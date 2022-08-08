@@ -10,20 +10,25 @@ interface VeNftTokenSelectInputProps {
 const VeNftTokenSelectInput = ({ form }: VeNftTokenSelectInputProps) => {
   const { tokenAddress } = useContext(V2ProjectContext)
   return (
-    <h3>
-      <Form.Item name="useJbToken" label={<Trans>Token to Lock:</Trans>}>
-        <Select onChange={val => form.setFieldsValue({ useJBToken: val })}>
-          <Select.Option key={'projectToken'} value={false}>
-            Project Token
+    <Form.Item
+      name="useJbToken"
+      label={
+        <h3>
+          <Trans>Token to Lock:</Trans>
+        </h3>
+      }
+    >
+      <Select onChange={val => form.setFieldsValue({ useJBToken: val })}>
+        <Select.Option key={'projectToken'} value={false}>
+          Project Token
+        </Select.Option>
+        {tokenAddress && (
+          <Select.Option key={'ERC-20'} value={true}>
+            ERC-20
           </Select.Option>
-          {tokenAddress && (
-            <Select.Option key={'ERC-20'} value={true}>
-              ERC-20
-            </Select.Option>
-          )}
-        </Select>
-      </Form.Item>
-    </h3>
+        )}
+      </Select>
+    </Form.Item>
   )
 }
 

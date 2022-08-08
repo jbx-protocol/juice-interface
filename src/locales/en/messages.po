@@ -1,0 +1,3140 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2022-01-15 13:53+1000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+msgid "$ve{tokenSymbolDisplayText} Received"
+msgstr "$ve{tokenSymbolDisplayText} Received"
+
+msgid "({0}%)"
+msgstr "({0}%)"
+
+msgid "({realTokenAllocationPercent}% of all newly minted tokens)."
+msgstr "({realTokenAllocationPercent}% of all newly minted tokens)."
+
+msgid "0% fee"
+msgstr "0% fee"
+
+msgid "1 year"
+msgstr "1 year"
+
+msgid "1. Get funded."
+msgstr "1. Get funded."
+
+msgid "1. Project details"
+msgstr "1. Project details"
+
+msgid "1. Set ENS name"
+msgstr "1. Set ENS name"
+
+msgid "100% overflow"
+msgstr ""
+
+msgid "2. Funding cycle"
+msgstr "2. Funding cycle"
+
+msgid "2. Give ownership"
+msgstr "2. Give ownership"
+
+msgid "2. Set text record"
+msgstr "2. Set text record"
+
+msgid "24 hours"
+msgstr "24 hours"
+
+msgid "3-day delay"
+msgstr ""
+
+msgid "3. Manage your funds"
+msgstr "3. Manage your funds"
+
+msgid "3. Review and deploy"
+msgstr "3. Review and deploy"
+
+msgid "30 days"
+msgstr "30 days"
+
+msgid "4. Build trust."
+msgstr "4. Build trust."
+
+msgid "7 days"
+msgstr "7 days"
+
+msgid "7-day delay"
+msgstr ""
+
+msgid "90 days"
+msgstr "90 days"
+
+msgid "<0/> Archived projects have not been modified or deleted on the blockchain, and can still be interacted with directly through the Juicebox contracts."
+msgstr ""
+
+msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the <1>risks</1> before committing your funds."
+msgstr "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the <1>risks</1> before committing your funds."
+
+msgid "<0/> contributed"
+msgstr "<0/> contributed"
+
+msgid "<0/> overflow received"
+msgstr "<0/> overflow received"
+
+msgid "<0/> owner balance"
+msgstr ""
+
+msgid "<0/> will go to the project owner: <1/>"
+msgstr "<0/> will go to the project owner: <1/>"
+
+msgid "<0/>{0} after {feePercentage}% JBX membership fee"
+msgstr "<0/>{0} after {feePercentage}% JBX membership fee"
+
+msgid "<0/>{0}{1} distributed"
+msgstr "<0/>{0}{1} distributed"
+
+msgid "<0><1/>{netDistributionAmount}</0> after {feePercentage}% JBX fee"
+msgstr "<0><1/>{netDistributionAmount}</0> after {feePercentage}% JBX fee"
+
+msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
+msgstr "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
+
+msgid "<0>A bonding curve rewards people who wait longer to redeem your tokens for overflow.</0><1>For example, with a bonding curve of 70%, redeeming 10% of the token supply at any given time will claim around 7% of the total overflow.</1><2>The rest is left to share between token holders.</2>,<3>For more info, check out this <4>short video</4> on bonding curves.</3>"
+msgstr "<0>A bonding curve rewards people who wait longer to redeem your tokens for overflow.</0><1>For example, with a bonding curve of 70%, redeeming 10% of the token supply at any given time will claim around 7% of the total overflow.</1><2>The rest is left to share between token holders.</2>,<3>For more info, check out this <4>short video</4> on bonding curves.</3>"
+
+msgid "<0>A mechanism like Juicebox where upfront financial commitments should be honored over time is only guaranteed within an ecosystem like Ethereum.</0><1>Ethereum provides a public environment where internet apps like Juicebox can run in a permission-less, trustless, and unstoppable fashion.</1><2>This means that anyone can see the code that they're using, anyone can use the code without asking for permission, and no one can mess with the code or take it down.</2><3>People using Juicebox are interacting with each other through public infrastructure—not a private, profit-seeking corporate service that brokers the exchange.</3><4>Juicebox was built to allow people and projects to get paid for creating public art and infrastructure, as much as or more than they would working towards corporate ends. No more shady business.</4>"
+msgstr "<0>A mechanism like Juicebox where upfront financial commitments should be honored over time is only guaranteed within an ecosystem like Ethereum.</0><1>Ethereum provides a public environment where internet apps like Juicebox can run in a permission-less, trustless, and unstoppable fashion.</1><2>This means that anyone can see the code that they're using, anyone can use the code without asking for permission, and no one can mess with the code or take it down.</2><3>People using Juicebox are interacting with each other through public infrastructure—not a private, profit-seeking corporate service that brokers the exchange.</3><4>Juicebox was built to allow people and projects to get paid for creating public art and infrastructure, as much as or more than they would working towards corporate ends. No more shady business.</4>"
+
+msgid "<0>A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project.</0><1>Holding these tokens entitles a project to a portion of its own overflow.</1>"
+msgstr "<0>A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project.</0><1>Holding these tokens entitles a project to a portion of its own overflow.</1>"
+
+msgid "<0>Add to balance:</0> payments to this contract will fund the project without minting project tokens."
+msgstr "<0>Add to balance:</0> payments to this contract will fund the project without minting project tokens."
+
+msgid "<0>Auto claim:</0> any minted tokens will automatically be claimed as ERC20 (if this project has issued an ERC20 token)."
+msgstr "<0>Auto claim:</0> any minted tokens will automatically be claimed as ERC20 (if this project has issued an ERC20 token)."
+
+msgid "<0>Contribution floor:</0> {0} ETH"
+msgstr "<0>Contribution floor:</0> {0} ETH"
+
+msgid "<0>Description: </0><1/>"
+msgstr "<0>Description: </0><1/>"
+
+msgid "<0>Discount rate</0>, to reduce your project token's issuance rate (tokens per ETH) each funding cycle."
+msgstr "<0>Discount rate</0>, to reduce your project token's issuance rate (tokens per ETH) each funding cycle."
+
+msgid "<0>If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens.</0><1>For more info, check out this <2>short video</2>.</1>"
+msgstr "<0>If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens.</0><1>For more info, check out this <2>short video</2>.</1>"
+
+msgid "<0>Juicebox has handled tens of thousands of ETH through its protocol, and has so far had 0 security mishaps.</0> <1>However, Juicebox is still experimental software. Although the Juicebox contract team have done their part to shape the smart contracts for public use and have tested the code thoroughly, the risk of exploits is never 0%.</1><2>Due to their public nature, any exploits to the contracts may have irreversible consequences, including loss of funds. Please use Juicebox with caution.</2><3><4>Learn more</4> about the risks.</3>"
+msgstr "<0>Juicebox has handled tens of thousands of ETH through its protocol, and has so far had 0 security mishaps.</0> <1>However, Juicebox is still experimental software. Although the Juicebox contract team have done their part to shape the smart contracts for public use and have tested the code thoroughly, the risk of exploits is never 0%.</1><2>Due to their public nature, any exploits to the contracts may have irreversible consequences, including loss of funds. Please use Juicebox with caution.</2><3><4>Learn more</4> about the risks.</3>"
+
+msgid "<0>Juicebox is a governance-minimal protocol. There are only a few levers that can be tuned, none of which impose changes for users without their consent. The Juicebox governance smart contract can adjust these levers.</0><1>The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly.</1>"
+msgstr "<0>Juicebox is a governance-minimal protocol. There are only a few levers that can be tuned, none of which impose changes for users without their consent. The Juicebox governance smart contract can adjust these levers.</0><1>The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly.</1>"
+
+msgid "<0>Juicebox is an open protocol on Ethereum that is funded using Juicebox itself. You can check out the contractualized budget specs <1>here</1>.</0><2>Projects building on Juicebox pay a {JB_FEE}% JBX membership fee from withdrawn funds into the JuiceboxDAO treasury. Projects can then use their JBX to participate in the governance of JuiceboxDAO and its collective treasury, as well as redeem from its growing <3>overflow</3>. The fee is also subject to change via JBX member votes.</2>"
+msgstr "<0>Juicebox is an open protocol on Ethereum that is funded using Juicebox itself. You can check out the contractualized budget specs <1>here</1>.</0><2>Projects building on Juicebox pay a {JB_FEE}% JBX membership fee from withdrawn funds into the JuiceboxDAO treasury. Projects can then use their JBX to participate in the governance of JuiceboxDAO and its collective treasury, as well as redeem from its growing <3>overflow</3>. The fee is also subject to change via JBX member votes.</2>"
+
+msgid "<0>Learn more</0> about burning tokens."
+msgstr "<0>Learn more</0> about burning tokens."
+
+msgid "<0>Learn more</0> about funding cycle duration."
+msgstr ""
+
+msgid "<0>Learn more</0> about funding cycles."
+msgstr ""
+
+msgid "<0>Learn more</0> about overflow."
+msgstr ""
+
+msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
+msgstr "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
+
+msgid "<0>No duration set.</0>Funding can be reconfigured at any time. Reconfigurations will start a new funding cycle."
+msgstr "<0>No duration set.</0>Funding can be reconfigured at any time. Reconfigurations will start a new funding cycle."
+
+msgid "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
+msgstr "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
+
+msgid "<0>Note:</0> Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
+msgstr "<0>Note:</0> Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
+
+msgid "<0>On a lower redemption rate, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than other holders.</0> <1>A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed.</1>Learn more in this <2>short video</2>."
+msgstr "<0>On a lower redemption rate, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than other holders.</0> <1>A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed.</1>Learn more in this <2>short video</2>."
+
+msgid "<0>Peel</0> is the DAO that manages the juicebox.money frontend interface. You can reach out to Peel either through the <1>Peel Discord</1> or the <2>Juicebox Discord</2>."
+msgstr "<0>Peel</0> is the DAO that manages the juicebox.money frontend interface. You can reach out to Peel either through the <1>Peel Discord</1> or the <2>Juicebox Discord</2>."
+
+msgid "<0>Recurring funding cycles</0>. For example, distribute funds from your project's treasury every week."
+msgstr "<0>Recurring funding cycles</0>. For example, distribute funds from your project's treasury every week."
+
+msgid "<0>Target is 0.</0> The project's entire balance will be considered overflow. <1>Learn more</1> about overflow."
+msgstr "<0>Target is 0.</0> The project's entire balance will be considered overflow. <1>Learn more</1> about overflow."
+
+msgid "<0>That's the plan, but the core Juicebox contracts will first be deployed to Ethereum Mainnet.</0><1>The contract team will soon start working on L2 payment terminals for Juicebox projects.</1>"
+msgstr "<0>That's the plan, but the core Juicebox contracts will first be deployed to Ethereum Mainnet.</0><1>The contract team will soon start working on L2 payment terminals for Juicebox projects.</1>"
+
+msgid "<0>The Juicebox V2 smart contracts have had multiple security audits. <1>Read the audit reports.</1></0><2>While Juicebox has been audited, it is still experimental software, and there are risks. Please use Juicebox with caution.</2><3><4>Learn more</4> about the risks.</3>"
+msgstr "<0>The Juicebox V2 smart contracts have had multiple security audits. <1>Read the audit reports.</1></0><2>While Juicebox has been audited, it is still experimental software, and there are risks. Please use Juicebox with caution.</2><3><4>Learn more</4> about the risks.</3>"
+
+msgid "<0>There are unit tests written for every condition of every function in the contracts, and integration tests for every workflow that the protocol supports.</0><1>There was also a script written to iteratively run the integration tests using a random input generator, prioritizing edge cases. The code has successfully passed over 1 million test cases through this stress-testing script.</1> <2>The code could always use more eyes and more critique to further the community's confidence. Join our <3>Discord</3> and check out the code on <4>GitHub</4> to work with us.</2>"
+msgstr "<0>There are unit tests written for every condition of every function in the contracts, and integration tests for every workflow that the protocol supports.</0><1>There was also a script written to iteratively run the integration tests using a random input generator, prioritizing edge cases. The code has successfully passed over 1 million test cases through this stress-testing script.</1> <2>The code could always use more eyes and more critique to further the community's confidence. Join our <3>Discord</3> and check out the code on <4>GitHub</4> to work with us.</2>"
+
+msgid "<0>This project has a 0% redemption rate</0>. You won't receive any ETH for burning your tokens."
+msgstr "<0>This project has a 0% redemption rate</0>. You won't receive any ETH for burning your tokens."
+
+#~ msgid "<0>This project has no overflow</0>, so you will not receive any ETH for burning tokens."
+#~ msgstr "<0>This project has no overflow</0>, so you will not receive any ETH for burning tokens."
+
+msgid "<0>This project has no overflow</0>. You won't receive any ETH for burning your tokens."
+msgstr "<0>This project has no overflow</0>. You won't receive any ETH for burning your tokens."
+
+msgid "<0>This website (juicebox.money) connects to the Juicebox protocol's smart contracts, deployed on the Ethereum network. (note: anyone else can make a website that also connects to these same smart contracts. For now, don't trust any site other than this one to access the Juicebox protocol).</0><1>Creating a Juicebox project mints you an NFT (ERC-721) representing ownership over it. Whoever owns this NFT can configure the rules of the game and how payouts are distributed.</1><2>The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The amount of tokens minted and distributed are proportional to the volume of payments received, weighted by the project's discount rate over time.</2>"
+msgstr "<0>This website (juicebox.money) connects to the Juicebox protocol's smart contracts, deployed on the Ethereum network. (note: anyone else can make a website that also connects to these same smart contracts. For now, don't trust any site other than this one to access the Juicebox protocol).</0><1>Creating a Juicebox project mints you an NFT (ERC-721) representing ownership over it. Whoever owns this NFT can configure the rules of the game and how payouts are distributed.</1><2>The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The amount of tokens minted and distributed are proportional to the volume of payments received, weighted by the project's discount rate over time.</2>"
+
+msgid "<0>Total project tokens minted</0> when 1 ETH is contributed. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
+msgstr "<0>Total project tokens minted</0> when 1 ETH is contributed. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
+
+msgid "<0>Users fund your project by paying to use your app or service, or as a patron or investor by making a payment directly to your project's smart contract (like on this app).</0><1>For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return.</1>"
+msgstr "<0>Users fund your project by paying to use your app or service, or as a patron or investor by making a payment directly to your project's smart contract (like on this app).</0><1>For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return.</1>"
+
+msgid "<0>Website:</0> <1>{0}</1>"
+msgstr "<0>Website:</0> <1>{0}</1>"
+
+msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
+msgstr "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
+
+msgid "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
+msgstr "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
+
+msgid "@"
+msgstr ""
+
+msgid "@{handle}"
+msgstr "@{handle}"
+
+msgid "@{handle} not found"
+msgstr "@{handle} not found"
+
+msgid "A project can be archived by its owner from the tools menu on the project page."
+msgstr "A project can be archived by its owner from the tools menu on the project page."
+
+msgid "A project can reserve a percentage of the tokens minted from payments it receives. Reserved tokens can be distributed according to the allocation below at any time."
+msgstr "A project can reserve a percentage of the tokens minted from payments it receives. Reserved tokens can be distributed according to the allocation below at any time."
+
+msgid "A project can reserve a percentage of tokens minted from every payment it receives. Reserved tokens can be distributed according to the allocation below at any time."
+msgstr "A project can reserve a percentage of tokens minted from every payment it receives. Reserved tokens can be distributed according to the allocation below at any time."
+
+msgid "A project's handle is used in its URL, and allows it to be included in search results on the projects page."
+msgstr "A project's handle is used in its URL, and allows it to be included in search results on the projects page."
+
+msgid "A project's lifetime is defined in funding cycles. If a funding target is set, the project can withdraw no more than the target for the duration of the cycle."
+msgstr ""
+
+msgid "A reconfiguration to an upcoming funding cycle must be submitted at least 3 days before it starts."
+msgstr ""
+
+msgid "A reconfiguration to an upcoming funding cycle must be submitted at least 7 days before it starts."
+msgstr ""
+
+msgid "A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
+msgstr "A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
+
+msgid "A veNft can only be redeemed if the project currently has overflow."
+msgstr "A veNft can only be redeemed if the project currently has overflow."
+
+msgid "ARCHIVED"
+msgstr "ARCHIVED"
+
+msgid "AVAILABLE"
+msgstr ""
+
+msgid "Activity"
+msgstr ""
+
+msgid "Add Lock Duration Option"
+msgstr "Add Lock Duration Option"
+
+msgid "Add NFT reward"
+msgstr "Add NFT reward"
+
+msgid "Add a payout"
+msgstr "Add a payout"
+
+msgid "Add an on-chain memo to this payment."
+msgstr "Add an on-chain memo to this payment."
+
+msgid "Add an on-chain memo to this reconfiguration."
+msgstr "Add an on-chain memo to this reconfiguration."
+
+msgid "Add funds to this project's balance without minting tokens."
+msgstr ""
+
+msgid "Add handle"
+msgstr "Add handle"
+
+msgid "Add image"
+msgstr ""
+
+msgid "Add lock duration option"
+msgstr "Add lock duration option"
+
+msgid "Add new payout"
+msgstr "Add new payout"
+
+msgid "Add payout"
+msgstr "Add payout"
+
+msgid "Add reward tier"
+msgstr "Add reward tier"
+
+msgid "Add terminal"
+msgstr "Add terminal"
+
+msgid "Add the V1 Token Payment Terminal to your project."
+msgstr "Add the V1 Token Payment Terminal to your project."
+
+msgid "Add to Balance"
+msgstr ""
+
+msgid "Add to balance"
+msgstr ""
+
+msgid "Add token"
+msgstr "Add token"
+
+msgid "Add token allocation"
+msgstr "Add token allocation"
+
+msgid "Address"
+msgstr ""
+
+msgid "Address required"
+msgstr "Address required"
+
+msgid "Address:"
+msgstr "Address:"
+
+msgid "Address: <0/>"
+msgstr "Address: <0/>"
+
+msgid "Adjust incentives for paying your project."
+msgstr "Adjust incentives for paying your project."
+
+msgid "Advanced (optional)"
+msgstr "Advanced (optional)"
+
+msgid "All"
+msgstr "All"
+
+msgid "All assets"
+msgstr ""
+
+msgid "All events"
+msgstr "All events"
+
+msgid "All funds can be distributed by the project. The project will have no overflow (the same as setting the target to infinity)."
+msgstr ""
+
+msgid "All funds received by the treasury will be distributed. Token holders will receive <0>no ETH</0> when burning their tokens."
+msgstr "All funds received by the treasury will be distributed. Token holders will receive <0>no ETH</0> when burning their tokens."
+
+msgid "All {0} will go to the project owner:"
+msgstr ""
+
+msgid "Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
+msgstr "Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
+
+msgid "Allow minting tokens"
+msgstr ""
+
+msgid "Allow terminal configuration"
+msgstr "Allow terminal configuration"
+
+msgid "Allow token minting"
+msgstr "Allow token minting"
+
+msgid "Allow your V1 project token holders to swap their tokens for your V2 project tokens."
+msgstr "Allow your V1 project token holders to swap their tokens for your V2 project tokens."
+
+msgid "Allowed"
+msgstr "Allowed"
+
+msgid "Almost definitely."
+msgstr ""
+
+msgid "Amount"
+msgstr "Amount"
+
+msgid "Amount of ERC-20 tokens to claim"
+msgstr "Amount of ERC-20 tokens to claim"
+
+msgid "Amount of newly minted project tokens <0>reserved for the project</0> when 1 ETH is contributed. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner."
+msgstr "Amount of newly minted project tokens <0>reserved for the project</0> when 1 ETH is contributed. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner."
+
+msgid "Amount of newly minted project tokens <0>reserved for the project</0> when 1 ETH is contributed. The project owner is allocated all reserved tokens by default, but they can also be allocated to other wallet addresses."
+msgstr "Amount of newly minted project tokens <0>reserved for the project</0> when 1 ETH is contributed. The project owner is allocated all reserved tokens by default, but they can also be allocated to other wallet addresses."
+
+msgid "Amount paid"
+msgstr ""
+
+msgid "Amount required"
+msgstr "Amount required"
+
+msgid "Amount to distribute"
+msgstr "Amount to distribute"
+
+msgid "Amount:"
+msgstr "Amount:"
+
+msgid "Amounts"
+msgstr "Amounts"
+
+msgid "Any changes you make will take effect in <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
+msgstr "Any changes you make will take effect in <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
+
+msgid "Any reconfiguration to an upcoming funding cycle will take effect once the current cycle ends. A project with no strategy may be vulnerable to being rug-pulled by its owner."
+msgstr ""
+
+msgid "Approve token for transaction"
+msgstr "Approve token for transaction"
+
+msgid "Archive project"
+msgstr "Archive project"
+
+msgid "Archived"
+msgstr "Archived"
+
+msgid "Are you sure you want to start over?"
+msgstr "Are you sure you want to start over?"
+
+msgid "Assets"
+msgstr "Assets"
+
+msgid "Attach a sticker"
+msgstr "Attach a sticker"
+
+msgid "Attach the image to be associated with this NFT."
+msgstr "Attach the image to be associated with this NFT."
+
+msgid "Auto claim"
+msgstr "Auto claim"
+
+msgid "Automate funding cycles"
+msgstr "Automate funding cycles"
+
+msgid "Automated funding cycles enable the following characteristics:"
+msgstr "Automated funding cycles enable the following characteristics:"
+
+msgid "Available after fee:"
+msgstr ""
+
+msgid "Available funds are distributed according to the payouts below."
+msgstr "Available funds are distributed according to the payouts below."
+
+msgid "Available funds can be distributed according to the payouts below{0}."
+msgstr "Available funds can be distributed according to the payouts below{0}."
+
+msgid "Available:"
+msgstr ""
+
+msgid "Back to top"
+msgstr "Back to top"
+
+msgid "Balance exceeded"
+msgstr "Balance exceeded"
+
+msgid "Balance of the project owner's wallet."
+msgstr "Balance of the project owner's wallet."
+
+msgid "Beneficiary"
+msgstr "Beneficiary"
+
+msgid "Beneficiary address"
+msgstr "Beneficiary address"
+
+msgid "Beneficiary:"
+msgstr "Beneficiary:"
+
+msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
+msgstr ""
+
+msgid "Block number"
+msgstr "Block number"
+
+msgid "Blog"
+msgstr ""
+
+msgid "Built for:"
+msgstr ""
+
+msgid "Burn project tokens"
+msgstr "Burn project tokens"
+
+msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project has no overflow."
+msgstr "Burn your {tokensLabel}. You won't receive ETH in return because this project has no overflow."
+
+msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project's redemption rate is zero."
+msgstr "Burn your {tokensLabel}. You won't receive ETH in return because this project's redemption rate is zero."
+
+msgid "Burn {0} {tokensTextShort}"
+msgstr "Burn {0} {tokensTextShort}"
+
+msgid "Burn {tokensLabel}"
+msgstr "Burn {tokensLabel}"
+
+msgid "Burn {tokensTextLong}"
+msgstr "Burn {tokensTextLong}"
+
+msgid "By default, all unallocated funds can be distributed to the project owner's wallet."
+msgstr "By default, all unallocated funds can be distributed to the project owner's wallet."
+
+msgid "By default, newly minted tokens will go to the wallet who sends funds to the address. You can enable this to set the token beneficiary to a custom address."
+msgstr "By default, newly minted tokens will go to the wallet who sends funds to the address. You can enable this to set the token beneficiary to a custom address."
+
+msgid "By default, the payer will receive any project tokens minted from the payment."
+msgstr "By default, the payer will receive any project tokens minted from the payment."
+
+msgid "Can I change my project's contract after it's been created?"
+msgstr ""
+
+msgid "Can I delete a project?"
+msgstr ""
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Cannot redeem tokens for ETH because this project has no overflow."
+msgstr "Cannot redeem tokens for ETH because this project has no overflow."
+
+msgid "Cannot redeem tokens for ETH because this project's redemption rate is zero."
+msgstr "Cannot redeem tokens for ETH because this project's redemption rate is zero."
+
+msgid "Change ENS name"
+msgstr "Change ENS name"
+
+msgid "Change project handle"
+msgstr "Change project handle"
+
+msgid "Changes to payouts will take effect immediately."
+msgstr "Changes to payouts will take effect immediately."
+
+msgid "Changes to project details will take effect immediately."
+msgstr "Changes to project details will take effect immediately."
+
+msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
+msgstr "Changes to these attributes can be made at any time and will be applied to your project immediately."
+
+msgid "Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
+msgstr "Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
+
+msgid "Changes to your reserved token allocation will take effect immediately."
+msgstr "Changes to your reserved token allocation will take effect immediately."
+
+msgid "Changes will take effect according to the project's custom ballot contract."
+msgstr "Changes will take effect according to the project's custom ballot contract."
+
+msgid "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule (the first funding cycle following <1>{1}</1> from now)."
+msgstr "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule (the first funding cycle following <1>{1}</1> from now)."
+
+msgid "Character"
+msgstr "Character"
+
+msgid "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC-20 tokens later."
+msgstr "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC-20 tokens later."
+
+msgid "Choose an ENS name to use as the project's handle. Subdomains are allowed and will be included in the handle. Handles won't include the \".eth\" extension.<0/><1/>juicebox.eth = @juicebox<2/>dao.juicebox.eth = @dao.juicebox"
+msgstr "Choose an ENS name to use as the project's handle. Subdomains are allowed and will be included in the handle. Handles won't include the \".eth\" extension.<0/><1/>juicebox.eth = @juicebox<2/>dao.juicebox.eth = @dao.juicebox"
+
+msgid "Choose how you would like to configure your payouts."
+msgstr "Choose how you would like to configure your payouts."
+
+msgid "Claim {tokenTextPlural}"
+msgstr "Claim {tokenTextPlural}"
+
+msgid "Claim {tokenTextPlural} as ERC-20 tokens"
+msgstr "Claim {tokenTextPlural} as ERC-20 tokens"
+
+msgid "Claim {tokenTextShort}"
+msgstr "Claim {tokenTextShort}"
+
+msgid "Claim {tokenTextShort} as ERC-20 tokens"
+msgstr "Claim {tokenTextShort} as ERC-20 tokens"
+
+msgid "Claim {tokensLabel} as ERC-20"
+msgstr "Claim {tokensLabel} as ERC-20"
+
+msgid "Claiming {tokenSymbol} tokens will convert your {tokenSymbol} balance to ERC-20 tokens and mint them to your wallet."
+msgstr "Claiming {tokenSymbol} tokens will convert your {tokenSymbol} balance to ERC-20 tokens and mint them to your wallet."
+
+msgid "Claiming {tokenTextLong} will convert your {tokenTextShort} balance to ERC-20 tokens and mint them to your wallet."
+msgstr "Claiming {tokenTextLong} will convert your {tokenTextShort} balance to ERC-20 tokens and mint them to your wallet."
+
+msgid "Close"
+msgstr "Close"
+
+msgid "Close, I'll do these later"
+msgstr "Close, I'll do these later"
+
+msgid "Collection name"
+msgstr "Collection name"
+
+msgid "Collection symbol"
+msgstr "Collection symbol"
+
+msgid "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
+msgstr "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
+
+msgid "Configure how your project will collect and spend funds."
+msgstr "Configure how your project will collect and spend funds."
+
+msgid "Configure restrictions for your funding cycles."
+msgstr "Configure restrictions for your funding cycles."
+
+msgid "Configure the dynamics of your project's token."
+msgstr "Configure the dynamics of your project's token."
+
+msgid "Configure which Juicebox V1 project you'd like to accept tokens for. Token holders of this V1 project will be able to swap their V1 tokens for V2 tokens."
+msgstr "Configure which Juicebox V1 project you'd like to accept tokens for. Token holders of this V1 project will be able to swap their V1 tokens for V2 tokens."
+
+msgid "Confirm Stake"
+msgstr "Confirm Stake"
+
+msgid "Congratulations on launching your project! The next steps are optional and can be completed at any time."
+msgstr "Congratulations on launching your project! The next steps are optional and can be completed at any time."
+
+msgid "Connect"
+msgstr ""
+
+msgid "Connect Wallet"
+msgstr "Connect Wallet"
+
+msgid "Connect wallet"
+msgstr "Connect wallet"
+
+msgid "Connect wallet to claim"
+msgstr "Connect wallet to claim"
+
+msgid "Connect wallet to deploy"
+msgstr "Connect wallet to deploy"
+
+msgid "Connect wallet to distribute"
+msgstr "Connect wallet to distribute"
+
+msgid "Connect wallet to issue"
+msgstr "Connect wallet to issue"
+
+msgid "Connect wallet to pay"
+msgstr "Connect wallet to pay"
+
+msgid "Connect wallet to transfer"
+msgstr "Connect wallet to transfer"
+
+msgid "Connect your wallet to see your holdings."
+msgstr "Connect your wallet to see your holdings."
+
+msgid "Connect your wallet to see your projects."
+msgstr "Connect your wallet to see your projects."
+
+msgid "Connected wallet not authorized"
+msgstr "Connected wallet not authorized"
+
+msgid "Contract address: {0}"
+msgstr ""
+
+msgid "Contribute to unlock an NFT reward."
+msgstr "Contribute to unlock an NFT reward."
+
+msgid "Contribution threshold"
+msgstr "Contribution threshold"
+
+msgid "Contributor rate"
+msgstr "Contributor rate"
+
+msgid "Contributors receive the NFT when they contribute at least this amount."
+msgstr "Contributors receive the NFT when they contribute at least this amount."
+
+msgid "Contributors who pay this address from a custodial service platform (like Coinbase) <0>won't receive project tokens</0>."
+msgstr "Contributors who pay this address from a custodial service platform (like Coinbase) <0>won't receive project tokens</0>."
+
+msgid "Contributors will be rewarded this amount of your project's tokens per ETH contributed."
+msgstr "Contributors will be rewarded this amount of your project's tokens per ETH contributed."
+
+msgid "Contributors will not receive any tokens in exchange for paying this project."
+msgstr "Contributors will not receive any tokens in exchange for paying this project."
+
+msgid "Contributors will receive <0>{discountRatePercent}%</0> more tokens for contributions they make this funding cycle compared to the next funding cycle."
+msgstr "Contributors will receive <0>{discountRatePercent}%</0> more tokens for contributions they make this funding cycle compared to the next funding cycle."
+
+msgid "Contributors will receive a relatively small portion of tokens in exchange for paying this project."
+msgstr "Contributors will receive a relatively small portion of tokens in exchange for paying this project."
+
+msgid "Contributors will see this message before they pay your project."
+msgstr "Contributors will see this message before they pay your project."
+
+msgid "Copied!"
+msgstr ""
+
+msgid "Copy to clipboard"
+msgstr "Copy to clipboard"
+
+msgid "Create a payable address (optional)"
+msgstr "Create a payable address (optional)"
+
+msgid "Create an Ethereum address for your project. Enables direct payments without going through your project's Juicebox page."
+msgstr "Create an Ethereum address for your project. Enables direct payments without going through your project's Juicebox page."
+
+msgid "Create an Ethereum address that can be used to pay your project directly."
+msgstr "Create an Ethereum address that can be used to pay your project directly."
+
+msgid "Create payable address"
+msgstr "Create payable address"
+
+msgid "Create payment address"
+msgstr "Create payment address"
+
+msgid "Create project"
+msgstr "Create project"
+
+msgid "Create your own ERC-20 token to represent stake in your project. Contributors will receive these tokens when they pay your project."
+msgstr "Create your own ERC-20 token to represent stake in your project. Contributors will receive these tokens when they pay your project."
+
+msgid "Created ETH-ERC20 payment address"
+msgstr "Created ETH-ERC20 payment address"
+
+msgid "Crowdfund your project with ETH. Set a funding target to cover predictable expenses, and any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
+msgstr "Crowdfund your project with ETH. Set a funding target to cover predictable expenses, and any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
+
+msgid "Crowdfunding"
+msgstr "Crowdfunding"
+
+msgid "Current"
+msgstr ""
+
+msgid "Current 3rd Party Exchange Rates"
+msgstr "Current 3rd Party Exchange Rates"
+
+msgid "Current owner: {ownerAddress}"
+msgstr "Current owner: {ownerAddress}"
+
+msgid "Currently worth: <0><1/></0>"
+msgstr "Currently worth: <0><1/></0>"
+
+msgid "Custom strategy"
+msgstr ""
+
+msgid "Custom token beneficiary"
+msgstr "Custom token beneficiary"
+
+msgid "Customize your project's \"pay\" button. Leave blank to use the default."
+msgstr "Customize your project's \"pay\" button. Leave blank to use the default."
+
+msgid "Cycle #{0}"
+msgstr ""
+
+msgid "Cycle #{0} -"
+msgstr "Cycle #{0} -"
+
+msgid "DAOs"
+msgstr "DAOs"
+
+msgid "Dark theme"
+msgstr ""
+
+msgid "Date"
+msgstr "Date"
+
+msgid "Date created"
+msgstr "Date created"
+
+msgid "Day"
+msgstr "Day"
+
+msgid "Days"
+msgstr "Days"
+
+msgid "Days to lock tokens"
+msgstr "Days to lock tokens"
+
+msgid "Delete NFT"
+msgstr "Delete NFT"
+
+msgid "Delete Option"
+msgstr "Delete Option"
+
+msgid "Delete payout"
+msgstr "Delete payout"
+
+msgid "Delete token allocation"
+msgstr "Delete token allocation"
+
+msgid "Deploy funding cycle configuration"
+msgstr "Deploy funding cycle configuration"
+
+msgid "Deploy payment address"
+msgstr "Deploy payment address"
+
+msgid "Deploy payment address contract"
+msgstr "Deploy payment address contract"
+
+#~ msgid "Deploy project"
+#~ msgstr "Deploy project"
+
+msgid "Deploy project on {0}"
+msgstr "Deploy project on {0}"
+
+#~ msgid "Deploy project on {signerNetwork}"
+#~ msgstr "Deploy project on {signerNetwork}"
+
+msgid "Deploy project to {0}"
+msgstr "Deploy project to {0}"
+
+msgid "Deployed ERC20 token"
+msgstr "Deployed ERC20 token"
+
+msgid "Deployed payment addresses can be found in the Tools drawer on the project page."
+msgstr "Deployed payment addresses can be found in the Tools drawer on the project page."
+
+msgid "Deposit 1 wei to @{handle}"
+msgstr "Deposit 1 wei to @{handle}"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Design how your tokens should work."
+msgstr "Design how your tokens should work."
+
+msgid "Design your project"
+msgstr ""
+
+msgid "Details"
+msgstr ""
+
+msgid "Determines whether tokens will be minted from payments to this address."
+msgstr "Determines whether tokens will be minted from payments to this address."
+
+msgid "Disabled"
+msgstr "Disabled"
+
+msgid "Disabled when your funding cycle's distribution limit is <0>No limit</0> (infinite)"
+msgstr "Disabled when your funding cycle's distribution limit is <0>No limit</0> (infinite)"
+
+msgid "Disabled when your project's funding cycle duration is 0."
+msgstr "Disabled when your project's funding cycle duration is 0."
+
+msgid "Disabled when your project's funding cycle has no duration."
+msgstr "Disabled when your project's funding cycle has no duration."
+
+msgid "Discard"
+msgstr "Discard"
+
+msgid "Disclose any details to your contributors before they pay your project."
+msgstr "Disclose any details to your contributors before they pay your project."
+
+msgid "Disconnect"
+msgstr ""
+
+msgid "Discord"
+msgstr ""
+
+msgid "Discord link"
+msgstr "Discord link"
+
+msgid "Discount rate"
+msgstr ""
+
+msgid "Display ERC-20 and other Juicebox project tokens that this project owner holds."
+msgstr "Display ERC-20 and other Juicebox project tokens that this project owner holds."
+
+msgid "Display ERC-20 tokens and other Juicebox project tokens that are in this project's owner's wallet."
+msgstr "Display ERC-20 tokens and other Juicebox project tokens that are in this project's owner's wallet."
+
+msgid "Distribute a percentage of all funds received to entities. Your distribution limit will be <0>infinite</0>."
+msgstr "Distribute a percentage of all funds received to entities. Your distribution limit will be <0>infinite</0>."
+
+msgid "Distribute a specific amount of funds to entities each funding cycle. Your distribution limit will equal the <0>sum of all payout amounts.</0>"
+msgstr "Distribute a specific amount of funds to entities each funding cycle. Your distribution limit will equal the <0>sum of all payout amounts.</0>"
+
+msgid "Distribute available funds to other Ethereum wallets or Juicebox projects as payouts. Use this to pay contributors, charities, Juicebox projects you depend on, or anyone else. Funds are distributed whenever a withdrawal is made from your project."
+msgstr "Distribute available funds to other Ethereum wallets or Juicebox projects as payouts. Use this to pay contributors, charities, Juicebox projects you depend on, or anyone else. Funds are distributed whenever a withdrawal is made from your project."
+
+msgid "Distribute funds"
+msgstr "Distribute funds"
+
+msgid "Distribute reserved {tokenTextPlural}"
+msgstr "Distribute reserved {tokenTextPlural}"
+
+msgid "Distribute {tokenTextPlural}"
+msgstr "Distribute {tokenTextPlural}"
+
+msgid "Distribute {tokensText}"
+msgstr "Distribute {tokensText}"
+
+msgid "Distributed"
+msgstr ""
+
+msgid "Distributed Funds"
+msgstr "Distributed Funds"
+
+msgid "Distributed Reserves"
+msgstr "Distributed Reserves"
+
+msgid "Distributed Tokens"
+msgstr "Distributed Tokens"
+
+msgid "Distributed funds"
+msgstr "Distributed funds"
+
+msgid "Distributed reserved {0}"
+msgstr "Distributed reserved {0}"
+
+msgid "Distributing funds to Juicebox projects won't incur fees."
+msgstr "Distributing funds to Juicebox projects won't incur fees."
+
+msgid "Distribution"
+msgstr "Distribution"
+
+msgid "Distribution Limit <0/>:"
+msgstr "Distribution Limit <0/>:"
+
+msgid "Distribution limit"
+msgstr "Distribution limit"
+
+msgid "Distribution limit is 0: All funds will be considered overflow and can be redeemed by token holders."
+msgstr "Distribution limit is 0: All funds will be considered overflow and can be redeemed by token holders."
+
+msgid "Distribution limit is infinite. <0>The project will control how all funds are distributed, and none can be redeemed by token holders.</0>"
+msgstr "Distribution limit is infinite. <0>The project will control how all funds are distributed, and none can be redeemed by token holders.</0>"
+
+msgid "Distribution limit, duration and payouts"
+msgstr "Distribution limit, duration and payouts"
+
+msgid "Distribution limit: <0/>{0}"
+msgstr "Distribution limit: <0/>{0}"
+
+msgid "Do I have to make my project open source to use Juicebox as its business model?"
+msgstr ""
+
+msgid "Do I need this?"
+msgstr "Do I need this?"
+
+msgid "Do not include .eth"
+msgstr "Do not include .eth"
+
+msgid "Docs"
+msgstr ""
+
+msgid "Documentation on v1.1 contracts"
+msgstr "Documentation on v1.1 contracts"
+
+msgid "Does a project benefit from its own overflow?"
+msgstr ""
+
+msgid "Done"
+msgstr "Done"
+
+msgid "Download CSV"
+msgstr "Download CSV"
+
+msgid "Download CSV of payments"
+msgstr "Download CSV of payments"
+
+msgid "Download CSV of project activity"
+msgstr "Download CSV of project activity"
+
+msgid "Download CSV of {0} holders"
+msgstr "Download CSV of {0} holders"
+
+msgid "Duration"
+msgstr ""
+
+msgid "Duration (seconds)"
+msgstr "Duration (seconds)"
+
+msgid "ENS Name"
+msgstr "ENS Name"
+
+msgid "ERC-20 tokens can only be minted once an ERC-20 token has been issued for this project."
+msgstr "ERC-20 tokens can only be minted once an ERC-20 token has been issued for this project."
+
+msgid "ERC20 Deployed"
+msgstr "ERC20 Deployed"
+
+msgid "ETH-ERC20 Address Created"
+msgstr "ETH-ERC20 Address Created"
+
+msgid "ETH-ERC20 Payment addresses"
+msgstr "ETH-ERC20 Payment addresses"
+
+msgid "ETH-ERC20 Payment addresses are <0>smart contracts</0>that allow this project to be paid in <1>ETH</1> by sending ETH directly to the contract, or in <2>ERC20 tokens</2> via the contract's <3>pay()</3> function."
+msgstr "ETH-ERC20 Payment addresses are <0>smart contracts</0>that allow this project to be paid in <1>ETH</1> by sending ETH directly to the contract, or in <2>ERC20 tokens</2> via the contract's <3>pay()</3> function."
+
+msgid "Each payout will receive their percent of this total each funding cycle if there is enough in the treasury. Otherwise, they will receive their percent of whatever is in the treasury."
+msgstr "Each payout will receive their percent of this total each funding cycle if there is enough in the treasury. Otherwise, they will receive their percent of whatever is in the treasury."
+
+msgid "Each project has its own <0>tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
+msgstr "Each project has its own <0>tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
+
+msgid "Edit NFT reward"
+msgstr "Edit NFT reward"
+
+msgid "Edit allocation"
+msgstr "Edit allocation"
+
+msgid "Edit payout"
+msgstr "Edit payout"
+
+msgid "Edit payouts"
+msgstr "Edit payouts"
+
+msgid "Edit project"
+msgstr "Edit project"
+
+msgid "Edit project details"
+msgstr "Edit project details"
+
+msgid "Edit reserved token allocation"
+msgstr "Edit reserved token allocation"
+
+msgid "Edit token allocation"
+msgstr "Edit token allocation"
+
+msgid "Edit tracked assets"
+msgstr "Edit tracked assets"
+
+msgid "Enable veBanny Governance"
+msgstr "Enable veBanny Governance"
+
+msgid "Enable veNFT Governance"
+msgstr "Enable veNFT Governance"
+
+msgid "Enable veNFT to Spend Unclaimed Tokens"
+msgstr "Enable veNFT to Spend Unclaimed Tokens"
+
+msgid "Enabled"
+msgstr ""
+
+msgid "Enabling this allows the project owner to manually mint any amount of tokens to any address."
+msgstr ""
+
+msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise unclaimed {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
+msgstr "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise unclaimed {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
+
+msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise, unclaimed {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
+msgstr "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise, unclaimed {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
+
+msgid "Enabling token minting will appear risky to contributors."
+msgstr "Enabling token minting will appear risky to contributors."
+
+msgid "End"
+msgstr ""
+
+msgid "Error loading holders"
+msgstr "Error loading holders"
+
+msgid "Error loading payments"
+msgstr "Error loading payments"
+
+msgid "Error parsing form"
+msgstr "Error parsing form"
+
+msgid "Error uploading file"
+msgstr "Error uploading file"
+
+msgid "Explore projects"
+msgstr "Explore projects"
+
+msgid "Extend Lock"
+msgstr "Extend Lock"
+
+msgid "Extend lock successful. Results will be indexed in a few moments."
+msgstr "Extend lock successful. Results will be indexed in a few moments."
+
+msgid "FAQ"
+msgstr ""
+
+msgid "FAQs"
+msgstr ""
+
+msgid "Failed to update project metadata"
+msgstr "Failed to update project metadata"
+
+msgid "Fee from <0><1/></0>"
+msgstr "Fee from <0><1/></0>"
+
+msgid "File must be less than {formattedSize}{unit}"
+msgstr "File must be less than {formattedSize}{unit}"
+
+msgid "Fund and operate your thing, your way."
+msgstr "Fund and operate your thing, your way."
+
+msgid "Fund anything."
+msgstr "Fund anything."
+
+#~ msgid "Fund anything. Grow together."
+#~ msgstr "Fund anything. Grow together."
+
+msgid "Funding"
+msgstr "Funding"
+
+msgid "Funding cycle"
+msgstr ""
+
+msgid "Funding cycle details"
+msgstr "Funding cycle details"
+
+msgid "Funding cycle duration"
+msgstr ""
+
+msgid "Funding cycle preview"
+msgstr "Funding cycle preview"
+
+msgid "Funding cycle required."
+msgstr "Funding cycle required."
+
+msgid "Funding cycle target"
+msgstr ""
+
+msgid "Funding cycles can be reconfigured moments before a new cycle begins, without notifying contributors."
+msgstr "Funding cycles can be reconfigured moments before a new cycle begins, without notifying contributors."
+
+msgid "Funding distribution"
+msgstr "Funding distribution"
+
+msgid "Funding target"
+msgstr "Funding target"
+
+msgid "Funds available to distribute in this funding cycle (before the {feePercentage}% JBX fee). This amount won't roll over to the next funding cycle, so funds should be distributed before this funding cycle ends."
+msgstr "Funds available to distribute in this funding cycle (before the {feePercentage}% JBX fee). This amount won't roll over to the next funding cycle, so funds should be distributed before this funding cycle ends."
+
+msgid "Funds will be distributed to:"
+msgstr ""
+
+msgid "General"
+msgstr "General"
+
+msgid "Give feedback"
+msgstr "Give feedback"
+
+msgid "Give this NFT a name."
+msgstr "Give this NFT a name."
+
+msgid "Go to Etherscan"
+msgstr ""
+
+msgid "Grant permission"
+msgstr "Grant permission"
+
+msgid "Handle"
+msgstr ""
+
+msgid "Has Juicebox been audited?"
+msgstr "Has Juicebox been audited?"
+
+msgid "Heads up"
+msgstr ""
+
+msgid "History"
+msgstr ""
+
+msgid "Holders"
+msgstr ""
+
+msgid "Holdings"
+msgstr "Holdings"
+
+msgid "Hours"
+msgstr "Hours"
+
+msgid "How decentralized is Juicebox?"
+msgstr ""
+
+msgid "How do I archive a project?"
+msgstr ""
+
+msgid "How do I create a project?"
+msgstr "How do I create a project?"
+
+msgid "How do I decide?"
+msgstr "How do I decide?"
+
+msgid "How do I set the redemption rate?"
+msgstr "How do I set the redemption rate?"
+
+msgid "How does it work?"
+msgstr "How does it work?"
+
+msgid "How have the contracts been tested?"
+msgstr ""
+
+msgid "How long before your next funding cycle must you reconfigure in order for changes to take effect."
+msgstr "How long before your next funding cycle must you reconfigure in order for changes to take effect."
+
+msgid "How long one funding cycle will last. Funding cycle <0>reconfigurations</0> will only take effect for <1>upcoming</1> funding cycles, i.e. once a current funding cycle has ended."
+msgstr "How long one funding cycle will last. Funding cycle <0>reconfigurations</0> will only take effect for <1>upcoming</1> funding cycles, i.e. once a current funding cycle has ended."
+
+msgid "How the {reservedPercentage}% of your project's reserved tokens will be split."
+msgstr "How the {reservedPercentage}% of your project's reserved tokens will be split."
+
+msgid "How to Juice."
+msgstr "How to Juice."
+
+msgid "How your project will distribute funds."
+msgstr ""
+
+msgid "I accept this project's <0>risks</0>."
+msgstr "I accept this project's <0>risks</0>."
+
+msgid "I have read and accept the <0>Terms of Service</0>."
+msgstr "I have read and accept the <0>Terms of Service</0>."
+
+msgid "I understand"
+msgstr "I understand"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "ID: {projectId}"
+msgstr "ID: {projectId}"
+
+msgid "If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
+msgstr "If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
+
+msgid "If locked, this split can't be edited or removed until the lock expires or the funding cycle is reconfigured."
+msgstr "If locked, this split can't be edited or removed until the lock expires or the funding cycle is reconfigured."
+
+msgid "If you don't raise the sum of all your payouts (<0/>{distributionLimit}), this address will receive {0}% of all the funds you raise."
+msgstr "If you don't raise the sum of all your payouts (<0/>{distributionLimit}), this address will receive {0}% of all the funds you raise."
+
+msgid "If you don't raise this amount, your splits will receive their percentage of whatever you raise."
+msgstr "If you don't raise this amount, your splits will receive their percentage of whatever you raise."
+
+msgid "If you have Juicebox project on Juicebox V1 and V2, we recommend you migrate to V2 exclusively."
+msgstr "If you have Juicebox project on Juicebox V1 and V2, we recommend you migrate to V2 exclusively."
+
+msgid "If you have already deployed a payable address and have lost it, please contact the Juicebox team through <0>Discord.</0>"
+msgstr "If you have already deployed a payable address and have lost it, please contact the Juicebox team through <0>Discord.</0>"
+
+msgid "If you're interested in creating a project but still confused on how to get started, consider watching this <0>instructional video</0>. Also feel free to reach out in the <1>Juicebox Discord</1> where our team will be happy to help bring your project idea to life!"
+msgstr "If you're interested in creating a project but still confused on how to get started, consider watching this <0>instructional video</0>. Also feel free to reach out in the <1>Juicebox Discord</1> where our team will be happy to help bring your project idea to life!"
+
+msgid "If you're unsure if you need to claim, you probably don't."
+msgstr "If you're unsure if you need to claim, you probably don't."
+
+msgid "Image file"
+msgstr "Image file"
+
+msgid "Image will be cropped to a square in thumbnail previews on the Juicebox app."
+msgstr "Image will be cropped to a square in thumbnail previews on the Juicebox app."
+
+msgid "In Juicebox"
+msgstr ""
+
+msgid "In treasury"
+msgstr "In treasury"
+
+msgid "In wallet"
+msgstr ""
+
+msgid "Incentives"
+msgstr ""
+
+msgid "Indie creators and builders"
+msgstr "Indie creators and builders"
+
+msgid "Infinite (no limit)"
+msgstr "Infinite (no limit)"
+
+msgid "Initial issuance rate"
+msgstr "Initial issuance rate"
+
+msgid "Initial mint rate"
+msgstr "Initial mint rate"
+
+msgid "Insufficient token balance"
+msgstr "Insufficient token balance"
+
+msgid "Invalid address"
+msgstr "Invalid address"
+
+msgid "Issue ERC-20"
+msgstr "Issue ERC-20"
+
+msgid "Issue ERC-20 token"
+msgstr "Issue ERC-20 token"
+
+msgid "Issue an ERC-20 to be used as this project's token. Once issued, anyone can claim their existing token balance in the new token."
+msgstr "Issue an ERC-20 to be used as this project's token. Once issued, anyone can claim their existing token balance in the new token."
+
+msgid "Issue an ERC-20 token (optional)"
+msgstr "Issue an ERC-20 token (optional)"
+
+msgid "Issue token"
+msgstr "Issue token"
+
+msgid "It isn't possible to remove a project's data from the blockchain, but we can hide it in the app if you'd like to prevent people from seeing or interacting with it — just let us know in <0>Discord</0>. Keep in mind people will still be able to use your project by interacting directly with the contract."
+msgstr "It isn't possible to remove a project's data from the blockchain, but we can hide it in the app if you'd like to prevent people from seeing or interacting with it — just let us know in <0>Discord</0>. Keep in mind people will still be able to use your project by interacting directly with the contract."
+
+msgid "It'd be a lot cooler if you did"
+msgstr ""
+
+msgid "JBX Fee ({0}%):"
+msgstr ""
+
+msgid "JBX Fee ({feePercentage}%):"
+msgstr "JBX Fee ({feePercentage}%):"
+
+msgid "Join <0>hundreds of projects</0> sippin' the Juice."
+msgstr "Join <0>hundreds of projects</0> sippin' the Juice."
+
+msgid "Juicebox Project ID"
+msgstr "Juicebox Project ID"
+
+msgid "Juicebox V1 project ID"
+msgstr "Juicebox V1 project ID"
+
+msgid "Juicebox V2 project"
+msgstr "Juicebox V2 project"
+
+msgid "Juicebox V2 project with ID {0}"
+msgstr "Juicebox V2 project with ID {0}"
+
+msgid "Juicebox gives you the tools to automate your funding so you can focus on building."
+msgstr "Juicebox gives you the tools to automate your funding so you can focus on building."
+
+msgid "Juicebox isn't guaranteed to be free of bugs or exploits. Before spending money, do your own research. <0>Ask questions</0>, check out the <1>code</1>, and understand the <2>risks</2>!"
+msgstr "Juicebox isn't guaranteed to be free of bugs or exploits. Before spending money, do your own research. <0>Ask questions</0>, check out the <1>code</1>, and understand the <2>risks</2>!"
+
+msgid "Juicebox loading animation"
+msgstr "Juicebox loading animation"
+
+msgid "Juicebox project"
+msgstr "Juicebox project"
+
+msgid "Juicebox projects use <0>ENS names</0> as handles. Setting a handle involves 2 transactions:"
+msgstr "Juicebox projects use <0>ENS names</0> as handles. Setting a handle involves 2 transactions:"
+
+#~ msgid "Juicebox puts the fun back in funding so you can focus on building."
+#~ msgstr "Juicebox puts the fun back in funding so you can focus on building."
+
+msgid "Last paid"
+msgstr ""
+
+msgid "Later"
+msgstr "Later"
+
+msgid "Latest"
+msgstr "Latest"
+
+msgid "Latest payments"
+msgstr "Latest payments"
+
+msgid "Launch funding cycle"
+msgstr "Launch funding cycle"
+
+msgid "Launch veNFT"
+msgstr "Launch veNFT"
+
+msgid "Launch your project"
+msgstr "Launch your project"
+
+msgid "Leave blank to start immediately."
+msgstr "Leave blank to start immediately."
+
+msgid "Leave unchecked to have Juicebox track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
+msgstr "Leave unchecked to have Juicebox track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
+
+msgid "Light theme"
+msgstr ""
+
+msgid "Link Juicebox V1 project"
+msgstr "Link Juicebox V1 project"
+
+msgid "Load more"
+msgstr ""
+
+msgid "Lock ${tokenSymbolDisplayText} for Voting Power"
+msgstr "Lock ${tokenSymbolDisplayText} for Voting Power"
+
+msgid "Lock Duration"
+msgstr "Lock Duration"
+
+msgid "Lock Durations ({0} options)"
+msgstr "Lock Durations ({0} options)"
+
+msgid "Lock duration"
+msgstr "Lock duration"
+
+msgid "Lock successful. Results will be indexed in a few moments."
+msgstr "Lock successful. Results will be indexed in a few moments."
+
+msgid "Lock until"
+msgstr "Lock until"
+
+msgid "Locked {tokenSymbolDisplayText}"
+msgstr "Locked {tokenSymbolDisplayText}"
+
+msgid "Locked:"
+msgstr "Locked:"
+
+msgid "Logo"
+msgstr ""
+
+msgid "MAX"
+msgstr "MAX"
+
+msgid "Manage"
+msgstr ""
+
+msgid "Manage your {0}"
+msgstr "Manage your {0}"
+
+msgid "Manage {tokenText}"
+msgstr "Manage {tokenText}"
+
+msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
+msgstr "Maximum {MAX_DESCRIPTION_LENGTH} characters"
+
+msgid "Memo"
+msgstr "Memo"
+
+msgid "Memo (optional)"
+msgstr "Memo (optional)"
+
+msgid "Memo included on-chain"
+msgstr "Memo included on-chain"
+
+msgid "Migrate to Juicebox V1.1"
+msgstr "Migrate to Juicebox V1.1"
+
+msgid "Mint NFT to a custom address."
+msgstr "Mint NFT to a custom address."
+
+msgid "Mint as ERC-20"
+msgstr "Mint as ERC-20"
+
+msgid "Mint new {tokensLabel} into an account. Only a project's owner, a designated operator, or one of its terminal's delegates can mint its tokens."
+msgstr "Mint new {tokensLabel} into an account. Only a project's owner, a designated operator, or one of its terminal's delegates can mint its tokens."
+
+msgid "Mint project tokens on demand"
+msgstr "Mint project tokens on demand"
+
+msgid "Mint rate"
+msgstr "Mint rate"
+
+msgid "Mint this project's ERC-20 tokens to your wallet."
+msgstr "Mint this project's ERC-20 tokens to your wallet."
+
+msgid "Mint tokens"
+msgstr "Mint tokens"
+
+msgid "Mint tokens as ERC-20"
+msgstr "Mint tokens as ERC-20"
+
+msgid "Mint tokens to a custom address."
+msgstr "Mint tokens to a custom address."
+
+msgid "Mint {tokensLabel}"
+msgstr "Mint {tokensLabel}"
+
+msgid "Mint {tokensTokenLower}"
+msgstr "Mint {tokensTokenLower}"
+
+msgid "Minutes"
+msgstr "Minutes"
+
+msgid "More information"
+msgstr "More information"
+
+msgid "More trending projects"
+msgstr "More trending projects"
+
+msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
+msgstr "Move your {tokensLabel} from the Juicebox contract to your wallet."
+
+msgid "My projects"
+msgstr "My projects"
+
+msgid "NFT projects"
+msgstr "NFT projects"
+
+msgid "NFT reward"
+msgstr "NFT reward"
+
+msgid "NFT rewards"
+msgstr "NFT rewards"
+
+msgid "NO LIMIT"
+msgstr "NO LIMIT"
+
+msgid "Name"
+msgstr ""
+
+msgid "New"
+msgstr "New"
+
+msgid "Newly minted {tokenSymbolPlural} <0>received by contributors</0> per ETH they contribute to the treasury."
+msgstr "Newly minted {tokenSymbolPlural} <0>received by contributors</0> per ETH they contribute to the treasury."
+
+msgid "Next: Funding cycle"
+msgstr "Next: Funding cycle"
+
+msgid "Next: Review and deploy"
+msgstr "Next: Review and deploy"
+
+msgid "No"
+msgstr "No"
+
+msgid "No NFT reward tiers"
+msgstr "No NFT reward tiers"
+
+msgid "No active funding cycle."
+msgstr "No active funding cycle."
+
+msgid "No activity yet"
+msgstr ""
+
+msgid "No beneficiary selected. Is your wallet connected?"
+msgstr "No beneficiary selected. Is your wallet connected?"
+
+msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
+msgstr ""
+
+msgid "No funds available to distribute."
+msgstr "No funds available to distribute."
+
+msgid "No funds can be distributed out of the treasury. Funds can only be accessed by token holders redeeming their tokens."
+msgstr "No funds can be distributed out of the treasury. Funds can only be accessed by token holders redeeming their tokens."
+
+msgid "No limit (infinite)"
+msgstr "No limit (infinite)"
+
+msgid "No more than the funding cycle target can be distributed by the project in a single funding cycle."
+msgstr ""
+
+msgid "No past funding cycles"
+msgstr ""
+
+msgid "No reserved tokens available to distribute."
+msgstr "No reserved tokens available to distribute."
+
+msgid "No strategy"
+msgstr ""
+
+msgid "No target"
+msgstr ""
+
+msgid "No target set."
+msgstr ""
+
+msgid "Not a valid ETH address"
+msgstr "Not a valid ETH address"
+
+msgid "Not set"
+msgstr ""
+
+msgid "Note"
+msgstr "Note"
+
+msgid "Note: Tokens can be minted manually when allowed in the current funding cycle. This can be changed by the project owner for upcoming cycles."
+msgstr "Note: Tokens can be minted manually when allowed in the current funding cycle. This can be changed by the project owner for upcoming cycles."
+
+msgid "Notice from {0}"
+msgstr "Notice from {0}"
+
+msgid "Notice from {0}:"
+msgstr ""
+
+msgid "Once launched, your first funding cycle <0>can't be changed</0>. You can reconfigure upcoming funding cycles according to the project's <1>reconfiguration rules</1>."
+msgstr "Once launched, your first funding cycle <0>can't be changed</0>. You can reconfigure upcoming funding cycles according to the project's <1>reconfiguration rules</1>."
+
+msgid "Only lowercase letters"
+msgstr "Only lowercase letters"
+
+msgid "Only project tokens claimed as ERC-20 tokens can be staked for NFTs."
+msgstr "Only project tokens claimed as ERC-20 tokens can be staked for NFTs."
+
+msgid "Other assets in this project's owner's wallet."
+msgstr "Other assets in this project's owner's wallet."
+
+msgid "Other details"
+msgstr "Other details"
+
+msgid "Overflow"
+msgstr "Overflow"
+
+msgid "Overflow is created if your project's balance exceeds your funding cycle target. Overflow can be redeemed by your project's token holders."
+msgstr ""
+
+msgid "Owned by: <0/>"
+msgstr "Owned by: <0/>"
+
+msgid "Owner can mint tokens at any time."
+msgstr "Owner can mint tokens at any time."
+
+msgid "Owner can set the project's payment terminals."
+msgstr "Owner can set the project's payment terminals."
+
+msgid "Owner is not allowed to mint tokens."
+msgstr "Owner is not allowed to mint tokens."
+
+msgid "Owner isn't allowed to set the project's payment terminals."
+msgstr "Owner isn't allowed to set the project's payment terminals."
+
+msgid "Owner token minting"
+msgstr "Owner token minting"
+
+msgid "Owner tools"
+msgstr "Owner tools"
+
+msgid "Paid"
+msgstr "Paid"
+
+msgid "Paid as <0/>"
+msgstr ""
+
+msgid "Pause payments"
+msgstr ""
+
+msgid "Pause received payments"
+msgstr "Pause received payments"
+
+msgid "Paused"
+msgstr ""
+
+msgid "Pay"
+msgstr ""
+
+msgid "Pay amount"
+msgstr ""
+
+msgid "Pay amount must be greater than 0."
+msgstr "Pay amount must be greater than 0."
+
+msgid "Pay button"
+msgstr ""
+
+msgid "Pay button text"
+msgstr ""
+
+msgid "Pay disclosure"
+msgstr ""
+
+msgid "Pay {0}"
+msgstr ""
+
+msgid "Payer"
+msgstr "Payer"
+
+msgid "Paying <0>{0}</0> is not an investment — it's a way to support the project. <1>{1}</1> determines any value or utility of the tokens you receive."
+msgstr "Paying <0>{0}</0> is not an investment — it's a way to support the project. <1>{1}</1> determines any value or utility of the tokens you receive."
+
+msgid "Paying <0>{0}</0> is not an investment — it's a way to support the project. Any value or utility of the tokens you receive is determined by {1}."
+msgstr "Paying <0>{0}</0> is not an investment — it's a way to support the project. Any value or utility of the tokens you receive is determined by {1}."
+
+msgid "Paying this project is currently disabled."
+msgstr ""
+
+msgid "Payment address contract:"
+msgstr "Payment address contract:"
+
+msgid "Payment equivalent"
+msgstr "Payment equivalent"
+
+msgid "Payment memo"
+msgstr "Payment memo"
+
+msgid "Payment memo image"
+msgstr "Payment memo image"
+
+msgid "Payment options"
+msgstr "Payment options"
+
+msgid "Payments"
+msgstr ""
+
+msgid "Payments are paused in this funding cycle."
+msgstr "Payments are paused in this funding cycle."
+
+msgid "Payments made"
+msgstr "Payments made"
+
+msgid "Payments paused"
+msgstr ""
+
+msgid "Payout is locked"
+msgstr "Payout is locked"
+
+msgid "Payout recipients"
+msgstr "Payout recipients"
+
+msgid "Payouts"
+msgstr "Payouts"
+
+msgid "Payouts (optional)"
+msgstr "Payouts (optional)"
+
+msgid "Payouts to Ethereum addresses incur a 2.5% JBX membership fee"
+msgstr "Payouts to Ethereum addresses incur a 2.5% JBX membership fee"
+
+msgid "Payouts to Ethereum addresses incur a {feePercentage}% fee. Your project will receive JBX in return at the current issuance rate."
+msgstr "Payouts to Ethereum addresses incur a {feePercentage}% fee. Your project will receive JBX in return at the current issuance rate."
+
+msgid "Peel"
+msgstr "Peel"
+
+msgid "Percent"
+msgstr "Percent"
+
+msgid "Percentage allocation"
+msgstr "Percentage allocation"
+
+msgid "Percentage:"
+msgstr "Percentage:"
+
+msgid "Percentages"
+msgstr "Percentages"
+
+msgid "Percentages must add up to 100% or less"
+msgstr "Percentages must add up to 100% or less"
+
+msgid "Podcast"
+msgstr ""
+
+msgid "Potential risks"
+msgstr "Potential risks"
+
+msgid "Preview"
+msgstr "Preview"
+
+msgid "Preview:"
+msgstr "Preview:"
+
+msgid "Project Created"
+msgstr "Project Created"
+
+msgid "Project ID must be a number."
+msgstr "Project ID must be a number."
+
+msgid "Project ID:"
+msgstr "Project ID:"
+
+msgid "Project Links"
+msgstr "Project Links"
+
+msgid "Project Page Customizations"
+msgstr "Project Page Customizations"
+
+msgid "Project Token"
+msgstr "Project Token"
+
+msgid "Project configuration"
+msgstr "Project configuration"
+
+msgid "Project created by"
+msgstr "Project created by"
+
+msgid "Project description"
+msgstr ""
+
+msgid "Project details"
+msgstr ""
+
+msgid "Project details can be edited at any time."
+msgstr "Project details can be edited at any time."
+
+msgid "Project details reconfigurations will create a separate transaction."
+msgstr "Project details reconfigurations will create a separate transaction."
+
+msgid "Project handle"
+msgstr ""
+
+msgid "Project handle must be unique."
+msgstr ""
+
+msgid "Project is accepting payments this funding cycle."
+msgstr "Project is accepting payments this funding cycle."
+
+msgid "Project is not accepting payments this funding cycle."
+msgstr "Project is not accepting payments this funding cycle."
+
+msgid "Project launch successful"
+msgstr "Project launch successful"
+
+msgid "Project name"
+msgstr ""
+
+msgid "Project name, handle, links, and other details."
+msgstr ""
+
+msgid "Project not found"
+msgstr "Project not found"
+
+msgid "Project owner"
+msgstr ""
+
+msgid "Project owner (you)"
+msgstr "Project owner (you)"
+
+msgid "Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."
+msgstr "Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."
+
+msgid "Project token"
+msgstr "Project token"
+
+msgid "Project tokens <0>aren't ERC-20 tokens</0> by default. Once you deploy your project, you can issue an ERC-20 for your holders to claim. This is <1>optional</1>."
+msgstr "Project tokens <0>aren't ERC-20 tokens</0> by default. Once you deploy your project, you can issue an ERC-20 for your holders to claim. This is <1>optional</1>."
+
+msgid "Project {0}"
+msgstr "Project {0}"
+
+msgid "Project {name} will be available soon! Try refreshing the page shortly."
+msgstr "Project {name} will be available soon! Try refreshing the page shortly."
+
+msgid "Project {projectId}"
+msgstr "Project {projectId}"
+
+msgid "Project {projectId} not found"
+msgstr "Project {projectId} not found"
+
+msgid "Projects"
+msgstr ""
+
+msgid "Projects can be created with an optional discount rate designed to incentivize supporters to contribute earlier rather than later. The amount of tokens rewarded per amount paid to your project will decrease by the discount rate with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier rather than later."
+msgstr "Projects can be created with an optional discount rate designed to incentivize supporters to contribute earlier rather than later. The amount of tokens rewarded per amount paid to your project will decrease by the discount rate with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier rather than later."
+
+msgid "Projects on Juicebox"
+msgstr ""
+
+msgid "Projects that you have created."
+msgstr "Projects that you have created."
+
+msgid "Projects that you hold tokens for."
+msgstr "Projects that you hold tokens for."
+
+msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will appear risky to contributors, as a relatively small number of tokens will be received in exchange for paying your project."
+msgstr "Projects using a reserved rate of {reservedRateRiskyMin}% or more will appear risky to contributors, as a relatively small number of tokens will be received in exchange for paying your project."
+
+msgid "Projects with a handle:<0/><1/>1. Are included in search results on the projects page<2/>2. Can be accessed via the URL: <3>juicebox.money{0}</3><4/><5/>(The original URL <6>juicebox.money{1}</6> will continue to work.)"
+msgstr "Projects with a handle:<0/><1/>1. Are included in search results on the projects page<2/>2. Can be accessed via the URL: <3>juicebox.money{0}</3><4/><5/>(The original URL <6>juicebox.money{1}</6> will continue to work.)"
+
+msgid "Provide a link to additional information about this NFT."
+msgstr "Provide a link to additional information about this NFT."
+
+msgid "Raised on Juicebox"
+msgstr "Raised on Juicebox"
+
+msgid "Range"
+msgstr "Range"
+
+msgid "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"
+msgstr "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"
+
+msgid "Read less"
+msgstr "Read less"
+
+msgid "Read more"
+msgstr "Read more"
+
+msgid "Receive ERC-20"
+msgstr "Receive ERC-20"
+
+msgid "Receive ERC-20 tokens"
+msgstr "Receive ERC-20 tokens"
+
+msgid "Receive this NFT when you contribute <0>{0}</0> - <<1>{rewardTierUpperLimit} ETH</1>."
+msgstr "Receive this NFT when you contribute <0>{0}</0> - <<1>{rewardTierUpperLimit} ETH</1>."
+
+msgid "Receive this NFT when you contribute at least <0>{0} ETH</0>."
+msgstr "Receive this NFT when you contribute at least <0>{0} ETH</0>."
+
+msgid "Receive {receiveText}"
+msgstr "Receive {receiveText}"
+
+msgid "Recipient"
+msgstr "Recipient"
+
+msgid "Recipient Address"
+msgstr "Recipient Address"
+
+msgid "Recipient address"
+msgstr "Recipient address"
+
+msgid "Recipients will receive payouts in ETH."
+msgstr "Recipients will receive payouts in ETH."
+
+msgid "Reconfiguration"
+msgstr ""
+
+msgid "Reconfiguration rules"
+msgstr "Reconfiguration rules"
+
+msgid "Reconfiguration strategy"
+msgstr ""
+
+msgid "Reconfigure"
+msgstr "Reconfigure"
+
+msgid "Reconfigure payouts as percentages of your distribution limit."
+msgstr "Reconfigure payouts as percentages of your distribution limit."
+
+msgid "Reconfigure project and funding details"
+msgstr "Reconfigure project and funding details"
+
+msgid "Reconfigure project details"
+msgstr "Reconfigure project details"
+
+msgid "Reconfigure token"
+msgstr "Reconfigure token"
+
+msgid "Reconfigure upcoming"
+msgstr "Reconfigure upcoming"
+
+msgid "Reconfigure upcoming funding cycles"
+msgstr "Reconfigure upcoming funding cycles"
+
+msgid "Redeem"
+msgstr "Redeem"
+
+msgid "Redeem successful. Results will be indexed in a few moments."
+msgstr "Redeem successful. Results will be indexed in a few moments."
+
+msgid "Redeem veNFT"
+msgstr "Redeem veNFT"
+
+msgid "Redeem your tokens for a portion of this project's overflow. The current funding cycle's <0>redemption rate</0> determines your redemption value."
+msgstr "Redeem your tokens for a portion of this project's overflow. The current funding cycle's <0>redemption rate</0> determines your redemption value."
+
+msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
+msgstr "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
+
+msgid "Redeem {0} {tokensTextShort} for ETH"
+msgstr "Redeem {0} {tokensTextShort} for ETH"
+
+msgid "Redeem {tokensLabel} for ETH"
+msgstr "Redeem {tokensLabel} for ETH"
+
+msgid "Redeem {tokensTextLong} for ETH"
+msgstr "Redeem {tokensTextLong} for ETH"
+
+msgid "Redeemed"
+msgstr "Redeemed"
+
+msgid "Redeeming this NFT will burn the token and return..."
+msgstr "Redeeming this NFT will burn the token and return..."
+
+msgid "Redemption rate"
+msgstr "Redemption rate"
+
+msgid "Redemption rate:"
+msgstr "Redemption rate:"
+
+#~ msgid "Redemption rate: <0>{0}%</0>"
+#~ msgstr "Redemption rate: <0>{0}%</0>"
+
+msgid "Redemption value"
+msgstr "Redemption value"
+
+msgid "Refresh"
+msgstr "Refresh"
+
+msgid "Relaunch your funding cycle on the new Juicebox V2 contracts."
+msgstr "Relaunch your funding cycle on the new Juicebox V2 contracts."
+
+msgid "Required"
+msgstr "Required"
+
+msgid "Reserve a percentage of freshly minted tokens for your project to use."
+msgstr "Reserve a percentage of freshly minted tokens for your project to use."
+
+msgid "Reserved rate"
+msgstr "Reserved rate"
+
+msgid "Reserved rate is 0% but has reserved token allocation. Consider adding a reserved rate that is greater than zero, or remove the token allocation."
+msgstr "Reserved rate is 0% but has reserved token allocation. Consider adding a reserved rate that is greater than zero, or remove the token allocation."
+
+msgid "Reserved token allocation"
+msgstr "Reserved token allocation"
+
+msgid "Reserved token allocation (optional)"
+msgstr "Reserved token allocation (optional)"
+
+msgid "Reserved token allocations"
+msgstr ""
+
+msgid "Reserved tokens"
+msgstr ""
+
+msgid "Reserved {0}"
+msgstr ""
+
+msgid "Reserved {tokenSymbolPlural}"
+msgstr "Reserved {tokenSymbolPlural}"
+
+msgid "Reserved {tokenTextPlural}: <0>{reservedTokensFormatted} {tokenTextPlural}</0>"
+msgstr "Reserved {tokenTextPlural}: <0>{reservedTokensFormatted} {tokenTextPlural}</0>"
+
+msgid "Reserved {tokensText}"
+msgstr "Reserved {tokensText}"
+
+msgid "Resources"
+msgstr "Resources"
+
+msgid "Restrict payments and printing tokens."
+msgstr "Restrict payments and printing tokens."
+
+msgid "Restricted actions"
+msgstr ""
+
+msgid "Review & Deploy"
+msgstr ""
+
+msgid "Review and confirm stake"
+msgstr "Review and confirm stake"
+
+msgid "Review and launch funding cycle"
+msgstr "Review and launch funding cycle"
+
+msgid "Review project"
+msgstr ""
+
+msgid "Reward contributors with NFT's."
+msgstr "Reward contributors with NFT's."
+
+msgid "Reward contributors with NFTs when they meet your configured funding criteria."
+msgstr "Reward contributors with NFTs when they meet your configured funding criteria."
+
+msgid "Reward specific community members with tokens."
+msgstr ""
+
+msgid "Rules"
+msgstr ""
+
+msgid "Rules for determining how funding cycles can be reconfigured"
+msgstr "Rules for determining how funding cycles can be reconfigured"
+
+msgid "Rules for how changes can be made to your project."
+msgstr ""
+
+msgid "Rules for how this project's funding cycles can be reconfigured."
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Save NFT reward"
+msgstr "Save NFT reward"
+
+msgid "Save NFT rewards"
+msgstr "Save NFT rewards"
+
+msgid "Save Option"
+msgstr "Save Option"
+
+msgid "Save changes"
+msgstr "Save changes"
+
+msgid "Save funding configuration"
+msgstr ""
+
+msgid "Save handle"
+msgstr "Save handle"
+
+msgid "Save payout"
+msgstr "Save payout"
+
+msgid "Save payouts"
+msgstr "Save payouts"
+
+msgid "Save project details"
+msgstr ""
+
+msgid "Save reconfiguration"
+msgstr ""
+
+msgid "Save rules"
+msgstr "Save rules"
+
+msgid "Save token allocation"
+msgstr "Save token allocation"
+
+msgid "Save token configuration"
+msgstr "Save token configuration"
+
+msgid "Save tracked assets"
+msgstr "Save tracked assets"
+
+msgid "Search projects by handle"
+msgstr ""
+
+msgid "Second"
+msgstr "Second"
+
+msgid "Seconds"
+msgstr "Seconds"
+
+msgid "See transaction"
+msgstr "See transaction"
+
+msgid "Set ENS name"
+msgstr "Set ENS name"
+
+msgid "Set Up veNFT Governance"
+msgstr "Set Up veNFT Governance"
+
+msgid "Set a distribution limit"
+msgstr "Set a distribution limit"
+
+msgid "Set a funding cycle duration"
+msgstr ""
+
+msgid "Set a funding cycle target"
+msgstr ""
+
+msgid "Set a project handle (optional)"
+msgstr "Set a project handle (optional)"
+
+msgid "Set a text record for {0} with the key <0>\"{projectHandleENSTextRecordKey}\"</0> and the value <1>\"{projectId}\"</1> (this project's ID). You can do this on the <2>ENS app</2>, or use the button below (as long as your connected wallet owns or controls that ENS name)."
+msgstr "Set a text record for {0} with the key <0>\"{projectHandleENSTextRecordKey}\"</0> and the value <1>\"{projectId}\"</1> (this project's ID). You can do this on the <2>ENS app</2>, or use the button below (as long as your connected wallet owns or controls that ENS name)."
+
+msgid "Set a unique name that will be visible in your project's URL, and that will allow your project to appear in search results."
+msgstr "Set a unique name that will be visible in your project's URL, and that will allow your project to appear in search results."
+
+msgid "Set project handle"
+msgstr "Set project handle"
+
+msgid "Set text record for {0}"
+msgstr "Set text record for {0}"
+
+msgid "Set the amount of funds you'd like to raise each funding cycle. Any funds raised within the funding cycle target can be distributed by the project, and can't be redeemed by your project's token holders."
+msgstr ""
+
+msgid "Set the length of your funding cycles."
+msgstr ""
+
+msgid "Set this to the sum of all your payouts"
+msgstr "Set this to the sum of all your payouts"
+
+msgid "Set up V1 token migration"
+msgstr "Set up V1 token migration"
+
+msgid "Set up and launch veNFT governance for your project using custom assets and parameters. (Experimental, does not currently launch)"
+msgstr "Set up and launch veNFT governance for your project using custom assets and parameters. (Experimental, does not currently launch)"
+
+msgid "Set up and launch veNFT governance for your project using default veBanny assets and parameters."
+msgstr "Set up and launch veNFT governance for your project using default veBanny assets and parameters."
+
+msgid "Set up and launch veNFT governance for your project."
+msgstr "Set up and launch veNFT governance for your project."
+
+msgid "Set up token migration"
+msgstr "Set up token migration"
+
+msgid "Set up your Juicebox V2 project for migration from your Juicebox V1 project."
+msgstr "Set up your Juicebox V2 project for migration from your Juicebox V1 project."
+
+msgid "Should you Juicebox?"
+msgstr ""
+
+msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."
+msgstr "Since you have not set a funding duration, changes to these settings will be applied immediately."
+
+msgid "Some funding cycle settings may put project contributors at risk."
+msgstr "Some funding cycle settings may put project contributors at risk."
+
+msgid "Some of the project's current funding cycle properties may indicate risk for contributors."
+msgstr "Some of the project's current funding cycle properties may indicate risk for contributors."
+
+msgid "Something went wrong."
+msgstr "Something went wrong."
+
+msgid "Spaces are not allowed"
+msgstr "Spaces are not allowed"
+
+msgid "Spending"
+msgstr ""
+
+msgid "Stake your {tokensLabel} to increase your voting weight and claim Governance NFTs."
+msgstr "Stake your {tokensLabel} to increase your voting weight and claim Governance NFTs."
+
+msgid "Stake {tokenName} ({tokenSymbolDisplayText}) tokens in exchange for voting weight. In return, you'll impact {projectName} governance and receive a choice governance NFT."
+msgstr "Stake {tokenName} ({tokenSymbolDisplayText}) tokens in exchange for voting weight. In return, you'll impact {projectName} governance and receive a choice governance NFT."
+
+msgid "Stake {tokensLabel} for NFT"
+msgstr "Stake {tokensLabel} for NFT"
+
+msgid "Staked {tokenSymbolDisplayText}"
+msgstr "Staked {tokenSymbolDisplayText}"
+
+msgid "Staking Summary:"
+msgstr "Staking Summary:"
+
+msgid "Start"
+msgstr ""
+
+msgid "Start Over"
+msgstr ""
+
+msgid "Start over"
+msgstr "Start over"
+
+msgid "Start raising funds"
+msgstr "Start raising funds"
+
+msgid "Start time (seconds, Unix time)"
+msgstr "Start time (seconds, Unix time)"
+
+msgid "Step 1. Add V1 token payment terminal"
+msgstr "Step 1. Add V1 token payment terminal"
+
+msgid "Step 2. Link your Juicebox V1 project"
+msgstr "Step 2. Link your Juicebox V1 project"
+
+msgid "Successfully approved ERC-20 spending."
+msgstr "Successfully approved ERC-20 spending."
+
+msgid "Sum of percentages cannot exceed 100%"
+msgstr "Sum of percentages cannot exceed 100%"
+
+msgid "Sum of percentages cannot exceed 100%."
+msgstr "Sum of percentages cannot exceed 100%."
+
+msgid "Swap V1 {tokenSymbolFormattedPlural} for V2 {tokenSymbolFormattedPlural}"
+msgstr "Swap V1 {tokenSymbolFormattedPlural} for V2 {tokenSymbolFormattedPlural}"
+
+msgid "Swap for V2 {tokenSymbolFormattedPlural}"
+msgstr "Swap for V2 {tokenSymbolFormattedPlural}"
+
+msgid "Swap for V2 {tokenText}"
+msgstr "Swap for V2 {tokenText}"
+
+msgid "Target"
+msgstr ""
+
+msgid "Target is 0: All funds will be considered overflow and can be redeemed by burning project tokens."
+msgstr "Target is 0: All funds will be considered overflow and can be redeemed by burning project tokens."
+
+msgid "Terminal configuration"
+msgstr "Terminal configuration"
+
+msgid "Text record is set"
+msgstr "Text record is set"
+
+msgid "The <0>Juicebox contracts</0> may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
+msgstr "The <0>Juicebox contracts</0> may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
+
+msgid "The <0>issuance rate</0> of your second funding cycle will be <1>{0} tokens per 1 ETH</1>, then <2>{1} tokens per 1 ETH </2>for your third funding cycle, and so on."
+msgstr "The <0>issuance rate</0> of your second funding cycle will be <1>{0} tokens per 1 ETH</1>, then <2>{1} tokens per 1 ETH </2>for your third funding cycle, and so on."
+
+msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
+msgstr ""
+
+msgid "The address of any smart contract deployed on {0} that implements <0>this interface</0>."
+msgstr "The address of any smart contract deployed on {0} that implements <0>this interface</0>."
+
+msgid "The address that should receive the tokens minted from paying this project."
+msgstr ""
+
+msgid "The amount of tokens minted to the receiver will be calculated based on if they had paid this amount to the project in the current funding cycle."
+msgstr "The amount of tokens minted to the receiver will be calculated based on if they had paid this amount to the project in the current funding cycle."
+
+msgid "The amount of tokens this project has reserved. These tokens can be distributed to reserved token beneficiaries."
+msgstr "The amount of tokens this project has reserved. These tokens can be distributed to reserved token beneficiaries."
+
+msgid "The amount of tokens to mint to the receiver."
+msgstr "The amount of tokens to mint to the receiver."
+
+msgid "The amount that has been distributed from the Juicebox balance in this funding cycle, out of the current distribution limit. No more than the distribution limit can be distributed in a single funding cycle—any remaining ETH in Juicebox is overflow, until the next cycle begins."
+msgstr "The amount that has been distributed from the Juicebox balance in this funding cycle, out of the current distribution limit. No more than the distribution limit can be distributed in a single funding cycle—any remaining ETH in Juicebox is overflow, until the next cycle begins."
+
+msgid "The amount that has been distributed from the Juicebox balance in this funding cycle, out of the current funding target. No more than the funding target can be distributed in a single funding cycle—any remaining ETH in Juicebox is overflow, until the next cycle begins."
+msgstr ""
+
+msgid "The balance of the project owner's wallet."
+msgstr "The balance of the project owner's wallet."
+
+msgid "The balance of this project in the Juicebox contract."
+msgstr "The balance of this project in the Juicebox contract."
+
+msgid "The distribution limit for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
+msgstr "The distribution limit for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
+
+msgid "The future will be led by creators, and owned by communities."
+msgstr ""
+
+msgid "The maximum amount of funds allowed to be distributed from the project's treasury each funding cycle."
+msgstr "The maximum amount of funds allowed to be distributed from the project's treasury each funding cycle."
+
+msgid "The maximum amount of funds that can be distributed from the treasury each funding cycle."
+msgstr "The maximum amount of funds that can be distributed from the treasury each funding cycle."
+
+msgid "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
+msgstr "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
+
+msgid "The number of project tokens minted when 1 ETH is contributed in the first funding cycle."
+msgstr "The number of project tokens minted when 1 ETH is contributed in the first funding cycle."
+
+msgid "The number of project tokens minted when 1 ETH is contributed."
+msgstr "The number of project tokens minted when 1 ETH is contributed."
+
+msgid "The onchain memo for each payment made to this address. The project's payment feed will include the memo alongside the payment."
+msgstr "The onchain memo for each payment made to this address. The project's payment feed will include the memo alongside the payment."
+
+msgid "The percentage this individual receives of the overall {reservedRate}% reserved token allocation"
+msgstr "The percentage this individual receives of the overall {reservedRate}% reserved token allocation"
+
+msgid "The programmable funding protocol for builders and creators. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
+msgstr "The programmable funding protocol for builders and creators. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
+
+#~ msgid "The programmable funding protocol. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
+#~ msgstr "The programmable funding protocol. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
+
+msgid "The project owner can add and remove payment terminals."
+msgstr "The project owner can add and remove payment terminals."
+
+msgid "The project owner is using an unverified contract for its reconfiguration strategy."
+msgstr "The project owner is using an unverified contract for its reconfiguration strategy."
+
+msgid "The project owner may mint any supply of tokens at any time, diluting the token share of all existing contributors."
+msgstr "The project owner may mint any supply of tokens at any time, diluting the token share of all existing contributors."
+
+msgid "The project owner may reconfigure this funding cycle at any time, without notice."
+msgstr "The project owner may reconfigure this funding cycle at any time, without notice."
+
+msgid "The project token's issuance rate will decrease by this percentage every funding cycle. A higher discount rate will incentivize contributors to pay the project earlier."
+msgstr "The project token's issuance rate will decrease by this percentage every funding cycle. A higher discount rate will incentivize contributors to pay the project earlier."
+
+msgid "The ratio of tokens rewarded per payment amount will decrease by this percentage with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier than later."
+msgstr ""
+
+msgid "The redemption rate determines the amount of overflow each token can be redeemed for at any given time. On a lower redemption rate, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than other holders. A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed."
+msgstr "The redemption rate determines the amount of overflow each token can be redeemed for at any given time. On a lower redemption rate, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than other holders. A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed."
+
+msgid "The redemption rate determines the amount of overflow each token can be redeemed for."
+msgstr "The redemption rate determines the amount of overflow each token can be redeemed for."
+
+msgid "The target for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
+msgstr ""
+
+msgid "The total funds this Juicebox project has received since it was created."
+msgstr "The total funds this Juicebox project has received since it was created."
+
+#~ msgid "The<0>Juicebox contracts</0> may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
+#~ msgstr "The<0>Juicebox contracts</0> may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
+
+msgid "There are no payouts defined for this funding cycle. The project owner will receive all available funds."
+msgstr "There are no payouts defined for this funding cycle. The project owner will receive all available funds."
+
+msgid "There are no reserved token recipients defined for this funding cycle. The project owner will receive all available tokens."
+msgstr "There are no reserved token recipients defined for this funding cycle. The project owner will receive all available tokens."
+
+msgid "These attributes can be changed at any time."
+msgstr "These attributes can be changed at any time."
+
+msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."
+msgstr "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."
+
+msgid "This Juicebox V2 project also has a project on Juicebox V1. The project owner is allowing you to swap your V1 tokens for V2 tokens."
+msgstr "This Juicebox V2 project also has a project on Juicebox V1. The project owner is allowing you to swap your V1 tokens for V2 tokens."
+
+msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
+msgstr "This address is an unrecognized strategy contract. Make sure it is correct!"
+
+msgid "This address will receive any tokens minted when the recipient project gets paid."
+msgstr ""
+
+msgid "This address will receive the tokens minted from paying this project."
+msgstr "This address will receive the tokens minted from paying this project."
+
+msgid "This funding cycle may pose risks to contributors. Check the funding cycle details before paying this project."
+msgstr "This funding cycle may pose risks to contributors. Check the funding cycle details before paying this project."
+
+msgid "This is the maximum amount of funds that can leave the treasury each funding cycle."
+msgstr "This is the maximum amount of funds that can leave the treasury each funding cycle."
+
+msgid "This list is using an experimental data index and may be inaccurate for some projects."
+msgstr ""
+
+msgid "This project is archived and can't be paid."
+msgstr "This project is archived and can't be paid."
+
+msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
+msgstr "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
+
+msgid "This project reserves some of the newly minted tokens for itself."
+msgstr "This project reserves some of the newly minted tokens for itself."
+
+msgid "This project uses the V2 version of the Juicebox contracts."
+msgstr "This project uses the V2 version of the Juicebox contracts."
+
+msgid "This project's balance in the Juicebox contract."
+msgstr "This project's balance in the Juicebox contract."
+
+msgid "This proposed reconfiguration hasn't passed the {0} period. It's not guaranteed to take effect in the upcoming funding cycle."
+msgstr "This proposed reconfiguration hasn't passed the {0} period. It's not guaranteed to take effect in the upcoming funding cycle."
+
+msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
+msgstr "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
+
+msgid "This will enable your project's veNFT contract to spend unclaimed tokens in addition to project ERC-20 tokens."
+msgstr "This will enable your project's veNFT contract to spend unclaimed tokens in addition to project ERC-20 tokens."
+
+msgid "This will erase all of your changes."
+msgstr "This will erase all of your changes."
+
+msgid "This will reset the data for your new project. All changes will be lost."
+msgstr "This will reset the data for your new project. All changes will be lost."
+
+msgid "Time Remaining"
+msgstr "Time Remaining"
+
+msgid "Time remaining for changes made to affect the next funding cycle:"
+msgstr "Time remaining for changes made to affect the next funding cycle:"
+
+msgid "To do so, you need to give your V1 token holders the ability to exchange their V1 tokens for V2 tokens. Select <0>Set up token migration</0> below to get started."
+msgstr "To do so, you need to give your V1 token holders the ability to exchange their V1 tokens for V2 tokens. Select <0>Set up token migration</0> below to get started."
+
+msgid "To: <0/>"
+msgstr ""
+
+msgid "Token"
+msgstr "Token"
+
+msgid "Token address: <0/>"
+msgstr ""
+
+msgid "Token amount"
+msgstr "Token amount"
+
+msgid "Token beneficiary address"
+msgstr "Token beneficiary address"
+
+msgid "Token beneficiary:"
+msgstr "Token beneficiary:"
+
+msgid "Token holders <0>cannot redeem their tokens</0> for any ETH when the redemption rate is 0."
+msgstr "Token holders <0>cannot redeem their tokens</0> for any ETH when the redemption rate is 0."
+
+msgid "Token holders of your V1 project tokens will swap their V1 tokens for V2 tokens at a 1-to-1 exchange rate."
+msgstr "Token holders of your V1 project tokens will swap their V1 tokens for V2 tokens at a 1-to-1 exchange rate."
+
+msgid "Token minting"
+msgstr ""
+
+msgid "Token minting allows the project owner to mint project tokens at any time."
+msgstr "Token minting allows the project owner to mint project tokens at any time."
+
+msgid "Token minting enabled"
+msgstr "Token minting enabled"
+
+msgid "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
+msgstr "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
+
+msgid "Token name"
+msgstr "Token name"
+
+msgid "Token name is required"
+msgstr "Token name is required"
+
+msgid "Token redeem value"
+msgstr ""
+
+msgid "Token symbol"
+msgstr "Token symbol"
+
+msgid "Token symbol is required"
+msgstr "Token symbol is required"
+
+msgid "Token to Lock:"
+msgstr "Token to Lock:"
+
+msgid "Tokens"
+msgstr ""
+
+msgid "Tokens <0>contributors will receive</0> when they contribute 1 ETH."
+msgstr "Tokens <0>contributors will receive</0> when they contribute 1 ETH."
+
+msgid "Tokens <0>reserved for the project</0> when 1 ETH is contributed."
+msgstr "Tokens <0>reserved for the project</0> when 1 ETH is contributed."
+
+msgid "Tokens are burned when they are redeemed."
+msgstr "Tokens are burned when they are redeemed."
+
+msgid "Tokens are earned by anyone who pays your project, and can be redeemed for overflow if your project has set a funding target."
+msgstr ""
+
+msgid "Tokens are required."
+msgstr "Tokens are required."
+
+msgid "Tokens can be minted manually when allowed in the current funding cycle. The project owner can enable or disable minting for upcoming cycles."
+msgstr "Tokens can be minted manually when allowed in the current funding cycle. The project owner can enable or disable minting for upcoming cycles."
+
+msgid "Tokens can be redeemed for a portion of a project's <0>overflow</0>, letting you benefit from its success. After all, you helped it get there. The token may also give you exclusive member-only privledges, and allow you to contribute to the governance of the community."
+msgstr "Tokens can be redeemed for a portion of a project's <0>overflow</0>, letting you benefit from its success. After all, you helped it get there. The token may also give you exclusive member-only privledges, and allow you to contribute to the governance of the community."
+
+#~ msgid "Tokens can be redeemed for a portion of this project's ETH overflow, according to the bonding curve rate of the current funding cycle. <0>Tokens are burned when they are redeemed.</0>"
+#~ msgstr "Tokens can be redeemed for a portion of this project's ETH overflow, according to the bonding curve rate of the current funding cycle. <0>Tokens are burned when they are redeemed.</0>"
+
+#~ msgid "Tokens can be redeemed for a portion of this project's ETH overflow, according to the redemption rate of the current funding cycle. <0>Tokens are burned when they are redeemed.</0>"
+#~ msgstr "Tokens can be redeemed for a portion of this project's ETH overflow, according to the redemption rate of the current funding cycle. <0>Tokens are burned when they are redeemed.</0>"
+
+msgid "Tokens can be redeemed for a portion of this project's overflow, according to the redemption rate of the current funding cycle. <0>Tokens are burned when they are redeemed.</0>"
+msgstr "Tokens can be redeemed for a portion of this project's overflow, according to the redemption rate of the current funding cycle. <0>Tokens are burned when they are redeemed.</0>"
+
+msgid "Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
+msgstr "Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
+
+msgid "Tokens for you"
+msgstr "Tokens for you"
+
+msgid "Tokens receiver"
+msgstr "Tokens receiver"
+
+msgid "Tokens reserved"
+msgstr "Tokens reserved"
+
+msgid "Tokens to burn"
+msgstr "Tokens to burn"
+
+msgid "Tokens to redeem"
+msgstr "Tokens to redeem"
+
+msgid "Tokens:"
+msgstr "Tokens:"
+
+msgid "Tools"
+msgstr ""
+
+msgid "Total funds:"
+msgstr ""
+
+msgid "Total raised"
+msgstr "Total raised"
+
+msgid "Total staked period"
+msgstr "Total staked period"
+
+msgid "Total staked {tokenSymbolDisplayText}"
+msgstr "Total staked {tokenSymbolDisplayText}"
+
+msgid "Total supply"
+msgstr ""
+
+msgid "Total: {0}%"
+msgstr ""
+
+msgid "Transaction failed"
+msgstr "Transaction failed"
+
+msgid "Transaction pending..."
+msgstr "Transaction pending..."
+
+msgid "Transaction unsuccessful"
+msgstr "Transaction unsuccessful"
+
+msgid "Transfer ownership"
+msgstr ""
+
+msgid "Transfer unclaimed {tokenSymbolShort}"
+msgstr "Transfer unclaimed {tokenSymbolShort}"
+
+msgid "Transfer {tokenSymbolShort}"
+msgstr "Transfer {tokenSymbolShort}"
+
+msgid "Trending"
+msgstr "Trending"
+
+msgid "Trending projects"
+msgstr "Trending projects"
+
+msgid "Twitter"
+msgstr ""
+
+msgid "Twitter handle"
+msgstr "Twitter handle"
+
+msgid "Unarchive project"
+msgstr "Unarchive project"
+
+msgid "Unavailable"
+msgstr "Unavailable"
+
+msgid "Unknown Project"
+msgstr "Unknown Project"
+
+msgid "Unless payments are paused in your funding cycle settings, your project can still receive payments directly through the Juicebox protocol contracts."
+msgstr "Unless payments are paused in your funding cycle settings, your project can still receive payments directly through the Juicebox protocol contracts."
+
+msgid "Unlock"
+msgstr "Unlock"
+
+msgid "Unlock successful. Results will be indexed in a few moments."
+msgstr "Unlock successful. Results will be indexed in a few moments."
+
+msgid "Unlock veNFT"
+msgstr "Unlock veNFT"
+
+msgid "Unlockable NFT rewards"
+msgstr "Unlockable NFT rewards"
+
+msgid "Unlocking this staking position will burn your NFT and return ${tokenSymbolDisplayText}."
+msgstr "Unlocking this staking position will burn your NFT and return ${tokenSymbolDisplayText}."
+
+msgid "Unsaved changes"
+msgstr "Unsaved changes"
+
+msgid "Untitled project"
+msgstr ""
+
+msgid "Untrack token"
+msgstr "Untrack token"
+
+msgid "Upcoming"
+msgstr ""
+
+msgid "Update your veNFT's lock duration."
+msgstr "Update your veNFT's lock duration."
+
+msgid "Updates you make to this section will only be applied to <0>upcoming</0> funding cycles."
+msgstr "Updates you make to this section will only be applied to <0>upcoming</0> funding cycles."
+
+msgid "Upload"
+msgstr ""
+
+msgid "Upload an image"
+msgstr "Upload an image"
+
+msgid "Uploaded to: <0>{url}</0>"
+msgstr "Uploaded to: <0>{url}</0>"
+
+msgid "Uploaded to: <0>{value}</0>"
+msgstr "Uploaded to: <0>{value}</0>"
+
+msgid "Use <0>Amounts</0> when you want to configure a <1>distribution limit</1>. Treasury funds that exceed the distribution limit are called <2>overflow</2>. Token holders can redeem (burn) their tokens for a portion of the overflow. <3>Learn more</3>."
+msgstr "Use <0>Amounts</0> when you want to configure a <1>distribution limit</1>. Treasury funds that exceed the distribution limit are called <2>overflow</2>. Token holders can redeem (burn) their tokens for a portion of the overflow. <3>Learn more</3>."
+
+msgid "Use <0>Percentages</0> when you want to configure an <1>infinite distribution limit.</1> With an infinite distribution limit, your project reserves all funds for itself. Your project won't have overflow, so tokens can never be redeemed for ETH. <2>Learn more</2>."
+msgstr "Use <0>Percentages</0> when you want to configure an <1>infinite distribution limit.</1> With an infinite distribution limit, your project reserves all funds for itself. Your project won't have overflow, so tokens can never be redeemed for ETH. <2>Learn more</2>."
+
+msgid "Using a duration is recommended. Allowing funding cycles to be reconfigured at any time will appear risky to contributors."
+msgstr "Using a duration is recommended. Allowing funding cycles to be reconfigured at any time will appear risky to contributors."
+
+msgid "Using a reconfiguration strategy is recommended. Projects with no strategy will appear risky to contributors."
+msgstr "Using a reconfiguration strategy is recommended. Projects with no strategy will appear risky to contributors."
+
+msgid "V1"
+msgstr ""
+
+msgid "V1 token holders can swap their tokens for your V2 tokens on your V2 project's <0>Tokens</0> section."
+msgstr "V1 token holders can swap their tokens for your V2 tokens on your V2 project's <0>Tokens</0> section."
+
+msgid "V1 token migration"
+msgstr "V1 token migration"
+
+msgid "V1 tokens to swap"
+msgstr "V1 tokens to swap"
+
+msgid "V1.1"
+msgstr ""
+
+msgid "V2"
+msgstr "V2"
+
+msgid "Version of the terminal contract used by this project."
+msgstr "Version of the terminal contract used by this project."
+
+msgid "View token ranges"
+msgstr "View token ranges"
+
+msgid "Volume"
+msgstr ""
+
+msgid "VotePWR"
+msgstr "VotePWR"
+
+msgid "WAGMI!"
+msgstr "WAGMI!"
+
+msgid "Wallet address"
+msgstr "Wallet address"
+
+msgid "We've disabled payments because the project has opted to reserve 100% of new tokens. You would receive no tokens from your payment."
+msgstr "We've disabled payments because the project has opted to reserve 100% of new tokens. You would receive no tokens from your payment."
+
+msgid "Website"
+msgstr ""
+
+msgid "What are automated funding cycles?"
+msgstr "What are automated funding cycles?"
+
+msgid "What are community tokens?"
+msgstr ""
+
+msgid "What are the risks?"
+msgstr ""
+
+msgid "What does Juicebox cost?"
+msgstr ""
+
+msgid "What is overflow?"
+msgstr ""
+
+msgid "What is the V1 Token Payment Terminal?"
+msgstr "What is the V1 Token Payment Terminal?"
+
+msgid "What's a bonding curve?"
+msgstr ""
+
+msgid "What's a discount rate?"
+msgstr ""
+
+msgid "What's going on under the hood?"
+msgstr ""
+
+msgid "When a payment address is paid, its <0>beneficiary</0> address will receive any minted project tokens."
+msgstr "When a payment address is paid, its <0>beneficiary</0> address will receive any minted project tokens."
+
+msgid "When checked, payments to this address will mint this project's ERC-20 tokens to the beneficiary's wallet. Payments will cost more gas. When unchecked, Juicebox will track the beneficiary's new tokens when they pay. The beneficiary can claim their ERC-20 tokens at any time."
+msgstr "When checked, payments to this address will mint this project's ERC-20 tokens to the beneficiary's wallet. Payments will cost more gas. When unchecked, Juicebox will track the beneficiary's new tokens when they pay. The beneficiary can claim their ERC-20 tokens at any time."
+
+msgid "When distributing, payouts to Ethereum addresses incur a 2.5% JBX membership fee. Payouts to other Juicebox projects don't incur fees. Your project will receive (the <0>JuiceboxDAO</0> token) in return at the current issuance rate."
+msgstr "When distributing, payouts to Ethereum addresses incur a 2.5% JBX membership fee. Payouts to other Juicebox projects don't incur fees. Your project will receive (the <0>JuiceboxDAO</0> token) in return at the current issuance rate."
+
+msgid "When enabled, the project owner can manually mint any amount of tokens to any address."
+msgstr "When enabled, the project owner can manually mint any amount of tokens to any address."
+
+msgid "When enabled, the project owner can set the project's payment terminals."
+msgstr "When enabled, the project owner can set the project's payment terminals."
+
+msgid "When enabled, your project cannot receive direct payments."
+msgstr "When enabled, your project cannot receive direct payments."
+
+msgid "When someone pays your project, they'll receive your project's tokens in return. Tokens can be redeemed for a portion of your project's overflow funds; when you win, your community wins with you. Leverage your project's token to grant governance rights, community access, or other membership perks."
+msgstr "When someone pays your project, they'll receive your project's tokens in return. Tokens can be redeemed for a portion of your project's overflow funds; when you win, your community wins with you. Leverage your project's token to grant governance rights, community access, or other membership perks."
+
+msgid "When token minting is allowed, the owner of this project has permission to mint any number of tokens to any address at their discretion. This has the effect of diluting all current token holders, without increasing the project's treasury balance. The project owner can reconfigure this along with all other properties of the funding cycle."
+msgstr ""
+
+msgid "Whenever someone pays your project, this percentage of the newly minted tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can \"mint\" them, which distributes them to their intended receivers."
+msgstr "Whenever someone pays your project, this percentage of the newly minted tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can \"mint\" them, which distributes them to their intended receivers."
+
+msgid "Who funds Juicebox projects?"
+msgstr ""
+
+msgid "Who is Peel?"
+msgstr "Who is Peel?"
+
+msgid "Why Ethereum?"
+msgstr ""
+
+msgid "Why should I want to own a project's tokens?"
+msgstr ""
+
+msgid "Will be rounded to <0/>{0}"
+msgstr "Will be rounded to <0/>{0}"
+
+msgid "Will it work on L2s?"
+msgstr ""
+
+msgid "With Juicebox, projects are built and maintained by motivated punks getting paid transparently, and funded by a community of users and patrons who are rewarded as the projects they support succeed."
+msgstr ""
+
+msgid "With no funding cycles, the project's owner can start a new funding cycle (Funding Cycle #2) on-demand. <0>Learn more.</0>"
+msgstr "With no funding cycles, the project's owner can start a new funding cycle (Funding Cycle #2) on-demand. <0>Learn more.</0>"
+
+msgid "Workspace"
+msgstr ""
+
+msgid "Would you like to issue an ERC-20 token to be used as this project's token?"
+msgstr "Would you like to issue an ERC-20 token to be used as this project's token?"
+
+msgid "Yes"
+msgstr "Yes"
+
+msgid "You are agreeing to IRREVOCABLY lock your tokens for {formattedLockDuration} in exchange for {votingPower} $ve{tokenSymbolDisplayText}"
+msgstr "You are agreeing to IRREVOCABLY lock your tokens for {formattedLockDuration} in exchange for {votingPower} $ve{tokenSymbolDisplayText}"
+
+msgid "You can edit your project details after creation at any time, but the transaction will cost gas."
+msgstr "You can edit your project details after creation at any time, but the transaction will cost gas."
+
+msgid "You can redeem your {tokenTextLong} for overflow without claiming them. You can transfer your unclaimed {tokenTextLong} to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
+msgstr "You can redeem your {tokenTextLong} for overflow without claiming them. You can transfer your unclaimed {tokenTextLong} to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
+
+msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
+msgstr "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
+
+msgid "You collection's symbol will apply to the whole collection of reward tiers on NFT marketplaces (like OpenSea)."
+msgstr "You collection's symbol will apply to the whole collection of reward tiers on NFT marketplaces (like OpenSea)."
+
+msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
+msgstr "You don't have a funding cycle duration. Changes you make will take effect immediately."
+
+msgid "You don't have enough tokens to stake."
+msgstr "You don't have enough tokens to stake."
+
+msgid "You don't hold tokens for any Juicebox project."
+msgstr "You don't hold tokens for any Juicebox project."
+
+msgid "You don't own any veNFTs!"
+msgstr "You don't own any veNFTs!"
+
+msgid "You have <0>{0}</0> tokens on <1>Juicebox V1</1>. You can swap your <2>{1}</2> V1 tokens for V2 tokens"
+msgstr "You have <0>{0}</0> tokens on <1>Juicebox V1</1>. You can swap your <2>{1}</2> V1 tokens for V2 tokens"
+
+msgid "You have configured for all funds to be distributed from the treasury. Your current payouts do not sum to 100%, so the remainder will go to the project owner."
+msgstr "You have configured for all funds to be distributed from the treasury. Your current payouts do not sum to 100%, so the remainder will go to the project owner."
+
+#~ msgid "You have exceeded the total token supply of <0>{0}</0>"
+#~ msgstr "You have exceeded the total token supply of <0>{0}</0>"
+
+msgid "You have set a funding cycle target."
+msgstr ""
+
+msgid "You have unsaved changes. Are you sure you want to discard them?"
+msgstr "You have unsaved changes. Are you sure you want to discard them?"
+
+msgid "You haven't created any projects yet."
+msgstr "You haven't created any projects yet."
+
+msgid "You must grant permission to swap your tokens."
+msgstr "You must grant permission to swap your tokens."
+
+msgid "You must own this V1 project."
+msgstr "You must own this V1 project."
+
+msgid "You must review and accept the Terms of Service."
+msgstr "You must review and accept the Terms of Service."
+
+msgid "You must review and accept the risks."
+msgstr "You must review and accept the risks."
+
+#~ msgid "You receive an NFT for contributing over <0>{0} ETH</0>."
+#~ msgstr "You receive an NFT for contributing over <0>{0} ETH</0>."
+
+msgid "You receive this NFT for contributing over <0>{0} ETH</0>."
+msgstr "You receive this NFT for contributing over <0>{0} ETH</0>."
+
+msgid "You will receive <0/>"
+msgstr "You will receive <0/>"
+
+msgid "You will receive at least <0/>"
+msgstr "You will receive at least <0/>"
+
+#~ msgid "You will receive at least {minReturnedTokensFormatted} ETH"
+#~ msgstr "You will receive at least {minReturnedTokensFormatted} ETH"
+
+msgid "You will receive {0}{1} ETH"
+msgstr "You will receive {0}{1} ETH"
+
+#~ msgid "You will receive {minReturnedTokensFormatted} ETH"
+#~ msgstr "You will receive {minReturnedTokensFormatted} ETH"
+
+msgid "You would receive <0/>"
+msgstr "You would receive <0/>"
+
+msgid "You would receive at least <0/>"
+msgstr "You would receive at least <0/>"
+
+#~ msgid "You would receive at least {minReturnedTokensFormatted} ETH"
+#~ msgstr "You would receive at least {minReturnedTokensFormatted} ETH"
+
+#~ msgid "You would receive {minReturnedTokensFormatted} ETH"
+#~ msgstr "You would receive {minReturnedTokensFormatted} ETH"
+
+msgid "You'll be able to issue ERC-20 tokens once your project contract has been deployed. Until then, the protocol will track token balances, allowing your supporters to earn tokens and redeem for overflow in the meantime."
+msgstr ""
+
+msgid "You're all set!"
+msgstr "You're all set!"
+
+msgid "You've completed this step."
+msgstr "You've completed this step."
+
+msgid "Your <0>@{v1ProjectHandle}</0> V1 token balance."
+msgstr "Your <0>@{v1ProjectHandle}</0> V1 token balance."
+
+msgid "Your Juicebox project has no active funding cycle. Launch a funding cycle to re-enable payments on your project."
+msgstr "Your Juicebox project has no active funding cycle. Launch a funding cycle to re-enable payments on your project."
+
+msgid "Your V1 balance"
+msgstr "Your V1 balance"
+
+msgid "Your V1 {tokenSymbolFormatted} balance"
+msgstr "Your V1 {tokenSymbolFormatted} balance"
+
+msgid "Your balance"
+msgstr ""
+
+msgid "Your collection's name will apply to the whole collection of reward tiers on NFT marketplaces (like OpenSea)."
+msgstr "Your collection's name will apply to the whole collection of reward tiers on NFT marketplaces (like OpenSea)."
+
+msgid "Your funding cycle configuration has been pre-populated using the configuration you originally launched with. If you need to customize it, contact us."
+msgstr "Your funding cycle configuration has been pre-populated using the configuration you originally launched with. If you need to customize it, contact us."
+
+msgid "Your new payable address:"
+msgstr "Your new payable address:"
+
+msgid "Your project can still receive payments directly through the Juicebox protocol contracts."
+msgstr "Your project can still receive payments directly through the Juicebox protocol contracts."
+
+msgid "Your project cannot receive direct payments while paused."
+msgstr ""
+
+msgid "Your project is funded across funding cycles. A funding cycle has a funding target and a duration. Your project's funding cycle configuration will depend on the kind of project you're starting."
+msgstr ""
+
+msgid "Your project will appear archived, and won't be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Allow a few days for your project to appear under the \"archived\" filter on the Projects page."
+msgstr "Your project will appear archived, and won't be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Allow a few days for your project to appear under the \"archived\" filter on the Projects page."
+
+msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
+msgstr "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
+
+msgid "Your project's funding cycle target and duration."
+msgstr ""
+
+msgid "Your transaction has been submitted and is awaiting confirmation."
+msgstr "Your transaction has been submitted and is awaiting confirmation."
+
+msgid "Your unclaimed token balance: {0}"
+msgstr "Your unclaimed token balance: {0}"
+
+msgid "Your unclaimed {tokenTextLong}"
+msgstr "Your unclaimed {tokenTextLong}"
+
+msgid "Your voting power"
+msgstr "Your voting power"
+
+msgid "Your {0} balance"
+msgstr "Your {0} balance"
+
+msgid "Zero"
+msgstr "Zero"
+
+msgid "after {0}% JBX fee"
+msgstr ""
+
+msgid "called by <0/>"
+msgstr "called by <0/>"
+
+msgid "day"
+msgstr "day"
+
+msgid "days"
+msgstr ""
+
+msgid "handle"
+msgstr ""
+
+msgid "hours"
+msgstr "hours"
+
+msgid "juiceboxETH"
+msgstr "juiceboxETH"
+
+msgid "last {trendingWindowDays} days"
+msgstr "last {trendingWindowDays} days"
+
+msgid "loading"
+msgstr "loading"
+
+msgid "locked until {lockedUntilFormatted}"
+msgstr "locked until {lockedUntilFormatted}"
+
+msgid "matching \"{searchText}\""
+msgstr "matching \"{searchText}\""
+
+msgid "minutes"
+msgstr "minutes"
+
+msgid "or <0><1>buy {tokenText} on exchange<2/></1></0>"
+msgstr "or <0><1>buy {tokenText} on exchange<2/></1></0>"
+
+msgid "project"
+msgstr "project"
+
+msgid "project owner"
+msgstr "project owner"
+
+msgid "projects"
+msgstr "projects"
+
+msgid "seconds"
+msgstr "seconds"
+
+msgid "token"
+msgstr "token"
+
+msgid "tokens"
+msgstr ""
+
+msgid "tokens per ETH contributed"
+msgstr "tokens per ETH contributed"
+
+msgid "tokens redeemed"
+msgstr ""
+
+msgid "until"
+msgstr ""
+
+msgid "veNFT"
+msgstr "veNFT"
+
+msgid "veNFT Tiers ({0} variants)"
+msgstr "veNFT Tiers ({0} variants)"
+
+msgid "{0, plural, one {# deployed payment address} other {# deployed payment addresses}}"
+msgstr "{0, plural, one {# deployed payment address} other {# deployed payment addresses}}"
+
+msgid "{0, plural, one {# payment address} other {# payment addresses}}"
+msgstr "{0, plural, one {# payment address} other {# payment addresses}}"
+
+msgid "{0} after JBX fee"
+msgstr "{0} after JBX fee"
+
+msgid "{0} ago"
+msgstr ""
+
+msgid "{0} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
+msgstr "{0} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
+
+msgid "{0} balance"
+msgstr ""
+
+#~ msgid "{0} balance: <0><1>{1} {tokensTextShort}</1><2>({share}% of supply)</2></0>"
+#~ msgstr "{0} balance: <0><1>{1} {tokensTextShort}</1><2>({share}% of supply)</2></0>"
+
+msgid "{0} days"
+msgstr ""
+
+msgid "{0} for you"
+msgstr ""
+
+msgid "{0} holders"
+msgstr ""
+
+msgid "{0} reserved"
+msgstr ""
+
+msgid "{0} tokens/ETH"
+msgstr "{0} tokens/ETH"
+
+msgid "{0} total"
+msgstr ""
+
+msgid "{0} unclaimed"
+msgstr "{0} unclaimed"
+
+msgid "{0} withdrawn"
+msgstr "{0} withdrawn"
+
+msgid "{0} {tokenTextPlural} reserved"
+msgstr "{0} {tokenTextPlural} reserved"
+
+msgid "{0}%"
+msgstr "{0}%"
+
+msgid "{0}% of all newly minted tokens."
+msgstr "{0}% of all newly minted tokens."
+
+msgid "{0}% of supply"
+msgstr ""
+
+msgid "{0}% to <0/>"
+msgstr ""
+
+msgid "{0}% to {1}"
+msgstr "{0}% to {1}"
+
+msgid "{0}/{1} withdrawn"
+msgstr "{0}/{1} withdrawn"
+
+msgid "{0}{1}"
+msgstr ""
+
+msgid "{count} total"
+msgstr ""
+
+msgid "{exchangeName} has no market for {tokenSymbol}."
+msgstr "{exchangeName} has no market for {tokenSymbol}."
+
+msgid "{formattedTimeLeft} left"
+msgstr "{formattedTimeLeft} left"
+
+msgid "{formattedTimeLeft} until #{0}"
+msgstr "{formattedTimeLeft} until #{0}"
+
+msgid "{inflationRate} tokens / ETH"
+msgstr "{inflationRate} tokens / ETH"
+
+msgid "{issuanceRate} tokens / ETH"
+msgstr "{issuanceRate} tokens / ETH"
+
+msgid "{label}"
+msgstr "{label}"
+
+msgid "{lockDurationOptionInDays} {lockDurationOptionInDays, plural, one {{0}} other {{1}}}"
+msgstr "{lockDurationOptionInDays} {lockDurationOptionInDays, plural, one {{0}} other {{1}}}"
+
+msgid "{lockDurationOption} {lockDurationOption, plural, one {{0}} other {{1}}}"
+msgstr "{lockDurationOption} {lockDurationOption, plural, one {{0}} other {{1}}}"
+
+msgid "{minTokensAllowedToStake, plural, one {You must stake at least # token.} other {You must stake at least # tokens.}}"
+msgstr "{minTokensAllowedToStake, plural, one {You must stake at least # token.} other {You must stake at least # tokens.}}"
+
+msgid "{payerRate} (+ {reservedRate} reserved) {tokenSymbolPlural}/ETH"
+msgstr "{payerRate} (+ {reservedRate} reserved) {tokenSymbolPlural}/ETH"
+
+msgid "{payerRate} {tokenSymbolPlural}/ETH"
+msgstr "{payerRate} {tokenSymbolPlural}/ETH"
+
+msgid "{paymentCount, plural, one {# payment} other {# payments}}"
+msgstr "{paymentCount, plural, one {# payment} other {# payments}}"
+
+msgid "{reservedRate} {tokenSymbolPlural}/ETH ({0}%)"
+msgstr "{reservedRate} {tokenSymbolPlural}/ETH ({0}%)"
+
+msgid "{tokenSymbolDisplayText} range"
+msgstr "{tokenSymbolDisplayText} range"
+
+msgid "{tokenSymbolDisplayText} to lock"
+msgstr "{tokenSymbolDisplayText} to lock"
+
+msgid "{tokenSymbolPluralCap} received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
+msgstr "{tokenSymbolPluralCap} received per ETH paid to the treasury. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
+
+msgid "{tokenSymbol} ERC-20 address"
+msgstr "{tokenSymbol} ERC-20 address"
+
+msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."
+msgstr ""
+
+msgid "{tokenTextSingular} recipients"
+msgstr "{tokenTextSingular} recipients"
+
+msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
+msgstr "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
+
+msgid "{tokensText} reserved"
+msgstr "{tokensText} reserved"
+
+msgid "{tokensTokenUpper} amount"
+msgstr "{tokensTokenUpper} amount"
+
+msgid "{totalStakedPeriodInDays, plural, one {{0}} other {{1}}}"
+msgstr "{totalStakedPeriodInDays, plural, one {{0}} other {{1}}}"
+
+msgid "{unclaimedBalanceFormatted} {tokenText} claimable"
+msgstr "{unclaimedBalanceFormatted} {tokenText} claimable"
+
+msgid "{unstakedTokens} {tokenSymbolDisplayText} remaining"
+msgstr "{unstakedTokens} {tokenSymbolDisplayText} remaining"
+
+msgid "{userOwnershipPercentage}% of total supply"
+msgstr "{userOwnershipPercentage}% of total supply"

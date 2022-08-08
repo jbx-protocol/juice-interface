@@ -4,31 +4,26 @@ import { ThemeContext } from 'contexts/themeContext'
 import { NftRewardTier } from 'models/v2/nftRewardTier'
 import { CSSProperties, MouseEventHandler, useContext } from 'react'
 
-import { LockOutlined, CheckOutlined } from '@ant-design/icons'
+import { CheckOutlined } from '@ant-design/icons'
 
 export function RewardTier({
   rewardTier,
   rewardTierUpperLimit,
   isSelected,
-  notEligible,
   onClick,
 }: {
   rewardTier: NftRewardTier
   rewardTierUpperLimit: number | undefined
   isSelected: boolean
-  notEligible: boolean
   onClick: MouseEventHandler<HTMLDivElement>
 }) {
   const {
-    theme: { colors },
+    theme: { colors, radii },
   } = useContext(ThemeContext)
 
   const backgroundColor = isSelected
     ? colors.background.l0
     : colors.background.l2
-
-  // Images render as squares in thumbnails
-  const imageSideLength = '146px'
 
   function RewardIcon() {
     const iconStyle: CSSProperties = {
@@ -74,7 +69,7 @@ export function RewardTier({
         placement={'bottom'}
       >
         <div style={iconStyle}>
-          {isSelected ? <CheckOutlined /> : <LockOutlined />}
+          <CheckOutlined />
         </div>
       </Tooltip>
     )
@@ -92,6 +87,7 @@ export function RewardTier({
           ? `2px solid ${colors.stroke.action.primary}`
           : 'rgba(0,0,0,0)',
         transition: 'box-shadow 0.25s',
+        borderRadius: radii.sm,
         height: '100%',
       }}
       onClick={onClick}
@@ -103,9 +99,10 @@ export function RewardTier({
           backgroundColor,
           width: '100%',
           display: 'flex',
+          paddingTop: '100%',
           justifyContent: 'center',
           alignItems: 'center',
-          // height: imageSideLength,
+          position: 'relative',
         }}
       >
         <img
@@ -113,12 +110,14 @@ export function RewardTier({
           src={rewardTier.imageUrl}
           style={{
             objectFit: 'cover',
-            width: imageSideLength,
-            height: imageSideLength,
+            width: '100%',
+            position: 'absolute',
+            top: 0,
+            height: '100%',
             filter: isSelected ? 'unset' : 'brightness(50%)',
           }}
         />
-        {isSelected || notEligible ? <RewardIcon /> : null}
+        {isSelected ? <RewardIcon /> : null}
       </div>
       {/* Details section below image */}
       <div
@@ -126,7 +125,6 @@ export function RewardTier({
           backgroundColor,
           width: '100%',
           padding: '8px 10px 5px',
-          borderTop: `1px solid ${colors.stroke.tertiary}`,
           height: '100%',
           display: 'flex',
           flexDirection: 'column',

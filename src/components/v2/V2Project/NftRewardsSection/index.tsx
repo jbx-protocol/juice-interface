@@ -54,7 +54,6 @@ export function NftRewardsSection({
 
   const renderRewardTier = (rewardTier: NftRewardTier, index: number) => {
     const isSelected = index === selectedIndex
-    const notEligible = rewardTier.contributionFloor > parseFloat(payAmountETH)
     if (!rewardTiers) return
 
     const nextRewardTier = rewardTiers[index + 1]
@@ -67,7 +66,6 @@ export function NftRewardsSection({
             rewardTier={rewardTier}
             rewardTierUpperLimit={nextRewardTier?.contributionFloor}
             isSelected={isSelected}
-            notEligible={notEligible}
             onClick={() => {
               setSelectedIndex(isSelected ? undefined : index)
               onPayAmountChange(

@@ -12,7 +12,7 @@ import { ipfsCidUrl, pinFileToIpfs } from 'utils/ipfs'
 const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif']
 
 // Always showing images as squares
-export const IMAGE_SIDE_LENGTH = '90px'
+export const NFT_IMAGE_SIDE_LENGTH = '90px'
 
 export default function NftUpload({ form }: { form: FormInstance }) {
   const {
@@ -94,7 +94,7 @@ export default function NftUpload({ form }: { form: FormInstance }) {
         />
       }
       rules={[{ required: true, validator: validateImageUrl }]}
-      extra={t`Image will be cropped to a square in thumbnail previews through the Juicebox app.`}
+      extra={t`Image will be cropped to a square in thumbnail previews on the Juicebox app.`}
       validateTrigger={'onSubmit'}
     >
       <Upload
@@ -121,9 +121,9 @@ export default function NftUpload({ form }: { form: FormInstance }) {
               alt={form.getFieldValue('name') ?? 'New NFT reward'}
               style={{
                 display: imageRenderLoading ? 'none' : 'unset',
-                width: IMAGE_SIDE_LENGTH,
-                height: IMAGE_SIDE_LENGTH,
-                objectFit: 'none',
+                width: NFT_IMAGE_SIDE_LENGTH,
+                height: NFT_IMAGE_SIDE_LENGTH,
+                objectFit: 'cover',
                 objectPosition: 'centre',
               }}
               onLoad={() => setImageRenderLoading(false)}

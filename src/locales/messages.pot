@@ -2453,6 +2453,9 @@ msgstr ""
 msgid "Token symbol is required"
 msgstr ""
 
+msgid "Token to Lock:"
+msgstr ""
+
 msgid "Tokens"
 msgstr ""
 

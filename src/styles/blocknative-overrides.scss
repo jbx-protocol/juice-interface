@@ -36,6 +36,18 @@
     background: var(--background-l1);
   }
 
+  // Select wallet, connect button
+  button.bn-onboard-custom.bn-onboard-icon-button {
+    border: 1px solid var(--stroke-tertiary);
+    color: var(--text-primary);
+    transition: background-color 250ms;
+    
+    &:hover {
+      color: var(--text-primary);
+      background-color: var(--background-l2);
+    }
+  }
+
   // Close icon
   .bn-onboard-modal-content-close:hover {
     background: none !important;

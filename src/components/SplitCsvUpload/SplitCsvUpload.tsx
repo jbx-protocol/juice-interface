@@ -1,7 +1,9 @@
 import { UploadOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
+import TooltipIcon from 'components/TooltipIcon'
+import { ThemeContext } from 'contexts/themeContext'
 import { Split } from 'models/v2/splits'
-import { ChangeEventHandler } from 'react'
+import { ChangeEventHandler, useContext } from 'react'
 import { splitPercentFrom } from 'utils/v2/math'
 
 // https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readyState
@@ -58,6 +60,10 @@ export function SplitCsvUpload({
 }: {
   onChange: (splits: Split[]) => void
 }) {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+
   const onUploadChange: ChangeEventHandler<HTMLInputElement> = async e => {
     e.preventDefault()
     e.stopPropagation()
@@ -75,11 +81,16 @@ export function SplitCsvUpload({
 
   return (
     <label
-      style={{ cursor: 'pointer', fontWeight: 400 }}
+      style={{ cursor: 'pointer', fontWeight: 400, color: colors.text.primary }}
       role="button"
       htmlFor="csv-upload"
     >
-      <UploadOutlined /> <Trans>Upload CSV</Trans>
+      <UploadOutlined /> <Trans>Upload CSV</Trans>{' '}
+      <TooltipIcon
+        tip={
+          'CSV format:\nbeneficiary, percent, preferClaimed, lockedUntil, projectId, allocator'
+        }
+      />
       <input
         type="file"
         hidden

@@ -1076,9 +1076,6 @@ msgstr ""
 msgid "Funding"
 msgstr ""
 
-msgid "Funding Cycle #{0}"
-msgstr ""
-
 msgid "Funding cycle"
 msgstr ""
 
@@ -2346,6 +2343,9 @@ msgid "This address will receive the tokens minted from paying this project."
 msgstr ""
 
 msgid "This funding cycle may pose risks to contributors. Check the funding cycle details before paying this project."
+msgstr ""
+
+msgid "This funding cycle's distribution limit."
 msgstr ""
 
 msgid "This is the maximum amount of funds that can leave the treasury each funding cycle."

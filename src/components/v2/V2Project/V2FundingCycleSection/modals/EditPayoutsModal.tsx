@@ -70,7 +70,6 @@ const DistributionLimitHeader = ({
   style?: React.CSSProperties
 }) => {
   const {
-    fundingCycle,
     distributionLimit,
     distributionLimitCurrency,
     loading: { distributionLimitLoading, fundingCycleLoading },
@@ -93,7 +92,7 @@ const DistributionLimitHeader = ({
         active
       >
         <TooltipLabel
-          tip={<Trans>Funding Cycle #{fundingCycle?.number.toString()} </Trans>}
+          tip={<Trans>This funding cycle's distribution limit.</Trans>}
           label={
             <>
               {distributionLimitIsInfinite ? (

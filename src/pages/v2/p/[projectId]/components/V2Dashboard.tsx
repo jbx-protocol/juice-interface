@@ -40,7 +40,7 @@ import {
 import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
 import { layouts } from 'constants/styles/layouts'
 
-import V2Project from '../../../../components/v2/V2Project'
+import V2Project from '../../../../../components/v2/V2Project'
 
 export default function V2Dashboard({
   projectId,
@@ -223,7 +223,7 @@ export default function V2Dashboard({
   return (
     <V2ProjectContext.Provider value={project}>
       <div style={layouts.maxWidth}>
-        <V2Project />
+        <V2Project selectedPage="info" />
         <div style={{ textAlign: 'center', marginTop: '3rem' }}>
           <ScrollToTopButton />
         </div>

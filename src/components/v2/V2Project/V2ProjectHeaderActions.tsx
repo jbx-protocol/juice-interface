@@ -11,10 +11,18 @@ import { ToolOutlined } from '@ant-design/icons'
 
 import ProjectVersionBadge from 'components/ProjectVersionBadge'
 
+import { featureFlagEnabled } from 'utils/featureFlags'
+
+import { InfoCircleOutlined } from '@ant-design/icons'
+
+import { useRouter } from 'next/router'
+
 import V2ReconfigureFundingModalTrigger from './V2ProjectReconfigureModal/V2ReconfigureModalTrigger'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 
 export default function V2ProjectHeaderActions() {
   const { projectId } = useContext(V2ProjectContext)
+  const router = useRouter()
 
   const {
     theme: { colors },
@@ -27,6 +35,12 @@ export default function V2ProjectHeaderActions() {
   )
 
   const showReconfigureButton = canReconfigure
+  const settingsPageEnabled = featureFlagEnabled(FEATURE_FLAGS.SETTINGS_PAGE)
+
+  const handleSettingsPageButtonClick = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault()
+    router.push(`/v2/p/${projectId}/settings`)
+  }
 
   return (
     <div
@@ -61,6 +75,15 @@ export default function V2ProjectHeaderActions() {
           />
         </Tooltip>
         {showReconfigureButton && <V2ReconfigureFundingModalTrigger />}
+        {settingsPageEnabled && (
+          <Tooltip title={t`Open settings page`} placement="bottom">
+            <Button
+              icon={<InfoCircleOutlined />}
+              type="text"
+              onClick={handleSettingsPageButtonClick}
+            />
+          </Tooltip>
+        )}
       </div>
     </div>
   )

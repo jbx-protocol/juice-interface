@@ -19,7 +19,7 @@ import { V2FundingCycle } from 'models/v2/fundingCycle'
 import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
 import { V2_CURRENCY_ETH } from 'utils/v2/currency'
 
-import V2Project from '../../components/v2/V2Project'
+import V2ProjectInfo from 'components/v2/V2Project/V2ProjectInfo'
 
 export default function ProjectPreview({
   singleColumnLayout,
@@ -111,7 +111,7 @@ export default function ProjectPreview({
   return (
     <V2ProjectContext.Provider value={project}>
       <div>
-        <V2Project
+        <V2ProjectInfo
           singleColumnLayout={singleColumnLayout}
           expandFundingCycleCard
         />

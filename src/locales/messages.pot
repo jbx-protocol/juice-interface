@@ -1556,6 +1556,9 @@ msgstr ""
 msgid "Only lowercase letters"
 msgstr ""
 
+msgid "Open settings page"
+msgstr ""
+
 msgid "Other assets in this project's owner's wallet."
 msgstr ""
 

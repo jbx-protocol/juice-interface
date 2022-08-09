@@ -31,6 +31,8 @@ import { CIDsOfNftRewardTiersResponse } from 'utils/v2/nftRewards'
 import useNameOfERC20 from 'hooks/NameOfERC20'
 import { ProjectMetadataV4 } from 'models/project-metadata'
 
+import { useVeNftContractAddress } from 'hooks/veNft/VeNftContractAddress'
+
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
@@ -54,6 +56,8 @@ export default function V2Dashboard({
   })
   const createdAt = first(projects)?.createdAt
   const totalVolume = first(projects)?.totalPaid
+
+  const veNftContractAddress = useVeNftContractAddress(projectId)
 
   const { data: fundingCycleResponse, loading: fundingCycleLoading } =
     useProjectCurrentFundingCycle({
@@ -198,6 +202,10 @@ export default function V2Dashboard({
       CIDs: nftRewardsCIDs,
       rewardTiers: nftRewardTiers ?? [],
       loading: nftsLoading,
+    },
+
+    veNft: {
+      contractAddress: veNftContractAddress,
     },
 
     loading: {

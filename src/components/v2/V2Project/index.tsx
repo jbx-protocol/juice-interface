@@ -17,7 +17,7 @@ import { RelaunchFundingCycleBanner } from './banners/RelaunchFundingCycleBanner
 import V2ProjectHeaderActions from './V2ProjectHeaderActions'
 
 import V2ProjectInfo from './V2ProjectInfo'
-import V2ProjectSettings from './V2ProjectSettings'
+import V2ProjectSettings from './V2ProjectSettingsPage/V2ProjectSettings'
 
 export default function V2Project({
   selectedPage,

@@ -56,6 +56,7 @@ export type V2ProjectContextType = {
 
   veNft: {
     contractAddress: string | undefined
+    uriResolver: string | undefined
   }
 
   loading: V2ProjectLoadingStates
@@ -102,6 +103,7 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
 
   veNft: {
     contractAddress: undefined,
+    uriResolver: undefined,
   },
 
   loading: {

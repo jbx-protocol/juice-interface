@@ -35,7 +35,6 @@ import Callout from 'components/Callout'
 import { VeNftContext } from 'contexts/v2/veNftContext'
 
 import { shadowCard } from 'constants/styles/shadowCard'
-import { VENFT_CONTRACT_ADDRESS } from 'constants/veNft/veNftProject'
 
 interface StakingFormProps {
   tokensStaked: number
@@ -52,7 +51,7 @@ const VeNftStakingForm = ({
 }: VeNftStakingFormProps) => {
   const { userAddress, onSelectWallet } = useContext(NetworkContext)
   const { tokenAddress } = useContext(V2ProjectContext)
-  const { lockDurationOptions, baseImagesHash, variants } =
+  const { lockDurationOptions, contractAddress, baseImagesHash, variants } =
     useContext(VeNftContext)
   const { theme } = useContext(ThemeContext)
 
@@ -94,7 +93,7 @@ const VeNftStakingForm = ({
   const { data: allowance } = useERC20Allowance(
     tokenAddress,
     userAddress,
-    VENFT_CONTRACT_ADDRESS,
+    contractAddress,
   )
   const hasAdequateApproval = allowance
     ? allowance.gte(parseWad(tokensStaked))
@@ -104,6 +103,10 @@ const VeNftStakingForm = ({
 
   const approveTx = useERC20Approve(tokenAddress)
   const approve = async () => {
+    if (!contractAddress) {
+      return
+    }
+
     if (!userAddress && onSelectWallet) {
       onSelectWallet()
     }
@@ -112,7 +115,7 @@ const VeNftStakingForm = ({
 
     const txSuccess = await approveTx(
       {
-        spender: VENFT_CONTRACT_ADDRESS,
+        spender: contractAddress,
         amount: MaxUint256,
       },
       {

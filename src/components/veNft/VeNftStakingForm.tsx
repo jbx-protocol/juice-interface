@@ -36,8 +36,11 @@ import { VeNftContext } from 'contexts/v2/veNftContext'
 
 import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
 
+import { MinimalCollapse } from 'components/MinimalCollapse'
+
 import { shadowCard } from 'constants/styles/shadowCard'
 import VeNftTokenSelectInput from './formControls/VeNftTokenSelectInput'
+import AllowPublicExtensionInput from './formControls/AllowPublicExtensionInput'
 
 export interface StakingFormProps {
   tokensStaked: number
@@ -70,7 +73,7 @@ const VeNftStakingForm = ({
   const tokensStaked = useWatch('tokensStaked', form) || 1
   const lockDuration = useWatch('lockDuration', form) || 0
   const beneficiary = useWatch('beneficiary', form) || ''
-  const useJbToken = useWatch('useJbToken', form)
+  const useJbToken = useWatch('useJbToken', form) || false
 
   const { data: nftTokenUri } = useVeNftResolverTokenUri(
     parseWad(tokensStaked),
@@ -198,7 +201,16 @@ const VeNftStakingForm = ({
               <VotingPowerDisplayInput votingPower={votingPower} />
             </div>
 
-            <CustomBeneficiaryInput form={form} />
+            <MinimalCollapse
+              header={
+                <h3 style={{ margin: 0 }}>
+                  <Trans>Advanced Options</Trans>
+                </h3>
+              }
+            >
+              <CustomBeneficiaryInput form={form} />
+              <AllowPublicExtensionInput form={form} />
+            </MinimalCollapse>
 
             {variants && baseImagesHash && (
               <VeNftCarousel

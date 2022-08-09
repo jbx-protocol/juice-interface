@@ -1,7 +1,5 @@
 import { SECONDS_IN_DAY } from 'constants/numbers'
 
-export const VENFT_CONTRACT_ADDRESS =
-  '0xce37f0fc9315153516d1a4f165fe28559c719a01'
 export const VENFT_RESOLVER_ADDRESS =
   '0x6e11c0114feeeba2b69f0776320350399137e151'
 export const VENFT_DEPLOYER_ADDRESS =

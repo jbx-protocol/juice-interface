@@ -1,4 +1,4 @@
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Button, Form, Input, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import CurrencySymbol from 'components/CurrencySymbol'
@@ -185,8 +185,12 @@ export default function PayoutModsList({
         >
           <Modal
             visible={modalVisible}
-            title="Edit payouts"
-            okText="Save payouts"
+            title={<Trans>Edit payouts</Trans>}
+            okText={
+              <span>
+                <Trans>Save payouts</Trans>
+              </span>
+            }
             onOk={() => setMods()}
             onCancel={() => {
               setModalVisible(false)

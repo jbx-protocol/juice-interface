@@ -7,6 +7,7 @@ export type VeNftContextType = {
   name: string | undefined
   lockDurationOptions: BigNumber[] | undefined
   baseImagesHash: string | undefined
+  contractAddress: string | undefined
   resolverAddress: string | undefined
   variants: VeNftVariant[] | undefined
   userTokens: VeNftToken[] | undefined
@@ -16,6 +17,7 @@ export const VeNftContext = createContext<VeNftContextType>({
   name: undefined,
   lockDurationOptions: undefined,
   baseImagesHash: undefined,
+  contractAddress: undefined,
   resolverAddress: undefined,
   variants: undefined,
   userTokens: undefined,

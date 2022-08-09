@@ -14,9 +14,9 @@ import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedT
 import ProjectPayersSection from 'components/Project/ProjectToolsDrawer/ProjectPayersSection'
 import { featureFlagEnabled } from 'utils/featureFlags'
 
-import VeNftSetupSection from 'components/veNft/VeNftSetupSection'
-
 import VeNftSetUnclaimedTokensPermissionSection from 'components/veNft/VeNftSetUnclaimedTokensPermissionSection'
+
+import VeNftEnableSection from 'components/veNft/VeNftEnableSection'
 
 import { V1TokenMigrationSetupSection } from './V1TokenMigrationSetupSection'
 import { AddToProjectBalanceForm } from '../../../Project/ProjectToolsDrawer/AddToProjectBalanceForm'
@@ -72,10 +72,10 @@ export function V2ProjectToolsDrawer({
 
   const VeNftTools = (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
-      {veNftContractAddress ? (
-        <VeNftSetUnclaimedTokensPermissionSection />
+      {!veNftContractAddress ? (
+        <VeNftEnableSection />
       ) : (
-        <VeNftSetupSection />
+        <VeNftSetUnclaimedTokensPermissionSection />
       )}
     </Space>
   )

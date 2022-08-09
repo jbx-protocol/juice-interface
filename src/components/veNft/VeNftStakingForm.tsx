@@ -31,7 +31,6 @@ import { useVeNftTokenMetadata } from 'hooks/veNft/VeNftTokenMetadata'
 
 import { useVeNftResolverTokenUri } from 'hooks/veNft/VeNftResolverTokenUri'
 
-import Callout from 'components/Callout'
 import { VeNftContext } from 'contexts/v2/veNftContext'
 
 import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
@@ -172,12 +171,6 @@ const VeNftStakingForm = ({
       >
         <div style={{ ...shadowCard(theme), padding: 25 }}>
           <Space direction="vertical" size={'large'} style={{ width: '100%' }}>
-            <Callout style={{ background: theme.colors.background.l1 }}>
-              <Trans>
-                Only project tokens claimed as ERC-20 tokens can be staked for
-                NFTs.
-              </Trans>
-            </Callout>
             <VeNftTokenSelectInput form={form} />
             <div>
               <Row gutter={20}>

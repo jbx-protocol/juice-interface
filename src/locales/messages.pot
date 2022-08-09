@@ -1004,6 +1004,9 @@ msgstr ""
 msgid "Edit tracked assets"
 msgstr ""
 
+msgid "Enable veBanny Governance"
+msgstr ""
+
 msgid "Enable veNFT Governance"
 msgstr ""
 
@@ -2112,6 +2115,12 @@ msgid "Set this to the sum of all your payouts"
 msgstr ""
 
 msgid "Set up V1 token migration"
+msgstr ""
+
+msgid "Set up and launch veNFT governance for your project using custom assets and parameters. (Experimental, does not currently launch)"
+msgstr ""
+
+msgid "Set up and launch veNFT governance for your project using default veBanny assets and parameters."
 msgstr ""
 
 msgid "Set up and launch veNFT governance for your project."

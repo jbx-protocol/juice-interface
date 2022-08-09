@@ -8,16 +8,15 @@ import VeNftRewardTierModal from 'components/veNft/VeNftRewardTierModal'
 import VeNftvariantCard from 'components/veNft/VeNftVariantCard'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 
-import { SECONDS_IN_DAY } from 'constants/numbers'
 import VeNftLockDurationOptionCard from './VeNftLockDurationOptionCard'
 import VeNftAddLockDurationModal from './VeNftAddLockDurationModal'
+import { DEFAULT_LOCK_DURATIONS } from 'constants/veNft/veNftProject'
 
 interface VeNftSetupModalProps {
   visible: boolean
   onCancel: VoidFunction
 }
 
-const DEFAULT_LOCK_DURATIONS = [1, 28 * SECONDS_IN_DAY, 84 * SECONDS_IN_DAY]
 const DEFAULT_VARIANTS: VeNftVariant[] = [
   {
     id: 1,

@@ -1,35 +1,20 @@
 import { UploadOutlined } from '@ant-design/icons'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import TooltipIcon from 'components/TooltipIcon'
 import { ThemeContext } from 'contexts/themeContext'
 import { Split } from 'models/v2/splits'
 import { ChangeEventHandler, useContext } from 'react'
+import { readFile } from 'utils/file'
+import { emitErrorNotification } from 'utils/notifications'
 import { splitPercentFrom } from 'utils/v2/math'
 
-// https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readyState
-const READY_STATE_DONE = 2
-
-const readCsvFile = async (file: File): Promise<string | null> => {
-  const reader = new FileReader()
-
-  return new Promise((resolve, reject) => {
-    reader.onload = function (evt) {
-      if (evt?.target?.readyState != READY_STATE_DONE) return resolve(null)
-      if (evt?.target.error) {
-        reject(evt.target.error)
-        return
-      }
-
-      const content = evt.target.result as string | null
-
-      resolve(content)
-    }
-
-    reader.readAsText(file)
-  })
-}
-
-const parseCsvFile = (csvContent: string) => {
+/**
+ * Parse a CSV file containing JB Splits.
+ * @param csvContent - raw CSV content, including a header row.
+ * @returns array of Split objects
+ */
+const parseSplitsCsvFile = (csvContent: string): Split[] => {
+  // Skip the header row (the first row in the CSV file).
   const [, ...rows] = csvContent.split('\n')
 
   const splits: Split[] = rows.map(row => {
@@ -70,13 +55,23 @@ export function SplitCsvUpload({
 
     const { files } = e.target
     const file = files?.[0]
-    if (!file) return
+    if (!file) {
+      emitErrorNotification(t`No file uploaded.`)
+      return
+    }
 
-    const csvContent = await readCsvFile(file)
-    if (!csvContent) return
+    try {
+      const csvContent = await readFile(file)
+      if (!csvContent) {
+        emitErrorNotification(t`File empty or corrupt. Try again.`)
+        return
+      }
 
-    const splits = parseCsvFile(csvContent)
-    onChange(splits)
+      const splits = parseSplitsCsvFile(csvContent)
+      onChange(splits)
+    } catch (e) {
+      emitErrorNotification(t`File upload failed. Try again.`)
+    }
   }
 
   return (

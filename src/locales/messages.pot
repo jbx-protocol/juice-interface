@@ -1064,7 +1064,13 @@ msgstr ""
 msgid "Fee from <0><1/></0>"
 msgstr ""
 
+msgid "File empty or corrupt. Try again."
+msgstr ""
+
 msgid "File must be less than {formattedSize}{unit}"
+msgstr ""
+
+msgid "File upload failed. Try again."
 msgstr ""
 
 msgid "Fund and operate your thing, your way."
@@ -1494,6 +1500,9 @@ msgid "No activity yet"
 msgstr ""
 
 msgid "No beneficiary selected. Is your wallet connected?"
+msgstr ""
+
+msgid "No file uploaded."
 msgstr ""
 
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."

@@ -86,7 +86,7 @@ export function TransferUnclaimedTokensForm({
           }
         />
       </Form.Item>
-      <Form.Item name="to" label={t`Recipient Address`}>
+      <Form.Item name="to" label={t`Recipient address`}>
         <EthAddressInput />
       </Form.Item>
       <Form.Item>

@@ -64,7 +64,7 @@ export default function ProjectDiscountRate({
                 <Switch checked={checked} onChange={onToggle} />{' '}
                 {!checked ? (
                   <span style={{ color: colors.text.tertiary, marginLeft: 10 }}>
-                    <Trans>({defaultFundingCycleData.discountRate}%)</Trans>
+                    ({defaultFundingCycleData.discountRate}%)
                   </span>
                 ) : null}
               </>

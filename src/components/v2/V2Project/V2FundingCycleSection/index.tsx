@@ -1,40 +1,36 @@
-import { SettingOutlined } from '@ant-design/icons'
-import { Button, Tooltip } from 'antd'
-
-import { ExclamationCircleOutlined } from '@ant-design/icons'
+import { ExclamationCircleOutlined, SettingOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
+import { Button, Tooltip } from 'antd'
+import { CardSection } from 'components/CardSection'
+import Loading from 'components/Loading'
+import FundingCycleSection, {
+  TabType,
+} from 'components/Project/FundingCycleSection'
 import { ThemeContext } from 'contexts/themeContext'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
+import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
+import { useProjectUpcomingFundingCycle } from 'hooks/v2/contractReader/ProjectUpcomingFundingCycle'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/V2ConnectedWalletHasPermission'
 import { V2OperatorPermission } from 'models/v2/permissions'
+import { useRouter } from 'next/router'
 import { useContext } from 'react'
-
-import Loading from 'components/Loading'
+import { pushSettingsContent } from 'utils/pushSettingsPage'
 import {
   hasFundingDuration,
   V2FundingCycleRiskCount,
 } from 'utils/v2/fundingCycle'
 import { serializeV2FundingCycleData } from 'utils/v2/serializers'
-
-import { CardSection } from 'components/CardSection'
-import FundingCycleSection, {
-  TabType,
-} from 'components/Project/FundingCycleSection'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
-
-import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
-
-import { useProjectUpcomingFundingCycle } from 'hooks/v2/contractReader/ProjectUpcomingFundingCycle'
-import V2ReconfigureFundingModalTrigger from '../V2ProjectReconfigureModal/V2ReconfigureModalTrigger'
 import CurrentFundingCycle from './CurrentFundingCycle'
 import FundingCycleHistory from './FundingCycleHistory'
 import NoFundingCycle from './NoFundingCycle'
-import UpcomingFundingCycle from './UpcomingFundingCycle'
+import { default as UpcomingFundingCycle } from './UpcomingFundingCycle'
 
 export default function V2FundingCycleSection({
   expandCard,
 }: {
   expandCard?: boolean
 }) {
+  const router = useRouter()
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -135,20 +131,19 @@ export default function V2FundingCycleSection({
       tabs={tabs}
       reconfigureButton={
         canReconfigure ? (
-          <V2ReconfigureFundingModalTrigger
-            hideProjectDetails
-            triggerButton={(onClick: VoidFunction) => (
-              <Button size="small" onClick={onClick} icon={<SettingOutlined />}>
-                <span>
-                  {hasFundingDuration(fundingCycleData) ? (
-                    <Trans>Reconfigure upcoming</Trans>
-                  ) : (
-                    <Trans>Reconfigure</Trans>
-                  )}
-                </span>
-              </Button>
-            )}
-          />
+          <Button
+            size="small"
+            onClick={() => pushSettingsContent(router, 'reconfigurefc')}
+            icon={<SettingOutlined />}
+          >
+            <span>
+              {hasFundingDuration(fundingCycleData) ? (
+                <Trans>Reconfigure upcoming</Trans>
+              ) : (
+                <Trans>Reconfigure</Trans>
+              )}
+            </span>
+          </Button>
         ) : null
       }
     />

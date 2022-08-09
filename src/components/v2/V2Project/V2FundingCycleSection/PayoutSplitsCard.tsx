@@ -1,28 +1,25 @@
 import { SettingOutlined } from '@ant-design/icons'
+import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import { Button, Skeleton, Space, Tooltip } from 'antd'
 import { CardSection } from 'components/CardSection'
 import SpendingStats from 'components/Project/SpendingStats'
 import TooltipLabel from 'components/TooltipLabel'
 import SplitList from 'components/v2/shared/SplitList'
+import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { V2CurrencyOption } from 'models/v2/currencyOption'
-import { useContext, useState } from 'react'
-
-import { V2CurrencyName } from 'utils/v2/currency'
-
-import { formatFee, MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
-
-import { BigNumber } from '@ethersproject/bignumber'
 import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerminalFee'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/V2ConnectedWalletHasPermission'
+import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { V2OperatorPermission } from 'models/v2/permissions'
 import { Split } from 'models/v2/splits'
+import { useRouter } from 'next/router'
+import { useContext, useState } from 'react'
 import { detailedTimeString } from 'utils/formatTime'
-
+import { pushSettingsContent } from 'utils/pushSettingsPage'
+import { V2CurrencyName } from 'utils/v2/currency'
+import { formatFee, MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
 import { reloadWindow } from 'utils/windowUtils'
-
-import { ThemeContext } from 'contexts/themeContext'
 import DistributePayoutsModal from './modals/DistributePayoutsModal'
 import { EditPayoutsModal } from './modals/EditPayoutsModal'
 
@@ -39,6 +36,7 @@ export default function PayoutSplitsCard({
   distributionLimit: BigNumber | undefined
   fundingCycleDuration: BigNumber | undefined
 }) {
+  const router = useRouter()
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -168,7 +166,7 @@ export default function PayoutSplitsCard({
             {canEditPayouts && effectiveDistributionLimit.gt(0) && (
               <Button
                 size="small"
-                onClick={() => setEditPayoutModalVisible(true)}
+                onClick={() => pushSettingsContent(router, 'payouts')}
                 icon={<SettingOutlined />}
                 style={{ marginBottom: '1rem' }}
               >

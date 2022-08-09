@@ -1,27 +1,22 @@
 import { Trans } from '@lingui/macro'
 import { Button, Divider, Space } from 'antd'
-import { useWallet } from 'hooks/Wallet'
-import { useContext, useState } from 'react'
-
-import VeNftSetupModal from 'components/veNft/VeNftSetupModal'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { useLaunchVeNftTx } from 'hooks/veNft/transactor/LaunchVeNftTx'
-
-import { featureFlagEnabled } from 'utils/featureFlags'
-
+import FormattedAddress from 'components/FormattedAddress'
 import {
   DEFAULT_LOCK_DURATIONS,
   VENFT_RESOLVER_ADDRESS,
 } from 'constants/veNft/veNftProject'
-
-import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { useLaunchVeNftTx } from 'hooks/veNft/transactor/LaunchVeNftTx'
+import { useWallet } from 'hooks/Wallet'
+import { useContext, useState } from 'react'
 
 const VeNftEnableSection = () => {
   const { isConnected, connect } = useWallet()
-  const { tokenSymbol } = useContext(V2ProjectContext)
+  const {
+    tokenSymbol,
+    veNft: { contractAddress: veNftContractAddress },
+  } = useContext(V2ProjectContext)
   const [loading, setLoading] = useState(false)
-  const [setupModalVisible, setSetupModalVisible] = useState(false)
-  const veNftCreatorEnabled = featureFlagEnabled(FEATURE_FLAGS.VENFT_CREATOR)
 
   const launchVeBannyTx = useLaunchVeNftTx()
 
@@ -65,43 +60,24 @@ const VeNftEnableSection = () => {
               veBanny assets and parameters.
             </Trans>
           </p>
-          <Button
-            type="primary"
-            size="small"
-            onClick={launchVeBanny}
-            loading={loading}
-          >
-            Launch veBanny
-          </Button>
-        </section>
-        <Divider />
-        {veNftCreatorEnabled && (
-          <section>
-            <h3>
-              <Trans>Enable veNFT Governance</Trans>
-            </h3>
-            <p>
-              <Trans>
-                Set up and launch veNFT governance for your project using custom
-                assets and parameters. (Experimental, does not currently launch)
-              </Trans>
-            </p>
+          {!veNftContractAddress ? (
             <Button
               type="primary"
               size="small"
-              onClick={() => setSetupModalVisible(true)}
+              onClick={launchVeBanny}
+              loading={loading}
             >
-              Launch Setup
+              <Trans>Launch veBanny</Trans>
             </Button>
-          </section>
-        )}
+          ) : (
+            <span>
+              <Trans>Contract address:</Trans>{' '}
+              <FormattedAddress address={veNftContractAddress} />
+            </span>
+          )}
+        </section>
+        <Divider />
       </>
-      {setupModalVisible && (
-        <VeNftSetupModal
-          visible={setupModalVisible}
-          onCancel={() => setSetupModalVisible(false)}
-        />
-      )}
     </Space>
   )
 }

@@ -1,8 +1,8 @@
-import { CaretRightFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Divider, Form, Modal, Space } from 'antd'
+import { Button, Form, Space } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
-import { useCallback, useContext, useState } from 'react'
+import { useContext, useState } from 'react'
+import { CaretRightFilled } from '@ant-design/icons'
 
 import UnsavedChangesModal from 'components/v2/shared/UnsavedChangesModal'
 
@@ -14,15 +14,14 @@ import RulesDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/R
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { MemoFormInput } from 'components/inputs/Pay/MemoFormInput'
+import { useEditingProjectData } from 'components/v2/V2Project/V2ProjectReconfigureModal/hooks/editingProjectData'
+import { useFundingHasSavedChanges } from 'components/v2/V2Project/V2ProjectReconfigureModal/hooks/fundingHasSavedChanges'
+import { useInitialEditingData } from 'components/v2/V2Project/V2ProjectReconfigureModal/hooks/initialEditingData'
+import { useReconfigureFundingCycle } from 'components/v2/V2Project/V2ProjectReconfigureModal/hooks/reconfigureFundingCycle'
+import ReconfigurePreview from 'components/v2/V2Project/V2ProjectReconfigureModal/ReconfigurePreview'
+import V2ReconfigureUpcomingMessage from 'components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage'
 
-import { V2ReconfigureProjectHandleDrawer } from '../V2ReconfigureProjectHandleDrawer'
-import { V2ReconfigureProjectDetailsDrawer } from './drawers/V2ReconfigureProjectDetailsDrawer'
-import { useEditingProjectData } from './hooks/editingProjectData'
-import { useFundingHasSavedChanges } from './hooks/fundingHasSavedChanges'
-import { useInitialEditingData } from './hooks/initialEditingData'
-import { useReconfigureFundingCycle } from './hooks/reconfigureFundingCycle'
-import ReconfigurePreview from './ReconfigurePreview'
-import V2ReconfigureUpcomingMessage from './V2ReconfigureUpcomingMessage'
+import { exit } from 'process'
 
 function ReconfigureButton({
   title,
@@ -69,21 +68,9 @@ export const FundingDrawersSubtitles = (
   </p>
 )
 
-export default function V2ProjectReconfigureModal({
-  visible,
-  onOk: exit,
-  onCancel,
-  hideProjectDetails,
-}: {
-  visible: boolean
-  onOk: VoidFunction
-  onCancel: VoidFunction
-  hideProjectDetails?: boolean
-}) {
-  const { initialEditingData } = useInitialEditingData(visible)
-
+export default function V2ProjectReconfigureForm() {
+  const { initialEditingData } = useInitialEditingData(true)
   const editingProjectData = useEditingProjectData()
-
   const [memo, setMemo] = useState('')
   const {
     fundingHasSavedChanges,
@@ -102,10 +89,6 @@ export default function V2ProjectReconfigureModal({
   const { reconfigureLoading, reconfigureFundingCycle } =
     useReconfigureFundingCycle({ editingProjectData, memo, exit })
 
-  const [projectHandleDrawerVisible, setProjectHandleDrawerVisible] =
-    useState<boolean>(false)
-  const [projectDetailsDrawerVisible, setProjectDetailsDrawerVisible] =
-    useState<boolean>(false)
   const [fundingDrawerVisible, setFundingDrawerVisible] =
     useState<boolean>(false)
   const [tokenDrawerVisible, setTokenDrawerVisible] = useState<boolean>(false)
@@ -120,76 +103,25 @@ export default function V2ProjectReconfigureModal({
   const [unsavedChangesModalVisibile, setUnsavedChangesModalVisible] =
     useState<boolean>(false)
 
-  const openUnsavedChangesModal = () => setUnsavedChangesModalVisible(true)
+  // const openUnsavedChangesModal = () => setUnsavedChangesModalVisible(true)
   const closeUnsavedChangesModal = () => setUnsavedChangesModalVisible(false)
 
   const closeUnsavedChangesModalAndExit = () => {
     closeUnsavedChangesModal()
-    onCancel()
   }
 
-  const handleGlobalModalClose = useCallback(() => {
-    if (!fundingHasSavedChanges) {
-      return onCancel()
-    }
-    openUnsavedChangesModal()
-  }, [fundingHasSavedChanges, onCancel])
+  // TODO: unsaved changes
+  // const handleGlobalModalClose = useCallback(() => {
+  //   openUnsavedChangesModal()
+  // }, [])
 
   const nftsWithFalseDataSourceForPay = Boolean(
     nftRewardsCids?.length && !fundingCycleMetadata?.useDataSourceForPay,
   )
 
   return (
-    <Modal
-      title={<Trans>Project configuration</Trans>}
-      visible={visible}
-      onOk={reconfigureFundingCycle}
-      onCancel={handleGlobalModalClose}
-      okText={t`Deploy funding cycle configuration`}
-      okButtonProps={{
-        disabled: !fundingHasSavedChanges && !nftsWithFalseDataSourceForPay,
-        style: { marginBottom: '15px' },
-      }}
-      confirmLoading={reconfigureLoading}
-      width={650}
-      style={{ paddingBottom: 20, paddingTop: 20 }}
-      centered
-      destroyOnClose
-    >
+    <>
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
-        {!hideProjectDetails && (
-          <>
-            <h4 style={{ marginBottom: 0 }}>
-              <Trans>Edit project details</Trans>
-            </h4>
-            <p>
-              <Trans>
-                Changes to project details will take effect immediately.
-              </Trans>
-            </p>
-          </>
-        )}
-        {!hideProjectDetails && (
-          <ReconfigureButton
-            reconfigureHasChanges={false}
-            title={t`Project handle`}
-            onClick={() => setProjectHandleDrawerVisible(true)}
-          />
-        )}
-        {!hideProjectDetails && (
-          <>
-            <ReconfigureButton
-              reconfigureHasChanges={false}
-              title={t`Other details`}
-              onClick={() => setProjectDetailsDrawerVisible(true)}
-            />
-            <Divider />
-          </>
-        )}
-
-        <h4 style={{ marginBottom: 0 }}>
-          <Trans>Reconfigure upcoming funding cycles</Trans>
-        </h4>
         <p>
           <V2ReconfigureUpcomingMessage />
         </p>
@@ -230,20 +162,16 @@ export default function V2ProjectReconfigureModal({
             <MemoFormInput value={memo} onChange={setMemo} />
           </Form.Item>
         </Form>
+        <Button
+          loading={reconfigureLoading}
+          onClick={reconfigureFundingCycle}
+          disabled={!fundingHasSavedChanges && !nftsWithFalseDataSourceForPay}
+          type="primary"
+        >
+          <Trans>Deploy funding cycle configuration</Trans>
+        </Button>
       </Space>
 
-      {hideProjectDetails ? null : (
-        <V2ReconfigureProjectDetailsDrawer
-          visible={projectDetailsDrawerVisible}
-          onFinish={() => setProjectDetailsDrawerVisible(false)}
-        />
-      )}
-      {hideProjectDetails ? null : (
-        <V2ReconfigureProjectHandleDrawer
-          visible={projectHandleDrawerVisible}
-          onFinish={() => setProjectHandleDrawerVisible(false)}
-        />
-      )}
       <FundingDrawer
         visible={fundingDrawerVisible}
         onClose={closeReconfigureDrawer}
@@ -261,6 +189,6 @@ export default function V2ProjectReconfigureModal({
         onOk={closeUnsavedChangesModalAndExit}
         onCancel={closeUnsavedChangesModal}
       />
-    </Modal>
+    </>
   )
 }

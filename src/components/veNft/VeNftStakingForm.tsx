@@ -34,12 +34,17 @@ import { useVeNftResolverTokenUri } from 'hooks/veNft/VeNftResolverTokenUri'
 import Callout from 'components/Callout'
 import { VeNftContext } from 'contexts/v2/veNftContext'
 
-import { shadowCard } from 'constants/styles/shadowCard'
+import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
 
-interface StakingFormProps {
+import { shadowCard } from 'constants/styles/shadowCard'
+import VeNftTokenSelectInput from './formControls/VeNftTokenSelectInput'
+
+export interface StakingFormProps {
   tokensStaked: number
   lockDuration: number
   beneficiary: string
+  useJbToken: boolean
+  allowPublicExtension: boolean
 }
 
 interface VeNftStakingFormProps {
@@ -65,6 +70,7 @@ const VeNftStakingForm = ({
   const tokensStaked = useWatch('tokensStaked', form) || 1
   const lockDuration = useWatch('lockDuration', form) || 0
   const beneficiary = useWatch('beneficiary', form) || ''
+  const useJbToken = useWatch('useJbToken', form)
 
   const { data: nftTokenUri } = useVeNftResolverTokenUri(
     parseWad(tokensStaked),
@@ -87,6 +93,8 @@ const VeNftStakingForm = ({
       : 0
 
   const { data: claimedBalance } = useERC20BalanceOf(tokenAddress, userAddress)
+  const { data: unclaimedBalance } = useUserUnclaimedTokenBalance()
+  const tokenBalance = useJbToken ? claimedBalance : unclaimedBalance
 
   const minTokensAllowedToStake = 1 //TODO: get this from the contract
 
@@ -147,6 +155,8 @@ const VeNftStakingForm = ({
     tokensStaked: minTokensAllowedToStake,
     lockDuration: 0,
     beneficiary: '',
+    useJbToken: false,
+    allowPublicExtension: false,
   }
 
   return (
@@ -165,12 +175,13 @@ const VeNftStakingForm = ({
                 NFTs.
               </Trans>
             </Callout>
+            <VeNftTokenSelectInput form={form} />
             <div>
               <Row gutter={20}>
                 <Col span={14}>
                   <TokensStakedInput
                     form={form}
-                    claimedBalance={claimedBalance}
+                    tokenBalance={tokenBalance}
                     tokenSymbolDisplayText={tokenSymbolDisplayText}
                     tokensStaked={tokensStaked}
                     minTokensAllowedToStake={minTokensAllowedToStake}
@@ -204,6 +215,7 @@ const VeNftStakingForm = ({
                 <Trans>View token ranges</Trans>
               </Button>
               <StakingFormActionButton
+                useJbToken={useJbToken}
                 hasAdequateApproval={hasAdequateApproval}
                 onReviewButtonClick={handleReviewButtonClick}
                 onApproveButtonClick={approve}
@@ -224,6 +236,8 @@ const VeNftStakingForm = ({
         tokensStaked={tokensStaked}
         lockDuration={lockDuration}
         beneficiary={beneficiary}
+        useJbToken={form.getFieldValue('useJbToken')}
+        allowPublicExtension={form.getFieldValue('allowPublicExtension')}
         votingPower={votingPower}
         tokenMetadata={tokenMetadata}
         onCancel={() => setConfirmStakeModalVisible(false)}

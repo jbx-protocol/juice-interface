@@ -96,6 +96,7 @@ export default function ProjectPreview({
 
     veNft: {
       contractAddress: undefined,
+      uriResolver: undefined,
     },
 
     loading: {

@@ -38,6 +38,11 @@ import {
   RedeemEventJson,
 } from './redeem-event'
 import { parseTapEventJson, TapEvent, TapEventJson } from '../v1/tap-event'
+import {
+  parseVeNftContractJson,
+  VeNftContract,
+  VeNftContractJson,
+} from '../v2/venft-contract'
 
 type BaseProject = {
   id: string
@@ -56,6 +61,7 @@ type BaseProject = {
   distributeToPayoutModEvents: Partial<DistributeToPayoutModEvent>[]
   distributeToTicketModEvents: Partial<DistributeToTicketModEvent>[]
   deployedERC20Events: Partial<DeployedERC20Event>[]
+  veNftContract: Partial<VeNftContract>
 }
 
 type ProjectV1 = {
@@ -104,6 +110,7 @@ export type ProjectJson = Partial<
     deployedERC20Events: DeployedERC20EventJson[]
     distributeToPayoutModEvents: DistributeToPayoutModEventJson[]
     distributeToTicketModEvents: DistributeToTicketModEventJson[]
+    veNftContract: VeNftContractJson
   }
 >
 
@@ -133,6 +140,9 @@ export const parseProjectJson = (project: ProjectJson): Partial<Project> => ({
   distributeToTicketModEvents:
     project.distributeToTicketModEvents?.map(parseDistributeToTicketModEvent) ??
     undefined,
+  veNftContract: project.veNftContract
+    ? parseVeNftContractJson(project.veNftContract)
+    : undefined,
 })
 
 export type TrendingProject = Pick<

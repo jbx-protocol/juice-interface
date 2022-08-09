@@ -59,10 +59,13 @@ export function NftRewardsSection({
     const nextRewardTier = rewardTiers[index + 1]
 
     return (
-      <Col md={8} xs={8}>
+      <Col
+        md={8}
+        xs={8}
+        key={`${rewardTier.contributionFloor}-${rewardTier.name}`}
+      >
         {!loading ? (
           <RewardTier
-            key={`${rewardTier.contributionFloor}-${rewardTier.name}`}
             rewardTier={rewardTier}
             rewardTierUpperLimit={nextRewardTier?.contributionFloor}
             isSelected={isSelected}

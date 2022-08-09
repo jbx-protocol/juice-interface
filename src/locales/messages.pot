@@ -125,6 +125,9 @@ msgstr ""
 msgid "<0>Description: </0><1/>"
 msgstr ""
 
+msgid "<0>Description:</0><1/>"
+msgstr ""
+
 msgid "<0>Discount rate</0>, to reduce your project token's issuance rate (tokens per ETH) each funding cycle."
 msgstr ""
 
@@ -150,6 +153,9 @@ msgid "<0>Learn more</0> about funding cycles."
 msgstr ""
 
 msgid "<0>Learn more</0> about overflow."
+msgstr ""
+
+msgid "<0>Max. supply:</0> <1>{0}</1>"
 msgstr ""
 
 msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
@@ -1334,6 +1340,9 @@ msgstr ""
 msgid "Light theme"
 msgstr ""
 
+msgid "Limited supply"
+msgstr ""
+
 msgid "Link Juicebox V1 project"
 msgstr ""
 
@@ -2075,6 +2084,9 @@ msgstr ""
 msgid "Set a funding cycle target"
 msgstr ""
 
+msgid "Set a limit on how many of these NFTs can be minted."
+msgstr ""
+
 msgid "Set a project handle (optional)"
 msgstr ""
 
@@ -2247,6 +2259,9 @@ msgid "The maximum amount of funds that can be distributed from the treasury eac
 msgstr ""
 
 msgid "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
+msgstr ""
+
+msgid "The maximum supply of this NFT in circulation."
 msgstr ""
 
 msgid "The number of project tokens minted when 1 ETH is contributed in the first funding cycle."

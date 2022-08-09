@@ -14,9 +14,6 @@ msgstr ""
 msgid "$ve{tokenSymbolDisplayText} Received"
 msgstr ""
 
-msgid "({0}%)"
-msgstr ""
-
 msgid "({realTokenAllocationPercent}% of all newly minted tokens)."
 msgstr ""
 
@@ -221,12 +218,6 @@ msgstr ""
 msgid "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
 msgstr ""
 
-msgid "@"
-msgstr ""
-
-msgid "@{handle}"
-msgstr ""
-
 msgid "@{handle} not found"
 msgstr ""
 
@@ -306,9 +297,6 @@ msgid "Add terminal"
 msgstr ""
 
 msgid "Add the V1 Token Payment Terminal to your project."
-msgstr ""
-
-msgid "Add to Balance"
 msgstr ""
 
 msgid "Add to balance"
@@ -1721,9 +1709,6 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
-msgid "Preview:"
-msgstr ""
-
 msgid "Project Created"
 msgstr ""
 
@@ -1866,9 +1851,6 @@ msgid "Receive {receiveText}"
 msgstr ""
 
 msgid "Recipient"
-msgstr ""
-
-msgid "Recipient Address"
 msgstr ""
 
 msgid "Recipient address"
@@ -2184,9 +2166,6 @@ msgid "Staking Summary:"
 msgstr ""
 
 msgid "Start"
-msgstr ""
-
-msgid "Start Over"
 msgstr ""
 
 msgid "Start over"
@@ -2921,9 +2900,6 @@ msgstr ""
 msgid "hours"
 msgstr ""
 
-msgid "juiceboxETH"
-msgstr ""
-
 msgid "last {trendingWindowDays} days"
 msgstr ""
 
@@ -3057,9 +3033,6 @@ msgid "{inflationRate} tokens / ETH"
 msgstr ""
 
 msgid "{issuanceRate} tokens / ETH"
-msgstr ""
-
-msgid "{label}"
 msgstr ""
 
 msgid "{lockDurationOptionInDays} {lockDurationOptionInDays, plural, one {{0}} other {{1}}}"

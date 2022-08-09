@@ -1003,14 +1003,6 @@ msgstr "Изменить распределение токенов"
 msgid "Edit tracked assets"
 msgstr "Изменить отслеживаемые активы"
 
-<<<<<<< HEAD
-=======
-#: src/components/veNft/VeNftSetupSection.tsx
-msgid "Enable veBanny Governance"
-msgstr ""
-
-#: src/components/veNft/VeNftSetupSection.tsx
->>>>>>> 6062f347 (Add translations, add tx)
 msgid "Enable veNFT Governance"
 msgstr ""
 
@@ -2115,18 +2107,6 @@ msgstr ""
 msgid "Set up V1 token migration"
 msgstr ""
 
-<<<<<<< HEAD
-=======
-#: src/components/veNft/VeNftSetupSection.tsx
-msgid "Set up and launch veNFT governance for your project using custom assets and parameters. (Experimental, does not currently launch)"
-msgstr ""
-
-#: src/components/veNft/VeNftSetupSection.tsx
-msgid "Set up and launch veNFT governance for your project using default veBanny assets and parameters."
-msgstr ""
-
-#: src/components/veNft/VeNftSetupModal.tsx
->>>>>>> 6062f347 (Add translations, add tx)
 msgid "Set up and launch veNFT governance for your project."
 msgstr ""
 

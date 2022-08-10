@@ -1,11 +1,22 @@
 import { Layout, Menu, MenuProps } from 'antd'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 
 import V2ProjectSettingsContent from './V2ProjectSettingsContent'
 
 type MenuItem = Required<MenuProps>['items'][number]
+
+export type V2SettingsContentKey =
+  | 'general'
+  | 'project-handle'
+  | 'funding-cycle'
+  | 'payouts'
+  | 'reserved-tokens'
+  | 'payment-addresses'
+  | 'v1-token-migration'
+  | 'venft'
 
 function getItem(
   label: React.ReactNode,
@@ -25,7 +36,10 @@ const items: MenuItem[] = [
   getItem(
     'Project',
     'project',
-    [getItem('General', 'project1'), getItem('Project handle', 'project2')],
+    [
+      getItem('General', 'general'),
+      getItem('Project handle', 'project-handle'),
+    ],
     'group',
   ),
   getItem('', 'div1', undefined, 'divider'),
@@ -33,9 +47,9 @@ const items: MenuItem[] = [
     'Funding',
     'funding',
     [
-      getItem('Funding cycle', 'funding1'),
-      getItem('Payouts', 'funding2'),
-      getItem('Reserved tokens', 'funding3'),
+      getItem('Funding cycle', 'funding-cycle'),
+      getItem('Payouts', 'payouts'),
+      getItem('Reserved tokens', 'reserved-tokens'),
     ],
     'group',
   ),
@@ -44,28 +58,30 @@ const items: MenuItem[] = [
     'Manage',
     'manage',
     [
-      getItem('Payment addresses', 'manage1'),
-      getItem('V1 token migration', 'manage2'),
-      getItem('veNFT', 'manage3'),
+      getItem('Payment addresses', 'payment-addresses'),
+      getItem('V1 token migration', 'v1-token-migration'),
+      getItem('veNFT', 'venft'),
     ],
     'group',
   ),
 ]
 
 const V2ProjectSettings = () => {
-  const [activeKey, setActiveKey] = useState<string | undefined>('project1')
+  const { projectId } = useContext(V2ProjectContext)
+  const [activeKey, setActiveKey] = useState<V2SettingsContentKey>('general')
 
   const handleMenuItemClick = (item: MenuItem) => {
-    setActiveKey(item?.key?.toString())
+    const key = item?.key as V2SettingsContentKey
+    setActiveKey(key)
   }
 
   return (
     <Layout style={{ minHeight: '100vh', background: 'transparent' }}>
       <Layout.Sider style={{ background: 'transparent' }}>
-        <Link href={`project`}>{`< Back to Project`}</Link>
+        <Link href={`/v2/p/${projectId}`}>{`< Back to Project`}</Link>
         <Menu
           defaultOpenKeys={['project', 'funding', 'manage']}
-          defaultSelectedKeys={['project1']}
+          defaultSelectedKeys={['general']}
           mode="inline"
           theme="dark"
           items={items}

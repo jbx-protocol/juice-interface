@@ -11,7 +11,7 @@ import { revalidateProject } from 'utils/revalidateProject'
 
 import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
 
-const V2ProjectSettingsMenuItems = () => {
+const V2ProjectSettingsProjectHandleContent = () => {
   const [projectForm] = useForm<ProjectDetailsFormFields>()
 
   const [loadingSaveChanges, setLoadingSaveChanges] = useState<boolean>()
@@ -94,4 +94,4 @@ const V2ProjectSettingsMenuItems = () => {
   )
 }
 
-export default V2ProjectSettingsMenuItems
+export default V2ProjectSettingsProjectHandleContent

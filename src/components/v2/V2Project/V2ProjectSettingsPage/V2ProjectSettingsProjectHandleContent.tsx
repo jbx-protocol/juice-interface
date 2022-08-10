@@ -16,7 +16,7 @@ import { v2ProjectRoute } from 'utils/routes'
 
 import { projectHandleENSTextRecordKey } from 'constants/projectHandleENSTextRecordKey'
 
-const V2ProjectSettingsProjectHandleTab = () => {
+const V2ProjectSettingsProjectHandleContent = () => {
   const { handle, projectId } = useContext(V2ProjectContext)
   const [ensNameForm] = useForm<{ ensName: string }>()
 
@@ -224,4 +224,4 @@ const V2ProjectSettingsProjectHandleTab = () => {
   )
 }
 
-export default V2ProjectSettingsProjectHandleTab
+export default V2ProjectSettingsProjectHandleContent

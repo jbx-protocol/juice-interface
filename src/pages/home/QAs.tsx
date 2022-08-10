@@ -4,7 +4,9 @@ import React, { ReactNode } from 'react'
 import Link from 'next/link'
 import { helpPagePath } from 'utils/helpPageHelper'
 
-export const OverflowVideoLink: React.FC = ({ children }) => (
+export const OverflowVideoLink: React.FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => (
   <ExternalLink href="https://youtu.be/9Mq5oDh0aBY">{children}</ExternalLink>
 )
 

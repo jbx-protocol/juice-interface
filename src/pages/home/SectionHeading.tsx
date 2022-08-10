@@ -1,10 +1,9 @@
 import useMobile from 'hooks/Mobile'
 import { CSSProperties } from 'react'
 
-export const SectionHeading: React.FC<{ style?: CSSProperties }> = ({
-  children,
-  style,
-}) => {
+export const SectionHeading: React.FC<
+  React.PropsWithChildren<{ style?: CSSProperties }>
+> = ({ children, style }) => {
   const isMobile = useMobile()
 
   return (

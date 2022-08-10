@@ -20,7 +20,9 @@ import useMobile from 'hooks/Mobile'
  * is still an issue, but the current structure allows opengraph and twitter
  * meta tags to be setup correctly.
  */
-export const AppWrapper: React.FC = ({ children }) => {
+export const AppWrapper: React.FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   return (
     <React.StrictMode>
       <ReactQueryProvider>
@@ -39,7 +41,7 @@ export const AppWrapper: React.FC = ({ children }) => {
   )
 }
 
-const _Wrapper: React.FC = ({ children }) => {
+const _Wrapper: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   const router = useRouter()
   if (router.asPath.match(/^\/#\//)) {
     redirectTo(router.asPath.replace('/#/', ''))

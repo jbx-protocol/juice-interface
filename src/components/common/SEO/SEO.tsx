@@ -18,7 +18,7 @@ interface Props {
   children?: ReactNode
 }
 
-export const SEO: FC<Props> = ({
+export const SEO: FC<React.PropsWithChildren<Props>> = ({
   url,
   title,
   description,

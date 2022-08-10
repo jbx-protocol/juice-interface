@@ -24,20 +24,20 @@ export const AppWrapper: React.FC<React.PropsWithChildren<unknown>> = ({
   children,
 }) => {
   return (
-    <React.StrictMode>
-      <ReactQueryProvider>
-        <Provider store={store}>
-          <LanguageProvider>
-            <ThemeProvider>
-              {/* TODO: Remove v1 provider */}
-              <V1UserProvider>
-                <_Wrapper>{children}</_Wrapper>
-              </V1UserProvider>
-            </ThemeProvider>
-          </LanguageProvider>
-        </Provider>
-      </ReactQueryProvider>
-    </React.StrictMode>
+    // <React.StrictMode>
+    <ReactQueryProvider>
+      <Provider store={store}>
+        <LanguageProvider>
+          <ThemeProvider>
+            {/* TODO: Remove v1 provider */}
+            <V1UserProvider>
+              <_Wrapper>{children}</_Wrapper>
+            </V1UserProvider>
+          </ThemeProvider>
+        </LanguageProvider>
+      </Provider>
+    </ReactQueryProvider>
+    // </React.StrictMode>
   )
 }
 

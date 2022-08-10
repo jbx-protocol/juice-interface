@@ -1,4 +1,4 @@
-import { useAccount } from 'wagmi'
+import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 import { V2OperatorPermission } from 'models/v2/permissions'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
@@ -9,7 +9,7 @@ import { useV2HasPermissions } from './V2HasPermissions'
 export function useV2ConnectedWalletHasPermission(
   permission: V2OperatorPermission | V2OperatorPermission[],
 ) {
-  const { address: userAddress } = useAccount()
+  const { userAddress } = useWallet()
   const { projectId, isPreviewMode } = useContext(V2ProjectContext)
 
   const { data: owner } = useProjectOwner(projectId)

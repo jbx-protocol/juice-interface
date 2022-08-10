@@ -1,4 +1,4 @@
-import { useAccount } from 'wagmi'
+import { useWallet } from 'hooks/Wallet'
 import { t, Trans } from '@lingui/macro'
 import { Modal, Space, Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
@@ -41,7 +41,7 @@ export default function RedeemModal({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { address: userAddress } = useAccount()
+  const { userAddress } = useWallet()
   const { projectId, tokenSymbol, currentFC, terminal, overflow } =
     useContext(V1ProjectContext)
 

@@ -1,4 +1,4 @@
-import { useAccount } from 'wagmi'
+import { useWallet } from 'hooks/Wallet'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { BigNumber } from '@ethersproject/bignumber'
 import { useContext, useMemo } from 'react'
@@ -10,7 +10,7 @@ import useTotalBalanceOf from './TotalBalanceOf'
 /** Returns claimable amount of project tokens for user with address `userAddress` and balance `totalBalance`. */
 export default function useClaimableOverflowOf() {
   const { terminal, projectId } = useContext(V1ProjectContext)
-  const { address: userAddress } = useAccount()
+  const { userAddress } = useWallet()
 
   const totalBalance = useTotalBalanceOf(userAddress, projectId, terminal?.name)
 

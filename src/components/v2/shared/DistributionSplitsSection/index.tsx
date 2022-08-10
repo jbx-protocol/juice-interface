@@ -1,4 +1,4 @@
-import { useAccount } from 'wagmi'
+import { useWallet } from 'hooks/Wallet'
 import { t, Trans } from '@lingui/macro'
 import { Button, Form, Radio, Space } from 'antd'
 import { useCallback, useContext, useEffect, useState } from 'react'
@@ -50,7 +50,7 @@ export default function DistributionSplitsSection({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { address: userAddress } = useAccount()
+  const { userAddress } = useWallet()
 
   const distributionLimitIsInfinite =
     !distributionLimit || parseWad(distributionLimit).eq(MAX_DISTRIBUTION_LIMIT)

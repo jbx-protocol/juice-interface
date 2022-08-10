@@ -1,4 +1,4 @@
-import { useAccount } from 'wagmi'
+import { useWallet } from 'hooks/Wallet'
 import { t, Trans } from '@lingui/macro'
 import { Button, Modal, Skeleton, Space } from 'antd'
 import DistributionSplitCard from 'components/v2/shared/DistributionSplitsSection/DistributionSplitCard'
@@ -27,7 +27,7 @@ import CurrencySymbol from 'components/CurrencySymbol'
 import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
 
 const OwnerSplitCard = ({ splits }: { splits: Split[] }) => {
-  const { address: userAddress } = useAccount()
+  const { userAddress } = useWallet()
   const { distributionLimit, distributionLimitCurrency } =
     useContext(V2ProjectContext)
   const remainingSplitsPercentage = 100 - getTotalSplitsPercentage(splits)

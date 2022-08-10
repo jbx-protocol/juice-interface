@@ -1,4 +1,3 @@
-import { useAccount } from 'wagmi'
 import { t, Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
@@ -15,6 +14,7 @@ import { reloadWindow } from 'utils/windowUtils'
 import axios from 'axios'
 import { revalidateProject } from 'utils/revalidateProject'
 import { V1TerminalVersion } from 'models/v1/terminals'
+import { useWallet } from 'hooks/Wallet'
 
 export default function ArchiveProject({
   storeCidTx,
@@ -33,7 +33,7 @@ export default function ArchiveProject({
   canTakePaymentsWhenArchived?: boolean
   cv: CV
 }) {
-  const { address: userAddress } = useAccount()
+  const { userAddress } = useWallet()
   const {
     theme: { colors },
   } = useContext(ThemeContext)

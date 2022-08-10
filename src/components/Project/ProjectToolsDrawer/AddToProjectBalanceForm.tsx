@@ -1,4 +1,3 @@
-import { useAccount } from 'wagmi'
 import { Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
@@ -8,6 +7,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useState } from 'react'
 import { parseWad } from 'utils/formatNumber'
+import { useWallet } from 'hooks/Wallet'
 
 export function AddToProjectBalanceForm({
   useAddToBalanceTx,
@@ -16,7 +16,7 @@ export function AddToProjectBalanceForm({
     value: BigNumber
   }>
 }) {
-  const { address: userAddress } = useAccount()
+  const { userAddress } = useWallet()
 
   const [addToBalanceForm] = Form.useForm<{ amount: string }>()
   const [loadingAddToBalance, setLoadingAddToBalance] = useState<boolean>()

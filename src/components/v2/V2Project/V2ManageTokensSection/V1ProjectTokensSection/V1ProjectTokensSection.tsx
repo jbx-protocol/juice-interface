@@ -1,4 +1,4 @@
-import { useAccount } from 'wagmi'
+import { useWallet } from 'hooks/Wallet'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
@@ -21,7 +21,7 @@ export function V1ProjectTokensSection({
   tokenText: string
   style?: CSSProperties
 }) {
-  const { address: userAddress } = useAccount()
+  const { userAddress } = useWallet()
   const { projectId } = useContext(V2ProjectContext)
 
   const [migrateTokensModalVisible, setMigrateTokensModalVisible] =

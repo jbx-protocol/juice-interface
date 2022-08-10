@@ -1,7 +1,7 @@
-import { useAccount } from 'wagmi'
+import { useWallet } from './Wallet'
 
 export function useIsUserAddress(address: string | undefined) {
-  const { address: userAddress } = useAccount()
+  const { userAddress } = useWallet()
 
   return (
     address !== undefined &&

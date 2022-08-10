@@ -1,8 +1,8 @@
-import { useAccount } from 'wagmi'
+import { useWallet } from 'hooks/Wallet'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 
 export const useVeNftUserTokens = () => {
-  const { address: userAddress } = useAccount()
+  const { userAddress } = useWallet()
   return useSubgraphQuery({
     entity: 'veNftToken',
     keys: [

@@ -1,4 +1,4 @@
-import { useAccount } from 'wagmi'
+import { useWallet } from 'hooks/Wallet'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { getAddress } from '@ethersproject/address'
 import * as constants from '@ethersproject/constants'
@@ -78,7 +78,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
   nftRewards: TxNftArg
 }> {
   const { transactor, contracts } = useContext(V2UserContext)
-  const { address: userAddress } = useAccount()
+  const { userAddress } = useWallet()
 
   return (
     {

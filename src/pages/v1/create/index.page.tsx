@@ -6,7 +6,6 @@ import { Button, Col, Drawer, DrawerProps, Row, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
 import V1Project from 'components/v1/V1Project'
-import { useNetwork } from 'wagmi'
 import { useWallet } from 'hooks/Wallet'
 import {
   V1ProjectContext,
@@ -86,8 +85,7 @@ export default function V1CreatePage() {
 
 function V1Create() {
   const router = useRouter()
-  const { chain } = useNetwork()
-  const { userAddress, connect, isConnected } = useWallet()
+  const { chain, userAddress, connect, isConnected } = useWallet()
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>()
   const [viewedSteps, setViewedSteps] = useState<number[]>([])

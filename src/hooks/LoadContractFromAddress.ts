@@ -1,9 +1,10 @@
 import { isAddress } from 'ethers/lib/utils'
 import { useState, useEffect } from 'react'
-import { useSigner, useProvider } from 'wagmi'
 import { Contract } from '@ethersproject/contracts'
 import { ContractInterface } from '@ethersproject/contracts'
 import * as constants from '@ethersproject/constants'
+
+import { useWallet } from './Wallet'
 
 export const useLoadContractFromAddress = <ABI extends ContractInterface>({
   address,
@@ -14,8 +15,7 @@ export const useLoadContractFromAddress = <ABI extends ContractInterface>({
 }) => {
   const [contract, setContract] = useState<Contract>()
 
-  const { data: signer } = useSigner()
-  const provider = useProvider()
+  const { signer, provider } = useWallet()
 
   const isInputAddressValid = (
     address: string | undefined,

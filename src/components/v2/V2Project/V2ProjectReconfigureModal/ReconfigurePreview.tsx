@@ -1,4 +1,4 @@
-import { useAccount } from 'wagmi'
+import { useWallet } from 'hooks/Wallet'
 import { Col, Row, Space } from 'antd'
 import {
   AllowMintingStatistic,
@@ -48,7 +48,7 @@ export default function ReconfigurePreview({
   fundingCycleData: V2FundingCycleData
   fundAccessConstraints: V2FundAccessConstraint[]
 }) {
-  const { address: userAddress } = useAccount()
+  const { userAddress } = useWallet()
 
   const fundingCycle: V2FundingCycle = {
     ...fundingCycleData,

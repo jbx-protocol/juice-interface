@@ -3,7 +3,7 @@ import {
   V2ProjectContextType,
 } from 'contexts/v2/projectContext'
 import { BigNumber } from '@ethersproject/bignumber'
-import { useAccount } from 'wagmi'
+import { useWallet } from 'hooks/Wallet'
 
 import {
   useAppSelector,
@@ -33,7 +33,7 @@ export default function ProjectPreview({
   const fundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
   const fundingCycleData = useEditingV2FundingCycleDataSelector()
   const fundAccessConstraints = useEditingV2FundAccessConstraintsSelector()
-  const { address: userAddress } = useAccount()
+  const { userAddress } = useWallet()
 
   const fundingCycle: V2FundingCycle = {
     ...fundingCycleData,

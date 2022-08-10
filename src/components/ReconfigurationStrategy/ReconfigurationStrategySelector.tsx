@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Form, Input, Space } from 'antd'
 import * as constants from '@ethersproject/constants'
-import { useNetwork } from 'wagmi'
+import { useWallet } from 'hooks/Wallet'
 import { useContext, useState } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
 
@@ -23,7 +23,7 @@ function CustomStrategyInput({
   value?: string
   onChange: (address: string) => void
 }) {
-  const { chain } = useNetwork()
+  const { chain } = useWallet()
   return (
     <div>
       <Form.Item

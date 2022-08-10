@@ -1,6 +1,6 @@
-import { useSigner } from 'wagmi'
 import { Contract } from '@ethersproject/contracts'
 import { SignerOrProvider } from 'utils/types'
+import { useWallet } from 'hooks/Wallet'
 
 import { V1ContractName } from 'models/v1/contracts'
 import { V1Contracts } from 'models/v1/contracts'
@@ -12,7 +12,7 @@ import { readNetwork } from 'constants/networks'
 
 export function useV1ContractLoader() {
   const [contracts, setContracts] = useState<V1Contracts>()
-  const { data: signer } = useSigner()
+  const { signer } = useWallet()
 
   useEffect(() => {
     async function loadContracts() {

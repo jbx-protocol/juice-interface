@@ -1,4 +1,4 @@
-import { useAccount } from 'wagmi'
+import { useWallet } from 'hooks/Wallet'
 import { t, Trans } from '@lingui/macro'
 import { Button, Descriptions, Space, Statistic } from 'antd'
 import SectionHeader from 'components/SectionHeader'
@@ -64,7 +64,7 @@ export default function V2ManageTokensSection() {
     projectMetadata,
     cv,
   } = useContext(V2ProjectContext)
-  const { address: userAddress } = useAccount()
+  const { userAddress } = useWallet()
 
   const [manageTokensModalVisible, setManageTokensModalVisible] =
     useState<boolean>(false)

@@ -1,4 +1,3 @@
-import { useAccount } from 'wagmi'
 import { t, Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
@@ -10,6 +9,7 @@ import { useState } from 'react'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
+import { useWallet } from 'hooks/Wallet'
 
 export function TransferUnclaimedTokensForm({
   tokenSymbol,
@@ -23,7 +23,7 @@ export function TransferUnclaimedTokensForm({
     amount: BigNumber
   }>
 }) {
-  const { address: userAddress } = useAccount()
+  const { userAddress } = useWallet()
 
   const [loadingTransferTokens, setLoadingTransferTokens] = useState<boolean>()
 

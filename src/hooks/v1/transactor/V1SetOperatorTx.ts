@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { V1UserContext } from 'contexts/v1/userContext'
-import { useSigner } from 'wagmi'
+import { useWallet } from 'hooks/Wallet'
 
 import { TransactorInstance } from '../../Transactor'
 
@@ -12,7 +12,7 @@ type OperatorData = {
 
 export function useV1SetOperatorTx(): TransactorInstance<OperatorData> {
   const { transactor, contracts } = useContext(V1UserContext)
-  const { data: signer } = useSigner()
+  const { signer } = useWallet()
 
   return ({ operator, domain, permissionIndexes }: OperatorData, txOpts) => {
     if (!transactor || !signer || !contracts?.OperatorStore) {

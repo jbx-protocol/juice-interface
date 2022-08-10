@@ -10,7 +10,7 @@ import {
   useEditingV2FundingCycleMetadataSelector,
 } from 'hooks/AppSelector'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
-import { useAccount } from 'wagmi'
+import { useWallet } from 'hooks/Wallet'
 import { formattedNum } from 'utils/formatNumber'
 import { V2CurrencyName } from 'utils/v2/currency'
 import {
@@ -50,7 +50,7 @@ export default function FundingSummarySection() {
     state => state.editingV2Project,
   )
 
-  const { address: userAddress } = useAccount()
+  const { userAddress } = useWallet()
 
   const fundingCycleData = useEditingV2FundingCycleDataSelector()
   const fundAccessConstraints = useEditingV2FundAccessConstraintsSelector()

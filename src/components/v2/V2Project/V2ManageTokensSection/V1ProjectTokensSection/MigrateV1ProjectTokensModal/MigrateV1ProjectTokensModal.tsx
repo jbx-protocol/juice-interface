@@ -1,4 +1,4 @@
-import { useAccount } from 'wagmi'
+import { useWallet } from 'hooks/Wallet'
 import { Trans } from '@lingui/macro'
 import { Form, ModalProps, Space } from 'antd'
 import TransactionModal from 'components/TransactionModal'
@@ -25,7 +25,7 @@ export function MigrateProjectTokensModal({
   v1TokenBalance: number
   v1ProjectHandle: string
 } & ModalProps) {
-  const { address: userAddress } = useAccount()
+  const { userAddress } = useWallet()
   const { contracts } = useContext(V2UserContext)
 
   const [loading, setLoading] = useState<boolean>(false)

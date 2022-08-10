@@ -1,4 +1,4 @@
-import { useAccount } from 'wagmi'
+import { useWallet } from 'hooks/Wallet'
 import { BigNumber } from '@ethersproject/bignumber'
 import { useContext } from 'react'
 import { V2UserContext } from 'contexts/v2/userContext'
@@ -11,7 +11,7 @@ export function useTransferUnclaimedTokensTx(): TransactorInstance<{
   to: string
 }> {
   const { transactor, contracts } = useContext(V2UserContext)
-  const { address: userAddress } = useAccount()
+  const { userAddress } = useWallet()
   const { projectId } = useContext(V2ProjectContext)
 
   return ({ amount, to }, txOpts) => {

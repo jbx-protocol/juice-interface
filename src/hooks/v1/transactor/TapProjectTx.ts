@@ -1,4 +1,4 @@
-import { useAccount } from 'wagmi'
+import { useWallet } from 'hooks/Wallet'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
 import { BigNumber } from '@ethersproject/bignumber'
@@ -14,7 +14,7 @@ export function useTapProjectTx(): TransactorInstance<{
   currency: V1CurrencyOption
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
-  const { address: userAddress } = useAccount()
+  const { userAddress } = useWallet()
   const { projectId, terminal } = useContext(V1ProjectContext)
 
   return ({ tapAmount, minAmount, currency }, txOpts) => {

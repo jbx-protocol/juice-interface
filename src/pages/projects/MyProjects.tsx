@@ -8,10 +8,10 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useMyProjectsQuery } from 'hooks/Projects'
 import { useContext } from 'react'
 import Link from 'next/link'
-import { useAccount } from 'wagmi'
+import { useWallet } from 'hooks/Wallet'
 
 export default function MyProjects() {
-  const { address: userAddress } = useAccount()
+  const { userAddress } = useWallet()
 
   const { data: projects, isLoading } = useMyProjectsQuery(userAddress)
 

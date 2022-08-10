@@ -1,5 +1,4 @@
 import { Signer } from 'ethers/lib/ethers'
-import { useNetwork, useSigner } from 'wagmi'
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { hexlify } from '@ethersproject/bytes'
 import { Contract } from '@ethersproject/contracts'
@@ -47,8 +46,7 @@ export function useTransactor({
 }: {
   gasPrice?: BigNumber
 }): Transactor | undefined {
-  const { data: signer } = useSigner()
-  const { chain } = useNetwork()
+  const { chain, signer } = useWallet()
   const { checkNetworkSupported, checkWalletConnected } = useWallet()
 
   const { isDarkMode } = useContext(ThemeContext)

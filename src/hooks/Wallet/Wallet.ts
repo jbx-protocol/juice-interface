@@ -1,10 +1,12 @@
 import { useChainModal, useConnectModal } from '@rainbow-me/rainbowkit'
 import { useCallback, useMemo } from 'react'
-import { useAccount, useNetwork } from 'wagmi'
+import { useAccount, useNetwork, useProvider, useSigner } from 'wagmi'
 
 export function useWallet() {
   const { address: userAddress, isConnected } = useAccount()
   const { chain } = useNetwork()
+  const { data: signer } = useSigner()
+  const provider = useProvider()
   const { openConnectModal } = useConnectModal()
   const { openChainModal } = useChainModal()
 
@@ -49,9 +51,12 @@ export function useWallet() {
   }, [connect, isConnected])
 
   return {
+    signer,
+    provider,
     userAddress,
     isConnected: userAddress && isConnected,
     connect,
+    chain,
     chainUnsupported,
     changeNetworks,
     checkNetworkSupported,

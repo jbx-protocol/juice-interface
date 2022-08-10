@@ -1,5 +1,5 @@
-import { useAccount } from 'wagmi'
 import { ThemeContext } from 'contexts/themeContext'
+import { useWallet } from 'hooks/Wallet'
 
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
@@ -19,7 +19,7 @@ export default function FeedbackFormButton({
   projectHandle?: string
 }) {
   const { isDarkMode } = useContext(ThemeContext)
-  const { address: userAddress } = useAccount()
+  const { userAddress } = useWallet()
 
   const formUrl = feedbackFormURL({
     referrer: 'stoned-banny',

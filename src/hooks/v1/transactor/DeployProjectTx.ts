@@ -1,4 +1,4 @@
-import { useAccount } from 'wagmi'
+import { useWallet } from 'hooks/Wallet'
 import { V1UserContext } from 'contexts/v1/userContext'
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
@@ -22,7 +22,7 @@ export function useDeployProjectTx(): TransactorInstance<{
   ticketMods: TicketMod[]
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
-  const { address: userAddress } = useAccount()
+  const { userAddress } = useWallet()
 
   return (
     {

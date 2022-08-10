@@ -1,6 +1,6 @@
-import { useSigner } from 'wagmi'
 import { V2ContractName, V2Contracts } from 'models/v2/contracts'
 import { useEffect, useState } from 'react'
+import { useWallet } from 'hooks/Wallet'
 
 import { loadContract } from 'utils/contracts/loadContract'
 
@@ -8,7 +8,7 @@ import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
 
 export function useV2ContractLoader() {
-  const { data: signer } = useSigner()
+  const { signer } = useWallet()
   const [contracts, setContracts] = useState<V2Contracts>()
 
   useEffect(() => {

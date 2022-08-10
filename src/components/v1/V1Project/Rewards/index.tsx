@@ -1,4 +1,4 @@
-import { useAccount } from 'wagmi'
+import { useWallet } from 'hooks/Wallet'
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Button, Descriptions, Space, Statistic } from 'antd'
@@ -35,7 +35,7 @@ export default function Rewards() {
   const [participantsModalVisible, setParticipantsModalVisible] =
     useState<boolean>(false)
 
-  const { address: userAddress } = useAccount()
+  const { userAddress } = useWallet()
   const {
     projectId,
     handle,

@@ -1,4 +1,4 @@
-import { useAccount } from 'wagmi'
+import { useWallet } from 'hooks/Wallet'
 import { t, Trans } from '@lingui/macro'
 import { Descriptions, Form, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
@@ -30,7 +30,7 @@ export default function V2RedeemModal({
   onCancel?: VoidFunction
   onConfirmed?: VoidFunction
 }) {
-  const { address: userAddress } = useAccount()
+  const { userAddress } = useWallet()
   const {
     tokenSymbol,
     fundingCycle,

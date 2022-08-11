@@ -19,33 +19,62 @@ import { EditTokenAllocationContent } from 'components/v2/V2Project/EditTokenAll
 import V2ProjectSettingsPayoutsContent from 'components/v2/V2Project/V2ProjectSettingsPage/V2ProjectSettingsEditPayouts'
 import ArchiveV2Project from 'components/v2/V2Project/ArchiveV2Project'
 import { V1TokenMigrationSetupSection } from 'components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection'
+import { useRouter } from 'next/router'
+import { useState, useEffect } from 'react'
 
-interface V2ProjectSettingsContentProps {
-  activeKey: V2SettingsContentKey
-}
+const defaultPage: V2SettingsContentKey = 'general'
 
-const V2ProjectSettingsContent = ({
-  activeKey,
-}: V2ProjectSettingsContentProps) => {
-  const getActiveTab = (activeKey: V2SettingsContentKey) => {
-    switch (activeKey) {
+const V2ProjectSettingsContent = () => {
+  const [selectedSettingsPage, setSelectedSettingsPage] =
+    useState<V2SettingsContentKey>(defaultPage)
+  const router = useRouter()
+
+  useEffect(() => {
+    setSelectedSettingsPage(() => {
+      switch (router.query.settingsPage) {
+        case 'general':
+          return 'general'
+        case 'projecthandle':
+          return 'projecthandle'
+        case 'payouts':
+          return 'payouts'
+        case 'reservedtokens':
+          return 'reservedtokens'
+        case 'paymentaddresses':
+          return 'paymentaddresses'
+        case 'v1tokenmigration':
+          return 'v1tokenmigration'
+        case 'venft':
+          return 'venft'
+        case 'transferownership':
+          return 'transferownership'
+        case 'archiveproject':
+          return 'archiveproject'
+        default:
+          return defaultPage
+      }
+    })
+  }, [router.query.settingsPage])
+
+  const getActiveTab = (selectedSettingsPage: V2SettingsContentKey) => {
+    switch (selectedSettingsPage) {
       case 'general':
         return <V2ProjectDetails />
-      case 'project-handle':
+      case 'projecthandle':
         return <V2ReconfigureProjectHandle />
       case 'payouts':
         return <V2ProjectSettingsPayoutsContent />
-      case 'reserved-tokens':
+      case 'reservedtokens':
         return <EditTokenAllocationContent />
-      case 'payment-addresses':
+      case 'paymentaddresses':
         return <ProjectPayersSection />
-      case 'v1-token-migration':
+      case 'v1tokenmigration':
         return <V1TokenMigrationSetupSection />
       case 'venft':
         return <V2ProjectSettingsVenftContent />
-      case 'transfer-ownership':
+      case 'transferownership':
         return <TransferOwnershipForm />
-      case 'archive-project':
+      case 'archiveproject':
         return <ArchiveV2Project />
       default:
         return null
@@ -54,10 +83,10 @@ const V2ProjectSettingsContent = ({
 
   return (
     <Layout style={{ background: 'transparent' }}>
-      <h2>{V2SettingsKeyTitleMap[activeKey]}</h2>
+      <h2>{V2SettingsKeyTitleMap[selectedSettingsPage]}</h2>
       <Divider />
       <Layout.Content style={{ margin: '0 16px' }}>
-        {getActiveTab(activeKey)}
+        {getActiveTab(selectedSettingsPage)}
       </Layout.Content>
     </Layout>
   )

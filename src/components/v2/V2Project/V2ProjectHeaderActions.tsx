@@ -15,14 +15,14 @@ import { featureFlagEnabled } from 'utils/featureFlags'
 
 import { InfoCircleOutlined } from '@ant-design/icons'
 
+import { useRouter } from 'next/router'
+
 import V2ReconfigureFundingModalTrigger from './V2ProjectReconfigureModal/V2ReconfigureModalTrigger'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 
-export default function V2ProjectHeaderActions({
-  setSettingsPageActive,
-}: {
-  setSettingsPageActive: VoidFunction
-}) {
+export default function V2ProjectHeaderActions() {
+  const router = useRouter()
+
   const { projectId } = useContext(V2ProjectContext)
 
   const {
@@ -74,9 +74,13 @@ export default function V2ProjectHeaderActions({
         {settingsPageEnabled && (
           <Tooltip title={t`Open settings page`} placement="bottom">
             <Button
+              onClick={() =>
+                router.push(`/v2/p/${projectId}?page=settings`, undefined, {
+                  shallow: true,
+                })
+              }
               icon={<InfoCircleOutlined />}
               type="text"
-              onClick={setSettingsPageActive}
             />
           </Tooltip>
         )}

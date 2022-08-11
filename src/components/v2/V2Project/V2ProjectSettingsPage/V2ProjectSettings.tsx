@@ -1,8 +1,8 @@
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Button, Layout, Menu, MenuProps } from 'antd'
-import { ProjectPage } from 'models/project-visibility'
-
-import { useState } from 'react'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { useRouter } from 'next/router'
+import { useContext } from 'react'
 
 import V2ProjectSettingsContent from './V2ProjectSettingsContent'
 
@@ -10,25 +10,25 @@ type MenuItem = Required<MenuProps>['items'][number]
 
 export type V2SettingsContentKey =
   | 'general'
-  | 'project-handle'
+  | 'projecthandle'
   | 'payouts'
-  | 'reserved-tokens'
-  | 'payment-addresses'
-  | 'v1-token-migration'
+  | 'reservedtokens'
+  | 'paymentaddresses'
+  | 'v1tokenmigration'
   | 'venft'
-  | 'transfer-ownership'
-  | 'archive-project'
+  | 'transferownership'
+  | 'archiveproject'
 
 export const V2SettingsKeyTitleMap: Record<V2SettingsContentKey, string> = {
-  general: 'General',
-  'project-handle': 'Project Handle',
-  payouts: 'Payouts',
-  'reserved-tokens': 'Reserved Tokens',
-  'payment-addresses': 'Payment Addresses',
-  'v1-token-migration': 'V1 Token Migration',
-  venft: 'VeNFT Governance',
-  'transfer-ownership': 'Transfer Ownership',
-  'archive-project': 'Archive Project',
+  general: t`General`,
+  projecthandle: t`Project Handle`,
+  payouts: t`Payouts`,
+  reservedtokens: t`Reserved Tokens`,
+  paymentaddresses: t`Payment Addresses`,
+  v1tokenmigration: t`V1 Token Migration`,
+  venft: t`VeNFT Governance`,
+  transferownership: t`Transfer Ownership`,
+  archiveproject: t`Archive Project`,
 }
 
 function getItem(
@@ -49,10 +49,7 @@ const items: MenuItem[] = [
   getItem(
     'Project',
     'project',
-    [
-      getItem('General', 'general'),
-      getItem('Project handle', 'project-handle'),
-    ],
+    [getItem('General', 'general'), getItem('Project handle', 'projecthandle')],
     'group',
   ),
   getItem('', 'div1', undefined, 'divider'),
@@ -61,7 +58,7 @@ const items: MenuItem[] = [
     'funding',
     [
       getItem('Payouts', 'payouts'),
-      getItem('Reserved tokens', 'reserved-tokens'),
+      getItem('Reserved tokens', 'reservedtokens'),
     ],
     'group',
   ),
@@ -70,32 +67,42 @@ const items: MenuItem[] = [
     'Manage',
     'manage',
     [
-      getItem('Payment addresses', 'payment-addresses'),
-      getItem('V1 token migration', 'v1-token-migration'),
+      getItem('Payment addresses', 'paymentaddresses'),
+      getItem('V1 token migration', 'v1tokenmigration'),
       getItem('veNFT governance', 'venft'),
-      getItem('Transfer ownership', 'transfer-ownership'),
-      getItem('Archive project', 'archive-project'),
+      getItem('Transfer ownership', 'transferownership'),
+      getItem('Archive project', 'archiveproject'),
     ],
     'group',
   ),
 ]
 
-const V2ProjectSettings = ({
-  setActivePage,
-}: {
-  setActivePage: (page: ProjectPage) => void
-}) => {
-  const [activeKey, setActiveKey] = useState<V2SettingsContentKey>('general')
+const V2ProjectSettings = () => {
+  const { projectId } = useContext(V2ProjectContext)
+  const router = useRouter()
 
   const handleMenuItemClick = (item: MenuItem) => {
     const key = item?.key as V2SettingsContentKey
-    setActiveKey(key)
+    router.push(
+      `/v2/p/${projectId}?page=settings&settingsPage=${key}`,
+      undefined,
+      {
+        shallow: true,
+      },
+    )
   }
 
   return (
     <Layout style={{ minHeight: '100vh', background: 'transparent' }}>
       <Layout.Sider style={{ background: 'transparent' }}>
-        <Button onClick={() => setActivePage('info')} type="link">
+        <Button
+          onClick={() =>
+            router.push(`/v2/p/${projectId}?page=info`, undefined, {
+              shallow: true,
+            })
+          }
+          type="link"
+        >
           <Trans>Back to project</Trans>
         </Button>
         <Menu
@@ -107,7 +114,7 @@ const V2ProjectSettings = ({
           onSelect={handleMenuItemClick}
         />
       </Layout.Sider>
-      <V2ProjectSettingsContent activeKey={activeKey} />
+      <V2ProjectSettingsContent />
     </Layout>
   )
 }

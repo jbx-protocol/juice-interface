@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { useState, useContext, useEffect } from 'react'
 import { Collapse, Button, Menu } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
@@ -71,9 +72,11 @@ export default function MobileCollapse() {
                 justifyContent: 'space-between',
               }}
             >
-              <a href="/" style={{ display: 'inline-block' }}>
-                {<Logo height={30} />}
-              </a>
+              <Link href="/">
+                <a style={{ display: 'inline-block' }}>
+                  {<Logo height={30} />}
+                </a>
+              </Link>
               <MenuOutlined
                 style={{
                   color: colors.icon.primary,

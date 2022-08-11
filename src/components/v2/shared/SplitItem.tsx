@@ -74,7 +74,7 @@ export default function SplitItem({
     }
     const getProjectLabel = () => {
       if (handle) {
-        return t`@${handle}`
+        return `@${handle}`
       }
       if (split.projectId) {
         return t`Project ${parseInt(split.projectId)}`

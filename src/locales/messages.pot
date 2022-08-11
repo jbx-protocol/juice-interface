@@ -14,9 +14,6 @@ msgstr ""
 msgid "$ve{tokenSymbolDisplayText} Received"
 msgstr ""
 
-msgid "({0}%)"
-msgstr ""
-
 msgid "({realTokenAllocationPercent}% of all newly minted tokens)."
 msgstr ""
 
@@ -96,6 +93,9 @@ msgid "<0/>{0} after {feePercentage}% JBX membership fee"
 msgstr ""
 
 msgid "<0/>{0}{1} distributed"
+msgstr ""
+
+msgid "<0><1/>{0}</0> Distribution Limit"
 msgstr ""
 
 msgid "<0><1/>{netDistributionAmount}</0> after {feePercentage}% JBX fee"
@@ -212,13 +212,10 @@ msgstr ""
 msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
 msgstr ""
 
+msgid "<0>Zero</0> Distribution Limit"
+msgstr ""
+
 msgid "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
-msgstr ""
-
-msgid "@"
-msgstr ""
-
-msgid "@{handle}"
 msgstr ""
 
 msgid "@{handle} not found"
@@ -302,9 +299,6 @@ msgstr ""
 msgid "Add the V1 Token Payment Terminal to your project."
 msgstr ""
 
-msgid "Add to Balance"
-msgstr ""
-
 msgid "Add to balance"
 msgstr ""
 
@@ -332,6 +326,9 @@ msgstr ""
 msgid "Advanced (optional)"
 msgstr ""
 
+msgid "Advanced Options"
+msgstr ""
+
 msgid "All"
 msgstr ""
 
@@ -356,6 +353,9 @@ msgstr ""
 msgid "Allow minting tokens"
 msgstr ""
 
+msgid "Allow public lock extension"
+msgstr ""
+
 msgid "Allow terminal configuration"
 msgstr ""
 
@@ -366,6 +366,9 @@ msgid "Allow your V1 project token holders to swap their tokens for your V2 proj
 msgstr ""
 
 msgid "Allowed"
+msgstr ""
+
+msgid "Allows anyone to extend your lock position."
 msgstr ""
 
 msgid "Almost definitely."
@@ -740,9 +743,6 @@ msgstr ""
 msgid "Cycle #{0}"
 msgstr ""
 
-msgid "Cycle #{0} -"
-msgstr ""
-
 msgid "DAOs"
 msgstr ""
 
@@ -911,9 +911,6 @@ msgstr ""
 msgid "Distribution limit, duration and payouts"
 msgstr ""
 
-msgid "Distribution limit: <0/>{0}"
-msgstr ""
-
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
 msgstr ""
 
@@ -1004,6 +1001,9 @@ msgstr ""
 msgid "Edit tracked assets"
 msgstr ""
 
+msgid "Enable veBanny Governance"
+msgstr ""
+
 msgid "Enable veNFT Governance"
 msgstr ""
 
@@ -1061,7 +1061,13 @@ msgstr ""
 msgid "Fee from <0><1/></0>"
 msgstr ""
 
+msgid "File empty or corrupt. Try again."
+msgstr ""
+
 msgid "File must be less than {formattedSize}{unit}"
+msgstr ""
+
+msgid "File upload failed. Try again."
 msgstr ""
 
 msgid "Fund and operate your thing, your way."
@@ -1493,6 +1499,9 @@ msgstr ""
 msgid "No beneficiary selected. Is your wallet connected?"
 msgstr ""
 
+msgid "No file uploaded."
+msgstr ""
+
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
 msgstr ""
 
@@ -1545,9 +1554,6 @@ msgid "Once launched, your first funding cycle <0>can't be changed</0>. You can 
 msgstr ""
 
 msgid "Only lowercase letters"
-msgstr ""
-
-msgid "Only project tokens claimed as ERC-20 tokens can be staked for NFTs."
 msgstr ""
 
 msgid "Other assets in this project's owner's wallet."
@@ -1703,9 +1709,6 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
-msgid "Preview:"
-msgstr ""
-
 msgid "Project Created"
 msgstr ""
 
@@ -1713,12 +1716,6 @@ msgid "Project ID must be a number."
 msgstr ""
 
 msgid "Project ID:"
-msgstr ""
-
-msgid "Project Links"
-msgstr ""
-
-msgid "Project Page Customizations"
 msgstr ""
 
 msgid "Project Token"
@@ -1757,6 +1754,9 @@ msgstr ""
 msgid "Project launch successful"
 msgstr ""
 
+msgid "Project links"
+msgstr ""
+
 msgid "Project name"
 msgstr ""
 
@@ -1773,6 +1773,9 @@ msgid "Project owner (you)"
 msgstr ""
 
 msgid "Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."
+msgstr ""
+
+msgid "Project page customizations"
 msgstr ""
 
 msgid "Project token"
@@ -1848,9 +1851,6 @@ msgid "Receive {receiveText}"
 msgstr ""
 
 msgid "Recipient"
-msgstr ""
-
-msgid "Recipient Address"
 msgstr ""
 
 msgid "Recipient address"
@@ -2114,6 +2114,12 @@ msgstr ""
 msgid "Set up V1 token migration"
 msgstr ""
 
+msgid "Set up and launch veNFT governance for your project using custom assets and parameters. (Experimental, does not currently launch)"
+msgstr ""
+
+msgid "Set up and launch veNFT governance for your project using default veBanny assets and parameters."
+msgstr ""
+
 msgid "Set up and launch veNFT governance for your project."
 msgstr ""
 
@@ -2160,9 +2166,6 @@ msgid "Staking Summary:"
 msgstr ""
 
 msgid "Start"
-msgstr ""
-
-msgid "Start Over"
 msgstr ""
 
 msgid "Start over"
@@ -2336,6 +2339,9 @@ msgstr ""
 msgid "This funding cycle may pose risks to contributors. Check the funding cycle details before paying this project."
 msgstr ""
 
+msgid "This funding cycle's distribution limit."
+msgstr ""
+
 msgid "This is the maximum amount of funds that can leave the treasury each funding cycle."
 msgstr ""
 
@@ -2430,6 +2436,9 @@ msgid "Token symbol"
 msgstr ""
 
 msgid "Token symbol is required"
+msgstr ""
+
+msgid "Token to Lock:"
 msgstr ""
 
 msgid "Tokens"
@@ -2577,6 +2586,9 @@ msgid "Updates you make to this section will only be applied to <0>upcoming</0> 
 msgstr ""
 
 msgid "Upload"
+msgstr ""
+
+msgid "Upload CSV"
 msgstr ""
 
 msgid "Upload an image"
@@ -2888,9 +2900,6 @@ msgstr ""
 msgid "hours"
 msgstr ""
 
-msgid "juiceboxETH"
-msgstr ""
-
 msgid "last {trendingWindowDays} days"
 msgstr ""
 
@@ -3024,9 +3033,6 @@ msgid "{inflationRate} tokens / ETH"
 msgstr ""
 
 msgid "{issuanceRate} tokens / ETH"
-msgstr ""
-
-msgid "{label}"
 msgstr ""
 
 msgid "{lockDurationOptionInDays} {lockDurationOptionInDays, plural, one {{0}} other {{1}}}"

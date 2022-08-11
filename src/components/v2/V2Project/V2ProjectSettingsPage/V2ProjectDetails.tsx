@@ -2,6 +2,7 @@ import { useForm } from 'antd/lib/form/Form'
 import ProjectDetailsForm, {
   ProjectDetailsFormFields,
 } from 'components/forms/ProjectDetailsForm'
+import { ThemeContext } from 'contexts/themeContext'
 
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDetailsTx'
@@ -9,9 +10,13 @@ import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 import { revalidateProject } from 'utils/revalidateProject'
 
+import { Trans } from '@lingui/macro'
+
 import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
 
-const V2ProjectSettingsProjectHandleContent = () => {
+const V2ProjectDetails = () => {
+  const { colors } = useContext(ThemeContext).theme
+
   const [projectForm] = useForm<ProjectDetailsFormFields>()
 
   const [loadingSaveChanges, setLoadingSaveChanges] = useState<boolean>()
@@ -84,14 +89,23 @@ const V2ProjectSettingsProjectHandleContent = () => {
   useEffect(() => {
     resetProjectForm()
   }, [resetProjectForm])
+
   return (
-    <ProjectDetailsForm
-      form={projectForm}
-      onFinish={onProjectFormSaved}
-      hideProjectHandle
-      loading={loadingSaveChanges}
-    />
+    <>
+      <p style={{ color: colors.text.primary }}>
+        <Trans>
+          Project details reconfigurations will create a separate transaction.
+        </Trans>
+      </p>
+      <br />
+      <ProjectDetailsForm
+        form={projectForm}
+        onFinish={onProjectFormSaved}
+        hideProjectHandle
+        loading={loadingSaveChanges}
+      />
+    </>
   )
 }
 
-export default V2ProjectSettingsProjectHandleContent
+export default V2ProjectDetails

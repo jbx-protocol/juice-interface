@@ -1,8 +1,8 @@
-import { Layout, Menu, MenuProps } from 'antd'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { Trans } from '@lingui/macro'
+import { Button, Layout, Menu, MenuProps } from 'antd'
+import { ProjectPage } from 'models/project-visibility'
 
-import Link from 'next/link'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 
 import V2ProjectSettingsContent from './V2ProjectSettingsContent'
 
@@ -17,6 +17,21 @@ export type V2SettingsContentKey =
   | 'payment-addresses'
   | 'v1-token-migration'
   | 'venft'
+  | 'transfer-ownership'
+  | 'archive-project'
+
+export const V2SettingsKeyTitleMap: Record<V2SettingsContentKey, string> = {
+  general: 'General',
+  'project-handle': 'Project Handle',
+  'funding-cycle': 'Funding Cycle',
+  payouts: 'Payouts',
+  'reserved-tokens': 'Reserved Tokens',
+  'payment-addresses': 'Payment Addresses',
+  'v1-token-migration': 'V1 Token Migration',
+  venft: 'VeNFT Governance',
+  'transfer-ownership': 'Transfer Ownership',
+  'archive-project': 'Archive Project',
+}
 
 function getItem(
   label: React.ReactNode,
@@ -60,14 +75,19 @@ const items: MenuItem[] = [
     [
       getItem('Payment addresses', 'payment-addresses'),
       getItem('V1 token migration', 'v1-token-migration'),
-      getItem('veNFT', 'venft'),
+      getItem('veNFT governance', 'venft'),
+      getItem('Transfer ownership', 'transfer-ownership'),
+      getItem('Archive project', 'archive-project'),
     ],
     'group',
   ),
 ]
 
-const V2ProjectSettings = () => {
-  const { projectId } = useContext(V2ProjectContext)
+const V2ProjectSettings = ({
+  setActivePage,
+}: {
+  setActivePage: (page: ProjectPage) => void
+}) => {
   const [activeKey, setActiveKey] = useState<V2SettingsContentKey>('general')
 
   const handleMenuItemClick = (item: MenuItem) => {
@@ -78,7 +98,9 @@ const V2ProjectSettings = () => {
   return (
     <Layout style={{ minHeight: '100vh', background: 'transparent' }}>
       <Layout.Sider style={{ background: 'transparent' }}>
-        <Link href={`/v2/p/${projectId}`}>{`< Back to Project`}</Link>
+        <Button onClick={() => setActivePage('info')} type="link">
+          <Trans>Back to project</Trans>
+        </Button>
         <Menu
           defaultOpenKeys={['project', 'funding', 'manage']}
           defaultSelectedKeys={['general']}

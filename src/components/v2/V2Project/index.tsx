@@ -83,7 +83,9 @@ export default function V2Project({
           setHandleModalVisible={setHandleModalVisible}
         />
       )}
-      {activePage === 'settings' && <V2ProjectSettings />}
+      {activePage === 'settings' && (
+        <V2ProjectSettings setActivePage={setActivePage} />
+      )}
     </Space>
   )
 }

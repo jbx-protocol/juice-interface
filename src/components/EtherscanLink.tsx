@@ -1,19 +1,11 @@
 import { Tooltip } from 'antd'
 import { t } from '@lingui/macro'
-import { NetworkName } from 'models/network-name'
 import { LinkOutlined } from '@ant-design/icons'
 import { CSSProperties } from 'react'
+import { getEtherscanBaseUrl } from 'utils/etherscan'
 
 import { readNetwork } from 'constants/networks'
 import ExternalLink from './ExternalLink'
-
-export const getEtherscanBaseUrl = (networkName: NetworkName) => {
-  let subdomain = ''
-  if (networkName !== NetworkName.mainnet) {
-    subdomain = networkName + '.'
-  }
-  return `https://${subdomain}etherscan.io`
-}
 
 export default function EtherscanLink({
   value,

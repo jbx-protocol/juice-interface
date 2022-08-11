@@ -11,7 +11,7 @@ import TransactionModal from 'components/TransactionModal'
 import Callout from 'components/Callout'
 import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayerTx'
 import { emitErrorNotification } from 'utils/notifications'
-import { verifyProjectPayer } from 'utils/verifyProjectPayer'
+import { verifyProjectPayer } from 'utils/v2/projectPayers/verifyProjectPayer'
 
 import { readProvider } from 'constants/readProvider'
 import { readNetwork } from 'constants/networks'

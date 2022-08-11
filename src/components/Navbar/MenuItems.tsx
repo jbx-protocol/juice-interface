@@ -111,9 +111,9 @@ export function TopLeftNavItems({
       direction={mobile ? 'vertical' : 'horizontal'}
     >
       {!mobile && (
-        <a href="/" style={{ display: 'inline-block' }}>
-          {<Logo />}
-        </a>
+        <Link href="/">
+          <a style={{ display: 'inline-block' }}>{<Logo />}</a>
+        </Link>
       )}
       <NavMenuItem
         text={t`Projects`}

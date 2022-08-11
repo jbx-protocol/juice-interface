@@ -4,9 +4,7 @@ import {
   V2SettingsContentKey,
   V2SettingsKeyTitleMap,
 } from 'components/v2/V2Project/V2ProjectSettingsPage/V2ProjectSettings'
-import V2ProjectSettingsFundingCycleContent from 'components/v2/V2Project/V2ProjectSettingsPage/V2ProjectSettingsFundingCycleContent'
 
-import V2ProjectSettingsReservedTokensContent from 'components/v2/V2Project/V2ProjectSettingsPage/V2ProjectSettingsReservedTokensContent'
 import V2ProjectSettingsVenftContent from 'components/v2/V2Project/V2ProjectSettingsPage/V2ProjectSettingsVenftContent'
 
 import ProjectPayersSection from 'components/Project/ProjectToolsDrawer/ProjectPayersSection'
@@ -17,10 +15,10 @@ import V2ReconfigureProjectHandle from 'components/v2/V2Project/V2ProjectSetting
 
 import V2ProjectDetails from 'components/v2/V2Project/V2ProjectSettingsPage/V2ProjectDetails'
 
-import { V1TokenMigrationSetupSection } from '../V2ProjectToolsDrawer/V1TokenMigrationSetupSection'
-import ArchiveV2Project from '../ArchiveV2Project'
-
-import V2ProjectSettingsPayoutsContent from './V2ProjectSettingsEditPayouts'
+import { EditTokenAllocationContent } from 'components/v2/V2Project/EditTokenAllocationContent'
+import V2ProjectSettingsPayoutsContent from 'components/v2/V2Project/V2ProjectSettingsPage/V2ProjectSettingsEditPayouts'
+import ArchiveV2Project from 'components/v2/V2Project/ArchiveV2Project'
+import { V1TokenMigrationSetupSection } from 'components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection'
 
 interface V2ProjectSettingsContentProps {
   activeKey: V2SettingsContentKey
@@ -35,12 +33,10 @@ const V2ProjectSettingsContent = ({
         return <V2ProjectDetails />
       case 'project-handle':
         return <V2ReconfigureProjectHandle />
-      case 'funding-cycle':
-        return <V2ProjectSettingsFundingCycleContent />
       case 'payouts':
         return <V2ProjectSettingsPayoutsContent />
       case 'reserved-tokens':
-        return <V2ProjectSettingsReservedTokensContent />
+        return <EditTokenAllocationContent />
       case 'payment-addresses':
         return <ProjectPayersSection />
       case 'v1-token-migration':

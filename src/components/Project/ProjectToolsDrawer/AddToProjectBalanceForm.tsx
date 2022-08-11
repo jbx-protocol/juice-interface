@@ -43,7 +43,7 @@ export function AddToProjectBalanceForm({
   return (
     <Form form={addToBalanceForm} layout="vertical">
       <h3>
-        <Trans>Add to Balance</Trans>
+        <Trans>Add to balance</Trans>
       </h3>
       <p>
         <Trans>

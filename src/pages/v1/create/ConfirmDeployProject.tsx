@@ -96,7 +96,7 @@ export default function ConfirmDeployProject() {
           <Col md={6} xs={24}>
             <Statistic
               title={t`Handle`}
-              value={t`@` + orEmpty(editingProject?.handle)}
+              value={'@' + orEmpty(editingProject?.handle)}
             />
           </Col>
           <Col md={7} xs={24}>

@@ -1718,12 +1718,6 @@ msgstr ""
 msgid "Project ID:"
 msgstr ""
 
-msgid "Project Links"
-msgstr ""
-
-msgid "Project Page Customizations"
-msgstr ""
-
 msgid "Project Token"
 msgstr ""
 
@@ -1760,6 +1754,9 @@ msgstr ""
 msgid "Project launch successful"
 msgstr ""
 
+msgid "Project links"
+msgstr ""
+
 msgid "Project name"
 msgstr ""
 
@@ -1776,6 +1773,9 @@ msgid "Project owner (you)"
 msgstr ""
 
 msgid "Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."
+msgstr ""
+
+msgid "Project page customizations"
 msgstr ""
 
 msgid "Project token"

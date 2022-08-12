@@ -12,7 +12,6 @@ import {
 import { GroupedSplits, SplitGroup } from 'models/v2/splits'
 import { ContractNftRewardTier, NftRewardTier } from 'models/v2/nftRewardTier'
 
-import { BigNumber } from '@ethersproject/bignumber'
 import { parseEther } from '@ethersproject/units'
 import { isValidMustStartAtOrAfter } from 'utils/v2/fundingCycle'
 
@@ -46,16 +45,14 @@ function getJBDeployTieredNFTRewardDataSourceData({
       nftRewards[cid].contributionFloor.toString(),
     )
     const maxSupply = nftRewards[cid].maxSupply
-    const remainingQuantity = maxSupply
-      ? BigNumber.from(maxSupply)
-      : BigNumber.from(MaxUint48)
+    const remainingQuantity = maxSupply ?? MaxUint48
     return {
       contributionFloor: contributionFloorWei,
       remainingQuantity,
-      initialQuantity: BigNumber.from(0),
+      initialQuantity: 0,
       tokenUri: `https://${IPFS_GATEWAY_HOSTNAME}/ipfs/${cid}`,
-      votingUnits: BigNumber.from(0),
-      reservedRate: BigNumber.from(0),
+      votingUnits: 0,
+      reservedRate: 0,
     }
   })
 

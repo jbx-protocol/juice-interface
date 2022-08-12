@@ -57,7 +57,9 @@ export const MOCK_NFTs: NftRewardTier[] = [
     imageUrl:
       'https://jbx.mypinata.cloud/ipfs/QmW7TPgipVPag1W1iZPcJDE4YRv9Mb5wY9AvxgFcPaFEXH',
     contributionFloor: 0.1,
-    maxSupply: 10,
+    tierRank: 1,
+    remainingSupply: 169,
+    maxSupply: 1000,
     externalLink: 'https://juicebox.money',
   },
   {
@@ -67,6 +69,8 @@ export const MOCK_NFTs: NftRewardTier[] = [
     imageUrl:
       'http://www.artrights.me/wp-content/uploads/2021/09/unnamed-1.png',
     contributionFloor: 1,
+    tierRank: 2,
+    remainingSupply: 2,
     maxSupply: 10,
     externalLink: 'https://juicebox.money',
   },
@@ -77,7 +81,9 @@ export const MOCK_NFTs: NftRewardTier[] = [
     imageUrl:
       'https://cms.qz.com/wp-content/uploads/2022/04/2022-04-05T124700Z_1953872473_RC20HT92RUJ9_RTRMADP_3_MUSK-TWITTER-BOARD-2-e1650904633294.jpg?quality=75&strip=all&w=1200&h=900&crop=1',
     contributionFloor: 10,
-    maxSupply: 10,
+    tierRank: 3,
+    remainingSupply: 6,
+    maxSupply: 100,
     externalLink: 'https://juicebox.money',
   },
 ]

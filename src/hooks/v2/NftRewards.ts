@@ -1,15 +1,24 @@
 import axios from 'axios'
 
-import { IPFSNftRewardTier, NftRewardTier } from 'models/v2/nftRewardTier'
+import {
+  ContractNftRewardTier,
+  IPFSNftRewardTier,
+  NftRewardTier,
+} from 'models/v2/nftRewardTier'
 import { useQuery, UseQueryResult } from 'react-query'
-import { ipfsCidUrl } from 'utils/ipfs'
 
 import { MaxUint48 } from 'constants/numbers'
 
-const DEFAULT_NFT_MAX_SUPPLY = MaxUint48
+export const DEFAULT_NFT_MAX_SUPPLY = MaxUint48
 
-async function getRewardTierOfCid(cid: string): Promise<NftRewardTier> {
-  const url = ipfsCidUrl(cid)
+async function getRewardTierFromIPFS({
+  contractNftRewardTier,
+  index,
+}: {
+  contractNftRewardTier: ContractNftRewardTier
+  index: number
+}): Promise<NftRewardTier> {
+  const url = contractNftRewardTier.tokenUri
   const response = await axios.get(url)
   const ipfsRewardTier: IPFSNftRewardTier = response.data
   return {
@@ -17,7 +26,11 @@ async function getRewardTierOfCid(cid: string): Promise<NftRewardTier> {
     description: ipfsRewardTier.description,
     externalLink: ipfsRewardTier.externalLink,
     contributionFloor: ipfsRewardTier.attributes.contributionFloor,
+    tierRank: index + 1,
     maxSupply: ipfsRewardTier.attributes.maxSupply ?? DEFAULT_NFT_MAX_SUPPLY,
+    remainingSupply:
+      contractNftRewardTier.remainingQuantity ??
+      ipfsRewardTier.attributes.maxSupply,
     imageUrl: ipfsRewardTier.image,
   }
 }
@@ -25,17 +38,24 @@ async function getRewardTierOfCid(cid: string): Promise<NftRewardTier> {
 // Retreives each NftRewardTier from IPFS given an array of CIDs (IpfsHashes)
 // Returns an array of NftRewardTiers
 export default function useNftRewards(
-  CIDs: string[] | undefined,
+  contractNftRewardTiers: ContractNftRewardTier[],
 ): UseQueryResult<NftRewardTier[]> {
   return useQuery(
     'nft-rewards',
     async () => {
-      if (!CIDs?.length) {
+      if (!contractNftRewardTiers?.length) {
         return
       }
 
-      return await Promise.all(CIDs.map(cid => getRewardTierOfCid(cid)))
+      return await Promise.all(
+        contractNftRewardTiers.map((contractNftRewardTier, index) =>
+          getRewardTierFromIPFS({
+            contractNftRewardTier,
+            index,
+          }),
+        ),
+      )
     },
-    { enabled: !!CIDs?.length },
+    { enabled: !!contractNftRewardTiers?.length },
   )
 }

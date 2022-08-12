@@ -45,6 +45,9 @@ export function TransferUnclaimedTokensForm({
           transferTokensForm.resetFields()
           setLoadingTransferTokens(false)
         },
+        onError: () => {
+          setLoadingTransferTokens(false)
+        },
       },
     )
   }
@@ -86,7 +89,7 @@ export function TransferUnclaimedTokensForm({
           }
         />
       </Form.Item>
-      <Form.Item name="to" label={t`Recipient Address`}>
+      <Form.Item name="to" label={t`Recipient address`}>
         <EthAddressInput />
       </Form.Item>
       <Form.Item>

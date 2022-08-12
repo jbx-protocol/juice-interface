@@ -46,6 +46,12 @@ export default function ProjectDetailsForm({
       onValuesChange={() => onValuesChange?.()}
     >
       <Space direction="vertical" size="large">
+        <Callout>
+          <Trans>
+            You can edit your project details after creation at any time, but
+            the transaction will cost gas.
+          </Trans>
+        </Callout>
         <div>
           <FormItems.ProjectName
             name="name"
@@ -77,16 +83,11 @@ export default function ProjectDetailsForm({
             onSuccess={logoUri => {
               form.setFieldsValue({ logoUri })
             }}
+            formItemProps={{ style: { marginBottom: 0 } }}
           />
         </div>
         <div>
-          <MinimalCollapse
-            header={
-              <h3 style={{ marginBottom: 0 }}>
-                <Trans>Project Links</Trans>
-              </h3>
-            }
-          >
+          <MinimalCollapse header={<Trans>Project links</Trans>}>
             <FormItems.ProjectLink name="infoUri" />
             <FormItems.ProjectTwitter name="twitter" />
             <FormItems.ProjectDiscord name="discord" />
@@ -94,13 +95,7 @@ export default function ProjectDetailsForm({
         </div>
 
         <div>
-          <MinimalCollapse
-            header={
-              <h3 style={{ marginBottom: 0 }}>
-                <Trans>Project Page Customizations</Trans>
-              </h3>
-            }
-          >
+          <MinimalCollapse header={<Trans>Project page customizations</Trans>}>
             <FormItems.ProjectPayButton name="payButton" />
             <FormItems.ProjectPayDisclosure name="payDisclosure" />
           </MinimalCollapse>
@@ -115,13 +110,6 @@ export default function ProjectDetailsForm({
               </Button>
             )}
           </Form.Item>
-
-          <Callout>
-            <Trans>
-              You can edit your project details after creation at any time, but
-              the transaction will cost gas.
-            </Trans>
-          </Callout>
         </div>
       </Space>
     </Form>

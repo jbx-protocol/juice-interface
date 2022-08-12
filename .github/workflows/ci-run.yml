@@ -84,7 +84,7 @@ jobs:
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install packages
-        run: yarn install
+        run: yarn install  --frozen-lockfile
 
       - name: Codegen
         run: 'yarn codegen'
@@ -106,7 +106,7 @@ jobs:
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install packages
-        run: yarn install
+        run: yarn install --frozen-lockfile
 
       - name: Build NextJS app
         run: 'yarn build'

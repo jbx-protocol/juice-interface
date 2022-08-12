@@ -10,6 +10,9 @@ const FEATURE_FLAG_DEFAULTS: {
   [FEATURE_FLAGS.VENFT]: {
     rinkeby: true,
   },
+  [FEATURE_FLAGS.VENFT_CREATOR]: {
+    rinkeby: true,
+  },
 }
 
 const featureFlagKey = (baseKey: string) => {

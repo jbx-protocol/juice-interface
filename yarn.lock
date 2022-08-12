@@ -2622,6 +2622,11 @@
   resolved "https://registry.yarnpkg.com/@jbx-protocol/project-handles/-/project-handles-2.0.0.tgz#9b70cdd34d4e985003c59f48643063a983322557"
   integrity sha512-kpfIuUYzF9wTUjFw02e1Pl3GkV7PtrnNddcKxveE/IgLhVp4qlVuukasJockaLrYeV4qzQ/2YVg+6RTjMNZ38Q==
 
+"@jbx-protocol/ve-nft@0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@jbx-protocol/ve-nft/-/ve-nft-0.0.6.tgz#ead7e001879ad5535731e0733aff2ef92b20edb4"
+  integrity sha512-RfFFwZXPsgQe/QGn+hKzi0z9LYULzxbslM1DStfB/2Tjslvu+SixoUmrFsS4D2XzQucefnN/5F5pmH3kUsF9dg==
+
 "@jest/console@^28.1.3":
   version "28.1.3"
   resolved "https://registry.yarnpkg.com/@jest/console/-/console-28.1.3.tgz#2030606ec03a18c31803b8a36382762e447655df"

@@ -32,12 +32,14 @@ import { StickerSelection } from 'components/Project/StickerSelection'
 
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
 
+import { PaymentMemoSticker } from 'components/modals/AttachStickerModal/paymentMemoSticker'
+
 import { ThemeContext } from 'contexts/themeContext'
 
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 import { ProjectPreferences } from 'constants/v1/projectPreferences'
 
-export interface V1PayFormType {
+interface V1PayFormType {
   memo?: string
   stickerUrls?: string[]
   uploadedImage?: string
@@ -140,6 +142,16 @@ export default function V1ConfirmPayOwnerModal({
     'reserved',
   )
 
+  const handleStickerSelect = (sticker: PaymentMemoSticker) => {
+    const url = new URL(`${window.location.origin}${sticker.filepath}`)
+    const urlString = url.toString()
+    const existingStickerUrls = (form.getFieldValue('stickerUrls') ??
+      []) as string[]
+    form.setFieldsValue({
+      stickerUrls: existingStickerUrls.concat(urlString),
+    })
+  }
+
   const hasIssuedTokens = tokenAddress && tokenAddress !== constants.AddressZero
 
   if (!metadata) return null
@@ -225,14 +237,11 @@ export default function V1ConfirmPayOwnerModal({
           </Descriptions.Item>
         </Descriptions>
         <Form form={form} layout="vertical">
-          <Form.Item
-            name="memo"
-            label={t`Memo (optional)`}
-            className={'antd-no-number-handler'}
-            style={{ marginBottom: 0 }}
-          >
+          <div style={{ position: 'relative' }}>
             <Form.Item
               name="memo"
+              label={t`Memo (optional)`}
+              className={'antd-no-number-handler'}
               extra={t`Add an on-chain memo to this payment.`}
               style={{ marginBottom: 0 }}
             >
@@ -244,12 +253,13 @@ export default function V1ConfirmPayOwnerModal({
                 autoSize
               />
             </Form.Item>
+            {/* Sticker select icon (right side of memo input) */}
             <div
               style={{
                 fontSize: '.8rem',
                 position: 'absolute',
                 right: 7,
-                top: 7,
+                top: 36,
               }}
             >
               {
@@ -267,9 +277,9 @@ export default function V1ConfirmPayOwnerModal({
                 />
               }
             </div>
-            <Form.Item name="stickerUrls">
-              <StickerSelection />
-            </Form.Item>
+          </div>
+          <Form.Item name="stickerUrls">
+            <StickerSelection />
           </Form.Item>
 
           <Form.Item name="uploadedImage">
@@ -301,13 +311,7 @@ export default function V1ConfirmPayOwnerModal({
             if (typeof window === 'undefined') {
               return
             }
-            const url = new URL(`${window.location.origin}${sticker.filepath}`)
-            const urlString = url.toString()
-            const existingStickerUrls = (form.getFieldValue('stickerUrls') ??
-              []) as string[]
-            form.setFieldsValue({
-              stickerUrls: existingStickerUrls.concat(urlString),
-            })
+            handleStickerSelect(sticker)
           }}
         />
       </Space>

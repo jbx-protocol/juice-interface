@@ -28,7 +28,7 @@ export function RewardTier({
   function RewardIcon() {
     const iconStyle: CSSProperties = {
       position: 'absolute',
-      right: 25,
+      right: 10,
       top: 10,
       fontSize: 15,
       color: isSelected ? colors.background.l0 : colors.text.secondary,

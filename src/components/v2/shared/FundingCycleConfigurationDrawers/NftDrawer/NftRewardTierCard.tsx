@@ -90,10 +90,21 @@ export default function NftRewardTierCard({
           </Row>
           {rewardTier.description && (
             <div style={{ fontSize: 13, marginTop: 15 }}>
-              <Paragraph
-                description={rewardTier.description}
-                characterLimit={74}
-              />
+              <Trans>
+                <strong>Description:</strong>
+                <Paragraph
+                  description={rewardTier.description}
+                  characterLimit={74}
+                />
+              </Trans>
+            </div>
+          )}
+          {rewardTier.maxSupply && (
+            <div style={{ fontSize: 13, marginTop: 15 }}>
+              <Trans>
+                <strong>Max. supply:</strong>{' '}
+                <span>{rewardTier.maxSupply}</span>
+              </Trans>
             </div>
           )}
         </Col>

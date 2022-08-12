@@ -7,6 +7,28 @@ import { revalidateProject } from 'utils/revalidateProject'
 
 import { EditingProjectData } from './editingProjectData'
 
+/**
+ * Return the value of the `weight` argument to send in the transaction.
+ */
+const getWeightArgument = ({
+  currentFundingCycleWeight,
+  newFundingCycleWeight,
+}: {
+  currentFundingCycleWeight: BigNumber
+  newFundingCycleWeight: BigNumber
+}): BigNumber => {
+  if (newFundingCycleWeight.eq(BigNumber.from(0))) {
+    // if desired weight is 0 (no tokens), send weight=1 to the contract
+    return BigNumber.from(1)
+  } else if (newFundingCycleWeight.eq(currentFundingCycleWeight)) {
+    // If the weight is unchanged, send weight=0 to the contract
+    return BigNumber.from(0)
+  }
+
+  // else, return the new weight
+  return newFundingCycleWeight
+}
+
 export const useReconfigureFundingCycle = ({
   editingProjectData,
   memo,
@@ -17,42 +39,23 @@ export const useReconfigureFundingCycle = ({
   exit: VoidFunction
 }) => {
   const {
+    nftRewards: { CIDs: nftRewardsCids },
+    fundingCycle,
+    projectId,
+  } = useContext(V2ProjectContext)
+
+  const [reconfigureTxLoading, setReconfigureTxLoading] =
+    useState<boolean>(false)
+
+  const reconfigureV2FundingCycleTx = useReconfigureV2FundingCycleTx()
+
+  const {
     editingPayoutGroupedSplits,
     editingReservedTokensGroupedSplits,
     editingFundingCycleMetadata,
     editingFundingCycleData,
     editingFundAccessConstraints,
   } = editingProjectData
-
-  const {
-    nftRewards: { CIDs: nftRewardsCids },
-    fundingCycle,
-    projectId,
-  } = useContext(V2ProjectContext)
-
-  const reconfigureV2FundingCycleTx = useReconfigureV2FundingCycleTx()
-  const [reconfigureTxLoading, setReconfigureTxLoading] =
-    useState<boolean>(false)
-
-  // If weight is 0, we send weight=1 to the contract
-  // If weight has not been modified, we send weight=0 to the contract
-  const getWeightForReconfigCall = ({
-    currentFundingCycleWeight,
-    newFundingCycleWeight,
-  }: {
-    currentFundingCycleWeight: BigNumber
-    newFundingCycleWeight: BigNumber
-  }): BigNumber => {
-    if (newFundingCycleWeight.eq(BigNumber.from(0))) {
-      return BigNumber.from(1)
-    } else if (
-      !currentFundingCycleWeight ||
-      newFundingCycleWeight.eq(currentFundingCycleWeight)
-    ) {
-      return BigNumber.from(0)
-    }
-    return currentFundingCycleWeight
-  }
 
   const reconfigureFundingCycle = useCallback(async () => {
     setReconfigureTxLoading(true)
@@ -68,8 +71,6 @@ export const useReconfigureFundingCycle = ({
       throw new Error('Error deploying project.')
     }
 
-    const newFundingCycleWeight = editingFundingCycleData.weight
-
     // Projects with NFT rewards need useDataSourceForPay to be true for NFT rewards to work
     const fundingCycleMetadata = nftRewardsCids?.length
       ? {
@@ -78,17 +79,16 @@ export const useReconfigureFundingCycle = ({
         }
       : editingFundingCycleMetadata
 
-    const currentFundingCycleWeight = fundingCycle.weight
-    const weightForReconfigCall = getWeightForReconfigCall({
-      currentFundingCycleWeight,
-      newFundingCycleWeight,
+    const weight = getWeightArgument({
+      currentFundingCycleWeight: fundingCycle.weight,
+      newFundingCycleWeight: editingFundingCycleData.weight,
     })
 
     const txSuccessful = await reconfigureV2FundingCycleTx(
       {
         fundingCycleData: {
           ...editingFundingCycleData,
-          weight: weightForReconfigCall,
+          weight,
         },
         fundingCycleMetadata,
         fundAccessConstraints: editingFundAccessConstraints,

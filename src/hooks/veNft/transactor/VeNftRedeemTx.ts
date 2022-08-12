@@ -5,8 +5,6 @@ import { V2UserContext } from 'contexts/v2/userContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useVeNftContract } from 'hooks/veNft/VeNftContract'
 
-import { VENFT_CONTRACT_ADDRESS } from 'constants/veNft/veNftProject'
-
 export type RedeemVeNftTx = TransactorInstance<{
   tokenId: number
   token: string
@@ -17,7 +15,7 @@ export type RedeemVeNftTx = TransactorInstance<{
 
 export function useRedeemVeNftTx(): RedeemVeNftTx {
   const { transactor } = useContext(V2UserContext)
-  const nftContract = useVeNftContract(VENFT_CONTRACT_ADDRESS)
+  const nftContract = useVeNftContract()
   const minReturnedTokens = BigNumber.from(0) // TODO will need a field for this in V2ConfirmPayOwnerModal
   const metadata: string[] = [] //randomBytes(1)
 

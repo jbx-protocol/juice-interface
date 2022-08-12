@@ -45,6 +45,9 @@ export function TransferUnclaimedTokensForm({
           transferTokensForm.resetFields()
           setLoadingTransferTokens(false)
         },
+        onError: () => {
+          setLoadingTransferTokens(false)
+        },
       },
     )
   }

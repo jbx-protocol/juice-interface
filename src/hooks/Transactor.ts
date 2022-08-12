@@ -39,13 +39,15 @@ export type TransactorInstance<T = undefined> = (
 
 export function onCatch(
   missingParam: string | undefined,
+  fnName: string,
+  version: 'v1' | 'v2',
   txOpts?: Omit<TransactorOptions, 'value'>,
 ) {
   txOpts?.onError?.(
     new DOMException(
       `Missing ${
         missingParam ?? 'parameter` not found'
-      } in v1 SafeTransferFromTx`,
+      } in ${version} ${fnName}`,
     ),
   )
 

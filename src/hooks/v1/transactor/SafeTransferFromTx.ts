@@ -32,7 +32,7 @@ export function useSafeTransferFromTx(): TransactorInstance<{
         ? 'newOwnerAddress'
         : undefined
 
-      return onCatch(missingParam, txOpts)
+      return onCatch(missingParam, 'safeTransferFrom', 'v1', txOpts)
     }
   }
 }

@@ -1316,6 +1316,9 @@ msgstr ""
 msgid "Juicebox projects use <0>ENS names</0> as handles. Setting a handle involves 2 transactions:"
 msgstr ""
 
+msgid "LINK TO NFT"
+msgstr ""
+
 msgid "Last paid"
 msgstr ""
 
@@ -1818,6 +1821,9 @@ msgid "Projects with a handle:<0/><1/>1. Are included in search results on the p
 msgstr ""
 
 msgid "Provide a link to additional information about this NFT."
+msgstr ""
+
+msgid "REMAINING SUPPLY: {0}/{1}"
 msgstr ""
 
 msgid "Raised on Juicebox"

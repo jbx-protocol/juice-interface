@@ -41,10 +41,12 @@ export default function NftRewardTierModal({
 
   const onFormSaved = async () => {
     await nftForm.validateFields()
+    const maxSupply = nftForm.getFieldValue('maxSupply')
 
     const newTier = {
       contributionFloor: parseFloat(nftForm.getFieldValue('contributionFloor')),
-      maxSupply: nftForm.getFieldValue('maxSupply'),
+      maxSupply,
+      remainingSupply: maxSupply,
       imageUrl: nftForm.getFieldValue('imageUrl'),
       name: nftForm.getFieldValue('name'),
       externalLink: nftForm.getFieldValue('externalLink'),

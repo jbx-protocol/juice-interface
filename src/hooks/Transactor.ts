@@ -17,7 +17,7 @@ import { windowOpen } from 'utils/windowUtils'
 
 type TransactorCallback = (e?: TransactionEvent, signer?: JsonRpcSigner) => void
 
-type TransactorOptions = {
+export type TransactorOptions = {
   value?: BigNumberish
   onDone?: VoidFunction
   onConfirmed?: TransactorCallback
@@ -36,6 +36,22 @@ export type TransactorInstance<T = undefined> = (
   args: T,
   txOpts?: Omit<TransactorOptions, 'value'>,
 ) => ReturnType<Transactor>
+
+export function onCatch(
+  missingParam: string | undefined,
+  txOpts?: Omit<TransactorOptions, 'value'>,
+) {
+  txOpts?.onError?.(
+    new DOMException(
+      `Missing ${
+        missingParam ?? 'parameter` not found'
+      } in v1 SafeTransferFromTx`,
+    ),
+  )
+
+  txOpts?.onDone?.()
+  return Promise.resolve(false)
+}
 
 // wrapper around BlockNative's Notify.js
 // https://docs.blocknative.com/notify

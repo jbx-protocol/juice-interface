@@ -21,9 +21,11 @@ type ConfirmStakeModalProps = {
   visible: boolean
   tokenSymbolDisplayText: string
   tokensStaked: number
-  votingPower: number
   lockDuration: number
   beneficiary: string
+  useJbToken: boolean
+  allowPublicExtension: boolean
+  votingPower: number
   tokenMetadata: VeNftTokenMetadata | undefined
   onCancel: VoidFunction
   onCompleted: VoidFunction
@@ -33,9 +35,11 @@ export default function ConfirmStakeModal({
   visible,
   tokenSymbolDisplayText,
   tokensStaked,
-  votingPower,
   lockDuration,
   beneficiary,
+  useJbToken,
+  allowPublicExtension,
+  votingPower,
   tokenMetadata,
   onCancel,
   onCompleted,
@@ -74,8 +78,8 @@ export default function ConfirmStakeModal({
         value: tokensStakedInWad,
         lockDuration: lockDuration,
         beneficiary: recipient,
-        useJbToken: true,
-        allowPublicExtension: false,
+        useJbToken,
+        allowPublicExtension,
       },
       {
         onDone: () => {

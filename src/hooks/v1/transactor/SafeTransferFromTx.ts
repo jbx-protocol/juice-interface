@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
 import { useContext } from 'react'
-import { isDefined } from 'utils/isDefined'
+import invariant from 'tiny-invariant'
 
 import { onCatch, TransactorInstance } from '../../Transactor'
 
@@ -13,7 +13,7 @@ export function useSafeTransferFromTx(): TransactorInstance<{
   const { projectId, owner } = useContext(V1ProjectContext)
 
   return ({ newOwnerAddress }, txOpts) => {
-    isDefined(transactor && contracts?.Projects && projectId && owner)
+    invariant(transactor && contracts?.Projects && projectId && owner)
     try {
       return transactor(
         contracts.Projects,

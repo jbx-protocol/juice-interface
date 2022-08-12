@@ -129,7 +129,6 @@ export default function PayInputSubText({
         width: '100%',
         display: 'flex',
         justifyContent: 'space-between',
-        marginTop: '3px',
         color: colors.text.secondary,
       }}
     >

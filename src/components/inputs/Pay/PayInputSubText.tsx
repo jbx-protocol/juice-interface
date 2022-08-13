@@ -125,7 +125,7 @@ export default function PayInputSubText({
   return (
     <div
       style={{
-        fontSize: '.65rem',
+        fontSize: '.7rem',
         width: '100%',
         display: 'flex',
         justifyContent: 'space-between',

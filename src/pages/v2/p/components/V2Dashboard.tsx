@@ -165,7 +165,7 @@ export default function V2Dashboard({
     nftRewardsCIDs = CIDsOfNftRewardTiersResponse(nftRewardTiersResponse)
   }
   const { data: nftRewardTiers, isLoading: nftRewardTiersLoading } =
-    useNftRewards(nftRewardsCIDs)
+    useNftRewards(nftRewardTiersResponse ?? [])
 
   const isArchived = projectId
     ? V2ArchivedProjectIds.includes(projectId) || projectMetadata?.archived

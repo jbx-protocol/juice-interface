@@ -8,7 +8,7 @@ import { readNetwork } from 'constants/networks'
 
 const loadTerminalAddress = (
   network: NetworkName,
-  terminal: V1TerminalName,
+  terminal: V1TerminalName | null,
 ): string =>
   // NOTE: This require is harder to easily change in the code base as it means
   // making changes to the way the functions in the file are called.

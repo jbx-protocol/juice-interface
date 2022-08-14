@@ -15,6 +15,8 @@ import { ProjectPage } from 'models/project-visibility'
 
 import { useRouter } from 'next/router'
 
+import { pushSettingsContent } from 'utils/pushSettingsPage'
+
 import { RelaunchFundingCycleBanner } from './banners/RelaunchFundingCycleBanner'
 import V2ProjectHeaderActions from './V2ProjectHeaderActions'
 
@@ -85,7 +87,9 @@ export default function V2Project() {
         handle={handle}
         owner={projectOwnerAddress}
         onClickSetHandle={
-          showAddHandle ? () => setHandleModalVisible(true) : undefined
+          showAddHandle
+            ? () => pushSettingsContent(router, 'projecthandle')
+            : undefined
         }
       />
       {activePage === 'info' && (
@@ -94,9 +98,7 @@ export default function V2Project() {
           setHandleModalVisible={setHandleModalVisible}
         />
       )}
-      {activePage === 'settings' && (
-        <V2ProjectSettings setActivePage={setActivePage} />
-      )}
+      {activePage === 'settings' && <V2ProjectSettings />}
     </Space>
   )
 }

@@ -11,6 +11,7 @@ type MenuItem = Required<MenuProps>['items'][number]
 export type V2SettingsContentKey =
   | 'general'
   | 'projecthandle'
+  | 'reconfigurefc'
   | 'payouts'
   | 'reservedtokens'
   | 'paymentaddresses'
@@ -22,6 +23,7 @@ export type V2SettingsContentKey =
 export const V2SettingsKeyTitleMap: Record<V2SettingsContentKey, string> = {
   general: t`General`,
   projecthandle: t`Project Handle`,
+  reconfigurefc: t`Reconfigure Funding Cycle`,
   payouts: t`Payouts`,
   reservedtokens: t`Reserved Tokens`,
   paymentaddresses: t`Payment Addresses`,
@@ -57,6 +59,7 @@ const items: MenuItem[] = [
     'Funding',
     'funding',
     [
+      getItem('Reconfigure FC', 'reconfigurefc'),
       getItem('Payouts', 'payouts'),
       getItem('Reserved tokens', 'reservedtokens'),
     ],

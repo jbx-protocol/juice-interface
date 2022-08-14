@@ -21,6 +21,7 @@ import ArchiveV2Project from 'components/v2/V2Project/ArchiveV2Project'
 import { V1TokenMigrationSetupSection } from 'components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
+import V2ProjectReconfigure from 'components/v2/V2Project/V2ProjectSettingsPage/V2ProjectReconfigure'
 
 const defaultPage: V2SettingsContentKey = 'general'
 
@@ -36,6 +37,8 @@ const V2ProjectSettingsContent = () => {
           return 'general'
         case 'projecthandle':
           return 'projecthandle'
+        case 'reconfigurefc':
+          return 'reconfigurefc'
         case 'payouts':
           return 'payouts'
         case 'reservedtokens':
@@ -62,6 +65,8 @@ const V2ProjectSettingsContent = () => {
         return <V2ProjectDetails />
       case 'projecthandle':
         return <V2ReconfigureProjectHandle />
+      case 'reconfigurefc':
+        return <V2ProjectReconfigure />
       case 'payouts':
         return <V2ProjectSettingsPayoutsContent />
       case 'reservedtokens':

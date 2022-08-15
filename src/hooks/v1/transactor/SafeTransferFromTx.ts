@@ -2,8 +2,9 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
 import { useContext } from 'react'
+import invariant from 'tiny-invariant'
 
-import { TransactorInstance } from '../../Transactor'
+import { onCatch, TransactorInstance } from '../../Transactor'
 
 export function useSafeTransferFromTx(): TransactorInstance<{
   newOwnerAddress: string
@@ -12,7 +13,15 @@ export function useSafeTransferFromTx(): TransactorInstance<{
   const { projectId, owner } = useContext(V1ProjectContext)
 
   return ({ newOwnerAddress }, txOpts) => {
-    if (!transactor || !projectId || !contracts?.Projects) {
+    invariant(transactor && contracts?.Projects && projectId && owner)
+    try {
+      return transactor(
+        contracts.Projects,
+        'safeTransferFrom(address,address,uint256)',
+        [owner, newOwnerAddress, BigNumber.from(projectId).toHexString()],
+        txOpts,
+      )
+    } catch (_) {
       const missingParam = !transactor
         ? 'transactor'
         : !projectId
@@ -21,25 +30,9 @@ export function useSafeTransferFromTx(): TransactorInstance<{
         ? 'contracts.Projects'
         : !newOwnerAddress
         ? 'newOwnerAddress'
-        : null
+        : undefined
 
-      txOpts?.onError?.(
-        new DOMException(
-          `Missing ${
-            missingParam ?? 'parameter` not found'
-          } in v1 SafeTransferFromTx`,
-        ),
-      )
-
-      txOpts?.onDone?.()
-      return Promise.resolve(false)
+      return onCatch(missingParam, 'safeTransferFrom', 'v1', txOpts)
     }
-
-    return transactor(
-      contracts.Projects,
-      'safeTransferFrom(address,address,uint256)',
-      [owner, newOwnerAddress, BigNumber.from(projectId).toHexString()],
-      txOpts,
-    )
   }
 }

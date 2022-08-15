@@ -2,7 +2,7 @@ import { Plural, t, Trans } from '@lingui/macro'
 import { Descriptions } from 'antd'
 
 import { ThemeContext } from 'contexts/themeContext'
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 
 import { useVeNftSummaryStats } from 'hooks/veNft/VeNftSummaryStats'
 import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'

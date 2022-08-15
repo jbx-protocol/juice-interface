@@ -8,7 +8,6 @@ import { ETHERC20ProjectPayer } from 'models/subgraph-entities/v2/eth-erc20-proj
 import { useContext } from 'react'
 
 import * as constants from '@ethersproject/constants'
-import TooltipIcon from 'components/TooltipIcon'
 import CopyTextButton from 'components/CopyTextButton'
 import EtherscanLink from 'components/EtherscanLink'
 
@@ -78,34 +77,32 @@ export default function ProjectPayersModal({
                   style={{ display: 'flex', justifyContent: 'space-between' }}
                 >
                   <span>
-                    <TooltipLabel
-                      tip={t`Tokens will be minted as a result of paying this project.`}
-                      label={t`Mints tokens`}
-                    />
-                    :
+                    <Trans>Mints tokens:</Trans>
                   </span>
-                  <span style={{ textTransform: 'capitalize' }}>
-                    {(!p.preferAddToBalance).toString()}
-                  </span>
+                  <TooltipLabel
+                    tip={t`Tokens will be minted as a result of paying this project.`}
+                    label={
+                      <span style={{ textTransform: 'capitalize' }}>
+                        {(!p.preferAddToBalance).toString()}
+                      </span>
+                    }
+                  />
                 </div>
                 <div
                   style={{ display: 'flex', justifyContent: 'space-between' }}
                 >
                   <Trans>Token beneficiary:</Trans>
                   {p.beneficiary !== constants.AddressZero ? (
-                    <span>
-                      <FormattedAddress address={p.beneficiary} />
-                      <TooltipIcon
-                        tip={
-                          <Trans>
-                            When someone pays this payer contract, project
-                            tokens will always be minted to this address,{' '}
-                            <strong>not to the person who paid.</strong>
-                          </Trans>
-                        }
-                        iconStyle={{ marginLeft: '8px' }}
-                      />
-                    </span>
+                    <TooltipLabel
+                      tip={
+                        <Trans>
+                          When someone pays this payer contract, project tokens
+                          will always be minted to this address,{' '}
+                          <strong>not to the person who paid.</strong>
+                        </Trans>
+                      }
+                      label={<FormattedAddress address={p.beneficiary} />}
+                    />
                   ) : (
                     <TooltipLabel
                       tip={t`Project tokens will be minted to whoever pays this payer contract.`}
@@ -118,15 +115,16 @@ export default function ProjectPayersModal({
                     style={{ display: 'flex', justifyContent: 'space-between' }}
                   >
                     <span>
-                      <TooltipLabel
-                        tip={t`New project tokens are automatically minted as ERC-20's. The gas to pay this contract will be higher than normal.`}
-                        label={t`Mints tokens as ERC-20`}
-                      />
-                      :
+                      <Trans>Mints tokens as ERC-20:</Trans>
                     </span>
-                    <span style={{ textTransform: 'capitalize' }}>
-                      {p.preferClaimedTokens.toString()}
-                    </span>
+                    <TooltipLabel
+                      tip={t`New project tokens are automatically minted as ERC-20's. The gas to pay this contract will be higher than normal.`}
+                      label={
+                        <span style={{ textTransform: 'capitalize' }}>
+                          {p.preferClaimedTokens.toString()}
+                        </span>
+                      }
+                    />
                   </div>
                 ) : null}
                 {p?.memo?.length ? (

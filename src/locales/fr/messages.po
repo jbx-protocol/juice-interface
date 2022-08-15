@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-08-08 07:00\n"
+"PO-Revision-Date: 2022-08-14 00:33\n"
 "Last-Translator: \n"
 "Language: fr_FR\n"
 "Language-Team: French\n"
@@ -17,9 +17,6 @@ msgstr ""
 "X-Crowdin-File-ID: 2852\n"
 
 msgid "$ve{tokenSymbolDisplayText} Received"
-msgstr ""
-
-msgid "({0}%)"
 msgstr ""
 
 msgid "({realTokenAllocationPercent}% of all newly minted tokens)."
@@ -103,6 +100,9 @@ msgstr "<0/>{0} après {feePercentage}% frais de membre JBX"
 msgid "<0/>{0}{1} distributed"
 msgstr "<0/>{0}{1} distribués"
 
+msgid "<0><1/>{0}</0> Distribution Limit"
+msgstr ""
+
 msgid "<0><1/>{netDistributionAmount}</0> after {feePercentage}% JBX fee"
 msgstr "<0><1/>{netDistributionAmount}</0> après {feePercentage}% des frais JBX"
 
@@ -128,6 +128,9 @@ msgid "<0>Contribution floor:</0> {0} ETH"
 msgstr ""
 
 msgid "<0>Description: </0><1/>"
+msgstr ""
+
+msgid "<0>Description:</0><1/>"
 msgstr ""
 
 msgid "<0>Discount rate</0>, to reduce your project token's issuance rate (tokens per ETH) each funding cycle."
@@ -156,6 +159,9 @@ msgstr "<0>En savoir plus</0> sur les cycles de financement."
 
 msgid "<0>Learn more</0> about overflow."
 msgstr "<0>En savoir plus</0> sur l'overflow."
+
+msgid "<0>Max. supply:</0> <1>{0}</1>"
+msgstr ""
 
 msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
 msgstr "<0>REMARQUE :</0> Ce projet a un solde de 0. Les projets ne peuvent pas migrer sans un solde. Pour migrer ce projet, vous devez le payer ou utiliser le bouton ci-dessous pour verser 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
@@ -211,14 +217,11 @@ msgstr ""
 msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
 msgstr "<0>Vos tokens non réclamés {tokenSymbol} :</0> {0}"
 
+msgid "<0>Zero</0> Distribution Limit"
+msgstr ""
+
 msgid "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
 msgstr "<0>{tokenSymbol} adresse de l'ERC-20 : </0><1/>"
-
-msgid "@"
-msgstr ""
-
-msgid "@{handle}"
-msgstr ""
 
 msgid "@{handle} not found"
 msgstr ""
@@ -301,9 +304,6 @@ msgstr ""
 msgid "Add the V1 Token Payment Terminal to your project."
 msgstr ""
 
-msgid "Add to Balance"
-msgstr "Ajouter au solde"
-
 msgid "Add to balance"
 msgstr "Ajouter au solde"
 
@@ -331,6 +331,9 @@ msgstr "Définir des récompenses au paiement de votre projet."
 msgid "Advanced (optional)"
 msgstr ""
 
+msgid "Advanced Options"
+msgstr ""
+
 msgid "All"
 msgstr "Tout"
 
@@ -355,6 +358,9 @@ msgstr "Destinez une portion des tokens réservés à votre projet à d'autres p
 msgid "Allow minting tokens"
 msgstr "Permettre la frappe de tokens"
 
+msgid "Allow public lock extension"
+msgstr ""
+
 msgid "Allow terminal configuration"
 msgstr ""
 
@@ -366,6 +372,9 @@ msgstr ""
 
 msgid "Allowed"
 msgstr "Autorisé"
+
+msgid "Allows anyone to extend your lock position."
+msgstr ""
 
 msgid "Almost definitely."
 msgstr "Définitivement."
@@ -739,9 +748,6 @@ msgstr "Customisez le bouton « payer » de votre projet. Laissez vide pour util
 msgid "Cycle #{0}"
 msgstr ""
 
-msgid "Cycle #{0} -"
-msgstr ""
-
 msgid "DAOs"
 msgstr ""
 
@@ -910,9 +916,6 @@ msgstr "La limite de distribution est infinie. <0>Le projet contrôlera la mani�
 msgid "Distribution limit, duration and payouts"
 msgstr "Limite de distribution, durée et paiements"
 
-msgid "Distribution limit: <0/>{0}"
-msgstr ""
-
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
 msgstr "Dois-je rendre mon projet open source pour utiliser Juicebox comme son modèle économique ?"
 
@@ -1003,6 +1006,9 @@ msgstr "Modifier l'allocation de token"
 msgid "Edit tracked assets"
 msgstr "Modifier les actifs suivis"
 
+msgid "Enable veBanny Governance"
+msgstr ""
+
 msgid "Enable veNFT Governance"
 msgstr ""
 
@@ -1060,8 +1066,14 @@ msgstr "Échec de la mise à jour des métadonnées du projet"
 msgid "Fee from <0><1/></0>"
 msgstr ""
 
+msgid "File empty or corrupt. Try again."
+msgstr ""
+
 msgid "File must be less than {formattedSize}{unit}"
 msgstr "Le fichier doit être inférieur à {formattedSize}{unit}"
+
+msgid "File upload failed. Try again."
+msgstr ""
 
 msgid "Fund and operate your thing, your way."
 msgstr ""
@@ -1309,6 +1321,9 @@ msgstr "Projet Juicebox"
 msgid "Juicebox projects use <0>ENS names</0> as handles. Setting a handle involves 2 transactions:"
 msgstr ""
 
+msgid "LINK TO NFT"
+msgstr ""
+
 msgid "Last paid"
 msgstr "Dernier paiement"
 
@@ -1338,6 +1353,9 @@ msgstr ""
 
 msgid "Light theme"
 msgstr "Mode clair"
+
+msgid "Limited supply"
+msgstr ""
 
 msgid "Link Juicebox V1 project"
 msgstr ""
@@ -1489,6 +1507,9 @@ msgstr "Aucune activité"
 msgid "No beneficiary selected. Is your wallet connected?"
 msgstr ""
 
+msgid "No file uploaded."
+msgstr ""
+
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
 msgstr "Aucun objectif de financement : le projet contrôlera la manière dont tous les fonds sont distribués, et rien ne pourra être récupéré par les titulaires de tokens."
 
@@ -1541,9 +1562,6 @@ msgid "Once launched, your first funding cycle <0>can't be changed</0>. You can 
 msgstr "Une fois lancé, votre premier cycle de financement <0>ne peut plus être modifié</0>. Vous pouvez reparamétrer les cycles de financement à venir selon les <1>règles de reparamétrage</1> du projet."
 
 msgid "Only lowercase letters"
-msgstr ""
-
-msgid "Only project tokens claimed as ERC-20 tokens can be staked for NFTs."
 msgstr ""
 
 msgid "Other assets in this project's owner's wallet."
@@ -1699,9 +1717,6 @@ msgstr "Risques potentiels"
 msgid "Preview"
 msgstr ""
 
-msgid "Preview:"
-msgstr "Aperçu :"
-
 msgid "Project Created"
 msgstr "Projet Créé"
 
@@ -1710,12 +1725,6 @@ msgstr "L'identifiant du projet doit être un numéro."
 
 msgid "Project ID:"
 msgstr "Identifiant du projet :"
-
-msgid "Project Links"
-msgstr ""
-
-msgid "Project Page Customizations"
-msgstr ""
 
 msgid "Project Token"
 msgstr "Token du projet"
@@ -1753,6 +1762,9 @@ msgstr "Le projet n'accepte pas des paiements dans ce cycle de financement."
 msgid "Project launch successful"
 msgstr "Démarrage du projet réussi"
 
+msgid "Project links"
+msgstr ""
+
 msgid "Project name"
 msgstr "Nom du projet"
 
@@ -1770,6 +1782,9 @@ msgstr "Propriétaire du projet (vous)"
 
 msgid "Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."
 msgstr "Les propriétaires de projet peuvent définir une période de délai, ce qui signifie que les redéfinitions d'un cycle de financement à venir doivent être soumises un certain nombre de jours avant qu'il ne commence. Par exemple, un délai de 3 jours signifie que les redéfinitions doivent être soumises au moins 3 jours avant le début du prochain cycle de financement. Cela donne aux détenteurs de tokens le temps de réagir à la décision et réduit les risques d'arnaque."
+
+msgid "Project page customizations"
+msgstr ""
 
 msgid "Project token"
 msgstr "Token du projet"
@@ -1813,14 +1828,17 @@ msgstr ""
 msgid "Provide a link to additional information about this NFT."
 msgstr ""
 
+msgid "REMAINING SUPPLY: {0}/{1}"
+msgstr ""
+
 msgid "Raised on Juicebox"
 msgstr ""
 
 msgid "Range"
 msgstr ""
 
-msgid "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"
-msgstr "Classements basés sur le nombre de contributions et le volume gagné au cours des derniers {trendingWindow} jours. <0>Voir le code</0>"
+msgid "Rankings based on number of contributions and volume gained in the last {trendingWindowDays} days. <0>See code</0>"
+msgstr ""
 
 msgid "Read less"
 msgstr ""
@@ -1845,9 +1863,6 @@ msgstr "Recevoir {receiveText}"
 
 msgid "Recipient"
 msgstr "Destinataire"
-
-msgid "Recipient Address"
-msgstr ""
 
 msgid "Recipient address"
 msgstr "Adresse du destinataire"
@@ -2080,6 +2095,9 @@ msgstr "Définir la durée du cycle de financement"
 msgid "Set a funding cycle target"
 msgstr "Définir l'objectif du cycle de financement"
 
+msgid "Set a limit on how many of these NFTs can be minted."
+msgstr ""
+
 msgid "Set a project handle (optional)"
 msgstr ""
 
@@ -2105,6 +2123,12 @@ msgid "Set this to the sum of all your payouts"
 msgstr "Définissez ceci sur la somme de tous vos paiements"
 
 msgid "Set up V1 token migration"
+msgstr ""
+
+msgid "Set up and launch veNFT governance for your project using custom assets and parameters. (Experimental, does not currently launch)"
+msgstr ""
+
+msgid "Set up and launch veNFT governance for your project using default veBanny assets and parameters."
 msgstr ""
 
 msgid "Set up and launch veNFT governance for your project."
@@ -2154,9 +2178,6 @@ msgstr ""
 
 msgid "Start"
 msgstr "Début"
-
-msgid "Start Over"
-msgstr "Recommencer"
 
 msgid "Start over"
 msgstr ""
@@ -2254,6 +2275,9 @@ msgstr "Le montant maximal de fonds pouvant être distribué à partir de la tr�
 msgid "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
 msgstr "Le montant maximal des fonds pouvant être distribués à partir de ce projet au cours d'un cycle de financement. Les fonds seront retirés en ETH, quelle que soit la devise que vous choisissez."
 
+msgid "The maximum supply of this NFT in circulation."
+msgstr ""
+
 msgid "The number of project tokens minted when 1 ETH is contributed in the first funding cycle."
 msgstr ""
 
@@ -2325,6 +2349,9 @@ msgstr "Cette adresse recevra les tokens frappés en payant ce projet."
 
 msgid "This funding cycle may pose risks to contributors. Check the funding cycle details before paying this project."
 msgstr "Ce cycle de financement peut présenter des risques pour les contributeurs. Vérifiez les détails du cycle de financement avant de payer ce projet."
+
+msgid "This funding cycle's distribution limit."
+msgstr ""
 
 msgid "This is the maximum amount of funds that can leave the treasury each funding cycle."
 msgstr "Ceci est le montant maximal de fonds qui peut sortir de la trésorerie à chaque cycle de financement."
@@ -2421,6 +2448,9 @@ msgstr "Symbole du token"
 
 msgid "Token symbol is required"
 msgstr "Le symbole du token est requis"
+
+msgid "Token to Lock:"
+msgstr ""
 
 msgid "Tokens"
 msgstr ""
@@ -2568,6 +2598,9 @@ msgstr "Les mises à jour que vous apportez à cette section ne seront appliqué
 
 msgid "Upload"
 msgstr "Importer"
+
+msgid "Upload CSV"
+msgstr ""
 
 msgid "Upload an image"
 msgstr ""
@@ -2878,9 +2911,6 @@ msgstr "identifiant"
 msgid "hours"
 msgstr "heures"
 
-msgid "juiceboxETH"
-msgstr ""
-
 msgid "last {trendingWindowDays} days"
 msgstr "derniers {trendingWindowDays} jours"
 
@@ -3014,9 +3044,6 @@ msgid "{inflationRate} tokens / ETH"
 msgstr ""
 
 msgid "{issuanceRate} tokens / ETH"
-msgstr ""
-
-msgid "{label}"
 msgstr ""
 
 msgid "{lockDurationOptionInDays} {lockDurationOptionInDays, plural, one {{0}} other {{1}}}"

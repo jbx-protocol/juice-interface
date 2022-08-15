@@ -4,25 +4,14 @@ import {
   PinataPinResponse,
 } from '@pinata/sdk'
 
-import { IpfsCacheJsonData } from 'models/ipfs-cache/cache-data'
-import { IpfsCacheName } from 'models/ipfs-cache/cache-name'
 import { consolidateMetadata, ProjectMetadataV4 } from 'models/project-metadata'
 import { IPFSNftRewardTier, NftRewardTier } from 'models/v2/nftRewardTier'
 
 import axios from 'axios'
 
-import { readNetwork } from 'constants/networks'
 import { IPFS_GATEWAY_HOSTNAME, DEFAULT_PINATA_GATEWAY } from 'constants/ipfs'
 
 export const IPFS_TAGS = {
-  [IpfsCacheName.trending]:
-    (process.env.NODE_ENV === 'production'
-      ? 'trending_projects_'
-      : 'DEV_trending_projects_') + readNetwork.name,
-  [IpfsCacheName.trendingV2]:
-    (process.env.NODE_ENV === 'production'
-      ? 'trending_projects_v2_'
-      : 'DEV_trending_projects_v2_') + readNetwork.name,
   METADATA:
     process.env.NODE_ENV === 'production'
       ? 'juicebox_project_metadata'
@@ -129,23 +118,6 @@ export const uploadProjectMetadata = async (
   })
 
   return res.data as PinataPinResponse
-}
-
-export const uploadIpfsJsonCache = async <T extends IpfsCacheName>(
-  tag: T,
-  data: IpfsCacheJsonData[T],
-) => {
-  return await axios.post('/api/ipfs/pin', {
-    data,
-    options: {
-      pinataMetadata: {
-        keyvalues: {
-          tag: IPFS_TAGS[tag],
-        } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
-        name: IPFS_TAGS[tag] + '.json',
-      },
-    },
-  })
 }
 
 export const getPinnedListByTag = async (tag: keyof typeof IPFS_TAGS) => {

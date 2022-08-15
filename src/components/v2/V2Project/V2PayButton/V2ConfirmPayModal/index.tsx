@@ -13,6 +13,8 @@ import { NftRewardTier } from 'models/v2/nftRewardTier'
 import { useContext, useState } from 'react'
 import { formattedNum, formatWad, fromWad } from 'utils/formatNumber'
 
+import { buildPaymentMemo } from 'utils/buildPaymentMemo'
+
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import {
   V2CurrencyName,
@@ -34,32 +36,6 @@ import { featureFlagEnabled } from 'utils/featureFlags'
 import { V2PayForm, V2PayFormType } from '../V2PayForm'
 import { NftRewardCell } from './NftRewardCell'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-
-/**
- * Produce payment memo with the following schema:
- * <text memo> <sticker URLs> <uploaded image URL>
- */
-const buildPaymentMemo = ({
-  text = '',
-  imageUrl,
-  stickerUrls,
-}: {
-  text?: string
-  imageUrl?: string
-  stickerUrls?: string[]
-}) => {
-  let memo = `${text}`
-
-  if (stickerUrls?.length) {
-    memo += `\n${stickerUrls.join(' ')}`
-  }
-
-  if (imageUrl) {
-    memo += `\n${imageUrl}`
-  }
-
-  return memo
-}
 
 export function V2ConfirmPayModal({
   visible,

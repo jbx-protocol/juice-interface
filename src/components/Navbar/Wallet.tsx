@@ -30,7 +30,12 @@ export default function Wallet({ userAddress }: { userAddress: string }) {
   const menu = (
     <Menu>
       <Menu.Item style={{ padding: menuItemPadding }} key={0}>
-        <EtherscanLink value={userAddress} type="address" truncated={true} />{' '}
+        <EtherscanLink
+          value={userAddress}
+          type="address"
+          truncated={true}
+          hideTooltip
+        />{' '}
         <CopyTextButton value={userAddress} style={{ zIndex: 1 }} />
       </Menu.Item>
       <Menu.Item
@@ -87,7 +92,7 @@ export default function Wallet({ userAddress }: { userAddress: string }) {
         }}
       >
         <FormattedAddress address={userAddress} tooltipDisabled={true} />
-        <Balance address={userAddress} />
+        <Balance address={userAddress} hideTooltip />
       </div>
     </Dropdown>
   )

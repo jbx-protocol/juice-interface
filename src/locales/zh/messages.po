@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-08-08 07:00\n"
+"PO-Revision-Date: 2022-08-14 00:33\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: Chinese Simplified\n"
@@ -18,9 +18,6 @@ msgstr ""
 
 msgid "$ve{tokenSymbolDisplayText} Received"
 msgstr "$ve{tokenSymbolDisplayText} received"
-
-msgid "({0}%)"
-msgstr "({0}%)"
 
 msgid "({realTokenAllocationPercent}% of all newly minted tokens)."
 msgstr "（{realTokenAllocationPercent}% 新铸造的代币）。"
@@ -103,6 +100,9 @@ msgstr "<0/>{0} 扣除 {feePercentage}% JBX 成员费用之后"
 msgid "<0/>{0}{1} distributed"
 msgstr "<0/>{0}{1} 已分发"
 
+msgid "<0><1/>{0}</0> Distribution Limit"
+msgstr ""
+
 msgid "<0><1/>{netDistributionAmount}</0> after {feePercentage}% JBX fee"
 msgstr "<0><1/>{netDistributionAmount}</0> 扣除 {feePercentage}% JBX 费用后"
 
@@ -128,6 +128,9 @@ msgid "<0>Contribution floor:</0> {0} ETH"
 msgstr ""
 
 msgid "<0>Description: </0><1/>"
+msgstr ""
+
+msgid "<0>Description:</0><1/>"
 msgstr ""
 
 msgid "<0>Discount rate</0>, to reduce your project token's issuance rate (tokens per ETH) each funding cycle."
@@ -156,6 +159,9 @@ msgstr "<0>进一步了解</0> 筹款周期。"
 
 msgid "<0>Learn more</0> about overflow."
 msgstr "<0>进一步了解</0> 溢出。"
+
+msgid "<0>Max. supply:</0> <1>{0}</1>"
+msgstr ""
 
 msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
 msgstr "<0>注意：</0> 该项目余额为零，无法迁移。如果要迁移该项目，先直接支付或是通过下方按钮存入 1 wei （0.000000000000000001 or 10<1>-18</1> ETH）。"
@@ -211,14 +217,11 @@ msgstr ""
 msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
 msgstr "<0>你当前未领取的 {tokenSymbol} 代币数量：</0> {0}"
 
+msgid "<0>Zero</0> Distribution Limit"
+msgstr ""
+
 msgid "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
 msgstr "<0>{tokenSymbol} ERC-20 地址：</0><1/>"
-
-msgid "@"
-msgstr ""
-
-msgid "@{handle}"
-msgstr ""
 
 msgid "@{handle} not found"
 msgstr ""
@@ -301,9 +304,6 @@ msgstr ""
 msgid "Add the V1 Token Payment Terminal to your project."
 msgstr ""
 
-msgid "Add to Balance"
-msgstr "添加到余额"
-
 msgid "Add to balance"
 msgstr "添加到余额"
 
@@ -331,6 +331,9 @@ msgstr "调整激励措施，以便鼓励其他人或项目向你的项目付款
 msgid "Advanced (optional)"
 msgstr ""
 
+msgid "Advanced Options"
+msgstr ""
+
 msgid "All"
 msgstr "全部"
 
@@ -355,6 +358,9 @@ msgstr "把您项目的一部分保留代币分发给其他以太坊钱包或其
 msgid "Allow minting tokens"
 msgstr "允许铸造代币"
 
+msgid "Allow public lock extension"
+msgstr ""
+
 msgid "Allow terminal configuration"
 msgstr ""
 
@@ -366,6 +372,9 @@ msgstr ""
 
 msgid "Allowed"
 msgstr "允许"
+
+msgid "Allows anyone to extend your lock position."
+msgstr ""
 
 msgid "Almost definitely."
 msgstr "答案是肯定的."
@@ -739,9 +748,6 @@ msgstr "定制项目的 \"付款“ 按钮。留空则使用默认值。"
 msgid "Cycle #{0}"
 msgstr "周期 #{0}"
 
-msgid "Cycle #{0} -"
-msgstr ""
-
 msgid "DAOs"
 msgstr ""
 
@@ -910,9 +916,6 @@ msgstr "分配限额为无限。<0>项目将决定所有资金应该如何分配
 msgid "Distribution limit, duration and payouts"
 msgstr "分配上限、时长及支出"
 
-msgid "Distribution limit: <0/>{0}"
-msgstr ""
-
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
 msgstr "要把 Juicebox 用作项目的商业模式的话，我必须把项目进行开源吗？"
 
@@ -1003,6 +1006,9 @@ msgstr "编辑代币的分发"
 msgid "Edit tracked assets"
 msgstr "编辑监测的资产"
 
+msgid "Enable veBanny Governance"
+msgstr ""
+
 msgid "Enable veNFT Governance"
 msgstr ""
 
@@ -1060,8 +1066,14 @@ msgstr "更新项目元数据失败"
 msgid "Fee from <0><1/></0>"
 msgstr ""
 
+msgid "File empty or corrupt. Try again."
+msgstr ""
+
 msgid "File must be less than {formattedSize}{unit}"
 msgstr "文件大小必须小于 {formattedSize}{unit}"
+
+msgid "File upload failed. Try again."
+msgstr ""
 
 msgid "Fund and operate your thing, your way."
 msgstr ""
@@ -1309,6 +1321,9 @@ msgstr "Juicebox项目"
 msgid "Juicebox projects use <0>ENS names</0> as handles. Setting a handle involves 2 transactions:"
 msgstr ""
 
+msgid "LINK TO NFT"
+msgstr ""
+
 msgid "Last paid"
 msgstr "上次支付"
 
@@ -1338,6 +1353,9 @@ msgstr ""
 
 msgid "Light theme"
 msgstr "浅色主题"
+
+msgid "Limited supply"
+msgstr ""
 
 msgid "Link Juicebox V1 project"
 msgstr ""
@@ -1489,6 +1507,9 @@ msgstr "暂无动态"
 msgid "No beneficiary selected. Is your wallet connected?"
 msgstr ""
 
+msgid "No file uploaded."
+msgstr ""
+
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
 msgstr "不设定筹款目标：所有的资金如何分发都由此项目决定，代币持有者无法赎回。"
 
@@ -1541,9 +1562,6 @@ msgid "Once launched, your first funding cycle <0>can't be changed</0>. You can 
 msgstr "一旦启动，你的第一个筹款周期 <0>不能再更改</0>。 你可以按照项目的 <1>重新配置规则</1>来重新配置后续的筹款周期。"
 
 msgid "Only lowercase letters"
-msgstr ""
-
-msgid "Only project tokens claimed as ERC-20 tokens can be staked for NFTs."
 msgstr ""
 
 msgid "Other assets in this project's owner's wallet."
@@ -1699,9 +1717,6 @@ msgstr "潜在风险"
 msgid "Preview"
 msgstr ""
 
-msgid "Preview:"
-msgstr "预览："
-
 msgid "Project Created"
 msgstr "创建项目"
 
@@ -1710,12 +1725,6 @@ msgstr "项目 ID 必须是一个数字。"
 
 msgid "Project ID:"
 msgstr "项目标识："
-
-msgid "Project Links"
-msgstr ""
-
-msgid "Project Page Customizations"
-msgstr ""
 
 msgid "Project Token"
 msgstr "项目代币"
@@ -1753,6 +1762,9 @@ msgstr "项目本筹款周期不接受付款。"
 msgid "Project launch successful"
 msgstr "项目成功启动"
 
+msgid "Project links"
+msgstr ""
+
 msgid "Project name"
 msgstr "项目名称"
 
@@ -1770,6 +1782,9 @@ msgstr "项目拥有者 (你)"
 
 msgid "Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."
 msgstr "项目方可以配置一个延迟期，这意味着对即将到来的筹款周期的重新配置必须在某个时间段内提交。例如，3天的延迟期意味着重新配置必须至少在下一个筹款周期开始前的3天内提交。这给了代币持有者对决策做出反应的时间，并减少了项目方跑路的机会。"
+
+msgid "Project page customizations"
+msgstr ""
 
 msgid "Project token"
 msgstr "项目代币"
@@ -1813,14 +1828,17 @@ msgstr ""
 msgid "Provide a link to additional information about this NFT."
 msgstr ""
 
+msgid "REMAINING SUPPLY: {0}/{1}"
+msgstr ""
+
 msgid "Raised on Juicebox"
 msgstr ""
 
 msgid "Range"
 msgstr ""
 
-msgid "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"
-msgstr "按最近 {trendingWindow} 天的支付次数与数额排行。<0>查看代码</0>"
+msgid "Rankings based on number of contributions and volume gained in the last {trendingWindowDays} days. <0>See code</0>"
+msgstr ""
 
 msgid "Read less"
 msgstr ""
@@ -1845,9 +1863,6 @@ msgstr "接收 {receiveText}"
 
 msgid "Recipient"
 msgstr "收款人"
-
-msgid "Recipient Address"
-msgstr ""
 
 msgid "Recipient address"
 msgstr "接收人地址"
@@ -2080,6 +2095,9 @@ msgstr "设置筹款周期持续时间"
 msgid "Set a funding cycle target"
 msgstr "设定筹款周期目标"
 
+msgid "Set a limit on how many of these NFTs can be minted."
+msgstr ""
+
 msgid "Set a project handle (optional)"
 msgstr ""
 
@@ -2105,6 +2123,12 @@ msgid "Set this to the sum of all your payouts"
 msgstr "把这个设置为你所有支出对象的总额"
 
 msgid "Set up V1 token migration"
+msgstr ""
+
+msgid "Set up and launch veNFT governance for your project using custom assets and parameters. (Experimental, does not currently launch)"
+msgstr ""
+
+msgid "Set up and launch veNFT governance for your project using default veBanny assets and parameters."
 msgstr ""
 
 msgid "Set up and launch veNFT governance for your project."
@@ -2154,9 +2178,6 @@ msgstr ""
 
 msgid "Start"
 msgstr "开始时间"
-
-msgid "Start Over"
-msgstr "重新来过"
 
 msgid "Start over"
 msgstr ""
@@ -2254,6 +2275,9 @@ msgstr "每个筹款周期可以从金库分配出去的最大金额。"
 msgid "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
 msgstr "单个筹款周期内，可从项目分配出去的资金上限。无论你选择用哪种货币进行分配，都是以 ETH 的形式提取资金。"
 
+msgid "The maximum supply of this NFT in circulation."
+msgstr ""
+
 msgid "The number of project tokens minted when 1 ETH is contributed in the first funding cycle."
 msgstr "第一个筹款周期捐款 1 ETH 铸造的项目代币数量。"
 
@@ -2325,6 +2349,9 @@ msgstr "捐款给项目后铸造出来的代币将会发放到这个地址。"
 
 msgid "This funding cycle may pose risks to contributors. Check the funding cycle details before paying this project."
 msgstr "当前筹款周期可能存在一定风险。支付前请先检查筹款周期的配置详情。"
+
+msgid "This funding cycle's distribution limit."
+msgstr ""
 
 msgid "This is the maximum amount of funds that can leave the treasury each funding cycle."
 msgstr "这是每个筹款周期可以从金库分配出去的最大资金数量。"
@@ -2421,6 +2448,9 @@ msgstr "代币符号"
 
 msgid "Token symbol is required"
 msgstr "请填写代币简称"
+
+msgid "Token to Lock:"
+msgstr ""
 
 msgid "Tokens"
 msgstr "代币"
@@ -2568,6 +2598,9 @@ msgstr "你对这个部分的改动在 <0>后面的</0> 筹款周期才会生效
 
 msgid "Upload"
 msgstr "上传"
+
+msgid "Upload CSV"
+msgstr ""
 
 msgid "Upload an image"
 msgstr ""
@@ -2878,9 +2911,6 @@ msgstr "标识"
 msgid "hours"
 msgstr "小时"
 
-msgid "juiceboxETH"
-msgstr ""
-
 msgid "last {trendingWindowDays} days"
 msgstr "最近 {trendingWindowDays} 天"
 
@@ -3015,9 +3045,6 @@ msgstr "{inflationRate} 代币 / ETH"
 
 msgid "{issuanceRate} tokens / ETH"
 msgstr "{issuanceRate} 个代币 / ETH"
-
-msgid "{label}"
-msgstr ""
 
 msgid "{lockDurationOptionInDays} {lockDurationOptionInDays, plural, one {{0}} other {{1}}}"
 msgstr ""

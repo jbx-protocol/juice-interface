@@ -3,6 +3,8 @@ import { useContext } from 'react'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
+import { handleTransactor } from 'utils/transactorHelper'
+
 import { TransactorInstance } from '../../Transactor'
 
 export function useMintTokensTx(): TransactorInstance<{
@@ -11,7 +13,7 @@ export function useMintTokensTx(): TransactorInstance<{
   preferClaimed: boolean
   memo: string
 }> {
-  const { transactor, contracts } = useContext(V2UserContext)
+  const { transactor, contracts, version } = useContext(V2UserContext)
   const { projectId } = useContext(V2ProjectContext)
 
   // TODO new V2 feature:
@@ -19,22 +21,20 @@ export function useMintTokensTx(): TransactorInstance<{
   const reservedRate = true
 
   return ({ value, beneficiary, preferClaimed, memo }, txOpts) => {
-    if (!transactor || !contracts || !projectId) {
-      txOpts?.onDone?.()
-      return Promise.resolve(false)
-    }
-
-    const contract = contracts.JBController
-    const functionName = 'mintTokensOf'
-    const args = [
-      projectId,
-      value.toHexString(),
-      beneficiary,
-      memo ?? '',
-      preferClaimed,
-      reservedRate,
-    ]
-
-    return transactor(contract, functionName, args, txOpts)
+    return handleTransactor({
+      args: [
+        projectId,
+        value.toHexString(),
+        beneficiary,
+        memo ?? '',
+        preferClaimed,
+        reservedRate,
+      ],
+      contract: contracts?.JBController,
+      fnName: 'mintTokensOf',
+      transactor,
+      txOpts,
+      version,
+    })
   }
 }

@@ -17,7 +17,7 @@ import { useRouter } from 'next/router'
 
 import { useInfiniteProjectsQuery, useProjectsSearch } from 'hooks/Projects'
 
-import { NetworkContext } from 'contexts/networkContext'
+import { useWallet } from 'hooks/Wallet'
 import { ThemeContext } from 'contexts/themeContext'
 
 import { CV } from 'models/cv'
@@ -52,7 +52,7 @@ function Projects() {
   // Checks URL to see if tab has been set
   const router = useRouter()
 
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress } = useWallet()
 
   const [searchText, setSearchText] = useState<string>(
     (router.query.search as string | undefined) ?? '',

@@ -5,4 +5,5 @@ import { createContext } from 'react'
 export const V1UserContext: React.Context<{
   contracts?: V1Contracts
   transactor?: Transactor
-}> = createContext({})
+  version: 'v1'
+}> = createContext({ version: 'v1' })

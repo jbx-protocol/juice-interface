@@ -100,6 +100,15 @@ export default function PayInputGroup({
               />
             }
           />
+          <PayInputSubText
+            payInCurrency={payInCurrency ?? ETH}
+            amount={payAmountETH}
+            reservedRate={reservedRate}
+            weight={weight}
+            tokenSymbol={tokenSymbol}
+            tokenAddress={tokenAddress}
+            weightingFn={weightingFn}
+          />
         </div>
 
         <PayButton
@@ -110,15 +119,6 @@ export default function PayInputGroup({
           disabled={disabled}
         />
       </div>
-      <PayInputSubText
-        payInCurrency={payInCurrency ?? ETH}
-        amount={payAmountETH}
-        reservedRate={reservedRate}
-        weight={weight}
-        tokenSymbol={tokenSymbol}
-        tokenAddress={tokenAddress}
-        weightingFn={weightingFn}
-      />
     </>
   )
 }

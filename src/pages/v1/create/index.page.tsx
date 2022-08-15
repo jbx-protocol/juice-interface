@@ -6,7 +6,7 @@ import { Button, Col, Drawer, DrawerProps, Row, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
 import V1Project from 'components/v1/V1Project'
-import { NetworkContext } from 'contexts/networkContext'
+import { useWallet } from 'hooks/Wallet'
 import {
   V1ProjectContext,
   V1ProjectContextType,
@@ -86,7 +86,13 @@ export default function V1CreatePage() {
 
 function V1Create() {
   const router = useRouter()
-  const { userAddress, onSelectWallet } = useContext(NetworkContext)
+  const {
+    userAddress,
+    connect,
+    isConnected,
+    chainUnsupported,
+    changeNetworks,
+  } = useWallet()
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>()
   const [viewedSteps, setViewedSteps] = useState<number[]>([])
@@ -785,8 +791,20 @@ function V1Create() {
 
         <Modal
           visible={deployProjectModalVisible}
-          onOk={userAddress ? deployProject : onSelectWallet}
           okText={<DeployButtonText />}
+          onOk={() => {
+            if (!isConnected) {
+              setDeployProjectModalVisible(false)
+              connect()
+              return
+            }
+            if (chainUnsupported) {
+              setDeployProjectModalVisible(false)
+              changeNetworks()
+              return
+            }
+            deployProject()
+          }}
           confirmLoading={loadingCreate}
           width={800}
           onCancel={() => setDeployProjectModalVisible(false)}

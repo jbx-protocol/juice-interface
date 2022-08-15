@@ -39,7 +39,6 @@
     "autolinker": "^3.14.3",
     "axios": "^0.21.1",
     "bnc-notify": "^1.9.1",
-    "bnc-onboard": "1.36.0",
     "bottleneck": "^2.19.5",
     "erc-20-abi": "^1.0.0",
     "eslint": "^8.19.0",

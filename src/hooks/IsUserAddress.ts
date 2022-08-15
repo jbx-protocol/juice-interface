@@ -1,8 +1,7 @@
-import { NetworkContext } from 'contexts/networkContext'
-import { useContext } from 'react'
+import { useWallet } from './Wallet'
 
 export function useIsUserAddress(address: string | undefined) {
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress } = useWallet()
 
   return (
     address !== undefined &&

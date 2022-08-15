@@ -5,11 +5,11 @@ import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactorButton from 'components/TransactorButton'
 import { BigNumber } from '@ethersproject/bignumber'
 import { TransactorInstance } from 'hooks/Transactor'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-import { NetworkContext } from 'contexts/networkContext'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
+import { useWallet } from 'hooks/Wallet'
 
 export function TransferUnclaimedTokensForm({
   tokenSymbol,
@@ -23,7 +23,7 @@ export function TransferUnclaimedTokensForm({
     amount: BigNumber
   }>
 }) {
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress } = useWallet()
 
   const [loadingTransferTokens, setLoadingTransferTokens] = useState<boolean>()
 

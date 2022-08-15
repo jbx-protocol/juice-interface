@@ -4,11 +4,11 @@ import Callout from 'components/Callout'
 import FormattedAddress from 'components/FormattedAddress'
 import TransactionModal from 'components/TransactionModal'
 
-import { NetworkContext } from 'contexts/networkContext'
 import { useLockTx } from 'hooks/veNft/transactor/VeNftLockTx'
+import { useWallet } from 'hooks/Wallet'
 import { VeNftTokenMetadata } from 'models/v2/veNft'
 
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { formattedNum, parseWad } from 'utils/formatNumber'
 
 import { detailedTimeString } from 'utils/formatTime'
@@ -44,7 +44,13 @@ export default function ConfirmStakeModal({
   onCancel,
   onCompleted,
 }: ConfirmStakeModalProps) {
-  const { userAddress, onSelectWallet } = useContext(NetworkContext)
+  const {
+    userAddress,
+    chainUnsupported,
+    isConnected,
+    changeNetworks,
+    connect,
+  } = useWallet()
   const [loading, setLoading] = useState(false)
   const [transactionPending, setTransactionPending] = useState(false)
   const recipient = beneficiary !== '' ? beneficiary : userAddress
@@ -66,8 +72,13 @@ export default function ConfirmStakeModal({
       return
     }
 
-    if (!userAddress && onSelectWallet) {
-      onSelectWallet()
+    if (chainUnsupported) {
+      await changeNetworks()
+      return
+    }
+    if (!isConnected) {
+      await connect()
+      return
     }
 
     setLoading(true)

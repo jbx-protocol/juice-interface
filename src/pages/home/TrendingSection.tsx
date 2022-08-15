@@ -33,7 +33,7 @@ export default function TrendingSection() {
     <h3 style={{ fontWeight: 600, margin: 0, fontSize: '1.3rem' }}>{text}</h3>
   )
 
-  const { data: projects } = useTrendingProjects(6, 7)
+  const { data: projects } = useTrendingProjects(6)
 
   return (
     <section style={trendingProjectsStyle}>
@@ -44,10 +44,7 @@ export default function TrendingSection() {
               text={
                 <span>
                   <Trans>Trending projects</Trans>{' '}
-                  <Tooltip
-                    title={<RankingExplanation trendingWindow={7} />}
-                    placement="bottom"
-                  >
+                  <Tooltip title={<RankingExplanation />} placement="bottom">
                     <InfoCircleOutlined style={{ fontSize: 20 }} />
                   </Tooltip>
                 </span>
@@ -61,7 +58,6 @@ export default function TrendingSection() {
                   size={'sm'}
                   rank={i + 1}
                   key={`${p.id}_${p.cv}`}
-                  trendingWindowDays={7}
                 />
               ))}
             </Grid>

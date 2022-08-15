@@ -2,37 +2,26 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
 import { useContext } from 'react'
-import invariant from 'tiny-invariant'
 
-import { onCatch, TransactorInstance } from '../../Transactor'
+import { handleTransactor } from 'utils/transactorHelper'
+
+import { TransactorInstance } from '../../Transactor'
 
 export function useSafeTransferFromTx(): TransactorInstance<{
   newOwnerAddress: string
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
-  const { projectId, owner } = useContext(V1ProjectContext)
+  const { projectId: unformattedProjectId, owner } =
+    useContext(V1ProjectContext)
+  const projectId = BigNumber.from(unformattedProjectId).toHexString()
 
-  return ({ newOwnerAddress }, txOpts) => {
-    invariant(transactor && contracts?.Projects && projectId && owner)
-    try {
-      return transactor(
-        contracts.Projects,
-        'safeTransferFrom(address,address,uint256)',
-        [owner, newOwnerAddress, BigNumber.from(projectId).toHexString()],
-        txOpts,
-      )
-    } catch (_) {
-      const missingParam = !transactor
-        ? 'transactor'
-        : !projectId
-        ? 'projectId'
-        : !contracts?.Projects
-        ? 'contracts.Projects'
-        : !newOwnerAddress
-        ? 'newOwnerAddress'
-        : undefined
-
-      return onCatch(missingParam, 'safeTransferFrom', 'v1', txOpts)
-    }
-  }
+  return ({ newOwnerAddress }, txOpts) =>
+    handleTransactor({
+      transactor,
+      contract: contracts?.Projects,
+      args: [owner, newOwnerAddress, projectId],
+      fnName: 'safeTransferFrom(address,address,uint256)',
+      txOpts,
+      version: 'v1',
+    })
 }

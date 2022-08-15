@@ -37,31 +37,13 @@ export type TransactorInstance<T = undefined> = (
   txOpts?: Omit<TransactorOptions, 'value'>,
 ) => ReturnType<Transactor>
 
-export function onCatch(
-  missingParam: string | undefined,
-  fnName: string,
-  version: 'v1' | 'v2',
-  txOpts?: Omit<TransactorOptions, 'value'>,
-) {
-  txOpts?.onError?.(
-    new DOMException(
-      `Missing ${
-        missingParam ?? 'parameter` not found'
-      } in ${version} ${fnName}`,
-    ),
-  )
-
-  txOpts?.onDone?.()
-  return Promise.resolve(false)
-}
-
 // wrapper around BlockNative's Notify.js
 // https://docs.blocknative.com/notify
 export function useTransactor({
   gasPrice,
 }: {
   gasPrice?: BigNumber
-}): Transactor | undefined {
+}): Transactor {
   const { signingProvider: provider, walletIsReady } =
     useContext(NetworkContext)
 

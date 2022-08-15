@@ -19,11 +19,13 @@ export default function ETHAmount({
   precision = PRECISION_ETH,
   padEnd = false,
   fallback,
+  hideTooltip,
 }: {
   amount: BigNumber | undefined // in wad (18 decimals)
   precision?: number
   padEnd?: boolean
   fallback?: string
+  hideTooltip?: boolean
 }) {
   if (amount === undefined) return fallback ? <span>{fallback}</span> : null
 
@@ -50,6 +52,7 @@ export default function ETHAmount({
             {formatWad(amount, { precision: 8 })}
           </span>
         }
+        visible={hideTooltip ? !hideTooltip : undefined}
       >
         <CurrencySymbol currency="ETH" />
         ~0
@@ -63,7 +66,10 @@ export default function ETHAmount({
   })
 
   return (
-    <Tooltip title={<ETHToUSD ethAmount={amount} />}>
+    <Tooltip
+      title={<ETHToUSD ethAmount={amount} />}
+      visible={hideTooltip ? !hideTooltip : undefined}
+    >
       <CurrencySymbol currency="ETH" />
       {formattedETHAmount}
     </Tooltip>

@@ -63,6 +63,7 @@ import PayModsForm from 'components/v1/shared/forms/PayModsForm'
 import RestrictedActionsForm, {
   RestrictedActionsFormFields,
 } from 'components/forms/RestrictedActionsForm'
+import { DeployButtonText } from 'components/DeployProjectButtonText'
 
 import { toDateSeconds } from 'utils/formatDate'
 
@@ -72,7 +73,6 @@ import ConfirmDeployProject from './ConfirmDeployProject'
 
 import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
 import { drawerStyle } from 'constants/styles/drawerStyle'
-import { readNetwork } from 'constants/networks'
 
 const terminalVersion: V1TerminalVersion = '1.1'
 
@@ -785,12 +785,8 @@ function V1Create() {
 
         <Modal
           visible={deployProjectModalVisible}
-          okText={
-            userAddress
-              ? t`Deploy project on ${readNetwork.name}`
-              : t`Connect wallet to deploy`
-          }
           onOk={userAddress ? deployProject : onSelectWallet}
+          okText={<DeployButtonText />}
           confirmLoading={loadingCreate}
           width={800}
           onCancel={() => setDeployProjectModalVisible(false)}

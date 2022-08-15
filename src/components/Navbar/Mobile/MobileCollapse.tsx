@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import { useState, useContext, useEffect } from 'react'
-import { Collapse, Button, Menu } from 'antd'
+import { Button, Collapse, Menu } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
-
 import { Trans } from '@lingui/macro'
 
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
@@ -10,26 +9,26 @@ import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { MenuOutlined } from '@ant-design/icons'
 
 import { ThemeContext } from 'contexts/themeContext'
-import { NetworkContext } from 'contexts/networkContext'
+import { useWallet } from 'hooks/Wallet'
 
 import FeedbackFormButton from 'components/FeedbackFormButton'
 
 import Logo from '../Logo'
-import Account from '../Account'
 import NavLanguageSelector from '../NavLanguageSelector'
 import { TopLeftNavItems } from '../MenuItems'
 import ThemePickerMobile from './ThemePickerMobile'
 import { topNavStyles } from '../navStyles'
 import ResourcesDropdownMobile from './ResourcesDropdownMobile'
+import Account from '../Account'
 
 const NAV_EXPANDED_KEY = 0
 
 export default function MobileCollapse() {
+  const { isConnected, disconnect } = useWallet()
   const [activeKey, setActiveKey] = useState<0 | undefined>()
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { signingProvider, onLogOut } = useContext(NetworkContext)
 
   const isNavExpanded = activeKey === NAV_EXPANDED_KEY
 
@@ -116,8 +115,8 @@ export default function MobileCollapse() {
             }}
           >
             <Account />
-            {signingProvider ? (
-              <Button onClick={onLogOut} style={{ marginTop: 10 }} block>
+            {isConnected ? (
+              <Button onClick={disconnect} style={{ marginTop: 10 }} block>
                 <Trans>Disconnect</Trans>
               </Button>
             ) : null}

@@ -2,7 +2,6 @@ import FormattedAddress from 'components/FormattedAddress'
 import { LogoutOutlined, CrownOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 
-import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 import { Dropdown, Menu } from 'antd'
@@ -10,6 +9,7 @@ import { Dropdown, Menu } from 'antd'
 import EtherscanLink from 'components/EtherscanLink'
 import CopyTextButton from 'components/CopyTextButton'
 import useMobile from 'hooks/Mobile'
+import { useWallet } from 'hooks/Wallet'
 import Link from 'next/link'
 
 import Balance from './Balance'
@@ -23,7 +23,7 @@ export default function Wallet({ userAddress }: { userAddress: string }) {
 
   const height = 45
 
-  const { onLogOut } = useContext(NetworkContext)
+  const { disconnect } = useWallet()
 
   const menuItemPadding = '10px 15px'
 
@@ -55,7 +55,7 @@ export default function Wallet({ userAddress }: { userAddress: string }) {
       </Menu.Item>
       {!isMobile && (
         <Menu.Item
-          onClick={onLogOut}
+          onClick={() => disconnect()}
           style={{
             padding: menuItemPadding,
             color: colors.text.primary,

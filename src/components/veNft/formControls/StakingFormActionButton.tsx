@@ -19,7 +19,7 @@ const StakingFormActionButton = ({
   const renderActionButton = () => {
     if (!isConnected) {
       return (
-        <Button block onClick={connect}>
+        <Button block onClick={async () => await connect()}>
           <Trans>Connect Wallet</Trans>
         </Button>
       )

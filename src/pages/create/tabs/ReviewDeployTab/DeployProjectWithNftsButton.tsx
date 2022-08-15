@@ -56,8 +56,7 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
   const launchProjectWithNftsTx = useLaunchProjectWithNftsTx()
   const router = useRouter()
 
-  const { isConnected, checkNetworkSupported, checkWalletConnected } =
-    useWallet()
+  const { chainUnsupported, isConnected, changeNetworks, connect } = useWallet()
 
   const {
     projectMetadata: { name: projectName },
@@ -201,7 +200,12 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
       return
     }
 
-    if (!checkNetworkSupported() || !checkWalletConnected()) {
+    if (chainUnsupported) {
+      await changeNetworks()
+      return
+    }
+    if (!isConnected) {
+      await connect()
       return
     }
 

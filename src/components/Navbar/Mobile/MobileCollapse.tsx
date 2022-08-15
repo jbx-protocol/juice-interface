@@ -11,12 +11,12 @@ import { ThemeContext } from 'contexts/themeContext'
 import FeedbackFormButton from 'components/FeedbackFormButton'
 
 import Logo from '../Logo'
-import ConnectButton from '../ConnectButton'
 import NavLanguageSelector from '../NavLanguageSelector'
 import { TopLeftNavItems } from '../MenuItems'
 import ThemePickerMobile from './ThemePickerMobile'
 import { topNavStyles } from '../navStyles'
 import ResourcesDropdownMobile from './ResourcesDropdownMobile'
+import Account from '../Account'
 
 const NAV_EXPANDED_KEY = 0
 
@@ -108,7 +108,7 @@ export default function MobileCollapse() {
               marginTop: '1rem',
             }}
           >
-            <ConnectButton />
+            <Account />
           </div>
         </CollapsePanel>
       </Collapse>

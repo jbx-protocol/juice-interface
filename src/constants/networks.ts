@@ -7,6 +7,8 @@ const infuraId = isBrowser()
 
 type NetworkInfo = {
   name: NetworkName
+  label: string
+  token?: string
   color: string
   chainId: number
   blockExplorer: string
@@ -24,6 +26,7 @@ if (typeof window !== 'undefined') {
 export const NETWORKS: Record<number, NetworkInfo> = {
   31337: {
     name: NetworkName.localhost,
+    label: 'Local Host',
     color: '#666666',
     chainId: 31337,
     blockExplorer: '',
@@ -31,6 +34,7 @@ export const NETWORKS: Record<number, NetworkInfo> = {
   },
   1: {
     name: NetworkName.mainnet,
+    label: 'Ethereum Mainnet',
     color: '#ff8b9e',
     chainId: 1,
     rpcUrl: `https://mainnet.infura.io/v3/${infuraId}`,
@@ -38,6 +42,7 @@ export const NETWORKS: Record<number, NetworkInfo> = {
   },
   42: {
     name: NetworkName.kovan,
+    label: 'Kovan',
     color: '#7003DD',
     chainId: 42,
     rpcUrl: `https://kovan.infura.io/v3/${infuraId}`,
@@ -46,6 +51,8 @@ export const NETWORKS: Record<number, NetworkInfo> = {
   },
   4: {
     name: NetworkName.rinkeby,
+    label: 'Rinkeby',
+    token: 'RINK ETH',
     color: '#e0d068',
     chainId: 4,
     rpcUrl: `https://rinkeby.infura.io/v3/${infuraId}`,
@@ -54,6 +61,7 @@ export const NETWORKS: Record<number, NetworkInfo> = {
   },
   3: {
     name: NetworkName.ropsten,
+    label: 'Ropsten',
     color: '#F60D09',
     chainId: 3,
     faucet: 'https://faucet.ropsten.be/',
@@ -62,6 +70,7 @@ export const NETWORKS: Record<number, NetworkInfo> = {
   },
   5: {
     name: NetworkName.goerli,
+    label: 'Goerli',
     color: '#0975F6',
     chainId: 5,
     faucet: 'https://goerli-faucet.slock.it/',
@@ -70,6 +79,7 @@ export const NETWORKS: Record<number, NetworkInfo> = {
   },
   100: {
     name: NetworkName.xdai,
+    label: 'XDAI',
     color: '#48a9a6',
     chainId: 100,
     price: 1,
@@ -80,6 +90,7 @@ export const NETWORKS: Record<number, NetworkInfo> = {
   },
   137: {
     name: NetworkName.matic,
+    label: 'MATIC',
     color: '#2bbdf7',
     chainId: 137,
     price: 1,
@@ -90,6 +101,7 @@ export const NETWORKS: Record<number, NetworkInfo> = {
   },
   80001: {
     name: NetworkName.mumbai,
+    label: 'Mumbai',
     color: '#92D9FA',
     chainId: 80001,
     price: 1,

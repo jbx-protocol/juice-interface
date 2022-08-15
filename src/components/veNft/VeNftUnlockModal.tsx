@@ -26,8 +26,13 @@ const UnlockModal = ({
   onCancel,
   onCompleted,
 }: UnlockModalProps) => {
-  const { userAddress, checkNetworkSupported, checkWalletConnected } =
-    useWallet()
+  const {
+    userAddress,
+    chainUnsupported,
+    isConnected,
+    changeNetworks,
+    connect,
+  } = useWallet()
   const { tokenId } = token
   const [loading, setLoading] = useState(false)
   const [transactionPending, setTransactionPending] = useState(false)
@@ -41,7 +46,12 @@ const UnlockModal = ({
   const unlock = async () => {
     await form.validateFields()
 
-    if (!checkNetworkSupported() || !checkWalletConnected()) {
+    if (chainUnsupported) {
+      await changeNetworks()
+      return
+    }
+    if (!isConnected) {
+      await connect()
       return
     }
 

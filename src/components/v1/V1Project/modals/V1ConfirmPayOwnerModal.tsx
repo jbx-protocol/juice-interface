@@ -47,8 +47,13 @@ export default function V1ConfirmPayOwnerModal({
 
   const [form] = useForm()
 
-  const { userAddress, checkNetworkSupported, checkWalletConnected } =
-    useWallet()
+  const {
+    userAddress,
+    chainUnsupported,
+    isConnected,
+    changeNetworks,
+    connect,
+  } = useWallet()
   const { tokenSymbol, tokenAddress, currentFC, metadata } =
     useContext(V1ProjectContext)
   const converter = useCurrencyConverter()
@@ -62,7 +67,12 @@ export default function V1ConfirmPayOwnerModal({
     await form.validateFields()
 
     // Prompt wallet connect if no wallet connected
-    if (!checkNetworkSupported() || !checkWalletConnected()) {
+    if (chainUnsupported) {
+      await changeNetworks()
+      return
+    }
+    if (!isConnected) {
+      await connect()
       return
     }
     setLoading(true)

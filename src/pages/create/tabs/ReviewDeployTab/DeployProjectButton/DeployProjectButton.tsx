@@ -12,6 +12,7 @@ import { TransactionReceipt } from '@ethersproject/providers'
 import { BigNumber } from '@ethersproject/bignumber'
 import { emitErrorNotification } from 'utils/notifications'
 import { useWallet } from 'hooks/Wallet'
+import { DeployButtonText } from 'components/DeployProjectButtonText'
 
 import TransactionModal from 'components/TransactionModal'
 
@@ -23,8 +24,6 @@ import { useRouter } from 'next/router'
 import { v2ProjectRoute } from 'utils/routes'
 
 import { findTransactionReceipt } from '../utils'
-
-import { ButtonText } from './ButtonText'
 
 const CREATE_EVENT_IDX = 0
 const PROJECT_ID_TOPIC_IDX = 3
@@ -45,7 +44,7 @@ export function DeployProjectButton({ form }: { form: FormInstance }) {
   const launchProjectTx = useLaunchProjectTx()
   const router = useRouter()
 
-  const { checkNetworkSupported, checkWalletConnected } = useWallet()
+  const { changeNetworks, chainUnsupported, isConnected, connect } = useWallet()
 
   const [deployLoading, setDeployLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
@@ -153,7 +152,12 @@ export function DeployProjectButton({ form }: { form: FormInstance }) {
       return
     }
 
-    if (!checkNetworkSupported() || !checkWalletConnected()) {
+    if (chainUnsupported) {
+      await changeNetworks()
+      return
+    }
+    if (!isConnected) {
+      await connect()
       return
     }
 
@@ -171,7 +175,7 @@ export function DeployProjectButton({ form }: { form: FormInstance }) {
         loading={deployLoading}
       >
         <span>
-          <ButtonText />
+          <DeployButtonText />
         </span>
       </Button>
       <TransactionModal

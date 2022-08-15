@@ -47,7 +47,8 @@ export function useTransactor({
   gasPrice?: BigNumber
 }): Transactor | undefined {
   const { chain, signer } = useWallet()
-  const { checkNetworkSupported, checkWalletConnected } = useWallet()
+  const chainId = chain ? BigNumber.from(chain.id) : undefined
+  const { chainUnsupported, isConnected, changeNetworks, connect } = useWallet()
 
   const { isDarkMode } = useContext(ThemeContext)
 
@@ -58,7 +59,13 @@ export function useTransactor({
       args: any[], // eslint-disable-line @typescript-eslint/no-explicit-any
       options?: TransactorOptions,
     ) => {
-      if (!checkNetworkSupported() || !checkWalletConnected()) {
+      if (chainUnsupported) {
+        await changeNetworks()
+        options?.onDone?.()
+        return false
+      }
+      if (!isConnected) {
+        await connect()
         options?.onDone?.()
         return false
       }
@@ -71,7 +78,7 @@ export function useTransactor({
       const notifyOpts: InitOptions = {
         dappId: process.env.NEXT_PUBLIC_BLOCKNATIVE_API_KEY,
         system: 'ethereum',
-        networkId: chain.id,
+        networkId: chainId?.toNumber(),
         darkMode: isDarkMode,
         transactionHandler: txInformation => {
           console.info('HANDLE TX', txInformation)
@@ -87,12 +94,12 @@ export function useTransactor({
       const notify = Notify(notifyOpts)
 
       let etherscanNetwork = ''
-      if (chain.name && chain.id > 1) {
+      if (chain.name && chainId?.gt(1)) {
         etherscanNetwork = chain.name + '.'
       }
 
       let etherscanTxUrl = 'https://' + etherscanNetwork + 'etherscan.io/tx/'
-      if (chain.id === 100) {
+      if (chainId?.eq(100)) {
         etherscanTxUrl = 'https://blockscout.com/poa/xdai/tx/'
       }
 
@@ -136,7 +143,8 @@ export function useTransactor({
         console.info('RESULT:', result)
 
         // if it is a valid Notify.js network, use that, if not, just send a default notification
-        const isNotifyNetwork = [1, 3, 4, 5, 42, 100].indexOf(chain.id) >= 0
+        const isNotifyNetwork =
+          [1, 3, 4, 5, 42, 100].indexOf(chainId?.toNumber() ?? -1) >= 0
 
         if (isNotifyNetwork) {
           const { emitter } = notify.hash(result.hash)
@@ -183,11 +191,14 @@ export function useTransactor({
       }
     },
     [
-      checkNetworkSupported,
-      checkWalletConnected,
+      chainUnsupported,
+      isConnected,
       signer,
       chain,
+      chainId,
       isDarkMode,
+      changeNetworks,
+      connect,
       gasPrice,
     ],
   )

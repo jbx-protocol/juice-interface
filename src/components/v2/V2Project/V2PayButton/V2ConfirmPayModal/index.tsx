@@ -72,8 +72,13 @@ export function V2ConfirmPayModal({
   onSuccess?: VoidFunction
   onCancel?: VoidFunction
 }) {
-  const { userAddress, checkNetworkSupported, checkWalletConnected } =
-    useWallet()
+  const {
+    userAddress,
+    chainUnsupported,
+    isConnected,
+    changeNetworks,
+    connect,
+  } = useWallet()
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -140,7 +145,12 @@ export function V2ConfirmPayModal({
     const txBeneficiary = beneficiary ? beneficiary : userAddress
 
     // Prompt wallet connect if no wallet connected
-    if (!checkNetworkSupported() || !checkWalletConnected()) {
+    if (chainUnsupported) {
+      await changeNetworks()
+      return
+    }
+    if (!isConnected) {
+      await connect()
       return
     }
     setLoading(true)

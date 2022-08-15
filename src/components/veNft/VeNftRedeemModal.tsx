@@ -28,8 +28,13 @@ const VeNftRedeemModal = ({
   onCancel,
   onCompleted,
 }: VeNftRedeemModalProps) => {
-  const { userAddress, checkNetworkSupported, checkWalletConnected } =
-    useWallet()
+  const {
+    userAddress,
+    chainUnsupported,
+    isConnected,
+    changeNetworks,
+    connect,
+  } = useWallet()
   const { primaryTerminal, tokenAddress } = useContext(V2ProjectContext)
   const { tokenId } = token
   const [form] = useForm<{ beneficiary: string }>()
@@ -46,7 +51,12 @@ const VeNftRedeemModal = ({
     const { beneficiary } = form.getFieldsValue()
     await form.validateFields()
 
-    if (!checkNetworkSupported() || !checkWalletConnected()) {
+    if (chainUnsupported) {
+      await changeNetworks()
+      return
+    }
+    if (!isConnected) {
+      await connect()
       return
     }
 

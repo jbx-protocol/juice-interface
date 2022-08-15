@@ -29,7 +29,7 @@ const VeNftExtendLockModal = ({
   onCancel,
   onCompleted,
 }: VeNftExtendLockModalProps) => {
-  const { checkNetworkSupported, checkWalletConnected } = useWallet()
+  const { chainUnsupported, isConnected, changeNetworks, connect } = useWallet()
   const { tokenId } = token
   const { lockDurationOptions } = useContext(VeNftContext)
   const [form] = Form.useForm<ExtendLockFormProps>()
@@ -59,7 +59,12 @@ const VeNftExtendLockModal = ({
   const extendLockTx = useExtendLockTx()
 
   const extendLock = async () => {
-    if (!checkNetworkSupported() || !checkWalletConnected()) {
+    if (chainUnsupported) {
+      await changeNetworks()
+      return
+    }
+    if (!isConnected) {
+      await connect()
       return
     }
 

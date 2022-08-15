@@ -1,10 +1,8 @@
 import { Trans } from '@lingui/macro'
 import { useWallet } from 'hooks/Wallet'
-import { useNetwork } from 'wagmi'
 
-export function ButtonText() {
-  const { isConnected, chainUnsupported } = useWallet()
-  const { chain } = useNetwork()
+export function DeployButtonText() {
+  const { isConnected, chainUnsupported, chain } = useWallet()
 
   if (chainUnsupported) {
     return <Trans>Change networks to deploy</Trans>

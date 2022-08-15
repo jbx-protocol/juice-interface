@@ -63,6 +63,7 @@ import PayModsForm from 'components/v1/shared/forms/PayModsForm'
 import RestrictedActionsForm, {
   RestrictedActionsFormFields,
 } from 'components/forms/RestrictedActionsForm'
+import { DeployButtonText } from 'components/DeployProjectButtonText'
 
 import { toDateSeconds } from 'utils/formatDate'
 
@@ -85,7 +86,13 @@ export default function V1CreatePage() {
 
 function V1Create() {
   const router = useRouter()
-  const { chain, userAddress, connect, isConnected } = useWallet()
+  const {
+    userAddress,
+    connect,
+    isConnected,
+    chainUnsupported,
+    changeNetworks,
+  } = useWallet()
   const { colors, radii } = useContext(ThemeContext).theme
   const [currentStep, setCurrentStep] = useState<number>()
   const [viewedSteps, setViewedSteps] = useState<number[]>([])
@@ -784,14 +791,20 @@ function V1Create() {
 
         <Modal
           visible={deployProjectModalVisible}
-          okText={
-            isConnected
-              ? chain
-                ? t`Deploy project on ${chain.name}`
-                : t`Deploy project`
-              : t`Connect wallet to deploy`
-          }
-          onOk={isConnected ? deployProject : connect}
+          okText={<DeployButtonText />}
+          onOk={() => {
+            if (!isConnected) {
+              setDeployProjectModalVisible(false)
+              connect()
+              return
+            }
+            if (chainUnsupported) {
+              setDeployProjectModalVisible(false)
+              changeNetworks()
+              return
+            }
+            deployProject()
+          }}
           confirmLoading={loadingCreate}
           width={800}
           onCancel={() => setDeployProjectModalVisible(false)}

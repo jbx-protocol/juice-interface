@@ -5,12 +5,17 @@ import { useWallet } from 'hooks/Wallet'
 import { useState } from 'react'
 
 const VeNftSetUnclaimedTokensPermissionSection = () => {
-  const { checkNetworkSupported, checkWalletConnected } = useWallet()
+  const { chainUnsupported, isConnected, changeNetworks, connect } = useWallet()
   const [loading, setLoading] = useState(false)
   const unclaimedTokensPermissionTx = useUnclaimedTokensPermissionTx()
 
   async function unclaimedTokensPermission() {
-    if (!checkNetworkSupported() || !checkWalletConnected()) {
+    if (chainUnsupported) {
+      await changeNetworks()
+      return
+    }
+    if (!isConnected) {
+      await connect()
       return
     }
 

@@ -50,8 +50,14 @@ interface VeNftStakingFormProps {
 const VeNftStakingForm = ({
   tokenSymbolDisplayText,
 }: VeNftStakingFormProps) => {
-  const { userAddress, checkNetworkSupported, checkWalletConnected } =
-    useWallet()
+  const {
+    userAddress,
+    chainUnsupported,
+    isConnected,
+    changeNetworks,
+    connect,
+  } = useWallet()
+  useWallet()
   const { tokenAddress } = useContext(V2ProjectContext)
   const { lockDurationOptions, resolverAddress, baseImagesHash, variants } =
     useContext(VeNftContext)
@@ -106,7 +112,12 @@ const VeNftStakingForm = ({
 
   const approveTx = useERC20Approve(tokenAddress)
   const approve = async () => {
-    if (!checkNetworkSupported() || !checkWalletConnected()) {
+    if (chainUnsupported) {
+      await changeNetworks()
+      return
+    }
+    if (!isConnected) {
+      await connect()
       return
     }
 

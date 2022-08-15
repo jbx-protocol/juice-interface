@@ -40,8 +40,13 @@ export default function ConfirmStakeModal({
   onCancel,
   onCompleted,
 }: ConfirmStakeModalProps) {
-  const { userAddress, checkNetworkSupported, checkWalletConnected } =
-    useWallet()
+  const {
+    userAddress,
+    chainUnsupported,
+    isConnected,
+    changeNetworks,
+    connect,
+  } = useWallet()
   const [loading, setLoading] = useState(false)
   const [transactionPending, setTransactionPending] = useState(false)
   const recipient = beneficiary !== '' ? beneficiary : userAddress
@@ -63,7 +68,12 @@ export default function ConfirmStakeModal({
       return
     }
 
-    if (!checkNetworkSupported() || !checkWalletConnected()) {
+    if (chainUnsupported) {
+      await changeNetworks()
+      return
+    }
+    if (!isConnected) {
+      await connect()
       return
     }
 

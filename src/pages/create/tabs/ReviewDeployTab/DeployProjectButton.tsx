@@ -1,4 +1,3 @@
-import { Trans } from '@lingui/macro'
 import { Button, FormInstance } from 'antd'
 import {
   useAppSelector,
@@ -13,6 +12,7 @@ import { TransactionReceipt } from '@ethersproject/providers'
 import { BigNumber } from '@ethersproject/bignumber'
 import { NetworkContext } from 'contexts/networkContext'
 import { emitErrorNotification } from 'utils/notifications'
+import { DeployButtonText } from 'components/DeployProjectButtonText'
 
 import TransactionModal from 'components/TransactionModal'
 
@@ -23,7 +23,6 @@ import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { v2ProjectRoute } from 'utils/routes'
 import { useRouter } from 'next/router'
 
-import { readNetwork } from 'constants/networks'
 import { findTransactionReceipt } from './utils'
 
 const CREATE_EVENT_IDX = 0
@@ -171,11 +170,7 @@ export function DeployProjectButton({ form }: { form: FormInstance }) {
         loading={deployLoading}
       >
         <span>
-          {userAddress ? (
-            <Trans>Deploy project to {readNetwork.name}</Trans>
-          ) : (
-            <Trans>Connect wallet to deploy</Trans>
-          )}
+          <DeployButtonText />
         </span>
       </Button>
       <TransactionModal

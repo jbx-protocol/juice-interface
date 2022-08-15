@@ -10,7 +10,7 @@ import { TransactorInstance } from '../../Transactor'
 export function useSafeTransferFromTx(): TransactorInstance<{
   newOwnerAddress: string
 }> {
-  const { transactor, contracts } = useContext(V1UserContext)
+  const { transactor, contracts, version } = useContext(V1UserContext)
   const { projectId: unformattedProjectId, owner } =
     useContext(V1ProjectContext)
   const projectId = BigNumber.from(unformattedProjectId).toHexString()
@@ -22,6 +22,6 @@ export function useSafeTransferFromTx(): TransactorInstance<{
       args: [owner, newOwnerAddress, projectId],
       fnName: 'safeTransferFrom(address,address,uint256)',
       txOpts,
-      version: 'v1',
+      version,
     })
 }

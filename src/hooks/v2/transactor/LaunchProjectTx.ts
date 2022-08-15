@@ -1,4 +1,4 @@
-import { NetworkContext } from 'contexts/networkContext'
+import { useWallet } from 'hooks/Wallet'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { useContext } from 'react'
 import {
@@ -25,7 +25,7 @@ export function useLaunchProjectTx(): TransactorInstance<{
   mustStartAtOrAfter?: string // epoch seconds. anything less than "now" will start immediately.
 }> {
   const { transactor, contracts } = useContext(V2UserContext)
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress } = useWallet()
 
   return (
     {

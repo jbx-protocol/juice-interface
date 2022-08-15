@@ -11,6 +11,7 @@ import TransactionModal from 'components/TransactionModal'
 import Callout from 'components/Callout'
 import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayerTx'
 import { emitErrorNotification } from 'utils/notifications'
+import { ToolOutlined } from '@ant-design/icons'
 
 import { readProvider } from 'constants/readProvider'
 
@@ -175,8 +176,8 @@ export default function LaunchProjectPayerModal({
         <CopyTextButton value={projectPayerAddress} style={{ fontSize: 25 }} />
         <p style={{ marginTop: 30 }}>
           <Trans>
-            Deployed payment addresses can be found in the Tools drawer on the
-            project page.
+            Deployed payment addresses can be found in the Tools drawer (
+            <ToolOutlined />) on the project page.
           </Trans>
         </p>
       </Modal>

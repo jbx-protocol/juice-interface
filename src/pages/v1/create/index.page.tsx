@@ -464,7 +464,7 @@ function V1Create() {
             block
             style={{ marginRight: 8 }}
           >
-            <Trans>Start Over</Trans>
+            <Trans>Start over</Trans>
           </Button>
 
           <Button
@@ -620,7 +620,7 @@ function V1Create() {
               paddingRight: spacing,
             }}
           >
-            <Trans>Preview:</Trans>
+            <Trans>Preview</Trans>
           </h3>
 
           <div
@@ -814,7 +814,7 @@ function V1Create() {
 
         <Modal
           visible={confirmStartOverVisible}
-          okText={t`Start Over`}
+          okText={t`Start over`}
           okType="danger"
           title={t`Are you sure you want to start over?`}
           onOk={() => {

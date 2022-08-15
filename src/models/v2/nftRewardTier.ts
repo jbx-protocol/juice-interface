@@ -3,9 +3,11 @@ import { BigNumber } from '@ethersproject/bignumber'
 // How we store reward tiers for use around the app
 export type NftRewardTier = {
   contributionFloor: number // ETH amount
-  maxSupply: number
+  maxSupply: number | undefined
+  remainingSupply: number | undefined
   imageUrl: string // link to ipfs
   name: string
+  tierRank: number // cheapest tier is 1
   externalLink: string | undefined
   description: string | undefined
 }
@@ -13,11 +15,11 @@ export type NftRewardTier = {
 // How the reward tiers are stored in the contracts
 export type ContractNftRewardTier = {
   contributionFloor: BigNumber //uint128
-  remainingQuantity: BigNumber //uint64
-  initialQuantity: BigNumber //uint64
+  remainingQuantity: number //uint64
+  initialQuantity: number //uint64
   tokenUri: string // full link to IPFS
-  votingUnits: BigNumber
-  reservedRate: BigNumber
+  votingUnits: number
+  reservedRate: number
 }
 
 // How the reward tiers are stored on IPFS

@@ -38,12 +38,22 @@ import {
   RedeemEventJson,
 } from './redeem-event'
 import { parseTapEventJson, TapEvent, TapEventJson } from '../v1/tap-event'
+import {
+  parseVeNftContractJson,
+  VeNftContract,
+  VeNftContractJson,
+} from '../v2/venft-contract'
 
 type BaseProject = {
   id: string
   projectId: number
+  cv: CV
   owner: string
   createdAt: number
+  trendingPaymentsCount: number
+  trendingScore: BigNumber
+  trendingVolume: BigNumber
+  createdWithinTrendingWindow: boolean
   totalPaid: BigNumber
   totalRedeemed: BigNumber
   currentBalance: BigNumber
@@ -56,10 +66,10 @@ type BaseProject = {
   distributeToPayoutModEvents: Partial<DistributeToPayoutModEvent>[]
   distributeToTicketModEvents: Partial<DistributeToTicketModEvent>[]
   deployedERC20Events: Partial<DeployedERC20Event>[]
+  veNftContract: Partial<VeNftContract>
 }
 
 type ProjectV1 = {
-  cv: CV
   terminal: string
   metadataUri: string
   metadataDomain: null
@@ -67,7 +77,6 @@ type ProjectV1 = {
 } & BaseProject
 
 type ProjectV2 = {
-  cv: CV
   terminal: null
   metadataUri: string
   metadataDomain: BigNumber
@@ -77,23 +86,23 @@ type ProjectV2 = {
 export type Project = ProjectV1 | ProjectV2 // Separate entity used for testing
 
 export type ProjectJson = Partial<
-  Record<
-    Exclude<
-      keyof Project,
-      | 'cv'
-      | 'projectId'
-      | 'metadataDomain'
-      | 'participants'
-      | 'printPremineEvents'
-      | 'payEvents'
-      | 'tapEvents'
-      | 'redeemEvents'
-      | 'printReservesEvents'
-      | 'deployedERC20Events'
-      | 'distributeToPayoutModEvents'
-      | 'distributeToTicketModEvents'
-    >,
-    string
+  Omit<
+    Project,
+    | 'participants'
+    | 'printPremineEvents'
+    | 'payEvents'
+    | 'tapEvents'
+    | 'redeemEvents'
+    | 'printReservesEvents'
+    | 'deployedERC20Events'
+    | 'distributeToPayoutModEvents'
+    | 'distributeToTicketModEvents'
+    | 'trendingScore'
+    | 'trendingVolume'
+    | 'totalPaid'
+    | 'totalRedeemed'
+    | 'currentBalance'
+    | 'veNftContract'
   > & {
     participants: ParticipantJson[]
     printPremineEvents: MintTokensEventJson[]
@@ -104,74 +113,54 @@ export type ProjectJson = Partial<
     deployedERC20Events: DeployedERC20EventJson[]
     distributeToPayoutModEvents: DistributeToPayoutModEventJson[]
     distributeToTicketModEvents: DistributeToTicketModEventJson[]
+    veNftContract: VeNftContractJson
+    trendingScore: string
+    trendingVolume: string
+    totalPaid: string
+    totalRedeemed: string
+    currentBalance: string
   }
 >
 
-export const parseProjectJson = (project: ProjectJson): Partial<Project> => ({
-  ...project,
-  createdAt: project.createdAt ? parseInt(project.createdAt) : undefined,
-  currentBalance: project.currentBalance
-    ? BigNumber.from(project.currentBalance)
-    : undefined,
-  totalPaid: project.totalPaid ? BigNumber.from(project.totalPaid) : undefined,
-  totalRedeemed: project.totalRedeemed
-    ? BigNumber.from(project.totalRedeemed)
-    : undefined,
-  participants: project.participants?.map(parseParticipantJson) ?? undefined,
-  printPremineEvents:
-    project.printPremineEvents?.map(parseMintTokensEventJson) ?? undefined,
-  payEvents: project.payEvents?.map(parsePayEventJson) ?? undefined,
-  tapEvents: project.tapEvents?.map(parseTapEventJson) ?? undefined,
-  redeemEvents: project.redeemEvents?.map(parseRedeemEventJson) ?? undefined,
-  printReservesEvents:
-    project.printReservesEvents?.map(parsePrintReservesEventJson) ?? undefined,
-  deployedERC20Events:
-    project.deployedERC20Events?.map(parseDeployedERC20EventJson) ?? undefined,
-  distributeToPayoutModEvents:
-    project.distributeToPayoutModEvents?.map(parseDistributeToPayoutModEvent) ??
-    undefined,
-  distributeToTicketModEvents:
-    project.distributeToTicketModEvents?.map(parseDistributeToTicketModEvent) ??
-    undefined,
-})
-
-export type TrendingProject = Pick<
-  Project,
-  | 'id'
-  | 'projectId'
-  | 'createdAt'
-  | 'terminal'
-  | 'totalPaid'
-  | 'handle'
-  | 'metadataUri'
-  | 'cv'
-> & {
-  trendingVolume: BigNumber
-  trendingScore: BigNumber
-  trendingPaymentsCount: number
-}
-
-export type TrendingProjectJson = Pick<
-  TrendingProject,
-  | 'id'
-  | 'projectId'
-  | 'createdAt'
-  | 'terminal'
-  | 'handle'
-  | 'metadataUri'
-  | 'trendingPaymentsCount'
-  | 'cv'
-> & {
-  trendingVolume: string
-  trendingScore: string
-  totalPaid: string
-}
-
-export const parseTrendingProjectJson = (
-  project: TrendingProjectJson,
-): TrendingProject => ({
-  ...project,
-  totalPaid: BigNumber.from(project.totalPaid),
-  trendingScore: BigNumber.from(project.trendingScore),
-  trendingVolume: BigNumber.from(project.trendingVolume),
-})
+export const parseProjectJson = (project: ProjectJson): Partial<Project> =>
+  ({
+    ...project,
+    currentBalance: project.currentBalance
+      ? BigNumber.from(project.currentBalance)
+      : undefined,
+    totalPaid: project.totalPaid
+      ? BigNumber.from(project.totalPaid)
+      : undefined,
+    totalRedeemed: project.totalRedeemed
+      ? BigNumber.from(project.totalRedeemed)
+      : undefined,
+    participants: project.participants?.map(parseParticipantJson) ?? undefined,
+    printPremineEvents:
+      project.printPremineEvents?.map(parseMintTokensEventJson) ?? undefined,
+    payEvents: project.payEvents?.map(parsePayEventJson) ?? undefined,
+    tapEvents: project.tapEvents?.map(parseTapEventJson) ?? undefined,
+    redeemEvents: project.redeemEvents?.map(parseRedeemEventJson) ?? undefined,
+    printReservesEvents:
+      project.printReservesEvents?.map(parsePrintReservesEventJson) ??
+      undefined,
+    deployedERC20Events:
+      project.deployedERC20Events?.map(parseDeployedERC20EventJson) ??
+      undefined,
+    distributeToPayoutModEvents:
+      project.distributeToPayoutModEvents?.map(
+        parseDistributeToPayoutModEvent,
+      ) ?? undefined,
+    distributeToTicketModEvents:
+      project.distributeToTicketModEvents?.map(
+        parseDistributeToTicketModEvent,
+      ) ?? undefined,
+    veNftContract: project.veNftContract
+      ? parseVeNftContractJson(project.veNftContract)
+      : undefined,
+    trendingVolume: project.trendingVolume
+      ? BigNumber.from(project.trendingVolume)
+      : undefined,
+    trendingScore: project.trendingScore
+      ? BigNumber.from(project.trendingScore)
+      : undefined,
+  } as Project)

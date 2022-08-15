@@ -11,14 +11,11 @@ import { useDeployProjectPayerTx } from 'hooks/v2/transactor/DeployProjectPayerT
 import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDetailsTx'
 import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
 
-import ProjectPayersSection from 'components/Project/ProjectToolsDrawer/ProjectPayersSection'
 import { featureFlagEnabled } from 'utils/featureFlags'
 
-import VeNftSetupSection from 'components/veNft/VeNftSetupSection'
-
-import { useVeNftEnabled } from 'hooks/veNft/VeNftEnabled'
-
 import VeNftSetUnclaimedTokensPermissionSection from 'components/veNft/VeNftSetUnclaimedTokensPermissionSection'
+
+import VeNftEnableSection from 'components/veNft/VeNftEnableSection'
 
 import { V1TokenMigrationSetupSection } from './V1TokenMigrationSetupSection'
 import { AddToProjectBalanceForm } from '../../../Project/ProjectToolsDrawer/AddToProjectBalanceForm'
@@ -36,8 +33,11 @@ export function V2ProjectToolsDrawer({
   visible?: boolean
   onClose?: VoidFunction
 }) {
-  const { projectOwnerAddress, tokenSymbol, projectId } =
-    useContext(V2ProjectContext)
+  const {
+    projectOwnerAddress,
+    tokenSymbol,
+    veNft: { contractAddress: veNftContractAddress },
+  } = useContext(V2ProjectContext)
 
   const editV2ProjectDetailsTx = useEditV2ProjectDetailsTx()
   const { data: unclaimedTokenBalance } = useUserUnclaimedTokenBalance()
@@ -45,7 +45,6 @@ export function V2ProjectToolsDrawer({
   const isOwnerWallet = useIsUserAddress(projectOwnerAddress)
 
   const veNftEnabled = featureFlagEnabled(FEATURE_FLAGS.VENFT)
-  const veNftAdminEnabled = useVeNftEnabled(projectId)
 
   const OwnerTools = (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
@@ -62,22 +61,16 @@ export function V2ProjectToolsDrawer({
 
       <Divider />
 
-      <ProjectPayersSection />
-
-      <Divider />
-
       <ArchiveV2Project editV2ProjectDetailsTx={editV2ProjectDetailsTx} />
     </Space>
   )
 
   const VeNftTools = (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
-      <VeNftSetupSection />
-      {veNftAdminEnabled && (
-        <>
-          <Divider />
-          <VeNftSetUnclaimedTokensPermissionSection />
-        </>
+      {!veNftContractAddress ? (
+        <VeNftEnableSection />
+      ) : (
+        <VeNftSetUnclaimedTokensPermissionSection />
       )}
     </Space>
   )
@@ -122,7 +115,7 @@ export function V2ProjectToolsDrawer({
             {OwnerTools}
           </TabPane>
         )}
-        {veNftEnabled && (
+        {veNftEnabled && isOwnerWallet && (
           <TabPane tab={<Trans>veNFT</Trans>} key="3">
             {VeNftTools}
           </TabPane>

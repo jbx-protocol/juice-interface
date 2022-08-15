@@ -16,6 +16,26 @@ export function useTransferUnclaimedTokensTx(): TransactorInstance<{
 
   return ({ amount, to }, txOpts) => {
     if (!transactor || !projectId || !contracts?.JBTokenStore) {
+      const missingParam = !transactor
+        ? 'transactor'
+        : !projectId
+        ? 'projectId'
+        : !contracts?.JBTokenStore
+        ? 'contracts.JBTokenStore'
+        : !amount
+        ? 'amount'
+        : !to
+        ? 'to'
+        : null
+
+      txOpts?.onError?.(
+        new DOMException(
+          `Missing ${
+            missingParam ?? 'parameter` not found'
+          } in v2 TransferUnclaimedTokensTx`,
+        ),
+      )
+
       txOpts?.onDone?.()
       return Promise.resolve(false)
     }

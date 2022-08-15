@@ -8,6 +8,7 @@ import { getNftRewardTier } from 'utils/v2/nftRewards'
 import { t, Trans } from '@lingui/macro'
 import SectionHeader from 'components/SectionHeader'
 import { ThemeContext } from 'contexts/themeContext'
+import useMobile from 'hooks/Mobile'
 
 import { RewardTier } from './RewardTier'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
@@ -25,6 +26,8 @@ export function NftRewardsSection({
   const {
     nftRewards: { CIDs, rewardTiers, loading: nftsLoading },
   } = useContext(V2ProjectContext)
+
+  const isMobile = useMobile()
 
   const [selectedIndex, setSelectedIndex] = useState<number>()
 
@@ -51,20 +54,21 @@ export function NftRewardsSection({
 
   const renderRewardTier = (rewardTier: NftRewardTier, index: number) => {
     const isSelected = index === selectedIndex
-    const notEligible = rewardTier.contributionFloor > parseFloat(payAmountETH)
     if (!rewardTiers) return
 
     const nextRewardTier = rewardTiers[index + 1]
 
     return (
-      <Col md={8} xs={8}>
+      <Col
+        md={8}
+        xs={8}
+        key={`${rewardTier.contributionFloor}-${rewardTier.name}`}
+      >
         {!loading ? (
           <RewardTier
-            key={`${rewardTier.contributionFloor}-${rewardTier.name}`}
             rewardTier={rewardTier}
             rewardTierUpperLimit={nextRewardTier?.contributionFloor}
             isSelected={isSelected}
-            notEligible={notEligible}
             onClick={() => {
               setSelectedIndex(isSelected ? undefined : index)
               onPayAmountChange(
@@ -94,7 +98,7 @@ export function NftRewardsSection({
         <Trans>Contribute to unlock an NFT reward.</Trans>
       </span>
       {rewardTiers ? (
-        <Row style={{ marginTop: '15px' }} gutter={24}>
+        <Row style={{ marginTop: '15px' }} gutter={isMobile ? 8 : 24}>
           {rewardTiers.map(renderRewardTier)}
         </Row>
       ) : null}

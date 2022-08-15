@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router'
 import FormattedAddress from 'components/FormattedAddress'
 import { LogoutOutlined, CrownOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
@@ -11,11 +10,11 @@ import EtherscanLink from 'components/EtherscanLink'
 import CopyTextButton from 'components/CopyTextButton'
 import useMobile from 'hooks/Mobile'
 import { useWallet } from 'hooks/Wallet'
+import Link from 'next/link'
 
 import Balance from './Balance'
 
 export default function Wallet({ userAddress }: { userAddress: string }) {
-  const router = useRouter()
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -41,9 +40,12 @@ export default function Wallet({ userAddress }: { userAddress: string }) {
           display: 'flex',
           justifyContent: 'space-between',
         }}
-        onClick={() => router.push('/projects?tab=myprojects')}
       >
-        <Trans>My projects</Trans>
+        <Link href="/projects?tab=myprojects">
+          <a>
+            <Trans>My projects</Trans>
+          </a>
+        </Link>
         <CrownOutlined />
       </Menu.Item>
       {!isMobile && (

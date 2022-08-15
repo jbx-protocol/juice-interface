@@ -2,6 +2,7 @@ import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { useWallet } from 'hooks/Wallet'
 interface StakingFormActionButtonProps {
+  useJbToken: boolean
   hasAdequateApproval: boolean
   tokenApprovalLoading: boolean
   onApproveButtonClick: () => void
@@ -9,6 +10,7 @@ interface StakingFormActionButtonProps {
 }
 
 const StakingFormActionButton = ({
+  useJbToken,
   hasAdequateApproval,
   tokenApprovalLoading,
   onApproveButtonClick,
@@ -24,7 +26,7 @@ const StakingFormActionButton = ({
         </Button>
       )
     }
-    if (!hasAdequateApproval) {
+    if (useJbToken && !hasAdequateApproval) {
       return (
         <Button
           block

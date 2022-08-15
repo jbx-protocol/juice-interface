@@ -12,6 +12,7 @@ import OwnedVeNftCard from 'components/veNft/VeNftOwnedTokenCard'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { shadowCard } from 'constants/styles/shadowCard'
+import VeNftSummaryStatsSection from './VeNftSummaryStatsSection'
 
 type OwnedNFTsSectionProps = {
   userTokens: VeNftToken[] | undefined
@@ -27,25 +28,33 @@ export default function OwnedNFTSection({
   const hasOverflow = Boolean(primaryTerminalCurrentOverflow?.gt(0))
 
   return (
-    <div style={{ ...shadowCard(theme), padding: 25, marginBottom: 10 }}>
+    <div>
       {userTokens && userTokens.length > 0 ? (
         <>
-          <h3>$ve{tokenSymbolDisplayText} NFTs:</h3>
-          <Space direction="vertical">
-            {userTokens.map((token, i) => (
-              <OwnedVeNftCard
-                key={i}
-                token={token}
-                tokenSymbolDisplayText={tokenSymbolDisplayText}
-                hasOverflow={hasOverflow}
-              />
-            ))}
-          </Space>
+          <div style={{ ...shadowCard(theme), padding: 25, marginBottom: 10 }}>
+            <h3>$ve{tokenSymbolDisplayText} NFTs:</h3>
+            <Space direction="vertical">
+              {userTokens.map((token, i) => (
+                <OwnedVeNftCard
+                  key={i}
+                  token={token}
+                  tokenSymbolDisplayText={tokenSymbolDisplayText}
+                  hasOverflow={hasOverflow}
+                />
+              ))}
+            </Space>
+          </div>
+          <VeNftSummaryStatsSection
+            userTokens={userTokens}
+            tokenSymbolDisplayText={tokenSymbolDisplayText}
+          />
         </>
       ) : (
-        <h3>
-          <Trans>You don't own any veNFTs!</Trans>
-        </h3>
+        <div style={{ ...shadowCard(theme), padding: 25, marginBottom: 10 }}>
+          <h3>
+            <Trans>You don't own any veNFTs!</Trans>
+          </h3>
+        </div>
       )}
     </div>
   )

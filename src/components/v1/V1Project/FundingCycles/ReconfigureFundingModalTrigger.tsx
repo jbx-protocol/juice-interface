@@ -1,6 +1,6 @@
 import { Button, Tooltip } from 'antd'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
-import React, { useContext, useRef, useState } from 'react'
+import { useContext, useRef, useState } from 'react'
 import { Provider } from 'react-redux'
 import store, { createStore } from 'redux/store'
 import { Trans } from '@lingui/macro'

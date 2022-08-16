@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Form, FormInstance, Select } from 'antd'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 
 interface VeNftTokenSelectInputProps {
   form: FormInstance

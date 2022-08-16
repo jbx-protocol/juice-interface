@@ -15,11 +15,13 @@ export type NftRewardTier = {
 // How the reward tiers are stored in the contracts
 export type ContractNftRewardTier = {
   contributionFloor: BigNumber //uint128
-  remainingQuantity: number //uint64
+  lockedUntil: BigNumber
   initialQuantity: number //uint64
-  tokenUri: string // full link to IPFS
   votingUnits: number
   reservedRate: number
+  reservedTokenBeneficiary: string
+  encodedIPFSUri: string // encoded link to the rewardTier on IPFS
+  shouldUseBeneficiaryAsDefault: boolean
 }
 
 // How the reward tiers are stored on IPFS

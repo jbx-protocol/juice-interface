@@ -2590,6 +2590,7 @@
   integrity sha512-70BvKKor6iM8eBTa4klH7iOA5+/oa0J5gMpazK5nECrn8U0xeKTB19v+jXmTu+26JYruZHzCKZVdV5aH+c8qnA==
 
 "@jbx-protocol/contracts-v2-4.0.0@npm:@jbx-protocol/contracts-v2@4.0.0", "@jbx-protocol/contracts-v2@^4.0.0":
+  name "@jbx-protocol/contracts-v2-4.0.0"
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@jbx-protocol/contracts-v2/-/contracts-v2-4.0.0.tgz#0e1758c3be932993c7dbfa6b23addd10cc1855ea"
   integrity sha512-8B3UBPZYS4HCvRY25M8ROZi7mQdDrUMfq7dT3ucPVlE1KQLC8nBMwV2PiihgUamKpbQES9vhs7T4UIZbAv79rg==
@@ -2612,7 +2613,7 @@
   resolved "https://registry.yarnpkg.com/@jbx-protocol/contracts-v2/-/contracts-v2-8.0.0.tgz#25aee5766716947beb37ad08cdb3d30463a4b988"
   integrity sha512-0yFuhZBVHg+CGHNe9vPjbdSAhQSXVhFOQficc5ed1yzdG8ZaBSKg9ZdC351hJD7w7Mp9Vhf/0gh3ErYAv2OQqw==
 
-"@jbx-protocol/juice-nft-rewards@^2.0.0":
+"@jbx-protocol/juice-nft-rewards@2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-nft-rewards/-/juice-nft-rewards-2.0.0.tgz#ff84d1b1afdb961eea8819638e40daa30f5aa9a9"
   integrity sha512-8YSvqz+i4phxRLQuJzAZiwr5OH9DLc5Gq54GzCbJFEKgvqtJk5PHhs9Vf+hCUXFR2hd6NRsTDeRyu3rM12XVpQ==

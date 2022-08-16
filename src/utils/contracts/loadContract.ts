@@ -27,8 +27,7 @@ export const loadContract = async (
   } else if (contractName === V2ContractName.JBV1TokenPaymentTerminal) {
     contractJson = await loadJBV1TokenPaymentTerminalContract(network)
   } else if (
-    contractName ===
-    V2ContractName.JBTieredLimitedNFTRewardDataSourceProjectDeployer
+    contractName === V2ContractName.JBTiered721DelegateProjectDeployer
   ) {
     contractJson = await loadJBNftRewardsDeployerContract()
   } else if (contractName === V2ContractName.JBVeNftDeployer) {
@@ -126,7 +125,7 @@ const loadJBV1TokenPaymentTerminalContract = async (network: NetworkName) => {
 
 const loadJBNftRewardsDeployerContract = async () => {
   const temporaryNftDeployerContractJson = {
-    address: '0x1Db110f9FD09820c60CaFA89CB736910306bbec9',
+    address: '0xf485c9f3d3a7d8ab22f1ca79ec2a4ccf545e394b',
     abi: TEMPORARY_NFT_DEPLOYER_ABI,
   }
 

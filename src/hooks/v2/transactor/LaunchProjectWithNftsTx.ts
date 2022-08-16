@@ -14,12 +14,13 @@ import { ContractNftRewardTier, NftRewardTier } from 'models/v2/nftRewardTier'
 
 import { parseEther } from '@ethersproject/units'
 import { isValidMustStartAtOrAfter } from 'utils/v2/fundingCycle'
+import { BigNumber } from '@ethersproject/bignumber'
+import { generateEncodedIPFSUri } from 'utils/ipfs'
 
-import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
-import { IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 import { TransactorInstance } from '../../Transactor'
 import { JUICEBOX_MONEY_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
 import { MaxUint48 } from 'constants/numbers'
+import { IJBTiered721DelegateStore } from 'constants/contracts/rinkeby/IJBTiered721DelegateStore'
 
 const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
 const DEFAULT_MEMO = ''
@@ -27,7 +28,7 @@ const DEFAULT_MEMO = ''
 // Maps cid to contributionFloor
 export type TxNftArg = { [cid: string]: NftRewardTier }
 
-function getJBDeployTieredNFTRewardDataSourceData({
+function getJBDeployTiered721DelegateData({
   collectionName,
   collectionSymbol,
   nftRewards,
@@ -45,14 +46,19 @@ function getJBDeployTieredNFTRewardDataSourceData({
       nftRewards[cid].contributionFloor.toString(),
     )
     const maxSupply = nftRewards[cid].maxSupply
-    const remainingQuantity = maxSupply ?? MaxUint48
+    const initialQuantity = maxSupply ?? MaxUint48
+
+    const encodedIPFSUri = generateEncodedIPFSUri(cid)
+
     return {
       contributionFloor: contributionFloorWei,
-      remainingQuantity,
-      initialQuantity: 0,
-      tokenUri: `https://${IPFS_GATEWAY_HOSTNAME}/ipfs/${cid}`,
+      lockedUntil: BigNumber.from(0),
+      initialQuantity,
       votingUnits: 0,
       reservedRate: 0,
+      reservedTokenBeneficiary: constants.AddressZero,
+      encodedIPFSUri,
+      shouldUseBeneficiaryAsDefault: false,
     }
   })
 
@@ -63,9 +69,11 @@ function getJBDeployTieredNFTRewardDataSourceData({
     tokenUriResolver: constants.AddressZero,
     contractUri: 'ipfs://null',
     owner: ownerAddress,
-    contributionToken: ETH_TOKEN_ADDRESS,
     tiers: tiersArg,
-    shouldMintByDefault: true,
+    reservedTokenBeneficiary: constants.AddressZero,
+    store: IJBTiered721DelegateStore,
+    lockReservedTokenChanges: false,
+    lockVotingUnitChanges: false,
   }
 }
 
@@ -110,7 +118,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
 
     const args = [
       userAddress, // _owner
-      getJBDeployTieredNFTRewardDataSourceData({
+      getJBDeployTiered721DelegateData({
         collectionName,
         collectionSymbol,
         nftRewards,
@@ -133,7 +141,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
     ]
 
     return transactor(
-      contracts.JBTieredLimitedNFTRewardDataSourceProjectDeployer,
+      contracts.JBTiered721DelegateProjectDeployer,
       'launchProjectFor',
       args,
       txOpts,

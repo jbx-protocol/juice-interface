@@ -11,11 +11,13 @@ export default function EtherscanLink({
   value,
   type,
   truncated,
+  hideTooltip,
   style,
 }: {
   value: string | undefined
   type: 'tx' | 'address'
   truncated?: boolean
+  hideTooltip?: boolean
   style?: CSSProperties
 }) {
   if (!value) return null
@@ -38,7 +40,10 @@ export default function EtherscanLink({
 
   if (type === 'tx') {
     return (
-      <Tooltip title={t`See transaction`}>
+      <Tooltip
+        title={t`See transaction`}
+        visible={hideTooltip ? !hideTooltip : undefined}
+      >
         <ExternalLink {...linkProps}>
           <LinkOutlined />
         </ExternalLink>
@@ -47,7 +52,10 @@ export default function EtherscanLink({
   }
 
   return (
-    <Tooltip title={t`Go to Etherscan`}>
+    <Tooltip
+      title={t`Go to Etherscan`}
+      visible={hideTooltip ? !hideTooltip : undefined}
+    >
       <ExternalLink {...linkProps}>{truncatedValue ?? value}</ExternalLink>
     </Tooltip>
   )

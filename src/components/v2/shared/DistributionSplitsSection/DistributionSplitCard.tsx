@@ -122,7 +122,7 @@ export default function DistributionSplitCard({
                   justifyContent: 'space-between',
                 }}
               >
-                <span style={{ cursor }}>{split.projectId}</span>
+                <span style={{ cursor }}>{parseInt(split.projectId)}</span>
               </div>
             </Col>
           </Row>

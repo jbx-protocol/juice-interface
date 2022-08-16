@@ -9,9 +9,11 @@ import ETHAmount from 'components/currency/ETHAmount'
 export default function Balance({
   address,
   showEthPrice,
+  hideTooltip,
 }: {
   address: string | undefined
   showEthPrice?: boolean
+  hideTooltip?: boolean
 }) {
   const {
     theme: { colors },
@@ -27,7 +29,7 @@ export default function Balance({
         color: colors.text.tertiary,
       }}
     >
-      <ETHAmount amount={balance} fallback="--" />
+      <ETHAmount amount={balance} fallback="--" hideTooltip={hideTooltip} />
 
       {showEthPrice && (
         <div style={{ color: colors.text.tertiary }}>

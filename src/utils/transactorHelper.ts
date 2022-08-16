@@ -32,7 +32,7 @@ export function handleTransactor(props: {
   }
 }
 
-export function onCatch(
+function onCatch(
   missingParam: string,
   fnName: string,
   version: 'v1' | 'v2',

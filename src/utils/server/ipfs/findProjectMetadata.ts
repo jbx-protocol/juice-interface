@@ -63,9 +63,8 @@ function isTemporaryServiceError({
   status: number | undefined
   code: string | undefined
 }) {
-  if (code) {
-    // Code returned when websocket resets
-    return code === 'ECONNRESET'
+  if (code === 'ECONNRESET') {
+    return true
   }
   if (status) {
     switch (status) {

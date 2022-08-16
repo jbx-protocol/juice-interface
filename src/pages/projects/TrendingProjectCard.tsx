@@ -7,7 +7,7 @@ import { t, Trans, Plural } from '@lingui/macro'
 import { ThemeContext } from 'contexts/themeContext'
 import * as constants from '@ethersproject/constants'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
-import { TrendingProject } from 'models/subgraph-entities/vX/project'
+import { Project } from 'models/subgraph-entities/vX/project'
 import { CSSProperties, useContext, useMemo } from 'react'
 import { getTerminalVersion } from 'utils/v1/terminals'
 
@@ -17,18 +17,26 @@ import { Skeleton } from 'antd'
 
 import { v2ProjectRoute } from 'utils/routes'
 
-import { SECONDS_IN_DAY } from 'constants/numbers'
+import { trendingWindowDays } from 'constants/trendingWindowDays'
 
 export default function TrendingProjectCard({
   project,
   size,
   rank,
-  trendingWindowDays,
 }: {
-  project: TrendingProject
+  project: Pick<
+    Project,
+    | 'terminal'
+    | 'trendingVolume'
+    | 'metadataUri'
+    | 'totalPaid'
+    | 'trendingPaymentsCount'
+    | 'createdWithinTrendingWindow'
+    | 'handle'
+    | 'cv'
+  >
   size?: 'sm' | 'lg'
   rank: number
-  trendingWindowDays: number
 }) {
   const {
     theme: { colors, radii },
@@ -64,13 +72,7 @@ export default function TrendingProjectCard({
       : 0
 
   const percentGainText = useMemo(() => {
-    if (
-      project.createdAt &&
-      project.createdAt >
-        new Date().valueOf() / 1000 - trendingWindowDays * SECONDS_IN_DAY
-    ) {
-      return t`New`
-    }
+    if (project.createdWithinTrendingWindow) return t`New`
 
     const preTrendingVolume = project.totalPaid?.sub(project.trendingVolume)
 
@@ -95,7 +97,7 @@ export default function TrendingProjectCard({
     }
 
     return `+${percentRounded}%`
-  }, [project, trendingWindowDays])
+  }, [project])
 
   const paymentCount = project.trendingPaymentsCount
 

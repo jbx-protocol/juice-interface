@@ -8,6 +8,8 @@ export type ProtocolLog = {
   paymentsCount: number
   redeemCount: number
   erc20Count: number
+  trendingLastUpdatedTimestamp: number
+  oldestTrendingPayEvent: string
 
   v1: Partial<Omit<ProtocolLog, 'v1' | 'v2'>>
   v2: Partial<Omit<ProtocolLog, 'v1' | 'v2'>>

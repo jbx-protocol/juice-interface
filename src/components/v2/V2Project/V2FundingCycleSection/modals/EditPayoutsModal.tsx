@@ -2,13 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Modal, Skeleton, Space } from 'antd'
 import DistributionSplitCard from 'components/v2/shared/DistributionSplitsSection/DistributionSplitCard'
 import { defaultSplit, Split } from 'models/v2/splits'
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { getTotalSplitsPercentage } from 'utils/v2/distributions'
 import { ThemeContext } from 'contexts/themeContext'
 import DistributionSplitModal from 'components/v2/shared/DistributionSplitsSection/DistributionSplitModal'

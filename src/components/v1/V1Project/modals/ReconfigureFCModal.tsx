@@ -22,12 +22,7 @@ import { useConfigureProjectTx } from 'hooks/v1/transactor/ConfigureProjectTx'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { V1FundingCycle, V1FundingCycleMetadata } from 'models/v1/fundingCycle'
 import { PayoutMod, TicketMod } from 'models/mods'
-import React, {
-  useCallback,
-  useContext,
-  useLayoutEffect,
-  useState,
-} from 'react'
+import { useCallback, useContext, useLayoutEffect, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import {
   formattedNum,

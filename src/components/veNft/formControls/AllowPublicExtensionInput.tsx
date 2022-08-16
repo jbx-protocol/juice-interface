@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Form, FormInstance, Space, Switch } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 
 interface AllowPublicExtensionInputProps {
   form: FormInstance

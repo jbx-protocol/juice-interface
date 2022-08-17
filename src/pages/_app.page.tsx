@@ -12,6 +12,7 @@ import {
 import { BigNumber } from '@ethersproject/bignumber'
 import { init, useWallets } from '@web3-onboard/react'
 import { unpadLeadingZerosString } from 'utils/bigNumbers'
+import config from 'config/seo_meta.json'
 
 import { NETWORKS } from 'constants/networks'
 
@@ -25,6 +26,11 @@ init({
     token: n.token ?? 'ETH',
     label: n.label,
   })),
+  appMetadata: {
+    icon: '/assets/juice_logo-ol.png',
+    name: config.title,
+    description: config.description,
+  },
 })
 
 export default function MyApp({ Component, pageProps }: AppProps) {

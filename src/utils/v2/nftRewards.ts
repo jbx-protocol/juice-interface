@@ -1,4 +1,5 @@
 import { ContractNftRewardTier, NftRewardTier } from 'models/v2/nftRewardTier'
+import { decodeEncodedIPFSUri } from 'utils/ipfs'
 
 // Returns the highest NFT reward tier that a payer is eligible given their pay amount
 export function getNftRewardTier({
@@ -41,10 +42,7 @@ export function CIDsOfNftRewardTiersResponse(
 ): string[] {
   const cids: string[] = nftRewardTiersResponse
     .map((contractRewardTier: ContractNftRewardTier) => {
-      const uriParts = contractRewardTier.tokenUri.split('/')
-      const cid = uriParts[uriParts.length - 1]
-
-      return cid ?? ''
+      return decodeEncodedIPFSUri(contractRewardTier.encodedIPFSUri)
     })
     .filter(cid => cid.length > 0)
   return cids

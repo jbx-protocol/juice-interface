@@ -10,17 +10,17 @@ import {
 } from 'models/v2/fundingCycle'
 
 import { GroupedSplits, SplitGroup } from 'models/v2/splits'
-import { ContractNftRewardTier, NftRewardTier } from 'models/v2/nftRewardTier'
+import { NftRewardTier } from 'models/v2/nftRewardTier'
 
 import { parseEther } from '@ethersproject/units'
 import { isValidMustStartAtOrAfter } from 'utils/v2/fundingCycle'
 import { BigNumber } from '@ethersproject/bignumber'
-import { generateEncodedIPFSUri } from 'utils/ipfs'
+import { encodeIPFSUri, ipfsCidUrl } from 'utils/ipfs'
 
 import { TransactorInstance } from '../../Transactor'
 import { JUICEBOX_MONEY_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
 import { MaxUint48 } from 'constants/numbers'
-import { IJBTiered721DelegateStore } from 'constants/contracts/rinkeby/IJBTiered721DelegateStore'
+import { JBTiered721DelegateStoreAddress } from 'constants/contracts/rinkeby/juiceNftRewards'
 
 const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
 const DEFAULT_MEMO = ''
@@ -41,14 +41,14 @@ function getJBDeployTiered721DelegateData({
   ownerAddress: string
   directory: string
 }) {
-  const tiersArg: ContractNftRewardTier[] = Object.keys(nftRewards).map(cid => {
+  const tiersArg = Object.keys(nftRewards).map(cid => {
     const contributionFloorWei = parseEther(
       nftRewards[cid].contributionFloor.toString(),
     )
     const maxSupply = nftRewards[cid].maxSupply
     const initialQuantity = maxSupply ?? MaxUint48
 
-    const encodedIPFSUri = generateEncodedIPFSUri(cid)
+    const encodedIPFSUri = encodeIPFSUri(cid)
 
     return {
       contributionFloor: contributionFloorWei,
@@ -67,11 +67,12 @@ function getJBDeployTiered721DelegateData({
     name: collectionName,
     symbol: collectionSymbol,
     tokenUriResolver: constants.AddressZero,
+    baseUri: ipfsCidUrl(''),
     contractUri: 'ipfs://null',
     owner: ownerAddress,
     tiers: tiersArg,
     reservedTokenBeneficiary: constants.AddressZero,
-    store: IJBTiered721DelegateStore,
+    store: JBTiered721DelegateStoreAddress,
     lockReservedTokenChanges: false,
     lockVotingUnitChanges: false,
   }

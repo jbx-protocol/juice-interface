@@ -1,25 +1,16 @@
-import { Contract } from '@ethersproject/contracts'
-import * as constants from '@ethersproject/constants'
-import { useMemo } from 'react'
 import { ContractNftRewardTier } from 'models/v2/nftRewardTier'
+import { MAX_NFT_REWARD_TIERS } from 'components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer'
+import { V2ContractName } from 'models/v2/contracts'
+import * as constants from '@ethersproject/constants'
 
 import useV2ContractReader from './V2ContractReader'
-import { TEMPORARY_NFT_DATASOURCE_ABI } from 'constants/contracts/rinkeby/TEMPORARY_NFT_DATASOUCE_ABI'
-import { readProvider } from 'constants/readProvider'
 
 export function useNftRewardTiersOf(dataSourceAddress: string | undefined) {
-  const dataSourceContract = useMemo(
-    () =>
-      new Contract(
-        dataSourceAddress ?? constants.AddressZero,
-        TEMPORARY_NFT_DATASOURCE_ABI,
-        readProvider,
-      ),
-    [dataSourceAddress],
-  )
-
+  if (dataSourceAddress === constants.AddressZero)
+    return { data: undefined, loading: undefined }
   return useV2ContractReader<ContractNftRewardTier[]>({
-    contract: dataSourceContract,
-    functionName: 'allTiers',
+    contract: V2ContractName.JBTiered721DelegateStore,
+    functionName: 'tiers',
+    args: [dataSourceAddress, 0, MAX_NFT_REWARD_TIERS],
   })
 }

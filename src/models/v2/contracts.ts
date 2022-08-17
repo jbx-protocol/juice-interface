@@ -26,6 +26,7 @@ export enum V2ContractName {
   DeprecatedJBDirectory = 'DeprecatedJBDirectory',
 
   JBTiered721DelegateProjectDeployer = 'JBTiered721DelegateProjectDeployer',
+  JBTiered721DelegateStore = 'JBTiered721DelegateStore',
 }
 
 export type V2Contracts = Record<V2ContractName, Contract>

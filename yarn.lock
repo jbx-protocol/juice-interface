@@ -2613,15 +2613,14 @@
   resolved "https://registry.yarnpkg.com/@jbx-protocol/contracts-v2/-/contracts-v2-8.0.0.tgz#25aee5766716947beb37ad08cdb3d30463a4b988"
   integrity sha512-0yFuhZBVHg+CGHNe9vPjbdSAhQSXVhFOQficc5ed1yzdG8ZaBSKg9ZdC351hJD7w7Mp9Vhf/0gh3ErYAv2OQqw==
 
-"@jbx-protocol/juice-nft-rewards@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-nft-rewards/-/juice-nft-rewards-2.0.0.tgz#ff84d1b1afdb961eea8819638e40daa30f5aa9a9"
-  integrity sha512-8YSvqz+i4phxRLQuJzAZiwr5OH9DLc5Gq54GzCbJFEKgvqtJk5PHhs9Vf+hCUXFR2hd6NRsTDeRyu3rM12XVpQ==
+"@jbx-protocol/juice-nft-rewards@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-nft-rewards/-/juice-nft-rewards-4.0.0.tgz#d9e1a3924b035d80ff55b978c964f4dc2d25fb2c"
+  integrity sha512-DQAepbNbZG9tt54dATUrnvcHz1ER3jSLiM1PDbHrNLv2FMYTj5xmufYtDoSAkXUuKGZcw0/UNxasfCcHcAWnWw==
   dependencies:
     "@jbx-protocol/contracts-v2" "^4.0.0"
     "@openzeppelin/contracts" "^4.6.0"
     "@paulrberg/contracts" "^3.7.0"
-    "@rari-capital/solmate" "^6.4.0"
     prb-math "^2.4.3"
 
 "@jbx-protocol/juice-v1-token-terminal@1.0.1":
@@ -3332,11 +3331,6 @@
     penpal "3.0.7"
     pocket-js-core "0.0.3"
     web3-provider-engine "16.0.1"
-
-"@rari-capital/solmate@^6.4.0":
-  version "6.4.0"
-  resolved "https://registry.yarnpkg.com/@rari-capital/solmate/-/solmate-6.4.0.tgz#c6ee4110c8075f14b415e420b13bd8bdbbc93d9e"
-  integrity sha512-BXWIHHbG5Zbgrxi0qVYe0Zs+bfx+XgOciVUACjuIApV0KzC0kY8XdO1higusIei/ZKCC+GUKdcdQZflxYPUTKQ==
 
 "@reduxjs/toolkit@^1.6.2":
   version "1.6.2"

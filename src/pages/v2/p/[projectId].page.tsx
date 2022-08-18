@@ -2,7 +2,6 @@ import { ProjectMetadataV4 } from 'models/project-metadata'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { V2UserProvider } from 'providers/v2/UserProvider'
 import { paginateDepleteProjectsQueryCall } from 'utils/apollo'
-import { ipfsCidUrl } from 'utils/ipfs'
 import { V2ContractName } from 'models/v2/contracts'
 import { loadContract } from 'utils/contracts/loadContract'
 import { AppWrapper, SEO } from 'components/common'
@@ -59,10 +58,9 @@ export const getStaticProps: GetStaticProps<{
     return { notFound: true }
   }
   const metadataCid = await getMetadataCidFromContract(projectId)
-  const url = ipfsCidUrl(metadataCid)
 
   try {
-    const metadata = await findProjectMetadata({ url })
+    const metadata = await findProjectMetadata({ metadataCid })
     return { props: { metadata, projectId } }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

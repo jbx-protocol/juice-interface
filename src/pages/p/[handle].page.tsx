@@ -29,7 +29,6 @@ import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
 import { V1CurrencyProvider } from 'providers/v1/V1CurrencyProvider'
 import { useMemo } from 'react'
-import { ipfsCidUrl } from 'utils/ipfs'
 import { V1CurrencyName } from 'utils/v1/currency'
 import ScrollToTopButton from 'components/ScrollToTopButton'
 
@@ -81,9 +80,10 @@ export const getStaticProps: GetStaticProps<{
     throw new Error(`Failed to load metadata uri for ${context.params}`)
   }
 
-  const url = ipfsCidUrl(projects[0].metadataUri)
   try {
-    const metadata = await findProjectMetadata({ url })
+    const metadata = await findProjectMetadata({
+      metadataCid: projects[0].metadataUri,
+    })
     return { props: { metadata, handle } }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

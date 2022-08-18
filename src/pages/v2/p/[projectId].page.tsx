@@ -55,6 +55,9 @@ export const getStaticProps: GetStaticProps<{
 }> = async context => {
   if (!context.params) throw new Error('params not supplied')
   const projectId = parseInt(context.params.projectId as string)
+  if (isNaN(projectId)) {
+    return { notFound: true }
+  }
   const metadataCid = await getMetadataCidFromContract(projectId)
   const url = ipfsCidUrl(metadataCid)
 

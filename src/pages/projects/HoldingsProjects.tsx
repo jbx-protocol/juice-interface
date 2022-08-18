@@ -5,7 +5,7 @@ import ProjectCard from 'components/ProjectCard'
 import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useHoldingsProjectsQuery } from 'hooks/Projects'
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { InfoCircleOutlined } from '@ant-design/icons'
 
 export default function HoldingsProjects() {

@@ -7,7 +7,7 @@ import Loading from 'components/Loading'
 import { AppWrapper } from 'components/common'
 
 import { ProjectCategory } from 'models/project-visibility'
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { useContext, useEffect, useMemo, useRef, useState } from 'react'
 
 import Grid from 'components/Grid'
 import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
@@ -224,7 +224,7 @@ function Projects() {
       </div>
 
       {selectedTab === 'all' ? (
-        <React.Fragment>
+        <>
           {concatenatedPages && (
             <Grid>
               {concatenatedPages.map(p => (
@@ -273,7 +273,7 @@ function Projects() {
               </div>
             )
           )}
-        </React.Fragment>
+        </>
       ) : selectedTab === 'holdings' ? (
         <div style={{ paddingBottom: 50 }}>
           <HoldingsProjects />

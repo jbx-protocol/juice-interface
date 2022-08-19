@@ -6,10 +6,13 @@ import {
 
 import { consolidateMetadata, ProjectMetadataV4 } from 'models/project-metadata'
 import { IPFSNftRewardTier, NftRewardTier } from 'models/v2/nftRewardTier'
+import { base58 } from 'ethers/lib/utils'
 
 import axios, { AxiosError } from 'axios'
 
 import { IPFS_GATEWAY_HOSTNAME, DEFAULT_PINATA_GATEWAY } from 'constants/ipfs'
+
+// NOTE: `cid` and `IPFS hash` are synonymous
 
 export const IPFS_TAGS = {
   METADATA:
@@ -179,4 +182,19 @@ export function formatIpfsLink(ipfsLink: string) {
   const ipfsLinkParts = ipfsLink.split('/')
   const cid = ipfsLinkParts[ipfsLinkParts.length - 1]
   return `https://${DEFAULT_PINATA_GATEWAY}/ipfs/${cid}`
+}
+
+// How IPFS URI's are stored in the contracts to save storage (/gas)
+export function encodeIPFSUri(cid: string) {
+  return '0x' + Buffer.from(base58.decode(cid).slice(2)).toString('hex')
+}
+
+export function decodeEncodedIPFSUri(hex: string) {
+  // Add default ipfs values for first 2 bytes:
+  // - function:0x12=sha2, size:0x20=256 bits
+  // - also cut off leading "0x"
+  const hashHex = '1220' + hex.slice(2)
+  const hashBytes = Buffer.from(hashHex, 'hex')
+  const hashStr = base58.encode(hashBytes)
+  return hashStr
 }

@@ -25,7 +25,7 @@ export const NFT_REWARDS_EXPLAINATION: JSX.Element = (
   </Trans>
 )
 
-const MAX_NFT_REWARD_TIERS = 3
+export const MAX_NFT_REWARD_TIERS = 3
 
 export default function NftDrawer({
   visible,

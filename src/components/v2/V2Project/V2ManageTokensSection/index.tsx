@@ -110,7 +110,9 @@ export default function V2ManageTokensSection() {
     useV2ConnectedWalletHasPermission(V2OperatorPermission.MINT),
   )
   const projectAllowsMint = Boolean(fundingCycleMetadata?.allowMinting)
-  const veNftEnabled = featureFlagEnabled(FEATURE_FLAGS.VENFT) && veNftAddress
+  const veNftEnabled = Boolean(
+    featureFlagEnabled(FEATURE_FLAGS.VENFT) && veNftAddress,
+  )
 
   return (
     <>

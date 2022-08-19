@@ -1,4 +1,3 @@
-import { Trans } from '@lingui/macro'
 import { Checkbox } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { CSSProperties, useContext } from 'react'
@@ -41,7 +40,7 @@ export default function FilterCheckboxItem({
         onChange={() => onChange(!checked)}
         disabled={disabled}
       />
-      <Trans>{label}</Trans>
+      {label}
     </div>
   )
 }

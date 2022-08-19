@@ -14,9 +14,6 @@ msgstr ""
 msgid "$ve{tokenSymbolDisplayText} Received"
 msgstr ""
 
-msgid "({0}%)"
-msgstr ""
-
 msgid "({realTokenAllocationPercent}% of all newly minted tokens)."
 msgstr ""
 
@@ -98,6 +95,9 @@ msgstr ""
 msgid "<0/>{0}{1} distributed"
 msgstr ""
 
+msgid "<0><1/>{0}</0> Distribution Limit"
+msgstr ""
+
 msgid "<0><1/>{netDistributionAmount}</0> after {feePercentage}% JBX fee"
 msgstr ""
 
@@ -113,16 +113,13 @@ msgstr ""
 msgid "<0>A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project.</0><1>Holding these tokens entitles a project to a portion of its own overflow.</1>"
 msgstr ""
 
-msgid "<0>Add to balance:</0> payments to this contract will fund the project without minting project tokens."
-msgstr ""
-
-msgid "<0>Auto claim:</0> any minted tokens will automatically be claimed as ERC20 (if this project has issued an ERC20 token)."
-msgstr ""
-
 msgid "<0>Contribution floor:</0> {0} ETH"
 msgstr ""
 
 msgid "<0>Description: </0><1/>"
+msgstr ""
+
+msgid "<0>Description:</0><1/>"
 msgstr ""
 
 msgid "<0>Discount rate</0>, to reduce your project token's issuance rate (tokens per ETH) each funding cycle."
@@ -150,6 +147,9 @@ msgid "<0>Learn more</0> about funding cycles."
 msgstr ""
 
 msgid "<0>Learn more</0> about overflow."
+msgstr ""
+
+msgid "<0>Max. supply:</0> <1>{0}</1>"
 msgstr ""
 
 msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
@@ -206,13 +206,10 @@ msgstr ""
 msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
 msgstr ""
 
+msgid "<0>Zero</0> Distribution Limit"
+msgstr ""
+
 msgid "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
-msgstr ""
-
-msgid "@"
-msgstr ""
-
-msgid "@{handle}"
 msgstr ""
 
 msgid "@{handle} not found"
@@ -296,9 +293,6 @@ msgstr ""
 msgid "Add the V1 Token Payment Terminal to your project."
 msgstr ""
 
-msgid "Add to Balance"
-msgstr ""
-
 msgid "Add to balance"
 msgstr ""
 
@@ -326,6 +320,9 @@ msgstr ""
 msgid "Advanced (optional)"
 msgstr ""
 
+msgid "Advanced Options"
+msgstr ""
+
 msgid "All"
 msgstr ""
 
@@ -350,6 +347,9 @@ msgstr ""
 msgid "Allow minting tokens"
 msgstr ""
 
+msgid "Allow public lock extension"
+msgstr ""
+
 msgid "Allow terminal configuration"
 msgstr ""
 
@@ -360,6 +360,9 @@ msgid "Allow your V1 project token holders to swap their tokens for your V2 proj
 msgstr ""
 
 msgid "Allowed"
+msgstr ""
+
+msgid "Allows anyone to extend your lock position."
 msgstr ""
 
 msgid "Almost definitely."
@@ -419,9 +422,6 @@ msgstr ""
 msgid "Attach the image to be associated with this NFT."
 msgstr ""
 
-msgid "Auto claim"
-msgstr ""
-
 msgid "Automate funding cycles"
 msgstr ""
 
@@ -453,9 +453,6 @@ msgid "Beneficiary"
 msgstr ""
 
 msgid "Beneficiary address"
-msgstr ""
-
-msgid "Beneficiary:"
 msgstr ""
 
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
@@ -734,9 +731,6 @@ msgstr ""
 msgid "Cycle #{0}"
 msgstr ""
 
-msgid "Cycle #{0} -"
-msgstr ""
-
 msgid "DAOs"
 msgstr ""
 
@@ -756,6 +750,9 @@ msgid "Days"
 msgstr ""
 
 msgid "Days to lock tokens"
+msgstr ""
+
+msgid "Default"
 msgstr ""
 
 msgid "Delete NFT"
@@ -788,7 +785,7 @@ msgstr ""
 msgid "Deployed ERC20 token"
 msgstr ""
 
-msgid "Deployed payment addresses can be found in the Tools drawer on the project page."
+msgid "Deployed payment addresses can be found in the Tools drawer (<0/>) on the project page."
 msgstr ""
 
 msgid "Deposit 1 wei to @{handle}"
@@ -905,9 +902,6 @@ msgstr ""
 msgid "Distribution limit, duration and payouts"
 msgstr ""
 
-msgid "Distribution limit: <0/>{0}"
-msgstr ""
-
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
 msgstr ""
 
@@ -959,12 +953,6 @@ msgstr ""
 msgid "ETH-ERC20 Address Created"
 msgstr ""
 
-msgid "ETH-ERC20 Payment addresses"
-msgstr ""
-
-msgid "ETH-ERC20 Payment addresses are <0>smart contracts</0>that allow this project to be paid in <1>ETH</1> by sending ETH directly to the contract, or in <2>ERC20 tokens</2> via the contract's <3>pay()</3> function."
-msgstr ""
-
 msgid "Each payout will receive their percent of this total each funding cycle if there is enough in the treasury. Otherwise, they will receive their percent of whatever is in the treasury."
 msgstr ""
 
@@ -996,6 +984,9 @@ msgid "Edit token allocation"
 msgstr ""
 
 msgid "Edit tracked assets"
+msgstr ""
+
+msgid "Enable veBanny Governance"
 msgstr ""
 
 msgid "Enable veNFT Governance"
@@ -1055,7 +1046,13 @@ msgstr ""
 msgid "Fee from <0><1/></0>"
 msgstr ""
 
+msgid "File empty or corrupt. Try again."
+msgstr ""
+
 msgid "File must be less than {formattedSize}{unit}"
+msgstr ""
+
+msgid "File upload failed. Try again."
 msgstr ""
 
 msgid "Fund and operate your thing, your way."
@@ -1202,9 +1199,6 @@ msgstr ""
 msgid "If you have Juicebox project on Juicebox V1 and V2, we recommend you migrate to V2 exclusively."
 msgstr ""
 
-msgid "If you have already deployed a payable address and have lost it, please contact the Juicebox team through <0>Discord.</0>"
-msgstr ""
-
 msgid "If you're interested in creating a project but still confused on how to get started, consider watching this <0>instructional video</0>. Also feel free to reach out in the <1>Juicebox Discord</1> where our team will be happy to help bring your project idea to life!"
 msgstr ""
 
@@ -1304,6 +1298,9 @@ msgstr ""
 msgid "Juicebox projects use <0>ENS names</0> as handles. Setting a handle involves 2 transactions:"
 msgstr ""
 
+msgid "LINK TO NFT"
+msgstr ""
+
 msgid "Last paid"
 msgstr ""
 
@@ -1332,6 +1329,9 @@ msgid "Leave unchecked to have Juicebox track your token balance, saving gas on 
 msgstr ""
 
 msgid "Light theme"
+msgstr ""
+
+msgid "Limited supply"
 msgstr ""
 
 msgid "Link Juicebox V1 project"
@@ -1427,10 +1427,13 @@ msgstr ""
 msgid "Mint {tokensTokenLower}"
 msgstr ""
 
-msgid "Minutes"
+msgid "Mints tokens as ERC-20:"
 msgstr ""
 
-msgid "More information"
+msgid "Mints tokens:"
+msgstr ""
+
+msgid "Minutes"
 msgstr ""
 
 msgid "More trending projects"
@@ -1460,6 +1463,9 @@ msgstr ""
 msgid "New"
 msgstr ""
 
+msgid "New project tokens are automatically minted as ERC-20's. The gas to pay this contract will be higher than normal."
+msgstr ""
+
 msgid "Newly minted {tokenSymbolPlural} <0>received by contributors</0> per ETH they contribute to the treasury."
 msgstr ""
 
@@ -1482,6 +1488,9 @@ msgid "No activity yet"
 msgstr ""
 
 msgid "No beneficiary selected. Is your wallet connected?"
+msgstr ""
+
+msgid "No file uploaded."
 msgstr ""
 
 msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
@@ -1536,9 +1545,6 @@ msgid "Once launched, your first funding cycle <0>can't be changed</0>. You can 
 msgstr ""
 
 msgid "Only lowercase letters"
-msgstr ""
-
-msgid "Only project tokens claimed as ERC-20 tokens can be staked for NFTs."
 msgstr ""
 
 msgid "Other assets in this project's owner's wallet."
@@ -1622,9 +1628,6 @@ msgstr ""
 msgid "Paying this project is currently disabled."
 msgstr ""
 
-msgid "Payment address contract:"
-msgstr ""
-
 msgid "Payment equivalent"
 msgstr ""
 
@@ -1694,9 +1697,6 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
-msgid "Preview:"
-msgstr ""
-
 msgid "Project Created"
 msgstr ""
 
@@ -1704,12 +1704,6 @@ msgid "Project ID must be a number."
 msgstr ""
 
 msgid "Project ID:"
-msgstr ""
-
-msgid "Project Links"
-msgstr ""
-
-msgid "Project Page Customizations"
 msgstr ""
 
 msgid "Project Token"
@@ -1748,6 +1742,9 @@ msgstr ""
 msgid "Project launch successful"
 msgstr ""
 
+msgid "Project links"
+msgstr ""
+
 msgid "Project name"
 msgstr ""
 
@@ -1766,10 +1763,16 @@ msgstr ""
 msgid "Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."
 msgstr ""
 
+msgid "Project page customizations"
+msgstr ""
+
 msgid "Project token"
 msgstr ""
 
 msgid "Project tokens <0>aren't ERC-20 tokens</0> by default. Once you deploy your project, you can issue an ERC-20 for your holders to claim. This is <1>optional</1>."
+msgstr ""
+
+msgid "Project tokens will be minted to whoever pays this payer contract."
 msgstr ""
 
 msgid "Project {0}"
@@ -1808,13 +1811,16 @@ msgstr ""
 msgid "Provide a link to additional information about this NFT."
 msgstr ""
 
+msgid "REMAINING SUPPLY: {0}/{1}"
+msgstr ""
+
 msgid "Raised on Juicebox"
 msgstr ""
 
 msgid "Range"
 msgstr ""
 
-msgid "Rankings based on number of contributions and volume gained in the last {trendingWindow} days. <0>See code</0>"
+msgid "Rankings based on number of contributions and volume gained in the last {trendingWindowDays} days. <0>See code</0>"
 msgstr ""
 
 msgid "Read less"
@@ -1839,9 +1845,6 @@ msgid "Receive {receiveText}"
 msgstr ""
 
 msgid "Recipient"
-msgstr ""
-
-msgid "Recipient Address"
 msgstr ""
 
 msgid "Recipient address"
@@ -2075,6 +2078,9 @@ msgstr ""
 msgid "Set a funding cycle target"
 msgstr ""
 
+msgid "Set a limit on how many of these NFTs can be minted."
+msgstr ""
+
 msgid "Set a project handle (optional)"
 msgstr ""
 
@@ -2100,6 +2106,12 @@ msgid "Set this to the sum of all your payouts"
 msgstr ""
 
 msgid "Set up V1 token migration"
+msgstr ""
+
+msgid "Set up and launch veNFT governance for your project using custom assets and parameters. (Experimental, does not currently launch)"
+msgstr ""
+
+msgid "Set up and launch veNFT governance for your project using default veBanny assets and parameters."
 msgstr ""
 
 msgid "Set up and launch veNFT governance for your project."
@@ -2148,9 +2160,6 @@ msgid "Staking Summary:"
 msgstr ""
 
 msgid "Start"
-msgstr ""
-
-msgid "Start Over"
 msgstr ""
 
 msgid "Start over"
@@ -2249,6 +2258,12 @@ msgstr ""
 msgid "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
 msgstr ""
 
+msgid "The maximum supply of this NFT in circulation."
+msgstr ""
+
+msgid "The memo that appears on the project's Juicebox page activity feed when this payer contract is paid."
+msgstr ""
+
 msgid "The number of project tokens minted when 1 ETH is contributed in the first funding cycle."
 msgstr ""
 
@@ -2319,6 +2334,9 @@ msgid "This address will receive the tokens minted from paying this project."
 msgstr ""
 
 msgid "This funding cycle may pose risks to contributors. Check the funding cycle details before paying this project."
+msgstr ""
+
+msgid "This funding cycle's distribution limit."
 msgstr ""
 
 msgid "This is the maximum amount of funds that can leave the treasury each funding cycle."
@@ -2417,6 +2435,9 @@ msgstr ""
 msgid "Token symbol is required"
 msgstr ""
 
+msgid "Token to Lock:"
+msgstr ""
+
 msgid "Tokens"
 msgstr ""
 
@@ -2460,6 +2481,9 @@ msgid "Tokens to burn"
 msgstr ""
 
 msgid "Tokens to redeem"
+msgstr ""
+
+msgid "Tokens will be minted as a result of paying this project."
 msgstr ""
 
 msgid "Tokens:"
@@ -2564,6 +2588,9 @@ msgstr ""
 msgid "Upload"
 msgstr ""
 
+msgid "Upload CSV"
+msgstr ""
+
 msgid "Upload an image"
 msgstr ""
 
@@ -2654,9 +2681,6 @@ msgstr ""
 msgid "What's going on under the hood?"
 msgstr ""
 
-msgid "When a payment address is paid, its <0>beneficiary</0> address will receive any minted project tokens."
-msgstr ""
-
 msgid "When checked, payments to this address will mint this project's ERC-20 tokens to the beneficiary's wallet. Payments will cost more gas. When unchecked, Juicebox will track the beneficiary's new tokens when they pay. The beneficiary can claim their ERC-20 tokens at any time."
 msgstr ""
 
@@ -2670,6 +2694,9 @@ msgid "When enabled, the project owner can set the project's payment terminals."
 msgstr ""
 
 msgid "When enabled, your project cannot receive direct payments."
+msgstr ""
+
+msgid "When someone pays this payer contract, project tokens will always be minted to this address, <0>not to the person who paid.</0>"
 msgstr ""
 
 msgid "When someone pays your project, they'll receive your project's tokens in return. Tokens can be redeemed for a portion of your project's overflow funds; when you win, your community wins with you. Leverage your project's token to grant governance rights, community access, or other membership perks."
@@ -2873,9 +2900,6 @@ msgstr ""
 msgid "hours"
 msgstr ""
 
-msgid "juiceboxETH"
-msgstr ""
-
 msgid "last {trendingWindowDays} days"
 msgstr ""
 
@@ -2927,10 +2951,13 @@ msgstr ""
 msgid "veNFT Tiers ({0} variants)"
 msgstr ""
 
-msgid "{0, plural, one {# deployed payment address} other {# deployed payment addresses}}"
+msgid "{0, plural, one {# payment address} other {# payment addresses}}"
 msgstr ""
 
-msgid "{0, plural, one {# payment address} other {# payment addresses}}"
+msgid "{0, plural, one {View # deployed payment address} other {View # deployed payment addresses}}"
+msgstr ""
+
+msgid "{0} - Project payer contracts"
 msgstr ""
 
 msgid "{0} after JBX fee"
@@ -3009,9 +3036,6 @@ msgid "{inflationRate} tokens / ETH"
 msgstr ""
 
 msgid "{issuanceRate} tokens / ETH"
-msgstr ""
-
-msgid "{label}"
 msgstr ""
 
 msgid "{lockDurationOptionInDays} {lockDurationOptionInDays, plural, one {{0}} other {{1}}}"

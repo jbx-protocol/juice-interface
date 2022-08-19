@@ -4,25 +4,17 @@ import {
   PinataPinResponse,
 } from '@pinata/sdk'
 
-import { IpfsCacheJsonData } from 'models/ipfs-cache/cache-data'
-import { IpfsCacheName } from 'models/ipfs-cache/cache-name'
 import { consolidateMetadata, ProjectMetadataV4 } from 'models/project-metadata'
 import { IPFSNftRewardTier, NftRewardTier } from 'models/v2/nftRewardTier'
+import { base58 } from 'ethers/lib/utils'
 
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 
-import { readNetwork } from 'constants/networks'
 import { IPFS_GATEWAY_HOSTNAME, DEFAULT_PINATA_GATEWAY } from 'constants/ipfs'
 
+// NOTE: `cid` and `IPFS hash` are synonymous
+
 export const IPFS_TAGS = {
-  [IpfsCacheName.trending]:
-    (process.env.NODE_ENV === 'production'
-      ? 'trending_projects_'
-      : 'DEV_trending_projects_') + readNetwork.name,
-  [IpfsCacheName.trendingV2]:
-    (process.env.NODE_ENV === 'production'
-      ? 'trending_projects_v2_'
-      : 'DEV_trending_projects_v2_') + readNetwork.name,
   METADATA:
     process.env.NODE_ENV === 'production'
       ? 'juicebox_project_metadata'
@@ -75,9 +67,13 @@ export const ipfsGetWithFallback = async (hash: string) => {
     return response
   } catch (error) {
     try {
+      console.info(`ipfs::falling back to public gateway for ${hash}`)
       const response = await axios.get(ipfsCidUrl(hash, { useFallback: true }))
       return response
-    } catch (error) {
+    } catch (fallbackError) {
+      if (fallbackError instanceof AxiosError) {
+        console.error(fallbackError.response?.statusText)
+      }
       return { data: null }
     }
   }
@@ -129,23 +125,6 @@ export const uploadProjectMetadata = async (
   })
 
   return res.data as PinataPinResponse
-}
-
-export const uploadIpfsJsonCache = async <T extends IpfsCacheName>(
-  tag: T,
-  data: IpfsCacheJsonData[T],
-) => {
-  return await axios.post('/api/ipfs/pin', {
-    data,
-    options: {
-      pinataMetadata: {
-        keyvalues: {
-          tag: IPFS_TAGS[tag],
-        } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
-        name: IPFS_TAGS[tag] + '.json',
-      },
-    },
-  })
 }
 
 export const getPinnedListByTag = async (tag: keyof typeof IPFS_TAGS) => {
@@ -203,4 +182,19 @@ export function formatIpfsLink(ipfsLink: string) {
   const ipfsLinkParts = ipfsLink.split('/')
   const cid = ipfsLinkParts[ipfsLinkParts.length - 1]
   return `https://${DEFAULT_PINATA_GATEWAY}/ipfs/${cid}`
+}
+
+// How IPFS URI's are stored in the contracts to save storage (/gas)
+export function encodeIPFSUri(cid: string) {
+  return '0x' + Buffer.from(base58.decode(cid).slice(2)).toString('hex')
+}
+
+export function decodeEncodedIPFSUri(hex: string) {
+  // Add default ipfs values for first 2 bytes:
+  // - function:0x12=sha2, size:0x20=256 bits
+  // - also cut off leading "0x"
+  const hashHex = '1220' + hex.slice(2)
+  const hashBytes = Buffer.from(hashHex, 'hex')
+  const hashStr = base58.encode(hashBytes)
+  return hashStr
 }

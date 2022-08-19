@@ -157,7 +157,7 @@ export default function DistributionSplitModal({
       )
     if (isEditingProjectSplit) {
       setEditingSplitType('project')
-      setProjectId(editingSplit.projectId?.toString())
+      setProjectId(parseInt(editingSplit.projectId ?? '').toString())
     }
     setLockedUntil(
       editingSplit.lockedUntil

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { Space } from 'antd'
 
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -8,7 +8,6 @@ import { t } from '@lingui/macro'
 import VeNftHeaderSection from 'components/veNft/VeNftHeaderSection'
 import VeNftStakingForm from 'components/veNft/VeNftStakingForm'
 import VeNftOwnedTokensSection from 'components/veNft/VeNftOwnedTokensSection'
-import VeNftSummaryStatsSection from 'components/veNft/VeNftSummaryStatsSection'
 import { VeNftContext } from 'contexts/v2/veNftContext'
 
 const VeNftContent = () => {
@@ -29,10 +28,6 @@ const VeNftContent = () => {
       />
       <VeNftStakingForm tokenSymbolDisplayText={tokenSymbolDisplayText} />
       <VeNftOwnedTokensSection
-        userTokens={userTokens}
-        tokenSymbolDisplayText={tokenSymbolDisplayText}
-      />
-      <VeNftSummaryStatsSection
         userTokens={userTokens}
         tokenSymbolDisplayText={tokenSymbolDisplayText}
       />

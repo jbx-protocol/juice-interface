@@ -1,10 +1,10 @@
 import { t, Trans } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
-import React, { ReactNode } from 'react'
+import { ReactNode, FC } from 'react'
 import Link from 'next/link'
 import { helpPagePath } from 'utils/helpPageHelper'
 
-export const OverflowVideoLink: React.FC = ({ children }) => (
+export const OverflowVideoLink: FC = ({ children }) => (
   <ExternalLink href="https://youtu.be/9Mq5oDh0aBY">{children}</ExternalLink>
 )
 

@@ -149,7 +149,7 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
         const nftRewardsArg: TxNftArg = {}
 
         CIDs.map((cid, index) => {
-          nftRewardsArg[cid] = rewardTiers[index].contributionFloor
+          nftRewardsArg[cid] = rewardTiers[index]
         })
 
         txSuccessful = await launchProjectWithNftsTx(

@@ -4,6 +4,7 @@ import { NetworkContext } from 'contexts/networkContext'
 import { useContext } from 'react'
 
 interface StakingFormActionButtonProps {
+  useJbToken: boolean
   hasAdequateApproval: boolean
   tokenApprovalLoading: boolean
   onApproveButtonClick: () => void
@@ -11,6 +12,7 @@ interface StakingFormActionButtonProps {
 }
 
 const StakingFormActionButton = ({
+  useJbToken,
   hasAdequateApproval,
   tokenApprovalLoading,
   onApproveButtonClick,
@@ -26,7 +28,7 @@ const StakingFormActionButton = ({
         </Button>
       )
     }
-    if (!hasAdequateApproval) {
+    if (useJbToken && !hasAdequateApproval) {
       return (
         <Button
           block

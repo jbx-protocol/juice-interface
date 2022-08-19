@@ -2,11 +2,18 @@ import { Contract, ContractInterface } from '@ethersproject/contracts'
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { NetworkName } from 'models/network-name'
 import { V2ContractName } from 'models/v2/contracts'
+import {
+  getLatestNftDelegateStoreContractAddress,
+  getLatestNftProjectDeployerContractAddress,
+} from 'utils/v2/nftRewards'
 
 import { mainnetPublicResolver } from 'constants/contracts/mainnet/PublicResolver'
 import { rinkebyPublicResolver } from 'constants/contracts/rinkeby/PublicResolver'
-import { TEMPORARY_NFT_DEPLOYER_ABI } from 'constants/contracts/rinkeby/TEMPORY_NFT_DEPLOYER_ABI'
 import { NETWORKS_BY_NAME } from 'constants/networks'
+import {
+  VENFT_DEPLOYER_ADDRESS,
+  VENFT_RESOLVER_ADDRESS,
+} from 'constants/veNft/veNftProject'
 
 export const loadContract = async (
   contractName: V2ContractName,
@@ -23,10 +30,15 @@ export const loadContract = async (
   } else if (contractName === V2ContractName.JBV1TokenPaymentTerminal) {
     contractJson = await loadJBV1TokenPaymentTerminalContract(network)
   } else if (
-    contractName ===
-    V2ContractName.JBTieredLimitedNFTRewardDataSourceProjectDeployer
+    contractName === V2ContractName.JBTiered721DelegateProjectDeployer
   ) {
-    contractJson = await loadJBNftRewardsDeployerContract()
+    contractJson = await loadJBTiered721DelegateProjectDeployerContract()
+  } else if (contractName === V2ContractName.JBTiered721DelegateStore) {
+    contractJson = await loadJBTiered721DelegateStoreContract()
+  } else if (contractName === V2ContractName.JBVeNftDeployer) {
+    contractJson = await loadVeNftDeployer()
+  } else if (contractName === V2ContractName.JBVeTokenUriResolver) {
+    contractJson = await loadVeTokenUriResolver()
   } else {
     contractJson = await loadJuiceboxV2Contract(contractName, network)
   }
@@ -116,11 +128,85 @@ const loadJBV1TokenPaymentTerminalContract = async (network: NetworkName) => {
   return contractJson
 }
 
-const loadJBNftRewardsDeployerContract = async () => {
-  const temporaryNftDeployerContractJson = {
-    address: '0x1Db110f9FD09820c60CaFA89CB736910306bbec9',
-    abi: TEMPORARY_NFT_DEPLOYER_ABI,
+const loadJBTiered721DelegateProjectDeployerContract = async () => {
+  const JBTiered721DelegateProjectDeployerContractAddress =
+    await getLatestNftProjectDeployerContractAddress()
+
+  const nftDeployerContractJson = {
+    address: JBTiered721DelegateProjectDeployerContractAddress,
+    abi: (
+      await import(
+        `@jbx-protocol/juice-nft-rewards/out/IJBTiered721DelegateProjectDeployer.sol/IJBTiered721DelegateProjectDeployer.json`
+      )
+    ).abi,
   }
 
-  return temporaryNftDeployerContractJson
+  return nftDeployerContractJson
+}
+
+const loadJBTiered721DelegateStoreContract = async () => {
+  const JBTiered721DelegateStoreContractAddress =
+    await getLatestNftDelegateStoreContractAddress()
+
+  const nftDeployerContractJson = {
+    address: JBTiered721DelegateStoreContractAddress,
+    abi: (
+      await import(
+        `@jbx-protocol/juice-nft-rewards/out/IJBTiered721DelegateStore.sol/IJBTiered721DelegateStore.json`
+      )
+    ).abi,
+  }
+
+  return nftDeployerContractJson
+}
+
+const loadVeNftDeployer = async () => {
+  const contractJson = {
+    abi: (
+      await import(
+        `@jbx-protocol/ve-nft/out/JBVeNftDeployer.sol/JBVeNftDeployer.json`
+      )
+    ).abi,
+    address: VENFT_DEPLOYER_ADDRESS,
+    // TODO: replace when broadcast is updated
+    // address: (
+    //   (await import(
+    //     `@jbx-protocol/ve-nft/broadcast/deploy.sol/${NETWORKS_BY_NAME[network].chainId}/run-latest.json`
+    //   )) as ForgeDeploy
+    // ).receipts[0].contractAddress,
+  }
+
+  return contractJson
+}
+
+const loadVeTokenUriResolver = async () => {
+  const contractJson = {
+    abi: (
+      await import(
+        `@jbx-protocol/ve-nft/out/JBVeTokenUriResolver.sol/JBVeTokenUriResolver.json`
+      )
+    ).abi,
+    address: VENFT_RESOLVER_ADDRESS,
+    // TODO: replace when broadcast is updated
+    // address: (
+    //   (await import(
+    //     `@jbx-protocol/ve-nft/broadcast/deploy.sol/${NETWORKS_BY_NAME[network].chainId}/run-latest.json`
+    //   )) as ForgeDeploy
+    // ).receipts[1].contractAddress,
+  }
+
+  return contractJson
+}
+
+export const loadVeNftContract = async (
+  signerOrProvider: JsonRpcSigner | JsonRpcProvider,
+  address: string,
+) => {
+  const contractJson = {
+    abi: (await import(`@jbx-protocol/ve-nft/out/JBVeNft.sol/JBVeNft.json`))
+      .abi,
+    address,
+  }
+
+  return new Contract(contractJson.address, contractJson.abi, signerOrProvider)
 }

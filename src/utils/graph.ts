@@ -53,6 +53,11 @@ import {
   UseAllowanceEventJson,
 } from 'models/subgraph-entities/v2/use-allowance-event'
 import {
+  VeNftContract,
+  VeNftContractJson,
+  parseVeNftContractJson,
+} from 'models/subgraph-entities/v2/venft-contract'
+import {
   VeNftToken,
   VeNftTokenJson,
   parseVeNftTokenJson,
@@ -132,6 +137,7 @@ export interface SubgraphEntities {
   etherc20ProjectPayer: ETHERC20ProjectPayer
   deployETHERC20ProjectPayerEvent: DeployETHERC20ProjectPayerEvent
   veNftToken: VeNftToken
+  veNftContract: VeNftContract
 }
 
 export interface SubgraphQueryReturnTypes {
@@ -173,6 +179,7 @@ export interface SubgraphQueryReturnTypes {
     deployETHERC20ProjectPayerEvents: DeployETHERC20ProjectPayerEventJson[]
   }
   veNftToken: { veNftTokens: VeNftTokenJson[] }
+  veNftContract: { veNftContracts: VeNftContractJson[] }
 }
 
 export type EntityKey = keyof SubgraphEntities
@@ -293,7 +300,7 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
 
   const overrideEntity: string = opts.entity
 
-  return `{ ${overrideEntity}${isPluralQuery(opts.entity) ? 's' : ''}${
+  const res = `{ ${overrideEntity}${isPluralQuery(opts.entity) ? 's' : ''}${
     args ? `(${args})` : ''
   } {${opts.keys.reduce(
     (acc, key) =>
@@ -304,6 +311,7 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
         : acc + ` ${key.entity} { ${key.keys.join(' ')} }`,
     '',
   )} } }`
+  return res
 }
 
 const subgraphUrl = process.env.NEXT_PUBLIC_SUBGRAPH_URL
@@ -477,6 +485,11 @@ export function formatGraphResponse<E extends EntityKey>(
         return response.veNftTokens.map(parseVeNftTokenJson)
       }
       break
+    case 'veNftContract':
+      if ('veNftContracts' in response) {
+        // @ts-ignore
+        return response.veNftContracts.map(parseVeNftContractJson)
+      }
   }
 
   return []

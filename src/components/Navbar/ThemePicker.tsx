@@ -2,7 +2,7 @@ import Moon from 'components/icons/Moon'
 import Sun from 'components/icons/Sun'
 
 import { ThemeContext } from 'contexts/themeContext'
-import React, { CSSProperties, useContext } from 'react'
+import { CSSProperties, useContext } from 'react'
 
 import { ThemeOption } from 'constants/theme/theme-option'
 

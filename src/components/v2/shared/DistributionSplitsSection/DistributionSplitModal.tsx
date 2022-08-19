@@ -56,7 +56,7 @@ type DistributionType = 'amount' | 'percent' | 'both'
 export default function DistributionSplitModal({
   visible,
   mode,
-  overrideDistTypeWithPercentage = false,
+  overrideDistTypeWithBoth = false,
   splits, // Locked and editable splits
   editingSplit, // Split that is currently being edited (only in the case mode ==='Edit')
   onSplitsChanged,
@@ -68,7 +68,7 @@ export default function DistributionSplitModal({
 }: {
   visible: boolean
   mode: ModalMode // 'Add' or 'Edit' or 'Undefined'
-  overrideDistTypeWithPercentage?: boolean
+  overrideDistTypeWithBoth?: boolean
   splits: Split[]
   editingSplit?: Split
   onSplitsChanged?: (splits: Split[]) => void
@@ -98,9 +98,8 @@ export default function DistributionSplitModal({
   )
 
   const [editingSplitType, setEditingSplitType] = useState<SplitType>('address')
-  const [distributionType, setDistributionType] = useState<DistributionType>(
-    distributionLimitIsInfinite ? 'percent' : 'both',
-  )
+  const [distributionType, setDistributionType] =
+    useState<DistributionType>('both')
   const [projectId, setProjectId] = useState<string | undefined>()
   const [newDistributionLimit, setNewDistributionLimit] = useState<string>()
   const [amount, setAmount] = useState<number | undefined>()
@@ -120,6 +119,24 @@ export default function DistributionSplitModal({
     }),
   )
 
+  useEffect(() => {
+    if (overrideDistTypeWithBoth) {
+      setDistributionType('both')
+    } else if (mode === 'Edit') {
+      if (distributionLimitIsInfinite) {
+        setDistributionType('percent')
+      } else {
+        setDistributionType('both')
+      }
+    } else if (mode === 'Add') {
+      if (distributionLimitIsInfinite) {
+        setDistributionType('percent')
+      } else {
+        setDistributionType('amount')
+      }
+    }
+  }, [mode, distributionLimitIsInfinite, visible, overrideDistTypeWithBoth])
+
   // Set address project id to undefined if editing type is address
   useEffect(() => {
     if (editingSplitType === 'address') {
@@ -127,14 +144,6 @@ export default function DistributionSplitModal({
       setProjectId(undefined)
     }
   }, [editingSplitType, form])
-
-  useEffect(() => {
-    if (overrideDistTypeWithPercentage) {
-      setDistributionType('percent')
-      return
-    }
-    setDistributionType(distributionLimitIsInfinite ? 'percent' : 'both')
-  }, [distributionLimitIsInfinite, overrideDistTypeWithPercentage, visible])
 
   // Set the initial info for form from split
   // If editing, format the lockedUntil and projectId
@@ -252,12 +261,25 @@ export default function DistributionSplitModal({
 
     const newPercent = getDistributionPercentFromAmount({
       amount: newAmount,
-      distributionLimit: parseFloat(distributionLimit ?? ''),
+      distributionLimit:
+        mode === 'Add'
+          ? newDistributionLimit
+          : parseFloat(distributionLimit ?? ''),
     })
 
     setNewDistributionLimit(newDistributionLimit.toString())
-
+    setAmount(newAmount)
     form.setFieldsValue({ percent: preciseFormatSplitPercent(newPercent) })
+  }
+
+  const onPercentChange = (newPercent: number) => {
+    const newAmount = amountFromPercent({
+      percent: newPercent,
+      amount: distributionLimit ?? '0',
+    })
+
+    setAmount(newAmount)
+    form.setFieldsValue({ percent: newPercent })
   }
 
   // Validates new payout receiving address
@@ -410,7 +432,7 @@ export default function DistributionSplitModal({
         ) : null}
 
         {/* Only show amount input if project distribution limit is not infinite */}
-        {distributionLimit && distributionType === 'both' ? (
+        {distributionType === 'amount' || distributionType === 'both' ? (
           <Form.Item
             className="ant-form-item-extra-only"
             label={t`Distribution`}
@@ -482,41 +504,34 @@ export default function DistributionSplitModal({
             </div>
           </Form.Item>
         ) : null}
-        <Form.Item>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            <span style={{ flex: 1 }}>
-              <NumberSlider
-                onChange={(percentage: number | undefined) => {
-                  if (!percentage) return
+        {distributionType === 'percent' || distributionType === 'both' ? (
+          <Form.Item>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <span style={{ flex: 1 }}>
+                <NumberSlider
+                  onChange={(percentage: number | undefined) => {
+                    if (!percentage) return
+                    onPercentChange(percentage)
+                  }}
+                  step={0.01}
+                  defaultValue={0}
+                  sliderValue={form.getFieldValue('percent')}
+                  suffix="%"
+                  name="percent"
+                  formItemProps={{
+                    rules: [{ validator: validatePayoutPercentage }],
+                  }}
+                />
+              </span>
+            </div>
+          </Form.Item>
+        ) : null}
 
-                  // Only trigger amount logic if distribution limit exists since Percentage input is available in both cases
-                  if (distributionLimit) {
-                    const newAmount = amountFromPercent({
-                      percent: percentage,
-                      amount: distributionLimit || '',
-                    })
-                    setAmount(newAmount)
-                  }
-
-                  form.setFieldsValue({ percent: percentage })
-                }}
-                step={0.01}
-                defaultValue={0}
-                sliderValue={form.getFieldValue('percent')}
-                suffix="%"
-                name="percent"
-                formItemProps={{
-                  rules: [{ validator: validatePayoutPercentage }],
-                }}
-              />
-            </span>
-          </div>
-        </Form.Item>
         <Form.Item
           name="lockedUntil"
           label={t`Lock until`}

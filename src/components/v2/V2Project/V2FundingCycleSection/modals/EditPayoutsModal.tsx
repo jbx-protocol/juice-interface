@@ -341,6 +341,7 @@ export const EditPayoutsModal = ({
             ? undefined
             : formatWad(distributionLimit, { thousandsSeparator: '' })
         }
+        overrideDistTypeWithBoth={true}
         mode={'Add'}
         splits={editingSplits}
         currencyName={currencyName}

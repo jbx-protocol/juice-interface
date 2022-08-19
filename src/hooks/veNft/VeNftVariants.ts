@@ -44,7 +44,7 @@ export function useVeNftVariants() {
       return variants
     },
     {
-      enabled: featureFlagEnabled(FEATURE_FLAGS.VENFT),
+      enabled: !!hash && featureFlagEnabled(FEATURE_FLAGS.VENFT),
       staleTime: 60000,
     },
   )

@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 
 import EtherscanLink from 'components/EtherscanLink'
 import CopyTextButton from 'components/CopyTextButton'
+import { truncateEthAddress } from 'utils/formatAddress'
 
 import { readProvider } from 'constants/readProvider'
 import { SECONDS_IN_DAY } from 'constants/numbers'
@@ -96,20 +97,8 @@ export default function FormattedAddress({
 
   if (!address) return null
 
-  const effectiveTruncateTo = truncateTo ?? 6
-  const frontTruncate = effectiveTruncateTo + 2 // account for 0x
-
   const formatted =
-    ensName ??
-    label ??
-    (address
-      ? address.substring(0, frontTruncate) +
-        '...' +
-        address.substr(
-          address.length - effectiveTruncateTo,
-          effectiveTruncateTo,
-        )
-      : '')
+    ensName ?? label ?? truncateEthAddress({ address, truncateTo })
 
   if (tooltipDisabled) {
     return (

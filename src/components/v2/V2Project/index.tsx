@@ -75,50 +75,61 @@ export default function V2Project({
     isArchived,
     projectOwnerAddress,
     handle,
+    loading,
   } = useContext(V2ProjectContext)
   const {
     currencies: { ETH },
   } = useContext(CurrencyContext)
 
-  const isMobile = useMobile()
-
-  const canReconfigureFundingCycles = useV2ConnectedWalletHasPermission(
-    V2OperatorPermission.RECONFIGURE,
-  )
-
-  const [handleModalVisible, setHandleModalVisible] = useState<boolean>()
-  const [payAmount, setPayAmount] = useState<string>('0')
-  const [payInCurrency, setPayInCurrency] = useState<CurrencyOption>(ETH)
-
-  const { data: queuedFundingCycleResponse } = useProjectQueuedFundingCycle({
-    projectId,
-  })
-
-  const [queuedFundingCycle] = queuedFundingCycleResponse || []
-
-  const editV2ProjectDetailsTx = useEditV2ProjectDetailsTx()
-
   // Checks URL to see if user was just directed from project deploy
   const router = useRouter()
   const isNewDeploy = Boolean(router.query.newDeploy)
-
-  const converter = useCurrencyConverter()
-
-  const hasEditPermission = useV2ConnectedWalletHasPermission(
-    V2OperatorPermission.RECONFIGURE,
-  )
-
-  const isOwner = useIsUserAddress(projectOwnerAddress)
 
   const [newDeployModalVisible, setNewDeployModalVisible] =
     useState<boolean>(isNewDeploy)
   const [balancesModalVisible, setBalancesModalVisible] =
     useState<boolean>(false)
+  const [handleModalVisible, setHandleModalVisible] = useState<boolean>()
+  const [payAmount, setPayAmount] = useState<string>('0')
+  const [payInCurrency, setPayInCurrency] = useState<CurrencyOption>(ETH)
+
+  const isMobile = useMobile()
+  const canReconfigureFundingCycles = useV2ConnectedWalletHasPermission(
+    V2OperatorPermission.RECONFIGURE,
+  )
+  const {
+    data: queuedFundingCycleResponse,
+    loading: queuedFundingCycleLoading,
+  } = useProjectQueuedFundingCycle({
+    projectId,
+  })
+  const [queuedFundingCycle] = queuedFundingCycleResponse || []
+
+  const converter = useCurrencyConverter()
+  const editV2ProjectDetailsTx = useEditV2ProjectDetailsTx()
+  const hasEditPermission = useV2ConnectedWalletHasPermission(
+    V2OperatorPermission.RECONFIGURE,
+  )
+  const isOwner = useIsUserAddress(projectOwnerAddress)
 
   const colSizeMd = singleColumnLayout ? 24 : 12
+
+  const allFundingCyclesLoading =
+    loading.fundingCycleLoading || queuedFundingCycleLoading
   const hasCurrentFundingCycle = fundingCycle?.number.gt(0)
   const hasQueuedFundingCycle = queuedFundingCycle?.number.gt(0)
+  const showRelaunchFundingCycleBanner =
+    !allFundingCyclesLoading &&
+    !hasCurrentFundingCycle &&
+    !hasQueuedFundingCycle &&
+    canReconfigureFundingCycles
+
   const showAddHandle = isOwner && !isPreviewMode && !handle
+
+  const nftRewardsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
+
+  const payAmountETH =
+    payInCurrency === ETH ? payAmount : fromWad(converter.usdToWei(payAmount))
 
   if (projectId === undefined) return null
 
@@ -139,18 +150,9 @@ export default function V2Project({
     return !hasCurrentFundingCycle
   }
 
-  const nftRewardsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
-
-  const payAmountETH =
-    payInCurrency === ETH ? payAmount : fromWad(converter.usdToWei(payAmount))
-
   return (
     <Space direction="vertical" size={GUTTER_PX} style={{ width: '100%' }}>
-      {!hasCurrentFundingCycle &&
-      !hasQueuedFundingCycle &&
-      canReconfigureFundingCycles ? (
-        <RelaunchFundingCycleBanner />
-      ) : null}
+      {showRelaunchFundingCycleBanner && <RelaunchFundingCycleBanner />}
 
       <ProjectHeader
         metadata={projectMetadata}

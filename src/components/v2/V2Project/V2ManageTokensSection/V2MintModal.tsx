@@ -52,7 +52,7 @@ export default function V2MintModal({
       {
         onDone: () => {
           setLoading(false)
-          setTransactionPending(true)
+          setTransactionPending(false)
         },
         onConfirmed: () => {
           form.resetFields()

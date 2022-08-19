@@ -38,62 +38,60 @@ const SmallProjectCardMobile = ({
           : `/p/${project?.handle}`
       }
     >
-      <a>
+      <a
+        className="clickable-border"
+        style={{
+          cursor: 'pointer',
+          overflow: 'hidden',
+          width: '100%',
+          padding: '0.5rem 1rem',
+          textAlign: 'center',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 10,
+        }}
+      >
         <div
-          className="clickable-border"
           style={{
-            cursor: 'pointer',
-            overflow: 'hidden',
-            width: '100%',
-            padding: '0.5rem 1rem',
-            textAlign: 'center',
             display: 'flex',
-            alignItems: 'center',
-            gap: 10,
+            justifyContent: 'center',
           }}
         >
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
-            <ProjectLogo
-              uri={metadata?.logoUri}
-              name={metadata?.name}
-              size={60}
-            />
-          </div>
+          <ProjectLogo
+            uri={metadata?.logoUri}
+            name={metadata?.name}
+            size={60}
+          />
+        </div>
 
-          <div
-            style={{
-              fontWeight: 400,
-              width: '100%',
-            }}
-          >
-            {metadata ? (
-              <span
-                style={{
-                  color: colors.text.primary,
-                  margin: 0,
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                }}
-              >
-                {metadata.name}
-              </span>
-            ) : (
-              <Skeleton paragraph={false} title={{ width: 120 }} active />
-            )}
-
-            <div
+        <div
+          style={{
+            fontWeight: 400,
+            width: '100%',
+          }}
+        >
+          {metadata ? (
+            <span
               style={{
                 color: colors.text.primary,
-                fontWeight: 500,
+                margin: 0,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
               }}
             >
-              <ETHAmount amount={project?.totalPaid} precision={0} /> raised
-            </div>
+              {metadata.name}
+            </span>
+          ) : (
+            <Skeleton paragraph={false} title={{ width: 120 }} active />
+          )}
+
+          <div
+            style={{
+              color: colors.text.primary,
+              fontWeight: 500,
+            }}
+          >
+            <ETHAmount amount={project?.totalPaid} precision={0} /> raised
           </div>
         </div>
       </a>
@@ -118,6 +116,7 @@ const SmallProjectCard = ({ project }: { project: ProjectCardProject }) => {
     >
       <a>
         <div
+          className="clickable-border"
           style={{
             cursor: 'pointer',
             overflow: 'hidden',
@@ -125,7 +124,6 @@ const SmallProjectCard = ({ project }: { project: ProjectCardProject }) => {
             padding: '1rem',
             textAlign: 'center',
           }}
-          className="clickable-border"
         >
           <div
             style={{

@@ -10,6 +10,7 @@ import { useContext } from 'react'
 import * as constants from '@ethersproject/constants'
 import CopyTextButton from 'components/CopyTextButton'
 import EtherscanLink from 'components/EtherscanLink'
+import useMobile from 'hooks/Mobile'
 
 export default function ProjectPayersModal({
   visible,
@@ -32,6 +33,8 @@ export default function ProjectPayersModal({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+
+  const isMobile = useMobile()
 
   const { projectMetadata } = useContext(V2ProjectContext)
 
@@ -69,7 +72,12 @@ export default function ProjectPayersModal({
                   }}
                 >
                   <span style={{ textDecoration: 'underline' }}>
-                    <EtherscanLink value={p.address} type={'address'} />
+                    <EtherscanLink
+                      value={p.address}
+                      type={'address'}
+                      truncated={isMobile ? true : false}
+                      truncateTo={isMobile ? 8 : undefined}
+                    />
                   </span>
                   <CopyTextButton value={p.address} />
                 </div>
@@ -101,7 +109,12 @@ export default function ProjectPayersModal({
                           <strong>not to the person who paid.</strong>
                         </Trans>
                       }
-                      label={<FormattedAddress address={p.beneficiary} />}
+                      label={
+                        <FormattedAddress
+                          address={p.beneficiary}
+                          truncateTo={3}
+                        />
+                      }
                     />
                   ) : (
                     <TooltipLabel
@@ -138,7 +151,12 @@ export default function ProjectPayersModal({
                       />
                       :
                     </span>
-                    <div style={{ maxWidth: '385px', textAlign: 'right' }}>
+                    <div
+                      style={{
+                        maxWidth: isMobile ? '75%' : '385px',
+                        textAlign: 'right',
+                      }}
+                    >
                       "{p.memo}"
                     </div>
                   </div>

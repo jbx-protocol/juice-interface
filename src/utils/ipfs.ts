@@ -8,7 +8,7 @@ import { consolidateMetadata, ProjectMetadataV4 } from 'models/project-metadata'
 import { IPFSNftRewardTier, NftRewardTier } from 'models/v2/nftRewardTier'
 import { base58 } from 'ethers/lib/utils'
 
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 
 import { IPFS_GATEWAY_HOSTNAME, DEFAULT_PINATA_GATEWAY } from 'constants/ipfs'
 
@@ -67,9 +67,13 @@ export const ipfsGetWithFallback = async (hash: string) => {
     return response
   } catch (error) {
     try {
+      console.info(`ipfs::falling back to public gateway for ${hash}`)
       const response = await axios.get(ipfsCidUrl(hash, { useFallback: true }))
       return response
-    } catch (error) {
+    } catch (fallbackError) {
+      if (fallbackError instanceof AxiosError) {
+        console.error(fallbackError.response?.statusText)
+      }
       return { data: null }
     }
   }

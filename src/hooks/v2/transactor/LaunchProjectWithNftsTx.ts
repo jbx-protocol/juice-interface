@@ -16,11 +16,11 @@ import { parseEther } from '@ethersproject/units'
 import { isValidMustStartAtOrAfter } from 'utils/v2/fundingCycle'
 import { BigNumber } from '@ethersproject/bignumber'
 import { encodeIPFSUri, ipfsCidUrl } from 'utils/ipfs'
+import { getLatestNftDelegateStoreContractAddress } from 'utils/v2/nftRewards'
 
 import { TransactorInstance } from '../../Transactor'
 import { JUICEBOX_MONEY_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
 import { MaxUint48 } from 'constants/numbers'
-import { JBTiered721DelegateStoreAddress } from 'constants/contracts/rinkeby/juiceNftRewards'
 
 const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
 const DEFAULT_MEMO = ''
@@ -28,7 +28,7 @@ const DEFAULT_MEMO = ''
 // Maps cid to contributionFloor
 export type TxNftArg = { [cid: string]: NftRewardTier }
 
-function getJBDeployTiered721DelegateData({
+async function getJBDeployTiered721DelegateData({
   collectionName,
   collectionSymbol,
   nftRewards,
@@ -41,6 +41,8 @@ function getJBDeployTiered721DelegateData({
   ownerAddress: string
   directory: string
 }) {
+  const JBTiered721DelegateStoreAddress =
+    await getLatestNftDelegateStoreContractAddress()
   const tiersArg = Object.keys(nftRewards).map(cid => {
     const contributionFloorWei = parseEther(
       nftRewards[cid].contributionFloor.toString(),
@@ -92,7 +94,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
   const { transactor, contracts } = useContext(V2UserContext)
   const { userAddress } = useContext(NetworkContext)
 
-  return (
+  return async (
     {
       collectionName,
       collectionSymbol,
@@ -117,15 +119,17 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
       return Promise.resolve(false)
     }
 
+    const delegateData = await getJBDeployTiered721DelegateData({
+      collectionName,
+      collectionSymbol,
+      nftRewards,
+      ownerAddress: userAddress,
+      directory: getAddress(contracts.JBDirectory.address),
+    })
+
     const args = [
       userAddress, // _owner
-      getJBDeployTiered721DelegateData({
-        collectionName,
-        collectionSymbol,
-        nftRewards,
-        ownerAddress: userAddress,
-        directory: getAddress(contracts.JBDirectory.address),
-      }), // _deployTieredNFTRewardDataSourceData
+      delegateData, // _deployTiered721DelegateData
       {
         projectMetadata: {
           domain: JUICEBOX_MONEY_METADATA_DOMAIN,

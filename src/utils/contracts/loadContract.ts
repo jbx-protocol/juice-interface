@@ -2,6 +2,10 @@ import { Contract, ContractInterface } from '@ethersproject/contracts'
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { NetworkName } from 'models/network-name'
 import { V2ContractName } from 'models/v2/contracts'
+import {
+  getLatestNftDelegateStoreContractAddress,
+  getLatestNftProjectDeployerContractAddress,
+} from 'utils/v2/nftRewards'
 
 import { mainnetPublicResolver } from 'constants/contracts/mainnet/PublicResolver'
 import { rinkebyPublicResolver } from 'constants/contracts/rinkeby/PublicResolver'
@@ -10,10 +14,6 @@ import {
   VENFT_DEPLOYER_ADDRESS,
   VENFT_RESOLVER_ADDRESS,
 } from 'constants/veNft/veNftProject'
-import {
-  JBTiered721DelegateProjectDeployerAddress,
-  JBTiered721DelegateStoreAddress,
-} from 'constants/contracts/rinkeby/juiceNftRewards'
 
 export const loadContract = async (
   contractName: V2ContractName,
@@ -129,8 +129,11 @@ const loadJBV1TokenPaymentTerminalContract = async (network: NetworkName) => {
 }
 
 const loadJBTiered721DelegateProjectDeployerContract = async () => {
-  const temporaryNftDeployerContractJson = {
-    address: JBTiered721DelegateProjectDeployerAddress,
+  const JBTiered721DelegateProjectDeployerContractAddress =
+    await getLatestNftProjectDeployerContractAddress()
+
+  const nftDeployerContractJson = {
+    address: JBTiered721DelegateProjectDeployerContractAddress,
     abi: (
       await import(
         `@jbx-protocol/juice-nft-rewards/out/IJBTiered721DelegateProjectDeployer.sol/IJBTiered721DelegateProjectDeployer.json`
@@ -138,12 +141,15 @@ const loadJBTiered721DelegateProjectDeployerContract = async () => {
     ).abi,
   }
 
-  return temporaryNftDeployerContractJson
+  return nftDeployerContractJson
 }
 
 const loadJBTiered721DelegateStoreContract = async () => {
-  const temporaryNftDeployerContractJson = {
-    address: JBTiered721DelegateStoreAddress,
+  const JBTiered721DelegateStoreContractAddress =
+    await getLatestNftDelegateStoreContractAddress()
+
+  const nftDeployerContractJson = {
+    address: JBTiered721DelegateStoreContractAddress,
     abi: (
       await import(
         `@jbx-protocol/juice-nft-rewards/out/IJBTiered721DelegateStore.sol/IJBTiered721DelegateStore.json`
@@ -151,7 +157,7 @@ const loadJBTiered721DelegateStoreContract = async () => {
     ).abi,
   }
 
-  return temporaryNftDeployerContractJson
+  return nftDeployerContractJson
 }
 
 const loadVeNftDeployer = async () => {

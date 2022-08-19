@@ -1,5 +1,29 @@
+import { V2ContractName } from 'models/v2/contracts'
 import { ContractNftRewardTier, NftRewardTier } from 'models/v2/nftRewardTier'
 import { decodeEncodedIPFSUri } from 'utils/ipfs'
+
+// Following three functions get the latest deployments of the NFT contracts from the NPM package
+// TODO: will need to incorporate `networkName` into this first function when contracts deployed to mainnet
+export async function getLatestNftContractDeployments() {
+  const latestNftContractDeployments = await import(
+    '@jbx-protocol/juice-nft-rewards/broadcast/Deploy.s.sol/4/run-latest.json'
+  )
+  return latestNftContractDeployments
+}
+
+export async function getLatestNftProjectDeployerContractAddress() {
+  const latestNftContractDeployments = await getLatestNftContractDeployments()
+  return latestNftContractDeployments.default.transactions.filter(
+    tx => tx.contractName === V2ContractName.JBTiered721DelegateProjectDeployer,
+  )?.[0]?.contractAddress
+}
+
+export async function getLatestNftDelegateStoreContractAddress() {
+  const latestNftContractDeployments = await getLatestNftContractDeployments()
+  return latestNftContractDeployments.default.transactions.filter(
+    tx => tx.contractName === V2ContractName.JBTiered721DelegateStore,
+  )?.[0]?.contractAddress
+}
 
 // Returns the highest NFT reward tier that a payer is eligible given their pay amount
 export function getNftRewardTier({

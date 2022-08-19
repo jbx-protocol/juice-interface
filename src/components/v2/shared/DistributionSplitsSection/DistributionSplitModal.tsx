@@ -120,13 +120,7 @@ export default function DistributionSplitModal({
   )
 
   useEffect(() => {
-    if (overrideDistTypeWithBoth) {
-      if (distributionLimitIsInfinite) {
-        setDistributionType('percent')
-      } else {
-        setDistributionType('both')
-      }
-    } else if (mode === 'Edit') {
+    if (mode === 'Edit' || overrideDistTypeWithBoth) {
       if (distributionLimitIsInfinite) {
         setDistributionType('percent')
       } else {

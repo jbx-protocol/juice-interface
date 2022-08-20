@@ -50,7 +50,9 @@ export function onCatch(
       } in ${version} ${fnName}`,
     ),
   )
-
+  emitErrorNotification(
+    `Missing ${missingParam ?? 'parameter` not found'} in ${version} ${fnName}`,
+  )
   txOpts?.onDone?.()
   return Promise.resolve(false)
 }

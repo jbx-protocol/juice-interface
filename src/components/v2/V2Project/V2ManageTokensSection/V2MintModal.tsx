@@ -60,6 +60,10 @@ export default function V2MintModal({
           setTransactionPending(false)
           onConfirmed?.()
         },
+        onError: () => {
+          setLoading(false)
+          setTransactionPending(false)
+        },
       },
     )
   }

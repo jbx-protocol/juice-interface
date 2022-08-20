@@ -21,6 +21,7 @@ export function usePayETHPaymentTerminalTx(): PayV2ProjectTx {
   const { transactor, contracts } = useContext(V2UserContext)
   const { projectId } = useContext(V2ProjectContext)
 
+  // Do this next
   return ({ memo, preferClaimedTokens, beneficiary, value }, txOpts) => {
     if (
       !transactor ||

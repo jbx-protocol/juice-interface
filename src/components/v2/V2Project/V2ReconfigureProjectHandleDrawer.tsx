@@ -152,7 +152,9 @@ export function V2ReconfigureProjectHandleDrawer({
           <br />
           <br />
           <Button onClick={() => setEnsNameInputDisabled(false)} type="primary">
-            <Trans>Change ENS name</Trans>
+            <span>
+              <Trans>Change ENS name</Trans>
+            </span>
           </Button>
         </div>
       ) : (
@@ -174,7 +176,9 @@ export function V2ReconfigureProjectHandleDrawer({
             disabled={!ensNameIsValid}
             type="primary"
           >
-            <Trans>Set ENS name</Trans>
+            <span>
+              <Trans>Set ENS name</Trans>
+            </span>
           </Button>
         </Form>
       )}
@@ -207,8 +211,10 @@ export function V2ReconfigureProjectHandleDrawer({
       </p>
 
       {projectId && textRecordValue.data === projectId ? (
-        <Button type="primary" disabled>
-          <CheckCircleFilled /> <Trans>Text record is set</Trans>
+        <Button type="primary" disabled icon={<CheckCircleFilled />}>
+          <span>
+            <Trans>Text record is set</Trans>
+          </span>
         </Button>
       ) : (
         <Button
@@ -217,9 +223,11 @@ export function V2ReconfigureProjectHandleDrawer({
           disabled={!projectEnsName}
           onClick={setTextRecord}
         >
-          <Trans>
-            Set text record for {projectEnsName + '.eth' ?? 'ENS name'}
-          </Trans>
+          <span>
+            <Trans>
+              Set text record for {projectEnsName + '.eth' ?? 'ENS name'}
+            </Trans>
+          </span>
         </Button>
       )}
 

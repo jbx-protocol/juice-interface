@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-08-14 00:33\n"
+"PO-Revision-Date: 2022-08-21 00:30\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: Chinese Simplified\n"
@@ -117,12 +117,6 @@ msgstr "<0>像 Juicebox 这种需要逐步兑现早期财务承诺的机制，�
 
 msgid "<0>A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project.</0><1>Holding these tokens entitles a project to a portion of its own overflow.</1>"
 msgstr "<0>项目可以选择保留某个百分比的代币。这个百分比的代币会铸造给项目，而不是分发给付费的用户。</0><1>持有这些代币能让项目拥有一部分自己的溢出。</1>"
-
-msgid "<0>Add to balance:</0> payments to this contract will fund the project without minting project tokens."
-msgstr ""
-
-msgid "<0>Auto claim:</0> any minted tokens will automatically be claimed as ERC20 (if this project has issued an ERC20 token)."
-msgstr ""
 
 msgid "<0>Contribution floor:</0> {0} ETH"
 msgstr ""
@@ -433,9 +427,6 @@ msgstr "上传一张贴图"
 msgid "Attach the image to be associated with this NFT."
 msgstr ""
 
-msgid "Auto claim"
-msgstr ""
-
 msgid "Automate funding cycles"
 msgstr "自动化筹款周期"
 
@@ -468,9 +459,6 @@ msgstr "受益人"
 
 msgid "Beneficiary address"
 msgstr "受益人钱包地址"
-
-msgid "Beneficiary:"
-msgstr ""
 
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
 msgstr "依托于以太坊社区精心打造的基础设施和经济生态，Juicebox 才得以实现。"
@@ -769,6 +757,9 @@ msgstr "天"
 msgid "Days to lock tokens"
 msgstr ""
 
+msgid "Default"
+msgstr ""
+
 msgid "Delete NFT"
 msgstr ""
 
@@ -799,7 +790,7 @@ msgstr "部署项目至 {0}"
 msgid "Deployed ERC20 token"
 msgstr "已部署的 ERC20 标准代币"
 
-msgid "Deployed payment addresses can be found in the Tools drawer on the project page."
+msgid "Deployed payment addresses can be found in the Tools drawer (<0/>) on the project page."
 msgstr ""
 
 msgid "Deposit 1 wei to @{handle}"
@@ -965,12 +956,6 @@ msgid "ERC20 Deployed"
 msgstr "部署 ERC-20 标准代币"
 
 msgid "ETH-ERC20 Address Created"
-msgstr ""
-
-msgid "ETH-ERC20 Payment addresses"
-msgstr ""
-
-msgid "ETH-ERC20 Payment addresses are <0>smart contracts</0>that allow this project to be paid in <1>ETH</1> by sending ETH directly to the contract, or in <2>ERC20 tokens</2> via the contract's <3>pay()</3> function."
 msgstr ""
 
 msgid "Each payout will receive their percent of this total each funding cycle if there is enough in the treasury. Otherwise, they will receive their percent of whatever is in the treasury."
@@ -1219,9 +1204,6 @@ msgstr "如果你没有筹集够这个金额，你的收款人按各自的占比
 msgid "If you have Juicebox project on Juicebox V1 and V2, we recommend you migrate to V2 exclusively."
 msgstr ""
 
-msgid "If you have already deployed a payable address and have lost it, please contact the Juicebox team through <0>Discord.</0>"
-msgstr "如果你已经部署过可支付地址但把它弄丢了，请到<0>Discord</0>去联系 Juicebox 团队。"
-
 msgid "If you're interested in creating a project but still confused on how to get started, consider watching this <0>instructional video</0>. Also feel free to reach out in the <1>Juicebox Discord</1> where our team will be happy to help bring your project idea to life!"
 msgstr "如果你对创建一个项目感兴趣，却不知道该如何开始，可以考虑看看这个<0>教学视频</0>。也可以在 <1>Juicebox Discord</1> 中寻求帮助，我们的团队将很乐意帮助您实现您的项目想法！"
 
@@ -1450,11 +1432,14 @@ msgstr "铸造 {tokensLabel}"
 msgid "Mint {tokensTokenLower}"
 msgstr "铸造 {tokensTokenLower}"
 
+msgid "Mints tokens as ERC-20:"
+msgstr ""
+
+msgid "Mints tokens:"
+msgstr ""
+
 msgid "Minutes"
 msgstr "分钟"
-
-msgid "More information"
-msgstr ""
 
 msgid "More trending projects"
 msgstr ""
@@ -1482,6 +1467,9 @@ msgstr "名称"
 
 msgid "New"
 msgstr "新"
+
+msgid "New project tokens are automatically minted as ERC-20's. The gas to pay this contract will be higher than normal."
+msgstr ""
 
 msgid "Newly minted {tokenSymbolPlural} <0>received by contributors</0> per ETH they contribute to the treasury."
 msgstr "捐款人每向金库捐款 1 ETH<0>获得的</0> 新铸造 {tokenSymbolPlural} 。"
@@ -1645,9 +1633,6 @@ msgstr "向 <0>{0}</0> 支付并不是投资 —— 而是支持项目的一种�
 msgid "Paying this project is currently disabled."
 msgstr "当前项目已暂停接收付款。"
 
-msgid "Payment address contract:"
-msgstr ""
-
 msgid "Payment equivalent"
 msgstr ""
 
@@ -1790,6 +1775,9 @@ msgid "Project token"
 msgstr "项目代币"
 
 msgid "Project tokens <0>aren't ERC-20 tokens</0> by default. Once you deploy your project, you can issue an ERC-20 for your holders to claim. This is <1>optional</1>."
+msgstr ""
+
+msgid "Project tokens will be minted to whoever pays this payer contract."
 msgstr ""
 
 msgid "Project {0}"
@@ -2278,6 +2266,9 @@ msgstr "单个筹款周期内，可从项目分配出去的资金上限。无论
 msgid "The maximum supply of this NFT in circulation."
 msgstr ""
 
+msgid "The memo that appears on the project's Juicebox page activity feed when this payer contract is paid."
+msgstr ""
+
 msgid "The number of project tokens minted when 1 ETH is contributed in the first funding cycle."
 msgstr "第一个筹款周期捐款 1 ETH 铸造的项目代币数量。"
 
@@ -2497,6 +2488,9 @@ msgstr ""
 msgid "Tokens to redeem"
 msgstr ""
 
+msgid "Tokens will be minted as a result of paying this project."
+msgstr ""
+
 msgid "Tokens:"
 msgstr "代币："
 
@@ -2692,9 +2686,6 @@ msgstr "什么是折扣率？"
 msgid "What's going on under the hood?"
 msgstr "里面究竟有什么乾坤？"
 
-msgid "When a payment address is paid, its <0>beneficiary</0> address will receive any minted project tokens."
-msgstr ""
-
 msgid "When checked, payments to this address will mint this project's ERC-20 tokens to the beneficiary's wallet. Payments will cost more gas. When unchecked, Juicebox will track the beneficiary's new tokens when they pay. The beneficiary can claim their ERC-20 tokens at any time."
 msgstr "勾选此项，向这个地址付款会把 ERC-20 标准代币铸造到受益人钱包地址。付款的 gas 费用会增加。取消勾选，则付款后受益人的新代币将在 Juicebox 协议内托管。受益人可以随时来提取自己的 ERC-20 代币。"
 
@@ -2709,6 +2700,9 @@ msgstr ""
 
 msgid "When enabled, your project cannot receive direct payments."
 msgstr "启用此选项，你的项目将无法收到直接付款。"
+
+msgid "When someone pays this payer contract, project tokens will always be minted to this address, <0>not to the person who paid.</0>"
+msgstr ""
 
 msgid "When someone pays your project, they'll receive your project's tokens in return. Tokens can be redeemed for a portion of your project's overflow funds; when you win, your community wins with you. Leverage your project's token to grant governance rights, community access, or other membership perks."
 msgstr "当有人向你的项目付款时，他们会收到项目的代币作为回报。 代币可以兑换你项目的部分溢出资金；让你的社区和你共赢。 利用你的项目代币来授予治理权、社区访问权或其他成员福利。"
@@ -2962,10 +2956,13 @@ msgstr ""
 msgid "veNFT Tiers ({0} variants)"
 msgstr ""
 
-msgid "{0, plural, one {# deployed payment address} other {# deployed payment addresses}}"
+msgid "{0, plural, one {# payment address} other {# payment addresses}}"
 msgstr ""
 
-msgid "{0, plural, one {# payment address} other {# payment addresses}}"
+msgid "{0, plural, one {View # deployed payment address} other {View # deployed payment addresses}}"
+msgstr ""
+
+msgid "{0} - Project payer contracts"
 msgstr ""
 
 msgid "{0} after JBX fee"

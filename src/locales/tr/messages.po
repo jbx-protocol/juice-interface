@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-08-14 00:33\n"
+"PO-Revision-Date: 2022-08-21 00:30\n"
 "Last-Translator: \n"
 "Language: tr_TR\n"
 "Language-Team: Turkish\n"
@@ -117,12 +117,6 @@ msgstr "<0>Juicebox gibi, önceden verilen finansal taahhütlerin zaman içinde 
 
 msgid "<0>A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project.</0><1>Holding these tokens entitles a project to a portion of its own overflow.</1>"
 msgstr "<0>Bir proje, token'ların bir yüzdesini kendisi için rezerve etmeyi seçebilir. Bu token yüzdesi, ödeme yapan kullanıcılara dağıtılmak yerine proje için basılır.</0><1>Bu token'ları tutmak, projeye kendi taşma payının bir kısmını alma hakkı verir.</1>"
-
-msgid "<0>Add to balance:</0> payments to this contract will fund the project without minting project tokens."
-msgstr ""
-
-msgid "<0>Auto claim:</0> any minted tokens will automatically be claimed as ERC20 (if this project has issued an ERC20 token)."
-msgstr ""
 
 msgid "<0>Contribution floor:</0> {0} ETH"
 msgstr ""
@@ -433,9 +427,6 @@ msgstr ""
 msgid "Attach the image to be associated with this NFT."
 msgstr ""
 
-msgid "Auto claim"
-msgstr ""
-
 msgid "Automate funding cycles"
 msgstr "Finansman döngülerini otomatikleştir"
 
@@ -468,9 +459,6 @@ msgstr "Faydalanıcı"
 
 msgid "Beneficiary address"
 msgstr "Faydalanıcı adresi"
-
-msgid "Beneficiary:"
-msgstr ""
 
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
 msgstr "Juicebox'ı mümkün kılan altyapı ve ekonomiyi hazırladığı için Ethereum topluluğuna selamlar."
@@ -769,6 +757,9 @@ msgstr "Gün"
 msgid "Days to lock tokens"
 msgstr ""
 
+msgid "Default"
+msgstr ""
+
 msgid "Delete NFT"
 msgstr ""
 
@@ -799,7 +790,7 @@ msgstr "Projeyi {0} ağında başlat"
 msgid "Deployed ERC20 token"
 msgstr "Devreye alınan ERC20 token'ı"
 
-msgid "Deployed payment addresses can be found in the Tools drawer on the project page."
+msgid "Deployed payment addresses can be found in the Tools drawer (<0/>) on the project page."
 msgstr ""
 
 msgid "Deposit 1 wei to @{handle}"
@@ -965,12 +956,6 @@ msgid "ERC20 Deployed"
 msgstr ""
 
 msgid "ETH-ERC20 Address Created"
-msgstr ""
-
-msgid "ETH-ERC20 Payment addresses"
-msgstr ""
-
-msgid "ETH-ERC20 Payment addresses are <0>smart contracts</0>that allow this project to be paid in <1>ETH</1> by sending ETH directly to the contract, or in <2>ERC20 tokens</2> via the contract's <3>pay()</3> function."
 msgstr ""
 
 msgid "Each payout will receive their percent of this total each funding cycle if there is enough in the treasury. Otherwise, they will receive their percent of whatever is in the treasury."
@@ -1219,9 +1204,6 @@ msgstr "Bu miktarı toplayamazsanız pay sahipleriniz, toplayabildiğiniz miktar
 msgid "If you have Juicebox project on Juicebox V1 and V2, we recommend you migrate to V2 exclusively."
 msgstr ""
 
-msgid "If you have already deployed a payable address and have lost it, please contact the Juicebox team through <0>Discord.</0>"
-msgstr "Ödeme adresini devreye aldığınız halde bu adresi kaybettiyseniz lütfen <0>Discord</0> aracılığıyla Juicebox ekibiyle iletişime geçin."
-
 msgid "If you're interested in creating a project but still confused on how to get started, consider watching this <0>instructional video</0>. Also feel free to reach out in the <1>Juicebox Discord</1> where our team will be happy to help bring your project idea to life!"
 msgstr "Bir proje başlatmak istiyorsanız ama hala çekinceleriniz varsa <0>bu bilgilendirici video</0>'yu izlemelisiniz. Ayrıca bize <1>Juicebox Discord</1>'u üzerinden ulaşabilirsiniz, takım arkadaşlarımız proje fikrinizi hayata geçirirken size yardımcı olmaktan mutluluk duyacaktır!"
 
@@ -1450,11 +1432,14 @@ msgstr "{tokensLabel} token'larını bas"
 msgid "Mint {tokensTokenLower}"
 msgstr "{tokensTokenLower} token'larını bas"
 
+msgid "Mints tokens as ERC-20:"
+msgstr ""
+
+msgid "Mints tokens:"
+msgstr ""
+
 msgid "Minutes"
 msgstr "Dakika"
-
-msgid "More information"
-msgstr ""
 
 msgid "More trending projects"
 msgstr ""
@@ -1482,6 +1467,9 @@ msgstr "İsim"
 
 msgid "New"
 msgstr "Yeni"
+
+msgid "New project tokens are automatically minted as ERC-20's. The gas to pay this contract will be higher than normal."
+msgstr ""
 
 msgid "Newly minted {tokenSymbolPlural} <0>received by contributors</0> per ETH they contribute to the treasury."
 msgstr "Hazineye katkıda bulundukları ETH başına, <0>katkıda bulunanlar tarafından alınan</0> yeni basılan {tokenSymbolPlural} miktarı."
@@ -1645,9 +1633,6 @@ msgstr "<0>{0}</0> ödemek bir yatırım değil, projeyi desteklemenin bir yolud
 msgid "Paying this project is currently disabled."
 msgstr "Bu projeye ödeme şu anda devredışı."
 
-msgid "Payment address contract:"
-msgstr ""
-
 msgid "Payment equivalent"
 msgstr ""
 
@@ -1790,6 +1775,9 @@ msgid "Project token"
 msgstr "Proje token'ı"
 
 msgid "Project tokens <0>aren't ERC-20 tokens</0> by default. Once you deploy your project, you can issue an ERC-20 for your holders to claim. This is <1>optional</1>."
+msgstr ""
+
+msgid "Project tokens will be minted to whoever pays this payer contract."
 msgstr ""
 
 msgid "Project {0}"
@@ -2278,6 +2266,9 @@ msgstr "Bir finansman döngüsü içinde bu projeden dağıtılabilecek maksimum
 msgid "The maximum supply of this NFT in circulation."
 msgstr ""
 
+msgid "The memo that appears on the project's Juicebox page activity feed when this payer contract is paid."
+msgstr ""
+
 msgid "The number of project tokens minted when 1 ETH is contributed in the first funding cycle."
 msgstr "İlk finansman döngüsüne 1 ETH katkıda bulunulduğunda basılan proje token'larının sayısı."
 
@@ -2497,6 +2488,9 @@ msgstr ""
 msgid "Tokens to redeem"
 msgstr ""
 
+msgid "Tokens will be minted as a result of paying this project."
+msgstr ""
+
 msgid "Tokens:"
 msgstr "Token'lar:"
 
@@ -2692,9 +2686,6 @@ msgstr "İndirim oranı nedir?"
 msgid "What's going on under the hood?"
 msgstr "Kaputun altında neler oluyor?"
 
-msgid "When a payment address is paid, its <0>beneficiary</0> address will receive any minted project tokens."
-msgstr ""
-
 msgid "When checked, payments to this address will mint this project's ERC-20 tokens to the beneficiary's wallet. Payments will cost more gas. When unchecked, Juicebox will track the beneficiary's new tokens when they pay. The beneficiary can claim their ERC-20 tokens at any time."
 msgstr "İşaretlendiğinde, bu adrese yapılan ödemeler, bu projenin ERC-20 token'larını faydalanıcının cüzdanına basacaktır. Ödemeler daha fazla gas ücretine mal olacaktır. İşaret kaldırılırsa Juicebox, ödeme yaptığında faydalanıcının yeni token'larını takip edecektir. Faydalanıcı, ERC-20 token'larını istediği zaman talep edebilir."
 
@@ -2709,6 +2700,9 @@ msgstr ""
 
 msgid "When enabled, your project cannot receive direct payments."
 msgstr "Etkinleştirildiğinde, projeniz doğrudan ödeme alamaz."
+
+msgid "When someone pays this payer contract, project tokens will always be minted to this address, <0>not to the person who paid.</0>"
+msgstr ""
 
 msgid "When someone pays your project, they'll receive your project's tokens in return. Tokens can be redeemed for a portion of your project's overflow funds; when you win, your community wins with you. Leverage your project's token to grant governance rights, community access, or other membership perks."
 msgstr "Birisi projenize ödeme yaptığında, karşılığında projenizin token'larından alırlar. Token'lar projenizin taşmasından bir miktar talep etmek için kullanılabilir; siz kazandığınızda topluluğunuz da sizinle birlikte kazanır. Projenizin token'ınını yönetişimde oy hakkı, topluluk erişimi veya başka üyelik ayrıcalıkları vermek için kullanabilirsiniz."
@@ -2962,10 +2956,13 @@ msgstr ""
 msgid "veNFT Tiers ({0} variants)"
 msgstr ""
 
-msgid "{0, plural, one {# deployed payment address} other {# deployed payment addresses}}"
+msgid "{0, plural, one {# payment address} other {# payment addresses}}"
 msgstr ""
 
-msgid "{0, plural, one {# payment address} other {# payment addresses}}"
+msgid "{0, plural, one {View # deployed payment address} other {View # deployed payment addresses}}"
+msgstr ""
+
+msgid "{0} - Project payer contracts"
 msgstr ""
 
 msgid "{0} after JBX fee"

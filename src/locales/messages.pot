@@ -833,6 +833,9 @@ msgstr ""
 msgid "Create your own ERC-20 token to represent stake in your project. Contributors will receive these tokens when they pay your project."
 msgstr ""
 
+msgid "Created"
+msgstr ""
+
 msgid "Created Payment Address"
 msgstr ""
 
@@ -939,9 +942,6 @@ msgid "Deploy project"
 msgstr ""
 
 msgid "Deploy project to {0}"
-msgstr ""
-
-msgid "Deployed ERC20 token"
 msgstr ""
 
 msgid "Deployed payment addresses can be found in the Tools drawer (<0/>) on the project page."
@@ -2138,7 +2138,7 @@ msgstr ""
 msgid "Project created"
 msgstr ""
 
-msgid "Project created by"
+msgid "Project created by <0/>"
 msgstr ""
 
 msgid "Project description"
@@ -3729,6 +3729,9 @@ msgid "{formattedTimeLeft} left"
 msgstr ""
 
 msgid "{formattedTimeLeft} until #{0}"
+msgstr ""
+
+msgid "{header}"
 msgstr ""
 
 msgid "{inflationRate} tokens / ETH"

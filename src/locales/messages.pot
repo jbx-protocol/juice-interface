@@ -791,9 +791,6 @@ msgstr ""
 msgid "Deploy project to {0}"
 msgstr ""
 
-msgid "Deployed ERC20 token"
-msgstr ""
-
 msgid "Deployed payment addresses can be found in the Tools drawer (<0/>) on the project page."
 msgstr ""
 
@@ -1739,7 +1736,7 @@ msgstr ""
 msgid "Project created"
 msgstr ""
 
-msgid "Project created by"
+msgid "Project created by <0/>"
 msgstr ""
 
 msgid "Project description"
@@ -3057,6 +3054,9 @@ msgid "{formattedTimeLeft} left"
 msgstr ""
 
 msgid "{formattedTimeLeft} until #{0}"
+msgstr ""
+
+msgid "{header}"
 msgstr ""
 
 msgid "{inflationRate} tokens / ETH"

@@ -145,11 +145,11 @@ export default function ProjectHeader({
             />
           )}
           {owner && (
-            <span style={{ color: colors.text.secondary }}>
+            <div style={{ color: colors.text.secondary, marginTop: '0.4rem' }}>
               <Trans>
-                Owned by: <FormattedAddress address={owner} />
+                Owned by <FormattedAddress address={owner} />
               </Trans>
-            </span>
+            </div>
           )}
         </div>
       </div>

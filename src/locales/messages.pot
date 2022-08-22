@@ -2915,7 +2915,7 @@ msgstr ""
 msgid "minutes"
 msgstr ""
 
-msgid "or <0><1>buy {tokenText} on exchange<2/></1></0>"
+msgid "or <0><1>buy {tokenText} on exchange.</1></0>"
 msgstr ""
 
 msgid "project"

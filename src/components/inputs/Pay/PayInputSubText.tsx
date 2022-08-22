@@ -11,7 +11,6 @@ import { CurrencyContext } from 'contexts/currencyContext'
 import { Tooltip } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import AMMPrices from 'components/AMMPrices'
-import TooltipIcon from 'components/TooltipIcon'
 
 import useWeiConverter from 'hooks/WeiConverter'
 import { CurrencyOption } from 'models/currencyOption'
@@ -125,10 +124,9 @@ export default function PayInputSubText({
   return (
     <div
       style={{
+        marginTop: '0.3rem',
         fontSize: '.65rem',
         width: '100%',
-        display: 'flex',
-        justifyContent: 'space-between',
         color: colors.text.secondary,
       }}
     >
@@ -152,14 +150,13 @@ export default function PayInputSubText({
             >
               <span
                 style={{
-                  color: colors.text.action.primary,
-                  cursor: 'pointer',
-                  padding: '0.5rem 0',
-                  fontWeight: 500,
+                  cursor: 'default',
+                  paddingTop: '0.5rem',
+                  paddingBottom: '1px',
+                  borderBottom: '1px dashed' + colors.stroke.secondary,
                 }}
               >
-                buy {tokenText} on exchange
-                <TooltipIcon iconStyle={{ marginLeft: '0.2rem' }} />
+                buy {tokenText} on exchange.
               </span>
             </Tooltip>
           </Trans>

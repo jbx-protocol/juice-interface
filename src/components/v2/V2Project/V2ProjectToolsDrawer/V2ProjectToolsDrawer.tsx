@@ -16,6 +16,7 @@ import { featureFlagEnabled } from 'utils/featureFlags'
 import VeNftSetUnclaimedTokensPermissionSection from 'components/veNft/VeNftSetUnclaimedTokensPermissionSection'
 
 import VeNftEnableSection from 'components/veNft/VeNftEnableSection'
+import useMobile from 'hooks/Mobile'
 
 import { V1TokenMigrationSetupSection } from './V1TokenMigrationSetupSection'
 import { AddToProjectBalanceForm } from '../../../Project/ProjectToolsDrawer/AddToProjectBalanceForm'
@@ -38,6 +39,8 @@ export function V2ProjectToolsDrawer({
     tokenSymbol,
     veNft: { contractAddress: veNftContractAddress },
   } = useContext(V2ProjectContext)
+
+  const isMobile = useMobile()
 
   const editV2ProjectDetailsTx = useEditV2ProjectDetailsTx()
   const { data: unclaimedTokenBalance } = useUserUnclaimedTokenBalance()
@@ -79,7 +82,7 @@ export function V2ProjectToolsDrawer({
     <Drawer
       visible={visible}
       onClose={onClose}
-      width={600}
+      width={!isMobile ? 600 : undefined}
       drawerStyle={{ paddingBottom: '2rem' }}
     >
       <h1>

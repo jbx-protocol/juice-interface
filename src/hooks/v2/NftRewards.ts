@@ -6,6 +6,7 @@ import {
   NftRewardTier,
 } from 'models/v2/nftRewardTier'
 import { useQuery, UseQueryResult } from 'react-query'
+import { decodeEncodedIPFSUri, ipfsCidUrl } from 'utils/ipfs'
 
 import { MaxUint48 } from 'constants/numbers'
 
@@ -18,7 +19,10 @@ async function getRewardTierFromIPFS({
   contractNftRewardTier: ContractNftRewardTier
   index: number
 }): Promise<NftRewardTier> {
-  const url = contractNftRewardTier.tokenUri
+  const url = ipfsCidUrl(
+    decodeEncodedIPFSUri(contractNftRewardTier.encodedIPFSUri),
+    { useFallback: true },
+  )
   const response = await axios.get(url)
   const ipfsRewardTier: IPFSNftRewardTier = response.data
   return {
@@ -30,7 +34,7 @@ async function getRewardTierFromIPFS({
     maxSupply: ipfsRewardTier.attributes.maxSupply ?? DEFAULT_NFT_MAX_SUPPLY,
     remainingSupply:
       contractNftRewardTier.remainingQuantity ??
-      ipfsRewardTier.attributes.maxSupply,
+      contractNftRewardTier.initialQuantity,
     imageUrl: ipfsRewardTier.image,
   }
 }
@@ -56,6 +60,6 @@ export default function useNftRewards(
         ),
       )
     },
-    { enabled: !!contractNftRewardTiers?.length },
+    { enabled: Boolean(contractNftRewardTiers?.length) },
   )
 }

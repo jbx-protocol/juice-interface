@@ -42,6 +42,7 @@ export default function RichImgPreview({
             width: w,
             height: h,
           }}
+          placeholder={true}
           alt={t`Payment memo image`}
         />
       </div>

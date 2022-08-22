@@ -1,7 +1,9 @@
+import { Trans } from '@lingui/macro'
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
 import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, useContext, useMemo } from 'react'
+import { useRouter } from 'next/router'
+import { CSSProperties, useContext, useEffect, useMemo, useState } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import {
   PayEventExtra,
@@ -11,6 +13,7 @@ import {
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ProjectEvent } from 'models/subgraph-entities/vX/project-event'
+import Link from 'next/link'
 import { contentLineHeight, smallHeaderStyle } from '../styles'
 import { ActivityElementEvent } from './activityElementEvent'
 import { DeployedERC20EventHeader } from './components/DeployedERC20Event'
@@ -34,6 +37,10 @@ import { ProjectCreateSubject } from './components/ProjectCreateEvent/ProjectCre
 import { RedeemEventHeader } from './components/RedeemEvent'
 import { RedeemEventExtra } from './components/RedeemEvent/RedeemEventExtra'
 import { RedeemEventSubject } from './components/RedeemEvent/RedeemEventSubject'
+
+function activityId(txHash: string): string {
+  return `activityid-${txHash}`
+}
 
 const DetailsContainer: React.FC = ({ children }) => {
   return (
@@ -61,14 +68,35 @@ const ExtraContainer: React.FC = ({ children }) => {
   )
 }
 
-function Header({ header }: { header: string | JSX.Element | null }) {
+function Header({
+  header,
+  isSelected,
+}: {
+  header: string | JSX.Element | null
+  isSelected: boolean
+}) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  return <div style={smallHeaderStyle(colors)}>{header}</div>
+  return (
+    <div
+      style={{
+        ...smallHeaderStyle(colors),
+        ...(isSelected ? { color: colors.text.warn } : {}),
+      }}
+    >
+      {header}
+    </div>
+  )
 }
 
-function SideDetails({ details }: { details: Partial<ActivityElementEvent> }) {
+function SideDetails({
+  details,
+  isSelected,
+}: {
+  details: Partial<ActivityElementEvent>
+  isSelected: boolean
+}) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -76,10 +104,20 @@ function SideDetails({ details }: { details: Partial<ActivityElementEvent> }) {
   return (
     <div style={{ textAlign: 'right' }}>
       {details.timestamp && (
-        <div style={smallHeaderStyle(colors)}>
-          {formatHistoricalDate(details.timestamp * 1000)}{' '}
+        <>
+          <Link href={`#${activityId(details.txHash ?? '')}`} scroll={true}>
+            <a
+              className="hover-action"
+              style={{
+                ...smallHeaderStyle(colors),
+                ...(isSelected ? { color: colors.text.warn } : {}),
+              }}
+            >
+              {formatHistoricalDate(details.timestamp * 1000)}
+            </a>
+          </Link>{' '}
           <EtherscanLink value={details.txHash} type="tx" />
-        </div>
+        </>
       )}
       {details.type === 'beneficiary' && (
         <div
@@ -112,11 +150,21 @@ function SideDetails({ details }: { details: Partial<ActivityElementEvent> }) {
   )
 }
 
-function Subject({ subject }: { subject: string | JSX.Element | null }) {
+function Subject({
+  subject,
+  isSelected,
+}: {
+  subject: string | JSX.Element | null
+  isSelected: boolean
+}) {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
   return (
     <div
       style={{
         lineHeight: contentLineHeight,
+        ...(isSelected ? { color: colors.text.warn } : {}),
       }}
     >
       {subject}
@@ -137,14 +185,21 @@ function _ActivityEvent({
   details: Partial<ActivityElementEvent>
   style?: CSSProperties
 }) {
+  const { asPath } = useRouter()
+  const [isSelected, setIsSelected] = useState<boolean>(false)
+
+  useEffect(() => {
+    const activityId = asPath.split('#activityid-')[1]
+    setIsSelected(activityId === details.txHash)
+  }, [asPath, details.txHash])
   return (
-    <div style={style}>
+    <div id={activityId(details.txHash ?? '')} style={style}>
       <DetailsContainer>
         <div>
-          <Header header={header} />
-          <Subject subject={subject} />
+          <Header header={header} isSelected={isSelected} />
+          <Subject subject={subject} isSelected={isSelected} />
         </div>
-        <SideDetails details={details} />
+        <SideDetails details={details} isSelected={isSelected} />
       </DetailsContainer>
       {extra ? <ExtraContainer>{extra}</ExtraContainer> : null}
     </div>

@@ -8,7 +8,8 @@ import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
 import { ProjectEvent } from 'models/subgraph-entities/vX/project-event'
-import { useContext, useMemo, useState } from 'react'
+import { useRouter } from 'next/router'
+import { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { WhereConfig } from 'utils/graph'
 
 import V2DownloadActivityModal from '../modals/V2DownloadActivityModal'
@@ -27,6 +28,8 @@ type EventFilter =
 // TODO | 'useAllowanceEvent'
 
 export default function ProjectActivity() {
+  const initialLoad = useRef(true)
+  const { asPath } = useRouter()
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
   const [eventFilter, setEventFilter] = useState<EventFilter>('all')
   const {
@@ -185,6 +188,15 @@ export default function ProjectActivity() {
     orderBy: 'timestamp',
     where,
   })
+
+  // On initial load, will scroll to highlighted element (if any)
+  useEffect(() => {
+    if (isLoading || !initialLoad.current || asPath.split('#').length < 2)
+      return
+    const id = asPath.split('#')[1]
+    document.getElementById(id)?.scrollIntoView()
+    initialLoad.current = false
+  }, [asPath, isLoading])
 
   const count =
     projectEvents?.pages?.reduce((prev, cur) => prev + cur.length, 0) ?? 0

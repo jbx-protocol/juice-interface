@@ -1,4 +1,4 @@
-import { LinkOutlined, LoadingOutlined } from '@ant-design/icons'
+import { LoadingOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import SushiswapLogo from 'components/icons/Sushiswap'
@@ -83,7 +83,6 @@ export default function TokenAMMPriceRow({
           >
             <ExternalLink href={exchangeLink} style={{ fontWeight: 400 }}>
               {`${formattedNum(WETHPrice)} ${tokenSymbol}/1 ETH`}
-              <LinkOutlined style={{ marginLeft: '0.2rem' }} />
             </ExternalLink>
           </Tooltip>
         ) : (

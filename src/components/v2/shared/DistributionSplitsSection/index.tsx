@@ -17,7 +17,7 @@ import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2/math'
 import { NetworkContext } from 'contexts/networkContext'
 import Link from 'next/link'
 
-import { filter } from 'lodash'
+import { filter, isEqual } from 'lodash'
 
 import { v2ProjectRoute } from 'utils/routes'
 
@@ -101,9 +101,13 @@ export default function DistributionSplitsSection({
             if (allSplits.length === 1) setDistributionLimit('0')
             const splitsAfterDelete = filter(
               adjustedSplits,
-              s => s.beneficiary !== split.beneficiary,
+              // compare splits but ignore percent because it has been adjusted
+              s =>
+                !isEqual(
+                  { ...s, percent: undefined },
+                  { ...split, percent: undefined },
+                ),
             )
-
             onSplitsChanged(splitsAfterDelete)
           }}
         />

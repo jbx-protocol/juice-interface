@@ -47,7 +47,7 @@ export default function Wallet({ userAddress }: { userAddress: string }) {
         }}
       >
         <Link href="/projects?tab=myprojects">
-          <a>
+          <a style={{ fontWeight: 400 }}>
             <Trans>My projects</Trans>
           </a>
         </Link>

@@ -7,6 +7,7 @@ import { useProjectPayers } from 'hooks/v2/ProjectPayers'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { Button } from 'antd'
 import ProjectPayersModal from 'components/v2/V2Project/ProjectPayersModal'
+import useMobile from 'hooks/Mobile'
 
 export function PayableAddressSection({
   useDeployProjectPayerTx,
@@ -17,6 +18,8 @@ export function PayableAddressSection({
 }) {
   const [projectPayersModalIsVisible, setProjectPayersModalIsVisible] =
     useState<boolean>()
+
+  const isMobile = useMobile()
 
   const { projectId } = useContext(V2ProjectContext)
 
@@ -47,7 +50,7 @@ export function PayableAddressSection({
               size="small"
               style={{
                 marginTop: '15px',
-                width: '55%',
+                width: isMobile ? '100%' : '55%',
               }}
             >
               {plural(projectPayers.length, {

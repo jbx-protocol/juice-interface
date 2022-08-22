@@ -13,7 +13,6 @@ export default function useClaimableOverflowOf() {
   const { userAddress } = useContext(NetworkContext)
 
   const totalBalance = useTotalBalanceOf(userAddress, projectId, terminal?.name)
-
   const _projectId = projectId
     ? BigNumber.from(projectId).toHexString()
     : undefined
@@ -22,8 +21,8 @@ export default function useClaimableOverflowOf() {
     contract: terminal?.name,
     functionName: 'claimableOverflowOf',
     args:
-      userAddress && _projectId
-        ? [userAddress, _projectId, totalBalance?.toHexString()]
+      userAddress && _projectId && totalBalance
+        ? [userAddress, _projectId, totalBalance]
         : null,
     valueDidChange: bigNumbersDiff,
     updateOn: useMemo(

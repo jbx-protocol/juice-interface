@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-08-14 00:33\n"
+"PO-Revision-Date: 2022-08-21 00:30\n"
 "Last-Translator: \n"
 "Language: pt_BR\n"
 "Language-Team: Portuguese, Brazilian\n"
@@ -117,12 +117,6 @@ msgstr "<0>Um mecanismo como Juicebox, em que os compromissos financeiros devem 
 
 msgid "<0>A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project.</0><1>Holding these tokens entitles a project to a portion of its own overflow.</1>"
 msgstr "<0>Um projeto pode escolher reservar uma porcentagem de tokens para ele mesmo. Ao em vez de ser distribuído para pagar os usuários, a porcentagem de tokens é emitida para o projeto.</0><1>Manter esses tokens dá direito a um projeto para uma parte de seu próprio overflow.</1>"
-
-msgid "<0>Add to balance:</0> payments to this contract will fund the project without minting project tokens."
-msgstr ""
-
-msgid "<0>Auto claim:</0> any minted tokens will automatically be claimed as ERC20 (if this project has issued an ERC20 token)."
-msgstr ""
 
 msgid "<0>Contribution floor:</0> {0} ETH"
 msgstr ""
@@ -433,9 +427,6 @@ msgstr "Anexar um sticker"
 msgid "Attach the image to be associated with this NFT."
 msgstr ""
 
-msgid "Auto claim"
-msgstr ""
-
 msgid "Automate funding cycles"
 msgstr "Automatizar ciclos de financiamento"
 
@@ -468,9 +459,6 @@ msgstr "Beneficiário"
 
 msgid "Beneficiary address"
 msgstr "Endereço do beneficiário"
-
-msgid "Beneficiary:"
-msgstr ""
 
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
 msgstr "Grandes aplausos à comunidade Ethereum por criar a infraestrutura e economia a fim de tornar o Juicebox possível."
@@ -769,6 +757,9 @@ msgstr "Dias"
 msgid "Days to lock tokens"
 msgstr ""
 
+msgid "Default"
+msgstr ""
+
 msgid "Delete NFT"
 msgstr ""
 
@@ -799,7 +790,7 @@ msgstr "Implementar o projeto para {0}"
 msgid "Deployed ERC20 token"
 msgstr "Token ERC20 implementado"
 
-msgid "Deployed payment addresses can be found in the Tools drawer on the project page."
+msgid "Deployed payment addresses can be found in the Tools drawer (<0/>) on the project page."
 msgstr ""
 
 msgid "Deposit 1 wei to @{handle}"
@@ -965,12 +956,6 @@ msgid "ERC20 Deployed"
 msgstr "ERC20 Implementado"
 
 msgid "ETH-ERC20 Address Created"
-msgstr ""
-
-msgid "ETH-ERC20 Payment addresses"
-msgstr ""
-
-msgid "ETH-ERC20 Payment addresses are <0>smart contracts</0>that allow this project to be paid in <1>ETH</1> by sending ETH directly to the contract, or in <2>ERC20 tokens</2> via the contract's <3>pay()</3> function."
 msgstr ""
 
 msgid "Each payout will receive their percent of this total each funding cycle if there is enough in the treasury. Otherwise, they will receive their percent of whatever is in the treasury."
@@ -1219,9 +1204,6 @@ msgstr "Se você não arrecadar esta quantidade, os seus splits irão receber as
 msgid "If you have Juicebox project on Juicebox V1 and V2, we recommend you migrate to V2 exclusively."
 msgstr ""
 
-msgid "If you have already deployed a payable address and have lost it, please contact the Juicebox team through <0>Discord.</0>"
-msgstr "Se você já implantou um endereço de pagamento e o perdeu, por favor, contate o time do Juicebox por meio do <0>Discord.</0>"
-
 msgid "If you're interested in creating a project but still confused on how to get started, consider watching this <0>instructional video</0>. Also feel free to reach out in the <1>Juicebox Discord</1> where our team will be happy to help bring your project idea to life!"
 msgstr "Se está interessado em criar um projeto, mas ainda está confuso sobre como começar, considere assistir a este <0>vídeo instrutivo</0>. Também se sinta livre para nos contatar no <1>Discord do Juicebox</1>, no qual nosso time estará muito feliz em ajudar a trazer a ideia do seu projeto à vida!"
 
@@ -1450,11 +1432,14 @@ msgstr "Criar {tokensLabel}"
 msgid "Mint {tokensTokenLower}"
 msgstr "Criar {tokensTokenLower}"
 
+msgid "Mints tokens as ERC-20:"
+msgstr ""
+
+msgid "Mints tokens:"
+msgstr ""
+
 msgid "Minutes"
 msgstr "Minutos"
-
-msgid "More information"
-msgstr ""
 
 msgid "More trending projects"
 msgstr ""
@@ -1482,6 +1467,9 @@ msgstr "Nome"
 
 msgid "New"
 msgstr "Novo"
+
+msgid "New project tokens are automatically minted as ERC-20's. The gas to pay this contract will be higher than normal."
+msgstr ""
 
 msgid "Newly minted {tokenSymbolPlural} <0>received by contributors</0> per ETH they contribute to the treasury."
 msgstr "{tokenSymbolPlural}, recentemente emitidos, <0>recebidos pelos contribuidores</0> por ETH que eles contribuíram para a tesouraria."
@@ -1645,9 +1633,6 @@ msgstr "Pagar <0>{0}</0> não é um investimento — é uma forma de apoiar o pr
 msgid "Paying this project is currently disabled."
 msgstr "O pagamento deste projeto está atualmente indisponível."
 
-msgid "Payment address contract:"
-msgstr ""
-
 msgid "Payment equivalent"
 msgstr ""
 
@@ -1790,6 +1775,9 @@ msgid "Project token"
 msgstr "Token do Projeto"
 
 msgid "Project tokens <0>aren't ERC-20 tokens</0> by default. Once you deploy your project, you can issue an ERC-20 for your holders to claim. This is <1>optional</1>."
+msgstr ""
+
+msgid "Project tokens will be minted to whoever pays this payer contract."
 msgstr ""
 
 msgid "Project {0}"
@@ -2278,6 +2266,9 @@ msgstr "A quantidade máxima de fundos que pode ser distribuída deste projeto e
 msgid "The maximum supply of this NFT in circulation."
 msgstr ""
 
+msgid "The memo that appears on the project's Juicebox page activity feed when this payer contract is paid."
+msgstr ""
+
 msgid "The number of project tokens minted when 1 ETH is contributed in the first funding cycle."
 msgstr "O número de tokens do projeto emitidos quanto 1 ETH é contribuído no primeiro ciclo de financiamento."
 
@@ -2497,6 +2488,9 @@ msgstr ""
 msgid "Tokens to redeem"
 msgstr ""
 
+msgid "Tokens will be minted as a result of paying this project."
+msgstr ""
+
 msgid "Tokens:"
 msgstr ""
 
@@ -2692,9 +2686,6 @@ msgstr "O que é uma taxa de desconto?"
 msgid "What's going on under the hood?"
 msgstr "Como funciona o Juicebox?"
 
-msgid "When a payment address is paid, its <0>beneficiary</0> address will receive any minted project tokens."
-msgstr ""
-
 msgid "When checked, payments to this address will mint this project's ERC-20 tokens to the beneficiary's wallet. Payments will cost more gas. When unchecked, Juicebox will track the beneficiary's new tokens when they pay. The beneficiary can claim their ERC-20 tokens at any time."
 msgstr "Quando avaliados, os pagamentos para esse endereço irá emitir os ERC-20 tokens do projeto para a carteira do beneficiário. Os pagamentos irão custar mais gás. Quando não avaliados, o Juicebox irá rastrear os tokens dos novos beneficiários quando forem pagos. O beneficiário pode reivindicar os ERC-20 tokens dele a qualquer momento."
 
@@ -2709,6 +2700,9 @@ msgstr ""
 
 msgid "When enabled, your project cannot receive direct payments."
 msgstr "Quando ativado, seu projeto não pode receber pagamentos diretos."
+
+msgid "When someone pays this payer contract, project tokens will always be minted to this address, <0>not to the person who paid.</0>"
+msgstr ""
 
 msgid "When someone pays your project, they'll receive your project's tokens in return. Tokens can be redeemed for a portion of your project's overflow funds; when you win, your community wins with you. Leverage your project's token to grant governance rights, community access, or other membership perks."
 msgstr "Quando alguém paga por seu projeto, eles recebem tokens em troca. Tokens podem ser resgatados por uma porção dos fundos de overflow do seu projeto; quando você ganha, sua comunidade ganha com você. Utilize os tokens do seu projeto para garatir direitos administrativos, acesso à comunidade ou outros benefícios de membro."
@@ -2962,10 +2956,13 @@ msgstr ""
 msgid "veNFT Tiers ({0} variants)"
 msgstr ""
 
-msgid "{0, plural, one {# deployed payment address} other {# deployed payment addresses}}"
+msgid "{0, plural, one {# payment address} other {# payment addresses}}"
 msgstr ""
 
-msgid "{0, plural, one {# payment address} other {# payment addresses}}"
+msgid "{0, plural, one {View # deployed payment address} other {View # deployed payment addresses}}"
+msgstr ""
+
+msgid "{0} - Project payer contracts"
 msgstr ""
 
 msgid "{0} after JBX fee"

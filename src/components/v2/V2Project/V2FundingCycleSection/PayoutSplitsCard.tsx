@@ -138,53 +138,55 @@ export default function PayoutSplitsCard({
           </div>
         )}
 
-        <div>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              gap: 10,
-              flexWrap: 'wrap',
-            }}
-          >
-            <TooltipLabel
-              label={
-                <h4 style={{ display: 'inline-block' }}>
-                  <Trans>Funding distribution</Trans>
-                </h4>
-              }
-              tip={
-                <Trans>
-                  Available funds can be distributed according to the payouts
-                  below
-                  {hasDuration ? ` every ${formattedDuration}` : null}.
-                </Trans>
-              }
-            />
-            {canEditPayouts && (
-              <Button
-                size="small"
-                onClick={() => setEditPayoutModalVisible(true)}
-                icon={<SettingOutlined />}
-                style={{ marginBottom: '1rem' }}
-              >
-                <span>
-                  <Trans>Edit payouts</Trans>
-                </span>
-              </Button>
-            )}
+        {distributableAmount?.gt(0) && (
+          <div>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                gap: 10,
+                flexWrap: 'wrap',
+              }}
+            >
+              <TooltipLabel
+                label={
+                  <h4 style={{ display: 'inline-block' }}>
+                    <Trans>Funding distribution</Trans>
+                  </h4>
+                }
+                tip={
+                  <Trans>
+                    Available funds can be distributed according to the payouts
+                    below
+                    {hasDuration ? ` every ${formattedDuration}` : null}.
+                  </Trans>
+                }
+              />
+              {canEditPayouts && (
+                <Button
+                  size="small"
+                  onClick={() => setEditPayoutModalVisible(true)}
+                  icon={<SettingOutlined />}
+                  style={{ marginBottom: '1rem' }}
+                >
+                  <span>
+                    <Trans>Edit payouts</Trans>
+                  </span>
+                </Button>
+              )}
+            </div>
+            {payoutSplits ? (
+              <SplitList
+                splits={payoutSplits}
+                currency={distributionLimitCurrency}
+                totalValue={distributionLimit}
+                projectOwnerAddress={projectOwnerAddress}
+                showSplitValues={!distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)}
+                valueFormatProps={{ precision: 4 }}
+              />
+            ) : null}
           </div>
-          {payoutSplits ? (
-            <SplitList
-              splits={payoutSplits}
-              currency={distributionLimitCurrency}
-              totalValue={distributionLimit}
-              projectOwnerAddress={projectOwnerAddress}
-              showSplitValues={!distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)}
-              valueFormatProps={{ precision: 4 }}
-            />
-          ) : null}
-        </div>
+        )}
       </Space>
 
       <DistributePayoutsModal

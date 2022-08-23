@@ -1,10 +1,10 @@
 import { Contract, EventFilter } from '@ethersproject/contracts'
 import { V2UserContext } from 'contexts/v2/userContext'
 
+import * as Sentry from '@sentry/browser'
 import { V2ContractName, V2Contracts } from 'models/v2/contracts'
 import { useCallback, useContext, useState } from 'react'
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
-import * as Sentry from '@sentry/browser'
 
 type ContractUpdateOn = {
   contract?: ContractConfig

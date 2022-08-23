@@ -1,8 +1,8 @@
+import { CaretRightFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Divider, Form, Modal, Space } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { useCallback, useContext, useState } from 'react'
-import { CaretRightFilled } from '@ant-design/icons'
 
 import UnsavedChangesModal from 'components/v2/shared/UnsavedChangesModal'
 
@@ -15,14 +15,14 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { MemoFormInput } from 'components/inputs/Pay/MemoFormInput'
 
+import { V2ReconfigureProjectHandleDrawer } from '../V2ReconfigureProjectHandleDrawer'
 import { V2ReconfigureProjectDetailsDrawer } from './drawers/V2ReconfigureProjectDetailsDrawer'
-import V2ReconfigureUpcomingMessage from './V2ReconfigureUpcomingMessage'
-import ReconfigurePreview from './ReconfigurePreview'
 import { useEditingProjectData } from './hooks/editingProjectData'
 import { useFundingHasSavedChanges } from './hooks/fundingHasSavedChanges'
-import { useReconfigureFundingCycle } from './hooks/reconfigureFundingCycle'
 import { useInitialEditingData } from './hooks/initialEditingData'
-import { V2ReconfigureProjectHandleDrawer } from '../V2ReconfigureProjectHandleDrawer'
+import { useReconfigureFundingCycle } from './hooks/reconfigureFundingCycle'
+import ReconfigurePreview from './ReconfigurePreview'
+import V2ReconfigureUpcomingMessage from './V2ReconfigureUpcomingMessage'
 
 function ReconfigureButton({
   title,

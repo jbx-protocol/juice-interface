@@ -1,22 +1,22 @@
-import { Button } from 'antd'
 import { t, Trans } from '@lingui/macro'
+import { Button } from 'antd'
 import TooltipLabel from 'components/TooltipLabel'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useReservedTokensOfProject from 'hooks/v1/contractReader/ReservedTokensOfProject'
-import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { TicketMod } from 'models/mods'
 import { NetworkName } from 'models/network-name'
+import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { useContext, useState } from 'react'
 import { formatWad, perbicentToPercent } from 'utils/formatNumber'
-import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
+import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 
 import { readNetwork } from 'constants/networks'
 
-import DistributeTokensModal from './modals/DistributeTokensModal'
-import TicketModsList from '../TicketModsList'
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
+import TicketModsList from '../TicketModsList'
+import DistributeTokensModal from './modals/DistributeTokensModal'
 
 export default function ReservedTokens({
   fundingCycle,

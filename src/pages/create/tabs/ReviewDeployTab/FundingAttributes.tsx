@@ -11,20 +11,20 @@ import {
 } from 'utils/v2/math'
 
 import FundingCycleDetailWarning from 'components/Project/FundingCycleDetailWarning'
-import { detailedTimeString } from 'utils/formatTime'
+import SplitList from 'components/v2/shared/SplitList'
 import {
   DISCOUNT_RATE_EXPLANATION,
   REDEMPTION_RATE_EXPLANATION,
 } from 'components/v2/V2Project/V2FundingCycleSection/settingExplanations'
-import SplitList from 'components/v2/shared/SplitList'
 import { Split } from 'models/v2/splits'
+import { detailedTimeString } from 'utils/formatTime'
 
-import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
+import { CurrencyName } from 'constants/currency'
 import {
   FUNDING_CYCLE_WARNING_TEXT,
   RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
 } from 'constants/fundingWarningText'
-import { CurrencyName } from 'constants/currency'
+import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
 
 export function DistributionLimitStatistic({
   distributionLimit,

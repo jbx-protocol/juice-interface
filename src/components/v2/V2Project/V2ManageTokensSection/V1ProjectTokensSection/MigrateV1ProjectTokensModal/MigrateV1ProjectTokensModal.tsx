@@ -1,19 +1,19 @@
-import { useWallet } from 'hooks/Wallet'
 import { Trans } from '@lingui/macro'
 import { Form, ModalProps, Space } from 'antd'
 import TransactionModal from 'components/TransactionModal'
 import { usePayV1TokenPaymentTerminal } from 'hooks/v2/transactor/PayV1TokenPaymentTerminal'
+import { useWallet } from 'hooks/Wallet'
 import { useContext, useState } from 'react'
-import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { parseWad } from 'utils/formatNumber'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
+import { V2UserContext } from 'contexts/v2/userContext'
 import { useV1HasPermissions } from 'hooks/v1/contractReader/V1HasPermissions'
 import { V1OperatorPermission } from 'models/v1/permissions'
-import { V2UserContext } from 'contexts/v2/userContext'
 
 import { GrantTransferPermissionCallout } from './GrantTransferPermissionCallout'
-import { TokenSwapDescription } from './TokenSwapDescription'
 import { MigrateV1ProjectTokensForm } from './MigrateV1ProjectTokensForm'
+import { TokenSwapDescription } from './TokenSwapDescription'
 
 export function MigrateProjectTokensModal({
   v1TokenSymbol,

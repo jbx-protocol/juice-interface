@@ -1,8 +1,8 @@
+import { CheckCircleFilled } from '@ant-design/icons'
+import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { PropsWithChildren, useContext } from 'react'
-import { CheckCircleFilled } from '@ant-design/icons'
-import { Trans } from '@lingui/macro'
 
 export function StepSection({
   children,

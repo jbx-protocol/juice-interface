@@ -1,5 +1,4 @@
-import { CloseCircleFilled } from '@ant-design/icons'
-import { FileImageOutlined } from '@ant-design/icons'
+import { CloseCircleFilled, FileImageOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, message, Row, Space, Upload } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'

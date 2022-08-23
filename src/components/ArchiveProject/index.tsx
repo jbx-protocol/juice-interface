@@ -1,20 +1,20 @@
+import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import { ExclamationCircleOutlined } from '@ant-design/icons'
 
+import { ThemeContext } from 'contexts/themeContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { CV } from 'models/cv'
 import { ProjectMetadataV4 } from 'models/project-metadata'
 import { useContext, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
-import { ThemeContext } from 'contexts/themeContext'
 
-import { reloadWindow } from 'utils/windowUtils'
 import axios from 'axios'
-import { revalidateProject } from 'utils/revalidateProject'
-import { V1TerminalVersion } from 'models/v1/terminals'
 import { useWallet } from 'hooks/Wallet'
+import { V1TerminalVersion } from 'models/v1/terminals'
+import { revalidateProject } from 'utils/revalidateProject'
+import { reloadWindow } from 'utils/windowUtils'
 
 export default function ArchiveProject({
   storeCidTx,

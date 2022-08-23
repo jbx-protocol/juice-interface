@@ -1,5 +1,5 @@
-import { Form, Input } from 'antd'
 import { t } from '@lingui/macro'
+import { Form, Input } from 'antd'
 
 import { FormItemExt } from './formItemExt'
 

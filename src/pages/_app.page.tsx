@@ -1,24 +1,24 @@
-import type { AppProps } from 'next/app'
-import React, { useEffect } from 'react'
-import { Head } from 'components/common'
-import injectedModule from '@web3-onboard/injected-wallets'
+import coinbaseWalletModule from '@web3-onboard/coinbase'
 import gnosisModule from '@web3-onboard/gnosis'
+import injectedModule from '@web3-onboard/injected-wallets'
+import keystoneModule from '@web3-onboard/keystone'
 import ledgerModule from '@web3-onboard/ledger'
 import trezorModule from '@web3-onboard/trezor'
-import keystoneModule from '@web3-onboard/keystone'
 import walletConnectModule from '@web3-onboard/walletconnect'
-import coinbaseWalletModule from '@web3-onboard/coinbase'
+import { Head } from 'components/common'
+import type { AppProps } from 'next/app'
+import React, { useEffect } from 'react'
 
-import '../styles/antd.css'
-import '../styles/index.scss'
+import { BigNumber } from '@ethersproject/bignumber'
+import { init, useWallets } from '@web3-onboard/react'
+import config from 'config/seo_meta.json'
 import {
   useLoadWalletFromLocalStorage,
   useStoreWalletsInLocalStorage,
 } from 'hooks/Network'
-import { BigNumber } from '@ethersproject/bignumber'
-import { init, useWallets } from '@web3-onboard/react'
 import { unpadLeadingZerosString } from 'utils/bigNumbers'
-import config from 'config/seo_meta.json'
+import '../styles/antd.css'
+import '../styles/index.scss'
 
 import { NETWORKS } from 'constants/networks'
 

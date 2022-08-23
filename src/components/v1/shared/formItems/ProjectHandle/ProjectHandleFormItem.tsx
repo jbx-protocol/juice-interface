@@ -1,18 +1,18 @@
-import { t } from '@lingui/macro'
 import { CheckCircleOutlined, LoadingOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
-import { Form } from 'antd'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { formatBytes32String } from '@ethersproject/strings'
+import { t } from '@lingui/macro'
+import { Form } from 'antd'
+import { FormItemExt } from 'components/formItems/formItemExt'
 import { ThemeContext } from 'contexts/themeContext'
 import useContractReader from 'hooks/v1/contractReader/ContractReader'
 import { V1ContractName } from 'models/v1/contracts'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { normalizeHandle } from 'utils/formatHandle'
-import { FormItemExt } from 'components/formItems/formItemExt'
 
 import {
-  ProjectHandleInput,
   ProjectHandleInitialValue,
+  ProjectHandleInput,
 } from './ProjectHandleInput'
 
 /**

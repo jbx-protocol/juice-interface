@@ -1,13 +1,13 @@
 import { Tooltip } from 'antd'
 
 import { BigNumber } from '@ethersproject/bignumber'
-import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { betweenZeroAndOne } from 'utils/bigNumbers'
+import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 
 import CurrencySymbol from '../CurrencySymbol'
 
-import ETHToUSD from './ETHToUSD'
 import { PRECISION_ETH } from 'constants/currency'
+import ETHToUSD from './ETHToUSD'
 
 const MIN_AMOUNT = parseWad(0.0001)
 

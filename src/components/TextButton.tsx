@@ -1,7 +1,7 @@
-import { Button, ButtonProps, Space } from 'antd'
 import { RightCircleOutlined } from '@ant-design/icons'
-import { useContext } from 'react'
+import { Button, ButtonProps, Space } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
+import { useContext } from 'react'
 
 export function TextButton({ style, ...props }: ButtonProps) {
   const {

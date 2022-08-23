@@ -1,6 +1,6 @@
+import { useWallet } from 'hooks/Wallet'
 import { V2ContractName, V2Contracts } from 'models/v2/contracts'
 import { useEffect, useState } from 'react'
-import { useWallet } from 'hooks/Wallet'
 
 import { loadContract } from 'utils/contracts/loadContract'
 

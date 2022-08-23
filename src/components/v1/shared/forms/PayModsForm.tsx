@@ -1,17 +1,17 @@
 import { t, Trans } from '@lingui/macro'
 
-import { Button, Form, Space, Input } from 'antd'
-import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber } from '@ethersproject/bignumber'
+import { Button, Form, Input, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { V1CurrencyOption } from 'models/v1/currencyOption'
+import { ThemeContext } from 'contexts/themeContext'
 import { PayoutMod } from 'models/mods'
+import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useLayoutEffect, useState } from 'react'
 import { fromWad, perbicentToPercent } from 'utils/formatNumber'
 
 import { getTotalPercentage } from 'components/formItems/formHelpers'
-import { CurrencyContext } from 'contexts/currencyContext'
 import ProjectPayoutMods from 'components/v1/shared/ProjectPayMods/ProjectPayoutMods'
+import { CurrencyContext } from 'contexts/currencyContext'
 
 import * as constants from '@ethersproject/constants'
 

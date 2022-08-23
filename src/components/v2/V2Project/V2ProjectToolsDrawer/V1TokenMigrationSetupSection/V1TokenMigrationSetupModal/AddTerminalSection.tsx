@@ -1,11 +1,11 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { MinimalCollapse } from 'components/MinimalCollapse'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { V2UserContext } from 'contexts/v2/userContext'
 import { useSetProjectTerminalsTx } from 'hooks/v2/transactor/SetProjectTerminalsTx'
 import { useCallback, useContext, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { V2UserContext } from 'contexts/v2/userContext'
 
 import { StepSection } from './StepSection'
 

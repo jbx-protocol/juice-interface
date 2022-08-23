@@ -1,13 +1,13 @@
 import { Tooltip } from 'antd'
 
 import { BigNumber } from '@ethersproject/bignumber'
-import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { betweenZeroAndOne } from 'utils/bigNumbers'
+import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 
-import CurrencySymbol from '../CurrencySymbol'
 import { PRECISION_USD } from 'constants/currency'
+import CurrencySymbol from '../CurrencySymbol'
 
 /**
  * Render a given amount formatted as USD. Displays ETH amount in a tooltip on hover.

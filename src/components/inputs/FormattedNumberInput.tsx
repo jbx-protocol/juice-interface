@@ -1,4 +1,4 @@
-import { InputNumber, Form } from 'antd'
+import { Form, InputNumber } from 'antd'
 import { CSSProperties } from 'react'
 import { formattedNum } from 'utils/formatNumber'
 

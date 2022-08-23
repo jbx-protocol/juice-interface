@@ -1,13 +1,13 @@
-import FormattedAddress from 'components/FormattedAddress'
-import { LogoutOutlined, CrownOutlined } from '@ant-design/icons'
+import { CrownOutlined, LogoutOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
+import FormattedAddress from 'components/FormattedAddress'
 
+import { Dropdown, Menu } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
-import { Dropdown, Menu } from 'antd'
 
-import EtherscanLink from 'components/EtherscanLink'
 import CopyTextButton from 'components/CopyTextButton'
+import EtherscanLink from 'components/EtherscanLink'
 import useMobile from 'hooks/Mobile'
 import { useWallet } from 'hooks/Wallet'
 import Link from 'next/link'

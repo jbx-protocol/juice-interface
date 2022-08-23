@@ -5,12 +5,12 @@ import {
   parseBaseProjectEntityJson,
 } from '../base/base-project-entity'
 
-import { BaseProjectEntity } from '../base/base-project-entity'
 import {
   BaseEventEntity,
   BaseEventEntityJson,
   parseBaseEventEntityJson,
 } from '../base/base-event-entity'
+import { BaseProjectEntity } from '../base/base-project-entity'
 
 export interface UseAllowanceEvent extends BaseEventEntity, BaseProjectEntity {
   fundingCycleConfiguration: BigNumber

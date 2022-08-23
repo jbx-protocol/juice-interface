@@ -2,12 +2,12 @@ import { Space } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
 import useMobile from 'hooks/Mobile'
 
-import MobileCollapse from './Mobile/MobileCollapse'
-import { TopLeftNavItems } from './MenuItems'
-import NavLanguageSelector from './NavLanguageSelector'
-import ThemePicker from './ThemePicker'
-import { topNavStyles, topRightNavStyles } from './navStyles'
 import Account from './Account'
+import { TopLeftNavItems } from './MenuItems'
+import MobileCollapse from './Mobile/MobileCollapse'
+import NavLanguageSelector from './NavLanguageSelector'
+import { topNavStyles, topRightNavStyles } from './navStyles'
+import ThemePicker from './ThemePicker'
 
 export default function Navbar() {
   const isMobile = useMobile()

@@ -1,14 +1,13 @@
 import { Contract } from '@ethersproject/contracts'
-import { SignerOrProvider } from 'utils/types'
 import { useWallet } from 'hooks/Wallet'
+import { SignerOrProvider } from 'utils/types'
 
-import { V1ContractName } from 'models/v1/contracts'
-import { V1Contracts } from 'models/v1/contracts'
 import { NetworkName } from 'models/network-name'
+import { V1ContractName, V1Contracts } from 'models/v1/contracts'
 import { useEffect, useState } from 'react'
 
-import { readProvider } from 'constants/readProvider'
 import { readNetwork } from 'constants/networks'
+import { readProvider } from 'constants/readProvider'
 
 export function useV1ContractLoader() {
   const [contracts, setContracts] = useState<V1Contracts>()

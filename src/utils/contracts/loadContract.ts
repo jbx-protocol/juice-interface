@@ -1,11 +1,11 @@
 import { Contract, ContractInterface } from '@ethersproject/contracts'
 import { NetworkName } from 'models/network-name'
 import { V2ContractName } from 'models/v2/contracts'
+import { SignerOrProvider } from 'utils/types'
 import {
   getLatestNftDelegateStoreContractAddress,
   getLatestNftProjectDeployerContractAddress,
 } from 'utils/v2/nftRewards'
-import { SignerOrProvider } from 'utils/types'
 
 import { mainnetPublicResolver } from 'constants/contracts/mainnet/PublicResolver'
 import { rinkebyPublicResolver } from 'constants/contracts/rinkeby/PublicResolver'

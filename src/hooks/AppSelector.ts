@@ -1,7 +1,7 @@
+import { useMemo } from 'react'
 import { shallowEqual, TypedUseSelectorHook, useSelector } from 'react-redux'
 import { RootState } from 'redux/store'
 import { deserializeV1FundingCycle } from 'utils/v1/serializers'
-import { useMemo } from 'react'
 import {
   deserializeFundAccessConstraint,
   deserializeV2FundingCycleData,

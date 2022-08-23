@@ -1,14 +1,14 @@
 import { useConnectWallet } from '@web3-onboard/react'
 
 import {
-  useProvider,
-  useUserAddress,
+  useChain,
   useChainUnsupported,
   useChangeNetworks,
   useDisconnect,
   useIsConnected,
-  useChain,
+  useProvider,
   useSigner,
+  useUserAddress,
 } from './hooks'
 
 export function useWallet() {

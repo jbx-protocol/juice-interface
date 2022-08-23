@@ -1,16 +1,17 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { DatePicker, Form, InputNumber, Modal, Radio } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import CurrencySwitch from 'components/CurrencySwitch'
 import CurrencySymbol from 'components/CurrencySymbol'
-import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import {
   ModalMode,
   validateEthAddress,
   validatePercentage,
 } from 'components/formItems/formHelpers'
 import InputAccessoryButton from 'components/InputAccessoryButton'
+import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import NumberSlider from 'components/inputs/NumberSlider'
 import TooltipIcon from 'components/TooltipIcon'
@@ -35,7 +36,6 @@ import {
   preciseFormatSplitPercent,
   splitPercentFrom,
 } from 'utils/v2/math'
-import * as constants from '@ethersproject/constants'
 
 import { CurrencyName } from 'constants/currency'
 

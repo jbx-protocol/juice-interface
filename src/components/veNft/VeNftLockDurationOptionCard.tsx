@@ -1,8 +1,8 @@
+import { DeleteOutlined } from '@ant-design/icons'
+import { Plural, t, Trans } from '@lingui/macro'
 import { Button, Col, Row, Tooltip } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
-import { DeleteOutlined } from '@ant-design/icons'
-import { Plural, t, Trans } from '@lingui/macro'
 
 import { SECONDS_IN_DAY } from 'constants/numbers'
 

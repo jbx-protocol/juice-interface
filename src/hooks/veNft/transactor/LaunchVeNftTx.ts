@@ -1,8 +1,8 @@
-import { useContext } from 'react'
 import { V2UserContext } from 'contexts/v2/userContext'
+import { useContext } from 'react'
 
-import { TransactorInstance } from 'hooks/Transactor'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { TransactorInstance } from 'hooks/Transactor'
 import { useWallet } from 'hooks/Wallet'
 
 export type ExtendLockTx = TransactorInstance<{

@@ -1,5 +1,5 @@
-import { Form } from 'antd'
 import { t } from '@lingui/macro'
+import { Form } from 'antd'
 
 import { IPFS_TAGS } from 'utils/ipfs'
 

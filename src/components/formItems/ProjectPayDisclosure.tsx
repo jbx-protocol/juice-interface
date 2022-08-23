@@ -1,5 +1,5 @@
-import { Form } from 'antd'
 import { t } from '@lingui/macro'
+import { Form } from 'antd'
 
 import TextArea from 'antd/lib/input/TextArea'
 

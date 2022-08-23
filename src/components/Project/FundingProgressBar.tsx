@@ -2,10 +2,10 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Progress, Tooltip } from 'antd'
 import { Property } from 'csstype'
 
+import { t } from '@lingui/macro'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useMemo, useState } from 'react'
 import { fracDiv } from 'utils/formatNumber'
-import { t } from '@lingui/macro'
 
 const TargetIndicatorLine = (
   props: { color: Property.Color } & React.DOMAttributes<HTMLDivElement>,

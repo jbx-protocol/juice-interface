@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import * as constants from '@ethersproject/constants'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { ProjectMetadataV4 } from 'models/project-metadata'
 
@@ -10,25 +10,25 @@ import {
   Split,
 } from 'models/v2/splits'
 import {
-  serializeV2FundingCycleData,
-  serializeV2FundingCycleMetadata,
+  SerializedV2FundAccessConstraint,
   SerializedV2FundingCycleData,
   SerializedV2FundingCycleMetadata,
-  SerializedV2FundAccessConstraint,
+  serializeV2FundingCycleData,
+  serializeV2FundingCycleMetadata,
 } from 'utils/v2/serializers'
 
+import { NftRewardTier } from 'models/v2/nftRewardTier'
 import {
   DEFAULT_MINT_RATE,
   issuanceRateFrom,
   redemptionRateFrom,
 } from 'utils/v2/math'
-import { NftRewardTier } from 'models/v2/nftRewardTier'
 
+import { DEFAULT_BALLOT_STRATEGY } from 'constants/v2/ballotStrategies'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
-import { DEFAULT_BALLOT_STRATEGY } from 'constants/v2/ballotStrategies'
 
 interface V2ProjectState {
   version: number

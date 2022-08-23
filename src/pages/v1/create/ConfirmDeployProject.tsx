@@ -3,17 +3,17 @@ import { Col, Row, Space, Statistic } from 'antd'
 import { Gutter } from 'antd/lib/grid/row'
 
 import CurrencySymbol from 'components/CurrencySymbol'
-import PayoutModsList from 'components/v1/shared/PayoutModsList'
 import ProjectLogo from 'components/ProjectLogo'
+import PayoutModsList from 'components/v1/shared/PayoutModsList'
 import TicketModsList from 'components/v1/shared/TicketModsList'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { V1FundingCycle } from 'models/v1/fundingCycle'
 import {
   useAppSelector,
   useEditingV1FundingCycleSelector,
 } from 'hooks/AppSelector'
 import useMobile from 'hooks/Mobile'
+import { V1FundingCycle } from 'models/v1/fundingCycle'
 
 import { useTerminalFee } from 'hooks/v1/TerminalFee'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
@@ -24,21 +24,21 @@ import {
   perbicentToPercent,
   permilleToPercent,
 } from 'utils/formatNumber'
+import { amountSubFee } from 'utils/math'
+import { orEmpty } from 'utils/orEmpty'
 import {
   getUnsafeV1FundingCycleProperties,
   hasFundingDuration,
   hasFundingTarget,
   isRecurring,
 } from 'utils/v1/fundingCycle'
-import { amountSubFee } from 'utils/math'
-import { orEmpty } from 'utils/orEmpty'
 
 import { V1CurrencyName } from 'utils/v1/currency'
 
 import FundingCycleDetailWarning from 'components/Project/FundingCycleDetailWarning'
 
-import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
+import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
 
 export default function ConfirmDeployProject() {
   const editingFC = useEditingV1FundingCycleSelector()

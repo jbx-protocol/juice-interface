@@ -2,8 +2,11 @@ import { AppWrapper, SEO } from 'components/common'
 import FeedbackFormButton from 'components/FeedbackFormButton'
 import NewDeployNotAvailable from 'components/NewDeployNotAvailable'
 import Project404 from 'components/Project404'
-import { findProjectMetadata } from 'utils/server'
+import ScrollToTopButton from 'components/ScrollToTopButton'
 
+import { layouts } from 'constants/styles/layouts'
+import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
+import { projectTypes } from 'constants/v1/projectTypes'
 import {
   V1ProjectContext,
   V1ProjectContextType,
@@ -29,18 +32,12 @@ import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
 import { V1CurrencyProvider } from 'providers/v1/V1CurrencyProvider'
 import { useMemo } from 'react'
-import { V1CurrencyName } from 'utils/v1/currency'
-import ScrollToTopButton from 'components/ScrollToTopButton'
-
-import { getTerminalName, getTerminalVersion } from 'utils/v1/terminals'
 import { paginateDepleteProjectsQueryCall } from 'utils/apollo'
-
+import { findProjectMetadata } from 'utils/server'
+import { V1CurrencyName } from 'utils/v1/currency'
+import { getTerminalName, getTerminalVersion } from 'utils/v1/terminals'
 import Loading from '../../components/Loading'
 import V1Project from '../../components/v1/V1Project'
-
-import { projectTypes } from 'constants/v1/projectTypes'
-import { layouts } from 'constants/styles/layouts'
-import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   if (process.env.BUILD_CACHE_V1_PROJECTS === 'true') {

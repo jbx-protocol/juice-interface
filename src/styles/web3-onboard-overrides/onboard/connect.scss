@@ -1,0 +1,22 @@
+:root {
+  --onboard-modal-z-index: 20;
+
+  --onboard-connect-sidebar-background: var(--background-l1);
+  --onboard-connect-sidebar-color: var(--text-primary);
+  --onboard-connect-sidebar-progress-background: var(--background-l2);
+  --onboard-connect-sidebar-progress-color: var(--background-brand-primary);
+
+  --onboard-connect-header-background: var(--background-l0);
+  --onboard-connect-header-color: var(--text-primary);
+
+  --onboard-close-button-background: transparent;
+  --onboard-close-button-color: var(--icon-secondary);
+
+  --onboard-wallet-button-background: transparent;
+  --onboard-wallet-button-background-hover: var(--background-l2);
+  --onboard-wallet-button-color: var(--text-primary);
+  --onboard-wallet-button-border-color: var(--stroke-tertiary);
+  --onboard-wallet-app-icon-border-color: var(--stroke-tertiary);
+
+  --onboard-main-scroll-container-background: var(--background-l0);
+}

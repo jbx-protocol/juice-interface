@@ -1,3 +1,4 @@
+import { useWallet } from 'hooks/Wallet'
 import { t, Trans } from '@lingui/macro'
 import { Modal, Space, Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
@@ -6,7 +7,6 @@ import ETHAmount from 'components/currency/ETHAmount'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 
-import { NetworkContext } from 'contexts/networkContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
 import useClaimableOverflowOf from 'hooks/v1/contractReader/ClaimableOverflowOf'
@@ -41,7 +41,7 @@ export default function RedeemModal({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress } = useWallet()
   const { projectId, tokenSymbol, currentFC, terminal, overflow } =
     useContext(V1ProjectContext)
 

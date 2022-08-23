@@ -1,11 +1,11 @@
+import { Signer } from 'ethers/lib/ethers'
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { hexlify } from '@ethersproject/bytes'
 import { Contract } from '@ethersproject/contracts'
 import { Deferrable } from '@ethersproject/properties'
-import { JsonRpcSigner, TransactionRequest } from '@ethersproject/providers'
+import { TransactionRequest } from '@ethersproject/providers'
 import { parseUnits } from '@ethersproject/units'
 import Notify, { InitOptions, TransactionEvent } from 'bnc-notify'
-import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useCallback, useContext } from 'react'
 
@@ -15,7 +15,9 @@ import * as Sentry from '@sentry/browser'
 import { t } from '@lingui/macro'
 import { windowOpen } from 'utils/windowUtils'
 
-type TransactorCallback = (e?: TransactionEvent, signer?: JsonRpcSigner) => void
+import { useWallet } from './Wallet'
+
+type TransactorCallback = (e?: TransactionEvent, signer?: Signer) => void
 
 type TransactorOptions = {
   value?: BigNumberish
@@ -44,8 +46,9 @@ export function useTransactor({
 }: {
   gasPrice?: BigNumber
 }): Transactor | undefined {
-  const { signingProvider: provider, walletIsReady } =
-    useContext(NetworkContext)
+  const { chain, signer } = useWallet()
+  const chainId = chain ? BigNumber.from(chain.id) : undefined
+  const { chainUnsupported, isConnected, changeNetworks, connect } = useWallet()
 
   const { isDarkMode } = useContext(ThemeContext)
 
@@ -56,21 +59,26 @@ export function useTransactor({
       args: any[], // eslint-disable-line @typescript-eslint/no-explicit-any
       options?: TransactorOptions,
     ) => {
-      const ready = await walletIsReady?.()
-
-      if (!ready || !provider) {
+      if (chainUnsupported) {
+        await changeNetworks()
+        options?.onDone?.()
+        return false
+      }
+      if (!isConnected) {
+        await connect()
         options?.onDone?.()
         return false
       }
 
-      const signer = provider.getSigner()
-
-      const network = await provider.getNetwork()
+      if (!signer || !chain) {
+        options?.onDone?.()
+        return false
+      }
 
       const notifyOpts: InitOptions = {
         dappId: process.env.NEXT_PUBLIC_BLOCKNATIVE_API_KEY,
         system: 'ethereum',
-        networkId: network.chainId,
+        networkId: chainId?.toNumber(),
         darkMode: isDarkMode,
         transactionHandler: txInformation => {
           console.info('HANDLE TX', txInformation)
@@ -86,12 +94,12 @@ export function useTransactor({
       const notify = Notify(notifyOpts)
 
       let etherscanNetwork = ''
-      if (network.name && network.chainId > 1) {
-        etherscanNetwork = network.name + '.'
+      if (chain.name && chainId?.gt(1)) {
+        etherscanNetwork = chain.name + '.'
       }
 
       let etherscanTxUrl = 'https://' + etherscanNetwork + 'etherscan.io/tx/'
-      if (network.chainId === 100) {
+      if (chainId?.eq(100)) {
         etherscanTxUrl = 'https://blockscout.com/poa/xdai/tx/'
       }
 
@@ -136,7 +144,7 @@ export function useTransactor({
 
         // if it is a valid Notify.js network, use that, if not, just send a default notification
         const isNotifyNetwork =
-          [1, 3, 4, 5, 42, 100].indexOf(network.chainId) >= 0
+          [1, 3, 4, 5, 42, 100].indexOf(chainId?.toNumber() ?? -1) >= 0
 
         if (isNotifyNetwork) {
           const { emitter } = notify.hash(result.hash)
@@ -182,6 +190,16 @@ export function useTransactor({
         return false
       }
     },
-    [provider, isDarkMode, gasPrice, walletIsReady],
+    [
+      chainUnsupported,
+      isConnected,
+      signer,
+      chain,
+      chainId,
+      isDarkMode,
+      changeNetworks,
+      connect,
+      gasPrice,
+    ],
   )
 }

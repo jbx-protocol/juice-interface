@@ -1,4 +1,3 @@
-import { Trans } from '@lingui/macro'
 import { Button, FormInstance } from 'antd'
 import {
   useAppSelector,
@@ -7,23 +6,23 @@ import {
   useEditingV2FundingCycleMetadataSelector,
 } from 'hooks/AppSelector'
 import { useLaunchProjectTx } from 'hooks/v2/transactor/LaunchProjectTx'
-import { useCallback, useContext, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 import { TransactionReceipt } from '@ethersproject/providers'
 import { BigNumber } from '@ethersproject/bignumber'
-import { NetworkContext } from 'contexts/networkContext'
 import { emitErrorNotification } from 'utils/notifications'
+import { useWallet } from 'hooks/Wallet'
+import { DeployButtonText } from 'components/DeployProjectButtonText'
 
 import TransactionModal from 'components/TransactionModal'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
 
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
-
-import { v2ProjectRoute } from 'utils/routes'
 import { useRouter } from 'next/router'
 
-import { readNetwork } from 'constants/networks'
+import { v2ProjectRoute } from 'utils/routes'
+
 import { findTransactionReceipt } from './utils'
 
 const CREATE_EVENT_IDX = 0
@@ -45,7 +44,7 @@ export function DeployProjectButton({ form }: { form: FormInstance }) {
   const launchProjectTx = useLaunchProjectTx()
   const router = useRouter()
 
-  const { userAddress, onSelectWallet } = useContext(NetworkContext)
+  const { changeNetworks, chainUnsupported, isConnected, connect } = useWallet()
 
   const [deployLoading, setDeployLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
@@ -153,8 +152,13 @@ export function DeployProjectButton({ form }: { form: FormInstance }) {
       return
     }
 
-    if (!userAddress) {
-      return onSelectWallet?.()
+    if (chainUnsupported) {
+      await changeNetworks()
+      return
+    }
+    if (!isConnected) {
+      await connect()
+      return
     }
 
     return deployProject()
@@ -171,11 +175,7 @@ export function DeployProjectButton({ form }: { form: FormInstance }) {
         loading={deployLoading}
       >
         <span>
-          {userAddress ? (
-            <Trans>Deploy project to {readNetwork.name}</Trans>
-          ) : (
-            <Trans>Connect wallet to deploy</Trans>
-          )}
+          <DeployButtonText />
         </span>
       </Button>
       <TransactionModal

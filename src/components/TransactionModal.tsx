@@ -1,8 +1,8 @@
 import { t, Trans } from '@lingui/macro'
 import { Modal, ModalProps } from 'antd'
-import { NetworkContext } from 'contexts/networkContext'
 
 import { ThemeContext } from 'contexts/themeContext'
+import { useWallet } from 'hooks/Wallet'
 import { PropsWithChildren, useContext } from 'react'
 
 type TransactionModalProps = PropsWithChildren<
@@ -53,7 +53,7 @@ const PendingTransactionModalBody = () => {
  * are replaced with a juicy loading state.
  */
 export default function TransactionModal(props: TransactionModalProps) {
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress } = useWallet()
   const okText = userAddress
     ? props.okText
     : props.connectWalletText ?? t`Connect wallet`

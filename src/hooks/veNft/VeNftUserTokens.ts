@@ -1,4 +1,4 @@
-import { NetworkContext } from 'contexts/networkContext'
+import { useWallet } from 'hooks/Wallet'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { useContext } from 'react'
@@ -10,7 +10,7 @@ export const useVeNftUserTokens = () => {
   const {
     veNft: { contractAddress },
   } = useContext(V2ProjectContext)
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress } = useWallet()
   return useSubgraphQuery(
     {
       entity: 'veNftToken',

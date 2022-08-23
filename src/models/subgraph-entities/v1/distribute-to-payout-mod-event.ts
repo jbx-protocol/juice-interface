@@ -2,12 +2,12 @@ import { BigNumber } from '@ethersproject/bignumber'
 
 import { parseProjectJson } from 'models/subgraph-entities/vX/project'
 
-import { Project, ProjectJson } from '../vX/project'
 import {
   BaseEventEntity,
   BaseEventEntityJson,
   parseBaseEventEntityJson,
 } from '../base/base-event-entity'
+import { Project, ProjectJson } from '../vX/project'
 
 export interface DistributeToPayoutModEvent extends BaseEventEntity {
   project: Partial<Project>

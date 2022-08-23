@@ -15,15 +15,15 @@ import {
   useState,
 } from 'react'
 import { formatDate } from 'utils/formatDate'
-import { permyriadToPercent, percentToPermyriad } from 'utils/formatNumber'
+import { percentToPermyriad, permyriadToPercent } from 'utils/formatNumber'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 
-import ReservedTokenReceiverModal from 'components/modals/ReservedTokenReceiverModal'
 import {
   validateEthAddress,
   validatePercentage,
 } from 'components/formItems/formHelpers'
+import ReservedTokenReceiverModal from 'components/modals/ReservedTokenReceiverModal'
 
 import FormattedAddress from 'components/FormattedAddress'
 import { FormItemExt } from 'components/formItems/formItemExt'

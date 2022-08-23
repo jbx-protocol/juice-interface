@@ -1,5 +1,5 @@
-import { Modal } from 'antd'
 import { t, Trans } from '@lingui/macro'
+import { Modal } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 
 export default function PayWarningModal({

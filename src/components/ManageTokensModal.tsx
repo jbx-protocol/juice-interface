@@ -1,12 +1,12 @@
+import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Modal, Space, Tooltip } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import RichButton from 'components/RichButton'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { PropsWithChildren, useContext, useState } from 'react'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-import * as constants from '@ethersproject/constants'
 import { reloadWindow } from 'utils/windowUtils'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { VeNftDrawer } from './veNft/VeNftDrawer'
 

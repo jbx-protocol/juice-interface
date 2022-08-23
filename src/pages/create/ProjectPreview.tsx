@@ -1,9 +1,9 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import {
   V2ProjectContext,
   V2ProjectContextType,
 } from 'contexts/v2/projectContext'
-import { BigNumber } from '@ethersproject/bignumber'
-import { useContext } from 'react'
+import { useWallet } from 'hooks/Wallet'
 
 import {
   useAppSelector,
@@ -12,12 +12,10 @@ import {
   useEditingV2FundingCycleMetadataSelector,
 } from 'hooks/AppSelector'
 
-import { NetworkContext } from 'contexts/networkContext'
-
 import { V2FundingCycle } from 'models/v2/fundingCycle'
 
-import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
 import { V2_CURRENCY_ETH } from 'utils/v2/currency'
+import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
 
 import V2Project from '../../components/v2/V2Project'
 
@@ -35,7 +33,7 @@ export default function ProjectPreview({
   const fundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
   const fundingCycleData = useEditingV2FundingCycleDataSelector()
   const fundAccessConstraints = useEditingV2FundAccessConstraintsSelector()
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress } = useWallet()
 
   const fundingCycle: V2FundingCycle = {
     ...fundingCycleData,

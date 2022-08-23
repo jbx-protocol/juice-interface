@@ -1,7 +1,7 @@
-import { useUniswapPriceQuery } from 'hooks/ERC20UniswapPrice'
-import { useSushiswapPriceQuery } from 'hooks/ERC20SushiswapPrice'
-import { CSSProperties } from 'react'
 import { Trans } from '@lingui/macro'
+import { useSushiswapPriceQuery } from 'hooks/ERC20SushiswapPrice'
+import { useUniswapPriceQuery } from 'hooks/ERC20UniswapPrice'
+import { CSSProperties } from 'react'
 
 import TokenAMMPriceRow from './TokenAMMPriceRow'
 

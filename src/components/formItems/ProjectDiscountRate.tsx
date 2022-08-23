@@ -1,16 +1,16 @@
-import { Form, Switch } from 'antd'
 import { Trans } from '@lingui/macro'
+import { Form, Switch } from 'antd'
 
-import { CSSProperties, useContext } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
 import FormItemLabel from 'pages/create/FormItemLabel'
+import { CSSProperties, useContext } from 'react'
 import { defaultFundingCycleData } from 'redux/slices/editingV2Project'
 
 import { DISCOUNT_RATE_EXPLANATION } from 'components/v2/V2Project/V2FundingCycleSection/settingExplanations'
 
-import { FormItemExt } from './formItemExt'
-import NumberSlider from '../inputs/NumberSlider'
 import FormItemWarningText from '../FormItemWarningText'
+import NumberSlider from '../inputs/NumberSlider'
+import { FormItemExt } from './formItemExt'
 
 function DiscountRateExtra({ disabled }: { disabled?: boolean }) {
   return (

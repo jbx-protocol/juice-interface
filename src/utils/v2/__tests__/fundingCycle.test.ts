@@ -8,11 +8,11 @@ import { Wallet } from '@ethersproject/wallet'
 
 import { invertPermyriad } from 'utils/bigNumbers'
 
+import { MaxUint54 } from 'constants/numbers'
 import {
   decodeV2FundingCycleMetadata,
   isValidMustStartAtOrAfter,
 } from '../fundingCycle'
-import { MaxUint54 } from 'constants/numbers'
 
 /**
  * Returns a mock FundingCyleMetadata packed into a BigNumber

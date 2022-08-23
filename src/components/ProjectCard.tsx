@@ -10,18 +10,18 @@ import { formatDate } from 'utils/formatDate'
 
 import { getTerminalVersion } from 'utils/v1/terminals'
 
-import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { Trans } from '@lingui/macro'
+import useSubgraphQuery from 'hooks/SubgraphQuery'
 
 import Link from 'next/link'
 
 import { v2ProjectRoute } from 'utils/routes'
 
-import ProjectLogo from './ProjectLogo'
-import ETHAmount from './currency/ETHAmount'
-import { V1ArchivedProjectIds } from '../constants/v1/archivedProjects'
-import Loading from './Loading'
 import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
+import { V1ArchivedProjectIds } from '../constants/v1/archivedProjects'
+import ETHAmount from './currency/ETHAmount'
+import Loading from './Loading'
+import ProjectLogo from './ProjectLogo'
 
 export type ProjectCardProject = Pick<
   Project,

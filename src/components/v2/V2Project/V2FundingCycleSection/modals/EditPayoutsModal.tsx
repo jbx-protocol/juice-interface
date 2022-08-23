@@ -1,29 +1,29 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Modal, Skeleton, Space } from 'antd'
-import DistributionSplitCard from 'components/v2/shared/DistributionSplitsSection/DistributionSplitCard'
-import { defaultSplit, Split } from 'models/v2/splits'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { getTotalSplitsPercentage } from 'utils/v2/distributions'
-import { ThemeContext } from 'contexts/themeContext'
-import DistributionSplitModal from 'components/v2/shared/DistributionSplitsSection/DistributionSplitModal'
-import { filter, isEqual } from 'lodash'
-import { V2CurrencyOption } from 'models/v2/currencyOption'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { V2CurrencyName } from 'utils/v2/currency'
-import { useSetProjectSplits } from 'hooks/v2/transactor/SetProjectSplits'
-import { NetworkContext } from 'contexts/networkContext'
-import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2/math'
-import { formatWad } from 'utils/formatNumber'
 import Callout from 'components/Callout'
 import { SplitCsvUpload } from 'components/SplitCsvUpload/SplitCsvUpload'
 import TooltipLabel from 'components/TooltipLabel'
+import DistributionSplitCard from 'components/v2/shared/DistributionSplitsSection/DistributionSplitCard'
+import DistributionSplitModal from 'components/v2/shared/DistributionSplitsSection/DistributionSplitModal'
+import { ThemeContext } from 'contexts/themeContext'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { useSetProjectSplits } from 'hooks/v2/transactor/SetProjectSplits'
+import { useWallet } from 'hooks/Wallet'
+import { filter, isEqual } from 'lodash'
+import { V2CurrencyOption } from 'models/v2/currencyOption'
+import { defaultSplit, Split } from 'models/v2/splits'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { formatWad } from 'utils/formatNumber'
+import { V2CurrencyName } from 'utils/v2/currency'
+import { getTotalSplitsPercentage } from 'utils/v2/distributions'
+import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2/math'
 
 import CurrencySymbol from 'components/CurrencySymbol'
 
 import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
 
 const OwnerSplitCard = ({ splits }: { splits: Split[] }) => {
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress } = useWallet()
   const { distributionLimit, distributionLimitCurrency } =
     useContext(V2ProjectContext)
   const remainingSplitsPercentage = 100 - getTotalSplitsPercentage(splits)

@@ -1,6 +1,6 @@
+import { formatBytes32String } from '@ethersproject/strings'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
-import { formatBytes32String } from '@ethersproject/strings'
 import { useContext } from 'react'
 
 import { BigNumber } from '@ethersproject/bignumber'

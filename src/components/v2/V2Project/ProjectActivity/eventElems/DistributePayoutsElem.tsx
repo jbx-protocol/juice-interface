@@ -1,5 +1,5 @@
-import FormattedAddress from 'components/FormattedAddress'
 import EtherscanLink from 'components/EtherscanLink'
+import FormattedAddress from 'components/FormattedAddress'
 
 import { ThemeContext } from 'contexts/themeContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
@@ -12,8 +12,8 @@ import {
   primaryContentFontSize,
   smallHeaderStyle,
 } from 'components/activityEventElems/styles'
-import { DistributePayoutsEvent } from 'models/subgraph-entities/v2/distribute-payouts-event'
 import ETHAmount from 'components/currency/ETHAmount'
+import { DistributePayoutsEvent } from 'models/subgraph-entities/v2/distribute-payouts-event'
 
 export default function DistributePayoutsElem({
   event,

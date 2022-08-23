@@ -1,6 +1,6 @@
+import { Trans } from '@lingui/macro'
 import Moon from 'components/icons/Moon'
 import Sun from 'components/icons/Sun'
-import { Trans } from '@lingui/macro'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'

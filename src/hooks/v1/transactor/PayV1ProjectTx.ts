@@ -1,6 +1,6 @@
-import { NetworkContext } from 'contexts/networkContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
+import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 
 import { BigNumber } from '@ethersproject/bignumber'
@@ -14,7 +14,7 @@ export function usePayV1ProjectTx(): TransactorInstance<{
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
   const { terminal, projectId } = useContext(V1ProjectContext)
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress } = useWallet()
 
   return ({ note, preferUnstaked, value }, txOpts) => {
     if (

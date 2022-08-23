@@ -1,35 +1,13 @@
-import { Contract } from '@ethersproject/contracts'
+import { useLoadContractFromAddress } from 'hooks/LoadContractFromAddress'
 
-import { NetworkContext } from 'contexts/networkContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { useContext } from 'react'
 
-import { useContext, useEffect, useState } from 'react'
+import { veNftAbi } from 'constants/veNft/veNftAbi'
 
-import { loadVeNftContract } from 'utils/contracts'
-
-import { readProvider } from 'constants/readProvider'
-
-export function useVeNftContract(): Contract | undefined {
+export function useVeNftContract() {
   const {
     veNft: { contractAddress },
   } = useContext(V2ProjectContext)
-  const [contract, setContract] = useState<Contract>()
-  const { signingProvider } = useContext(NetworkContext)
-
-  useEffect(() => {
-    const loadContract = async () => {
-      if (!contractAddress) {
-        return
-      }
-      const signerOrProvider = signingProvider?.getSigner() ?? readProvider
-      const contract = await loadVeNftContract(
-        signerOrProvider,
-        contractAddress,
-      )
-      setContract(contract)
-    }
-    loadContract()
-  }, [contractAddress, signingProvider, setContract])
-
-  return contract
+  return useLoadContractFromAddress({ address: contractAddress, abi: veNftAbi })
 }

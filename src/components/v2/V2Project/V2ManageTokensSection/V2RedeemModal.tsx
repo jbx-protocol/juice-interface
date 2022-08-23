@@ -1,6 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Descriptions, Form, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
+import { useWallet } from 'hooks/Wallet'
 
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
@@ -8,17 +9,16 @@ import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { useContext, useState } from 'react'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 
-import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { tokenSymbolText } from 'utils/tokenSymbolText'
-import useTotalBalanceOf from 'hooks/v2/contractReader/TotalBalanceOf'
-import { NetworkContext } from 'contexts/networkContext'
-import { formatRedemptionRate } from 'utils/v2/math'
-import { useETHReceivedFromTokens } from 'hooks/v2/contractReader/ETHReceivedFromTokens'
-import { V2_CURRENCY_USD } from 'utils/v2/currency'
-import { useRedeemTokensTx } from 'hooks/v2/transactor/RedeemTokensTx'
-import TransactionModal from 'components/TransactionModal'
-import ETHAmount from 'components/currency/ETHAmount'
 import Callout from 'components/Callout'
+import ETHAmount from 'components/currency/ETHAmount'
+import TransactionModal from 'components/TransactionModal'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { useETHReceivedFromTokens } from 'hooks/v2/contractReader/ETHReceivedFromTokens'
+import useTotalBalanceOf from 'hooks/v2/contractReader/TotalBalanceOf'
+import { useRedeemTokensTx } from 'hooks/v2/transactor/RedeemTokensTx'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
+import { V2_CURRENCY_USD } from 'utils/v2/currency'
+import { formatRedemptionRate } from 'utils/v2/math'
 
 // This doubles as the 'Redeem' and 'Burn' modal depending on if project has overflow
 export default function V2RedeemModal({
@@ -30,7 +30,7 @@ export default function V2RedeemModal({
   onCancel?: VoidFunction
   onConfirmed?: VoidFunction
 }) {
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress } = useWallet()
   const {
     tokenSymbol,
     fundingCycle,

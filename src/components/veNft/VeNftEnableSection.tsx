@@ -1,11 +1,11 @@
 import { Trans } from '@lingui/macro'
 import { Button, Divider, Space } from 'antd'
+import { useWallet } from 'hooks/Wallet'
 import { useContext, useState } from 'react'
 
 import VeNftSetupModal from 'components/veNft/VeNftSetupModal'
-import { useLaunchVeNftTx } from 'hooks/veNft/transactor/LaunchVeNftTx'
-import { NetworkContext } from 'contexts/networkContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { useLaunchVeNftTx } from 'hooks/veNft/transactor/LaunchVeNftTx'
 
 import { featureFlagEnabled } from 'utils/featureFlags'
 
@@ -13,10 +13,11 @@ import {
   DEFAULT_LOCK_DURATIONS,
   VENFT_RESOLVER_ADDRESS,
 } from 'constants/veNft/veNftProject'
+
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 
 const VeNftEnableSection = () => {
-  const { userAddress, onSelectWallet } = useContext(NetworkContext)
+  const { isConnected, connect } = useWallet()
   const { tokenSymbol } = useContext(V2ProjectContext)
   const [loading, setLoading] = useState(false)
   const [setupModalVisible, setSetupModalVisible] = useState(false)
@@ -25,8 +26,9 @@ const VeNftEnableSection = () => {
   const launchVeBannyTx = useLaunchVeNftTx()
 
   const launchVeBanny = async () => {
-    if (!userAddress && onSelectWallet) {
-      onSelectWallet()
+    if (!isConnected) {
+      connect()
+      return
     }
 
     setLoading(true)

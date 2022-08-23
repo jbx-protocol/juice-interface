@@ -1,6 +1,6 @@
+import { LoadingOutlined } from '@ant-design/icons'
 import { CardSection } from 'components/CardSection'
 import FundingCycleDetailsCard from 'components/Project/FundingCycleDetailsCard'
-import { LoadingOutlined } from '@ant-design/icons'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useContext } from 'react'
 import { V2FundingCycleRiskCount } from 'utils/v2/fundingCycle'

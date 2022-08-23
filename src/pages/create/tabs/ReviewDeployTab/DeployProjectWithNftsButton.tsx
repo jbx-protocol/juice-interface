@@ -1,3 +1,5 @@
+import { BigNumber } from '@ethersproject/bignumber'
+import { TransactionReceipt } from '@ethersproject/providers'
 import { Trans } from '@lingui/macro'
 import { Button, FormInstance } from 'antd'
 import {
@@ -10,22 +12,20 @@ import {
   TxNftArg,
   useLaunchProjectWithNftsTx,
 } from 'hooks/v2/transactor/LaunchProjectWithNftsTx'
-import { useCallback, useContext, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
-import { TransactionReceipt } from '@ethersproject/providers'
-import { BigNumber } from '@ethersproject/bignumber'
-import { NetworkContext } from 'contexts/networkContext'
 import { emitErrorNotification } from 'utils/notifications'
 
 import TransactionModal from 'components/TransactionModal'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
+import { useWallet } from 'hooks/Wallet'
 
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 
-import { v2ProjectRoute } from 'utils/routes'
 import { TransactionEvent } from 'bnc-notify'
 import { useRouter } from 'next/router'
+import { v2ProjectRoute } from 'utils/routes'
 
 import { readNetwork } from 'constants/networks'
 import { findTransactionReceipt } from './utils'
@@ -56,7 +56,7 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
   const launchProjectWithNftsTx = useLaunchProjectWithNftsTx()
   const router = useRouter()
 
-  const { userAddress, onSelectWallet } = useContext(NetworkContext)
+  const { chainUnsupported, isConnected, changeNetworks, connect } = useWallet()
 
   const {
     projectMetadata: { name: projectName },
@@ -200,8 +200,13 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
       return
     }
 
-    if (!userAddress) {
-      return onSelectWallet?.()
+    if (chainUnsupported) {
+      await changeNetworks()
+      return
+    }
+    if (!isConnected) {
+      await connect()
+      return
     }
 
     return deployProject()
@@ -218,7 +223,7 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
         loading={deployLoading}
       >
         <span>
-          {userAddress ? (
+          {isConnected ? (
             <Trans>Deploy project to {readNetwork.name}</Trans>
           ) : (
             <Trans>Connect wallet to deploy</Trans>

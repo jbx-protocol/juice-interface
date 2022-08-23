@@ -1,26 +1,26 @@
-import { NetworkContext } from 'contexts/networkContext'
-import { V2UserContext } from 'contexts/v2/userContext'
 import { getAddress } from '@ethersproject/address'
 import * as constants from '@ethersproject/constants'
-import { useContext } from 'react'
+import { V2UserContext } from 'contexts/v2/userContext'
+import { useWallet } from 'hooks/Wallet'
 import {
   V2FundAccessConstraint,
   V2FundingCycleData,
   V2FundingCycleMetadata,
 } from 'models/v2/fundingCycle'
+import { useContext } from 'react'
 
-import { GroupedSplits, SplitGroup } from 'models/v2/splits'
 import { NftRewardTier } from 'models/v2/nftRewardTier'
+import { GroupedSplits, SplitGroup } from 'models/v2/splits'
 
-import { parseEther } from '@ethersproject/units'
-import { isValidMustStartAtOrAfter } from 'utils/v2/fundingCycle'
 import { BigNumber } from '@ethersproject/bignumber'
+import { parseEther } from '@ethersproject/units'
 import { encodeIPFSUri, ipfsCidUrl } from 'utils/ipfs'
+import { isValidMustStartAtOrAfter } from 'utils/v2/fundingCycle'
 import { getLatestNftDelegateStoreContractAddress } from 'utils/v2/nftRewards'
 
-import { TransactorInstance } from '../../Transactor'
-import { JUICEBOX_MONEY_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
 import { MaxUint48 } from 'constants/numbers'
+import { JUICEBOX_MONEY_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
+import { TransactorInstance } from '../../Transactor'
 
 const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
 const DEFAULT_MEMO = ''
@@ -92,7 +92,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
   nftRewards: TxNftArg
 }> {
   const { transactor, contracts } = useContext(V2UserContext)
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress } = useWallet()
 
   return async (
     {

@@ -4,14 +4,15 @@ import { useState } from 'react'
 import { TransactionReceipt } from '@ethersproject/providers'
 import { TransactorInstance } from 'hooks/Transactor'
 
+import { ToolOutlined } from '@ant-design/icons'
 import { Modal, Space } from 'antd'
-import EtherscanLink from 'components/EtherscanLink'
-import CopyTextButton from 'components/CopyTextButton'
-import TransactionModal from 'components/TransactionModal'
+import { useForm } from 'antd/lib/form/Form'
 import Callout from 'components/Callout'
+import CopyTextButton from 'components/CopyTextButton'
+import EtherscanLink from 'components/EtherscanLink'
+import TransactionModal from 'components/TransactionModal'
 import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayerTx'
 import { emitErrorNotification } from 'utils/notifications'
-import { ToolOutlined } from '@ant-design/icons'
 
 import { readProvider } from 'constants/readProvider'
 
@@ -28,6 +29,14 @@ const getProjectPayerAddressFromReceipt = (
 ): string => {
   const newProjectPayerAddress = txReceipt?.logs[DEPLOY_EVENT_IDX]?.address
   return newProjectPayerAddress
+}
+
+export interface AdvancedOptionsFields {
+  memo: string
+  memoImageUrl: string | undefined
+  tokenMintingEnabled: boolean
+  customBeneficiaryAddress: string | undefined
+  preferClaimed: boolean
 }
 
 export default function LaunchProjectPayerModal({
@@ -47,36 +56,25 @@ export default function LaunchProjectPayerModal({
   const [transactionPending, setTransactionPending] = useState<boolean>()
   const [projectPayerAddress, setProjectPayerAddress] = useState<string>()
 
-  const [tokenMintingEnabled, setTokenMintingEnabled] = useState<boolean>(true)
-  const [customBeneficiaryAddress, setCustomBeneficiaryAddress] =
-    useState<string>()
-  const [preferClaimed, setPreferClaimed] = useState<boolean>(false)
-  const [memo, setMemo] = useState<string>()
+  const [advancedOptionsForm] = useForm<AdvancedOptionsFields>()
 
   const [confirmedModalVisible, setConfirmedModalVisible] = useState<boolean>()
-  // TODO: load project payer and show different thing in this section if the project already has one
-  // (Issue: #897)
 
   const deployProjectPayerTx = useDeployProjectPayerTx()
-
-  const resetStates = () => {
-    setTokenMintingEnabled(true)
-    setCustomBeneficiaryAddress(undefined)
-    setPreferClaimed(false)
-    setMemo(undefined)
-  }
 
   async function deployProjectPayer() {
     if (!deployProjectPayerTx) return
 
     setLoadingProjectPayer(true)
 
+    const fields = advancedOptionsForm.getFieldsValue(true)
+
     const txSuccess = await deployProjectPayerTx(
       {
-        customBeneficiaryAddress,
-        customMemo: memo,
-        tokenMintingEnabled,
-        preferClaimed,
+        customBeneficiaryAddress: fields.customBeneficiaryAddress,
+        customMemo: `${fields.memo} ${fields.memoImageUrl ?? ''}`,
+        tokenMintingEnabled: fields.tokenMintingEnabled,
+        preferClaimed: fields.preferClaimed,
       },
       {
         onDone() {
@@ -101,6 +99,7 @@ export default function LaunchProjectPayerModal({
           setLoadingProjectPayer(false)
           setTransactionPending(false)
           setConfirmedModalVisible(true)
+          advancedOptionsForm.resetFields()
         },
       },
     )
@@ -108,7 +107,6 @@ export default function LaunchProjectPayerModal({
       setLoadingProjectPayer(false)
       setTransactionPending(false)
     }
-    resetStates()
   }
 
   return (
@@ -122,6 +120,7 @@ export default function LaunchProjectPayerModal({
         onCancel={() => onClose()}
         confirmLoading={loadingProjectPayer}
         transactionPending={transactionPending}
+        width={600}
       >
         <Space direction="vertical" size="middle">
           <div>
@@ -144,18 +143,7 @@ export default function LaunchProjectPayerModal({
               <strong>won't receive project tokens</strong>.
             </Trans>
           </Callout>
-          {/* TODO: we should consider reworking this */}
-          {/* Form that controls internals of the AdvancedOptionsCollapse */}
-          <AdvancedOptionsCollapse
-            memo={memo}
-            setMemo={setMemo}
-            customBeneficiaryAddress={customBeneficiaryAddress}
-            setCustomBeneficiaryAddress={setCustomBeneficiaryAddress}
-            tokenMintingEnabled={tokenMintingEnabled}
-            setTokenMintingEnabled={setTokenMintingEnabled}
-            preferClaimed={preferClaimed}
-            setPreferClaimed={setPreferClaimed}
-          />
+          <AdvancedOptionsCollapse form={advancedOptionsForm} />
         </Space>
       </TransactionModal>
       <Modal

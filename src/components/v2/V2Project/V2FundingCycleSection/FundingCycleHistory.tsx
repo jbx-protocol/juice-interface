@@ -1,6 +1,6 @@
 import { CaretRightOutlined } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
 import { BigNumber } from '@ethersproject/bignumber'
+import { t, Trans } from '@lingui/macro'
 
 import { Space } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
@@ -13,15 +13,15 @@ import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
 
 import FundingCycleDetails from 'components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails'
-import { V2FundingCycle } from 'models/v2/fundingCycle'
-import { V2CurrencyName } from 'utils/v2/currency'
-import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { V2UserContext } from 'contexts/v2/userContext'
 import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
 import useUsedDistributionLimit from 'hooks/v2/contractReader/UsedDistributionLimit'
-import { V2UserContext } from 'contexts/v2/userContext'
-import { formatDiscountRate, MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
+import { V2CurrencyOption } from 'models/v2/currencyOption'
+import { V2FundingCycle } from 'models/v2/fundingCycle'
+import { V2CurrencyName } from 'utils/v2/currency'
 import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
+import { formatDiscountRate, MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
 
 // Fill in gaps between first funding cycle of each configuration:
 //     - derives starts from duration and start time of the first FC of that configuration

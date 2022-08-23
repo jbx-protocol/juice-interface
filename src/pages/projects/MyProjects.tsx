@@ -4,14 +4,14 @@ import { Button } from 'antd'
 import Grid from 'components/Grid'
 import Loading from 'components/Loading'
 import ProjectCard from 'components/ProjectCard'
-import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useMyProjectsQuery } from 'hooks/Projects'
-import { useContext } from 'react'
+import { useWallet } from 'hooks/Wallet'
 import Link from 'next/link'
+import { useContext } from 'react'
 
 export default function MyProjects() {
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress } = useWallet()
 
   const { data: projects, isLoading } = useMyProjectsQuery(userAddress)
 

@@ -1,12 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { V1FundingCycle } from 'models/v1/fundingCycle'
+import { CV } from 'models/cv'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { ProjectMetadataV4 } from 'models/project-metadata'
 import { ProjectType } from 'models/project-type'
-import { V1TerminalName } from 'models/v1/terminals'
-import { V1TerminalVersion } from 'models/v1/terminals'
+import { V1FundingCycle } from 'models/v1/fundingCycle'
+import { V1TerminalName, V1TerminalVersion } from 'models/v1/terminals'
 import { createContext } from 'react'
-import { CV } from 'models/cv'
 
 export type V1ProjectContextType = {
   projectId: number | undefined

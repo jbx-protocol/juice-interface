@@ -1,10 +1,10 @@
 import { Trans } from '@lingui/macro'
 import { Button, Drawer, DrawerProps } from 'antd'
 
+import ReconfigurationStrategySelector from 'components/ReconfigurationStrategy/ReconfigurationStrategySelector'
 import { ThemeContext } from 'contexts/themeContext'
 import { BallotStrategy } from 'models/ballot'
 import { useContext, useEffect, useState } from 'react'
-import ReconfigurationStrategySelector from 'components/ReconfigurationStrategy/ReconfigurationStrategySelector'
 
 import { ballotStrategies } from 'constants/v1/ballotStrategies'
 

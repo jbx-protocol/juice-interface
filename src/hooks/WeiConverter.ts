@@ -1,9 +1,9 @@
-import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { parseEther } from 'ethers/lib/utils'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 
-import { useContext } from 'react'
 import { CurrencyContext } from 'contexts/currencyContext'
 import { CurrencyOption } from 'models/currencyOption'
+import { useContext } from 'react'
 
 // Converts an amount (ETH or USD) to WEIw
 export default function useWeiConverter<C extends CurrencyOption>({

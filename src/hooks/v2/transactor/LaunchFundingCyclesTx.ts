@@ -1,11 +1,11 @@
-import { NetworkContext } from 'contexts/networkContext'
 import { V2UserContext } from 'contexts/v2/userContext'
-import { useContext } from 'react'
+import { useWallet } from 'hooks/Wallet'
 import {
   V2FundAccessConstraint,
   V2FundingCycleData,
   V2FundingCycleMetadata,
 } from 'models/v2/fundingCycle'
+import { useContext } from 'react'
 
 import { GroupedSplits, SplitGroup } from 'models/v2/splits'
 import { isValidMustStartAtOrAfter } from 'utils/v2/fundingCycle'
@@ -24,7 +24,7 @@ export function useLaunchFundingCyclesTx(): TransactorInstance<{
   mustStartAtOrAfter?: string // epoch seconds. anything less than "now" will start immediately.
 }> {
   const { transactor, contracts } = useContext(V2UserContext)
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress } = useWallet()
 
   return (
     {

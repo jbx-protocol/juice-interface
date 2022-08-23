@@ -23,3 +23,21 @@ export const betweenZeroAndOne = (amount: BigNumber) => {
 export const invertPermyriad = (permyriad: BigNumber) => {
   return BigNumber.from(10000).sub(permyriad)
 }
+
+/**
+ * Unpad any extra leading zeros on a hex number.
+ */
+export const unpadLeadingZerosString = (num: string) => {
+  if (!num.match(/^0x/)) {
+    throw new Error('Invalid number passed to unpadLeadingZerosString')
+  }
+  num = num.slice(2)
+  while (num.length > 0) {
+    if (num[0] === '0') {
+      num = num.slice(1)
+      continue
+    }
+    break
+  }
+  return `0x${num}`
+}

@@ -6,8 +6,8 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/V2ConnectedWalletHasPermission'
 import { V2OperatorPermission } from 'models/v2/permissions'
 
-import { useContext, useState } from 'react'
 import { ToolOutlined } from '@ant-design/icons'
+import { useContext, useState } from 'react'
 
 import ProjectVersionBadge from 'components/ProjectVersionBadge'
 

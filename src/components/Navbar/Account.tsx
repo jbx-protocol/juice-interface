@@ -1,22 +1,34 @@
 import { Button, Space } from 'antd'
-import { NetworkContext } from 'contexts/networkContext'
 
-import { useContext } from 'react'
 import { Trans } from '@lingui/macro'
+import { useAccountCenter } from '@web3-onboard/react'
 import { ThemeContext } from 'contexts/themeContext'
+import { useWallet } from 'hooks/Wallet'
+import { useContext, useEffect } from 'react'
 
 import Wallet from './Wallet'
 
 export default function Account() {
-  const { userAddress, onSelectWallet, shouldSwitchNetwork, walletIsReady } =
-    useContext(NetworkContext)
+  const {
+    userAddress,
+    isConnected,
+    connect,
+    chainUnsupported,
+    changeNetworks,
+  } = useWallet()
+  const updateAccountCenter = useAccountCenter()
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  if (!userAddress) {
+  useEffect(() => {
+    updateAccountCenter({ enabled: false })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  if (!isConnected) {
     return (
-      <Button onClick={onSelectWallet} block>
+      <Button onClick={() => connect()} block>
         <Trans>Connect</Trans>
       </Button>
     )
@@ -24,17 +36,17 @@ export default function Account() {
 
   if (!userAddress) return null
 
-  if (shouldSwitchNetwork) {
+  if (chainUnsupported) {
     return (
       <Space direction="horizontal">
-        {shouldSwitchNetwork && (
+        {chainUnsupported && (
           <Button
             size="small"
             style={{
               borderColor: colors.stroke.warn,
               color: colors.text.warn,
             }}
-            onClick={walletIsReady}
+            onClick={changeNetworks}
           >
             Wrong network
           </Button>

@@ -1,4 +1,15 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { Col, Row, Space } from 'antd'
+import { parseEther } from 'ethers/lib/utils'
+import { useWallet } from 'hooks/Wallet'
+import { V2CurrencyOption } from 'models/v2/currencyOption'
+import {
+  V2FundAccessConstraint,
+  V2FundingCycle,
+  V2FundingCycleData,
+  V2FundingCycleMetadata,
+} from 'models/v2/fundingCycle'
+import { Split } from 'models/v2/splits'
 import {
   AllowMintingStatistic,
   AllowSetTerminalsStatistic,
@@ -14,27 +25,15 @@ import {
   ReservedSplitsStatistic,
   ReservedTokensStatistic,
 } from 'pages/create/tabs/ReviewDeployTab/FundingAttributes'
-import {
-  V2FundAccessConstraint,
-  V2FundingCycle,
-  V2FundingCycleData,
-  V2FundingCycleMetadata,
-} from 'models/v2/fundingCycle'
-import { BigNumber } from '@ethersproject/bignumber'
-import { useContext } from 'react'
-import { NetworkContext } from 'contexts/networkContext'
-import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
+import { formattedNum } from 'utils/formatNumber'
 import { V2CurrencyName } from 'utils/v2/currency'
-import { V2CurrencyOption } from 'models/v2/currencyOption'
+import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
 import {
   formatIssuanceRate,
   formatReservedRate,
   MAX_DISTRIBUTION_LIMIT,
   weightedAmount,
 } from 'utils/v2/math'
-import { Split } from 'models/v2/splits'
-import { formattedNum } from 'utils/formatNumber'
-import { parseEther } from 'ethers/lib/utils'
 
 export default function ReconfigurePreview({
   payoutSplits,
@@ -49,7 +48,7 @@ export default function ReconfigurePreview({
   fundingCycleData: V2FundingCycleData
   fundAccessConstraints: V2FundAccessConstraint[]
 }) {
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress } = useWallet()
 
   const fundingCycle: V2FundingCycle = {
     ...fundingCycleData,

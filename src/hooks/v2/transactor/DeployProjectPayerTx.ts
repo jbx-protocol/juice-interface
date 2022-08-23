@@ -1,8 +1,8 @@
 import * as constants from '@ethersproject/constants'
-import { useContext } from 'react'
-import { V2UserContext } from 'contexts/v2/userContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { NetworkContext } from 'contexts/networkContext'
+import { V2UserContext } from 'contexts/v2/userContext'
+import { useWallet } from 'hooks/Wallet'
+import { useContext } from 'react'
 
 import { TransactorInstance } from '../../Transactor'
 
@@ -15,7 +15,7 @@ export type DeployProjectPayerTxArgs = {
 
 export function useDeployProjectPayerTx(): TransactorInstance<DeployProjectPayerTxArgs> {
   const { transactor, contracts } = useContext(V2UserContext)
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress } = useWallet()
   const { projectId } = useContext(V2ProjectContext)
 
   const DEFAULT_MEMO = ''

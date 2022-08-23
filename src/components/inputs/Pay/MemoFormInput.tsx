@@ -1,10 +1,10 @@
 import { t } from '@lingui/macro'
 import { Input } from 'antd'
 
-import { useContext, useState } from 'react'
-import { ThemeContext } from 'contexts/themeContext'
 import Sticker from 'components/icons/Sticker'
 import { AttachStickerModal } from 'components/modals/AttachStickerModal'
+import { ThemeContext } from 'contexts/themeContext'
+import { useContext, useState } from 'react'
 
 export function MemoFormInput({
   value,

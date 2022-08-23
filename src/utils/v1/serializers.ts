@@ -1,12 +1,12 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import {
-  perbicentToPercent,
-  permilleToPercent,
   fromWad,
+  parseWad,
+  perbicentToPercent,
   percentToPerbicent,
   percentToPermille,
-  parseWad,
+  permilleToPercent,
 } from 'utils/formatNumber'
 
 // Spreads all properties from both v0 or v1 FundingCycleMetadata

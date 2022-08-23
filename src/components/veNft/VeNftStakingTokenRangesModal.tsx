@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { Col, Modal, Row, Image } from 'antd'
+import { Col, Image, Modal, Row } from 'antd'
 import { VeNftContext } from 'contexts/v2/veNftContext'
 import { useContext } from 'react'
 import { getVeNftBaseImage } from 'utils/v2/veNft'

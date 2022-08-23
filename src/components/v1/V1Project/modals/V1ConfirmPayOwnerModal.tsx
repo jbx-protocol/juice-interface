@@ -194,6 +194,7 @@ export default function V1ConfirmPayOwnerModal({
       confirmLoading={loading}
       width={640}
       centered={true}
+      zIndex={1}
     >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <p>

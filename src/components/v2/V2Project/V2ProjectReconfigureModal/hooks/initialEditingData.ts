@@ -149,13 +149,15 @@ export const useInitialEditingData = (visible: boolean) => {
     )
 
     // Set editing funding cycle
-    const editingFundingCycleData = serializeV2FundingCycleData(
-      effectiveFundingCycle,
-    )
+    const editingFundingCycleData = fundingCycle?.weight
+      ? serializeV2FundingCycleData({
+          ...effectiveFundingCycle,
+          weight: fundingCycle.weight,
+        })
+      : serializeV2FundingCycleData(effectiveFundingCycle)
+
     dispatch(
-      editingV2ProjectActions.setFundingCycleData(
-        serializeV2FundingCycleData(effectiveFundingCycle),
-      ),
+      editingV2ProjectActions.setFundingCycleData(editingFundingCycleData),
     )
 
     // Set editing funding metadata

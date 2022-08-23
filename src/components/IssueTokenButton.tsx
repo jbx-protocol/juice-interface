@@ -67,7 +67,7 @@ export default function IssueTokenButton({
     setModalVisible(false)
 
     // remove newDeploy=true query parameter
-    router.replace({
+    router.replace(router.pathname, {
       search: '',
     })
   }

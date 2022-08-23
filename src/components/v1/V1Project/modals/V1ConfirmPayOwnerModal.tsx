@@ -4,12 +4,10 @@ import { t, Trans } from '@lingui/macro'
 import { Checkbox, Descriptions, Form, Input, Modal, Space } from 'antd'
 import { useForm, useWatch } from 'antd/lib/form/Form'
 import FormattedAddress from 'components/FormattedAddress'
-import { NetworkContext } from 'contexts/networkContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { emitErrorNotification } from 'utils/notifications'
 
-import { usePayV1ProjectTx } from 'hooks/v1/transactor/PayV1ProjectTx'
 import { useContext, useState } from 'react'
 import { formattedNum, formatWad } from 'utils/formatNumber'
 import { weightedRate } from 'utils/math'
@@ -20,6 +18,8 @@ import {
   fundingCycleRiskCount,
   getUnsafeV1FundingCycleProperties,
 } from 'utils/v1/fundingCycle'
+import { usePayV1ProjectTx } from 'hooks/v1/transactor/PayV1ProjectTx'
+import { useWallet } from 'hooks/Wallet'
 
 import Callout from 'components/Callout'
 import Paragraph from 'components/Paragraph'
@@ -71,7 +71,13 @@ export default function V1ConfirmPayOwnerModal({
 
   const stickerUrls = useWatch('stickerUrls', form)
 
-  const { userAddress, onSelectWallet } = useContext(NetworkContext)
+  const {
+    userAddress,
+    chainUnsupported,
+    isConnected,
+    changeNetworks,
+    connect,
+  } = useWallet()
   const { tokenSymbol, tokenAddress, currentFC, metadata } =
     useContext(V1ProjectContext)
   const converter = useCurrencyConverter()
@@ -95,8 +101,13 @@ export default function V1ConfirmPayOwnerModal({
     } = form.getFieldsValue()
 
     // Prompt wallet connect if no wallet connected
-    if (!userAddress && onSelectWallet) {
-      onSelectWallet()
+    if (chainUnsupported) {
+      await changeNetworks()
+      return
+    }
+    if (!isConnected) {
+      await connect()
+      return
     }
     setLoading(true)
 
@@ -183,6 +194,7 @@ export default function V1ConfirmPayOwnerModal({
       confirmLoading={loading}
       width={640}
       centered={true}
+      zIndex={1}
     >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <p>

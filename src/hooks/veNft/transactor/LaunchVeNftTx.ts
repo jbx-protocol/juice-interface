@@ -3,7 +3,7 @@ import { V2UserContext } from 'contexts/v2/userContext'
 
 import { TransactorInstance } from 'hooks/Transactor'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { NetworkContext } from 'contexts/networkContext'
+import { useWallet } from 'hooks/Wallet'
 
 export type ExtendLockTx = TransactorInstance<{
   name: string
@@ -14,7 +14,7 @@ export type ExtendLockTx = TransactorInstance<{
 
 export function useLaunchVeNftTx(): ExtendLockTx {
   const { transactor, contracts } = useContext(V2UserContext)
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress } = useWallet()
   const { projectId } = useContext(V2ProjectContext)
 
   return ({ name, symbol, uriResolver, lockDurationOptions }, txOpts) => {

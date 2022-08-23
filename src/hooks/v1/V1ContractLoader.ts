@@ -1,19 +1,18 @@
 import { Contract } from '@ethersproject/contracts'
-import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
+import { SignerOrProvider } from 'utils/types'
+import { useWallet } from 'hooks/Wallet'
 
-import { NetworkContext } from 'contexts/networkContext'
 import { V1ContractName } from 'models/v1/contracts'
 import { V1Contracts } from 'models/v1/contracts'
 import { NetworkName } from 'models/network-name'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { readProvider } from 'constants/readProvider'
 import { readNetwork } from 'constants/networks'
 
 export function useV1ContractLoader() {
   const [contracts, setContracts] = useState<V1Contracts>()
-
-  const { signingProvider } = useContext(NetworkContext)
+  const { signer } = useWallet()
 
   useEffect(() => {
     async function loadContracts() {
@@ -21,7 +20,7 @@ export function useV1ContractLoader() {
         const network = readNetwork.name
 
         // Contracts can be used read-only without a signer, but require a signer to create transactions.
-        const signerOrProvider = signingProvider?.getSigner() ?? readProvider
+        const signerOrProvider = signer ?? readProvider
 
         const loadContractKeyPair = async (contractName: V1ContractName) => ({
           key: contractName,
@@ -47,7 +46,7 @@ export function useV1ContractLoader() {
     }
 
     loadContracts()
-  }, [signingProvider, setContracts])
+  }, [setContracts, signer])
 
   return contracts
 }
@@ -55,7 +54,7 @@ export function useV1ContractLoader() {
 const loadContract = async (
   contractName: keyof typeof V1ContractName,
   network: NetworkName,
-  signerOrProvider: JsonRpcSigner | JsonRpcProvider,
+  signerOrProvider: SignerOrProvider,
 ): Promise<Contract> => {
   const contract = await import(
     `@jbx-protocol/contracts-v1/deployments/${network}/${contractName}.json`

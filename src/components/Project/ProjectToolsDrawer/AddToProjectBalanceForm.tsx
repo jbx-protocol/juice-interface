@@ -3,11 +3,11 @@ import { Form } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactorButton from 'components/TransactorButton'
-import { NetworkContext } from 'contexts/networkContext'
 import { BigNumber } from '@ethersproject/bignumber'
 import { TransactorInstance } from 'hooks/Transactor'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { parseWad } from 'utils/formatNumber'
+import { useWallet } from 'hooks/Wallet'
 
 export function AddToProjectBalanceForm({
   useAddToBalanceTx,
@@ -16,7 +16,7 @@ export function AddToProjectBalanceForm({
     value: BigNumber
   }>
 }) {
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress } = useWallet()
 
   const [addToBalanceForm] = Form.useForm<{ amount: string }>()
   const [loadingAddToBalance, setLoadingAddToBalance] = useState<boolean>()

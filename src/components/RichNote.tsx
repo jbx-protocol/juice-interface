@@ -5,28 +5,32 @@ import { useProcessedRichNote } from 'hooks/ProcessedRichNote'
 
 type RichNoteProps = {
   note: string | undefined
+  ignoreMediaLinks?: boolean
   style?: React.CSSProperties | undefined
 }
 
 export default function RichNote({
   note,
   style,
+  ignoreMediaLinks,
   children,
 }: React.PropsWithChildren<RichNoteProps>) {
   const { trimmedNote, formattedMediaLinks } = useProcessedRichNote(note)
 
-  if (trimmedNote === undefined) return null
+  const noteToRender = ignoreMediaLinks ? note : trimmedNote
+
+  if (noteToRender === undefined) return null
 
   return (
     <div style={{ marginTop: 5, ...style }}>
-      {trimmedNote.length ? (
+      {noteToRender.length ? (
         <span
           style={{
             overflowWrap: 'break-word',
             paddingRight: '0.5rem',
           }}
           dangerouslySetInnerHTML={{
-            __html: Autolinker.link(trimmedNote, {
+            __html: Autolinker.link(noteToRender, {
               sanitizeHtml: true,
               truncate: {
                 length: 30,
@@ -39,7 +43,7 @@ export default function RichNote({
 
       {children}
 
-      {formattedMediaLinks?.length ? (
+      {!ignoreMediaLinks && formattedMediaLinks?.length ? (
         <div style={{ display: 'block' }}>
           <Space size="middle">
             {formattedMediaLinks.map((link, i) => (

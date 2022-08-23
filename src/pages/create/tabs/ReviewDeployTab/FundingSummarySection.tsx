@@ -10,7 +10,7 @@ import {
   useEditingV2FundingCycleMetadataSelector,
 } from 'hooks/AppSelector'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
-import { useContext } from 'react'
+import { useWallet } from 'hooks/Wallet'
 import { formattedNum } from 'utils/formatNumber'
 import { V2CurrencyName } from 'utils/v2/currency'
 import {
@@ -23,7 +23,6 @@ import {
   MAX_DISTRIBUTION_LIMIT,
   weightedAmount,
 } from 'utils/v2/math'
-import { NetworkContext } from 'contexts/networkContext'
 
 import { V2FundingCycle } from 'models/v2/fundingCycle'
 import Callout from 'components/Callout'
@@ -51,7 +50,7 @@ export default function FundingSummarySection() {
     state => state.editingV2Project,
   )
 
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress } = useWallet()
 
   const fundingCycleData = useEditingV2FundingCycleDataSelector()
   const fundAccessConstraints = useEditingV2FundAccessConstraintsSelector()

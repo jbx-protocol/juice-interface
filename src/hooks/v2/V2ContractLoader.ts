@@ -1,6 +1,6 @@
-import { NetworkContext } from 'contexts/networkContext'
 import { V2ContractName, V2Contracts } from 'models/v2/contracts'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useWallet } from 'hooks/Wallet'
 
 import { loadContract } from 'utils/contracts/loadContract'
 
@@ -8,9 +8,8 @@ import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
 
 export function useV2ContractLoader() {
+  const { signer } = useWallet()
   const [contracts, setContracts] = useState<V2Contracts>()
-
-  const { signingProvider } = useContext(NetworkContext)
 
   useEffect(() => {
     async function loadContracts() {
@@ -18,7 +17,7 @@ export function useV2ContractLoader() {
         const network = readNetwork.name
 
         // Contracts can be used read-only without a signer, but require a signer to create transactions.
-        const signerOrProvider = signingProvider?.getSigner() ?? readProvider
+        const signerOrProvider = signer ?? readProvider
 
         const contractLoaders = await Promise.all(
           Object.values(V2ContractName).map(contractName =>
@@ -41,7 +40,7 @@ export function useV2ContractLoader() {
     }
 
     loadContracts()
-  }, [signingProvider, setContracts])
+  }, [setContracts, signer])
 
   return contracts
 }

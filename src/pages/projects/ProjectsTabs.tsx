@@ -2,8 +2,8 @@ import { t } from '@lingui/macro'
 import { Space } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { ProjectCategory } from 'models/project-visibility'
-import { useContext } from 'react'
 import Link from 'next/link'
+import { useContext } from 'react'
 
 const TAB_TYPE_NAMES: { [k in ProjectCategory]: string } = {
   all: t`All`,

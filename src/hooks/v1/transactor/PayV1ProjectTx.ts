@@ -1,6 +1,6 @@
-import { useWallet } from 'hooks/Wallet'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
+import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 
 import { BigNumber } from '@ethersproject/bignumber'

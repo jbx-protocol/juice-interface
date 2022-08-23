@@ -1,4 +1,7 @@
+import { BigNumber } from '@ethersproject/bignumber'
+import { TransactionReceipt } from '@ethersproject/providers'
 import { Button, FormInstance } from 'antd'
+import { DeployButtonText } from 'components/DeployProjectButtonText'
 import {
   useAppSelector,
   useEditingV2FundAccessConstraintsSelector,
@@ -6,20 +9,17 @@ import {
   useEditingV2FundingCycleMetadataSelector,
 } from 'hooks/AppSelector'
 import { useLaunchProjectTx } from 'hooks/v2/transactor/LaunchProjectTx'
+import { useWallet } from 'hooks/Wallet'
 import { useCallback, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
-import { TransactionReceipt } from '@ethersproject/providers'
-import { BigNumber } from '@ethersproject/bignumber'
 import { emitErrorNotification } from 'utils/notifications'
-import { useWallet } from 'hooks/Wallet'
-import { DeployButtonText } from 'components/DeployProjectButtonText'
 
 import TransactionModal from 'components/TransactionModal'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
 
-import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { useRouter } from 'next/router'
+import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 
 import { v2ProjectRoute } from 'utils/routes'
 

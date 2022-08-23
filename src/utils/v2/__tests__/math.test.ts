@@ -1,19 +1,19 @@
 import { BigNumber } from '@ethersproject/bignumber'
 
 import {
-  reservedRateFrom,
-  formatReservedRate,
-  MAX_RESERVED_RATE,
-  MAX_DISCOUNT_RATE,
-  formatDiscountRate,
   discountRateFrom,
-  redemptionRateFrom,
-  formatRedemptionRate,
-  MAX_REDEMPTION_RATE,
-  splitPercentFrom,
-  formatSplitPercent,
-  SPLITS_TOTAL_PERCENT,
+  formatDiscountRate,
   formatFee,
+  formatRedemptionRate,
+  formatReservedRate,
+  formatSplitPercent,
+  MAX_DISCOUNT_RATE,
+  MAX_REDEMPTION_RATE,
+  MAX_RESERVED_RATE,
+  redemptionRateFrom,
+  reservedRateFrom,
+  splitPercentFrom,
+  SPLITS_TOTAL_PERCENT,
 } from '../math'
 
 describe('math', () => {

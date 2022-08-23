@@ -1,8 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import {
+  V2FundAccessConstraint,
   V2FundingCycleData,
   V2FundingCycleMetadata,
-  V2FundAccessConstraint,
 } from 'models/v2/fundingCycle'
 import { fromWad, parseWad } from 'utils/formatNumber'
 

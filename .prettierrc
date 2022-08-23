@@ -14,5 +14,6 @@
         "printWidth": 600
       }
     }
-  ]
+  ],
+  "organizeImportsSkipDestructiveCodeActions": true
 }

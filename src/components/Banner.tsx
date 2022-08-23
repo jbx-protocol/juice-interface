@@ -1,6 +1,6 @@
+import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
-import { ExclamationCircleOutlined } from '@ant-design/icons'
 
 export default function Banner({
   title,

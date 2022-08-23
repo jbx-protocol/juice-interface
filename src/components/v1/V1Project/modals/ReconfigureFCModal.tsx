@@ -4,41 +4,41 @@ import { t, Trans } from '@lingui/macro'
 import { Drawer, DrawerProps, Space, Statistic } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
+import CurrencySymbol from 'components/CurrencySymbol'
 import RestrictedActionsForm, {
   RestrictedActionsFormFields,
 } from 'components/forms/RestrictedActionsForm'
-import CurrencySymbol from 'components/CurrencySymbol'
 import PayoutModsList from 'components/v1/shared/PayoutModsList'
-import TicketModsList from 'components/v1/shared/TicketModsList'
 import ReconfigurationStrategyDrawer from 'components/v1/shared/ReconfigurationStrategyDrawer'
+import TicketModsList from 'components/v1/shared/TicketModsList'
 
-import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { ThemeContext } from 'contexts/themeContext'
 import * as constants from '@ethersproject/constants'
+import { ThemeContext } from 'contexts/themeContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useEditingV1FundingCycleSelector } from 'hooks/AppSelector'
 import { useTerminalFee } from 'hooks/v1/TerminalFee'
 import { useConfigureProjectTx } from 'hooks/v1/transactor/ConfigureProjectTx'
+import { PayoutMod, TicketMod } from 'models/mods'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { V1FundingCycle, V1FundingCycleMetadata } from 'models/v1/fundingCycle'
-import { PayoutMod, TicketMod } from 'models/mods'
 import { useCallback, useContext, useLayoutEffect, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
+import { drawerWidth } from 'utils/drawerWidth'
 import {
   formattedNum,
   formatWad,
+  fromWad,
   perbicentToPercent,
   permilleToPercent,
-  fromWad,
 } from 'utils/formatNumber'
+import { amountSubFee } from 'utils/math'
 import {
   decodeFundingCycleMetadata,
   hasFundingTarget,
   isRecurring,
 } from 'utils/v1/fundingCycle'
-import { amountSubFee } from 'utils/math'
 import { serializeV1FundingCycle } from 'utils/v1/serializers'
-import { drawerWidth } from 'utils/drawerWidth'
 
 import { V1CurrencyName } from 'utils/v1/currency'
 
@@ -47,17 +47,17 @@ import BudgetForm from 'components/v1/shared/forms/BudgetForm'
 import IncentivesForm, {
   IncentivesFormFields,
 } from 'components/forms/IncentivesForm'
-import PayModsForm from 'components/v1/shared/forms/PayModsForm'
 import TicketingForm, {
   TicketingFormFields,
 } from 'components/forms/TicketingForm'
+import PayModsForm from 'components/v1/shared/forms/PayModsForm'
 
 import { BallotStrategy } from 'models/ballot'
 
 import { detailedTimeString, secondsUntil } from 'utils/formatTime'
 
-import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
 import { SECONDS_IN_DAY } from 'constants/numbers'
+import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
 
 const V1ReconfigureUpcomingMessage = ({
   currentFC,

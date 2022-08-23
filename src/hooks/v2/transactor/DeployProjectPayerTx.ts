@@ -1,8 +1,8 @@
 import * as constants from '@ethersproject/constants'
-import { useContext } from 'react'
-import { V2UserContext } from 'contexts/v2/userContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { V2UserContext } from 'contexts/v2/userContext'
 import { useWallet } from 'hooks/Wallet'
+import { useContext } from 'react'
 
 import { TransactorInstance } from '../../Transactor'
 

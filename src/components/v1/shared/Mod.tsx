@@ -1,14 +1,14 @@
 import { CrownFilled, LockOutlined } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
 import { BigNumber } from '@ethersproject/bignumber'
+import { t, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
+import FormattedAddress from 'components/FormattedAddress'
+import TooltipLabel from 'components/TooltipLabel'
 import { ThemeContext } from 'contexts/themeContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { useContext } from 'react'
 import { formatDate } from 'utils/formatDate'
-import FormattedAddress from 'components/FormattedAddress'
-import TooltipLabel from 'components/TooltipLabel'
 
 import V1ProjectHandle from './V1ProjectHandle'
 

@@ -4,9 +4,9 @@ import { BigNumber } from '@ethersproject/bignumber'
 
 import { Trans } from '@lingui/macro'
 
+import { CurrencyName } from 'constants/currency'
 import BudgetTargetInput from '../inputs/BudgetTargetInput'
 import { FormItemExt } from './formItemExt'
-import { CurrencyName } from 'constants/currency'
 
 export default function ProjectTarget({
   hideLabel,

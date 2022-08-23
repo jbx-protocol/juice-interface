@@ -1,7 +1,7 @@
-import { Tooltip } from 'antd'
-import { t } from '@lingui/macro'
-import { NetworkName } from 'models/network-name'
 import { LinkOutlined } from '@ant-design/icons'
+import { t } from '@lingui/macro'
+import { Tooltip } from 'antd'
+import { NetworkName } from 'models/network-name'
 import { CSSProperties } from 'react'
 import { truncateEthAddress } from 'utils/formatAddress'
 

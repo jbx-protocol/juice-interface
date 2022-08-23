@@ -1,13 +1,13 @@
 import { plural, Trans } from '@lingui/macro'
+import { Button } from 'antd'
 import LaunchProjectPayerButton from 'components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerButton'
-import { useContext, useState } from 'react'
-import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayerTx'
+import ProjectPayersModal from 'components/v2/V2Project/ProjectPayersModal'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
+import useMobile from 'hooks/Mobile'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useProjectPayers } from 'hooks/v2/ProjectPayers'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { Button } from 'antd'
-import ProjectPayersModal from 'components/v2/V2Project/ProjectPayersModal'
-import useMobile from 'hooks/Mobile'
+import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayerTx'
+import { useContext, useState } from 'react'
 
 export function PayableAddressSection({
   useDeployProjectPayerTx,

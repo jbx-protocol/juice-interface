@@ -1,8 +1,8 @@
 import { CopyOutlined } from '@ant-design/icons'
-import { Tooltip } from 'antd'
-import { CSSProperties, useContext, useState } from 'react'
 import { t } from '@lingui/macro'
+import { Tooltip } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
+import { CSSProperties, useContext, useState } from 'react'
 
 // Copies a given text to clipboard when clicked
 export default function CopyTextButton({

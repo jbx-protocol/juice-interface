@@ -1,18 +1,18 @@
+import { LoadingOutlined } from '@ant-design/icons'
 import { CardSection } from 'components/CardSection'
 import FundingCycleDetailsCard from 'components/Project/FundingCycleDetailsCard'
-import { LoadingOutlined } from '@ant-design/icons'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { useContext } from 'react'
-import { V2FundingCycleRiskCount } from 'utils/v2/fundingCycle'
 import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
 import { useProjectLatestConfiguredFundingCycle } from 'hooks/v2/contractReader/ProjectLatestConfiguredFundingCycle'
-import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
 import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
+import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
 import {
   BallotState,
   V2FundingCycle,
   V2FundingCycleMetadata,
 } from 'models/v2/fundingCycle'
+import { useContext } from 'react'
+import { V2FundingCycleRiskCount } from 'utils/v2/fundingCycle'
 
 import FundingCycleDetails from './FundingCycleDetails'
 import PayoutSplitsCard from './PayoutSplitsCard'

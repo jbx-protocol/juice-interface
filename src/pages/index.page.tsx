@@ -1,22 +1,22 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, Row, Space } from 'antd'
-import FeedbackFormButton from 'components/FeedbackFormButton'
 import { AppWrapper } from 'components/common'
+import FeedbackFormButton from 'components/FeedbackFormButton'
 
 import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, useContext } from 'react'
 import useMobile from 'hooks/Mobile'
 import { fathom } from 'lib/fathom'
+import { CSSProperties, useContext } from 'react'
 
 import { ThemeOption } from 'constants/theme/theme-option'
 
 import Faq from './home/Faq'
 import Footer from './home/Footer'
-import TrendingSection from './home/TrendingSection'
-import { TopProjectsSection } from './home/TopProjectsSection'
-import { StatsSection } from './home/StatsSection'
 import { HowItWorksSection } from './home/HowItWorksSection'
+import { StatsSection } from './home/StatsSection'
 import { HeroHeading, HeroSubheading } from './home/strings'
+import { TopProjectsSection } from './home/TopProjectsSection'
+import TrendingSection from './home/TrendingSection'
 
 export default function LandingPage() {
   return (

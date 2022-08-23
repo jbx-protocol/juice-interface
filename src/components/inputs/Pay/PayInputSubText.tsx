@@ -1,22 +1,22 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { parseEther } from '@ethersproject/units'
+import { Trans } from '@lingui/macro'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { useContext, useMemo } from 'react'
 import { WeightFunction } from 'utils/math'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-import { Trans } from '@lingui/macro'
-import { useContext, useMemo } from 'react'
 
 import { CurrencyContext } from 'contexts/currencyContext'
 
 import { Tooltip } from 'antd'
-import { ThemeContext } from 'contexts/themeContext'
 import AMMPrices from 'components/AMMPrices'
+import { ThemeContext } from 'contexts/themeContext'
 
+import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useWeiConverter from 'hooks/WeiConverter'
 import { CurrencyOption } from 'models/currencyOption'
-import { formatIssuanceRate } from 'utils/v2/math'
 import { formattedNum } from 'utils/formatNumber'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { formatIssuanceRate } from 'utils/v2/math'
 import { getNftRewardTier } from 'utils/v2/nftRewards'
 
 /**

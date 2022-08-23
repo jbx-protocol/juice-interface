@@ -7,8 +7,8 @@ import useReservedTokensOfProject from 'hooks/v1/contractReader/ReservedTokensOf
 import { useDistributeTokensTx } from 'hooks/v1/transactor/DistributeTokensTx'
 import { useContext, useState } from 'react'
 import { formatWad } from 'utils/formatNumber'
-import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
+import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 
 export default function DistributeTokensModal({
   visible,

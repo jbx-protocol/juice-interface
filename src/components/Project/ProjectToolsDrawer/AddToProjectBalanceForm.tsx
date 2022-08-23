@@ -1,13 +1,13 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactorButton from 'components/TransactorButton'
-import { BigNumber } from '@ethersproject/bignumber'
 import { TransactorInstance } from 'hooks/Transactor'
+import { useWallet } from 'hooks/Wallet'
 import { useState } from 'react'
 import { parseWad } from 'utils/formatNumber'
-import { useWallet } from 'hooks/Wallet'
 
 export function AddToProjectBalanceForm({
   useAddToBalanceTx,

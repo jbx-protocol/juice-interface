@@ -1,7 +1,7 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { useSetChain } from '@web3-onboard/react'
 import { useCallback } from 'react'
 import { unpadLeadingZerosString } from 'utils/bigNumbers'
-import { BigNumber } from '@ethersproject/bignumber'
 
 import { readNetwork } from 'constants/networks'
 

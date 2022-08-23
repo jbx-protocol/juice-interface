@@ -1,14 +1,14 @@
+import {
+  DeleteOutlined,
+  LinkOutlined,
+  LoadingOutlined,
+} from '@ant-design/icons'
+import { Trans } from '@lingui/macro'
 import { Button, Col, Image, Row, Tooltip } from 'antd'
 import Paragraph from 'components/Paragraph'
 import { ThemeContext } from 'contexts/themeContext'
 import { NftRewardTier } from 'models/v2/nftRewardTier'
 import { useContext, useState } from 'react'
-import {
-  LinkOutlined,
-  DeleteOutlined,
-  LoadingOutlined,
-} from '@ant-design/icons'
-import { Trans } from '@lingui/macro'
 
 import NftRewardTierModal from './NftRewardTierModal'
 import { NFT_IMAGE_SIDE_LENGTH } from './NftUpload'

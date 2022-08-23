@@ -1,13 +1,13 @@
-import { ThemeContext } from 'contexts/themeContext'
 import { BigNumber } from '@ethersproject/bignumber'
+import { ThemeContext } from 'contexts/themeContext'
 import { CSSProperties, useContext, useEffect, useState } from 'react'
 import { perbicentToPercent } from 'utils/formatNumber'
 
 import { Trans } from '@lingui/macro'
 
-import FormattedNumberInput from './FormattedNumberInput'
 import { CurrencyName } from 'constants/currency'
 import CurrencySwitch from '../CurrencySwitch'
+import FormattedNumberInput from './FormattedNumberInput'
 
 export default function BudgetTargetInput({
   currency,

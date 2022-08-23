@@ -9,12 +9,12 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { useCallback, useContext, useEffect, useState } from 'react'
 
-import { uploadProjectMetadata } from 'utils/ipfs'
 import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDetailsTx'
+import { uploadProjectMetadata } from 'utils/ipfs'
 import { revalidateProject } from 'utils/revalidateProject'
 
-import { drawerStyle } from 'constants/styles/drawerStyle'
 import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
+import { drawerStyle } from 'constants/styles/drawerStyle'
 
 export function V2ReconfigureProjectDetailsDrawer({
   visible,

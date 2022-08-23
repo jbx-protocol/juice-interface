@@ -1,10 +1,10 @@
-import { useRouter } from 'next/router'
-import Link from 'next/link'
-import { t, Trans } from '@lingui/macro'
-import { CSSProperties, useEffect, useState } from 'react'
-import { Dropdown, Menu, Space } from 'antd'
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
+import { t, Trans } from '@lingui/macro'
+import { Dropdown, Menu, Space } from 'antd'
 import ExternalLink from 'components/ExternalLink'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { CSSProperties, useEffect, useState } from 'react'
 
 import Logo from './Logo'
 import {

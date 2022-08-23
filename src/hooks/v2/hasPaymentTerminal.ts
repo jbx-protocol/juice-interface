@@ -1,5 +1,5 @@
-import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { getAddress } from '@ethersproject/address'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useContext } from 'react'
 
 export function useHasPaymentTerminal(terminalAddress?: string): boolean {

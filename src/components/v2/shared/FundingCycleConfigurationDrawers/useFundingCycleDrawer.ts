@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useCallback, useState } from 'react'
 
 /**
  * Provides State for Funding Cycle Drawers.

@@ -1,12 +1,12 @@
+import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Form, FormInstance, Input, Space, Switch } from 'antd'
+import { EthAddressInput } from 'components/inputs/EthAddressInput'
+import { FormImageUploader } from 'components/inputs/FormImageUploader'
+import { MinimalCollapse } from 'components/MinimalCollapse'
 import TooltipLabel from 'components/TooltipLabel'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useContext, useState } from 'react'
-import * as constants from '@ethersproject/constants'
-import { EthAddressInput } from 'components/inputs/EthAddressInput'
-import { MinimalCollapse } from 'components/MinimalCollapse'
-import { FormImageUploader } from 'components/inputs/FormImageUploader'
 
 import { AdvancedOptionsFields } from './LaunchProjectPayerModal'
 

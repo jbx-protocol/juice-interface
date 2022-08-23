@@ -1,16 +1,16 @@
 import { Skeleton, Space } from 'antd'
 import FundingProgressBar from 'components/Project/FundingProgressBar'
-import { useContext } from 'react'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useTerminalCurrentOverflow from 'hooks/v2/contractReader/TerminalCurrentOverflow'
+import { useContext } from 'react'
 
 import { VolumeStatLine } from 'components/Project/VolumeStatLine'
 
 import { ThemeContext } from 'contexts/themeContext'
 
-import ProjectBalance from './ProjectBalance'
 import DistributedRatio from './DistributedRatio'
 import OwnerBalance from './OwnerBalance'
+import ProjectBalance from './ProjectBalance'
 
 export default function TreasuryStats() {
   const {

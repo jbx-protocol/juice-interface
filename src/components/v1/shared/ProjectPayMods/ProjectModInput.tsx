@@ -1,5 +1,5 @@
+import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
 import { Button, Col, Row, Space } from 'antd'
-import { LockOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import CurrencySymbol from 'components/CurrencySymbol'
 import FormattedAddress from 'components/FormattedAddress'
 

@@ -1,6 +1,6 @@
+import { LoadingOutlined } from '@ant-design/icons'
 import { Image, Tooltip } from 'antd'
 import ExternalLink from 'components/ExternalLink'
-import { LoadingOutlined } from '@ant-design/icons'
 
 import { NftRewardTier } from 'models/v2/nftRewardTier'
 import { useState } from 'react'

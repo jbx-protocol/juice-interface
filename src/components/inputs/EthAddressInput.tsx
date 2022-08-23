@@ -1,7 +1,7 @@
 import { CheckCircleFilled, LoadingOutlined } from '@ant-design/icons'
+import * as constants from '@ethersproject/constants'
 import { Input } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
-import * as constants from '@ethersproject/constants'
 import { isAddress } from 'ethers/lib/utils'
 import { useContext, useState } from 'react'
 

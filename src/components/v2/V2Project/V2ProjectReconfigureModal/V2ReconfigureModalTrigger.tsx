@@ -6,10 +6,10 @@ import store, { createStore } from 'redux/store'
 import { SettingOutlined } from '@ant-design/icons'
 
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
-import { V2FundingCycle } from 'models/v2/fundingCycle'
 import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
+import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
 import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
+import { V2FundingCycle } from 'models/v2/fundingCycle'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { fromWad } from 'utils/formatNumber'
 

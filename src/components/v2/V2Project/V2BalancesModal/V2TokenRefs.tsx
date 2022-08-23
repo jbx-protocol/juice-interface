@@ -1,7 +1,7 @@
 import {
   CaretDownFilled,
-  PlusOutlined,
   DeleteOutlined,
+  PlusOutlined,
 } from '@ant-design/icons'
 import * as constants from '@ethersproject/constants'
 import { Button, Col, Form, Input, Row, Tooltip } from 'antd'

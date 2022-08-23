@@ -1,5 +1,5 @@
+import { t, Trans } from '@lingui/macro'
 import { Form, Space, Switch } from 'antd'
-import { Trans, t } from '@lingui/macro'
 import { useEffect, useState } from 'react'
 
 import FormattedNumberInput from '../inputs/FormattedNumberInput'

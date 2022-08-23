@@ -4,12 +4,12 @@ import { Tooltip } from 'antd'
 
 import { useEffect, useState } from 'react'
 
-import EtherscanLink from 'components/EtherscanLink'
 import CopyTextButton from 'components/CopyTextButton'
+import EtherscanLink from 'components/EtherscanLink'
 import { truncateEthAddress } from 'utils/formatAddress'
 
-import { readProvider } from 'constants/readProvider'
 import { SECONDS_IN_DAY } from 'constants/numbers'
+import { readProvider } from 'constants/readProvider'
 
 type EnsRecord = {
   name: string | null

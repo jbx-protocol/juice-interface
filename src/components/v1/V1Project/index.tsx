@@ -1,24 +1,24 @@
-import { Col, Row } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
+import { Col, Row } from 'antd'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { CSSProperties, useContext, useState } from 'react'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 
-import ProjectHeader from 'components/Project/ProjectHeader'
 import PayInputGroup from 'components/inputs/Pay/PayInputGroup'
+import ProjectHeader from 'components/Project/ProjectHeader'
 import { CurrencyContext } from 'contexts/currencyContext'
 import { CurrencyOption } from 'models/currencyOption'
-import { Suspense, lazy } from 'react'
+import { lazy, Suspense } from 'react'
 
 import { weightedRate } from 'utils/math'
 
 import FundingCycles from './FundingCycles'
 import Paid from './Paid'
 import ProjectActivity from './ProjectActivity'
-import V1ProjectHeaderActions from './V1ProjectHeaderActions'
 import Rewards from './Rewards'
 import V1PayButton from './V1PayButton'
+import V1ProjectHeaderActions from './V1ProjectHeaderActions'
 
 const VolumeChart = lazy(() => import('components/VolumeChart'))
 

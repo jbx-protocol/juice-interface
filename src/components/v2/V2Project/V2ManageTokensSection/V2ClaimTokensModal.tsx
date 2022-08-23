@@ -58,6 +58,10 @@ export default function V2ClaimTokensModal({
           setTransactionPending(false)
           onConfirmed?.()
         },
+        onError: () => {
+          setTransactionPending(false)
+          setLoading(false)
+        },
       },
     )
   }

@@ -1,129 +1,142 @@
 import { t, Trans } from '@lingui/macro'
-import { Input, Space, Switch } from 'antd'
+import { Form, FormInstance, Input, Space, Switch } from 'antd'
 import TooltipLabel from 'components/TooltipLabel'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { Dispatch, SetStateAction, useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import * as constants from '@ethersproject/constants'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { MinimalCollapse } from 'components/MinimalCollapse'
+import { FormImageUploader } from 'components/inputs/FormImageUploader'
+
+import { AdvancedOptionsFields } from './LaunchProjectPayerModal'
+
+const defaultAdvancedOptions: AdvancedOptionsFields = {
+  memo: '',
+  memoImageUrl: undefined,
+  tokenMintingEnabled: true,
+  preferClaimed: false,
+  customBeneficiaryAddress: undefined,
+}
 
 export default function AdvancedOptionsCollapse({
-  memo,
-  setMemo,
-  customBeneficiaryAddress,
-  setCustomBeneficiaryAddress,
-  tokenMintingEnabled,
-  setTokenMintingEnabled,
-  preferClaimed,
-  setPreferClaimed,
+  form,
 }: {
-  memo: string | undefined
-  setMemo: Dispatch<SetStateAction<string | undefined>>
-  customBeneficiaryAddress: string | undefined
-  setCustomBeneficiaryAddress: Dispatch<SetStateAction<string | undefined>>
-  tokenMintingEnabled: boolean
-  setTokenMintingEnabled: Dispatch<SetStateAction<boolean>>
-  preferClaimed: boolean
-  setPreferClaimed: Dispatch<SetStateAction<boolean>>
+  form: FormInstance<AdvancedOptionsFields>
 }) {
   const { tokenAddress } = useContext(V2ProjectContext)
 
+  // need state for this field to update dom
+  const [tokenMintingEnabled, setTokenMintingEnabled] = useState<boolean>(
+    form.getFieldValue('tokenMintingEnabled') === false ? false : true,
+  )
+
   const [customBeneficiaryEnabled, setCustomBeneficiaryEnabled] =
-    useState<boolean>(false)
+    useState<boolean>(Boolean(form.getFieldValue('customBeneficiaryAddress')))
 
   const switchMargin = '1rem'
 
   return (
     <MinimalCollapse header={<Trans>Advanced (optional)</Trans>}>
-      <Space size="middle" direction="vertical">
-        <div>
-          <TooltipLabel
-            label={t`Payment memo`}
-            tip={
-              <Trans>
-                The onchain memo for each payment made to this address. The
-                project's payment feed will include the memo alongside the
-                payment.
-              </Trans>
-            }
-          />
-          <Input
-            value={memo}
-            onChange={e => setMemo(e.target.value)}
-            type="string"
-            autoComplete="off"
-            style={{ marginTop: 5 }}
-          />
-        </div>
-        <div style={{ display: 'flex' }}>
-          <TooltipLabel
-            label={t`Token minting enabled`}
-            tip={t`Determines whether tokens will be minted from payments to this address.`}
-          />
-          <Switch
-            onChange={setTokenMintingEnabled}
-            checked={tokenMintingEnabled}
-            style={{ marginLeft: switchMargin }}
-          />
-        </div>
-        {tokenMintingEnabled &&
-        tokenAddress &&
-        tokenAddress !== constants.AddressZero ? (
+      <Space size="middle" direction="vertical" style={{ width: '100%' }}>
+        <Form form={form} initialValues={defaultAdvancedOptions}>
+          <div>
+            <TooltipLabel
+              label={t`Payment memo`}
+              tip={
+                <Trans>
+                  The onchain memo for each payment made to this address. The
+                  project's payment feed will include the memo alongside the
+                  payment.
+                </Trans>
+              }
+            />
+            <Form.Item name={'memo'}>
+              <Input
+                type="string"
+                autoComplete="off"
+                style={{ marginTop: 5 }}
+              />
+            </Form.Item>
+            <Form.Item name={'memoImageUrl'}>
+              <FormImageUploader text={t`Add image`} />
+            </Form.Item>
+          </div>
           <div style={{ display: 'flex' }}>
             <TooltipLabel
-              label={t`Mint tokens as ERC-20`}
-              tip={
-                <Trans>
-                  When checked, payments to this address will mint this
-                  project's ERC-20 tokens to the beneficiary's wallet. Payments
-                  will cost more gas. When unchecked, Juicebox will track the
-                  beneficiary's new tokens when they pay. The beneficiary can
-                  claim their ERC-20 tokens at any time.
-                </Trans>
-              }
+              label={t`Token minting enabled`}
+              tip={t`Determines whether tokens will be minted from payments to this address.`}
             />
-            <Switch
-              style={{ marginLeft: switchMargin }}
-              checked={preferClaimed}
-              onChange={setPreferClaimed}
-            />
+            <Form.Item
+              name={'tokenMintingEnabled'}
+              initialValue={tokenMintingEnabled}
+            >
+              <Switch
+                onChange={setTokenMintingEnabled}
+                checked={tokenMintingEnabled}
+                style={{ marginLeft: switchMargin }}
+              />
+            </Form.Item>
           </div>
-        ) : null}
-
-        {tokenMintingEnabled ? (
-          <div
-            style={{
-              display: 'flex',
-            }}
-          >
-            <TooltipLabel
-              label={t`Custom token beneficiary`}
-              tip={
-                <Trans>
-                  By default, newly minted tokens will go to the wallet who
-                  sends funds to the address. You can enable this to set the
-                  token beneficiary to a custom address.
-                </Trans>
-              }
-            />
-            <Switch
-              onChange={checked => {
-                setCustomBeneficiaryEnabled(checked)
-                if (!checked) {
-                  setCustomBeneficiaryAddress(undefined)
+          {tokenMintingEnabled &&
+          tokenAddress &&
+          tokenAddress !== constants.AddressZero ? (
+            <div style={{ display: 'flex' }}>
+              <TooltipLabel
+                label={t`Mint tokens as ERC-20`}
+                tip={
+                  <Trans>
+                    When checked, payments to this address will mint this
+                    project's ERC-20 tokens to the beneficiary's wallet.
+                    Payments will cost more gas. When unchecked, Juicebox will
+                    track the beneficiary's new tokens when they pay. The
+                    beneficiary can claim their ERC-20 tokens at any time.
+                  </Trans>
                 }
+              />
+              <Form.Item name={'preferClaimed'} valuePropName="checked">
+                <Switch style={{ marginLeft: switchMargin }} />
+              </Form.Item>
+            </div>
+          ) : null}
+
+          {tokenMintingEnabled ? (
+            <div
+              style={{
+                display: 'flex',
+                marginBottom: '10px',
               }}
-              checked={customBeneficiaryEnabled}
-              style={{ marginLeft: switchMargin }}
+            >
+              <TooltipLabel
+                label={t`Custom token beneficiary`}
+                tip={
+                  <Trans>
+                    By default, newly minted tokens will go to the wallet who
+                    sends funds to the address. You can enable this to set the
+                    token beneficiary to a custom address.
+                  </Trans>
+                }
+              />
+              <Switch
+                onChange={checked => {
+                  setCustomBeneficiaryEnabled(checked)
+                  if (!checked) {
+                    form.setFieldsValue({ customBeneficiaryAddress: undefined })
+                  }
+                }}
+                checked={customBeneficiaryEnabled}
+                style={{ marginLeft: switchMargin }}
+              />
+            </div>
+          ) : null}
+          {tokenMintingEnabled && customBeneficiaryEnabled ? (
+            <EthAddressInput
+              value={form.getFieldValue('customBeneficiaryAddress')}
+              onChange={value =>
+                form.setFieldsValue({ customBeneficiaryAddress: value })
+              }
             />
-          </div>
-        ) : null}
-        {tokenMintingEnabled && customBeneficiaryEnabled ? (
-          <EthAddressInput
-            value={customBeneficiaryAddress}
-            onChange={setCustomBeneficiaryAddress}
-          />
-        ) : null}
+          ) : null}
+        </Form>
       </Space>
     </MinimalCollapse>
   )

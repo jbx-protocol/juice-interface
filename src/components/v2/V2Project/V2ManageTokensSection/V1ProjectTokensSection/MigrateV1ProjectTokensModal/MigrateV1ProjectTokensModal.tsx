@@ -1,7 +1,7 @@
+import { useWallet } from 'hooks/Wallet'
 import { Trans } from '@lingui/macro'
 import { Form, ModalProps, Space } from 'antd'
 import TransactionModal from 'components/TransactionModal'
-import { NetworkContext } from 'contexts/networkContext'
 import { usePayV1TokenPaymentTerminal } from 'hooks/v2/transactor/PayV1TokenPaymentTerminal'
 import { useContext, useState } from 'react'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -25,7 +25,7 @@ export function MigrateProjectTokensModal({
   v1TokenBalance: number
   v1ProjectHandle: string
 } & ModalProps) {
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress } = useWallet()
   const { contracts } = useContext(V2UserContext)
 
   const [loading, setLoading] = useState<boolean>(false)

@@ -21,8 +21,8 @@ async function getRewardTierFromIPFS({
 }): Promise<NftRewardTier> {
   const url = ipfsCidUrl(
     decodeEncodedIPFSUri(contractNftRewardTier.encodedIPFSUri),
-    { useFallback: true },
   )
+
   const response = await axios.get(url)
   const ipfsRewardTier: IPFSNftRewardTier = response.data
   return {

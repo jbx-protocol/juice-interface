@@ -1,10 +1,10 @@
+import { useWallet } from 'hooks/Wallet'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
 import { useV1ProjectIdOfV2Project } from 'hooks/v2/contractReader/V1ProjectIdOfV2Project'
 import { getTerminalName } from 'utils/v1/terminals'
 import useTotalV1BalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
-import { NetworkContext } from 'contexts/networkContext'
 import { CSSProperties, useContext, useState } from 'react'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { formatWad, fromWad } from 'utils/formatNumber'
@@ -21,7 +21,7 @@ export function V1ProjectTokensSection({
   tokenText: string
   style?: CSSProperties
 }) {
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress } = useWallet()
   const { projectId } = useContext(V2ProjectContext)
 
   const [migrateTokensModalVisible, setMigrateTokensModalVisible] =

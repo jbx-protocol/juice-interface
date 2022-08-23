@@ -3,7 +3,6 @@ import { Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { useContext, useState } from 'react'
 
-import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useRedeemVeNftTx } from 'hooks/veNft/transactor/VeNftRedeemTx'
@@ -14,6 +13,7 @@ import { emitSuccessNotification } from 'utils/notifications'
 import CustomBeneficiaryInput from 'components/veNft/formControls/CustomBeneficiaryInput'
 import TransactionModal from 'components/TransactionModal'
 import { MemoFormInput } from 'components/inputs/Pay/MemoFormInput'
+import { useWallet } from 'hooks/Wallet'
 
 type VeNftRedeemModalProps = {
   token: VeNftToken
@@ -28,7 +28,13 @@ const VeNftRedeemModal = ({
   onCancel,
   onCompleted,
 }: VeNftRedeemModalProps) => {
-  const { userAddress, onSelectWallet } = useContext(NetworkContext)
+  const {
+    userAddress,
+    chainUnsupported,
+    isConnected,
+    changeNetworks,
+    connect,
+  } = useWallet()
   const { primaryTerminal, tokenAddress } = useContext(V2ProjectContext)
   const { tokenId } = token
   const [form] = useForm<{ beneficiary: string }>()
@@ -45,8 +51,13 @@ const VeNftRedeemModal = ({
     const { beneficiary } = form.getFieldsValue()
     await form.validateFields()
 
-    if (!userAddress && onSelectWallet) {
-      onSelectWallet()
+    if (chainUnsupported) {
+      await changeNetworks()
+      return
+    }
+    if (!isConnected) {
+      await connect()
+      return
     }
 
     const txBeneficiary = beneficiary ? beneficiary : userAddress!

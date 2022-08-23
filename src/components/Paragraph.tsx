@@ -35,6 +35,7 @@ export default function Paragraph({
         note={
           !expanded && CHARACTER_LIMIT_EXCEEDED ? shortDescription : description
         }
+        ignoreMediaLinks
       >
         {CHARACTER_LIMIT_EXCEEDED && (
           <Button

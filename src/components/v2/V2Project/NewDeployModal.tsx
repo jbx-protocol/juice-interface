@@ -1,13 +1,13 @@
+import { CheckCircleFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
+import RichButton from 'components/RichButton'
 import { useDeployProjectPayerTx } from 'hooks/v2/transactor/DeployProjectPayerTx'
 import { useIssueTokensTx } from 'hooks/v2/transactor/IssueTokensTx'
-import { CheckCircleFilled } from '@ant-design/icons'
 import { CSSProperties, useContext, useState } from 'react'
-import RichButton from 'components/RichButton'
 
-import { ThemeContext } from 'contexts/themeContext'
 import IssueTokenModal from 'components/modals/IssueTokenModal'
+import { ThemeContext } from 'contexts/themeContext'
 
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 

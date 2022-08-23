@@ -1,11 +1,11 @@
+import ETHAmount from 'components/currency/ETHAmount'
 import Loading from 'components/Loading'
 import ProjectLogo from 'components/ProjectLogo'
-import ETHAmount from 'components/currency/ETHAmount'
 
-import { t, Trans, Plural } from '@lingui/macro'
+import { Plural, t, Trans } from '@lingui/macro'
 
-import { ThemeContext } from 'contexts/themeContext'
 import * as constants from '@ethersproject/constants'
+import { ThemeContext } from 'contexts/themeContext'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { Project } from 'models/subgraph-entities/vX/project'
 import { CSSProperties, useContext, useMemo } from 'react'

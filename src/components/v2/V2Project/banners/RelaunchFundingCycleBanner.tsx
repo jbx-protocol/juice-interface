@@ -2,35 +2,35 @@ import { Trans } from '@lingui/macro'
 import { Button, Form, Input } from 'antd'
 import { useContext, useEffect, useMemo, useState } from 'react'
 
+import { BigNumber } from '@ethersproject/bignumber'
 import Banner from 'components/Banner'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
 import TransactionModal from 'components/TransactionModal'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { V2UserContext } from 'contexts/v2/userContext'
+import useProjectCurrentFundingCycle from 'hooks/v2/contractReader/ProjectCurrentFundingCycle'
+import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
+import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
+import useProjectTerminals from 'hooks/v2/contractReader/ProjectTerminals'
+import { useLaunchFundingCyclesTx } from 'hooks/v2/transactor/LaunchFundingCyclesTx'
 import {
   V2FundAccessConstraint,
   V2FundingCycleData,
   V2FundingCycleMetadata,
 } from 'models/v2/fundingCycle'
-import { V2UserContext } from 'contexts/v2/userContext'
-import { BigNumber } from '@ethersproject/bignumber'
-import useProjectTerminals from 'hooks/v2/contractReader/ProjectTerminals'
-import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
-import useProjectCurrentFundingCycle from 'hooks/v2/contractReader/ProjectCurrentFundingCycle'
-import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
-import { useLaunchFundingCyclesTx } from 'hooks/v2/transactor/LaunchFundingCyclesTx'
 
 import { reloadWindow } from 'utils/windowUtils'
 
+import { readNetwork } from 'constants/networks'
+import {
+  BALLOT_ADDRESSES,
+  DEPRECATED_BALLOT_ADDRESSES,
+} from 'constants/v2/ballotStrategies'
+import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
 import ReconfigurePreview from '../V2ProjectReconfigureModal/ReconfigurePreview'
-import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
-import {
-  BALLOT_ADDRESSES,
-  DEPRECATED_BALLOT_ADDRESSES,
-} from 'constants/v2/ballotStrategies'
-import { readNetwork } from 'constants/networks'
 
 export function RelaunchFundingCycleBanner() {
   const { projectId } = useContext(V2ProjectContext)

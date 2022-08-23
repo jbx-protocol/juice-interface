@@ -1,12 +1,12 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons'
+import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import { Collapse, Tooltip } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { ThemeContext } from 'contexts/themeContext'
-import { BigNumber } from '@ethersproject/bignumber'
+import { BallotState } from 'models/v2/fundingCycle'
 import { useContext } from 'react'
 import { detailedTimeUntil } from 'utils/formatTime'
-import { BallotState } from 'models/v2/fundingCycle'
 
 import { BallotStateBadge } from './BallotStateBadge'
 

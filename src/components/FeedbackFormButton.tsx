@@ -1,9 +1,9 @@
 import { ThemeContext } from 'contexts/themeContext'
 import { useWallet } from 'hooks/Wallet'
 
+import { MessageOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
-import { MessageOutlined } from '@ant-design/icons'
 
 import { useContext } from 'react'
 

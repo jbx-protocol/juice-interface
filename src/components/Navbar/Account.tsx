@@ -1,10 +1,10 @@
 import { Button, Space } from 'antd'
 
-import { useContext, useEffect } from 'react'
 import { Trans } from '@lingui/macro'
+import { useAccountCenter } from '@web3-onboard/react'
 import { ThemeContext } from 'contexts/themeContext'
 import { useWallet } from 'hooks/Wallet'
-import { useAccountCenter } from '@web3-onboard/react'
+import { useContext, useEffect } from 'react'
 
 import Wallet from './Wallet'
 

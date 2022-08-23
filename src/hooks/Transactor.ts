@@ -1,4 +1,3 @@
-import { Signer } from 'ethers/lib/ethers'
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { hexlify } from '@ethersproject/bytes'
 import { Contract } from '@ethersproject/contracts'
@@ -7,12 +6,13 @@ import { TransactionRequest } from '@ethersproject/providers'
 import { parseUnits } from '@ethersproject/units'
 import Notify, { InitOptions, TransactionEvent } from 'bnc-notify'
 import { ThemeContext } from 'contexts/themeContext'
+import { Signer } from 'ethers/lib/ethers'
 import { useCallback, useContext } from 'react'
 
 import { emitErrorNotification } from 'utils/notifications'
 
-import * as Sentry from '@sentry/browser'
 import { t } from '@lingui/macro'
+import * as Sentry from '@sentry/browser'
 import { windowOpen } from 'utils/windowUtils'
 
 import { useWallet } from './Wallet'

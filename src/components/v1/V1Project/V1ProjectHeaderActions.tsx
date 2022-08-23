@@ -1,3 +1,4 @@
+import { SettingOutlined, ToolOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
@@ -5,10 +6,9 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import { useContext, useState } from 'react'
-import { SettingOutlined, ToolOutlined } from '@ant-design/icons'
 
-import { useIsUserAddress } from 'hooks/IsUserAddress'
 import { V1ProjectToolsDrawer } from 'components/v1/V1Project/V1ProjectToolsDrawer'
+import { useIsUserAddress } from 'hooks/IsUserAddress'
 
 import EditProjectModal from './modals/EditProjectModal'
 import MigrateV1Pt1Modal from './modals/MigrateV1Pt1Modal'

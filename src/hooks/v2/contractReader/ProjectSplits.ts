@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import isEqual from 'lodash/isEqual'
 import { V2ContractName } from 'models/v2/contracts'
 import { Split, SplitGroup } from 'models/v2/splits'
-import isEqual from 'lodash/isEqual'
 
 import { useCallback } from 'react'
 

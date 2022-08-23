@@ -1,5 +1,5 @@
-import { NextApiRequest, NextApiResponse } from 'next'
 import formidable from 'formidable'
+import { NextApiRequest, NextApiResponse } from 'next'
 
 import { getPinata } from 'utils/pinata'
 

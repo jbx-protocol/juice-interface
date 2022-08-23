@@ -10,9 +10,9 @@ import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'
 
 import { emitSuccessNotification } from 'utils/notifications'
 
-import CustomBeneficiaryInput from 'components/veNft/formControls/CustomBeneficiaryInput'
-import TransactionModal from 'components/TransactionModal'
 import { MemoFormInput } from 'components/inputs/Pay/MemoFormInput'
+import TransactionModal from 'components/TransactionModal'
+import CustomBeneficiaryInput from 'components/veNft/formControls/CustomBeneficiaryInput'
 import { useWallet } from 'hooks/Wallet'
 
 type VeNftRedeemModalProps = {

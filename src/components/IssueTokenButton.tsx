@@ -1,11 +1,11 @@
-import { Button, Space, Tooltip } from 'antd'
-import { Trans } from '@lingui/macro'
-import { useState } from 'react'
-import { TransactorInstance } from 'hooks/Transactor'
-import { useRouter } from 'next/router'
 import { SettingOutlined } from '@ant-design/icons'
+import { Trans } from '@lingui/macro'
+import { Button, Space, Tooltip } from 'antd'
 import { ButtonType } from 'antd/lib/button'
 import { SizeType } from 'antd/lib/config-provider/SizeContext'
+import { TransactorInstance } from 'hooks/Transactor'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
 
 import IssueTokenModal from './modals/IssueTokenModal'
 

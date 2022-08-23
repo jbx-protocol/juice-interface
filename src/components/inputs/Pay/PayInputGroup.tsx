@@ -1,5 +1,5 @@
-import { CSSProperties, useContext, useState } from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
+import { CSSProperties, useContext, useState } from 'react'
 
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'

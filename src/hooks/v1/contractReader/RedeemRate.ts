@@ -1,5 +1,5 @@
-import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { BigNumber } from '@ethersproject/bignumber'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1BallotState } from 'models/ballot'
 import { V1ContractName } from 'models/v1/contracts'
 import { V1FundingCycle } from 'models/v1/fundingCycle'

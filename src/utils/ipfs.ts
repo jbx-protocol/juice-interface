@@ -4,13 +4,13 @@ import {
   PinataPinResponse,
 } from '@pinata/sdk'
 
+import { base58 } from 'ethers/lib/utils'
 import { consolidateMetadata, ProjectMetadataV4 } from 'models/project-metadata'
 import { IPFSNftRewardTier, NftRewardTier } from 'models/v2/nftRewardTier'
-import { base58 } from 'ethers/lib/utils'
 
 import axios from 'axios'
 
-import { IPFS_GATEWAY_HOSTNAME, DEFAULT_PINATA_GATEWAY } from 'constants/ipfs'
+import { DEFAULT_PINATA_GATEWAY, IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 
 // NOTE: `cid` and `IPFS hash` are synonymous
 

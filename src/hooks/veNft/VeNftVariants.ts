@@ -1,10 +1,10 @@
 import { VeNftVariant } from 'models/v2/veNft'
 import { useQuery } from 'react-query'
-import { ipfsGetWithFallback } from 'utils/ipfs'
 import { featureFlagEnabled } from 'utils/featureFlags'
+import { ipfsGetWithFallback } from 'utils/ipfs'
 
-import { VARIANTS_HASH } from 'constants/veNft/veNftProject'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { VARIANTS_HASH } from 'constants/veNft/veNftProject'
 
 type VeNftMetadataResponse = {
   metadata: {

@@ -1,8 +1,8 @@
 import { Trans } from '@lingui/macro'
 import { Button, Form, Input } from 'antd'
+import { useSetV1ProjectIdTx } from 'hooks/v2/transactor/SetV1ProjectIdTx'
 import { useCallback, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
-import { useSetV1ProjectIdTx } from 'hooks/v2/transactor/SetV1ProjectIdTx'
 
 import { StepSection } from './StepSection'
 

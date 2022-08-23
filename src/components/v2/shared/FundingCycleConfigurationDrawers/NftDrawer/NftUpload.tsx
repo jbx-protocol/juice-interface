@@ -6,8 +6,8 @@ import { CSSProperties, useContext, useState } from 'react'
 
 import { LoadingOutlined, UploadOutlined } from '@ant-design/icons'
 import { ThemeContext } from 'contexts/themeContext'
-import { emitErrorNotification } from 'utils/notifications'
 import { ipfsCidUrl, pinFileToIpfs } from 'utils/ipfs'
+import { emitErrorNotification } from 'utils/notifications'
 
 const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif']
 

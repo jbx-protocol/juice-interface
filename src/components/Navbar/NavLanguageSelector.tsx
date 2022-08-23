@@ -1,7 +1,7 @@
-import { CSSProperties, useContext, useEffect, useState } from 'react'
-import { Select } from 'antd'
 import { GlobalOutlined } from '@ant-design/icons'
+import { Select } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
+import { CSSProperties, useContext, useEffect, useState } from 'react'
 
 import { reloadWindow } from 'utils/windowUtils'
 

@@ -1,19 +1,19 @@
 import { Trans } from '@lingui/macro'
 import { Button, Space } from 'antd'
-import WithdrawModal from 'components/v1/shared/FundingCycle/modals/WithdrawModal'
 import TooltipLabel from 'components/TooltipLabel'
+import WithdrawModal from 'components/v1/shared/FundingCycle/modals/WithdrawModal'
+import PayoutModsList from 'components/v1/shared/PayoutModsList'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { PayoutMod } from 'models/mods'
 import { useContext, useState } from 'react'
-import PayoutModsList from 'components/v1/shared/PayoutModsList'
 
-import { hasFundingTarget } from 'utils/v1/fundingCycle'
 import { V1CurrencyName } from 'utils/v1/currency'
+import { hasFundingTarget } from 'utils/v1/fundingCycle'
 
-import { V1CurrencyOption } from 'models/v1/currencyOption'
-import { perbicentToPercent } from 'utils/formatNumber'
 import SpendingStats from 'components/Project/SpendingStats'
+import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useRouter } from 'next/router'
+import { perbicentToPercent } from 'utils/formatNumber'
 
 export default function Spending({
   payoutMods,

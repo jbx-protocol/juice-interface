@@ -1,6 +1,6 @@
-import { useWallet } from 'hooks/Wallet'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
+import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 

@@ -45,13 +45,6 @@
         "format": ["PascalCase"]
       }
     ],
-    "import/order": [
-      "error",
-      {
-        "groups": ["external", "internal"],
-        "newlines-between": "always-and-inside-groups"
-      }
-    ],
     "no-console": ["error", { "allow": ["warn", "error", "info"] }],
     "no-restricted-imports": [
       "error",

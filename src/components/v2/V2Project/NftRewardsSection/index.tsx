@@ -1,17 +1,17 @@
-import { Col, Row } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
+import { t, Trans } from '@lingui/macro'
+import { Col, Row } from 'antd'
+import SectionHeader from 'components/SectionHeader'
+import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+import useMobile from 'hooks/Mobile'
 import { NftRewardTier } from 'models/v2/nftRewardTier'
 import { useContext, useEffect, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { getNftRewardTier } from 'utils/v2/nftRewards'
-import { t, Trans } from '@lingui/macro'
-import SectionHeader from 'components/SectionHeader'
-import { ThemeContext } from 'contexts/themeContext'
-import useMobile from 'hooks/Mobile'
 
-import { RewardTier } from './RewardTier'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { RewardTier } from './RewardTier'
 
 export function NftRewardsSection({
   payAmountETH,

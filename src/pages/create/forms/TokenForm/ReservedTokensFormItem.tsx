@@ -1,12 +1,12 @@
 import { Trans } from '@lingui/macro'
 import { CSSProperties, useState } from 'react'
 
-import { FormItemExt } from 'components/formItems/formItemExt'
 import { FormItems } from 'components/formItems'
-import { toMod, toSplit } from 'utils/v2/splits'
+import { FormItemExt } from 'components/formItems/formItemExt'
+import FormItemWarningText from 'components/FormItemWarningText'
 import { Split } from 'models/v2/splits'
 import { defaultFundingCycleMetadata } from 'redux/slices/editingV2Project'
-import FormItemWarningText from 'components/FormItemWarningText'
+import { toMod, toSplit } from 'utils/v2/splits'
 
 export default function ReservedTokensFormItem({
   hideLabel,

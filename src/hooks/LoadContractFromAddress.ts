@@ -1,8 +1,7 @@
-import { isAddress } from 'ethers/lib/utils'
-import { useState, useEffect } from 'react'
-import { Contract } from '@ethersproject/contracts'
-import { ContractInterface } from '@ethersproject/contracts'
 import * as constants from '@ethersproject/constants'
+import { Contract, ContractInterface } from '@ethersproject/contracts'
+import { isAddress } from 'ethers/lib/utils'
+import { useEffect, useState } from 'react'
 
 import { useWallet } from './Wallet'
 

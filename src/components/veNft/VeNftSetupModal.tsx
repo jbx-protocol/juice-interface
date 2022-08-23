@@ -4,13 +4,13 @@ import TransactionModal from 'components/TransactionModal'
 import { VeNftVariant } from 'models/v2/veNft'
 import { useState } from 'react'
 
+import { MinimalCollapse } from 'components/MinimalCollapse'
 import VeNftRewardTierModal from 'components/veNft/VeNftRewardTierModal'
 import VeNftvariantCard from 'components/veNft/VeNftVariantCard'
-import { MinimalCollapse } from 'components/MinimalCollapse'
 
-import VeNftLockDurationOptionCard from './VeNftLockDurationOptionCard'
-import VeNftAddLockDurationModal from './VeNftAddLockDurationModal'
 import { DEFAULT_LOCK_DURATIONS } from 'constants/veNft/veNftProject'
+import VeNftAddLockDurationModal from './VeNftAddLockDurationModal'
+import VeNftLockDurationOptionCard from './VeNftLockDurationOptionCard'
 
 interface VeNftSetupModalProps {
   visible: boolean

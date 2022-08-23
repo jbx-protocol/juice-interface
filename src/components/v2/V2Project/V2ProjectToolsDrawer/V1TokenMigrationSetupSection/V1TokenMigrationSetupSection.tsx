@@ -1,10 +1,10 @@
+import { LoadingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { MinimalCollapse } from 'components/MinimalCollapse'
-import { useContext, useState } from 'react'
-import { useV1ProjectIdOfV2Project } from 'hooks/v2/contractReader/V1ProjectIdOfV2Project'
-import { LoadingOutlined } from '@ant-design/icons'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { useV1ProjectIdOfV2Project } from 'hooks/v2/contractReader/V1ProjectIdOfV2Project'
+import { useContext, useState } from 'react'
 
 import { V1TokenMigrationSetupModal } from './V1TokenMigrationSetupModal'
 

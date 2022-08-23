@@ -1,14 +1,14 @@
-import { Row, Col, Tooltip, Space, Button } from 'antd'
 import { InfoCircleOutlined } from '@ant-design/icons'
+import { Button, Col, Row, Space, Tooltip } from 'antd'
 
-import { CSSProperties, useContext } from 'react'
+import { Trans } from '@lingui/macro'
 import { ThemeContext } from 'contexts/themeContext'
 import RankingExplanation from 'pages/projects/RankingExplanation'
-import { Trans } from '@lingui/macro'
+import { CSSProperties, useContext } from 'react'
 
+import Grid from 'components/Grid'
 import { useTrendingProjects } from 'hooks/Projects'
 import TrendingProjectCard from 'pages/projects/TrendingProjectCard'
-import Grid from 'components/Grid'
 
 import useMobile from 'hooks/Mobile'
 

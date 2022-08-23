@@ -1,3 +1,5 @@
+import { BigNumber } from '@ethersproject/bignumber'
+import { TransactionReceipt } from '@ethersproject/providers'
 import { Trans } from '@lingui/macro'
 import { Button, FormInstance } from 'antd'
 import {
@@ -12,8 +14,6 @@ import {
 } from 'hooks/v2/transactor/LaunchProjectWithNftsTx'
 import { useCallback, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
-import { TransactionReceipt } from '@ethersproject/providers'
-import { BigNumber } from '@ethersproject/bignumber'
 import { emitErrorNotification } from 'utils/notifications'
 
 import TransactionModal from 'components/TransactionModal'
@@ -23,9 +23,9 @@ import { useWallet } from 'hooks/Wallet'
 
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 
-import { v2ProjectRoute } from 'utils/routes'
 import { TransactionEvent } from 'bnc-notify'
 import { useRouter } from 'next/router'
+import { v2ProjectRoute } from 'utils/routes'
 
 import { readNetwork } from 'constants/networks'
 import { findTransactionReceipt } from './utils'

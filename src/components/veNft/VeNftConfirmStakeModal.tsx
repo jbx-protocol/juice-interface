@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Col, Row, Image, Descriptions } from 'antd'
+import { Col, Descriptions, Image, Row } from 'antd'
 import Callout from 'components/Callout'
 import FormattedAddress from 'components/FormattedAddress'
 import TransactionModal from 'components/TransactionModal'

@@ -1,6 +1,6 @@
-import Modal from 'antd/lib/modal/Modal'
 import { t } from '@lingui/macro'
-import { FormInstance, Form, DatePicker } from 'antd'
+import { DatePicker, Form, FormInstance } from 'antd'
+import Modal from 'antd/lib/modal/Modal'
 
 import NumberSlider from 'components/inputs/NumberSlider'
 import { useState } from 'react'

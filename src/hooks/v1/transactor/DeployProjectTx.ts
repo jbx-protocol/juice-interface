@@ -1,13 +1,13 @@
-import { useWallet } from 'hooks/Wallet'
-import { V1UserContext } from 'contexts/v1/userContext'
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { formatBytes32String } from '@ethersproject/strings'
+import { V1UserContext } from 'contexts/v1/userContext'
+import { useWallet } from 'hooks/Wallet'
+import { PayoutMod, TicketMod } from 'models/mods'
 import {
   V1FundingCycleMetadata,
   V1FundingCycleProperties,
 } from 'models/v1/fundingCycle'
-import { PayoutMod, TicketMod } from 'models/mods'
 import { useContext } from 'react'
 import { hasFundingTarget } from 'utils/v1/fundingCycle'
 

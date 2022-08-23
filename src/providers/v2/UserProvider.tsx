@@ -1,8 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { V2UserContext } from 'contexts/v2/userContext'
-import { useV2ContractLoader } from 'hooks/v2/V2ContractLoader'
 import { useGasPriceQuery } from 'hooks/GasPrice'
 import { useTransactor } from 'hooks/Transactor'
+import { useV2ContractLoader } from 'hooks/v2/V2ContractLoader'
 
 export const V2UserProvider: React.FC = ({ children }) => {
   const contracts = useV2ContractLoader()

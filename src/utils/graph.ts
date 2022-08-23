@@ -53,14 +53,14 @@ import {
   UseAllowanceEventJson,
 } from 'models/subgraph-entities/v2/use-allowance-event'
 import {
+  parseVeNftContractJson,
   VeNftContract,
   VeNftContractJson,
-  parseVeNftContractJson,
 } from 'models/subgraph-entities/v2/venft-contract'
 import {
+  parseVeNftTokenJson,
   VeNftToken,
   VeNftTokenJson,
-  parseVeNftTokenJson,
 } from 'models/subgraph-entities/v2/venft-token'
 import {
   DeployedERC20Event,

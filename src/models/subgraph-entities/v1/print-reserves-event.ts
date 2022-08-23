@@ -1,11 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
 
-import { parseProjectJson, Project, ProjectJson } from '../vX/project'
 import {
   BaseEventEntity,
   BaseEventEntityJson,
   parseBaseEventEntityJson,
 } from '../base/base-event-entity'
+import { parseProjectJson, Project, ProjectJson } from '../vX/project'
 
 export interface PrintReservesEvent extends BaseEventEntity {
   project: Partial<Project>

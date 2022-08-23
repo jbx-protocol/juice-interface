@@ -1,13 +1,13 @@
 import {
-  REDUX_STORE_V1_PROJECT_VERSION,
   defaultProjectState as defaultV1ProjectState,
+  REDUX_STORE_V1_PROJECT_VERSION,
 } from './slices/editingProject'
 import {
-  REDUX_STORE_V2_PROJECT_VERSION,
   defaultProjectState as defaultV2ProjectState,
+  REDUX_STORE_V2_PROJECT_VERSION,
 } from './slices/editingV2Project'
 
-import { RootState, REDUX_STATE_LOCALSTORAGE_KEY } from './store'
+import { REDUX_STATE_LOCALSTORAGE_KEY, RootState } from './store'
 
 interface PreloadedState {
   reduxState: RootState

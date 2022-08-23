@@ -1,8 +1,8 @@
-import { Form, Input } from 'antd'
 import { t } from '@lingui/macro'
+import { Form, Input } from 'antd'
 
-import { FormItemExt } from './formItemExt'
 import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
+import { FormItemExt } from './formItemExt'
 
 export default function ProjectPayButton({
   name,

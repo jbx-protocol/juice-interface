@@ -3,10 +3,10 @@ import { SemanticColors } from 'models/semantic-theme/colors'
 import { ThemeOption } from 'constants/theme/theme-option'
 
 import { backgroundColors } from './background'
+import { boxShadow } from './boxShadow'
 import { iconColors } from './icon'
 import { strokeColors } from './stroke'
 import { textColors } from './text'
-import { boxShadow } from './boxShadow'
 
 export const juiceThemeColors = (themeOption: ThemeOption): SemanticColors => ({
   background: backgroundColors[themeOption],

@@ -1,8 +1,8 @@
-import { Space } from 'antd'
 import { CloseCircleFilled } from '@ant-design/icons'
-import { useContext } from 'react'
-import { ThemeContext } from 'contexts/themeContext'
+import { Space } from 'antd'
 import { IconedImage } from 'components/IconedImage'
+import { ThemeContext } from 'contexts/themeContext'
+import { useContext } from 'react'
 
 export const StickerSelection = ({
   value,

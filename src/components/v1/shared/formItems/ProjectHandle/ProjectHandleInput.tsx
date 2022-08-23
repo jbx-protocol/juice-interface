@@ -1,12 +1,12 @@
-import { Input } from 'antd'
 import { t } from '@lingui/macro'
+import { Input } from 'antd'
 
-import { useContext, useState, useEffect, useCallback } from 'react'
-import { V1UserContext } from 'contexts/v1/userContext'
-import { normalizeHandle } from 'utils/formatHandle'
 import { BigNumber } from '@ethersproject/bignumber'
 import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber'
 import { parseBytes32String } from '@ethersproject/strings'
+import { V1UserContext } from 'contexts/v1/userContext'
+import { useCallback, useContext, useEffect, useState } from 'react'
+import { normalizeHandle } from 'utils/formatHandle'
 
 type ProjectHandleInputValue = string | undefined
 export type ProjectHandleInitialValue = string | BigNumber | undefined

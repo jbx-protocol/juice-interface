@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
-import { V1TerminalVersion } from 'models/v1/terminals'
 import { V1UserContext } from 'contexts/v1/userContext'
+import { V1TerminalVersion } from 'models/v1/terminals'
 import { useContext, useEffect, useState } from 'react'
 
 export function useTerminalFee(version?: V1TerminalVersion) {

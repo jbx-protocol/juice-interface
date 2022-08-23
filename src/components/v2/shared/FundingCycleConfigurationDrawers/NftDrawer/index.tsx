@@ -1,8 +1,8 @@
+import { PlusCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Empty, Form, Input, Space } from 'antd'
 import NftRewardTierModal from 'components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal'
 import { ThemeContext } from 'contexts/themeContext'
-import { PlusCircleOutlined } from '@ant-design/icons'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'

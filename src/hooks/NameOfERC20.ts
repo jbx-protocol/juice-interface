@@ -1,6 +1,6 @@
+import * as constants from '@ethersproject/constants'
 import { useErc20Contract } from 'hooks/Erc20Contract'
 import { useEffect, useState } from 'react'
-import * as constants from '@ethersproject/constants'
 
 /** Returns name for ERC20 token with `address`. */
 export default function useNameOfERC20(tokenAddress: string | undefined) {

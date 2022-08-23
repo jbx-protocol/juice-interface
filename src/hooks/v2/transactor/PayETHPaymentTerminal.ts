@@ -4,8 +4,8 @@ import { useContext } from 'react'
 
 import { BigNumber } from '@ethersproject/bignumber'
 
-import { TransactorInstance } from '../../Transactor'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
+import { TransactorInstance } from '../../Transactor'
 
 const DEFAULT_DELEGATE_METADATA = 0
 const DEFAULT_MIN_RETURNED_TOKENS = 0 // TODO will need a field for this in V2ConfirmPayOwnerModal

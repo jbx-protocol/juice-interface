@@ -1,13 +1,13 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
-import { useContext, useState } from 'react'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { V2_CURRENCY_USD } from 'utils/v2/currency'
+import { PayButtonProps } from 'components/inputs/Pay/PayInputGroup'
 import PayWarningModal from 'components/PayWarningModal'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useWeiConverter from 'hooks/WeiConverter'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
-import { PayButtonProps } from 'components/inputs/Pay/PayInputGroup'
+import { useContext, useState } from 'react'
+import { V2_CURRENCY_USD } from 'utils/v2/currency'
 
 import { reloadWindow } from 'utils/windowUtils'
 

@@ -3,8 +3,8 @@ import { Trans } from '@lingui/macro'
 import { Descriptions } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
 
-import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { useContext } from 'react'
@@ -14,25 +14,25 @@ import {
   perbicentToPercent,
   permilleToPercent,
 } from 'utils/formatNumber'
+import { weightedRate } from 'utils/math'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 import {
   decodeFundingCycleMetadata,
   getUnsafeV1FundingCycleProperties,
   hasFundingTarget,
   isRecurring,
 } from 'utils/v1/fundingCycle'
-import { weightedRate } from 'utils/math'
-import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import { V1CurrencyName } from 'utils/v1/currency'
 
 import TooltipLabel from 'components/TooltipLabel'
 
-import FundingCycleDetailWarning from 'components/Project/FundingCycleDetailWarning'
 import EtherscanLink from 'components/EtherscanLink'
+import FundingCycleDetailWarning from 'components/Project/FundingCycleDetailWarning'
 
-import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 import { SECONDS_IN_DAY } from 'constants/numbers'
+import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
 
 export default function FundingCycleDetails({
   fundingCycle,

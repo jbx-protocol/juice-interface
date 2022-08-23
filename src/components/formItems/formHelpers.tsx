@@ -1,10 +1,10 @@
+import { isAddress } from '@ethersproject/address'
+import * as constants from '@ethersproject/constants'
 import { PayoutMod } from 'models/mods'
 import { permyriadToPercent } from 'utils/formatNumber'
-import * as constants from '@ethersproject/constants'
-import { isAddress } from '@ethersproject/address'
 
-import { percentToPermyriad } from 'utils/formatNumber'
 import { Split } from 'models/v2/splits'
+import { percentToPermyriad } from 'utils/formatNumber'
 
 export type ModalMode = 'Add' | 'Edit' | undefined
 

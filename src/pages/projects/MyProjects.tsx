@@ -6,9 +6,9 @@ import Loading from 'components/Loading'
 import ProjectCard from 'components/ProjectCard'
 import { ThemeContext } from 'contexts/themeContext'
 import { useMyProjectsQuery } from 'hooks/Projects'
-import { useContext } from 'react'
-import Link from 'next/link'
 import { useWallet } from 'hooks/Wallet'
+import Link from 'next/link'
+import { useContext } from 'react'
 
 export default function MyProjects() {
   const { userAddress } = useWallet()

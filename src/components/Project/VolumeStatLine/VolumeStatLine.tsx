@@ -2,15 +2,15 @@ import { Trans } from '@lingui/macro'
 import ETHAmount from 'components/currency/ETHAmount'
 import CurrencySymbol from 'components/CurrencySymbol'
 
+import { BigNumber } from '@ethersproject/bignumber'
 import { ThemeContext } from 'contexts/themeContext'
 import { Property } from 'csstype'
-import { BigNumber } from '@ethersproject/bignumber'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useContext, useMemo } from 'react'
 import { formatWad } from 'utils/formatNumber'
-import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 
-import { textPrimary, textSecondary } from 'constants/styles/text'
 import { CurrencyName } from 'constants/currency'
+import { textPrimary, textSecondary } from 'constants/styles/text'
 import StatLine from '../StatLine'
 
 export const VolumeStatLine = ({

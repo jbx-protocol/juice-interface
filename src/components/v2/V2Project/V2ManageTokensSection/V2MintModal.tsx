@@ -2,15 +2,15 @@ import { Form, Input, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 
-import * as constants from '@ethersproject/constants'
 import { isAddress } from '@ethersproject/address'
+import * as constants from '@ethersproject/constants'
 import { useContext, useState } from 'react'
 import { parseWad } from 'utils/formatNumber'
 
+import { t, Trans } from '@lingui/macro'
+import TransactionModal from 'components/TransactionModal'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useMintTokensTx } from 'hooks/v2/transactor/MintTokensTx'
-import TransactionModal from 'components/TransactionModal'
-import { t, Trans } from '@lingui/macro'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export default function V2MintModal({

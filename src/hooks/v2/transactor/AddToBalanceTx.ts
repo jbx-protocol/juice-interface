@@ -1,10 +1,10 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { useContext } from 'react'
-import { V2UserContext } from 'contexts/v2/userContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { V2UserContext } from 'contexts/v2/userContext'
+import { useContext } from 'react'
 
-import { TransactorInstance } from '../../Transactor'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
+import { TransactorInstance } from '../../Transactor'
 
 const DEFAULT_METADATA = 0
 

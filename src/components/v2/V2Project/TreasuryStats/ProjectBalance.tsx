@@ -1,11 +1,11 @@
-import { Trans } from '@lingui/macro'
-import StatLine from 'components/Project/StatLine'
 import { BigNumber } from '@ethersproject/bignumber'
-import { NO_CURRENCY, V2_CURRENCY_USD } from 'utils/v2/currency'
-import { CSSProperties, useContext } from 'react'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { ThemeContext } from 'contexts/themeContext'
+import { Trans } from '@lingui/macro'
 import ETHAmount from 'components/currency/ETHAmount'
+import StatLine from 'components/Project/StatLine'
+import { ThemeContext } from 'contexts/themeContext'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { CSSProperties, useContext } from 'react'
+import { NO_CURRENCY, V2_CURRENCY_USD } from 'utils/v2/currency'
 
 import V2CurrencyAmount from 'components/v2/shared/V2CurrencyAmount'
 

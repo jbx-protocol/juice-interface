@@ -1,10 +1,10 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useReconfigureV2FundingCycleTx } from 'hooks/v2/transactor/ReconfigureV2FundingCycleTx'
-import { useCallback, useContext, useState } from 'react'
 import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton'
-import { BigNumber } from '@ethersproject/bignumber'
-import { revalidateProject } from 'utils/revalidateProject'
+import { useCallback, useContext, useState } from 'react'
 import { fromWad } from 'utils/formatNumber'
+import { revalidateProject } from 'utils/revalidateProject'
 
 import { EditingProjectData } from './editingProjectData'
 

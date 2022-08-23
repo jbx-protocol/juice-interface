@@ -1,11 +1,11 @@
 import { Trans } from '@lingui/macro'
 import { Button, Form, Space } from 'antd'
+import FormattedAddress from 'components/FormattedAddress'
+import { FormItemExt } from 'components/formItems/formItemExt'
 import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useContext, useState } from 'react'
 import { permyriadToPercent } from 'utils/formatNumber'
-import FormattedAddress from 'components/FormattedAddress'
-import { FormItemExt } from 'components/formItems/formItemExt'
 
 import { CurrencyName } from 'constants/currency'
 

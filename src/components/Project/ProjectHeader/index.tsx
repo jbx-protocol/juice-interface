@@ -1,11 +1,11 @@
-import { t, Trans } from '@lingui/macro'
 import { EditOutlined } from '@ant-design/icons'
+import { t, Trans } from '@lingui/macro'
+import FormattedAddress from 'components/FormattedAddress'
+import Paragraph from 'components/Paragraph'
 import ProjectLogo from 'components/ProjectLogo'
 import { ThemeContext } from 'contexts/themeContext'
-import { useContext } from 'react'
 import { ProjectMetadataV4 } from 'models/project-metadata'
-import Paragraph from 'components/Paragraph'
-import FormattedAddress from 'components/FormattedAddress'
+import { useContext } from 'react'
 
 import { Button, Tooltip } from 'antd'
 

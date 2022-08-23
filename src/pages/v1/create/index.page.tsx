@@ -1,18 +1,17 @@
-import { useRouter } from 'next/router'
 import { CaretRightFilled, CheckCircleFilled } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, Drawer, DrawerProps, Row, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
+import { AppWrapper } from 'components/common'
 import V1Project from 'components/v1/V1Project'
-import { useWallet } from 'hooks/Wallet'
+import { ThemeContext } from 'contexts/themeContext'
 import {
   V1ProjectContext,
   V1ProjectContextType,
 } from 'contexts/v1/projectContext'
-import { ThemeContext } from 'contexts/themeContext'
-import * as constants from '@ethersproject/constants'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import {
   useAppSelector,
@@ -20,23 +19,20 @@ import {
 } from 'hooks/AppSelector'
 import { useTerminalFee } from 'hooks/v1/TerminalFee'
 import { useDeployProjectTx } from 'hooks/v1/transactor/DeployProjectTx'
+import { useWallet } from 'hooks/Wallet'
+import { PayoutMod, TicketMod } from 'models/mods'
 import { V1ContractName } from 'models/v1/contracts'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
-import { PayoutMod, TicketMod } from 'models/mods'
 import { V1TerminalVersion } from 'models/v1/terminals'
+import { useRouter } from 'next/router'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import {
+  fromWad,
   perbicentToPercent,
   permilleToPercent,
-  fromWad,
 } from 'utils/formatNumber'
-import {
-  encodeFundingCycleMetadata,
-  hasFundingTarget,
-  hasFundingDuration,
-} from 'utils/v1/fundingCycle'
 import {
   cidFromUrl,
   editMetadataForCid,
@@ -44,26 +40,30 @@ import {
   metadataNameForHandle,
   uploadProjectMetadata,
 } from 'utils/ipfs'
+import {
+  encodeFundingCycleMetadata,
+  hasFundingDuration,
+  hasFundingTarget,
+} from 'utils/v1/fundingCycle'
 import { getTerminalAddress } from 'utils/v1/terminals'
-import { AppWrapper } from 'components/common'
 
+import ProjectDetailsForm, {
+  ProjectDetailsFormFields,
+} from 'components/forms/ProjectDetailsForm'
 import TicketingForm, {
   TicketingFormFields,
 } from 'components/forms/TicketingForm'
 import ReconfigurationStrategyDrawer from 'components/v1/shared/ReconfigurationStrategyDrawer'
-import ProjectDetailsForm, {
-  ProjectDetailsFormFields,
-} from 'components/forms/ProjectDetailsForm'
 
-import BudgetForm from 'components/v1/shared/forms/BudgetForm'
+import { DeployButtonText } from 'components/DeployProjectButtonText'
 import IncentivesForm, {
   IncentivesFormFields,
 } from 'components/forms/IncentivesForm'
-import PayModsForm from 'components/v1/shared/forms/PayModsForm'
 import RestrictedActionsForm, {
   RestrictedActionsFormFields,
 } from 'components/forms/RestrictedActionsForm'
-import { DeployButtonText } from 'components/DeployProjectButtonText'
+import BudgetForm from 'components/v1/shared/forms/BudgetForm'
+import PayModsForm from 'components/v1/shared/forms/PayModsForm'
 
 import { toDateSeconds } from 'utils/formatDate'
 
@@ -71,8 +71,8 @@ import { BallotStrategy } from 'models/ballot'
 
 import ConfirmDeployProject from './ConfirmDeployProject'
 
-import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
 import { drawerStyle } from 'constants/styles/drawerStyle'
+import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
 
 const terminalVersion: V1TerminalVersion = '1.1'
 

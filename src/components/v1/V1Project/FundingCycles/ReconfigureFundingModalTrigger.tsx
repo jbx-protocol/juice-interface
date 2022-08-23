@@ -1,9 +1,9 @@
+import { Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useContext, useRef, useState } from 'react'
 import { Provider } from 'react-redux'
 import store, { createStore } from 'redux/store'
-import { Trans } from '@lingui/macro'
 
 import { BigNumber } from '@ethersproject/bignumber'
 

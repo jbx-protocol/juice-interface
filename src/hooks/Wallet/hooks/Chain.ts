@@ -1,6 +1,6 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { useSetChain } from '@web3-onboard/react'
 import { useMemo } from 'react'
-import { BigNumber } from '@ethersproject/bignumber'
 
 export function useChain() {
   const [{ connectedChain, chains }] = useSetChain()

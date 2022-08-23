@@ -1,8 +1,8 @@
-import Link from 'next/link'
-import { useState, useContext, useEffect } from 'react'
+import { Trans } from '@lingui/macro'
 import { Button, Collapse, Menu } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
-import { Trans } from '@lingui/macro'
+import Link from 'next/link'
+import { useContext, useEffect, useState } from 'react'
 
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 
@@ -13,13 +13,13 @@ import { useWallet } from 'hooks/Wallet'
 
 import FeedbackFormButton from 'components/FeedbackFormButton'
 
+import Account from '../Account'
 import Logo from '../Logo'
-import NavLanguageSelector from '../NavLanguageSelector'
 import { TopLeftNavItems } from '../MenuItems'
-import ThemePickerMobile from './ThemePickerMobile'
+import NavLanguageSelector from '../NavLanguageSelector'
 import { topNavStyles } from '../navStyles'
 import ResourcesDropdownMobile from './ResourcesDropdownMobile'
-import Account from '../Account'
+import ThemePickerMobile from './ThemePickerMobile'
 
 const NAV_EXPANDED_KEY = 0
 

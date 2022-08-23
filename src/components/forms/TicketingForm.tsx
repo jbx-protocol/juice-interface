@@ -1,5 +1,5 @@
-import { Button, Form, FormInstance, Space } from 'antd'
 import { Trans } from '@lingui/macro'
+import { Button, Form, FormInstance, Space } from 'antd'
 import { FormItems } from 'components/formItems'
 import { ThemeContext } from 'contexts/themeContext'
 import { TicketMod } from 'models/mods'

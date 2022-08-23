@@ -1,20 +1,20 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import * as constants from '@ethersproject/constants'
-import { V1CurrencyOption } from 'models/v1/currencyOption'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { ProjectMetadataV4 } from 'models/project-metadata'
+import { V1CurrencyOption } from 'models/v1/currencyOption'
+import { toDateSeconds } from 'utils/formatDate'
 import {
   perbicentToPercent,
-  permilleToPercent,
   percentToPerbicent,
   percentToPermille,
+  permilleToPercent,
 } from 'utils/formatNumber'
 import {
   SerializedV1FundingCycle,
   serializeV1FundingCycle,
 } from 'utils/v1/serializers'
-import { toDateSeconds } from 'utils/formatDate'
 
 import { V1_CURRENCY_USD } from 'constants/v1/currency'
 

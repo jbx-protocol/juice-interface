@@ -1,8 +1,8 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import {
   V2ProjectContext,
   V2ProjectContextType,
 } from 'contexts/v2/projectContext'
-import { BigNumber } from '@ethersproject/bignumber'
 import { useWallet } from 'hooks/Wallet'
 
 import {
@@ -14,8 +14,8 @@ import {
 
 import { V2FundingCycle } from 'models/v2/fundingCycle'
 
-import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
 import { V2_CURRENCY_ETH } from 'utils/v2/currency'
+import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
 
 import V2Project from '../../components/v2/V2Project'
 

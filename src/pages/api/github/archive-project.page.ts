@@ -1,7 +1,7 @@
-import { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios'
-import { ProjectMetadataV4 } from 'models/project-metadata'
 import { CV } from 'models/cv'
+import { ProjectMetadataV4 } from 'models/project-metadata'
+import { NextApiRequest, NextApiResponse } from 'next'
 
 import { readNetwork } from 'constants/networks'
 

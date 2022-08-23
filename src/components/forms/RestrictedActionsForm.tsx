@@ -1,5 +1,5 @@
-import { Button, Form, FormInstance, Space, Switch } from 'antd'
 import { t, Trans } from '@lingui/macro'
+import { Button, Form, FormInstance, Space, Switch } from 'antd'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useEffect, useState } from 'react'

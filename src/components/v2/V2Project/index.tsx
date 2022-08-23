@@ -8,24 +8,24 @@ import VolumeChart from 'components/VolumeChart'
 
 import { useContext, useState } from 'react'
 
-import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/V2ConnectedWalletHasPermission'
-import { V2OperatorPermission } from 'models/v2/permissions'
 import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
+import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/V2ConnectedWalletHasPermission'
 import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDetailsTx'
+import { V2OperatorPermission } from 'models/v2/permissions'
 import { useRouter } from 'next/router'
 import { weightedAmount } from 'utils/v2/math'
 
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 
-import { v2ProjectRoute } from 'utils/routes'
-import V2BugNotice from 'components/v2/shared/V2BugNotice'
-import { featureFlagEnabled } from 'utils/featureFlags'
-import { CurrencyContext } from 'contexts/currencyContext'
-import { CurrencyOption } from 'models/currencyOption'
-import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-import { fromWad } from 'utils/formatNumber'
 import { TextButton } from 'components/TextButton'
+import V2BugNotice from 'components/v2/shared/V2BugNotice'
+import { CurrencyContext } from 'contexts/currencyContext'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useMobile from 'hooks/Mobile'
+import { CurrencyOption } from 'models/currencyOption'
+import { featureFlagEnabled } from 'utils/featureFlags'
+import { fromWad } from 'utils/formatNumber'
+import { v2ProjectRoute } from 'utils/routes'
 
 import { V2_PROJECT_IDS } from 'constants/v2/projectIds'
 import { RelaunchFundingCycleBanner } from './banners/RelaunchFundingCycleBanner'
@@ -38,9 +38,9 @@ import V2ManageTokensSection from './V2ManageTokensSection'
 import V2PayButton from './V2PayButton'
 import V2ProjectHeaderActions from './V2ProjectHeaderActions'
 
-import { V2ReconfigureProjectHandleDrawer } from './V2ReconfigureProjectHandleDrawer'
-import { NftRewardsSection } from './NftRewardsSection'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { NftRewardsSection } from './NftRewardsSection'
+import { V2ReconfigureProjectHandleDrawer } from './V2ReconfigureProjectHandleDrawer'
 
 const GUTTER_PX = 40
 

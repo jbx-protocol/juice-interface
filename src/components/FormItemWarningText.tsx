@@ -1,6 +1,6 @@
+import { InfoCircleOutlined } from '@ant-design/icons'
 import { ThemeContext } from 'contexts/themeContext'
 import { PropsWithChildren, useContext } from 'react'
-import { InfoCircleOutlined } from '@ant-design/icons'
 
 export default function FormItemWarningText({
   children,

@@ -3,11 +3,11 @@ import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
 import { Split } from 'models/v2/splits'
 import { useContext, useEffect, useState } from 'react'
 import {
-  editingV2ProjectActions,
   defaultFundingCycleMetadata,
+  editingV2ProjectActions,
 } from 'redux/slices/editingV2Project'
 import { fromWad } from 'utils/formatNumber'
-import { V2_CURRENCY_ETH, NO_CURRENCY } from 'utils/v2/currency'
+import { NO_CURRENCY, V2_CURRENCY_ETH } from 'utils/v2/currency'
 import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
 import {
   SerializedV2FundAccessConstraint,
@@ -25,11 +25,11 @@ import { V2UserContext } from 'contexts/v2/userContext'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
 
+import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
-import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 
 export interface InitialEditingData {
   fundAccessConstraints: SerializedV2FundAccessConstraint[]

@@ -1,5 +1,5 @@
-import { Select, Space } from 'antd'
 import { t, Trans } from '@lingui/macro'
+import { Select, Space } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
 
 import { ThemeContext } from 'contexts/themeContext'
@@ -22,13 +22,13 @@ import {
   YAxis,
 } from 'recharts'
 
-import { EventRef, ShowGraph } from './types'
+import { daysToMillis } from './daysToMillis'
 import { useDuration } from './hooks/useDuration'
 import { loadBlockRefs } from './loadBlockRefs'
-import { loadProjectEvents } from './loadProjectEvents'
 import { loadDomain } from './loadDomain'
+import { loadProjectEvents } from './loadProjectEvents'
 import { loadTapEvents } from './loadTapEvents'
-import { daysToMillis } from './daysToMillis'
+import { EventRef, ShowGraph } from './types'
 
 const now = moment.now() - 5 * 60 * 1000 // 5 min ago
 

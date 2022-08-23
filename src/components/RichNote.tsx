@@ -1,6 +1,6 @@
+import { Space } from 'antd'
 import Autolinker from 'autolinker'
 import RichImgPreview from 'components/RichImgPreview'
-import { Space } from 'antd'
 import { useProcessedRichNote } from 'hooks/ProcessedRichNote'
 
 type RichNoteProps = {

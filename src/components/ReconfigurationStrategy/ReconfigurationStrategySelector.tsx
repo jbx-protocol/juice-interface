@@ -1,9 +1,9 @@
+import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Form, Input, Space } from 'antd'
-import * as constants from '@ethersproject/constants'
+import { ThemeContext } from 'contexts/themeContext'
 import { useWallet } from 'hooks/Wallet'
 import { useContext, useState } from 'react'
-import { ThemeContext } from 'contexts/themeContext'
 
 import ReconfigurationStrategyOption from 'components/ReconfigurationStrategy/ReconfigurationStrategyOption'
 

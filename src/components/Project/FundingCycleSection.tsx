@@ -1,5 +1,5 @@
-import { Space } from 'antd'
 import { Trans } from '@lingui/macro'
+import { Space } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 
 import { useContext, useState } from 'react'

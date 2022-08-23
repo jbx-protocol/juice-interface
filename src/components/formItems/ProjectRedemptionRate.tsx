@@ -1,7 +1,8 @@
-import { Form, Space } from 'antd'
 import { Trans } from '@lingui/macro'
+import { Form, Space } from 'antd'
 
 import { ThemeContext } from 'contexts/themeContext'
+import FormItemLabel from 'pages/create/FormItemLabel'
 import {
   CSSProperties,
   useCallback,
@@ -10,15 +11,14 @@ import {
   useLayoutEffect,
   useState,
 } from 'react'
-import FormItemLabel from 'pages/create/FormItemLabel'
 
 import ExternalLink from 'components/ExternalLink'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 
-import NumberSlider from '../inputs/NumberSlider'
-import { FormItemExt } from './formItemExt'
 import FormItemWarningText from '../FormItemWarningText'
+import NumberSlider from '../inputs/NumberSlider'
 import SwitchHeading from '../SwitchHeading'
+import { FormItemExt } from './formItemExt'
 
 const GRAPH_CONTAINER_ID = 'graph-container'
 export const DEFAULT_BONDING_CURVE_RATE_PERCENTAGE = '100'

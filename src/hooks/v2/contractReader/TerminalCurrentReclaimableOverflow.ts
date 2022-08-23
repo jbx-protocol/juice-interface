@@ -1,13 +1,13 @@
-import { useWallet } from 'hooks/Wallet'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { BigNumber } from '@ethersproject/bignumber'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbers'
 
 import { V2ContractName } from 'models/v2/contracts'
 
-import useV2ContractReader from './V2ContractReader'
 import useTotalBalanceOf from './TotalBalanceOf'
+import useV2ContractReader from './V2ContractReader'
 
 /** Returns claimable amount of project tokens for user with address `userAddress` and balance `totalBalance`. */
 export default function useTerminalCurrentReclaimableOverflow({

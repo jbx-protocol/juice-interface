@@ -1,17 +1,17 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Button, Modal } from 'antd'
-import ProjectTicketMods from 'components/v1/shared/ProjectTicketMods'
 import Mod from 'components/v1/shared/Mod'
+import ProjectTicketMods from 'components/v1/shared/ProjectTicketMods'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { BigNumber } from '@ethersproject/bignumber'
 import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
 import { useSetTicketModsTx } from 'hooks/v1/transactor/SetTicketModsTx'
-import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { TicketMod } from 'models/mods'
+import { V1FundingCycle } from 'models/v1/fundingCycle'
+import { V1OperatorPermission } from 'models/v1/permissions'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { formatWad, permyriadToPercent } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-import { V1OperatorPermission } from 'models/v1/permissions'
 export default function TicketModsList({
   total,
   mods,

@@ -1,5 +1,5 @@
-import { useSetChain } from '@web3-onboard/react'
 import { BigNumber } from '@ethersproject/bignumber'
+import { useSetChain } from '@web3-onboard/react'
 import { useMemo } from 'react'
 
 import { readNetwork } from 'constants/networks'

@@ -1,5 +1,5 @@
-import { Token, WETH9, Route, Pair, CurrencyAmount } from '@sushiswap/sdk'
 import { Contract } from '@ethersproject/contracts'
+import { CurrencyAmount, Pair, Route, Token, WETH9 } from '@sushiswap/sdk'
 
 import IUniswapV2PairABI from '@uniswap/v2-core/build/IUniswapV2Pair.json'
 
@@ -7,8 +7,8 @@ import { useQuery } from 'react-query'
 
 import { readNetwork } from 'constants/networks'
 
-import { readProvider } from 'constants/readProvider'
 import { WAD_DECIMALS } from 'constants/numbers'
+import { readProvider } from 'constants/readProvider'
 
 /**
  * Fetches information about a pair and constructs a pair from the given two tokens.

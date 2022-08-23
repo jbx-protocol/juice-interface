@@ -1,15 +1,15 @@
 import { Trans } from '@lingui/macro'
 import { Divider, Drawer, Space, Tabs } from 'antd'
-import { useContext } from 'react'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
 import ArchiveV2Project from 'components/v2/V2Project/ArchiveV2Project'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
+import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
 import { useAddToBalanceTx } from 'hooks/v2/transactor/AddToBalanceTx'
-import { useTransferProjectOwnershipTx } from 'hooks/v2/transactor/TransferProjectOwnershipTx'
-import { useTransferUnclaimedTokensTx } from 'hooks/v2/transactor/TransferUnclaimedTokensTx'
 import { useDeployProjectPayerTx } from 'hooks/v2/transactor/DeployProjectPayerTx'
 import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDetailsTx'
-import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
+import { useTransferProjectOwnershipTx } from 'hooks/v2/transactor/TransferProjectOwnershipTx'
+import { useTransferUnclaimedTokensTx } from 'hooks/v2/transactor/TransferUnclaimedTokensTx'
+import { useContext } from 'react'
 
 import { featureFlagEnabled } from 'utils/featureFlags'
 
@@ -18,12 +18,12 @@ import VeNftSetUnclaimedTokensPermissionSection from 'components/veNft/VeNftSetU
 import VeNftEnableSection from 'components/veNft/VeNftEnableSection'
 import useMobile from 'hooks/Mobile'
 
-import { V1TokenMigrationSetupSection } from './V1TokenMigrationSetupSection'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { AddToProjectBalanceForm } from '../../../Project/ProjectToolsDrawer/AddToProjectBalanceForm'
 import { PayableAddressSection } from '../../../Project/ProjectToolsDrawer/PayableAddressSection'
 import { TransferOwnershipForm } from '../../../Project/ProjectToolsDrawer/TransferOwnershipForm'
 import { TransferUnclaimedTokensForm } from '../../../Project/ProjectToolsDrawer/TransferUnclaimedTokensForm'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { V1TokenMigrationSetupSection } from './V1TokenMigrationSetupSection'
 
 const { TabPane } = Tabs
 

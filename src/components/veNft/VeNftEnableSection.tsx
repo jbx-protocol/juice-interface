@@ -1,11 +1,11 @@
 import { Trans } from '@lingui/macro'
 import { Button, Divider, Space } from 'antd'
-import { useContext, useState } from 'react'
 import { useWallet } from 'hooks/Wallet'
+import { useContext, useState } from 'react'
 
 import VeNftSetupModal from 'components/veNft/VeNftSetupModal'
-import { useLaunchVeNftTx } from 'hooks/veNft/transactor/LaunchVeNftTx'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { useLaunchVeNftTx } from 'hooks/veNft/transactor/LaunchVeNftTx'
 
 import { featureFlagEnabled } from 'utils/featureFlags'
 

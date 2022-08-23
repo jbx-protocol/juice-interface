@@ -5,13 +5,13 @@ import {
   V2CurrencyUSD,
 } from 'models/v2/currencyOption'
 
-import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 import {
   CurrencyMetadata,
   CurrencyName,
   CurrencySymbol,
   CURRENCY_METADATA,
 } from 'constants/currency'
+import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 
 // If a project has no fund access constraint,
 // then currency will be 0.

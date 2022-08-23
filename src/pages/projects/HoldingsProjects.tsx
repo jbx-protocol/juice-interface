@@ -1,12 +1,12 @@
+import { InfoCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import Grid from 'components/Grid'
 import Loading from 'components/Loading'
 import ProjectCard from 'components/ProjectCard'
-import { useWallet } from 'hooks/Wallet'
 import { ThemeContext } from 'contexts/themeContext'
 import { useHoldingsProjectsQuery } from 'hooks/Projects'
+import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
-import { InfoCircleOutlined } from '@ant-design/icons'
 
 export default function HoldingsProjects() {
   const { userAddress } = useWallet()

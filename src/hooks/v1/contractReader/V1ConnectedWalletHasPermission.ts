@@ -1,7 +1,7 @@
-import { useWallet } from 'hooks/Wallet'
-import { useContext } from 'react'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { useWallet } from 'hooks/Wallet'
 import { V1OperatorPermission } from 'models/v1/permissions'
+import { useContext } from 'react'
 
 import { useProjectOwner } from './ProjectOwner'
 import { useV1HasPermissions } from './V1HasPermissions'

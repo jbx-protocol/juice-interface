@@ -1,6 +1,6 @@
-import * as constants from '@ethersproject/constants'
-import { BigNumber } from '@ethersproject/bignumber'
 import { getAddress } from '@ethersproject/address'
+import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
 import {
   V2FundingCycle,
   V2FundingCycleMetadata,
@@ -12,14 +12,14 @@ import unsafeFundingCycleProperties from 'utils/unsafeFundingCycleProperties'
 
 import { fromWad, parseWad } from '../formatNumber'
 
+import { FundingCycleRiskFlags } from 'constants/fundingWarningText'
+import { MaxUint54 } from 'constants/numbers'
+import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
+import { MAX_DISTRIBUTION_LIMIT } from './math'
 import {
   SerializedV2FundAccessConstraint,
   SerializedV2FundingCycleData,
 } from './serializers'
-import { FundingCycleRiskFlags } from 'constants/fundingWarningText'
-import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
-import { MAX_DISTRIBUTION_LIMIT } from './math'
-import { MaxUint54 } from 'constants/numbers'
 
 export const hasDistributionLimit = (
   fundAccessConstraint: SerializedV2FundAccessConstraint | undefined,

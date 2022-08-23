@@ -1,11 +1,11 @@
+import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import Callout from 'components/Callout'
+import { V2UserContext } from 'contexts/v2/userContext'
 import { useV1SetOperatorTx } from 'hooks/v1/transactor/V1SetOperatorTx'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import { useContext, useState } from 'react'
-import { Trans } from '@lingui/macro'
 import { emitErrorNotification } from 'utils/notifications'
-import { V2UserContext } from 'contexts/v2/userContext'
 
 export function GrantTransferPermissionCallout({
   onFinish,

@@ -5,9 +5,9 @@ import {
   useEditingV2FundingCycleMetadataSelector,
 } from 'hooks/AppSelector'
 import {
-  V2FundingCycleMetadata,
-  V2FundingCycleData,
   V2FundAccessConstraint,
+  V2FundingCycleData,
+  V2FundingCycleMetadata,
 } from 'models/v2/fundingCycle'
 import {
   ETHPayoutGroupedSplits,

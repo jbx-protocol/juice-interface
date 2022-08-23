@@ -1,13 +1,13 @@
-import { useContext } from 'react'
 import { Space } from 'antd'
+import { useContext } from 'react'
 
-import { tokenSymbolText } from 'utils/tokenSymbolText'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { t } from '@lingui/macro'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import VeNftHeaderSection from 'components/veNft/VeNftHeaderSection'
-import VeNftStakingForm from 'components/veNft/VeNftStakingForm'
 import VeNftOwnedTokensSection from 'components/veNft/VeNftOwnedTokensSection'
+import VeNftStakingForm from 'components/veNft/VeNftStakingForm'
 import { VeNftContext } from 'contexts/v2/veNftContext'
 
 const VeNftContent = () => {

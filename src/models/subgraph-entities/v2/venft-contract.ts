@@ -1,7 +1,7 @@
 import {
-  VeNftTokenJson,
   parseVeNftTokenJson,
   VeNftToken,
+  VeNftTokenJson,
 } from 'models/subgraph-entities/v2/venft-token'
 
 export interface VeNftContract {

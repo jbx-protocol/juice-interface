@@ -1,11 +1,11 @@
+import { CheckCircleFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Modal, ModalProps, Space } from 'antd'
 import Callout from 'components/Callout'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useV1ProjectIdOfV2Project } from 'hooks/v2/contractReader/V1ProjectIdOfV2Project'
-import { useContext, useState } from 'react'
-import { CheckCircleFilled } from '@ant-design/icons'
 import { useHasV1TokenPaymentTerminal } from 'hooks/v2/hasV1TokenPaymentTerminal'
+import { useContext, useState } from 'react'
 
 import { AddTerminalSection } from './AddTerminalSection'
 import { SetV1ProjectSection } from './SetV1ProjectSection'

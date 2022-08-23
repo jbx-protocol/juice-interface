@@ -1,15 +1,15 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
+import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactorButton from 'components/TransactorButton'
-import { BigNumber } from '@ethersproject/bignumber'
 import { TransactorInstance } from 'hooks/Transactor'
+import { useWallet } from 'hooks/Wallet'
 import { useState } from 'react'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-import { EthAddressInput } from 'components/inputs/EthAddressInput'
-import { useWallet } from 'hooks/Wallet'
 
 export function TransferUnclaimedTokensForm({
   tokenSymbol,

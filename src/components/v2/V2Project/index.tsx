@@ -192,6 +192,7 @@ export default function V2Project({
             <div style={{ marginTop: '30px' }}>
               <NftRewardsSection
                 payAmountETH={payAmountETH}
+                payInCurrency={payInCurrency}
                 onPayAmountChange={setPayAmount}
               />
             </div>
@@ -228,6 +229,7 @@ export default function V2Project({
               {!isMobile && nftRewardsEnabled ? (
                 <NftRewardsSection
                   payAmountETH={payAmountETH}
+                  payInCurrency={payInCurrency}
                   onPayAmountChange={setPayAmount}
                 />
               ) : null}

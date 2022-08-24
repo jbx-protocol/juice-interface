@@ -11,18 +11,29 @@ import { featureFlagEnabled } from 'utils/featureFlags'
 import { getNftRewardTier } from 'utils/v2/nftRewards'
 
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { CurrencyContext } from 'contexts/currencyContext'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { CurrencyOption } from 'models/currencyOption'
+import { parseWad } from 'utils/formatNumber'
 import { RewardTier } from './RewardTier'
 
 export function NftRewardsSection({
   payAmountETH,
+  payInCurrency,
   onPayAmountChange,
 }: {
   payAmountETH: string
+  payInCurrency: CurrencyOption
   onPayAmountChange: (payAmount: string) => void
 }) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const {
+    currencies: { USD },
+  } = useContext(CurrencyContext)
+  const converter = useCurrencyConverter()
+
   const {
     nftRewards: { CIDs, rewardTiers, loading: nftsLoading },
   } = useContext(V2ProjectContext)
@@ -58,6 +69,20 @@ export function NftRewardsSection({
 
     const nextRewardTier = rewardTiers[index + 1]
 
+    const handleSelected = () => {
+      setSelectedIndex(index)
+      // update pay input with NFT's contribution floor
+      onPayAmountChange(
+        (payInCurrency === USD // convert to USD if USD selected in pay input
+          ? converter
+              .weiToUsd(parseWad(rewardTier.contributionFloor))
+              ?.add(1) //-> adds 1USD to ensure ETH amount is above the contributionFloor
+              ?.toNumber() ?? 0
+          : rewardTier.contributionFloor
+        ).toString(),
+      )
+    }
+
     return (
       <Col
         md={8}
@@ -69,12 +94,7 @@ export function NftRewardsSection({
             rewardTier={rewardTier}
             rewardTierUpperLimit={nextRewardTier?.contributionFloor}
             isSelected={isSelected}
-            onClick={() => {
-              setSelectedIndex(isSelected ? undefined : index)
-              onPayAmountChange(
-                isSelected ? '0' : rewardTier.contributionFloor.toString(),
-              )
-            }}
+            onClick={handleSelected}
           />
         ) : (
           <LoadingOutlined />

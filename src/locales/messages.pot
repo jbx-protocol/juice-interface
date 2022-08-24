@@ -611,9 +611,6 @@ msgstr ""
 msgid "Connect Wallet"
 msgstr ""
 
-msgid "Connect wallet"
-msgstr ""
-
 msgid "Connect wallet to claim"
 msgstr ""
 

@@ -1,6 +1,4 @@
 import { LinkOutlined } from '@ant-design/icons'
-import { t } from '@lingui/macro'
-import { Tooltip } from 'antd'
 import { NetworkName } from 'models/network-name'
 import { CSSProperties } from 'react'
 import { truncateEthAddress } from 'utils/formatAddress'
@@ -13,14 +11,12 @@ export default function EtherscanLink({
   type,
   truncated,
   truncateTo,
-  hideTooltip,
   style,
 }: {
   value: string | undefined
   type: 'tx' | 'address'
   truncated?: boolean
   truncateTo?: number
-  hideTooltip?: boolean
   style?: CSSProperties
 }) {
   if (!value) return null
@@ -42,23 +38,11 @@ export default function EtherscanLink({
 
   if (type === 'tx') {
     return (
-      <Tooltip
-        title={t`See transaction`}
-        visible={hideTooltip ? !hideTooltip : undefined}
-      >
-        <ExternalLink {...linkProps}>
-          <LinkOutlined />
-        </ExternalLink>
-      </Tooltip>
+      <ExternalLink {...linkProps}>
+        <LinkOutlined />
+      </ExternalLink>
     )
   }
 
-  return (
-    <Tooltip
-      title={t`Go to Etherscan`}
-      visible={hideTooltip ? !hideTooltip : undefined}
-    >
-      <ExternalLink {...linkProps}>{truncatedValue ?? value}</ExternalLink>
-    </Tooltip>
-  )
+  return <ExternalLink {...linkProps}>{truncatedValue ?? value}</ExternalLink>
 }

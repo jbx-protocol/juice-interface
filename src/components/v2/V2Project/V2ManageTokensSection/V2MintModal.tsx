@@ -34,7 +34,7 @@ export default function V2MintModal({
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
 
-  async function executeMintTx() {
+  const executeMintTx = async () => {
     const beneficiary = form.getFieldValue('beneficary')
     if (!isAddress(beneficiary)) return
 
@@ -42,7 +42,7 @@ export default function V2MintModal({
 
     await form.validateFields()
 
-    mintTokensTx(
+    const txSuccess = await mintTokensTx(
       {
         value: parseWad(value),
         beneficiary,
@@ -51,8 +51,8 @@ export default function V2MintModal({
       },
       {
         onDone: () => {
+          setTransactionPending(true)
           setLoading(false)
-          setTransactionPending(false)
         },
         onConfirmed: () => {
           form.resetFields()
@@ -62,6 +62,11 @@ export default function V2MintModal({
         },
       },
     )
+
+    if (!txSuccess) {
+      setTransactionPending(false)
+      setLoading(false)
+    }
   }
 
   const erc20Issued =

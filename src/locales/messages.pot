@@ -2348,6 +2348,9 @@ msgstr ""
 msgid "This list is using an experimental data index and may be inaccurate for some projects."
 msgstr ""
 
+msgid "This project has no distributions"
+msgstr ""
+
 msgid "This project is archived and can't be paid."
 msgstr ""
 

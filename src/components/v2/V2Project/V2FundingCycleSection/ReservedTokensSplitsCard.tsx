@@ -35,6 +35,8 @@ export default function ReservedTokensSplitsCard({
     theme: { colors },
   } = useContext(ThemeContext)
 
+  const effectiveReservedRate = reservedRate ?? BigNumber.from(0)
+
   const [
     distributeReservedTokensModalVisible,
     setDistributeReservedTokensModalVisible,
@@ -174,14 +176,20 @@ export default function ReservedTokensSplitsCard({
               </Button>
             ) : null}
           </div>
-          {reservedTokensSplits ? (
-            <SplitList
-              splits={reservedTokensSplits}
-              projectOwnerAddress={projectOwnerAddress}
-              totalValue={undefined}
-              reservedRate={parseFloat(formatReservedRate(reservedRate))}
-            />
-          ) : null}
+          {effectiveReservedRate.gt(0) ? (
+            reservedTokensSplits ? (
+              <SplitList
+                splits={reservedTokensSplits}
+                projectOwnerAddress={projectOwnerAddress}
+                totalValue={undefined}
+                reservedRate={parseFloat(formatReservedRate(reservedRate))}
+              />
+            ) : null
+          ) : (
+            <span style={{ color: colors.text.tertiary }}>
+              <Trans>This project has no reserved tokens</Trans>
+            </span>
+          )}
         </div>
       </Space>
 

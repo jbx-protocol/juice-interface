@@ -2,6 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
 import { PayButtonProps } from 'components/inputs/Pay/PayInputGroup'
+import Loading from 'components/Loading'
 import PayWarningModal from 'components/PayWarningModal'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useWeiConverter from 'hooks/WeiConverter'
@@ -20,8 +21,12 @@ export default function V2PayButton({
   disabled,
   wrapperStyle,
 }: PayButtonProps) {
-  const { projectMetadata, fundingCycleMetadata, isArchived } =
-    useContext(V2ProjectContext)
+  const {
+    projectMetadata,
+    fundingCycleMetadata,
+    loading: { fundingCycleLoading },
+    isArchived,
+  } = useContext(V2ProjectContext)
 
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
   const [payWarningModalVisible, setPayWarningModalVisible] =
@@ -32,8 +37,6 @@ export default function V2PayButton({
     amount: payAmount,
   })
 
-  if (!fundingCycleMetadata) return null
-
   const payButtonText = projectMetadata?.payButton?.length
     ? projectMetadata.payButton
     : t`Pay`
@@ -41,11 +44,12 @@ export default function V2PayButton({
   let disabledMessage: string | undefined
   if (isArchived) {
     disabledMessage = t`This project is archived and can't be paid.`
-  } else if (fundingCycleMetadata.pausePay) {
+  } else if (fundingCycleMetadata?.pausePay) {
     disabledMessage = t`Payments are paused in this funding cycle.`
   }
 
-  const isPayDisabled = Boolean(disabledMessage) || disabled
+  const isPayDisabled =
+    Boolean(disabledMessage) || disabled || fundingCycleLoading
 
   return (
     <div style={{ textAlign: 'center', ...wrapperStyle }}>
@@ -65,7 +69,13 @@ export default function V2PayButton({
           }}
           disabled={isPayDisabled}
         >
-          {payButtonText}
+          {fundingCycleLoading ? (
+            <div style={{ margin: '0 auto' }}>
+              <Loading size={'default'} />
+            </div>
+          ) : (
+            payButtonText
+          )}
         </Button>
       </Tooltip>
       {payInCurrency === V2_CURRENCY_USD && (

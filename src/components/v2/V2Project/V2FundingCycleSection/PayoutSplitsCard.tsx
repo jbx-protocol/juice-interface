@@ -191,7 +191,7 @@ export default function PayoutSplitsCard({
             ) : null
           ) : (
             <span style={{ color: colors.text.tertiary }}>
-              <Trans>This project has no distributions</Trans>
+              <Trans>This project has no distributions.</Trans>
             </span>
           )}
         </div>

@@ -187,7 +187,7 @@ export default function ReservedTokensSplitsCard({
             ) : null
           ) : (
             <span style={{ color: colors.text.tertiary }}>
-              <Trans>This project has no reserved tokens</Trans>
+              <Trans>This project has no reserved tokens.</Trans>
             </span>
           )}
         </div>

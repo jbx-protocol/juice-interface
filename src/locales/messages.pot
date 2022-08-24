@@ -611,6 +611,9 @@ msgstr ""
 msgid "Connect Wallet"
 msgstr ""
 
+msgid "Connect wallet"
+msgstr ""
+
 msgid "Connect wallet to claim"
 msgstr ""
 
@@ -2193,6 +2196,9 @@ msgid "Swap for V2 {tokenSymbolFormattedPlural}"
 msgstr ""
 
 msgid "Swap for V2 {tokenText}"
+msgstr ""
+
+msgid "Switch network to {0}"
 msgstr ""
 
 msgid "Target"

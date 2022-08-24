@@ -1,7 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Modal, ModalProps } from 'antd'
 import { readNetwork } from 'constants/networks'
-
 import { ThemeContext } from 'contexts/themeContext'
 import { useWallet } from 'hooks/Wallet'
 import { PropsWithChildren, useContext, useMemo } from 'react'
@@ -58,10 +57,12 @@ export default function TransactionModal(props: TransactionModalProps) {
   const { isConnected, chainUnsupported } = useWallet()
   const okText = useMemo(() => {
     if (chainUnsupported) {
-      return props.switchNetworkText ?? `Switch network to ${readNetwork.label}`
+      return (
+        props.switchNetworkText ?? t`Switch network to ${readNetwork.label}`
+      )
     }
     if (!isConnected) {
-      return props.connectWalletText ?? 'Connect wallet'
+      return props.connectWalletText ?? t`Connect wallet`
     }
     return props.okText
   }, [

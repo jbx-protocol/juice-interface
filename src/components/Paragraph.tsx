@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import { Button } from 'antd'
 
-import { useState, useMemo, CSSProperties } from 'react'
+import { CSSProperties, useMemo, useState } from 'react'
 
 import RichNote from './RichNote'
 
@@ -35,6 +35,7 @@ export default function Paragraph({
         note={
           !expanded && CHARACTER_LIMIT_EXCEEDED ? shortDescription : description
         }
+        ignoreMediaLinks
       >
         {CHARACTER_LIMIT_EXCEEDED && (
           <Button

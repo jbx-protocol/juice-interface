@@ -7,9 +7,9 @@ import TooltipLabel from 'components/TooltipLabel'
 import SplitList from 'components/v2/shared/SplitList'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+import useProjectReservedTokens from 'hooks/v2/contractReader/ProjectReservedTokens'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/V2ConnectedWalletHasPermission'
 import { V2OperatorPermission } from 'models/v2/permissions'
-import useProjectReservedTokens from 'hooks/v2/contractReader/ProjectReservedTokens'
 import { Split } from 'models/v2/splits'
 import { CSSProperties, useContext, useState } from 'react'
 import { formatWad } from 'utils/formatNumber'
@@ -34,6 +34,8 @@ export default function ReservedTokensSplitsCard({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+
+  const effectiveReservedRate = reservedRate ?? BigNumber.from(0)
 
   const [
     distributeReservedTokensModalVisible,
@@ -174,14 +176,20 @@ export default function ReservedTokensSplitsCard({
               </Button>
             ) : null}
           </div>
-          {reservedTokensSplits ? (
-            <SplitList
-              splits={reservedTokensSplits}
-              projectOwnerAddress={projectOwnerAddress}
-              totalValue={undefined}
-              reservedRate={parseFloat(formatReservedRate(reservedRate))}
-            />
-          ) : null}
+          {effectiveReservedRate.gt(0) ? (
+            reservedTokensSplits ? (
+              <SplitList
+                splits={reservedTokensSplits}
+                projectOwnerAddress={projectOwnerAddress}
+                totalValue={undefined}
+                reservedRate={parseFloat(formatReservedRate(reservedRate))}
+              />
+            ) : null
+          ) : (
+            <span style={{ color: colors.text.tertiary }}>
+              <Trans>This project has no reserved tokens.</Trans>
+            </span>
+          )}
         </div>
       </Space>
 

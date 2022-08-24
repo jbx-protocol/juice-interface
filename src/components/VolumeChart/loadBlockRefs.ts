@@ -3,8 +3,8 @@ import EthDater from 'ethereum-block-by-date'
 import moment from 'moment'
 
 import { readProvider } from 'constants/readProvider'
-import { BlockRef, Duration } from './types'
 import { daysToMillis } from './daysToMillis'
+import { BlockRef, Duration } from './types'
 
 export const loadBlockRefs = async ({
   duration,

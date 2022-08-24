@@ -512,6 +512,9 @@ msgstr ""
 msgid "Change ENS name"
 msgstr ""
 
+msgid "Change networks to deploy"
+msgstr ""
+
 msgid "Change project handle"
 msgstr ""
 
@@ -776,7 +779,7 @@ msgstr ""
 msgid "Deploy payment address contract"
 msgstr ""
 
-msgid "Deploy project on {0}"
+msgid "Deploy project"
 msgstr ""
 
 msgid "Deploy project to {0}"
@@ -1559,7 +1562,7 @@ msgstr ""
 msgid "Overflow is created if your project's balance exceeds your funding cycle target. Overflow can be redeemed by your project's token holders."
 msgstr ""
 
-msgid "Owned by: <0/>"
+msgid "Owned by <0/>"
 msgstr ""
 
 msgid "Owner can mint tokens at any time."
@@ -2195,6 +2198,9 @@ msgstr ""
 msgid "Swap for V2 {tokenText}"
 msgstr ""
 
+msgid "Switch network to {0}"
+msgstr ""
+
 msgid "Target"
 msgstr ""
 
@@ -2343,6 +2349,12 @@ msgid "This is the maximum amount of funds that can leave the treasury each fund
 msgstr ""
 
 msgid "This list is using an experimental data index and may be inaccurate for some projects."
+msgstr ""
+
+msgid "This project has no distributions."
+msgstr ""
+
+msgid "This project has no reserved tokens."
 msgstr ""
 
 msgid "This project is archived and can't be paid."

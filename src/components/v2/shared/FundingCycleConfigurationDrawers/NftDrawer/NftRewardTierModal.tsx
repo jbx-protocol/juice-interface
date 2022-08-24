@@ -2,8 +2,8 @@ import { t } from '@lingui/macro'
 import { Form, Input, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ModalMode } from 'components/formItems/formHelpers'
-import { NftRewardTier } from 'models/v2/nftRewardTier'
 import TooltipLabel from 'components/TooltipLabel'
+import { NftRewardTier } from 'models/v2/nftRewardTier'
 import { useEffect } from 'react'
 
 import ContributionFloorFormItem from './ContributionFloorFormItem'
@@ -49,7 +49,7 @@ export default function NftRewardTierModal({
       remainingSupply: maxSupply,
       imageUrl: nftForm.getFieldValue('imageUrl'),
       name: nftForm.getFieldValue('name'),
-      externalLink: nftForm.getFieldValue('externalLink'),
+      externalLink: `https://${nftForm.getFieldValue('externalLink')}`,
       description: nftForm.getFieldValue('description'),
     } as NftRewardTier
 
@@ -67,7 +67,7 @@ export default function NftRewardTierModal({
         imageUrl: rewardTier.imageUrl,
         maxSupply: rewardTier.maxSupply,
         name: rewardTier.name,
-        externalLink: rewardTier.externalLink,
+        externalLink: rewardTier.externalLink?.slice(8), // removes 'https://'
         description: rewardTier.description,
         contributionFloor: rewardTier.contributionFloor,
       })
@@ -108,7 +108,7 @@ export default function NftRewardTierModal({
             />
           }
         >
-          <Input type="string" autoComplete="off" />
+          <Input type="string" autoComplete="off" prefix="https://" />
         </Form.Item>
         <Form.Item
           label={t`Description`}

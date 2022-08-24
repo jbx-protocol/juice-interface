@@ -3,10 +3,10 @@ import { t, Trans } from '@lingui/macro'
 import { Descriptions, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import FormattedAddress from 'components/FormattedAddress'
-import { NetworkContext } from 'contexts/networkContext'
-import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
 import TooltipLabel from 'components/TooltipLabel'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { useWallet } from 'hooks/Wallet'
 
 import { NftRewardTier } from 'models/v2/nftRewardTier'
 
@@ -15,27 +15,27 @@ import { formattedNum, formatWad, fromWad } from 'utils/formatNumber'
 
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
 
+import { ThemeContext } from 'contexts/themeContext'
+import { usePayETHPaymentTerminalTx } from 'hooks/v2/transactor/PayETHPaymentTerminal'
+import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import {
   V2CurrencyName,
   V2_CURRENCY_ETH,
   V2_CURRENCY_USD,
 } from 'utils/v2/currency'
-import { usePayETHPaymentTerminalTx } from 'hooks/v2/transactor/PayETHPaymentTerminal'
-import { emitErrorNotification } from 'utils/notifications'
-import { ThemeContext } from 'contexts/themeContext'
 
-import Paragraph from 'components/Paragraph'
-import { weightedAmount } from 'utils/v2/math'
-import TransactionModal from 'components/TransactionModal'
 import Callout from 'components/Callout'
+import Paragraph from 'components/Paragraph'
+import TransactionModal from 'components/TransactionModal'
 import useMobile from 'hooks/Mobile'
-import { getNftRewardTier } from 'utils/v2/nftRewards'
 import { featureFlagEnabled } from 'utils/featureFlags'
+import { weightedAmount } from 'utils/v2/math'
+import { getNftRewardTier } from 'utils/v2/nftRewards'
 
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { V2PayForm, V2PayFormType } from '../V2PayForm'
 import { NftRewardCell } from './NftRewardCell'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 
 export function V2ConfirmPayModal({
   visible,
@@ -48,7 +48,13 @@ export function V2ConfirmPayModal({
   onSuccess?: VoidFunction
   onCancel?: VoidFunction
 }) {
-  const { userAddress, onSelectWallet } = useContext(NetworkContext)
+  const {
+    userAddress,
+    chainUnsupported,
+    isConnected,
+    changeNetworks,
+    connect,
+  } = useWallet()
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -115,8 +121,13 @@ export function V2ConfirmPayModal({
     const txBeneficiary = beneficiary ? beneficiary : userAddress
 
     // Prompt wallet connect if no wallet connected
-    if (!userAddress && onSelectWallet) {
-      onSelectWallet()
+    if (chainUnsupported) {
+      await changeNetworks()
+      return
+    }
+    if (!isConnected) {
+      await connect()
+      return
     }
     setLoading(true)
 

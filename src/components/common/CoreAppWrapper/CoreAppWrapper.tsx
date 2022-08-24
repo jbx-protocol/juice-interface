@@ -1,16 +1,16 @@
-import Navbar from 'components/Navbar'
 import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
+import Navbar from 'components/Navbar'
+import useMobile from 'hooks/Mobile'
 import { useRouter } from 'next/router'
 import LanguageProvider from 'providers/LanguageProvider'
 import ReactQueryProvider from 'providers/ReactQueryProvider'
+import { ThemeProvider } from 'providers/ThemeProvider'
 import { V1UserProvider } from 'providers/v1/UserProvider'
 import React from 'react'
 import { Provider } from 'react-redux'
-import { ThemeProvider } from 'providers/ThemeProvider'
 import store from 'redux/store'
 import { redirectTo } from 'utils/windowUtils'
-import useMobile from 'hooks/Mobile'
 
 /**
  * Contains all the core app providers used by each page.
@@ -44,7 +44,6 @@ const _Wrapper: React.FC = ({ children }) => {
   if (router.asPath.match(/^\/#\//)) {
     redirectTo(router.asPath.replace('/#/', ''))
   }
-
   const isMobile = useMobile()
 
   return (

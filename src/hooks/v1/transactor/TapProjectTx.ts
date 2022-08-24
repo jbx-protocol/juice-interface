@@ -1,7 +1,7 @@
-import { NetworkContext } from 'contexts/networkContext'
+import { BigNumber } from '@ethersproject/bignumber'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
-import { BigNumber } from '@ethersproject/bignumber'
+import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 
 import { V1CurrencyOption } from 'models/v1/currencyOption'
@@ -14,7 +14,7 @@ export function useTapProjectTx(): TransactorInstance<{
   currency: V1CurrencyOption
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress } = useWallet()
   const { projectId, terminal } = useContext(V1ProjectContext)
 
   return ({ tapAmount, minAmount, currency }, txOpts) => {

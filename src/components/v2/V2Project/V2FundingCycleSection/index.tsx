@@ -1,33 +1,33 @@
-import { Button, Tooltip } from 'antd'
 import { SettingOutlined } from '@ant-design/icons'
+import { Button, Tooltip } from 'antd'
 
-import { t, Trans } from '@lingui/macro'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
+import { t, Trans } from '@lingui/macro'
 import { ThemeContext } from 'contexts/themeContext'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/V2ConnectedWalletHasPermission'
 import { V2OperatorPermission } from 'models/v2/permissions'
 import { useContext } from 'react'
 
+import Loading from 'components/Loading'
 import {
   hasFundingDuration,
   V2FundingCycleRiskCount,
 } from 'utils/v2/fundingCycle'
 import { serializeV2FundingCycleData } from 'utils/v2/serializers'
-import Loading from 'components/Loading'
 
+import { CardSection } from 'components/CardSection'
 import FundingCycleSection, {
   TabType,
 } from 'components/Project/FundingCycleSection'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { CardSection } from 'components/CardSection'
 
 import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
 
-import CurrentFundingCycle from './CurrentFundingCycle'
 import V2ReconfigureFundingModalTrigger from '../V2ProjectReconfigureModal/V2ReconfigureModalTrigger'
-import UpcomingFundingCycle from './UpcomingFundingCycle'
+import CurrentFundingCycle from './CurrentFundingCycle'
 import FundingCycleHistory from './FundingCycleHistory'
 import NoFundingCycle from './NoFundingCycle'
+import UpcomingFundingCycle from './UpcomingFundingCycle'
 
 export default function V2FundingCycleSection({
   expandCard,

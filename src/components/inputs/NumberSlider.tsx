@@ -1,4 +1,4 @@
-import { InputNumber, Slider, Form } from 'antd'
+import { Form, InputNumber, Slider } from 'antd'
 import { CSSProperties, useEffect, useState } from 'react'
 
 import { roundDown } from 'components/formItems/formHelpers'

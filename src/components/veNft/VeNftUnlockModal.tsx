@@ -1,15 +1,15 @@
 import { t, Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useUnlockTx } from 'hooks/veNft/transactor/VeNftUnlockTx'
 import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'
 import { useContext, useState } from 'react'
 import { emitSuccessNotification } from 'utils/notifications'
 
-import CustomBeneficiaryInput from 'components/veNft/formControls/CustomBeneficiaryInput'
 import TransactionModal from 'components/TransactionModal'
+import CustomBeneficiaryInput from 'components/veNft/formControls/CustomBeneficiaryInput'
+import { useWallet } from 'hooks/Wallet'
 
 type UnlockModalProps = {
   visible: boolean
@@ -26,7 +26,13 @@ const UnlockModal = ({
   onCancel,
   onCompleted,
 }: UnlockModalProps) => {
-  const { userAddress, onSelectWallet } = useContext(NetworkContext)
+  const {
+    userAddress,
+    chainUnsupported,
+    isConnected,
+    changeNetworks,
+    connect,
+  } = useWallet()
   const { tokenId } = token
   const [loading, setLoading] = useState(false)
   const [transactionPending, setTransactionPending] = useState(false)
@@ -40,8 +46,13 @@ const UnlockModal = ({
   const unlock = async () => {
     await form.validateFields()
 
-    if (!userAddress && onSelectWallet) {
-      onSelectWallet()
+    if (chainUnsupported) {
+      await changeNetworks()
+      return
+    }
+    if (!isConnected) {
+      await connect()
+      return
     }
 
     const beneficiary = form.getFieldValue('beneficiary')

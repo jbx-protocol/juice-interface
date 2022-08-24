@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
-import { MinimalCollapse } from 'components/MinimalCollapse'
 import ExternalLink from 'components/ExternalLink'
+import { MinimalCollapse } from 'components/MinimalCollapse'
 import { CSSProperties } from 'react'
 import { helpPagePath } from 'utils/helpPageHelper'
 

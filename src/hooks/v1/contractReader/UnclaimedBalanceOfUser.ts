@@ -1,6 +1,6 @@
-import { NetworkContext } from 'contexts/networkContext'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { BigNumber } from '@ethersproject/bignumber'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { useWallet } from 'hooks/Wallet'
 import { V1ContractName } from 'models/v1/contracts'
 import { useContext } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbers'
@@ -10,7 +10,7 @@ import useShouldUpdateTokens from './ShouldUpdateTokens'
 
 /** Returns unclaimed balance of user with `userAddress`. */
 export default function useUnclaimedBalanceOfUser() {
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress } = useWallet()
   const { projectId, terminal } = useContext(V1ProjectContext)
 
   return useContractReader<BigNumber>({

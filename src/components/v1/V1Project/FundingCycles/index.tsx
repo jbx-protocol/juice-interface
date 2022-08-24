@@ -1,17 +1,17 @@
-import { Tooltip } from 'antd'
-import { t, Trans } from '@lingui/macro'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
+import { t, Trans } from '@lingui/macro'
+import { Tooltip } from 'antd'
 import { CardSection } from 'components/CardSection'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import { useContext } from 'react'
 
-import { fundingCycleRiskCount } from 'utils/v1/fundingCycle'
-import { V1FundingCycle } from 'models/v1/fundingCycle'
 import CurrentFundingCycle from 'components/v1/shared/FundingCycle/CurrentFundingCycle'
 import QueuedFundingCycle from 'components/v1/shared/FundingCycle/QueuedFundingCycle'
+import { V1FundingCycle } from 'models/v1/fundingCycle'
+import { fundingCycleRiskCount } from 'utils/v1/fundingCycle'
 
 import FundingCycleSection from 'components/Project/FundingCycleSection'
 

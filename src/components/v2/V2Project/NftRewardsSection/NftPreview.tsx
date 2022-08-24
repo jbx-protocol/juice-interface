@@ -1,11 +1,11 @@
+import { CloseOutlined, LinkOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
+import ExternalLink from 'components/ExternalLink'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+import useMobile from 'hooks/Mobile'
+import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/v2/NftRewards'
 import { NftRewardTier } from 'models/v2/nftRewardTier'
 import { CSSProperties, useContext } from 'react'
-import { LinkOutlined, CloseOutlined } from '@ant-design/icons'
-import ExternalLink from 'components/ExternalLink'
-import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/v2/NftRewards'
-import useMobile from 'hooks/Mobile'
 
 import { darkColors } from 'constants/styles/colors'
 

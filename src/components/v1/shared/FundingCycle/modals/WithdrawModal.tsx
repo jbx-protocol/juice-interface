@@ -1,28 +1,28 @@
-import { Space } from 'antd'
 import { t, Trans } from '@lingui/macro'
+import { Space } from 'antd'
 
 import CurrencySymbol from 'components/CurrencySymbol'
 import FormattedAddress from 'components/FormattedAddress'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import PayoutModsList from 'components/v1/shared/PayoutModsList'
 import TransactionModal from 'components/TransactionModal'
+import PayoutModsList from 'components/v1/shared/PayoutModsList'
 
-import { V1ProjectContext } from 'contexts/v1/projectContext'
+import ETHAmount from 'components/currency/ETHAmount'
 import { ThemeContext } from 'contexts/themeContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useTapProjectTx } from 'hooks/v1/transactor/TapProjectTx'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useEffect, useState } from 'react'
-import { V1CurrencyName } from 'utils/v1/currency'
 import {
   formatWad,
-  perbicentToPercent,
   fromWad,
   parseWad,
+  perbicentToPercent,
 } from 'utils/formatNumber'
 import { amountSubFee, feeForAmount } from 'utils/math'
-import ETHAmount from 'components/currency/ETHAmount'
+import { V1CurrencyName } from 'utils/v1/currency'
 
 import { V1_CURRENCY_USD } from 'constants/v1/currency'
 

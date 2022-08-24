@@ -1,31 +1,31 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Form, Radio, Space } from 'antd'
+import { useWallet } from 'hooks/Wallet'
 import { useCallback, useContext, useEffect, useState } from 'react'
 
-import { Split } from 'models/v2/splits'
 import { FormItemExt } from 'components/formItems/formItemExt'
-import { fromWad, parseWad } from 'utils/formatNumber'
-import DistributionLimit from 'components/v2/V2Project/DistributionLimit'
 import TooltipIcon from 'components/TooltipIcon'
+import DistributionLimit from 'components/v2/V2Project/DistributionLimit'
+import { ThemeContext } from 'contexts/themeContext'
+import { Split } from 'models/v2/splits'
+import Link from 'next/link'
+import { fromWad, parseWad } from 'utils/formatNumber'
 import {
   adjustedSplitPercents,
   getNewDistributionLimit,
   getTotalSplitsPercentage,
 } from 'utils/v2/distributions'
-import { ThemeContext } from 'contexts/themeContext'
 import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2/math'
-import { NetworkContext } from 'contexts/networkContext'
-import Link from 'next/link'
 
 import { filter, isEqual } from 'lodash'
 
 import { v2ProjectRoute } from 'utils/routes'
 
-import DistributionSplitCard from './DistributionSplitCard'
 import { CurrencyName } from 'constants/currency'
+import DistributionSplitCard from './DistributionSplitCard'
 import DistributionSplitModal from './DistributionSplitModal'
-import SpecificLimitModal from './SpecificLimitModal'
 import { PayoutConfigurationExplainerCollapse } from './PayoutConfigurationExplainerCollapse'
+import SpecificLimitModal from './SpecificLimitModal'
 
 type DistributionType = 'amount' | 'percent'
 
@@ -50,7 +50,7 @@ export default function DistributionSplitsSection({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress } = useWallet()
 
   const distributionLimitIsInfinite =
     !distributionLimit || parseWad(distributionLimit).eq(MAX_DISTRIBUTION_LIMIT)

@@ -6,11 +6,6 @@ import {
 
 import { CV } from '../../cv'
 import {
-  DeployedERC20Event,
-  DeployedERC20EventJson,
-  parseDeployedERC20EventJson,
-} from './deployed-erc20-event'
-import {
   DistributeToPayoutModEvent,
   DistributeToPayoutModEventJson,
   parseDistributeToPayoutModEvent,
@@ -20,29 +15,34 @@ import {
   DistributeToTicketModEventJson,
   parseDistributeToTicketModEvent,
 } from '../v1/distribute-to-ticket-mod-event'
-import { Participant } from './participant'
-import { parsePayEventJson, PayEvent, PayEventJson } from './pay-event'
-import {
-  parseMintTokensEventJson,
-  MintTokensEvent,
-  MintTokensEventJson,
-} from './mint-tokens-event'
 import {
   parsePrintReservesEventJson,
   PrintReservesEvent,
   PrintReservesEventJson,
 } from '../v1/print-reserves-event'
-import {
-  parseRedeemEventJson,
-  RedeemEvent,
-  RedeemEventJson,
-} from './redeem-event'
 import { parseTapEventJson, TapEvent, TapEventJson } from '../v1/tap-event'
 import {
   parseVeNftContractJson,
   VeNftContract,
   VeNftContractJson,
 } from '../v2/venft-contract'
+import {
+  DeployedERC20Event,
+  DeployedERC20EventJson,
+  parseDeployedERC20EventJson,
+} from './deployed-erc20-event'
+import {
+  MintTokensEvent,
+  MintTokensEventJson,
+  parseMintTokensEventJson,
+} from './mint-tokens-event'
+import { Participant } from './participant'
+import { parsePayEventJson, PayEvent, PayEventJson } from './pay-event'
+import {
+  parseRedeemEventJson,
+  RedeemEvent,
+  RedeemEventJson,
+} from './redeem-event'
 
 type BaseProject = {
   id: string

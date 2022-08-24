@@ -1,17 +1,19 @@
-import { Pool } from '@uniswap/v3-sdk'
-import { Token } from '@uniswap/sdk-core'
-import { useQuery } from 'react-query'
 import { BigNumber } from '@ethersproject/bignumber'
-import { Contract } from '@ethersproject/contracts'
-import IUniswapV3PoolABI from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json'
-import IUniswapV3FactoryABI from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Factory.sol/IUniswapV3Factory.json'
-import { FACTORY_ADDRESS as UNISWAP_V3_FACTORY_ADDRESS } from '@uniswap/v3-sdk'
 import * as ethersConstants from '@ethersproject/constants'
+import { Contract } from '@ethersproject/contracts'
+import { Token } from '@uniswap/sdk-core'
+import IUniswapV3FactoryABI from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Factory.sol/IUniswapV3Factory.json'
+import IUniswapV3PoolABI from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json'
+import {
+  FACTORY_ADDRESS as UNISWAP_V3_FACTORY_ADDRESS,
+  Pool,
+} from '@uniswap/v3-sdk'
+import { useQuery } from 'react-query'
 
-import { readProvider } from 'constants/readProvider'
 import { readNetwork } from 'constants/networks'
-import { WETH } from 'constants/tokens'
 import { WAD_DECIMALS } from 'constants/numbers'
+import { readProvider } from 'constants/readProvider'
+import { WETH } from 'constants/tokens'
 
 interface Immutables {
   factory: string

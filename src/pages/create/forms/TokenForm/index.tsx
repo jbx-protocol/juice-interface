@@ -1,11 +1,11 @@
 import { Trans } from '@lingui/macro'
 import { Button, Form, Space } from 'antd'
+import { ItemNoInput } from 'components/formItems/ItemNoInput'
 import { ThemeContext } from 'contexts/themeContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
-import ReservedTokensFormItem from 'pages/create/forms/TokenForm/ReservedTokensFormItem'
 import { round } from 'lodash'
-import { ItemNoInput } from 'components/formItems/ItemNoInput'
+import ReservedTokensFormItem from 'pages/create/forms/TokenForm/ReservedTokensFormItem'
 
 import {
   CSSProperties,
@@ -53,14 +53,14 @@ import SwitchHeading from 'components/SwitchHeading'
 
 import NumberSlider from 'components/inputs/NumberSlider'
 
+import { DEFAULT_BONDING_CURVE_RATE_PERCENTAGE } from 'components/formItems/ProjectRedemptionRate'
 import FormItemWarningText from 'components/FormItemWarningText'
 import { formattedNum } from 'utils/formatNumber'
-import { DEFAULT_BONDING_CURVE_RATE_PERCENTAGE } from 'components/formItems/ProjectRedemptionRate'
 
-import { DISCOUNT_RATE_EXPLANATION } from 'components/v2/V2Project/V2FundingCycleSection/settingExplanations'
-import { getTotalSplitsPercentage } from 'utils/v2/distributions'
 import { useForm } from 'antd/lib/form/Form'
 import Callout from 'components/Callout'
+import { DISCOUNT_RATE_EXPLANATION } from 'components/v2/V2Project/V2FundingCycleSection/settingExplanations'
+import { getTotalSplitsPercentage } from 'utils/v2/distributions'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 import MintRateFormItem from './MintRateFormItem'

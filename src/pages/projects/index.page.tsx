@@ -2,9 +2,9 @@ import { InfoCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import Search from 'antd/lib/input/Search'
+import { AppWrapper } from 'components/common'
 import FeedbackFormButton from 'components/FeedbackFormButton'
 import Loading from 'components/Loading'
-import { AppWrapper } from 'components/common'
 
 import { ProjectCategory } from 'models/project-visibility'
 import { useContext, useEffect, useMemo, useRef, useState } from 'react'
@@ -17,20 +17,20 @@ import { useRouter } from 'next/router'
 
 import { useInfiniteProjectsQuery, useProjectsSearch } from 'hooks/Projects'
 
-import { NetworkContext } from 'contexts/networkContext'
 import { ThemeContext } from 'contexts/themeContext'
+import { useWallet } from 'hooks/Wallet'
 
-import { CV } from 'models/cv'
 import ExternalLink from 'components/ExternalLink'
+import { CV } from 'models/cv'
 import { helpPagePath } from 'utils/helpPageHelper'
 
 import { layouts } from 'constants/styles/layouts'
-import TrendingProjects from './TrendingProjects'
-import ProjectsTabs from './ProjectsTabs'
-import HoldingsProjects from './HoldingsProjects'
-import ProjectsFilterAndSort from './ProjectsFilterAndSort'
 import ArchivedProjectsMessage from './ArchivedProjectsMessage'
+import HoldingsProjects from './HoldingsProjects'
 import MyProjects from './MyProjects'
+import ProjectsFilterAndSort from './ProjectsFilterAndSort'
+import ProjectsTabs from './ProjectsTabs'
+import TrendingProjects from './TrendingProjects'
 
 export default function ProjectsPage() {
   return (
@@ -52,7 +52,7 @@ function Projects() {
   // Checks URL to see if tab has been set
   const router = useRouter()
 
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress } = useWallet()
 
   const [searchText, setSearchText] = useState<string>(
     (router.query.search as string | undefined) ?? '',

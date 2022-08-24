@@ -1,3 +1,4 @@
+import { RightCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, Skeleton, Space } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
@@ -5,12 +6,11 @@ import Loading from 'components/Loading'
 import { ProjectCardProject } from 'components/ProjectCard'
 import ProjectLogo from 'components/ProjectLogo'
 import { ThemeContext } from 'contexts/themeContext'
+import useMobile from 'hooks/Mobile'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { useProjectsQuery } from 'hooks/Projects'
-import { RightCircleOutlined } from '@ant-design/icons'
-import { useContext } from 'react'
 import Link from 'next/link'
-import useMobile from 'hooks/Mobile'
+import { useContext } from 'react'
 
 import { SectionHeading } from './SectionHeading'
 import {
@@ -252,14 +252,11 @@ export function TopProjectsSection() {
 
           <div style={{ textAlign: 'center' }}>
             <Space direction="vertical" style={{ width: '100%' }} size="large">
-              <Button
-                size="large"
-                type="primary"
-                href="/create"
-                block={isMobile}
-              >
-                <Trans>Start raising funds</Trans>
-              </Button>
+              <Link href="/create">
+                <Button size="large" type="primary" block={isMobile}>
+                  <Trans>Start raising funds</Trans>
+                </Button>
+              </Link>
 
               <div
                 role="button"

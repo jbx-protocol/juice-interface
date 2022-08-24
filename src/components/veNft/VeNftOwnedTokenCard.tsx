@@ -2,11 +2,11 @@ import {
   Button,
   Card,
   Col,
-  Row,
+  Descriptions,
   Image,
+  Row,
   Space,
   Tooltip,
-  Descriptions,
 } from 'antd'
 
 import { ThemeContext } from 'contexts/themeContext'
@@ -15,8 +15,8 @@ import { CSSProperties, useContext, useState } from 'react'
 import { formattedNum, fromWad } from 'utils/formatNumber'
 import { detailedTimeString } from 'utils/formatTime'
 
-import { useVeNftTokenMetadata } from 'hooks/veNft/VeNftTokenMetadata'
 import { t, Trans } from '@lingui/macro'
+import { useVeNftTokenMetadata } from 'hooks/veNft/VeNftTokenMetadata'
 import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'
 
 import VeNftExtendLockModal from './VeNftExtendLockModal'

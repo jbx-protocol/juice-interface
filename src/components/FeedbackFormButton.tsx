@@ -1,13 +1,13 @@
 import { ThemeContext } from 'contexts/themeContext'
+import { useWallet } from 'hooks/Wallet'
 
+import { MessageOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
-import { MessageOutlined } from '@ant-design/icons'
 
 import { useContext } from 'react'
 
 import { feedbackFormURL } from 'utils/feedbackFormURL'
-import { NetworkContext } from 'contexts/networkContext'
 
 import ExternalLink from './ExternalLink'
 
@@ -19,7 +19,7 @@ export default function FeedbackFormButton({
   projectHandle?: string
 }) {
   const { isDarkMode } = useContext(ThemeContext)
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress } = useWallet()
 
   const formUrl = feedbackFormURL({
     referrer: 'stoned-banny',

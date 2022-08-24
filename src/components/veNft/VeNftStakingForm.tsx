@@ -1,29 +1,29 @@
+import { BigNumber } from '@ethersproject/bignumber'
+import { MaxUint256 } from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, Form, Row, Space } from 'antd'
-import { MaxUint256 } from '@ethersproject/constants'
-import { ThemeContext } from 'contexts/themeContext'
-import { useContext, useMemo, useState, useEffect } from 'react'
 import { useForm, useWatch } from 'antd/lib/form/Form'
-import { BigNumber } from '@ethersproject/bignumber'
+import { ThemeContext } from 'contexts/themeContext'
+import { useContext, useEffect, useMemo, useState } from 'react'
 
-import { NetworkContext } from 'contexts/networkContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
+import useERC20Allowance from 'hooks/ERC20Allowance'
 import useERC20BalanceOf from 'hooks/v2/contractReader/ERC20BalanceOf'
 import useERC20Approve from 'hooks/veNft/transactor/ERC20ApproveTx'
-import useERC20Allowance from 'hooks/ERC20Allowance'
 
-import TokensStakedInput from 'components/veNft/formControls/TokensStakedInput'
-import LockDurationSelectInput from 'components/veNft/formControls/LockDurationSelectInput'
 import CustomBeneficiaryInput from 'components/veNft/formControls/CustomBeneficiaryInput'
+import LockDurationSelectInput from 'components/veNft/formControls/LockDurationSelectInput'
 import StakingFormActionButton from 'components/veNft/formControls/StakingFormActionButton'
+import TokensStakedInput from 'components/veNft/formControls/TokensStakedInput'
 import VotingPowerDisplayInput from 'components/veNft/formControls/VotingPowerDisplayInput'
 import VeNftCarousel from 'components/veNft/VeNftCarousel'
-import StakingTokenRangesModal from 'components/veNft/VeNftStakingTokenRangesModal'
 import ConfirmStakeModal from 'components/veNft/VeNftConfirmStakeModal'
+import StakingTokenRangesModal from 'components/veNft/VeNftStakingTokenRangesModal'
+import { useWallet } from 'hooks/Wallet'
 
-import { reloadWindow } from 'utils/windowUtils'
 import { parseWad } from 'utils/formatNumber'
+import { reloadWindow } from 'utils/windowUtils'
 
 import { emitSuccessNotification } from 'utils/notifications'
 
@@ -38,8 +38,8 @@ import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedT
 import { MinimalCollapse } from 'components/MinimalCollapse'
 
 import { shadowCard } from 'constants/styles/shadowCard'
-import VeNftTokenSelectInput from './formControls/VeNftTokenSelectInput'
 import AllowPublicExtensionInput from './formControls/AllowPublicExtensionInput'
+import VeNftTokenSelectInput from './formControls/VeNftTokenSelectInput'
 
 export interface StakingFormProps {
   tokensStaked: number
@@ -56,7 +56,14 @@ interface VeNftStakingFormProps {
 const VeNftStakingForm = ({
   tokenSymbolDisplayText,
 }: VeNftStakingFormProps) => {
-  const { userAddress, onSelectWallet } = useContext(NetworkContext)
+  const {
+    userAddress,
+    chainUnsupported,
+    isConnected,
+    changeNetworks,
+    connect,
+  } = useWallet()
+  useWallet()
   const { tokenAddress } = useContext(V2ProjectContext)
   const { lockDurationOptions, contractAddress, baseImagesHash, variants } =
     useContext(VeNftContext)
@@ -116,9 +123,13 @@ const VeNftStakingForm = ({
     if (!contractAddress) {
       return
     }
-
-    if (!userAddress && onSelectWallet) {
-      onSelectWallet()
+    if (chainUnsupported) {
+      await changeNetworks()
+      return
+    }
+    if (!isConnected) {
+      await connect()
+      return
     }
 
     setTokenApprovalLoading(true)

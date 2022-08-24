@@ -6,8 +6,8 @@ import { BigNumber } from '@ethersproject/bignumber'
 
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 
-import { TransactorInstance } from '../../Transactor'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
+import { TransactorInstance } from '../../Transactor'
 
 type DistributePayoutsTx = TransactorInstance<{
   memo?: string

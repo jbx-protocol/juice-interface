@@ -1,22 +1,22 @@
 import { t, Trans } from '@lingui/macro'
-import { Modal, Space, Form } from 'antd'
+import { Form, Modal, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
+import { useWallet } from 'hooks/Wallet'
 
 import ETHAmount from 'components/currency/ETHAmount'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 
-import { NetworkContext } from 'contexts/networkContext'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useClaimableOverflowOf from 'hooks/v1/contractReader/ClaimableOverflowOf'
 import { useRedeemRate } from 'hooks/v1/contractReader/RedeemRate'
 import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
 import { useRedeemTokensTx } from 'hooks/v1/transactor/RedeemTokensTx'
 import { CSSProperties, useContext, useState } from 'react'
 import { formattedNum, formatWad, fromWad, parseWad } from 'utils/formatNumber'
-import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
+import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 
 import { V1_CURRENCY_USD } from 'constants/v1/currency'
 
@@ -41,7 +41,7 @@ export default function RedeemModal({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { userAddress } = useContext(NetworkContext)
+  const { userAddress } = useWallet()
   const { projectId, tokenSymbol, currentFC, terminal, overflow } =
     useContext(V1ProjectContext)
 

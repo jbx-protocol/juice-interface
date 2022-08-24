@@ -1,27 +1,28 @@
+import { SettingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, Skeleton, Space, Tooltip } from 'antd'
 import { CardSection } from 'components/CardSection'
-import TooltipLabel from 'components/TooltipLabel'
 import SpendingStats from 'components/Project/SpendingStats'
+import TooltipLabel from 'components/TooltipLabel'
 import SplitList from 'components/v2/shared/SplitList'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { useContext, useState } from 'react'
-import { SettingOutlined } from '@ant-design/icons'
 
 import { V2CurrencyName } from 'utils/v2/currency'
 
 import { formatFee, MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
 
-import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerminalFee'
-import { Split } from 'models/v2/splits'
 import { BigNumber } from '@ethersproject/bignumber'
-import { detailedTimeString } from 'utils/formatTime'
+import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerminalFee'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/V2ConnectedWalletHasPermission'
 import { V2OperatorPermission } from 'models/v2/permissions'
+import { Split } from 'models/v2/splits'
+import { detailedTimeString } from 'utils/formatTime'
 
 import { reloadWindow } from 'utils/windowUtils'
 
+import { ThemeContext } from 'contexts/themeContext'
 import DistributePayoutsModal from './modals/DistributePayoutsModal'
 import { EditPayoutsModal } from './modals/EditPayoutsModal'
 
@@ -38,6 +39,9 @@ export default function PayoutSplitsCard({
   distributionLimit: BigNumber | undefined
   fundingCycleDuration: BigNumber | undefined
 }) {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
   const {
     usedDistributionLimit,
     projectOwnerAddress,
@@ -161,7 +165,7 @@ export default function PayoutSplitsCard({
                 </Trans>
               }
             />
-            {canEditPayouts && (
+            {canEditPayouts && effectiveDistributionLimit.gt(0) && (
               <Button
                 size="small"
                 onClick={() => setEditPayoutModalVisible(true)}
@@ -174,16 +178,22 @@ export default function PayoutSplitsCard({
               </Button>
             )}
           </div>
-          {payoutSplits ? (
-            <SplitList
-              splits={payoutSplits}
-              currency={distributionLimitCurrency}
-              totalValue={distributionLimit}
-              projectOwnerAddress={projectOwnerAddress}
-              showSplitValues={!distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)}
-              valueFormatProps={{ precision: 4 }}
-            />
-          ) : null}
+          {effectiveDistributionLimit.gt(0) ? (
+            payoutSplits ? (
+              <SplitList
+                splits={payoutSplits}
+                currency={distributionLimitCurrency}
+                totalValue={distributionLimit}
+                projectOwnerAddress={projectOwnerAddress}
+                showSplitValues={!distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)}
+                valueFormatProps={{ precision: 4 }}
+              />
+            ) : null
+          ) : (
+            <span style={{ color: colors.text.tertiary }}>
+              <Trans>This project has no distributions.</Trans>
+            </span>
+          )}
         </div>
       </Space>
 

@@ -15,24 +15,24 @@ import { ThemeContext } from 'contexts/themeContext'
 
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 
+import { V2UserContext } from 'contexts/v2/userContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
+import { useAppSelector } from 'hooks/AppSelector'
 import {
   defaultFundingCycleData,
   defaultFundingCycleMetadata,
   editingV2ProjectActions,
 } from 'redux/slices/editingV2Project'
-import { V2UserContext } from 'contexts/v2/userContext'
-import { useAppSelector } from 'hooks/AppSelector'
 import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
 
 import { sanitizeSplit } from 'utils/v2/splits'
 
-import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
 import {
   getV2CurrencyOption,
   V2CurrencyName,
   V2_CURRENCY_ETH,
 } from 'utils/v2/currency'
+import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
 
 import ExternalLink from 'components/ExternalLink'
 
@@ -40,21 +40,21 @@ import { Split } from 'models/v2/splits'
 
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
 
+import { fromWad } from 'utils/formatNumber'
 import {
   deriveDurationUnit,
-  secondsToOtherUnit,
   otherUnitToSeconds,
+  secondsToOtherUnit,
 } from 'utils/formatTime'
-import { fromWad } from 'utils/formatNumber'
 
 import FormItemWarningText from 'components/FormItemWarningText'
 
+import { ItemNoInput } from 'components/formItems/ItemNoInput'
 import SwitchHeading from 'components/SwitchHeading'
 import DistributionSplitsSection from 'components/v2/shared/DistributionSplitsSection'
-import { getTotalSplitsPercentage } from 'utils/v2/distributions'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { ItemNoInput } from 'components/formItems/ItemNoInput'
 import { helpPagePath } from 'utils/helpPageHelper'
+import { getTotalSplitsPercentage } from 'utils/v2/distributions'
 
 import isEqual from 'lodash/isEqual'
 
@@ -62,8 +62,8 @@ import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 
-import DurationInputAndSelect from './DurationInputAndSelect'
 import { DurationUnitsOption } from 'constants/time'
+import DurationInputAndSelect from './DurationInputAndSelect'
 
 import { FundingCycleExplainerCollapse } from './FundingCycleExplainerCollapse'
 

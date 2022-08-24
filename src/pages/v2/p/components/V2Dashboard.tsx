@@ -8,6 +8,7 @@ import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useProjectsQuery } from 'hooks/Projects'
 import useSymbolOfERC20 from 'hooks/SymbolOfERC20'
 import { useBallotState } from 'hooks/v2/contractReader/BallotState'
+import { useNftRewardTiersOf } from 'hooks/v2/contractReader/NftRewardTiersOf'
 import { usePaymentTerminalBalance } from 'hooks/v2/contractReader/PaymentTerminalBalance'
 import useProjectCurrentFundingCycle from 'hooks/v2/contractReader/ProjectCurrentFundingCycle'
 import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
@@ -22,8 +23,7 @@ import useUsedDistributionLimit from 'hooks/v2/contractReader/UsedDistributionLi
 import { first } from 'lodash'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { useMemo } from 'react'
-import { NO_CURRENCY, V2_CURRENCY_ETH, V2CurrencyName } from 'utils/v2/currency'
-import { useNftRewardTiersOf } from 'hooks/v2/contractReader/NftRewardTiersOf'
+import { NO_CURRENCY, V2CurrencyName, V2_CURRENCY_ETH } from 'utils/v2/currency'
 
 import useNftRewards from 'hooks/v2/NftRewards'
 import { CIDsOfNftRewardTiersResponse } from 'utils/v2/nftRewards'
@@ -33,12 +33,12 @@ import { ProjectMetadataV4 } from 'models/project-metadata'
 
 import { useVeNftContractForProject } from 'hooks/veNft/VeNftContractForProject'
 
+import { layouts } from 'constants/styles/layouts'
+import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
-import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
-import { layouts } from 'constants/styles/layouts'
 
 import V2Project from '../../../../components/v2/V2Project'
 

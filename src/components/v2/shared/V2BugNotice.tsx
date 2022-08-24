@@ -1,6 +1,6 @@
-import { useContext } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
 import Link from 'next/link'
+import { useContext } from 'react'
 
 export default function V2BugNotice() {
   const {

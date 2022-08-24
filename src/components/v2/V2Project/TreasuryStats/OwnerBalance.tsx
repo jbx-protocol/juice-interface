@@ -1,9 +1,9 @@
 import { Trans } from '@lingui/macro'
 import StatLine from 'components/Project/StatLine'
 
-import { CSSProperties, useContext } from 'react'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
 import ETHAmount from 'components/currency/ETHAmount'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { CSSProperties, useContext } from 'react'
 
 import EtherscanLink from 'components/EtherscanLink'
 

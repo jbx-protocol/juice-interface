@@ -1,8 +1,8 @@
 import { t, Trans } from '@lingui/macro'
 import { Form, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import InputAccessoryButton from 'components/InputAccessoryButton'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TooltipLabel from 'components/TooltipLabel'
 
 import { CurrencyName } from 'constants/currency'
@@ -25,7 +25,11 @@ export default function SpecificLimitModal({
   function setNewSplitsFromLimit() {
     form.validateFields()
 
-    setDistributionLimit(form.getFieldValue('distributionLimit'))
+    const distributionLimit = form
+      .getFieldValue('distributionLimit')
+      // Remove all commas from distribution limit
+      .replace(/,/g, '')
+    setDistributionLimit(distributionLimit)
     onClose()
   }
 

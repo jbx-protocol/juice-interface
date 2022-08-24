@@ -1,7 +1,7 @@
 import { Contract, ContractInterface } from '@ethersproject/contracts'
-import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { NetworkName } from 'models/network-name'
 import { V2ContractName } from 'models/v2/contracts'
+import { SignerOrProvider } from 'utils/types'
 import {
   getLatestNftDelegateStoreContractAddress,
   getLatestNftProjectDeployerContractAddress,
@@ -18,7 +18,7 @@ import {
 export const loadContract = async (
   contractName: V2ContractName,
   network: NetworkName,
-  signerOrProvider: JsonRpcSigner | JsonRpcProvider,
+  signerOrProvider: SignerOrProvider,
 ): Promise<Contract | undefined> => {
   let contractJson: { abi: ContractInterface; address: string } | undefined =
     undefined
@@ -199,7 +199,7 @@ const loadVeTokenUriResolver = async () => {
 }
 
 export const loadVeNftContract = async (
-  signerOrProvider: JsonRpcSigner | JsonRpcProvider,
+  signerOrProvider: SignerOrProvider,
   address: string,
 ) => {
   const contractJson = {

@@ -1,17 +1,15 @@
-import FormattedAddress from 'components/FormattedAddress'
-import { LogoutOutlined, CrownOutlined } from '@ant-design/icons'
+import { CrownOutlined, LogoutOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-
-import { NetworkContext } from 'contexts/networkContext'
-import { ThemeContext } from 'contexts/themeContext'
-import { useContext } from 'react'
 import { Dropdown, Menu } from 'antd'
-
-import EtherscanLink from 'components/EtherscanLink'
+import { ItemType } from 'antd/lib/menu/hooks/useItems'
 import CopyTextButton from 'components/CopyTextButton'
+import EtherscanLink from 'components/EtherscanLink'
+import FormattedAddress from 'components/FormattedAddress'
+import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
+import { useWallet } from 'hooks/Wallet'
 import Link from 'next/link'
-
+import { useContext } from 'react'
 import Balance from './Balance'
 
 export default function Wallet({ userAddress }: { userAddress: string }) {
@@ -23,57 +21,61 @@ export default function Wallet({ userAddress }: { userAddress: string }) {
 
   const height = 45
 
-  const { onLogOut } = useContext(NetworkContext)
+  const { disconnect } = useWallet()
 
-  const menuItemPadding = '10px 15px'
-
-  const menu = (
-    <Menu>
-      <Menu.Item style={{ padding: menuItemPadding }} key={0}>
-        <EtherscanLink
-          value={userAddress}
-          type="address"
-          truncated={true}
-          hideTooltip
-        />{' '}
-        <CopyTextButton value={userAddress} style={{ zIndex: 1 }} />
-      </Menu.Item>
-      <Menu.Item
-        style={{
-          padding: menuItemPadding,
-          color: colors.text.primary,
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
-        <Link href="/projects?tab=myprojects">
-          <a style={{ fontWeight: 400 }}>
-            <Trans>My projects</Trans>
-          </a>
-        </Link>
-        <CrownOutlined />
-      </Menu.Item>
-      {!isMobile && (
-        <Menu.Item
-          onClick={onLogOut}
-          style={{
-            padding: menuItemPadding,
-            color: colors.text.primary,
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
-          key={1}
-        >
-          <Trans>Disconnect</Trans>
-          <LogoutOutlined />
-        </Menu.Item>
-      )}
-    </Menu>
+  const CopyableAddress = () => (
+    <>
+      <EtherscanLink
+        value={userAddress}
+        type="address"
+        truncated={true}
+        hideTooltip
+      />{' '}
+      <CopyTextButton value={userAddress} style={{ zIndex: 1 }} />
+    </>
   )
+
+  const MyProjects = () => (
+    <>
+      <Link href="/projects?tab=myprojects">
+        <a style={{ fontWeight: 400 }}>
+          <Trans>My projects</Trans>
+        </a>
+      </Link>
+      <CrownOutlined />
+    </>
+  )
+
+  const Disconnect = () => (
+    <>
+      <Trans>Disconnect</Trans>
+      <LogoutOutlined rotate={-90} />
+    </>
+  )
+
+  const items: ItemType[] = [
+    {
+      key: 0,
+      label: <CopyableAddress />,
+    },
+    {
+      key: 1,
+      label: <MyProjects />,
+    },
+  ]
+  if (!isMobile) {
+    items.push({
+      key: 2,
+      label: <Disconnect />,
+      onClick: async () => {
+        await disconnect()
+      },
+    })
+  }
 
   return (
     <Dropdown
-      overlay={menu}
+      overlay={<Menu items={items} />}
       placement={!isMobile ? 'bottomRight' : 'top'}
       overlayStyle={{ padding: 0 }}
     >

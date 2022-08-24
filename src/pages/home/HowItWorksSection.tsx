@@ -1,9 +1,9 @@
+import { InfoCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, Divider, Row } from 'antd'
 import ExternalLink from 'components/ExternalLink'
-import { CSSProperties } from 'react'
-import { InfoCircleOutlined } from '@ant-design/icons'
 import useMobile from 'hooks/Mobile'
+import { CSSProperties } from 'react'
 import { helpPagePath } from 'utils/helpPageHelper'
 
 import { OverflowVideoLink } from './QAs'

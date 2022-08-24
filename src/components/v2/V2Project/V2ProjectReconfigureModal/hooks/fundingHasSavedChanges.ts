@@ -2,8 +2,8 @@ import { isEqual } from 'lodash'
 import { useMemo } from 'react'
 import {
   serializeFundAccessConstraint,
-  serializeV2FundingCycleMetadata,
   serializeV2FundingCycleData,
+  serializeV2FundingCycleMetadata,
 } from 'utils/v2/serializers'
 
 import { EditingProjectData } from './editingProjectData'

@@ -1,7 +1,8 @@
 import { LoadingOutlined } from '@ant-design/icons'
 import { Spin } from 'antd'
+import { SpinSize } from 'antd/lib/spin'
 
-export default function Loading({ size }: { size?: number }) {
+export default function Loading({ size }: { size?: SpinSize }) {
   return (
     <div
       style={{
@@ -11,10 +12,7 @@ export default function Loading({ size }: { size?: number }) {
         height: '100%',
       }}
     >
-      <Spin
-        size="large"
-        indicator={<LoadingOutlined style={size ? { fontSize: size } : {}} />}
-      ></Spin>
+      <Spin size={size ?? 'large'} indicator={<LoadingOutlined />}></Spin>
     </div>
   )
 }

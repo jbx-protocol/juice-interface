@@ -10,6 +10,7 @@ import { CSSProperties, useContext } from 'react'
 
 import { ThemeOption } from 'constants/theme/theme-option'
 
+import Link from 'next/link'
 import Faq from './home/Faq'
 import Footer from './home/Footer'
 import { HowItWorksSection } from './home/HowItWorksSection'
@@ -106,22 +107,23 @@ function Landing() {
           flexDirection: isMobile ? 'column' : 'row',
         }}
       >
-        <Button
-          type="primary"
-          size="large"
-          block={isMobile}
-          href={'/create'}
-          onClick={() => {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            ;(fathom as any)?.trackGoal('IIYVJKNC', 0)
-          }}
-          style={{
-            marginRight: isMobile ? 0 : '0.8rem',
-            marginBottom: isMobile ? '0.8rem' : 0,
-          }}
-        >
-          <Trans>Launch your project</Trans>
-        </Button>
+        <Link href="/create">
+          <Button
+            type="primary"
+            size="large"
+            block={isMobile}
+            onClick={() => {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              ;(fathom as any)?.trackGoal('IIYVJKNC', 0)
+            }}
+            style={{
+              marginRight: isMobile ? 0 : '0.8rem',
+              marginBottom: isMobile ? '0.8rem' : 0,
+            }}
+          >
+            <Trans>Launch your project</Trans>
+          </Button>
+        </Link>
         <Button size="large" block={isMobile} href="/projects">
           <Trans>Explore projects</Trans>
         </Button>

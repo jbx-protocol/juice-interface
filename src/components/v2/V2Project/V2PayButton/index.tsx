@@ -1,17 +1,15 @@
+import { LoadingOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
 import { PayButtonProps } from 'components/inputs/Pay/PayInputGroup'
-import Loading from 'components/Loading'
 import PayWarningModal from 'components/PayWarningModal'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useWeiConverter from 'hooks/WeiConverter'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { useContext, useState } from 'react'
 import { V2_CURRENCY_USD } from 'utils/v2/currency'
-
 import { reloadWindow } from 'utils/windowUtils'
-
 import { V2ConfirmPayModal } from './V2ConfirmPayModal'
 
 export default function V2PayButton({
@@ -69,13 +67,7 @@ export default function V2PayButton({
           }}
           disabled={isPayDisabled}
         >
-          {fundingCycleLoading ? (
-            <div style={{ margin: '0 auto' }}>
-              <Loading size={'default'} />
-            </div>
-          ) : (
-            payButtonText
-          )}
+          {fundingCycleLoading ? <LoadingOutlined /> : payButtonText}
         </Button>
       </Tooltip>
       {payInCurrency === V2_CURRENCY_USD && (

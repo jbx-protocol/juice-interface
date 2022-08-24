@@ -252,14 +252,11 @@ export function TopProjectsSection() {
 
           <div style={{ textAlign: 'center' }}>
             <Space direction="vertical" style={{ width: '100%' }} size="large">
-              <Button
-                size="large"
-                type="primary"
-                href="/create"
-                block={isMobile}
-              >
-                <Trans>Start raising funds</Trans>
-              </Button>
+              <Link href="/create">
+                <Button size="large" type="primary" block={isMobile}>
+                  <Trans>Start raising funds</Trans>
+                </Button>
+              </Link>
 
               <div
                 role="button"

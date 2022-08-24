@@ -2198,6 +2198,9 @@ msgstr ""
 msgid "Swap for V2 {tokenText}"
 msgstr ""
 
+msgid "Switch network to {0}"
+msgstr ""
+
 msgid "Target"
 msgstr ""
 
@@ -2346,6 +2349,12 @@ msgid "This is the maximum amount of funds that can leave the treasury each fund
 msgstr ""
 
 msgid "This list is using an experimental data index and may be inaccurate for some projects."
+msgstr ""
+
+msgid "This project has no distributions."
+msgstr ""
+
+msgid "This project has no reserved tokens."
 msgstr ""
 
 msgid "This project is archived and can't be paid."

@@ -1706,9 +1706,6 @@ msgstr ""
 msgid "Project ID must be a number."
 msgstr ""
 
-msgid "Project ID:"
-msgstr ""
-
 msgid "Project Token"
 msgstr ""
 
@@ -1788,6 +1785,9 @@ msgid "Project {projectId}"
 msgstr ""
 
 msgid "Project {projectId} not found"
+msgstr ""
+
+msgid "Project:"
 msgstr ""
 
 msgid "Projects"

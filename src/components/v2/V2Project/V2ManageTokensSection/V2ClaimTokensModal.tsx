@@ -38,7 +38,7 @@ export default function V2ClaimTokensModal({
     setClaimAmount(fromWad(unclaimedBalance))
   }, [unclaimedBalance])
 
-  function executeClaimTokensTx() {
+  const executeClaimTokensTx = async () => {
     if (
       !claimAmount ||
       parseWad(claimAmount).eq(0) // Disable claiming 0 tokens
@@ -47,7 +47,7 @@ export default function V2ClaimTokensModal({
 
     setLoading(true)
 
-    claimTokensTx(
+    const txSuccess = await claimTokensTx(
       { claimAmount: parseWad(claimAmount) },
       {
         onDone: () => {
@@ -58,12 +58,13 @@ export default function V2ClaimTokensModal({
           setTransactionPending(false)
           onConfirmed?.()
         },
-        onError: () => {
-          setTransactionPending(false)
-          setLoading(false)
-        },
       },
     )
+
+    if (!txSuccess) {
+      setTransactionPending(false)
+      setLoading(false)
+    }
   }
 
   const ticketsIssued = tokenAddress

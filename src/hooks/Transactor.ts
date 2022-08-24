@@ -181,10 +181,11 @@ export function useTransactor({
           description = JSON.parse(json).message || message
         } catch (_) {
           description = message
+          options?.onError?.(new DOMException(description))
           emitErrorNotification(t`Transaction failed`, { description })
         }
 
-        options?.onError?.(new DOMException(description))
+        options?.onDone?.()
 
         return false
       }

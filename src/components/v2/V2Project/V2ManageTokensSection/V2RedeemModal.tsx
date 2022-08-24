@@ -109,7 +109,7 @@ export default function V2RedeemModal({
 
     setLoading(true)
 
-    redeemTokensTx(
+    const txSuccess = await redeemTokensTx(
       {
         redeemAmount: parseWad(redeemAmount),
         minReturnedTokens,
@@ -126,12 +126,13 @@ export default function V2RedeemModal({
           setLoading(false)
           onConfirmed?.()
         },
-        onError: () => {
-          setTransactionPending(false)
-          setLoading(false)
-        },
       },
     )
+
+    if (!txSuccess) {
+      setTransactionPending(false)
+      setLoading(false)
+    }
   }
 
   const totalSupplyExceeded =

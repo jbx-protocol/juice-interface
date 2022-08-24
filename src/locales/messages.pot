@@ -1877,9 +1877,6 @@ msgstr ""
 msgid "Reconfigure project details"
 msgstr ""
 
-msgid "Reconfigure token"
-msgstr ""
-
 msgid "Reconfigure upcoming"
 msgstr ""
 

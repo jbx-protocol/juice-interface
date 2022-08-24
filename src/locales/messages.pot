@@ -2198,6 +2198,9 @@ msgstr ""
 msgid "Swap for V2 {tokenText}"
 msgstr ""
 
+msgid "Switch network to {0}"
+msgstr ""
+
 msgid "Target"
 msgstr ""
 

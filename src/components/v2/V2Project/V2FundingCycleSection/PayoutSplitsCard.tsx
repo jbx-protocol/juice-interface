@@ -165,7 +165,7 @@ export default function PayoutSplitsCard({
                 </Trans>
               }
             />
-            {canEditPayouts && (
+            {canEditPayouts && effectiveDistributionLimit.gt(0) && (
               <Button
                 size="small"
                 onClick={() => setEditPayoutModalVisible(true)}

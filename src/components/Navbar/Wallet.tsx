@@ -25,12 +25,7 @@ export default function Wallet({ userAddress }: { userAddress: string }) {
 
   const CopyableAddress = () => (
     <>
-      <EtherscanLink
-        value={userAddress}
-        type="address"
-        truncated={true}
-        hideTooltip
-      />{' '}
+      <EtherscanLink value={userAddress} type="address" truncated />{' '}
       <CopyTextButton value={userAddress} style={{ zIndex: 1 }} />
     </>
   )

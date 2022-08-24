@@ -1109,9 +1109,6 @@ msgstr ""
 msgid "Give this NFT a name."
 msgstr ""
 
-msgid "Go to Etherscan"
-msgstr ""
-
 msgid "Grant permission"
 msgstr ""
 
@@ -2061,9 +2058,6 @@ msgid "Second"
 msgstr ""
 
 msgid "Seconds"
-msgstr ""
-
-msgid "See transaction"
 msgstr ""
 
 msgid "Set ENS name"

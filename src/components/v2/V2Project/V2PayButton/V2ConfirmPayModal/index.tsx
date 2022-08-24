@@ -53,7 +53,7 @@ export function V2ConfirmPayModal({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { fundingCycle, fundingCycleMetadata, projectId, tokenSymbol } =
+  const { fundingCycle, fundingCycleMetadata, projectId, tokenSymbol, handle, } =
     useContext(V2ProjectContext)
   const { projectMetadata } = useContext(ProjectMetadataContext)
   const {
@@ -65,7 +65,9 @@ export function V2ConfirmPayModal({
   const [form] = useForm<V2PayFormType>()
 
   const converter = useCurrencyConverter()
-  const payProjectTx = usePayETHPaymentTerminalTx()
+  const payProjectTx = usePayETHPaymentTerminalTx({
+    projectTitle: handle ? `@${handle}` : projectMetadata?.name,
+  })
   const isMobile = useMobile()
   const {
     userAddress,

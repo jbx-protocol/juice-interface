@@ -17,7 +17,11 @@ type PayV2ProjectTx = TransactorInstance<{
   value: BigNumber
 }>
 
-export function usePayETHPaymentTerminalTx(): PayV2ProjectTx {
+export function usePayETHPaymentTerminalTx({
+  projectTitle,
+}: {
+  projectTitle?: string
+}): PayV2ProjectTx {
   const { transactor, contracts } = useContext(V2UserContext)
   const { projectId } = useContext(V2ProjectContext)
 
@@ -47,7 +51,8 @@ export function usePayETHPaymentTerminalTx(): PayV2ProjectTx {
       ],
       {
         ...txOpts,
-        value: value,
+        value,
+        title: 'Pay ' + projectTitle ?? `project ${projectId.toString()}`,
       },
     )
   }

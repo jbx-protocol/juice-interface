@@ -7,6 +7,8 @@ import { EtherPriceProvider } from 'providers/EtherPriceProvider'
 import LanguageProvider from 'providers/LanguageProvider'
 import ReactQueryProvider from 'providers/ReactQueryProvider'
 import { ThemeProvider } from 'providers/ThemeProvider'
+import TxHistoryProvider from 'providers/TxHistoryProvider'
+import { V1UserProvider } from 'providers/v1/UserProvider'
 import React from 'react'
 import { Provider } from 'react-redux'
 import store from 'redux/store'
@@ -26,11 +28,13 @@ export const AppWrapper: React.FC = ({ children }) => {
       <ReactQueryProvider>
         <Provider store={store}>
           <LanguageProvider>
-            <ThemeProvider>
-              <EtherPriceProvider>
-                <_Wrapper>{children}</_Wrapper>
-              </EtherPriceProvider>
-            </ThemeProvider>
+            <TxHistoryProvider>
+              <ThemeProvider>
+                <EtherPriceProvider>
+                  <_Wrapper>{children}</_Wrapper>
+                </EtherPriceProvider>
+              </ThemeProvider>
+            </TxHistoryProvider>
           </LanguageProvider>
         </Provider>
       </ReactQueryProvider>

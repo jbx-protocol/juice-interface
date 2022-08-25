@@ -11,7 +11,7 @@ const nowSeconds = () => Math.round(new Date().valueOf() / 1000)
 const KEY_TRANSACTIONS = 'transactions'
 
 const SHORT_TERM_POLL_INTERVAL_MILLIS = 3 * 1000 // 3 sec
-const LONG_TERM_POLL_INTERVAL_MILLIS = 12 * 1000 // 10 sec
+const LONG_TERM_POLL_INTERVAL_MILLIS = 12 * 1000 // 12 sec
 
 // Arbitrary time to give folks a sense of tx history
 const TX_HISTORY_TIME_SECS = 60 * 60 // 1 hr

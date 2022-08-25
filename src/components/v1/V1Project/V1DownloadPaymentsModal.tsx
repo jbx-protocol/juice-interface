@@ -11,6 +11,7 @@ import { querySubgraphExhaustive } from 'utils/graph'
 import { emitErrorNotification } from 'utils/notifications'
 
 import { readProvider } from 'constants/readProvider'
+import { downloadCsvFile } from 'utils/csv'
 
 export default function V1DownloadPaymentsModal({
   visible,
@@ -74,18 +75,7 @@ export default function V1DownloadPaymentsModal({
         rows.push([fromWad(p.amount), date, p.caller, p.beneficiary, p.note])
       })
 
-      const csvContent =
-        'data:text/csv;charset=utf-8,' + rows.map(e => e.join(',')).join('\n')
-      const encodedUri = encodeURI(csvContent)
-      const link = document.createElement('a')
-      link.setAttribute('href', encodedUri)
-      link.setAttribute(
-        'download',
-        `@${handle}_payments-block${blockNumber}.csv`,
-      )
-      document.body.appendChild(link)
-
-      link.click()
+      downloadCsvFile(`@${handle}_payments-block${blockNumber}.csv`, rows)
 
       setLoading(false)
     } catch (e) {

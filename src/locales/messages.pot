@@ -1274,12 +1274,6 @@ msgstr ""
 msgid "Juicebox V1 project ID"
 msgstr ""
 
-msgid "Juicebox V2 project"
-msgstr ""
-
-msgid "Juicebox V2 project with ID {0}"
-msgstr ""
-
 msgid "Juicebox gives you the tools to automate your funding so you can focus on building."
 msgstr ""
 

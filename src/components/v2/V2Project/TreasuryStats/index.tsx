@@ -37,10 +37,14 @@ export default function TreasuryStats() {
     (!isPreviewMode && overflowLoading) || distributionLimitLoading
 
   return (
-    <Space direction="vertical" style={{ display: 'flex' }}>
+    <Space direction="vertical" style={{ display: 'flex' }} size="middle">
       <VolumeStatLine totalVolume={totalVolume} color={colors.text.primary} />
-      <ProjectBalance />
-      <DistributedRatio />
+
+      <Space direction="vertical" style={{ width: '100%' }}>
+        <ProjectBalance />
+        <DistributedRatio />
+      </Space>
+
       <Skeleton
         loading={fundingProgressBarLoading}
         title={false}

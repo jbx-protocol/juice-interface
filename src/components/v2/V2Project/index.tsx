@@ -150,6 +150,11 @@ export default function V2Project({
     return !hasCurrentFundingCycle
   }
 
+  const handleNftSelected = (payAmountETH: string) => {
+    setPayAmount(payAmountETH)
+    setPayInCurrency(ETH)
+  }
+
   return (
     <Space direction="vertical" size={GUTTER_PX} style={{ width: '100%' }}>
       {showRelaunchFundingCycleBanner && <RelaunchFundingCycleBanner />}
@@ -192,8 +197,7 @@ export default function V2Project({
             <div style={{ marginTop: '30px' }}>
               <NftRewardsSection
                 payAmountETH={payAmountETH}
-                payInCurrency={payInCurrency}
-                onPayAmountChange={setPayAmount}
+                onNftSelected={handleNftSelected}
               />
             </div>
           ) : null}
@@ -229,8 +233,7 @@ export default function V2Project({
               {!isMobile && nftRewardsEnabled ? (
                 <NftRewardsSection
                   payAmountETH={payAmountETH}
-                  payInCurrency={payInCurrency}
-                  onPayAmountChange={setPayAmount}
+                  onNftSelected={handleNftSelected}
                 />
               ) : null}
               <ProjectActivity />

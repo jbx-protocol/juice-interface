@@ -34,8 +34,8 @@ async function getRewardTierFromIPFS({
     tierRank: index + 1,
     maxSupply: ipfsRewardTier.attributes.maxSupply ?? DEFAULT_NFT_MAX_SUPPLY,
     remainingSupply:
-      contractNftRewardTier.remainingQuantity ??
-      contractNftRewardTier.initialQuantity,
+      contractNftRewardTier.remainingQuantity.toNumber() ??
+      contractNftRewardTier.initialQuantity.toNumber(),
     imageUrl: ipfsRewardTier.image,
   }
 }

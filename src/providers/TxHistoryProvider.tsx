@@ -4,7 +4,7 @@ import { ReactNode, useCallback, useEffect, useState } from 'react'
 import { clearInterval, setInterval } from 'timers'
 
 import { readProvider } from '../constants/readProvider'
-import { TransactionsContext } from '../contexts/transactionsContext'
+import { TxHistoryContext } from '../contexts/txHistoryContext'
 
 const KEY_TRANSACTIONS = 'transactions'
 
@@ -121,7 +121,7 @@ export default function TxHistoryProvider({
   )
 
   return (
-    <TransactionsContext.Provider
+    <TxHistoryContext.Provider
       value={{
         transactions,
         addTransaction,
@@ -129,6 +129,6 @@ export default function TxHistoryProvider({
       }}
     >
       {children}
-    </TransactionsContext.Provider>
+    </TxHistoryContext.Provider>
   )
 }

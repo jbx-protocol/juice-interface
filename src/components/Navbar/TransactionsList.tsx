@@ -1,19 +1,20 @@
 import {
   CaretDownOutlined,
   CheckCircleOutlined,
+  CloseCircleOutlined,
   ExclamationCircleOutlined,
+  ThunderboltOutlined,
 } from '@ant-design/icons'
-import { Button } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { NetworkName } from 'models/network-name'
 import { TxStatus } from 'models/transaction'
-import { CSSProperties, useContext, useEffect, useState } from 'react'
+import { CSSProperties, useContext, useEffect, useMemo, useState } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { readNetwork } from '../../constants/networks'
 import {
   timestampForTxLog,
-  TransactionsContext,
-} from '../../contexts/transactionsContext'
+  TxHistoryContext,
+} from '../../contexts/txHistoryContext'
 import Loading from '../Loading'
 
 export default function TransactionsList({
@@ -23,7 +24,7 @@ export default function TransactionsList({
   style?: CSSProperties
   listStyle?: CSSProperties
 }) {
-  const { transactions, removeTransaction } = useContext(TransactionsContext)
+  const { transactions, removeTransaction } = useContext(TxHistoryContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -48,26 +49,38 @@ export default function TransactionsList({
     }
   }
 
+  const hasPendingTxs = useMemo(
+    () => transactions?.some(tx => tx.status === TxStatus.pending),
+    [transactions],
+  )
+
   useEffect(() => {
     // Auto expand if pending tx is added
-    if (transactions?.some(tx => tx.status === TxStatus.pending)) {
-      setIsExpanded(true)
-    }
-  }, [transactions])
+    if (hasPendingTxs) setIsExpanded(true)
+  }, [hasPendingTxs])
 
   return (
     <div style={{ ...style }}>
       {!!transactions?.length && (
-        <Button
-          style={{ paddingLeft: 5, paddingRight: 5 }}
-          type="text"
+        <div
+          className="clickable-border"
+          role="button"
+          style={{
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            paddingLeft: 10,
+            paddingRight: 5,
+            borderRadius: 15,
+            height: 30,
+          }}
           onClick={() => setIsExpanded(!isExpanded)}
         >
-          TXS{' '}
-          <span style={{ minWidth: 20 }}>
+          {hasPendingTxs ? <Loading size="small" /> : <ThunderboltOutlined />}
+          <span style={{ minWidth: 20, textAlign: 'center', fontWeight: 600 }}>
             {isExpanded ? <CaretDownOutlined /> : transactions.length}
           </span>
-        </Button>
+        </div>
       )}
 
       {isExpanded && (
@@ -95,7 +108,8 @@ export default function TransactionsList({
                     gap: 10,
                     width: '100%',
                     padding: '5px 20px',
-                    background: colors.background.l1,
+                    background: colors.background.l0,
+                    border: `1px solid ${colors.stroke.secondary}`,
                     boxSizing: 'border-box',
                   }}
                 >
@@ -130,7 +144,7 @@ export default function TransactionsList({
                     <div style={{ fontSize: '0.85rem' }}>{tx.title}</div>
                   </a>
 
-                  <span
+                  <CloseCircleOutlined
                     style={{ cursor: 'default' }}
                     onClick={() => {
                       // Close menu if removing last tx
@@ -140,9 +154,7 @@ export default function TransactionsList({
 
                       removeTransaction?.(tx.id)
                     }}
-                  >
-                    ×
-                  </span>
+                  />
                 </div>
               ))
           ) : (

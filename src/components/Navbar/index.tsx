@@ -20,7 +20,11 @@ export default function Navbar() {
         <NavLanguageSelector />
         <ThemePicker />
         <TransactionsList
-          listStyle={{ position: 'absolute', top: 60, right: 30 }}
+          listStyle={{
+            position: 'absolute', // Position below navbar
+            top: 70,
+            right: 30,
+          }}
         />
         <Account />
       </Space>

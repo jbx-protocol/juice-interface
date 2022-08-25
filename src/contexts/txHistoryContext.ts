@@ -6,7 +6,7 @@ import { createContext } from 'react'
 export const timestampForTxLog = (txLog: TransactionLog) =>
   (txLog.tx as TransactionResponse).timestamp ?? txLog.createdAt
 
-export const TransactionsContext: React.Context<{
+export const TxHistoryContext: React.Context<{
   transactions?: TransactionLog[]
   addTransaction?: (title: string, tx: TransactionResponse) => void
   removeTransaction?: (id: number) => void

@@ -12,7 +12,7 @@ import { emitErrorNotification } from 'utils/notifications'
 import { t } from '@lingui/macro'
 import * as Sentry from '@sentry/browser'
 
-import { TransactionsContext } from 'contexts/transactionsContext'
+import { TxHistoryContext } from 'contexts/txHistoryContext'
 import { useWallet } from './Wallet'
 
 type TransactorCallback = (e?: Transaction, signer?: Signer) => void
@@ -69,7 +69,7 @@ export function useTransactor({
 }): Transactor | undefined {
   const { chain, signer } = useWallet()
   const { chainUnsupported, isConnected, changeNetworks, connect } = useWallet()
-  const { addTransaction } = useContext(TransactionsContext)
+  const { addTransaction } = useContext(TxHistoryContext)
 
   return useCallback(
     async (
@@ -118,11 +118,13 @@ export function useTransactor({
       try {
         let result
 
+        const txTitle = options?.title ?? functionName
+
         if (tx instanceof Promise) {
           console.info('AWAITING TX', tx)
           result = await tx
 
-          addTransaction?.(options?.title ?? functionName, result)
+          addTransaction?.(txTitle, result)
         } else {
           console.info('RUNNING TX', tx)
 
@@ -132,7 +134,7 @@ export function useTransactor({
 
           result = await signer.sendTransaction(tx)
 
-          addTransaction?.(options?.title ?? functionName, result)
+          addTransaction?.(txTitle, result)
 
           await result.wait()
         }

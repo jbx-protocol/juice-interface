@@ -35,7 +35,6 @@ export default function FeedbackFormButton({
         <MessageOutlined size={iconSize} />
         <ExternalLink
           style={{ margin: '0 0 2px 12px', fontWeight: 400 }}
-          className="quiet"
           href={formUrl}
         >
           <Trans>Give feedback</Trans>
@@ -48,7 +47,7 @@ export default function FeedbackFormButton({
     <Tooltip
       title={
         <ExternalLink
-          className="quiet hover-text-action-primary hover-text-decoration-underline"
+          className="hover-text-action-primary hover-text-decoration-underline"
           href={formUrl}
         >
           <Trans>Give feedback</Trans>

@@ -41,15 +41,6 @@ a {
   }
 }
 
-a.quiet {
-  color: inherit;
-  font-weight: 500;
-
-  &:hover {
-    color: var(--text-primary);
-  }
-}
-
 input {
   background: var(--background-l0);
   color: var(--text-primary);

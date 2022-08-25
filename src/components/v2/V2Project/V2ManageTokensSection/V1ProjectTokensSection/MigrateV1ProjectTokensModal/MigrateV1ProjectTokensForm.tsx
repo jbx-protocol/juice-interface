@@ -5,7 +5,7 @@ import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { formattedNum } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
-export interface MigrateV1ProjectTokensFormType {
+interface MigrateV1ProjectTokensFormType {
   tokenAmount: string
 }
 

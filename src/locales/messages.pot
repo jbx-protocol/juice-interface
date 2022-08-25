@@ -680,7 +680,10 @@ msgstr ""
 msgid "Copy to clipboard"
 msgstr ""
 
-msgid "Create a payable address (optional)"
+msgid "Create Payment Address"
+msgstr ""
+
+msgid "Create a Payment Address (optional)"
 msgstr ""
 
 msgid "Create an Ethereum address for your project. Enables direct payments without going through your project's Juicebox page."
@@ -689,19 +692,13 @@ msgstr ""
 msgid "Create an Ethereum address that can be used to pay your project directly."
 msgstr ""
 
-msgid "Create payable address"
-msgstr ""
-
-msgid "Create payment address"
-msgstr ""
-
 msgid "Create project"
 msgstr ""
 
 msgid "Create your own ERC-20 token to represent stake in your project. Contributors will receive these tokens when they pay your project."
 msgstr ""
 
-msgid "Created ETH-ERC20 payment address"
+msgid "Created Payment Address"
 msgstr ""
 
 msgid "Crowdfund your project with ETH. Set a funding target to cover predictable expenses, and any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
@@ -770,13 +767,13 @@ msgstr ""
 msgid "Delete token allocation"
 msgstr ""
 
+msgid "Deploy Payment Address"
+msgstr ""
+
+msgid "Deploy Payment Address contract"
+msgstr ""
+
 msgid "Deploy funding cycle configuration"
-msgstr ""
-
-msgid "Deploy payment address"
-msgstr ""
-
-msgid "Deploy payment address contract"
 msgstr ""
 
 msgid "Deploy project"
@@ -875,13 +872,13 @@ msgstr ""
 msgid "Distributed Reserves"
 msgstr ""
 
-msgid "Distributed Tokens"
-msgstr ""
-
 msgid "Distributed funds"
 msgstr ""
 
 msgid "Distributed reserved {0}"
+msgstr ""
+
+msgid "Distributed tokens"
 msgstr ""
 
 msgid "Distributing funds to Juicebox projects won't incur fees."
@@ -953,7 +950,7 @@ msgstr ""
 msgid "ERC20 Deployed"
 msgstr ""
 
-msgid "ETH-ERC20 Address Created"
+msgid "ERC20 deployed"
 msgstr ""
 
 msgid "Each payout will receive their percent of this total each funding cycle if there is enough in the treasury. Otherwise, they will receive their percent of whatever is in the treasury."
@@ -1107,9 +1104,6 @@ msgid "Give feedback"
 msgstr ""
 
 msgid "Give this NFT a name."
-msgstr ""
-
-msgid "Go to Etherscan"
 msgstr ""
 
 msgid "Grant permission"
@@ -1631,6 +1625,9 @@ msgstr ""
 msgid "Paying this project is currently disabled."
 msgstr ""
 
+msgid "Payment Address created"
+msgstr ""
+
 msgid "Payment equivalent"
 msgstr ""
 
@@ -1706,13 +1703,13 @@ msgstr ""
 msgid "Project ID must be a number."
 msgstr ""
 
-msgid "Project ID:"
-msgstr ""
-
 msgid "Project Token"
 msgstr ""
 
 msgid "Project configuration"
+msgstr ""
+
+msgid "Project created"
 msgstr ""
 
 msgid "Project created by"
@@ -1788,6 +1785,9 @@ msgid "Project {projectId}"
 msgstr ""
 
 msgid "Project {projectId} not found"
+msgstr ""
+
+msgid "Project:"
 msgstr ""
 
 msgid "Projects"
@@ -1875,9 +1875,6 @@ msgid "Reconfigure project and funding details"
 msgstr ""
 
 msgid "Reconfigure project details"
-msgstr ""
-
-msgid "Reconfigure token"
 msgstr ""
 
 msgid "Reconfigure upcoming"
@@ -2061,9 +2058,6 @@ msgid "Second"
 msgstr ""
 
 msgid "Seconds"
-msgstr ""
-
-msgid "See transaction"
 msgstr ""
 
 msgid "Set ENS name"
@@ -2855,7 +2849,7 @@ msgstr ""
 msgid "Your funding cycle configuration has been pre-populated using the configuration you originally launched with. If you need to customize it, contact us."
 msgstr ""
 
-msgid "Your new payable address:"
+msgid "Your new payment address:"
 msgstr ""
 
 msgid "Your project can still receive payments directly through the Juicebox protocol contracts."
@@ -2963,10 +2957,10 @@ msgstr ""
 msgid "veNFT Tiers ({0} variants)"
 msgstr ""
 
-msgid "{0, plural, one {# payment address} other {# payment addresses}}"
+msgid "{0, plural, one {# Payment Address} other {# Payment Addresses}}"
 msgstr ""
 
-msgid "{0, plural, one {View # deployed payment address} other {View # deployed payment addresses}}"
+msgid "{0, plural, one {View deployed Payment Address} other {View deployed Payment Addresses}}"
 msgstr ""
 
 msgid "{0} - Project payer contracts"

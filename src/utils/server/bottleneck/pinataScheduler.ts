@@ -4,7 +4,7 @@ import Bottleneck from 'bottleneck'
 const PINATA_RATE_LIMIT_SECONDS = 180
 const SECONDS_IN_MINUTES = 60
 
-export const generatePinataScheduler = (id?: string) => {
+const generatePinataScheduler = (id?: string) => {
   const pinataApiCallsPermittedPerSecond =
     PINATA_RATE_LIMIT_SECONDS / SECONDS_IN_MINUTES
   return new Bottleneck({

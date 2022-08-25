@@ -52,7 +52,7 @@ export function ExportSplitsButton<G extends SplitGroup>({
       const splitType =
         groupedSplits.group === ETH_PAYOUT_SPLIT_GROUP
           ? 'payouts'
-          : 'reserved_tokens'
+          : 'reserved-tokens'
       const filename = `${projectIdentifier}_${splitType}_fc-${fundingCycle.number}`
 
       downloadCsvFile(filename, csvContent)

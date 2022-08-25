@@ -16,6 +16,7 @@ import { ExportSection } from 'components/Project/ProjectToolsDrawer/ExportSecti
 import { TransferOwnershipForm } from 'components/Project/ProjectToolsDrawer/TransferOwnershipForm'
 import { TransferUnclaimedTokensForm } from 'components/Project/ProjectToolsDrawer/TransferUnclaimedTokensForm'
 import { ExportPayoutModsButton } from './ExportPayoutModsButton'
+import { ExportTicketModsButton } from './ExportTicketModsButton'
 
 const { TabPane } = Tabs
 
@@ -77,7 +78,7 @@ export function V1ProjectToolsDrawer({
 
             <ExportSection
               exportPayoutsButton={<ExportPayoutModsButton />}
-              exportReservedTokensButton={undefined}
+              exportReservedTokensButton={<ExportTicketModsButton />}
             />
           </Space>
         </TabPane>

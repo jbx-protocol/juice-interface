@@ -1,5 +1,6 @@
 import ScrollToTopButton from 'components/ScrollToTopButton'
 
+import * as constants from '@ethersproject/constants'
 import {
   V2ProjectContext,
   V2ProjectContextType,
@@ -177,6 +178,7 @@ export default function V2Dashboard({
   //    - will resolve false when `useNftRewardTiersOf` fails
   const nftsLoading = Boolean(
     fundingCycleMetadata?.dataSource &&
+      fundingCycleMetadata.dataSource !== constants.AddressZero &&
       (nftRewardTiersLoading || nftRewardsCIDsLoading),
   )
 

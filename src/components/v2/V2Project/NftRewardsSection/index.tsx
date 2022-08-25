@@ -107,12 +107,12 @@ export function NftRewardsSection({
       >
         <Trans>Contribute to unlock an NFT reward.</Trans>
       </span>
-      {!nftsLoading ? (
+      {nftsLoading ? (
+        <RewardTiersLoadingSkeleton />
+      ) : (
         <Row style={{ marginTop: '15px' }} gutter={isMobile ? 8 : 24}>
           {rewardTiers?.map(renderRewardTier)}
         </Row>
-      ) : (
-        <RewardTiersLoadingSkeleton />
       )}
     </div>
   )

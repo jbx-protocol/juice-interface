@@ -80,13 +80,11 @@ export default function SplitItem({
     return (
       <div>
         <div>
-          <Link
-            href={v2ProjectRoute({ projectId: split.projectId, handle })}
-            target="_blank"
-          >
+          <Link href={v2ProjectRoute({ projectId: split.projectId, handle })}>
             <a
               className="text-primary hover-text-action-primary hover-text-decoration-underline"
               style={{ fontWeight: 500 }}
+              target="_blank"
             >
               {getProjectLabel()}
             </a>

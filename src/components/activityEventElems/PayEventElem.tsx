@@ -110,7 +110,10 @@ export default function PayEventElem({
               lineHeight: contentLineHeight,
             }}
           >
-            <FormattedAddress address={event.beneficiary} />
+            <FormattedAddress
+              address={event.beneficiary}
+              style={{ fontWeight: 400 }}
+            />
           </div>
         </div>
       </div>

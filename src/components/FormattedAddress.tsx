@@ -2,7 +2,7 @@ import { isAddress } from '@ethersproject/address'
 
 import { Tooltip } from 'antd'
 
-import { useEffect, useState } from 'react'
+import { CSSProperties, useEffect, useState } from 'react'
 
 import CopyTextButton from 'components/CopyTextButton'
 import EtherscanLink from 'components/EtherscanLink'
@@ -38,11 +38,13 @@ export default function FormattedAddress({
   label,
   tooltipDisabled,
   truncateTo,
+  style,
 }: {
   address: string | undefined
   label?: string
   tooltipDisabled?: boolean
   truncateTo?: number
+  style?: CSSProperties
 }) {
   const [ensName, setEnsName] = useState<string | null>()
 
@@ -100,23 +102,29 @@ export default function FormattedAddress({
   const formatted =
     ensName ?? label ?? truncateEthAddress({ address, truncateTo })
 
+  const mergedStyle: CSSProperties = {
+    userSelect: 'all',
+    lineHeight: '22px',
+    ...style,
+  }
+
   if (tooltipDisabled) {
-    return (
-      <span style={{ userSelect: 'all', lineHeight: '22px' }}>{formatted}</span>
-    )
+    return <span style={mergedStyle}>{formatted}</span>
   }
 
   return (
     <Tooltip
-      trigger={['hover', 'click']}
       title={
-        <span>
-          <EtherscanLink value={address} type="address" />{' '}
-          <CopyTextButton value={address} />
+        <span style={{ fontSize: '0.8rem' }}>
+          {address} <CopyTextButton value={address} />
         </span>
       }
     >
-      <span style={{ userSelect: 'all', lineHeight: '22px' }}>{formatted}</span>
+      <span>
+        <EtherscanLink type="address" value={address} style={mergedStyle}>
+          {formatted}
+        </EtherscanLink>
+      </span>
     </Tooltip>
   )
 }

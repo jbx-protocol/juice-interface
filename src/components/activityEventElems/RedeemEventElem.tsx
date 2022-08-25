@@ -85,7 +85,10 @@ export default function RedeemEventElem({
               textAlign: 'right',
             }}
           >
-            <FormattedAddress address={event.beneficiary} />
+            <FormattedAddress
+              address={event.beneficiary}
+              style={{ fontWeight: 400 }}
+            />
           </div>
         </div>
       </div>

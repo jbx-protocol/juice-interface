@@ -47,7 +47,10 @@ export default function FeedbackFormButton({
   return (
     <Tooltip
       title={
-        <ExternalLink className="quiet hover-action" href={formUrl}>
+        <ExternalLink
+          className="quiet hover-text-action-primary hover-text-decoration-underline"
+          href={formUrl}
+        >
           <Trans>Give feedback</Trans>
         </ExternalLink>
       }

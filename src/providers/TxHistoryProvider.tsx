@@ -50,7 +50,7 @@ export default function TxHistoryProvider({
     // Only set new poller if there are pending transactions
     // Succeeded/failed txs don't need to be refreshed
     if (!poller && transactions.some(tx => tx.status === TxStatus.pending)) {
-      const threeMinutesAgo = nowSeconds() - 3 * 60 * 1000
+      const threeMinutesAgo = nowSeconds() - 3 * 60
 
       // If any pending txs were created less than 3 min ago, use short poll time
       // Otherwise use longer poll time

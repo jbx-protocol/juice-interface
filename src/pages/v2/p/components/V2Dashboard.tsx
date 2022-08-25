@@ -178,7 +178,7 @@ export default function V2Dashboard({
   //    - will resolve false when `useNftRewardTiersOf` fails
   const nftsLoading = Boolean(
     fundingCycleMetadata?.dataSource &&
-      fundingCycleMetadata?.dataSource !== constants.AddressZero &&
+      fundingCycleMetadata.dataSource !== constants.AddressZero &&
       (nftRewardTiersLoading || nftRewardsCIDsLoading),
   )
 

@@ -371,23 +371,23 @@ export default function ProjectActivity() {
               <Trans>Redeemed</Trans>
             </Select.Option>
             <Select.Option value="distributePayouts">
-              <Trans>Distributed Funds</Trans>
+              <Trans>Distributed funds</Trans>
             </Select.Option>
             <Select.Option value="distributeTokens">
-              <Trans>Distributed Tokens</Trans>
+              <Trans>Distributed tokens</Trans>
             </Select.Option>
             {/* TODO */}
             {/* <Select.Option value="useAllowance">
               <Trans>Used Allowance</Trans>
             </Select.Option> */}
             <Select.Option value="deployERC20">
-              <Trans>ERC20 Deployed</Trans>
+              <Trans>ERC20 deployed</Trans>
             </Select.Option>
             <Select.Option value="deployETHERC20ProjectPayer">
-              <Trans>ETH-ERC20 Address Created</Trans>
+              <Trans>Payment Address created</Trans>
             </Select.Option>
             <Select.Option value="projectCreate">
-              <Trans>Project Created</Trans>
+              <Trans>Project created</Trans>
             </Select.Option>
           </Select>
         </Space>

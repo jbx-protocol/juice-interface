@@ -13,7 +13,7 @@ import { VeNftDrawer } from './veNft/VeNftDrawer'
 const BURN_DEFINITION_LINK =
   'https://www.investopedia.com/tech/cryptocurrency-burning-can-it-manage-inflation/'
 
-export type RedeemDisabledReason = 'redemptionRateZero' | 'overflowZero'
+type RedeemDisabledReason = 'redemptionRateZero' | 'overflowZero'
 
 const BurnTokensHelp = () => {
   return (

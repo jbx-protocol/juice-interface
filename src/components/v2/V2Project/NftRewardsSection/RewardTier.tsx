@@ -1,24 +1,67 @@
 import { Trans } from '@lingui/macro'
-import { Tooltip } from 'antd'
+import { Skeleton, Tooltip } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { NftRewardTier } from 'models/v2/nftRewardTier'
 import { CSSProperties, MouseEventHandler, useContext, useState } from 'react'
 
-import { CheckOutlined } from '@ant-design/icons'
+import { CheckOutlined, LoadingOutlined } from '@ant-design/icons'
 
 import { NftPreview } from './NftPreview'
 
+const rewardTierContainerStyle: CSSProperties = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'flex-start',
+  cursor: 'pointer',
+  transition: 'box-shadow 0.25s',
+  height: '100%',
+}
+
+const loadingImageContainerStyle: CSSProperties = {
+  width: '100%',
+  height: '151px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}
+
+const imageStyle: CSSProperties = {
+  objectFit: 'cover',
+  width: '100%',
+  position: 'absolute',
+  top: 0,
+  height: '100%',
+}
+
+const nftTitleSectionStyle: CSSProperties = {
+  width: '100%',
+  height: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center,',
+}
+
+const imageContainerStyle: CSSProperties = {
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  position: 'relative',
+}
+
 // The clickable cards on the project page
 export function RewardTier({
+  loading,
   rewardTier,
   rewardTierUpperLimit,
   isSelected,
   onClick,
 }: {
-  rewardTier: NftRewardTier
-  rewardTierUpperLimit: number | undefined
-  isSelected: boolean
-  onClick: MouseEventHandler<HTMLDivElement>
+  loading?: boolean
+  rewardTier?: NftRewardTier
+  rewardTierUpperLimit?: number | undefined
+  isSelected?: boolean
+  onClick?: MouseEventHandler<HTMLDivElement>
 }) {
   const {
     theme: { colors, radii },
@@ -55,13 +98,13 @@ export function RewardTier({
             {rewardTierUpperLimit ? (
               <Trans>
                 Receive this NFT when you contribute{' '}
-                <strong>{rewardTier.contributionFloor}</strong> - {'<'}
+                <strong>{rewardTier?.contributionFloor}</strong> - {'<'}
                 <strong>{rewardTierUpperLimit} ETH</strong>.
               </Trans>
             ) : (
               <Trans>
                 Receive this NFT when you contribute at least{' '}
-                <strong>{rewardTier.contributionFloor} ETH</strong>.
+                <strong>{rewardTier?.contributionFloor} ETH</strong>.
               </Trans>
             )}
           </span>
@@ -87,16 +130,11 @@ export function RewardTier({
           isSelected ? 'selected-box-shadow' : ''
         } hover-box-shadow`}
         style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'flex-start',
-          cursor: 'pointer',
+          ...rewardTierContainerStyle,
           outline: isSelected
             ? `2px solid ${colors.stroke.action.primary}`
             : 'rgba(0,0,0,0)',
-          transition: 'box-shadow 0.25s',
           borderRadius: radii.sm,
-          height: '100%',
         }}
         onClick={!isSelected ? onClick : () => setPreviewVisible(true)}
         role="button"
@@ -104,65 +142,81 @@ export function RewardTier({
         {/* Image container */}
         <div
           style={{
+            ...imageContainerStyle,
+            paddingTop: !loading ? '100%' : 'unset',
             backgroundColor,
-            width: '100%',
-            display: 'flex',
-            paddingTop: '100%',
-            justifyContent: 'center',
-            alignItems: 'center',
-            position: 'relative',
           }}
         >
-          <img
-            alt={rewardTier.name}
-            src={rewardTier.imageUrl}
-            style={{
-              objectFit: 'cover',
-              width: '100%',
-              position: 'absolute',
-              top: 0,
-              height: '100%',
-              filter: isSelected ? 'unset' : 'brightness(50%)',
-            }}
-          />
+          {loading ? (
+            <div
+              style={{
+                ...loadingImageContainerStyle,
+                borderBottom: `1px solid ${colors.stroke.tertiary}`,
+              }}
+            >
+              <LoadingOutlined />
+            </div>
+          ) : (
+            <img
+              alt={rewardTier?.name}
+              src={rewardTier?.imageUrl}
+              style={{
+                ...imageStyle,
+                filter: isSelected ? 'unset' : 'brightness(50%)',
+              }}
+            />
+          )}
           {isSelected ? <RewardIcon /> : null}
         </div>
         {/* Details section below image */}
         <div
           style={{
+            ...nftTitleSectionStyle,
             backgroundColor,
-            width: '100%',
-            padding: '8px 10px 5px',
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center,',
+            padding: `${!loading ? 8 : 4}px 10px 5px`,
           }}
         >
-          <h5
-            style={{
-              color: isSelected ? colors.text.primary : colors.text.tertiary,
-              marginBottom: 0,
-              lineHeight: '13px',
-            }}
+          <Skeleton
+            loading={loading}
+            active
+            title={false}
+            paragraph={{ rows: 1, width: ['100%'] }}
           >
-            {rewardTier.name}
-          </h5>
-          <span
-            style={{
-              color: colors.text.secondary,
-              fontSize: '0.7rem',
-            }}
+            <h5
+              style={{
+                color: isSelected ? colors.text.primary : colors.text.tertiary,
+                marginBottom: 0,
+                lineHeight: '13px',
+              }}
+            >
+              {rewardTier?.name}
+            </h5>
+          </Skeleton>
+          <Skeleton
+            loading={loading}
+            active
+            title={false}
+            paragraph={{ rows: 1, width: ['50%'] }}
+            style={{ marginTop: '3px' }}
           >
-            {rewardTier.contributionFloor} ETH
-          </span>
+            <span
+              style={{
+                color: colors.text.secondary,
+                fontSize: '0.7rem',
+              }}
+            >
+              {rewardTier?.contributionFloor} ETH
+            </span>
+          </Skeleton>
         </div>
       </div>
-      <NftPreview
-        visible={previewVisible}
-        rewardTier={rewardTier}
-        onClose={() => setPreviewVisible(false)}
-      />
+      {rewardTier ? (
+        <NftPreview
+          visible={previewVisible}
+          rewardTier={rewardTier}
+          onClose={() => setPreviewVisible(false)}
+        />
+      ) : null}
     </>
   )
 }

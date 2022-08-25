@@ -33,7 +33,7 @@ export default function DeployETHERC20ProjectPayerEventElem({
         }}
       >
         <div style={smallHeaderStyle(colors)}>
-          <Trans>Created ETH-ERC20 payment address</Trans>
+          <Trans>Created Payment Address</Trans>
         </div>
 
         <div style={{ textAlign: 'right' }}>

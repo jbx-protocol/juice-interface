@@ -25,7 +25,11 @@ export default function SpecificLimitModal({
   function setNewSplitsFromLimit() {
     form.validateFields()
 
-    setDistributionLimit(form.getFieldValue('distributionLimit'))
+    const distributionLimit = form
+      .getFieldValue('distributionLimit')
+      // Remove all commas from distribution limit
+      .replace(/,/g, '')
+    setDistributionLimit(distributionLimit)
     onClose()
   }
 

@@ -176,8 +176,8 @@ export default function ProjectPayersModal({
           }}
         >
           {plural(projectPayers.length, {
-            one: '# payment address',
-            other: '# payment addresses',
+            one: '# Payment Address',
+            other: '# Payment Addresses',
           })}
         </div>
       ) : null}

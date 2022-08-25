@@ -171,7 +171,14 @@ export default function V2Dashboard({
     ? V2ArchivedProjectIds.includes(projectId) || projectMetadata?.archived
     : false
 
-  const nftsLoading = nftRewardTiersLoading || nftRewardsCIDsLoading
+  // Assumes having `dataSource` means there are NFTs initially
+  // In worst case, if has `dataSource` but isn't for NFTs:
+  //    - loading will be true briefly
+  //    - will resolve false when `useNftRewardTiersOf` fails
+  const nftsLoading = Boolean(
+    fundingCycleMetadata?.dataSource &&
+      (nftRewardTiersLoading || nftRewardsCIDsLoading),
+  )
 
   const project: V2ProjectContextType = {
     cv: '2',

@@ -134,7 +134,7 @@ export default function PayInputSubText({
         <Trans>Receive {receiveText}</Trans>
       </span>
       {tokenSymbol && tokenAddress && (
-        <div>
+        <div style={{ marginTop: '0.2rem' }}>
           <Trans>
             or{' '}
             <Tooltip

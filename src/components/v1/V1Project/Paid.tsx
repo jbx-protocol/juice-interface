@@ -21,6 +21,7 @@ import { V1CurrencyName } from 'utils/v1/currency'
 
 import { VolumeStatLine } from 'components/Project/VolumeStatLine'
 
+import { Space } from 'antd'
 import { readNetwork } from 'constants/networks'
 import { textPrimary, textSecondary } from 'constants/styles/text'
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
@@ -55,9 +56,6 @@ export default function Paid() {
 
   if (!currentFC) return null
 
-  const spacing =
-    hasFundingTarget(currentFC) && currentFC.target.gt(0) ? 15 : 10
-
   const formatCurrencyAmount = (amt: BigNumber | undefined) => {
     if (!amt) return null
 
@@ -77,7 +75,7 @@ export default function Paid() {
     projectId === V1_PROJECT_IDS.CONSTITUTION_DAO
 
   return (
-    <>
+    <Space direction="vertical" size="middle" style={{ width: '100%' }}>
       <VolumeStatLine
         totalVolume={earned}
         color={
@@ -85,7 +83,8 @@ export default function Paid() {
         }
         convertToCurrency={isConstitutionDAO ? 'USD' : undefined}
       />
-      <div style={{ marginTop: spacing, marginBottom: spacing }}>
+
+      <Space direction="vertical" style={{ width: '100%' }}>
         <StatLine
           statLabel={<Trans>In Juicebox</Trans>}
           statLabelTip={
@@ -102,7 +101,7 @@ export default function Paid() {
               }}
             >
               {currentFC.currency.eq(V1_CURRENCY_USD) ? (
-                <span style={secondaryTextStyle} className="text-xs">
+                <span style={secondaryTextStyle} className="text-sm">
                   <ETHAmount amount={balance} precision={2} padEnd={true} />{' '}
                 </span>
               ) : (
@@ -159,62 +158,65 @@ export default function Paid() {
               />
             </div>
           ))}
+      </Space>
 
-        {hasFundingTarget(currentFC) && currentFC.target.gt(0) && (
-          <FundingProgressBar
-            targetAmount={currentFC.target}
-            overflowAmountInTargetCurrency={overflowInCurrency}
-            balanceInTargetCurrency={balanceInCurrency}
-          />
-        )}
-      </div>
+      {hasFundingTarget(currentFC) && currentFC.target.gt(0) && (
+        <FundingProgressBar
+          targetAmount={currentFC.target}
+          overflowAmountInTargetCurrency={overflowInCurrency}
+          balanceInTargetCurrency={balanceInCurrency}
+        />
+      )}
 
-      <StatLine
-        statLabel={<Trans>In wallet</Trans>}
-        statLabelTip={
-          <>
-            <p>
-              <Trans>The balance of the project owner's wallet.</Trans>
-            </p>{' '}
-            <EtherscanLink value={owner} type="address" />
-          </>
-        }
-        statValue={
-          <span>
-            <span style={secondaryTextStyle}>
-              <V1ProjectTokenBalance
-                style={{ display: 'inline-block' }}
-                wallet={owner}
-                projectId={V1_PROJECT_IDS.JUICEBOX_DAO}
-                hideHandle
-              />{' '}
-              +{' '}
+      <div>
+        <StatLine
+          statLabel={<Trans>In wallet</Trans>}
+          statLabelTip={
+            <>
+              <p>
+                <Trans>The balance of the project owner's wallet.</Trans>
+              </p>{' '}
+              <EtherscanLink value={owner} type="address" />
+            </>
+          }
+          statValue={
+            <span>
+              <span style={secondaryTextStyle}>
+                <V1ProjectTokenBalance
+                  style={{ display: 'inline-block' }}
+                  wallet={owner}
+                  projectId={V1_PROJECT_IDS.JUICEBOX_DAO}
+                  hideHandle
+                />{' '}
+                +{' '}
+              </span>
+              <span style={textPrimary}>
+                <ETHAmount amount={ownerBalance} precision={2} padEnd={true} />
+              </span>
             </span>
-            <span style={textPrimary}>
-              <ETHAmount amount={ownerBalance} precision={2} padEnd={true} />
-            </span>
-          </span>
-        }
-      />
+          }
+        />
 
-      <div
-        style={{
-          textAlign: 'right',
-        }}
-      >
-        <span
-          style={{ ...secondaryTextStyle, cursor: 'pointer' }}
-          onClick={() => setBalancesModalVisible(true)}
-          role="button"
+        <div
+          style={{
+            textAlign: 'right',
+          }}
         >
-          <Trans>All assets</Trans> <RightCircleOutlined />
-        </span>
+          <span
+            style={{ ...secondaryTextStyle, cursor: 'pointer' }}
+            onClick={() => setBalancesModalVisible(true)}
+            role="button"
+            className="text-xs"
+          >
+            <Trans>All assets</Trans> <RightCircleOutlined />
+          </span>
+        </div>
       </div>
 
       <V1BalancesModal
         visible={balancesModalVisible}
         onCancel={() => setBalancesModalVisible(false)}
       />
-    </>
+    </Space>
   )
 }

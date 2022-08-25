@@ -101,6 +101,7 @@ export default function VolumeChart({
   }
 
   const axisStyle: SVGProps<SVGTextElement> = {
+    fontSize: '0.75rem',
     fill: colors.text.tertiary,
     visibility: events?.length ? 'visible' : 'hidden',
   }
@@ -250,7 +251,6 @@ export default function VolumeChart({
               tickSize={2}
               tickCount={4}
               tick={axisStyle}
-              className="text-xs"
               mirror
             />
             <XAxis

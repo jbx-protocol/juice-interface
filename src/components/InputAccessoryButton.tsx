@@ -32,17 +32,16 @@ export default function InputAccessoryButton({
             : colors.background.l1,
         fontWeight: 500,
         whiteSpace: 'nowrap',
-        padding: '1px 6px',
+        padding: '3px 6px',
         marginLeft: placement === 'suffix' ? 8 : 0,
         marginRight: placement === 'prefix' ? 8 : 0,
         borderRadius: radii.sm,
       }}
+      className="text-xs"
       onClick={onClick}
     >
       {content}
-      {withArrow && (
-        <CaretDownOutlined style={{ marginLeft: 4 }} className="text-xs" />
-      )}
+      {withArrow && <CaretDownOutlined style={{ marginLeft: 4 }} />}
     </div>
   ) : null
 }

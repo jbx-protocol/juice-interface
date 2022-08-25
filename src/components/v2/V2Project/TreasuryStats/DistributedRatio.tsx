@@ -68,6 +68,7 @@ export default function DistributedRatio({ style }: { style?: CSSProperties }) {
               ...secondaryTextStyle,
               textAlign: 'right',
             }}
+            className="text-xs"
           >
             <TooltipLabel
               tip={

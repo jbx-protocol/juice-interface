@@ -1028,6 +1028,21 @@ msgstr ""
 msgid "Explore projects"
 msgstr ""
 
+msgid "Export data"
+msgstr ""
+
+msgid "Export payouts CSV"
+msgstr ""
+
+msgid "Export the current funding cycle's payouts to CSV."
+msgstr ""
+
+msgid "Export the current funding cycle's reserved token allocation to CSV."
+msgstr ""
+
+msgid "Export token allocation CSV"
+msgstr ""
+
 msgid "Extend Lock"
 msgstr ""
 

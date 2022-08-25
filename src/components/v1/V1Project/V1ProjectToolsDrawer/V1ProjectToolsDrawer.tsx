@@ -11,9 +11,11 @@ import { useSafeTransferFromTx } from 'hooks/v1/transactor/SafeTransferFromTx'
 import { useSetProjectUriTx } from 'hooks/v1/transactor/SetProjectUriTx'
 import { useTransferTokensTx } from 'hooks/v1/transactor/TransferTokensTx'
 
-import { AddToProjectBalanceForm } from '../../Project/ProjectToolsDrawer/AddToProjectBalanceForm'
-import { TransferOwnershipForm } from '../../Project/ProjectToolsDrawer/TransferOwnershipForm'
-import { TransferUnclaimedTokensForm } from '../../Project/ProjectToolsDrawer/TransferUnclaimedTokensForm'
+import { AddToProjectBalanceForm } from 'components/Project/ProjectToolsDrawer/AddToProjectBalanceForm'
+import { ExportSection } from 'components/Project/ProjectToolsDrawer/ExportSection'
+import { TransferOwnershipForm } from 'components/Project/ProjectToolsDrawer/TransferOwnershipForm'
+import { TransferUnclaimedTokensForm } from 'components/Project/ProjectToolsDrawer/TransferUnclaimedTokensForm'
+import { ExportPayoutModsButton } from './ExportPayoutModsButton'
 
 const { TabPane } = Tabs
 
@@ -72,6 +74,11 @@ export function V1ProjectToolsDrawer({
             <section>
               <AddToProjectBalanceForm useAddToBalanceTx={useAddToBalanceTx} />
             </section>
+
+            <ExportSection
+              exportPayoutsButton={<ExportPayoutModsButton />}
+              exportReservedTokensButton={undefined}
+            />
           </Space>
         </TabPane>
         {isOwnerWallet && (

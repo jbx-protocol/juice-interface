@@ -24,27 +24,29 @@ export default function Wallet({ userAddress }: { userAddress: string }) {
   const { disconnect } = useWallet()
 
   const CopyableAddress = () => (
-    <>
+    <div style={{ color: colors.text.primary }}>
       <EtherscanLink value={userAddress} type="address" truncated />{' '}
       <CopyTextButton value={userAddress} style={{ zIndex: 1 }} />
-    </>
+    </div>
   )
 
   const MyProjects = () => (
     <>
       <Link href="/projects?tab=myprojects">
-        <a style={{ fontWeight: 400 }}>
+        <a style={{ fontWeight: 400, color: colors.text.primary }}>
           <Trans>My projects</Trans>
         </a>
       </Link>
-      <CrownOutlined />
+      <CrownOutlined style={{ color: colors.text.primary }} />
     </>
   )
 
   const Disconnect = () => (
     <>
-      <Trans>Disconnect</Trans>
-      <LogoutOutlined rotate={-90} />
+      <span style={{ color: colors.text.primary }}>
+        <Trans>Disconnect</Trans>
+      </span>
+      <LogoutOutlined style={{ color: colors.text.primary }} rotate={-90} />
     </>
   )
 

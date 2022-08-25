@@ -494,6 +494,9 @@ msgstr ""
 msgid "By default, the payer will receive any project tokens minted from the payment."
 msgstr ""
 
+msgid "CSV download failed."
+msgstr ""
+
 msgid "Can I change my project's contract after it's been created?"
 msgstr ""
 

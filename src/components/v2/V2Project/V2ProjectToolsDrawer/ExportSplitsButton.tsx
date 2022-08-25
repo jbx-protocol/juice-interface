@@ -1,10 +1,14 @@
 import { DownloadOutlined } from '@ant-design/icons'
+import { BigNumber } from '@ethersproject/bignumber'
+import { t } from '@lingui/macro'
 import { Button } from 'antd'
 import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { GroupedSplits, Split, SplitGroup } from 'models/v2/splits'
 import { PropsWithChildren, useContext, useState } from 'react'
 import { downloadCsvFile } from 'utils/csv'
+import { emitErrorNotification } from 'utils/notifications'
+import { formatSplitPercent } from 'utils/v2/math'
 
 const CSV_HEADER = [
   'beneficiary',
@@ -19,7 +23,7 @@ const prepareSplitsCsv = (splits: Split[]): (string | undefined)[][] => {
   const csvContent = splits.map(split => {
     return [
       split.beneficiary,
-      `${split.percent}`,
+      `${parseFloat(formatSplitPercent(BigNumber.from(split.percent))) / 100}`,
       `${split.preferClaimed}`,
       `${split.lockedUntil}`,
       split.projectId,
@@ -42,17 +46,22 @@ export function ExportSplitsButton<G extends SplitGroup>({
 
     setLoading(true)
 
-    const csvContent = prepareSplitsCsv(groupedSplits.splits)
-    const projectIdentifier = handle ? `@${handle}` : `project-${projectId}`
-    const splitType =
-      groupedSplits.group === ETH_PAYOUT_SPLIT_GROUP
-        ? 'payouts'
-        : 'reserved_tokens'
-    const filename = `${projectIdentifier}_${splitType}_fc-${fundingCycle.number}`
+    try {
+      const csvContent = prepareSplitsCsv(groupedSplits.splits)
+      const projectIdentifier = handle ? `@${handle}` : `project-${projectId}`
+      const splitType =
+        groupedSplits.group === ETH_PAYOUT_SPLIT_GROUP
+          ? 'payouts'
+          : 'reserved_tokens'
+      const filename = `${projectIdentifier}_${splitType}_fc-${fundingCycle.number}`
 
-    downloadCsvFile(filename, csvContent)
-
-    setLoading(false)
+      downloadCsvFile(filename, csvContent)
+    } catch (e) {
+      console.error(e)
+      emitErrorNotification(t`CSV download failed.`)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (

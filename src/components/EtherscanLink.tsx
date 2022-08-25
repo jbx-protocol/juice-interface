@@ -12,12 +12,14 @@ export default function EtherscanLink({
   truncated,
   truncateTo,
   style,
+  className,
 }: {
   value: string | undefined
   type: 'tx' | 'address'
   truncated?: boolean
   truncateTo?: number
   style?: CSSProperties
+  className?: string
 }) {
   if (!value) return null
   let truncatedValue: string | undefined
@@ -31,7 +33,7 @@ export default function EtherscanLink({
     subdomain = readNetwork.name + '.'
   }
   const linkProps = {
-    className: 'hover-action',
+    className: 'hover-action' + className,
     style: { ...style, fontWeight: 400 },
     href: `https://${subdomain}etherscan.io/${type}/${value}`,
   }

@@ -56,7 +56,7 @@ export default function SplitItem({
     const lockedUntilFormatted = formatDate(lockedUntil * 1000, 'yyyy-MM-DD')
 
     return (
-      <div style={{ fontSize: '.8rem', color: colors.text.secondary }}>
+      <div className="text-xs" style={{ color: colors.text.secondary }}>
         <LockOutlined /> <Trans>locked until {lockedUntilFormatted}</Trans>
       </div>
     )
@@ -103,10 +103,10 @@ export default function SplitItem({
 
         <div
           style={{
-            fontSize: '.8rem',
             color: colors.text.secondary,
             marginLeft: 10,
           }}
+          className="text-xs"
         >
           <TooltipLabel
             label={<Trans>Tokens:</Trans>}

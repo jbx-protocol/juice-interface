@@ -84,7 +84,7 @@ export default function PayEventElem({
         }}
       >
         <div>
-          <div style={smallHeaderStyle(colors)}>
+          <div style={smallHeaderStyle(colors)} className="text-xs">
             <Trans>Paid</Trans>
           </div>
           <div
@@ -99,7 +99,7 @@ export default function PayEventElem({
 
         <div style={{ textAlign: 'right' }}>
           {event.timestamp && (
-            <div style={smallHeaderStyle(colors)}>
+            <div style={smallHeaderStyle(colors)} className="text-xs">
               {formatHistoricalDate(event.timestamp * 1000)}{' '}
               <EtherscanLink value={event.txHash} type="tx" />
             </div>
@@ -109,6 +109,7 @@ export default function PayEventElem({
               ...smallHeaderStyle(colors),
               lineHeight: contentLineHeight,
             }}
+            className="text-xs"
           >
             <FormattedAddress address={event.beneficiary} />
           </div>

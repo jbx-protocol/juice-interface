@@ -72,7 +72,8 @@ export default function Payments() {
                 <ProjectHandle project={e.project} />
 
                 <div
-                  style={{ fontSize: '.7rem', color: colors.text.secondary }}
+                  style={{ color: colors.text.secondary }}
+                  className="text-xs"
                 >
                   {e.timestamp && formatHistoricalDate(e.timestamp * 1000)}
                 </div>

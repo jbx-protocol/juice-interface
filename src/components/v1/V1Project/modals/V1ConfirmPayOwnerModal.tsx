@@ -268,11 +268,11 @@ export default function V1ConfirmPayOwnerModal({
             {/* Sticker select icon (right side of memo input) */}
             <div
               style={{
-                fontSize: '.8rem',
                 position: 'absolute',
                 right: 7,
                 top: 36,
               }}
+              className="text-xs"
             >
               {
                 <Sticker

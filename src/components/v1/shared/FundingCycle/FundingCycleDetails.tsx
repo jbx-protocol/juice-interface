@@ -318,7 +318,7 @@ export default function FundingCycleDetails({
           {ballotStrategy.name}
         </FundingCycleDetailWarning>
         <div style={{ color: colors.text.secondary }}>
-          <div style={{ fontSize: '0.7rem' }}>
+          <div className="text-xs">
             <Trans>
               Address:{' '}
               <EtherscanLink value={ballotStrategy.address} type="address" />

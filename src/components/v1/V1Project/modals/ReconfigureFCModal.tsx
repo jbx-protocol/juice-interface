@@ -476,7 +476,7 @@ export default function ReconfigureFCModal({
                   <span>
                     <CurrencySymbol currency={editingFCCurrency} />
                     {formatWad(editingFC.target)}{' '}
-                    <span style={{ fontSize: '0.8rem' }}>
+                    <span className="text-xs">
                       (
                       {terminalFee?.gt(0) ? (
                         <span>
@@ -534,8 +534,7 @@ export default function ReconfigureFCModal({
               const ballot = getBallotStrategyByAddress(editingFC.ballot)
               return (
                 <div>
-                  {ballot.name}{' '}
-                  <div style={{ fontSize: '0.7rem' }}>{ballot.address}</div>
+                  {ballot.name} <div className="text-xs">{ballot.address}</div>
                 </div>
               )
             }}

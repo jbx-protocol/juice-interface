@@ -48,7 +48,7 @@ export default function RedeemEventElem({
         }}
       >
         <div>
-          <div style={smallHeaderStyle(colors)}>
+          <div style={smallHeaderStyle(colors)} className="text-xs">
             <Trans>Redeemed</Trans>
           </div>
           <div
@@ -72,6 +72,7 @@ export default function RedeemEventElem({
               ...smallHeaderStyle(colors),
               textAlign: 'right',
             }}
+            className="text-xs"
           >
             {event.timestamp && (
               <span>{formatHistoricalDate(event.timestamp * 1000)}</span>
@@ -84,6 +85,7 @@ export default function RedeemEventElem({
               lineHeight: contentLineHeight,
               textAlign: 'right',
             }}
+            className="text-xs"
           >
             <FormattedAddress address={event.beneficiary} />
           </div>

@@ -33,7 +33,7 @@ export default function DeployedERC20EventElem({
       }}
     >
       <div>
-        <div style={smallHeaderStyle(colors)}>
+        <div style={smallHeaderStyle(colors)} className="text-xs">
           <Trans>Deployed ERC20 token</Trans>
         </div>
         <div
@@ -48,7 +48,7 @@ export default function DeployedERC20EventElem({
 
       <div style={{ textAlign: 'right' }}>
         {event.timestamp && (
-          <div style={smallHeaderStyle(colors)}>
+          <div style={smallHeaderStyle(colors)} className="text-xs">
             {formatHistoricalDate(event.timestamp * 1000)}{' '}
             <EtherscanLink value={event.txHash} type="tx" />
           </div>

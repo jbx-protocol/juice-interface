@@ -94,7 +94,7 @@ export function EthAddressInput({
         onChange={onInputChange}
       />
       {extraText ? (
-        <div style={{ fontSize: '0.7rem', color: colors.text.secondary }}>
+        <div style={{ color: colors.text.secondary }} className="text-xs">
           <CheckCircleFilled /> {extraText}
         </div>
       ) : null}

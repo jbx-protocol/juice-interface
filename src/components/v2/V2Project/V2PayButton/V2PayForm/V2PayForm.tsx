@@ -108,11 +108,11 @@ export const V2PayForm = ({
               </Form.Item>
               <div
                 style={{
-                  fontSize: '.8rem',
                   position: 'absolute',
                   right: 7,
                   top: 7,
                 }}
+                className="text-xs"
               >
                 {
                   <Sticker

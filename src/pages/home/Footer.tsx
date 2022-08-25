@@ -81,7 +81,7 @@ export default function Footer() {
       {gitCommit ? (
         <span style={{ color: 'white' }}>
           Version:{' '}
-          <ExternalLink href={gitCommitLink} style={{ fontSize: '0.8rem' }}>
+          <ExternalLink href={gitCommitLink} className="text-xs">
             #{gitCommit}
           </ExternalLink>
         </span>

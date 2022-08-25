@@ -8,14 +8,16 @@ export default function TooltipLabel({
   tip,
   placement,
   style,
+  className,
 }: {
   label: string | JSX.Element
   tip?: string | JSX.Element
   placement?: TooltipProps['placement']
   style?: CSSProperties
+  className?: string
 }) {
   return (
-    <span style={style}>
+    <span style={style} className={className}>
       <span style={{ marginRight: tip ? 5 : 0 }}>{label}</span>
       {tip && <TooltipIcon tip={tip} placement={placement} />}
     </span>

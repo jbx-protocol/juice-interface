@@ -256,7 +256,7 @@ export default function DistributePayoutsModal({
             showSplitValues
           />
         </div>
-        <p style={{ fontSize: '0.8rem' }}>
+        <p className="text-xs">
           <ExclamationCircleOutlined />{' '}
           <Trans>Recipients will receive payouts in ETH.</Trans>
         </p>

@@ -198,7 +198,8 @@ export function V2ConfirmPayModal({
             </strong>
             <Paragraph
               description={projectMetadata.payDisclosure}
-              style={{ fontStyle: 'italic', fontSize: '0.8rem' }}
+              style={{ fontStyle: 'italic' }}
+              className="text-xs"
             />
           </Callout>
         )}
@@ -215,7 +216,7 @@ export function V2ConfirmPayModal({
             <div>
               {formatWad(receivedTickets, { precision: 0 })} {tokenText}
             </div>
-            <div style={{ fontSize: '0.7rem' }}>
+            <div className="text-xs">
               {userAddress ? (
                 <Trans>
                   To: <FormattedAddress address={userAddress} />

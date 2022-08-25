@@ -44,6 +44,7 @@ export default function DistributedRatio({ style }: { style?: CSSProperties }) {
               ...secondaryTextStyle,
               color: colors.text.primary,
             }}
+            className="text-xs"
           >
             <V2CurrencyAmount
               amount={usedDistributionLimit}

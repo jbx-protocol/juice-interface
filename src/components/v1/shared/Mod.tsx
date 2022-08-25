@@ -52,10 +52,10 @@ export default function Mod({
               </div>
               <div
                 style={{
-                  fontSize: '.8rem',
                   color: colors.text.secondary,
                   marginLeft: 10,
                 }}
+                className="text-xs"
               >
                 <TooltipLabel
                   label={t`Tokens` + ':'}
@@ -90,7 +90,7 @@ export default function Mod({
           )}
         </div>
         {mod.lockedUntil ? (
-          <div style={{ fontSize: '.8rem', color: colors.text.secondary }}>
+          <div style={{ color: colors.text.secondary }} className="text-xs">
             <LockOutlined /> <Trans>until</Trans>{' '}
             {mod.lockedUntil
               ? formatDate(mod.lockedUntil * 1000, 'yyyy-MM-DD')

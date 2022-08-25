@@ -179,7 +179,7 @@ export default function ConfirmDeployProject() {
                     <CurrencySymbol currency={editingFCCurrency} />
                     {formatWad(editingFC?.target)}{' '}
                     {editingFC.fee?.gt(0) && (
-                      <span style={{ fontSize: '0.8rem' }}>
+                      <span className="text-xs">
                         (
                         <CurrencySymbol currency={editingFCCurrency} />
                         <Trans>
@@ -292,7 +292,7 @@ export default function ConfirmDeployProject() {
                 return (
                   <div>
                     {ballot.name}{' '}
-                    <div style={{ fontSize: '0.7rem' }}>{ballot.address}</div>
+                    <div className="text-xs">{ballot.address}</div>
                   </div>
                 )
               }}

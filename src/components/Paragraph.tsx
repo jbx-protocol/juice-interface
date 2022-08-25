@@ -9,10 +9,12 @@ export default function Paragraph({
   description,
   characterLimit,
   style,
+  className,
 }: {
   description: string
   characterLimit?: number
   style?: CSSProperties
+  className?: string
 }) {
   const CHARACTER_LIMIT_EXCEEDED =
     (characterLimit && description.length > characterLimit) ||
@@ -29,7 +31,7 @@ export default function Paragraph({
   }, [characterLimit, description])
 
   return (
-    <div>
+    <div className={className}>
       <RichNote
         style={{ maxWidth: '700px', display: 'inline', ...style }} // good line length for reading
         note={

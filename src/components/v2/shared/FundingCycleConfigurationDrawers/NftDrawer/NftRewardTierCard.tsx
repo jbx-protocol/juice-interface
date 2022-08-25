@@ -89,7 +89,7 @@ export default function NftRewardTierCard({
             </Col>
           </Row>
           {rewardTier.description && (
-            <div style={{ fontSize: 13, marginTop: 15 }}>
+            <div style={{ marginTop: 15 }} className="text-xs">
               <Trans>
                 <strong>Description:</strong>
                 <Paragraph
@@ -100,7 +100,7 @@ export default function NftRewardTierCard({
             </div>
           )}
           {rewardTier.maxSupply && (
-            <div style={{ fontSize: 13, marginTop: 15 }}>
+            <div style={{ marginTop: 15 }} className="text-xs">
               <Trans>
                 <strong>Max. supply:</strong>{' '}
                 <span>{rewardTier.maxSupply}</span>

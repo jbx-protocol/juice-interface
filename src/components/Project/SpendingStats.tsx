@@ -35,7 +35,6 @@ export default function SpendingStats({
   } = useContext(ThemeContext)
 
   const smallHeaderStyle: CSSProperties = {
-    fontSize: '.7rem',
     fontWeight: 500,
     cursor: 'default',
     color: colors.text.secondary,
@@ -68,10 +67,14 @@ export default function SpendingStats({
               cycle ends.
             </Trans>
           }
+          className="text-xs"
         />
       </div>
 
-      <div style={{ ...smallHeaderStyle, color: colors.text.tertiary }}>
+      <div
+        style={{ ...smallHeaderStyle, color: colors.text.tertiary }}
+        className="text-xs"
+      >
         <div>
           <Trans>
             <CurrencySymbol currency={currency} />

@@ -170,9 +170,9 @@ export default function ProjectCard({
               <span
                 style={{
                   color: colors.text.tertiary,
-                  fontSize: '0.7rem',
                   fontWeight: 500,
                 }}
+                className="text-xs"
               >
                 V{terminalVersion ?? _project.cv}
               </span>
@@ -213,10 +213,10 @@ export default function ProjectCard({
                 right: 0,
                 padding: '2px 4px',
                 background: colors.background.l1,
-                fontSize: '0.7rem',
                 color: colors.text.tertiary,
                 fontWeight: 500,
               }}
+              className="text-xs"
             >
               <Trans>ARCHIVED</Trans>
             </div>

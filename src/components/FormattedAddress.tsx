@@ -110,7 +110,7 @@ export default function FormattedAddress({
     <Tooltip
       trigger={['hover', 'click']}
       title={
-        <span>
+        <span className="text-sm">
           <EtherscanLink value={address} type="address" />{' '}
           <CopyTextButton value={address} />
         </span>

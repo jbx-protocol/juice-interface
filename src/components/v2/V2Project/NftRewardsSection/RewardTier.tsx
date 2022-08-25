@@ -78,7 +78,6 @@ export function RewardTier({
       position: 'absolute',
       right: 10,
       top: 10,
-      fontSize: 15,
       color: isSelected ? colors.background.l0 : colors.text.secondary,
       backgroundColor: isSelected
         ? colors.background.action.primary
@@ -94,7 +93,7 @@ export function RewardTier({
     return (
       <Tooltip
         title={
-          <span style={{ fontSize: '0.7rem' }}>
+          <span className="text-xs">
             {rewardTierUpperLimit ? (
               <Trans>
                 Receive this NFT when you contribute{' '}
@@ -116,7 +115,7 @@ export function RewardTier({
         }}
         placement={'bottom'}
       >
-        <div style={iconStyle}>
+        <div style={iconStyle} className="text-sm">
           <CheckOutlined />
         </div>
       </Tooltip>
@@ -202,8 +201,8 @@ export function RewardTier({
             <span
               style={{
                 color: colors.text.secondary,
-                fontSize: '0.7rem',
               }}
+              className="text-xs"
             >
               {rewardTier?.contributionFloor} ETH
             </span>

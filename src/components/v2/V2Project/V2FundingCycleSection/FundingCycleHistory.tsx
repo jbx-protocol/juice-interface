@@ -172,7 +172,7 @@ function HistoricalFundingCycle({
       <Space align="baseline">
         <h3>#{fundingCycle.number.toString()}</h3>
 
-        <div style={{ fontSize: '.8rem', marginLeft: 10 }}>
+        <div style={{ marginLeft: 10 }} className="text-xs">
           <CurrencySymbol
             currency={V2CurrencyName(
               distributionLimitCurrency?.toNumber() as V2CurrencyOption,
@@ -195,7 +195,7 @@ function HistoricalFundingCycle({
         </div>
       </Space>
 
-      <Space align="baseline" style={{ fontSize: '.8rem' }}>
+      <Space align="baseline" className="text-xs">
         {formatHistoricalDate(
           fundingCycle.start.add(fundingCycle.duration).mul(1000).toNumber(),
         )}

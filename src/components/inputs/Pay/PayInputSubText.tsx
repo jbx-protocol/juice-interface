@@ -125,10 +125,10 @@ export default function PayInputSubText({
     <div
       style={{
         marginTop: '0.3rem',
-        fontSize: '.65rem',
         width: '100%',
         color: colors.text.secondary,
       }}
+      className="text-xs"
     >
       <span>
         <Trans>Receive {receiveText}</Trans>

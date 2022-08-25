@@ -261,11 +261,10 @@ export function TopProjectsSection() {
               <div
                 role="button"
                 style={{
-                  fontSize: '0.9rem',
                   color: colors.text.secondary,
                   cursor: 'pointer',
                 }}
-                className="hover-text-decoration-underline"
+                className="hover-text-decoration-underline text-sm"
                 onClick={() => {
                   document
                     .getElementById('how-it-works')

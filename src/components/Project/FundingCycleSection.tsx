@@ -55,7 +55,7 @@ export default function FundingCycleSection({
         {reconfigureButton}
       </div>
 
-      <Space style={{ fontSize: '.8rem', marginBottom: 12 }} size="middle">
+      <Space style={{ marginBottom: 12 }} size="middle" className="text-xs">
         {tabs.map(tab => (
           <div
             key={tab.key}

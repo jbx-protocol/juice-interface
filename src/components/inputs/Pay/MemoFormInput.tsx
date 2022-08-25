@@ -40,11 +40,11 @@ export function MemoFormInput({
           size={20}
           style={{
             color: colors.text.secondary,
-            fontSize: '.8rem',
             position: 'absolute',
             right: 5,
             top: 7,
           }}
+          className="text-xs"
         />
       </div>
       <AttachStickerModal

@@ -206,7 +206,7 @@ export default function DistributionSplitsSection({
             <Space direction="vertical">
               <Radio value="amount">
                 <Trans>Amounts</Trans>
-                <p style={{ fontWeight: 400, fontSize: '0.8rem' }}>
+                <p style={{ fontWeight: 400 }} className="text-xs">
                   <Trans>
                     Distribute a specific amount of funds to entities each
                     funding cycle. Your distribution limit will equal the{' '}
@@ -216,7 +216,7 @@ export default function DistributionSplitsSection({
               </Radio>
               <Radio value="percent">
                 <Trans>Percentages</Trans>
-                <p style={{ fontWeight: 400, fontSize: '0.8rem' }}>
+                <p style={{ fontWeight: 400 }} className="text-xs">
                   <Trans>
                     Distribute a percentage of all funds received to entities.
                     Your distribution limit will be <strong>infinite</strong>.

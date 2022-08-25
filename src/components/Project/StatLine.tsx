@@ -31,7 +31,7 @@ export default function StatLine({
         ...style,
       }}
     >
-      <div style={textSecondary(theme)}>
+      <div style={textSecondary(theme)} className="text-xs">
         <TooltipLabel label={statLabel} tip={statLabelTip} />
       </div>
 

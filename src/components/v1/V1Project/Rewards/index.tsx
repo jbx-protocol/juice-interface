@@ -179,10 +179,10 @@ export default function Rewards() {
                       <div
                         style={{
                           cursor: 'default',
-                          fontSize: '0.8rem',
                           fontWeight: 500,
                           color: colors.text.tertiary,
                         }}
+                        className="text-xs"
                       >
                         <Trans>{share || 0}% of supply</Trans>
                       </div>

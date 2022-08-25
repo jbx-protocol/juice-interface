@@ -40,12 +40,12 @@ export function Badge({
     <span
       style={{
         padding: '0.1rem 0.5rem',
-        fontSize: 12,
         fontWeight: 400,
         borderRadius: 12,
         ...variantStyle[variant],
         ...style,
       }}
+      className="text-xs"
     >
       {children}
     </span>

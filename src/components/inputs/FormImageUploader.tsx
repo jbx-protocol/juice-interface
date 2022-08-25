@@ -100,10 +100,10 @@ export const FormImageUploader = ({
         {value?.length ? (
           <span
             style={{
-              fontSize: '.7rem',
               wordBreak: 'break-all',
               textOverflow: 'ellipsis',
             }}
+            className="text-xs"
           >
             <Trans>
               Uploaded to: <ExternalLink href={value}>{value}</ExternalLink>

@@ -41,7 +41,7 @@ export default function InputAccessoryButton({
     >
       {content}
       {withArrow && (
-        <CaretDownOutlined style={{ fontSize: 10, marginLeft: 4 }} />
+        <CaretDownOutlined style={{ marginLeft: 4 }} className="text-xs" />
       )}
     </div>
   ) : null

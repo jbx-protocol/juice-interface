@@ -100,10 +100,10 @@ export default function ProjectHeader({
             {isArchived && (
               <span
                 style={{
-                  fontSize: '0.8rem',
                   color: colors.text.disabled,
                   textTransform: 'uppercase',
                 }}
+                className="text-xs"
               >
                 (archived)
               </span>

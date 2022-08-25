@@ -333,8 +333,7 @@ export function ReconfigurationStatistic({
             tooltipTitle={ballotWarningText}
           >
             <div>
-              {ballot.name}{' '}
-              <div style={{ fontSize: '0.7rem' }}>{ballot.address}</div>
+              {ballot.name} <div className="text-xs">{ballot.address}</div>
             </div>
           </FundingCycleDetailWarning>
         )
@@ -378,7 +377,7 @@ export function DistributionSplitsStatistic({
         />
       }
       valueRender={() => (
-        <div style={{ fontSize: '0.9rem' }}>
+        <div className="text-sm">
           <SplitList
             splits={splits}
             currency={currency}
@@ -411,7 +410,7 @@ export function ReservedSplitsStatistic({
         />
       }
       valueRender={() => (
-        <div style={{ fontSize: '0.9rem' }}>
+        <div className="text-sm">
           <SplitList
             splits={splits}
             projectOwnerAddress={projectOwnerAddress}

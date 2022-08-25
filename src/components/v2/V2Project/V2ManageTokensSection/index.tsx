@@ -221,10 +221,10 @@ export default function V2ManageTokensSection() {
                         <div
                           style={{
                             cursor: 'default',
-                            fontSize: '0.8rem',
                             fontWeight: 500,
                             color: colors.text.tertiary,
                           }}
+                          className="text-xs"
                         >
                           <Trans>
                             {userOwnershipPercentage}% of total supply

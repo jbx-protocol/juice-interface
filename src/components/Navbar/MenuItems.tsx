@@ -91,7 +91,6 @@ export function TopLeftNavItems({
   const router = useRouter()
   const [resourcesOpen, setResourcesOpen] = useState<boolean>(false)
   const dropdownIconStyle: CSSProperties = {
-    fontSize: 13,
     marginLeft: 7,
   }
 
@@ -153,9 +152,9 @@ export function TopLeftNavItems({
           >
             <Trans>Resources</Trans>
             {resourcesOpen ? (
-              <UpOutlined style={dropdownIconStyle} />
+              <UpOutlined style={dropdownIconStyle} className="text-xs" />
             ) : (
-              <DownOutlined style={dropdownIconStyle} />
+              <DownOutlined style={dropdownIconStyle} className="text-xs" />
             )}
           </div>
         </Dropdown>

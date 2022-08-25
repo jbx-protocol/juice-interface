@@ -112,10 +112,10 @@ export default function FormattedNumberInput({
         <div
           style={{
             zIndex: 1,
-            fontSize: '.8rem',
             position: 'absolute',
             right: 5,
           }}
+          className="text-xs"
         >
           {accessory && <div>{accessory}</div>}
         </div>

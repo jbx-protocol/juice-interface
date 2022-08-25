@@ -27,7 +27,6 @@ type Props = {
 }
 
 const fontStyle = {
-  fontSize: '0.7rem',
   fontWeight: 400,
 }
 
@@ -48,7 +47,7 @@ export default function TokenAMMPriceRow({
 
     return (
       <Tooltip title={tooltip} overlayInnerStyle={{ ...fontStyle }}>
-        <span style={{ cursor: 'default' }}>
+        <span style={{ cursor: 'default' }} className="text-xs">
           {!WETHPrice ? <Trans>Unavailable</Trans> : null}
           <TooltipIcon iconStyle={{ marginLeft: '0.2rem' }} />
         </span>
@@ -65,6 +64,7 @@ export default function TokenAMMPriceRow({
         justifyContent: 'space-between',
         ...style,
       }}
+      className="text-xs"
     >
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <span style={{ marginRight: '0.5rem', width: '1rem' }}>

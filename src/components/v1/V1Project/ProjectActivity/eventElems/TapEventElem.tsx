@@ -70,7 +70,7 @@ export default function TapEventElem({
         }}
       >
         <div>
-          <div style={smallHeaderStyle(colors)}>
+          <div style={smallHeaderStyle(colors)} className="text-xs">
             <Trans>Distributed funds</Trans>
           </div>
           {payoutEvents?.length ? (
@@ -90,13 +90,13 @@ export default function TapEventElem({
             textAlign: 'right',
           }}
         >
-          <div style={smallHeaderStyle(colors)}>
+          <div style={smallHeaderStyle(colors)} className="text-xs">
             {event.timestamp && (
               <span>{formatHistoricalDate(event.timestamp * 1000)}</span>
             )}{' '}
             <EtherscanLink value={event.txHash} type="tx" />
           </div>
-          <div style={smallHeaderStyle(colors)}>
+          <div style={smallHeaderStyle(colors)} className="text-xs">
             <Trans>
               called by <FormattedAddress address={event.caller} />
             </Trans>
@@ -112,8 +112,8 @@ export default function TapEventElem({
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'baseline',
-              fontSize: '0.8rem',
             }}
+            className="text-xs"
           >
             <div style={{ fontWeight: 500 }}>
               {e.modProjectId?.gt(0) ? (

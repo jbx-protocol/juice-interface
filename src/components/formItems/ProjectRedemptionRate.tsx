@@ -35,7 +35,7 @@ function BondingCurveRateExtra({
   } = useContext(ThemeContext)
 
   return (
-    <Space style={{ fontSize: '0.9rem' }} direction="vertical" size="large">
+    <Space className="text-sm" direction="vertical" size="large">
       <p style={{ margin: 0 }}>
         <Trans>
           The redemption rate determines the amount of overflow each token can
@@ -110,7 +110,6 @@ export function ProjectRedemptionRate({
   } = useContext(ThemeContext)
 
   const labelStyle: CSSProperties = {
-    fontSize: '.9rem',
     fontWeight: 500,
     textAlign: 'center',
     position: 'absolute',
@@ -292,6 +291,7 @@ export function ProjectRedemptionRate({
               left: 0,
               right: 0,
             }}
+            className="text-sm"
           >
             % <Trans>tokens redeemed</Trans>
           </div>
@@ -305,6 +305,7 @@ export function ProjectRedemptionRate({
               left: 0,
               width: graphSize,
             }}
+            className="text-sm"
           >
             <Trans>Token redeem value</Trans>
           </div>

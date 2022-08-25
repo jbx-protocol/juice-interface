@@ -90,7 +90,7 @@ export default function FundingHistory({
             <Space align="baseline">
               <h3>#{cycle.number.toString()}</h3>
 
-              <div style={{ fontSize: '.8rem', marginLeft: 10 }}>
+              <div style={{ marginLeft: 10 }} className="text-xs">
                 <CurrencySymbol
                   currency={V1CurrencyName(
                     cycle.currency.toNumber() as V1CurrencyOption,
@@ -115,7 +115,7 @@ export default function FundingHistory({
 
             <div style={{ flex: 1 }}></div>
 
-            <Space align="baseline" style={{ fontSize: '.8rem' }}>
+            <Space align="baseline" className="text-xs">
               {formatHistoricalDate(
                 cycle.start.add(cycle.duration).mul(1000).toNumber(),
               )}

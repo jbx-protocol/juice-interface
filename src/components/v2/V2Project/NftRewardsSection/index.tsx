@@ -102,8 +102,8 @@ export function NftRewardsSection({
       <span
         style={{
           color: colors.text.tertiary,
-          fontSize: '0.69rem',
         }}
+        className="text-xs"
       >
         <Trans>Contribute to unlock an NFT reward.</Trans>
       </span>

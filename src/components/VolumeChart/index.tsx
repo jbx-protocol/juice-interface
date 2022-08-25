@@ -97,12 +97,10 @@ export default function VolumeChart({
   }, [cv, duration, projectId, showGraph])
 
   const buttonStyle: CSSProperties = {
-    fontSize: '0.7rem',
     textTransform: 'uppercase',
   }
 
   const axisStyle: SVGProps<SVGTextElement> = {
-    fontSize: 11,
     fill: colors.text.tertiary,
     visibility: events?.length ? 'visible' : 'hidden',
   }
@@ -141,11 +139,11 @@ export default function VolumeChart({
       <div
         style={{
           textTransform: 'uppercase',
-          fontSize: '0.8rem',
           fontWeight: selected ? 600 : 400,
           color: selected ? colors.text.secondary : colors.text.tertiary,
           cursor: 'pointer',
         }}
+        className="text-xs"
         onClick={() => setShowGraph(tab)}
       >
         {text}
@@ -170,7 +168,7 @@ export default function VolumeChart({
         </div>
 
         <Select
-          className="small"
+          className="small text-xs"
           style={{
             ...buttonStyle,
             width: 100,
@@ -252,6 +250,7 @@ export default function VolumeChart({
               tickSize={2}
               tickCount={4}
               tick={axisStyle}
+              className="text-xs"
               mirror
             />
             <XAxis
@@ -280,8 +279,8 @@ export default function VolumeChart({
               contentStyle={{
                 background: colors.background.l0,
                 border: '1px solid ' + colors.stroke.secondary,
-                fontSize: '0.8rem',
               }}
+              className="text-xs"
               cursor={{ stroke: colors.stroke.secondary }}
               content={({ active, payload }) => {
                 if (!active || !payload?.length) return null
@@ -296,9 +295,9 @@ export default function VolumeChart({
                   >
                     <div
                       style={{
-                        fontSize: '0.7rem',
                         color: colors.text.tertiary,
                       }}
+                      className="text-xs"
                     >
                       {dateStringForBlockTime(payload[0].payload.timestamp)}
                     </div>
@@ -308,10 +307,10 @@ export default function VolumeChart({
                         {payload[0].payload.tapped}
                         <div
                           style={{
-                            fontSize: '0.7rem',
                             fontWeight: 500,
                             color: colors.text.secondary,
                           }}
+                          className="text-xs"
                         >
                           withdraw
                         </div>

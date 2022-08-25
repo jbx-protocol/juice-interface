@@ -71,7 +71,7 @@ export default function DistributeReservedTokensEventElem({
         }}
       >
         <div>
-          <div style={smallHeaderStyle(colors)}>
+          <div style={smallHeaderStyle(colors)} className="text-xs">
             <Trans>
               Distributed reserved{' '}
               {tokenSymbolText({
@@ -99,13 +99,16 @@ export default function DistributeReservedTokensEventElem({
         </div>
 
         <div>
-          <div style={{ ...smallHeaderStyle(colors), textAlign: 'right' }}>
+          <div
+            style={{ ...smallHeaderStyle(colors), textAlign: 'right' }}
+            className="text-xs"
+          >
             {event.timestamp && (
               <span>{formatHistoricalDate(event.timestamp * 1000)}</span>
             )}{' '}
             <EtherscanLink value={event.txHash} type="tx" />
           </div>
-          <div style={smallHeaderStyle(colors)}>
+          <div style={smallHeaderStyle(colors)} className="text-xs">
             <Trans>
               called by <FormattedAddress address={event.caller} />
             </Trans>
@@ -123,16 +126,17 @@ export default function DistributeReservedTokensEventElem({
               alignItems: 'baseline',
             }}
           >
-            <div style={{ fontWeight: 500, fontSize: '0.8rem' }}>
+            <div style={{ fontWeight: 500 }} className="text-xs">
               <FormattedAddress address={e.beneficiary} />:
             </div>
 
             <div
               style={
                 distributeEvents.length > 1
-                  ? { color: colors.text.secondary, fontSize: '0.8rem' }
+                  ? { color: colors.text.secondary }
                   : { fontWeight: 500 }
               }
+              className="text-xs"
             >
               {formatWad(e.tokenCount, { precision: 0 })}
             </div>

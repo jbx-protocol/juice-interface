@@ -48,7 +48,6 @@ const linkStyle: CSSProperties = {
 const bodyTextStyle: CSSProperties = {
   display: 'flex',
   marginTop: '20px',
-  fontSize: '0.75rem',
   color: darkColors.light0,
 }
 
@@ -105,7 +104,7 @@ export function NftPreview({
           {rewardTier.description}
         </p>
         {hasLimitedSupply || rewardTier.externalLink ? (
-          <div style={bodyTextStyle}>
+          <div style={bodyTextStyle} className="text-xs">
             {hasLimitedSupply ? (
               <div>
                 <Trans>

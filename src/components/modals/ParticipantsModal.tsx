@@ -120,7 +120,6 @@ export default function ParticipantsModal({
 
   const list = useMemo(() => {
     const smallHeaderStyle = {
-      fontSize: '.7rem',
       color: colors.text.tertiary,
     }
 
@@ -207,7 +206,7 @@ export default function ParticipantsModal({
                 >
                   <FormattedAddress address={p.wallet} />
                 </div>
-                <div style={smallHeaderStyle}>
+                <div style={smallHeaderStyle} className="text-xs">
                   <Trans>
                     <ETHAmount amount={p.totalPaid} /> contributed
                   </Trans>
@@ -228,7 +227,7 @@ export default function ParticipantsModal({
                   })}{' '}
                   ({formatPercent(p.balance, totalTokenSupply)}%)
                 </div>
-                <div style={smallHeaderStyle}>
+                <div style={smallHeaderStyle} className="text-xs">
                   {formatWad(p.stakedBalance, { precision: 0 })}{' '}
                   <Trans>
                     {tokenSymbolText({

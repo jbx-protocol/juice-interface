@@ -12,11 +12,11 @@ export function TextButton({ style, ...props }: ButtonProps) {
       {...props}
       style={{
         color: colors.text.tertiary,
-        fontSize: '0.8rem',
         textTransform: 'uppercase',
         padding: 0,
         ...style,
       }}
+      className="text-xs"
       type="text"
       size="small"
     >

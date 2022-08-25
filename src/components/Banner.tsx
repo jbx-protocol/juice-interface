@@ -26,7 +26,10 @@ export default function Banner({
         style={{ position: 'absolute', left: 20, top: 18 }}
       />
 
-      <h2 style={{ color: colors.text.primary, fontSize: 14, fontWeight: 600 }}>
+      <h2
+        style={{ color: colors.text.primary, fontWeight: 600 }}
+        className="text-sm"
+      >
         {title}
       </h2>
       <p>{body}</p>

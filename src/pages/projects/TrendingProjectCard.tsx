@@ -167,9 +167,9 @@ export default function TrendingProjectCard({
                   <span
                     style={{
                       color: colors.text.tertiary,
-                      fontSize: '0.7rem',
                       fontWeight: 500,
                     }}
+                    className="text-xs"
                   >
                     V{terminalVersion ?? project.cv}
                   </span>
@@ -212,9 +212,9 @@ export default function TrendingProjectCard({
                 style={{
                   fontWeight: 400,
                   color: colors.text.secondary,
-                  fontSize: 13,
                   marginTop: 2,
                 }}
+                className="text-xs"
               >
                 <Plural
                   value={paymentCount}

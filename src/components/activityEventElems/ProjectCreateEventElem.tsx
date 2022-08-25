@@ -27,7 +27,9 @@ export default function ProjectCreateEventElem({
       }}
     >
       <div>
-        <div style={smallHeaderStyle(colors)}>Created</div>
+        <div style={smallHeaderStyle(colors)} className="text-xs">
+          Created
+        </div>
         <div
           style={{
             lineHeight: contentLineHeight,
@@ -40,7 +42,7 @@ export default function ProjectCreateEventElem({
 
       <div style={{ textAlign: 'right' }}>
         {event.timestamp && (
-          <div style={smallHeaderStyle(colors)}>
+          <div style={smallHeaderStyle(colors)} className="text-xs">
             {formatHistoricalDate(event.timestamp * 1000)}{' '}
             <EtherscanLink value={event.txHash} type="tx" />
           </div>

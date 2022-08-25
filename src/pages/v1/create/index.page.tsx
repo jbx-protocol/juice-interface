@@ -426,8 +426,8 @@ function V1Create() {
                   style={{
                     color: colors.text.secondary,
                     fontWeight: 400,
-                    fontSize: '0.75rem',
                   }}
+                  className="text-xs"
                 >
                   {step.description}
                 </div>

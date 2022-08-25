@@ -48,7 +48,8 @@ const AllAssetsButton = ({ onClick }: { onClick: VoidFunction }) => {
   return (
     <TextButton
       onClick={onClick}
-      style={{ fontWeight: 400, fontSize: '0.8rem' }}
+      style={{ fontWeight: 400 }}
+      className="text-xs"
     >
       <Trans>All assets</Trans>
     </TextButton>

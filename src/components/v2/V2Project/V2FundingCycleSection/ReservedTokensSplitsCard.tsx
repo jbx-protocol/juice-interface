@@ -53,7 +53,6 @@ export default function ReservedTokensSplitsCard({
   )
 
   const smallHeaderStyle: CSSProperties = {
-    fontSize: '.7rem',
     fontWeight: 500,
     cursor: 'default',
     color: colors.text.secondary,
@@ -114,6 +113,7 @@ export default function ReservedTokensSplitsCard({
                   ...smallHeaderStyle,
                   whiteSpace: 'nowrap',
                 }}
+                className="text-xs"
                 label={
                   <span style={{ textTransform: 'uppercase' }}>
                     <Trans>{tokensText} reserved</Trans>

@@ -82,8 +82,8 @@ export default function RichButton({
             style={{
               color: subheadingColor,
               margin: 0,
-              fontSize: 12,
             }}
+            className="text-xs"
           >
             {description}
           </p>

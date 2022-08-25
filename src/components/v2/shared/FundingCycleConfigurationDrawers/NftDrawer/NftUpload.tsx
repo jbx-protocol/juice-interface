@@ -72,12 +72,12 @@ export default function NftUpload({ form }: { form: FormInstance }) {
           width: '100%',
         }}
       >
-        <div style={{ fontSize: 14 }}>
+        <div className="text-sm">
           <strong>
             <Trans>Upload an image</Trans>
           </strong>
         </div>
-        <div style={{ color: colors.text.secondary, fontSize: 12 }}>
+        <div style={{ color: colors.text.secondary }} className="text-xs">
           JPG, PNG, GIF
         </div>
       </div>

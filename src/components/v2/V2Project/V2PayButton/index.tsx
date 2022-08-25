@@ -71,7 +71,7 @@ export default function V2PayButton({
         </Button>
       </Tooltip>
       {payInCurrency === V2_CURRENCY_USD && (
-        <div style={{ fontSize: '.7rem' }}>
+        <div className="text-xs">
           <Trans>
             Paid as <ETHAmount amount={weiPayAmt} />
           </Trans>

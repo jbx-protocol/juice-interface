@@ -47,7 +47,7 @@ export const VolumeStatLine = ({
       statValue={
         <span style={textPrimary}>
           {convertedVolume && convertToCurrency ? (
-            <span style={secondaryTextStyle}>
+            <span style={secondaryTextStyle} className="text-xs">
               <CurrencySymbol currency={convertToCurrency} />
               {convertedVolume}{' '}
             </span>

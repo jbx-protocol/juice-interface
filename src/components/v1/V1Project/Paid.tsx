@@ -102,7 +102,7 @@ export default function Paid() {
               }}
             >
               {currentFC.currency.eq(V1_CURRENCY_USD) ? (
-                <span style={secondaryTextStyle}>
+                <span style={secondaryTextStyle} className="text-xs">
                   <ETHAmount amount={balance} precision={2} padEnd={true} />{' '}
                 </span>
               ) : (
@@ -132,6 +132,7 @@ export default function Paid() {
                     ...secondaryTextStyle,
                     color: colors.text.primary,
                   }}
+                  className="text-xs"
                 >
                   {formatCurrencyAmount(currentFC.tapped)} /{' '}
                   {formatCurrencyAmount(currentFC.target)}
@@ -144,6 +145,7 @@ export default function Paid() {
                 ...secondaryTextStyle,
                 textAlign: 'right',
               }}
+              className="text-xs"
             >
               <TooltipLabel
                 tip={

@@ -158,8 +158,8 @@ export default function LaunchProjectPayerModal({
         </h4>
         <EtherscanLink
           value={projectPayerAddress}
-          style={{ fontSize: 15 }}
           type="address"
+          className="text-sm"
         />
         <CopyTextButton value={projectPayerAddress} style={{ fontSize: 25 }} />
         <p style={{ marginTop: 30 }}>

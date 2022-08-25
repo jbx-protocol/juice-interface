@@ -276,11 +276,6 @@ export default function VolumeChart({
               interval={2}
             />
             <Tooltip
-              contentStyle={{
-                background: colors.background.l0,
-                border: '1px solid ' + colors.stroke.secondary,
-              }}
-              className="text-xs"
               cursor={{ stroke: colors.stroke.secondary }}
               content={({ active, payload }) => {
                 if (!active || !payload?.length) return null
@@ -290,8 +285,9 @@ export default function VolumeChart({
                     style={{
                       padding: 10,
                       background: colors.background.l0,
-                      border: '1px solid ' + colors.stroke.tertiary,
+                      border: '1px solid ' + colors.stroke.secondary,
                     }}
+                    className="text-xs"
                   >
                     <div
                       style={{

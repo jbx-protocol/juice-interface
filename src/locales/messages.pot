@@ -1736,7 +1736,13 @@ msgstr ""
 msgid "Project Handle"
 msgstr ""
 
+msgid "Project Home"
+msgstr ""
+
 msgid "Project ID must be a number."
+msgstr ""
+
+msgid "Project Settings"
 msgstr ""
 
 msgid "Project Token"

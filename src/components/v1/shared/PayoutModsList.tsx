@@ -25,6 +25,10 @@ import { amountSubFee } from 'utils/math'
 
 import { V1CurrencyName } from 'utils/v1/currency'
 
+import { pushSettingsContent } from 'utils/pushSettingsPage'
+
+import { useRouter } from 'next/router'
+
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 import ProjectPayoutMods from './ProjectPayMods/ProjectPayoutMods'
 
@@ -43,6 +47,7 @@ export default function PayoutModsList({
   feePerbicent: BigNumber | undefined
   total?: BigNumber
 }) {
+  const router = useRouter()
   const [form] = useForm<{
     totalPercent: number
   }>()
@@ -169,7 +174,10 @@ export default function PayoutModsList({
 
       {fundingCycle && projectId && hasEditPermission ? (
         <div style={{ marginTop: 10 }}>
-          <Button size="small" onClick={() => setModalVisible(true)}>
+          <Button
+            size="small"
+            onClick={() => pushSettingsContent(router, 'payouts')}
+          >
             Edit payouts
           </Button>
         </div>

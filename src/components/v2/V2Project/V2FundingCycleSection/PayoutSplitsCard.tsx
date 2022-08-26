@@ -22,6 +22,10 @@ import { V2OperatorPermission } from 'models/v2/permissions'
 
 import { reloadWindow } from 'utils/windowUtils'
 
+import { pushSettingsContent } from 'utils/pushSettingsPage'
+
+import { useRouter } from 'next/router'
+
 import DistributePayoutsModal from './modals/DistributePayoutsModal'
 import { EditPayoutsModal } from './modals/EditPayoutsModal'
 
@@ -38,6 +42,7 @@ export default function PayoutSplitsCard({
   distributionLimit: BigNumber | undefined
   fundingCycleDuration: BigNumber | undefined
 }) {
+  const router = useRouter()
   const {
     usedDistributionLimit,
     projectOwnerAddress,
@@ -164,7 +169,7 @@ export default function PayoutSplitsCard({
             {canEditPayouts && (
               <Button
                 size="small"
-                onClick={() => setEditPayoutModalVisible(true)}
+                onClick={() => pushSettingsContent(router, 'payouts')}
                 icon={<SettingOutlined />}
                 style={{ marginBottom: '1rem' }}
               >

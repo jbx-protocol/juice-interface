@@ -5,18 +5,12 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import ArchiveV2Project from 'components/v2/V2Project/ArchiveV2Project'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 import { useAddToBalanceTx } from 'hooks/v2/transactor/AddToBalanceTx'
-import { useTransferProjectOwnershipTx } from 'hooks/v2/transactor/TransferProjectOwnershipTx'
 import { useTransferUnclaimedTokensTx } from 'hooks/v2/transactor/TransferUnclaimedTokensTx'
 import { useDeployProjectPayerTx } from 'hooks/v2/transactor/DeployProjectPayerTx'
-import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDetailsTx'
 import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
 
 import ProjectPayersSection from 'components/Project/ProjectToolsDrawer/ProjectPayersSection'
 import { featureFlagEnabled } from 'utils/featureFlags'
-
-import VeNftSetUnclaimedTokensPermissionSection from 'components/veNft/VeNftSetUnclaimedTokensPermissionSection'
-
-import VeNftEnableSection from 'components/veNft/VeNftEnableSection'
 
 import { V1TokenMigrationSetupSection } from './V1TokenMigrationSetupSection'
 import { AddToProjectBalanceForm } from '../../../Project/ProjectToolsDrawer/AddToProjectBalanceForm'
@@ -24,6 +18,7 @@ import { PayableAddressSection } from '../../../Project/ProjectToolsDrawer/Payab
 import { TransferOwnershipForm } from '../../../Project/ProjectToolsDrawer/TransferOwnershipForm'
 import { TransferUnclaimedTokensForm } from '../../../Project/ProjectToolsDrawer/TransferUnclaimedTokensForm'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import V2ProjectSettingsVenftContent from '../V2ProjectSettings/V2ProjectSettingsVenftContent'
 
 const { TabPane } = Tabs
 
@@ -34,13 +29,8 @@ export function V2ProjectToolsDrawer({
   visible?: boolean
   onClose?: VoidFunction
 }) {
-  const {
-    projectOwnerAddress,
-    tokenSymbol,
-    veNft: { contractAddress: veNftContractAddress },
-  } = useContext(V2ProjectContext)
+  const { projectOwnerAddress, tokenSymbol } = useContext(V2ProjectContext)
 
-  const editV2ProjectDetailsTx = useEditV2ProjectDetailsTx()
   const { data: unclaimedTokenBalance } = useUserUnclaimedTokenBalance()
 
   const isOwnerWallet = useIsUserAddress(projectOwnerAddress)
@@ -54,10 +44,7 @@ export function V2ProjectToolsDrawer({
       <Divider />
 
       <section>
-        <TransferOwnershipForm
-          ownerAddress={projectOwnerAddress}
-          useTransferProjectOwnershipTx={useTransferProjectOwnershipTx}
-        />
+        <TransferOwnershipForm />
       </section>
 
       <Divider />
@@ -66,17 +53,7 @@ export function V2ProjectToolsDrawer({
 
       <Divider />
 
-      <ArchiveV2Project editV2ProjectDetailsTx={editV2ProjectDetailsTx} />
-    </Space>
-  )
-
-  const VeNftTools = (
-    <Space direction="vertical" size="large" style={{ width: '100%' }}>
-      {!veNftContractAddress ? (
-        <VeNftEnableSection />
-      ) : (
-        <VeNftSetUnclaimedTokensPermissionSection />
-      )}
+      <ArchiveV2Project />
     </Space>
   )
 
@@ -122,7 +99,7 @@ export function V2ProjectToolsDrawer({
         )}
         {veNftEnabled && isOwnerWallet && (
           <TabPane tab={<Trans>veNFT</Trans>} key="3">
-            {VeNftTools}
+            <V2ProjectSettingsVenftContent />
           </TabPane>
         )}
       </Tabs>

@@ -4,7 +4,11 @@ import { PayoutMod } from 'models/mods'
 import { Split } from 'models/v2/splits'
 import { percentToPermyriad, permyriadToPercent } from 'utils/formatNumber'
 
-import { formatSplitPercent, splitPercentFrom } from './math'
+import {
+  formatSplitPercent,
+  splitPercentFrom,
+  SPLITS_TOTAL_PERCENT,
+} from './math'
 
 export const toSplit = (mod: PayoutMod): Split => {
   return {
@@ -44,5 +48,29 @@ export const sanitizeSplit = (split: Split): Split => {
     allocator: constants.AddressZero,
     preferClaimed: false,
     percent: split.percent,
+  }
+}
+
+/**
+ * Return a Split object that represents the remaining percentage allocated to the project owner.
+ *
+ * In the Juicebox protocol, if the sum of the split percentages is less than 100%,
+ * the remainder gets allocated to the project owner.
+ */
+export const getProjectOwnerRemainderSplit = (
+  projectOwnerAddress: string,
+  splits: Split[],
+): Split => {
+  const totalSplitPercentage =
+    splits?.reduce((sum, split) => sum + split.percent, 0) ?? 0
+  const ownerPercentage = SPLITS_TOTAL_PERCENT - totalSplitPercentage
+
+  return {
+    beneficiary: projectOwnerAddress,
+    percent: ownerPercentage,
+    preferClaimed: false,
+    lockedUntil: 0,
+    projectId: BigNumber.from(0).toHexString(),
+    allocator: constants.AddressZero,
   }
 }

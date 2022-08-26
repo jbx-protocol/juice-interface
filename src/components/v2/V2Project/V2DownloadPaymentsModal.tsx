@@ -10,6 +10,7 @@ import { fromWad } from 'utils/formatNumber'
 import { querySubgraphExhaustive } from 'utils/graph'
 
 import { readProvider } from 'constants/readProvider'
+import { downloadCsvFile } from 'utils/csv'
 
 export default function V2DownloadPaymentsModal({
   visible,
@@ -73,18 +74,10 @@ export default function V2DownloadPaymentsModal({
         rows.push([fromWad(p.amount), date, p.caller, p.beneficiary, p.note])
       })
 
-      const csvContent =
-        'data:text/csv;charset=utf-8,' + rows.map(e => e.join(',')).join('\n')
-      const encodedUri = encodeURI(csvContent)
-      const link = document.createElement('a')
-      link.setAttribute('href', encodedUri)
-      link.setAttribute(
-        'download',
+      downloadCsvFile(
         `project-${projectId}_payments-block${blockNumber}.csv`,
+        rows,
       )
-      document.body.appendChild(link)
-
-      link.click()
 
       setLoading(false)
     } catch (e) {

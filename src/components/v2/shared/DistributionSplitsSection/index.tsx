@@ -1,27 +1,24 @@
+import { PlusCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Form, Radio, Space } from 'antd'
-import { useWallet } from 'hooks/Wallet'
-import { useCallback, useContext, useEffect, useState } from 'react'
-
 import { FormItemExt } from 'components/formItems/formItemExt'
 import TooltipIcon from 'components/TooltipIcon'
 import DistributionLimit from 'components/v2/V2Project/DistributionLimit'
+import { CurrencyName } from 'constants/currency'
 import { ThemeContext } from 'contexts/themeContext'
+import { useWallet } from 'hooks/Wallet'
+import { filter, isEqual } from 'lodash'
 import { Split } from 'models/v2/splits'
 import Link from 'next/link'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { fromWad, parseWad } from 'utils/formatNumber'
+import { v2ProjectRoute } from 'utils/routes'
 import {
   adjustedSplitPercents,
   getNewDistributionLimit,
   getTotalSplitsPercentage,
 } from 'utils/v2/distributions'
 import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2/math'
-
-import { filter, isEqual } from 'lodash'
-
-import { v2ProjectRoute } from 'utils/routes'
-
-import { CurrencyName } from 'constants/currency'
 import DistributionSplitCard from './DistributionSplitCard'
 import DistributionSplitModal from './DistributionSplitModal'
 import { PayoutConfigurationExplainerCollapse } from './PayoutConfigurationExplainerCollapse'
@@ -272,8 +269,11 @@ export default function DistributionSplitsSection({
               setAddSplitModalVisible(true)
             }}
             block
+            icon={<PlusCircleOutlined />}
           >
-            <Trans>Add payout</Trans>
+            <span>
+              <Trans>Add payout recipient</Trans>
+            </span>
           </Button>
         </Form.Item>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>

@@ -223,7 +223,7 @@ export default function V2Dashboard({
   return (
     <V2ProjectContext.Provider value={project}>
       <div style={layouts.maxWidth}>
-        <V2Project selectedPage="info" />
+        <V2Project />
         <div style={{ textAlign: 'center', marginTop: '3rem' }}>
           <ScrollToTopButton />
         </div>

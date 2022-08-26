@@ -11,19 +11,17 @@ import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedF
 
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 
-import { ProjectPage } from 'models/project-visibility'
+import { useRouter } from 'next/router'
+
+import { pushSettingsContent } from 'utils/pushSettingsPage'
 
 import { RelaunchFundingCycleBanner } from './banners/RelaunchFundingCycleBanner'
 import V2ProjectHeaderActions from './V2ProjectHeaderActions'
 
 import V2ProjectInfo from './V2ProjectInfo'
-import V2ProjectSettings from './V2ProjectSettingsPage/V2ProjectSettings'
 
-export default function V2Project({
-  selectedPage,
-}: {
-  selectedPage: ProjectPage
-}) {
+export default function V2Project() {
+  const router = useRouter()
   const {
     projectId,
     projectMetadata,
@@ -34,7 +32,6 @@ export default function V2Project({
     handle,
   } = useContext(V2ProjectContext)
 
-  const [activePage, setActivePage] = useState<ProjectPage>(selectedPage)
   const [handleModalVisible, setHandleModalVisible] = useState<boolean>()
 
   const canReconfigureFundingCycles = useV2ConnectedWalletHasPermission(
@@ -65,29 +62,20 @@ export default function V2Project({
 
       <ProjectHeader
         metadata={projectMetadata}
-        actions={
-          !isPreviewMode ? (
-            <V2ProjectHeaderActions
-              setSettingsPageActive={() => setActivePage('settings')}
-            />
-          ) : undefined
-        }
+        actions={!isPreviewMode ? <V2ProjectHeaderActions /> : undefined}
         isArchived={isArchived}
         handle={handle}
         owner={projectOwnerAddress}
         onClickSetHandle={
-          showAddHandle ? () => setHandleModalVisible(true) : undefined
+          showAddHandle
+            ? () => pushSettingsContent(router, 'projecthandle')
+            : undefined
         }
       />
-      {activePage === 'info' && (
-        <V2ProjectInfo
-          handleModalVisible={handleModalVisible}
-          setHandleModalVisible={setHandleModalVisible}
-        />
-      )}
-      {activePage === 'settings' && (
-        <V2ProjectSettings setActivePage={setActivePage} />
-      )}
+      <V2ProjectInfo
+        handleModalVisible={handleModalVisible}
+        setHandleModalVisible={setHandleModalVisible}
+      />
     </Space>
   )
 }

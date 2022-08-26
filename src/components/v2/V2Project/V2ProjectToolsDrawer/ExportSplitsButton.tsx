@@ -9,6 +9,7 @@ import { PropsWithChildren, useContext, useState } from 'react'
 import { downloadCsvFile } from 'utils/csv'
 import { emitErrorNotification } from 'utils/notifications'
 import { formatSplitPercent } from 'utils/v2/math'
+import { getProjectOwnerRemainderSplit } from 'utils/v2/splits'
 
 const CSV_HEADER = [
   'beneficiary',
@@ -19,35 +20,59 @@ const CSV_HEADER = [
   'allocator',
 ]
 
-const prepareSplitsCsv = (splits: Split[]): (string | undefined)[][] => {
-  const csvContent = splits.map(split => {
-    return [
-      split.beneficiary,
-      `${parseFloat(formatSplitPercent(BigNumber.from(split.percent))) / 100}`,
-      `${split.preferClaimed}`,
-      `${split.lockedUntil}`,
-      split.projectId,
-      split.allocator,
-    ]
-  })
+const splitToCsvRow = (split: Split) => {
+  return [
+    split.beneficiary,
+    `${parseFloat(formatSplitPercent(BigNumber.from(split.percent))) / 100}`,
+    `${split.preferClaimed}`,
+    `${split.lockedUntil}`,
+    split.projectId,
+    split.allocator,
+  ]
+}
 
-  return [CSV_HEADER, ...csvContent]
+const prepareSplitsCsv = (
+  splits: Split[],
+  projectOwnerAddress: string,
+): (string | undefined)[][] => {
+  const csvContent = splits.map(splitToCsvRow)
+
+  const rows = [CSV_HEADER, ...csvContent]
+
+  const projectOwnerSplit = getProjectOwnerRemainderSplit(
+    projectOwnerAddress,
+    splits,
+  )
+  if (projectOwnerSplit.percent > 0) {
+    rows.push(splitToCsvRow(projectOwnerSplit))
+  }
+
+  return rows
 }
 
 export function ExportSplitsButton<G extends SplitGroup>({
   children,
   groupedSplits,
 }: PropsWithChildren<{ groupedSplits: GroupedSplits<G> }>) {
-  const { handle, projectId, fundingCycle } = useContext(V2ProjectContext)
+  const { handle, projectId, fundingCycle, projectOwnerAddress } =
+    useContext(V2ProjectContext)
   const [loading, setLoading] = useState<boolean>(false)
 
   const onExportSplitsButtonClick = () => {
-    if (!groupedSplits || !fundingCycle) return
+    if (!groupedSplits || !fundingCycle || !projectOwnerAddress) {
+      emitErrorNotification(
+        t`CSV data wasn't ready for export. Wait a few seconds and try again.`,
+      )
+      return
+    }
 
     setLoading(true)
 
     try {
-      const csvContent = prepareSplitsCsv(groupedSplits.splits)
+      const csvContent = prepareSplitsCsv(
+        groupedSplits.splits,
+        projectOwnerAddress,
+      )
       const projectIdentifier = handle ? `@${handle}` : `project-${projectId}`
       const splitType =
         groupedSplits.group === ETH_PAYOUT_SPLIT_GROUP

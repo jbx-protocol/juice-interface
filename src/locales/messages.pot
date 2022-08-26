@@ -494,6 +494,9 @@ msgstr ""
 msgid "By default, the payer will receive any project tokens minted from the payment."
 msgstr ""
 
+msgid "CSV data wasn't ready for export. Wait a few seconds and try again."
+msgstr ""
+
 msgid "CSV download failed."
 msgstr ""
 

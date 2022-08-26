@@ -1,7 +1,7 @@
 import { Drawer } from 'antd'
 
 import { drawerStyle } from 'constants/styles/drawerStyle'
-import V2ReconfigureProjectHandle from './V2ProjectSettingsPage/V2ReconfigureProjectHandle'
+import V2ReconfigureProjectHandle from './V2ProjectSettings/V2ReconfigureProjectHandle'
 
 export function V2ReconfigureProjectHandleDrawer({
   visible,

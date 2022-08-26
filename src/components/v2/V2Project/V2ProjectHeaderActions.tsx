@@ -50,7 +50,7 @@ export default function V2ProjectHeaderActions() {
         <Tooltip title={t`Project Home`} placement="bottom">
           <Button
             onClick={() =>
-              router.push(`/v2/p/${projectId}?page=info`, undefined, {
+              router.push(`/v2/p/${projectId}`, undefined, {
                 shallow: true,
               })
             }
@@ -61,7 +61,7 @@ export default function V2ProjectHeaderActions() {
         <Tooltip title={t`Project Settings`} placement="bottom">
           <Button
             onClick={() =>
-              router.push(`/v2/p/${projectId}?page=settings`, undefined, {
+              router.push(`/v2/p/${projectId}/settings`, undefined, {
                 shallow: true,
               })
             }

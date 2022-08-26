@@ -1,9 +1,9 @@
 import { NextRouter } from 'next/router'
-import { V2SettingsContentKey } from 'components/v2/V2Project/V2ProjectSettingsPage/V2ProjectSettings'
+import { V2SettingsKey } from 'components/v2/V2Project/V2ProjectSettings/V2ProjectSettings'
 
 export const pushSettingsContent = (
   router: NextRouter,
-  contentKey: V2SettingsContentKey,
+  contentKey: V2SettingsKey,
   options: { shallow?: boolean } = { shallow: true },
 ) => {
   const { shallow } = options
@@ -11,8 +11,7 @@ export const pushSettingsContent = (
     {
       pathname: router.pathname,
       query: {
-        page: 'settings',
-        settingsPage: contentKey,
+        page: contentKey,
       },
     },
     undefined,

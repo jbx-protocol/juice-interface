@@ -11,8 +11,10 @@ import useProjectReservedTokens from 'hooks/v2/contractReader/ProjectReservedTok
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/V2ConnectedWalletHasPermission'
 import { V2OperatorPermission } from 'models/v2/permissions'
 import { Split } from 'models/v2/splits'
+import { useRouter } from 'next/router'
 import { CSSProperties, useContext, useState } from 'react'
 import { formatWad } from 'utils/formatNumber'
+import { pushSettingsContent } from 'utils/routes'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { formatReservedRate } from 'utils/v2/math'
 import { reloadWindow } from 'utils/windowUtils'
@@ -34,6 +36,7 @@ export default function ReservedTokensSplitsCard({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const router = useRouter()
 
   const effectiveReservedRate = reservedRate ?? BigNumber.from(0)
 
@@ -166,7 +169,9 @@ export default function ReservedTokensSplitsCard({
             {canEditTokens && reservedRate?.gt(0) ? (
               <Button
                 size="small"
-                onClick={() => setEditTokenAllocationModalVisible(true)}
+                onClick={() =>
+                  pushSettingsContent(router, 'reservedtokens', projectId)
+                }
                 icon={<SettingOutlined />}
                 style={{ marginBottom: '1rem' }}
               >

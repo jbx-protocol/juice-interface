@@ -25,7 +25,7 @@ import useMobile from 'hooks/Mobile'
 import { CurrencyOption } from 'models/currencyOption'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { fromWad } from 'utils/formatNumber'
-import { v2ProjectRoute } from 'utils/routes'
+import { pushSettingsContent, v2ProjectRoute } from 'utils/routes'
 
 import { V2_PROJECT_IDS } from 'constants/v2/projectIds'
 import { RelaunchFundingCycleBanner } from './banners/RelaunchFundingCycleBanner'
@@ -40,7 +40,6 @@ import V2ProjectHeaderActions from './V2ProjectHeaderActions'
 
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { NftRewardsSection } from './NftRewardsSection'
-import { V2ReconfigureProjectHandleDrawer } from './V2ReconfigureProjectHandleDrawer'
 
 const GUTTER_PX = 40
 
@@ -89,7 +88,6 @@ export default function V2Project({
     useState<boolean>(isNewDeploy)
   const [balancesModalVisible, setBalancesModalVisible] =
     useState<boolean>(false)
-  const [handleModalVisible, setHandleModalVisible] = useState<boolean>()
   const [payAmount, setPayAmount] = useState<string>('0')
   const [payInCurrency, setPayInCurrency] = useState<CurrencyOption>(ETH)
 
@@ -161,7 +159,9 @@ export default function V2Project({
         handle={handle}
         owner={projectOwnerAddress}
         onClickSetHandle={
-          showAddHandle ? () => setHandleModalVisible(true) : undefined
+          showAddHandle
+            ? () => pushSettingsContent(router, 'projecthandle', projectId)
+            : undefined
         }
       />
       {!isPreviewMode &&
@@ -249,12 +249,6 @@ export default function V2Project({
         onCancel={() => setBalancesModalVisible(false)}
         storeCidTx={editV2ProjectDetailsTx}
       />
-      {showAddHandle && (
-        <V2ReconfigureProjectHandleDrawer
-          visible={handleModalVisible}
-          onFinish={() => setHandleModalVisible(false)}
-        />
-      )}
     </Space>
   )
 }

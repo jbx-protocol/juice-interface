@@ -3,5 +3,4 @@ export const FEATURE_FLAGS = {
   NFT_REWARDS: 'nftRewards',
   VENFT: 'veNft',
   VENFT_CREATOR: 'veNftCreator',
-  SETTINGS_PAGE: 'settingsPage',
 }

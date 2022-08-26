@@ -23,6 +23,8 @@ import { detailedTimeString } from 'utils/formatTime'
 import { reloadWindow } from 'utils/windowUtils'
 
 import { ThemeContext } from 'contexts/themeContext'
+import { useRouter } from 'next/router'
+import { pushSettingsContent } from 'utils/routes'
 import DistributePayoutsModal from './modals/DistributePayoutsModal'
 import { EditPayoutsModal } from './modals/EditPayoutsModal'
 
@@ -42,7 +44,9 @@ export default function PayoutSplitsCard({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const router = useRouter()
   const {
+    projectId,
     usedDistributionLimit,
     projectOwnerAddress,
     balanceInDistributionLimitCurrency,
@@ -168,7 +172,9 @@ export default function PayoutSplitsCard({
             {canEditPayouts && effectiveDistributionLimit.gt(0) && (
               <Button
                 size="small"
-                onClick={() => setEditPayoutModalVisible(true)}
+                onClick={() =>
+                  pushSettingsContent(router, 'payouts', projectId)
+                }
                 icon={<SettingOutlined />}
                 style={{ marginBottom: '1rem' }}
               >

@@ -1,7 +1,7 @@
 import { Button, Tooltip } from 'antd'
-import { useRef, useState } from 'react'
+import { useContext, useRef, useState } from 'react'
 import { Provider } from 'react-redux'
-import store, { createStore } from 'redux/store'
+import store from 'redux/store'
 
 import { SettingOutlined } from '@ant-design/icons'
 
@@ -9,6 +9,9 @@ import { t } from '@lingui/macro'
 
 import { reloadWindow } from 'utils/windowUtils'
 
+import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { useRouter } from 'next/router'
+import { pushSettingsContent } from 'utils/routes'
 import V2ProjectReconfigureModal from './index'
 
 // This component uses a local version of the entire Redux store
@@ -23,14 +26,15 @@ export default function V2ReconfigureFundingModalTrigger({
   hideProjectDetails?: boolean
   triggerButton?: (onClick: VoidFunction) => JSX.Element
 }) {
+  const router = useRouter()
+  const { projectId } = useContext(V2ProjectContext)
   const [reconfigureModalVisible, setReconfigureModalVisible] =
     useState<boolean>(false)
 
   const localStoreRef = useRef<typeof store>()
 
-  function handleModalOpen() {
-    localStoreRef.current = createStore()
-    setReconfigureModalVisible(true)
+  function handleReconfigureClick() {
+    pushSettingsContent(router, 'reconfigurefc', projectId)
   }
 
   function handleOk() {
@@ -41,14 +45,14 @@ export default function V2ReconfigureFundingModalTrigger({
   return (
     <div style={{ textAlign: 'right' }}>
       {triggerButton ? (
-        triggerButton(handleModalOpen)
+        triggerButton(handleReconfigureClick)
       ) : (
         <Tooltip
           title={t`Reconfigure project and funding details`}
           placement="bottom"
         >
           <Button
-            onClick={handleModalOpen}
+            onClick={handleReconfigureClick}
             icon={<SettingOutlined />}
             type="text"
           />

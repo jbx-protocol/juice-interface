@@ -26,6 +26,7 @@ export function useClaimTokensTx(): TransactorInstance<{
         : !claimAmount
         ? 'claimAmount'
         : undefined
+
       txOpts?.onError?.(
         new DOMException(
           `Missing ${missingParam} not found in v2 ClaimTokensTx`,

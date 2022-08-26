@@ -494,6 +494,12 @@ msgstr ""
 msgid "By default, the payer will receive any project tokens minted from the payment."
 msgstr ""
 
+msgid "CSV data wasn't ready for export. Wait a few seconds and try again."
+msgstr ""
+
+msgid "CSV download failed."
+msgstr ""
+
 msgid "Can I change my project's contract after it's been created?"
 msgstr ""
 
@@ -1026,6 +1032,21 @@ msgid "Error uploading file"
 msgstr ""
 
 msgid "Explore projects"
+msgstr ""
+
+msgid "Export data"
+msgstr ""
+
+msgid "Export payouts CSV"
+msgstr ""
+
+msgid "Export the current funding cycle's payouts to CSV."
+msgstr ""
+
+msgid "Export the current funding cycle's reserved token allocation to CSV."
+msgstr ""
+
+msgid "Export token allocation CSV"
 msgstr ""
 
 msgid "Extend Lock"

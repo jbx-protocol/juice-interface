@@ -1,4 +1,7 @@
-export function downloadCsvFile(filename: string, rows: string[][]) {
+export function downloadCsvFile(
+  filename: string,
+  rows: (string | undefined)[][],
+) {
   const csvContent =
     'data:text/csv;charset=utf-8,' + rows.map(e => e.join(',')).join('\n')
   const encodedUri = encodeURI(csvContent)

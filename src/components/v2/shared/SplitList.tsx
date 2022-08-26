@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Split } from 'models/v2/splits'
-import { SPLITS_TOTAL_PERCENT } from 'utils/v2/math'
+import { getProjectOwnerRemainderSplit } from 'utils/v2/splits'
 
 import SplitItem from './SplitItem'
 
@@ -23,9 +23,9 @@ export default function SplitList({
   valueFormatProps?: { precision?: number }
   reservedRate?: number
 }) {
-  const totalSplitPercentage =
-    splits?.reduce((sum, split) => sum + split.percent, 0) ?? 0
-  const ownerPercentage = SPLITS_TOTAL_PERCENT - totalSplitPercentage
+  const ownerSplit = projectOwnerAddress
+    ? getProjectOwnerRemainderSplit(projectOwnerAddress, splits)
+    : undefined
 
   return (
     <div>
@@ -48,16 +48,9 @@ export default function SplitList({
             />
           </div>
         ))}
-      {ownerPercentage && reservedRate ? (
+      {ownerSplit && reservedRate ? (
         <SplitItem
-          split={{
-            beneficiary: projectOwnerAddress,
-            percent: ownerPercentage,
-            preferClaimed: undefined,
-            lockedUntil: undefined,
-            projectId: undefined,
-            allocator: undefined,
-          }}
+          split={ownerSplit}
           showSplitValue={showSplitValues}
           currency={currency}
           totalValue={totalValue}

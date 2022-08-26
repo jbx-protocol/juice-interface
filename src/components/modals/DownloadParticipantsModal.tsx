@@ -10,6 +10,7 @@ import { querySubgraphExhaustive } from 'utils/graph'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import { readProvider } from 'constants/readProvider'
+import { downloadCsvFile } from 'utils/csv'
 
 export default function DownloadParticipantsModal({
   projectId,
@@ -91,18 +92,7 @@ export default function DownloadParticipantsModal({
         ])
       })
 
-      const csvContent =
-        'data:text/csv;charset=utf-8,' + rows.map(e => e.join(',')).join('\n')
-      const encodedUri = encodeURI(csvContent)
-      const link = document.createElement('a')
-      link.setAttribute('href', encodedUri)
-      link.setAttribute(
-        'download',
-        `@${projectName}_holders-block${blockNumber}.csv`,
-      )
-      document.body.appendChild(link)
-
-      link.click()
+      downloadCsvFile(`@${projectName}_holders-block${blockNumber}.csv`, rows)
 
       setLoading(false)
     } catch (e) {

@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import { Drawer } from 'antd'
 
 import { drawerStyle } from 'constants/styles/drawerStyle'
-import V2ProjectDetails from '../../V2ProjectSettingsPage/V2ProjectDetails'
+import V2ProjectDetails from '../../V2ProjectSettings/V2ProjectDetails'
 
 export function V2ReconfigureProjectDetailsDrawer({
   visible,

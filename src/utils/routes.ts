@@ -16,12 +16,13 @@ export const v2ProjectRoute = ({
 export const pushSettingsContent = (
   router: NextRouter,
   contentKey: V2SettingsKey,
+  projectId: number | undefined,
   options: { shallow?: boolean } = { shallow: true },
 ) => {
   const { shallow } = options
   router.push(
     {
-      pathname: router.pathname,
+      pathname: `/v2/p/${projectId}/settings`,
       query: {
         page: contentKey,
       },

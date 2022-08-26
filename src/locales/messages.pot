@@ -656,6 +656,9 @@ msgstr ""
 msgid "Connected wallet not authorized"
 msgstr ""
 
+msgid "Contract address:"
+msgstr ""
+
 msgid "Contract address: {0}"
 msgstr ""
 
@@ -729,6 +732,9 @@ msgid "Current 3rd Party Exchange Rates"
 msgstr ""
 
 msgid "Current owner: {ownerAddress}"
+msgstr ""
+
+msgid "Current owner: {projectOwnerAddress}"
 msgstr ""
 
 msgid "Currently worth: <0><1/></0>"
@@ -1002,9 +1008,6 @@ msgid "Edit tracked assets"
 msgstr ""
 
 msgid "Enable veBanny Governance"
-msgstr ""
-
-msgid "Enable veNFT Governance"
 msgstr ""
 
 msgid "Enable veNFT to Spend Unclaimed Tokens"
@@ -1341,6 +1344,9 @@ msgid "Latest payments"
 msgstr ""
 
 msgid "Launch funding cycle"
+msgstr ""
+
+msgid "Launch veBanny"
 msgstr ""
 
 msgid "Launch veNFT"
@@ -2151,9 +2157,6 @@ msgid "Set this to the sum of all your payouts"
 msgstr ""
 
 msgid "Set up V1 token migration"
-msgstr ""
-
-msgid "Set up and launch veNFT governance for your project using custom assets and parameters. (Experimental, does not currently launch)"
 msgstr ""
 
 msgid "Set up and launch veNFT governance for your project using default veBanny assets and parameters."

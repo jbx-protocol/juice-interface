@@ -23,6 +23,7 @@ export default function ArchiveProject({
   owner,
   handle,
   canTakePaymentsWhenArchived = false,
+  showHeader = true,
   cv,
 }: {
   storeCidTx: TransactorInstance<{ cid: string }>
@@ -31,6 +32,7 @@ export default function ArchiveProject({
   owner: string | undefined
   handle?: string | undefined // Used on V1 projects
   canTakePaymentsWhenArchived?: boolean
+  showHeader?: boolean
   cv: CV
 }) {
   const { userAddress } = useWallet()
@@ -132,9 +134,11 @@ export default function ArchiveProject({
 
   return (
     <section>
-      <h3>
-        <Trans>Archive project</Trans>
-      </h3>
+      {showHeader && (
+        <h3>
+          <Trans>Archive project</Trans>
+        </h3>
+      )}
       <p>
         <Trans>
           Your project will appear archived, and won't be able to receive

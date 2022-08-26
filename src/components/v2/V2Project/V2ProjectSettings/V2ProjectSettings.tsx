@@ -101,7 +101,7 @@ const V2ProjectSettings = () => {
 
   const handleMenuItemClick = (item: MenuItem) => {
     const key = item?.key as V2SettingsKey
-    pushSettingsContent(router, key)
+    pushSettingsContent(router, key, projectId)
   }
 
   return (
@@ -115,7 +115,7 @@ const V2ProjectSettings = () => {
           owner={projectOwnerAddress}
           onClickSetHandle={
             showAddHandle
-              ? () => pushSettingsContent(router, 'projecthandle')
+              ? () => pushSettingsContent(router, 'projecthandle', projectId)
               : undefined
           }
         />

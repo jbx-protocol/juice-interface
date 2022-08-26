@@ -1721,9 +1721,6 @@ msgstr ""
 msgid "Project ID must be a number."
 msgstr ""
 
-msgid "Project ID:"
-msgstr ""
-
 msgid "Project Token"
 msgstr ""
 
@@ -1806,6 +1803,9 @@ msgid "Project {projectId}"
 msgstr ""
 
 msgid "Project {projectId} not found"
+msgstr ""
+
+msgid "Project:"
 msgstr ""
 
 msgid "Projects"
@@ -1893,9 +1893,6 @@ msgid "Reconfigure project and funding details"
 msgstr ""
 
 msgid "Reconfigure project details"
-msgstr ""
-
-msgid "Reconfigure token"
 msgstr ""
 
 msgid "Reconfigure upcoming"

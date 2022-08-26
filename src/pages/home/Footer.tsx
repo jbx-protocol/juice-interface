@@ -7,6 +7,7 @@ import { CSSProperties, useContext } from 'react'
 import { reloadWindow, scrollToTop } from 'utils/windowUtils'
 
 import { Languages } from 'constants/languages/language-options'
+import { TERMS_OF_SERVICE_URL } from 'constants/links'
 
 export default function Footer() {
   const { colors } = useContext(ThemeContext).theme
@@ -74,7 +75,7 @@ export default function Footer() {
         {link('GitHub', 'https://github.com/jbx-protocol/juice-interface')}
         {link('Twitter', 'https://twitter.com/juiceboxETH')}
         {link('Privacy Policy', '/privacy')}
-        {link('Terms of Service', '/privacy')}
+        {link('Terms of Service', TERMS_OF_SERVICE_URL)}
       </div>
 
       {gitCommit ? (

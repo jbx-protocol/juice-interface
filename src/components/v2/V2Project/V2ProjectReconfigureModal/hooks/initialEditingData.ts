@@ -116,7 +116,7 @@ export const useInitialEditingData = (visible: boolean) => {
     effectiveDistributionLimitCurrency = queuedDistributionLimitCurrency
   }
 
-  // Creates the local redux state from V2ProjectContext values
+  // Populates the local redux state from V2ProjectContext values
   useEffect(() => {
     if (!visible || !effectiveFundingCycle) return
 

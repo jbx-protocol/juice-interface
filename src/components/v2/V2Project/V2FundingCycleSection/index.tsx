@@ -23,8 +23,11 @@ import { CardSection } from 'components/CardSection'
 
 import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
 
+import { pushSettingsContent } from 'utils/pushSettingsPage'
+
+import { useRouter } from 'next/router'
+
 import CurrentFundingCycle from './CurrentFundingCycle'
-import V2ReconfigureFundingModalTrigger from '../V2ProjectReconfigureModal/V2ReconfigureModalTrigger'
 import UpcomingFundingCycle from './UpcomingFundingCycle'
 import FundingCycleHistory from './FundingCycleHistory'
 import NoFundingCycle from './NoFundingCycle'
@@ -34,6 +37,7 @@ export default function V2FundingCycleSection({
 }: {
   expandCard?: boolean
 }) {
+  const router = useRouter()
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -134,20 +138,19 @@ export default function V2FundingCycleSection({
       tabs={tabs}
       reconfigureButton={
         canReconfigure ? (
-          <V2ReconfigureFundingModalTrigger
-            hideProjectDetails
-            triggerButton={(onClick: VoidFunction) => (
-              <Button size="small" onClick={onClick} icon={<SettingOutlined />}>
-                <span>
-                  {hasFundingDuration(fundingCycleData) ? (
-                    <Trans>Reconfigure upcoming</Trans>
-                  ) : (
-                    <Trans>Reconfigure</Trans>
-                  )}
-                </span>
-              </Button>
-            )}
-          />
+          <Button
+            size="small"
+            onClick={() => pushSettingsContent(router, 'reconfigurefc')}
+            icon={<SettingOutlined />}
+          >
+            <span>
+              {hasFundingDuration(fundingCycleData) ? (
+                <Trans>Reconfigure upcoming</Trans>
+              ) : (
+                <Trans>Reconfigure</Trans>
+              )}
+            </span>
+          </Button>
         ) : null
       }
     />

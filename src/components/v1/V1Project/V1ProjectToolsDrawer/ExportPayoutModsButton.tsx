@@ -7,6 +7,7 @@ import { useContext, useState } from 'react'
 import { downloadCsvFile } from 'utils/csv'
 import { permyriadToPercent } from 'utils/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
+import { getProjectOwnerRemainderPayoutMod } from 'utils/v1/mods'
 
 const CSV_HEADER: (keyof PayoutMod)[] = [
   'beneficiary',
@@ -17,32 +18,52 @@ const CSV_HEADER: (keyof PayoutMod)[] = [
   'allocator',
 ]
 
-const preparePayoutModsCsv = (mods: PayoutMod[]): (string | undefined)[][] => {
-  const csvContent = mods.map(mod => {
-    return [
-      mod.beneficiary,
-      `${parseFloat(permyriadToPercent(`${mod.percent}`)) / 100}`,
-      `${mod.preferUnstaked}`,
-      `${mod.lockedUntil}`,
-      mod.projectId?.toString(),
-      mod.allocator,
-    ]
-  })
+const payoutModToCsvRow = (mod: PayoutMod) => {
+  return [
+    mod.beneficiary,
+    `${parseFloat(permyriadToPercent(`${mod.percent}`)) / 100}`,
+    `${mod.preferUnstaked}`,
+    `${mod.lockedUntil}`,
+    mod.projectId?.toString(),
+    mod.allocator,
+  ]
+}
 
-  return [CSV_HEADER, ...csvContent]
+const preparePayoutModsCsv = (
+  mods: PayoutMod[],
+  projectOwnerAddress: string,
+): (string | undefined)[][] => {
+  const csvContent = mods.map(payoutModToCsvRow)
+  const rows = [CSV_HEADER, ...csvContent]
+
+  const projectOwnerMod = getProjectOwnerRemainderPayoutMod(
+    projectOwnerAddress,
+    mods,
+  )
+  if (projectOwnerMod.percent > 0) {
+    rows.push(payoutModToCsvRow(projectOwnerMod))
+  }
+
+  return rows
 }
 
 export function ExportPayoutModsButton() {
-  const { handle, currentFC, currentPayoutMods } = useContext(V1ProjectContext)
+  const { handle, currentFC, currentPayoutMods, owner } =
+    useContext(V1ProjectContext)
   const [loading, setLoading] = useState<boolean>(false)
 
   const onExportSplitsButtonClick = () => {
-    if (!currentFC || !currentPayoutMods) return
+    if (!currentFC || !currentPayoutMods || !owner) {
+      emitErrorNotification(
+        t`CSV data wasn't ready for export. Wait a few seconds and try again.`,
+      )
+      return
+    }
 
     setLoading(true)
 
     try {
-      const csvContent = preparePayoutModsCsv(currentPayoutMods)
+      const csvContent = preparePayoutModsCsv(currentPayoutMods, owner)
       const filename = `@${handle}_payouts_fc-${currentFC.number}`
 
       downloadCsvFile(filename, csvContent)

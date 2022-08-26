@@ -1,17 +1,13 @@
 import {
   CaretDownFilled,
   DeleteOutlined,
-  PlusOutlined,
+  PlusCircleOutlined,
 } from '@ant-design/icons'
 import * as constants from '@ethersproject/constants'
-import { Button, Col, Form, Input, Row, Tooltip } from 'antd'
-
-import { FormInstance } from 'antd/lib/form/Form'
-
-import { useState } from 'react'
-
 import { t, Trans } from '@lingui/macro'
-
+import { Button, Col, Form, Input, Row, Tooltip } from 'antd'
+import { FormInstance } from 'antd/lib/form/Form'
+import { useState } from 'react'
 import { EditTrackedAssetsForm } from './V2BalancesModal'
 
 export type AssetInputType = 'project' | 'erc20'
@@ -146,7 +142,7 @@ export default function V2TokenRefs({
                 type="dashed"
                 onClick={() => add()}
                 block
-                icon={<PlusOutlined />}
+                icon={<PlusCircleOutlined />}
               >
                 <span>
                   <Trans>Add token</Trans>

@@ -12,6 +12,7 @@ import { V1OperatorPermission } from 'models/v1/permissions'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { formatWad, permyriadToPercent } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
+import { MODS_TOTAL_PERCENT } from 'utils/v1/mods'
 export default function TicketModsList({
   total,
   mods,
@@ -64,7 +65,7 @@ export default function TicketModsList({
   }
 
   const modsTotal = mods?.reduce((acc, curr) => acc + curr.percent, 0)
-  const ownerPercent = 10000 - (modsTotal ?? 0)
+  const ownerPercent = MODS_TOTAL_PERCENT - (modsTotal ?? 0)
 
   const hasEditPermission = useV1ConnectedWalletHasPermission(
     V1OperatorPermission.SetTicketMods,

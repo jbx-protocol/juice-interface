@@ -1565,9 +1565,6 @@ msgstr ""
 msgid "Only lowercase letters"
 msgstr ""
 
-msgid "Open settings page"
-msgstr ""
-
 msgid "Other assets in this project's owner's wallet."
 msgstr ""
 
@@ -1730,10 +1727,16 @@ msgstr ""
 msgid "Project Handle"
 msgstr ""
 
+msgid "Project Home"
+msgstr ""
+
 msgid "Project ID must be a number."
 msgstr ""
 
 msgid "Project ID:"
+msgstr ""
+
+msgid "Project Settings"
 msgstr ""
 
 msgid "Project Token"
@@ -1887,6 +1890,9 @@ msgid "Reconfiguration strategy"
 msgstr ""
 
 msgid "Reconfigure"
+msgstr ""
+
+msgid "Reconfigure Funding Cycle"
 msgstr ""
 
 msgid "Reconfigure payouts as percentages of your distribution limit."

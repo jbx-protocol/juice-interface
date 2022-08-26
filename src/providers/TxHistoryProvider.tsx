@@ -48,7 +48,7 @@ export default function TxHistoryProvider({
   // Setup poller for refreshing transactions
   useEffect(() => {
     // Only set new poller if there are pending transactions
-    // Succeeded/failed txs don't need to be refreshed
+    // because ucceeded/failed txs don't need to be refreshed
     if (!poller && transactions.some(tx => tx.status === TxStatus.pending)) {
       const threeMinutesAgo = nowSeconds() - 3 * 60
 
@@ -69,11 +69,13 @@ export default function TxHistoryProvider({
               await Promise.all(
                 transactions.map(async txLog => {
                   // Only do refresh logic for pending txs
+                  // idk why tx.hash would be undefined but it's optional typed :shrug:
                   if (!txLog.tx.hash || txLog.status !== TxStatus.pending) {
                     return txLog
                   }
 
                   // If no response yet, get response
+                  // We know tx is a TransactionResponse if .wait is defined
                   const response = (txLog.tx as TransactionResponse).wait
                     ? (txLog.tx as TransactionResponse)
                     : await readProvider.getTransaction(txLog.tx.hash)
@@ -85,7 +87,7 @@ export default function TxHistoryProvider({
                     // Tx has been mined
                     status = TxStatus.success
                   } catch (_) {
-                    // Handle error thrown by ethers provider when a transaction fails
+                    // ethers provider throws error when a transaction fails
                     status = TxStatus.failed
                   }
 

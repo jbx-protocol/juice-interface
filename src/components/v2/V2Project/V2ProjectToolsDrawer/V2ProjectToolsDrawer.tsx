@@ -18,7 +18,7 @@ import { PayableAddressSection } from '../../../Project/ProjectToolsDrawer/Payab
 import { TransferOwnershipForm } from '../../../Project/ProjectToolsDrawer/TransferOwnershipForm'
 import { TransferUnclaimedTokensForm } from '../../../Project/ProjectToolsDrawer/TransferUnclaimedTokensForm'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import V2ProjectSettingsVenftContent from '../V2ProjectSettingsPage/V2ProjectSettingsVenftContent'
+import V2ProjectSettingsVenftContent from '../V2ProjectSettings/V2ProjectSettingsVenftContent'
 
 const { TabPane } = Tabs
 

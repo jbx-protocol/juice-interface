@@ -410,6 +410,9 @@ msgstr ""
 msgid "Approve token for transaction"
 msgstr ""
 
+msgid "Archive Project"
+msgstr ""
+
 msgid "Archive project"
 msgstr ""
 
@@ -447,6 +450,9 @@ msgid "Available funds can be distributed according to the payouts below{0}."
 msgstr ""
 
 msgid "Available:"
+msgstr ""
+
+msgid "Back to project"
 msgstr ""
 
 msgid "Back to top"
@@ -650,6 +656,9 @@ msgstr ""
 msgid "Connected wallet not authorized"
 msgstr ""
 
+msgid "Contract address:"
+msgstr ""
+
 msgid "Contract address: {0}"
 msgstr ""
 
@@ -725,7 +734,7 @@ msgstr ""
 msgid "Current 3rd Party Exchange Rates"
 msgstr ""
 
-msgid "Current owner: {ownerAddress}"
+msgid "Current owner: {projectOwnerAddress}"
 msgstr ""
 
 msgid "Currently worth: <0><1/></0>"
@@ -1002,9 +1011,6 @@ msgid "Edit tracked assets"
 msgstr ""
 
 msgid "Enable veBanny Governance"
-msgstr ""
-
-msgid "Enable veNFT Governance"
 msgstr ""
 
 msgid "Enable veNFT to Spend Unclaimed Tokens"
@@ -1331,6 +1337,9 @@ msgstr ""
 msgid "Launch funding cycle"
 msgstr ""
 
+msgid "Launch veBanny"
+msgstr ""
+
 msgid "Launch veNFT"
 msgstr ""
 
@@ -1556,9 +1565,6 @@ msgstr ""
 msgid "Only lowercase letters"
 msgstr ""
 
-msgid "Open settings page"
-msgstr ""
-
 msgid "Other assets in this project's owner's wallet."
 msgstr ""
 
@@ -1640,6 +1646,9 @@ msgstr ""
 msgid "Paying this project is currently disabled."
 msgstr ""
 
+msgid "Payment Addresses"
+msgstr ""
+
 msgid "Payment address contract:"
 msgstr ""
 
@@ -1715,10 +1724,19 @@ msgstr ""
 msgid "Project Created"
 msgstr ""
 
+msgid "Project Handle"
+msgstr ""
+
+msgid "Project Home"
+msgstr ""
+
 msgid "Project ID must be a number."
 msgstr ""
 
 msgid "Project ID:"
+msgstr ""
+
+msgid "Project Settings"
 msgstr ""
 
 msgid "Project Token"
@@ -1874,6 +1892,9 @@ msgstr ""
 msgid "Reconfigure"
 msgstr ""
 
+msgid "Reconfigure Funding Cycle"
+msgstr ""
+
 msgid "Reconfigure payouts as percentages of your distribution limit."
 msgstr ""
 
@@ -1941,6 +1962,9 @@ msgid "Required"
 msgstr ""
 
 msgid "Reserve a percentage of freshly minted tokens for your project to use."
+msgstr ""
+
+msgid "Reserved Tokens"
 msgstr ""
 
 msgid "Reserved rate"
@@ -2115,9 +2139,6 @@ msgid "Set this to the sum of all your payouts"
 msgstr ""
 
 msgid "Set up V1 token migration"
-msgstr ""
-
-msgid "Set up and launch veNFT governance for your project using custom assets and parameters. (Experimental, does not currently launch)"
 msgstr ""
 
 msgid "Set up and launch veNFT governance for your project using default veBanny assets and parameters."
@@ -2522,6 +2543,9 @@ msgstr ""
 msgid "Transaction unsuccessful"
 msgstr ""
 
+msgid "Transfer Ownership"
+msgstr ""
+
 msgid "Transfer ownership"
 msgstr ""
 
@@ -2618,6 +2642,9 @@ msgstr ""
 msgid "V1"
 msgstr ""
 
+msgid "V1 Token Migration"
+msgstr ""
+
 msgid "V1 token holders can swap their tokens for your V2 tokens on your V2 project's <0>Tokens</0> section."
 msgstr ""
 
@@ -2631,6 +2658,9 @@ msgid "V1.1"
 msgstr ""
 
 msgid "V2"
+msgstr ""
+
+msgid "VeNFT Governance"
 msgstr ""
 
 msgid "Version of the terminal contract used by this project."

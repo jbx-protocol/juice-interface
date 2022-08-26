@@ -1,53 +1,22 @@
-import { Layout, Menu, MenuProps } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import ProjectDetailsForm, {
   ProjectDetailsFormFields,
 } from 'components/forms/ProjectDetailsForm'
+import { ThemeContext } from 'contexts/themeContext'
 
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDetailsTx'
-import Link from 'next/link'
-import { useState, useContext, useCallback, useEffect } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 import { revalidateProject } from 'utils/revalidateProject'
 
+import { Trans } from '@lingui/macro'
+
 import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
-const { Content, Sider } = Layout
 
-type MenuItem = Required<MenuProps>['items'][number]
+const V2ProjectDetails = () => {
+  const { colors } = useContext(ThemeContext).theme
 
-function getItem(
-  label: React.ReactNode,
-  key: React.Key,
-  icon?: React.ReactNode,
-  children?: MenuItem[],
-): MenuItem {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  } as MenuItem
-}
-
-const items: MenuItem[] = [
-  getItem('Project', 'project', undefined, [
-    getItem('General', 'project1'),
-    getItem('Project handle', 'project2'),
-  ]),
-  getItem('Funding', 'funding', undefined, [
-    getItem('Funding cycle', 'funding1'),
-    getItem('Payouts', 'funding2'),
-    getItem('Reserved tokens', 'funding3'),
-  ]),
-  getItem('Manage', 'manage', undefined, [
-    getItem('Payment addresses', 'manage1'),
-    getItem('V1 token migration', 'manage2'),
-    getItem('veNFT', 'manage3'),
-  ]),
-]
-
-const V2ProjectSettings = () => {
   const [projectForm] = useForm<ProjectDetailsFormFields>()
 
   const [loadingSaveChanges, setLoadingSaveChanges] = useState<boolean>()
@@ -122,29 +91,21 @@ const V2ProjectSettings = () => {
   }, [resetProjectForm])
 
   return (
-    <Layout style={{ minHeight: '100vh', background: 'transparent' }}>
-      <Sider style={{ background: 'transparent' }}>
-        <Link href={`project`}>{`< Back to Project`}</Link>
-        <Menu
-          defaultOpenKeys={['project', 'funding', 'manage']}
-          defaultSelectedKeys={['project1']}
-          mode="inline"
-          theme="dark"
-          items={items}
-        />
-      </Sider>
-      <Layout style={{ background: 'transparent' }}>
-        <Content style={{ margin: '0 16px' }}>
-          <ProjectDetailsForm
-            form={projectForm}
-            onFinish={onProjectFormSaved}
-            hideProjectHandle
-            loading={loadingSaveChanges}
-          />
-        </Content>
-      </Layout>
-    </Layout>
+    <>
+      <p style={{ color: colors.text.primary }}>
+        <Trans>
+          Project details reconfigurations will create a separate transaction.
+        </Trans>
+      </p>
+      <br />
+      <ProjectDetailsForm
+        form={projectForm}
+        onFinish={onProjectFormSaved}
+        hideProjectHandle
+        loading={loadingSaveChanges}
+      />
+    </>
   )
 }
 
-export default V2ProjectSettings
+export default V2ProjectDetails

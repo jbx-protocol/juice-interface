@@ -1,7 +1,23 @@
+import * as constants from '@ethersproject/constants'
 import { Trans } from '@lingui/macro'
-
 import { Button, Form } from 'antd'
-
+import ExternalLink from 'components/ExternalLink'
+import { ItemNoInput } from 'components/formItems/ItemNoInput'
+import FormItemWarningText from 'components/FormItemWarningText'
+import SwitchHeading from 'components/SwitchHeading'
+import DistributionSplitsSection from 'components/v2/shared/DistributionSplitsSection'
+import { shadowCard } from 'constants/styles/shadowCard'
+import { DurationUnitsOption } from 'constants/time'
+import { DEFAULT_BALLOT_STRATEGY } from 'constants/v2/ballotStrategies'
+import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
+import { ThemeContext } from 'contexts/themeContext'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { V2UserContext } from 'contexts/v2/userContext'
+import { useAppDispatch } from 'hooks/AppDispatch'
+import { useAppSelector } from 'hooks/AppSelector'
+import isEqual from 'lodash/isEqual'
+import { V2CurrencyOption } from 'models/v2/currencyOption'
+import { Split } from 'models/v2/splits'
 import {
   useCallback,
   useContext,
@@ -10,61 +26,29 @@ import {
   useMemo,
   useState,
 } from 'react'
-
-import { ThemeContext } from 'contexts/themeContext'
-
-import { V2CurrencyOption } from 'models/v2/currencyOption'
-
-import { V2UserContext } from 'contexts/v2/userContext'
-import { useAppDispatch } from 'hooks/AppDispatch'
-import { useAppSelector } from 'hooks/AppSelector'
 import {
   defaultFundingCycleData,
   defaultFundingCycleMetadata,
   editingV2ProjectActions,
 } from 'redux/slices/editingV2Project'
-import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
-
-import { sanitizeSplit } from 'utils/v2/splits'
-
-import {
-  getV2CurrencyOption,
-  V2CurrencyName,
-  V2_CURRENCY_ETH,
-} from 'utils/v2/currency'
-import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
-
-import ExternalLink from 'components/ExternalLink'
-
-import { Split } from 'models/v2/splits'
-
-import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
-
 import { fromWad } from 'utils/formatNumber'
 import {
   deriveDurationUnit,
   otherUnitToSeconds,
   secondsToOtherUnit,
 } from 'utils/formatTime'
-
-import FormItemWarningText from 'components/FormItemWarningText'
-
-import { ItemNoInput } from 'components/formItems/ItemNoInput'
-import SwitchHeading from 'components/SwitchHeading'
-import DistributionSplitsSection from 'components/v2/shared/DistributionSplitsSection'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { helpPagePath } from 'utils/helpPageHelper'
+import {
+  getV2CurrencyOption,
+  V2CurrencyName,
+  V2_CURRENCY_ETH,
+} from 'utils/v2/currency'
 import { getTotalSplitsPercentage } from 'utils/v2/distributions'
-
-import isEqual from 'lodash/isEqual'
-
-import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
-
-import { shadowCard } from 'constants/styles/shadowCard'
-
-import { DurationUnitsOption } from 'constants/time'
+import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
+import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
+import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
+import { sanitizeSplit } from 'utils/v2/splits'
 import DurationInputAndSelect from './DurationInputAndSelect'
-
 import { FundingCycleExplainerCollapse } from './FundingCycleExplainerCollapse'
 
 type FundingFormFields = {
@@ -74,7 +58,7 @@ type FundingFormFields = {
   totalSplitsPercentage?: number
 }
 
-const DEFAULT_FUNDING_CYCLE_DURATION = 14
+const DEFAULT_FUNDING_CYCLE_DURATION_DAYS = 14
 
 export default function FundingForm({
   onFormUpdated,
@@ -239,12 +223,19 @@ export default function FundingForm({
       )
       dispatch(editingV2ProjectActions.setDuration(durationInSeconds ?? '0'))
 
-      // reset discount rate if duration is 0
       if (!durationInSeconds || durationInSeconds === '0') {
+        // reset discount rate if duration is 0
         dispatch(
           editingV2ProjectActions.setDiscountRate(
             defaultFundingCycleData.discountRate,
           ),
+        )
+        // set ballot to 0x00 if duration is 0
+        dispatch(editingV2ProjectActions.setBallot(constants.AddressZero))
+      } else {
+        // if duration is set, reset the ballot to the "default" ballot
+        dispatch(
+          editingV2ProjectActions.setBallot(DEFAULT_BALLOT_STRATEGY.address),
         )
       }
 
@@ -341,12 +332,14 @@ export default function FundingForm({
           onChange={checked => {
             setDurationEnabled(checked)
 
+            // if no funding cycle, select a 0-ballot
             if (!checked) {
               fundingForm.setFieldsValue({ duration: '0' })
+            } else {
+              fundingForm.setFieldsValue({
+                duration: DEFAULT_FUNDING_CYCLE_DURATION_DAYS.toString(),
+              })
             }
-            fundingForm.setFieldsValue({
-              duration: DEFAULT_FUNDING_CYCLE_DURATION.toString(),
-            })
           }}
           style={{ marginBottom: '1rem' }}
         >

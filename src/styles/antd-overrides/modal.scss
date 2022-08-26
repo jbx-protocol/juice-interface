@@ -20,3 +20,8 @@
     border-color: transparent;
   }
 }
+
+.ant-modal-wrap,
+.ant-modal-mask {
+  z-index: 1;
+}

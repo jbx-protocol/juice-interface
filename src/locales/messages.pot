@@ -284,6 +284,9 @@ msgstr ""
 msgid "Add payout"
 msgstr ""
 
+msgid "Add payout recipient"
+msgstr ""
+
 msgid "Add reward tier"
 msgstr ""
 

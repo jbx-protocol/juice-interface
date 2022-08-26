@@ -1,10 +1,20 @@
-import { DeleteOutlined, LockOutlined } from '@ant-design/icons'
+import {
+  DeleteOutlined,
+  LockOutlined,
+  PlusCircleOutlined,
+} from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-
 import { Button, Col, Form, Row, Space, Tooltip } from 'antd'
-
 import { useForm } from 'antd/lib/form/Form'
+import FormattedAddress from 'components/FormattedAddress'
+import {
+  validateEthAddress,
+  validatePercentage,
+} from 'components/formItems/formHelpers'
+import { FormItemExt } from 'components/formItems/formItemExt'
+import ReservedTokenReceiverModal from 'components/modals/ReservedTokenReceiverModal'
 import { ThemeContext } from 'contexts/themeContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { TicketMod } from 'models/mods'
 import * as moment from 'moment'
 import {
@@ -16,17 +26,6 @@ import {
 } from 'react'
 import { formatDate } from 'utils/formatDate'
 import { percentToPermyriad, permyriadToPercent } from 'utils/formatNumber'
-
-import { V1ProjectContext } from 'contexts/v1/projectContext'
-
-import {
-  validateEthAddress,
-  validatePercentage,
-} from 'components/formItems/formHelpers'
-import ReservedTokenReceiverModal from 'components/modals/ReservedTokenReceiverModal'
-
-import FormattedAddress from 'components/FormattedAddress'
-import { FormItemExt } from 'components/formItems/formItemExt'
 
 type ModalMode = 'Add' | 'Edit' | undefined
 
@@ -319,8 +318,11 @@ export default function ProjectTicketMods({
             form.resetFields()
           }}
           block
+          icon={<PlusCircleOutlined />}
         >
-          <Trans>Add token allocation</Trans>
+          <span>
+            <Trans>Add token allocation</Trans>
+          </span>
         </Button>
       </Space>
       <ReservedTokenReceiverModal

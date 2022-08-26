@@ -89,6 +89,7 @@ const items: MenuItem[] = [
 const V2ProjectSettings = () => {
   const router = useRouter()
   const {
+    projectId,
     projectMetadata,
     isPreviewMode,
     isArchived,
@@ -122,7 +123,7 @@ const V2ProjectSettings = () => {
           <Layout.Sider style={{ background: 'transparent' }}>
             <Button
               onClick={() =>
-                router.push(`/v2/p/4417`, undefined, {
+                router.push(`/v2/p/${projectId}`, undefined, {
                   shallow: true,
                 })
               }

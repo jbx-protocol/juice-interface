@@ -34,10 +34,35 @@ export type Transactor = (
   options?: TransactorOptions,
 ) => Promise<boolean>
 
+type TxOptions = Omit<TransactorOptions, 'value'>
+
 export type TransactorInstance<T = undefined> = (
   args: T,
-  txOpts?: Omit<TransactorOptions, 'value'>,
+  txOpts?: TxOptions,
 ) => ReturnType<Transactor>
+
+export function onCatch({
+  fnName,
+  version,
+  missingParam,
+  txOpts,
+}: {
+  fnName: string
+  version: 'v1' | 'v2'
+  missingParam?: string
+  txOpts?: TxOptions
+}): Promise<boolean> {
+  txOpts?.onError?.(
+    new DOMException(
+      `Missing ${
+        missingParam ?? 'parameter` not found'
+      } in ${version} ${fnName}`,
+    ),
+  )
+
+  txOpts?.onDone?.()
+  return Promise.resolve(false)
+}
 
 // wrapper around BlockNative's Notify.js
 // https://docs.blocknative.com/notify

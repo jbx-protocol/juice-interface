@@ -13,7 +13,7 @@
     "predev": "yarn compile-styles && yarn i18n:compile && yarn codegen",
     "dev": "yarn prestart && next dev",
     "find-deadcode": "ts-prune",
-    "format": "prettier --write './**/*.{js,jsx,ts,tsx}'",
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
     "i18n:compile": "NODE_ENV=development yarn i18n:extract-source-locale && lingui compile",
     "i18n:extract": "./scripts/extract-translations-template.sh",
     "i18n:extract-source-locale": "NODE_ENV=development lingui extract --locale en",

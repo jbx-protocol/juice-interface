@@ -1,10 +1,56 @@
 {
-  "name": "@jbox/app",
+  "name": "juice-interface",
   "version": "0.1.0",
   "private": true,
+  "browser": {
+    "fs": false
+  },
+  "scripts": {
+    "prebuild": "yarn predev",
+    "build": "NEXT_PUBLIC_VERSION=$(git rev-parse --short HEAD) next build",
+    "codegen": "graphql-code-generator --config codegen.yml -r dotenv/config",
+    "compile-styles": "lessc ./node_modules/antd/dist/antd.less ./src/styles/antd.css --js",
+    "predev": "yarn compile-styles && yarn i18n:compile && yarn codegen",
+    "dev": "yarn prestart && next dev",
+    "find-deadcode": "ts-prune",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx}'",
+    "i18n:compile": "NODE_ENV=development yarn i18n:extract-source-locale && lingui compile",
+    "i18n:extract": "./scripts/extract-translations-template.sh",
+    "i18n:extract-source-locale": "NODE_ENV=development lingui extract --locale en",
+    "i18n:lint": "./scripts/lint-translations-template.sh",
+    "postinstall": "yarn i18n:compile",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./",
+    "lint-staged": "lint-staged",
+    "lint:fix": "yarn lint --fix",
+    "prepare": "husky install",
+    "pristine": "rm -Rf node_modules && yarn cache clean --all && yarn install",
+    "prestart": "yarn compile-styles",
+    "start": "NEXT_PUBLIC_VERSION=$(git rev-parse --short HEAD) next start",
+    "test": "jest test",
+    "ts:compile": "tsc --noEmit --incremental"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,css}": [
+      "eslint",
+      "prettier --write"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      "last 1 chrome version",
+      "last 1 firefox version"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version"
+    ]
+  },
+  "resolutions": {
+    "//": "See https://github.com/facebook/create-react-app/issues/11773",
+    "react-error-overlay": "6.0.9"
+  },
   "dependencies": {
     "@apollo/client": "3.6.9",
-    "@babel/core": "^7.18.6",
     "@jbx-protocol/contracts-v1": "2.0.0",
     "@jbx-protocol/contracts-v2-4.0.0": "npm:@jbx-protocol/contracts-v2@4.0.0",
     "@jbx-protocol/contracts-v2-latest": "npm:@jbx-protocol/contracts-v2@8.0.0",
@@ -21,15 +67,6 @@
     "@sentry/react": "^6.18.2",
     "@sentry/tracing": "^6.18.2",
     "@sushiswap/sdk": "5.0.0-canary.116",
-    "@types/ethereum-block-by-date": "1.4.1",
-    "@types/jest": "^26.0.15",
-    "@types/lodash": "^4.14.180",
-    "@types/node": "^12.0.0",
-    "@types/react": "^17",
-    "@types/react-dom": "^17",
-    "@types/react-redux": "^7.1.16",
-    "@typescript-eslint/eslint-plugin": "5.27.0",
-    "@typescript-eslint/parser": "5.27.0",
     "@uniswap/sdk": "3.0.3",
     "@uniswap/sdk-core": "3.0.1",
     "@uniswap/v3-sdk": "3.8.2",
@@ -49,12 +86,6 @@
     "bnc-notify": "1.9.1",
     "bottleneck": "^2.19.5",
     "erc-20-abi": "^1.0.0",
-    "eslint": "^8.19.0",
-    "eslint-config-prettier": "8.5.0",
-    "eslint-config-react-app": "^6.0.0",
-    "eslint-plugin-import": "2.26.0",
-    "eslint-plugin-react": "7.30.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
     "ethereum-block-by-date": "1.4.5",
     "ethers": "^5.6.9",
     "formidable": "^2.0.1",
@@ -62,7 +93,6 @@
     "less": "4.1.2",
     "lodash": "^4.17.21",
     "next": "^12.2.2",
-    "prettier": "2.6.2",
     "react": "^17",
     "react-dom": "^17.0.1",
     "react-query": "^3.33.2",
@@ -70,54 +100,11 @@
     "recharts": "^2.1.2",
     "sass": "^1.52.1",
     "tiny-invariant": "^1.2.0",
-    "typescript": "4.7.4",
     "use-deep-compare-effect": "^1.6.1",
     "uuid": "^8.3.2"
   },
-  "scripts": {
-    "compile-styles": "lessc ./node_modules/antd/dist/antd.less ./src/styles/antd.css --js",
-    "codegen": "graphql-code-generator --config codegen.yml -r dotenv/config",
-    "predev": "yarn compile-styles && yarn i18n:compile && yarn codegen",
-    "dev": "yarn prestart && next dev",
-    "prestart": "yarn compile-styles",
-    "start": "ESLINT_NO_DEV_ERRORS=true NEXT_PUBLIC_VERSION=$(git rev-parse --short HEAD) next start",
-    "prebuild": "yarn predev",
-    "build": "NEXT_PUBLIC_VERSION=$(git rev-parse --short HEAD) next build",
-    "test": "jest test",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./",
-    "ts:compile": "tsc --noEmit --incremental",
-    "lint:fix": "yarn lint --fix",
-    "lint-staged": "lint-staged",
-    "prepare": "husky install",
-    "i18n:extract": "./scripts/extract-translations-template.sh",
-    "i18n:extract-source-locale": "NODE_ENV=development lingui extract --locale en",
-    "i18n:compile": "NODE_ENV=development yarn i18n:extract-source-locale && lingui compile",
-    "i18n:lint": "./scripts/lint-translations-template.sh",
-    "postinstall": "yarn i18n:compile",
-    "format": "prettier --write './**/*.{js,jsx,ts,tsx}'",
-    "pristine": "rm -Rf node_modules && yarn cache clean --all && yarn install",
-    "find-deadcode": "ts-prune"
-  },
-  "browser": {
-    "fs": false
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,css}": [
-      "eslint",
-      "prettier --write"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      "last 1 chrome version",
-      "last 1 firefox version"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version"
-    ]
-  },
   "devDependencies": {
+    "@babel/core": "^7.18.6",
     "@graphql-codegen/cli": "^2.9.1",
     "@graphql-codegen/introspection": "^2.2.0",
     "@graphql-codegen/typescript": "^2.7.2",
@@ -128,19 +115,32 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^12.1.10",
+    "@types/ethereum-block-by-date": "1.4.1",
     "@types/formidable": "^2.0.5",
+    "@types/jest": "^26.0.15",
+    "@types/lodash": "^4.14.180",
+    "@types/node": "^12.0.0",
+    "@types/react": "^17",
+    "@types/react-dom": "^17",
+    "@types/react-redux": "^7.1.16",
     "@types/uuid": "^8.3.4",
+    "@typescript-eslint/eslint-plugin": "^5.35.1",
+    "@typescript-eslint/parser": "^5.35.1",
     "dotenv": "^16.0.1",
+    "eslint": "^8.19.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-react": "^7.31.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "husky": "^7.0.0",
     "jest": "^28.1.3",
-    "lint-staged": "13.0.0",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
     "prettier-plugin-organize-imports": "^3.1.0",
     "react-error-overlay": "6.0.9",
     "react-test-renderer": "^17",
-    "ts-prune": "^0.10.3"
-  },
-  "resolutions": {
-    "//": "See https://github.com/facebook/create-react-app/issues/11773",
-    "react-error-overlay": "6.0.9"
+    "ts-prune": "^0.10.3",
+    "typescript": "4.7.4"
   }
 }

@@ -24,7 +24,7 @@ export function useMintTokensTx(): TransactorInstance<{
         ? 'transactor'
         : !contracts
         ? 'contracts'
-        : projectId
+        : !projectId
         ? 'projectId'
         : null
 

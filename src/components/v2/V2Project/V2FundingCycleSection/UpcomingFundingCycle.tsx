@@ -1,72 +1,19 @@
 import { LoadingOutlined } from '@ant-design/icons'
 import { CardSection } from 'components/CardSection'
 import FundingCycleDetailsCard from 'components/Project/FundingCycleDetailsCard'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
-import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
-import { useProjectLatestConfiguredFundingCycle } from 'hooks/v2/contractReader/ProjectLatestConfiguredFundingCycle'
-import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
-import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
-import {
-  BallotState,
-  V2FundingCycle,
-  V2FundingCycleMetadata,
-} from 'models/v2/fundingCycle'
-import { useContext } from 'react'
-import { V2FundingCycleRiskCount } from 'utils/v2/fundingCycle'
-
-import FundingCycleDetails from './FundingCycleDetails'
-import PayoutSplitsCard from './PayoutSplitsCard'
-import ReservedTokensSplitsCard from './ReservedTokensSplitsCard'
-
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
-
-const useUpcomingFundingCycle = (): [
-  V2FundingCycle | undefined,
-  V2FundingCycleMetadata | undefined,
-  BallotState?,
-] => {
-  const { projectId, fundingCycle } = useContext(V2ProjectContext)
-
-  const { data: latestConfiguredFundingCycleResponse } =
-    useProjectLatestConfiguredFundingCycle({
-      projectId,
-    })
-  const [
-    latestConfiguredFundingCycle,
-    latestConfiguredFundingCycleMetadata,
-    latestConfiguredFundingCycleBallotState,
-  ] = latestConfiguredFundingCycleResponse ?? []
-
-  const isCurrentFundingCycleLatest =
-    latestConfiguredFundingCycle &&
-    fundingCycle &&
-    fundingCycle.number.eq(latestConfiguredFundingCycle.number)
-
-  const { data: queuedFundingCycleResponse } = useProjectQueuedFundingCycle({
-    projectId: isCurrentFundingCycleLatest ? projectId : undefined,
-  })
-  const [queuedFundingCycle, queuedFundingCycleMetadata] =
-    queuedFundingCycleResponse ?? []
-
-  const hasLatestBallotFailed =
-    latestConfiguredFundingCycleBallotState === BallotState.failed
-
-  if (
-    (isCurrentFundingCycleLatest || hasLatestBallotFailed) &&
-    queuedFundingCycle
-  ) {
-    return [queuedFundingCycle, queuedFundingCycleMetadata]
-  }
-
-  return [
-    latestConfiguredFundingCycle,
-    latestConfiguredFundingCycleMetadata,
-    latestConfiguredFundingCycleBallotState,
-  ]
-}
+import { V2ProjectContext } from 'contexts/v2/projectContext'
+import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
+import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
+import { useProjectUpcomingFundingCycle } from 'hooks/v2/contractReader/ProjectUpcomingFundingCycle'
+import { useContext } from 'react'
+import { V2FundingCycleRiskCount } from 'utils/v2/fundingCycle'
+import FundingCycleDetails from './FundingCycleDetails'
+import PayoutSplitsCard from './PayoutSplitsCard'
+import ReservedTokensSplitsCard from './ReservedTokensSplitsCard'
 
 export default function UpcomingFundingCycle({
   expandCard,
@@ -76,7 +23,7 @@ export default function UpcomingFundingCycle({
   const { projectId, primaryTerminal } = useContext(V2ProjectContext)
 
   const [upcomingFundingCycle, upcomingFundingCycleMetadata, ballotState] =
-    useUpcomingFundingCycle()
+    useProjectUpcomingFundingCycle()
 
   const { data: queuedPayoutSplits } = useProjectSplits({
     projectId,

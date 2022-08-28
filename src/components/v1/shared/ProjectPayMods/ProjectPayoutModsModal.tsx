@@ -36,7 +36,7 @@ import { useForm } from 'antd/lib/form/Form'
 
 import { CurrencyName } from 'constants/currency'
 
-import FormattedNumberInputNew from 'components/inputs/FormattedNumberInputNew'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { EditingPayoutMod } from './types'
 
 type ModType = 'project' | 'address'
@@ -303,7 +303,7 @@ export const ProjectPayoutModsModal = ({
                 alignItems: 'center',
               }}
             >
-              <FormattedNumberInputNew
+              <FormattedNumberInput
                 value={form.getFieldValue('amount')}
                 placeholder={'0'}
                 onChange={amount => onAmountChange(parseFloat(amount || '0'))}

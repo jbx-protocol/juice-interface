@@ -7,7 +7,7 @@ import { Trans } from '@lingui/macro'
 
 import { CurrencyName } from 'constants/currency'
 import CurrencySwitch from '../CurrencySwitch'
-import FormattedNumberInputNew from './FormattedNumberInputNew'
+import FormattedNumberInput from './FormattedNumberInput'
 
 export default function BudgetTargetInput({
   currency,
@@ -62,7 +62,7 @@ export default function BudgetTargetInput({
 
   return (
     <div>
-      <FormattedNumberInputNew
+      <FormattedNumberInput
         value={target}
         placeholder={placeholder}
         disabled={disabled}
@@ -72,7 +72,7 @@ export default function BudgetTargetInput({
       {feePerbicent?.gt(0) && showTargetSubFeeInput && (
         <div style={targetSubFeeStyles}>
           <div style={{ fontWeight: 500, flexGrow: 1, marginRight: 8 }}>
-            <FormattedNumberInputNew
+            <FormattedNumberInput
               value={targetSubFee}
               placeholder={placeholder}
               disabled={disabled}

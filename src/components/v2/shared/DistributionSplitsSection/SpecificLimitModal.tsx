@@ -2,7 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import { Form, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import InputAccessoryButton from 'components/InputAccessoryButton'
-import FormattedNumberInputNew from 'components/inputs/FormattedNumberInputNew'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TooltipLabel from 'components/TooltipLabel'
 
 import { CurrencyName } from 'constants/currency'
@@ -77,7 +77,7 @@ export default function SpecificLimitModal({
             />
           }
         >
-          <FormattedNumberInputNew
+          <FormattedNumberInput
             placeholder="0"
             min={0}
             accessory={

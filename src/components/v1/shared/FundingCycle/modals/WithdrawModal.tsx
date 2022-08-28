@@ -23,7 +23,7 @@ import {
 import { amountSubFee, feeForAmount } from 'utils/math'
 import { V1CurrencyName } from 'utils/v1/currency'
 
-import FormattedNumberInputNew from 'components/inputs/FormattedNumberInputNew'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { V1_CURRENCY_USD } from 'constants/v1/currency'
 
 export default function WithdrawModal({
@@ -171,7 +171,7 @@ export default function WithdrawModal({
           </div>
         </div>
         <div>
-          <FormattedNumberInputNew
+          <FormattedNumberInput
             placeholder="0"
             value={tapAmount}
             onChange={value => setTapAmount(value)}

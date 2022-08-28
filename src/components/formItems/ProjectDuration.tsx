@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Form, Space, Switch } from 'antd'
 import { SwitchChangeEventHandler } from 'antd/lib/switch'
-import FormattedNumberInputNew from 'components/inputs/FormattedNumberInputNew'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { useCallback, useEffect, useState } from 'react'
 import { FormItemExt } from './formItemExt'
 
@@ -75,7 +75,7 @@ export default function ProjectDuration({
         {...formItemProps}
         style={{ display: showDurationInput ? 'block' : 'none' }}
       >
-        <FormattedNumberInputNew
+        <FormattedNumberInput
           placeholder="30"
           value={value}
           suffix="days"

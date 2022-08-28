@@ -290,7 +290,7 @@ export default function FundingCycleHistory() {
     <Space
       direction="vertical"
       size="large"
-      style={{ width: '100%', maxHeight: '80vh', overflow: 'scroll' }}
+      style={{ width: '100%', maxHeight: '80vh', overflow: 'auto' }}
     >
       {pastFundingCycles.length ? (
         pastFundingCycles.map((fundingCycle: V2FundingCycle, i) => (

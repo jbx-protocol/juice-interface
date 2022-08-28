@@ -4,13 +4,13 @@ import { useForm } from 'antd/lib/form/Form'
 import { useWallet } from 'hooks/Wallet'
 
 import InputAccessoryButton from 'components/InputAccessoryButton'
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 
 import { useContext, useState } from 'react'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 
 import Callout from 'components/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
+import FormattedNumberInputNew from 'components/inputs/FormattedNumberInputNew'
 import TransactionModal from 'components/TransactionModal'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useETHReceivedFromTokens } from 'hooks/v2/contractReader/ETHReceivedFromTokens'
@@ -219,6 +219,7 @@ export default function V2RedeemModal({
         <div>
           <Form form={form} layout="vertical">
             <Form.Item
+              name="redeemAmount"
               label={
                 canRedeem ? (
                   <Trans>Tokens to redeem</Trans>
@@ -226,9 +227,9 @@ export default function V2RedeemModal({
                   <Trans>Tokens to burn</Trans>
                 )
               }
+              rules={[{ validator: validateRedeemAmount }]}
             >
-              <FormattedNumberInput
-                name="redeemAmount"
+              <FormattedNumberInputNew
                 min={0}
                 step={0.001}
                 placeholder="0"
@@ -239,9 +240,6 @@ export default function V2RedeemModal({
                     onClick={() => setRedeemAmount(fromWad(totalBalance))}
                   />
                 }
-                formItemProps={{
-                  rules: [{ validator: validateRedeemAmount }],
-                }}
                 disabled={totalBalance?.eq(0)}
                 onChange={val => setRedeemAmount(val)}
               />

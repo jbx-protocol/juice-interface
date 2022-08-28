@@ -160,7 +160,7 @@ export default function LaunchProjectPayerModal({
           value={projectPayerAddress}
           style={{ fontSize: 15 }}
           type="address"
-        />
+        />{' '}
         <CopyTextButton value={projectPayerAddress} style={{ fontSize: 25 }} />
         <p style={{ marginTop: 30 }}>
           <Trans>

@@ -29,7 +29,7 @@ export default function CopyTextButton({
       <CopyOutlined
         onClick={copyText}
         className="copyIcon"
-        style={{ ...style, paddingLeft: 10, color: colors.text.primary }}
+        style={{ ...style, color: colors.text.primary }}
       />
     </Tooltip>
   )

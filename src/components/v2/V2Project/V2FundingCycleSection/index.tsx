@@ -23,6 +23,7 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
 
+import { useProjectUpcomingFundingCycle } from 'hooks/v2/contractReader/ProjectUpcomingFundingCycle'
 import V2ReconfigureFundingModalTrigger from '../V2ProjectReconfigureModal/V2ReconfigureModalTrigger'
 import CurrentFundingCycle from './CurrentFundingCycle'
 import FundingCycleHistory from './FundingCycleHistory'
@@ -54,7 +55,7 @@ export default function V2FundingCycleSection({
   } = useProjectQueuedFundingCycle({
     projectId,
   })
-
+  const [upcomingFundingCycle] = useProjectUpcomingFundingCycle()
   const [queuedFundingCycle] = queuedFundingCycleResponse || []
 
   if (
@@ -113,7 +114,7 @@ export default function V2FundingCycleSection({
       content: <CurrentFundingCycle expandCard={expandCard} />,
     },
     !isPreviewMode &&
-      (hasFundingDuration(fundingCycleData) || fundingCycle.number.eq(0)) && {
+      !upcomingFundingCycle?.number.eq(0) && {
         key: 'upcoming',
         label: tabText({ text: t`Upcoming` }),
         content: <UpcomingFundingCycle expandCard={expandCard} />,

@@ -1058,9 +1058,6 @@ msgstr ""
 msgid "Extend lock successful. Results will be indexed in a few moments."
 msgstr ""
 
-msgid "FAQ"
-msgstr ""
-
 msgid "FAQs"
 msgstr ""
 
@@ -1128,6 +1125,9 @@ msgid "Give feedback"
 msgstr ""
 
 msgid "Give this NFT a name."
+msgstr ""
+
+msgid "Governance"
 msgstr ""
 
 msgid "Grant permission"
@@ -1490,6 +1490,9 @@ msgstr ""
 msgid "Newly minted {tokenSymbolPlural} <0>received by contributors</0> per ETH they contribute to the treasury."
 msgstr ""
 
+msgid "Newsletter"
+msgstr ""
+
 msgid "Next: Funding cycle"
 msgstr ""
 
@@ -1694,7 +1697,7 @@ msgstr ""
 msgid "Payouts to Ethereum addresses incur a {feePercentage}% fee. Your project will receive JBX in return at the current issuance rate."
 msgstr ""
 
-msgid "Peel"
+msgid "PeelDAO"
 msgstr ""
 
 msgid "Percent"
@@ -1719,6 +1722,9 @@ msgid "Potential risks"
 msgstr ""
 
 msgid "Preview"
+msgstr ""
+
+msgid "Project #{projectId}"
 msgstr ""
 
 msgid "Project Created"
@@ -1803,9 +1809,6 @@ msgid "Project {0}"
 msgstr ""
 
 msgid "Project {name} will be available soon! Try refreshing the page shortly."
-msgstr ""
-
-msgid "Project {projectId}"
 msgstr ""
 
 msgid "Project {projectId} not found"
@@ -2760,9 +2763,6 @@ msgid "With Juicebox, projects are built and maintained by motivated punks getti
 msgstr ""
 
 msgid "With no funding cycles, the project's owner can start a new funding cycle (Funding Cycle #2) on-demand. <0>Learn more.</0>"
-msgstr ""
-
-msgid "Workspace"
 msgstr ""
 
 msgid "Would you like to issue an ERC-20 token to be used as this project's token?"

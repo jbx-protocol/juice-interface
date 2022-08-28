@@ -1,6 +1,6 @@
-import { PayEvent } from 'models/subgraph-entities/vX/pay-event'
-
-export type ActivityElementEvent = Pick<PayEvent, 'timestamp' | 'txHash'> & {
+export interface ActivityElementEvent {
+  timestamp: number
+  txHash: string
   beneficiary?: string
   terminal?: string
 }

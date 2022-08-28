@@ -25,6 +25,22 @@ export function useRedeemTokensTx(): TransactorInstance<{
       !projectId ||
       !contracts?.JBETHPaymentTerminal
     ) {
+      const missingParam = !transactor
+        ? 'transactor'
+        : !userAddress
+        ? 'userAddress'
+        : !projectId
+        ? 'projectId'
+        : !contracts?.JBETHPaymentTerminal
+        ? 'contracts.JBETHPaymentTerminal'
+        : null
+
+      txOpts?.onError?.(
+        new DOMException(
+          `Missing ${missingParam ?? 'parameter` not found'} in v2 transactor`,
+        ),
+      )
+
       txOpts?.onDone?.()
       return Promise.resolve(false)
     }

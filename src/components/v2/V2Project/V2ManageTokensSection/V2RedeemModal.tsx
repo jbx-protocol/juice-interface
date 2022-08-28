@@ -126,6 +126,10 @@ export default function V2RedeemModal({
           setLoading(false)
           onConfirmed?.()
         },
+        onError: () => {
+          setTransactionPending(false)
+          setLoading(false)
+        },
       },
     )
 

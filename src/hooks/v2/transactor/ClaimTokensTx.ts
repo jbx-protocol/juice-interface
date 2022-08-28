@@ -15,6 +15,22 @@ export function useClaimTokensTx(): TransactorInstance<{
 
   return ({ claimAmount }, txOpts) => {
     if (!transactor || !userAddress || !projectId || !contracts?.JBTokenStore) {
+      const missingParam = !transactor
+        ? 'transactor'
+        : !userAddress
+        ? 'userAddress'
+        : !projectId
+        ? 'projectId'
+        : !contracts?.JBTokenStore
+        ? 'contracts.JBTokenStore'
+        : null
+
+      txOpts?.onError?.(
+        new DOMException(
+          `Missing ${missingParam ?? 'parameter` not found'} in v2 transactor`,
+        ),
+      )
+
       txOpts?.onDone?.()
       return Promise.resolve(false)
     }

@@ -20,6 +20,20 @@ export function useMintTokensTx(): TransactorInstance<{
 
   return ({ value, beneficiary, preferClaimed, memo }, txOpts) => {
     if (!transactor || !contracts || !projectId) {
+      const missingParam = !transactor
+        ? 'transactor'
+        : !contracts
+        ? 'contracts'
+        : projectId
+        ? 'projectId'
+        : null
+
+      txOpts?.onError?.(
+        new DOMException(
+          `Missing ${missingParam ?? 'parameter` not found'} in v2 transactor`,
+        ),
+      )
+
       txOpts?.onDone?.()
       return Promise.resolve(false)
     }

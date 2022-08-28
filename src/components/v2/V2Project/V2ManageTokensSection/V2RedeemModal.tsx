@@ -10,7 +10,7 @@ import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 
 import Callout from 'components/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
-import FormattedNumberInputNew from 'components/inputs/FormattedNumberInputNew'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/TransactionModal'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useETHReceivedFromTokens } from 'hooks/v2/contractReader/ETHReceivedFromTokens'
@@ -229,7 +229,7 @@ export default function V2RedeemModal({
               }
               rules={[{ validator: validateRedeemAmount }]}
             >
-              <FormattedNumberInputNew
+              <FormattedNumberInput
                 min={0}
                 step={0.001}
                 placeholder="0"

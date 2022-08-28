@@ -12,7 +12,7 @@ import { ThemeContext } from 'contexts/themeContext'
 
 import { Trans } from '@lingui/macro'
 
-import FormattedNumberInputNew from '../FormattedNumberInputNew'
+import FormattedNumberInput from '../FormattedNumberInput'
 import PayInputSubText from './PayInputSubText'
 
 export type PayButtonProps = {
@@ -82,7 +82,7 @@ export default function PayInputGroup({
         }}
       >
         <div style={{ flex: 2, minWidth: '50%' }}>
-          <FormattedNumberInputNew
+          <FormattedNumberInput
             placeholder="0"
             onChange={val => {
               setIsErrorField(Number(val) <= 0)

@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
-import FormattedNumberInputNew from 'components/inputs/FormattedNumberInputNew'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactorButton from 'components/TransactorButton'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useWallet } from 'hooks/Wallet'
@@ -52,7 +52,7 @@ export function AddToProjectBalanceForm({
       </p>
 
       <Form.Item name="amount" label={<Trans>Pay amount</Trans>}>
-        <FormattedNumberInputNew
+        <FormattedNumberInput
           placeholder="0"
           accessory={<InputAccessoryButton content="ETH" />}
         />

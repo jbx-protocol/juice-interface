@@ -2,7 +2,7 @@ import { InputNumber } from 'antd'
 import { CSSProperties } from 'react'
 import { formattedNum } from 'utils/formatNumber'
 
-export default function FormattedNumberInputNew({
+export default function FormattedNumberInput({
   style,
   min,
   max,

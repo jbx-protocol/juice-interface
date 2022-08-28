@@ -3,7 +3,7 @@ import { Form, Modal, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import ETHAmount from 'components/currency/ETHAmount'
 import InputAccessoryButton from 'components/InputAccessoryButton'
-import FormattedNumberInputNew from 'components/inputs/FormattedNumberInputNew'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { V1_CURRENCY_USD } from 'constants/v1/currency'
 import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
@@ -205,7 +205,7 @@ export default function RedeemModal({
               name="redeemAmount"
               rules={[{ validator: validateRedeemAmount }]}
             >
-              <FormattedNumberInputNew
+              <FormattedNumberInput
                 min={0}
                 step={0.001}
                 placeholder="0"

@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Form, FormInstance } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
-import FormattedNumberInputNew from 'components/inputs/FormattedNumberInputNew'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { VeNftFormFields } from 'components/veNft/VeNftRewardTierModal'
 
 export default function ContributionFloorFormItem({
@@ -24,7 +24,7 @@ export default function ContributionFloorFormItem({
       extra={t`Contributors receive the NFT when they contribute at least this amount.`}
       rules={[{ required: true, validator: validatecontributionFloorAmount }]}
     >
-      <FormattedNumberInputNew
+      <FormattedNumberInput
         accessory={<InputAccessoryButton content={'ETH'} disabled />}
       />
     </Form.Item>

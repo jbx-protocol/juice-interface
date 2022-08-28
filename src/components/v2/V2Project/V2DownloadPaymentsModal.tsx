@@ -8,7 +8,7 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import { fromWad } from 'utils/formatNumber'
 import { querySubgraphExhaustive } from 'utils/graph'
 
-import FormattedNumberInputNew from 'components/inputs/FormattedNumberInputNew'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { readProvider } from 'constants/readProvider'
 import { downloadCsvFile } from 'utils/csv'
 
@@ -105,7 +105,7 @@ export default function V2DownloadPaymentsModal({
         <label style={{ display: 'block', marginTop: 20, marginBottom: 5 }}>
           <Trans>Block number</Trans>
         </label>
-        <FormattedNumberInputNew
+        <FormattedNumberInput
           value={blockNumber?.toString()}
           onChange={val => setBlockNumber(val ? parseInt(val) : undefined)}
           accessory={

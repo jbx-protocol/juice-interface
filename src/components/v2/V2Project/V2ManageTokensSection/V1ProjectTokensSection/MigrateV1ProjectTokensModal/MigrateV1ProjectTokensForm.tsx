@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Form, FormInstance, FormProps, Space, Statistic } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
-import FormattedNumberInputNew from 'components/inputs/FormattedNumberInputNew'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { formattedNum } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
@@ -44,7 +44,7 @@ export function MigrateV1ProjectTokensForm({
             },
           ]}
         >
-          <FormattedNumberInputNew
+          <FormattedNumberInput
             max={v1TokenBalance}
             accessory={
               <InputAccessoryButton

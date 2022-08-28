@@ -2,8 +2,6 @@ import { InputNumber } from 'antd'
 import { CSSProperties } from 'react'
 import { formattedNum } from 'utils/formatNumber'
 
-import { FormItemExt } from 'components/formItems/formItemExt'
-
 export default function FormattedNumberInputNew({
   style,
   min,
@@ -32,7 +30,7 @@ export default function FormattedNumberInputNew({
   onChange?: (val?: string) => void
   onBlur?: (val?: string) => void
   isInteger?: boolean
-} & FormItemExt) {
+}) {
   const thousandsSeparator = ','
   const decimalSeparator = '.'
   const _suffix = suffix ? ` ${suffix}` : ''

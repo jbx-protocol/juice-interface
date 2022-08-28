@@ -51,35 +51,34 @@ export default function SpecificLimitModal({
       onOk={setNewSplitsFromLimit}
     >
       <Form form={form}>
-        <Form.Item name="distributionLimit">
+        <Form.Item
+          name="distributionLimit"
+          rules={[
+            {
+              required: true,
+              validator: (rule, value: string) => {
+                if (!value.match(/^[\d,]+$/g)) {
+                  return Promise.reject()
+                }
+              },
+            },
+          ]}
+          extra={
+            <TooltipLabel
+              label={t`Set this to the sum of all your payouts`}
+              tip={
+                <Trans>
+                  Each payout will receive their percent of this total each
+                  funding cycle if there is enough in the treasury. Otherwise,
+                  they will receive their percent of whatever is in the
+                  treasury.
+                </Trans>
+              }
+            />
+          }
+        >
           <FormattedNumberInputNew
             placeholder="0"
-            name="distributionLimit"
-            formItemProps={{
-              rules: [
-                {
-                  required: true,
-                  validator: (rule, value: string) => {
-                    if (!value.match(/^[\d,]+$/g)) {
-                      return Promise.reject()
-                    }
-                  },
-                },
-              ],
-              extra: (
-                <TooltipLabel
-                  label={t`Set this to the sum of all your payouts`}
-                  tip={
-                    <Trans>
-                      Each payout will receive their percent of this total each
-                      funding cycle if there is enough in the treasury.
-                      Otherwise, they will receive their percent of whatever is
-                      in the treasury.
-                    </Trans>
-                  }
-                />
-              ),
-            }}
             min={0}
             accessory={
               <InputAccessoryButton

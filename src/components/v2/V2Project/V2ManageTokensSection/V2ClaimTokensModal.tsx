@@ -4,7 +4,7 @@ import { t, Trans } from '@lingui/macro'
 import { Descriptions, Form, Space } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
 import InputAccessoryButton from 'components/InputAccessoryButton'
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import FormattedNumberInputNew from 'components/inputs/FormattedNumberInputNew'
 import TransactionModal from 'components/TransactionModal'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
@@ -143,7 +143,7 @@ export default function V2ClaimTokensModal({
 
         <Form layout="vertical">
           <Form.Item label={t`Amount of ERC-20 tokens to claim`}>
-            <FormattedNumberInput
+            <FormattedNumberInputNew
               min={0}
               max={parseFloat(fromWad(unclaimedBalance))}
               disabled={!ticketsIssued}

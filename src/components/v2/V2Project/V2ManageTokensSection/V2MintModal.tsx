@@ -7,7 +7,7 @@ import { useContext, useState } from 'react'
 import { parseWad } from 'utils/formatNumber'
 
 import { t, Trans } from '@lingui/macro'
-import FormattedNumberInputNew from 'components/inputs/FormattedNumberInputNew'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/TransactionModal'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useMintTokensTx } from 'hooks/v2/transactor/MintTokensTx'
@@ -133,7 +133,7 @@ export default function V2MintModal({
           ]}
           required
         >
-          <FormattedNumberInputNew placeholder="0" />
+          <FormattedNumberInput placeholder="0" />
         </Form.Item>
         <br />
         <Form.Item label="Memo" name="memo">

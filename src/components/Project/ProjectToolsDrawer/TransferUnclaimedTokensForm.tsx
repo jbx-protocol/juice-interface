@@ -3,7 +3,7 @@ import { t, Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
-import FormattedNumberInputNew from 'components/inputs/FormattedNumberInputNew'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactorButton from 'components/TransactorButton'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useWallet } from 'hooks/Wallet'
@@ -70,7 +70,7 @@ export function TransferUnclaimedTokensForm({
         </Trans>
       </p>
       <Form.Item name="amount" label="Amount">
-        <FormattedNumberInputNew
+        <FormattedNumberInput
           placeholder="0"
           accessory={
             <InputAccessoryButton

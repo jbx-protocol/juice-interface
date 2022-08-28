@@ -13,7 +13,7 @@ import { parseWad } from 'utils/formatNumber'
 
 import { RuleObject } from 'antd/lib/form'
 import { StoreValue } from 'antd/lib/form/interface'
-import FormattedNumberInputNew from 'components/inputs/FormattedNumberInputNew'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 
 export default function PrintPreminedModal({
@@ -133,7 +133,7 @@ export default function PrintPreminedModal({
             required={true}
             rules={[{ validator: amountValidator }]}
           >
-            <FormattedNumberInputNew
+            <FormattedNumberInput
               accessory={
                 terminal?.version === '1' ? (
                   <InputAccessoryButton content="ETH" />

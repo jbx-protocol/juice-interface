@@ -12,7 +12,7 @@ import {
 } from 'components/formItems/formHelpers'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
-import FormattedNumberInputNew from 'components/inputs/FormattedNumberInputNew'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import NumberSlider from 'components/inputs/NumberSlider'
 import TooltipIcon from 'components/TooltipIcon'
 import TooltipLabel from 'components/TooltipLabel'
@@ -453,7 +453,7 @@ export default function DistributionSplitModal({
                   },
                 ]}
               >
-                <FormattedNumberInputNew
+                <FormattedNumberInput
                   placeholder={'0'}
                   accessory={
                     isFirstSplit && onCurrencyChange ? (

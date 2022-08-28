@@ -16,7 +16,7 @@ import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { V2CurrencyName, V2_CURRENCY_USD } from 'utils/v2/currency'
 import { amountSubFee, feeForAmount } from 'utils/v2/math'
 
-import FormattedNumberInputNew from 'components/inputs/FormattedNumberInputNew'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/TransactionModal'
 import { formatFee } from 'utils/v2/math'
 
@@ -202,7 +202,7 @@ export default function DistributePayoutsModal({
               </div>
             }
           >
-            <FormattedNumberInputNew
+            <FormattedNumberInput
               placeholder="0"
               value={distributionAmount}
               onChange={value => setDistributionAmount(value)}

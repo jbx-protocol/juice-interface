@@ -8,7 +8,7 @@ import { fromWad } from 'utils/formatNumber'
 import { querySubgraphExhaustive } from 'utils/graph'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
-import FormattedNumberInputNew from 'components/inputs/FormattedNumberInputNew'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { readProvider } from 'constants/readProvider'
 import { downloadCsvFile } from 'utils/csv'
 
@@ -122,7 +122,7 @@ export default function DownloadParticipantsModal({
         <label style={{ display: 'block', marginTop: 20, marginBottom: 5 }}>
           <Trans>Block number</Trans>
         </label>
-        <FormattedNumberInputNew
+        <FormattedNumberInput
           value={blockNumber?.toString()}
           onChange={val => setBlockNumber(val ? parseInt(val) : undefined)}
           accessory={

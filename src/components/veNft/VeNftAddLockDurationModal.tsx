@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Form, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import FormattedNumberInputNew from 'components/inputs/FormattedNumberInputNew'
 
 import { SECONDS_IN_DAY } from 'constants/numbers'
 
@@ -40,18 +40,12 @@ export default function VeNftAddLockDurationModal({
       title={t`Add Lock Duration Option`}
     >
       <Form layout="vertical" form={nftForm}>
-        <Form.Item name="lockDuration" required={true}>
-          <FormattedNumberInput
-            suffix={t` days`}
-            min={1}
-            onChange={val => {
-              nftForm.setFieldsValue({ lockDuration: val })
-            }}
-            formItemProps={{
-              required: true,
-              label: <Trans>Days to lock tokens</Trans>,
-            }}
-          />
+        <Form.Item
+          name="lockDuration"
+          required
+          label={<Trans>Days to lock tokens</Trans>}
+        >
+          <FormattedNumberInputNew suffix={t` days`} min={1} />
         </Form.Item>
       </Form>
     </Modal>

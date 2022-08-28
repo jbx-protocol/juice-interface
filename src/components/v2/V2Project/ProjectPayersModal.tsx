@@ -78,7 +78,7 @@ export default function ProjectPayersModal({
                       truncated={isMobile ? true : false}
                       truncateTo={isMobile ? 8 : undefined}
                     />
-                  </span>
+                  </span>{' '}
                   <CopyTextButton value={p.address} />
                 </div>
                 <div

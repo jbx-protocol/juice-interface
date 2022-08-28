@@ -34,26 +34,10 @@ label {
 a {
   color: var(--text-action-primary);
   font-weight: 500;
+  transition: none;
 
   &:hover {
     color: var(--text-action-highlight);
-  }
-}
-
-a.quiet {
-  color: inherit;
-  font-weight: 500;
-
-  &:hover {
-    color: var(--text-primary);
-  }
-}
-
-a.hover-action {
-  color: var(--text-primary);
-  &:hover {
-    color: var(--text-action-primary);
-    text-decoration: underline;
   }
 }
 

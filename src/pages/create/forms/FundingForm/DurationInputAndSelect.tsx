@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Form, Select } from 'antd'
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import FormattedNumberInputNew from 'components/inputs/FormattedNumberInputNew'
 
 import {
   DurationUnitsOption,
@@ -21,7 +21,7 @@ export default function DurationInputAndSelect({
         style={{ width: '100%' }}
         required
       >
-        <FormattedNumberInput
+        <FormattedNumberInputNew
           placeholder="30"
           min={1}
           style={{ paddingRight: 15 }}

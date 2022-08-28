@@ -2,7 +2,6 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { CSSProperties, useContext, useState } from 'react'
 
 import InputAccessoryButton from 'components/InputAccessoryButton'
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { CurrencyContext } from 'contexts/currencyContext'
 
 import { CurrencyOption } from 'models/currencyOption'
@@ -13,6 +12,7 @@ import { ThemeContext } from 'contexts/themeContext'
 
 import { Trans } from '@lingui/macro'
 
+import FormattedNumberInputNew from '../FormattedNumberInputNew'
 import PayInputSubText from './PayInputSubText'
 
 export type PayButtonProps = {
@@ -82,7 +82,7 @@ export default function PayInputGroup({
         }}
       >
         <div style={{ flex: 2, minWidth: '50%' }}>
-          <FormattedNumberInput
+          <FormattedNumberInputNew
             placeholder="0"
             onChange={val => {
               setIsErrorField(Number(val) <= 0)
@@ -110,7 +110,6 @@ export default function PayInputGroup({
             weightingFn={weightingFn}
           />
         </div>
-
         <PayButton
           wrapperStyle={{ flex: 1 }}
           payAmount={payAmountETH}

@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Form } from 'antd'
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import FormattedNumberInputNew from 'components/inputs/FormattedNumberInputNew'
 import TooltipLabel from 'components/TooltipLabel'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
@@ -49,7 +49,7 @@ export default function MintRateFormItem({
         style={{ width: '100%' }}
         required
       >
-        <FormattedNumberInput
+        <FormattedNumberInputNew
           min={0}
           max={MAX_MINT_RATE}
           accessory={

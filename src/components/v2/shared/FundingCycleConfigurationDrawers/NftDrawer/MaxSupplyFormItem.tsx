@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
 import { Form, Switch } from 'antd'
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import FormattedNumberInputNew from 'components/inputs/FormattedNumberInputNew'
 import TooltipLabel from 'components/TooltipLabel'
 
 import { useState } from 'react'
@@ -48,7 +48,7 @@ export default function MaxSupplyFormItem({
               style={{ width: '100%', marginBottom: 0 }}
               name={'maxSupply'}
             >
-              <FormattedNumberInput isInteger />
+              <FormattedNumberInputNew isInteger />
             </Form.Item>
           ) : null}
         </div>

@@ -4,7 +4,6 @@ import { t, Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
 import InputAccessoryButton from 'components/InputAccessoryButton'
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import SplitList from 'components/v2/shared/SplitList'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
@@ -17,6 +16,7 @@ import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { V2CurrencyName, V2_CURRENCY_USD } from 'utils/v2/currency'
 import { amountSubFee, feeForAmount } from 'utils/v2/math'
 
+import FormattedNumberInputNew from 'components/inputs/FormattedNumberInputNew'
 import TransactionModal from 'components/TransactionModal'
 import { formatFee } from 'utils/v2/math'
 
@@ -202,7 +202,7 @@ export default function DistributePayoutsModal({
               </div>
             }
           >
-            <FormattedNumberInput
+            <FormattedNumberInputNew
               placeholder="0"
               value={distributionAmount}
               onChange={value => setDistributionAmount(value)}

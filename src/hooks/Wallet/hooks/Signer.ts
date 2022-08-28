@@ -1,20 +1,22 @@
-import { JsonRpcBatchProvider, Web3Provider } from '@ethersproject/providers'
+import { Web3Provider } from '@ethersproject/providers'
+import { useConnectWallet } from '@web3-onboard/react'
 import { useMemo } from 'react'
-
-import { useProvider } from './Provider'
+import { useChainUnsupported } from './ChainUnsupported'
 
 export function useSigner() {
-  const provider = useProvider()
-  const signer = useMemo(() => {
-    if (provider instanceof JsonRpcBatchProvider) {
-      return undefined
-    }
-    if (provider instanceof Web3Provider) {
-      return provider?.getSigner()
-    }
+  const [{ wallet }] = useConnectWallet()
+  const chainUnsupported = useChainUnsupported()
+  const signerProvider = useMemo(() => {
+    if (!wallet) return undefined
+    return new Web3Provider(wallet.provider, 'any')
+  }, [wallet])
 
-    console.error('FATAL: unexpected lack of provider found')
-    throw new Error('FATAL: unexpected lack of provider found')
-  }, [provider])
+  const signer = useMemo(() => {
+    // If the provider is not available or the chain is unsupported, we
+    // shouldn't attempt to do anything
+    if (!signerProvider || chainUnsupported) return undefined
+    return signerProvider.getSigner()
+  }, [chainUnsupported, signerProvider])
+
   return signer
 }

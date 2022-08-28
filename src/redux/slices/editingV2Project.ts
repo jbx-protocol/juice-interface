@@ -24,7 +24,6 @@ import {
   redemptionRateFrom,
 } from 'utils/v2/math'
 
-import { DEFAULT_BALLOT_STRATEGY } from 'constants/v2/ballotStrategies'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
@@ -49,7 +48,7 @@ interface V2ProjectState {
 // Increment this version by 1 when making breaking changes.
 // When users return to the site and their local version is less than
 // this number, their state will be reset.
-export const REDUX_STORE_V2_PROJECT_VERSION = 6
+export const REDUX_STORE_V2_PROJECT_VERSION = 7
 
 const defaultProjectMetadataState: ProjectMetadataV4 = {
   name: '',
@@ -67,7 +66,7 @@ export const defaultFundingCycleData: SerializedV2FundingCycleData =
     duration: BigNumber.from(0),
     weight: BigNumber.from(issuanceRateFrom(DEFAULT_MINT_RATE.toString())), // 1e24, resulting in 1,000,000 tokens per ETH
     discountRate: BigNumber.from(0), // A number from 0-1,000,000,000
-    ballot: DEFAULT_BALLOT_STRATEGY.address,
+    ballot: constants.AddressZero,
   })
 
 export const defaultFundingCycleMetadata: SerializedV2FundingCycleMetadata =

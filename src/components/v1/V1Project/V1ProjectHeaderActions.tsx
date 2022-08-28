@@ -7,7 +7,7 @@ import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1Con
 import { V1OperatorPermission } from 'models/v1/permissions'
 import { useContext, useState } from 'react'
 
-import { V1ProjectToolsDrawer } from 'components/v1/V1Project/V1ProjectToolsDrawer'
+import { V1ProjectToolsDrawer } from 'components/v1/V1Project/V1ProjectToolsDrawer/V1ProjectToolsDrawer'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 
 import EditProjectModal from './modals/EditProjectModal'

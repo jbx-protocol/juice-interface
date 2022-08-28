@@ -284,6 +284,9 @@ msgstr ""
 msgid "Add payout"
 msgstr ""
 
+msgid "Add payout recipient"
+msgstr ""
+
 msgid "Add reward tier"
 msgstr ""
 
@@ -492,6 +495,12 @@ msgid "By default, newly minted tokens will go to the wallet who sends funds to 
 msgstr ""
 
 msgid "By default, the payer will receive any project tokens minted from the payment."
+msgstr ""
+
+msgid "CSV data wasn't ready for export. Wait a few seconds and try again."
+msgstr ""
+
+msgid "CSV download failed."
 msgstr ""
 
 msgid "Can I change my project's contract after it's been created?"
@@ -1026,6 +1035,21 @@ msgid "Error uploading file"
 msgstr ""
 
 msgid "Explore projects"
+msgstr ""
+
+msgid "Export data"
+msgstr ""
+
+msgid "Export payouts CSV"
+msgstr ""
+
+msgid "Export the current funding cycle's payouts to CSV."
+msgstr ""
+
+msgid "Export the current funding cycle's reserved token allocation to CSV."
+msgstr ""
+
+msgid "Export token allocation CSV"
 msgstr ""
 
 msgid "Extend Lock"
@@ -1703,9 +1727,6 @@ msgstr ""
 msgid "Project ID must be a number."
 msgstr ""
 
-msgid "Project ID:"
-msgstr ""
-
 msgid "Project Token"
 msgstr ""
 
@@ -1788,6 +1809,9 @@ msgid "Project {projectId}"
 msgstr ""
 
 msgid "Project {projectId} not found"
+msgstr ""
+
+msgid "Project:"
 msgstr ""
 
 msgid "Projects"

@@ -2618,10 +2618,10 @@ msgstr ""
 msgid "Upload an image"
 msgstr ""
 
-msgid "Uploaded to: <0>{url}</0>"
+msgid "Uploaded to: <0>{imageUrl}</0>"
 msgstr ""
 
-msgid "Uploaded to: <0>{value}</0>"
+msgid "Uploaded to: <0>{url}</0>"
 msgstr ""
 
 msgid "Use <0>Amounts</0> when you want to configure a <1>distribution limit</1>. Treasury funds that exceed the distribution limit are called <2>overflow</2>. Token holders can redeem (burn) their tokens for a portion of the overflow. <3>Learn more</3>."

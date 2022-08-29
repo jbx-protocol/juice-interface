@@ -1,9 +1,10 @@
 import { Contract, EventFilter } from '@ethersproject/contracts'
 import * as Sentry from '@sentry/browser'
 import { V1UserContext } from 'contexts/v1/userContext'
-import { V1ContractName, V1Contracts } from 'models/v1/contracts'
+import { V1ContractName } from 'models/v1/contracts'
 import { useCallback, useContext, useState } from 'react'
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
+import { contractToRead } from 'utils/contractToRead'
 
 type ContractUpdateOn = {
   contract?: ContractConfig
@@ -138,15 +139,4 @@ export default function useContractReader<V>({
   ])
 
   return value
-}
-
-function contractToRead(
-  contractConfig?: ContractConfig,
-  contracts?: V1Contracts,
-): Contract | undefined {
-  if (!contractConfig) return
-
-  if (typeof contractConfig === 'string') {
-    return contracts ? contracts[contractConfig] : undefined
-  } else return contractConfig
 }

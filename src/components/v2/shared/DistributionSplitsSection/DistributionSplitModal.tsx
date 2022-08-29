@@ -246,7 +246,7 @@ export default function DistributionSplitModal({
   const onAmountChange = (newAmount: number) => {
     if (distributionLimitIsInfinite || !newAmount) return
 
-    // We need to check if we are in edit mode, therefore do not adjust new distribution limit
+    // We need to check if we are using amount input from edit modal, therefore do not set new distribution limit.
     if (overrideDistTypeWithBoth) {
       const newPercent = getDistributionPercentFromAmount({
         amount: newAmount,

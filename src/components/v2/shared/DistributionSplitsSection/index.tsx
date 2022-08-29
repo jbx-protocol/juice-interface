@@ -150,7 +150,7 @@ export default function DistributionSplitsSection({
         onSplitsChanged={onSplitsChanged}
         onCurrencyChange={onCurrencyChange}
         currencyName={currencyName}
-        isLocked={distributionLimitIsInfinite}
+        isLocked
         isProjectOwner
       />
     )

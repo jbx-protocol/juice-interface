@@ -26,6 +26,7 @@ import { amountSubFee } from 'utils/math'
 import { V1CurrencyName } from 'utils/v1/currency'
 
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'
+import { MODS_TOTAL_PERCENT } from 'utils/v1/mods'
 import ProjectPayoutMods from './ProjectPayMods/ProjectPayoutMods'
 
 export default function PayoutModsList({
@@ -91,7 +92,7 @@ export default function PayoutModsList({
   }
 
   const modsTotal = mods?.reduce((acc, curr) => acc + curr.percent, 0)
-  const ownerPercent = 10000 - (modsTotal ?? 0)
+  const ownerPercent = MODS_TOTAL_PERCENT - (modsTotal ?? 0)
 
   const baseTotal = total ?? amountSubFee(fundingCycle?.target, feePerbicent)
 

@@ -113,8 +113,8 @@ export default function LaunchProjectPayerModal({
     <>
       <TransactionModal
         visible={visible}
-        title={t`Create payment address`}
-        okText={t`Deploy payment address contract`}
+        title={t`Create Payment Address`}
+        okText={t`Deploy Payment Address contract`}
         connectWalletText={t`Connect wallet to deploy`}
         onOk={deployProjectPayer}
         onCancel={() => onClose()}
@@ -154,13 +154,13 @@ export default function LaunchProjectPayerModal({
         centered
       >
         <h4 style={{ marginBottom: 30 }}>
-          <Trans>Your new payable address:</Trans>
+          <Trans>Your new payment address:</Trans>
         </h4>
         <EtherscanLink
           value={projectPayerAddress}
           style={{ fontSize: 15 }}
           type="address"
-        />
+        />{' '}
         <CopyTextButton value={projectPayerAddress} style={{ fontSize: 25 }} />
         <p style={{ marginTop: 30 }}>
           <Trans>

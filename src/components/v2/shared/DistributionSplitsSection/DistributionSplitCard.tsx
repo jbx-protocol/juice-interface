@@ -23,6 +23,7 @@ import {
 } from 'utils/v2/math'
 
 import { CurrencyName } from 'constants/currency'
+import V2ProjectHandle from '../V2ProjectHandle'
 import DistributionSplitModal from './DistributionSplitModal'
 
 const Parens = ({
@@ -59,6 +60,7 @@ export default function DistributionSplitCard({
   const {
     theme: { colors, radii },
   } = useContext(ThemeContext)
+
   const { projectOwnerAddress } = useContext(V2ProjectContext)
 
   const [editSplitModalOpen, setEditSplitModalOpen] = useState<boolean>(false)
@@ -109,7 +111,7 @@ export default function DistributionSplitCard({
           <Row gutter={gutter} style={{ width: '100%' }} align="middle">
             <Col span={labelColSpan}>
               <label style={{ cursor }}>
-                <Trans>Project ID:</Trans>
+                <Trans>Project:</Trans>
               </label>{' '}
             </Col>
             <Col span={dataColSpan}>
@@ -120,7 +122,7 @@ export default function DistributionSplitCard({
                   justifyContent: 'space-between',
                 }}
               >
-                <span style={{ cursor }}>{parseInt(split.projectId)}</span>
+                <V2ProjectHandle projectId={parseInt(split.projectId)} />
               </div>
             </Col>
           </Row>

@@ -170,11 +170,9 @@ export default function ReconfigurePreview({
         </Col>
       </Row>
       <Row gutter={gutter}>
-        {hasDuration ? (
-          <Col span={24}>
-            <ReconfigurationStatistic ballotAddress={fundingCycle.ballot} />
-          </Col>
-        ) : null}
+        <Col span={24}>
+          <ReconfigurationStatistic ballotAddress={fundingCycle.ballot} />
+        </Col>
       </Row>
 
       {!distributionLimit?.eq(0) && (

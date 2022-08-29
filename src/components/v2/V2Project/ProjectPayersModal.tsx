@@ -78,7 +78,7 @@ export default function ProjectPayersModal({
                       truncated={isMobile ? true : false}
                       truncateTo={isMobile ? 8 : undefined}
                     />
-                  </span>
+                  </span>{' '}
                   <CopyTextButton value={p.address} />
                 </div>
                 <div
@@ -176,8 +176,8 @@ export default function ProjectPayersModal({
           }}
         >
           {plural(projectPayers.length, {
-            one: '# payment address',
-            other: '# payment addresses',
+            one: '# Payment Address',
+            other: '# Payment Addresses',
           })}
         </div>
       ) : null}

@@ -1,8 +1,13 @@
+import { PlusCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Modal, Skeleton, Space } from 'antd'
 import Callout from 'components/Callout'
+import CurrencySymbol from 'components/CurrencySymbol'
+import { SplitCsvUpload } from 'components/SplitCsvUpload/SplitCsvUpload'
+import TooltipLabel from 'components/TooltipLabel'
 import DistributionSplitCard from 'components/v2/shared/DistributionSplitsSection/DistributionSplitCard'
 import DistributionSplitModal from 'components/v2/shared/DistributionSplitsSection/DistributionSplitModal'
+import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useSetProjectSplits } from 'hooks/v2/transactor/SetProjectSplits'
@@ -19,16 +24,10 @@ import React, {
 
 import { formatWad } from 'utils/formatNumber'
 
-import { SplitCsvUpload } from 'components/SplitCsvUpload/SplitCsvUpload'
-import TooltipLabel from 'components/TooltipLabel'
 import { useWallet } from 'hooks/Wallet'
 import { V2CurrencyName } from 'utils/v2/currency'
 import { getTotalSplitsPercentage } from 'utils/v2/distributions'
 import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2/math'
-
-import CurrencySymbol from 'components/CurrencySymbol'
-
-import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
 
 const OwnerSplitCard = ({ splits }: { splits: Split[] }) => {
   const { userAddress } = useWallet()
@@ -356,8 +355,11 @@ export const EditPayoutsModal = ({
               setAddSplitModalVisible(true)
             }}
             block
+            icon={<PlusCircleOutlined />}
           >
-            <Trans>Add payout</Trans>
+            <span>
+              <Trans>Add payout recipient</Trans>
+            </span>
           </Button>
         </Space>
       </Modal>

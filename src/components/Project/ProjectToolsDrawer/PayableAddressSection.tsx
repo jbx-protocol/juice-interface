@@ -29,7 +29,7 @@ export function PayableAddressSection({
     <>
       <section>
         <h3>
-          <Trans>Create payable address</Trans>
+          <Trans>Create Payment Address</Trans>
         </h3>
         <p>
           <Trans>
@@ -54,8 +54,8 @@ export function PayableAddressSection({
               }}
             >
               {plural(projectPayers.length, {
-                one: 'View # deployed payment address',
-                other: 'View # deployed payment addresses',
+                one: 'View deployed Payment Address',
+                other: 'View deployed Payment Addresses',
               })}
             </Button>
             <ProjectPayersModal

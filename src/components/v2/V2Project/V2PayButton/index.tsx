@@ -1,3 +1,4 @@
+import { LoadingOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
@@ -8,9 +9,7 @@ import useWeiConverter from 'hooks/WeiConverter'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { useContext, useState } from 'react'
 import { V2_CURRENCY_USD } from 'utils/v2/currency'
-
 import { reloadWindow } from 'utils/windowUtils'
-
 import { V2ConfirmPayModal } from './V2ConfirmPayModal'
 
 export default function V2PayButton({
@@ -20,8 +19,12 @@ export default function V2PayButton({
   disabled,
   wrapperStyle,
 }: PayButtonProps) {
-  const { projectMetadata, fundingCycleMetadata, isArchived } =
-    useContext(V2ProjectContext)
+  const {
+    projectMetadata,
+    fundingCycleMetadata,
+    loading: { fundingCycleLoading },
+    isArchived,
+  } = useContext(V2ProjectContext)
 
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
   const [payWarningModalVisible, setPayWarningModalVisible] =
@@ -32,8 +35,6 @@ export default function V2PayButton({
     amount: payAmount,
   })
 
-  if (!fundingCycleMetadata) return null
-
   const payButtonText = projectMetadata?.payButton?.length
     ? projectMetadata.payButton
     : t`Pay`
@@ -41,11 +42,12 @@ export default function V2PayButton({
   let disabledMessage: string | undefined
   if (isArchived) {
     disabledMessage = t`This project is archived and can't be paid.`
-  } else if (fundingCycleMetadata.pausePay) {
+  } else if (fundingCycleMetadata?.pausePay) {
     disabledMessage = t`Payments are paused in this funding cycle.`
   }
 
-  const isPayDisabled = Boolean(disabledMessage) || disabled
+  const isPayDisabled =
+    Boolean(disabledMessage) || disabled || fundingCycleLoading
 
   return (
     <div style={{ textAlign: 'center', ...wrapperStyle }}>
@@ -65,7 +67,7 @@ export default function V2PayButton({
           }}
           disabled={isPayDisabled}
         >
-          {payButtonText}
+          {fundingCycleLoading ? <LoadingOutlined /> : payButtonText}
         </Button>
       </Tooltip>
       {payInCurrency === V2_CURRENCY_USD && (

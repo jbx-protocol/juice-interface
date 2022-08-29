@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-08-21 00:30\n"
+"PO-Revision-Date: 2022-08-28 00:36\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: Chinese Simplified\n"
@@ -289,6 +289,9 @@ msgstr "添加新的支出"
 msgid "Add payout"
 msgstr "添加支出"
 
+msgid "Add payout recipient"
+msgstr ""
+
 msgid "Add reward tier"
 msgstr ""
 
@@ -499,6 +502,12 @@ msgstr "默认情况下，新铸造代币会分发给向这个地址付款的钱
 msgid "By default, the payer will receive any project tokens minted from the payment."
 msgstr ""
 
+msgid "CSV data wasn't ready for export. Wait a few seconds and try again."
+msgstr ""
+
+msgid "CSV download failed."
+msgstr ""
+
 msgid "Can I change my project's contract after it's been created?"
 msgstr "项目合约创建后，我还更改它吗?"
 
@@ -515,6 +524,9 @@ msgid "Cannot redeem tokens for ETH because this project's redemption rate is ze
 msgstr ""
 
 msgid "Change ENS name"
+msgstr ""
+
+msgid "Change networks to deploy"
 msgstr ""
 
 msgid "Change project handle"
@@ -682,8 +694,11 @@ msgstr "已复制！"
 msgid "Copy to clipboard"
 msgstr "复制到剪贴板"
 
-msgid "Create a payable address (optional)"
-msgstr "创建一个可付款地址（可选）"
+msgid "Create Payment Address"
+msgstr ""
+
+msgid "Create a Payment Address (optional)"
+msgstr ""
 
 msgid "Create an Ethereum address for your project. Enables direct payments without going through your project's Juicebox page."
 msgstr "为项目创建一个以太坊地址。支持不经过项目的 Juicebox 页面直接付款。"
@@ -691,19 +706,13 @@ msgstr "为项目创建一个以太坊地址。支持不经过项目的 Juicebox
 msgid "Create an Ethereum address that can be used to pay your project directly."
 msgstr "创建一个可用于直接支付给你的项目的以太坊地址。"
 
-msgid "Create payable address"
-msgstr "创建可支付地址"
-
-msgid "Create payment address"
-msgstr ""
-
 msgid "Create project"
 msgstr "创建项目"
 
 msgid "Create your own ERC-20 token to represent stake in your project. Contributors will receive these tokens when they pay your project."
 msgstr "创建项目自己的 ERC-20 代币来代表对项目的份额。捐款人向项目付款将会获得这些代币。"
 
-msgid "Created ETH-ERC20 payment address"
+msgid "Created Payment Address"
 msgstr ""
 
 msgid "Crowdfund your project with ETH. Set a funding target to cover predictable expenses, and any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
@@ -772,16 +781,16 @@ msgstr "删除支出"
 msgid "Delete token allocation"
 msgstr "删除代币的分配方案"
 
+msgid "Deploy Payment Address"
+msgstr ""
+
+msgid "Deploy Payment Address contract"
+msgstr ""
+
 msgid "Deploy funding cycle configuration"
 msgstr "部署筹款周期配置"
 
-msgid "Deploy payment address"
-msgstr ""
-
-msgid "Deploy payment address contract"
-msgstr ""
-
-msgid "Deploy project on {0}"
+msgid "Deploy project"
 msgstr ""
 
 msgid "Deploy project to {0}"
@@ -877,14 +886,14 @@ msgstr "分配资金"
 msgid "Distributed Reserves"
 msgstr "分配保留代币"
 
-msgid "Distributed Tokens"
-msgstr "分配代币"
-
 msgid "Distributed funds"
 msgstr "分配资金"
 
 msgid "Distributed reserved {0}"
 msgstr "已分配的保留代币 {0}"
+
+msgid "Distributed tokens"
+msgstr ""
 
 msgid "Distributing funds to Juicebox projects won't incur fees."
 msgstr "分配资金给 Juicebox 项目不会产生费用。"
@@ -955,7 +964,7 @@ msgstr "项目签发了 ERC-20 代币合约后，才能铸造 ERC-20 标准的�
 msgid "ERC20 Deployed"
 msgstr "部署 ERC-20 标准代币"
 
-msgid "ETH-ERC20 Address Created"
+msgid "ERC20 deployed"
 msgstr ""
 
 msgid "Each payout will receive their percent of this total each funding cycle if there is enough in the treasury. Otherwise, they will receive their percent of whatever is in the treasury."
@@ -1032,6 +1041,21 @@ msgstr ""
 
 msgid "Explore projects"
 msgstr "探索项目"
+
+msgid "Export data"
+msgstr ""
+
+msgid "Export payouts CSV"
+msgstr ""
+
+msgid "Export the current funding cycle's payouts to CSV."
+msgstr ""
+
+msgid "Export the current funding cycle's reserved token allocation to CSV."
+msgstr ""
+
+msgid "Export token allocation CSV"
+msgstr ""
 
 msgid "Extend Lock"
 msgstr ""
@@ -1110,9 +1134,6 @@ msgstr "提交反馈"
 
 msgid "Give this NFT a name."
 msgstr ""
-
-msgid "Go to Etherscan"
-msgstr "跳转到 Etherscan"
 
 msgid "Grant permission"
 msgstr ""
@@ -1564,7 +1585,7 @@ msgstr "溢出"
 msgid "Overflow is created if your project's balance exceeds your funding cycle target. Overflow can be redeemed by your project's token holders."
 msgstr "如果您项目的资金余额超出您的筹款周期目标，就会产生溢出。项目代币持有人可以赎回溢出部分资金。"
 
-msgid "Owned by: <0/>"
+msgid "Owned by <0/>"
 msgstr ""
 
 msgid "Owner can mint tokens at any time."
@@ -1632,6 +1653,9 @@ msgstr "向 <0>{0}</0> 支付并不是投资 —— 而是支持项目的一种�
 
 msgid "Paying this project is currently disabled."
 msgstr "当前项目已暂停接收付款。"
+
+msgid "Payment Address created"
+msgstr ""
 
 msgid "Payment equivalent"
 msgstr ""
@@ -1708,14 +1732,14 @@ msgstr "创建项目"
 msgid "Project ID must be a number."
 msgstr "项目 ID 必须是一个数字。"
 
-msgid "Project ID:"
-msgstr "项目标识："
-
 msgid "Project Token"
 msgstr "项目代币"
 
 msgid "Project configuration"
 msgstr "项目设置"
+
+msgid "Project created"
+msgstr ""
 
 msgid "Project created by"
 msgstr "项目创建人是"
@@ -1791,6 +1815,9 @@ msgstr "项目 {projectId}"
 
 msgid "Project {projectId} not found"
 msgstr "项目 {projectId} 未找到"
+
+msgid "Project:"
+msgstr ""
 
 msgid "Projects"
 msgstr "项目"
@@ -1878,9 +1905,6 @@ msgstr "重新配置项目和筹款详细内容"
 
 msgid "Reconfigure project details"
 msgstr "重新配置项目明细"
-
-msgid "Reconfigure token"
-msgstr "重新配置代币"
 
 msgid "Reconfigure upcoming"
 msgstr "重新配置之后的筹款"
@@ -2065,9 +2089,6 @@ msgstr ""
 msgid "Seconds"
 msgstr "秒"
 
-msgid "See transaction"
-msgstr "查看交易"
-
 msgid "Set ENS name"
 msgstr ""
 
@@ -2198,6 +2219,9 @@ msgid "Swap for V2 {tokenSymbolFormattedPlural}"
 msgstr ""
 
 msgid "Swap for V2 {tokenText}"
+msgstr ""
+
+msgid "Switch network to {0}"
 msgstr ""
 
 msgid "Target"
@@ -2349,6 +2373,12 @@ msgstr "这是每个筹款周期可以从金库分配出去的最大资金数量
 
 msgid "This list is using an experimental data index and may be inaccurate for some projects."
 msgstr "这个列表是通过实验性的数据索引统计而得到的，对某些项目来说可能并不精确。"
+
+msgid "This project has no distributions."
+msgstr ""
+
+msgid "This project has no reserved tokens."
+msgstr ""
 
 msgid "This project is archived and can't be paid."
 msgstr "项目已被归档，无法收到付款。"
@@ -2848,8 +2878,8 @@ msgstr ""
 msgid "Your funding cycle configuration has been pre-populated using the configuration you originally launched with. If you need to customize it, contact us."
 msgstr "你的筹款周期配置已按你原来启动项目时的配置进行预填。如果你需要自己定制，请联系我们。"
 
-msgid "Your new payable address:"
-msgstr "你的新可支付地址："
+msgid "Your new payment address:"
+msgstr ""
 
 msgid "Your project can still receive payments directly through the Juicebox protocol contracts."
 msgstr "项目仍能通过 Juicebox 协议的合约直接收到付款。"
@@ -2920,8 +2950,8 @@ msgstr "满足条件 \"{searchText}\""
 msgid "minutes"
 msgstr "分钟"
 
-msgid "or <0><1>buy {tokenText} on exchange<2/></1></0>"
-msgstr "或是 <0><1>在交易所购买 {tokenText} <2/></1></0>"
+msgid "or <0><1>buy {tokenText} on exchange.</1></0>"
+msgstr ""
 
 msgid "project"
 msgstr "项目"
@@ -2956,10 +2986,10 @@ msgstr ""
 msgid "veNFT Tiers ({0} variants)"
 msgstr ""
 
-msgid "{0, plural, one {# payment address} other {# payment addresses}}"
+msgid "{0, plural, one {# Payment Address} other {# Payment Addresses}}"
 msgstr ""
 
-msgid "{0, plural, one {View # deployed payment address} other {View # deployed payment addresses}}"
+msgid "{0, plural, one {View deployed Payment Address} other {View deployed Payment Addresses}}"
 msgstr ""
 
 msgid "{0} - Project payer contracts"

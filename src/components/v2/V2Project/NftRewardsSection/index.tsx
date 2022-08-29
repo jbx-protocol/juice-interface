@@ -1,4 +1,3 @@
-import { LoadingOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Col, Row } from 'antd'
 import SectionHeader from 'components/SectionHeader'
@@ -10,6 +9,7 @@ import { useContext, useEffect, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { getNftRewardTier } from 'utils/v2/nftRewards'
 
+import { MAX_NFT_REWARD_TIERS } from 'components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { RewardTier } from './RewardTier'
 
@@ -48,9 +48,11 @@ export function NftRewardsSection({
 
   const nftRewardsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
 
-  if (!CIDs || CIDs.length < 1 || !nftRewardsEnabled) return null
+  const hasCIDs = Boolean(CIDs?.length)
 
-  const loading = nftsLoading || (CIDs.length && !rewardTiers?.length)
+  if ((!hasCIDs && !nftsLoading) || !nftRewardsEnabled) {
+    return null
+  }
 
   const renderRewardTier = (rewardTier: NftRewardTier, index: number) => {
     const isSelected = index === selectedIndex
@@ -64,22 +66,30 @@ export function NftRewardsSection({
         xs={8}
         key={`${rewardTier.contributionFloor}-${rewardTier.name}`}
       >
-        {!loading ? (
-          <RewardTier
-            rewardTier={rewardTier}
-            rewardTierUpperLimit={nextRewardTier?.contributionFloor}
-            isSelected={isSelected}
-            onClick={() => {
-              setSelectedIndex(isSelected ? undefined : index)
-              onPayAmountChange(
-                isSelected ? '0' : rewardTier.contributionFloor.toString(),
-              )
-            }}
-          />
-        ) : (
-          <LoadingOutlined />
-        )}
+        <RewardTier
+          rewardTier={rewardTier}
+          rewardTierUpperLimit={nextRewardTier?.contributionFloor}
+          isSelected={isSelected}
+          onClick={() => {
+            setSelectedIndex(isSelected ? undefined : index)
+            onPayAmountChange(
+              isSelected ? '0' : rewardTier.contributionFloor.toString(),
+            )
+          }}
+        />
       </Col>
+    )
+  }
+
+  function RewardTiersLoadingSkeleton() {
+    return (
+      <Row style={{ marginTop: '15px' }} gutter={isMobile ? 8 : 24}>
+        {[...Array(MAX_NFT_REWARD_TIERS)]?.map(index => (
+          <Col md={8} xs={8} key={index}>
+            <RewardTier loading />
+          </Col>
+        ))}
+      </Row>
     )
   }
 
@@ -97,11 +107,13 @@ export function NftRewardsSection({
       >
         <Trans>Contribute to unlock an NFT reward.</Trans>
       </span>
-      {rewardTiers ? (
+      {nftsLoading ? (
+        <RewardTiersLoadingSkeleton />
+      ) : (
         <Row style={{ marginTop: '15px' }} gutter={isMobile ? 8 : 24}>
-          {rewardTiers.map(renderRewardTier)}
+          {rewardTiers?.map(renderRewardTier)}
         </Row>
-      ) : null}
+      )}
     </div>
   )
 }

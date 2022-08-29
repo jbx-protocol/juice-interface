@@ -104,7 +104,7 @@ export default function NewDeployModal({
         />
         <RichButton
           prefix="3"
-          heading={<Trans>Create a payable address (optional)</Trans>}
+          heading={<Trans>Create a Payment Address (optional)</Trans>}
           description={
             <Trans>
               Create an Ethereum address for your project. Enables direct

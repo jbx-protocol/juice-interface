@@ -34,7 +34,10 @@ export default function ProjectCreateEventElem({
           }}
         >
           <Trans>Project created by</Trans>{' '}
-          <FormattedAddress address={event.caller} />
+          <FormattedAddress
+            address={event.caller}
+            style={{ fontWeight: 400 }}
+          />
         </div>
       </div>
 

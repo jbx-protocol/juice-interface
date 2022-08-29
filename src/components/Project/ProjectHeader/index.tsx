@@ -9,6 +9,7 @@ import { useContext } from 'react'
 
 import { Button, Tooltip } from 'antd'
 
+import useMobile from 'hooks/Mobile'
 import SocialLinks from './SocialLinks'
 
 export default function ProjectHeader({
@@ -29,6 +30,7 @@ export default function ProjectHeader({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const isMobile = useMobile()
 
   const headerHeight = 120
 
@@ -77,6 +79,7 @@ export default function ProjectHeader({
                   : colors.text.placeholder,
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
+                maxWidth: isMobile ? '100%' : '75%',
               }}
               title={projectTitle}
             >

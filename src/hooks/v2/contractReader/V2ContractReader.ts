@@ -1,9 +1,8 @@
 import { Contract, EventFilter } from '@ethersproject/contracts'
 import { V2UserContext } from 'contexts/v2/userContext'
-
-import * as Sentry from '@sentry/browser'
+import { useContractReadValue } from 'hooks/ContractReadValue'
 import { V2ContractName } from 'models/v2/contracts'
-import { useCallback, useContext, useState } from 'react'
+import { useCallback, useContext } from 'react'
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
 import { getContract } from 'utils/getContract'
 
@@ -34,78 +33,30 @@ export default function useV2ContractReader<V>({
   callback?: (val?: V) => void
   valueDidChange?: (oldVal?: V, newVal?: V) => boolean
 }): ContractReadResult<V> {
-  const [value, setValue] = useState<V | undefined>()
-  const [loading, setLoading] = useState<boolean>(true)
-
   const { contracts } = useContext(V2UserContext)
 
-  const _formatter = useCallback(
-    (val: any) => (formatter ? formatter(val) : val), // eslint-disable-line @typescript-eslint/no-explicit-any
-    [formatter],
-  )
   const _callback = useCallback(
     (val: any) => (callback ? callback(val) : val), // eslint-disable-line @typescript-eslint/no-explicit-any
     [callback],
   )
-  const _valueDidChange = useCallback(
-    (a?: any, b?: any) => (valueDidChange ? valueDidChange(a, b) : a !== b), // eslint-disable-line @typescript-eslint/no-explicit-any
-    [valueDidChange],
-  )
+
+  const { value, loading, refetchValue } = useContractReadValue({
+    contract,
+    contracts,
+    functionName,
+    args,
+    version: 'V2',
+    formatter,
+    valueDidChange,
+  })
+
+  // Call the callback on contract read value changed
+  useDeepCompareEffectNoCheck(() => {
+    _callback(value)
+  }, [value])
 
   useDeepCompareEffectNoCheck(() => {
-    async function getValue() {
-      const readContract = getContract(contract, contracts)
-
-      console.info(readContract, functionName, args, contract, contracts)
-
-      if (!readContract || !functionName || args === null) return
-
-      try {
-        console.info('📚 [V2] Read >', functionName)
-
-        setLoading(true)
-        const result = await readContract[functionName](...(args ?? []))
-
-        const newValue = _formatter(result)
-
-        if (_valueDidChange(value, newValue)) {
-          console.info(
-            '📗 [V2] New >',
-            functionName,
-            { args },
-            { newValue },
-            { contract: readContract.address },
-          )
-          setValue(newValue)
-          _callback(newValue)
-        }
-      } catch (err) {
-        console.error(
-          '📕 [V2] Read error >',
-          functionName,
-          { args },
-          { err },
-          { contract: readContract.address },
-          contracts,
-        )
-
-        Sentry.captureException(err, {
-          tags: {
-            contract: typeof contract === 'string' ? contract : undefined,
-            contract_function: functionName,
-          },
-        })
-
-        setValue(_formatter(undefined))
-        _callback(_formatter(undefined))
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    getValue()
-
-    const listener = () => getValue()
+    const listener = () => refetchValue()
 
     const subscriptions: {
       contract: Contract
@@ -136,16 +87,7 @@ export default function useV2ContractReader<V>({
     }
 
     return () => subscriptions.forEach(s => s.contract.off(s.filter, listener))
-  }, [
-    contract,
-    contracts,
-    functionName,
-    updateOn,
-    args,
-    _formatter,
-    _callback,
-    _valueDidChange,
-  ])
+  }, [contract, contracts, functionName, updateOn, args, _callback])
 
   return { data: value, loading }
 }

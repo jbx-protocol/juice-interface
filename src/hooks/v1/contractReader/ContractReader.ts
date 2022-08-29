@@ -4,7 +4,7 @@ import { V1UserContext } from 'contexts/v1/userContext'
 import { V1ContractName } from 'models/v1/contracts'
 import { useCallback, useContext, useState } from 'react'
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
-import { contractToRead } from 'utils/contractToRead'
+import { getContract } from 'utils/getContract'
 
 type ContractUpdateOn = {
   contract?: ContractConfig
@@ -50,7 +50,7 @@ export default function useContractReader<V>({
 
   useDeepCompareEffectNoCheck(() => {
     async function getValue() {
-      const readContract = contractToRead(contract, contracts)
+      const readContract = getContract(contract, contracts)
 
       if (!readContract || !functionName || args === null) return
 
@@ -107,7 +107,7 @@ export default function useContractReader<V>({
       try {
         // Subscribe listener to updateOn events
         updateOn.forEach(u => {
-          const _contract = contractToRead(u.contract, contracts)
+          const _contract = getContract(u.contract, contracts)
 
           if (!u.eventName || !_contract) return
 

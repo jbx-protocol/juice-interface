@@ -2,7 +2,7 @@ import { Contract } from '@ethersproject/contracts'
 
 type ContractConfig<T> = T | Contract | undefined
 
-export function contractToRead<T extends string>(
+export function getContract<T extends string>(
   contractConfig?: ContractConfig<T>,
   contracts?: Record<T, Contract>,
 ): Contract | undefined {

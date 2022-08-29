@@ -15,6 +15,7 @@ import { revalidateProject } from 'utils/revalidateProject'
 
 import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
 import { drawerStyle } from 'constants/styles/drawerStyle'
+import { reloadWindow } from 'utils/windowUtils'
 
 export function V2ReconfigureProjectDetailsDrawer({
   visible,
@@ -66,6 +67,7 @@ export function V2ReconfigureProjectDetailsDrawer({
           }
           if (onFinish) onFinish()
           projectForm.resetFields()
+          reloadWindow()
         },
       },
     )

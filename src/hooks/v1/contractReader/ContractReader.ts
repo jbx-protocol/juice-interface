@@ -43,7 +43,6 @@ export default function useContractReader<V>({
     contracts,
     functionName,
     args,
-    version: 'V1',
     formatter,
     valueDidChange,
   })

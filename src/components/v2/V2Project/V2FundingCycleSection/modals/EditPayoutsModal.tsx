@@ -244,6 +244,7 @@ export const EditPayoutsModal = ({
               ? undefined
               : formatWad(distributionLimit, { thousandsSeparator: '' })
           }
+          overrideDistTypeWithBoth
           currencyName={currencyName}
           isLocked={isLocked}
           onSplitsChanged={onSplitsChanged}

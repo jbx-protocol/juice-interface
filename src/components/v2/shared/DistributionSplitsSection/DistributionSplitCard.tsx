@@ -41,6 +41,7 @@ export default function DistributionSplitCard({
   currencyName,
   isLocked,
   isProjectOwner,
+  overrideDistTypeWithBoth = false,
   onSplitsChanged,
   onSplitDelete,
   setDistributionLimit,
@@ -52,6 +53,7 @@ export default function DistributionSplitCard({
   currencyName: CurrencyName
   isLocked?: boolean
   isProjectOwner?: boolean
+  overrideDistTypeWithBoth?: boolean
   onSplitsChanged?: (splits: Split[]) => void
   onSplitDelete?: (split: Split) => void
   setDistributionLimit?: (distributionLimit: string) => void
@@ -279,6 +281,7 @@ export default function DistributionSplitCard({
           visible={editSplitModalOpen}
           onSplitsChanged={onSplitsChanged}
           mode={'Edit'}
+          overrideDistTypeWithBoth={overrideDistTypeWithBoth}
           splits={splits}
           editingSplit={split}
           distributionLimit={distributionLimit}

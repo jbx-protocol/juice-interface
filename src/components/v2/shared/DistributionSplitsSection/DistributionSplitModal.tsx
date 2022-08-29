@@ -120,20 +120,14 @@ export default function DistributionSplitModal({
   )
 
   useEffect(() => {
-    if (mode === 'Edit' || overrideDistTypeWithBoth) {
-      if (distributionLimitIsInfinite) {
-        setDistributionType('percent')
-      } else {
-        setDistributionType('both')
-      }
-    } else if (mode === 'Add') {
-      if (distributionLimitIsInfinite) {
-        setDistributionType('percent')
-      } else {
-        setDistributionType('amount')
-      }
+    if (distributionLimitIsInfinite) {
+      setDistributionType('percent')
+    } else if (overrideDistTypeWithBoth) {
+      setDistributionType('both')
+    } else {
+      setDistributionType('amount')
     }
-  }, [mode, distributionLimitIsInfinite, visible, overrideDistTypeWithBoth])
+  }, [distributionLimitIsInfinite, visible, overrideDistTypeWithBoth])
 
   // Set address project id to undefined if editing type is address
   useEffect(() => {
@@ -251,6 +245,20 @@ export default function DistributionSplitModal({
 
   const onAmountChange = (newAmount: number) => {
     if (distributionLimitIsInfinite || !newAmount) return
+
+    // We need to check if we are in edit mode, therefore do not adjust new distribution limit
+    if (overrideDistTypeWithBoth) {
+      const newPercent = getDistributionPercentFromAmount({
+        amount: newAmount,
+        distributionLimit: parseFloat(distributionLimit ?? '0'),
+      })
+
+      setAmount(newAmount)
+      form.setFieldsValue({ percent: preciseFormatSplitPercent(newPercent) })
+
+      return
+    }
+
     const newDistributionLimit = getNewDistributionLimit({
       currentDistributionLimit: distributionLimit ?? '0',
       newSplitAmount: newAmount,

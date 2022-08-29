@@ -11,9 +11,7 @@ export async function callContractRead<T extends string>({
   contracts,
   functionName,
   args,
-  version,
 }: {
-  version: string
   readContract: Contract | undefined
   contracts: Record<T, Contract> | undefined
   functionName: string | undefined
@@ -22,11 +20,11 @@ export async function callContractRead<T extends string>({
   if (!readContract || !functionName || args === null) return
 
   try {
-    console.info(`📚 [${version}] Read >`, functionName)
+    console.info(`📚 Read >`, functionName)
     return await readContract[functionName](...(args ?? []))
   } catch (err) {
     console.error(
-      `📕 [${version}] Read error >`,
+      `📕 Read error >`,
       functionName,
       { args },
       { err },

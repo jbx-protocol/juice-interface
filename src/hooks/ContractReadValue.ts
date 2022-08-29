@@ -2,7 +2,7 @@ import { Contract } from '@ethersproject/contracts'
 import { useCallback, useState } from 'react'
 import useDeepCompareEffect from 'use-deep-compare-effect'
 import { callContractRead } from 'utils/callContractRead'
-import { contractToRead } from 'utils/contractToRead'
+import { getContract } from 'utils/getContract'
 
 /**
  * Reads a `contract` value from `contracts`, using the `functionName`.
@@ -19,11 +19,9 @@ export function useContractReadValue<C extends string, V>({
   contracts,
   functionName,
   args,
-  version,
   formatter,
   valueDidChange,
 }: {
-  version: string
   contract: C | Contract | undefined
   contracts: Record<C, Contract> | undefined
   functionName: string | undefined
@@ -44,7 +42,7 @@ export function useContractReadValue<C extends string, V>({
   )
 
   const fetchValue = useCallback(async () => {
-    const readContract = contractToRead(contract, contracts)
+    const readContract = getContract(contract, contracts)
     try {
       setLoading(true)
       const result = await callContractRead({
@@ -52,13 +50,12 @@ export function useContractReadValue<C extends string, V>({
         contracts,
         functionName,
         args,
-        version,
       })
       const newValue = _formatter(result)
 
       if (_valueDidChange(value, newValue)) {
         console.info(
-          `📗 [${version}] New >`,
+          `📗 New >`,
           functionName,
           { args },
           { newValue },
@@ -79,7 +76,6 @@ export function useContractReadValue<C extends string, V>({
     contracts,
     functionName,
     value,
-    version,
   ])
 
   // Fetch the value on load or when args change.

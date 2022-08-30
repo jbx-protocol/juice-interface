@@ -4,7 +4,6 @@ import { Space } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
 import FormattedAddress from 'components/FormattedAddress'
 import InputAccessoryButton from 'components/InputAccessoryButton'
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/TransactionModal'
 import PayoutModsList from 'components/v1/shared/PayoutModsList'
 
@@ -24,6 +23,7 @@ import {
 import { amountSubFee, feeForAmount } from 'utils/math'
 import { V1CurrencyName } from 'utils/v1/currency'
 
+import FormattedNumberInputNew from 'components/inputs/FormattedNumberInputNew'
 import { V1_CURRENCY_USD } from 'constants/v1/currency'
 
 export default function WithdrawModal({
@@ -171,7 +171,7 @@ export default function WithdrawModal({
           </div>
         </div>
         <div>
-          <FormattedNumberInput
+          <FormattedNumberInputNew
             placeholder="0"
             value={tapAmount}
             onChange={value => setTapAmount(value)}

@@ -10,7 +10,7 @@ import type { AppProps } from 'next/app'
 import React, { useEffect } from 'react'
 
 import { BigNumber } from '@ethersproject/bignumber'
-import { init, useWallets } from '@web3-onboard/react'
+import { init, useAccountCenter, useWallets } from '@web3-onboard/react'
 import config from 'config/seo_meta.json'
 import {
   useLoadWalletFromLocalStorage,
@@ -57,6 +57,7 @@ init({
 })
 
 export default function MyApp({ Component, pageProps }: AppProps) {
+  const updateAccountCenter = useAccountCenter()
   const loadWalletFromLocalStorage = useLoadWalletFromLocalStorage()
   const storeWalletsInLocalStorage = useStoreWalletsInLocalStorage()
   const connectedWallets = useWallets()
@@ -70,6 +71,12 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     storeWalletsInLocalStorage(connectedWallets)
   }, [storeWalletsInLocalStorage, connectedWallets])
+
+  // disable account center in web3-onboard
+  useEffect(() => {
+    updateAccountCenter({ enabled: false })
+  }, [updateAccountCenter])
+
   return (
     <>
       {/* Default HEAD - overwritten by specific page SEO */}

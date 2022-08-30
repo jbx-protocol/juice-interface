@@ -1,11 +1,8 @@
-import { Form, InputNumber } from 'antd'
+import { InputNumber } from 'antd'
 import { CSSProperties } from 'react'
 import { formattedNum } from 'utils/formatNumber'
 
-import { FormItemExt } from 'components/formItems/formItemExt'
-
 export default function FormattedNumberInput({
-  name,
   style,
   min,
   max,
@@ -16,12 +13,10 @@ export default function FormattedNumberInput({
   suffix,
   prefix,
   accessory,
-  formItemProps,
   onChange,
   onBlur,
   isInteger,
 }: {
-  name?: string
   style?: CSSProperties
   min?: number
   max?: number
@@ -35,7 +30,7 @@ export default function FormattedNumberInput({
   onChange?: (val?: string) => void
   onBlur?: (val?: string) => void
   isInteger?: boolean
-} & FormItemExt) {
+}) {
   const thousandsSeparator = ','
   const decimalSeparator = '.'
   const _suffix = suffix ? ` ${suffix}` : ''
@@ -58,68 +53,62 @@ export default function FormattedNumberInput({
   }
 
   return (
-    <Form.Item
-      name={name}
-      {...formItemProps}
-      className="formatted-number-input"
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        position: 'relative',
+        ...style,
+      }}
     >
+      <InputNumber
+        className={accessory ? 'antd-no-number-handler' : ''}
+        min={min}
+        max={max}
+        style={{ width: '100%' }}
+        value={value !== undefined ? parseFloat(value) : undefined}
+        step={step ?? 1}
+        stringMode={true}
+        placeholder={placeholder}
+        formatter={(val?: string | number | undefined) =>
+          _prefix +
+          (val
+            ? formattedNum(val, {
+                thousandsSeparator,
+                decimalSeparator,
+              })
+            : '') +
+          _suffix
+        }
+        parser={(val?: string) =>
+          parseFloat(
+            (val !== undefined ? val : '0')
+              .replace(new RegExp(thousandsSeparator, 'g'), '')
+              .replace(_prefix, '')
+              .replace(_suffix, '')
+              .split('')
+              .filter(char => allowedValueChars.includes(char))
+              .join('') || '0',
+          )
+        }
+        disabled={disabled}
+        onBlur={_value => {
+          onBlur?.(_value?.toString())
+        }}
+        onChange={_value => {
+          onChange?.(_value?.toString())
+        }}
+      />
       <div
         style={{
-          display: 'flex',
-          alignItems: 'center',
-          position: 'relative',
-          ...style,
+          zIndex: 1,
+          fontSize: '.8rem',
+          position: 'absolute',
+          right: 5,
         }}
       >
-        <InputNumber
-          className={accessory ? 'antd-no-number-handler' : ''}
-          min={min}
-          max={max}
-          style={{ width: '100%' }}
-          value={value !== undefined ? parseFloat(value) : undefined}
-          step={step ?? 1}
-          stringMode={true}
-          placeholder={placeholder}
-          formatter={(val?: string | number | undefined) =>
-            _prefix +
-            (val
-              ? formattedNum(val, {
-                  thousandsSeparator,
-                  decimalSeparator,
-                })
-              : '') +
-            _suffix
-          }
-          parser={(val?: string) =>
-            parseFloat(
-              (val !== undefined ? val : '0')
-                .replace(new RegExp(thousandsSeparator, 'g'), '')
-                .replace(_prefix, '')
-                .replace(_suffix, '')
-                .split('')
-                .filter(char => allowedValueChars.includes(char))
-                .join('') || '0',
-            )
-          }
-          disabled={disabled}
-          onBlur={_value => {
-            onBlur?.(_value?.toString())
-          }}
-          onChange={_value => {
-            onChange?.(_value?.toString())
-          }}
-        />
-        <div
-          style={{
-            zIndex: 1,
-            fontSize: '.8rem',
-            position: 'absolute',
-            right: 5,
-          }}
-        >
-          {accessory && <div>{accessory}</div>}
-        </div>
+        {accessory && <div>{accessory}</div>}
       </div>
-    </Form.Item>
+    </div>
   )
 }

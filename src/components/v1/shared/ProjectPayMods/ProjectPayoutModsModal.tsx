@@ -11,7 +11,6 @@ import {
 } from 'components/formItems/formHelpers'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import NumberSlider from 'components/inputs/NumberSlider'
 
 import { ThemeContext } from 'contexts/themeContext'
@@ -37,6 +36,7 @@ import { useForm } from 'antd/lib/form/Form'
 
 import { CurrencyName } from 'constants/currency'
 
+import FormattedNumberInputNew from 'components/inputs/FormattedNumberInputNew'
 import { EditingPayoutMod } from './types'
 
 type ModType = 'project' | 'address'
@@ -294,6 +294,7 @@ export const ProjectPayoutModsModal = ({
                 </div>
               ) : null
             }
+            rules={[{ validator: validatePayout }]}
           >
             <div
               style={{
@@ -302,13 +303,10 @@ export const ProjectPayoutModsModal = ({
                 alignItems: 'center',
               }}
             >
-              <FormattedNumberInput
+              <FormattedNumberInputNew
                 value={form.getFieldValue('amount')}
                 placeholder={'0'}
                 onChange={amount => onAmountChange(parseFloat(amount || '0'))}
-                formItemProps={{
-                  rules: [{ validator: validatePayout }],
-                }}
                 accessory={<InputAccessoryButton content={currencyName} />}
               />
             </div>

@@ -1,7 +1,6 @@
 import { Form, Input, Modal, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import InputAccessoryButton from 'components/InputAccessoryButton'
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 
 import { isAddress } from '@ethersproject/address'
 import * as constants from '@ethersproject/constants'
@@ -12,6 +11,9 @@ import { usePrintTokensTx } from 'hooks/v1/transactor/PrintTokensTx'
 import { useContext, useMemo, useState } from 'react'
 import { parseWad } from 'utils/formatNumber'
 
+import { RuleObject } from 'antd/lib/form'
+import { StoreValue } from 'antd/lib/form/interface'
+import FormattedNumberInputNew from 'components/inputs/FormattedNumberInputNew'
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 
 export default function PrintPreminedModal({
@@ -32,20 +34,19 @@ export default function PrintPreminedModal({
     memo: string
   }>()
 
-  const [value, setValue] = useState<string>('0')
   const [loading, setLoading] = useState<boolean>()
 
   async function mint() {
+    await form.validateFields()
+    const amount = form.getFieldValue('amount') ?? '0'
     const beneficiary = form.getFieldValue('beneficiary')
     if (!isAddress(beneficiary)) return
 
     setLoading(true)
 
-    await form.validateFields()
-
     printTokensTx(
       {
-        value: parseWad(value),
+        value: parseWad(amount),
         currency: V1_CURRENCY_ETH,
         beneficiary,
         memo: form.getFieldValue('memo'),
@@ -54,7 +55,6 @@ export default function PrintPreminedModal({
       {
         onConfirmed: () => {
           form.resetFields()
-          setValue('0')
           onConfirmed?.()
         },
         onDone: () => {
@@ -64,36 +64,30 @@ export default function PrintPreminedModal({
     )
   }
 
+  const amountValidator = (rule: RuleObject, value: StoreValue) => {
+    if (!value || value === '0') {
+      return Promise.reject(t`Amount required`)
+    }
+    return Promise.resolve()
+  }
+
   const formItemProps: { label: string; extra: string } | undefined =
     useMemo(() => {
       if (!terminal?.version) return
-
-      const amountValidator = () => {
-        if (!value || value === '0') {
-          return Promise.reject(t`Amount required`)
-        }
-        return Promise.resolve()
-      }
 
       switch (terminal.version) {
         case '1':
           return {
             label: t`Payment equivalent`,
-            name: 'amount',
             extra: t`The amount of tokens minted to the receiver will be calculated based on if they had paid this amount to the project in the current funding cycle.`,
-            required: true,
-            rules: [{ validator: amountValidator }],
           }
         case '1.1':
           return {
             label: t`Token amount`,
-            name: 'amount',
             extra: t`The amount of tokens to mint to the receiver.`,
-            required: true,
-            rules: [{ validator: amountValidator }],
           }
       }
-    }, [terminal?.version, value])
+    }, [terminal?.version])
 
   const erc20Issued =
     tokenSymbol && tokenAddress && tokenAddress !== constants.AddressZero
@@ -133,16 +127,20 @@ export default function PrintPreminedModal({
           <Input placeholder={constants.AddressZero} />
         </Form.Item>
         <div style={{ marginBottom: '1rem' }}>
-          <FormattedNumberInput
-            formItemProps={formItemProps}
-            value={value}
-            onChange={val => setValue(val ?? '0')}
-            accessory={
-              terminal?.version === '1' ? (
-                <InputAccessoryButton content="ETH" />
-              ) : undefined
-            }
-          />
+          <Form.Item
+            {...formItemProps}
+            name="amount"
+            required={true}
+            rules={[{ validator: amountValidator }]}
+          >
+            <FormattedNumberInputNew
+              accessory={
+                terminal?.version === '1' ? (
+                  <InputAccessoryButton content="ETH" />
+                ) : undefined
+              }
+            />
+          </Form.Item>
         </div>
         <Form.Item
           label={<Trans>Memo</Trans>}

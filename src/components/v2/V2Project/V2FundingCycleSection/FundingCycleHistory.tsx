@@ -312,9 +312,7 @@ export default function FundingCycleHistory() {
 
   return (
     <div>
-      <FundingCycles />
-
-      {allCyclesLoaded ? null : <Loading />}
+      {allCyclesLoaded ? <FundingCycles /> : <Loading />}
 
       {selectedFundingCycle && (
         <Modal

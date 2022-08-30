@@ -23,5 +23,5 @@ export function useEtherPrice() {
     return () => clearInterval(timer)
   })
 
-  return price
+  return price ?? 0
 }

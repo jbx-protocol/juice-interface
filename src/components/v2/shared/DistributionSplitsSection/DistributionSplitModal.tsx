@@ -267,10 +267,7 @@ export default function DistributionSplitModal({
 
     const newPercent = getDistributionPercentFromAmount({
       amount: newAmount,
-      distributionLimit:
-        mode === 'Add'
-          ? newDistributionLimit
-          : parseFloat(distributionLimit ?? ''),
+      distributionLimit: newDistributionLimit,
     })
 
     setNewDistributionLimit(newDistributionLimit.toString())

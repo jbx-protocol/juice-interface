@@ -1,4 +1,3 @@
-import { PlusCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
 import { Split } from 'models/v2/splits'

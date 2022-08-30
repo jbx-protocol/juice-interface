@@ -1,3 +1,4 @@
+import { PlusCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, Skeleton, Space } from 'antd'
 import Callout from 'components/Callout'
@@ -306,8 +307,11 @@ export const V2EditPayouts = ({
             setAddSplitModalVisible(true)
           }}
           block
+          icon={<PlusCircleOutlined />}
         >
-          <Trans>Add payout</Trans>
+          <span>
+            <Trans>Add payout recipient</Trans>
+          </span>
         </Button>
       </Space>
       <DistributionSplitModal

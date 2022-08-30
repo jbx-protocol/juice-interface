@@ -1,14 +1,13 @@
 import { TransactionResponse } from '@ethersproject/providers'
+import { useWallet } from 'hooks/Wallet'
 import { TransactionLog, TxStatus } from 'models/transaction'
-import { ReactNode, useCallback, useEffect, useState } from 'react'
+import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import { clearInterval, setInterval } from 'timers'
 
 import { readProvider } from '../constants/readProvider'
 import { TxHistoryContext } from '../contexts/txHistoryContext'
 
 const nowSeconds = () => Math.round(new Date().valueOf() / 1000)
-
-const KEY_TRANSACTIONS = 'transactions'
 
 const SHORT_TERM_POLL_INTERVAL_MILLIS = 3 * 1000 // 3 sec
 const LONG_TERM_POLL_INTERVAL_MILLIS = 12 * 1000 // 12 sec
@@ -21,20 +20,36 @@ export default function TxHistoryProvider({
 }: {
   children: ReactNode
 }) {
+  const { userAddress, chain } = useWallet()
   const [transactions, setTransactions] = useState<TransactionLog[]>([])
   const [poller, setPoller] = useState<NodeJS.Timer>()
 
+  const localStorageKey = useMemo(
+    () =>
+      chain && userAddress
+        ? `transactions_${chain?.id}_${userAddress}`
+        : undefined,
+    [chain, userAddress],
+  )
+
   // Sets TransactionLogs in both localStorage and state
   // Ensures localStorage is always up to date, so we can persist good data on refresh
-  const _setTransactions = useCallback((txs: TransactionLog[]) => {
-    localStorage.setItem(KEY_TRANSACTIONS, JSON.stringify(txs))
-    setTransactions(txs)
-  }, [])
+  const _setTransactions = useCallback(
+    (txs: TransactionLog[]) => {
+      if (!localStorageKey) return
+
+      localStorage.setItem(localStorageKey, JSON.stringify(txs))
+      setTransactions(txs)
+    },
+    [localStorageKey],
+  )
 
   // Load initial state
   useEffect(() => {
+    if (!localStorageKey) return
+
     _setTransactions(
-      JSON.parse(localStorage.getItem(KEY_TRANSACTIONS) || '[]')
+      JSON.parse(localStorage.getItem(localStorageKey) || '[]')
         // Only persist txs that are failed/pending
         // or were created within history window
         .filter(
@@ -43,7 +58,7 @@ export default function TxHistoryProvider({
             nowSeconds() - TX_HISTORY_TIME_SECS < tx.createdAt,
         ) as TransactionLog[],
     )
-  }, [_setTransactions])
+  }, [_setTransactions, localStorageKey])
 
   // Setup poller for refreshing transactions
   useEffect(() => {

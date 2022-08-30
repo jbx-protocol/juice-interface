@@ -9,19 +9,14 @@ type ResourceItem = {
 export const resourcesMenuItems = (): ResourceItem[] => {
   return [
     {
-      text: t`Docs`,
-      key: 'docs',
-      link: 'https://info.juicebox.money/',
+      text: t`Governance`,
+      key: 'governance',
+      link: 'https://vote.juicebox.money/#/jbdao.eth',
     },
     {
-      text: t`Blog`,
-      key: 'blog',
-      link: 'https://info.juicebox.money/blog',
-    },
-    {
-      key: 'workspace',
-      text: t`Workspace`,
-      link: 'https://juicebox.notion.site/',
+      text: t`Newsletter`,
+      key: 'newsletter',
+      link: 'https://newsletter.juicebox.money',
     },
     {
       key: 'podcast',
@@ -30,7 +25,7 @@ export const resourcesMenuItems = (): ResourceItem[] => {
     },
     {
       key: 'peel',
-      text: t`Peel`,
+      text: t`PeelDAO`,
       link: 'https://discord.gg/XvmfY4Hkcz',
     },
   ]

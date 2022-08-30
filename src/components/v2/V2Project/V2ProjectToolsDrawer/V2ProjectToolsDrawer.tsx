@@ -13,6 +13,7 @@ import useMobile from 'hooks/Mobile'
 import { default as useUserUnclaimedTokenBalance } from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
 import { useAddToBalanceTx } from 'hooks/v2/transactor/AddToBalanceTx'
 import { useDeployProjectPayerTx } from 'hooks/v2/transactor/DeployProjectPayerTx'
+import { useTransferProjectOwnershipTx } from 'hooks/v2/transactor/TransferProjectOwnershipTx'
 import { useTransferUnclaimedTokensTx } from 'hooks/v2/transactor/TransferUnclaimedTokensTx'
 import { ETHPayoutSplitGroup, ReservedTokensSplitGroup } from 'models/v2/splits'
 import { useContext } from 'react'
@@ -56,7 +57,10 @@ export function V2ProjectToolsDrawer({
       <Divider />
 
       <section>
-        <TransferOwnershipForm />
+        <TransferOwnershipForm
+          ownerAddress={projectOwnerAddress}
+          useTransferProjectOwnershipTx={useTransferProjectOwnershipTx}
+        />
       </section>
 
       <Divider />

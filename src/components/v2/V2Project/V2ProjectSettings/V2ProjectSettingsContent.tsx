@@ -13,13 +13,16 @@ import V2ProjectSettingsPayoutsContent from 'components/v2/V2Project/V2ProjectSe
 import V2ProjectSettingsVenftContent from 'components/v2/V2Project/V2ProjectSettings/V2ProjectSettingsVenftContent'
 import V2ReconfigureProjectHandle from 'components/v2/V2Project/V2ProjectSettings/V2ReconfigureProjectHandle'
 import { V1TokenMigrationSetupSection } from 'components/v2/V2Project/V2ProjectToolsDrawer/V1TokenMigrationSetupSection'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useDeployProjectPayerTx } from 'hooks/v2/transactor/DeployProjectPayerTx'
+import { useTransferProjectOwnershipTx } from 'hooks/v2/transactor/TransferProjectOwnershipTx'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 const defaultPage: V2SettingsKey = 'general'
 
 const V2ProjectSettingsContent = () => {
+  const { projectOwnerAddress } = useContext(V2ProjectContext)
   const [selectedSettingsPage, setSelectedSettingsPage] =
     useState<V2SettingsKey>(defaultPage)
   const router = useRouter()
@@ -76,7 +79,12 @@ const V2ProjectSettingsContent = () => {
       case 'venft':
         return <V2ProjectSettingsVenftContent />
       case 'transferownership':
-        return <TransferOwnershipForm />
+        return (
+          <TransferOwnershipForm
+            ownerAddress={projectOwnerAddress}
+            useTransferProjectOwnershipTx={useTransferProjectOwnershipTx}
+          />
+        )
       case 'archiveproject':
         return <ArchiveV2Project />
       default:

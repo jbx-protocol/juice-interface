@@ -1,7 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useCallback, useContext, useEffect, useState } from 'react'
@@ -10,6 +9,7 @@ import { querySubgraphExhaustive } from 'utils/graph'
 
 import { emitErrorNotification } from 'utils/notifications'
 
+import FormattedNumberInputNew from 'components/inputs/FormattedNumberInputNew'
 import { readProvider } from 'constants/readProvider'
 import { downloadCsvFile } from 'utils/csv'
 
@@ -103,7 +103,7 @@ export default function V1DownloadPaymentsModal({
         <label style={{ display: 'block', marginTop: 20, marginBottom: 5 }}>
           <Trans>Block number</Trans>
         </label>
-        <FormattedNumberInput
+        <FormattedNumberInputNew
           value={blockNumber?.toString()}
           onChange={val => setBlockNumber(val ? parseInt(val) : undefined)}
           accessory={

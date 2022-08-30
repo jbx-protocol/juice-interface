@@ -17,10 +17,6 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { formatReservedRate } from 'utils/v2/math'
 import { reloadWindow } from 'utils/windowUtils'
 
-import { pushSettingsContent } from 'utils/pushSettingsPage'
-
-import { useRouter } from 'next/router'
-
 import DistributeReservedTokensModal from './modals/DistributeReservedTokensModal'
 import { EditTokenAllocationModal } from './modals/EditTokenAllocationModal'
 
@@ -33,7 +29,6 @@ export default function ReservedTokensSplitsCard({
   reservedTokensSplits: Split[] | undefined
   reservedRate: BigNumber | undefined
 }) {
-  const router = useRouter()
   const { tokenSymbol, projectOwnerAddress, projectId, isPreviewMode } =
     useContext(V2ProjectContext)
   const {
@@ -171,7 +166,7 @@ export default function ReservedTokensSplitsCard({
             {canEditTokens && reservedRate?.gt(0) ? (
               <Button
                 size="small"
-                onClick={() => pushSettingsContent(router, 'reservedtokens')}
+                onClick={() => setEditTokenAllocationModalVisible(true)}
                 icon={<SettingOutlined />}
                 style={{ marginBottom: '1rem' }}
               >

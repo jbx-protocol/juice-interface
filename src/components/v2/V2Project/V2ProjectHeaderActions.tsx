@@ -1,4 +1,8 @@
-import { HomeOutlined, SettingOutlined, ToolOutlined } from '@ant-design/icons'
+import {
+  HomeOutlined,
+  ThunderboltOutlined,
+  ToolOutlined,
+} from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import { V2ProjectToolsDrawer } from 'components/v2/V2Project/V2ProjectToolsDrawer/V2ProjectToolsDrawer'
@@ -9,7 +13,12 @@ import { useContext, useState } from 'react'
 
 import ProjectVersionBadge from 'components/ProjectVersionBadge'
 
+import V2ReconfigureFundingModalTrigger from 'components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureModalTrigger'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/V2ConnectedWalletHasPermission'
+import { V2OperatorPermission } from 'models/v2/permissions'
 import Link from 'next/link'
+import { featureFlagEnabled } from 'utils/featureFlags'
 
 export default function V2ProjectHeaderActions() {
   const { projectId } = useContext(V2ProjectContext)
@@ -19,6 +28,13 @@ export default function V2ProjectHeaderActions() {
   } = useContext(ThemeContext)
 
   const [toolDrawerVisible, setToolDrawerVisible] = useState<boolean>(false)
+  const settingsPageEnabled = featureFlagEnabled(FEATURE_FLAGS.SETTINGS_PAGE)
+
+  const canReconfigure = useV2ConnectedWalletHasPermission(
+    V2OperatorPermission.RECONFIGURE,
+  )
+
+  const showReconfigureButton = canReconfigure
 
   return (
     <div
@@ -45,18 +61,20 @@ export default function V2ProjectHeaderActions() {
         onClose={() => setToolDrawerVisible(false)}
       />
       <div style={{ display: 'flex' }}>
-        <Tooltip title={t`Project Home`} placement="bottom">
-          {projectId && (
+        {settingsPageEnabled && projectId && (
+          <>
             <Link href={`/v2/p/${projectId}`}>
-              <Button icon={<HomeOutlined />} type="text" />
+              <Tooltip title={t`Project Home`} placement="bottom">
+                <Button icon={<HomeOutlined />} type="text" />
+              </Tooltip>
             </Link>
-          )}
-        </Tooltip>
-        <Tooltip title={t`Project Settings`} placement="bottom">
-          <Link href={`/v2/p/${projectId}/settings`}>
-            <Button icon={<SettingOutlined />} type="text" />
-          </Link>
-        </Tooltip>
+            <Link href={`/v2/p/${projectId}/settings`}>
+              <Tooltip title={t`Project Settings`} placement="bottom">
+                <Button icon={<ThunderboltOutlined />} type="text" />
+              </Tooltip>
+            </Link>
+          </>
+        )}
         <Tooltip title={t`Tools`} placement="bottom">
           <Button
             onClick={() => setToolDrawerVisible(true)}
@@ -64,6 +82,7 @@ export default function V2ProjectHeaderActions() {
             type="text"
           />
         </Tooltip>
+        {showReconfigureButton && <V2ReconfigureFundingModalTrigger />}
       </div>
     </div>
   )

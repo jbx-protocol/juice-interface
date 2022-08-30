@@ -9,14 +9,11 @@ import { useIsUserAddress } from 'hooks/IsUserAddress'
 import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/V2ConnectedWalletHasPermission'
 import { V2OperatorPermission } from 'models/v2/permissions'
-import { useRouter } from 'next/router'
-import { pushSettingsContent } from 'utils/pushSettingsPage'
 import { RelaunchFundingCycleBanner } from './banners/RelaunchFundingCycleBanner'
 import V2ProjectHeaderActions from './V2ProjectHeaderActions'
 import V2ProjectInfo from './V2ProjectInfo'
 
 export default function V2Project() {
-  const router = useRouter()
   const {
     projectId,
     projectMetadata,
@@ -68,9 +65,7 @@ export default function V2Project() {
         handle={handle}
         owner={projectOwnerAddress}
         onClickSetHandle={
-          showAddHandle
-            ? () => pushSettingsContent(router, 'projecthandle')
-            : undefined
+          showAddHandle ? () => setHandleModalVisible(true) : undefined
         }
       />
       <V2ProjectInfo

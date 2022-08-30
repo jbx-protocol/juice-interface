@@ -11,7 +11,11 @@ import { useContext, useState } from 'react'
 
 import { V2CurrencyName } from 'utils/v2/currency'
 
-import { formatFee, MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
+import {
+  formatFee,
+  formatReservedRate,
+  MAX_DISTRIBUTION_LIMIT,
+} from 'utils/v2/math'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerminalFee'
@@ -32,12 +36,14 @@ export default function PayoutSplitsCard({
   distributionLimitCurrency,
   distributionLimit,
   fundingCycleDuration,
+  reservedRate,
 }: {
   hideDistributeButton?: boolean
   payoutSplits: Split[] | undefined
   distributionLimitCurrency: BigNumber | undefined
   distributionLimit: BigNumber | undefined
   fundingCycleDuration: BigNumber | undefined
+  reservedRate: BigNumber | undefined
 }) {
   const {
     theme: { colors },
@@ -187,6 +193,7 @@ export default function PayoutSplitsCard({
                 projectOwnerAddress={projectOwnerAddress}
                 showSplitValues={!distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)}
                 valueFormatProps={{ precision: 4 }}
+                reservedRate={parseFloat(formatReservedRate(reservedRate))}
               />
             ) : null
           ) : (

@@ -23,7 +23,7 @@ export const Head: VFC = () => {
 
       <script
         async
-        src="https://www.desmos.com/api/v1.6/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"
+        src="/vendor/desmos/calculator.min.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"
       ></script>
       <script
         src="https://learned-hearty.juicebox.money/script.js"

@@ -1,8 +1,18 @@
 import { Trans } from '@lingui/macro'
 import { Drawer } from 'antd'
 
+import { useForm } from 'antd/lib/form/Form'
+import ProjectDetailsForm, {
+  ProjectDetailsFormFields,
+} from 'components/forms/ProjectDetailsForm'
+import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
 import { drawerStyle } from 'constants/styles/drawerStyle'
-import V2ProjectDetails from '../../V2ProjectSettings/V2ProjectDetails'
+import { ThemeContext } from 'contexts/themeContext'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDetailsTx'
+import { useCallback, useContext, useEffect, useState } from 'react'
+import { uploadProjectMetadata } from 'utils/ipfs'
+import { revalidateProject } from 'utils/revalidateProject'
 import { reloadWindow } from 'utils/windowUtils'
 
 export function V2ReconfigureProjectDetailsDrawer({
@@ -94,7 +104,18 @@ export function V2ReconfigureProjectDetailsDrawer({
       <h3>
         <Trans>Reconfigure project details</Trans>
       </h3>
-      <V2ProjectDetails />
+      <p style={{ color: colors.text.primary }}>
+        <Trans>
+          Project details reconfigurations will create a separate transaction.
+        </Trans>
+      </p>
+      <br />
+      <ProjectDetailsForm
+        form={projectForm}
+        onFinish={onProjectFormSaved}
+        hideProjectHandle
+        loading={loadingSaveChanges}
+      />
     </Drawer>
   )
 }

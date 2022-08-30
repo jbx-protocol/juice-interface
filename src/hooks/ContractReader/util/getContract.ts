@@ -1,6 +1,5 @@
 import { Contract } from '@ethersproject/contracts'
-
-type ContractConfig<T> = T | Contract | undefined
+import { ContractConfig } from '../types'
 
 export function getContract<T extends string>(
   contractConfig?: ContractConfig<T>,

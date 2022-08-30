@@ -1,8 +1,7 @@
 import { Contract } from '@ethersproject/contracts'
 import { useCallback, useState } from 'react'
-import useDeepCompareEffect from 'use-deep-compare-effect'
-import { callContractRead } from 'utils/callContractRead'
-import { getContract } from 'utils/getContract'
+import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
+import { callContractRead, getContract } from './util'
 
 /**
  * Reads a `contract` value from `contracts`, using the `functionName`.
@@ -64,6 +63,10 @@ export function useContractReadValue<C extends string, V>({
         setValue(newValue)
       }
     } catch (err) {
+      console.error('Read contract >', {
+        functionName,
+        error: err,
+      })
       setValue(_formatter(undefined))
     } finally {
       setLoading(false)
@@ -79,15 +82,12 @@ export function useContractReadValue<C extends string, V>({
   ])
 
   // Fetch the value on load or when args change.
-  useDeepCompareEffect(() => {
+  useDeepCompareEffectNoCheck(() => {
     fetchValue()
 
-    // WARNING: This is kind of a hack in order to get it working.
-    // Only is called when args has changed.
-    // Most likely case is when args go from null -> defined
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [{ args }])
+    // args and contracts may initially be not defined, so we want to keep
+    // calling until they are
+  }, [args, contracts])
 
   return { refetchValue: fetchValue, value, loading }
 }

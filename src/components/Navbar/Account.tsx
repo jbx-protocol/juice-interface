@@ -1,10 +1,9 @@
 import { Button, Space } from 'antd'
 
 import { Trans } from '@lingui/macro'
-import { useAccountCenter } from '@web3-onboard/react'
 import { ThemeContext } from 'contexts/themeContext'
 import { useWallet } from 'hooks/Wallet'
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 
 import Wallet from './Wallet'
 
@@ -16,15 +15,9 @@ export default function Account() {
     chainUnsupported,
     changeNetworks,
   } = useWallet()
-  const updateAccountCenter = useAccountCenter()
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-
-  useEffect(() => {
-    updateAccountCenter({ enabled: false })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   if (!isConnected) {
     return (

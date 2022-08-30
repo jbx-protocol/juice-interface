@@ -2,7 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import { Form, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import InputAccessoryButton from 'components/InputAccessoryButton'
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import FormattedNumberInputNew from 'components/inputs/FormattedNumberInputNew'
 import TooltipLabel from 'components/TooltipLabel'
 
 import { CurrencyName } from 'constants/currency'
@@ -51,39 +51,45 @@ export default function SpecificLimitModal({
       onOk={setNewSplitsFromLimit}
     >
       <Form form={form}>
-        <FormattedNumberInput
-          placeholder="0"
-          onChange={distributionLimit =>
-            form.setFieldsValue({
-              distributionLimit,
-            })
-          }
-          name="distributionLimit"
-          formItemProps={{
-            rules: [{ required: true }],
-            extra: (
-              <TooltipLabel
-                label={t`Set this to the sum of all your payouts`}
-                tip={
-                  <Trans>
-                    Each payout will receive their percent of this total each
-                    funding cycle if there is enough in the treasury. Otherwise,
-                    they will receive their percent of whatever is in the
-                    treasury.
-                  </Trans>
-                }
+        <Form.Item name="distributionLimit">
+          <FormattedNumberInputNew
+            placeholder="0"
+            name="distributionLimit"
+            formItemProps={{
+              rules: [
+                {
+                  required: true,
+                  validator: (rule, value: string) => {
+                    if (!value.match(/^[\d,]+$/g)) {
+                      return Promise.reject()
+                    }
+                  },
+                },
+              ],
+              extra: (
+                <TooltipLabel
+                  label={t`Set this to the sum of all your payouts`}
+                  tip={
+                    <Trans>
+                      Each payout will receive their percent of this total each
+                      funding cycle if there is enough in the treasury.
+                      Otherwise, they will receive their percent of whatever is
+                      in the treasury.
+                    </Trans>
+                  }
+                />
+              ),
+            }}
+            min={0}
+            accessory={
+              <InputAccessoryButton
+                withArrow
+                content={currencyName}
+                onClick={toggleCurrency}
               />
-            ),
-          }}
-          min={0}
-          accessory={
-            <InputAccessoryButton
-              withArrow
-              content={currencyName}
-              onClick={toggleCurrency}
-            />
-          }
-        />
+            }
+          />
+        </Form.Item>
       </Form>
     </Modal>
   )

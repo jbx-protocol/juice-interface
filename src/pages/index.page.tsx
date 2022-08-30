@@ -83,11 +83,7 @@ function Landing() {
         t`NFT projects`,
         t`Indie creators and builders`,
       ].map((data, i) => (
-        <Space
-          style={{ fontStyle: 'italic', paddingLeft: 8 }}
-          key={i}
-          size="middle"
-        >
+        <Space style={{ paddingLeft: 8 }} key={i} size="middle">
           <img src="/assets/bolt.svg" alt="⚡️" />
           {data}
         </Space>

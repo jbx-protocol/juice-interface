@@ -1,21 +1,26 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { V1UserContext } from 'contexts/v1/userContext'
 import { V1ContractName } from 'models/v1/contracts'
-import { useCallback, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import { fromWad } from 'utils/formatNumber'
-
-import useContractReader from './v1/contractReader/ContractReader'
+import { useContractReadValue } from './ContractReader'
 
 export function useEtherPrice() {
-  const [price, setPrice] = useState<number>(0)
+  const { contracts } = useContext(V1UserContext)
 
-  useContractReader({
+  const { refetchValue, value: price } = useContractReadValue({
+    contracts,
     contract: V1ContractName.Prices,
     functionName: 'getETHPriceFor',
     args: ['1'], // $1 USD
-    callback: useCallback(
-      (val?: BigNumber) => setPrice(parseFloat(fromWad(val))),
-      [setPrice],
-    ),
+    formatter: val => {
+      if (!val) return
+      return parseFloat(fromWad(val))
+    },
+  })
+
+  useEffect(() => {
+    const timer = setInterval(refetchValue, 5000)
+    return () => clearInterval(timer)
   })
 
   return price

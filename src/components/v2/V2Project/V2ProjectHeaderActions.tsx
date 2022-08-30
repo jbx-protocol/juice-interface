@@ -9,11 +9,9 @@ import { useContext, useState } from 'react'
 
 import ProjectVersionBadge from 'components/ProjectVersionBadge'
 
-import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 export default function V2ProjectHeaderActions() {
-  const router = useRouter()
-
   const { projectId } = useContext(V2ProjectContext)
 
   const {
@@ -48,26 +46,16 @@ export default function V2ProjectHeaderActions() {
       />
       <div style={{ display: 'flex' }}>
         <Tooltip title={t`Project Home`} placement="bottom">
-          <Button
-            onClick={() =>
-              router.push(`/v2/p/${projectId}`, undefined, {
-                shallow: true,
-              })
-            }
-            icon={<HomeOutlined />}
-            type="text"
-          />
+          {projectId && (
+            <Link href={`/v2/p/${projectId}`}>
+              <Button icon={<HomeOutlined />} type="text" />
+            </Link>
+          )}
         </Tooltip>
         <Tooltip title={t`Project Settings`} placement="bottom">
-          <Button
-            onClick={() =>
-              router.push(`/v2/p/${projectId}/settings`, undefined, {
-                shallow: true,
-              })
-            }
-            icon={<SettingOutlined />}
-            type="text"
-          />
+          <Link href={`/v2/p/${projectId}/settings`}>
+            <Button icon={<SettingOutlined />} type="text" />
+          </Link>
         </Tooltip>
         <Tooltip title={t`Tools`} placement="bottom">
           <Button

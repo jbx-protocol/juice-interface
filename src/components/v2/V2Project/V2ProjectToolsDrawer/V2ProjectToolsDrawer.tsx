@@ -2,8 +2,7 @@ import { Trans } from '@lingui/macro'
 import { Divider, Drawer, Space, Tabs } from 'antd'
 import { ExportSection } from 'components/Project/ProjectToolsDrawer/ExportSection'
 import ArchiveV2Project from 'components/v2/V2Project/ArchiveV2Project'
-import VeNftEnableSection from 'components/veNft/VeNftEnableSection'
-import VeNftSetUnclaimedTokensPermissionSection from 'components/veNft/VeNftSetUnclaimedTokensPermissionSection'
+import V2ProjectSettingsVenftContent from 'components/v2/V2Project/V2ProjectSettings/V2ProjectSettingsVenftContent'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
@@ -41,7 +40,6 @@ export function V2ProjectToolsDrawer({
     tokenSymbol,
     payoutSplits,
     reservedTokensSplits,
-    veNft: { contractAddress: veNftContractAddress },
   } = useContext(V2ProjectContext)
 
   const isMobile = useMobile()
@@ -68,16 +66,6 @@ export function V2ProjectToolsDrawer({
       <Divider />
 
       <ArchiveV2Project />
-    </Space>
-  )
-
-  const VeNftTools = (
-    <Space direction="vertical" size="large" style={{ width: '100%' }}>
-      {!veNftContractAddress ? (
-        <VeNftEnableSection />
-      ) : (
-        <VeNftSetUnclaimedTokensPermissionSection />
-      )}
     </Space>
   )
 
@@ -150,7 +138,7 @@ export function V2ProjectToolsDrawer({
         )}
         {veNftEnabled && isOwnerWallet && (
           <TabPane tab={<Trans>veNFT</Trans>} key="3">
-            {VeNftTools}
+            <V2ProjectSettingsVenftContent />
           </TabPane>
         )}
       </Tabs>

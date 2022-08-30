@@ -1,24 +1,21 @@
 import { t, Trans } from '@lingui/macro'
 import { Form, Modal, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { useWallet } from 'hooks/Wallet'
-
 import ETHAmount from 'components/currency/ETHAmount'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-
+import { V1_CURRENCY_USD } from 'constants/v1/currency'
 import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useClaimableOverflowOf from 'hooks/v1/contractReader/ClaimableOverflowOf'
 import { useRedeemRate } from 'hooks/v1/contractReader/RedeemRate'
 import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
 import { useRedeemTokensTx } from 'hooks/v1/transactor/RedeemTokensTx'
+import { useWallet } from 'hooks/Wallet'
 import { CSSProperties, useContext, useState } from 'react'
 import { formattedNum, formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
-
-import { V1_CURRENCY_USD } from 'constants/v1/currency'
 
 // This double as the 'Redeem' and 'Burn' modal depending on if project has overflow
 export default function RedeemModal({
@@ -204,23 +201,25 @@ export default function RedeemModal({
               if (e.key === 'Enter') redeem()
             }}
           >
-            <FormattedNumberInput
-              min={0}
-              step={0.001}
-              placeholder="0"
-              value={redeemAmount}
-              accessory={
-                <InputAccessoryButton
-                  content={t`MAX`}
-                  onClick={() => setRedeemAmount(fromWad(totalBalance))}
-                />
-              }
-              formItemProps={{
-                rules: [{ validator: validateRedeemAmount }],
-              }}
-              disabled={totalBalance?.eq(0)}
-              onChange={val => setRedeemAmount(val)}
-            />
+            <Form.Item
+              name="redeemAmount"
+              rules={[{ validator: validateRedeemAmount }]}
+            >
+              <FormattedNumberInput
+                min={0}
+                step={0.001}
+                placeholder="0"
+                value={redeemAmount}
+                accessory={
+                  <InputAccessoryButton
+                    content={t`MAX`}
+                    onClick={() => setRedeemAmount(fromWad(totalBalance))}
+                  />
+                }
+                disabled={totalBalance?.eq(0)}
+                onChange={val => setRedeemAmount(val)}
+              />
+            </Form.Item>
           </Form>
           {overflow?.gt(0) ? (
             <div style={{ fontWeight: 500, marginTop: 20 }}>

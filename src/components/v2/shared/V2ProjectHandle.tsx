@@ -19,7 +19,7 @@ export default function V2ProjectHandle({
         style={{ fontWeight: 500, marginRight: '0.5rem', ...style }}
         className="text-primary hover-text-action-primary hover-text-decoration-underline"
       >
-        {handle ? `@${handle}` : <Trans>Project {projectId}</Trans>}
+        {handle ? `@${handle}` : <Trans>Project #{projectId}</Trans>}
       </a>
     </Link>
   )

@@ -1,6 +1,6 @@
 import { CaretRightFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Divider, Form, Modal, Space } from 'antd'
+import { Divider, Form, Space } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { useCallback, useContext, useState } from 'react'
 
@@ -15,6 +15,7 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { MemoFormInput } from 'components/inputs/Pay/MemoFormInput'
 
+import TransactionModal from 'components/TransactionModal'
 import { V2ReconfigureProjectHandleDrawer } from '../V2ReconfigureProjectHandleDrawer'
 import { V2ReconfigureProjectDetailsDrawer } from './drawers/V2ReconfigureProjectDetailsDrawer'
 import { useEditingProjectData } from './hooks/editingProjectData'
@@ -140,7 +141,7 @@ export default function V2ProjectReconfigureModal({
   )
 
   return (
-    <Modal
+    <TransactionModal
       title={<Trans>Project configuration</Trans>}
       visible={visible}
       onOk={reconfigureFundingCycle}
@@ -261,6 +262,6 @@ export default function V2ProjectReconfigureModal({
         onOk={closeUnsavedChangesModalAndExit}
         onCancel={closeUnsavedChangesModal}
       />
-    </Modal>
+    </TransactionModal>
   )
 }

@@ -5,9 +5,21 @@
 .ant-menu-item-group-title {
   text-transform: uppercase;
   padding-bottom: 0;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 
 .ant-menu > .ant-menu-item-divider {
   margin: 1rem 0;
 }
+
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected,
+.ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background-color: var(--background-l1);
+  color: var(--text-primary)
+}
+
+.ant-menu-light .ant-menu-item:hover {
+  color: var(--text-action-highlight)
+}
+
+

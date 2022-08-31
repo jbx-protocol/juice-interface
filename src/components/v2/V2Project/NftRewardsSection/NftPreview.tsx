@@ -38,7 +38,6 @@ const headerStyle: CSSProperties = {
 }
 
 const linkStyle: CSSProperties = {
-  marginLeft: '25px',
   display: 'flex',
   alignItems: 'center',
   cursor: 'pointer',
@@ -67,7 +66,11 @@ export function NftPreview({
 
   if (!visible) return null
 
-  const hasLimitedSupply = rewardTier.remainingSupply !== DEFAULT_NFT_MAX_SUPPLY
+  const hasLimitedSupply = Boolean(
+    rewardTier.remainingSupply &&
+      rewardTier.maxSupply &&
+      rewardTier.remainingSupply !== DEFAULT_NFT_MAX_SUPPLY,
+  )
 
   const maxImageDimensions = '600px'
   const containerWidth = !isMobile ? maxImageDimensions : '90vw'
@@ -115,7 +118,13 @@ export function NftPreview({
               </div>
             ) : null}
             {rewardTier.externalLink ? (
-              <ExternalLink href={rewardTier.externalLink} style={linkStyle}>
+              <ExternalLink
+                href={rewardTier.externalLink}
+                style={{
+                  ...linkStyle,
+                  marginLeft: hasLimitedSupply ? '25px' : 0,
+                }}
+              >
                 <LinkOutlined style={{ fontSize: '1.1rem' }} />
                 <span
                   style={{ textDecoration: 'underline', marginLeft: '5px' }}

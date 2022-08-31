@@ -15,14 +15,15 @@ import { RewardTier } from './RewardTier'
 
 export function NftRewardsSection({
   payAmountETH,
-  onPayAmountChange,
+  onNftSelected,
 }: {
   payAmountETH: string
-  onPayAmountChange: (payAmount: string) => void
+  onNftSelected: (payAmountETH: string) => void
 }) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+
   const {
     nftRewards: { CIDs, rewardTiers, loading: nftsLoading },
   } = useContext(V2ProjectContext)
@@ -60,6 +61,11 @@ export function NftRewardsSection({
 
     const nextRewardTier = rewardTiers[index + 1]
 
+    const handleSelected = () => {
+      setSelectedIndex(index)
+      onNftSelected(rewardTier.contributionFloor.toString())
+    }
+
     return (
       <Col
         md={8}
@@ -70,12 +76,7 @@ export function NftRewardsSection({
           rewardTier={rewardTier}
           rewardTierUpperLimit={nextRewardTier?.contributionFloor}
           isSelected={isSelected}
-          onClick={() => {
-            setSelectedIndex(isSelected ? undefined : index)
-            onPayAmountChange(
-              isSelected ? '0' : rewardTier.contributionFloor.toString(),
-            )
-          }}
+          onClick={handleSelected}
         />
       </Col>
     )

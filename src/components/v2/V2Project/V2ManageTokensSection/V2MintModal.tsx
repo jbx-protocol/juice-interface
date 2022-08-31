@@ -1,6 +1,5 @@
 import { Form, Input, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 
 import { isAddress } from '@ethersproject/address'
 import * as constants from '@ethersproject/constants'
@@ -8,6 +7,7 @@ import { useContext, useState } from 'react'
 import { parseWad } from 'utils/formatNumber'
 
 import { t, Trans } from '@lingui/macro'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/TransactionModal'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useMintTokensTx } from 'hooks/v2/transactor/MintTokensTx'
@@ -30,21 +30,22 @@ export default function V2MintModal({
     memo: string
   }>()
 
-  const [value, setValue] = useState<string>('0')
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
 
   async function executeMintTx() {
+    await form.validateFields()
+
+    const amount = form.getFieldValue('amount') ?? '0'
     const beneficiary = form.getFieldValue('beneficary')
-    if (!isAddress(beneficiary)) return
+
+    if (amount === '0' || !isAddress(beneficiary)) return
 
     setLoading(true)
 
-    await form.validateFields()
-
     mintTokensTx(
       {
-        value: parseWad(value),
+        value: parseWad(amount),
         beneficiary,
         preferClaimed: form.getFieldValue('preferClaimed'),
         memo: form.getFieldValue('memo'),
@@ -56,7 +57,6 @@ export default function V2MintModal({
         },
         onConfirmed: () => {
           form.resetFields()
-          setValue('0')
           setTransactionPending(false)
           onConfirmed?.()
         },
@@ -104,6 +104,7 @@ export default function V2MintModal({
           rules={[
             {
               required: true,
+              validateTrigger: 'onCreate',
               validator: (rule, value) => {
                 if (!value || !isAddress(value))
                   return Promise.reject('Not a valid ETH address')
@@ -114,15 +115,26 @@ export default function V2MintModal({
         >
           <Input placeholder={constants.AddressZero} />
         </Form.Item>
-        <FormattedNumberInput
-          formItemProps={{
-            label: t`${tokensTokenUpper} amount`,
-            extra: t`The amount of tokens to mint to the receiver.`,
-            rules: [{ required: true }],
-          }}
-          value={value}
-          onChange={val => setValue(val ?? '0')}
-        />
+        <Form.Item
+          name="amount"
+          label={t`${tokensTokenUpper} amount`}
+          extra={t`The amount of tokens to mint to the receiver.`}
+          rules={[
+            {
+              required: true,
+              validateTrigger: 'onCreate',
+              validator: (rule, value) => {
+                if (!value || value === '0') {
+                  return Promise.reject('Invalid value')
+                }
+                return Promise.resolve()
+              },
+            },
+          ]}
+          required
+        >
+          <FormattedNumberInput placeholder="0" />
+        </Form.Item>
         <br />
         <Form.Item label="Memo" name="memo">
           <Input placeholder="Memo included on-chain (optional)" />

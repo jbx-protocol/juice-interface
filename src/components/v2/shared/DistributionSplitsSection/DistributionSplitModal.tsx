@@ -16,6 +16,7 @@ import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import NumberSlider from 'components/inputs/NumberSlider'
 import TooltipIcon from 'components/TooltipIcon'
 import TooltipLabel from 'components/TooltipLabel'
+import { CurrencyName } from 'constants/currency'
 import { ThemeContext } from 'contexts/themeContext'
 import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerminalFee'
 import { findIndex, round } from 'lodash'
@@ -37,13 +38,11 @@ import {
   splitPercentFrom,
 } from 'utils/v2/math'
 
-import { CurrencyName } from 'constants/currency'
-
 type AddOrEditSplitFormFields = {
   projectId: string
   beneficiary: string
   percent: number
-  amount: number
+  amount: string | undefined
   lockedUntil: Moment.Moment | undefined | null
 }
 
@@ -83,6 +82,7 @@ export default function DistributionSplitModal({
   } = useContext(ThemeContext)
 
   const [form] = useForm<AddOrEditSplitFormFields>()
+  const amount = Form.useWatch('amount', form)
 
   const distributionLimitIsInfinite = useMemo(
     () =>
@@ -102,7 +102,6 @@ export default function DistributionSplitModal({
     useState<DistributionType>('both')
   const [projectId, setProjectId] = useState<string | undefined>()
   const [newDistributionLimit, setNewDistributionLimit] = useState<string>()
-  const [amount, setAmount] = useState<number | undefined>()
   const [lockedUntil, setLockedUntil] = useState<
     Moment.Moment | undefined | null
   >()
@@ -163,21 +162,20 @@ export default function DistributionSplitModal({
     })
 
     if (distributionLimitIsInfinite) {
-      setAmount(
-        amountFromPercent({
-          percent: preciseFormatSplitPercent(editingSplit.percent),
-          amount: distributionLimit ?? '0',
-        }),
-      )
+      const amount = amountFromPercent({
+        percent: preciseFormatSplitPercent(editingSplit.percent),
+        amount: distributionLimit ?? '0',
+      })
+      form.setFieldsValue({ amount: amount.toString() })
     } else if (distributionLimit) {
       const percentPerBillion = editingSplit.percent
       const amount = amountFromPercent({
         percent: preciseFormatSplitPercent(percentPerBillion),
         amount: distributionLimit,
       })
-      setAmount(amount)
+      form.setFieldsValue({ amount: amount.toString() })
     } else {
-      setAmount(undefined)
+      form.setFieldsValue({ amount: undefined })
     }
   }, [
     distributionLimit,
@@ -189,7 +187,6 @@ export default function DistributionSplitModal({
 
   const resetStates = () => {
     setProjectId(undefined)
-    setAmount(undefined)
     setLockedUntil(undefined)
   }
 
@@ -243,37 +240,41 @@ export default function DistributionSplitModal({
     onClose()
   }
 
-  const onAmountChange = (newAmount: number) => {
-    if (distributionLimitIsInfinite || !newAmount) return
+  useEffect(() => {
+    if (distributionLimitIsInfinite || !amount) return
 
-    // We need to check if we are using amount input from edit modal, therefore do not set new distribution limit.
     if (overrideDistTypeWithBoth) {
       const newPercent = getDistributionPercentFromAmount({
-        amount: newAmount,
+        amount: parseFloat(amount),
         distributionLimit: parseFloat(distributionLimit ?? '0'),
       })
 
-      setAmount(newAmount)
       form.setFieldsValue({ percent: preciseFormatSplitPercent(newPercent) })
 
       return
     }
-
     const newDistributionLimit = getNewDistributionLimit({
       currentDistributionLimit: distributionLimit ?? '0',
-      newSplitAmount: newAmount,
+      newSplitAmount: parseFloat(amount),
       editingSplitPercent: mode === 'Add' ? 0 : editingSplit?.percent ?? 0, //percentPerBillion,
     })
 
     const newPercent = getDistributionPercentFromAmount({
-      amount: newAmount,
+      amount: parseFloat(amount),
       distributionLimit: newDistributionLimit,
     })
 
     setNewDistributionLimit(newDistributionLimit.toString())
-    setAmount(newAmount)
     form.setFieldsValue({ percent: preciseFormatSplitPercent(newPercent) })
-  }
+  }, [
+    amount,
+    distributionLimit,
+    distributionLimitIsInfinite,
+    editingSplit?.percent,
+    form,
+    mode,
+    overrideDistTypeWithBoth,
+  ])
 
   const onPercentChange = (newPercent: number) => {
     const newAmount = amountFromPercent({
@@ -281,7 +282,7 @@ export default function DistributionSplitModal({
       amount: distributionLimit ?? '0',
     })
 
-    setAmount(newAmount)
+    form.setFieldsValue({ amount: newAmount.toString() })
     form.setFieldsValue({ percent: newPercent })
   }
 
@@ -289,10 +290,8 @@ export default function DistributionSplitModal({
   const validatePayoutAddress = () => {
     const beneficiary = form.getFieldValue('beneficiary')
 
-    if (
-      editingSplit?.beneficiary &&
-      editingSplit?.beneficiary === beneficiary
-    ) {
+    if (!beneficiary) return Promise.reject('Beneficiary required')
+    if (editingSplit?.beneficiary === beneficiary) {
       return Promise.resolve()
     }
     return validateEthAddress(
@@ -329,7 +328,8 @@ export default function DistributionSplitModal({
     current && current < moment().endOf('day')
 
   const amountSubFee = amount
-    ? amount - (amount * parseFloat(feePercentage ?? '0')) / 100
+    ? parseFloat(amount) -
+      (parseFloat(amount) * parseFloat(feePercentage ?? '0')) / 100
     : undefined
 
   function AfterFeeMessage() {
@@ -463,25 +463,33 @@ export default function DistributionSplitModal({
                 alignItems: 'center',
               }}
             >
-              <FormattedNumberInput
-                value={amount?.toFixed(4)}
-                placeholder={'0'}
-                onChange={amount => onAmountChange(parseFloat(amount || '0'))}
-                formItemProps={{
-                  rules: [{ validator: validatePayoutPercentage }],
-                  required: true,
-                }}
-                accessory={
-                  isFirstSplit && onCurrencyChange ? (
-                    <CurrencySwitch
-                      onCurrencyChange={onCurrencyChange}
-                      currency={currencyName}
-                    />
-                  ) : (
-                    <InputAccessoryButton content={currencyName} />
-                  )
-                }
-              />
+              <Form.Item
+                noStyle
+                name="amount"
+                required
+                rules={[
+                  {
+                    validator: validatePayoutPercentage,
+                    validateTrigger: 'onCreate',
+                    required: true,
+                  },
+                ]}
+              >
+                <FormattedNumberInput
+                  style={{ width: '100%' }}
+                  placeholder={'0'}
+                  accessory={
+                    isFirstSplit && onCurrencyChange ? (
+                      <CurrencySwitch
+                        onCurrencyChange={onCurrencyChange}
+                        currency={currencyName}
+                      />
+                    ) : (
+                      <InputAccessoryButton content={currencyName} />
+                    )
+                  }
+                />
+              </Form.Item>
               <div
                 style={{
                   display: 'flex',

@@ -1,7 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { emitErrorNotification } from 'utils/notifications'
 
 import { V2ProjectContext } from 'contexts/v2/projectContext'
@@ -9,6 +8,7 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import { fromWad } from 'utils/formatNumber'
 import { querySubgraphExhaustive } from 'utils/graph'
 
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { readProvider } from 'constants/readProvider'
 import { downloadCsvFile } from 'utils/csv'
 

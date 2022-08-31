@@ -1,32 +1,25 @@
 import Icon from '@ant-design/icons'
 import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
+import { ThemeContext } from 'contexts/themeContext'
+import { useContext } from 'react'
 
-const SafeIcon = () => (
-  <img src="/assets/gnosis.svg" alt="Gnosis Safe" width={20} height={20} />
-)
+const SafeIcon = () => {
+  const { isDarkMode } = useContext(ThemeContext)
+  const src = isDarkMode
+    ? '/assets/icons/gnosis_od.svg'
+    : '/assets/icons/gnosis_ol.svg'
 
-const GnosisSafeBadge = ({
-  ownerIsGnosisSafe,
-  ownerIsGnosisSafeLoading,
-}: {
-  ownerIsGnosisSafe?: boolean
-  ownerIsGnosisSafeLoading?: boolean
-}) => {
-  return (
-    <>
-      {!ownerIsGnosisSafeLoading && ownerIsGnosisSafe && (
-        <div>
-          <Tooltip
-            placement="bottom"
-            title={t`This project is owned by a Gnosis Safe.`}
-          >
-            <Icon component={SafeIcon} />
-          </Tooltip>
-        </div>
-      )}
-    </>
-  )
+  return <img src={src} alt="Gnosis Safe" width={15} height={15} />
 }
 
-export default GnosisSafeBadge
+export function GnosisSafeBadge() {
+  return (
+    <Tooltip
+      placement="bottom"
+      title={t`This project is owned by a Gnosis Safe.`}
+    >
+      <Icon component={SafeIcon} />
+    </Tooltip>
+  )
+}

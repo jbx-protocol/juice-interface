@@ -42,8 +42,6 @@ export default function V1Project({
     tokenAddress,
     isPreviewMode,
     owner,
-    ownerIsGnosisSafe,
-    ownerIsGnosisSafeLoading,
     cv,
   } = useContext(V1ProjectContext)
 
@@ -69,8 +67,6 @@ export default function V1Project({
         isArchived={isArchived}
         owner={owner}
         actions={<V1ProjectHeaderActions />}
-        ownerIsGnosisSafe={ownerIsGnosisSafe}
-        ownerIsGnosisSafeLoading={ownerIsGnosisSafeLoading}
       />
 
       <Row gutter={gutter} align="bottom">

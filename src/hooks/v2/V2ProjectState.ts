@@ -6,7 +6,6 @@ import {
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
 import { V2ProjectContextType } from 'contexts/v2/projectContext'
-import { useAddressIsGnosisSafe } from 'hooks/AddressIsGnosisSafe'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useNameOfERC20 from 'hooks/NameOfERC20'
 import { useProjectsQuery } from 'hooks/Projects'
@@ -82,9 +81,6 @@ export function useV2ProjectState({
     projectId,
   })
   const { data: projectOwnerAddress } = useProjectOwner(projectId)
-  const { data: ownerIsGnosisSafe, isLoading: ownerIsGnosisSafeLoading } =
-    useAddressIsGnosisSafe(projectOwnerAddress)
-
   const isArchived = projectId
     ? V2ArchivedProjectIds.includes(projectId) || projectMetadata?.archived
     : false
@@ -212,7 +208,6 @@ export function useV2ProjectState({
     projectId,
     handle,
     projectOwnerAddress,
-    ownerIsGnosisSafe,
     projectMetadata,
     isArchived,
 
@@ -267,7 +262,6 @@ export function useV2ProjectState({
       distributionLimitLoading,
       fundingCycleLoading,
       usedDistributionLimitLoading,
-      ownerIsGnosisSafeLoading,
     },
   }
 

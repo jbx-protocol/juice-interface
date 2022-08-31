@@ -99,7 +99,7 @@ export default function ProjectHeader({
             paddingTop: 8,
             paddingBottom: 4,
             fontWeight: 500,
-            gap: 20,
+            columnGap: 20,
           }}
         >
           {isArchived && (

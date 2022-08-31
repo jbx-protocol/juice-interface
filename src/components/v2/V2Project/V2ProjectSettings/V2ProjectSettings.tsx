@@ -89,7 +89,7 @@ const items: MenuItem[] = [
   ),
 ]
 
-const V2ProjectSettings = () => {
+export function V2ProjectSettings() {
   const {
     projectMetadata,
     isPreviewMode,
@@ -153,5 +153,3 @@ const V2ProjectSettings = () => {
     </div>
   )
 }
-
-export default V2ProjectSettings

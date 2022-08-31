@@ -5,7 +5,7 @@ import {
 } from 'components/v2/V2Project/V2ProjectSettings/V2ProjectSettings'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import V2ProjectDetails from './V2ProjectDetails'
+import V2ProjectDetails from './pages/V2ProjectDetails'
 
 const defaultPage: V2SettingsKey = 'general'
 

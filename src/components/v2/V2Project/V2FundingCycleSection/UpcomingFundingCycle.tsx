@@ -78,7 +78,6 @@ export default function UpcomingFundingCycle({
         distributionLimit={queuedDistributionLimit}
         fundingCycleDuration={upcomingFundingCycle.duration}
         hideDistributeButton
-        reservedRate={queuedReservedRate}
       />
       <ReservedTokensSplitsCard
         reservedTokensSplits={queuedReservedTokensSplits}

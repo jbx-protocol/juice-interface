@@ -48,7 +48,7 @@ export default function SplitList({
             />
           </div>
         ))}
-      {ownerSplit && ownerSplit.percent && reservedRate ? (
+      {ownerSplit?.percent ? (
         <SplitItem
           split={ownerSplit}
           showSplitValue={showSplitValues}

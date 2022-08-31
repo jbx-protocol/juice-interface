@@ -53,7 +53,6 @@ export default function CurrentFundingCycle({
         distributionLimitCurrency={distributionLimitCurrency}
         distributionLimit={distributionLimit}
         fundingCycleDuration={fundingCycle.duration}
-        reservedRate={reservedRate}
       />
       <ReservedTokensSplitsCard
         reservedTokensSplits={reservedTokensSplits}

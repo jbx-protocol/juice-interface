@@ -1,5 +1,9 @@
 import { AppWrapper, SEO } from 'components/common'
 import Loading from 'components/Loading'
+import { readNetwork } from 'constants/networks'
+import { readProvider } from 'constants/readProvider'
+import { JUICEBOX_MONEY_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
+import { V2_PROJECT_IDS } from 'constants/v2/projectIds'
 import { ProjectMetadataV4 } from 'models/project-metadata'
 import { V2ContractName } from 'models/v2/contracts'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
@@ -7,11 +11,6 @@ import { V2UserProvider } from 'providers/v2/UserProvider'
 import { paginateDepleteProjectsQueryCall } from 'utils/apollo'
 import { loadContract } from 'utils/contracts/loadContract'
 import { findProjectMetadata } from 'utils/server'
-
-import { readNetwork } from 'constants/networks'
-import { readProvider } from 'constants/readProvider'
-import { JUICEBOX_MONEY_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
-import { V2_PROJECT_IDS } from 'constants/v2/projectIds'
 import V2Dashboard from './components/V2Dashboard'
 
 async function getMetadataCidFromContract(projectId: number) {

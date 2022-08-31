@@ -5,6 +5,7 @@ import {
 } from 'components/v2/V2Project/V2ProjectSettings/V2ProjectSettings'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import V2ProjectDetails from './V2ProjectDetails'
 
 const defaultPage: V2SettingsKey = 'general'
 
@@ -45,8 +46,7 @@ const V2ProjectSettingsContent = () => {
   const getActiveTab = (selectedSettingsPage: V2SettingsKey) => {
     switch (selectedSettingsPage) {
       case 'general':
-        // return <V2ProjectDetails />
-        return <div>Project Details</div>
+        return <V2ProjectDetails />
       case 'projecthandle':
         // return <V2ReconfigureProjectHandle />
         return <div>Reconfigure Project Handle</div>

@@ -83,6 +83,7 @@ export default function DistributionSplitModal({
 
   const [form] = useForm<AddOrEditSplitFormFields>()
   const amount = Form.useWatch('amount', form)
+  const percent = Form.useWatch('percent', form)
 
   const distributionLimitIsInfinite = useMemo(
     () =>
@@ -243,6 +244,7 @@ export default function DistributionSplitModal({
   useEffect(() => {
     if (distributionLimitIsInfinite || !amount) return
 
+    // Case when we edit payouts, therefore we do not set new distribution limit.
     if (overrideDistTypeWithBoth) {
       const newPercent = getDistributionPercentFromAmount({
         amount: parseFloat(amount),
@@ -276,9 +278,9 @@ export default function DistributionSplitModal({
     overrideDistTypeWithBoth,
   ])
 
-  const onPercentChange = (newPercent: number) => {
+  const onPercentChange = (newPercent: number | undefined) => {
     const newAmount = amountFromPercent({
-      percent: newPercent,
+      percent: newPercent ?? 0,
       amount: distributionLimit ?? '0',
     })
 
@@ -526,12 +528,11 @@ export default function DistributionSplitModal({
               <span style={{ flex: 1 }}>
                 <NumberSlider
                   onChange={(percentage: number | undefined) => {
-                    if (!percentage) return
                     onPercentChange(percentage)
                   }}
                   step={0.01}
                   defaultValue={0}
-                  sliderValue={form.getFieldValue('percent')}
+                  sliderValue={percent}
                   suffix="%"
                   name="percent"
                   formItemProps={{

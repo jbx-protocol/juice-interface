@@ -84,7 +84,7 @@ function Landing() {
         t`Indie creators and builders`,
       ].map((data, i) => (
         <Space style={{ paddingLeft: 8 }} key={i} size="middle">
-          <img src="/assets/bolt.svg" alt="⚡️" />
+          <img src="/assets/icons/bolt.svg" alt="⚡️" />
           {data}
         </Space>
       ))}

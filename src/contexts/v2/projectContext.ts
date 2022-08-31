@@ -13,6 +13,7 @@ type V2ProjectLoadingStates = {
   distributionLimitLoading: boolean
   fundingCycleLoading: boolean
   usedDistributionLimitLoading: boolean
+  ownerIsGnosisSafeLoading: boolean
 }
 
 export type V2ProjectContextType = {
@@ -31,6 +32,7 @@ export type V2ProjectContextType = {
   ETHBalance: BigNumber | undefined
   totalVolume: BigNumber | undefined
   projectOwnerAddress: string | undefined
+  ownerIsGnosisSafe: boolean | undefined
   balanceInDistributionLimitCurrency: BigNumber | undefined
   usedDistributionLimit: BigNumber | undefined // how much has been distributed
   isArchived: boolean | undefined
@@ -78,6 +80,7 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
   ETHBalance: undefined,
   totalVolume: undefined,
   projectOwnerAddress: undefined,
+  ownerIsGnosisSafe: undefined,
   balanceInDistributionLimitCurrency: undefined,
   usedDistributionLimit: undefined,
   isArchived: undefined,
@@ -112,5 +115,6 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
     distributionLimitLoading: false,
     fundingCycleLoading: false,
     usedDistributionLimitLoading: false,
+    ownerIsGnosisSafeLoading: false,
   },
 })

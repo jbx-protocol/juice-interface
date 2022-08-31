@@ -7,8 +7,9 @@ import { ThemeContext } from 'contexts/themeContext'
 import { ProjectMetadataV4 } from 'models/project-metadata'
 import { useContext } from 'react'
 
-import { Button, Tooltip } from 'antd'
+import { Button, Space, Tooltip } from 'antd'
 
+import GnosisSafeBadge from 'components/Project/ProjectHeader/GnosisSafeBadge'
 import useMobile from 'hooks/Mobile'
 import SocialLinks from './SocialLinks'
 
@@ -19,6 +20,8 @@ export default function ProjectHeader({
   actions,
   onClickSetHandle,
   owner,
+  ownerIsGnosisSafe,
+  ownerIsGnosisSafeLoading,
 }: {
   metadata?: ProjectMetadataV4
   isArchived?: boolean
@@ -26,6 +29,8 @@ export default function ProjectHeader({
   actions?: JSX.Element
   onClickSetHandle?: VoidFunction
   owner?: string
+  ownerIsGnosisSafe?: boolean
+  ownerIsGnosisSafeLoading?: boolean
 }) {
   const {
     theme: { colors },
@@ -149,9 +154,15 @@ export default function ProjectHeader({
           )}
           {owner && (
             <div style={{ color: colors.text.secondary, marginTop: '0.4rem' }}>
-              <Trans>
-                Owned by <FormattedAddress address={owner} />
-              </Trans>
+              <Space direction="horizontal">
+                <GnosisSafeBadge
+                  ownerIsGnosisSafe={ownerIsGnosisSafe}
+                  ownerIsGnosisSafeLoading={ownerIsGnosisSafeLoading}
+                />
+                <Trans>
+                  Owned by <FormattedAddress address={owner} />
+                </Trans>
+              </Space>
             </div>
           )}
         </div>

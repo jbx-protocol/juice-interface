@@ -74,6 +74,7 @@ export default function V2Project({
     cv,
     isArchived,
     projectOwnerAddress,
+    ownerIsGnosisSafe,
     handle,
     loading,
   } = useContext(V2ProjectContext)
@@ -168,6 +169,8 @@ export default function V2Project({
         onClickSetHandle={
           showAddHandle ? () => setHandleModalVisible(true) : undefined
         }
+        ownerIsGnosisSafe={ownerIsGnosisSafe}
+        ownerIsGnosisSafeLoading={loading.ownerIsGnosisSafeLoading}
       />
       {!isPreviewMode &&
         hasCurrentFundingCycle === false &&

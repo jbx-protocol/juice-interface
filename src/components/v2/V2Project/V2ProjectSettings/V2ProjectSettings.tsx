@@ -133,7 +133,7 @@ export function V2ProjectSettings() {
             style={{ background: 'transparent', marginRight: '3rem' }}
             width={250}
           >
-            <Space direction="vertical" size="middle">
+            <Space direction="vertical" size="middle" style={{ width: '100%' }}>
               <Link href={`/v2/p/${projectId}`}>
                 <Button
                   type="link"

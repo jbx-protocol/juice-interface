@@ -99,7 +99,9 @@ const V2ProjectSettingsContent = () => {
       <h2 style={{ color: colors.text.primary, marginBottom: 0 }}>
         {V2SettingsKeyTitleMap[selectedSettingsPage]}
       </h2>
+
       <Divider />
+
       <Layout.Content style={{ margin: '0 16px' }}>
         {getActiveTab(selectedSettingsPage)}
       </Layout.Content>

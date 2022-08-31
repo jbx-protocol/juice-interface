@@ -1,3 +1,13 @@
 .ant-menu-item:hover {
   background: none !important;
 }
+
+.ant-menu-item-group-title {
+  text-transform: uppercase;
+  padding-bottom: 0;
+  font-size: 12px;
+}
+
+.ant-menu > .ant-menu-item-divider {
+  margin: 1rem 0;
+}

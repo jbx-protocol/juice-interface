@@ -1,34 +1,16 @@
 import { AppWrapper, SEO } from 'components/common'
 import Loading from 'components/Loading'
-import { readNetwork } from 'constants/networks'
-import { readProvider } from 'constants/readProvider'
-import { JUICEBOX_MONEY_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
 import { V2_PROJECT_IDS } from 'constants/v2/projectIds'
-import { ProjectMetadataV4 } from 'models/project-metadata'
-import { V2ContractName } from 'models/v2/contracts'
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
+import {
+  GetStaticPaths,
+  GetStaticProps,
+  GetStaticPropsResult,
+  InferGetStaticPropsType,
+} from 'next'
 import { V2UserProvider } from 'providers/v2/UserProvider'
 import { paginateDepleteProjectsQueryCall } from 'utils/apollo'
-import { loadContract } from 'utils/contracts/loadContract'
-import { findProjectMetadata } from 'utils/server'
 import V2Dashboard from './components/V2Dashboard'
-
-export async function getMetadataCidFromContract(projectId: number) {
-  const network = readNetwork.name
-  const contract = await loadContract(
-    V2ContractName.JBProjects,
-    network,
-    readProvider,
-  )
-  if (!contract) {
-    throw new Error(`contract not found ${V2ContractName.JBProjects}`)
-  }
-  const metadataCid = (await contract.metadataContentOf(
-    projectId,
-    JUICEBOX_MONEY_METADATA_DOMAIN,
-  )) as string
-  return metadataCid
-}
+import { getProjectProps, ProjectPageProps } from './utils/props'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   if (process.env.BUILD_CACHE_V2_PROJECTS === 'true') {
@@ -47,28 +29,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
-export const getStaticProps: GetStaticProps<{
-  metadata: ProjectMetadataV4
-  projectId: number
-}> = async context => {
+export const getStaticProps: GetStaticProps<
+  ProjectPageProps
+> = async context => {
   if (!context.params) throw new Error('params not supplied')
+
   const projectId = parseInt(context.params.projectId as string)
-  if (isNaN(projectId)) {
-    return { notFound: true }
-  }
-  const metadataCid = await getMetadataCidFromContract(projectId)
-
-  try {
-    const metadata = await findProjectMetadata({ metadataCid })
-    return { props: { metadata, projectId } }
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (e: any) {
-    if (e?.response?.status === 404 || e?.response?.status === 400) {
-      return { notFound: true }
-    }
-    throw e
-  }
+  return getProjectProps(projectId) as Promise<
+    GetStaticPropsResult<ProjectPageProps>
+  >
 }
 
 export default function V2ProjectPage({

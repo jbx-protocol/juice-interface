@@ -4,31 +4,15 @@ import { ProjectMetadataV4 } from 'models/project-metadata'
 import { GetServerSideProps } from 'next'
 import { V2UserProvider } from 'providers/v2/UserProvider'
 import V2ProjectProvider from 'providers/v2/V2ProjectProvider'
-import { findProjectMetadata } from 'utils/server'
-import { getMetadataCidFromContract } from '../index.page'
+import { getProjectProps, ProjectPageProps } from '../utils/props'
 
-export const getServerSideProps: GetServerSideProps<{
-  metadata: ProjectMetadataV4
-  projectId: number
-}> = async context => {
+export const getServerSideProps: GetServerSideProps<
+  ProjectPageProps
+> = async context => {
   if (!context.params) throw new Error('params not supplied')
+
   const projectId = parseInt(context.params.projectId as string)
-  if (isNaN(projectId)) {
-    return { notFound: true }
-  }
-  const metadataCid = await getMetadataCidFromContract(projectId)
-
-  try {
-    const metadata = await findProjectMetadata({ metadataCid })
-    return { props: { metadata, projectId } }
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (e: any) {
-    if (e?.response?.status === 404 || e?.response?.status === 400) {
-      return { notFound: true }
-    }
-    throw e
-  }
+  return getProjectProps(projectId)
 }
 
 export default function V2ProjectSettingsPage({

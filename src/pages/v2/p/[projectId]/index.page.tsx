@@ -13,7 +13,7 @@ import { loadContract } from 'utils/contracts/loadContract'
 import { findProjectMetadata } from 'utils/server'
 import V2Dashboard from './components/V2Dashboard'
 
-async function getMetadataCidFromContract(projectId: number) {
+export async function getMetadataCidFromContract(projectId: number) {
   const network = readNetwork.name
   const contract = await loadContract(
     V2ContractName.JBProjects,

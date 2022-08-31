@@ -1,36 +1,13 @@
 import { AppWrapper } from 'components/common'
 import V2ProjectSettings from 'components/v2/V2Project/V2ProjectSettings/V2ProjectSettings'
-import { readNetwork } from 'constants/networks'
-import { readProvider } from 'constants/readProvider'
-import { JUICEBOX_MONEY_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
-import { V2_PROJECT_IDS } from 'constants/v2/projectIds'
 import { ProjectMetadataV4 } from 'models/project-metadata'
-import { V2ContractName } from 'models/v2/contracts'
-import { GetStaticPaths, GetStaticProps } from 'next'
+import { GetServerSideProps } from 'next'
 import { V2UserProvider } from 'providers/v2/UserProvider'
 import V2ProjectProvider from 'providers/v2/V2ProjectProvider'
-import { paginateDepleteProjectsQueryCall } from 'utils/apollo'
-import { loadContract } from 'utils/contracts'
 import { findProjectMetadata } from 'utils/server'
+import { getMetadataCidFromContract } from '../index.page'
 
-async function getMetadataCidFromContract(projectId: number) {
-  const network = readNetwork.name
-  const contract = await loadContract(
-    V2ContractName.JBProjects,
-    network,
-    readProvider,
-  )
-  if (!contract) {
-    throw new Error(`contract not found ${V2ContractName.JBProjects}`)
-  }
-  const metadataCid = (await contract.metadataContentOf(
-    projectId,
-    JUICEBOX_MONEY_METADATA_DOMAIN,
-  )) as string
-  return metadataCid
-}
-
-export const getStaticProps: GetStaticProps<{
+export const getServerSideProps: GetServerSideProps<{
   metadata: ProjectMetadataV4
   projectId: number
 }> = async context => {
@@ -51,23 +28,6 @@ export const getStaticProps: GetStaticProps<{
       return { notFound: true }
     }
     throw e
-  }
-}
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  if (process.env.BUILD_CACHE_V2_PROJECTS === 'true') {
-    const projects = await paginateDepleteProjectsQueryCall({
-      variables: { where: { cv: '2' } },
-    })
-    const paths = projects.map(({ projectId }) => ({
-      params: { projectId: String(projectId) },
-    }))
-    return { paths, fallback: true }
-  }
-
-  return {
-    paths: [{ params: { projectId: String(V2_PROJECT_IDS.JUICEBOX_DAO) } }],
-    fallback: true,
   }
 }
 

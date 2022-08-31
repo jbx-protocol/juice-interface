@@ -6,7 +6,6 @@ import { useRouter } from 'next/router'
 import LanguageProvider from 'providers/LanguageProvider'
 import ReactQueryProvider from 'providers/ReactQueryProvider'
 import { ThemeProvider } from 'providers/ThemeProvider'
-import { V1UserProvider } from 'providers/v1/UserProvider'
 import React from 'react'
 import { Provider } from 'react-redux'
 import store from 'redux/store'
@@ -27,10 +26,7 @@ export const AppWrapper: React.FC = ({ children }) => {
         <Provider store={store}>
           <LanguageProvider>
             <ThemeProvider>
-              {/* TODO: Remove v1 provider */}
-              <V1UserProvider>
-                <_Wrapper>{children}</_Wrapper>
-              </V1UserProvider>
+              <_Wrapper>{children}</_Wrapper>
             </ThemeProvider>
           </LanguageProvider>
         </Provider>

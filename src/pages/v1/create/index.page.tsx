@@ -73,13 +73,16 @@ import ConfirmDeployProject from './ConfirmDeployProject'
 
 import { drawerStyle } from 'constants/styles/drawerStyle'
 import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
+import { V1UserProvider } from 'providers/v1/UserProvider'
 
 const terminalVersion: V1TerminalVersion = '1.1'
 
 export default function V1CreatePage() {
   return (
     <AppWrapper>
-      <V1Create />
+      <V1UserProvider>
+        <V1Create />
+      </V1UserProvider>
     </AppWrapper>
   )
 }

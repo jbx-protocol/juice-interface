@@ -30,6 +30,7 @@ import { ProjectMetadataV4 } from 'models/project-metadata'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
+import { V1UserProvider } from 'providers/v1/UserProvider'
 import { V1CurrencyProvider } from 'providers/v1/V1CurrencyProvider'
 import { useMemo } from 'react'
 import { paginateDepleteProjectsQueryCall } from 'utils/apollo'
@@ -114,7 +115,9 @@ export default function V1HandlePage({
         />
       ) : null}
       <AppWrapper>
-        {metadata ? <V1Dashboard metadata={metadata} /> : <Loading />}
+        <V1UserProvider>
+          {metadata ? <V1Dashboard metadata={metadata} /> : <Loading />}
+        </V1UserProvider>
       </AppWrapper>
     </>
   )

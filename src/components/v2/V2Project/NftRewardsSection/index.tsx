@@ -1,6 +1,8 @@
 import { t, Trans } from '@lingui/macro'
 import { Col, Row } from 'antd'
 import SectionHeader from 'components/SectionHeader'
+import { MAX_NFT_REWARD_TIERS } from 'components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useMobile from 'hooks/Mobile'
@@ -8,21 +10,19 @@ import { NftRewardTier } from 'models/v2/nftRewardTier'
 import { useContext, useEffect, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { getNftRewardTier } from 'utils/v2/nftRewards'
-
-import { MAX_NFT_REWARD_TIERS } from 'components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { RewardTier } from './RewardTier'
 
 export function NftRewardsSection({
   payAmountETH,
-  onPayAmountChange,
+  onNftSelected,
 }: {
   payAmountETH: string
-  onPayAmountChange: (payAmount: string) => void
+  onNftSelected: (payAmountETH: string) => void
 }) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+
   const {
     nftRewards: { CIDs, rewardTiers, loading: nftsLoading },
   } = useContext(V2ProjectContext)
@@ -60,6 +60,11 @@ export function NftRewardsSection({
 
     const nextRewardTier = rewardTiers[index + 1]
 
+    const handleSelected = () => {
+      setSelectedIndex(index)
+      onNftSelected(rewardTier.contributionFloor.toString())
+    }
+
     return (
       <Col
         md={8}
@@ -70,12 +75,7 @@ export function NftRewardsSection({
           rewardTier={rewardTier}
           rewardTierUpperLimit={nextRewardTier?.contributionFloor}
           isSelected={isSelected}
-          onClick={() => {
-            setSelectedIndex(isSelected ? undefined : index)
-            onPayAmountChange(
-              isSelected ? '0' : rewardTier.contributionFloor.toString(),
-            )
-          }}
+          onClick={handleSelected}
         />
       </Col>
     )

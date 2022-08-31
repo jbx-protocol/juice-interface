@@ -1,14 +1,11 @@
 import { Space } from 'antd'
 import ProjectHeader from 'components/Project/ProjectHeader'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-// TODO: Do we still need lazy loading?
-
-import { useContext, useState } from 'react'
-
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/V2ConnectedWalletHasPermission'
 import { V2OperatorPermission } from 'models/v2/permissions'
+import { useContext, useState } from 'react'
 import { RelaunchFundingCycleBanner } from './banners/RelaunchFundingCycleBanner'
 import V2ProjectHeaderActions from './V2ProjectHeaderActions'
 import V2ProjectInfo from './V2ProjectInfo'

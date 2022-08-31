@@ -198,7 +198,7 @@ export function V2ConfirmPayModal({
             </strong>
             <Paragraph
               description={projectMetadata.payDisclosure}
-              style={{ fontStyle: 'italic', fontSize: '0.8rem' }}
+              style={{ fontSize: '0.8rem' }}
             />
           </Callout>
         )}

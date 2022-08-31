@@ -15,9 +15,11 @@ export const Head: VFC = () => {
       <link rel="apple-touch-icon" href="/assets/juice_logo-ol.png" />
       <link rel="icon" href="/favicon.ico" />
       <link rel="manifest" href="/manifest.json" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" />
+
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
       <link
-        href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap"
         rel="stylesheet"
       />
 
@@ -25,11 +27,14 @@ export const Head: VFC = () => {
         async
         src="/vendor/desmos/calculator.min.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"
       ></script>
-      <script
-        src="https://learned-hearty.juicebox.money/script.js"
-        data-site="ERYRRJSV"
-        defer
-      ></script>
+
+      {process.env.NODE_ENV === 'production' && (
+        <script
+          src="https://learned-hearty.juicebox.money/script.js"
+          data-site="ERYRRJSV"
+          defer
+        ></script>
+      )}
       {process.env.NODE_ENV === 'production' && (
         <script
           defer

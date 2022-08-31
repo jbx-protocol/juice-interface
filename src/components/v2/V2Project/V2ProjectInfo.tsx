@@ -1,9 +1,10 @@
 import { Trans } from '@lingui/macro'
-import { Row, Col, Space } from 'antd'
+import { Col, Row, Space } from 'antd'
 import PayInputGroup from 'components/inputs/Pay/PayInputGroup'
 import { TextButton } from 'components/TextButton'
 import VolumeChart from 'components/VolumeChart'
-
+import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { V2_PROJECT_IDS } from 'constants/v2/projectIds'
 import { CurrencyContext } from 'contexts/currencyContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
@@ -20,9 +21,6 @@ import { featureFlagEnabled } from 'utils/featureFlags'
 import { fromWad } from 'utils/formatNumber'
 import { v2ProjectRoute } from 'utils/routes'
 import { weightedAmount } from 'utils/v2/math'
-
-import { V2_PROJECT_IDS } from 'constants/v2/projectIds'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import V2BugNotice from '../shared/V2BugNotice'
 import NewDeployModal from './NewDeployModal'
 import { NftRewardsSection } from './NftRewardsSection'
@@ -129,6 +127,11 @@ const V2ProjectInfo = ({
     return !hasCurrentFundingCycle
   }
 
+  const handleNftSelected = (payAmountETH: string) => {
+    setPayAmount(payAmountETH)
+    setPayInCurrency(ETH)
+  }
+
   const nftRewardsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
 
   const payAmountETH =
@@ -163,7 +166,7 @@ const V2ProjectInfo = ({
             <div style={{ marginTop: '30px' }}>
               <NftRewardsSection
                 payAmountETH={payAmountETH}
-                onPayAmountChange={setPayAmount}
+                onNftSelected={handleNftSelected}
               />
             </div>
           ) : null}
@@ -199,7 +202,7 @@ const V2ProjectInfo = ({
               {!isMobile && nftRewardsEnabled ? (
                 <NftRewardsSection
                   payAmountETH={payAmountETH}
-                  onPayAmountChange={setPayAmount}
+                  onNftSelected={setPayAmount}
                 />
               ) : null}
               <ProjectActivity />

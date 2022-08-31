@@ -2402,6 +2402,9 @@ msgstr ""
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
 msgstr ""
 
+msgid "This project is owned by a Gnosis Safe."
+msgstr ""
+
 msgid "This project reserves some of the newly minted tokens for itself."
 msgstr ""
 

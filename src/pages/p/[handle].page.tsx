@@ -11,6 +11,7 @@ import {
   V1ProjectContext,
   V1ProjectContextType,
 } from 'contexts/v1/projectContext'
+import { useAddressIsGnosisSafe } from 'hooks/AddressIsGnosisSafe'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useProjectsQuery } from 'hooks/Projects'
 import useSymbolOfERC20 from 'hooks/SymbolOfERC20'
@@ -129,6 +130,8 @@ function V1Dashboard({ metadata }: { metadata: ProjectMetadataV4 }) {
 
   const projectId = useProjectIdForHandle(handle)
   const owner = useOwnerOfProject(projectId)
+  const { data: ownerIsGnosisSafe, isLoading: ownerIsGnosisSafeLoading } =
+    useAddressIsGnosisSafe(owner)
   const terminalAddress = useTerminalOfProject(projectId)
   const terminalName = getTerminalName({
     address: terminalAddress,
@@ -194,6 +197,8 @@ function V1Dashboard({ metadata }: { metadata: ProjectMetadataV4 }) {
       projectId: projectId?.toNumber(),
       projectType,
       owner,
+      ownerIsGnosisSafe,
+      ownerIsGnosisSafeLoading,
       earned,
       handle,
       metadata,
@@ -229,6 +234,8 @@ function V1Dashboard({ metadata }: { metadata: ProjectMetadataV4 }) {
     handle,
     metadata,
     owner,
+    ownerIsGnosisSafe,
+    ownerIsGnosisSafeLoading,
     projectId,
     queuedFC,
     queuedPayoutMods,

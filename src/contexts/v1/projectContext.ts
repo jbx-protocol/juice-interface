@@ -14,6 +14,8 @@ export type V1ProjectContextType = {
   handle: string | undefined
   metadata: ProjectMetadataV4 | undefined
   owner: string | undefined // owner address
+  ownerIsGnosisSafe: boolean | undefined
+  ownerIsGnosisSafeLoading: boolean | undefined
   earned: BigNumber | undefined
   currentFC: V1FundingCycle | undefined
   queuedFC: V1FundingCycle | undefined
@@ -45,6 +47,8 @@ export const V1ProjectContext = createContext<V1ProjectContextType>({
   handle: undefined,
   metadata: undefined,
   owner: undefined,
+  ownerIsGnosisSafe: undefined,
+  ownerIsGnosisSafeLoading: undefined,
   earned: undefined,
   currentFC: undefined,
   queuedFC: undefined,

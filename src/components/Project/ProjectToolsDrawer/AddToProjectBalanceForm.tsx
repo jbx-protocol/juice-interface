@@ -54,11 +54,6 @@ export function AddToProjectBalanceForm({
       <Form.Item name="amount" label={<Trans>Pay amount</Trans>}>
         <FormattedNumberInput
           placeholder="0"
-          onChange={amount =>
-            addToBalanceForm.setFieldsValue({
-              amount,
-            })
-          }
           accessory={<InputAccessoryButton content="ETH" />}
         />
       </Form.Item>

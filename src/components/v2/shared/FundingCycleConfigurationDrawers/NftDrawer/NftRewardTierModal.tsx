@@ -9,6 +9,7 @@ import { useEffect } from 'react'
 import ContributionFloorFormItem from './ContributionFloorFormItem'
 import NftUpload from './NftUpload'
 
+import { withHttps } from 'utils/externalLink'
 import { NFT_REWARDS_EXPLAINATION } from '.'
 import MaxSupplyFormItem from './MaxSupplyFormItem'
 
@@ -49,7 +50,7 @@ export default function NftRewardTierModal({
       remainingSupply: maxSupply,
       imageUrl: nftForm.getFieldValue('imageUrl'),
       name: nftForm.getFieldValue('name'),
-      externalLink: `https://${nftForm.getFieldValue('externalLink')}`,
+      externalLink: withHttps(nftForm.getFieldValue('externalLink')),
       description: nftForm.getFieldValue('description'),
     } as NftRewardTier
 

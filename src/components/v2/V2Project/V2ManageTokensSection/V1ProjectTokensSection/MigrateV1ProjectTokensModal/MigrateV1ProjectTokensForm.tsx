@@ -33,6 +33,8 @@ export function MigrateV1ProjectTokensForm({
 
         <Form.Item
           name="tokenAmount"
+          required
+          label={<Trans>V1 tokens to swap</Trans>}
           rules={[
             {
               message: <Trans>Tokens are required.</Trans>,
@@ -43,14 +45,7 @@ export function MigrateV1ProjectTokensForm({
           ]}
         >
           <FormattedNumberInput
-            onChange={val => {
-              form.setFieldsValue({ tokenAmount: val })
-            }}
             max={v1TokenBalance}
-            formItemProps={{
-              required: true,
-              label: <Trans>V1 tokens to swap</Trans>,
-            }}
             accessory={
               <InputAccessoryButton
                 content={<Trans>MAX</Trans>}

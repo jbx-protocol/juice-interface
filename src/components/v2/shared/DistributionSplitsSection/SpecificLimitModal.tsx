@@ -51,39 +51,44 @@ export default function SpecificLimitModal({
       onOk={setNewSplitsFromLimit}
     >
       <Form form={form}>
-        <FormattedNumberInput
-          placeholder="0"
-          onChange={distributionLimit =>
-            form.setFieldsValue({
-              distributionLimit,
-            })
-          }
+        <Form.Item
           name="distributionLimit"
-          formItemProps={{
-            rules: [{ required: true }],
-            extra: (
-              <TooltipLabel
-                label={t`Set this to the sum of all your payouts`}
-                tip={
-                  <Trans>
-                    Each payout will receive their percent of this total each
-                    funding cycle if there is enough in the treasury. Otherwise,
-                    they will receive their percent of whatever is in the
-                    treasury.
-                  </Trans>
+          rules={[
+            {
+              required: true,
+              validator: (rule, value: string) => {
+                if (!value.match(/^[\d,]+$/g)) {
+                  return Promise.reject()
                 }
-              />
-            ),
-          }}
-          min={0}
-          accessory={
-            <InputAccessoryButton
-              withArrow
-              content={currencyName}
-              onClick={toggleCurrency}
+              },
+            },
+          ]}
+          extra={
+            <TooltipLabel
+              label={t`Set this to the sum of all your payouts`}
+              tip={
+                <Trans>
+                  Each payout will receive their percent of this total each
+                  funding cycle if there is enough in the treasury. Otherwise,
+                  they will receive their percent of whatever is in the
+                  treasury.
+                </Trans>
+              }
             />
           }
-        />
+        >
+          <FormattedNumberInput
+            placeholder="0"
+            min={0}
+            accessory={
+              <InputAccessoryButton
+                withArrow
+                content={currencyName}
+                onClick={toggleCurrency}
+              />
+            }
+          />
+        </Form.Item>
       </Form>
     </Modal>
   )

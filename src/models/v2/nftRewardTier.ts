@@ -17,8 +17,8 @@ export type ContractNftRewardTier = {
   id: number
   contributionFloor: BigNumber //uint128
   lockedUntil: BigNumber
-  remainingQuantity: number
-  initialQuantity: number //uint64
+  remainingQuantity: BigNumber
+  initialQuantity: BigNumber //uint64
   votingUnits: number
   reservedRate: number
   reservedTokenBeneficiary: string

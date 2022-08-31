@@ -45,6 +45,7 @@ export function MigrateProjectTokensModal({
   const payV1TokenPaymentTerminalTx = usePayV1TokenPaymentTerminal()
 
   const swapTokens = async () => {
+    await form.validateFields()
     setLoading(true)
 
     const tokenAmount = form.getFieldValue('tokenAmount')

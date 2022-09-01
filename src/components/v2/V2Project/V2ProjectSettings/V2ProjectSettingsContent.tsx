@@ -3,14 +3,21 @@ import {
   V2SettingsKey,
   V2SettingsKeyTitleMap,
 } from 'components/v2/V2Project/V2ProjectSettings/V2ProjectSettings'
+import { ThemeContext } from 'contexts/themeContext'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import V2ProjectDetails from './pages/V2ProjectDetails'
 
 const defaultPage: V2SettingsKey = 'general'
 
 const V2ProjectSettingsContent = () => {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+
   const [selectedSettingsPage, setSelectedSettingsPage] =
     useState<V2SettingsKey>(defaultPage)
+
   const router = useRouter()
 
   useEffect(() => {
@@ -45,8 +52,7 @@ const V2ProjectSettingsContent = () => {
   const getActiveTab = (selectedSettingsPage: V2SettingsKey) => {
     switch (selectedSettingsPage) {
       case 'general':
-        // return <V2ProjectDetails />
-        return <div>Project Details</div>
+        return <V2ProjectDetails />
       case 'projecthandle':
         // return <V2ReconfigureProjectHandle />
         return <div>Reconfigure Project Handle</div>
@@ -90,8 +96,12 @@ const V2ProjectSettingsContent = () => {
 
   return (
     <Layout style={{ background: 'transparent' }}>
-      <h2>{V2SettingsKeyTitleMap[selectedSettingsPage]}</h2>
+      <h2 style={{ color: colors.text.primary, marginBottom: 0 }}>
+        {V2SettingsKeyTitleMap[selectedSettingsPage]}
+      </h2>
+
       <Divider />
+
       <Layout.Content style={{ margin: '0 16px' }}>
         {getActiveTab(selectedSettingsPage)}
       </Layout.Content>

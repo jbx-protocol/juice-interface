@@ -68,10 +68,10 @@ export const useFundingHasSavedChanges = ({
       fundingCycleData.duration !== initialEditingData.fundingCycleData.duration
     const distributionLimitUpdated =
       fundAccessConstraints.distributionLimit !==
-      initialEditingData.fundAccessConstraints?.[0].distributionLimit
+      initialEditingData.fundAccessConstraints?.[0]?.distributionLimit
     const distributionLimitCurrencyUpdated =
       fundAccessConstraints.distributionLimitCurrency !==
-      initialEditingData.fundAccessConstraints?.[0].distributionLimitCurrency
+      initialEditingData.fundAccessConstraints?.[0]?.distributionLimitCurrency
     const payoutGroupedSplitsUpdated = !isEqual(
       payoutGroupedSplits,
       initialEditingData.payoutGroupedSplits?.payoutGroupedSplits ?? [],

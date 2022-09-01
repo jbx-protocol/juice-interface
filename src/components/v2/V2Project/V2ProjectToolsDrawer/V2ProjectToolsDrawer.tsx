@@ -22,7 +22,7 @@ import { ETHPayoutSplitGroup, ReservedTokensSplitGroup } from 'models/v2/splits'
 import { useContext } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { AddToProjectBalanceForm } from '../../../Project/ProjectToolsDrawer/AddToProjectBalanceForm'
-import { PayableAddressSection } from '../../../Project/ProjectToolsDrawer/PayableAddressSection'
+import { PaymentAddressSection } from '../../../Project/ProjectToolsDrawer/PaymentAddressSection'
 import { TransferOwnershipForm } from '../../../Project/ProjectToolsDrawer/TransferOwnershipForm'
 import { TransferUnclaimedTokensForm } from '../../../Project/ProjectToolsDrawer/TransferUnclaimedTokensForm'
 import { ExportSplitsButton } from './ExportSplitsButton'
@@ -56,11 +56,20 @@ export function V2ProjectToolsDrawer({
 
   const OwnerTools = (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
-      <V1TokenMigrationSetupSection />
+      <section>
+        <h3>
+          <Trans>V1 token migration</Trans>
+        </h3>
+        <V1TokenMigrationSetupSection />
+      </section>
 
       <Divider />
 
       <section>
+        <h3>
+          <Trans>Transfer ownership</Trans>
+        </h3>
+
         <TransferOwnershipForm
           ownerAddress={projectOwnerAddress}
           useTransferProjectOwnershipTx={useTransferProjectOwnershipTx}
@@ -97,9 +106,15 @@ export function V2ProjectToolsDrawer({
       <Tabs>
         <TabPane tab={<Trans>General</Trans>} key="1">
           <Space direction="vertical" size="middle" style={{ width: '100%' }}>
-            <PayableAddressSection
-              useDeployProjectPayerTx={useDeployProjectPayerTx}
-            />
+            <section>
+              <h3>
+                <Trans>Create Payment Address</Trans>
+              </h3>
+
+              <PaymentAddressSection
+                useDeployProjectPayerTx={useDeployProjectPayerTx}
+              />
+            </section>
 
             <Divider />
 

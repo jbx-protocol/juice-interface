@@ -4,7 +4,7 @@ import VeNftSetUnclaimedTokensPermissionSection from 'components/veNft/VeNftSetU
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import React, { useContext } from 'react'
 
-const V2ProjectSettingsVenftContent = () => {
+export function V2VeNftSettingsPage() {
   const {
     veNft: { contractAddress: veNftContractAddress },
   } = useContext(V2ProjectContext)
@@ -15,5 +15,3 @@ const V2ProjectSettingsVenftContent = () => {
     </Space>
   )
 }
-
-export default V2ProjectSettingsVenftContent

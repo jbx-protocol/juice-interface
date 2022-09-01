@@ -114,6 +114,8 @@ export default function NftRewardTierCard({
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            height: imageLoading ? NFT_IMAGE_SIDE_LENGTH : 'unset',
+            width: imageLoading ? NFT_IMAGE_SIDE_LENGTH : 'unset',
           }}
         >
           {imageLoading ? (
@@ -122,8 +124,8 @@ export default function NftRewardTierCard({
           <Image
             src={rewardTier.imageUrl}
             alt={rewardTier.name}
-            height={NFT_IMAGE_SIDE_LENGTH}
-            width={NFT_IMAGE_SIDE_LENGTH}
+            height={imageLoading ? 0 : NFT_IMAGE_SIDE_LENGTH}
+            width={imageLoading ? 0 : NFT_IMAGE_SIDE_LENGTH}
             style={{
               display: imageLoading ? 'none' : 'unset',
               objectFit: 'cover',

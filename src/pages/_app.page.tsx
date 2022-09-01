@@ -1,26 +1,25 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import coinbaseWalletModule from '@web3-onboard/coinbase'
 import gnosisModule from '@web3-onboard/gnosis'
 import injectedModule from '@web3-onboard/injected-wallets'
 import keystoneModule from '@web3-onboard/keystone'
 import ledgerModule from '@web3-onboard/ledger'
+import { init, useAccountCenter, useWallets } from '@web3-onboard/react'
 import trezorModule from '@web3-onboard/trezor'
 import walletConnectModule from '@web3-onboard/walletconnect'
 import { Head } from 'components/common'
-import type { AppProps } from 'next/app'
-import React, { useEffect } from 'react'
-
-import { BigNumber } from '@ethersproject/bignumber'
-import { init, useWallets } from '@web3-onboard/react'
 import config from 'config/seo_meta.json'
+import { NETWORKS } from 'constants/networks'
 import {
   useLoadWalletFromLocalStorage,
   useStoreWalletsInLocalStorage,
 } from 'hooks/Network'
+import type { AppProps } from 'next/app'
+import React, { useEffect } from 'react'
 import { unpadLeadingZerosString } from 'utils/bigNumbers'
+import { installJuiceboxWindowObject } from '../lib/juicebox'
 import '../styles/antd.css'
 import '../styles/index.scss'
-
-import { NETWORKS } from 'constants/networks'
 
 const injected = injectedModule()
 const gnosis = gnosisModule()
@@ -57,6 +56,7 @@ init({
 })
 
 export default function MyApp({ Component, pageProps }: AppProps) {
+  const updateAccountCenter = useAccountCenter()
   const loadWalletFromLocalStorage = useLoadWalletFromLocalStorage()
   const storeWalletsInLocalStorage = useStoreWalletsInLocalStorage()
   const connectedWallets = useWallets()
@@ -70,6 +70,17 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     storeWalletsInLocalStorage(connectedWallets)
   }, [storeWalletsInLocalStorage, connectedWallets])
+
+  // disable account center in web3-onboard
+  useEffect(() => {
+    updateAccountCenter({ enabled: false })
+  }, [updateAccountCenter])
+
+  // run on initial mount
+  useEffect(() => {
+    installJuiceboxWindowObject()
+  }, [])
+
   return (
     <>
       {/* Default HEAD - overwritten by specific page SEO */}

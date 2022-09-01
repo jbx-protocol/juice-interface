@@ -8,12 +8,16 @@ import { useContext } from 'react'
 import { useProjectLatestConfiguredFundingCycle } from './ProjectLatestConfiguredFundingCycle'
 import useProjectQueuedFundingCycle from './ProjectQueuedFundingCycle'
 
+/**
+ * If the latestConfiguredFundingCycleOf has an active ballot, return latestConfiguredFundingCycleOf.
+ * Else, return queuedFundingCycleOf.
+ */
 export function useProjectUpcomingFundingCycle(): [
   V2FundingCycle | undefined,
   V2FundingCycleMetadata | undefined,
   BallotState?,
 ] {
-  const { projectId, fundingCycle } = useContext(V2ProjectContext)
+  const { projectId } = useContext(V2ProjectContext)
 
   const { data: latestConfiguredFundingCycleResponse } =
     useProjectLatestConfiguredFundingCycle({
@@ -25,30 +29,23 @@ export function useProjectUpcomingFundingCycle(): [
     latestConfiguredFundingCycleBallotState,
   ] = latestConfiguredFundingCycleResponse ?? []
 
-  const isCurrentFundingCycleLatest =
+  const isLatestConfiguredActive =
     latestConfiguredFundingCycle &&
-    fundingCycle &&
-    fundingCycle.number.eq(latestConfiguredFundingCycle.number)
+    latestConfiguredFundingCycleBallotState === BallotState.active
 
   const { data: queuedFundingCycleResponse } = useProjectQueuedFundingCycle({
-    projectId: isCurrentFundingCycleLatest ? projectId : undefined,
+    projectId: !isLatestConfiguredActive ? projectId : undefined,
   })
   const [queuedFundingCycle, queuedFundingCycleMetadata] =
     queuedFundingCycleResponse ?? []
 
-  const hasLatestBallotFailed =
-    latestConfiguredFundingCycleBallotState === BallotState.failed
-
-  if (
-    (isCurrentFundingCycleLatest || hasLatestBallotFailed) &&
-    queuedFundingCycle
-  ) {
-    return [queuedFundingCycle, queuedFundingCycleMetadata]
+  if (isLatestConfiguredActive) {
+    return [
+      latestConfiguredFundingCycle,
+      latestConfiguredFundingCycleMetadata,
+      latestConfiguredFundingCycleBallotState,
+    ]
   }
 
-  return [
-    latestConfiguredFundingCycle,
-    latestConfiguredFundingCycleMetadata,
-    latestConfiguredFundingCycleBallotState,
-  ]
+  return [queuedFundingCycle, queuedFundingCycleMetadata]
 }

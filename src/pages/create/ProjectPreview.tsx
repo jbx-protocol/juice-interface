@@ -14,10 +14,9 @@ import {
 
 import { V2FundingCycle } from 'models/v2/fundingCycle'
 
+import V2Project from 'components/v2/V2Project'
 import { V2_CURRENCY_ETH } from 'utils/v2/currency'
 import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
-
-import V2Project from '../../components/v2/V2Project'
 
 export default function ProjectPreview({
   singleColumnLayout,

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-08-21 00:30\n"
+"PO-Revision-Date: 2022-08-28 00:36\n"
 "Last-Translator: \n"
 "Language: pt_BR\n"
 "Language-Team: Portuguese, Brazilian\n"
@@ -289,6 +289,9 @@ msgstr "Adicionar novo pagamento"
 msgid "Add payout"
 msgstr "Adicionar pagamento"
 
+msgid "Add payout recipient"
+msgstr ""
+
 msgid "Add reward tier"
 msgstr ""
 
@@ -499,6 +502,12 @@ msgstr "Por padrão, tokens recentemente emitidos irão para a carteira de quem 
 msgid "By default, the payer will receive any project tokens minted from the payment."
 msgstr ""
 
+msgid "CSV data wasn't ready for export. Wait a few seconds and try again."
+msgstr ""
+
+msgid "CSV download failed."
+msgstr ""
+
 msgid "Can I change my project's contract after it's been created?"
 msgstr "Posso mudar o contrato do meu projeto após ele ter sido criado?"
 
@@ -515,6 +524,9 @@ msgid "Cannot redeem tokens for ETH because this project's redemption rate is ze
 msgstr ""
 
 msgid "Change ENS name"
+msgstr ""
+
+msgid "Change networks to deploy"
 msgstr ""
 
 msgid "Change project handle"
@@ -682,8 +694,11 @@ msgstr "Copiado!"
 msgid "Copy to clipboard"
 msgstr "Copiar para a área de transferência"
 
-msgid "Create a payable address (optional)"
-msgstr "Criar um endereço de pagamento (opcional)"
+msgid "Create Payment Address"
+msgstr ""
+
+msgid "Create a Payment Address (optional)"
+msgstr ""
 
 msgid "Create an Ethereum address for your project. Enables direct payments without going through your project's Juicebox page."
 msgstr "Criar um endereço Ethereum para o seu projeto. Habilite pagamentos diretos sem ter que ir para a página do seu projeto Juicebox."
@@ -691,19 +706,13 @@ msgstr "Criar um endereço Ethereum para o seu projeto. Habilite pagamentos dire
 msgid "Create an Ethereum address that can be used to pay your project directly."
 msgstr "Criar um endereço Ethereum que pode ser usado para pagar ao seu projeto diretamente."
 
-msgid "Create payable address"
-msgstr "Criar endereço de pagamento"
-
-msgid "Create payment address"
-msgstr ""
-
 msgid "Create project"
 msgstr "Criar projeto"
 
 msgid "Create your own ERC-20 token to represent stake in your project. Contributors will receive these tokens when they pay your project."
 msgstr "Crie seu próprio token ERC-20 para representar a participação em seu projeto. Contribuidores receberão esses tokens quando eles pagarem seu projeto."
 
-msgid "Created ETH-ERC20 payment address"
+msgid "Created Payment Address"
 msgstr ""
 
 msgid "Crowdfund your project with ETH. Set a funding target to cover predictable expenses, and any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
@@ -772,16 +781,16 @@ msgstr "Deletar pagamento"
 msgid "Delete token allocation"
 msgstr "Deletar alocação de token"
 
+msgid "Deploy Payment Address"
+msgstr ""
+
+msgid "Deploy Payment Address contract"
+msgstr ""
+
 msgid "Deploy funding cycle configuration"
 msgstr "Implemente a configuração do ciclo de financiamento"
 
-msgid "Deploy payment address"
-msgstr ""
-
-msgid "Deploy payment address contract"
-msgstr ""
-
-msgid "Deploy project on {0}"
+msgid "Deploy project"
 msgstr ""
 
 msgid "Deploy project to {0}"
@@ -877,14 +886,14 @@ msgstr "Fundos distribuídos"
 msgid "Distributed Reserves"
 msgstr "Reservas distribuídas"
 
-msgid "Distributed Tokens"
-msgstr "Tokens distribuídos"
-
 msgid "Distributed funds"
 msgstr "Fundos distribuídos"
 
 msgid "Distributed reserved {0}"
 msgstr "Reservados distribuídos {0}"
+
+msgid "Distributed tokens"
+msgstr ""
 
 msgid "Distributing funds to Juicebox projects won't incur fees."
 msgstr "A distribuição de fundos para os projetos Juicebox não irão incorrer em taxas."
@@ -955,7 +964,7 @@ msgstr "Os tokens ERC-20 apenas podem ser criados uma vez que o token ERC-20 ten
 msgid "ERC20 Deployed"
 msgstr "ERC20 Implementado"
 
-msgid "ETH-ERC20 Address Created"
+msgid "ERC20 deployed"
 msgstr ""
 
 msgid "Each payout will receive their percent of this total each funding cycle if there is enough in the treasury. Otherwise, they will receive their percent of whatever is in the treasury."
@@ -1032,6 +1041,21 @@ msgstr ""
 
 msgid "Explore projects"
 msgstr "Explore projetos"
+
+msgid "Export data"
+msgstr ""
+
+msgid "Export payouts CSV"
+msgstr ""
+
+msgid "Export the current funding cycle's payouts to CSV."
+msgstr ""
+
+msgid "Export the current funding cycle's reserved token allocation to CSV."
+msgstr ""
+
+msgid "Export token allocation CSV"
+msgstr ""
 
 msgid "Extend Lock"
 msgstr ""
@@ -1110,9 +1134,6 @@ msgstr "Dê um feedback"
 
 msgid "Give this NFT a name."
 msgstr ""
-
-msgid "Go to Etherscan"
-msgstr "Vá para Etherscan"
 
 msgid "Grant permission"
 msgstr ""
@@ -1564,7 +1585,7 @@ msgstr ""
 msgid "Overflow is created if your project's balance exceeds your funding cycle target. Overflow can be redeemed by your project's token holders."
 msgstr "Overflow é criado se o saldo do seu projeto exceder o meta do seu ciclo de financiamento. O overflow pode ser resgatado pelos titulares do token do seu projeto."
 
-msgid "Owned by: <0/>"
+msgid "Owned by <0/>"
 msgstr ""
 
 msgid "Owner can mint tokens at any time."
@@ -1632,6 +1653,9 @@ msgstr "Pagar <0>{0}</0> não é um investimento — é uma forma de apoiar o pr
 
 msgid "Paying this project is currently disabled."
 msgstr "O pagamento deste projeto está atualmente indisponível."
+
+msgid "Payment Address created"
+msgstr ""
 
 msgid "Payment equivalent"
 msgstr ""
@@ -1708,14 +1732,14 @@ msgstr "Projeto Criado"
 msgid "Project ID must be a number."
 msgstr "A ID do projeto precisa ser um número."
 
-msgid "Project ID:"
-msgstr "ID do projeto:"
-
 msgid "Project Token"
 msgstr "Token do Projeto"
 
 msgid "Project configuration"
 msgstr "Configuração do projeto"
+
+msgid "Project created"
+msgstr ""
 
 msgid "Project created by"
 msgstr "Projeto criado por"
@@ -1791,6 +1815,9 @@ msgstr "Projeto {projectId}"
 
 msgid "Project {projectId} not found"
 msgstr "Projeto {projectId} não encontrado"
+
+msgid "Project:"
+msgstr ""
 
 msgid "Projects"
 msgstr "Projetos"
@@ -1878,9 +1905,6 @@ msgstr "Reconfigure o projeto e os detalhes do financiamento"
 
 msgid "Reconfigure project details"
 msgstr "Reconfigurar detalhes do projeto"
-
-msgid "Reconfigure token"
-msgstr "Reconfigurar token"
 
 msgid "Reconfigure upcoming"
 msgstr "Reconfigurar próximos ciclos"
@@ -2065,9 +2089,6 @@ msgstr ""
 msgid "Seconds"
 msgstr "Segundos"
 
-msgid "See transaction"
-msgstr "Ver transação"
-
 msgid "Set ENS name"
 msgstr ""
 
@@ -2198,6 +2219,9 @@ msgid "Swap for V2 {tokenSymbolFormattedPlural}"
 msgstr ""
 
 msgid "Swap for V2 {tokenText}"
+msgstr ""
+
+msgid "Switch network to {0}"
 msgstr ""
 
 msgid "Target"
@@ -2349,6 +2373,12 @@ msgstr "Esta é a quantidade máxima de fundos que pode deixar na tesouraria de 
 
 msgid "This list is using an experimental data index and may be inaccurate for some projects."
 msgstr "Essa lista está usando um índice de dados experimental e pode ser impreciso para alguns projetos."
+
+msgid "This project has no distributions."
+msgstr ""
+
+msgid "This project has no reserved tokens."
+msgstr ""
 
 msgid "This project is archived and can't be paid."
 msgstr "Este projeto está arquivado e não pode ser pago."
@@ -2848,8 +2878,8 @@ msgstr ""
 msgid "Your funding cycle configuration has been pre-populated using the configuration you originally launched with. If you need to customize it, contact us."
 msgstr "A configuração do seu ciclo de financiamento tem sido pré-preenchida usando a configuração com que você, originalmente, lançou. Caso precise de customizá-la, entre em contato conosco."
 
-msgid "Your new payable address:"
-msgstr "Seu novo endereço de pagamento:"
+msgid "Your new payment address:"
+msgstr ""
 
 msgid "Your project can still receive payments directly through the Juicebox protocol contracts."
 msgstr "Seu projeto ainda pode receber pagamentos diretamente através do protocolo de contratos Juicebox."
@@ -2920,8 +2950,8 @@ msgstr "coincidindo \"{searchText}\""
 msgid "minutes"
 msgstr "minutos"
 
-msgid "or <0><1>buy {tokenText} on exchange<2/></1></0>"
-msgstr "ou <0><1> compre {tokenText} em troca<2/></1></0>"
+msgid "or <0><1>buy {tokenText} on exchange.</1></0>"
+msgstr ""
 
 msgid "project"
 msgstr "projeto"
@@ -2956,10 +2986,10 @@ msgstr ""
 msgid "veNFT Tiers ({0} variants)"
 msgstr ""
 
-msgid "{0, plural, one {# payment address} other {# payment addresses}}"
+msgid "{0, plural, one {# Payment Address} other {# Payment Addresses}}"
 msgstr ""
 
-msgid "{0, plural, one {View # deployed payment address} other {View # deployed payment addresses}}"
+msgid "{0, plural, one {View deployed Payment Address} other {View deployed Payment Addresses}}"
 msgstr ""
 
 msgid "{0} - Project payer contracts"

@@ -2,15 +2,15 @@
   "short_name": "Juicebox",
   "name": "Juicebox",
   "description": "Community funding for people and projects.",
-  "iconPath": "android-chrome-144x144.png",
+  "iconPath": "gnosis.png",
   "icons": [
     {
       "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "sizes": "128x128 96x96 64x64 32x32 16x16",
       "type": "image/x-icon"
     }
   ],
-  "start_url": "./index.html",
+  "start_url": ".",
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
   "display": "standalone"

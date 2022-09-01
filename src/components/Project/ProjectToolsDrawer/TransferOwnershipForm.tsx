@@ -43,9 +43,6 @@ export function TransferOwnershipForm({
 
   return (
     <Form form={transferOwnershipForm} layout="vertical">
-      <h3>
-        <Trans>Transfer ownership</Trans>
-      </h3>
       <p>
         <Trans>Current owner: {ownerAddress}</Trans>
       </p>

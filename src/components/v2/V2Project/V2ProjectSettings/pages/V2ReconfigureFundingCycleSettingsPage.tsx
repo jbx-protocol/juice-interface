@@ -15,10 +15,13 @@ export function V2ReconfigureFundingCycleSettingsPage() {
     localStoreRef.current = createStore()
   }, [])
 
-  if (!localStoreRef.current) return null
   return (
-    <Provider store={localStoreRef.current}>
-      <V2ReconfigureFundingCycleForm />
-    </Provider>
+    <>
+      {localStoreRef.current && (
+        <Provider store={localStoreRef.current}>
+          <V2ReconfigureFundingCycleForm />
+        </Provider>
+      )}
+    </>
   )
 }

@@ -70,7 +70,9 @@ export function V2ReservedTokensSettingsPage() {
         disabled={totalPercentagesInvalid}
         type="primary"
       >
-        <Trans>Save token allocation</Trans>
+        <span>
+          <Trans>Save token allocation</Trans>
+        </span>
       </Button>
     </>
   )

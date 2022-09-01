@@ -24,7 +24,8 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
 
 import { useProjectUpcomingFundingCycle } from 'hooks/v2/contractReader/ProjectUpcomingFundingCycle'
-import V2ReconfigureFundingModalTrigger from '../V2ProjectReconfigureModal/V2ReconfigureModalTrigger'
+import Link from 'next/link'
+import { settingsPagePath } from 'utils/routes'
 import CurrentFundingCycle from './CurrentFundingCycle'
 import FundingCycleHistory from './FundingCycleHistory'
 import NoFundingCycle from './NoFundingCycle'
@@ -43,6 +44,7 @@ export default function V2FundingCycleSection({
     isPreviewMode,
     loading: { fundingCycleLoading },
     projectId,
+    handle,
   } = useContext(V2ProjectContext)
 
   const canReconfigure = useV2ConnectedWalletHasPermission(
@@ -135,20 +137,17 @@ export default function V2FundingCycleSection({
       tabs={tabs}
       reconfigureButton={
         canReconfigure ? (
-          <V2ReconfigureFundingModalTrigger
-            hideProjectDetails
-            triggerButton={(onClick: VoidFunction) => (
-              <Button size="small" onClick={onClick} icon={<SettingOutlined />}>
-                <span>
-                  {hasFundingDuration(fundingCycleData) ? (
-                    <Trans>Reconfigure upcoming</Trans>
-                  ) : (
-                    <Trans>Reconfigure</Trans>
-                  )}
-                </span>
-              </Button>
-            )}
-          />
+          <Link href={settingsPagePath('reconfigurefc', { projectId, handle })}>
+            <Button size="small" icon={<SettingOutlined />}>
+              <span>
+                {hasFundingDuration(fundingCycleData) ? (
+                  <Trans>Reconfigure upcoming</Trans>
+                ) : (
+                  <Trans>Reconfigure</Trans>
+                )}
+              </span>
+            </Button>
+          </Link>
         ) : null
       }
     />

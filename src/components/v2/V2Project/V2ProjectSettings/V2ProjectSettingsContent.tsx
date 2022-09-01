@@ -1,7 +1,7 @@
 import { Divider, Layout } from 'antd'
 import {
-  V2SettingsKey,
-  V2SettingsKeyTitleMap,
+  V2SettingsPageKey,
+  V2SettingsPageKeyTitleMap,
 } from 'components/v2/V2Project/V2ProjectSettings/V2ProjectSettings'
 import { ThemeContext } from 'contexts/themeContext'
 import { useRouter } from 'next/router'
@@ -16,17 +16,18 @@ import { V2ReservedTokensSettingsPage } from './pages/V2ReservedTokensSettingsPa
 import { V2TransferOwnershipSettingsPage } from './pages/V2TransferOwnershipSettingsPage'
 import { V2VeNftSettingsPage } from './pages/V2VeNftSettingsPage'
 
-const SettingsPageComponents: { [k in V2SettingsKey]: () => JSX.Element } = {
-  general: V2ProjectDetailsSettingsPage,
-  projecthandle: V2ProjectHandleSettingsPage,
-  reconfigurefc: V2ReconfigureFundingCycleSettingsPage,
-  payouts: V2PayoutsSettingsPage,
-  reservedtokens: V2ReservedTokensSettingsPage,
-  v1tokenmigration: V1V2TokenMigrationSettingsPage,
-  venft: V2VeNftSettingsPage,
-  transferownership: V2TransferOwnershipSettingsPage,
-  archiveproject: V2ArchiveProjectSettingsPage,
-}
+const SettingsPageComponents: { [k in V2SettingsPageKey]: () => JSX.Element } =
+  {
+    general: V2ProjectDetailsSettingsPage,
+    projecthandle: V2ProjectHandleSettingsPage,
+    reconfigurefc: V2ReconfigureFundingCycleSettingsPage,
+    payouts: V2PayoutsSettingsPage,
+    reservedtokens: V2ReservedTokensSettingsPage,
+    v1tokenmigration: V1V2TokenMigrationSettingsPage,
+    venft: V2VeNftSettingsPage,
+    transferownership: V2TransferOwnershipSettingsPage,
+    archiveproject: V2ArchiveProjectSettingsPage,
+  }
 
 const DEFAULT_SETTINGS_PAGE = 'general'
 
@@ -37,7 +38,7 @@ export function V2ProjectSettingsContent() {
 
   const router = useRouter()
 
-  const activeSettingsPage = router.query.page as V2SettingsKey
+  const activeSettingsPage = router.query.page as V2SettingsPageKey
   const ActiveSettingsPage = useMemo(
     () => SettingsPageComponents[activeSettingsPage ?? DEFAULT_SETTINGS_PAGE],
     [activeSettingsPage],
@@ -46,7 +47,7 @@ export function V2ProjectSettingsContent() {
   return (
     <Layout style={{ background: 'transparent' }}>
       <h2 style={{ color: colors.text.primary, marginBottom: 0 }}>
-        {V2SettingsKeyTitleMap[activeSettingsPage]}
+        {V2SettingsPageKeyTitleMap[activeSettingsPage]}
       </h2>
 
       <Divider />

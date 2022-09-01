@@ -25,22 +25,18 @@ export default function V2ProjectHeaderActions() {
     V2OperatorPermission.RECONFIGURE,
   )
 
-  const SettingsPageButton = () => {
-    if (settingsPageEnabled) {
-      return (
-        <Tooltip title={t`Project Settings`} placement="bottom">
-          <a
-            href={`/v2/p/${projectId}/settings`}
-            className="ant-btn ant-btn-text ant-btn-icon-only"
-          >
-            <SettingOutlined />
-          </a>
-        </Tooltip>
-      )
-    }
-
-    return <V2ReconfigureFundingModalTrigger />
-  }
+  const SettingsPageButton = settingsPageEnabled ? (
+    <Tooltip title={t`Project Settings`} placement="bottom">
+      <a
+        href={`/v2/p/${projectId}/settings`}
+        className="ant-btn ant-btn-text ant-btn-icon-only"
+      >
+        <SettingOutlined />
+      </a>
+    </Tooltip>
+  ) : (
+    <V2ReconfigureFundingModalTrigger />
+  )
 
   return (
     <div
@@ -75,7 +71,7 @@ export default function V2ProjectHeaderActions() {
           />
         </Tooltip>
 
-        {canReconfigure && <SettingsPageButton />}
+        {canReconfigure && SettingsPageButton}
       </div>
     </div>
   )

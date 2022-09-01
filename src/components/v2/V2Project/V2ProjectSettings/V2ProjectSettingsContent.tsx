@@ -3,100 +3,57 @@ import {
   V2SettingsKey,
   V2SettingsKeyTitleMap,
 } from 'components/v2/V2Project/V2ProjectSettings/V2ProjectSettings'
+import { ThemeContext } from 'contexts/themeContext'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useContext, useMemo } from 'react'
+import { V1V2TokenMigrationSettingsPage } from './pages/V1V2TokenMigrationSettingsPage'
+import { V2ArchiveProjectSettingsPage } from './pages/V2ArchiveProjectSettingsPage'
+import { V2PayoutsSettingsPage } from './pages/V2PayoutsSettingsPage'
+import { V2ProjectDetailsSettingsPage } from './pages/V2ProjectDetailsSettingsPage'
+import { V2ProjectHandleSettingsPage } from './pages/V2ProjectHandleSettingsPage'
+import { V2ReconfigureFundingCycleSettingsPage } from './pages/V2ReconfigureFundingCycleSettingsPage'
+import { V2ReservedTokensSettingsPage } from './pages/V2ReservedTokensSettingsPage'
+import { V2TransferOwnershipSettingsPage } from './pages/V2TransferOwnershipSettingsPage'
+import { V2VeNftSettingsPage } from './pages/V2VeNftSettingsPage'
 
-const defaultPage: V2SettingsKey = 'general'
+const SettingsPageComponents: { [k in V2SettingsKey]: () => JSX.Element } = {
+  general: V2ProjectDetailsSettingsPage,
+  projecthandle: V2ProjectHandleSettingsPage,
+  reconfigurefc: V2ReconfigureFundingCycleSettingsPage,
+  payouts: V2PayoutsSettingsPage,
+  reservedtokens: V2ReservedTokensSettingsPage,
+  v1tokenmigration: V1V2TokenMigrationSettingsPage,
+  venft: V2VeNftSettingsPage,
+  transferownership: V2TransferOwnershipSettingsPage,
+  archiveproject: V2ArchiveProjectSettingsPage,
+}
 
-const V2ProjectSettingsContent = () => {
-  const [selectedSettingsPage, setSelectedSettingsPage] =
-    useState<V2SettingsKey>(defaultPage)
+const DEFAULT_SETTINGS_PAGE = 'general'
+
+export function V2ProjectSettingsContent() {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+
   const router = useRouter()
 
-  useEffect(() => {
-    setSelectedSettingsPage(() => {
-      switch (router.query.page) {
-        case 'general':
-          return 'general'
-        case 'projecthandle':
-          return 'projecthandle'
-        case 'reconfigurefc':
-          return 'reconfigurefc'
-        case 'payouts':
-          return 'payouts'
-        case 'reservedtokens':
-          return 'reservedtokens'
-        case 'paymentaddresses':
-          return 'paymentaddresses'
-        case 'v1tokenmigration':
-          return 'v1tokenmigration'
-        case 'venft':
-          return 'venft'
-        case 'transferownership':
-          return 'transferownership'
-        case 'archiveproject':
-          return 'archiveproject'
-        default:
-          return defaultPage
-      }
-    })
-  }, [router.query.page])
-
-  const getActiveTab = (selectedSettingsPage: V2SettingsKey) => {
-    switch (selectedSettingsPage) {
-      case 'general':
-        // return <V2ProjectDetails />
-        return <div>Project Details</div>
-      case 'projecthandle':
-        // return <V2ReconfigureProjectHandle />
-        return <div>Reconfigure Project Handle</div>
-      case 'reconfigurefc':
-        // return <V2ProjectReconfigure />
-        return <div>Reconfigure Funding Cycle</div>
-      case 'payouts':
-        // return <V2ProjectSettingsPayoutsContent />
-        return <div>Payouts</div>
-      case 'reservedtokens':
-        // return <EditTokenAllocationContent />
-        return <div>Reserved Tokens</div>
-      case 'paymentaddresses':
-        // return (
-        //   <PayableAddressSection
-        //     useDeployProjectPayerTx={useDeployProjectPayerTx}
-        //   />
-        // )
-        return <div>Payment Addresses</div>
-      case 'v1tokenmigration':
-        // return <V1TokenMigrationSetupSection />
-        return <div>V1 Token Migration</div>
-      case 'venft':
-        // return <V2ProjectSettingsVenftContent />
-        return <div>VENFT</div>
-      case 'transferownership':
-        // return (
-        //   <TransferOwnershipForm
-        //     ownerAddress={projectOwnerAddress}
-        //     useTransferProjectOwnershipTx={useTransferProjectOwnershipTx}
-        //   />
-        // )
-        return <div>Transfer Ownership</div>
-      case 'archiveproject':
-        // return <ArchiveV2Project />
-        return <div>Archive Project</div>
-      default:
-        return null
-    }
-  }
+  const activeSettingsPage = router.query.page as V2SettingsKey
+  const ActiveSettingsPage = useMemo(
+    () => SettingsPageComponents[activeSettingsPage ?? DEFAULT_SETTINGS_PAGE],
+    [activeSettingsPage],
+  )
 
   return (
     <Layout style={{ background: 'transparent' }}>
-      <h2>{V2SettingsKeyTitleMap[selectedSettingsPage]}</h2>
+      <h2 style={{ color: colors.text.primary, marginBottom: 0 }}>
+        {V2SettingsKeyTitleMap[activeSettingsPage]}
+      </h2>
+
       <Divider />
+
       <Layout.Content style={{ margin: '0 16px' }}>
-        {getActiveTab(selectedSettingsPage)}
+        <ActiveSettingsPage />
       </Layout.Content>
     </Layout>
   )
 }
-
-export default V2ProjectSettingsContent

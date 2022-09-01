@@ -782,9 +782,6 @@ msgstr ""
 msgid "Delete token allocation"
 msgstr ""
 
-msgid "Deploy Payment Address"
-msgstr ""
-
 msgid "Deploy Payment Address contract"
 msgstr ""
 
@@ -1973,7 +1970,7 @@ msgstr ""
 msgid "Reserve a percentage of freshly minted tokens for your project to use."
 msgstr ""
 
-msgid "Reserved Tokens"
+msgid "Reserved Token Allocation"
 msgstr ""
 
 msgid "Reserved rate"
@@ -3012,9 +3009,6 @@ msgid "{0, plural, one {# Payment Address} other {# Payment Addresses}}"
 msgstr ""
 
 msgid "{0, plural, one {View deployed Payment Address} other {View deployed Payment Addresses}}"
-msgstr ""
-
-msgid "{0} - Project payer contracts"
 msgstr ""
 
 msgid "{0} after JBX fee"

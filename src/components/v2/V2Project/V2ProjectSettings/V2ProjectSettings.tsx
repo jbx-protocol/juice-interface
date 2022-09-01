@@ -1,19 +1,16 @@
+import { LeftOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Layout, Menu, MenuProps, Space } from 'antd'
 import ProjectHeader from 'components/Project/ProjectHeader'
-import ScrollToTopButton from 'components/ScrollToTopButton'
 import V2ProjectHeaderActions from 'components/v2/V2Project/V2ProjectHeaderActions'
-import V2ProjectSettingsContent from 'components/v2/V2Project/V2ProjectSettings/V2ProjectSettingsContent'
-
-import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { useIsUserAddress } from 'hooks/IsUserAddress'
-import { useRouter } from 'next/router'
-import { useContext } from 'react'
-import { pushSettingsContent } from 'utils/pushSettingsPage'
-
+import { V2ProjectSettingsContent } from 'components/v2/V2Project/V2ProjectSettings/V2ProjectSettingsContent'
 import { layouts } from 'constants/styles/layouts'
 import { ThemeContext } from 'contexts/themeContext'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useContext } from 'react'
+import { pushSettingsContent } from 'utils/routes'
 
 type MenuItem = Required<MenuProps>['items'][number]
 
@@ -23,7 +20,6 @@ export type V2SettingsKey =
   | 'reconfigurefc'
   | 'payouts'
   | 'reservedtokens'
-  | 'paymentaddresses'
   | 'v1tokenmigration'
   | 'venft'
   | 'transferownership'
@@ -34,8 +30,7 @@ export const V2SettingsKeyTitleMap: { [k in V2SettingsKey]: string } = {
   projecthandle: t`Project Handle`,
   reconfigurefc: t`Reconfigure Funding Cycle`,
   payouts: t`Payouts`,
-  reservedtokens: t`Reserved Tokens`,
-  paymentaddresses: t`Payment Addresses`,
+  reservedtokens: t`Reserved Token Allocation`,
   v1tokenmigration: t`V1 Token Migration`,
   venft: t`VeNFT Governance`,
   transferownership: t`Transfer Ownership`,
@@ -68,7 +63,7 @@ const items: MenuItem[] = [
     'Funding',
     'funding',
     [
-      getItem('Reconfigure FC', 'reconfigurefc'),
+      getItem('Funding cycle', 'reconfigurefc'),
       getItem('Payouts', 'payouts'),
       getItem('Reserved tokens', 'reservedtokens'),
     ],
@@ -79,7 +74,6 @@ const items: MenuItem[] = [
     'Manage',
     'manage',
     [
-      getItem('Payment addresses', 'paymentaddresses'),
       getItem('V1 token migration', 'v1tokenmigration'),
       getItem('veNFT governance', 'venft'),
       getItem('Transfer ownership', 'transferownership'),
@@ -89,7 +83,7 @@ const items: MenuItem[] = [
   ),
 ]
 
-const V2ProjectSettings = () => {
+export function V2ProjectSettings() {
   const {
     projectMetadata,
     isPreviewMode,
@@ -98,12 +92,12 @@ const V2ProjectSettings = () => {
     handle,
     projectId,
   } = useContext(V2ProjectContext)
-  const { isDarkMode } = useContext(ThemeContext)
+  const {
+    isDarkMode,
+    theme: { colors },
+  } = useContext(ThemeContext)
 
   const router = useRouter()
-  const isOwner = useIsUserAddress(projectOwnerAddress)
-
-  const showAddHandle = isOwner && !isPreviewMode && !handle
 
   const handleMenuItemClick = (item: MenuItem) => {
     const key = item?.key as V2SettingsKey
@@ -118,40 +112,46 @@ const V2ProjectSettings = () => {
           actions={!isPreviewMode ? <V2ProjectHeaderActions /> : undefined}
           isArchived={isArchived}
           handle={handle}
-          owner={projectOwnerAddress}
-          onClickSetHandle={
-            showAddHandle
-              ? () => pushSettingsContent(router, 'projecthandle')
-              : undefined
-          }
+          projectOwnerAddress={projectOwnerAddress}
         />
-        <Layout style={{ minHeight: '100vh', background: 'transparent' }}>
+        <Layout
+          style={{
+            minHeight: '100vh',
+            background: 'transparent',
+            marginBottom: '4rem',
+          }}
+        >
           <Layout.Sider
             style={{ background: 'transparent', marginRight: '3rem' }}
             width={250}
           >
-            <Link href={`/v2/p/${projectId}`}>
-              <Button type="link">
-                <Trans>Back to project</Trans>
-              </Button>
-            </Link>
-            <Menu
-              defaultOpenKeys={['project', 'funding', 'manage']}
-              defaultSelectedKeys={['general']}
-              mode="inline"
-              theme={isDarkMode ? 'dark' : 'light'}
-              items={items}
-              onSelect={handleMenuItemClick}
-            />
+            <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+              <Link href={`/v2/p/${projectId}`}>
+                <Button
+                  type="link"
+                  icon={<LeftOutlined />}
+                  size="small"
+                  style={{ color: colors.text.secondary }}
+                >
+                  <span>
+                    <Trans>Back to project</Trans>
+                  </span>
+                </Button>
+              </Link>
+              <Menu
+                defaultOpenKeys={['project', 'funding', 'manage']}
+                defaultSelectedKeys={['general']}
+                mode="inline"
+                theme={isDarkMode ? 'dark' : 'light'}
+                items={items}
+                onSelect={handleMenuItemClick}
+              />
+            </Space>
           </Layout.Sider>
+
           <V2ProjectSettingsContent />
         </Layout>
       </Space>
-      <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-        <ScrollToTopButton />
-      </div>
     </div>
   )
 }
-
-export default V2ProjectSettings

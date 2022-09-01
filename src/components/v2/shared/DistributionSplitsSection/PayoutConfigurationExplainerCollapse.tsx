@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import { CSSProperties } from 'react'
-import { helpPagePath } from 'utils/helpPageHelper'
+import { helpPagePath } from 'utils/routes'
 
 export function PayoutConfigurationExplainerCollapse({
   style,

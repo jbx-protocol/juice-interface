@@ -5,15 +5,14 @@ import ProjectHeader from 'components/Project/ProjectHeader'
 import ScrollToTopButton from 'components/ScrollToTopButton'
 import V2ProjectHeaderActions from 'components/v2/V2Project/V2ProjectHeaderActions'
 import V2ProjectSettingsContent from 'components/v2/V2Project/V2ProjectSettings/V2ProjectSettingsContent'
+import { layouts } from 'constants/styles/layouts'
+import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
 import { pushSettingsContent } from 'utils/pushSettingsPage'
-
-import { layouts } from 'constants/styles/layouts'
-import { ThemeContext } from 'contexts/themeContext'
-import Link from 'next/link'
 
 type MenuItem = Required<MenuProps>['items'][number]
 

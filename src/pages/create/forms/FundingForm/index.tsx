@@ -37,7 +37,7 @@ import {
   otherUnitToSeconds,
   secondsToOtherUnit,
 } from 'utils/formatTime'
-import { helpPagePath } from 'utils/helpPageHelper'
+import { helpPagePath } from 'utils/routes'
 import {
   getV2CurrencyOption,
   V2CurrencyName,

@@ -5,7 +5,6 @@ import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'pages/create/tabs/ReviewDe
 import { useCallback, useContext, useState } from 'react'
 import { fromWad } from 'utils/formatNumber'
 import { revalidateProject } from 'utils/revalidateProject'
-
 import { EditingProjectData } from './editingProjectData'
 
 /**
@@ -36,11 +35,9 @@ const getWeightArgument = ({
 export const useReconfigureFundingCycle = ({
   editingProjectData,
   memo,
-  exit,
 }: {
   editingProjectData: EditingProjectData
   memo: string
-  exit: VoidFunction
 }) => {
   const {
     nftRewards: { CIDs: nftRewardsCids },
@@ -116,7 +113,6 @@ export const useReconfigureFundingCycle = ({
             })
           }
           setReconfigureTxLoading(false)
-          exit()
         },
       },
     )
@@ -135,7 +131,6 @@ export const useReconfigureFundingCycle = ({
     fundingCycle,
     memo,
     projectId,
-    exit,
   ])
 
   return { reconfigureLoading: reconfigureTxLoading, reconfigureFundingCycle }

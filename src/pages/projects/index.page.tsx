@@ -22,7 +22,7 @@ import { useWallet } from 'hooks/Wallet'
 
 import ExternalLink from 'components/ExternalLink'
 import { CV } from 'models/cv'
-import { helpPagePath } from 'utils/helpPageHelper'
+import { helpPagePath } from 'utils/routes'
 
 import { layouts } from 'constants/styles/layouts'
 import ArchivedProjectsMessage from './ArchivedProjectsMessage'

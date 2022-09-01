@@ -6,7 +6,16 @@ import {
 import { ThemeContext } from 'contexts/themeContext'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
-import V2ProjectDetails from './pages/V2ProjectDetails'
+import { V1V2TokenMigrationSettingsPage } from './pages/V1V2TokenMigrationSettingsPage'
+import { V2ArchiveProjectSettingsPage } from './pages/V2ArchiveProjectSettingsPage'
+import { V2PaymentAddressSettingsPage } from './pages/V2PaymentAddressSettingsPage'
+import { V2PayoutsSettingsPage } from './pages/V2PayoutsSettingsPage'
+import { V2ProjectDetailsSettingsPage } from './pages/V2ProjectDetailsSettingsPage'
+import { V2ProjectHandleSettingsPage } from './pages/V2ProjectHandleSettingsPage'
+import { V2ReconfigureFundingCycleSettingsPage } from './pages/V2ReconfigureFundingCycleSettingsPage'
+import { V2ReservedTokensSettingsPage } from './pages/V2ReservedTokensSettingsPage'
+import { V2TransferOwnershipSettingsPage } from './pages/V2TransferOwnershipSettingsPage'
+import { V2VeNftSettingsPage } from './pages/V2VeNftSettingsPage'
 
 const defaultPage: V2SettingsKey = 'general'
 
@@ -52,43 +61,26 @@ const V2ProjectSettingsContent = () => {
   const getActiveTab = (selectedSettingsPage: V2SettingsKey) => {
     switch (selectedSettingsPage) {
       case 'general':
-        return <V2ProjectDetails />
+        return <V2ProjectDetailsSettingsPage />
       case 'projecthandle':
-        // return <V2ReconfigureProjectHandle />
-        return <div>Reconfigure Project Handle</div>
+        return <V2ProjectHandleSettingsPage />
       case 'reconfigurefc':
-        // return <V2ProjectReconfigure />
-        return <div>Reconfigure Funding Cycle</div>
+        return <V2ReconfigureFundingCycleSettingsPage />
       case 'payouts':
-        // return <V2ProjectSettingsPayoutsContent />
-        return <div>Payouts</div>
+        return <V2PayoutsSettingsPage />
       case 'reservedtokens':
-        // return <EditTokenAllocationContent />
-        return <div>Reserved Tokens</div>
+        return <V2ReservedTokensSettingsPage />
       case 'paymentaddresses':
-        // return (
-        //   <PayableAddressSection
-        //     useDeployProjectPayerTx={useDeployProjectPayerTx}
-        //   />
-        // )
-        return <div>Payment Addresses</div>
+        return <V2PaymentAddressSettingsPage />
       case 'v1tokenmigration':
-        // return <V1TokenMigrationSetupSection />
-        return <div>V1 Token Migration</div>
+        return <V1V2TokenMigrationSettingsPage />
       case 'venft':
-        // return <V2ProjectSettingsVenftContent />
-        return <div>VENFT</div>
+        return <V2VeNftSettingsPage />
       case 'transferownership':
-        // return (
-        //   <TransferOwnershipForm
-        //     ownerAddress={projectOwnerAddress}
-        //     useTransferProjectOwnershipTx={useTransferProjectOwnershipTx}
-        //   />
-        // )
-        return <div>Transfer Ownership</div>
+        return <V2TransferOwnershipSettingsPage />
       case 'archiveproject':
-        // return <ArchiveV2Project />
-        return <div>Archive Project</div>
+        return <V2ArchiveProjectSettingsPage />
+
       default:
         return null
     }

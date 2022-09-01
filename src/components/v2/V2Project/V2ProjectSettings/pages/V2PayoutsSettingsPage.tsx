@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { Button } from 'antd'
+import { Button, Space } from 'antd'
 
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useSetProjectSplits } from 'hooks/v2/transactor/SetProjectSplits'
@@ -11,7 +11,7 @@ import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
 
 import { V2EditPayouts } from '../../V2EditPayouts'
 
-const V2ProjectSettingsPayoutsContent = () => {
+export function V2PayoutsSettingsPage() {
   const { fundingCycle } = useContext(V2ProjectContext)
   const [loading, setLoading] = useState(false)
   const [editingSplits, setEditingSplits] = useState<Split[]>([])
@@ -50,7 +50,7 @@ const V2ProjectSettingsPayoutsContent = () => {
   )
 
   return (
-    <>
+    <Space direction="vertical" size="middle">
       <V2EditPayouts
         editingSplits={editingSplits}
         setEditingSplits={setEditingSplits}
@@ -63,8 +63,6 @@ const V2ProjectSettingsPayoutsContent = () => {
       >
         <Trans>Save payouts</Trans>
       </Button>
-    </>
+    </Space>
   )
 }
-
-export default V2ProjectSettingsPayoutsContent

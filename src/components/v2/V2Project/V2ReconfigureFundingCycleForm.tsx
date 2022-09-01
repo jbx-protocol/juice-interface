@@ -73,7 +73,7 @@ export function V2ReconfigureFundingCycleForm() {
   } = useFundingHasSavedChanges({
     editingProjectData,
     initialEditingData,
-  }) 
+  })
   const {
     fundingCycleMetadata,
     nftRewards: { CIDs: nftRewardsCids },

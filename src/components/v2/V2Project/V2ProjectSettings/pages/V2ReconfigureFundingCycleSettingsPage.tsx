@@ -1,5 +1,5 @@
 import { V2ReconfigureFundingCycleForm } from 'components/v2/V2Project/V2ReconfigureFundingCycleForm'
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import { Provider } from 'react-redux'
 import store, { createStore } from 'redux/store'
 
@@ -10,10 +10,9 @@ import store, { createStore } from 'redux/store'
 // are independent.
 export function V2ReconfigureFundingCycleSettingsPage() {
   const localStoreRef = useRef<typeof store>()
-
-  useEffect(() => {
+  if (!localStoreRef.current) {
     localStoreRef.current = createStore()
-  }, [])
+  }
 
   return (
     <>

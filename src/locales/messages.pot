@@ -713,6 +713,9 @@ msgstr ""
 msgid "Created Payment Address"
 msgstr ""
 
+msgid "Created payment address"
+msgstr ""
+
 msgid "Crowdfund your project with ETH. Set a funding target to cover predictable expenses, and any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
 msgstr ""
 
@@ -3054,9 +3057,6 @@ msgid "{formattedTimeLeft} left"
 msgstr ""
 
 msgid "{formattedTimeLeft} until #{0}"
-msgstr ""
-
-msgid "{header}"
 msgstr ""
 
 msgid "{inflationRate} tokens / ETH"

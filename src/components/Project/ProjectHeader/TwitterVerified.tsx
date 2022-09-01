@@ -8,10 +8,13 @@ import { Tooltip } from 'antd'
 import useTwitterVerified from 'hooks/TwitterVerified'
 
 const TwitterVerified = () => {
-  const twitterVerified = useTwitterVerified()
+  const { data: verificationInfo } = useTwitterVerified('2-4653')
+  if (!verificationInfo) {
+    return null
+  }
   return (
     <div>
-      {twitterVerified ? (
+      {verificationInfo.verified ? (
         <Tooltip title={t`Twitter Verified`} placement="right">
           <CheckCircleOutlined />
         </Tooltip>

@@ -40,9 +40,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       },
     })
     const { username } = userData.data.data
-    return res.status(200).json({ username, verification: 'success' })
+    return res.status(200).json({ username, verificationSuccess: true })
   } catch (e) {
-    return res.status(500).json({ error: 'Something went wrong' })
+    return res
+      .status(500)
+      .json({ error: 'Something went wrong', verificationSuccess: false })
   }
 }
 

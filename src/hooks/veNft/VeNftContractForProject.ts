@@ -17,6 +17,7 @@ export const useVeNftContractForProject = (projectId: number | undefined) => {
     },
     {
       enabled: featureFlagEnabled(FEATURE_FLAGS.VENFT),
+      retry: false,
     },
   )
 }

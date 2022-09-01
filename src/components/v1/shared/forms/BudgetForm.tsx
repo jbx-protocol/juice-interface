@@ -13,7 +13,7 @@ import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromWad, parseWad } from 'utils/formatNumber'
-import { helpPagePath } from 'utils/helpPageHelper'
+import { helpPagePath } from 'utils/routes'
 import { getV1CurrencyOption, V1CurrencyName } from 'utils/v1/currency'
 import { hasFundingTarget, isRecurring } from 'utils/v1/fundingCycle'
 

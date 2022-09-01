@@ -3,7 +3,6 @@ import { Modal, Space } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
 import TooltipLabel from 'components/TooltipLabel'
 import { ThemeContext } from 'contexts/themeContext'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { ETHERC20ProjectPayer } from 'models/subgraph-entities/v2/eth-erc20-project-payer'
 import { useContext } from 'react'
 
@@ -36,17 +35,15 @@ export default function ProjectPayersModal({
 
   const isMobile = useMobile()
 
-  const { projectMetadata } = useContext(V2ProjectContext)
-
   return (
     <Modal
       visible={visible}
       onCancel={onCancel}
       cancelText="Done"
-      title={t`${projectMetadata?.name} - Project payer contracts`}
+      title={t`Payment Addresses`}
       okButtonProps={{ hidden: true }}
     >
-      {projectPayers?.length && (
+      {projectPayers?.length ? (
         <Space direction="vertical" style={{ width: '100%' }}>
           {projectPayers.map(p => (
             <div
@@ -165,7 +162,7 @@ export default function ProjectPayersModal({
             </div>
           ))}
         </Space>
-      )}
+      ) : null}
 
       {projectPayers ? (
         <div

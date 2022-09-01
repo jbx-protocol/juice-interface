@@ -5,7 +5,6 @@ import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'pages/create/tabs/ReviewDe
 import { useCallback, useContext, useState } from 'react'
 import { fromWad } from 'utils/formatNumber'
 import { revalidateProject } from 'utils/revalidateProject'
-
 import { EditingProjectData } from './editingProjectData'
 
 /**
@@ -40,7 +39,7 @@ export const useReconfigureFundingCycle = ({
 }: {
   editingProjectData: EditingProjectData
   memo: string
-  exit: VoidFunction
+  exit?: VoidFunction
 }) => {
   const {
     nftRewards: { CIDs: nftRewardsCids },
@@ -116,7 +115,7 @@ export const useReconfigureFundingCycle = ({
             })
           }
           setReconfigureTxLoading(false)
-          exit()
+          exit?.()
         },
       },
     )

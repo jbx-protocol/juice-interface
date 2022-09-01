@@ -166,7 +166,9 @@ export function V2ProjectHandleSettingsPage() {
             disabled={!ensNameIsValid}
             type="primary"
           >
-            <Trans>Set ENS name</Trans>
+            <span>
+              <Trans>Set ENS name</Trans>
+            </span>
           </Button>
         </Form>
       )}
@@ -209,9 +211,11 @@ export function V2ProjectHandleSettingsPage() {
           disabled={!projectEnsName}
           onClick={setTextRecord}
         >
-          <Trans>
-            Set text record for {projectEnsName + '.eth' ?? 'ENS name'}
-          </Trans>
+          <span>
+            <Trans>
+              Set text record for {projectEnsName + '.eth' ?? 'ENS name'}
+            </Trans>
+          </span>
         </Button>
       )}
 

@@ -1,21 +1,17 @@
-import { t, Trans } from '@lingui/macro'
-import { useState } from 'react'
-
-import { TransactionReceipt } from '@ethersproject/providers'
-import { TransactorInstance } from 'hooks/Transactor'
-
 import { ToolOutlined } from '@ant-design/icons'
+import { TransactionReceipt } from '@ethersproject/providers'
+import { t, Trans } from '@lingui/macro'
 import { Modal, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Callout from 'components/Callout'
 import CopyTextButton from 'components/CopyTextButton'
 import EtherscanLink from 'components/EtherscanLink'
 import TransactionModal from 'components/TransactionModal'
-import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayerTx'
-import { emitErrorNotification } from 'utils/notifications'
-
 import { readProvider } from 'constants/readProvider'
-
+import { TransactorInstance } from 'hooks/Transactor'
+import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayerTx'
+import { useState } from 'react'
+import { emitErrorNotification } from 'utils/notifications'
 import AdvancedOptionsCollapse from './AdvancedOptionsCollapse'
 
 const DEPLOY_EVENT_IDX = 0

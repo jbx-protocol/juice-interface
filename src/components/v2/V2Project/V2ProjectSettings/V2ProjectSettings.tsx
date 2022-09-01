@@ -67,7 +67,7 @@ const items: MenuItem[] = [
     'Funding',
     'funding',
     [
-      getItem('Reconfigure FC', 'reconfigurefc'),
+      getItem('Funding cycle', 'reconfigurefc'),
       getItem('Payouts', 'payouts'),
       getItem('Reserved tokens', 'reservedtokens'),
     ],

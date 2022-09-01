@@ -2591,7 +2591,13 @@ msgstr ""
 msgid "Twitter"
 msgstr ""
 
+msgid "Twitter Verified"
+msgstr ""
+
 msgid "Twitter handle"
+msgstr ""
+
+msgid "Twitter unverified."
 msgstr ""
 
 msgid "Unarchive project"
@@ -2688,6 +2694,12 @@ msgid "V2"
 msgstr ""
 
 msgid "VeNFT Governance"
+msgstr ""
+
+msgid "Verify Twitter"
+msgstr ""
+
+msgid "Verify your project owns the linked Twitter account."
 msgstr ""
 
 msgid "Version of the terminal contract used by this project."

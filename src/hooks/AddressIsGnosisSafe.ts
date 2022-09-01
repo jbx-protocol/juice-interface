@@ -2,8 +2,9 @@ import axios from 'axios'
 import { useQuery } from 'react-query'
 
 export const useAddressIsGnosisSafe = (address?: string) => {
-  return (
-    useQuery(['address-is-gnosis-safe', address], async () => {
+  return useQuery(
+    ['address-is-gnosis-safe', address],
+    async () => {
       if (!address) {
         return
       }
@@ -19,9 +20,9 @@ export const useAddressIsGnosisSafe = (address?: string) => {
       } catch (error) {
         return false
       }
-    }),
+    },
     {
       retry: false,
-    }
+    },
   )
 }

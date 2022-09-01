@@ -20,14 +20,14 @@ export default function ProjectHeader({
   isArchived,
   actions,
   onClickSetHandle,
-  owner,
+  projectOwnerAddress,
 }: {
   metadata?: ProjectMetadataV4
   isArchived?: boolean
   handle?: string
   actions?: JSX.Element
   onClickSetHandle?: VoidFunction
-  owner?: string
+  projectOwnerAddress?: string
 }) {
   const {
     theme: { colors },
@@ -35,7 +35,7 @@ export default function ProjectHeader({
 
   const isMobile = useMobile()
   const { data: ownerIsGnosisSafe, isLoading: ownerIsGnosisSafeLoading } =
-    useAddressIsGnosisSafe(owner)
+    useAddressIsGnosisSafe(projectOwnerAddress)
 
   const projectTitle = metadata?.name || t`Untitled project`
 
@@ -149,12 +149,12 @@ export default function ProjectHeader({
             style={{ color: colors.text.secondary }}
           />
         )}
-        {owner && (
+        {projectOwnerAddress && (
           <div style={{ color: colors.text.secondary, marginTop: '0.4rem' }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <span style={{ marginRight: '0.4rem' }}>
                 <Trans>
-                  Owned by <FormattedAddress address={owner} />
+                  Owned by <FormattedAddress address={projectOwnerAddress} />
                 </Trans>
               </span>
               {!ownerIsGnosisSafeLoading && ownerIsGnosisSafe && (

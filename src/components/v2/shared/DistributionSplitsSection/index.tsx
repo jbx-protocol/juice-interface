@@ -72,6 +72,7 @@ export default function DistributionSplitsSection({
         (editableSplits.length === 1 && index === 0)
       return (
         <DistributionSplitCard
+          key={`split-${index}`}
           split={split}
           splits={allSplits}
           distributionLimit={distributionLimit}

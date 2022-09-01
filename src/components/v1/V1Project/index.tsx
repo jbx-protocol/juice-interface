@@ -22,6 +22,8 @@ import V1ProjectHeaderActions from './V1ProjectHeaderActions'
 
 const VolumeChart = lazy(() => import('components/VolumeChart'))
 
+const gutter = 40
+
 export default function V1Project({
   style,
   showCurrentDetail,
@@ -55,8 +57,6 @@ export default function V1Project({
   const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
   const reservedRate = fcMetadata?.reservedRate
 
-  const gutter = 40
-
   if (projectId === undefined || !fcMetadata) return null
 
   return (
@@ -65,7 +65,7 @@ export default function V1Project({
         metadata={metadata}
         handle={handle}
         isArchived={isArchived}
-        owner={owner}
+        projectOwnerAddress={owner}
         actions={<V1ProjectHeaderActions />}
       />
 

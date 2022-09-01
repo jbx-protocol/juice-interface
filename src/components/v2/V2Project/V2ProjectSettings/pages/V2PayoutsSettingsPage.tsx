@@ -11,7 +11,7 @@ import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
 
 import { V2EditPayouts } from '../../V2EditPayouts'
 
-const V2ProjectSettingsPayoutsContent = () => {
+export function V2PayoutsSettingsPage() {
   const { fundingCycle } = useContext(V2ProjectContext)
   const [loading, setLoading] = useState(false)
   const [editingSplits, setEditingSplits] = useState<Split[]>([])
@@ -66,5 +66,3 @@ const V2ProjectSettingsPayoutsContent = () => {
     </>
   )
 }
-
-export default V2ProjectSettingsPayoutsContent

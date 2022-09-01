@@ -19,7 +19,7 @@ import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
 // conflict with existing Redux state. This is so editing a
 // persisted Redux state and the Reconfigure Funding modal
 // are independent.
-export default function V2ProjectReconfigure() {
+export function V2ReconfigureFundingCycleSettingsPage() {
   const dispatch = useDispatch()
   const { projectId, fundingCycle, primaryTerminal } =
     useContext(V2ProjectContext)

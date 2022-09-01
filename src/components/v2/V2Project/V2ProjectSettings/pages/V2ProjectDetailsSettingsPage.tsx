@@ -14,7 +14,7 @@ import { Trans } from '@lingui/macro'
 
 import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
 
-const V2ProjectDetails = () => {
+export function V2ProjectDetailsSettingsPage() {
   const { colors } = useContext(ThemeContext).theme
 
   const [projectForm] = useForm<ProjectDetailsFormFields>()
@@ -107,5 +107,3 @@ const V2ProjectDetails = () => {
     </>
   )
 }
-
-export default V2ProjectDetails

@@ -35,11 +35,9 @@ const getWeightArgument = ({
 export const useReconfigureFundingCycle = ({
   editingProjectData,
   memo,
-  exit,
 }: {
   editingProjectData: EditingProjectData
   memo: string
-  exit?: VoidFunction
 }) => {
   const {
     nftRewards: { CIDs: nftRewardsCids },
@@ -115,7 +113,6 @@ export const useReconfigureFundingCycle = ({
             })
           }
           setReconfigureTxLoading(false)
-          exit?.()
         },
       },
     )
@@ -134,7 +131,6 @@ export const useReconfigureFundingCycle = ({
     fundingCycle,
     memo,
     projectId,
-    exit,
   ])
 
   return { reconfigureLoading: reconfigureTxLoading, reconfigureFundingCycle }

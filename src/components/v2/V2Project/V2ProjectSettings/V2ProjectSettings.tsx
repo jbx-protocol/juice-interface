@@ -4,17 +4,20 @@ import { Button, Layout, Menu, MenuProps, Space } from 'antd'
 import ProjectHeader from 'components/Project/ProjectHeader'
 import V2ProjectHeaderActions from 'components/v2/V2Project/V2ProjectHeaderActions'
 import { V2ProjectSettingsContent } from 'components/v2/V2Project/V2ProjectSettings/V2ProjectSettingsContent'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { layouts } from 'constants/styles/layouts'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { useIsUserAddress } from 'hooks/IsUserAddress'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
-import { pushSettingsContent } from 'utils/routes'
+import { featureFlagEnabled } from 'utils/featureFlags'
+import { pushSettingsContent, v2ProjectRoute } from 'utils/routes'
 
 type MenuItem = Required<MenuProps>['items'][number]
 
-export type V2SettingsKey =
+export type V2SettingsPageKey =
   | 'general'
   | 'projecthandle'
   | 'reconfigurefc'
@@ -25,7 +28,7 @@ export type V2SettingsKey =
   | 'transferownership'
   | 'archiveproject'
 
-export const V2SettingsKeyTitleMap: { [k in V2SettingsKey]: string } = {
+export const V2SettingsPageKeyTitleMap: { [k in V2SettingsPageKey]: string } = {
   general: t`General`,
   projecthandle: t`Project Handle`,
   reconfigurefc: t`Reconfigure Funding Cycle`,
@@ -37,7 +40,7 @@ export const V2SettingsKeyTitleMap: { [k in V2SettingsKey]: string } = {
   archiveproject: t`Archive Project`,
 }
 
-function getItem(
+function menuItem(
   label: React.ReactNode,
   key: React.Key,
   children?: MenuItem[],
@@ -48,36 +51,41 @@ function getItem(
     children,
     label,
     type,
-  } as MenuItem
+  }
 }
 
 const items: MenuItem[] = [
-  getItem(
+  menuItem(
     'Project',
     'project',
-    [getItem('General', 'general'), getItem('Project handle', 'projecthandle')],
-    'group',
-  ),
-  getItem('', 'div1', undefined, 'divider'),
-  getItem(
-    'Funding',
-    'funding',
     [
-      getItem('Funding cycle', 'reconfigurefc'),
-      getItem('Payouts', 'payouts'),
-      getItem('Reserved tokens', 'reservedtokens'),
+      menuItem('General', 'general'),
+      menuItem('Project handle', 'projecthandle'),
     ],
     'group',
   ),
-  getItem('', 'div2', undefined, 'divider'),
-  getItem(
+  menuItem('', 'div1', undefined, 'divider'),
+  menuItem(
+    'Funding',
+    'funding',
+    [
+      menuItem('Funding cycle', 'reconfigurefc'),
+      menuItem('Payouts', 'payouts'),
+      menuItem('Reserved tokens', 'reservedtokens'),
+    ],
+    'group',
+  ),
+  menuItem('', 'div2', undefined, 'divider'),
+  menuItem(
     'Manage',
     'manage',
     [
-      getItem('V1 token migration', 'v1tokenmigration'),
-      getItem('veNFT governance', 'venft'),
-      getItem('Transfer ownership', 'transferownership'),
-      getItem('Archive project', 'archiveproject'),
+      menuItem('V1 token migration', 'v1tokenmigration'),
+      featureFlagEnabled(FEATURE_FLAGS.VENFT)
+        ? menuItem('veNFT governance', 'venft')
+        : null,
+      menuItem('Transfer ownership', 'transferownership'),
+      menuItem('Archive project', 'archiveproject'),
     ],
     'group',
   ),
@@ -92,15 +100,18 @@ export function V2ProjectSettings() {
     handle,
     projectId,
   } = useContext(V2ProjectContext)
-  const {
-    isDarkMode,
-    theme: { colors },
-  } = useContext(ThemeContext)
+  const { isDarkMode } = useContext(ThemeContext)
 
   const router = useRouter()
+  const isOwner = useIsUserAddress(projectOwnerAddress)
+
+  const canEditProjectHandle = isOwner && !isPreviewMode && !handle
+  const activeSettingsPage = router.query.page as V2SettingsPageKey
 
   const handleMenuItemClick = (item: MenuItem) => {
-    const key = item?.key as V2SettingsKey
+    const key = item?.key as V2SettingsPageKey | undefined
+    if (!key) return
+
     pushSettingsContent(router, key)
   }
 
@@ -113,6 +124,8 @@ export function V2ProjectSettings() {
           isArchived={isArchived}
           handle={handle}
           projectOwnerAddress={projectOwnerAddress}
+          canEditProjectHandle={canEditProjectHandle}
+          projectId={projectId}
         />
         <Layout
           style={{
@@ -126,13 +139,8 @@ export function V2ProjectSettings() {
             width={250}
           >
             <Space direction="vertical" size="middle" style={{ width: '100%' }}>
-              <Link href={`/v2/p/${projectId}`}>
-                <Button
-                  type="link"
-                  icon={<LeftOutlined />}
-                  size="small"
-                  style={{ color: colors.text.secondary }}
-                >
+              <Link href={v2ProjectRoute({ projectId, handle })}>
+                <Button type="link" icon={<LeftOutlined />} size="small">
                   <span>
                     <Trans>Back to project</Trans>
                   </span>
@@ -140,7 +148,7 @@ export function V2ProjectSettings() {
               </Link>
               <Menu
                 defaultOpenKeys={['project', 'funding', 'manage']}
-                defaultSelectedKeys={['general']}
+                defaultSelectedKeys={[activeSettingsPage]}
                 mode="inline"
                 theme={isDarkMode ? 'dark' : 'light'}
                 items={items}

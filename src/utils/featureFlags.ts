@@ -46,10 +46,10 @@ export const featureFlagEnabled = (featureFlag: string): boolean => {
 
   try {
     const localStorageEnabled = localStorage
-      ? JSON.parse(localStorage.getItem(featureFlagKey(featureFlag)) || 'false')
-      : false
+      ? JSON.parse(localStorage.getItem(featureFlagKey(featureFlag)) || 'null')
+      : null
 
-    return localStorageEnabled || defaultEnabled
+    return localStorageEnabled ?? defaultEnabled
   } catch (e) {
     return defaultEnabled
   }

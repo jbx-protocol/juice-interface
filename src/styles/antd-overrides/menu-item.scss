@@ -10,16 +10,16 @@
 
 .ant-menu > .ant-menu-item-divider {
   margin: 1rem 0;
+  border-color: var(--stroke-tertiary);
 }
 
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected,
 .ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
-  background-color: var(--background-l2);
-  color: var(--text-primary)
+  background-color: var(--background-l2) !important;
+  color: var(--text-primary);
+  font-weight: 500;
 }
 
 .ant-menu-light .ant-menu-item:hover {
-  color: var(--text-action-highlight)
+  color: var(--text-action-highlight);
 }
-
-

@@ -1,5 +1,5 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
-import { V2SettingsKey } from 'components/v2/V2Project/V2ProjectSettings/V2ProjectSettings'
+import { V2SettingsPageKey } from 'components/v2/V2Project/V2ProjectSettings/V2ProjectSettings'
 import { NextRouter } from 'next/router'
 
 export const v2ProjectRoute = ({
@@ -20,7 +20,7 @@ export function helpPagePath(path: string): string {
 }
 
 export const settingsPagePath = (
-  settingsPage: V2SettingsKey,
+  settingsPage: V2SettingsPageKey,
   {
     projectId,
     handle,
@@ -37,7 +37,7 @@ export const settingsPagePath = (
 
 export const pushSettingsContent = (
   router: NextRouter,
-  contentKey: V2SettingsKey,
+  contentKey: V2SettingsPageKey,
   options: { shallow?: boolean; scroll?: boolean } = {
     shallow: true,
     scroll: false,

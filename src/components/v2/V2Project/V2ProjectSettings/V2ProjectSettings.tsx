@@ -27,6 +27,7 @@ export type V2SettingsKey =
   | 'v1tokenmigration'
   | 'venft'
   | 'transferownership'
+  | 'verifytwitter'
   | 'archiveproject'
 
 export const V2SettingsKeyTitleMap: { [k in V2SettingsKey]: string } = {
@@ -39,6 +40,7 @@ export const V2SettingsKeyTitleMap: { [k in V2SettingsKey]: string } = {
   v1tokenmigration: t`V1 Token Migration`,
   venft: t`VeNFT Governance`,
   transferownership: t`Transfer Ownership`,
+  verifytwitter: t`Verify Twitter`,
   archiveproject: t`Archive Project`,
 }
 
@@ -83,6 +85,7 @@ const items: MenuItem[] = [
       getItem('V1 token migration', 'v1tokenmigration'),
       getItem('veNFT governance', 'venft'),
       getItem('Transfer ownership', 'transferownership'),
+      getItem('Verify Twitter', 'verifytwitter'),
       getItem('Archive project', 'archiveproject'),
     ],
     'group',

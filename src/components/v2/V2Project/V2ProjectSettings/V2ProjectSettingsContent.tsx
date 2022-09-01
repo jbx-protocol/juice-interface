@@ -3,6 +3,7 @@ import {
   V2SettingsKey,
   V2SettingsKeyTitleMap,
 } from 'components/v2/V2Project/V2ProjectSettings/V2ProjectSettings'
+import VerifyTwitter from 'components/v2/V2Project/V2ProjectSettings/VerifyTwitter'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
@@ -34,6 +35,8 @@ const V2ProjectSettingsContent = () => {
           return 'venft'
         case 'transferownership':
           return 'transferownership'
+        case 'verifytwitter':
+          return 'verifytwitter'
         case 'archiveproject':
           return 'archiveproject'
         default:
@@ -80,6 +83,8 @@ const V2ProjectSettingsContent = () => {
         //   />
         // )
         return <div>Transfer Ownership</div>
+      case 'verifytwitter':
+        return <VerifyTwitter />
       case 'archiveproject':
         // return <ArchiveV2Project />
         return <div>Archive Project</div>

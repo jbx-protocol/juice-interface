@@ -11,8 +11,9 @@ import { ThemeContext } from 'contexts/themeContext'
 
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
+import { useRouter } from 'next/router'
+import { pushSettingsContent } from 'utils/routes'
 import LaunchProjectPayerModal from './LaunchProjectPayer/LaunchProjectPayerModal'
-import { V2ReconfigureProjectHandleDrawer } from './V2ReconfigureProjectHandleDrawer'
 
 export default function NewDeployModal({
   visible,
@@ -26,12 +27,12 @@ export default function NewDeployModal({
     theme: { colors },
   } = useContext(ThemeContext)
 
+  const router = useRouter()
+
   const [issueTokenModalVisible, setIssueTokenModalVisible] =
     useState<boolean>(false)
   const [launchProjectPayerModalVisible, setLaunchProjectPayerModalVisible] =
     useState<boolean>(false)
-  const [handleModalVisible, setHandleModalVisible] = useState<boolean>(false)
-
   const [hasIssuedToken, setHasIssuedToken] = useState<boolean>()
   const [hasLaunchedPayableAddress, setHasLaunchedPayableAddress] =
     useState<boolean>()
@@ -73,7 +74,7 @@ export default function NewDeployModal({
               that will allow your project to appear in search results.
             </Trans>
           }
-          onClick={() => setHandleModalVisible(true)}
+          onClick={() => pushSettingsContent(router, 'projecthandle')}
           disabled={!!handle}
           icon={
             handle ? (
@@ -122,10 +123,6 @@ export default function NewDeployModal({
           style={stepButtonStyle}
         />
       </div>
-      <V2ReconfigureProjectHandleDrawer
-        visible={handleModalVisible}
-        onFinish={() => setHandleModalVisible(false)}
-      />
       <IssueTokenModal
         visible={issueTokenModalVisible}
         useIssueTokensTx={useIssueTokensTx}

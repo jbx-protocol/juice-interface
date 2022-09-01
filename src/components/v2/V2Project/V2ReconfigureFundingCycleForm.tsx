@@ -52,15 +52,6 @@ function ReconfigureButton({
   )
 }
 
-export const FundingDrawersSubtitles = (
-  <p>
-    <Trans>
-      Updates you make to this section will only be applied to <i>upcoming</i>{' '}
-      funding cycles.
-    </Trans>
-  </p>
-)
-
 export function V2ReconfigureFundingCycleForm() {
   const { initialEditingData } = useInitialEditingData(true)
   const editingProjectData = useEditingProjectData()

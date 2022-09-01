@@ -12,7 +12,7 @@ export interface ProjectPageProps {
   projectId: number
 }
 
-export async function getMetadataCidFromContract(projectId: number) {
+async function getMetadataCidFromContract(projectId: number) {
   const network = readNetwork.name
   const contract = await loadContract(
     V2ContractName.JBProjects,

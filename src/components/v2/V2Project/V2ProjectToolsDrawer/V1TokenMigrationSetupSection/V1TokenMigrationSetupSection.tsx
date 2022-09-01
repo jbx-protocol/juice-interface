@@ -58,7 +58,6 @@ export function V1TokenMigrationSetupSection() {
       <Button
         onClick={() => setMigrationModalVisible(true)}
         type="primary"
-        size="small"
         disabled={hasV1ProjectId}
       >
         <Trans>Set up token migration</Trans>

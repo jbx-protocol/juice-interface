@@ -11,14 +11,14 @@ import useProjectReservedTokens from 'hooks/v2/contractReader/ProjectReservedTok
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/V2ConnectedWalletHasPermission'
 import { V2OperatorPermission } from 'models/v2/permissions'
 import { Split } from 'models/v2/splits'
+import Link from 'next/link'
 import { CSSProperties, useContext, useState } from 'react'
 import { formatWad } from 'utils/formatNumber'
+import { settingsPagePath } from 'utils/routes'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { formatReservedRate } from 'utils/v2/math'
 import { reloadWindow } from 'utils/windowUtils'
-
 import DistributeReservedTokensModal from './modals/DistributeReservedTokensModal'
-import { EditTokenAllocationModal } from './modals/EditTokenAllocationModal'
 
 export default function ReservedTokensSplitsCard({
   hideDistributeButton,
@@ -29,7 +29,7 @@ export default function ReservedTokensSplitsCard({
   reservedTokensSplits: Split[] | undefined
   reservedRate: BigNumber | undefined
 }) {
-  const { tokenSymbol, projectOwnerAddress, projectId, isPreviewMode } =
+  const { tokenSymbol, projectOwnerAddress, projectId, isPreviewMode, handle } =
     useContext(V2ProjectContext)
   const {
     theme: { colors },
@@ -41,8 +41,6 @@ export default function ReservedTokensSplitsCard({
     distributeReservedTokensModalVisible,
     setDistributeReservedTokensModalVisible,
   ] = useState<boolean>()
-  const [editTokenAllocationModalVisible, setEditTokenAllocationModalVisible] =
-    useState<boolean>(false)
   const { data: reservedTokens, loading: loadingReservedTokens } =
     useProjectReservedTokens({
       projectId,
@@ -164,16 +162,22 @@ export default function ReservedTokensSplitsCard({
               }
             />
             {canEditTokens && reservedRate?.gt(0) ? (
-              <Button
-                size="small"
-                onClick={() => setEditTokenAllocationModalVisible(true)}
-                icon={<SettingOutlined />}
-                style={{ marginBottom: '1rem' }}
+              <Link
+                href={settingsPagePath('reservedtokens', {
+                  projectId,
+                  handle,
+                })}
               >
-                <span>
-                  <Trans>Edit allocation</Trans>
-                </span>
-              </Button>
+                <Button
+                  size="small"
+                  icon={<SettingOutlined />}
+                  style={{ marginBottom: '1rem' }}
+                >
+                  <span>
+                    <Trans>Edit allocation</Trans>
+                  </span>
+                </Button>
+              </Link>
             ) : null}
           </div>
           {effectiveReservedRate.gt(0) ? (
@@ -197,11 +201,6 @@ export default function ReservedTokensSplitsCard({
         visible={distributeReservedTokensModalVisible}
         onCancel={() => setDistributeReservedTokensModalVisible(false)}
         onConfirmed={reloadWindow}
-      />
-      <EditTokenAllocationModal
-        visible={editTokenAllocationModalVisible}
-        onOk={() => setEditTokenAllocationModalVisible(false)}
-        onCancel={() => setEditTokenAllocationModalVisible(false)}
       />
     </CardSection>
   )

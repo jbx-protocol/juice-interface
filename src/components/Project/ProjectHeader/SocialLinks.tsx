@@ -1,6 +1,7 @@
 import { TwitterOutlined } from '@ant-design/icons'
 import { Space } from 'antd'
 import Discord from 'components/icons/Discord'
+import TwitterVerified from 'components/Project/ProjectHeader/TwitterVerified'
 import { CSSProperties } from 'react'
 
 import ExternalLink from '../../ExternalLink'
@@ -51,17 +52,20 @@ export default function SocialLinks({
         </span>
       )}
       {twitter && (
-        <ExternalLink
-          style={{
-            ...linkStyle,
-          }}
-          href={'https://twitter.com/' + twitter}
-        >
-          <span style={{ marginRight: 4 }}>
-            <TwitterOutlined />
-          </span>
-          @{prettyUrl(twitter)}
-        </ExternalLink>
+        <Space direction="horizontal">
+          <ExternalLink
+            style={{
+              ...linkStyle,
+            }}
+            href={'https://twitter.com/' + twitter}
+          >
+            <span style={{ marginRight: 4 }}>
+              <TwitterOutlined />
+            </span>
+            @{prettyUrl(twitter)}
+          </ExternalLink>
+          <TwitterVerified />
+        </Space>
       )}
       {discord && (
         <ExternalLink

@@ -61,7 +61,9 @@ export function V2PayoutsSettingsPage() {
         disabled={totalSplitsPercentageInvalid}
         type="primary"
       >
-        <Trans>Save payouts</Trans>
+        <span>
+          <Trans>Save payouts</Trans>
+        </span>
       </Button>
     </Space>
   )

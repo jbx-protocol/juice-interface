@@ -1,27 +1,20 @@
 import { CaretRightFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Form, Space } from 'antd'
-import { ThemeContext } from 'contexts/themeContext'
-import { useContext, useState } from 'react'
-
-import UnsavedChangesModal from 'components/v2/shared/UnsavedChangesModal'
-
-import FundingDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/FundingDrawer'
-
-import TokenDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/TokenDrawer'
-
-import RulesDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/RulesDrawer'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
-
 import { MemoFormInput } from 'components/inputs/Pay/MemoFormInput'
+import FundingDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/FundingDrawer'
+import RulesDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/RulesDrawer'
+import TokenDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/TokenDrawer'
+import UnsavedChangesModal from 'components/v2/shared/UnsavedChangesModal'
 import { useEditingProjectData } from 'components/v2/V2Project/V2ProjectReconfigureModal/hooks/editingProjectData'
 import { useFundingHasSavedChanges } from 'components/v2/V2Project/V2ProjectReconfigureModal/hooks/fundingHasSavedChanges'
 import { useInitialEditingData } from 'components/v2/V2Project/V2ProjectReconfigureModal/hooks/initialEditingData'
 import { useReconfigureFundingCycle } from 'components/v2/V2Project/V2ProjectReconfigureModal/hooks/reconfigureFundingCycle'
 import ReconfigurePreview from 'components/v2/V2Project/V2ProjectReconfigureModal/ReconfigurePreview'
 import V2ReconfigureUpcomingMessage from 'components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage'
-
-import { exit } from 'process'
+import { ThemeContext } from 'contexts/themeContext'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { useContext, useState } from 'react'
 
 function ReconfigureButton({
   title,
@@ -68,7 +61,7 @@ export const FundingDrawersSubtitles = (
   </p>
 )
 
-export default function V2ProjectReconfigureForm() {
+export function V2ProjectReconfigureForm() {
   const { initialEditingData } = useInitialEditingData(true)
   const editingProjectData = useEditingProjectData()
   const [memo, setMemo] = useState('')
@@ -87,7 +80,7 @@ export default function V2ProjectReconfigureForm() {
   } = useContext(V2ProjectContext)
 
   const { reconfigureLoading, reconfigureFundingCycle } =
-    useReconfigureFundingCycle({ editingProjectData, memo, exit })
+    useReconfigureFundingCycle({ editingProjectData, memo })
 
   const [fundingDrawerVisible, setFundingDrawerVisible] =
     useState<boolean>(false)
@@ -168,7 +161,9 @@ export default function V2ProjectReconfigureForm() {
           disabled={!fundingHasSavedChanges && !nftsWithFalseDataSourceForPay}
           type="primary"
         >
-          <Trans>Deploy funding cycle configuration</Trans>
+          <span>
+            <Trans>Deploy funding cycle configuration</Trans>
+          </span>
         </Button>
       </Space>
 

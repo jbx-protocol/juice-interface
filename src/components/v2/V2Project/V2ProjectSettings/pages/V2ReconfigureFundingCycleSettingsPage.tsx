@@ -10,7 +10,7 @@ import { V2FundingCycle } from 'models/v2/fundingCycle'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { fromWad } from 'utils/formatNumber'
 
-import V2ProjectReconfigureForm from 'components/v2/V2Project/V2ProjectReconfigureForm'
+import { V2ProjectReconfigureForm } from 'components/v2/V2Project/V2ProjectReconfigureForm'
 
 import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
 

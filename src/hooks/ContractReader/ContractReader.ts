@@ -1,5 +1,4 @@
 import { Contract } from '@ethersproject/contracts'
-import { useCallback } from 'react'
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
 import { useContractReadValue } from './ContractReadValue'
 import { ContractConfig, ContractUpdateOn } from './types'
@@ -26,11 +25,6 @@ export function useContractReader<ContractName extends string, V>({
   callback,
   valueDidChange,
 }: ContractReaderProps<ContractName, V>) {
-  const _callback = useCallback(
-    (val: any) => (callback ? callback(val) : val), // eslint-disable-line @typescript-eslint/no-explicit-any
-    [callback],
-  )
-
   const { value, loading, refetchValue } = useContractReadValue({
     contract,
     contracts,
@@ -42,7 +36,7 @@ export function useContractReader<ContractName extends string, V>({
 
   // Call the callback on contract read value changed
   useDeepCompareEffectNoCheck(() => {
-    _callback(value)
+    callback?.(value)
   }, [value])
 
   useDeepCompareEffectNoCheck(() => {
@@ -62,7 +56,7 @@ export function useContractReader<ContractName extends string, V>({
         error,
       })
     }
-  }, [contract, contracts, functionName, updateOn, args, _callback])
+  }, [contract, contracts, functionName, updateOn, args])
 
   return { data: value, loading }
 }

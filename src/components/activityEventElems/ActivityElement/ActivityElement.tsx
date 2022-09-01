@@ -81,7 +81,7 @@ function SideDetails({ details }: { details: Partial<ActivityElementEvent> }) {
           <EtherscanLink value={details.txHash} type="tx" />
         </div>
       )}
-      {details.beneficiary ? (
+      {details.type === 'beneficiary' && (
         <div
           style={{
             ...smallHeaderStyle(colors),
@@ -93,7 +93,21 @@ function SideDetails({ details }: { details: Partial<ActivityElementEvent> }) {
             style={{ fontWeight: 400 }}
           />
         </div>
-      ) : null}
+      )}{' '}
+      {details.type === 'caller' && (
+        <div
+          style={{
+            ...smallHeaderStyle(colors),
+            lineHeight: contentLineHeight,
+          }}
+        >
+          called by{' '}
+          <FormattedAddress
+            address={details.caller}
+            style={{ fontWeight: 400 }}
+          />
+        </div>
+      )}
     </div>
   )
 }
@@ -158,7 +172,7 @@ export function ActivityEvent({
             note={event.payEvent.note}
           />
         ),
-        details: event.payEvent,
+        details: { ...event.payEvent, type: 'beneficiary' as const },
       }
     }
     if (event.redeemEvent) {
@@ -173,7 +187,7 @@ export function ActivityEvent({
         Extra: (
           <RedeemEventExtra returnAmount={event.redeemEvent.returnAmount} />
         ),
-        details: event.redeemEvent,
+        details: { ...event.redeemEvent, type: 'beneficiary' as const },
       }
     }
     if (event.projectCreateEvent) {
@@ -214,7 +228,7 @@ export function ActivityEvent({
             id={event.distributePayoutsEvent.id}
           />
         ),
-        details: event.distributePayoutsEvent,
+        details: { ...event.distributePayoutsEvent, type: 'caller' as const },
       }
     }
     if (event.distributeReservedTokensEvent) {
@@ -238,7 +252,10 @@ export function ActivityEvent({
             id={event.distributeReservedTokensEvent.id}
           />
         ),
-        details: event.distributeReservedTokensEvent,
+        details: {
+          ...event.distributeReservedTokensEvent,
+          type: 'caller' as const,
+        },
       }
     }
     if (event.deployETHERC20ProjectPayerEvent) {
@@ -251,7 +268,10 @@ export function ActivityEvent({
             memo={event.deployETHERC20ProjectPayerEvent.memo ?? undefined}
           />
         ),
-        details: event.deployETHERC20ProjectPayerEvent,
+        details: {
+          ...event.deployETHERC20ProjectPayerEvent,
+          type: 'caller' as const,
+        },
       }
     }
     return { Header: null, Subject: null, Extra: null, details: null }

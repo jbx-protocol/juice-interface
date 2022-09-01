@@ -67,7 +67,6 @@ export default function V1Project({
         isArchived={isArchived}
         projectOwnerAddress={owner}
         actions={<V1ProjectHeaderActions />}
-        projectId={projectId}
       />
 
       <Row gutter={gutter} align="bottom">

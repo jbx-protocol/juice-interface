@@ -7,7 +7,6 @@ import { V2ProjectSettingsContent } from 'components/v2/V2Project/V2ProjectSetti
 import { layouts } from 'constants/styles/layouts'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { useIsUserAddress } from 'hooks/IsUserAddress'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
@@ -99,9 +98,6 @@ export function V2ProjectSettings() {
   } = useContext(ThemeContext)
 
   const router = useRouter()
-  const isOwner = useIsUserAddress(projectOwnerAddress)
-
-  const canEditProjectHandle = isOwner && !isPreviewMode && !handle
 
   const handleMenuItemClick = (item: MenuItem) => {
     const key = item?.key as V2SettingsKey
@@ -117,8 +113,6 @@ export function V2ProjectSettings() {
           isArchived={isArchived}
           handle={handle}
           projectOwnerAddress={projectOwnerAddress}
-          canEditProjectHandle={canEditProjectHandle}
-          projectId={projectId}
         />
         <Layout
           style={{

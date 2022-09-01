@@ -61,7 +61,7 @@ export const FundingDrawersSubtitles = (
   </p>
 )
 
-export function V2ProjectReconfigureForm() {
+export function V2ReconfigureFundingCycleForm() {
   const { initialEditingData } = useInitialEditingData(true)
   const editingProjectData = useEditingProjectData()
   const [memo, setMemo] = useState('')

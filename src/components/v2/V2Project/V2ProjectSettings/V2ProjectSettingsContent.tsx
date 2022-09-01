@@ -38,9 +38,10 @@ export function V2ProjectSettingsContent() {
 
   const router = useRouter()
 
-  const activeSettingsPage = router.query.page as V2SettingsPageKey
+  const activeSettingsPage =
+    (router.query.page as V2SettingsPageKey) ?? DEFAULT_SETTINGS_PAGE
   const ActiveSettingsPage = useMemo(
-    () => SettingsPageComponents[activeSettingsPage ?? DEFAULT_SETTINGS_PAGE],
+    () => SettingsPageComponents[activeSettingsPage],
     [activeSettingsPage],
   )
 

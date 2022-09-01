@@ -1,30 +1,17 @@
 import { DownloadOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Select, Space } from 'antd'
-import DeployedERC20EventElem from 'components/activityEventElems/DeployedERC20EventElem'
-import PayEventElem from 'components/activityEventElems/PayEventElem'
-import ProjectCreateEventElem from 'components/activityEventElems/ProjectCreateEventElem'
-import RedeemEventElem from 'components/activityEventElems/RedeemEventElem'
+import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import Loading from 'components/Loading'
 import SectionHeader from 'components/SectionHeader'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
-import { DeployETHERC20ProjectPayerEvent } from 'models/subgraph-entities/v2/deploy-eth-erc20-project-payer-event'
-import { DistributePayoutsEvent } from 'models/subgraph-entities/v2/distribute-payouts-event'
-import { DistributeReservedTokensEvent } from 'models/subgraph-entities/v2/distribute-reserved-tokens-event'
-import { DeployedERC20Event } from 'models/subgraph-entities/vX/deployed-erc20-event'
-import { PayEvent } from 'models/subgraph-entities/vX/pay-event'
-import { ProjectCreateEvent } from 'models/subgraph-entities/vX/project-create-event'
 import { ProjectEvent } from 'models/subgraph-entities/vX/project-event'
-import { RedeemEvent } from 'models/subgraph-entities/vX/redeem-event'
 import { useContext, useMemo, useState } from 'react'
 import { WhereConfig } from 'utils/graph'
 
 import V2DownloadActivityModal from '../modals/V2DownloadActivityModal'
-import DeployETHERC20ProjectPayerEventElem from './eventElems/DeployETHERC20ProjectPayerEventElem'
-import DistributePayoutsElem from './eventElems/DistributePayoutsElem'
-import DistributeReservedTokensEventElem from './eventElems/DistributeReservedTokensElem'
 
 type EventFilter =
   | 'all'
@@ -204,81 +191,20 @@ export default function ProjectActivity() {
 
   const list = useMemo(
     () =>
-      projectEvents?.pages.map(group =>
-        group.map((e: ProjectEvent) => {
-          let elem: JSX.Element | undefined = undefined
-
-          if (e.payEvent) {
-            elem = <PayEventElem event={e.payEvent as PayEvent} />
-          }
-          if (e.redeemEvent) {
-            elem = <RedeemEventElem event={e.redeemEvent as RedeemEvent} />
-          }
-          if (e.projectCreateEvent) {
-            elem = (
-              <ProjectCreateEventElem
-                event={e.projectCreateEvent as ProjectCreateEvent}
-              />
-            )
-          }
-          if (e.deployedERC20Event) {
-            elem = (
-              <DeployedERC20EventElem
-                event={e.deployedERC20Event as DeployedERC20Event}
-              />
-            )
-          }
-          if (e.distributePayoutsEvent) {
-            elem = (
-              <DistributePayoutsElem
-                event={e.distributePayoutsEvent as DistributePayoutsEvent}
-              />
-            )
-          }
-          if (e.distributeReservedTokensEvent) {
-            elem = (
-              <DistributeReservedTokensEventElem
-                event={
-                  e.distributeReservedTokensEvent as DistributeReservedTokensEvent
-                }
-              />
-            )
-          }
-          if (e.deployETHERC20ProjectPayerEvent) {
-            elem = (
-              <DeployETHERC20ProjectPayerEventElem
-                event={
-                  e.deployETHERC20ProjectPayerEvent as DeployETHERC20ProjectPayerEvent
-                }
-              />
-            )
-          }
-          if (e.useAllowanceEvent) {
-            // TODO
-            // elem = (
-            //   <DeployedERC20EventElem
-            //     event={e.deployedERC20Event as DeployedERC20Event}
-            //   />
-            // )
-          }
-
-          if (!elem) return null
-
-          return (
-            <div
-              key={e.id}
-              style={{
-                marginBottom: 20,
-                paddingBottom: 20,
-                borderBottom: '1px solid ' + colors.stroke.tertiary,
-              }}
-            >
-              {elem}
-            </div>
-          )
-        }),
-      ),
-    [colors, projectEvents],
+      projectEvents?.pages.flat().map(event => {
+        return (
+          <ActivityEvent
+            event={event}
+            key={event.id}
+            style={{
+              marginBottom: 20,
+              paddingBottom: 20,
+              borderBottom: '1px solid ' + colors.stroke.tertiary,
+            }}
+          />
+        )
+      }),
+    [colors.stroke.tertiary, projectEvents?.pages],
   )
 
   const listStatus = useMemo(() => {

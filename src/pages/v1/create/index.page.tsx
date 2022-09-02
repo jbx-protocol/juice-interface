@@ -71,16 +71,23 @@ import { BallotStrategy } from 'models/ballot'
 
 import ConfirmDeployProject from './ConfirmDeployProject'
 
+import { DesmosScript } from 'components/common/Head/scripts/DesmosScript'
 import { drawerStyle } from 'constants/styles/drawerStyle'
 import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
+import Head from 'next/head'
 
 const terminalVersion: V1TerminalVersion = '1.1'
 
 export default function V1CreatePage() {
   return (
-    <AppWrapper>
-      <V1Create />
-    </AppWrapper>
+    <>
+      <Head>
+        <DesmosScript />
+      </Head>
+      <AppWrapper>
+        <V1Create />
+      </AppWrapper>
+    </>
   )
 }
 

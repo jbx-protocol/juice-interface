@@ -46,10 +46,6 @@ export const SEO: FC<Props> = ({
           name="googlebot"
           content={robots ?? 'index,follow'}
         ></meta>
-        <meta
-          name="google-site-verification"
-          content="0Jp7zERBL5i76DiM-bODvBGgbjuVMEQGSuwOchP_ZnE"
-        />
       </Head>
 
       <TwitterMetaTags

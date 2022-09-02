@@ -1,5 +1,5 @@
-import { LoadingOutlined } from '@ant-design/icons'
 import { CardSection } from 'components/CardSection'
+import Loading from 'components/Loading'
 import FundingCycleDetailsCard from 'components/Project/FundingCycleDetailsCard'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
@@ -45,7 +45,7 @@ export default function UpcomingFundingCycle({
   const [queuedDistributionLimit, queuedDistributionLimitCurrency] =
     queuedDistributionLimitData ?? []
 
-  if (!upcomingFundingCycle) return <LoadingOutlined />
+  if (!upcomingFundingCycle) return <Loading />
 
   const queuedReservedRate = upcomingFundingCycleMetadata?.reservedRate
 

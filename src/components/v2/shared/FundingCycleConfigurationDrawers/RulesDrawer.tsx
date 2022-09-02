@@ -2,8 +2,7 @@ import { t } from '@lingui/macro'
 import FundingCycleDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/FundingCycleDrawer'
 import { useFundingCycleDrawer } from 'components/v2/shared/FundingCycleConfigurationDrawers/useFundingCycleDrawer'
 import UnsavedChangesModal from 'components/v2/shared/UnsavedChangesModal'
-
-import RulesForm from '../../../../pages/create/forms/RulesForm'
+import RulesForm from 'pages/create/forms/RulesForm'
 
 export default function RulesDrawer({
   visible,

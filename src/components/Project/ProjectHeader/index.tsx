@@ -9,7 +9,9 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useAddressIsGnosisSafe } from 'hooks/AddressIsGnosisSafe'
 import useMobile from 'hooks/Mobile'
 import { ProjectMetadataV4 } from 'models/project-metadata'
+import Link from 'next/link'
 import { useContext } from 'react'
+import { settingsPagePath } from 'utils/routes'
 import SocialLinks from './SocialLinks'
 
 const headerHeight = 120
@@ -19,15 +21,17 @@ export default function ProjectHeader({
   metadata,
   isArchived,
   actions,
-  onClickSetHandle,
+  canEditProjectHandle,
   projectOwnerAddress,
+  projectId,
 }: {
-  metadata?: ProjectMetadataV4
-  isArchived?: boolean
-  handle?: string
-  actions?: JSX.Element
-  onClickSetHandle?: VoidFunction
-  projectOwnerAddress?: string
+  metadata: ProjectMetadataV4 | undefined
+  isArchived: boolean | undefined
+  handle: string | undefined
+  actions: JSX.Element | undefined
+  projectOwnerAddress: string | undefined
+  projectId: number | undefined
+  canEditProjectHandle?: boolean
 }) {
   const {
     theme: { colors },
@@ -122,18 +126,29 @@ export default function ProjectHeader({
             >
               @{handle}
             </span>
-          ) : onClickSetHandle ? (
+          ) : canEditProjectHandle && projectId ? (
             <Tooltip
               placement="bottom"
               title={t`A project's handle is used in its URL, and allows it to be included in search results on the projects page.`}
             >
-              <Button
-                onClick={onClickSetHandle}
-                type="text"
-                style={{ padding: 0 }}
-              >
-                <EditOutlined /> <Trans>Add handle</Trans>
-              </Button>
+              <div>
+                <Link
+                  href={settingsPagePath('projecthandle', {
+                    projectId,
+                    handle,
+                  })}
+                >
+                  <Button
+                    type="link"
+                    icon={<EditOutlined />}
+                    style={{ paddingLeft: 0 }}
+                  >
+                    <span>
+                      <Trans>Add handle</Trans>
+                    </span>
+                  </Button>
+                </Link>
+              </div>
             </Tooltip>
           ) : null}
           <SocialLinks
@@ -142,6 +157,7 @@ export default function ProjectHeader({
             infoUri={metadata?.infoUri}
           />
         </div>
+
         {metadata?.description && (
           <Paragraph
             description={metadata.description}
@@ -149,18 +165,24 @@ export default function ProjectHeader({
             style={{ color: colors.text.secondary }}
           />
         )}
+
         {projectOwnerAddress && (
-          <div style={{ color: colors.text.secondary, marginTop: '0.4rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <span style={{ marginRight: '0.4rem' }}>
-                <Trans>
-                  Owned by <FormattedAddress address={projectOwnerAddress} />
-                </Trans>
-              </span>
-              {!ownerIsGnosisSafeLoading && ownerIsGnosisSafe && (
-                <GnosisSafeBadge />
-              )}
-            </div>
+          <div
+            style={{
+              color: colors.text.secondary,
+              marginTop: '0.4rem',
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <span style={{ marginRight: '0.4rem' }}>
+              <Trans>
+                Owned by <FormattedAddress address={projectOwnerAddress} />
+              </Trans>
+            </span>
+            {!ownerIsGnosisSafeLoading && ownerIsGnosisSafe && (
+              <GnosisSafeBadge />
+            )}
           </div>
         )}
       </div>

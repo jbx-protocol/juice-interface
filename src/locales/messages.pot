@@ -536,9 +536,6 @@ msgstr ""
 msgid "Changes to payouts will take effect immediately."
 msgstr ""
 
-msgid "Changes to project details will take effect immediately."
-msgstr ""
-
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
 msgstr ""
 
@@ -984,9 +981,6 @@ msgid "Edit payouts"
 msgstr ""
 
 msgid "Edit project"
-msgstr ""
-
-msgid "Edit project details"
 msgstr ""
 
 msgid "Edit reserved token allocation"
@@ -1571,9 +1565,6 @@ msgstr ""
 msgid "Other assets in this project's owner's wallet."
 msgstr ""
 
-msgid "Other details"
-msgstr ""
-
 msgid "Overflow"
 msgstr ""
 
@@ -1760,9 +1751,6 @@ msgstr ""
 msgid "Project details can be edited at any time."
 msgstr ""
 
-msgid "Project details reconfigurations will create a separate transaction."
-msgstr ""
-
 msgid "Project handle"
 msgstr ""
 
@@ -1908,9 +1896,6 @@ msgid "Reconfigure payouts as percentages of your distribution limit."
 msgstr ""
 
 msgid "Reconfigure project and funding details"
-msgstr ""
-
-msgid "Reconfigure project details"
 msgstr ""
 
 msgid "Reconfigure upcoming"
@@ -2633,9 +2618,6 @@ msgstr ""
 msgid "Update your veNFT's lock duration."
 msgstr ""
 
-msgid "Updates you make to this section will only be applied to <0>upcoming</0> funding cycles."
-msgstr ""
-
 msgid "Upload"
 msgstr ""
 
@@ -2645,10 +2627,10 @@ msgstr ""
 msgid "Upload an image"
 msgstr ""
 
-msgid "Uploaded to: <0>{url}</0>"
+msgid "Uploaded to: <0>{imageUrl}</0>"
 msgstr ""
 
-msgid "Uploaded to: <0>{value}</0>"
+msgid "Uploaded to: <0>{url}</0>"
 msgstr ""
 
 msgid "Use <0>Amounts</0> when you want to configure a <1>distribution limit</1>. Treasury funds that exceed the distribution limit are called <2>overflow</2>. Token holders can redeem (burn) their tokens for a portion of the overflow. <3>Learn more</3>."
@@ -2670,9 +2652,6 @@ msgid "V1 Token Migration"
 msgstr ""
 
 msgid "V1 token holders can swap their tokens for your V2 tokens on your V2 project's <0>Tokens</0> section."
-msgstr ""
-
-msgid "V1 token migration"
 msgstr ""
 
 msgid "V1 tokens to swap"
@@ -2997,9 +2976,6 @@ msgid "tokens redeemed"
 msgstr ""
 
 msgid "until"
-msgstr ""
-
-msgid "veNFT"
 msgstr ""
 
 msgid "veNFT Tiers ({0} variants)"

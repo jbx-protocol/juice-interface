@@ -1,7 +1,6 @@
 import { Drawer } from 'antd'
-import { PropsWithChildren } from 'react'
-
 import { drawerStyle } from 'constants/styles/drawerStyle'
+import { PropsWithChildren } from 'react'
 
 /**
  * Provides the blueprint for Funding Cycle Drawers.

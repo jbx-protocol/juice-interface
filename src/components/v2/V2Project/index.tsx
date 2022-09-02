@@ -29,10 +29,10 @@ import { v2ProjectRoute } from 'utils/routes'
 
 import { V2_PROJECT_IDS } from 'constants/v2/projectIds'
 import { RelaunchFundingCycleBanner } from './banners/RelaunchFundingCycleBanner'
-import NewDeployModal from './NewDeployModal'
+import NewDeployModal from './modals/NewDeployModal'
+import { V2BalancesModal } from './modals/V2BalancesModal/V2BalancesModal'
 import ProjectActivity from './ProjectActivity'
 import TreasuryStats from './TreasuryStats'
-import { V2BalancesModal } from './V2BalancesModal/V2BalancesModal'
 import V2FundingCycleSection from './V2FundingCycleSection'
 import V2ManageTokensSection from './V2ManageTokensSection'
 import V2PayButton from './V2PayButton'
@@ -40,7 +40,6 @@ import V2ProjectHeaderActions from './V2ProjectHeaderActions'
 
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { NftRewardsSection } from './NftRewardsSection'
-import { V2ReconfigureProjectHandleDrawer } from './V2ReconfigureProjectHandleDrawer'
 
 const GUTTER_PX = 40
 
@@ -89,7 +88,6 @@ export default function V2Project({
     useState<boolean>(isNewDeploy)
   const [balancesModalVisible, setBalancesModalVisible] =
     useState<boolean>(false)
-  const [handleModalVisible, setHandleModalVisible] = useState<boolean>()
   const [payAmount, setPayAmount] = useState<string>('0')
   const [payInCurrency, setPayInCurrency] = useState<CurrencyOption>(ETH)
 
@@ -124,7 +122,7 @@ export default function V2Project({
     !hasQueuedFundingCycle &&
     canReconfigureFundingCycles
 
-  const showAddHandle = isOwner && !isPreviewMode && !handle
+  const canEditProjectHandle = isOwner && !isPreviewMode && !handle
 
   const nftRewardsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
 
@@ -165,9 +163,8 @@ export default function V2Project({
         isArchived={isArchived}
         handle={handle}
         projectOwnerAddress={projectOwnerAddress}
-        onClickSetHandle={
-          showAddHandle ? () => setHandleModalVisible(true) : undefined
-        }
+        canEditProjectHandle={canEditProjectHandle}
+        projectId={projectId}
       />
       {!isPreviewMode &&
         hasCurrentFundingCycle === false &&
@@ -254,12 +251,6 @@ export default function V2Project({
         onCancel={() => setBalancesModalVisible(false)}
         storeCidTx={editV2ProjectDetailsTx}
       />
-      {showAddHandle && (
-        <V2ReconfigureProjectHandleDrawer
-          visible={handleModalVisible}
-          onFinish={() => setHandleModalVisible(false)}
-        />
-      )}
     </Space>
   )
 }

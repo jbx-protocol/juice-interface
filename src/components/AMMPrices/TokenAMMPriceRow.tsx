@@ -5,6 +5,7 @@ import SushiswapLogo from 'components/icons/Sushiswap'
 import UniswapLogo from 'components/icons/Uniswap'
 import { CSSProperties } from 'react'
 import { formattedNum } from 'utils/formatNumber'
+import { truncateString } from 'utils/formatString'
 
 import ExternalLink from '../ExternalLink'
 
@@ -56,6 +57,12 @@ export default function TokenAMMPriceRow({
     )
   }
 
+  const preparePrice = (price: string) => {
+    const formattedPrice = formattedNum(price) ?? ''
+
+    return truncateString(formattedPrice, 15)
+  }
+
   return (
     <div
       style={{
@@ -72,7 +79,6 @@ export default function TokenAMMPriceRow({
         </span>
         {exchangeName}
       </div>
-
       {loading && <LoadingOutlined />}
 
       {!loading &&
@@ -82,7 +88,7 @@ export default function TokenAMMPriceRow({
             overlayInnerStyle={{ ...fontStyle }}
           >
             <ExternalLink href={exchangeLink} style={{ fontWeight: 400 }}>
-              {`${formattedNum(WETHPrice)} ${tokenSymbol}/1 ETH`}
+              {`${preparePrice(WETHPrice)} ${tokenSymbol}/1 ETH`}
             </ExternalLink>
           </Tooltip>
         ) : (

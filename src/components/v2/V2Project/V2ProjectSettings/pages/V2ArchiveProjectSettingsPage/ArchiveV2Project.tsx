@@ -7,7 +7,7 @@ import ArchiveProject from 'components/ArchiveProject'
 /**
  * V2 Wrapper around `ArchiveProject`.
  */
-export default function ArchiveV2Project({
+export function V2ArchiveProject({
   editV2ProjectDetailsTx,
 }: {
   editV2ProjectDetailsTx: TransactorInstance<{

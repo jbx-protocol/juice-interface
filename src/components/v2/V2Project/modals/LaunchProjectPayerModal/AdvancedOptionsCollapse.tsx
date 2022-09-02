@@ -8,7 +8,7 @@ import TooltipLabel from 'components/TooltipLabel'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useContext, useState } from 'react'
 
-import { AdvancedOptionsFields } from './LaunchProjectPayerModal'
+import type { AdvancedOptionsFields } from './LaunchProjectPayerModal'
 
 const defaultAdvancedOptions: AdvancedOptionsFields = {
   memo: '',

@@ -6,15 +6,15 @@ import FundingDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers
 import RulesDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/RulesDrawer'
 import TokenDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/TokenDrawer'
 import UnsavedChangesModal from 'components/v2/shared/UnsavedChangesModal'
-import { useEditingProjectData } from 'components/v2/V2Project/V2ProjectReconfigureModal/hooks/editingProjectData'
-import { useFundingHasSavedChanges } from 'components/v2/V2Project/V2ProjectReconfigureModal/hooks/fundingHasSavedChanges'
-import { useInitialEditingData } from 'components/v2/V2Project/V2ProjectReconfigureModal/hooks/initialEditingData'
-import { useReconfigureFundingCycle } from 'components/v2/V2Project/V2ProjectReconfigureModal/hooks/reconfigureFundingCycle'
-import ReconfigurePreview from 'components/v2/V2Project/V2ProjectReconfigureModal/ReconfigurePreview'
-import V2ReconfigureUpcomingMessage from 'components/v2/V2Project/V2ProjectReconfigureModal/V2ReconfigureUpcomingMessage'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useContext, useState } from 'react'
+import { useEditingProjectData } from './hooks/editingProjectData'
+import { useFundingHasSavedChanges } from './hooks/fundingHasSavedChanges'
+import { useInitialEditingData } from './hooks/initialEditingData'
+import { useReconfigureFundingCycle } from './hooks/reconfigureFundingCycle'
+import ReconfigurePreview from './ReconfigurePreview'
+import V2ReconfigureUpcomingMessage from './V2ReconfigureUpcomingMessage'
 
 function ReconfigureButton({
   title,

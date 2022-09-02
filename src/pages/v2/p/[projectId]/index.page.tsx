@@ -1,4 +1,5 @@
 import { AppWrapper, SEO } from 'components/common'
+import { DesmosScript } from 'components/common/Head/scripts/DesmosScript'
 import Loading from 'components/Loading'
 import { V2_PROJECT_IDS } from 'constants/v2/projectIds'
 import {
@@ -58,7 +59,9 @@ export default function V2ProjectPage({
             image: metadata.logoUri,
             site: metadata.twitter,
           }}
-        />
+        >
+          <DesmosScript />
+        </SEO>
       ) : null}
       <AppWrapper>
         <V2UserProvider>

@@ -9,7 +9,7 @@ import { getTotalSplitsPercentage } from 'utils/v2/distributions'
 
 import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
 
-import { V2EditPayouts } from '../../V2EditPayouts'
+import { V2EditPayouts } from './V2EditPayouts'
 
 export function V2PayoutsSettingsPage() {
   const { fundingCycle } = useContext(V2ProjectContext)

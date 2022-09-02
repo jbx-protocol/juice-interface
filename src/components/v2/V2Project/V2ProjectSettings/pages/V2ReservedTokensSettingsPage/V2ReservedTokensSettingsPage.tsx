@@ -7,7 +7,7 @@ import { Split } from 'models/v2/splits'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 import { preciseFormatSplitPercent } from 'utils/v2/math'
-import { V2EditReservedTokens } from '../../V2EditReservedTokens'
+import { V2EditReservedTokens } from './V2EditReservedTokens'
 
 export function V2ReservedTokensSettingsPage() {
   const { reservedTokensSplits, fundingCycle } = useContext(V2ProjectContext)

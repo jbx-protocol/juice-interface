@@ -1,4 +1,4 @@
-import { V2ReconfigureFundingCycleForm } from 'components/v2/V2Project/V2ReconfigureFundingCycleForm'
+import { V2ReconfigureFundingCycleForm } from 'components/v2/V2Project/V2ProjectSettings/pages/V2ProjectReconfigureFundingCycleSettingsPage/V2ReconfigureFundingCycleForm'
 import { useRef } from 'react'
 import { Provider } from 'react-redux'
 import store, { createStore } from 'redux/store'

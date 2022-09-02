@@ -23,7 +23,7 @@ import {
 } from 'utils/v2/math'
 
 import { CurrencyName } from 'constants/currency'
-import V2ProjectHandle from '../V2ProjectHandle'
+import V2ProjectHandle from '../../../../../components/v2/shared/V2ProjectHandle'
 import DistributionSplitModal from './DistributionSplitModal'
 
 const Parens = ({

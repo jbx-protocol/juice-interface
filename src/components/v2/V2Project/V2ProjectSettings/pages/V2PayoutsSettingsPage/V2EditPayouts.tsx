@@ -4,13 +4,13 @@ import { Button, Skeleton, Space } from 'antd'
 import Callout from 'components/Callout'
 import { SplitCsvUpload } from 'components/SplitCsvUpload/SplitCsvUpload'
 import TooltipLabel from 'components/TooltipLabel'
-import DistributionSplitCard from 'components/v2/shared/DistributionSplitsSection/DistributionSplitCard'
-import DistributionSplitModal from 'components/v2/shared/DistributionSplitsSection/DistributionSplitModal'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { filter, isEqual } from 'lodash'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { defaultSplit, Split } from 'models/v2/splits'
+import DistributionSplitCard from 'pages/create/forms/FundingForm/DistributionSplitsSection/DistributionSplitCard'
+import DistributionSplitModal from 'pages/create/forms/FundingForm/DistributionSplitsSection/DistributionSplitModal'
 import React, {
   useCallback,
   useContext,

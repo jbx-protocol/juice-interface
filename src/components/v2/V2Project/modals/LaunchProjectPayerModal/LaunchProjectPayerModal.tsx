@@ -35,7 +35,7 @@ export interface AdvancedOptionsFields {
   preferClaimed: boolean
 }
 
-export default function LaunchProjectPayerModal({
+export function LaunchProjectPayerModal({
   visible,
   onClose,
   useDeployProjectPayerTx,

@@ -32,7 +32,7 @@ import { parseEther } from 'ethers/lib/utils'
 
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
-import DistributionLimit from '../DistributionLimit'
+import DistributionLimit from '../../shared/DistributionLimit'
 import {
   DISCOUNT_RATE_EXPLANATION,
   REDEMPTION_RATE_EXPLANATION,

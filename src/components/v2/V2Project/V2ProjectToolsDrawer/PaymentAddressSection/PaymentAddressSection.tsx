@@ -1,7 +1,7 @@
 import { plural, Trans } from '@lingui/macro'
 import { Button, Space } from 'antd'
-import LaunchProjectPayerButton from 'components/v2/V2Project/LaunchProjectPayer/LaunchProjectPayerButton'
-import ProjectPayersModal from 'components/v2/V2Project/ProjectPayersModal'
+import { PaymentAddressesModal } from 'components/v2/V2Project/modals/PaymentAddressesModal'
+import { LaunchProjectPayerButton } from 'components/v2/V2Project/V2ProjectToolsDrawer/PaymentAddressSection/LaunchProjectPayerButton'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useProjectPayers } from 'hooks/v2/ProjectPayers'
@@ -45,7 +45,7 @@ export function PaymentAddressSection({
                 other: 'View deployed Payment Addresses',
               })}
             </Button>
-            <ProjectPayersModal
+            <PaymentAddressesModal
               visible={projectPayersModalIsVisible}
               onCancel={() => setProjectPayersModalIsVisible(false)}
               projectPayers={projectPayers}

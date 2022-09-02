@@ -5,7 +5,6 @@ import ExternalLink from 'components/ExternalLink'
 import { ItemNoInput } from 'components/formItems/ItemNoInput'
 import FormItemWarningText from 'components/FormItemWarningText'
 import SwitchHeading from 'components/SwitchHeading'
-import DistributionSplitsSection from 'components/v2/shared/DistributionSplitsSection'
 import { shadowCard } from 'constants/styles/shadowCard'
 import { DurationUnitsOption } from 'constants/time'
 import { DEFAULT_BALLOT_STRATEGY } from 'constants/v2/ballotStrategies'
@@ -18,6 +17,7 @@ import { useAppSelector } from 'hooks/AppSelector'
 import isEqual from 'lodash/isEqual'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { Split } from 'models/v2/splits'
+import DistributionSplitsSection from 'pages/create/forms/FundingForm/DistributionSplitsSection'
 import {
   useCallback,
   useContext,

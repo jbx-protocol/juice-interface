@@ -239,6 +239,9 @@ msgstr ""
 msgid "A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
 msgstr ""
 
+msgid "A tier at this amount already exists."
+msgstr ""
+
 msgid "A veNft can only be redeemed if the project currently has overflow."
 msgstr ""
 

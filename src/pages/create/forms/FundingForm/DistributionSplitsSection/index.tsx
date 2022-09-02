@@ -20,7 +20,7 @@ import {
 } from 'utils/v2/distributions'
 import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2/math'
 import DistributionSplitCard from './DistributionSplitCard'
-import DistributionSplitModal from './DistributionSplitModal'
+import { DistributionSplitModal } from './DistributionSplitModal'
 import { PayoutConfigurationExplainerCollapse } from './PayoutConfigurationExplainerCollapse'
 import SpecificLimitModal from './SpecificLimitModal'
 

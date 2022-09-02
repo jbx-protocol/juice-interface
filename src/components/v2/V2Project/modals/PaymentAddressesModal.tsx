@@ -11,7 +11,7 @@ import CopyTextButton from 'components/CopyTextButton'
 import EtherscanLink from 'components/EtherscanLink'
 import useMobile from 'hooks/Mobile'
 
-export default function ProjectPayersModal({
+export function PaymentAddressesModal({
   visible,
   onCancel,
   projectPayers,

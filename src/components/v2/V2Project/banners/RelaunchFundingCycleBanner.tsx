@@ -30,7 +30,7 @@ import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/v2/splits'
-import ReconfigurePreview from '../V2ProjectReconfigureModal/ReconfigurePreview'
+import ReconfigurePreview from '../V2ProjectSettings/pages/V2ProjectReconfigureFundingCycleSettingsPage/ReconfigurePreview'
 
 export function RelaunchFundingCycleBanner() {
   const { projectId } = useContext(V2ProjectContext)

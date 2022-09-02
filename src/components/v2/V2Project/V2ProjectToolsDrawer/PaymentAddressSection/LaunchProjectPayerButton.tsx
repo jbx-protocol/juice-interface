@@ -3,9 +3,9 @@ import { Button } from 'antd'
 import { TransactorInstance } from 'hooks/Transactor'
 import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayerTx'
 import { useState } from 'react'
-import LaunchProjectPayerModal from './LaunchProjectPayerModal'
+import { LaunchProjectPayerModal } from '../../modals/LaunchProjectPayerModal'
 
-export default function LaunchProjectPayerButton({
+export function LaunchProjectPayerButton({
   useDeployProjectPayerTx,
 }: {
   useDeployProjectPayerTx: () =>

@@ -13,7 +13,7 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { useRouter } from 'next/router'
 import { pushSettingsContent } from 'utils/routes'
-import LaunchProjectPayerModal from './LaunchProjectPayer/LaunchProjectPayerModal'
+import { LaunchProjectPayerModal } from './LaunchProjectPayerModal'
 
 export default function NewDeployModal({
   visible,

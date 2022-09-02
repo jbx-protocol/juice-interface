@@ -17,9 +17,9 @@ import Link from 'next/link'
 import { useContext } from 'react'
 import { settingsPagePath } from 'utils/routes'
 import { AddToProjectBalanceForm } from '../../../Project/ProjectToolsDrawer/AddToProjectBalanceForm'
-import { PaymentAddressSection } from '../../../Project/ProjectToolsDrawer/PaymentAddressSection'
 import { TransferUnclaimedTokensForm } from '../../../Project/ProjectToolsDrawer/TransferUnclaimedTokensForm'
 import { ExportSplitsButton } from './ExportSplitsButton'
+import { PaymentAddressSection } from './PaymentAddressSection'
 
 const { TabPane } = Tabs
 

@@ -407,6 +407,9 @@ msgstr ""
 msgid "Approve token for transaction"
 msgstr ""
 
+msgid "Archive Project"
+msgstr ""
+
 msgid "Archive project"
 msgstr ""
 
@@ -441,6 +444,9 @@ msgid "Available funds can be distributed according to the payouts below{0}."
 msgstr ""
 
 msgid "Available:"
+msgstr ""
+
+msgid "Back to project"
 msgstr ""
 
 msgid "Back to top"
@@ -528,9 +534,6 @@ msgid "Change project handle"
 msgstr ""
 
 msgid "Changes to payouts will take effect immediately."
-msgstr ""
-
-msgid "Changes to project details will take effect immediately."
 msgstr ""
 
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
@@ -776,9 +779,6 @@ msgstr ""
 msgid "Delete token allocation"
 msgstr ""
 
-msgid "Deploy Payment Address"
-msgstr ""
-
 msgid "Deploy Payment Address contract"
 msgstr ""
 
@@ -983,9 +983,6 @@ msgstr ""
 msgid "Edit project"
 msgstr ""
 
-msgid "Edit project details"
-msgstr ""
-
 msgid "Edit reserved token allocation"
 msgstr ""
 
@@ -1058,9 +1055,6 @@ msgstr ""
 msgid "Extend lock successful. Results will be indexed in a few moments."
 msgstr ""
 
-msgid "FAQ"
-msgstr ""
-
 msgid "FAQs"
 msgstr ""
 
@@ -1128,6 +1122,9 @@ msgid "Give feedback"
 msgstr ""
 
 msgid "Give this NFT a name."
+msgstr ""
+
+msgid "Governance"
 msgstr ""
 
 msgid "Grant permission"
@@ -1484,6 +1481,9 @@ msgstr ""
 msgid "Newly minted {tokenSymbolPlural} <0>received by contributors</0> per ETH they contribute to the treasury."
 msgstr ""
 
+msgid "Newsletter"
+msgstr ""
+
 msgid "Next: Funding cycle"
 msgstr ""
 
@@ -1565,9 +1565,6 @@ msgstr ""
 msgid "Other assets in this project's owner's wallet."
 msgstr ""
 
-msgid "Other details"
-msgstr ""
-
 msgid "Overflow"
 msgstr ""
 
@@ -1646,6 +1643,9 @@ msgstr ""
 msgid "Payment Address created"
 msgstr ""
 
+msgid "Payment Addresses"
+msgstr ""
+
 msgid "Payment equivalent"
 msgstr ""
 
@@ -1688,7 +1688,7 @@ msgstr ""
 msgid "Payouts to Ethereum addresses incur a {feePercentage}% fee. Your project will receive JBX in return at the current issuance rate."
 msgstr ""
 
-msgid "Peel"
+msgid "PeelDAO"
 msgstr ""
 
 msgid "Percent"
@@ -1715,10 +1715,19 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
+msgid "Project #{projectId}"
+msgstr ""
+
 msgid "Project Created"
 msgstr ""
 
+msgid "Project Handle"
+msgstr ""
+
 msgid "Project ID must be a number."
+msgstr ""
+
+msgid "Project Settings"
 msgstr ""
 
 msgid "Project Token"
@@ -1740,9 +1749,6 @@ msgid "Project details"
 msgstr ""
 
 msgid "Project details can be edited at any time."
-msgstr ""
-
-msgid "Project details reconfigurations will create a separate transaction."
 msgstr ""
 
 msgid "Project handle"
@@ -1797,9 +1803,6 @@ msgid "Project {0}"
 msgstr ""
 
 msgid "Project {name} will be available soon! Try refreshing the page shortly."
-msgstr ""
-
-msgid "Project {projectId}"
 msgstr ""
 
 msgid "Project {projectId} not found"
@@ -1886,13 +1889,13 @@ msgstr ""
 msgid "Reconfigure"
 msgstr ""
 
+msgid "Reconfigure Funding Cycle"
+msgstr ""
+
 msgid "Reconfigure payouts as percentages of your distribution limit."
 msgstr ""
 
 msgid "Reconfigure project and funding details"
-msgstr ""
-
-msgid "Reconfigure project details"
 msgstr ""
 
 msgid "Reconfigure upcoming"
@@ -1950,6 +1953,9 @@ msgid "Required"
 msgstr ""
 
 msgid "Reserve a percentage of freshly minted tokens for your project to use."
+msgstr ""
+
+msgid "Reserved Token Allocation"
 msgstr ""
 
 msgid "Reserved rate"
@@ -2375,6 +2381,9 @@ msgstr ""
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
 msgstr ""
 
+msgid "This project is owned by a Gnosis Safe."
+msgstr ""
+
 msgid "This project reserves some of the newly minted tokens for itself."
 msgstr ""
 
@@ -2543,6 +2552,9 @@ msgstr ""
 msgid "Transaction unsuccessful"
 msgstr ""
 
+msgid "Transfer Ownership"
+msgstr ""
+
 msgid "Transfer ownership"
 msgstr ""
 
@@ -2606,9 +2618,6 @@ msgstr ""
 msgid "Update your veNFT's lock duration."
 msgstr ""
 
-msgid "Updates you make to this section will only be applied to <0>upcoming</0> funding cycles."
-msgstr ""
-
 msgid "Upload"
 msgstr ""
 
@@ -2639,10 +2648,10 @@ msgstr ""
 msgid "V1"
 msgstr ""
 
-msgid "V1 token holders can swap their tokens for your V2 tokens on your V2 project's <0>Tokens</0> section."
+msgid "V1 Token Migration"
 msgstr ""
 
-msgid "V1 token migration"
+msgid "V1 token holders can swap their tokens for your V2 tokens on your V2 project's <0>Tokens</0> section."
 msgstr ""
 
 msgid "V1 tokens to swap"
@@ -2652,6 +2661,9 @@ msgid "V1.1"
 msgstr ""
 
 msgid "V2"
+msgstr ""
+
+msgid "VeNFT Governance"
 msgstr ""
 
 msgid "Version of the terminal contract used by this project."
@@ -2754,9 +2766,6 @@ msgid "With Juicebox, projects are built and maintained by motivated punks getti
 msgstr ""
 
 msgid "With no funding cycles, the project's owner can start a new funding cycle (Funding Cycle #2) on-demand. <0>Learn more.</0>"
-msgstr ""
-
-msgid "Workspace"
 msgstr ""
 
 msgid "Would you like to issue an ERC-20 token to be used as this project's token?"
@@ -2969,9 +2978,6 @@ msgstr ""
 msgid "until"
 msgstr ""
 
-msgid "veNFT"
-msgstr ""
-
 msgid "veNFT Tiers ({0} variants)"
 msgstr ""
 
@@ -2979,9 +2985,6 @@ msgid "{0, plural, one {# Payment Address} other {# Payment Addresses}}"
 msgstr ""
 
 msgid "{0, plural, one {View deployed Payment Address} other {View deployed Payment Addresses}}"
-msgstr ""
-
-msgid "{0} - Project payer contracts"
 msgstr ""
 
 msgid "{0} after JBX fee"

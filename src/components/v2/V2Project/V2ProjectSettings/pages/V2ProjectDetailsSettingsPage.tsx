@@ -1,34 +1,19 @@
-import { Trans } from '@lingui/macro'
-import { Drawer } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import ProjectDetailsForm, {
   ProjectDetailsFormFields,
 } from 'components/forms/ProjectDetailsForm'
-import { ThemeContext } from 'contexts/themeContext'
+import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-
-import { useCallback, useContext, useEffect, useState } from 'react'
-
 import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDetailsTx'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 import { revalidateProject } from 'utils/revalidateProject'
 
-import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
-import { drawerStyle } from 'constants/styles/drawerStyle'
-
-export function V2ReconfigureProjectDetailsDrawer({
-  visible,
-  onFinish,
-}: {
-  visible: boolean
-  onFinish?: () => void
-}) {
+export function V2ProjectDetailsSettingsPage() {
   const [projectForm] = useForm<ProjectDetailsFormFields>()
 
   const [loadingSaveChanges, setLoadingSaveChanges] = useState<boolean>()
   const { projectMetadata, projectId } = useContext(V2ProjectContext)
-
-  const { colors } = useContext(ThemeContext).theme
 
   const EditV2ProjectDetailsTx = useEditV2ProjectDetailsTx()
 
@@ -64,7 +49,6 @@ export function V2ReconfigureProjectDetailsDrawer({
               projectId: String(projectId),
             })
           }
-          if (onFinish) onFinish()
           projectForm.resetFields()
         },
       },
@@ -100,22 +84,11 @@ export function V2ReconfigureProjectDetailsDrawer({
   }, [resetProjectForm])
 
   return (
-    <Drawer visible={visible} {...drawerStyle} onClose={onFinish}>
-      <h3>
-        <Trans>Reconfigure project details</Trans>
-      </h3>
-      <p style={{ color: colors.text.primary }}>
-        <Trans>
-          Project details reconfigurations will create a separate transaction.
-        </Trans>
-      </p>
-      <br />
-      <ProjectDetailsForm
-        form={projectForm}
-        onFinish={onProjectFormSaved}
-        hideProjectHandle
-        loading={loadingSaveChanges}
-      />
-    </Drawer>
+    <ProjectDetailsForm
+      form={projectForm}
+      onFinish={onProjectFormSaved}
+      hideProjectHandle
+      loading={loadingSaveChanges}
+    />
   )
 }

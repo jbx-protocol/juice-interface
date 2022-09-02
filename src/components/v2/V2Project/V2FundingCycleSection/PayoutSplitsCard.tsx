@@ -1,30 +1,26 @@
 import { SettingOutlined } from '@ant-design/icons'
+import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import { Button, Skeleton, Space, Tooltip } from 'antd'
 import { CardSection } from 'components/CardSection'
 import SpendingStats from 'components/Project/SpendingStats'
 import TooltipLabel from 'components/TooltipLabel'
 import SplitList from 'components/v2/shared/SplitList'
+import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { V2CurrencyOption } from 'models/v2/currencyOption'
-import { useContext, useState } from 'react'
-
-import { V2CurrencyName } from 'utils/v2/currency'
-
-import { formatFee, MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
-
-import { BigNumber } from '@ethersproject/bignumber'
 import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerminalFee'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/V2ConnectedWalletHasPermission'
+import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { V2OperatorPermission } from 'models/v2/permissions'
 import { Split } from 'models/v2/splits'
+import Link from 'next/link'
+import { useContext, useState } from 'react'
 import { detailedTimeString } from 'utils/formatTime'
-
+import { settingsPagePath } from 'utils/routes'
+import { V2CurrencyName } from 'utils/v2/currency'
+import { formatFee, MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
 import { reloadWindow } from 'utils/windowUtils'
-
-import { ThemeContext } from 'contexts/themeContext'
 import DistributePayoutsModal from './modals/DistributePayoutsModal'
-import { EditPayoutsModal } from './modals/EditPayoutsModal'
 
 export default function PayoutSplitsCard({
   hideDistributeButton,
@@ -48,13 +44,13 @@ export default function PayoutSplitsCard({
     balanceInDistributionLimitCurrency,
     isPreviewMode,
     loading,
+    projectId,
+    handle,
   } = useContext(V2ProjectContext)
   const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
 
   const [distributePayoutsModalVisible, setDistributePayoutsModalVisible] =
     useState<boolean>()
-  const [editPayoutModalVisible, setEditPayoutModalVisible] =
-    useState<boolean>(false)
   const isLoadingStats =
     loading.ETHBalanceLoading ||
     loading.distributionLimitLoading ||
@@ -166,16 +162,17 @@ export default function PayoutSplitsCard({
               }
             />
             {canEditPayouts && effectiveDistributionLimit.gt(0) && (
-              <Button
-                size="small"
-                onClick={() => setEditPayoutModalVisible(true)}
-                icon={<SettingOutlined />}
-                style={{ marginBottom: '1rem' }}
-              >
-                <span>
-                  <Trans>Edit payouts</Trans>
-                </span>
-              </Button>
+              <Link href={settingsPagePath('payouts', { projectId, handle })}>
+                <Button
+                  size="small"
+                  icon={<SettingOutlined />}
+                  style={{ marginBottom: '1rem' }}
+                >
+                  <span>
+                    <Trans>Edit payouts</Trans>
+                  </span>
+                </Button>
+              </Link>
             )}
           </div>
           {effectiveDistributionLimit.gt(0) ? (
@@ -201,11 +198,6 @@ export default function PayoutSplitsCard({
         visible={distributePayoutsModalVisible}
         onCancel={() => setDistributePayoutsModalVisible(false)}
         onConfirmed={reloadWindow}
-      />
-      <EditPayoutsModal
-        visible={editPayoutModalVisible}
-        onCancel={() => setEditPayoutModalVisible(false)}
-        onOk={() => setEditPayoutModalVisible(false)}
       />
     </CardSection>
   )

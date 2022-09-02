@@ -20,10 +20,7 @@ export function V1TokenMigrationSetupSection() {
   const hasV1ProjectId = Boolean(v1Project?.toNumber() ?? 0 > 0)
 
   return (
-    <section>
-      <h3>
-        <Trans>V1 token migration</Trans>
-      </h3>
+    <>
       <p>
         <Trans>
           Allow your V1 project token holders to swap their tokens for your V2
@@ -61,7 +58,6 @@ export function V1TokenMigrationSetupSection() {
       <Button
         onClick={() => setMigrationModalVisible(true)}
         type="primary"
-        size="small"
         disabled={hasV1ProjectId}
       >
         <Trans>Set up token migration</Trans>
@@ -72,6 +68,6 @@ export function V1TokenMigrationSetupSection() {
         onOk={() => setMigrationModalVisible(false)}
         onCancel={() => setMigrationModalVisible(false)}
       />
-    </section>
+    </>
   )
 }

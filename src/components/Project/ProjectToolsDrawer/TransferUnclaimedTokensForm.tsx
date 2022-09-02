@@ -72,11 +72,6 @@ export function TransferUnclaimedTokensForm({
       <Form.Item name="amount" label="Amount">
         <FormattedNumberInput
           placeholder="0"
-          onChange={amount =>
-            transferTokensForm.setFieldsValue({
-              amount,
-            })
-          }
           accessory={
             <InputAccessoryButton
               content={<Trans>MAX</Trans>}

@@ -1,43 +1,54 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { paginateDepleteProjectsQueryCall } from 'utils/apollo'
 
-export async function middleware(request: NextRequest) {
-  // If request is for a handle id, add the search param with `isHandle`.
-  if (request.nextUrl.pathname.startsWith('/@')) {
-    const handle = request.nextUrl.pathname.slice(2) // slice off "/@"
-    console.info('Project middleware request', {
-      pathname: request.nextUrl.pathname,
-      handle,
-    })
-    let projects
-    try {
-      projects = await paginateDepleteProjectsQueryCall({
-        variables: {
-          where: { cv: '2', handle },
-        },
-      })
-    } catch (e) {
-      console.error('Failed to query projects', e)
-      throw e
-    }
-    const url = request.nextUrl
-    if (!projects.length) {
-      console.info('Page not found', {
-        originalPathname: request.nextUrl.pathname,
-        newPathname: '/404',
-        handle,
-      })
-      url.pathname = '/404'
-      return NextResponse.rewrite(url)
-    }
+// get the handle name from a URL path
+const HANDLE_REGEX = new RegExp(/\/@([^/]+).*/)
 
-    const projectId = projects[0].projectId
-    url.pathname = `/v2/p/${projectId}`
-    console.info('Rewriting to project route', {
+export async function middleware(request: NextRequest) {
+  if (!request.nextUrl.pathname.startsWith('/@')) return
+
+  // If request is for a handle id, add the search param with `isHandle`.
+  const handle = request.nextUrl.pathname.match(HANDLE_REGEX)?.[1]
+  if (!handle) return
+
+  const trailingPath = request.nextUrl.pathname.split('/').slice(2).join('/')
+
+  console.info('Project middleware request', {
+    pathname: request.nextUrl.pathname,
+    handle,
+  })
+
+  let projects
+  try {
+    projects = await paginateDepleteProjectsQueryCall({
+      variables: {
+        where: { cv: '2', handle },
+      },
+    })
+  } catch (e) {
+    console.error('Failed to query projects', e)
+    throw e
+  }
+
+  const url = request.nextUrl
+
+  if (!projects.length) {
+    console.info('Page not found', {
       originalPathname: request.nextUrl.pathname,
-      newPathname: url.pathname,
+      newPathname: '/404',
       handle,
     })
+    url.pathname = '/404'
     return NextResponse.rewrite(url)
   }
+
+  const projectId = projects[0].projectId
+  url.pathname = `/v2/p/${projectId}${trailingPath ? `/${trailingPath}` : ''}`
+
+  console.info('Rewriting to project route', {
+    originalPathname: request.nextUrl.pathname,
+    newPathname: url.pathname,
+    handle,
+  })
+  return NextResponse.rewrite(url)
 }

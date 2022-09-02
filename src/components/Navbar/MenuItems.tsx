@@ -3,7 +3,6 @@ import { t, Trans } from '@lingui/macro'
 import { Dropdown, Menu, Space } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { CSSProperties, useEffect, useState } from 'react'
 
 import Logo from './Logo'
@@ -88,7 +87,6 @@ export function TopLeftNavItems({
   mobile?: boolean
   onClickMenuItems?: VoidFunction
 }) {
-  const router = useRouter()
   const [resourcesOpen, setResourcesOpen] = useState<boolean>(false)
   const dropdownIconStyle: CSSProperties = {
     fontSize: 13,
@@ -121,20 +119,14 @@ export function TopLeftNavItems({
         route="/projects"
       />
       <NavMenuItem
-        text={t`FAQ`}
-        onClick={() => {
-          router.push('/').then(() => {
-            document
-              .getElementById('faq')
-              ?.scrollIntoView({ behavior: 'smooth' })
-            onClickMenuItems?.()
-          })
-        }}
+        text={t`Docs`}
+        onClick={onClickMenuItems}
+        route="https://info.juicebox.money/"
       />
       <NavMenuItem
-        text={t`Discord`}
+        text={t`Blog`}
         onClick={onClickMenuItems}
-        route="https://discord.gg/6jXrJSyDFf"
+        route="https://info.juicebox.money/blog"
       />
 
       {!mobile && (

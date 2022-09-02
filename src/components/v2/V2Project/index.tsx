@@ -40,7 +40,6 @@ import V2ProjectHeaderActions from './V2ProjectHeaderActions'
 
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { NftRewardsSection } from './NftRewardsSection'
-import { V2ReconfigureProjectHandleDrawer } from './V2ReconfigureProjectHandleDrawer'
 
 const GUTTER_PX = 40
 
@@ -89,7 +88,6 @@ export default function V2Project({
     useState<boolean>(isNewDeploy)
   const [balancesModalVisible, setBalancesModalVisible] =
     useState<boolean>(false)
-  const [handleModalVisible, setHandleModalVisible] = useState<boolean>()
   const [payAmount, setPayAmount] = useState<string>('0')
   const [payInCurrency, setPayInCurrency] = useState<CurrencyOption>(ETH)
 
@@ -124,7 +122,7 @@ export default function V2Project({
     !hasQueuedFundingCycle &&
     canReconfigureFundingCycles
 
-  const showAddHandle = isOwner && !isPreviewMode && !handle
+  const canEditProjectHandle = isOwner && !isPreviewMode && !handle
 
   const nftRewardsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
 
@@ -150,6 +148,11 @@ export default function V2Project({
     return !hasCurrentFundingCycle
   }
 
+  const handleNftSelected = (payAmountETH: string) => {
+    setPayAmount(payAmountETH)
+    setPayInCurrency(ETH)
+  }
+
   return (
     <Space direction="vertical" size={GUTTER_PX} style={{ width: '100%' }}>
       {showRelaunchFundingCycleBanner && <RelaunchFundingCycleBanner />}
@@ -159,10 +162,9 @@ export default function V2Project({
         actions={!isPreviewMode ? <V2ProjectHeaderActions /> : undefined}
         isArchived={isArchived}
         handle={handle}
-        owner={projectOwnerAddress}
-        onClickSetHandle={
-          showAddHandle ? () => setHandleModalVisible(true) : undefined
-        }
+        projectOwnerAddress={projectOwnerAddress}
+        canEditProjectHandle={canEditProjectHandle}
+        projectId={projectId}
       />
       {!isPreviewMode &&
         hasCurrentFundingCycle === false &&
@@ -192,7 +194,7 @@ export default function V2Project({
             <div style={{ marginTop: '30px' }}>
               <NftRewardsSection
                 payAmountETH={payAmountETH}
-                onPayAmountChange={setPayAmount}
+                onNftSelected={handleNftSelected}
               />
             </div>
           ) : null}
@@ -228,7 +230,7 @@ export default function V2Project({
               {!isMobile && nftRewardsEnabled ? (
                 <NftRewardsSection
                   payAmountETH={payAmountETH}
-                  onPayAmountChange={setPayAmount}
+                  onNftSelected={handleNftSelected}
                 />
               ) : null}
               <ProjectActivity />
@@ -249,12 +251,6 @@ export default function V2Project({
         onCancel={() => setBalancesModalVisible(false)}
         storeCidTx={editV2ProjectDetailsTx}
       />
-      {showAddHandle && (
-        <V2ReconfigureProjectHandleDrawer
-          visible={handleModalVisible}
-          onFinish={() => setHandleModalVisible(false)}
-        />
-      )}
     </Space>
   )
 }

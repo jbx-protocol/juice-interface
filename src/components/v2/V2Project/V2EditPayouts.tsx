@@ -1,28 +1,33 @@
 import { PlusCircleOutlined } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
-import { Button, Modal, Skeleton, Space } from 'antd'
+import { Trans } from '@lingui/macro'
+import { Button, Skeleton, Space } from 'antd'
 import Callout from 'components/Callout'
-import CurrencySymbol from 'components/CurrencySymbol'
 import { SplitCsvUpload } from 'components/SplitCsvUpload/SplitCsvUpload'
 import TooltipLabel from 'components/TooltipLabel'
 import DistributionSplitCard from 'components/v2/shared/DistributionSplitsSection/DistributionSplitCard'
 import DistributionSplitModal from 'components/v2/shared/DistributionSplitsSection/DistributionSplitModal'
-import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { useSetProjectSplits } from 'hooks/v2/transactor/SetProjectSplits'
-import { useWallet } from 'hooks/Wallet'
 import { filter, isEqual } from 'lodash'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { defaultSplit, Split } from 'models/v2/splits'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { formatWad } from 'utils/formatNumber'
 import { V2CurrencyName } from 'utils/v2/currency'
 import { getTotalSplitsPercentage } from 'utils/v2/distributions'
 import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2/math'
 
+import CurrencySymbol from 'components/CurrencySymbol'
+import { useUserAddress } from 'hooks/Wallet/hooks'
+
 const OwnerSplitCard = ({ splits }: { splits: Split[] }) => {
-  const { userAddress } = useWallet()
+  const userAddress = useUserAddress()
   const { distributionLimit, distributionLimitCurrency } =
     useContext(V2ProjectContext)
   const remainingSplitsPercentage = 100 - getTotalSplitsPercentage(splits)
@@ -111,14 +116,14 @@ const DistributionLimitHeader = ({
   )
 }
 
-export const EditPayoutsModal = ({
+export const V2EditPayouts = ({
+  editingSplits,
+  setEditingSplits,
   visible,
-  onOk,
-  onCancel,
 }: {
-  visible: boolean
-  onOk: VoidFunction
-  onCancel: VoidFunction
+  editingSplits: Split[]
+  setEditingSplits: (splits: Split[]) => void
+  visible?: boolean
 }) => {
   const {
     theme: { colors },
@@ -126,14 +131,9 @@ export const EditPayoutsModal = ({
 
   const {
     payoutSplits: contextPayoutSplits,
-    fundingCycle,
     distributionLimitCurrency,
     distributionLimit,
   } = useContext(V2ProjectContext)
-  const setProjectSplits = useSetProjectSplits({
-    domain: fundingCycle?.configuration?.toString(),
-  })
-  const [modalLoading, setModalLoading] = useState<boolean>(false)
 
   const currencyName =
     V2CurrencyName(
@@ -143,7 +143,6 @@ export const EditPayoutsModal = ({
   // Must differentiate between splits loaded from redux and
   // ones just added to be able to still edit splits you've
   // added with a lockedUntil
-  const [editingSplits, setEditingSplits] = useState<Split[]>([])
 
   const isLockedSplit = useCallback(
     ({ split }: { split: Split }) => {
@@ -167,7 +166,7 @@ export const EditPayoutsModal = ({
   // Load original splits from context into editing splits.
   useEffect(() => {
     setEditingSplits(contextPayoutSplits ?? [])
-  }, [contextPayoutSplits, visible])
+  }, [contextPayoutSplits, setEditingSplits, visible])
 
   const lockedSplits = useMemo(
     () => editingSplits.filter(split => isLockedSplit({ split })),
@@ -191,35 +190,12 @@ export const EditPayoutsModal = ({
   const ownerSplitCardVisible =
     remainingSplitsPercentage > 0 && distributionLimit?.gt(0)
 
-  const onSplitsConfirmed = useCallback(
-    async (splits: Split[]) => {
-      if (totalSplitsPercentageInvalid) return
-      setModalLoading(true)
-      const tx = await setProjectSplits(
-        {
-          groupedSplits: {
-            group: ETH_PAYOUT_SPLIT_GROUP,
-            splits,
-          },
-        },
-        {
-          onConfirmed: () => {
-            setModalLoading(false)
-            onOk()
-          },
-          onError: () => setModalLoading(false),
-        },
-      )
-      if (!tx) {
-        setModalLoading(false)
-      }
+  const onSplitsChanged = useCallback(
+    (newSplits: Split[]) => {
+      setEditingSplits(newSplits)
     },
-    [onOk, setProjectSplits, totalSplitsPercentageInvalid],
+    [setEditingSplits],
   )
-
-  const onSplitsChanged = useCallback((newSplits: Split[]) => {
-    setEditingSplits(newSplits)
-  }, [])
 
   const renderSplitCard = useCallback(
     (split: Split, index: number, isLocked?: boolean) => {
@@ -262,100 +238,82 @@ export const EditPayoutsModal = ({
 
   return (
     <>
-      <Modal
-        visible={visible}
-        confirmLoading={modalLoading}
-        title={<Trans>Edit payouts</Trans>}
-        okText={
-          <span>
-            <Trans>Save payouts</Trans>
-          </span>
-        }
-        cancelText={modalLoading ? t`Close` : t`Cancel`}
-        onOk={() => onSplitsConfirmed(editingSplits)}
-        onCancel={onCancel}
-        width={720}
-        destroyOnClose
+      <Space
+        direction="vertical"
+        size="middle"
+        style={{ width: '100%', marginBottom: '2rem' }}
       >
-        <Space
-          direction="vertical"
-          size="middle"
-          style={{ width: '100%', marginBottom: '2rem' }}
-        >
-          <div>
-            <Trans>
-              Reconfigure payouts as percentages of your distribution limit.
-            </Trans>
-          </div>
-          <Callout>
-            <Trans>Changes to payouts will take effect immediately.</Trans>
-          </Callout>
+        <div>
+          <Trans>
+            Reconfigure payouts as percentages of your distribution limit.
+          </Trans>
+        </div>
+        <Callout>
+          <Trans>Changes to payouts will take effect immediately.</Trans>
+        </Callout>
+      </Space>
+
+      <Space
+        direction="vertical"
+        style={{ width: '100%', minHeight: 0 }}
+        size="middle"
+      >
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <DistributionLimitHeader />
+
+          <SplitCsvUpload onChange={onSplitsChanged} />
+        </div>
+        <Space style={{ width: '100%' }} direction="vertical" size="small">
+          {editableSplits.map((split, index) => renderSplitCard(split, index))}
         </Space>
-
-        <Space
-          direction="vertical"
-          style={{ width: '100%', minHeight: 0 }}
-          size="middle"
-        >
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <DistributionLimitHeader />
-
-            <SplitCsvUpload onChange={onSplitsChanged} />
-          </div>
+        {lockedSplits ? (
           <Space style={{ width: '100%' }} direction="vertical" size="small">
-            {editableSplits.map((split, index) =>
-              renderSplitCard(split, index),
+            {lockedSplits.map((split, index) =>
+              renderSplitCard(split, index, true),
             )}
           </Space>
-          {lockedSplits ? (
-            <Space style={{ width: '100%' }} direction="vertical" size="small">
-              {lockedSplits.map((split, index) =>
-                renderSplitCard(split, index, true),
-              )}
-            </Space>
-          ) : null}
-          {ownerSplitCardVisible ? (
-            <OwnerSplitCard splits={editingSplits} />
-          ) : null}
-          {totalSplitsPercentageInvalid && (
-            <span style={{ color: colors.text.failure }}>
-              <Trans>Sum of percentages cannot exceed 100%.</Trans>
-            </span>
-          )}
+        ) : null}
+        {ownerSplitCardVisible ? (
+          <OwnerSplitCard splits={editingSplits} />
+        ) : null}
+        {totalSplitsPercentageInvalid && (
+          <span style={{ color: colors.text.failure }}>
+            <Trans>Sum of percentages cannot exceed 100%.</Trans>
+          </span>
+        )}
 
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            color: colors.text.secondary,
+          }}
+        >
           <div
             style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              color: colors.text.secondary,
+              color:
+                totalSplitsPercentage > 100
+                  ? colors.text.warn
+                  : colors.text.secondary,
             }}
           >
-            <div
-              style={{
-                color:
-                  totalSplitsPercentage > 100
-                    ? colors.text.warn
-                    : colors.text.secondary,
-              }}
-            >
-              <Trans>Total: {totalSplitsPercentage.toFixed(2)}%</Trans>
-            </div>
+            <Trans>Total: {totalSplitsPercentage.toFixed(2)}%</Trans>
           </div>
+        </div>
 
-          <Button
-            type="dashed"
-            onClick={() => {
-              setAddSplitModalVisible(true)
-            }}
-            block
-            icon={<PlusCircleOutlined />}
-          >
-            <span>
-              <Trans>Add payout recipient</Trans>
-            </span>
-          </Button>
-        </Space>
-      </Modal>
+        <Button
+          type="dashed"
+          onClick={() => {
+            setAddSplitModalVisible(true)
+          }}
+          block
+          icon={<PlusCircleOutlined />}
+        >
+          <span>
+            <Trans>Add payout recipient</Trans>
+          </span>
+        </Button>
+      </Space>
       <DistributionSplitModal
         visible={addSplitModalVisible}
         onSplitsChanged={onSplitsChanged}

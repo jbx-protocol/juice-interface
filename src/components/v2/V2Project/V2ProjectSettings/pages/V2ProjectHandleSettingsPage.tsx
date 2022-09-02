@@ -1,7 +1,7 @@
 import { CheckCircleFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-import { Button, Divider, Drawer } from 'antd'
-import Form, { useForm } from 'antd/lib/form/Form'
+import { Button, Divider, Form } from 'antd'
+import { useForm } from 'antd/lib/form/Form'
 import ExternalLink from 'components/ExternalLink'
 import { FormItems } from 'components/formItems'
 
@@ -11,20 +11,12 @@ import useProjectENSName from 'hooks/v2/contractReader/ProjectENSName'
 import { useProjectHandleENSTextRecord } from 'hooks/v2/contractReader/ProjectHandleENSTextRecord'
 import { useEditV2ProjectHandleTx } from 'hooks/v2/transactor/EditV2ProjectHandleTx'
 import { useSetENSTextRecordForHandleTx } from 'hooks/v2/transactor/SetENSTextRecordForHandleTx'
-import { useCallback, useContext, useEffect, useState } from 'react'
-
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { v2ProjectRoute } from 'utils/routes'
 
-import { drawerStyle } from 'constants/styles/drawerStyle'
-import { projectHandleENSTextRecordKey } from '../../../constants/projectHandleENSTextRecordKey'
+import { projectHandleENSTextRecordKey } from 'constants/projectHandleENSTextRecordKey'
 
-export function V2ReconfigureProjectHandleDrawer({
-  visible,
-  onFinish,
-}: {
-  visible: boolean | undefined
-  onFinish?: () => void
-}) {
+export function V2ProjectHandleSettingsPage() {
   const { handle, projectId } = useContext(V2ProjectContext)
   const [ensNameForm] = useForm<{ ensName: string }>()
 
@@ -86,7 +78,7 @@ export function V2ReconfigureProjectHandleDrawer({
   }, [resetHandleForm])
 
   return (
-    <Drawer visible={visible} {...drawerStyle} onClose={onFinish}>
+    <>
       <h3>
         {handle ? (
           <Trans>Change project handle</Trans>
@@ -152,9 +144,7 @@ export function V2ReconfigureProjectHandleDrawer({
           <br />
           <br />
           <Button onClick={() => setEnsNameInputDisabled(false)} type="primary">
-            <span>
-              <Trans>Change ENS name</Trans>
-            </span>
+            <Trans>Change ENS name</Trans>
           </Button>
         </div>
       ) : (
@@ -211,10 +201,8 @@ export function V2ReconfigureProjectHandleDrawer({
       </p>
 
       {projectId && textRecordValue.data === projectId ? (
-        <Button type="primary" disabled icon={<CheckCircleFilled />}>
-          <span>
-            <Trans>Text record is set</Trans>
-          </span>
+        <Button type="primary" disabled>
+          <CheckCircleFilled /> <Trans>Text record is set</Trans>
         </Button>
       ) : (
         <Button
@@ -236,6 +224,6 @@ export function V2ReconfigureProjectHandleDrawer({
           Choose an ENS name before setting the text record
         </p>
       )}
-    </Drawer>
+    </>
   )
 }

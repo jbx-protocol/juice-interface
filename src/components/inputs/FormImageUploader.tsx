@@ -3,7 +3,7 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Col, message, Row, Space, Upload } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useState } from 'react'
-import { ipfsCidUrl, pinFileToIpfs } from 'utils/ipfs'
+import { cidFromUrl, ipfsCidUrl, pinFileToIpfs } from 'utils/ipfs'
 
 import ExternalLink from '../ExternalLink'
 
@@ -21,20 +21,27 @@ export const FormImageUploader = ({
   metadata,
   text,
 }: {
-  value?: string
+  value?: string // IPFS link: `ipfs://${cid}`
   onChange?: (value?: string) => void
   metadata?: Record<string | number, any> // eslint-disable-line @typescript-eslint/no-explicit-any
   maxSizeKBs?: number
   text?: string
 }) => {
   const [loadingUpload, setLoadingUpload] = useState<boolean>(false)
+  const [imageCid, setImageCid] = useState<string | undefined>(
+    cidFromUrl(value),
+  )
 
   const { theme } = useContext(ThemeContext)
 
   const setValue = (cid?: string) => {
-    const newUrl = cid ? ipfsCidUrl(cid) : undefined
-    onChange?.(newUrl)
+    setImageCid(cid)
+    // storing images in `ipfs://` format where possible (see issue #1726)
+    const ipfsUrl = cid ? `ipfs://${cid}` : undefined
+    onChange?.(ipfsUrl)
   }
+
+  const imageUrl = imageCid ? ipfsCidUrl(imageCid) : undefined
 
   return (
     <Row
@@ -45,7 +52,7 @@ export const FormImageUploader = ({
     >
       <Col xs={24} md={7}>
         <Space align="start">
-          {value && (
+          {imageUrl ? (
             <img
               style={{
                 maxHeight: 80,
@@ -54,12 +61,12 @@ export const FormImageUploader = ({
                 objectPosition: 'center',
                 borderRadius: theme.radii.md,
               }}
-              src={value}
+              src={imageUrl}
               alt="Uploaded user content"
             />
-          )}
+          ) : null}
 
-          {value ? (
+          {imageUrl ? (
             <Button
               icon={<CloseCircleFilled />}
               type="text"
@@ -97,7 +104,7 @@ export const FormImageUploader = ({
       </Col>
 
       <Col xs={24} md={17}>
-        {value?.length ? (
+        {imageUrl ? (
           <span
             style={{
               fontSize: '.7rem',
@@ -106,7 +113,8 @@ export const FormImageUploader = ({
             }}
           >
             <Trans>
-              Uploaded to: <ExternalLink href={value}>{value}</ExternalLink>
+              Uploaded to:{' '}
+              <ExternalLink href={imageUrl}>{imageUrl}</ExternalLink>
             </Trans>
           </span>
         ) : null}

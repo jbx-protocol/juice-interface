@@ -26,6 +26,7 @@ export type V2SettingsPageKey =
   | 'v1tokenmigration'
   | 'venft'
   | 'transferownership'
+  | 'verifytwitter'
   | 'archiveproject'
 
 export const V2SettingsPageKeyTitleMap: { [k in V2SettingsPageKey]: string } = {
@@ -37,6 +38,7 @@ export const V2SettingsPageKeyTitleMap: { [k in V2SettingsPageKey]: string } = {
   v1tokenmigration: t`V1 Token Migration`,
   venft: t`VeNFT Governance`,
   transferownership: t`Transfer Ownership`,
+  verifytwitter: t`Verify Twitter`,
   archiveproject: t`Archive Project`,
 }
 

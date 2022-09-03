@@ -1,8 +1,10 @@
 import { t, Trans } from '@lingui/macro'
 import { Tabs } from 'antd'
 import { AppWrapper } from 'components/common'
+import { DesmosScript } from 'components/common/Head/scripts/DesmosScript'
 import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
+import Head from 'next/head'
 import { V2UserProvider } from 'providers/v2/UserProvider'
 import { V2CurrencyProvider } from 'providers/v2/V2CurrencyProvider'
 import { useContext, useState } from 'react'
@@ -15,9 +17,15 @@ import ReviewDeployTab from './tabs/ReviewDeployTab'
 
 export default function V2CreatePage() {
   return (
-    <AppWrapper>
-      <V2Create />
-    </AppWrapper>
+    <>
+      <Head>
+        <DesmosScript />
+      </Head>
+
+      <AppWrapper>
+        <V2Create />
+      </AppWrapper>
+    </>
   )
 }
 

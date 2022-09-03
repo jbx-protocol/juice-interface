@@ -6,13 +6,13 @@ import {
 import { ThemeContext } from 'contexts/themeContext'
 import { useRouter } from 'next/router'
 import { useContext, useMemo } from 'react'
-import { V1V2TokenMigrationSettingsPage } from './pages/V1V2TokenMigrationSettingsPage'
+import { V1V2TokenMigrationSettingsPage } from './pages/V1V2TokenMigrationSettingsPage/V1V2TokenMigrationSettingsPage'
 import { V2ArchiveProjectSettingsPage } from './pages/V2ArchiveProjectSettingsPage'
-import { V2PayoutsSettingsPage } from './pages/V2PayoutsSettingsPage'
+import { V2PayoutsSettingsPage } from './pages/V2PayoutsSettingsPage/V2PayoutsSettingsPage'
 import { V2ProjectDetailsSettingsPage } from './pages/V2ProjectDetailsSettingsPage'
 import { V2ProjectHandleSettingsPage } from './pages/V2ProjectHandleSettingsPage'
-import { V2ReconfigureFundingCycleSettingsPage } from './pages/V2ReconfigureFundingCycleSettingsPage'
-import { V2ReservedTokensSettingsPage } from './pages/V2ReservedTokensSettingsPage'
+import { V2ReconfigureFundingCycleSettingsPage } from './pages/V2ProjectReconfigureFundingCycleSettingsPage'
+import { V2ReservedTokensSettingsPage } from './pages/V2ReservedTokensSettingsPage/V2ReservedTokensSettingsPage'
 import { V2TransferOwnershipSettingsPage } from './pages/V2TransferOwnershipSettingsPage'
 import { V2VeNftSettingsPage } from './pages/V2VeNftSettingsPage'
 
@@ -38,9 +38,10 @@ export function V2ProjectSettingsContent() {
 
   const router = useRouter()
 
-  const activeSettingsPage = router.query.page as V2SettingsPageKey
+  const activeSettingsPage =
+    (router.query.page as V2SettingsPageKey) ?? DEFAULT_SETTINGS_PAGE
   const ActiveSettingsPage = useMemo(
-    () => SettingsPageComponents[activeSettingsPage ?? DEFAULT_SETTINGS_PAGE],
+    () => SettingsPageComponents[activeSettingsPage],
     [activeSettingsPage],
   )
 

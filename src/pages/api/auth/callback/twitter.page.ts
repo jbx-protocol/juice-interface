@@ -16,7 +16,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (!req.query.code) {
     res.status(500).json({ error: 'No code provided from Twitter' })
   }
-  const projectId = '2-4356'
+  const projectId = '2-4653'
   const projectUsername = 'jmilldotdev'
 
   const clientId = process.env.NEXT_PUBLIC_TWITTER_CLIENT_ID

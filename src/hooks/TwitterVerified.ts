@@ -1,22 +1,16 @@
-import axios from 'axios'
-import { useQuery } from 'react-query'
+import { doc } from 'firebase/firestore'
+import { useDocumentData } from 'react-firebase-hooks/firestore'
+import { firestore } from 'utils/firebase'
 
 export interface TwitterVerificationInfo {
   verified: boolean
-  handle: string
+  username: string
   verifiedAt: number
 }
 
-const useTwitterVerified = (projectId: string | undefined) => {
-  const verificationFileUri = process.env
-    .NEXT_PUBLIC_TWITTER_VERIFICATION_FILE_URI as string
-  return useQuery('twitter-verified', async () => {
-    if (!projectId) {
-      return
-    }
-    const { data } = await axios.get(verificationFileUri)
-    const verificationInfo = data[projectId]?.twitter as TwitterVerificationInfo
-    return verificationInfo
+const useTwitterVerified = (projectId: string) => {
+  return useDocumentData(doc(firestore, 'twitterVerification', projectId), {
+    snapshotListenOptions: { includeMetadataChanges: true },
   })
 }
 

@@ -5,16 +5,19 @@ import {
 import { t, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 
-import useTwitterVerified from 'hooks/TwitterVerified'
+import useTwitterVerified, {
+  TwitterVerificationInfo,
+} from 'hooks/TwitterVerified'
 
 const TwitterVerified = () => {
-  const { data: verificationInfo } = useTwitterVerified('2-4653')
-  if (!verificationInfo) {
+  const [value] = useTwitterVerified('2-4356')
+  const info = value as TwitterVerificationInfo
+  if (!info) {
     return null
   }
   return (
     <div>
-      {verificationInfo.verified ? (
+      {info.verified ? (
         <Tooltip title={t`Twitter Verified`} placement="right">
           <CheckCircleOutlined />
         </Tooltip>

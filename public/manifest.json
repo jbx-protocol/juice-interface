@@ -2,7 +2,7 @@
   "short_name": "Juicebox",
   "name": "Juicebox",
   "description": "Community funding for people and projects.",
-  "iconPath": "gnosis.png",
+  "iconPath": "gnosis.svg",
   "icons": [
     {
       "src": "favicon.ico",

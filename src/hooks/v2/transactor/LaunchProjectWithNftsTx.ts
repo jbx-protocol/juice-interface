@@ -29,12 +29,14 @@ const DEFAULT_MEMO = ''
 export type TxNftArg = { [cid: string]: NftRewardTier }
 
 async function getJBDeployTiered721DelegateData({
+  collectionCID,
   collectionName,
   collectionSymbol,
   nftRewards,
   ownerAddress,
   directory,
 }: {
+  collectionCID: string
   collectionName: string
   collectionSymbol: string
   nftRewards: TxNftArg
@@ -70,7 +72,7 @@ async function getJBDeployTiered721DelegateData({
     symbol: collectionSymbol,
     tokenUriResolver: constants.AddressZero,
     baseUri: ipfsCidUrl(''),
-    contractUri: 'ipfs://null',
+    contractUri: ipfsCidUrl(collectionCID),
     owner: ownerAddress,
     tiers: tiersArg,
     reservedTokenBeneficiary: constants.AddressZero,
@@ -81,6 +83,7 @@ async function getJBDeployTiered721DelegateData({
 }
 
 export function useLaunchProjectWithNftsTx(): TransactorInstance<{
+  collectionCID: string
   collectionName: string
   collectionSymbol: string
   projectMetadataCID: string
@@ -96,6 +99,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
 
   return async (
     {
+      collectionCID,
       collectionName,
       collectionSymbol,
       projectMetadataCID,
@@ -120,6 +124,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
     }
 
     const delegateData = await getJBDeployTiered721DelegateData({
+      collectionCID,
       collectionName,
       collectionSymbol,
       nftRewards,

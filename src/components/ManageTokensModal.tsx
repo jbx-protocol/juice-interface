@@ -4,11 +4,11 @@ import { Modal, Space, Tooltip } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import RichButton from 'components/RichButton'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+import Link from 'next/link'
 import { PropsWithChildren, useContext, useState } from 'react'
+import { veNftPagePath } from 'utils/routes'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { reloadWindow } from 'utils/windowUtils'
-
-import { VeNftDrawer } from './veNft/VeNftDrawer'
 
 const BURN_DEFINITION_LINK =
   'https://www.investopedia.com/tech/cryptocurrency-burning-can-it-manage-inflation/'
@@ -92,12 +92,12 @@ export default function ManageTokensModal({
   ClaimTokensModal: (props: ModalProps) => JSX.Element | null
   MintModal: (props: ModalProps) => JSX.Element | null
 }) {
-  const { fundingCycleMetadata } = useContext(V2ProjectContext)
+  const { fundingCycleMetadata, projectId, handle } =
+    useContext(V2ProjectContext)
 
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
   const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>()
   const [mintModalVisible, setMintModalVisible] = useState<boolean>()
-  const [veNftDrawerVisible, setVeNftDrawerVisible] = useState<boolean>(false)
 
   const tokensLabel = tokenSymbolText({
     tokenSymbol: tokenSymbol,
@@ -208,16 +208,17 @@ export default function ManageTokensModal({
             </Tooltip>
           )}
           {veNftEnabled && (
-            <RichButton
-              heading={<Trans>Stake {tokensLabel} for NFT</Trans>}
-              description={
-                <Trans>
-                  Stake your {tokensLabel} to increase your voting weight and
-                  claim Governance NFTs.
-                </Trans>
-              }
-              onClick={() => setVeNftDrawerVisible(true)}
-            />
+            <Link href={veNftPagePath('mint', { projectId, handle })}>
+              <RichButton
+                heading={<Trans>Stake {tokensLabel} for NFT</Trans>}
+                description={
+                  <Trans>
+                    Stake your {tokensLabel} to increase your voting weight and
+                    claim Governance NFTs.
+                  </Trans>
+                }
+              />
+            </Link>
           )}
         </Space>
       </Modal>
@@ -236,12 +237,6 @@ export default function ManageTokensModal({
         visible={mintModalVisible}
         onCancel={() => setMintModalVisible(false)}
         onConfirmed={reloadWindow}
-      />
-      <VeNftDrawer
-        visible={veNftDrawerVisible}
-        onClose={() => {
-          setVeNftDrawerVisible(false)
-        }}
       />
     </>
   )

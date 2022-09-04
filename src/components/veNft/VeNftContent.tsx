@@ -1,38 +1,44 @@
-import { Space } from 'antd'
-import { useContext } from 'react'
+import { Divider, Layout } from 'antd'
+import MintVeNftContent from 'components/veNft/MintVeNftContent'
+import MyVeNftsContent from 'components/veNft/MyVeNftsContent'
+import { V2VeNftPageKeyTitleMap } from 'components/veNft/VeNft'
+import { ThemeContext } from 'contexts/themeContext'
+import { V2VeNftPageKey } from 'models/menu-keys'
+import { useRouter } from 'next/router'
+import { useContext, useMemo } from 'react'
 
-import { t } from '@lingui/macro'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { tokenSymbolText } from 'utils/tokenSymbolText'
-
-import VeNftHeaderSection from 'components/veNft/VeNftHeaderSection'
-import VeNftOwnedTokensSection from 'components/veNft/VeNftOwnedTokensSection'
-import VeNftStakingForm from 'components/veNft/VeNftStakingForm'
-import { VeNftContext } from 'contexts/v2/veNftContext'
-
-const VeNftContent = () => {
-  const { tokenSymbol, tokenName, projectMetadata } =
-    useContext(V2ProjectContext)
-
-  const { userTokens } = useContext(VeNftContext)
-
-  const tokenSymbolDisplayText = tokenSymbolText({ tokenSymbol })
-  const projectName = projectMetadata?.name ?? t`Unknown Project`
-
-  return (
-    <Space direction="vertical">
-      <VeNftHeaderSection
-        tokenName={tokenName}
-        tokenSymbolDisplayText={tokenSymbolDisplayText}
-        projectName={projectName}
-      />
-      <VeNftStakingForm tokenSymbolDisplayText={tokenSymbolDisplayText} />
-      <VeNftOwnedTokensSection
-        userTokens={userTokens}
-        tokenSymbolDisplayText={tokenSymbolDisplayText}
-      />
-    </Space>
-  )
+const VeNftPageComponents: { [k in V2VeNftPageKey]: () => JSX.Element } = {
+  mint: MintVeNftContent,
+  myvenfts: MyVeNftsContent,
 }
 
-export default VeNftContent
+const DEFAULT_SETTINGS_PAGE = 'mint'
+
+export function VeNftContent() {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+
+  const router = useRouter()
+
+  const activePage =
+    (router.query.page as V2VeNftPageKey) ?? DEFAULT_SETTINGS_PAGE
+  const ActiveSettingsPage = useMemo(
+    () => VeNftPageComponents[activePage],
+    [activePage],
+  )
+
+  return (
+    <Layout style={{ background: 'transparent' }}>
+      <h2 style={{ color: colors.text.primary, marginBottom: 0 }}>
+        {V2VeNftPageKeyTitleMap[activePage]}
+      </h2>
+
+      <Divider />
+
+      <Layout.Content style={{ margin: '0 16px' }}>
+        <ActiveSettingsPage />
+      </Layout.Content>
+    </Layout>
+  )
+}

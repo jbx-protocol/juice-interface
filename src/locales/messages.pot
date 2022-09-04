@@ -1409,6 +1409,9 @@ msgstr ""
 msgid "Mint NFT to a custom address."
 msgstr ""
 
+msgid "Mint VeNFT"
+msgstr ""
+
 msgid "Mint as ERC-20"
 msgstr ""
 
@@ -1452,6 +1455,9 @@ msgid "More trending projects"
 msgstr ""
 
 msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
+msgstr ""
+
+msgid "My VeNFTs"
 msgstr ""
 
 msgid "My projects"

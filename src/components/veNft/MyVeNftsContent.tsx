@@ -5,27 +5,22 @@ import { useContext } from 'react'
 
 import { Trans } from '@lingui/macro'
 
-import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'
-
 import OwnedVeNftCard from 'components/veNft/VeNftOwnedTokenCard'
 
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { shadowCard } from 'constants/styles/shadowCard'
+import { VeNftContext } from 'contexts/v2/veNftContext'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 import VeNftSummaryStatsSection from './VeNftSummaryStatsSection'
 
-type OwnedNFTsSectionProps = {
-  userTokens: VeNftToken[] | undefined
-  tokenSymbolDisplayText: string
-}
-
-export default function OwnedNFTSection({
-  userTokens,
-  tokenSymbolDisplayText,
-}: OwnedNFTsSectionProps) {
+export default function MyVeNftsContent() {
   const { theme } = useContext(ThemeContext)
-  const { primaryTerminalCurrentOverflow } = useContext(V2ProjectContext)
+  const { userTokens } = useContext(VeNftContext)
+  const { primaryTerminalCurrentOverflow, tokenSymbol } =
+    useContext(V2ProjectContext)
   const hasOverflow = Boolean(primaryTerminalCurrentOverflow?.gt(0))
+  const tokenSymbolDisplayText = tokenSymbolText({ tokenSymbol })
 
   return (
     <div>

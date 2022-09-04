@@ -83,6 +83,8 @@ export function V2ProjectToolsDrawer({
               <AddToProjectBalanceForm useAddToBalanceTx={useAddToBalanceTx} />
             </section>
 
+            <Divider />
+
             <ExportSection
               exportPayoutsButton={
                 payoutSplits ? (

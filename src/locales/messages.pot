@@ -200,6 +200,9 @@ msgstr ""
 msgid "<0>Users fund your project by paying to use your app or service, or as a patron or investor by making a payment directly to your project's smart contract (like on this app).</0><1>For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return.</1>"
 msgstr ""
 
+msgid "<0>Verify here</0>."
+msgstr ""
+
 msgid "<0>Website:</0> <1>{0}</1>"
 msgstr ""
 
@@ -2579,7 +2582,7 @@ msgstr ""
 msgid "Twitter handle"
 msgstr ""
 
-msgid "Twitter unverified."
+msgid "Twitter handle unverified."
 msgstr ""
 
 msgid "Unarchive project"

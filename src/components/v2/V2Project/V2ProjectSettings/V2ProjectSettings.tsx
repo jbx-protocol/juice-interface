@@ -82,6 +82,8 @@ const items: MenuItem[] = [
     'Manage',
     'manage',
     [
+      menuItem('Payment addresses', 'paymentaddresses'),
+      menuItem('Verify Twitter', 'verifytwitter'),
       menuItem('V1 token migration', 'v1tokenmigration'),
       featureFlagEnabled(FEATURE_FLAGS.VENFT)
         ? menuItem('veNFT governance', 'venft')

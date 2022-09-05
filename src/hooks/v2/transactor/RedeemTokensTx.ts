@@ -13,12 +13,13 @@ const DEFAULT_METADATA = 0
 export function useRedeemTokensTx(): TransactorInstance<{
   redeemAmount: BigNumber
   minReturnedTokens: BigNumber
+  memo: string
 }> {
   const { transactor, contracts } = useContext(V2UserContext)
   const { userAddress } = useWallet()
   const { projectId } = useContext(V2ProjectContext)
 
-  return ({ redeemAmount, minReturnedTokens }, txOpts) => {
+  return ({ redeemAmount, minReturnedTokens, memo }, txOpts) => {
     if (
       !transactor ||
       !userAddress ||
@@ -28,8 +29,6 @@ export function useRedeemTokensTx(): TransactorInstance<{
       txOpts?.onDone?.()
       return Promise.resolve(false)
     }
-
-    const memo = '' //TODO: memo field on V2RedeemModal
 
     return transactor(
       contracts?.JBETHPaymentTerminal,

@@ -16,7 +16,7 @@ export function PercentageFormItem({
           alignItems: 'center',
         }}
       >
-        <span style={{ flex: 1 }}>
+        <div style={{ flex: 1 }}>
           <NumberSlider
             onChange={(percentage: number | undefined) => {
               form.setFieldsValue({ percent: percentage })
@@ -30,7 +30,7 @@ export function PercentageFormItem({
               rules: [{ validator: percentageValidator }],
             }}
           />
-        </span>
+        </div>
       </div>
     </Form.Item>
   )

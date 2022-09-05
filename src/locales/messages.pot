@@ -3140,7 +3140,7 @@ msgstr ""
 msgid "{tokensTokenUpper} amount"
 msgstr ""
 
-msgid "{totalStakedPeriodInDays, plural, one {{0}} other {{1}}}"
+msgid "{totalLockedPeriodInDays, plural, one {{0}} other {{1}}}"
 msgstr ""
 
 msgid "{unclaimedBalanceFormatted} {tokenText} claimable"

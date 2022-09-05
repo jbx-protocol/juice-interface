@@ -21,9 +21,9 @@ const VeNftSummaryStatsSection = ({
   userTokens,
 }: VeNftSummaryStatsSectionProps) => {
   const { theme } = useContext(ThemeContext)
-  const { totalStaked, totalStakedPeriod } = useVeNftSummaryStats(userTokens)
-  const totalStakedPeriodInDays = totalStakedPeriod / (60 * 60 * 24)
-  const formattedTotalStakedPeriod = formattedNum(totalStakedPeriodInDays, {
+  const { totalLocked, totalLockedPeriod } = useVeNftSummaryStats(userTokens)
+  const totalLockedPeriodInDays = totalLockedPeriod / (60 * 60 * 24)
+  const formattedtotalLockedPeriod = formattedNum(totalLockedPeriodInDays, {
     precision: 2,
   })
 
@@ -38,12 +38,12 @@ const VeNftSummaryStatsSection = ({
         column={1}
       >
         <Descriptions.Item label={t`Total staked ${tokenSymbolDisplayText}`}>
-          {totalStaked}
+          {totalLocked}
         </Descriptions.Item>
         <Descriptions.Item label={t`Total staked period`}>
-          {`${formattedTotalStakedPeriod} `}
+          {`${formattedtotalLockedPeriod} `}
           <Plural
-            value={totalStakedPeriodInDays}
+            value={totalLockedPeriodInDays}
             one={t`day`}
             other={t`days`}
           />

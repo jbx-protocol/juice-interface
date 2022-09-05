@@ -8,7 +8,7 @@ import { useWallet } from 'hooks/Wallet'
 
 import FormattedAddress from 'components/FormattedAddress'
 import { CSSProperties, useContext, useState } from 'react'
-import { formatPercent, formatWad } from 'utils/formatNumber'
+import { formatPercent, formatWad, fromWad, parseWad } from 'utils/formatNumber'
 
 import IssueTokenButton from 'components/IssueTokenButton'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/V2ConnectedWalletHasPermission'
@@ -31,6 +31,9 @@ import { featureFlagEnabled } from 'utils/featureFlags'
 import { reloadWindow } from 'utils/windowUtils'
 
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { useVeNftSummaryStats } from 'hooks/veNft/VeNftSummaryStats'
+import Link from 'next/link'
+import { veNftPagePath } from 'utils/routes'
 import { V1ProjectTokensSection } from './V1ProjectTokensSection/V1ProjectTokensSection'
 import V2ClaimTokensModal from './V2ClaimTokensModal'
 import V2MintModal from './V2MintModal'
@@ -61,6 +64,7 @@ export default function V2ManageTokensSection() {
     primaryTerminalCurrentOverflow,
     projectMetadata,
     cv,
+    handle,
     veNft: { contractAddress: veNftAddress },
   } = useContext(V2ProjectContext)
   const { userAddress } = useWallet()
@@ -72,6 +76,7 @@ export default function V2ManageTokensSection() {
 
   const { data: claimedBalance } = useERC20BalanceOf(tokenAddress, userAddress)
   const { data: unclaimedBalance } = useUserUnclaimedTokenBalance()
+  const { totalLocked } = useVeNftSummaryStats()
   const { data: totalBalance } = useTotalBalanceOf(userAddress, projectId)
   const { data: v1ProjectId } = useV1ProjectIdOfV2Project(projectId)
   const hasV1TokenPaymentTerminal = useHasV1TokenPaymentTerminal()
@@ -79,9 +84,11 @@ export default function V2ManageTokensSection() {
   const hasV1ProjectId = Boolean(v1ProjectId?.toNumber() ?? 0 > 0)
   const v1TokenSwapEnabled = featureFlagEnabled(FEATURE_FLAGS.V1_TOKEN_SWAP)
 
+  const x = parseInt(fromWad(totalBalance)) + totalLocked
+
   // %age of tokens the user owns.
   const userOwnershipPercentage =
-    formatPercent(totalBalance, totalTokenSupply) || '0'
+    formatPercent(parseWad(x), totalTokenSupply) || '0'
   const claimedBalanceFormatted = formatWad(claimedBalance ?? 0, {
     precision: 0,
   })
@@ -216,6 +223,21 @@ export default function V2ManageTokensSection() {
                             <>
                               {unclaimedBalanceFormatted} {tokenText}
                             </>
+                          )}
+                        </div>
+                        <div>
+                          {veNftAddress && (
+                            <div>
+                              {totalLocked} {tokenText}{' '}
+                              <Link
+                                href={veNftPagePath('myvenfts', {
+                                  projectId,
+                                  handle,
+                                })}
+                              >
+                                locked
+                              </Link>
+                            </div>
                           )}
                         </div>
                         <div

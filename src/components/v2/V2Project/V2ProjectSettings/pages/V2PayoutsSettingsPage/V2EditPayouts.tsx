@@ -10,7 +10,7 @@ import { filter, isEqual } from 'lodash'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { defaultSplit, Split } from 'models/v2/splits'
 import DistributionSplitCard from 'pages/create/forms/FundingForm/DistributionSplitsSection/DistributionSplitCard'
-import DistributionSplitModal from 'pages/create/forms/FundingForm/DistributionSplitsSection/DistributionSplitModal'
+import { DistributionSplitModal } from 'pages/create/forms/FundingForm/DistributionSplitsSection/DistributionSplitModal'
 import React, {
   useCallback,
   useContext,

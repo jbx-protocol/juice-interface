@@ -1,5 +1,5 @@
 import { Contract } from '@ethersproject/contracts'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
 import { callContractRead, getContract } from './util'
 
@@ -28,8 +28,7 @@ export function useContractReadValue<C extends string, V>({
   formatter?: (val?: any) => V | undefined // eslint-disable-line @typescript-eslint/no-explicit-any
   valueDidChange?: (oldVal?: V, newVal?: V) => boolean
 }) {
-  const fetchId = useRef(0)
-  const [value, _setValue] = useState<V | undefined>()
+  const [value, setValue] = useState<V | undefined>()
   const [loading, setLoading] = useState<boolean>(true)
 
   const _formatter = useCallback(
@@ -41,23 +40,7 @@ export function useContractReadValue<C extends string, V>({
     [valueDidChange],
   )
 
-  const setValue = useCallback(
-    ({
-      currentFetchId,
-      value,
-    }: {
-      currentFetchId: number
-      value: V | undefined
-    }) => {
-      if (fetchId.current === currentFetchId) {
-        _setValue(value)
-      }
-    },
-    [],
-  )
-
   const fetchValue = useCallback(async () => {
-    const currentFetchId = ++fetchId.current
     const readContract = getContract(contract, contracts)
     try {
       setLoading(true)
@@ -77,14 +60,14 @@ export function useContractReadValue<C extends string, V>({
           { newValue },
           { contract: readContract?.address },
         )
-        setValue({ currentFetchId, value: newValue })
+        setValue(newValue)
       }
     } catch (err) {
       console.error('Read contract >', {
         functionName,
         error: err,
       })
-      setValue({ currentFetchId, value: _formatter(undefined) })
+      setValue(_formatter(undefined))
     } finally {
       setLoading(false)
     }

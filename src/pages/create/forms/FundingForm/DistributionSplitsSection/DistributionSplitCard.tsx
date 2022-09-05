@@ -1,19 +1,18 @@
+import { CrownFilled, DeleteOutlined, LockOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
+import { t, Trans } from '@lingui/macro'
 import { Button, Col, Row, Space, Tooltip } from 'antd'
+import CurrencySymbol from 'components/CurrencySymbol'
 import FormattedAddress from 'components/FormattedAddress'
+import TooltipIcon from 'components/TooltipIcon'
+import { CurrencyName } from 'constants/currency'
 import { ThemeContext } from 'contexts/themeContext'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { round } from 'lodash'
 import { Split } from 'models/v2/splits'
 import { PropsWithChildren, useContext, useState } from 'react'
-import { parseWad } from 'utils/formatNumber'
-
-import { CrownFilled, DeleteOutlined, LockOutlined } from '@ant-design/icons'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { formatDate } from 'utils/formatDate'
-
-import { t, Trans } from '@lingui/macro'
-import CurrencySymbol from 'components/CurrencySymbol'
-import TooltipIcon from 'components/TooltipIcon'
-import { round } from 'lodash'
+import { parseWad } from 'utils/formatNumber'
 import { amountFromPercent } from 'utils/v2/distributions'
 import {
   formatSplitPercent,
@@ -21,10 +20,8 @@ import {
   preciseFormatSplitPercent,
   SPLITS_TOTAL_PERCENT,
 } from 'utils/v2/math'
-
-import { CurrencyName } from 'constants/currency'
 import V2ProjectHandle from '../../../../../components/v2/shared/V2ProjectHandle'
-import DistributionSplitModal from './DistributionSplitModal'
+import { DistributionSplitModal } from './DistributionSplitModal'
 
 const Parens = ({
   withParens = false,

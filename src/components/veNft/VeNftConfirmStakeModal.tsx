@@ -16,6 +16,7 @@ import {
   emitErrorNotification,
   emitSuccessNotification,
 } from 'utils/notifications'
+import { reloadWindow } from 'utils/windowUtils'
 
 type ConfirmStakeModalProps = {
   visible: boolean
@@ -104,6 +105,7 @@ export default function ConfirmStakeModal({
             t`Lock successful. Results will be indexed in a few moments.`,
           )
           onCompleted()
+          reloadWindow()
         },
       },
     )

@@ -461,6 +461,9 @@ msgstr ""
 msgid "Balance of the project owner's wallet."
 msgstr ""
 
+msgid "Before locking your project ERC-20 token, you must approve the veNFT contract for spending."
+msgstr ""
+
 msgid "Beneficiary"
 msgstr ""
 
@@ -2345,6 +2348,9 @@ msgstr ""
 msgid "The total funds this Juicebox project has received since it was created."
 msgstr ""
 
+msgid "The veNFT contract is currently unable to lock project token. Contact the project owner regarding adding this permission."
+msgstr ""
+
 msgid "There are no payouts defined for this funding cycle. The project owner will receive all available funds."
 msgstr ""
 
@@ -2592,9 +2598,6 @@ msgid "Unarchive project"
 msgstr ""
 
 msgid "Unavailable"
-msgstr ""
-
-msgid "Unclaimed tokens permission set successfully."
 msgstr ""
 
 msgid "Unknown Project"

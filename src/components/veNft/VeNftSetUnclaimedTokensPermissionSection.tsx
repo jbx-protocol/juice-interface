@@ -1,11 +1,11 @@
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import Loading from 'components/Loading'
 import { useUnclaimedTokensPermissionTx } from 'hooks/veNft/transactor/VeNftUnclaimedTokenPermissions'
 import { useVeNftHasProjectTokenPermission } from 'hooks/veNft/VeNftHasProjectTokenPermission'
 import { useWallet } from 'hooks/Wallet'
 import { useState } from 'react'
-import { emitSuccessNotification } from 'utils/notifications'
+import { reloadWindow } from 'utils/windowUtils'
 
 const VeNftSetUnclaimedTokensPermissionSection = () => {
   const { chainUnsupported, isConnected, changeNetworks, connect } = useWallet()
@@ -30,9 +30,7 @@ const VeNftSetUnclaimedTokensPermissionSection = () => {
     const txSuccess = await unclaimedTokensPermissionTx(undefined, {
       onConfirmed: () => {
         setLoading(false)
-        emitSuccessNotification(
-          t`Unclaimed tokens permission set successfully.`,
-        )
+        reloadWindow()
       },
     })
 

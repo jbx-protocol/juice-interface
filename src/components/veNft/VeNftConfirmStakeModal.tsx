@@ -53,6 +53,7 @@ export default function ConfirmStakeModal({
   } = useWallet()
   const [loading, setLoading] = useState(false)
   const [transactionPending, setTransactionPending] = useState(false)
+
   const recipient = beneficiary !== '' ? beneficiary : userAddress
 
   const tokensStakedInWad = parseWad(tokensStaked)
@@ -109,6 +110,7 @@ export default function ConfirmStakeModal({
 
     if (!txSuccess) {
       setLoading(false)
+      setTransactionPending(false)
     }
   }
 

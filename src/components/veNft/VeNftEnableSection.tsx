@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Button, Divider, Space } from 'antd'
 import { useWallet } from 'hooks/Wallet'
 import { useContext, useState } from 'react'
@@ -16,6 +16,7 @@ import {
 
 import FormattedAddress from 'components/FormattedAddress'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { emitSuccessNotification } from 'utils/notifications'
 
 const VeNftEnableSection = () => {
   const { isConnected, connect } = useWallet()
@@ -46,6 +47,9 @@ const VeNftEnableSection = () => {
       },
       {
         onConfirmed: () => {
+          emitSuccessNotification(
+            t`VeNFT contract created successfully. Results will be indexed in a few moments.`,
+          )
           setLoading(false)
         },
       },
@@ -77,7 +81,7 @@ const VeNftEnableSection = () => {
                 onClick={launchVeBanny}
                 loading={loading}
               >
-                Launch veBanny
+                <Trans>Enable</Trans>
               </Button>
             </>
           ) : (

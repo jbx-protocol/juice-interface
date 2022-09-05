@@ -371,6 +371,9 @@ msgstr ""
 msgid "Almost definitely."
 msgstr ""
 
+msgid "Already Enabled"
+msgstr ""
+
 msgid "Amount"
 msgstr ""
 
@@ -651,6 +654,9 @@ msgid "Connect your wallet to see your projects."
 msgstr ""
 
 msgid "Connected wallet not authorized"
+msgstr ""
+
+msgid "Contract address:"
 msgstr ""
 
 msgid "Contract address: {0}"
@@ -992,7 +998,7 @@ msgstr ""
 msgid "Edit tracked assets"
 msgstr ""
 
-msgid "Enable veBanny Governance"
+msgid "Enable"
 msgstr ""
 
 msgid "Enable veNFT Governance"
@@ -2982,6 +2988,12 @@ msgid "tokens redeemed"
 msgstr ""
 
 msgid "until"
+msgstr ""
+
+msgid "veNFT"
+msgstr ""
+
+msgid "veNFT Governance Enabled"
 msgstr ""
 
 msgid "veNFT Tiers ({0} variants)"

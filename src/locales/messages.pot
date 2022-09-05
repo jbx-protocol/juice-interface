@@ -1379,6 +1379,15 @@ msgstr ""
 msgid "Lock until"
 msgstr ""
 
+msgid "Lock your {tokensLabel} to increase your voting weight and claim Governance NFTs."
+msgstr ""
+
+msgid "Lock {tokenName} ({tokenSymbolDisplayText}) tokens in exchange for voting weight. In return, you'll impact {projectName} governance and receive a choice governance NFT."
+msgstr ""
+
+msgid "Lock {tokensLabel} for Governance NFTs"
+msgstr ""
+
 msgid "Locked {tokenSymbolDisplayText}"
 msgstr ""
 
@@ -1415,7 +1424,7 @@ msgstr ""
 msgid "Migrate to Juicebox V1.1"
 msgstr ""
 
-msgid "Mint NFT to a custom address."
+msgid "Mint NFT to a custom address"
 msgstr ""
 
 msgid "Mint VeNFT"
@@ -1946,7 +1955,7 @@ msgstr ""
 msgid "Redeemed"
 msgstr ""
 
-msgid "Redeeming this NFT will burn the token and return..."
+msgid "Redeeming this NFT will burn the token, as well as the underlying project token, and you will receive token from the project overflow in return."
 msgstr ""
 
 msgid "Redemption rate"
@@ -2099,6 +2108,12 @@ msgstr ""
 msgid "Seconds"
 msgstr ""
 
+msgid "Send redeemed token to a custom address"
+msgstr ""
+
+msgid "Send unlocked tokens to a custom address"
+msgstr ""
+
 msgid "Set ENS name"
 msgstr ""
 
@@ -2180,19 +2195,7 @@ msgstr ""
 msgid "Spending"
 msgstr ""
 
-msgid "Stake your {tokensLabel} to increase your voting weight and claim Governance NFTs."
-msgstr ""
-
-msgid "Stake {tokenName} ({tokenSymbolDisplayText}) tokens in exchange for voting weight. In return, you'll impact {projectName} governance and receive a choice governance NFT."
-msgstr ""
-
-msgid "Stake {tokensLabel} for NFT"
-msgstr ""
-
 msgid "Staked {tokenSymbolDisplayText}"
-msgstr ""
-
-msgid "Staking Summary:"
 msgstr ""
 
 msgid "Start"
@@ -2546,13 +2549,13 @@ msgstr ""
 msgid "Total funds:"
 msgstr ""
 
+msgid "Total locked period"
+msgstr ""
+
+msgid "Total locked {tokenSymbolDisplayText}"
+msgstr ""
+
 msgid "Total raised"
-msgstr ""
-
-msgid "Total staked period"
-msgstr ""
-
-msgid "Total staked {tokenSymbolDisplayText}"
 msgstr ""
 
 msgid "Total supply"
@@ -3003,6 +3006,9 @@ msgid "veNFT"
 msgstr ""
 
 msgid "veNFT Governance Enabled"
+msgstr ""
+
+msgid "veNFT Summary:"
 msgstr ""
 
 msgid "veNFT Tiers ({0} variants)"

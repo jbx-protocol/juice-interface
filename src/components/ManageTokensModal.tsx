@@ -210,10 +210,10 @@ export default function ManageTokensModal({
           {veNftEnabled && (
             <Link href={veNftPagePath('mint', { projectId, handle })}>
               <RichButton
-                heading={<Trans>Stake {tokensLabel} for NFT</Trans>}
+                heading={<Trans>Lock {tokensLabel} for Governance NFTs</Trans>}
                 description={
                   <Trans>
-                    Stake your {tokensLabel} to increase your voting weight and
+                    Lock your {tokensLabel} to increase your voting weight and
                     claim Governance NFTs.
                   </Trans>
                 }

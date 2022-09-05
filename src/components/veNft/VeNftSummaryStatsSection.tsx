@@ -5,7 +5,6 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 
 import { useVeNftSummaryStats } from 'hooks/veNft/VeNftSummaryStats'
-import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'
 
 import { formattedNum } from 'utils/formatNumber'
 
@@ -13,15 +12,13 @@ import { shadowCard } from 'constants/styles/shadowCard'
 
 interface VeNftSummaryStatsSectionProps {
   tokenSymbolDisplayText: string
-  userTokens: VeNftToken[] | undefined
 }
 
 const VeNftSummaryStatsSection = ({
   tokenSymbolDisplayText,
-  userTokens,
 }: VeNftSummaryStatsSectionProps) => {
   const { theme } = useContext(ThemeContext)
-  const { totalLocked, totalLockedPeriod } = useVeNftSummaryStats(userTokens)
+  const { totalLocked, totalLockedPeriod } = useVeNftSummaryStats()
   const totalLockedPeriodInDays = totalLockedPeriod / (60 * 60 * 24)
   const formattedtotalLockedPeriod = formattedNum(totalLockedPeriodInDays, {
     precision: 2,
@@ -32,15 +29,15 @@ const VeNftSummaryStatsSection = ({
       <Descriptions
         title={
           <h3>
-            <Trans>Staking Summary:</Trans>
+            <Trans>veNFT Summary:</Trans>
           </h3>
         }
         column={1}
       >
-        <Descriptions.Item label={t`Total staked ${tokenSymbolDisplayText}`}>
+        <Descriptions.Item label={t`Total locked ${tokenSymbolDisplayText}`}>
           {totalLocked}
         </Descriptions.Item>
-        <Descriptions.Item label={t`Total staked period`}>
+        <Descriptions.Item label={t`Total locked period`}>
           {`${formattedtotalLockedPeriod} `}
           <Plural
             value={totalLockedPeriodInDays}

@@ -40,7 +40,6 @@ export default function MyVeNftsContent() {
             </Space>
           </div>
           <VeNftSummaryStatsSection
-            userTokens={userTokens}
             tokenSymbolDisplayText={tokenSymbolDisplayText}
           />
         </>

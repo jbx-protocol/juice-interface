@@ -84,11 +84,11 @@ export default function V2ManageTokensSection() {
   const hasV1ProjectId = Boolean(v1ProjectId?.toNumber() ?? 0 > 0)
   const v1TokenSwapEnabled = featureFlagEnabled(FEATURE_FLAGS.V1_TOKEN_SWAP)
 
-  const x = parseInt(fromWad(totalBalance)) + totalLocked
+  const totalBalanceWithLock = parseInt(fromWad(totalBalance)) + totalLocked
 
   // %age of tokens the user owns.
   const userOwnershipPercentage =
-    formatPercent(parseWad(x), totalTokenSupply) || '0'
+    formatPercent(parseWad(totalBalanceWithLock), totalTokenSupply) || '0'
   const claimedBalanceFormatted = formatWad(claimedBalance ?? 0, {
     precision: 0,
   })

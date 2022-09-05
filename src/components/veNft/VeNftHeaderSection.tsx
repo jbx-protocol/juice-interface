@@ -19,7 +19,7 @@ const VeNftHeaderSection = ({
       </h1>
       <p>
         <Trans>
-          Stake {tokenName} ({tokenSymbolDisplayText}) tokens in exchange for
+          Lock {tokenName} ({tokenSymbolDisplayText}) tokens in exchange for
           voting weight. In return, you'll impact {projectName} governance and
           receive a choice governance NFT.
         </Trans>

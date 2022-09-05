@@ -249,7 +249,10 @@ const VeNftStakingForm = ({
                     </h3>
                   }
                 >
-                  <CustomBeneficiaryInput form={form} />
+                  <CustomBeneficiaryInput
+                    form={form}
+                    labelText={t`Mint NFT to a custom address`}
+                  />
                   <AllowPublicExtensionInput form={form} />
                 </MinimalCollapse>
 

@@ -1,5 +1,5 @@
 import { Contract } from '@ethersproject/contracts'
-import { useCallback, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
 import { callContractRead, getContract } from './util'
 
@@ -28,7 +28,8 @@ export function useContractReadValue<C extends string, V>({
   formatter?: (val?: any) => V | undefined // eslint-disable-line @typescript-eslint/no-explicit-any
   valueDidChange?: (oldVal?: V, newVal?: V) => boolean
 }) {
-  const [value, setValue] = useState<V | undefined>()
+  const fetchId = useRef(0)
+  const [value, _setValue] = useState<V | undefined>()
   const [loading, setLoading] = useState<boolean>(true)
 
   const _formatter = useCallback(
@@ -40,7 +41,23 @@ export function useContractReadValue<C extends string, V>({
     [valueDidChange],
   )
 
+  const setValue = useCallback(
+    ({
+      currentFetchId,
+      value,
+    }: {
+      currentFetchId: number
+      value: V | undefined
+    }) => {
+      if (fetchId.current === currentFetchId) {
+        _setValue(value)
+      }
+    },
+    [],
+  )
+
   const fetchValue = useCallback(async () => {
+    const currentFetchId = ++fetchId.current
     const readContract = getContract(contract, contracts)
     try {
       setLoading(true)
@@ -60,14 +77,14 @@ export function useContractReadValue<C extends string, V>({
           { newValue },
           { contract: readContract?.address },
         )
-        setValue(newValue)
+        setValue({ currentFetchId, value: newValue })
       }
     } catch (err) {
       console.error('Read contract >', {
         functionName,
         error: err,
       })
-      setValue(_formatter(undefined))
+      setValue({ currentFetchId, value: _formatter(undefined) })
     } finally {
       setLoading(false)
     }
@@ -78,6 +95,7 @@ export function useContractReadValue<C extends string, V>({
     contract,
     contracts,
     functionName,
+    setValue,
     value,
   ])
 
@@ -87,7 +105,7 @@ export function useContractReadValue<C extends string, V>({
 
     // args and contracts may initially be not defined, so we want to keep
     // calling until they are
-  }, [args, contracts])
+  }, [args, contracts, functionName, contract])
 
   return { refetchValue: fetchValue, value, loading }
 }

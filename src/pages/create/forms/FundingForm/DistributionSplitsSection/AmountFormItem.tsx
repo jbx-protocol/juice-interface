@@ -100,7 +100,7 @@ export function AmountFormItem({
             },
           ]}
         >
-          <span style={{ flex: 1 }}>
+          <div style={{ flex: 1 }}>
             <FormattedNumberInput
               placeholder={'0'}
               accessory={
@@ -114,7 +114,7 @@ export function AmountFormItem({
                 )
               }
             />
-          </span>
+          </div>
         </Form.Item>
         <div
           style={{

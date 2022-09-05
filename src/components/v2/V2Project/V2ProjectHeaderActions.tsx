@@ -1,4 +1,4 @@
-import { SettingOutlined, ToolOutlined } from '@ant-design/icons'
+import { SettingOutlined, SmileOutlined, ToolOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import ProjectVersionBadge from 'components/ProjectVersionBadge'
@@ -9,10 +9,14 @@ import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/V2Con
 import { V2OperatorPermission } from 'models/v2/permissions'
 import Link from 'next/link'
 import { useContext, useState } from 'react'
-import { settingsPagePath } from 'utils/routes'
+import { settingsPagePath, veNftPagePath } from 'utils/routes'
 
 export default function V2ProjectHeaderActions() {
-  const { projectId, handle } = useContext(V2ProjectContext)
+  const {
+    projectId,
+    handle,
+    veNft: { contractAddress: veNftContractAddress },
+  } = useContext(V2ProjectContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -22,6 +26,7 @@ export default function V2ProjectHeaderActions() {
   const canReconfigure = useV2ConnectedWalletHasPermission(
     V2OperatorPermission.RECONFIGURE,
   )
+  const veNftEnabled = veNftContractAddress ? true : false
 
   return (
     <div
@@ -60,7 +65,16 @@ export default function V2ProjectHeaderActions() {
           <Tooltip title={t`Project Settings`} placement="bottom">
             <div>
               <Link href={settingsPagePath('general', { handle, projectId })}>
-                <Button type="link" icon={<SettingOutlined />} />
+                <Button type="text" icon={<SettingOutlined />} />
+              </Link>
+            </div>
+          </Tooltip>
+        )}
+        {veNftEnabled && (
+          <Tooltip title={t`veNFT`} placement="bottom">
+            <div>
+              <Link href={veNftPagePath('mint', { handle, projectId })}>
+                <Button type="text" icon={<SmileOutlined />} />
               </Link>
             </div>
           </Tooltip>

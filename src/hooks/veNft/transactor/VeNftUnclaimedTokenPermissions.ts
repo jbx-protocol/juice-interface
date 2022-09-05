@@ -4,6 +4,7 @@ import { useContext } from 'react'
 import { TransactorInstance } from 'hooks/Transactor'
 
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { V2OperatorPermission } from 'models/v2/permissions'
 
 export function useUnclaimedTokensPermissionTx(): TransactorInstance {
   const { transactor, contracts } = useContext(V2UserContext)
@@ -11,7 +12,7 @@ export function useUnclaimedTokensPermissionTx(): TransactorInstance {
     projectId,
     veNft: { contractAddress },
   } = useContext(V2ProjectContext)
-  const permissionIndexes = [12] // TRANSFER permission, https://github.com/jbx-protocol/juice-contracts-v2/blob/main/contracts/libraries/JBOperations.sol
+  const permissionIndexes = [V2OperatorPermission.TRANSFER] // TRANSFER permission, https://github.com/jbx-protocol/juice-contracts-v2/blob/main/contracts/libraries/JBOperations.sol
 
   return (_, txOpts) => {
     if (!transactor || !contracts || !projectId || !contractAddress) {

@@ -2,6 +2,7 @@
     "name": "Juicebox",
     "short_name": "Juicebox",
     "description": "The programmable funding protocol. Fund anything on Ethererum.",
+    "iconPath": "/assets/juice_logo-orange.svg",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",

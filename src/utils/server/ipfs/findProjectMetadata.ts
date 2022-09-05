@@ -70,6 +70,7 @@ function isTemporaryServiceError({
   }
   if (status) {
     switch (status) {
+      case 429:
       case 500:
       case 503:
       case 504:

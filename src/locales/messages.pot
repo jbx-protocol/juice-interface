@@ -2594,6 +2594,9 @@ msgstr ""
 msgid "Unavailable"
 msgstr ""
 
+msgid "Unclaimed tokens permission set successfully."
+msgstr ""
+
 msgid "Unknown Project"
 msgstr ""
 
@@ -2676,6 +2679,9 @@ msgid "V2"
 msgstr ""
 
 msgid "VeNFT Governance"
+msgstr ""
+
+msgid "VeNFT contract created successfully. Results will be indexed in a few moments."
 msgstr ""
 
 msgid "Version of the terminal contract used by this project."

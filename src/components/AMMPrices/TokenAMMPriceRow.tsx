@@ -4,8 +4,7 @@ import { Tooltip } from 'antd'
 import SushiswapLogo from 'components/icons/Sushiswap'
 import UniswapLogo from 'components/icons/Uniswap'
 import { CSSProperties } from 'react'
-import { formattedNum } from 'utils/formatNumber'
-import { truncateString } from 'utils/formatString'
+import { formatOrTruncate } from 'utils/formatNumber'
 
 import ExternalLink from '../ExternalLink'
 
@@ -57,10 +56,12 @@ export default function TokenAMMPriceRow({
     )
   }
 
-  const preparePrice = (price: string) => {
-    const formattedPrice = formattedNum(price) ?? ''
+  const formatPrice = (price: string) => {
+    const p = parseInt(price, 10)
+    const formatLimit = 1e12 - 1 // trillion
 
-    return truncateString(formattedPrice, 15)
+    // format all values below trillion value, otherwise truncate is as long number.
+    return formatOrTruncate(p, formatLimit)
   }
 
   return (
@@ -88,7 +89,7 @@ export default function TokenAMMPriceRow({
             overlayInnerStyle={{ ...fontStyle }}
           >
             <ExternalLink href={exchangeLink} style={{ fontWeight: 400 }}>
-              {`${preparePrice(WETHPrice)} ${tokenSymbol}/1 ETH`}
+              {`${formatPrice(WETHPrice)} ${tokenSymbol}/1 ETH`}
             </ExternalLink>
           </Tooltip>
         ) : (

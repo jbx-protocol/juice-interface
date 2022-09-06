@@ -263,3 +263,17 @@ export const truncateLongNumber = (num: number, digits: number) => {
     ? (num / item.value).toFixed(digits).replace(rx, '$1') + item.symbol
     : '0'
 }
+
+export const formatOrTruncate = (
+  num: number,
+  limit: number,
+  config?: {
+    truncDigits: number
+    formatConfig: FormatConfig
+  },
+) => {
+  if (num > limit) {
+    return truncateLongNumber(num, config?.truncDigits || 0)
+  }
+  return formattedNum(num, config?.formatConfig)
+}

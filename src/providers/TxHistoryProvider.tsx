@@ -22,7 +22,6 @@ export default function TxHistoryProvider({
 }) {
   const { userAddress, chain } = useWallet()
   const [transactions, setTransactions] = useState<TransactionLog[]>([])
-  const [poller, setPoller] = useState<NodeJS.Timer>()
 
   const localStorageKey = useMemo(
     () =>
@@ -63,67 +62,62 @@ export default function TxHistoryProvider({
   // Setup poller for refreshing transactions
   useEffect(() => {
     // Only set new poller if there are pending transactions
-    // because ucceeded/failed txs don't need to be refreshed
-    if (!poller && transactions.some(tx => tx.status === TxStatus.pending)) {
-      const threeMinutesAgo = nowSeconds() - 3 * 60
+    // Succeeded/failed txs don't need to be refreshed
+    if (!transactions.some(tx => tx.status === TxStatus.pending)) return
 
-      // If any pending txs were created less than 3 min ago, use short poll time
-      // Otherwise use longer poll time
-      // (Assume no need for quick UX if user has already waited 3 min)
-      const pollInterval = transactions.some(
-        tx => tx.status === TxStatus.pending && threeMinutesAgo < tx.createdAt,
-      )
-        ? SHORT_TERM_POLL_INTERVAL_MILLIS
-        : LONG_TERM_POLL_INTERVAL_MILLIS
+    // If any pending txs were created less than 3 min ago, use short poll time
+    // Otherwise use longer poll time
+    // (Assume no need for quick UX if user has already waited 3 min)
+    const threeMinutesAgo = nowSeconds() - 3 * 60
+    const pollInterval = transactions.some(
+      tx => tx.status === TxStatus.pending && threeMinutesAgo < tx.createdAt,
+    )
+      ? SHORT_TERM_POLL_INTERVAL_MILLIS
+      : LONG_TERM_POLL_INTERVAL_MILLIS
 
-      setPoller(
-        setInterval(
-          async () =>
-            _setTransactions(
-              // Refresh all transactions
-              await Promise.all(
-                transactions.map(async txLog => {
-                  // Only do refresh logic for pending txs
-                  // idk why tx.hash would be undefined but it's optional typed :shrug:
-                  if (!txLog.tx.hash || txLog.status !== TxStatus.pending) {
-                    return txLog
-                  }
+    const poller = setInterval(
+      async () =>
+        _setTransactions(
+          // Refresh all transactions
+          await Promise.all(
+            transactions.map(async txLog => {
+              // Only do refresh logic for pending txs
+              // tx.hash shouldn't ever be undefined but it's optional typed :shrug:
+              if (!txLog.tx.hash || txLog.status !== TxStatus.pending) {
+                return txLog
+              }
 
-                  // If no response yet, get response
-                  // We know tx is a TransactionResponse if .wait is defined
-                  const response = (txLog.tx as TransactionResponse).wait
-                    ? (txLog.tx as TransactionResponse)
-                    : await readProvider.getTransaction(txLog.tx.hash)
+              // If no response yet, get response
+              // We know tx is a TransactionResponse if .wait is defined
+              const response = (txLog.tx as TransactionResponse).wait
+                ? (txLog.tx as TransactionResponse)
+                : await readProvider.getTransaction(txLog.tx.hash)
 
-                  let status = TxStatus.pending
-                  try {
-                    await response.wait()
+              let status = TxStatus.pending
+              try {
+                await response.wait()
 
-                    // Tx has been mined
-                    status = TxStatus.success
-                  } catch (_) {
-                    // ethers provider throws error when a transaction fails
-                    status = TxStatus.failed
-                  }
+                // Tx has been mined
+                status = TxStatus.success
+              } catch (_) {
+                // ethers provider throws error when a transaction fails
+                status = TxStatus.failed
+              }
 
-                  return {
-                    ...txLog,
-                    tx: response,
-                    status,
-                  }
-                }),
-              ),
-            ),
-          pollInterval,
+              return {
+                ...txLog,
+                tx: response,
+                status,
+              }
+            }),
+          ),
         ),
-      )
-    }
+      pollInterval,
+    )
 
-    // Clean up. Ensures we stop polling once all pending TXs have been refreshed
-    return () => {
-      if (poller) clearInterval(poller)
-    }
-  }, [poller, transactions, _setTransactions])
+    // Clean up
+    return () => clearInterval(poller)
+  }, [transactions, _setTransactions])
 
   const addTransaction = useCallback(
     (title: string, tx: TransactionResponse) => {

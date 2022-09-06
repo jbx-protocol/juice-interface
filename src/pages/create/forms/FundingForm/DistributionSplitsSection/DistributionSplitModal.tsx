@@ -3,26 +3,14 @@ import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { DatePicker, Form, InputNumber, Modal, Radio } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import CurrencySwitch from 'components/CurrencySwitch'
-import CurrencySymbol from 'components/CurrencySymbol'
-import {
-  ModalMode,
-  validateEthAddress,
-  validatePercentage,
-} from 'components/formItems/formHelpers'
-import InputAccessoryButton from 'components/InputAccessoryButton'
+import { ModalMode, validateEthAddress } from 'components/formItems/formHelpers'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import NumberSlider from 'components/inputs/NumberSlider'
-import TooltipIcon from 'components/TooltipIcon'
-import TooltipLabel from 'components/TooltipLabel'
 import { CurrencyName } from 'constants/currency'
-import { ThemeContext } from 'contexts/themeContext'
 import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerminalFee'
-import { findIndex, round } from 'lodash'
+import { findIndex } from 'lodash'
 import { Split } from 'models/v2/splits'
 import moment, * as Moment from 'moment'
-import { useContext, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { parseWad } from 'utils/formatNumber'
 import { stringIsDigit } from 'utils/math'
 import {
@@ -37,22 +25,16 @@ import {
   preciseFormatSplitPercent,
   splitPercentFrom,
 } from 'utils/v2/math'
+import { AmountFormItem } from './AmountFormItem'
+import { PercentageFormItem } from './PercentageFormItem'
+import { AddOrEditSplitFormFields, SplitType } from './types'
 
-type AddOrEditSplitFormFields = {
-  projectId: string
-  beneficiary: string
-  percent: number
-  amount: string | undefined
-  lockedUntil: Moment.Moment | undefined | null
-}
-
-type SplitType = 'project' | 'address'
-type DistributionType = 'amount' | 'percent'
+type DistributionType = 'amount' | 'percent' | 'both'
 
 // Using both state and a form in this modal. I know it seems over the top,
 // but the state is necessary to link the percent and amount fields, and the form
 // is useful for its features such as field validation.
-export default function DistributionSplitModal({
+export function DistributionSplitModal({
   visible,
   mode,
   overrideDistTypeWithPercentage = false,
@@ -77,10 +59,6 @@ export default function DistributionSplitModal({
   currencyName: CurrencyName
   onCurrencyChange?: (currencyName: CurrencyName) => void
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const [form] = useForm<AddOrEditSplitFormFields>()
   const amount = Form.useWatch('amount', form)
 
@@ -295,39 +273,9 @@ export default function DistributionSplitModal({
     return Promise.resolve()
   }
 
-  const validatePayoutPercentage = () => {
-    return validatePercentage(
-      preciseFormatSplitPercent(form.getFieldValue('percent') ?? 0),
-    )
-  }
-
   // Cannot select days before today or today with lockedUntil
   const disabledDate = (current: moment.Moment) =>
     current && current < moment().endOf('day')
-
-  const amountSubFee = amount
-    ? parseFloat(amount) -
-      (parseFloat(amount) * parseFloat(feePercentage ?? '0')) / 100
-    : undefined
-
-  function AfterFeeMessage() {
-    return amountSubFee && amountSubFee > 0 ? (
-      <TooltipLabel
-        label={
-          <Trans>
-            <CurrencySymbol currency={currencyName} />
-            {round(amountSubFee, 4)} after {feePercentage}% JBX membership fee
-          </Trans>
-        }
-        tip={
-          <Trans>
-            Payouts to Ethereum addresses incur a {feePercentage}% fee. Your
-            project will receive JBX in return at the current issuance rate.
-          </Trans>
-        }
-      />
-    ) : null
-  }
 
   return (
     <Modal
@@ -414,108 +362,17 @@ export default function DistributionSplitModal({
 
         {/* Only show amount input if project distribution limit is not infinite */}
         {distributionLimit && distributionType === 'amount' ? (
-          <Form.Item
-            className="ant-form-item-extra-only"
-            label={t`Distribution`}
-            required
-            extra={
-              feePercentage && form.getFieldValue('percent') <= 100 ? (
-                <>
-                  {editingSplitType === 'address' ? (
-                    <div>
-                      <AfterFeeMessage />
-                    </div>
-                  ) : (
-                    <Trans>
-                      Distributing funds to Juicebox projects won't incur fees.
-                    </Trans>
-                  )}
-                </>
-              ) : null
-            }
-          >
-            <div
-              style={{
-                display: 'flex',
-                color: colors.text.primary,
-                alignItems: 'center',
-              }}
-            >
-              <Form.Item
-                noStyle
-                name="amount"
-                required
-                rules={[
-                  {
-                    validator: validatePayoutPercentage,
-                    validateTrigger: 'onCreate',
-                    required: true,
-                  },
-                ]}
-              >
-                <FormattedNumberInput
-                  placeholder={'0'}
-                  accessory={
-                    isFirstSplit && onCurrencyChange ? (
-                      <CurrencySwitch
-                        onCurrencyChange={onCurrencyChange}
-                        currency={currencyName}
-                      />
-                    ) : (
-                      <InputAccessoryButton content={currencyName} />
-                    )
-                  }
-                />
-              </Form.Item>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  marginLeft: 10,
-                }}
-              >
-                <Trans>{form.getFieldValue('percent') ?? '0'}%</Trans>
-                <TooltipIcon
-                  tip={
-                    <Trans>
-                      If you don't raise the sum of all your payouts (
-                      <CurrencySymbol currency={currencyName} />
-                      {distributionLimit}), this address will receive{' '}
-                      {form.getFieldValue('percent')}% of all the funds you
-                      raise.
-                    </Trans>
-                  }
-                  placement={'topLeft'}
-                  iconStyle={{ marginLeft: 5 }}
-                />
-              </div>
-            </div>
-          </Form.Item>
+          <AmountFormItem
+            form={form}
+            currencyName={currencyName}
+            editingSplitType={editingSplitType}
+            feePercentage={feePercentage}
+            isFirstSplit={isFirstSplit}
+            distributionLimit={distributionLimit}
+            onCurrencyChange={onCurrencyChange}
+          />
         ) : (
-          <Form.Item>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-              }}
-            >
-              <span style={{ flex: 1 }}>
-                <NumberSlider
-                  onChange={(percentage: number | undefined) => {
-                    form.setFieldsValue({ percent: percentage })
-                  }}
-                  step={0.01}
-                  defaultValue={0}
-                  sliderValue={form.getFieldValue('percent') ?? 0}
-                  suffix="%"
-                  name="percent"
-                  formItemProps={{
-                    rules: [{ validator: validatePayoutPercentage }],
-                  }}
-                />
-              </span>
-            </div>
-          </Form.Item>
+          <PercentageFormItem form={form} />
         )}
         <Form.Item
           name="lockedUntil"

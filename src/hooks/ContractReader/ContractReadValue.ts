@@ -78,6 +78,7 @@ export function useContractReadValue<C extends string, V>({
     contract,
     contracts,
     functionName,
+    setValue,
     value,
   ])
 
@@ -87,7 +88,7 @@ export function useContractReadValue<C extends string, V>({
 
     // args and contracts may initially be not defined, so we want to keep
     // calling until they are
-  }, [args, contracts])
+  }, [args, contracts, functionName, contract])
 
   return { refetchValue: fetchValue, value, loading }
 }

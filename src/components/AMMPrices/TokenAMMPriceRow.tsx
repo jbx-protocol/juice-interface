@@ -3,6 +3,7 @@ import { t, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import SushiswapLogo from 'components/icons/Sushiswap'
 import UniswapLogo from 'components/icons/Uniswap'
+import { ONE_TRILLION } from 'constants/numbers'
 import { CSSProperties } from 'react'
 import { formatOrTruncate } from 'utils/formatNumber'
 
@@ -58,10 +59,9 @@ export default function TokenAMMPriceRow({
 
   const formatPrice = (price: string) => {
     const p = parseInt(price, 10)
-    const formatLimit = 1e12 - 1 // trillion
 
     // format all values below trillion value, otherwise truncate is as long number.
-    return formatOrTruncate(p, formatLimit)
+    return formatOrTruncate(p, ONE_TRILLION)
   }
 
   return (

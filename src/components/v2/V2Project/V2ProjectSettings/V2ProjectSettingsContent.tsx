@@ -23,6 +23,7 @@ const SettingsPageComponents: { [k in V2SettingsPageKey]: () => JSX.Element } =
     reservedtokens: V2ReservedTokensSettingsPage,
     v1tokenmigration: V1V2TokenMigrationSettingsPage,
     venft: V2VeNftSettingsPage,
+    verifytwitter: VerifyTwitter,
     transferownership: V2TransferOwnershipSettingsPage,
     archiveproject: V2ArchiveProjectSettingsPage,
   }

@@ -1445,6 +1445,9 @@ msgstr ""
 msgid "Lock until"
 msgstr ""
 
+msgid "Lock veNFT"
+msgstr ""
+
 msgid "Lock your {tokensLabel} to increase your voting weight and claim Governance NFTs."
 msgstr ""
 
@@ -1452,9 +1455,6 @@ msgid "Lock {tokenName} ({tokenSymbolDisplayText}) tokens in exchange for voting
 msgstr ""
 
 msgid "Lock {tokensLabel} for Governance NFTs"
-msgstr ""
-
-msgid "Lock veNFT"
 msgstr ""
 
 msgid "Locked {tokenSymbolDisplayText}"
@@ -1496,19 +1496,16 @@ msgstr ""
 msgid "Migrate to Juicebox V1.1"
 msgstr ""
 
-msgid "Mint NFT to a custom address"
-msgstr ""
-
-msgid "Mint VeNFT"
-msgstr ""
-
 msgid "Migrate {projectTitle}"
 msgstr ""
 
 msgid "Mint ${tokenSymbol}"
 msgstr ""
 
-msgid "Mint NFT to a custom address."
+msgid "Mint NFT to a custom address"
+msgstr ""
+
+msgid "Mint VeNFT"
 msgstr ""
 
 msgid "Mint as ERC-20"

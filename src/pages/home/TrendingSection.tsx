@@ -1,18 +1,21 @@
 import { InfoCircleOutlined } from '@ant-design/icons'
-import { Button, Col, Row, Space, Tooltip } from 'antd'
-
 import { Trans } from '@lingui/macro'
-import { ThemeContext } from 'contexts/themeContext'
-import RankingExplanation from 'pages/projects/RankingExplanation'
-import { CSSProperties, useContext } from 'react'
-
+import { Button, Col, Row, Space, Tooltip } from 'antd'
 import Grid from 'components/Grid'
-import { useTrendingProjects } from 'hooks/Projects'
-import TrendingProjectCard from 'pages/projects/TrendingProjectCard'
-
+import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
-
+import { useTrendingProjects } from 'hooks/Projects'
+import Link from 'next/link'
+import RankingExplanation from 'pages/projects/RankingExplanation'
+import TrendingProjectCard from 'pages/projects/TrendingProjectCard'
+import { CSSProperties, useContext } from 'react'
 import Payments from './Payments'
+
+const TRENDING_PROJECTS_LIMIT = 6
+
+const SmallHeader = ({ text }: { text: string | JSX.Element }) => (
+  <h3 style={{ fontWeight: 600, margin: 0, fontSize: '1.3rem' }}>{text}</h3>
+)
 
 export default function TrendingSection() {
   const {
@@ -29,11 +32,9 @@ export default function TrendingSection() {
     margin: '0 auto',
   }
 
-  const SmallHeader = ({ text }: { text: string | JSX.Element }) => (
-    <h3 style={{ fontWeight: 600, margin: 0, fontSize: '1.3rem' }}>{text}</h3>
+  const { data: trendingProjects } = useTrendingProjects(
+    TRENDING_PROJECTS_LIMIT,
   )
-
-  const { data: projects } = useTrendingProjects(6)
 
   return (
     <section style={trendingProjectsStyle}>
@@ -52,7 +53,7 @@ export default function TrendingSection() {
             />
 
             <Grid list>
-              {projects?.map((p, i) => (
+              {trendingProjects?.map((p, i) => (
                 <TrendingProjectCard
                   project={p}
                   size={'sm'}
@@ -69,9 +70,11 @@ export default function TrendingSection() {
               padding: '1rem 0 2rem 0',
             }}
           >
-            <Button size="large" href="/projects" block={isMobile}>
-              <Trans>More trending projects</Trans>
-            </Button>
+            <Link href="/projects">
+              <Button size="large" block={isMobile}>
+                <Trans>More trending projects</Trans>
+              </Button>
+            </Link>
           </Row>
         </Col>
         <Col xs={24} md={12}>

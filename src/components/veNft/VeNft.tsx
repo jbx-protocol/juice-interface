@@ -3,31 +3,22 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Layout, Menu, MenuProps, Space } from 'antd'
 import ProjectHeader from 'components/Project/ProjectHeader'
 import V2ProjectHeaderActions from 'components/v2/V2Project/V2ProjectHeaderActions'
-import { V2ProjectSettingsContent } from 'components/v2/V2Project/V2ProjectSettings/V2ProjectSettingsContent'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { VeNftContent } from 'components/veNft/VeNftContent'
 import { layouts } from 'constants/styles/layouts'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
-import { V2SettingsPageKey } from 'models/menu-keys'
+import { V2VeNftPageKey } from 'models/menu-keys'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { pushMenuContent, v2ProjectRoute } from 'utils/routes'
 
 type MenuItem = Required<MenuProps>['items'][number]
 
-export const V2SettingsPageKeyTitleMap: { [k in V2SettingsPageKey]: string } = {
-  general: t`General`,
-  projecthandle: t`Project Handle`,
-  reconfigurefc: t`Reconfigure Funding Cycle`,
-  payouts: t`Payouts`,
-  reservedtokens: t`Reserved Token Allocation`,
-  v1tokenmigration: t`V1 Token Migration`,
-  venft: t`VeNFT Governance`,
-  transferownership: t`Transfer Ownership`,
-  archiveproject: t`Archive Project`,
+export const V2VeNftPageKeyTitleMap: { [k in V2VeNftPageKey]: string } = {
+  mint: t`Mint VeNFT`,
+  myvenfts: t`My VeNFTs`,
 }
 
 function menuItem(
@@ -46,42 +37,14 @@ function menuItem(
 
 const items: MenuItem[] = [
   menuItem(
-    'Project',
-    'project',
-    [
-      menuItem('General', 'general'),
-      menuItem('Project handle', 'projecthandle'),
-    ],
-    'group',
-  ),
-  menuItem('', 'div1', undefined, 'divider'),
-  menuItem(
-    'Funding',
-    'funding',
-    [
-      menuItem('Funding cycle', 'reconfigurefc'),
-      menuItem('Payouts', 'payouts'),
-      menuItem('Reserved tokens', 'reservedtokens'),
-    ],
-    'group',
-  ),
-  menuItem('', 'div2', undefined, 'divider'),
-  menuItem(
-    'Manage',
-    'manage',
-    [
-      menuItem('V1 token migration', 'v1tokenmigration'),
-      featureFlagEnabled(FEATURE_FLAGS.VENFT)
-        ? menuItem('veNFT governance', 'venft')
-        : null,
-      menuItem('Transfer ownership', 'transferownership'),
-      menuItem('Archive project', 'archiveproject'),
-    ],
+    'VeNFT',
+    'venft',
+    [menuItem('Mint VeNFT', 'mint'), menuItem('My VeNFTs', 'myvenfts')],
     'group',
   ),
 ]
 
-export function V2ProjectSettings() {
+export function VeNft() {
   const {
     projectMetadata,
     isPreviewMode,
@@ -96,10 +59,10 @@ export function V2ProjectSettings() {
   const isOwner = useIsUserAddress(projectOwnerAddress)
 
   const canEditProjectHandle = isOwner && !isPreviewMode && !handle
-  const activeSettingsPage = router.query.page as V2SettingsPageKey
+  const activeSettingsPage = router.query.page as V2VeNftPageKey
 
   const handleMenuItemClick = (item: MenuItem) => {
-    const key = item?.key as V2SettingsPageKey | undefined
+    const key = item?.key as V2VeNftPageKey | undefined
     if (!key) return
 
     pushMenuContent(router, key)
@@ -147,7 +110,7 @@ export function V2ProjectSettings() {
             </Space>
           </Layout.Sider>
 
-          <V2ProjectSettingsContent />
+          <VeNftContent />
         </Layout>
       </Space>
     </div>

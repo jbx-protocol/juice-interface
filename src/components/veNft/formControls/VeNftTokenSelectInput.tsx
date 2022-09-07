@@ -24,7 +24,7 @@ const VeNftTokenSelectInput = ({ form }: VeNftTokenSelectInputProps) => {
         </Select.Option>
         {tokenAddress && (
           <Select.Option key={'ERC-20'} value={true}>
-            ERC-20
+            Project ERC-20 Token
           </Select.Option>
         )}
       </Select>

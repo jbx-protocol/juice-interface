@@ -38,6 +38,7 @@ import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedT
 import { MinimalCollapse } from 'components/MinimalCollapse'
 
 import { shadowCard } from 'constants/styles/shadowCard'
+import { useVeNftHasProjectTokenPermission } from 'hooks/veNft/VeNftHasProjectTokenPermission'
 import AllowPublicExtensionInput from './formControls/AllowPublicExtensionInput'
 import VeNftTokenSelectInput from './formControls/VeNftTokenSelectInput'
 
@@ -79,7 +80,6 @@ const VeNftStakingForm = ({
   const tokensStaked = useWatch('tokensStaked', form) || 1
   const lockDuration = useWatch('lockDuration', form) || 0
   const beneficiary = useWatch('beneficiary', form) || ''
-  const useJbToken = useWatch('useJbToken', form) || false
 
   const { data: nftTokenUri } = useVeNftResolverTokenUri(
     parseWad(tokensStaked),
@@ -87,6 +87,8 @@ const VeNftStakingForm = ({
     lockDurationOptions,
   )
   const { data: tokenMetadata, refetch } = useVeNftTokenMetadata(nftTokenUri)
+  const { data: hasUnclaimedTokensPermission } =
+    useVeNftHasProjectTokenPermission()
 
   const lockDurationOptionsInSeconds = useMemo(() => {
     return lockDurationOptions
@@ -103,7 +105,6 @@ const VeNftStakingForm = ({
 
   const { data: claimedBalance } = useERC20BalanceOf(tokenAddress, userAddress)
   const { data: unclaimedBalance } = useUserUnclaimedTokenBalance()
-  const tokenBalance = useJbToken ? claimedBalance : unclaimedBalance
 
   const minTokensAllowedToStake = 1 //TODO: get this from the contract
 
@@ -115,6 +116,13 @@ const VeNftStakingForm = ({
   const hasAdequateApproval = allowance
     ? allowance.gte(parseWad(tokensStaked))
     : false
+
+  const useJbToken = useWatch('useJbToken', form) || false
+  const tokenBalance = useJbToken ? claimedBalance : unclaimedBalance
+
+  const cannotSpendProjectToken = !hasUnclaimedTokensPermission && !useJbToken
+  const cannotSpendProjectErc20Token = !hasAdequateApproval && useJbToken
+  const hasWarning = cannotSpendProjectToken || cannotSpendProjectErc20Token
 
   const votingPower = tokensStaked * (lockDuration / maxLockDuration)
 
@@ -183,61 +191,102 @@ const VeNftStakingForm = ({
         <div style={{ ...shadowCard(theme), padding: 25 }}>
           <Space direction="vertical" size={'large'} style={{ width: '100%' }}>
             <VeNftTokenSelectInput form={form} />
-            <div>
-              <Row gutter={20}>
-                <Col span={14}>
-                  <TokensStakedInput
-                    form={form}
-                    tokenBalance={tokenBalance}
-                    tokenSymbolDisplayText={tokenSymbolDisplayText}
-                    tokensStaked={tokensStaked}
-                    minTokensAllowedToStake={minTokensAllowedToStake}
-                  />
-                </Col>
-                <Col span={10}>
-                  <LockDurationSelectInput
-                    form={form}
-                    lockDurationOptionsInSeconds={lockDurationOptionsInSeconds}
-                  />
-                </Col>
-              </Row>
-
-              <VotingPowerDisplayInput votingPower={votingPower} />
-            </div>
-
-            <MinimalCollapse
-              header={
-                <h3 style={{ margin: 0 }}>
-                  <Trans>Advanced Options</Trans>
-                </h3>
-              }
-            >
-              <CustomBeneficiaryInput form={form} />
-              <AllowPublicExtensionInput form={form} />
-            </MinimalCollapse>
-
-            {variants && baseImagesHash && (
-              <VeNftCarousel
-                tokensStaked={tokensStaked}
-                baseImagesHash={baseImagesHash}
-                variants={variants}
-                form={form}
-                tokenMetadata={tokenMetadata}
-              />
+            {cannotSpendProjectToken && (
+              <p>
+                <Trans>
+                  The veNFT contract is currently unable to lock project token.
+                  Contact the project owner regarding adding this permission.
+                </Trans>
+              </p>
             )}
+            {cannotSpendProjectErc20Token && (
+              <>
+                <p>
+                  <Trans>
+                    Before locking your project ERC-20 token, you must approve
+                    the veNFT contract for spending.
+                  </Trans>
+                </p>
+                <StakingFormActionButton
+                  useJbToken={useJbToken}
+                  hasAdequateApproval={hasAdequateApproval}
+                  onReviewButtonClick={handleReviewButtonClick}
+                  onApproveButtonClick={approve}
+                  tokenApprovalLoading={tokenApprovalLoading}
+                />
+              </>
+            )}
+            {!hasWarning && (
+              <>
+                <div>
+                  <Row gutter={20}>
+                    <Col span={14}>
+                      <TokensStakedInput
+                        form={form}
+                        tokenBalance={tokenBalance}
+                        tokenSymbolDisplayText={tokenSymbolDisplayText}
+                        tokensStaked={tokensStaked}
+                        minTokensAllowedToStake={minTokensAllowedToStake}
+                      />
+                    </Col>
+                    <Col span={10}>
+                      <LockDurationSelectInput
+                        form={form}
+                        lockDurationOptionsInSeconds={
+                          lockDurationOptionsInSeconds
+                        }
+                      />
+                    </Col>
+                  </Row>
 
-            <Space size="middle" direction="vertical" style={{ width: '100%' }}>
-              <Button block onClick={() => setTokenRangesModalVisible(true)}>
-                <Trans>View token ranges</Trans>
-              </Button>
-              <StakingFormActionButton
-                useJbToken={useJbToken}
-                hasAdequateApproval={hasAdequateApproval}
-                onReviewButtonClick={handleReviewButtonClick}
-                onApproveButtonClick={approve}
-                tokenApprovalLoading={tokenApprovalLoading}
-              />
-            </Space>
+                  <VotingPowerDisplayInput votingPower={votingPower} />
+                </div>
+
+                <MinimalCollapse
+                  header={
+                    <h3 style={{ margin: 0 }}>
+                      <Trans>Advanced Options</Trans>
+                    </h3>
+                  }
+                >
+                  <CustomBeneficiaryInput
+                    form={form}
+                    labelText={t`Mint NFT to a custom address`}
+                  />
+                  <AllowPublicExtensionInput form={form} />
+                </MinimalCollapse>
+
+                {variants && baseImagesHash && (
+                  <VeNftCarousel
+                    tokensStaked={tokensStaked}
+                    baseImagesHash={baseImagesHash}
+                    variants={variants}
+                    form={form}
+                    tokenMetadata={tokenMetadata}
+                  />
+                )}
+
+                <Space
+                  size="middle"
+                  direction="vertical"
+                  style={{ width: '100%' }}
+                >
+                  <Button
+                    block
+                    onClick={() => setTokenRangesModalVisible(true)}
+                  >
+                    <Trans>View token ranges</Trans>
+                  </Button>
+                  <StakingFormActionButton
+                    useJbToken={useJbToken}
+                    hasAdequateApproval={hasAdequateApproval}
+                    onReviewButtonClick={handleReviewButtonClick}
+                    onApproveButtonClick={approve}
+                    tokenApprovalLoading={tokenApprovalLoading}
+                  />
+                </Space>
+              </>
+            )}
           </Space>
         </div>
       </Form>

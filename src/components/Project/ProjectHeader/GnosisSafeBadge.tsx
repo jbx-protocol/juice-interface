@@ -10,15 +10,12 @@ const SafeIcon = () => {
     ? '/assets/icons/gnosis_od.svg'
     : '/assets/icons/gnosis_ol.svg'
 
-  return <img src={src} alt="Gnosis Safe" width={15} height={15} />
+  return <img src={src} alt="Safe" width={15} height={15} />
 }
 
 export function GnosisSafeBadge() {
   return (
-    <Tooltip
-      placement="bottom"
-      title={t`This project is owned by a Gnosis Safe.`}
-    >
+    <Tooltip placement="bottom" title={t`This project is owned by a Safe.`}>
       <Icon component={SafeIcon} />
     </Tooltip>
   )

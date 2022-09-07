@@ -1,5 +1,6 @@
 import { Divider, Layout } from 'antd'
 import { V2SettingsPageKeyTitleMap } from 'components/v2/V2Project/V2ProjectSettings/V2ProjectSettings'
+import VerifyTwitter from 'components/v2/V2Project/V2ProjectSettings/VerifyTwitter'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2SettingsPageKey } from 'models/menu-keys'
 import { useRouter } from 'next/router'

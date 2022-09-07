@@ -12,3 +12,4 @@ export type V2SettingsPageKey =
   | 'venft'
   | 'transferownership'
   | 'archiveproject'
+  | 'verifytwitter'

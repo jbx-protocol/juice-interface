@@ -59,9 +59,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     await writeVerificationState(projectId, username)
     return res.status(200).json({ username })
   } catch (e) {
-    return res
-      .status(500)
-      .json({ error: 'Something went wrong', verificationSuccess: false })
+    return res.status(500).json({ error: 'Something went wrong' })
   }
 }
 

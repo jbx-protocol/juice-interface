@@ -49,7 +49,7 @@ const useOauthPopupWindow = (url: string, oauthOptions: OauthOptions) => {
       const interval = setInterval(() => {
         try {
           const { data, type } = JSON.parse(
-            window.localStorage.getItem('oauth_popup_data'),
+            window.localStorage.getItem('oauth_popup_data') as string,
           )
           if (type === 'OAUTH_ERROR') {
             clearInterval(interval)
@@ -71,10 +71,9 @@ const useOauthPopupWindow = (url: string, oauthOptions: OauthOptions) => {
       .finally(() => {
         if (windowInstanceOpenInitially) {
           const closeInterval = setInterval(() => {
-            if (windowInstance.closed) {
-              setIsAuthenticating(false)
-              clearInterval(closeInterval)
-            }
+            setIsAuthenticating(false)
+            clearInterval(closeInterval)
+            windowInstance.close()
           }, 500)
         }
 

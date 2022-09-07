@@ -57,7 +57,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       })
     }
     await writeVerificationState(projectId, username)
-    return res.status(200).json({ username })
+    return res.redirect(`/auth/success`)
   } catch (e) {
     return res.status(500).json({ error: 'Something went wrong' })
   }

@@ -29,6 +29,28 @@ type TransactorOptions = {
 
 type TxOpts = Omit<TransactorOptions, 'value'>
 
+export function onCatch({
+  txOpts,
+  missingParam,
+  functionName,
+  version,
+}: {
+  txOpts?: TxOpts
+  missingParam?: string
+  functionName: string
+  version: 'v1' | 'v2'
+}) {
+  txOpts?.onError?.(
+    new DOMException(
+      `Missing ${
+        missingParam ?? 'unknown'
+      } parameter in ${functionName} ${version}`,
+    ),
+  )
+  txOpts?.onDone?.()
+  return Promise.resolve(false)
+}
+
 export type Transactor = (
   contract: Contract,
   functionName: string,

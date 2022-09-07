@@ -3,7 +3,10 @@ import { V2UserContext } from 'contexts/v2/userContext'
 import { namehash } from 'ethers/lib/utils'
 import { useContext } from 'react'
 
-import { TransactorInstance } from '../../Transactor'
+import { projectHandleENSTextRecordKey } from 'constants/projectHandleENSTextRecordKey'
+
+import { t } from '@lingui/macro'
+import { TransactorInstance } from 'hooks/Transactor'
 
 export function useSetENSTextRecordForHandleTx(): TransactorInstance<{
   ensName: string
@@ -21,11 +24,9 @@ export function useSetENSTextRecordForHandleTx(): TransactorInstance<{
 
     const node = namehash(ensName + (ensName.endsWith('.eth') ? '' : '.eth'))
 
-    return transactor(
-      contracts.PublicResolver,
-      'setText',
-      [node, key, value],
-      txOpts,
-    )
+    return transactor(contracts.PublicResolver, 'setText', [node, key, value], {
+      ...txOpts,
+      title: t`Set ENS text record for ${ensName}`,
+    })
   }
 }

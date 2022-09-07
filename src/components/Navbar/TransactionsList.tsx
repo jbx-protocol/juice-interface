@@ -5,6 +5,7 @@ import {
   ExclamationCircleOutlined,
   ThunderboltOutlined,
 } from '@ant-design/icons'
+import { Trans } from '@lingui/macro'
 import { ThemeContext } from 'contexts/themeContext'
 import { NetworkName } from 'models/network-name'
 import { TxStatus } from 'models/transaction'
@@ -144,21 +145,25 @@ export default function TransactionsList({
                     <div style={{ fontSize: '0.85rem' }}>{tx.title}</div>
                   </a>
 
-                  <CloseCircleOutlined
-                    style={{ cursor: 'default' }}
-                    onClick={() => {
-                      // Close menu if removing last tx
-                      if (transactions.length === 1 && isExpanded) {
-                        setIsExpanded(false)
-                      }
+                  {removeTransaction && (
+                    <CloseCircleOutlined
+                      style={{ cursor: 'default' }}
+                      onClick={() => {
+                        removeTransaction(tx.id)
 
-                      removeTransaction?.(tx.id)
-                    }}
-                  />
+                        // Close menu if removing last tx
+                        if (transactions.length === 1 && isExpanded) {
+                          setIsExpanded(false)
+                        }
+                      }}
+                    />
+                  )}
                 </div>
               ))
           ) : (
-            <div style={{ fontWeight: 600 }}>No transaction history</div>
+            <div style={{ fontWeight: 600 }}>
+              <Trans>No transaction history</Trans>
+            </div>
           )}
         </div>
       )}

@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { formatBytes32String } from '@ethersproject/strings'
+import { t } from '@lingui/macro'
 import { V1UserContext } from 'contexts/v1/userContext'
 import { useWallet } from 'hooks/Wallet'
 import { PayoutMod, TicketMod } from 'models/mods'
@@ -79,7 +80,10 @@ export function useDeployProjectTx(): TransactorInstance<{
           allocator: constants.AddressZero,
         })),
       ],
-      txOpts,
+      {
+        ...txOpts,
+        title: t`Launch @${handle}`,
+      },
     )
   }
 }

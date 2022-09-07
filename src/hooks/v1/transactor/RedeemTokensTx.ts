@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { t } from '@lingui/macro'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
 import { useWallet } from 'hooks/Wallet'
@@ -13,7 +14,7 @@ export function useRedeemTokensTx(): TransactorInstance<{
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
   const { userAddress } = useWallet()
-  const { projectId, terminal } = useContext(V1ProjectContext)
+  const { projectId, terminal, tokenSymbol } = useContext(V1ProjectContext)
 
   return ({ redeemAmount, minAmount, preferConverted }, txOpts) => {
     if (
@@ -40,7 +41,10 @@ export function useRedeemTokensTx(): TransactorInstance<{
         userAddress,
         preferConverted,
       ],
-      txOpts,
+      {
+        ...txOpts,
+        title: tokenSymbol ? t`Redeem $${tokenSymbol}` : t`Redeem tokens`,
+      },
     )
   }
 }

@@ -1,3 +1,4 @@
+import { t } from '@lingui/macro'
 import { Input } from 'antd'
 
 import Sticker from 'components/icons/Sticker'
@@ -29,7 +30,7 @@ export function MemoFormInput({
         }}
       >
         <Input.TextArea
-          placeholder={placeholder}
+          placeholder={placeholder ? placeholder : t`Memo (optional)`}
           maxLength={256}
           value={value}
           onChange={e => onChange?.(e.target.value)}

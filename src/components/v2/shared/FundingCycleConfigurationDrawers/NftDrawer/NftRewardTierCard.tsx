@@ -15,10 +15,12 @@ import { NFT_IMAGE_SIDE_LENGTH } from './NftUpload'
 
 export default function NftRewardTierCard({
   rewardTier,
+  validateContributionFloor,
   onChange,
   onDelete,
 }: {
   rewardTier: NftRewardTier
+  validateContributionFloor: (floor: number) => boolean
   onChange: (rewardTier: NftRewardTier) => void
   onDelete: VoidFunction
 }) {
@@ -152,6 +154,7 @@ export default function NftRewardTierCard({
       <NftRewardTierModal
         visible={editTierModalVisible}
         rewardTier={rewardTier}
+        validateContributionFloor={validateContributionFloor}
         mode="Edit"
         onClose={() => setEditTierModalVisible(false)}
         onChange={onChange}

@@ -12,6 +12,7 @@ const {
   DANGER_ZONE_DAO,
   FALLEN_DAO,
   WEB3_COOL_KIDS,
+  SCHIZO_DAO,
 } = V2_PROJECT_IDS
 
 const V2ArchivedProjectIdsByNetwork: Partial<Record<NetworkName, number[]>> = {
@@ -24,6 +25,7 @@ const V2ArchivedProjectIdsByNetwork: Partial<Record<NetworkName, number[]>> = {
     DANGER_ZONE_DAO,
     FALLEN_DAO,
     WEB3_COOL_KIDS,
+    SCHIZO_DAO,
   ],
   [NetworkName.rinkeby]: [
     83, // AngelDAO

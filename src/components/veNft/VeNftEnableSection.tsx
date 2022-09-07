@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Button, Divider, Space } from 'antd'
 import { useWallet } from 'hooks/Wallet'
 import { useContext, useState } from 'react'
@@ -14,11 +14,16 @@ import {
   VENFT_RESOLVER_ADDRESS,
 } from 'constants/veNft/veNftProject'
 
+import FormattedAddress from 'components/FormattedAddress'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { emitSuccessNotification } from 'utils/notifications'
 
 const VeNftEnableSection = () => {
   const { isConnected, connect } = useWallet()
-  const { tokenSymbol } = useContext(V2ProjectContext)
+  const {
+    tokenSymbol,
+    veNft: { contractAddress: veNftContractAddress },
+  } = useContext(V2ProjectContext)
   const [loading, setLoading] = useState(false)
   const [setupModalVisible, setSetupModalVisible] = useState(false)
   const veNftCreatorEnabled = featureFlagEnabled(FEATURE_FLAGS.VENFT_CREATOR)
@@ -42,6 +47,9 @@ const VeNftEnableSection = () => {
       },
       {
         onConfirmed: () => {
+          emitSuccessNotification(
+            t`VeNFT contract created successfully. Results will be indexed in a few moments.`,
+          )
           setLoading(false)
         },
       },
@@ -56,23 +64,39 @@ const VeNftEnableSection = () => {
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
       <>
         <section>
-          <h3>
-            <Trans>Enable veBanny Governance</Trans>
-          </h3>
-          <p>
-            <Trans>
-              Set up and launch veNFT governance for your project using default
-              veBanny assets and parameters.
-            </Trans>
-          </p>
-          <Button
-            type="primary"
-            size="small"
-            onClick={launchVeBanny}
-            loading={loading}
-          >
-            Launch veBanny
-          </Button>
+          {!veNftContractAddress ? (
+            <>
+              <h3>
+                <Trans>Enable veNFT Governance</Trans>
+              </h3>
+              <p>
+                <Trans>
+                  Set up and launch veNFT governance for your project using
+                  default veBanny assets and parameters.
+                </Trans>
+              </p>
+              <Button
+                type="primary"
+                size="small"
+                onClick={launchVeBanny}
+                loading={loading}
+              >
+                <Trans>Enable</Trans>
+              </Button>
+            </>
+          ) : (
+            <>
+              <h3>
+                <Trans>veNFT Governance Enabled</Trans>
+              </h3>
+              <p>
+                <span>
+                  <Trans>Contract address:</Trans>{' '}
+                  <FormattedAddress address={veNftContractAddress} />
+                </span>
+              </p>
+            </>
+          )}
         </section>
         <Divider />
         {veNftCreatorEnabled && (

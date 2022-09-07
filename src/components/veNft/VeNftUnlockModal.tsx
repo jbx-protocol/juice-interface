@@ -103,7 +103,10 @@ const UnlockModal = ({
         </p>
       </div>
       <Form form={form} layout="vertical">
-        <CustomBeneficiaryInput form={form} />
+        <CustomBeneficiaryInput
+          form={form}
+          labelText={t`Send unlocked tokens to a custom address`}
+        />
       </Form>
     </TransactionModal>
   )

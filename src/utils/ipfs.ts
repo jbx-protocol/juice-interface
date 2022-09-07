@@ -11,6 +11,7 @@ import { IPFSNftRewardTier, NftRewardTier } from 'models/v2/nftRewardTier'
 import axios from 'axios'
 
 import { DEFAULT_PINATA_GATEWAY, IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
+import { generateSnapshotSettings } from './snapshot'
 
 // NOTE: `cid` and `IPFS hash` are synonymous
 
@@ -27,6 +28,10 @@ export const IPFS_TAGS = {
     process.env.NODE_ENV === 'production'
       ? 'juicebox_nft_reward_tier'
       : 'DEV_juicebox_nft_reward_tier',
+  SNAPSHOT_SETTINGS:
+    process.env.NODE_ENV === 'production'
+      ? 'juicebox_snapshot_settings'
+      : 'DEV_juicebox_snapshot_settings',
 }
 
 // keyvalues will be upserted to existing metadata. A null value will remove an existing keyvalue
@@ -168,6 +173,44 @@ export async function uploadNftRewardsToIPFS(
   return await Promise.all(
     nftRewards.map(rewardTier => uploadNftRewardToIPFS(rewardTier)),
   )
+}
+
+// Uploads snapshot settings to IPFS
+// returns CID which point to the settings on IPFS
+export async function uploadSnapshotSettingsToIPFS({
+  handle,
+  tokenSymbol,
+  projectId,
+  projectMetadata,
+  projectOwnerAddress,
+}: {
+  handle: string
+  tokenSymbol: string
+  projectId: number
+  projectMetadata: ProjectMetadataV4
+  projectOwnerAddress: string
+}): Promise<string | undefined> {
+  const snapshotSettings = generateSnapshotSettings({
+    handle,
+    tokenSymbol,
+    projectId,
+    projectMetadata,
+    projectOwnerAddress,
+  })
+
+  const res = await axios.post('/api/ipfs/pin', {
+    data: snapshotSettings,
+    options: {
+      pinataMetadata: {
+        keyvalues: {
+          tag: IPFS_TAGS.SNAPSHOT_SETTINGS,
+        } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+        name: projectMetadata?.name,
+      },
+    },
+  })
+  console.info('Uploaded snapshot settings to IPFS: ', res.data.IpfsHash)
+  return res.data.IpfsHash as string
 }
 
 // returns a native IPFS link (`ipfs://cid`) as a https link

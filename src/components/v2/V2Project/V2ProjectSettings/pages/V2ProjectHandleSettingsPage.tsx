@@ -59,7 +59,11 @@ export function V2ProjectHandleSettingsPage() {
     setLoadingSetTextRecord(true)
 
     setENSTextRecordForHandleTx(
-      { ensName: projectEnsName ?? '' },
+      {
+        ensName: projectEnsName ?? '',
+        key: projectHandleENSTextRecordKey,
+        value: projectId?.toString() ?? '',
+      },
       {
         onDone: () => setLoadingSetTextRecord(false),
       },

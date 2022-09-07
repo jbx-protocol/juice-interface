@@ -27,6 +27,7 @@ export type V2SettingsPageKey =
   | 'venft'
   | 'transferownership'
   | 'archiveproject'
+  | 'tokenweightedvoting'
 
 export const V2SettingsPageKeyTitleMap: { [k in V2SettingsPageKey]: string } = {
   general: t`General`,
@@ -38,6 +39,7 @@ export const V2SettingsPageKeyTitleMap: { [k in V2SettingsPageKey]: string } = {
   venft: t`VeNFT Governance`,
   transferownership: t`Transfer Ownership`,
   archiveproject: t`Archive Project`,
+  tokenweightedvoting: t`Token-Weighted Voting`,
 }
 
 function menuItem(
@@ -86,6 +88,7 @@ const items: MenuItem[] = [
         : null,
       menuItem('Transfer ownership', 'transferownership'),
       menuItem('Archive project', 'archiveproject'),
+      menuItem('Token-Weighted Voting', 'tokenweightedvoting'),
     ],
     'group',
   ),

@@ -6,6 +6,7 @@ import {
 import { ThemeContext } from 'contexts/themeContext'
 import { useRouter } from 'next/router'
 import { useContext, useMemo } from 'react'
+import { SnapshotSettingsPage } from './pages/SnapshotSettingsPage'
 import { V1V2TokenMigrationSettingsPage } from './pages/V1V2TokenMigrationSettingsPage/V1V2TokenMigrationSettingsPage'
 import { V2ArchiveProjectSettingsPage } from './pages/V2ArchiveProjectSettingsPage'
 import { V2PayoutsSettingsPage } from './pages/V2PayoutsSettingsPage/V2PayoutsSettingsPage'
@@ -27,6 +28,7 @@ const SettingsPageComponents: { [k in V2SettingsPageKey]: () => JSX.Element } =
     venft: V2VeNftSettingsPage,
     transferownership: V2TransferOwnershipSettingsPage,
     archiveproject: V2ArchiveProjectSettingsPage,
+    tokenweightedvoting: SnapshotSettingsPage,
   }
 
 const DEFAULT_SETTINGS_PAGE = 'general'

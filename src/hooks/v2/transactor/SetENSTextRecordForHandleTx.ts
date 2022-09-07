@@ -3,17 +3,17 @@ import { V2UserContext } from 'contexts/v2/userContext'
 import { namehash } from 'ethers/lib/utils'
 import { useContext } from 'react'
 
-import { projectHandleENSTextRecordKey } from 'constants/projectHandleENSTextRecordKey'
-
 import { TransactorInstance } from '../../Transactor'
 
 export function useSetENSTextRecordForHandleTx(): TransactorInstance<{
   ensName: string
+  key: string
+  value: string
 }> {
   const { transactor, contracts } = useContext(V2UserContext)
   const { projectId } = useContext(V2ProjectContext)
 
-  return ({ ensName }, txOpts) => {
+  return ({ ensName, key, value }, txOpts) => {
     if (!transactor || !projectId || !contracts?.JBProjects) {
       txOpts?.onDone?.()
       return Promise.resolve(false)
@@ -24,7 +24,7 @@ export function useSetENSTextRecordForHandleTx(): TransactorInstance<{
     return transactor(
       contracts.PublicResolver,
       'setText',
-      [node, projectHandleENSTextRecordKey, projectId.toString()],
+      [node, key, value],
       txOpts,
     )
   }

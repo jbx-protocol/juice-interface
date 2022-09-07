@@ -170,7 +170,13 @@ msgstr ""
 msgid "<0>Peel</0> is the DAO that manages the juicebox.money frontend interface. You can reach out to Peel either through the <1>Peel Discord</1> or the <2>Juicebox Discord</2>."
 msgstr ""
 
+msgid "<0>Project handle</0> required."
+msgstr ""
+
 msgid "<0>Recurring funding cycles</0>. For example, distribute funds from your project's treasury every week."
+msgstr ""
+
+msgid "<0>Snapshot</0> is an off-chain voting system. You can use your Juicebox project tokens in a Snapshot voting strategy. <1>Learn more about Snapshot</1>."
 msgstr ""
 
 msgid "<0>Target is 0.</0> The project's entire balance will be considered overflow. <1>Learn more</1> about overflow."
@@ -783,6 +789,9 @@ msgid "Delete token allocation"
 msgstr ""
 
 msgid "Deploy Payment Address contract"
+msgstr ""
+
+msgid "Deploy Snapshot space"
 msgstr ""
 
 msgid "Deploy funding cycle configuration"
@@ -2153,6 +2162,9 @@ msgstr ""
 msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."
 msgstr ""
 
+msgid "Snapshot voting"
+msgstr ""
+
 msgid "Some funding cycle settings may put project contributors at risk."
 msgstr ""
 
@@ -2472,6 +2484,9 @@ msgid "Token symbol is required"
 msgstr ""
 
 msgid "Token to Lock:"
+msgstr ""
+
+msgid "Token-Weighted Voting"
 msgstr ""
 
 msgid "Tokens"

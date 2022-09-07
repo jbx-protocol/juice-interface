@@ -4,6 +4,7 @@ import { useForm } from 'antd/lib/form/Form'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useState } from 'react'
 
+import { emitErrorNotification } from 'utils/notifications'
 import { IssueTokenTxArgs } from '../IssueTokenButton'
 import TransactionModal from '../TransactionModal'
 
@@ -44,6 +45,11 @@ export default function IssueTokenModal({
           setLoading(false)
           onClose()
           onConfirmed?.()
+        },
+        onError: (e: DOMException) => {
+          setTransactionPending(false)
+          setLoading(false)
+          emitErrorNotification(e.message)
         },
       },
     )

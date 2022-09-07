@@ -7,9 +7,13 @@ import { useContext, useState } from 'react'
 
 interface CustomBeneficiaryInputProps {
   form: FormInstance
+  labelText: string
 }
 
-const CustomBeneficiaryInput = ({ form }: CustomBeneficiaryInputProps) => {
+const CustomBeneficiaryInput = ({
+  form,
+  labelText,
+}: CustomBeneficiaryInputProps) => {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -28,7 +32,7 @@ const CustomBeneficiaryInput = ({ form }: CustomBeneficiaryInputProps) => {
   }
 
   return (
-    <Form.Item extra={t`Mint NFT to a custom address.`}>
+    <Form.Item extra={labelText}>
       <Space>
         <Switch
           checked={customBeneficiaryEnabled}

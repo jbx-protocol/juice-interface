@@ -71,7 +71,7 @@ msgstr ""
 msgid "90 days"
 msgstr ""
 
-msgid "<0/> Archived projects have not been modified or deleted on the blockchain, and can still be interacted with directly through the Juicebox contracts."
+msgid "<0/> Archived projects haven't been modified or deleted on-chain. They can still be interacted with directly through the Juicebox contracts."
 msgstr ""
 
 msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the <1>risks</1> before committing your funds."
@@ -213,9 +213,6 @@ msgid "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
 msgstr ""
 
 msgid "@{handle} not found"
-msgstr ""
-
-msgid "A project can be archived by its owner from the tools menu on the project page."
 msgstr ""
 
 msgid "A project can reserve a percentage of the tokens minted from payments it receives. Reserved tokens can be distributed according to the allocation below at any time."
@@ -1785,6 +1782,9 @@ msgid "Project owner"
 msgstr ""
 
 msgid "Project owner (you)"
+msgstr ""
+
+msgid "Project owners can archive their Juicebox projects in their project's settings page."
 msgstr ""
 
 msgid "Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."

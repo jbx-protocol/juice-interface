@@ -1,4 +1,3 @@
-import { t } from '@lingui/macro'
 import { Input } from 'antd'
 
 import Sticker from 'components/icons/Sticker'
@@ -9,9 +8,11 @@ import { useContext, useState } from 'react'
 export function MemoFormInput({
   value,
   onChange,
+  placeholder,
 }: {
   value?: string
   onChange?: (memo: string) => void
+  placeholder?: string
 }) {
   const {
     theme: { colors },
@@ -28,7 +29,7 @@ export function MemoFormInput({
         }}
       >
         <Input.TextArea
-          placeholder={t`WAGMI!`}
+          placeholder={placeholder}
           maxLength={256}
           value={value}
           onChange={e => onChange?.(e.target.value)}

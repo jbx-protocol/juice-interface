@@ -77,6 +77,7 @@ const items: MenuItem[] = [
         : null,
       menuItem('Transfer ownership', 'transferownership'),
       menuItem('Archive project', 'archiveproject'),
+      menuItem('Verify Twitter', 'verifytwitter'),
     ],
     'group',
   ),

@@ -27,6 +27,8 @@ type TransactorOptions = {
   onError?: ErrorCallback
 }
 
+type TxOpts = Omit<TransactorOptions, 'value'>
+
 export type Transactor = (
   contract: Contract,
   functionName: string,
@@ -36,7 +38,7 @@ export type Transactor = (
 
 export type TransactorInstance<T = undefined> = (
   args: T,
-  txOpts?: Omit<TransactorOptions, 'value'>,
+  txOpts?: TxOpts,
 ) => ReturnType<Transactor>
 
 // wrapper around BlockNative's Notify.js

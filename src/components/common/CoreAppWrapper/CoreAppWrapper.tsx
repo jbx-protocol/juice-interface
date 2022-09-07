@@ -3,6 +3,7 @@ import { Content } from 'antd/lib/layout/layout'
 import Navbar from 'components/Navbar'
 import useMobile from 'hooks/Mobile'
 import { useRouter } from 'next/router'
+import { EtherPriceProvider } from 'providers/EtherPriceProvider'
 import LanguageProvider from 'providers/LanguageProvider'
 import ReactQueryProvider from 'providers/ReactQueryProvider'
 import { ThemeProvider } from 'providers/ThemeProvider'
@@ -29,7 +30,9 @@ export const AppWrapper: React.FC = ({ children }) => {
             <ThemeProvider>
               {/* TODO: Remove v1 provider */}
               <V1UserProvider>
-                <_Wrapper>{children}</_Wrapper>
+                <EtherPriceProvider>
+                  <_Wrapper>{children}</_Wrapper>
+                </EtherPriceProvider>
               </V1UserProvider>
             </ThemeProvider>
           </LanguageProvider>

@@ -17,7 +17,7 @@ import { useWallet } from './Wallet'
 
 type TransactorCallback = (e?: Transaction, signer?: Signer) => void
 
-type TransactorOptions = {
+export type TransactorOptions = {
   title?: string
   value?: BigNumberish
   onDone?: VoidFunction

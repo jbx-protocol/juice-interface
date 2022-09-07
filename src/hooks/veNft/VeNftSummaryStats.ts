@@ -1,24 +1,25 @@
-import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'
+import { useVeNftUserTokens } from 'hooks/veNft/VeNftUserTokens'
 import { fromWad } from 'utils/formatNumber'
 
 export type VeNftSummaryStats = {
-  totalStaked: number
-  totalStakedPeriod: number
+  totalLocked: number
+  totalLockedPeriod: number
 }
 
-export function useVeNftSummaryStats(userTokens: VeNftToken[] | undefined) {
+export function useVeNftSummaryStats() {
+  const { data: userTokens } = useVeNftUserTokens()
   if (!userTokens) {
     return {
-      totalStaked: 0,
-      totalStakedPeriod: 0,
+      totalLocked: 0,
+      totalLockedPeriod: 0,
     }
   }
 
   const summaryStats: VeNftSummaryStats = {
-    totalStaked: userTokens.reduce((acc, token) => {
+    totalLocked: userTokens.reduce((acc, token) => {
       return acc + parseInt(fromWad(token.lockAmount))
     }, 0),
-    totalStakedPeriod: userTokens.reduce((acc, token) => {
+    totalLockedPeriod: userTokens.reduce((acc, token) => {
       return acc + token.lockDuration
     }, 0),
   }

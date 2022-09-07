@@ -371,6 +371,9 @@ msgstr ""
 msgid "Almost definitely."
 msgstr ""
 
+msgid "Already Enabled"
+msgstr ""
+
 msgid "Amount"
 msgstr ""
 
@@ -456,6 +459,9 @@ msgid "Balance exceeded"
 msgstr ""
 
 msgid "Balance of the project owner's wallet."
+msgstr ""
+
+msgid "Before locking your project ERC-20 token, you must approve the veNFT contract for spending."
 msgstr ""
 
 msgid "Beneficiary"
@@ -651,6 +657,9 @@ msgid "Connect your wallet to see your projects."
 msgstr ""
 
 msgid "Connected wallet not authorized"
+msgstr ""
+
+msgid "Contract address:"
 msgstr ""
 
 msgid "Contract address: {0}"
@@ -992,7 +1001,7 @@ msgstr ""
 msgid "Edit tracked assets"
 msgstr ""
 
-msgid "Enable veBanny Governance"
+msgid "Enable"
 msgstr ""
 
 msgid "Enable veNFT Governance"
@@ -1370,6 +1379,15 @@ msgstr ""
 msgid "Lock until"
 msgstr ""
 
+msgid "Lock your {tokensLabel} to increase your voting weight and claim Governance NFTs."
+msgstr ""
+
+msgid "Lock {tokenName} ({tokenSymbolDisplayText}) tokens in exchange for voting weight. In return, you'll impact {projectName} governance and receive a choice governance NFT."
+msgstr ""
+
+msgid "Lock {tokensLabel} for Governance NFTs"
+msgstr ""
+
 msgid "Locked {tokenSymbolDisplayText}"
 msgstr ""
 
@@ -1406,7 +1424,10 @@ msgstr ""
 msgid "Migrate to Juicebox V1.1"
 msgstr ""
 
-msgid "Mint NFT to a custom address."
+msgid "Mint NFT to a custom address"
+msgstr ""
+
+msgid "Mint VeNFT"
 msgstr ""
 
 msgid "Mint as ERC-20"
@@ -1452,6 +1473,9 @@ msgid "More trending projects"
 msgstr ""
 
 msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
+msgstr ""
+
+msgid "My VeNFTs"
 msgstr ""
 
 msgid "My projects"
@@ -1934,7 +1958,7 @@ msgstr ""
 msgid "Redeemed"
 msgstr ""
 
-msgid "Redeeming this NFT will burn the token and return..."
+msgid "Redeeming this NFT will burn the token, as well as the underlying project token, and you will receive token from the project overflow in return."
 msgstr ""
 
 msgid "Redemption rate"
@@ -2087,6 +2111,12 @@ msgstr ""
 msgid "Seconds"
 msgstr ""
 
+msgid "Send redeemed token to a custom address"
+msgstr ""
+
+msgid "Send unlocked tokens to a custom address"
+msgstr ""
+
 msgid "Set ENS name"
 msgstr ""
 
@@ -2168,19 +2198,7 @@ msgstr ""
 msgid "Spending"
 msgstr ""
 
-msgid "Stake your {tokensLabel} to increase your voting weight and claim Governance NFTs."
-msgstr ""
-
-msgid "Stake {tokenName} ({tokenSymbolDisplayText}) tokens in exchange for voting weight. In return, you'll impact {projectName} governance and receive a choice governance NFT."
-msgstr ""
-
-msgid "Stake {tokensLabel} for NFT"
-msgstr ""
-
 msgid "Staked {tokenSymbolDisplayText}"
-msgstr ""
-
-msgid "Staking Summary:"
 msgstr ""
 
 msgid "Start"
@@ -2334,6 +2352,9 @@ msgid "The target for this funding cycle is 0, meaning all funds in Juicebox are
 msgstr ""
 
 msgid "The total funds this Juicebox project has received since it was created."
+msgstr ""
+
+msgid "The veNFT contract is currently unable to lock project token. Contact the project owner regarding adding this permission."
 msgstr ""
 
 msgid "There are no payouts defined for this funding cycle. The project owner will receive all available funds."
@@ -2531,13 +2552,13 @@ msgstr ""
 msgid "Total funds:"
 msgstr ""
 
+msgid "Total locked period"
+msgstr ""
+
+msgid "Total locked {tokenSymbolDisplayText}"
+msgstr ""
+
 msgid "Total raised"
-msgstr ""
-
-msgid "Total staked period"
-msgstr ""
-
-msgid "Total staked {tokenSymbolDisplayText}"
 msgstr ""
 
 msgid "Total supply"
@@ -2667,6 +2688,9 @@ msgid "V2"
 msgstr ""
 
 msgid "VeNFT Governance"
+msgstr ""
+
+msgid "VeNFT contract created successfully. Results will be indexed in a few moments."
 msgstr ""
 
 msgid "Version of the terminal contract used by this project."
@@ -2981,6 +3005,15 @@ msgstr ""
 msgid "until"
 msgstr ""
 
+msgid "veNFT"
+msgstr ""
+
+msgid "veNFT Governance Enabled"
+msgstr ""
+
+msgid "veNFT Summary:"
+msgstr ""
+
 msgid "veNFT Tiers ({0} variants)"
 msgstr ""
 
@@ -3116,7 +3149,7 @@ msgstr ""
 msgid "{tokensTokenUpper} amount"
 msgstr ""
 
-msgid "{totalStakedPeriodInDays, plural, one {{0}} other {{1}}}"
+msgid "{totalLockedPeriodInDays, plural, one {{0}} other {{1}}}"
 msgstr ""
 
 msgid "{unclaimedBalanceFormatted} {tokenText} claimable"

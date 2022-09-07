@@ -11,8 +11,8 @@ import { ThemeContext } from 'contexts/themeContext'
 
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
-import { useRouter } from 'next/router'
-import { pushSettingsContent } from 'utils/routes'
+import Link from 'next/link'
+import { settingsPagePath } from 'utils/routes'
 import { LaunchProjectPayerModal } from './LaunchProjectPayerModal'
 
 export default function NewDeployModal({
@@ -22,12 +22,10 @@ export default function NewDeployModal({
   visible: boolean
   onClose: VoidFunction
 }) {
-  const { handle } = useContext(V2ProjectContext)
+  const { handle, projectId } = useContext(V2ProjectContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-
-  const router = useRouter()
 
   const [issueTokenModalVisible, setIssueTokenModalVisible] =
     useState<boolean>(false)
@@ -65,25 +63,26 @@ export default function NewDeployModal({
         </Trans>
       </p>
       <div>
-        <RichButton
-          prefix="1"
-          heading={<Trans>Set a project handle (optional)</Trans>}
-          description={
-            <Trans>
-              Set a unique name that will be visible in your project's URL, and
-              that will allow your project to appear in search results.
-            </Trans>
-          }
-          onClick={() => pushSettingsContent(router, 'projecthandle')}
-          disabled={!!handle}
-          icon={
-            handle ? (
-              <CheckCircleFilled style={{ color: seenColor }} />
-            ) : undefined
-          }
-          primaryColor={handle ? seenColor : undefined}
-          style={stepButtonStyle}
-        />
+        <Link href={settingsPagePath('projecthandle', { handle, projectId })}>
+          <RichButton
+            prefix="1"
+            heading={<Trans>Set a project handle (optional)</Trans>}
+            description={
+              <Trans>
+                Set a unique name that will be visible in your project's URL,
+                and that will allow your project to appear in search results.
+              </Trans>
+            }
+            disabled={!!handle}
+            icon={
+              handle ? (
+                <CheckCircleFilled style={{ color: seenColor }} />
+              ) : undefined
+            }
+            primaryColor={handle ? seenColor : undefined}
+            style={stepButtonStyle}
+          />
+        </Link>
         <RichButton
           prefix="2"
           heading={<Trans>Issue an ERC-20 token (optional)</Trans>}

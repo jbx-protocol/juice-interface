@@ -62,7 +62,7 @@ export default function TransactionsList({
 
   return (
     <div style={{ ...style }}>
-      {!!transactions?.length && (
+      {transactions?.length && (
         <div
           className="clickable-border"
           role="button"

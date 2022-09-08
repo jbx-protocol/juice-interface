@@ -6,6 +6,7 @@ import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { ThemeContext } from 'contexts/themeContext'
 import { BallotState } from 'models/v2/fundingCycle'
 import { useContext } from 'react'
+import { formatDate } from 'utils/formatDate'
 import { detailedTimeUntil } from 'utils/formatTime'
 
 import { BallotStateBadge } from './BallotStateBadge'
@@ -58,16 +59,20 @@ export default function FundingCycleDetailsCard({
       ? detailedTimeUntil(endTimeSeconds)
       : detailedTimeUntil(fundingCycleDurationSeconds)
 
+    const fundingCycleDurationMilliseconds = endTimeSeconds.mul(1000).toNumber()
+
     return (
-      <span style={{ color: colors.text.secondary, marginLeft: 10 }}>
-        {isFundingCycleRecurring ? (
-          <Trans>
-            {formattedTimeLeft} until #{fundingCycleNumber.add(1).toString()}
-          </Trans>
-        ) : (
-          <Trans>{formattedTimeLeft} left</Trans>
-        )}
-      </span>
+      <Tooltip title={`${formatDate(fundingCycleDurationMilliseconds)} UTC`}>
+        <span style={{ color: colors.text.secondary, marginLeft: 10 }}>
+          {isFundingCycleRecurring ? (
+            <Trans>
+              {formattedTimeLeft} until #{fundingCycleNumber.add(1).toString()}
+            </Trans>
+          ) : (
+            <Trans>{formattedTimeLeft} left</Trans>
+          )}
+        </span>
+      </Tooltip>
     )
   }
 

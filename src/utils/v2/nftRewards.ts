@@ -71,3 +71,15 @@ export function CIDsOfNftRewardTiersResponse(
     .filter(cid => cid.length > 0)
   return cids
 }
+
+// Default name for NFT collections on NFT marketplaces
+export const defaultNftCollectionName = (projectName: string | undefined) =>
+  `${projectName?.length ? projectName : "Your project's"} NFT rewards`
+
+// Default description for NFT collections on NFT marketplaces
+export const defaultNftCollectionDescription = (
+  projectName: string | undefined,
+) =>
+  `NFTs rewarded to ${
+    projectName?.length ? projectName : 'your project'
+  }'s Juicebox contributors.`

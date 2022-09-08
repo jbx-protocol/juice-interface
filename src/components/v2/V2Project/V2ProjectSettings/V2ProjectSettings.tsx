@@ -70,12 +70,14 @@ const items: MenuItem[] = [
     'Manage',
     'manage',
     [
-      menuItem('V1 token migration', 'v1tokenmigration'),
+      menuItem('Transfer ownership', 'transferownership'),
+      menuItem('Archive project', 'archiveproject'),
       featureFlagEnabled(FEATURE_FLAGS.VENFT)
         ? menuItem('veNFT governance', 'venft')
         : null,
-      menuItem('Transfer ownership', 'transferownership'),
-      menuItem('Archive project', 'archiveproject'),
+      featureFlagEnabled(FEATURE_FLAGS.V1_TOKEN_SWAP)
+        ? menuItem('V1 token migration', 'v1tokenmigration')
+        : null,
     ],
     'group',
   ),

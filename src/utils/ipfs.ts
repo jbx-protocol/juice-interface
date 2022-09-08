@@ -6,10 +6,15 @@ import {
 
 import { base58 } from 'ethers/lib/utils'
 import { consolidateMetadata, ProjectMetadataV4 } from 'models/project-metadata'
-import { IPFSNftRewardTier, NftRewardTier } from 'models/v2/nftRewardTier'
+import {
+  IpfsNftCollectionMetadata,
+  IPFSNftRewardTier,
+  NftRewardTier,
+} from 'models/v2/nftRewardTier'
 
 import axios from 'axios'
 
+import { juiceboxEmojiImageUri } from 'constants/images'
 import { DEFAULT_PINATA_GATEWAY, IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 
 // NOTE: `cid` and `IPFS hash` are synonymous
@@ -27,6 +32,10 @@ export const IPFS_TAGS = {
     process.env.NODE_ENV === 'production'
       ? 'juicebox_nft_reward_tier'
       : 'DEV_juicebox_nft_reward_tier',
+  NFT_REWARDS_COLLECTION_METADATA:
+    process.env.NODE_ENV === 'production'
+      ? 'juicebox_nft_reward_tier_collection'
+      : 'DEV_juicebox_nft_reward_tier_collectionr',
 }
 
 // keyvalues will be upserted to existing metadata. A null value will remove an existing keyvalue
@@ -141,10 +150,16 @@ async function uploadNftRewardToIPFS(
     displayUri: undefined,
     youtubeUri: undefined,
     backgroundColor: undefined,
-    attributes: {
-      contributionFloor: rewardTier.contributionFloor,
-      maxSupply: rewardTier.maxSupply,
-    },
+    attributes: [
+      {
+        trait_type: 'Min. Contribution',
+        value: rewardTier.contributionFloor,
+      },
+      {
+        trait_type: 'Max. Supply',
+        value: rewardTier.maxSupply,
+      },
+    ],
   }
   const res = await axios.post('/api/ipfs/pin', {
     data: ipfsNftRewardTier,
@@ -168,6 +183,44 @@ export async function uploadNftRewardsToIPFS(
   return await Promise.all(
     nftRewards.map(rewardTier => uploadNftRewardToIPFS(rewardTier)),
   )
+}
+
+export async function uploadNftCollectionMetadataToIPFS({
+  collectionName,
+  collectionDescription,
+  collectionLogoUri,
+  collectionInfoUri,
+}: {
+  collectionName: string
+  collectionDescription: string
+  collectionLogoUri: string | undefined
+  collectionInfoUri: string | undefined
+}) {
+  // TODO: add inputs for the rest of these fields
+  const ipfsNftCollectionMetadata: IpfsNftCollectionMetadata = {
+    name: collectionName,
+    description: collectionDescription,
+    image: collectionLogoUri?.length
+      ? collectionLogoUri
+      : juiceboxEmojiImageUri,
+    seller_fee_basis_points: undefined,
+    external_link: collectionInfoUri?.length
+      ? collectionInfoUri
+      : 'https://juicebox.money',
+    fee_recipient: undefined,
+  }
+  const res = await axios.post('/api/ipfs/pin', {
+    data: ipfsNftCollectionMetadata,
+    options: {
+      pinataMetadata: {
+        keyvalues: {
+          tag: IPFS_TAGS.NFT_REWARDS_COLLECTION_METADATA,
+        } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+        name: collectionName,
+      },
+    },
+  })
+  return res.data.IpfsHash as string
 }
 
 // returns a native IPFS link (`ipfs://cid`) as a https link

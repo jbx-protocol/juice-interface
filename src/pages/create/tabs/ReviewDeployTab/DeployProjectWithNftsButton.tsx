@@ -69,7 +69,13 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
     projectMetadata,
     reservedTokensGroupedSplits,
     payoutGroupedSplits,
-    nftRewards: { CIDs, rewardTiers, collectionName, collectionSymbol },
+    nftRewards: {
+      CIDs,
+      rewardTiers,
+      collectionName,
+      collectionSymbol,
+      collectionCID,
+    },
   } = useAppSelector(state => state.editingV2Project)
   const fundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
   const fundingCycleData = useEditingV2FundingCycleDataSelector()
@@ -154,6 +160,7 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
 
         txSuccessful = await launchProjectWithNftsTx(
           {
+            collectionCID: collectionCID ?? '',
             collectionName: collectionName ?? projectName,
             collectionSymbol: collectionSymbol ?? '',
             projectMetadataCID: uploadedMetadata.IpfsHash,
@@ -189,6 +196,7 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
     rewardTiers,
     collectionName,
     collectionSymbol,
+    collectionCID,
     dispatch,
     router,
   ])

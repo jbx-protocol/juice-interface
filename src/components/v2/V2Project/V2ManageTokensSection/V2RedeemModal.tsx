@@ -16,6 +16,7 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useETHReceivedFromTokens } from 'hooks/v2/contractReader/ETHReceivedFromTokens'
 import useTotalBalanceOf from 'hooks/v2/contractReader/TotalBalanceOf'
 import { useRedeemTokensTx } from 'hooks/v2/transactor/RedeemTokensTx'
+import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { V2_CURRENCY_USD } from 'utils/v2/currency'
 import { formatRedemptionRate } from 'utils/v2/math'
@@ -103,7 +104,7 @@ export default function V2RedeemModal({
     return Promise.resolve()
   }
 
-  const exectuteRedeemTransaction = async () => {
+  const executeRedeemTransaction = async () => {
     await form.validateFields()
     if (!minReturnedTokens) return
 
@@ -126,9 +127,10 @@ export default function V2RedeemModal({
           setLoading(false)
           onConfirmed?.()
         },
-        onError: () => {
+        onError: (e: DOMException) => {
           setTransactionPending(false)
           setLoading(false)
+          emitErrorNotification(e.message)
         },
       },
     )
@@ -153,7 +155,7 @@ export default function V2RedeemModal({
       visible={visible}
       confirmLoading={loading}
       onOk={() => {
-        exectuteRedeemTransaction()
+        executeRedeemTransaction()
       }}
       onCancel={() => {
         setRedeemAmount(undefined)

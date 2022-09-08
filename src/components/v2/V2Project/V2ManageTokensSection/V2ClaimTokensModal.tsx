@@ -12,6 +12,7 @@ import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedT
 import { useClaimTokensTx } from 'hooks/v2/transactor/ClaimTokensTx'
 import { useContext, useLayoutEffect, useState } from 'react'
 import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
+import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export default function V2ClaimTokensModal({
@@ -58,9 +59,10 @@ export default function V2ClaimTokensModal({
           setTransactionPending(false)
           onConfirmed?.()
         },
-        onError: () => {
+        onError: (e: DOMException) => {
           setTransactionPending(false)
           setLoading(false)
+          emitErrorNotification(e.message)
         },
       },
     )

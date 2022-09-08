@@ -11,6 +11,7 @@ import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/TransactionModal'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useMintTokensTx } from 'hooks/v2/transactor/MintTokensTx'
+import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export default function V2MintModal({
@@ -60,9 +61,10 @@ export default function V2MintModal({
           setTransactionPending(false)
           onConfirmed?.()
         },
-        onError: () => {
+        onError: (e: DOMException) => {
           setTransactionPending(false)
           setLoading(false)
+          emitErrorNotification(e.message)
         },
       },
     )

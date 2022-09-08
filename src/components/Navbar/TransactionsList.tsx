@@ -62,7 +62,7 @@ export default function TransactionsList({
 
   return (
     <div style={{ ...style }}>
-      {transactions?.length && (
+      {!!transactions?.length && (
         <div
           className="clickable-border"
           role="button"
@@ -90,7 +90,6 @@ export default function TransactionsList({
             display: 'flex',
             flexDirection: 'column',
             gap: 10,
-            width: 300,
             ...listStyle,
           }}
         >

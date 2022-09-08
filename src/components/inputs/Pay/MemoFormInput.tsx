@@ -9,9 +9,11 @@ import { useContext, useState } from 'react'
 export function MemoFormInput({
   value,
   onChange,
+  placeholder,
 }: {
   value?: string
   onChange?: (memo: string) => void
+  placeholder?: string
 }) {
   const {
     theme: { colors },
@@ -28,7 +30,7 @@ export function MemoFormInput({
         }}
       >
         <Input.TextArea
-          placeholder={t`WAGMI!`}
+          placeholder={placeholder ? placeholder : t`Memo (optional)`}
           maxLength={256}
           value={value}
           onChange={e => onChange?.(e.target.value)}

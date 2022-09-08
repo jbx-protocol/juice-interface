@@ -10,7 +10,10 @@ import { useAppSelector } from 'hooks/AppSelector'
 import { NftRewardTier } from 'models/v2/nftRewardTier'
 import { useCallback, useContext, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
-import { uploadNftRewardsToIPFS } from 'utils/ipfs'
+import {
+  uploadNftCollectionMetadataToIPFS,
+  uploadNftRewardsToIPFS,
+} from 'utils/ipfs'
 import { sortNftRewardTiers } from 'utils/v2/nftRewards'
 
 import { shadowCard } from 'constants/styles/shadowCard'
@@ -45,6 +48,7 @@ export default function NftDrawer({
       collectionName: savedCollectionName,
       collectionSymbol: savedCollectionSymbol,
     },
+    projectMetadata: { name: projectName, logoUri, infoUri },
   } = useAppSelector(state => state.editingV2Project)
 
   const [addTierModalVisible, setAddTierModalVisible] = useState<boolean>(false)
@@ -61,18 +65,44 @@ export default function NftDrawer({
     savedCollectionSymbol,
   )
 
+  const defaultCollectionName = `${projectName} NFT rewards`
+  const defaultCollectionDescription = `The NFT's rewarded to ${projectName}'s Juicebox contributors.`
+
   const onNftFormSaved = useCallback(async () => {
     setSubmitLoading(true)
-    // Calls cloud function to store NftRewards to IPFS
-    const CIDs = await uploadNftRewardsToIPFS(rewardTiers)
+    const [rewardTiersCIDs, nftCollectionMetadataCID] = await Promise.all([
+      uploadNftRewardsToIPFS(rewardTiers),
+      uploadNftCollectionMetadataToIPFS({
+        collectionName: collectionName ?? defaultCollectionName,
+        collectionDescription: defaultCollectionDescription,
+        collectionLogoUri: logoUri,
+        collectionInfoUri: infoUri,
+      }),
+    ])
+
     dispatch(editingV2ProjectActions.setNftRewardsName(collectionName))
     dispatch(editingV2ProjectActions.setNftRewardsSymbol(collectionSymbol))
     dispatch(editingV2ProjectActions.setNftRewardTiers(rewardTiers))
+    dispatch(
+      editingV2ProjectActions.setNftRewardsCollectionMetadataCID(
+        nftCollectionMetadataCID,
+      ),
+    )
     // Store cid (link to nfts on IPFS) to be used later in the deploy tx
-    dispatch(editingV2ProjectActions.setNftRewardsCIDs(CIDs))
+    dispatch(editingV2ProjectActions.setNftRewardsCIDs(rewardTiersCIDs))
     setSubmitLoading(false)
     onClose?.()
-  }, [rewardTiers, dispatch, onClose, collectionSymbol, collectionName])
+  }, [
+    rewardTiers,
+    dispatch,
+    onClose,
+    collectionSymbol,
+    collectionName,
+    defaultCollectionName,
+    defaultCollectionDescription,
+    logoUri,
+    infoUri,
+  ])
 
   const handleAddRewardTier = (newRewardTier: NftRewardTier) => {
     setRewardTiers(sortNftRewardTiers([...rewardTiers, newRewardTier]))

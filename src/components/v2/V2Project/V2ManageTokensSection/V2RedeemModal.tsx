@@ -11,6 +11,7 @@ import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
 import Callout from 'components/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import { MemoFormInput } from 'components/inputs/Pay/MemoFormInput'
 import TransactionModal from 'components/TransactionModal'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useETHReceivedFromTokens } from 'hooks/v2/contractReader/ETHReceivedFromTokens'
@@ -44,6 +45,7 @@ export default function V2RedeemModal({
 
   const [redeemAmount, setRedeemAmount] = useState<string>()
   const [loading, setLoading] = useState<boolean>()
+  const [memo, setMemo] = useState<string>('')
   const [transactionPending, setTransactionPending] = useState<boolean>()
 
   const [form] = useForm<{
@@ -114,6 +116,7 @@ export default function V2RedeemModal({
       {
         redeemAmount: parseWad(redeemAmount),
         minReturnedTokens,
+        memo,
       },
       {
         // step 1
@@ -254,6 +257,9 @@ export default function V2RedeemModal({
                 disabled={totalBalance?.eq(0)}
                 onChange={val => setRedeemAmount(val)}
               />
+            </Form.Item>
+            <Form.Item label={t`Memo`}>
+              <MemoFormInput value={memo} onChange={setMemo} />
             </Form.Item>
           </Form>
 

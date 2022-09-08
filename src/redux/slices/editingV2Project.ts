@@ -42,6 +42,7 @@ interface V2ProjectState {
     CIDs: string[] | undefined // points to locations of the NFTs' json on IPFS
     collectionSymbol: string | undefined
     collectionName: string | undefined
+    collectionCID: string | undefined
   }
 }
 
@@ -116,6 +117,7 @@ export const defaultProjectState: V2ProjectState = {
     CIDs: undefined,
     collectionSymbol: undefined,
     collectionName: undefined,
+    collectionCID: undefined,
   },
 }
 
@@ -221,6 +223,12 @@ const editingV2ProjectSlice = createSlice({
     },
     setNftRewardsCIDs: (state, action: PayloadAction<string[]>) => {
       state.nftRewards.CIDs = action.payload
+    },
+    setNftRewardsCollectionMetadataCID: (
+      state,
+      action: PayloadAction<string | undefined>,
+    ) => {
+      state.nftRewards.collectionCID = action.payload
     },
     setNftRewardsSymbol: (state, action: PayloadAction<string | undefined>) => {
       state.nftRewards.collectionSymbol = action.payload

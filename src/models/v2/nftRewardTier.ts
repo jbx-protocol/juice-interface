@@ -25,13 +25,16 @@ export type ContractNftRewardTier = {
   encodedIPFSUri: string // encoded link to the rewardTier on IPFS
 }
 
+type OpenSeaAttribute = {
+  //eslint-disable-next-line
+  trait_type: string
+  value: number | undefined
+}
+
 // How the reward tiers are stored on IPFS
 // Tank - the following are guidelines on NFT keys and tier JSON, derivates from EIP-721, https://github.com/ethereum/EIPs/blob/master/EIPS/eip-721.md
 export type IPFSNftRewardTier = {
-  attributes: {
-    contributionFloor: number
-    maxSupply: number | undefined
-  }
+  attributes: OpenSeaAttribute[]
   name: string
   symbol: string | undefined
   description: string | undefined
@@ -43,4 +46,14 @@ export type IPFSNftRewardTier = {
   externalLink: string | undefined // external_uri (optional, This is the URL that will appear below the asset's image on OpenSea and will allow users to leave OpenSea and view the item on your site.)
   youtubeUri: string | undefined // youtube_uri (optional, A URL to a YouTube video.)
   backgroundColor: string | undefined // background_color, (optional, Background color of the item on OpenSea. Must be a six-character hexadecimal without a pre-pended #.)
+}
+
+// Metadata for the whole collection on IPFS
+export type IpfsNftCollectionMetadata = {
+  name: string
+  description: string | undefined
+  image: string | undefined
+  external_link: string | undefined
+  seller_fee_basis_points: number | undefined
+  fee_recipient: string | undefined
 }

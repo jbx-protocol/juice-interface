@@ -7,11 +7,10 @@ import {
 } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { ThemeContext } from 'contexts/themeContext'
-import { NetworkName } from 'models/network-name'
 import { TxStatus } from 'models/transaction'
 import { CSSProperties, useContext, useEffect, useMemo, useState } from 'react'
+import { etherscanLinkForTxHash } from 'utils/etherscan'
 import { formatHistoricalDate } from 'utils/formatDate'
-import { readNetwork } from '../../constants/networks'
 import {
   timestampForTxLog,
   TxHistoryContext,
@@ -122,9 +121,7 @@ export default function TransactionsList({
                     }}
                     href={
                       tx.tx.hash
-                        ? `https://${readNetwork.name}${
-                            readNetwork.name !== NetworkName.mainnet ? '.' : ''
-                          }etherscan.io/tx/${tx.tx.hash}`
+                        ? etherscanLinkForTxHash(tx.tx.hash)
                         : undefined
                     }
                     target="_blank"

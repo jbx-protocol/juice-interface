@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-08-28 00:36\n"
+"PO-Revision-Date: 2022-09-04 00:36\n"
 "Last-Translator: \n"
 "Language: fr_FR\n"
 "Language-Team: French\n"
@@ -412,6 +412,9 @@ msgstr "Tout reparamétrage d'un cycle de financement à venir sera effectif une
 msgid "Approve token for transaction"
 msgstr ""
 
+msgid "Archive Project"
+msgstr ""
+
 msgid "Archive project"
 msgstr "Archiver le projet"
 
@@ -447,6 +450,9 @@ msgstr "Les fonds disponibles peuvent être distribués selon les paiements ci-d
 
 msgid "Available:"
 msgstr "Disponible :"
+
+msgid "Back to project"
+msgstr ""
 
 msgid "Back to top"
 msgstr "Haut de page"
@@ -534,9 +540,6 @@ msgstr ""
 
 msgid "Changes to payouts will take effect immediately."
 msgstr ""
-
-msgid "Changes to project details will take effect immediately."
-msgstr "Les modifications apportées aux détails du projet prendront effet immédiatement."
 
 msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
 msgstr "Ces attributs peuvent être modifiés à tout moment et les changements seront appliqués immédiatement à votre projet."
@@ -781,9 +784,6 @@ msgstr "Supprimer paiement"
 msgid "Delete token allocation"
 msgstr "Supprimer l'allocation de token"
 
-msgid "Deploy Payment Address"
-msgstr ""
-
 msgid "Deploy Payment Address contract"
 msgstr ""
 
@@ -988,9 +988,6 @@ msgstr ""
 msgid "Edit project"
 msgstr "Modifier le projet"
 
-msgid "Edit project details"
-msgstr "Modifier les détails du projet"
-
 msgid "Edit reserved token allocation"
 msgstr "Modifier l'allocation des tokens réservés"
 
@@ -1063,9 +1060,6 @@ msgstr ""
 msgid "Extend lock successful. Results will be indexed in a few moments."
 msgstr ""
 
-msgid "FAQ"
-msgstr ""
-
 msgid "FAQs"
 msgstr ""
 
@@ -1133,6 +1127,9 @@ msgid "Give feedback"
 msgstr "Donner un feedback"
 
 msgid "Give this NFT a name."
+msgstr ""
+
+msgid "Governance"
 msgstr ""
 
 msgid "Grant permission"
@@ -1302,12 +1299,6 @@ msgstr "Identifiant du projet Juicebox"
 
 msgid "Juicebox V1 project ID"
 msgstr ""
-
-msgid "Juicebox V2 project"
-msgstr ""
-
-msgid "Juicebox V2 project with ID {0}"
-msgstr "Projet Juicebox V2 avec Identifiant {0}"
 
 msgid "Juicebox gives you the tools to automate your funding so you can focus on building."
 msgstr ""
@@ -1495,6 +1486,9 @@ msgstr ""
 msgid "Newly minted {tokenSymbolPlural} <0>received by contributors</0> per ETH they contribute to the treasury."
 msgstr ""
 
+msgid "Newsletter"
+msgstr ""
+
 msgid "Next: Funding cycle"
 msgstr "Suivant : Cycle de financement"
 
@@ -1576,9 +1570,6 @@ msgstr ""
 msgid "Other assets in this project's owner's wallet."
 msgstr "Autres actifs dans le portefeuille du propriétaire de ce projet."
 
-msgid "Other details"
-msgstr ""
-
 msgid "Overflow"
 msgstr ""
 
@@ -1657,6 +1648,9 @@ msgstr "Le paiement de ce projet est actuellement désactivé."
 msgid "Payment Address created"
 msgstr ""
 
+msgid "Payment Addresses"
+msgstr ""
+
 msgid "Payment equivalent"
 msgstr ""
 
@@ -1699,7 +1693,7 @@ msgstr ""
 msgid "Payouts to Ethereum addresses incur a {feePercentage}% fee. Your project will receive JBX in return at the current issuance rate."
 msgstr "Les paiements aux adresses Ethereum entraînent des frais de {feePercentage}%. Votre projet recevra des JBX en retour, au taux d'émission actuel."
 
-msgid "Peel"
+msgid "PeelDAO"
 msgstr ""
 
 msgid "Percent"
@@ -1726,11 +1720,20 @@ msgstr "Risques potentiels"
 msgid "Preview"
 msgstr ""
 
+msgid "Project #{projectId}"
+msgstr ""
+
 msgid "Project Created"
 msgstr "Projet Créé"
 
+msgid "Project Handle"
+msgstr ""
+
 msgid "Project ID must be a number."
 msgstr "L'identifiant du projet doit être un numéro."
+
+msgid "Project Settings"
+msgstr ""
 
 msgid "Project Token"
 msgstr "Token du projet"
@@ -1752,9 +1755,6 @@ msgstr "Détails du projet"
 
 msgid "Project details can be edited at any time."
 msgstr "Les détails du projet peuvent être modifiés à tout moment."
-
-msgid "Project details reconfigurations will create a separate transaction."
-msgstr "Les modifications des détails du projet créeront une transaction à part."
 
 msgid "Project handle"
 msgstr "Identifiant du projet"
@@ -1809,9 +1809,6 @@ msgstr ""
 
 msgid "Project {name} will be available soon! Try refreshing the page shortly."
 msgstr "Le projet {name} sera bientôt disponible ! Essayez d'actualiser la page sous peu."
-
-msgid "Project {projectId}"
-msgstr "Projet {projectId}"
 
 msgid "Project {projectId} not found"
 msgstr "Projet {projectId} introuvable"
@@ -1897,14 +1894,14 @@ msgstr "Stratégie de reparamétrage"
 msgid "Reconfigure"
 msgstr "Modifier les paramètres"
 
+msgid "Reconfigure Funding Cycle"
+msgstr ""
+
 msgid "Reconfigure payouts as percentages of your distribution limit."
 msgstr ""
 
 msgid "Reconfigure project and funding details"
 msgstr "Reconfigurer les détails du projet et du financement"
-
-msgid "Reconfigure project details"
-msgstr "Modifier les détails du projet"
 
 msgid "Reconfigure upcoming"
 msgstr "Modifier les prochains cycles"
@@ -1962,6 +1959,9 @@ msgstr "Demandé"
 
 msgid "Reserve a percentage of freshly minted tokens for your project to use."
 msgstr "Réserver un pourcentage de nouveaux tokens créés à être utilisé par votre projet."
+
+msgid "Reserved Token Allocation"
+msgstr ""
 
 msgid "Reserved rate"
 msgstr "Taux de réservation"
@@ -2386,6 +2386,9 @@ msgstr "Ce projet a été archivé et ne peut pas être payé."
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
 msgstr "Ce projet utilise actuellement le contrat de terminal Juicebox V1. Les nouvelles fonctionnalités introduites dans V1.1 permettent au propriétaire du projet de :"
 
+msgid "This project is owned by a Gnosis Safe."
+msgstr ""
+
 msgid "This project reserves some of the newly minted tokens for itself."
 msgstr ""
 
@@ -2554,6 +2557,9 @@ msgstr "Transaction en attente..."
 msgid "Transaction unsuccessful"
 msgstr "Transaction échouée"
 
+msgid "Transfer Ownership"
+msgstr ""
+
 msgid "Transfer ownership"
 msgstr "Transférer la propriété"
 
@@ -2617,9 +2623,6 @@ msgstr "À venir"
 msgid "Update your veNFT's lock duration."
 msgstr ""
 
-msgid "Updates you make to this section will only be applied to <0>upcoming</0> funding cycles."
-msgstr "Les mises à jour que vous apportez à cette section ne seront appliquées qu'aux cycles de financement <0>à venir</0>."
-
 msgid "Upload"
 msgstr "Importer"
 
@@ -2629,11 +2632,11 @@ msgstr ""
 msgid "Upload an image"
 msgstr ""
 
+msgid "Uploaded to: <0>{imageUrl}</0>"
+msgstr ""
+
 msgid "Uploaded to: <0>{url}</0>"
 msgstr "Importé vers : <0>{url}</0>"
-
-msgid "Uploaded to: <0>{value}</0>"
-msgstr ""
 
 msgid "Use <0>Amounts</0> when you want to configure a <1>distribution limit</1>. Treasury funds that exceed the distribution limit are called <2>overflow</2>. Token holders can redeem (burn) their tokens for a portion of the overflow. <3>Learn more</3>."
 msgstr "Utilisez l'option <0>Montants</0> lorsque vous souhaitez configurer une <1>limite de distribution</1>. Les fonds de la trésorerie qui dépassent la limite de distribution sont appelés <2>overflow</2>. Les détenteurs de tokens peuvent échanger (brûler) leurs tokens contre une partie de l'overflow . <3>En savoir plus </3>."
@@ -2650,10 +2653,10 @@ msgstr "Il est recommandé d'utiliser une stratégie de reconfiguration. Les pro
 msgid "V1"
 msgstr ""
 
-msgid "V1 token holders can swap their tokens for your V2 tokens on your V2 project's <0>Tokens</0> section."
+msgid "V1 Token Migration"
 msgstr ""
 
-msgid "V1 token migration"
+msgid "V1 token holders can swap their tokens for your V2 tokens on your V2 project's <0>Tokens</0> section."
 msgstr ""
 
 msgid "V1 tokens to swap"
@@ -2663,6 +2666,9 @@ msgid "V1.1"
 msgstr ""
 
 msgid "V2"
+msgstr ""
+
+msgid "VeNFT Governance"
 msgstr ""
 
 msgid "Version of the terminal contract used by this project."
@@ -2766,9 +2772,6 @@ msgstr "Avec Juicebox, les projets sont construits et maintenus par des punks mo
 
 msgid "With no funding cycles, the project's owner can start a new funding cycle (Funding Cycle #2) on-demand. <0>Learn more.</0>"
 msgstr "En l'absence de cycles de financement, le propriétaire du projet peut démarrer un nouveau cycle de financement (cycle de financement #2) à la demande. <0>En savoir plus.</0>"
-
-msgid "Workspace"
-msgstr "Espace de travail"
 
 msgid "Would you like to issue an ERC-20 token to be used as this project's token?"
 msgstr "Souhaitez-vous émettre un token ERC-20 à utiliser comme token de ce projet ?"
@@ -2980,9 +2983,6 @@ msgstr "tokens récupérés"
 msgid "until"
 msgstr "jusqu'à"
 
-msgid "veNFT"
-msgstr ""
-
 msgid "veNFT Tiers ({0} variants)"
 msgstr ""
 
@@ -2990,9 +2990,6 @@ msgid "{0, plural, one {# Payment Address} other {# Payment Addresses}}"
 msgstr ""
 
 msgid "{0, plural, one {View deployed Payment Address} other {View deployed Payment Addresses}}"
-msgstr ""
-
-msgid "{0} - Project payer contracts"
 msgstr ""
 
 msgid "{0} after JBX fee"

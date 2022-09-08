@@ -16,6 +16,7 @@ import {
   emitErrorNotification,
   emitSuccessNotification,
 } from 'utils/notifications'
+import { reloadWindow } from 'utils/windowUtils'
 
 type ConfirmStakeModalProps = {
   visible: boolean
@@ -53,6 +54,7 @@ export default function ConfirmStakeModal({
   } = useWallet()
   const [loading, setLoading] = useState(false)
   const [transactionPending, setTransactionPending] = useState(false)
+
   const recipient = beneficiary !== '' ? beneficiary : userAddress
 
   const tokensStakedInWad = parseWad(tokensStaked)
@@ -103,12 +105,14 @@ export default function ConfirmStakeModal({
             t`Lock successful. Results will be indexed in a few moments.`,
           )
           onCompleted()
+          reloadWindow()
         },
       },
     )
 
     if (!txSuccess) {
       setLoading(false)
+      setTransactionPending(false)
     }
   }
 

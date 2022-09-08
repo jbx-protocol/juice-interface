@@ -9,24 +9,14 @@ import { layouts } from 'constants/styles/layouts'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
+import { V2SettingsPageKey } from 'models/menu-keys'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
-import { pushSettingsContent, v2ProjectRoute } from 'utils/routes'
+import { pushMenuContent, v2ProjectRoute } from 'utils/routes'
 
 type MenuItem = Required<MenuProps>['items'][number]
-
-export type V2SettingsPageKey =
-  | 'general'
-  | 'projecthandle'
-  | 'reconfigurefc'
-  | 'payouts'
-  | 'reservedtokens'
-  | 'v1tokenmigration'
-  | 'venft'
-  | 'transferownership'
-  | 'archiveproject'
 
 export const V2SettingsPageKeyTitleMap: { [k in V2SettingsPageKey]: string } = {
   general: t`General`,
@@ -112,7 +102,7 @@ export function V2ProjectSettings() {
     const key = item?.key as V2SettingsPageKey | undefined
     if (!key) return
 
-    pushSettingsContent(router, key)
+    pushMenuContent(router, key)
   }
 
   return (

@@ -1,6 +1,6 @@
 {
   "title": "Juicebox",
-  "titleTemplate": "%s - Juicebox",
+  "titleTemplate": "%s | Juicebox",
   "description": "The programmable funding protocol. Built for DAOs, crowdfunding, Web3 businesses and communities. Fund your thing on Ethereum.",
   "twitter": {
     "handle": "@juiceboxETH",

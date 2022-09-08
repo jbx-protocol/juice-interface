@@ -1,5 +1,5 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
-import { V2SettingsPageKey } from 'components/v2/V2Project/V2ProjectSettings/V2ProjectSettings'
+import { MenuKey, V2SettingsPageKey, V2VeNftPageKey } from 'models/menu-keys'
 import { NextRouter } from 'next/router'
 
 export const v2ProjectRoute = ({
@@ -35,9 +35,25 @@ export const settingsPagePath = (
   })}/settings?page=${settingsPage}`
 }
 
-export const pushSettingsContent = (
+export const veNftPagePath = (
+  settingsPage: V2VeNftPageKey,
+  {
+    projectId,
+    handle,
+  }: {
+    projectId?: BigNumberish
+    handle?: string | null
+  },
+) => {
+  return `${v2ProjectRoute({
+    projectId,
+    handle,
+  })}/venft?page=${settingsPage}`
+}
+
+export const pushMenuContent = (
   router: NextRouter,
-  contentKey: V2SettingsPageKey,
+  contentKey: MenuKey,
   options: { shallow?: boolean; scroll?: boolean } = {
     shallow: true,
     scroll: false,

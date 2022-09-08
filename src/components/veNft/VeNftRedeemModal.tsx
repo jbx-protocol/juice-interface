@@ -104,12 +104,19 @@ const VeNftRedeemModal = ({
     >
       <div style={{ color: colors.text.secondary }}>
         <p>
-          <Trans>Redeeming this NFT will burn the token and return...</Trans>
+          <Trans>
+            Redeeming this NFT will burn the token, as well as the underlying
+            project token, and you will receive token from the project overflow
+            in return.
+          </Trans>
         </p>
       </div>
       <Form form={form} layout="vertical">
         <MemoFormInput value={memo} onChange={setMemo} />
-        <CustomBeneficiaryInput form={form} />
+        <CustomBeneficiaryInput
+          form={form}
+          labelText={t`Send redeemed token to a custom address`}
+        />
       </Form>
     </TransactionModal>
   )

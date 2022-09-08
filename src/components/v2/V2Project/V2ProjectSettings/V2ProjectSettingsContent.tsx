@@ -1,9 +1,7 @@
 import { Divider, Layout } from 'antd'
-import {
-  V2SettingsPageKey,
-  V2SettingsPageKeyTitleMap,
-} from 'components/v2/V2Project/V2ProjectSettings/V2ProjectSettings'
+import { V2SettingsPageKeyTitleMap } from 'components/v2/V2Project/V2ProjectSettings/V2ProjectSettings'
 import { ThemeContext } from 'contexts/themeContext'
+import { V2SettingsPageKey } from 'models/menu-keys'
 import { useRouter } from 'next/router'
 import { useContext, useMemo } from 'react'
 import { V1V2TokenMigrationSettingsPage } from './pages/V1V2TokenMigrationSettingsPage/V1V2TokenMigrationSettingsPage'

@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Split } from 'models/v2/splits'
+import { useMemo } from 'react'
 import { getProjectOwnerRemainderSplit } from 'utils/v2/splits'
 
 import SplitItem from './SplitItem'
@@ -23,9 +24,10 @@ export default function SplitList({
   valueFormatProps?: { precision?: number }
   reservedRate?: number
 }) {
-  const ownerSplit = projectOwnerAddress
-    ? getProjectOwnerRemainderSplit(projectOwnerAddress, splits)
-    : undefined
+  const ownerSplit = useMemo(() => {
+    if (!projectOwnerAddress) return
+    return getProjectOwnerRemainderSplit(projectOwnerAddress, splits)
+  }, [projectOwnerAddress, splits])
 
   return (
     <div>

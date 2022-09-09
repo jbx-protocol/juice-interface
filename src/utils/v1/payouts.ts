@@ -8,7 +8,7 @@ import {
   percentToPerbicent,
   stripCommas,
 } from 'utils/formatNumber'
-import { amountAddFee, amountSubFee } from 'utils/math'
+import { amountAddFee, amountSubFee } from 'utils/v1/math'
 
 // Returns formatted 'funding target after fee'
 // given 'funding target'

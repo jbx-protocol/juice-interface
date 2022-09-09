@@ -9,13 +9,13 @@ type ResourceItem = {
 export const resourcesMenuItems = (): ResourceItem[] => {
   return [
     {
-      text: t`Governance`,
       key: 'governance',
+      text: t`Governance`,
       link: 'https://vote.juicebox.money/#/jbdao.eth',
     },
     {
-      text: t`Newsletter`,
       key: 'newsletter',
+      text: t`Newsletter`,
       link: 'https://newsletter.juicebox.money',
     },
     {

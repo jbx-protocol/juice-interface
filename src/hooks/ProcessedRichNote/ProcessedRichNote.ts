@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { formatIpfsLink } from 'utils/ipfs'
+import { formatIpfsLink, ipfsLinkRegex } from 'utils/ipfs'
 
 import { ProjectPreferences } from 'constants/v2/projectPreferences'
 import { loadAllMediaLinks } from './loadAllMediaLinks'
@@ -7,11 +7,6 @@ import { loadAllMediaLinks } from './loadAllMediaLinks'
 // Gets strings that start with 'https'
 const URLRegex = new RegExp(
   /((?:https?):\/\/(?:\w+:?\w*)?(?:\S+)(:\d+)?(?:\/|\/([\w#!:.?+=&%!\-/]))?)/gi,
-)
-
-// Gets strings that start with 'ipfs'
-const ipfsLinkRegex = new RegExp(
-  /((?:ipfs?):\/\/(?:\w+:?\w*)?(?:\S+)(:\d+)?(?:\/|\/([\w#!:.?+=&%!\-/]))?)/gi,
 )
 
 /**

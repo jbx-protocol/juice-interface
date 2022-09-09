@@ -259,7 +259,11 @@ export function V2ConfirmPayModal({
           ) : null}
         </Descriptions>
 
-        <V2PayForm form={form} onFinish={() => pay()} />
+        <V2PayForm
+          form={form}
+          onFinish={() => pay()}
+          nftRewardTier={nftRewardTier}
+        />
       </Space>
     </TransactionModal>
   )

@@ -9,19 +9,19 @@ type ResourceItem = {
 export const resourcesMenuItems = (): ResourceItem[] => {
   return [
     {
-      text: t`Governance`,
       key: 'governance',
+      text: t`Governance`,
       link: 'https://vote.juicebox.money/#/jbdao.eth',
     },
     {
-      text: t`Newsletter`,
       key: 'newsletter',
+      text: t`Newsletter`,
       link: 'https://newsletter.juicebox.money',
     },
     {
       key: 'podcast',
       text: t`Podcast`,
-      link: 'https://open.spotify.com/show/4G8ji7vofcOx2acXcjXIa4?si=1e5e6e171ed744e8',
+      link: 'https://podcast.juicebox.money/',
     },
     {
       key: 'peel',

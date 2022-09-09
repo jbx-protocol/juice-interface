@@ -14,7 +14,6 @@ import {
   perbicentToPercent,
   permilleToPercent,
 } from 'utils/formatNumber'
-import { weightedRate } from 'utils/math'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import {
   decodeFundingCycleMetadata,
@@ -22,6 +21,7 @@ import {
   hasFundingTarget,
   isRecurring,
 } from 'utils/v1/fundingCycle'
+import { weightedRate } from 'utils/v1/math'
 
 import { V1CurrencyName } from 'utils/v1/currency'
 

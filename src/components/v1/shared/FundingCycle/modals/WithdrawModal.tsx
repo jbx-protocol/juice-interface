@@ -20,8 +20,8 @@ import {
   parseWad,
   perbicentToPercent,
 } from 'utils/formatNumber'
-import { amountSubFee, feeForAmount } from 'utils/math'
 import { V1CurrencyName } from 'utils/v1/currency'
+import { amountSubFee, feeForAmount } from 'utils/v1/math'
 
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { V1_CURRENCY_USD } from 'constants/v1/currency'

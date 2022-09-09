@@ -24,7 +24,7 @@ import {
   percentToPermyriad,
   permyriadToPercent,
 } from 'utils/formatNumber'
-import { amountSubFee } from 'utils/math'
+import { amountSubFee } from 'utils/v1/math'
 import { getAmountFromPercent, getPercentFromAmount } from 'utils/v1/payouts'
 
 import * as constants from '@ethersproject/constants'

@@ -2057,6 +2057,9 @@ msgstr ""
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr ""
 
+msgid "Safe transactions"
+msgstr ""
+
 msgid "Save"
 msgstr ""
 

@@ -72,9 +72,11 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
     nftRewards: {
       CIDs,
       rewardTiers,
-      collectionName,
-      collectionSymbol,
-      collectionCID,
+      collectionMetadata: {
+        name: collectionName,
+        symbol: collectionSymbol,
+        CID: collectionCID,
+      },
     },
   } = useAppSelector(state => state.editingV2Project)
   const fundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()

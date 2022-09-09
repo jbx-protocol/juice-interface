@@ -21,7 +21,7 @@ export const resourcesMenuItems = (): ResourceItem[] => {
     {
       key: 'podcast',
       text: t`Podcast`,
-      link: 'https://open.spotify.com/show/4G8ji7vofcOx2acXcjXIa4?si=1e5e6e171ed744e8',
+      link: 'http://podcast.juicebox.money/',
     },
     {
       key: 'peel',

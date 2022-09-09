@@ -5,7 +5,8 @@ import { useContext } from 'react'
 import { t } from '@lingui/macro'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { TransactorInstance } from 'hooks/Transactor'
+import { onCatch, TransactorInstance } from 'hooks/Transactor'
+import invariant from 'tiny-invariant'
 import { useV2ProjectTitle } from '../ProjectTitle'
 
 const DEFAULT_METADATA = 0
@@ -20,20 +21,38 @@ export function useAddToBalanceTx(): TransactorInstance<{
   const DEFAULT_MEMO = ''
 
   return ({ value }, txOpts) => {
-    if (!transactor || !projectId || !contracts?.JBETHPaymentTerminal) {
-      txOpts?.onDone?.()
-      return Promise.resolve(false)
-    }
+    try {
+      invariant(
+        transactor &&
+          projectId &&
+          projectTitle &&
+          contracts?.JBETHPaymentTerminal,
+      )
+      return transactor(
+        contracts.JBETHPaymentTerminal,
+        'addToBalanceOf',
+        [projectId, value, ETH_TOKEN_ADDRESS, DEFAULT_MEMO, DEFAULT_METADATA],
+        {
+          ...txOpts,
+          value,
+          title: t`Add to balance of ${projectTitle}`,
+        },
+      )
+    } catch {
+      const missingParam = !transactor
+        ? 'transactor'
+        : !projectId
+        ? 'projectId'
+        : !contracts?.JBETHPaymentTerminal
+        ? 'contracts.JBETHPaymentTerminal'
+        : undefined
 
-    return transactor(
-      contracts?.JBETHPaymentTerminal,
-      'addToBalanceOf',
-      [projectId, value, ETH_TOKEN_ADDRESS, DEFAULT_MEMO, DEFAULT_METADATA],
-      {
-        ...txOpts,
-        value,
-        title: t`Add to balance of ${projectTitle}`,
-      },
-    )
+      return onCatch({
+        txOpts,
+        missingParam,
+        cv: '2',
+        functionName: 'addToBalanceOf',
+      })
+    }
   }
 }

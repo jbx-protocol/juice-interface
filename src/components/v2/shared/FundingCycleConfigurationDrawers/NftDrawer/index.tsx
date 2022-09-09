@@ -1,12 +1,12 @@
-import { PlusCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Button, Empty, Form, Input, Space } from 'antd'
+import { Button, Empty, Space } from 'antd'
 import NftRewardTierModal from 'components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal'
 import { ThemeContext } from 'contexts/themeContext'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 
+import { useForm } from 'antd/lib/form/Form'
 import { NftRewardTier } from 'models/v2/nftRewardTier'
 import { useCallback, useContext, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
@@ -14,11 +14,19 @@ import {
   uploadNftCollectionMetadataToIPFS,
   uploadNftRewardsToIPFS,
 } from 'utils/ipfs'
-import { sortNftRewardTiers } from 'utils/v2/nftRewards'
+import {
+  defaultNftCollectionDescription,
+  defaultNftCollectionName,
+  sortNftRewardTiers,
+} from 'utils/v2/nftRewards'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 
+import { MinimalCollapse } from 'components/MinimalCollapse'
+import TooltipIcon from 'components/TooltipIcon'
 import FundingCycleDrawer from '../FundingCycleDrawer'
+import { AddRewardTierButton } from './AddRewardTierButton'
+import { NftMarketplaceCustomizationForm } from './NftMarketplaceCustomizationForm'
 import NftRewardTierCard from './NftRewardTierCard'
 
 export const NFT_REWARDS_EXPLAINATION: JSX.Element = (
@@ -29,6 +37,12 @@ export const NFT_REWARDS_EXPLAINATION: JSX.Element = (
 )
 
 export const MAX_NFT_REWARD_TIERS = 3
+
+export type MarketplaceFormFields = {
+  collectionName: string
+  collectionSymbol: string
+  collectionDescription: string
+}
 
 export default function NftDrawer({
   visible,
@@ -43,13 +57,11 @@ export default function NftDrawer({
   } = useContext(ThemeContext)
   const dispatch = useAppDispatch()
   const {
-    nftRewards: {
-      rewardTiers: savedRewardTiers,
-      collectionName: savedCollectionName,
-      collectionSymbol: savedCollectionSymbol,
-    },
+    nftRewards: { rewardTiers: savedRewardTiers },
     projectMetadata: { name: projectName, logoUri, infoUri },
   } = useAppSelector(state => state.editingV2Project)
+
+  const [marketplaceForm] = useForm<MarketplaceFormFields>()
 
   const [addTierModalVisible, setAddTierModalVisible] = useState<boolean>(false)
   const [submitLoading, setSubmitLoading] = useState<boolean>(false)
@@ -58,30 +70,36 @@ export default function NftDrawer({
     savedRewardTiers ?? [],
   )
 
-  const [collectionName, setCollectionName] = useState<string | undefined>(
-    savedCollectionName,
-  )
-  const [collectionSymbol, setCollectionSymbol] = useState<string | undefined>(
-    savedCollectionSymbol,
-  )
-
-  const defaultCollectionName = `${projectName} NFT rewards`
-  const defaultCollectionDescription = `The NFT's rewarded to ${projectName}'s Juicebox contributors.`
-
   const onNftFormSaved = useCallback(async () => {
     setSubmitLoading(true)
+    const marketplaceFormValues = marketplaceForm.getFieldsValue(true)
+    const collectionName = marketplaceFormValues.collectionName
+
     const [rewardTiersCIDs, nftCollectionMetadataCID] = await Promise.all([
       uploadNftRewardsToIPFS(rewardTiers),
       uploadNftCollectionMetadataToIPFS({
-        collectionName: collectionName ?? defaultCollectionName,
-        collectionDescription: defaultCollectionDescription,
+        collectionName:
+          marketplaceFormValues.collectionName ??
+          defaultNftCollectionName(projectName),
+        collectionDescription:
+          marketplaceFormValues.collectionDescription ??
+          defaultNftCollectionDescription(projectName),
         collectionLogoUri: logoUri,
         collectionInfoUri: infoUri,
       }),
     ])
 
     dispatch(editingV2ProjectActions.setNftRewardsName(collectionName))
-    dispatch(editingV2ProjectActions.setNftRewardsSymbol(collectionSymbol))
+    dispatch(
+      editingV2ProjectActions.setNftRewardsSymbol(
+        marketplaceFormValues.collectionSymbol,
+      ),
+    )
+    dispatch(
+      editingV2ProjectActions.setNftRewardsSymbol(
+        marketplaceFormValues.collectionDescription,
+      ),
+    )
     dispatch(editingV2ProjectActions.setNftRewardTiers(rewardTiers))
     dispatch(
       editingV2ProjectActions.setNftRewardsCollectionMetadataCID(
@@ -96,10 +114,8 @@ export default function NftDrawer({
     rewardTiers,
     dispatch,
     onClose,
-    collectionSymbol,
-    collectionName,
-    defaultCollectionName,
-    defaultCollectionDescription,
+    marketplaceForm,
+    projectName,
     logoUri,
     infoUri,
   ])
@@ -155,32 +171,7 @@ export default function NftDrawer({
           }}
         >
           <p>{NFT_REWARDS_EXPLAINATION}</p>
-          <Form layout="vertical">
-            <Form.Item
-              requiredMark="optional"
-              label={t`Collection name`}
-              tooltip={t`Your collection's name will apply to the whole collection of reward tiers on NFT marketplaces (like OpenSea).`}
-            >
-              <Input
-                type="string"
-                value={collectionName}
-                autoComplete="off"
-                onChange={e => setCollectionName(e.target.value)}
-              />
-            </Form.Item>
-            <Form.Item
-              requiredMark="optional"
-              label={t`Collection symbol`}
-              tooltip={t`You collection's symbol will apply to the whole collection of reward tiers on NFT marketplaces (like OpenSea).`}
-            >
-              <Input
-                type="string"
-                value={collectionSymbol}
-                autoComplete="off"
-                onChange={e => setCollectionSymbol(e.target.value)}
-              />
-            </Form.Item>
-          </Form>
+
           <Space direction="vertical" size="large" style={{ width: '100%' }}>
             {rewardTiers.map((rewardTier, index) => (
               <NftRewardTierCard
@@ -203,20 +194,26 @@ export default function NftDrawer({
             />
           )}
 
-          <Button
-            type="dashed"
+          <AddRewardTierButton
             onClick={() => {
               setAddTierModalVisible(true)
             }}
-            style={{ marginTop: 15 }}
             disabled={rewardTiers.length >= MAX_NFT_REWARD_TIERS}
-            block
-            icon={<PlusCircleOutlined />}
+            style={{ marginBottom: 30 }}
+          />
+          <MinimalCollapse
+            header={
+              <>
+                <Trans>Marketplace customizations</Trans>
+                <TooltipIcon
+                  tip={t`Customize how your NFT collection will appear on NFT marketplaces (like OpenSea).`}
+                  iconStyle={{ marginLeft: 10 }}
+                />
+              </>
+            }
           >
-            <span>
-              <Trans>Add reward tier</Trans>
-            </span>
-          </Button>
+            <NftMarketplaceCustomizationForm form={marketplaceForm} />
+          </MinimalCollapse>
         </div>
         <Button
           onClick={onNftFormSaved}

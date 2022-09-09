@@ -32,12 +32,12 @@ import {
   perbicentToPercent,
   permilleToPercent,
 } from 'utils/formatNumber'
-import { amountSubFee } from 'utils/math'
 import {
   decodeFundingCycleMetadata,
   hasFundingTarget,
   isRecurring,
 } from 'utils/v1/fundingCycle'
+import { amountSubFee } from 'utils/v1/math'
 import { serializeV1FundingCycle } from 'utils/v1/serializers'
 
 import { V1CurrencyName } from 'utils/v1/currency'

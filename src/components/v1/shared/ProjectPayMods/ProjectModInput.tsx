@@ -12,7 +12,7 @@ import {
   percentToPerbicent,
   permyriadToPercent,
 } from 'utils/formatNumber'
-import { amountSubFee } from 'utils/math'
+import { amountSubFee } from 'utils/v1/math'
 
 import { BigNumber } from '@ethersproject/bignumber'
 

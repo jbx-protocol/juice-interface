@@ -12,7 +12,6 @@ import { usePayV1ProjectTx } from 'hooks/v1/transactor/PayV1ProjectTx'
 import { useWallet } from 'hooks/Wallet'
 import { useContext, useState } from 'react'
 import { formattedNum, formatWad } from 'utils/formatNumber'
-import { weightedRate } from 'utils/math'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { V1CurrencyName } from 'utils/v1/currency'
 import {
@@ -20,6 +19,7 @@ import {
   fundingCycleRiskCount,
   getUnsafeV1FundingCycleProperties,
 } from 'utils/v1/fundingCycle'
+import { weightedRate } from 'utils/v1/math'
 
 import Callout from 'components/Callout'
 import Paragraph from 'components/Paragraph'

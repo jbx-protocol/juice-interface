@@ -57,3 +57,10 @@ export type IpfsNftCollectionMetadata = {
   seller_fee_basis_points: number | undefined
   fee_recipient: string | undefined
 }
+
+export type NftCollectionMetadata = {
+  symbol: string | undefined
+  name: string | undefined
+  CID: string | undefined
+  description: string | undefined
+}

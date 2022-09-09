@@ -14,7 +14,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
-import { v2ProjectRoute } from 'utils/routes'
+import { pushMenuContent, v2ProjectRoute } from 'utils/routes'
 
 type MenuItem = Required<MenuProps>['items'][number]
 

@@ -11,6 +11,7 @@ export const PROJECT_PAY_CHARACTER_LIMIT = 16
 export const TEN_THOUSAND = 10000
 export const ONE_MILLION = 1000000
 export const ONE_BILLION = 1000000000
+export const ONE_TRILLION = 1000000000000
 
 export const MaxUint232 = constants.MaxUint256.add(1)
   .div(2 ** 24)

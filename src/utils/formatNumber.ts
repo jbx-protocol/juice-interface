@@ -263,3 +263,20 @@ export const truncateLongNumber = (num: number, digits: number) => {
     ? (num / item.value).toFixed(digits).replace(rx, '$1') + item.symbol
     : '0'
 }
+
+/**
+Depending on [limit], either format number to human readable way or show it as exponential value in case of big numbers
+*/
+export const formatOrTruncate = (
+  num: number,
+  limit: number,
+  config?: {
+    truncDigits: number
+    formatConfig: FormatConfig
+  },
+) => {
+  if (num > limit) {
+    return num.toExponential(config?.truncDigits || 5)
+  }
+  return formattedNum(num, config?.formatConfig)
+}

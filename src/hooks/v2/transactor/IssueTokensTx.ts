@@ -3,7 +3,7 @@ import { V2UserContext } from 'contexts/v2/userContext'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
 
-import { onCatch, TransactorInstance } from '../../Transactor'
+import { onCatch, TransactorInstance } from 'hooks/Transactor'
 
 export function useIssueTokensTx(): TransactorInstance<{
   name: string

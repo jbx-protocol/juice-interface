@@ -11,7 +11,7 @@ import {
 import { useContext } from 'react'
 import { hasFundingTarget } from 'utils/v1/fundingCycle'
 
-import { TransactorInstance } from '../../Transactor'
+import { TransactorInstance } from 'hooks/Transactor'
 
 export function useDeployProjectTx(): TransactorInstance<{
   handle: string

@@ -56,7 +56,7 @@ Take the following steps to set up Piñata for local development:
    - **API Key**. In the `.env` file, copy the **API Key** into the `PINATA_PINNER_KEY` variable.
    - **API Secret**. In the `.env` file, copy the **API Secret** into the `PINATA_PINNER_SECRET` variable.
 
-Note: Once you pass Piñata's free tier of 1GB of storage, you'll need to get access to the premium `PINATA_PINNER_KEY` and `PINATA_PINNER_SECRET` keys. Contact the Peel team in discord to get access. Pinata will constantly give a 429 error if the free tier of API requests has been reached. Piñata will give a 429 error if the free tier of storage has been reached.
+Note: Once you pass Piñata's free tier of 1GB of storage, you'll need to get access to the premium `PINATA_PINNER_KEY` and `PINATA_PINNER_SECRET` keys. Contact the Peel team in discord to get access. Piñata will constantly give a 429 error if the free tier of API requests has been reached.
 
 ### Blocknative
 

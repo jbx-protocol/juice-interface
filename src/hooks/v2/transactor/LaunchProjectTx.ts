@@ -11,7 +11,7 @@ import { GroupedSplits, SplitGroup } from 'models/v2/splits'
 import { isValidMustStartAtOrAfter } from 'utils/v2/fundingCycle'
 
 import { JUICEBOX_MONEY_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
-import { TransactorInstance } from '../../Transactor'
+import { TransactorInstance } from 'hooks/Transactor'
 
 const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
 const DEFAULT_MEMO = ''

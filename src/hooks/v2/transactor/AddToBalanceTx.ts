@@ -4,7 +4,7 @@ import { V2UserContext } from 'contexts/v2/userContext'
 import { useContext } from 'react'
 
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
-import { TransactorInstance } from '../../Transactor'
+import { TransactorInstance } from 'hooks/Transactor'
 
 const DEFAULT_METADATA = 0
 

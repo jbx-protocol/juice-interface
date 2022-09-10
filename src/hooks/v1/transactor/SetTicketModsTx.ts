@@ -6,7 +6,7 @@ import { useWallet } from 'hooks/Wallet'
 import { TicketMod } from 'models/mods'
 import { useContext } from 'react'
 
-import { TransactorInstance } from '../../Transactor'
+import { TransactorInstance } from 'hooks/Transactor'
 
 export function useSetTicketModsTx(): TransactorInstance<{
   configured: BigNumber

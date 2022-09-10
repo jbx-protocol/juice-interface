@@ -17,8 +17,8 @@ import Link from 'next/link'
 
 import { v2ProjectRoute } from 'utils/routes'
 
+import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
-import { V1ArchivedProjectIds } from '../constants/v1/archivedProjects'
 import ETHAmount from './currency/ETHAmount'
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'

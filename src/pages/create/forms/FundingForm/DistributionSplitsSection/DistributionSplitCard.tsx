@@ -5,6 +5,7 @@ import { Button, Col, Row, Space, Tooltip } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
 import FormattedAddress from 'components/FormattedAddress'
 import TooltipIcon from 'components/TooltipIcon'
+import V2ProjectHandle from 'components/v2/shared/V2ProjectHandle'
 import { CurrencyName } from 'constants/currency'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
@@ -20,7 +21,6 @@ import {
   preciseFormatSplitPercent,
   SPLITS_TOTAL_PERCENT,
 } from 'utils/v2/math'
-import V2ProjectHandle from '../../../../../components/v2/shared/V2ProjectHandle'
 import { DistributionSplitModal } from './DistributionSplitModal'
 
 const Parens = ({

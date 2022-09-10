@@ -20,7 +20,7 @@ import { getLatestNftDelegateStoreContractAddress } from 'utils/v2/nftRewards'
 
 import { MaxUint48 } from 'constants/numbers'
 import { JUICEBOX_MONEY_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
-import { TransactorInstance } from '../../Transactor'
+import { TransactorInstance } from 'hooks/Transactor'
 
 const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
 const DEFAULT_MEMO = ''

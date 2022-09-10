@@ -5,7 +5,7 @@ import { useContext } from 'react'
 
 import { projectHandleENSTextRecordKey } from 'constants/projectHandleENSTextRecordKey'
 
-import { TransactorInstance } from '../../Transactor'
+import { TransactorInstance } from 'hooks/Transactor'
 
 export function useSetENSTextRecordForHandleTx(): TransactorInstance<{
   ensName: string

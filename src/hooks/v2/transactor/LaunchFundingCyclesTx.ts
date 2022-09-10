@@ -10,7 +10,7 @@ import { useContext } from 'react'
 import { GroupedSplits, SplitGroup } from 'models/v2/splits'
 import { isValidMustStartAtOrAfter } from 'utils/v2/fundingCycle'
 
-import { TransactorInstance } from '../../Transactor'
+import { TransactorInstance } from 'hooks/Transactor'
 
 const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
 const DEFAULT_MEMO = ''

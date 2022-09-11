@@ -3,7 +3,7 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
 import { useContext } from 'react'
 
-import { TransactorInstance } from '../../Transactor'
+import { TransactorInstance } from 'hooks/Transactor'
 
 export function useMigrateV1ProjectTx(): TransactorInstance<{
   newTerminalAddress: string

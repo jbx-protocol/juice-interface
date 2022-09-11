@@ -5,7 +5,7 @@ import { V1UserContext } from 'contexts/v1/userContext'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext } from 'react'
 
-import { TransactorInstance } from '../../Transactor'
+import { TransactorInstance } from 'hooks/Transactor'
 
 export function usePrintTokensTx(): TransactorInstance<{
   value: BigNumber

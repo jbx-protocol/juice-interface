@@ -5,7 +5,7 @@ import * as constants from '@ethersproject/constants'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 
-import { TransactorInstance } from '../../Transactor'
+import { TransactorInstance } from 'hooks/Transactor'
 
 const DEFAULT_DELEGATE_METADATA = 0
 const DEFAULT_MIN_RETURNED_TOKENS = 0

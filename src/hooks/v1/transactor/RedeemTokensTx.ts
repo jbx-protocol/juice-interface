@@ -4,7 +4,7 @@ import { V1UserContext } from 'contexts/v1/userContext'
 import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 
-import { TransactorInstance } from '../../Transactor'
+import { TransactorInstance } from 'hooks/Transactor'
 
 export function useRedeemTokensTx(): TransactorInstance<{
   redeemAmount: BigNumber

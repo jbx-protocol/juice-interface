@@ -30,6 +30,7 @@ import { useHasV1TokenPaymentTerminal } from 'hooks/v2/hasV1TokenPaymentTerminal
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { reloadWindow } from 'utils/windowUtils'
 
+import AddERCToWalletButton from 'components/v2/V2Project/V2ManageTokensSection/AddERCToWalletButton'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { useVeNftSummaryStats } from 'hooks/veNft/VeNftSummaryStats'
 import Link from 'next/link'
@@ -172,6 +173,8 @@ export default function V2ManageTokensSection() {
                       <FormattedAddress address={tokenAddress} />)
                     </div>
                   </div>
+
+                  <AddERCToWalletButton />
                 </Descriptions.Item>
               )}
               <Descriptions.Item

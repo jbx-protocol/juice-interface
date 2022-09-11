@@ -296,6 +296,9 @@ msgstr ""
 msgid "Add the V1 Token Payment Terminal to your project."
 msgstr ""
 
+msgid "Add to Metamask"
+msgstr ""
+
 msgid "Add to balance"
 msgstr ""
 

@@ -1,11 +1,12 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { useMetamask } from 'hooks/Wallet/hooks/Metamask'
+import { useMetamask, useProviderIsMetamask } from 'hooks/Wallet/Metamask'
 import React, { useContext } from 'react'
 
 const AddERCToWalletButton = () => {
   const ethereum = useMetamask()
+  const isMetamask = useProviderIsMetamask()
   const { tokenAddress, tokenSymbol } = useContext(V2ProjectContext)
 
   const addTokenToWalletRequest = async () => {
@@ -25,7 +26,7 @@ const AddERCToWalletButton = () => {
     })
   }
 
-  if (!ethereum) {
+  if (!isMetamask) {
     return null
   }
 

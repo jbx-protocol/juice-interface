@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, Row, Space } from 'antd'
 import { AppWrapper } from 'components/common'
-import FeedbackFormButton from 'components/FeedbackFormButton'
+import { FeedbackFormButton } from 'components/FeedbackFormButton'
 
 import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
@@ -18,14 +18,6 @@ import { StatsSection } from './home/StatsSection'
 import { HeroHeading, HeroSubheading } from './home/strings'
 import { TopProjectsSection } from './home/TopProjectsSection'
 import TrendingSection from './home/TrendingSection'
-
-export default function LandingPage() {
-  return (
-    <AppWrapper>
-      <Landing />
-    </AppWrapper>
-  )
-}
 
 const BigHeader = ({
   text,
@@ -325,5 +317,13 @@ function Landing() {
       <FeedbackFormButton />
       <Footer />
     </div>
+  )
+}
+
+export default function LandingPage() {
+  return (
+    <AppWrapper>
+      <Landing />
+    </AppWrapper>
   )
 }

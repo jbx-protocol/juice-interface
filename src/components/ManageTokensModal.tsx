@@ -1,7 +1,6 @@
 import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Modal, Space, Tooltip } from 'antd'
-import ExternalLink from 'components/ExternalLink'
 import RichButton from 'components/RichButton'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import Link from 'next/link'
@@ -10,19 +9,7 @@ import { veNftPagePath } from 'utils/routes'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { reloadWindow } from 'utils/windowUtils'
 
-const BURN_DEFINITION_LINK =
-  'https://www.investopedia.com/tech/cryptocurrency-burning-can-it-manage-inflation/'
-
 type RedeemDisabledReason = 'redemptionRateZero' | 'overflowZero'
-
-const BurnTokensHelp = () => {
-  return (
-    <Trans>
-      <ExternalLink href={BURN_DEFINITION_LINK}>Learn more</ExternalLink> about
-      burning tokens.
-    </Trans>
-  )
-}
 
 const RedeemButtonTooltip = ({
   buttonDisabled,
@@ -32,25 +19,21 @@ const RedeemButtonTooltip = ({
   redeemDisabledReason?: RedeemDisabledReason
   buttonDisabled: boolean
 }>) => {
+  if (!buttonDisabled) return <>{children}</>
+
   return (
     <Tooltip
       title={
-        buttonDisabled ? (
-          <>
-            {redeemDisabledReason === 'overflowZero' ? (
-              <Trans>
-                Cannot redeem tokens for ETH because this project has no
-                overflow.
-              </Trans>
-            ) : (
-              <Trans>
-                Cannot redeem tokens for ETH because this project's redemption
-                rate is zero.
-              </Trans>
-            )}
-          </>
+        redeemDisabledReason === 'overflowZero' ? (
+          <Trans>
+            You cannot redeem your tokens for ETH because this project has no
+            overflow.
+          </Trans>
         ) : (
-          <BurnTokensHelp />
+          <Trans>
+            You cannot redeem your tokens for ETH because this project's
+            redemption rate is zero.
+          </Trans>
         )
       }
       placement="right"
@@ -132,41 +115,41 @@ export default function ManageTokensModal({
             buttonDisabled={redeemDisabled}
             redeemDisabledReason={redeemDisabledReason}
           >
-            <RichButton
-              heading={<Trans>Redeem {tokensLabel} for ETH</Trans>}
-              description={
-                <Trans>
-                  Redeem your {tokensLabel} for a portion of the project's
-                  overflow. Any {tokensLabel} you redeem will be burned.
-                </Trans>
-              }
-              onClick={() => setRedeemModalVisible(true)}
-              disabled={redeemDisabled}
-            />
+            <div>
+              <RichButton
+                heading={<Trans>Redeem {tokensLabel} for ETH</Trans>}
+                description={
+                  <Trans>
+                    Redeem your {tokensLabel} for a portion of the project's
+                    overflow. Any {tokensLabel} you redeem will be burned.
+                  </Trans>
+                }
+                onClick={() => setRedeemModalVisible(true)}
+                disabled={redeemDisabled}
+              />
+            </div>
           </RedeemButtonTooltip>
 
           {redeemDisabled && (
-            <Tooltip title={<BurnTokensHelp />} placement="right">
-              <RichButton
-                heading={<Trans>Burn {tokensLabel}</Trans>}
-                description={
-                  <>
-                    {redeemDisabledReason === 'overflowZero' ? (
-                      <Trans>
-                        Burn your {tokensLabel}. You won't receive ETH in return
-                        because this project has no overflow.
-                      </Trans>
-                    ) : (
-                      <Trans>
-                        Burn your {tokensLabel}. You won't receive ETH in return
-                        because this project's redemption rate is zero.
-                      </Trans>
-                    )}
-                  </>
-                }
-                onClick={() => setRedeemModalVisible(true)}
-              />
-            </Tooltip>
+            <RichButton
+              heading={<Trans>Burn {tokensLabel}</Trans>}
+              description={
+                <>
+                  {redeemDisabledReason === 'overflowZero' ? (
+                    <Trans>
+                      Burn your {tokensLabel}. You won't receive ETH in return
+                      because this project has no overflow.
+                    </Trans>
+                  ) : (
+                    <Trans>
+                      Burn your {tokensLabel}. You won't receive ETH in return
+                      because this project's redemption rate is zero.
+                    </Trans>
+                  )}
+                </>
+              }
+              onClick={() => setRedeemModalVisible(true)}
+            />
           )}
 
           {hasIssuedTokens && (
@@ -193,18 +176,20 @@ export default function ManageTokensModal({
               }
               placement="right"
             >
-              <RichButton
-                heading={<Trans>Mint {tokensLabel}</Trans>}
-                description={
-                  <Trans>
-                    Mint new {tokensLabel} into an account. Only a project's
-                    owner, a designated operator, or one of its terminal's
-                    delegates can mint its tokens.
-                  </Trans>
-                }
-                onClick={() => setMintModalVisible(true)}
-                disabled={!projectAllowsMint}
-              />
+              <div>
+                <RichButton
+                  heading={<Trans>Mint {tokensLabel}</Trans>}
+                  description={
+                    <Trans>
+                      Mint new {tokensLabel} into an account. Only a project's
+                      owner, a designated operator, or one of its terminal's
+                      delegates can mint its tokens.
+                    </Trans>
+                  }
+                  onClick={() => setMintModalVisible(true)}
+                  disabled={!projectAllowsMint}
+                />
+              </div>
             </Tooltip>
           )}
           {veNftEnabled && (

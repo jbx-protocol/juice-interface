@@ -1,7 +1,6 @@
 import { ThemeContext } from 'contexts/themeContext'
 import { useWallet } from 'hooks/Wallet'
 
-import { MessageOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 
@@ -11,8 +10,7 @@ import { feedbackFormURL } from 'utils/feedbackFormURL'
 
 import ExternalLink from './ExternalLink'
 
-export default function FeedbackFormButton({
-  mobile,
+export function FeedbackFormButton({
   projectHandle,
 }: {
   mobile?: boolean
@@ -26,22 +24,6 @@ export default function FeedbackFormButton({
     projectHandle,
     userAddress,
   })
-
-  const iconSize = 16
-
-  if (mobile) {
-    return (
-      <div>
-        <MessageOutlined size={iconSize} />
-        <ExternalLink
-          style={{ margin: '0 0 2px 12px', fontWeight: 400 }}
-          href={formUrl}
-        >
-          <Trans>Give feedback</Trans>
-        </ExternalLink>
-      </div>
-    )
-  }
 
   return (
     <Tooltip

@@ -19,14 +19,6 @@ import { HeroHeading, HeroSubheading } from './home/strings'
 import { TopProjectsSection } from './home/TopProjectsSection'
 import TrendingSection from './home/TrendingSection'
 
-export default function LandingPage() {
-  return (
-    <AppWrapper>
-      <Landing />
-    </AppWrapper>
-  )
-}
-
 const BigHeader = ({
   text,
   style,
@@ -325,5 +317,13 @@ function Landing() {
       <FeedbackFormButton />
       <Footer />
     </div>
+  )
+}
+
+export default function LandingPage() {
+  return (
+    <AppWrapper>
+      <Landing />
+    </AppWrapper>
   )
 }

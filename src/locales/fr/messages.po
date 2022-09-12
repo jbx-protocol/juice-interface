@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-09-04 00:36\n"
+"PO-Revision-Date: 2022-09-11 00:35\n"
 "Last-Translator: \n"
 "Language: fr_FR\n"
 "Language-Team: French\n"
@@ -76,8 +76,8 @@ msgstr "7 jours de délai"
 msgid "90 days"
 msgstr "90 jours"
 
-msgid "<0/> Archived projects have not been modified or deleted on the blockchain, and can still be interacted with directly through the Juicebox contracts."
-msgstr "<0/> Les projets archivés n'ont pas été modifiés ou supprimés de la blockchain et peuvent toujours être intégrés directement à travers les contrats Juicebox."
+msgid "<0/> Archived projects haven't been modified or deleted on-chain. They can still be interacted with directly through the Juicebox contracts."
+msgstr ""
 
 msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the <1>risks</1> before committing your funds."
 msgstr ""
@@ -220,9 +220,6 @@ msgstr "<0>{tokenSymbol} adresse de l'ERC-20 : </0><1/>"
 msgid "@{handle} not found"
 msgstr ""
 
-msgid "A project can be archived by its owner from the tools menu on the project page."
-msgstr "Un projet peut être archivé par son propriétaire, dans le menu des outils de la page du projet."
-
 msgid "A project can reserve a percentage of the tokens minted from payments it receives. Reserved tokens can be distributed according to the allocation below at any time."
 msgstr "Un projet peut réserver un pourcentage de tokens frappés à partir des paiements reçus. Les tokens réservés peuvent être distribués à tout moment, selon les allocations ci-dessous."
 
@@ -243,6 +240,9 @@ msgstr "Le reparamétrage d'un cycle de financement à venir doit être soumis a
 
 msgid "A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
 msgstr "Un taux réservé supérieur à 90% est risqué pour les contributeurs. Les contributeurs ne recevront pas beaucoup de tokens pour leur contribution."
+
+msgid "A tier at this amount already exists."
+msgstr ""
 
 msgid "A veNft can only be redeemed if the project currently has overflow."
 msgstr ""
@@ -376,6 +376,9 @@ msgstr ""
 msgid "Almost definitely."
 msgstr "Définitivement."
 
+msgid "Already Enabled"
+msgstr ""
+
 msgid "Amount"
 msgstr "Somme"
 
@@ -462,6 +465,9 @@ msgstr "Solde dépassé"
 
 msgid "Balance of the project owner's wallet."
 msgstr "Solde du portefeuille du propriétaire du projet."
+
+msgid "Before locking your project ERC-20 token, you must approve the veNFT contract for spending."
+msgstr ""
 
 msgid "Beneficiary"
 msgstr "Bénéficiaire"
@@ -595,6 +601,9 @@ msgstr "Fermer"
 msgid "Close, I'll do these later"
 msgstr "Fermez, je ferai ceux-ci plus tard"
 
+msgid "Collection description"
+msgstr ""
+
 msgid "Collection name"
 msgstr ""
 
@@ -657,6 +666,9 @@ msgstr "Connectez votre portefeuille pour voir vos projets."
 
 msgid "Connected wallet not authorized"
 msgstr "Portefeuille connecté non autorisé"
+
+msgid "Contract address:"
+msgstr ""
 
 msgid "Contract address: {0}"
 msgstr "Adresse du contrat : {0}"
@@ -741,6 +753,9 @@ msgstr "Stratégie personnalisée"
 
 msgid "Custom token beneficiary"
 msgstr "Bénéficiaire de token personnalisé"
+
+msgid "Customize how your NFT collection will appear on NFT marketplaces (like OpenSea)."
+msgstr ""
 
 msgid "Customize your project's \"pay\" button. Leave blank to use the default."
 msgstr "Customisez le bouton « payer » de votre projet. Laissez vide pour utiliser le bouton par défaut."
@@ -898,11 +913,11 @@ msgstr ""
 msgid "Distributing funds to Juicebox projects won't incur fees."
 msgstr "La distribution de fonds aux projets Juicebox n'entraînera pas de frais."
 
-msgid "Distribution"
-msgstr ""
-
 msgid "Distribution Limit <0/>:"
 msgstr "Limite de distribution<0/> :"
+
+msgid "Distribution amount"
+msgstr ""
 
 msgid "Distribution limit"
 msgstr "Limite de distribution"
@@ -997,7 +1012,7 @@ msgstr "Modifier l'allocation de token"
 msgid "Edit tracked assets"
 msgstr "Modifier les actifs suivis"
 
-msgid "Enable veBanny Governance"
+msgid "Enable"
 msgstr ""
 
 msgid "Enable veNFT Governance"
@@ -1375,6 +1390,15 @@ msgstr ""
 msgid "Lock until"
 msgstr "Bloquer jusqu'à"
 
+msgid "Lock your {tokensLabel} to increase your voting weight and claim Governance NFTs."
+msgstr ""
+
+msgid "Lock {tokenName} ({tokenSymbolDisplayText}) tokens in exchange for voting weight. In return, you'll impact {projectName} governance and receive a choice governance NFT."
+msgstr ""
+
+msgid "Lock {tokensLabel} for Governance NFTs"
+msgstr ""
+
 msgid "Locked {tokenSymbolDisplayText}"
 msgstr ""
 
@@ -1396,6 +1420,9 @@ msgstr ""
 msgid "Manage {tokenText}"
 msgstr "Gérer {tokenText}"
 
+msgid "Marketplace customizations"
+msgstr ""
+
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
 msgstr "{MAX_DESCRIPTION_LENGTH} caractères au maximum"
 
@@ -1411,7 +1438,10 @@ msgstr ""
 msgid "Migrate to Juicebox V1.1"
 msgstr "Migrer vers Juicebox V1.1"
 
-msgid "Mint NFT to a custom address."
+msgid "Mint NFT to a custom address"
+msgstr ""
+
+msgid "Mint VeNFT"
 msgstr ""
 
 msgid "Mint as ERC-20"
@@ -1458,6 +1488,9 @@ msgstr ""
 
 msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
 msgstr "Transférer vos {tokensLabel} du contrat Juicebox vers votre portefeuille."
+
+msgid "My VeNFTs"
+msgstr ""
 
 msgid "My projects"
 msgstr ""
@@ -1789,6 +1822,9 @@ msgstr "Propriétaire du projet"
 msgid "Project owner (you)"
 msgstr "Propriétaire du projet (vous)"
 
+msgid "Project owners can archive their Juicebox projects in their project's settings page."
+msgstr ""
+
 msgid "Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."
 msgstr "Les propriétaires de projet peuvent définir une période de délai, ce qui signifie que les redéfinitions d'un cycle de financement à venir doivent être soumises un certain nombre de jours avant qu'il ne commence. Par exemple, un délai de 3 jours signifie que les redéfinitions doivent être soumises au moins 3 jours avant le début du prochain cycle de financement. Cela donne aux détenteurs de tokens le temps de réagir à la décision et réduit les risques d'arnaque."
 
@@ -1936,7 +1972,7 @@ msgstr "Récupérer {tokensTextLong} pour ETH"
 msgid "Redeemed"
 msgstr "Récupéré"
 
-msgid "Redeeming this NFT will burn the token and return..."
+msgid "Redeeming this NFT will burn the token, as well as the underlying project token, and you will receive token from the project overflow in return."
 msgstr ""
 
 msgid "Redemption rate"
@@ -2089,6 +2125,12 @@ msgstr ""
 msgid "Seconds"
 msgstr "Secondes"
 
+msgid "Send redeemed token to a custom address"
+msgstr ""
+
+msgid "Send unlocked tokens to a custom address"
+msgstr ""
+
 msgid "Set ENS name"
 msgstr ""
 
@@ -2170,19 +2212,7 @@ msgstr ""
 msgid "Spending"
 msgstr "Dépenses"
 
-msgid "Stake your {tokensLabel} to increase your voting weight and claim Governance NFTs."
-msgstr ""
-
-msgid "Stake {tokenName} ({tokenSymbolDisplayText}) tokens in exchange for voting weight. In return, you'll impact {projectName} governance and receive a choice governance NFT."
-msgstr ""
-
-msgid "Stake {tokensLabel} for NFT"
-msgstr ""
-
 msgid "Staked {tokenSymbolDisplayText}"
-msgstr ""
-
-msgid "Staking Summary:"
 msgstr ""
 
 msgid "Start"
@@ -2338,6 +2368,9 @@ msgstr "L'objectif pour ce cycle de financement est de 0, ce qui signifie que to
 msgid "The total funds this Juicebox project has received since it was created."
 msgstr "Le total des fonds que ce projet Juicebox a reçu depuis sa création."
 
+msgid "The veNFT contract is currently unable to lock project token. Contact the project owner regarding adding this permission."
+msgstr ""
+
 msgid "There are no payouts defined for this funding cycle. The project owner will receive all available funds."
 msgstr "Aucun paiement n'est défini pour ce cycle de financement. Le propriétaire du projet recevra tous les fonds disponibles."
 
@@ -2386,7 +2419,7 @@ msgstr "Ce projet a été archivé et ne peut pas être payé."
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
 msgstr "Ce projet utilise actuellement le contrat de terminal Juicebox V1. Les nouvelles fonctionnalités introduites dans V1.1 permettent au propriétaire du projet de :"
 
-msgid "This project is owned by a Gnosis Safe."
+msgid "This project is owned by a Safe."
 msgstr ""
 
 msgid "This project reserves some of the newly minted tokens for itself."
@@ -2533,14 +2566,14 @@ msgstr "Outils"
 msgid "Total funds:"
 msgstr "Total de fonds :"
 
+msgid "Total locked period"
+msgstr ""
+
+msgid "Total locked {tokenSymbolDisplayText}"
+msgstr ""
+
 msgid "Total raised"
 msgstr "Total collecté"
-
-msgid "Total staked period"
-msgstr ""
-
-msgid "Total staked {tokenSymbolDisplayText}"
-msgstr ""
 
 msgid "Total supply"
 msgstr "Offre totale"
@@ -2671,6 +2704,9 @@ msgstr ""
 msgid "VeNFT Governance"
 msgstr ""
 
+msgid "VeNFT contract created successfully. Results will be indexed in a few moments."
+msgstr ""
+
 msgid "Version of the terminal contract used by this project."
 msgstr "Version du contrat terminal utilisé par ce projet."
 
@@ -2791,9 +2827,6 @@ msgstr "Vous pouvez toujours récupérer vos tokens {tokenTextLong} de l'overflo
 msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
 msgstr "Vous pouvez toujours récupérer vos tokens {tokenSymbol} de l'overflow sans les réclamer, et vous pouvez transférer vos tokens {tokenSymbol} non réclamés vers une autre adresse à partir du menu Outils, accessible à partir de l'icône en forme de clé anglaise dans le coin supérieur droit de ce projet. ."
 
-msgid "You collection's symbol will apply to the whole collection of reward tiers on NFT marketplaces (like OpenSea)."
-msgstr ""
-
 msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
 msgstr "Vous n'avez pas une durée de cycle de financement. Les modifications que vous apportez prendront effet immédiatement."
 
@@ -2874,9 +2907,6 @@ msgstr ""
 
 msgid "Your balance"
 msgstr "Votre solde"
-
-msgid "Your collection's name will apply to the whole collection of reward tiers on NFT marketplaces (like OpenSea)."
-msgstr ""
 
 msgid "Your funding cycle configuration has been pre-populated using the configuration you originally launched with. If you need to customize it, contact us."
 msgstr "Les paramètres de votre cycle de financement ont été préremplis à l'aide des paramètres initialement utilisés pour le lancer. Si vous avez besoin de le personnaliser, contactez-nous."
@@ -2982,6 +3012,15 @@ msgstr "tokens récupérés"
 
 msgid "until"
 msgstr "jusqu'à"
+
+msgid "veNFT"
+msgstr ""
+
+msgid "veNFT Governance Enabled"
+msgstr ""
+
+msgid "veNFT Summary:"
+msgstr ""
 
 msgid "veNFT Tiers ({0} variants)"
 msgstr ""
@@ -3118,7 +3157,7 @@ msgstr "{tokensText} réservés"
 msgid "{tokensTokenUpper} amount"
 msgstr "{tokensTokenUpper} montant"
 
-msgid "{totalStakedPeriodInDays, plural, one {{0}} other {{1}}}"
+msgid "{totalLockedPeriodInDays, plural, one {{0}} other {{1}}}"
 msgstr ""
 
 msgid "{unclaimedBalanceFormatted} {tokenText} claimable"

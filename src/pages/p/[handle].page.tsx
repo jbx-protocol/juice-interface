@@ -1,6 +1,6 @@
 import { AppWrapper, SEO } from 'components/common'
 import { DesmosScript } from 'components/common/Head/scripts/DesmosScript'
-import FeedbackFormButton from 'components/FeedbackFormButton'
+import { FeedbackFormButton } from 'components/FeedbackFormButton'
 import NewDeployNotAvailable from 'components/NewDeployNotAvailable'
 import Project404 from 'components/Project404'
 import ScrollToTopButton from 'components/ScrollToTopButton'

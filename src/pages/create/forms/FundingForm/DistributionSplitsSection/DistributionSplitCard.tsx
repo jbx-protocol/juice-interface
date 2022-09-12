@@ -31,6 +31,10 @@ const Parens = ({
   return <>{children}</>
 }
 
+const gutter = 10
+const labelColSpan = 9
+const dataColSpan = 15
+
 export default function DistributionSplitCard({
   split,
   splits,
@@ -59,15 +63,9 @@ export default function DistributionSplitCard({
   const {
     theme: { colors, radii },
   } = useContext(ThemeContext)
-
   const { projectOwnerAddress } = useContext(V2ProjectContext)
 
   const [editSplitModalOpen, setEditSplitModalOpen] = useState<boolean>(false)
-
-  const gutter = 10
-
-  const labelColSpan = 9
-  const dataColSpan = 15
 
   const isProject = parseInt(split.projectId ?? '0') > 0
 
@@ -91,11 +89,11 @@ export default function DistributionSplitCard({
       style={{
         display: 'flex',
         padding: 10,
-        border:
-          '1px solid ' +
-          (isLocked ? colors.stroke.disabled : colors.stroke.tertiary),
+        border: isLocked ? '1px solid' + colors.stroke.disabled : undefined,
         borderRadius: radii.md,
       }}
+      role="button"
+      className="clickable-border"
     >
       <Space
         direction="vertical"

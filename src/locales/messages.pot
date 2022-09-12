@@ -137,9 +137,6 @@ msgstr ""
 msgid "<0>Juicebox is an open protocol on Ethereum that is funded using Juicebox itself. You can check out the contractualized budget specs <1>here</1>.</0><2>Projects building on Juicebox pay a {JB_FEE}% JBX membership fee from withdrawn funds into the JuiceboxDAO treasury. Projects can then use their JBX to participate in the governance of JuiceboxDAO and its collective treasury, as well as redeem from its growing <3>overflow</3>. The fee is also subject to change via JBX member votes.</2>"
 msgstr ""
 
-msgid "<0>Learn more</0> about burning tokens."
-msgstr ""
-
 msgid "<0>Learn more</0> about funding cycle duration."
 msgstr ""
 
@@ -522,12 +519,6 @@ msgid "Can I delete a project?"
 msgstr ""
 
 msgid "Cancel"
-msgstr ""
-
-msgid "Cannot redeem tokens for ETH because this project has no overflow."
-msgstr ""
-
-msgid "Cannot redeem tokens for ETH because this project's redemption rate is zero."
 msgstr ""
 
 msgid "Change ENS name"
@@ -2820,6 +2811,12 @@ msgid "You can redeem your {tokenTextLong} for overflow without claiming them. Y
 msgstr ""
 
 msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
+msgstr ""
+
+msgid "You cannot redeem your tokens for ETH because this project has no overflow."
+msgstr ""
+
+msgid "You cannot redeem your tokens for ETH because this project's redemption rate is zero."
 msgstr ""
 
 msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."

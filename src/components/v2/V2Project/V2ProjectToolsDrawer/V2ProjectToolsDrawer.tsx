@@ -1,6 +1,8 @@
 import { Trans } from '@lingui/macro'
 import { Divider, Drawer, Space, Tabs } from 'antd'
+import { AddToProjectBalanceForm } from 'components/Project/ProjectToolsDrawer/AddToProjectBalanceForm'
 import { ExportSection } from 'components/Project/ProjectToolsDrawer/ExportSection'
+import { TransferUnclaimedTokensForm } from 'components/Project/ProjectToolsDrawer/TransferUnclaimedTokensForm'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
@@ -16,8 +18,6 @@ import { ETHPayoutSplitGroup, ReservedTokensSplitGroup } from 'models/v2/splits'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { settingsPagePath } from 'utils/routes'
-import { AddToProjectBalanceForm } from '../../../Project/ProjectToolsDrawer/AddToProjectBalanceForm'
-import { TransferUnclaimedTokensForm } from '../../../Project/ProjectToolsDrawer/TransferUnclaimedTokensForm'
 import { ExportSplitsButton } from './ExportSplitsButton'
 import { PaymentAddressSection } from './PaymentAddressSection'
 

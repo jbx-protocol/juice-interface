@@ -2,14 +2,13 @@ import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
+import { TransactorInstance } from 'hooks/Transactor'
 import { PayoutMod, TicketMod } from 'models/mods'
 import {
   V1FundingCycleMetadata,
   V1FundingCycleProperties,
 } from 'models/v1/fundingCycle'
 import { useContext } from 'react'
-
-import { TransactorInstance } from '../../Transactor'
 
 export function useConfigureProjectTx(): TransactorInstance<{
   fcProperties: V1FundingCycleProperties

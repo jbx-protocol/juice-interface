@@ -4,7 +4,7 @@ import { useContext } from 'react'
 
 import { JUICEBOX_MONEY_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
 
-import { TransactorInstance } from '../../Transactor'
+import { TransactorInstance } from 'hooks/Transactor'
 
 export function useEditV2ProjectDetailsTx(): TransactorInstance<{
   cid: string

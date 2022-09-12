@@ -5,7 +5,7 @@ import { useContext } from 'react'
 
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 
-import { TransactorInstance } from '../../Transactor'
+import { TransactorInstance } from 'hooks/Transactor'
 
 export function useTapProjectTx(): TransactorInstance<{
   tapAmount: BigNumber

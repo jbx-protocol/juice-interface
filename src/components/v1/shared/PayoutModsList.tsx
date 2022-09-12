@@ -21,7 +21,7 @@ import {
   perbicentToPercent,
   permyriadToPercent,
 } from 'utils/formatNumber'
-import { amountSubFee } from 'utils/math'
+import { amountSubFee } from 'utils/v1/math'
 
 import { V1CurrencyName } from 'utils/v1/currency'
 

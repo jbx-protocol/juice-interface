@@ -3,7 +3,7 @@ import { t, Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import Search from 'antd/lib/input/Search'
 import { AppWrapper } from 'components/common'
-import FeedbackFormButton from 'components/FeedbackFormButton'
+import { FeedbackFormButton } from 'components/FeedbackFormButton'
 import Loading from 'components/Loading'
 
 import { ProjectCategory } from 'models/project-visibility'

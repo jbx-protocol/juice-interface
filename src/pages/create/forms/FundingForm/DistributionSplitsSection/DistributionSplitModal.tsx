@@ -11,7 +11,7 @@ import { findIndex } from 'lodash'
 import { Split } from 'models/v2/splits'
 import moment, * as Moment from 'moment'
 import { useEffect, useMemo, useState } from 'react'
-import { parseWad } from 'utils/formatNumber'
+import { parseWad, stripCommas } from 'utils/formatNumber'
 import { stringIsDigit } from 'utils/math'
 import {
   adjustedSplitPercents,
@@ -20,7 +20,6 @@ import {
   getNewDistributionLimit,
 } from 'utils/v2/distributions'
 import {
-  formatFee,
   MAX_DISTRIBUTION_LIMIT,
   preciseFormatSplitPercent,
   splitPercentFrom,
@@ -84,11 +83,8 @@ export function DistributionSplitModal({
   const [lockedUntil, setLockedUntil] = useState<
     Moment.Moment | undefined | null
   >()
-  const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
 
-  const feePercentage = ETHPaymentTerminalFee
-    ? formatFee(ETHPaymentTerminalFee)
-    : undefined
+  const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
 
   useEffect(() =>
     form.setFieldsValue({
@@ -139,18 +135,18 @@ export function DistributionSplitModal({
     })
 
     if (distributionLimitIsInfinite) {
-      const amount = amountFromPercent({
+      const newAmount = amountFromPercent({
         percent: preciseFormatSplitPercent(editingSplit.percent),
         amount: distributionLimit ?? '0',
       })
-      form.setFieldsValue({ amount: amount.toString() })
+      form.setFieldsValue({ amount: newAmount.toString() })
     } else if (distributionLimit) {
       const percentPerBillion = editingSplit.percent
-      const amount = amountFromPercent({
+      const newAmount = amountFromPercent({
         percent: preciseFormatSplitPercent(percentPerBillion),
         amount: distributionLimit,
       })
-      form.setFieldsValue({ amount: amount.toString() })
+      form.setFieldsValue({ amount: newAmount.toString() })
     } else {
       form.setFieldsValue({ amount: undefined })
     }
@@ -217,16 +213,22 @@ export function DistributionSplitModal({
     onClose()
   }
 
+  /**
+   * Set new distribution limit
+   */
   useEffect(() => {
     if (distributionLimitIsInfinite || !amount) return
+
+    const newAmount = parseFloat(stripCommas(amount))
+
     const newDistributionLimit = getNewDistributionLimit({
       currentDistributionLimit: distributionLimit ?? '0',
-      newSplitAmount: parseFloat(amount),
+      newSplitAmount: newAmount,
       editingSplitPercent: mode === 'Add' ? 0 : editingSplit?.percent ?? 0, //percentPerBillion,
     })
 
     const newPercent = getDistributionPercentFromAmount({
-      amount: parseFloat(amount),
+      amount: newAmount,
       distributionLimit: newDistributionLimit,
     })
 
@@ -366,7 +368,7 @@ export function DistributionSplitModal({
             form={form}
             currencyName={currencyName}
             editingSplitType={editingSplitType}
-            feePercentage={feePercentage}
+            fee={ETHPaymentTerminalFee}
             isFirstSplit={isFirstSplit}
             distributionLimit={distributionLimit}
             onCurrencyChange={onCurrencyChange}

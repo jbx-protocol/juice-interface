@@ -5,6 +5,7 @@ import { Button, Col, Row, Space, Tooltip } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
 import FormattedAddress from 'components/FormattedAddress'
 import TooltipIcon from 'components/TooltipIcon'
+import V2ProjectHandle from 'components/v2/shared/V2ProjectHandle'
 import { CurrencyName } from 'constants/currency'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
@@ -20,7 +21,6 @@ import {
   preciseFormatSplitPercent,
   SPLITS_TOTAL_PERCENT,
 } from 'utils/v2/math'
-import V2ProjectHandle from '../../../../../components/v2/shared/V2ProjectHandle'
 import { DistributionSplitModal } from './DistributionSplitModal'
 
 const Parens = ({
@@ -30,6 +30,10 @@ const Parens = ({
   if (withParens) return <>({children})</>
   return <>{children}</>
 }
+
+const gutter = 10
+const labelColSpan = 9
+const dataColSpan = 15
 
 export default function DistributionSplitCard({
   split,
@@ -59,15 +63,9 @@ export default function DistributionSplitCard({
   const {
     theme: { colors, radii },
   } = useContext(ThemeContext)
-
   const { projectOwnerAddress } = useContext(V2ProjectContext)
 
   const [editSplitModalOpen, setEditSplitModalOpen] = useState<boolean>(false)
-
-  const gutter = 10
-
-  const labelColSpan = 9
-  const dataColSpan = 15
 
   const isProject = parseInt(split.projectId ?? '0') > 0
 
@@ -91,11 +89,11 @@ export default function DistributionSplitCard({
       style={{
         display: 'flex',
         padding: 10,
-        border:
-          '1px solid ' +
-          (isLocked ? colors.stroke.disabled : colors.stroke.tertiary),
+        border: isLocked ? '1px solid' + colors.stroke.disabled : undefined,
         borderRadius: radii.md,
       }}
+      role="button"
+      className="clickable-border"
     >
       <Space
         direction="vertical"

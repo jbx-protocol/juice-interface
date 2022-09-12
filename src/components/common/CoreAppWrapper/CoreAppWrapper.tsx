@@ -60,7 +60,7 @@ const _Wrapper: React.FC = ({ children }) => {
         }}
       >
         <Navbar />
-        <Content style={isMobile ? { paddingTop: 40 } : {}}>{children}</Content>
+        <Content style={isMobile ? { paddingTop: 64 } : {}}>{children}</Content>
       </Layout>
     </>
   )

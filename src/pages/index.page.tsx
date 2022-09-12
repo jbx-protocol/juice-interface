@@ -18,15 +18,6 @@ import { StatsSection } from './home/StatsSection'
 import { HeroHeading, HeroSubheading } from './home/strings'
 import { TopProjectsSection } from './home/TopProjectsSection'
 import TrendingSection from './home/TrendingSection'
-import { V2UserProvider } from 'providers/v2/UserProvider'
-
-export default function LandingPage() {
-  return (
-    <AppWrapper>
-      <Landing />
-    </AppWrapper>
-  )
-}
 
 const BigHeader = ({
   text,
@@ -205,9 +196,7 @@ function Landing() {
 
       <StatsSection />
 
-      <V2UserProvider>
-        <TrendingSection />
-      </V2UserProvider>
+      <TrendingSection />
 
       <HowItWorksSection />
 
@@ -328,5 +317,13 @@ function Landing() {
       <FeedbackFormButton />
       <Footer />
     </div>
+  )
+}
+
+export default function LandingPage() {
+  return (
+    <AppWrapper>
+      <Landing />
+    </AppWrapper>
   )
 }

@@ -28,6 +28,7 @@ import { formatDate } from 'utils/formatDate'
 import { percentToPermyriad, permyriadToPercent } from 'utils/formatNumber'
 
 type ModalMode = 'Add' | 'Edit' | undefined
+const gutter = 10
 
 export default function ProjectTicketMods({
   name,
@@ -44,6 +45,11 @@ export default function ProjectTicketMods({
   style?: CSSProperties
   onModsChanged: (mods: TicketMod[]) => void
 } & FormItemExt) {
+  const { owner } = useContext(V1ProjectContext)
+  const {
+    theme: { colors, radii },
+  } = useContext(ThemeContext)
+
   const [form] = useForm<{
     beneficiary: string
     percent: number
@@ -51,13 +57,6 @@ export default function ProjectTicketMods({
   }>()
   const [editingModIndex, setEditingModIndex] = useState<number>() // index of the mod currently being edited (edit modal open)
   const [modalMode, setModalMode] = useState<ModalMode>() //either 'Add', 'Edit' or undefined
-  const { owner } = useContext(V1ProjectContext)
-
-  const {
-    theme: { colors, radii },
-  } = useContext(ThemeContext)
-
-  const gutter = 10
 
   const modInput = useCallback(
     (mod: TicketMod, index: number, locked?: boolean) => {
@@ -68,12 +67,11 @@ export default function ProjectTicketMods({
           style={{
             display: 'flex',
             padding: 10,
-            border:
-              '1px solid ' +
-              (locked ? colors.stroke.disabled : colors.stroke.tertiary),
+            border: locked ? '1px solid ' + colors.stroke.disabled : undefined,
             borderRadius: radii.md,
           }}
           key={mod.beneficiary ?? '' + index}
+          className="clickable-border"
         >
           <Space
             direction="vertical"
@@ -178,7 +176,6 @@ export default function ProjectTicketMods({
     [
       mods,
       colors.stroke.disabled,
-      colors.stroke.tertiary,
       colors.text.primary,
       colors.icon.disabled,
       radii.md,

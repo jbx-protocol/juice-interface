@@ -36,12 +36,11 @@ function ReconfigureButton({
         padding: 10,
         fontWeight: 500,
         borderRadius: radii.sm,
-        border:
-          '1px solid ' +
-          (reconfigureHasChanges
-            ? colors.stroke.action.primary
-            : colors.stroke.action.secondary),
+        border: reconfigureHasChanges
+          ? '1px solid ' + colors.stroke.action.primary
+          : undefined,
       }}
+      className="clickable-border"
       onClick={onClick}
     >
       <div>{title}</div>

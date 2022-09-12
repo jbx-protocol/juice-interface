@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, Row, Space } from 'antd'
 import { AppWrapper } from 'components/common'
-import FeedbackFormButton from 'components/FeedbackFormButton'
+import { FeedbackFormButton } from 'components/FeedbackFormButton'
 
 import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'

@@ -24,7 +24,7 @@ export default function Payments() {
       'note',
       'timestamp',
       'id',
-      { entity: 'project', keys: ['id', 'projectId', 'cv'] },
+      { entity: 'project', keys: ['id', 'projectId', 'handle', 'cv'] },
     ],
     first: 20,
     orderDirection: 'desc',
@@ -38,11 +38,17 @@ export default function Payments() {
       <div style={{ color: colors.text.action.primary, fontWeight: 500 }}>
         {project.cv === '2' ? (
           <div style={{ display: 'flex', alignItems: 'baseline' }}>
-            <V2ProjectHandle projectId={project.projectId} />
+            <V2ProjectHandle
+              projectId={project.projectId}
+              handle={project.handle}
+            />
             <ProjectVersionBadge versionText="V2" size="small" />
           </div>
         ) : (
-          <V1ProjectHandle projectId={project.projectId} />
+          <V1ProjectHandle
+            projectId={project.projectId}
+            handle={project.handle}
+          />
         )}
       </div>
     )

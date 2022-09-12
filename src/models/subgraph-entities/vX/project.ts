@@ -67,20 +67,19 @@ type BaseProject = {
   distributeToTicketModEvents: Partial<DistributeToTicketModEvent>[]
   deployedERC20Events: Partial<DeployedERC20Event>[]
   veNftContract: Partial<VeNftContract>
+  metadataUri: string
 }
 
 type ProjectV1 = {
   terminal: string
-  metadataUri: string
   metadataDomain: null
   handle: string
 } & BaseProject
 
 type ProjectV2 = {
   terminal: null
-  metadataUri: string
   metadataDomain: BigNumber
-  handle: null
+  handle: string | null
 } & BaseProject
 
 export type Project = ProjectV1 | ProjectV2 // Separate entity used for testing

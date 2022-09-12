@@ -1,6 +1,6 @@
 import { AppWrapper } from 'components/common'
 
-import ExternalLink from '../components/ExternalLink'
+import ExternalLink from 'components/ExternalLink'
 
 export default function PrivacyPolicyPage() {
   return (

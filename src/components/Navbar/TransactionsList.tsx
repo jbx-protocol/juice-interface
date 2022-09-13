@@ -10,7 +10,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { TxStatus } from 'models/transaction'
 import { CSSProperties, useContext, useEffect, useMemo, useState } from 'react'
 import { etherscanLinkForTxHash } from 'utils/etherscan'
-import { formatHistoricalDate } from 'utils/formatDate'
+import { formatHistoricalDate } from 'utils/format/formatDate'
 import {
   timestampForTxLog,
   TxHistoryContext,

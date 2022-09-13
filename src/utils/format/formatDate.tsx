@@ -10,9 +10,14 @@ export const formatDate = (
   format = 'YYYY-MM-DD h:mma',
 ) => moment(BigNumber.from(dateMillis).toNumber()).format(format)
 
+export const formatDateToUTC = (
+  dateMillis: BigNumberish,
+  format = 'YYYY-MM-DD h:mma UTC',
+) => moment(BigNumber.from(dateMillis).toNumber()).utc().format(format)
+
 export function formatHistoricalDate(dateMillis: BigNumberish) {
   return (
-    <Tooltip title={`${formatDate(dateMillis)} UTC`}>
+    <Tooltip title={`${formatDateToUTC(dateMillis)}`}>
       {t`${moment(BigNumber.from(dateMillis).toNumber()).fromNow(true)} ago`}
     </Tooltip>
   )

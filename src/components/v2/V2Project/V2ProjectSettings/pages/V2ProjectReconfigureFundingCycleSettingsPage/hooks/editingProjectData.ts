@@ -5,14 +5,14 @@ import {
   useEditingV2FundingCycleMetadataSelector,
 } from 'hooks/AppSelector'
 import {
+  ETHPayoutGroupedSplits,
+  ReservedTokensGroupedSplits,
+} from 'models/splits'
+import {
   V2FundAccessConstraint,
   V2FundingCycleData,
   V2FundingCycleMetadata,
 } from 'models/v2/fundingCycle'
-import {
-  ETHPayoutGroupedSplits,
-  ReservedTokensGroupedSplits,
-} from 'models/v2/splits'
 
 export interface EditingProjectData {
   editingPayoutGroupedSplits: ETHPayoutGroupedSplits

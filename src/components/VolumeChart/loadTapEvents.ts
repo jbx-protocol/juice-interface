@@ -1,4 +1,4 @@
-import { fromWad } from 'utils/formatNumber'
+import { fromWad } from 'utils/format/formatNumber'
 import { querySubgraph } from 'utils/graph'
 
 import { daysToMillis } from './daysToMillis'

@@ -4,7 +4,7 @@ import {
   V2FundingCycleData,
   V2FundingCycleMetadata,
 } from 'models/v2/fundingCycle'
-import { fromWad, parseWad } from 'utils/formatNumber'
+import { fromWad, parseWad } from 'utils/format/formatNumber'
 
 export type SerializedV2FundingCycleMetadata = Record<
   keyof Omit<

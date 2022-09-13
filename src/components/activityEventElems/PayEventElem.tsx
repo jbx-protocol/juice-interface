@@ -7,7 +7,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { PayEvent } from 'models/subgraph-entities/vX/pay-event'
 import { useCallback, useContext } from 'react'
-import { formatHistoricalDate } from 'utils/formatDate'
+import { formatHistoricalDate } from 'utils/format/formatDate'
 
 import V2ProjectHandle from '../v2/shared/V2ProjectHandle'
 

@@ -1,5 +1,5 @@
 import { useVeNftUserTokens } from 'hooks/veNft/VeNftUserTokens'
-import { fromWad } from 'utils/formatNumber'
+import { fromWad } from 'utils/format/formatNumber'
 
 export type VeNftSummaryStats = {
   totalLocked: number

@@ -4,9 +4,9 @@ import { CSSProperties, useState } from 'react'
 import { FormItems } from 'components/formItems'
 import { FormItemExt } from 'components/formItems/formItemExt'
 import FormItemWarningText from 'components/FormItemWarningText'
-import { Split } from 'models/v2/splits'
+import { Split } from 'models/splits'
 import { defaultFundingCycleMetadata } from 'redux/slices/editingV2Project'
-import { toMod, toSplit } from 'utils/v2/splits'
+import { toMod, toSplit } from 'utils/splits'
 
 export default function ReservedTokensFormItem({
   hideLabel,

@@ -9,7 +9,7 @@ import { emitSuccessNotification } from 'utils/notifications'
 
 import TransactionModal from 'components/TransactionModal'
 import LockDurationSelectInput from 'components/veNft/formControls/LockDurationSelectInput'
-import { VeNftContext } from 'contexts/v2/veNftContext'
+import { VeNftContext } from 'contexts/veNftContext'
 import { useWallet } from 'hooks/Wallet'
 
 type VeNftExtendLockModalProps = {

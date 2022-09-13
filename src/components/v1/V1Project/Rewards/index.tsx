@@ -21,7 +21,7 @@ import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1Con
 import { useIssueTokensTx } from 'hooks/v1/transactor/IssueTokensTx'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import { CSSProperties, useContext, useState } from 'react'
-import { formatPercent, formatWad } from 'utils/formatNumber'
+import { formatPercent, formatWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 

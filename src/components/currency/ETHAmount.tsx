@@ -2,7 +2,7 @@ import { Tooltip } from 'antd'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { betweenZeroAndOne } from 'utils/bigNumbers'
-import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
+import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
 
 import CurrencySymbol from '../CurrencySymbol'
 

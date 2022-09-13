@@ -1,8 +1,8 @@
 import { Col, Image } from 'antd'
 
-import { VeNftTokenMetadata, VeNftVariant } from 'models/v2/veNft'
+import { VeNftTokenMetadata, VeNftVariant } from 'models/veNft'
 import { useCallback } from 'react'
-import { getVeNftBaseImage } from 'utils/v2/veNft'
+import { getVeNftBaseImage } from 'utils/veNft'
 
 interface VeNftCarouselItemProps {
   variant?: VeNftVariant

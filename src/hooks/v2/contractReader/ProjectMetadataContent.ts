@@ -1,6 +1,6 @@
 import { V2ContractName } from 'models/v2/contracts'
 
-import { JUICEBOX_MONEY_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
+import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
 import useV2ContractReader from './V2ContractReader'
 
 export default function useProjectMetadataContent(
@@ -9,6 +9,8 @@ export default function useProjectMetadataContent(
   return useV2ContractReader<string>({
     contract: V2ContractName.JBProjects,
     functionName: 'metadataContentOf',
-    args: projectId ? [projectId, JUICEBOX_MONEY_METADATA_DOMAIN] : null,
+    args: projectId
+      ? [projectId, JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN]
+      : null,
   })
 }

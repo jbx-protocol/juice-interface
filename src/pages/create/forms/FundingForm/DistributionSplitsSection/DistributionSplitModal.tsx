@@ -8,10 +8,10 @@ import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { CurrencyName } from 'constants/currency'
 import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerminalFee'
 import { findIndex } from 'lodash'
-import { Split } from 'models/v2/splits'
+import { Split } from 'models/splits'
 import moment, * as Moment from 'moment'
 import { useEffect, useMemo, useState } from 'react'
-import { parseWad, stripCommas } from 'utils/formatNumber'
+import { parseWad, stripCommas } from 'utils/format/formatNumber'
 import { stringIsDigit } from 'utils/math'
 import {
   adjustedSplitPercents,

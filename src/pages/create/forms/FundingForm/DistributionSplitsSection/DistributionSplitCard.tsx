@@ -10,10 +10,10 @@ import { CurrencyName } from 'constants/currency'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { round } from 'lodash'
-import { Split } from 'models/v2/splits'
+import { Split } from 'models/splits'
 import { PropsWithChildren, useContext, useState } from 'react'
-import { formatDate } from 'utils/formatDate'
-import { parseWad } from 'utils/formatNumber'
+import { formatDate } from 'utils/format/formatDate'
+import { parseWad } from 'utils/format/formatNumber'
 import { amountFromPercent } from 'utils/v2/distributions'
 import {
   formatSplitPercent,

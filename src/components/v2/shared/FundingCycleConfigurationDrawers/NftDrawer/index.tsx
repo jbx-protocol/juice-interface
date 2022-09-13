@@ -7,7 +7,7 @@ import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 
 import { useForm } from 'antd/lib/form/Form'
-import { NftRewardTier } from 'models/v2/nftRewardTier'
+import { NftRewardTier } from 'models/nftRewardTier'
 import { useCallback, useContext, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import {
@@ -17,8 +17,9 @@ import {
 import {
   defaultNftCollectionDescription,
   defaultNftCollectionName,
+  MAX_NFT_REWARD_TIERS,
   sortNftRewardTiers,
-} from 'utils/v2/nftRewards'
+} from 'utils/nftRewards'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 
@@ -35,8 +36,6 @@ export const NFT_REWARDS_EXPLAINATION: JSX.Element = (
     criteria.
   </Trans>
 )
-
-export const MAX_NFT_REWARD_TIERS = 3
 
 export type MarketplaceFormFields = {
   collectionName: string

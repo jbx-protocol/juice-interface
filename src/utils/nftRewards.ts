@@ -1,6 +1,8 @@
+import { ContractNftRewardTier, NftRewardTier } from 'models/nftRewardTier'
 import { V2ContractName } from 'models/v2/contracts'
-import { ContractNftRewardTier, NftRewardTier } from 'models/v2/nftRewardTier'
 import { decodeEncodedIPFSUri } from 'utils/ipfs'
+
+export const MAX_NFT_REWARD_TIERS = 3
 
 // Following three functions get the latest deployments of the NFT contracts from the NPM package
 // TODO: will need to incorporate `networkName` into this first function when contracts deployed to mainnet

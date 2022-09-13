@@ -14,7 +14,7 @@ export function useSetENSTextRecordForHandleTx(): TransactorInstance<{
   const { projectId } = useContext(V2ProjectContext)
 
   return ({ ensName }, txOpts) => {
-    if (!transactor || !projectId || !contracts?.JBProjects) {
+    if (!transactor || !projectId || !contracts?.PublicResolver) {
       txOpts?.onDone?.()
       return Promise.resolve(false)
     }

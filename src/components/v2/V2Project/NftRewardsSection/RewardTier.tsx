@@ -13,7 +13,7 @@ const rewardTierContainerStyle: CSSProperties = {
   flexDirection: 'column',
   alignItems: 'flex-start',
   cursor: 'pointer',
-  transition: 'box-shadow 0.25s',
+  transition: 'box-shadow 100ms linear',
   height: '100%',
 }
 

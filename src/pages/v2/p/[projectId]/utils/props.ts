@@ -22,10 +22,12 @@ async function getMetadataCidFromContract(projectId: number) {
   if (!contract) {
     throw new Error(`contract not found ${V2ContractName.JBProjects}`)
   }
+
   const metadataCid = (await contract.metadataContentOf(
     projectId,
     JUICEBOX_MONEY_METADATA_DOMAIN,
   )) as string
+
   return metadataCid
 }
 

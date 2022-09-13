@@ -12,6 +12,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
 
 import { CurrencyName } from 'constants/currency'
+import ETHToUSD from 'components/currency/ETHToUSD'
 
 export default function SpendingStats({
   currency,
@@ -48,15 +49,23 @@ export default function SpendingStats({
   return (
     <div>
       <div>
-        <span
-          style={{
-            fontSize: '1rem',
-            fontWeight: 500,
-          }}
+        <Tooltip
+          title={
+            currency === 'ETH' ? (
+              <ETHToUSD ethAmount={distributableAmount ?? ''} />
+            ) : undefined
+          }
         >
-          <CurrencySymbol currency={currency} />
-          {formatWad(distributableAmount, { precision: 4 }) || '0'}{' '}
-        </span>
+          <span
+            style={{
+              fontSize: '1rem',
+              fontWeight: 500,
+            }}
+          >
+            <CurrencySymbol currency={currency} />
+            {formatWad(distributableAmount, { precision: 4 }) || '0'}{' '}
+          </span>
+        </Tooltip>
         <TooltipLabel
           style={smallHeaderStyle}
           label={<Trans>AVAILABLE</Trans>}

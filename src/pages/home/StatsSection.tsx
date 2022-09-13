@@ -4,7 +4,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { useContext } from 'react'
-import { formattedNum } from 'utils/formatNumber'
+import { formattedNum } from 'utils/format/formatNumber'
 
 const Stat = ({
   value,

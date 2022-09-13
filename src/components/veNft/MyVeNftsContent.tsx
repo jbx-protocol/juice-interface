@@ -10,7 +10,7 @@ import OwnedVeNftCard from 'components/veNft/VeNftOwnedTokenCard'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { shadowCard } from 'constants/styles/shadowCard'
-import { VeNftContext } from 'contexts/v2/veNftContext'
+import { VeNftContext } from 'contexts/veNftContext'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import VeNftSummaryStatsSection from './VeNftSummaryStatsSection'
 

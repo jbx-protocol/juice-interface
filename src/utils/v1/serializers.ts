@@ -7,7 +7,7 @@ import {
   percentToPerbicent,
   percentToPermille,
   permilleToPercent,
-} from 'utils/formatNumber'
+} from 'utils/format/formatNumber'
 
 // Spreads all properties from both v0 or v1 FundingCycleMetadata
 export type EditingV1FundingCycle = Omit<V1FundingCycle, 'metadata'> & {

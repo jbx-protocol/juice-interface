@@ -2,7 +2,7 @@ import { useWallet } from 'hooks/Wallet'
 import { V2ContractName, V2Contracts } from 'models/v2/contracts'
 import { useEffect, useState } from 'react'
 
-import { loadContract } from 'utils/contracts/loadContract'
+import { loadV2Contract } from 'utils/contracts/v2/loadContract'
 
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
@@ -21,7 +21,7 @@ export function useV2ContractLoader() {
 
         const contractLoaders = await Promise.all(
           Object.values(V2ContractName).map(contractName =>
-            loadContract(contractName, network, signerOrProvider),
+            loadV2Contract(contractName, network, signerOrProvider),
           ),
         )
 

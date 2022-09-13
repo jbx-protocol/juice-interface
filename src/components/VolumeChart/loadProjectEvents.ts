@@ -1,5 +1,5 @@
 import { Project } from 'models/subgraph-entities/vX/project'
-import { fromWad } from 'utils/formatNumber'
+import { fromWad } from 'utils/format/formatNumber'
 import { querySubgraph, WhereConfig } from 'utils/graph'
 
 import { BlockRef, EventRef, ShowGraph } from './types'

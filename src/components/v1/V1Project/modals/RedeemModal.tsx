@@ -13,7 +13,12 @@ import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
 import { useRedeemTokensTx } from 'hooks/v1/transactor/RedeemTokensTx'
 import { useWallet } from 'hooks/Wallet'
 import { CSSProperties, useContext, useState } from 'react'
-import { formattedNum, formatWad, fromWad, parseWad } from 'utils/formatNumber'
+import {
+  formattedNum,
+  formatWad,
+  fromWad,
+  parseWad,
+} from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 

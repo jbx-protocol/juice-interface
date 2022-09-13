@@ -5,7 +5,7 @@ import { Property } from 'csstype'
 import { t } from '@lingui/macro'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useMemo, useState } from 'react'
-import { fracDiv } from 'utils/formatNumber'
+import { fracDiv } from 'utils/format/formatNumber'
 
 const TargetIndicatorLine = (
   props: { color: Property.Color } & React.DOMAttributes<HTMLDivElement>,

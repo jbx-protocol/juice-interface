@@ -6,8 +6,8 @@ import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { RedeemEvent } from 'models/subgraph-entities/vX/redeem-event'
 import { useContext } from 'react'
-import { formatHistoricalDate } from 'utils/formatDate'
-import { formatWad } from 'utils/formatNumber'
+import { formatHistoricalDate } from 'utils/format/formatDate'
+import { formatWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import {

@@ -22,7 +22,7 @@ import ConfirmStakeModal from 'components/veNft/VeNftConfirmStakeModal'
 import StakingTokenRangesModal from 'components/veNft/VeNftStakingTokenRangesModal'
 import { useWallet } from 'hooks/Wallet'
 
-import { parseWad } from 'utils/formatNumber'
+import { parseWad } from 'utils/format/formatNumber'
 import { reloadWindow } from 'utils/windowUtils'
 
 import { emitSuccessNotification } from 'utils/notifications'
@@ -31,7 +31,7 @@ import { useVeNftTokenMetadata } from 'hooks/veNft/VeNftTokenMetadata'
 
 import { useVeNftResolverTokenUri } from 'hooks/veNft/VeNftResolverTokenUri'
 
-import { VeNftContext } from 'contexts/v2/veNftContext'
+import { VeNftContext } from 'contexts/veNftContext'
 
 import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
 

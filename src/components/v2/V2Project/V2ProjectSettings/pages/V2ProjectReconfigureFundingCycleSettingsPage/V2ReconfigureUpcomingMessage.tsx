@@ -3,7 +3,7 @@ import { Trans } from '@lingui/macro'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useContext } from 'react'
 
-import { detailedTimeString, secondsUntil } from 'utils/formatTime'
+import { detailedTimeString, secondsUntil } from 'utils/format/formatTime'
 
 import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
 

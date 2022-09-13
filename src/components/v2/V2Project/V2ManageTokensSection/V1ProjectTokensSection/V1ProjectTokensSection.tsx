@@ -9,7 +9,7 @@ import useTotalV1BalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
 import { useV1ProjectIdOfV2Project } from 'hooks/v2/contractReader/V1ProjectIdOfV2Project'
 import { useWallet } from 'hooks/Wallet'
 import { CSSProperties, useContext, useState } from 'react'
-import { formatWad, fromWad } from 'utils/formatNumber'
+import { formatWad, fromWad } from 'utils/format/formatNumber'
 import { getTerminalName } from 'utils/v1/terminals'
 
 export function V1ProjectTokensSection({

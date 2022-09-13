@@ -1,4 +1,4 @@
-import { VeNftVariant } from 'models/v2/veNft'
+import { VeNftVariant } from 'models/veNft'
 
 import { DEFAULT_PINATA_GATEWAY, IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 

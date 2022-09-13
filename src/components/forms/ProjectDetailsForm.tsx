@@ -5,7 +5,7 @@ import Callout from 'components/Callout'
 import { FormItems } from 'components/formItems'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import { CSSProperties } from 'react'
-import { normalizeHandle } from 'utils/formatHandle'
+import { normalizeHandle } from 'utils/format/formatHandle'
 
 export type ProjectDetailsFormFields = {
   name: string

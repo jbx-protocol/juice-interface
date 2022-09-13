@@ -5,7 +5,7 @@ import SushiswapLogo from 'components/icons/Sushiswap'
 import UniswapLogo from 'components/icons/Uniswap'
 import { ONE_TRILLION } from 'constants/numbers'
 import { CSSProperties } from 'react'
-import { formatOrTruncate } from 'utils/formatNumber'
+import { formatOrTruncate } from 'utils/format/formatNumber'
 
 import ExternalLink from '../ExternalLink'
 

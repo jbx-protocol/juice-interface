@@ -1,7 +1,7 @@
 import { V1UserContext } from 'contexts/v1/userContext'
 import { V1ContractName } from 'models/v1/contracts'
 import { useContext, useEffect } from 'react'
-import { fromWad } from 'utils/formatNumber'
+import { fromWad } from 'utils/format/formatNumber'
 import { useContractReadValue } from './ContractReader'
 
 export function useEtherPrice() {

@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { VeNftVariant } from 'models/v2/veNft'
+import { VeNftVariant } from 'models/veNft'
 
 import { parseVeNftContractJson, VeNftContractJson } from './venft-contract'
 

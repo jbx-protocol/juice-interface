@@ -23,7 +23,7 @@ import {
   formatWad,
   perbicentToPercent,
   permilleToPercent,
-} from 'utils/formatNumber'
+} from 'utils/format/formatNumber'
 import { orEmpty } from 'utils/orEmpty'
 import {
   getUnsafeV1FundingCycleProperties,

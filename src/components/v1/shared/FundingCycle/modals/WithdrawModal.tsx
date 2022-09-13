@@ -19,7 +19,7 @@ import {
   fromWad,
   parseWad,
   perbicentToPercent,
-} from 'utils/formatNumber'
+} from 'utils/format/formatNumber'
 import { V1CurrencyName } from 'utils/v1/currency'
 import { amountSubFee, feeForAmount } from 'utils/v1/math'
 

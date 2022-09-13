@@ -7,8 +7,8 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { V2FundingCycle, V2FundingCycleMetadata } from 'models/v2/fundingCycle'
 import { useContext } from 'react'
-import { formatDate } from 'utils/formatDate'
-import { formattedNum } from 'utils/formatNumber'
+import { formatDate } from 'utils/format/formatDate'
+import { formattedNum } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { V2CurrencyName } from 'utils/v2/currency'
 
@@ -17,7 +17,7 @@ import FundingCycleDetailWarning from 'components/Project/FundingCycleDetailWarn
 
 import { getUnsafeV2FundingCycleProperties } from 'utils/v2/fundingCycle'
 
-import { detailedTimeString } from 'utils/formatTime'
+import { detailedTimeString } from 'utils/format/formatTime'
 
 import {
   formatDiscountRate,

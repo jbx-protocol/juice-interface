@@ -5,7 +5,7 @@ import { ModalMode } from 'components/formItems/formHelpers'
 import TooltipLabel from 'components/TooltipLabel'
 
 import NftUpload from 'components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload'
-import { VeNftVariant } from 'models/v2/veNft'
+import { VeNftVariant } from 'models/veNft'
 import { useEffect } from 'react'
 
 import TokensStakedMinInput from 'components/veNft/formControls/TokensStakedMinInput'

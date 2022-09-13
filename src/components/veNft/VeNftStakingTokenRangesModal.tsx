@@ -1,8 +1,8 @@
 import { Trans } from '@lingui/macro'
 import { Col, Image, Modal, Row } from 'antd'
-import { VeNftContext } from 'contexts/v2/veNftContext'
+import { VeNftContext } from 'contexts/veNftContext'
 import { useContext } from 'react'
-import { getVeNftBaseImage } from 'utils/v2/veNft'
+import { getVeNftBaseImage } from 'utils/veNft'
 
 type StakingTokenRangesModalProps = {
   visible: boolean

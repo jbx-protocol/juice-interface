@@ -2,7 +2,7 @@ import { LoadingOutlined } from '@ant-design/icons'
 import { Image, Tooltip } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 
-import { NftRewardTier } from 'models/v2/nftRewardTier'
+import { NftRewardTier } from 'models/nftRewardTier'
 import { useState } from 'react'
 
 export function NftRewardCell({

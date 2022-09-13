@@ -6,7 +6,7 @@ import { TransferUnclaimedTokensForm } from 'components/Project/ProjectToolsDraw
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
-} from 'constants/v2/splits'
+} from 'constants/splits'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 import useMobile from 'hooks/Mobile'
@@ -14,7 +14,7 @@ import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedT
 import { useAddToBalanceTx } from 'hooks/v2/transactor/AddToBalanceTx'
 import { useDeployProjectPayerTx } from 'hooks/v2/transactor/DeployProjectPayerTx'
 import { useTransferUnclaimedTokensTx } from 'hooks/v2/transactor/TransferUnclaimedTokensTx'
-import { ETHPayoutSplitGroup, ReservedTokensSplitGroup } from 'models/v2/splits'
+import { ETHPayoutSplitGroup, ReservedTokensSplitGroup } from 'models/splits'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { settingsPagePath } from 'utils/routes'

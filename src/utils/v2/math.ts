@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { invertPermyriad } from 'utils/bigNumbers'
-import { fromWad, percentToPermyriad } from 'utils/formatNumber'
+import { fromWad, percentToPermyriad } from 'utils/format/formatNumber'
 import { WeightFunction } from 'utils/math'
 
 import {

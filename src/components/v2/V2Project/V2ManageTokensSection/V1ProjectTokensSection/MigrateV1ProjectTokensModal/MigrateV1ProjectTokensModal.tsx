@@ -4,7 +4,7 @@ import TransactionModal from 'components/TransactionModal'
 import { usePayV1TokenPaymentTerminal } from 'hooks/v2/transactor/PayV1TokenPaymentTerminal'
 import { useWallet } from 'hooks/Wallet'
 import { useContext, useState } from 'react'
-import { parseWad } from 'utils/formatNumber'
+import { parseWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import { V2UserContext } from 'contexts/v2/userContext'

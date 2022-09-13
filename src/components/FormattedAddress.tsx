@@ -6,7 +6,7 @@ import { CSSProperties, useEffect, useState } from 'react'
 
 import CopyTextButton from 'components/CopyTextButton'
 import EtherscanLink from 'components/EtherscanLink'
-import { truncateEthAddress } from 'utils/formatAddress'
+import { truncateEthAddress } from 'utils/format/formatAddress'
 
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { readProvider } from 'constants/readProvider'

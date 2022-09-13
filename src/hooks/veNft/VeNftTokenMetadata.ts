@@ -1,4 +1,4 @@
-import { VeNftTokenMetadata } from 'models/v2/veNft'
+import { VeNftTokenMetadata } from 'models/veNft'
 import { useQuery } from 'react-query'
 import { ipfsGetWithFallback } from 'utils/ipfs'
 

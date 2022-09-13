@@ -4,7 +4,7 @@ import FundingCycleDetailsCard from 'components/Project/FundingCycleDetailsCard'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
-} from 'constants/v2/splits'
+} from 'constants/splits'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
 import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'

@@ -1,7 +1,7 @@
 import { LinkOutlined } from '@ant-design/icons'
 import { NetworkName } from 'models/network-name'
 import { CSSProperties, PropsWithChildren } from 'react'
-import { truncateEthAddress } from 'utils/formatAddress'
+import { truncateEthAddress } from 'utils/format/formatAddress'
 
 import { readNetwork } from 'constants/networks'
 import ExternalLink from './ExternalLink'

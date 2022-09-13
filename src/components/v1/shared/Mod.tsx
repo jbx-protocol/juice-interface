@@ -8,7 +8,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { useContext } from 'react'
-import { formatDate } from 'utils/formatDate'
+import { formatDate } from 'utils/format/formatDate'
 
 import V1ProjectHandle from './V1ProjectHandle'
 

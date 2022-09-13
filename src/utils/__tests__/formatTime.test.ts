@@ -1,4 +1,4 @@
-import { detailedTimeString } from '../formatTime'
+import { detailedTimeString } from '../format/formatTime'
 
 describe('formatTime utilities', () => {
   describe('detailedTimeString', () => {

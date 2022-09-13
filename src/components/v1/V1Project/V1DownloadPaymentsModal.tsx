@@ -4,7 +4,7 @@ import InputAccessoryButton from 'components/InputAccessoryButton'
 
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { fromWad } from 'utils/formatNumber'
+import { fromWad } from 'utils/format/formatNumber'
 import { querySubgraphExhaustive } from 'utils/graph'
 
 import { emitErrorNotification } from 'utils/notifications'

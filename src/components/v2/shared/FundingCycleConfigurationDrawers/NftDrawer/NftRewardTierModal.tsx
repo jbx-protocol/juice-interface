@@ -3,7 +3,7 @@ import { Form, Input, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ModalMode } from 'components/formItems/formHelpers'
 import TooltipLabel from 'components/TooltipLabel'
-import { NftRewardTier } from 'models/v2/nftRewardTier'
+import { NftRewardTier } from 'models/nftRewardTier'
 import { useEffect } from 'react'
 
 import ContributionFloorFormItem from './ContributionFloorFormItem'

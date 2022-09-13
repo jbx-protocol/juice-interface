@@ -4,13 +4,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { ProjectMetadataV4 } from 'models/project-metadata'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
-import { toDateSeconds } from 'utils/formatDate'
+import { toDateSeconds } from 'utils/format/formatDate'
 import {
   perbicentToPercent,
   percentToPerbicent,
   percentToPermille,
   permilleToPercent,
-} from 'utils/formatNumber'
+} from 'utils/format/formatNumber'
 import {
   SerializedV1FundingCycle,
   serializeV1FundingCycle,

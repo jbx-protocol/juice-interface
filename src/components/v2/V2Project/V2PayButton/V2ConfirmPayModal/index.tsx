@@ -8,10 +8,10 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useWallet } from 'hooks/Wallet'
 
-import { NftRewardTier } from 'models/v2/nftRewardTier'
+import { NftRewardTier } from 'models/nftRewardTier'
 
 import { useContext, useState } from 'react'
-import { formattedNum, formatWad, fromWad } from 'utils/formatNumber'
+import { formattedNum, formatWad, fromWad } from 'utils/format/formatNumber'
 
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
 
@@ -30,8 +30,8 @@ import Paragraph from 'components/Paragraph'
 import TransactionModal from 'components/TransactionModal'
 import useMobile from 'hooks/Mobile'
 import { featureFlagEnabled } from 'utils/featureFlags'
+import { getNftRewardTier } from 'utils/nftRewards'
 import { weightedAmount } from 'utils/v2/math'
-import { getNftRewardTier } from 'utils/v2/nftRewards'
 
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { V2PayForm, V2PayFormType } from '../V2PayForm'

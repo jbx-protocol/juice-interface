@@ -6,8 +6,8 @@ import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { ThemeContext } from 'contexts/themeContext'
 import { BallotState } from 'models/v2/fundingCycle'
 import { useContext } from 'react'
-import { formatDateToUTC } from 'utils/formatDate'
-import { detailedTimeUntil } from 'utils/formatTime'
+import { formatDateToUTC } from 'utils/format/formatDate'
+import { detailedTimeUntil } from 'utils/format/formatTime'
 
 import { BallotStateBadge } from './BallotStateBadge'
 

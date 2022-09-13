@@ -13,7 +13,7 @@ import { hasFundingTarget } from 'utils/v1/fundingCycle'
 import SpendingStats from 'components/Project/SpendingStats'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useRouter } from 'next/router'
-import { perbicentToPercent } from 'utils/formatNumber'
+import { perbicentToPercent } from 'utils/format/formatNumber'
 
 export default function Spending({
   payoutMods,

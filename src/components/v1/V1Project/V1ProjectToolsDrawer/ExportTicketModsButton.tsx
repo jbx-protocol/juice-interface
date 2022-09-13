@@ -5,7 +5,7 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { TicketMod } from 'models/mods'
 import { useContext, useState } from 'react'
 import { downloadCsvFile } from 'utils/csv'
-import { permyriadToPercent } from 'utils/formatNumber'
+import { permyriadToPercent } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
 import { getProjectOwnerRemainderTicketMod } from 'utils/v1/mods'
 

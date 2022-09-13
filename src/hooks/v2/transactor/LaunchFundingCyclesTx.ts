@@ -7,7 +7,7 @@ import {
 } from 'models/v2/fundingCycle'
 import { useContext } from 'react'
 
-import { GroupedSplits, SplitGroup } from 'models/v2/splits'
+import { GroupedSplits, SplitGroup } from 'models/splits'
 import { isValidMustStartAtOrAfter } from 'utils/v2/fundingCycle'
 
 import { TransactorInstance } from 'hooks/Transactor'

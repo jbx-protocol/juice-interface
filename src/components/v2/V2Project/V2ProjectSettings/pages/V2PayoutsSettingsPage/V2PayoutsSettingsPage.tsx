@@ -3,11 +3,11 @@ import { Button, Space } from 'antd'
 
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useSetProjectSplits } from 'hooks/v2/transactor/SetProjectSplits'
-import { Split } from 'models/v2/splits'
+import { Split } from 'models/splits'
 import { useCallback, useContext, useMemo, useState } from 'react'
 import { getTotalSplitsPercentage } from 'utils/v2/distributions'
 
-import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
+import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/splits'
 
 import { V2EditPayouts } from './V2EditPayouts'
 

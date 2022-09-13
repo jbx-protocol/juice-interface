@@ -6,7 +6,7 @@ import { useWallet } from 'hooks/Wallet'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 
 import { useContext, useState } from 'react'
-import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
+import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
 
 import Callout from 'components/Callout'
 import ETHAmount from 'components/currency/ETHAmount'

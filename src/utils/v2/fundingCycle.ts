@@ -10,7 +10,7 @@ import {
 import { invertPermyriad } from 'utils/bigNumbers'
 import unsafeFundingCycleProperties from 'utils/unsafeFundingCycleProperties'
 
-import { fromWad, parseWad } from '../formatNumber'
+import { fromWad, parseWad } from '../format/formatNumber'
 
 import { FundingCycleRiskFlags } from 'constants/fundingWarningText'
 import { MaxUint54 } from 'constants/numbers'

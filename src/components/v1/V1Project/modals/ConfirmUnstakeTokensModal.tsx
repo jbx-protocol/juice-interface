@@ -9,7 +9,7 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceOfUser'
 import { useUnstakeTokensTx } from 'hooks/v1/transactor/UnstakeTokensTx'
 import { useContext, useLayoutEffect, useState } from 'react'
-import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
+import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export default function ConfirmUnstakeTokensModal({

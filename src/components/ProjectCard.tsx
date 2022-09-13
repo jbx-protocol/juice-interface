@@ -6,7 +6,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { Project } from 'models/subgraph-entities/vX/project'
 import { CSSProperties, useContext } from 'react'
-import { formatDate } from 'utils/formatDate'
+import { formatDate } from 'utils/format/formatDate'
 
 import { getTerminalVersion } from 'utils/v1/terminals'
 

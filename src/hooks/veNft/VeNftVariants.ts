@@ -1,4 +1,4 @@
-import { VeNftVariant } from 'models/v2/veNft'
+import { VeNftVariant } from 'models/veNft'
 import { useQuery } from 'react-query'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { ipfsGetWithFallback } from 'utils/ipfs'

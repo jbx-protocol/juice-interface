@@ -4,14 +4,14 @@ import {
   ContractNftRewardTier,
   IPFSNftRewardTier,
   NftRewardTier,
-} from 'models/v2/nftRewardTier'
+} from 'models/nftRewardTier'
 import { useQuery, UseQueryResult } from 'react-query'
 import { decodeEncodedIPFSUri, ipfsCidUrl } from 'utils/ipfs'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { MaxUint48 } from 'constants/numbers'
 import { withHttps } from 'utils/externalLink'
-import { formatWad } from 'utils/formatNumber'
+import { formatWad } from 'utils/format/formatNumber'
 
 export const DEFAULT_NFT_MAX_SUPPLY = MaxUint48
 

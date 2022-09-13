@@ -32,7 +32,7 @@ import {
   fromWad,
   perbicentToPercent,
   permilleToPercent,
-} from 'utils/formatNumber'
+} from 'utils/format/formatNumber'
 import {
   cidFromUrl,
   editMetadataForCid,
@@ -65,7 +65,7 @@ import RestrictedActionsForm, {
 import BudgetForm from 'components/v1/shared/forms/BudgetForm'
 import PayModsForm from 'components/v1/shared/forms/PayModsForm'
 
-import { toDateSeconds } from 'utils/formatDate'
+import { toDateSeconds } from 'utils/format/formatDate'
 
 import { BallotStrategy } from 'models/ballot'
 

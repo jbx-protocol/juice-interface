@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { Descriptions } from 'antd'
+import { Descriptions, Tooltip } from 'antd'
 
 import TooltipLabel from 'components/TooltipLabel'
 import { ThemeContext } from 'contexts/themeContext'
@@ -7,7 +7,7 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { V2FundingCycle, V2FundingCycleMetadata } from 'models/v2/fundingCycle'
 import { useContext } from 'react'
-import { formatDate } from 'utils/formatDate'
+import { formatDate, formatDateToUTC } from 'utils/formatDate'
 import { formattedNum } from 'utils/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { V2CurrencyName } from 'utils/v2/currency'
@@ -160,13 +160,21 @@ export default function FundingCycleDetails({
 
         {fundingCycle.duration.gt(0) && (
           <Descriptions.Item label={<Trans>Start</Trans>}>
-            {formattedStartTime}
+            <Tooltip title={formatDateToUTC(fundingCycle.start.mul(1000))}>
+              {formattedStartTime}
+            </Tooltip>
           </Descriptions.Item>
         )}
 
         {fundingCycle.duration.gt(0) && (
           <Descriptions.Item label={<Trans>End</Trans>}>
-            {formattedEndTime}
+            <Tooltip
+              title={formatDateToUTC(
+                fundingCycle.start.add(fundingCycle.duration).mul(1000),
+              )}
+            >
+              {formattedEndTime}
+            </Tooltip>
           </Descriptions.Item>
         )}
 

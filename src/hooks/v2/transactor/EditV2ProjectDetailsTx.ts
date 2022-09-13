@@ -2,7 +2,7 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { useContext } from 'react'
 
-import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
+import { JUICEBOX_MONEY_METADATA_DOMAIN } from 'constants/metadataDomain'
 
 import { TransactorInstance } from 'hooks/Transactor'
 
@@ -21,7 +21,7 @@ export function useEditV2ProjectDetailsTx(): TransactorInstance<{
     return transactor(
       contracts.JBProjects,
       'setMetadataOf',
-      [projectId, [cid, JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN]],
+      [projectId, [cid, JUICEBOX_MONEY_METADATA_DOMAIN]],
       txOpts,
     )
   }

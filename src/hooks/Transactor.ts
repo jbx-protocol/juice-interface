@@ -38,7 +38,7 @@ export function onCatch({
   txOpts?: TxOpts
   missingParam?: string
   functionName: string
-  version: 'v1' | 'v2'
+  version: 'v1' | 'v2' | 'v3'
 }) {
   txOpts?.onError?.(
     new DOMException(

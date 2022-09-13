@@ -29,7 +29,7 @@ import {
   BALLOT_ADDRESSES,
   DEPRECATED_BALLOT_ADDRESSES,
 } from 'constants/v2/ballotStrategies'
-import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
+import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 import ReconfigurePreview from '../V2ProjectSettings/pages/V2ProjectReconfigureFundingCycleSettingsPage/ReconfigurePreview'
 
 export function RelaunchFundingCycleBanner() {

@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 
 import { V2ContractName } from 'models/v2/contracts'
 
-import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
+import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 
 import useV2ContractReader from './V2ContractReader'
 

@@ -1,4 +1,4 @@
-import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
+import { JUICEBOX_MONEY_METADATA_DOMAIN } from 'constants/metadataDomain'
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
 import { ProjectMetadataV4 } from 'models/project-metadata'
@@ -25,7 +25,7 @@ async function getMetadataCidFromContract(projectId: number) {
 
   const metadataCid = (await contract.metadataContentOf(
     projectId,
-    JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN,
+    JUICEBOX_MONEY_METADATA_DOMAIN,
   )) as string
 
   return metadataCid

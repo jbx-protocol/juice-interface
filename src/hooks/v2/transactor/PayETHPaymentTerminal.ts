@@ -4,7 +4,7 @@ import { useContext } from 'react'
 
 import { BigNumber } from '@ethersproject/bignumber'
 
-import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
+import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 import { TransactorInstance } from 'hooks/Transactor'
 
 const DEFAULT_DELEGATE_METADATA = 0

@@ -3,7 +3,7 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { useContext } from 'react'
 
-import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
+import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 import { TransactorInstance } from 'hooks/Transactor'
 
 const DEFAULT_METADATA = 0

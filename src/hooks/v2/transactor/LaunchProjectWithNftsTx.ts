@@ -18,7 +18,7 @@ import { encodeIPFSUri, ipfsCidUrl } from 'utils/ipfs'
 import { getLatestNftDelegateStoreContractAddress } from 'utils/nftRewards'
 import { isValidMustStartAtOrAfter } from 'utils/v2/fundingCycle'
 
-import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
+import { JUICEBOX_MONEY_METADATA_DOMAIN } from 'constants/metadataDomain'
 import { MaxUint48 } from 'constants/numbers'
 import { TransactorInstance } from 'hooks/Transactor'
 
@@ -137,7 +137,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
       delegateData, // _deployTiered721DelegateData
       {
         projectMetadata: {
-          domain: JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN,
+          domain: JUICEBOX_MONEY_METADATA_DOMAIN,
           content: projectMetadataCID,
         },
         data: fundingCycleData,

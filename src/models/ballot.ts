@@ -11,6 +11,12 @@ export enum V2BallotState {
   'Failed' = 2,
 }
 
+export enum V3BallotState {
+  'Active' = 0,
+  'Approved' = 1,
+  'Failed' = 2,
+}
+
 export type BallotStrategy = {
   address: string
   name: string

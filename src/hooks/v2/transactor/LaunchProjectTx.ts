@@ -10,7 +10,7 @@ import { useContext } from 'react'
 import { GroupedSplits, SplitGroup } from 'models/splits'
 import { isValidMustStartAtOrAfter } from 'utils/v2/fundingCycle'
 
-import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
+import { JUICEBOX_MONEY_METADATA_DOMAIN } from 'constants/metadataDomain'
 import { TransactorInstance } from 'hooks/Transactor'
 
 const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
@@ -51,7 +51,7 @@ export function useLaunchProjectTx(): TransactorInstance<{
 
     const args = [
       userAddress, // _owner
-      [projectMetadataCID, JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN], // _projectMetadata (JBProjectMetadata)
+      [projectMetadataCID, JUICEBOX_MONEY_METADATA_DOMAIN], // _projectMetadata (JBProjectMetadata)
       fundingCycleData, // _data (JBFundingCycleData)
       fundingCycleMetadata, // _metadata (JBFundingCycleMetadata)
       mustStartAtOrAfter, // _mustStartAtOrAfter

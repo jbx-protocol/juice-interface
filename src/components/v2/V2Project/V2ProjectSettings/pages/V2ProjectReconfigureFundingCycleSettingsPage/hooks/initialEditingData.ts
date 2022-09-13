@@ -29,7 +29,7 @@ import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
-import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
+import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 
 export interface InitialEditingData {
   fundAccessConstraints: SerializedV2FundAccessConstraint[]

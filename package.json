@@ -1,8 +1,7 @@
 {
     "name": "juice-frontend",
-    "version": "0.0.1-alpha",
+    "version": "1.0.0",
     "description": "Juicebox frontend monorepo",
-    "main": "index.js",
     "repository": "https://github.com/jbx-protocol/juice-frontend",
     "license": "MIT",
     "private": true,
@@ -10,6 +9,7 @@
       "./workspaces/*"
     ],
     "scripts": {
+      "dev:interface": "yarn --cwd workspaces/interface dev",
       "build:interface": "yarn --cwd workspaces/interface build",
       "build": "yarn build:interface"
     }

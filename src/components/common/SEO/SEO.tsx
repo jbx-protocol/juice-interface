@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { FC, ReactNode } from 'react'
 
-import config from '../../../config/seo_meta.json'
+import config from 'config/seo_meta.json'
 import { OpenGraphMetaTags } from './OpenGraphMetaTags'
 import {
   TwitterCardType,

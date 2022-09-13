@@ -6,7 +6,7 @@ import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { ThemeContext } from 'contexts/themeContext'
 import { BallotState } from 'models/v2/fundingCycle'
 import { useContext } from 'react'
-import { detailedTimeUntil } from 'utils/formatTime'
+import { detailedTimeUntil } from 'utils/format/formatTime'
 
 import { BallotStateBadge } from './BallotStateBadge'
 

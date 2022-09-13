@@ -11,7 +11,7 @@ import { CurrencyContext } from 'contexts/currencyContext'
 import { CurrencyOption } from 'models/currencyOption'
 import { lazy, Suspense } from 'react'
 
-import { weightedRate } from 'utils/math'
+import { weightedRate } from 'utils/v1/math'
 
 import FundingCycles from './FundingCycles'
 import Paid from './Paid'

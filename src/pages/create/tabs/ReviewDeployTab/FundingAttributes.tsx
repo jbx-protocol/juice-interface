@@ -3,7 +3,7 @@ import { t, Trans } from '@lingui/macro'
 import { Statistic } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
 import TooltipLabel from 'components/TooltipLabel'
-import { formatWad } from 'utils/formatNumber'
+import { formatWad } from 'utils/format/formatNumber'
 import {
   formatDiscountRate,
   formatRedemptionRate,
@@ -16,8 +16,8 @@ import {
   DISCOUNT_RATE_EXPLANATION,
   REDEMPTION_RATE_EXPLANATION,
 } from 'components/v2/V2Project/V2FundingCycleSection/settingExplanations'
-import { Split } from 'models/v2/splits'
-import { detailedTimeString } from 'utils/formatTime'
+import { Split } from 'models/splits'
+import { detailedTimeString } from 'utils/format/formatTime'
 
 import { CurrencyName } from 'constants/currency'
 import {

@@ -5,7 +5,7 @@ import { useContext } from 'react'
 
 import { BigNumber } from '@ethersproject/bignumber'
 
-import { TransactorInstance } from '../../Transactor'
+import { TransactorInstance } from 'hooks/Transactor'
 
 export function useSetProjectHandleTx(): TransactorInstance<{
   handle: string

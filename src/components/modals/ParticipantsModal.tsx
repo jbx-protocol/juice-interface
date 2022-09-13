@@ -15,7 +15,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { CV } from 'models/cv'
 import { Participant } from 'models/subgraph-entities/vX/participant'
 import { useContext, useEffect, useMemo, useState } from 'react'
-import { formatPercent, formatWad } from 'utils/formatNumber'
+import { formatPercent, formatWad } from 'utils/format/formatNumber'
 import { OrderDirection, querySubgraph } from 'utils/graph'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 

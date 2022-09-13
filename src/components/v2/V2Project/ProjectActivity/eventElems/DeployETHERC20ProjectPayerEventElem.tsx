@@ -6,7 +6,7 @@ import RichNote from 'components/RichNote'
 import { ThemeContext } from 'contexts/themeContext'
 import { DeployETHERC20ProjectPayerEvent } from 'models/subgraph-entities/v2/deploy-eth-erc20-project-payer-event'
 import { useContext } from 'react'
-import { formatHistoricalDate } from 'utils/formatDate'
+import { formatHistoricalDate } from 'utils/format/formatDate'
 
 export default function DeployETHERC20ProjectPayerEventElem({
   event,

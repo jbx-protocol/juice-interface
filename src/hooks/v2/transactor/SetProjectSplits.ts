@@ -1,9 +1,9 @@
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { TransactorInstance } from 'hooks/Transactor'
-import { GroupedSplits } from 'models/v2/splits'
+import { GroupedSplits } from 'models/splits'
 import { useContext } from 'react'
-import { sanitizeSplit } from 'utils/v2/splits'
+import { sanitizeSplit } from 'utils/splits'
 
 export const useSetProjectSplits = <G>({
   domain,

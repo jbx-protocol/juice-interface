@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import CurrencySymbol from 'components/CurrencySymbol'
 import TooltipIcon from 'components/TooltipIcon'
-import { formatWad } from 'utils/formatNumber'
+import { formatWad } from 'utils/format/formatNumber'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
 
 import { ThemeContext } from 'contexts/themeContext'

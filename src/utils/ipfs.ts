@@ -5,12 +5,12 @@ import {
 } from '@pinata/sdk'
 
 import { base58 } from 'ethers/lib/utils'
-import { consolidateMetadata, ProjectMetadataV4 } from 'models/project-metadata'
 import {
   IpfsNftCollectionMetadata,
   IPFSNftRewardTier,
   NftRewardTier,
-} from 'models/v2/nftRewardTier'
+} from 'models/nftRewardTier'
+import { consolidateMetadata, ProjectMetadataV4 } from 'models/project-metadata'
 
 import axios from 'axios'
 

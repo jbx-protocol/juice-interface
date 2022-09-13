@@ -5,7 +5,7 @@ import { round } from 'lodash'
 import FormItemLabel from 'pages/create/FormItemLabel'
 import { CSSProperties, useContext, useState } from 'react'
 import { defaultFundingCycleMetadata } from 'redux/slices/editingV2Project'
-import { formattedNum } from 'utils/formatNumber'
+import { formattedNum } from 'utils/format/formatNumber'
 import { DEFAULT_MINT_RATE } from 'utils/v2/math'
 
 import {

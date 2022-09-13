@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Skeleton, Tooltip } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
-import { NftRewardTier } from 'models/v2/nftRewardTier'
+import { NftRewardTier } from 'models/nftRewardTier'
 import { CSSProperties, MouseEventHandler, useContext, useState } from 'react'
 
 import { CheckOutlined, LoadingOutlined } from '@ant-design/icons'
@@ -13,7 +13,7 @@ const rewardTierContainerStyle: CSSProperties = {
   flexDirection: 'column',
   alignItems: 'flex-start',
   cursor: 'pointer',
-  transition: 'box-shadow 0.25s',
+  transition: 'box-shadow 100ms linear',
   height: '100%',
 }
 

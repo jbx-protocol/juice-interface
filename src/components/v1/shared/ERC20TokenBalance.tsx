@@ -2,7 +2,7 @@ import useSymbolOfERC20 from 'hooks/SymbolOfERC20'
 import useERC20BalanceOf from 'hooks/v1/contractReader/ERC20BalanceOf'
 import useERC20DecimalsOf from 'hooks/v1/contractReader/ERC20DecimalsOf'
 import { CSSProperties } from 'react'
-import { formatWad } from 'utils/formatNumber'
+import { formatWad } from 'utils/format/formatNumber'
 
 import FormattedAddress from 'components/FormattedAddress'
 

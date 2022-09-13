@@ -2,6 +2,7 @@ import { CrownFilled, LockOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
+import ETHToUSD from 'components/currency/ETHToUSD'
 import CurrencySymbol from 'components/CurrencySymbol'
 import FormattedAddress from 'components/FormattedAddress'
 import TooltipIcon from 'components/TooltipIcon'
@@ -9,12 +10,12 @@ import TooltipLabel from 'components/TooltipLabel'
 import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
 import useProjectHandle from 'hooks/v2/contractReader/ProjectHandle'
+import { Split } from 'models/splits'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
-import { Split } from 'models/v2/splits'
 import Link from 'next/link'
 import { useContext } from 'react'
-import { formatDate } from 'utils/formatDate'
-import { formatWad } from 'utils/formatNumber'
+import { formatDate } from 'utils/format/formatDate'
+import { formatWad } from 'utils/format/formatNumber'
 import { v2ProjectRoute } from 'utils/routes'
 import { V2CurrencyName } from 'utils/v2/currency'
 import { formatSplitPercent, SPLITS_TOTAL_PERCENT } from 'utils/v2/math'
@@ -149,18 +150,21 @@ export default function SplitItem({
   const SplitValue = () => {
     const splitValue = totalValue?.mul(split.percent).div(SPLITS_TOTAL_PERCENT)
     const splitValueFormatted = formatWad(splitValue, { ...valueFormatProps })
+    const curr = V2CurrencyName(
+      currency?.toNumber() as V2CurrencyOption | undefined,
+    )
+    const tooltipTitle =
+      curr === 'ETH' ? <ETHToUSD ethAmount={splitValue ?? ''} /> : undefined
 
     return (
-      <span style={{ fontSize: itemFontSize }}>
-        (
-        <CurrencySymbol
-          currency={V2CurrencyName(
-            currency?.toNumber() as V2CurrencyOption | undefined,
-          )}
-        />
-        {splitValueFormatted}
-        {valueSuffix ? <span> {valueSuffix}</span> : null})
-      </span>
+      <Tooltip title={tooltipTitle}>
+        <span style={{ fontSize: itemFontSize }}>
+          (
+          <CurrencySymbol currency={curr} />
+          {splitValueFormatted}
+          {valueSuffix ? <span> {valueSuffix}</span> : null})
+        </span>
+      </Tooltip>
     )
   }
 

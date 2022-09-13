@@ -137,9 +137,6 @@ msgstr ""
 msgid "<0>Juicebox is an open protocol on Ethereum that is funded using Juicebox itself. You can check out the contractualized budget specs <1>here</1>.</0><2>Projects building on Juicebox pay a {JB_FEE}% JBX membership fee from withdrawn funds into the JuiceboxDAO treasury. Projects can then use their JBX to participate in the governance of JuiceboxDAO and its collective treasury, as well as redeem from its growing <3>overflow</3>. The fee is also subject to change via JBX member votes.</2>"
 msgstr ""
 
-msgid "<0>Learn more</0> about burning tokens."
-msgstr ""
-
 msgid "<0>Learn more</0> about funding cycle duration."
 msgstr ""
 
@@ -530,12 +527,6 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-msgid "Cannot redeem tokens for ETH because this project has no overflow."
-msgstr ""
-
-msgid "Cannot redeem tokens for ETH because this project's redemption rate is zero."
-msgstr ""
-
 msgid "Change ENS name"
 msgstr ""
 
@@ -600,6 +591,9 @@ msgid "Close"
 msgstr ""
 
 msgid "Close, I'll do these later"
+msgstr ""
+
+msgid "Collection description"
 msgstr ""
 
 msgid "Collection name"
@@ -750,6 +744,9 @@ msgid "Custom strategy"
 msgstr ""
 
 msgid "Custom token beneficiary"
+msgstr ""
+
+msgid "Customize how your NFT collection will appear on NFT marketplaces (like OpenSea)."
 msgstr ""
 
 msgid "Customize your project's \"pay\" button. Leave blank to use the default."
@@ -911,10 +908,10 @@ msgstr ""
 msgid "Distributing funds to Juicebox projects won't incur fees."
 msgstr ""
 
-msgid "Distribution"
+msgid "Distribution Limit <0/>:"
 msgstr ""
 
-msgid "Distribution Limit <0/>:"
+msgid "Distribution amount"
 msgstr ""
 
 msgid "Distribution limit"
@@ -1416,6 +1413,9 @@ msgid "Manage your {0}"
 msgstr ""
 
 msgid "Manage {tokenText}"
+msgstr ""
+
+msgid "Marketplace customizations"
 msgstr ""
 
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
@@ -2828,7 +2828,10 @@ msgstr ""
 msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
 msgstr ""
 
-msgid "You collection's symbol will apply to the whole collection of reward tiers on NFT marketplaces (like OpenSea)."
+msgid "You cannot redeem your tokens for ETH because this project has no overflow."
+msgstr ""
+
+msgid "You cannot redeem your tokens for ETH because this project's redemption rate is zero."
 msgstr ""
 
 msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
@@ -2910,9 +2913,6 @@ msgid "Your V1 {tokenSymbolFormatted} balance"
 msgstr ""
 
 msgid "Your balance"
-msgstr ""
-
-msgid "Your collection's name will apply to the whole collection of reward tiers on NFT marketplaces (like OpenSea)."
 msgstr ""
 
 msgid "Your funding cycle configuration has been pre-populated using the configuration you originally launched with. If you need to customize it, contact us."

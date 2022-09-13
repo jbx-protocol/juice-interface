@@ -8,7 +8,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import useContractReader from 'hooks/v1/contractReader/ContractReader'
 import { V1ContractName } from 'models/v1/contracts'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { normalizeHandle } from 'utils/formatHandle'
+import { normalizeHandle } from 'utils/format/formatHandle'
 
 import {
   ProjectHandleInitialValue,

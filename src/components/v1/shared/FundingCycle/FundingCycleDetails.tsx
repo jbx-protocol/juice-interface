@@ -8,13 +8,12 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { useContext } from 'react'
-import { formatDate } from 'utils/formatDate'
+import { formatDate } from 'utils/format/formatDate'
 import {
   formatWad,
   perbicentToPercent,
   permilleToPercent,
-} from 'utils/formatNumber'
-import { weightedRate } from 'utils/math'
+} from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import {
   decodeFundingCycleMetadata,
@@ -22,6 +21,7 @@ import {
   hasFundingTarget,
   isRecurring,
 } from 'utils/v1/fundingCycle'
+import { weightedRate } from 'utils/v1/math'
 
 import { V1CurrencyName } from 'utils/v1/currency'
 

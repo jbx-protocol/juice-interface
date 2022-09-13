@@ -1,9 +1,9 @@
-import { ContractNftRewardTier } from 'models/v2/nftRewardTier'
+import { ContractNftRewardTier } from 'models/nftRewardTier'
 
 import * as constants from '@ethersproject/constants'
-import { MAX_NFT_REWARD_TIERS } from 'components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer'
 import { V2ContractName } from 'models/v2/contracts'
 
+import { MAX_NFT_REWARD_TIERS } from 'utils/nftRewards'
 import useV2ContractReader from './V2ContractReader'
 
 export function useNftRewardTiersOf(dataSourceAddress: string | undefined) {

@@ -6,12 +6,12 @@ import TransactionModal from 'components/TransactionModal'
 
 import { useLockTx } from 'hooks/veNft/transactor/VeNftLockTx'
 import { useWallet } from 'hooks/Wallet'
-import { VeNftTokenMetadata } from 'models/v2/veNft'
+import { VeNftTokenMetadata } from 'models/veNft'
 
 import { useState } from 'react'
-import { formattedNum, parseWad } from 'utils/formatNumber'
+import { formattedNum, parseWad } from 'utils/format/formatNumber'
 
-import { detailedTimeString } from 'utils/formatTime'
+import { detailedTimeString } from 'utils/format/formatTime'
 import {
   emitErrorNotification,
   emitSuccessNotification,

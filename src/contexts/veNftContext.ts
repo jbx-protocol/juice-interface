@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'
-import { VeNftVariant } from 'models/v2/veNft'
+import { VeNftVariant } from 'models/veNft'
 import { createContext } from 'react'
 
 export type VeNftContextType = {

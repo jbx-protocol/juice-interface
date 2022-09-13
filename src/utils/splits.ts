@@ -1,14 +1,17 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { PayoutMod } from 'models/mods'
-import { Split } from 'models/v2/splits'
-import { percentToPermyriad, permyriadToPercent } from 'utils/formatNumber'
+import { Split } from 'models/splits'
+import {
+  percentToPermyriad,
+  permyriadToPercent,
+} from 'utils/format/formatNumber'
 
 import {
   formatSplitPercent,
   splitPercentFrom,
   SPLITS_TOTAL_PERCENT,
-} from './math'
+} from './v2/math'
 
 export const toSplit = (mod: PayoutMod): Split => {
   return {

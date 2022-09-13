@@ -6,7 +6,7 @@ import { useContext } from 'react'
 
 import { useVeNftSummaryStats } from 'hooks/veNft/VeNftSummaryStats'
 
-import { formattedNum } from 'utils/formatNumber'
+import { formattedNum } from 'utils/format/formatNumber'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 

@@ -4,7 +4,7 @@ import { useAppSelector } from 'hooks/AppSelector'
 import {
   defaultNftCollectionDescription,
   defaultNftCollectionName,
-} from 'utils/v2/nftRewards'
+} from 'utils/nftRewards'
 
 import { MarketplaceFormFields } from '.'
 

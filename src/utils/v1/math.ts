@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { fromWad, percentToPerbicent } from 'utils/formatNumber'
+import { fromWad, percentToPerbicent } from 'utils/format/formatNumber'
 import { WeightFunction } from 'utils/math'
 
 export const feeForAmount = (

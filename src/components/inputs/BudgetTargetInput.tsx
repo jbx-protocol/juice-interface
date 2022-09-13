@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { ThemeContext } from 'contexts/themeContext'
 import { CSSProperties, useContext, useEffect, useState } from 'react'
-import { perbicentToPercent } from 'utils/formatNumber'
+import { perbicentToPercent } from 'utils/format/formatNumber'
 
 import { Trans } from '@lingui/macro'
 

@@ -1,4 +1,4 @@
-import { Split } from 'models/v2/splits'
+import { Split } from 'models/splits'
 
 import { preciseFormatSplitPercent, splitPercentFrom } from './math'
 

@@ -5,7 +5,7 @@ import { emitErrorNotification } from 'utils/notifications'
 
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { fromWad } from 'utils/formatNumber'
+import { fromWad } from 'utils/format/formatNumber'
 import { querySubgraphExhaustive } from 'utils/graph'
 
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'

@@ -11,7 +11,7 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
 import { useClaimTokensTx } from 'hooks/v2/transactor/ClaimTokensTx'
 import { useContext, useLayoutEffect, useState } from 'react'
-import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
+import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export default function V2ClaimTokensModal({

@@ -15,8 +15,8 @@ import { V2UserContext } from 'contexts/v2/userContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import isEqual from 'lodash/isEqual'
+import { Split } from 'models/splits'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
-import { Split } from 'models/v2/splits'
 import DistributionSplitsSection from 'pages/create/forms/FundingForm/DistributionSplitsSection'
 import {
   useCallback,
@@ -31,13 +31,14 @@ import {
   defaultFundingCycleMetadata,
   editingV2ProjectActions,
 } from 'redux/slices/editingV2Project'
-import { fromWad } from 'utils/formatNumber'
+import { fromWad } from 'utils/format/formatNumber'
 import {
   deriveDurationUnit,
   otherUnitToSeconds,
   secondsToOtherUnit,
-} from 'utils/formatTime'
+} from 'utils/format/formatTime'
 import { helpPagePath } from 'utils/routes'
+import { sanitizeSplit } from 'utils/splits'
 import {
   getV2CurrencyOption,
   V2CurrencyName,
@@ -47,7 +48,6 @@ import { getTotalSplitsPercentage } from 'utils/v2/distributions'
 import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
 import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
-import { sanitizeSplit } from 'utils/v2/splits'
 import DurationInputAndSelect from './DurationInputAndSelect'
 import { FundingCycleExplainerCollapse } from './FundingCycleExplainerCollapse'
 

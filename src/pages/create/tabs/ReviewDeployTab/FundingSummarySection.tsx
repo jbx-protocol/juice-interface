@@ -11,7 +11,7 @@ import {
 } from 'hooks/AppSelector'
 import { useWallet } from 'hooks/Wallet'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
-import { formattedNum } from 'utils/formatNumber'
+import { formattedNum } from 'utils/format/formatNumber'
 import { V2CurrencyName } from 'utils/v2/currency'
 import {
   getDefaultFundAccessConstraint,

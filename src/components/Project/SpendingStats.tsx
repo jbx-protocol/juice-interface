@@ -6,13 +6,13 @@ import Balance from 'components/Navbar/Balance'
 import TooltipLabel from 'components/TooltipLabel'
 import { ThemeContext } from 'contexts/themeContext'
 import { CSSProperties, useContext } from 'react'
-import { formatWad } from 'utils/formatNumber'
+import { formatWad } from 'utils/format/formatNumber'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
 
-import { CurrencyName } from 'constants/currency'
 import ETHToUSD from 'components/currency/ETHToUSD'
+import { CurrencyName } from 'constants/currency'
 
 export default function SpendingStats({
   currency,

@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Split } from 'models/v2/splits'
-import { getProjectOwnerRemainderSplit } from 'utils/v2/splits'
+import { Split } from 'models/splits'
+import { getProjectOwnerRemainderSplit } from 'utils/splits'
 
 import SplitItem from './SplitItem'
 

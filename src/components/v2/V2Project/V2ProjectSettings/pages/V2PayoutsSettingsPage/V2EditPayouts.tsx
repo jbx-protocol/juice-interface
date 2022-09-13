@@ -7,8 +7,8 @@ import TooltipLabel from 'components/TooltipLabel'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { filter, isEqual } from 'lodash'
+import { defaultSplit, Split } from 'models/splits'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
-import { defaultSplit, Split } from 'models/v2/splits'
 import DistributionSplitCard from 'pages/create/forms/FundingForm/DistributionSplitsSection/DistributionSplitCard'
 import { DistributionSplitModal } from 'pages/create/forms/FundingForm/DistributionSplitsSection/DistributionSplitModal'
 import React, {
@@ -18,7 +18,7 @@ import React, {
   useMemo,
   useState,
 } from 'react'
-import { formatWad } from 'utils/formatNumber'
+import { formatWad } from 'utils/format/formatNumber'
 import { V2CurrencyName } from 'utils/v2/currency'
 import { getTotalSplitsPercentage } from 'utils/v2/distributions'
 import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2/math'

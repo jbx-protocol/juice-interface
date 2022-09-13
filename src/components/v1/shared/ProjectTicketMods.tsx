@@ -24,8 +24,11 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { formatDate } from 'utils/formatDate'
-import { percentToPermyriad, permyriadToPercent } from 'utils/formatNumber'
+import { formatDate } from 'utils/format/formatDate'
+import {
+  percentToPermyriad,
+  permyriadToPercent,
+} from 'utils/format/formatNumber'
 
 type ModalMode = 'Add' | 'Edit' | undefined
 const gutter = 10

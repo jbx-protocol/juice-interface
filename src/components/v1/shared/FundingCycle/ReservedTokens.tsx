@@ -8,7 +8,7 @@ import { TicketMod } from 'models/mods'
 import { NetworkName } from 'models/network-name'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { useContext, useState } from 'react'
-import { formatWad, perbicentToPercent } from 'utils/formatNumber'
+import { formatWad, perbicentToPercent } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 

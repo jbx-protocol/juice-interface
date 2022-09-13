@@ -6,7 +6,7 @@ import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber'
 import { parseBytes32String } from '@ethersproject/strings'
 import { V1UserContext } from 'contexts/v1/userContext'
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { normalizeHandle } from 'utils/formatHandle'
+import { normalizeHandle } from 'utils/format/formatHandle'
 
 type ProjectHandleInputValue = string | undefined
 export type ProjectHandleInitialValue = string | BigNumber | undefined

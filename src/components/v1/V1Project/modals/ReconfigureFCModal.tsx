@@ -31,7 +31,7 @@ import {
   fromWad,
   perbicentToPercent,
   permilleToPercent,
-} from 'utils/formatNumber'
+} from 'utils/format/formatNumber'
 import {
   decodeFundingCycleMetadata,
   hasFundingTarget,
@@ -54,7 +54,7 @@ import PayModsForm from 'components/v1/shared/forms/PayModsForm'
 
 import { BallotStrategy } from 'models/ballot'
 
-import { detailedTimeString, secondsUntil } from 'utils/formatTime'
+import { detailedTimeString, secondsUntil } from 'utils/format/formatTime'
 
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'

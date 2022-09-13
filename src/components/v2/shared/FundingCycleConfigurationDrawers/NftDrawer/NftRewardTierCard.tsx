@@ -7,7 +7,7 @@ import { Trans } from '@lingui/macro'
 import { Button, Col, Image, Row, Tooltip } from 'antd'
 import Paragraph from 'components/Paragraph'
 import { ThemeContext } from 'contexts/themeContext'
-import { NftRewardTier } from 'models/v2/nftRewardTier'
+import { NftRewardTier } from 'models/nftRewardTier'
 import { useContext, useState } from 'react'
 
 import NftRewardTierModal from './NftRewardTierModal'

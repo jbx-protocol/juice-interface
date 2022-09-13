@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { formatBytes32String } from '@ethersproject/strings'
 
 import { V1ContractName } from 'models/v1/contracts'
-import { normalizeHandle } from 'utils/formatHandle'
+import { normalizeHandle } from 'utils/format/formatHandle'
 
 import useContractReader from './ContractReader'
 

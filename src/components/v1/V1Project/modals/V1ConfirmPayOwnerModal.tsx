@@ -11,7 +11,7 @@ import { emitErrorNotification } from 'utils/notifications'
 import { usePayV1ProjectTx } from 'hooks/v1/transactor/PayV1ProjectTx'
 import { useWallet } from 'hooks/Wallet'
 import { useContext, useState } from 'react'
-import { formattedNum, formatWad } from 'utils/formatNumber'
+import { formattedNum, formatWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { V1CurrencyName } from 'utils/v1/currency'
 import {

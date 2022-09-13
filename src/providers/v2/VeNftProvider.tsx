@@ -1,5 +1,5 @@
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { VeNftContext } from 'contexts/v2/veNftContext'
+import { VeNftContext } from 'contexts/veNftContext'
 import { useVeNftBaseImagesHash } from 'hooks/veNft/VeNftBaseImagesHash'
 import { useVeNftLockDurationOptions } from 'hooks/veNft/VeNftLockDurationOptions'
 import { useVeNftName } from 'hooks/veNft/VeNftName'

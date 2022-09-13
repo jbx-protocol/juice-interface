@@ -4,7 +4,7 @@ import { useForm } from 'antd/lib/form/Form'
 import { isAddress } from '@ethersproject/address'
 import * as constants from '@ethersproject/constants'
 import { useContext, useState } from 'react'
-import { parseWad } from 'utils/formatNumber'
+import { parseWad } from 'utils/format/formatNumber'
 
 import { t, Trans } from '@lingui/macro'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'

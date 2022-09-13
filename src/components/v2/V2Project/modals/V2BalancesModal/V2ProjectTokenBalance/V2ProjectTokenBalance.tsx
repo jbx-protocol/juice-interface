@@ -3,7 +3,7 @@ import useProjectToken from 'hooks/v2/contractReader/ProjectToken'
 import useTotalBalanceOf from 'hooks/v2/contractReader/TotalBalanceOf'
 import { useWallet } from 'hooks/Wallet'
 import { CSSProperties } from 'react'
-import { formatWad } from 'utils/formatNumber'
+import { formatWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export const V2ProjectTokenBalance = ({

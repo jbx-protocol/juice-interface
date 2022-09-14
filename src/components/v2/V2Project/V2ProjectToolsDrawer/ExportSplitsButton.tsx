@@ -2,14 +2,14 @@ import { DownloadOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
 import { Button } from 'antd'
-import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/v2/splits'
+import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/splits'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { GroupedSplits, Split, SplitGroup } from 'models/v2/splits'
+import { GroupedSplits, Split, SplitGroup } from 'models/splits'
 import { PropsWithChildren, useContext, useState } from 'react'
 import { downloadCsvFile } from 'utils/csv'
 import { emitErrorNotification } from 'utils/notifications'
+import { getProjectOwnerRemainderSplit } from 'utils/splits'
 import { formatSplitPercent } from 'utils/v2/math'
-import { getProjectOwnerRemainderSplit } from 'utils/v2/splits'
 
 const CSV_HEADER = [
   'beneficiary',

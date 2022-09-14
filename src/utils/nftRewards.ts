@@ -1,6 +1,8 @@
+import { ContractNftRewardTier, NftRewardTier } from 'models/nftRewardTier'
 import { V2ContractName } from 'models/v2/contracts'
-import { ContractNftRewardTier, NftRewardTier } from 'models/v2/nftRewardTier'
 import { decodeEncodedIPFSUri } from 'utils/ipfs'
+
+export const MAX_NFT_REWARD_TIERS = 3
 
 // Following three functions get the latest deployments of the NFT contracts from the NPM package
 // TODO: will need to incorporate `networkName` into this first function when contracts deployed to mainnet
@@ -71,3 +73,15 @@ export function CIDsOfNftRewardTiersResponse(
     .filter(cid => cid.length > 0)
   return cids
 }
+
+// Default name for NFT collections on NFT marketplaces
+export const defaultNftCollectionName = (projectName: string | undefined) =>
+  `${projectName?.length ? projectName : "Your project's"} NFT rewards`
+
+// Default description for NFT collections on NFT marketplaces
+export const defaultNftCollectionDescription = (
+  projectName: string | undefined,
+) =>
+  `NFTs rewarded to ${
+    projectName?.length ? projectName : 'your project'
+  }'s Juicebox contributors.`

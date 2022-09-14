@@ -1,10 +1,11 @@
 import { AppWrapper, SEO } from 'components/common'
 import { DesmosScript } from 'components/common/Head/scripts/DesmosScript'
-import FeedbackFormButton from 'components/FeedbackFormButton'
+import { FeedbackFormButton } from 'components/FeedbackFormButton'
+import Loading from 'components/Loading'
 import NewDeployNotAvailable from 'components/NewDeployNotAvailable'
 import Project404 from 'components/Project404'
 import ScrollToTopButton from 'components/ScrollToTopButton'
-
+import V1Project from 'components/v1/V1Project'
 import { layouts } from 'constants/styles/layouts'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { projectTypes } from 'constants/v1/projectTypes'
@@ -31,14 +32,13 @@ import { ProjectMetadataV4 } from 'models/project-metadata'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
+import { V1UserProvider } from 'providers/v1/UserProvider'
 import { V1CurrencyProvider } from 'providers/v1/V1CurrencyProvider'
 import { useMemo } from 'react'
 import { paginateDepleteProjectsQueryCall } from 'utils/apollo'
 import { findProjectMetadata } from 'utils/server'
 import { V1CurrencyName } from 'utils/v1/currency'
 import { getTerminalName, getTerminalVersion } from 'utils/v1/terminals'
-import Loading from '../../components/Loading'
-import V1Project from '../../components/v1/V1Project'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   if (process.env.BUILD_CACHE_V1_PROJECTS === 'true') {
@@ -117,7 +117,13 @@ export default function V1HandlePage({
         </SEO>
       ) : null}
       <AppWrapper>
-        {metadata ? <V1Dashboard metadata={metadata} /> : <Loading />}
+        {metadata ? (
+          <V1UserProvider>
+            <V1Dashboard metadata={metadata} />
+          </V1UserProvider>
+        ) : (
+          <Loading />
+        )}
       </AppWrapper>
     </>
   )

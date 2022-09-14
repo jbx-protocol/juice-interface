@@ -1,3 +1,4 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Form, FormInstance } from 'antd'
 import CurrencySwitch from 'components/CurrencySwitch'
@@ -8,15 +9,16 @@ import TooltipIcon from 'components/TooltipIcon'
 import TooltipLabel from 'components/TooltipLabel'
 import { CurrencyName } from 'constants/currency'
 import { ThemeContext } from 'contexts/themeContext'
-import { round } from 'lodash'
 import { useContext } from 'react'
+import { formatWad, parseWad, stripCommas } from 'utils/format/formatNumber'
+import { amountSubFee, formatFee } from 'utils/v2/math'
 import { AddOrEditSplitFormFields, SplitType } from './types'
 import { percentageValidator } from './util'
 
 export function AmountFormItem({
   form,
   distributionLimit,
-  feePercentage,
+  fee,
   editingSplitType,
   currencyName,
   isFirstSplit,
@@ -24,7 +26,7 @@ export function AmountFormItem({
 }: {
   form: FormInstance<AddOrEditSplitFormFields>
   distributionLimit?: string
-  feePercentage: string | undefined
+  fee: BigNumber | undefined
   editingSplitType: SplitType
   currencyName: CurrencyName
   isFirstSplit: boolean
@@ -36,18 +38,19 @@ export function AmountFormItem({
 
   const amount = Form.useWatch('amount', form)
 
-  const amountSubFee = amount
-    ? parseFloat(amount) -
-      (parseFloat(amount) * parseFloat(feePercentage ?? '0')) / 100
-    : undefined
-
   function AfterFeeMessage() {
-    return amountSubFee && amountSubFee > 0 ? (
+    if (!fee || !amount || amount === '0') return null
+
+    const feePercentage = formatFee(fee)
+    const amountSubFeeValue = amountSubFee(parseWad(stripCommas(amount)), fee)
+
+    return (
       <TooltipLabel
         label={
           <Trans>
             <CurrencySymbol currency={currencyName} />
-            {round(amountSubFee, 4)} after {feePercentage}% JBX membership fee
+            {formatWad(amountSubFeeValue, { precision: 4 })} after{' '}
+            {feePercentage}% JBX membership fee
           </Trans>
         }
         tip={
@@ -57,16 +60,16 @@ export function AmountFormItem({
           </Trans>
         }
       />
-    ) : null
+    )
   }
 
   return (
     <Form.Item
       className="ant-form-item-extra-only"
-      label={t`Distribution`}
+      label={t`Distribution amount`}
       required
       extra={
-        feePercentage && form.getFieldValue('percent') <= 100 ? (
+        fee && form.getFieldValue('percent') <= 100 ? (
           <>
             {editingSplitType === 'address' ? (
               <div>

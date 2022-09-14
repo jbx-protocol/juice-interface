@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 
 import { V2FundingCycleMetadata } from 'models/v2/fundingCycle'
 
-import { percentToPermyriad } from 'utils/formatNumber'
+import { percentToPermyriad } from 'utils/format/formatNumber'
 
 import { Wallet } from '@ethersproject/wallet'
 

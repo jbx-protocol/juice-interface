@@ -1,6 +1,6 @@
 import { InputNumber } from 'antd'
 import { CSSProperties } from 'react'
-import { formattedNum } from 'utils/formatNumber'
+import { formattedNum } from 'utils/format/formatNumber'
 
 export default function FormattedNumberInput({
   style,

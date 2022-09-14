@@ -5,7 +5,7 @@ import { useContext } from 'react'
 
 import { projectHandleENSTextRecordKey } from 'constants/projectHandleENSTextRecordKey'
 
-import { TransactorInstance } from '../../Transactor'
+import { TransactorInstance } from 'hooks/Transactor'
 
 export function useSetENSTextRecordForHandleTx(): TransactorInstance<{
   ensName: string
@@ -14,7 +14,7 @@ export function useSetENSTextRecordForHandleTx(): TransactorInstance<{
   const { projectId } = useContext(V2ProjectContext)
 
   return ({ ensName }, txOpts) => {
-    if (!transactor || !projectId || !contracts?.JBProjects) {
+    if (!transactor || !projectId || !contracts?.PublicResolver) {
       txOpts?.onDone?.()
       return Promise.resolve(false)
     }

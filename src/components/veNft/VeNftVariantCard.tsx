@@ -2,10 +2,10 @@ import { DeleteOutlined, LoadingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, Col, Image, Row, Tooltip } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
-import { VeNftVariant } from 'models/v2/veNft'
+import { VeNftVariant } from 'models/veNft'
 import { useContext, useState } from 'react'
 
-import { truncateLongNumber } from 'utils/formatNumber'
+import { truncateLongNumber } from 'utils/format/formatNumber'
 
 import VeNftRewardTierModal from './VeNftRewardTierModal'
 

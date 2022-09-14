@@ -23,8 +23,7 @@ import {
   formatWad,
   perbicentToPercent,
   permilleToPercent,
-} from 'utils/formatNumber'
-import { amountSubFee } from 'utils/math'
+} from 'utils/format/formatNumber'
 import { orEmpty } from 'utils/orEmpty'
 import {
   getUnsafeV1FundingCycleProperties,
@@ -32,6 +31,7 @@ import {
   hasFundingTarget,
   isRecurring,
 } from 'utils/v1/fundingCycle'
+import { amountSubFee } from 'utils/v1/math'
 
 import { V1CurrencyName } from 'utils/v1/currency'
 

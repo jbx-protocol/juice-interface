@@ -20,8 +20,8 @@ import {
   fromWad,
   perbicentToPercent,
   permyriadToPercent,
-} from 'utils/formatNumber'
-import { amountSubFee } from 'utils/math'
+} from 'utils/format/formatNumber'
+import { amountSubFee } from 'utils/v1/math'
 
 import { V1CurrencyName } from 'utils/v1/currency'
 

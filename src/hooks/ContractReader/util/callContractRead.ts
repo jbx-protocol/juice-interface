@@ -13,9 +13,9 @@ export async function callContractRead<T extends string>({
   args,
 }: {
   readContract: Contract | undefined
-  contracts: Record<T, Contract> | undefined
   functionName: string | undefined
   args: unknown[] | null | undefined
+  contracts?: Record<T, Contract> | undefined
 }) {
   if (!readContract || !functionName || args === null) return
 
@@ -29,7 +29,7 @@ export async function callContractRead<T extends string>({
       { args },
       { err },
       { contract: readContract.address },
-      contracts,
+      { contracts },
     )
 
     Sentry.captureException(err, {

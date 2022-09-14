@@ -1,11 +1,11 @@
 import { Contract, ContractInterface } from '@ethersproject/contracts'
 import { NetworkName } from 'models/network-name'
 import { V2ContractName } from 'models/v2/contracts'
-import { SignerOrProvider } from 'utils/types'
 import {
   getLatestNftDelegateStoreContractAddress,
   getLatestNftProjectDeployerContractAddress,
-} from 'utils/v2/nftRewards'
+} from 'utils/nftRewards'
+import { SignerOrProvider } from 'utils/types'
 
 import { mainnetPublicResolver } from 'constants/contracts/mainnet/PublicResolver'
 import { rinkebyPublicResolver } from 'constants/contracts/rinkeby/PublicResolver'
@@ -15,7 +15,7 @@ import {
   VENFT_RESOLVER_ADDRESS,
 } from 'constants/veNft/veNftProject'
 
-export const loadContract = async (
+export const loadV2Contract = async (
   contractName: V2ContractName,
   network: NetworkName,
   signerOrProvider: SignerOrProvider,

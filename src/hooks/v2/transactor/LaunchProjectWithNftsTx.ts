@@ -9,18 +9,18 @@ import {
 } from 'models/v2/fundingCycle'
 import { useContext } from 'react'
 
-import { NftRewardTier } from 'models/v2/nftRewardTier'
-import { GroupedSplits, SplitGroup } from 'models/v2/splits'
+import { NftRewardTier } from 'models/nftRewardTier'
+import { GroupedSplits, SplitGroup } from 'models/splits'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { parseEther } from '@ethersproject/units'
 import { encodeIPFSUri, ipfsCidUrl } from 'utils/ipfs'
+import { getLatestNftDelegateStoreContractAddress } from 'utils/nftRewards'
 import { isValidMustStartAtOrAfter } from 'utils/v2/fundingCycle'
-import { getLatestNftDelegateStoreContractAddress } from 'utils/v2/nftRewards'
 
+import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
 import { MaxUint48 } from 'constants/numbers'
-import { JUICEBOX_MONEY_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
-import { TransactorInstance } from '../../Transactor'
+import { TransactorInstance } from 'hooks/Transactor'
 
 const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
 const DEFAULT_MEMO = ''
@@ -137,7 +137,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
       delegateData, // _deployTiered721DelegateData
       {
         projectMetadata: {
-          domain: JUICEBOX_MONEY_METADATA_DOMAIN,
+          domain: JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN,
           content: projectMetadataCID,
         },
         data: fundingCycleData,

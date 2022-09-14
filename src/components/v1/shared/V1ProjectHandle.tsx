@@ -5,20 +5,23 @@ import { CSSProperties } from 'react'
 
 export default function V1ProjectHandle({
   projectId,
+  handle,
   style,
 }: {
   projectId: BigNumberish
+  handle?: string | null
   style?: CSSProperties
 }) {
-  const handle = useHandleForProjectId(projectId)
+  const _handle = useHandleForProjectId(!handle ? projectId : undefined)
+  const handleToRender = handle ?? _handle
 
   return (
-    <Link href={`/p/${handle}`}>
+    <Link href={`/p/${handleToRender}`}>
       <a
         className="text-primary hover-text-action-primary hover-text-decoration-underline"
         style={{ fontWeight: 500, ...style }}
       >
-        @{handle}
+        @{handleToRender}
       </a>
     </Link>
   )

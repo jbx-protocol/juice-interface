@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Form, Select } from 'antd'
 import { FormInstance } from 'antd/lib/form'
-import { detailedTimeString } from 'utils/formatTime'
+import { detailedTimeString } from 'utils/format/formatTime'
 
 interface TokensStakedInputProps {
   form: FormInstance

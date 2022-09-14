@@ -9,5 +9,7 @@ export function getContract<T extends string>(
 
   if (typeof contractConfig === 'string') {
     return contracts ? contracts[contractConfig] : undefined
-  } else return contractConfig
+  } else {
+    return contractConfig
+  }
 }

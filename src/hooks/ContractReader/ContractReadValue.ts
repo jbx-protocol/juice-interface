@@ -15,16 +15,16 @@ import { callContractRead, getContract } from './util'
  */
 export function useContractReadValue<C extends string, V>({
   contract,
-  contracts,
   functionName,
   args,
+  contracts,
   formatter,
   valueDidChange,
 }: {
   contract: C | Contract | undefined
-  contracts: Record<C, Contract> | undefined
   functionName: string | undefined
   args: unknown[] | null | undefined
+  contracts?: Record<C, Contract> | undefined
   formatter?: (val?: any) => V | undefined // eslint-disable-line @typescript-eslint/no-explicit-any
   valueDidChange?: (oldVal?: V, newVal?: V) => boolean
 }) {

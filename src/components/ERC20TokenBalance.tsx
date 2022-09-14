@@ -1,6 +1,6 @@
+import useERC20BalanceOf from 'hooks/ERC20BalanceOf'
+import useERC20DecimalsOf from 'hooks/ERC20DecimalsOf'
 import useSymbolOfERC20 from 'hooks/SymbolOfERC20'
-import useERC20BalanceOf from 'hooks/v1/contractReader/ERC20BalanceOf'
-import useERC20DecimalsOf from 'hooks/v1/contractReader/ERC20DecimalsOf'
 import { CSSProperties } from 'react'
 import { formatWad } from 'utils/format/formatNumber'
 
@@ -17,7 +17,7 @@ export default function ERC20TokenBalance({
   style?: CSSProperties
   precision?: number
 }) {
-  const balance = useERC20BalanceOf(tokenAddress, wallet)
+  const { data: balance } = useERC20BalanceOf(tokenAddress, wallet)
   const decimals = useERC20DecimalsOf(tokenAddress)
   const symbol = useSymbolOfERC20(tokenAddress)
 

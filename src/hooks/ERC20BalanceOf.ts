@@ -1,23 +1,19 @@
-import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
+import { BigNumber } from '@ethersproject/bignumber'
 import { useErc20Contract } from 'hooks/Erc20Contract'
-import { V1TerminalName } from 'models/v1/terminals'
 import { bigNumbersDiff } from 'utils/bigNumbers'
 
-import useContractReader from './ContractReader'
-import useShouldUpdateTokens from './ShouldUpdateTokens'
+import useContractReader from './v2/contractReader/V2ContractReader'
 
 /** Returns ERC20 balance of `wallet`. Pass arguments for `projectId` and `terminalName` if the ERC20 is a project token, to update the returned value when relevant on-chain events are emitted. */
 export default function useERC20BalanceOf(
   tokenAddress: string | undefined,
-  wallet: string | undefined,
-  projectId?: BigNumberish,
-  terminalName?: V1TerminalName,
+  walletAddress: string | undefined,
 ) {
   return useContractReader<BigNumber>({
     contract: useErc20Contract(tokenAddress),
     functionName: 'balanceOf',
-    args: wallet ? [wallet] : null,
+    args: walletAddress ? [walletAddress] : null,
     valueDidChange: bigNumbersDiff,
-    updateOn: useShouldUpdateTokens(projectId, terminalName, wallet),
+    // TODO: implement updateOn arg (useShouldUpdateTokens -> update on pay, redeem, mint or convert)
   })
 }

@@ -30,8 +30,16 @@
   }
 }
 
+.hover-box-shadow, .hover-box-shadow-sm {
+  transition: box-shadow 0.3s;
+}
+
 .hover-box-shadow:hover {
   box-shadow: 3px 0px 11px 0px var(--boxShadow-primary)
+}
+
+.hover-box-shadow-sm:hover {
+  box-shadow: 1px 0px 2px 0px var(--boxShadow-primary)
 }
 
 .selected-box-shadow {

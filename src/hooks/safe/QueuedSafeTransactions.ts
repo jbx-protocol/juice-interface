@@ -19,9 +19,8 @@ export function useQueuedSafeTransactions({
     async () => {
       const response = await axiosInstance.get(
         `/safes/${safeAddress}/multisig-transactions`,
-        { params: { trusted: true, limit } },
+        { params: { trusted: true, limit, executed: false, queued: true } },
       )
-
       return response.data
     },
     {

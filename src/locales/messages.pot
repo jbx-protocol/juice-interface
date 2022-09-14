@@ -1133,6 +1133,9 @@ msgstr ""
 msgid "Give this NFT a name."
 msgstr ""
 
+msgid "Go to your Safe"
+msgstr ""
+
 msgid "Governance"
 msgstr ""
 
@@ -1860,6 +1863,9 @@ msgid "Projects with a handle:<0/><1/>1. Are included in search results on the p
 msgstr ""
 
 msgid "Provide a link to additional information about this NFT."
+msgstr ""
+
+msgid "Queued"
 msgstr ""
 
 msgid "REMAINING SUPPLY: {0}/{1}"

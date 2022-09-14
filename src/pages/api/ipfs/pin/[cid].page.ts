@@ -1,5 +1,5 @@
+import { getPinata } from 'lib/pinata'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { getPinata } from 'utils/pinata'
 
 interface ApiRequest extends NextApiRequest {
   query: {

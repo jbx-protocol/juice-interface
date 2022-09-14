@@ -1,5 +1,5 @@
+import { paginateDepleteProjectsQueryCall } from 'lib/apollo'
 import { NextRequest, NextResponse } from 'next/server'
-import { paginateDepleteProjectsQueryCall } from 'utils/apollo'
 
 // get the handle name from a URL path
 const HANDLE_REGEX = new RegExp(/\/@([^/]+).*/)

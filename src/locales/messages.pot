@@ -170,6 +170,9 @@ msgstr ""
 msgid "<0>Recurring funding cycles</0>. For example, distribute funds from your project's treasury every week."
 msgstr ""
 
+msgid "<0>Snapshot</0> is an off-chain voting system. You can use your Juicebox project tokens in a Snapshot voting strategy. <1>Learn more about Snapshot</1>."
+msgstr ""
+
 msgid "<0>Target is 0.</0> The project's entire balance will be considered overflow. <1>Learn more</1> about overflow."
 msgstr ""
 
@@ -366,9 +369,6 @@ msgid "Allows anyone to extend your lock position."
 msgstr ""
 
 msgid "Almost definitely."
-msgstr ""
-
-msgid "Already Enabled"
 msgstr ""
 
 msgid "Amount"
@@ -788,6 +788,9 @@ msgstr ""
 msgid "Deploy Payment Address contract"
 msgstr ""
 
+msgid "Deploy Snapshot space"
+msgstr ""
+
 msgid "Deploy funding cycle configuration"
 msgstr ""
 
@@ -998,7 +1001,10 @@ msgstr ""
 msgid "Edit tracked assets"
 msgstr ""
 
-msgid "Enable"
+msgid "Enable unclaimed token spending"
+msgstr ""
+
+msgid "Enable veNFT"
 msgstr ""
 
 msgid "Enable veNFT Governance"
@@ -1128,6 +1134,9 @@ msgid "Give feedback"
 msgstr ""
 
 msgid "Give this NFT a name."
+msgstr ""
+
+msgid "Go to <0>{snapshotUrl}</0>"
 msgstr ""
 
 msgid "Governance"
@@ -1781,6 +1790,9 @@ msgstr ""
 msgid "Project handle must be unique."
 msgstr ""
 
+msgid "Project handle required. <0>Set project handle.</0>"
+msgstr ""
+
 msgid "Project is accepting payments this funding cycle."
 msgstr ""
 
@@ -2178,6 +2190,9 @@ msgid "Should you Juicebox?"
 msgstr ""
 
 msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."
+msgstr ""
+
+msgid "Snapshot voting"
 msgstr ""
 
 msgid "Some funding cycle settings may put project contributors at risk."
@@ -2603,6 +2618,9 @@ msgstr ""
 msgid "Unavailable"
 msgstr ""
 
+msgid "Unclaimed token spending enabled"
+msgstr ""
+
 msgid "Unknown Project"
 msgstr ""
 
@@ -2682,9 +2700,6 @@ msgid "V1.1"
 msgstr ""
 
 msgid "V2"
-msgstr ""
-
-msgid "VeNFT Governance"
 msgstr ""
 
 msgid "VeNFT contract created successfully. Results will be indexed in a few moments."

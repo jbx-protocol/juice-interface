@@ -1,11 +1,8 @@
-import formidable from 'formidable'
-import { NextApiRequest, NextApiResponse } from 'next'
-
-import { getPinata } from 'utils/pinata'
-
 import { t } from '@lingui/macro'
-
+import formidable from 'formidable'
 import fs from 'fs'
+import { getPinata } from 'lib/pinata'
+import { NextApiRequest, NextApiResponse } from 'next'
 
 export const config = {
   api: {

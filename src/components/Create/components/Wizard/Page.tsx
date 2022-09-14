@@ -1,5 +1,6 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons'
 import { Button, ButtonProps, Space } from 'antd'
+import { PageContext } from './contexts/PageContext'
 import { usePage } from './hooks'
 
 const BackButton = (props: ButtonProps) => {
@@ -62,29 +63,42 @@ export const Page: React.FC<PageProps> = ({
   if (isHidden) return null
 
   return (
-    <Space direction="vertical" size="large" style={{ width: '100%' }}>
-      <div>
-        <h1>{title}</h1>
-        <p>{description}</p>
-      </div>
-      <div>{children}</div>
-      <div
-        style={{
-          marginTop: '16px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
-        <Space>
-          {canGoBack && <BackButton onClick={goToPreviousPage} />}
-          {isFinalPage && <DoneButton text={doneText} />}
-        </Space>
-        <Space style={{ marginLeft: 'auto' }}>
-          {!isFinalPage && isSkippable && <SkipButton onClick={goToNextPage} />}
-          {!isFinalPage && <NextButton onClick={goToNextPage} />}
-        </Space>
-      </div>
-    </Space>
+    <PageContext.Provider
+      value={{
+        isHidden,
+        canGoBack,
+        isFinalPage,
+        doneText,
+        goToNextPage,
+        goToPreviousPage,
+      }}
+    >
+      <Space direction="vertical" size="large" style={{ width: '100%' }}>
+        <div>
+          <h1>{title}</h1>
+          <p>{description}</p>
+        </div>
+        <div>{children}</div>
+        <div
+          style={{
+            marginTop: '16px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <Space>
+            {canGoBack && <BackButton onClick={goToPreviousPage} />}
+            {isFinalPage && <DoneButton text={doneText} />}
+          </Space>
+          <Space style={{ marginLeft: 'auto' }}>
+            {!isFinalPage && isSkippable && (
+              <SkipButton onClick={goToNextPage} />
+            )}
+            {!isFinalPage && <NextButton onClick={goToNextPage} />}
+          </Space>
+        </div>
+      </Space>
+    </PageContext.Provider>
   )
 }

@@ -2,6 +2,7 @@ import { AppWrapper, SEO } from 'components/common'
 import { DesmosScript } from 'components/common/Head/scripts/DesmosScript'
 import Loading from 'components/Loading'
 import { V2_PROJECT_IDS } from 'constants/v2/projectIds'
+import { paginateDepleteProjectsQueryCall } from 'lib/apollo'
 import {
   GetStaticPaths,
   GetStaticProps,
@@ -9,7 +10,6 @@ import {
   InferGetStaticPropsType,
 } from 'next'
 import { V2UserProvider } from 'providers/v2/UserProvider'
-import { paginateDepleteProjectsQueryCall } from 'utils/apollo'
 import V2Dashboard from './components/V2Dashboard'
 import { getProjectProps, ProjectPageProps } from './utils/props'
 

@@ -25,9 +25,9 @@ export const V2SettingsPageKeyTitleMap: { [k in V2SettingsPageKey]: string } = {
   payouts: t`Payouts`,
   reservedtokens: t`Reserved Token Allocation`,
   v1tokenmigration: t`V1 Token Migration`,
-  venft: t`VeNFT Governance`,
   transferownership: t`Transfer Ownership`,
   archiveproject: t`Archive Project`,
+  governance: t`Governance`,
 }
 
 function menuItem(
@@ -72,9 +72,7 @@ const items: MenuItem[] = [
     [
       menuItem('Transfer ownership', 'transferownership'),
       menuItem('Archive project', 'archiveproject'),
-      featureFlagEnabled(FEATURE_FLAGS.VENFT)
-        ? menuItem('veNFT governance', 'venft')
-        : null,
+      menuItem('Governance', 'governance'),
       featureFlagEnabled(FEATURE_FLAGS.V1_TOKEN_SWAP)
         ? menuItem('V1 token migration', 'v1tokenmigration')
         : null,

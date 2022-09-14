@@ -54,15 +54,14 @@ const VeNftSetUnclaimedTokensPermissionSection = () => {
       ) : (
         <Button
           type="primary"
-          size="small"
           onClick={unclaimedTokensPermission}
           loading={loading}
           disabled={hasUnclaimedTokensPermission}
         >
           {hasUnclaimedTokensPermission ? (
-            <Trans>Already Enabled</Trans>
+            <Trans>Unclaimed token spending enabled</Trans>
           ) : (
-            <Trans>Enable</Trans>
+            <Trans>Enable unclaimed token spending</Trans>
           )}
         </Button>
       )}

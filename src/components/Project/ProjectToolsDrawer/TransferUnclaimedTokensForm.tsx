@@ -8,7 +8,7 @@ import TransactorButton from 'components/TransactorButton'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useWallet } from 'hooks/Wallet'
 import { useState } from 'react'
-import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
+import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export function TransferUnclaimedTokensForm({

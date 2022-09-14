@@ -8,7 +8,12 @@ import { useWallet } from 'hooks/Wallet'
 
 import FormattedAddress from 'components/FormattedAddress'
 import { CSSProperties, useContext, useState } from 'react'
-import { formatPercent, formatWad, fromWad, parseWad } from 'utils/formatNumber'
+import {
+  formatPercent,
+  formatWad,
+  fromWad,
+  parseWad,
+} from 'utils/format/formatNumber'
 
 import IssueTokenButton from 'components/IssueTokenButton'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/V2ConnectedWalletHasPermission'

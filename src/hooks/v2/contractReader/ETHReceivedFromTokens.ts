@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2BallotState } from 'models/ballot'
 import { useContext } from 'react'
-import { parseWad } from 'utils/formatNumber'
+import { parseWad } from 'utils/format/formatNumber'
 
 import { MAX_REDEMPTION_RATE } from 'utils/v2/math'
 

@@ -1,13 +1,14 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
-import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
-} from 'constants/v2/splits'
+} from 'constants/splits'
+import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
 import { V2ProjectContextType } from 'contexts/v2/projectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useNameOfERC20 from 'hooks/NameOfERC20'
+import useNftRewards from 'hooks/NftRewards'
 import { useProjectsQuery } from 'hooks/Projects'
 import useSymbolOfERC20 from 'hooks/SymbolOfERC20'
 import { useBallotState } from 'hooks/v2/contractReader/BallotState'
@@ -23,14 +24,13 @@ import useProjectToken from 'hooks/v2/contractReader/ProjectToken'
 import useProjectTokenTotalSupply from 'hooks/v2/contractReader/ProjectTokenTotalSupply'
 import useTerminalCurrentOverflow from 'hooks/v2/contractReader/TerminalCurrentOverflow'
 import useUsedDistributionLimit from 'hooks/v2/contractReader/UsedDistributionLimit'
-import useNftRewards from 'hooks/v2/NftRewards'
 import { useVeNftContractForProject } from 'hooks/veNft/VeNftContractForProject'
 import { first } from 'lodash'
 import { ProjectMetadataV4 } from 'models/project-metadata'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { useMemo } from 'react'
+import { CIDsOfNftRewardTiersResponse } from 'utils/nftRewards'
 import { NO_CURRENCY, V2CurrencyName, V2_CURRENCY_ETH } from 'utils/v2/currency'
-import { CIDsOfNftRewardTiersResponse } from 'utils/v2/nftRewards'
 
 const useBalanceInDistributionLimitCurrency = ({
   ETHBalanceLoading,

@@ -7,7 +7,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { PayoutMod } from 'models/mods'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useLayoutEffect, useState } from 'react'
-import { fromWad, perbicentToPercent } from 'utils/formatNumber'
+import { fromWad, perbicentToPercent } from 'utils/format/formatNumber'
 
 import { getTotalPercentage } from 'components/formItems/formHelpers'
 import ProjectPayoutMods from 'components/v1/shared/ProjectPayMods/ProjectPayoutMods'

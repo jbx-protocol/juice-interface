@@ -21,9 +21,9 @@ import {
   editingV2ProjectActions,
 } from 'redux/slices/editingV2Project'
 
-import { sanitizeSplit } from 'utils/v2/splits'
+import { sanitizeSplit } from 'utils/splits'
 
-import { Split } from 'models/v2/splits'
+import { Split } from 'models/splits'
 
 import {
   DEFAULT_MINT_RATE,
@@ -55,7 +55,7 @@ import NumberSlider from 'components/inputs/NumberSlider'
 
 import { DEFAULT_BONDING_CURVE_RATE_PERCENTAGE } from 'components/formItems/ProjectRedemptionRate'
 import FormItemWarningText from 'components/FormItemWarningText'
-import { formattedNum } from 'utils/formatNumber'
+import { formattedNum } from 'utils/format/formatNumber'
 
 import { useForm } from 'antd/lib/form/Form'
 import Callout from 'components/Callout'

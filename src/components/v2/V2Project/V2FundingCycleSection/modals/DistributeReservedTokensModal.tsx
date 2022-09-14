@@ -6,7 +6,7 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useProjectReservedTokens from 'hooks/v2/contractReader/ProjectReservedTokens'
 import { useDistributeReservedTokens } from 'hooks/v2/transactor/DistributeReservedTokensTx'
 import { useContext, useState } from 'react'
-import { formatWad } from 'utils/formatNumber'
+import { formatWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export default function DistributeReservedTokensModal({

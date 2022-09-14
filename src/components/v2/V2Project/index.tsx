@@ -24,7 +24,7 @@ import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useMobile from 'hooks/Mobile'
 import { CurrencyOption } from 'models/currencyOption'
 import { featureFlagEnabled } from 'utils/featureFlags'
-import { fromWad } from 'utils/formatNumber'
+import { fromWad } from 'utils/format/formatNumber'
 import { v2ProjectRoute } from 'utils/routes'
 
 import { V2_PROJECT_IDS } from 'constants/v2/projectIds'

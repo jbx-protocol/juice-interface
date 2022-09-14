@@ -22,7 +22,7 @@ import TooltipIcon from 'components/TooltipIcon'
 
 import { StickerSelection } from 'components/Project/StickerSelection'
 
-import { ProjectPreferences } from 'constants/v2/projectPreferences'
+import { ProjectPreferences } from 'constants/projectPreferences'
 
 export interface V2PayFormType {
   memo?: string

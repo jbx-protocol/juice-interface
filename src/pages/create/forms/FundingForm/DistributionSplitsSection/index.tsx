@@ -8,10 +8,10 @@ import { CurrencyName } from 'constants/currency'
 import { ThemeContext } from 'contexts/themeContext'
 import { useWallet } from 'hooks/Wallet'
 import { filter, isEqual } from 'lodash'
-import { Split } from 'models/v2/splits'
+import { Split } from 'models/splits'
 import Link from 'next/link'
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { fromWad, parseWad } from 'utils/formatNumber'
+import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { v2ProjectRoute } from 'utils/routes'
 import {
   adjustedSplitPercents,

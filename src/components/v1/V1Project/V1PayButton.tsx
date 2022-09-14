@@ -7,7 +7,7 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useWeiConverter from 'hooks/WeiConverter'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useState } from 'react'
-import { fromWad } from 'utils/formatNumber'
+import { fromWad } from 'utils/format/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 
 import { readNetwork } from 'constants/networks'

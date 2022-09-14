@@ -3,7 +3,7 @@ import EtherscanLink from 'components/EtherscanLink'
 import { ThemeContext } from 'contexts/themeContext'
 import { DeployedERC20Event } from 'models/subgraph-entities/vX/deployed-erc20-event'
 import { useContext } from 'react'
-import { formatHistoricalDate } from 'utils/formatDate'
+import { formatHistoricalDate } from 'utils/format/formatDate'
 
 import {
   contentLineHeight,

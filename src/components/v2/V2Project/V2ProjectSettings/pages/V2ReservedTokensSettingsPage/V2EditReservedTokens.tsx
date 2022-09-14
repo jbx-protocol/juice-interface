@@ -3,10 +3,10 @@ import { Form } from 'antd'
 import Callout from 'components/Callout'
 import { FormItems } from 'components/formItems'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { Split } from 'models/v2/splits'
+import { Split } from 'models/splits'
 import { useContext, useEffect } from 'react'
+import { toMod, toSplit } from 'utils/splits'
 import { formatReservedRate } from 'utils/v2/math'
-import { toMod, toSplit } from 'utils/v2/splits'
 
 export function V2EditReservedTokens({
   editingReservedTokensSplits,

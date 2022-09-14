@@ -9,7 +9,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { Project } from 'models/subgraph-entities/vX/project'
 import { useContext } from 'react'
-import { formatHistoricalDate } from 'utils/formatDate'
+import { formatHistoricalDate } from 'utils/format/formatDate'
 
 export default function Payments() {
   const {

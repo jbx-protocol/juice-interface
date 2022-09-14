@@ -7,7 +7,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { Property } from 'csstype'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useContext, useMemo } from 'react'
-import { formatWad } from 'utils/formatNumber'
+import { formatWad } from 'utils/format/formatNumber'
 
 import { CurrencyName } from 'constants/currency'
 import { textPrimary, textSecondary } from 'constants/styles/text'

@@ -12,8 +12,8 @@ import {
 import { ThemeContext } from 'contexts/themeContext'
 
 import { CSSProperties, useContext, useState } from 'react'
-import { formattedNum, fromWad } from 'utils/formatNumber'
-import { detailedTimeString } from 'utils/formatTime'
+import { formattedNum, fromWad } from 'utils/format/formatNumber'
+import { detailedTimeString } from 'utils/format/formatTime'
 
 import { t, Trans } from '@lingui/macro'
 import { useVeNftTokenMetadata } from 'hooks/veNft/VeNftTokenMetadata'

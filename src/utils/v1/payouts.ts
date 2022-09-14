@@ -7,7 +7,7 @@ import {
   parseWad,
   percentToPerbicent,
   stripCommas,
-} from 'utils/formatNumber'
+} from 'utils/format/formatNumber'
 import { amountAddFee, amountSubFee } from 'utils/v1/math'
 
 // Returns formatted 'funding target after fee'

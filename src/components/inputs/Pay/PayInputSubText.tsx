@@ -15,9 +15,9 @@ import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useWeiConverter from 'hooks/WeiConverter'
 import { CurrencyOption } from 'models/currencyOption'
-import { formattedNum } from 'utils/formatNumber'
+import { formattedNum } from 'utils/format/formatNumber'
+import { getNftRewardTier } from 'utils/nftRewards'
 import { formatIssuanceRate } from 'utils/v2/math'
-import { getNftRewardTier } from 'utils/v2/nftRewards'
 
 /**
  * Help text shown below the Pay input field.

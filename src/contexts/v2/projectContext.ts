@@ -1,10 +1,10 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { V2BallotState } from 'models/ballot'
 import { CV } from 'models/cv'
+import { NftRewardTier } from 'models/nftRewardTier'
 import { ProjectMetadataV4 } from 'models/project-metadata'
+import { Split } from 'models/splits'
 import { V2FundingCycle, V2FundingCycleMetadata } from 'models/v2/fundingCycle'
-import { NftRewardTier } from 'models/v2/nftRewardTier'
-import { Split } from 'models/v2/splits'
 import { createContext } from 'react'
 
 type V2ProjectLoadingStates = {

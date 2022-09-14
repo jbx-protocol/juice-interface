@@ -4,7 +4,7 @@ import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
 import useTokenAddressOfProject from 'hooks/v1/contractReader/TokenAddressOfProject'
 import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
 import { CSSProperties, useContext } from 'react'
-import { formatWad } from 'utils/formatNumber'
+import { formatWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { getTerminalName } from 'utils/v1/terminals'
 

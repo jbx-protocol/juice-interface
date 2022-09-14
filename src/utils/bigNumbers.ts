@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 
-import { parseWad } from './formatNumber'
+import { parseWad } from './format/formatNumber'
 
 export const bigNumbersDiff = (a?: BigNumber, b?: BigNumber) => {
   if ((a && !b) || (!a && b)) return true

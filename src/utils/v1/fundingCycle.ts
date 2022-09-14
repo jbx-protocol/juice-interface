@@ -2,7 +2,7 @@ import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 
 import * as constants from '@ethersproject/constants'
 import { V1FundingCycle, V1FundingCycleMetadata } from 'models/v1/fundingCycle'
-import { perbicentToPercent } from 'utils/formatNumber'
+import { perbicentToPercent } from 'utils/format/formatNumber'
 import unsafeFundingCycleProperties from 'utils/unsafeFundingCycleProperties'
 
 import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'

@@ -10,7 +10,7 @@ import { TicketMod } from 'models/mods'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
-import { formatWad, permyriadToPercent } from 'utils/formatNumber'
+import { formatWad, permyriadToPercent } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { MODS_TOTAL_PERCENT } from 'utils/v1/mods'
 export default function TicketModsList({

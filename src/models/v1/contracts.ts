@@ -7,7 +7,6 @@ export enum V1ContractName {
   TerminalDirectory = 'TerminalDirectory',
   ModStore = 'ModStore',
   OperatorStore = 'OperatorStore',
-  Prices = 'Prices',
   Projects = 'Projects',
   TicketBooth = 'TicketBooth',
 }

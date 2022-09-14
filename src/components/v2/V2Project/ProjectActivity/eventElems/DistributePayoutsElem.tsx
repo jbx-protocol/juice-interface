@@ -13,6 +13,7 @@ import {
   smallHeaderStyle,
 } from 'components/activityEventElems/styles'
 import ETHAmount from 'components/currency/ETHAmount'
+import V2ProjectHandle from 'components/v2/shared/V2ProjectHandle'
 import { DistributePayoutsEvent } from 'models/subgraph-entities/v2/distribute-payouts-event'
 
 export default function DistributePayoutsElem({
@@ -115,7 +116,7 @@ export default function DistributePayoutsElem({
           >
             <div style={{ fontWeight: 500 }}>
               {e.splitProjectId ? (
-                <span>Project {e.splitProjectId}</span>
+                <V2ProjectHandle projectId={e.splitProjectId} />
               ) : (
                 <FormattedAddress address={e.beneficiary} />
               )}

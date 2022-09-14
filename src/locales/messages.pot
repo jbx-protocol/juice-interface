@@ -14,6 +14,9 @@ msgstr ""
 msgid "$ve{tokenSymbolDisplayText} Received"
 msgstr ""
 
+msgid "'Pay'"
+msgstr ""
+
 msgid "({realTokenAllocationPercent}% of all newly minted tokens)."
 msgstr ""
 
@@ -210,6 +213,9 @@ msgid "<0>Zero</0> Distribution Limit"
 msgstr ""
 
 msgid "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
+msgstr ""
+
+msgid "@juiceboxETH"
 msgstr ""
 
 msgid "@{handle} not found"
@@ -743,6 +749,9 @@ msgstr ""
 msgid "Custom token beneficiary"
 msgstr ""
 
+msgid "Customise Payment Terminal"
+msgstr ""
+
 msgid "Customize how your NFT collection will appear on NFT marketplaces (like OpenSea)."
 msgstr ""
 
@@ -1032,6 +1041,15 @@ msgid "Enabling token minting will appear risky to contributors."
 msgstr ""
 
 msgid "End"
+msgstr ""
+
+msgid "Enter pay disclosure"
+msgstr ""
+
+msgid "Enter project description"
+msgstr ""
+
+msgid "Enter project name"
 msgstr ""
 
 msgid "Error loading holders"
@@ -1649,6 +1667,12 @@ msgstr ""
 msgid "Pay"
 msgstr ""
 
+msgid "Pay Button Text"
+msgstr ""
+
+msgid "Pay Disclosure"
+msgstr ""
+
 msgid "Pay amount"
 msgstr ""
 
@@ -1760,10 +1784,19 @@ msgstr ""
 msgid "Project Created"
 msgstr ""
 
+msgid "Project Description"
+msgstr ""
+
 msgid "Project Handle"
 msgstr ""
 
 msgid "Project ID must be a number."
+msgstr ""
+
+msgid "Project Links"
+msgstr ""
+
+msgid "Project Name"
 msgstr ""
 
 msgid "Project Settings"
@@ -2975,10 +3008,16 @@ msgstr ""
 msgid "days"
 msgstr ""
 
+msgid "discord.gg/xyz"
+msgstr ""
+
 msgid "handle"
 msgstr ""
 
 msgid "hours"
+msgstr ""
+
+msgid "juicebox.com"
 msgstr ""
 
 msgid "last {trendingWindowDays} days"

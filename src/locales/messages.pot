@@ -446,6 +446,9 @@ msgstr ""
 msgid "Available:"
 msgstr ""
 
+msgid "Back"
+msgstr ""
+
 msgid "Back to project"
 msgstr ""
 
@@ -1517,6 +1520,9 @@ msgstr ""
 msgid "Newsletter"
 msgstr ""
 
+msgid "Next"
+msgstr ""
+
 msgid "Next: Funding cycle"
 msgstr ""
 
@@ -2190,6 +2196,9 @@ msgid "Should you Juicebox?"
 msgstr ""
 
 msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."
+msgstr ""
+
+msgid "Skip"
 msgstr ""
 
 msgid "Snapshot voting"

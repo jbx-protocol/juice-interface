@@ -9,7 +9,7 @@ import { useContext, useEffect, useMemo, useState } from 'react'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import useERC20Allowance from 'hooks/ERC20Allowance'
-import useERC20BalanceOf from 'hooks/v2/contractReader/ERC20BalanceOf'
+import useERC20BalanceOf from 'hooks/ERC20BalanceOf'
 import useERC20Approve from 'hooks/veNft/transactor/ERC20ApproveTx'
 
 import CustomBeneficiaryInput from 'components/veNft/formControls/CustomBeneficiaryInput'

@@ -1,6 +1,13 @@
-import { ContractNftRewardTier, NftRewardTier } from 'models/nftRewardTier'
+import axios from 'axios'
+import { juiceboxEmojiImageUri } from 'constants/images'
+import {
+  ContractNftRewardTier,
+  IpfsNftCollectionMetadata,
+  IPFSNftRewardTier,
+  NftRewardTier,
+} from 'models/nftRewardTier'
 import { V2ContractName } from 'models/v2/contracts'
-import { decodeEncodedIPFSUri } from 'utils/ipfs'
+import { decodeEncodedIPFSUri, IPFS_TAGS } from 'utils/ipfs'
 
 export const MAX_NFT_REWARD_TIERS = 3
 
@@ -85,3 +92,91 @@ export const defaultNftCollectionDescription = (
   `NFTs rewarded to ${
     projectName?.length ? projectName : 'your project'
   }'s Juicebox contributors.`
+
+async function uploadNftRewardToIPFS(
+  rewardTier: NftRewardTier,
+): Promise<string> {
+  const ipfsNftRewardTier: IPFSNftRewardTier = {
+    description: rewardTier.description,
+    name: rewardTier.name,
+    externalLink: rewardTier.externalLink,
+    symbol: undefined,
+    image: rewardTier.imageUrl,
+    imageDataUrl: undefined,
+    artifactUri: undefined,
+    animationUri: undefined,
+    displayUri: undefined,
+    youtubeUri: undefined,
+    backgroundColor: undefined,
+    attributes: [
+      {
+        trait_type: 'Min. Contribution',
+        value: rewardTier.contributionFloor,
+      },
+      {
+        trait_type: 'Max. Supply',
+        value: rewardTier.maxSupply,
+      },
+    ],
+  }
+  const res = await axios.post('/api/ipfs/pin', {
+    data: ipfsNftRewardTier,
+    options: {
+      pinataMetadata: {
+        keyvalues: {
+          tag: IPFS_TAGS.NFT_REWARDS,
+        } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+        name: ipfsNftRewardTier.name,
+      },
+    },
+  })
+  return res.data.IpfsHash as string
+}
+
+// Uploads each nft reward tier to an individual location on IPFS
+// returns an array of CIDs which point to each rewardTier on IPFS
+export async function uploadNftRewardsToIPFS(
+  nftRewards: NftRewardTier[],
+): Promise<string[]> {
+  return await Promise.all(
+    nftRewards.map(rewardTier => uploadNftRewardToIPFS(rewardTier)),
+  )
+}
+
+export async function uploadNftCollectionMetadataToIPFS({
+  collectionName,
+  collectionDescription,
+  collectionLogoUri,
+  collectionInfoUri,
+}: {
+  collectionName: string
+  collectionDescription: string
+  collectionLogoUri: string | undefined
+  collectionInfoUri: string | undefined
+}) {
+  // TODO: add inputs for the rest of these fields
+  const ipfsNftCollectionMetadata: IpfsNftCollectionMetadata = {
+    name: collectionName,
+    description: collectionDescription,
+    image: collectionLogoUri?.length
+      ? collectionLogoUri
+      : juiceboxEmojiImageUri,
+    seller_fee_basis_points: undefined,
+    external_link: collectionInfoUri?.length
+      ? collectionInfoUri
+      : 'https://juicebox.money',
+    fee_recipient: undefined,
+  }
+  const res = await axios.post('/api/ipfs/pin', {
+    data: ipfsNftCollectionMetadata,
+    options: {
+      pinataMetadata: {
+        keyvalues: {
+          tag: IPFS_TAGS.NFT_REWARDS_COLLECTION_METADATA,
+        } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+        name: collectionName,
+      },
+    },
+  })
+  return res.data.IpfsHash as string
+}

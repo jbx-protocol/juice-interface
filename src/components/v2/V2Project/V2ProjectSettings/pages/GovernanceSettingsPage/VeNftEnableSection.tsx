@@ -75,13 +75,8 @@ const VeNftEnableSection = () => {
                   default veBanny assets and parameters.
                 </Trans>
               </p>
-              <Button
-                type="primary"
-                size="small"
-                onClick={launchVeBanny}
-                loading={loading}
-              >
-                <Trans>Enable</Trans>
+              <Button type="primary" onClick={launchVeBanny} loading={loading}>
+                <Trans>Enable veNFT</Trans>
               </Button>
             </>
           ) : (
@@ -98,26 +93,25 @@ const VeNftEnableSection = () => {
             </>
           )}
         </section>
-        <Divider />
         {veNftCreatorEnabled && (
-          <section>
-            <h3>
-              <Trans>Enable veNFT Governance</Trans>
-            </h3>
-            <p>
-              <Trans>
-                Set up and launch veNFT governance for your project using custom
-                assets and parameters. (Experimental, does not currently launch)
-              </Trans>
-            </p>
-            <Button
-              type="primary"
-              size="small"
-              onClick={() => setSetupModalVisible(true)}
-            >
-              Launch Setup
-            </Button>
-          </section>
+          <>
+            <Divider />
+            <section>
+              <h3>
+                <Trans>Enable veNFT Governance</Trans>
+              </h3>
+              <p>
+                <Trans>
+                  Set up and launch veNFT governance for your project using
+                  custom assets and parameters. (Experimental, does not
+                  currently launch)
+                </Trans>
+              </p>
+              <Button type="primary" onClick={() => setSetupModalVisible(true)}>
+                Launch Setup
+              </Button>
+            </section>
+          </>
         )}
       </>
       {setupModalVisible && (

@@ -167,9 +167,6 @@ msgstr ""
 msgid "<0>Peel</0> is the DAO that manages the juicebox.money frontend interface. You can reach out to Peel either through the <1>Peel Discord</1> or the <2>Juicebox Discord</2>."
 msgstr ""
 
-msgid "<0>Project handle</0> required."
-msgstr ""
-
 msgid "<0>Recurring funding cycles</0>. For example, distribute funds from your project's treasury every week."
 msgstr ""
 
@@ -372,9 +369,6 @@ msgid "Allows anyone to extend your lock position."
 msgstr ""
 
 msgid "Almost definitely."
-msgstr ""
-
-msgid "Already Enabled"
 msgstr ""
 
 msgid "Amount"
@@ -1007,7 +1001,10 @@ msgstr ""
 msgid "Edit tracked assets"
 msgstr ""
 
-msgid "Enable"
+msgid "Enable unclaimed token spending"
+msgstr ""
+
+msgid "Enable veNFT"
 msgstr ""
 
 msgid "Enable veNFT Governance"
@@ -1137,6 +1134,9 @@ msgid "Give feedback"
 msgstr ""
 
 msgid "Give this NFT a name."
+msgstr ""
+
+msgid "Go to <0>{snapshotUrl}</0>"
 msgstr ""
 
 msgid "Governance"
@@ -1788,6 +1788,9 @@ msgid "Project handle"
 msgstr ""
 
 msgid "Project handle must be unique."
+msgstr ""
+
+msgid "Project handle required. <0>Set project handle.</0>"
 msgstr ""
 
 msgid "Project is accepting payments this funding cycle."
@@ -2507,9 +2510,6 @@ msgstr ""
 msgid "Token to Lock:"
 msgstr ""
 
-msgid "Token-Weighted Voting"
-msgstr ""
-
 msgid "Tokens"
 msgstr ""
 
@@ -2621,6 +2621,9 @@ msgstr ""
 msgid "Unavailable"
 msgstr ""
 
+msgid "Unclaimed token spending enabled"
+msgstr ""
+
 msgid "Unknown Project"
 msgstr ""
 
@@ -2700,9 +2703,6 @@ msgid "V1.1"
 msgstr ""
 
 msgid "V2"
-msgstr ""
-
-msgid "VeNFT Governance"
 msgstr ""
 
 msgid "VeNFT contract created successfully. Results will be indexed in a few moments."

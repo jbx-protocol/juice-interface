@@ -4,8 +4,8 @@ import { ThemeContext } from 'contexts/themeContext'
 import { V2SettingsPageKey } from 'models/menu-keys'
 import { useRouter } from 'next/router'
 import { useContext, useMemo } from 'react'
-import { SnapshotSettingsPage } from './pages/SnapshotSettingsPage'
-import { V1V2TokenMigrationSettingsPage } from './pages/V1V2TokenMigrationSettingsPage/V1V2TokenMigrationSettingsPage'
+import { GovernanceSettingsPage } from './pages/GovernanceSettingsPage'
+import { V1V2TokenMigrationSettingsPage } from './pages/V1V2TokenMigrationSettingsPage'
 import { V2ArchiveProjectSettingsPage } from './pages/V2ArchiveProjectSettingsPage'
 import { V2PayoutsSettingsPage } from './pages/V2PayoutsSettingsPage/V2PayoutsSettingsPage'
 import { V2ProjectDetailsSettingsPage } from './pages/V2ProjectDetailsSettingsPage'
@@ -13,7 +13,6 @@ import { V2ProjectHandleSettingsPage } from './pages/V2ProjectHandleSettingsPage
 import { V2ReconfigureFundingCycleSettingsPage } from './pages/V2ProjectReconfigureFundingCycleSettingsPage'
 import { V2ReservedTokensSettingsPage } from './pages/V2ReservedTokensSettingsPage/V2ReservedTokensSettingsPage'
 import { V2TransferOwnershipSettingsPage } from './pages/V2TransferOwnershipSettingsPage'
-import { V2VeNftSettingsPage } from './pages/V2VeNftSettingsPage'
 
 const SettingsPageComponents: { [k in V2SettingsPageKey]: () => JSX.Element } =
   {
@@ -23,10 +22,9 @@ const SettingsPageComponents: { [k in V2SettingsPageKey]: () => JSX.Element } =
     payouts: V2PayoutsSettingsPage,
     reservedtokens: V2ReservedTokensSettingsPage,
     v1tokenmigration: V1V2TokenMigrationSettingsPage,
-    venft: V2VeNftSettingsPage,
     transferownership: V2TransferOwnershipSettingsPage,
     archiveproject: V2ArchiveProjectSettingsPage,
-    tokenweightedvoting: SnapshotSettingsPage,
+    governance: GovernanceSettingsPage,
   }
 
 const DEFAULT_SETTINGS_PAGE = 'general'

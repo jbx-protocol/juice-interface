@@ -14,7 +14,7 @@ const WizardContainer: React.FC = ({ children }) => {
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'column',
-        padding: '32px 0',
+        padding: '2rem 0',
       }}
     >
       {children}

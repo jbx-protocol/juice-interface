@@ -1,4 +1,5 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons'
+import { t, Trans } from '@lingui/macro'
 import { Button, ButtonProps, Space } from 'antd'
 import { PageContext } from './contexts/PageContext'
 import { usePage } from './hooks'
@@ -6,7 +7,7 @@ import { usePage } from './hooks'
 const BackButton = (props: ButtonProps) => {
   return (
     <Button size="large" {...props}>
-      <ArrowLeftOutlined /> Back
+      <ArrowLeftOutlined /> <Trans>Back</Trans>
     </Button>
   )
 }
@@ -14,7 +15,9 @@ const BackButton = (props: ButtonProps) => {
 const SkipButton = (props: ButtonProps) => {
   return (
     <Button type="link" {...props}>
-      <span style={{ textDecoration: 'underline' }}>Skip</span>
+      <span style={{ textDecoration: 'underline' }}>
+        <Trans>Skip</Trans>
+      </span>
     </Button>
   )
 }
@@ -22,7 +25,7 @@ const SkipButton = (props: ButtonProps) => {
 const NextButton = (props: ButtonProps) => {
   return (
     <Button type="primary" size="large" {...props}>
-      Next <ArrowRightOutlined />
+      <Trans>Next</Trans> <ArrowRightOutlined />
     </Button>
   )
 }
@@ -30,7 +33,7 @@ const NextButton = (props: ButtonProps) => {
 const DoneButton = (props: ButtonProps & { text?: string }) => {
   return (
     <Button type="primary" size="large" {...props}>
-      {props.text ?? 'Done'}
+      {props.text ?? t`Done`}
     </Button>
   )
 }
@@ -81,7 +84,7 @@ export const Page: React.FC<PageProps> = ({
         <div>{children}</div>
         <div
           style={{
-            marginTop: '16px',
+            marginTop: '1rem',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',

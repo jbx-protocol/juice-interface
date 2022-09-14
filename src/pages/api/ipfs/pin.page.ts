@@ -1,6 +1,6 @@
 import { PinataMetadata } from '@pinata/sdk'
+import { getPinata, getPinnedListByTag } from 'lib/pinata'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { getPinata, getPinnedListByTag } from 'utils/pinata'
 
 interface ApiRequest extends NextApiRequest {
   query: {

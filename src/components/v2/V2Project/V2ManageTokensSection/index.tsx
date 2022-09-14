@@ -3,7 +3,7 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Descriptions, Space, Statistic } from 'antd'
 import SectionHeader from 'components/SectionHeader'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import useERC20BalanceOf from 'hooks/v2/contractReader/ERC20BalanceOf'
+import useERC20BalanceOf from 'hooks/ERC20BalanceOf'
 import { useWallet } from 'hooks/Wallet'
 
 import FormattedAddress from 'components/FormattedAddress'

@@ -1,6 +1,6 @@
 import { parseEther } from '@ethersproject/units'
 import { Trans } from '@lingui/macro'
-import { Descriptions } from 'antd'
+import { Descriptions, Tooltip } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
 
 import { ThemeContext } from 'contexts/themeContext'
@@ -8,7 +8,7 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { useContext } from 'react'
-import { formatDate } from 'utils/format/formatDate'
+import { formatDate, formatDateToUTC } from 'utils/format/formatDate'
 import {
   formatWad,
   perbicentToPercent,
@@ -156,13 +156,23 @@ export default function FundingCycleDetails({
 
         {fundingCycle.duration.gt(0) && (
           <Descriptions.Item label={<Trans>Start</Trans>}>
-            {formattedStartTime}
+            <Tooltip title={formatDateToUTC(fundingCycle.start.mul(1000))}>
+              {formattedStartTime}
+            </Tooltip>
           </Descriptions.Item>
         )}
 
         {fundingCycle.duration.gt(0) && (
           <Descriptions.Item label={<Trans>End</Trans>}>
-            {formattedEndTime}
+            <Tooltip
+              title={formatDateToUTC(
+                fundingCycle.start
+                  .add(fundingCycle.duration.mul(SECONDS_IN_DAY))
+                  .mul(1000),
+              )}
+            >
+              {formattedEndTime}
+            </Tooltip>
           </Descriptions.Item>
         )}
 

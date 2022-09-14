@@ -18,7 +18,7 @@ import { weightedAmount } from 'utils/v2/math'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 
 import { TextButton } from 'components/TextButton'
-import V2BugNotice from 'components/v2/shared/V2BugNotice'
+import V2BugNotice from 'components/V2BugNotice'
 import { CurrencyContext } from 'contexts/currencyContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useMobile from 'hooks/Mobile'

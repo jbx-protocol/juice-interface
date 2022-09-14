@@ -41,6 +41,7 @@ export default function Payments() {
             <V2ProjectHandle
               projectId={project.projectId}
               handle={project.handle}
+              style={{ marginRight: '0.5rem' }}
             />
             <ProjectVersionBadge versionText="V2" size="small" />
           </div>

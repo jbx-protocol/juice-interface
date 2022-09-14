@@ -11,8 +11,8 @@ import ParticipantsModal from 'components/modals/ParticipantsModal'
 import SectionHeader from 'components/SectionHeader'
 import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
+import useERC20BalanceOf from 'hooks/ERC20BalanceOf'
 import useCanPrintPreminedTokens from 'hooks/v1/contractReader/CanPrintPreminedTokens'
-import useERC20BalanceOf from 'hooks/v1/contractReader/ERC20BalanceOf'
 import useReservedTokensOfProject from 'hooks/v1/contractReader/ReservedTokensOfProject'
 import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
 import useTotalSupplyOfProjectToken from 'hooks/v1/contractReader/TotalSupplyOfProjectToken'
@@ -51,7 +51,7 @@ export default function Rewards() {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const claimedBalance = useERC20BalanceOf(tokenAddress, userAddress)
+  const { data: claimedBalance } = useERC20BalanceOf(tokenAddress, userAddress)
   const unclaimedBalance = useUnclaimedBalanceOfUser()
   const totalBalance = useTotalBalanceOf(userAddress, projectId, terminal?.name)
 

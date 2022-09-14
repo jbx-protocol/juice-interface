@@ -11,14 +11,12 @@ import { NftRewardTier } from 'models/nftRewardTier'
 import { useCallback, useContext, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import {
-  uploadNftCollectionMetadataToIPFS,
-  uploadNftRewardsToIPFS,
-} from 'utils/ipfs'
-import {
   defaultNftCollectionDescription,
   defaultNftCollectionName,
   MAX_NFT_REWARD_TIERS,
   sortNftRewardTiers,
+  uploadNftCollectionMetadataToIPFS,
+  uploadNftRewardsToIPFS,
 } from 'utils/nftRewards'
 
 import { shadowCard } from 'constants/styles/shadowCard'

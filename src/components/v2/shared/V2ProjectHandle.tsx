@@ -21,7 +21,7 @@ export default function V2ProjectHandle({
   return (
     <Link href={v2ProjectRoute({ projectId, handle: handleToRender })}>
       <a
-        style={{ fontWeight: 500, marginRight: '0.5rem', ...style }}
+        style={{ fontWeight: 500, ...style }}
         className="text-primary hover-text-action-primary hover-text-decoration-underline"
       >
         {handleToRender ? (

@@ -1826,9 +1826,6 @@ msgstr ""
 msgid "Project tokens will be minted to whoever pays this payer contract."
 msgstr ""
 
-msgid "Project {0}"
-msgstr ""
-
 msgid "Project {name} will be available soon! Try refreshing the page shortly."
 msgstr ""
 

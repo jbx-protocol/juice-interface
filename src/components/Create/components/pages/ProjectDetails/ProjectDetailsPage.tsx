@@ -2,6 +2,7 @@ import { t } from '@lingui/macro'
 import { Col, Form, Input, Row, Space } from 'antd'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { CreateCollapse } from '../../CreateCollapse'
+import { OptionalHeader } from '../../OptionalHeader'
 
 // TODO: Do we want to set validators on these?
 export const ProjectDetailsPage: React.FC = () => {
@@ -21,7 +22,10 @@ export const ProjectDetailsPage: React.FC = () => {
           <FormImageUploader text={t`Upload`} />
         </Form.Item>
         <CreateCollapse>
-          <CreateCollapse.Panel key={0} header={t`Project Links`}>
+          <CreateCollapse.Panel
+            key={0}
+            header={<OptionalHeader header={t`Project Links`} />}
+          >
             {/* Adding paddingBottom is a bit of a hack, but horizontal gutters not working */}
             <Row gutter={32} style={{ paddingBottom: '2rem' }}>
               <Col span={12}>
@@ -43,7 +47,10 @@ export const ProjectDetailsPage: React.FC = () => {
               </Col>
             </Row>
           </CreateCollapse.Panel>
-          <CreateCollapse.Panel key={1} header={t`Customise Payment Terminal`}>
+          <CreateCollapse.Panel
+            key={1}
+            header={<OptionalHeader header={t`Project Links`} />}
+          >
             <Row gutter={32} style={{ paddingBottom: '2rem' }}>
               <Col span={12}>
                 <Form.Item name="payButtonText" label={t`Pay Button Text`}>

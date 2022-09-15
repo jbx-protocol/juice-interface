@@ -9,7 +9,7 @@ import { emitSuccessNotification } from 'utils/notifications'
 
 import TransactionModal from 'components/TransactionModal'
 import LockDurationSelectInput from 'components/veNft/formControls/LockDurationSelectInput'
-import { VeNftContext } from 'contexts/veNftContext'
+import { useVeNftLockDurationOptions } from 'hooks/veNft/VeNftLockDurationOptions'
 import { useWallet } from 'hooks/Wallet'
 
 type VeNftExtendLockModalProps = {
@@ -31,7 +31,7 @@ const VeNftExtendLockModal = ({
 }: VeNftExtendLockModalProps) => {
   const { chainUnsupported, isConnected, changeNetworks, connect } = useWallet()
   const { tokenId } = token
-  const { lockDurationOptions } = useContext(VeNftContext)
+  const { data: lockDurationOptions } = useVeNftLockDurationOptions()
   const [form] = Form.useForm<ExtendLockFormProps>()
   const [loading, setLoading] = useState(false)
   const [transactionPending, setTransactionPending] = useState(false)

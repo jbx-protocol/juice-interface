@@ -44,11 +44,6 @@ export type V2ProjectContextType = {
   primaryTerminalCurrentOverflow: BigNumber | undefined
   totalTokenSupply: BigNumber | undefined
 
-  veNft: {
-    contractAddress: string | undefined
-    uriResolver: string | undefined
-  }
-
   loading: V2ProjectLoadingStates
 }
 
@@ -82,11 +77,6 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
 
   primaryTerminalCurrentOverflow: undefined,
   totalTokenSupply: undefined,
-
-  veNft: {
-    contractAddress: undefined,
-    uriResolver: undefined,
-  },
 
   loading: {
     ETHBalanceLoading: false,

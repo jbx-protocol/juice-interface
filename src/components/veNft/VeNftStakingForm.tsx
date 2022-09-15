@@ -38,7 +38,10 @@ import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedT
 import { MinimalCollapse } from 'components/MinimalCollapse'
 
 import { shadowCard } from 'constants/styles/shadowCard'
+import { VARIANTS_HASH } from 'constants/veNft/veNftProject'
 import { useVeNftHasProjectTokenPermission } from 'hooks/veNft/VeNftHasProjectTokenPermission'
+import { useVeNftLockDurationOptions } from 'hooks/veNft/VeNftLockDurationOptions'
+import { useVeNftVariants } from 'hooks/veNft/VeNftVariants'
 import AllowPublicExtensionInput from './formControls/AllowPublicExtensionInput'
 import VeNftTokenSelectInput from './formControls/VeNftTokenSelectInput'
 
@@ -66,8 +69,9 @@ const VeNftStakingForm = ({
   } = useWallet()
   useWallet()
   const { tokenAddress } = useContext(V2ProjectContext)
-  const { lockDurationOptions, contractAddress, baseImagesHash, variants } =
-    useContext(VeNftContext)
+  const { contractAddress } = useContext(VeNftContext)
+  const { data: variants } = useVeNftVariants()
+  const { data: lockDurationOptions } = useVeNftLockDurationOptions()
   const { theme } = useContext(ThemeContext)
 
   const [form] = useForm<StakingFormProps>()
@@ -256,10 +260,10 @@ const VeNftStakingForm = ({
                   <AllowPublicExtensionInput form={form} />
                 </MinimalCollapse>
 
-                {variants && baseImagesHash && (
+                {variants && (
                   <VeNftCarousel
                     tokensStaked={tokensStaked}
-                    baseImagesHash={baseImagesHash}
+                    baseImagesHash={VARIANTS_HASH}
                     variants={variants}
                     form={form}
                     tokenMetadata={tokenMetadata}

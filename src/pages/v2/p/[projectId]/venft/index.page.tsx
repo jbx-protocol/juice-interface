@@ -29,7 +29,7 @@ export default function V2ProjectSettingsPage({
       <V2UserProvider>
         <V2ProjectMetadataProvider projectId={projectId} metadata={metadata}>
           <V2ProjectProvider projectId={projectId}>
-            <VeNftProvider>
+            <VeNftProvider projectId={projectId}>
               <VeNft />
             </VeNftProvider>
           </V2ProjectProvider>

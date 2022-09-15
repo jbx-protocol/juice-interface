@@ -1034,7 +1034,7 @@ msgstr ""
 msgid "End"
 msgstr ""
 
-msgid "Enter your project’s details, these can be edited at any time after your project is deployed, but the transaction will cost gas."
+msgid "Enter your project’s details. You can edit your project's details at any time after you deploy project your project, but the transaction will cost gas."
 msgstr ""
 
 msgid "Error loading holders"

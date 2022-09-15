@@ -3,11 +3,14 @@ import { Col, Form, Input, Row, Space } from 'antd'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { CreateCollapse } from '../../CreateCollapse'
 import { OptionalHeader } from '../../OptionalHeader'
+import { useProjectDetailsForm } from './hooks/ProjectDetailsForm'
 
 // TODO: Do we want to set validators on these?
 export const ProjectDetailsPage: React.FC = () => {
+  const form = useProjectDetailsForm()
+
   return (
-    <Form name="projectDetails" colon={false} layout="vertical">
+    <Form {...form} name="projectDetails" colon={false} layout="vertical">
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <Form.Item name="projectName" label={t`Project Name`}>
           <Input />

@@ -11,6 +11,7 @@ import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/TransactionModal'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useMintTokensTx } from 'hooks/v2/transactor/MintTokensTx'
+import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export default function V2MintModal({
@@ -33,7 +34,7 @@ export default function V2MintModal({
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
 
-  async function executeMintTx() {
+  const executeMintTx = async () => {
     await form.validateFields()
 
     const amount = form.getFieldValue('amount') ?? '0'
@@ -43,7 +44,7 @@ export default function V2MintModal({
 
     setLoading(true)
 
-    mintTokensTx(
+    const txSuccess = await mintTokensTx(
       {
         value: parseWad(amount),
         beneficiary,
@@ -52,16 +53,26 @@ export default function V2MintModal({
       },
       {
         onDone: () => {
+          setTransactionPending(true)
           setLoading(false)
-          setTransactionPending(false)
         },
         onConfirmed: () => {
           form.resetFields()
           setTransactionPending(false)
           onConfirmed?.()
         },
+        onError: (e: DOMException) => {
+          setTransactionPending(false)
+          setLoading(false)
+          emitErrorNotification(e.message)
+        },
       },
     )
+
+    if (!txSuccess) {
+      setTransactionPending(false)
+      setLoading(false)
+    }
   }
 
   const erc20Issued =

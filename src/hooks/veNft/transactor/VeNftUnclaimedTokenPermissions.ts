@@ -5,16 +5,17 @@ import { TransactorInstance } from 'hooks/Transactor'
 
 import { t } from '@lingui/macro'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { V2OperatorPermission } from 'models/v2/permissions'
+import { VeNftContext } from 'contexts/veNftContext'
 import { useV2ProjectTitle } from 'hooks/v2/ProjectTitle'
+import { V2OperatorPermission } from 'models/v2/permissions'
 
 export function useUnclaimedTokensPermissionTx(): TransactorInstance {
   const { transactor, contracts } = useContext(V2UserContext)
-  const {
-    projectId,
-    veNft: { contractAddress },
-  } = useContext(V2ProjectContext)
+  const { projectId } = useContext(V2ProjectContext)
+  const { contractAddress } = useContext(VeNftContext)
+
   const projectTitle = useV2ProjectTitle()
+
   const permissionIndexes = [V2OperatorPermission.TRANSFER] // TRANSFER permission, https://github.com/jbx-protocol/juice-contracts-v2/blob/main/contracts/libraries/JBOperations.sol
 
   return (_, txOpts) => {

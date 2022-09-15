@@ -16,14 +16,13 @@ import {
 
 import FormattedAddress from 'components/FormattedAddress'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { VeNftContext } from 'contexts/veNftContext'
 import { emitSuccessNotification } from 'utils/notifications'
 
 const VeNftEnableSection = () => {
   const { isConnected, connect } = useWallet()
-  const {
-    tokenSymbol,
-    veNft: { contractAddress: veNftContractAddress },
-  } = useContext(V2ProjectContext)
+  const { tokenSymbol } = useContext(V2ProjectContext)
+  const { contractAddress: veNftContractAddress } = useContext(VeNftContext)
   const [loading, setLoading] = useState(false)
   const [setupModalVisible, setSetupModalVisible] = useState(false)
   const veNftCreatorEnabled = featureFlagEnabled(FEATURE_FLAGS.VENFT_CREATOR)

@@ -22,9 +22,12 @@ import useTerminalCurrentOverflow from 'hooks/v2/contractReader/TerminalCurrentO
 import useUsedDistributionLimit from 'hooks/v2/contractReader/UsedDistributionLimit'
 import { useVeNftContractForProject } from 'hooks/veNft/VeNftContractForProject'
 import first from 'lodash/first'
+import { CV } from 'models/cv'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { useMemo } from 'react'
 import { NO_CURRENCY, V2CurrencyName, V2_CURRENCY_ETH } from 'utils/v2/currency'
+
+const V2_PROJECT_CV: CV = '2'
 
 const useBalanceInDistributionLimitCurrency = ({
   ETHBalanceLoading,
@@ -76,7 +79,7 @@ export function useV2ProjectState({ projectId }: { projectId: number }) {
   const { data: projects } = useProjectsQuery({
     projectId,
     keys: ['createdAt', 'totalPaid'],
-    cv: ['2'],
+    cv: [V2_PROJECT_CV],
   })
   const createdAt = first(projects)?.createdAt
   const totalVolume = first(projects)?.totalPaid
@@ -166,7 +169,7 @@ export function useV2ProjectState({ projectId }: { projectId: number }) {
   const veNftUriResolver = first(veNftInfo)?.uriResolver
 
   const project: V2ProjectContextType = {
-    cv: '2',
+    cv: V2_PROJECT_CV,
 
     // project metadata
     projectId,

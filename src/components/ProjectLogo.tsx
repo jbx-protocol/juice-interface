@@ -41,6 +41,7 @@ export default function ProjectLogo({
           src={uri}
           alt={name + ' logo'}
           onError={() => setSrcLoadError(true)}
+          loading="lazy"
         />
       ) : (
         <div

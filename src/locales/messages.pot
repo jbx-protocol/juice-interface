@@ -3086,6 +3086,9 @@ msgstr ""
 msgid "{0} holders"
 msgstr ""
 
+msgid "{0} is required"
+msgstr ""
+
 msgid "{0} reserved"
 msgstr ""
 

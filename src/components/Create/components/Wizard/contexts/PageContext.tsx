@@ -1,4 +1,5 @@
 import { createContext } from 'react'
+import { AnyPromiseFn } from 'utils/types'
 
 export const PageContext: React.Context<
   Partial<{
@@ -8,5 +9,7 @@ export const PageContext: React.Context<
     doneText: string | undefined
     goToNextPage: () => void
     goToPreviousPage: () => void
+    addValidator: (validator: AnyPromiseFn) => string
+    removeValidator: (id: string) => void
   }>
 > = createContext({})

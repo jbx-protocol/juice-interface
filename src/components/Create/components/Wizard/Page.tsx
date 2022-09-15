@@ -59,6 +59,8 @@ export const Page: React.FC<PageProps> = ({
     doneText,
     goToPreviousPage,
     goToNextPage,
+    addValidator,
+    removeValidator,
   } = usePage({
     name,
   })
@@ -74,6 +76,8 @@ export const Page: React.FC<PageProps> = ({
         doneText,
         goToNextPage,
         goToPreviousPage,
+        addValidator,
+        removeValidator,
       }}
     >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>

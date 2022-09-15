@@ -1,18 +1,38 @@
 import { t } from '@lingui/macro'
 import { Col, Form, Input, Row, Space } from 'antd'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
+import { useCallback } from 'react'
 import { CreateCollapse } from '../../CreateCollapse'
 import { OptionalHeader } from '../../OptionalHeader'
+import { usePageValidatorSubscription } from '../hooks'
+import { inputMustExistRule } from '../utils'
 import { useProjectDetailsForm } from './hooks/ProjectDetailsForm'
 
-// TODO: Do we want to set validators on these?
 export const ProjectDetailsPage: React.FC = () => {
-  const form = useProjectDetailsForm()
+  const formProps = useProjectDetailsForm()
+
+  const validator = useCallback(
+    async () => await formProps.form.validateFields(),
+    [formProps.form],
+  )
+
+  usePageValidatorSubscription(validator)
 
   return (
-    <Form {...form} name="projectDetails" colon={false} layout="vertical">
+    <Form
+      {...formProps}
+      name="projectDetails"
+      colon={false}
+      layout="vertical"
+      scrollToFirstError
+    >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
-        <Form.Item name="projectName" label={t`Project Name`}>
+        <Form.Item
+          name="projectName"
+          label={t`Project Name`}
+          required
+          rules={[inputMustExistRule({ label: t`Project Name` })]}
+        >
           <Input />
         </Form.Item>
         <Form.Item name="projectDescription" label={t`Project Description`}>

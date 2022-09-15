@@ -35,6 +35,7 @@ export default function PayInputGroup({
   tokenAddress,
   weightingFn,
   disabled,
+  isEligibleForNft,
 }: {
   payAmountETH: string
   payInCurrency: CurrencyOption
@@ -47,11 +48,11 @@ export default function PayInputGroup({
   tokenAddress: string | undefined
   weightingFn: WeightFunction
   disabled?: boolean
+  isEligibleForNft?: boolean
 }) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-
   const {
     currencyMetadata,
     currencies: { USD, ETH },
@@ -108,6 +109,7 @@ export default function PayInputGroup({
             tokenSymbol={tokenSymbol}
             tokenAddress={tokenAddress}
             weightingFn={weightingFn}
+            isEligibleForNft={isEligibleForNft}
           />
         </div>
         <PayButton

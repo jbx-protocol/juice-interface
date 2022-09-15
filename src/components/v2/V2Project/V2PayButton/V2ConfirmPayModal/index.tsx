@@ -34,6 +34,7 @@ import { getNftRewardTier } from 'utils/nftRewards'
 import { weightedAmount } from 'utils/v2/math'
 
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2PayForm, V2PayFormType } from '../V2PayForm'
 import { NftRewardCell } from './NftRewardCell'
@@ -52,14 +53,12 @@ export function V2ConfirmPayModal({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const {
-    fundingCycle,
-    fundingCycleMetadata,
-    projectId,
-    tokenSymbol,
-    nftRewards: { rewardTiers },
-  } = useContext(V2ProjectContext)
+  const { fundingCycle, fundingCycleMetadata, projectId, tokenSymbol } =
+    useContext(V2ProjectContext)
   const { projectMetadata } = useContext(ProjectMetadataContext)
+  const {
+    nftRewards: { rewardTiers },
+  } = useContext(NftRewardsContext)
 
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()

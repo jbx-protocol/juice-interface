@@ -1,13 +1,13 @@
 import { CloseOutlined, LinkOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useMobile from 'hooks/Mobile'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/NftRewards'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { CSSProperties, useContext } from 'react'
 
 import { darkColors } from 'constants/styles/colors'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 
 const containerStyle: CSSProperties = {
   zIndex: 10000,
@@ -60,9 +60,9 @@ export function NftPreview({
   rewardTier: NftRewardTier
   onClose: VoidFunction
 }) {
-  const isMobile = useMobile()
+  const { projectMetadata } = useContext(ProjectMetadataContext)
 
-  const { projectMetadata } = useContext(V2ProjectContext)
+  const isMobile = useMobile()
 
   if (!visible) return null
 

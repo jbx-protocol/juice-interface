@@ -15,6 +15,7 @@ import {
 import { V2FundingCycle } from 'models/v2/fundingCycle'
 
 import V2Project from 'components/v2/V2Project'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2_CURRENCY_ETH } from 'utils/v2/currency'
 import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
 
@@ -50,11 +51,9 @@ export default function ProjectPreview({
   const project: V2ProjectContextType = {
     isPreviewMode: true,
     cv: '2',
-    isArchived: false,
 
     projectId: 0,
     handle: undefined,
-    projectMetadata,
 
     createdAt: undefined,
 
@@ -106,13 +105,17 @@ export default function ProjectPreview({
   }
 
   return (
-    <V2ProjectContext.Provider value={project}>
-      <div>
-        <V2Project
-          singleColumnLayout={singleColumnLayout}
-          expandFundingCycleCard
-        />
-      </div>
-    </V2ProjectContext.Provider>
+    <ProjectMetadataContext.Provider
+      value={{ projectMetadata, isArchived: false }}
+    >
+      <V2ProjectContext.Provider value={project}>
+        <div>
+          <V2Project
+            singleColumnLayout={singleColumnLayout}
+            expandFundingCycleCard
+          />
+        </div>
+      </V2ProjectContext.Provider>
+    </ProjectMetadataContext.Provider>
   )
 }

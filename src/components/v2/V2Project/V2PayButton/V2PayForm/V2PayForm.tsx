@@ -23,6 +23,7 @@ import TooltipIcon from 'components/TooltipIcon'
 import { StickerSelection } from 'components/Project/StickerSelection'
 
 import { ProjectPreferences } from 'constants/projectPreferences'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 
 export interface V2PayFormType {
   memo?: string
@@ -39,8 +40,8 @@ export const V2PayForm = ({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { tokenAddress, fundingCycle, projectMetadata } =
-    useContext(V2ProjectContext)
+  const { tokenAddress, fundingCycle } = useContext(V2ProjectContext)
+  const { projectMetadata } = useContext(ProjectMetadataContext)
 
   const [customBeneficiaryEnabled, setCustomBeneficiaryEnabled] =
     useState<boolean>(false)

@@ -6,6 +6,7 @@ import V2ProjectHeaderActions from 'components/v2/V2Project/V2ProjectHeaderActio
 import { V2ProjectSettingsContent } from 'components/v2/V2Project/V2ProjectSettings/V2ProjectSettingsContent'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { layouts } from 'constants/styles/layouts'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
@@ -82,14 +83,9 @@ const items: MenuItem[] = [
 ]
 
 export function V2ProjectSettings() {
-  const {
-    projectMetadata,
-    isPreviewMode,
-    isArchived,
-    projectOwnerAddress,
-    handle,
-    projectId,
-  } = useContext(V2ProjectContext)
+  const { isPreviewMode, projectOwnerAddress, handle, projectId } =
+    useContext(V2ProjectContext)
+  const { projectMetadata, isArchived } = useContext(ProjectMetadataContext)
   const { isDarkMode } = useContext(ThemeContext)
 
   const router = useRouter()

@@ -1,6 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import ExternalLink from 'components/ExternalLink'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { useSetENSTextRecordForHandleTx } from 'hooks/v2/transactor/SetENSTextRecordForHandleTx'
@@ -11,15 +12,11 @@ import { emitErrorNotification } from 'utils/notifications'
 import { helpPagePath } from 'utils/routes'
 
 export function SnapshotSettingsSection() {
-  const {
-    tokenSymbol,
-    tokenAddress,
-    handle,
-    projectId,
-    projectMetadata,
-    projectOwnerAddress,
-  } = useContext(V2ProjectContext)
+  const { tokenSymbol, tokenAddress, handle, projectId, projectOwnerAddress } =
+    useContext(V2ProjectContext)
   const { contracts } = useContext(V2UserContext)
+  const { projectMetadata } = useContext(ProjectMetadataContext)
+
   const JBTokenStoreAddress = contracts?.JBTokenStore.address
 
   const [launchLoading, setLaunchLoading] = useState<boolean>(false)

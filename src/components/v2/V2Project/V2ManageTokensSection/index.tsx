@@ -36,6 +36,7 @@ import { featureFlagEnabled } from 'utils/featureFlags'
 import { reloadWindow } from 'utils/windowUtils'
 
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useVeNftSummaryStats } from 'hooks/veNft/VeNftSummaryStats'
 import Link from 'next/link'
 import { veNftPagePath } from 'utils/routes'
@@ -67,11 +68,12 @@ export default function V2ManageTokensSection() {
     fundingCycleMetadata,
     projectId,
     primaryTerminalCurrentOverflow,
-    projectMetadata,
     cv,
     handle,
     veNft: { contractAddress: veNftAddress },
   } = useContext(V2ProjectContext)
+  const { projectMetadata } = useContext(ProjectMetadataContext)
+
   const { userAddress } = useWallet()
 
   const [manageTokensModalVisible, setManageTokensModalVisible] =

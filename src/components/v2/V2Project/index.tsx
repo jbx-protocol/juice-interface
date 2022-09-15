@@ -42,7 +42,7 @@ import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { getNftRewardTier } from 'utils/nftRewards'
-import { NftRewardsSection } from './NftRewardsSection'
+import { NftRewardsSection } from '../../NftRewards/NftRewardsSection'
 
 const GUTTER_PX = 40
 

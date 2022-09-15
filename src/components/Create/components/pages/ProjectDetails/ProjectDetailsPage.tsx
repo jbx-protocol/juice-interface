@@ -10,13 +10,10 @@ export const ProjectDetailsPage: React.FC = () => {
     <Form name="projectDetails" colon={false} layout="vertical">
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <Form.Item name="projectName" label={t`Project Name`}>
-          <Input placeholder={t`Enter project name`} />
+          <Input />
         </Form.Item>
         <Form.Item name="projectDescription" label={t`Project Description`}>
-          <Input.TextArea
-            autoSize={{ minRows: 4, maxRows: 6 }}
-            placeholder={t`Enter project description`}
-          />
+          <Input.TextArea autoSize={{ minRows: 4, maxRows: 6 }} />
         </Form.Item>
         <Form.Item name="logo" label={t`Logo`}>
           <FormImageUploader text={t`Upload`} />
@@ -30,19 +27,19 @@ export const ProjectDetailsPage: React.FC = () => {
             <Row gutter={32} style={{ paddingBottom: '2rem' }}>
               <Col span={12}>
                 <Form.Item name="projectWebsite" label={t`Website`}>
-                  <Input placeholder={t`juicebox.com`} />
+                  <Input />
                 </Form.Item>
               </Col>
               <Col span={12}>
                 <Form.Item name="projectTwitter" label={t`Twitter`}>
-                  <Input placeholder={t`@juiceboxETH`} />
+                  <Input />
                 </Form.Item>
               </Col>
             </Row>
             <Row gutter={32}>
               <Col span={12}>
                 <Form.Item name="projectDiscord" label={t`Discord`}>
-                  <Input placeholder={t`discord.gg/xyz`} />
+                  <Input />
                 </Form.Item>
               </Col>
             </Row>
@@ -54,15 +51,12 @@ export const ProjectDetailsPage: React.FC = () => {
             <Row gutter={32} style={{ paddingBottom: '2rem' }}>
               <Col span={12}>
                 <Form.Item name="payButtonText" label={t`Pay Button Text`}>
-                  <Input placeholder={t`'Pay'`} />
+                  <Input />
                 </Form.Item>
               </Col>
             </Row>
             <Form.Item name="payDisclosure" label={t`Pay Disclosure`}>
-              <Input.TextArea
-                autoSize={{ minRows: 4, maxRows: 6 }}
-                placeholder={t`Enter pay disclosure`}
-              />
+              <Input.TextArea autoSize={{ minRows: 4, maxRows: 6 }} />
             </Form.Item>
           </CreateCollapse.Panel>
         </CreateCollapse>

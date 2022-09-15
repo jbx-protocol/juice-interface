@@ -14,9 +14,6 @@ msgstr ""
 msgid "$ve{tokenSymbolDisplayText} Received"
 msgstr ""
 
-msgid "'Pay'"
-msgstr ""
-
 msgid "({realTokenAllocationPercent}% of all newly minted tokens)."
 msgstr ""
 
@@ -213,9 +210,6 @@ msgid "<0>Zero</0> Distribution Limit"
 msgstr ""
 
 msgid "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
-msgstr ""
-
-msgid "@juiceboxETH"
 msgstr ""
 
 msgid "@{handle} not found"
@@ -1038,15 +1032,6 @@ msgid "Enabling token minting will appear risky to contributors."
 msgstr ""
 
 msgid "End"
-msgstr ""
-
-msgid "Enter pay disclosure"
-msgstr ""
-
-msgid "Enter project description"
-msgstr ""
-
-msgid "Enter project name"
 msgstr ""
 
 msgid "Error loading holders"
@@ -3005,16 +2990,10 @@ msgstr ""
 msgid "days"
 msgstr ""
 
-msgid "discord.gg/xyz"
-msgstr ""
-
 msgid "handle"
 msgstr ""
 
 msgid "hours"
-msgstr ""
-
-msgid "juicebox.com"
 msgstr ""
 
 msgid "last {trendingWindowDays} days"

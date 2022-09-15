@@ -12,6 +12,7 @@ import Callout from 'components/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { MemoFormInput } from 'components/inputs/Pay/MemoFormInput'
+import { RedeemWithExchange } from 'components/Project/RedeemWithExchange'
 import TransactionModal from 'components/TransactionModal'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useETHReceivedFromTokens } from 'hooks/v2/contractReader/ETHReceivedFromTokens'
@@ -35,6 +36,7 @@ export default function V2RedeemModal({
   const { userAddress } = useWallet()
   const {
     tokenSymbol,
+    tokenAddress,
     fundingCycle,
     primaryTerminalCurrentOverflow,
     projectId,
@@ -257,7 +259,15 @@ export default function V2RedeemModal({
                 disabled={totalBalance?.eq(0)}
                 onChange={val => setRedeemAmount(val)}
               />
+              {tokenSymbol && tokenAddress && (
+                <RedeemWithExchange
+                  tokenSymbol={tokenSymbol}
+                  tokenAddress={tokenAddress}
+                  style={{ fontSize: '.65rem' }}
+                />
+              )}
             </Form.Item>
+
             <Form.Item label={t`Memo`}>
               <MemoFormInput value={memo} onChange={setMemo} />
             </Form.Item>

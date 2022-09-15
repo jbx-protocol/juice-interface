@@ -4,6 +4,7 @@ import { useForm } from 'antd/lib/form/Form'
 import ETHAmount from 'components/currency/ETHAmount'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import { RedeemWithExchange } from 'components/Project/RedeemWithExchange'
 import { V1_CURRENCY_USD } from 'constants/v1/currency'
 import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
@@ -44,8 +45,14 @@ export default function RedeemModal({
     theme: { colors },
   } = useContext(ThemeContext)
   const { userAddress } = useWallet()
-  const { projectId, tokenSymbol, currentFC, terminal, overflow } =
-    useContext(V1ProjectContext)
+  const {
+    projectId,
+    tokenSymbol,
+    tokenAddress,
+    currentFC,
+    terminal,
+    overflow,
+  } = useContext(V1ProjectContext)
 
   const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
@@ -224,6 +231,13 @@ export default function RedeemModal({
                 disabled={totalBalance?.eq(0)}
                 onChange={val => setRedeemAmount(val)}
               />
+              {tokenSymbol && tokenAddress && (
+                <RedeemWithExchange
+                  tokenSymbol={tokenSymbol}
+                  tokenAddress={tokenAddress}
+                  style={{ fontSize: '.65rem' }}
+                />
+              )}
             </Form.Item>
           </Form>
           {overflow?.gt(0) ? (

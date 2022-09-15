@@ -19,7 +19,7 @@ export type V2ProjectContextType = {
   projectId: number | undefined
   handle: string | undefined
   createdAt: number | undefined
-  cv: CV | undefined
+  cv: CV
   tokenAddress: string | undefined
   tokenSymbol: string | undefined
   tokenName: string | undefined
@@ -53,12 +53,12 @@ export type V2ProjectContextType = {
 }
 
 export const V2ProjectContext = createContext<V2ProjectContextType>({
+  cv: '2',
   isPreviewMode: false,
 
   projectId: undefined,
   handle: undefined,
   createdAt: undefined,
-  cv: undefined,
   tokenAddress: undefined,
   tokenSymbol: undefined,
   tokenName: undefined,

@@ -2,13 +2,14 @@ import { t } from '@lingui/macro'
 import { Space } from 'antd'
 import VeNftHeaderSection from 'components/veNft/VeNftHeaderSection'
 import VeNftStakingForm from 'components/veNft/VeNftStakingForm'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useContext } from 'react'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 const MintVeNftContent = () => {
-  const { tokenSymbol, tokenName, projectMetadata } =
-    useContext(V2ProjectContext)
+  const { tokenSymbol, tokenName } = useContext(V2ProjectContext)
+  const { projectMetadata } = useContext(ProjectMetadataContext)
 
   const tokenSymbolDisplayText = tokenSymbolText({ tokenSymbol })
   const projectName = projectMetadata?.name ?? t`Unknown Project`

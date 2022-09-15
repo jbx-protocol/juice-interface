@@ -39,6 +39,7 @@ import V2PayButton from './V2PayButton'
 import V2ProjectHeaderActions from './V2ProjectHeaderActions'
 
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { NftRewardsSection } from './NftRewardsSection'
 
 const GUTTER_PX = 40
@@ -64,18 +65,17 @@ export default function V2Project({
   const {
     createdAt,
     projectId,
-    projectMetadata,
     fundingCycle,
     fundingCycleMetadata,
     isPreviewMode,
     tokenSymbol,
     tokenAddress,
     cv,
-    isArchived,
     projectOwnerAddress,
     handle,
     loading,
   } = useContext(V2ProjectContext)
+  const { projectMetadata, isArchived } = useContext(ProjectMetadataContext)
   const {
     currencies: { ETH },
   } = useContext(CurrencyContext)

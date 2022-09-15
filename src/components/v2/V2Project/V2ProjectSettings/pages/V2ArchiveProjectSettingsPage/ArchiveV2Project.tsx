@@ -3,6 +3,7 @@ import { TransactorInstance } from 'hooks/Transactor'
 import { useContext } from 'react'
 
 import ArchiveProject from 'components/ArchiveProject'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 
 /**
  * V2 Wrapper around `ArchiveProject`.
@@ -14,8 +15,8 @@ export function V2ArchiveProject({
     cid: string
   }>
 }) {
-  const { projectMetadata, projectId, projectOwnerAddress, cv } =
-    useContext(V2ProjectContext)
+  const { projectId, projectOwnerAddress, cv } = useContext(V2ProjectContext)
+  const { projectMetadata } = useContext(ProjectMetadataContext)
 
   return (
     <ArchiveProject

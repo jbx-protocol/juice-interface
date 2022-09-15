@@ -5,6 +5,7 @@ import ProjectHeader from 'components/Project/ProjectHeader'
 import V2ProjectHeaderActions from 'components/v2/V2Project/V2ProjectHeaderActions'
 import { VeNftContent } from 'components/veNft/VeNftContent'
 import { layouts } from 'constants/styles/layouts'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
@@ -45,14 +46,9 @@ const items: MenuItem[] = [
 ]
 
 export function VeNft() {
-  const {
-    projectMetadata,
-    isPreviewMode,
-    isArchived,
-    projectOwnerAddress,
-    handle,
-    projectId,
-  } = useContext(V2ProjectContext)
+  const { isPreviewMode, projectOwnerAddress, handle, projectId } =
+    useContext(V2ProjectContext)
+  const { projectMetadata, isArchived } = useContext(ProjectMetadataContext)
   const { isDarkMode } = useContext(ThemeContext)
 
   const router = useRouter()

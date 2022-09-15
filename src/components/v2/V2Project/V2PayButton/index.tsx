@@ -4,6 +4,7 @@ import { Button, Tooltip } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
 import { PayButtonProps } from 'components/inputs/Pay/PayInputGroup'
 import PayWarningModal from 'components/PayWarningModal'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useWeiConverter from 'hooks/WeiConverter'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
@@ -20,11 +21,10 @@ export default function V2PayButton({
   wrapperStyle,
 }: PayButtonProps) {
   const {
-    projectMetadata,
     fundingCycleMetadata,
     loading: { fundingCycleLoading },
-    isArchived,
   } = useContext(V2ProjectContext)
+  const { projectMetadata, isArchived } = useContext(ProjectMetadataContext)
 
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
   const [payWarningModalVisible, setPayWarningModalVisible] =

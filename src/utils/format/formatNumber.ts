@@ -1,6 +1,6 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { formatUnits, parseUnits } from '@ethersproject/units'
-import { round } from 'lodash'
+import round from 'lodash/round'
 
 import { WAD_DECIMALS } from 'constants/numbers'
 

@@ -23,11 +23,11 @@ import { useWallet } from 'hooks/Wallet'
 
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 
-import { TransactionEvent } from 'bnc-notify'
 import { useRouter } from 'next/router'
 import { v2ProjectRoute } from 'utils/routes'
 
 import { readNetwork } from 'constants/networks'
+import { TransactorOptions } from 'hooks/Transactor'
 import { findTransactionReceipt } from './utils'
 
 const NFT_CREATE_EVENT_IDX = 2
@@ -107,13 +107,13 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
       return
     }
 
-    const txOpts = {
+    const txOpts: TransactorOptions = {
       onDone() {
         console.info('Transaction executed. Awaiting confirmation...')
         setTransactionPending(true)
       },
-      async onConfirmed(result: TransactionEvent | undefined) {
-        const txHash = result?.transaction?.hash
+      async onConfirmed(result) {
+        const txHash = result?.hash
         if (!txHash) {
           return // TODO error notififcation
         }

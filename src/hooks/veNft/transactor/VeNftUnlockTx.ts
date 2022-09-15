@@ -1,6 +1,7 @@
 import { V2UserContext } from 'contexts/v2/userContext'
 import { useContext } from 'react'
 
+import { t } from '@lingui/macro'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useVeNftContract } from 'hooks/veNft/VeNftContract'
 
@@ -21,6 +22,7 @@ export function useUnlockTx(): UnlockTx {
 
     return transactor(nftContract, 'unlock', [[{ tokenId, beneficiary }]], {
       ...txOpts,
+      title: t`Unlock veNFT`,
     })
   }
 }

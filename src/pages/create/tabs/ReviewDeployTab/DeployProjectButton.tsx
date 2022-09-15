@@ -96,7 +96,7 @@ export function DeployProjectButton({ form }: { form: FormInstance }) {
             setTransactionPending(true)
           },
           async onConfirmed(result) {
-            const txHash = result?.transaction?.hash
+            const txHash = result?.hash
             if (!txHash) {
               return // TODO error notififcation
             }

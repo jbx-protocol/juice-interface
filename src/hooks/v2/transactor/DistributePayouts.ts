@@ -6,8 +6,10 @@ import { BigNumber } from '@ethersproject/bignumber'
 
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 
+import { t } from '@lingui/macro'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 import { TransactorInstance } from 'hooks/Transactor'
+import { useV2ProjectTitle } from '../ProjectTitle'
 
 type DistributePayoutsTx = TransactorInstance<{
   memo?: string
@@ -20,6 +22,7 @@ const minReturnedTokens = 0 // TODO will need a field for this in WithdrawModal 
 export function useDistributePayoutsTx(): DistributePayoutsTx {
   const { transactor, contracts } = useContext(V2UserContext)
   const { projectId } = useContext(V2ProjectContext)
+  const projectTitle = useV2ProjectTitle()
 
   return ({ amount, currency, memo = '' }, txOpts) => {
     if (
@@ -37,7 +40,10 @@ export function useDistributePayoutsTx(): DistributePayoutsTx {
       contracts.JBETHPaymentTerminal,
       'distributePayoutsOf',
       [projectId, amount, currency, ETH_TOKEN_ADDRESS, minReturnedTokens, memo],
-      txOpts,
+      {
+        ...txOpts,
+        title: t`Distribute payouts of ${projectTitle}`,
+      },
     )
   }
 }

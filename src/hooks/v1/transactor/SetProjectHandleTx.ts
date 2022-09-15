@@ -6,6 +6,7 @@ import { useContext } from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
 
 import { TransactorInstance } from 'hooks/Transactor'
+import { t } from '@lingui/macro'
 
 export function useSetProjectHandleTx(): TransactorInstance<{
   handle: string
@@ -23,7 +24,10 @@ export function useSetProjectHandleTx(): TransactorInstance<{
       contracts.Projects,
       'setHandle',
       [BigNumber.from(projectId).toHexString(), formatBytes32String(handle)],
-      txOpts,
+      {
+        ...txOpts,
+        title: t`Set handle @${handle}`,
+      },
     )
   }
 }

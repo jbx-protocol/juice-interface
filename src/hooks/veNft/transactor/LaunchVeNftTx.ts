@@ -1,6 +1,7 @@
 import { V2UserContext } from 'contexts/v2/userContext'
 import { useContext } from 'react'
 
+import { t } from '@lingui/macro'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useWallet } from 'hooks/Wallet'
@@ -45,6 +46,7 @@ export function useLaunchVeNftTx(): ExtendLockTx {
       ],
       {
         ...txOpts,
+        title: t`Launch veNFT ${symbol}`,
       },
     )
   }

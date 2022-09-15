@@ -1,10 +1,12 @@
 import * as constants from '@ethersproject/constants'
+import { t } from '@lingui/macro'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 
 import { TransactorInstance } from 'hooks/Transactor'
+import { useV2ProjectTitle } from '../ProjectTitle'
 
 export type DeployProjectPayerTxArgs = {
   customBeneficiaryAddress: string | undefined
@@ -17,6 +19,7 @@ export function useDeployProjectPayerTx(): TransactorInstance<DeployProjectPayer
   const { transactor, contracts } = useContext(V2UserContext)
   const { userAddress } = useWallet()
   const { projectId } = useContext(V2ProjectContext)
+  const projectTitle = useV2ProjectTitle()
 
   const DEFAULT_MEMO = ''
   const DEFAULT_METADATA = [0x1]
@@ -50,6 +53,7 @@ export function useDeployProjectPayerTx(): TransactorInstance<DeployProjectPayer
       ],
       {
         ...txOpts,
+        title: t`Deploy project payer for ${projectTitle}`,
       },
     )
   }

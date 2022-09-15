@@ -6,8 +6,10 @@ import { useContext } from 'react'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 
+import { t } from '@lingui/macro'
 import { onCatch, TransactorInstance } from 'hooks/Transactor'
 import invariant from 'tiny-invariant'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 const DEFAULT_METADATA = 0
 
@@ -18,7 +20,7 @@ export function useRedeemTokensTx(): TransactorInstance<{
 }> {
   const { transactor, contracts, version } = useContext(V2UserContext)
   const { userAddress } = useWallet()
-  const { projectId } = useContext(V2ProjectContext)
+  const { projectId, tokenSymbol } = useContext(V2ProjectContext)
 
   return ({ redeemAmount, minReturnedTokens, memo }, txOpts) => {
     try {
@@ -41,7 +43,13 @@ export function useRedeemTokensTx(): TransactorInstance<{
           memo, // _memo
           DEFAULT_METADATA, // _metadata, TODO: metadata
         ],
-        txOpts,
+        {
+          ...txOpts,
+          title: t`Redeem ${tokenSymbolText({
+            tokenSymbol,
+            plural: true,
+          })}`,
+        },
       )
     } catch {
       const missingParam = !transactor

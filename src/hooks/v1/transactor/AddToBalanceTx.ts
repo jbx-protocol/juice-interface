@@ -1,15 +1,18 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { t } from '@lingui/macro'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
 import { useContext } from 'react'
 
 import { TransactorInstance } from 'hooks/Transactor'
+import { useV1ProjectTitle } from '../ProjectTitle'
 
 export function useAddToBalanceTx(): TransactorInstance<{
   value: BigNumber
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
   const { projectId, terminal } = useContext(V1ProjectContext)
+  const projectTitle = useV1ProjectTitle()
 
   return ({ value }, txOpts) => {
     if (
@@ -31,6 +34,7 @@ export function useAddToBalanceTx(): TransactorInstance<{
       {
         ...txOpts,
         value: value.toHexString(),
+        title: t`Add to balance of ${projectTitle}`,
       },
     )
   }

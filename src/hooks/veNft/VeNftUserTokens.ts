@@ -1,15 +1,13 @@
-import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { VeNftContext } from 'contexts/veNftContext'
 
 export const useVeNftUserTokens = () => {
-  const {
-    veNft: { contractAddress },
-  } = useContext(V2ProjectContext)
+  const { contractAddress } = useContext(VeNftContext)
   const { userAddress } = useWallet()
   return useSubgraphQuery(
     {

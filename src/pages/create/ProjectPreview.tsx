@@ -85,11 +85,6 @@ export default function ProjectPreview({
     primaryTerminalCurrentOverflow: undefined,
     totalTokenSupply: undefined,
 
-    veNft: {
-      contractAddress: undefined,
-      uriResolver: undefined,
-    },
-
     loading: {
       ETHBalanceLoading: false,
       balanceInDistributionLimitCurrencyLoading: false,

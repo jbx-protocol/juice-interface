@@ -20,7 +20,6 @@ import useProjectToken from 'hooks/v2/contractReader/ProjectToken'
 import useProjectTokenTotalSupply from 'hooks/v2/contractReader/ProjectTokenTotalSupply'
 import useTerminalCurrentOverflow from 'hooks/v2/contractReader/TerminalCurrentOverflow'
 import useUsedDistributionLimit from 'hooks/v2/contractReader/UsedDistributionLimit'
-import { useVeNftContractForProject } from 'hooks/veNft/VeNftContractForProject'
 import first from 'lodash/first'
 import { CV } from 'models/cv'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
@@ -161,13 +160,6 @@ export function useV2ProjectState({ projectId }: { projectId: number }) {
   const tokenName = useNameOfERC20(tokenAddress)
   const { data: totalTokenSupply } = useProjectTokenTotalSupply(projectId)
 
-  /**
-   * Load veNFT data
-   */
-  const { data: veNftInfo } = useVeNftContractForProject(projectId)
-  const veNftContractAddress = first(veNftInfo)?.address
-  const veNftUriResolver = first(veNftInfo)?.uriResolver
-
   const project: V2ProjectContextType = {
     cv: V2_PROJECT_CV,
 
@@ -206,12 +198,6 @@ export function useV2ProjectState({ projectId }: { projectId: number }) {
     tokenSymbol,
     tokenName,
     totalTokenSupply,
-
-    // veNFT data
-    veNft: {
-      contractAddress: veNftContractAddress,
-      uriResolver: veNftUriResolver,
-    },
 
     // loading states
     loading: {

@@ -23,7 +23,7 @@ export const ProjectDetailsPage: React.FC = () => {
         <CreateCollapse>
           <CreateCollapse.Panel key={0} header={t`Project Links`}>
             {/* Adding paddingBottom is a bit of a hack, but horizontal gutters not working */}
-            <Row gutter={32} style={{ paddingBottom: '32px' }}>
+            <Row gutter={32} style={{ paddingBottom: '2rem' }}>
               <Col span={12}>
                 <Form.Item name="projectWebsite" label={t`Website`}>
                   <Input placeholder={t`juicebox.com`} />
@@ -44,7 +44,7 @@ export const ProjectDetailsPage: React.FC = () => {
             </Row>
           </CreateCollapse.Panel>
           <CreateCollapse.Panel key={1} header={t`Customise Payment Terminal`}>
-            <Row gutter={32} style={{ paddingBottom: '32px' }}>
+            <Row gutter={32} style={{ paddingBottom: '2rem' }}>
               <Col span={12}>
                 <Form.Item name="payButtonText" label={t`Pay Button Text`}>
                   <Input placeholder={t`'Pay'`} />

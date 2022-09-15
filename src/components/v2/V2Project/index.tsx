@@ -39,7 +39,9 @@ import V2PayButton from './V2PayButton'
 import V2ProjectHeaderActions from './V2ProjectHeaderActions'
 
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { getNftRewardTier } from 'utils/nftRewards'
 import { NftRewardsSection } from './NftRewardsSection'
 
 const GUTTER_PX = 40
@@ -126,6 +128,19 @@ export default function V2Project({
 
   const nftRewardsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
 
+  const {
+    nftRewards: { rewardTiers: nftRewardTiers },
+  } = useContext(NftRewardsContext)
+  const isEligibleForNft =
+    nftRewardTiers && payAmount
+      ? Boolean(
+          getNftRewardTier({
+            nftRewardTiers: nftRewardTiers,
+            payAmountETH: parseFloat(payAmount),
+          }),
+        )
+      : false
+
   const payAmountETH =
     payInCurrency === ETH ? payAmount : fromWad(converter.usdToWei(payAmount))
 
@@ -189,6 +204,7 @@ export default function V2Project({
             tokenSymbol={tokenSymbol}
             tokenAddress={tokenAddress}
             disabled={isPreviewMode || payIsDisabledPreV2Redeploy()}
+            isEligibleForNft={isEligibleForNft}
           />
           {(isMobile && nftRewardsEnabled) || isPreviewMode ? (
             <div style={{ marginTop: '30px' }}>

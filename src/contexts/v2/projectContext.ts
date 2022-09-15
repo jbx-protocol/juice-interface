@@ -1,7 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { V2BallotState } from 'models/ballot'
 import { CV } from 'models/cv'
-import { NftRewardTier } from 'models/nftRewardTier'
 import { Split } from 'models/splits'
 import { V2FundingCycle, V2FundingCycleMetadata } from 'models/v2/fundingCycle'
 import { createContext } from 'react'
@@ -45,12 +44,6 @@ export type V2ProjectContextType = {
   primaryTerminalCurrentOverflow: BigNumber | undefined
   totalTokenSupply: BigNumber | undefined
 
-  nftRewards: {
-    CIDs: string[] | undefined
-    rewardTiers: NftRewardTier[] | undefined
-    loading: boolean | undefined
-  }
-
   veNft: {
     contractAddress: string | undefined
     uriResolver: string | undefined
@@ -89,12 +82,6 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
 
   primaryTerminalCurrentOverflow: undefined,
   totalTokenSupply: undefined,
-
-  nftRewards: {
-    CIDs: undefined,
-    rewardTiers: undefined,
-    loading: undefined,
-  },
 
   veNft: {
     contractAddress: undefined,

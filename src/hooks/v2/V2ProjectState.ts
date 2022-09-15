@@ -4,7 +4,6 @@ import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
-import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
 import { V2ProjectContextType } from 'contexts/v2/projectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useNameOfERC20 from 'hooks/NameOfERC20'
@@ -25,8 +24,7 @@ import useProjectTokenTotalSupply from 'hooks/v2/contractReader/ProjectTokenTota
 import useTerminalCurrentOverflow from 'hooks/v2/contractReader/TerminalCurrentOverflow'
 import useUsedDistributionLimit from 'hooks/v2/contractReader/UsedDistributionLimit'
 import { useVeNftContractForProject } from 'hooks/veNft/VeNftContractForProject'
-import { first } from 'lodash'
-import { ProjectMetadataV4 } from 'models/project-metadata'
+import first from 'lodash/first'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { useMemo } from 'react'
 import { CIDsOfNftRewardTiersResponse } from 'utils/nftRewards'
@@ -67,13 +65,7 @@ const useBalanceInDistributionLimitCurrency = ({
   }, [ETHBalance, ETHBalanceLoading, converter, distributionLimitCurrency])
 }
 
-export function useV2ProjectState({
-  projectId,
-  metadata: projectMetadata,
-}: {
-  projectId: number
-  metadata: ProjectMetadataV4
-}) {
+export function useV2ProjectState({ projectId }: { projectId: number }) {
   /**
    * Load additional project metadata
    */
@@ -81,9 +73,6 @@ export function useV2ProjectState({
     projectId,
   })
   const { data: projectOwnerAddress } = useProjectOwner(projectId)
-  const isArchived = projectId
-    ? V2ArchivedProjectIds.includes(projectId) || projectMetadata?.archived
-    : false
 
   /**
    * Load project stats
@@ -208,8 +197,6 @@ export function useV2ProjectState({
     projectId,
     handle,
     projectOwnerAddress,
-    projectMetadata,
-    isArchived,
 
     // stats
     createdAt,

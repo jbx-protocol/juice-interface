@@ -3,6 +3,7 @@ import ProjectDetailsForm, {
   ProjectDetailsFormFields,
 } from 'components/forms/ProjectDetailsForm'
 import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useEditV2ProjectDetailsTx } from 'hooks/v2/transactor/EditV2ProjectDetailsTx'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
@@ -13,7 +14,8 @@ export function V2ProjectDetailsSettingsPage() {
   const [projectForm] = useForm<ProjectDetailsFormFields>()
 
   const [loadingSaveChanges, setLoadingSaveChanges] = useState<boolean>()
-  const { projectMetadata, projectId } = useContext(V2ProjectContext)
+  const { projectId } = useContext(V2ProjectContext)
+  const { projectMetadata } = useContext(ProjectMetadataContext)
 
   const EditV2ProjectDetailsTx = useEditV2ProjectDetailsTx()
 

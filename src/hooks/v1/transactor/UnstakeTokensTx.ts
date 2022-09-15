@@ -6,6 +6,7 @@ import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 
 import { TransactorInstance } from 'hooks/Transactor'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export function useUnstakeTokensTx(): TransactorInstance<{
   unstakeAmount: BigNumber
@@ -30,7 +31,10 @@ export function useUnstakeTokensTx(): TransactorInstance<{
       ],
       {
         ...txOpts,
-        title: tokenSymbol ? t`Unstake $${tokenSymbol}` : t`Unstake tokens`,
+        title: t`Unstake ${tokenSymbolText({
+          tokenSymbol,
+          plural: true,
+        })}`,
       },
     )
   }

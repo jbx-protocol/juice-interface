@@ -6,6 +6,7 @@ import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 
 import { TransactorInstance } from 'hooks/Transactor'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export function useRedeemTokensTx(): TransactorInstance<{
   redeemAmount: BigNumber
@@ -43,7 +44,10 @@ export function useRedeemTokensTx(): TransactorInstance<{
       ],
       {
         ...txOpts,
-        title: tokenSymbol ? t`Redeem $${tokenSymbol}` : t`Redeem tokens`,
+        title: t`Redeem ${tokenSymbolText({
+          tokenSymbol,
+          plural: true,
+        })}`,
       },
     )
   }

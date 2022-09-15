@@ -6,6 +6,7 @@ import { onCatch, TransactorInstance } from 'hooks/Transactor'
 import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export function useClaimTokensTx(): TransactorInstance<{
   claimAmount: BigNumber
@@ -25,7 +26,10 @@ export function useClaimTokensTx(): TransactorInstance<{
         [userAddress, projectId, claimAmount.toHexString()],
         {
           ...txOpts,
-          title: tokenSymbol ? t`Claim $${tokenSymbol}` : t`Claim tokens`,
+          title: t`Claim ${tokenSymbolText({
+            tokenSymbol,
+            plural: true,
+          })}`,
         },
       )
     } catch {

@@ -4,6 +4,7 @@ import { V2UserContext } from 'contexts/v2/userContext'
 import { useContext } from 'react'
 
 import { TransactorInstance } from 'hooks/Transactor'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 type DistributeReserveTokensTx = TransactorInstance<{
   memo?: string
@@ -25,9 +26,10 @@ export function useDistributeReservedTokens(): DistributeReserveTokensTx {
       [projectId, memo],
       {
         ...txOpts,
-        title: tokenSymbol
-          ? t`Distribute reserved $${tokenSymbol}`
-          : t`Distribute reserved tokens`,
+        title: t`Distribute reserved ${tokenSymbolText({
+          tokenSymbol,
+          plural: true,
+        })}`,
       },
     )
   }

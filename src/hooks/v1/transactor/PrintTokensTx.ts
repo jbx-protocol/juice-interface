@@ -7,6 +7,7 @@ import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext } from 'react'
 
 import { TransactorInstance } from 'hooks/Transactor'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export function usePrintTokensTx(): TransactorInstance<{
   value: BigNumber
@@ -55,7 +56,10 @@ export function usePrintTokensTx(): TransactorInstance<{
 
     return transactor(terminalContract, functionName, args, {
       ...txOpts,
-      title: tokenSymbol ? t`Mint $${tokenSymbol}` : t`Mint tokens`,
+      title: t`Mint ${tokenSymbolText({
+        tokenSymbol,
+        plural: true,
+      })}`,
     })
   }
 }

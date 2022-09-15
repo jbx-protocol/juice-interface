@@ -9,6 +9,7 @@ import { V2UserContext } from 'contexts/v2/userContext'
 import { t } from '@lingui/macro'
 import { onCatch, TransactorInstance } from 'hooks/Transactor'
 import invariant from 'tiny-invariant'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 const DEFAULT_METADATA = 0
 
@@ -44,7 +45,10 @@ export function useRedeemTokensTx(): TransactorInstance<{
         ],
         {
           ...txOpts,
-          title: tokenSymbol ? t`Redeem $${tokenSymbol}` : t`Redeem tokens`,
+          title: t`Redeem ${tokenSymbolText({
+            tokenSymbol,
+            plural: true,
+          })}`,
         },
       )
     } catch {

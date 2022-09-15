@@ -6,6 +6,7 @@ import { useContext } from 'react'
 
 import { onCatch, TransactorInstance } from 'hooks/Transactor'
 import invariant from 'tiny-invariant'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export function useMintTokensTx(): TransactorInstance<{
   value: BigNumber
@@ -36,7 +37,10 @@ export function useMintTokensTx(): TransactorInstance<{
         ],
         {
           ...txOpts,
-          title: tokenSymbol ? t`Mint $${tokenSymbol}` : t`Mint tokens`,
+          title: t`Mint ${tokenSymbolText({
+            tokenSymbol,
+            plural: true,
+          })}`,
         },
       )
     } catch {

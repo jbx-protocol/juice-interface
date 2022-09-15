@@ -1,11 +1,10 @@
 import {
   CaretDownOutlined,
-  CheckCircleOutlined,
   CloseCircleOutlined,
-  ExclamationCircleOutlined,
   ThunderboltOutlined,
 } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
+import TxStatusElem from 'components/TxStatusElem'
 import { ThemeContext } from 'contexts/themeContext'
 import { TxStatus } from 'models/transaction'
 import { CSSProperties, useContext, useEffect, useMemo, useState } from 'react'
@@ -29,25 +28,6 @@ export default function TransactionsList({
     theme: { colors },
   } = useContext(ThemeContext)
   const [isExpanded, setIsExpanded] = useState<boolean>()
-
-  const TxStatusElem = (status: TxStatus) => {
-    switch (status) {
-      case TxStatus.pending:
-        return <Loading size="small" />
-      case TxStatus.success:
-        return (
-          <div style={{ color: colors.icon.success }}>
-            <CheckCircleOutlined />
-          </div>
-        )
-      case TxStatus.failed:
-        return (
-          <div style={{ color: colors.icon.failure }}>
-            <ExclamationCircleOutlined />
-          </div>
-        )
-    }
-  }
 
   const hasPendingTxs = useMemo(
     () => transactions?.some(tx => tx.status === TxStatus.pending),
@@ -135,7 +115,7 @@ export default function TransactionsList({
                         color: colors.text.tertiary,
                       }}
                     >
-                      {TxStatusElem(tx.status)}{' '}
+                      <TxStatusElem status={tx.status} />{' '}
                       {formatHistoricalDate(timestampForTxLog(tx) * 1000)}
                     </div>
                     <div style={{ fontSize: '0.85rem' }}>{tx.title}</div>

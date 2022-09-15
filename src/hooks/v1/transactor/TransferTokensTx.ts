@@ -6,6 +6,7 @@ import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 
 import { TransactorInstance } from 'hooks/Transactor'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export function useTransferTokensTx(): TransactorInstance<{
   amount: BigNumber
@@ -32,9 +33,10 @@ export function useTransferTokensTx(): TransactorInstance<{
       ],
       {
         ...txOpts,
-        title: tokenSymbol
-          ? t`Transfer unclaimed $${tokenSymbol}`
-          : t`Transfer unclaimed tokens`,
+        title: t`Transfer unclaimed ${tokenSymbolText({
+          tokenSymbol,
+          plural: true,
+        })}`,
       },
     )
   }

@@ -5,6 +5,7 @@ import { V1UserContext } from 'contexts/v1/userContext'
 import { useContext } from 'react'
 
 import { TransactorInstance } from 'hooks/Transactor'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export function useDistributeTokensTx(): TransactorInstance {
   const { transactor, contracts } = useContext(V1UserContext)
@@ -24,9 +25,10 @@ export function useDistributeTokensTx(): TransactorInstance {
       [BigNumber.from(projectId).toHexString()],
       {
         ...txOpts,
-        title: tokenSymbol
-          ? t`Distribute reserved $${tokenSymbol}`
-          : t`Distribute reserved tokens`,
+        title: t`Distribute reserved ${tokenSymbolText({
+          tokenSymbol,
+          plural: true,
+        })}`,
       },
     )
   }

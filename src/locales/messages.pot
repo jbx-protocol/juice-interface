@@ -572,10 +572,7 @@ msgstr ""
 msgid "Choose how you would like to configure your payouts."
 msgstr ""
 
-msgid "Claim ${tokenSymbol}"
-msgstr ""
-
-msgid "Claim tokens"
+msgid "Claim {0}"
 msgstr ""
 
 msgid "Claim {tokenTextPlural}"
@@ -899,10 +896,7 @@ msgstr ""
 msgid "Distribute payouts of {projectTitle}"
 msgstr ""
 
-msgid "Distribute reserved ${tokenSymbol}"
-msgstr ""
-
-msgid "Distribute reserved tokens"
+msgid "Distribute reserved {0}"
 msgstr ""
 
 msgid "Distribute reserved {tokenTextPlural}"
@@ -1499,9 +1493,6 @@ msgstr ""
 msgid "Migrate {projectTitle}"
 msgstr ""
 
-msgid "Mint ${tokenSymbol}"
-msgstr ""
-
 msgid "Mint NFT to a custom address"
 msgstr ""
 
@@ -1530,6 +1521,9 @@ msgid "Mint tokens as ERC-20"
 msgstr ""
 
 msgid "Mint tokens to a custom address."
+msgstr ""
+
+msgid "Mint {0}"
 msgstr ""
 
 msgid "Mint {tokensLabel}"
@@ -2042,13 +2036,7 @@ msgstr ""
 msgid "Redeem"
 msgstr ""
 
-msgid "Redeem ${tokenSymbol}"
-msgstr ""
-
 msgid "Redeem successful. Results will be indexed in a few moments."
-msgstr ""
-
-msgid "Redeem tokens"
 msgstr ""
 
 msgid "Redeem veNFT"
@@ -2058,6 +2046,9 @@ msgid "Redeem your tokens for a portion of this project's overflow. The current 
 msgstr ""
 
 msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
+msgstr ""
+
+msgid "Redeem {0}"
 msgstr ""
 
 msgid "Redeem {0} {tokensTextShort} for ETH"
@@ -2741,10 +2732,7 @@ msgstr ""
 msgid "Transfer ownership of {projectTitle}"
 msgstr ""
 
-msgid "Transfer unclaimed ${tokenSymbol}"
-msgstr ""
-
-msgid "Transfer unclaimed tokens"
+msgid "Transfer unclaimed {0}"
 msgstr ""
 
 msgid "Transfer unclaimed {tokenSymbolShort}"
@@ -2798,10 +2786,7 @@ msgstr ""
 msgid "Unsaved changes"
 msgstr ""
 
-msgid "Unstake ${tokenSymbol}"
-msgstr ""
-
-msgid "Unstake tokens"
+msgid "Unstake {0}"
 msgstr ""
 
 msgid "Untitled project"

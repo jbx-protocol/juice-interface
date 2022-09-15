@@ -169,3 +169,16 @@
 .ant-collapse-header-text {
   width: 100%;
 }
+
+// Create flow collapse styling
+.create-collapse {
+  .ant-collapse-header {
+    padding-left: 0 !important;
+    border-bottom: solid 1px var(--stroke-tertiary);
+  }
+
+  .ant-collapse-content-box {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}

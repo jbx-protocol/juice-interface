@@ -37,6 +37,7 @@ import {
   DISCOUNT_RATE_EXPLANATION,
   REDEMPTION_RATE_EXPLANATION,
 } from './settingExplanations'
+import ETHToUSD from 'components/currency/ETHToUSD'
 
 export default function FundingCycleDetails({
   fundingCycle,
@@ -74,6 +75,10 @@ export default function FundingCycleDetails({
     capitalize: false,
     plural: true,
   })
+
+  const currency = V2CurrencyName(
+    distributionLimitCurrency?.toNumber() as V2CurrencyOption | undefined,
+  )
 
   const ReservedTokensText = () => {
     const reservedRate = formattedNum(
@@ -134,14 +139,19 @@ export default function FundingCycleDetails({
       >
         <Descriptions.Item label={<Trans>Distribution limit</Trans>}>
           <span style={{ whiteSpace: 'nowrap' }}>
-            <DistributionLimit
-              distributionLimit={distributionLimit}
-              currencyName={V2CurrencyName(
-                distributionLimitCurrency?.toNumber() as
-                  | V2CurrencyOption
-                  | undefined,
-              )}
-            />
+            <Tooltip
+              title={
+                currency === 'ETH' && distributionLimit?.gt(0) ? (
+                  <ETHToUSD ethAmount={distributionLimit} />
+                ) : undefined
+              }
+            >
+              {''}
+              <DistributionLimit
+                distributionLimit={distributionLimit}
+                currencyName={currency}
+              />
+            </Tooltip>
           </span>
         </Descriptions.Item>
 

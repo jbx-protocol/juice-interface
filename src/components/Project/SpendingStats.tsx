@@ -51,8 +51,8 @@ export default function SpendingStats({
       <div>
         <Tooltip
           title={
-            currency === 'ETH' ? (
-              <ETHToUSD ethAmount={distributableAmount ?? ''} />
+            currency === 'ETH' && distributableAmount?.gt(0) ? (
+              <ETHToUSD ethAmount={distributableAmount} />
             ) : undefined
           }
         >

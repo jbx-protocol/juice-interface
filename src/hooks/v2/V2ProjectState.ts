@@ -1,5 +1,4 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import * as constants from '@ethersproject/constants'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
@@ -7,11 +6,9 @@ import {
 import { V2ProjectContextType } from 'contexts/v2/projectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useNameOfERC20 from 'hooks/NameOfERC20'
-import useNftRewards from 'hooks/NftRewards'
 import { useProjectsQuery } from 'hooks/Projects'
 import useSymbolOfERC20 from 'hooks/SymbolOfERC20'
 import { useBallotState } from 'hooks/v2/contractReader/BallotState'
-import { useNftRewardTiersOf } from 'hooks/v2/contractReader/NftRewardTiersOf'
 import { usePaymentTerminalBalance } from 'hooks/v2/contractReader/PaymentTerminalBalance'
 import useProjectCurrentFundingCycle from 'hooks/v2/contractReader/ProjectCurrentFundingCycle'
 import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
@@ -27,7 +24,6 @@ import { useVeNftContractForProject } from 'hooks/veNft/VeNftContractForProject'
 import first from 'lodash/first'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { useMemo } from 'react'
-import { CIDsOfNftRewardTiersResponse } from 'utils/nftRewards'
 import { NO_CURRENCY, V2CurrencyName, V2_CURRENCY_ETH } from 'utils/v2/currency'
 
 const useBalanceInDistributionLimitCurrency = ({
@@ -163,27 +159,6 @@ export function useV2ProjectState({ projectId }: { projectId: number }) {
   const { data: totalTokenSupply } = useProjectTokenTotalSupply(projectId)
 
   /**
-   * Load NFT Rewards data
-   */
-  const { data: nftRewardTiersResponse, loading: nftRewardsCIDsLoading } =
-    useNftRewardTiersOf(fundingCycleMetadata?.dataSource)
-  let nftRewardsCIDs: string[] = []
-  if (nftRewardTiersResponse) {
-    nftRewardsCIDs = CIDsOfNftRewardTiersResponse(nftRewardTiersResponse)
-  }
-  const { data: nftRewardTiers, isLoading: nftRewardTiersLoading } =
-    useNftRewards(nftRewardTiersResponse ?? [])
-  // Assumes having `dataSource` means there are NFTs initially
-  // In worst case, if has `dataSource` but isn't for NFTs:
-  //    - loading will be true briefly
-  //    - will resolve false when `useNftRewardTiersOf` fails
-  const nftsLoading = Boolean(
-    fundingCycleMetadata?.dataSource &&
-      fundingCycleMetadata.dataSource !== constants.AddressZero &&
-      (nftRewardTiersLoading || nftRewardsCIDsLoading),
-  )
-
-  /**
    * Load veNFT data
    */
   const { data: veNftInfo } = useVeNftContractForProject(projectId)
@@ -228,13 +203,6 @@ export function useV2ProjectState({ projectId }: { projectId: number }) {
     tokenSymbol,
     tokenName,
     totalTokenSupply,
-
-    // NFT Rewards data
-    nftRewards: {
-      CIDs: nftRewardsCIDs,
-      rewardTiers: nftRewardTiers ?? [],
-      loading: nftsLoading,
-    },
 
     // veNFT data
     veNft: {

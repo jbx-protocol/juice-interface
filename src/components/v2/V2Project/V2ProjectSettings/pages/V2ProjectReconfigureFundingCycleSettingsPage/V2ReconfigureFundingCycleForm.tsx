@@ -6,6 +6,7 @@ import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
 import FundingDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/FundingDrawer'
 import RulesDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/RulesDrawer'
 import TokenDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/TokenDrawer'
+import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useContext, useState } from 'react'
@@ -64,10 +65,10 @@ export function V2ReconfigureFundingCycleForm() {
     editingProjectData,
     initialEditingData,
   })
+  const { fundingCycleMetadata } = useContext(V2ProjectContext)
   const {
-    fundingCycleMetadata,
     nftRewards: { CIDs: nftRewardsCids },
-  } = useContext(V2ProjectContext)
+  } = useContext(NftRewardsContext)
 
   const { reconfigureLoading, reconfigureFundingCycle } =
     useReconfigureFundingCycle({ editingProjectData, memo })

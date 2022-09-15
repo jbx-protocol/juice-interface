@@ -2,7 +2,6 @@ import { t, Trans } from '@lingui/macro'
 import { Col, Row } from 'antd'
 import SectionHeader from 'components/SectionHeader'
 import { ThemeContext } from 'contexts/themeContext'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useMobile from 'hooks/Mobile'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useContext, useEffect, useState } from 'react'
@@ -10,6 +9,7 @@ import { featureFlagEnabled } from 'utils/featureFlags'
 import { getNftRewardTier, MAX_NFT_REWARD_TIERS } from 'utils/nftRewards'
 
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { RewardTier } from './RewardTier'
 
 export function NftRewardsSection({
@@ -22,14 +22,13 @@ export function NftRewardsSection({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-
   const {
     nftRewards: { CIDs, rewardTiers, loading: nftsLoading },
-  } = useContext(V2ProjectContext)
-
-  const isMobile = useMobile()
+  } = useContext(NftRewardsContext)
 
   const [selectedIndex, setSelectedIndex] = useState<number>()
+
+  const isMobile = useMobile()
 
   useEffect(() => {
     if (!rewardTiers) return

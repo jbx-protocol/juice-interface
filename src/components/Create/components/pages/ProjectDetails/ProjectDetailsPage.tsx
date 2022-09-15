@@ -12,7 +12,12 @@ export const ProjectDetailsPage: React.FC = () => {
   const formProps = useProjectDetailsForm()
 
   const validator = useCallback(
-    async () => await formProps.form.validateFields(),
+    async () =>
+      await formProps.form.validateFields().catch(e => {
+        const namePath = e?.errorFields?.[0]?.name
+        formProps.form.scrollToField(namePath)
+        throw e
+      }),
     [formProps.form],
   )
 

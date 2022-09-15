@@ -1,15 +1,27 @@
 import { Divider, Space } from 'antd'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { readNetwork } from 'constants/networks'
+import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { VeNftContext } from 'contexts/veNftContext'
+import { VeNftProvider } from 'providers/v2/VeNftProvider'
 import { useContext } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { SnapshotSettingsSection } from './SnapshotSettingsSection'
 import VeNftEnableSection from './VeNftEnableSection'
 import VeNftSetUnclaimedTokensPermissionSection from './VeNftSetUnclaimedTokensPermissionSection'
 
-export function GovernanceSettingsPage() {
+const VeNftSections = () => {
   const { contractAddress: veNftContractAddress } = useContext(VeNftContext)
+  return (
+    <>
+      <VeNftEnableSection />
+      {veNftContractAddress && <VeNftSetUnclaimedTokensPermissionSection />}
+    </>
+  )
+}
+
+export function GovernanceSettingsPage() {
+  const { projectId } = useContext(V2ProjectContext)
 
   return (
     <div>
@@ -18,11 +30,10 @@ export function GovernanceSettingsPage() {
 
         {featureFlagEnabled(FEATURE_FLAGS.VENFT) && (
           <>
-            <Divider />
-            <VeNftEnableSection />
-            {veNftContractAddress && (
-              <VeNftSetUnclaimedTokensPermissionSection />
-            )}
+            <VeNftProvider projectId={projectId}>
+              <Divider />
+              <VeNftSections />
+            </VeNftProvider>
           </>
         )}
       </Space>

@@ -6,7 +6,7 @@ import { PropsWithChildren } from 'react'
 export function VeNftProvider({
   projectId,
   children,
-}: PropsWithChildren<{ projectId: number }>) {
+}: PropsWithChildren<{ projectId: number | undefined }>) {
   const { data: veNftInfo } = useVeNftContractForProject(projectId)
   const contractAddress = first(veNftInfo)?.address
 

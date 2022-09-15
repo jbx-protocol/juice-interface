@@ -1649,6 +1649,12 @@ msgstr ""
 msgid "Pay"
 msgstr ""
 
+msgid "Pay Button Text"
+msgstr ""
+
+msgid "Pay Disclosure"
+msgstr ""
+
 msgid "Pay amount"
 msgstr ""
 
@@ -1760,10 +1766,19 @@ msgstr ""
 msgid "Project Created"
 msgstr ""
 
+msgid "Project Description"
+msgstr ""
+
 msgid "Project Handle"
 msgstr ""
 
 msgid "Project ID must be a number."
+msgstr ""
+
+msgid "Project Links"
+msgstr ""
+
+msgid "Project Name"
 msgstr ""
 
 msgid "Project Settings"
@@ -3114,6 +3129,9 @@ msgid "{formattedTimeLeft} left"
 msgstr ""
 
 msgid "{formattedTimeLeft} until #{0}"
+msgstr ""
+
+msgid "{header} <0>(Optional)</0>"
 msgstr ""
 
 msgid "{inflationRate} tokens / ETH"

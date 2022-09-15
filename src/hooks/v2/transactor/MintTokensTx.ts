@@ -3,7 +3,8 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { useContext } from 'react'
 
-import { TransactorInstance } from 'hooks/Transactor'
+import { onCatch, TransactorInstance } from 'hooks/Transactor'
+import invariant from 'tiny-invariant'
 
 export function useMintTokensTx(): TransactorInstance<{
   value: BigNumber
@@ -11,7 +12,7 @@ export function useMintTokensTx(): TransactorInstance<{
   preferClaimed: boolean
   memo: string
 }> {
-  const { transactor, contracts } = useContext(V2UserContext)
+  const { transactor, contracts, version } = useContext(V2UserContext)
   const { projectId } = useContext(V2ProjectContext)
 
   // TODO new V2 feature:
@@ -19,22 +20,36 @@ export function useMintTokensTx(): TransactorInstance<{
   const reservedRate = true
 
   return ({ value, beneficiary, preferClaimed, memo }, txOpts) => {
-    if (!transactor || !contracts || !projectId) {
-      txOpts?.onDone?.()
-      return Promise.resolve(false)
+    try {
+      invariant(transactor && projectId && contracts)
+      return transactor(
+        contracts?.JBController,
+        'mintTokensOf',
+        [
+          projectId,
+          value.toHexString(),
+          beneficiary,
+          memo ?? '',
+          preferClaimed,
+          reservedRate,
+        ],
+        txOpts,
+      )
+    } catch {
+      const missingParam = !transactor
+        ? 'transactor'
+        : !contracts
+        ? 'contracts'
+        : !projectId
+        ? 'projectId'
+        : undefined
+
+      return onCatch({
+        txOpts,
+        missingParam,
+        functionName: 'mintTokensOf',
+        version,
+      })
     }
-
-    const contract = contracts.JBController
-    const functionName = 'mintTokensOf'
-    const args = [
-      projectId,
-      value.toHexString(),
-      beneficiary,
-      memo ?? '',
-      preferClaimed,
-      reservedRate,
-    ]
-
-    return transactor(contract, functionName, args, txOpts)
   }
 }

@@ -10,16 +10,19 @@ import {
 import { goerliPublicResolver } from 'constants/contracts/goerli/PublicResolver'
 import { mainnetPublicResolver } from 'constants/contracts/mainnet/PublicResolver'
 import { rinkebyPublicResolver } from 'constants/contracts/rinkeby/PublicResolver'
+import { CV_V2 } from 'constants/cv'
 import { NETWORKS_BY_NAME } from 'constants/networks'
 import {
   VENFT_DEPLOYER_ADDRESS,
   VENFT_RESOLVER_ADDRESS,
 } from 'constants/veNft/veNftProject'
+import { V2CVType, V3CVType } from 'models/cv'
 
 export const loadV2V3Contract = async (
   contractName: V2V3ContractName,
   network: NetworkName,
   signerOrProvider: SignerOrProvider,
+  version: V2CVType | V3CVType,
 ): Promise<Contract | undefined> => {
   let contractJson: { abi: ContractInterface; address: string } | undefined =
     undefined
@@ -41,7 +44,10 @@ export const loadV2V3Contract = async (
   } else if (contractName === V2V3ContractName.JBVeTokenUriResolver) {
     contractJson = await loadVeTokenUriResolver()
   } else {
-    contractJson = await loadJuiceboxV2Contract(contractName, network)
+    contractJson =
+      version === CV_V2
+        ? await loadJuiceboxV2Contract(contractName, network)
+        : await loadJuiceboxV3Contract(contractName, network)
   }
 
   if (!contractJson) {
@@ -110,6 +116,17 @@ const loadJuiceboxV2Contract = async (
   const filename = contractOverride?.filename ?? contractName
   return await import(
     `@jbx-protocol/contracts-v2-${version}/deployments/${network}/${filename}.json`
+  )
+}
+
+const loadJuiceboxV3Contract = async (
+  contractName: V2V3ContractName,
+  network: NetworkName,
+) => {
+  const contractOverride = CONTRACT_ABI_OVERRIDES[contractName]
+  const filename = contractOverride?.filename ?? contractName
+  return await import(
+    `@jbx-protocol/juice-contracts-v3/deployments/${network}/${filename}.json`
   )
 }
 

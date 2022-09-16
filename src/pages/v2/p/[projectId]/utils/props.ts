@@ -1,3 +1,4 @@
+import { CV_V2 } from 'constants/cv'
 import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
@@ -18,6 +19,7 @@ async function getMetadataCidFromContract(projectId: number) {
     V2V3ContractName.JBProjects,
     network,
     readProvider,
+    CV_V2, // TODO check this
   )
   if (!contract) {
     throw new Error(`contract not found ${V2V3ContractName.JBProjects}`)

@@ -2642,9 +2642,6 @@ msgstr ""
 msgid "This project reserves some of the newly minted tokens for itself."
 msgstr ""
 
-msgid "This project uses the V2 version of the Juicebox contracts."
-msgstr ""
-
 msgid "This project's balance in the Juicebox contract."
 msgstr ""
 

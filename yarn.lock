@@ -3916,6 +3916,11 @@
   resolved "https://registry.yarnpkg.com/@jbx-protocol/contracts-v2/-/contracts-v2-8.0.0.tgz#25aee5766716947beb37ad08cdb3d30463a4b988"
   integrity sha512-0yFuhZBVHg+CGHNe9vPjbdSAhQSXVhFOQficc5ed1yzdG8ZaBSKg9ZdC351hJD7w7Mp9Vhf/0gh3ErYAv2OQqw==
 
+"@jbx-protocol/juice-contracts-v3@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-contracts-v3/-/juice-contracts-v3-2.0.0.tgz#57943e36f5c7c7e6d9a03892e3d0e48bd90530d4"
+  integrity sha512-79pIQgiCKOE/RuIWtSN5qldnz/vBBnzQjbwQO9KxRXaafw7B/dDvS4eGG32RKa9G3FmU/Yd6Ub57OesncvBNDw==
+
 "@jbx-protocol/juice-nft-rewards@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-nft-rewards/-/juice-nft-rewards-4.0.0.tgz#d9e1a3924b035d80ff55b978c964f4dc2d25fb2c"

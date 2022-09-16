@@ -23,7 +23,7 @@ export function useV2V3ContractLoader({ cv }: { cv: V2CVType | V3CVType }) {
 
         const contractLoaders = await Promise.all(
           Object.values(V2V3ContractName).map(contractName =>
-            loadV2V3Contract(contractName, network, signerOrProvider),
+            loadV2V3Contract(contractName, network, signerOrProvider, cv),
           ),
         )
 

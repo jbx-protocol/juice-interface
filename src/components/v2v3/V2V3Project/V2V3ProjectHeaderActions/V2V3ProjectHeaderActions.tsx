@@ -1,7 +1,6 @@
 import { SettingOutlined, SmileOutlined, ToolOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
 import { Button, Space, Tooltip } from 'antd'
-import ProjectVersionBadge from 'components/ProjectVersionBadge'
 import { V2V3ProjectToolsDrawer } from 'components/v2v3/V2V3Project/V2V3ProjectToolsDrawer/V2V3ProjectToolsDrawer'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
@@ -11,8 +10,9 @@ import { V2OperatorPermission } from 'models/v2v3/permissions'
 import Link from 'next/link'
 import { useContext, useState } from 'react'
 import { settingsPagePath, veNftPagePath } from 'utils/routes'
+import { ContractVersionSelect } from './ContractVersionSelect'
 
-export default function V2V3ProjectHeaderActions() {
+export function V2V3ProjectHeaderActions() {
   const { handle } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
   const { contractAddress: veNftContractAddress } = useContext(VeNftContext)
@@ -32,11 +32,8 @@ export default function V2V3ProjectHeaderActions() {
           alignItems: 'center',
         }}
       >
-        <Tooltip
-          title={t`This project uses the V2 version of the Juicebox contracts.`}
-        >
-          <ProjectVersionBadge versionText="V2" />
-        </Tooltip>
+        <ContractVersionSelect />
+
         <div
           style={{
             display: 'flex',

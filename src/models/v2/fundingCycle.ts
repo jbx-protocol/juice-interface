@@ -1,20 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 
-export type V2FundingCycleData = {
-  duration: BigNumber
-  weight: BigNumber
-  discountRate: BigNumber
-  ballot: string // hex, contract address
-}
-
-export type V2FundingCycleMetadataGlobal = {
-  allowSetController: boolean
-  allowSetTerminals: boolean
-}
-
-export type V2FundingCycleMetadata = {
+export type BaseV2FundingCycleMetadata = {
   version?: number
-  global: V2FundingCycleMetadataGlobal
   reservedRate: BigNumber
   redemptionRate: BigNumber
   ballotRedemptionRate: BigNumber
@@ -23,7 +10,6 @@ export type V2FundingCycleMetadata = {
   pauseRedeem: boolean
   pauseBurn: boolean
   allowMinting: boolean
-  allowChangeToken: boolean
   allowTerminalMigration: boolean
   allowControllerMigration: boolean
   holdFees: boolean
@@ -33,7 +19,7 @@ export type V2FundingCycleMetadata = {
   dataSource: string // hex, contract address
 }
 
-export type V2FundAccessConstraint = {
+export type V2V3FundAccessConstraint = {
   terminal: string // address probably
   token: string // address
   distributionLimit: BigNumber
@@ -42,7 +28,19 @@ export type V2FundAccessConstraint = {
   overflowAllowanceCurrency: BigNumber
 }
 
-export type V2FundingCycle = V2FundingCycleData & {
+export type V2FundingCycleMetadataGlobal = {
+  allowSetController: boolean
+  allowSetTerminals: boolean
+}
+
+export type V2V3FundingCycleData = {
+  duration: BigNumber
+  weight: BigNumber
+  discountRate: BigNumber
+  ballot: string // hex, contract address
+}
+
+export type V2V3FundingCycle = V2V3FundingCycleData & {
   number: BigNumber
   configuration: BigNumber
   basedOn: BigNumber
@@ -54,4 +52,9 @@ export enum BallotState {
   'active',
   'approved',
   'failed',
+}
+
+export type V2FundingCycleMetadata = BaseV2FundingCycleMetadata & {
+  global: V2FundingCycleMetadataGlobal
+  allowChangeToken: boolean
 }

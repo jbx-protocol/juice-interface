@@ -164,13 +164,20 @@ textarea.ant-input::placeholder {
 
 .ant-select {
   .ant-select-selector {
-    background-color: transparent !important;
+    background-color: transparent;
     color: var(--text-primary);
-    border-color: var(--stroke-secondary) !important;
+    border-color: var(--stroke-secondary);
   }
 
   .ant-select-arrow {
     color: var(--text-primary);
+  }
+}
+
+.ant-select-color-secondary {
+  .ant-select-selector,
+  .ant-select-arrow {
+    color: var(--text-secondary);
   }
 }
 

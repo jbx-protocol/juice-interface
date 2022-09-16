@@ -4,14 +4,14 @@ import { Trans } from '@lingui/macro'
 import { Button, FormInstance } from 'antd'
 import {
   useAppSelector,
-  useEditingV2FundAccessConstraintsSelector,
-  useEditingV2FundingCycleDataSelector,
   useEditingV2FundingCycleMetadataSelector,
+  useEditingV2V3FundAccessConstraintsSelector,
+  useEditingV2V3FundingCycleDataSelector,
 } from 'hooks/AppSelector'
 import {
   TxNftArg,
   useLaunchProjectWithNftsTx,
-} from 'hooks/v2/transactor/LaunchProjectWithNftsTx'
+} from 'hooks/v2v3/transactor/LaunchProjectWithNftsTx'
 import { useCallback, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
@@ -81,8 +81,8 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
     },
   } = useAppSelector(state => state.editingV2Project)
   const fundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
-  const fundingCycleData = useEditingV2FundingCycleDataSelector()
-  const fundAccessConstraints = useEditingV2FundAccessConstraintsSelector()
+  const fundingCycleData = useEditingV2V3FundingCycleDataSelector()
+  const fundAccessConstraints = useEditingV2V3FundAccessConstraintsSelector()
   const dispatch = useAppDispatch()
 
   const deployProject = useCallback(async () => {

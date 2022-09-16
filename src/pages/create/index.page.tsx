@@ -6,8 +6,8 @@ import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
 import Head from 'next/head'
 import { TransactionProvider } from 'providers/TransactionProvider'
-import { V2ContractsProvider } from 'providers/v2/V2ContractsProvider'
-import { V2CurrencyProvider } from 'providers/v2/V2CurrencyProvider'
+import { V2V3ContractsProvider } from 'providers/v2v3/V2V3ContractsProvider'
+import { V2V3CurrencyProvider } from 'providers/v2v3/V2V3CurrencyProvider'
 import { useContext, useState } from 'react'
 import { scrollToTop } from 'utils/windowUtils'
 
@@ -63,9 +63,9 @@ function V2Create() {
   const isMobile = useMobile()
 
   return (
-    <V2ContractsProvider>
+    <V2V3ContractsProvider>
       <TransactionProvider>
-        <V2CurrencyProvider>
+        <V2V3CurrencyProvider>
           <div
             style={{
               maxWidth: 1200,
@@ -103,8 +103,8 @@ function V2Create() {
               ))}
             </Tabs>
           </div>
-        </V2CurrencyProvider>
+        </V2V3CurrencyProvider>
       </TransactionProvider>
-    </V2ContractsProvider>
+    </V2V3ContractsProvider>
   )
 }

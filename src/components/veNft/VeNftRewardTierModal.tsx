@@ -4,7 +4,7 @@ import { useForm } from 'antd/lib/form/Form'
 import { ModalMode } from 'components/formItems/formHelpers'
 import TooltipLabel from 'components/TooltipLabel'
 
-import NftUpload from 'components/v2/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload'
+import NftUpload from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload'
 import { VeNftVariant } from 'models/veNft'
 import { useEffect } from 'react'
 

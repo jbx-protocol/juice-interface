@@ -11,7 +11,7 @@ import {
   formatSplitPercent,
   splitPercentFrom,
   SPLITS_TOTAL_PERCENT,
-} from './v2/math'
+} from './v2v3/math'
 
 export const toSplit = (mod: PayoutMod): Split => {
   return {

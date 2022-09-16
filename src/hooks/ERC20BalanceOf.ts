@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { useErc20Contract } from 'hooks/Erc20Contract'
 import { bigNumbersDiff } from 'utils/bigNumbers'
 
-import useContractReader from './v2/contractReader/V2ContractReader'
+import useContractReader from './v2v3/contractReader/V2ContractReader'
 
 /** Returns ERC20 balance of `wallet`. Pass arguments for `projectId` and `terminalName` if the ERC20 is a project token, to update the returned value when relevant on-chain events are emitted. */
 export default function useERC20BalanceOf(

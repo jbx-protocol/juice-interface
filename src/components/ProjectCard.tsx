@@ -19,7 +19,7 @@ import { v2ProjectRoute } from 'utils/routes'
 
 import { CV_V1, CV_V1_1, CV_V2 } from 'constants/cv'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
-import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
+import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
 import ETHAmount from './currency/ETHAmount'
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'

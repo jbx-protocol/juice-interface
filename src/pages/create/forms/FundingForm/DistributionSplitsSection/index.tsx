@@ -3,7 +3,7 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Form, Radio, Space } from 'antd'
 import { FormItemExt } from 'components/formItems/formItemExt'
 import TooltipIcon from 'components/TooltipIcon'
-import DistributionLimit from 'components/v2/shared/DistributionLimit'
+import DistributionLimit from 'components/v2v3/shared/DistributionLimit'
 import { CurrencyName } from 'constants/currency'
 import { ThemeContext } from 'contexts/themeContext'
 import { useWallet } from 'hooks/Wallet'
@@ -18,8 +18,8 @@ import {
   adjustedSplitPercents,
   getNewDistributionLimit,
   getTotalSplitsPercentage,
-} from 'utils/v2/distributions'
-import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2/math'
+} from 'utils/v2v3/distributions'
+import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2v3/math'
 import DistributionSplitCard from './DistributionSplitCard'
 import { DistributionSplitModal } from './DistributionSplitModal'
 import { PayoutConfigurationExplainerCollapse } from './PayoutConfigurationExplainerCollapse'

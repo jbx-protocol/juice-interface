@@ -18,9 +18,9 @@ export function useRedeemTokensTx(): TransactorInstance<{
   minReturnedTokens: BigNumber
   memo: string
 }> {
-  const { transactor, contracts, version } = useContext(V2UserContext)
+  const { transactor, contracts } = useContext(V2UserContext)
   const { userAddress } = useWallet()
-  const { projectId, tokenSymbol } = useContext(V2ProjectContext)
+  const { projectId, tokenSymbol, cv } = useContext(V2ProjectContext)
 
   return ({ redeemAmount, minReturnedTokens, memo }, txOpts) => {
     try {
@@ -66,7 +66,7 @@ export function useRedeemTokensTx(): TransactorInstance<{
         txOpts,
         missingParam,
         functionName: 'redeemTokensOf',
-        version,
+        cv,
       })
     }
   }

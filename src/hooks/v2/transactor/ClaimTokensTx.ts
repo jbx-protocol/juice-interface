@@ -11,9 +11,9 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 export function useClaimTokensTx(): TransactorInstance<{
   claimAmount: BigNumber
 }> {
-  const { transactor, contracts, version } = useContext(V2UserContext)
+  const { transactor, contracts } = useContext(V2UserContext)
   const { userAddress } = useWallet()
-  const { projectId, tokenSymbol } = useContext(V2ProjectContext)
+  const { projectId, tokenSymbol, cv } = useContext(V2ProjectContext)
 
   return ({ claimAmount }, txOpts) => {
     try {
@@ -47,7 +47,7 @@ export function useClaimTokensTx(): TransactorInstance<{
         txOpts,
         missingParam,
         functionName: 'claimFor',
-        version,
+        cv,
       })
     }
   }

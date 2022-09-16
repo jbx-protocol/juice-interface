@@ -3,13 +3,14 @@ import { Modal } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import { emitErrorNotification } from 'utils/notifications'
 
-import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { querySubgraphExhaustive } from 'utils/graph'
 
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import { CV_V2 } from 'constants/cv'
 import { readProvider } from 'constants/readProvider'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { downloadCsvFile } from 'utils/csv'
 
 export default function V2DownloadPaymentsModal({
@@ -22,7 +23,7 @@ export default function V2DownloadPaymentsModal({
   const [latestBlockNumber, setLatestBlockNumber] = useState<number>()
   const [blockNumber, setBlockNumber] = useState<number>()
   const [loading, setLoading] = useState<boolean>()
-  const { projectId, cv } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   useEffect(() => {
     readProvider.getBlockNumber().then(val => {
@@ -56,7 +57,7 @@ export default function V2DownloadPaymentsModal({
           },
           {
             key: 'cv',
-            value: cv,
+            value: CV_V2,
           },
         ],
       })
@@ -84,7 +85,7 @@ export default function V2DownloadPaymentsModal({
       console.error('Error downloading payments', e)
       setLoading(false)
     }
-  }, [projectId, cv, setLoading, blockNumber])
+  }, [projectId, setLoading, blockNumber])
 
   return (
     <Modal

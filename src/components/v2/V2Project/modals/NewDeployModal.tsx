@@ -11,6 +11,7 @@ import { ThemeContext } from 'contexts/themeContext'
 
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import Link from 'next/link'
 import { settingsPagePath } from 'utils/routes'
 import { LaunchProjectPayerModal } from './LaunchProjectPayerModal'
@@ -22,10 +23,11 @@ export default function NewDeployModal({
   visible: boolean
   onClose: VoidFunction
 }) {
-  const { handle, projectId } = useContext(V2ProjectContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const { handle } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const [issueTokenModalVisible, setIssueTokenModalVisible] =
     useState<boolean>(false)

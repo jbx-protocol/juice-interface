@@ -5,7 +5,6 @@ import { Button, Modal, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import ERC20TokenBalance from 'components/ERC20TokenBalance'
 import { V2ProjectTokenBalance } from 'components/v2/V2Project/modals/V2BalancesModal/V2ProjectTokenBalance'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { ProjectMetadataV4 } from 'models/project-metadata'
 import { TokenRef } from 'models/token-ref'
@@ -15,7 +14,9 @@ import { revalidateProject } from 'utils/revalidateProject'
 
 import V2TokenRefs, { AssetInputType } from './V2TokenRefs'
 
+import { CV_V2 } from 'constants/cv'
 import { V2_PROJECT_IDS } from 'constants/v2/projectIds'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 
 export interface EditTrackedAssetsForm {
   tokenRefs: { assetInput: { input: string; type: AssetInputType } }[]
@@ -38,7 +39,7 @@ export function V2BalancesModal({
   onCancel: () => void
   storeCidTx: TransactorInstance<{ cid: string }>
 }) {
-  const { projectId } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
   const [editModalVisible, setEditModalVisible] = useState<boolean>()
   const [loading, setLoading] = useState<boolean>()
   const [form] = useForm<EditTrackedAssetsForm>()
@@ -85,7 +86,7 @@ export function V2BalancesModal({
         onDone: async () => {
           if (projectId) {
             await revalidateProject({
-              cv: '2',
+              cv: CV_V2,
               projectId: String(projectId),
             })
           }

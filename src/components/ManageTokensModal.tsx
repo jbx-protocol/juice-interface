@@ -2,6 +2,7 @@ import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Modal, Space, Tooltip } from 'antd'
 import RichButton from 'components/RichButton'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import Link from 'next/link'
 import { PropsWithChildren, useContext, useState } from 'react'
@@ -75,8 +76,8 @@ export default function ManageTokensModal({
   ClaimTokensModal: (props: ModalProps) => JSX.Element | null
   MintModal: (props: ModalProps) => JSX.Element | null
 }) {
-  const { fundingCycleMetadata, projectId, handle } =
-    useContext(V2ProjectContext)
+  const { fundingCycleMetadata, handle } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
   const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>()

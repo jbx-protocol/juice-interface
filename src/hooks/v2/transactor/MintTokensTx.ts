@@ -4,6 +4,7 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { useContext } from 'react'
 
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { onCatch, TransactorInstance } from 'hooks/Transactor'
 import invariant from 'tiny-invariant'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -15,7 +16,8 @@ export function useMintTokensTx(): TransactorInstance<{
   memo: string
 }> {
   const { transactor, contracts } = useContext(V2UserContext)
-  const { projectId, tokenSymbol, cv } = useContext(V2ProjectContext)
+  const { tokenSymbol } = useContext(V2ProjectContext)
+  const { projectId, cv } = useContext(ProjectMetadataContext)
 
   // TODO new V2 feature:
   // Whether to use the current funding cycle's reserved rate in the mint calculation.

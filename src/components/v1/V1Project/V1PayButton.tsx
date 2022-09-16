@@ -10,6 +10,7 @@ import { useContext, useState } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 
+import { CV_V1 } from 'constants/cv'
 import { readNetwork } from 'constants/networks'
 import { V1_CURRENCY_USD } from 'constants/v1/currency'
 import { disablePayOverrides } from 'constants/v1/overrides'
@@ -45,7 +46,7 @@ export default function V1PayButton({
 
   // v1 projects who still use 100% RR to disable pay
   const isV1AndMaxRR =
-    terminal?.version === '1' && fcMetadata.reservedRate === 200
+    terminal?.version === CV_V1 && fcMetadata.reservedRate === 200
 
   // Edge case for MoonDAO, upgraded to v1.1 but can't use payIsPaused for now
   const isMoonAndMaxRR =

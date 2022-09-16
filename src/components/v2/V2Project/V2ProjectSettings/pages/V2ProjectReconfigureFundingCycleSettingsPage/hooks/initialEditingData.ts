@@ -30,6 +30,7 @@ import {
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 
 export interface InitialEditingData {
   fundAccessConstraints: SerializedV2FundAccessConstraint[]
@@ -56,7 +57,6 @@ export const useInitialEditingData = (visible: boolean) => {
   const dispatch = useAppDispatch()
 
   const {
-    projectId,
     primaryTerminal,
     fundingCycle,
     payoutSplits,
@@ -64,6 +64,7 @@ export const useInitialEditingData = (visible: boolean) => {
     distributionLimit,
     distributionLimitCurrency,
   } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const { data: queuedFundingCycleResponse } = useProjectQueuedFundingCycle({
     projectId,

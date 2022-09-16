@@ -6,6 +6,7 @@ import NewDeployNotAvailable from 'components/NewDeployNotAvailable'
 import Project404 from 'components/Project404'
 import ScrollToTopButton from 'components/ScrollToTopButton'
 import V1Project from 'components/v1/V1Project'
+import { CV_V1, CV_V1_1 } from 'constants/cv'
 import { layouts } from 'constants/styles/layouts'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { projectTypes } from 'constants/v1/projectTypes'
@@ -44,7 +45,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   if (process.env.BUILD_CACHE_V1_PROJECTS === 'true') {
     const projects = await paginateDepleteProjectsQueryCall({
       variables: {
-        where: { cv_in: ['1', '1.1'] },
+        where: { cv_in: [CV_V1, CV_V1_1] },
       },
     })
     const paths = projects
@@ -70,7 +71,7 @@ export const getStaticProps: GetStaticProps<{
   const handle = context.params.handle as string
   const projects = await paginateDepleteProjectsQueryCall({
     variables: {
-      where: { cv_in: ['1', '1.1'], handle },
+      where: { cv_in: [CV_V1, CV_V1_1], handle },
       first: 1,
     },
   })

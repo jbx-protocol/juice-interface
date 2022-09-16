@@ -1,3 +1,4 @@
+import { CV_V2 } from 'constants/cv'
 import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ProjectMetadataV4 } from 'models/project-metadata'
@@ -17,7 +18,7 @@ export default function V2ProjectMetadataProvider({
 
   return (
     <ProjectMetadataContext.Provider
-      value={{ projectMetadata: metadata, isArchived }}
+      value={{ projectMetadata: metadata, isArchived, projectId, cv: CV_V2 }}
     >
       {children}
     </ProjectMetadataContext.Provider>

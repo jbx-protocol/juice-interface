@@ -6,6 +6,7 @@ import { CardSection } from 'components/CardSection'
 import SpendingStats from 'components/Project/SpendingStats'
 import TooltipLabel from 'components/TooltipLabel'
 import SplitList from 'components/v2/shared/SplitList'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerminalFee'
@@ -44,9 +45,10 @@ export default function PayoutSplitsCard({
     balanceInDistributionLimitCurrency,
     isPreviewMode,
     loading,
-    projectId,
     handle,
   } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
+
   const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
 
   const [distributePayoutsModalVisible, setDistributePayoutsModalVisible] =

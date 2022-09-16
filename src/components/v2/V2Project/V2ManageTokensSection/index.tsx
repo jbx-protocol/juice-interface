@@ -67,13 +67,11 @@ export default function V2ManageTokensSection() {
     isPreviewMode,
     totalTokenSupply,
     fundingCycleMetadata,
-    projectId,
     primaryTerminalCurrentOverflow,
-    cv,
     handle,
   } = useContext(V2ProjectContext)
   const { contractAddress: veNftAddress } = useContext(VeNftContext)
-  const { projectMetadata } = useContext(ProjectMetadataContext)
+  const { projectMetadata, projectId, cv } = useContext(ProjectMetadataContext)
 
   const { userAddress } = useWallet()
 

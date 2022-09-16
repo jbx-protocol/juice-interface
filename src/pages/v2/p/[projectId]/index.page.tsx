@@ -1,6 +1,7 @@
 import { AppWrapper, SEO } from 'components/common'
 import { DesmosScript } from 'components/common/Head/scripts/DesmosScript'
 import Loading from 'components/Loading'
+import { CV_V2 } from 'constants/cv'
 import { V2_PROJECT_IDS } from 'constants/v2/projectIds'
 import { paginateDepleteProjectsQueryCall } from 'lib/apollo'
 import {
@@ -16,7 +17,7 @@ import { getProjectProps, ProjectPageProps } from './utils/props'
 export const getStaticPaths: GetStaticPaths = async () => {
   if (process.env.BUILD_CACHE_V2_PROJECTS === 'true') {
     const projects = await paginateDepleteProjectsQueryCall({
-      variables: { where: { cv: '2' } },
+      variables: { where: { cv: CV_V2 } },
     })
     const paths = projects.map(({ projectId }) => ({
       params: { projectId: String(projectId) },

@@ -3,6 +3,7 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { useContext } from 'react'
 
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useV2ProjectTitle } from '../ProjectTitle'
 
@@ -10,7 +11,8 @@ export function useTransferProjectOwnershipTx(): TransactorInstance<{
   newOwnerAddress: string // new owner address
 }> {
   const { transactor, contracts } = useContext(V2UserContext)
-  const { projectId, projectOwnerAddress } = useContext(V2ProjectContext)
+  const { projectOwnerAddress } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
   const projectTitle = useV2ProjectTitle()
 
   return ({ newOwnerAddress }, txOpts) => {

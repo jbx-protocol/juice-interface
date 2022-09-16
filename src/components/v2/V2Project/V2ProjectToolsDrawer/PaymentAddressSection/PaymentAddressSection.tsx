@@ -2,7 +2,7 @@ import { plural, Trans } from '@lingui/macro'
 import { Button, Space } from 'antd'
 import { PaymentAddressesModal } from 'components/v2/V2Project/modals/PaymentAddressesModal'
 import { LaunchProjectPayerButton } from 'components/v2/V2Project/V2ProjectToolsDrawer/PaymentAddressSection/LaunchProjectPayerButton'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useProjectPayers } from 'hooks/ProjectPayers'
 import { TransactorInstance } from 'hooks/Transactor'
 import { DeployProjectPayerTxArgs } from 'hooks/v2/transactor/DeployProjectPayerTx'
@@ -15,7 +15,7 @@ export function PaymentAddressSection({
     | TransactorInstance<DeployProjectPayerTxArgs>
     | undefined
 }) {
-  const { projectId } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const [projectPayersModalIsVisible, setProjectPayersModalIsVisible] =
     useState<boolean>()

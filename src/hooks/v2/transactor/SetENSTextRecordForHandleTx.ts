@@ -1,11 +1,9 @@
-import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { namehash } from 'ethers/lib/utils'
 import { useContext } from 'react'
 
-import { projectHandleENSTextRecordKey } from 'constants/projectHandleENSTextRecordKey'
-
 import { t } from '@lingui/macro'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactorInstance } from 'hooks/Transactor'
 
 export function useSetENSTextRecordForHandleTx(): TransactorInstance<{
@@ -14,7 +12,7 @@ export function useSetENSTextRecordForHandleTx(): TransactorInstance<{
   value: string
 }> {
   const { transactor, contracts } = useContext(V2UserContext)
-  const { projectId } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   return ({ ensName, key, value }, txOpts) => {
     if (!transactor || !projectId || !contracts?.PublicResolver) {

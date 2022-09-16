@@ -5,7 +5,7 @@ import { useWallet } from 'hooks/Wallet'
 
 import * as constants from '@ethersproject/constants'
 import FormattedAddress from 'components/FormattedAddress'
-import IssueTokenButton from 'components/IssueTokenButton'
+import { IssueErc20TokenButton } from 'components/IssueErc20TokenButton'
 import ManageTokensModal from 'components/ManageTokensModal'
 import ParticipantsModal from 'components/modals/ParticipantsModal'
 import SectionHeader from 'components/SectionHeader'
@@ -18,7 +18,7 @@ import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
 import useTotalSupplyOfProjectToken from 'hooks/v1/contractReader/TotalSupplyOfProjectToken'
 import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceOfUser'
 import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
-import { useIssueTokensTx } from 'hooks/v1/transactor/IssueTokensTx'
+import { useIssueErc20TokenTx } from 'hooks/v1/transactor/IssueErc20TokenTx'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import { CSSProperties, useContext, useState } from 'react'
 import { formatPercent, formatWad } from 'utils/format/formatNumber'
@@ -203,7 +203,7 @@ export default function Rewards() {
         />
 
         {!ticketsIssued && hasIssueTicketsPermission && !isPreviewMode && (
-          <IssueTokenButton useIssueTokensTx={useIssueTokensTx} />
+          <IssueErc20TokenButton useIssueErc20TokenTx={useIssueErc20TokenTx} />
         )}
       </Space>
 

@@ -14,8 +14,8 @@ export function useMintTokensTx(): TransactorInstance<{
   preferClaimed: boolean
   memo: string
 }> {
-  const { transactor, contracts, version } = useContext(V2UserContext)
-  const { projectId, tokenSymbol } = useContext(V2ProjectContext)
+  const { transactor, contracts } = useContext(V2UserContext)
+  const { projectId, tokenSymbol, cv } = useContext(V2ProjectContext)
 
   // TODO new V2 feature:
   // Whether to use the current funding cycle's reserved rate in the mint calculation.
@@ -56,7 +56,7 @@ export function useMintTokensTx(): TransactorInstance<{
         txOpts,
         missingParam,
         functionName: 'mintTokensOf',
-        version,
+        cv,
       })
     }
   }

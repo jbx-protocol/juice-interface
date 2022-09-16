@@ -1,27 +1,17 @@
 import { t } from '@lingui/macro'
 import { Col, Form, Input, Row, Space } from 'antd'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
-import { useCallback } from 'react'
+import { useContext } from 'react'
 import { CreateCollapse } from '../../CreateCollapse'
 import { OptionalHeader } from '../../OptionalHeader'
-import { usePageValidatorSubscription } from '../hooks'
+import { Wizard } from '../../Wizard'
+import { PageContext } from '../../Wizard/contexts/PageContext'
 import { inputMustExistRule } from '../utils'
 import { useProjectDetailsForm } from './hooks/ProjectDetailsForm'
 
 export const ProjectDetailsPage: React.FC = () => {
+  const { goToNextPage } = useContext(PageContext)
   const formProps = useProjectDetailsForm()
-
-  const validator = useCallback(
-    async () =>
-      await formProps.form.validateFields().catch(e => {
-        const namePath = e?.errorFields?.[0]?.name
-        formProps.form.scrollToField(namePath)
-        throw e
-      }),
-    [formProps.form],
-  )
-
-  usePageValidatorSubscription(validator)
 
   return (
     <Form
@@ -29,6 +19,7 @@ export const ProjectDetailsPage: React.FC = () => {
       name="projectDetails"
       colon={false}
       layout="vertical"
+      onFinish={goToNextPage}
       scrollToFirstError
     >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
@@ -89,6 +80,7 @@ export const ProjectDetailsPage: React.FC = () => {
           </CreateCollapse.Panel>
         </CreateCollapse>
       </Space>
+      <Wizard.Page.ButtonControl />
     </Form>
   )
 }

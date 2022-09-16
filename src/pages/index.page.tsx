@@ -180,8 +180,8 @@ function Landing() {
                 src={
                   forThemeOption &&
                   forThemeOption({
-                    [ThemeOption.dark]: '/assets/banana-od.png',
-                    [ThemeOption.light]: '/assets/banana-ol.png',
+                    [ThemeOption.dark]: '/assets/banana-od.webp',
+                    [ThemeOption.light]: '/assets/banana-ol.webp',
                   })
                 }
                 alt="Chill banana drinking juice"

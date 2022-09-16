@@ -1,9 +1,9 @@
+import React, { CSSProperties, useContext } from 'react'
 import { Tooltip } from 'antd'
 import AMMPrices from 'components/AMMPrices'
 import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, useContext } from 'react'
 
-export const RedeemWithExchange = ({
+export const RedeemTokenViaExchange = ({
   tokenSymbol,
   tokenAddress,
   style,

@@ -12,7 +12,7 @@ import Callout from 'components/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { MemoFormInput } from 'components/inputs/Pay/MemoFormInput'
-import { RedeemWithExchange } from 'components/Project/RedeemWithExchange'
+import { RedeemTokenViaExchange } from 'components/Project/RedeemTokenViaExchange'
 import TransactionModal from 'components/TransactionModal'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useETHReceivedFromTokens } from 'hooks/v2/contractReader/ETHReceivedFromTokens'
@@ -260,7 +260,7 @@ export default function V2RedeemModal({
                 onChange={val => setRedeemAmount(val)}
               />
               {tokenSymbol && tokenAddress && (
-                <RedeemWithExchange
+                <RedeemTokenViaExchange
                   tokenSymbol={tokenSymbol}
                   tokenAddress={tokenAddress}
                   style={{ fontSize: '.65rem' }}

@@ -44,14 +44,14 @@ export default function DistributeTokensModal({
   return (
     <Modal
       title={`Distribute reserved ${tokenSymbolText({
-        tokenSymbol: tokenSymbol,
+        tokenSymbol,
         capitalize: false,
         plural: true,
       })}`}
       visible={visible}
       onOk={distribute}
       okText={`Distribute ${tokenSymbolText({
-        tokenSymbol: tokenSymbol,
+        tokenSymbol,
         capitalize: false,
         plural: true,
       })}`}
@@ -88,7 +88,7 @@ export default function DistributeTokensModal({
             <Trans>
               All{' '}
               {tokenSymbolText({
-                tokenSymbol: tokenSymbol,
+                tokenSymbol,
                 capitalize: false,
                 plural: true,
               })}{' '}

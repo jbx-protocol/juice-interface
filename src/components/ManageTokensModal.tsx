@@ -2,11 +2,7 @@ import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Modal, Space, Tooltip } from 'antd'
 import RichButton from 'components/RichButton'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
-import Link from 'next/link'
-import { PropsWithChildren, useContext, useState } from 'react'
-import { veNftPagePath } from 'utils/routes'
+import { PropsWithChildren, useState } from 'react'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { reloadWindow } from 'utils/windowUtils'
 
@@ -18,7 +14,7 @@ const RedeemButtonTooltip = ({
   children,
 }: PropsWithChildren<{
   redeemDisabledReason?: RedeemDisabledReason
-  buttonDisabled: boolean
+  buttonDisabled?: boolean
 }>) => {
   if (!buttonDisabled) return <>{children}</>
 
@@ -55,43 +51,39 @@ export default function ManageTokensModal({
   visible,
   projectAllowsMint,
   userHasMintPermission,
-  veNftEnabled,
   hasOverflow,
+  redeemDisabled,
   tokenSymbol,
   tokenAddress,
+
+  children,
   RedeemModal,
   ClaimTokensModal,
   MintModal,
-}: {
+}: PropsWithChildren<{
   userHasMintPermission: boolean
   projectAllowsMint: boolean
-  veNftEnabled: boolean
   onCancel?: VoidFunction
   visible?: boolean
   hasOverflow: boolean | undefined
+  redeemDisabled: boolean | undefined
   tokenSymbol: string | undefined
   tokenAddress: string | undefined
 
   RedeemModal: (props: ModalProps) => JSX.Element | null
   ClaimTokensModal: (props: ModalProps) => JSX.Element | null
   MintModal: (props: ModalProps) => JSX.Element | null
-}) {
-  const { fundingCycleMetadata, handle } = useContext(V2ProjectContext)
-  const { projectId } = useContext(ProjectMetadataContext)
-
+}>) {
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
   const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>()
   const [mintModalVisible, setMintModalVisible] = useState<boolean>()
 
   const tokensLabel = tokenSymbolText({
-    tokenSymbol: tokenSymbol,
+    tokenSymbol,
     capitalize: false,
     plural: true,
   })
 
-  const redeemDisabled = Boolean(
-    !hasOverflow || fundingCycleMetadata?.redemptionRate.eq(0),
-  )
   const redeemDisabledReason = !hasOverflow
     ? 'overflowZero'
     : 'redemptionRateZero'
@@ -101,7 +93,7 @@ export default function ManageTokensModal({
     <>
       <Modal
         title={t`Manage your ${tokenSymbolText({
-          tokenSymbol: tokenSymbol,
+          tokenSymbol,
           capitalize: false,
           plural: true,
           includeTokenWord: true,
@@ -193,19 +185,8 @@ export default function ManageTokensModal({
               </div>
             </Tooltip>
           )}
-          {veNftEnabled && (
-            <Link href={veNftPagePath('mint', { projectId, handle })}>
-              <RichButton
-                heading={<Trans>Lock {tokensLabel} for Governance NFTs</Trans>}
-                description={
-                  <Trans>
-                    Lock your {tokensLabel} to increase your voting weight and
-                    claim Governance NFTs.
-                  </Trans>
-                }
-              />
-            </Link>
-          )}
+
+          {children}
         </Space>
       </Modal>
 

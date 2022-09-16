@@ -61,13 +61,13 @@ export default function DistributeReservedTokensModal({
 
   const reservedTokensFormatted = formatWad(reservedTokens, { precision: 0 })
   const tokenTextPlural = tokenSymbolText({
-    tokenSymbol: tokenSymbol,
+    tokenSymbol,
     capitalize: false,
     plural: true,
   })
 
   const tokenTextSingular = tokenSymbolText({
-    tokenSymbol: tokenSymbol,
+    tokenSymbol,
     capitalize: true,
     plural: false,
   })

@@ -157,7 +157,7 @@ export default function ParticipantsModal({
             <Select.Option value="balance">
               <Trans>
                 {tokenSymbolText({
-                  tokenSymbol: tokenSymbol,
+                  tokenSymbol,
                   capitalize: true,
                 })}{' '}
                 balance
@@ -233,7 +233,7 @@ export default function ParticipantsModal({
                 >
                   {formatWad(p.balance, { precision: 0 })}{' '}
                   {tokenSymbolText({
-                    tokenSymbol: tokenSymbol,
+                    tokenSymbol,
                     capitalize: false,
                     plural: true,
                   })}{' '}
@@ -243,7 +243,7 @@ export default function ParticipantsModal({
                   {formatWad(p.stakedBalance, { precision: 0 })}{' '}
                   <Trans>
                     {tokenSymbolText({
-                      tokenSymbol: tokenSymbol,
+                      tokenSymbol,
                       capitalize: false,
                       plural: true,
                     })}{' '}
@@ -278,8 +278,7 @@ export default function ParticipantsModal({
       <div>
         <h4>
           <Trans>
-            {tokenSymbolText({ tokenSymbol: tokenSymbol, capitalize: true })}{' '}
-            holders
+            {tokenSymbolText({ tokenSymbol, capitalize: true })} holders
           </Trans>
         </h4>
         <Space direction="vertical">

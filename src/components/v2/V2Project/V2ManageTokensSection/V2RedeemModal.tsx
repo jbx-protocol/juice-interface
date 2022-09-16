@@ -70,13 +70,13 @@ export default function V2RedeemModal({
       rewardAmount
 
   const tokensTextLong = tokenSymbolText({
-    tokenSymbol: tokenSymbol,
+    tokenSymbol,
     capitalize: false,
     plural: true,
     includeTokenWord: true,
   })
   const tokensTextShort = tokenSymbolText({
-    tokenSymbol: tokenSymbol,
+    tokenSymbol,
     capitalize: false,
     plural: true,
   })

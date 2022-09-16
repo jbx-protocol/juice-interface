@@ -15,7 +15,7 @@ export const usePage = ({ name }: { name: string }) => {
     [pageIndex, pages?.length],
   )
 
-  const goToNextPage = useCallback(async () => {
+  const goToNextPage = useCallback(() => {
     if (!pages || !goToPage) return
     if (pageIndex === pages.length - 1) return
     const nextPage = pages[pageIndex + 1].name

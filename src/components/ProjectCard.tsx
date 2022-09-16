@@ -6,7 +6,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { Project } from 'models/subgraph-entities/vX/project'
 import { CSSProperties, useContext } from 'react'
-import { formatDate } from 'utils/formatDate'
+import { formatDate } from 'utils/format/formatDate'
 
 import { getTerminalVersion } from 'utils/v1/terminals'
 
@@ -17,8 +17,8 @@ import Link from 'next/link'
 
 import { v2ProjectRoute } from 'utils/routes'
 
+import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
-import { V1ArchivedProjectIds } from '../constants/v1/archivedProjects'
 import ETHAmount from './currency/ETHAmount'
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'

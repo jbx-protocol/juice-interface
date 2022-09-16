@@ -15,8 +15,8 @@ import { ThemeContext } from 'contexts/themeContext'
 import { CV } from 'models/cv'
 import { Participant } from 'models/subgraph-entities/vX/participant'
 import { useContext, useEffect, useMemo, useState } from 'react'
-import { formatPercent, formatWad } from 'utils/formatNumber'
-import { OrderDirection, querySubgraph } from 'utils/graph'
+import { formatPercent, formatWad } from 'utils/format/formatNumber'
+import { GraphQueryOpts, OrderDirection, querySubgraph } from 'utils/graph'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import DownloadParticipantsModal from './DownloadParticipantsModal'
@@ -57,10 +57,23 @@ export default function ParticipantsModal({
   useEffect(() => {
     setLoading(true)
 
-    if (!projectId || !visible) {
+    if (!projectId || !visible || !cv) {
       setParticipants([])
       return
     }
+
+    // Projects that migrate between 1 & 1.1 may change their CV without the CV of their participants being updated. This should be fixed by better subgraph infrastructure, but this fix will make sure the UI works for now.
+    const cvOpt: GraphQueryOpts<'participant', keyof Participant>['where'] =
+      cv === '1' || cv === '1.1'
+        ? {
+            key: 'cv',
+            operator: 'in',
+            value: ['1', '1.1'],
+          }
+        : {
+            key: 'cv',
+            value: cv,
+          }
 
     querySubgraph({
       entity: 'participant',
@@ -83,10 +96,7 @@ export default function ParticipantsModal({
                 key: 'projectId',
                 value: projectId,
               },
-              {
-                key: 'cv',
-                value: cv,
-              },
+              cvOpt,
               {
                 key: 'balance',
                 value: 0,
@@ -325,6 +335,7 @@ export default function ParticipantsModal({
         tokenSymbol={tokenSymbol}
         projectName={projectName}
         visible={downloadModalVisible}
+        cv={cv}
         onCancel={() => setDownloadModalVisible(false)}
       />
     </Modal>

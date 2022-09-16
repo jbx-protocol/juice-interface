@@ -12,7 +12,7 @@ import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerm
 import { useDistributePayoutsTx } from 'hooks/v2/transactor/DistributePayouts'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { useContext, useEffect, useState } from 'react'
-import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
+import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
 import { V2CurrencyName, V2_CURRENCY_USD } from 'utils/v2/currency'
 import { amountSubFee, feeForAmount } from 'utils/v2/math'
 

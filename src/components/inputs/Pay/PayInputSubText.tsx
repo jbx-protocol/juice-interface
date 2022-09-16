@@ -12,12 +12,10 @@ import { Tooltip } from 'antd'
 import AMMPrices from 'components/AMMPrices'
 import { ThemeContext } from 'contexts/themeContext'
 
-import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useWeiConverter from 'hooks/WeiConverter'
 import { CurrencyOption } from 'models/currencyOption'
-import { formattedNum } from 'utils/formatNumber'
+import { formattedNum } from 'utils/format/formatNumber'
 import { formatIssuanceRate } from 'utils/v2/math'
-import { getNftRewardTier } from 'utils/v2/nftRewards'
 
 /**
  * Help text shown below the Pay input field.
@@ -35,6 +33,7 @@ export default function PayInputSubText({
   tokenSymbol,
   tokenAddress,
   weightingFn,
+  isEligibleForNft,
 }: {
   payInCurrency: CurrencyOption
   amount: string | undefined
@@ -43,15 +42,12 @@ export default function PayInputSubText({
   tokenSymbol: string | undefined
   tokenAddress: string | undefined
   weightingFn: WeightFunction
+  isEligibleForNft?: boolean
 }) {
   const converter = useCurrencyConverter()
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-
-  const {
-    nftRewards: { rewardTiers: nftRewardTiers },
-  } = useContext(V2ProjectContext)
 
   const {
     currencyMetadata,
@@ -62,14 +58,6 @@ export default function PayInputSubText({
     currency: payInCurrency,
     amount: amount,
   })
-
-  const isEligibleForNft =
-    nftRewardTiers && amount
-      ? getNftRewardTier({
-          nftRewardTiers: nftRewardTiers,
-          payAmountETH: parseFloat(amount),
-        })
-      : false
 
   const tokenText = tokenSymbolText({
     tokenSymbol,

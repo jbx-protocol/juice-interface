@@ -5,7 +5,7 @@ import { emitErrorNotification } from 'utils/notifications'
 
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { fromWad } from 'utils/formatNumber'
+import { fromWad } from 'utils/format/formatNumber'
 import { querySubgraphExhaustive } from 'utils/graph'
 
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
@@ -22,7 +22,7 @@ export default function V2DownloadPaymentsModal({
   const [latestBlockNumber, setLatestBlockNumber] = useState<number>()
   const [blockNumber, setBlockNumber] = useState<number>()
   const [loading, setLoading] = useState<boolean>()
-  const { projectId } = useContext(V2ProjectContext)
+  const { projectId, cv } = useContext(V2ProjectContext)
 
   useEffect(() => {
     readProvider.getBlockNumber().then(val => {
@@ -56,7 +56,7 @@ export default function V2DownloadPaymentsModal({
           },
           {
             key: 'cv',
-            value: '2',
+            value: cv,
           },
         ],
       })
@@ -84,7 +84,7 @@ export default function V2DownloadPaymentsModal({
       console.error('Error downloading payments', e)
       setLoading(false)
     }
-  }, [projectId, setLoading, blockNumber])
+  }, [projectId, cv, setLoading, blockNumber])
 
   return (
     <Modal

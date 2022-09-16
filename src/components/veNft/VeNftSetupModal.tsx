@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Space } from 'antd'
 import TransactionModal from 'components/TransactionModal'
-import { VeNftVariant } from 'models/v2/veNft'
+import { VeNftVariant } from 'models/veNft'
 import { useState } from 'react'
 
 import { MinimalCollapse } from 'components/MinimalCollapse'

@@ -1,11 +1,11 @@
 import { t, Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
-import { round } from 'lodash'
+import round from 'lodash/round'
 import FormItemLabel from 'pages/create/FormItemLabel'
 import { CSSProperties, useContext, useState } from 'react'
 import { defaultFundingCycleMetadata } from 'redux/slices/editingV2Project'
-import { formattedNum } from 'utils/formatNumber'
+import { formattedNum } from 'utils/format/formatNumber'
 import { DEFAULT_MINT_RATE } from 'utils/v2/math'
 
 import {

@@ -4,7 +4,7 @@ import FormattedAddress from 'components/FormattedAddress'
 import { ThemeContext } from 'contexts/themeContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { useContext } from 'react'
-import { formatHistoricalDate } from 'utils/formatDate'
+import { formatHistoricalDate } from 'utils/format/formatDate'
 
 import { Trans } from '@lingui/macro'
 import {
@@ -13,6 +13,7 @@ import {
   smallHeaderStyle,
 } from 'components/activityEventElems/styles'
 import ETHAmount from 'components/currency/ETHAmount'
+import V2ProjectHandle from 'components/v2/shared/V2ProjectHandle'
 import { DistributePayoutsEvent } from 'models/subgraph-entities/v2/distribute-payouts-event'
 
 export default function DistributePayoutsElem({
@@ -115,7 +116,7 @@ export default function DistributePayoutsElem({
           >
             <div style={{ fontWeight: 500 }}>
               {e.splitProjectId ? (
-                <span>Project {e.splitProjectId}</span>
+                <V2ProjectHandle projectId={e.splitProjectId} />
               ) : (
                 <FormattedAddress address={e.beneficiary} />
               )}

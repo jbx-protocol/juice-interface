@@ -1,9 +1,10 @@
+import { t } from '@lingui/macro'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
 
-import { onCatch, TransactorInstance } from '../../Transactor'
+import { onCatch, TransactorInstance } from 'hooks/Transactor'
 
 export function useIssueTokensTx(): TransactorInstance<{
   name: string
@@ -21,7 +22,10 @@ export function useIssueTokensTx(): TransactorInstance<{
         contracts.JBController,
         'issueTokenFor',
         [projectId, name, symbol],
-        txOpts,
+        {
+          ...txOpts,
+          title: t`Issue $${symbol}`,
+        },
       )
     } catch {
       const missingParam = !transactor

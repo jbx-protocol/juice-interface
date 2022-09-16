@@ -1,15 +1,44 @@
-import { V1UserContext } from 'contexts/v1/userContext'
-import { V1ContractName } from 'models/v1/contracts'
-import { useContext, useEffect } from 'react'
-import { fromWad } from 'utils/formatNumber'
+import { Contract } from '@ethersproject/contracts'
+import { readNetwork } from 'constants/networks'
+import { readProvider } from 'constants/readProvider'
+import { useEffect, useState } from 'react'
+import { fromWad } from 'utils/format/formatNumber'
 import { useContractReadValue } from './ContractReader'
+import { loadV1Contract } from './v1/V1ContractLoader'
+
+/**
+ * Chainlink feed doesn't tend to up date that quickly.
+ * Refresh every 5 minutes.
+ */
+const PRICE_REFRESH_INTERVAL = 60 * 1000 * 5 // 5 minutes
+
+const usePricesContract = () => {
+  const [contract, setContract] = useState<Contract | undefined>()
+
+  useEffect(() => {
+    if (contract) return
+
+    const load = async () => {
+      const contract = await loadV1Contract(
+        'Prices',
+        readNetwork.name,
+        readProvider,
+      )
+
+      setContract(contract)
+    }
+
+    load()
+  }, [contract])
+
+  return contract
+}
 
 export function useEtherPrice() {
-  const { contracts } = useContext(V1UserContext)
+  const contract = usePricesContract()
 
   const { refetchValue, value: price } = useContractReadValue({
-    contracts,
-    contract: V1ContractName.Prices,
+    contract,
     functionName: 'getETHPriceFor',
     args: ['1'], // $1 USD
     formatter: val => {
@@ -19,9 +48,9 @@ export function useEtherPrice() {
   })
 
   useEffect(() => {
-    const timer = setInterval(refetchValue, 5000)
+    const timer = setInterval(refetchValue, PRICE_REFRESH_INTERVAL)
     return () => clearInterval(timer)
-  })
+  }, [refetchValue])
 
   return price ?? 0
 }

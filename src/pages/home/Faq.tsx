@@ -14,6 +14,7 @@ export default function Faq() {
               src={qa.img.src}
               alt={qa.img.alt}
               style={{ maxWidth: '100%' }}
+              loading="lazy"
             />
           )}
         </CollapsePanel>

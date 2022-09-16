@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import { Form, FormInstance, FormProps, Space, Statistic } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { formattedNum } from 'utils/formatNumber'
+import { formattedNum } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 interface MigrateV1ProjectTokensFormType {

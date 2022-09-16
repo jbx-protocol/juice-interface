@@ -10,13 +10,13 @@ import OwnedVeNftCard from 'components/veNft/VeNftOwnedTokenCard'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import { shadowCard } from 'constants/styles/shadowCard'
-import { VeNftContext } from 'contexts/v2/veNftContext'
+import { useVeNftUserTokens } from 'hooks/veNft/VeNftUserTokens'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import VeNftSummaryStatsSection from './VeNftSummaryStatsSection'
 
 export default function MyVeNftsContent() {
   const { theme } = useContext(ThemeContext)
-  const { userTokens } = useContext(VeNftContext)
+  const { data: userTokens } = useVeNftUserTokens()
   const { primaryTerminalCurrentOverflow, tokenSymbol } =
     useContext(V2ProjectContext)
   const hasOverflow = Boolean(primaryTerminalCurrentOverflow?.gt(0))

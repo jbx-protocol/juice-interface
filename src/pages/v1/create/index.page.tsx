@@ -32,7 +32,7 @@ import {
   fromWad,
   perbicentToPercent,
   permilleToPercent,
-} from 'utils/formatNumber'
+} from 'utils/format/formatNumber'
 import {
   cidFromUrl,
   editMetadataForCid,
@@ -65,7 +65,7 @@ import RestrictedActionsForm, {
 import BudgetForm from 'components/v1/shared/forms/BudgetForm'
 import PayModsForm from 'components/v1/shared/forms/PayModsForm'
 
-import { toDateSeconds } from 'utils/formatDate'
+import { toDateSeconds } from 'utils/format/formatDate'
 
 import { BallotStrategy } from 'models/ballot'
 
@@ -75,6 +75,7 @@ import { DesmosScript } from 'components/common/Head/scripts/DesmosScript'
 import { drawerStyle } from 'constants/styles/drawerStyle'
 import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
 import Head from 'next/head'
+import { V1UserProvider } from 'providers/v1/UserProvider'
 
 const terminalVersion: V1TerminalVersion = '1.1'
 
@@ -85,7 +86,9 @@ export default function V1CreatePage() {
         <DesmosScript />
       </Head>
       <AppWrapper>
-        <V1Create />
+        <V1UserProvider>
+          <V1Create />
+        </V1UserProvider>
       </AppWrapper>
     </>
   )

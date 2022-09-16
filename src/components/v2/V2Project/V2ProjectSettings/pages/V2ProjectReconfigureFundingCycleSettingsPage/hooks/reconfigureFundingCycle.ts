@@ -1,9 +1,10 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useReconfigureV2FundingCycleTx } from 'hooks/v2/transactor/ReconfigureV2FundingCycleTx'
 import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton'
 import { useCallback, useContext, useState } from 'react'
-import { fromWad } from 'utils/formatNumber'
+import { fromWad } from 'utils/format/formatNumber'
 import { revalidateProject } from 'utils/revalidateProject'
 import { EditingProjectData } from './editingProjectData'
 
@@ -39,11 +40,10 @@ export const useReconfigureFundingCycle = ({
   editingProjectData: EditingProjectData
   memo: string
 }) => {
+  const { fundingCycle, projectId } = useContext(V2ProjectContext)
   const {
     nftRewards: { CIDs: nftRewardsCids },
-    fundingCycle,
-    projectId,
-  } = useContext(V2ProjectContext)
+  } = useContext(NftRewardsContext)
 
   const [reconfigureTxLoading, setReconfigureTxLoading] =
     useState<boolean>(false)

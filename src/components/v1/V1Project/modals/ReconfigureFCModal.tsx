@@ -31,13 +31,13 @@ import {
   fromWad,
   perbicentToPercent,
   permilleToPercent,
-} from 'utils/formatNumber'
-import { amountSubFee } from 'utils/math'
+} from 'utils/format/formatNumber'
 import {
   decodeFundingCycleMetadata,
   hasFundingTarget,
   isRecurring,
 } from 'utils/v1/fundingCycle'
+import { amountSubFee } from 'utils/v1/math'
 import { serializeV1FundingCycle } from 'utils/v1/serializers'
 
 import { V1CurrencyName } from 'utils/v1/currency'
@@ -54,7 +54,7 @@ import PayModsForm from 'components/v1/shared/forms/PayModsForm'
 
 import { BallotStrategy } from 'models/ballot'
 
-import { detailedTimeString, secondsUntil } from 'utils/formatTime'
+import { detailedTimeString, secondsUntil } from 'utils/format/formatTime'
 
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'

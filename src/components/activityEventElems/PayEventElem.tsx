@@ -4,10 +4,9 @@ import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
 import RichNote from 'components/RichNote'
 import { ThemeContext } from 'contexts/themeContext'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { PayEvent } from 'models/subgraph-entities/vX/pay-event'
-import { useCallback, useContext } from 'react'
-import { formatHistoricalDate } from 'utils/formatDate'
+import { useContext } from 'react'
+import { formatHistoricalDate } from 'utils/format/formatDate'
 
 import V2ProjectHandle from '../v2/shared/V2ProjectHandle'
 
@@ -16,16 +15,6 @@ import {
   primaryContentFontSize,
   smallHeaderStyle,
 } from './styles'
-
-// Maps a project id to an internal map of payment event overrides.
-const payEventOverrides = new Map<number, Map<string, string>>([
-  [
-    10,
-    new Map<string, string>([
-      ['Minted WikiToken for Page ID', 'WikiToken minted'],
-    ]),
-  ],
-])
 
 export default function PayEventElem({
   event,
@@ -43,34 +32,9 @@ export default function PayEventElem({
       >
     | undefined
 }) {
-  const { projectId } = useContext(V1ProjectContext)
-
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-
-  const usePayEventOverrides = projectId && payEventOverrides.has(projectId)
-
-  const formatPayEventOverride = useCallback(
-    (e: Partial<PayEvent>) => {
-      if (!projectId) {
-        return e.note
-      }
-
-      let override
-      payEventOverrides
-        .get(projectId)
-        ?.forEach((value: string, key: string) => {
-          if (e.note?.includes(key)) {
-            override = value
-            return
-          }
-        })
-
-      return override ? override : e.note
-    },
-    [projectId],
-  )
 
   if (!event) return null
 
@@ -130,11 +94,7 @@ export default function PayEventElem({
       ) : (
         <div style={{ marginTop: 5 }}>
           <RichNote
-            note={
-              (usePayEventOverrides
-                ? formatPayEventOverride(event)
-                : event.note) ?? ''
-            }
+            note={event.note ?? ''}
             style={{ color: colors.text.secondary }}
           />
         </div>

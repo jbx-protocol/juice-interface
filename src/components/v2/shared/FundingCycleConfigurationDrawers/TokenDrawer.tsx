@@ -1,9 +1,9 @@
 import { t, Trans } from '@lingui/macro'
 import Callout from 'components/Callout'
-import FundingCycleDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/FundingCycleDrawer'
-import { useFundingCycleDrawer } from 'components/v2/shared/FundingCycleConfigurationDrawers/useFundingCycleDrawer'
-import UnsavedChangesModal from 'components/v2/shared/UnsavedChangesModal'
+import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
 import TokenForm from 'pages/create/forms/TokenForm'
+import FundingCycleDrawer from './FundingCycleDrawer'
+import { useFundingCycleDrawer } from './useFundingCycleDrawer'
 
 export default function TokenDrawer({
   visible,

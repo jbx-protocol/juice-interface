@@ -6,7 +6,7 @@ import { useWallet } from 'hooks/Wallet'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 
 import { useContext, useState } from 'react'
-import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
+import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
 
 import Callout from 'components/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
@@ -17,6 +17,7 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useETHReceivedFromTokens } from 'hooks/v2/contractReader/ETHReceivedFromTokens'
 import useTotalBalanceOf from 'hooks/v2/contractReader/TotalBalanceOf'
 import { useRedeemTokensTx } from 'hooks/v2/transactor/RedeemTokensTx'
+import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { V2_CURRENCY_USD } from 'utils/v2/currency'
 import { formatRedemptionRate } from 'utils/v2/math'
@@ -105,13 +106,13 @@ export default function V2RedeemModal({
     return Promise.resolve()
   }
 
-  const exectuteRedeemTransaction = async () => {
+  const executeRedeemTransaction = async () => {
     await form.validateFields()
     if (!minReturnedTokens) return
 
     setLoading(true)
 
-    redeemTokensTx(
+    const txSuccess = await redeemTokensTx(
       {
         redeemAmount: parseWad(redeemAmount),
         minReturnedTokens,
@@ -129,8 +130,18 @@ export default function V2RedeemModal({
           setLoading(false)
           onConfirmed?.()
         },
+        onError: (e: DOMException) => {
+          setTransactionPending(false)
+          setLoading(false)
+          emitErrorNotification(e.message)
+        },
       },
     )
+
+    if (!txSuccess) {
+      setTransactionPending(false)
+      setLoading(false)
+    }
   }
 
   const totalSupplyExceeded =
@@ -147,7 +158,7 @@ export default function V2RedeemModal({
       visible={visible}
       confirmLoading={loading}
       onOk={() => {
-        exectuteRedeemTransaction()
+        executeRedeemTransaction()
       }}
       onCancel={() => {
         setRedeemAmount(undefined)

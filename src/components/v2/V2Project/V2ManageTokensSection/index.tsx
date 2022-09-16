@@ -3,12 +3,17 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Descriptions, Space, Statistic } from 'antd'
 import SectionHeader from 'components/SectionHeader'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import useERC20BalanceOf from 'hooks/v2/contractReader/ERC20BalanceOf'
+import useERC20BalanceOf from 'hooks/ERC20BalanceOf'
 import { useWallet } from 'hooks/Wallet'
 
 import FormattedAddress from 'components/FormattedAddress'
 import { CSSProperties, useContext, useState } from 'react'
-import { formatPercent, formatWad, fromWad, parseWad } from 'utils/formatNumber'
+import {
+  formatPercent,
+  formatWad,
+  fromWad,
+  parseWad,
+} from 'utils/format/formatNumber'
 
 import IssueTokenButton from 'components/IssueTokenButton'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/V2ConnectedWalletHasPermission'
@@ -31,6 +36,8 @@ import { featureFlagEnabled } from 'utils/featureFlags'
 import { reloadWindow } from 'utils/windowUtils'
 
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { VeNftContext } from 'contexts/veNftContext'
 import { useVeNftSummaryStats } from 'hooks/veNft/VeNftSummaryStats'
 import Link from 'next/link'
 import { veNftPagePath } from 'utils/routes'
@@ -62,11 +69,12 @@ export default function V2ManageTokensSection() {
     fundingCycleMetadata,
     projectId,
     primaryTerminalCurrentOverflow,
-    projectMetadata,
     cv,
     handle,
-    veNft: { contractAddress: veNftAddress },
   } = useContext(V2ProjectContext)
+  const { contractAddress: veNftAddress } = useContext(VeNftContext)
+  const { projectMetadata } = useContext(ProjectMetadataContext)
+
   const { userAddress } = useWallet()
 
   const [manageTokensModalVisible, setManageTokensModalVisible] =

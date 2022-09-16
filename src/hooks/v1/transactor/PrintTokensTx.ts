@@ -1,11 +1,13 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
+import { t } from '@lingui/macro'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext } from 'react'
 
-import { TransactorInstance } from '../../Transactor'
+import { TransactorInstance } from 'hooks/Transactor'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export function usePrintTokensTx(): TransactorInstance<{
   value: BigNumber
@@ -15,7 +17,7 @@ export function usePrintTokensTx(): TransactorInstance<{
   preferUnstaked: boolean
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
-  const { terminal, projectId } = useContext(V1ProjectContext)
+  const { terminal, projectId, tokenSymbol } = useContext(V1ProjectContext)
 
   return ({ value, currency, beneficiary, memo, preferUnstaked }, txOpts) => {
     if (!transactor || !contracts || !projectId || !terminal?.version) {
@@ -52,6 +54,12 @@ export function usePrintTokensTx(): TransactorInstance<{
         ]
     }
 
-    return transactor(terminalContract, functionName, args, txOpts)
+    return transactor(terminalContract, functionName, args, {
+      ...txOpts,
+      title: t`Mint ${tokenSymbolText({
+        tokenSymbol,
+        plural: true,
+      })}`,
+    })
   }
 }

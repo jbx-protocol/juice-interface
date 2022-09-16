@@ -1,6 +1,7 @@
 import { V2UserContext } from 'contexts/v2/userContext'
 import { useContext } from 'react'
 
+import { t } from '@lingui/macro'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useVeNftContract } from 'hooks/veNft/VeNftContract'
 
@@ -25,6 +26,7 @@ export function useExtendLockTx(): ExtendLockTx {
       [[{ tokenId, updatedDuration }]],
       {
         ...txOpts,
+        title: t`Extend veNFT lock`,
       },
     )
   }

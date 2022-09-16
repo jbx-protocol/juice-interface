@@ -46,7 +46,7 @@ export default function ProjectActivity() {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { projectId } = useContext(V2ProjectContext)
+  const { projectId, cv } = useContext(V2ProjectContext)
 
   const pageSize = 50
 
@@ -54,7 +54,7 @@ export default function ProjectActivity() {
     const _where: WhereConfig<'projectEvent'>[] = [
       {
         key: 'cv',
-        value: '2',
+        value: cv,
       },
       {
         key: 'mintTokensEvent',
@@ -108,7 +108,7 @@ export default function ProjectActivity() {
     }
 
     return _where
-  }, [projectId, eventFilter])
+  }, [projectId, cv, eventFilter])
 
   const {
     data: projectEvents,

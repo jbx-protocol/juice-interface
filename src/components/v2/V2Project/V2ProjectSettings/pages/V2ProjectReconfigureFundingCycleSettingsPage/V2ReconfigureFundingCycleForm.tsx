@@ -2,10 +2,11 @@ import { CaretRightFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Form, Space } from 'antd'
 import { MemoFormInput } from 'components/inputs/Pay/MemoFormInput'
+import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
 import FundingDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/FundingDrawer'
 import RulesDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/RulesDrawer'
 import TokenDrawer from 'components/v2/shared/FundingCycleConfigurationDrawers/TokenDrawer'
-import UnsavedChangesModal from 'components/v2/shared/UnsavedChangesModal'
+import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useContext, useState } from 'react'
@@ -36,12 +37,11 @@ function ReconfigureButton({
         padding: 10,
         fontWeight: 500,
         borderRadius: radii.sm,
-        border:
-          '1px solid ' +
-          (reconfigureHasChanges
-            ? colors.stroke.action.primary
-            : colors.stroke.action.secondary),
+        border: reconfigureHasChanges
+          ? '1px solid ' + colors.stroke.action.primary
+          : undefined,
       }}
+      className="clickable-border"
       onClick={onClick}
     >
       <div>{title}</div>
@@ -65,10 +65,10 @@ export function V2ReconfigureFundingCycleForm() {
     editingProjectData,
     initialEditingData,
   })
+  const { fundingCycleMetadata } = useContext(V2ProjectContext)
   const {
-    fundingCycleMetadata,
     nftRewards: { CIDs: nftRewardsCids },
-  } = useContext(V2ProjectContext)
+  } = useContext(NftRewardsContext)
 
   const { reconfigureLoading, reconfigureFundingCycle } =
     useReconfigureFundingCycle({ editingProjectData, memo })

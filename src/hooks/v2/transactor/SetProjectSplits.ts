@@ -1,9 +1,11 @@
+import { t } from '@lingui/macro'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { TransactorInstance } from 'hooks/Transactor'
-import { GroupedSplits } from 'models/v2/splits'
+import { GroupedSplits } from 'models/splits'
 import { useContext } from 'react'
-import { sanitizeSplit } from 'utils/v2/splits'
+import { sanitizeSplit } from 'utils/splits'
+import { useV2ProjectTitle } from '../ProjectTitle'
 
 export const useSetProjectSplits = <G>({
   domain,
@@ -14,6 +16,8 @@ export const useSetProjectSplits = <G>({
 }> => {
   const { transactor, contracts } = useContext(V2UserContext)
   const { projectId } = useContext(V2ProjectContext)
+  const projectTitle = useV2ProjectTitle()
+
   return ({ groupedSplits }, txOpts) => {
     const txGroupedSplits = {
       group: groupedSplits.group,
@@ -28,7 +32,10 @@ export const useSetProjectSplits = <G>({
       contracts.JBSplitsStore,
       'set',
       [projectId, domain, [txGroupedSplits]],
-      txOpts,
+      {
+        ...txOpts,
+        title: t`Set splits for ${projectTitle}`,
+      },
     )
   }
 }

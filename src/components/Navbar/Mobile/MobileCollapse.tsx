@@ -11,13 +11,13 @@ import { MenuOutlined } from '@ant-design/icons'
 import { ThemeContext } from 'contexts/themeContext'
 import { useWallet } from 'hooks/Wallet'
 
-import FeedbackFormButton from 'components/FeedbackFormButton'
-
+import useMobile from 'hooks/Mobile'
 import Account from '../Account'
 import Logo from '../Logo'
 import { TopLeftNavItems } from '../MenuItems'
 import NavLanguageSelector from '../NavLanguageSelector'
 import { topNavStyles } from '../navStyles'
+import TransactionsList from '../TransactionsList'
 import ResourcesDropdownMobile from './ResourcesDropdownMobile'
 import ThemePickerMobile from './ThemePickerMobile'
 
@@ -29,6 +29,7 @@ export default function MobileCollapse() {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const isMobile = useMobile()
 
   const isNavExpanded = activeKey === NAV_EXPANDED_KEY
 
@@ -76,16 +77,40 @@ export default function MobileCollapse() {
                   {<Logo height={30} />}
                 </a>
               </Link>
-              <MenuOutlined
+              <div
                 style={{
-                  color: colors.icon.primary,
-                  fontSize: '1.5rem',
-                  paddingTop: 6,
-                  paddingLeft: 10,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 30,
                 }}
-                onClick={toggleNav}
-                role="button"
-              />
+              >
+                <TransactionsList
+                  listStyle={
+                    isMobile
+                      ? {
+                          position: 'absolute',
+                          top: 48,
+                          left: 0,
+                          right: 0,
+                          padding: 12,
+                        }
+                      : {
+                          position: 'absolute',
+                          top: 70, // Position below navbar
+                          right: 30,
+                          width: 300,
+                        }
+                  }
+                />
+                <MenuOutlined
+                  style={{
+                    color: colors.icon.primary,
+                    fontSize: '1.5rem',
+                  }}
+                  onClick={toggleNav}
+                  role="button"
+                />
+              </div>
             </div>
           }
         >
@@ -100,9 +125,6 @@ export default function MobileCollapse() {
               </Menu.Item>
               <Menu.Item key="theme-picker">
                 <ThemePickerMobile />
-              </Menu.Item>
-              <Menu.Item key="feedback">
-                <FeedbackFormButton mobile />
               </Menu.Item>
             </div>
           </Menu>

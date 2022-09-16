@@ -4,22 +4,26 @@ import InputAccessoryButton from 'components/InputAccessoryButton'
 import { emitErrorNotification } from 'utils/notifications'
 
 import { useCallback, useEffect, useState } from 'react'
-import { fromWad } from 'utils/formatNumber'
-import { querySubgraphExhaustive } from 'utils/graph'
+import { fromWad } from 'utils/format/formatNumber'
+import { GraphQueryOpts, querySubgraphExhaustive } from 'utils/graph'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { readProvider } from 'constants/readProvider'
+import { CV } from 'models/cv'
+import { Participant } from 'models/subgraph-entities/vX/participant'
 import { downloadCsvFile } from 'utils/csv'
 
 export default function DownloadParticipantsModal({
   projectId,
+  cv,
   tokenSymbol,
   projectName,
   visible,
   onCancel,
 }: {
   projectId: number | undefined
+  cv: CV | undefined
   tokenSymbol: string | undefined
   projectName: string | undefined
   visible: boolean | undefined
@@ -37,7 +41,21 @@ export default function DownloadParticipantsModal({
   }, [])
 
   const download = useCallback(async () => {
-    if (blockNumber === undefined || !projectId) return
+    if (blockNumber === undefined || !projectId || !cv) return
+
+    // Projects that migrate between 1 & 1.1 may change their CV without the CV of their participants being updated. This should be fixed by better subgraph infrastructure, but this fix will make sure the UI works for now.
+    const cvOpt: GraphQueryOpts<'participant', keyof Participant>['where'] =
+      cv === '1' || cv === '1.1'
+        ? {
+            key: 'cv',
+            operator: 'in',
+            value: ['1', '1.1'],
+          }
+        : {
+            key: 'cv',
+            value: cv,
+          }
+
     const rows = [
       [
         'Wallet address',
@@ -66,10 +84,13 @@ export default function DownloadParticipantsModal({
         block: {
           number: blockNumber,
         },
-        where: {
-          key: 'projectId',
-          value: projectId,
-        },
+        where: [
+          {
+            key: 'projectId',
+            value: projectId,
+          },
+          cvOpt,
+        ],
       })
 
       if (!participants) {
@@ -99,7 +120,7 @@ export default function DownloadParticipantsModal({
       console.error('Error downloading participants', e)
       setLoading(false)
     }
-  }, [blockNumber, projectId, tokenSymbol, projectName])
+  }, [blockNumber, projectId, tokenSymbol, projectName, cv])
 
   return (
     <Modal

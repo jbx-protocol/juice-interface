@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import TooltipIcon from 'components/TooltipIcon'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useContext } from 'react'
 
 const TooltipDescription = () => {
@@ -17,7 +17,7 @@ export function TokenSwapDescription({
 }: {
   v1ProjectHandle: string
 }) {
-  const { projectMetadata } = useContext(V2ProjectContext)
+  const { projectMetadata } = useContext(ProjectMetadataContext)
 
   return (
     <div>

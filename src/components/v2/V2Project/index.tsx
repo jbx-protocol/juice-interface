@@ -18,13 +18,13 @@ import { weightedAmount } from 'utils/v2/math'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 
 import { TextButton } from 'components/TextButton'
-import V2BugNotice from 'components/v2/shared/V2BugNotice'
+import V2BugNotice from 'components/V2BugNotice'
 import { CurrencyContext } from 'contexts/currencyContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useMobile from 'hooks/Mobile'
 import { CurrencyOption } from 'models/currencyOption'
 import { featureFlagEnabled } from 'utils/featureFlags'
-import { fromWad } from 'utils/formatNumber'
+import { fromWad } from 'utils/format/formatNumber'
 import { v2ProjectRoute } from 'utils/routes'
 
 import { V2_PROJECT_IDS } from 'constants/v2/projectIds'
@@ -39,7 +39,10 @@ import V2PayButton from './V2PayButton'
 import V2ProjectHeaderActions from './V2ProjectHeaderActions'
 
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { NftRewardsSection } from './NftRewardsSection'
+import { NftRewardsContext } from 'contexts/nftRewardsContext'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { getNftRewardTier } from 'utils/nftRewards'
+import { NftRewardsSection } from '../../NftRewards/NftRewardsSection'
 
 const GUTTER_PX = 40
 
@@ -64,18 +67,17 @@ export default function V2Project({
   const {
     createdAt,
     projectId,
-    projectMetadata,
     fundingCycle,
     fundingCycleMetadata,
     isPreviewMode,
     tokenSymbol,
     tokenAddress,
     cv,
-    isArchived,
     projectOwnerAddress,
     handle,
     loading,
   } = useContext(V2ProjectContext)
+  const { projectMetadata, isArchived } = useContext(ProjectMetadataContext)
   const {
     currencies: { ETH },
   } = useContext(CurrencyContext)
@@ -125,6 +127,19 @@ export default function V2Project({
   const canEditProjectHandle = isOwner && !isPreviewMode && !handle
 
   const nftRewardsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
+
+  const {
+    nftRewards: { rewardTiers: nftRewardTiers },
+  } = useContext(NftRewardsContext)
+  const isEligibleForNft =
+    nftRewardTiers && payAmount
+      ? Boolean(
+          getNftRewardTier({
+            nftRewardTiers: nftRewardTiers,
+            payAmountETH: parseFloat(payAmount),
+          }),
+        )
+      : false
 
   const payAmountETH =
     payInCurrency === ETH ? payAmount : fromWad(converter.usdToWei(payAmount))
@@ -189,6 +204,7 @@ export default function V2Project({
             tokenSymbol={tokenSymbol}
             tokenAddress={tokenAddress}
             disabled={isPreviewMode || payIsDisabledPreV2Redeploy()}
+            isEligibleForNft={isEligibleForNft}
           />
           {(isMobile && nftRewardsEnabled) || isPreviewMode ? (
             <div style={{ marginTop: '30px' }}>

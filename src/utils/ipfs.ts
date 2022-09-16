@@ -3,21 +3,14 @@ import {
   PinataPinListResponse,
   PinataPinResponse,
 } from '@pinata/sdk'
-
+import axios from 'axios'
+import { DEFAULT_PINATA_GATEWAY, IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 import { base58 } from 'ethers/lib/utils'
 import { consolidateMetadata, ProjectMetadataV4 } from 'models/project-metadata'
-import {
-  IpfsNftCollectionMetadata,
-  IPFSNftRewardTier,
-  NftRewardTier,
-} from 'models/v2/nftRewardTier'
 
-import axios from 'axios'
-
-import { juiceboxEmojiImageUri } from 'constants/images'
-import { DEFAULT_PINATA_GATEWAY, IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
-
-// NOTE: `cid` and `IPFS hash` are synonymous
+/**
+ * NOTE: `cid` and `IPFS hash` are synonymous
+ */
 
 // Gets strings that start with 'ipfs'
 export const ipfsLinkRegex = new RegExp(
@@ -37,6 +30,10 @@ export const IPFS_TAGS = {
     process.env.NODE_ENV === 'production'
       ? 'juicebox_nft_reward_tier'
       : 'DEV_juicebox_nft_reward_tier',
+  SNAPSHOT_SETTINGS:
+    process.env.NODE_ENV === 'production'
+      ? 'juicebox_snapshot_settings'
+      : 'DEV_juicebox_snapshot_settings',
   NFT_REWARDS_COLLECTION_METADATA:
     process.env.NODE_ENV === 'production'
       ? 'juicebox_nft_reward_tier_collection'
@@ -138,94 +135,6 @@ export const getPinnedListByTag = async (tag: keyof typeof IPFS_TAGS) => {
   const data = await axios.get(`/api/ipfs/pin?tag=${IPFS_TAGS[tag]}`)
 
   return data.data as PinataPinListResponse
-}
-
-async function uploadNftRewardToIPFS(
-  rewardTier: NftRewardTier,
-): Promise<string> {
-  const ipfsNftRewardTier: IPFSNftRewardTier = {
-    description: rewardTier.description,
-    name: rewardTier.name,
-    externalLink: rewardTier.externalLink,
-    symbol: undefined,
-    image: rewardTier.imageUrl,
-    imageDataUrl: undefined,
-    artifactUri: undefined,
-    animationUri: undefined,
-    displayUri: undefined,
-    youtubeUri: undefined,
-    backgroundColor: undefined,
-    attributes: [
-      {
-        trait_type: 'Min. Contribution',
-        value: rewardTier.contributionFloor,
-      },
-      {
-        trait_type: 'Max. Supply',
-        value: rewardTier.maxSupply,
-      },
-    ],
-  }
-  const res = await axios.post('/api/ipfs/pin', {
-    data: ipfsNftRewardTier,
-    options: {
-      pinataMetadata: {
-        keyvalues: {
-          tag: IPFS_TAGS.NFT_REWARDS,
-        } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
-        name: ipfsNftRewardTier.name,
-      },
-    },
-  })
-  return res.data.IpfsHash as string
-}
-
-// Uploads each nft reward tier to an individual location on IPFS
-// returns an array of CIDs which point to each rewardTier on IPFS
-export async function uploadNftRewardsToIPFS(
-  nftRewards: NftRewardTier[],
-): Promise<string[]> {
-  return await Promise.all(
-    nftRewards.map(rewardTier => uploadNftRewardToIPFS(rewardTier)),
-  )
-}
-
-export async function uploadNftCollectionMetadataToIPFS({
-  collectionName,
-  collectionDescription,
-  collectionLogoUri,
-  collectionInfoUri,
-}: {
-  collectionName: string
-  collectionDescription: string
-  collectionLogoUri: string | undefined
-  collectionInfoUri: string | undefined
-}) {
-  // TODO: add inputs for the rest of these fields
-  const ipfsNftCollectionMetadata: IpfsNftCollectionMetadata = {
-    name: collectionName,
-    description: collectionDescription,
-    image: collectionLogoUri?.length
-      ? collectionLogoUri
-      : juiceboxEmojiImageUri,
-    seller_fee_basis_points: undefined,
-    external_link: collectionInfoUri?.length
-      ? collectionInfoUri
-      : 'https://juicebox.money',
-    fee_recipient: undefined,
-  }
-  const res = await axios.post('/api/ipfs/pin', {
-    data: ipfsNftCollectionMetadata,
-    options: {
-      pinataMetadata: {
-        keyvalues: {
-          tag: IPFS_TAGS.NFT_REWARDS_COLLECTION_METADATA,
-        } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
-        name: collectionName,
-      },
-    },
-  })
-  return res.data.IpfsHash as string
 }
 
 // returns a native IPFS link (`ipfs://cid`) as a https link

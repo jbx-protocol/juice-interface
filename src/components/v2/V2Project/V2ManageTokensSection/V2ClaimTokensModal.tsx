@@ -11,7 +11,8 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
 import { useClaimTokensTx } from 'hooks/v2/transactor/ClaimTokensTx'
 import { useContext, useLayoutEffect, useState } from 'react'
-import { formatWad, fromWad, parseWad } from 'utils/formatNumber'
+import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
+import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export default function V2ClaimTokensModal({
@@ -38,7 +39,7 @@ export default function V2ClaimTokensModal({
     setClaimAmount(fromWad(unclaimedBalance))
   }, [unclaimedBalance])
 
-  function executeClaimTokensTx() {
+  const executeClaimTokensTx = async () => {
     if (
       !claimAmount ||
       parseWad(claimAmount).eq(0) // Disable claiming 0 tokens
@@ -47,7 +48,7 @@ export default function V2ClaimTokensModal({
 
     setLoading(true)
 
-    claimTokensTx(
+    const txSuccess = await claimTokensTx(
       { claimAmount: parseWad(claimAmount) },
       {
         onDone: () => {
@@ -58,8 +59,18 @@ export default function V2ClaimTokensModal({
           setTransactionPending(false)
           onConfirmed?.()
         },
+        onError: (e: DOMException) => {
+          setTransactionPending(false)
+          setLoading(false)
+          emitErrorNotification(e.message)
+        },
       },
     )
+
+    if (!txSuccess) {
+      setTransactionPending(false)
+      setLoading(false)
+    }
   }
 
   const ticketsIssued = tokenAddress

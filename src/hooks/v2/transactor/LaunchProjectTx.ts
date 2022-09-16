@@ -7,11 +7,13 @@ import {
 } from 'models/v2/fundingCycle'
 import { useContext } from 'react'
 
-import { GroupedSplits, SplitGroup } from 'models/v2/splits'
+import { GroupedSplits, SplitGroup } from 'models/splits'
 import { isValidMustStartAtOrAfter } from 'utils/v2/fundingCycle'
 
-import { JUICEBOX_MONEY_METADATA_DOMAIN } from 'constants/v2/metadataDomain'
-import { TransactorInstance } from '../../Transactor'
+import { t } from '@lingui/macro'
+import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
+import { TransactorInstance } from 'hooks/Transactor'
+import { useV2ProjectTitle } from '../ProjectTitle'
 
 const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
 const DEFAULT_MEMO = ''
@@ -26,6 +28,7 @@ export function useLaunchProjectTx(): TransactorInstance<{
 }> {
   const { transactor, contracts } = useContext(V2UserContext)
   const { userAddress } = useWallet()
+  const projectTitle = useV2ProjectTitle()
 
   return (
     {
@@ -51,7 +54,7 @@ export function useLaunchProjectTx(): TransactorInstance<{
 
     const args = [
       userAddress, // _owner
-      [projectMetadataCID, JUICEBOX_MONEY_METADATA_DOMAIN], // _projectMetadata (JBProjectMetadata)
+      [projectMetadataCID, JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN], // _projectMetadata (JBProjectMetadata)
       fundingCycleData, // _data (JBFundingCycleData)
       fundingCycleMetadata, // _metadata (JBFundingCycleMetadata)
       mustStartAtOrAfter, // _mustStartAtOrAfter
@@ -61,6 +64,9 @@ export function useLaunchProjectTx(): TransactorInstance<{
       DEFAULT_MEMO,
     ]
 
-    return transactor(contracts.JBController, 'launchProjectFor', args, txOpts)
+    return transactor(contracts.JBController, 'launchProjectFor', args, {
+      ...txOpts,
+      title: t`Launch ${projectTitle}`,
+    })
   }
 }

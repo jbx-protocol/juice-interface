@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { formatIpfsLink, ipfsLinkRegex } from 'utils/ipfs'
 
-import { ProjectPreferences } from 'constants/v2/projectPreferences'
+import { ProjectPreferences } from 'constants/projectPreferences'
 import { loadAllMediaLinks } from './loadAllMediaLinks'
 
 // Gets strings that start with 'https'

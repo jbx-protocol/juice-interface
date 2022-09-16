@@ -22,14 +22,14 @@ import { reloadWindow } from 'utils/windowUtils'
 
 import { readNetwork } from 'constants/networks'
 import {
+  ETH_PAYOUT_SPLIT_GROUP,
+  RESERVED_TOKEN_SPLIT_GROUP,
+} from 'constants/splits'
+import {
   BALLOT_ADDRESSES,
   DEPRECATED_BALLOT_ADDRESSES,
 } from 'constants/v2/ballotStrategies'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
-import {
-  ETH_PAYOUT_SPLIT_GROUP,
-  RESERVED_TOKEN_SPLIT_GROUP,
-} from 'constants/v2/splits'
 import ReconfigurePreview from '../V2ProjectSettings/pages/V2ProjectReconfigureFundingCycleSettingsPage/ReconfigurePreview'
 
 export function RelaunchFundingCycleBanner() {

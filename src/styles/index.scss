@@ -57,10 +57,10 @@ h6 {
 
 .clickable-border {
   border: 1px solid var(--stroke-tertiary);
-  transition: border-color 120ms ease-out;
+  transition: border-color 100ms linear;
 
   &:hover {
-    border: 1px solid var(--stroke-secondary);
+    border: 1px solid var(--stroke-primary);
   }
 }
 
@@ -101,7 +101,7 @@ p,
 span,
 li,
 button {
-  transition: background-color 100ms ease-in, background 100ms ease-in;
+  transition: background-color 100ms linear, background 100ms linear;
 }
 
 body,
@@ -112,4 +112,3 @@ div {
 
 @import 'antd-overrides/index.scss';
 @import 'web3-onboard-overrides/index.scss';
-@import 'blocknative-overrides.scss';

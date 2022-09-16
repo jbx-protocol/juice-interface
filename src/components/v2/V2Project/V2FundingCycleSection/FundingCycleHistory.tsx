@@ -9,8 +9,8 @@ import Loading from 'components/Loading'
 import { ThemeContext } from 'contexts/themeContext'
 
 import { useContext, useEffect, useState } from 'react'
-import { formatHistoricalDate } from 'utils/formatDate'
-import { formatWad } from 'utils/formatNumber'
+import { formatHistoricalDate } from 'utils/format/formatDate'
+import { formatWad } from 'utils/format/formatNumber'
 
 import FundingCycleDetails from 'components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails'
 import { V2ProjectContext } from 'contexts/v2/projectContext'

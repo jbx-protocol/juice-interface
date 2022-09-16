@@ -7,7 +7,7 @@ import TransactorButton from 'components/TransactorButton'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useWallet } from 'hooks/Wallet'
 import { useState } from 'react'
-import { parseWad } from 'utils/formatNumber'
+import { parseWad } from 'utils/format/formatNumber'
 
 export function AddToProjectBalanceForm({
   useAddToBalanceTx,

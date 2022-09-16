@@ -4,6 +4,7 @@
   color: var(--text-over-action-secondary);
   font-weight: 500;
   border-radius: var(--radius-sm);
+  transition: all 100ms linear;
 
   &:hover {
     background: transparent;
@@ -21,14 +22,14 @@
 
 .ant-btn-primary {
   &:not(.ant-btn[disabled]) {
-    background: var(--background-action-primary) !important;
-    border-color: transparent !important;
-    color: var(--text-over-action-primary) !important;
+    background: var(--background-action-primary);
+    border-color: transparent;
+    color: var(--text-over-action-primary);
+    box-shadow: none;
   }
 
-  &:hover {
+  &:hover:not(.ant-btn[disabled]) {
     background: var(--background-action-highlight);
-    border-color: var(--stroke-action-primary);
     color: var(--text-over-action-primary);
   }
 

@@ -2,6 +2,7 @@ import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { useContext } from 'react'
 
+import { t } from '@lingui/macro'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useVeNftContract } from 'hooks/veNft/VeNftContract'
 
@@ -47,6 +48,7 @@ export function useLockTx(): LockTx {
       ],
       {
         ...txOpts,
+        title: t`Lock veNFT`,
       },
     )
   }

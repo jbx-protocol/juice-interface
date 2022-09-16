@@ -1,6 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { V2BallotState } from 'models/ballot'
-import { CV } from 'models/cv'
 import { Split } from 'models/splits'
 import { V2FundingCycle, V2FundingCycleMetadata } from 'models/v2/fundingCycle'
 import { createContext } from 'react'
@@ -16,10 +15,8 @@ type V2ProjectLoadingStates = {
 export type V2ProjectContextType = {
   isPreviewMode?: boolean
 
-  projectId: number | undefined
   handle: string | undefined
   createdAt: number | undefined
-  cv: CV | undefined
   tokenAddress: string | undefined
   tokenSymbol: string | undefined
   tokenName: string | undefined
@@ -44,21 +41,14 @@ export type V2ProjectContextType = {
   primaryTerminalCurrentOverflow: BigNumber | undefined
   totalTokenSupply: BigNumber | undefined
 
-  veNft: {
-    contractAddress: string | undefined
-    uriResolver: string | undefined
-  }
-
   loading: V2ProjectLoadingStates
 }
 
 export const V2ProjectContext = createContext<V2ProjectContextType>({
   isPreviewMode: false,
 
-  projectId: undefined,
   handle: undefined,
   createdAt: undefined,
-  cv: undefined,
   tokenAddress: undefined,
   tokenSymbol: undefined,
   tokenName: undefined,
@@ -82,11 +72,6 @@ export const V2ProjectContext = createContext<V2ProjectContextType>({
 
   primaryTerminalCurrentOverflow: undefined,
   totalTokenSupply: undefined,
-
-  veNft: {
-    contractAddress: undefined,
-    uriResolver: undefined,
-  },
 
   loading: {
     ETHBalanceLoading: false,

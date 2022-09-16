@@ -5,36 +5,36 @@ import { TransactorInstance } from 'hooks/Transactor'
 import { useState } from 'react'
 
 import { emitErrorNotification } from 'utils/notifications'
-import { IssueTokenTxArgs } from '../IssueTokenButton'
+import { IssueErc20TokenTxArgs } from '../IssueErc20TokenButton'
 import TransactionModal from '../TransactionModal'
 
-export default function IssueTokenModal({
+export function IssueErc20TokenModal({
   visible,
   onClose,
-  useIssueTokensTx,
+  useIssueErc20TokenTx,
   isNewDeploy,
   onConfirmed,
 }: {
   visible: boolean
   onClose: VoidFunction
-  useIssueTokensTx: () => TransactorInstance<IssueTokenTxArgs>
+  useIssueErc20TokenTx: () => TransactorInstance<IssueErc20TokenTxArgs>
   isNewDeploy?: boolean
   onConfirmed?: VoidFunction
 }) {
   const [transactionPending, setTransactionPending] = useState<boolean>()
   const [loading, setLoading] = useState<boolean>()
-  const [form] = useForm<IssueTokenTxArgs>()
+  const [form] = useForm<IssueErc20TokenTxArgs>()
 
-  const issueTokensTx = useIssueTokensTx()
+  const issueErc20TokenTx = useIssueErc20TokenTx()
 
-  async function executeIssueTokensTx() {
+  async function executeErc20IssueTokenTx() {
     await form.validateFields()
 
     setLoading(true)
 
     const fields = form.getFieldsValue(true)
 
-    const txSuccess = await issueTokensTx(
+    const txSuccess = await issueErc20TokenTx(
       { name: fields.name, symbol: fields.symbol },
       {
         onDone: () => {
@@ -67,7 +67,7 @@ export default function IssueTokenModal({
       okText={t`Issue token`}
       cancelText={t`Later`}
       connectWalletText={t`Connect wallet to issue`}
-      onOk={executeIssueTokensTx}
+      onOk={executeErc20IssueTokenTx}
       onCancel={() => onClose()}
       confirmLoading={loading}
       transactionPending={transactionPending}

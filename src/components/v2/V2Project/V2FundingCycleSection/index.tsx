@@ -23,6 +23,7 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
 
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useProjectUpcomingFundingCycle } from 'hooks/v2/contractReader/ProjectUpcomingFundingCycle'
 import Link from 'next/link'
 import { settingsPagePath } from 'utils/routes'
@@ -43,9 +44,9 @@ export default function V2FundingCycleSection({
     fundingCycle,
     isPreviewMode,
     loading: { fundingCycleLoading },
-    projectId,
     handle,
   } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const canReconfigure = useV2ConnectedWalletHasPermission(
     V2OperatorPermission.RECONFIGURE,

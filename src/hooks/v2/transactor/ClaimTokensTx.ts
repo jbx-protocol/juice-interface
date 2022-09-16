@@ -1,17 +1,22 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { t } from '@lingui/macro'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { onCatch, TransactorInstance } from 'hooks/Transactor'
 import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export function useClaimTokensTx(): TransactorInstance<{
   claimAmount: BigNumber
 }> {
-  const { transactor, contracts, version } = useContext(V2UserContext)
+  const { transactor, contracts } = useContext(V2UserContext)
+  const { tokenSymbol } = useContext(V2ProjectContext)
+  const { projectId, cv } = useContext(ProjectMetadataContext)
+
   const { userAddress } = useWallet()
-  const { projectId } = useContext(V2ProjectContext)
 
   return ({ claimAmount }, txOpts) => {
     try {
@@ -22,7 +27,13 @@ export function useClaimTokensTx(): TransactorInstance<{
         contracts?.JBTokenStore,
         'claimFor',
         [userAddress, projectId, claimAmount.toHexString()],
-        txOpts,
+        {
+          ...txOpts,
+          title: t`Claim ${tokenSymbolText({
+            tokenSymbol,
+            plural: true,
+          })}`,
+        },
       )
     } catch {
       const missingParam = !transactor
@@ -39,7 +50,7 @@ export function useClaimTokensTx(): TransactorInstance<{
         txOpts,
         missingParam,
         functionName: 'claimFor',
-        version,
+        cv,
       })
     }
   }

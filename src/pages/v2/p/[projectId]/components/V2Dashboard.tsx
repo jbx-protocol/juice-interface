@@ -5,6 +5,7 @@ import { ProjectMetadataV4 } from 'models/project-metadata'
 import { V2NftRewardsProvider } from 'providers/v2/V2NftRewardsProvider'
 import V2ProjectMetadataProvider from 'providers/v2/V2ProjectMetadataProvider'
 import V2ProjectProvider from 'providers/v2/V2ProjectProvider'
+import { VeNftProvider } from 'providers/v2/VeNftProvider'
 
 export default function V2Dashboard({
   projectId,
@@ -18,7 +19,9 @@ export default function V2Dashboard({
       <V2ProjectMetadataProvider projectId={projectId} metadata={metadata}>
         <V2ProjectProvider projectId={projectId}>
           <V2NftRewardsProvider>
-            <V2Project />
+            <VeNftProvider projectId={projectId}>
+              <V2Project />
+            </VeNftProvider>
           </V2NftRewardsProvider>
         </V2ProjectProvider>
       </V2ProjectMetadataProvider>

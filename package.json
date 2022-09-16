@@ -83,7 +83,6 @@
     "antd": "4.21.0",
     "autolinker": "^3.14.3",
     "axios": "0.27.2",
-    "bnc-notify": "1.9.1",
     "bottleneck": "^2.19.5",
     "erc-20-abi": "^1.0.0",
     "ethereum-block-by-date": "1.4.5",

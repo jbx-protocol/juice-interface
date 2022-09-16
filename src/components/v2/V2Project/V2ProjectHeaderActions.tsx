@@ -3,8 +3,10 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import ProjectVersionBadge from 'components/ProjectVersionBadge'
 import { V2ProjectToolsDrawer } from 'components/v2/V2Project/V2ProjectToolsDrawer/V2ProjectToolsDrawer'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { VeNftContext } from 'contexts/veNftContext'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/V2ConnectedWalletHasPermission'
 import { V2OperatorPermission } from 'models/v2/permissions'
 import Link from 'next/link'
@@ -13,13 +15,11 @@ import { settingsPagePath, veNftPagePath } from 'utils/routes'
 
 export default function V2ProjectHeaderActions() {
   const {
-    projectId,
-    handle,
-    veNft: { contractAddress: veNftContractAddress },
-  } = useContext(V2ProjectContext)
-  const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const { handle } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
+  const { contractAddress: veNftContractAddress } = useContext(VeNftContext)
 
   const [toolDrawerVisible, setToolDrawerVisible] = useState<boolean>(false)
 

@@ -15,6 +15,7 @@ import {
 import { V2FundingCycle } from 'models/v2/fundingCycle'
 
 import V2Project from 'components/v2/V2Project'
+import { CV_V2 } from 'constants/cv'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2_CURRENCY_ETH } from 'utils/v2/currency'
@@ -51,9 +52,7 @@ export default function ProjectPreview({
 
   const project: V2ProjectContextType = {
     isPreviewMode: true,
-    cv: '2',
 
-    projectId: 0,
     handle: undefined,
 
     createdAt: undefined,
@@ -85,11 +84,6 @@ export default function ProjectPreview({
     primaryTerminalCurrentOverflow: undefined,
     totalTokenSupply: undefined,
 
-    veNft: {
-      contractAddress: undefined,
-      uriResolver: undefined,
-    },
-
     loading: {
       ETHBalanceLoading: false,
       balanceInDistributionLimitCurrencyLoading: false,
@@ -101,7 +95,7 @@ export default function ProjectPreview({
 
   return (
     <ProjectMetadataContext.Provider
-      value={{ projectMetadata, isArchived: false }}
+      value={{ projectMetadata, isArchived: false, projectId: 0, cv: CV_V2 }}
     >
       <V2ProjectContext.Provider value={project}>
         <div>

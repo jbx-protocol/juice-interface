@@ -5,6 +5,7 @@ import ETHAmount from 'components/currency/ETHAmount'
 import Loading from 'components/Loading'
 import { ProjectCardProject } from 'components/ProjectCard'
 import ProjectLogo from 'components/ProjectLogo'
+import { CV_V2 } from 'constants/cv'
 import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
@@ -33,7 +34,7 @@ const SmallProjectCardMobile = ({
     <Link
       key={`${project.id}_${project.cv}`}
       href={
-        project.cv === '2'
+        project.cv === CV_V2
           ? `/v2/p/${project.projectId}`
           : `/p/${project?.handle}`
       }
@@ -61,6 +62,7 @@ const SmallProjectCardMobile = ({
             uri={metadata?.logoUri}
             name={metadata?.name}
             size={60}
+            projectId={project.projectId}
           />
         </div>
 
@@ -109,7 +111,7 @@ const SmallProjectCard = ({ project }: { project: ProjectCardProject }) => {
     <Link
       key={`${project.id}_${project.cv}`}
       href={
-        project.cv === '2'
+        project.cv === CV_V2
           ? `/v2/p/${project.projectId}`
           : `/p/${project?.handle}`
       }
@@ -136,6 +138,7 @@ const SmallProjectCard = ({ project }: { project: ProjectCardProject }) => {
               uri={metadata?.logoUri}
               name={metadata?.name}
               size={90}
+              projectId={project.projectId}
             />
           </div>
 

@@ -20,7 +20,7 @@ export default function TrendingProjects({
           {projects.map((p, i) => (
             <TrendingProjectCard
               project={p}
-              size={'lg'}
+              size="lg"
               rank={i + 1}
               key={`${p.id}_${p.cv}`}
             />

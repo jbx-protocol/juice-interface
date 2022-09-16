@@ -35,6 +35,7 @@ export default function TrendingProjectCard({
     | 'createdWithinTrendingWindow'
     | 'handle'
     | 'cv'
+    | 'projectId'
   >
   size?: 'sm' | 'lg'
   rank: number
@@ -126,6 +127,7 @@ export default function TrendingProjectCard({
                 uri={metadata?.logoUri}
                 name={metadata?.name}
                 size={size === 'sm' ? 70 : 110}
+                projectId={project.projectId}
               />
             </div>
 

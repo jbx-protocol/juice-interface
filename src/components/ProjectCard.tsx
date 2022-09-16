@@ -131,6 +131,7 @@ export default function ProjectCard({
               uri={metadata?.logoUri}
               name={metadata?.name}
               size={110}
+              projectId={_project?.projectId}
             />
           </div>
           <div

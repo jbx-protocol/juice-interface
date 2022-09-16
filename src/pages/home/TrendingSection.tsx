@@ -56,7 +56,7 @@ export default function TrendingSection() {
               {trendingProjects?.map((p, i) => (
                 <TrendingProjectCard
                   project={p}
-                  size={'sm'}
+                  size="sm"
                   rank={i + 1}
                   key={`${p.id}_${p.cv}`}
                 />

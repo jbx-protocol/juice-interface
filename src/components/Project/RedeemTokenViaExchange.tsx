@@ -19,10 +19,11 @@ export const RedeemTokenViaExchange = ({
   return (
     <span style={style}>
       <Tooltip
-        placement="bottom"
         title={
           <AMMPrices tokenSymbol={tokenSymbol} tokenAddress={tokenAddress} />
         }
+        placement="bottomLeft"
+        overlayStyle={{ minWidth: '300px' }}
       >
         <span
           style={{

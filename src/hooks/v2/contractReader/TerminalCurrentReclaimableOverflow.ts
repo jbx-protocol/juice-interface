@@ -1,11 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbers'
 
 import { V2ContractName } from 'models/v2/contracts'
 
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import useTotalBalanceOf from './TotalBalanceOf'
 import useV2ContractReader from './V2ContractReader'
 
@@ -15,7 +15,7 @@ export default function useTerminalCurrentReclaimableOverflow({
 }: {
   terminal: string | undefined
 }) {
-  const { projectId } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
   const { userAddress } = useWallet()
 
   const { data: totalBalance, loading: totalBalanceLoading } =

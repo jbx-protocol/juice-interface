@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { V2CVType } from 'models/cv'
+import { V1TerminalVersion } from 'models/v1/terminals'
 
 /**
  * Calls to the NextJS API `/api/nextjs/revalidate-project` to revalidate the
@@ -11,7 +13,9 @@ import axios from 'axios'
  * @returns {Promise<AxiosResponse>} Promise related to the axios call.
  */
 export function revalidateProject(
-  project: { cv: '1' | '1.1'; handle: string } | { cv: '2'; projectId: string },
+  project:
+    | { cv: V1TerminalVersion; handle: string }
+    | { cv: V2CVType; projectId: string },
 ) {
   return axios.post('/api/nextjs/revalidate-project', { project })
 }

@@ -13,6 +13,7 @@ import { formatHistoricalDate } from 'utils/format/formatDate'
 import { formatWad } from 'utils/format/formatNumber'
 
 import FundingCycleDetails from 'components/v2/V2Project/V2FundingCycleSection/FundingCycleDetails'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
@@ -123,11 +124,11 @@ function HistoricalFundingCycle({
   index: number
   onClick: VoidFunction
 }) {
-  const { projectId, primaryTerminal } = useContext(V2ProjectContext)
-
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const { primaryTerminal } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const { data: distributionLimitData } = useProjectDistributionLimit({
     projectId,
@@ -206,11 +207,9 @@ function HistoricalFundingCycle({
 }
 
 export default function FundingCycleHistory() {
-  const {
-    projectId,
-    fundingCycle: currentFundingCycle,
-    primaryTerminal,
-  } = useContext(V2ProjectContext)
+  const { fundingCycle: currentFundingCycle, primaryTerminal } =
+    useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
   const { contracts } = useContext(V2UserContext)
 
   const [selectedIndex, setSelectedIndex] = useState<number>()

@@ -2,11 +2,11 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { useContext } from 'react'
 
 import * as constants from '@ethersproject/constants'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 
-import { TransactorInstance } from 'hooks/Transactor'
 import { t } from '@lingui/macro'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { TransactorInstance } from 'hooks/Transactor'
 import { useV2ProjectTitle } from '../ProjectTitle'
 
 const DEFAULT_DELEGATE_METADATA = 0
@@ -21,7 +21,7 @@ type PayV2ProjectTx = TransactorInstance<{
 
 export function usePayV1TokenPaymentTerminal(): PayV2ProjectTx {
   const { transactor, contracts } = useContext(V2UserContext)
-  const { projectId } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
   const projectTitle = useV2ProjectTitle()
 
   return ({ memo, preferClaimedTokens, beneficiary, value }, txOpts) => {

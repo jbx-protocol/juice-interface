@@ -3,6 +3,7 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { useContext } from 'react'
 
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
@@ -12,7 +13,8 @@ type DistributeReserveTokensTx = TransactorInstance<{
 
 export function useDistributeReservedTokens(): DistributeReserveTokensTx {
   const { transactor, contracts } = useContext(V2UserContext)
-  const { projectId, tokenSymbol } = useContext(V2ProjectContext)
+  const { tokenSymbol } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   return ({ memo = '' }, txOpts) => {
     if (!transactor || !projectId || !contracts?.JBController) {

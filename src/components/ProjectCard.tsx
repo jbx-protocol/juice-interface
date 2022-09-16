@@ -17,6 +17,7 @@ import Link from 'next/link'
 
 import { v2ProjectRoute } from 'utils/routes'
 
+import { CV_V1, CV_V1_1, CV_V2 } from 'constants/cv'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
 import ETHAmount from './currency/ETHAmount'
@@ -99,9 +100,9 @@ export default function ProjectCard({
   const terminalVersion = getTerminalVersion(_project?.terminal)
 
   const isArchived =
-    ((_project.cv === '1' || _project.cv === '1.1') &&
+    ((_project.cv === CV_V1 || _project.cv === CV_V1_1) &&
       V1ArchivedProjectIds.includes(_project.projectId)) ||
-    (_project.cv === '2' &&
+    (_project.cv === CV_V2 &&
       V2ArchivedProjectIds.includes(_project.projectId)) ||
     metadata?.archived
 
@@ -109,7 +110,7 @@ export default function ProjectCard({
     <Link
       key={`${_project.id}_${_project.cv}`}
       href={
-        _project.cv === '2'
+        _project.cv === CV_V2
           ? v2ProjectRoute(_project)
           : `/p/${_project?.handle}`
       }

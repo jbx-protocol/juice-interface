@@ -63,7 +63,7 @@ export default function ReservesEventElem({
             <Trans>
               Distributed reserved{' '}
               {tokenSymbolText({
-                tokenSymbol: tokenSymbol,
+                tokenSymbol,
                 capitalize: false,
                 plural: true,
               })}
@@ -78,7 +78,7 @@ export default function ReservesEventElem({
             >
               {formatWad(event.count, { precision: 0 })}{' '}
               {tokenSymbolText({
-                tokenSymbol: tokenSymbol,
+                tokenSymbol,
                 capitalize: false,
                 plural: parseInt(fromWad(event.count) || '0') !== 1,
               })}

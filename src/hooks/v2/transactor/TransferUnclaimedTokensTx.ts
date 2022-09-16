@@ -5,6 +5,7 @@ import { V2UserContext } from 'contexts/v2/userContext'
 import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
@@ -14,7 +15,8 @@ export function useTransferUnclaimedTokensTx(): TransactorInstance<{
 }> {
   const { transactor, contracts } = useContext(V2UserContext)
   const { userAddress } = useWallet()
-  const { projectId, tokenSymbol } = useContext(V2ProjectContext)
+  const { tokenSymbol } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   return ({ amount, to }, txOpts) => {
     if (!transactor || !projectId || !contracts?.JBTokenStore) {

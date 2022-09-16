@@ -35,6 +35,7 @@ import { useHasV1TokenPaymentTerminal } from 'hooks/v2/hasV1TokenPaymentTerminal
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { reloadWindow } from 'utils/windowUtils'
 
+import RichButton from 'components/RichButton'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { VeNftContext } from 'contexts/veNftContext'
@@ -67,13 +68,11 @@ export default function V2ManageTokensSection() {
     isPreviewMode,
     totalTokenSupply,
     fundingCycleMetadata,
-    projectId,
     primaryTerminalCurrentOverflow,
-    cv,
     handle,
   } = useContext(V2ProjectContext)
   const { contractAddress: veNftAddress } = useContext(VeNftContext)
-  const { projectMetadata } = useContext(ProjectMetadataContext)
+  const { projectMetadata, projectId, cv } = useContext(ProjectMetadataContext)
 
   const { userAddress } = useWallet()
 
@@ -105,12 +104,15 @@ export default function V2ManageTokensSection() {
   })
 
   const tokenText = tokenSymbolText({
-    tokenSymbol: tokenSymbol,
+    tokenSymbol,
     capitalize: false,
     plural: true,
   })
 
   const hasOverflow = Boolean(primaryTerminalCurrentOverflow?.gt(0))
+  const redeemDisabled = Boolean(
+    !hasOverflow || fundingCycleMetadata?.redemptionRate.eq(0),
+  )
 
   const hasIssuedERC20 = tokenAddress !== constants.AddressZero
   const hasIssueTicketsPermission = useV2ConnectedWalletHasPermission(
@@ -145,7 +147,7 @@ export default function V2ManageTokensSection() {
                 tip={
                   <Trans>
                     {tokenSymbolText({
-                      tokenSymbol: tokenSymbol,
+                      tokenSymbol,
                       capitalize: true,
                       plural: true,
                       includeTokenWord: true,
@@ -318,14 +320,28 @@ export default function V2ManageTokensSection() {
         onCancel={() => setManageTokensModalVisible(false)}
         projectAllowsMint={projectAllowsMint}
         userHasMintPermission={userHasMintPermission}
-        veNftEnabled={veNftEnabled}
         hasOverflow={hasOverflow}
+        redeemDisabled={redeemDisabled}
         tokenSymbol={tokenSymbol}
         tokenAddress={tokenAddress}
         RedeemModal={V2RedeemModal}
         ClaimTokensModal={V2ClaimTokensModal}
         MintModal={V2MintModal}
-      />
+      >
+        {veNftEnabled && (
+          <Link href={veNftPagePath('mint', { projectId, handle })}>
+            <RichButton
+              heading={<Trans>Lock {tokenText} for Governance NFTs</Trans>}
+              description={
+                <Trans>
+                  Lock your {tokenText} to increase your voting weight and claim
+                  Governance NFTs.
+                </Trans>
+              }
+            />
+          </Link>
+        )}
+      </ManageTokensModal>
       <ParticipantsModal
         projectId={projectId}
         projectName={projectMetadata?.name}

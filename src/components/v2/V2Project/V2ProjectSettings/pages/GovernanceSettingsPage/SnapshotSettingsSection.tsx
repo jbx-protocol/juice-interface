@@ -12,10 +12,10 @@ import { emitErrorNotification } from 'utils/notifications'
 import { helpPagePath } from 'utils/routes'
 
 export function SnapshotSettingsSection() {
-  const { tokenSymbol, tokenAddress, handle, projectId, projectOwnerAddress } =
+  const { tokenSymbol, tokenAddress, handle, projectOwnerAddress } =
     useContext(V2ProjectContext)
   const { contracts } = useContext(V2UserContext)
-  const { projectMetadata } = useContext(ProjectMetadataContext)
+  const { projectMetadata, projectId } = useContext(ProjectMetadataContext)
 
   const JBTokenStoreAddress = contracts?.JBTokenStore.address
 

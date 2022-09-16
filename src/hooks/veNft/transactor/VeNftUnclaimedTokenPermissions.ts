@@ -4,14 +4,14 @@ import { useContext } from 'react'
 import { TransactorInstance } from 'hooks/Transactor'
 
 import { t } from '@lingui/macro'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { VeNftContext } from 'contexts/veNftContext'
 import { useV2ProjectTitle } from 'hooks/v2/ProjectTitle'
 import { V2OperatorPermission } from 'models/v2/permissions'
 
 export function useUnclaimedTokensPermissionTx(): TransactorInstance {
   const { transactor, contracts } = useContext(V2UserContext)
-  const { projectId } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
   const { contractAddress } = useContext(VeNftContext)
 
   const projectTitle = useV2ProjectTitle()

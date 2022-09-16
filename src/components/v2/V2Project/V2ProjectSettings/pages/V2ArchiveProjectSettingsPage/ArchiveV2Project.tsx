@@ -3,6 +3,7 @@ import { TransactorInstance } from 'hooks/Transactor'
 import { useContext } from 'react'
 
 import ArchiveProject from 'components/ArchiveProject'
+import { CV_V2 } from 'constants/cv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 
 /**
@@ -15,8 +16,8 @@ export function V2ArchiveProject({
     cid: string
   }>
 }) {
-  const { projectId, projectOwnerAddress, cv } = useContext(V2ProjectContext)
-  const { projectMetadata } = useContext(ProjectMetadataContext)
+  const { projectOwnerAddress } = useContext(V2ProjectContext)
+  const { projectMetadata, projectId } = useContext(ProjectMetadataContext)
 
   return (
     <ArchiveProject
@@ -24,7 +25,7 @@ export function V2ArchiveProject({
       metadata={projectMetadata}
       projectId={projectId}
       owner={projectOwnerAddress}
-      cv={cv ?? '2'}
+      cv={CV_V2}
     />
   )
 }

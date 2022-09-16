@@ -15,7 +15,7 @@ import {
   parseWad,
 } from 'utils/format/formatNumber'
 
-import IssueTokenButton from 'components/IssueTokenButton'
+import { IssueErc20TokenButton } from 'components/IssueErc20TokenButton'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/V2ConnectedWalletHasPermission'
 import { V2OperatorPermission } from 'models/v2/permissions'
 
@@ -25,7 +25,7 @@ import { TextButton } from 'components/TextButton'
 import { ThemeContext } from 'contexts/themeContext'
 import useTotalBalanceOf from 'hooks/v2/contractReader/TotalBalanceOf'
 import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
-import { useIssueTokensTx } from 'hooks/v2/transactor/IssueTokensTx'
+import { useIssueErc20TokenTx } from 'hooks/v2/transactor/IssueErc20TokenTx'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import TooltipIcon from 'components/TooltipIcon'
@@ -118,7 +118,7 @@ export default function V2ManageTokensSection() {
   const hasIssueTicketsPermission = useV2ConnectedWalletHasPermission(
     V2OperatorPermission.ISSUE,
   )
-  const showIssueTokensButton =
+  const showIssueErc20TokenButton =
     !hasIssuedERC20 && hasIssueTicketsPermission && !isPreviewMode
   const showV1ProjectTokensSection =
     v1TokenSwapEnabled && hasV1ProjectId && hasV1TokenPaymentTerminal
@@ -159,10 +159,10 @@ export default function V2ManageTokensSection() {
                   </Trans>
                 }
               />
-              {showIssueTokensButton && (
+              {showIssueErc20TokenButton && (
                 <div style={{ marginBottom: 20 }}>
-                  <IssueTokenButton
-                    useIssueTokensTx={useIssueTokensTx}
+                  <IssueErc20TokenButton
+                    useIssueErc20TokenTx={useIssueErc20TokenTx}
                     onCompleted={reloadWindow}
                   />
                 </div>

@@ -185,7 +185,6 @@ function Landing() {
                   })
                 }
                 alt="Chill banana drinking juice"
-                loading="lazy"
               />
             </Col>
           </Row>

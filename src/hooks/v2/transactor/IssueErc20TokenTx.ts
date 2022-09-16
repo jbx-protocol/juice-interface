@@ -6,7 +6,7 @@ import invariant from 'tiny-invariant'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { onCatch, TransactorInstance } from 'hooks/Transactor'
 
-export function useIssueTokensTx(): TransactorInstance<{
+export function useIssueErc20TokenTx(): TransactorInstance<{
   name: string
   symbol: string
 }> {

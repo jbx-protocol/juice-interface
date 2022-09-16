@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 
-import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { t } from '@lingui/macro'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { GroupedSplits, SplitGroup } from 'models/splits'
@@ -10,6 +11,7 @@ import {
   V2FundingCycleMetadata,
 } from 'models/v2/fundingCycle'
 import { isValidMustStartAtOrAfter } from 'utils/v2/fundingCycle'
+import { useV2ProjectTitle } from '../ProjectTitle'
 
 const DEFAULT_MUST_START_AT_OR_AFTER = '1'
 
@@ -22,7 +24,8 @@ export function useReconfigureV2FundingCycleTx(): TransactorInstance<{
   memo: string
 }> {
   const { transactor, contracts } = useContext(V2UserContext)
-  const { projectId } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
+  const projectTitle = useV2ProjectTitle()
 
   return (
     {
@@ -57,7 +60,10 @@ export function useReconfigureV2FundingCycleTx(): TransactorInstance<{
         fundAccessConstraints,
         memo,
       ],
-      txOpts,
+      {
+        ...txOpts,
+        title: t`Reconfigure ${projectTitle}`,
+      },
     )
   }
 }

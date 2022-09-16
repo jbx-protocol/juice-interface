@@ -58,15 +58,6 @@ Take the following steps to set up Piñata for local development:
 
 Note: Once you pass Piñata's free tier of 1GB of storage, you'll need to get access to the premium `PINATA_PINNER_KEY` and `PINATA_PINNER_SECRET` keys. Contact the Peel team in discord to get access. Piñata will constantly give a 429 error if the free tier of API requests has been reached.
 
-### Blocknative
-
-Juicebox uses [Blocknative](https://www.blocknative.com) to onboard users by enabling wallet selection, connection, wallet checks, and real-time state updates.
-
-Take the following steps to set up Blocknative for local development:
-
-1. Create a Blocknative API key ([learn more](https://docs.blocknative.com/webhook-api#setup-api-key)).
-1. Copy the API key into the `NEXT_PUBLIC_BLOCKNATIVE_API_KEY` variable of the `.env` file.
-
 ### The Graph
 
 Juicebox uses [The Graph](https://thegraph.com) to query the Ethereum network using a GraphQL API.

@@ -13,6 +13,7 @@ import { lazy, Suspense } from 'react'
 
 import { weightedRate } from 'utils/v1/math'
 
+import { CV_V1 } from 'constants/cv'
 import FundingCycles from './FundingCycles'
 import Paid from './Paid'
 import ProjectActivity from './ProjectActivity'
@@ -44,7 +45,6 @@ export default function V1Project({
     tokenAddress,
     isPreviewMode,
     owner,
-    cv,
   } = useContext(V1ProjectContext)
 
   const {
@@ -100,7 +100,7 @@ export default function V1Project({
                   style={{ height: 240 }}
                   projectId={projectId}
                   createdAt={createdAt}
-                  cv={cv ?? '1'}
+                  cv={CV_V1}
                 />
               </Suspense>
             </div>

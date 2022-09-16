@@ -1,10 +1,13 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { t } from '@lingui/macro'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { useContext } from 'react'
 
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { onCatch, TransactorInstance } from 'hooks/Transactor'
 import invariant from 'tiny-invariant'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export function useMintTokensTx(): TransactorInstance<{
   value: BigNumber
@@ -12,8 +15,9 @@ export function useMintTokensTx(): TransactorInstance<{
   preferClaimed: boolean
   memo: string
 }> {
-  const { transactor, contracts, version } = useContext(V2UserContext)
-  const { projectId } = useContext(V2ProjectContext)
+  const { transactor, contracts } = useContext(V2UserContext)
+  const { tokenSymbol } = useContext(V2ProjectContext)
+  const { projectId, cv } = useContext(ProjectMetadataContext)
 
   // TODO new V2 feature:
   // Whether to use the current funding cycle's reserved rate in the mint calculation.
@@ -33,7 +37,13 @@ export function useMintTokensTx(): TransactorInstance<{
           preferClaimed,
           reservedRate,
         ],
-        txOpts,
+        {
+          ...txOpts,
+          title: t`Mint ${tokenSymbolText({
+            tokenSymbol,
+            plural: true,
+          })}`,
+        },
       )
     } catch {
       const missingParam = !transactor
@@ -48,7 +58,7 @@ export function useMintTokensTx(): TransactorInstance<{
         txOpts,
         missingParam,
         functionName: 'mintTokensOf',
-        version,
+        cv,
       })
     }
   }

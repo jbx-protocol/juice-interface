@@ -83,9 +83,11 @@ const items: MenuItem[] = [
 ]
 
 export function V2ProjectSettings() {
-  const { isPreviewMode, projectOwnerAddress, handle, projectId } =
+  const { isPreviewMode, projectOwnerAddress, handle } =
     useContext(V2ProjectContext)
-  const { projectMetadata, isArchived } = useContext(ProjectMetadataContext)
+  const { projectMetadata, isArchived, projectId } = useContext(
+    ProjectMetadataContext,
+  )
   const { isDarkMode } = useContext(ThemeContext)
 
   const router = useRouter()

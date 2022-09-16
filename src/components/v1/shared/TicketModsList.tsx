@@ -90,7 +90,7 @@ export default function TicketModsList({
                       ? ` (${formatWad(total?.mul(mod.percent).div(10000), {
                           precision: 0,
                         })} ${tokenSymbolText({
-                          tokenSymbol: tokenSymbol,
+                          tokenSymbol,
                           capitalize: false,
                           plural: true,
                         })})`
@@ -111,7 +111,7 @@ export default function TicketModsList({
                 ? ` (${formatWad(total?.mul(ownerPercent).div(10000), {
                     precision: 0,
                   })} ${tokenSymbolText({
-                    tokenSymbol: tokenSymbol,
+                    tokenSymbol,
                     capitalize: false,
                     plural: true,
                   })})`

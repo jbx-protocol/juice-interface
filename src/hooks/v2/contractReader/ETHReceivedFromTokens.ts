@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2BallotState } from 'models/ballot'
 import { useContext } from 'react'
@@ -31,13 +32,13 @@ export function useETHReceivedFromTokens({
   tokenAmount: string | undefined
 }): BigNumber | undefined {
   const {
-    projectId,
     fundingCycle,
     fundingCycleMetadata,
     primaryTerminalCurrentOverflow,
     totalTokenSupply,
     ballotState,
   } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const { data: undistributedReservedTokens } = useProjectReservedTokens({
     projectId,

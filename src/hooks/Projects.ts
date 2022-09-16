@@ -1,3 +1,4 @@
+import { CV_V1, CV_V2 } from 'constants/cv'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
 import { CV } from 'models/cv'
@@ -44,10 +45,10 @@ const DEFAULT_ENTITY_KEYS: (keyof Project)[] = [
   'cv',
 ]
 const V1_ARCHIVED_SUBGRAPH_IDS = V1ArchivedProjectIds.map(projectId =>
-  getSubgraphIdForProject('1', projectId),
+  getSubgraphIdForProject(CV_V1, projectId),
 )
 const V2_ARCHIVED_SUBGRAPH_IDS = V2ArchivedProjectIds.map(projectId =>
-  getSubgraphIdForProject('2', projectId),
+  getSubgraphIdForProject(CV_V2, projectId),
 )
 const ARCHIVED_SUBGRAPH_IDS = [
   ...V1_ARCHIVED_SUBGRAPH_IDS,

@@ -1,5 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { CV_V2 } from 'constants/cv'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useReconfigureV2FundingCycleTx } from 'hooks/v2/transactor/ReconfigureV2FundingCycleTx'
 import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton'
@@ -40,7 +42,8 @@ export const useReconfigureFundingCycle = ({
   editingProjectData: EditingProjectData
   memo: string
 }) => {
-  const { fundingCycle, projectId } = useContext(V2ProjectContext)
+  const { fundingCycle } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
   const {
     nftRewards: { CIDs: nftRewardsCids },
   } = useContext(NftRewardsContext)
@@ -108,7 +111,7 @@ export const useReconfigureFundingCycle = ({
         async onConfirmed() {
           if (projectId) {
             await revalidateProject({
-              cv: '2',
+              cv: CV_V2,
               projectId: String(projectId),
             })
           }

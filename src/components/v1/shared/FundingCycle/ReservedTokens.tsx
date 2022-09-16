@@ -54,7 +54,7 @@ export default function ReservedTokens({
               <Trans>
                 Reserved{' '}
                 {tokenSymbolText({
-                  tokenSymbol: tokenSymbol,
+                  tokenSymbol,
                   capitalize: false,
                   plural: true,
                 })}

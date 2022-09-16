@@ -1,10 +1,13 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { t } from '@lingui/macro'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactorInstance } from 'hooks/Transactor'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export function useTransferUnclaimedTokensTx(): TransactorInstance<{
   amount: BigNumber
@@ -12,7 +15,8 @@ export function useTransferUnclaimedTokensTx(): TransactorInstance<{
 }> {
   const { transactor, contracts } = useContext(V2UserContext)
   const { userAddress } = useWallet()
-  const { projectId } = useContext(V2ProjectContext)
+  const { tokenSymbol } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   return ({ amount, to }, txOpts) => {
     if (!transactor || !projectId || !contracts?.JBTokenStore) {
@@ -44,7 +48,13 @@ export function useTransferUnclaimedTokensTx(): TransactorInstance<{
       contracts.JBTokenStore,
       'transferFrom',
       [userAddress, projectId, to, amount.toHexString()],
-      txOpts,
+      {
+        ...txOpts,
+        title: t`Transfer unclaimed ${tokenSymbolText({
+          tokenSymbol,
+          plural: true,
+        })}`,
+      },
     )
   }
 }

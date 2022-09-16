@@ -76,8 +76,8 @@ export function LaunchProjectPayerModal({
         onDone() {
           setTransactionPending(true)
         },
-        async onConfirmed(result) {
-          const txHash = result?.transaction?.hash
+        async onConfirmed(tx) {
+          const txHash = tx?.hash
           if (!txHash) {
             return
           }

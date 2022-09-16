@@ -6,6 +6,8 @@ import { useContext } from 'react'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 
 import { TransactorInstance } from 'hooks/Transactor'
+import { t } from '@lingui/macro'
+import { useV1ProjectTitle } from '../ProjectTitle'
 
 export function useTapProjectTx(): TransactorInstance<{
   tapAmount: BigNumber
@@ -14,6 +16,7 @@ export function useTapProjectTx(): TransactorInstance<{
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
   const { projectId, terminal } = useContext(V1ProjectContext)
+  const projectTitle = useV1ProjectTitle()
 
   return ({ tapAmount, minAmount, currency }, txOpts) => {
     if (
@@ -37,7 +40,10 @@ export function useTapProjectTx(): TransactorInstance<{
         currency,
         minAmount?.toHexString(),
       ],
-      txOpts,
+      {
+        ...txOpts,
+        title: t`Tap ${projectTitle}`,
+      },
     )
   }
 }

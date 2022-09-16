@@ -5,6 +5,7 @@ import ProjectVersionBadge from 'components/ProjectVersionBadge'
 import RichNote from 'components/RichNote'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
 import V2ProjectHandle from 'components/v2/shared/V2ProjectHandle'
+import { CV_V2 } from 'constants/cv'
 import { ThemeContext } from 'contexts/themeContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { Project } from 'models/subgraph-entities/vX/project'
@@ -36,7 +37,7 @@ export default function Payments() {
 
     return (
       <div style={{ color: colors.text.action.primary, fontWeight: 500 }}>
-        {project.cv === '2' ? (
+        {project.cv === CV_V2 ? (
           <div style={{ display: 'flex', alignItems: 'baseline' }}>
             <V2ProjectHandle
               projectId={project.projectId}

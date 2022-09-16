@@ -1,16 +1,17 @@
-import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { t } from '@lingui/macro'
 import { V2UserContext } from 'contexts/v2/userContext'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
 
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { onCatch, TransactorInstance } from 'hooks/Transactor'
 
-export function useIssueTokensTx(): TransactorInstance<{
+export function useIssueErc20TokenTx(): TransactorInstance<{
   name: string
   symbol: string
 }> {
-  const { transactor, contracts, version } = useContext(V2UserContext)
-  const { projectId } = useContext(V2ProjectContext)
+  const { transactor, contracts } = useContext(V2UserContext)
+  const { projectId, cv } = useContext(ProjectMetadataContext)
 
   return ({ name, symbol }, txOpts) => {
     try {
@@ -21,7 +22,10 @@ export function useIssueTokensTx(): TransactorInstance<{
         contracts.JBController,
         'issueTokenFor',
         [projectId, name, symbol],
-        txOpts,
+        {
+          ...txOpts,
+          title: t`Issue $${symbol}`,
+        },
       )
     } catch {
       const missingParam = !transactor
@@ -40,7 +44,7 @@ export function useIssueTokensTx(): TransactorInstance<{
         txOpts,
         missingParam,
         functionName: 'issueTokenFor',
-        version,
+        cv,
       })
     }
   }

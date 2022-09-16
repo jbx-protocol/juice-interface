@@ -79,13 +79,13 @@ export default function V2MintModal({
     tokenSymbol && tokenAddress && tokenAddress !== constants.AddressZero
 
   const tokensTokenLower = tokenSymbolText({
-    tokenSymbol: tokenSymbol,
+    tokenSymbol,
     capitalize: false,
     plural: true,
   })
 
   const tokensTokenUpper = tokenSymbolText({
-    tokenSymbol: tokenSymbol,
+    tokenSymbol,
     capitalize: true,
     plural: false,
   })

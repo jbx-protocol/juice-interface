@@ -10,8 +10,8 @@ export function useIssueTokensTx(): TransactorInstance<{
   name: string
   symbol: string
 }> {
-  const { transactor, contracts, version } = useContext(V2UserContext)
-  const { projectId } = useContext(V2ProjectContext)
+  const { transactor, contracts } = useContext(V2UserContext)
+  const { projectId, cv } = useContext(V2ProjectContext)
 
   return ({ name, symbol }, txOpts) => {
     try {
@@ -44,7 +44,7 @@ export function useIssueTokensTx(): TransactorInstance<{
         txOpts,
         missingParam,
         functionName: 'issueTokenFor',
-        version,
+        cv,
       })
     }
   }

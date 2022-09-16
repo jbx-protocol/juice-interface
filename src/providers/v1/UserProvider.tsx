@@ -13,14 +13,11 @@ export const V1UserProvider: React.FC = ({ children }) => {
     gasPrice: gasPrice ? BigNumber.from(gasPrice) : undefined,
   })
 
-  const version = 'v1'
-
   return (
     <V1UserContext.Provider
       value={{
         contracts,
         transactor,
-        version,
       }}
     >
       {children}

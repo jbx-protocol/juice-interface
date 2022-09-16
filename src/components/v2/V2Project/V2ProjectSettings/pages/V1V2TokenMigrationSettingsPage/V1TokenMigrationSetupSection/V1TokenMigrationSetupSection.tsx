@@ -2,7 +2,7 @@ import { LoadingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { MinimalCollapse } from 'components/MinimalCollapse'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useV1ProjectIdOfV2Project } from 'hooks/v2/contractReader/V1ProjectIdOfV2Project'
 import { useContext, useState } from 'react'
 
@@ -11,7 +11,7 @@ import { V1TokenMigrationSetupModal } from './V1TokenMigrationSetupModal'
 export function V1TokenMigrationSetupSection() {
   const [migrationModalVisible, setMigrationModalVisible] =
     useState<boolean>(false)
-  const { projectId } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const { data: v1Project, loading: v1ProjectLoading } =
     useV1ProjectIdOfV2Project(

@@ -161,10 +161,7 @@ export function useV2ProjectState({ projectId }: { projectId: number }) {
   const { data: totalTokenSupply } = useProjectTokenTotalSupply(projectId)
 
   const project: V2ProjectContextType = {
-    cv: V2_PROJECT_CV,
-
     // project metadata
-    projectId,
     handle,
     projectOwnerAddress,
 

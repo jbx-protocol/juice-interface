@@ -38,13 +38,13 @@ export function onCatch({
   txOpts?: TxOpts
   missingParam?: string
   functionName: string
-  cv: CV
+  cv: CV | undefined
 }) {
   txOpts?.onError?.(
     new DOMException(
-      `Missing ${
-        missingParam ?? 'unknown'
-      } parameter in ${functionName} v${cv}`,
+      `Missing ${missingParam ?? 'unknown'} parameter in ${functionName}${
+        cv ? ` v${cv}` : ''
+      }`,
     ),
   )
   txOpts?.onDone?.()

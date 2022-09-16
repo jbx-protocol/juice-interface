@@ -1,7 +1,7 @@
 import { Divider, Space } from 'antd'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { readNetwork } from 'constants/networks'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { VeNftContext } from 'contexts/veNftContext'
 import { VeNftProvider } from 'providers/v2/VeNftProvider'
 import { useContext } from 'react'
@@ -21,7 +21,7 @@ const VeNftSections = () => {
 }
 
 export function GovernanceSettingsPage() {
-  const { projectId } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   return (
     <div>

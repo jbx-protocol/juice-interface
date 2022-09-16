@@ -9,6 +9,7 @@ import { GraphQueryOpts, querySubgraphExhaustive } from 'utils/graph'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import { CV_V1, CV_V1_1 } from 'constants/cv'
 import { readProvider } from 'constants/readProvider'
 import { CV } from 'models/cv'
 import { Participant } from 'models/subgraph-entities/vX/participant'
@@ -45,11 +46,11 @@ export default function DownloadParticipantsModal({
 
     // Projects that migrate between 1 & 1.1 may change their CV without the CV of their participants being updated. This should be fixed by better subgraph infrastructure, but this fix will make sure the UI works for now.
     const cvOpt: GraphQueryOpts<'participant', keyof Participant>['where'] =
-      cv === '1' || cv === '1.1'
+      cv === CV_V1 || cv === CV_V1_1
         ? {
             key: 'cv',
             operator: 'in',
-            value: ['1', '1.1'],
+            value: [CV_V1, CV_V1_1],
           }
         : {
             key: 'cv',

@@ -7,6 +7,7 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2UserContext } from 'contexts/v2/userContext'
 
 import { t } from '@lingui/macro'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { onCatch, TransactorInstance } from 'hooks/Transactor'
 import invariant from 'tiny-invariant'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -19,8 +20,10 @@ export function useRedeemTokensTx(): TransactorInstance<{
   memo: string
 }> {
   const { transactor, contracts } = useContext(V2UserContext)
+  const { tokenSymbol } = useContext(V2ProjectContext)
+  const { projectId, cv } = useContext(ProjectMetadataContext)
+
   const { userAddress } = useWallet()
-  const { projectId, tokenSymbol, cv } = useContext(V2ProjectContext)
 
   return ({ redeemAmount, minReturnedTokens, memo }, txOpts) => {
     try {

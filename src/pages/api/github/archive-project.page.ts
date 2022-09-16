@@ -3,6 +3,7 @@ import { CV } from 'models/cv'
 import { ProjectMetadataV4 } from 'models/project-metadata'
 import { NextApiRequest, NextApiResponse } from 'next'
 
+import { CV_V2 } from 'constants/cv'
 import { readNetwork } from 'constants/networks'
 
 interface ArchiveProjectNextApiRequest extends NextApiRequest {
@@ -50,7 +51,7 @@ const handler = async (
 
     const labels = [
       'archive request',
-      cv === '2' ? 'V2' : 'V1',
+      cv === CV_V2 ? 'V2' : 'V1',
       'bot',
       readNetwork.name === 'rinkeby' ? 'rinkeby' : undefined,
       readNetwork.name === 'mainnet' ? 'mainnet' : undefined,

@@ -17,6 +17,7 @@ import { Skeleton } from 'antd'
 
 import { v2ProjectRoute } from 'utils/routes'
 
+import { CV_V2 } from 'constants/cv'
 import { trendingWindowDays } from 'constants/trendingWindowDays'
 
 export default function TrendingProjectCard({
@@ -105,7 +106,7 @@ export default function TrendingProjectCard({
     <Link
       key={project.handle}
       href={
-        project.cv === '2' ? v2ProjectRoute(project) : `/p/${project?.handle}`
+        project.cv === CV_V2 ? v2ProjectRoute(project) : `/p/${project?.handle}`
       }
     >
       <a>

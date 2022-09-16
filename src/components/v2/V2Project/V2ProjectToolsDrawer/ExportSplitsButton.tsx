@@ -3,6 +3,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
 import { Button } from 'antd'
 import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/splits'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { GroupedSplits, Split, SplitGroup } from 'models/splits'
 import { PropsWithChildren, useContext, useState } from 'react'
@@ -54,8 +55,9 @@ export function ExportSplitsButton<G extends SplitGroup>({
   children,
   groupedSplits,
 }: PropsWithChildren<{ groupedSplits: GroupedSplits<G> }>) {
-  const { handle, projectId, fundingCycle, projectOwnerAddress } =
+  const { handle, fundingCycle, projectOwnerAddress } =
     useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
   const [loading, setLoading] = useState<boolean>(false)
 
   const onExportSplitsButtonClick = () => {

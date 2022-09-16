@@ -2,6 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import { Space } from 'antd'
 import TransactionModal from 'components/TransactionModal'
 import SplitList from 'components/v2/shared/SplitList'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useProjectReservedTokens from 'hooks/v2/contractReader/ProjectReservedTokens'
 import { useDistributeReservedTokens } from 'hooks/v2/transactor/DistributeReservedTokensTx'
@@ -23,8 +24,8 @@ export default function DistributeReservedTokensModal({
     reservedTokensSplits,
     projectOwnerAddress,
     fundingCycleMetadata,
-    projectId,
   } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
@@ -60,13 +61,13 @@ export default function DistributeReservedTokensModal({
 
   const reservedTokensFormatted = formatWad(reservedTokens, { precision: 0 })
   const tokenTextPlural = tokenSymbolText({
-    tokenSymbol: tokenSymbol,
+    tokenSymbol,
     capitalize: false,
     plural: true,
   })
 
   const tokenTextSingular = tokenSymbolText({
-    tokenSymbol: tokenSymbol,
+    tokenSymbol,
     capitalize: true,
     plural: false,
   })

@@ -38,6 +38,7 @@ import V2ManageTokensSection from './V2ManageTokensSection'
 import V2PayButton from './V2PayButton'
 import V2ProjectHeaderActions from './V2ProjectHeaderActions'
 
+import { CV_V2 } from 'constants/cv'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
@@ -66,18 +67,18 @@ export default function V2Project({
 }) {
   const {
     createdAt,
-    projectId,
     fundingCycle,
     fundingCycleMetadata,
     isPreviewMode,
     tokenSymbol,
     tokenAddress,
-    cv,
     projectOwnerAddress,
     handle,
     loading,
   } = useContext(V2ProjectContext)
-  const { projectMetadata, isArchived } = useContext(ProjectMetadataContext)
+  const { projectMetadata, isArchived, projectId } = useContext(
+    ProjectMetadataContext,
+  )
   const {
     currencies: { ETH },
   } = useContext(CurrencyContext)
@@ -228,7 +229,7 @@ export default function V2Project({
                 style={{ height: 240 }}
                 createdAt={createdAt}
                 projectId={projectId}
-                cv={cv ?? '2'}
+                cv={CV_V2}
               />
             ) : null}
             <V2ManageTokensSection />

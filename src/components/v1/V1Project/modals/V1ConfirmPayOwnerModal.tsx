@@ -222,7 +222,7 @@ export default function V1ConfirmPayOwnerModal({
           </Descriptions.Item>
           <Descriptions.Item
             label={t`${tokenSymbolText({
-              tokenSymbol: tokenSymbol,
+              tokenSymbol,
               capitalize: true,
               plural: true,
             })} for you`}
@@ -239,7 +239,7 @@ export default function V1ConfirmPayOwnerModal({
           </Descriptions.Item>
           <Descriptions.Item
             label={t`${tokenSymbolText({
-              tokenSymbol: tokenSymbol,
+              tokenSymbol,
               capitalize: true,
               plural: true,
             })} reserved`}

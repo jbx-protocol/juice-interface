@@ -7,6 +7,7 @@ import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 import useMobile from 'hooks/Mobile'
@@ -35,9 +36,9 @@ export function V2ProjectToolsDrawer({
     tokenSymbol,
     payoutSplits,
     reservedTokensSplits,
-    projectId,
     handle,
   } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const isMobile = useMobile()
   const { data: unclaimedTokenBalance } = useUserUnclaimedTokenBalance()

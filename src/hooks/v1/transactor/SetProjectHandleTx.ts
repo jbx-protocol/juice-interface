@@ -5,8 +5,8 @@ import { useContext } from 'react'
 
 import { BigNumber } from '@ethersproject/bignumber'
 
-import { TransactorInstance } from 'hooks/Transactor'
 import { t } from '@lingui/macro'
+import { TransactorInstance } from 'hooks/Transactor'
 
 export function useSetProjectHandleTx(): TransactorInstance<{
   handle: string

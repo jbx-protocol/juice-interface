@@ -7,6 +7,7 @@ import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactionContext } from 'contexts/transactionContext'
 import { TransactorInstance } from 'hooks/Transactor'
+
 import { useV2ProjectTitle } from '../ProjectTitle'
 
 export function useEditV2ProjectDetailsTx(): TransactorInstance<{

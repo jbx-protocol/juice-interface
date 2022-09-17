@@ -12,6 +12,11 @@ import { consolidateMetadata, ProjectMetadataV4 } from 'models/project-metadata'
  * NOTE: `cid` and `IPFS hash` are synonymous
  */
 
+// Gets strings that start with 'ipfs'
+export const ipfsLinkRegex = new RegExp(
+  /((?:ipfs?):\/\/(?:\w+:?\w*)?(?:\S+)(:\d+)?(?:\/|\/([\w#!:.?+=&%!\-/]))?)/gi,
+)
+
 export const IPFS_TAGS = {
   METADATA:
     process.env.NODE_ENV === 'production'

@@ -8,6 +8,7 @@ import { TransactorInstance } from 'hooks/Transactor'
 import { useWallet } from 'hooks/Wallet'
 import { useState } from 'react'
 import { parseWad } from 'utils/format/formatNumber'
+import { emitErrorNotification } from 'utils/notifications'
 
 export function AddToProjectBalanceForm({
   useAddToBalanceTx,
@@ -23,10 +24,10 @@ export function AddToProjectBalanceForm({
 
   const addToBalanceTx = useAddToBalanceTx()
 
-  function addToBalance() {
+  async function addToBalance() {
     setLoadingAddToBalance(true)
 
-    addToBalanceTx(
+    const result = await addToBalanceTx(
       { value: parseWad(addToBalanceForm.getFieldValue('amount')) },
       {
         onConfirmed: () => {
@@ -36,8 +37,17 @@ export function AddToProjectBalanceForm({
         onDone: () => {
           setLoadingAddToBalance(false)
         },
+        onError: e => {
+          setLoadingAddToBalance(false)
+          addToBalanceForm.resetFields()
+          emitErrorNotification(e.message)
+        },
       },
     )
+
+    if (!result) {
+      setLoadingAddToBalance(false)
+    }
   }
 
   return (

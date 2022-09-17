@@ -7,7 +7,7 @@ import { useContext, useState } from 'react'
 import { parseWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
-import { V2UserContext } from 'contexts/v2/userContext'
+import { V2ContractsContext } from 'contexts/v2/V2ContractsContext'
 import { useV1HasPermissions } from 'hooks/v1/contractReader/V1HasPermissions'
 import { V1OperatorPermission } from 'models/v1/permissions'
 
@@ -26,7 +26,7 @@ export function MigrateProjectTokensModal({
   v1ProjectHandle: string
 } & ModalProps) {
   const { userAddress } = useWallet()
-  const { contracts } = useContext(V2UserContext)
+  const { contracts } = useContext(V2ContractsContext)
 
   const [loading, setLoading] = useState<boolean>(false)
   const [transactionPending, setTransactionPending] = useState<boolean>(false)

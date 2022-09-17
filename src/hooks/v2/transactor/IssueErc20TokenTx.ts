@@ -1,16 +1,18 @@
 import { t } from '@lingui/macro'
-import { V2UserContext } from 'contexts/v2/userContext'
+import { V2ContractsContext } from 'contexts/v2/V2ContractsContext'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
 
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { TransactionContext } from 'contexts/transactionContext'
 import { onCatch, TransactorInstance } from 'hooks/Transactor'
 
 export function useIssueErc20TokenTx(): TransactorInstance<{
   name: string
   symbol: string
 }> {
-  const { transactor, contracts } = useContext(V2UserContext)
+  const { transactor } = useContext(TransactionContext)
+  const { contracts } = useContext(V2ContractsContext)
   const { projectId, cv } = useContext(ProjectMetadataContext)
 
   return ({ name, symbol }, txOpts) => {

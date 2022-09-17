@@ -1,9 +1,10 @@
 import { t } from '@lingui/macro'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { V2UserContext } from 'contexts/v2/userContext'
+import { V2ContractsContext } from 'contexts/v2/V2ContractsContext'
 import { useContext } from 'react'
 
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { TransactionContext } from 'contexts/transactionContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
@@ -12,7 +13,8 @@ type DistributeReserveTokensTx = TransactorInstance<{
 }>
 
 export function useDistributeReservedTokens(): DistributeReserveTokensTx {
-  const { transactor, contracts } = useContext(V2UserContext)
+  const { transactor } = useContext(TransactionContext)
+  const { contracts } = useContext(V2ContractsContext)
   const { tokenSymbol } = useContext(V2ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 

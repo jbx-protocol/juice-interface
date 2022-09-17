@@ -10,7 +10,8 @@ import {
   GetStaticPropsResult,
   InferGetStaticPropsType,
 } from 'next'
-import { V2UserProvider } from 'providers/v2/UserProvider'
+import { TransactionProvider } from 'providers/TransactionProvider'
+import { V2ContractsProvider } from 'providers/v2/V2ContractsProvider'
 import V2Dashboard from './components/V2Dashboard'
 import { getProjectProps, ProjectPageProps } from './utils/props'
 
@@ -65,13 +66,15 @@ export default function V2ProjectPage({
         </SEO>
       ) : null}
       <AppWrapper>
-        <V2UserProvider>
-          {metadata ? (
-            <V2Dashboard metadata={metadata} projectId={projectId} />
-          ) : (
-            <Loading />
-          )}
-        </V2UserProvider>
+        <V2ContractsProvider>
+          <TransactionProvider>
+            {metadata ? (
+              <V2Dashboard metadata={metadata} projectId={projectId} />
+            ) : (
+              <Loading />
+            )}
+          </TransactionProvider>
+        </V2ContractsProvider>
       </AppWrapper>
     </>
   )

@@ -21,7 +21,7 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
 
-import { V2UserContext } from 'contexts/v2/userContext'
+import { V2ContractsContext } from 'contexts/v2/V2ContractsContext'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
 
@@ -53,7 +53,7 @@ export const useInitialEditingData = (visible: boolean) => {
     }
   }>()
 
-  const { contracts } = useContext(V2UserContext)
+  const { contracts } = useContext(V2ContractsContext)
   const dispatch = useAppDispatch()
 
   const {

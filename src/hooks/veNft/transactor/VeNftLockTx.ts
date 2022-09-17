@@ -1,8 +1,8 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
-import { V2UserContext } from 'contexts/v2/userContext'
 import { useContext } from 'react'
 
 import { t } from '@lingui/macro'
+import { TransactionContext } from 'contexts/transactionContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useVeNftContract } from 'hooks/veNft/VeNftContract'
 
@@ -16,7 +16,7 @@ export type LockTx = TransactorInstance<{
 }>
 
 export function useLockTx(): LockTx {
-  const { transactor } = useContext(V2UserContext)
+  const { transactor } = useContext(TransactionContext)
   const nftContract = useVeNftContract()
 
   return (

@@ -22,8 +22,11 @@ import TooltipIcon from 'components/TooltipIcon'
 
 import { StickerSelection } from 'components/Project/StickerSelection'
 
-import { ProjectPreferences } from 'constants/projectPreferences'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { NftRewardTier } from 'models/nftRewardTier'
+import { cidFromUrl } from 'utils/ipfs'
+
+import { ProjectPreferences } from 'constants/projectPreferences'
 
 export interface V2PayFormType {
   memo?: string
@@ -35,8 +38,12 @@ export interface V2PayFormType {
 
 export const V2PayForm = ({
   form,
+  nftRewardTier,
   ...props
-}: { form: FormInstance<V2PayFormType> } & FormProps) => {
+}: {
+  form: FormInstance<V2PayFormType>
+  nftRewardTier: NftRewardTier | null
+} & FormProps) => {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -62,7 +69,16 @@ export const V2PayForm = ({
 
   return (
     <>
-      <Form form={form} layout="vertical" {...props}>
+      <Form
+        form={form}
+        layout="vertical"
+        {...props}
+        initialValues={{
+          stickerUrls: nftRewardTier
+            ? [`ipfs://${cidFromUrl(nftRewardTier?.imageUrl)}`]
+            : undefined,
+        }}
+      >
         <Space direction="vertical" size="large">
           {hasIssuedTokens && (
             <Form.Item

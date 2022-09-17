@@ -80,8 +80,10 @@ export default function FundingSummarySection() {
     distributionLimit && !distributionLimit.gte(MAX_DISTRIBUTION_LIMIT),
   )
 
-  const unsafeFundingCycleProperties =
-    getUnsafeV2FundingCycleProperties(fundingCycle)
+  const unsafeFundingCycleProperties = getUnsafeV2FundingCycleProperties(
+    fundingCycle,
+    fundingCycleMetadata,
+  )
 
   const duration = fundingCycle.duration
   const hasDuration = duration?.gt(0)

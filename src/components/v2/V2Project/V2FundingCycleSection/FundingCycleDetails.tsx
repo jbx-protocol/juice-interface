@@ -55,7 +55,7 @@ export default function FundingCycleDetails({
 
   const { tokenSymbol } = useContext(V2ProjectContext)
 
-  if (!fundingCycle) return null
+  if (!fundingCycle || !fundingCycleMetadata) return null
 
   const formattedDuration = detailedTimeString({
     timeSeconds: fundingCycle.duration.toNumber(),
@@ -66,8 +66,10 @@ export default function FundingCycleDetails({
     fundingCycle.start.add(fundingCycle.duration).mul(1000),
   )
   const ballotStrategy = getBallotStrategyByAddress(fundingCycle.ballot)
-  const unsafeFundingCycleProperties =
-    getUnsafeV2FundingCycleProperties(fundingCycle)
+  const unsafeFundingCycleProperties = getUnsafeV2FundingCycleProperties(
+    fundingCycle,
+    fundingCycleMetadata,
+  )
 
   const tokenSymbolPlural = tokenSymbolText({
     tokenSymbol,

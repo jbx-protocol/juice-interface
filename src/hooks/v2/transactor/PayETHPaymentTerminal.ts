@@ -1,4 +1,4 @@
-import { V2UserContext } from 'contexts/v2/userContext'
+import { V2ContractsContext } from 'contexts/v2/V2ContractsContext'
 import { useContext } from 'react'
 
 import { BigNumber } from '@ethersproject/bignumber'
@@ -6,6 +6,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { TransactionContext } from 'contexts/transactionContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useV2ProjectTitle } from '../ProjectTitle'
 
@@ -20,8 +21,10 @@ type PayV2ProjectTx = TransactorInstance<{
 }>
 
 export function usePayETHPaymentTerminalTx(): PayV2ProjectTx {
-  const { transactor, contracts } = useContext(V2UserContext)
+  const { transactor } = useContext(TransactionContext)
+  const { contracts } = useContext(V2ContractsContext)
   const { projectId } = useContext(ProjectMetadataContext)
+
   const projectTitle = useV2ProjectTitle()
 
   return ({ memo, preferClaimedTokens, beneficiary, value }, txOpts) => {

@@ -5,7 +5,8 @@ import { DesmosScript } from 'components/common/Head/scripts/DesmosScript'
 import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
 import Head from 'next/head'
-import { V2UserProvider } from 'providers/v2/UserProvider'
+import { TransactionProvider } from 'providers/TransactionProvider'
+import { V2ContractsProvider } from 'providers/v2/V2ContractsProvider'
 import { V2CurrencyProvider } from 'providers/v2/V2CurrencyProvider'
 import { useContext, useState } from 'react'
 import { scrollToTop } from 'utils/windowUtils'
@@ -62,46 +63,48 @@ function V2Create() {
   const isMobile = useMobile()
 
   return (
-    <V2UserProvider>
-      <V2CurrencyProvider>
-        <div
-          style={{
-            maxWidth: 1200,
-            margin: '0 auto',
-            padding: !isMobile ? '2rem 4rem' : '2rem 1rem',
-          }}
-        >
-          <h1
+    <V2ContractsProvider>
+      <TransactionProvider>
+        <V2CurrencyProvider>
+          <div
             style={{
-              color: colors.text.primary,
-              fontSize: 28,
+              maxWidth: 1200,
+              margin: '0 auto',
+              padding: !isMobile ? '2rem 4rem' : '2rem 1rem',
             }}
           >
-            <Trans>Launch your project</Trans>
-          </h1>
+            <h1
+              style={{
+                color: colors.text.primary,
+                fontSize: 28,
+              }}
+            >
+              <Trans>Launch your project</Trans>
+            </h1>
 
-          <Tabs
-            activeKey={activeTab}
-            onChange={setActiveTab}
-            tabBarGutter={50}
-            size="large"
-          >
-            {TABS.map((tab, idx) => (
-              <TabPane tab={<TabText>{tab.title}</TabText>} key={idx}>
-                <tab.component
-                  onFinish={() => {
-                    // bail if on last tab.
-                    if (idx === TABS.length - 1) return
+            <Tabs
+              activeKey={activeTab}
+              onChange={setActiveTab}
+              tabBarGutter={50}
+              size="large"
+            >
+              {TABS.map((tab, idx) => (
+                <TabPane tab={<TabText>{tab.title}</TabText>} key={idx}>
+                  <tab.component
+                    onFinish={() => {
+                      // bail if on last tab.
+                      if (idx === TABS.length - 1) return
 
-                    setActiveTab(`${idx + 1}`)
-                    scrollToTop()
-                  }}
-                />
-              </TabPane>
-            ))}
-          </Tabs>
-        </div>
-      </V2CurrencyProvider>
-    </V2UserProvider>
+                      setActiveTab(`${idx + 1}`)
+                      scrollToTop()
+                    }}
+                  />
+                </TabPane>
+              ))}
+            </Tabs>
+          </div>
+        </V2CurrencyProvider>
+      </TransactionProvider>
+    </V2ContractsProvider>
   )
 }

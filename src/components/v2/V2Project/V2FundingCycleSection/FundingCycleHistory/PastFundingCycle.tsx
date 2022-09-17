@@ -67,19 +67,15 @@ export function PastFundingCycle({
                 distributionLimitCurrency?.toNumber() as V2CurrencyOption,
               )}
             />
-            {!(distributionLimitIsInfinite || distributionLimitIsZero) ? (
-              <>
-                <Trans>
-                  {formatWad(usedDistributionLimit, { precision: 2 })}/
-                  {formatWad(distributionLimit, { precision: 2 })} withdrawn
-                </Trans>
-              </>
+            {!distributionLimitIsInfinite && !distributionLimitIsZero ? (
+              <Trans>
+                {formatWad(usedDistributionLimit, { precision: 2 })}/
+                {formatWad(distributionLimit, { precision: 2 })} withdrawn
+              </Trans>
             ) : (
-              <>
-                <Trans>
-                  {formatWad(usedDistributionLimit, { precision: 2 })} withdrawn
-                </Trans>
-              </>
+              <Trans>
+                {formatWad(usedDistributionLimit, { precision: 2 })} withdrawn
+              </Trans>
             )}
           </div>
         </Space>
@@ -94,7 +90,6 @@ export function PastFundingCycle({
 
       <Modal
         visible={modalVisible}
-        width={600}
         title={`Cycle #${fundingCycle?.number.toString()}`}
         onCancel={() => setModalVisible(false)}
         onOk={() => setModalVisible(false)}

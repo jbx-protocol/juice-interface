@@ -3,7 +3,7 @@ import { CardSection } from 'components/CardSection'
 import FundingCycleDetailsCard from 'components/Project/FundingCycleDetailsCard'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useContext } from 'react'
-import { V2FundingCycleRiskCount } from 'utils/v2/fundingCycle'
+import { v2FundingCycleRiskCount } from 'utils/v2/fundingCycle'
 
 import FundingCycleDetails from './FundingCycleDetails'
 import PayoutSplitsCard from './PayoutSplitsCard'
@@ -23,9 +23,7 @@ export default function CurrentFundingCycle({
     fundingCycleMetadata,
   } = useContext(V2ProjectContext)
 
-  if (!fundingCycle) return <LoadingOutlined />
-
-  const reservedRate = fundingCycleMetadata?.reservedRate
+  if (!fundingCycle || !fundingCycleMetadata) return <LoadingOutlined />
 
   return (
     <div>
@@ -43,7 +41,10 @@ export default function CurrentFundingCycle({
           fundingCycleDurationSeconds={fundingCycle.duration}
           fundingCycleStartTime={fundingCycle.start}
           isFundingCycleRecurring={true}
-          fundingCycleRiskCount={V2FundingCycleRiskCount(fundingCycle)}
+          fundingCycleRiskCount={v2FundingCycleRiskCount(
+            fundingCycle,
+            fundingCycleMetadata,
+          )}
           expand={expandCard}
         />
       </CardSection>
@@ -56,7 +57,7 @@ export default function CurrentFundingCycle({
       />
       <ReservedTokensSplitsCard
         reservedTokensSplits={reservedTokensSplits}
-        reservedRate={reservedRate}
+        reservedRate={fundingCycleMetadata.reservedRate}
       />
     </div>
   )

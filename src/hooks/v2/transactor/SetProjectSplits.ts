@@ -1,6 +1,7 @@
 import { t } from '@lingui/macro'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { V2UserContext } from 'contexts/v2/userContext'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { TransactionContext } from 'contexts/transactionContext'
+import { V2ContractsContext } from 'contexts/v2/V2ContractsContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { GroupedSplits } from 'models/splits'
 import { useContext } from 'react'
@@ -14,8 +15,9 @@ export const useSetProjectSplits = <G>({
 }): TransactorInstance<{
   groupedSplits: GroupedSplits<G>
 }> => {
-  const { transactor, contracts } = useContext(V2UserContext)
-  const { projectId } = useContext(V2ProjectContext)
+  const { transactor } = useContext(TransactionContext)
+  const { contracts } = useContext(V2ContractsContext)
+  const { projectId } = useContext(ProjectMetadataContext)
   const projectTitle = useV2ProjectTitle()
 
   return ({ groupedSplits }, txOpts) => {

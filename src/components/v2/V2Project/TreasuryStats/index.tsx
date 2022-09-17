@@ -8,24 +8,24 @@ import { VolumeStatLine } from 'components/Project/VolumeStatLine'
 
 import { ThemeContext } from 'contexts/themeContext'
 
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import DistributedRatio from './DistributedRatio'
 import OwnerBalance from './OwnerBalance'
 import ProjectBalance from './ProjectBalance'
 
 export default function TreasuryStats() {
   const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+  const {
     balanceInDistributionLimitCurrency,
     distributionLimit,
-    projectId,
     totalVolume,
     isPreviewMode,
     primaryTerminal,
     loading: { distributionLimitLoading },
   } = useContext(V2ProjectContext)
-
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const { data: overflow, loading: overflowLoading } =
     useTerminalCurrentOverflow({

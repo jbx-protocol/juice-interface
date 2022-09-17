@@ -1442,13 +1442,13 @@ msgstr ""
 msgid "Lock veNFT"
 msgstr ""
 
-msgid "Lock your {tokensLabel} to increase your voting weight and claim Governance NFTs."
+msgid "Lock your {tokenText} to increase your voting weight and claim Governance NFTs."
 msgstr ""
 
 msgid "Lock {tokenName} ({tokenSymbolDisplayText}) tokens in exchange for voting weight. In return, you'll impact {projectName} governance and receive a choice governance NFT."
 msgstr ""
 
-msgid "Lock {tokensLabel} for Governance NFTs"
+msgid "Lock {tokenText} for Governance NFTs"
 msgstr ""
 
 msgid "Locked {tokenSymbolDisplayText}"

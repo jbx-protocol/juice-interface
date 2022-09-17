@@ -15,9 +15,12 @@ import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { v2ProjectRoute } from 'utils/routes'
 
 import { projectHandleENSTextRecordKey } from 'constants/projectHandleENSTextRecordKey'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 
 export function V2ProjectHandleSettingsPage() {
-  const { handle, projectId } = useContext(V2ProjectContext)
+  const { handle } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
+
   const [ensNameForm] = useForm<{ ensName: string }>()
 
   const [ensNameIsValid, setEnsNameIsValid] = useState<boolean>()

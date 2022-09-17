@@ -53,9 +53,9 @@ export function V2ConfirmPayModal({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { fundingCycle, fundingCycleMetadata, projectId, tokenSymbol } =
+  const { fundingCycle, fundingCycleMetadata, tokenSymbol } =
     useContext(V2ProjectContext)
-  const { projectMetadata } = useContext(ProjectMetadataContext)
+  const { projectMetadata, projectId } = useContext(ProjectMetadataContext)
   const {
     nftRewards: { rewardTiers },
   } = useContext(NftRewardsContext)

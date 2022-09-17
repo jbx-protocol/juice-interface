@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { MigrateProjectTokensModal } from 'components/v2/V2Project/V2ManageTokensSection/V1ProjectTokensSection/MigrateV1ProjectTokensModal'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import useSymbolOfERC20 from 'hooks/SymbolOfERC20'
 import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
 import useTokenAddressOfProject from 'hooks/v1/contractReader/TokenAddressOfProject'
@@ -21,8 +21,9 @@ export function V1ProjectTokensSection({
   tokenText: string
   style?: CSSProperties
 }) {
+  const { projectId } = useContext(ProjectMetadataContext)
+
   const { userAddress } = useWallet()
-  const { projectId } = useContext(V2ProjectContext)
 
   const [migrateTokensModalVisible, setMigrateTokensModalVisible] =
     useState<boolean>(false)

@@ -59,7 +59,7 @@ export default function RedeemEventElem({
           >
             {formatWad(event.amount, { precision: 0 })}{' '}
             {tokenSymbolText({
-              tokenSymbol: tokenSymbol,
+              tokenSymbol,
               capitalize: false,
               plural: true,
             })}

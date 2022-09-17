@@ -3,7 +3,7 @@ import { Button, Tooltip } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { V2UserContext } from 'contexts/v2/userContext'
+import { V2ContractsContext } from 'contexts/v2/V2ContractsContext'
 import { useSetENSTextRecordForHandleTx } from 'hooks/v2/transactor/SetENSTextRecordForHandleTx'
 import { pokeSnapshot, uploadSnapshotSettingsToIPFS } from 'lib/snapshot'
 import Link from 'next/link'
@@ -12,10 +12,10 @@ import { emitErrorNotification } from 'utils/notifications'
 import { helpPagePath } from 'utils/routes'
 
 export function SnapshotSettingsSection() {
-  const { tokenSymbol, tokenAddress, handle, projectId, projectOwnerAddress } =
+  const { tokenSymbol, tokenAddress, handle, projectOwnerAddress } =
     useContext(V2ProjectContext)
-  const { contracts } = useContext(V2UserContext)
-  const { projectMetadata } = useContext(ProjectMetadataContext)
+  const { contracts } = useContext(V2ContractsContext)
+  const { projectMetadata, projectId } = useContext(ProjectMetadataContext)
 
   const JBTokenStoreAddress = contracts?.JBTokenStore.address
 

@@ -53,7 +53,7 @@ export function TransferUnclaimedTokensForm({
   }
 
   const tokenSymbolShort = tokenSymbolText({
-    tokenSymbol: tokenSymbol,
+    tokenSymbol,
     capitalize: false,
     plural: true,
   })

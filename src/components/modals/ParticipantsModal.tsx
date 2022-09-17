@@ -11,6 +11,7 @@ import Callout from 'components/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
 import FormattedAddress from 'components/FormattedAddress'
 import Loading from 'components/Loading'
+import { CV_V1, CV_V1_1 } from 'constants/cv'
 import { ThemeContext } from 'contexts/themeContext'
 import { CV } from 'models/cv'
 import { Participant } from 'models/subgraph-entities/vX/participant'
@@ -64,11 +65,11 @@ export default function ParticipantsModal({
 
     // Projects that migrate between 1 & 1.1 may change their CV without the CV of their participants being updated. This should be fixed by better subgraph infrastructure, but this fix will make sure the UI works for now.
     const cvOpt: GraphQueryOpts<'participant', keyof Participant>['where'] =
-      cv === '1' || cv === '1.1'
+      cv === CV_V1 || cv === CV_V1_1
         ? {
             key: 'cv',
             operator: 'in',
-            value: ['1', '1.1'],
+            value: [CV_V1, CV_V1_1],
           }
         : {
             key: 'cv',
@@ -156,7 +157,7 @@ export default function ParticipantsModal({
             <Select.Option value="balance">
               <Trans>
                 {tokenSymbolText({
-                  tokenSymbol: tokenSymbol,
+                  tokenSymbol,
                   capitalize: true,
                 })}{' '}
                 balance
@@ -232,7 +233,7 @@ export default function ParticipantsModal({
                 >
                   {formatWad(p.balance, { precision: 0 })}{' '}
                   {tokenSymbolText({
-                    tokenSymbol: tokenSymbol,
+                    tokenSymbol,
                     capitalize: false,
                     plural: true,
                   })}{' '}
@@ -242,7 +243,7 @@ export default function ParticipantsModal({
                   {formatWad(p.stakedBalance, { precision: 0 })}{' '}
                   <Trans>
                     {tokenSymbolText({
-                      tokenSymbol: tokenSymbol,
+                      tokenSymbol,
                       capitalize: false,
                       plural: true,
                     })}{' '}
@@ -277,8 +278,7 @@ export default function ParticipantsModal({
       <div>
         <h4>
           <Trans>
-            {tokenSymbolText({ tokenSymbol: tokenSymbol, capitalize: true })}{' '}
-            holders
+            {tokenSymbolText({ tokenSymbol, capitalize: true })} holders
           </Trans>
         </h4>
         <Space direction="vertical">

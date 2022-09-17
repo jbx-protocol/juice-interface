@@ -63,6 +63,7 @@ export default function ProjectHeader({
           uri={metadata?.logoUri}
           name={metadata?.name}
           size={headerHeight}
+          projectId={projectId}
         />
       </div>
 

@@ -1,4 +1,4 @@
-import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import {
   BallotState,
   V2FundingCycle,
@@ -17,7 +17,7 @@ export function useProjectUpcomingFundingCycle(): [
   V2FundingCycleMetadata | undefined,
   BallotState?,
 ] {
-  const { projectId } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const { data: latestConfiguredFundingCycleResponse } =
     useProjectLatestConfiguredFundingCycle({

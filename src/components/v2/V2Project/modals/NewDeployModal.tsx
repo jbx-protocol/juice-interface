@@ -3,14 +3,15 @@ import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
 import RichButton from 'components/RichButton'
 import { useDeployProjectPayerTx } from 'hooks/v2/transactor/DeployProjectPayerTx'
-import { useIssueTokensTx } from 'hooks/v2/transactor/IssueTokensTx'
+import { useIssueErc20TokenTx } from 'hooks/v2/transactor/IssueErc20TokenTx'
 import { CSSProperties, useContext, useState } from 'react'
 
-import IssueTokenModal from 'components/modals/IssueTokenModal'
 import { ThemeContext } from 'contexts/themeContext'
 
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 
+import { IssueErc20TokenModal } from 'components/modals/IssueErc20TokenModal'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import Link from 'next/link'
 import { settingsPagePath } from 'utils/routes'
 import { LaunchProjectPayerModal } from './LaunchProjectPayerModal'
@@ -22,10 +23,11 @@ export default function NewDeployModal({
   visible: boolean
   onClose: VoidFunction
 }) {
-  const { handle, projectId } = useContext(V2ProjectContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const { handle } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const [issueTokenModalVisible, setIssueTokenModalVisible] =
     useState<boolean>(false)
@@ -122,9 +124,9 @@ export default function NewDeployModal({
           style={stepButtonStyle}
         />
       </div>
-      <IssueTokenModal
+      <IssueErc20TokenModal
         visible={issueTokenModalVisible}
-        useIssueTokensTx={useIssueTokensTx}
+        useIssueErc20TokenTx={useIssueErc20TokenTx}
         onClose={() => setIssueTokenModalVisible(false)}
         onConfirmed={() => setHasIssuedToken(true)}
       />

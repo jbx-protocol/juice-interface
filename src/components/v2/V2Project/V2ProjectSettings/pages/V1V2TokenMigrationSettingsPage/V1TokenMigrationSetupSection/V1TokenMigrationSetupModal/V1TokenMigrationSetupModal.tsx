@@ -2,7 +2,7 @@ import { CheckCircleFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Modal, ModalProps, Space } from 'antd'
 import Callout from 'components/Callout'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useV1ProjectIdOfV2Project } from 'hooks/v2/contractReader/V1ProjectIdOfV2Project'
 import { useHasV1TokenPaymentTerminal } from 'hooks/v2/hasV1TokenPaymentTerminal'
 import { useContext, useState } from 'react'
@@ -11,7 +11,7 @@ import { AddTerminalSection } from './AddTerminalSection'
 import { SetV1ProjectSection } from './SetV1ProjectSection'
 
 export function V1TokenMigrationSetupModal({ ...props }: ModalProps) {
-  const { projectId } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
   const [
     migrationTerminalSectionComplete,
     setMigrationTerminalSectionComplete,

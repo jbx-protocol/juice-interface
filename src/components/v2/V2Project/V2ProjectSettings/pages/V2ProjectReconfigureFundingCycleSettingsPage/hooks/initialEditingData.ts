@@ -21,7 +21,7 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
 
-import { V2UserContext } from 'contexts/v2/userContext'
+import { V2ContractsContext } from 'contexts/v2/V2ContractsContext'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
 
@@ -30,6 +30,7 @@ import {
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 
 export interface InitialEditingData {
   fundAccessConstraints: SerializedV2FundAccessConstraint[]
@@ -52,11 +53,10 @@ export const useInitialEditingData = (visible: boolean) => {
     }
   }>()
 
-  const { contracts } = useContext(V2UserContext)
+  const { contracts } = useContext(V2ContractsContext)
   const dispatch = useAppDispatch()
 
   const {
-    projectId,
     primaryTerminal,
     fundingCycle,
     payoutSplits,
@@ -64,6 +64,7 @@ export const useInitialEditingData = (visible: boolean) => {
     distributionLimit,
     distributionLimitCurrency,
   } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const { data: queuedFundingCycleResponse } = useProjectQueuedFundingCycle({
     projectId,

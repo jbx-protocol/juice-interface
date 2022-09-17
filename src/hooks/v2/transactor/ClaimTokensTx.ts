@@ -1,7 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { TransactionContext } from 'contexts/transactionContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { V2UserContext } from 'contexts/v2/userContext'
+import { V2ContractsContext } from 'contexts/v2/V2ContractsContext'
 import { onCatch, TransactorInstance } from 'hooks/Transactor'
 import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
@@ -11,9 +13,12 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 export function useClaimTokensTx(): TransactorInstance<{
   claimAmount: BigNumber
 }> {
-  const { transactor, contracts, version } = useContext(V2UserContext)
+  const { transactor } = useContext(TransactionContext)
+  const { contracts } = useContext(V2ContractsContext)
+  const { tokenSymbol } = useContext(V2ProjectContext)
+  const { projectId, cv } = useContext(ProjectMetadataContext)
+
   const { userAddress } = useWallet()
-  const { projectId, tokenSymbol } = useContext(V2ProjectContext)
 
   return ({ claimAmount }, txOpts) => {
     try {
@@ -47,7 +52,7 @@ export function useClaimTokensTx(): TransactorInstance<{
         txOpts,
         missingParam,
         functionName: 'claimFor',
-        version,
+        cv,
       })
     }
   }

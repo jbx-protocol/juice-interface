@@ -13,6 +13,7 @@ import { t } from '@lingui/macro'
 import * as Sentry from '@sentry/browser'
 
 import { TxHistoryContext } from 'contexts/txHistoryContext'
+import { CV } from 'models/cv'
 import { useWallet } from './Wallet'
 
 type TransactorCallback = (e?: Transaction, signer?: Signer) => void
@@ -32,18 +33,18 @@ export function onCatch({
   txOpts,
   missingParam,
   functionName,
-  version,
+  cv,
 }: {
   txOpts?: TxOpts
   missingParam?: string
   functionName: string
-  version: 'v1' | 'v2'
+  cv: CV | undefined
 }) {
   txOpts?.onError?.(
     new DOMException(
-      `Missing ${
-        missingParam ?? 'unknown'
-      } parameter in ${functionName} ${version}`,
+      `Missing ${missingParam ?? 'unknown'} parameter in ${functionName}${
+        cv ? ` v${cv}` : ''
+      }`,
     ),
   )
   txOpts?.onDone?.()

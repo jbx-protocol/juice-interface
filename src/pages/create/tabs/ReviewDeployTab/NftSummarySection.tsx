@@ -42,7 +42,7 @@ export default function NftSummarySection() {
             }}
           >
             <Image
-              src={rewardTier.imageUrl ?? '/assets/banana-od.png'}
+              src={rewardTier.imageUrl ?? '/assets/banana-od.webp'}
               alt={rewardTier.name}
               height={NFT_IMAGE_SIDE_LENGTH}
               width={NFT_IMAGE_SIDE_LENGTH}

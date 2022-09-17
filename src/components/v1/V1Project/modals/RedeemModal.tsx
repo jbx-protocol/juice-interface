@@ -92,13 +92,13 @@ export default function RedeemModal({
   }
 
   const tokensTextLong = tokenSymbolText({
-    tokenSymbol: tokenSymbol,
+    tokenSymbol,
     capitalize: false,
     plural: true,
     includeTokenWord: true,
   })
   const tokensTextShort = tokenSymbolText({
-    tokenSymbol: tokenSymbol,
+    tokenSymbol,
     capitalize: false,
     plural: true,
   })
@@ -166,8 +166,7 @@ export default function RedeemModal({
             </span>
           </p>
           <p style={statsStyle}>
-            {tokenSymbolText({ tokenSymbol: tokenSymbol, capitalize: true })}{' '}
-            balance:{' '}
+            {tokenSymbolText({ tokenSymbol, capitalize: true })} balance:{' '}
             <span>
               {formatWad(totalBalance ?? 0, { precision: 0 })} {tokensTextShort}
             </span>

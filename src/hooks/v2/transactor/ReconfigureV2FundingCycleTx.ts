@@ -2,7 +2,8 @@ import { useContext } from 'react'
 
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { V2UserContext } from 'contexts/v2/userContext'
+import { TransactionContext } from 'contexts/transactionContext'
+import { V2ContractsContext } from 'contexts/v2/V2ContractsContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { GroupedSplits, SplitGroup } from 'models/splits'
 import {
@@ -23,8 +24,10 @@ export function useReconfigureV2FundingCycleTx(): TransactorInstance<{
   mustStartAtOrAfter?: string // epoch seconds. anything less than "now" will start immediately.
   memo: string
 }> {
-  const { transactor, contracts } = useContext(V2UserContext)
+  const { transactor } = useContext(TransactionContext)
+  const { contracts } = useContext(V2ContractsContext)
   const { projectId } = useContext(ProjectMetadataContext)
+
   const projectTitle = useV2ProjectTitle()
 
   return (

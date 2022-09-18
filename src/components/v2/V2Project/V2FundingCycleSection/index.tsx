@@ -11,7 +11,7 @@ import { useContext } from 'react'
 import Loading from 'components/Loading'
 import {
   hasFundingDuration,
-  V2FundingCycleRiskCount,
+  v2FundingCycleRiskCount,
 } from 'utils/v2/fundingCycle'
 import { serializeV2FundingCycleData } from 'utils/v2/serializers'
 
@@ -28,7 +28,7 @@ import { useProjectUpcomingFundingCycle } from 'hooks/v2/contractReader/ProjectU
 import Link from 'next/link'
 import { settingsPagePath } from 'utils/routes'
 import CurrentFundingCycle from './CurrentFundingCycle'
-import FundingCycleHistory from './FundingCycleHistory'
+import FundingCycleHistory from './FundingCycleHistory/FundingCycleHistory'
 import NoFundingCycle from './NoFundingCycle'
 import UpcomingFundingCycle from './UpcomingFundingCycle'
 
@@ -42,6 +42,7 @@ export default function V2FundingCycleSection({
   } = useContext(ThemeContext)
   const {
     fundingCycle,
+    fundingCycleMetadata,
     isPreviewMode,
     loading: { fundingCycleLoading },
     handle,
@@ -81,7 +82,10 @@ export default function V2FundingCycleSection({
     text: string
     hideRiskFlag?: boolean
   }) => {
-    const hasRisks = fundingCycle && V2FundingCycleRiskCount(fundingCycle)
+    const hasRisks =
+      fundingCycle &&
+      fundingCycleMetadata &&
+      v2FundingCycleRiskCount(fundingCycle, fundingCycleMetadata)
     if (!hasRisks || hideRiskFlag) {
       return text
     }

@@ -2,7 +2,9 @@ import { CloseCircleFilled } from '@ant-design/icons'
 import { Space } from 'antd'
 import { IconedImage } from 'components/IconedImage'
 import { ThemeContext } from 'contexts/themeContext'
+
 import { useContext } from 'react'
+import { formatIpfsLink, ipfsLinkRegex } from 'utils/ipfs'
 
 export const StickerSelection = ({
   value,
@@ -31,7 +33,7 @@ export const StickerSelection = ({
       {value?.map((url, i) => (
         <IconedImage
           key={`${i}-${url}`}
-          url={url}
+          url={url.match(ipfsLinkRegex) ? formatIpfsLink(url) : url}
           width={50}
           icon={
             <CloseCircleFilled

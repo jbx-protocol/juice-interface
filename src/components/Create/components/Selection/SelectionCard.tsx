@@ -1,10 +1,13 @@
 import { Col, Divider, Row } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
-import { ReactNode, useCallback, useContext } from 'react'
+import { ReactNode, useCallback, useContext, useMemo } from 'react'
 import { CheckedCircle, RadialBackgroundIcon } from './components'
 import { SelectionContext } from './Selection'
 
-const Border: React.FC<{ isSelected: boolean }> = ({
+// TODO: These colors are not final and we need more work related to defocusing
+
+const Container: React.FC<{ isSelected: boolean; isDefocused: boolean }> = ({
+  isDefocused,
   isSelected,
   children,
 }) => {
@@ -16,11 +19,19 @@ const Border: React.FC<{ isSelected: boolean }> = ({
     ? colors.stroke.action.primary
     : colors.stroke.tertiary
 
+  // TODO: These colors are not final and we need more work related to defocusing
+  const backgroundColor = useMemo(() => {
+    if (isDefocused) return colors.background.disabled
+    return colors.background.l2
+  }, [colors.background.disabled, colors.background.l2, isDefocused])
+
   return (
     <div
       style={{
         border: 'solid 1px',
+        borderRadius: 1,
         borderColor,
+        backgroundColor,
       }}
     >
       {children}
@@ -33,10 +44,8 @@ export interface SelectionCardProps {
   title: ReactNode
   icon?: ReactNode
   titleBadge?: ReactNode
-  description?: string
+  description?: ReactNode
   isSelected?: boolean
-  onSelected?: () => void
-  onChange?: (selected: boolean) => void
 }
 
 export const SelectionCard: React.FC<SelectionCardProps> = ({
@@ -45,40 +54,44 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
   icon,
   description,
   children,
-  onSelected,
-  onChange,
 }) => {
-  const { selection, setSelection } = useContext(SelectionContext)
+  const { selection, defocusOnSelect, setSelection } =
+    useContext(SelectionContext)
   const isSelected = selection === name
 
   const onClick = useCallback(() => {
     if (isSelected) {
       setSelection?.(undefined)
-      onChange?.(false)
       return
     }
     setSelection?.(name)
-    onChange?.(true)
-    onSelected?.()
-  }, [isSelected, name, onChange, onSelected, setSelection])
+  }, [isSelected, name, setSelection])
+
+  const defocused = !!defocusOnSelect && !!selection && !isSelected
 
   return (
-    <Border isSelected={isSelected}>
+    <Container isSelected={isSelected} isDefocused={defocused}>
       <div
-        style={{ padding: '1.75rem 0', userSelect: 'none' }}
+        className={!isSelected ? 'clickable-border' : undefined}
+        role="button"
+        style={{
+          padding: '1.75rem 0',
+          userSelect: 'none',
+          cursor: 'pointer',
+        }}
         onClick={onClick}
       >
         <div style={{ padding: '0 1rem' }}>
           <Row>
-            <Col span={2}>{icon && <RadialBackgroundIcon icon={icon} />}</Col>
-            <Col span={20}>{<h2>{title}</h2>}</Col>
+            <Col span={3}>{icon && <RadialBackgroundIcon icon={icon} />}</Col>
+            <Col span={19}>{<h2>{title}</h2>}</Col>
             <Col offset={1} span={1}>
               <CheckedCircle checked={isSelected} />
             </Col>
           </Row>
           {description && (
             <Row>
-              <Col offset={2} span={19}>
+              <Col offset={3} span={18}>
                 {description}
               </Col>
             </Row>
@@ -90,13 +103,13 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
           <Divider style={{ marginTop: 0, marginBottom: '2rem' }} />
           <div style={{ padding: '0 1rem' }}>
             <Row>
-              <Col offset={2} span={19}>
+              <Col offset={3} span={18}>
                 {children}
               </Col>
             </Row>
           </div>
         </div>
       )}
-    </Border>
+    </Container>
   )
 }

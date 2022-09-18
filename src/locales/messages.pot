@@ -2003,6 +2003,9 @@ msgstr ""
 msgid "Recipients will receive payouts in ETH."
 msgstr ""
 
+msgid "Recommended"
+msgstr ""
+
 msgid "Reconfiguration"
 msgstr ""
 

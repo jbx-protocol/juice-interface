@@ -5,6 +5,7 @@ export const topNavStyles: CSSProperties = {
   justifyContent: 'space-between',
   alignItems: 'center',
   background: 'var(--background-l0)',
+  zIndex: 1,
 }
 
 export const topRightNavStyles: CSSProperties = {

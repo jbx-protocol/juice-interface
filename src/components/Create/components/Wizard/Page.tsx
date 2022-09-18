@@ -1,12 +1,13 @@
 import { Space } from 'antd'
+import { ReactNode } from 'react'
 import { PageContext } from './contexts/PageContext'
 import { usePage } from './hooks'
 import { PageButtonControl } from './PageButtonControl'
 
 export interface PageProps {
   name: string
-  title?: string
-  description?: string
+  title?: ReactNode
+  description?: ReactNode
   isSkippable?: boolean
 }
 

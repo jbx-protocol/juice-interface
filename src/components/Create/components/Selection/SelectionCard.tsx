@@ -35,6 +35,8 @@ export interface SelectionCardProps {
   titleBadge?: ReactNode
   description?: string
   isSelected?: boolean
+  onSelected?: () => void
+  onChange?: (selected: boolean) => void
 }
 
 export const SelectionCard: React.FC<SelectionCardProps> = ({
@@ -43,6 +45,8 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
   icon,
   description,
   children,
+  onSelected,
+  onChange,
 }) => {
   const { selection, setSelection } = useContext(SelectionContext)
   const isSelected = selection === name
@@ -50,10 +54,13 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
   const onClick = useCallback(() => {
     if (isSelected) {
       setSelection?.(undefined)
+      onChange?.(false)
       return
     }
     setSelection?.(name)
-  }, [isSelected, name, setSelection])
+    onChange?.(true)
+    onSelected?.()
+  }, [isSelected, name, onChange, onSelected, setSelection])
 
   return (
     <Border isSelected={isSelected}>

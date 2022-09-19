@@ -1004,6 +1004,9 @@ msgstr ""
 msgid "ERC20 deployed"
 msgstr ""
 
+msgid "ETH"
+msgstr ""
+
 msgid "Each payout will receive their percent of this total each funding cycle if there is enough in the treasury. Otherwise, they will receive their percent of whatever is in the treasury."
 msgstr ""
 
@@ -1140,6 +1143,9 @@ msgid "Fund anything."
 msgstr ""
 
 msgid "Funding"
+msgstr ""
+
+msgid "Funding Cycle"
 msgstr ""
 
 msgid "Funding Cycle #1 will start immediately after you launch your project. You can't reconfigure Funding Cycle #1 after launch."
@@ -2781,6 +2787,9 @@ msgid "Twitter"
 msgstr ""
 
 msgid "Twitter handle"
+msgstr ""
+
+msgid "USD"
 msgstr ""
 
 msgid "Unarchive project"

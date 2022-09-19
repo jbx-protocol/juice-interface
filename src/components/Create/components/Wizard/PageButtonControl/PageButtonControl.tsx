@@ -4,8 +4,10 @@ import { PageContext } from '../contexts/PageContext'
 import { BackButton, DoneButton, NextButton, SkipButton } from './components'
 
 export const PageButtonControl = ({
+  isNextEnabled = true, // Default enabled if not supplied
   onPageDone,
 }: {
+  isNextEnabled?: boolean
   onPageDone?: () => void
 }) => {
   const {
@@ -32,7 +34,9 @@ export const PageButtonControl = ({
       </Space>
       <Space style={{ marginLeft: 'auto' }}>
         {!isFinalPage && isSkippable && <SkipButton onClick={goToNextPage} />}
-        {!isFinalPage && <NextButton onClick={onPageDone} />}
+        {!isFinalPage && (
+          <NextButton disabled={!isNextEnabled} onClick={onPageDone} />
+        )}
       </Space>
     </div>
   )

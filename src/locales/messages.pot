@@ -92,6 +92,9 @@ msgstr ""
 msgid "<0/> will go to the project owner: <1/>"
 msgstr ""
 
+msgid "<0/> your project’s settings will not be able to be edited or changed during the first funding cycle."
+msgstr ""
+
 msgid "<0/>{0} after {feePercentage}% JBX membership fee"
 msgstr ""
 
@@ -1154,6 +1157,9 @@ msgstr ""
 msgid "Funding Cycles"
 msgstr ""
 
+msgid "Funding Target"
+msgstr ""
+
 msgid "Funding cycle"
 msgstr ""
 
@@ -1320,6 +1326,9 @@ msgid "Indie creators and builders"
 msgstr ""
 
 msgid "Infinite (no limit)"
+msgstr ""
+
+msgid "Infinite Funding Target"
 msgstr ""
 
 msgid "Initial issuance rate"
@@ -1617,6 +1626,9 @@ msgid "Next: Review and deploy"
 msgstr ""
 
 msgid "No"
+msgstr ""
+
+msgid "No Funding Target"
 msgstr ""
 
 msgid "No NFT reward tiers"
@@ -2246,6 +2258,9 @@ msgstr ""
 msgid "Seconds"
 msgstr ""
 
+msgid "Select the option that best suits your project’s funding requirements."
+msgstr ""
+
 msgid "Send redeemed token to a custom address"
 msgstr ""
 
@@ -2283,6 +2298,9 @@ msgid "Set a limit on how many of these NFTs can be minted."
 msgstr ""
 
 msgid "Set a project handle (optional)"
+msgstr ""
+
+msgid "Set a specific amount to distribute to nominated addresses each funding cycle."
 msgstr ""
 
 msgid "Set a text record for {0} with the key <0>\"{projectHandleENSTextRecordKey}\"</0> and the value <1>\"{projectId}\"</1> (this project's ID). You can do this on the <2>ENS app</2>, or use the button below (as long as your connected wallet owns or controls that ENS name)."
@@ -2345,6 +2363,9 @@ msgstr ""
 msgid "Set veNFT operator for {projectTitle}"
 msgstr ""
 
+msgid "Set your funding target"
+msgstr ""
+
 msgid "Should you Juicebox?"
 msgstr ""
 
@@ -2367,6 +2388,9 @@ msgid "Something went wrong."
 msgstr ""
 
 msgid "Spaces are not allowed"
+msgstr ""
+
+msgid "Specific Funding Target"
 msgstr ""
 
 msgid "Spending"
@@ -3120,6 +3144,12 @@ msgid "Your project will appear archived, and won't be able to receive payments 
 msgstr ""
 
 msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
+msgstr ""
+
+msgid "Your project will withhold all funds raised. Funds can be distributed to payout addresses you set, and the project owner will receive any unallocated funds. Your project will have no overflow, so token holders can't redeem their tokens for ETH."
+msgstr ""
+
+msgid "Your project won't withhold any funds. All funds raised are Overflow. Token holders can redeem their tokens for a portion of your entire treasury."
 msgstr ""
 
 msgid "Your project's funding cycle target and duration."

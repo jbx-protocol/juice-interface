@@ -1,4 +1,5 @@
 import { CloseCircleOutlined } from '@ant-design/icons'
+import ExternalLink from 'components/ExternalLink'
 import TxStatusElem from 'components/TxStatusElem'
 import { ThemeContext } from 'contexts/themeContext'
 import { timestampForTxLog } from 'contexts/txHistoryContext'
@@ -24,7 +25,7 @@ export function TransactionItem({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        gap: 10,
+        gap: 24,
         width: '100%',
         padding: '5px 20px',
         background: colors.background.l0,
@@ -32,16 +33,10 @@ export function TransactionItem({
         boxSizing: 'border-box',
       }}
     >
-      <a
+      <div
         style={{
-          cursor: tx.tx.hash ? 'pointer' : 'default',
-          color: colors.text.primary,
-          fontSize: '0.7rem',
           lineHeight: '1.5rem',
         }}
-        href={tx.tx.hash ? etherscanLink('tx', tx.tx.hash) : undefined}
-        target="_blank"
-        rel="noopener noreferrer"
       >
         <div
           style={{
@@ -49,17 +44,26 @@ export function TransactionItem({
             alignItems: 'baseline',
             gap: 10,
             color: colors.text.tertiary,
+            fontSize: '0.7rem',
           }}
         >
           <TxStatusElem status={tx.status} />{' '}
           {formatHistoricalDate(timestampForTxLog(tx) * 1000)}
         </div>
-        <div style={{ fontSize: '0.85rem' }}>{tx.title}</div>
-      </a>
+
+        <ExternalLink
+          href={tx.tx.hash ? etherscanLink('tx', tx.tx.hash) : undefined}
+          style={{ fontSize: '0.85rem' }}
+          className="text-primary hover-text-decoration-underline"
+        >
+          {tx.title}
+        </ExternalLink>
+      </div>
 
       {onRemoveTransaction && (
         <CloseCircleOutlined
-          style={{ cursor: 'default' }}
+          role="button"
+          className="hover-text-action-primary"
           onClick={() => {
             onRemoveTransaction()
           }}

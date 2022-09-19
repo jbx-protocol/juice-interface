@@ -46,6 +46,7 @@ export function TransactionsList({
             paddingRight: 5,
             borderRadius: 15,
             height: 30,
+            userSelect: 'none',
           }}
           onClick={() => setIsExpanded(!isExpanded)}
         >

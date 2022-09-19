@@ -111,26 +111,24 @@ export function useTransactor({
         )
 
       console.info(
-        '🧃 Calling ' + functionName + '() with args:',
+        '🧃 Transactor::Calling ' + functionName + '() with args:',
         reportArgs,
         tx,
       )
 
+      const txTitle = options?.title ?? functionName
+
       try {
         let result
-
-        const txTitle = options?.title ?? functionName
-
         if (tx instanceof Promise) {
-          console.info('AWAITING TX', tx)
+          console.info('Transactor::AWAITING TX', tx)
           result = await tx
 
           addTransaction?.(txTitle, result)
         } else {
-          console.info('RUNNING TX', tx)
+          console.info('Transactor::RUNNING TX', tx)
 
           if (!tx.gasPrice) tx.gasPrice = gasPrice ?? parseUnits('4.1', 'gwei')
-
           if (!tx.gasLimit) tx.gasLimit = hexlify(120000)
 
           result = await signer.sendTransaction(tx)
@@ -139,13 +137,7 @@ export function useTransactor({
 
           await result.wait()
         }
-        console.info('RESULT:', result)
-
-        if (result.confirmations) {
-          options?.onConfirmed?.(result, signer)
-        } else {
-          options?.onCancelled?.(result, signer)
-        }
+        console.info('Transactor::RESULT::', result)
 
         options?.onDone?.()
 
@@ -153,7 +145,7 @@ export function useTransactor({
       } catch (e) {
         const message = (e as Error).message
 
-        console.error('Transaction Error:', message)
+        console.error('Transactor::Transaction Error:', message)
         Sentry.captureException(e, {
           tags: {
             contract_function: functionName,

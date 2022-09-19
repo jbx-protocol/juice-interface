@@ -1,11 +1,15 @@
-import { PullRequestOutlined, RedoOutlined } from '@ant-design/icons'
+import {
+  InfoCircleOutlined,
+  PullRequestOutlined,
+  RedoOutlined,
+} from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import Callout from 'components/Callout'
 import { useContext } from 'react'
 import { DurationInput } from '../../DurationInput'
-import { RecommendedTitle } from '../../RecommendedTitle'
+import { RecommendedBadge } from '../../RecommendedBadge'
 import { Selection } from '../../Selection/Selection'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
@@ -24,8 +28,8 @@ const FundingCycleCallout: React.FC = () => {
         <Callout>
           <Space direction="vertical" size="middle">
             <Trans>
-              Funding Cycle #1 will start immediately after you deploy your
-              project. Once deployed, Funding Cycle #1 cannot be reconfigured.
+              Funding Cycle #1 will start immediately after you launch your
+              project. You can't reconfigure Funding Cycle #1 after launch.
             </Trans>
             <Trans>
               You can reconfigure your project's next funding cycle (Funding
@@ -39,7 +43,7 @@ const FundingCycleCallout: React.FC = () => {
         <Callout>
           <Trans>
             With manual funding cycles selected, the project's owner can start a
-            new funding cycle on-demand. This could be a risk flag to some
+            new funding cycle on-demand. This may pose a risk to some
             contributors.
           </Trans>
         </Callout>
@@ -72,14 +76,23 @@ export const FundingCyclesPage = () => {
             <Selection>
               <Selection.Card
                 name="automated"
-                title={<RecommendedTitle text={t`Automated Funding Cycles`} />}
+                title={
+                  <Trans>
+                    Automated Funding Cycles <RecommendedBadge />
+                  </Trans>
+                }
                 description={t`Set a duration for automatically recurring funding cycles. Funds may only be distributed once per cycle.`}
                 icon={<RedoOutlined />}
               >
                 <Form.Item
                   name="duration"
                   label={t`Funding cycle duration`}
-                  extra={t`Note: your project’s settings will not be able to be edited or changed during the first funding cycle.`}
+                  extra={
+                    <Trans>
+                      <InfoCircleOutlined /> Your project’s settings cannot be
+                      edited or changed during the first funding cycle.
+                    </Trans>
+                  }
                   rules={[
                     inputMustExistRule({ label: t`Funding cycle duration` }),
                   ]}
@@ -90,7 +103,7 @@ export const FundingCyclesPage = () => {
               <Selection.Card
                 name="manual"
                 title={t`Manual Funding Cycles`}
-                description={t`The project’s owner can start a new funding cycle on demand without a set duration.`}
+                description={t`The project’s owner can change the project's settings and start a new funding cycle at any time.`}
                 icon={<PullRequestOutlined />}
               />
             </Selection>

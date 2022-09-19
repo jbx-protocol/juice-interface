@@ -77,6 +77,9 @@ msgstr ""
 msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the <1>risks</1> before committing your funds."
 msgstr ""
 
+msgid "<0/> Your project’s settings cannot be edited or changed during the first funding cycle."
+msgstr ""
+
 msgid "<0/> contributed"
 msgstr ""
 
@@ -440,7 +443,7 @@ msgstr ""
 msgid "Automate funding cycles"
 msgstr ""
 
-msgid "Automated Funding Cycles"
+msgid "Automated Funding Cycles <0/>"
 msgstr ""
 
 msgid "Automated funding cycles enable the following characteristics:"
@@ -1139,7 +1142,7 @@ msgstr ""
 msgid "Funding"
 msgstr ""
 
-msgid "Funding Cycle #1 will start immediately after you deploy your project. Once deployed, Funding Cycle #1 cannot be reconfigured."
+msgid "Funding Cycle #1 will start immediately after you launch your project. You can't reconfigure Funding Cycle #1 after launch."
 msgstr ""
 
 msgid "Funding Cycles"
@@ -1376,7 +1379,7 @@ msgstr ""
 msgid "Juicebox project"
 msgstr ""
 
-msgid "Juicebox projects are funded in cycles. You can think of this as a set period of time in which your project settings are locked. <0>Learn more.</0>"
+msgid "Juicebox projects are funded in cycles. A Funding Cycle is a set period of time in which your project settings are locked. <0>Learn more.</0>"
 msgstr ""
 
 msgid "Juicebox projects use <0>ENS names</0> as handles. Setting a handle involves 2 transactions:"
@@ -1668,9 +1671,6 @@ msgid "Note"
 msgstr ""
 
 msgid "Note: Tokens can be minted manually when allowed in the current funding cycle. This can be changed by the project owner for upcoming cycles."
-msgstr ""
-
-msgid "Note: your project’s settings will not be able to be edited or changed during the first funding cycle."
 msgstr ""
 
 msgid "Notice from {0}"
@@ -2513,7 +2513,7 @@ msgstr ""
 msgid "The project token's issuance rate will decrease by this percentage every funding cycle. A higher discount rate will incentivize contributors to pay the project earlier."
 msgstr ""
 
-msgid "The project’s owner can start a new funding cycle on demand without a set duration."
+msgid "The project’s owner can change the project's settings and start a new funding cycle at any time."
 msgstr ""
 
 msgid "The ratio of tokens rewarded per payment amount will decrease by this percentage with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier than later."
@@ -2978,7 +2978,7 @@ msgstr ""
 msgid "With Juicebox, projects are built and maintained by motivated punks getting paid transparently, and funded by a community of users and patrons who are rewarded as the projects they support succeed."
 msgstr ""
 
-msgid "With manual funding cycles selected, the project's owner can start a new funding cycle on-demand. This could be a risk flag to some contributors."
+msgid "With manual funding cycles selected, the project's owner can start a new funding cycle on-demand. This may pose a risk to some contributors."
 msgstr ""
 
 msgid "With no funding cycles, the project's owner can start a new funding cycle (Funding Cycle #2) on-demand. <0>Learn more.</0>"

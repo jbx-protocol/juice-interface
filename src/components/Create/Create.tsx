@@ -1,5 +1,7 @@
 import { t, Trans } from '@lingui/macro'
+import ExternalLink from 'components/ExternalLink'
 import { useWallet } from 'hooks/Wallet'
+import { helpPagePath } from 'utils/routes'
 import { FundingCyclesPage, ProjectDetailsPage } from './components'
 import { Wizard } from './components/Wizard'
 
@@ -24,9 +26,13 @@ export function Create() {
         title={t`Funding Cycles`}
         description={
           <Trans>
-            Juicebox projects are funded in cycles. You can think of this as a
-            set period of time in which your project settings are locked.{' '}
-            <a href="#TODO">Learn more.</a>
+            Juicebox projects are funded in cycles. A Funding Cycle is a set
+            period of time in which your project settings are locked.{' '}
+            <ExternalLink
+              href={helpPagePath('/dev/learn/glossary/funding-cycle')}
+            >
+              Learn more.
+            </ExternalLink>
           </Trans>
         }
       >

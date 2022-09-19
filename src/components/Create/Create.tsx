@@ -1,6 +1,8 @@
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
+import ExternalLink from 'components/ExternalLink'
 import { useWallet } from 'hooks/Wallet'
-import { ProjectDetailsPage } from './components'
+import { helpPagePath } from 'utils/routes'
+import { FundingCyclesPage, ProjectDetailsPage } from './components'
 import { Wizard } from './components/Wizard'
 
 export function Create() {
@@ -18,6 +20,27 @@ export function Create() {
         description={t`Enter your project’s details. You can edit your project's details at any time after you deploy project your project, but the transaction will cost gas.`}
       >
         <ProjectDetailsPage />
+      </Wizard.Page>
+      <Wizard.Page
+        name="fundingCycles"
+        title={t`Funding Cycles`}
+        description={
+          <Trans>
+            Juicebox projects are funded in cycles. A Funding Cycle is a set
+            period of time in which your project settings are locked.{' '}
+            <ExternalLink
+              href={helpPagePath('/dev/learn/glossary/funding-cycle')}
+            >
+              Learn more.
+            </ExternalLink>
+          </Trans>
+        }
+      >
+        <FundingCyclesPage />
+      </Wizard.Page>
+      <Wizard.Page name="nextStep" title={t`Empty Step`}>
+        <div>TODO</div>
+        <Wizard.Page.ButtonControl />
       </Wizard.Page>
     </Wizard>
   )

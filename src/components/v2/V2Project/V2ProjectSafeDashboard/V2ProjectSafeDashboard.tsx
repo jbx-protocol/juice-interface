@@ -1,13 +1,14 @@
-import { Trans } from '@lingui/macro'
-import { Tabs } from 'antd'
+import { t, Trans } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
+import { Tab } from 'components/Tab'
 import { layouts } from 'constants/styles/layouts'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useAddressIsGnosisSafe } from 'hooks/AddressIsGnosisSafe'
 import { useQueuedSafeTransactions } from 'hooks/safe/QueuedSafeTransactions'
-import { useContext } from 'react'
-import { generateSafeUrl } from 'utils/safe'
+import { generateSafeUrl } from 'lib/safe'
+import { useContext, useState } from 'react'
+
 import { SafeTransaction } from './SafeTransaction'
 export interface SafeTransactionType {
   nonce: number
@@ -18,6 +19,7 @@ export interface SafeTransactionType {
     parameters: object[]
   }
   isExecuted: boolean
+  safeTxGas: number
   safeTxHash: string
   submissionDate: string
   executionDate: string
@@ -31,10 +33,16 @@ export interface SafeTransactionType {
   safe: string
 }
 
-const { TabPane } = Tabs
+export type SafeTxCategory = 'queued' | 'history'
+const defaultTab: SafeTxCategory = 'queued'
+
+const TAB_NAMES: { [k in SafeTxCategory]: string } = {
+  queued: t`Queued`,
+  history: t`History`,
+}
 
 export function V2ProjectSafeDashboard() {
-  const { projectOwnerAddress } = useContext(V2ProjectContext)
+  const { projectOwnerAddress, projectId } = useContext(V2ProjectContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -45,6 +53,8 @@ export function V2ProjectSafeDashboard() {
   )
   const { data: ownerIsGnosisSafe, isLoading: ownerIsGnosisSafeLoading } =
     useAddressIsGnosisSafe(projectOwnerAddress)
+
+  const [selectedTab, setSelectedTab] = useState<SafeTxCategory>(defaultTab)
 
   if (!projectOwnerAddress) return null
 
@@ -69,21 +79,26 @@ export function V2ProjectSafeDashboard() {
       {isLoading && <div style={{ marginTop: 20 }}>Loading...</div>}
 
       {!isLoading && (
-        <Tabs
-          style={{ marginTop: 20 }}
-          tabBarStyle={{ border: 'unset', marginBottom: 15 }}
-        >
-          <TabPane tab={<Trans>Queued</Trans>} key="1">
-            {queuedSafeTransactions?.results.map(
-              (transaction: SafeTransactionType, idx: number) => (
-                <SafeTransaction
-                  key={`safe-${transaction.nonce}-${idx}`}
-                  transaction={transaction}
-                />
-              ),
-            )}
-          </TabPane>
-        </Tabs>
+        <div style={{ marginTop: '1.5rem' }}>
+          <Tab
+            name={TAB_NAMES['queued']}
+            link={`v2/p/${projectId}/safe`}
+            isSelected={selectedTab === 'queued'}
+            onClick={() => setSelectedTab('queued')}
+          />
+          {selectedTab === 'queued' ? (
+            <div style={{ marginTop: '1.5rem' }}>
+              {queuedSafeTransactions?.map(
+                (transaction: SafeTransactionType, idx: number) => (
+                  <SafeTransaction
+                    key={`safe-${transaction.nonce}-${idx}`}
+                    transaction={transaction}
+                  />
+                ),
+              )}
+            </div>
+          ) : null}
+        </div>
       )}
     </div>
   )

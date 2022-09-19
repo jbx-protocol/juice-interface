@@ -2,9 +2,9 @@ import { RightOutlined } from '@ant-design/icons'
 import ExternalLink from 'components/ExternalLink'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2UserContext } from 'contexts/v2/userContext'
-import { CSSProperties, useContext, useMemo, useState } from 'react'
-import { formatHistoricalDate } from 'utils/formatDate'
-import { generateSafeTxUrl } from 'utils/safe'
+import { generateSafeTxUrl } from 'lib/safe'
+import { CSSProperties, useContext, useMemo } from 'react'
+import { formatHistoricalDate } from 'utils/format/formatDate'
 
 import { SafeTransactionType } from './V2ProjectSafeDashboard'
 
@@ -95,7 +95,6 @@ export function SafeTransaction({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const [hover, setHover] = useState<boolean>(false)
 
   const { method } = transaction.dataDecoded ?? {}
 
@@ -108,7 +107,6 @@ export function SafeTransaction({
     border: '1px solid ' + colors.stroke.tertiary,
     padding: '0.5rem 1rem',
     marginBottom: '1rem',
-    backgroundColor: hover ? colors.background.l2 : 'unset',
     transition: 'all 0.3s',
   }
 
@@ -122,10 +120,8 @@ export function SafeTransaction({
   return (
     <ExternalLink
       style={safeTransactionRowStyle}
-      className="hover-box-shadow-sm"
+      className="hover-box-shadow-sm hover-bg-l2"
       href={generateSafeTxUrl(transaction)}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
     >
       <TransactionContent transaction={transaction} />
     </ExternalLink>

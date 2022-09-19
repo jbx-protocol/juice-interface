@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { SafeTransactionType } from 'components/v2/V2Project/V2ProjectSafeDashboard/V2ProjectSafeDashboard'
 import { useQuery } from 'react-query'
 
 const SAFE_API_BASE_URL = 'https://safe-transaction.gnosis.io/api/v1'
@@ -21,7 +22,9 @@ export function useQueuedSafeTransactions({
         `/safes/${safeAddress}/multisig-transactions`,
         { params: { trusted: true, limit, executed: false, queued: true } },
       )
-      return response.data
+      return response.data.results.filter(
+        (tx: SafeTransactionType) => tx.safeTxGas === 0,
+      )
     },
     {
       enabled: Boolean(safeAddress),

@@ -6,6 +6,7 @@ import { V2ContractsProvider } from 'providers/v2/V2ContractsProvider'
 import { V2CurrencyProvider } from 'providers/v2/V2CurrencyProvider'
 import { helpPagePath } from 'utils/routes'
 import { FundingCyclesPage, ProjectDetailsPage } from './components'
+import { FundingTargetPage } from './components/pages/FundingTarget'
 import { Wizard } from './components/Wizard'
 
 export function Create() {
@@ -45,6 +46,13 @@ export function Create() {
               }
             >
               <FundingCyclesPage />
+            </Wizard.Page>
+            <Wizard.Page
+              name="fundingTarget"
+              title={t`Funding Target`}
+              description={t`Select an option that best suits your project’s funding requirements.`}
+            >
+              <FundingTargetPage />
             </Wizard.Page>
             <Wizard.Page name="nextStep" title={t`Empty Step`}>
               <div>TODO</div>

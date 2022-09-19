@@ -344,6 +344,12 @@ msgstr ""
 msgid "All funds can be distributed by the project. The project will have no overflow (the same as setting the target to infinity)."
 msgstr ""
 
+msgid "All funds raised will be available to distribute to payout addresses. Your project will have no overflow, so token holders will not be able to redeem."
+msgstr ""
+
+msgid "All funds raised will be considered ‘overflow’ and will be redeemable by token holders at any time."
+msgstr ""
+
 msgid "All funds received by the treasury will be distributed. Token holders will receive <0>no ETH</0> when burning their tokens."
 msgstr ""
 
@@ -1154,6 +1160,9 @@ msgstr ""
 msgid "Funding Cycles"
 msgstr ""
 
+msgid "Funding Target"
+msgstr ""
+
 msgid "Funding cycle"
 msgstr ""
 
@@ -1320,6 +1329,9 @@ msgid "Indie creators and builders"
 msgstr ""
 
 msgid "Infinite (no limit)"
+msgstr ""
+
+msgid "Infinite Funding Target"
 msgstr ""
 
 msgid "Initial issuance rate"
@@ -1619,6 +1631,9 @@ msgstr ""
 msgid "No"
 msgstr ""
 
+msgid "No Funding Target"
+msgstr ""
+
 msgid "No NFT reward tiers"
 msgstr ""
 
@@ -1677,6 +1692,9 @@ msgid "Note"
 msgstr ""
 
 msgid "Note: Tokens can be minted manually when allowed in the current funding cycle. This can be changed by the project owner for upcoming cycles."
+msgstr ""
+
+msgid "Note: your project’s settings will not be able to be edited or changed during the first funding cycle."
 msgstr ""
 
 msgid "Notice from {0}"
@@ -2246,6 +2264,9 @@ msgstr ""
 msgid "Seconds"
 msgstr ""
 
+msgid "Select an option that best suits your project’s funding requirements."
+msgstr ""
+
 msgid "Send redeemed token to a custom address"
 msgstr ""
 
@@ -2283,6 +2304,9 @@ msgid "Set a limit on how many of these NFTs can be minted."
 msgstr ""
 
 msgid "Set a project handle (optional)"
+msgstr ""
+
+msgid "Set a specific amount that you will be able to distribute to nominated wallets each funding cycle."
 msgstr ""
 
 msgid "Set a text record for {0} with the key <0>\"{projectHandleENSTextRecordKey}\"</0> and the value <1>\"{projectId}\"</1> (this project's ID). You can do this on the <2>ENS app</2>, or use the button below (as long as your connected wallet owns or controls that ENS name)."
@@ -2345,6 +2369,9 @@ msgstr ""
 msgid "Set veNFT operator for {projectTitle}"
 msgstr ""
 
+msgid "Set your funding target"
+msgstr ""
+
 msgid "Should you Juicebox?"
 msgstr ""
 
@@ -2367,6 +2394,9 @@ msgid "Something went wrong."
 msgstr ""
 
 msgid "Spaces are not allowed"
+msgstr ""
+
+msgid "Specific Funding Target"
 msgstr ""
 
 msgid "Spending"

@@ -36,24 +36,23 @@ import { weightedAmount } from 'utils/v2/math'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { redirectTo, reloadWindow } from 'utils/windowUtils'
 import { V2PayForm, V2PayFormType } from '../V2PayForm'
 import { NftRewardCell } from './NftRewardCell'
 
 export function V2ConfirmPayModal({
   visible,
   weiAmount,
-  onSuccess,
   onCancel,
 }: {
   visible?: boolean
   weiAmount: BigNumber | undefined
-  onSuccess?: VoidFunction
   onCancel?: VoidFunction
 }) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { fundingCycle, fundingCycleMetadata, tokenSymbol } =
+  const { fundingCycle, fundingCycleMetadata, tokenSymbol, handle } =
     useContext(V2ProjectContext)
   const { projectMetadata, projectId } = useContext(ProjectMetadataContext)
   const {
@@ -108,6 +107,16 @@ export function V2ConfirmPayModal({
     })
   }
 
+  const projectBaseUrl = handle ? `/@${handle}` : `/v2/p/${projectId}`
+
+  const handlePaySuccess = () => {
+    if (nftRewardTier && projectMetadata?.nftPaymentSuccessModal) {
+      redirectTo(`${projectBaseUrl}?nftPurchaseConfirmed=true`)
+    } else {
+      reloadWindow()
+    }
+  }
+
   async function pay() {
     if (!weiAmount) return
 
@@ -148,7 +157,7 @@ export function V2ConfirmPayModal({
             setLoading(false)
             setTransactionPending(false)
 
-            onSuccess?.()
+            handlePaySuccess()
           },
           onError() {
             setLoading(false)

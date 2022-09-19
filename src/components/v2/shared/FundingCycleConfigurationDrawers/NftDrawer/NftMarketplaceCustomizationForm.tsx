@@ -6,7 +6,7 @@ import {
   defaultNftCollectionName,
 } from 'utils/nftRewards'
 
-import { MarketplaceFormFields } from '.'
+import { MarketplaceFormFields } from './formFields'
 
 export function NftMarketplaceCustomizationForm({
   form,

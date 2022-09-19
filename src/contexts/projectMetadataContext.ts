@@ -1,9 +1,9 @@
 import { CV } from 'models/cv'
-import { ProjectMetadataV4 } from 'models/project-metadata'
+import { ProjectMetadataV5 } from 'models/project-metadata'
 import { createContext } from 'react'
 
 export interface ProjectMetadataContextType {
-  projectMetadata: ProjectMetadataV4 | undefined
+  projectMetadata: ProjectMetadataV5 | undefined
   isArchived: boolean | undefined
   projectId: number | undefined
   cv: CV | undefined

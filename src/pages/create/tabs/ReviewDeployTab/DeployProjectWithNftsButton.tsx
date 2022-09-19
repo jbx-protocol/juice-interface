@@ -77,6 +77,7 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
         symbol: collectionSymbol,
         CID: collectionCID,
       },
+      postPayModal,
     },
   } = useAppSelector(state => state.editingV2Project)
   const fundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
@@ -99,7 +100,10 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
     }
 
     // Upload project metadata
-    const uploadedMetadata = await uploadProjectMetadata(projectMetadata)
+    const uploadedMetadata = await uploadProjectMetadata({
+      nftPaymentSuccessModal: postPayModal,
+      ...projectMetadata,
+    })
 
     if (!uploadedMetadata.IpfsHash) {
       console.error('Failed to upload project metadata.')
@@ -186,6 +190,7 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
       handleProjectLaunchFailed(error as Error)
     }
   }, [
+    postPayModal,
     projectName,
     launchProjectWithNftsTx,
     projectMetadata,

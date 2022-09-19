@@ -23,9 +23,13 @@ import { shadowCard } from 'constants/styles/shadowCard'
 
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import TooltipIcon from 'components/TooltipIcon'
+import { withHttps } from 'utils/externalLink'
 import FundingCycleDrawer from '../FundingCycleDrawer'
 import { AddRewardTierButton } from './AddRewardTierButton'
+import { MarketplaceFormFields, NftPostPayModalFormFields } from './formFields'
 import { NftMarketplaceCustomizationForm } from './NftMarketplaceCustomizationForm'
+import { NftPostPayModalForm } from './NftPostPayModalForm'
+import { NftPostPayModalPreviewButton } from './NftPostPayModalPreviewButton'
 import NftRewardTierCard from './NftRewardTierCard'
 
 export const NFT_REWARDS_EXPLAINATION: JSX.Element = (
@@ -34,12 +38,6 @@ export const NFT_REWARDS_EXPLAINATION: JSX.Element = (
     criteria.
   </Trans>
 )
-
-export type MarketplaceFormFields = {
-  collectionName: string
-  collectionSymbol: string
-  collectionDescription: string
-}
 
 export default function NftDrawer({
   visible,
@@ -59,6 +57,7 @@ export default function NftDrawer({
   } = useAppSelector(state => state.editingV2Project)
 
   const [marketplaceForm] = useForm<MarketplaceFormFields>()
+  const [postPayModalForm] = useForm<NftPostPayModalFormFields>()
 
   const [addTierModalVisible, setAddTierModalVisible] = useState<boolean>(false)
   const [submitLoading, setSubmitLoading] = useState<boolean>(false)
@@ -103,11 +102,25 @@ export default function NftDrawer({
         nftCollectionMetadataCID,
       ),
     )
+
+    const postPayModalContent = postPayModalForm.getFieldValue('content')
+    dispatch(
+      editingV2ProjectActions.setNftPostPayModalConfig(
+        postPayModalContent
+          ? {
+              ctaLink: withHttps(postPayModalForm.getFieldValue('ctaLink')),
+              ctaText: postPayModalForm.getFieldValue('ctaText'),
+              content: postPayModalContent,
+            }
+          : undefined,
+      ),
+    )
     // Store cid (link to nfts on IPFS) to be used later in the deploy tx
     dispatch(editingV2ProjectActions.setNftRewardsCIDs(rewardTiersCIDs))
     setSubmitLoading(false)
     onClose?.()
   }, [
+    postPayModalForm,
     rewardTiers,
     dispatch,
     onClose,
@@ -210,6 +223,21 @@ export default function NftDrawer({
             }
           >
             <NftMarketplaceCustomizationForm form={marketplaceForm} />
+          </MinimalCollapse>
+          <MinimalCollapse
+            header={
+              <>
+                <Trans>Purchase confirmation popup</Trans>
+                <TooltipIcon
+                  tip={t`Show your contributors a message after they buy an NFT.`}
+                  iconStyle={{ marginLeft: 10 }}
+                />
+              </>
+            }
+            style={{ marginTop: '1rem' }}
+          >
+            <NftPostPayModalForm form={postPayModalForm} />
+            <NftPostPayModalPreviewButton form={postPayModalForm} />
           </MinimalCollapse>
         </div>
         <Button

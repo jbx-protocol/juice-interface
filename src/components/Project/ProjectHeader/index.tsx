@@ -8,7 +8,7 @@ import ProjectLogo from 'components/ProjectLogo'
 import { ThemeContext } from 'contexts/themeContext'
 import { useAddressIsGnosisSafe } from 'hooks/AddressIsGnosisSafe'
 import useMobile from 'hooks/Mobile'
-import { ProjectMetadataV4 } from 'models/project-metadata'
+import { ProjectMetadataV5 } from 'models/project-metadata'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { settingsPagePath } from 'utils/routes'
@@ -25,7 +25,7 @@ export default function ProjectHeader({
   projectOwnerAddress,
   projectId,
 }: {
-  metadata: ProjectMetadataV4 | undefined
+  metadata: ProjectMetadataV5 | undefined
   isArchived: boolean | undefined
   handle: string | undefined
   actions: JSX.Element | undefined

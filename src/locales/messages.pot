@@ -509,6 +509,9 @@ msgstr ""
 msgid "Burn {tokensTextLong}"
 msgstr ""
 
+msgid "Button will close the modal if no link is given."
+msgstr ""
+
 msgid "By default, all unallocated funds can be distributed to the project owner's wallet."
 msgstr ""
 
@@ -522,6 +525,12 @@ msgid "CSV data wasn't ready for export. Wait a few seconds and try again."
 msgstr ""
 
 msgid "CSV download failed."
+msgstr ""
+
+msgid "Call-to-action button link"
+msgstr ""
+
+msgid "Call-to-action button text"
 msgstr ""
 
 msgid "Can I change my project's contract after it's been created?"
@@ -1487,6 +1496,9 @@ msgstr ""
 msgid "Memo included on-chain"
 msgstr ""
 
+msgid "Message"
+msgstr ""
+
 msgid "Migrate to Juicebox V1.1"
 msgstr ""
 
@@ -1551,6 +1563,9 @@ msgid "My VeNFTs"
 msgstr ""
 
 msgid "My projects"
+msgstr ""
+
+msgid "NFT mint confirmed"
 msgstr ""
 
 msgid "NFT projects"
@@ -1961,6 +1976,9 @@ msgstr ""
 msgid "Provide a link to additional information about this NFT."
 msgstr ""
 
+msgid "Purchase confirmation popup"
+msgstr ""
+
 msgid "REMAINING SUPPLY: {0}/{1}"
 msgstr ""
 
@@ -2313,6 +2331,9 @@ msgid "Set veNFT operator for {projectTitle}"
 msgstr ""
 
 msgid "Should you Juicebox?"
+msgstr ""
+
+msgid "Show your contributors a message after they buy an NFT."
 msgstr ""
 
 msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."

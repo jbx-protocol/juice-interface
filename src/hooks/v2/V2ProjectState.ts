@@ -1,18 +1,14 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import * as constants from '@ethersproject/constants'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
-import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
 import { V2ProjectContextType } from 'contexts/v2/projectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useNameOfERC20 from 'hooks/NameOfERC20'
-import useNftRewards from 'hooks/NftRewards'
 import { useProjectsQuery } from 'hooks/Projects'
 import useSymbolOfERC20 from 'hooks/SymbolOfERC20'
 import { useBallotState } from 'hooks/v2/contractReader/BallotState'
-import { useNftRewardTiersOf } from 'hooks/v2/contractReader/NftRewardTiersOf'
 import { usePaymentTerminalBalance } from 'hooks/v2/contractReader/PaymentTerminalBalance'
 import useProjectCurrentFundingCycle from 'hooks/v2/contractReader/ProjectCurrentFundingCycle'
 import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
@@ -24,13 +20,13 @@ import useProjectToken from 'hooks/v2/contractReader/ProjectToken'
 import useProjectTokenTotalSupply from 'hooks/v2/contractReader/ProjectTokenTotalSupply'
 import useTerminalCurrentOverflow from 'hooks/v2/contractReader/TerminalCurrentOverflow'
 import useUsedDistributionLimit from 'hooks/v2/contractReader/UsedDistributionLimit'
-import { useVeNftContractForProject } from 'hooks/veNft/VeNftContractForProject'
-import { first } from 'lodash'
-import { ProjectMetadataV4 } from 'models/project-metadata'
+import first from 'lodash/first'
+import { CV } from 'models/cv'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { useMemo } from 'react'
-import { CIDsOfNftRewardTiersResponse } from 'utils/nftRewards'
 import { NO_CURRENCY, V2CurrencyName, V2_CURRENCY_ETH } from 'utils/v2/currency'
+
+const V2_PROJECT_CV: CV = '2'
 
 const useBalanceInDistributionLimitCurrency = ({
   ETHBalanceLoading,
@@ -67,13 +63,7 @@ const useBalanceInDistributionLimitCurrency = ({
   }, [ETHBalance, ETHBalanceLoading, converter, distributionLimitCurrency])
 }
 
-export function useV2ProjectState({
-  projectId,
-  metadata: projectMetadata,
-}: {
-  projectId: number
-  metadata: ProjectMetadataV4
-}) {
+export function useV2ProjectState({ projectId }: { projectId: number }) {
   /**
    * Load additional project metadata
    */
@@ -81,9 +71,6 @@ export function useV2ProjectState({
     projectId,
   })
   const { data: projectOwnerAddress } = useProjectOwner(projectId)
-  const isArchived = projectId
-    ? V2ArchivedProjectIds.includes(projectId) || projectMetadata?.archived
-    : false
 
   /**
    * Load project stats
@@ -91,7 +78,7 @@ export function useV2ProjectState({
   const { data: projects } = useProjectsQuery({
     projectId,
     keys: ['createdAt', 'totalPaid'],
-    cv: ['2'],
+    cv: [V2_PROJECT_CV],
   })
   const createdAt = first(projects)?.createdAt
   const totalVolume = first(projects)?.totalPaid
@@ -173,43 +160,10 @@ export function useV2ProjectState({
   const tokenName = useNameOfERC20(tokenAddress)
   const { data: totalTokenSupply } = useProjectTokenTotalSupply(projectId)
 
-  /**
-   * Load NFT Rewards data
-   */
-  const { data: nftRewardTiersResponse, loading: nftRewardsCIDsLoading } =
-    useNftRewardTiersOf(fundingCycleMetadata?.dataSource)
-  let nftRewardsCIDs: string[] = []
-  if (nftRewardTiersResponse) {
-    nftRewardsCIDs = CIDsOfNftRewardTiersResponse(nftRewardTiersResponse)
-  }
-  const { data: nftRewardTiers, isLoading: nftRewardTiersLoading } =
-    useNftRewards(nftRewardTiersResponse ?? [])
-  // Assumes having `dataSource` means there are NFTs initially
-  // In worst case, if has `dataSource` but isn't for NFTs:
-  //    - loading will be true briefly
-  //    - will resolve false when `useNftRewardTiersOf` fails
-  const nftsLoading = Boolean(
-    fundingCycleMetadata?.dataSource &&
-      fundingCycleMetadata.dataSource !== constants.AddressZero &&
-      (nftRewardTiersLoading || nftRewardsCIDsLoading),
-  )
-
-  /**
-   * Load veNFT data
-   */
-  const { data: veNftInfo } = useVeNftContractForProject(projectId)
-  const veNftContractAddress = first(veNftInfo)?.address
-  const veNftUriResolver = first(veNftInfo)?.uriResolver
-
   const project: V2ProjectContextType = {
-    cv: '2',
-
     // project metadata
-    projectId,
     handle,
     projectOwnerAddress,
-    projectMetadata,
-    isArchived,
 
     // stats
     createdAt,
@@ -241,19 +195,6 @@ export function useV2ProjectState({
     tokenSymbol,
     tokenName,
     totalTokenSupply,
-
-    // NFT Rewards data
-    nftRewards: {
-      CIDs: nftRewardsCIDs,
-      rewardTiers: nftRewardTiers ?? [],
-      loading: nftsLoading,
-    },
-
-    // veNFT data
-    veNft: {
-      contractAddress: veNftContractAddress,
-      uriResolver: veNftUriResolver,
-    },
 
     // loading states
     loading: {

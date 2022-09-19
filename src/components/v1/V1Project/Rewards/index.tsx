@@ -5,20 +5,20 @@ import { useWallet } from 'hooks/Wallet'
 
 import * as constants from '@ethersproject/constants'
 import FormattedAddress from 'components/FormattedAddress'
-import IssueTokenButton from 'components/IssueTokenButton'
+import { IssueErc20TokenButton } from 'components/IssueErc20TokenButton'
 import ManageTokensModal from 'components/ManageTokensModal'
 import ParticipantsModal from 'components/modals/ParticipantsModal'
 import SectionHeader from 'components/SectionHeader'
 import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
+import useERC20BalanceOf from 'hooks/ERC20BalanceOf'
 import useCanPrintPreminedTokens from 'hooks/v1/contractReader/CanPrintPreminedTokens'
-import useERC20BalanceOf from 'hooks/v1/contractReader/ERC20BalanceOf'
 import useReservedTokensOfProject from 'hooks/v1/contractReader/ReservedTokensOfProject'
 import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
 import useTotalSupplyOfProjectToken from 'hooks/v1/contractReader/TotalSupplyOfProjectToken'
 import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceOfUser'
 import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
-import { useIssueTokensTx } from 'hooks/v1/transactor/IssueTokensTx'
+import { useIssueErc20TokenTx } from 'hooks/v1/transactor/IssueErc20TokenTx'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import { CSSProperties, useContext, useState } from 'react'
 import { formatPercent, formatWad } from 'utils/format/formatNumber'
@@ -29,13 +29,14 @@ import ConfirmUnstakeTokensModal from '../modals/ConfirmUnstakeTokensModal'
 import PrintPreminedModal from '../modals/PrintPreminedModal'
 import RedeemModal from '../modals/RedeemModal'
 
-export default function Rewards() {
-  const [manageTokensModalVisible, setManageTokensModalVisible] =
-    useState<boolean>()
-  const [participantsModalVisible, setParticipantsModalVisible] =
-    useState<boolean>(false)
+const labelStyle: CSSProperties = {
+  width: 128,
+}
 
-  const { userAddress } = useWallet()
+export default function Rewards() {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
   const {
     projectId,
     handle,
@@ -47,23 +48,33 @@ export default function Rewards() {
     terminal,
     overflow,
   } = useContext(V1ProjectContext)
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
 
-  const claimedBalance = useERC20BalanceOf(tokenAddress, userAddress)
+  const [manageTokensModalVisible, setManageTokensModalVisible] =
+    useState<boolean>()
+  const [participantsModalVisible, setParticipantsModalVisible] =
+    useState<boolean>(false)
+
+  const { userAddress } = useWallet()
+
+  const fundingCycleMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
+
+  const { data: claimedBalance } = useERC20BalanceOf(tokenAddress, userAddress)
   const unclaimedBalance = useUnclaimedBalanceOfUser()
   const totalBalance = useTotalBalanceOf(userAddress, projectId, terminal?.name)
-
-  const metadata = decodeFundingCycleMetadata(currentFC?.metadata)
   const reservedTicketBalance = useReservedTokensOfProject(
-    metadata?.reservedRate,
+    fundingCycleMetadata?.reservedRate,
   )
-
   const totalSupply = useTotalSupplyOfProjectToken(projectId)
   const totalSupplyWithReservedTicketBalance = totalSupply?.add(
     reservedTicketBalance ? reservedTicketBalance : BigNumber.from(0),
   )
+  const hasIssueTicketsPermission = useV1ConnectedWalletHasPermission(
+    V1OperatorPermission.Issue,
+  )
+  const userHasMintPermission = useV1ConnectedWalletHasPermission(
+    V1OperatorPermission.PrintTickets,
+  )
+  const canPrintPreminedV1Tickets = Boolean(useCanPrintPreminedTokens())
 
   const share = formatPercent(
     totalBalance,
@@ -74,33 +85,23 @@ export default function Rewards() {
     ? tokenAddress !== constants.AddressZero
     : false
 
-  const hasIssueTicketsPermission = useV1ConnectedWalletHasPermission(
-    V1OperatorPermission.Issue,
-  )
-
-  const labelStyle: CSSProperties = {
-    width: 128,
-  }
-
-  const tokensLabel = tokenSymbolText({
-    tokenSymbol: tokenSymbol,
-    capitalize: true,
-    plural: true,
-  })
-
-  const canPrintPreminedV1Tickets = Boolean(useCanPrintPreminedTokens())
-  const userHasMintPermission = useV1ConnectedWalletHasPermission(
-    V1OperatorPermission.PrintTickets,
-  )
-
   const projectAllowsMint = Boolean(
-    metadata &&
-      (metadata.version === 0
+    fundingCycleMetadata &&
+      (fundingCycleMetadata.version === 0
         ? canPrintPreminedV1Tickets
-        : metadata.ticketPrintingIsAllowed),
+        : fundingCycleMetadata.ticketPrintingIsAllowed),
   )
 
   const hasOverflow = Boolean(overflow?.gt(0))
+  const redeemDisabled = Boolean(
+    !hasOverflow || fundingCycleMetadata?.bondingCurveRate === 0,
+  )
+
+  const tokensLabel = tokenSymbolText({
+    tokenSymbol,
+    capitalize: true,
+    plural: true,
+  })
 
   return (
     <div>
@@ -202,7 +203,7 @@ export default function Rewards() {
         />
 
         {!ticketsIssued && hasIssueTicketsPermission && !isPreviewMode && (
-          <IssueTokenButton useIssueTokensTx={useIssueTokensTx} />
+          <IssueErc20TokenButton useIssueErc20TokenTx={useIssueErc20TokenTx} />
         )}
       </Space>
 
@@ -211,8 +212,8 @@ export default function Rewards() {
         onCancel={() => setManageTokensModalVisible(false)}
         projectAllowsMint={projectAllowsMint}
         userHasMintPermission={userHasMintPermission}
-        veNftEnabled={false}
         hasOverflow={hasOverflow}
+        redeemDisabled={redeemDisabled}
         tokenSymbol={tokenSymbol}
         tokenAddress={tokenAddress}
         RedeemModal={RedeemModal}

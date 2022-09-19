@@ -6,6 +6,7 @@ import V2ProjectHeaderActions from 'components/v2/V2Project/V2ProjectHeaderActio
 import { V2ProjectSettingsContent } from 'components/v2/V2Project/V2ProjectSettings/V2ProjectSettingsContent'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { layouts } from 'constants/styles/layouts'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
@@ -25,9 +26,9 @@ export const V2SettingsPageKeyTitleMap: { [k in V2SettingsPageKey]: string } = {
   payouts: t`Payouts`,
   reservedtokens: t`Reserved Token Allocation`,
   v1tokenmigration: t`V1 Token Migration`,
-  venft: t`VeNFT Governance`,
   transferownership: t`Transfer Ownership`,
   archiveproject: t`Archive Project`,
+  governance: t`Governance`,
 }
 
 function menuItem(
@@ -72,9 +73,7 @@ const items: MenuItem[] = [
     [
       menuItem('Transfer ownership', 'transferownership'),
       menuItem('Archive project', 'archiveproject'),
-      featureFlagEnabled(FEATURE_FLAGS.VENFT)
-        ? menuItem('veNFT governance', 'venft')
-        : null,
+      menuItem('Governance', 'governance'),
       featureFlagEnabled(FEATURE_FLAGS.V1_TOKEN_SWAP)
         ? menuItem('V1 token migration', 'v1tokenmigration')
         : null,
@@ -84,14 +83,11 @@ const items: MenuItem[] = [
 ]
 
 export function V2ProjectSettings() {
-  const {
-    projectMetadata,
-    isPreviewMode,
-    isArchived,
-    projectOwnerAddress,
-    handle,
-    projectId,
-  } = useContext(V2ProjectContext)
+  const { isPreviewMode, projectOwnerAddress, handle } =
+    useContext(V2ProjectContext)
+  const { projectMetadata, isArchived, projectId } = useContext(
+    ProjectMetadataContext,
+  )
   const { isDarkMode } = useContext(ThemeContext)
 
   const router = useRouter()

@@ -1,6 +1,7 @@
 import { Contract } from '@ethersproject/contracts'
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
+import { NetworkName } from 'models/network-name'
 import { useEffect, useState } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { useContractReadValue } from './ContractReader'
@@ -19,13 +20,25 @@ const usePricesContract = () => {
     if (contract) return
 
     const load = async () => {
-      const contract = await loadV1Contract(
-        'Prices',
-        readNetwork.name,
-        readProvider,
-      )
+      try {
+        const contract = await loadV1Contract(
+          'Prices',
+          readNetwork.name,
+          readProvider,
+        )
 
-      setContract(contract)
+        setContract(contract)
+      } catch (_) {
+        // if Prices contract isn't deployed on the readNetwork,
+        // fall back to mainnet
+        const contract = await loadV1Contract(
+          'Prices',
+          NetworkName.mainnet,
+          readProvider,
+        )
+
+        setContract(contract)
+      }
     }
 
     load()

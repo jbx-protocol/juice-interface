@@ -1,7 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { V2UserContext } from 'contexts/v2/userContext'
 import { useContext } from 'react'
 
+import { t } from '@lingui/macro'
+import { TransactionContext } from 'contexts/transactionContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useVeNftContract } from 'hooks/veNft/VeNftContract'
 
@@ -14,7 +15,7 @@ export type RedeemVeNftTx = TransactorInstance<{
 }>
 
 export function useRedeemVeNftTx(): RedeemVeNftTx {
-  const { transactor } = useContext(V2UserContext)
+  const { transactor } = useContext(TransactionContext)
   const nftContract = useVeNftContract()
   const minReturnedTokens = BigNumber.from(0) // TODO will need a field for this in V2ConfirmPayOwnerModal
   const metadata: string[] = [] //randomBytes(1)
@@ -43,6 +44,7 @@ export function useRedeemVeNftTx(): RedeemVeNftTx {
       ],
       {
         ...txOpts,
+        title: t`Redeem veNFT`,
       },
     )
   }

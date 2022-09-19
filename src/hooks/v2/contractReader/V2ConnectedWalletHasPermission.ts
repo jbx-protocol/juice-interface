@@ -1,3 +1,4 @@
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useWallet } from 'hooks/Wallet'
 import { V2OperatorPermission } from 'models/v2/permissions'
@@ -10,7 +11,8 @@ export function useV2ConnectedWalletHasPermission(
   permission: V2OperatorPermission | V2OperatorPermission[],
 ) {
   const { userAddress } = useWallet()
-  const { projectId, isPreviewMode } = useContext(V2ProjectContext)
+  const { isPreviewMode } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const { data: owner } = useProjectOwner(projectId)
 

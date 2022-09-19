@@ -13,10 +13,12 @@ import ETHAmount from 'components/currency/ETHAmount'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { MemoFormInput } from 'components/inputs/Pay/MemoFormInput'
 import TransactionModal from 'components/TransactionModal'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useETHReceivedFromTokens } from 'hooks/v2/contractReader/ETHReceivedFromTokens'
 import useTotalBalanceOf from 'hooks/v2/contractReader/TotalBalanceOf'
 import { useRedeemTokensTx } from 'hooks/v2/transactor/RedeemTokensTx'
+import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { V2_CURRENCY_USD } from 'utils/v2/currency'
 import { formatRedemptionRate } from 'utils/v2/math'
@@ -31,16 +33,17 @@ export default function V2RedeemModal({
   onCancel?: VoidFunction
   onConfirmed?: VoidFunction
 }) {
-  const { userAddress } = useWallet()
   const {
     tokenSymbol,
     fundingCycle,
     primaryTerminalCurrentOverflow,
-    projectId,
     totalTokenSupply,
     distributionLimitCurrency,
     fundingCycleMetadata,
   } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
+
+  const { userAddress } = useWallet()
 
   const [redeemAmount, setRedeemAmount] = useState<string>()
   const [loading, setLoading] = useState<boolean>()
@@ -67,13 +70,13 @@ export default function V2RedeemModal({
       rewardAmount
 
   const tokensTextLong = tokenSymbolText({
-    tokenSymbol: tokenSymbol,
+    tokenSymbol,
     capitalize: false,
     plural: true,
     includeTokenWord: true,
   })
   const tokensTextShort = tokenSymbolText({
-    tokenSymbol: tokenSymbol,
+    tokenSymbol,
     capitalize: false,
     plural: true,
   })
@@ -105,13 +108,13 @@ export default function V2RedeemModal({
     return Promise.resolve()
   }
 
-  const exectuteRedeemTransaction = async () => {
+  const executeRedeemTransaction = async () => {
     await form.validateFields()
     if (!minReturnedTokens) return
 
     setLoading(true)
 
-    redeemTokensTx(
+    const txSuccess = await redeemTokensTx(
       {
         redeemAmount: parseWad(redeemAmount),
         minReturnedTokens,
@@ -129,8 +132,18 @@ export default function V2RedeemModal({
           setLoading(false)
           onConfirmed?.()
         },
+        onError: (e: DOMException) => {
+          setTransactionPending(false)
+          setLoading(false)
+          emitErrorNotification(e.message)
+        },
       },
     )
+
+    if (!txSuccess) {
+      setTransactionPending(false)
+      setLoading(false)
+    }
   }
 
   const totalSupplyExceeded =
@@ -147,7 +160,7 @@ export default function V2RedeemModal({
       visible={visible}
       confirmLoading={loading}
       onOk={() => {
-        exectuteRedeemTransaction()
+        executeRedeemTransaction()
       }}
       onCancel={() => {
         setRedeemAmount(undefined)

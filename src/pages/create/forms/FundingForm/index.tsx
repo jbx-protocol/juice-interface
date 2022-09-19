@@ -11,7 +11,7 @@ import { DEFAULT_BALLOT_STRATEGY } from 'constants/v2/ballotStrategies'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { V2UserContext } from 'contexts/v2/userContext'
+import { V2ContractsContext } from 'contexts/v2/V2ContractsContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import isEqual from 'lodash/isEqual'
@@ -73,7 +73,7 @@ export default function FundingForm({
     theme,
     theme: { colors },
   } = useContext(ThemeContext)
-  const { contracts } = useContext(V2UserContext)
+  const { contracts } = useContext(V2ContractsContext)
   const { payoutSplits } = useContext(V2ProjectContext)
 
   const dispatch = useAppDispatch()

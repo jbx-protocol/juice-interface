@@ -43,6 +43,7 @@ export default function RichImgPreview({
             height: h,
           }}
           alt={t`Payment memo image`}
+          loading="lazy"
         />
       </div>
     )

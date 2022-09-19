@@ -15,6 +15,9 @@ import {
 import { V2FundingCycle } from 'models/v2/fundingCycle'
 
 import V2Project from 'components/v2/V2Project'
+import { CV_V2 } from 'constants/cv'
+import { NftRewardsContext } from 'contexts/nftRewardsContext'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2_CURRENCY_ETH } from 'utils/v2/currency'
 import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
 
@@ -49,12 +52,8 @@ export default function ProjectPreview({
 
   const project: V2ProjectContextType = {
     isPreviewMode: true,
-    cv: '2',
-    isArchived: false,
 
-    projectId: 0,
     handle: undefined,
-    projectMetadata,
 
     createdAt: undefined,
 
@@ -85,17 +84,6 @@ export default function ProjectPreview({
     primaryTerminalCurrentOverflow: undefined,
     totalTokenSupply: undefined,
 
-    nftRewards: {
-      CIDs: nftRewardsCIDs,
-      rewardTiers: nftRewardTiers,
-      loading: undefined,
-    },
-
-    veNft: {
-      contractAddress: undefined,
-      uriResolver: undefined,
-    },
-
     loading: {
       ETHBalanceLoading: false,
       balanceInDistributionLimitCurrencyLoading: false,
@@ -106,13 +94,27 @@ export default function ProjectPreview({
   }
 
   return (
-    <V2ProjectContext.Provider value={project}>
-      <div>
-        <V2Project
-          singleColumnLayout={singleColumnLayout}
-          expandFundingCycleCard
-        />
-      </div>
-    </V2ProjectContext.Provider>
+    <ProjectMetadataContext.Provider
+      value={{ projectMetadata, isArchived: false, projectId: 0, cv: CV_V2 }}
+    >
+      <V2ProjectContext.Provider value={project}>
+        <div>
+          <NftRewardsContext.Provider
+            value={{
+              nftRewards: {
+                CIDs: nftRewardsCIDs,
+                rewardTiers: nftRewardTiers,
+                loading: undefined,
+              },
+            }}
+          >
+            <V2Project
+              singleColumnLayout={singleColumnLayout}
+              expandFundingCycleCard
+            />
+          </NftRewardsContext.Provider>
+        </div>
+      </V2ProjectContext.Provider>
+    </ProjectMetadataContext.Provider>
   )
 }

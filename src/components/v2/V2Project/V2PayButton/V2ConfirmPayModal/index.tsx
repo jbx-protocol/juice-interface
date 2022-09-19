@@ -34,6 +34,8 @@ import { getNftRewardTier } from 'utils/nftRewards'
 import { weightedAmount } from 'utils/v2/math'
 
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { NftRewardsContext } from 'contexts/nftRewardsContext'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2PayForm, V2PayFormType } from '../V2PayForm'
 import { NftRewardCell } from './NftRewardCell'
 
@@ -49,23 +51,14 @@ export function V2ConfirmPayModal({
   onCancel?: VoidFunction
 }) {
   const {
-    userAddress,
-    chainUnsupported,
-    isConnected,
-    changeNetworks,
-    connect,
-  } = useWallet()
-  const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const { fundingCycle, fundingCycleMetadata, tokenSymbol } =
+    useContext(V2ProjectContext)
+  const { projectMetadata, projectId } = useContext(ProjectMetadataContext)
   const {
-    fundingCycle,
-    fundingCycleMetadata,
-    projectMetadata,
-    projectId,
-    tokenSymbol,
     nftRewards: { rewardTiers },
-  } = useContext(V2ProjectContext)
+  } = useContext(NftRewardsContext)
 
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
@@ -74,6 +67,13 @@ export function V2ConfirmPayModal({
   const converter = useCurrencyConverter()
   const payProjectTx = usePayETHPaymentTerminalTx()
   const isMobile = useMobile()
+  const {
+    userAddress,
+    chainUnsupported,
+    isConnected,
+    changeNetworks,
+    connect,
+  } = useWallet()
 
   const usdAmount = converter.weiToUsd(weiAmount)
   const nftRewardTiers = rewardTiers //rewardTiers
@@ -259,7 +259,11 @@ export function V2ConfirmPayModal({
           ) : null}
         </Descriptions>
 
-        <V2PayForm form={form} onFinish={() => pay()} />
+        <V2PayForm
+          form={form}
+          onFinish={() => pay()}
+          nftRewardTier={nftRewardTier}
+        />
       </Space>
     </TransactionModal>
   )

@@ -4,9 +4,14 @@ import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { V2UserContext } from 'contexts/v2/userContext'
+import { V2ContractsContext } from 'contexts/v2/V2ContractsContext'
 
-import { TransactorInstance } from 'hooks/Transactor'
+import { t } from '@lingui/macro'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { TransactionContext } from 'contexts/transactionContext'
+import { onCatch, TransactorInstance } from 'hooks/Transactor'
+import invariant from 'tiny-invariant'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 const DEFAULT_METADATA = 0
 
@@ -15,35 +20,59 @@ export function useRedeemTokensTx(): TransactorInstance<{
   minReturnedTokens: BigNumber
   memo: string
 }> {
-  const { transactor, contracts } = useContext(V2UserContext)
+  const { transactor } = useContext(TransactionContext)
+  const { contracts } = useContext(V2ContractsContext)
+  const { tokenSymbol } = useContext(V2ProjectContext)
+  const { projectId, cv } = useContext(ProjectMetadataContext)
+
   const { userAddress } = useWallet()
-  const { projectId } = useContext(V2ProjectContext)
 
   return ({ redeemAmount, minReturnedTokens, memo }, txOpts) => {
-    if (
-      !transactor ||
-      !userAddress ||
-      !projectId ||
-      !contracts?.JBETHPaymentTerminal
-    ) {
-      txOpts?.onDone?.()
-      return Promise.resolve(false)
-    }
+    try {
+      invariant(
+        transactor &&
+          userAddress &&
+          projectId &&
+          contracts?.JBETHPaymentTerminal,
+      )
+      return transactor(
+        contracts?.JBETHPaymentTerminal,
+        'redeemTokensOf',
+        [
+          userAddress, // _holder
+          projectId, // _projectId
+          redeemAmount, // _tokenCount, tokens to redeem
+          constants.AddressZero, // _token, unused parameter
+          minReturnedTokens, // _minReturnedTokens, min amount of ETH to receive
+          userAddress, // _beneficiary
+          memo, // _memo
+          DEFAULT_METADATA, // _metadata, TODO: metadata
+        ],
+        {
+          ...txOpts,
+          title: t`Redeem ${tokenSymbolText({
+            tokenSymbol,
+            plural: true,
+          })}`,
+        },
+      )
+    } catch {
+      const missingParam = !transactor
+        ? 'transactor'
+        : !userAddress
+        ? 'userAddress'
+        : !projectId
+        ? 'projectId'
+        : !contracts?.JBETHPaymentTerminal
+        ? 'contracts.JBETHPaymentTerminal'
+        : undefined
 
-    return transactor(
-      contracts?.JBETHPaymentTerminal,
-      'redeemTokensOf',
-      [
-        userAddress, // _holder
-        projectId, // _projectId
-        redeemAmount, // _tokenCount, tokens to redeem
-        constants.AddressZero, // _token, unused parameter
-        minReturnedTokens, // _minReturnedTokens, min amount of ETH to receive
-        userAddress, // _beneficiary
-        memo, // _memo
-        DEFAULT_METADATA, // _metadata, TODO: metadata
-      ],
-      txOpts,
-    )
+      return onCatch({
+        txOpts,
+        missingParam,
+        functionName: 'redeemTokensOf',
+        cv,
+      })
+    }
   }
 }

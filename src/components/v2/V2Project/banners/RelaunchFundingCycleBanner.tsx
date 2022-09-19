@@ -5,8 +5,7 @@ import { useContext, useEffect, useMemo, useState } from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
 import Banner from 'components/Banner'
 import TransactionModal from 'components/TransactionModal'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { V2UserContext } from 'contexts/v2/userContext'
+import { V2ContractsContext } from 'contexts/v2/V2ContractsContext'
 import useProjectCurrentFundingCycle from 'hooks/v2/contractReader/ProjectCurrentFundingCycle'
 import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistributionLimit'
 import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
@@ -30,11 +29,12 @@ import {
   DEPRECATED_BALLOT_ADDRESSES,
 } from 'constants/v2/ballotStrategies'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import ReconfigurePreview from '../V2ProjectSettings/pages/V2ProjectReconfigureFundingCycleSettingsPage/ReconfigurePreview'
 
 export function RelaunchFundingCycleBanner() {
-  const { projectId } = useContext(V2ProjectContext)
-  const { contracts } = useContext(V2UserContext)
+  const { projectId } = useContext(ProjectMetadataContext)
+  const { contracts } = useContext(V2ContractsContext)
   const [newDuration, setNewDuration] = useState<BigNumber>(BigNumber.from(0))
   const [newStart, setNewStart] = useState<string>('1')
 

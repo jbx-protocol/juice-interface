@@ -1,6 +1,6 @@
 import { getAddress } from '@ethersproject/address'
 import * as constants from '@ethersproject/constants'
-import { V2UserContext } from 'contexts/v2/userContext'
+import { V2ContractsContext } from 'contexts/v2/V2ContractsContext'
 import { useWallet } from 'hooks/Wallet'
 import {
   V2FundAccessConstraint,
@@ -18,9 +18,12 @@ import { encodeIPFSUri, ipfsCidUrl } from 'utils/ipfs'
 import { getLatestNftDelegateStoreContractAddress } from 'utils/nftRewards'
 import { isValidMustStartAtOrAfter } from 'utils/v2/fundingCycle'
 
+import { t } from '@lingui/macro'
 import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
 import { MaxUint48 } from 'constants/numbers'
+import { TransactionContext } from 'contexts/transactionContext'
 import { TransactorInstance } from 'hooks/Transactor'
+import { useV2ProjectTitle } from '../ProjectTitle'
 
 const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
 const DEFAULT_MEMO = ''
@@ -94,8 +97,10 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
   mustStartAtOrAfter?: string // epoch seconds. anything less than "now" will start immediately.
   nftRewards: TxNftArg
 }> {
-  const { transactor, contracts } = useContext(V2UserContext)
+  const { transactor } = useContext(TransactionContext)
+  const { contracts } = useContext(V2ContractsContext)
   const { userAddress } = useWallet()
+  const projectTitle = useV2ProjectTitle()
 
   return async (
     {
@@ -154,7 +159,10 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
       contracts.JBTiered721DelegateProjectDeployer,
       'launchProjectFor',
       args,
-      txOpts,
+      {
+        ...txOpts,
+        title: t`Launch ${projectTitle}`,
+      },
     )
   }
 }

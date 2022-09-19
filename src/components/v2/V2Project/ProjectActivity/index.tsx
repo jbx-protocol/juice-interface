@@ -7,8 +7,9 @@ import ProjectCreateEventElem from 'components/activityEventElems/ProjectCreateE
 import RedeemEventElem from 'components/activityEventElems/RedeemEventElem'
 import Loading from 'components/Loading'
 import SectionHeader from 'components/SectionHeader'
+import { CV_V2 } from 'constants/cv'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
 import { DeployETHERC20ProjectPayerEvent } from 'models/subgraph-entities/v2/deploy-eth-erc20-project-payer-event'
 import { DistributePayoutsEvent } from 'models/subgraph-entities/v2/distribute-payouts-event'
@@ -46,7 +47,7 @@ export default function ProjectActivity() {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { projectId } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const pageSize = 50
 
@@ -54,7 +55,7 @@ export default function ProjectActivity() {
     const _where: WhereConfig<'projectEvent'>[] = [
       {
         key: 'cv',
-        value: '2',
+        value: CV_V2,
       },
       {
         key: 'mintTokensEvent',

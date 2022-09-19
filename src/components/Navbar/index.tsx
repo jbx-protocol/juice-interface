@@ -1,5 +1,6 @@
 import { Space } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
+import TransactionsList from 'components/Navbar/TransactionsList'
 import useMobile from 'hooks/Mobile'
 
 import Account from './Account'
@@ -18,6 +19,13 @@ export default function Navbar() {
       <Space size="middle" style={{ ...topRightNavStyles }}>
         <NavLanguageSelector />
         <ThemePicker />
+        <TransactionsList
+          listStyle={{
+            position: 'absolute', // Position below navbar
+            top: 70,
+            right: 30,
+          }}
+        />
         <Account />
       </Space>
     </Header>

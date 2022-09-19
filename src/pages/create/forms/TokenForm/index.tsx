@@ -4,7 +4,7 @@ import { ItemNoInput } from 'components/formItems/ItemNoInput'
 import { ThemeContext } from 'contexts/themeContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
-import { round } from 'lodash'
+import round from 'lodash/round'
 import ReservedTokensFormItem from 'pages/create/forms/TokenForm/ReservedTokensFormItem'
 
 import {

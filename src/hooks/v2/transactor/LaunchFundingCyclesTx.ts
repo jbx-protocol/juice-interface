@@ -1,4 +1,4 @@
-import { V2UserContext } from 'contexts/v2/userContext'
+import { V2ContractsContext } from 'contexts/v2/V2ContractsContext'
 import { useWallet } from 'hooks/Wallet'
 import {
   V2FundAccessConstraint,
@@ -10,7 +10,11 @@ import { useContext } from 'react'
 import { GroupedSplits, SplitGroup } from 'models/splits'
 import { isValidMustStartAtOrAfter } from 'utils/v2/fundingCycle'
 
+import { t } from '@lingui/macro'
+import { TransactionContext } from 'contexts/transactionContext'
 import { TransactorInstance } from 'hooks/Transactor'
+
+import { useV2ProjectTitle } from '../ProjectTitle'
 
 const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
 const DEFAULT_MEMO = ''
@@ -23,8 +27,11 @@ export function useLaunchFundingCyclesTx(): TransactorInstance<{
   groupedSplits?: GroupedSplits<SplitGroup>[]
   mustStartAtOrAfter?: string // epoch seconds. anything less than "now" will start immediately.
 }> {
-  const { transactor, contracts } = useContext(V2UserContext)
+  const { transactor } = useContext(TransactionContext)
+  const { contracts } = useContext(V2ContractsContext)
+
   const { userAddress } = useWallet()
+  const projectTitle = useV2ProjectTitle()
 
   return (
     {
@@ -58,11 +65,9 @@ export function useLaunchFundingCyclesTx(): TransactorInstance<{
       DEFAULT_MEMO,
     ]
 
-    return transactor(
-      contracts.JBController,
-      'launchFundingCyclesFor',
-      args,
-      txOpts,
-    )
+    return transactor(contracts.JBController, 'launchFundingCyclesFor', args, {
+      ...txOpts,
+      title: t`Launch funding cycles for ${projectTitle}`,
+    })
   }
 }

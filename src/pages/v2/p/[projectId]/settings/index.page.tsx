@@ -2,7 +2,9 @@ import { AppWrapper } from 'components/common'
 import { V2ProjectSettings } from 'components/v2/V2Project/V2ProjectSettings'
 import { ProjectMetadataV4 } from 'models/project-metadata'
 import { GetServerSideProps } from 'next'
-import { V2UserProvider } from 'providers/v2/UserProvider'
+import { TransactionProvider } from 'providers/TransactionProvider'
+import { V2ContractsProvider } from 'providers/v2/V2ContractsProvider'
+import V2ProjectMetadataProvider from 'providers/v2/V2ProjectMetadataProvider'
 import V2ProjectProvider from 'providers/v2/V2ProjectProvider'
 import { getProjectProps, ProjectPageProps } from '../utils/props'
 
@@ -24,11 +26,15 @@ export default function V2ProjectSettingsPage({
 }) {
   return (
     <AppWrapper>
-      <V2UserProvider>
-        <V2ProjectProvider projectId={projectId} metadata={metadata}>
-          <V2ProjectSettings />
-        </V2ProjectProvider>
-      </V2UserProvider>
+      <V2ContractsProvider>
+        <TransactionProvider>
+          <V2ProjectMetadataProvider projectId={projectId} metadata={metadata}>
+            <V2ProjectProvider projectId={projectId}>
+              <V2ProjectSettings />
+            </V2ProjectProvider>
+          </V2ProjectMetadataProvider>
+        </TransactionProvider>
+      </V2ContractsProvider>
     </AppWrapper>
   )
 }

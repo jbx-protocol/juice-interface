@@ -5,6 +5,7 @@ import { Button, Skeleton, Space, Tooltip } from 'antd'
 import { CardSection } from 'components/CardSection'
 import TooltipLabel from 'components/TooltipLabel'
 import SplitList from 'components/v2/shared/SplitList'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import useProjectReservedTokens from 'hooks/v2/contractReader/ProjectReservedTokens'
@@ -29,11 +30,12 @@ export default function ReservedTokensSplitsCard({
   reservedTokensSplits: Split[] | undefined
   reservedRate: BigNumber | undefined
 }) {
-  const { tokenSymbol, projectOwnerAddress, projectId, isPreviewMode, handle } =
-    useContext(V2ProjectContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const { tokenSymbol, projectOwnerAddress, isPreviewMode, handle } =
+    useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const effectiveReservedRate = reservedRate ?? BigNumber.from(0)
 

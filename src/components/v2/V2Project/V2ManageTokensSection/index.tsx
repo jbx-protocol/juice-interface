@@ -3,7 +3,7 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Descriptions, Space, Statistic } from 'antd'
 import SectionHeader from 'components/SectionHeader'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import useERC20BalanceOf from 'hooks/v2/contractReader/ERC20BalanceOf'
+import useERC20BalanceOf from 'hooks/ERC20BalanceOf'
 import { useWallet } from 'hooks/Wallet'
 
 import FormattedAddress from 'components/FormattedAddress'
@@ -15,7 +15,7 @@ import {
   parseWad,
 } from 'utils/format/formatNumber'
 
-import IssueTokenButton from 'components/IssueTokenButton'
+import { IssueErc20TokenButton } from 'components/IssueErc20TokenButton'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2/contractReader/V2ConnectedWalletHasPermission'
 import { V2OperatorPermission } from 'models/v2/permissions'
 
@@ -25,7 +25,7 @@ import { TextButton } from 'components/TextButton'
 import { ThemeContext } from 'contexts/themeContext'
 import useTotalBalanceOf from 'hooks/v2/contractReader/TotalBalanceOf'
 import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
-import { useIssueTokensTx } from 'hooks/v2/transactor/IssueTokensTx'
+import { useIssueErc20TokenTx } from 'hooks/v2/transactor/IssueErc20TokenTx'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import TooltipIcon from 'components/TooltipIcon'
@@ -35,7 +35,10 @@ import { useHasV1TokenPaymentTerminal } from 'hooks/v2/hasV1TokenPaymentTerminal
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { reloadWindow } from 'utils/windowUtils'
 
+import RichButton from 'components/RichButton'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { VeNftContext } from 'contexts/veNftContext'
 import { useVeNftSummaryStats } from 'hooks/veNft/VeNftSummaryStats'
 import Link from 'next/link'
 import { veNftPagePath } from 'utils/routes'
@@ -65,13 +68,12 @@ export default function V2ManageTokensSection() {
     isPreviewMode,
     totalTokenSupply,
     fundingCycleMetadata,
-    projectId,
     primaryTerminalCurrentOverflow,
-    projectMetadata,
-    cv,
     handle,
-    veNft: { contractAddress: veNftAddress },
   } = useContext(V2ProjectContext)
+  const { contractAddress: veNftAddress } = useContext(VeNftContext)
+  const { projectMetadata, projectId, cv } = useContext(ProjectMetadataContext)
+
   const { userAddress } = useWallet()
 
   const [manageTokensModalVisible, setManageTokensModalVisible] =
@@ -102,18 +104,21 @@ export default function V2ManageTokensSection() {
   })
 
   const tokenText = tokenSymbolText({
-    tokenSymbol: tokenSymbol,
+    tokenSymbol,
     capitalize: false,
     plural: true,
   })
 
   const hasOverflow = Boolean(primaryTerminalCurrentOverflow?.gt(0))
+  const redeemDisabled = Boolean(
+    !hasOverflow || fundingCycleMetadata?.redemptionRate.eq(0),
+  )
 
   const hasIssuedERC20 = tokenAddress !== constants.AddressZero
   const hasIssueTicketsPermission = useV2ConnectedWalletHasPermission(
     V2OperatorPermission.ISSUE,
   )
-  const showIssueTokensButton =
+  const showIssueErc20TokenButton =
     !hasIssuedERC20 && hasIssueTicketsPermission && !isPreviewMode
   const showV1ProjectTokensSection =
     v1TokenSwapEnabled && hasV1ProjectId && hasV1TokenPaymentTerminal
@@ -142,7 +147,7 @@ export default function V2ManageTokensSection() {
                 tip={
                   <Trans>
                     {tokenSymbolText({
-                      tokenSymbol: tokenSymbol,
+                      tokenSymbol,
                       capitalize: true,
                       plural: true,
                       includeTokenWord: true,
@@ -154,10 +159,10 @@ export default function V2ManageTokensSection() {
                   </Trans>
                 }
               />
-              {showIssueTokensButton && (
+              {showIssueErc20TokenButton && (
                 <div style={{ marginBottom: 20 }}>
-                  <IssueTokenButton
-                    useIssueTokensTx={useIssueTokensTx}
+                  <IssueErc20TokenButton
+                    useIssueErc20TokenTx={useIssueErc20TokenTx}
                     onCompleted={reloadWindow}
                   />
                 </div>
@@ -315,14 +320,28 @@ export default function V2ManageTokensSection() {
         onCancel={() => setManageTokensModalVisible(false)}
         projectAllowsMint={projectAllowsMint}
         userHasMintPermission={userHasMintPermission}
-        veNftEnabled={veNftEnabled}
         hasOverflow={hasOverflow}
+        redeemDisabled={redeemDisabled}
         tokenSymbol={tokenSymbol}
         tokenAddress={tokenAddress}
         RedeemModal={V2RedeemModal}
         ClaimTokensModal={V2ClaimTokensModal}
         MintModal={V2MintModal}
-      />
+      >
+        {veNftEnabled && (
+          <Link href={veNftPagePath('mint', { projectId, handle })}>
+            <RichButton
+              heading={<Trans>Lock {tokenText} for Governance NFTs</Trans>}
+              description={
+                <Trans>
+                  Lock your {tokenText} to increase your voting weight and claim
+                  Governance NFTs.
+                </Trans>
+              }
+            />
+          </Link>
+        )}
+      </ManageTokensModal>
       <ParticipantsModal
         projectId={projectId}
         projectName={projectMetadata?.name}

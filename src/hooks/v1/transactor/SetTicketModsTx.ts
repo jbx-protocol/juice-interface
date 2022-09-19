@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
+import { t } from '@lingui/macro'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
 import { useWallet } from 'hooks/Wallet'
@@ -7,6 +8,7 @@ import { TicketMod } from 'models/mods'
 import { useContext } from 'react'
 
 import { TransactorInstance } from 'hooks/Transactor'
+import { useV1ProjectTitle } from '../ProjectTitle'
 
 export function useSetTicketModsTx(): TransactorInstance<{
   configured: BigNumber
@@ -15,6 +17,7 @@ export function useSetTicketModsTx(): TransactorInstance<{
   const { transactor, contracts } = useContext(V1UserContext)
   const { userAddress } = useWallet()
   const { projectId, terminal } = useContext(V1ProjectContext)
+  const projectTitle = useV1ProjectTitle()
 
   return ({ configured, ticketMods }, txOpts) => {
     if (
@@ -41,7 +44,10 @@ export function useSetTicketModsTx(): TransactorInstance<{
           beneficiary: m.beneficiary || constants.AddressZero,
         })),
       ],
-      txOpts,
+      {
+        ...txOpts,
+        title: t`Set reserved tokens of ${projectTitle}`,
+      },
     )
   }
 }

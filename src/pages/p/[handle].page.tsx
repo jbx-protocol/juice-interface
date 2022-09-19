@@ -6,6 +6,7 @@ import NewDeployNotAvailable from 'components/NewDeployNotAvailable'
 import Project404 from 'components/Project404'
 import ScrollToTopButton from 'components/ScrollToTopButton'
 import V1Project from 'components/v1/V1Project'
+import { CV_V1, CV_V1_1 } from 'constants/cv'
 import { layouts } from 'constants/styles/layouts'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { projectTypes } from 'constants/v1/projectTypes'
@@ -28,6 +29,7 @@ import useQueuedPayoutModsOfProject from 'hooks/v1/contractReader/QueuedPayoutMo
 import useQueuedTicketModsOfProject from 'hooks/v1/contractReader/QueuedTicketModsOfProject'
 import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
 import useTokenAddressOfProject from 'hooks/v1/contractReader/TokenAddressOfProject'
+import { paginateDepleteProjectsQueryCall } from 'lib/apollo'
 import { ProjectMetadataV4 } from 'models/project-metadata'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
@@ -35,7 +37,6 @@ import { useRouter } from 'next/router'
 import { V1UserProvider } from 'providers/v1/UserProvider'
 import { V1CurrencyProvider } from 'providers/v1/V1CurrencyProvider'
 import { useMemo } from 'react'
-import { paginateDepleteProjectsQueryCall } from 'utils/apollo'
 import { findProjectMetadata } from 'utils/server'
 import { V1CurrencyName } from 'utils/v1/currency'
 import { getTerminalName, getTerminalVersion } from 'utils/v1/terminals'
@@ -44,7 +45,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   if (process.env.BUILD_CACHE_V1_PROJECTS === 'true') {
     const projects = await paginateDepleteProjectsQueryCall({
       variables: {
-        where: { cv_in: ['1', '1.1'] },
+        where: { cv_in: [CV_V1, CV_V1_1] },
       },
     })
     const paths = projects
@@ -70,7 +71,7 @@ export const getStaticProps: GetStaticProps<{
   const handle = context.params.handle as string
   const projects = await paginateDepleteProjectsQueryCall({
     variables: {
-      where: { cv_in: ['1', '1.1'], handle },
+      where: { cv_in: [CV_V1, CV_V1_1], handle },
       first: 1,
     },
   })

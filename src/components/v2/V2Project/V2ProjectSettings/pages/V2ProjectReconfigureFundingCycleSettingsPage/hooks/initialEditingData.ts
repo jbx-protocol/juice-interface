@@ -2,13 +2,9 @@ import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistribu
 import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
 import { Split } from 'models/splits'
 import { useContext, useEffect, useState } from 'react'
-import {
-  defaultFundingCycleMetadata,
-  editingV2ProjectActions,
-} from 'redux/slices/editingV2Project'
+import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { fromWad } from 'utils/format/formatNumber'
 import { NO_CURRENCY, V2_CURRENCY_ETH } from 'utils/v2/currency'
-import { decodeV2FundingCycleMetadata } from 'utils/v2/fundingCycle'
 import {
   SerializedV2FundAccessConstraint,
   SerializedV2FundingCycleData,
@@ -21,7 +17,7 @@ import { V2ProjectContext } from 'contexts/v2/projectContext'
 
 import useProjectQueuedFundingCycle from 'hooks/v2/contractReader/ProjectQueuedFundingCycle'
 
-import { V2UserContext } from 'contexts/v2/userContext'
+import { V2ContractsContext } from 'contexts/v2/V2ContractsContext'
 
 import { useAppDispatch } from 'hooks/AppDispatch'
 
@@ -30,6 +26,7 @@ import {
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 
 export interface InitialEditingData {
   fundAccessConstraints: SerializedV2FundAccessConstraint[]
@@ -52,24 +49,26 @@ export const useInitialEditingData = (visible: boolean) => {
     }
   }>()
 
-  const { contracts } = useContext(V2UserContext)
+  const { contracts } = useContext(V2ContractsContext)
   const dispatch = useAppDispatch()
 
   const {
-    projectId,
     primaryTerminal,
     fundingCycle,
+    fundingCycleMetadata,
     payoutSplits,
     reservedTokensSplits,
     distributionLimit,
     distributionLimitCurrency,
   } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const { data: queuedFundingCycleResponse } = useProjectQueuedFundingCycle({
     projectId,
   })
 
-  const [queuedFundingCycle] = queuedFundingCycleResponse ?? []
+  const [queuedFundingCycle, queuedFundingCycleMetadata] =
+    queuedFundingCycleResponse ?? []
   const { data: queuedPayoutSplits } = useProjectSplits({
     projectId,
     splitGroup: ETH_PAYOUT_SPLIT_GROUP,
@@ -95,6 +94,10 @@ export const useInitialEditingData = (visible: boolean) => {
     ? queuedFundingCycle
     : fundingCycle
 
+  const effectiveFundingCycleMetadata = queuedFundingCycle?.number.gt(0)
+    ? queuedFundingCycleMetadata
+    : fundingCycleMetadata
+
   const effectivePayoutSplits = queuedFundingCycle?.number.gt(0)
     ? queuedPayoutSplits
     : payoutSplits
@@ -118,7 +121,8 @@ export const useInitialEditingData = (visible: boolean) => {
 
   // Populates the local redux state from V2ProjectContext values
   useEffect(() => {
-    if (!visible || !effectiveFundingCycle) return
+    if (!visible || !effectiveFundingCycle || !effectiveFundingCycleMetadata)
+      return
 
     // Build fundAccessConstraint
     let fundAccessConstraint: SerializedV2FundAccessConstraint | undefined =
@@ -160,21 +164,16 @@ export const useInitialEditingData = (visible: boolean) => {
       editingV2ProjectActions.setFundingCycleData(editingFundingCycleData),
     )
 
-    // Set editing funding metadata
-    const editingFundingCycleMetadata = effectiveFundingCycle.metadata
-      ? serializeV2FundingCycleMetadata(
-          decodeV2FundingCycleMetadata(effectiveFundingCycle.metadata),
-        )
-      : defaultFundingCycleMetadata
-    if (effectiveFundingCycle?.metadata) {
-      dispatch(
-        editingV2ProjectActions.setFundingCycleMetadata(
-          serializeV2FundingCycleMetadata(
-            decodeV2FundingCycleMetadata(effectiveFundingCycle.metadata),
-          ),
-        ),
-      )
-    }
+    const editingFundingCycleMetadata = serializeV2FundingCycleMetadata(
+      effectiveFundingCycleMetadata,
+    )
+
+    // Set editing funding cycle metadata
+    dispatch(
+      editingV2ProjectActions.setFundingCycleMetadata(
+        editingFundingCycleMetadata,
+      ),
+    )
 
     // Set editing payout splits
     dispatch(
@@ -200,6 +199,7 @@ export const useInitialEditingData = (visible: boolean) => {
   }, [
     contracts,
     effectiveFundingCycle,
+    effectiveFundingCycleMetadata,
     effectivePayoutSplits,
     effectiveReservedTokensSplits,
     effectiveDistributionLimit,

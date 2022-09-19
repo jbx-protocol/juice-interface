@@ -1,5 +1,6 @@
+import { CV_V2 } from 'constants/cv'
+import { paginateDepleteProjectsQueryCall } from 'lib/apollo'
 import { NextRequest, NextResponse } from 'next/server'
-import { paginateDepleteProjectsQueryCall } from 'utils/apollo'
 
 // get the handle name from a URL path
 const HANDLE_REGEX = new RegExp(/\/@([^/]+).*/)
@@ -22,7 +23,7 @@ export async function middleware(request: NextRequest) {
   try {
     projects = await paginateDepleteProjectsQueryCall({
       variables: {
-        where: { cv: '2', handle },
+        where: { cv: CV_V2, handle },
       },
     })
   } catch (e) {

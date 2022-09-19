@@ -11,6 +11,7 @@ import { uploadProjectMetadata } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
 
 import axios from 'axios'
+import { CV_V1, CV_V1_1, CV_V2 } from 'constants/cv'
 import { useWallet } from 'hooks/Wallet'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { revalidateProject } from 'utils/revalidateProject'
@@ -42,8 +43,8 @@ export default function ArchiveProject({
 
   const revalidateProjectAfterArchive = async () => {
     switch (cv) {
-      case '1':
-      case '1.1':
+      case CV_V1:
+      case CV_V1_1:
         if (handle) {
           await revalidateProject({
             cv: cv as V1TerminalVersion,
@@ -51,10 +52,10 @@ export default function ArchiveProject({
           })
         }
         break
-      case '2':
+      case CV_V2:
         if (projectId) {
           await revalidateProject({
-            cv: '2',
+            cv: CV_V2,
             projectId: String(projectId),
           })
         }

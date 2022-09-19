@@ -8,6 +8,7 @@ import RedeemEventElem from 'components/activityEventElems/RedeemEventElem'
 import Loading from 'components/Loading'
 import SectionHeader from 'components/SectionHeader'
 import V1DownloadActivityModal from 'components/v1/V1Project/V1DownloadActivityModal'
+import { CV_V1, CV_V1_1 } from 'constants/cv'
 import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
@@ -51,7 +52,7 @@ export default function ProjectActivity() {
       {
         key: 'cv',
         operator: 'in',
-        value: ['1', '1.1'],
+        value: [CV_V1, CV_V1_1],
       },
       {
         key: 'mintTokensEvent',

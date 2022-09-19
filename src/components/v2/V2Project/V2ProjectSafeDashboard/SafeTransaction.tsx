@@ -1,7 +1,6 @@
 import { RightOutlined } from '@ant-design/icons'
 import ExternalLink from 'components/ExternalLink'
 import { ThemeContext } from 'contexts/themeContext'
-import { V2UserContext } from 'contexts/v2/userContext'
 import { generateSafeTxUrl } from 'lib/safe'
 import { CSSProperties, useContext, useMemo } from 'react'
 import { formatHistoricalDate } from 'utils/format/formatDate'
@@ -46,10 +45,6 @@ const ReconfigureFundingCyclesOfTransaction = ({
   transaction,
 }: SafeTransactionComponentProps) => {
   // const [expanded, setExpanded] = useState<boolean>(false)
-
-  const { contracts } = useContext(V2UserContext)
-
-  if (!contracts || !transaction.data) return null
 
   // const decodedData = contracts['JBController'].interface.parseTransaction({
   //   data: transaction.data,

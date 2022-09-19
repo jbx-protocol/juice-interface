@@ -1175,10 +1175,10 @@ msgstr ""
 msgid "Give this NFT a name."
 msgstr ""
 
-msgid "Go to your Safe"
+msgid "Go to <0>{snapshotUrl}</0>"
 msgstr ""
 
-msgid "Go to <0>{snapshotUrl}</0>"
+msgid "Go to your Safe"
 msgstr ""
 
 msgid "Governance"

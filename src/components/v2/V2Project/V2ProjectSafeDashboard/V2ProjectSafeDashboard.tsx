@@ -2,12 +2,14 @@ import { t, Trans } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
 import { Tab } from 'components/Tab'
 import { layouts } from 'constants/styles/layouts'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useAddressIsGnosisSafe } from 'hooks/AddressIsGnosisSafe'
 import { useQueuedSafeTransactions } from 'hooks/safe/QueuedSafeTransactions'
 import { generateSafeUrl } from 'lib/safe'
 import { useContext, useState } from 'react'
+import { v2ProjectRoute } from 'utils/routes'
 
 import { SafeTransaction } from './SafeTransaction'
 export interface SafeTransactionType {
@@ -42,10 +44,12 @@ const TAB_NAMES: { [k in SafeTxCategory]: string } = {
 }
 
 export function V2ProjectSafeDashboard() {
-  const { projectOwnerAddress, projectId } = useContext(V2ProjectContext)
+  const { projectOwnerAddress } = useContext(V2ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+
   const { data: queuedSafeTransactions, isLoading } = useQueuedSafeTransactions(
     {
       safeAddress: projectOwnerAddress,
@@ -82,7 +86,7 @@ export function V2ProjectSafeDashboard() {
         <div style={{ marginTop: '1.5rem' }}>
           <Tab
             name={TAB_NAMES['queued']}
-            link={`v2/p/${projectId}/safe`}
+            link={v2ProjectRoute({ projectId })}
             isSelected={selectedTab === 'queued'}
             onClick={() => setSelectedTab('queued')}
           />

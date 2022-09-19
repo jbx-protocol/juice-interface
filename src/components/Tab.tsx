@@ -11,7 +11,7 @@ export function Tab({
   name: string
   link: string
   isSelected: boolean
-  onClick: VoidFunction
+  onClick?: VoidFunction
 }) {
   const {
     theme: { colors },

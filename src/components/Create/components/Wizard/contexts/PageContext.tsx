@@ -2,6 +2,8 @@ import { createContext } from 'react'
 
 export const PageContext: React.Context<
   Partial<{
+    pageName: string
+    isSkippable: boolean
     isHidden: boolean
     canGoBack: boolean
     isFinalPage: boolean

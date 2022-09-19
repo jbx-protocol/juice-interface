@@ -15,6 +15,7 @@ export const useWizard = ({ children }: { children?: any[] }) => {
       .map(child => {
         if (!child.props || (child.props && !isPage(child.props))) {
           console.warn('Invalid child in Wizard', { child })
+          return undefined
         }
         return {
           name: child.props.name,
@@ -22,7 +23,7 @@ export const useWizard = ({ children }: { children?: any[] }) => {
           description: child.props.description,
         }
       })
-      .filter(p => !!p)
+      .filter(p => !!p) as PageProps[]
   }, [children])
 
   const goToPage = useCallback(

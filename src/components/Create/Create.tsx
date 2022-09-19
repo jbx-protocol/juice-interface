@@ -50,7 +50,7 @@ export function Create() {
             <Wizard.Page
               name="fundingTarget"
               title={t`Funding Target`}
-              description={t`Select an option that best suits your project’s funding requirements.`}
+              description={t`Select the option that best suits your project’s funding requirements.`}
             >
               <FundingTargetPage />
             </Wizard.Page>

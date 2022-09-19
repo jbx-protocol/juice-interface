@@ -1,5 +1,6 @@
 import {
   CloseCircleOutlined,
+  InfoCircleOutlined,
   PushpinOutlined,
   RetweetOutlined,
 } from '@ant-design/icons'
@@ -41,8 +42,8 @@ export const FundingTargetPage: React.FC = () => {
               icon={<PushpinOutlined />}
               description={
                 <Trans>
-                  Set a specific amount that you will be able to distribute to
-                  nominated wallets each funding cycle.
+                  Set a specific amount to distribute to nominated addresses
+                  each funding cycle.
                 </Trans>
               }
             >
@@ -51,8 +52,8 @@ export const FundingTargetPage: React.FC = () => {
                 label={t`Set your funding target`}
                 extra={
                   <Trans>
-                    Note: your project’s settings will not be able to be edited
-                    or changed during the first funding cycle.
+                    <InfoCircleOutlined /> your project’s settings will not be
+                    able to be edited or changed during the first funding cycle.
                   </Trans>
                 }
               >
@@ -65,9 +66,10 @@ export const FundingTargetPage: React.FC = () => {
               icon={<RetweetOutlined />}
               description={
                 <Trans>
-                  All funds raised will be available to distribute to payout
-                  addresses. Your project will have no overflow, so token
-                  holders will not be able to redeem.
+                  Your project will withhold all funds raised. Funds can be
+                  distributed to payout addresses you set, and the project owner
+                  will receive any unallocated funds. Your project will have no
+                  overflow, so token holders can't redeem their tokens for ETH.
                 </Trans>
               }
             />
@@ -77,8 +79,9 @@ export const FundingTargetPage: React.FC = () => {
               icon={<CloseCircleOutlined />}
               description={
                 <Trans>
-                  All funds raised will be considered ‘overflow’ and will be
-                  redeemable by token holders at any time.
+                  Your project won't withhold any funds. All funds raised are
+                  Overflow. Token holders can redeem their tokens for a portion
+                  of your entire treasury.
                 </Trans>
               }
             />

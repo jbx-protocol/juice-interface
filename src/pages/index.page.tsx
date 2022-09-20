@@ -10,6 +10,7 @@ import { CSSProperties, useContext } from 'react'
 
 import { ThemeOption } from 'constants/theme/theme-option'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import Faq from './home/Faq'
 import Footer from './home/Footer'
@@ -18,6 +19,12 @@ import { StatsSection } from './home/StatsSection'
 import { HeroHeading, HeroSubheading } from './home/strings'
 import { TopProjectsSection } from './home/TopProjectsSection'
 import TrendingSection from './home/TrendingSection'
+import bananaOd from '/public/assets/banana-od.webp'
+import bananaOl from '/public/assets/banana-ol.webp'
+import blueBerry from '/public/assets/blueberry-ol.png'
+import bolt from '/public/assets/icons/bolt.svg'
+import orangeLadyOd from '/public/assets/orange_lady-od.png'
+import orangeLadyOl from '/public/assets/orange_lady-ol.png'
 
 const BigHeader = ({
   text,
@@ -76,7 +83,7 @@ function Landing() {
         t`Indie creators and builders`,
       ].map((data, i) => (
         <Space style={{ paddingLeft: 8 }} key={i} size="middle">
-          <img src="/assets/icons/bolt.svg" alt="⚡️" />
+          <Image src={bolt} alt="⚡️" />
           {data}
         </Space>
       ))}
@@ -169,7 +176,7 @@ function Landing() {
             </Col>
 
             <Col xs={24} md={11}>
-              <img
+              <Image
                 className="hide-mobile"
                 style={{
                   minHeight: 300,
@@ -180,8 +187,8 @@ function Landing() {
                 src={
                   forThemeOption &&
                   forThemeOption({
-                    [ThemeOption.dark]: '/assets/banana-od.webp',
-                    [ThemeOption.light]: '/assets/banana-ol.webp',
+                    [ThemeOption.dark]: bananaOd,
+                    [ThemeOption.light]: bananaOl,
                   })
                 }
                 alt="Chill banana drinking juice"
@@ -236,9 +243,9 @@ function Landing() {
             </Col>
 
             <Col xs={24} md={10}>
-              <img
+              <Image
                 style={{ maxWidth: '100%' }}
-                src="/assets/blueberry-ol.png"
+                src={blueBerry}
                 alt="Sexy blueberry with bright pink lipstick spraying a can of spraypaint"
                 loading="lazy"
               />
@@ -276,7 +283,7 @@ function Landing() {
           justifyContent: 'center',
         }}
       >
-        <img
+        <Image
           style={{
             height: '40vh',
             maxHeight: 400,
@@ -289,8 +296,8 @@ function Landing() {
           src={
             forThemeOption &&
             forThemeOption({
-              [ThemeOption.dark]: '/assets/orange_lady-od.png',
-              [ThemeOption.light]: '/assets/orange_lady-ol.png',
+              [ThemeOption.dark]: orangeLadyOd,
+              [ThemeOption.light]: orangeLadyOl,
             })
           }
           alt="Powerlifting orange hitting an olympic deadlift"

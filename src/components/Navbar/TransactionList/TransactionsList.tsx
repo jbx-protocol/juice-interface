@@ -71,24 +71,26 @@ export function TransactionsList({
               .sort((a, b) =>
                 timestampForTxLog(a) > timestampForTxLog(b) ? -1 : 1,
               )
-              .map(tx => (
-                <TransactionItem
-                  key={tx.tx.hash}
-                  tx={tx}
-                  onRemoveTransaction={
-                    removeTransaction
-                      ? () => {
-                          removeTransaction(tx.id)
+              .map(tx =>
+                tx ? (
+                  <TransactionItem
+                    key={tx.tx?.hash}
+                    tx={tx}
+                    onRemoveTransaction={
+                      removeTransaction
+                        ? () => {
+                            removeTransaction(tx.id)
 
-                          // Close menu if removing last tx
-                          if (transactions.length === 1 && isExpanded) {
-                            setIsExpanded(false)
+                            // Close menu if removing last tx
+                            if (transactions.length === 1 && isExpanded) {
+                              setIsExpanded(false)
+                            }
                           }
-                        }
-                      : undefined
-                  }
-                />
-              ))
+                        : undefined
+                    }
+                  />
+                ) : null,
+              )
           ) : (
             <div style={{ fontWeight: 600 }}>
               <Trans>No transaction history</Trans>

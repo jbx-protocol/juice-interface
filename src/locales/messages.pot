@@ -1205,6 +1205,9 @@ msgstr ""
 msgid "Go to <0>{snapshotUrl}</0>"
 msgstr ""
 
+msgid "Go to your Safe"
+msgstr ""
+
 msgid "Governance"
 msgstr ""
 
@@ -2000,6 +2003,9 @@ msgstr ""
 msgid "Provide a link to additional information about this NFT."
 msgstr ""
 
+msgid "Queued"
+msgstr ""
+
 msgid "REMAINING SUPPLY: {0}/{1}"
 msgstr ""
 
@@ -2202,6 +2208,9 @@ msgid "Rules for how changes can be made to your project."
 msgstr ""
 
 msgid "Rules for how this project's funding cycles can be reconfigured."
+msgstr ""
+
+msgid "Safe transactions"
 msgstr ""
 
 msgid "Save"

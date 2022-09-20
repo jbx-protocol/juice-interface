@@ -126,15 +126,14 @@ export function RewardTier({
   return (
     <>
       <div
-        className={`${
-          isSelected ? 'selected-box-shadow' : ''
-        } hover-box-shadow`}
+        className={`${isSelected ? 'selected-box-shadow' : ''}`}
         style={{
           ...rewardTierContainerStyle,
           outline: isSelected
             ? `2px solid ${colors.stroke.action.primary}`
             : 'rgba(0,0,0,0)',
           borderRadius: radii.sm,
+          transition: 'box-shadow 100ms linear',
         }}
         onClick={!isSelected ? onClick : () => setPreviewVisible(true)}
         role="button"

@@ -99,10 +99,9 @@ export function SafeTransaction({
     color: colors.text.primary,
     fontWeight: 400,
     width: '100%',
-    border: '1px solid ' + colors.stroke.tertiary,
     padding: '0.5rem 1rem',
     marginBottom: '1rem',
-    transition: 'all 0.3s',
+    transition: 'background-color 100ms linear',
   }
 
   const TransactionContent = useMemo(() => {
@@ -115,7 +114,7 @@ export function SafeTransaction({
   return (
     <ExternalLink
       style={safeTransactionRowStyle}
-      className="hover-box-shadow-sm hover-bg-l2"
+      className="hover-bg-l2 clickable-border"
       href={generateSafeTxUrl(transaction)}
     >
       <TransactionContent transaction={transaction} />

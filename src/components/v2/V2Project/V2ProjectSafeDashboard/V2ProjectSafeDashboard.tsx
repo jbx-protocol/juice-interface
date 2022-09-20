@@ -2,14 +2,12 @@ import { t, Trans } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
 import { Tab } from 'components/Tab'
 import { layouts } from 'constants/styles/layouts'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { useAddressIsGnosisSafe } from 'hooks/AddressIsGnosisSafe'
 import { useQueuedSafeTransactions } from 'hooks/safe/QueuedSafeTransactions'
 import { generateSafeUrl } from 'lib/safe'
 import { useContext, useState } from 'react'
-import { v2ProjectRoute } from 'utils/routes'
 
 import { SafeTransaction } from './SafeTransaction'
 export interface SafeTransactionType {
@@ -36,7 +34,10 @@ export interface SafeTransactionType {
 }
 
 export type SafeTxCategory = 'queued' | 'history'
-const defaultTab: SafeTxCategory = 'queued'
+const SAFE_TX_QUEUED_KEY: SafeTxCategory = 'queued'
+// const SAFE_TX_HISTORY_KEY: SafeTxCategory = 'history'
+
+const DEFAULT_TAB: SafeTxCategory = SAFE_TX_QUEUED_KEY
 
 const TAB_NAMES: { [k in SafeTxCategory]: string } = {
   queued: t`Queued`,
@@ -45,10 +46,11 @@ const TAB_NAMES: { [k in SafeTxCategory]: string } = {
 
 export function V2ProjectSafeDashboard() {
   const { projectOwnerAddress } = useContext(V2ProjectContext)
-  const { projectId } = useContext(ProjectMetadataContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+
+  const [selectedTab, setSelectedTab] = useState<SafeTxCategory>(DEFAULT_TAB)
 
   const { data: queuedSafeTransactions, isLoading } = useQueuedSafeTransactions(
     {
@@ -57,8 +59,6 @@ export function V2ProjectSafeDashboard() {
   )
   const { data: ownerIsGnosisSafe, isLoading: ownerIsGnosisSafeLoading } =
     useAddressIsGnosisSafe(projectOwnerAddress)
-
-  const [selectedTab, setSelectedTab] = useState<SafeTxCategory>(defaultTab)
 
   if (!projectOwnerAddress) return null
 
@@ -71,6 +71,7 @@ export function V2ProjectSafeDashboard() {
       <h1 style={{ color: colors.text.primary, marginBottom: 5 }}>
         <Trans>Safe transactions</Trans>
       </h1>
+
       {!isLoading ? (
         <ExternalLink
           href={generateSafeUrl(projectOwnerAddress)}
@@ -85,12 +86,12 @@ export function V2ProjectSafeDashboard() {
       {!isLoading && (
         <div style={{ marginTop: '1.5rem' }}>
           <Tab
-            name={TAB_NAMES['queued']}
-            link={v2ProjectRoute({ projectId })}
-            isSelected={selectedTab === 'queued'}
-            onClick={() => setSelectedTab('queued')}
+            name={TAB_NAMES.queued}
+            isSelected={selectedTab === SAFE_TX_QUEUED_KEY}
+            onClick={() => setSelectedTab(SAFE_TX_QUEUED_KEY)}
           />
-          {selectedTab === 'queued' ? (
+
+          {selectedTab === SAFE_TX_QUEUED_KEY ? (
             <div style={{ marginTop: '1.5rem' }}>
               {queuedSafeTransactions?.map(
                 (transaction: SafeTransactionType, idx: number) => (

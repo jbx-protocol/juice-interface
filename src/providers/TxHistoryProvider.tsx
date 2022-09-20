@@ -22,7 +22,7 @@ const pollTransaction = async (
 ): Promise<TransactionLog> => {
   // Only do refresh logic for pending txs
   // tx.hash shouldn't ever be undefined but it's optional typed :shrug:
-  if (!txLog.tx.hash || txLog.status !== TxStatus.pending) {
+  if (!txLog.tx?.hash || txLog.status !== TxStatus.pending) {
     return txLog
   }
 

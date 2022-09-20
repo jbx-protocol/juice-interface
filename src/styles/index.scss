@@ -55,21 +55,6 @@ h6 {
   color: var(--text-header);
 }
 
-.clickable-border {
-  border: 1px solid var(--stroke-tertiary);
-  transition: border-color 100ms linear;
-
-  &:hover {
-    border: 1px solid var(--stroke-primary);
-  }
-}
-
-.hover-opacity {
-  &:hover {
-    opacity: 0.7;
-  }
-}
-
 @media screen and (min-width: 600px) and (max-width: 1000px) {
   .hide-tablet {
     display: none;

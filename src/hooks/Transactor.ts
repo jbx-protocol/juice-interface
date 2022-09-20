@@ -1,10 +1,9 @@
-import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
+import { BigNumber } from '@ethersproject/bignumber'
 import { hexlify } from '@ethersproject/bytes'
 import { Contract } from '@ethersproject/contracts'
 import { Deferrable } from '@ethersproject/properties'
 import { TransactionRequest } from '@ethersproject/providers'
 import { parseUnits } from '@ethersproject/units'
-import { Signer, Transaction } from 'ethers/lib/ethers'
 import { useCallback, useContext } from 'react'
 
 import { emitErrorNotification } from 'utils/notifications'
@@ -14,22 +13,12 @@ import * as Sentry from '@sentry/browser'
 
 import { TxHistoryContext } from 'contexts/txHistoryContext'
 import { CV } from 'models/cv'
+import { TransactionOptions } from 'models/transaction'
 import { useWallet } from './Wallet'
 
-type TransactorCallback = (e?: Transaction, signer?: Signer) => void
+type TxOpts = Omit<TransactionOptions, 'value'>
 
-export type TransactorOptions = {
-  title?: string
-  value?: BigNumberish
-  onDone?: VoidFunction
-  onConfirmed?: TransactorCallback
-  onCancelled?: TransactorCallback
-  onError?: ErrorCallback
-}
-
-type TxOpts = Omit<TransactorOptions, 'value'>
-
-export function onCatch({
+export function handleTransactionException({
   txOpts,
   missingParam,
   functionName,
@@ -55,7 +44,7 @@ export type Transactor = (
   contract: Contract,
   functionName: string,
   args: any[], // eslint-disable-line @typescript-eslint/no-explicit-any
-  options?: TransactorOptions,
+  options?: TransactionOptions,
 ) => Promise<boolean>
 
 export type TransactorInstance<T = undefined> = (
@@ -77,7 +66,7 @@ export function useTransactor({
       contract: Contract,
       functionName: string,
       args: any[], // eslint-disable-line @typescript-eslint/no-explicit-any
-      options?: TransactorOptions,
+      options?: TransactionOptions,
     ) => {
       if (chainUnsupported) {
         await changeNetworks()
@@ -111,49 +100,48 @@ export function useTransactor({
         )
 
       console.info(
-        '🧃 Calling ' + functionName + '() with args:',
+        '🧃 Transactor::Calling ' + functionName + '() with args:',
         reportArgs,
         tx,
       )
 
+      const txTitle = options?.title ?? functionName
+
       try {
         let result
-
-        const txTitle = options?.title ?? functionName
-
         if (tx instanceof Promise) {
-          console.info('AWAITING TX', tx)
+          console.info('Transactor::AWAITING TX', tx)
           result = await tx
 
-          addTransaction?.(txTitle, result)
+          addTransaction?.(txTitle, result, {
+            onConfirmed: options?.onConfirmed,
+            onCancelled: options?.onCancelled,
+          })
         } else {
-          console.info('RUNNING TX', tx)
+          console.info('Transactor::RUNNING TX', tx)
 
           if (!tx.gasPrice) tx.gasPrice = gasPrice ?? parseUnits('4.1', 'gwei')
-
           if (!tx.gasLimit) tx.gasLimit = hexlify(120000)
 
           result = await signer.sendTransaction(tx)
 
-          addTransaction?.(txTitle, result)
+          addTransaction?.(txTitle, result, {
+            onConfirmed: options?.onConfirmed,
+            onCancelled: options?.onCancelled,
+          })
 
           await result.wait()
         }
-        console.info('RESULT:', result)
+        console.info('Transactor::RESULT::', result)
 
-        if (result.confirmations) {
-          options?.onConfirmed?.(result, signer)
-        } else {
-          options?.onCancelled?.(result, signer)
-        }
-
+        // transaction was submitted, but not confirmed/mined yet.
         options?.onDone?.()
 
         return true
       } catch (e) {
         const message = (e as Error).message
 
-        console.error('Transaction Error:', message)
+        console.error('Transactor::Transaction Error:', message)
         Sentry.captureException(e, {
           tags: {
             contract_function: functionName,

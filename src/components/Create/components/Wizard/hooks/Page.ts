@@ -19,6 +19,7 @@ export const usePage = ({ name }: { name: string }) => {
     if (!pages || !goToPage) return
     if (pageIndex === pages.length - 1) return
     const nextPage = pages[pageIndex + 1].name
+
     goToPage(nextPage)
   }, [goToPage, pageIndex, pages])
 

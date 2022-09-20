@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-09-11 00:35\n"
+"PO-Revision-Date: 2022-09-18 00:39\n"
 "Last-Translator: \n"
 "Language: fr_FR\n"
 "Language-Team: French\n"
@@ -142,9 +142,6 @@ msgstr "<0>Juicebox est un protocole de gouvernance minimale. Il n'y a que quelq
 msgid "<0>Juicebox is an open protocol on Ethereum that is funded using Juicebox itself. You can check out the contractualized budget specs <1>here</1>.</0><2>Projects building on Juicebox pay a {JB_FEE}% JBX membership fee from withdrawn funds into the JuiceboxDAO treasury. Projects can then use their JBX to participate in the governance of JuiceboxDAO and its collective treasury, as well as redeem from its growing <3>overflow</3>. The fee is also subject to change via JBX member votes.</2>"
 msgstr "<0>Juicebox est un protocole ouvert sur Ethereum qui est financé à l'aide de Juicebox lui-même. Vous pouvez consulter les spécifications budgétaires contractuelles <1>ici</1>.</0><2>Les projets construits sur Juicebox paient des {JB_FEE}% frais d'adhésion JBX à partir des fonds retirés vers la trésorerie de JuiceboxDAO. Les projets peuvent ensuite utiliser leur JBX pour participer à la gouvernance de JuiceboxDAO et de sa trésorerie collective, ainsi que pour récupérer à partir de son <3>overflow</3> croissant. Les frais sont également susceptibles de changer via les votes des membres JBX.</2>"
 
-msgid "<0>Learn more</0> about burning tokens."
-msgstr "<0>En savoir plus</0> sur la frappe de tokens."
-
 msgid "<0>Learn more</0> about funding cycle duration."
 msgstr "<0>En savoir plus</0> sur la durée du cycle de financement."
 
@@ -177,6 +174,9 @@ msgstr "<0>Peel</0> c'est la DAO qui gère l'interface principale de juicebox.mo
 
 msgid "<0>Recurring funding cycles</0>. For example, distribute funds from your project's treasury every week."
 msgstr "<0>Cycles de financement récurrents</0>. Par exemple, distribuer des fonds de la trésorerie de votre projet toutes les semaines."
+
+msgid "<0>Snapshot</0> is an off-chain voting system. You can use your Juicebox project tokens in a Snapshot voting strategy. <1>Learn more about Snapshot</1>."
+msgstr ""
 
 msgid "<0>Target is 0.</0> The project's entire balance will be considered overflow. <1>Learn more</1> about overflow."
 msgstr "<0>L'objectif est de 0.</0> La totalité du solde du projet sera considérée comme de l'overflow. <1>En savoir plus</1> sur l'overflow."
@@ -304,6 +304,9 @@ msgstr ""
 msgid "Add to balance"
 msgstr "Ajouter au solde"
 
+msgid "Add to balance of {projectTitle}"
+msgstr ""
+
 msgid "Add token"
 msgstr ""
 
@@ -376,9 +379,6 @@ msgstr ""
 msgid "Almost definitely."
 msgstr "Définitivement."
 
-msgid "Already Enabled"
-msgstr ""
-
 msgid "Amount"
 msgstr "Somme"
 
@@ -411,6 +411,12 @@ msgstr "Toutes les modifications que vous apportez prendront effet dans le <0>cy
 
 msgid "Any reconfiguration to an upcoming funding cycle will take effect once the current cycle ends. A project with no strategy may be vulnerable to being rug-pulled by its owner."
 msgstr "Tout reparamétrage d'un cycle de financement à venir sera effectif une fois que le cycle en cours aura fini."
+
+msgid "Approve ${symbol}"
+msgstr ""
+
+msgid "Approve ERC20"
+msgstr ""
 
 msgid "Approve token for transaction"
 msgstr ""
@@ -453,6 +459,9 @@ msgstr "Les fonds disponibles peuvent être distribués selon les paiements ci-d
 
 msgid "Available:"
 msgstr "Disponible :"
+
+msgid "Back"
+msgstr ""
 
 msgid "Back to project"
 msgstr ""
@@ -529,12 +538,6 @@ msgstr "Puis-je supprimer un projet ?"
 msgid "Cancel"
 msgstr "Annuler"
 
-msgid "Cannot redeem tokens for ETH because this project has no overflow."
-msgstr "Il n'est pas possible de récupérer des tokens pour ETH car ce projet n'a pas d'overflow."
-
-msgid "Cannot redeem tokens for ETH because this project's redemption rate is zero."
-msgstr ""
-
 msgid "Change ENS name"
 msgstr ""
 
@@ -573,6 +576,9 @@ msgstr ""
 
 msgid "Choose how you would like to configure your payouts."
 msgstr "Choisissez comment souhaitez-vous paramétrer vos paiements."
+
+msgid "Claim {0}"
+msgstr ""
 
 msgid "Claim {tokenTextPlural}"
 msgstr "Réclamer {tokenTextPlural}"
@@ -623,6 +629,9 @@ msgid "Configure the dynamics of your project's token."
 msgstr "Configurer la dynamique du token de votre projet."
 
 msgid "Configure which Juicebox V1 project you'd like to accept tokens for. Token holders of this V1 project will be able to swap their V1 tokens for V2 tokens."
+msgstr ""
+
+msgid "Configure {projectTitle}"
 msgstr ""
 
 msgid "Confirm Stake"
@@ -802,10 +811,16 @@ msgstr "Supprimer l'allocation de token"
 msgid "Deploy Payment Address contract"
 msgstr ""
 
+msgid "Deploy Snapshot space"
+msgstr ""
+
 msgid "Deploy funding cycle configuration"
 msgstr ""
 
 msgid "Deploy project"
+msgstr ""
+
+msgid "Deploy project payer for {projectTitle}"
 msgstr ""
 
 msgid "Deploy project to {0}"
@@ -882,6 +897,12 @@ msgstr "Distribuez les fonds disponibles, en tant que paiement à d'autres porte
 
 msgid "Distribute funds"
 msgstr "Distribuer les fonds"
+
+msgid "Distribute payouts of {projectTitle}"
+msgstr ""
+
+msgid "Distribute reserved {0}"
+msgstr ""
 
 msgid "Distribute reserved {tokenTextPlural}"
 msgstr "Distribuez les {tokenTextPlural} réservés"
@@ -994,6 +1015,12 @@ msgstr ""
 msgid "Edit allocation"
 msgstr ""
 
+msgid "Edit details of {projectTitle}"
+msgstr ""
+
+msgid "Edit handle of {projectTitle}"
+msgstr ""
+
 msgid "Edit payout"
 msgstr "Modifier un paiement"
 
@@ -1012,7 +1039,10 @@ msgstr "Modifier l'allocation de token"
 msgid "Edit tracked assets"
 msgstr "Modifier les actifs suivis"
 
-msgid "Enable"
+msgid "Enable unclaimed token spending"
+msgstr ""
+
+msgid "Enable veNFT"
 msgstr ""
 
 msgid "Enable veNFT Governance"
@@ -1038,6 +1068,9 @@ msgstr "Désactiver la frappe de tokens peut sembler risqué aux contributeurs."
 
 msgid "End"
 msgstr "Fin"
+
+msgid "Enter your project’s details. You can edit your project's details at any time after you deploy project your project, but the transaction will cost gas."
+msgstr ""
 
 msgid "Error loading holders"
 msgstr "Erreur lors du chargement des titulaires"
@@ -1073,6 +1106,9 @@ msgid "Extend Lock"
 msgstr ""
 
 msgid "Extend lock successful. Results will be indexed in a few moments."
+msgstr ""
+
+msgid "Extend veNFT lock"
 msgstr ""
 
 msgid "FAQs"
@@ -1142,6 +1178,9 @@ msgid "Give feedback"
 msgstr "Donner un feedback"
 
 msgid "Give this NFT a name."
+msgstr ""
+
+msgid "Go to <0>{snapshotUrl}</0>"
 msgstr ""
 
 msgid "Governance"
@@ -1279,6 +1318,9 @@ msgstr ""
 msgid "Invalid address"
 msgstr ""
 
+msgid "Issue ${symbol}"
+msgstr ""
+
 msgid "Issue ERC-20"
 msgstr "Émettre ERC-20"
 
@@ -1345,14 +1387,26 @@ msgstr "Dernier"
 msgid "Latest payments"
 msgstr "Derniers paiements"
 
+msgid "Launch @{handle}"
+msgstr ""
+
 msgid "Launch funding cycle"
 msgstr "Lancer le cycle de financement"
+
+msgid "Launch funding cycles for {projectTitle}"
+msgstr ""
 
 msgid "Launch veNFT"
 msgstr ""
 
+msgid "Launch veNFT {symbol}"
+msgstr ""
+
 msgid "Launch your project"
 msgstr "Lancez votre projet"
+
+msgid "Launch {projectTitle}"
+msgstr ""
 
 msgid "Leave blank to start immediately."
 msgstr "Laisser vide pour commencer immédiatement."
@@ -1390,13 +1444,16 @@ msgstr ""
 msgid "Lock until"
 msgstr "Bloquer jusqu'à"
 
-msgid "Lock your {tokensLabel} to increase your voting weight and claim Governance NFTs."
+msgid "Lock veNFT"
+msgstr ""
+
+msgid "Lock your {tokenText} to increase your voting weight and claim Governance NFTs."
 msgstr ""
 
 msgid "Lock {tokenName} ({tokenSymbolDisplayText}) tokens in exchange for voting weight. In return, you'll impact {projectName} governance and receive a choice governance NFT."
 msgstr ""
 
-msgid "Lock {tokensLabel} for Governance NFTs"
+msgid "Lock {tokenText} for Governance NFTs"
 msgstr ""
 
 msgid "Locked {tokenSymbolDisplayText}"
@@ -1438,6 +1495,9 @@ msgstr ""
 msgid "Migrate to Juicebox V1.1"
 msgstr "Migrer vers Juicebox V1.1"
 
+msgid "Migrate {projectTitle}"
+msgstr ""
+
 msgid "Mint NFT to a custom address"
 msgstr ""
 
@@ -1467,6 +1527,9 @@ msgstr "Frapper des tokens comme ERC-20"
 
 msgid "Mint tokens to a custom address."
 msgstr "Frapper des tokens vers une adresse personnalisée."
+
+msgid "Mint {0}"
+msgstr ""
 
 msgid "Mint {tokensLabel}"
 msgstr "Frapper {tokensLabel}"
@@ -1522,6 +1585,9 @@ msgstr ""
 msgid "Newsletter"
 msgstr ""
 
+msgid "Next"
+msgstr ""
+
 msgid "Next: Funding cycle"
 msgstr "Suivant : Cycle de financement"
 
@@ -1575,6 +1641,9 @@ msgstr "Aucun objectif"
 
 msgid "No target set."
 msgstr "Aucun objectif défini."
+
+msgid "No transaction history"
+msgstr ""
 
 msgid "Not a valid ETH address"
 msgstr ""
@@ -1648,6 +1717,12 @@ msgstr "Suspendu"
 msgid "Pay"
 msgstr "Payer"
 
+msgid "Pay Button Text"
+msgstr ""
+
+msgid "Pay Disclosure"
+msgstr ""
+
 msgid "Pay amount"
 msgstr "Payer le montant"
 
@@ -1665,6 +1740,9 @@ msgstr "Déclaration pour le paiement"
 
 msgid "Pay {0}"
 msgstr "Payer {0}"
+
+msgid "Pay {projectTitle}"
+msgstr ""
 
 msgid "Payer"
 msgstr "Payeur"
@@ -1759,11 +1837,23 @@ msgstr ""
 msgid "Project Created"
 msgstr "Projet Créé"
 
+msgid "Project Description"
+msgstr ""
+
+msgid "Project Details"
+msgstr ""
+
 msgid "Project Handle"
 msgstr ""
 
 msgid "Project ID must be a number."
 msgstr "L'identifiant du projet doit être un numéro."
+
+msgid "Project Links"
+msgstr ""
+
+msgid "Project Name"
+msgstr ""
 
 msgid "Project Settings"
 msgstr ""
@@ -1794,6 +1884,9 @@ msgstr "Identifiant du projet"
 
 msgid "Project handle must be unique."
 msgstr "L'identifiant du projet doit être unique."
+
+msgid "Project handle required. <0>Set project handle.</0>"
+msgstr ""
 
 msgid "Project is accepting payments this funding cycle."
 msgstr "Le projet accepte des paiements dans ce cycle de financement."
@@ -1838,9 +1931,6 @@ msgid "Project tokens <0>aren't ERC-20 tokens</0> by default. Once you deploy yo
 msgstr ""
 
 msgid "Project tokens will be minted to whoever pays this payer contract."
-msgstr ""
-
-msgid "Project {0}"
 msgstr ""
 
 msgid "Project {name} will be available soon! Try refreshing the page shortly."
@@ -1945,6 +2035,9 @@ msgstr "Modifier les prochains cycles"
 msgid "Reconfigure upcoming funding cycles"
 msgstr "Reconfigurer les prochains cycles de financement"
 
+msgid "Reconfigure {projectTitle}"
+msgstr ""
+
 msgid "Redeem"
 msgstr ""
 
@@ -1959,6 +2052,9 @@ msgstr ""
 
 msgid "Redeem your {tokensLabel} for a portion of the project's overflow. Any {tokensLabel} you redeem will be burned."
 msgstr "Récupérer vos {tokensLabel} d'une portion de l'overflow du projet. Aucun {tokensLabel} récupéré sera brûlé."
+
+msgid "Redeem {0}"
+msgstr ""
 
 msgid "Redeem {0} {tokensTextShort} for ETH"
 msgstr "Récupérer {0} {tokensTextShort} pour ETH"
@@ -2134,7 +2230,16 @@ msgstr ""
 msgid "Set ENS name"
 msgstr ""
 
+msgid "Set ENS text record for {ensName}"
+msgstr ""
+
+msgid "Set URI for {projectTitle}"
+msgstr ""
+
 msgid "Set Up veNFT Governance"
+msgstr ""
+
+msgid "Set V1 project of {projectTitle}"
 msgstr ""
 
 msgid "Set a distribution limit"
@@ -2158,7 +2263,25 @@ msgstr ""
 msgid "Set a unique name that will be visible in your project's URL, and that will allow your project to appear in search results."
 msgstr ""
 
+msgid "Set handle @{handle}"
+msgstr ""
+
+msgid "Set operator for {projectTitle}"
+msgstr ""
+
+msgid "Set payouts of {projectTitle}"
+msgstr ""
+
 msgid "Set project handle"
+msgstr ""
+
+msgid "Set reserved tokens of {projectTitle}"
+msgstr ""
+
+msgid "Set splits for {projectTitle}"
+msgstr ""
+
+msgid "Set terminals for {projectTitle}"
 msgstr ""
 
 msgid "Set text record for {0}"
@@ -2191,11 +2314,20 @@ msgstr ""
 msgid "Set up your Juicebox V2 project for migration from your Juicebox V1 project."
 msgstr ""
 
+msgid "Set veNFT operator for {projectTitle}"
+msgstr ""
+
 msgid "Should you Juicebox?"
 msgstr "Faut-il Juicebox ?"
 
 msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."
 msgstr "Vous n'avez pas défini une durée de financement, les modifications apportées à ces paramètres seront appliquées immédiatement."
+
+msgid "Skip"
+msgstr ""
+
+msgid "Snapshot voting"
+msgstr ""
 
 msgid "Some funding cycle settings may put project contributors at risk."
 msgstr ""
@@ -2251,7 +2383,13 @@ msgstr ""
 msgid "Swap for V2 {tokenText}"
 msgstr ""
 
+msgid "Swap v1 project tokens {projectTitle}"
+msgstr ""
+
 msgid "Switch network to {0}"
+msgstr ""
+
+msgid "Tap {projectTitle}"
 msgstr ""
 
 msgid "Target"
@@ -2596,6 +2734,12 @@ msgstr ""
 msgid "Transfer ownership"
 msgstr "Transférer la propriété"
 
+msgid "Transfer ownership of {projectTitle}"
+msgstr ""
+
+msgid "Transfer unclaimed {0}"
+msgstr ""
+
 msgid "Transfer unclaimed {tokenSymbolShort}"
 msgstr "Transférér les {tokenSymbolShort} non réclamés"
 
@@ -2620,6 +2764,9 @@ msgstr "Désarchiver le projet"
 msgid "Unavailable"
 msgstr "Indisponible"
 
+msgid "Unclaimed token spending enabled"
+msgstr ""
+
 msgid "Unknown Project"
 msgstr ""
 
@@ -2643,6 +2790,9 @@ msgstr ""
 
 msgid "Unsaved changes"
 msgstr "Modifications non sauvegardées"
+
+msgid "Unstake {0}"
+msgstr ""
 
 msgid "Untitled project"
 msgstr "Projet sans titre"
@@ -2699,9 +2849,6 @@ msgid "V1.1"
 msgstr ""
 
 msgid "V2"
-msgstr ""
-
-msgid "VeNFT Governance"
 msgstr ""
 
 msgid "VeNFT contract created successfully. Results will be indexed in a few moments."
@@ -2826,6 +2973,12 @@ msgstr "Vous pouvez toujours récupérer vos tokens {tokenTextLong} de l'overflo
 
 msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
 msgstr "Vous pouvez toujours récupérer vos tokens {tokenSymbol} de l'overflow sans les réclamer, et vous pouvez transférer vos tokens {tokenSymbol} non réclamés vers une autre adresse à partir du menu Outils, accessible à partir de l'icône en forme de clé anglaise dans le coin supérieur droit de ce projet. ."
+
+msgid "You cannot redeem your tokens for ETH because this project has no overflow."
+msgstr ""
+
+msgid "You cannot redeem your tokens for ETH because this project's redemption rate is zero."
+msgstr ""
 
 msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
 msgstr "Vous n'avez pas une durée de cycle de financement. Les modifications que vous apportez prendront effet immédiatement."
@@ -3102,6 +3255,9 @@ msgstr "{formattedTimeLeft} restant"
 
 msgid "{formattedTimeLeft} until #{0}"
 msgstr "{formattedTimeLeft} jusqu'à #{0}"
+
+msgid "{header} <0>(Optional)</0>"
+msgstr ""
 
 msgid "{inflationRate} tokens / ETH"
 msgstr ""

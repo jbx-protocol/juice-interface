@@ -1,6 +1,6 @@
 import { Space } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
-import TransactionsList from 'components/Navbar/TransactionsList'
+import { TransactionsList } from 'components/Navbar/TransactionList'
 import useMobile from 'hooks/Mobile'
 
 import Account from './Account'

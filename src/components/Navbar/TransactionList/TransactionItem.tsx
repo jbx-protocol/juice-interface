@@ -52,7 +52,7 @@ export function TransactionItem({
         </div>
 
         <ExternalLink
-          href={tx.tx.hash ? etherscanLink('tx', tx.tx.hash) : undefined}
+          href={tx.tx?.hash ? etherscanLink('tx', tx.tx.hash) : undefined}
           style={{ fontSize: '0.85rem' }}
           className="text-primary hover-text-decoration-underline"
         >

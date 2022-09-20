@@ -6,7 +6,10 @@ import { t } from '@lingui/macro'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactionContext } from 'contexts/transactionContext'
-import { onCatch, TransactorInstance } from 'hooks/Transactor'
+import {
+  handleTransactionException,
+  TransactorInstance,
+} from 'hooks/Transactor'
 import invariant from 'tiny-invariant'
 import { useV2ProjectTitle } from '../ProjectTitle'
 
@@ -50,7 +53,7 @@ export function useAddToBalanceTx(): TransactorInstance<{
         ? 'contracts.JBETHPaymentTerminal'
         : undefined
 
-      return onCatch({
+      return handleTransactionException({
         txOpts,
         missingParam,
         cv,

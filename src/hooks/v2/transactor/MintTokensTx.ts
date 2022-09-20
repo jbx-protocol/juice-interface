@@ -6,7 +6,10 @@ import { useContext } from 'react'
 
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactionContext } from 'contexts/transactionContext'
-import { onCatch, TransactorInstance } from 'hooks/Transactor'
+import {
+  handleTransactionException,
+  TransactorInstance,
+} from 'hooks/Transactor'
 import invariant from 'tiny-invariant'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
@@ -56,7 +59,7 @@ export function useMintTokensTx(): TransactorInstance<{
         ? 'projectId'
         : undefined
 
-      return onCatch({
+      return handleTransactionException({
         txOpts,
         missingParam,
         functionName: 'mintTokensOf',

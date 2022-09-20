@@ -5,7 +5,10 @@ import invariant from 'tiny-invariant'
 
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactionContext } from 'contexts/transactionContext'
-import { onCatch, TransactorInstance } from 'hooks/Transactor'
+import {
+  handleTransactionException,
+  TransactorInstance,
+} from 'hooks/Transactor'
 
 export function useIssueErc20TokenTx(): TransactorInstance<{
   name: string
@@ -42,7 +45,7 @@ export function useIssueErc20TokenTx(): TransactorInstance<{
         ? 'symbol'
         : undefined
 
-      return onCatch({
+      return handleTransactionException({
         txOpts,
         missingParam,
         functionName: 'issueTokenFor',

@@ -1,11 +1,13 @@
-import { TransactionResponse } from '@ethersproject/providers'
 import { useWallet } from 'hooks/Wallet'
 import { TransactionLog, TxStatus } from 'models/transaction'
 import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import { clearInterval, setInterval } from 'timers'
 
 import { readProvider } from '../constants/readProvider'
-import { TxHistoryContext } from '../contexts/txHistoryContext'
+import {
+  AddTransactionFunction,
+  TxHistoryContext,
+} from '../contexts/txHistoryContext'
 
 const nowSeconds = () => Math.round(new Date().valueOf() / 1000)
 
@@ -14,6 +16,42 @@ const LONG_POLL_INTERVAL_MILLISECONDS = 12 * 1000 // 12 sec
 
 // Arbitrary time to give folks a sense of tx history
 const TX_HISTORY_TIME_SECS = 60 * 60 // 1 hr
+
+const pollTransaction = async (
+  txLog: TransactionLog,
+): Promise<TransactionLog> => {
+  // Only do refresh logic for pending txs
+  // tx.hash shouldn't ever be undefined but it's optional typed :shrug:
+  if (!txLog.tx?.hash || txLog.status !== TxStatus.pending) {
+    return txLog
+  }
+
+  const response = await readProvider.getTransaction(txLog.tx.hash)
+  // if no response, then the tx is cancelled.
+  if (!response) {
+    txLog.callbacks?.onCancelled?.(response)
+    return {
+      ...txLog,
+      tx: response,
+      status: TxStatus.failed,
+    }
+  }
+
+  // Tx has been mined
+  if (response.confirmations > 0 && txLog.status === TxStatus.pending) {
+    console.info('CALLING ONCONFIRMED', response)
+    txLog.callbacks?.onConfirmed?.(response)
+    return {
+      ...txLog,
+      tx: response,
+      status: TxStatus.success,
+    }
+  }
+
+  return {
+    ...txLog,
+  }
+}
 
 export default function TxHistoryProvider({
   children,
@@ -81,41 +119,15 @@ export default function TxHistoryProvider({
       console.info('TxHistoryProvider::poller::polling for tx updates...')
 
       const transactionLogs = await Promise.all(
-        transactions.map(async txLog => {
-          // Only do refresh logic for pending txs
-          // tx.hash shouldn't ever be undefined but it's optional typed :shrug:
-          if (!txLog.tx.hash || txLog.status !== TxStatus.pending) {
-            return txLog
-          }
-
-          // If no response yet, get response.
-          // We know tx is a TransactionResponse if `.wait` is defined.
-          const response = (txLog.tx as TransactionResponse).wait
-            ? (txLog.tx as TransactionResponse)
-            : await readProvider.getTransaction(txLog.tx.hash)
-
-          let status = TxStatus.pending
-          try {
-            // Tx has been mined
-            status = TxStatus.success
-          } catch (_) {
-            // ethers provider throws error when a transaction fails
-            status = TxStatus.failed
-          }
-
-          return {
-            ...txLog,
-            tx: response,
-            status,
-          }
+        transactions.map(txLog => {
+          return pollTransaction(txLog)
         }),
       )
 
       console.info(
-        'TxHistoryProvider::poller::settings transactions',
+        'TxHistoryProvider::poller::updating transactions state',
         transactionLogs,
       )
-
       _setTransactions(transactionLogs)
     }, pollInterval)
 
@@ -127,8 +139,8 @@ export default function TxHistoryProvider({
     }
   }, [transactions, _setTransactions])
 
-  const addTransaction = useCallback(
-    (title: string, tx: TransactionResponse) => {
+  const addTransaction: AddTransactionFunction = useCallback(
+    (title, tx, callbacks) => {
       _setTransactions([
         ...transactions,
         {
@@ -139,6 +151,7 @@ export default function TxHistoryProvider({
           tx,
           createdAt: nowSeconds(),
           status: TxStatus.pending,
+          callbacks,
         },
       ])
     },

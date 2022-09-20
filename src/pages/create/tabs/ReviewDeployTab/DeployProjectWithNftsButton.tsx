@@ -27,7 +27,7 @@ import { useRouter } from 'next/router'
 import { v2ProjectRoute } from 'utils/routes'
 
 import { readNetwork } from 'constants/networks'
-import { TransactorOptions } from 'hooks/Transactor'
+import { TransactionOptions } from 'models/transaction'
 import { findTransactionReceipt } from './utils'
 
 const NFT_CREATE_EVENT_IDX = 2
@@ -107,7 +107,7 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
       return
     }
 
-    const txOpts: TransactorOptions = {
+    const txOpts: TransactionOptions = {
       onDone() {
         console.info('Transaction executed. Awaiting confirmation...')
         setTransactionPending(true)

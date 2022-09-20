@@ -4,7 +4,10 @@ import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactionContext } from 'contexts/transactionContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
 import { V2ContractsContext } from 'contexts/v2/V2ContractsContext'
-import { onCatch, TransactorInstance } from 'hooks/Transactor'
+import {
+  handleTransactionException,
+  TransactorInstance,
+} from 'hooks/Transactor'
 import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
@@ -48,7 +51,7 @@ export function useClaimTokensTx(): TransactorInstance<{
         ? 'contracts.JBTokenStore'
         : undefined
 
-      return onCatch({
+      return handleTransactionException({
         txOpts,
         missingParam,
         functionName: 'claimFor',

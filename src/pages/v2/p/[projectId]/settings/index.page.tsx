@@ -1,6 +1,6 @@
 import { AppWrapper } from 'components/common'
 import { V2ProjectSettings } from 'components/v2/V2Project/V2ProjectSettings'
-import { ProjectMetadataV4 } from 'models/project-metadata'
+import { ProjectMetadataV5 } from 'models/project-metadata'
 import { GetServerSideProps } from 'next'
 import { TransactionProvider } from 'providers/TransactionProvider'
 import { V2ContractsProvider } from 'providers/v2/V2ContractsProvider'
@@ -22,7 +22,7 @@ export default function V2ProjectSettingsPage({
   metadata,
 }: {
   projectId: number
-  metadata: ProjectMetadataV4
+  metadata: ProjectMetadataV5
 }) {
   return (
     <AppWrapper>

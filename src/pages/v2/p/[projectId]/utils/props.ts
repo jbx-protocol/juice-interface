@@ -1,14 +1,14 @@
 import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
-import { ProjectMetadataV4 } from 'models/project-metadata'
+import { ProjectMetadataV5 } from 'models/project-metadata'
 import { V2ContractName } from 'models/v2/contracts'
 import { GetServerSidePropsResult } from 'next'
 import { loadV2Contract } from 'utils/contracts/v2'
 import { findProjectMetadata } from 'utils/server'
 
 export interface ProjectPageProps {
-  metadata: ProjectMetadataV4
+  metadata: ProjectMetadataV5
   projectId: number
 }
 

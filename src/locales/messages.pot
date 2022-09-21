@@ -704,9 +704,6 @@ msgstr ""
 msgid "Contributors will be rewarded this amount of your project's tokens per ETH contributed."
 msgstr ""
 
-msgid "Contributors will not receive any tokens in exchange for paying this project."
-msgstr ""
-
 msgid "Contributors will receive <0>{discountRatePercent}%</0> more tokens for contributions they make this funding cycle compared to the next funding cycle."
 msgstr ""
 
@@ -714,6 +711,9 @@ msgid "Contributors will receive a relatively small portion of tokens in exchang
 msgstr ""
 
 msgid "Contributors will see this message before they pay your project."
+msgstr ""
+
+msgid "Contributors won't receive any tokens when they pay this project."
 msgstr ""
 
 msgid "Copied!"

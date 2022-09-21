@@ -19,7 +19,7 @@ export const FUNDING_CYCLE_WARNING_TEXT: () => {
     noBallot: t`The project owner can change the next funding cycle’s configuration at any time.`,
     customBallot: t`The project owner is using an unverified contract for its reconfiguration strategy.`,
     allowMinting: t`The project owner may mint any supply of tokens at any time, diluting the token share of all existing contributors.`,
-    metadataMaxReservedRate: t`Contributors will not receive any tokens in exchange for paying this project.`,
+    metadataMaxReservedRate: t`Contributors won't receive any tokens when they pay this project.`,
     metadataReservedRate: t`Contributors will receive a relatively small portion of tokens in exchange for paying this project.`,
   }
 }

@@ -1,9 +1,8 @@
 import { LinkOutlined } from '@ant-design/icons'
-import { NetworkName } from 'models/network-name'
 import { CSSProperties, PropsWithChildren } from 'react'
 import { truncateEthAddress } from 'utils/format/formatAddress'
 
-import { readNetwork } from 'constants/networks'
+import { etherscanLink } from 'utils/etherscan'
 import ExternalLink from './ExternalLink'
 
 export default function EtherscanLink({
@@ -27,15 +26,11 @@ export default function EtherscanLink({
     truncatedValue = truncateEthAddress({ address: value, truncateTo })
   }
 
-  let subdomain = ''
-  if (readNetwork.name !== NetworkName.mainnet) {
-    subdomain = readNetwork.name + '.'
-  }
   const linkProps = {
     className:
       'hover-text-action-primary hover-text-decoration-underline color-unset',
     style: { ...style },
-    href: `https://${subdomain}etherscan.io/${type}/${value}`,
+    href: etherscanLink(type, value),
   }
 
   if (type === 'tx') {

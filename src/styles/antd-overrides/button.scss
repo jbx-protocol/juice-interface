@@ -104,12 +104,12 @@
   margin: 3px;
   box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.1);
   border-radius: 100%;
-  transition: 0.3s;
+  transition: 100ms linear;
   cursor: pointer;
   img {
     width: 60px;
     margin-left: -3px;
-    transition: 0.3s;
+    transition: 100ms linear;
   }
 }
 

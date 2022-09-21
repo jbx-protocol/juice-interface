@@ -2,7 +2,10 @@ import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { ProjectMetadataV4 } from 'models/project-metadata'
+import {
+  LATEST_METADATA_VERSION,
+  ProjectMetadataV5,
+} from 'models/project-metadata'
 
 import {
   ETHPayoutGroupedSplits,
@@ -17,7 +20,11 @@ import {
   serializeV2FundingCycleMetadata,
 } from 'utils/v2/serializers'
 
-import { NftCollectionMetadata, NftRewardTier } from 'models/nftRewardTier'
+import {
+  NftCollectionMetadata,
+  NftPostPayModalConfig,
+  NftRewardTier,
+} from 'models/nftRewardTier'
 import {
   DEFAULT_MINT_RATE,
   issuanceRateFrom,
@@ -31,7 +38,7 @@ import {
 
 interface V2ProjectState {
   version: number
-  projectMetadata: ProjectMetadataV4
+  projectMetadata: ProjectMetadataV5
   fundingCycleData: SerializedV2FundingCycleData
   fundingCycleMetadata: SerializedV2FundingCycleMetadata
   fundAccessConstraints: SerializedV2FundAccessConstraint[]
@@ -41,6 +48,7 @@ interface V2ProjectState {
     rewardTiers: NftRewardTier[]
     CIDs: string[] | undefined // points to locations of the NFTs' json on IPFS
     collectionMetadata: NftCollectionMetadata
+    postPayModal: NftPostPayModalConfig | undefined
   }
 }
 
@@ -49,7 +57,7 @@ interface V2ProjectState {
 // this number, their state will be reset.
 export const REDUX_STORE_V2_PROJECT_VERSION = 7
 
-const defaultProjectMetadataState: ProjectMetadataV4 = {
+const defaultProjectMetadataState: ProjectMetadataV5 = {
   name: '',
   infoUri: '',
   logoUri: '',
@@ -57,7 +65,8 @@ const defaultProjectMetadataState: ProjectMetadataV4 = {
   twitter: '',
   discord: '',
   tokens: [],
-  version: 4,
+  nftPaymentSuccessModal: undefined,
+  version: LATEST_METADATA_VERSION,
 }
 
 export const defaultFundingCycleData: SerializedV2FundingCycleData =
@@ -102,6 +111,13 @@ const EMPTY_RESERVED_TOKENS_GROUPED_SPLITS = {
   splits: [],
 }
 
+const EMPTY_NFT_COLLECTION_METADATA = {
+  symbol: undefined,
+  name: undefined,
+  CID: undefined,
+  description: undefined,
+}
+
 export const defaultProjectState: V2ProjectState = {
   version: REDUX_STORE_V2_PROJECT_VERSION,
   projectMetadata: { ...defaultProjectMetadataState },
@@ -113,12 +129,8 @@ export const defaultProjectState: V2ProjectState = {
   nftRewards: {
     rewardTiers: [],
     CIDs: undefined,
-    collectionMetadata: {
-      symbol: undefined,
-      name: undefined,
-      CID: undefined,
-      description: undefined,
-    },
+    collectionMetadata: EMPTY_NFT_COLLECTION_METADATA,
+    postPayModal: undefined,
   },
 }
 
@@ -245,6 +257,12 @@ const editingV2ProjectSlice = createSlice({
       action: PayloadAction<string | undefined>,
     ) => {
       state.nftRewards.collectionMetadata.description = action.payload
+    },
+    setNftPostPayModalConfig: (
+      state,
+      action: PayloadAction<NftPostPayModalConfig | undefined>,
+    ) => {
+      state.nftRewards.postPayModal = action.payload
     },
     setNftRewardsName: (state, action: PayloadAction<string | undefined>) => {
       state.nftRewards.collectionMetadata.name = action.payload

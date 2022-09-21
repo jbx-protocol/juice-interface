@@ -9,7 +9,10 @@ import { V2ContractsContext } from 'contexts/v2/V2ContractsContext'
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactionContext } from 'contexts/transactionContext'
-import { onCatch, TransactorInstance } from 'hooks/Transactor'
+import {
+  handleTransactionException,
+  TransactorInstance,
+} from 'hooks/Transactor'
 import invariant from 'tiny-invariant'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
@@ -67,7 +70,7 @@ export function useRedeemTokensTx(): TransactorInstance<{
         ? 'contracts.JBETHPaymentTerminal'
         : undefined
 
-      return onCatch({
+      return handleTransactionException({
         txOpts,
         missingParam,
         functionName: 'redeemTokensOf',

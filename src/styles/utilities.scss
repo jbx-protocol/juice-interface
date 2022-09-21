@@ -2,6 +2,25 @@
   color: var(--text-primary);
 }
 
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.clickable-border {
+  border: 1px solid var(--stroke-tertiary);
+  transition: border-color 100ms linear;
+
+  &:hover {
+    border: 1px solid var(--stroke-primary);
+  }
+}
+
+.hover-opacity {
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
 .color-unset {
   color: unset
 }
@@ -9,6 +28,12 @@
 .hover-text-action-primary {
   &:hover {
     color: var(--text-action-primary);
+  }
+}
+
+.hover-text-primary {
+  &:hover {
+    color: var(--text-primary);
   }
 }
 
@@ -28,10 +53,6 @@
   &:hover {
     color: unset
   }
-}
-
-.hover-box-shadow:hover {
-  box-shadow: 3px 0px 11px 0px var(--boxShadow-primary)
 }
 
 .selected-box-shadow {

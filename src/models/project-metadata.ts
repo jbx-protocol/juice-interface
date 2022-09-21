@@ -1,10 +1,14 @@
+import { NftPostPayModalConfig } from './nftRewardTier'
 import { TokenRef } from './token-ref'
+
+export const LATEST_METADATA_VERSION = 5
 
 type ProjectMetadata =
   | ProjectMetadataV1
   | ProjectMetadataV2
   | ProjectMetadataV3
   | ProjectMetadataV4
+  | ProjectMetadataV5
 
 type ProjectMetadataV1 = Partial<{
   name: string
@@ -42,15 +46,25 @@ export type ProjectMetadataV4 = Partial<
   }
 >
 
+// add `nftPaymentSuccessModal`
+export type ProjectMetadataV5 = Partial<
+  Omit<ProjectMetadataV4, 'version'> & {
+    version: typeof LATEST_METADATA_VERSION
+    nftPaymentSuccessModal: NftPostPayModalConfig
+  }
+>
+
 // Converts metadata of any version to latest version
 export const consolidateMetadata = (
   metadata: ProjectMetadata,
-): ProjectMetadataV4 => {
+): ProjectMetadataV5 => {
   return {
     ...metadata,
     payButton:
       (metadata as ProjectMetadataV3).payButton ??
       (metadata as ProjectMetadataV2).payText,
-    version: 4,
+    version: LATEST_METADATA_VERSION,
+    nftPaymentSuccessModal:
+      (metadata as ProjectMetadataV5)?.nftPaymentSuccessModal ?? undefined,
   }
 }

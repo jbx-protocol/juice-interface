@@ -2,7 +2,10 @@ import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { PayoutMod, TicketMod } from 'models/mods'
-import { ProjectMetadataV5 } from 'models/project-metadata'
+import {
+  LATEST_METADATA_VERSION,
+  ProjectMetadataV5,
+} from 'models/project-metadata'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { toDateSeconds } from 'utils/format/formatDate'
 import {
@@ -50,7 +53,7 @@ export const defaultProjectState: EditingProjectState = {
       twitter: '',
       discord: '',
       tokens: [],
-      version: 5,
+      version: LATEST_METADATA_VERSION,
       archived: false,
     },
     handle: '',

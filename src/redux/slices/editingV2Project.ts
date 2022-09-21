@@ -2,7 +2,10 @@ import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { ProjectMetadataV5 } from 'models/project-metadata'
+import {
+  LATEST_METADATA_VERSION,
+  ProjectMetadataV5,
+} from 'models/project-metadata'
 
 import {
   ETHPayoutGroupedSplits,
@@ -63,7 +66,7 @@ const defaultProjectMetadataState: ProjectMetadataV5 = {
   discord: '',
   tokens: [],
   nftPaymentSuccessModal: undefined,
-  version: 5,
+  version: LATEST_METADATA_VERSION,
 }
 
 export const defaultFundingCycleData: SerializedV2FundingCycleData =

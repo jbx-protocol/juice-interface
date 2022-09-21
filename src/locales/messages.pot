@@ -1826,6 +1826,9 @@ msgstr ""
 msgid "Payment options"
 msgstr ""
 
+msgid "Payment success popup"
+msgstr ""
+
 msgid "Payments"
 msgstr ""
 
@@ -2016,9 +2019,6 @@ msgid "Projects with a handle:<0/><1/>1. Are included in search results on the p
 msgstr ""
 
 msgid "Provide a link to additional information about this NFT."
-msgstr ""
-
-msgid "Purchase confirmation popup"
 msgstr ""
 
 msgid "Queued"
@@ -2396,7 +2396,7 @@ msgstr ""
 msgid "Should you Juicebox?"
 msgstr ""
 
-msgid "Show your contributors a message after they buy an NFT."
+msgid "Show your contributors a message after they receive their NFT reward."
 msgstr ""
 
 msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."

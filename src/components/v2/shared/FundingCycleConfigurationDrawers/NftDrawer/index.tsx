@@ -227,9 +227,9 @@ export default function NftDrawer({
           <MinimalCollapse
             header={
               <>
-                <Trans>Purchase confirmation popup</Trans>
+                <Trans>Payment success popup</Trans>
                 <TooltipIcon
-                  tip={t`Show your contributors a message after they buy an NFT.`}
+                  tip={t`Show your contributors a message after they receive their NFT reward.`}
                   iconStyle={{ marginLeft: 10 }}
                 />
               </>

@@ -36,6 +36,7 @@ import { weightedAmount } from 'utils/v2/math'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { v2ProjectRoute } from 'utils/routes'
 import { redirectTo, reloadWindow } from 'utils/windowUtils'
 import { V2PayForm, V2PayFormType } from '../V2PayForm'
 import { NftRewardCell } from './NftRewardCell'
@@ -107,11 +108,11 @@ export function V2ConfirmPayModal({
     })
   }
 
-  const projectBaseUrl = handle ? `/@${handle}` : `/v2/p/${projectId}`
-
   const handlePaySuccess = () => {
     if (nftRewardTier && projectMetadata?.nftPaymentSuccessModal) {
-      redirectTo(`${projectBaseUrl}?nftPurchaseConfirmed=true`)
+      redirectTo(
+        `${v2ProjectRoute({ handle, projectId })}?nftPurchaseConfirmed=true`,
+      )
     } else {
       reloadWindow()
     }

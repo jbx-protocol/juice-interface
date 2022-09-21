@@ -29,6 +29,7 @@ export function NftPostPayModal({
       okButtonProps={{
         href: withHttps(config.ctaLink),
         target: '_blank',
+        rel: 'noopener noreferrer',
       }}
       cancelButtonProps={{
         hidden: true,

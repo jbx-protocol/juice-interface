@@ -713,9 +713,6 @@ msgstr ""
 msgid "Contributors will be rewarded this amount of your project's tokens per ETH contributed."
 msgstr ""
 
-msgid "Contributors will not receive any tokens in exchange for paying this project."
-msgstr ""
-
 msgid "Contributors will receive <0>{discountRatePercent}%</0> more tokens for contributions they make this funding cycle compared to the next funding cycle."
 msgstr ""
 
@@ -723,6 +720,9 @@ msgid "Contributors will receive a relatively small portion of tokens in exchang
 msgstr ""
 
 msgid "Contributors will see this message before they pay your project."
+msgstr ""
+
+msgid "Contributors won't receive any tokens when they pay this project."
 msgstr ""
 
 msgid "Copied!"
@@ -1185,9 +1185,6 @@ msgid "Funding cycle required."
 msgstr ""
 
 msgid "Funding cycle target"
-msgstr ""
-
-msgid "Funding cycles can be reconfigured moments before a new cycle begins, without notifying contributors."
 msgstr ""
 
 msgid "Funding distribution"
@@ -2564,13 +2561,16 @@ msgstr ""
 msgid "The project owner can add and remove payment terminals."
 msgstr ""
 
+msgid "The project owner can change the next funding cycle’s configuration at any time."
+msgstr ""
+
 msgid "The project owner is using an unverified contract for its reconfiguration strategy."
 msgstr ""
 
 msgid "The project owner may mint any supply of tokens at any time, diluting the token share of all existing contributors."
 msgstr ""
 
-msgid "The project owner may reconfigure this funding cycle at any time, without notice."
+msgid "The project owner may start a new funding cycle with a new configuration at any time."
 msgstr ""
 
 msgid "The project token's issuance rate will decrease by this percentage every funding cycle. A higher discount rate will incentivize contributors to pay the project earlier."

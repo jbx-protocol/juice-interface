@@ -1,7 +1,7 @@
 import ScrollToTopButton from 'components/ScrollToTopButton'
 import V2Project from 'components/v2/V2Project'
 import { layouts } from 'constants/styles/layouts'
-import { ProjectMetadataV4 } from 'models/project-metadata'
+import { ProjectMetadataV5 } from 'models/project-metadata'
 import { V2NftRewardsProvider } from 'providers/v2/V2NftRewardsProvider'
 import V2ProjectMetadataProvider from 'providers/v2/V2ProjectMetadataProvider'
 import V2ProjectProvider from 'providers/v2/V2ProjectProvider'
@@ -12,7 +12,7 @@ export default function V2Dashboard({
   metadata,
 }: {
   projectId: number
-  metadata: ProjectMetadataV4
+  metadata: ProjectMetadataV5
 }) {
   return (
     <div style={layouts.maxWidth}>

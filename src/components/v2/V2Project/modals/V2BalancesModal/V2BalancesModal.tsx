@@ -6,7 +6,7 @@ import { useForm } from 'antd/lib/form/Form'
 import ERC20TokenBalance from 'components/ERC20TokenBalance'
 import { V2ProjectTokenBalance } from 'components/v2/V2Project/modals/V2BalancesModal/V2ProjectTokenBalance'
 import { TransactorInstance } from 'hooks/Transactor'
-import { ProjectMetadataV4 } from 'models/project-metadata'
+import { ProjectMetadataV5 } from 'models/project-metadata'
 import { TokenRef } from 'models/token-ref'
 import { useContext, useEffect, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
@@ -32,7 +32,7 @@ export function V2BalancesModal({
   storeCidTx,
 }: {
   owner: string | undefined
-  projectMetadata: ProjectMetadataV4 | undefined
+  projectMetadata: ProjectMetadataV5 | undefined
   projectName: string | undefined
   hasEditPermissions?: boolean
   visible: boolean | undefined
@@ -141,7 +141,7 @@ export function V2BalancesModal({
         <Space direction="vertical" style={{ width: '100%', marginTop: 20 }}>
           <V2ProjectTokenBalance projectId={V2_PROJECT_IDS.JUICEBOX_DAO} />
 
-          {(projectMetadata as ProjectMetadataV4)?.tokens?.map(t =>
+          {(projectMetadata as ProjectMetadataV5)?.tokens?.map(t =>
             t.type === 'erc20' ? (
               <ERC20TokenBalance
                 key={t.value}

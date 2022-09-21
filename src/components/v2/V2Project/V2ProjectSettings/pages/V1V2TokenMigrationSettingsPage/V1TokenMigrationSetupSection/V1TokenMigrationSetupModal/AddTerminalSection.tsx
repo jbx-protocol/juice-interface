@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { V2UserContext } from 'contexts/v2/userContext'
+import { V2ContractsContext } from 'contexts/v2/V2ContractsContext'
 import { useSetProjectTerminalsTx } from 'hooks/v2/transactor/SetProjectTerminalsTx'
 import { useCallback, useContext, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
@@ -16,7 +16,7 @@ export function AddTerminalSection({
   completed: boolean
   onCompleted: VoidFunction
 }) {
-  const { contracts } = useContext(V2UserContext)
+  const { contracts } = useContext(V2ContractsContext)
   const [addTerminalLoading, setAddTerminalLoading] = useState<boolean>(false)
   const setProjectTerminalsTx = useSetProjectTerminalsTx()
   const { terminals } = useContext(V2ProjectContext)

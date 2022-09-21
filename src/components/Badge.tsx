@@ -1,7 +1,7 @@
 import { ThemeContext } from 'contexts/themeContext'
 import { CSSProperties, PropsWithChildren, useContext } from 'react'
 
-export type BadgeVariant = 'warning' | 'danger'
+export type BadgeVariant = 'warning' | 'danger' | 'info'
 
 const variantStyleLight: { [k in BadgeVariant]: CSSProperties } = {
   warning: {
@@ -11,6 +11,10 @@ const variantStyleLight: { [k in BadgeVariant]: CSSProperties } = {
   danger: {
     color: '#8A1500',
     backgroundColor: '#FFD4CC',
+  },
+  info: {
+    color: '#18b4c7',
+    backgroundColor: '#32c8db44',
   },
 }
 
@@ -25,15 +29,24 @@ const variantStyleDark: { [k in BadgeVariant]: CSSProperties } = {
     border: '1px solid #FFBBAD',
     backgroundColor: '#592E26',
   },
+  info: {
+    color: '#32c8db',
+    border: '1px solid #32c8db',
+    backgroundColor: '#32c8db22',
+  },
 }
 
 export function Badge({
+  upperCase,
   children,
   variant,
   style,
-}: PropsWithChildren<{ variant: BadgeVariant; style?: CSSProperties }>) {
+}: PropsWithChildren<{
+  variant: BadgeVariant
+  style?: CSSProperties
+  upperCase?: boolean
+}>) {
   const { isDarkMode } = useContext(ThemeContext)
-
   const variantStyle = isDarkMode ? variantStyleDark : variantStyleLight
 
   return (
@@ -43,6 +56,7 @@ export function Badge({
         fontSize: 12,
         fontWeight: 400,
         borderRadius: 12,
+        textTransform: upperCase ? 'uppercase' : undefined,
         ...variantStyle[variant],
         ...style,
       }}

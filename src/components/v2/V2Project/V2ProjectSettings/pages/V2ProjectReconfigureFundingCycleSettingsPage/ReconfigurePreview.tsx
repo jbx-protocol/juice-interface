@@ -35,6 +35,8 @@ import {
   weightedAmount,
 } from 'utils/v2/math'
 
+const gutter = 20
+
 export default function ReconfigurePreview({
   payoutSplits,
   reserveSplits,
@@ -90,8 +92,6 @@ export default function ReconfigurePreview({
   const reservedPercentage = parseFloat(
     formatReservedRate(fundingCycleMetadata?.reservedRate),
   )
-
-  const gutter = 20
 
   const secondRowColWidth = hasDuration && hasDistributionLimit ? 8 : 12
 

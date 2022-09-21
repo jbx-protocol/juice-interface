@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { CV } from 'models/cv'
 import { PayoutMod, TicketMod } from 'models/mods'
-import { ProjectMetadataV4 } from 'models/project-metadata'
+import { ProjectMetadataV5 } from 'models/project-metadata'
 import { ProjectType } from 'models/project-type'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { V1TerminalName, V1TerminalVersion } from 'models/v1/terminals'
@@ -12,7 +12,7 @@ export type V1ProjectContextType = {
   projectType: ProjectType | undefined
   createdAt: number | undefined
   handle: string | undefined
-  metadata: ProjectMetadataV4 | undefined
+  metadata: ProjectMetadataV5 | undefined
   owner: string | undefined // owner address
   earned: BigNumber | undefined
   currentFC: V1FundingCycle | undefined

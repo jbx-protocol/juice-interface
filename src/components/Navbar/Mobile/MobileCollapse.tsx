@@ -17,7 +17,7 @@ import Logo from '../Logo'
 import { TopLeftNavItems } from '../MenuItems'
 import NavLanguageSelector from '../NavLanguageSelector'
 import { topNavStyles } from '../navStyles'
-import TransactionsList from '../TransactionsList'
+import { TransactionsList } from '../TransactionList'
 import ResourcesDropdownMobile from './ResourcesDropdownMobile'
 import ThemePickerMobile from './ThemePickerMobile'
 

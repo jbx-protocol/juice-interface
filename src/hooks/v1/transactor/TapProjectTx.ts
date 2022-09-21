@@ -5,8 +5,8 @@ import { useContext } from 'react'
 
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 
-import { TransactorInstance } from 'hooks/Transactor'
 import { t } from '@lingui/macro'
+import { TransactorInstance } from 'hooks/Transactor'
 import { useV1ProjectTitle } from '../ProjectTitle'
 
 export function useTapProjectTx(): TransactorInstance<{

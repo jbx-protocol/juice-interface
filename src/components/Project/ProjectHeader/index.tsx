@@ -1,6 +1,6 @@
-import { EditOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Button, Tooltip } from 'antd'
+import { Tooltip } from 'antd'
+import { Badge } from 'components/Badge'
 import FormattedAddress from 'components/FormattedAddress'
 import Paragraph from 'components/Paragraph'
 import { GnosisSafeBadge } from 'components/Project/ProjectHeader/GnosisSafeBadge'
@@ -8,10 +8,9 @@ import ProjectLogo from 'components/ProjectLogo'
 import { ThemeContext } from 'contexts/themeContext'
 import { useAddressIsGnosisSafe } from 'hooks/AddressIsGnosisSafe'
 import useMobile from 'hooks/Mobile'
-import { ProjectMetadataV4 } from 'models/project-metadata'
-import Link from 'next/link'
+import { ProjectMetadataV5 } from 'models/project-metadata'
 import { useContext } from 'react'
-import { settingsPagePath } from 'utils/routes'
+import { EditProjectHandleButton } from './EditProjectHandleButton'
 import SocialLinks from './SocialLinks'
 
 const headerHeight = 120
@@ -25,7 +24,7 @@ export default function ProjectHeader({
   projectOwnerAddress,
   projectId,
 }: {
-  metadata: ProjectMetadataV4 | undefined
+  metadata: ProjectMetadataV5 | undefined
   isArchived: boolean | undefined
   handle: string | undefined
   actions: JSX.Element | undefined
@@ -76,24 +75,42 @@ export default function ProjectHeader({
             alignItems: 'flex-start',
           }}
         >
-          <h1
+          <div
             style={{
-              fontSize: '2.4rem',
-              lineHeight: '2.8rem',
-              margin: 0,
-              color: metadata?.name
-                ? colors.text.primary
-                : colors.text.placeholder,
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
               maxWidth: isMobile ? '100%' : '75%',
+              display: 'flex',
+              alignItems: 'center',
             }}
-            title={projectTitle}
           >
-            {projectTitle}
-          </h1>
+            <h1
+              style={{
+                fontSize: '2.4rem',
+                lineHeight: '2.8rem',
+                margin: 0,
+                color: metadata?.name
+                  ? colors.text.primary
+                  : colors.text.placeholder,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+              title={projectTitle}
+            >
+              {projectTitle}
+            </h1>
+            {isArchived && (
+              <Badge
+                variant="warning"
+                style={{
+                  textTransform: 'uppercase',
+                  marginLeft: '1rem',
+                }}
+              >
+                <Trans>Archived</Trans>
+              </Badge>
+            )}
+          </div>
 
-          {actions ? actions : null}
+          {actions ?? null}
         </div>
 
         <div
@@ -107,51 +124,25 @@ export default function ProjectHeader({
             columnGap: 20,
           }}
         >
-          {isArchived && (
-            <span
-              style={{
-                fontSize: '0.8rem',
-                color: colors.text.disabled,
-                textTransform: 'uppercase',
-              }}
-            >
-              (archived)
-            </span>
-          )}
-          {handle ? (
-            <span
-              style={{
-                color: colors.text.secondary,
-                fontWeight: 600,
-              }}
-            >
-              @{handle}
-            </span>
-          ) : canEditProjectHandle && projectId ? (
-            <Tooltip
-              placement="bottom"
-              title={t`A project's handle is used in its URL, and allows it to be included in search results on the projects page.`}
-            >
-              <div>
-                <Link
-                  href={settingsPagePath('projecthandle', {
-                    projectId,
-                    handle,
-                  })}
-                >
-                  <Button
-                    type="link"
-                    icon={<EditOutlined />}
-                    style={{ paddingLeft: 0 }}
-                  >
-                    <span>
-                      <Trans>Add handle</Trans>
-                    </span>
-                  </Button>
-                </Link>
-              </div>
-            </Tooltip>
+          <span
+            style={{
+              color: colors.text.secondary,
+              fontWeight: 600,
+            }}
+          >
+            {handle ? (
+              <Tooltip title={t`Project ID: ${projectId}`}>
+                <span>@{handle}</span>
+              </Tooltip>
+            ) : (
+              <Trans>Project #{projectId}</Trans>
+            )}
+          </span>
+
+          {!handle && canEditProjectHandle && projectId ? (
+            <EditProjectHandleButton />
           ) : null}
+
           <SocialLinks
             discord={metadata?.discord}
             twitter={metadata?.twitter}

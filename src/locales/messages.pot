@@ -77,6 +77,9 @@ msgstr ""
 msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the <1>risks</1> before committing your funds."
 msgstr ""
 
+msgid "<0/> Your project’s settings cannot be edited or changed during the first funding cycle."
+msgstr ""
+
 msgid "<0/> contributed"
 msgstr ""
 
@@ -87,6 +90,9 @@ msgid "<0/> owner balance"
 msgstr ""
 
 msgid "<0/> will go to the project owner: <1/>"
+msgstr ""
+
+msgid "<0/> your project’s settings will not be able to be edited or changed during the first funding cycle."
 msgstr ""
 
 msgid "<0/>{0} after {feePercentage}% JBX membership fee"
@@ -440,6 +446,9 @@ msgstr ""
 msgid "Automate funding cycles"
 msgstr ""
 
+msgid "Automated Funding Cycles <0/>"
+msgstr ""
+
 msgid "Automated funding cycles enable the following characteristics:"
 msgstr ""
 
@@ -509,6 +518,9 @@ msgstr ""
 msgid "Burn {tokensTextLong}"
 msgstr ""
 
+msgid "Button will close the modal if no link is given."
+msgstr ""
+
 msgid "By default, all unallocated funds can be distributed to the project owner's wallet."
 msgstr ""
 
@@ -522,6 +534,12 @@ msgid "CSV data wasn't ready for export. Wait a few seconds and try again."
 msgstr ""
 
 msgid "CSV download failed."
+msgstr ""
+
+msgid "Call-to-action button link"
+msgstr ""
+
+msgid "Call-to-action button text"
 msgstr ""
 
 msgid "Can I change my project's contract after it's been created?"
@@ -695,9 +713,6 @@ msgstr ""
 msgid "Contributors will be rewarded this amount of your project's tokens per ETH contributed."
 msgstr ""
 
-msgid "Contributors will not receive any tokens in exchange for paying this project."
-msgstr ""
-
 msgid "Contributors will receive <0>{discountRatePercent}%</0> more tokens for contributions they make this funding cycle compared to the next funding cycle."
 msgstr ""
 
@@ -705,6 +720,9 @@ msgid "Contributors will receive a relatively small portion of tokens in exchang
 msgstr ""
 
 msgid "Contributors will see this message before they pay your project."
+msgstr ""
+
+msgid "Contributors won't receive any tokens when they pay this project."
 msgstr ""
 
 msgid "Copied!"
@@ -998,6 +1016,9 @@ msgstr ""
 msgid "ERC20 deployed"
 msgstr ""
 
+msgid "ETH"
+msgstr ""
+
 msgid "Each payout will receive their percent of this total each funding cycle if there is enough in the treasury. Otherwise, they will receive their percent of whatever is in the treasury."
 msgstr ""
 
@@ -1032,6 +1053,9 @@ msgid "Edit token allocation"
 msgstr ""
 
 msgid "Edit tracked assets"
+msgstr ""
+
+msgid "Empty Step"
 msgstr ""
 
 msgid "Enable unclaimed token spending"
@@ -1133,6 +1157,18 @@ msgstr ""
 msgid "Funding"
 msgstr ""
 
+msgid "Funding Cycle"
+msgstr ""
+
+msgid "Funding Cycle #1 will start immediately after you launch your project. You can't reconfigure Funding Cycle #1 after launch."
+msgstr ""
+
+msgid "Funding Cycles"
+msgstr ""
+
+msgid "Funding Target"
+msgstr ""
+
 msgid "Funding cycle"
 msgstr ""
 
@@ -1149,9 +1185,6 @@ msgid "Funding cycle required."
 msgstr ""
 
 msgid "Funding cycle target"
-msgstr ""
-
-msgid "Funding cycles can be reconfigured moments before a new cycle begins, without notifying contributors."
 msgstr ""
 
 msgid "Funding distribution"
@@ -1176,6 +1209,9 @@ msgid "Give this NFT a name."
 msgstr ""
 
 msgid "Go to <0>{snapshotUrl}</0>"
+msgstr ""
+
+msgid "Go to your Safe"
 msgstr ""
 
 msgid "Governance"
@@ -1301,6 +1337,9 @@ msgstr ""
 msgid "Infinite (no limit)"
 msgstr ""
 
+msgid "Infinite Funding Target"
+msgstr ""
+
 msgid "Initial issuance rate"
 msgstr ""
 
@@ -1362,6 +1401,9 @@ msgid "Juicebox loading animation"
 msgstr ""
 
 msgid "Juicebox project"
+msgstr ""
+
+msgid "Juicebox projects are funded in cycles. A Funding Cycle is a set period of time in which your project settings are locked. <0>Learn more.</0>"
 msgstr ""
 
 msgid "Juicebox projects use <0>ENS names</0> as handles. Setting a handle involves 2 transactions:"
@@ -1472,6 +1514,9 @@ msgstr ""
 msgid "Manage {tokenText}"
 msgstr ""
 
+msgid "Manual Funding Cycles"
+msgstr ""
+
 msgid "Marketplace customizations"
 msgstr ""
 
@@ -1485,6 +1530,9 @@ msgid "Memo (optional)"
 msgstr ""
 
 msgid "Memo included on-chain"
+msgstr ""
+
+msgid "Message"
 msgstr ""
 
 msgid "Migrate to Juicebox V1.1"
@@ -1553,6 +1601,9 @@ msgstr ""
 msgid "My projects"
 msgstr ""
 
+msgid "NFT mint confirmed"
+msgstr ""
+
 msgid "NFT projects"
 msgstr ""
 
@@ -1590,6 +1641,9 @@ msgid "Next: Review and deploy"
 msgstr ""
 
 msgid "No"
+msgstr ""
+
+msgid "No Funding Target"
 msgstr ""
 
 msgid "No NFT reward tiers"
@@ -1769,6 +1823,9 @@ msgstr ""
 msgid "Payment options"
 msgstr ""
 
+msgid "Payment success popup"
+msgstr ""
+
 msgid "Payments"
 msgstr ""
 
@@ -1842,6 +1899,9 @@ msgid "Project Handle"
 msgstr ""
 
 msgid "Project ID must be a number."
+msgstr ""
+
+msgid "Project ID: {projectId}"
 msgstr ""
 
 msgid "Project Links"
@@ -1961,6 +2021,9 @@ msgstr ""
 msgid "Provide a link to additional information about this NFT."
 msgstr ""
 
+msgid "Queued"
+msgstr ""
+
 msgid "REMAINING SUPPLY: {0}/{1}"
 msgstr ""
 
@@ -2001,6 +2064,9 @@ msgid "Recipient address"
 msgstr ""
 
 msgid "Recipients will receive payouts in ETH."
+msgstr ""
+
+msgid "Recommended"
 msgstr ""
 
 msgid "Reconfiguration"
@@ -2162,6 +2228,9 @@ msgstr ""
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr ""
 
+msgid "Safe transactions"
+msgstr ""
+
 msgid "Save"
 msgstr ""
 
@@ -2216,6 +2285,9 @@ msgstr ""
 msgid "Seconds"
 msgstr ""
 
+msgid "Select the option that best suits your project’s funding requirements."
+msgstr ""
+
 msgid "Send redeemed token to a custom address"
 msgstr ""
 
@@ -2240,6 +2312,9 @@ msgstr ""
 msgid "Set a distribution limit"
 msgstr ""
 
+msgid "Set a duration for automatically recurring funding cycles. Funds may only be distributed once per cycle."
+msgstr ""
+
 msgid "Set a funding cycle duration"
 msgstr ""
 
@@ -2250,6 +2325,9 @@ msgid "Set a limit on how many of these NFTs can be minted."
 msgstr ""
 
 msgid "Set a project handle (optional)"
+msgstr ""
+
+msgid "Set a specific amount to distribute to nominated addresses each funding cycle."
 msgstr ""
 
 msgid "Set a text record for {0} with the key <0>\"{projectHandleENSTextRecordKey}\"</0> and the value <1>\"{projectId}\"</1> (this project's ID). You can do this on the <2>ENS app</2>, or use the button below (as long as your connected wallet owns or controls that ENS name)."
@@ -2312,7 +2390,13 @@ msgstr ""
 msgid "Set veNFT operator for {projectTitle}"
 msgstr ""
 
+msgid "Set your funding target"
+msgstr ""
+
 msgid "Should you Juicebox?"
+msgstr ""
+
+msgid "Show your contributors a message after they receive their NFT reward."
 msgstr ""
 
 msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."
@@ -2334,6 +2418,9 @@ msgid "Something went wrong."
 msgstr ""
 
 msgid "Spaces are not allowed"
+msgstr ""
+
+msgid "Specific Funding Target"
 msgstr ""
 
 msgid "Spending"
@@ -2474,16 +2561,22 @@ msgstr ""
 msgid "The project owner can add and remove payment terminals."
 msgstr ""
 
+msgid "The project owner can change the next funding cycle’s configuration at any time."
+msgstr ""
+
 msgid "The project owner is using an unverified contract for its reconfiguration strategy."
 msgstr ""
 
 msgid "The project owner may mint any supply of tokens at any time, diluting the token share of all existing contributors."
 msgstr ""
 
-msgid "The project owner may reconfigure this funding cycle at any time, without notice."
+msgid "The project owner may start a new funding cycle with a new configuration at any time."
 msgstr ""
 
 msgid "The project token's issuance rate will decrease by this percentage every funding cycle. A higher discount rate will incentivize contributors to pay the project earlier."
+msgstr ""
+
+msgid "The project’s owner can change the project's settings and start a new funding cycle at any time."
 msgstr ""
 
 msgid "The ratio of tokens rewarded per payment amount will decrease by this percentage with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier than later."
@@ -2753,6 +2846,9 @@ msgstr ""
 msgid "Twitter handle"
 msgstr ""
 
+msgid "USD"
+msgstr ""
+
 msgid "Unarchive project"
 msgstr ""
 
@@ -2948,6 +3044,9 @@ msgstr ""
 msgid "With Juicebox, projects are built and maintained by motivated punks getting paid transparently, and funded by a community of users and patrons who are rewarded as the projects they support succeed."
 msgstr ""
 
+msgid "With manual funding cycles selected, the project's owner can start a new funding cycle on-demand. This may pose a risk to some contributors."
+msgstr ""
+
 msgid "With no funding cycles, the project's owner can start a new funding cycle (Funding Cycle #2) on-demand. <0>Learn more.</0>"
 msgstr ""
 
@@ -2961,6 +3060,9 @@ msgid "You are agreeing to IRREVOCABLY lock your tokens for {formattedLockDurati
 msgstr ""
 
 msgid "You can edit your project details after creation at any time, but the transaction will cost gas."
+msgstr ""
+
+msgid "You can reconfigure your project's next funding cycle (Funding Cycle #2) at any time within the bounds of the rules you set."
 msgstr ""
 
 msgid "You can redeem your {tokenTextLong} for overflow without claiming them. You can transfer your unclaimed {tokenTextLong} to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
@@ -3075,6 +3177,12 @@ msgid "Your project will appear archived, and won't be able to receive payments 
 msgstr ""
 
 msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
+msgstr ""
+
+msgid "Your project will withhold all funds raised. Funds can be distributed to payout addresses you set, and the project owner will receive any unallocated funds. Your project will have no overflow, so token holders can't redeem their tokens for ETH."
+msgstr ""
+
+msgid "Your project won't withhold any funds. All funds raised are Overflow. Token holders can redeem their tokens for a portion of your entire treasury."
 msgstr ""
 
 msgid "Your project's funding cycle target and duration."
@@ -3198,6 +3306,9 @@ msgid "{0} for you"
 msgstr ""
 
 msgid "{0} holders"
+msgstr ""
+
+msgid "{0} is required"
 msgstr ""
 
 msgid "{0} reserved"

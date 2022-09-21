@@ -1,8 +1,9 @@
 import { AppWrapper } from 'components/common'
 import { VeNft } from 'components/veNft/VeNft'
-import { ProjectMetadataV4 } from 'models/project-metadata'
+import { ProjectMetadataV5 } from 'models/project-metadata'
 import { GetServerSideProps } from 'next'
-import { V2UserProvider } from 'providers/v2/UserProvider'
+import { TransactionProvider } from 'providers/TransactionProvider'
+import { V2ContractsProvider } from 'providers/v2/V2ContractsProvider'
 import V2ProjectMetadataProvider from 'providers/v2/V2ProjectMetadataProvider'
 import V2ProjectProvider from 'providers/v2/V2ProjectProvider'
 import { VeNftProvider } from 'providers/v2/VeNftProvider'
@@ -22,19 +23,21 @@ export default function V2ProjectSettingsPage({
   metadata,
 }: {
   projectId: number
-  metadata: ProjectMetadataV4
+  metadata: ProjectMetadataV5
 }) {
   return (
     <AppWrapper>
-      <V2UserProvider>
-        <V2ProjectMetadataProvider projectId={projectId} metadata={metadata}>
-          <V2ProjectProvider projectId={projectId}>
-            <VeNftProvider projectId={projectId}>
-              <VeNft />
-            </VeNftProvider>
-          </V2ProjectProvider>
-        </V2ProjectMetadataProvider>
-      </V2UserProvider>
+      <V2ContractsProvider>
+        <TransactionProvider>
+          <V2ProjectMetadataProvider projectId={projectId} metadata={metadata}>
+            <V2ProjectProvider projectId={projectId}>
+              <VeNftProvider projectId={projectId}>
+                <VeNft />
+              </VeNftProvider>
+            </V2ProjectProvider>
+          </V2ProjectMetadataProvider>
+        </TransactionProvider>
+      </V2ContractsProvider>
     </AppWrapper>
   )
 }

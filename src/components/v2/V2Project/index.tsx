@@ -44,6 +44,7 @@ import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { getNftRewardTier } from 'utils/nftRewards'
 import { NftRewardsSection } from '../../NftRewards/NftRewardsSection'
+import { NftPostPayModal } from '../shared/NftPostPayModal'
 
 const GUTTER_PX = 40
 
@@ -86,9 +87,13 @@ export default function V2Project({
   // Checks URL to see if user was just directed from project deploy
   const router = useRouter()
   const isNewDeploy = Boolean(router.query.newDeploy)
+  const nftPurchaseConfirmed = Boolean(router.query.nftPurchaseConfirmed)
 
   const [newDeployModalVisible, setNewDeployModalVisible] =
     useState<boolean>(isNewDeploy)
+  const [nftPostPayModalVisible, setNftPostPayModalVisible] =
+    useState<boolean>(nftPurchaseConfirmed)
+
   const [balancesModalVisible, setBalancesModalVisible] =
     useState<boolean>(false)
   const [payAmount, setPayAmount] = useState<string>('0')
@@ -151,6 +156,12 @@ export default function V2Project({
     // Change URL without refreshing page
     router.replace(v2ProjectRoute({ projectId }))
     setNewDeployModalVisible(false)
+  }
+
+  const closeNftPostPayModal = () => {
+    // Change URL without refreshing page
+    router.replace(v2ProjectRoute({ projectId }))
+    setNftPostPayModalVisible(false)
   }
 
   // Temporarily disable pay for V2 projects until V2 contracts have been redeployed
@@ -259,6 +270,13 @@ export default function V2Project({
         visible={newDeployModalVisible}
         onClose={closeNewDeployModal}
       />
+      {projectMetadata?.nftPaymentSuccessModal?.content ? (
+        <NftPostPayModal
+          visible={nftPostPayModalVisible}
+          onClose={closeNftPostPayModal}
+          config={projectMetadata.nftPaymentSuccessModal}
+        />
+      ) : null}
       <V2BalancesModal
         owner={projectOwnerAddress}
         projectMetadata={projectMetadata}

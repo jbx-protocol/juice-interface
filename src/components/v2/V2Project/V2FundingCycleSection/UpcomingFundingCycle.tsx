@@ -11,7 +11,7 @@ import useProjectDistributionLimit from 'hooks/v2/contractReader/ProjectDistribu
 import useProjectSplits from 'hooks/v2/contractReader/ProjectSplits'
 import { useProjectUpcomingFundingCycle } from 'hooks/v2/contractReader/ProjectUpcomingFundingCycle'
 import { useContext } from 'react'
-import { V2FundingCycleRiskCount } from 'utils/v2/fundingCycle'
+import { v2FundingCycleRiskCount } from 'utils/v2/fundingCycle'
 import FundingCycleDetails from './FundingCycleDetails'
 import PayoutSplitsCard from './PayoutSplitsCard'
 import ReservedTokensSplitsCard from './ReservedTokensSplitsCard'
@@ -47,9 +47,7 @@ export default function UpcomingFundingCycle({
   const [queuedDistributionLimit, queuedDistributionLimitCurrency] =
     queuedDistributionLimitData ?? []
 
-  if (!upcomingFundingCycle) return <Loading />
-
-  const queuedReservedRate = upcomingFundingCycleMetadata?.reservedRate
+  if (!upcomingFundingCycle || !upcomingFundingCycleMetadata) return <Loading />
 
   return (
     <div>
@@ -67,7 +65,10 @@ export default function UpcomingFundingCycle({
           fundingCycleDurationSeconds={upcomingFundingCycle.duration}
           fundingCycleStartTime={upcomingFundingCycle.start}
           isFundingCycleRecurring
-          fundingCycleRiskCount={V2FundingCycleRiskCount(upcomingFundingCycle)}
+          fundingCycleRiskCount={v2FundingCycleRiskCount(
+            upcomingFundingCycle,
+            upcomingFundingCycleMetadata,
+          )}
           expand={expandCard}
           ballotState={ballotState}
           ballotStrategyAddress={upcomingFundingCycle.ballot}
@@ -83,7 +84,7 @@ export default function UpcomingFundingCycle({
       />
       <ReservedTokensSplitsCard
         reservedTokensSplits={queuedReservedTokensSplits}
-        reservedRate={queuedReservedRate}
+        reservedRate={upcomingFundingCycleMetadata.reservedRate}
         hideDistributeButton
       />
     </div>

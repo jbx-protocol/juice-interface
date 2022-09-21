@@ -1,10 +1,13 @@
-import { AppWrapper } from 'components/common'
+import { AppWrapper, Head } from 'components/common'
 import { Create } from 'components/Create'
 
 export default function CreatePage() {
   return (
-    <AppWrapper>
-      <Create />
-    </AppWrapper>
+    <>
+      <Head />
+      <AppWrapper>
+        <Create />
+      </AppWrapper>
+    </>
   )
 }

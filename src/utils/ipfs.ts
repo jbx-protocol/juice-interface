@@ -6,7 +6,7 @@ import {
 import axios from 'axios'
 import { DEFAULT_PINATA_GATEWAY, IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 import { base58 } from 'ethers/lib/utils'
-import { consolidateMetadata, ProjectMetadataV4 } from 'models/project-metadata'
+import { consolidateMetadata, ProjectMetadataV5 } from 'models/project-metadata'
 
 /**
  * NOTE: `cid` and `IPFS hash` are synonymous
@@ -111,7 +111,7 @@ export const pinFileToIpfs = async (
 }
 
 export const uploadProjectMetadata = async (
-  metadata: Omit<ProjectMetadataV4, 'version'>,
+  metadata: Omit<ProjectMetadataV5, 'version'>,
   handle?: string,
 ) => {
   const res = await axios.post('/api/ipfs/pin', {

@@ -10,7 +10,6 @@ import useWeiConverter from 'hooks/WeiConverter'
 import { V2CurrencyOption } from 'models/v2/currencyOption'
 import { useContext, useState } from 'react'
 import { V2_CURRENCY_USD } from 'utils/v2/currency'
-import { reloadWindow } from 'utils/windowUtils'
 import { V2ConfirmPayModal } from './V2ConfirmPayModal'
 
 export default function V2PayButton({
@@ -88,7 +87,6 @@ export default function V2PayButton({
       />
       <V2ConfirmPayModal
         visible={payModalVisible}
-        onSuccess={reloadWindow}
         onCancel={() => setPayModalVisible(false)}
         weiAmount={weiPayAmt}
       />

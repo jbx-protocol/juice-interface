@@ -30,7 +30,7 @@ import useQueuedTicketModsOfProject from 'hooks/v1/contractReader/QueuedTicketMo
 import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
 import useTokenAddressOfProject from 'hooks/v1/contractReader/TokenAddressOfProject'
 import { paginateDepleteProjectsQueryCall } from 'lib/apollo'
-import { ProjectMetadataV4 } from 'models/project-metadata'
+import { ProjectMetadataV5 } from 'models/project-metadata'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
@@ -64,7 +64,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps<{
-  metadata: ProjectMetadataV4
+  metadata: ProjectMetadataV5
   handle: string
 }> = async context => {
   if (!context.params) throw new Error('params not supplied')
@@ -130,7 +130,7 @@ export default function V1HandlePage({
   )
 }
 
-function V1Dashboard({ metadata }: { metadata: ProjectMetadataV4 }) {
+function V1Dashboard({ metadata }: { metadata: ProjectMetadataV5 }) {
   const router = useRouter()
 
   // Checks URL to see if user was just directed from project deploy

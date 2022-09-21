@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import axios from 'axios'
 import { juiceboxEmojiImageUri } from 'constants/images'
 import { readNetwork } from 'constants/networks'
-import { ProjectMetadataV4 } from 'models/project-metadata'
+import { ProjectMetadataV5 } from 'models/project-metadata'
 import { IPFS_TAGS } from 'utils/ipfs'
 
 /**
@@ -23,7 +23,7 @@ const generateSnapshotSpaceSettings = ({
   handle: string
   tokenSymbol: string
   projectId: number
-  projectMetadata: ProjectMetadataV4
+  projectMetadata: ProjectMetadataV5
   projectOwnerAddress: string
   JBTokenStoreAddress: string
 }) => {
@@ -107,7 +107,7 @@ export async function uploadSnapshotSettingsToIPFS({
   handle: string
   tokenSymbol: string
   projectId: number
-  projectMetadata: ProjectMetadataV4
+  projectMetadata: ProjectMetadataV5
   projectOwnerAddress: string
   JBTokenStoreAddress: string
 }): Promise<string | undefined> {

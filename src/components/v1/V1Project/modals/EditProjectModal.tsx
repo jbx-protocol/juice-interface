@@ -6,7 +6,7 @@ import { FormItems } from 'components/formItems'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useSetProjectHandleTx } from 'hooks/v1/transactor/SetProjectHandleTx'
 import { useSetProjectUriTx } from 'hooks/v1/transactor/SetProjectUriTx'
-import { ProjectMetadataV4 } from 'models/project-metadata'
+import { ProjectMetadataV5 } from 'models/project-metadata'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { useContext, useEffect, useState } from 'react'
 import {
@@ -44,7 +44,7 @@ export default function EditProjectModal({
   onCancel,
 }: {
   handle: string | undefined
-  metadata: ProjectMetadataV4 | undefined
+  metadata: ProjectMetadataV5 | undefined
   visible?: boolean
   onSuccess?: VoidFunction
   onCancel?: VoidFunction

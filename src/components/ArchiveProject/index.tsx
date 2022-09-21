@@ -5,7 +5,7 @@ import { Button } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { CV } from 'models/cv'
-import { ProjectMetadataV4 } from 'models/project-metadata'
+import { ProjectMetadataV5 } from 'models/project-metadata'
 import { useContext, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
@@ -27,7 +27,7 @@ export default function ArchiveProject({
   cv,
 }: {
   storeCidTx: TransactorInstance<{ cid: string }>
-  metadata: ProjectMetadataV4 | undefined
+  metadata: ProjectMetadataV5 | undefined
   projectId: number | undefined
   owner: string | undefined
   handle?: string | undefined // Used on V1 projects

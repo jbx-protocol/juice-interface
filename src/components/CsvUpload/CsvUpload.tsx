@@ -2,48 +2,18 @@ import { UploadOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import TooltipIcon from 'components/TooltipIcon'
 import { ThemeContext } from 'contexts/themeContext'
-import { Split } from 'models/splits'
 import { ChangeEventHandler, useContext } from 'react'
 import { readFile } from 'utils/file'
 import { emitErrorNotification } from 'utils/notifications'
-import { splitPercentFrom } from 'utils/v2/math'
 
-/**
- * Parse a CSV file containing JB Splits.
- * @param csvContent - raw CSV content, including a header row.
- * @returns array of Split objects
- */
-const parseSplitsCsvFile = (csvContent: string): Split[] => {
-  // Skip the header row (the first row in the CSV file).
-  const [, ...rows] = csvContent.split('\n')
-
-  const splits: Split[] = rows.map(row => {
-    const [
-      beneficiary,
-      percent,
-      preferClaimed,
-      lockedUntil,
-      projectId,
-      allocator,
-    ] = row.split(',')
-
-    return {
-      beneficiary,
-      percent: splitPercentFrom(parseFloat(percent) * 100).toNumber(),
-      preferClaimed: Boolean(preferClaimed),
-      lockedUntil: lockedUntil ? parseInt(lockedUntil) : undefined,
-      projectId: projectId || undefined,
-      allocator: allocator || undefined,
-    }
-  })
-
-  return splits
-}
-
-export function SplitCsvUpload({
+export function CsvUpload<T>({
+  templateUrl,
+  parser,
   onChange,
 }: {
-  onChange: (splits: Split[]) => void
+  templateUrl: string
+  parser: (csv: string) => T[]
+  onChange: (parsed: T[]) => void
 }) {
   const {
     theme: { colors },
@@ -67,8 +37,8 @@ export function SplitCsvUpload({
         return
       }
 
-      const splits = parseSplitsCsvFile(csvContent)
-      onChange(splits)
+      const parsed = parser(csvContent)
+      onChange(parsed)
     } catch (e) {
       emitErrorNotification(t`File upload failed. Try again.`)
     }
@@ -83,7 +53,11 @@ export function SplitCsvUpload({
       <UploadOutlined /> <Trans>Upload CSV</Trans>{' '}
       <TooltipIcon
         tip={
-          'CSV format:\nbeneficiary, percent, preferClaimed, lockedUntil, projectId, allocator'
+          <>
+            <a href={templateUrl} download>
+              <Trans>Download Template</Trans>
+            </a>
+          </>
         }
       />
       <input

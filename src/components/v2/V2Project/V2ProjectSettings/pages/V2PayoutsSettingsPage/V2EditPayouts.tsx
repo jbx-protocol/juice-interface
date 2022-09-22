@@ -2,7 +2,7 @@ import { PlusCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, Skeleton, Space } from 'antd'
 import Callout from 'components/Callout'
-import { SplitCsvUpload } from 'components/SplitCsvUpload/SplitCsvUpload'
+import { CsvUpload } from 'components/CsvUpload/CsvUpload'
 import TooltipLabel from 'components/TooltipLabel'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
@@ -26,6 +26,7 @@ import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2/math'
 
 import CurrencySymbol from 'components/CurrencySymbol'
 import { useUserAddress } from 'hooks/Wallet/hooks'
+import { parseV2SplitsCsv } from 'utils/csv'
 
 const OwnerSplitCard = ({ splits }: { splits: Split[] }) => {
   const userAddress = useUserAddress()
@@ -262,7 +263,11 @@ export const V2EditPayouts = ({
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <DistributionLimitHeader />
 
-          <SplitCsvUpload onChange={onSplitsChanged} />
+          <CsvUpload
+            onChange={onSplitsChanged}
+            templateUrl={'/assets/csv/v2-splits-template.csv'}
+            parser={parseV2SplitsCsv}
+          />
         </div>
         <Space style={{ width: '100%' }} direction="vertical" size="small">
           {editableSplits.map((split, index) => renderSplitCard(split, index))}

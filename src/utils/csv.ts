@@ -1,3 +1,8 @@
+import { BigNumber } from '@ethersproject/bignumber'
+import { PayoutMod, TicketMod } from 'models/mods'
+import { Split } from 'models/splits'
+import { splitPercentFrom } from 'utils/v2/math'
+
 export function downloadCsvFile(
   filename: string,
   rows: (string | undefined)[][],
@@ -13,4 +18,73 @@ export function downloadCsvFile(
   document.body.appendChild(link)
 
   link.click()
+}
+
+/**
+ * Parse a CSV file containing JB Splits.
+ * @param csvContent - raw CSV content, including a header row.
+ * @returns array of Split objects
+ */
+export const parseV2SplitsCsv = (csvContent: string): Split[] => {
+  // Skip the header row (the first row in the CSV file).
+  const [, ...rows] = csvContent.split('\n')
+
+  const splits: Split[] = rows.map(row => {
+    const [
+      beneficiary,
+      percent,
+      preferClaimed,
+      lockedUntil,
+      projectId,
+      allocator,
+    ] = row.split(',')
+
+    return {
+      beneficiary,
+      percent: splitPercentFrom(parseFloat(percent) * 100).toNumber(),
+      preferClaimed: Boolean(preferClaimed),
+      lockedUntil: lockedUntil ? parseInt(lockedUntil) : undefined,
+      projectId: projectId || undefined,
+      allocator: allocator || undefined,
+    }
+  })
+
+  return splits
+}
+
+export const parseV1PayoutModsCsv = (csvContent: string): PayoutMod[] => {
+  const [, ...rows] = csvContent.split('\n')
+
+  const payoutMods: PayoutMod[] = rows.map(row => {
+    const [beneficiary, percent, lockedUntil, projectId, handle] =
+      row.split(',')
+
+    const obj = {
+      beneficiary,
+      percent: parseFloat(percent) * 10000,
+      lockedUntil: lockedUntil ? parseInt(lockedUntil) : undefined,
+      projectId: projectId ? BigNumber.from(projectId) : undefined,
+      handle: handle || undefined,
+    }
+    return obj
+  })
+
+  return payoutMods
+}
+
+export const parseV1TicketModsCsv = (csvContent: string): TicketMod[] => {
+  const [, ...rows] = csvContent.split('\n')
+
+  const ticketMods: TicketMod[] = rows.map(row => {
+    const [beneficiary, percent, preferUnstaked, lockedUntil] = row.split(',')
+
+    return {
+      preferUnstaked: Boolean(preferUnstaked),
+      percent: parseFloat(percent) * 10000,
+      lockedUntil: lockedUntil ? parseInt(lockedUntil) : undefined,
+      beneficiary: beneficiary || undefined,
+    }
+  })
+
+  return ticketMods
 }

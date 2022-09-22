@@ -20,7 +20,7 @@ import { usePayETHPaymentTerminalTx } from 'hooks/v2v3/transactor/PayETHPaymentT
 import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import {
-  V2CurrencyName,
+  V2V3CurrencyName,
   V2V3_CURRENCY_ETH,
   V2V3_CURRENCY_USD,
 } from 'utils/v2v3/currency'
@@ -215,8 +215,8 @@ export function V2ConfirmPayModal({
 
         <Descriptions column={1} bordered size={isMobile ? 'small' : 'default'}>
           <Descriptions.Item label={t`Pay amount`} className="content-right">
-            {formattedNum(usdAmount)} {V2CurrencyName(V2V3_CURRENCY_USD)} (
-            {formatWad(weiAmount)} {V2CurrencyName(V2V3_CURRENCY_ETH)})
+            {formattedNum(usdAmount)} {V2V3CurrencyName(V2V3_CURRENCY_USD)} (
+            {formatWad(weiAmount)} {V2V3CurrencyName(V2V3_CURRENCY_ETH)})
           </Descriptions.Item>
           <Descriptions.Item
             label={<Trans>Tokens for you</Trans>}

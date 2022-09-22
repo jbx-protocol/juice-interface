@@ -41,7 +41,7 @@ import { helpPagePath } from 'utils/routes'
 import { sanitizeSplit } from 'utils/splits'
 import {
   getV2V3CurrencyOption,
-  V2CurrencyName,
+  V2V3CurrencyName,
   V2V3_CURRENCY_ETH,
 } from 'utils/v2v3/currency'
 import { getTotalSplitsPercentage } from 'utils/v2v3/distributions'
@@ -384,7 +384,7 @@ export default function FundingForm({
         <DistributionSplitsSection
           distributionLimit={distributionLimit}
           setDistributionLimit={setDistributionLimit}
-          currencyName={V2CurrencyName(distributionLimitCurrency) ?? 'ETH'}
+          currencyName={V2V3CurrencyName(distributionLimitCurrency) ?? 'ETH'}
           onCurrencyChange={currencyName =>
             setDistributionLimitCurrency(getV2V3CurrencyOption(currencyName))
           }

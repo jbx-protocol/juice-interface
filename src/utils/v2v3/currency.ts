@@ -26,7 +26,7 @@ export const V2V3_CURRENCY_METADATA: Record<
   [V2V3_CURRENCY_USD]: CURRENCY_METADATA.USD,
 }
 
-export const V2CurrencyName = (
+export const V2V3CurrencyName = (
   currency?: V2V3CurrencyOption,
 ): CurrencyName | undefined =>
   currency !== undefined ? V2V3_CURRENCY_METADATA[currency]?.name : undefined

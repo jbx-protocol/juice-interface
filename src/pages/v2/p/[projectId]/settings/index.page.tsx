@@ -1,11 +1,11 @@
 import { AppWrapper } from 'components/common'
-import { V2ProjectSettings } from 'components/v2/V2Project/V2ProjectSettings'
+import { V2V3ProjectSettings } from 'components/v2v3/V2V3Project/V2V3ProjectSettings'
 import { ProjectMetadataV5 } from 'models/project-metadata'
 import { GetServerSideProps } from 'next'
 import { TransactionProvider } from 'providers/TransactionProvider'
-import { V2ContractsProvider } from 'providers/v2/V2ContractsProvider'
-import V2ProjectMetadataProvider from 'providers/v2/V2ProjectMetadataProvider'
-import V2ProjectProvider from 'providers/v2/V2ProjectProvider'
+import { V2V3ContractsProvider } from 'providers/v2v3/V2V3ContractsProvider'
+import V2V3ProjectMetadataProvider from 'providers/v2v3/V2V3ProjectMetadataProvider'
+import V2V3ProjectProvider from 'providers/v2v3/V2V3ProjectProvider'
 import { getProjectProps, ProjectPageProps } from '../utils/props'
 
 export const getServerSideProps: GetServerSideProps<
@@ -17,7 +17,7 @@ export const getServerSideProps: GetServerSideProps<
   return getProjectProps(projectId)
 }
 
-export default function V2ProjectSettingsPage({
+export default function V2V3ProjectSettingsPage({
   projectId,
   metadata,
 }: {
@@ -26,15 +26,18 @@ export default function V2ProjectSettingsPage({
 }) {
   return (
     <AppWrapper>
-      <V2ContractsProvider>
+      <V2V3ContractsProvider>
         <TransactionProvider>
-          <V2ProjectMetadataProvider projectId={projectId} metadata={metadata}>
-            <V2ProjectProvider projectId={projectId}>
-              <V2ProjectSettings />
-            </V2ProjectProvider>
-          </V2ProjectMetadataProvider>
+          <V2V3ProjectMetadataProvider
+            projectId={projectId}
+            metadata={metadata}
+          >
+            <V2V3ProjectProvider projectId={projectId}>
+              <V2V3ProjectSettings />
+            </V2V3ProjectProvider>
+          </V2V3ProjectMetadataProvider>
         </TransactionProvider>
-      </V2ContractsProvider>
+      </V2V3ContractsProvider>
     </AppWrapper>
   )
 }

@@ -35,7 +35,7 @@ import {
   issuanceRateFrom,
   redemptionRateFrom,
   reservedRateFrom,
-} from 'utils/v2/math'
+} from 'utils/v2v3/math'
 
 import { BigNumber } from '@ethersproject/bignumber'
 
@@ -45,9 +45,9 @@ import {
   getDefaultFundAccessConstraint,
   hasDistributionLimit,
   hasFundingDuration,
-} from 'utils/v2/fundingCycle'
+} from 'utils/v2v3/fundingCycle'
 
-import { SerializedV2FundAccessConstraint } from 'utils/v2/serializers'
+import { SerializedV2V3FundAccessConstraint } from 'utils/v2v3/serializers'
 
 import SwitchHeading from 'components/SwitchHeading'
 
@@ -59,8 +59,8 @@ import { formattedNum } from 'utils/format/formatNumber'
 
 import { useForm } from 'antd/lib/form/Form'
 import Callout from 'components/Callout'
-import { DISCOUNT_RATE_EXPLANATION } from 'components/v2/V2Project/V2FundingCycleSection/settingExplanations'
-import { getTotalSplitsPercentage } from 'utils/v2/distributions'
+import { DISCOUNT_RATE_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+import { getTotalSplitsPercentage } from 'utils/v2v3/distributions'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 import MintRateFormItem from './MintRateFormItem'
@@ -161,7 +161,7 @@ export default function TokenForm({
     fundAccessConstraints,
   } = useAppSelector(state => state.editingV2Project)
   const fundAccessConstraint =
-    getDefaultFundAccessConstraint<SerializedV2FundAccessConstraint>(
+    getDefaultFundAccessConstraint<SerializedV2V3FundAccessConstraint>(
       fundAccessConstraints,
     )
 

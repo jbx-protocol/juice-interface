@@ -6,7 +6,7 @@ import { Split } from 'models/splits'
 import { ChangeEventHandler, useContext } from 'react'
 import { readFile } from 'utils/file'
 import { emitErrorNotification } from 'utils/notifications'
-import { splitPercentFrom } from 'utils/v2/math'
+import { splitPercentFrom } from 'utils/v2v3/math'
 
 /**
  * Parse a CSV file containing JB Splits.

@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Form, FormInstance, Select } from 'antd'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useContext } from 'react'
 
 interface VeNftTokenSelectInputProps {
@@ -8,7 +8,7 @@ interface VeNftTokenSelectInputProps {
 }
 
 const VeNftTokenSelectInput = ({ form }: VeNftTokenSelectInputProps) => {
-  const { tokenAddress } = useContext(V2ProjectContext)
+  const { tokenAddress } = useContext(V2V3ProjectContext)
   return (
     <Form.Item
       name="useJbToken"

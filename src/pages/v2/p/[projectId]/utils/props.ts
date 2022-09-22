@@ -2,10 +2,10 @@ import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
 import { ProjectMetadataV5 } from 'models/project-metadata'
-import { V2ContractName } from 'models/v2/contracts'
+import { V2V3ContractName } from 'models/v2v3/contracts'
 import { GetServerSidePropsResult } from 'next'
-import { loadV2Contract } from 'utils/contracts/v2'
 import { findProjectMetadata } from 'utils/server'
+import { loadV2V3Contract } from 'utils/v2v3/loadV2V3Contract'
 
 export interface ProjectPageProps {
   metadata: ProjectMetadataV5
@@ -14,13 +14,13 @@ export interface ProjectPageProps {
 
 async function getMetadataCidFromContract(projectId: number) {
   const network = readNetwork.name
-  const contract = await loadV2Contract(
-    V2ContractName.JBProjects,
+  const contract = await loadV2V3Contract(
+    V2V3ContractName.JBProjects,
     network,
     readProvider,
   )
   if (!contract) {
-    throw new Error(`contract not found ${V2ContractName.JBProjects}`)
+    throw new Error(`contract not found ${V2V3ContractName.JBProjects}`)
   }
 
   const metadataCid = (await contract.metadataContentOf(

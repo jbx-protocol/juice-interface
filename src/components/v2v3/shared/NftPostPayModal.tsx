@@ -2,7 +2,6 @@ import { t } from '@lingui/macro'
 import Modal from 'antd/lib/modal/Modal'
 import { NftPostPayModalConfig } from 'models/nftRewardTier'
 import { withHttps } from 'utils/externalLink'
-import { windowOpen } from 'utils/windowUtils'
 
 export function NftPostPayModal({
   visible,
@@ -14,9 +13,7 @@ export function NftPostPayModal({
   onClose: VoidFunction
 }) {
   const onOk = () => {
-    if (config.ctaLink) {
-      windowOpen(config.ctaLink)
-    } else {
+    if (!config.ctaLink) {
       onClose()
     }
   }

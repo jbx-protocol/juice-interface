@@ -33,7 +33,8 @@ export function NftPostPayModalForm({
           type="string"
           autoComplete="off"
           placeholder={'OK'}
-          maxLength={10}
+          maxLength={20}
+          showCount
         />
       </Form.Item>
       <Form.Item

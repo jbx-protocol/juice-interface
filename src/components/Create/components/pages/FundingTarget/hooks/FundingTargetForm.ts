@@ -2,11 +2,11 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Form } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import { CurrencySelectInputValue } from 'components/Create/components/CurrencySelectInput'
-import { ETH_TOKEN_ADDRESS } from 'constants/v2/juiceboxTokens'
-import { V2ContractsContext } from 'contexts/v2/V2ContractsContext'
+import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
+import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
-import { V2CurrencyOption } from 'models/v2/currencyOption'
+import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import {
   useCallback,
   useContext,
@@ -15,8 +15,8 @@ import {
   useMemo,
 } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
-import { V2_CURRENCY_ETH, V2_CURRENCY_USD } from 'utils/v2/currency'
-import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
+import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
+import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 
 type TargetSelection = 'specific' | 'infinite' | 'none'
 
@@ -26,7 +26,7 @@ export type FundingTargetFormProps = Partial<{
 }>
 
 const useSetDistributionLimit = () => {
-  const { contracts } = useContext(V2ContractsContext)
+  const { contracts } = useContext(V2V3ContractsContext)
   const dispatch = useAppDispatch()
   return useCallback(
     (input: { amount: BigNumber; currency: 'eth' | 'usd' } | undefined) => {
@@ -36,7 +36,7 @@ const useSetDistributionLimit = () => {
         return
       }
       const distributionLimitCurrency = (
-        input.currency === 'eth' ? V2_CURRENCY_ETH : V2_CURRENCY_USD
+        input.currency === 'eth' ? V2V3_CURRENCY_ETH : V2V3_CURRENCY_USD
       ).toString()
       dispatch(
         editingV2ProjectActions.setFundAccessConstraints([
@@ -86,9 +86,9 @@ export const useFundingTargetForm = () => {
 
     const distributionLimitCurrency = (parseInt(
       fundAccessConstraints[0].distributionLimitCurrency,
-    ) ?? V2_CURRENCY_ETH) as V2CurrencyOption
+    ) ?? V2V3_CURRENCY_ETH) as V2V3CurrencyOption
     const currency =
-      distributionLimitCurrency === V2_CURRENCY_ETH ? 'eth' : 'usd'
+      distributionLimitCurrency === V2V3_CURRENCY_ETH ? 'eth' : 'usd'
 
     return {
       targetSelection,

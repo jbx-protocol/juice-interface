@@ -6,7 +6,7 @@ import FormItemLabel from 'pages/create/FormItemLabel'
 import { CSSProperties, useContext, useState } from 'react'
 import { defaultFundingCycleMetadata } from 'redux/slices/editingV2Project'
 import { formattedNum } from 'utils/format/formatNumber'
-import { DEFAULT_MINT_RATE } from 'utils/v2/math'
+import { DEFAULT_MINT_RATE } from 'utils/v2v3/math'
 
 import {
   FUNDING_CYCLE_WARNING_TEXT,

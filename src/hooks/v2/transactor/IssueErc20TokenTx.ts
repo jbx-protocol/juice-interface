@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro'
-import { V2ContractsContext } from 'contexts/v2/V2ContractsContext'
+import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
 
@@ -15,7 +15,7 @@ export function useIssueErc20TokenTx(): TransactorInstance<{
   symbol: string
 }> {
   const { transactor } = useContext(TransactionContext)
-  const { contracts } = useContext(V2ContractsContext)
+  const { contracts } = useContext(V2V3ContractsContext)
   const { projectId, cv } = useContext(ProjectMetadataContext)
 
   return ({ name, symbol }, txOpts) => {

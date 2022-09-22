@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
 import { TransactionContext } from 'contexts/transactionContext'
 
-import { V2ContractsContext } from 'contexts/v2/V2ContractsContext'
+import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { useContractReader } from 'hooks/ContractReader'
 import { useErc20Contract } from 'hooks/Erc20Contract'
 import { TransactorInstance } from 'hooks/Transactor'
@@ -18,7 +18,7 @@ export default function useERC20Approve(
   erc20address: string | undefined,
 ): TransactorInstance<ERC20ApproveArgs> {
   const { transactor } = useContext(TransactionContext)
-  const { contracts } = useContext(V2ContractsContext)
+  const { contracts } = useContext(V2V3ContractsContext)
   const contract = useErc20Contract(erc20address)
 
   const { data: symbol } = useContractReader({

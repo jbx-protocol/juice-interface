@@ -8,14 +8,14 @@ import {
   formatDiscountRate,
   formatRedemptionRate,
   MAX_DISTRIBUTION_LIMIT,
-} from 'utils/v2/math'
+} from 'utils/v2v3/math'
 
 import FundingCycleDetailWarning from 'components/Project/FundingCycleDetailWarning'
-import SplitList from 'components/v2/shared/SplitList'
+import SplitList from 'components/v2v3/shared/SplitList'
 import {
   DISCOUNT_RATE_EXPLANATION,
   REDEMPTION_RATE_EXPLANATION,
-} from 'components/v2/V2Project/V2FundingCycleSection/settingExplanations'
+} from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { Split } from 'models/splits'
 import { detailedTimeString } from 'utils/format/formatTime'
 
@@ -24,7 +24,7 @@ import {
   FUNDING_CYCLE_WARNING_TEXT,
   RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
 } from 'constants/fundingWarningText'
-import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
+import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 
 export function DistributionLimitStatistic({
   distributionLimit,

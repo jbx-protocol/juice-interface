@@ -6,7 +6,7 @@ import FormItemLabel from 'pages/create/FormItemLabel'
 import { CSSProperties, useContext } from 'react'
 import { defaultFundingCycleData } from 'redux/slices/editingV2Project'
 
-import { DISCOUNT_RATE_EXPLANATION } from 'components/v2/V2Project/V2FundingCycleSection/settingExplanations'
+import { DISCOUNT_RATE_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 
 import FormItemWarningText from '../FormItemWarningText'
 import NumberSlider from '../inputs/NumberSlider'

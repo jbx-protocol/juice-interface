@@ -60,6 +60,7 @@ export default function ManageTokensModal({
   RedeemModal,
   ClaimTokensModal,
   MintModal,
+  TransferUnclaimedModal,
 }: PropsWithChildren<{
   userHasMintPermission: boolean
   projectAllowsMint: boolean
@@ -73,10 +74,13 @@ export default function ManageTokensModal({
   RedeemModal: (props: ModalProps) => JSX.Element | null
   ClaimTokensModal: (props: ModalProps) => JSX.Element | null
   MintModal: (props: ModalProps) => JSX.Element | null
+  TransferUnclaimedModal: (props: ModalProps) => JSX.Element | null
 }>) {
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
   const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>()
   const [mintModalVisible, setMintModalVisible] = useState<boolean>()
+  const [transferTokensModalVisible, setTransferTokensModalVisible] =
+    useState<boolean>()
 
   const tokensLabel = tokenSymbolText({
     tokenSymbol,
@@ -185,6 +189,19 @@ export default function ManageTokensModal({
               </div>
             </Tooltip>
           )}
+          <div>
+            <RichButton
+              heading={<Trans>Transfer unclaimed {tokensLabel}</Trans>}
+              description={
+                <Trans>
+                  {' '}
+                  Move your unclaimed {tokensLabel} from your wallet to another
+                  wallet.
+                </Trans>
+              }
+              onClick={() => setTransferTokensModalVisible(true)}
+            />
+          </div>
 
           {children}
         </Space>
@@ -203,6 +220,11 @@ export default function ManageTokensModal({
       <MintModal
         visible={mintModalVisible}
         onCancel={() => setMintModalVisible(false)}
+        onConfirmed={reloadWindow}
+      />
+      <TransferUnclaimedModal
+        visible={transferTokensModalVisible}
+        onCancel={() => setTransferTokensModalVisible(false)}
         onConfirmed={reloadWindow}
       />
     </>

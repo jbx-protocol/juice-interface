@@ -46,6 +46,7 @@ import { V1ProjectTokensSection } from './V1ProjectTokensSection/V1ProjectTokens
 import V2ClaimTokensModal from './V2ClaimTokensModal'
 import V2MintModal from './V2MintModal'
 import V2RedeemModal from './V2RedeemModal'
+import { V2TransferUnclaimedTokensModal } from './V2TransferUnclaimedModal'
 
 const labelStyle: CSSProperties = {
   width: '10.5rem',
@@ -327,6 +328,7 @@ export default function V2ManageTokensSection() {
         RedeemModal={V2RedeemModal}
         ClaimTokensModal={V2ClaimTokensModal}
         MintModal={V2MintModal}
+        TransferUnclaimedModal={V2TransferUnclaimedTokensModal}
       >
         {veNftEnabled && (
           <Link href={veNftPagePath('mint', { projectId, handle })}>

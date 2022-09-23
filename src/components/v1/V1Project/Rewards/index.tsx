@@ -28,6 +28,7 @@ import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import ConfirmUnstakeTokensModal from '../modals/ConfirmUnstakeTokensModal'
 import PrintPreminedModal from '../modals/PrintPreminedModal'
 import RedeemModal from '../modals/RedeemModal'
+import { TransferUnclaimedModal } from '../modals/TransferUnclaimedModal'
 
 const labelStyle: CSSProperties = {
   width: 128,
@@ -219,6 +220,7 @@ export default function Rewards() {
         RedeemModal={RedeemModal}
         ClaimTokensModal={ConfirmUnstakeTokensModal}
         MintModal={PrintPreminedModal}
+        TransferUnclaimedModal={TransferUnclaimedModal}
       />
       <ParticipantsModal
         projectId={projectId}

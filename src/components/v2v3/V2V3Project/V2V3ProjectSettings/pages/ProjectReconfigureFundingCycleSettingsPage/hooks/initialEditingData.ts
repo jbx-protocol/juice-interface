@@ -6,11 +6,11 @@ import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { fromWad } from 'utils/format/formatNumber'
 import { NO_CURRENCY, V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import {
-  SerializedV2FundingCycleMetadata,
   SerializedV2V3FundAccessConstraint,
   SerializedV2V3FundingCycleData,
-  serializeV2FundingCycleMetadata,
+  SerializedV2V3FundingCycleMetadata,
   serializeV2V3FundingCycleData,
+  serializeV2V3FundingCycleMetadata,
 } from 'utils/v2v3/serializers'
 
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
@@ -31,7 +31,7 @@ import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 export interface InitialEditingData {
   fundAccessConstraints: SerializedV2V3FundAccessConstraint[]
   fundingCycleData: SerializedV2V3FundingCycleData
-  fundingCycleMetadata: SerializedV2FundingCycleMetadata
+  fundingCycleMetadata: SerializedV2V3FundingCycleMetadata
   payoutGroupedSplits: {
     payoutGroupedSplits: Split[]
     reservedTokensGroupedSplits: Split[]
@@ -42,7 +42,7 @@ export const useInitialEditingData = (visible: boolean) => {
   const [initialEditingData, setInitialEditingData] = useState<{
     fundAccessConstraints: SerializedV2V3FundAccessConstraint[]
     fundingCycleData: SerializedV2V3FundingCycleData
-    fundingCycleMetadata: SerializedV2FundingCycleMetadata
+    fundingCycleMetadata: SerializedV2V3FundingCycleMetadata
     payoutGroupedSplits: {
       payoutGroupedSplits: Split[]
       reservedTokensGroupedSplits: Split[]
@@ -164,7 +164,7 @@ export const useInitialEditingData = (visible: boolean) => {
       editingV2ProjectActions.setFundingCycleData(editingFundingCycleData),
     )
 
-    const editingFundingCycleMetadata = serializeV2FundingCycleMetadata(
+    const editingFundingCycleMetadata = serializeV2V3FundingCycleMetadata(
       effectiveFundingCycleMetadata,
     )
 

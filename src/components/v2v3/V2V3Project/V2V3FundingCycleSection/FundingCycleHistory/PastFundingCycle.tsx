@@ -6,11 +6,11 @@ import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import useProjectDistributionLimit from 'hooks/v2v3/contractReader/ProjectDistributionLimit'
 import useUsedDistributionLimit from 'hooks/v2v3/contractReader/UsedDistributionLimit'
-import {
-  V2FundingCycleMetadata,
-  V2V3FundingCycle,
-} from 'models/v2/fundingCycle'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
+import {
+  V2V3FundingCycle,
+  V2V3FundingCycleMetadata,
+} from 'models/v2v3/fundingCycle'
 import { useContext, useState } from 'react'
 import { formatHistoricalDate } from 'utils/format/formatDate'
 import { formatWad } from 'utils/format/formatNumber'
@@ -23,7 +23,7 @@ export function PastFundingCycle({
   fundingCycleMetadata,
 }: {
   fundingCycle: V2V3FundingCycle
-  fundingCycleMetadata: V2FundingCycleMetadata
+  fundingCycleMetadata: V2V3FundingCycleMetadata
 }) {
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const { primaryTerminal } = useContext(V2V3ProjectContext)

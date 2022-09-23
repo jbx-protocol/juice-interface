@@ -2,8 +2,8 @@ import isEqual from 'lodash/isEqual'
 import { useMemo } from 'react'
 import {
   serializeFundAccessConstraint,
-  serializeV2FundingCycleMetadata,
   serializeV2V3FundingCycleData,
+  serializeV2V3FundingCycleMetadata,
 } from 'utils/v2v3/serializers'
 
 import { EditingProjectData } from './editingProjectData'
@@ -33,7 +33,7 @@ export const useFundingHasSavedChanges = ({
       fundAccessConstraints: editingFundAccessConstraints.map(
         serializeFundAccessConstraint,
       ),
-      fundingCycleMetadata: serializeV2FundingCycleMetadata(
+      fundingCycleMetadata: serializeV2V3FundingCycleMetadata(
         editingFundingCycleMetadata,
       ),
       fundingCycleData: serializeV2V3FundingCycleData(editingFundingCycleData),
@@ -93,7 +93,7 @@ export const useFundingHasSavedChanges = ({
     const fundingCycleData = serializeV2V3FundingCycleData(
       editingFundingCycleData,
     )
-    const fundingCycleMetadata = serializeV2FundingCycleMetadata(
+    const fundingCycleMetadata = serializeV2V3FundingCycleMetadata(
       editingFundingCycleMetadata,
     )
     const fundAccessConstraints = editingFundAccessConstraints.length
@@ -138,7 +138,7 @@ export const useFundingHasSavedChanges = ({
     const fundingCycleData = serializeV2V3FundingCycleData(
       editingFundingCycleData,
     )
-    const fundingCycleMetadata = serializeV2FundingCycleMetadata(
+    const fundingCycleMetadata = serializeV2V3FundingCycleMetadata(
       editingFundingCycleMetadata,
     )
     const fundAccessConstraints = editingFundAccessConstraints.length

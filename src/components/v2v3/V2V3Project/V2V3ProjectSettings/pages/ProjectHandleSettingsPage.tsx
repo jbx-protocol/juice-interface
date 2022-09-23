@@ -12,7 +12,7 @@ import { useProjectHandleENSTextRecord } from 'hooks/v2v3/contractReader/Project
 import { useEditV2V3ProjectHandleTx } from 'hooks/v2v3/transactor/EditV2V3ProjectHandleTx'
 import { useSetENSTextRecordForHandleTx } from 'hooks/v2v3/transactor/SetENSTextRecordForHandleTx'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { v2ProjectRoute } from 'utils/routes'
+import { v2v3ProjectRoute } from 'utils/routes'
 
 import { projectHandleENSTextRecordKey } from 'constants/projectHandleENSTextRecordKey'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
@@ -106,13 +106,12 @@ export function ProjectHandleSettingsPage() {
           1. Are included in search results on the projects page
           <br />
           2. Can be accessed via the URL:{' '}
-          <b>juicebox.money{v2ProjectRoute({ handle: 'handle' })}</b>
+          <b>juicebox.money{v2v3ProjectRoute({ handle: 'handle' })}</b>
           <br />
           <br />
-          (The original URL <b>
-            juicebox.money{v2ProjectRoute({ projectId })}
-          </b>{' '}
-          will continue to work.)
+          (The original URL{' '}
+          <b>juicebox.money{v2v3ProjectRoute({ projectId })}</b> will continue
+          to work.)
         </Trans>
       </p>
 

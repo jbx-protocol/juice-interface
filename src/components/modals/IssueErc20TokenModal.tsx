@@ -1,23 +1,48 @@
 import { t, Trans } from '@lingui/macro'
 import { Form, Input } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
+import { CV_V1, CV_V1_1, CV_V2, CV_V3 } from 'constants/cv'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactorInstance } from 'hooks/Transactor'
-import { useState } from 'react'
+import { useV1IssueErc20TokenTx } from 'hooks/v1/transactor/IssueErc20TokenTx'
+import { useV2IssueErc20TokenTx } from 'hooks/v2/transactor/V2IssueErc20TokenTx'
+import { useV3IssueErc20TokenTx } from 'hooks/v3/transactor/V3IssueErc20TokenTx'
+import { useContext, useState } from 'react'
 
 import { emitErrorNotification } from 'utils/notifications'
 import { IssueErc20TokenTxArgs } from '../IssueErc20TokenButton'
 import TransactionModal from '../TransactionModal'
 
+/**
+ * Return the appropriate issue erc20 token hook for the given contract version [cv].
+ * @returns
+ */
+const useIssueErc20TokenTx = ():
+  | TransactorInstance<IssueErc20TokenTxArgs>
+  | undefined => {
+  const { cv } = useContext(ProjectMetadataContext)
+
+  if (cv === CV_V1 || cv === CV_V1_1) {
+    return useV1IssueErc20TokenTx()
+  }
+
+  if (cv === CV_V2) {
+    return useV2IssueErc20TokenTx()
+  }
+
+  if (cv === CV_V3) {
+    return useV3IssueErc20TokenTx()
+  }
+}
+
 export function IssueErc20TokenModal({
   visible,
   onClose,
-  useIssueErc20TokenTx,
   isNewDeploy,
   onConfirmed,
 }: {
   visible: boolean
   onClose: VoidFunction
-  useIssueErc20TokenTx: () => TransactorInstance<IssueErc20TokenTxArgs>
   isNewDeploy?: boolean
   onConfirmed?: VoidFunction
 }) {
@@ -29,6 +54,11 @@ export function IssueErc20TokenModal({
 
   async function executeErc20IssueTokenTx() {
     await form.validateFields()
+
+    if (!issueErc20TokenTx) {
+      emitErrorNotification(t`ERC20 transaction not ready. Try again.`)
+      return
+    }
 
     setLoading(true)
 
@@ -55,6 +85,10 @@ export function IssueErc20TokenModal({
     )
 
     if (!txSuccess) {
+      emitErrorNotification(
+        t`Failed to issue ERC20 token. Check transaction and try again.`,
+      )
+
       setLoading(false)
       setTransactionPending(false)
     }

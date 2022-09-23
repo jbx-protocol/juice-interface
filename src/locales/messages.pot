@@ -1592,6 +1592,9 @@ msgstr ""
 msgid "More trending projects"
 msgstr ""
 
+msgid "Move your unclaimed {tokensLabel} from your wallet to another wallet."
+msgstr ""
+
 msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
 msgstr ""
 
@@ -2831,7 +2834,16 @@ msgstr ""
 msgid "Transfer unclaimed {tokenSymbolShort}"
 msgstr ""
 
+msgid "Transfer unclaimed {tokenTextShort}"
+msgstr ""
+
+msgid "Transfer unclaimed {tokensLabel}"
+msgstr ""
+
 msgid "Transfer {tokenSymbolShort}"
+msgstr ""
+
+msgid "Transfer {tokenTextShort}"
 msgstr ""
 
 msgid "Trending"

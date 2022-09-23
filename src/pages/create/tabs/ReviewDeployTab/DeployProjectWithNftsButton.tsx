@@ -24,7 +24,7 @@ import { useWallet } from 'hooks/Wallet'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 
 import { useRouter } from 'next/router'
-import { v2ProjectRoute } from 'utils/routes'
+import { v2v3ProjectRoute } from 'utils/routes'
 
 import { readNetwork } from 'constants/networks'
 import { TransactionOptions } from 'models/transaction'
@@ -137,7 +137,7 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
         // Reset Redux state/localstorage after deploying
         dispatch(editingV2ProjectActions.resetState())
 
-        router.push(`${v2ProjectRoute({ projectId })}?newDeploy=true`)
+        router.push(`${v2v3ProjectRoute({ projectId })}?newDeploy=true`)
       },
       onCancelled() {
         setDeployLoading(false)

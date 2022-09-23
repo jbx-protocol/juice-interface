@@ -15,9 +15,9 @@ import useSubgraphQuery from 'hooks/SubgraphQuery'
 
 import Link from 'next/link'
 
-import { v2ProjectRoute } from 'utils/routes'
+import { v2v3ProjectRoute } from 'utils/routes'
 
-import { CV_V1, CV_V1_1, CV_V2 } from 'constants/cv'
+import { CV_V1, CV_V1_1, CV_V2, CV_V3 } from 'constants/cv'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
 import ETHAmount from './currency/ETHAmount'
@@ -110,8 +110,8 @@ export default function ProjectCard({
     <Link
       key={`${_project.id}_${_project.cv}`}
       href={
-        _project.cv === CV_V2
-          ? v2ProjectRoute(_project)
+        _project.cv === CV_V2 || _project.cv === CV_V3
+          ? v2v3ProjectRoute(_project)
           : `/p/${_project?.handle}`
       }
     >

@@ -1,6 +1,6 @@
 import { AppWrapper } from 'components/common'
 import ExternalLink from 'components/ExternalLink'
-import { v2ProjectRoute } from 'utils/routes'
+import { v2v3ProjectRoute } from 'utils/routes'
 
 export default function V2BugUpdatesPage() {
   return (
@@ -48,7 +48,7 @@ function V2BugUpdates() {
         <p>
           To re-enable project creation, the JuiceboxDAO multisig members must
           migrate the JuiceboxDAO project (https://juicebox.money/
-          {v2ProjectRoute({ projectId: 1 })}) as soon as possible, so that it
+          {v2v3ProjectRoute({ projectId: 1 })}) as soon as possible, so that it
           can start accepting fees from new projects.
         </p>
         <h4>(In progress) Project migration.</h4>

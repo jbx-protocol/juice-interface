@@ -15,7 +15,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
-import { pushMenuContent, v2ProjectRoute } from 'utils/routes'
+import { pushMenuContent, v2v3ProjectRoute } from 'utils/routes'
 
 type MenuItem = Required<MenuProps>['items'][number]
 
@@ -127,7 +127,7 @@ export function V2V3ProjectSettings() {
             width={250}
           >
             <Space direction="vertical" size="middle" style={{ width: '100%' }}>
-              <Link href={v2ProjectRoute({ projectId, handle })}>
+              <Link href={v2v3ProjectRoute({ projectId, handle })}>
                 <Button type="link" icon={<LeftOutlined />} size="small">
                   <span>
                     <Trans>Back to project</Trans>

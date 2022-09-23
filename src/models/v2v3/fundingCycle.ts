@@ -21,6 +21,11 @@ export type BaseV2V3FundingCycleMetadata = {
   dataSource: string // hex, contract address
 }
 
+export type BaseV2V3FundingCycleMetadataGlobal = {
+  allowSetController: boolean
+  allowSetTerminals: boolean
+}
+
 export type V2V3FundAccessConstraint = {
   terminal: string // address probably
   token: string // address

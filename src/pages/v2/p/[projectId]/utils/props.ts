@@ -23,7 +23,7 @@ async function loadJBProjects() {
     V2V3ContractName.JBProjects,
     network,
     readProvider,
-    CV_V3, // Note: v2 and v3 use the same JBProjects, so the CV doesn't matter.
+    CV_V2, // Note: v2 and v3 use the same JBProjects, so the CV doesn't matter.
   )
 
   return contract

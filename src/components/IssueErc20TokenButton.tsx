@@ -25,9 +25,7 @@ export function IssueErc20TokenButton({
     setModalVisible(false)
 
     // remove newDeploy=true query parameter
-    router.replace(router.pathname, {
-      search: '',
-    })
+    router.replace(router.asPath, undefined, { shallow: true })
   }
 
   return (

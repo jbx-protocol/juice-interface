@@ -152,9 +152,9 @@ export default function V2ManageTokensSection() {
                       includeTokenWord: true,
                     })}{' '}
                     are distributed to anyone who pays this project. If the
-                    project has set a funding target, tokens can be redeemed for
-                    a portion of the project's overflow whether or not they have
-                    been claimed yet.
+                    project has set a distribution limit, tokens can be redeemed
+                    for a portion of the project's overflow whether or not they
+                    have been claimed yet.
                   </Trans>
                 }
               />

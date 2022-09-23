@@ -1,8 +1,8 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 
-import { V2ContractName } from 'models/v2/contracts'
+import { V2V3ContractName } from 'models/v2v3/contracts'
 
-import useV2ContractReader from '../v2/contractReader/V2ContractReader'
+import useV2ContractReader from '../v2v3/contractReader/V2ContractReader'
 
 export function useVeNftResolverTokenUri(
   amount: BigNumber,
@@ -10,7 +10,7 @@ export function useVeNftResolverTokenUri(
   lockDurationOptions: BigNumber[] | undefined,
 ) {
   return useV2ContractReader<string>({
-    contract: V2ContractName.JBVeTokenUriResolver,
+    contract: V2V3ContractName.JBVeTokenUriResolver,
     functionName: 'tokenURI',
     args: [
       1, // _tokenId

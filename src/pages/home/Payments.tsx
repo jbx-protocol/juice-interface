@@ -4,8 +4,8 @@ import Loading from 'components/Loading'
 import ProjectVersionBadge from 'components/ProjectVersionBadge'
 import RichNote from 'components/RichNote'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
-import V2ProjectHandle from 'components/v2/shared/V2ProjectHandle'
-import { CV_V2 } from 'constants/cv'
+import V2V3ProjectHandle from 'components/v2v3/shared/V2V3ProjectHandle'
+import { CV_V1, CV_V1_1 } from 'constants/cv'
 import { ThemeContext } from 'contexts/themeContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { Project } from 'models/subgraph-entities/vX/project'
@@ -37,20 +37,20 @@ export default function Payments() {
 
     return (
       <div style={{ color: colors.text.action.primary, fontWeight: 500 }}>
-        {project.cv === CV_V2 ? (
-          <div style={{ display: 'flex', alignItems: 'baseline' }}>
-            <V2ProjectHandle
-              projectId={project.projectId}
-              handle={project.handle}
-              style={{ marginRight: '0.5rem' }}
-            />
-            <ProjectVersionBadge versionText="V2" size="small" />
-          </div>
-        ) : (
+        {project.cv === CV_V1 || project.cv === CV_V1_1 ? (
           <V1ProjectHandle
             projectId={project.projectId}
             handle={project.handle}
           />
+        ) : (
+          <div style={{ display: 'flex', alignItems: 'baseline' }}>
+            <V2V3ProjectHandle
+              projectId={project.projectId}
+              handle={project.handle}
+              style={{ marginRight: '0.5rem' }}
+            />
+            <ProjectVersionBadge versionText={`V${project.cv}`} size="small" />
+          </div>
         )}
       </div>
     )

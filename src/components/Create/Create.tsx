@@ -2,8 +2,8 @@ import { t, Trans } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
 import { useWallet } from 'hooks/Wallet'
 import { TransactionProvider } from 'providers/TransactionProvider'
-import { V2ContractsProvider } from 'providers/v2/V2ContractsProvider'
-import { V2CurrencyProvider } from 'providers/v2/V2CurrencyProvider'
+import { V2V3ContractsProvider } from 'providers/v2v3/V2V3ContractsProvider'
+import { V2V3CurrencyProvider } from 'providers/v2v3/V2V3CurrencyProvider'
 import { helpPagePath } from 'utils/routes'
 import { FundingCyclesPage, ProjectDetailsPage } from './components'
 import { FundingTargetPage } from './components/pages/FundingTarget'
@@ -12,9 +12,9 @@ import { Wizard } from './components/Wizard'
 export function Create() {
   const { chain } = useWallet()
   return (
-    <V2ContractsProvider>
+    <V2V3ContractsProvider>
       <TransactionProvider>
-        <V2CurrencyProvider>
+        <V2V3CurrencyProvider>
           <Wizard
             doneText={
               // TODO: Handle wallet connect event and text changes
@@ -59,8 +59,8 @@ export function Create() {
               <Wizard.Page.ButtonControl />
             </Wizard.Page>
           </Wizard>
-        </V2CurrencyProvider>
+        </V2V3CurrencyProvider>
       </TransactionProvider>
-    </V2ContractsProvider>
+    </V2V3ContractsProvider>
   )
 }

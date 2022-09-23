@@ -1,4 +1,4 @@
-import { V2ContractsContext } from 'contexts/v2/V2ContractsContext'
+import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { useContext } from 'react'
 
 import { t } from '@lingui/macro'
@@ -16,7 +16,7 @@ export type ExtendLockTx = TransactorInstance<{
 
 export function useLaunchVeNftTx(): ExtendLockTx {
   const { transactor } = useContext(TransactionContext)
-  const { contracts } = useContext(V2ContractsContext)
+  const { contracts } = useContext(V2V3ContractsContext)
   const { userAddress } = useWallet()
   const { projectId } = useContext(ProjectMetadataContext)
 

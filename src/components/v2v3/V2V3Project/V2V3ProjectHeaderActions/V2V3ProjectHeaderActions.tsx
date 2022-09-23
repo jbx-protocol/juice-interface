@@ -1,7 +1,9 @@
 import { SettingOutlined, SmileOutlined, ToolOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
 import { Button, Space, Tooltip } from 'antd'
+import ProjectVersionBadge from 'components/ProjectVersionBadge'
 import { V2V3ProjectToolsDrawer } from 'components/v2v3/V2V3Project/V2V3ProjectToolsDrawer/V2V3ProjectToolsDrawer'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { VeNftContext } from 'contexts/veNftContext'
@@ -9,6 +11,7 @@ import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2C
 import { V2OperatorPermission } from 'models/v2v3/permissions'
 import Link from 'next/link'
 import { useContext, useState } from 'react'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { settingsPagePath, veNftPagePath } from 'utils/routes'
 import { ContractVersionSelect } from './ContractVersionSelect'
 
@@ -32,7 +35,11 @@ export function V2V3ProjectHeaderActions() {
           alignItems: 'center',
         }}
       >
-        <ContractVersionSelect />
+        {featureFlagEnabled(FEATURE_FLAGS.V3) ? (
+          <ContractVersionSelect />
+        ) : (
+          <ProjectVersionBadge versionText="V2" />
+        )}
 
         <div
           style={{

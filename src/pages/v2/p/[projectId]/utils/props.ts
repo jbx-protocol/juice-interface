@@ -1,4 +1,5 @@
 import { CV_V2, CV_V3 } from 'constants/cv'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
@@ -6,6 +7,7 @@ import { V2CVType, V3CVType } from 'models/cv'
 import { ProjectMetadataV5 } from 'models/project-metadata'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import { GetServerSidePropsResult } from 'next'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { findProjectMetadata } from 'utils/server'
 import { loadV2V3Contract } from 'utils/v2v3/loadV2V3Contract'
 
@@ -52,6 +54,10 @@ async function loadV3JBController() {
 }
 
 async function isV3Project(projectId: number) {
+  if (featureFlagEnabled(FEATURE_FLAGS.V3)) {
+    return Promise.resolve(false)
+  }
+
   const [JBDirectory, JBController] = await Promise.all([
     loadV3JBDirectory(),
     loadV3JBController(),

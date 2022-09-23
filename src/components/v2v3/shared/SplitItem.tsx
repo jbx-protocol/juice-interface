@@ -13,7 +13,7 @@ import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useContext } from 'react'
 import { formatDate } from 'utils/format/formatDate'
 import { formatWad } from 'utils/format/formatNumber'
-import { V2CurrencyName } from 'utils/v2v3/currency'
+import { V2V3CurrencyName } from 'utils/v2v3/currency'
 import { formatSplitPercent, SPLITS_TOTAL_PERCENT } from 'utils/v2v3/math'
 import V2V3ProjectHandle from './V2V3ProjectHandle'
 
@@ -127,7 +127,7 @@ const SplitValue = ({
 }) => {
   const splitValue = totalValue?.mul(split.percent).div(SPLITS_TOTAL_PERCENT)
   const splitValueFormatted = formatWad(splitValue, { ...valueFormatProps })
-  const curr = V2CurrencyName(
+  const curr = V2V3CurrencyName(
     currency?.toNumber() as V2V3CurrencyOption | undefined,
   )
   const tooltipTitle =

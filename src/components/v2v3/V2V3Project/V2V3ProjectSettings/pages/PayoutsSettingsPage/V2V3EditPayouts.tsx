@@ -20,7 +20,7 @@ import React, {
   useState,
 } from 'react'
 import { formatWad } from 'utils/format/formatNumber'
-import { V2CurrencyName } from 'utils/v2v3/currency'
+import { V2V3CurrencyName } from 'utils/v2v3/currency'
 import { getTotalSplitsPercentage } from 'utils/v2v3/distributions'
 import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2v3/math'
 
@@ -42,7 +42,7 @@ const OwnerSplitCard = ({ splits }: { splits: Split[] }) => {
     [remainingSplitsPercentage, userAddress],
   )
   const currencyName =
-    V2CurrencyName(
+    V2V3CurrencyName(
       distributionLimitCurrency?.toNumber() as V2V3CurrencyOption | undefined,
     ) ?? 'ETH'
   const distributionLimitIsInfinite = distributionLimit?.eq(
@@ -75,7 +75,7 @@ const DistributionLimitHeader = ({
     loading: { distributionLimitLoading, fundingCycleLoading },
   } = useContext(V2V3ProjectContext)
 
-  const currency = V2CurrencyName(
+  const currency = V2V3CurrencyName(
     distributionLimitCurrency?.toNumber() as V2V3CurrencyOption,
   )
   const distributionLimitIsInfinite = distributionLimit?.eq(
@@ -138,7 +138,7 @@ export const V2V3EditPayouts = ({
   } = useContext(V2V3ProjectContext)
 
   const currencyName =
-    V2CurrencyName(
+    V2V3CurrencyName(
       distributionLimitCurrency?.toNumber() as V2V3CurrencyOption | undefined,
     ) ?? 'ETH'
 

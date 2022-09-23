@@ -13,7 +13,7 @@ import { useContext } from 'react'
 import { formatDate, formatDateToUTC } from 'utils/format/formatDate'
 import { formattedNum } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-import { V2CurrencyName } from 'utils/v2v3/currency'
+import { V2V3CurrencyName } from 'utils/v2v3/currency'
 
 import EtherscanLink from 'components/EtherscanLink'
 import FundingCycleDetailWarning from 'components/Project/FundingCycleDetailWarning'
@@ -141,7 +141,7 @@ export default function FundingCycleDetails({
           <span style={{ whiteSpace: 'nowrap' }}>
             <DistributionLimit
               distributionLimit={distributionLimit}
-              currencyName={V2CurrencyName(
+              currencyName={V2V3CurrencyName(
                 distributionLimitCurrency?.toNumber() as
                   | V2V3CurrencyOption
                   | undefined,

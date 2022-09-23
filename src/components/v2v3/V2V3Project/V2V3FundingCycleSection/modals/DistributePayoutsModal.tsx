@@ -13,7 +13,7 @@ import { useDistributePayoutsTx } from 'hooks/v2v3/transactor/DistributePayouts'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useContext, useEffect, useState } from 'react'
 import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
-import { V2CurrencyName, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
+import { V2V3CurrencyName, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { amountSubFee, feeForAmount } from 'utils/v2v3/math'
 
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
@@ -100,7 +100,7 @@ export default function DistributePayoutsModal({
 
   if (!ETHPaymentTerminalFee) return null
 
-  const distributionCurrencyName = V2CurrencyName(
+  const distributionCurrencyName = V2V3CurrencyName(
     distributionLimitCurrency?.toNumber() as V2V3CurrencyOption,
   )
 
@@ -219,7 +219,7 @@ export default function DistributePayoutsModal({
                       color: colors.text.primary,
                     }}
                   >
-                    {V2CurrencyName(
+                    {V2V3CurrencyName(
                       distributionLimitCurrency?.toNumber() as V2V3CurrencyOption,
                     )}
                   </span>

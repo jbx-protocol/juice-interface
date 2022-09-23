@@ -18,7 +18,7 @@ import Link from 'next/link'
 import { useContext, useState } from 'react'
 import { detailedTimeString } from 'utils/format/formatTime'
 import { settingsPagePath } from 'utils/routes'
-import { V2CurrencyName } from 'utils/v2v3/currency'
+import { V2V3CurrencyName } from 'utils/v2v3/currency'
 import { formatFee, MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { reloadWindow } from 'utils/windowUtils'
 import DistributePayoutsModal from './modals/DistributePayoutsModal'
@@ -119,7 +119,7 @@ export default function PayoutSplitsCard({
             >
               <SpendingStats
                 hasFundingTarget={distributionLimit?.gt(0)}
-                currency={V2CurrencyName(
+                currency={V2V3CurrencyName(
                   distributionLimitCurrency?.toNumber() as V2V3CurrencyOption,
                 )}
                 distributableAmount={distributableAmount}

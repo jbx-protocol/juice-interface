@@ -26,7 +26,7 @@ import {
   ReservedTokensStatistic,
 } from 'pages/create/tabs/ReviewDeployTab/FundingAttributes'
 import { formattedNum } from 'utils/format/formatNumber'
-import { V2CurrencyName } from 'utils/v2v3/currency'
+import { V2V3CurrencyName } from 'utils/v2v3/currency'
 import { getDefaultFundAccessConstraint } from 'utils/v2v3/fundingCycle'
 import {
   formatIssuanceRate,
@@ -65,8 +65,8 @@ export default function ReconfigurePreview({
     fundAccessConstraints,
   )
 
-  const currencyName = V2CurrencyName(
-    fundAccessConstraint?.distributionLimitCurrency.toNumber() as V2V3CurrencyOption,
+  const currencyName = V2V3CurrencyName(
+    fundAccessConstraint?.distributionLimitCurrency?.toNumber() as V2V3CurrencyOption,
   )
 
   const distributionLimit = fundAccessConstraint?.distributionLimit

@@ -88,7 +88,7 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
   const totalVolume = first(projects)?.totalPaid
 
   /**
-   * Load funding cyle data
+   * Load funding cycle data
    */
   const { data: fundingCycleResponse, loading: fundingCycleLoading } =
     useProjectCurrentFundingCycle({

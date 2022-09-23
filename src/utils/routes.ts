@@ -2,7 +2,7 @@ import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { MenuKey, V2SettingsPageKey, V2VeNftPageKey } from 'models/menu-keys'
 import { NextRouter } from 'next/router'
 
-export const v2ProjectRoute = ({
+export const v2v3ProjectRoute = ({
   projectId,
   handle,
 }: {
@@ -29,7 +29,7 @@ export const settingsPagePath = (
     handle?: string | null
   },
 ) => {
-  return `${v2ProjectRoute({
+  return `${v2v3ProjectRoute({
     projectId,
     handle,
   })}/settings?page=${settingsPage}`
@@ -45,7 +45,7 @@ export const veNftPagePath = (
     handle?: string | null
   },
 ) => {
-  return `${v2ProjectRoute({
+  return `${v2v3ProjectRoute({
     projectId,
     handle,
   })}/venft?page=${settingsPage}`

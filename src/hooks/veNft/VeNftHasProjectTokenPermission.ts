@@ -1,8 +1,8 @@
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { VeNftContext } from 'contexts/veNftContext'
-import useProjectOwner from 'hooks/v2/contractReader/ProjectOwner'
-import { useV2HasPermissions } from 'hooks/v2/contractReader/V2HasPermissions'
-import { V2OperatorPermission } from 'models/v2/permissions'
+import useProjectOwner from 'hooks/v2v3/contractReader/ProjectOwner'
+import { useV2HasPermissions } from 'hooks/v2v3/contractReader/V2HasPermissions'
+import { V2OperatorPermission } from 'models/v2v3/permissions'
 import { useContext } from 'react'
 
 export function useVeNftHasProjectTokenPermission() {

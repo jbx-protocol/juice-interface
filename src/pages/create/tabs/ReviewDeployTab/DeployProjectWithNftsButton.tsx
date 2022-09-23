@@ -4,14 +4,14 @@ import { Trans } from '@lingui/macro'
 import { Button, FormInstance } from 'antd'
 import {
   useAppSelector,
-  useEditingV2FundAccessConstraintsSelector,
-  useEditingV2FundingCycleDataSelector,
   useEditingV2FundingCycleMetadataSelector,
+  useEditingV2V3FundAccessConstraintsSelector,
+  useEditingV2V3FundingCycleDataSelector,
 } from 'hooks/AppSelector'
 import {
   TxNftArg,
   useLaunchProjectWithNftsTx,
-} from 'hooks/v2/transactor/LaunchProjectWithNftsTx'
+} from 'hooks/v2v3/transactor/LaunchProjectWithNftsTx'
 import { useCallback, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
@@ -24,7 +24,7 @@ import { useWallet } from 'hooks/Wallet'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 
 import { useRouter } from 'next/router'
-import { v2ProjectRoute } from 'utils/routes'
+import { v2v3ProjectRoute } from 'utils/routes'
 
 import { readNetwork } from 'constants/networks'
 import { TransactionOptions } from 'models/transaction'
@@ -81,8 +81,8 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
     },
   } = useAppSelector(state => state.editingV2Project)
   const fundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
-  const fundingCycleData = useEditingV2FundingCycleDataSelector()
-  const fundAccessConstraints = useEditingV2FundAccessConstraintsSelector()
+  const fundingCycleData = useEditingV2V3FundingCycleDataSelector()
+  const fundAccessConstraints = useEditingV2V3FundAccessConstraintsSelector()
   const dispatch = useAppDispatch()
 
   const deployProject = useCallback(async () => {
@@ -137,7 +137,7 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
         // Reset Redux state/localstorage after deploying
         dispatch(editingV2ProjectActions.resetState())
 
-        router.push(`${v2ProjectRoute({ projectId })}?newDeploy=true`)
+        router.push(`${v2v3ProjectRoute({ projectId })}?newDeploy=true`)
       },
       onCancelled() {
         setDeployLoading(false)

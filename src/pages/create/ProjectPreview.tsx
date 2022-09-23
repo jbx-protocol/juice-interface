@@ -1,25 +1,25 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import {
-  V2ProjectContext,
-  V2ProjectContextType,
-} from 'contexts/v2/projectContext'
+  V2V3ProjectContext,
+  V2V3ProjectContextType,
+} from 'contexts/v2v3/V2V3ProjectContext'
 import { useWallet } from 'hooks/Wallet'
 
 import {
   useAppSelector,
-  useEditingV2FundAccessConstraintsSelector,
-  useEditingV2FundingCycleDataSelector,
   useEditingV2FundingCycleMetadataSelector,
+  useEditingV2V3FundAccessConstraintsSelector,
+  useEditingV2V3FundingCycleDataSelector,
 } from 'hooks/AppSelector'
 
-import { V2FundingCycle } from 'models/v2/fundingCycle'
+import { V2V3FundingCycle } from 'models/v2/fundingCycle'
 
-import V2Project from 'components/v2/V2Project'
+import { V2V3Project } from 'components/v2v3/V2V3Project/V2V3Project'
 import { CV_V2 } from 'constants/cv'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { V2_CURRENCY_ETH } from 'utils/v2/currency'
-import { getDefaultFundAccessConstraint } from 'utils/v2/fundingCycle'
+import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
+import { getDefaultFundAccessConstraint } from 'utils/v2v3/fundingCycle'
 
 export default function ProjectPreview({
   singleColumnLayout,
@@ -33,11 +33,11 @@ export default function ProjectPreview({
     nftRewards: { CIDs: nftRewardsCIDs, rewardTiers: nftRewardTiers },
   } = useAppSelector(state => state.editingV2Project)
   const fundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
-  const fundingCycleData = useEditingV2FundingCycleDataSelector()
-  const fundAccessConstraints = useEditingV2FundAccessConstraintsSelector()
+  const fundingCycleData = useEditingV2V3FundingCycleDataSelector()
+  const fundAccessConstraints = useEditingV2V3FundAccessConstraintsSelector()
   const { userAddress } = useWallet()
 
-  const fundingCycle: V2FundingCycle = {
+  const fundingCycle: V2V3FundingCycle = {
     ...fundingCycleData,
     number: BigNumber.from(1),
     configuration: BigNumber.from(0),
@@ -50,7 +50,7 @@ export default function ProjectPreview({
     fundAccessConstraints,
   )
 
-  const project: V2ProjectContextType = {
+  const project: V2V3ProjectContextType = {
     isPreviewMode: true,
 
     handle: undefined,
@@ -64,7 +64,7 @@ export default function ProjectPreview({
     distributionLimitCurrency:
       !fundAccessConstraint?.distributionLimitCurrency.eq(0)
         ? fundAccessConstraint?.distributionLimitCurrency
-        : BigNumber.from(V2_CURRENCY_ETH),
+        : BigNumber.from(V2V3_CURRENCY_ETH),
 
     payoutSplits: payoutGroupedSplits?.splits,
     reservedTokensSplits: reservedTokensGroupedSplits?.splits,
@@ -97,7 +97,7 @@ export default function ProjectPreview({
     <ProjectMetadataContext.Provider
       value={{ projectMetadata, isArchived: false, projectId: 0, cv: CV_V2 }}
     >
-      <V2ProjectContext.Provider value={project}>
+      <V2V3ProjectContext.Provider value={project}>
         <div>
           <NftRewardsContext.Provider
             value={{
@@ -108,13 +108,13 @@ export default function ProjectPreview({
               },
             }}
           >
-            <V2Project
+            <V2V3Project
               singleColumnLayout={singleColumnLayout}
               expandFundingCycleCard
             />
           </NftRewardsContext.Provider>
         </div>
-      </V2ProjectContext.Provider>
+      </V2V3ProjectContext.Provider>
     </ProjectMetadataContext.Provider>
   )
 }

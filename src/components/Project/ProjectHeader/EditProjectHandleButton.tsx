@@ -2,14 +2,14 @@ import { EditOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { settingsPagePath } from 'utils/routes'
 
 export function EditProjectHandleButton() {
   const { projectId } = useContext(ProjectMetadataContext)
-  const { handle } = useContext(V2ProjectContext)
+  const { handle } = useContext(V2V3ProjectContext)
 
   return (
     <Tooltip

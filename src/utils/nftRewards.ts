@@ -6,7 +6,7 @@ import {
   IPFSNftRewardTier,
   NftRewardTier,
 } from 'models/nftRewardTier'
-import { V2ContractName } from 'models/v2/contracts'
+import { V2V3ContractName } from 'models/v2v3/contracts'
 import { decodeEncodedIPFSUri, IPFS_TAGS } from 'utils/ipfs'
 
 export const MAX_NFT_REWARD_TIERS = 3
@@ -23,14 +23,15 @@ export async function getLatestNftContractDeployments() {
 export async function getLatestNftProjectDeployerContractAddress() {
   const latestNftContractDeployments = await getLatestNftContractDeployments()
   return latestNftContractDeployments.default.transactions.filter(
-    tx => tx.contractName === V2ContractName.JBTiered721DelegateProjectDeployer,
+    tx =>
+      tx.contractName === V2V3ContractName.JBTiered721DelegateProjectDeployer,
   )?.[0]?.contractAddress
 }
 
 export async function getLatestNftDelegateStoreContractAddress() {
   const latestNftContractDeployments = await getLatestNftContractDeployments()
   return latestNftContractDeployments.default.transactions.filter(
-    tx => tx.contractName === V2ContractName.JBTiered721DelegateStore,
+    tx => tx.contractName === V2V3ContractName.JBTiered721DelegateStore,
   )?.[0]?.contractAddress
 }
 

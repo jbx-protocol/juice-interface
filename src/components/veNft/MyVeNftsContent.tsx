@@ -7,7 +7,7 @@ import { Trans } from '@lingui/macro'
 
 import OwnedVeNftCard from 'components/veNft/VeNftOwnedTokenCard'
 
-import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 
 import { shadowCard } from 'constants/styles/shadowCard'
 import { useVeNftUserTokens } from 'hooks/veNft/VeNftUserTokens'
@@ -18,7 +18,7 @@ export default function MyVeNftsContent() {
   const { theme } = useContext(ThemeContext)
   const { data: userTokens } = useVeNftUserTokens()
   const { primaryTerminalCurrentOverflow, tokenSymbol } =
-    useContext(V2ProjectContext)
+    useContext(V2V3ProjectContext)
   const hasOverflow = Boolean(primaryTerminalCurrentOverflow?.gt(0))
   const tokenSymbolDisplayText = tokenSymbolText({ tokenSymbol })
 

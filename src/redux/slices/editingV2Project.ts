@@ -13,12 +13,12 @@ import {
   Split,
 } from 'models/splits'
 import {
-  SerializedV2FundAccessConstraint,
-  SerializedV2FundingCycleData,
   SerializedV2FundingCycleMetadata,
-  serializeV2FundingCycleData,
+  SerializedV2V3FundAccessConstraint,
+  SerializedV2V3FundingCycleData,
   serializeV2FundingCycleMetadata,
-} from 'utils/v2/serializers'
+  serializeV2V3FundingCycleData,
+} from 'utils/v2v3/serializers'
 
 import {
   NftCollectionMetadata,
@@ -29,7 +29,7 @@ import {
   DEFAULT_MINT_RATE,
   issuanceRateFrom,
   redemptionRateFrom,
-} from 'utils/v2/math'
+} from 'utils/v2v3/math'
 
 import {
   ETH_PAYOUT_SPLIT_GROUP,
@@ -39,9 +39,9 @@ import {
 interface V2ProjectState {
   version: number
   projectMetadata: ProjectMetadataV5
-  fundingCycleData: SerializedV2FundingCycleData
+  fundingCycleData: SerializedV2V3FundingCycleData
   fundingCycleMetadata: SerializedV2FundingCycleMetadata
-  fundAccessConstraints: SerializedV2FundAccessConstraint[]
+  fundAccessConstraints: SerializedV2V3FundAccessConstraint[]
   payoutGroupedSplits: ETHPayoutGroupedSplits
   reservedTokensGroupedSplits: ReservedTokensGroupedSplits
   nftRewards: {
@@ -69,8 +69,8 @@ const defaultProjectMetadataState: ProjectMetadataV5 = {
   version: LATEST_METADATA_VERSION,
 }
 
-export const defaultFundingCycleData: SerializedV2FundingCycleData =
-  serializeV2FundingCycleData({
+export const defaultFundingCycleData: SerializedV2V3FundingCycleData =
+  serializeV2V3FundingCycleData({
     duration: BigNumber.from(0),
     weight: BigNumber.from(issuanceRateFrom(DEFAULT_MINT_RATE.toString())), // 1e24, resulting in 1,000,000 tokens per ETH
     discountRate: BigNumber.from(0), // A number from 0-1,000,000,000
@@ -165,7 +165,7 @@ const editingV2ProjectSlice = createSlice({
     },
     setFundingCycleData: (
       state,
-      action: PayloadAction<SerializedV2FundingCycleData>,
+      action: PayloadAction<SerializedV2V3FundingCycleData>,
     ) => {
       state.fundingCycleData = action.payload
     },
@@ -195,7 +195,7 @@ const editingV2ProjectSlice = createSlice({
     },
     setFundAccessConstraints: (
       state,
-      action: PayloadAction<SerializedV2FundAccessConstraint[]>,
+      action: PayloadAction<SerializedV2V3FundAccessConstraint[]>,
     ) => {
       state.fundAccessConstraints = action.payload
     },

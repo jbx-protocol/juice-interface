@@ -6,7 +6,7 @@ import { useForm } from 'antd/lib/form/Form'
 import { ModalMode, validateEthAddress } from 'components/formItems/formHelpers'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { CurrencyName } from 'constants/currency'
-import { useETHPaymentTerminalFee } from 'hooks/v2/contractReader/ETHPaymentTerminalFee'
+import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/ETHPaymentTerminalFee'
 import findIndex from 'lodash/findIndex'
 import { Split } from 'models/splits'
 import moment, * as Moment from 'moment'
@@ -18,12 +18,12 @@ import {
   amountFromPercent,
   getDistributionPercentFromAmount,
   getNewDistributionLimit,
-} from 'utils/v2/distributions'
+} from 'utils/v2v3/distributions'
 import {
   MAX_DISTRIBUTION_LIMIT,
   preciseFormatSplitPercent,
   splitPercentFrom,
-} from 'utils/v2/math'
+} from 'utils/v2v3/math'
 import { AmountFormItem } from './AmountFormItem'
 import { PercentageFormItem } from './PercentageFormItem'
 import { AddOrEditSplitFormFields, SplitType } from './types'

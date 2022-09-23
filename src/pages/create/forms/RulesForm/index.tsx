@@ -19,8 +19,8 @@ import { shadowCard } from 'constants/styles/shadowCard'
 import {
   ballotStrategies,
   DEFAULT_BALLOT_STRATEGY,
-} from 'constants/v2/ballotStrategies'
-import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
+} from 'constants/v2v3/ballotStrategies'
+import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 import FormItemLabel from '../../FormItemLabel'
 import TokenMintingExtra from './TokenMintingExtra'
 

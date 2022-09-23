@@ -26,7 +26,7 @@ import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useMemo } from 'react'
 import {
   NO_CURRENCY,
-  V2CurrencyName,
+  V2V3CurrencyName,
   V2V3_CURRENCY_ETH,
 } from 'utils/v2v3/currency'
 
@@ -57,10 +57,10 @@ const useBalanceInDistributionLimitCurrency = ({
     return {
       data: converter.wadToCurrency(
         ETHBalance,
-        V2CurrencyName(
+        V2V3CurrencyName(
           distributionLimitCurrency?.toNumber() as V2V3CurrencyOption,
         ),
-        V2CurrencyName(V2V3_CURRENCY_ETH),
+        V2V3CurrencyName(V2V3_CURRENCY_ETH),
       ),
       loading: false,
     }

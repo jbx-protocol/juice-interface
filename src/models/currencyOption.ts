@@ -1,4 +1,4 @@
 import { V1CurrencyOption } from './v1/currencyOption'
-import { V2CurrencyOption } from './v2/currencyOption'
+import { V2V3CurrencyOption } from './v2v3/currencyOption'
 
-export type CurrencyOption = V1CurrencyOption | V2CurrencyOption
+export type CurrencyOption = V1CurrencyOption | V2V3CurrencyOption

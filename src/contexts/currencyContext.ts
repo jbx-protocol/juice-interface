@@ -1,9 +1,9 @@
 import { createContext } from 'react'
 import {
-  V2_CURRENCY_ETH,
-  V2_CURRENCY_METADATA,
-  V2_CURRENCY_USD,
-} from 'utils/v2/currency'
+  V2V3_CURRENCY_ETH,
+  V2V3_CURRENCY_METADATA,
+  V2V3_CURRENCY_USD,
+} from 'utils/v2v3/currency'
 
 import { CurrencyOption } from 'models/currencyOption'
 
@@ -19,6 +19,6 @@ type CurrencyContextType = {
 
 // Defaults to V2
 export const CurrencyContext = createContext<CurrencyContextType>({
-  currencyMetadata: V2_CURRENCY_METADATA,
-  currencies: { ETH: V2_CURRENCY_ETH, USD: V2_CURRENCY_USD },
+  currencyMetadata: V2V3_CURRENCY_METADATA,
+  currencies: { ETH: V2V3_CURRENCY_ETH, USD: V2V3_CURRENCY_USD },
 })

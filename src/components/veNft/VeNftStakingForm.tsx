@@ -6,7 +6,7 @@ import { useForm, useWatch } from 'antd/lib/form/Form'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useEffect, useMemo, useState } from 'react'
 
-import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 
 import useERC20Allowance from 'hooks/ERC20Allowance'
 import useERC20BalanceOf from 'hooks/ERC20BalanceOf'
@@ -33,7 +33,7 @@ import { useVeNftResolverTokenUri } from 'hooks/veNft/VeNftResolverTokenUri'
 
 import { VeNftContext } from 'contexts/veNftContext'
 
-import useUserUnclaimedTokenBalance from 'hooks/v2/contractReader/UserUnclaimedTokenBalance'
+import useUserUnclaimedTokenBalance from 'hooks/v2v3/contractReader/UserUnclaimedTokenBalance'
 
 import { MinimalCollapse } from 'components/MinimalCollapse'
 
@@ -68,7 +68,7 @@ const VeNftStakingForm = ({
     connect,
   } = useWallet()
   useWallet()
-  const { tokenAddress } = useContext(V2ProjectContext)
+  const { tokenAddress } = useContext(V2V3ProjectContext)
   const { contractAddress } = useContext(VeNftContext)
   const { data: variants } = useVeNftVariants()
   const { data: lockDurationOptions } = useVeNftLockDurationOptions()

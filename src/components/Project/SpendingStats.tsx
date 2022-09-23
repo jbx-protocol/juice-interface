@@ -9,7 +9,7 @@ import { CSSProperties, useContext } from 'react'
 import { formatWad } from 'utils/format/formatNumber'
 
 import { BigNumber } from '@ethersproject/bignumber'
-import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2/math'
+import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 
 import ETHToUSD from 'components/currency/ETHToUSD'
 import { CurrencyName } from 'constants/currency'

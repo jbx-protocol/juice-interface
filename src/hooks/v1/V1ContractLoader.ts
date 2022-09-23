@@ -3,9 +3,9 @@ import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
 import { useWallet } from 'hooks/Wallet'
 import { NetworkName } from 'models/network-name'
+import { SignerOrProvider } from 'models/signerOrProvider'
 import { V1ContractName, V1Contracts } from 'models/v1/contracts'
 import { useEffect, useState } from 'react'
-import { SignerOrProvider } from 'utils/types'
 
 export const loadV1Contract = async (
   contractName: string,

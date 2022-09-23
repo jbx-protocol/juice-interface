@@ -3,7 +3,7 @@ import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { BallotState } from 'models/v2/fundingCycle'
 
-import { getBallotStrategyByAddress } from 'constants/v2/ballotStrategies/getBallotStrategiesByAddress'
+import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 import { Badge, BadgeVariant } from '../Badge'
 
 export function BallotStateBadge({

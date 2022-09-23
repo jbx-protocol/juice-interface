@@ -6,7 +6,7 @@ import { useContext } from 'react'
 
 import { TransactorInstance } from 'hooks/Transactor'
 
-export function useIssueErc20TokenTx(): TransactorInstance<{
+export function useV1IssueErc20TokenTx(): TransactorInstance<{
   name: string
   symbol: string
 }> {

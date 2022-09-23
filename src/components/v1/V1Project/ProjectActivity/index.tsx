@@ -326,16 +326,16 @@ export default function ProjectActivity() {
               <Trans>Redeemed</Trans>
             </Select.Option>
             <Select.Option value="withdraw">
-              <Trans>Distributed Funds</Trans>
+              <Trans>Distributed funds</Trans>
             </Select.Option>
             <Select.Option value="printReserves">
-              <Trans>Distributed Reserves</Trans>
+              <Trans>Distributed reserves</Trans>
             </Select.Option>
             <Select.Option value="deployERC20">
               <Trans>ERC20 Deployed</Trans>
             </Select.Option>
             <Select.Option value="projectCreate">
-              <Trans>Project Created</Trans>
+              <Trans>Project created</Trans>
             </Select.Option>
           </Select>
         </Space>

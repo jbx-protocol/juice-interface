@@ -1,0 +1,48 @@
+import { useWallet } from 'hooks/Wallet'
+import { V2V3ContractName, V2V3Contracts } from 'models/v2v3/contracts'
+import { useEffect, useState } from 'react'
+
+import { loadV2V3Contract } from 'utils/v2v3/loadV2V3Contract'
+
+import { readNetwork } from 'constants/networks'
+import { readProvider } from 'constants/readProvider'
+import { V2CVType, V3CVType } from 'models/cv'
+
+export function useV2V3ContractLoader({ cv }: { cv: V2CVType | V3CVType }) {
+  const { signer } = useWallet()
+  const [contracts, setContracts] = useState<V2V3Contracts>()
+
+  useEffect(() => {
+    async function loadContracts() {
+      console.info(`Loading v${cv} contracts...`)
+      try {
+        const network = readNetwork.name
+
+        // Contracts can be used read-only without a signer, but require a signer to create transactions.
+        const signerOrProvider = signer ?? readProvider
+
+        const contractLoaders = await Promise.all(
+          Object.values(V2V3ContractName).map(contractName =>
+            loadV2V3Contract(contractName, network, signerOrProvider),
+          ),
+        )
+
+        const newContractMap = Object.values(V2V3ContractName).reduce(
+          (accumulator, contractName, idx) => ({
+            ...accumulator,
+            [contractName]: contractLoaders[idx],
+          }),
+          {} as V2V3Contracts,
+        )
+
+        setContracts(newContractMap)
+      } catch (e) {
+        console.error('CONTRACT LOADER ERROR:', e)
+      }
+    }
+
+    loadContracts()
+  }, [setContracts, signer, cv])
+
+  return contracts
+}

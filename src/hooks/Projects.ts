@@ -1,6 +1,6 @@
 import { CV_V1, CV_V2 } from 'constants/cv'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
-import { V2ArchivedProjectIds } from 'constants/v2/archivedProjects'
+import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
 import { CV } from 'models/cv'
 import { ProjectState } from 'models/project-visibility'
 import { Project } from 'models/subgraph-entities/vX/project'

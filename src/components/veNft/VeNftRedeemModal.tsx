@@ -4,7 +4,7 @@ import { useForm } from 'antd/lib/form/Form'
 import { useContext, useState } from 'react'
 
 import { ThemeContext } from 'contexts/themeContext'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useRedeemVeNftTx } from 'hooks/veNft/transactor/VeNftRedeemTx'
 import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'
 
@@ -35,7 +35,7 @@ const VeNftRedeemModal = ({
     changeNetworks,
     connect,
   } = useWallet()
-  const { primaryTerminal, tokenAddress } = useContext(V2ProjectContext)
+  const { primaryTerminal, tokenAddress } = useContext(V2V3ProjectContext)
   const { tokenId } = token
   const [form] = useForm<{ beneficiary: string }>()
   const [loading, setLoading] = useState(false)

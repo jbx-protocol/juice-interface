@@ -1007,6 +1007,9 @@ msgstr ""
 msgid "ERC20 deployed"
 msgstr ""
 
+msgid "ERC20 transaction not ready. Try again."
+msgstr ""
+
 msgid "ETH"
 msgstr ""
 
@@ -1122,6 +1125,9 @@ msgid "Extend veNFT lock"
 msgstr ""
 
 msgid "FAQs"
+msgstr ""
+
+msgid "Failed to issue ERC20 token. Check transaction and try again."
 msgstr ""
 
 msgid "Failed to update project metadata"
@@ -2483,6 +2489,12 @@ msgstr ""
 msgid "The address that should receive the tokens minted from paying this project."
 msgstr ""
 
+msgid "The amount distributed from the Juicebox balance in this funding cycle, out of the current distribution limit. No more than the distribution limit can be distributed in a single funding cycle. Any remaining ETH in Juicebox is overflow until the next cycle begins."
+msgstr ""
+
+msgid "The amount distributed from the Juicebox balance in this funding cycle, out of the current funding target. No more than the funding target can be distributed in a single funding cycle. Any remaining ETH in Juicebox is overflow until the next cycle begins."
+msgstr ""
+
 msgid "The amount of tokens minted to the receiver will be calculated based on if they had paid this amount to the project in the current funding cycle."
 msgstr ""
 
@@ -2490,12 +2502,6 @@ msgid "The amount of tokens this project has reserved. These tokens can be distr
 msgstr ""
 
 msgid "The amount of tokens to mint to the receiver."
-msgstr ""
-
-msgid "The amount that has been distributed from the Juicebox balance in this funding cycle, out of the current distribution limit. No more than the distribution limit can be distributed in a single funding cycle—any remaining ETH in Juicebox is overflow, until the next cycle begins."
-msgstr ""
-
-msgid "The amount that has been distributed from the Juicebox balance in this funding cycle, out of the current funding target. No more than the funding target can be distributed in a single funding cycle—any remaining ETH in Juicebox is overflow, until the next cycle begins."
 msgstr ""
 
 msgid "The balance of the project owner's wallet."
@@ -3272,7 +3278,7 @@ msgstr ""
 msgid "{0} ago"
 msgstr ""
 
-msgid "{0} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
+msgid "{0} are distributed to anyone who pays this project. If the project has set a distribution limit, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr ""
 
 msgid "{0} balance"

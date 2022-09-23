@@ -2,7 +2,6 @@ import { CheckCircleFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
 import RichButton from 'components/RichButton'
-import { useIssueErc20TokenTx } from 'hooks/v2/transactor/IssueErc20TokenTx'
 import { useDeployProjectPayerTx } from 'hooks/v2v3/transactor/DeployProjectPayerTx'
 import { CSSProperties, useContext, useState } from 'react'
 
@@ -126,7 +125,6 @@ export default function NewDeployModal({
       </div>
       <IssueErc20TokenModal
         visible={issueTokenModalVisible}
-        useIssueErc20TokenTx={useIssueErc20TokenTx}
         onClose={() => setIssueTokenModalVisible(false)}
         onConfirmed={() => setHasIssuedToken(true)}
       />

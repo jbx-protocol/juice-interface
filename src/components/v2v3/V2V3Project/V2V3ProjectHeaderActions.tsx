@@ -1,6 +1,6 @@
 import { SettingOutlined, SmileOutlined, ToolOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
-import { Button, Tooltip } from 'antd'
+import { Button, Space, Tooltip } from 'antd'
 import ProjectVersionBadge from 'components/ProjectVersionBadge'
 import { V2V3ProjectToolsDrawer } from 'components/v2v3/V2V3Project/V2V3ProjectToolsDrawer/V2V3ProjectToolsDrawer'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
@@ -26,7 +26,7 @@ export default function V2V3ProjectHeaderActions() {
 
   return (
     <>
-      <div
+      <Space
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -71,7 +71,7 @@ export default function V2V3ProjectHeaderActions() {
             </Tooltip>
           )}
         </div>
-      </div>
+      </Space>
 
       <V2V3ProjectToolsDrawer
         visible={toolDrawerVisible}

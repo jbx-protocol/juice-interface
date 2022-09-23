@@ -18,7 +18,6 @@ import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
 import useTotalSupplyOfProjectToken from 'hooks/v1/contractReader/TotalSupplyOfProjectToken'
 import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceOfUser'
 import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
-import { useIssueErc20TokenTx } from 'hooks/v1/transactor/IssueErc20TokenTx'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import { CSSProperties, useContext, useState } from 'react'
 import { formatPercent, formatWad } from 'utils/format/formatNumber'
@@ -203,7 +202,7 @@ export default function Rewards() {
         />
 
         {!ticketsIssued && hasIssueTicketsPermission && !isPreviewMode && (
-          <IssueErc20TokenButton useIssueErc20TokenTx={useIssueErc20TokenTx} />
+          <IssueErc20TokenButton />
         )}
       </Space>
 

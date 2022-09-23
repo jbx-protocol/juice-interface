@@ -38,7 +38,11 @@ export function V2V3ProjectHeaderActions() {
         {featureFlagEnabled(FEATURE_FLAGS.V3) ? (
           <ContractVersionSelect />
         ) : (
-          <ProjectVersionBadge versionText="V2" />
+          <Tooltip
+            title={t`This project uses the V2 version of the Juicebox contracts.`}
+          >
+            <ProjectVersionBadge versionText="V2" />
+          </Tooltip>
         )}
 
         <div

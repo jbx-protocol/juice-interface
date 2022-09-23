@@ -73,7 +73,7 @@
 }
 
 .ant-form {
-  color: var(--text-primary)
+  color: var(--text-primary);
 }
 
 .ant-form-item {
@@ -100,7 +100,7 @@ input.ant-input[type='number'] {
   -moz-appearance: textfield;
 }
 
-.ant-input-prefix, 
+.ant-input-prefix,
 .ant-input-show-count-suffix {
   color: var(--text-secondary);
 }
@@ -165,7 +165,6 @@ textarea.ant-input::placeholder {
 .ant-select {
   .ant-select-selector {
     background-color: transparent;
-    color: var(--text-primary);
     border-color: var(--stroke-secondary);
   }
 
@@ -246,7 +245,6 @@ textarea.ant-input::placeholder {
   border: none !important;
   box-shadow: none !important;
 }
-
 
 .ant-upload {
   color: var(--text-primary);

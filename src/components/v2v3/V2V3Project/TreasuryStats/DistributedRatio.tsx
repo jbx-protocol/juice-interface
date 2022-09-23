@@ -31,10 +31,10 @@ export default function DistributedRatio({ style }: { style?: CSSProperties }) {
       statLabel={<Trans>Distributed</Trans>}
       statLabelTip={
         <Trans>
-          The amount that has been distributed from the Juicebox balance in this
-          funding cycle, out of the current distribution limit. No more than the
-          distribution limit can be distributed in a single funding cycle—any
-          remaining ETH in Juicebox is overflow, until the next cycle begins.
+          The amount distributed from the Juicebox balance in this funding
+          cycle, out of the current distribution limit. No more than the
+          distribution limit can be distributed in a single funding cycle. Any
+          remaining ETH in Juicebox is overflow until the next cycle begins.
         </Trans>
       }
       statValue={

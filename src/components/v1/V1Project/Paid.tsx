@@ -119,11 +119,11 @@ export default function Paid() {
               statLabel={<Trans>Distributed</Trans>}
               statLabelTip={
                 <Trans>
-                  The amount that has been distributed from the Juicebox balance
-                  in this funding cycle, out of the current funding target. No
-                  more than the funding target can be distributed in a single
-                  funding cycle—any remaining ETH in Juicebox is overflow, until
-                  the next cycle begins.
+                  The amount distributed from the Juicebox balance in this
+                  funding cycle, out of the current funding target. No more than
+                  the funding target can be distributed in a single funding
+                  cycle. Any remaining ETH in Juicebox is overflow until the
+                  next cycle begins.
                 </Trans>
               }
               statValue={

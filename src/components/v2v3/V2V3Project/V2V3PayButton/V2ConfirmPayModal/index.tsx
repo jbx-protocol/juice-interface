@@ -20,7 +20,7 @@ import { usePayETHPaymentTerminalTx } from 'hooks/v2v3/transactor/PayETHPaymentT
 import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import {
-  V2CurrencyName,
+  V2V3CurrencyName,
   V2V3_CURRENCY_ETH,
   V2V3_CURRENCY_USD,
 } from 'utils/v2v3/currency'
@@ -36,7 +36,7 @@ import { weightedAmount } from 'utils/v2v3/math'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { v2ProjectRoute } from 'utils/routes'
+import { v2v3ProjectRoute } from 'utils/routes'
 import { redirectTo, reloadWindow } from 'utils/windowUtils'
 import { V2PayForm, V2PayFormType } from '../V2PayForm'
 import { NftRewardCell } from './NftRewardCell'
@@ -111,7 +111,7 @@ export function V2ConfirmPayModal({
   const handlePaySuccess = () => {
     if (nftRewardTier && projectMetadata?.nftPaymentSuccessModal) {
       redirectTo(
-        `${v2ProjectRoute({ handle, projectId })}?nftPurchaseConfirmed=true`,
+        `${v2v3ProjectRoute({ handle, projectId })}?nftPurchaseConfirmed=true`,
       )
     } else {
       reloadWindow()
@@ -215,8 +215,8 @@ export function V2ConfirmPayModal({
 
         <Descriptions column={1} bordered size={isMobile ? 'small' : 'default'}>
           <Descriptions.Item label={t`Pay amount`} className="content-right">
-            {formattedNum(usdAmount)} {V2CurrencyName(V2V3_CURRENCY_USD)} (
-            {formatWad(weiAmount)} {V2CurrencyName(V2V3_CURRENCY_ETH)})
+            {formattedNum(usdAmount)} {V2V3CurrencyName(V2V3_CURRENCY_USD)} (
+            {formatWad(weiAmount)} {V2V3CurrencyName(V2V3_CURRENCY_ETH)})
           </Descriptions.Item>
           <Descriptions.Item
             label={<Trans>Tokens for you</Trans>}

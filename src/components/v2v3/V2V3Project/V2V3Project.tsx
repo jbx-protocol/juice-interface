@@ -25,7 +25,7 @@ import useMobile from 'hooks/Mobile'
 import { CurrencyOption } from 'models/currencyOption'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { fromWad } from 'utils/format/formatNumber'
-import { v2ProjectRoute } from 'utils/routes'
+import { v2v3ProjectRoute } from 'utils/routes'
 
 import { V2V3_PROJECT_IDS } from 'constants/v2v3/projectIds'
 import { RelaunchFundingCycleBanner } from './banners/RelaunchFundingCycleBanner'
@@ -154,13 +154,13 @@ export function V2V3Project({
 
   const closeNewDeployModal = () => {
     // Change URL without refreshing page
-    router.replace(v2ProjectRoute({ projectId }))
+    router.replace(v2v3ProjectRoute({ projectId }))
     setNewDeployModalVisible(false)
   }
 
   const closeNftPostPayModal = () => {
     // Change URL without refreshing page
-    router.replace(v2ProjectRoute({ projectId }))
+    router.replace(v2v3ProjectRoute({ projectId }))
     setNftPostPayModalVisible(false)
   }
 

@@ -23,7 +23,6 @@ import ManageTokensModal from 'components/ManageTokensModal'
 import ParticipantsModal from 'components/modals/ParticipantsModal'
 import { TextButton } from 'components/TextButton'
 import { ThemeContext } from 'contexts/themeContext'
-import { useIssueErc20TokenTx } from 'hooks/v2/transactor/IssueErc20TokenTx'
 import useTotalBalanceOf from 'hooks/v2v3/contractReader/TotalBalanceOf'
 import useUserUnclaimedTokenBalance from 'hooks/v2v3/contractReader/UserUnclaimedTokenBalance'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -154,18 +153,15 @@ export default function V2ManageTokensSection() {
                       includeTokenWord: true,
                     })}{' '}
                     are distributed to anyone who pays this project. If the
-                    project has set a funding target, tokens can be redeemed for
-                    a portion of the project's overflow whether or not they have
-                    been claimed yet.
+                    project has set a distribution limit, tokens can be redeemed
+                    for a portion of the project's overflow whether or not they
+                    have been claimed yet.
                   </Trans>
                 }
               />
               {showIssueErc20TokenButton && (
                 <div style={{ marginBottom: 20 }}>
-                  <IssueErc20TokenButton
-                    useIssueErc20TokenTx={useIssueErc20TokenTx}
-                    onCompleted={reloadWindow}
-                  />
+                  <IssueErc20TokenButton onCompleted={reloadWindow} />
                 </div>
               )}
             </div>

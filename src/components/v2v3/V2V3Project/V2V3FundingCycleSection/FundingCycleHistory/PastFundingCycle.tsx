@@ -14,7 +14,7 @@ import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useContext, useState } from 'react'
 import { formatHistoricalDate } from 'utils/format/formatDate'
 import { formatWad } from 'utils/format/formatNumber'
-import { V2CurrencyName } from 'utils/v2v3/currency'
+import { V2V3CurrencyName } from 'utils/v2v3/currency'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import FundingCycleDetails from '../FundingCycleDetails'
 
@@ -66,7 +66,7 @@ export function PastFundingCycle({
 
           <div style={{ fontSize: '.8rem', marginLeft: 10 }}>
             <CurrencySymbol
-              currency={V2CurrencyName(
+              currency={V2V3CurrencyName(
                 distributionLimitCurrency?.toNumber() as V2V3CurrencyOption,
               )}
             />

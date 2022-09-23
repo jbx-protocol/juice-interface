@@ -221,9 +221,6 @@ msgstr ""
 msgid "@{handle} not found"
 msgstr ""
 
-msgid "A project can reserve a percentage of the tokens minted from payments it receives. Reserved tokens can be distributed according to the allocation below at any time."
-msgstr ""
-
 msgid "A project can reserve a percentage of tokens minted from every payment it receives. Reserved tokens can be distributed according to the allocation below at any time."
 msgstr ""
 
@@ -420,9 +417,6 @@ msgid "Approve ERC20"
 msgstr ""
 
 msgid "Approve token for transaction"
-msgstr ""
-
-msgid "Archive Project"
 msgstr ""
 
 msgid "Archive project"
@@ -654,9 +648,6 @@ msgid "Congratulations on launching your project! The next steps are optional an
 msgstr ""
 
 msgid "Connect"
-msgstr ""
-
-msgid "Connect Wallet"
 msgstr ""
 
 msgid "Connect wallet"
@@ -929,16 +920,13 @@ msgstr ""
 msgid "Distributed"
 msgstr ""
 
-msgid "Distributed Funds"
-msgstr ""
-
-msgid "Distributed Reserves"
-msgstr ""
-
 msgid "Distributed funds"
 msgstr ""
 
 msgid "Distributed reserved {0}"
+msgstr ""
+
+msgid "Distributed reserves"
 msgstr ""
 
 msgid "Distributed tokens"
@@ -1014,6 +1002,9 @@ msgid "ERC20 Deployed"
 msgstr ""
 
 msgid "ERC20 deployed"
+msgstr ""
+
+msgid "ERC20 transaction not ready. Try again."
 msgstr ""
 
 msgid "ETH"
@@ -1131,6 +1122,9 @@ msgid "Extend veNFT lock"
 msgstr ""
 
 msgid "FAQs"
+msgstr ""
+
+msgid "Failed to issue ERC20 token. Check transaction and try again."
 msgstr ""
 
 msgid "Failed to update project metadata"
@@ -1889,16 +1883,10 @@ msgstr ""
 msgid "Project #{projectId}"
 msgstr ""
 
-msgid "Project Created"
-msgstr ""
-
 msgid "Project Description"
 msgstr ""
 
 msgid "Project Details"
-msgstr ""
-
-msgid "Project Handle"
 msgstr ""
 
 msgid "Project ID must be a number."
@@ -2154,9 +2142,6 @@ msgid "Required"
 msgstr ""
 
 msgid "Reserve a percentage of freshly minted tokens for your project to use."
-msgstr ""
-
-msgid "Reserved Token Allocation"
 msgstr ""
 
 msgid "Reserved rate"
@@ -2504,6 +2489,12 @@ msgstr ""
 msgid "The address that should receive the tokens minted from paying this project."
 msgstr ""
 
+msgid "The amount distributed from the Juicebox balance in this funding cycle, out of the current distribution limit. No more than the distribution limit can be distributed in a single funding cycle. Any remaining ETH in Juicebox is overflow until the next cycle begins."
+msgstr ""
+
+msgid "The amount distributed from the Juicebox balance in this funding cycle, out of the current funding target. No more than the funding target can be distributed in a single funding cycle. Any remaining ETH in Juicebox is overflow until the next cycle begins."
+msgstr ""
+
 msgid "The amount of tokens minted to the receiver will be calculated based on if they had paid this amount to the project in the current funding cycle."
 msgstr ""
 
@@ -2511,12 +2502,6 @@ msgid "The amount of tokens this project has reserved. These tokens can be distr
 msgstr ""
 
 msgid "The amount of tokens to mint to the receiver."
-msgstr ""
-
-msgid "The amount that has been distributed from the Juicebox balance in this funding cycle, out of the current distribution limit. No more than the distribution limit can be distributed in a single funding cycle—any remaining ETH in Juicebox is overflow, until the next cycle begins."
-msgstr ""
-
-msgid "The amount that has been distributed from the Juicebox balance in this funding cycle, out of the current funding target. No more than the funding target can be distributed in a single funding cycle—any remaining ETH in Juicebox is overflow, until the next cycle begins."
 msgstr ""
 
 msgid "The balance of the project owner's wallet."
@@ -2819,9 +2804,6 @@ msgstr ""
 msgid "Transaction unsuccessful"
 msgstr ""
 
-msgid "Transfer Ownership"
-msgstr ""
-
 msgid "Transfer ownership"
 msgstr ""
 
@@ -2939,10 +2921,10 @@ msgstr ""
 msgid "V1"
 msgstr ""
 
-msgid "V1 Token Migration"
+msgid "V1 token holders can swap their tokens for your V2 tokens on your V2 project's <0>Tokens</0> section."
 msgstr ""
 
-msgid "V1 token holders can swap their tokens for your V2 tokens on your V2 project's <0>Tokens</0> section."
+msgid "V1 token migration"
 msgstr ""
 
 msgid "V1 tokens to swap"
@@ -3305,7 +3287,7 @@ msgstr ""
 msgid "{0} ago"
 msgstr ""
 
-msgid "{0} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
+msgid "{0} are distributed to anyone who pays this project. If the project has set a distribution limit, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr ""
 
 msgid "{0} balance"

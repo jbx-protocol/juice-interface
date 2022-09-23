@@ -2,7 +2,6 @@ import { SettingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 
-import { TransactorInstance } from 'hooks/Transactor'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
@@ -14,10 +13,8 @@ export type IssueErc20TokenTxArgs = {
 }
 
 export function IssueErc20TokenButton({
-  useIssueErc20TokenTx,
   onCompleted,
 }: {
-  useIssueErc20TokenTx: () => TransactorInstance<IssueErc20TokenTxArgs>
   onCompleted?: VoidFunction
 }) {
   const [modalVisible, setModalVisible] = useState<boolean>(false)
@@ -56,7 +53,6 @@ export function IssueErc20TokenButton({
       </Tooltip>
       <IssueErc20TokenModal
         visible={modalVisible}
-        useIssueErc20TokenTx={useIssueErc20TokenTx}
         onClose={onClose}
         onConfirmed={onCompleted}
       />

@@ -1004,6 +1004,9 @@ msgstr ""
 msgid "ERC20 deployed"
 msgstr ""
 
+msgid "ERC20 transaction not ready. Try again."
+msgstr ""
+
 msgid "ETH"
 msgstr ""
 
@@ -1119,6 +1122,9 @@ msgid "Extend veNFT lock"
 msgstr ""
 
 msgid "FAQs"
+msgstr ""
+
+msgid "Failed to issue ERC20 token. Check transaction and try again."
 msgstr ""
 
 msgid "Failed to update project metadata"

@@ -10,7 +10,7 @@ import {
   TransactorInstance,
 } from 'hooks/Transactor'
 
-export function useIssueErc20TokenTx(): TransactorInstance<{
+export function useV3IssueErc20TokenTx(): TransactorInstance<{
   name: string
   symbol: string
 }> {
@@ -21,11 +21,11 @@ export function useIssueErc20TokenTx(): TransactorInstance<{
   return ({ name, symbol }, txOpts) => {
     try {
       invariant(
-        transactor && projectId && contracts?.JBController && name && symbol,
+        transactor && projectId && contracts?.JBTokenStore && name && symbol,
       )
       return transactor(
-        contracts.JBController,
-        'issueTokenFor',
+        contracts.JBTokenStore,
+        'issueFor',
         [projectId, name, symbol],
         {
           ...txOpts,

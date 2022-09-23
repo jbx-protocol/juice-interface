@@ -53,25 +53,31 @@ async function loadV3JBController() {
   return contract
 }
 
-async function isV3Project(projectId: number) {
+/**
+ * Return whether a project is a v2 or v3 project.
+ *
+ * A project is considered a v3 project the [projectId]
+ * in the V3 JBDirectory contract has its controller set to the V3 JBController address.
+ */
+async function isV3Project(projectId: number): Promise<boolean> {
   if (!featureFlagEnabled(FEATURE_FLAGS.V3)) {
     return Promise.resolve(false)
   }
 
-  const [JBDirectory, JBController] = await Promise.all([
+  const [V3JBDirectory, V3JBController] = await Promise.all([
     loadV3JBDirectory(),
     loadV3JBController(),
   ])
-  if (!JBDirectory) {
+  if (!V3JBDirectory) {
     throw new Error(`contract not found ${V2V3ContractName.JBDirectory}`)
   }
-  if (!JBController) {
+  if (!V3JBController) {
     throw new Error(`contract not found ${V2V3ContractName.JBController}`)
   }
 
-  const projectControllerAddress = await JBDirectory.controllerOf(projectId)
+  const projectControllerAddress = await V3JBDirectory.controllerOf(projectId)
 
-  return projectControllerAddress === JBController.address
+  return projectControllerAddress === V3JBController.address
 }
 
 async function getMetadataCidFromContract(projectId: number) {

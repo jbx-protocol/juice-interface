@@ -1,5 +1,4 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { V3FundingCycleMetadata } from 'models/v3/fundingCycle'
 
 export type BaseV2FundingCycleMetadata = {
   version?: number
@@ -59,5 +58,3 @@ export type V2FundingCycleMetadata = BaseV2FundingCycleMetadata & {
   global: V2FundingCycleMetadataGlobal
   allowChangeToken: boolean
 }
-
-type V2V3FundingCycleMetadata = V2FundingCycleMetadata | V3FundingCycleMetadata

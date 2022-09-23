@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import TooltipLabel from 'components/TooltipLabel'
 
@@ -62,7 +62,13 @@ export default function ReservedTokens({
               ({perbicentToPercent(metadata?.reservedRate)}%)
             </h4>
           }
-          tip={t`A project can reserve a percentage of the tokens minted from payments it receives. Reserved tokens can be distributed according to the allocation below at any time.`}
+          tip={
+            <Trans>
+              A project can reserve a percentage of tokens minted from every
+              payment it receives. Reserved tokens can be distributed according
+              to the allocation below at any time.
+            </Trans>
+          }
         />
       </div>
 

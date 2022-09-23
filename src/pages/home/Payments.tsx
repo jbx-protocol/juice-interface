@@ -6,7 +6,6 @@ import RichNote from 'components/RichNote'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
 import V2V3ProjectHandle from 'components/v2v3/shared/V2V3ProjectHandle'
 import { CV_V1, CV_V1_1 } from 'constants/cv'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { Project } from 'models/subgraph-entities/vX/project'
@@ -17,7 +16,6 @@ export default function Payments() {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { cv } = useContext(ProjectMetadataContext)
 
   const { data: events, isLoading } = useSubgraphQuery({
     entity: 'payEvent',
@@ -51,7 +49,7 @@ export default function Payments() {
               handle={project.handle}
               style={{ marginRight: '0.5rem' }}
             />
-            <ProjectVersionBadge versionText={`V${cv}`} size="small" />
+            <ProjectVersionBadge versionText={`V${project.cv}`} size="small" />
           </div>
         )}
       </div>

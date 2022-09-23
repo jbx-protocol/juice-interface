@@ -1,11 +1,12 @@
-import { CV_V2 } from 'constants/cv'
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { useV2V3ContractLoader } from 'hooks/v2v3/V2V3ContractLoader'
 import { V2CVType, V3CVType } from 'models/cv'
 import { useState } from 'react'
 
-export const V2V3ContractsProvider: React.FC = ({ children }) => {
-  const [cv, setCv] = useState<V2CVType | V3CVType>(CV_V2) // TODO decide on whether to default to v3
+export const V2V3ContractsProvider: React.FC<{
+  initialCv: V3CVType | V2CVType
+}> = ({ children, initialCv }) => {
+  const [cv, setCv] = useState<V2CVType | V3CVType>(initialCv) // TODO decide on whether to default to v3
 
   const contracts = useV2V3ContractLoader({ cv })
 

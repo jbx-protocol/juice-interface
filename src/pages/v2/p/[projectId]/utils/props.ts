@@ -1,16 +1,20 @@
-import { CV_V2 } from 'constants/cv'
+import { CV_V3 } from 'constants/cv'
 import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
+import { V2CVType, V3CVType } from 'models/cv'
 import { ProjectMetadataV5 } from 'models/project-metadata'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import { GetServerSidePropsResult } from 'next'
 import { findProjectMetadata } from 'utils/server'
 import { loadV2V3Contract } from 'utils/v2v3/loadV2V3Contract'
 
+const DEFAULT_CV: V3CVType | V2CVType = CV_V3
+
 export interface ProjectPageProps {
   metadata: ProjectMetadataV5
   projectId: number
+  cv: V3CVType | V2CVType
 }
 
 async function getMetadataCidFromContract(projectId: number) {
@@ -19,7 +23,7 @@ async function getMetadataCidFromContract(projectId: number) {
     V2V3ContractName.JBProjects,
     network,
     readProvider,
-    CV_V2, // TODO check this
+    DEFAULT_CV, // TODO check this
   )
   if (!contract) {
     throw new Error(`contract not found ${V2V3ContractName.JBProjects}`)
@@ -40,17 +44,17 @@ export async function getProjectProps(
     return { notFound: true }
   }
 
-  const metadataCid = await getMetadataCidFromContract(projectId)
-
   try {
+    const metadataCid = await getMetadataCidFromContract(projectId)
     const metadata = await findProjectMetadata({ metadataCid })
-    return { props: { metadata, projectId } }
+    return { props: { metadata, projectId, cv: DEFAULT_CV } }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (e: any) {
     if (e?.response?.status === 404 || e?.response?.status === 400) {
       return { notFound: true }
     }
+
     throw e
   }
 }

@@ -2,6 +2,8 @@ import { t, Trans } from '@lingui/macro'
 import { Tabs } from 'antd'
 import { AppWrapper } from 'components/common'
 import { DesmosScript } from 'components/common/Head/scripts/DesmosScript'
+import { CV_V2, CV_V3 } from 'constants/cv'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
 import Head from 'next/head'
@@ -9,6 +11,7 @@ import { TransactionProvider } from 'providers/TransactionProvider'
 import { V2V3ContractsProvider } from 'providers/v2v3/V2V3ContractsProvider'
 import { V2V3CurrencyProvider } from 'providers/v2v3/V2V3CurrencyProvider'
 import { useContext, useState } from 'react'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { scrollToTop } from 'utils/windowUtils'
 
 import { TabContentProps } from './models'
@@ -63,7 +66,9 @@ function V2Create() {
   const isMobile = useMobile()
 
   return (
-    <V2V3ContractsProvider>
+    <V2V3ContractsProvider
+      initialCv={featureFlagEnabled(FEATURE_FLAGS.V3) ? CV_V3 : CV_V2}
+    >
       <TransactionProvider>
         <V2V3CurrencyProvider>
           <div

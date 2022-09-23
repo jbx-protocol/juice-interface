@@ -21,13 +21,13 @@ type MenuItem = Required<MenuProps>['items'][number]
 
 export const V2SettingsPageKeyTitleMap: { [k in V2SettingsPageKey]: string } = {
   general: t`General`,
-  projecthandle: t`Project Handle`,
+  projecthandle: t`Project handle`,
   reconfigurefc: t`Reconfigure Funding Cycle`,
   payouts: t`Payouts`,
-  reservedtokens: t`Reserved Token Allocation`,
-  v1tokenmigration: t`V1 Token Migration`,
-  transferownership: t`Transfer Ownership`,
-  archiveproject: t`Archive Project`,
+  reservedtokens: t`Reserved token allocation`,
+  v1tokenmigration: t`V1 token migration`,
+  transferownership: t`Transfer ownership`,
+  archiveproject: t`Archive project`,
   governance: t`Governance`,
 }
 

@@ -6,7 +6,7 @@ import { useState } from 'react'
 export const V2V3ContractsProvider: React.FC<{
   initialCv: V3CVType | V2CVType
 }> = ({ children, initialCv }) => {
-  const [cv, setCv] = useState<V2CVType | V3CVType>(initialCv) // TODO decide on whether to default to v3
+  const [cv, setCv] = useState<V2CVType | V3CVType>(initialCv)
 
   const contracts = useV2V3ContractLoader({ cv })
 

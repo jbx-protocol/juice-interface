@@ -12,7 +12,7 @@ import {
 import { useWallet } from 'hooks/Wallet'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { formattedNum } from 'utils/format/formatNumber'
-import { V2CurrencyName } from 'utils/v2v3/currency'
+import { V2V3CurrencyName } from 'utils/v2v3/currency'
 import {
   getDefaultFundAccessConstraint,
   getUnsafeV2V3FundingCycleProperties,
@@ -70,7 +70,7 @@ export default function FundingSummarySection() {
     fundAccessConstraints,
   )
 
-  const currencyName = V2CurrencyName(
+  const currencyName = V2V3CurrencyName(
     fundAccessConstraint?.distributionLimitCurrency.toNumber() as V2V3CurrencyOption,
   )
 

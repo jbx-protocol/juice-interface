@@ -54,7 +54,7 @@ async function loadV3JBController() {
 }
 
 async function isV3Project(projectId: number) {
-  if (featureFlagEnabled(FEATURE_FLAGS.V3)) {
+  if (!featureFlagEnabled(FEATURE_FLAGS.V3)) {
     return Promise.resolve(false)
   }
 

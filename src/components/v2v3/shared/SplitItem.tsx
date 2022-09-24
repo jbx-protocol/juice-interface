@@ -131,7 +131,9 @@ const SplitValue = ({
     currency?.toNumber() as V2V3CurrencyOption | undefined,
   )
   const tooltipTitle =
-    curr === 'ETH' ? <ETHToUSD ethAmount={splitValue ?? ''} /> : undefined
+    curr === 'ETH' && splitValue?.gt(0) ? (
+      <ETHToUSD ethAmount={splitValue} />
+    ) : undefined
 
   return (
     <Tooltip title={tooltipTitle}>

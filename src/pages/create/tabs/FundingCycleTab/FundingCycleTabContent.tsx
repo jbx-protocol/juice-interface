@@ -50,7 +50,15 @@ export default function FundingCycleTabContent({
   return (
     <ProjectConfigurationFieldsContainer showPreview>
       <Space direction="vertical" style={{ width: '100%' }}>
-        <FundingCycleExplainer />
+        <p>
+          <Trans>
+            Juicebox projects are funded in cycles. You can think of this as a
+            set period of time in which your project settings are locked.
+          </Trans>
+        </p>
+        <p>
+          <Trans>Configure your project's first funding cycle below.</Trans>
+        </p>
         <RichButton
           prefix="1"
           heading={<Trans>Funding</Trans>}
@@ -123,6 +131,8 @@ export default function FundingCycleTabContent({
           }
           primaryColor={rulesDrawerSeen ? seenColor : undefined}
         />
+
+        <FundingCycleExplainer />
 
         <Button
           type="primary"

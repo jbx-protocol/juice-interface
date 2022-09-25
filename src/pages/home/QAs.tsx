@@ -368,7 +368,7 @@ export default function QAs(): {
         </Trans>
       ),
       img: {
-        src: '/assets/cooler_if_you_did.png',
+        src: '/public/assets/cooler_if_you_did.png',
         alt: t`It'd be a lot cooler if you did`,
       },
     },

@@ -3230,6 +3230,9 @@ msgstr ""
 msgid "or <0><1>buy {tokenText} on exchange.</1></0>"
 msgstr ""
 
+msgid "or <0><1>redeem {tokenSymbol} on exchange.</1></0>"
+msgstr ""
+
 msgid "project"
 msgstr ""
 

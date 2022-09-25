@@ -638,6 +638,9 @@ msgstr ""
 msgid "Configure which Juicebox V1 project you'd like to accept tokens for. Token holders of this V1 project will be able to swap their V1 tokens for V2 tokens."
 msgstr ""
 
+msgid "Configure your project's first funding cycle below."
+msgstr ""
+
 msgid "Configure {projectTitle}"
 msgstr ""
 
@@ -1401,6 +1404,9 @@ msgid "Juicebox project"
 msgstr ""
 
 msgid "Juicebox projects are funded in cycles. A Funding Cycle is a set period of time in which your project settings are locked. <0>Learn more.</0>"
+msgstr ""
+
+msgid "Juicebox projects are funded in cycles. You can think of this as a set period of time in which your project settings are locked."
 msgstr ""
 
 msgid "Juicebox projects use <0>ENS names</0> as handles. Setting a handle involves 2 transactions:"

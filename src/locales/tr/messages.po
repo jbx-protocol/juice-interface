@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-09-18 00:39\n"
+"PO-Revision-Date: 2022-09-25 00:36\n"
 "Last-Translator: \n"
 "Language: tr_TR\n"
 "Language-Team: Turkish\n"
@@ -82,6 +82,9 @@ msgstr ""
 msgid "<0/> The Juicebox protocol is open to anyone, and project configurations can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the <1>risks</1> before committing your funds."
 msgstr ""
 
+msgid "<0/> Your project’s settings cannot be edited or changed during the first funding cycle."
+msgstr ""
+
 msgid "<0/> contributed"
 msgstr ""
 
@@ -92,6 +95,9 @@ msgid "<0/> owner balance"
 msgstr "<0/> sahip bakiyesi"
 
 msgid "<0/> will go to the project owner: <1/>"
+msgstr ""
+
+msgid "<0/> your project’s settings will not be able to be edited or changed during the first funding cycle."
 msgstr ""
 
 msgid "<0/>{0} after {feePercentage}% JBX membership fee"
@@ -219,9 +225,6 @@ msgstr "<0>{tokenSymbol} ERC-20 adresi:</0> <1/>"
 
 msgid "@{handle} not found"
 msgstr ""
-
-msgid "A project can reserve a percentage of the tokens minted from payments it receives. Reserved tokens can be distributed according to the allocation below at any time."
-msgstr "Bir proje, aldığı ödemelerden basılan token'ların belirli bir yüzdesini rezerve edebilir. Rezerve token'lar, herhangi bir zamanda aşağıdaki tahsise göre dağıtılabilir."
 
 msgid "A project can reserve a percentage of tokens minted from every payment it receives. Reserved tokens can be distributed according to the allocation below at any time."
 msgstr "Bir proje, aldığı her ödemeden basılan token'ların belirli bir yüzdesini rezerve edebilir. Rezerve token'lar, herhangi bir zamanda aşağıdaki tahsise göre dağıtılabilir."
@@ -421,9 +424,6 @@ msgstr ""
 msgid "Approve token for transaction"
 msgstr ""
 
-msgid "Archive Project"
-msgstr ""
-
 msgid "Archive project"
 msgstr "Projeyi arşivle"
 
@@ -444,6 +444,9 @@ msgstr ""
 
 msgid "Automate funding cycles"
 msgstr "Finansman döngülerini otomatikleştir"
+
+msgid "Automated Funding Cycles <0/>"
+msgstr ""
 
 msgid "Automated funding cycles enable the following characteristics:"
 msgstr "Otomatikleştirilen finansman döngüleri aşağıdaki özellikleri sağlar:"
@@ -514,6 +517,9 @@ msgstr "{tokensLabel} token'larını yak"
 msgid "Burn {tokensTextLong}"
 msgstr "{tokensTextLong} yak"
 
+msgid "Button will close the modal if no link is given."
+msgstr ""
+
 msgid "By default, all unallocated funds can be distributed to the project owner's wallet."
 msgstr "Aksi istenmediği takdirde, tahsis edilmemiş bütün fonlar proje sahibinin cüzdanına dağıtılabilir."
 
@@ -527,6 +533,12 @@ msgid "CSV data wasn't ready for export. Wait a few seconds and try again."
 msgstr ""
 
 msgid "CSV download failed."
+msgstr ""
+
+msgid "Call-to-action button link"
+msgstr ""
+
+msgid "Call-to-action button text"
 msgstr ""
 
 msgid "Can I change my project's contract after it's been created?"
@@ -643,9 +655,6 @@ msgstr "Projenizi başlattığınız için tebrikler! Sonraki adımlar isteğe b
 msgid "Connect"
 msgstr "Bağlan"
 
-msgid "Connect Wallet"
-msgstr ""
-
 msgid "Connect wallet"
 msgstr "Cüzdan bağla"
 
@@ -700,9 +709,6 @@ msgstr ""
 msgid "Contributors will be rewarded this amount of your project's tokens per ETH contributed."
 msgstr "Katkıda bulunanlar, katkıda bulundukları ETH başına bu miktarda proje token'ı ile ödüllendirilecektir."
 
-msgid "Contributors will not receive any tokens in exchange for paying this project."
-msgstr "Katkı sahipleri bu projeye ödeme karşılığında token almayacaktır."
-
 msgid "Contributors will receive <0>{discountRatePercent}%</0> more tokens for contributions they make this funding cycle compared to the next funding cycle."
 msgstr "Katkı sahipleri, bu finansman döngüsünde yaptıkları katkılar için bir sonraki finansman döngüsüne kıyasla <0>{discountRatePercent}%</0> oranında daha fazla token alacaktır."
 
@@ -711,6 +717,9 @@ msgstr "Katkı sahipleri bu projeye ödeme karşılığında token'ların nispet
 
 msgid "Contributors will see this message before they pay your project."
 msgstr "Katkıda bulunanlar, projenize ödeme yapmadan önce bu mesajı göreceklerdir."
+
+msgid "Contributors won't receive any tokens when they pay this project."
+msgstr ""
 
 msgid "Copied!"
 msgstr "Kopyalandı!"
@@ -916,16 +925,13 @@ msgstr "{tokensText} token'ları dağıt"
 msgid "Distributed"
 msgstr "Dağıtıldı"
 
-msgid "Distributed Funds"
-msgstr "Dağıtılmış Fonlar"
-
-msgid "Distributed Reserves"
-msgstr "Dağıtılmış Rezervler"
-
 msgid "Distributed funds"
 msgstr "Dağıtılmış fonlar"
 
 msgid "Distributed reserved {0}"
+msgstr ""
+
+msgid "Distributed reserves"
 msgstr ""
 
 msgid "Distributed tokens"
@@ -1003,6 +1009,12 @@ msgstr ""
 msgid "ERC20 deployed"
 msgstr ""
 
+msgid "ERC20 transaction not ready. Try again."
+msgstr ""
+
+msgid "ETH"
+msgstr ""
+
 msgid "Each payout will receive their percent of this total each funding cycle if there is enough in the treasury. Otherwise, they will receive their percent of whatever is in the treasury."
 msgstr "Her ödeme, finansman döngülerinin her birinde, hazinede yeterli tutar mevcutsa bu toplamdan ona ait olan yüzdeyi alacaktır. Aksi halde, hazinede bulunan tutar ne kadarsa bu tutar üzerinden yüzde alacaktır."
 
@@ -1038,6 +1050,9 @@ msgstr "Token tahsisini düzenle"
 
 msgid "Edit tracked assets"
 msgstr "İzlenen varlıkları düzenleyin"
+
+msgid "Empty Step"
+msgstr ""
 
 msgid "Enable unclaimed token spending"
 msgstr ""
@@ -1114,6 +1129,9 @@ msgstr ""
 msgid "FAQs"
 msgstr "SSS"
 
+msgid "Failed to issue ERC20 token. Check transaction and try again."
+msgstr ""
+
 msgid "Failed to update project metadata"
 msgstr "Proje meta verileri güncellenemedi"
 
@@ -1138,6 +1156,18 @@ msgstr ""
 msgid "Funding"
 msgstr "Finansman"
 
+msgid "Funding Cycle"
+msgstr ""
+
+msgid "Funding Cycle #1 will start immediately after you launch your project. You can't reconfigure Funding Cycle #1 after launch."
+msgstr ""
+
+msgid "Funding Cycles"
+msgstr ""
+
+msgid "Funding Target"
+msgstr ""
+
 msgid "Funding cycle"
 msgstr "Finansman döngüsü"
 
@@ -1155,9 +1185,6 @@ msgstr "Finansman döngüsü gerekli."
 
 msgid "Funding cycle target"
 msgstr "Finansman döngüsü hedefi"
-
-msgid "Funding cycles can be reconfigured moments before a new cycle begins, without notifying contributors."
-msgstr "Finansman döngüleri, katkı sahiplerini bilgilendirmeden, yeni bir döngü başlangıcından dakikalar önce yeniden yapılandırılabilir."
 
 msgid "Funding distribution"
 msgstr "Finansman dağılımı"
@@ -1181,6 +1208,9 @@ msgid "Give this NFT a name."
 msgstr ""
 
 msgid "Go to <0>{snapshotUrl}</0>"
+msgstr ""
+
+msgid "Go to your Safe"
 msgstr ""
 
 msgid "Governance"
@@ -1306,6 +1336,9 @@ msgstr "Bağımsız yaratıcılar ve geliştiriciler"
 msgid "Infinite (no limit)"
 msgstr "Sonsuz (sınır yok)"
 
+msgid "Infinite Funding Target"
+msgstr ""
+
 msgid "Initial issuance rate"
 msgstr "İlk token çıkarma oranı"
 
@@ -1368,6 +1401,9 @@ msgstr "Juicebox yüklenme animasyonu"
 
 msgid "Juicebox project"
 msgstr "Juicebox projesi"
+
+msgid "Juicebox projects are funded in cycles. A Funding Cycle is a set period of time in which your project settings are locked. <0>Learn more.</0>"
+msgstr ""
 
 msgid "Juicebox projects use <0>ENS names</0> as handles. Setting a handle involves 2 transactions:"
 msgstr ""
@@ -1477,6 +1513,9 @@ msgstr ""
 msgid "Manage {tokenText}"
 msgstr "{tokenText} token'ını yönet"
 
+msgid "Manual Funding Cycles"
+msgstr ""
+
 msgid "Marketplace customizations"
 msgstr ""
 
@@ -1490,6 +1529,9 @@ msgid "Memo (optional)"
 msgstr ""
 
 msgid "Memo included on-chain"
+msgstr ""
+
+msgid "Message"
 msgstr ""
 
 msgid "Migrate to Juicebox V1.1"
@@ -1558,6 +1600,9 @@ msgstr ""
 msgid "My projects"
 msgstr ""
 
+msgid "NFT mint confirmed"
+msgstr ""
+
 msgid "NFT projects"
 msgstr ""
 
@@ -1596,6 +1641,9 @@ msgstr "Sonraki: İncele ve başlat"
 
 msgid "No"
 msgstr "Hayır"
+
+msgid "No Funding Target"
+msgstr ""
 
 msgid "No NFT reward tiers"
 msgstr ""
@@ -1774,6 +1822,9 @@ msgstr "Ödeme notu görüntüsü"
 msgid "Payment options"
 msgstr ""
 
+msgid "Payment success popup"
+msgstr ""
+
 msgid "Payments"
 msgstr "Ödemeler"
 
@@ -1834,20 +1885,17 @@ msgstr ""
 msgid "Project #{projectId}"
 msgstr ""
 
-msgid "Project Created"
-msgstr "Proje Oluşturuldu"
-
 msgid "Project Description"
 msgstr ""
 
 msgid "Project Details"
 msgstr ""
 
-msgid "Project Handle"
-msgstr ""
-
 msgid "Project ID must be a number."
 msgstr "Proje kimliği bir sayı olmalıdır."
+
+msgid "Project ID: {projectId}"
+msgstr ""
 
 msgid "Project Links"
 msgstr ""
@@ -1966,6 +2014,9 @@ msgstr ""
 msgid "Provide a link to additional information about this NFT."
 msgstr ""
 
+msgid "Queued"
+msgstr ""
+
 msgid "REMAINING SUPPLY: {0}/{1}"
 msgstr ""
 
@@ -2007,6 +2058,9 @@ msgstr ""
 
 msgid "Recipients will receive payouts in ETH."
 msgstr "Alıcılar ödemeleri ETH olarak alacaktır."
+
+msgid "Recommended"
+msgstr ""
 
 msgid "Reconfiguration"
 msgstr "Yeniden yapılandırma"
@@ -2092,9 +2146,6 @@ msgstr "Gerekli"
 msgid "Reserve a percentage of freshly minted tokens for your project to use."
 msgstr "Projenizin kullanması için yeni basılmış token'ların bir yüzdesini rezerve edin."
 
-msgid "Reserved Token Allocation"
-msgstr ""
-
 msgid "Reserved rate"
 msgstr "Rezerve oranı"
 
@@ -2167,6 +2218,9 @@ msgstr "Projenizde nasıl değişiklik yapılabileceğine ilişkin kurallar."
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr "Bu projenin finansman döngülerinin nasıl yeniden yapılandırılabileceğine ilişkin kurallar."
 
+msgid "Safe transactions"
+msgstr ""
+
 msgid "Save"
 msgstr "Kaydet"
 
@@ -2221,6 +2275,9 @@ msgstr ""
 msgid "Seconds"
 msgstr "Saniye"
 
+msgid "Select the option that best suits your project’s funding requirements."
+msgstr ""
+
 msgid "Send redeemed token to a custom address"
 msgstr ""
 
@@ -2245,6 +2302,9 @@ msgstr ""
 msgid "Set a distribution limit"
 msgstr "Bir dağıtım sınırı belirleyin"
 
+msgid "Set a duration for automatically recurring funding cycles. Funds may only be distributed once per cycle."
+msgstr ""
+
 msgid "Set a funding cycle duration"
 msgstr "Bir finansman döngüsü süresi belirleyin"
 
@@ -2255,6 +2315,9 @@ msgid "Set a limit on how many of these NFTs can be minted."
 msgstr ""
 
 msgid "Set a project handle (optional)"
+msgstr ""
+
+msgid "Set a specific amount to distribute to nominated addresses each funding cycle."
 msgstr ""
 
 msgid "Set a text record for {0} with the key <0>\"{projectHandleENSTextRecordKey}\"</0> and the value <1>\"{projectId}\"</1> (this project's ID). You can do this on the <2>ENS app</2>, or use the button below (as long as your connected wallet owns or controls that ENS name)."
@@ -2317,8 +2380,14 @@ msgstr ""
 msgid "Set veNFT operator for {projectTitle}"
 msgstr ""
 
+msgid "Set your funding target"
+msgstr ""
+
 msgid "Should you Juicebox?"
 msgstr "Juicebox’a katılmalı mısın?"
+
+msgid "Show your contributors a message after they receive their NFT reward."
+msgstr ""
 
 msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."
 msgstr "Bir finansman süresi belirlemediğiniz için bu ayarlarda yapılan değişiklikler hemen uygulanacaktır."
@@ -2339,6 +2408,9 @@ msgid "Something went wrong."
 msgstr "Bir şeyler yanlış gitti."
 
 msgid "Spaces are not allowed"
+msgstr ""
+
+msgid "Specific Funding Target"
 msgstr ""
 
 msgid "Spending"
@@ -2419,6 +2491,12 @@ msgstr "{0} üzerinde devreye alınan ve <0>bu arayüzü</0> kullanan herhangi b
 msgid "The address that should receive the tokens minted from paying this project."
 msgstr "Bu projeye ödeme yaparak basılan token'ları alması gereken adres."
 
+msgid "The amount distributed from the Juicebox balance in this funding cycle, out of the current distribution limit. No more than the distribution limit can be distributed in a single funding cycle. Any remaining ETH in Juicebox is overflow until the next cycle begins."
+msgstr ""
+
+msgid "The amount distributed from the Juicebox balance in this funding cycle, out of the current funding target. No more than the funding target can be distributed in a single funding cycle. Any remaining ETH in Juicebox is overflow until the next cycle begins."
+msgstr ""
+
 msgid "The amount of tokens minted to the receiver will be calculated based on if they had paid this amount to the project in the current funding cycle."
 msgstr ""
 
@@ -2427,12 +2505,6 @@ msgstr "Bu projenin sahip olduğu rezerve token miktarı. Bu token'lar, rezerve 
 
 msgid "The amount of tokens to mint to the receiver."
 msgstr "Alıcıya basılacak token miktarı."
-
-msgid "The amount that has been distributed from the Juicebox balance in this funding cycle, out of the current distribution limit. No more than the distribution limit can be distributed in a single funding cycle—any remaining ETH in Juicebox is overflow, until the next cycle begins."
-msgstr "Mevcut dağıtım limitinin dışında, bu finansman döngüsünde Juicebox bakiyesinden dağıtılan miktar. Tek bir finansman döngüsünde dağıtım limitinden fazlası dağıtılamaz; Juicebox'ta kalan tüm ETH, bir sonraki döngü başlayana kadar taşma olarak kabul edilir."
-
-msgid "The amount that has been distributed from the Juicebox balance in this funding cycle, out of the current funding target. No more than the funding target can be distributed in a single funding cycle—any remaining ETH in Juicebox is overflow, until the next cycle begins."
-msgstr "Mevcut finansman hedefinin dışında, bu finansman döngüsünde Juicebox bakiyesinden dağıtılan miktar. Tek bir finansman döngüsünde finansman hedefinden daha fazlası dağıtılamaz; Juicebox'ta kalan ETH, bir sonraki döngü başlayana kadar taşma durumundadır."
 
 msgid "The balance of the project owner's wallet."
 msgstr "Proje sahibinin cüzdan bakiyesi."
@@ -2479,17 +2551,23 @@ msgstr ""
 msgid "The project owner can add and remove payment terminals."
 msgstr ""
 
+msgid "The project owner can change the next funding cycle’s configuration at any time."
+msgstr ""
+
 msgid "The project owner is using an unverified contract for its reconfiguration strategy."
 msgstr ""
 
 msgid "The project owner may mint any supply of tokens at any time, diluting the token share of all existing contributors."
 msgstr "Proje sahibi, herhangi bir zamanda herhangi bir miktarda token basarak tüm mevcut katkı sahiplerinin token payını azaltabilir."
 
-msgid "The project owner may reconfigure this funding cycle at any time, without notice."
-msgstr "Proje sahibi, bu finansman döngüsünü, herhangi bir zamanda, bildirimde bulunmadan yeniden yapılandırabilir."
+msgid "The project owner may start a new funding cycle with a new configuration at any time."
+msgstr ""
 
 msgid "The project token's issuance rate will decrease by this percentage every funding cycle. A higher discount rate will incentivize contributors to pay the project earlier."
 msgstr "Proje token'ı çıkarma oranı, her finansman döngüsünde bu yüzde oranında azalacaktır. Daha yüksek bir indirim oranı, katkıda bulunanları projeye daha erken ödeme yapmaya teşvik edecektir."
+
+msgid "The project’s owner can change the project's settings and start a new funding cycle at any time."
+msgstr ""
 
 msgid "The ratio of tokens rewarded per payment amount will decrease by this percentage with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier than later."
 msgstr "Ödeme tutarı başına verilen token'ların oranı, her yeni finansman döngüsünde bu yüzde oranında azalacaktır. Daha yüksek bir indirim oranı, destekçileri projenizi daha erken ödemeye teşvik edecektir."
@@ -2728,9 +2806,6 @@ msgstr "İşlem beklemede..."
 msgid "Transaction unsuccessful"
 msgstr "İşlem başarısız"
 
-msgid "Transfer Ownership"
-msgstr ""
-
 msgid "Transfer ownership"
 msgstr "Mülkiyeti aktar"
 
@@ -2757,6 +2832,9 @@ msgstr ""
 
 msgid "Twitter handle"
 msgstr "Twitter tanıtıcısı"
+
+msgid "USD"
+msgstr ""
 
 msgid "Unarchive project"
 msgstr "Projeyi arşivden kaldır"
@@ -2836,10 +2914,10 @@ msgstr "Yeniden yapılandırma stratejisi kullanılması önerilir. Stratejisi o
 msgid "V1"
 msgstr ""
 
-msgid "V1 Token Migration"
+msgid "V1 token holders can swap their tokens for your V2 tokens on your V2 project's <0>Tokens</0> section."
 msgstr ""
 
-msgid "V1 token holders can swap their tokens for your V2 tokens on your V2 project's <0>Tokens</0> section."
+msgid "V1 token migration"
 msgstr ""
 
 msgid "V1 tokens to swap"
@@ -2953,6 +3031,9 @@ msgstr "L2'lerde çalışacak mı?"
 msgid "With Juicebox, projects are built and maintained by motivated punks getting paid transparently, and funded by a community of users and patrons who are rewarded as the projects they support succeed."
 msgstr "Juicebox ile projeler, motive olmuş punklar tarafından şeffaf bir şekilde ödenir ve destekledikleri projeler başarılı oldukça ödüllendirilen bir kullanıcı ve kullanıcı topluluğu tarafından finanse edilir ve sürdürülür."
 
+msgid "With manual funding cycles selected, the project's owner can start a new funding cycle on-demand. This may pose a risk to some contributors."
+msgstr ""
+
 msgid "With no funding cycles, the project's owner can start a new funding cycle (Funding Cycle #2) on-demand. <0>Learn more.</0>"
 msgstr "Finansman döngüsü tanımlanmamışsa, proje sahibi talep üzerine yeni bir finansman döngüsü (2. Finansman Döngüsü) başlatabilir. <0>Daha fazla bilgi edinin.</0>"
 
@@ -2967,6 +3048,9 @@ msgstr ""
 
 msgid "You can edit your project details after creation at any time, but the transaction will cost gas."
 msgstr "Proje ayrıntılarınızı oluşturduktan sonra istediğiniz zaman düzenleyebilirsiniz, ancak işlem gas maliyeti doğuracaktır."
+
+msgid "You can reconfigure your project's next funding cycle (Funding Cycle #2) at any time within the bounds of the rules you set."
+msgstr ""
 
 msgid "You can redeem your {tokenTextLong} for overflow without claiming them. You can transfer your unclaimed {tokenTextLong} to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
 msgstr "{tokenTextLong} token'larınızı hak talebinde bulunmadan taşma için kullanabilirsiniz. Bu projenin sağ üst köşesindeki İngiliz anahtarı simgesinden erişilebilen Araçlar menüsünden talep edilmemiş {tokenTextLong} token'larınızı başka bir adrese aktarabilirsiniz."
@@ -3082,6 +3166,12 @@ msgstr ""
 msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
 msgstr "Projeniz juicebox.money uygulamasında hemen aktif olarak görünecektir. Projenizin projeler sayfasında, \"aktif projeler\" listesinde görünmesi için lütfen birkaç gün bekleyin."
 
+msgid "Your project will withhold all funds raised. Funds can be distributed to payout addresses you set, and the project owner will receive any unallocated funds. Your project will have no overflow, so token holders can't redeem their tokens for ETH."
+msgstr ""
+
+msgid "Your project won't withhold any funds. All funds raised are Overflow. Token holders can redeem their tokens for a portion of your entire treasury."
+msgstr ""
+
 msgid "Your project's funding cycle target and duration."
 msgstr "Projenizin finansman döngüsü hedefi ve süresi."
 
@@ -3190,8 +3280,8 @@ msgstr "JBX ücreti sonrası {0}"
 msgid "{0} ago"
 msgstr "{0} önce"
 
-msgid "{0} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
-msgstr "{0} token'ları bu projeye ödeme yapan herkese dağıtılır. Proje için bir finansman hedefi belirlenmişse token'lar, talep edilmiş olup olmadıklarına bakılmaksızın proje taşmasının bir miktarı için kullanılabilir."
+msgid "{0} are distributed to anyone who pays this project. If the project has set a distribution limit, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
+msgstr ""
 
 msgid "{0} balance"
 msgstr "{0} bakiyesi"
@@ -3204,6 +3294,9 @@ msgstr "Size ait {0}"
 
 msgid "{0} holders"
 msgstr "{0} sahipleri"
+
+msgid "{0} is required"
+msgstr ""
 
 msgid "{0} reserved"
 msgstr "Rezerve {0}"

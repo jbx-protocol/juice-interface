@@ -3,7 +3,9 @@ import { Modal, ModalProps } from 'antd'
 import { readNetwork } from 'constants/networks'
 import { ThemeContext } from 'contexts/themeContext'
 import { useWallet } from 'hooks/Wallet'
+import Image from 'next/image'
 import { PropsWithChildren, useContext, useMemo } from 'react'
+import quint from '/public/assets/quint.gif'
 
 type TransactionModalProps = PropsWithChildren<
   ModalProps & {
@@ -30,8 +32,8 @@ const PendingTransactionModalBody = () => {
       }}
     >
       <div style={{ textAlign: 'center', maxWidth: 400 }}>
-        <img
-          src="/assets/quint.gif"
+        <Image
+          src={quint}
           alt={t`Juicebox loading animation`}
           style={{ maxWidth: 100, marginBottom: '1rem' }}
         />

@@ -6,9 +6,11 @@ import { Tooltip } from 'antd'
 
 import { useContext } from 'react'
 
+import Image from 'next/image'
 import { feedbackFormURL } from 'utils/feedbackFormURL'
 
 import ExternalLink from './ExternalLink'
+import stonedBanny from '/public/assets/stoned_banny.png'
 
 export function FeedbackFormButton({
   projectHandle,
@@ -40,7 +42,7 @@ export function FeedbackFormButton({
         className={`feedback-button hide-mobile ${isDarkMode ? 'dark' : ''}`}
         href={formUrl}
       >
-        <img src="/assets/stoned_banny.png" alt="Stoned banny" />
+        <Image src={stonedBanny} alt="Stoned banny" />
       </ExternalLink>
     </Tooltip>
   )

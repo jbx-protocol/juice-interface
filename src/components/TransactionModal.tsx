@@ -5,7 +5,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useWallet } from 'hooks/Wallet'
 import Image from 'next/image'
 import { PropsWithChildren, useContext, useMemo } from 'react'
-import quint from '/public/assets/quint.gif'
+import quint from '/public/assets/quint.webp'
 
 type TransactionModalProps = PropsWithChildren<
   ModalProps & {

@@ -25,7 +25,7 @@ const PAYMENT_MEMO_STICKERS: PaymentMemoSticker[] = [
   { filepath: '/assets/stickers/banny_shoes.png', alt: 'Banny with shoes' },
   { filepath: '/assets/stickers/banny_stoned.png', alt: 'Stoned banny' },
   { filepath: '/assets/stickers/banny_yes.png', alt: 'Stoned screaming "yes"' },
-  { filepath: '/assets/quint.gif', alt: 'Quint' },
+  { filepath: '/assets/quint.webp', alt: 'Quint' },
 ]
 
 export function AttachStickerModal({

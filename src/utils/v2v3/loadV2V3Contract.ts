@@ -53,9 +53,10 @@ export const loadV2V3Contract = async (
   }
 
   if (!contractJson) {
-    throw new Error(
-      `Error importing contract ${contractName}. Network: ${network})`,
+    console.error(
+      `Error importing contract ${contractName} [network=${network}, version=${version}]`,
     )
+    return
   }
 
   return new Contract(contractJson.address, contractJson.abi, signerOrProvider)
@@ -68,7 +69,7 @@ interface ForgeDeploy {
 /**
  *  Defines the ABI filename to use for a given V2V3ContractName.
  */
-const CONTRACT_ABI_OVERRIDES: {
+const V2_CONTRACT_ABI_OVERRIDES: {
   [k in V2V3ContractName]?: { filename: string; version: string }
 } = {
   DeprecatedJBController: {
@@ -113,7 +114,7 @@ const loadJuiceboxV2Contract = async (
   contractName: V2V3ContractName,
   network: NetworkName,
 ) => {
-  const contractOverride = CONTRACT_ABI_OVERRIDES[contractName]
+  const contractOverride = V2_CONTRACT_ABI_OVERRIDES[contractName]
   const version = contractOverride?.version ?? 'latest'
   const filename = contractOverride?.filename ?? contractName
   return await import(
@@ -125,12 +126,13 @@ const loadJuiceboxV3Contract = async (
   contractName: V2V3ContractName,
   network: NetworkName,
 ) => {
-  const contractOverride = CONTRACT_ABI_OVERRIDES[contractName]
-  const filename = contractOverride?.filename ?? contractName
-
-  return await import(
-    `@jbx-protocol/juice-contracts-v3/deployments/${network}/${filename}.json`
-  )
+  try {
+    return await import(
+      `@jbx-protocol/juice-contracts-v3/deployments/${network}/${contractName}.json`
+    )
+  } catch (_) {
+    return undefined
+  }
 }
 
 const loadJBV1TokenPaymentTerminalContract = async (network: NetworkName) => {

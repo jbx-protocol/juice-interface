@@ -51,10 +51,13 @@ export function useJuiceTheme(storageKey = 'jb_theme'): ThemeContextType {
     [initialThemeOption],
   )
 
-  useEffect(
-    () => setIsDarkMode(currentThemeOption === ThemeOption.dark),
-    [currentThemeOption],
-  )
+  useEffect(() => {
+    setIsDarkMode(currentThemeOption === ThemeOption.dark)
+    document.documentElement.style.setProperty(
+      'color-scheme',
+      currentThemeOption,
+    )
+  }, [currentThemeOption])
 
   return {
     themeOption: currentThemeOption,

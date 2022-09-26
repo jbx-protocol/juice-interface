@@ -6,8 +6,13 @@ export function MinimalCollapse({
   children,
   header,
   style,
+  light,
   ...props
-}: PropsWithChildren<{ header: string | JSX.Element; style?: CSSProperties }> &
+}: PropsWithChildren<{
+  header: string | JSX.Element
+  style?: CSSProperties
+  light?: boolean
+}> &
   CollapseProps) {
   return (
     <Collapse
@@ -17,7 +22,9 @@ export function MinimalCollapse({
         background: 'transparent',
         ...style,
       }}
-      className="minimal ant-collapse-header-text-primary ant-collapse-header-p-0"
+      className={`minimal ant-collapse-header-text-primary ant-collapse-header-p-0 ${
+        light ? 'light' : ''
+      }`}
       {...props}
     >
       <CollapsePanel key="1" header={header}>

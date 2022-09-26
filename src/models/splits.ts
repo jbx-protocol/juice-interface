@@ -1,3 +1,5 @@
+import { BigNumber } from '@ethersproject/bignumber'
+
 export type Split = {
   beneficiary: string | undefined // address
   percent: number
@@ -5,6 +7,17 @@ export type Split = {
   lockedUntil: number | undefined
   projectId: string | undefined
   allocator: string | undefined // address, If an allocator is specified, funds will be sent to the allocator contract along with the projectId, beneficiary, preferClaimed properties.
+}
+
+// Splits as they are given to transactions such as reconfigureFundingCyclesOf
+// Used when interpreting data from Gnosis Safe transactions
+export type OutgoingSplit = {
+  beneficiary: string | undefined // address
+  percent: BigNumber
+  preferClaimed: boolean | undefined
+  lockedUntil: number | undefined
+  projectId: string | undefined
+  allocator: string | undefined
 }
 
 export const defaultSplit = {

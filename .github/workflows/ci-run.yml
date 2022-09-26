@@ -28,7 +28,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
       - uses: actions/cache@v2
         with:
           path: '**/node_modules'
@@ -77,14 +76,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16.x' # LTS, use whatever Vercel uses.
       - uses: actions/cache@v2
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install packages
-        run: yarn install  --frozen-lockfile
+        run: yarn install
 
       - name: Codegen
         run: 'yarn codegen'
@@ -99,14 +100,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16.x' # LTS, use whatever Vercel uses.
       - uses: actions/cache@v2
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install packages
-        run: yarn install --frozen-lockfile
+        run: yarn install
 
       - name: Build NextJS app
         run: 'yarn build'

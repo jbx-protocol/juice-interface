@@ -19,8 +19,6 @@ import { StatsSection } from './home/StatsSection'
 import { HeroHeading, HeroSubheading } from './home/strings'
 import { TopProjectsSection } from './home/TopProjectsSection'
 import TrendingSection from './home/TrendingSection'
-import bananaOd from '/public/assets/banana-od.webp'
-import bananaOl from '/public/assets/banana-ol.webp'
 import blueBerry from '/public/assets/blueberry-ol.png'
 import bolt from '/public/assets/icons/bolt.svg'
 import orangeLadyOd from '/public/assets/orange_lady-od.png'
@@ -185,11 +183,10 @@ function Landing() {
                   objectFit: 'contain',
                 }}
                 src={
-                  forThemeOption &&
-                  forThemeOption({
-                    [ThemeOption.dark]: bananaOd,
-                    [ThemeOption.light]: bananaOl,
-                  })
+                  forThemeOption?.({
+                    [ThemeOption.dark]: '/assets/banana-od.webp',
+                    [ThemeOption.light]: '/assets/banana-ol.webp',
+                  }) ?? '/assets/banana-ol.webp'
                 }
                 alt="Chill banana drinking juice"
               />

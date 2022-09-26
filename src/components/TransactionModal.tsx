@@ -5,7 +5,6 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useWallet } from 'hooks/Wallet'
 import Image from 'next/image'
 import { PropsWithChildren, useContext, useMemo } from 'react'
-import quint from '/public/assets/quint.webp'
 
 type TransactionModalProps = PropsWithChildren<
   ModalProps & {
@@ -33,9 +32,10 @@ const PendingTransactionModalBody = () => {
     >
       <div style={{ textAlign: 'center', maxWidth: 400 }}>
         <Image
-          src={quint}
+          src="/assets/quint.webp"
           alt={t`Juicebox loading animation`}
           style={{ maxWidth: 100, marginBottom: '1rem' }}
+          width={100}
         />
         <h2 style={{ color: colors.text.primary }}>
           <Trans>Transaction pending...</Trans>

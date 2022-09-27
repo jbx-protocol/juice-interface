@@ -7,6 +7,7 @@ import { loadV2V3Contract } from 'utils/v2v3/loadV2V3Contract'
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
 import { V2CVType, V3CVType } from 'models/cv'
+import { emitErrorNotification } from 'utils/notifications'
 
 export function useV2V3ContractLoader({ cv }: { cv: V2CVType | V3CVType }) {
   const { signer } = useWallet()
@@ -23,7 +24,7 @@ export function useV2V3ContractLoader({ cv }: { cv: V2CVType | V3CVType }) {
 
         const contractLoaders = await Promise.all(
           Object.values(V2V3ContractName).map(contractName =>
-            loadV2V3Contract(contractName, network, signerOrProvider),
+            loadV2V3Contract(contractName, network, signerOrProvider, cv),
           ),
         )
 
@@ -38,6 +39,9 @@ export function useV2V3ContractLoader({ cv }: { cv: V2CVType | V3CVType }) {
         setContracts(newContractMap)
       } catch (e) {
         console.error('CONTRACT LOADER ERROR:', e)
+        emitErrorNotification(
+          'Failed to load contracts. Change network or refresh page.',
+        )
       }
     }
 

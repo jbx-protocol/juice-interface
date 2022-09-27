@@ -33,6 +33,7 @@ import {
 import { BigNumber } from '@ethersproject/bignumber'
 import { parseEther } from 'ethers/lib/utils'
 
+import ETHToUSD from 'components/currency/ETHToUSD'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 import DistributionLimit from '../../shared/DistributionLimit'
@@ -79,6 +80,10 @@ export default function FundingCycleDetails({
     capitalize: false,
     plural: true,
   })
+
+  const currency = V2V3CurrencyName(
+    distributionLimitCurrency?.toNumber() as V2V3CurrencyOption | undefined,
+  )
 
   const ReservedTokensText = () => {
     const reservedRate = formattedNum(
@@ -139,14 +144,19 @@ export default function FundingCycleDetails({
       >
         <Descriptions.Item label={<Trans>Distribution limit</Trans>}>
           <span style={{ whiteSpace: 'nowrap' }}>
-            <DistributionLimit
-              distributionLimit={distributionLimit}
-              currencyName={V2V3CurrencyName(
-                distributionLimitCurrency?.toNumber() as
-                  | V2V3CurrencyOption
-                  | undefined,
-              )}
-            />
+            <Tooltip
+              title={
+                currency === 'ETH' && distributionLimit?.gt(0) ? (
+                  <ETHToUSD ethAmount={distributionLimit} />
+                ) : undefined
+              }
+            >
+              {''}
+              <DistributionLimit
+                distributionLimit={distributionLimit}
+                currencyName={currency}
+              />
+            </Tooltip>
           </span>
         </Descriptions.Item>
 

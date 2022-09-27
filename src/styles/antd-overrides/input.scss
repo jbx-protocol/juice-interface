@@ -73,7 +73,7 @@
 }
 
 .ant-form {
-  color: var(--text-primary)
+  color: var(--text-primary);
 }
 
 .ant-form-item {
@@ -100,7 +100,7 @@ input.ant-input[type='number'] {
   -moz-appearance: textfield;
 }
 
-.ant-input-prefix, 
+.ant-input-prefix,
 .ant-input-show-count-suffix {
   color: var(--text-secondary);
 }
@@ -161,92 +161,6 @@ textarea.ant-input::placeholder {
 .ant-input-textarea-show-count::after {
   color: var(--text-tertiary);
 }
-
-.ant-select {
-  .ant-select-selector {
-    background-color: transparent;
-    color: var(--text-primary);
-    border-color: var(--stroke-secondary);
-  }
-
-  .ant-select-arrow {
-    color: var(--text-primary);
-  }
-}
-
-.ant-select-color-secondary {
-  .ant-select-selector,
-  .ant-select-arrow {
-    color: var(--text-secondary);
-  }
-}
-
-.ant-select.small {
-  .ant-select-selector {
-    height: 24px;
-    border-color: var(--stroke-tertiary) !important;
-  }
-  .ant-select-selection-item {
-    line-height: 22px;
-    color: var(--text-secondary);
-    font-weight: 500;
-  }
-  .ant-select-arrow {
-    margin-top: -4px;
-    font-size: 10px;
-  }
-}
-
-.ant-select-dropdown {
-  padding: 0;
-  background-color: var(--background-l0);
-
-  .ant-select-item-option {
-    color: var(--text-primary);
-  }
-
-  .ant-select-item-option-active {
-    color: var(--text-primary);
-    background-color: var(--background-l2);
-  }
-
-  .ant-select-item-option-selected {
-    color: var(--text-primary);
-    background-color: var(--background-l2);
-  }
-}
-
-// Specific to language Select in top nav
-.language-selector {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  .ant-select {
-    border: none !important;
-    margin-left: 4px;
-    width: 100%;
-  }
-
-  .ant-select-selector {
-    height: 24px;
-    padding: 0 8px !important;
-    border: none !important;
-  }
-  .ant-select-arrow {
-    display: none;
-  }
-  .ant-select-selection-item {
-    text-align: left;
-    padding: 0 !important;
-    font-weight: 400;
-  }
-}
-
-.language-selector .ant-select-focused .ant-select-selector {
-  border: none !important;
-  box-shadow: none !important;
-}
-
 
 .ant-upload {
   color: var(--text-primary);

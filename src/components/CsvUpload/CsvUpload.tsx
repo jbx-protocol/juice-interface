@@ -45,29 +45,33 @@ export function CsvUpload<T>({
   }
 
   return (
-    <label
-      style={{ cursor: 'pointer', fontWeight: 400, color: colors.text.primary }}
-      role="button"
-      htmlFor="csv-upload"
-    >
-      <UploadOutlined /> <Trans>Upload CSV</Trans>{' '}
-      <TooltipIcon
-        tip={
-          <>
+    <div>
+      <label
+        style={{
+          cursor: 'pointer',
+          fontWeight: 400,
+          color: colors.text.primary,
+        }}
+        role="button"
+        htmlFor="csv-upload"
+      >
+        <UploadOutlined /> <Trans>Upload CSV</Trans>{' '}
+        <TooltipIcon
+          tip={
             <a href={templateUrl} download>
               <Trans>Download Template</Trans>
             </a>
-          </>
-        }
-      />
-      <input
-        type="file"
-        hidden
-        id="csv-upload"
-        onChange={onUploadChange}
-        // Never set the value. This allows a file of the same name to be uploaded repeatedly.
-        value=""
-      />
-    </label>
+          }
+        />
+        <input
+          type="file"
+          hidden
+          id="csv-upload"
+          onChange={onUploadChange}
+          // Never set the value. This allows a file of the same name to be uploaded repeatedly.
+          value=""
+        />
+      </label>
+    </div>
   )
 }

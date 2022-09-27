@@ -1,8 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import {
-  V2FundingCycleMetadata,
   V2V3FundingCycle,
-} from 'models/v2/fundingCycle'
+  V2V3FundingCycleMetadata,
+} from 'models/v2v3/fundingCycle'
 
 import unsafeFundingCycleProperties from 'utils/unsafeFundingCycleProperties'
 
@@ -54,7 +54,7 @@ export function getDefaultFundAccessConstraint<T>(
  */
 export const getUnsafeV2V3FundingCycleProperties = (
   fundingCycle: V2V3FundingCycle,
-  fundingCycleMetadata: V2FundingCycleMetadata,
+  fundingCycleMetadata: V2V3FundingCycleMetadata,
 ): FundingCycleRiskFlags => {
   const ballot = getBallotStrategyByAddress(fundingCycle.ballot)
   const reservedRatePercentage = parseFloat(
@@ -76,7 +76,7 @@ export const getUnsafeV2V3FundingCycleProperties = (
  */
 export const getV2V3FundingCycleRiskCount = (
   fundingCycle: V2V3FundingCycle,
-  fundingCycleMetadata: V2FundingCycleMetadata,
+  fundingCycleMetadata: V2V3FundingCycleMetadata,
 ): number => {
   return Object.values(
     getUnsafeV2V3FundingCycleProperties(fundingCycle, fundingCycleMetadata),

@@ -4,9 +4,9 @@ import { Trans } from '@lingui/macro'
 import { Button, FormInstance } from 'antd'
 import {
   useAppSelector,
-  useEditingV2FundingCycleMetadataSelector,
   useEditingV2V3FundAccessConstraintsSelector,
   useEditingV2V3FundingCycleDataSelector,
+  useEditingV2V3FundingCycleMetadataSelector,
 } from 'hooks/AppSelector'
 import {
   TxNftArg,
@@ -80,7 +80,7 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
       postPayModal,
     },
   } = useAppSelector(state => state.editingV2Project)
-  const fundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
+  const fundingCycleMetadata = useEditingV2V3FundingCycleMetadataSelector()
   const fundingCycleData = useEditingV2V3FundingCycleDataSelector()
   const fundAccessConstraints = useEditingV2V3FundAccessConstraintsSelector()
   const dispatch = useAppDispatch()

@@ -1,9 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import {
-  V2FundingCycleMetadata,
-  V2V3FundingCycle,
-} from 'models/v2/fundingCycle'
 import { V2V3Contracts } from 'models/v2v3/contracts'
+import {
+  V2V3FundingCycle,
+  V2V3FundingCycleMetadata,
+} from 'models/v2v3/fundingCycle'
 import { formatDiscountRate } from 'utils/v2v3/math'
 
 // Fill in gaps between first funding cycle of each configuration:
@@ -15,10 +15,10 @@ const deriveFundingCyclesBetweenEachConfiguration = ({
   firstFCOfEachConfiguration,
   currentFundingCycle,
 }: {
-  firstFCOfEachConfiguration: [V2V3FundingCycle, V2FundingCycleMetadata][]
+  firstFCOfEachConfiguration: [V2V3FundingCycle, V2V3FundingCycleMetadata][]
   currentFundingCycle: V2V3FundingCycle
 }) => {
-  const allFundingCycles: [V2V3FundingCycle, V2FundingCycleMetadata][] = []
+  const allFundingCycles: [V2V3FundingCycle, V2V3FundingCycleMetadata][] = []
 
   firstFCOfEachConfiguration.forEach(
     (firstFundingCycleOfConfiguration, configurationIndex) => {
@@ -103,15 +103,17 @@ export const fetchPastFundingCycles = async ({
   projectId: number
   currentFundingCycle: V2V3FundingCycle
   contracts: V2V3Contracts
-}): Promise<[V2V3FundingCycle, V2FundingCycleMetadata][]> => {
+}): Promise<[V2V3FundingCycle, V2V3FundingCycleMetadata][]> => {
   const firstFCOfCurrentConfiguration =
     (await contracts?.JBController.getFundingCycleOf(
       projectId,
       currentFundingCycle.configuration,
-    )) as [V2V3FundingCycle, V2FundingCycleMetadata]
+    )) as [V2V3FundingCycle, V2V3FundingCycleMetadata]
 
-  let firstFCOfEachConfiguration: [V2V3FundingCycle, V2FundingCycleMetadata][] =
-    [firstFCOfCurrentConfiguration]
+  let firstFCOfEachConfiguration: [
+    V2V3FundingCycle,
+    V2V3FundingCycleMetadata,
+  ][] = [firstFCOfCurrentConfiguration]
 
   let previousReconfiguration = currentFundingCycle.basedOn
   // Get first funding cycle of each configuration using basedOn
@@ -120,7 +122,7 @@ export const fetchPastFundingCycles = async ({
       (await contracts?.JBController.getFundingCycleOf(
         projectId,
         previousReconfiguration,
-      )) as [V2V3FundingCycle, V2FundingCycleMetadata]
+      )) as [V2V3FundingCycle, V2V3FundingCycleMetadata]
 
     if (previousReconfigurationFirstFundingCycle) {
       // Add it to the start of list

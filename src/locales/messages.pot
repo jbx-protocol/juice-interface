@@ -380,6 +380,9 @@ msgstr ""
 msgid "Amount"
 msgstr ""
 
+msgid "Amount is required."
+msgstr ""
+
 msgid "Amount of ERC-20 tokens to claim"
 msgstr ""
 
@@ -2052,6 +2055,9 @@ msgid "Recipient"
 msgstr ""
 
 msgid "Recipient address"
+msgstr ""
+
+msgid "Recipient address is required."
 msgstr ""
 
 msgid "Recipients will receive payouts in ETH."

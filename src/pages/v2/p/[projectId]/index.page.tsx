@@ -2,7 +2,7 @@ import { AppWrapper, SEO } from 'components/common'
 import { DesmosScript } from 'components/common/Head/scripts/DesmosScript'
 import Loading from 'components/Loading'
 import { CV_V2 } from 'constants/cv'
-import { V2_PROJECT_IDS } from 'constants/v2/projectIds'
+import { V2V3_PROJECT_IDS } from 'constants/v2v3/projectIds'
 import { paginateDepleteProjectsQueryCall } from 'lib/apollo'
 import {
   GetStaticPaths,
@@ -10,9 +10,8 @@ import {
   GetStaticPropsResult,
   InferGetStaticPropsType,
 } from 'next'
-import { TransactionProvider } from 'providers/TransactionProvider'
-import { V2ContractsProvider } from 'providers/v2/V2ContractsProvider'
-import V2Dashboard from './components/V2Dashboard'
+
+import { V2V3Dashboard } from './components/V2V3Dashboard'
 import { getProjectProps, ProjectPageProps } from './utils/props'
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -27,7 +26,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 
   return {
-    paths: [{ params: { projectId: String(V2_PROJECT_IDS.JUICEBOX_DAO) } }],
+    paths: [{ params: { projectId: String(V2V3_PROJECT_IDS.JUICEBOX_DAO) } }],
     fallback: true,
   }
 }
@@ -66,15 +65,11 @@ export default function V2ProjectPage({
         </SEO>
       ) : null}
       <AppWrapper>
-        <V2ContractsProvider>
-          <TransactionProvider>
-            {metadata ? (
-              <V2Dashboard metadata={metadata} projectId={projectId} />
-            ) : (
-              <Loading />
-            )}
-          </TransactionProvider>
-        </V2ContractsProvider>
+        {metadata ? (
+          <V2V3Dashboard metadata={metadata} projectId={projectId} />
+        ) : (
+          <Loading />
+        )}
       </AppWrapper>
     </>
   )

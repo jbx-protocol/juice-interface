@@ -5,22 +5,22 @@ import { Button, Col, Row, Space, Tooltip } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
 import FormattedAddress from 'components/FormattedAddress'
 import TooltipIcon from 'components/TooltipIcon'
-import V2ProjectHandle from 'components/v2/shared/V2ProjectHandle'
+import V2V3ProjectHandle from 'components/v2v3/shared/V2V3ProjectHandle'
 import { CurrencyName } from 'constants/currency'
 import { ThemeContext } from 'contexts/themeContext'
-import { V2ProjectContext } from 'contexts/v2/projectContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import round from 'lodash/round'
 import { Split } from 'models/splits'
 import { PropsWithChildren, useContext, useState } from 'react'
 import { formatDate } from 'utils/format/formatDate'
 import { parseWad } from 'utils/format/formatNumber'
-import { amountFromPercent } from 'utils/v2/distributions'
+import { amountFromPercent } from 'utils/v2v3/distributions'
 import {
   formatSplitPercent,
   MAX_DISTRIBUTION_LIMIT,
   preciseFormatSplitPercent,
   SPLITS_TOTAL_PERCENT,
-} from 'utils/v2/math'
+} from 'utils/v2v3/math'
 import { DistributionSplitModal } from './DistributionSplitModal'
 
 const Parens = ({
@@ -63,7 +63,7 @@ export default function DistributionSplitCard({
   const {
     theme: { colors, radii },
   } = useContext(ThemeContext)
-  const { projectOwnerAddress } = useContext(V2ProjectContext)
+  const { projectOwnerAddress } = useContext(V2V3ProjectContext)
 
   const [editSplitModalOpen, setEditSplitModalOpen] = useState<boolean>(false)
 
@@ -119,7 +119,7 @@ export default function DistributionSplitCard({
                   justifyContent: 'space-between',
                 }}
               >
-                <V2ProjectHandle projectId={parseInt(split.projectId)} />
+                <V2V3ProjectHandle projectId={parseInt(split.projectId)} />
               </div>
             </Col>
           </Row>

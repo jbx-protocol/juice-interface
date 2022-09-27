@@ -5,27 +5,27 @@ import { Col, Row, Space } from 'antd'
 
 import {
   useAppSelector,
-  useEditingV2FundAccessConstraintsSelector,
-  useEditingV2FundingCycleDataSelector,
   useEditingV2FundingCycleMetadataSelector,
+  useEditingV2V3FundAccessConstraintsSelector,
+  useEditingV2V3FundingCycleDataSelector,
 } from 'hooks/AppSelector'
 import { useWallet } from 'hooks/Wallet'
-import { V2CurrencyOption } from 'models/v2/currencyOption'
+import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { formattedNum } from 'utils/format/formatNumber'
-import { V2CurrencyName } from 'utils/v2/currency'
+import { V2CurrencyName } from 'utils/v2v3/currency'
 import {
   getDefaultFundAccessConstraint,
-  getUnsafeV2FundingCycleProperties,
-} from 'utils/v2/fundingCycle'
+  getUnsafeV2V3FundingCycleProperties,
+} from 'utils/v2v3/fundingCycle'
 import {
   formatIssuanceRate,
   formatReservedRate,
   MAX_DISTRIBUTION_LIMIT,
   weightedAmount,
-} from 'utils/v2/math'
+} from 'utils/v2v3/math'
 
 import Callout from 'components/Callout'
-import { V2FundingCycle } from 'models/v2/fundingCycle'
+import { V2V3FundingCycle } from 'models/v2/fundingCycle'
 
 import { rowGutter } from '.'
 
@@ -52,10 +52,10 @@ export default function FundingSummarySection() {
 
   const { userAddress } = useWallet()
 
-  const fundingCycleData = useEditingV2FundingCycleDataSelector()
-  const fundAccessConstraints = useEditingV2FundAccessConstraintsSelector()
+  const fundingCycleData = useEditingV2V3FundingCycleDataSelector()
+  const fundAccessConstraints = useEditingV2V3FundAccessConstraintsSelector()
 
-  const fundingCycle: V2FundingCycle = {
+  const fundingCycle: V2V3FundingCycle = {
     ...fundingCycleData,
     number: BigNumber.from(1),
     configuration: BigNumber.from(0),
@@ -71,7 +71,7 @@ export default function FundingSummarySection() {
   )
 
   const currencyName = V2CurrencyName(
-    fundAccessConstraint?.distributionLimitCurrency.toNumber() as V2CurrencyOption,
+    fundAccessConstraint?.distributionLimitCurrency.toNumber() as V2V3CurrencyOption,
   )
 
   const distributionLimit =
@@ -80,7 +80,7 @@ export default function FundingSummarySection() {
     distributionLimit && !distributionLimit.gte(MAX_DISTRIBUTION_LIMIT),
   )
 
-  const unsafeFundingCycleProperties = getUnsafeV2FundingCycleProperties(
+  const unsafeFundingCycleProperties = getUnsafeV2V3FundingCycleProperties(
     fundingCycle,
     fundingCycleMetadata,
   )

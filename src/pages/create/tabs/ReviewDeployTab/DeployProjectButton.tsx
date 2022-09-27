@@ -4,11 +4,11 @@ import { Button, FormInstance } from 'antd'
 import { DeployButtonText } from 'components/DeployProjectButtonText'
 import {
   useAppSelector,
-  useEditingV2FundAccessConstraintsSelector,
-  useEditingV2FundingCycleDataSelector,
   useEditingV2FundingCycleMetadataSelector,
+  useEditingV2V3FundAccessConstraintsSelector,
+  useEditingV2V3FundingCycleDataSelector,
 } from 'hooks/AppSelector'
-import { useLaunchProjectTx } from 'hooks/v2/transactor/LaunchProjectTx'
+import { useLaunchProjectTx } from 'hooks/v2v3/transactor/LaunchProjectTx'
 import { useWallet } from 'hooks/Wallet'
 import { useCallback, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
@@ -52,8 +52,8 @@ export function DeployProjectButton({ form }: { form: FormInstance }) {
   const { projectMetadata, reservedTokensGroupedSplits, payoutGroupedSplits } =
     useAppSelector(state => state.editingV2Project)
   const fundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
-  const fundingCycleData = useEditingV2FundingCycleDataSelector()
-  const fundAccessConstraints = useEditingV2FundAccessConstraintsSelector()
+  const fundingCycleData = useEditingV2V3FundingCycleDataSelector()
+  const fundAccessConstraints = useEditingV2V3FundAccessConstraintsSelector()
   const dispatch = useAppDispatch()
 
   const deployProject = useCallback(async () => {

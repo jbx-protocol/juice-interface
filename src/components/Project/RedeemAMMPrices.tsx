@@ -23,7 +23,11 @@ export const RedeemAMMPrices = ({
         or{' '}
         <Tooltip
           title={
-            <AMMPrices tokenSymbol={tokenSymbol} tokenAddress={tokenAddress} />
+            <AMMPrices
+              mode="redeem"
+              tokenSymbol={tokenSymbol}
+              tokenAddress={tokenAddress}
+            />
           }
           placement="bottomLeft"
           overlayStyle={{ minWidth: '300px' }}

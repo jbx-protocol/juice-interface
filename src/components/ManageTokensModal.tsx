@@ -1,10 +1,13 @@
 import * as constants from '@ethersproject/constants'
+import { BigNumber } from '@ethersproject/bignumber'
+
 import { t, Trans } from '@lingui/macro'
 import { Modal, Space, Tooltip } from 'antd'
 import RichButton from 'components/RichButton'
 import { PropsWithChildren, useState } from 'react'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { reloadWindow } from 'utils/windowUtils'
+import { TransactorInstance } from 'hooks/Transactor'
 
 type RedeemDisabledReason = 'redemptionRateZero' | 'overflowZero'
 
@@ -41,10 +44,19 @@ const RedeemButtonTooltip = ({
 }
 
 type ModalProps = {
-  visible?: boolean
-  onCancel?: VoidFunction
-  onConfirmed?: VoidFunction
+  visible: boolean
+  onCancel: VoidFunction
+  onConfirmed: VoidFunction
 }
+
+type TransferUnclaimedModalProps = {
+  tokenSymbol: string | undefined
+  unclaimedBalance: BigNumber | undefined
+  useTransferUnclaimedTokensTx: () => TransactorInstance<{
+    to: string
+    amount: BigNumber
+  }>
+} & ModalProps
 
 export default function ManageTokensModal({
   onCancel,
@@ -55,12 +67,15 @@ export default function ManageTokensModal({
   redeemDisabled,
   tokenSymbol,
   tokenAddress,
+  tokenUnclaimedBalance,
+
+  transferUnclaimedTokensTx,
 
   children,
   RedeemModal,
   ClaimTokensModal,
   MintModal,
-  TransferUnclaimedModal,
+  TransferUnclaimedTokensModal,
 }: PropsWithChildren<{
   userHasMintPermission: boolean
   projectAllowsMint: boolean
@@ -70,17 +85,25 @@ export default function ManageTokensModal({
   redeemDisabled: boolean | undefined
   tokenSymbol: string | undefined
   tokenAddress: string | undefined
+  tokenUnclaimedBalance: BigNumber | undefined
+
+  transferUnclaimedTokensTx: () => TransactorInstance<{
+    to: string
+    amount: BigNumber
+  }>
 
   RedeemModal: (props: ModalProps) => JSX.Element | null
   ClaimTokensModal: (props: ModalProps) => JSX.Element | null
   MintModal: (props: ModalProps) => JSX.Element | null
-  TransferUnclaimedModal: (props: ModalProps) => JSX.Element | null
+  TransferUnclaimedTokensModal: (
+    props: TransferUnclaimedModalProps,
+  ) => JSX.Element | null
 }>) {
   const [redeemModalVisible, setRedeemModalVisible] = useState<boolean>(false)
-  const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>()
-  const [mintModalVisible, setMintModalVisible] = useState<boolean>()
+  const [unstakeModalVisible, setUnstakeModalVisible] = useState<boolean>(false)
+  const [mintModalVisible, setMintModalVisible] = useState<boolean>(false)
   const [transferTokensModalVisible, setTransferTokensModalVisible] =
-    useState<boolean>()
+    useState<boolean>(false)
 
   const tokensLabel = tokenSymbolText({
     tokenSymbol,
@@ -189,7 +212,7 @@ export default function ManageTokensModal({
               </div>
             </Tooltip>
           )}
-          <div>
+          {tokenUnclaimedBalance?.gt(0) ? (
             <RichButton
               heading={<Trans>Transfer unclaimed {tokensLabel}</Trans>}
               description={
@@ -201,7 +224,7 @@ export default function ManageTokensModal({
               }
               onClick={() => setTransferTokensModalVisible(true)}
             />
-          </div>
+          ) : null}
 
           {children}
         </Space>
@@ -222,10 +245,13 @@ export default function ManageTokensModal({
         onCancel={() => setMintModalVisible(false)}
         onConfirmed={reloadWindow}
       />
-      <TransferUnclaimedModal
+      <TransferUnclaimedTokensModal
         visible={transferTokensModalVisible}
         onCancel={() => setTransferTokensModalVisible(false)}
         onConfirmed={reloadWindow}
+        tokenSymbol={tokenSymbol}
+        unclaimedBalance={tokenUnclaimedBalance}
+        useTransferUnclaimedTokensTx={transferUnclaimedTokensTx}
       />
     </>
   )

@@ -25,6 +25,8 @@ import { TextButton } from 'components/TextButton'
 import { ThemeContext } from 'contexts/themeContext'
 import useTotalBalanceOf from 'hooks/v2v3/contractReader/TotalBalanceOf'
 import useUserUnclaimedTokenBalance from 'hooks/v2v3/contractReader/UserUnclaimedTokenBalance'
+import { useTransferUnclaimedTokensTx } from 'hooks/v2v3/transactor/TransferUnclaimedTokensTx'
+
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import TooltipIcon from 'components/TooltipIcon'
@@ -34,6 +36,7 @@ import { useHasV1TokenPaymentTerminal } from 'hooks/v2v3/hasV1TokenPaymentTermin
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { reloadWindow } from 'utils/windowUtils'
 
+import { TransferUnclaimedTokensModal } from 'components/modals/TransferUnclaimedTokensModal'
 import RichButton from 'components/RichButton'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
@@ -45,7 +48,6 @@ import { V1ProjectTokensSection } from './V1ProjectTokensSection/V1ProjectTokens
 import V2ClaimTokensModal from './V2ClaimTokensModal'
 import V2MintModal from './V2MintModal'
 import V2RedeemModal from './V2RedeemModal'
-import { V2TransferUnclaimedTokensModal } from './V2TransferUnclaimedModal'
 
 const labelStyle: CSSProperties = {
   width: '10.5rem',
@@ -321,10 +323,12 @@ export default function V2ManageTokensSection() {
         redeemDisabled={redeemDisabled}
         tokenSymbol={tokenSymbol}
         tokenAddress={tokenAddress}
+        tokenUnclaimedBalance={unclaimedBalance}
+        transferUnclaimedTokensTx={useTransferUnclaimedTokensTx}
         RedeemModal={V2RedeemModal}
         ClaimTokensModal={V2ClaimTokensModal}
         MintModal={V2MintModal}
-        TransferUnclaimedModal={V2TransferUnclaimedTokensModal}
+        TransferUnclaimedTokensModal={TransferUnclaimedTokensModal}
       >
         {veNftEnabled && (
           <Link href={veNftPagePath('mint', { projectId, handle })}>

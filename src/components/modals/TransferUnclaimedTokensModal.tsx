@@ -1,57 +1,89 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Form, Modal } from 'antd'
+import { Form } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
+import TransactionModal from 'components/TransactionModal'
 import { isAddress } from 'ethers/lib/utils'
-import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceOfUser'
-import { useTransferTokensTx } from 'hooks/v1/transactor/TransferTokensTx'
-
-import { FC, useContext, useState } from 'react'
+import { TransactorInstance } from 'hooks/Transactor'
+import { useState } from 'react'
 import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
+import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
-interface TransferUnclaimedModalProps {
-  visible?: boolean
-  onCancel?: VoidFunction
-  onConfirmed?: VoidFunction
-}
-
-export const TransferUnclaimedModal: FC<TransferUnclaimedModalProps> = ({
+export function TransferUnclaimedTokensModal({
   visible,
   onCancel,
   onConfirmed,
-}) => {
-  const unclaimedBalance = useUnclaimedBalanceOfUser()
-  const { tokenSymbol } = useContext(V1ProjectContext)
+  tokenSymbol,
+  unclaimedBalance,
+  useTransferUnclaimedTokensTx,
+}: {
+  visible: boolean
+  onCancel: VoidFunction
+  onConfirmed: VoidFunction
+  tokenSymbol: string | undefined
+  unclaimedBalance: BigNumber | undefined
+  useTransferUnclaimedTokensTx: () => TransactorInstance<{
+    to: string
+    amount: BigNumber
+  }>
+}) {
   const [loading, setLoading] = useState<boolean>()
+  const [transactionPending, setTransactionPending] = useState<boolean>()
   const [form] = Form.useForm<{ amount: string; to: string }>()
-  const transferUnclaimedTokensTx = useTransferTokensTx()
-
   const amount = useWatch('amount', form)
   const address = useWatch('to', form)
+  const transferUnclaimedTokensTx = useTransferUnclaimedTokensTx()
 
   const transferTokens = async () => {
+    await form.validateFields()
+
     setLoading(true)
 
-    transferUnclaimedTokensTx(
+    const txSuccess = await transferUnclaimedTokensTx(
       {
         to: address,
         amount: parseWad(amount),
       },
       {
+        onDone: () => {
+          setTransactionPending(true)
+        },
         onConfirmed: () => {
           form.resetFields()
+          setTransactionPending(false)
           setLoading(false)
           onConfirmed?.()
         },
-        onError: () => {
+        onError: (e: DOMException) => {
+          setTransactionPending(false)
           setLoading(false)
+          emitErrorNotification(e.message)
         },
       },
     )
+
+    if (!txSuccess) {
+      setTransactionPending(false)
+      setLoading(false)
+    }
+  }
+
+  const validateAmount = () => {
+    if (parseWad(amount).eq(0)) {
+      return Promise.reject(t`Amount is required.`)
+    }
+    return Promise.resolve()
+  }
+
+  const validateAddress = () => {
+    if (!isAddress(address)) {
+      return Promise.reject(t`Recipient address is required.`)
+    }
+    return Promise.resolve()
   }
 
   const tokenTextShort = tokenSymbolText({
@@ -60,7 +92,8 @@ export const TransferUnclaimedModal: FC<TransferUnclaimedModalProps> = ({
   })
 
   return (
-    <Modal
+    <TransactionModal
+      transactionPending={transactionPending}
       title={t`Transfer unclaimed ${tokenTextShort}`}
       visible={visible}
       confirmLoading={loading}
@@ -68,16 +101,10 @@ export const TransferUnclaimedModal: FC<TransferUnclaimedModalProps> = ({
         transferTokens()
       }}
       onCancel={() => {
-        form.setFieldsValue({
-          amount: undefined,
-          to: undefined,
-        })
+        form.resetFields()
         onCancel?.()
       }}
       okText={t`Transfer ${tokenTextShort}`}
-      okButtonProps={{
-        disabled: parseWad(amount).eq(0) || !isAddress(address),
-      }}
       centered
     >
       <Form form={form} layout="vertical">
@@ -87,7 +114,15 @@ export const TransferUnclaimedModal: FC<TransferUnclaimedModalProps> = ({
             {formatWad(unclaimedBalance, { precision: 0 })}
           </Trans>
         </p>
-        <Form.Item name="amount" label="Amount">
+        <Form.Item
+          name="amount"
+          label={t`Amount`}
+          rules={[
+            {
+              validator: validateAmount,
+            },
+          ]}
+        >
           <FormattedNumberInput
             placeholder="0"
             min={0}
@@ -104,10 +139,18 @@ export const TransferUnclaimedModal: FC<TransferUnclaimedModalProps> = ({
             }
           />
         </Form.Item>
-        <Form.Item name="to" label={t`Recipient address`}>
+        <Form.Item
+          name="to"
+          label={t`Recipient address`}
+          rules={[
+            {
+              validator: validateAddress,
+            },
+          ]}
+        >
           <EthAddressInput />
         </Form.Item>
       </Form>
-    </Modal>
+    </TransactionModal>
   )
 }

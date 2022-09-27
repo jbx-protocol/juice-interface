@@ -24,10 +24,11 @@ import { formatPercent, formatWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 
+import { TransferUnclaimedTokensModal } from 'components/modals/TransferUnclaimedTokensModal'
+import { useTransferTokensTx } from 'hooks/v1/transactor/TransferTokensTx'
 import ConfirmUnstakeTokensModal from '../modals/ConfirmUnstakeTokensModal'
 import PrintPreminedModal from '../modals/PrintPreminedModal'
 import RedeemModal from '../modals/RedeemModal'
-import { TransferUnclaimedModal } from '../modals/TransferUnclaimedModal'
 
 const labelStyle: CSSProperties = {
   width: 128,
@@ -216,10 +217,12 @@ export default function Rewards() {
         redeemDisabled={redeemDisabled}
         tokenSymbol={tokenSymbol}
         tokenAddress={tokenAddress}
+        tokenUnclaimedBalance={unclaimedBalance}
+        transferUnclaimedTokensTx={useTransferTokensTx}
         RedeemModal={RedeemModal}
         ClaimTokensModal={ConfirmUnstakeTokensModal}
         MintModal={PrintPreminedModal}
-        TransferUnclaimedModal={TransferUnclaimedModal}
+        TransferUnclaimedTokensModal={TransferUnclaimedTokensModal}
       />
       <ParticipantsModal
         projectId={projectId}

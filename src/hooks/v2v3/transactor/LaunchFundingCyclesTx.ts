@@ -1,10 +1,10 @@
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { useWallet } from 'hooks/Wallet'
 import {
-  V2FundingCycleMetadata,
   V2V3FundAccessConstraint,
   V2V3FundingCycleData,
-} from 'models/v2/fundingCycle'
+  V2V3FundingCycleMetadata,
+} from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
 
 import { GroupedSplits, SplitGroup } from 'models/splits'
@@ -22,7 +22,7 @@ const DEFAULT_MEMO = ''
 export function useLaunchFundingCyclesTx(): TransactorInstance<{
   projectId: number
   fundingCycleData: V2V3FundingCycleData
-  fundingCycleMetadata: V2FundingCycleMetadata
+  fundingCycleMetadata: V2V3FundingCycleMetadata
   fundAccessConstraints: V2V3FundAccessConstraint[]
   groupedSplits?: GroupedSplits<SplitGroup>[]
   mustStartAtOrAfter?: string // epoch seconds. anything less than "now" will start immediately.

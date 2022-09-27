@@ -7,10 +7,10 @@ import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { GroupedSplits, SplitGroup } from 'models/splits'
 import {
-  V2FundingCycleMetadata,
   V2V3FundAccessConstraint,
   V2V3FundingCycleData,
-} from 'models/v2/fundingCycle'
+  V2V3FundingCycleMetadata,
+} from 'models/v2v3/fundingCycle'
 import { isValidMustStartAtOrAfter } from 'utils/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../ProjectTitle'
 
@@ -18,7 +18,7 @@ const DEFAULT_MUST_START_AT_OR_AFTER = '1'
 
 export function useReconfigureV2V3FundingCycleTx(): TransactorInstance<{
   fundingCycleData: V2V3FundingCycleData
-  fundingCycleMetadata: V2FundingCycleMetadata
+  fundingCycleMetadata: V2V3FundingCycleMetadata
   fundAccessConstraints: V2V3FundAccessConstraint[]
   groupedSplits?: GroupedSplits<SplitGroup>[]
   mustStartAtOrAfter?: string // epoch seconds. anything less than "now" will start immediately.

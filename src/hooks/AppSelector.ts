@@ -4,8 +4,8 @@ import { RootState } from 'redux/store'
 import { deserializeV1FundingCycle } from 'utils/v1/serializers'
 import {
   deserializeFundAccessConstraint,
-  deserializeV2FundingCycleMetadata,
   deserializeV2V3FundingCycleData,
+  deserializeV2V3FundingCycleMetadata,
 } from 'utils/v2v3/serializers'
 
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
@@ -24,14 +24,14 @@ export const useEditingV1FundingCycleSelector = () => {
   return fc
 }
 
-export const useEditingV2FundingCycleMetadataSelector = () => {
+export const useEditingV2V3FundingCycleMetadataSelector = () => {
   const serializedFundingCycleMetadata = useAppSelector(
     state => state.editingV2Project.fundingCycleMetadata,
     shallowEqual,
   )
 
   const fundingCycleMetadata = useMemo(
-    () => deserializeV2FundingCycleMetadata(serializedFundingCycleMetadata),
+    () => deserializeV2V3FundingCycleMetadata(serializedFundingCycleMetadata),
     [serializedFundingCycleMetadata],
   )
 

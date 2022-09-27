@@ -1,5 +1,6 @@
-import { DownloadOutlined, UploadOutlined } from '@ant-design/icons'
+import { UploadOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
+import TooltipIcon from 'components/TooltipIcon'
 import { ThemeContext } from 'contexts/themeContext'
 import { ChangeEventHandler, useContext } from 'react'
 import { readFile } from 'utils/file'
@@ -44,30 +45,29 @@ export function CsvUpload<T>({
   }
 
   return (
-    <div>
-      <label
-        style={{
-          cursor: 'pointer',
-          fontWeight: 400,
-          color: colors.text.primary,
-        }}
-        role="button"
-        htmlFor="csv-upload"
-      >
-        <UploadOutlined /> <Trans>Upload CSV</Trans>{' '}
-        <input
-          type="file"
-          hidden
-          id="csv-upload"
-          onChange={onUploadChange}
-          // Never set the value. This allows a file of the same name to be uploaded repeatedly.
-          value=""
-        />
-      </label>
-      |{' '}
-      <a href={templateUrl} download style={{ color: 'inherit' }}>
-        <DownloadOutlined /> <Trans>Download Template</Trans>
-      </a>
-    </div>
+    <label
+      style={{ cursor: 'pointer', fontWeight: 400, color: colors.text.primary }}
+      role="button"
+      htmlFor="csv-upload"
+    >
+      <UploadOutlined /> <Trans>Upload CSV</Trans>{' '}
+      <TooltipIcon
+        tip={
+          <>
+            <a href={templateUrl} download>
+              <Trans>Download Template</Trans>
+            </a>
+          </>
+        }
+      />
+      <input
+        type="file"
+        hidden
+        id="csv-upload"
+        onChange={onUploadChange}
+        // Never set the value. This allows a file of the same name to be uploaded repeatedly.
+        value=""
+      />
+    </label>
   )
 }

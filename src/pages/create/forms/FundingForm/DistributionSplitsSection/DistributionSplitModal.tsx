@@ -339,7 +339,7 @@ export function DistributionSplitModal({
               value={parseInt(projectId ?? '')}
               style={{ width: '100%' }}
               placeholder={t`ID`}
-              onChange={(projectId: number) => {
+              onChange={(projectId: number | null) => {
                 setProjectId(projectId?.toString())
               }}
             />

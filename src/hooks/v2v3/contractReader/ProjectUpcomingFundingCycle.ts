@@ -1,9 +1,9 @@
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import {
   BallotState,
-  V2FundingCycleMetadata,
   V2V3FundingCycle,
-} from 'models/v2/fundingCycle'
+  V2V3FundingCycleMetadata,
+} from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
 import { useProjectLatestConfiguredFundingCycle } from './ProjectLatestConfiguredFundingCycle'
 import useProjectQueuedFundingCycle from './ProjectQueuedFundingCycle'
@@ -14,7 +14,7 @@ import useProjectQueuedFundingCycle from './ProjectQueuedFundingCycle'
  */
 export function useProjectUpcomingFundingCycle(): [
   V2V3FundingCycle | undefined,
-  V2FundingCycleMetadata | undefined,
+  V2V3FundingCycleMetadata | undefined,
   BallotState?,
 ] {
   const { projectId } = useContext(ProjectMetadataContext)

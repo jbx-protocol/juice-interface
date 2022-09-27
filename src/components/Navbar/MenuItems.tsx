@@ -6,11 +6,7 @@ import Link from 'next/link'
 import { CSSProperties, useEffect, useState } from 'react'
 
 import Logo from './Logo'
-import {
-  navDropdownItem,
-  navMenuItemStyles,
-  topLeftNavStyles,
-} from './navStyles'
+import { navMenuItemStyles, topLeftNavStyles } from './navStyles'
 
 import { resourcesMenuItems } from './constants'
 
@@ -65,19 +61,10 @@ function NavMenuItem({
 }
 
 const resourcesMenu = (
-  <Menu style={{ marginTop: -16, marginLeft: -6 }}>
-    {resourcesMenuItems().map(r => (
-      <Menu.Item key={r.key}>
-        <ExternalLink
-          className="nav-dropdown-item"
-          href={r.link}
-          style={navDropdownItem}
-        >
-          {r.text}
-        </ExternalLink>
-      </Menu.Item>
-    ))}
-  </Menu>
+  <Menu
+    items={resourcesMenuItems()}
+    style={{ marginTop: -16, marginLeft: -6 }}
+  />
 )
 
 export function TopLeftNavItems({

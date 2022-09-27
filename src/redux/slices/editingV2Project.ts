@@ -13,11 +13,11 @@ import {
   Split,
 } from 'models/splits'
 import {
-  SerializedV2FundingCycleMetadata,
   SerializedV2V3FundAccessConstraint,
   SerializedV2V3FundingCycleData,
-  serializeV2FundingCycleMetadata,
+  SerializedV2V3FundingCycleMetadata,
   serializeV2V3FundingCycleData,
+  serializeV2V3FundingCycleMetadata,
 } from 'utils/v2v3/serializers'
 
 import {
@@ -40,7 +40,7 @@ interface V2ProjectState {
   version: number
   projectMetadata: ProjectMetadataV5
   fundingCycleData: SerializedV2V3FundingCycleData
-  fundingCycleMetadata: SerializedV2FundingCycleMetadata
+  fundingCycleMetadata: SerializedV2V3FundingCycleMetadata
   fundAccessConstraints: SerializedV2V3FundAccessConstraint[]
   payoutGroupedSplits: ETHPayoutGroupedSplits
   reservedTokensGroupedSplits: ReservedTokensGroupedSplits
@@ -77,8 +77,8 @@ export const defaultFundingCycleData: SerializedV2V3FundingCycleData =
     ballot: constants.AddressZero,
   })
 
-export const defaultFundingCycleMetadata: SerializedV2FundingCycleMetadata =
-  serializeV2FundingCycleMetadata({
+export const defaultFundingCycleMetadata: SerializedV2V3FundingCycleMetadata =
+  serializeV2V3FundingCycleMetadata({
     global: {
       allowSetTerminals: false,
       allowSetController: false,
@@ -171,7 +171,7 @@ const editingV2ProjectSlice = createSlice({
     },
     setFundingCycleMetadata: (
       state,
-      action: PayloadAction<SerializedV2FundingCycleMetadata>,
+      action: PayloadAction<SerializedV2V3FundingCycleMetadata>,
     ) => {
       state.fundingCycleMetadata = action.payload
     },

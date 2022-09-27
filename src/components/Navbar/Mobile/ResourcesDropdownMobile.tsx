@@ -23,7 +23,7 @@ export default function ResourcesDropdownMobile() {
             href={r.link}
             style={{ ...navMenuItemStyles, fontWeight: 400 }}
           >
-            {r.text}
+            {r.label}
           </ExternalLink>
         </Menu.Item>
       ))}

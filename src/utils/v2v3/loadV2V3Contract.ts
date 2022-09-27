@@ -10,16 +10,19 @@ import {
 import { goerliPublicResolver } from 'constants/contracts/goerli/PublicResolver'
 import { mainnetPublicResolver } from 'constants/contracts/mainnet/PublicResolver'
 import { rinkebyPublicResolver } from 'constants/contracts/rinkeby/PublicResolver'
+import { CV_V2, CV_V3 } from 'constants/cv'
 import { NETWORKS_BY_NAME } from 'constants/networks'
 import {
   VENFT_DEPLOYER_ADDRESS,
   VENFT_RESOLVER_ADDRESS,
 } from 'constants/veNft/veNftProject'
+import { V2CVType, V3CVType } from 'models/cv'
 
 export const loadV2V3Contract = async (
   contractName: V2V3ContractName,
   network: NetworkName,
   signerOrProvider: SignerOrProvider,
+  version: V2CVType | V3CVType,
 ): Promise<Contract | undefined> => {
   let contractJson: { abi: ContractInterface; address: string } | undefined =
     undefined
@@ -41,13 +44,19 @@ export const loadV2V3Contract = async (
   } else if (contractName === V2V3ContractName.JBVeTokenUriResolver) {
     contractJson = await loadVeTokenUriResolver()
   } else {
-    contractJson = await loadJuiceboxV2Contract(contractName, network)
+    contractJson =
+      version === CV_V2
+        ? await loadJuiceboxV2Contract(contractName, network)
+        : version === CV_V3
+        ? await loadJuiceboxV3Contract(contractName, network)
+        : undefined
   }
 
   if (!contractJson) {
-    throw new Error(
-      `Error importing contract ${contractName}. Network: ${network})`,
+    console.error(
+      `Error importing contract ${contractName} [network=${network}, version=${version}]`,
     )
+    return
   }
 
   return new Contract(contractJson.address, contractJson.abi, signerOrProvider)
@@ -60,7 +69,7 @@ interface ForgeDeploy {
 /**
  *  Defines the ABI filename to use for a given V2V3ContractName.
  */
-const CONTRACT_ABI_OVERRIDES: {
+const V2_CONTRACT_ABI_OVERRIDES: {
   [k in V2V3ContractName]?: { filename: string; version: string }
 } = {
   DeprecatedJBController: {
@@ -105,12 +114,25 @@ const loadJuiceboxV2Contract = async (
   contractName: V2V3ContractName,
   network: NetworkName,
 ) => {
-  const contractOverride = CONTRACT_ABI_OVERRIDES[contractName]
+  const contractOverride = V2_CONTRACT_ABI_OVERRIDES[contractName]
   const version = contractOverride?.version ?? 'latest'
   const filename = contractOverride?.filename ?? contractName
   return await import(
     `@jbx-protocol/contracts-v2-${version}/deployments/${network}/${filename}.json`
   )
+}
+
+const loadJuiceboxV3Contract = async (
+  contractName: V2V3ContractName,
+  network: NetworkName,
+) => {
+  try {
+    return await import(
+      `@jbx-protocol/juice-contracts-v3/deployments/${network}/${contractName}.json`
+    )
+  } catch (_) {
+    return undefined
+  }
 }
 
 const loadJBV1TokenPaymentTerminalContract = async (network: NetworkName) => {

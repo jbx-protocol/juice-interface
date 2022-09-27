@@ -10,6 +10,7 @@ import {
   GetStaticPropsResult,
   InferGetStaticPropsType,
 } from 'next'
+import { V2V3ContractsProvider } from 'providers/v2v3/V2V3ContractsProvider'
 
 import { V2V3Dashboard } from './components/V2V3Dashboard'
 import { getProjectProps, ProjectPageProps } from './utils/props'
@@ -45,6 +46,7 @@ export const getStaticProps: GetStaticProps<
 export default function V2ProjectPage({
   metadata,
   projectId,
+  cv,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
@@ -66,7 +68,9 @@ export default function V2ProjectPage({
       ) : null}
       <AppWrapper>
         {metadata ? (
-          <V2V3Dashboard metadata={metadata} projectId={projectId} />
+          <V2V3ContractsProvider initialCv={cv}>
+            <V2V3Dashboard metadata={metadata} projectId={projectId} />
+          </V2V3ContractsProvider>
         ) : (
           <Loading />
         )}

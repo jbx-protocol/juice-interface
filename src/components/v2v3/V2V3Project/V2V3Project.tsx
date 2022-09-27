@@ -36,7 +36,7 @@ import TreasuryStats from './TreasuryStats'
 import V2V3FundingCycleSection from './V2V3FundingCycleSection'
 import V2ManageTokensSection from './V2V3ManageTokensSection'
 import V2PayButton from './V2V3PayButton'
-import V2V3ProjectHeaderActions from './V2V3ProjectHeaderActions'
+import { V2V3ProjectHeaderActions } from './V2V3ProjectHeaderActions/V2V3ProjectHeaderActions'
 
 import { CV_V2 } from 'constants/cv'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
@@ -128,6 +128,7 @@ export function V2V3Project({
     !allFundingCyclesLoading &&
     !hasCurrentFundingCycle &&
     !hasQueuedFundingCycle &&
+    cv === CV_V2 &&
     canReconfigureFundingCycles
 
   const canEditProjectHandle = isOwner && !isPreviewMode && !handle

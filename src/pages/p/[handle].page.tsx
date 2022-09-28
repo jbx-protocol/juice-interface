@@ -76,7 +76,9 @@ export const getStaticProps: GetStaticProps<{
     },
   })
   if (!projects[0]?.metadataUri) {
-    throw new Error(`Failed to load metadata uri for ${context.params}`)
+    throw new Error(
+      `Failed to load metadata uri for ${JSON.stringify(context.params)}`,
+    )
   }
 
   try {

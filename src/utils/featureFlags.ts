@@ -1,14 +1,18 @@
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { readNetwork } from 'constants/networks'
+import { NetworkName } from 'models/network-name'
 
 const FEATURE_FLAG_DEFAULTS: {
-  [featureFlag: string]: { [networkName: string]: boolean }
+  [featureFlag: string]: { [networkName in NetworkName]?: boolean }
 } = {
   [FEATURE_FLAGS.NFT_REWARDS]: {
     rinkeby: true,
   },
   [FEATURE_FLAGS.VENFT]: {
     rinkeby: true,
+  },
+  [FEATURE_FLAGS.V3]: {
+    goerli: true,
   },
 }
 
@@ -31,8 +35,7 @@ export const disableFeatureFlag = (featureFlag: string) => {
 
 const featureFlagDefaultEnabled = (featureFlag: string): boolean => {
   // if default-enabled for this environment, return true
-  const defaultEnabled =
-    FEATURE_FLAG_DEFAULTS[featureFlag]?.[readNetwork.name as string]
+  const defaultEnabled = FEATURE_FLAG_DEFAULTS[featureFlag]?.[readNetwork.name]
 
   return Boolean(defaultEnabled)
 }

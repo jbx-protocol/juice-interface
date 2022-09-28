@@ -156,15 +156,18 @@ export function V2V3Project({
 
   if (projectId === undefined) return null
 
+  // Change URL without refreshing page
+  const removeQueryParams = () => {
+    router.push(v2v3ProjectRoute({ projectId }), undefined, { shallow: true })
+  }
+
   const closeNewDeployModal = () => {
-    // Change URL without refreshing page
-    router.replace(v2v3ProjectRoute({ projectId }))
+    removeQueryParams()
     setNewDeployModalVisible(false)
   }
 
   const closeNftPostPayModal = () => {
-    // Change URL without refreshing page
-    router.replace(v2v3ProjectRoute({ projectId }))
+    removeQueryParams()
     setNftPostPayModalVisible(false)
   }
 

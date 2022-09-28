@@ -4,5 +4,6 @@ import { createContext } from 'react'
 
 export const V2V3ContractsContext: React.Context<{
   contracts?: V2V3Contracts
+  setVersion?: (version: V2CVType | V3CVType) => void
   cv?: V2CVType | V3CVType
 }> = createContext({})

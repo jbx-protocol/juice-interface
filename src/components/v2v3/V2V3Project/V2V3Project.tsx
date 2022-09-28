@@ -36,7 +36,7 @@ import TreasuryStats from './TreasuryStats'
 import V2V3FundingCycleSection from './V2V3FundingCycleSection'
 import V2ManageTokensSection from './V2V3ManageTokensSection'
 import V2PayButton from './V2V3PayButton'
-import V2V3ProjectHeaderActions from './V2V3ProjectHeaderActions'
+import { V2V3ProjectHeaderActions } from './V2V3ProjectHeaderActions/V2V3ProjectHeaderActions'
 
 import { CV_V2 } from 'constants/cv'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
@@ -128,6 +128,7 @@ export function V2V3Project({
     !allFundingCyclesLoading &&
     !hasCurrentFundingCycle &&
     !hasQueuedFundingCycle &&
+    cv === CV_V2 &&
     canReconfigureFundingCycles
 
   const canEditProjectHandle = isOwner && !isPreviewMode && !handle
@@ -137,6 +138,9 @@ export function V2V3Project({
   const {
     nftRewards: { rewardTiers: nftRewardTiers },
   } = useContext(NftRewardsContext)
+  const hasNftRewards = Boolean(nftRewardTiers?.length)
+  const showNftSection = nftRewardsEnabled && hasNftRewards
+
   const isEligibleForNft =
     nftRewardTiers && payAmount
       ? Boolean(
@@ -219,7 +223,7 @@ export function V2V3Project({
             disabled={isPreviewMode || payIsDisabledPreV2Redeploy()}
             isEligibleForNft={isEligibleForNft}
           />
-          {(isMobile && nftRewardsEnabled) || isPreviewMode ? (
+          {(isMobile && showNftSection) || isPreviewMode ? (
             <div style={{ marginTop: '30px' }}>
               <NftRewardsSection
                 payAmountETH={payAmountETH}
@@ -256,7 +260,7 @@ export function V2V3Project({
             style={{ marginTop: isMobile ? GUTTER_PX : 0 }}
           >
             <Space size="large" direction="vertical" style={{ width: '100%' }}>
-              {!isMobile && nftRewardsEnabled ? (
+              {!isMobile && showNftSection ? (
                 <NftRewardsSection
                   payAmountETH={payAmountETH}
                   onNftSelected={handleNftSelected}

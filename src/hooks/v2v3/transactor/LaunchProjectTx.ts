@@ -3,7 +3,7 @@ import { useWallet } from 'hooks/Wallet'
 import {
   V2V3FundAccessConstraint,
   V2V3FundingCycleData,
-} from 'models/v2/fundingCycle'
+} from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
 
 import { GroupedSplits, SplitGroup } from 'models/splits'
@@ -14,7 +14,7 @@ import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain
 import { TransactionContext } from 'contexts/transactionContext'
 import { TransactorInstance } from 'hooks/Transactor'
 
-import { V2FundingCycleMetadata } from 'models/v2/fundingCycle'
+import { V2V3FundingCycleMetadata } from 'models/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../ProjectTitle'
 
 const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
@@ -23,7 +23,7 @@ const DEFAULT_MEMO = ''
 export function useLaunchProjectTx(): TransactorInstance<{
   projectMetadataCID: string
   fundingCycleData: V2V3FundingCycleData
-  fundingCycleMetadata: V2FundingCycleMetadata
+  fundingCycleMetadata: V2V3FundingCycleMetadata
   fundAccessConstraints: V2V3FundAccessConstraint[]
   groupedSplits?: GroupedSplits<SplitGroup>[]
   mustStartAtOrAfter?: string // epoch seconds. anything less than "now" will start immediately.

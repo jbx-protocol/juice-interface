@@ -74,12 +74,13 @@ export default function NftDrawer({
     const [rewardTiersCIDs, nftCollectionMetadataCID] = await Promise.all([
       uploadNftRewardsToIPFS(rewardTiers),
       uploadNftCollectionMetadataToIPFS({
-        collectionName:
-          marketplaceFormValues.collectionName ??
-          defaultNftCollectionName(projectName),
-        collectionDescription:
-          marketplaceFormValues.collectionDescription ??
-          defaultNftCollectionDescription(projectName),
+        collectionName: marketplaceFormValues.collectionName?.length
+          ? marketplaceFormValues.collectionName
+          : defaultNftCollectionName(projectName),
+        collectionDescription: marketplaceFormValues.collectionDescription
+          ?.length
+          ? marketplaceFormValues.collectionDescription
+          : defaultNftCollectionDescription(projectName),
         collectionLogoUri: logoUri,
         collectionInfoUri: infoUri,
       }),

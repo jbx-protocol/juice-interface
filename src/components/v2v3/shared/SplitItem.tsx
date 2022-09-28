@@ -198,7 +198,7 @@ export default function SplitItem({
           )}
         </div>
 
-        {split.lockedUntil ? (
+        {split.lockedUntil && split.lockedUntil > 0 ? (
           <LockedText lockedUntil={split.lockedUntil} />
         ) : null}
       </div>

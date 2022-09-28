@@ -36,7 +36,6 @@ import { useHasV1TokenPaymentTerminal } from 'hooks/v2v3/hasV1TokenPaymentTermin
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { reloadWindow } from 'utils/windowUtils'
 
-import { TransferUnclaimedTokensModal } from 'components/modals/TransferUnclaimedTokensModal'
 import RichButton from 'components/RichButton'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
@@ -328,7 +327,6 @@ export default function V2ManageTokensSection() {
         RedeemModal={V2RedeemModal}
         ClaimTokensModal={V2ClaimTokensModal}
         MintModal={V2MintModal}
-        TransferUnclaimedTokensModal={TransferUnclaimedTokensModal}
       >
         {veNftEnabled && (
           <Link href={veNftPagePath('mint', { projectId, handle })}>

@@ -24,7 +24,6 @@ import { formatPercent, formatWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 
-import { TransferUnclaimedTokensModal } from 'components/modals/TransferUnclaimedTokensModal'
 import { useTransferTokensTx } from 'hooks/v1/transactor/TransferTokensTx'
 import ConfirmUnstakeTokensModal from '../modals/ConfirmUnstakeTokensModal'
 import PrintPreminedModal from '../modals/PrintPreminedModal'
@@ -222,7 +221,6 @@ export default function Rewards() {
         RedeemModal={RedeemModal}
         ClaimTokensModal={ConfirmUnstakeTokensModal}
         MintModal={PrintPreminedModal}
-        TransferUnclaimedTokensModal={TransferUnclaimedTokensModal}
       />
       <ParticipantsModal
         projectId={projectId}

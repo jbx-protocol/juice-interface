@@ -88,11 +88,15 @@ export function V2V3Project({
   const router = useRouter()
   const isNewDeploy = Boolean(router.query.newDeploy)
   const nftPurchaseConfirmed = Boolean(router.query.nftPurchaseConfirmed)
+  console.info('router.query:', router.query)
+  console.info('nftPurchaseConfirmed: ', nftPurchaseConfirmed)
 
   const [newDeployModalVisible, setNewDeployModalVisible] =
     useState<boolean>(isNewDeploy)
   const [nftPostPayModalVisible, setNftPostPayModalVisible] =
     useState<boolean>(nftPurchaseConfirmed)
+
+  console.info('nftPostPayModalVisible state: ', nftPostPayModalVisible)
 
   const [balancesModalVisible, setBalancesModalVisible] =
     useState<boolean>(false)

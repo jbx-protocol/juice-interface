@@ -116,9 +116,10 @@ export function V2ConfirmPayModal({
     setTransactionPending(false)
 
     if (nftRewardTier && projectMetadata?.nftPaymentSuccessModal) {
-      router.push(
+      router.replace(
         `${v2v3ProjectRoute({ handle, projectId })}?nftPurchaseConfirmed=true`,
       )
+      // reloadWindow()
     } else {
       reloadWindow()
     }

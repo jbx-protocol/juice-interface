@@ -6,7 +6,7 @@ import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 // TODO: Do we still need lazy loading?
 import VolumeChart from 'components/VolumeChart'
 
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import useProjectQueuedFundingCycle from 'hooks/v2v3/contractReader/ProjectQueuedFundingCycle'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
@@ -97,6 +97,9 @@ export function V2V3Project({
     useState<boolean>(nftPurchaseConfirmed)
 
   console.info('nftPostPayModalVisible state: ', nftPostPayModalVisible)
+
+  useEffect(() => setNewDeployModalVisible(true), [isNewDeploy])
+  useEffect(() => setNftPostPayModalVisible(true), [nftPurchaseConfirmed])
 
   const [balancesModalVisible, setBalancesModalVisible] =
     useState<boolean>(false)

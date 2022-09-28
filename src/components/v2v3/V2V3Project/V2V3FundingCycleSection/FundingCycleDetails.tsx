@@ -4,11 +4,11 @@ import { Descriptions, Tooltip } from 'antd'
 import TooltipLabel from 'components/TooltipLabel'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
-import {
-  V2FundingCycleMetadata,
-  V2V3FundingCycle,
-} from 'models/v2/fundingCycle'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
+import {
+  V2V3FundingCycle,
+  V2V3FundingCycleMetadata,
+} from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
 import { formatDate, formatDateToUTC } from 'utils/format/formatDate'
 import { formattedNum } from 'utils/format/formatNumber'
@@ -49,7 +49,7 @@ export default function FundingCycleDetails({
   distributionLimitCurrency,
 }: {
   fundingCycle: V2V3FundingCycle | undefined
-  fundingCycleMetadata: V2FundingCycleMetadata | undefined
+  fundingCycleMetadata: V2V3FundingCycleMetadata | undefined
   distributionLimit: BigNumber | undefined
   distributionLimitCurrency: BigNumber | undefined
 }) {

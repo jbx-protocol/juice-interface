@@ -4,9 +4,9 @@ import { Button, FormInstance } from 'antd'
 import { DeployButtonText } from 'components/DeployProjectButtonText'
 import {
   useAppSelector,
-  useEditingV2FundingCycleMetadataSelector,
   useEditingV2V3FundAccessConstraintsSelector,
   useEditingV2V3FundingCycleDataSelector,
+  useEditingV2V3FundingCycleMetadataSelector,
 } from 'hooks/AppSelector'
 import { useLaunchProjectTx } from 'hooks/v2v3/transactor/LaunchProjectTx'
 import { useWallet } from 'hooks/Wallet'
@@ -51,7 +51,7 @@ export function DeployProjectButton({ form }: { form: FormInstance }) {
 
   const { projectMetadata, reservedTokensGroupedSplits, payoutGroupedSplits } =
     useAppSelector(state => state.editingV2Project)
-  const fundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
+  const fundingCycleMetadata = useEditingV2V3FundingCycleMetadataSelector()
   const fundingCycleData = useEditingV2V3FundingCycleDataSelector()
   const fundAccessConstraints = useEditingV2V3FundAccessConstraintsSelector()
   const dispatch = useAppDispatch()

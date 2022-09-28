@@ -5,9 +5,9 @@ import { Col, Row, Space } from 'antd'
 
 import {
   useAppSelector,
-  useEditingV2FundingCycleMetadataSelector,
   useEditingV2V3FundAccessConstraintsSelector,
   useEditingV2V3FundingCycleDataSelector,
+  useEditingV2V3FundingCycleMetadataSelector,
 } from 'hooks/AppSelector'
 import { useWallet } from 'hooks/Wallet'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
@@ -25,7 +25,7 @@ import {
 } from 'utils/v2v3/math'
 
 import Callout from 'components/Callout'
-import { V2V3FundingCycle } from 'models/v2/fundingCycle'
+import { V2V3FundingCycle } from 'models/v2v3/fundingCycle'
 
 import { rowGutter } from '.'
 
@@ -64,7 +64,7 @@ export default function FundingSummarySection() {
     metadata: BigNumber.from(0),
   }
 
-  const fundingCycleMetadata = useEditingV2FundingCycleMetadataSelector()
+  const fundingCycleMetadata = useEditingV2V3FundingCycleMetadataSelector()
 
   const fundAccessConstraint = getDefaultFundAccessConstraint(
     fundAccessConstraints,

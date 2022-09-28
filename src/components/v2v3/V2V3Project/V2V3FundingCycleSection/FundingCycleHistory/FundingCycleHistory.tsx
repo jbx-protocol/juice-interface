@@ -5,9 +5,9 @@ import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import {
-  V2FundingCycleMetadata,
   V2V3FundingCycle,
-} from 'models/v2/fundingCycle'
+  V2V3FundingCycleMetadata,
+} from 'models/v2v3/fundingCycle'
 import { useContext, useEffect, useState } from 'react'
 import { PastFundingCycle } from './PastFundingCycle'
 import { fetchPastFundingCycles } from './utils'
@@ -18,7 +18,7 @@ export default function FundingCycleHistory() {
   const { contracts } = useContext(V2V3ContractsContext)
 
   const [pastFundingCycles, setPastFundingCycles] = useState<
-    [V2V3FundingCycle, V2FundingCycleMetadata][]
+    [V2V3FundingCycle, V2V3FundingCycleMetadata][]
   >([])
 
   useEffect(() => {

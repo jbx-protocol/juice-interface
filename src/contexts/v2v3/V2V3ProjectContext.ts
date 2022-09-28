@@ -2,9 +2,9 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { V2BallotState } from 'models/ballot'
 import { Split } from 'models/splits'
 import {
-  V2FundingCycleMetadata,
   V2V3FundingCycle,
-} from 'models/v2/fundingCycle'
+  V2V3FundingCycleMetadata,
+} from 'models/v2v3/fundingCycle'
 import { createContext } from 'react'
 
 type V2ProjectLoadingStates = {
@@ -31,7 +31,7 @@ export type V2V3ProjectContextType = {
   balanceInDistributionLimitCurrency: BigNumber | undefined
   usedDistributionLimit: BigNumber | undefined // how much has been distributed
 
-  fundingCycleMetadata: V2FundingCycleMetadata | undefined
+  fundingCycleMetadata: V2V3FundingCycleMetadata | undefined
   fundingCycle: V2V3FundingCycle | undefined
   ballotState: V2BallotState | undefined
 

@@ -12,10 +12,10 @@ import useProjectSplits from 'hooks/v2v3/contractReader/ProjectSplits'
 import useProjectTerminals from 'hooks/v2v3/contractReader/ProjectTerminals'
 import { useLaunchFundingCyclesTx } from 'hooks/v2v3/transactor/LaunchFundingCyclesTx'
 import {
-  V2FundingCycleMetadata,
   V2V3FundAccessConstraint,
   V2V3FundingCycleData,
-} from 'models/v2/fundingCycle'
+  V2V3FundingCycleMetadata,
+} from 'models/v2v3/fundingCycle'
 
 import { reloadWindow } from 'utils/windowUtils'
 
@@ -130,7 +130,7 @@ export function RelaunchFundingCycleBanner() {
       discountRate: deprecatedFundingCycle.discountRate,
     }
 
-    const fundingCycleMetadata: V2FundingCycleMetadata =
+    const fundingCycleMetadata: V2V3FundingCycleMetadata =
       deprecatedFundingCycleMetadata
 
     await launchFundingCycleTx(

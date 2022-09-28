@@ -4,11 +4,12 @@ import { parseEther } from 'ethers/lib/utils'
 import { useWallet } from 'hooks/Wallet'
 import { Split } from 'models/splits'
 import {
-  V2FundingCycleMetadata,
   V2V3FundAccessConstraint,
   V2V3FundingCycle,
   V2V3FundingCycleData,
-} from 'models/v2/fundingCycle'
+  V2V3FundingCycleMetadata,
+} from 'models/v2v3/fundingCycle'
+
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import {
   AllowMintingStatistic,
@@ -46,7 +47,7 @@ export default function ReconfigurePreview({
 }: {
   payoutSplits: Split[]
   reserveSplits: Split[]
-  fundingCycleMetadata: V2FundingCycleMetadata
+  fundingCycleMetadata: V2V3FundingCycleMetadata
   fundingCycleData: V2V3FundingCycleData
   fundAccessConstraints: V2V3FundAccessConstraint[]
 }) {

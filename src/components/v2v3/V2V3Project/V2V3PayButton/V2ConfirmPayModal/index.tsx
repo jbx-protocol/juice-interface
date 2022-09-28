@@ -38,7 +38,6 @@ import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useRouter } from 'next/router'
 import { v2v3ProjectRoute } from 'utils/routes'
-import { reloadWindow } from 'utils/windowUtils'
 import { V2PayForm, V2PayFormType } from '../V2PayForm'
 import { NftRewardCell } from './NftRewardCell'
 
@@ -119,9 +118,6 @@ export function V2ConfirmPayModal({
       router.replace(
         `${v2v3ProjectRoute({ handle, projectId })}?nftPurchaseConfirmed=true`,
       )
-      // reloadWindow()
-    } else {
-      reloadWindow()
     }
   }
 

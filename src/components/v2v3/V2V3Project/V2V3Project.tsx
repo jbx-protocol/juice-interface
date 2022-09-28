@@ -86,20 +86,25 @@ export function V2V3Project({
 
   // Checks URL to see if user was just directed from project deploy
   const router = useRouter()
-  const isNewDeploy = Boolean(router.query.newDeploy)
-  const nftPurchaseConfirmed = Boolean(router.query.nftPurchaseConfirmed)
-  console.info('router.query:', router.query)
-  console.info('nftPurchaseConfirmed: ', nftPurchaseConfirmed)
+  const queryParams = router.query
+  const isNewDeploy = Boolean(queryParams.newDeploy)
+  const nftPurchaseConfirmed = Boolean(queryParams.nftPurchaseConfirmed)
 
   const [newDeployModalVisible, setNewDeployModalVisible] =
     useState<boolean>(isNewDeploy)
   const [nftPostPayModalVisible, setNftPostPayModalVisible] =
     useState<boolean>(nftPurchaseConfirmed)
 
-  console.info('nftPostPayModalVisible state: ', nftPostPayModalVisible)
-
-  useEffect(() => setNewDeployModalVisible(true), [isNewDeploy])
-  useEffect(() => setNftPostPayModalVisible(true), [nftPurchaseConfirmed])
+  useEffect(() => {
+    if (isNewDeploy) {
+      setNewDeployModalVisible(true)
+    }
+  }, [isNewDeploy])
+  useEffect(() => {
+    if (nftPurchaseConfirmed) {
+      setNftPostPayModalVisible(true)
+    }
+  }, [nftPurchaseConfirmed])
 
   const [balancesModalVisible, setBalancesModalVisible] =
     useState<boolean>(false)

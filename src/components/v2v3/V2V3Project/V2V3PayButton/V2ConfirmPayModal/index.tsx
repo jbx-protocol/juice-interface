@@ -36,8 +36,8 @@ import { weightedAmount } from 'utils/v2v3/math'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { useRouter } from 'next/router'
 import { v2v3ProjectRoute } from 'utils/routes'
-import { redirectTo, reloadWindow } from 'utils/windowUtils'
 import { V2PayForm, V2PayFormType } from '../V2PayForm'
 import { NftRewardCell } from './NftRewardCell'
 
@@ -67,6 +67,7 @@ export function V2ConfirmPayModal({
   const converter = useCurrencyConverter()
   const payProjectTx = usePayETHPaymentTerminalTx()
   const isMobile = useMobile()
+  const router = useRouter()
   const {
     userAddress,
     chainUnsupported,
@@ -109,12 +110,14 @@ export function V2ConfirmPayModal({
   }
 
   const handlePaySuccess = () => {
+    if (onCancel) onCancel()
+    setLoading(false)
+    setTransactionPending(false)
+
     if (nftRewardTier && projectMetadata?.nftPaymentSuccessModal) {
-      redirectTo(
+      router.replace(
         `${v2v3ProjectRoute({ handle, projectId })}?nftPurchaseConfirmed=true`,
       )
-    } else {
-      reloadWindow()
     }
   }
 
@@ -155,9 +158,6 @@ export function V2ConfirmPayModal({
         },
         {
           onConfirmed() {
-            setLoading(false)
-            setTransactionPending(false)
-
             handlePaySuccess()
           },
           onError() {

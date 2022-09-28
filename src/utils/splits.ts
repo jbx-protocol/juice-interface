@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { PayoutMod } from 'models/mods'
-import { Split } from 'models/splits'
+import { OutgoingSplit, Split } from 'models/splits'
 import {
   percentToPermyriad,
   permyriadToPercent,
@@ -76,4 +76,15 @@ export const getProjectOwnerRemainderSplit = (
     projectId: BigNumber.from(0).toHexString(),
     allocator: constants.AddressZero,
   }
+}
+
+/**
+ * Converts array of splits from transaction data (e.g. outgoing reconfig tx) to array of native Split objects
+ * (Outgoing Split objects have percent and lockedUntil as BigNumbers)
+ */
+export const formatOutgoingSplits = (splits: OutgoingSplit[]): Split[] => {
+  return splits.map(
+    (split: OutgoingSplit) =>
+      ({ ...split, percent: split.percent.toNumber() } as Split),
+  )
 }

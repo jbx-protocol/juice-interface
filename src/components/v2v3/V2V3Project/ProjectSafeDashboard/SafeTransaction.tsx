@@ -1,13 +1,15 @@
-import { RightOutlined } from '@ant-design/icons'
+import { t } from '@lingui/macro'
+import { Tooltip } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { ThemeContext } from 'contexts/themeContext'
 import { generateSafeTxUrl } from 'lib/safe'
 import { CSSProperties, useContext, useMemo } from 'react'
 import { formatHistoricalDate } from 'utils/format/formatDate'
+import { ReconfigureFundingCyclesOfTransaction } from './juiceboxTransactions/reconfigureFundingCyclesOf'
 
 import { SafeTransactionType } from './ProjectSafeDashboard'
 
-type SafeTransactionComponentProps = {
+export type SafeTransactionComponentProps = {
   transaction: SafeTransactionType
 }
 
@@ -16,64 +18,80 @@ const nonceStyle: CSSProperties = {
   width: '1rem',
 }
 
-function TransactionHeader({
+export const safeTransactionRowStyle: CSSProperties = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  fontWeight: 400,
+  width: '100%',
+  padding: '0.5rem 1rem',
+  marginBottom: '1rem',
+  transition: 'background-color 100ms linear',
+}
+
+export function TransactionHeader({
   transaction,
+  onClick,
+  title,
 }: {
   transaction: SafeTransactionType
+  onClick?: VoidFunction
+  title?: string
 }) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const _method = title ?? transaction?.dataDecoded?.method
+  const transactionTitle = (
+    <Tooltip title={t`Go to Safe`}>
+      <ExternalLink
+        href={generateSafeTxUrl(transaction)}
+        className="hover-text-action-primary hover-text-decoration-underline color-unset"
+        onClick={e => e.stopPropagation()}
+      >
+        {_method}
+      </ExternalLink>
+    </Tooltip>
+  )
+
   return (
-    <>
+    <div
+      onClick={onClick}
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        width: '100%',
+      }}
+    >
       <div style={{ display: 'flex' }}>
         <div style={{ ...nonceStyle, color: colors.text.secondary }}>
           {transaction.nonce}
         </div>
-        <div>{transaction?.dataDecoded?.method}</div>
+        {transactionTitle}
       </div>
       <div style={{ color: colors.text.secondary }}>
         {formatHistoricalDate(new Date(transaction.submissionDate).valueOf())}
-        <RightOutlined style={{ marginLeft: 10 }} />
       </div>
-    </>
-  )
-}
-
-// The components from `TRANSACTION_METHOD_COMPONENTS_MAP` will have specific drawers when expanded
-const ReconfigureFundingCyclesOfTransaction = ({
-  transaction,
-}: SafeTransactionComponentProps) => {
-  // const [expanded, setExpanded] = useState<boolean>(false)
-
-  // const decodedData = contracts['JBController'].interface.parseTransaction({
-  //   data: transaction.data,
-  // }).args
-
-  return (
-    <>
-      <TransactionHeader transaction={transaction} />
-
-      {/* {expanded && (
-        <div style={{ marginTop: '2rem', marginLeft: '4rem' }}>
-          <ReconfigurePreview
-            payoutSplits={[]}
-            reserveSplits={[]}
-            fundingCycleMetadata={decodedData._metadata}
-            fundingCycleData={decodedData._data}
-            fundAccessConstraints={decodedData._fundAccessConstraints}
-          />
-        </div>
-      )} 
-      </div>*/}
-    </>
+    </div>
   )
 }
 
 const GenericSafeTransaction = ({
   transaction,
 }: SafeTransactionComponentProps) => {
-  return <TransactionHeader transaction={transaction} />
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+  return (
+    <div
+      style={{
+        ...safeTransactionRowStyle,
+        color: colors.text.primary,
+        border: `1px solid ${colors.stroke.tertiary}`,
+      }}
+    >
+      <TransactionHeader transaction={transaction} />
+    </div>
+  )
 }
 
 const TRANSACTION_METHOD_COMPONENTS_MAP: {
@@ -87,22 +105,7 @@ export function SafeTransaction({
 }: {
   transaction: SafeTransactionType
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const { method } = transaction.dataDecoded ?? {}
-
-  const safeTransactionRowStyle: CSSProperties = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    color: colors.text.primary,
-    fontWeight: 400,
-    width: '100%',
-    padding: '0.5rem 1rem',
-    marginBottom: '1rem',
-    transition: 'background-color 100ms linear',
-  }
 
   const TransactionContent = useMemo(() => {
     if (!method) return GenericSafeTransaction // only the header
@@ -111,13 +114,5 @@ export function SafeTransaction({
 
   if (!method) return null
 
-  return (
-    <ExternalLink
-      style={safeTransactionRowStyle}
-      className="hover-bg-l2 clickable-border"
-      href={generateSafeTxUrl(transaction)}
-    >
-      <TransactionContent transaction={transaction} />
-    </ExternalLink>
-  )
+  return <TransactionContent transaction={transaction} />
 }

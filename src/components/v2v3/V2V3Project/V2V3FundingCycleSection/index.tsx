@@ -21,16 +21,55 @@ import FundingCycleSection, {
 } from 'components/Project/FundingCycleSection'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 
-import useProjectQueuedFundingCycle from 'hooks/v2v3/contractReader/ProjectQueuedFundingCycle'
-
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { useProjectUpcomingFundingCycle } from 'hooks/v2v3/contractReader/ProjectUpcomingFundingCycle'
 import Link from 'next/link'
 import { settingsPagePath } from 'utils/routes'
 import CurrentFundingCycle from './CurrentFundingCycle'
 import FundingCycleHistory from './FundingCycleHistory/FundingCycleHistory'
-import NoFundingCycle from './NoFundingCycle'
 import UpcomingFundingCycle from './UpcomingFundingCycle'
+
+const tabText = ({
+  text,
+  hideRiskFlag,
+}: {
+  text: string
+  hideRiskFlag?: boolean
+}) => {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+  const { fundingCycle, fundingCycleMetadata } = useContext(V2V3ProjectContext)
+
+  const hasRisks =
+    fundingCycle &&
+    fundingCycleMetadata &&
+    getV2V3FundingCycleRiskCount(fundingCycle, fundingCycleMetadata)
+
+  if (!hasRisks || hideRiskFlag) {
+    return text
+  }
+
+  return (
+    <Tooltip
+      title={
+        <Trans>
+          This funding cycle may pose risks to contributors. Check the funding
+          cycle details before paying this project.
+        </Trans>
+      }
+    >
+      <span>
+        {text}
+        <ExclamationCircleOutlined
+          style={{
+            color: colors.text.warn,
+            marginLeft: 4,
+          }}
+        />
+      </span>
+    </Tooltip>
+  )
+}
 
 export default function V2V3FundingCycleSection({
   expandCard,
@@ -38,11 +77,7 @@ export default function V2V3FundingCycleSection({
   expandCard?: boolean
 }) {
   const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-  const {
     fundingCycle,
-    fundingCycleMetadata,
     isPreviewMode,
     loading: { fundingCycleLoading },
     handle,
@@ -53,79 +88,29 @@ export default function V2V3FundingCycleSection({
     V2OperatorPermission.RECONFIGURE,
   )
 
-  const {
-    data: queuedFundingCycleResponse,
-    loading: queuedFundingCycleLoading,
-  } = useProjectQueuedFundingCycle({
-    projectId,
-  })
-  const [upcomingFundingCycle] = useProjectUpcomingFundingCycle()
-  const [queuedFundingCycle] = queuedFundingCycleResponse || []
-
-  if (
-    fundingCycleLoading ||
-    (queuedFundingCycleLoading && !isPreviewMode) ||
-    !fundingCycle ||
-    (!queuedFundingCycle && !isPreviewMode)
-  ) {
+  if (fundingCycleLoading) {
     return <Loading />
   }
 
-  if (fundingCycle.number.eq(0) && queuedFundingCycle?.number.eq(0)) {
-    return <NoFundingCycle />
-  }
-
-  const tabText = ({
-    text,
-    hideRiskFlag,
-  }: {
-    text: string
-    hideRiskFlag?: boolean
-  }) => {
-    const hasRisks =
-      fundingCycle &&
-      fundingCycleMetadata &&
-      getV2V3FundingCycleRiskCount(fundingCycle, fundingCycleMetadata)
-    if (!hasRisks || hideRiskFlag) {
-      return text
-    }
-
-    return (
-      <Tooltip
-        title={
-          <Trans>
-            This funding cycle may pose risks to contributors. Check the funding
-            cycle details before paying this project.
-          </Trans>
-        }
-      >
-        <span>
-          {text}
-          <ExclamationCircleOutlined
-            style={{
-              color: colors.text.warn,
-              marginLeft: 4,
-            }}
-          />
-        </span>
-      </Tooltip>
+  const reconfigureButtonText =
+    fundingCycle &&
+    hasFundingDuration(serializeV2V3FundingCycleData(fundingCycle)) ? (
+      <Trans>Reconfigure upcoming</Trans>
+    ) : (
+      <Trans>Reconfigure</Trans>
     )
-  }
-
-  const fundingCycleData = serializeV2V3FundingCycleData(fundingCycle)
 
   const tabs = [
-    fundingCycle.number.gt(0) && {
+    {
       key: 'current',
       label: tabText({ text: t`Current` }),
       content: <CurrentFundingCycle expandCard={expandCard} />,
     },
-    !isPreviewMode &&
-      !upcomingFundingCycle?.number.eq(0) && {
-        key: 'upcoming',
-        label: tabText({ text: t`Upcoming` }),
-        content: <UpcomingFundingCycle expandCard={expandCard} />,
-      },
+    !isPreviewMode && {
+      key: 'upcoming',
+      label: tabText({ text: t`Upcoming` }),
+      content: <UpcomingFundingCycle expandCard={expandCard} />,
+    },
     {
       key: 'history',
       label: tabText({ text: t`History`, hideRiskFlag: true }),
@@ -144,13 +129,7 @@ export default function V2V3FundingCycleSection({
         canReconfigure ? (
           <Link href={settingsPagePath('reconfigurefc', { projectId, handle })}>
             <Button size="small" icon={<SettingOutlined />}>
-              <span>
-                {hasFundingDuration(fundingCycleData) ? (
-                  <Trans>Reconfigure upcoming</Trans>
-                ) : (
-                  <Trans>Reconfigure</Trans>
-                )}
-              </span>
+              <span>{reconfigureButtonText}</span>
             </Button>
           </Link>
         ) : null

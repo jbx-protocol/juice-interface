@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Button, Modal } from 'antd'
+import { Button, Modal, Space } from 'antd'
+import { CsvUpload } from 'components/CsvUpload/CsvUpload'
 import Mod from 'components/v1/shared/Mod'
 import ProjectTicketMods from 'components/v1/shared/ProjectTicketMods'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
@@ -9,7 +10,14 @@ import { useSetTicketModsTx } from 'hooks/v1/transactor/SetTicketModsTx'
 import { TicketMod } from 'models/mods'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { V1OperatorPermission } from 'models/v1/permissions'
-import { useContext, useLayoutEffect, useMemo, useState } from 'react'
+import {
+  useCallback,
+  useContext,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from 'react'
+import { parseV1TicketModsCsv } from 'utils/csv'
 import { formatWad, permyriadToPercent } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { MODS_TOTAL_PERCENT } from 'utils/v1/mods'
@@ -69,6 +77,13 @@ export default function TicketModsList({
 
   const hasEditPermission = useV1ConnectedWalletHasPermission(
     V1OperatorPermission.SetTicketMods,
+  )
+
+  const onModsChanged = useCallback(
+    (newMods: TicketMod[]) => {
+      setEditingMods(newMods)
+    },
+    [setEditingMods],
   )
 
   return (
@@ -142,12 +157,27 @@ export default function TicketModsList({
           confirmLoading={loading}
           width={720}
         >
-          <ProjectTicketMods
-            mods={editingMods}
-            lockedMods={lockedMods}
-            onModsChanged={setEditingMods}
-            reservedRate={reservedRate}
-          />
+          <Space
+            direction="vertical"
+            style={{ width: '100%', minHeight: 0 }}
+            size="middle"
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Trans>Reserved token allocation</Trans>
+
+              <CsvUpload
+                onChange={onModsChanged}
+                templateUrl={'/assets/csv/v1-reserve-template.csv'}
+                parser={parseV1TicketModsCsv}
+              />
+            </div>
+            <ProjectTicketMods
+              mods={editingMods}
+              lockedMods={lockedMods}
+              onModsChanged={setEditingMods}
+              reservedRate={reservedRate}
+            />
+          </Space>
         </Modal>
       ) : null}
     </div>

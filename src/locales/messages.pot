@@ -989,6 +989,9 @@ msgstr ""
 msgid "Download CSV of {0} holders"
 msgstr ""
 
+msgid "Download Template"
+msgstr ""
+
 msgid "Duration"
 msgstr ""
 

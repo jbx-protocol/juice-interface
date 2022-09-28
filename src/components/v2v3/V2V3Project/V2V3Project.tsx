@@ -6,7 +6,7 @@ import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 // TODO: Do we still need lazy loading?
 import VolumeChart from 'components/VolumeChart'
 
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import useProjectQueuedFundingCycle from 'hooks/v2v3/contractReader/ProjectQueuedFundingCycle'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
@@ -86,13 +86,25 @@ export function V2V3Project({
 
   // Checks URL to see if user was just directed from project deploy
   const router = useRouter()
-  const isNewDeploy = Boolean(router.query.newDeploy)
-  const nftPurchaseConfirmed = Boolean(router.query.nftPurchaseConfirmed)
+  const queryParams = router.query
+  const isNewDeploy = Boolean(queryParams.newDeploy)
+  const nftPurchaseConfirmed = Boolean(queryParams.nftPurchaseConfirmed)
 
   const [newDeployModalVisible, setNewDeployModalVisible] =
     useState<boolean>(isNewDeploy)
   const [nftPostPayModalVisible, setNftPostPayModalVisible] =
     useState<boolean>(nftPurchaseConfirmed)
+
+  useEffect(() => {
+    if (isNewDeploy) {
+      setNewDeployModalVisible(true)
+    }
+  }, [isNewDeploy])
+  useEffect(() => {
+    if (nftPurchaseConfirmed) {
+      setNftPostPayModalVisible(true)
+    }
+  }, [nftPurchaseConfirmed])
 
   const [balancesModalVisible, setBalancesModalVisible] =
     useState<boolean>(false)
@@ -138,6 +150,9 @@ export function V2V3Project({
   const {
     nftRewards: { rewardTiers: nftRewardTiers },
   } = useContext(NftRewardsContext)
+  const hasNftRewards = Boolean(nftRewardTiers?.length)
+  const showNftSection = nftRewardsEnabled && hasNftRewards
+
   const isEligibleForNft =
     nftRewardTiers && payAmount
       ? Boolean(
@@ -153,15 +168,18 @@ export function V2V3Project({
 
   if (projectId === undefined) return null
 
+  // Change URL without refreshing page
+  const removeQueryParams = () => {
+    router.push(v2v3ProjectRoute({ projectId }), undefined, { shallow: true })
+  }
+
   const closeNewDeployModal = () => {
-    // Change URL without refreshing page
-    router.replace(v2v3ProjectRoute({ projectId }))
+    removeQueryParams()
     setNewDeployModalVisible(false)
   }
 
   const closeNftPostPayModal = () => {
-    // Change URL without refreshing page
-    router.replace(v2v3ProjectRoute({ projectId }))
+    removeQueryParams()
     setNftPostPayModalVisible(false)
   }
 
@@ -220,7 +238,7 @@ export function V2V3Project({
             disabled={isPreviewMode || payIsDisabledPreV2Redeploy()}
             isEligibleForNft={isEligibleForNft}
           />
-          {(isMobile && nftRewardsEnabled) || isPreviewMode ? (
+          {(isMobile && showNftSection) || isPreviewMode ? (
             <div style={{ marginTop: '30px' }}>
               <NftRewardsSection
                 payAmountETH={payAmountETH}
@@ -257,7 +275,7 @@ export function V2V3Project({
             style={{ marginTop: isMobile ? GUTTER_PX : 0 }}
           >
             <Space size="large" direction="vertical" style={{ width: '100%' }}>
-              {!isMobile && nftRewardsEnabled ? (
+              {!isMobile && showNftSection ? (
                 <NftRewardsSection
                   payAmountETH={payAmountETH}
                   onNftSelected={handleNftSelected}

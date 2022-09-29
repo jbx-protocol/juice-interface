@@ -9,12 +9,9 @@ import FundingCycleDetails from './FundingCycleDetails'
 import PayoutSplitsCard from './PayoutSplitsCard'
 import ReservedTokensSplitsCard from './ReservedTokensSplitsCard'
 
-export default function CurrentFundingCycle({
-  expandCard,
-}: {
-  expandCard?: boolean
-}) {
+export default function CurrentFundingCycle() {
   const {
+    isPreviewMode,
     fundingCycle,
     payoutSplits,
     distributionLimitCurrency,
@@ -56,7 +53,7 @@ export default function CurrentFundingCycle({
             fundingCycle,
             fundingCycleMetadata,
           )}
-          expand={expandCard}
+          isPreviewMode={isPreviewMode}
         />
       </CardSection>
 

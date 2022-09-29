@@ -25,13 +25,11 @@ const VolumeChart = lazy(() => import('components/VolumeChart'))
 
 const gutter = 40
 
-export default function V1Project({
+export function V1Project({
   style,
-  showCurrentDetail,
   column,
 }: {
   style?: CSSProperties
-  showCurrentDetail?: boolean
   column?: boolean
 }) {
   const {
@@ -110,7 +108,7 @@ export default function V1Project({
             <Rewards />
           </div>
 
-          <FundingCycles showCurrentDetail={showCurrentDetail} />
+          <FundingCycles />
         </Col>
         {!isPreviewMode ? (
           <Col xs={24} md={column ? 24 : 12} style={{ marginTop: gutter }}>

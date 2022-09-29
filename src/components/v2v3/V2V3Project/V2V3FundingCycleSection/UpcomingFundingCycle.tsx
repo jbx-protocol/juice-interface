@@ -16,11 +16,7 @@ import FundingCycleDetails from './FundingCycleDetails'
 import PayoutSplitsCard from './PayoutSplitsCard'
 import ReservedTokensSplitsCard from './ReservedTokensSplitsCard'
 
-export default function UpcomingFundingCycle({
-  expandCard,
-}: {
-  expandCard?: boolean
-}) {
+export default function UpcomingFundingCycle() {
   const { primaryTerminal } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
@@ -69,7 +65,6 @@ export default function UpcomingFundingCycle({
             upcomingFundingCycle,
             upcomingFundingCycleMetadata,
           )}
-          expand={expandCard}
           ballotState={ballotState}
           ballotStrategyAddress={upcomingFundingCycle.ballot}
         />

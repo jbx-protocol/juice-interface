@@ -20,7 +20,6 @@ export default function FundingCycleDetailsCard({
   fundingCycleRiskCount,
   isFundingCycleRecurring,
   fundingCycleDetails,
-  expand,
   isPreviewMode,
   ballotState,
   ballotStrategyAddress,
@@ -31,7 +30,6 @@ export default function FundingCycleDetailsCard({
   fundingCycleRiskCount: number
   fundingCycleDetails: JSX.Element
   isFundingCycleRecurring: boolean
-  expand?: boolean
   isPreviewMode?: boolean
   ballotState?: BallotState
   ballotStrategyAddress?: string
@@ -83,7 +81,8 @@ export default function FundingCycleDetailsCard({
         border: 'none',
       }}
       className="minimal"
-      defaultActiveKey={expand ? COLLAPSE_PANEL_KEY : undefined}
+      // expand by default in preview mode
+      defaultActiveKey={isPreviewMode ? COLLAPSE_PANEL_KEY : undefined}
     >
       <CollapsePanel
         key={COLLAPSE_PANEL_KEY}

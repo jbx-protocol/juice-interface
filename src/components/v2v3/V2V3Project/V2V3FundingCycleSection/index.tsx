@@ -71,11 +71,7 @@ const tabText = ({
   )
 }
 
-export default function V2V3FundingCycleSection({
-  expandCard,
-}: {
-  expandCard?: boolean
-}) {
+export default function V2V3FundingCycleSection() {
   const {
     fundingCycle,
     isPreviewMode,
@@ -104,12 +100,12 @@ export default function V2V3FundingCycleSection({
     {
       key: 'current',
       label: tabText({ text: t`Current` }),
-      content: <CurrentFundingCycle expandCard={expandCard} />,
+      content: <CurrentFundingCycle />,
     },
     !isPreviewMode && {
       key: 'upcoming',
       label: tabText({ text: t`Upcoming` }),
-      content: <UpcomingFundingCycle expandCard={expandCard} />,
+      content: <UpcomingFundingCycle />,
     },
     {
       key: 'history',

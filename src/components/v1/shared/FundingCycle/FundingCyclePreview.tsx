@@ -6,15 +6,17 @@ import { fundingCycleRiskCount, isRecurring } from 'utils/v1/fundingCycle'
 
 import { SECONDS_IN_DAY } from 'constants/numbers'
 
+import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { useContext } from 'react'
 import FundingCycleDetails from './FundingCycleDetails'
 
 export default function FundingCyclePreview({
   fundingCycle,
-  expand,
 }: {
   fundingCycle: V1FundingCycle | undefined
-  expand?: boolean
 }) {
+  const { isPreviewMode } = useContext(V1ProjectContext)
+
   if (!fundingCycle) return null
 
   return (
@@ -25,7 +27,7 @@ export default function FundingCyclePreview({
       fundingCycleStartTime={fundingCycle.start}
       isFundingCycleRecurring={isRecurring(fundingCycle)}
       fundingCycleRiskCount={fundingCycleRiskCount(fundingCycle)}
-      expand={expand}
+      isPreviewMode={isPreviewMode}
     />
   )
 }

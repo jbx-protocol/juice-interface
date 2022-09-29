@@ -61,10 +61,8 @@ const AllAssetsButton = ({ onClick }: { onClick: VoidFunction }) => {
 
 export function V2V3Project({
   singleColumnLayout,
-  expandFundingCycleCard,
 }: {
   singleColumnLayout?: boolean
-  expandFundingCycleCard?: boolean
 }) {
   const {
     createdAt,
@@ -286,7 +284,7 @@ export function V2V3Project({
               />
             ) : null}
             <V2ManageTokensSection />
-            <V2V3FundingCycleSection expandCard={expandFundingCycleCard} />
+            <V2V3FundingCycleSection />
           </Space>
         </Col>
 

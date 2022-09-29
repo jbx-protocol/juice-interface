@@ -108,10 +108,7 @@ export default function ProjectPreview({
               },
             }}
           >
-            <V2V3Project
-              singleColumnLayout={singleColumnLayout}
-              expandFundingCycleCard
-            />
+            <V2V3Project singleColumnLayout={singleColumnLayout} />
           </NftRewardsContext.Provider>
         </div>
       </V2V3ProjectContext.Provider>

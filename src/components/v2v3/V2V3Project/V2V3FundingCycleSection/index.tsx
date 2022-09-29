@@ -28,7 +28,7 @@ import CurrentFundingCycle from './CurrentFundingCycle'
 import FundingCycleHistory from './FundingCycleHistory/FundingCycleHistory'
 import UpcomingFundingCycle from './UpcomingFundingCycle'
 
-const tabText = ({
+const TabText = ({
   text,
   hideRiskFlag,
 }: {
@@ -46,7 +46,7 @@ const tabText = ({
     getV2V3FundingCycleRiskCount(fundingCycle, fundingCycleMetadata)
 
   if (!hasRisks || hideRiskFlag) {
-    return text
+    return <span>{text}</span>
   }
 
   return (
@@ -99,17 +99,17 @@ export default function V2V3FundingCycleSection() {
   const tabs = [
     {
       key: 'current',
-      label: tabText({ text: t`Current` }),
+      label: <TabText text={t`Current`} />,
       content: <CurrentFundingCycle />,
     },
     !isPreviewMode && {
       key: 'upcoming',
-      label: tabText({ text: t`Upcoming` }),
+      label: <TabText text={t`Upcoming`} />,
       content: <UpcomingFundingCycle />,
     },
     {
       key: 'history',
-      label: tabText({ text: t`History`, hideRiskFlag: true }),
+      label: <TabText text={t`History`} hideRiskFlag />,
       content: (
         <CardSection>
           <FundingCycleHistory />

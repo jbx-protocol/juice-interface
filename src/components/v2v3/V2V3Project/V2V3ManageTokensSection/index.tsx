@@ -25,6 +25,8 @@ import { TextButton } from 'components/TextButton'
 import { ThemeContext } from 'contexts/themeContext'
 import useTotalBalanceOf from 'hooks/v2v3/contractReader/TotalBalanceOf'
 import useUserUnclaimedTokenBalance from 'hooks/v2v3/contractReader/UserUnclaimedTokenBalance'
+import { useTransferUnclaimedTokensTx } from 'hooks/v2v3/transactor/TransferUnclaimedTokensTx'
+
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import TooltipIcon from 'components/TooltipIcon'
@@ -320,6 +322,8 @@ export default function V2ManageTokensSection() {
         redeemDisabled={redeemDisabled}
         tokenSymbol={tokenSymbol}
         tokenAddress={tokenAddress}
+        tokenUnclaimedBalance={unclaimedBalance}
+        transferUnclaimedTokensTx={useTransferUnclaimedTokensTx}
         RedeemModal={V2RedeemModal}
         ClaimTokensModal={V2ClaimTokensModal}
         MintModal={V2MintModal}

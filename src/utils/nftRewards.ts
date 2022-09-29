@@ -181,3 +181,21 @@ export async function uploadNftCollectionMetadataToIPFS({
   })
   return res.data.IpfsHash as string
 }
+
+// Determines if two NFT reward tiers are equal
+export function tiersEqual({
+  tier1,
+  tier2,
+}: {
+  tier1: NftRewardTier
+  tier2: NftRewardTier
+}) {
+  return (
+    tier1.contributionFloor === tier2.contributionFloor &&
+    tier1.description === tier2.description &&
+    tier1.externalLink === tier2.externalLink &&
+    tier1.imageUrl === tier2.imageUrl &&
+    tier1.maxSupply === tier2.maxSupply &&
+    tier1.name === tier2.name
+  )
+}

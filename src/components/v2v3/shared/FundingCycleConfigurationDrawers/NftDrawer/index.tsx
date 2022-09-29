@@ -15,6 +15,7 @@ import {
   defaultNftCollectionName,
   MAX_NFT_REWARD_TIERS,
   sortNftRewardTiers,
+  tiersEqual,
   uploadNftCollectionMetadataToIPFS,
   uploadNftRewardsToIPFS,
 } from 'utils/nftRewards'
@@ -22,9 +23,11 @@ import {
 import { shadowCard } from 'constants/styles/shadowCard'
 
 import { MinimalCollapse } from 'components/MinimalCollapse'
+import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
 import TooltipIcon from 'components/TooltipIcon'
 import { withHttps } from 'utils/externalLink'
 import FundingCycleDrawer from '../FundingCycleDrawer'
+import { useFundingCycleDrawer } from '../useFundingCycleDrawer'
 import { AddRewardTierButton } from './AddRewardTierButton'
 import { MarketplaceFormFields, NftPostPayModalFormFields } from './formFields'
 import { NftMarketplaceCustomizationForm } from './NftMarketplaceCustomizationForm'
@@ -65,6 +68,14 @@ export default function NftDrawer({
   const [rewardTiers, setRewardTiers] = useState<NftRewardTier[]>(
     savedRewardTiers ?? [],
   )
+
+  const {
+    handleDrawerCloseClick,
+    emitDrawerClose,
+    setFormUpdated,
+    unsavedChangesModalVisible,
+    closeModal,
+  } = useFundingCycleDrawer(onClose)
 
   const onNftFormSaved = useCallback(async () => {
     setSubmitLoading(true)
@@ -119,6 +130,7 @@ export default function NftDrawer({
     // Store cid (link to nfts on IPFS) to be used later in the deploy tx
     dispatch(editingV2ProjectActions.setNftRewardsCIDs(rewardTiersCIDs))
     setSubmitLoading(false)
+    setFormUpdated(false)
     onClose?.()
   }, [
     postPayModalForm,
@@ -126,6 +138,7 @@ export default function NftDrawer({
     dispatch,
     onClose,
     marketplaceForm,
+    setFormUpdated,
     projectName,
     logoUri,
     infoUri,
@@ -133,6 +146,7 @@ export default function NftDrawer({
 
   const handleAddRewardTier = (newRewardTier: NftRewardTier) => {
     setRewardTiers(sortNftRewardTiers([...rewardTiers, newRewardTier]))
+    setFormUpdated(true)
   }
 
   const handleEditRewardTier = ({
@@ -142,6 +156,9 @@ export default function NftDrawer({
     index: number
     newRewardTier: NftRewardTier
   }) => {
+    if (!tiersEqual({ tier1: newRewardTier, tier2: rewardTiers[index] })) {
+      setFormUpdated(true)
+    }
     const newRewardTiers = rewardTiers.map((tier, i) =>
       i === index
         ? {
@@ -171,7 +188,7 @@ export default function NftDrawer({
       <FundingCycleDrawer
         title={t`NFT rewards`}
         visible={visible}
-        onClose={onClose}
+        onClose={handleDrawerCloseClick}
       >
         <div
           style={{
@@ -223,7 +240,10 @@ export default function NftDrawer({
               </>
             }
           >
-            <NftMarketplaceCustomizationForm form={marketplaceForm} />
+            <NftMarketplaceCustomizationForm
+              form={marketplaceForm}
+              onFormUpdated={setFormUpdated}
+            />
           </MinimalCollapse>
           <MinimalCollapse
             header={
@@ -237,7 +257,10 @@ export default function NftDrawer({
             }
             style={{ marginTop: '1rem' }}
           >
-            <NftPostPayModalForm form={postPayModalForm} />
+            <NftPostPayModalForm
+              form={postPayModalForm}
+              onFormUpdated={setFormUpdated}
+            />
             <NftPostPayModalPreviewButton form={postPayModalForm} />
           </MinimalCollapse>
         </div>
@@ -260,6 +283,14 @@ export default function NftDrawer({
         mode="Add"
         onClose={() => setAddTierModalVisible(false)}
         isCreate
+      />
+      <UnsavedChangesModal
+        visible={unsavedChangesModalVisible}
+        onOk={() => {
+          closeModal()
+          emitDrawerClose()
+        }}
+        onCancel={closeModal}
       />
     </>
   )

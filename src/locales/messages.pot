@@ -380,6 +380,9 @@ msgstr ""
 msgid "Amount"
 msgstr ""
 
+msgid "Amount is required."
+msgstr ""
+
 msgid "Amount of ERC-20 tokens to claim"
 msgstr ""
 
@@ -1598,6 +1601,9 @@ msgstr ""
 msgid "More trending projects"
 msgstr ""
 
+msgid "Move your unclaimed {tokensLabel} from your wallet to another wallet."
+msgstr ""
+
 msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
 msgstr ""
 
@@ -2067,6 +2073,9 @@ msgid "Recipient"
 msgstr ""
 
 msgid "Recipient address"
+msgstr ""
+
+msgid "Recipient address is required."
 msgstr ""
 
 msgid "Recipients will receive payouts in ETH."
@@ -2837,7 +2846,16 @@ msgstr ""
 msgid "Transfer unclaimed {tokenSymbolShort}"
 msgstr ""
 
+msgid "Transfer unclaimed {tokenTextShort}"
+msgstr ""
+
+msgid "Transfer unclaimed {tokensLabel}"
+msgstr ""
+
 msgid "Transfer {tokenSymbolShort}"
+msgstr ""
+
+msgid "Transfer {tokenTextShort}"
 msgstr ""
 
 msgid "Trending"

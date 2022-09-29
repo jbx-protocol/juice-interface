@@ -5,16 +5,13 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 import { useContext } from 'react'
 
-import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceOfUser'
 import { useAddToBalanceTx } from 'hooks/v1/transactor/AddToBalanceTx'
 import { useSafeTransferFromTx } from 'hooks/v1/transactor/SafeTransferFromTx'
 import { useSetProjectUriTx } from 'hooks/v1/transactor/SetProjectUriTx'
-import { useTransferTokensTx } from 'hooks/v1/transactor/TransferTokensTx'
 
 import { AddToProjectBalanceForm } from 'components/Project/ProjectToolsDrawer/AddToProjectBalanceForm'
 import { ExportSection } from 'components/Project/ProjectToolsDrawer/ExportSection'
 import { TransferOwnershipForm } from 'components/Project/ProjectToolsDrawer/TransferOwnershipForm'
-import { TransferUnclaimedTokensForm } from 'components/Project/ProjectToolsDrawer/TransferUnclaimedTokensForm'
 import { ExportPayoutModsButton } from './ExportPayoutModsButton'
 import { ExportTicketModsButton } from './ExportTicketModsButton'
 
@@ -27,11 +24,10 @@ export function V1ProjectToolsDrawer({
   visible?: boolean
   onClose?: VoidFunction
 }) {
-  const { owner, tokenSymbol } = useContext(V1ProjectContext)
+  const { owner } = useContext(V1ProjectContext)
 
   const setUriTx = useSetProjectUriTx()
   const isOwnerWallet = useIsUserAddress(owner)
-  const unclaimedTokenBalance = useUnclaimedBalanceOfUser()
 
   const OwnerTools = (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
@@ -63,18 +59,10 @@ export function V1ProjectToolsDrawer({
         <TabPane tab={<Trans>General</Trans>} key="1">
           <Space direction="vertical" size="middle" style={{ width: '100%' }}>
             <section>
-              <TransferUnclaimedTokensForm
-                tokenSymbol={tokenSymbol}
-                unclaimedTokenBalance={unclaimedTokenBalance}
-                useTransferUnclaimedTokensTx={useTransferTokensTx}
-              />
+              <AddToProjectBalanceForm useAddToBalanceTx={useAddToBalanceTx} />
             </section>
 
             <Divider />
-
-            <section>
-              <AddToProjectBalanceForm useAddToBalanceTx={useAddToBalanceTx} />
-            </section>
 
             <ExportSection
               exportPayoutsButton={<ExportPayoutModsButton />}

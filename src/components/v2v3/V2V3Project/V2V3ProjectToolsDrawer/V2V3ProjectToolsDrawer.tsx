@@ -2,7 +2,6 @@ import { Trans } from '@lingui/macro'
 import { Divider, Drawer, Space, Tabs } from 'antd'
 import { AddToProjectBalanceForm } from 'components/Project/ProjectToolsDrawer/AddToProjectBalanceForm'
 import { ExportSection } from 'components/Project/ProjectToolsDrawer/ExportSection'
-import { TransferUnclaimedTokensForm } from 'components/Project/ProjectToolsDrawer/TransferUnclaimedTokensForm'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
@@ -11,10 +10,8 @@ import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 import useMobile from 'hooks/Mobile'
-import useUserUnclaimedTokenBalance from 'hooks/v2v3/contractReader/UserUnclaimedTokenBalance'
 import { useAddToBalanceTx } from 'hooks/v2v3/transactor/AddToBalanceTx'
 import { useDeployProjectPayerTx } from 'hooks/v2v3/transactor/DeployProjectPayerTx'
-import { useTransferUnclaimedTokensTx } from 'hooks/v2v3/transactor/TransferUnclaimedTokensTx'
 import { ETHPayoutSplitGroup, ReservedTokensSplitGroup } from 'models/splits'
 import Link from 'next/link'
 import { useContext } from 'react'
@@ -31,17 +28,11 @@ export function V2V3ProjectToolsDrawer({
   visible?: boolean
   onClose?: VoidFunction
 }) {
-  const {
-    projectOwnerAddress,
-    tokenSymbol,
-    payoutSplits,
-    reservedTokensSplits,
-    handle,
-  } = useContext(V2V3ProjectContext)
+  const { projectOwnerAddress, payoutSplits, reservedTokensSplits, handle } =
+    useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
   const isMobile = useMobile()
-  const { data: unclaimedTokenBalance } = useUserUnclaimedTokenBalance()
   const isOwnerWallet = useIsUserAddress(projectOwnerAddress)
 
   return (
@@ -65,16 +56,6 @@ export function V2V3ProjectToolsDrawer({
 
               <PaymentAddressSection
                 useDeployProjectPayerTx={useDeployProjectPayerTx}
-              />
-            </section>
-
-            <Divider />
-
-            <section>
-              <TransferUnclaimedTokensForm
-                tokenSymbol={tokenSymbol}
-                unclaimedTokenBalance={unclaimedTokenBalance}
-                useTransferUnclaimedTokensTx={useTransferUnclaimedTokensTx}
               />
             </section>
 

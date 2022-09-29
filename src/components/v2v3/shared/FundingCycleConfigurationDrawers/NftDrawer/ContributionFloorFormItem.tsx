@@ -19,7 +19,7 @@ export default function ContributionFloorFormItem({
     if (value === undefined || value <= 0) {
       return Promise.reject(t`Amount required`)
     }
-    const isInitialValue = initialValue?.toString() === value
+    const isInitialValue = initialValue == value
     // Check this `contributionFloor` isn't already in another tier
     // - But allow if tier is being edited and its `contributionFloor` hasn't changed
     if (!validateDuplicate(value) && !isInitialValue) {

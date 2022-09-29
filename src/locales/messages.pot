@@ -1214,6 +1214,9 @@ msgstr ""
 msgid "Go to <0>{snapshotUrl}</0>"
 msgstr ""
 
+msgid "Go to Safe"
+msgstr ""
+
 msgid "Go to your Safe"
 msgstr ""
 
@@ -1667,6 +1670,9 @@ msgstr ""
 msgid "No beneficiary selected. Is your wallet connected?"
 msgstr ""
 
+msgid "No distributions configured."
+msgstr ""
+
 msgid "No file uploaded."
 msgstr ""
 
@@ -1689,6 +1695,9 @@ msgid "No past funding cycles"
 msgstr ""
 
 msgid "No reserved tokens available to distribute."
+msgstr ""
+
+msgid "No reserved tokens configured."
 msgstr ""
 
 msgid "No strategy"
@@ -2088,6 +2097,9 @@ msgid "Reconfigure"
 msgstr ""
 
 msgid "Reconfigure Funding Cycle"
+msgstr ""
+
+msgid "Reconfigure funding cycle"
 msgstr ""
 
 msgid "Reconfigure payouts as percentages of your distribution limit."
@@ -2664,6 +2676,9 @@ msgid "This proposed reconfiguration hasn't passed the {0} period. It's not guar
 msgstr ""
 
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
+msgstr ""
+
+msgid "This transaction reconfigures the project's funding cycle."
 msgstr ""
 
 msgid "This will enable your project's veNFT contract to spend unclaimed tokens in addition to project ERC-20 tokens."

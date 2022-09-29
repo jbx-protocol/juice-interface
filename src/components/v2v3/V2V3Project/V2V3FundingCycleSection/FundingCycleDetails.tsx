@@ -65,10 +65,12 @@ export default function FundingCycleDetails({
     timeSeconds: fundingCycle.duration.toNumber(),
     fullWords: true,
   })
-  const formattedStartTime = formatDate(fundingCycle.start.mul(1000))
-  const formattedEndTime = formatDate(
-    fundingCycle.start.add(fundingCycle.duration).mul(1000),
-  )
+  const formattedStartTime = fundingCycle.start
+    ? formatDate(fundingCycle.start.mul(1000))
+    : undefined
+  const formattedEndTime = fundingCycle.start
+    ? formatDate(fundingCycle.start?.add(fundingCycle.duration).mul(1000))
+    : undefined
   const ballotStrategy = getBallotStrategyByAddress(fundingCycle.ballot)
   const unsafeFundingCycleProperties = getUnsafeV2V3FundingCycleProperties(
     fundingCycle,
@@ -173,7 +175,7 @@ export default function FundingCycleDetails({
           )}
         </Descriptions.Item>
 
-        {fundingCycle.duration.gt(0) && (
+        {fundingCycle.duration.gt(0) && formattedStartTime && (
           <Descriptions.Item label={<Trans>Start</Trans>}>
             <Tooltip title={formatDateToUTC(fundingCycle.start.mul(1000))}>
               {formattedStartTime}
@@ -181,7 +183,7 @@ export default function FundingCycleDetails({
           </Descriptions.Item>
         )}
 
-        {fundingCycle.duration.gt(0) && (
+        {fundingCycle.duration.gt(0) && formattedEndTime && (
           <Descriptions.Item label={<Trans>End</Trans>}>
             <Tooltip
               title={formatDateToUTC(

@@ -1712,6 +1712,9 @@ msgstr ""
 msgid "No transaction history"
 msgstr ""
 
+msgid "No upcoming funding cycle."
+msgstr ""
+
 msgid "Not a valid ETH address"
 msgstr ""
 

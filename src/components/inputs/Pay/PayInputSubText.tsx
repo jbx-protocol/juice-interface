@@ -128,6 +128,7 @@ export default function PayInputSubText({
             <Tooltip
               title={
                 <AMMPrices
+                  mode="buy"
                   tokenSymbol={tokenSymbol}
                   tokenAddress={tokenAddress}
                 />

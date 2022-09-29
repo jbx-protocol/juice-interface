@@ -12,6 +12,7 @@ import Callout from 'components/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { MemoFormInput } from 'components/inputs/Pay/MemoFormInput'
+import { RedeemAMMPrices } from 'components/Project/RedeemAMMPrices'
 import TransactionModal from 'components/TransactionModal'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
@@ -35,6 +36,7 @@ export default function V2RedeemModal({
 }) {
   const {
     tokenSymbol,
+    tokenAddress,
     fundingCycle,
     primaryTerminalCurrentOverflow,
     totalTokenSupply,
@@ -259,7 +261,15 @@ export default function V2RedeemModal({
                 disabled={totalBalance?.eq(0)}
                 onChange={val => setRedeemAmount(val)}
               />
+              {tokenSymbol && tokenAddress ? (
+                <RedeemAMMPrices
+                  tokenSymbol={tokenSymbol}
+                  tokenAddress={tokenAddress}
+                  style={{ fontSize: '.65rem' }}
+                />
+              ) : null}
             </Form.Item>
+
             <Form.Item label={t`Memo`}>
               <MemoFormInput value={memo} onChange={setMemo} />
             </Form.Item>

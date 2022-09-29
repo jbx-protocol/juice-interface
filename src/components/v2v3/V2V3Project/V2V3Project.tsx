@@ -84,32 +84,38 @@ export function V2V3Project({
     currencies: { ETH },
   } = useContext(CurrencyContext)
 
-  // Checks URL to see if user was just directed from project deploy
-  const router = useRouter()
-  const queryParams = router.query
-  const isNewDeploy = Boolean(queryParams.newDeploy)
-  const nftPurchaseConfirmed = Boolean(queryParams.nftPurchaseConfirmed)
-
   const [newDeployModalVisible, setNewDeployModalVisible] =
-    useState<boolean>(isNewDeploy)
+    useState<boolean>(false)
   const [nftPostPayModalVisible, setNftPostPayModalVisible] =
-    useState<boolean>(nftPurchaseConfirmed)
-
-  useEffect(() => {
-    if (isNewDeploy) {
-      setNewDeployModalVisible(true)
-    }
-  }, [isNewDeploy])
-  useEffect(() => {
-    if (nftPurchaseConfirmed) {
-      setNftPostPayModalVisible(true)
-    }
-  }, [nftPurchaseConfirmed])
+    useState<boolean>(false)
 
   const [balancesModalVisible, setBalancesModalVisible] =
     useState<boolean>(false)
   const [payAmount, setPayAmount] = useState<string>('0')
   const [payInCurrency, setPayInCurrency] = useState<CurrencyOption>(ETH)
+
+  // Checks URL to see if user was just directed from project deploy
+  const { replace: routerReplace, query } = useRouter()
+
+  /**
+   * When the router is ready,
+   * check if the user was just redirected from:
+   * - project deploy, or;
+   * - successful NFT rewards payment.
+   *
+   * This should only run once: on initial load.
+   *
+   * The reason for this useEffect is because `query` doesn't appear to
+   * update when `router.replace` is called to remove the query params.
+   */
+  useEffect(() => {
+    if (query.newDeploy === 'true') {
+      setNewDeployModalVisible(true)
+    }
+    if (query.nftPurchaseConfirmed === 'true') {
+      setNftPostPayModalVisible(true)
+    }
+  }, [query])
 
   const isMobile = useMobile()
   const canReconfigureFundingCycles = useV2ConnectedWalletHasPermission(
@@ -170,7 +176,23 @@ export function V2V3Project({
 
   // Change URL without refreshing page
   const removeQueryParams = () => {
-    router.push(v2v3ProjectRoute({ projectId }), undefined, { shallow: true })
+    // `Next` `query.nftPurchaseConfirmed` not updating unless a new
+    // `nftPurchaseConfirmed` value is given
+    const newQuery: Record<string, string> = {}
+    Object.keys(query).forEach((key: string) => {
+      if (key !== 'projectId') {
+        newQuery[key] = 'null'
+      }
+    })
+
+    routerReplace(
+      {
+        pathname: v2v3ProjectRoute({ projectId }),
+        query: newQuery,
+      },
+      undefined,
+      { shallow: true },
+    )
   }
 
   const closeNewDeployModal = () => {

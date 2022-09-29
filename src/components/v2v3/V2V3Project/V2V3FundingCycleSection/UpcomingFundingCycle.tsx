@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/macro'
 import { CardSection } from 'components/CardSection'
 import Loading from 'components/Loading'
 import FundingCycleDetailsCard from 'components/Project/FundingCycleDetailsCard'
@@ -16,12 +17,14 @@ import FundingCycleDetails from './FundingCycleDetails'
 import PayoutSplitsCard from './PayoutSplitsCard'
 import ReservedTokensSplitsCard from './ReservedTokensSplitsCard'
 
-export default function UpcomingFundingCycle() {
+export function UpcomingFundingCycle() {
   const { primaryTerminal } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
-  const [upcomingFundingCycle, upcomingFundingCycleMetadata, ballotState] =
+  const { data: upcomingFundingCycleResponse, loading } =
     useProjectUpcomingFundingCycle()
+  const [upcomingFundingCycle, upcomingFundingCycleMetadata, ballotState] =
+    upcomingFundingCycleResponse ?? []
 
   const { data: queuedPayoutSplits } = useProjectSplits({
     projectId,
@@ -43,7 +46,15 @@ export default function UpcomingFundingCycle() {
   const [queuedDistributionLimit, queuedDistributionLimitCurrency] =
     queuedDistributionLimitData ?? []
 
-  if (!upcomingFundingCycle || !upcomingFundingCycleMetadata) return <Loading />
+  if (loading) return <Loading />
+
+  if (!upcomingFundingCycle || !upcomingFundingCycleMetadata) {
+    return (
+      <CardSection>
+        <Trans>No upcoming funding cycle.</Trans>
+      </CardSection>
+    )
+  }
 
   return (
     <div>

@@ -1,32 +1,27 @@
-import { SettingOutlined } from '@ant-design/icons'
-import { Button, Tooltip } from 'antd'
-
-import { ExclamationCircleOutlined } from '@ant-design/icons'
+import { ExclamationCircleOutlined, SettingOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
+import { Button, Tooltip } from 'antd'
+import { CardSection } from 'components/CardSection'
+import Loading from 'components/Loading'
+import FundingCycleSection, {
+  TabType,
+} from 'components/Project/FundingCycleSection'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
 import { V2OperatorPermission } from 'models/v2v3/permissions'
+import Link from 'next/link'
 import { useContext } from 'react'
-
-import Loading from 'components/Loading'
+import { settingsPagePath } from 'utils/routes'
 import {
   getV2V3FundingCycleRiskCount,
   hasFundingDuration,
 } from 'utils/v2v3/fundingCycle'
 import { serializeV2V3FundingCycleData } from 'utils/v2v3/serializers'
-
-import { CardSection } from 'components/CardSection'
-import FundingCycleSection, {
-  TabType,
-} from 'components/Project/FundingCycleSection'
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
-
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import Link from 'next/link'
-import { settingsPagePath } from 'utils/routes'
-import CurrentFundingCycle from './CurrentFundingCycle'
-import FundingCycleHistory from './FundingCycleHistory/FundingCycleHistory'
-import UpcomingFundingCycle from './UpcomingFundingCycle'
+import { CurrentFundingCycle } from './CurrentFundingCycle'
+import { FundingCycleHistory } from './FundingCycleHistory'
+import { UpcomingFundingCycle } from './UpcomingFundingCycle'
 
 const TabText = ({
   text,
@@ -71,12 +66,12 @@ const TabText = ({
   )
 }
 
-export default function V2V3FundingCycleSection() {
+export function V2V3FundingCycleSection() {
   const {
     fundingCycle,
     isPreviewMode,
-    loading: { fundingCycleLoading },
     handle,
+    loading: { fundingCycleLoading },
   } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 

@@ -9,7 +9,7 @@ import FundingCycleDetails from './FundingCycleDetails'
 import PayoutSplitsCard from './PayoutSplitsCard'
 import ReservedTokensSplitsCard from './ReservedTokensSplitsCard'
 
-export default function CurrentFundingCycle() {
+export function CurrentFundingCycle() {
   const {
     isPreviewMode,
     fundingCycle,

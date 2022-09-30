@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Modal } from 'antd'
+import { Modal, ModalProps } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import { emitErrorNotification } from 'utils/notifications'
 
@@ -13,13 +13,7 @@ import { readProvider } from 'constants/readProvider'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { downloadCsvFile } from 'utils/csv'
 
-export default function V2V3DownloadPaymentsModal({
-  visible,
-  onCancel,
-}: {
-  visible: boolean | undefined
-  onCancel: VoidFunction | undefined
-}) {
+export default function V2V3DownloadPaymentsModal(props: ModalProps) {
   const [latestBlockNumber, setLatestBlockNumber] = useState<number>()
   const [blockNumber, setBlockNumber] = useState<number>()
   const [loading, setLoading] = useState<boolean>()
@@ -89,14 +83,13 @@ export default function V2V3DownloadPaymentsModal({
 
   return (
     <Modal
-      visible={visible}
-      onCancel={onCancel}
       onOk={download}
       okText={t`Download CSV`}
       okButtonProps={{ type: 'primary' }}
       cancelText={t`Close`}
       confirmLoading={loading}
       centered
+      {...props}
     >
       <div>
         <h4>

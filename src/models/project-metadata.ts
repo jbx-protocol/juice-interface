@@ -39,7 +39,7 @@ type ProjectMetadataV3 = Partial<
 >
 
 // add `archived`
-export type ProjectMetadataV4 = Partial<
+type ProjectMetadataV4 = Partial<
   Omit<ProjectMetadataV3, 'version'> & {
     version: 4
     archived: boolean

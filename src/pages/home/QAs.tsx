@@ -10,7 +10,7 @@ export const OverflowVideoLink: FC = ({ children }) => (
 
 const JB_FEE = 2.5
 
-export const JBDiscordLink = ({ children }: { children: ReactNode }) => (
+const JBDiscordLink = ({ children }: { children: ReactNode }) => (
   <ExternalLink href="https://discord.gg/6jXrJSyDFf">{children}</ExternalLink>
 )
 

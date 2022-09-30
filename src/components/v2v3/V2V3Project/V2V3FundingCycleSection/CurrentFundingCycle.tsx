@@ -25,7 +25,7 @@ export function CurrentFundingCycle() {
     return <LoadingOutlined />
   }
 
-  if (!fundingCycle || !fundingCycle.number.eq(0) || !fundingCycleMetadata) {
+  if (!fundingCycle || fundingCycle.number.eq(0) || !fundingCycleMetadata) {
     return (
       <CardSection>
         <Trans>No active funding cycle.</Trans>

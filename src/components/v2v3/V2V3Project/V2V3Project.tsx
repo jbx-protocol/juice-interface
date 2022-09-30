@@ -18,7 +18,7 @@ import { weightedAmount } from 'utils/v2v3/math'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 
 import { TextButton } from 'components/TextButton'
-import V2BugNotice from 'components/V2BugNotice'
+import { V2BugNoticeBanner } from 'components/v2v3/V2V3Project/banners/V2BugNoticeBanner'
 import { CurrencyContext } from 'contexts/currencyContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useMobile from 'hooks/Mobile'
@@ -221,7 +221,13 @@ export function V2V3Project({
 
   return (
     <Space direction="vertical" size={GUTTER_PX} style={{ width: '100%' }}>
-      {showRelaunchFundingCycleBanner && <RelaunchFundingCycleBanner />}
+      <Space direction="vertical" size="small" style={{ width: '100%' }}>
+        {!isPreviewMode &&
+          hasCurrentFundingCycle === false &&
+          hasQueuedFundingCycle === false &&
+          cv === CV_V2 && <V2BugNoticeBanner />}
+        {showRelaunchFundingCycleBanner && <RelaunchFundingCycleBanner />}
+      </Space>
 
       <ProjectHeader
         metadata={projectMetadata}
@@ -232,10 +238,7 @@ export function V2V3Project({
         canEditProjectHandle={canEditProjectHandle}
         projectId={projectId}
       />
-      {!isPreviewMode &&
-        hasCurrentFundingCycle === false &&
-        hasQueuedFundingCycle === false &&
-        cv === CV_V2 && <V2BugNotice />}
+
       <Row gutter={GUTTER_PX} align={'bottom'}>
         <Col md={colSizeMd} xs={24}>
           <TreasuryStats />

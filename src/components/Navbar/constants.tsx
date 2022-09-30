@@ -1,5 +1,4 @@
 import { Trans } from '@lingui/macro'
-import ExternalLink from 'components/ExternalLink'
 
 type ResourceItem = {
   label: JSX.Element
@@ -8,56 +7,45 @@ type ResourceItem = {
 
 export const resourcesMenuItems = (mobile?: boolean): ResourceItem[] => {
   const linkStyle = {
-    color: 'var(--text-primary)',
-    fontWeight: mobile ? 400 : 500,
+    className: 'nav-dropdown-item',
+    target: '_blank',
+    rel: 'noopener noreferrer',
+    style: {
+      color: 'var(--text-primary)',
+      fontWeight: mobile ? 400 : 500,
+    },
   }
   return [
     {
       key: 'governance',
       label: (
-        <ExternalLink
-          href="https://vote.juicebox.money/#/jbdao.eth"
-          className="nav-dropdown-item"
-          style={linkStyle}
-        >
+        <a href="https://vote.juicebox.money/#/jbdao.eth" {...linkStyle}>
           <Trans>Governance</Trans>
-        </ExternalLink>
+        </a>
       ),
     },
     {
       key: 'newsletter',
       label: (
-        <ExternalLink
-          href="https://newsletter.juicebox.money"
-          className="nav-dropdown-item"
-          style={linkStyle}
-        >
+        <a href="https://newsletter.juicebox.money" {...linkStyle}>
           <Trans>Newsletter</Trans>
-        </ExternalLink>
+        </a>
       ),
     },
     {
       key: 'podcast',
       label: (
-        <ExternalLink
-          href="https://podcast.juicebox.money/"
-          className="nav-dropdown-item"
-          style={linkStyle}
-        >
+        <a href="https://podcast.juicebox.money/" {...linkStyle}>
           <Trans>Podcast</Trans>
-        </ExternalLink>
+        </a>
       ),
     },
     {
       key: 'peel',
       label: (
-        <ExternalLink
-          href="https://discord.gg/XvmfY4Hkcz"
-          className="nav-dropdown-item"
-          style={linkStyle}
-        >
+        <a href="https://discord.gg/XvmfY4Hkcz" {...linkStyle}>
           <Trans>PeelDAO</Trans>
-        </ExternalLink>
+        </a>
       ),
     },
   ]

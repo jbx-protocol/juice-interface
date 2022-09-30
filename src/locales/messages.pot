@@ -1499,6 +1499,9 @@ msgstr ""
 msgid "Lock {tokenText} for Governance NFTs"
 msgstr ""
 
+msgid "Locked until {0}"
+msgstr ""
+
 msgid "Locked {tokenSymbolDisplayText}"
 msgstr ""
 

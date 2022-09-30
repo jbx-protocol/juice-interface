@@ -21,6 +21,7 @@ export default function InputAccessoryButton({
     <div
       role="button"
       style={{
+        userSelect: 'none',
         cursor: onClick && !disabled ? 'pointer' : 'default',
         color:
           onClick && !disabled

@@ -8,23 +8,44 @@ import { useContext, useEffect, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { getNftRewardTier, MAX_NFT_REWARD_TIERS } from 'utils/nftRewards'
 
+import { usePayProjectForm } from 'components/Project/PayProjectForm/usePayProjectForm'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { CurrencyContext } from 'contexts/currencyContext'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { fromWad } from 'utils/format/formatNumber'
 import { RewardTier } from './RewardTier'
 
-export function NftRewardsSection({
-  payAmountETH,
-  onNftSelected,
-}: {
-  payAmountETH: string
-  onNftSelected: (payAmountETH: string) => void
-}) {
+function RewardTiersLoadingSkeleton() {
+  const isMobile = useMobile()
+
+  return (
+    <Row style={{ marginTop: '15px' }} gutter={isMobile ? 8 : 24}>
+      {[...Array(MAX_NFT_REWARD_TIERS)]?.map(index => (
+        <Col md={8} xs={8} key={index}>
+          <RewardTier loading />
+        </Col>
+      ))}
+    </Row>
+  )
+}
+
+export function NftRewardsSection() {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
   const {
     nftRewards: { CIDs, rewardTiers, loading: nftsLoading },
   } = useContext(NftRewardsContext)
+  const {
+    currencies: { ETH },
+  } = useContext(CurrencyContext)
+  const converter = useCurrencyConverter()
+  const { payAmount, payInCurrency, setPayAmount, setPayInCurrency } =
+    usePayProjectForm()
+
+  const payAmountETH =
+    payInCurrency === ETH ? payAmount : fromWad(converter.usdToWei(payAmount))
 
   const [selectedIndex, setSelectedIndex] = useState<number>()
 
@@ -61,7 +82,8 @@ export function NftRewardsSection({
 
     const handleSelected = () => {
       setSelectedIndex(index)
-      onNftSelected(rewardTier.contributionFloor.toString())
+      setPayAmount(rewardTier.contributionFloor.toString())
+      setPayInCurrency(ETH)
     }
 
     return (
@@ -77,18 +99,6 @@ export function NftRewardsSection({
           onClick={handleSelected}
         />
       </Col>
-    )
-  }
-
-  function RewardTiersLoadingSkeleton() {
-    return (
-      <Row style={{ marginTop: '15px' }} gutter={isMobile ? 8 : 24}>
-        {[...Array(MAX_NFT_REWARD_TIERS)]?.map(index => (
-          <Col md={8} xs={8} key={index}>
-            <RewardTier loading />
-          </Col>
-        ))}
-      </Row>
     )
   }
 

@@ -31,7 +31,7 @@ import TransactionModal from 'components/TransactionModal'
 import useMobile from 'hooks/Mobile'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { getNftRewardTier } from 'utils/nftRewards'
-import { weightedAmount } from 'utils/v2v3/math'
+import { weightAmountPermyriad } from 'utils/v2v3/math'
 
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
@@ -83,13 +83,13 @@ export function V2ConfirmPayModal({
 
   const reservedRate = fundingCycleMetadata?.reservedRate?.toNumber()
 
-  const receivedTickets = weightedAmount(
+  const receivedTickets = weightAmountPermyriad(
     fundingCycle?.weight,
     reservedRate,
     weiAmount,
     'payer',
   )
-  const ownerTickets = weightedAmount(
+  const ownerTickets = weightAmountPermyriad(
     fundingCycle?.weight,
     reservedRate,
     weiAmount,

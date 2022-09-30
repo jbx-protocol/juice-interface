@@ -1,19 +1,13 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import { CSSProperties, useContext, useState } from 'react'
-
+import { Trans } from '@lingui/macro'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import { CurrencyContext } from 'contexts/currencyContext'
-
-import { CurrencyOption } from 'models/currencyOption'
-
-import { WeightFunction } from 'utils/math'
-
 import { ThemeContext } from 'contexts/themeContext'
-
-import { Trans } from '@lingui/macro'
-
-import FormattedNumberInput from '../FormattedNumberInput'
+import { CurrencyOption } from 'models/currencyOption'
+import { CSSProperties, useContext } from 'react'
+import FormattedNumberInput from '../../inputs/FormattedNumberInput'
 import PayInputSubText from './PayInputSubText'
+import { PayProjectFormContext } from './PayProjectFormContext'
+import { usePayProjectForm } from './usePayProjectForm'
 
 export type PayButtonProps = {
   payAmount: string
@@ -23,33 +17,7 @@ export type PayButtonProps = {
   wrapperStyle?: CSSProperties
 }
 
-export default function PayInputGroup({
-  payAmountETH,
-  payInCurrency,
-  onPayAmountChange,
-  onPayInCurrencyChange,
-  PayButton,
-  reservedRate,
-  weight,
-  tokenSymbol,
-  tokenAddress,
-  weightingFn,
-  disabled,
-  isEligibleForNft,
-}: {
-  payAmountETH: string
-  payInCurrency: CurrencyOption
-  onPayAmountChange: (payAmount: string) => void
-  onPayInCurrencyChange: (currency: CurrencyOption) => void
-  PayButton: (props: PayButtonProps) => JSX.Element | null
-  reservedRate: number | undefined
-  weight: BigNumber | undefined
-  tokenSymbol: string | undefined
-  tokenAddress: string | undefined
-  weightingFn: WeightFunction
-  disabled?: boolean
-  isEligibleForNft?: boolean
-}) {
+export function PayProjectForm({ disabled }: { disabled?: boolean }) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -57,18 +25,27 @@ export default function PayInputGroup({
     currencyMetadata,
     currencies: { USD, ETH },
   } = useContext(CurrencyContext)
-
-  const [isErrorField, setIsErrorField] = useState<boolean>(false)
+  const { PayButton } = useContext(PayProjectFormContext)
+  const {
+    payAmount,
+    setPayAmount,
+    payInCurrency,
+    setPayInCurrency,
+    error,
+    setError,
+  } = usePayProjectForm()
 
   const togglePayInCurrency = () => {
     const newPayInCurrency = payInCurrency === ETH ? USD : ETH
-    onPayInCurrencyChange(newPayInCurrency)
+    setPayInCurrency(newPayInCurrency)
   }
+
+  if (!PayButton) return null
 
   return (
     <>
       <div style={{ height: '22px' }}>
-        {isErrorField ? (
+        {error ? (
           <span style={{ color: colors.text.failure, fontSize: '0.7rem' }}>
             <Trans>Pay amount must be greater than 0.</Trans>
           </span>
@@ -86,10 +63,10 @@ export default function PayInputGroup({
           <FormattedNumberInput
             placeholder="0"
             onChange={val => {
-              setIsErrorField(Number(val) <= 0)
-              onPayAmountChange(val ?? '0')
+              setError(Number(val) <= 0)
+              setPayAmount(val ?? '0')
             }}
-            value={payAmountETH}
+            value={payAmount}
             min={0}
             disabled={disabled}
             accessory={
@@ -103,20 +80,15 @@ export default function PayInputGroup({
           />
           <PayInputSubText
             payInCurrency={payInCurrency ?? ETH}
-            amount={payAmountETH}
-            reservedRate={reservedRate}
-            weight={weight}
-            tokenSymbol={tokenSymbol}
-            tokenAddress={tokenAddress}
-            weightingFn={weightingFn}
-            isEligibleForNft={isEligibleForNft}
+            amount={payAmount}
           />
         </div>
+
         <PayButton
           wrapperStyle={{ flex: 1 }}
-          payAmount={payAmountETH}
+          payAmount={payAmount}
           payInCurrency={payInCurrency}
-          onError={() => setIsErrorField(true)}
+          onError={() => setError(true)}
           disabled={disabled}
         />
       </div>

@@ -1,7 +1,9 @@
 import { t } from '@lingui/macro'
 import { MenuProps } from 'antd'
 
-export const resourcesMenuItems = (): MenuProps['items'] => {
+type MenuItem = Required<MenuProps>['items'][number]
+
+export const resourcesMenuItems = (): MenuItem[] => {
   return [
     {
       key: 'governance',

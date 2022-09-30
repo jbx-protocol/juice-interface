@@ -6,11 +6,7 @@ import FundingCyclePreview from './FundingCyclePreview'
 import ReservedTokens from './ReservedTokens'
 import Spending from './Spending'
 
-export default function CurrentFundingCycle({
-  showCurrentDetail,
-}: {
-  showCurrentDetail?: boolean
-}) {
+export default function CurrentFundingCycle() {
   const { projectId, currentFC, currentPayoutMods, currentTicketMods } =
     useContext(V1ProjectContext)
 
@@ -19,10 +15,7 @@ export default function CurrentFundingCycle({
   return (
     <div style={{ position: 'relative' }}>
       <CardSection>
-        <FundingCyclePreview
-          fundingCycle={currentFC}
-          expand={showCurrentDetail}
-        />
+        <FundingCyclePreview fundingCycle={currentFC} />
       </CardSection>
       <CardSection>
         <Spending payoutMods={currentPayoutMods} />

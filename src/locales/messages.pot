@@ -323,9 +323,6 @@ msgstr ""
 msgid "Address: <0/>"
 msgstr ""
 
-msgid "Adjust incentives for paying your project."
-msgstr ""
-
 msgid "Advanced (optional)"
 msgstr ""
 
@@ -558,9 +555,6 @@ msgid "Change project handle"
 msgstr ""
 
 msgid "Changes to payouts will take effect immediately."
-msgstr ""
-
-msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
 msgstr ""
 
 msgid "Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
@@ -1226,9 +1220,6 @@ msgstr ""
 msgid "Grant permission"
 msgstr ""
 
-msgid "Handle"
-msgstr ""
-
 msgid "Has Juicebox been audited?"
 msgstr ""
 
@@ -1278,9 +1269,6 @@ msgid "How the {reservedPercentage}% of your project's reserved tokens will be s
 msgstr ""
 
 msgid "How to Juice."
-msgstr ""
-
-msgid "How your project will distribute funds."
 msgstr ""
 
 msgid "I accept this project's <0>risks</0>."
@@ -1676,9 +1664,6 @@ msgstr ""
 msgid "No file uploaded."
 msgstr ""
 
-msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
-msgstr ""
-
 msgid "No funds available to distribute."
 msgstr ""
 
@@ -1710,6 +1695,9 @@ msgid "No target set."
 msgstr ""
 
 msgid "No transaction history"
+msgstr ""
+
+msgid "No upcoming funding cycle."
 msgstr ""
 
 msgid "Not a valid ETH address"
@@ -1794,9 +1782,6 @@ msgid "Pay amount"
 msgstr ""
 
 msgid "Pay amount must be greater than 0."
-msgstr ""
-
-msgid "Pay button"
 msgstr ""
 
 msgid "Pay button text"
@@ -1970,9 +1955,6 @@ msgstr ""
 msgid "Project name"
 msgstr ""
 
-msgid "Project name, handle, links, and other details."
-msgstr ""
-
 msgid "Project not found"
 msgstr ""
 
@@ -2082,9 +2064,6 @@ msgid "Recipients will receive payouts in ETH."
 msgstr ""
 
 msgid "Recommended"
-msgstr ""
-
-msgid "Reconfiguration"
 msgstr ""
 
 msgid "Reconfiguration rules"
@@ -2204,13 +2183,7 @@ msgstr ""
 msgid "Resources"
 msgstr ""
 
-msgid "Restrict payments and printing tokens."
-msgstr ""
-
 msgid "Restricted actions"
-msgstr ""
-
-msgid "Review & Deploy"
 msgstr ""
 
 msgid "Review and confirm stake"
@@ -2219,25 +2192,16 @@ msgstr ""
 msgid "Review and launch funding cycle"
 msgstr ""
 
-msgid "Review project"
-msgstr ""
-
 msgid "Reward contributors with NFT's."
 msgstr ""
 
 msgid "Reward contributors with NFTs when they meet your configured funding criteria."
 msgstr ""
 
-msgid "Reward specific community members with tokens."
-msgstr ""
-
 msgid "Rules"
 msgstr ""
 
 msgid "Rules for determining how funding cycles can be reconfigured"
-msgstr ""
-
-msgid "Rules for how changes can be made to your project."
 msgstr ""
 
 msgid "Rules for how this project's funding cycles can be reconfigured."
@@ -2492,9 +2456,6 @@ msgstr ""
 msgid "Target"
 msgstr ""
 
-msgid "Target is 0: All funds will be considered overflow and can be redeemed by burning project tokens."
-msgstr ""
-
 msgid "Terminal configuration"
 msgstr ""
 
@@ -2505,9 +2466,6 @@ msgid "The <0>Juicebox contracts</0> may be vulnerable to bugs or hacks. All fun
 msgstr ""
 
 msgid "The <0>issuance rate</0> of your second funding cycle will be <1>{0} tokens per 1 ETH</1>, then <2>{1} tokens per 1 ETH </2>for your third funding cycle, and so on."
-msgstr ""
-
-msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
 msgstr ""
 
 msgid "The address of any smart contract deployed on {0} that implements <0>this interface</0>."
@@ -2618,12 +2576,6 @@ msgstr ""
 msgid "There are no reserved token recipients defined for this funding cycle. The project owner will receive all available tokens."
 msgstr ""
 
-msgid "These attributes can be changed at any time."
-msgstr ""
-
-msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."
-msgstr ""
-
 msgid "This Juicebox V2 project also has a project on Juicebox V1. The project owner is allowing you to swap your V1 tokens for V2 tokens."
 msgstr ""
 
@@ -2682,9 +2634,6 @@ msgid "This transaction reconfigures the project's funding cycle."
 msgstr ""
 
 msgid "This will enable your project's veNFT contract to spend unclaimed tokens in addition to project ERC-20 tokens."
-msgstr ""
-
-msgid "This will erase all of your changes."
 msgstr ""
 
 msgid "This will reset the data for your new project. All changes will be lost."
@@ -3207,9 +3156,6 @@ msgid "Your project will withhold all funds raised. Funds can be distributed to 
 msgstr ""
 
 msgid "Your project won't withhold any funds. All funds raised are Overflow. Token holders can redeem their tokens for a portion of your entire treasury."
-msgstr ""
-
-msgid "Your project's funding cycle target and duration."
 msgstr ""
 
 msgid "Your transaction has been submitted and is awaiting confirmation."

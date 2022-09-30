@@ -12,7 +12,7 @@ import { useContext, useEffect, useState } from 'react'
 import { PastFundingCycle } from './PastFundingCycle'
 import { fetchPastFundingCycles } from './utils'
 
-export default function FundingCycleHistory() {
+export function FundingCycleHistory() {
   const { fundingCycle: currentFundingCycle } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
   const { contracts } = useContext(V2V3ContractsContext)

@@ -6,7 +6,7 @@ import { Button, Col, Drawer, DrawerProps, Row, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
 import { AppWrapper } from 'components/common'
-import V1Project from 'components/v1/V1Project'
+import { V1Project } from 'components/v1/V1Project'
 import { ThemeContext } from 'contexts/themeContext'
 import {
   V1ProjectContext,
@@ -640,7 +640,7 @@ function V1Create() {
               borderLeft: '1px solid ' + colors.stroke.tertiary,
             }}
           >
-            <V1Project showCurrentDetail column />
+            <V1Project column />
           </div>
         </Col>
 

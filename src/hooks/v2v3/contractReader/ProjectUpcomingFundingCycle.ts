@@ -7,45 +7,67 @@ import {
 import { useContext } from 'react'
 import { useProjectLatestConfiguredFundingCycle } from './ProjectLatestConfiguredFundingCycle'
 import useProjectQueuedFundingCycle from './ProjectQueuedFundingCycle'
+import { ContractReadResult } from './V2ContractReader'
+
+type UpcomingFundingCycleDataType = [
+  V2V3FundingCycle | undefined,
+  V2V3FundingCycleMetadata | undefined,
+  BallotState?,
+]
 
 /**
  * If the latestConfiguredFundingCycleOf has an active ballot, return latestConfiguredFundingCycleOf.
  * Else, return queuedFundingCycleOf.
  */
-export function useProjectUpcomingFundingCycle(): [
-  V2V3FundingCycle | undefined,
-  V2V3FundingCycleMetadata | undefined,
-  BallotState?,
-] {
+export function useProjectUpcomingFundingCycle(): ContractReadResult<UpcomingFundingCycleDataType> {
   const { projectId } = useContext(ProjectMetadataContext)
 
-  const { data: latestConfiguredFundingCycleResponse } =
-    useProjectLatestConfiguredFundingCycle({
-      projectId,
-    })
+  /**
+   * Get Latest Configured Funding Cycle.
+   */
+  const {
+    data: latestConfiguredFundingCycleResponse,
+    loading: latestConfiguredFundingCycleLoading,
+  } = useProjectLatestConfiguredFundingCycle({
+    projectId,
+  })
   const [
     latestConfiguredFundingCycle,
     latestConfiguredFundingCycleMetadata,
     latestConfiguredFundingCycleBallotState,
   ] = latestConfiguredFundingCycleResponse ?? []
-
   const isLatestConfiguredActive =
     latestConfiguredFundingCycle &&
     latestConfiguredFundingCycleBallotState === BallotState.active
 
-  const { data: queuedFundingCycleResponse } = useProjectQueuedFundingCycle({
+  /**
+   * Get Queued Configured Funding Cycle, only if latestConfiguredFundingCycle isn't active.
+   */
+  const {
+    data: queuedFundingCycleResponse,
+    loading: queuedFundingCycleLoading,
+  } = useProjectQueuedFundingCycle({
     projectId: !isLatestConfiguredActive ? projectId : undefined,
   })
   const [queuedFundingCycle, queuedFundingCycleMetadata] =
     queuedFundingCycleResponse ?? []
 
+  const loading =
+    queuedFundingCycleLoading || latestConfiguredFundingCycleLoading
+
   if (isLatestConfiguredActive) {
-    return [
-      latestConfiguredFundingCycle,
-      latestConfiguredFundingCycleMetadata,
-      latestConfiguredFundingCycleBallotState,
-    ]
+    return {
+      data: [
+        latestConfiguredFundingCycle,
+        latestConfiguredFundingCycleMetadata,
+        latestConfiguredFundingCycleBallotState,
+      ],
+      loading,
+    }
   }
 
-  return [queuedFundingCycle, queuedFundingCycleMetadata]
+  return {
+    data: [queuedFundingCycle, queuedFundingCycleMetadata],
+    loading,
+  }
 }

@@ -123,12 +123,12 @@ export function TopLeftNavItems({
           open={resourcesOpen}
         >
           <div
-            className={menuItemProps.className}
+            className="nav-menu-item hover-opacity"
             onClick={e => {
               setResourcesOpen(!resourcesOpen)
               e.stopPropagation()
             }}
-            style={{ ...menuItemProps.style }}
+            style={{ ...navMenuItemStyles }}
           >
             <Trans>Resources</Trans>
             {resourcesOpen ? (

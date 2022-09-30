@@ -102,7 +102,7 @@ export function V2V3FundingCycleSection() {
       label: <TabText text={t`Upcoming`} />,
       content: <UpcomingFundingCycle />,
     },
-    {
+    !isPreviewMode && {
       key: 'history',
       label: <TabText text={t`History`} hideRiskFlag />,
       content: (

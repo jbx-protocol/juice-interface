@@ -18,11 +18,7 @@ import FundingCycleSection from 'components/Project/FundingCycleSection'
 import FundingHistory from './FundingHistory'
 import ReconfigureFundingModalTrigger from './ReconfigureFundingModalTrigger'
 
-export default function FundingCycles({
-  showCurrentDetail,
-}: {
-  showCurrentDetail?: boolean
-}) {
+export default function FundingCycles() {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -66,7 +62,7 @@ export default function FundingCycles({
     {
       key: 'current',
       label: tabText({ text: t`Current`, fundingCycle: currentFC }),
-      content: <CurrentFundingCycle showCurrentDetail={showCurrentDetail} />,
+      content: <CurrentFundingCycle />,
     },
     {
       key: 'upcoming',

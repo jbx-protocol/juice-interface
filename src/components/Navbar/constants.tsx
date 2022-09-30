@@ -1,12 +1,10 @@
 import { Trans } from '@lingui/macro'
+import { MenuProps } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 
-type ResourceItem = {
-  label: JSX.Element
-  key: string
-}
+type MenuItem = Required<MenuProps>['items'][number]
 
-export const resourcesMenuItems = (mobile?: boolean): ResourceItem[] => {
+export const resourcesMenuItems = (mobile?: boolean): MenuItem[] => {
   const linkStyle = {
     color: 'var(--text-primary)',
     fontWeight: mobile ? 400 : 500,

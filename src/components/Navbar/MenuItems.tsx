@@ -74,15 +74,15 @@ export function TopLeftNavItems({
         <Dropdown
           overlay={resourcesMenu}
           overlayStyle={{ padding: 0 }}
-          visible={resourcesOpen}
+          open={resourcesOpen}
         >
           <div
-            className="nav-menu-item hover-opacity"
+            className={menuItemProps.className}
             onClick={e => {
               setResourcesOpen(!resourcesOpen)
               e.stopPropagation()
             }}
-            style={{ ...navMenuItemStyles }}
+            style={{ ...menuItemProps.style }}
           >
             <Trans>Resources</Trans>
             {resourcesOpen ? (

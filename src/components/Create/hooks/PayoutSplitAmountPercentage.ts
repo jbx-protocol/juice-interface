@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Split } from 'models/splits'
 import { useMemo } from 'react'
 import { useFundingTargetType } from '../../../hooks/FundingTargetType'
+import { AllocationSplit } from '../components/Allocation'
 
 /**
  * Hook to calculate the payout split amount percentage.
@@ -17,7 +17,7 @@ export const usePayoutSplitAmountPercentage = ({
   totalAllocationAmount,
 }: {
   allocationId?: string
-  allocations: (Split & { id: string })[] // TODO: Fixed in a later PR to use proper type
+  allocations: AllocationSplit[]
   totalAllocationAmount?: BigNumber | undefined
 }) => {
   const fundingTargetType = useFundingTargetType(totalAllocationAmount)

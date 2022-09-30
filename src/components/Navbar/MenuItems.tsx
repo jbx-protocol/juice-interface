@@ -50,6 +50,30 @@ export function TopLeftNavItems({
     rel: 'noopener noreferrer',
   }
 
+  const desktopDropDown = !mobile ? (
+    <Dropdown
+      overlay={resourcesMenu}
+      overlayStyle={{ padding: 0 }}
+      open={resourcesOpen}
+    >
+      <div
+        className="nav-menu-item hover-opacity"
+        onClick={e => {
+          setResourcesOpen(!resourcesOpen)
+          e.stopPropagation()
+        }}
+        style={{ ...navMenuItemStyles }}
+      >
+        <Trans>Resources</Trans>
+        {resourcesOpen ? (
+          <UpOutlined style={dropdownIconStyle} />
+        ) : (
+          <DownOutlined style={dropdownIconStyle} />
+        )}
+      </div>
+    </Dropdown>
+  ) : null
+
   return (
     <Space
       size={mobile ? 0 : 'large'}
@@ -70,29 +94,7 @@ export function TopLeftNavItems({
       <Link href="https://info.juicebox.money/blog">
         <a {...externalMenuLinkProps}>{t`Blog`}</a>
       </Link>
-      {!mobile && (
-        <Dropdown
-          overlay={resourcesMenu}
-          overlayStyle={{ padding: 0 }}
-          open={resourcesOpen}
-        >
-          <div
-            className="nav-menu-item hover-opacity"
-            onClick={e => {
-              setResourcesOpen(!resourcesOpen)
-              e.stopPropagation()
-            }}
-            style={{ ...navMenuItemStyles }}
-          >
-            <Trans>Resources</Trans>
-            {resourcesOpen ? (
-              <UpOutlined style={dropdownIconStyle} />
-            ) : (
-              <DownOutlined style={dropdownIconStyle} />
-            )}
-          </div>
-        </Dropdown>
-      )}
+      {desktopDropDown}
     </Space>
   )
 }

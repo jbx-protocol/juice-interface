@@ -1,9 +1,7 @@
 import { t } from '@lingui/macro'
 import { Menu } from 'antd'
-import ExternalLink from 'components/ExternalLink'
 
 import { resourcesMenuItems } from '../constants'
-import { navMenuItemStyles } from '../navStyles'
 
 const { SubMenu } = Menu
 
@@ -16,16 +14,8 @@ export default function ResourcesDropdownMobile() {
         marginLeft: 15,
       }}
     >
-      {resourcesMenuItems().map(r => (
-        <Menu.Item key={r.key}>
-          <ExternalLink
-            className="nav-dropdown-item"
-            href={r.link}
-            style={{ ...navMenuItemStyles, fontWeight: 400 }}
-          >
-            {r.label}
-          </ExternalLink>
-        </Menu.Item>
+      {resourcesMenuItems(true).map(r => (
+        <Menu.Item key={r.key}>{r.label}</Menu.Item>
       ))}
     </SubMenu>
   )

@@ -214,10 +214,12 @@ export function V2V3Project({
 
   return (
     <Space direction="vertical" size={GUTTER_PX} style={{ width: '100%' }}>
-      <Space direction="vertical" size="small" style={{ width: '100%' }}>
-        {showV2BugNoticeBanner && <V2BugNoticeBanner />}
-        {showRelaunchFundingCycleBanner && <RelaunchFundingCycleBanner />}
-      </Space>
+      {showV2BugNoticeBanner || showRelaunchFundingCycleBanner ? (
+        <Space direction="vertical" size="small" style={{ width: '100%' }}>
+          {showV2BugNoticeBanner && <V2BugNoticeBanner />}
+          {showRelaunchFundingCycleBanner && <RelaunchFundingCycleBanner />}
+        </Space>
+      ) : null}
 
       <ProjectHeader
         metadata={projectMetadata}

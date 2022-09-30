@@ -1,5 +1,5 @@
-import Banner from '../../../Banner'
-import ExternalLink from '../../../ExternalLink'
+import Banner from 'components/Banner'
+import ExternalLink from 'components/ExternalLink'
 
 export function V2BugNoticeBanner() {
   // This copy has not been prepped for translations due to being a hot fix that is likely to change.

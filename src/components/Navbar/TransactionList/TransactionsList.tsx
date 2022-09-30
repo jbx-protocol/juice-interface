@@ -1,12 +1,8 @@
 import { CaretDownOutlined, ThunderboltOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
+import { timestampForTxLog, TxHistoryContext } from 'contexts/txHistoryContext'
 import { TxStatus } from 'models/transaction'
 import { CSSProperties, useContext, useEffect, useMemo, useState } from 'react'
-
-import {
-  timestampForTxLog,
-  TxHistoryContext,
-} from '../../../contexts/txHistoryContext'
 import Loading from '../../Loading'
 import { TransactionItem } from './TransactionItem'
 

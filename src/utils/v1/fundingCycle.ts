@@ -1,4 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 
 import * as constants from '@ethersproject/constants'
 import { V1FundingCycle, V1FundingCycleMetadata } from 'models/v1/fundingCycle'
@@ -46,6 +46,35 @@ export const decodeFundingCycleMetadata = (
   } as V1FundingCycleMetadata
 }
 
+export const encodeFundingCycleMetadata = (
+  reserved: BigNumberish,
+  bondingCurveRate: BigNumberish,
+  reconfigurationBondingCurveRate: BigNumberish,
+  payIsPaused: boolean | null,
+  ticketPrintingIsAllowed: boolean | null,
+  treasuryExtension: string | null,
+  version: 1 | 0,
+): BigNumber => {
+  let encoded = BigNumber.from(version)
+    .or(BigNumber.from(reserved).shl(8))
+    .or(BigNumber.from(bondingCurveRate).shl(16))
+    .or(BigNumber.from(reconfigurationBondingCurveRate).shl(24))
+
+  if (payIsPaused !== null) {
+    encoded = encoded.or(BigNumber.from(payIsPaused ? 1 : 0).shl(32))
+  }
+  if (ticketPrintingIsAllowed !== null) {
+    encoded = encoded.or(
+      BigNumber.from(ticketPrintingIsAllowed ? 1 : 0).shl(33),
+    )
+  }
+  if (treasuryExtension !== null) {
+    encoded = encoded.or(BigNumber.from(treasuryExtension).shl(34))
+  }
+
+  return encoded
+}
+
 /**
  * From the FundingCycles.sol contract:
  *    If discountRate is 201, an non-recurring funding cycle will get made.
@@ -58,7 +87,7 @@ export const hasFundingTarget = (
   fundingCycle: Pick<V1FundingCycle | EditingV1FundingCycle, 'target'>,
 ) => fundingCycle.target.lt(constants.MaxUint256)
 
-const hasFundingDuration = (
+export const hasFundingDuration = (
   fundingCycle: Pick<V1FundingCycle | EditingV1FundingCycle, 'duration'>,
 ) => fundingCycle.duration && !fundingCycle.duration.eq(constants.AddressZero)
 

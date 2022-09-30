@@ -13,7 +13,7 @@ export const MAX_NFT_REWARD_TIERS = 3
 
 // Following three functions get the latest deployments of the NFT contracts from the NPM package
 // TODO: will need to incorporate `networkName` into this first function when contracts deployed to mainnet
-async function getLatestNftContractDeployments() {
+export async function getLatestNftContractDeployments() {
   const latestNftContractDeployments = await import(
     '@jbx-protocol/juice-nft-rewards/broadcast/Deploy.s.sol/4/run-latest.json'
   )

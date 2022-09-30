@@ -1,4 +1,8 @@
-import { PinataMetadata, PinataPinResponse } from '@pinata/sdk'
+import {
+  PinataMetadata,
+  PinataPinListResponse,
+  PinataPinResponse,
+} from '@pinata/sdk'
 import axios from 'axios'
 import { DEFAULT_PINATA_GATEWAY, IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 import { base58 } from 'ethers/lib/utils'
@@ -125,6 +129,12 @@ export const uploadProjectMetadata = async (
   })
 
   return res.data as PinataPinResponse
+}
+
+export const getPinnedListByTag = async (tag: keyof typeof IPFS_TAGS) => {
+  const data = await axios.get(`/api/ipfs/pin?tag=${IPFS_TAGS[tag]}`)
+
+  return data.data as PinataPinListResponse
 }
 
 // returns a native IPFS link (`ipfs://cid`) as a https link

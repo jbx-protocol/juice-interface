@@ -24,3 +24,8 @@ export const navMenuItemStyles: CSSProperties = {
   fontWeight: 600,
   color: 'var(--text-primary)',
 }
+
+export const navDropdownItem: CSSProperties = {
+  color: 'var(--text-primary)',
+  fontWeight: 500,
+}

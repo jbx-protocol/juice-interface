@@ -1,7 +1,7 @@
 import { NftRewardTier } from 'models/nftRewardTier'
 import { createContext } from 'react'
 
-type NftRewardsContextType = {
+export type NftRewardsContextType = {
   nftRewards: {
     CIDs: string[] | undefined
     rewardTiers: NftRewardTier[] | undefined

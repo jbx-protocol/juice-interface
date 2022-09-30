@@ -4,6 +4,7 @@ import PayInputGroup from 'components/inputs/Pay/PayInputGroup'
 import ProjectHeader from 'components/Project/ProjectHeader'
 import { TextButton } from 'components/TextButton'
 import { V2BugNoticeBanner } from 'components/v2v3/V2V3Project/banners/V2BugNoticeBanner'
+import VolumeChart from 'components/VolumeChart'
 import { CV_V2 } from 'constants/cv'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { V2V3_PROJECT_IDS } from 'constants/v2v3/projectIds'
@@ -20,7 +21,7 @@ import { useEditProjectDetailsTx } from 'hooks/v2v3/transactor/EditProjectDetail
 import { CurrencyOption } from 'models/currencyOption'
 import { V2OperatorPermission } from 'models/v2v3/permissions'
 import { useRouter } from 'next/router'
-import { lazy, useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { fromWad } from 'utils/format/formatNumber'
 import { getNftRewardTier } from 'utils/nftRewards'
@@ -37,7 +38,6 @@ import { V2V3FundingCycleSection } from './V2V3FundingCycleSection'
 import V2ManageTokensSection from './V2V3ManageTokensSection'
 import V2PayButton from './V2V3PayButton'
 import { V2V3ProjectHeaderActions } from './V2V3ProjectHeaderActions/V2V3ProjectHeaderActions'
-const VolumeChart = lazy(() => import('components/VolumeChart'))
 
 const GUTTER_PX = 40
 

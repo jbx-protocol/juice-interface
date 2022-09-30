@@ -259,6 +259,7 @@ export function V2V3Project({
           ) : null}
         </Col>
       </Row>
+
       <Row gutter={GUTTER_PX}>
         <Col md={colSizeMd} xs={24}>
           <Space
@@ -297,6 +298,7 @@ export function V2V3Project({
           </Col>
         ) : null}
       </Row>
+
       <NewDeployModal
         visible={newDeployModalVisible}
         onClose={closeNewDeployModal}

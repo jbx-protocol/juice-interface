@@ -2,15 +2,14 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Form } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import { CurrencySelectInputValue } from 'components/Create/components/CurrencySelectInput'
+import { FundingTargetType } from 'models/fundingTargetType'
 import { useDebugValue, useEffect, useMemo } from 'react'
 import { useEditingDistributionLimit } from 'redux/hooks/EditingDistributionLimit'
 import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 
-type TargetSelection = 'specific' | 'infinite' | 'none'
-
 export type FundingTargetFormProps = Partial<{
-  targetSelection: TargetSelection
+  targetSelection: FundingTargetType
   amount: CurrencySelectInputValue
 }>
 
@@ -25,7 +24,7 @@ export const useFundingTargetForm = () => {
       return undefined
     }
 
-    let targetSelection: TargetSelection
+    let targetSelection: FundingTargetType
 
     if (distributionLimit.amount.eq(MAX_DISTRIBUTION_LIMIT)) {
       targetSelection = 'infinite'

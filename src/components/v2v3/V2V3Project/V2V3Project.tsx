@@ -73,7 +73,6 @@ export function V2V3Project({
     tokenAddress,
     projectOwnerAddress,
     handle,
-    loading,
   } = useContext(V2V3ProjectContext)
   const { projectMetadata, isArchived, projectId, cv } = useContext(
     ProjectMetadataContext,
@@ -119,10 +118,7 @@ export function V2V3Project({
   const canReconfigureFundingCycles = useV2ConnectedWalletHasPermission(
     V2OperatorPermission.RECONFIGURE,
   )
-  const {
-    data: queuedFundingCycleResponse,
-    loading: queuedFundingCycleLoading,
-  } = useProjectQueuedFundingCycle({
+  const { data: queuedFundingCycleResponse } = useProjectQueuedFundingCycle({
     projectId,
   })
   const [queuedFundingCycle] = queuedFundingCycleResponse || []
@@ -136,16 +132,20 @@ export function V2V3Project({
 
   const colSizeMd = singleColumnLayout ? 24 : 12
 
-  const allFundingCyclesLoading =
-    loading.fundingCycleLoading || queuedFundingCycleLoading
   const hasCurrentFundingCycle = fundingCycle?.number.gt(0)
   const hasQueuedFundingCycle = queuedFundingCycle?.number.gt(0)
-  const showRelaunchFundingCycleBanner =
-    !allFundingCyclesLoading &&
-    !hasCurrentFundingCycle &&
-    !hasQueuedFundingCycle &&
+
+  // If a V2 project has no current or queued FC, we assume that
+  // it's because it's using the old bugged contracts.
+  // TODO probably should check the contract address instead.
+  const showV2BugNoticeBanner =
+    !isPreviewMode &&
     cv === CV_V2 &&
-    canReconfigureFundingCycles
+    hasCurrentFundingCycle === false &&
+    hasQueuedFundingCycle === false
+
+  const showRelaunchFundingCycleBanner =
+    showV2BugNoticeBanner && canReconfigureFundingCycles
 
   const canEditProjectHandle = isOwner && !isPreviewMode && !handle
 
@@ -222,10 +222,7 @@ export function V2V3Project({
   return (
     <Space direction="vertical" size={GUTTER_PX} style={{ width: '100%' }}>
       <Space direction="vertical" size="small" style={{ width: '100%' }}>
-        {!isPreviewMode &&
-          hasCurrentFundingCycle === false &&
-          hasQueuedFundingCycle === false &&
-          cv === CV_V2 && <V2BugNoticeBanner />}
+        {showV2BugNoticeBanner && <V2BugNoticeBanner />}
         {showRelaunchFundingCycleBanner && <RelaunchFundingCycleBanner />}
       </Space>
 

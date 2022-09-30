@@ -2,9 +2,9 @@ import { t } from '@lingui/macro'
 import { ThemeContext } from 'contexts/themeContext'
 import { useCallback, useContext } from 'react'
 import { WizardContext } from '../Wizard/contexts'
-import { useFundingCycleRecallValue } from './hooks'
+import { useFundingCycleRecallValue, useFundingTarget } from './hooks'
 
-type PresentableRecall = 'fundingCycles'
+type PresentableRecall = 'fundingCycles' | 'fundingTarget'
 
 const RecallOption: React.FC<{
   option: string
@@ -39,6 +39,22 @@ const FundingCycleRecallOption: React.FC = () => {
   )
 }
 
+const FundingTargetRecallOption: React.FC = () => {
+  const { goToPage } = useContext(WizardContext)
+  const fundingTarget = useFundingTarget()
+  const onClick = useCallback(() => goToPage?.('fundingTarget'), [goToPage])
+
+  if (!fundingTarget) return null
+
+  return (
+    <RecallOption
+      option={t`Funding Target`}
+      value={fundingTarget}
+      onClick={onClick}
+    />
+  )
+}
+
 export const RecallCard: React.FC<{
   show: PresentableRecall[]
 }> = ({ show }) => {
@@ -57,6 +73,7 @@ export const RecallCard: React.FC<{
       }}
     >
       {show.includes('fundingCycles') && <FundingCycleRecallOption />}
+      {show.includes('fundingTarget') && <FundingTargetRecallOption />}
     </div>
   )
 }

@@ -254,6 +254,9 @@ msgstr ""
 msgid "Activity"
 msgstr ""
 
+msgid "Add"
+msgstr ""
+
 msgid "Add Lock Duration Option"
 msgstr ""
 
@@ -935,6 +938,9 @@ msgstr ""
 msgid "Distributing funds to Juicebox projects won't incur fees."
 msgstr ""
 
+msgid "Distribution Amount"
+msgstr ""
+
 msgid "Distribution Limit <0/>:"
 msgstr ""
 
@@ -1377,6 +1383,9 @@ msgid "JBX Fee ({feePercentage}%):"
 msgstr ""
 
 msgid "Join <0>hundreds of projects</0> sippin' the Juice."
+msgstr ""
+
+msgid "Juicebox Project"
 msgstr ""
 
 msgid "Juicebox Project ID"
@@ -2931,6 +2940,9 @@ msgid "VotePWR"
 msgstr ""
 
 msgid "WAGMI!"
+msgstr ""
+
+msgid "Wallet Address"
 msgstr ""
 
 msgid "Wallet address"

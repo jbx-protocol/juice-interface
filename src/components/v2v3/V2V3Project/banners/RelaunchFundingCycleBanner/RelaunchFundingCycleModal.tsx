@@ -1,24 +1,7 @@
-import { Trans } from '@lingui/macro'
-import { Button, Form, Input } from 'antd'
-import { useContext, useEffect, useMemo, useState } from 'react'
-
 import { BigNumber } from '@ethersproject/bignumber'
-import Banner from 'components/Banner'
+import { Trans } from '@lingui/macro'
+import { Form, Input, ModalProps } from 'antd'
 import TransactionModal from 'components/TransactionModal'
-import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
-import useProjectCurrentFundingCycle from 'hooks/v2v3/contractReader/ProjectCurrentFundingCycle'
-import useProjectDistributionLimit from 'hooks/v2v3/contractReader/ProjectDistributionLimit'
-import useProjectSplits from 'hooks/v2v3/contractReader/ProjectSplits'
-import useProjectTerminals from 'hooks/v2v3/contractReader/ProjectTerminals'
-import { useLaunchFundingCyclesTx } from 'hooks/v2v3/transactor/LaunchFundingCyclesTx'
-import {
-  V2V3FundAccessConstraint,
-  V2V3FundingCycleData,
-  V2V3FundingCycleMetadata,
-} from 'models/v2v3/fundingCycle'
-
-import { reloadWindow } from 'utils/windowUtils'
-
 import { readNetwork } from 'constants/networks'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
@@ -30,15 +13,27 @@ import {
 } from 'constants/v2v3/ballotStrategies'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import ReconfigurePreview from '../V2V3ProjectSettings/pages/ProjectReconfigureFundingCycleSettingsPage/ReconfigurePreview'
+import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
+import useProjectCurrentFundingCycle from 'hooks/v2v3/contractReader/ProjectCurrentFundingCycle'
+import useProjectDistributionLimit from 'hooks/v2v3/contractReader/ProjectDistributionLimit'
+import useProjectSplits from 'hooks/v2v3/contractReader/ProjectSplits'
+import useProjectTerminals from 'hooks/v2v3/contractReader/ProjectTerminals'
+import { useLaunchFundingCyclesTx } from 'hooks/v2v3/transactor/LaunchFundingCyclesTx'
+import {
+  V2V3FundAccessConstraint,
+  V2V3FundingCycleData,
+  V2V3FundingCycleMetadata,
+} from 'models/v2v3/fundingCycle'
+import { useContext, useEffect, useMemo, useState } from 'react'
+import { reloadWindow } from 'utils/windowUtils'
+import ReconfigurePreview from '../../V2V3ProjectSettings/pages/ProjectReconfigureFundingCycleSettingsPage/ReconfigurePreview'
 
-export function RelaunchFundingCycleBanner() {
+export function RelaunchFundingCycleModal(props: ModalProps) {
   const { projectId } = useContext(ProjectMetadataContext)
   const { contracts } = useContext(V2V3ContractsContext)
+
   const [newDuration, setNewDuration] = useState<BigNumber>(BigNumber.from(0))
   const [newStart, setNewStart] = useState<string>('1')
-
-  const [modalOpen, setModalOpen] = useState<boolean>(false)
   const [transactionPending, setTransactionPending] = useState<boolean>(false)
 
   const { data, loading: deprecatedFundingCycleLoading } =
@@ -62,10 +57,6 @@ export function RelaunchFundingCycleBanner() {
       domain: deprecatedFundingCycle?.configuration?.toString(),
       useDeprecatedContract: true,
     })
-
-  useEffect(() => {
-    setNewDuration(deprecatedFundingCycle?.duration ?? BigNumber.from(0))
-  }, [deprecatedFundingCycle])
 
   const { data: terminals } = useProjectTerminals({
     projectId,
@@ -93,8 +84,6 @@ export function RelaunchFundingCycleBanner() {
     overflowAllowanceCurrency: BigNumber.from(0),
   }
 
-  const launchFundingCycleTx = useLaunchFundingCyclesTx()
-
   const newBallot = useMemo(() => {
     if (!deprecatedFundingCycle) return
 
@@ -107,6 +96,12 @@ export function RelaunchFundingCycleBanner() {
         return deprecatedFundingCycle.ballot
     }
   }, [deprecatedFundingCycle])
+
+  useEffect(() => {
+    setNewDuration(deprecatedFundingCycle?.duration ?? BigNumber.from(0))
+  }, [deprecatedFundingCycle])
+
+  const launchFundingCycleTx = useLaunchFundingCyclesTx()
 
   const loading =
     payoutSplitsLoading ||
@@ -165,108 +160,89 @@ export function RelaunchFundingCycleBanner() {
   }
 
   return (
-    <>
-      <Banner
-        title={<Trans>Funding cycle required.</Trans>}
-        body={
-          <Trans>
-            Your Juicebox project has no active funding cycle. Launch a funding
-            cycle to re-enable payments on your project.
-          </Trans>
-        }
-        actions={
-          <>
-            <Button type="primary" onClick={() => setModalOpen(true)}>
-              <Trans>Review and launch funding cycle</Trans>
-            </Button>
-          </>
-        }
-      />
-      <TransactionModal
-        visible={modalOpen}
-        title={<Trans>Launch funding cycle</Trans>}
-        okText={
-          <span>
-            <Trans>Launch funding cycle</Trans>
-          </span>
-        }
-        width={700}
-        onOk={onLaunchModalOk}
-        onCancel={() => setModalOpen(false)}
-        transactionPending={transactionPending}
-      >
-        {loading ? (
-          'Loading...'
-        ) : (
-          <>
-            <p style={{ marginBottom: '2rem' }}>
-              <Trans>
-                Relaunch your funding cycle on the new Juicebox V2 contracts.
-              </Trans>
-            </p>
-            <Form layout="vertical" style={{ marginBottom: '1rem' }}>
-              <div style={{ display: 'flex', gap: 20 }}>
-                <Form.Item
-                  label={<Trans>Duration (seconds)</Trans>}
-                  required
-                  style={{ width: '100%' }}
-                  extra={
-                    newDuration.toNumber() > 0
-                      ? `= ${newDuration.toNumber() / 86400} days`
-                      : ''
-                  }
-                >
-                  <Input
-                    type="number"
-                    min={0}
-                    value={newDuration.toNumber()}
-                    onChange={e => {
-                      setNewDuration(BigNumber.from(e.target.value || 0))
-                    }}
-                  />
-                </Form.Item>
+    <TransactionModal
+      title={<Trans>Launch funding cycle</Trans>}
+      okText={
+        <span>
+          <Trans>Launch funding cycle</Trans>
+        </span>
+      }
+      width={700}
+      onOk={onLaunchModalOk}
+      transactionPending={transactionPending}
+      {...props}
+    >
+      {loading ? (
+        'Loading...'
+      ) : (
+        <>
+          <p style={{ marginBottom: '2rem' }}>
+            <Trans>
+              Relaunch your funding cycle on the new Juicebox V2 contracts.
+            </Trans>
+          </p>
+          <Form layout="vertical" style={{ marginBottom: '1rem' }}>
+            <div style={{ display: 'flex', gap: 20 }}>
+              <Form.Item
+                label={<Trans>Duration (seconds)</Trans>}
+                required
+                style={{ width: '100%' }}
+                extra={
+                  newDuration.toNumber() > 0
+                    ? `= ${newDuration.toNumber() / 86400} days`
+                    : ''
+                }
+              >
+                <Input
+                  type="number"
+                  min={0}
+                  value={newDuration.toNumber()}
+                  onChange={e => {
+                    setNewDuration(BigNumber.from(e.target.value || 0))
+                  }}
+                />
+              </Form.Item>
 
-                <Form.Item
-                  label={<Trans>Start time (seconds, Unix time)</Trans>}
-                  style={{ width: '100%' }}
-                  extra={<Trans>Leave blank to start immediately.</Trans>}
-                >
-                  <Input
-                    type="number"
-                    min={0}
-                    onChange={e => {
-                      setNewStart(e.target.value || '1')
-                    }}
-                  />
-                </Form.Item>
-              </div>
-            </Form>
+              <Form.Item
+                label={<Trans>Start time (seconds, Unix time)</Trans>}
+                style={{ width: '100%' }}
+                extra={<Trans>Leave blank to start immediately.</Trans>}
+              >
+                <Input
+                  type="number"
+                  min={0}
+                  onChange={e => {
+                    setNewStart(e.target.value || '1')
+                  }}
+                />
+              </Form.Item>
+            </div>
+          </Form>
 
-            <h3>
-              <Trans>Funding cycle preview</Trans>
-            </h3>
-            <p>
-              <Trans>
-                Your funding cycle configuration has been pre-populated using
-                the configuration you originally launched with. If you need to
-                customize it, contact us.
-              </Trans>
-            </p>
+          <h3>
+            <Trans>Funding cycle preview</Trans>
+          </h3>
+          <p>
+            <Trans>
+              Your funding cycle configuration has been pre-populated using the
+              configuration you originally launched with. If you need to
+              customize it, contact us.
+            </Trans>
+          </p>
 
-            <ReconfigurePreview
-              payoutSplits={deprecatedPayoutSplits ?? []}
-              reserveSplits={deprecatedTokenSplits ?? []}
-              fundingCycleMetadata={deprecatedFundingCycleMetadata}
-              fundingCycleData={{
-                ...deprecatedFundingCycle,
-                duration: newDuration ?? deprecatedFundingCycle.duration,
-                ballot: newBallot ?? deprecatedFundingCycle.ballot,
-              }}
-              fundAccessConstraints={[deprecatedFundAccessConstraint]}
-            />
-          </>
-        )}
-      </TransactionModal>
-    </>
+          <ReconfigurePreview
+            payoutSplits={deprecatedPayoutSplits ?? []}
+            reserveSplits={deprecatedTokenSplits ?? []}
+            fundingCycleMetadata={deprecatedFundingCycleMetadata}
+            fundingCycleData={{
+              ...deprecatedFundingCycle,
+              duration: newDuration ?? deprecatedFundingCycle.duration,
+              ballot: newBallot ?? deprecatedFundingCycle.ballot,
+            }}
+            fundAccessConstraints={[deprecatedFundAccessConstraint]}
+          />
+        </>
+      )}
+    </TransactionModal>
   )
 }

@@ -1,4 +1,7 @@
-import { ExclamationCircleOutlined } from '@ant-design/icons'
+import Icon, {
+  ExclamationCircleOutlined,
+  WarningOutlined,
+} from '@ant-design/icons'
 import { ThemeContext } from 'contexts/themeContext'
 import { CSSProperties, useContext } from 'react'
 
@@ -8,7 +11,7 @@ export default function Banner({
   title,
   body,
   actions,
-  variant,
+  variant = 'info',
 }: {
   title: string | JSX.Element
   body: string | JSX.Element
@@ -30,7 +33,15 @@ export default function Banner({
     },
   }
 
-  const style = variantStyle[variant ?? 'info']
+  const variantIcon: {
+    [k in BannerVariant]: typeof Icon
+  } = {
+    warning: WarningOutlined,
+    info: ExclamationCircleOutlined,
+  }
+
+  const style = variantStyle[variant]
+  const IconComponent = variantIcon[variant]
 
   return (
     <div
@@ -40,9 +51,7 @@ export default function Banner({
         ...style,
       }}
     >
-      <ExclamationCircleOutlined
-        style={{ position: 'absolute', left: 20, top: 18 }}
-      />
+      <IconComponent style={{ position: 'absolute', left: 20, top: 18 }} />
 
       <h2
         style={{
@@ -53,7 +62,7 @@ export default function Banner({
       >
         {title}
       </h2>
-      <p>{body}</p>
+      <div>{body}</div>
 
       {actions && <div>{actions}</div>}
     </div>

@@ -15,22 +15,9 @@ function NavMenuItem({
   onClick,
 }: {
   text: string
-  route?: string
+  route: string
   onClick?: VoidFunction
 }) {
-  if (!route) {
-    return (
-      <div
-        className="nav-menu-item hover-opacity"
-        onClick={onClick}
-        role="button"
-        style={navMenuItemStyles}
-      >
-        {text}
-      </div>
-    )
-  }
-
   const external = route?.startsWith('http')
   const externalLinkProps = external
     ? ({

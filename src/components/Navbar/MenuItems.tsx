@@ -1,7 +1,6 @@
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Dropdown, Menu, Space } from 'antd'
-import ExternalLink from 'components/ExternalLink'
 import Link from 'next/link'
 import { CSSProperties, useEffect, useState } from 'react'
 
@@ -33,26 +32,20 @@ function NavMenuItem({
   }
 
   const external = route?.startsWith('http')
-  if (external) {
-    return (
-      <ExternalLink
-        className="nav-menu-item hover-opacity"
-        style={navMenuItemStyles}
-        href={route}
-        onClick={onClick}
-        target="_blank"
-        rel="noreferrer"
-      >
-        {text}
-      </ExternalLink>
-    )
-  }
+  const externalLinkProps = external
+    ? ({
+        target: '_blank',
+        rel: 'noopener noreferrer',
+      } as const)
+    : {}
+
   return (
     <Link href={route}>
       <a
         className="nav-menu-item hover-opacity"
         onClick={onClick}
         style={navMenuItemStyles}
+        {...externalLinkProps}
       >
         {text}
       </a>

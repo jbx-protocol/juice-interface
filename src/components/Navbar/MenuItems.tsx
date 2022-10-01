@@ -7,8 +7,18 @@ import { CSSProperties, useEffect, useState } from 'react'
 import Logo from './Logo'
 import { navMenuItemStyles } from './navStyles'
 
+import SubMenu from 'antd/lib/menu/SubMenu'
 import { resourcesMenuItems } from './constants'
-import ResourcesDropdownMobile from './Mobile/ResourcesDropdownMobile'
+
+function ResourcesDropdownMobile() {
+  return (
+    <SubMenu key="resources" title={t`Resources`}>
+      {resourcesMenuItems(true).map(r => (
+        <Menu.Item key={r.key}>{r.label}</Menu.Item>
+      ))}
+    </SubMenu>
+  )
+}
 
 const resourcesMenu = (
   <Menu

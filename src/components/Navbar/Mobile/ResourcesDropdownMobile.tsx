@@ -7,13 +7,7 @@ const { SubMenu } = Menu
 
 export default function ResourcesDropdownMobile() {
   return (
-    <SubMenu
-      key="resources"
-      title={t`Resources`}
-      style={{
-        marginLeft: 30,
-      }}
-    >
+    <SubMenu key="resources" title={t`Resources`}>
       {resourcesMenuItems(true).map(r => (
         <Menu.Item key={r.key}>{r.label}</Menu.Item>
       ))}

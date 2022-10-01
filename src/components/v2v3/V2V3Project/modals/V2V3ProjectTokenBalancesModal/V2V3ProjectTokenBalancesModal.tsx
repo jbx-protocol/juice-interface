@@ -1,11 +1,10 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Button, Modal, Space } from 'antd'
+import { Button, Modal, ModalProps, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import ERC20TokenBalance from 'components/ERC20TokenBalance'
 import { V2ProjectTokenBalance } from 'components/v2v3/V2V3Project/modals/V2V3ProjectTokenBalancesModal/V2ProjectTokenBalance'
-import { TransactorInstance } from 'hooks/Transactor'
 import { ProjectMetadataV5 } from 'models/project-metadata'
 import { TokenRef } from 'models/token-ref'
 import { useContext, useEffect, useState } from 'react'
@@ -17,32 +16,29 @@ import { AssetInputType, TokenRefs } from './TokenRefs'
 import { CV_V2 } from 'constants/cv'
 import { V2V3_PROJECT_IDS } from 'constants/v2v3/projectIds'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
+import { useEditProjectDetailsTx } from 'hooks/v2v3/transactor/EditProjectDetailsTx'
+import { V2OperatorPermission } from 'models/v2v3/permissions'
 
 export interface EditTrackedAssetsForm {
   tokenRefs: { assetInput: { input: string; type: AssetInputType } }[]
 }
 
-export function V2V3DownloadActivityModal({
-  owner,
-  projectMetadata,
-  projectName,
-  hasEditPermissions,
-  visible,
-  onCancel,
-  storeCidTx,
-}: {
-  owner: string | undefined
-  projectMetadata: ProjectMetadataV5 | undefined
-  projectName: string | undefined
-  hasEditPermissions?: boolean
-  visible: boolean | undefined
-  onCancel: () => void
-  storeCidTx: TransactorInstance<{ cid: string }>
-}) {
-  const { projectId } = useContext(ProjectMetadataContext)
+export function V2V3DownloadActivityModal(props: ModalProps) {
+  const { projectId, projectMetadata } = useContext(ProjectMetadataContext)
+  const { projectOwnerAddress } = useContext(V2V3ProjectContext)
   const [editModalVisible, setEditModalVisible] = useState<boolean>()
   const [loading, setLoading] = useState<boolean>()
   const [form] = useForm<EditTrackedAssetsForm>()
+
+  const hasEditPermission = useV2ConnectedWalletHasPermission(
+    V2OperatorPermission.RECONFIGURE,
+  )
+
+  const editV2ProjectDetailsTx = useEditProjectDetailsTx()
+
+  const projectName = projectMetadata?.name
 
   useEffect(() => {
     const initialTokens = (
@@ -80,7 +76,7 @@ export function V2V3DownloadActivityModal({
       return
     }
 
-    storeCidTx(
+    editV2ProjectDetailsTx(
       { cid: uploadedMetadata.IpfsHash },
       {
         onDone: async () => {
@@ -100,8 +96,6 @@ export function V2V3DownloadActivityModal({
 
   return (
     <Modal
-      visible={visible}
-      onCancel={onCancel}
       footer={
         <div
           style={{
@@ -110,7 +104,7 @@ export function V2V3DownloadActivityModal({
             marginTop: 20,
           }}
         >
-          {hasEditPermissions ? (
+          {hasEditPermission ? (
             <Button
               type="text"
               size="small"
@@ -124,11 +118,12 @@ export function V2V3DownloadActivityModal({
           ) : (
             <div></div>
           )}
-          <Button onClick={onCancel}>
+          <Button onClick={props.onCancel}>
             <Trans>Done</Trans>
           </Button>
         </div>
       }
+      {...props}
     >
       <div>
         <h2>
@@ -145,7 +140,7 @@ export function V2V3DownloadActivityModal({
             t.type === 'erc20' ? (
               <ERC20TokenBalance
                 key={t.value}
-                wallet={owner}
+                wallet={projectOwnerAddress}
                 tokenAddress={t.value}
               />
             ) : (

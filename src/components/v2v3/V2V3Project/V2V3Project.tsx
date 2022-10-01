@@ -17,7 +17,6 @@ import { useIsUserAddress } from 'hooks/IsUserAddress'
 import useMobile from 'hooks/Mobile'
 import useProjectQueuedFundingCycle from 'hooks/v2v3/contractReader/ProjectQueuedFundingCycle'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
-import { useEditProjectDetailsTx } from 'hooks/v2v3/transactor/EditProjectDetailsTx'
 import { CurrencyOption } from 'models/currencyOption'
 import { V2OperatorPermission } from 'models/v2v3/permissions'
 import { useRouter } from 'next/router'
@@ -117,10 +116,7 @@ export function V2V3Project({
   const [queuedFundingCycle] = queuedFundingCycleResponse || []
 
   const converter = useCurrencyConverter()
-  const editV2ProjectDetailsTx = useEditProjectDetailsTx()
-  const hasEditPermission = useV2ConnectedWalletHasPermission(
-    V2OperatorPermission.RECONFIGURE,
-  )
+
   const isOwner = useIsUserAddress(projectOwnerAddress)
 
   const colSizeMd = singleColumnLayout ? 24 : 12
@@ -263,6 +259,7 @@ export function V2V3Project({
           ) : null}
         </Col>
       </Row>
+
       <Row gutter={GUTTER_PX}>
         <Col md={colSizeMd} xs={24}>
           <Space
@@ -301,6 +298,7 @@ export function V2V3Project({
           </Col>
         ) : null}
       </Row>
+
       <NewDeployModal
         visible={newDeployModalVisible}
         onClose={closeNewDeployModal}
@@ -313,13 +311,8 @@ export function V2V3Project({
         />
       ) : null}
       <V2V3DownloadActivityModal
-        owner={projectOwnerAddress}
-        projectMetadata={projectMetadata}
-        projectName={projectMetadata?.name}
-        hasEditPermissions={hasEditPermission}
         visible={balancesModalVisible}
         onCancel={() => setBalancesModalVisible(false)}
-        storeCidTx={editV2ProjectDetailsTx}
       />
     </Space>
   )

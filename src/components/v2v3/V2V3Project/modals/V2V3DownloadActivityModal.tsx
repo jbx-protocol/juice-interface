@@ -1,25 +1,18 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Modal } from 'antd'
+import { Button, Modal, ModalProps } from 'antd'
 import { useState } from 'react'
 
 import V2V3DownloadPaymentsModal from './V2V3DownloadPaymentsModal'
 
-export default function V2V3DownloadActivityModal({
-  visible,
-  onCancel,
-}: {
-  visible: boolean | undefined
-  onCancel: VoidFunction | undefined
-}) {
+export default function V2V3DownloadActivityModal(props: ModalProps) {
   const [paymentsModalVisible, setPaymentsModalVisible] = useState<boolean>()
 
   return (
     <Modal
-      visible={visible}
-      onCancel={onCancel}
       cancelText={t`Close`}
       okButtonProps={{ hidden: true }}
       centered
+      {...props}
     >
       <div>
         <h4>

@@ -1,6 +1,7 @@
 import { t } from '@lingui/macro'
 import { Form, FormInstance, Input } from 'antd'
 import { useAppSelector } from 'hooks/AppSelector'
+import { useCallback, useEffect, useMemo } from 'react'
 import {
   defaultNftCollectionDescription,
   defaultNftCollectionName,
@@ -10,8 +11,10 @@ import { MarketplaceFormFields } from './formFields'
 
 export function NftMarketplaceCustomizationForm({
   form,
+  onFormUpdated,
 }: {
   form: FormInstance<MarketplaceFormFields>
+  onFormUpdated: (updated: boolean) => void
 }) {
   const {
     nftRewards: {
@@ -20,13 +23,33 @@ export function NftMarketplaceCustomizationForm({
     projectMetadata: { name: projectName },
   } = useAppSelector(state => state.editingV2Project)
 
-  const initialValues = {
-    collectionName: name,
-    collectionDescription: description,
-    collectionSymbol: symbol,
-  }
+  const initialValues = useMemo(
+    () => ({
+      collectionName: name,
+      collectionDescription: description,
+      collectionSymbol: symbol,
+    }),
+    [name, description, symbol],
+  )
+
+  const handleFormChange = useCallback(() => {
+    const hasUpdated =
+      initialValues.collectionName !== form.getFieldValue('collectionName') ||
+      initialValues.collectionDescription !==
+        form.getFieldValue('collectionDescription') ||
+      initialValues.collectionSymbol !== form.getFieldValue('collectionSymbol')
+    onFormUpdated(hasUpdated)
+  }, [form, initialValues, onFormUpdated])
+
+  useEffect(() => handleFormChange(), [handleFormChange])
+
   return (
-    <Form layout="vertical" form={form} initialValues={initialValues}>
+    <Form
+      layout="vertical"
+      form={form}
+      initialValues={initialValues}
+      onValuesChange={handleFormChange}
+    >
       <Form.Item
         requiredMark="optional"
         name="collectionName"

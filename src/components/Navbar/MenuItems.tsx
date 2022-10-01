@@ -80,7 +80,7 @@ export function TopLeftNavItems({
           key: 'index',
           label: (
             <Link href="/">
-              <a style={{ display: 'none' }}>{<Logo />}</a>
+              <a style={{ display: 'inline-block' }}>{<Logo />}</a>
             </Link>
           ),
         },

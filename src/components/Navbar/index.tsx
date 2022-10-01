@@ -11,10 +11,8 @@ import ThemePicker from './ThemePicker'
 
 export default function Navbar() {
   const isMobile = useMobile()
-
-  if (isMobile) return <MobileCollapse />
-
-  return (
+  const desktop = !isMobile
+  return desktop ? (
     <Header className="top-nav" style={{ ...topNavStyles }}>
       <TopLeftNavItems />
 

@@ -150,7 +150,7 @@ export function TopLeftNavItems({
       items={menuItems}
       style={{
         display: 'flex',
-        flexDirection: !desktop ? 'row' : 'column',
+        flexDirection: desktop ? 'row' : 'column',
       }}
     />
   )

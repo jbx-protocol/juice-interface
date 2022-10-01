@@ -8,6 +8,7 @@ import Logo from './Logo'
 import { navMenuItemStyles } from './navStyles'
 
 import { resourcesMenuItems } from './constants'
+import ResourcesDropdownMobile from './Mobile/ResourcesDropdownMobile'
 
 const resourcesMenu = (
   <Menu
@@ -50,7 +51,7 @@ export function TopLeftNavItems({
     rel: 'noopener noreferrer',
   }
 
-  const desktopDropDown = !mobile ? (
+  const desktopDropDown = (
     <Dropdown
       overlay={resourcesMenu}
       overlayStyle={{ padding: 0 }}
@@ -72,7 +73,7 @@ export function TopLeftNavItems({
         )}
       </div>
     </Dropdown>
-  ) : null
+  )
 
   const menuItems = !mobile
     ? [
@@ -140,7 +141,7 @@ export function TopLeftNavItems({
         },
         {
           key: 'resources',
-          label: desktopDropDown,
+          label: <ResourcesDropdownMobile />,
         },
       ]
 

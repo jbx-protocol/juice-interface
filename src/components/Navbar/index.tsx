@@ -15,7 +15,7 @@ export default function Navbar() {
   const desktop = !isMobile
   return desktop ? (
     <Header className="top-nav" style={{ ...topNavStyles }}>
-      <TopLeftNavItems />
+      <TopLeftNavItems desktop={desktop} />
 
       <Space size="middle" style={{ ...topRightNavStyles }}>
         <NavLanguageSelector />

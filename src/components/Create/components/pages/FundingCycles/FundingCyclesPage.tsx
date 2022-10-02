@@ -71,9 +71,9 @@ export const FundingCyclesPage = () => {
       scrollToFirstError
     >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
-        <Space direction="vertical" size="large">
+        <Space direction="vertical" size="large" style={{ width: '100%' }}>
           <Form.Item noStyle name="selection">
-            <Selection>
+            <Selection defocusOnSelect style={{ width: '100%' }}>
               <Selection.Card
                 name="automated"
                 title={

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-09-25 00:36\n"
+"PO-Revision-Date: 2022-10-02 00:47\n"
 "Last-Translator: \n"
 "Language: es_ES\n"
 "Language-Team: Spanish\n"
@@ -328,9 +328,6 @@ msgstr "Dirección:"
 msgid "Address: <0/>"
 msgstr "Dirección: <0/>"
 
-msgid "Adjust incentives for paying your project."
-msgstr "Ajusta los incentivos por pagar tu proyecto."
-
 msgid "Advanced (optional)"
 msgstr ""
 
@@ -384,6 +381,9 @@ msgstr "Casi de forma definitiva."
 
 msgid "Amount"
 msgstr "Cantidad"
+
+msgid "Amount is required."
+msgstr ""
 
 msgid "Amount of ERC-20 tokens to claim"
 msgstr "Cantidad de tokens ERC-20 a reclamar"
@@ -562,9 +562,6 @@ msgstr ""
 msgid "Changes to payouts will take effect immediately."
 msgstr "Los cambios a los pagos surtirán efecto de inmediato."
 
-msgid "Changes to these attributes can be made at any time and will be applied to your project immediately."
-msgstr "Se pueden hacer cambios a estos atributos en cualquier momento y serán aplicados a tu proyecto inmediatamente."
-
 msgid "Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
 msgstr "Los cambios a las configuraciones de financiamiento de tu proyecto requieren un periodo aprobado por la comunidad para surtir efecto, lo cual actúa como salvaguardia contra rug pulls. Tus partidarios no necesitan confiar en ti — aunque ya lo hacen."
 
@@ -641,6 +638,9 @@ msgid "Configure the dynamics of your project's token."
 msgstr "Configura la dinámica del token de tu proyecto."
 
 msgid "Configure which Juicebox V1 project you'd like to accept tokens for. Token holders of this V1 project will be able to swap their V1 tokens for V2 tokens."
+msgstr ""
+
+msgid "Configure your project's first funding cycle below."
 msgstr ""
 
 msgid "Configure {projectTitle}"
@@ -991,6 +991,9 @@ msgstr "Descargar CSV de la actividad del proyecto"
 msgid "Download CSV of {0} holders"
 msgstr "Descargar CSV de {0} holders"
 
+msgid "Download Template"
+msgstr ""
+
 msgid "Duration"
 msgstr "Duración"
 
@@ -1210,6 +1213,9 @@ msgstr ""
 msgid "Go to <0>{snapshotUrl}</0>"
 msgstr ""
 
+msgid "Go to Safe"
+msgstr ""
+
 msgid "Go to your Safe"
 msgstr ""
 
@@ -1218,9 +1224,6 @@ msgstr ""
 
 msgid "Grant permission"
 msgstr ""
-
-msgid "Handle"
-msgstr "Usuario"
 
 msgid "Has Juicebox been audited?"
 msgstr ""
@@ -1272,9 +1275,6 @@ msgstr "Cómo se dividirá el {reservedPercentage}% de los tokens reservados de 
 
 msgid "How to Juice."
 msgstr ""
-
-msgid "How your project will distribute funds."
-msgstr "Cómo tu proyecto distribuirá los fondos."
 
 msgid "I accept this project's <0>risks</0>."
 msgstr ""
@@ -1403,6 +1403,9 @@ msgid "Juicebox project"
 msgstr "Proyecto de Juicebox"
 
 msgid "Juicebox projects are funded in cycles. A Funding Cycle is a set period of time in which your project settings are locked. <0>Learn more.</0>"
+msgstr ""
+
+msgid "Juicebox projects are funded in cycles. You can think of this as a set period of time in which your project settings are locked."
 msgstr ""
 
 msgid "Juicebox projects use <0>ENS names</0> as handles. Setting a handle involves 2 transactions:"
@@ -1591,6 +1594,9 @@ msgstr "Minutos"
 msgid "More trending projects"
 msgstr ""
 
+msgid "Move your unclaimed {tokensLabel} from your wallet to another wallet."
+msgstr ""
+
 msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
 msgstr "Mueve tus {tokensLabel} del contrato de Juicebox a tu billetera."
 
@@ -1657,11 +1663,11 @@ msgstr "Sin actividad, todavía"
 msgid "No beneficiary selected. Is your wallet connected?"
 msgstr ""
 
-msgid "No file uploaded."
+msgid "No distributions configured."
 msgstr ""
 
-msgid "No funding target: The project will control how all funds are distributed, and none can be redeemed by token holders."
-msgstr "Sin meta-objetivo de financiamiento: Este proyecto va a controlar cómo serán distribuidos todos los fondos, y ninguno podrá ser canjeado por los tenedores de los tokens."
+msgid "No file uploaded."
+msgstr ""
 
 msgid "No funds available to distribute."
 msgstr ""
@@ -1681,6 +1687,9 @@ msgstr "Sin ciclos de financiamiento pasados"
 msgid "No reserved tokens available to distribute."
 msgstr ""
 
+msgid "No reserved tokens configured."
+msgstr ""
+
 msgid "No strategy"
 msgstr "Sin estrategia"
 
@@ -1691,6 +1700,9 @@ msgid "No target set."
 msgstr "Sin meta-objetivo establecida."
 
 msgid "No transaction history"
+msgstr ""
+
+msgid "No upcoming funding cycle."
 msgstr ""
 
 msgid "Not a valid ETH address"
@@ -1776,9 +1788,6 @@ msgstr "Pagar cantidad"
 
 msgid "Pay amount must be greater than 0."
 msgstr "El monto del pago debe ser mayor que 0."
-
-msgid "Pay button"
-msgstr "Botón de pago"
 
 msgid "Pay button text"
 msgstr "Texto del botón de pago"
@@ -1951,9 +1960,6 @@ msgstr ""
 msgid "Project name"
 msgstr "Nombre del proyecto"
 
-msgid "Project name, handle, links, and other details."
-msgstr "Nombre del proyecto, usuario, links y otros detalles."
-
 msgid "Project not found"
 msgstr ""
 
@@ -2056,14 +2062,14 @@ msgstr "Beneficiario"
 msgid "Recipient address"
 msgstr "Dirección de beneficiario"
 
+msgid "Recipient address is required."
+msgstr ""
+
 msgid "Recipients will receive payouts in ETH."
 msgstr "Los beneficiarios recibirán los pagos en ETH."
 
 msgid "Recommended"
 msgstr ""
-
-msgid "Reconfiguration"
-msgstr "Reconfiguración"
 
 msgid "Reconfiguration rules"
 msgstr "Reglas de reconfiguración"
@@ -2075,6 +2081,9 @@ msgid "Reconfigure"
 msgstr "Reconfigurar"
 
 msgid "Reconfigure Funding Cycle"
+msgstr ""
+
+msgid "Reconfigure funding cycle"
 msgstr ""
 
 msgid "Reconfigure payouts as percentages of your distribution limit."
@@ -2179,14 +2188,8 @@ msgstr "{tokensText} reservados"
 msgid "Resources"
 msgstr "Recursos"
 
-msgid "Restrict payments and printing tokens."
-msgstr "Restringir pagos y emisión de tokens."
-
 msgid "Restricted actions"
 msgstr "Acciones restringidas"
-
-msgid "Review & Deploy"
-msgstr "Revisa & Despliega"
 
 msgid "Review and confirm stake"
 msgstr ""
@@ -2194,26 +2197,17 @@ msgstr ""
 msgid "Review and launch funding cycle"
 msgstr "Revisar y lanzar ciclo de financiamiento"
 
-msgid "Review project"
-msgstr "Revisar proyecto"
-
 msgid "Reward contributors with NFT's."
 msgstr ""
 
 msgid "Reward contributors with NFTs when they meet your configured funding criteria."
 msgstr ""
 
-msgid "Reward specific community members with tokens."
-msgstr "Recompensar a miembros específicos de la comunidad con tokens."
-
 msgid "Rules"
 msgstr "Reglas"
 
 msgid "Rules for determining how funding cycles can be reconfigured"
 msgstr "Reglas para determinar cómo se pueden reconfigurar los ciclos de financiamiento"
-
-msgid "Rules for how changes can be made to your project."
-msgstr "Reglas para cómo pueden realizarse cambios a tu proyecto."
 
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr "Reglas para cómo pueden ser reconfigurados los ciclos de financiamiento de este proyecto."
@@ -2467,9 +2461,6 @@ msgstr ""
 msgid "Target"
 msgstr "Objetivo"
 
-msgid "Target is 0: All funds will be considered overflow and can be redeemed by burning project tokens."
-msgstr "La meta-ojetivo es 0: Todos los fondos serán considerados excedente y pueden ser canjeados al quemar tokens del proyecto."
-
 msgid "Terminal configuration"
 msgstr ""
 
@@ -2481,9 +2472,6 @@ msgstr ""
 
 msgid "The <0>issuance rate</0> of your second funding cycle will be <1>{0} tokens per 1 ETH</1>, then <2>{1} tokens per 1 ETH </2>for your third funding cycle, and so on."
 msgstr "La <0>tasa de emisión</0> de tu segundo ciclo de financiamiento será <1>{0} tokens por 1 ETH</1>, entonces <2>{1} tokens por 1 ETH </2>para tu tercer ciclo de financiamiento y así sucesivamente."
-
-msgid "The JBX protocol is unaudited, and projects built on it may be vulnerable to bugs or exploits. Be smart!"
-msgstr "El protocolo JBX está inauditado, y los proyectos contruidos sobre este pueden ser vulnerables a bugs o exploits. ¡Sé inteligente!"
 
 msgid "The address of any smart contract deployed on {0} that implements <0>this interface</0>."
 msgstr "La dirección de cualquier contrato inteligente desplegado en {0} que implemente <0>esta interfaz</0>."
@@ -2593,12 +2581,6 @@ msgstr "No hay pagos definidos para este ciclo de financiamiento. El dueño del 
 msgid "There are no reserved token recipients defined for this funding cycle. The project owner will receive all available tokens."
 msgstr "No hay beneficiarios de tokens reservados definidos para este ciclo de financiamiento. El dueño del proyecto recibirá todos los tokens disponibles."
 
-msgid "These attributes can be changed at any time."
-msgstr "Estos atributos pueden cambiarse en cualquier momento."
-
-msgid "These settings will <0>not</0> be editable immediately within a funding cycle. They can only be changed for <1>upcoming</1> funding cycles."
-msgstr "Estos ajustes <0>no</0> serán editables inmediatamente dentro de un ciclo de financiamiento. Solo pueden ser cambiados para <1>próximos</1> ciclos de financiamiento."
-
 msgid "This Juicebox V2 project also has a project on Juicebox V1. The project owner is allowing you to swap your V1 tokens for V2 tokens."
 msgstr ""
 
@@ -2653,11 +2635,11 @@ msgstr ""
 msgid "This rate determines the amount of overflow that each token can be redeemed for at any given time. On a lower bonding curve, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than others. A bonding curve of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr "Esta tasa determina la cantidad de excedente por la que cada token puede ser canjeado en cualquier momento dado. En una menor curva de adhesión, canjear un token incrementa el valor de cada token restante, creando un incentivo para holdear tokens por más tiempo que otros. Una curva de adhesión del 100% significa que todos los tokens tendrán un valor igual sin importar cuando hayan sido canjeados."
 
-msgid "This will enable your project's veNFT contract to spend unclaimed tokens in addition to project ERC-20 tokens."
+msgid "This transaction reconfigures the project's funding cycle."
 msgstr ""
 
-msgid "This will erase all of your changes."
-msgstr "Esto borrará todos tus cambios."
+msgid "This will enable your project's veNFT contract to spend unclaimed tokens in addition to project ERC-20 tokens."
+msgstr ""
 
 msgid "This will reset the data for your new project. All changes will be lost."
 msgstr "Esto reiniciará los datos para tu nuevo proyecto. Todos los cambios se perderán."
@@ -2818,8 +2800,17 @@ msgstr ""
 msgid "Transfer unclaimed {tokenSymbolShort}"
 msgstr "Transferir {tokenSymbolShort} no reclamados"
 
+msgid "Transfer unclaimed {tokenTextShort}"
+msgstr ""
+
+msgid "Transfer unclaimed {tokensLabel}"
+msgstr ""
+
 msgid "Transfer {tokenSymbolShort}"
 msgstr "Transferir {tokenSymbolShort}"
+
+msgid "Transfer {tokenTextShort}"
+msgstr ""
 
 msgid "Trending"
 msgstr "Tendencias"
@@ -3172,9 +3163,6 @@ msgstr ""
 msgid "Your project won't withhold any funds. All funds raised are Overflow. Token holders can redeem their tokens for a portion of your entire treasury."
 msgstr ""
 
-msgid "Your project's funding cycle target and duration."
-msgstr "El objetivo y duración de tu ciclo de financiamiento."
-
 msgid "Your transaction has been submitted and is awaiting confirmation."
 msgstr "Tu transacción ha sido presentada y está esperando confirmación."
 
@@ -3227,6 +3215,9 @@ msgid "minutes"
 msgstr "minutos"
 
 msgid "or <0><1>buy {tokenText} on exchange.</1></0>"
+msgstr ""
+
+msgid "or <0><1>redeem {tokenSymbol} on exchange.</1></0>"
 msgstr ""
 
 msgid "project"

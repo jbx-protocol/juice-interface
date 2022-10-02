@@ -114,7 +114,10 @@ export default function MobileCollapse() {
           }
         >
           <Menu mode="inline" defaultSelectedKeys={['resources']}>
-            <TopLeftNavItems mobile onClickMenuItems={() => collapseNav()} />
+            <TopLeftNavItems
+              desktop={false}
+              onClickMenuItems={() => collapseNav()}
+            />
 
             <div style={{ marginLeft: 15 }}>
               <Menu.Item key="language-selector">

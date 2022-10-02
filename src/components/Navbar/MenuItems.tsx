@@ -120,7 +120,7 @@ export function TopLeftNavItems({
         <Dropdown
           overlay={resourcesMenu}
           overlayStyle={{ padding: 0 }}
-          visible={resourcesOpen}
+          open={resourcesOpen}
         >
           <div
             className="nav-menu-item hover-opacity"

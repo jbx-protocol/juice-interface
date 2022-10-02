@@ -28,8 +28,6 @@ export const useFundingTargetForm = () => {
 
     if (distributionLimit.amount.eq(MAX_DISTRIBUTION_LIMIT)) {
       targetSelection = 'infinite'
-    } else if (distributionLimit.amount.eq(0)) {
-      targetSelection = 'none'
     } else {
       targetSelection = 'specific'
     }
@@ -50,13 +48,6 @@ export const useFundingTargetForm = () => {
     if (targetSelection === 'infinite') {
       setDistributionLimit({
         amount: MAX_DISTRIBUTION_LIMIT,
-        currency: V2V3_CURRENCY_ETH,
-      })
-      return
-    }
-    if (targetSelection === 'none') {
-      setDistributionLimit({
-        amount: BigNumber.from('0'),
         currency: V2V3_CURRENCY_ETH,
       })
       return

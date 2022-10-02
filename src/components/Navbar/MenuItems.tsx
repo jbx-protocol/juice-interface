@@ -143,9 +143,9 @@ export function TopLeftNavItems({
           label: (
             <a
               className="nav-menu-item hover-opacity"
-              style={navMenuItemStyles}
+              style={{ ...navMenuItemStyles }}
             >
-              Resources
+              {t`Resources`}
             </a>
           ),
           children: [...resourcesMenuItems(true)],
@@ -155,9 +155,11 @@ export function TopLeftNavItems({
   return (
     <Menu
       items={menuItems}
+      mode="inline"
       style={{
         display: 'flex',
         flexDirection: desktop ? 'row' : 'column',
+        width: desktop ? 500 : 'auto',
       }}
     />
   )

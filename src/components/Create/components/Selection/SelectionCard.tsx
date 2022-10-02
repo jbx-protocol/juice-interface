@@ -15,21 +15,19 @@ const Container: React.FC<{ isSelected: boolean; isDefocused: boolean }> = ({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const borderColor = isSelected
-    ? colors.stroke.action.primary
-    : colors.stroke.tertiary
-
+  const borderColor = isSelected ? colors.stroke.action.primary : undefined
   // TODO: These colors are not final and we need more work related to defocusing
   const backgroundColor = useMemo(() => {
     if (isDefocused) return colors.background.disabled
     return colors.background.l2
   }, [colors.background.disabled, colors.background.l2, isDefocused])
 
+  const className = !isSelected ? 'clickable-border' : 'border'
+
   return (
     <div
+      className={className}
       style={{
-        border: 'solid 1px',
-        borderRadius: 1,
         borderColor,
         backgroundColor,
       }}
@@ -72,7 +70,6 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
   return (
     <Container isSelected={isSelected} isDefocused={defocused}>
       <div
-        className={!isSelected ? 'clickable-border' : undefined}
         role="button"
         style={{
           padding: '1.75rem 0',

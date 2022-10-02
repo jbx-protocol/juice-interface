@@ -35,7 +35,7 @@ export const FundingTargetPage: React.FC = () => {
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <RecallCard show={['fundingCycles']} />
         <Form.Item noStyle name="targetSelection">
-          <Selection>
+          <Selection defocusOnSelect style={{ width: '100%' }}>
             <Selection.Card
               name="specific"
               title={t`Specific Funding Target`}

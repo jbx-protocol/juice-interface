@@ -1,5 +1,5 @@
 import { Space } from 'antd'
-import React, { useCallback, useState } from 'react'
+import React, { CSSProperties, useCallback, useState } from 'react'
 import { SelectionCard } from './SelectionCard'
 
 export const SelectionContext = React.createContext<{
@@ -11,10 +11,12 @@ export const SelectionContext = React.createContext<{
 export const Selection: React.FC<{
   value?: string
   defocusOnSelect?: boolean
+  style?: CSSProperties
   onChange?: (value: string | undefined) => void
 }> & { Card: typeof SelectionCard } = ({
   defocusOnSelect,
   value,
+  style,
   onChange,
   children,
 }) => {
@@ -37,7 +39,7 @@ export const Selection: React.FC<{
         setSelection: setSelectionWrapper,
       }}
     >
-      <Space direction="vertical" size="middle">
+      <Space direction="vertical" size="middle" style={style}>
         {children}
       </Space>
     </SelectionContext.Provider>

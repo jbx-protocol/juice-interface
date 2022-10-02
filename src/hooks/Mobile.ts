@@ -1,4 +1,4 @@
-import debounce from 'lodash.debounce'
+import debounce from 'lodash/debounce'
 import { useEffect, useState } from 'react'
 
 // Copied from react-use, so if we ever decide to include that library,

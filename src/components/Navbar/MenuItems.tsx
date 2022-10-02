@@ -141,12 +141,14 @@ export function TopLeftNavItems({
         {
           key: 'resources',
           label: (
-            <a
-              className="nav-menu-item hover-opacity"
-              style={{ ...navMenuItemStyles }}
-            >
-              {t`Resources`}
-            </a>
+            <Link href="">
+              <a
+                className="nav-menu-item hover-opacity"
+                style={{ ...navMenuItemStyles }}
+              >
+                {t`Resources`}
+              </a>
+            </Link>
           ),
           children: [...resourcesMenuItems(true)],
         },

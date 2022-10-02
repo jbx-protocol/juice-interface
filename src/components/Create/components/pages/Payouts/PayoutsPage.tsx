@@ -33,7 +33,7 @@ export const PayoutsPage: React.FC = () => {
           <Trans>How would you like to distribute payments?</Trans>
         </h2>
         <Form.Item noStyle name="selection">
-          <Selection defocusOnSelect>
+          <Selection defocusOnSelect style={{ width: '100%' }}>
             <Selection.Card
               name="percentages"
               title={t`Percentages`}

@@ -11,10 +11,6 @@
   width: auto !important;
 }
 
-.ant-menu-item-only-child:last-child {
-  padding: 0 !important;
-}
-
 .ant-menu-submenu-title {
   color: var(--text-primary) !important;
   font-weight: 600;
@@ -30,7 +26,6 @@
 
 .ant-menu-inline .ant-menu-item:not(:last-child) {
   margin-bottom: -4px !important;
-  padding-left: 0 !important;
 }
 
 .ant-menu-submenu-arrow {

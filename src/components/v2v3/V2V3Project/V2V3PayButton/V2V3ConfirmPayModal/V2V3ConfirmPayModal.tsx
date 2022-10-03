@@ -2,46 +2,40 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Descriptions, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
+import Callout from 'components/Callout'
 import FormattedAddress from 'components/FormattedAddress'
+import Paragraph from 'components/Paragraph'
 import TooltipLabel from 'components/TooltipLabel'
+import TransactionModal from 'components/TransactionModal'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { NftRewardsContext } from 'contexts/nftRewardsContext'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-import { useWallet } from 'hooks/Wallet'
-
-import { NftRewardTier } from 'models/nftRewardTier'
-
-import { useContext, useState } from 'react'
-import { formattedNum, formatWad, fromWad } from 'utils/format/formatNumber'
-
-import { buildPaymentMemo } from 'utils/buildPaymentMemo'
-
-import { ThemeContext } from 'contexts/themeContext'
+import useMobile from 'hooks/Mobile'
 import { usePayETHPaymentTerminalTx } from 'hooks/v2v3/transactor/PayETHPaymentTerminal'
+import { useWallet } from 'hooks/Wallet'
+import { NftRewardTier } from 'models/nftRewardTier'
+import { useRouter } from 'next/router'
+import { useContext, useState } from 'react'
+import { buildPaymentMemo } from 'utils/buildPaymentMemo'
+import { featureFlagEnabled } from 'utils/featureFlags'
+import { formattedNum, formatWad, fromWad } from 'utils/format/formatNumber'
+import { getNftRewardTier } from 'utils/nftRewards'
 import { emitErrorNotification } from 'utils/notifications'
+import { v2v3ProjectRoute } from 'utils/routes'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import {
   V2V3CurrencyName,
   V2V3_CURRENCY_ETH,
   V2V3_CURRENCY_USD,
 } from 'utils/v2v3/currency'
-
-import Callout from 'components/Callout'
-import Paragraph from 'components/Paragraph'
-import TransactionModal from 'components/TransactionModal'
-import useMobile from 'hooks/Mobile'
-import { featureFlagEnabled } from 'utils/featureFlags'
-import { getNftRewardTier } from 'utils/nftRewards'
-import { weightedAmount } from 'utils/v2v3/math'
-
-import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { NftRewardsContext } from 'contexts/nftRewardsContext'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { useRouter } from 'next/router'
-import { v2v3ProjectRoute } from 'utils/routes'
-import { V2PayForm, V2PayFormType } from '../V2PayForm'
+import { weightAmountPermyriad } from 'utils/v2v3/math'
 import { NftRewardCell } from './NftRewardCell'
+import { V2V3PayForm, V2V3PayFormType } from './V2V3PayForm'
 
-export function V2ConfirmPayModal({
+export function V2V3ConfirmPayModal({
   visible,
   weiAmount,
   onCancel,
@@ -62,7 +56,7 @@ export function V2ConfirmPayModal({
 
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
-  const [form] = useForm<V2PayFormType>()
+  const [form] = useForm<V2V3PayFormType>()
 
   const converter = useCurrencyConverter()
   const payProjectTx = usePayETHPaymentTerminalTx()
@@ -83,13 +77,13 @@ export function V2ConfirmPayModal({
 
   const reservedRate = fundingCycleMetadata?.reservedRate?.toNumber()
 
-  const receivedTickets = weightedAmount(
+  const receivedTickets = weightAmountPermyriad(
     fundingCycle?.weight,
     reservedRate,
     weiAmount,
     'payer',
   )
-  const ownerTickets = weightedAmount(
+  const ownerTickets = weightAmountPermyriad(
     fundingCycle?.weight,
     reservedRate,
     weiAmount,
@@ -269,7 +263,7 @@ export function V2ConfirmPayModal({
           ) : null}
         </Descriptions>
 
-        <V2PayForm
+        <V2V3PayForm
           form={form}
           onFinish={() => pay()}
           nftRewardTier={nftRewardTier}

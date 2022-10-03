@@ -1,4 +1,5 @@
 import { t, Trans } from '@lingui/macro'
+import { Space } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { Tab } from 'components/Tab'
 import { layouts } from 'constants/styles/layouts'
@@ -8,7 +9,10 @@ import { useAddressIsGnosisSafe } from 'hooks/AddressIsGnosisSafe'
 import { useQueuedSafeTransactions } from 'hooks/safe/QueuedSafeTransactions'
 import { generateSafeUrl } from 'lib/safe'
 import { useRouter } from 'next/router'
-import { useContext, useState } from 'react'
+// import { useRouter } from 'next/router'
+import { CSSProperties, useContext, useState } from 'react'
+// import { v2v3ProjectRoute } from 'utils/routes'
+import { ExecutedSafeTransactionsListing } from './ExecutedSafeTransactionsListing'
 
 import { SafeTransaction } from './SafeTransaction'
 export interface SafeTransactionType {
@@ -36,7 +40,7 @@ export interface SafeTransactionType {
 
 export type SafeTxCategory = 'queued' | 'history'
 const SAFE_TX_QUEUED_KEY: SafeTxCategory = 'queued'
-// const SAFE_TX_HISTORY_KEY: SafeTxCategory = 'history'
+const SAFE_TX_HISTORY_KEY: SafeTxCategory = 'history'
 
 const DEFAULT_TAB: SafeTxCategory = SAFE_TX_QUEUED_KEY
 
@@ -50,6 +54,7 @@ export function ProjectSafeDashboard() {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  // const { replace: routerReplace, query, pathname } = useRouter()
   const { query } = useRouter()
 
   const preSelectedTab = query.tab as SafeTxCategory
@@ -75,12 +80,25 @@ export function ProjectSafeDashboard() {
 
   if (!projectOwnerAddress) return null
 
-  if (!ownerIsGnosisSafeLoading && !ownerIsGnosisSafe) {
-    return <div>Project is not owned by a Safe.</div>
+  const containerStyle: CSSProperties = {
+    ...layouts.maxWidth,
+    margin: '2rem auto',
   }
 
+  if (!ownerIsGnosisSafeLoading && !ownerIsGnosisSafe) {
+    return (
+      <div style={containerStyle}>
+        <Trans>Project is not owned by a Safe.</Trans>
+      </div>
+    )
+  }
+
+  // useEffect(() => {
+  //   routerReplace(`${v2v3ProjectRoute({projectId, handle})}/safe?tab=${selectedTab}`)
+  // }, [selectedTab, routerReplace, pathname])
+
   return (
-    <div style={{ ...layouts.maxWidth, margin: '2rem auto' }}>
+    <div style={containerStyle}>
       <h1 style={{ color: colors.text.primary, marginBottom: 5 }}>
         <Trans>Safe transactions</Trans>
       </h1>
@@ -98,25 +116,38 @@ export function ProjectSafeDashboard() {
 
       {!isLoading && (
         <div style={{ marginTop: '1.5rem' }}>
-          <Tab
-            name={TAB_NAMES.queued}
-            isSelected={selectedTab === SAFE_TX_QUEUED_KEY}
-            onClick={() => setSelectedTab(SAFE_TX_QUEUED_KEY)}
-          />
+          <Space size="large">
+            <Tab
+              name={TAB_NAMES.queued}
+              isSelected={selectedTab === SAFE_TX_QUEUED_KEY}
+              onClick={() => setSelectedTab(SAFE_TX_QUEUED_KEY)}
+            />
+            <Tab
+              name={TAB_NAMES.history}
+              isSelected={selectedTab === SAFE_TX_HISTORY_KEY}
+              onClick={() => setSelectedTab(SAFE_TX_HISTORY_KEY)}
+            />
+          </Space>
 
-          {selectedTab === SAFE_TX_QUEUED_KEY ? (
-            <div style={{ marginTop: '1.5rem' }}>
-              {queuedSafeTransactions?.map(
-                (transaction: SafeTransactionType, idx: number) => (
-                  <SafeTransaction
-                    key={`safe-${transaction.nonce}-${idx}`}
-                    transaction={transaction}
-                    selected={preSelectedTx === transaction.safeTxHash}
-                  />
-                ),
-              )}
-            </div>
-          ) : null}
+          <div style={{ marginTop: '1.5rem' }}>
+            {selectedTab === SAFE_TX_QUEUED_KEY ? (
+              <>
+                {queuedSafeTransactions?.map(
+                  (transaction: SafeTransactionType, idx: number) => (
+                    <SafeTransaction
+                      key={`safe-${transaction.nonce}-${idx}`}
+                      transaction={transaction}
+                      selected={preSelectedTx === transaction.safeTxHash}
+                    />
+                  ),
+                )}
+              </>
+            ) : selectedTab === SAFE_TX_HISTORY_KEY ? (
+              <ExecutedSafeTransactionsListing
+                safeAddress={projectOwnerAddress}
+              />
+            ) : null}
+          </div>
         </div>
       )}
     </div>

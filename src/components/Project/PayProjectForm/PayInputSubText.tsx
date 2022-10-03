@@ -3,7 +3,6 @@ import { parseEther } from '@ethersproject/units'
 import { Trans } from '@lingui/macro'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useContext, useMemo } from 'react'
-import { WeightFunction } from 'utils/math'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import { CurrencyContext } from 'contexts/currencyContext'
@@ -16,6 +15,7 @@ import useWeiConverter from 'hooks/WeiConverter'
 import { CurrencyOption } from 'models/currencyOption'
 import { formattedNum } from 'utils/format/formatNumber'
 import { formatIssuanceRate } from 'utils/v2v3/math'
+import { PayProjectFormContext } from './payProjectFormContext'
 
 /**
  * Help text shown below the Pay input field.
@@ -28,32 +28,27 @@ import { formatIssuanceRate } from 'utils/v2v3/math'
 export default function PayInputSubText({
   payInCurrency,
   amount,
-  reservedRate,
-  weight,
-  tokenSymbol,
-  tokenAddress,
-  weightingFn,
-  isEligibleForNft,
 }: {
   payInCurrency: CurrencyOption
   amount: string | undefined
-  reservedRate: number | undefined
-  weight: BigNumber | undefined
-  tokenSymbol: string | undefined
-  tokenAddress: string | undefined
-  weightingFn: WeightFunction
-  isEligibleForNft?: boolean
 }) {
-  const converter = useCurrencyConverter()
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-
   const {
     currencyMetadata,
     currencies: { ETH },
   } = useContext(CurrencyContext)
+  const {
+    reservedRate,
+    weight,
+    tokenSymbol,
+    tokenAddress,
+    weightingFn,
+    isEligibleForNft,
+  } = useContext(PayProjectFormContext)
 
+  const converter = useCurrencyConverter()
   const weiPayAmt = useWeiConverter<CurrencyOption>({
     currency: payInCurrency,
     amount: amount,
@@ -66,9 +61,11 @@ export default function PayInputSubText({
   })
 
   const receiveText = useMemo(() => {
-    const formatReceivedTickets = (wei: BigNumber) => {
-      const exchangeRate = weightingFn(weight, reservedRate, wei, 'payer')
-      return formattedNum(formatIssuanceRate(exchangeRate))
+    const formatReceivedTickets = (wei: BigNumber): string | undefined => {
+      const exchangeRate = weightingFn?.(weight, reservedRate, wei, 'payer')
+      return exchangeRate
+        ? formattedNum(formatIssuanceRate(exchangeRate))
+        : undefined
     }
 
     if (weiPayAmt?.gt(0)) {

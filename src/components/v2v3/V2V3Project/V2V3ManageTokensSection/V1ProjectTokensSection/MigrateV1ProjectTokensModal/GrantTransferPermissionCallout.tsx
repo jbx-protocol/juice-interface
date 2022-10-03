@@ -20,7 +20,7 @@ export function GrantTransferPermissionCallout({
   const onGivePermissionClick = async () => {
     setSetPermissionLoading(true)
 
-    const operator = contracts?.JBV1TokenPaymentTerminal.address
+    const operator = contracts?.JBV1TokenPaymentTerminal?.address
     if (!operator) return
 
     try {

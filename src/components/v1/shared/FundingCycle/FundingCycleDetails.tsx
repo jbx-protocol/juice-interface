@@ -21,7 +21,7 @@ import {
   hasFundingTarget,
   isRecurring,
 } from 'utils/v1/fundingCycle'
-import { weightedRate } from 'utils/v1/math'
+import { weightAmountPerbicent } from 'utils/v1/math'
 
 import { V1CurrencyName } from 'utils/v1/currency'
 
@@ -74,7 +74,7 @@ export default function FundingCycleDetails({
 
   const ReservedRateText = () => {
     const payerRate = formatWad(
-      weightedRate(
+      weightAmountPerbicent(
         fundingCycle?.weight,
         fcReservedRate,
         parseEther('1'),
@@ -86,7 +86,7 @@ export default function FundingCycleDetails({
     )
 
     const reservedRate = formatWad(
-      weightedRate(
+      weightAmountPerbicent(
         fundingCycle?.weight,
         fcReservedRate,
         parseEther('1'),

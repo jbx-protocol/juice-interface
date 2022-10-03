@@ -8,6 +8,7 @@ import { CreateBadge } from '../../CreateBadge'
 import { Selection } from '../../Selection'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
+import { CustomTokenSettings } from './components'
 import { useProjectTokensForm } from './hooks/ProjectTokenForm'
 
 export const ProjectTokenPage: React.FC = () => {
@@ -55,7 +56,9 @@ export const ProjectTokenPage: React.FC = () => {
                   Set custom rules & parameters for your project tokens.
                 </Trans>
               }
-            />
+            >
+              <CustomTokenSettings />
+            </Selection.Card>
           </Selection>
         </Form.Item>
         <Callout>

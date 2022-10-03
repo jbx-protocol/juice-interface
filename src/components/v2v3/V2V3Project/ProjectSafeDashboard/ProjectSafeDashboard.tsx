@@ -1,4 +1,5 @@
 import { t, Trans } from '@lingui/macro'
+import { Space } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { Tab } from 'components/Tab'
 import { layouts } from 'constants/styles/layouts'
@@ -8,6 +9,7 @@ import { useAddressIsGnosisSafe } from 'hooks/AddressIsGnosisSafe'
 import { useQueuedSafeTransactions } from 'hooks/safe/QueuedSafeTransactions'
 import { generateSafeUrl } from 'lib/safe'
 import { useContext, useState } from 'react'
+import { ExecutedSafeTransactionsListing } from './ExecutedSafeTransactionsListing'
 
 import { SafeTransaction } from './SafeTransaction'
 export interface SafeTransactionType {
@@ -35,7 +37,7 @@ export interface SafeTransactionType {
 
 export type SafeTxCategory = 'queued' | 'history'
 const SAFE_TX_QUEUED_KEY: SafeTxCategory = 'queued'
-// const SAFE_TX_HISTORY_KEY: SafeTxCategory = 'history'
+const SAFE_TX_HISTORY_KEY: SafeTxCategory = 'history'
 
 const DEFAULT_TAB: SafeTxCategory = SAFE_TX_QUEUED_KEY
 
@@ -52,11 +54,10 @@ export function ProjectSafeDashboard() {
 
   const [selectedTab, setSelectedTab] = useState<SafeTxCategory>(DEFAULT_TAB)
 
-  const { data: queuedSafeTransactions, isLoading } = useQueuedSafeTransactions(
-    {
+  const { data: queuedSafeTransactions, isLoading: isQueuedLoading } =
+    useQueuedSafeTransactions({
       safeAddress: projectOwnerAddress,
-    },
-  )
+    })
   const { data: ownerIsGnosisSafe, isLoading: ownerIsGnosisSafeLoading } =
     useAddressIsGnosisSafe(projectOwnerAddress)
 
@@ -72,7 +73,7 @@ export function ProjectSafeDashboard() {
         <Trans>Safe transactions</Trans>
       </h1>
 
-      {!isLoading ? (
+      {!isQueuedLoading ? (
         <ExternalLink
           href={generateSafeUrl(projectOwnerAddress)}
           style={{ textDecoration: 'underline' }}
@@ -81,28 +82,41 @@ export function ProjectSafeDashboard() {
         </ExternalLink>
       ) : null}
 
-      {isLoading && <div style={{ marginTop: 20 }}>Loading...</div>}
+      {isQueuedLoading && <div style={{ marginTop: 20 }}>Loading...</div>}
 
-      {!isLoading && (
+      {!isQueuedLoading && (
         <div style={{ marginTop: '1.5rem' }}>
-          <Tab
-            name={TAB_NAMES.queued}
-            isSelected={selectedTab === SAFE_TX_QUEUED_KEY}
-            onClick={() => setSelectedTab(SAFE_TX_QUEUED_KEY)}
-          />
+          <Space size="large">
+            <Tab
+              name={TAB_NAMES.queued}
+              isSelected={selectedTab === SAFE_TX_QUEUED_KEY}
+              onClick={() => setSelectedTab(SAFE_TX_QUEUED_KEY)}
+            />
+            <Tab
+              name={TAB_NAMES.history}
+              isSelected={selectedTab === SAFE_TX_HISTORY_KEY}
+              onClick={() => setSelectedTab(SAFE_TX_HISTORY_KEY)}
+            />
+          </Space>
 
-          {selectedTab === SAFE_TX_QUEUED_KEY ? (
-            <div style={{ marginTop: '1.5rem' }}>
-              {queuedSafeTransactions?.map(
-                (transaction: SafeTransactionType, idx: number) => (
-                  <SafeTransaction
-                    key={`safe-${transaction.nonce}-${idx}`}
-                    transaction={transaction}
-                  />
-                ),
-              )}
-            </div>
-          ) : null}
+          <div style={{ marginTop: '1.5rem' }}>
+            {selectedTab === SAFE_TX_QUEUED_KEY ? (
+              <>
+                {queuedSafeTransactions?.map(
+                  (transaction: SafeTransactionType, idx: number) => (
+                    <SafeTransaction
+                      key={`safe-${transaction.nonce}-${idx}`}
+                      transaction={transaction}
+                    />
+                  ),
+                )}
+              </>
+            ) : selectedTab === SAFE_TX_HISTORY_KEY ? (
+              <ExecutedSafeTransactionsListing
+                safeAddress={projectOwnerAddress}
+              />
+            ) : null}
+          </div>
         </div>
       )}
     </div>

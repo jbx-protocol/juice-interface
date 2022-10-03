@@ -1,6 +1,10 @@
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { VENFT_RESOLVER_ADDRESS } from 'constants/veNft/veNftProject'
+import { featureFlagEnabled } from 'utils/featureFlags'
 
 export const loadVeTokenUriResolver = async () => {
+  if (!featureFlagEnabled(FEATURE_FLAGS.VENFT)) return
+
   const contractJson = {
     abi: (
       await import(

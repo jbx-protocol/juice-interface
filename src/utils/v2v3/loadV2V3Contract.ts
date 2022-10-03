@@ -1,11 +1,9 @@
 import { Contract, ContractInterface } from '@ethersproject/contracts'
 import { CV_V2, CV_V3 } from 'constants/cv'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { V2CVType, V3CVType } from 'models/cv'
 import { NetworkName } from 'models/network-name'
 import { SignerOrProvider } from 'models/signerOrProvider'
 import { V2V3ContractName } from 'models/v2v3/contracts'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { loadJBProjectHandlesContract } from './contractLoaders/JBProjectHandles'
 import { loadJBTiered721DelegateProjectDeployerContract } from './contractLoaders/JBTiered721DelegateProjectDeployer'
 import { loadJBTiered721DelegateStoreContract } from './contractLoaders/JBTiered721DelegateStore'
@@ -33,30 +31,17 @@ export const loadV2V3Contract = async (
     contractJson = await loadJBProjectHandlesContract(network)
   } else if (contractName === V2V3ContractName.PublicResolver) {
     contractJson = loadPublicResolverContract(network)
-  } else if (
-    contractName === V2V3ContractName.JBV1TokenPaymentTerminal &&
-    featureFlagEnabled(FEATURE_FLAGS.V1_TOKEN_SWAP)
-  ) {
+  } else if (contractName === V2V3ContractName.JBV1TokenPaymentTerminal) {
     contractJson = await loadJBV1TokenPaymentTerminalContract(network)
   } else if (
-    contractName === V2V3ContractName.JBTiered721DelegateProjectDeployer &&
-    featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
+    contractName === V2V3ContractName.JBTiered721DelegateProjectDeployer
   ) {
     contractJson = await loadJBTiered721DelegateProjectDeployerContract()
-  } else if (
-    contractName === V2V3ContractName.JBTiered721DelegateStore &&
-    featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
-  ) {
+  } else if (contractName === V2V3ContractName.JBTiered721DelegateStore) {
     contractJson = await loadJBTiered721DelegateStoreContract()
-  } else if (
-    contractName === V2V3ContractName.JBVeNftDeployer &&
-    featureFlagEnabled(FEATURE_FLAGS.VENFT)
-  ) {
+  } else if (contractName === V2V3ContractName.JBVeNftDeployer) {
     contractJson = await loadVeNftDeployer()
-  } else if (
-    contractName === V2V3ContractName.JBVeTokenUriResolver &&
-    featureFlagEnabled(FEATURE_FLAGS.VENFT)
-  ) {
+  } else if (contractName === V2V3ContractName.JBVeTokenUriResolver) {
     contractJson = await loadVeTokenUriResolver()
   } else {
     contractJson =

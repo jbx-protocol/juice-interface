@@ -4,12 +4,12 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Modal, ModalProps, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import ERC20TokenBalance from 'components/ERC20TokenBalance'
-import { V2ProjectTokenBalance } from 'components/v2v3/V2V3Project/modals/V2V3ProjectTokenBalancesModal/V2ProjectTokenBalance'
 import { ProjectMetadataV5 } from 'models/project-metadata'
 import { TokenRef } from 'models/token-ref'
 import { useContext, useEffect, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 import { revalidateProject } from 'utils/revalidateProject'
+import { V2V3ProjectTokenBalance } from './V2V3ProjectTokenBalance'
 
 import { AssetInputType, TokenRefs } from './TokenRefs'
 
@@ -134,7 +134,7 @@ export function V2V3DownloadActivityModal(props: ModalProps) {
         </p>
 
         <Space direction="vertical" style={{ width: '100%', marginTop: 20 }}>
-          <V2ProjectTokenBalance projectId={V2V3_PROJECT_IDS.JUICEBOX_DAO} />
+          <V2V3ProjectTokenBalance projectId={V2V3_PROJECT_IDS.JUICEBOX_DAO} />
 
           {(projectMetadata as ProjectMetadataV5)?.tokens?.map(t =>
             t.type === 'erc20' ? (
@@ -144,7 +144,7 @@ export function V2V3DownloadActivityModal(props: ModalProps) {
                 tokenAddress={t.value}
               />
             ) : (
-              <V2ProjectTokenBalance
+              <V2V3ProjectTokenBalance
                 projectId={BigNumber.from(t.value).toNumber()}
               />
             ),

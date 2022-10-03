@@ -19,7 +19,7 @@ import {
   fundingCycleRiskCount,
   getUnsafeV1FundingCycleProperties,
 } from 'utils/v1/fundingCycle'
-import { weightedRate } from 'utils/v1/math'
+import { weightAmountPerbicent } from 'utils/v1/math'
 
 import Callout from 'components/Callout'
 import Paragraph from 'components/Paragraph'
@@ -140,13 +140,13 @@ export default function V1ConfirmPayOwnerModal({
     currentFC?.metadata,
   )?.reservedRate
 
-  const receivedTickets = weightedRate(
+  const receivedTickets = weightAmountPerbicent(
     currentFC?.weight,
     fcReservedRate,
     weiAmount,
     'payer',
   )
-  const ownerTickets = weightedRate(
+  const ownerTickets = weightAmountPerbicent(
     currentFC?.weight,
     fcReservedRate,
     weiAmount,

@@ -8,11 +8,12 @@ import { Selection } from '../../Selection'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { PayoutsList } from './components/PayoutsList'
-import { usePayoutsForm } from './hooks'
+import { useAvailablePayoutsSelections, usePayoutsForm } from './hooks'
 
 export const PayoutsPage: React.FC = () => {
   const { goToNextPage } = useContext(PageContext)
   const { form, initialValues } = usePayoutsForm()
+  const availableSelections = useAvailablePayoutsSelections()
 
   const selection = useWatch('selection', form)
   const isNextEnabled = !!selection
@@ -33,29 +34,37 @@ export const PayoutsPage: React.FC = () => {
           <Trans>How would you like to distribute payments?</Trans>
         </h2>
         <Form.Item noStyle name="selection">
-          <Selection defocusOnSelect style={{ width: '100%' }}>
-            <Selection.Card
-              name="percentages"
-              title={t`Percentages`}
-              icon={<PercentageOutlined />}
-              description={
-                <Trans>
-                  Distribute a percentage of all funds received between the
-                  entities nominated in the next step.
-                </Trans>
-              }
-            />
-            <Selection.Card
-              name="amounts"
-              title={t`Specific Amounts`}
-              icon={<FieldBinaryOutlined />}
-              description={
-                <Trans>
-                  Distribute a specific amount of funds to each entity nominated
-                  in the next step.
-                </Trans>
-              }
-            />
+          <Selection
+            disableInteractivity={availableSelections.size === 1}
+            defocusOnSelect
+            style={{ width: '100%' }}
+          >
+            {availableSelections.has('percentages') && (
+              <Selection.Card
+                name="percentages"
+                title={t`Percentages`}
+                icon={<PercentageOutlined />}
+                description={
+                  <Trans>
+                    Distribute a percentage of all funds received between the
+                    entities nominated in the next step.
+                  </Trans>
+                }
+              />
+            )}
+            {availableSelections.has('amounts') && (
+              <Selection.Card
+                name="amounts"
+                title={t`Specific Amounts`}
+                icon={<FieldBinaryOutlined />}
+                description={
+                  <Trans>
+                    Distribute a specific amount of funds to each entity
+                    nominated in the next step.
+                  </Trans>
+                }
+              />
+            )}
           </Selection>
         </Form.Item>
         {selection && (

@@ -6,6 +6,7 @@ import { useAppSelector } from 'hooks/AppSelector'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { useDebugValue, useEffect, useMemo } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import { useAvailablePayoutsSelections } from './AvailablePayoutsSelections'
 
 export type PayoutsFormProps = Partial<{
   selection: PayoutsSelection
@@ -18,19 +19,27 @@ export const usePayoutsForm = () => {
     payoutGroupedSplits: { splits },
     payoutsSelection,
   } = useAppSelector(state => state.editingV2Project)
+  const availableSelections = useAvailablePayoutsSelections()
+
+  const overridenSelection = useMemo(
+    () =>
+      availableSelections.size === 1 ? [...availableSelections][0] : undefined,
+    [availableSelections],
+  )
 
   useDebugValue(form.getFieldsValue())
 
   const initialValues: PayoutsFormProps | undefined = useMemo(() => {
+    const selection = overridenSelection ?? payoutsSelection
     if (!splits.length) {
-      return { selection: payoutsSelection }
+      return { selection }
     }
     const payoutsList: AllocationSplit[] = splits.map(s => ({
       id: `${s.beneficiary}${s.projectId ? `-${s.projectId}` : ''}`,
       ...s,
     }))
-    return { payoutsList, selection: payoutsSelection }
-  }, [payoutsSelection, splits])
+    return { payoutsList, selection }
+  }, [overridenSelection, payoutsSelection, splits])
 
   const dispatch = useAppDispatch()
   const payoutsList = useWatch('payoutsList', form)

@@ -12,3 +12,4 @@ export type V2SettingsPageKey =
   | 'archiveproject'
   | 'governance'
   | 'v1tokenmigration'
+  | 'verifytwitter'

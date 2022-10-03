@@ -27,6 +27,7 @@ export const V2SettingsPageKeyTitleMap: { [k in V2SettingsPageKey]: string } = {
   reservedtokens: t`Reserved token allocation`,
   v1tokenmigration: t`V1 token migration`,
   transferownership: t`Transfer ownership`,
+  verifytwitter: t`Verify Twitter`,
   archiveproject: t`Archive project`,
   governance: t`Governance`,
 }
@@ -72,6 +73,7 @@ const items: MenuItem[] = [
     'manage',
     [
       menuItem('Transfer ownership', 'transferownership'),
+      menuItem('Verify Twitter', 'verifytwitter'),
       menuItem('Archive project', 'archiveproject'),
       menuItem('Governance', 'governance'),
       featureFlagEnabled(FEATURE_FLAGS.V1_TOKEN_SWAP)

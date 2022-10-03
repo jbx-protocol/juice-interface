@@ -13,6 +13,7 @@ import { ReconfigureFundingCycleSettingsPage } from './pages/ProjectReconfigureF
 import { ReservedTokensSettingsPage } from './pages/ReservedTokensSettingsPage'
 import { TransferOwnershipSettingsPage } from './pages/TransferOwnershipSettingsPage'
 import { V1V2TokenMigrationSettingsPage } from './pages/V1V2TokenMigrationSettingsPage'
+import { VerifyTwitterSettingsPage } from './pages/VerifyTwitterSettingsPage'
 
 const SettingsPageComponents: {
   [k in V2SettingsPageKey]: () => JSX.Element | null
@@ -23,6 +24,7 @@ const SettingsPageComponents: {
   payouts: PayoutsSettingsPage,
   reservedtokens: ReservedTokensSettingsPage,
   v1tokenmigration: V1V2TokenMigrationSettingsPage,
+  verifytwitter: VerifyTwitterSettingsPage,
   transferownership: TransferOwnershipSettingsPage,
   archiveproject: ArchiveProjectSettingsPage,
   governance: GovernanceSettingsPage,

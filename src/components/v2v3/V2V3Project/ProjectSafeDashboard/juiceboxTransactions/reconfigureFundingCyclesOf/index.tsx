@@ -3,35 +3,46 @@ import { t } from '@lingui/macro'
 
 import { ThemeContext } from 'contexts/themeContext'
 
-import { useContext, useState } from 'react'
+import { CSSProperties, useContext, useState } from 'react'
+import { SafeTransactionType } from '../..'
 
-import {
-  SafeTransactionComponentProps,
-  safeTransactionRowStyle,
-  TransactionHeader,
-} from '../../SafeTransaction'
+import { safeTransactionRowStyle } from '../../SafeTransaction'
+import { TransactionHeader } from '../../TransactionHeader'
 import { ReconfigureRichPreview } from './ReconfigurationRichPreview'
 
 export function ReconfigureFundingCyclesOfTransaction({
   transaction,
-}: SafeTransactionComponentProps) {
+  selected,
+}: {
+  transaction: SafeTransactionType
+  selected: boolean
+}) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const [expanded, setExpanded] = useState<boolean>(false)
+  const [expanded, setExpanded] = useState<boolean>(selected)
+
+  const rowStyle: CSSProperties = {
+    ...safeTransactionRowStyle,
+    color: colors.text.primary,
+    display: 'flex',
+    flexDirection: 'column',
+    cursor: 'pointer',
+  }
+
+  if (selected) {
+    rowStyle['border'] = `1px solid ${colors.stroke.action.primary}`
+  }
 
   return (
     <div
-      style={{
-        ...safeTransactionRowStyle,
-        color: colors.text.primary,
-        display: 'flex',
-        flexDirection: 'column',
-        cursor: 'pointer',
+      style={rowStyle}
+      onClick={() => {
+        setExpanded(!expanded)
       }}
-      onClick={() => setExpanded(!expanded)}
       className="clickable-border"
+      id={`${transaction.safeTxHash}`}
     >
       <div style={{ display: 'flex', width: '100%' }}>
         <TransactionHeader

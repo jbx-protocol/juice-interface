@@ -7,6 +7,7 @@ import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useAddressIsGnosisSafe } from 'hooks/AddressIsGnosisSafe'
 import { useQueuedSafeTransactions } from 'hooks/safe/QueuedSafeTransactions'
 import { generateSafeUrl } from 'lib/safe'
+import { useRouter } from 'next/router'
 import { useContext, useState } from 'react'
 
 import { SafeTransaction } from './SafeTransaction'
@@ -49,8 +50,20 @@ export function ProjectSafeDashboard() {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const { query } = useRouter()
 
-  const [selectedTab, setSelectedTab] = useState<SafeTxCategory>(DEFAULT_TAB)
+  const preSelectedTab = query.tab as SafeTxCategory
+  const [selectedTab, setSelectedTab] = useState<SafeTxCategory>(
+    preSelectedTab ?? DEFAULT_TAB,
+  )
+
+  const preSelectedTx = query.tx as string
+
+  if (preSelectedTx) {
+    document
+      .getElementById(preSelectedTx)
+      ?.scrollIntoView({ behavior: 'smooth' })
+  }
 
   const { data: queuedSafeTransactions, isLoading } = useQueuedSafeTransactions(
     {
@@ -98,6 +111,7 @@ export function ProjectSafeDashboard() {
                   <SafeTransaction
                     key={`safe-${transaction.nonce}-${idx}`}
                     transaction={transaction}
+                    selected={preSelectedTx === transaction.safeTxHash}
                   />
                 ),
               )}

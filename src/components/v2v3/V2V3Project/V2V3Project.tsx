@@ -20,6 +20,7 @@ import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2C
 import { CurrencyOption } from 'models/currencyOption'
 import { V2OperatorPermission } from 'models/v2v3/permissions'
 import { useRouter } from 'next/router'
+import { ParsedUrlQuery } from 'querystring'
 import { useContext, useEffect, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { fromWad } from 'utils/format/formatNumber'
@@ -77,6 +78,8 @@ export function V2V3Project({
     useState<boolean>(false)
   const [nftPostPayModalVisible, setNftPostPayModalVisible] =
     useState<boolean>(false)
+  const [queryState, setQueryState] = useState<ParsedUrlQuery>()
+  const [queryCount, setQueryCount] = useState<number>(0)
 
   const [balancesModalVisible, setBalancesModalVisible] =
     useState<boolean>(false)
@@ -86,6 +89,10 @@ export function V2V3Project({
   // Checks URL to see if user was just directed from project deploy
   const { replace: routerReplace, query } = useRouter()
 
+  useEffect(() => {
+    if (queryCount === 0) setQueryState(query)
+  }, [query, queryCount])
+  console.info('queryState: ', queryState)
   /**
    * When the router is ready,
    * check if the user was just redirected from:
@@ -98,13 +105,14 @@ export function V2V3Project({
    * update when `router.replace` is called to remove the query params.
    */
   useEffect(() => {
-    if (query.newDeploy === 'true') {
+    console.info('*queryState: ', queryState)
+    if (queryState?.newDeploy === 'true') {
       setNewDeployModalVisible(true)
     }
-    if (query.nftPurchaseConfirmed === 'true') {
+    if (queryState?.nftPurchaseConfirmed === 'true') {
       setNftPostPayModalVisible(true)
     }
-  }, [query])
+  }, [queryState])
 
   const isMobile = useMobile()
   const canReconfigureFundingCycles = useV2ConnectedWalletHasPermission(
@@ -163,19 +171,13 @@ export function V2V3Project({
 
   // Change URL without refreshing page
   const removeQueryParams = () => {
-    // `Next` `query.nftPurchaseConfirmed` not updating unless a new
-    // `nftPurchaseConfirmed` value is given
-    const newQuery: Record<string, string> = {}
-    Object.keys(query).forEach((key: string) => {
-      if (key !== 'projectId') {
-        newQuery[key] = 'null'
-      }
-    })
+    setQueryState(undefined)
+    setQueryCount(1)
 
     routerReplace(
       {
         pathname: v2v3ProjectRoute({ projectId }),
-        query: newQuery,
+        // query: newQuery,
       },
       undefined,
       { shallow: true },

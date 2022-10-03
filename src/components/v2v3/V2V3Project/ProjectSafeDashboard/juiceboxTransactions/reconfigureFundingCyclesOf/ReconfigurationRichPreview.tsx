@@ -10,11 +10,13 @@ import { OutgoingProjectData } from 'models/outgoingProject'
 import { useContext } from 'react'
 import { formatOutgoingSplits } from 'utils/splits'
 import { formatReservedRate, MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
-import { SafeTransactionComponentProps } from '../../SafeTransaction'
+import { SafeTransactionType } from '../..'
 
 export function ReconfigureRichPreview({
   transaction,
-}: SafeTransactionComponentProps) {
+}: {
+  transaction: SafeTransactionType
+}) {
   const { contracts } = useContext(V2V3ContractsContext)
   const { projectOwnerAddress } = useContext(V2V3ProjectContext)
   const {

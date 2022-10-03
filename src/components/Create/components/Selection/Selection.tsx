@@ -11,10 +11,12 @@ export const SelectionContext = React.createContext<{
 export const Selection: React.FC<{
   value?: string
   defocusOnSelect?: boolean
+  disableInteractivity?: boolean
   style?: CSSProperties
   onChange?: (value: string | undefined) => void
 }> & { Card: typeof SelectionCard } = ({
   defocusOnSelect,
+  disableInteractivity,
   value,
   style,
   onChange,
@@ -36,7 +38,7 @@ export const Selection: React.FC<{
       value={{
         defocusOnSelect,
         selection: _selection,
-        setSelection: setSelectionWrapper,
+        setSelection: !disableInteractivity ? setSelectionWrapper : undefined,
       }}
     >
       <Space direction="vertical" size="middle" style={style}>

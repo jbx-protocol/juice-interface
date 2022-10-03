@@ -34,7 +34,7 @@ export function MigrateProjectTokensModal({
 
   const [form] = Form.useForm<{ tokenAmount: string }>()
 
-  const operator = contracts?.JBV1TokenPaymentTerminal.address
+  const operator = contracts?.JBV1TokenPaymentTerminal?.address
   const hasV1TokenTransferPermission =
     useV1HasPermissions({
       operator,

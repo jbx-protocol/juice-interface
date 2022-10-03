@@ -6,5 +6,5 @@ import { useHasPaymentTerminal } from './hasPaymentTerminal'
 export function useHasV1TokenPaymentTerminal(): boolean {
   const { contracts } = useContext(V2V3ContractsContext)
 
-  return useHasPaymentTerminal(contracts?.JBV1TokenPaymentTerminal.address)
+  return useHasPaymentTerminal(contracts?.JBV1TokenPaymentTerminal?.address)
 }

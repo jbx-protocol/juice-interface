@@ -24,6 +24,7 @@ export const loadJuiceboxV2Contract = async (
   const contractOverride = V2_CONTRACT_ABI_OVERRIDES[contractName]
   const version = contractOverride?.version ?? 'latest'
   const filename = contractOverride?.filename ?? contractName
+
   return await import(
     `@jbx-protocol/contracts-v2-${version}/deployments/${network}/${filename}.json`
   )

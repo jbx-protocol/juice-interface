@@ -5,12 +5,13 @@ import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { CSSProperties, useContext, useState } from 'react'
 import { v2v3ProjectRoute } from 'utils/routes'
+import { SafeTransactionType } from '.'
 
 export function ShareTxButton({
-  transactionId,
+  transaction,
   style,
 }: {
-  transactionId: string
+  transaction: SafeTransactionType
   style?: CSSProperties
 }) {
   const { projectId } = useContext(ProjectMetadataContext)
@@ -18,11 +19,14 @@ export function ShareTxButton({
 
   const [copied, setCopied] = useState<boolean>(false)
 
-  const linkToTx = `
-    ${window.location.origin}/
+  let linkToTx = `
+    ${window.location.origin}
       ${v2v3ProjectRoute({ projectId, handle })}/
-      safe?tx=${transactionId}
-  `
+      safe?tx=${transaction.safeTxHash}`
+
+  if (transaction.isExecuted) {
+    linkToTx += `&tab=history`
+  }
 
   const copyLinkToKeyboard = () => {
     if (navigator) {

@@ -4,8 +4,10 @@ import { SafeTransaction } from './SafeTransaction'
 
 export function ExecutedSafeTransactionsListing({
   safeAddress,
+  selectedTx,
 }: {
   safeAddress: string
+  selectedTx: string | undefined
 }) {
   const { data: executedSafeTransactions, isLoading } =
     useExecutedSafeTransactions({
@@ -23,6 +25,7 @@ export function ExecutedSafeTransactionsListing({
           <SafeTransaction
             key={`safe-${transaction.nonce}-${idx}`}
             transaction={transaction}
+            selected={selectedTx === transaction.safeTxHash}
           />
         ),
       )}

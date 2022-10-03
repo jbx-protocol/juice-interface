@@ -1949,6 +1949,9 @@ msgstr ""
 msgid "Project is not accepting payments this funding cycle."
 msgstr ""
 
+msgid "Project is not owned by a Safe."
+msgstr ""
+
 msgid "Project launch successful"
 msgstr ""
 

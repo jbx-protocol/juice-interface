@@ -22,6 +22,7 @@ export const safeTransactionRowStyle: CSSProperties = {
 
 const GenericSafeTransaction = ({
   transaction,
+  selected,
 }: SafeTransactionComponentProps) => {
   const {
     theme: { colors },
@@ -31,7 +32,9 @@ const GenericSafeTransaction = ({
       style={{
         ...safeTransactionRowStyle,
         color: colors.text.primary,
-        border: `1px solid ${colors.stroke.tertiary}`,
+        border: `1px solid ${
+          selected ? colors.stroke.action.primary : colors.stroke.tertiary
+        }`,
       }}
       id={`${transaction.safeTxHash}`}
     >

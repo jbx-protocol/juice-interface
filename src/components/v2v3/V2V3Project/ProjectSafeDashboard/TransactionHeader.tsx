@@ -53,10 +53,7 @@ export function TransactionHeader({
           {transaction.nonce}
         </div>
         {transactionTitle}
-        <ShareTxButton
-          transactionId={transaction.safeTxHash}
-          style={{ marginLeft: 10 }}
-        />
+        <ShareTxButton transaction={transaction} style={{ marginLeft: 10 }} />
       </div>
       <div style={{ color: colors.text.secondary }}>
         {formatHistoricalDate(new Date(transaction.submissionDate).valueOf())}

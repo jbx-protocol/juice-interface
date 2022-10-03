@@ -52,7 +52,7 @@ export default function ETHAmount({
             {formatWad(amount, { precision: 8 })}
           </span>
         }
-        visible={hideTooltip ? !hideTooltip : undefined}
+        open={hideTooltip ? !hideTooltip : undefined}
       >
         <CurrencySymbol currency="ETH" />
         ~0
@@ -68,7 +68,7 @@ export default function ETHAmount({
   return (
     <Tooltip
       title={<ETHToUSD ethAmount={amount} />}
-      visible={hideTooltip ? !hideTooltip : undefined}
+      open={hideTooltip ? !hideTooltip : undefined}
     >
       <CurrencySymbol currency="ETH" />
       {formattedETHAmount}

@@ -7,10 +7,6 @@ import { V2V3ContractName } from 'models/v2v3/contracts'
 const V2_CONTRACT_ABI_OVERRIDES: {
   [k in V2V3ContractName]?: { filename: string; version: string }
 } = {
-  DeprecatedJBController: {
-    version: '4.0.0',
-    filename: 'JBController',
-  },
   DeprecatedJBSplitsStore: {
     version: '4.0.0',
     filename: 'JBSplitsStore',

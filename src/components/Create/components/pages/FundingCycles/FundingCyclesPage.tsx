@@ -8,8 +8,8 @@ import { Form, Space } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import Callout from 'components/Callout'
 import { useContext } from 'react'
+import { CreateBadge } from '../../CreateBadge'
 import { DurationInput } from '../../DurationInput'
-import { RecommendedBadge } from '../../RecommendedBadge'
 import { Selection } from '../../Selection/Selection'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
@@ -78,7 +78,7 @@ export const FundingCyclesPage = () => {
                 name="automated"
                 title={
                   <Trans>
-                    Automated Funding Cycles <RecommendedBadge />
+                    Automated Funding Cycles <CreateBadge.Recommended />
                   </Trans>
                 }
                 description={t`Set a duration for automatically recurring funding cycles. Funds may only be distributed once per cycle.`}

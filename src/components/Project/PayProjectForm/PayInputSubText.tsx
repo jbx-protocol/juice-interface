@@ -15,7 +15,7 @@ import useWeiConverter from 'hooks/WeiConverter'
 import { CurrencyOption } from 'models/currencyOption'
 import { formattedNum } from 'utils/format/formatNumber'
 import { formatIssuanceRate } from 'utils/v2v3/math'
-import { PayProjectFormContext } from './PayProjectFormContext'
+import { PayProjectFormContext } from './payProjectFormContext'
 
 /**
  * Help text shown below the Pay input field.

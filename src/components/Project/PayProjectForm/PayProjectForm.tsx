@@ -2,17 +2,12 @@ import { Trans } from '@lingui/macro'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import { CurrencyContext } from 'contexts/currencyContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { CurrencyOption } from 'models/currencyOption'
 import { CSSProperties, useContext } from 'react'
 import FormattedNumberInput from '../../inputs/FormattedNumberInput'
 import PayInputSubText from './PayInputSubText'
-import { PayProjectFormContext } from './PayProjectFormContext'
-import { usePayProjectForm } from './usePayProjectForm'
+import { PayProjectFormContext } from './payProjectFormContext'
 
 export type PayButtonProps = {
-  payAmount: string
-  payInCurrency: CurrencyOption
-  onError: (error?: Error) => void
   disabled?: boolean
   wrapperStyle?: CSSProperties
 }
@@ -25,7 +20,7 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
     currencyMetadata,
     currencies: { USD, ETH },
   } = useContext(CurrencyContext)
-  const { PayButton } = useContext(PayProjectFormContext)
+  const { PayButton, form: payProjectForm } = useContext(PayProjectFormContext)
   const {
     payAmount,
     setPayAmount,
@@ -33,11 +28,11 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
     setPayInCurrency,
     error,
     setError,
-  } = usePayProjectForm()
+  } = payProjectForm ?? {}
 
   const togglePayInCurrency = () => {
     const newPayInCurrency = payInCurrency === ETH ? USD : ETH
-    setPayInCurrency(newPayInCurrency)
+    setPayInCurrency?.(newPayInCurrency)
   }
 
   if (!PayButton) return null
@@ -63,8 +58,8 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
           <FormattedNumberInput
             placeholder="0"
             onChange={val => {
-              setError(Number(val) <= 0)
-              setPayAmount(val ?? '0')
+              setError?.(Number(val) <= 0)
+              setPayAmount?.(val ?? '0')
             }}
             value={payAmount}
             min={0}
@@ -84,13 +79,7 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
           />
         </div>
 
-        <PayButton
-          wrapperStyle={{ flex: 1 }}
-          payAmount={payAmount}
-          payInCurrency={payInCurrency}
-          onError={() => setError(true)}
-          disabled={disabled}
-        />
+        <PayButton wrapperStyle={{ flex: 1 }} disabled={disabled} />
       </div>
     </>
   )

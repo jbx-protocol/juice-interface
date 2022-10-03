@@ -188,60 +188,68 @@ export function V2V3Project() {
         projectId={projectId}
       />
 
-      <Row gutter={GUTTER_PX} align={'bottom'}>
-        <Col md={colSizeMd} xs={24}>
-          <TreasuryStats />
-          <div style={{ textAlign: 'right' }}>
-            <AllAssetsButton onClick={() => setBalancesModalVisible(true)} />
-          </div>
-        </Col>
-        <Col md={colSizeMd} xs={24}>
-          <V2V3PayProjectFormProvider>
-            <PayProjectForm
-              disabled={isPreviewMode || payIsDisabledPreV2Redeploy()}
-            />
-          </V2V3PayProjectFormProvider>
-          {(isMobile && showNftSection) || isPreviewMode ? (
-            <div style={{ marginTop: '30px' }}>
-              <NftRewardsSection />
-            </div>
-          ) : null}
-        </Col>
-      </Row>
-
-      <Row gutter={GUTTER_PX}>
-        <Col md={colSizeMd} xs={24}>
-          <Space
-            direction="vertical"
-            size={GUTTER_PX}
-            style={{ width: '100%' }}
-          >
-            {!isPreviewMode ? (
-              <VolumeChart
-                style={{ height: 240 }}
-                createdAt={createdAt}
-                projectId={projectId}
-                cv={CV_V2}
+      <V2V3PayProjectFormProvider>
+        <Space direction="vertical" size={GUTTER_PX} style={{ width: '100%' }}>
+          <Row gutter={GUTTER_PX} align={'bottom'}>
+            <Col md={colSizeMd} xs={24}>
+              <TreasuryStats />
+              <div style={{ textAlign: 'right' }}>
+                <AllAssetsButton
+                  onClick={() => setBalancesModalVisible(true)}
+                />
+              </div>
+            </Col>
+            <Col md={colSizeMd} xs={24}>
+              <PayProjectForm
+                disabled={isPreviewMode || payIsDisabledPreV2Redeploy()}
               />
-            ) : null}
-            <V2ManageTokensSection />
-            <V2V3FundingCycleSection />
-          </Space>
-        </Col>
+              {(isMobile && showNftSection) || isPreviewMode ? (
+                <div style={{ marginTop: '30px' }}>
+                  <NftRewardsSection />
+                </div>
+              ) : null}
+            </Col>
+          </Row>
 
-        {!isPreviewMode ? (
-          <Col
-            md={colSizeMd}
-            xs={24}
-            style={{ marginTop: isMobile ? GUTTER_PX : 0 }}
-          >
-            <Space size="large" direction="vertical" style={{ width: '100%' }}>
-              {!isMobile && showNftSection ? <NftRewardsSection /> : null}
-              <ProjectActivity />
-            </Space>
-          </Col>
-        ) : null}
-      </Row>
+          <Row gutter={GUTTER_PX}>
+            <Col md={colSizeMd} xs={24}>
+              <Space
+                direction="vertical"
+                size={GUTTER_PX}
+                style={{ width: '100%' }}
+              >
+                {!isPreviewMode ? (
+                  <VolumeChart
+                    style={{ height: 240 }}
+                    createdAt={createdAt}
+                    projectId={projectId}
+                    cv={CV_V2}
+                  />
+                ) : null}
+                <V2ManageTokensSection />
+                <V2V3FundingCycleSection />
+              </Space>
+            </Col>
+
+            {!isPreviewMode ? (
+              <Col
+                md={colSizeMd}
+                xs={24}
+                style={{ marginTop: isMobile ? GUTTER_PX : 0 }}
+              >
+                <Space
+                  size="large"
+                  direction="vertical"
+                  style={{ width: '100%' }}
+                >
+                  {!isMobile && showNftSection ? <NftRewardsSection /> : null}
+                  <ProjectActivity />
+                </Space>
+              </Col>
+            ) : null}
+          </Row>
+        </Space>
+      </V2V3PayProjectFormProvider>
 
       <NewDeployModal
         visible={newDeployModalVisible}

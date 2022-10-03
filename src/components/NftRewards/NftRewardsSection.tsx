@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Col, Row } from 'antd'
-import { usePayProjectForm } from 'components/Project/PayProjectForm/usePayProjectForm'
+import { PayProjectFormContext } from 'components/Project/PayProjectForm/payProjectFormContext'
 import SectionHeader from 'components/SectionHeader'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { CurrencyContext } from 'contexts/currencyContext'
@@ -39,12 +39,13 @@ export function NftRewardsSection() {
   const {
     currencies: { ETH },
   } = useContext(CurrencyContext)
+  const { form: payProjectForm } = useContext(PayProjectFormContext)
+  const { payAmount, payInCurrency, setPayAmount, setPayInCurrency } =
+    payProjectForm ?? {}
 
   const [selectedIndex, setSelectedIndex] = useState<number>()
 
   const converter = useCurrencyConverter()
-  const { payAmount, payInCurrency, setPayAmount, setPayInCurrency } =
-    usePayProjectForm()
   const isMobile = useMobile()
 
   const nftRewardsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
@@ -55,12 +56,12 @@ export function NftRewardsSection() {
 
   const handleSelected = (rewardTier: NftRewardTier, idx: number) => {
     setSelectedIndex(idx)
-    setPayAmount(rewardTier.contributionFloor.toString())
-    setPayInCurrency(ETH)
+    setPayAmount?.(rewardTier.contributionFloor.toString())
+    setPayInCurrency?.(ETH)
   }
 
   useEffect(() => {
-    if (!rewardTiers) return
+    if (!rewardTiers || !payAmountETH) return
 
     const highestEligibleRewardTier = getNftRewardTier({
       nftRewardTiers: rewardTiers,

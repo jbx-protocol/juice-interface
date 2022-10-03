@@ -4,6 +4,7 @@ import { Button, Tooltip } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
 import PayWarningModal from 'components/PayWarningModal'
 import { PayButtonProps } from 'components/Project/PayProjectForm/PayProjectForm'
+import { PayProjectFormContext } from 'components/Project/PayProjectForm/payProjectFormContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import useWeiConverter from 'hooks/WeiConverter'
@@ -12,22 +13,19 @@ import { useContext, useState } from 'react'
 import { V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { V2ConfirmPayModal } from './V2ConfirmPayModal'
 
-export default function V2PayButton({
-  payAmount,
-  payInCurrency,
-  onError,
-  disabled,
-  wrapperStyle,
-}: PayButtonProps) {
+export function V2V3PayButton({ disabled, wrapperStyle }: PayButtonProps) {
   const {
     fundingCycleMetadata,
     loading: { fundingCycleLoading },
   } = useContext(V2V3ProjectContext)
   const { projectMetadata, isArchived } = useContext(ProjectMetadataContext)
+  const { form: payProjectForm } = useContext(PayProjectFormContext)
 
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
   const [payWarningModalVisible, setPayWarningModalVisible] =
     useState<boolean>(false)
+
+  const { payInCurrency, payAmount, setError } = payProjectForm ?? {}
 
   const weiPayAmt = useWeiConverter<V2V3CurrencyOption>({
     currency: payInCurrency as V2V3CurrencyOption,
@@ -60,7 +58,7 @@ export default function V2PayButton({
           type="primary"
           onClick={() => {
             if (weiPayAmt?.eq(0)) {
-              return onError?.()
+              return setError?.(true)
             }
             setPayWarningModalVisible(true)
           }}

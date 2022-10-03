@@ -1,8 +1,17 @@
 import { CurrencyContext } from 'contexts/currencyContext'
 import { CurrencyOption } from 'models/currencyOption'
-import { useContext, useState } from 'react'
+import { Dispatch, SetStateAction, useContext, useState } from 'react'
 
-export function usePayProjectForm() {
+export interface PayProjectForm {
+  payAmount: string
+  setPayAmount: Dispatch<SetStateAction<string>>
+  payInCurrency: CurrencyOption
+  setPayInCurrency: Dispatch<SetStateAction<CurrencyOption>>
+  error: boolean
+  setError: Dispatch<SetStateAction<boolean>>
+}
+
+export function usePayProjectForm(): PayProjectForm {
   const {
     currencies: { ETH },
   } = useContext(CurrencyContext)

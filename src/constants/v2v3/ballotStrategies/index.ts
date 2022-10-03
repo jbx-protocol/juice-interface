@@ -33,7 +33,7 @@ export const BALLOT_ADDRESSES: BallotOption = {
   SEVEN_DAY: {
     rinkeby: '0x69f9aAC8e68cBa3685b84A1990a0F29F131Ca791',
     mainnet: '0x642EFF5259624FD09D021AB764a4b47d1DbD5770',
-    goerli: '0xd2eEEdB22f075eBFf0a2A7D38781AA320CBc357E', // TODO add once it's deployed.
+    goerli: '0xd2eEEdB22f075eBFf0a2A7D38781AA320CBc357E',
   },
 }
 

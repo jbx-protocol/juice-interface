@@ -11,7 +11,7 @@ import useWeiConverter from 'hooks/WeiConverter'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useContext, useState } from 'react'
 import { V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
-import { V2ConfirmPayModal } from './V2ConfirmPayModal'
+import { V2V3ConfirmPayModal } from './V2V3ConfirmPayModal/V2V3ConfirmPayModal'
 
 export function V2V3PayButton({ disabled, wrapperStyle }: PayButtonProps) {
   const {
@@ -83,7 +83,7 @@ export function V2V3PayButton({ disabled, wrapperStyle }: PayButtonProps) {
         }}
         onCancel={() => setPayWarningModalVisible(false)}
       />
-      <V2ConfirmPayModal
+      <V2V3ConfirmPayModal
         visible={payModalVisible}
         onCancel={() => setPayModalVisible(false)}
         weiAmount={weiPayAmt}

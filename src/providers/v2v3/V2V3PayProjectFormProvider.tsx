@@ -1,6 +1,6 @@
 import { PayProjectFormContext } from 'components/Project/PayProjectForm/payProjectFormContext'
 import { usePayProjectForm } from 'components/Project/PayProjectForm/usePayProjectForm'
-import { V2V3PayButton } from 'components/v2v3/V2V3Project/V2V3PayButton'
+import { V2V3PayButton } from 'components/v2v3/V2V3Project/V2V3PayButton/V2V3PayButton'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useContext } from 'react'

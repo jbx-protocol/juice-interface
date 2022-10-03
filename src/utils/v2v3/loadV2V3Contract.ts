@@ -1,22 +1,24 @@
 import { Contract, ContractInterface } from '@ethersproject/contracts'
+import { CV_V2, CV_V3 } from 'constants/cv'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { V2CVType, V3CVType } from 'models/cv'
 import { NetworkName } from 'models/network-name'
 import { SignerOrProvider } from 'models/signerOrProvider'
 import { V2V3ContractName } from 'models/v2v3/contracts'
-import {
-  getLatestNftDelegateStoreContractAddress,
-  getLatestNftProjectDeployerContractAddress,
-} from 'utils/nftRewards'
+import { featureFlagEnabled } from 'utils/featureFlags'
+import { loadJBProjectHandlesContract } from './contractLoaders/JBProjectHandles'
+import { loadJBTiered721DelegateProjectDeployerContract } from './contractLoaders/JBTiered721DelegateProjectDeployer'
+import { loadJBTiered721DelegateStoreContract } from './contractLoaders/JBTiered721DelegateStore'
+import { loadJuiceboxV2Contract } from './contractLoaders/JuiceboxV2'
+import { loadJuiceboxV3Contract } from './contractLoaders/JuiceboxV3'
+import { loadPublicResolverContract } from './contractLoaders/PublicResolver'
+import { loadJBV1TokenPaymentTerminalContract } from './contractLoaders/V1TokenPaymentTerminal'
+import { loadVeNftDeployer } from './contractLoaders/VeNftDeployer'
+import { loadVeTokenUriResolver } from './contractLoaders/VeTokenUriResolver'
 
-import { goerliPublicResolver } from 'constants/contracts/goerli/PublicResolver'
-import { mainnetPublicResolver } from 'constants/contracts/mainnet/PublicResolver'
-import { rinkebyPublicResolver } from 'constants/contracts/rinkeby/PublicResolver'
-import { CV_V2, CV_V3 } from 'constants/cv'
-import { NETWORKS_BY_NAME } from 'constants/networks'
-import {
-  VENFT_DEPLOYER_ADDRESS,
-  VENFT_RESOLVER_ADDRESS,
-} from 'constants/veNft/veNftProject'
-import { V2CVType, V3CVType } from 'models/cv'
+export interface ForgeDeploy {
+  receipts: { contractAddress: string }[]
+}
 
 export const loadV2V3Contract = async (
   contractName: V2V3ContractName,
@@ -31,17 +33,30 @@ export const loadV2V3Contract = async (
     contractJson = await loadJBProjectHandlesContract(network)
   } else if (contractName === V2V3ContractName.PublicResolver) {
     contractJson = loadPublicResolverContract(network)
-  } else if (contractName === V2V3ContractName.JBV1TokenPaymentTerminal) {
+  } else if (
+    contractName === V2V3ContractName.JBV1TokenPaymentTerminal &&
+    featureFlagEnabled(FEATURE_FLAGS.V1_TOKEN_SWAP)
+  ) {
     contractJson = await loadJBV1TokenPaymentTerminalContract(network)
   } else if (
-    contractName === V2V3ContractName.JBTiered721DelegateProjectDeployer
+    contractName === V2V3ContractName.JBTiered721DelegateProjectDeployer &&
+    featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
   ) {
     contractJson = await loadJBTiered721DelegateProjectDeployerContract()
-  } else if (contractName === V2V3ContractName.JBTiered721DelegateStore) {
+  } else if (
+    contractName === V2V3ContractName.JBTiered721DelegateStore &&
+    featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
+  ) {
     contractJson = await loadJBTiered721DelegateStoreContract()
-  } else if (contractName === V2V3ContractName.JBVeNftDeployer) {
+  } else if (
+    contractName === V2V3ContractName.JBVeNftDeployer &&
+    featureFlagEnabled(FEATURE_FLAGS.VENFT)
+  ) {
     contractJson = await loadVeNftDeployer()
-  } else if (contractName === V2V3ContractName.JBVeTokenUriResolver) {
+  } else if (
+    contractName === V2V3ContractName.JBVeTokenUriResolver &&
+    featureFlagEnabled(FEATURE_FLAGS.VENFT)
+  ) {
     contractJson = await loadVeTokenUriResolver()
   } else {
     contractJson =
@@ -53,183 +68,10 @@ export const loadV2V3Contract = async (
   }
 
   if (!contractJson) {
-    console.error(
-      `Error importing contract ${contractName} [network=${network}, version=${version}]`,
+    console.info(
+      `Contract load skipped [contract=${contractName} network=${network}, version=${version}]`,
     )
     return
-  }
-
-  return new Contract(contractJson.address, contractJson.abi, signerOrProvider)
-}
-
-interface ForgeDeploy {
-  receipts: { contractAddress: string }[]
-}
-
-/**
- *  Defines the ABI filename to use for a given V2V3ContractName.
- */
-const V2_CONTRACT_ABI_OVERRIDES: {
-  [k in V2V3ContractName]?: { filename: string; version: string }
-} = {
-  DeprecatedJBController: {
-    version: '4.0.0',
-    filename: 'JBController',
-  },
-  DeprecatedJBSplitsStore: {
-    version: '4.0.0',
-    filename: 'JBSplitsStore',
-  },
-  DeprecatedJBDirectory: {
-    version: '4.0.0',
-    filename: 'JBDirectory',
-  },
-}
-
-const loadJBProjectHandlesContract = async (network: NetworkName) => {
-  const contractJson = {
-    abi: (
-      await import(
-        `@jbx-protocol/project-handles/out/JBProjectHandles.sol/JBProjectHandles.json`
-      )
-    ).abi,
-    address: (
-      (await import(
-        `@jbx-protocol/project-handles/broadcast/Deploy.sol/${NETWORKS_BY_NAME[network].chainId}/run-latest.json`
-      )) as ForgeDeploy
-    ).receipts[0].contractAddress, // contractAddress is prefixed `0x0x` in error, trim first `0x`
-  }
-
-  return contractJson
-}
-
-const loadPublicResolverContract = (network: NetworkName) => {
-  // ENS contracts package currently doesn't include rinkeby information, and ABI contains errors
-  if (network === NetworkName.mainnet) return mainnetPublicResolver
-  if (network === NetworkName.rinkeby) return rinkebyPublicResolver
-  if (network === NetworkName.goerli) return goerliPublicResolver
-}
-
-const loadJuiceboxV2Contract = async (
-  contractName: V2V3ContractName,
-  network: NetworkName,
-) => {
-  const contractOverride = V2_CONTRACT_ABI_OVERRIDES[contractName]
-  const version = contractOverride?.version ?? 'latest'
-  const filename = contractOverride?.filename ?? contractName
-  return await import(
-    `@jbx-protocol/contracts-v2-${version}/deployments/${network}/${filename}.json`
-  )
-}
-
-const loadJuiceboxV3Contract = async (
-  contractName: V2V3ContractName,
-  network: NetworkName,
-) => {
-  try {
-    return await import(
-      `@jbx-protocol/juice-contracts-v3/deployments/${network}/${contractName}.json`
-    )
-  } catch (_) {
-    return undefined
-  }
-}
-
-const loadJBV1TokenPaymentTerminalContract = async (network: NetworkName) => {
-  const contractJson = {
-    abi: (
-      await import(
-        `@jbx-protocol/juice-v1-token-terminal/out/JBV1TokenPaymentTerminal.sol/JBV1TokenPaymentTerminal.json`
-      )
-    ).abi,
-    address: (
-      (await import(
-        `@jbx-protocol/juice-v1-token-terminal/broadcast/Deploy.sol/${NETWORKS_BY_NAME[network].chainId}/run-latest.json`
-      )) as ForgeDeploy
-    ).receipts[0].contractAddress,
-  }
-
-  return contractJson
-}
-
-const loadJBTiered721DelegateProjectDeployerContract = async () => {
-  const JBTiered721DelegateProjectDeployerContractAddress =
-    await getLatestNftProjectDeployerContractAddress()
-
-  const nftDeployerContractJson = {
-    address: JBTiered721DelegateProjectDeployerContractAddress,
-    abi: (
-      await import(
-        `@jbx-protocol/juice-nft-rewards/out/IJBTiered721DelegateProjectDeployer.sol/IJBTiered721DelegateProjectDeployer.json`
-      )
-    ).abi,
-  }
-
-  return nftDeployerContractJson
-}
-
-const loadJBTiered721DelegateStoreContract = async () => {
-  const JBTiered721DelegateStoreContractAddress =
-    await getLatestNftDelegateStoreContractAddress()
-
-  const nftDeployerContractJson = {
-    address: JBTiered721DelegateStoreContractAddress,
-    abi: (
-      await import(
-        `@jbx-protocol/juice-nft-rewards/out/IJBTiered721DelegateStore.sol/IJBTiered721DelegateStore.json`
-      )
-    ).abi,
-  }
-
-  return nftDeployerContractJson
-}
-
-const loadVeNftDeployer = async () => {
-  const contractJson = {
-    abi: (
-      await import(
-        `@jbx-protocol/ve-nft/out/JBVeNftDeployer.sol/JBVeNftDeployer.json`
-      )
-    ).abi,
-    address: VENFT_DEPLOYER_ADDRESS,
-    // TODO: replace when broadcast is updated
-    // address: (
-    //   (await import(
-    //     `@jbx-protocol/ve-nft/broadcast/deploy.sol/${NETWORKS_BY_NAME[network].chainId}/run-latest.json`
-    //   )) as ForgeDeploy
-    // ).receipts[0].contractAddress,
-  }
-
-  return contractJson
-}
-
-const loadVeTokenUriResolver = async () => {
-  const contractJson = {
-    abi: (
-      await import(
-        `@jbx-protocol/ve-nft/out/JBVeTokenUriResolver.sol/JBVeTokenUriResolver.json`
-      )
-    ).abi,
-    address: VENFT_RESOLVER_ADDRESS,
-    // TODO: replace when broadcast is updated
-    // address: (
-    //   (await import(
-    //     `@jbx-protocol/ve-nft/broadcast/deploy.sol/${NETWORKS_BY_NAME[network].chainId}/run-latest.json`
-    //   )) as ForgeDeploy
-    // ).receipts[1].contractAddress,
-  }
-
-  return contractJson
-}
-
-export const loadVeNftContract = async (
-  signerOrProvider: SignerOrProvider,
-  address: string,
-) => {
-  const contractJson = {
-    abi: (await import(`@jbx-protocol/ve-nft/out/JBVeNft.sol/JBVeNft.json`))
-      .abi,
-    address,
   }
 
   return new Contract(contractJson.address, contractJson.abi, signerOrProvider)

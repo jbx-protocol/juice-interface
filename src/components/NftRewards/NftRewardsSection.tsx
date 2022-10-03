@@ -1,19 +1,18 @@
 import { t, Trans } from '@lingui/macro'
 import { Col, Row } from 'antd'
+import { usePayProjectForm } from 'components/Project/PayProjectForm/usePayProjectForm'
 import SectionHeader from 'components/SectionHeader'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { CurrencyContext } from 'contexts/currencyContext'
+import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ThemeContext } from 'contexts/themeContext'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useMobile from 'hooks/Mobile'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useContext, useEffect, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
-import { getNftRewardTier, MAX_NFT_REWARD_TIERS } from 'utils/nftRewards'
-
-import { usePayProjectForm } from 'components/Project/PayProjectForm/usePayProjectForm'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { CurrencyContext } from 'contexts/currencyContext'
-import { NftRewardsContext } from 'contexts/nftRewardsContext'
-import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { fromWad } from 'utils/format/formatNumber'
+import { getNftRewardTier, MAX_NFT_REWARD_TIERS } from 'utils/nftRewards'
 import { RewardTier } from './RewardTier'
 
 function RewardTiersLoadingSkeleton() {
@@ -40,19 +39,29 @@ export function NftRewardsSection() {
   const {
     currencies: { ETH },
   } = useContext(CurrencyContext)
-  const converter = useCurrencyConverter()
-  const { payAmount, payInCurrency, setPayAmount, setPayInCurrency } =
-    usePayProjectForm()
-
-  const payAmountETH =
-    payInCurrency === ETH ? payAmount : fromWad(converter.usdToWei(payAmount))
 
   const [selectedIndex, setSelectedIndex] = useState<number>()
 
+  const converter = useCurrencyConverter()
+  const { payAmount, payInCurrency, setPayAmount, setPayInCurrency } =
+    usePayProjectForm()
   const isMobile = useMobile()
+
+  const nftRewardsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
+  const payAmountETH =
+    payInCurrency === ETH ? payAmount : fromWad(converter.usdToWei(payAmount))
+
+  const hasCIDs = Boolean(CIDs?.length)
+
+  const handleSelected = (rewardTier: NftRewardTier, idx: number) => {
+    setSelectedIndex(idx)
+    setPayAmount(rewardTier.contributionFloor.toString())
+    setPayInCurrency(ETH)
+  }
 
   useEffect(() => {
     if (!rewardTiers) return
+
     const highestEligibleRewardTier = getNftRewardTier({
       nftRewardTiers: rewardTiers,
       payAmountETH: parseFloat(payAmountETH),
@@ -66,40 +75,8 @@ export function NftRewardsSection() {
     }
   }, [payAmountETH, rewardTiers])
 
-  const nftRewardsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
-
-  const hasCIDs = Boolean(CIDs?.length)
-
   if ((!hasCIDs && !nftsLoading) || !nftRewardsEnabled) {
     return null
-  }
-
-  const renderRewardTier = (rewardTier: NftRewardTier, index: number) => {
-    const isSelected = index === selectedIndex
-    if (!rewardTiers) return
-
-    const nextRewardTier = rewardTiers[index + 1]
-
-    const handleSelected = () => {
-      setSelectedIndex(index)
-      setPayAmount(rewardTier.contributionFloor.toString())
-      setPayInCurrency(ETH)
-    }
-
-    return (
-      <Col
-        md={8}
-        xs={8}
-        key={`${rewardTier.contributionFloor}-${rewardTier.name}`}
-      >
-        <RewardTier
-          rewardTier={rewardTier}
-          rewardTierUpperLimit={nextRewardTier?.contributionFloor}
-          isSelected={isSelected}
-          onClick={handleSelected}
-        />
-      </Col>
-    )
   }
 
   return (
@@ -116,11 +93,25 @@ export function NftRewardsSection() {
       >
         <Trans>Contribute to unlock an NFT reward.</Trans>
       </span>
+
       {nftsLoading ? (
         <RewardTiersLoadingSkeleton />
       ) : (
         <Row style={{ marginTop: '15px' }} gutter={isMobile ? 8 : 24}>
-          {rewardTiers?.map(renderRewardTier)}
+          {rewardTiers?.map((rewardTier, idx) => (
+            <Col
+              md={8}
+              xs={8}
+              key={`${rewardTier.contributionFloor}-${rewardTier.name}`}
+            >
+              <RewardTier
+                rewardTier={rewardTier}
+                rewardTierUpperLimit={rewardTiers[idx + 1]?.contributionFloor}
+                isSelected={idx === selectedIndex}
+                onClick={() => handleSelected(rewardTier, idx)}
+              />
+            </Col>
+          ))}
         </Row>
       )}
     </div>

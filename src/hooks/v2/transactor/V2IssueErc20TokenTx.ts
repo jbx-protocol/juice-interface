@@ -5,6 +5,7 @@ import invariant from 'tiny-invariant'
 
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactionContext } from 'contexts/transactionContext'
+import { V2V3ProjectContractsContext } from 'contexts/v2v3/V2V3ProjectContractsContext'
 import {
   handleTransactionException,
   TransactorInstance,
@@ -17,14 +18,15 @@ export function useV2IssueErc20TokenTx(): TransactorInstance<{
   const { transactor } = useContext(TransactionContext)
   const { contracts } = useContext(V2V3ContractsContext)
   const { projectId, cv } = useContext(ProjectMetadataContext)
+  const {
+    contracts: { JBController },
+  } = useContext(V2V3ProjectContractsContext)
 
   return ({ name, symbol }, txOpts) => {
     try {
-      invariant(
-        transactor && projectId && contracts?.JBController && name && symbol,
-      )
+      invariant(transactor && projectId && JBController && name && symbol)
       return transactor(
-        contracts.JBController,
+        JBController,
         'issueTokenFor',
         [projectId, name, symbol],
         {

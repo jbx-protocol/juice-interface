@@ -3,6 +3,7 @@ import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
+import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { V2V3ProjectContextType } from 'contexts/v2v3/V2V3ProjectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useNameOfERC20 from 'hooks/NameOfERC20'
@@ -21,16 +22,13 @@ import useProjectTokenTotalSupply from 'hooks/v2v3/contractReader/ProjectTokenTo
 import useTerminalCurrentOverflow from 'hooks/v2v3/contractReader/TerminalCurrentOverflow'
 import useUsedDistributionLimit from 'hooks/v2v3/contractReader/UsedDistributionLimit'
 import first from 'lodash/first'
-import { CV } from 'models/cv'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
-import { useMemo } from 'react'
+import { useContext, useMemo } from 'react'
 import {
   NO_CURRENCY,
   V2V3CurrencyName,
   V2V3_CURRENCY_ETH,
 } from 'utils/v2v3/currency'
-
-const V2_PROJECT_CV: CV = '2'
 
 const useBalanceInDistributionLimitCurrency = ({
   ETHBalanceLoading,
@@ -68,6 +66,8 @@ const useBalanceInDistributionLimitCurrency = ({
 }
 
 export function useV2V3ProjectState({ projectId }: { projectId: number }) {
+  const { cv } = useContext(V2V3ContractsContext)
+
   /**
    * Load additional project metadata
    */
@@ -82,7 +82,7 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
   const { data: projects } = useProjectsQuery({
     projectId,
     keys: ['createdAt', 'totalPaid'],
-    cv: [V2_PROJECT_CV],
+    cv: cv ? [cv] : undefined,
   })
   const createdAt = first(projects)?.createdAt
   const totalVolume = first(projects)?.totalPaid

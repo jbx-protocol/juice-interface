@@ -6,7 +6,7 @@ import { CSSProperties, useContext } from 'react'
 import { formatWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
-export const V2ProjectTokenBalance = ({
+export const V2V3ProjectTokenBalance = ({
   projectId,
   style,
   precision,

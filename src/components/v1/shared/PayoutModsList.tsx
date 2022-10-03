@@ -21,12 +21,12 @@ import {
   perbicentToPercent,
   permyriadToPercent,
 } from 'utils/formatNumber'
-import { amountSubFee } from 'utils/math'
 
 import { V1CurrencyName } from 'utils/v1/currency'
 
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 import { MODS_TOTAL_PERCENT } from 'utils/v1/mods'
+import { amountSubFee } from 'utils/v2/math'
 import ProjectPayoutMods from './ProjectPayMods/ProjectPayoutMods'
 
 export default function PayoutModsList({

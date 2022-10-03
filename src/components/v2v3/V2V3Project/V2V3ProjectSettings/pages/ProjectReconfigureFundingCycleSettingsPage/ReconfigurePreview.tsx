@@ -33,7 +33,7 @@ import {
   formatIssuanceRate,
   formatReservedRate,
   MAX_DISTRIBUTION_LIMIT,
-  weightedAmount,
+  weightAmountPermyriad,
 } from 'utils/v2v3/math'
 
 const gutter = 20
@@ -81,7 +81,7 @@ export default function ReconfigurePreview({
   const issuanceRate =
     formattedNum(
       formatIssuanceRate(
-        weightedAmount(
+        weightAmountPermyriad(
           fundingCycle?.weight,
           fundingCycleMetadata?.reservedRate.toNumber(),
           parseEther('1'),
@@ -99,7 +99,7 @@ export default function ReconfigurePreview({
   const reservedRate =
     formattedNum(
       formatIssuanceRate(
-        weightedAmount(
+        weightAmountPermyriad(
           fundingCycle?.weight,
           fundingCycleMetadata?.reservedRate.toNumber(),
           parseEther('1'),

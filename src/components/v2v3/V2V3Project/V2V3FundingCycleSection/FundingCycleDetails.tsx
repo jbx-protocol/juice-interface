@@ -27,7 +27,7 @@ import {
   formatIssuanceRate,
   formatRedemptionRate,
   formatReservedRate,
-  weightedAmount,
+  weightAmountPermyriad,
 } from 'utils/v2v3/math'
 
 import { BigNumber } from '@ethersproject/bignumber'
@@ -90,7 +90,7 @@ export default function FundingCycleDetails({
   const ReservedTokensText = () => {
     const reservedRate = formattedNum(
       formatIssuanceRate(
-        weightedAmount(
+        weightAmountPermyriad(
           fundingCycle?.weight,
           fundingCycleMetadata?.reservedRate.toNumber(),
           parseEther('1'),
@@ -112,7 +112,7 @@ export default function FundingCycleDetails({
   const IssuanceRateText = () => {
     const payerRate = formattedNum(
       formatIssuanceRate(
-        weightedAmount(
+        weightAmountPermyriad(
           fundingCycle?.weight,
           fundingCycleMetadata?.reservedRate.toNumber(),
           parseEther('1'),

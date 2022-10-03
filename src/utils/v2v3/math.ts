@@ -191,7 +191,7 @@ export const formatFee = (feePerBillion: BigNumber): string => {
  * @param outputType
  * @returns
  */
-export const weightedAmount: WeightFunction = (
+export const weightAmountPermyriad: WeightFunction = (
   weight: BigNumber | undefined,
   reservedRatePermyriad: number | undefined,
   amountWad: BigNumber | undefined,

@@ -21,7 +21,7 @@ import {
   formatIssuanceRate,
   formatReservedRate,
   MAX_DISTRIBUTION_LIMIT,
-  weightedAmount,
+  weightAmountPermyriad,
 } from 'utils/v2v3/math'
 
 import Callout from 'components/Callout'
@@ -91,7 +91,7 @@ export default function FundingSummarySection() {
   const initialIssuanceRate =
     formattedNum(
       formatIssuanceRate(
-        weightedAmount(
+        weightAmountPermyriad(
           fundingCycle?.weight,
           fundingCycleMetadata?.reservedRate.toNumber(),
           parseEther('1'),
@@ -107,7 +107,7 @@ export default function FundingSummarySection() {
   const reservedRate =
     formattedNum(
       formatIssuanceRate(
-        weightedAmount(
+        weightAmountPermyriad(
           fundingCycle?.weight,
           fundingCycleMetadata?.reservedRate.toNumber(),
           parseEther('1'),

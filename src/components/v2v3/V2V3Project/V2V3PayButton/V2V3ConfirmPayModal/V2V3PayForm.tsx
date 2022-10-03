@@ -3,32 +3,28 @@ import { t, Trans } from '@lingui/macro'
 import { Checkbox, Form, Input, Modal, Space, Switch } from 'antd'
 import { FormInstance, FormProps, useWatch } from 'antd/lib/form/Form'
 import Callout from 'components/Callout'
+import Sticker from 'components/icons/Sticker'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import { AttachStickerModal } from 'components/modals/AttachStickerModal'
+import { StickerSelection } from 'components/Project/StickerSelection'
 import ProjectRiskNotice from 'components/ProjectRiskNotice'
+import TooltipIcon from 'components/TooltipIcon'
+import { ProjectPreferences } from 'constants/projectPreferences'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { isAddress } from 'ethers/lib/utils'
+import { NftRewardTier } from 'models/nftRewardTier'
 import { useContext, useState } from 'react'
+import { cidFromUrl } from 'utils/ipfs'
 import {
   getUnsafeV2V3FundingCycleProperties,
   getV2V3FundingCycleRiskCount,
 } from 'utils/v2v3/fundingCycle'
 
-import Sticker from 'components/icons/Sticker'
-import TooltipIcon from 'components/TooltipIcon'
-
-import { StickerSelection } from 'components/Project/StickerSelection'
-
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { NftRewardTier } from 'models/nftRewardTier'
-import { cidFromUrl } from 'utils/ipfs'
-
-import { ProjectPreferences } from 'constants/projectPreferences'
-
-export interface V2PayFormType {
+export interface V2V3PayFormType {
   memo?: string
   beneficiary?: string
   stickerUrls?: string[]
@@ -36,12 +32,12 @@ export interface V2PayFormType {
   preferClaimedTokens?: boolean
 }
 
-export const V2PayForm = ({
+export const V2V3PayForm = ({
   form,
   nftRewardTier,
   ...props
 }: {
-  form: FormInstance<V2PayFormType>
+  form: FormInstance<V2V3PayFormType>
   nftRewardTier: NftRewardTier | null
 } & FormProps) => {
   const {

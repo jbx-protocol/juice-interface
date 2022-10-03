@@ -21,11 +21,7 @@ import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { getDefaultFundAccessConstraint } from 'utils/v2v3/fundingCycle'
 
-export default function ProjectPreview({
-  singleColumnLayout,
-}: {
-  singleColumnLayout?: boolean
-}) {
+export default function ProjectPreview() {
   const {
     projectMetadata,
     payoutGroupedSplits,
@@ -108,7 +104,7 @@ export default function ProjectPreview({
               },
             }}
           >
-            <V2V3Project singleColumnLayout={singleColumnLayout} />
+            <V2V3Project />
           </NftRewardsContext.Provider>
         </div>
       </V2V3ProjectContext.Provider>

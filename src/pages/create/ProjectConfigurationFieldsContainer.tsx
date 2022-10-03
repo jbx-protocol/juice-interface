@@ -37,7 +37,7 @@ export default function ProjectConfigurationFieldsContainer({
             overflow: 'hidden',
           }}
         >
-          <ProjectPreview singleColumnLayout />
+          <ProjectPreview />
         </div>
       </Col>
     </Row>

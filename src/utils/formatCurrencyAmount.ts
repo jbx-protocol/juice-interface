@@ -1,9 +1,8 @@
-import { isInteger } from 'lodash'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from './v2v3/currency'
 
 const formatAmount = (amount: number) => {
-  if (isInteger(amount)) {
+  if (Number.isInteger(amount)) {
     return amount.toString()
   }
   return amount.toFixed(2)

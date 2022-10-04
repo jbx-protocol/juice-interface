@@ -7,7 +7,7 @@ import {
 } from 'models/v2v3/fundingCycle'
 import { createContext } from 'react'
 
-type V2ProjectLoadingStates = {
+interface V2V3ProjectLoadingStates {
   ETHBalanceLoading: boolean
   balanceInDistributionLimitCurrencyLoading: boolean
   distributionLimitLoading: boolean
@@ -44,7 +44,7 @@ export type V2V3ProjectContextType = {
   primaryTerminalCurrentOverflow: BigNumber | undefined
   totalTokenSupply: BigNumber | undefined
 
-  loading: V2ProjectLoadingStates
+  loading: V2V3ProjectLoadingStates
 }
 
 export const V2V3ProjectContext = createContext<V2V3ProjectContextType>({

@@ -2,8 +2,8 @@ import { Trans } from '@lingui/macro'
 import { Space } from 'antd'
 import Loading from 'components/Loading'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { V2V3ProjectContractsContext } from 'contexts/v2v3/V2V3ProjectContractsContext'
 import {
   V2V3FundingCycle,
   V2V3FundingCycleMetadata,
@@ -13,9 +13,11 @@ import { PastFundingCycle } from './PastFundingCycle'
 import { fetchPastFundingCycles } from './utils'
 
 export function FundingCycleHistory() {
-  const { fundingCycle: currentFundingCycle } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
-  const { contracts } = useContext(V2V3ContractsContext)
+  const {
+    contracts: { JBController },
+  } = useContext(V2V3ProjectContractsContext)
+  const { fundingCycle: currentFundingCycle } = useContext(V2V3ProjectContext)
 
   const [pastFundingCycles, setPastFundingCycles] = useState<
     [V2V3FundingCycle, V2V3FundingCycleMetadata][]
@@ -23,19 +25,19 @@ export function FundingCycleHistory() {
 
   useEffect(() => {
     async function loadPastFundingCycles() {
-      if (!projectId || !currentFundingCycle || !contracts) return
+      if (!projectId || !currentFundingCycle || !JBController) return
 
       const pastFundingCycles = await fetchPastFundingCycles({
         projectId,
         currentFundingCycle,
-        contracts,
+        JBController,
       })
 
       setPastFundingCycles(pastFundingCycles)
     }
 
     loadPastFundingCycles()
-  }, [contracts, projectId, currentFundingCycle])
+  }, [JBController, projectId, currentFundingCycle])
 
   if (!projectId || !currentFundingCycle || !currentFundingCycle?.number)
     return null

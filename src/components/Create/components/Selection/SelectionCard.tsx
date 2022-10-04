@@ -89,7 +89,7 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
               <CheckedCircle checked={isSelected} />
             </Col>
           </Row>
-          {description && (
+          {isSelected && description && (
             <Row>
               <Col offset={3} span={18}>
                 {description}

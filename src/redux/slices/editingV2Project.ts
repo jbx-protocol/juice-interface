@@ -35,6 +35,7 @@ import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
+import { PayoutsSelection } from 'models/payoutsSelection'
 
 interface V2ProjectState {
   version: number
@@ -43,6 +44,7 @@ interface V2ProjectState {
   fundingCycleMetadata: SerializedV2V3FundingCycleMetadata
   fundAccessConstraints: SerializedV2V3FundAccessConstraint[]
   payoutGroupedSplits: ETHPayoutGroupedSplits
+  payoutsSelection: PayoutsSelection | undefined
   reservedTokensGroupedSplits: ReservedTokensGroupedSplits
   nftRewards: {
     rewardTiers: NftRewardTier[]
@@ -125,6 +127,7 @@ export const defaultProjectState: V2ProjectState = {
   fundingCycleMetadata: { ...defaultFundingCycleMetadata },
   fundAccessConstraints: [],
   payoutGroupedSplits: EMPTY_PAYOUT_GROUPED_SPLITS,
+  payoutsSelection: undefined,
   reservedTokensGroupedSplits: EMPTY_RESERVED_TOKENS_GROUPED_SPLITS,
   nftRewards: {
     rewardTiers: [],
@@ -215,6 +218,12 @@ const editingV2ProjectSlice = createSlice({
         ...EMPTY_PAYOUT_GROUPED_SPLITS,
         splits: action.payload,
       }
+    },
+    setPayoutsSelection: (
+      state,
+      action: PayloadAction<PayoutsSelection | undefined>,
+    ) => {
+      state.payoutsSelection = action.payload
     },
     setReservedTokensSplits: (state, action: PayloadAction<Split[]>) => {
       state.reservedTokensGroupedSplits = {

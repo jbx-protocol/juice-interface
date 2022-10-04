@@ -1,5 +1,4 @@
 import {
-  CloseCircleOutlined,
   InfoCircleOutlined,
   PushpinOutlined,
   RetweetOutlined,
@@ -35,7 +34,7 @@ export const FundingTargetPage: React.FC = () => {
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <RecallCard show={['fundingCycles']} />
         <Form.Item noStyle name="targetSelection">
-          <Selection>
+          <Selection defocusOnSelect style={{ width: '100%' }}>
             <Selection.Card
               name="specific"
               title={t`Specific Funding Target`}
@@ -70,18 +69,6 @@ export const FundingTargetPage: React.FC = () => {
                   distributed to payout addresses you set, and the project owner
                   will receive any unallocated funds. Your project will have no
                   overflow, so token holders can't redeem their tokens for ETH.
-                </Trans>
-              }
-            />
-            <Selection.Card
-              name="none"
-              title={t`No Funding Target`}
-              icon={<CloseCircleOutlined />}
-              description={
-                <Trans>
-                  Your project won't withhold any funds. All funds raised are
-                  Overflow. Token holders can redeem their tokens for a portion
-                  of your entire treasury.
                 </Trans>
               }
             />

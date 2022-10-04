@@ -25,15 +25,15 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 
 import { useTransferTokensTx } from 'hooks/v1/transactor/TransferTokensTx'
-import ConfirmUnstakeTokensModal from '../modals/ConfirmUnstakeTokensModal'
-import PrintPreminedModal from '../modals/PrintPreminedModal'
-import RedeemModal from '../modals/RedeemModal'
+import ConfirmUnstakeTokensModal from './modals/ConfirmUnstakeTokensModal'
+import PrintPreminedModal from './modals/PrintPreminedModal'
+import RedeemModal from './modals/RedeemModal'
 
 const labelStyle: CSSProperties = {
   width: 128,
 }
 
-export default function Rewards() {
+export function TokensSection() {
   const {
     theme: { colors },
   } = useContext(ThemeContext)

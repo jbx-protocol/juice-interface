@@ -7,9 +7,9 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1PayProjectFormProvider } from 'providers/v1/V1PayProjectFormProvider'
 import { CSSProperties, lazy, Suspense, useContext } from 'react'
 import FundingCycles from './FundingCycles'
-import Paid from './Paid'
 import ProjectActivity from './ProjectActivity'
-import Rewards from './Rewards'
+import { TokensSection } from './TokensSection'
+import { TreasuryStatsSection } from './TreasuryStatsSection'
 import V1ProjectHeaderActions from './V1ProjectHeaderActions'
 
 const VolumeChart = lazy(() => import('components/VolumeChart'))
@@ -46,7 +46,7 @@ export function V1Project({
 
       <Row gutter={gutter} align="bottom">
         <Col xs={24} md={column ? 24 : 12} style={{ marginTop: gutter }}>
-          <Paid />
+          <TreasuryStatsSection />
         </Col>
 
         <Col xs={24} md={column ? 24 : 12} style={{ marginTop: gutter }}>
@@ -72,7 +72,7 @@ export function V1Project({
           )}
 
           <div style={{ marginBottom: gutter }}>
-            <Rewards />
+            <TokensSection />
           </div>
 
           <FundingCycles />

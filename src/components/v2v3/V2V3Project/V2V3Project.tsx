@@ -3,19 +3,14 @@ import { Col, Row, Space } from 'antd'
 import { PayProjectForm } from 'components/Project/PayProjectForm'
 import ProjectHeader from 'components/Project/ProjectHeader'
 import { TextButton } from 'components/TextButton'
-import { V2BugNoticeBanner } from 'components/v2v3/V2V3Project/banners/V2BugNoticeBanner'
 import VolumeChart from 'components/VolumeChart'
 import { CV_V2 } from 'constants/cv'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { V2V3_PROJECT_IDS } from 'constants/v2v3/projectIds'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 import useMobile from 'hooks/Mobile'
-import useProjectQueuedFundingCycle from 'hooks/v2v3/contractReader/ProjectQueuedFundingCycle'
-import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
-import { V2OperatorPermission } from 'models/v2v3/permissions'
 import { useRouter } from 'next/router'
 import { V2V3PayProjectFormProvider } from 'providers/v2v3/V2V3PayProjectFormProvider'
 import { useContext, useEffect, useState } from 'react'
@@ -23,7 +18,7 @@ import { featureFlagEnabled } from 'utils/featureFlags'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { NftRewardsSection } from '../../NftRewards/NftRewardsSection'
 import { NftPostPayModal } from '../shared/NftPostPayModal'
-import { RelaunchFundingCycleBanner } from './banners/RelaunchFundingCycleBanner'
+import { ProjectBanners } from './banners/ProjectBanners'
 import NewDeployModal from './modals/NewDeployModal'
 import { V2V3DownloadActivityModal } from './modals/V2V3ProjectTokenBalancesModal/V2V3ProjectTokenBalancesModal'
 import ProjectActivity from './ProjectActivity'
@@ -53,7 +48,7 @@ export function V2V3Project() {
     projectOwnerAddress,
     handle,
   } = useContext(V2V3ProjectContext)
-  const { projectMetadata, isArchived, projectId, cv } = useContext(
+  const { projectMetadata, isArchived, projectId } = useContext(
     ProjectMetadataContext,
   )
 
@@ -88,32 +83,12 @@ export function V2V3Project() {
   }, [query])
 
   const isMobile = useMobile()
-  const canReconfigureFundingCycles = useV2ConnectedWalletHasPermission(
-    V2OperatorPermission.RECONFIGURE,
-  )
-  const { data: queuedFundingCycleResponse } = useProjectQueuedFundingCycle({
-    projectId,
-  })
-  const [queuedFundingCycle] = queuedFundingCycleResponse || []
 
   const isOwner = useIsUserAddress(projectOwnerAddress)
 
   const colSizeMd = isPreviewMode ? 24 : 12
 
   const hasCurrentFundingCycle = fundingCycle?.number.gt(0)
-  const hasQueuedFundingCycle = queuedFundingCycle?.number.gt(0)
-
-  // If a V2 project has no current or queued FC, we assume that
-  // it's because it's using the old bugged contracts.
-  // TODO probably should check the contract address instead.
-  const showV2BugNoticeBanner =
-    !isPreviewMode &&
-    cv === CV_V2 &&
-    hasCurrentFundingCycle === false &&
-    hasQueuedFundingCycle === false
-
-  const showRelaunchFundingCycleBanner =
-    showV2BugNoticeBanner && canReconfigureFundingCycles
 
   const canEditProjectHandle = isOwner && !isPreviewMode && !handle
 
@@ -158,25 +133,11 @@ export function V2V3Project() {
     setNftPostPayModalVisible(false)
   }
 
-  // Temporarily disable pay for V2 projects until V2 contracts have been redeployed
-  const payIsDisabledPreV2Redeploy = () => {
-    // Do not disable pay for projects with these ids
-    const exceptionProjectIds = [V2V3_PROJECT_IDS.MOON_MARS]
-
-    if (exceptionProjectIds.includes(projectId)) return false
-
-    // disable if there's no current funding cycle
-    return !hasCurrentFundingCycle
-  }
+  const payProjectFormDisabled = isPreviewMode || !hasCurrentFundingCycle
 
   return (
     <Space direction="vertical" size={GUTTER_PX} style={{ width: '100%' }}>
-      {showV2BugNoticeBanner || showRelaunchFundingCycleBanner ? (
-        <Space direction="vertical" size="small" style={{ width: '100%' }}>
-          {showV2BugNoticeBanner && <V2BugNoticeBanner />}
-          {showRelaunchFundingCycleBanner && <RelaunchFundingCycleBanner />}
-        </Space>
-      ) : null}
+      <ProjectBanners />
 
       <ProjectHeader
         metadata={projectMetadata}
@@ -200,9 +161,7 @@ export function V2V3Project() {
               </div>
             </Col>
             <Col md={colSizeMd} xs={24}>
-              <PayProjectForm
-                disabled={isPreviewMode || payIsDisabledPreV2Redeploy()}
-              />
+              <PayProjectForm disabled={payProjectFormDisabled} />
               {(isMobile && showNftSection) || isPreviewMode ? (
                 <div style={{ marginTop: '30px' }}>
                   <NftRewardsSection />

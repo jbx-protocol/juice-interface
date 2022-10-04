@@ -815,7 +815,7 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-msgid "Default Token Settings"
+msgid "Default Token Settings <0/>"
 msgstr ""
 
 msgid "Delete NFT"
@@ -860,7 +860,7 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-msgid "Design how your project's tokens should work. Tokens are used for governance, ownership & redemption. <0>Learn more</0>."
+msgid "Design how your project's tokens should work. You can use your project tokens for governance, ownership & treasury redemptions. <0>Learn more</0>."
 msgstr ""
 
 msgid "Design how your tokens should work."

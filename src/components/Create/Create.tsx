@@ -76,9 +76,9 @@ export function Create() {
               title={t`Project Token`}
               description={
                 <Trans>
-                  Design how your project's tokens should work. Tokens are used
-                  for governance, ownership & redemption.{' '}
-                  <a href="#TODO">Learn more</a>.
+                  Design how your project's tokens should work. You can use your
+                  project tokens for governance, ownership & treasury
+                  redemptions. <a href="#TODO">Learn more</a>.
                 </Trans>
               }
             >

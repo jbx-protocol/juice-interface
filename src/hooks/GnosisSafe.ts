@@ -1,9 +1,10 @@
 import axios from 'axios'
+import { GnosisSafe } from 'models/safe'
 import { useQuery } from 'react-query'
 
-export const useAddressIsGnosisSafe = (address?: string) => {
+export const useGnosisSafe = (address?: string) => {
   return useQuery(
-    ['address-is-gnosis-safe', address],
+    ['gnosis-safe', address],
     async () => {
       if (!address) {
         return
@@ -14,11 +15,11 @@ export const useAddressIsGnosisSafe = (address?: string) => {
           `https://safe-transaction.gnosis.io/api/v1/safes/${address}`,
         )
         if (response.data) {
-          return true
+          return response.data as GnosisSafe
         }
-        return false
+        return null
       } catch (error) {
-        return false
+        return null
       }
     },
     {

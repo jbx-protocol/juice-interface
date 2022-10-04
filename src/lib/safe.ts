@@ -1,4 +1,4 @@
-import { SafeTransactionType } from 'components/v2v3/V2V3Project/ProjectSafeDashboard/ProjectSafeDashboard'
+import { SafeTransactionType } from 'models/safe'
 
 // Links to a Gnosis safe multisig
 export const generateSafeUrl = (address: string) =>

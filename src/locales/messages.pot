@@ -1097,6 +1097,9 @@ msgstr ""
 msgid "Error parsing form"
 msgstr ""
 
+msgid "Error reading transaction data"
+msgstr ""
+
 msgid "Error uploading file"
 msgstr ""
 

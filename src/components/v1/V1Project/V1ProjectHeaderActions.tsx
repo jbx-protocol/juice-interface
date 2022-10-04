@@ -17,7 +17,7 @@ import MigrateV1Pt1Modal from './modals/MigrateV1Pt1Modal'
 export default function V1ProjectHeaderActions() {
   const { handle, isPreviewMode, terminal, owner } =
     useContext(V1ProjectContext)
-  const { projectId, projectMetadata } = useContext(ProjectMetadataContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const [migrateDrawerVisible, setMigrateDrawerVisible] =
     useState<boolean>(false)
@@ -106,7 +106,6 @@ export default function V1ProjectHeaderActions() {
       />
       <EditProjectModal
         visible={editProjectModalVisible}
-        metadata={projectMetadata}
         handle={handle}
         onSuccess={() => setEditProjectModalVisible(false)}
         onCancel={() => setEditProjectModalVisible(false)}

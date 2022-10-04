@@ -1,10 +1,7 @@
+import ArchiveProject from 'components/ArchiveProject'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useContext } from 'react'
-
-import ArchiveProject from 'components/ArchiveProject'
-import { CV_V1 } from 'constants/cv'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 
 /**
  * V1 Wrapper around `ArchiveProject`.
@@ -17,19 +14,15 @@ export default function ArchiveV1Project({
   }>
 }) {
   const { handle, terminal, owner } = useContext(V1ProjectContext)
-  const { projectId, projectMetadata } = useContext(ProjectMetadataContext)
 
   const canTakePaymentsWhenArchived = !(terminal?.version === '1.1')
 
   return (
     <ArchiveProject
       storeCidTx={setUriTx}
-      metadata={projectMetadata}
-      projectId={projectId}
       owner={owner}
       handle={handle}
       canTakePaymentsWhenArchived={canTakePaymentsWhenArchived}
-      cv={CV_V1}
     />
   )
 }

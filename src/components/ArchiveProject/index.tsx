@@ -1,43 +1,36 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button } from 'antd'
-
+import axios from 'axios'
+import { CV_V1, CV_V1_1, CV_V2 } from 'constants/cv'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { TransactorInstance } from 'hooks/Transactor'
-import { CV } from 'models/cv'
-import { ProjectMetadataV5 } from 'models/project-metadata'
+import { useWallet } from 'hooks/Wallet'
+import { V1TerminalVersion } from 'models/v1/terminals'
 import { useContext, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
-
-import axios from 'axios'
-import { CV_V1, CV_V1_1, CV_V2 } from 'constants/cv'
-import { useWallet } from 'hooks/Wallet'
-import { V1TerminalVersion } from 'models/v1/terminals'
 import { revalidateProject } from 'utils/revalidateProject'
 import { reloadWindow } from 'utils/windowUtils'
 
 export default function ArchiveProject({
   storeCidTx,
-  metadata,
-  projectId,
   owner,
   handle,
   canTakePaymentsWhenArchived = false,
-  cv,
 }: {
   storeCidTx: TransactorInstance<{ cid: string }>
-  metadata: ProjectMetadataV5 | undefined
-  projectId: number | undefined
   owner: string | undefined
   handle?: string | undefined // Used on V1 projects
   canTakePaymentsWhenArchived?: boolean
-  cv: CV
 }) {
-  const { userAddress } = useWallet()
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const { projectId, projectMetadata, cv } = useContext(ProjectMetadataContext)
+
+  const { userAddress } = useWallet()
 
   const [isLoadingArchive, setIsLoadingArchive] = useState<boolean>(false)
 
@@ -70,7 +63,7 @@ export default function ArchiveProject({
     setIsLoadingArchive(true)
 
     const uploadedMetadata = await uploadProjectMetadata({
-      ...metadata,
+      ...projectMetadata,
       archived,
     })
     if (!uploadedMetadata.IpfsHash) {
@@ -83,7 +76,7 @@ export default function ArchiveProject({
     axios.post(`/api/github/archive-project`, {
       archived,
       projectId,
-      metadata,
+      projectMetadata,
       handle,
       cv,
     })
@@ -104,7 +97,7 @@ export default function ArchiveProject({
     }
   }
 
-  if (metadata?.archived) {
+  if (projectMetadata?.archived) {
     return (
       <section>
         <h3>

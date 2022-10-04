@@ -1352,6 +1352,12 @@ msgstr ""
 msgid "Invalid address"
 msgstr ""
 
+msgid "Invalid type - contact Juicebox Support"
+msgstr ""
+
+msgid "Is not a valid integer"
+msgstr ""
+
 msgid "Issue ${symbol}"
 msgstr ""
 
@@ -2927,6 +2933,9 @@ msgstr ""
 msgid "V2"
 msgstr ""
 
+msgid "Value has already been submitted"
+msgstr ""
+
 msgid "VeNFT contract created successfully. Results will be indexed in a few moments."
 msgstr ""
 
@@ -3191,6 +3200,9 @@ msgstr ""
 msgid "Zero"
 msgstr ""
 
+msgid "Zero address cannot be used"
+msgstr ""
+
 msgid "after {0}% JBX fee"
 msgstr ""
 
@@ -3296,7 +3308,13 @@ msgstr ""
 msgid "{0} holders"
 msgstr ""
 
+msgid "{0} is not a valid integer"
+msgstr ""
+
 msgid "{0} is required"
+msgstr ""
+
+msgid "{0} must be numeric"
 msgstr ""
 
 msgid "{0} reserved"
@@ -3357,6 +3375,9 @@ msgid "{inflationRate} tokens / ETH"
 msgstr ""
 
 msgid "{issuanceRate} tokens / ETH"
+msgstr ""
+
+msgid "{label} is not a valid ETH Address"
 msgstr ""
 
 msgid "{lockDurationOptionInDays} {lockDurationOptionInDays, plural, one {{0}} other {{1}}}"

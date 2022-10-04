@@ -6,10 +6,6 @@
   color: var(--text-secondary);
 }
 
-.border {
-  border: 1px solid var(--stroke-tertiary);
-}
-
 .clickable-border {
   border: 1px solid var(--stroke-tertiary);
   transition: border-color 100ms linear;
@@ -26,7 +22,7 @@
 }
 
 .color-unset {
-  color: unset;
+  color: unset
 }
 
 .hover-text-action-primary {
@@ -55,10 +51,10 @@
 
 .hover-color-unset {
   &:hover {
-    color: unset;
+    color: unset
   }
 }
 
 .selected-box-shadow {
-  box-shadow: 2px 0px 10px 0px var(--boxShadow-primary);
+  box-shadow: 2px 0px 10px 0px var(--boxShadow-primary)
 }

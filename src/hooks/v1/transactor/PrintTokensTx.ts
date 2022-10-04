@@ -6,6 +6,7 @@ import { V1UserContext } from 'contexts/v1/userContext'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext } from 'react'
 
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
@@ -17,7 +18,8 @@ export function usePrintTokensTx(): TransactorInstance<{
   preferUnstaked: boolean
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
-  const { terminal, projectId, tokenSymbol } = useContext(V1ProjectContext)
+  const { terminal, tokenSymbol } = useContext(V1ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   return ({ value, currency, beneficiary, memo, preferUnstaked }, txOpts) => {
     if (!transactor || !contracts || !projectId || !terminal?.version) {

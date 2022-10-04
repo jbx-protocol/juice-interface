@@ -1,10 +1,10 @@
-import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useContext } from 'react'
-
 import useOwnerOfProject from './OwnerOfProject'
 
 export function useProjectOwner() {
-  const { projectId } = useContext(V1ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
+
   const owner = useOwnerOfProject(projectId)
 
   return { owner }

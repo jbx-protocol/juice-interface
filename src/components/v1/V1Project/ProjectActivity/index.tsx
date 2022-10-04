@@ -8,8 +8,8 @@ import RedeemEventElem from 'components/activityEventElems/RedeemEventElem'
 import Loading from 'components/Loading'
 import SectionHeader from 'components/SectionHeader'
 import { CV_V1, CV_V1_1 } from 'constants/cv'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
 import { PrintReservesEvent } from 'models/subgraph-entities/v1/print-reserves-event'
 import { TapEvent } from 'models/subgraph-entities/v1/tap-event'
@@ -20,10 +20,9 @@ import { ProjectEvent } from 'models/subgraph-entities/vX/project-event'
 import { RedeemEvent } from 'models/subgraph-entities/vX/redeem-event'
 import { useContext, useMemo, useState } from 'react'
 import { WhereConfig } from 'utils/graph'
-import { V1DownloadActivityModal } from './V1DownloadActivityModal'
-
 import ReservesEventElem from './eventElems/ReservesEventElem'
 import TapEventElem from './eventElems/TapEventElem'
+import { V1DownloadActivityModal } from './V1DownloadActivityModal'
 
 type EventFilter =
   | 'all'
@@ -35,17 +34,16 @@ type EventFilter =
   | 'projectCreate'
 // | 'mintTokens' TODO
 
+const pageSize = 50
+
 export default function ProjectActivity() {
-  const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
-
-  const { projectId } = useContext(V1ProjectContext)
-
-  const [eventFilter, setEventFilter] = useState<EventFilter>('all')
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
-  const pageSize = 50
+  const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
+  const [eventFilter, setEventFilter] = useState<EventFilter>('all')
 
   const where: WhereConfig<'projectEvent'>[] = useMemo(() => {
     const _where: WhereConfig<'projectEvent'>[] = [

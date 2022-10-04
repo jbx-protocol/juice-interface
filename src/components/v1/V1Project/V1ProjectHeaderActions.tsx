@@ -10,12 +10,14 @@ import { useContext, useState } from 'react'
 import { V1ProjectToolsDrawer } from 'components/v1/V1Project/V1ProjectToolsDrawer/V1ProjectToolsDrawer'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import EditProjectModal from './modals/EditProjectModal'
 import MigrateV1Pt1Modal from './modals/MigrateV1Pt1Modal'
 
 export default function V1ProjectHeaderActions() {
-  const { projectId, handle, metadata, isPreviewMode, terminal, owner } =
+  const { handle, isPreviewMode, terminal, owner } =
     useContext(V1ProjectContext)
+  const { projectId, projectMetadata } = useContext(ProjectMetadataContext)
 
   const [migrateDrawerVisible, setMigrateDrawerVisible] =
     useState<boolean>(false)
@@ -104,7 +106,7 @@ export default function V1ProjectHeaderActions() {
       />
       <EditProjectModal
         visible={editProjectModalVisible}
-        metadata={metadata}
+        metadata={projectMetadata}
         handle={handle}
         onSuccess={() => setEditProjectModalVisible(false)}
         onCancel={() => setEditProjectModalVisible(false)}

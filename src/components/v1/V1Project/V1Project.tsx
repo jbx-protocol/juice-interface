@@ -3,6 +3,7 @@ import { Col, Row } from 'antd'
 import { PayProjectForm } from 'components/Project/PayProjectForm'
 import ProjectHeader from 'components/Project/ProjectHeader'
 import { CV_V1 } from 'constants/cv'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1PayProjectFormProvider } from 'providers/v1/V1PayProjectFormProvider'
 import { CSSProperties, lazy, Suspense, useContext } from 'react'
@@ -23,20 +24,16 @@ export function V1Project({
   style?: CSSProperties
   column?: boolean
 }) {
-  const {
-    createdAt,
-    projectId,
-    handle,
-    metadata,
-    isArchived,
-    isPreviewMode,
-    owner,
-  } = useContext(V1ProjectContext)
+  const { createdAt, handle, isPreviewMode, owner } =
+    useContext(V1ProjectContext)
+  const { projectId, isArchived, projectMetadata } = useContext(
+    ProjectMetadataContext,
+  )
 
   return (
     <div style={style}>
       <ProjectHeader
-        metadata={metadata}
+        metadata={projectMetadata}
         handle={handle}
         isArchived={isArchived}
         projectOwnerAddress={owner}

@@ -4,6 +4,7 @@ import { useContext } from 'react'
 
 import ArchiveProject from 'components/ArchiveProject'
 import { CV_V1 } from 'constants/cv'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 
 /**
  * V1 Wrapper around `ArchiveProject`.
@@ -15,15 +16,15 @@ export default function ArchiveV1Project({
     cid: string
   }>
 }) {
-  const { metadata, projectId, handle, terminal, owner } =
-    useContext(V1ProjectContext)
+  const { handle, terminal, owner } = useContext(V1ProjectContext)
+  const { projectId, projectMetadata } = useContext(ProjectMetadataContext)
 
   const canTakePaymentsWhenArchived = !(terminal?.version === '1.1')
 
   return (
     <ArchiveProject
       storeCidTx={setUriTx}
-      metadata={metadata}
+      metadata={projectMetadata}
       projectId={projectId}
       owner={owner}
       handle={handle}

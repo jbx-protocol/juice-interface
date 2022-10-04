@@ -2,8 +2,8 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Divider, Form, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/formItems'
-
-import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useSetProjectHandleTx } from 'hooks/v1/transactor/SetProjectHandleTx'
 import { useSetProjectUriTx } from 'hooks/v1/transactor/SetProjectUriTx'
 import { ProjectMetadataV5 } from 'models/project-metadata'
@@ -17,8 +17,6 @@ import {
   uploadProjectMetadata,
 } from 'utils/ipfs'
 import { revalidateProject } from 'utils/revalidateProject'
-
-import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
 
 type ProjectInfoFormFields = {
   name: string
@@ -49,7 +47,7 @@ export default function EditProjectModal({
   onSuccess?: VoidFunction
   onCancel?: VoidFunction
 }) {
-  const { cv } = useContext(V1ProjectContext)
+  const { cv } = useContext(ProjectMetadataContext)
   const [loadingSetURI, setLoadingSetURI] = useState<boolean>()
   const [loadingSetHandle, setLoadingSetHandle] = useState<boolean>()
   const [projectInfoForm] = useForm<ProjectInfoFormFields>()

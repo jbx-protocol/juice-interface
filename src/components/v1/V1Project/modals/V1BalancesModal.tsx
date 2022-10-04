@@ -19,6 +19,7 @@ import { V1TerminalVersion } from 'models/v1/terminals'
 import { revalidateProject } from 'utils/revalidateProject'
 
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 
 export function V1BalancesModal({
   visible,
@@ -27,16 +28,21 @@ export function V1BalancesModal({
   visible: boolean | undefined
   onCancel: () => void
 }) {
+  const { owner, handle } = useContext(V1ProjectContext)
+  const { projectMetadata, cv } = useContext(ProjectMetadataContext)
+
   const [editModalVisible, setEditModalVisible] = useState<boolean>()
   const [loading, setLoading] = useState<boolean>()
   const [editingTokenRefs, setEditingTokenRefs] = useState<TokenRef[]>([])
-  const { owner, metadata, handle, cv } = useContext(V1ProjectContext)
+
   const setProjectUriTx = useSetProjectUriTx()
 
   useEffect(() => {
-    const initialTokens = metadata?.tokens ?? [{ type: 'erc20', value: '' }]
+    const initialTokens = projectMetadata?.tokens ?? [
+      { type: 'erc20', value: '' },
+    ]
     setEditingTokenRefs(initialTokens)
-  }, [metadata])
+  }, [projectMetadata])
 
   const hasEditPermission = useV1ConnectedWalletHasPermission([
     V1OperatorPermission.SetUri,
@@ -49,7 +55,7 @@ export function V1BalancesModal({
 
     const uploadedMetadata = await uploadProjectMetadata(
       {
-        ...metadata,
+        ...projectMetadata,
         tokens: editingTokenRefs.filter(t => t.type),
       },
       handle,
@@ -117,7 +123,7 @@ export function V1BalancesModal({
             wallet={owner}
             projectId={V1_PROJECT_IDS.JUICEBOX_DAO}
           />
-          {(metadata as ProjectMetadataV5)?.tokens?.map(t =>
+          {(projectMetadata as ProjectMetadataV5)?.tokens?.map(t =>
             t.type === 'erc20' ? (
               <ERC20TokenBalance
                 key={t.value}

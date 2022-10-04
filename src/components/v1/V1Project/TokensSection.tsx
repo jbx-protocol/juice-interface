@@ -24,6 +24,7 @@ import { formatPercent, formatWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useTransferTokensTx } from 'hooks/v1/transactor/TransferTokensTx'
 import ConfirmUnstakeTokensModal from './modals/ConfirmUnstakeTokensModal'
 import PrintPreminedModal from './modals/PrintPreminedModal'
@@ -38,16 +39,15 @@ export function TokensSection() {
     theme: { colors },
   } = useContext(ThemeContext)
   const {
-    projectId,
     handle,
     tokenAddress,
     tokenSymbol,
-    cv,
     isPreviewMode,
     currentFC,
     terminal,
     overflow,
   } = useContext(V1ProjectContext)
+  const { projectId, cv } = useContext(ProjectMetadataContext)
 
   const [manageTokensModalVisible, setManageTokensModalVisible] =
     useState<boolean>()

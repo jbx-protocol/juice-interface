@@ -6,7 +6,6 @@ import { CV_V1 } from 'constants/cv'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1PayProjectFormProvider } from 'providers/v1/V1PayProjectFormProvider'
 import { CSSProperties, lazy, Suspense, useContext } from 'react'
-import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import FundingCycles from './FundingCycles'
 import Paid from './Paid'
 import ProjectActivity from './ProjectActivity'
@@ -26,7 +25,6 @@ export function V1Project({
 }) {
   const {
     createdAt,
-    currentFC,
     projectId,
     handle,
     metadata,
@@ -34,10 +32,6 @@ export function V1Project({
     isPreviewMode,
     owner,
   } = useContext(V1ProjectContext)
-
-  const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
-
-  if (projectId === undefined || !fcMetadata) return null
 
   return (
     <div style={style}>

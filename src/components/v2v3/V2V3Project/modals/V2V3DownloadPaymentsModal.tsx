@@ -1,23 +1,21 @@
 import { t, Trans } from '@lingui/macro'
 import { Modal, ModalProps } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
-import { emitErrorNotification } from 'utils/notifications'
-
-import { useCallback, useContext, useEffect, useState } from 'react'
-import { fromWad } from 'utils/format/formatNumber'
-import { querySubgraphExhaustive } from 'utils/graph'
-
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { CV_V2 } from 'constants/cv'
 import { readProvider } from 'constants/readProvider'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { downloadCsvFile } from 'utils/csv'
+import { fromWad } from 'utils/format/formatNumber'
+import { querySubgraphExhaustive } from 'utils/graph'
+import { emitErrorNotification } from 'utils/notifications'
 
 export default function V2V3DownloadPaymentsModal(props: ModalProps) {
+  const { projectId, cv } = useContext(ProjectMetadataContext)
+
   const [latestBlockNumber, setLatestBlockNumber] = useState<number>()
   const [blockNumber, setBlockNumber] = useState<number>()
   const [loading, setLoading] = useState<boolean>()
-  const { projectId } = useContext(ProjectMetadataContext)
 
   useEffect(() => {
     readProvider.getBlockNumber().then(val => {
@@ -27,7 +25,7 @@ export default function V2V3DownloadPaymentsModal(props: ModalProps) {
   }, [])
 
   const download = useCallback(async () => {
-    if (blockNumber === undefined || !projectId) return
+    if (blockNumber === undefined || !projectId || !cv) return
 
     setLoading(true)
 
@@ -51,7 +49,7 @@ export default function V2V3DownloadPaymentsModal(props: ModalProps) {
           },
           {
             key: 'cv',
-            value: CV_V2,
+            value: cv,
           },
         ],
       })
@@ -79,7 +77,7 @@ export default function V2V3DownloadPaymentsModal(props: ModalProps) {
       console.error('Error downloading payments', e)
       setLoading(false)
     }
-  }, [projectId, setLoading, blockNumber])
+  }, [projectId, setLoading, blockNumber, cv])
 
   return (
     <Modal

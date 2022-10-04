@@ -17,11 +17,10 @@ const SELECT_OPTIONS: BaseOptionType[] = [
     value: CV_V2,
     label: 'V2',
   },
-  readNetwork.name &&
-    NetworkName.rinkeby && {
-      value: CV_V3,
-      label: 'V3',
-    },
+  readNetwork.name !== NetworkName.rinkeby && {
+    value: CV_V3,
+    label: 'V3',
+  },
 ].filter(Boolean) as BaseOptionType[]
 
 /**

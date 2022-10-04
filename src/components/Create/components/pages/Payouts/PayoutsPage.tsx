@@ -29,7 +29,9 @@ export const PayoutsPage: React.FC = () => {
     >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <RecallCard show={['fundingCycles', 'fundingTarget']} />
-        <h2>How would you like to distribute payments?</h2>
+        <h2>
+          <Trans>How would you like to distribute payments?</Trans>
+        </h2>
         <Form.Item noStyle name="selection">
           <Selection defocusOnSelect>
             <Selection.Card
@@ -58,8 +60,14 @@ export const PayoutsPage: React.FC = () => {
         </Form.Item>
         {selection && (
           <Space direction="vertical" style={{ width: '100%' }}>
-            <h2>Who's getting paid?</h2>
-            <p>Add wallet addresses or juicebox projects to receive payouts.</p>
+            <h2>
+              <Trans>Who's getting paid?</Trans>
+            </h2>
+            <p>
+              <Trans>
+                Add wallet addresses or juicebox projects to receive payouts.
+              </Trans>
+            </p>
             <Form.Item noStyle name="payoutsList">
               <PayoutsList payoutsSelection={selection} />
             </Form.Item>

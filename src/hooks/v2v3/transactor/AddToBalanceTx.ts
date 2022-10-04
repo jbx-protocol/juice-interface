@@ -1,15 +1,14 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
-import { useContext } from 'react'
-
 import { t } from '@lingui/macro'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactionContext } from 'contexts/transactionContext'
+import { V2V3ProjectContractsContext } from 'contexts/v2v3/V2V3ProjectContractsContext'
 import {
   handleTransactionException,
   TransactorInstance,
 } from 'hooks/Transactor'
+import { useContext } from 'react'
 import invariant from 'tiny-invariant'
 import { useV2ProjectTitle } from '../ProjectTitle'
 
@@ -19,7 +18,7 @@ export function useAddToBalanceTx(): TransactorInstance<{
   value: BigNumber
 }> {
   const { transactor } = useContext(TransactionContext)
-  const { contracts } = useContext(V2V3ContractsContext)
+  const { contracts } = useContext(V2V3ProjectContractsContext)
   const { projectId, cv } = useContext(ProjectMetadataContext)
 
   const projectTitle = useV2ProjectTitle()

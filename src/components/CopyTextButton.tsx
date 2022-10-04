@@ -37,13 +37,9 @@ export default function CopyTextButton({
           e.stopPropagation()
           handleCopy()
         }}
+        style={{ ...style, color: colors.text.primary }}
       >
-        {button ?? (
-          <CopyOutlined
-            className="copyIcon"
-            style={{ ...style, color: colors.text.primary }}
-          />
-        )}
+        {button ?? <CopyOutlined className="copyIcon" />}
       </div>
     </Tooltip>
   )

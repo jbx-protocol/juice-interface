@@ -10,9 +10,11 @@ import { v2v3ProjectRoute } from 'utils/routes'
 export function ShareTxButton({
   transaction,
   style,
+  isPastTransaction,
 }: {
   transaction: SafeTransactionType
   style?: CSSProperties
+  isPastTransaction?: boolean
 }) {
   const { projectId } = useContext(ProjectMetadataContext)
   const { handle } = useContext(V2V3ProjectContext)
@@ -22,7 +24,7 @@ export function ShareTxButton({
       ${v2v3ProjectRoute({ projectId, handle })}/
       safe?tx=${transaction.safeTxHash}`
 
-  if (transaction.isExecuted) {
+  if (isPastTransaction) {
     linkToTx += `&tab=history`
   }
 
@@ -30,6 +32,7 @@ export function ShareTxButton({
     <CopyTextButton
       value={linkToTx}
       button={<ShareAltOutlined style={style} />}
+      style={{ marginLeft: 10 }}
       tooltipText={t`Copy link to share.`}
     />
   )

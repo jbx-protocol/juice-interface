@@ -317,6 +317,9 @@ msgstr ""
 msgid "Add token allocation"
 msgstr ""
 
+msgid "Add wallet addresses or juicebox projects to receive payouts."
+msgstr ""
+
 msgid "Address"
 msgstr ""
 
@@ -1287,6 +1290,9 @@ msgid "How the {reservedPercentage}% of your project's reserved tokens will be s
 msgstr ""
 
 msgid "How to Juice."
+msgstr ""
+
+msgid "How would you like to distribute payments?"
 msgstr ""
 
 msgid "I accept this project's <0>risks</0>."
@@ -3039,6 +3045,9 @@ msgid "Who funds Juicebox projects?"
 msgstr ""
 
 msgid "Who is Peel?"
+msgstr ""
+
+msgid "Who's getting paid?"
 msgstr ""
 
 msgid "Why Ethereum?"

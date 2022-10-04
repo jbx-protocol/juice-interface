@@ -1,8 +1,12 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { createContext } from 'react'
+import { createContext, CSSProperties } from 'react'
 import { WeightFunction } from 'utils/math'
-import { PayButtonProps } from './PayProjectForm'
 import { PayProjectForm } from './usePayProjectForm'
+
+export interface PayButtonProps {
+  disabled?: boolean
+  wrapperStyle?: CSSProperties
+}
 
 interface PayProjectFormContextType {
   PayButton: undefined | ((props: PayButtonProps) => JSX.Element | null)

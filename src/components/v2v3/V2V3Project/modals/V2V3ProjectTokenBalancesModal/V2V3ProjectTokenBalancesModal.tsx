@@ -25,7 +25,7 @@ export interface EditTrackedAssetsForm {
   tokenRefs: { assetInput: { input: string; type: AssetInputType } }[]
 }
 
-export function V2V3DownloadActivityModal(props: ModalProps) {
+export function V2V3ProjectTokenBalancesModal(props: ModalProps) {
   const { projectId, projectMetadata } = useContext(ProjectMetadataContext)
   const { projectOwnerAddress } = useContext(V2V3ProjectContext)
   const [editModalVisible, setEditModalVisible] = useState<boolean>()

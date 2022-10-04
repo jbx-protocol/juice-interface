@@ -26,18 +26,18 @@ export function PastFundingCycle({
   fundingCycleMetadata: V2V3FundingCycleMetadata
 }) {
   const [modalVisible, setModalVisible] = useState<boolean>(false)
-  const { primaryTerminal } = useContext(V2V3ProjectContext)
+  const { primaryETHTerminal } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
   const { data: distributionLimitData } = useProjectDistributionLimit({
     projectId,
     configuration: fundingCycle?.configuration?.toString(),
-    terminal: primaryTerminal,
+    terminal: primaryETHTerminal,
   })
 
   const { data: usedDistributionLimit } = useUsedDistributionLimit({
     projectId,
-    terminal: primaryTerminal,
+    terminal: primaryETHTerminal,
     fundingCycleNumber: fundingCycle?.number,
   })
 

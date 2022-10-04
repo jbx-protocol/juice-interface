@@ -10,7 +10,7 @@ import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'
 
 import { emitSuccessNotification } from 'utils/notifications'
 
-import { MemoFormInput } from 'components/inputs/Pay/MemoFormInput'
+import { MemoFormInput } from 'components/Project/PayProjectForm/MemoFormInput'
 import TransactionModal from 'components/TransactionModal'
 import CustomBeneficiaryInput from 'components/veNft/formControls/CustomBeneficiaryInput'
 import { useWallet } from 'hooks/Wallet'
@@ -35,7 +35,7 @@ const VeNftRedeemModal = ({
     changeNetworks,
     connect,
   } = useWallet()
-  const { primaryTerminal, tokenAddress } = useContext(V2V3ProjectContext)
+  const { primaryETHTerminal, tokenAddress } = useContext(V2V3ProjectContext)
   const { tokenId } = token
   const [form] = useForm<{ beneficiary: string }>()
   const [loading, setLoading] = useState(false)
@@ -70,7 +70,7 @@ const VeNftRedeemModal = ({
         token: tokenAddress || '',
         beneficiary: txBeneficiary,
         memo,
-        terminal: primaryTerminal ? primaryTerminal : '',
+        terminal: primaryETHTerminal ?? '',
       },
       {
         onDone: () => {

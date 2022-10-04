@@ -22,14 +22,14 @@ export default function TreasuryStats() {
     distributionLimit,
     totalVolume,
     isPreviewMode,
-    primaryTerminal,
+    primaryETHTerminal,
     loading: { distributionLimitLoading },
   } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
   const { data: overflow, loading: overflowLoading } =
     useTerminalCurrentOverflow({
-      terminal: primaryTerminal,
+      terminal: primaryETHTerminal,
       projectId,
     })
 

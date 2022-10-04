@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { V2V3Contracts } from 'models/v2v3/contracts'
+import { Contract } from '@ethersproject/contracts'
 import {
   V2V3FundingCycle,
   V2V3FundingCycleMetadata,
@@ -98,17 +98,16 @@ const deriveFundingCyclesBetweenEachConfiguration = ({
 export const fetchPastFundingCycles = async ({
   projectId,
   currentFundingCycle,
-  contracts,
+  JBController,
 }: {
   projectId: number
   currentFundingCycle: V2V3FundingCycle
-  contracts: V2V3Contracts
+  JBController: Contract
 }): Promise<[V2V3FundingCycle, V2V3FundingCycleMetadata][]> => {
-  const firstFCOfCurrentConfiguration =
-    (await contracts?.JBController.getFundingCycleOf(
-      projectId,
-      currentFundingCycle.configuration,
-    )) as [V2V3FundingCycle, V2V3FundingCycleMetadata]
+  const firstFCOfCurrentConfiguration = (await JBController.getFundingCycleOf(
+    projectId,
+    currentFundingCycle.configuration,
+  )) as [V2V3FundingCycle, V2V3FundingCycleMetadata]
 
   let firstFCOfEachConfiguration: [
     V2V3FundingCycle,
@@ -119,7 +118,7 @@ export const fetchPastFundingCycles = async ({
   // Get first funding cycle of each configuration using basedOn
   while (!previousReconfiguration.eq(BigNumber.from(0))) {
     const previousReconfigurationFirstFundingCycle =
-      (await contracts?.JBController.getFundingCycleOf(
+      (await JBController.getFundingCycleOf(
         projectId,
         previousReconfiguration,
       )) as [V2V3FundingCycle, V2V3FundingCycleMetadata]

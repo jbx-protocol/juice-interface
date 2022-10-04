@@ -1,30 +1,29 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
-import { PayButtonProps } from 'components/inputs/Pay/PayInputGroup'
 import PayWarningModal from 'components/PayWarningModal'
+import {
+  PayButtonProps,
+  PayProjectFormContext,
+} from 'components/Project/PayProjectForm/payProjectFormContext'
+import { readNetwork } from 'constants/networks'
+import { V1_CURRENCY_USD } from 'constants/v1/currency'
+import { disablePayOverrides } from 'constants/v1/overrides'
+import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useWeiConverter from 'hooks/WeiConverter'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useState } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
-
-import { readNetwork } from 'constants/networks'
-import { V1_CURRENCY_USD } from 'constants/v1/currency'
-import { disablePayOverrides } from 'constants/v1/overrides'
-import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 import V1ConfirmPayOwnerModal from './modals/V1ConfirmPayOwnerModal'
 
-export default function V1PayButton({
-  payAmount,
-  payInCurrency,
-  onError,
-  wrapperStyle,
-  disabled,
-}: PayButtonProps) {
+export function V1PayButton({ wrapperStyle, disabled }: PayButtonProps) {
   const { projectId, currentFC, metadata, isArchived, terminal } =
     useContext(V1ProjectContext)
+
+  const { form: payProjectForm } = useContext(PayProjectFormContext)
+  const { payInCurrency, payAmount, setError } = payProjectForm ?? {}
 
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
   const [payWarningModalVisible, setPayWarningModalVisible] =
@@ -78,7 +77,7 @@ export default function V1PayButton({
 
   const onPayButtonClick = () => {
     if (parseFloat(fromWad(weiPayAmt)) === 0) {
-      return onError()
+      return setError?.(true)
     }
 
     setPayWarningModalVisible(true)

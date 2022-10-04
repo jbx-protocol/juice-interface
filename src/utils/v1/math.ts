@@ -39,7 +39,7 @@ export const amountAddFee = (amount?: string, feePerbicent?: BigNumber) => {
  * @param amountWad - amount to weight, as a wad.
  * @param outputType
  */
-export const weightedRate: WeightFunction = (
+export const weightAmountPerbicent: WeightFunction = (
   weight: BigNumber | undefined,
   reservedRatePerbicent: number | undefined,
   wadAmount: BigNumber | undefined,

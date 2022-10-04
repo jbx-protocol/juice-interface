@@ -29,6 +29,7 @@ import {
   V2V3CurrencyName,
   V2V3_CURRENCY_ETH,
 } from 'utils/v2v3/currency'
+import { useProjectPrimaryTerminal } from './contractReader/ProjectPrimaryTerminal'
 
 const useBalanceInDistributionLimitCurrency = ({
   ETHBalanceLoading,
@@ -117,7 +118,9 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
   const { data: terminals } = useProjectTerminals({
     projectId,
   })
-  const primaryTerminal = terminals?.[0] // TODO: make primaryTerminalOf hook and use it
+  const { data: primaryTerminal } = useProjectPrimaryTerminal({
+    projectId,
+  })
   const { data: ETHBalance, loading: ETHBalanceLoading } =
     usePaymentTerminalBalance({
       terminal: primaryTerminal,

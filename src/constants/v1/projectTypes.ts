@@ -6,7 +6,7 @@ import { V1_PROJECT_IDS } from './projectIds'
 
 const { SHARK_DAO, SVSPOOL002, DEFI_DAO, CONSTITUTION_DAO } = V1_PROJECT_IDS
 
-const projectTypesByNetwork: Partial<
+const PROJECT_TYPES_BY_NETWORK: Partial<
   Record<NetworkName, Record<number, ProjectType>>
 > = {
   [NetworkName.mainnet]: {
@@ -20,4 +20,4 @@ const projectTypesByNetwork: Partial<
   },
 }
 
-export const projectTypes = projectTypesByNetwork[readNetwork.name] ?? {}
+export const PROJECT_TYPES = PROJECT_TYPES_BY_NETWORK[readNetwork.name] ?? {}

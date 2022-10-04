@@ -1,2 +1,5 @@
 export * from './FundingCycles'
+export * from './FundingTarget'
+export * from './Payouts'
 export * from './ProjectDetails'
+export * from './ProjectToken'

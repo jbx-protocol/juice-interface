@@ -2,11 +2,10 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Divider, Form, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/formItems'
-
-import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useSetProjectHandleTx } from 'hooks/v1/transactor/SetProjectHandleTx'
 import { useSetProjectUriTx } from 'hooks/v1/transactor/SetProjectUriTx'
-import { ProjectMetadataV5 } from 'models/project-metadata'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { useContext, useEffect, useState } from 'react'
 import {
@@ -17,8 +16,6 @@ import {
   uploadProjectMetadata,
 } from 'utils/ipfs'
 import { revalidateProject } from 'utils/revalidateProject'
-
-import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
 
 type ProjectInfoFormFields = {
   name: string
@@ -38,43 +35,43 @@ type HandleFormFields = {
 
 export default function EditProjectModal({
   handle,
-  metadata,
   visible,
   onSuccess,
   onCancel,
 }: {
   handle: string | undefined
-  metadata: ProjectMetadataV5 | undefined
   visible?: boolean
   onSuccess?: VoidFunction
   onCancel?: VoidFunction
 }) {
-  const { cv } = useContext(V1ProjectContext)
+  const { cv, projectMetadata } = useContext(ProjectMetadataContext)
+
   const [loadingSetURI, setLoadingSetURI] = useState<boolean>()
   const [loadingSetHandle, setLoadingSetHandle] = useState<boolean>()
   const [projectInfoForm] = useForm<ProjectInfoFormFields>()
   const [handleForm] = useForm<HandleFormFields>()
+
   const setProjectUriTx = useSetProjectUriTx()
   const setHandleTx = useSetProjectHandleTx()
 
   useEffect(() => {
-    if (metadata) {
+    if (projectMetadata) {
       projectInfoForm.setFieldsValue({
-        name: metadata?.name,
-        infoUri: metadata?.infoUri,
-        logoUri: metadata?.logoUri,
-        twitter: metadata?.twitter,
-        discord: metadata?.discord,
-        description: metadata?.description,
-        payButton: metadata?.payButton,
-        payDisclosure: metadata?.payDisclosure,
+        name: projectMetadata?.name,
+        infoUri: projectMetadata?.infoUri,
+        logoUri: projectMetadata?.logoUri,
+        twitter: projectMetadata?.twitter,
+        discord: projectMetadata?.discord,
+        description: projectMetadata?.description,
+        payButton: projectMetadata?.payButton,
+        payDisclosure: projectMetadata?.payDisclosure,
       })
     }
 
     if (handle) {
       handleForm.setFieldsValue({ handle })
     }
-  }, [handleForm, handle, projectInfoForm, metadata])
+  }, [handleForm, handle, projectInfoForm, projectMetadata])
 
   async function setUri() {
     if (!handle) return
@@ -93,7 +90,7 @@ export default function EditProjectModal({
         discord: fields.discord,
         payButton: fields.payButton.substring(0, PROJECT_PAY_CHARACTER_LIMIT), // Enforce limit
         payDisclosure: fields.payDisclosure,
-        tokens: metadata?.tokens ?? [],
+        tokens: projectMetadata?.tokens ?? [],
       },
       handle,
     )
@@ -120,7 +117,7 @@ export default function EditProjectModal({
           })
 
           // If logo changed
-          if (metadata?.logoUri !== fields.logoUri) {
+          if (projectMetadata?.logoUri !== fields.logoUri) {
             // Set name for new logo file
             editMetadataForCid(cidFromUrl(fields.logoUri), {
               name: logoNameForHandle(handle),

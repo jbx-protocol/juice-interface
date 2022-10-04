@@ -1,4 +1,5 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1ContractName } from 'models/v1/contracts'
 import { useContext, useMemo } from 'react'
@@ -10,7 +11,8 @@ import useContractReader from './ContractReader'
 export default function useReservedTokensOfProject(
   reservedRate: BigNumberish | undefined,
 ) {
-  const { projectId, terminal } = useContext(V1ProjectContext)
+  const { terminal } = useContext(V1ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const _projectId = BigNumber.from(projectId).toHexString()
 

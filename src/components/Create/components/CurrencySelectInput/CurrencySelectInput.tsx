@@ -25,8 +25,8 @@ export const CurrencySelectInput: React.FC<{
 
     const amount = parseInt(e.target.value)
     if (isNaN(amount)) return
-    if (amount <= 0) {
-      handleChange({ amount: '1', currency })
+    if (amount < 0) {
+      handleChange({ amount: '0', currency })
       return
     }
 

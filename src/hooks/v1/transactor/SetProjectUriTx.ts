@@ -1,17 +1,17 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V1UserContext } from 'contexts/v1/userContext'
-import { useContext } from 'react'
-
 import { TransactorInstance } from 'hooks/Transactor'
+import { useContext } from 'react'
 import { useV1ProjectTitle } from '../ProjectTitle'
 
 export function useSetProjectUriTx(): TransactorInstance<{
   cid: string
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
-  const { projectId } = useContext(V1ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
+
   const projectTitle = useV1ProjectTitle()
 
   return ({ cid }, txOpts) => {

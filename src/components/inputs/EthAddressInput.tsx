@@ -11,8 +11,10 @@ const isENS = (address = '') => address.endsWith('.eth')
 
 export function EthAddressInput({
   value,
+  placeholder = `juicebox.eth / ${constants.AddressZero}`,
   onChange,
 }: {
+  placeholder?: string
   value?: string
   onChange?: (value: string) => void
 }) {
@@ -87,7 +89,7 @@ export function EthAddressInput({
         allowClear={true}
         type="text"
         spellCheck={false}
-        placeholder={`juicebox.eth / ${constants.AddressZero}`}
+        placeholder={placeholder}
         value={ensName ?? value}
         suffix={loadingENSName ? <LoadingOutlined spin /> : null}
         disabled={loadingENSName}

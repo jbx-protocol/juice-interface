@@ -4,6 +4,7 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
 import { useContext } from 'react'
 
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useV1ProjectTitle } from '../ProjectTitle'
 
@@ -11,7 +12,9 @@ export function useSafeTransferFromTx(): TransactorInstance<{
   newOwnerAddress: string
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
-  const { projectId, owner } = useContext(V1ProjectContext)
+  const { owner } = useContext(V1ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
+
   const projectTitle = useV1ProjectTitle()
 
   return ({ newOwnerAddress }, txOpts) => {

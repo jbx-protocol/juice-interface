@@ -2,15 +2,10 @@ import { Trans } from '@lingui/macro'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import { CurrencyContext } from 'contexts/currencyContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, useContext } from 'react'
+import { useContext } from 'react'
 import FormattedNumberInput from '../../inputs/FormattedNumberInput'
 import PayInputSubText from './PayInputSubText'
 import { PayProjectFormContext } from './payProjectFormContext'
-
-export type PayButtonProps = {
-  disabled?: boolean
-  wrapperStyle?: CSSProperties
-}
 
 export function PayProjectForm({ disabled }: { disabled?: boolean }) {
   const {

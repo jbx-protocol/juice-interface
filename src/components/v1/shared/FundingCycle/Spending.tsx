@@ -1,27 +1,27 @@
 import { Trans } from '@lingui/macro'
 import { Button, Space } from 'antd'
+import SpendingStats from 'components/Project/SpendingStats'
 import TooltipLabel from 'components/TooltipLabel'
 import WithdrawModal from 'components/v1/shared/FundingCycle/modals/WithdrawModal'
 import PayoutModsList from 'components/v1/shared/PayoutModsList'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { PayoutMod } from 'models/mods'
-import { useContext, useState } from 'react'
-
-import { V1CurrencyName } from 'utils/v1/currency'
-import { hasFundingTarget } from 'utils/v1/fundingCycle'
-
-import SpendingStats from 'components/Project/SpendingStats'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useRouter } from 'next/router'
+import { useContext, useState } from 'react'
 import { perbicentToPercent } from 'utils/format/formatNumber'
+import { V1CurrencyName } from 'utils/v1/currency'
+import { hasFundingTarget } from 'utils/v1/fundingCycle'
 
 export default function Spending({
   payoutMods,
 }: {
   payoutMods: PayoutMod[] | undefined
 }) {
-  const { projectId, currentFC, isPreviewMode, balanceInCurrency, owner } =
+  const { currentFC, isPreviewMode, balanceInCurrency, owner } =
     useContext(V1ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const [withdrawModalVisible, setWithdrawModalVisible] = useState<boolean>()
 

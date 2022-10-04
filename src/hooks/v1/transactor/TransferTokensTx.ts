@@ -5,6 +5,7 @@ import { V1UserContext } from 'contexts/v1/userContext'
 import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import {
   handleTransactionException,
   TransactorInstance,
@@ -18,7 +19,8 @@ export function useTransferTokensTx(): TransactorInstance<{
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
   const { userAddress } = useWallet()
-  const { projectId, tokenSymbol, cv } = useContext(V1ProjectContext)
+  const { tokenSymbol } = useContext(V1ProjectContext)
+  const { projectId, cv } = useContext(ProjectMetadataContext)
 
   return ({ amount, to }, txOpts) => {
     try {

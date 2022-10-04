@@ -11,6 +11,7 @@ import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 import useMobile from 'hooks/Mobile'
+import { useValidatePrimaryTerminal } from 'hooks/v2v3/ValidatePrimaryTerminal'
 import { useRouter } from 'next/router'
 import { V2V3PayProjectFormProvider } from 'providers/v2v3/V2V3PayProjectFormProvider'
 import { useContext, useEffect, useState } from 'react'
@@ -74,12 +75,14 @@ export function V2V3Project() {
 
   const isMobile = useMobile()
   const isOwner = useIsUserAddress(projectOwnerAddress)
+  const isPrimaryTerminalValid = useValidatePrimaryTerminal()
 
   const canEditProjectHandle = isOwner && !isPreviewMode && !handle
 
   const hasCurrentFundingCycle = fundingCycle?.number.gt(0)
 
-  const payProjectFormDisabled = isPreviewMode || !hasCurrentFundingCycle
+  const payProjectFormDisabled =
+    isPreviewMode || !hasCurrentFundingCycle || !isPrimaryTerminalValid
 
   const nftRewardsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
   const hasNftRewards = Boolean(nftRewardTiers?.length)

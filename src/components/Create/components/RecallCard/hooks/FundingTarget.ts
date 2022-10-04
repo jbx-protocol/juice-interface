@@ -2,11 +2,12 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { useAppSelector } from 'hooks/AppSelector'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
+import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 
 function formatFundingTarget({
   distributionLimit,
-  distributionLimitCurrency = '1',
+  distributionLimitCurrency = V2V3_CURRENCY_ETH.toString(),
 }: {
   distributionLimit: string | undefined
   distributionLimitCurrency: string | undefined
@@ -29,8 +30,6 @@ export const useFundingTarget = () => {
   const { fundAccessConstraints } = useAppSelector(
     state => state.editingV2Project,
   )
-
-  if (!fundAccessConstraints.length) return null
 
   if (!fundAccessConstraints[0]?.distributionLimit.length) return null
 

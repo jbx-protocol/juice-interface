@@ -37,10 +37,10 @@ export const RedeemAMMPrices = ({
               cursor: 'default',
               paddingTop: '0.5rem',
               paddingBottom: '1px',
-              borderBottom: '1px dashed' + colors.stroke.secondary,
+              borderBottom: '1px dashed ' + colors.stroke.secondary,
             }}
           >
-            redeem {tokenSymbol} on exchange.
+            sell {tokenSymbol} on exchange.
           </span>
         </Tooltip>
       </Trans>

@@ -8,29 +8,43 @@ import { CSSProperties, useContext, useState } from 'react'
 export default function CopyTextButton({
   value,
   style = {},
+  button,
+  tooltipText,
 }: {
   value: string | undefined
   style?: CSSProperties
+  button?: JSX.Element
+  tooltipText?: string
 }) {
   const { colors } = useContext(ThemeContext).theme
   const [copied, setCopied] = useState<boolean>(false)
-  const copyText = () => {
+  const handleCopy = () => {
     if (navigator) {
       navigator.clipboard.writeText(value ?? '')
       setCopied(true)
       setTimeout(() => setCopied(false), 3000)
     }
   }
+  const _tooltipText = tooltipText ?? t`Copy to clipboard`
+
   return (
     <Tooltip
       trigger={['hover']}
-      title={<span>{copied ? t`Copied!` : t`Copy to clipboard`}</span>}
+      title={<span>{copied ? t`Copied!` : _tooltipText}</span>}
     >
-      <CopyOutlined
-        onClick={copyText}
-        className="copyIcon"
-        style={{ ...style, color: colors.text.primary }}
-      />
+      <div
+        onClick={e => {
+          e.stopPropagation()
+          handleCopy()
+        }}
+      >
+        {button ?? (
+          <CopyOutlined
+            className="copyIcon"
+            style={{ ...style, color: colors.text.primary }}
+          />
+        )}
+      </div>
     </Tooltip>
   )
 }

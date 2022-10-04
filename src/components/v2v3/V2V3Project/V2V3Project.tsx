@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Col, Row, Space } from 'antd'
 import { PayProjectForm } from 'components/Project/PayProjectForm'
-import ProjectHeader from 'components/Project/ProjectHeader'
+import { ProjectHeader } from 'components/Project/ProjectHeader'
 import { TextButton } from 'components/TextButton'
 import VolumeChart from 'components/VolumeChart'
 import { CV_V2 } from 'constants/cv'
@@ -58,9 +58,7 @@ export function V2V3Project() {
     projectOwnerAddress,
     handle,
   } = useContext(V2V3ProjectContext)
-  const { projectMetadata, isArchived, projectId } = useContext(
-    ProjectMetadataContext,
-  )
+  const { projectMetadata, projectId } = useContext(ProjectMetadataContext)
   const {
     nftRewards: { rewardTiers: nftRewardTiers },
   } = useContext(NftRewardsContext)
@@ -148,13 +146,10 @@ export function V2V3Project() {
       <ProjectBanners />
 
       <ProjectHeader
-        metadata={projectMetadata}
         actions={!isPreviewMode ? <V2V3ProjectHeaderActions /> : undefined}
-        isArchived={isArchived}
         handle={handle}
         projectOwnerAddress={projectOwnerAddress}
         canEditProjectHandle={canEditProjectHandle}
-        projectId={projectId}
       />
 
       <V2V3PayProjectFormProvider>

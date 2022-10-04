@@ -5,6 +5,7 @@ import { V1UserContext } from 'contexts/v1/userContext'
 import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
@@ -13,7 +14,8 @@ export function useUnstakeTokensTx(): TransactorInstance<{
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
   const { userAddress } = useWallet()
-  const { projectId, tokenSymbol } = useContext(V1ProjectContext)
+  const { tokenSymbol } = useContext(V1ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   return ({ unstakeAmount }, txOpts) => {
     if (!transactor || !userAddress || !projectId || !contracts?.TicketBooth) {

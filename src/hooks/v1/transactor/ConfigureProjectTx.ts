@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { t } from '@lingui/macro'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
 import { TransactorInstance } from 'hooks/Transactor'
@@ -20,7 +21,9 @@ export function useConfigureProjectTx(): TransactorInstance<{
   ticketMods: TicketMod[]
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
-  const { projectId, terminal } = useContext(V1ProjectContext)
+  const { terminal } = useContext(V1ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
+
   const projectTitle = useV1ProjectTitle()
 
   return ({ fcProperties, fcMetadata, payoutMods, ticketMods }, txOpts) => {

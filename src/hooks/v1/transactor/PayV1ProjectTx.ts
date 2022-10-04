@@ -4,8 +4,8 @@ import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 
 import { BigNumber } from '@ethersproject/bignumber'
-
 import { t } from '@lingui/macro'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useV1ProjectTitle } from '../ProjectTitle'
 
@@ -15,7 +15,9 @@ export function usePayV1ProjectTx(): TransactorInstance<{
   value: BigNumber
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
-  const { terminal, projectId } = useContext(V1ProjectContext)
+  const { terminal } = useContext(V1ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
+
   const projectTitle = useV1ProjectTitle()
   const { userAddress } = useWallet()
 

@@ -3,7 +3,7 @@ import { Modal } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import { emitErrorNotification } from 'utils/notifications'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { GraphQueryOpts, querySubgraphExhaustive } from 'utils/graph'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -11,25 +11,21 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { CV_V1, CV_V1_1 } from 'constants/cv'
 import { readProvider } from 'constants/readProvider'
-import { CV } from 'models/cv'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { Participant } from 'models/subgraph-entities/vX/participant'
 import { downloadCsvFile } from 'utils/csv'
 
-export default function DownloadParticipantsModal({
-  projectId,
-  cv,
+export function DownloadParticipantsModal({
   tokenSymbol,
-  projectName,
   visible,
   onCancel,
 }: {
-  projectId: number | undefined
-  cv: CV | undefined
   tokenSymbol: string | undefined
-  projectName: string | undefined
   visible: boolean | undefined
   onCancel: VoidFunction | undefined
 }) {
+  const { projectId, projectMetadata, cv } = useContext(ProjectMetadataContext)
+
   const [latestBlockNumber, setLatestBlockNumber] = useState<number>()
   const [blockNumber, setBlockNumber] = useState<number>()
   const [loading, setLoading] = useState<boolean>()
@@ -114,14 +110,17 @@ export default function DownloadParticipantsModal({
         ])
       })
 
-      downloadCsvFile(`@${projectName}_holders-block${blockNumber}.csv`, rows)
+      downloadCsvFile(
+        `@${projectMetadata?.name}_holders-block${blockNumber}.csv`,
+        rows,
+      )
 
       setLoading(false)
     } catch (e) {
       console.error('Error downloading participants', e)
       setLoading(false)
     }
-  }, [blockNumber, projectId, tokenSymbol, projectName, cv])
+  }, [blockNumber, projectId, tokenSymbol, projectMetadata, cv])
 
   return (
     <Modal

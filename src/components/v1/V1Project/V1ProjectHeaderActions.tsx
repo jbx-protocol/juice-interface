@@ -1,21 +1,22 @@
 import { SettingOutlined, ToolOutlined } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
+import { t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
+import { V1ProjectToolsDrawer } from 'components/v1/V1Project/V1ProjectToolsDrawer/V1ProjectToolsDrawer'
+import { CV_V1 } from 'constants/cv'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { useIsUserAddress } from 'hooks/IsUserAddress'
 import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import { useContext, useState } from 'react'
-
-import { V1ProjectToolsDrawer } from 'components/v1/V1Project/V1ProjectToolsDrawer/V1ProjectToolsDrawer'
-import { useIsUserAddress } from 'hooks/IsUserAddress'
-
 import EditProjectModal from './modals/EditProjectModal'
 import MigrateV1Pt1Modal from './modals/MigrateV1Pt1Modal'
 
 export default function V1ProjectHeaderActions() {
-  const { projectId, handle, metadata, isPreviewMode, terminal, owner } =
+  const { handle, isPreviewMode, terminal, owner } =
     useContext(V1ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const [migrateDrawerVisible, setMigrateDrawerVisible] =
     useState<boolean>(false)
@@ -29,7 +30,7 @@ export default function V1ProjectHeaderActions() {
   ])
   const isOwner = useIsUserAddress(owner)
 
-  const allowMigrate = isOwner && terminal?.version === '1'
+  const allowMigrate = isOwner && terminal?.version === CV_V1
 
   const {
     theme: { colors },
@@ -50,7 +51,6 @@ export default function V1ProjectHeaderActions() {
           paddingRight: 10,
         }}
       >
-        <Trans>ID: {projectId}</Trans>{' '}
         {terminal?.version && (
           <Tooltip
             title={t`Version of the terminal contract used by this project.`}
@@ -104,7 +104,6 @@ export default function V1ProjectHeaderActions() {
       />
       <EditProjectModal
         visible={editProjectModalVisible}
-        metadata={metadata}
         handle={handle}
         onSuccess={() => setEditProjectModalVisible(false)}
         onCancel={() => setEditProjectModalVisible(false)}

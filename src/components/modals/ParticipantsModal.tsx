@@ -12,37 +12,32 @@ import ETHAmount from 'components/currency/ETHAmount'
 import FormattedAddress from 'components/FormattedAddress'
 import Loading from 'components/Loading'
 import { CV_V1, CV_V1_1 } from 'constants/cv'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { CV } from 'models/cv'
 import { Participant } from 'models/subgraph-entities/vX/participant'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { formatPercent, formatWad } from 'utils/format/formatNumber'
 import { GraphQueryOpts, OrderDirection, querySubgraph } from 'utils/graph'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-
-import DownloadParticipantsModal from './DownloadParticipantsModal'
+import { DownloadParticipantsModal } from './DownloadParticipantsModal'
 
 const pageSize = 100
 
 export default function ParticipantsModal({
-  projectId,
-  projectName,
   tokenSymbol,
   tokenAddress,
-  cv,
   totalTokenSupply,
   visible,
   onCancel,
 }: {
-  projectId: number | undefined
-  projectName: string | undefined
   tokenSymbol: string | undefined
   tokenAddress: string | undefined
-  cv: CV | undefined
   totalTokenSupply: BigNumber | undefined
   visible: boolean | undefined
   onCancel: VoidFunction | undefined
 }) {
+  const { projectId, cv } = useContext(ProjectMetadataContext)
+
   const [loading, setLoading] = useState<boolean>()
   const [participants, setParticipants] = useState<Participant[]>([])
   const [sortPayerReports, setSortPayerReports] =
@@ -331,11 +326,8 @@ export default function ParticipantsModal({
       </div>
 
       <DownloadParticipantsModal
-        projectId={projectId}
         tokenSymbol={tokenSymbol}
-        projectName={projectName}
         visible={downloadModalVisible}
-        cv={cv}
         onCancel={() => setDownloadModalVisible(false)}
       />
     </Modal>

@@ -35,7 +35,7 @@ const VeNftRedeemModal = ({
     changeNetworks,
     connect,
   } = useWallet()
-  const { primaryTerminal, tokenAddress } = useContext(V2V3ProjectContext)
+  const { primaryETHTerminal, tokenAddress } = useContext(V2V3ProjectContext)
   const { tokenId } = token
   const [form] = useForm<{ beneficiary: string }>()
   const [loading, setLoading] = useState(false)
@@ -70,7 +70,7 @@ const VeNftRedeemModal = ({
         token: tokenAddress || '',
         beneficiary: txBeneficiary,
         memo,
-        terminal: primaryTerminal ? primaryTerminal : '',
+        terminal: primaryETHTerminal ?? '',
       },
       {
         onDone: () => {

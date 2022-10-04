@@ -18,7 +18,7 @@ import PayoutSplitsCard from './PayoutSplitsCard'
 import ReservedTokensSplitsCard from './ReservedTokensSplitsCard'
 
 export function UpcomingFundingCycle() {
-  const { primaryTerminal } = useContext(V2V3ProjectContext)
+  const { primaryETHTerminal } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
   const { data: upcomingFundingCycleResponse, loading } =
@@ -41,7 +41,7 @@ export function UpcomingFundingCycle() {
   const { data: queuedDistributionLimitData } = useProjectDistributionLimit({
     projectId,
     configuration: upcomingFundingCycle?.configuration.toString(),
-    terminal: primaryTerminal,
+    terminal: primaryETHTerminal,
   })
   const [queuedDistributionLimit, queuedDistributionLimitCurrency] =
     queuedDistributionLimitData ?? []

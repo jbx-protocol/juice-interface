@@ -3,8 +3,10 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
 import PayWarningModal from 'components/PayWarningModal'
-import { PayButtonProps } from 'components/Project/PayProjectForm/PayProjectForm'
-import { PayProjectFormContext } from 'components/Project/PayProjectForm/payProjectFormContext'
+import {
+  PayButtonProps,
+  PayProjectFormContext,
+} from 'components/Project/PayProjectForm/payProjectFormContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import useWeiConverter from 'hooks/WeiConverter'

@@ -24,7 +24,7 @@ export type V2V3ProjectContextType = {
   tokenSymbol: string | undefined
   tokenName: string | undefined
   terminals: string[] | undefined // array of terminal addresses, 0xABC...
-  primaryTerminal: string | undefined
+  primaryETHTerminal: string | undefined
   ETHBalance: BigNumber | undefined
   totalVolume: BigNumber | undefined
   projectOwnerAddress: string | undefined
@@ -56,7 +56,7 @@ export const V2V3ProjectContext = createContext<V2V3ProjectContextType>({
   tokenSymbol: undefined,
   tokenName: undefined,
   terminals: undefined,
-  primaryTerminal: undefined,
+  primaryETHTerminal: undefined,
   ETHBalance: undefined,
   totalVolume: undefined,
   projectOwnerAddress: undefined,

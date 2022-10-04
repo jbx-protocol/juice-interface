@@ -1,14 +1,13 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Button, Descriptions, Space, Statistic } from 'antd'
-import { useWallet } from 'hooks/Wallet'
-
-import * as constants from '@ethersproject/constants'
 import FormattedAddress from 'components/FormattedAddress'
 import { IssueErc20TokenButton } from 'components/IssueErc20TokenButton'
 import ManageTokensModal from 'components/ManageTokensModal'
 import ParticipantsModal from 'components/modals/ParticipantsModal'
 import SectionHeader from 'components/SectionHeader'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useERC20BalanceOf from 'hooks/ERC20BalanceOf'
@@ -18,14 +17,13 @@ import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
 import useTotalSupplyOfProjectToken from 'hooks/v1/contractReader/TotalSupplyOfProjectToken'
 import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceOfUser'
 import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
+import { useTransferTokensTx } from 'hooks/v1/transactor/TransferTokensTx'
+import { useWallet } from 'hooks/Wallet'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import { CSSProperties, useContext, useState } from 'react'
 import { formatPercent, formatWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
-
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { useTransferTokensTx } from 'hooks/v1/transactor/TransferTokensTx'
 import ConfirmUnstakeTokensModal from './modals/ConfirmUnstakeTokensModal'
 import PrintPreminedModal from './modals/PrintPreminedModal'
 import RedeemModal from './modals/RedeemModal'
@@ -39,7 +37,6 @@ export function TokensSection() {
     theme: { colors },
   } = useContext(ThemeContext)
   const {
-    handle,
     tokenAddress,
     tokenSymbol,
     isPreviewMode,
@@ -47,7 +44,7 @@ export function TokensSection() {
     terminal,
     overflow,
   } = useContext(V1ProjectContext)
-  const { projectId, cv } = useContext(ProjectMetadataContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const [manageTokensModalVisible, setManageTokensModalVisible] =
     useState<boolean>()
@@ -223,11 +220,8 @@ export function TokensSection() {
         MintModal={PrintPreminedModal}
       />
       <ParticipantsModal
-        projectId={projectId}
-        projectName={handle}
         tokenSymbol={tokenSymbol}
         tokenAddress={tokenAddress}
-        cv={cv}
         totalTokenSupply={totalSupply}
         visible={participantsModalVisible}
         onCancel={() => setParticipantsModalVisible(false)}

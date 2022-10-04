@@ -1679,9 +1679,6 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-msgid "No Funding Target"
-msgstr ""
-
 msgid "No NFT reward tiers"
 msgstr ""
 
@@ -3201,9 +3198,6 @@ msgid "Your project will immediately appear active on the juicebox.money app. Pl
 msgstr ""
 
 msgid "Your project will withhold all funds raised. Funds can be distributed to payout addresses you set, and the project owner will receive any unallocated funds. Your project will have no overflow, so token holders can't redeem their tokens for ETH."
-msgstr ""
-
-msgid "Your project won't withhold any funds. All funds raised are Overflow. Token holders can redeem their tokens for a portion of your entire treasury."
 msgstr ""
 
 msgid "Your transaction has been submitted and is awaiting confirmation."

@@ -29,7 +29,7 @@ import {
   V2V3CurrencyName,
   V2V3_CURRENCY_ETH,
 } from 'utils/v2v3/currency'
-import { useProjectPrimaryTerminal } from './contractReader/ProjectPrimaryTerminal'
+import { useProjectPrimaryEthTerminal } from './contractReader/ProjectPrimaryEthTerminal'
 
 const useBalanceInDistributionLimitCurrency = ({
   ETHBalanceLoading,
@@ -118,17 +118,17 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
   const { data: terminals } = useProjectTerminals({
     projectId,
   })
-  const { data: primaryTerminal } = useProjectPrimaryTerminal({
+  const { data: primaryETHTerminal } = useProjectPrimaryEthTerminal({
     projectId,
   })
   const { data: ETHBalance, loading: ETHBalanceLoading } =
     usePaymentTerminalBalance({
-      terminal: primaryTerminal,
+      terminal: primaryETHTerminal,
       projectId,
     })
   const { data: primaryTerminalCurrentOverflow } = useTerminalCurrentOverflow({
     projectId,
-    terminal: primaryTerminal,
+    terminal: primaryETHTerminal,
   })
 
   /**
@@ -138,12 +138,12 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
     useProjectDistributionLimit({
       projectId,
       configuration: fundingCycle?.configuration?.toString(),
-      terminal: primaryTerminal,
+      terminal: primaryETHTerminal,
     })
   const { data: usedDistributionLimit, loading: usedDistributionLimitLoading } =
     useUsedDistributionLimit({
       projectId,
-      terminal: primaryTerminal,
+      terminal: primaryETHTerminal,
       fundingCycleNumber: fundingCycle?.number,
     })
   const [distributionLimit, distributionLimitCurrency] =
@@ -188,7 +188,7 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
     // payment terminal data
     terminals,
     ETHBalance,
-    primaryTerminal,
+    primaryETHTerminal,
     primaryTerminalCurrentOverflow,
 
     // distribution limit data

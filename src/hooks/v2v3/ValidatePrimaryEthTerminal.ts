@@ -12,11 +12,11 @@ import { useContext } from 'react'
  * In the future, this may not be the case.
  * For example, if another new version of the ETH terminal is deployed, we'll need to support it.
  */
-export function useValidatePrimaryTerminal() {
-  const { primaryTerminal } = useContext(V2V3ProjectContext)
+export function useValidatePrimaryEthTerminal() {
+  const { primaryETHTerminal } = useContext(V2V3ProjectContext)
   const { contracts } = useContext(V2V3ContractsContext)
 
-  return primaryTerminal
-    ? getAddress(primaryTerminal) === contracts?.JBETHPaymentTerminal.address
+  return primaryETHTerminal
+    ? getAddress(primaryETHTerminal) === contracts?.JBETHPaymentTerminal.address
     : false
 }

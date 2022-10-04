@@ -53,7 +53,7 @@ export const useInitialEditingData = (visible: boolean) => {
   const dispatch = useAppDispatch()
 
   const {
-    primaryTerminal,
+    primaryETHTerminal,
     fundingCycle,
     fundingCycleMetadata,
     payoutSplits,
@@ -84,7 +84,7 @@ export const useInitialEditingData = (visible: boolean) => {
   const { data: queuedDistributionLimitData } = useProjectDistributionLimit({
     projectId,
     configuration: queuedFundingCycle?.configuration.toString(),
-    terminal: primaryTerminal,
+    terminal: primaryETHTerminal,
   })
 
   const [queuedDistributionLimit, queuedDistributionLimitCurrency] =

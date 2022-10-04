@@ -3,25 +3,18 @@ import { Form, Space } from 'antd'
 
 import { ThemeContext } from 'contexts/themeContext'
 import FormItemLabel from 'pages/create/FormItemLabel'
-import {
-  CSSProperties,
-  useCallback,
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useState,
-} from 'react'
+import { CSSProperties, useContext, useState } from 'react'
 
 import ExternalLink from 'components/ExternalLink'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 
+import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph/TokenRedemptionRateGraph'
 import FormItemWarningText from '../FormItemWarningText'
 import NumberSlider from '../inputs/NumberSlider'
 import SwitchHeading from '../SwitchHeading'
 import { FormItemExt } from './formItemExt'
 
-const GRAPH_CONTAINER_ID = 'graph-container'
-export const DEFAULT_BONDING_CURVE_RATE_PERCENTAGE = '100'
+export const DEFAULT_BONDING_CURVE_RATE_PERCENTAGE = 100
 
 function BondingCurveRateExtra({
   disabled,
@@ -105,104 +98,7 @@ export function ProjectRedemptionRate({
   onToggled?: (checked: boolean) => void
   disabled?: boolean
 } & FormItemExt) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
-  const labelStyle: CSSProperties = {
-    fontSize: '.9rem',
-    fontWeight: 500,
-    textAlign: 'center',
-    position: 'absolute',
-  }
-
-  const graphSize = 300
-  const graphPad = 50
-  const [calculator, setCalculator] = useState<any>() // eslint-disable-line @typescript-eslint/no-explicit-any
-
-  const bondingCurveId = 'bonding-curve'
-  const baseCurveId = 'base-curve'
-
-  useLayoutEffect(() => {
-    try {
-      // https://www.desmos.com/api/v1.6/docs/index.html
-      setCalculator(
-        Desmos.GraphingCalculator(document.getElementById(GRAPH_CONTAINER_ID), {
-          keypad: false,
-          expressions: false,
-          settingsMenu: false,
-          zoomButtons: false,
-          expressionsTopbar: false,
-          pointsOfInterest: false,
-          trace: false,
-          border: false,
-          lockViewport: true,
-          images: false,
-          folders: false,
-          notes: false,
-          sliders: false,
-          links: false,
-          distributions: false,
-          pasteTableData: false,
-          showGrid: false,
-          showXAxis: false,
-          showYAxis: false,
-          xAxisNumbers: false,
-          yAxisNumbers: false,
-          polarNumbers: false,
-        }),
-      )
-    } catch (e) {
-      console.error('Error setting calculator', e)
-    }
-  }, [])
-
-  const graphCurve = useCallback(
-    (_value?: number) => {
-      if (_value === undefined || !calculator) return
-
-      const overflow = 10
-      const supply = 10
-
-      calculator.setMathBounds({
-        left: 0,
-        bottom: 0,
-        right: 10,
-        top: 10,
-      })
-      calculator.removeExpressions([
-        { id: bondingCurveId },
-        { id: baseCurveId },
-      ])
-      calculator.setExpression({
-        id: baseCurveId,
-        latex: `y=x`,
-        color: colors.stroke.secondary,
-      })
-      if (_value === 0) {
-        calculator.setExpression({
-          id: bondingCurveId,
-          latex: `y=0`,
-          color: colors.text.brand.primary,
-        })
-        return
-      }
-      calculator.setExpression({
-        id: bondingCurveId,
-        latex: `y=${overflow} * (x/${supply}) * (${_value / 100} + (x - x${
-          _value / 100
-        })/${supply})`,
-        color: colors.text.brand.primary,
-      })
-    },
-    [calculator, colors.stroke.secondary, colors.text.brand.primary],
-  )
-
-  useEffect(
-    () =>
-      graphCurve(parseFloat(value ?? DEFAULT_BONDING_CURVE_RATE_PERCENTAGE)),
-    [calculator, graphCurve, value],
-  )
+  const [graphValue, setGraphValue] = useState<number>()
 
   return (
     <div style={style}>
@@ -217,7 +113,7 @@ export function ProjectRedemptionRate({
                   onChange={checked => {
                     onToggled(checked)
                     if (!checked)
-                      onChange(parseInt(DEFAULT_BONDING_CURVE_RATE_PERCENTAGE))
+                      onChange(DEFAULT_BONDING_CURVE_RATE_PERCENTAGE)
                   }}
                   disabled={disabled}
                 >
@@ -240,11 +136,11 @@ export function ProjectRedemptionRate({
             max={100}
             step={0.5}
             name={name}
-            sliderValue={parseFloat(
-              value ?? DEFAULT_BONDING_CURVE_RATE_PERCENTAGE,
-            )}
+            sliderValue={
+              value ? parseFloat(value) : DEFAULT_BONDING_CURVE_RATE_PERCENTAGE
+            }
             onChange={(val: number | undefined) => {
-              graphCurve(val)
+              setGraphValue(val)
               onChange(val)
             }}
             suffix="%"
@@ -253,63 +149,11 @@ export function ProjectRedemptionRate({
         )}
       </Form.Item>
 
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <div style={{ position: 'relative' }}>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: graphSize,
-              width: graphSize,
-            }}
-          >
-            <div
-              id={GRAPH_CONTAINER_ID}
-              style={{
-                width: graphSize - graphPad,
-                height: graphSize - graphPad,
-              }}
-            ></div>
-          </div>
-
-          <div
-            style={{
-              position: 'absolute',
-              top: graphPad / 2,
-              left: graphPad / 2,
-              width: graphSize - graphPad,
-              height: graphSize - graphPad,
-              borderLeft: '2px solid ' + colors.stroke.secondary,
-              borderBottom: '2px solid ' + colors.stroke.secondary,
-            }}
-          ></div>
-
-          <div
-            style={{
-              ...labelStyle,
-              bottom: 0,
-              left: 0,
-              right: 0,
-            }}
-          >
-            % <Trans>tokens redeemed</Trans>
-          </div>
-
-          <div
-            style={{
-              ...labelStyle,
-              transform: 'rotate(-90deg)',
-              bottom: 0,
-              top: 0,
-              left: 0,
-              width: graphSize,
-            }}
-          >
-            <Trans>Token redeem value</Trans>
-          </div>
-        </div>
-      </div>
+      <TokenRedemptionRateGraph
+        value={graphValue}
+        graphPad={50}
+        graphSize={300}
+      />
     </div>
   )
 }

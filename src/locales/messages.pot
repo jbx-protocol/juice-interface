@@ -14,6 +14,9 @@ msgstr ""
 msgid "$ve{tokenSymbolDisplayText} Received"
 msgstr ""
 
+msgid "% tokens redeemed"
+msgstr ""
+
 msgid "({realTokenAllocationPercent}% of all newly minted tokens)."
 msgstr ""
 
@@ -3297,9 +3300,6 @@ msgid "tokens"
 msgstr ""
 
 msgid "tokens per ETH contributed"
-msgstr ""
-
-msgid "tokens redeemed"
 msgstr ""
 
 msgid "until"

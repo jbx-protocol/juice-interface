@@ -20,7 +20,7 @@ import { NftRewardsSection } from '../../NftRewards/NftRewardsSection'
 import { NftPostPayModal } from '../shared/NftPostPayModal'
 import { ProjectBanners } from './banners/ProjectBanners'
 import NewDeployModal from './modals/NewDeployModal'
-import { V2V3DownloadActivityModal } from './modals/V2V3ProjectTokenBalancesModal/V2V3ProjectTokenBalancesModal'
+import { V2V3ProjectTokenBalancesModal } from './modals/V2V3ProjectTokenBalancesModal/V2V3ProjectTokenBalancesModal'
 import ProjectActivity from './ProjectActivity'
 import TreasuryStats from './TreasuryStats'
 import { V2V3FundingCycleSection } from './V2V3FundingCycleSection'
@@ -29,14 +29,23 @@ import { V2V3ProjectHeaderActions } from './V2V3ProjectHeaderActions/V2V3Project
 
 const GUTTER_PX = 40
 
-const AllAssetsButton = ({ onClick }: { onClick: VoidFunction }) => {
+const AllAssetsButton = () => {
+  const [balancesModalVisible, setBalancesModalVisible] =
+    useState<boolean>(false)
+
   return (
-    <TextButton
-      onClick={onClick}
-      style={{ fontWeight: 400, fontSize: '0.8rem' }}
-    >
-      <Trans>All assets</Trans>
-    </TextButton>
+    <>
+      <TextButton
+        onClick={() => setBalancesModalVisible(true)}
+        style={{ fontWeight: 400, fontSize: '0.8rem' }}
+      >
+        <Trans>All assets</Trans>
+      </TextButton>
+      <V2V3ProjectTokenBalancesModal
+        visible={balancesModalVisible}
+        onCancel={() => setBalancesModalVisible(false)}
+      />
+    </>
   )
 }
 
@@ -51,16 +60,32 @@ export function V2V3Project() {
   const { projectMetadata, isArchived, projectId } = useContext(
     ProjectMetadataContext,
   )
+  const {
+    nftRewards: { rewardTiers: nftRewardTiers },
+  } = useContext(NftRewardsContext)
 
   const [newDeployModalVisible, setNewDeployModalVisible] =
     useState<boolean>(false)
   const [nftPostPayModalVisible, setNftPostPayModalVisible] =
     useState<boolean>(false)
-  const [balancesModalVisible, setBalancesModalVisible] =
-    useState<boolean>(false)
 
   // Checks URL to see if user was just directed from project deploy
   const { replace: routerReplace, query } = useRouter()
+
+  const isMobile = useMobile()
+  const isOwner = useIsUserAddress(projectOwnerAddress)
+
+  const canEditProjectHandle = isOwner && !isPreviewMode && !handle
+
+  const hasCurrentFundingCycle = fundingCycle?.number.gt(0)
+
+  const payProjectFormDisabled = isPreviewMode || !hasCurrentFundingCycle
+
+  const nftRewardsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
+  const hasNftRewards = Boolean(nftRewardTiers?.length)
+  const showNftSection = nftRewardsEnabled && hasNftRewards
+
+  const colSizeMd = isPreviewMode ? 24 : 12
 
   /**
    * When the router is ready,
@@ -81,26 +106,6 @@ export function V2V3Project() {
       setNftPostPayModalVisible(true)
     }
   }, [query])
-
-  const isMobile = useMobile()
-
-  const isOwner = useIsUserAddress(projectOwnerAddress)
-
-  const colSizeMd = isPreviewMode ? 24 : 12
-
-  const hasCurrentFundingCycle = fundingCycle?.number.gt(0)
-
-  const canEditProjectHandle = isOwner && !isPreviewMode && !handle
-
-  const nftRewardsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
-
-  const {
-    nftRewards: { rewardTiers: nftRewardTiers },
-  } = useContext(NftRewardsContext)
-  const hasNftRewards = Boolean(nftRewardTiers?.length)
-  const showNftSection = nftRewardsEnabled && hasNftRewards
-
-  if (projectId === undefined) return null
 
   // Change URL without refreshing page
   const removeQueryParams = () => {
@@ -133,7 +138,7 @@ export function V2V3Project() {
     setNftPostPayModalVisible(false)
   }
 
-  const payProjectFormDisabled = isPreviewMode || !hasCurrentFundingCycle
+  if (projectId === undefined) return null
 
   return (
     <Space direction="vertical" size={GUTTER_PX} style={{ width: '100%' }}>
@@ -155,11 +160,10 @@ export function V2V3Project() {
             <Col md={colSizeMd} xs={24}>
               <TreasuryStats />
               <div style={{ textAlign: 'right' }}>
-                <AllAssetsButton
-                  onClick={() => setBalancesModalVisible(true)}
-                />
+                <AllAssetsButton />
               </div>
             </Col>
+
             <Col md={colSizeMd} xs={24}>
               <PayProjectForm disabled={payProjectFormDisabled} />
               {(isMobile && showNftSection) || isPreviewMode ? (
@@ -221,10 +225,6 @@ export function V2V3Project() {
           config={projectMetadata.nftPaymentSuccessModal}
         />
       ) : null}
-      <V2V3DownloadActivityModal
-        visible={balancesModalVisible}
-        onCancel={() => setBalancesModalVisible(false)}
-      />
     </Space>
   )
 }

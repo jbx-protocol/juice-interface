@@ -20,7 +20,6 @@ export enum V2V3ContractName {
 
   JBV1TokenPaymentTerminal = 'JBV1TokenPaymentTerminal',
 
-  DeprecatedJBController = 'DeprecatedJBController',
   DeprecatedJBSplitsStore = 'DeprecatedJBSplitsStore',
   DeprecatedJBDirectory = 'DeprecatedJBDirectory',
 

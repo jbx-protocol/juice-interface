@@ -39,7 +39,6 @@ export function RelaunchFundingCycleModal(props: ModalProps) {
   const { data, loading: deprecatedFundingCycleLoading } =
     useProjectCurrentFundingCycle({
       projectId,
-      useDeprecatedContract: true,
     })
   const [deprecatedFundingCycle, deprecatedFundingCycleMetadata] = data ?? []
 
@@ -69,7 +68,6 @@ export function RelaunchFundingCycleModal(props: ModalProps) {
       projectId,
       configuration: deprecatedFundingCycle?.configuration?.toString(),
       terminal: primaryTerminal,
-      useDeprecatedContract: true,
     })
 
   const [deprecatedDistributionLimit, deprecatedDistributionLimitCurrency] =

@@ -4,9 +4,7 @@ import { V2CVType, V3CVType } from 'models/cv'
 import { ProjectMetadataV5 } from 'models/project-metadata'
 import { GetServerSideProps } from 'next'
 import { TransactionProvider } from 'providers/TransactionProvider'
-import { V2V3ContractsProvider } from 'providers/v2v3/V2V3ContractsProvider'
-import V2V3ProjectMetadataProvider from 'providers/v2v3/V2V3ProjectMetadataProvider'
-import V2V3ProjectProvider from 'providers/v2v3/V2V3ProjectProvider'
+import { V2V3ProjectPageProvider } from 'providers/v2v3/V2V3ProjectPageProvider'
 import { VeNftProvider } from 'providers/v2v3/VeNftProvider'
 import { getProjectProps, ProjectPageProps } from '../utils/props'
 
@@ -30,20 +28,17 @@ export default function V2V3ProjectSettingsPage({
 }) {
   return (
     <AppWrapper>
-      <V2V3ContractsProvider initialCv={cv}>
+      <V2V3ProjectPageProvider
+        projectId={projectId}
+        metadata={metadata}
+        cv={cv}
+      >
         <TransactionProvider>
-          <V2V3ProjectMetadataProvider
-            projectId={projectId}
-            metadata={metadata}
-          >
-            <V2V3ProjectProvider projectId={projectId}>
-              <VeNftProvider projectId={projectId}>
-                <VeNft />
-              </VeNftProvider>
-            </V2V3ProjectProvider>
-          </V2V3ProjectMetadataProvider>
+          <VeNftProvider projectId={projectId}>
+            <VeNft />
+          </VeNftProvider>
         </TransactionProvider>
-      </V2V3ContractsProvider>
+      </V2V3ProjectPageProvider>
     </AppWrapper>
   )
 }

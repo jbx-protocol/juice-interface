@@ -3,10 +3,11 @@ import { Tooltip } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { ThemeContext } from 'contexts/themeContext'
 import { generateSafeTxUrl } from 'lib/safe'
+import { SafeTransactionType } from 'models/safe'
 import { CSSProperties, useContext } from 'react'
 import { formatHistoricalDate } from 'utils/format/formatDate'
-import { SafeTransactionType } from '.'
 import { ShareTxButton } from './ShareTxButton'
+import { TransactionSigStatus } from './TransactionSigStatus'
 
 const nonceStyle: CSSProperties = {
   marginRight: '2rem',
@@ -17,10 +18,12 @@ export function TransactionHeader({
   transaction,
   onClick,
   title,
+  isPastTransaction,
 }: {
   transaction: SafeTransactionType
   onClick?: VoidFunction
   title?: string
+  isPastTransaction?: boolean
 }) {
   const {
     theme: { colors },
@@ -55,7 +58,17 @@ export function TransactionHeader({
         {transactionTitle}
         <ShareTxButton transaction={transaction} style={{ marginLeft: 10 }} />
       </div>
-      <div style={{ color: colors.text.secondary }}>
+      <div
+        style={{
+          width: '200px',
+          color: colors.text.secondary,
+          display: 'flex',
+          justifyContent: isPastTransaction ? 'flex-end' : 'space-between',
+        }}
+      >
+        {isPastTransaction ? null : (
+          <TransactionSigStatus transaction={transaction} />
+        )}
         {formatHistoricalDate(new Date(transaction.submissionDate).valueOf())}
       </div>
     </div>

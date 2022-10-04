@@ -4,19 +4,19 @@ import { t } from '@lingui/macro'
 import { ThemeContext } from 'contexts/themeContext'
 
 import { CSSProperties, useContext, useState } from 'react'
-import { SafeTransactionType } from '../..'
 
-import { safeTransactionRowStyle } from '../../SafeTransaction'
+import {
+  SafeTransactionComponentProps,
+  safeTransactionRowStyle,
+} from '../../SafeTransaction'
 import { TransactionHeader } from '../../TransactionHeader'
 import { ReconfigureRichPreview } from './ReconfigurationRichPreview'
 
 export function ReconfigureFundingCyclesOfTransaction({
   transaction,
   selected,
-}: {
-  transaction: SafeTransactionType
-  selected: boolean
-}) {
+  isPastTransaction,
+}: SafeTransactionComponentProps) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -48,6 +48,7 @@ export function ReconfigureFundingCyclesOfTransaction({
         <TransactionHeader
           transaction={transaction}
           title={t`Reconfigure funding cycle`}
+          isPastTransaction={isPastTransaction}
         />
         <div style={{ marginLeft: 10 }}>
           {expanded ? <UpOutlined /> : <DownOutlined />}

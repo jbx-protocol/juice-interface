@@ -6,38 +6,17 @@ import { layouts } from 'constants/styles/layouts'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
-import { useAddressIsGnosisSafe } from 'hooks/AddressIsGnosisSafe'
+import { useGnosisSafe } from 'hooks/GnosisSafe'
 import { useQueuedSafeTransactions } from 'hooks/safe/QueuedSafeTransactions'
 import { generateSafeUrl } from 'lib/safe'
+import { SafeTransactionType } from 'models/safe'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { CSSProperties, useContext, useState } from 'react'
+import { CSSProperties, useContext } from 'react'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { ExecutedSafeTransactionsListing } from './ExecutedSafeTransactionsListing'
 
 import { SafeTransaction } from './SafeTransaction'
-export interface SafeTransactionType {
-  nonce: number
-  origin: string
-  data?: string
-  dataDecoded?: {
-    method: string
-    parameters: object[]
-  }
-  isExecuted: boolean
-  safeTxGas: number
-  safeTxHash: string
-  submissionDate: string
-  executionDate: string
-  confirmations?: {
-    owner: string
-    submissionDate: string
-    transactionHash: string
-    signature: string
-    signatureType: string
-  }[]
-  safe: string
-}
 
 export type SafeTxCategory = 'queued' | 'history'
 const SAFE_TX_QUEUED_KEY: SafeTxCategory = 'queued'
@@ -58,10 +37,7 @@ export function ProjectSafeDashboard() {
   } = useContext(ThemeContext)
   const { query } = useRouter()
 
-  const preSelectedTab = query.tab as SafeTxCategory
-  const [selectedTab, setSelectedTab] = useState<SafeTxCategory>(
-    preSelectedTab ?? DEFAULT_TAB,
-  )
+  const selectedTab = (query.tab as SafeTxCategory) ?? DEFAULT_TAB
 
   const preSelectedTx = query.tx as string
 
@@ -76,8 +52,8 @@ export function ProjectSafeDashboard() {
       safeAddress: projectOwnerAddress,
     },
   )
-  const { data: ownerIsGnosisSafe, isLoading: ownerIsGnosisSafeLoading } =
-    useAddressIsGnosisSafe(projectOwnerAddress)
+  const { data: gnosisSafe, isLoading: gnosisSafeLoading } =
+    useGnosisSafe(projectOwnerAddress)
 
   if (!projectOwnerAddress) return null
 
@@ -86,7 +62,7 @@ export function ProjectSafeDashboard() {
     margin: '2rem auto',
   }
 
-  if (!ownerIsGnosisSafeLoading && !ownerIsGnosisSafe) {
+  if (!gnosisSafeLoading && !gnosisSafe) {
     return (
       <div style={containerStyle}>
         <Trans>Project is not owned by a Safe.</Trans>
@@ -113,7 +89,7 @@ export function ProjectSafeDashboard() {
 
       {isLoading && <div style={{ marginTop: 20 }}>Loading...</div>}
 
-      {!isLoading && (
+      {!isLoading && gnosisSafe && (
         <div style={{ marginTop: '1.5rem' }}>
           <Space size="large">
             <Link href={`${projectSafeRoute}?tab=queued`}>
@@ -121,7 +97,6 @@ export function ProjectSafeDashboard() {
                 <Tab
                   name={TAB_NAMES.queued}
                   isSelected={selectedTab === SAFE_TX_QUEUED_KEY}
-                  onClick={() => setSelectedTab(SAFE_TX_QUEUED_KEY)}
                 />
               </a>
             </Link>
@@ -130,7 +105,6 @@ export function ProjectSafeDashboard() {
                 <Tab
                   name={TAB_NAMES.history}
                   isSelected={selectedTab === SAFE_TX_HISTORY_KEY}
-                  onClick={() => setSelectedTab(SAFE_TX_HISTORY_KEY)}
                 />
               </a>
             </Link>
@@ -143,7 +117,10 @@ export function ProjectSafeDashboard() {
                   (transaction: SafeTransactionType, idx: number) => (
                     <SafeTransaction
                       key={`safe-${transaction.nonce}-${idx}`}
-                      transaction={transaction}
+                      transaction={{
+                        ...transaction,
+                        threshold: gnosisSafe?.threshold,
+                      }}
                       selected={preSelectedTx === transaction.safeTxHash}
                     />
                   ),
@@ -151,7 +128,7 @@ export function ProjectSafeDashboard() {
               </>
             ) : selectedTab === SAFE_TX_HISTORY_KEY ? (
               <ExecutedSafeTransactionsListing
-                safeAddress={projectOwnerAddress}
+                safe={gnosisSafe}
                 selectedTx={preSelectedTx}
               />
             ) : null}

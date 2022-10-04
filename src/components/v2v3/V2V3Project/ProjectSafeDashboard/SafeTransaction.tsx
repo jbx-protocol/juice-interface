@@ -1,13 +1,14 @@
 import { ThemeContext } from 'contexts/themeContext'
+import { SafeTransactionType } from 'models/safe'
 import { CSSProperties, useContext, useMemo } from 'react'
 import { ReconfigureFundingCyclesOfTransaction } from './juiceboxTransactions/reconfigureFundingCyclesOf'
 
-import { SafeTransactionType } from './ProjectSafeDashboard'
 import { TransactionHeader } from './TransactionHeader'
 
 export type SafeTransactionComponentProps = {
   transaction: SafeTransactionType
   selected: boolean
+  isPastTransaction?: boolean
 }
 
 export const safeTransactionRowStyle: CSSProperties = {
@@ -23,6 +24,7 @@ export const safeTransactionRowStyle: CSSProperties = {
 const GenericSafeTransaction = ({
   transaction,
   selected,
+  isPastTransaction,
 }: SafeTransactionComponentProps) => {
   const {
     theme: { colors },
@@ -35,10 +37,14 @@ const GenericSafeTransaction = ({
         border: `1px solid ${
           selected ? colors.stroke.action.primary : colors.stroke.tertiary
         }`,
+        paddingRight: '40px',
       }}
       id={`${transaction.safeTxHash}`}
     >
-      <TransactionHeader transaction={transaction} />
+      <TransactionHeader
+        transaction={transaction}
+        isPastTransaction={isPastTransaction}
+      />
     </div>
   )
 }
@@ -52,10 +58,8 @@ const TRANSACTION_METHOD_COMPONENTS_MAP: {
 export function SafeTransaction({
   transaction,
   selected,
-}: {
-  transaction: SafeTransactionType
-  selected: boolean
-}) {
+  isPastTransaction,
+}: SafeTransactionComponentProps) {
   const { method } = transaction.dataDecoded ?? {}
 
   const TransactionContent = useMemo(() => {
@@ -65,5 +69,11 @@ export function SafeTransaction({
 
   if (!method) return null
 
-  return <TransactionContent transaction={transaction} selected={selected} />
+  return (
+    <TransactionContent
+      transaction={transaction}
+      selected={selected}
+      isPastTransaction={isPastTransaction}
+    />
+  )
 }

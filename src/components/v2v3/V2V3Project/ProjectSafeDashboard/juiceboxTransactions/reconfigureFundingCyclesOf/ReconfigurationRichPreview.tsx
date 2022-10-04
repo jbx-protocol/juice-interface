@@ -8,14 +8,16 @@ import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/V2V3ProjectContractsContext'
 import { OutgoingProjectData } from 'models/outgoingProject'
+import { SafeTransactionType } from 'models/safe'
 import { useContext } from 'react'
 import { formatOutgoingSplits } from 'utils/splits'
 import { formatReservedRate, MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
-import { SafeTransactionComponentProps } from '../../SafeTransaction'
 
 export function ReconfigureRichPreview({
   transaction,
-}: SafeTransactionComponentProps) {
+}: {
+  transaction: SafeTransactionType
+}) {
   const {
     contracts: { JBController },
   } = useContext(V2V3ProjectContractsContext)
@@ -26,10 +28,18 @@ export function ReconfigureRichPreview({
   } = useContext(ThemeContext)
 
   if (!contracts) return null
-
-  const dataResult: unknown = JBController?.interface?.parseTransaction({
-    data: transaction.data ?? '',
-  }).args
+  let dataResult: unknown
+  try {
+    dataResult = JBController?.interface?.parseTransaction({
+      data: transaction.data ?? '',
+    }).args
+  } catch (e) {
+    return (
+      <div style={{ margin: '1rem 3rem 0' }}>
+        <Trans>Error reading transaction data</Trans>
+      </div>
+    )
+  }
 
   const decodedData = dataResult as OutgoingProjectData
 

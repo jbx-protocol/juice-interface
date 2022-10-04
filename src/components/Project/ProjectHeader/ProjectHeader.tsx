@@ -7,7 +7,7 @@ import { GnosisSafeBadge } from 'components/Project/ProjectHeader/GnosisSafeBadg
 import ProjectLogo from 'components/ProjectLogo'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { useAddressIsGnosisSafe } from 'hooks/AddressIsGnosisSafe'
+import { useGnosisSafe } from 'hooks/GnosisSafe'
 import useMobile from 'hooks/Mobile'
 import { useContext } from 'react'
 import { EditProjectHandleButton } from './EditProjectHandleButton'
@@ -34,8 +34,8 @@ export function ProjectHeader({
   )
 
   const isMobile = useMobile()
-  const { data: ownerIsGnosisSafe, isLoading: ownerIsGnosisSafeLoading } =
-    useAddressIsGnosisSafe(projectOwnerAddress)
+  const { data: gnosisSafe, isLoading: gnosisSafeLoading } =
+    useGnosisSafe(projectOwnerAddress)
 
   const projectTitle = projectMetadata?.name || t`Untitled project`
 
@@ -169,9 +169,7 @@ export function ProjectHeader({
                 Owned by <FormattedAddress address={projectOwnerAddress} />
               </Trans>
             </span>
-            {!ownerIsGnosisSafeLoading && ownerIsGnosisSafe && (
-              <GnosisSafeBadge />
-            )}
+            {!gnosisSafeLoading && gnosisSafe && <GnosisSafeBadge />}
           </div>
         )}
       </div>

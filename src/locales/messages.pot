@@ -773,6 +773,9 @@ msgstr ""
 msgid "Currently worth: <0><1/></0>"
 msgstr ""
 
+msgid "Custom Token Settings"
+msgstr ""
+
 msgid "Custom strategy"
 msgstr ""
 
@@ -810,6 +813,9 @@ msgid "Days to lock tokens"
 msgstr ""
 
 msgid "Default"
+msgstr ""
+
+msgid "Default Token Settings <0/>"
 msgstr ""
 
 msgid "Delete NFT"
@@ -852,6 +858,9 @@ msgid "Deposit 1 wei to @{handle}"
 msgstr ""
 
 msgid "Description"
+msgstr ""
+
+msgid "Design how your project's tokens should work. You can use your project tokens for governance, ownership & treasury redemptions. <0>Learn more</0>."
 msgstr ""
 
 msgid "Design how your tokens should work."
@@ -2012,6 +2021,9 @@ msgstr ""
 msgid "Project tokens <0>aren't ERC-20 tokens</0> by default. Once you deploy your project, you can issue an ERC-20 for your holders to claim. This is <1>optional</1>."
 msgstr ""
 
+msgid "Project tokens are not ERC-20 tokens by default. Once you deploy your project, you can issue an ERC-20 for your holders to claim. This is optional."
+msgstr ""
+
 msgid "Project tokens will be minted to whoever pays this payer contract."
 msgstr ""
 
@@ -2097,6 +2109,9 @@ msgid "Recipients will receive payouts in ETH."
 msgstr ""
 
 msgid "Recommended"
+msgstr ""
+
+msgid "Recommended for new users. <0>View details</0>."
 msgstr ""
 
 msgid "Reconfiguration rules"
@@ -2346,6 +2361,9 @@ msgid "Set a text record for {0} with the key <0>\"{projectHandleENSTextRecordKe
 msgstr ""
 
 msgid "Set a unique name that will be visible in your project's URL, and that will allow your project to appear in search results."
+msgstr ""
+
+msgid "Set custom rules & parameters for your project tokens."
 msgstr ""
 
 msgid "Set handle @{handle}"

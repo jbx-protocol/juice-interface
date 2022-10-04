@@ -12,6 +12,7 @@ import {
   FundingCyclesPage,
   PayoutsPage,
   ProjectDetailsPage,
+  ProjectTokenPage,
 } from './components'
 import { FundingTargetPage } from './components/pages/FundingTarget'
 import { Wizard } from './components/Wizard'
@@ -69,6 +70,19 @@ export function Create() {
               description={t`Choose which addresses to pay and how to split the total payout amount each funding cycle. How do I decide?`}
             >
               <PayoutsPage />
+            </Wizard.Page>
+            <Wizard.Page
+              name="projectToken"
+              title={t`Project Token`}
+              description={
+                <Trans>
+                  Design how your project's tokens should work. You can use your
+                  project tokens for governance, ownership & treasury
+                  redemptions. <a href="#TODO">Learn more</a>.
+                </Trans>
+              }
+            >
+              <ProjectTokenPage />
             </Wizard.Page>
             <Wizard.Page name="nextStep" title={t`Empty Step`}>
               <div>TODO</div>

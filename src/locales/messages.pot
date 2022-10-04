@@ -287,6 +287,9 @@ msgstr ""
 msgid "Add new payout"
 msgstr ""
 
+msgid "Add new payout address"
+msgstr ""
+
 msgid "Add payout"
 msgstr ""
 
@@ -312,6 +315,9 @@ msgid "Add token"
 msgstr ""
 
 msgid "Add token allocation"
+msgstr ""
+
+msgid "Add wallet addresses or juicebox projects to receive payouts."
 msgstr ""
 
 msgid "Address"
@@ -582,6 +588,9 @@ msgid "Choose an ENS name to use as the project's handle. Subdomains are allowed
 msgstr ""
 
 msgid "Choose how you would like to configure your payouts."
+msgstr ""
+
+msgid "Choose which addresses to pay and how to split the total payout amount each funding cycle. How do I decide?"
 msgstr ""
 
 msgid "Claim {0}"
@@ -893,7 +902,13 @@ msgstr ""
 msgid "Display ERC-20 tokens and other Juicebox project tokens that are in this project's owner's wallet."
 msgstr ""
 
+msgid "Distribute a percentage of all funds received between the entities nominated in the next step."
+msgstr ""
+
 msgid "Distribute a percentage of all funds received to entities. Your distribution limit will be <0>infinite</0>."
+msgstr ""
+
+msgid "Distribute a specific amount of funds to each entity nominated in the next step."
 msgstr ""
 
 msgid "Distribute a specific amount of funds to entities each funding cycle. Your distribution limit will equal the <0>sum of all payout amounts.</0>"
@@ -1275,6 +1290,9 @@ msgid "How the {reservedPercentage}% of your project's reserved tokens will be s
 msgstr ""
 
 msgid "How to Juice."
+msgstr ""
+
+msgid "How would you like to distribute payments?"
 msgstr ""
 
 msgid "I accept this project's <0>risks</0>."
@@ -2417,6 +2435,9 @@ msgstr ""
 msgid "Spaces are not allowed"
 msgstr ""
 
+msgid "Specific Amounts"
+msgstr ""
+
 msgid "Specific Funding Target"
 msgstr ""
 
@@ -3024,6 +3045,9 @@ msgid "Who funds Juicebox projects?"
 msgstr ""
 
 msgid "Who is Peel?"
+msgstr ""
+
+msgid "Who's getting paid?"
 msgstr ""
 
 msgid "Why Ethereum?"

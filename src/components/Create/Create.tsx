@@ -8,7 +8,11 @@ import { V2V3ContractsProvider } from 'providers/v2v3/V2V3ContractsProvider'
 import { V2V3CurrencyProvider } from 'providers/v2v3/V2V3CurrencyProvider'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { helpPagePath } from 'utils/routes'
-import { FundingCyclesPage, ProjectDetailsPage } from './components'
+import {
+  FundingCyclesPage,
+  PayoutsPage,
+  ProjectDetailsPage,
+} from './components'
 import { FundingTargetPage } from './components/pages/FundingTarget'
 import { Wizard } from './components/Wizard'
 
@@ -58,6 +62,13 @@ export function Create() {
               description={t`Select the option that best suits your project’s funding requirements.`}
             >
               <FundingTargetPage />
+            </Wizard.Page>
+            <Wizard.Page
+              name="payouts"
+              title={t`Payouts`}
+              description={t`Choose which addresses to pay and how to split the total payout amount each funding cycle. How do I decide?`}
+            >
+              <PayoutsPage />
             </Wizard.Page>
             <Wizard.Page name="nextStep" title={t`Empty Step`}>
               <div>TODO</div>

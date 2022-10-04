@@ -13,7 +13,7 @@ import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { readProvider } from 'constants/readProvider'
 import { downloadCsvFile } from 'utils/csv'
 
-export default function V1DownloadPaymentsModal({
+export function V1DownloadPaymentsModal({
   visible,
   onCancel,
 }: {

@@ -1,10 +1,9 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Modal } from 'antd'
 import { useState } from 'react'
+import { V1DownloadPaymentsModal } from './V1DownloadPaymentsModal'
 
-import V1DownloadPaymentsModal from './V1DownloadPaymentsModal'
-
-export default function V1DownloadActivityModal({
+export function V1DownloadActivityModal({
   visible,
   onCancel,
 }: {

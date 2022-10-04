@@ -6,6 +6,7 @@ import FundingCycleDetails from 'components/v2v3/V2V3Project/V2V3FundingCycleSec
 import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { V2V3ProjectContractsContext } from 'contexts/v2v3/V2V3ProjectContractsContext'
 import { OutgoingProjectData } from 'models/outgoingProject'
 import { useContext } from 'react'
 import { formatOutgoingSplits } from 'utils/splits'
@@ -17,6 +18,9 @@ export function ReconfigureRichPreview({
 }: {
   transaction: SafeTransactionType
 }) {
+  const {
+    contracts: { JBController },
+  } = useContext(V2V3ProjectContractsContext)
   const { contracts } = useContext(V2V3ContractsContext)
   const { projectOwnerAddress } = useContext(V2V3ProjectContext)
   const {
@@ -25,9 +29,7 @@ export function ReconfigureRichPreview({
 
   if (!contracts) return null
 
-  const dataResult: unknown = contracts[
-    'JBController'
-  ].interface.parseTransaction({
+  const dataResult: unknown = JBController?.interface?.parseTransaction({
     data: transaction.data ?? '',
   }).args
 

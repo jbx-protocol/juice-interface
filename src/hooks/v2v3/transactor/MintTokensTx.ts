@@ -1,11 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
-import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useContext } from 'react'
 
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactionContext } from 'contexts/transactionContext'
+import { V2V3ProjectContractsContext } from 'contexts/v2v3/V2V3ProjectContractsContext'
 import {
   handleTransactionException,
   TransactorInstance,
@@ -20,8 +20,10 @@ export function useMintTokensTx(): TransactorInstance<{
   memo: string
 }> {
   const { transactor } = useContext(TransactionContext)
-  const { contracts } = useContext(V2V3ContractsContext)
   const { tokenSymbol } = useContext(V2V3ProjectContext)
+  const {
+    contracts: { JBController },
+  } = useContext(V2V3ProjectContractsContext)
   const { projectId, cv } = useContext(ProjectMetadataContext)
 
   // TODO new V2 feature:
@@ -30,9 +32,9 @@ export function useMintTokensTx(): TransactorInstance<{
 
   return ({ value, beneficiary, preferClaimed, memo }, txOpts) => {
     try {
-      invariant(transactor && projectId && contracts)
+      invariant(transactor && projectId && JBController)
       return transactor(
-        contracts?.JBController,
+        JBController,
         'mintTokensOf',
         [
           projectId,
@@ -53,8 +55,8 @@ export function useMintTokensTx(): TransactorInstance<{
     } catch {
       const missingParam = !transactor
         ? 'transactor'
-        : !contracts
-        ? 'contracts'
+        : !JBController
+        ? 'JBController'
         : !projectId
         ? 'projectId'
         : undefined

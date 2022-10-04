@@ -1,7 +1,7 @@
 import { LoadingOutlined } from '@ant-design/icons'
 import { Col, Row } from 'antd'
 import { PayProjectForm } from 'components/Project/PayProjectForm'
-import ProjectHeader from 'components/Project/ProjectHeader'
+import { ProjectHeader } from 'components/Project/ProjectHeader'
 import { CV_V1 } from 'constants/cv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
@@ -26,19 +26,14 @@ export function V1Project({
 }) {
   const { createdAt, handle, isPreviewMode, owner } =
     useContext(V1ProjectContext)
-  const { projectId, isArchived, projectMetadata } = useContext(
-    ProjectMetadataContext,
-  )
+  const { projectId } = useContext(ProjectMetadataContext)
 
   return (
     <div style={style}>
       <ProjectHeader
-        metadata={projectMetadata}
         handle={handle}
-        isArchived={isArchived}
         projectOwnerAddress={owner}
         actions={<V1ProjectHeaderActions />}
-        projectId={projectId}
       />
 
       <Row gutter={gutter} align="bottom">

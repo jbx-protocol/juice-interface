@@ -203,7 +203,7 @@ export default function V1ConfirmPayOwnerModal({
         {projectMetadata.payDisclosure && (
           <div>
             <h4>
-              <Trans>Notice from {projectMetadata.name}:</Trans>
+              <Trans>Notice from {projectMetadata.name}</Trans>
             </h4>
             <Paragraph description={projectMetadata.payDisclosure} />
           </div>

@@ -338,7 +338,6 @@ export function DistributionSplitModal({
             <InputNumber
               value={parseInt(projectId ?? '')}
               style={{ width: '100%' }}
-              placeholder={t`ID`}
               onChange={(projectId: number | null) => {
                 setProjectId(projectId?.toString())
               }}

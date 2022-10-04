@@ -1322,12 +1322,6 @@ msgstr ""
 msgid "I understand"
 msgstr ""
 
-msgid "ID"
-msgstr ""
-
-msgid "ID: {projectId}"
-msgstr ""
-
 msgid "If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 msgstr ""
 
@@ -1767,9 +1761,6 @@ msgid "Note: Tokens can be minted manually when allowed in the current funding c
 msgstr ""
 
 msgid "Notice from {0}"
-msgstr ""
-
-msgid "Notice from {0}:"
 msgstr ""
 
 msgid "Once launched, your first funding cycle <0>can't be changed</0>. You can reconfigure upcoming funding cycles according to the project's <1>reconfiguration rules</1>."

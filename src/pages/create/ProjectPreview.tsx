@@ -72,7 +72,7 @@ export default function ProjectPreview() {
 
     tokenAddress: undefined,
     terminals: [],
-    primaryTerminal: undefined,
+    primaryETHTerminal: undefined,
     tokenSymbol: undefined,
     tokenName: undefined,
     projectOwnerAddress: userAddress,

@@ -2,8 +2,10 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
 import PayWarningModal from 'components/PayWarningModal'
-import { PayButtonProps } from 'components/Project/PayProjectForm/PayProjectForm'
-import { PayProjectFormContext } from 'components/Project/PayProjectForm/payProjectFormContext'
+import {
+  PayButtonProps,
+  PayProjectFormContext,
+} from 'components/Project/PayProjectForm/payProjectFormContext'
 import { readNetwork } from 'constants/networks'
 import { V1_CURRENCY_USD } from 'constants/v1/currency'
 import { disablePayOverrides } from 'constants/v1/overrides'

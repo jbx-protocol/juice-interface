@@ -1,14 +1,13 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Button, Descriptions, Space, Statistic } from 'antd'
-import { useWallet } from 'hooks/Wallet'
-
-import * as constants from '@ethersproject/constants'
 import FormattedAddress from 'components/FormattedAddress'
 import { IssueErc20TokenButton } from 'components/IssueErc20TokenButton'
 import ManageTokensModal from 'components/ManageTokensModal'
 import ParticipantsModal from 'components/modals/ParticipantsModal'
 import SectionHeader from 'components/SectionHeader'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useERC20BalanceOf from 'hooks/ERC20BalanceOf'
@@ -18,36 +17,34 @@ import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
 import useTotalSupplyOfProjectToken from 'hooks/v1/contractReader/TotalSupplyOfProjectToken'
 import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceOfUser'
 import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
+import { useTransferTokensTx } from 'hooks/v1/transactor/TransferTokensTx'
+import { useWallet } from 'hooks/Wallet'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import { CSSProperties, useContext, useState } from 'react'
 import { formatPercent, formatWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
-
-import { useTransferTokensTx } from 'hooks/v1/transactor/TransferTokensTx'
-import ConfirmUnstakeTokensModal from '../modals/ConfirmUnstakeTokensModal'
-import PrintPreminedModal from '../modals/PrintPreminedModal'
-import RedeemModal from '../modals/RedeemModal'
+import ConfirmUnstakeTokensModal from './modals/ConfirmUnstakeTokensModal'
+import PrintPreminedModal from './modals/PrintPreminedModal'
+import RedeemModal from './modals/RedeemModal'
 
 const labelStyle: CSSProperties = {
   width: 128,
 }
 
-export default function Rewards() {
+export function TokensSection() {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
   const {
-    projectId,
-    handle,
     tokenAddress,
     tokenSymbol,
-    cv,
     isPreviewMode,
     currentFC,
     terminal,
     overflow,
   } = useContext(V1ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const [manageTokensModalVisible, setManageTokensModalVisible] =
     useState<boolean>()
@@ -223,11 +220,8 @@ export default function Rewards() {
         MintModal={PrintPreminedModal}
       />
       <ParticipantsModal
-        projectId={projectId}
-        projectName={handle}
         tokenSymbol={tokenSymbol}
         tokenAddress={tokenAddress}
-        cv={cv}
         totalTokenSupply={totalSupply}
         visible={participantsModalVisible}
         onCancel={() => setParticipantsModalVisible(false)}

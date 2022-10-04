@@ -6,6 +6,7 @@ import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { RedeemAMMPrices } from 'components/Project/RedeemAMMPrices'
 import { V1_CURRENCY_USD } from 'constants/v1/currency'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useClaimableOverflowOf from 'hooks/v1/contractReader/ClaimableOverflowOf'
@@ -33,6 +34,13 @@ export default function RedeemModal({
   onOk?: VoidFunction
   onCancel?: VoidFunction
 }) {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+  const { tokenSymbol, tokenAddress, currentFC, terminal, overflow } =
+    useContext(V1ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
+
   const [redeemAmount, setRedeemAmount] = useState<string>()
   const [loading, setLoading] = useState<boolean>()
   const redeemTokensTx = useRedeemTokensTx()
@@ -41,25 +49,10 @@ export default function RedeemModal({
     redeemAmount: string
   }>()
 
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-  const { userAddress } = useWallet()
-  const {
-    projectId,
-    tokenSymbol,
-    tokenAddress,
-    currentFC,
-    terminal,
-    overflow,
-  } = useContext(V1ProjectContext)
-
   const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
-
+  const { userAddress } = useWallet()
   const totalBalance = useTotalBalanceOf(userAddress, projectId, terminal?.name)
-
   const maxClaimable = useClaimableOverflowOf()
-
   const rewardAmount = useRedeemRate({
     tokenAmount: redeemAmount,
     fundingCycle: currentFC,

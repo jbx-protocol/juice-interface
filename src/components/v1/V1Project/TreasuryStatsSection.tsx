@@ -25,22 +25,17 @@ import { readNetwork } from 'constants/networks'
 import { textPrimary, textSecondary } from 'constants/styles/text'
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V1BalancesModal } from './modals/V1BalancesModal'
 
-export default function Paid() {
+export function TreasuryStatsSection() {
   const [balancesModalVisible, setBalancesModalVisible] = useState<boolean>()
   const { theme } = useContext(ThemeContext)
   const { colors } = theme
 
-  const {
-    projectId,
-    currentFC,
-    balanceInCurrency,
-    balance,
-    owner,
-    earned,
-    overflow,
-  } = useContext(V1ProjectContext)
+  const { currentFC, balanceInCurrency, balance, owner, earned, overflow } =
+    useContext(V1ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const converter = useCurrencyConverter()
   const { data: ownerBalance } = useEthBalanceQuery(owner)

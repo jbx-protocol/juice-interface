@@ -6,6 +6,7 @@ import { useContext } from 'react'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 
 import { t } from '@lingui/macro'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useV1ProjectTitle } from '../ProjectTitle'
 
@@ -15,7 +16,9 @@ export function useTapProjectTx(): TransactorInstance<{
   currency: V1CurrencyOption
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
-  const { projectId, terminal } = useContext(V1ProjectContext)
+  const { terminal } = useContext(V1ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
+
   const projectTitle = useV1ProjectTitle()
 
   return ({ tapAmount, minAmount, currency }, txOpts) => {

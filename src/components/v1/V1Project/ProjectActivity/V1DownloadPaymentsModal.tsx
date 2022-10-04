@@ -1,29 +1,29 @@
 import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
-
-import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { useCallback, useContext, useEffect, useState } from 'react'
-import { fromWad } from 'utils/format/formatNumber'
-import { querySubgraphExhaustive } from 'utils/graph'
-
-import { emitErrorNotification } from 'utils/notifications'
-
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { readProvider } from 'constants/readProvider'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { downloadCsvFile } from 'utils/csv'
+import { fromWad } from 'utils/format/formatNumber'
+import { querySubgraphExhaustive } from 'utils/graph'
+import { emitErrorNotification } from 'utils/notifications'
 
-export default function V1DownloadPaymentsModal({
+export function V1DownloadPaymentsModal({
   visible,
   onCancel,
 }: {
   visible: boolean | undefined
   onCancel: VoidFunction | undefined
 }) {
+  const { projectId, cv } = useContext(ProjectMetadataContext)
+
   const [latestBlockNumber, setLatestBlockNumber] = useState<number>()
   const [blockNumber, setBlockNumber] = useState<number>()
   const [loading, setLoading] = useState<boolean>()
-  const { projectId, cv, handle } = useContext(V1ProjectContext)
+  const { handle } = useContext(V1ProjectContext)
 
   useEffect(() => {
     readProvider.getBlockNumber().then(val => {

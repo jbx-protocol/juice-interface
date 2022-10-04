@@ -25,6 +25,7 @@ import { amountSubFee, feeForAmount } from 'utils/v1/math'
 
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { V1_CURRENCY_USD } from 'constants/v1/currency'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 
 export default function WithdrawModal({
   visible,
@@ -35,11 +36,12 @@ export default function WithdrawModal({
   onCancel?: VoidFunction
   onConfirmed?: VoidFunction
 }) {
-  const { balanceInCurrency, projectId, currentFC, currentPayoutMods, owner } =
-    useContext(V1ProjectContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const { balanceInCurrency, currentFC, currentPayoutMods, owner } =
+    useContext(V1ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const [loading, setLoading] = useState<boolean>()
   const [tapAmount, setTapAmount] = useState<string>()

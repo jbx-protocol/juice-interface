@@ -1,7 +1,7 @@
 import { LeftOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Layout, Menu, MenuProps, Space } from 'antd'
-import ProjectHeader from 'components/Project/ProjectHeader'
+import { ProjectHeader } from 'components/Project/ProjectHeader'
 import { V2V3ProjectHeaderActions } from 'components/v2v3/V2V3Project/V2V3ProjectHeaderActions'
 import { VeNftContent } from 'components/veNft/VeNftContent'
 import { layouts } from 'constants/styles/layouts'
@@ -48,9 +48,7 @@ const items: MenuItem[] = [
 export function VeNft() {
   const { isPreviewMode, projectOwnerAddress, handle } =
     useContext(V2V3ProjectContext)
-  const { projectMetadata, isArchived, projectId } = useContext(
-    ProjectMetadataContext,
-  )
+  const { projectId } = useContext(ProjectMetadataContext)
   const { isDarkMode } = useContext(ThemeContext)
 
   const router = useRouter()
@@ -70,13 +68,10 @@ export function VeNft() {
     <div style={layouts.maxWidth}>
       <Space direction="vertical" size={40} style={{ width: '100%' }}>
         <ProjectHeader
-          metadata={projectMetadata}
           actions={!isPreviewMode ? <V2V3ProjectHeaderActions /> : undefined}
-          isArchived={isArchived}
           handle={handle}
           projectOwnerAddress={projectOwnerAddress}
           canEditProjectHandle={canEditProjectHandle}
-          projectId={projectId}
         />
         <Layout
           style={{

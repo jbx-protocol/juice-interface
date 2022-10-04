@@ -7,6 +7,7 @@ import { useWallet } from 'hooks/Wallet'
 import { TicketMod } from 'models/mods'
 import { useContext } from 'react'
 
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useV1ProjectTitle } from '../ProjectTitle'
 
@@ -16,7 +17,9 @@ export function useSetTicketModsTx(): TransactorInstance<{
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
   const { userAddress } = useWallet()
-  const { projectId, terminal } = useContext(V1ProjectContext)
+  const { terminal } = useContext(V1ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
+
   const projectTitle = useV1ProjectTitle()
 
   return ({ configured, ticketMods }, txOpts) => {

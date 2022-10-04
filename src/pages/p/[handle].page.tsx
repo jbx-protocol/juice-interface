@@ -8,13 +8,14 @@ import ScrollToTopButton from 'components/ScrollToTopButton'
 import { V1Project } from 'components/v1/V1Project'
 import { CV_V1, CV_V1_1 } from 'constants/cv'
 import { layouts } from 'constants/styles/layouts'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { paginateDepleteProjectsQueryCall } from 'lib/apollo'
 import { ProjectMetadataV5 } from 'models/project-metadata'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
 import { V1UserProvider } from 'providers/v1/UserProvider'
 import { V1CurrencyProvider } from 'providers/v1/V1CurrencyProvider'
+import { V1ProjectMetadataProvider } from 'providers/v1/V1ProjectMetadataProvider'
 import { V1ProjectProvider } from 'providers/v1/V1ProjectProvider'
 import { useContext } from 'react'
 import { findProjectMetadata } from 'utils/server'
@@ -101,11 +102,13 @@ export default function V1HandlePage({
       <AppWrapper>
         {metadata ? (
           <V1UserProvider>
-            <V1ProjectProvider handle={handle} metadata={metadata}>
-              <V1CurrencyProvider>
-                <V1Dashboard />
-              </V1CurrencyProvider>
-            </V1ProjectProvider>
+            <V1ProjectMetadataProvider handle={handle} metadata={metadata}>
+              <V1ProjectProvider handle={handle}>
+                <V1CurrencyProvider>
+                  <V1Dashboard />
+                </V1CurrencyProvider>
+              </V1ProjectProvider>
+            </V1ProjectMetadataProvider>
           </V1UserProvider>
         ) : (
           <Loading />
@@ -116,7 +119,7 @@ export default function V1HandlePage({
 }
 
 function V1Dashboard() {
-  const { projectId } = useContext(V1ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
   const router = useRouter()
 
   // Checks URL to see if user was just directed from project deploy

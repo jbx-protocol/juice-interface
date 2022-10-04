@@ -1,12 +1,11 @@
-import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { PROJECT_TYPES } from 'constants/v1/projectTypes'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V1ProjectContextType } from 'contexts/v1/projectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useProjectsQuery } from 'hooks/Projects'
 import useSymbolOfERC20 from 'hooks/SymbolOfERC20'
-import { ProjectMetadataV5 } from 'models/project-metadata'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
-import { useMemo } from 'react'
+import { useContext, useMemo } from 'react'
 import { V1CurrencyName } from 'utils/v1/currency'
 import { getTerminalName, getTerminalVersion } from 'utils/v1/terminals'
 import useBalanceOfProject from './contractReader/BalanceOfProject'
@@ -15,7 +14,6 @@ import useCurrentPayoutModsOfProject from './contractReader/CurrentPayoutModsOfP
 import useCurrentTicketModsOfProject from './contractReader/CurrentTicketModsOfProject'
 import useOverflowOfProject from './contractReader/OverflowOfProject'
 import useOwnerOfProject from './contractReader/OwnerOfProject'
-import useProjectIdForHandle from './contractReader/ProjectIdForHandle'
 import useQueuedFundingCycleOfProject from './contractReader/QueuedFundingCycleOfProject'
 import useQueuedPayoutModsOfProject from './contractReader/QueuedPayoutModsOfProject'
 import useQueuedTicketModsOfProject from './contractReader/QueuedTicketModsOfProject'
@@ -24,23 +22,18 @@ import useTokenAddressOfProject from './contractReader/TokenAddressOfProject'
 
 export function useV1ProjectState({
   handle,
-  metadata,
 }: {
-  handle: string | undefined
-  metadata: ProjectMetadataV5 | undefined
+  handle: string
 }): V1ProjectContextType {
-  const projectId = useProjectIdForHandle(handle)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const owner = useOwnerOfProject(projectId)
   const terminalAddress = useTerminalOfProject(projectId)
+  const terminalVersion = getTerminalVersion(terminalAddress)
   const terminalName = getTerminalName({
     address: terminalAddress,
   })
-  const terminalVersion = getTerminalVersion(terminalAddress)
-  const currentFC = useCurrentFundingCycleOfProject(
-    projectId?.toNumber(),
-    terminalName,
-  )
+  const currentFC = useCurrentFundingCycleOfProject(projectId, terminalName)
   const queuedFC = useQueuedFundingCycleOfProject(projectId)
   const currentPayoutMods = useCurrentPayoutModsOfProject(
     projectId,
@@ -60,7 +53,7 @@ export function useV1ProjectState({
   )
   const tokenAddress = useTokenAddressOfProject(projectId)
   const tokenSymbol = useSymbolOfERC20(tokenAddress)
-  const balance = useBalanceOfProject(projectId?.toNumber(), terminalName)
+  const balance = useBalanceOfProject(projectId, terminalName)
   const converter = useCurrencyConverter()
   const balanceInCurrency = useMemo(
     () =>
@@ -75,31 +68,23 @@ export function useV1ProjectState({
   const overflow = useOverflowOfProject(projectId, terminalName)
 
   const { data: projects } = useProjectsQuery({
-    projectId: projectId?.toNumber(),
+    projectId: projectId,
     keys: ['createdAt', 'totalPaid'],
   })
 
   const createdAt = projects?.[0]?.createdAt
   const earned = projects?.[0]?.totalPaid
 
-  const project = useMemo<V1ProjectContextType>(() => {
-    const projectType = projectId
-      ? PROJECT_TYPES[projectId.toNumber()]
-      : 'standard'
+  const project = useMemo<V1ProjectContextType>((): V1ProjectContextType => {
+    const projectType = projectId ? PROJECT_TYPES[projectId] : 'standard'
     const isPreviewMode = false
-    const isArchived = projectId
-      ? V1ArchivedProjectIds.includes(projectId.toNumber()) ||
-        metadata?.archived
-      : false
 
     return {
       createdAt,
-      projectId: projectId?.toNumber(),
       projectType,
       owner,
       earned,
       handle,
-      metadata,
       currentFC,
       queuedFC,
       currentPayoutMods,
@@ -112,8 +97,6 @@ export function useV1ProjectState({
       balanceInCurrency,
       overflow,
       isPreviewMode,
-      isArchived,
-      cv: terminalVersion,
       terminal: {
         address: terminalAddress,
         name: terminalName,
@@ -130,7 +113,6 @@ export function useV1ProjectState({
     currentTicketMods,
     earned,
     handle,
-    metadata,
     owner,
     projectId,
     queuedFC,

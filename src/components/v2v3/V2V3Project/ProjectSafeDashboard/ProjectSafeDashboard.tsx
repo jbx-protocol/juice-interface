@@ -14,6 +14,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { CSSProperties, useContext } from 'react'
 import { v2v3ProjectRoute } from 'utils/routes'
+import { BackToProjectButton } from '../BackToProjectButton'
 import { ExecutedSafeTransactionsListing } from './ExecutedSafeTransactionsListing'
 import { SafeTransaction } from './SafeTransaction'
 
@@ -78,12 +79,15 @@ export function ProjectSafeDashboard() {
       </h1>
 
       {!isLoading ? (
-        <ExternalLink
-          href={generateSafeUrl(projectOwnerAddress)}
-          style={{ textDecoration: 'underline' }}
-        >
-          <Trans>Go to your Safe</Trans>
-        </ExternalLink>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <ExternalLink
+            href={generateSafeUrl(projectOwnerAddress)}
+            style={{ textDecoration: 'underline' }}
+          >
+            <Trans>Go to your Safe</Trans>
+          </ExternalLink>
+          <BackToProjectButton />
+        </div>
       ) : null}
 
       {isLoading && <div style={{ marginTop: 20 }}>Loading...</div>}

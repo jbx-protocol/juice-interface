@@ -16,6 +16,7 @@ import { formatOutgoingSplits } from 'utils/splits'
 import { loadJuiceboxV2Contract } from 'utils/v2v3/contractLoaders/JuiceboxV2'
 import { loadJuiceboxV3Contract } from 'utils/v2v3/contractLoaders/JuiceboxV3'
 import { formatReservedRate, MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
+import { LinkToSafeButton } from '../../LinkToSafeButton'
 
 const useTransactionJBController = (transaction: SafeTransactionType) => {
   const [JBController, setJBController] = useState<Contract | undefined>()
@@ -156,6 +157,12 @@ export function ReconfigureRichPreview({
           )}
         </MinimalCollapse>
       </Space>
+      <LinkToSafeButton
+        transaction={transaction}
+        style={{
+          marginTop: '1rem',
+        }}
+      />
     </div>
   )
 }

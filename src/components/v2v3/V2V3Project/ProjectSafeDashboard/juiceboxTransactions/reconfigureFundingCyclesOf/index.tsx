@@ -23,9 +23,6 @@ export function ReconfigureFundingCyclesOfTransaction({
   const rowStyle: CSSProperties = {
     ...safeTransactionRowStyle,
     color: colors.text.primary,
-    display: 'flex',
-    flexDirection: 'column',
-    cursor: 'pointer',
   }
 
   if (selected) {

@@ -10,11 +10,13 @@ import { featureFlagEnabled } from 'utils/featureFlags'
 import { helpPagePath } from 'utils/routes'
 import {
   FundingCyclesPage,
+  FundingTargetPage,
+  NftRewardsPage,
   PayoutsPage,
   ProjectDetailsPage,
   ProjectTokenPage,
 } from './components'
-import { FundingTargetPage } from './components/pages/FundingTarget'
+import { CreateBadge } from './components/CreateBadge'
 import { Wizard } from './components/Wizard'
 
 export function Create() {
@@ -83,6 +85,22 @@ export function Create() {
               }
             >
               <ProjectTokenPage />
+            </Wizard.Page>
+            <Wizard.Page
+              name="nftRewards"
+              title={
+                <Trans>
+                  NFT Rewards <CreateBadge.Optional />
+                </Trans>
+              }
+              description={
+                <Trans>
+                  Reward contributors with NFTs when they meet your funding
+                  criteria.
+                </Trans>
+              }
+            >
+              <NftRewardsPage />
             </Wizard.Page>
             <Wizard.Page name="nextStep" title={t`Empty Step`}>
               <div>TODO</div>

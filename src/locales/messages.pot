@@ -1658,6 +1658,9 @@ msgstr ""
 msgid "My projects"
 msgstr ""
 
+msgid "NFT Rewards <0/>"
+msgstr ""
+
 msgid "NFT mint confirmed"
 msgstr ""
 
@@ -2262,6 +2265,9 @@ msgid "Reward contributors with NFT's."
 msgstr ""
 
 msgid "Reward contributors with NFTs when they meet your configured funding criteria."
+msgstr ""
+
+msgid "Reward contributors with NFTs when they meet your funding criteria."
 msgstr ""
 
 msgid "Rules"

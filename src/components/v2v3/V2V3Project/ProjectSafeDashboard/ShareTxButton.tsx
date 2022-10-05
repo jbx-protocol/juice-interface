@@ -32,6 +32,7 @@ export function ShareTxButton({
     <CopyTextButton
       value={linkToTx}
       button={<ShareAltOutlined style={style} />}
+      style={{ marginLeft: 10 }}
       tooltipText={t`Copy link to share.`}
     />
   )

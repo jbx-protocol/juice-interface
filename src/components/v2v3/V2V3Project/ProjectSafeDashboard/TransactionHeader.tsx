@@ -58,7 +58,7 @@ export function TransactionHeader({
         {transactionTitle}
         <ShareTxButton
           transaction={transaction}
-          style={{ marginLeft: 10, cursor: 'pointer' }}
+          style={{ cursor: 'pointer' }}
           isPastTransaction
         />
       </div>

@@ -36,6 +36,7 @@ import {
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
 import { PayoutsSelection } from 'models/payoutsSelection'
+import { ProjectTokensSelection } from 'models/projectTokenSelection'
 
 interface V2ProjectState {
   version: number
@@ -46,6 +47,7 @@ interface V2ProjectState {
   payoutGroupedSplits: ETHPayoutGroupedSplits
   payoutsSelection: PayoutsSelection | undefined
   reservedTokensGroupedSplits: ReservedTokensGroupedSplits
+  projectTokensSelection: ProjectTokensSelection | undefined
   nftRewards: {
     rewardTiers: NftRewardTier[]
     CIDs: string[] | undefined // points to locations of the NFTs' json on IPFS
@@ -129,6 +131,7 @@ export const defaultProjectState: V2ProjectState = {
   payoutGroupedSplits: EMPTY_PAYOUT_GROUPED_SPLITS,
   payoutsSelection: undefined,
   reservedTokensGroupedSplits: EMPTY_RESERVED_TOKENS_GROUPED_SPLITS,
+  projectTokensSelection: undefined,
   nftRewards: {
     rewardTiers: [],
     CIDs: undefined,
@@ -230,6 +233,12 @@ const editingV2ProjectSlice = createSlice({
         ...EMPTY_RESERVED_TOKENS_GROUPED_SPLITS,
         splits: action.payload,
       }
+    },
+    setProjectTokensSelection: (
+      state,
+      action: PayloadAction<ProjectTokensSelection | undefined>,
+    ) => {
+      state.projectTokensSelection = action.payload
     },
     setPausePay: (state, action: PayloadAction<boolean>) => {
       state.fundingCycleMetadata.pausePay = action.payload

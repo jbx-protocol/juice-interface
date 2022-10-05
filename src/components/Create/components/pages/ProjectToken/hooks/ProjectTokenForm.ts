@@ -2,14 +2,16 @@ import { Form } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import { AllocationSplit } from 'components/Create/components/Allocation'
 import { ONE_MILLION } from 'constants/numbers'
+import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
+import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { useDebugValue, useEffect, useMemo } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { formatIssuanceRate, issuanceRateFrom } from 'utils/v2v3/math'
 import { useFormDispatchWatch } from '../../hooks'
 
 export type ProjectTokensFormProps = Partial<{
-  selection: 'default' | 'custom'
+  selection: ProjectTokensSelection
   initialMintRate: string | undefined
   reservedTokensPercentage: number | undefined
   reservedTokenAllocation: AllocationSplit[] | undefined
@@ -33,10 +35,12 @@ export const useProjectTokensForm = () => {
     fundingCycleMetadata,
     fundingCycleData,
     reservedTokensGroupedSplits,
+    projectTokensSelection,
   } = useAppSelector(state => state.editingV2Project)
   useDebugValue(form.getFieldsValue())
 
   const initialValues: ProjectTokensFormProps | undefined = useMemo(() => {
+    const selection = projectTokensSelection
     const initialMintRate = fundingCycleData?.weight
       ? formatIssuanceRate(fundingCycleData.weight)
       : DefaultSettings.initialMintRate
@@ -58,6 +62,7 @@ export const useProjectTokensForm = () => {
         : DefaultSettings.tokenMinting
 
     return {
+      selection,
       initialMintRate,
       reservedTokensPercentage,
       reservedTokenAllocation,
@@ -71,16 +76,20 @@ export const useProjectTokensForm = () => {
     fundingCycleMetadata.allowMinting,
     fundingCycleMetadata.redemptionRate,
     fundingCycleMetadata.reservedRate,
+    projectTokensSelection,
   ])
 
+  const dispatch = useAppDispatch()
   const selection = useWatch('selection', form)
 
   useEffect(() => {
+    dispatch(editingV2ProjectActions.setProjectTokensSelection(selection))
+
     if (selection === 'default') {
       form.setFieldsValue({ ...DefaultSettings })
       return
     }
-  }, [form, selection])
+  }, [dispatch, form, selection])
 
   useFormDispatchWatch({
     form,

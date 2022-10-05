@@ -1,8 +1,9 @@
 import { t, Trans } from '@lingui/macro'
-import { Divider, Form, Space, Switch } from 'antd'
+import { Divider, Form, Space } from 'antd'
 import Callout from 'components/Callout'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import NumberSlider from 'components/inputs/NumberSlider'
+import { JuiceSwitch } from 'components/JuiceSwitch'
 import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
@@ -121,15 +122,9 @@ export const CustomTokenSettings = () => {
       <>
         <Form.Item
           extra={t`When enabled, the project owner can manually mint any amount of tokens to any address.`}
+          name="tokenMinting"
         >
-          <Space>
-            <Form.Item name="tokenMinting" valuePropName="checked">
-              <Switch />
-            </Form.Item>
-            <h3>
-              <Trans>Allow token minting</Trans>
-            </h3>
-          </Space>
+          <JuiceSwitch label={t`Allow token minting`} />
         </Form.Item>
         <TODOCallout>
           <Trans>

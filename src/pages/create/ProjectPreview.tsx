@@ -1,27 +1,25 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { V2V3Project } from 'components/v2v3/V2V3Project/V2V3Project'
+import { NftRewardsContext } from 'contexts/nftRewardsContext'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import {
   V2V3ProjectContext,
   V2V3ProjectContextType,
 } from 'contexts/v2v3/V2V3ProjectContext'
-import { useWallet } from 'hooks/Wallet'
-
 import {
   useAppSelector,
   useEditingV2V3FundAccessConstraintsSelector,
   useEditingV2V3FundingCycleDataSelector,
   useEditingV2V3FundingCycleMetadataSelector,
 } from 'hooks/AppSelector'
-
+import { useWallet } from 'hooks/Wallet'
 import { V2V3FundingCycle } from 'models/v2v3/fundingCycle'
-
-import { V2V3Project } from 'components/v2v3/V2V3Project/V2V3Project'
-import { CV_V2 } from 'constants/cv'
-import { NftRewardsContext } from 'contexts/nftRewardsContext'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { useContext } from 'react'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { getDefaultFundAccessConstraint } from 'utils/v2v3/fundingCycle'
 
-export default function ProjectPreview() {
+export function ProjectPreview() {
   const {
     projectMetadata,
     payoutGroupedSplits,
@@ -32,6 +30,7 @@ export default function ProjectPreview() {
   const fundingCycleData = useEditingV2V3FundingCycleDataSelector()
   const fundAccessConstraints = useEditingV2V3FundAccessConstraintsSelector()
   const { userAddress } = useWallet()
+  const { cv } = useContext(V2V3ContractsContext)
 
   const fundingCycle: V2V3FundingCycle = {
     ...fundingCycleData,
@@ -91,7 +90,7 @@ export default function ProjectPreview() {
 
   return (
     <ProjectMetadataContext.Provider
-      value={{ projectMetadata, isArchived: false, projectId: 0, cv: CV_V2 }}
+      value={{ projectMetadata, isArchived: false, projectId: 0, cv }}
     >
       <V2V3ProjectContext.Provider value={project}>
         <div>

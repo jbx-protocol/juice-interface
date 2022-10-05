@@ -2,12 +2,11 @@ import { Trans } from '@lingui/macro'
 import { Col, Row } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { PropsWithChildren, useContext } from 'react'
-
-import ProjectPreview from './ProjectPreview'
+import { ProjectPreview } from './ProjectPreview'
 
 const FULL_WIDTH_PX = 24
 
-export default function ProjectConfigurationFieldsContainer({
+export function ProjectConfigurationFieldsContainer({
   showPreview,
   children,
 }: PropsWithChildren<{ showPreview?: boolean }>) {

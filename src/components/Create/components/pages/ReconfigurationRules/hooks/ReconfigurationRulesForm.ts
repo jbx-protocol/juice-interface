@@ -1,7 +1,8 @@
 import { Form } from 'antd'
+import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
 
 export interface ReconfigurationRulesFormProps {
-  selection: 'threeDay' | 'sevenDay' | 'custom' | 'none'
+  selection: ReconfigurationStrategy
 }
 
 export const useReconfigurationRulesForm = () => {

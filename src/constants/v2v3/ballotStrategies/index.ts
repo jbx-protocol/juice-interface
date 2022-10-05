@@ -5,6 +5,7 @@ import { NetworkName } from 'models/network-name'
 
 import { readNetwork } from 'constants/networks'
 import { SECONDS_IN_DAY } from 'constants/numbers'
+import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
 
 type BallotOption = Record<
   'THREE_DAY' | 'SEVEN_DAY',
@@ -37,24 +38,38 @@ export const BALLOT_ADDRESSES: BallotOption = {
   },
 }
 
-export function ballotStrategies() {
+interface BallotStrategy {
+  id: ReconfigurationStrategy
+  name: string
+  description: string
+  address: string
+  durationSeconds: number
+}
+
+const durationBallotStrategyDescription = (days: number) =>
+  t`A reconfiguration to an upcoming funding cycle must be submitted at least ${days} days before it starts.`
+
+export function ballotStrategies(network?: NetworkName): BallotStrategy[] {
   return [
     {
+      id: 'none',
       name: t`No strategy`,
       description: t`Any reconfiguration to an upcoming funding cycle will take effect once the current cycle ends. A project with no strategy may be vulnerable to being rug-pulled by its owner.`,
       address: constants.AddressZero,
       durationSeconds: 0,
     },
     {
+      id: 'threeDay',
       name: t`3-day delay`,
-      description: t`A reconfiguration to an upcoming funding cycle must be submitted at least 3 days before it starts.`,
-      address: BALLOT_ADDRESSES.THREE_DAY[readNetwork.name]!,
+      description: durationBallotStrategyDescription(3),
+      address: BALLOT_ADDRESSES.THREE_DAY[network ?? readNetwork.name]!,
       durationSeconds: SECONDS_IN_DAY * 3,
     },
     {
+      id: 'sevenDay',
       name: t`7-day delay`,
-      description: t`A reconfiguration to an upcoming funding cycle must be submitted at least 7 days before it starts.`,
-      address: BALLOT_ADDRESSES.SEVEN_DAY[readNetwork.name]!,
+      description: durationBallotStrategyDescription(7),
+      address: BALLOT_ADDRESSES.SEVEN_DAY[network ?? readNetwork.name]!,
       durationSeconds: SECONDS_IN_DAY * 7,
     },
   ]

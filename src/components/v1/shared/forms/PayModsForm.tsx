@@ -14,6 +14,8 @@ import ProjectPayoutMods from 'components/v1/shared/ProjectPayMods/ProjectPayout
 import { CurrencyContext } from 'contexts/currencyContext'
 
 import * as constants from '@ethersproject/constants'
+import { CsvUpload } from 'components/CsvUpload/CsvUpload'
+import { parseV1PayoutModsCsv } from 'utils/csv'
 
 export default function PayModsForm({
   initialMods,
@@ -64,6 +66,13 @@ export default function PayModsForm({
     return Promise.resolve()
   }
 
+  const onModsChanged = (newMods: PayoutMod[]) => {
+    setMods(newMods)
+    form.setFieldsValue({
+      totalPercent: calculateTotalPercentage(newMods),
+    })
+  }
+
   return (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
       <div style={{ color: colors.text.secondary }}>
@@ -85,6 +94,14 @@ export default function PayModsForm({
             owner's wallet.
           </Trans>
         </p>
+      </div>
+
+      <div style={{ textAlign: 'right' }}>
+        <CsvUpload
+          onChange={onModsChanged}
+          templateUrl={'/assets/csv/v1-payouts-template.csv'}
+          parser={parseV1PayoutModsCsv}
+        />
       </div>
 
       <Form form={form} layout="vertical">

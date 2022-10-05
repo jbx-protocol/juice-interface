@@ -2,6 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { Split } from 'models/splits'
 import { splitPercentFrom } from 'utils/v2v3/math'
+import { percentToPermyriad } from './format/formatNumber'
 
 export function downloadCsvFile(
   filename: string,
@@ -18,6 +19,14 @@ export function downloadCsvFile(
   document.body.appendChild(link)
 
   link.click()
+}
+
+const parseBoolean = (rawBoolean: string): boolean => {
+  try {
+    return JSON.parse(rawBoolean)
+  } catch (e) {
+    return false
+  }
 }
 
 /**
@@ -56,17 +65,25 @@ export const parseV1PayoutModsCsv = (csvContent: string): PayoutMod[] => {
   const [, ...rows] = csvContent.split('\n')
 
   const payoutMods: PayoutMod[] = rows.map(row => {
-    const [beneficiary, percent, lockedUntil, projectId, handle] =
-      row.split(',')
-
-    const obj = {
+    const [
       beneficiary,
-      percent: parseFloat(percent) * 10000,
+      percent,
+      preferUnstaked,
+      lockedUntil,
+      projectId,
+      allocator,
+    ] = row.split(',')
+
+    const payoutMod: PayoutMod = {
+      beneficiary,
+      percent: percentToPermyriad(parseFloat(percent) * 100).toNumber(),
+      preferUnstaked: parseBoolean(preferUnstaked),
       lockedUntil: lockedUntil ? parseInt(lockedUntil) : undefined,
       projectId: projectId ? BigNumber.from(projectId) : undefined,
-      handle: handle || undefined,
+      allocator,
     }
-    return obj
+
+    return payoutMod
   })
 
   return payoutMods
@@ -80,7 +97,7 @@ export const parseV1TicketModsCsv = (csvContent: string): TicketMod[] => {
 
     return {
       preferUnstaked: Boolean(preferUnstaked),
-      percent: parseFloat(percent) * 10000,
+      percent: percentToPermyriad(parseFloat(percent) * 100).toNumber(),
       lockedUntil: lockedUntil ? parseInt(lockedUntil) : undefined,
       beneficiary: beneficiary || undefined,
     }

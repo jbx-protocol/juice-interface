@@ -21,6 +21,14 @@ export function downloadCsvFile(
   link.click()
 }
 
+const parseBoolean = (rawBoolean: string): boolean => {
+  try {
+    return JSON.parse(rawBoolean)
+  } catch (e) {
+    return false
+  }
+}
+
 /**
  * Parse a CSV file containing JB Splits.
  * @param csvContent - raw CSV content, including a header row.
@@ -69,7 +77,7 @@ export const parseV1PayoutModsCsv = (csvContent: string): PayoutMod[] => {
     const payoutMod: PayoutMod = {
       beneficiary,
       percent: percentToPermyriad(parseFloat(percent) * 100).toNumber(),
-      preferUnstaked: Boolean(preferUnstaked),
+      preferUnstaked: parseBoolean(preferUnstaked),
       lockedUntil: lockedUntil ? parseInt(lockedUntil) : undefined,
       projectId: projectId ? BigNumber.from(projectId) : undefined,
       allocator,

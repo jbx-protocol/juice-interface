@@ -713,6 +713,9 @@ msgstr ""
 msgid "Contributor rate"
 msgstr ""
 
+msgid "Contributor rate: {0} / 1 ETH<0/>Reserved rate: {1} / 1 ETH"
+msgstr ""
+
 msgid "Contributors receive the NFT when they contribute at least this amount."
 msgstr ""
 
@@ -912,6 +915,9 @@ msgid "Discord"
 msgstr ""
 
 msgid "Discord link"
+msgstr ""
+
+msgid "Discount Rate"
 msgstr ""
 
 msgid "Discount rate"
@@ -2187,6 +2193,9 @@ msgid "Redeemed"
 msgstr ""
 
 msgid "Redeeming this NFT will burn the token, as well as the underlying project token, and you will receive token from the project overflow in return."
+msgstr ""
+
+msgid "Redemption Rate"
 msgstr ""
 
 msgid "Redemption rate"

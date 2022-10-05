@@ -27,7 +27,7 @@ const useTransactionJBController = (transaction: SafeTransactionType) => {
         loadJuiceboxV3Contract(V2V3ContractName.JBController, readNetwork.name),
       ])
 
-      if (transaction.to === V2JBController.address) {
+      if (transaction.to === V2JBController?.address) {
         setJBController(
           new Contract(
             V2JBController.address,
@@ -35,7 +35,7 @@ const useTransactionJBController = (transaction: SafeTransactionType) => {
             readProvider,
           ),
         )
-      } else if (transaction.to === V3JBController.address) {
+      } else if (transaction.to === V3JBController?.address) {
         setJBController(
           new Contract(
             V3JBController.address,

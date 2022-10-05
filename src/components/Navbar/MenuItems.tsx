@@ -9,37 +9,6 @@ import { navMenuItemStyles, topLeftNavStyles } from './navStyles'
 
 import { resourcesMenuItems } from './constants'
 
-function NavMenuItem({
-  text,
-  route,
-  onClick,
-}: {
-  text: string
-  route: string
-  onClick?: VoidFunction
-}) {
-  const external = route?.startsWith('http')
-  const externalLinkProps = external
-    ? ({
-        target: '_blank',
-        rel: 'noopener noreferrer',
-      } as const)
-    : {}
-
-  return (
-    <Link href={route}>
-      <a
-        className="nav-menu-item hover-opacity"
-        onClick={onClick}
-        style={navMenuItemStyles}
-        {...externalLinkProps}
-      >
-        {text}
-      </a>
-    </Link>
-  )
-}
-
 const resourcesMenu = (
   <Menu
     items={resourcesMenuItems()}
@@ -69,6 +38,18 @@ export function TopLeftNavItems({
     return () => window.removeEventListener('click', handleClick)
   }, [])
 
+  const menuItemProps = {
+    onClick: onClickMenuItems,
+    style: navMenuItemStyles,
+    className: 'nav-menu-item hover-opacity',
+  }
+
+  const externalMenuLinkProps = {
+    ...menuItemProps,
+    target: '_blank',
+    rel: 'noopener noreferrer',
+  }
+
   return (
     <Space
       size={mobile ? 0 : 'large'}
@@ -80,22 +61,15 @@ export function TopLeftNavItems({
           <a style={{ display: 'inline-block' }}>{<Logo />}</a>
         </Link>
       )}
-      <NavMenuItem
-        text={t`Projects`}
-        onClick={onClickMenuItems}
-        route="/projects"
-      />
-      <NavMenuItem
-        text={t`Docs`}
-        onClick={onClickMenuItems}
-        route="https://info.juicebox.money/"
-      />
-      <NavMenuItem
-        text={t`Blog`}
-        onClick={onClickMenuItems}
-        route="https://info.juicebox.money/blog"
-      />
-
+      <Link href="/projects">
+        <a {...menuItemProps}>{t`Projects`}</a>
+      </Link>
+      <Link href="https://info.juicebox.money/">
+        <a {...externalMenuLinkProps}>{t`Docs`}</a>
+      </Link>
+      <Link href="https://info.juicebox.money/blog">
+        <a {...externalMenuLinkProps}>{t`Blog`}</a>
+      </Link>
       {!mobile && (
         <Dropdown
           overlay={resourcesMenu}

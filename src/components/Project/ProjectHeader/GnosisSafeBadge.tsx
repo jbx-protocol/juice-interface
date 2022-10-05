@@ -35,9 +35,8 @@ export function GnosisSafeBadge() {
         <Trans>
           This project is owned by a Safe.{' '}
           <Link href={`${v2v3ProjectRoute({ projectId, handle })}/safe`}>
-            See transactions
+            See transactions.
           </Link>
-          .
         </Trans>
       }
     >

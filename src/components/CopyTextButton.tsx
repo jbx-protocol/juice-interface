@@ -18,7 +18,6 @@ export default function CopyTextButton({
 }) {
   const { colors } = useContext(ThemeContext).theme
   const [copied, setCopied] = useState<boolean>(false)
-
   const handleCopy = () => {
     if (navigator) {
       navigator.clipboard.writeText(value ?? '')
@@ -26,7 +25,6 @@ export default function CopyTextButton({
       setTimeout(() => setCopied(false), 3000)
     }
   }
-
   const _tooltipText = tooltipText ?? t`Copy to clipboard`
 
   return (
@@ -34,16 +32,15 @@ export default function CopyTextButton({
       trigger={['hover']}
       title={<span>{copied ? t`Copied!` : _tooltipText}</span>}
     >
-      <span
+      <div
         onClick={e => {
           e.stopPropagation()
           handleCopy()
         }}
-        style={{ ...style, color: colors.text.primary, cursor: 'pointer' }}
-        role="button"
+        style={{ ...style, color: colors.text.primary }}
       >
         {button ?? <CopyOutlined className="copyIcon" />}
-      </span>
+      </div>
     </Tooltip>
   )
 }

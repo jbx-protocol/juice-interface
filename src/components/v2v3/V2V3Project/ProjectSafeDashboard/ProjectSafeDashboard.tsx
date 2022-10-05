@@ -14,8 +14,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { CSSProperties, useContext } from 'react'
 import { v2v3ProjectRoute } from 'utils/routes'
-import { BackToProjectButton } from '../BackToProjectButton'
 import { ExecutedSafeTransactionsListing } from './ExecutedSafeTransactionsListing'
+
 import { SafeTransaction } from './SafeTransaction'
 
 export type SafeTxCategory = 'queued' | 'history'
@@ -35,8 +35,18 @@ export function ProjectSafeDashboard() {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const { query } = useRouter()
 
-  const router = useRouter()
+  const selectedTab = (query.tab as SafeTxCategory) ?? DEFAULT_TAB
+
+  const preSelectedTx = query.tx as string
+
+  if (preSelectedTx) {
+    document
+      .getElementById(preSelectedTx)
+      ?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   const { data: queuedSafeTransactions, isLoading } = useQueuedSafeTransactions(
     {
       safeAddress: projectOwnerAddress,
@@ -45,22 +55,12 @@ export function ProjectSafeDashboard() {
   const { data: gnosisSafe, isLoading: gnosisSafeLoading } =
     useGnosisSafe(projectOwnerAddress)
 
-  const url = new URL(router.asPath, process.env.NEXT_PUBLIC_BASE_URL)
-  const preSelectedTx = url.hash.slice(1) as string
-  if (preSelectedTx) {
-    document
-      .getElementById(preSelectedTx)
-      ?.scrollIntoView({ behavior: 'smooth' })
-  }
-
-  const selectedTab = (router.query.tab as SafeTxCategory) ?? DEFAULT_TAB
+  if (!projectOwnerAddress) return null
 
   const containerStyle: CSSProperties = {
     ...layouts.maxWidth,
     margin: '2rem auto',
   }
-
-  if (!projectOwnerAddress) return null
 
   if (!gnosisSafeLoading && !gnosisSafe) {
     return (
@@ -79,15 +79,12 @@ export function ProjectSafeDashboard() {
       </h1>
 
       {!isLoading ? (
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <ExternalLink
-            href={generateSafeUrl(projectOwnerAddress)}
-            style={{ textDecoration: 'underline' }}
-          >
-            <Trans>Go to your Safe</Trans>
-          </ExternalLink>
-          <BackToProjectButton />
-        </div>
+        <ExternalLink
+          href={generateSafeUrl(projectOwnerAddress)}
+          style={{ textDecoration: 'underline' }}
+        >
+          <Trans>Go to your Safe</Trans>
+        </ExternalLink>
       ) : null}
 
       {isLoading && <div style={{ marginTop: 20 }}>Loading...</div>}

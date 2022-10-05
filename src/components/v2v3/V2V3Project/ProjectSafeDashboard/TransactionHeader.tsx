@@ -1,12 +1,8 @@
-import { t } from '@lingui/macro'
-import { Tooltip } from 'antd'
-import ExternalLink from 'components/ExternalLink'
 import { ThemeContext } from 'contexts/themeContext'
-import { generateSafeTxUrl } from 'lib/safe'
 import { SafeTransactionType } from 'models/safe'
+import Link from 'next/link'
 import { CSSProperties, useContext } from 'react'
 import { formatHistoricalDate } from 'utils/format/formatDate'
-import { ShareTxButton } from './ShareTxButton'
 import { TransactionSigStatus } from './TransactionSigStatus'
 
 const nonceStyle: CSSProperties = {
@@ -28,18 +24,7 @@ export function TransactionHeader({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const _method = title ?? transaction?.dataDecoded?.method
-  const transactionTitle = (
-    <Tooltip title={t`Go to Safe`}>
-      <ExternalLink
-        href={generateSafeTxUrl(transaction)}
-        className="hover-text-action-primary hover-text-decoration-underline color-unset"
-        onClick={e => e.stopPropagation()}
-      >
-        {_method}
-      </ExternalLink>
-    </Tooltip>
-  )
+  const transactionTitle = title ?? transaction?.dataDecoded?.method
 
   return (
     <div
@@ -49,18 +34,16 @@ export function TransactionHeader({
         justifyContent: 'space-between',
         width: '100%',
       }}
-      id={`${transaction.safeTxHash}`}
     >
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <div style={{ ...nonceStyle, color: colors.text.secondary }}>
           {transaction.nonce}
         </div>
-        {transactionTitle}
-        <ShareTxButton
-          transaction={transaction}
-          style={{ marginLeft: 10, cursor: 'pointer' }}
-          isPastTransaction
-        />
+        <Link href={`#${transaction.safeTxHash}`}>
+          <a className="text-primary hover-text-decoration-underline">
+            {transactionTitle}
+          </a>
+        </Link>
       </div>
       <div
         style={{

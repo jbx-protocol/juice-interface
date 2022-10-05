@@ -56,7 +56,11 @@ export function TransactionHeader({
           {transaction.nonce}
         </div>
         {transactionTitle}
-        <ShareTxButton transaction={transaction} style={{ marginLeft: 10 }} />
+        <ShareTxButton
+          transaction={transaction}
+          style={{ marginLeft: 10, cursor: 'pointer' }}
+          isPastTransaction
+        />
       </div>
       <div
         style={{

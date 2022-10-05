@@ -1,17 +1,56 @@
+import { Contract } from '@ethersproject/contracts'
 import { t, Trans } from '@lingui/macro'
 import { Space } from 'antd'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import SplitList from 'components/v2v3/shared/SplitList'
 import FundingCycleDetails from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails'
+import { readNetwork } from 'constants/networks'
+import { readProvider } from 'constants/readProvider'
 import { ThemeContext } from 'contexts/themeContext'
-import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
-import { V2V3ProjectContractsContext } from 'contexts/v2v3/V2V3ProjectContractsContext'
 import { OutgoingProjectData } from 'models/outgoingProject'
 import { SafeTransactionType } from 'models/safe'
-import { useContext } from 'react'
+import { V2V3ContractName } from 'models/v2v3/contracts'
+import { useContext, useEffect, useState } from 'react'
 import { formatOutgoingSplits } from 'utils/splits'
+import { loadJuiceboxV2Contract } from 'utils/v2v3/contractLoaders/JuiceboxV2'
+import { loadJuiceboxV3Contract } from 'utils/v2v3/contractLoaders/JuiceboxV3'
 import { formatReservedRate, MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
+
+const useTransactionJBController = (transaction: SafeTransactionType) => {
+  const [JBController, setJBController] = useState<Contract | undefined>()
+
+  useEffect(() => {
+    async function load() {
+      const [V2JBController, V3JBController] = await Promise.all([
+        loadJuiceboxV2Contract(V2V3ContractName.JBController, readNetwork.name),
+        loadJuiceboxV3Contract(V2V3ContractName.JBController, readNetwork.name),
+      ])
+
+      if (transaction.to === V2JBController.address) {
+        setJBController(
+          new Contract(
+            V2JBController.address,
+            V2JBController.abi,
+            readProvider,
+          ),
+        )
+      } else if (transaction.to === V3JBController.address) {
+        setJBController(
+          new Contract(
+            V3JBController.address,
+            V3JBController.abi,
+            readProvider,
+          ),
+        )
+      }
+    }
+
+    load()
+  }, [transaction.to])
+
+  return JBController
+}
 
 export function ReconfigureRichPreview({
   transaction,
@@ -19,21 +58,25 @@ export function ReconfigureRichPreview({
   transaction: SafeTransactionType
 }) {
   const {
-    contracts: { JBController },
-  } = useContext(V2V3ProjectContractsContext)
-  const { contracts } = useContext(V2V3ContractsContext)
-  const { projectOwnerAddress } = useContext(V2V3ProjectContext)
-  const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const { projectOwnerAddress } = useContext(V2V3ProjectContext)
 
-  if (!contracts) return null
+  const JBController = useTransactionJBController(transaction)
+  if (!JBController) return null
+
   let dataResult: unknown
   try {
-    dataResult = JBController?.interface?.parseTransaction({
-      data: transaction.data ?? '',
-    }).args
+    if (!transaction.data) throw new Error('No transaction data to parse.')
+
+    const parsedTransaction = JBController.interface.parseTransaction({
+      data: transaction.data,
+    })
+
+    dataResult = parsedTransaction?.args
+    if (!dataResult) throw new Error('Failed to parse transaction data.')
   } catch (e) {
+    console.error(e)
     return (
       <div style={{ margin: '1rem 3rem 0' }}>
         <Trans>Error reading transaction data</Trans>
@@ -49,7 +92,7 @@ export function ReconfigureRichPreview({
     decodedData._fundAccessConstraints?.[0]?.distributionLimit
   const reservedRate = decodedData._metadata?.reservedRate
   const payoutSplits = decodedData._groupedSplits?.[0]?.splits
-  const reservedTokensSplits = decodedData._groupedSplits?.[1].splits
+  const reservedTokensSplits = decodedData._groupedSplits?.[1]?.splits
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>

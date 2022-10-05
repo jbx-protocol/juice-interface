@@ -35,7 +35,7 @@ export const Wizard: React.FC<{ doneText?: string }> & {
     >
       <WizardContainer>
         <Steps />
-        <div>{props.children}</div>
+        {props.children}
       </WizardContainer>
     </WizardContext.Provider>
   )

@@ -1,4 +1,3 @@
-import { Space } from 'antd'
 import { useContext } from 'react'
 import { PageContext } from '../contexts/PageContext'
 import { BackButton, DoneButton, NextButton } from './components'
@@ -22,15 +21,14 @@ export const PageButtonControl = ({
         alignItems: 'center',
       }}
     >
-      <Space>
-        {canGoBack && <BackButton onClick={goToPreviousPage} />}
-        {isFinalPage && <DoneButton text={doneText} onClick={onPageDone} />}
-      </Space>
-      <Space style={{ marginLeft: 'auto' }}>
-        {!isFinalPage && (
+      {canGoBack && <BackButton onClick={goToPreviousPage} />}
+      <div style={{ marginLeft: 'auto' }}>
+        {!isFinalPage ? (
           <NextButton disabled={!isNextEnabled} onClick={onPageDone} />
+        ) : (
+          <DoneButton text={doneText} onClick={onPageDone} />
         )}
-      </Space>
+      </div>
     </div>
   )
 }

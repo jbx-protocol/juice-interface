@@ -740,9 +740,6 @@ msgstr ""
 msgid "Copied!"
 msgstr ""
 
-msgid "Copy link to share."
-msgstr ""
-
 msgid "Copy to clipboard"
 msgstr ""
 
@@ -1251,9 +1248,6 @@ msgid "Give this NFT a name."
 msgstr ""
 
 msgid "Go to <0>{snapshotUrl}</0>"
-msgstr ""
-
-msgid "Go to Safe"
 msgstr ""
 
 msgid "Go to your Safe"

@@ -15,7 +15,6 @@ import { useRouter } from 'next/router'
 import { CSSProperties, useContext } from 'react'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { ExecutedSafeTransactionsListing } from './ExecutedSafeTransactionsListing'
-
 import { SafeTransaction } from './SafeTransaction'
 
 export type SafeTxCategory = 'queued' | 'history'
@@ -35,18 +34,8 @@ export function ProjectSafeDashboard() {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { query } = useRouter()
 
-  const selectedTab = (query.tab as SafeTxCategory) ?? DEFAULT_TAB
-
-  const preSelectedTx = query.tx as string
-
-  if (preSelectedTx) {
-    document
-      .getElementById(preSelectedTx)
-      ?.scrollIntoView({ behavior: 'smooth' })
-  }
-
+  const router = useRouter()
   const { data: queuedSafeTransactions, isLoading } = useQueuedSafeTransactions(
     {
       safeAddress: projectOwnerAddress,
@@ -55,12 +44,22 @@ export function ProjectSafeDashboard() {
   const { data: gnosisSafe, isLoading: gnosisSafeLoading } =
     useGnosisSafe(projectOwnerAddress)
 
-  if (!projectOwnerAddress) return null
+  const url = new URL(router.asPath, process.env.NEXT_PUBLIC_BASE_URL)
+  const preSelectedTx = url.hash.slice(1) as string
+  if (preSelectedTx) {
+    document
+      .getElementById(preSelectedTx)
+      ?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  const selectedTab = (router.query.tab as SafeTxCategory) ?? DEFAULT_TAB
 
   const containerStyle: CSSProperties = {
     ...layouts.maxWidth,
     margin: '2rem auto',
   }
+
+  if (!projectOwnerAddress) return null
 
   if (!gnosisSafeLoading && !gnosisSafe) {
     return (

@@ -2,7 +2,6 @@ import { ThemeContext } from 'contexts/themeContext'
 import { SafeTransactionType } from 'models/safe'
 import { CSSProperties, useContext, useMemo } from 'react'
 import { ReconfigureFundingCyclesOfTransaction } from './juiceboxTransactions/reconfigureFundingCyclesOf'
-
 import { TransactionHeader } from './TransactionHeader'
 
 export type SafeTransactionComponentProps = {

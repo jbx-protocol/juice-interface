@@ -1,10 +1,7 @@
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
-
 import { ThemeContext } from 'contexts/themeContext'
-
 import { CSSProperties, useContext, useState } from 'react'
-
 import {
   SafeTransactionComponentProps,
   safeTransactionRowStyle,
@@ -26,13 +23,10 @@ export function ReconfigureFundingCyclesOfTransaction({
   const rowStyle: CSSProperties = {
     ...safeTransactionRowStyle,
     color: colors.text.primary,
-    display: 'flex',
-    flexDirection: 'column',
-    cursor: 'pointer',
   }
 
   if (selected) {
-    rowStyle['border'] = `1px solid ${colors.stroke.action.primary}`
+    rowStyle.border = `1px solid ${colors.stroke.action.primary}`
   }
 
   return (

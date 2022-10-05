@@ -2,11 +2,12 @@ import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import axios from 'axios'
-import { CV_V1, CV_V1_1, CV_V2 } from 'constants/cv'
+import { CV_V1, CV_V1_1, CV_V2, CV_V3 } from 'constants/cv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useWallet } from 'hooks/Wallet'
+import { V2V3CVType } from 'models/cv'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { useContext, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
@@ -46,9 +47,10 @@ export default function ArchiveProject({
         }
         break
       case CV_V2:
+      case CV_V3:
         if (projectId) {
           await revalidateProject({
-            cv: CV_V2,
+            cv: cv as V2V3CVType,
             projectId: String(projectId),
           })
         }

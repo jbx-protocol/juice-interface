@@ -3,7 +3,7 @@ import { BaseOptionType } from 'antd/lib/select'
 import { CV_V2, CV_V3 } from 'constants/cv'
 import { readNetwork } from 'constants/networks'
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
-import { V2CVType, V3CVType } from 'models/cv'
+import { V2V3CVType } from 'models/cv'
 import { NetworkName } from 'models/network-name'
 import { useContext } from 'react'
 
@@ -34,7 +34,7 @@ export function ContractVersionSelect() {
       defaultValue={cv}
       bordered={false}
       className="ant-select-color-secondary"
-      onSelect={(value: V2CVType | V3CVType) => setVersion?.(value)}
+      onSelect={(value: V2V3CVType) => setVersion?.(value)}
       options={SELECT_OPTIONS}
     />
   )

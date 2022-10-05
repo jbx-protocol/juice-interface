@@ -2,20 +2,20 @@ import { useForm } from 'antd/lib/form/Form'
 import ProjectDetailsForm, {
   ProjectDetailsFormFields,
 } from 'components/forms/ProjectDetailsForm'
-import { CV_V2 } from 'constants/cv'
 import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useEditProjectDetailsTx } from 'hooks/v2v3/transactor/EditProjectDetailsTx'
+import { V2V3CVType } from 'models/cv'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 import { revalidateProject } from 'utils/revalidateProject'
 
 export function ProjectDetailsSettingsPage() {
-  const [projectForm] = useForm<ProjectDetailsFormFields>()
+  const { projectId } = useContext(ProjectMetadataContext)
+  const { projectMetadata, cv } = useContext(ProjectMetadataContext)
 
   const [loadingSaveChanges, setLoadingSaveChanges] = useState<boolean>()
-  const { projectId } = useContext(ProjectMetadataContext)
-  const { projectMetadata } = useContext(ProjectMetadataContext)
+  const [projectForm] = useForm<ProjectDetailsFormFields>()
 
   const EditV2ProjectDetailsTx = useEditProjectDetailsTx()
 
@@ -47,7 +47,7 @@ export function ProjectDetailsSettingsPage() {
         onConfirmed: async () => {
           if (projectId) {
             await revalidateProject({
-              cv: CV_V2,
+              cv: cv as V2V3CVType,
               projectId: String(projectId),
             })
           }

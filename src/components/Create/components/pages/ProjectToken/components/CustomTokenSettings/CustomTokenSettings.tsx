@@ -1,14 +1,36 @@
 import { t, Trans } from '@lingui/macro'
-import { Divider, Form, Input, Space, Switch } from 'antd'
+import { Divider, Form, Space, Switch } from 'antd'
 import Callout from 'components/Callout'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import NumberSlider from 'components/inputs/NumberSlider'
 import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph'
+import { ThemeContext } from 'contexts/themeContext'
+import { useContext } from 'react'
+import { MAX_MINT_RATE } from 'utils/v2v3/math'
+import { inputMustExistRule } from '../../../utils'
+import { ReservedTokenRateCallout, ReservedTokensList } from './components'
+
+// TODO: This is here to remind us we need to fix the colors
+const TODOCallout: React.FC = ({ children }) => (
+  <Callout style={{ backgroundColor: 'magenta' }}>{children}</Callout>
+)
 
 export const CustomTokenSettings = () => {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
   return (
     <>
       <Form.Item name="initialMintRate" label={t`Initial Mint Rate`}>
-        <Input suffix={t`tokens per ETH contributed`} />
+        <FormattedNumberInput
+          min={0}
+          max={MAX_MINT_RATE}
+          accessory={
+            <span style={{ color: colors.text.primary, marginRight: 20 }}>
+              <Trans>tokens per ETH contributed</Trans>
+            </span>
+          }
+        />
       </Form.Item>
 
       <Divider />
@@ -18,39 +40,48 @@ export const CustomTokenSettings = () => {
           Set aside a percentage of freshly minted tokens, which you can
           allocate below.
         </Trans>
-        <Form.Item noStyle name="reservedTokens">
-          <NumberSlider />
+        <Form.Item
+          noStyle
+          name="reservedTokensPercentage"
+          valuePropName="sliderValue"
+          rules={[inputMustExistRule({ label: t`Reserved tokens` })]}
+        >
+          <NumberSlider min={0} defaultValue={0} suffix="%" step={0.5} />
         </Form.Item>
-        {/* START: This is not final - just a placeholder */}
-        <Callout>
-          Contributor rate: 630,000 tokens / 1 ETH
-          <br />
-          Reserved rate: 370,000 tokens / 1 ETH
-        </Callout>
-        {/* END: This is not final - just a placeholder */}
+        <ReservedTokenRateCallout />
       </Form.Item>
       <Form.Item label={t`Reserved token allocation`} requiredMark="optional">
         <Trans>
           Allocate reserved tokens to Ethereum addresses or Juicebox projects.
           Unallocated reserved tokens are sent to the project owner.
         </Trans>
-        <Form.Item noStyle name="reservedTokenAllocation">
-          {/* TODO allocation */}
+        <Form.Item
+          noStyle
+          name="reservedTokenAllocation"
+          rules={[inputMustExistRule({ label: t`Reserved token allocation` })]}
+        >
+          <ReservedTokensList />
         </Form.Item>
       </Form.Item>
 
       <Divider />
 
+      {/* TODO: Allow disabling */}
       <Form.Item label={t`Discount rate`}>
         <Trans>
           The project token's issuance rate will decrease by this percentage
           every funding cycle (14 days). A higher discount rate will incentivize
           contributors to pay the project earlier.
         </Trans>
-        <Form.Item noStyle name="discountRate">
-          <NumberSlider />
+        <Form.Item
+          noStyle
+          name="discountRate"
+          valuePropName="sliderValue"
+          rules={[inputMustExistRule({ label: t`Discount Rate` })]}
+        >
+          <NumberSlider min={0} defaultValue={0} suffix="%" step={0.5} />
         </Form.Item>
-        <Callout>
+        <TODOCallout>
           <Space direction="vertical">
             <Trans>
               Contributors will receive 5% more tokens for contributions they
@@ -62,7 +93,7 @@ export const CustomTokenSettings = () => {
               funding cycle, and so on.
             </Trans>
           </Space>
-        </Callout>
+        </TODOCallout>
       </Form.Item>
 
       <Divider />
@@ -72,8 +103,13 @@ export const CustomTokenSettings = () => {
           The redemption rate determines the amount of overflow each token can
           be redeemed for. <a href="#TODO">Learn more.</a>
         </Trans>
-        <Form.Item noStyle name="redemptionRate">
-          <NumberSlider />
+        <Form.Item
+          noStyle
+          name="redemptionRate"
+          valuePropName="sliderValue"
+          rules={[inputMustExistRule({ label: t`Redemption Rate` })]}
+        >
+          <NumberSlider min={0.1} defaultValue={0} suffix="%" step={0.5} />
         </Form.Item>
         <Form.Item noStyle name="redemptionRate">
           <TokenRedemptionRateGraph graphPad={50} graphSize={300} />
@@ -90,15 +126,17 @@ export const CustomTokenSettings = () => {
             <Form.Item name="tokenMinting" valuePropName="checked">
               <Switch />
             </Form.Item>
-            <h3>Allow token minting</h3>
+            <h3>
+              <Trans>Allow token minting</Trans>
+            </h3>
           </Space>
         </Form.Item>
-        <Callout>
+        <TODOCallout>
           <Trans>
             Token minting is not recommended as it allows the project owner to
             create unlimited tokens. This is a risk factor for contributors.
           </Trans>
-        </Callout>
+        </TODOCallout>
       </>
     </>
   )

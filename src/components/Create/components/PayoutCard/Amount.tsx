@@ -1,19 +1,12 @@
 import { Space } from 'antd'
 import { usePayoutSplitAmountPercentage } from 'components/Create/hooks/PayoutSplitAmountPercentage'
+import { formatPercent } from 'components/Create/utils/formatPercent'
 import { Parenthesis } from 'components/Parenthesis'
 import { ThemeContext } from 'contexts/themeContext'
-import { isInteger } from 'lodash'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { useContext, useMemo } from 'react'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { Allocation } from '../Allocation'
-
-const formatPercent = (percent: number) => {
-  if (isInteger(percent)) {
-    return `${percent}%`
-  }
-  return `${percent.toFixed(2)}%`
-}
 
 export const Amount = ({
   allocationId, // if undefined, assume owner

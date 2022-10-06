@@ -9,7 +9,7 @@ import { RuleObject } from 'antd/lib/form'
  */
 export const inputMustExistRule = (props?: { label?: string }) => ({
   validator: (rule: RuleObject, value: unknown) => {
-    if (!value)
+    if (value === null || value === undefined)
       return Promise.reject(
         props?.label ? t`${props.label} is required` : 'Required',
       )

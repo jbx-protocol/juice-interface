@@ -1,5 +1,6 @@
 import { ballotStrategies } from 'constants/v2v3/ballotStrategies'
 import { NetworkName } from 'models/network-name'
+import { ArrayElement } from 'utils/arrayElement'
 
 export const useAvailableReconfigurationStrategies = (network: NetworkName) => {
   const strategies = ballotStrategies(network).map(s =>
@@ -23,3 +24,7 @@ export const useAvailableReconfigurationStrategies = (network: NetworkName) => {
 
   return [threeDay, sevenDay, none]
 }
+
+export type AvailableReconfigurationStrategy = ArrayElement<
+  ReturnType<typeof useAvailableReconfigurationStrategies>
+>

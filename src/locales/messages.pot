@@ -53,9 +53,6 @@ msgstr ""
 msgid "3-day delay"
 msgstr ""
 
-msgid "3-day delay <0/>"
-msgstr ""
-
 msgid "3. Manage your funds"
 msgstr ""
 

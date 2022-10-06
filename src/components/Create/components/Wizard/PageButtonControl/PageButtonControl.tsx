@@ -1,7 +1,7 @@
 import { Space } from 'antd'
 import { useContext } from 'react'
 import { PageContext } from '../contexts/PageContext'
-import { BackButton, DoneButton, NextButton, SkipButton } from './components'
+import { BackButton, DoneButton, NextButton } from './components'
 
 export const PageButtonControl = ({
   isNextEnabled = true, // Default enabled if not supplied
@@ -10,14 +10,8 @@ export const PageButtonControl = ({
   isNextEnabled?: boolean
   onPageDone?: () => void
 }) => {
-  const {
-    isSkippable,
-    canGoBack,
-    isFinalPage,
-    doneText,
-    goToPreviousPage,
-    goToNextPage,
-  } = useContext(PageContext)
+  const { canGoBack, isFinalPage, doneText, goToPreviousPage } =
+    useContext(PageContext)
 
   return (
     <div
@@ -33,7 +27,6 @@ export const PageButtonControl = ({
         {isFinalPage && <DoneButton text={doneText} onClick={onPageDone} />}
       </Space>
       <Space style={{ marginLeft: 'auto' }}>
-        {!isFinalPage && isSkippable && <SkipButton onClick={goToNextPage} />}
         {!isFinalPage && (
           <NextButton disabled={!isNextEnabled} onClick={onPageDone} />
         )}

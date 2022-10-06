@@ -8,12 +8,11 @@ export interface PageProps {
   name: string
   title?: ReactNode
   description?: ReactNode
-  isSkippable?: boolean
 }
 
 export const Page: React.FC<PageProps> & {
   ButtonControl: typeof PageButtonControl
-} = ({ name, title, description, isSkippable = false, children }) => {
+} = ({ name, title, description, children }) => {
   const {
     canGoBack,
     isFinalPage,
@@ -31,7 +30,6 @@ export const Page: React.FC<PageProps> & {
     <PageContext.Provider
       value={{
         pageName: name,
-        isSkippable,
         isHidden,
         canGoBack,
         isFinalPage,

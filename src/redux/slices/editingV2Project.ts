@@ -61,7 +61,7 @@ interface V2ProjectState {
 // Increment this version by 1 when making breaking changes.
 // When users return to the site and their local version is less than
 // this number, their state will be reset.
-export const REDUX_STORE_V2_PROJECT_VERSION = 7
+export const REDUX_STORE_V2_PROJECT_VERSION = 8
 
 const defaultProjectMetadataState: ProjectMetadataV5 = {
   name: '',

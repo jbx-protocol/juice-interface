@@ -3,6 +3,7 @@ import { Form, Space } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import Callout from 'components/Callout'
 import { Selection } from 'components/Create/components/Selection'
+import FormattedAddress from 'components/FormattedAddress'
 import { JuiceSwitch } from 'components/JuiceSwitch'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
@@ -30,7 +31,8 @@ const ReconfigurationDaysDescription = ({
         least {days} days before it starts.
       </Trans>
       <div style={{ color: colors.text.tertiary }}>
-        Contract address: {contract}
+        Contract address:{' '}
+        <FormattedAddress truncateTo={16} address={contract} />
       </div>
     </Space>
   )
@@ -57,8 +59,8 @@ export const ReconfigurationRulesPage = () => {
         <Space direction="vertical" size="middle" style={{ width: '100%' }}>
           <Form.Item noStyle name="selection">
             <Selection defocusOnSelect style={{ width: '100%' }}>
-              {/* TODO: Support checked on left side */}
               <Selection.Card
+                checkPosition="left"
                 name="threeDay"
                 title={
                   <Trans>
@@ -74,6 +76,7 @@ export const ReconfigurationRulesPage = () => {
                 }
               />
               <Selection.Card
+                checkPosition="left"
                 name="sevenDay"
                 title={t`7-day delay`}
                 description={
@@ -85,11 +88,13 @@ export const ReconfigurationRulesPage = () => {
                 }
               />
               <Selection.Card
+                checkPosition="left"
                 name="custom"
                 title={t`Custom strategy`}
                 description={<span style={{ color: 'magenta' }}>TODO</span>}
               />
               <Selection.Card
+                checkPosition="left"
                 name="none"
                 title={t`No strategy`}
                 description={<span style={{ color: 'magenta' }}>TODO</span>}

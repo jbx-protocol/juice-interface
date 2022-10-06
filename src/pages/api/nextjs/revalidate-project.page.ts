@@ -1,7 +1,7 @@
-import { CV_V1, CV_V1_1, CV_V2 } from 'constants/cv'
+import { CV_V1, CV_V1_1, CV_V2, CV_V3 } from 'constants/cv'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-const VALID_CVS = [CV_V1, CV_V1_1, CV_V2]
+const VALID_CVS = [CV_V1, CV_V1_1, CV_V2, CV_V3]
 
 export default async function handler(
   req: NextApiRequest,
@@ -18,6 +18,7 @@ export default async function handler(
       handle = project?.handle
       break
     case CV_V2:
+    case CV_V3:
       projectId = project?.projectId
       break
   }
@@ -57,6 +58,7 @@ function calculatePath({
     case CV_V1_1:
       return `/p/${handle}`
     case CV_V2:
+    case CV_V3:
       return `/v2/p/${projectId}`
     default:
       throw new Error(`Unsupported cv: ${cv}`)

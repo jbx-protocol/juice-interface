@@ -2,19 +2,16 @@ import { CheckCircleFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, Space } from 'antd'
 import RichButton from 'components/RichButton'
-import { useContext, useState } from 'react'
-
-import NftDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer'
-import { ThemeContext } from 'contexts/themeContext'
-import { featureFlagEnabled } from 'utils/featureFlags'
-
 import FundingDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawers/FundingDrawer'
+import NftDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer'
 import RulesDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawers/RulesDrawer'
 import TokenDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawers/TokenDrawer'
-
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { ThemeContext } from 'contexts/themeContext'
+import { useContext, useState } from 'react'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import FundingCycleExplainer from '../../FundingCycleExplainer'
-import ProjectConfigurationFieldsContainer from '../../ProjectConfigurationFieldsContainer'
+import { ProjectConfigurationFieldsContainer } from '../../ProjectConfigurationFieldsContainer'
 
 export default function FundingCycleTabContent({
   onFinish,

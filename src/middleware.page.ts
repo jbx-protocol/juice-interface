@@ -1,4 +1,4 @@
-import { CV_V2 } from 'constants/cv'
+import { CV_V2, CV_V3 } from 'constants/cv'
 import { paginateDepleteProjectsQueryCall } from 'lib/apollo'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -23,7 +23,7 @@ export async function middleware(request: NextRequest) {
   try {
     projects = await paginateDepleteProjectsQueryCall({
       variables: {
-        where: { cv: CV_V2, handle },
+        where: { cv_in: [CV_V2, CV_V3], handle },
       },
     })
   } catch (e) {

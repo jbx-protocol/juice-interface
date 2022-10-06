@@ -4,7 +4,6 @@ import { PayProjectForm } from 'components/Project/PayProjectForm'
 import { ProjectHeader } from 'components/Project/ProjectHeader'
 import { TextButton } from 'components/TextButton'
 import VolumeChart from 'components/VolumeChart'
-import { CV_V2 } from 'constants/cv'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
@@ -58,7 +57,7 @@ export function V2V3Project() {
     projectOwnerAddress,
     handle,
   } = useContext(V2V3ProjectContext)
-  const { projectMetadata, projectId } = useContext(ProjectMetadataContext)
+  const { projectMetadata, projectId, cv } = useContext(ProjectMetadataContext)
   const {
     nftRewards: { rewardTiers: nftRewardTiers },
   } = useContext(NftRewardsContext)
@@ -179,12 +178,12 @@ export function V2V3Project() {
                 size={GUTTER_PX}
                 style={{ width: '100%' }}
               >
-                {!isPreviewMode ? (
+                {!isPreviewMode && cv ? (
                   <VolumeChart
                     style={{ height: 240 }}
                     createdAt={createdAt}
                     projectId={projectId}
-                    cv={CV_V2}
+                    cv={cv}
                   />
                 ) : null}
                 <V2ManageTokensSection />

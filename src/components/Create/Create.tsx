@@ -15,6 +15,7 @@ import {
   PayoutsPage,
   ProjectDetailsPage,
   ProjectTokenPage,
+  ReconfigurationRulesPage,
 } from './components'
 import { CreateBadge } from './components/CreateBadge'
 import { Wizard } from './components/Wizard'
@@ -101,6 +102,15 @@ export function Create() {
               }
             >
               <NftRewardsPage />
+            </Wizard.Page>
+            <Wizard.Page
+              name="reconfigurationRules"
+              title={<Trans>Reconfiguration Rules</Trans>}
+              description={
+                <Trans>Configure restrictions for your funding cycle.</Trans>
+              }
+            >
+              <ReconfigurationRulesPage />
             </Wizard.Page>
             <Wizard.Page name="nextStep" title={t`Empty Step`}>
               <div>TODO</div>

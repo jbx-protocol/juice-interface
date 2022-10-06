@@ -108,6 +108,7 @@ export const defaultFundingCycleMetadata: SerializedV2V3FundingCycleMetadata =
           useDataSourceForPay: false,
           useDataSourceForRedeem: false,
           dataSource: constants.AddressZero,
+          metadata: BigNumber.from(0),
         }
       : {
           global: {

@@ -38,6 +38,7 @@ import {
 } from 'constants/splits'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
+import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
 import { featureFlagEnabled } from 'utils/featureFlags'
 
 interface V2ProjectState {
@@ -56,6 +57,7 @@ interface V2ProjectState {
     collectionMetadata: NftCollectionMetadata
     postPayModal: NftPostPayModalConfig | undefined
   }
+  reconfigurationRuleSelection: ReconfigurationStrategy | undefined
 }
 
 // Increment this version by 1 when making breaking changes.
@@ -167,6 +169,7 @@ export const defaultProjectState: V2ProjectState = {
     collectionMetadata: EMPTY_NFT_COLLECTION_METADATA,
     postPayModal: undefined,
   },
+  reconfigurationRuleSelection: undefined,
 }
 
 const editingV2ProjectSlice = createSlice({
@@ -316,6 +319,12 @@ const editingV2ProjectSlice = createSlice({
     },
     setAllowSetTerminals: (state, action: PayloadAction<boolean>) => {
       state.fundingCycleMetadata.global.allowSetTerminals = action.payload
+    },
+    setReconfigurationRuleSelection: (
+      state,
+      action: PayloadAction<ReconfigurationStrategy | undefined>,
+    ) => {
+      state.reconfigurationRuleSelection = action.payload
     },
   },
 })

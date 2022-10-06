@@ -25,7 +25,7 @@ export function ProjectBanners() {
   const hasQueuedFundingCycle = queuedFundingCycle?.number.gt(0)
   const hasCurrentFundingCycle = fundingCycle?.number.gt(0)
 
-  // If a V2 project has no current or queued FC, we assume that
+  // If a V2 project (_not_ a V3 project) has no current or queued FC, we assume that
   // it's because it's using the old bugged contracts.
   // TODO probably should check the contract address instead.
   const showV2BugNoticeBanner =

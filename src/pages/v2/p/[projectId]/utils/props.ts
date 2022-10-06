@@ -3,7 +3,7 @@ import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
-import { V2CVType, V3CVType } from 'models/cv'
+import { CV2V3 } from 'models/cv'
 import { NetworkName } from 'models/network-name'
 import { ProjectMetadataV5 } from 'models/project-metadata'
 import { V2V3ContractName } from 'models/v2v3/contracts'
@@ -15,7 +15,7 @@ import { loadV2V3Contract } from 'utils/v2v3/loadV2V3Contract'
 export interface ProjectPageProps {
   metadata: ProjectMetadataV5
   projectId: number
-  cv: V3CVType | V2CVType
+  cv: CV2V3
 }
 
 async function loadJBProjects() {

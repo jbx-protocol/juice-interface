@@ -2,7 +2,7 @@ import { isAddress } from '@ethersproject/address'
 
 import { Tooltip } from 'antd'
 
-import { CSSProperties, useEffect, useState } from 'react'
+import { CSSProperties, MouseEventHandler, useEffect, useState } from 'react'
 
 import CopyTextButton from 'components/CopyTextButton'
 import EtherscanLink from 'components/EtherscanLink'
@@ -39,12 +39,14 @@ export default function FormattedAddress({
   tooltipDisabled,
   truncateTo,
   style,
+  onClick,
 }: {
   address: string | undefined
   label?: string
   tooltipDisabled?: boolean
   truncateTo?: number
   style?: CSSProperties
+  onClick?: MouseEventHandler
 }) {
   const [ensName, setEnsName] = useState<string | null>()
 
@@ -109,7 +111,11 @@ export default function FormattedAddress({
   }
 
   if (tooltipDisabled) {
-    return <span style={mergedStyle}>{formatted}</span>
+    return (
+      <span onClick={onClick} style={mergedStyle}>
+        {formatted}
+      </span>
+    )
   }
 
   return (
@@ -121,7 +127,12 @@ export default function FormattedAddress({
       }
     >
       <span>
-        <EtherscanLink type="address" value={address} style={mergedStyle}>
+        <EtherscanLink
+          onClick={onClick}
+          type="address"
+          value={address}
+          style={mergedStyle}
+        >
           {formatted}
         </EtherscanLink>
       </span>

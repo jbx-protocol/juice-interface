@@ -39,7 +39,11 @@ export const ReconfigurationRulesPage = () => {
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <Space direction="vertical" size="middle" style={{ width: '100%' }}>
           <Form.Item noStyle name="selection">
-            <Selection defocusOnSelect style={{ width: '100%' }}>
+            <Selection
+              allowDeselect={false}
+              defocusOnSelect
+              style={{ width: '100%' }}
+            >
               {reconfigurationStrategies.map(strategy => (
                 <RuleCard strategy={strategy} key={strategy.id} />
               ))}

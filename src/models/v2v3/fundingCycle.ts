@@ -2,8 +2,14 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { V2FundingCycleMetadata } from 'models/v2/fundingCycle'
 import { V3FundingCycleMetadata } from 'models/v3/fundingCycle'
 
+export type BaseV2V3FundingCycleMetadataGlobal = {
+  allowSetController: boolean
+  allowSetTerminals: boolean
+}
+
 export type BaseV2V3FundingCycleMetadata = {
   version?: number
+  global: BaseV2V3FundingCycleMetadataGlobal
   reservedRate: BigNumber
   redemptionRate: BigNumber
   ballotRedemptionRate: BigNumber
@@ -19,11 +25,6 @@ export type BaseV2V3FundingCycleMetadata = {
   useDataSourceForPay: boolean
   useDataSourceForRedeem: boolean
   dataSource: string // hex, contract address
-}
-
-export type BaseV2V3FundingCycleMetadataGlobal = {
-  allowSetController: boolean
-  allowSetTerminals: boolean
 }
 
 export type V2V3FundAccessConstraint = {

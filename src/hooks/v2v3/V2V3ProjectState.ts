@@ -5,6 +5,7 @@ import {
 } from 'constants/splits'
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { V2V3ProjectContextType } from 'contexts/v2v3/V2V3ProjectContext'
+import { V2V3ProjectContractsContext } from 'contexts/v2v3/V2V3ProjectContractsContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useNameOfERC20 from 'hooks/NameOfERC20'
 import { useProjectsQuery } from 'hooks/Projects'
@@ -29,7 +30,6 @@ import {
   V2V3CurrencyName,
   V2V3_CURRENCY_ETH,
 } from 'utils/v2v3/currency'
-import { useProjectPrimaryEthTerminal } from './contractReader/ProjectPrimaryEthTerminal'
 
 const useBalanceInDistributionLimitCurrency = ({
   ETHBalanceLoading,
@@ -68,6 +68,9 @@ const useBalanceInDistributionLimitCurrency = ({
 
 export function useV2V3ProjectState({ projectId }: { projectId: number }) {
   const { cv } = useContext(V2V3ContractsContext)
+  const {
+    contracts: { JBETHPaymentTerminal },
+  } = useContext(V2V3ProjectContractsContext)
 
   /**
    * Load additional project metadata
@@ -118,9 +121,7 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
   const { data: terminals } = useProjectTerminals({
     projectId,
   })
-  const { data: primaryETHTerminal } = useProjectPrimaryEthTerminal({
-    projectId,
-  })
+  const primaryETHTerminal = JBETHPaymentTerminal?.address
   const { data: ETHBalance, loading: ETHBalanceLoading } =
     usePaymentTerminalBalance({
       terminal: primaryETHTerminal,

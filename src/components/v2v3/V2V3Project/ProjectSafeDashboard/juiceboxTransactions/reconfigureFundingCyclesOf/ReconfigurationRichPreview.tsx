@@ -1,56 +1,37 @@
-import { Contract } from '@ethersproject/contracts'
 import { t, Trans } from '@lingui/macro'
 import { Space } from 'antd'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import SplitList from 'components/v2v3/shared/SplitList'
 import FundingCycleDetails from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails'
-import { readNetwork } from 'constants/networks'
-import { readProvider } from 'constants/readProvider'
+import { CV_V2, CV_V3 } from 'constants/cv'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { useLoadV2V3Contract } from 'hooks/v2v3/LoadV2V3Contract'
 import { OutgoingProjectData } from 'models/outgoingProject'
 import { SafeTransactionType } from 'models/safe'
 import { V2V3ContractName } from 'models/v2v3/contracts'
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { formatOutgoingSplits } from 'utils/splits'
-import { loadJuiceboxV2Contract } from 'utils/v2v3/contractLoaders/JuiceboxV2'
-import { loadJuiceboxV3Contract } from 'utils/v2v3/contractLoaders/JuiceboxV3'
 import { formatReservedRate, MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { LinkToSafeButton } from '../../LinkToSafeButton'
 
 const useTransactionJBController = (transaction: SafeTransactionType) => {
-  const [JBController, setJBController] = useState<Contract | undefined>()
+  const V2JBController = useLoadV2V3Contract({
+    cv: CV_V2,
+    contractName: V2V3ContractName.JBController,
+  })
+  const V3JBController = useLoadV2V3Contract({
+    cv: CV_V3,
+    contractName: V2V3ContractName.JBController,
+  })
 
-  useEffect(() => {
-    async function load() {
-      const [V2JBController, V3JBController] = await Promise.all([
-        loadJuiceboxV2Contract(V2V3ContractName.JBController, readNetwork.name),
-        loadJuiceboxV3Contract(V2V3ContractName.JBController, readNetwork.name),
-      ])
+  if (transaction.to === V2JBController?.address) {
+    return V2JBController
+  }
 
-      if (transaction.to === V2JBController.address) {
-        setJBController(
-          new Contract(
-            V2JBController.address,
-            V2JBController.abi,
-            readProvider,
-          ),
-        )
-      } else if (transaction.to === V3JBController.address) {
-        setJBController(
-          new Contract(
-            V3JBController.address,
-            V3JBController.abi,
-            readProvider,
-          ),
-        )
-      }
-    }
-
-    load()
-  }, [transaction.to])
-
-  return JBController
+  if (transaction.to === V3JBController?.address) {
+    return V3JBController
+  }
 }
 
 export function ReconfigureRichPreview({

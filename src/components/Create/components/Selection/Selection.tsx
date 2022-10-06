@@ -12,11 +12,13 @@ export const Selection: React.FC<{
   value?: string
   defocusOnSelect?: boolean
   disableInteractivity?: boolean
+  allowDeselect?: boolean
   style?: CSSProperties
   onChange?: (value: string | undefined) => void
 }> & { Card: typeof SelectionCard } = ({
   defocusOnSelect,
   disableInteractivity,
+  allowDeselect = true,
   value,
   style,
   onChange,
@@ -27,10 +29,11 @@ export const Selection: React.FC<{
   const setSelectionWrapper = useCallback(
     (selection: string | undefined) => {
       const _setSelection = onChange ?? setSelection
-      // This is required or get a bug where residual data causes weird toggling
+      const eventIsDeselecting = selection === undefined
+      if (!allowDeselect && eventIsDeselecting) return
       _setSelection?.(selection ?? '')
     },
-    [onChange],
+    [allowDeselect, onChange],
   )
 
   return (

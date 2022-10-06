@@ -5,7 +5,7 @@ import { ProjectMetadataV5 } from 'models/project-metadata'
 import { GetServerSideProps } from 'next'
 import { TransactionProvider } from 'providers/TransactionProvider'
 import { V2V3ProjectPageProvider } from 'providers/v2v3/V2V3ProjectPageProvider'
-import { getProjectProps, ProjectPageProps } from '../utils/props'
+import { getProjectProps, ProjectPageProps } from 'utils/server/pages/props'
 
 export const getServerSideProps: GetServerSideProps<
   ProjectPageProps

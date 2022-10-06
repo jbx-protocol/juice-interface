@@ -1,5 +1,5 @@
 import { Contract, ContractInterface } from '@ethersproject/contracts'
-import { V2V3CVType } from 'models/cv'
+import { CV2V3 } from 'models/cv'
 import { NetworkName } from 'models/network-name'
 import { SignerOrProvider } from 'models/signerOrProvider'
 import { V2V3ContractName } from 'models/v2v3/contracts'
@@ -20,7 +20,7 @@ export const loadV2V3Contract = async (
   contractName: V2V3ContractName,
   network: NetworkName,
   signerOrProvider: SignerOrProvider,
-  version: V2V3CVType,
+  version: CV2V3,
 ): Promise<Contract | undefined> => {
   let contractJson: { abi: ContractInterface; address: string } | undefined =
     undefined

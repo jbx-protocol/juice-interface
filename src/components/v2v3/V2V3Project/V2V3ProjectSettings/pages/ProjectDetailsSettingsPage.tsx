@@ -5,7 +5,7 @@ import ProjectDetailsForm, {
 import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useEditProjectDetailsTx } from 'hooks/v2v3/transactor/EditProjectDetailsTx'
-import { V2V3CVType } from 'models/cv'
+import { CV2V3 } from 'models/cv'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
 import { revalidateProject } from 'utils/revalidateProject'
@@ -47,7 +47,7 @@ export function ProjectDetailsSettingsPage() {
         onConfirmed: async () => {
           if (projectId) {
             await revalidateProject({
-              cv: cv as V2V3CVType,
+              cv: cv as CV2V3,
               projectId: String(projectId),
             })
           }

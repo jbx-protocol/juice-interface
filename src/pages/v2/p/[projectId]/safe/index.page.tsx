@@ -1,6 +1,6 @@
 import { AppWrapper } from 'components/common'
 import { ProjectSafeDashboard } from 'components/v2v3/V2V3Project/ProjectSafeDashboard'
-import { V2CVType, V3CVType } from 'models/cv'
+import { CV2V3 } from 'models/cv'
 import { ProjectMetadataV5 } from 'models/project-metadata'
 import { GetServerSideProps } from 'next'
 import { TransactionProvider } from 'providers/TransactionProvider'
@@ -23,7 +23,7 @@ export default function ProjectSafeDashboardPage({
 }: {
   projectId: number
   metadata: ProjectMetadataV5
-  cv: V3CVType | V2CVType
+  cv: CV2V3
 }) {
   return (
     <AppWrapper>

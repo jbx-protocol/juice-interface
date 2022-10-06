@@ -9,7 +9,7 @@ import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
 import { useEditProjectDetailsTx } from 'hooks/v2v3/transactor/EditProjectDetailsTx'
-import { V2V3CVType } from 'models/cv'
+import { CV2V3 } from 'models/cv'
 import { ProjectMetadataV5 } from 'models/project-metadata'
 import { TokenRef } from 'models/token-ref'
 import { V2OperatorPermission } from 'models/v2v3/permissions'
@@ -81,7 +81,7 @@ export function V2V3ProjectTokenBalancesModal(props: ModalProps) {
         onDone: async () => {
           if (projectId) {
             await revalidateProject({
-              cv: cv as V2V3CVType,
+              cv: cv as CV2V3,
               projectId: String(projectId),
             })
           }

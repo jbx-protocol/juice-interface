@@ -3,7 +3,7 @@ import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useReconfigureV2V3FundingCycleTx } from 'hooks/v2v3/transactor/ReconfigureV2V3FundingCycleTx'
-import { V2V3CVType } from 'models/cv'
+import { CV2V3 } from 'models/cv'
 import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton'
 import { useCallback, useContext, useState } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
@@ -111,7 +111,7 @@ export const useReconfigureFundingCycle = ({
         async onConfirmed() {
           if (projectId) {
             await revalidateProject({
-              cv: cv as V2V3CVType,
+              cv: cv as CV2V3,
               projectId: String(projectId),
             })
           }

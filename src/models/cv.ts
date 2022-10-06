@@ -1,7 +1,7 @@
 import { V1TerminalVersion } from 'models/v1/terminals'
-export type V2CVType = '2'
-export type V3CVType = '3'
-export type V2V3CVType = V2CVType | V3CVType
+export type CV2 = '2'
+export type CV3 = '3'
+export type CV2V3 = CV2 | CV3
 
 // CV = contracts version
-export type CV = V1TerminalVersion | V2V3CVType
+export type CV = V1TerminalVersion | CV2V3

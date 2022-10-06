@@ -7,7 +7,7 @@ import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useWallet } from 'hooks/Wallet'
-import { V2V3CVType } from 'models/cv'
+import { CV2V3 } from 'models/cv'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { useContext, useState } from 'react'
 import { uploadProjectMetadata } from 'utils/ipfs'
@@ -50,7 +50,7 @@ export default function ArchiveProject({
       case CV_V3:
         if (projectId) {
           await revalidateProject({
-            cv: cv as V2V3CVType,
+            cv: cv as CV2V3,
             projectId: String(projectId),
           })
         }

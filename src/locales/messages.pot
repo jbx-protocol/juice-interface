@@ -53,6 +53,9 @@ msgstr ""
 msgid "3-day delay"
 msgstr ""
 
+msgid "3-day delay <0/>"
+msgstr ""
+
 msgid "3. Manage your funds"
 msgstr ""
 
@@ -239,6 +242,9 @@ msgstr ""
 msgid "A reconfiguration to an upcoming funding cycle must be submitted at least 7 days before it starts."
 msgstr ""
 
+msgid "A reconfiguration to an upcoming funding cycle must be submitted at least {days} days before it starts."
+msgstr ""
+
 msgid "A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
 msgstr ""
 
@@ -339,6 +345,9 @@ msgid "Advanced (optional)"
 msgstr ""
 
 msgid "Advanced Options"
+msgstr ""
+
+msgid "Advanced Rules"
 msgstr ""
 
 msgid "All"
@@ -642,6 +651,9 @@ msgid "Commit portions of your funds to the people or projects you want to suppo
 msgstr ""
 
 msgid "Configure how your project will collect and spend funds."
+msgstr ""
+
+msgid "Configure restrictions for your funding cycle."
 msgstr ""
 
 msgid "Configure restrictions for your funding cycles."
@@ -2132,6 +2144,9 @@ msgstr ""
 msgid "Recommended for new users. <0>View details</0>."
 msgstr ""
 
+msgid "Reconfiguration Rules"
+msgstr ""
+
 msgid "Reconfiguration rules"
 msgstr ""
 
@@ -2693,6 +2708,9 @@ msgstr ""
 msgid "This list is using an experimental data index and may be inaccurate for some projects."
 msgstr ""
 
+msgid "This means that you will have to submit changes to your funding AT LEAST 3 days before your next funding cycle starts. These changes will be visible to your contributors."
+msgstr ""
+
 msgid "This project has no distributions."
 msgstr ""
 
@@ -3075,6 +3093,9 @@ msgid "When checked, payments to this address will mint this project's ERC-20 to
 msgstr ""
 
 msgid "When distributing, payouts to Ethereum addresses incur a 2.5% JBX membership fee. Payouts to other Juicebox projects don't incur fees. Your project will receive (the <0>JuiceboxDAO</0> token) in return at the current issuance rate."
+msgstr ""
+
+msgid "When enabled, the payments to the project are paused, and no new tokens will be issued."
 msgstr ""
 
 msgid "When enabled, the project owner can manually mint any amount of tokens to any address."

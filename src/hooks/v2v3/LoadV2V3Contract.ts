@@ -5,6 +5,11 @@ import { V2V3ContractName } from 'models/v2v3/contracts'
 import { useEffect, useState } from 'react'
 import { loadJuiceboxV2OrV3Contract } from 'utils/v2v3/contractLoaders/JuiceboxV2OrV3'
 
+/**
+ * Load a JB V2 or V3 contract, depending on the given [cv].
+ *
+ * (optional) If [address] is provided, load the contract at that address.
+ */
 export const useLoadV2V3Contract = ({
   cv,
   contractName,

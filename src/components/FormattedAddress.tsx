@@ -16,7 +16,7 @@ type EnsRecord = {
   expires: number
 }
 
-const getStorageKey = () => 'jb_ensDict_' + readProvider.network.chainId
+const getStorageKey = () => 'jb_ensDict_' + readProvider?.network?.chainId ?? ''
 
 const getEnsDict = () => {
   if (typeof window !== 'undefined') {

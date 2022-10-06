@@ -44,6 +44,7 @@ export interface SelectionCardProps {
   titleBadge?: ReactNode
   description?: ReactNode
   isSelected?: boolean
+  checkPosition?: 'left' | 'right'
 }
 
 export const SelectionCard: React.FC<SelectionCardProps> = ({
@@ -51,6 +52,7 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
   title,
   icon,
   description,
+  checkPosition = 'right',
   children,
 }) => {
   const { selection, defocusOnSelect, setSelection } =
@@ -89,6 +91,7 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
               gap: '1rem',
             }}
           >
+            {checkPosition === 'left' && <CheckedCircle checked={isSelected} />}
             <div>{icon && <RadialBackgroundIcon icon={icon} />}</div>
             <div
               style={{
@@ -101,7 +104,9 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
               <h2 style={{ margin: 0 }}>{title}</h2>
               {isSelected && description && <div>{description}</div>}
             </div>
-            <CheckedCircle checked={isSelected} />
+            {checkPosition === 'right' && (
+              <CheckedCircle checked={isSelected} />
+            )}
           </div>
         </div>
       </div>

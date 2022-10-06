@@ -1,5 +1,6 @@
 import { Select } from 'antd'
 import { BaseOptionType } from 'antd/lib/select'
+import ProjectVersionBadge from 'components/ProjectVersionBadge'
 import { CV_V2, CV_V3 } from 'constants/cv'
 import { readNetwork } from 'constants/networks'
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
@@ -28,6 +29,10 @@ const SELECT_OPTIONS: BaseOptionType[] = [
  */
 export function ContractVersionSelect() {
   const { setVersion, cv } = useContext(V2V3ContractsContext)
+
+  if (SELECT_OPTIONS.length < 2) {
+    return <ProjectVersionBadge versionText={`V${cv}`} />
+  }
 
   return (
     <Select

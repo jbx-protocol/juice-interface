@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { V2FundingCycleMetadata } from 'models/v2/fundingCycle'
 import {
+  BaseV2V3FundingCycleMetadata,
   V2V3FundAccessConstraint,
   V2V3FundingCycleData,
   V2V3FundingCycleMetadata,
@@ -50,6 +51,7 @@ type V3FundingCycleMetadataBooleans = Record<
     | 'dataSource'
     | 'version'
     | 'global'
+    | 'metadata'
   >,
   boolean
 >
@@ -103,60 +105,92 @@ export const serializeV2V3FundingCycleMetadata = (
     dataSource: fundingCycleMetadata.dataSource, // hex, contract address
   }
 
+  const v2FundingCycleMetadata: V2FundingCycleMetadata =
+    fundingCycleMetadata as V2FundingCycleMetadata
   // Return V2 FC Metadata type if fundingCycleMetadata matches the type
-  if (
-    typeof (fundingCycleMetadata as V2FundingCycleMetadata).allowChangeToken !==
-    'undefined'
-  ) {
+  if (typeof v2FundingCycleMetadata.allowChangeToken !== 'undefined') {
     return {
       ...baseSerializedMetadata,
-      allowChangeToken: (fundingCycleMetadata as V2FundingCycleMetadata)
-        .allowChangeToken,
+      allowChangeToken: v2FundingCycleMetadata.allowChangeToken,
     } as SerializedV2FundingCycleMetadata
   }
+
+  const v3FundingCycleMetadata: V3FundingCycleMetadata =
+    fundingCycleMetadata as V3FundingCycleMetadata
 
   return {
     ...baseSerializedMetadata,
     global: {
       ...baseSerializedMetadata.global,
-      pauseTransfers: (fundingCycleMetadata as V3FundingCycleMetadata).global
-        .pauseTransfers,
+      pauseTransfers: v3FundingCycleMetadata.global.pauseTransfers,
     },
-    preferClaimedTokenOverride: (fundingCycleMetadata as V3FundingCycleMetadata)
-      .preferClaimedTokenOverride,
-    metadata: (fundingCycleMetadata as V3FundingCycleMetadata).metadata,
-  } as SerializedV3FundingCycleMetadata
+    preferClaimedTokenOverride:
+      v3FundingCycleMetadata.preferClaimedTokenOverride ?? false,
+    metadata: v3FundingCycleMetadata?.metadata?.toString() ?? '',
+  }
 }
 
 export const deserializeV2V3FundingCycleMetadata = (
   serializedFundingCycleMetadata: SerializedV2V3FundingCycleMetadata,
-): Omit<V2FundingCycleMetadata, 'version'> => ({
-  global: {
-    allowSetTerminals: serializedFundingCycleMetadata.global.allowSetTerminals,
-    allowSetController:
-      serializedFundingCycleMetadata.global.allowSetController,
-  },
-  reservedRate: BigNumber.from(serializedFundingCycleMetadata.reservedRate),
-  redemptionRate: BigNumber.from(serializedFundingCycleMetadata.redemptionRate),
-  ballotRedemptionRate: BigNumber.from(
-    serializedFundingCycleMetadata.ballotRedemptionRate,
-  ),
-  pausePay: serializedFundingCycleMetadata.pausePay,
-  pauseDistributions: serializedFundingCycleMetadata.pauseDistributions,
-  pauseRedeem: serializedFundingCycleMetadata.pauseRedeem,
-  allowMinting: serializedFundingCycleMetadata.allowMinting,
-  pauseBurn: serializedFundingCycleMetadata.pauseBurn,
-  allowChangeToken: serializedFundingCycleMetadata.allowChangeToken,
-  allowTerminalMigration: serializedFundingCycleMetadata.allowTerminalMigration,
-  allowControllerMigration:
-    serializedFundingCycleMetadata.allowControllerMigration,
-  holdFees: serializedFundingCycleMetadata.holdFees,
-  useTotalOverflowForRedemptions:
-    serializedFundingCycleMetadata.useTotalOverflowForRedemptions,
-  useDataSourceForPay: serializedFundingCycleMetadata.useDataSourceForPay,
-  useDataSourceForRedeem: serializedFundingCycleMetadata.useDataSourceForRedeem,
-  dataSource: serializedFundingCycleMetadata.dataSource, // hex, contract address
-})
+): Omit<V2V3FundingCycleMetadata, 'version'> => {
+  const baseMetadata: BaseV2V3FundingCycleMetadata = {
+    global: {
+      allowSetTerminals:
+        serializedFundingCycleMetadata.global.allowSetTerminals,
+      allowSetController:
+        serializedFundingCycleMetadata.global.allowSetController,
+    },
+    reservedRate: BigNumber.from(serializedFundingCycleMetadata.reservedRate),
+    redemptionRate: BigNumber.from(
+      serializedFundingCycleMetadata.redemptionRate,
+    ),
+    ballotRedemptionRate: BigNumber.from(
+      serializedFundingCycleMetadata.ballotRedemptionRate,
+    ),
+    pausePay: serializedFundingCycleMetadata.pausePay,
+    pauseDistributions: serializedFundingCycleMetadata.pauseDistributions,
+    pauseRedeem: serializedFundingCycleMetadata.pauseRedeem,
+    allowMinting: serializedFundingCycleMetadata.allowMinting,
+    pauseBurn: serializedFundingCycleMetadata.pauseBurn,
+    allowTerminalMigration:
+      serializedFundingCycleMetadata.allowTerminalMigration,
+    allowControllerMigration:
+      serializedFundingCycleMetadata.allowControllerMigration,
+    holdFees: serializedFundingCycleMetadata.holdFees,
+    useTotalOverflowForRedemptions:
+      serializedFundingCycleMetadata.useTotalOverflowForRedemptions,
+    useDataSourceForPay: serializedFundingCycleMetadata.useDataSourceForPay,
+    useDataSourceForRedeem:
+      serializedFundingCycleMetadata.useDataSourceForRedeem,
+    dataSource: serializedFundingCycleMetadata.dataSource, // hex, contract address
+  }
+
+  // Return V2 FC Metadata type if fundingCycleMetadata matches the type
+  if (
+    typeof (serializedFundingCycleMetadata as SerializedV2FundingCycleMetadata)
+      .allowChangeToken !== 'undefined'
+  ) {
+    return {
+      ...baseMetadata,
+      allowChangeToken: (
+        serializedFundingCycleMetadata as SerializedV2FundingCycleMetadata
+      ).allowChangeToken,
+    } as V2FundingCycleMetadata
+  }
+
+  const v3SerializedFundingCycleMetadata: SerializedV3FundingCycleMetadata =
+    serializedFundingCycleMetadata as SerializedV3FundingCycleMetadata
+  return {
+    ...baseMetadata,
+    global: {
+      ...baseMetadata.global,
+      pauseTransfers: v3SerializedFundingCycleMetadata.global.pauseTransfers,
+    },
+    preferClaimedTokenOverride:
+      v3SerializedFundingCycleMetadata.preferClaimedTokenOverride,
+    metadata: BigNumber.from(v3SerializedFundingCycleMetadata.metadata),
+  } as V3FundingCycleMetadata
+}
 
 export const serializeV2V3FundingCycleData = (
   fundingCycleData: V2V3FundingCycleData,

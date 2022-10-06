@@ -13,11 +13,15 @@ export const useFormDispatchWatch = <
 >({
   form,
   fieldName,
+  ignoreUndefined,
+  currentValue,
   dispatchFunction,
   formatter,
 }: {
   form: FormInstance<FormValues>
   fieldName: keyof FormValues
+  ignoreUndefined?: boolean
+  currentValue?: Payload
   dispatchFunction: ActionCreatorWithPayload<Payload>
   formatter: (v: FormValues[keyof FormValues]) => Payload
 }) => {
@@ -25,6 +29,16 @@ export const useFormDispatchWatch = <
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(dispatchFunction(formatter(fieldValue)))
-  }, [dispatch, dispatchFunction, fieldValue, formatter])
+    if (ignoreUndefined && fieldValue === undefined) return
+    const v = formatter(fieldValue)
+    if (v === currentValue) return
+    dispatch(dispatchFunction(v))
+  }, [
+    currentValue,
+    dispatch,
+    dispatchFunction,
+    fieldValue,
+    formatter,
+    ignoreUndefined,
+  ])
 }

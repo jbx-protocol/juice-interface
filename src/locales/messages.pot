@@ -740,9 +740,6 @@ msgstr ""
 msgid "Copied!"
 msgstr ""
 
-msgid "Copy link to share."
-msgstr ""
-
 msgid "Copy to clipboard"
 msgstr ""
 
@@ -1251,9 +1248,6 @@ msgid "Give this NFT a name."
 msgstr ""
 
 msgid "Go to <0>{snapshotUrl}</0>"
-msgstr ""
-
-msgid "Go to Safe"
 msgstr ""
 
 msgid "Go to your Safe"
@@ -2324,6 +2318,9 @@ msgstr ""
 msgid "Seconds"
 msgstr ""
 
+msgid "See Tx on Safe"
+msgstr ""
+
 msgid "Select the option that best suits your project’s funding requirements."
 msgstr ""
 
@@ -2690,7 +2687,7 @@ msgstr ""
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
 msgstr ""
 
-msgid "This project is owned by a Safe. <0>See transactions.</0>"
+msgid "This project is owned by a Safe. <0>See transactions</0>."
 msgstr ""
 
 msgid "This project reserves some of the newly minted tokens for itself."

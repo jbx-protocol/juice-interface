@@ -3,40 +3,17 @@ import { Form, Space } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import Callout from 'components/Callout'
 import { Selection } from 'components/Create/components/Selection'
-import FormattedAddress from 'components/FormattedAddress'
 import { JuiceSwitch } from 'components/JuiceSwitch'
-import { ThemeContext } from 'contexts/themeContext'
+import { readNetwork } from 'constants/networks'
 import { useContext } from 'react'
-import { CreateBadge } from '../../CreateBadge'
 import { CreateCollapse } from '../../CreateCollapse'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
-import { useReconfigurationRulesForm } from './hooks'
-
-const ReconfigurationDaysDescription = ({
-  days,
-  contract,
-}: {
-  days: number
-  contract: string
-}) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
-  return (
-    <Space direction="vertical">
-      <Trans>
-        A reconfiguration to an upcoming funding cycle must be submitted at
-        least {days} days before it starts.
-      </Trans>
-      <div style={{ color: colors.text.tertiary }}>
-        Contract address:{' '}
-        <FormattedAddress truncateTo={16} address={contract} />
-      </div>
-    </Space>
-  )
-}
+import { CustomRuleCard, RuleCard } from './components'
+import {
+  useAvailableReconfigurationStrategies,
+  useReconfigurationRulesForm,
+} from './hooks'
 
 export const ReconfigurationRulesPage = () => {
   const { form, initialValues } = useReconfigurationRulesForm()
@@ -44,6 +21,10 @@ export const ReconfigurationRulesPage = () => {
 
   const selection = useWatch('selection', form)
   const isNextEnabled = !!selection
+
+  const reconfigurationStrategies = useAvailableReconfigurationStrategies(
+    readNetwork.name,
+  )
 
   return (
     <Form
@@ -59,46 +40,10 @@ export const ReconfigurationRulesPage = () => {
         <Space direction="vertical" size="middle" style={{ width: '100%' }}>
           <Form.Item noStyle name="selection">
             <Selection defocusOnSelect style={{ width: '100%' }}>
-              <Selection.Card
-                checkPosition="left"
-                name="threeDay"
-                title={
-                  <Trans>
-                    3-day delay <CreateBadge.Default />
-                  </Trans>
-                }
-                description={
-                  <ReconfigurationDaysDescription
-                    days={3}
-                    // Fix this address
-                    contract="0xTODO0xC3890c4Dac5D06C4DAA2eE3Fdc95eC1686A4"
-                  />
-                }
-              />
-              <Selection.Card
-                checkPosition="left"
-                name="sevenDay"
-                title={t`7-day delay`}
-                description={
-                  <ReconfigurationDaysDescription
-                    days={7}
-                    // Fix this address
-                    contract="0xTODO0xC3890c4Dac5D06C4DAA2eE3Fdc95eC1686A4"
-                  />
-                }
-              />
-              <Selection.Card
-                checkPosition="left"
-                name="custom"
-                title={t`Custom strategy`}
-                description={<span style={{ color: 'magenta' }}>TODO</span>}
-              />
-              <Selection.Card
-                checkPosition="left"
-                name="none"
-                title={t`No strategy`}
-                description={<span style={{ color: 'magenta' }}>TODO</span>}
-              />
+              {reconfigurationStrategies.map(strategy => (
+                <RuleCard strategy={strategy} key={strategy.id} />
+              ))}
+              <CustomRuleCard />
             </Selection>
           </Form.Item>
         </Space>

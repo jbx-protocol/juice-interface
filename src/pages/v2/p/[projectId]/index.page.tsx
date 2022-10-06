@@ -11,9 +11,8 @@ import {
   InferGetStaticPropsType,
 } from 'next'
 import { V2V3ProjectPageProvider } from 'providers/v2v3/V2V3ProjectPageProvider'
-
+import { getProjectProps, ProjectPageProps } from 'utils/server/pages/props'
 import { V2V3Dashboard } from './components/V2V3Dashboard'
-import { getProjectProps, ProjectPageProps } from './utils/props'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   if (process.env.BUILD_CACHE_V2_PROJECTS === 'true') {

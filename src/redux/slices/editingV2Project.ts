@@ -31,12 +31,14 @@ import {
   redemptionRateFrom,
 } from 'utils/v2v3/math'
 
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
+import { featureFlagEnabled } from 'utils/featureFlags'
 
 interface V2ProjectState {
   version: number
@@ -59,7 +61,7 @@ interface V2ProjectState {
 // Increment this version by 1 when making breaking changes.
 // When users return to the site and their local version is less than
 // this number, their state will be reset.
-export const REDUX_STORE_V2_PROJECT_VERSION = 7
+export const REDUX_STORE_V2_PROJECT_VERSION = 8
 
 const defaultProjectMetadataState: ProjectMetadataV5 = {
   name: '',
@@ -82,28 +84,55 @@ export const defaultFundingCycleData: SerializedV2V3FundingCycleData =
   })
 
 export const defaultFundingCycleMetadata: SerializedV2V3FundingCycleMetadata =
-  serializeV2V3FundingCycleMetadata({
-    global: {
-      allowSetTerminals: false,
-      allowSetController: false,
-    },
-    reservedRate: BigNumber.from(0), // A number from 0-10,000
-    redemptionRate: redemptionRateFrom('100'), // A number from 0-10,000
-    ballotRedemptionRate: redemptionRateFrom('100'), // A number from 0-10,000
-    pausePay: false,
-    pauseDistributions: false,
-    pauseRedeem: false,
-    allowMinting: false,
-    pauseBurn: false,
-    allowChangeToken: false,
-    allowTerminalMigration: false,
-    allowControllerMigration: false,
-    holdFees: false,
-    useTotalOverflowForRedemptions: false,
-    useDataSourceForPay: false,
-    useDataSourceForRedeem: false,
-    dataSource: constants.AddressZero,
-  })
+  serializeV2V3FundingCycleMetadata(
+    featureFlagEnabled(FEATURE_FLAGS.V3)
+      ? {
+          global: {
+            allowSetTerminals: false,
+            allowSetController: false,
+            pauseTransfers: false,
+          },
+          reservedRate: BigNumber.from(0), // A number from 0-10,000
+          redemptionRate: redemptionRateFrom('100'), // A number from 0-10,000
+          ballotRedemptionRate: redemptionRateFrom('100'), // A number from 0-10,000
+          pausePay: false,
+          pauseDistributions: false,
+          pauseRedeem: false,
+          allowMinting: false,
+          pauseBurn: false,
+          preferClaimedTokenOverride: false,
+          allowTerminalMigration: false,
+          allowControllerMigration: false,
+          holdFees: false,
+          useTotalOverflowForRedemptions: false,
+          useDataSourceForPay: false,
+          useDataSourceForRedeem: false,
+          dataSource: constants.AddressZero,
+          metadata: BigNumber.from(0),
+        }
+      : {
+          global: {
+            allowSetTerminals: false,
+            allowSetController: false,
+          },
+          reservedRate: BigNumber.from(0), // A number from 0-10,000
+          redemptionRate: redemptionRateFrom('100'), // A number from 0-10,000
+          ballotRedemptionRate: redemptionRateFrom('100'), // A number from 0-10,000
+          pausePay: false,
+          pauseDistributions: false,
+          pauseRedeem: false,
+          allowMinting: false,
+          pauseBurn: false,
+          allowChangeToken: false,
+          allowTerminalMigration: false,
+          allowControllerMigration: false,
+          holdFees: false,
+          useTotalOverflowForRedemptions: false,
+          useDataSourceForPay: false,
+          useDataSourceForRedeem: false,
+          dataSource: constants.AddressZero,
+        },
+  ) ?? {}
 
 const EMPTY_PAYOUT_GROUPED_SPLITS = {
   group: ETH_PAYOUT_SPLIT_GROUP,

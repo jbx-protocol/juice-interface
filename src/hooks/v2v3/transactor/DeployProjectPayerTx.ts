@@ -36,7 +36,7 @@ export function useDeployProjectPayerTx(): TransactorInstance<DeployProjectPayer
     },
     txOpts,
   ) => {
-    if (!transactor || !projectId || !contracts?.JBETHPaymentTerminal) {
+    if (!transactor || !projectId || !contracts) {
       txOpts?.onDone?.()
       return Promise.resolve(false)
     }

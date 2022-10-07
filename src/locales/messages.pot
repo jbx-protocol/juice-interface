@@ -2528,6 +2528,9 @@ msgstr ""
 msgid "Start time (seconds, Unix time)"
 msgstr ""
 
+msgid "Start upgrade"
+msgstr ""
+
 msgid "Step 1. Add V1 token payment terminal"
 msgstr ""
 
@@ -3270,6 +3273,9 @@ msgid "Your project cannot receive direct payments while paused."
 msgstr ""
 
 msgid "Your project is funded across funding cycles. A funding cycle has a funding target and a duration. Your project's funding cycle configuration will depend on the kind of project you're starting."
+msgstr ""
+
+msgid "Your project is up to date!"
 msgstr ""
 
 msgid "Your project will appear archived, and won't be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Allow a few days for your project to appear under the \"archived\" filter on the Projects page."

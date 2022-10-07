@@ -3,12 +3,14 @@ import { Button } from 'antd'
 import axios from 'axios'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useTwitterAuth } from 'hooks/SocialAuth'
+import useTwitterVerified from 'hooks/TwitterVerified'
 import { useContext, useState } from 'react'
 
 export const VerifyTwitterSettingsPage = () => {
   const { projectId, projectMetadata } = useContext(ProjectMetadataContext)
   const { onOpen } = useTwitterAuth()
   const [isAuthenticating, setIsAuthenticating] = useState(false)
+  const twitterVerified = useTwitterVerified()
 
   const initiateAuthRequest = async () => {
     if (!projectId || !projectMetadata?.twitter) return
@@ -25,13 +27,19 @@ export const VerifyTwitterSettingsPage = () => {
       <p>
         <Trans>Verify your project owns the linked Twitter account.</Trans>
       </p>
-      <Button
-        type="primary"
-        onClick={initiateAuthRequest}
-        loading={isAuthenticating}
-      >
-        <Trans>Verify Twitter</Trans>
-      </Button>
+      {twitterVerified ? (
+        <Button
+          type="primary"
+          onClick={initiateAuthRequest}
+          loading={isAuthenticating}
+        >
+          <Trans>Verify Twitter</Trans>
+        </Button>
+      ) : (
+        <Button disabled type="primary">
+          Twitter Connected
+        </Button>
+      )}
     </div>
   )
 }

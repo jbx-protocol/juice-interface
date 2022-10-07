@@ -19,7 +19,7 @@ const TwitterVerified = () => {
   const { handle, projectOwnerAddress } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
   const { userAddress } = useWallet()
-  const [value] = useTwitterVerified('2-4653')
+  const [value] = useTwitterVerified()
   const info = value as TwitterVerificationInfo
   const canVerify =
     projectOwnerAddress?.toLowerCase() === userAddress?.toLowerCase()

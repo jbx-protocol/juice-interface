@@ -13,7 +13,7 @@ const handler = async (req: ApiRequest, res: NextApiResponse) => {
   try {
     const { projectId, twitterUsername } = req.body
     await firestoreAdmin.collection('twitterVerification').add({
-      projectId,
+      projectId: `2-${projectId}`,
       twitterUsername,
       initiatedAt: admin.firestore.FieldValue.serverTimestamp(),
     })

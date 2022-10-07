@@ -3,7 +3,7 @@ import { Button, Space, Statistic } from 'antd'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useContext, useState } from 'react'
 import { useIsUpgradeAvailable } from './hooks/useIsUpgradeAvailable'
-import { UpgradeWizard } from './UpgradeWizard'
+import { UpgradeWizard } from './UpgradeWizard/UpgradeWizard'
 
 export function ProjectUpgradesPage() {
   const { cv } = useContext(ProjectMetadataContext)

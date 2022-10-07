@@ -52,7 +52,7 @@ function ReconfigureButton({
   )
 }
 
-export function V2ReconfigureFundingCycleForm() {
+export function V2V3ReconfigureFundingCycleForm() {
   const { initialEditingData } = useInitialEditingData(true)
   const editingProjectData = useEditingProjectData()
   const [memo, setMemo] = useState('')

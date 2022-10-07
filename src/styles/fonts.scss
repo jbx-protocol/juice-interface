@@ -1,0 +1,129 @@
+body.Capsules {
+  font-family: 'Capsules';
+  code {
+    font-family: 'Capsules';
+  }
+  div,
+  p,
+  button,
+  a {
+    font-family: 'Capsules';
+  }
+}
+
+body.GT-Pressura-Mono {
+  font-family: 'GT Pressura Mono';
+  code {
+    font-family: 'GT Pressura Mono';
+  }
+  div,
+  p,
+  button,
+  a {
+    font-family: 'GT Pressura Mono';
+  }
+}
+
+body.Centra-Mono {
+  font-family: 'Centra Mono';
+  code {
+    font-family: 'Centra Mono';
+  }
+  div,
+  p,
+  button,
+  a {
+    font-family: 'Centra Mono';
+  }
+}
+
+body.Tarnac-Sans {
+  font-family: 'Tarnac Sans';
+  code {
+    font-family: 'Tarnac Sans';
+  }
+  div,
+  p,
+  button,
+  a {
+    font-family: 'Tarnac Sans';
+  }
+}
+
+@font-face {
+  font-family: 'Capsules';
+  src: url('/fonts/CapsulesVF.woff2') format('woff2');
+  font-weight: 100 700;
+}
+
+@font-face {
+  font-family: 'Capsules';
+  src: url('/fonts/CapsulesVF.woff2') format('woff2') tech('variations');
+  font-weight: 100 700;
+}
+
+@font-face {
+  font-family: 'GT Pressura Mono';
+  font-weight: 400;
+  src: url('/fonts/GT-Pressura-Mono-Regular-Trial.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'GT Pressura Mono';
+  font-weight: 100 300;
+  src: url('/fonts/GT-Pressura-Mono-Light-Trial.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'GT Pressura Mono';
+  font-weight: 600 900;
+  src: url('/fonts/GT-Pressura-Mono-Bold-Trial.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Centra Mono';
+  font-weight: 400;
+  src: url('/fonts/CentraMonoTRIAL-Book.ttf');
+}
+
+@font-face {
+  font-family: 'Centra Mono';
+  font-weight: 100 300;
+  src: url('/fonts/CentraMonoTRIAL-Light.ttf');
+}
+
+@font-face {
+  font-family: 'Centra Mono';
+  font-weight: 600;
+  src: url('/fonts/CentraMonoTRIAL-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'Centra Mono';
+  font-weight: 700 900;
+  src: url('/fonts/CentraMonoTRIAL-Black.ttf');
+}
+
+@font-face {
+  font-family: 'Tarnac Sans';
+  font-weight: 400;
+  src: url('/fonts/TarnacSansTRIAL-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Tarnac Sans';
+  font-weight: 100 300;
+  src: url('/fonts/TarnacSansTRIAL-Light.ttf');
+}
+
+@font-face {
+  font-family: 'Tarnac Sans';
+  font-weight: 600;
+  src: url('/fonts/TarnacSansTRIAL-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'Tarnac Sans';
+  font-weight: 700 900;
+  src: url('/fonts/TarnacSansTRIAL-Black.ttf');
+}

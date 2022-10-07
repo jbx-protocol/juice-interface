@@ -4,6 +4,7 @@ import { TransactionsList } from 'components/Navbar/TransactionList'
 import useMobile from 'hooks/Mobile'
 
 import Account from './Account'
+import FontSelector from './FontSelector'
 import { TopLeftNavItems } from './MenuItems'
 import MobileCollapse from './Mobile/MobileCollapse'
 import NavLanguageSelector from './NavLanguageSelector'
@@ -17,6 +18,7 @@ export default function Navbar() {
       <TopLeftNavItems />
 
       <Space size="middle" style={{ ...topRightNavStyles }}>
+        <FontSelector />
         <NavLanguageSelector />
         <ThemePicker />
         <TransactionsList

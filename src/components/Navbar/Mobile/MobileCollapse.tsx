@@ -45,6 +45,27 @@ export default function MobileCollapse() {
     return () => window.removeEventListener('click', handleClick)
   }, [])
 
+  const menuItems = [
+    {
+      key: 'topLeftItems',
+      label: (
+        <TopLeftNavItems
+          desktop={false}
+          onClickMenuItems={() => collapseNav()}
+        />
+      ),
+    },
+    {
+      key: 'lang-selector',
+      label: <NavLanguageSelector mobile />,
+    },
+
+    {
+      key: 'theme-picker',
+      label: <ThemePickerMobile />,
+    },
+  ]
+
   return (
     <Header
       className="top-nav top-nav-mobile"
@@ -113,18 +134,11 @@ export default function MobileCollapse() {
             </div>
           }
         >
-          <Menu mode="inline" defaultSelectedKeys={['resources']}>
-            <TopLeftNavItems
-              desktop={false}
-              onClickMenuItems={() => collapseNav()}
-            />
-            <Menu.Item key="language-selector">
-              <NavLanguageSelector mobile />
-            </Menu.Item>
-            <Menu.Item key="theme-picker">
-              <ThemePickerMobile />
-            </Menu.Item>
-          </Menu>
+          <Menu
+            mode="inline"
+            items={menuItems}
+            defaultSelectedKeys={['resources']}
+          />
           <div
             style={{
               display: 'flex',

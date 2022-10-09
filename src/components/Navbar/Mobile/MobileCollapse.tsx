@@ -118,15 +118,12 @@ export default function MobileCollapse() {
               desktop={false}
               onClickMenuItems={() => collapseNav()}
             />
-
-            <div style={{ marginLeft: 15 }}>
-              <Menu.Item key="language-selector">
-                <NavLanguageSelector mobile />
-              </Menu.Item>
-              <Menu.Item key="theme-picker">
-                <ThemePickerMobile />
-              </Menu.Item>
-            </div>
+            <Menu.Item key="language-selector">
+              <NavLanguageSelector mobile />
+            </Menu.Item>
+            <Menu.Item key="theme-picker">
+              <ThemePickerMobile />
+            </Menu.Item>
           </Menu>
           <div
             style={{

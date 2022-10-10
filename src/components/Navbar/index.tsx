@@ -2,7 +2,6 @@ import { Space } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
 import { TransactionsList } from 'components/Navbar/TransactionList'
 import useMobile from 'hooks/Mobile'
-
 import Account from './Account'
 import FontSelector from './FontSelector'
 import { TopLeftNavItems } from './MenuItems'
@@ -13,7 +12,10 @@ import ThemePicker from './ThemePicker'
 
 export default function Navbar() {
   const isMobile = useMobile()
-  return !isMobile ? (
+
+  if (isMobile) return <MobileCollapse />
+
+  return (
     <Header className="top-nav" style={{ ...topNavStyles }}>
       <TopLeftNavItems />
 
@@ -31,7 +33,5 @@ export default function Navbar() {
         <Account />
       </Space>
     </Header>
-  ) : (
-    <MobileCollapse />
   )
 }

@@ -5,6 +5,7 @@ import { V1UserContext } from 'contexts/v1/userContext'
 import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
@@ -14,8 +15,10 @@ export function useRedeemTokensTx(): TransactorInstance<{
   preferConverted: boolean
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
+  const { terminal, tokenSymbol } = useContext(V1ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
+
   const { userAddress } = useWallet()
-  const { projectId, terminal, tokenSymbol } = useContext(V1ProjectContext)
 
   return ({ redeemAmount, minAmount, preferConverted }, txOpts) => {
     if (

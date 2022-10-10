@@ -10,6 +10,7 @@ export const RadialBackgroundIcon = ({ icon }: { icon: ReactNode }) => {
       style={{
         width: '2.625rem',
         height: '2.625rem',
+        minWidth: '2.625rem',
         fontSize: '1.3rem',
         backgroundColor: colors.background.l1,
         borderRadius: '50%',

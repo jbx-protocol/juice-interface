@@ -24,7 +24,7 @@ import ExternalLink from 'components/ExternalLink'
 import { CV } from 'models/cv'
 import { helpPagePath } from 'utils/routes'
 
-import { CV_V1, CV_V1_1, CV_V2 } from 'constants/cv'
+import { CV_V1, CV_V1_1, CV_V2, CV_V3 } from 'constants/cv'
 import { layouts } from 'constants/styles/layouts'
 import ArchivedProjectsMessage from './ArchivedProjectsMessage'
 import HoldingsProjects from './HoldingsProjects'
@@ -93,8 +93,8 @@ function Projects() {
     const _cv: CV[] = []
     if (includeV1) _cv.push(CV_V1)
     if (includeV1_1) _cv.push(CV_V1_1)
-    if (includeV2) _cv.push(CV_V2)
-    return _cv.length ? _cv : [CV_V1, CV_V1_1, CV_V2]
+    if (includeV2) _cv.push(CV_V2, CV_V3)
+    return _cv.length ? _cv : [CV_V1, CV_V1_1, CV_V2, CV_V3]
   }, [includeV1, includeV1_1, includeV2])
 
   const {

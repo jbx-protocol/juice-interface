@@ -7,7 +7,6 @@ import ProjectCreateEventElem from 'components/activityEventElems/ProjectCreateE
 import RedeemEventElem from 'components/activityEventElems/RedeemEventElem'
 import Loading from 'components/Loading'
 import SectionHeader from 'components/SectionHeader'
-import { CV_V2 } from 'constants/cv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
@@ -40,23 +39,19 @@ type EventFilter =
   | 'deployETHERC20ProjectPayer'
 // TODO | 'useAllowanceEvent'
 
+const pageSize = 50
+
 export default function ProjectActivity() {
-  const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
-  const [eventFilter, setEventFilter] = useState<EventFilter>('all')
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const { projectId, cv } = useContext(ProjectMetadataContext)
 
-  const { projectId } = useContext(ProjectMetadataContext)
-
-  const pageSize = 50
+  const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
+  const [eventFilter, setEventFilter] = useState<EventFilter>('all')
 
   const where: WhereConfig<'projectEvent'>[] = useMemo(() => {
     const _where: WhereConfig<'projectEvent'>[] = [
-      {
-        key: 'cv',
-        value: CV_V2,
-      },
       {
         key: 'mintTokensEvent',
         value: null, // Exclude all mintTokensEvents. One of these events is created for every Pay event, and showing both event types may lead to confusion
@@ -71,6 +66,13 @@ export default function ProjectActivity() {
       _where.push({
         key: 'projectId',
         value: projectId,
+      })
+    }
+
+    if (cv) {
+      _where.push({
+        key: 'cv',
+        value: cv,
       })
     }
 
@@ -109,7 +111,7 @@ export default function ProjectActivity() {
     }
 
     return _where
-  }, [projectId, eventFilter])
+  }, [projectId, eventFilter, cv])
 
   const {
     data: projectEvents,

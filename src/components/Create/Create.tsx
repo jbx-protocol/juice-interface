@@ -8,8 +8,16 @@ import { V2V3ContractsProvider } from 'providers/v2v3/V2V3ContractsProvider'
 import { V2V3CurrencyProvider } from 'providers/v2v3/V2V3CurrencyProvider'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { helpPagePath } from 'utils/routes'
-import { FundingCyclesPage, ProjectDetailsPage } from './components'
-import { FundingTargetPage } from './components/pages/FundingTarget'
+import {
+  FundingCyclesPage,
+  FundingTargetPage,
+  NftRewardsPage,
+  PayoutsPage,
+  ProjectDetailsPage,
+  ProjectTokenPage,
+  ReconfigurationRulesPage,
+} from './components'
+import { CreateBadge } from './components/CreateBadge'
 import { Wizard } from './components/Wizard'
 
 export function Create() {
@@ -58,6 +66,51 @@ export function Create() {
               description={t`Select the option that best suits your project’s funding requirements.`}
             >
               <FundingTargetPage />
+            </Wizard.Page>
+            <Wizard.Page
+              name="payouts"
+              title={t`Payouts`}
+              description={t`Choose which addresses to pay and how to split the total payout amount each funding cycle. How do I decide?`}
+            >
+              <PayoutsPage />
+            </Wizard.Page>
+            <Wizard.Page
+              name="projectToken"
+              title={t`Project Token`}
+              description={
+                <Trans>
+                  Design how your project's tokens should work. You can use your
+                  project tokens for governance, ownership & treasury
+                  redemptions. <a href="#TODO">Learn more</a>.
+                </Trans>
+              }
+            >
+              <ProjectTokenPage />
+            </Wizard.Page>
+            <Wizard.Page
+              name="nftRewards"
+              title={
+                <Trans>
+                  NFT Rewards <CreateBadge.Optional />
+                </Trans>
+              }
+              description={
+                <Trans>
+                  Reward contributors with NFTs when they meet your funding
+                  criteria.
+                </Trans>
+              }
+            >
+              <NftRewardsPage />
+            </Wizard.Page>
+            <Wizard.Page
+              name="reconfigurationRules"
+              title={<Trans>Reconfiguration Rules</Trans>}
+              description={
+                <Trans>Configure restrictions for your funding cycle.</Trans>
+              }
+            >
+              <ReconfigurationRulesPage />
             </Wizard.Page>
             <Wizard.Page name="nextStep" title={t`Empty Step`}>
               <div>TODO</div>

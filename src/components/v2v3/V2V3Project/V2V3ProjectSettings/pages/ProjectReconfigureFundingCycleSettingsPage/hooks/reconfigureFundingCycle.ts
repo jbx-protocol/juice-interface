@@ -1,9 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { CV_V2 } from 'constants/cv'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useReconfigureV2V3FundingCycleTx } from 'hooks/v2v3/transactor/ReconfigureV2V3FundingCycleTx'
+import { CV2V3 } from 'models/cv'
 import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton'
 import { useCallback, useContext, useState } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
@@ -43,7 +43,7 @@ export const useReconfigureFundingCycle = ({
   memo: string
 }) => {
   const { fundingCycle } = useContext(V2V3ProjectContext)
-  const { projectId } = useContext(ProjectMetadataContext)
+  const { projectId, cv } = useContext(ProjectMetadataContext)
   const {
     nftRewards: { CIDs: nftRewardsCids },
   } = useContext(NftRewardsContext)
@@ -111,7 +111,7 @@ export const useReconfigureFundingCycle = ({
         async onConfirmed() {
           if (projectId) {
             await revalidateProject({
-              cv: CV_V2,
+              cv: cv as CV2V3,
               projectId: String(projectId),
             })
           }
@@ -134,6 +134,7 @@ export const useReconfigureFundingCycle = ({
     fundingCycle,
     memo,
     projectId,
+    cv,
   ])
 
   return { reconfigureLoading: reconfigureTxLoading, reconfigureFundingCycle }

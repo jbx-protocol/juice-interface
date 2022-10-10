@@ -3,7 +3,9 @@ import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
+import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { V2V3ProjectContextType } from 'contexts/v2v3/V2V3ProjectContext'
+import { V2V3ProjectContractsContext } from 'contexts/v2v3/V2V3ProjectContractsContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useNameOfERC20 from 'hooks/NameOfERC20'
 import { useProjectsQuery } from 'hooks/Projects'
@@ -21,16 +23,13 @@ import useProjectTokenTotalSupply from 'hooks/v2v3/contractReader/ProjectTokenTo
 import useTerminalCurrentOverflow from 'hooks/v2v3/contractReader/TerminalCurrentOverflow'
 import useUsedDistributionLimit from 'hooks/v2v3/contractReader/UsedDistributionLimit'
 import first from 'lodash/first'
-import { CV } from 'models/cv'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
-import { useMemo } from 'react'
+import { useContext, useMemo } from 'react'
 import {
   NO_CURRENCY,
   V2V3CurrencyName,
   V2V3_CURRENCY_ETH,
 } from 'utils/v2v3/currency'
-
-const V2_PROJECT_CV: CV = '2'
 
 const useBalanceInDistributionLimitCurrency = ({
   ETHBalanceLoading,
@@ -68,6 +67,11 @@ const useBalanceInDistributionLimitCurrency = ({
 }
 
 export function useV2V3ProjectState({ projectId }: { projectId: number }) {
+  const { cv } = useContext(V2V3ContractsContext)
+  const {
+    contracts: { JBETHPaymentTerminal },
+  } = useContext(V2V3ProjectContractsContext)
+
   /**
    * Load additional project metadata
    */
@@ -82,7 +86,7 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
   const { data: projects } = useProjectsQuery({
     projectId,
     keys: ['createdAt', 'totalPaid'],
-    cv: [V2_PROJECT_CV],
+    cv: cv ? [cv] : undefined,
   })
   const createdAt = first(projects)?.createdAt
   const totalVolume = first(projects)?.totalPaid
@@ -117,15 +121,15 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
   const { data: terminals } = useProjectTerminals({
     projectId,
   })
-  const primaryTerminal = terminals?.[0] // TODO: make primaryTerminalOf hook and use it
+  const primaryETHTerminal = JBETHPaymentTerminal?.address
   const { data: ETHBalance, loading: ETHBalanceLoading } =
     usePaymentTerminalBalance({
-      terminal: primaryTerminal,
+      terminal: primaryETHTerminal,
       projectId,
     })
   const { data: primaryTerminalCurrentOverflow } = useTerminalCurrentOverflow({
     projectId,
-    terminal: primaryTerminal,
+    terminal: primaryETHTerminal,
   })
 
   /**
@@ -135,12 +139,12 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
     useProjectDistributionLimit({
       projectId,
       configuration: fundingCycle?.configuration?.toString(),
-      terminal: primaryTerminal,
+      terminal: primaryETHTerminal,
     })
   const { data: usedDistributionLimit, loading: usedDistributionLimitLoading } =
     useUsedDistributionLimit({
       projectId,
-      terminal: primaryTerminal,
+      terminal: primaryETHTerminal,
       fundingCycleNumber: fundingCycle?.number,
     })
   const [distributionLimit, distributionLimitCurrency] =
@@ -185,7 +189,7 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
     // payment terminal data
     terminals,
     ETHBalance,
-    primaryTerminal,
+    primaryETHTerminal,
     primaryTerminalCurrentOverflow,
 
     // distribution limit data

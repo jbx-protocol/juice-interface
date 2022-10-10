@@ -2,7 +2,6 @@ import * as constants from '@ethersproject/constants'
 import { Contract, ContractInterface } from '@ethersproject/contracts'
 import { isAddress } from 'ethers/lib/utils'
 import { useEffect, useState } from 'react'
-
 import { useWallet } from './Wallet'
 
 export const useLoadContractFromAddress = <ABI extends ContractInterface>({
@@ -10,7 +9,7 @@ export const useLoadContractFromAddress = <ABI extends ContractInterface>({
   abi,
 }: {
   address: string | undefined
-  abi: ABI
+  abi: ABI | undefined
 }) => {
   const [contract, setContract] = useState<Contract>()
 
@@ -26,7 +25,7 @@ export const useLoadContractFromAddress = <ABI extends ContractInterface>({
   }
 
   useEffect(() => {
-    if (!isInputAddressValid(address)) {
+    if (!abi || !isInputAddressValid(address)) {
       return setContract(undefined)
     }
 

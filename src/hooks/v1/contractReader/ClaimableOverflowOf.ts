@@ -1,17 +1,18 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useWallet } from 'hooks/Wallet'
 import { useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbers'
-
 import useContractReader from './ContractReader'
 import useTotalBalanceOf from './TotalBalanceOf'
 
 /** Returns claimable amount of project tokens for user with address `userAddress` and balance `totalBalance`. */
 export default function useClaimableOverflowOf() {
-  const { terminal, projectId } = useContext(V1ProjectContext)
-  const { userAddress } = useWallet()
+  const { terminal } = useContext(V1ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
+  const { userAddress } = useWallet()
   const totalBalance = useTotalBalanceOf(userAddress, projectId, terminal?.name)
   const _projectId = projectId
     ? BigNumber.from(projectId).toHexString()

@@ -1,95 +1,77 @@
-import { t } from '@lingui/macro'
-import { Tooltip } from 'antd'
-import ExternalLink from 'components/ExternalLink'
+import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { ThemeContext } from 'contexts/themeContext'
-import { generateSafeTxUrl } from 'lib/safe'
-import { CSSProperties, useContext, useMemo } from 'react'
-import { formatHistoricalDate } from 'utils/format/formatDate'
+import { SafeTransactionType } from 'models/safe'
+import { CSSProperties, useContext, useMemo, useState } from 'react'
 import { ReconfigureFundingCyclesOfTransaction } from './juiceboxTransactions/reconfigureFundingCyclesOf'
-
-import { SafeTransactionType } from './ProjectSafeDashboard'
+import { LinkToSafeButton } from './LinkToSafeButton'
+import { TransactionHeader } from './TransactionHeader'
 
 export type SafeTransactionComponentProps = {
   transaction: SafeTransactionType
-}
-
-const nonceStyle: CSSProperties = {
-  marginRight: '2rem',
-  width: '1rem',
+  selected: boolean
+  isPastTransaction?: boolean
 }
 
 export const safeTransactionRowStyle: CSSProperties = {
-  display: 'flex',
   justifyContent: 'space-between',
   fontWeight: 400,
   width: '100%',
   padding: '0.5rem 1rem',
   marginBottom: '1rem',
   transition: 'background-color 100ms linear',
-}
-
-export function TransactionHeader({
-  transaction,
-  onClick,
-  title,
-}: {
-  transaction: SafeTransactionType
-  onClick?: VoidFunction
-  title?: string
-}) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-  const _method = title ?? transaction?.dataDecoded?.method
-  const transactionTitle = (
-    <Tooltip title={t`Go to Safe`}>
-      <ExternalLink
-        href={generateSafeTxUrl(transaction)}
-        className="hover-text-action-primary hover-text-decoration-underline color-unset"
-        onClick={e => e.stopPropagation()}
-      >
-        {_method}
-      </ExternalLink>
-    </Tooltip>
-  )
-
-  return (
-    <div
-      onClick={onClick}
-      style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        width: '100%',
-      }}
-    >
-      <div style={{ display: 'flex' }}>
-        <div style={{ ...nonceStyle, color: colors.text.secondary }}>
-          {transaction.nonce}
-        </div>
-        {transactionTitle}
-      </div>
-      <div style={{ color: colors.text.secondary }}>
-        {formatHistoricalDate(new Date(transaction.submissionDate).valueOf())}
-      </div>
-    </div>
-  )
+  display: 'flex',
+  flexDirection: 'column',
+  cursor: 'pointer',
 }
 
 const GenericSafeTransaction = ({
   transaction,
+  selected,
+  isPastTransaction,
 }: SafeTransactionComponentProps) => {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+
+  const [expanded, setExpanded] = useState<boolean>(selected)
+
+  const rowStyle: CSSProperties = {
+    ...safeTransactionRowStyle,
+    color: colors.text.primary,
+    paddingRight: '1rem',
+  }
+
+  if (selected) {
+    rowStyle.border = `1px solid ${colors.stroke.action.primary}`
+  }
+
   return (
     <div
-      style={{
-        ...safeTransactionRowStyle,
-        color: colors.text.primary,
-        border: `1px solid ${colors.stroke.tertiary}`,
+      className="clickable-border"
+      style={rowStyle}
+      onClick={() => {
+        setExpanded(!expanded)
       }}
+      id={`${transaction.safeTxHash}`}
     >
-      <TransactionHeader transaction={transaction} />
+      <div style={{ display: 'flex', width: '100%' }}>
+        <TransactionHeader
+          transaction={transaction}
+          isPastTransaction={isPastTransaction}
+        />
+        <div style={{ marginLeft: 10 }}>
+          {expanded ? <UpOutlined /> : <DownOutlined />}
+        </div>
+      </div>
+
+      {expanded ? (
+        <LinkToSafeButton
+          transaction={transaction}
+          style={{
+            marginTop: '1rem',
+          }}
+        />
+      ) : null}
     </div>
   )
 }
@@ -102,9 +84,9 @@ const TRANSACTION_METHOD_COMPONENTS_MAP: {
 
 export function SafeTransaction({
   transaction,
-}: {
-  transaction: SafeTransactionType
-}) {
+  selected,
+  isPastTransaction,
+}: SafeTransactionComponentProps) {
   const { method } = transaction.dataDecoded ?? {}
 
   const TransactionContent = useMemo(() => {
@@ -114,5 +96,11 @@ export function SafeTransaction({
 
   if (!method) return null
 
-  return <TransactionContent transaction={transaction} />
+  return (
+    <TransactionContent
+      transaction={transaction}
+      selected={selected}
+      isPastTransaction={isPastTransaction}
+    />
+  )
 }

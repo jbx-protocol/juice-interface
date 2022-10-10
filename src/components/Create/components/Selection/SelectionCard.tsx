@@ -1,4 +1,4 @@
-import { Col, Divider, Row } from 'antd'
+import { Divider } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { ReactNode, useCallback, useContext, useMemo } from 'react'
 import { CheckedCircle, RadialBackgroundIcon } from './components'
@@ -15,21 +15,19 @@ const Container: React.FC<{ isSelected: boolean; isDefocused: boolean }> = ({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const borderColor = isSelected
-    ? colors.stroke.action.primary
-    : colors.stroke.tertiary
-
+  const borderColor = isSelected ? colors.stroke.action.primary : undefined
   // TODO: These colors are not final and we need more work related to defocusing
   const backgroundColor = useMemo(() => {
     if (isDefocused) return colors.background.disabled
     return colors.background.l2
   }, [colors.background.disabled, colors.background.l2, isDefocused])
 
+  const className = !isSelected ? 'clickable-border' : 'border'
+
   return (
     <div
+      className={className}
       style={{
-        border: 'solid 1px',
-        borderRadius: 1,
         borderColor,
         backgroundColor,
       }}
@@ -46,6 +44,7 @@ export interface SelectionCardProps {
   titleBadge?: ReactNode
   description?: ReactNode
   isSelected?: boolean
+  checkPosition?: 'left' | 'right'
 }
 
 export const SelectionCard: React.FC<SelectionCardProps> = ({
@@ -53,6 +52,7 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
   title,
   icon,
   description,
+  checkPosition = 'right',
   children,
 }) => {
   const { selection, defocusOnSelect, setSelection } =
@@ -69,45 +69,51 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
 
   const defocused = !!defocusOnSelect && !!selection && !isSelected
 
+  const childGap = 42 + 32
+
   return (
     <Container isSelected={isSelected} isDefocused={defocused}>
       <div
-        className={!isSelected ? 'clickable-border' : undefined}
         role="button"
         style={{
-          padding: '1.75rem 0',
+          padding: '1.5rem 0',
           userSelect: 'none',
           cursor: 'pointer',
         }}
         onClick={onClick}
       >
         <div style={{ padding: '0 1rem' }}>
-          <Row>
-            <Col span={3}>{icon && <RadialBackgroundIcon icon={icon} />}</Col>
-            <Col span={19}>{<h2>{title}</h2>}</Col>
-            <Col offset={1} span={1}>
+          <div
+            style={{
+              display: 'flex',
+              //TODO: This is probably not the best way to handle pushing content, could do with some help here
+              alignItems: isSelected ? 'baseline' : 'center',
+              gap: '1rem',
+            }}
+          >
+            {checkPosition === 'left' && <CheckedCircle checked={isSelected} />}
+            <div>{icon && <RadialBackgroundIcon icon={icon} />}</div>
+            <div
+              style={{
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.25rem',
+              }}
+            >
+              <h2 style={{ margin: 0 }}>{title}</h2>
+              {isSelected && description && <div>{description}</div>}
+            </div>
+            {checkPosition === 'right' && (
               <CheckedCircle checked={isSelected} />
-            </Col>
-          </Row>
-          {description && (
-            <Row>
-              <Col offset={3} span={18}>
-                {description}
-              </Col>
-            </Row>
-          )}
+            )}
+          </div>
         </div>
       </div>
       {isSelected && children && (
         <div style={{ paddingBottom: '1.75rem' }}>
           <Divider style={{ marginTop: 0, marginBottom: '2rem' }} />
-          <div style={{ padding: '0 1rem' }}>
-            <Row>
-              <Col offset={3} span={18}>
-                {children}
-              </Col>
-            </Row>
-          </div>
+          <div style={{ padding: `0 ${childGap}px` }}>{children}</div>
         </div>
       )}
     </Container>

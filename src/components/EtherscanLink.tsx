@@ -1,24 +1,18 @@
 import { LinkOutlined } from '@ant-design/icons'
-import { CSSProperties, PropsWithChildren } from 'react'
+import { CSSProperties, MouseEventHandler } from 'react'
 import { truncateEthAddress } from 'utils/format/formatAddress'
 
 import { etherscanLink } from 'utils/etherscan'
 import ExternalLink from './ExternalLink'
 
-export default function EtherscanLink({
-  value,
-  type,
-  truncated,
-  truncateTo,
-  style,
-  children,
-}: PropsWithChildren<{
+const EtherscanLink: React.FC<{
   value: string | undefined
   type: 'tx' | 'address'
   truncated?: boolean
   truncateTo?: number
   style?: CSSProperties
-}>) {
+  onClick?: MouseEventHandler
+}> = ({ value, type, truncated, truncateTo, style, children, onClick }) => {
   if (!value) return null
   let truncatedValue: string | undefined
   // Return first and last 4 chars of ETH address only
@@ -35,15 +29,17 @@ export default function EtherscanLink({
 
   if (type === 'tx') {
     return (
-      <ExternalLink {...linkProps}>
+      <ExternalLink onClick={onClick} {...linkProps}>
         <LinkOutlined />
       </ExternalLink>
     )
   }
 
   return (
-    <ExternalLink {...linkProps}>
+    <ExternalLink onClick={onClick} {...linkProps}>
       {children ?? truncatedValue ?? value}
     </ExternalLink>
   )
 }
+
+export default EtherscanLink

@@ -31,10 +31,15 @@ import {
   redemptionRateFrom,
 } from 'utils/v2v3/math'
 
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
+import { PayoutsSelection } from 'models/payoutsSelection'
+import { ProjectTokensSelection } from 'models/projectTokenSelection'
+import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
+import { featureFlagEnabled } from 'utils/featureFlags'
 
 interface V2ProjectState {
   version: number
@@ -43,19 +48,22 @@ interface V2ProjectState {
   fundingCycleMetadata: SerializedV2V3FundingCycleMetadata
   fundAccessConstraints: SerializedV2V3FundAccessConstraint[]
   payoutGroupedSplits: ETHPayoutGroupedSplits
+  payoutsSelection: PayoutsSelection | undefined
   reservedTokensGroupedSplits: ReservedTokensGroupedSplits
+  projectTokensSelection: ProjectTokensSelection | undefined
   nftRewards: {
     rewardTiers: NftRewardTier[]
     CIDs: string[] | undefined // points to locations of the NFTs' json on IPFS
     collectionMetadata: NftCollectionMetadata
     postPayModal: NftPostPayModalConfig | undefined
   }
+  reconfigurationRuleSelection: ReconfigurationStrategy | undefined
 }
 
 // Increment this version by 1 when making breaking changes.
 // When users return to the site and their local version is less than
 // this number, their state will be reset.
-export const REDUX_STORE_V2_PROJECT_VERSION = 7
+export const REDUX_STORE_V2_PROJECT_VERSION = 8
 
 const defaultProjectMetadataState: ProjectMetadataV5 = {
   name: '',
@@ -78,28 +86,55 @@ export const defaultFundingCycleData: SerializedV2V3FundingCycleData =
   })
 
 export const defaultFundingCycleMetadata: SerializedV2V3FundingCycleMetadata =
-  serializeV2V3FundingCycleMetadata({
-    global: {
-      allowSetTerminals: false,
-      allowSetController: false,
-    },
-    reservedRate: BigNumber.from(0), // A number from 0-10,000
-    redemptionRate: redemptionRateFrom('100'), // A number from 0-10,000
-    ballotRedemptionRate: redemptionRateFrom('100'), // A number from 0-10,000
-    pausePay: false,
-    pauseDistributions: false,
-    pauseRedeem: false,
-    allowMinting: false,
-    pauseBurn: false,
-    allowChangeToken: false,
-    allowTerminalMigration: false,
-    allowControllerMigration: false,
-    holdFees: false,
-    useTotalOverflowForRedemptions: false,
-    useDataSourceForPay: false,
-    useDataSourceForRedeem: false,
-    dataSource: constants.AddressZero,
-  })
+  serializeV2V3FundingCycleMetadata(
+    featureFlagEnabled(FEATURE_FLAGS.V3)
+      ? {
+          global: {
+            allowSetTerminals: false,
+            allowSetController: false,
+            pauseTransfers: false,
+          },
+          reservedRate: BigNumber.from(0), // A number from 0-10,000
+          redemptionRate: redemptionRateFrom('100'), // A number from 0-10,000
+          ballotRedemptionRate: redemptionRateFrom('100'), // A number from 0-10,000
+          pausePay: false,
+          pauseDistributions: false,
+          pauseRedeem: false,
+          allowMinting: false,
+          pauseBurn: false,
+          preferClaimedTokenOverride: false,
+          allowTerminalMigration: false,
+          allowControllerMigration: false,
+          holdFees: false,
+          useTotalOverflowForRedemptions: false,
+          useDataSourceForPay: false,
+          useDataSourceForRedeem: false,
+          dataSource: constants.AddressZero,
+          metadata: BigNumber.from(0),
+        }
+      : {
+          global: {
+            allowSetTerminals: false,
+            allowSetController: false,
+          },
+          reservedRate: BigNumber.from(0), // A number from 0-10,000
+          redemptionRate: redemptionRateFrom('100'), // A number from 0-10,000
+          ballotRedemptionRate: redemptionRateFrom('100'), // A number from 0-10,000
+          pausePay: false,
+          pauseDistributions: false,
+          pauseRedeem: false,
+          allowMinting: false,
+          pauseBurn: false,
+          allowChangeToken: false,
+          allowTerminalMigration: false,
+          allowControllerMigration: false,
+          holdFees: false,
+          useTotalOverflowForRedemptions: false,
+          useDataSourceForPay: false,
+          useDataSourceForRedeem: false,
+          dataSource: constants.AddressZero,
+        },
+  ) ?? {}
 
 const EMPTY_PAYOUT_GROUPED_SPLITS = {
   group: ETH_PAYOUT_SPLIT_GROUP,
@@ -125,13 +160,16 @@ export const defaultProjectState: V2ProjectState = {
   fundingCycleMetadata: { ...defaultFundingCycleMetadata },
   fundAccessConstraints: [],
   payoutGroupedSplits: EMPTY_PAYOUT_GROUPED_SPLITS,
+  payoutsSelection: undefined,
   reservedTokensGroupedSplits: EMPTY_RESERVED_TOKENS_GROUPED_SPLITS,
+  projectTokensSelection: undefined,
   nftRewards: {
     rewardTiers: [],
     CIDs: undefined,
     collectionMetadata: EMPTY_NFT_COLLECTION_METADATA,
     postPayModal: undefined,
   },
+  reconfigurationRuleSelection: undefined,
 }
 
 const editingV2ProjectSlice = createSlice({
@@ -216,11 +254,23 @@ const editingV2ProjectSlice = createSlice({
         splits: action.payload,
       }
     },
+    setPayoutsSelection: (
+      state,
+      action: PayloadAction<PayoutsSelection | undefined>,
+    ) => {
+      state.payoutsSelection = action.payload
+    },
     setReservedTokensSplits: (state, action: PayloadAction<Split[]>) => {
       state.reservedTokensGroupedSplits = {
         ...EMPTY_RESERVED_TOKENS_GROUPED_SPLITS,
         splits: action.payload,
       }
+    },
+    setProjectTokensSelection: (
+      state,
+      action: PayloadAction<ProjectTokensSelection | undefined>,
+    ) => {
+      state.projectTokensSelection = action.payload
     },
     setPausePay: (state, action: PayloadAction<boolean>) => {
       state.fundingCycleMetadata.pausePay = action.payload
@@ -269,6 +319,12 @@ const editingV2ProjectSlice = createSlice({
     },
     setAllowSetTerminals: (state, action: PayloadAction<boolean>) => {
       state.fundingCycleMetadata.global.allowSetTerminals = action.payload
+    },
+    setReconfigurationRuleSelection: (
+      state,
+      action: PayloadAction<ReconfigurationStrategy | undefined>,
+    ) => {
+      state.reconfigurationRuleSelection = action.payload
     },
   },
 })

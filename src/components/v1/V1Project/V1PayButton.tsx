@@ -2,12 +2,15 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
 import PayWarningModal from 'components/PayWarningModal'
-import { PayButtonProps } from 'components/Project/PayProjectForm/PayProjectForm'
-import { PayProjectFormContext } from 'components/Project/PayProjectForm/payProjectFormContext'
+import {
+  PayButtonProps,
+  PayProjectFormContext,
+} from 'components/Project/PayProjectForm/payProjectFormContext'
 import { readNetwork } from 'constants/networks'
 import { V1_CURRENCY_USD } from 'constants/v1/currency'
 import { disablePayOverrides } from 'constants/v1/overrides'
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useWeiConverter from 'hooks/WeiConverter'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
@@ -17,8 +20,10 @@ import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import V1ConfirmPayOwnerModal from './modals/V1ConfirmPayOwnerModal'
 
 export function V1PayButton({ wrapperStyle, disabled }: PayButtonProps) {
-  const { projectId, currentFC, metadata, isArchived, terminal } =
-    useContext(V1ProjectContext)
+  const { currentFC, terminal } = useContext(V1ProjectContext)
+  const { projectId, isArchived, projectMetadata } = useContext(
+    ProjectMetadataContext,
+  )
 
   const { form: payProjectForm } = useContext(PayProjectFormContext)
   const { payInCurrency, payAmount, setError } = payProjectForm ?? {}
@@ -32,13 +37,15 @@ export function V1PayButton({ wrapperStyle, disabled }: PayButtonProps) {
     amount: payAmount,
   })
 
-  if (!metadata || !currentFC) return null
+  if (!projectMetadata || !currentFC) return null
 
   const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
   if (!fcMetadata) return null
 
-  const payButtonText = metadata.payButton?.length ? metadata.payButton : t`Pay`
+  const payButtonText = projectMetadata.payButton?.length
+    ? projectMetadata.payButton
+    : t`Pay`
 
   // v1 projects who still use 100% RR to disable pay
   const isV1AndMaxRR =

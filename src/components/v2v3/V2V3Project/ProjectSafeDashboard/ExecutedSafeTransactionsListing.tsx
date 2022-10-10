@@ -1,15 +1,17 @@
 import { useExecutedSafeTransactions } from 'hooks/safe/ExecutedSafeTransaction'
-import { SafeTransactionType } from '.'
+import { GnosisSafe, SafeTransactionType } from 'models/safe'
 import { SafeTransaction } from './SafeTransaction'
 
 export function ExecutedSafeTransactionsListing({
-  safeAddress,
+  safe,
+  selectedTx,
 }: {
-  safeAddress: string
+  safe: GnosisSafe
+  selectedTx: string | undefined
 }) {
   const { data: executedSafeTransactions, isLoading } =
     useExecutedSafeTransactions({
-      safeAddress,
+      safeAddress: safe.address,
     })
 
   if (isLoading) {
@@ -23,6 +25,8 @@ export function ExecutedSafeTransactionsListing({
           <SafeTransaction
             key={`safe-${transaction.nonce}-${idx}`}
             transaction={transaction}
+            selected={selectedTx === transaction.safeTxHash}
+            isPastTransaction
           />
         ),
       )}

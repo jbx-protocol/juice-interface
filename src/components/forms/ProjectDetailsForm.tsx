@@ -82,6 +82,7 @@ export default function ProjectDetailsForm({
             initialUrl={form.getFieldValue('logoUri')}
             onSuccess={logoUri => {
               form.setFieldsValue({ logoUri })
+              onValuesChange?.()
             }}
             formItemProps={{ style: { marginBottom: 0 } }}
           />

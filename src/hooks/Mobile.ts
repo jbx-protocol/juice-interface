@@ -1,3 +1,4 @@
+import debounce from 'lodash/debounce'
 import { useEffect, useState } from 'react'
 
 // Copied from react-use, so if we ever decide to include that library,
@@ -19,14 +20,14 @@ function useMedia(query: string, defaultState = false) {
       setState(queryList.matches)
     }
 
-    queryList.addEventListener('change', onChange)
+    window.addEventListener('resize', debounce(onChange, 200))
     setState(queryList.matches)
-
     return () => {
       mounted = false
-      queryList.removeEventListener('change', onChange)
+      window.removeEventListener('resize', onChange)
     }
-  }, [query])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return state
 }

@@ -4,30 +4,29 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Modal, ModalProps, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import ERC20TokenBalance from 'components/ERC20TokenBalance'
-import { ProjectMetadataV5 } from 'models/project-metadata'
-import { TokenRef } from 'models/token-ref'
-import { useContext, useEffect, useState } from 'react'
-import { uploadProjectMetadata } from 'utils/ipfs'
-import { revalidateProject } from 'utils/revalidateProject'
-import { V2V3ProjectTokenBalance } from './V2V3ProjectTokenBalance'
-
-import { AssetInputType, TokenRefs } from './TokenRefs'
-
-import { CV_V2 } from 'constants/cv'
 import { V2V3_PROJECT_IDS } from 'constants/v2v3/projectIds'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
 import { useEditProjectDetailsTx } from 'hooks/v2v3/transactor/EditProjectDetailsTx'
+import { CV2V3 } from 'models/cv'
+import { ProjectMetadataV5 } from 'models/project-metadata'
+import { TokenRef } from 'models/token-ref'
 import { V2OperatorPermission } from 'models/v2v3/permissions'
+import { useContext, useEffect, useState } from 'react'
+import { uploadProjectMetadata } from 'utils/ipfs'
+import { revalidateProject } from 'utils/revalidateProject'
+import { AssetInputType, TokenRefs } from './TokenRefs'
+import { V2V3ProjectTokenBalance } from './V2V3ProjectTokenBalance'
 
 export interface EditTrackedAssetsForm {
   tokenRefs: { assetInput: { input: string; type: AssetInputType } }[]
 }
 
-export function V2V3DownloadActivityModal(props: ModalProps) {
-  const { projectId, projectMetadata } = useContext(ProjectMetadataContext)
+export function V2V3ProjectTokenBalancesModal(props: ModalProps) {
+  const { projectId, projectMetadata, cv } = useContext(ProjectMetadataContext)
   const { projectOwnerAddress } = useContext(V2V3ProjectContext)
+
   const [editModalVisible, setEditModalVisible] = useState<boolean>()
   const [loading, setLoading] = useState<boolean>()
   const [form] = useForm<EditTrackedAssetsForm>()
@@ -52,7 +51,7 @@ export function V2V3DownloadActivityModal(props: ModalProps) {
   }, [form, projectMetadata, editModalVisible])
 
   async function updateTokenRefs() {
-    if (!projectName) return
+    if (!projectName || !cv) return
 
     await form.validateFields()
 
@@ -82,7 +81,7 @@ export function V2V3DownloadActivityModal(props: ModalProps) {
         onDone: async () => {
           if (projectId) {
             await revalidateProject({
-              cv: CV_V2,
+              cv: cv as CV2V3,
               projectId: String(projectId),
             })
           }

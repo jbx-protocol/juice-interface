@@ -4,13 +4,11 @@ import { useForm } from 'antd/lib/form/Form'
 import ProjectDetailsForm, {
   ProjectDetailsFormFields,
 } from 'components/forms/ProjectDetailsForm'
-
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useCallback, useEffect } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
-
-import ProjectConfigurationFieldsContainer from '../../ProjectConfigurationFieldsContainer'
+import { ProjectConfigurationFieldsContainer } from '../../ProjectConfigurationFieldsContainer'
 
 export default function ProjectDetailsDrawerContent({
   onFinish,

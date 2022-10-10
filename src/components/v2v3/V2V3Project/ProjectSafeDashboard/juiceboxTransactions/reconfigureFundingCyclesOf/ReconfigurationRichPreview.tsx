@@ -3,31 +3,68 @@ import { Space } from 'antd'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import SplitList from 'components/v2v3/shared/SplitList'
 import FundingCycleDetails from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails'
+import { CV_V2, CV_V3 } from 'constants/cv'
 import { ThemeContext } from 'contexts/themeContext'
-import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { useLoadV2V3Contract } from 'hooks/v2v3/LoadV2V3Contract'
 import { OutgoingProjectData } from 'models/outgoingProject'
+import { SafeTransactionType } from 'models/safe'
+import { V2V3ContractName } from 'models/v2v3/contracts'
 import { useContext } from 'react'
 import { formatOutgoingSplits } from 'utils/splits'
 import { formatReservedRate, MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
-import { SafeTransactionComponentProps } from '../../SafeTransaction'
+import { LinkToSafeButton } from '../../LinkToSafeButton'
+
+const useTransactionJBController = (transaction: SafeTransactionType) => {
+  const V2JBController = useLoadV2V3Contract({
+    cv: CV_V2,
+    contractName: V2V3ContractName.JBController,
+  })
+  const V3JBController = useLoadV2V3Contract({
+    cv: CV_V3,
+    contractName: V2V3ContractName.JBController,
+  })
+
+  if (transaction.to === V2JBController?.address) {
+    return V2JBController
+  }
+
+  if (transaction.to === V3JBController?.address) {
+    return V3JBController
+  }
+}
 
 export function ReconfigureRichPreview({
   transaction,
-}: SafeTransactionComponentProps) {
-  const { contracts } = useContext(V2V3ContractsContext)
-  const { projectOwnerAddress } = useContext(V2V3ProjectContext)
+}: {
+  transaction: SafeTransactionType
+}) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const { projectOwnerAddress } = useContext(V2V3ProjectContext)
 
-  if (!contracts) return null
+  const JBController = useTransactionJBController(transaction)
+  if (!JBController) return null
 
-  const dataResult: unknown = contracts[
-    'JBController'
-  ].interface.parseTransaction({
-    data: transaction.data ?? '',
-  }).args
+  let dataResult: unknown
+  try {
+    if (!transaction.data) throw new Error('No transaction data to parse.')
+
+    const parsedTransaction = JBController.interface.parseTransaction({
+      data: transaction.data,
+    })
+
+    dataResult = parsedTransaction?.args
+    if (!dataResult) throw new Error('Failed to parse transaction data.')
+  } catch (e) {
+    console.error(e)
+    return (
+      <div style={{ margin: '1rem 3rem 0' }}>
+        <Trans>Error reading transaction data</Trans>
+      </div>
+    )
+  }
 
   const decodedData = dataResult as OutgoingProjectData
 
@@ -37,7 +74,7 @@ export function ReconfigureRichPreview({
     decodedData._fundAccessConstraints?.[0]?.distributionLimit
   const reservedRate = decodedData._metadata?.reservedRate
   const payoutSplits = decodedData._groupedSplits?.[0]?.splits
-  const reservedTokensSplits = decodedData._groupedSplits?.[1].splits
+  const reservedTokensSplits = decodedData._groupedSplits?.[1]?.splits
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -101,6 +138,12 @@ export function ReconfigureRichPreview({
           )}
         </MinimalCollapse>
       </Space>
+      <LinkToSafeButton
+        transaction={transaction}
+        style={{
+          marginTop: '1rem',
+        }}
+      />
     </div>
   )
 }

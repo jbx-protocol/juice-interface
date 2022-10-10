@@ -1,14 +1,12 @@
 import { Contract, ContractInterface } from '@ethersproject/contracts'
-import { CV_V2, CV_V3 } from 'constants/cv'
-import { V2CVType, V3CVType } from 'models/cv'
+import { CV2V3 } from 'models/cv'
 import { NetworkName } from 'models/network-name'
 import { SignerOrProvider } from 'models/signerOrProvider'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import { loadJBProjectHandlesContract } from './contractLoaders/JBProjectHandles'
 import { loadJBTiered721DelegateProjectDeployerContract } from './contractLoaders/JBTiered721DelegateProjectDeployer'
 import { loadJBTiered721DelegateStoreContract } from './contractLoaders/JBTiered721DelegateStore'
-import { loadJuiceboxV2Contract } from './contractLoaders/JuiceboxV2'
-import { loadJuiceboxV3Contract } from './contractLoaders/JuiceboxV3'
+import { loadJuiceboxV2OrV3Contract } from './contractLoaders/JuiceboxV2OrV3'
 import { loadPublicResolverContract } from './contractLoaders/PublicResolver'
 import { loadJBV1TokenPaymentTerminalContract } from './contractLoaders/V1TokenPaymentTerminal'
 import { loadVeNftDeployer } from './contractLoaders/VeNftDeployer'
@@ -22,7 +20,7 @@ export const loadV2V3Contract = async (
   contractName: V2V3ContractName,
   network: NetworkName,
   signerOrProvider: SignerOrProvider,
-  version: V2CVType | V3CVType,
+  version: CV2V3,
 ): Promise<Contract | undefined> => {
   let contractJson: { abi: ContractInterface; address: string } | undefined =
     undefined
@@ -44,12 +42,11 @@ export const loadV2V3Contract = async (
   } else if (contractName === V2V3ContractName.JBVeTokenUriResolver) {
     contractJson = await loadVeTokenUriResolver()
   } else {
-    contractJson =
-      version === CV_V2
-        ? await loadJuiceboxV2Contract(contractName, network)
-        : version === CV_V3
-        ? await loadJuiceboxV3Contract(contractName, network)
-        : undefined
+    contractJson = await loadJuiceboxV2OrV3Contract(
+      version,
+      contractName,
+      network,
+    )
   }
 
   if (!contractJson) {

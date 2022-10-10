@@ -1,6 +1,6 @@
 import { VeNftContext } from 'contexts/veNftContext'
 import { useVeNftContractForProject } from 'hooks/veNft/VeNftContractForProject'
-import { first } from 'lodash'
+import first from 'lodash/first'
 import { PropsWithChildren } from 'react'
 
 export function VeNftProvider({

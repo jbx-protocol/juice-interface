@@ -73,7 +73,7 @@ export default function V2ManageTokensSection() {
     handle,
   } = useContext(V2V3ProjectContext)
   const { contractAddress: veNftAddress } = useContext(VeNftContext)
-  const { projectMetadata, projectId, cv } = useContext(ProjectMetadataContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const { userAddress } = useWallet()
 
@@ -343,11 +343,8 @@ export default function V2ManageTokensSection() {
         )}
       </ManageTokensModal>
       <ParticipantsModal
-        projectId={projectId}
-        projectName={projectMetadata?.name}
         tokenSymbol={tokenSymbol}
         tokenAddress={tokenAddress}
-        cv={cv}
         totalTokenSupply={totalTokenSupply}
         visible={participantsModalVisible}
         onCancel={() => setParticipantsModalVisible(false)}

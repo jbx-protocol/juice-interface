@@ -1,7 +1,6 @@
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Dropdown, Menu, Space } from 'antd'
-import ExternalLink from 'components/ExternalLink'
 import Link from 'next/link'
 import { CSSProperties, useEffect, useState } from 'react'
 
@@ -9,56 +8,6 @@ import Logo from './Logo'
 import { navMenuItemStyles, topLeftNavStyles } from './navStyles'
 
 import { resourcesMenuItems } from './constants'
-
-function NavMenuItem({
-  text,
-  route,
-  onClick,
-}: {
-  text: string
-  route?: string
-  onClick?: VoidFunction
-}) {
-  if (!route) {
-    return (
-      <div
-        className="nav-menu-item hover-opacity"
-        onClick={onClick}
-        role="button"
-        style={navMenuItemStyles}
-      >
-        {text}
-      </div>
-    )
-  }
-
-  const external = route?.startsWith('http')
-  if (external) {
-    return (
-      <ExternalLink
-        className="nav-menu-item hover-opacity"
-        style={navMenuItemStyles}
-        href={route}
-        onClick={onClick}
-        target="_blank"
-        rel="noreferrer"
-      >
-        {text}
-      </ExternalLink>
-    )
-  }
-  return (
-    <Link href={route}>
-      <a
-        className="nav-menu-item hover-opacity"
-        onClick={onClick}
-        style={navMenuItemStyles}
-      >
-        {text}
-      </a>
-    </Link>
-  )
-}
 
 const resourcesMenu = (
   <Menu
@@ -89,6 +38,42 @@ export function TopLeftNavItems({
     return () => window.removeEventListener('click', handleClick)
   }, [])
 
+  const menuItemProps = {
+    onClick: onClickMenuItems,
+    style: navMenuItemStyles,
+    className: 'nav-menu-item hover-opacity',
+  }
+
+  const externalMenuLinkProps = {
+    ...menuItemProps,
+    target: '_blank',
+    rel: 'noopener noreferrer',
+  }
+
+  const desktopDropDown = !mobile ? (
+    <Dropdown
+      overlay={resourcesMenu}
+      overlayStyle={{ padding: 0 }}
+      open={resourcesOpen}
+    >
+      <div
+        className="nav-menu-item hover-opacity"
+        onClick={e => {
+          setResourcesOpen(!resourcesOpen)
+          e.stopPropagation()
+        }}
+        style={{ ...navMenuItemStyles }}
+      >
+        <Trans>Resources</Trans>
+        {resourcesOpen ? (
+          <UpOutlined style={dropdownIconStyle} />
+        ) : (
+          <DownOutlined style={dropdownIconStyle} />
+        )}
+      </div>
+    </Dropdown>
+  ) : null
+
   return (
     <Space
       size={mobile ? 0 : 'large'}
@@ -100,45 +85,16 @@ export function TopLeftNavItems({
           <a style={{ display: 'inline-block' }}>{<Logo />}</a>
         </Link>
       )}
-      <NavMenuItem
-        text={t`Projects`}
-        onClick={onClickMenuItems}
-        route="/projects"
-      />
-      <NavMenuItem
-        text={t`Docs`}
-        onClick={onClickMenuItems}
-        route="https://info.juicebox.money/"
-      />
-      <NavMenuItem
-        text={t`Blog`}
-        onClick={onClickMenuItems}
-        route="https://info.juicebox.money/blog"
-      />
-
-      {!mobile && (
-        <Dropdown
-          overlay={resourcesMenu}
-          overlayStyle={{ padding: 0 }}
-          open={resourcesOpen}
-        >
-          <div
-            className="nav-menu-item hover-opacity"
-            onClick={e => {
-              setResourcesOpen(!resourcesOpen)
-              e.stopPropagation()
-            }}
-            style={{ ...navMenuItemStyles }}
-          >
-            <Trans>Resources</Trans>
-            {resourcesOpen ? (
-              <UpOutlined style={dropdownIconStyle} />
-            ) : (
-              <DownOutlined style={dropdownIconStyle} />
-            )}
-          </div>
-        </Dropdown>
-      )}
+      <Link href="/projects">
+        <a {...menuItemProps}>{t`Projects`}</a>
+      </Link>
+      <Link href="https://info.juicebox.money/">
+        <a {...externalMenuLinkProps}>{t`Docs`}</a>
+      </Link>
+      <Link href="https://info.juicebox.money/blog">
+        <a {...externalMenuLinkProps}>{t`Blog`}</a>
+      </Link>
+      {desktopDropDown}
     </Space>
   )
 }

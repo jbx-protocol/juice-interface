@@ -52,12 +52,14 @@ const imageContainerStyle: CSSProperties = {
 // The clickable cards on the project page
 export function RewardTier({
   loading,
+  tierRank,
   rewardTier,
   rewardTierUpperLimit,
   isSelected,
   onClick,
 }: {
   loading?: boolean
+  tierRank?: number
   rewardTier?: NftRewardTier
   rewardTierUpperLimit?: number | undefined
   isSelected?: boolean
@@ -209,9 +211,10 @@ export function RewardTier({
           </Skeleton>
         </div>
       </div>
-      {rewardTier ? (
+      {rewardTier && tierRank ? (
         <NftPreview
           visible={previewVisible}
+          tierRank={tierRank}
           rewardTier={rewardTier}
           onClose={() => setPreviewVisible(false)}
         />

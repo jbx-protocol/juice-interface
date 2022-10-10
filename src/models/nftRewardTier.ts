@@ -7,7 +7,8 @@ export type NftRewardTier = {
   remainingSupply: number | undefined
   imageUrl: string // link to ipfs
   name: string
-  tierRank: number // cheapest tier is 1
+  /* @deprecated - now derived from comparing contributionFloor between each */
+  tierRank?: number | undefined // cheapest tier is 1
   externalLink: string | undefined
   description: string | undefined
 }

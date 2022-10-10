@@ -61,9 +61,9 @@ export const useInitialEditingData = ({ visible }: { visible?: boolean }) => {
   const { data: queuedFundingCycleResponse } = useProjectQueuedFundingCycle({
     projectId,
   })
-
   const [queuedFundingCycle, queuedFundingCycleMetadata] =
     queuedFundingCycleResponse ?? []
+
   const { data: queuedPayoutSplits } = useProjectSplits({
     projectId,
     splitGroup: ETH_PAYOUT_SPLIT_GROUP,
@@ -81,22 +81,19 @@ export const useInitialEditingData = ({ visible }: { visible?: boolean }) => {
     configuration: queuedFundingCycle?.configuration.toString(),
     terminal: primaryETHTerminal,
   })
-
   const [queuedDistributionLimit, queuedDistributionLimitCurrency] =
     queuedDistributionLimitData ?? []
 
+  // Use data from the queued funding cycle (if it exists).
   const effectiveFundingCycle = queuedFundingCycle?.number.gt(0)
     ? queuedFundingCycle
     : fundingCycle
-
   const effectiveFundingCycleMetadata = queuedFundingCycle?.number.gt(0)
     ? queuedFundingCycleMetadata
     : fundingCycleMetadata
-
   const effectivePayoutSplits = queuedFundingCycle?.number.gt(0)
     ? queuedPayoutSplits
     : payoutSplits
-
   const effectiveReservedTokensSplits = queuedFundingCycle?.number.gt(0)
     ? queuedReservedTokensSplits
     : reservedTokensSplits

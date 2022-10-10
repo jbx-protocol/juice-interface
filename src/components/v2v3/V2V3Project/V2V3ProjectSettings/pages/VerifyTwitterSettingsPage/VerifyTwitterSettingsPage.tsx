@@ -22,7 +22,7 @@ export const VerifyTwitterSettingsPage = () => {
   const [isDisconnecting, setIsDisconnecting] = useState(false)
   const [isAuthenticating, setIsAuthenticating] = useState(false)
   const { colors } = useContext(ThemeContext).theme
-  const [value] = useTwitterVerified()
+  const verification = useTwitterVerified()
   const isOwner =
     projectOwnerAddress?.toLowerCase() === userAddress?.toLowerCase()
 
@@ -97,7 +97,7 @@ export const VerifyTwitterSettingsPage = () => {
         </h4>
         <p>
           Your Twitter account is connected and currently set to:{' '}
-          <strong>@{projectMetadata?.twitter}</strong>
+          <strong>@{verification?.username}</strong>
         </p>
         {isOwner ? (
           <Button
@@ -116,5 +116,5 @@ export const VerifyTwitterSettingsPage = () => {
     )
   }
 
-  return <>{value ? verifiedState() : unverifiedState()}</>
+  return verification ? verifiedState() : unverifiedState()
 }

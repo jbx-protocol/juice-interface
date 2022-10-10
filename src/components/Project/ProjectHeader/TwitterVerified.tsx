@@ -7,9 +7,7 @@ import { Tooltip } from 'antd'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 
-import useTwitterVerified, {
-  TwitterVerificationInfo,
-} from 'hooks/TwitterVerified'
+import useTwitterVerified from 'hooks/TwitterVerified'
 import { useWallet } from 'hooks/Wallet'
 import Link from 'next/link'
 import { useContext } from 'react'
@@ -17,10 +15,14 @@ import { settingsPagePath } from 'utils/routes'
 
 const TwitterVerified = () => {
   const { handle, projectOwnerAddress } = useContext(V2V3ProjectContext)
-  const { projectId } = useContext(ProjectMetadataContext)
+  const { projectId, projectMetadata } = useContext(ProjectMetadataContext)
   const { userAddress } = useWallet()
-  const [value] = useTwitterVerified()
-  const info = value as TwitterVerificationInfo
+  const verification = useTwitterVerified()
+  const isVerified =
+    verification &&
+    projectMetadata?.twitter &&
+    verification.username === projectMetadata.twitter
+
   const canVerify =
     projectOwnerAddress?.toLowerCase() === userAddress?.toLowerCase()
 
@@ -46,7 +48,7 @@ const TwitterVerified = () => {
   }
   return (
     <div>
-      {info && info.verified ? (
+      {isVerified ? (
         <Tooltip title={t`Twitter Verified`} placement="right">
           <CheckCircleOutlined />
         </Tooltip>

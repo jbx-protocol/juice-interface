@@ -11,13 +11,12 @@ import ThemePicker from './ThemePicker'
 
 export default function Navbar() {
   const isMobile = useMobile()
-  const desktop = !isMobile
 
   if (isMobile) return <MobileCollapse />
 
   return (
     <Header className="top-nav" style={{ ...topNavStyles }}>
-      <TopLeftNavItems desktop={desktop} />
+      <TopLeftNavItems />
 
       <Space size="middle" style={{ ...topRightNavStyles }}>
         <NavLanguageSelector />

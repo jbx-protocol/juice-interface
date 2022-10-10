@@ -138,10 +138,6 @@ export function TopLeftNavItems({
             </Link>
           ),
         },
-        {
-          key: 'resources',
-          label: desktopDropDown,
-        },
       ]
 
   return (

@@ -11,7 +11,7 @@ export default function ResourcesDropdownMobile() {
       key="resources"
       title={t`Resources`}
       style={{
-        marginLeft: 15,
+        marginLeft: 30,
       }}
     >
       {resourcesMenuItems(true).map(r => (

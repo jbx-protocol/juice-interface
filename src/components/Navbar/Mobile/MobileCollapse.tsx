@@ -1,17 +1,13 @@
+import { MenuOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, Collapse, Menu } from 'antd'
+import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { Header } from 'antd/lib/layout/layout'
+import { ThemeContext } from 'contexts/themeContext'
+import useMobile from 'hooks/Mobile'
+import { useWallet } from 'hooks/Wallet'
 import Link from 'next/link'
 import { useContext, useEffect, useState } from 'react'
-
-import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
-
-import { MenuOutlined } from '@ant-design/icons'
-
-import { ThemeContext } from 'contexts/themeContext'
-import { useWallet } from 'hooks/Wallet'
-
-import useMobile from 'hooks/Mobile'
 import Account from '../Account'
 import Logo from '../Logo'
 import { TopLeftNavItems } from '../MenuItems'
@@ -24,12 +20,14 @@ import ThemePickerMobile from './ThemePickerMobile'
 const NAV_EXPANDED_KEY = 0
 
 export default function MobileCollapse() {
-  const { isConnected, disconnect } = useWallet()
-  const [activeKey, setActiveKey] = useState<0 | undefined>()
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+
+  const [activeKey, setActiveKey] = useState<0 | undefined>()
+
   const isMobile = useMobile()
+  const { isConnected, disconnect } = useWallet()
 
   const isNavExpanded = activeKey === NAV_EXPANDED_KEY
 

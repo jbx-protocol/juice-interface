@@ -124,7 +124,7 @@ export default function NftUpload({ form }: { form: FormInstance }) {
                 width: NFT_IMAGE_SIDE_LENGTH,
                 height: NFT_IMAGE_SIDE_LENGTH,
                 objectFit: 'cover',
-                objectPosition: 'centre',
+                objectPosition: 'center',
               }}
               onLoad={() => setImageRenderLoading(false)}
               onClick={e => e.stopPropagation()}

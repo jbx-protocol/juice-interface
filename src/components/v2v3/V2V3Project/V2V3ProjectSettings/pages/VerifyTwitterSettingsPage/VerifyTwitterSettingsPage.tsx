@@ -76,7 +76,8 @@ export const VerifyTwitterSettingsPage = () => {
           </Trans>
         </p>
         <p>
-          Currently set to: <strong>@{projectMetadata?.twitter}</strong>
+          Project Twitter currently set to:{' '}
+          <strong>@{projectMetadata?.twitter}</strong>
         </p>
         <Button
           type="primary"

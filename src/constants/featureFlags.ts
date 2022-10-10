@@ -4,4 +4,5 @@ export const FEATURE_FLAGS = {
   VENFT: 'veNft',
   VENFT_CREATOR: 'veNftCreator',
   V3: 'V3',
+  TWITTER_VERIFY: 'twitterVerify',
 }

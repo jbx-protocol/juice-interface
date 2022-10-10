@@ -2,7 +2,9 @@ import { TwitterOutlined } from '@ant-design/icons'
 import { Space } from 'antd'
 import Discord from 'components/icons/Discord'
 import TwitterVerified from 'components/Project/ProjectHeader/TwitterVerified'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { CSSProperties } from 'react'
+import { featureFlagEnabled } from 'utils/featureFlags'
 
 import ExternalLink from '../../ExternalLink'
 
@@ -39,6 +41,7 @@ export default function SocialLinks({
   twitter?: string
   discord?: string
 }) {
+  const twitterVerifyEnabled = featureFlagEnabled(FEATURE_FLAGS.TWITTER_VERIFY)
   return (
     <Space
       size="middle"
@@ -64,7 +67,7 @@ export default function SocialLinks({
             </span>
             @{prettyUrl(twitter)}
           </ExternalLink>
-          <TwitterVerified />
+          {twitterVerifyEnabled && <TwitterVerified />}
         </Space>
       )}
       {discord && (

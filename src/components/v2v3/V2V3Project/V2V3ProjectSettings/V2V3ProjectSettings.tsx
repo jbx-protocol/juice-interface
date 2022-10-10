@@ -73,11 +73,13 @@ const items: MenuItem[] = [
     'manage',
     [
       menuItem('Transfer ownership', 'transferownership'),
-      menuItem('Verify Twitter', 'verifytwitter'),
       menuItem('Archive project', 'archiveproject'),
       menuItem('Governance', 'governance'),
       featureFlagEnabled(FEATURE_FLAGS.V1_TOKEN_SWAP)
         ? menuItem('V1 token migration', 'v1tokenmigration')
+        : null,
+      featureFlagEnabled(FEATURE_FLAGS.TWITTER_VERIFY)
+        ? menuItem('Verify Twitter', 'verifytwitter')
         : null,
     ],
     'group',

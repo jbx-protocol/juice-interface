@@ -85,7 +85,11 @@ export function PaymentAddressesModal({
                     <Trans>Mints tokens:</Trans>
                   </span>
                   <TooltipLabel
-                    tip={t`Tokens will be minted as a result of paying this project.`}
+                    tip={
+                      p.preferAddToBalance
+                        ? t`Payments to this project won't mint new project tokens.`
+                        : t`Payments to this project will mint new project tokens.`
+                    }
                     label={
                       <span style={{ textTransform: 'capitalize' }}>
                         {(!p.preferAddToBalance).toString()}
@@ -101,9 +105,10 @@ export function PaymentAddressesModal({
                     <TooltipLabel
                       tip={
                         <Trans>
-                          When someone pays this payer contract, project tokens
-                          will always be minted to this address,{' '}
-                          <strong>not to the person who paid.</strong>
+                          When the Payment Address receives a payment, project
+                          tokens will be minted to this token beneficiary
+                          address. The address that made the payment{' '}
+                          <strong>won't receive any project tokens.</strong>
                         </Trans>
                       }
                       label={
@@ -115,7 +120,7 @@ export function PaymentAddressesModal({
                     />
                   ) : (
                     <TooltipLabel
-                      tip={t`Project tokens will be minted to whoever pays this payer contract.`}
+                      tip={t`New project tokens will be minted to the address that made the payment.`}
                       label={t`Default`}
                     />
                   )}
@@ -128,7 +133,7 @@ export function PaymentAddressesModal({
                       <Trans>Mints tokens as ERC-20:</Trans>
                     </span>
                     <TooltipLabel
-                      tip={t`New project tokens are automatically minted as ERC-20's. The gas to pay this contract will be higher than normal.`}
+                      tip={t`New project tokens are minted as ERC-20 tokens by default. Payments to this Payment Address will incur a higher gas fee than regular Juicebox payments.`}
                       label={
                         <span style={{ textTransform: 'capitalize' }}>
                           {p.preferClaimedTokens.toString()}
@@ -143,7 +148,7 @@ export function PaymentAddressesModal({
                   >
                     <span>
                       <TooltipLabel
-                        tip={t`The memo that appears on the project's Juicebox page activity feed when this payer contract is paid.`}
+                        tip={t`Memos appear on the project's activity feed when the Payment Address receives a payment.`}
                         label={t`Memo`}
                       />
                       :

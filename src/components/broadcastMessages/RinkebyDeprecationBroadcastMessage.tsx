@@ -24,6 +24,7 @@ export function RinkebyDeprecationBroadcastMessage() {
         padding: '1.5rem',
         justifyContent: 'center',
         marginTop: isMobile ? '64px' : 0,
+        color: '#000',
       }}
     >
       <p style={{ margin: 0 }}>
@@ -33,7 +34,7 @@ export function RinkebyDeprecationBroadcastMessage() {
           testnet instead:{' '}
           <a
             href="https://goerli.juicebox.money"
-            style={{ color: colors.text.primary, textDecoration: 'underline' }}
+            style={{ color: '#000', textDecoration: 'underline' }}
           >
             https://goerli.juicebox.money
           </a>

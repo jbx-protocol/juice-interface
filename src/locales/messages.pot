@@ -653,6 +653,9 @@ msgstr ""
 msgid "Connect"
 msgstr ""
 
+msgid "Connect to Twitter to verify account ownership."
+msgstr ""
+
 msgid "Connect wallet"
 msgstr ""
 
@@ -2639,6 +2642,9 @@ msgstr ""
 msgid "This will enable your project's veNFT contract to spend unclaimed tokens in addition to project ERC-20 tokens."
 msgstr ""
 
+msgid "This will pop a window allowing you to connect to Twitter and verify you are the owner of the project's Twitter account."
+msgstr ""
+
 msgid "This will reset the data for your new project. All changes will be lost."
 msgstr ""
 
@@ -2819,7 +2825,13 @@ msgstr ""
 msgid "Twitter"
 msgstr ""
 
+msgid "Twitter Already Connected"
+msgstr ""
+
 msgid "Twitter Verified"
+msgstr ""
+
+msgid "Twitter account disconnected."
 msgstr ""
 
 msgid "Twitter handle"
@@ -2930,7 +2942,7 @@ msgstr ""
 msgid "Verify Twitter"
 msgstr ""
 
-msgid "Verify your project owns the linked Twitter account."
+msgid "Verify you are the project owner in order to disconnect your Twitter account."
 msgstr ""
 
 msgid "Version of the terminal contract used by this project."

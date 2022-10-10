@@ -50,6 +50,7 @@
     "react-error-overlay": "6.0.9"
   },
   "dependencies": {
+    "@ambire/signature-validator": "^1.0.3",
     "@apollo/client": "3.6.9",
     "@jbx-protocol/contracts-v1": "2.0.0",
     "@jbx-protocol/contracts-v2-4.0.0": "npm:@jbx-protocol/contracts-v2@4.0.0",

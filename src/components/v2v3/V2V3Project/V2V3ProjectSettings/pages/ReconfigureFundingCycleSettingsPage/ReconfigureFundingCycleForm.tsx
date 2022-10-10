@@ -53,9 +53,21 @@ function ReconfigureButton({
 }
 
 export function V2V3ReconfigureFundingCycleForm() {
-  const { initialEditingData } = useInitialEditingData(true)
-  const editingProjectData = useEditingProjectData()
+  const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
+  const {
+    nftRewards: { CIDs: nftRewardsCids },
+  } = useContext(NftRewardsContext)
+
   const [memo, setMemo] = useState('')
+  const [fundingDrawerVisible, setFundingDrawerVisible] =
+    useState<boolean>(false)
+  const [tokenDrawerVisible, setTokenDrawerVisible] = useState<boolean>(false)
+  const [rulesDrawerVisible, setRulesDrawerVisible] = useState<boolean>(false)
+  const [unsavedChangesModalVisibile, setUnsavedChangesModalVisible] =
+    useState<boolean>(false)
+
+  const { initialEditingData } = useInitialEditingData({ visible: true })
+  const editingProjectData = useEditingProjectData()
   const {
     fundingHasSavedChanges,
     fundingDrawerHasSavedChanges,
@@ -65,27 +77,15 @@ export function V2V3ReconfigureFundingCycleForm() {
     editingProjectData,
     initialEditingData,
   })
-  const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
-  const {
-    nftRewards: { CIDs: nftRewardsCids },
-  } = useContext(NftRewardsContext)
 
   const { reconfigureLoading, reconfigureFundingCycle } =
     useReconfigureFundingCycle({ editingProjectData, memo })
-
-  const [fundingDrawerVisible, setFundingDrawerVisible] =
-    useState<boolean>(false)
-  const [tokenDrawerVisible, setTokenDrawerVisible] = useState<boolean>(false)
-  const [rulesDrawerVisible, setRulesDrawerVisible] = useState<boolean>(false)
 
   const closeReconfigureDrawer = () => {
     setFundingDrawerVisible(false)
     setTokenDrawerVisible(false)
     setRulesDrawerVisible(false)
   }
-
-  const [unsavedChangesModalVisibile, setUnsavedChangesModalVisible] =
-    useState<boolean>(false)
 
   // const openUnsavedChangesModal = () => setUnsavedChangesModalVisible(true)
   const closeUnsavedChangesModal = () => setUnsavedChangesModalVisible(false)

@@ -1427,6 +1427,12 @@ msgstr ""
 msgid "Is not a valid integer"
 msgstr ""
 
+msgid "Is not a valid number"
+msgstr ""
+
+msgid "Is not greater than zero"
+msgstr ""
+
 msgid "Issue ${symbol}"
 msgstr ""
 
@@ -3458,6 +3464,9 @@ msgstr ""
 msgid "{0} is not a valid integer"
 msgstr ""
 
+msgid "{0} is not valid URL"
+msgstr ""
+
 msgid "{0} is required"
 msgstr ""
 
@@ -3528,6 +3537,12 @@ msgid "{issuanceRate} tokens / ETH"
 msgstr ""
 
 msgid "{label} is not a valid ETH Address"
+msgstr ""
+
+msgid "{label} must be greater than zero"
+msgstr ""
+
+msgid "{label} must be numeric"
 msgstr ""
 
 msgid "{lockDurationOptionInDays} {lockDurationOptionInDays, plural, one {{0}} other {{1}}}"

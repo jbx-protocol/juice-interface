@@ -26,7 +26,8 @@ function useMedia(query: string, defaultState = false) {
       mounted = false
       window.removeEventListener('resize', onChange)
     }
-  }, [query])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return state
 }

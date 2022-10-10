@@ -29,5 +29,7 @@ export default function Navbar() {
         <Account />
       </Space>
     </Header>
+  ) : (
+    <MobileCollapse />
   )
 }

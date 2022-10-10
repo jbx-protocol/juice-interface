@@ -12,7 +12,7 @@ export function RinkebyDeprecationBroadcastMessage() {
   } = useContext(ThemeContext)
   const isMobile = useMobile()
 
-  if (readNetwork.name === NetworkName.rinkeby) return null
+  if (readNetwork.name !== NetworkName.rinkeby) return null
 
   return (
     <div

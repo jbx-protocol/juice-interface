@@ -141,12 +141,14 @@ export function TopLeftNavItems({
         {
           key: 'resources',
           label: (
-            <a
-              className="nav-menu-item hover-opacity"
-              style={navMenuItemStyles}
-            >
-              Resources
-            </a>
+            <Link href="">
+              <a
+                className="nav-menu-item hover-opacity"
+                style={{ ...navMenuItemStyles }}
+              >
+                {t`Resources`}
+              </a>
+            </Link>
           ),
           children: [...resourcesMenuItems(true)],
         },
@@ -155,9 +157,11 @@ export function TopLeftNavItems({
   return (
     <Menu
       items={menuItems}
+      mode="inline"
       style={{
         display: 'flex',
         flexDirection: desktop ? 'row' : 'column',
+        width: desktop ? 500 : 'auto',
       }}
     />
   )

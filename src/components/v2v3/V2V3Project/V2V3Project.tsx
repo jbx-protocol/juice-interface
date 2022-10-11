@@ -107,34 +107,29 @@ export function V2V3Project() {
     }
   }, [query])
 
-  // Change URL without refreshing page
-  const removeQueryParams = () => {
-    // `Next` `query.nftPurchaseConfirmed` not updating unless a new
-    // `nftPurchaseConfirmed` value is given
-    const newQuery: Record<string, string> = {}
-    Object.keys(query).forEach((key: string) => {
-      if (key !== 'projectId') {
-        newQuery[key] = 'null'
-      }
-    })
-
+  const closeNewDeployModal = () => {
+    // Wipes query param
     routerReplace(
       {
         pathname: v2v3ProjectRoute({ projectId }),
-        query: newQuery,
       },
       undefined,
       { shallow: true },
     )
-  }
-
-  const closeNewDeployModal = () => {
-    removeQueryParams()
     setNewDeployModalVisible(false)
   }
 
   const closeNftPostPayModal = () => {
-    removeQueryParams()
+    // `Next` `query.nftPurchaseConfirmed` not updating unless a new
+    // `nftPurchaseConfirmed` value is given
+    routerReplace(
+      {
+        pathname: v2v3ProjectRoute({ projectId }),
+        query: { nftPurchaseConfirmed: 'null' },
+      },
+      undefined,
+      { shallow: true },
+    )
     setNftPostPayModalVisible(false)
   }
 

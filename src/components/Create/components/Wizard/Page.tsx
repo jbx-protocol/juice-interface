@@ -1,4 +1,5 @@
 import { Space } from 'antd'
+import { Property } from 'csstype'
 import { ReactNode } from 'react'
 import { PageContext } from './contexts/PageContext'
 import { usePage } from './hooks'
@@ -8,11 +9,12 @@ export interface PageProps {
   name: string
   title?: ReactNode
   description?: ReactNode
+  width?: Property.Width<string | number>
 }
 
 export const Page: React.FC<PageProps> & {
   ButtonControl: typeof PageButtonControl
-} = ({ name, title, description, children }) => {
+} = ({ name, title, description, children, width = '600px' }) => {
   const {
     canGoBack,
     isFinalPage,
@@ -38,7 +40,7 @@ export const Page: React.FC<PageProps> & {
         goToPreviousPage,
       }}
     >
-      <Space direction="vertical" size="large" style={{ width: '100%' }}>
+      <Space direction="vertical" size="large" style={{ width }}>
         <div>
           <h1>{title}</h1>
           <p>{description}</p>

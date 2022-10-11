@@ -10,7 +10,6 @@ const WizardContainer: React.FC = ({ children }) => {
     <div
       style={{
         margin: '0 auto',
-        width: '600px',
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'column',

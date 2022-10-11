@@ -1,24 +1,35 @@
 import { CaretRightFilled } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Drawer, DrawerProps, Space, Statistic } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Modal from 'antd/lib/modal/Modal'
+import Callout from 'components/Callout'
 import CurrencySymbol from 'components/CurrencySymbol'
+import IncentivesForm, {
+  IncentivesFormFields,
+} from 'components/forms/IncentivesForm'
 import RestrictedActionsForm, {
   RestrictedActionsFormFields,
 } from 'components/forms/RestrictedActionsForm'
+import TicketingForm, {
+  TicketingFormFields,
+} from 'components/forms/TicketingForm'
+import BudgetForm from 'components/v1/shared/forms/BudgetForm'
+import PayModsForm from 'components/v1/shared/forms/PayModsForm'
 import PayoutModsList from 'components/v1/shared/PayoutModsList'
 import ReconfigurationStrategyDrawer from 'components/v1/shared/ReconfigurationStrategyDrawer'
 import TicketModsList from 'components/v1/shared/TicketModsList'
-
-import * as constants from '@ethersproject/constants'
+import { SECONDS_IN_DAY } from 'constants/numbers'
+import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
 import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useEditingV1FundingCycleSelector } from 'hooks/AppSelector'
 import { useTerminalFee } from 'hooks/v1/TerminalFee'
 import { useConfigureProjectTx } from 'hooks/v1/transactor/ConfigureProjectTx'
+import { BallotStrategy } from 'models/ballot'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { V1FundingCycle, V1FundingCycleMetadata } from 'models/v1/fundingCycle'
@@ -32,6 +43,8 @@ import {
   perbicentToPercent,
   permilleToPercent,
 } from 'utils/format/formatNumber'
+import { detailedTimeString, secondsUntil } from 'utils/format/formatTime'
+import { V1CurrencyName } from 'utils/v1/currency'
 import {
   decodeFundingCycleMetadata,
   hasFundingTarget,
@@ -39,25 +52,6 @@ import {
 } from 'utils/v1/fundingCycle'
 import { amountSubFee } from 'utils/v1/math'
 import { serializeV1FundingCycle } from 'utils/v1/serializers'
-
-import { V1CurrencyName } from 'utils/v1/currency'
-
-import BudgetForm from 'components/v1/shared/forms/BudgetForm'
-
-import IncentivesForm, {
-  IncentivesFormFields,
-} from 'components/forms/IncentivesForm'
-import TicketingForm, {
-  TicketingFormFields,
-} from 'components/forms/TicketingForm'
-import PayModsForm from 'components/v1/shared/forms/PayModsForm'
-
-import { BallotStrategy } from 'models/ballot'
-
-import { detailedTimeString, secondsUntil } from 'utils/format/formatTime'
-
-import { SECONDS_IN_DAY } from 'constants/numbers'
-import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
 
 const V1ReconfigureUpcomingMessage = ({
   currentFC,
@@ -77,8 +71,8 @@ const V1ReconfigureUpcomingMessage = ({
     // If duration is unset/0, changes take effect immediately to current FC
     return (
       <Trans>
-        You don't have a funding cycle duration. Changes you make will take
-        effect immediately.
+        Your project's current funding cycle has no duration. Changes you make
+        below will take effect immediately.
       </Trans>
     )
   } else if (ballotStrategyLength === undefined) {
@@ -143,6 +137,17 @@ export default function ReconfigureFCModal({
   onDone?: VoidFunction
 }) {
   const { colors, radii } = useContext(ThemeContext).theme
+  const {
+    queuedFC,
+    currentFC,
+    terminal,
+    isPreviewMode,
+    queuedPayoutMods,
+    currentPayoutMods,
+    queuedTicketMods,
+    currentTicketMods,
+  } = useContext(V1ProjectContext)
+
   const [currentStep, setCurrentStep] = useState<number>()
   const [payModsModalVisible, setPayModsFormModalVisible] =
     useState<boolean>(false)
@@ -165,17 +170,8 @@ export default function ReconfigureFCModal({
   const [restrictedActionsForm] = useForm<RestrictedActionsFormFields>()
   const [editingPayoutMods, setEditingPayoutMods] = useState<PayoutMod[]>([])
   const [editingTicketMods, setEditingTicketMods] = useState<TicketMod[]>([])
+
   const dispatch = useAppDispatch()
-  const {
-    queuedFC,
-    currentFC,
-    terminal,
-    isPreviewMode,
-    queuedPayoutMods,
-    currentPayoutMods,
-    queuedTicketMods,
-    currentTicketMods,
-  } = useContext(V1ProjectContext)
 
   const editingFC = useEditingV1FundingCycleSelector()
   const terminalFee = useTerminalFee(terminal?.version)
@@ -412,9 +408,9 @@ export default function ReconfigureFCModal({
         <h4 style={{ marginBottom: 0 }}>
           <Trans>Reconfigure upcoming funding cycles</Trans>
         </h4>
-        <p>
+        <Callout>
           <V1ReconfigureUpcomingMessage currentFC={currentFC} />
-        </p>
+        </Callout>
 
         <Space direction="vertical" size="large" style={{ width: '100%' }}>
           <div>

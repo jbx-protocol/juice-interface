@@ -662,13 +662,13 @@ msgstr ""
 msgid "Configure restrictions for your funding cycles."
 msgstr ""
 
-msgid "Configure the dynamics of your project's token."
-msgstr ""
-
 msgid "Configure which Juicebox V1 project you'd like to accept tokens for. Token holders of this V1 project will be able to swap their V1 tokens for V2 tokens."
 msgstr ""
 
 msgid "Configure your project's first funding cycle below."
+msgstr ""
+
+msgid "Configure your project's token."
 msgstr ""
 
 msgid "Configure {projectTitle}"
@@ -860,6 +860,9 @@ msgstr ""
 msgid "Deploy Payment Address contract"
 msgstr ""
 
+msgid "Deploy Payment Address for {projectTitle}"
+msgstr ""
+
 msgid "Deploy Snapshot space"
 msgstr ""
 
@@ -867,9 +870,6 @@ msgid "Deploy funding cycle configuration"
 msgstr ""
 
 msgid "Deploy project"
-msgstr ""
-
-msgid "Deploy project payer for {projectTitle}"
 msgstr ""
 
 msgid "Deploy project to {0}"
@@ -1008,9 +1008,6 @@ msgid "Distribution limit is 0: All funds will be considered overflow and can be
 msgstr ""
 
 msgid "Distribution limit is infinite. <0>The project will control how all funds are distributed, and none can be redeemed by token holders.</0>"
-msgstr ""
-
-msgid "Distribution limit, duration and payouts"
 msgstr ""
 
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
@@ -1290,9 +1287,6 @@ msgid "History"
 msgstr ""
 
 msgid "Holders"
-msgstr ""
-
-msgid "Holdings"
 msgstr ""
 
 msgid "Hours"
@@ -1601,6 +1595,9 @@ msgstr ""
 msgid "Memo included on-chain"
 msgstr ""
 
+msgid "Memos appear on the project's activity feed when the Payment Address receives a payment."
+msgstr ""
+
 msgid "Message"
 msgstr ""
 
@@ -1670,6 +1667,9 @@ msgstr ""
 msgid "My VeNFTs"
 msgstr ""
 
+msgid "My holdings"
+msgstr ""
+
 msgid "My projects"
 msgstr ""
 
@@ -1697,7 +1697,10 @@ msgstr ""
 msgid "New"
 msgstr ""
 
-msgid "New project tokens are automatically minted as ERC-20's. The gas to pay this contract will be higher than normal."
+msgid "New project tokens are minted as ERC-20 tokens by default. Payments to this Payment Address will incur a higher gas fee than regular Juicebox payments."
+msgstr ""
+
+msgid "New project tokens will be minted to the address that made the payment."
 msgstr ""
 
 msgid "Newly minted {tokenSymbolPlural} <0>received by contributors</0> per ETH they contribute to the treasury."
@@ -1913,6 +1916,12 @@ msgstr ""
 msgid "Payments paused"
 msgstr ""
 
+msgid "Payments to this project will mint new project tokens."
+msgstr ""
+
+msgid "Payments to this project won't mint new project tokens."
+msgstr ""
+
 msgid "Payout is locked"
 msgstr ""
 
@@ -2057,7 +2066,7 @@ msgstr ""
 msgid "Project tokens are not ERC-20 tokens by default. Once you deploy your project, you can issue an ERC-20 for your holders to claim. This is optional."
 msgstr ""
 
-msgid "Project tokens will be minted to whoever pays this payer contract."
+msgid "Project upgrades"
 msgstr ""
 
 msgid "Project {name} will be available soon! Try refreshing the page shortly."
@@ -2274,6 +2283,9 @@ msgid "Restricted actions"
 msgstr ""
 
 msgid "Review and confirm stake"
+msgstr ""
+
+msgid "Review and deploy"
 msgstr ""
 
 msgid "Review and launch funding cycle"
@@ -2519,6 +2531,9 @@ msgstr ""
 msgid "Start time (seconds, Unix time)"
 msgstr ""
 
+msgid "Start upgrade"
+msgstr ""
+
 msgid "Step 1. Add V1 token payment terminal"
 msgstr ""
 
@@ -2613,9 +2628,6 @@ msgid "The maximum amount of funds that can be distributed from this project in 
 msgstr ""
 
 msgid "The maximum supply of this NFT in circulation."
-msgstr ""
-
-msgid "The memo that appears on the project's Juicebox page activity feed when this payer contract is paid."
 msgstr ""
 
 msgid "The number of project tokens minted when 1 ETH is contributed in the first funding cycle."
@@ -2861,9 +2873,6 @@ msgstr ""
 msgid "Tokens to redeem"
 msgstr ""
 
-msgid "Tokens will be minted as a result of paying this project."
-msgstr ""
-
 msgid "Tokens:"
 msgstr ""
 
@@ -3107,10 +3116,10 @@ msgstr ""
 msgid "When enabled, your project cannot receive direct payments."
 msgstr ""
 
-msgid "When someone pays this payer contract, project tokens will always be minted to this address, <0>not to the person who paid.</0>"
+msgid "When someone pays your project, they'll receive your project's tokens in return. Tokens can be redeemed for a portion of your project's overflow funds; when you win, your community wins with you. Leverage your project's token to grant governance rights, community access, or other membership perks."
 msgstr ""
 
-msgid "When someone pays your project, they'll receive your project's tokens in return. Tokens can be redeemed for a portion of your project's overflow funds; when you win, your community wins with you. Leverage your project's token to grant governance rights, community access, or other membership perks."
+msgid "When the Payment Address receives a payment, project tokens will be minted to this token beneficiary address. The address that made the payment <0>won't receive any project tokens.</0>"
 msgstr ""
 
 msgid "When token minting is allowed, the owner of this project has permission to mint any number of tokens to any address at their discretion. This has the effect of diluting all current token holders, without increasing the project's treasury balance. The project owner can reconfigure this along with all other properties of the funding cycle."
@@ -3174,9 +3183,6 @@ msgid "You cannot redeem your tokens for ETH because this project has no overflo
 msgstr ""
 
 msgid "You cannot redeem your tokens for ETH because this project's redemption rate is zero."
-msgstr ""
-
-msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
 msgstr ""
 
 msgid "You don't have enough tokens to stake."
@@ -3272,6 +3278,9 @@ msgstr ""
 msgid "Your project is funded across funding cycles. A funding cycle has a funding target and a duration. Your project's funding cycle configuration will depend on the kind of project you're starting."
 msgstr ""
 
+msgid "Your project is up to date!"
+msgstr ""
+
 msgid "Your project will appear archived, and won't be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Allow a few days for your project to appear under the \"archived\" filter on the Projects page."
 msgstr ""
 
@@ -3279,6 +3288,9 @@ msgid "Your project will immediately appear active on the juicebox.money app. Pl
 msgstr ""
 
 msgid "Your project will withhold all funds raised. Funds can be distributed to payout addresses you set, and the project owner will receive any unallocated funds. Your project will have no overflow, so token holders can't redeem their tokens for ETH."
+msgstr ""
+
+msgid "Your project's current funding cycle has no duration. Changes you make below will take effect immediately."
 msgstr ""
 
 msgid "Your transaction has been submitted and is awaiting confirmation."

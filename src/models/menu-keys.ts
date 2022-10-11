@@ -1,8 +1,8 @@
-export type MenuKey = V2SettingsPageKey | V2VeNftPageKey
+export type MenuKey = V2V3SettingsPageKey | V2VeNftPageKey
 
 export type V2VeNftPageKey = 'mint' | 'myvenfts'
 
-export type V2SettingsPageKey =
+export type V2V3SettingsPageKey =
   | 'general'
   | 'projecthandle'
   | 'reconfigurefc'
@@ -12,3 +12,4 @@ export type V2SettingsPageKey =
   | 'archiveproject'
   | 'governance'
   | 'v1tokenmigration'
+  | 'upgrades'

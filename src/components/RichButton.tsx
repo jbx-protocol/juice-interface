@@ -2,6 +2,16 @@ import { CaretRightFilled } from '@ant-design/icons'
 import { ThemeContext } from 'contexts/themeContext'
 import { ComponentPropsWithoutRef, CSSProperties, useContext } from 'react'
 
+export type RichButtonProps = {
+  heading: JSX.Element | string
+  description: JSX.Element | string
+  disabled?: boolean
+  prefix?: JSX.Element | string
+  icon?: JSX.Element
+  primaryColor?: string
+  buttonStyle?: CSSProperties
+} & ComponentPropsWithoutRef<'div'>
+
 export default function RichButton({
   heading,
   prefix,
@@ -9,15 +19,9 @@ export default function RichButton({
   disabled,
   icon,
   primaryColor,
+  buttonStyle,
   ...props
-}: {
-  heading: JSX.Element | string
-  description: JSX.Element | string
-  disabled?: boolean
-  prefix?: JSX.Element | string
-  icon?: JSX.Element
-  primaryColor?: string
-} & ComponentPropsWithoutRef<'div'>) {
+}: RichButtonProps) {
   const {
     theme: { colors, radii },
   } = useContext(ThemeContext)
@@ -30,7 +34,7 @@ export default function RichButton({
     ? colors.text.disabled
     : primaryColor ?? colors.text.primary
 
-  const cardStyles: CSSProperties = {
+  const baseButtonStyle: CSSProperties = {
     ...props?.style,
     display: 'flex',
     justifyContent: 'space-between',
@@ -45,7 +49,8 @@ export default function RichButton({
       className="clickable-border"
       {...props}
       style={{
-        ...cardStyles,
+        ...baseButtonStyle,
+        ...buttonStyle,
       }}
       role="button"
       onClick={e => {

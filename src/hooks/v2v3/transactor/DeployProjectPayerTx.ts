@@ -1,12 +1,11 @@
 import * as constants from '@ethersproject/constants'
 import { t } from '@lingui/macro'
-import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
-import { useWallet } from 'hooks/Wallet'
-import { useContext } from 'react'
-
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactionContext } from 'contexts/transactionContext'
+import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { TransactorInstance } from 'hooks/Transactor'
+import { useWallet } from 'hooks/Wallet'
+import { useContext } from 'react'
 import { useV2ProjectTitle } from '../ProjectTitle'
 
 export type DeployProjectPayerTxArgs = {
@@ -56,7 +55,7 @@ export function useDeployProjectPayerTx(): TransactorInstance<DeployProjectPayer
       ],
       {
         ...txOpts,
-        title: t`Deploy project payer for ${projectTitle}`,
+        title: t`Deploy Payment Address for ${projectTitle}`,
       },
     )
   }

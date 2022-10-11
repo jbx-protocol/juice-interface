@@ -6,12 +6,12 @@ import Link from 'next/link'
 
 const TAB_TYPE_NAMES: { [k in ProjectCategory]: string } = {
   all: t`All`,
-  holdings: t`Holdings`,
+  holdings: t`My holdings`,
   myprojects: t`My projects`,
   trending: t`Trending`,
 }
 
-const TABS: ProjectCategory[] = ['all', 'holdings', 'myprojects', 'trending']
+const TABS: ProjectCategory[] = ['all', 'trending', 'holdings', 'myprojects']
 
 const ProjectTab = ({
   type,

@@ -1,6 +1,6 @@
 import { Select } from 'antd'
 import { BaseOptionType } from 'antd/lib/select'
-import ProjectVersionBadge from 'components/ProjectVersionBadge'
+import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
 import { CV_V2, CV_V3 } from 'constants/cv'
 import { readNetwork } from 'constants/networks'
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'

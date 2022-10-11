@@ -659,13 +659,13 @@ msgstr ""
 msgid "Configure restrictions for your funding cycles."
 msgstr ""
 
-msgid "Configure the dynamics of your project's token."
-msgstr ""
-
 msgid "Configure which Juicebox V1 project you'd like to accept tokens for. Token holders of this V1 project will be able to swap their V1 tokens for V2 tokens."
 msgstr ""
 
 msgid "Configure your project's first funding cycle below."
+msgstr ""
+
+msgid "Configure your project's token."
 msgstr ""
 
 msgid "Configure {projectTitle}"
@@ -1005,9 +1005,6 @@ msgid "Distribution limit is 0: All funds will be considered overflow and can be
 msgstr ""
 
 msgid "Distribution limit is infinite. <0>The project will control how all funds are distributed, and none can be redeemed by token holders.</0>"
-msgstr ""
-
-msgid "Distribution limit, duration and payouts"
 msgstr ""
 
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
@@ -2285,6 +2282,9 @@ msgstr ""
 msgid "Review and confirm stake"
 msgstr ""
 
+msgid "Review and deploy"
+msgstr ""
+
 msgid "Review and launch funding cycle"
 msgstr ""
 
@@ -2526,6 +2526,9 @@ msgid "Start raising funds"
 msgstr ""
 
 msgid "Start time (seconds, Unix time)"
+msgstr ""
+
+msgid "Start upgrade"
 msgstr ""
 
 msgid "Step 1. Add V1 token payment terminal"
@@ -3270,6 +3273,9 @@ msgid "Your project cannot receive direct payments while paused."
 msgstr ""
 
 msgid "Your project is funded across funding cycles. A funding cycle has a funding target and a duration. Your project's funding cycle configuration will depend on the kind of project you're starting."
+msgstr ""
+
+msgid "Your project is up to date!"
 msgstr ""
 
 msgid "Your project will appear archived, and won't be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Allow a few days for your project to appear under the \"archived\" filter on the Projects page."

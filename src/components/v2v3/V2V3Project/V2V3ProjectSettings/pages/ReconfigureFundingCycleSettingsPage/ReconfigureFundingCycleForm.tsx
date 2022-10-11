@@ -1,8 +1,9 @@
-import { CaretRightFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Form, Space } from 'antd'
+import Callout from 'components/Callout'
 import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
 import { MemoFormInput } from 'components/Project/PayProjectForm/MemoFormInput'
+import RichButton, { RichButtonProps } from 'components/RichButton'
 import FundingDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawers/FundingDrawer'
 import RulesDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawers/RulesDrawer'
 import TokenDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawers/TokenDrawer'
@@ -18,44 +19,41 @@ import ReconfigurePreview from './ReconfigurePreview'
 import V2V3ReconfigureUpcomingMessage from './ReconfigureUpcomingMessage'
 
 function ReconfigureButton({
-  title,
   reconfigureHasChanges,
-  onClick,
+  ...props
 }: {
-  title: string
   reconfigureHasChanges: boolean
-  onClick: () => void
-}) {
-  const { colors, radii } = useContext(ThemeContext).theme
+} & RichButtonProps) {
+  const { colors } = useContext(ThemeContext).theme
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        cursor: 'pointer',
-        padding: 10,
-        fontWeight: 500,
-        borderRadius: radii.sm,
+    <RichButton
+      {...props}
+      buttonStyle={{
         border: reconfigureHasChanges
           ? '1px solid ' + colors.stroke.action.primary
           : undefined,
       }}
-      className="clickable-border"
-      onClick={onClick}
-    >
-      <div>{title}</div>
-      <div>
-        <CaretRightFilled />
-      </div>
-    </div>
+    />
   )
 }
 
-export function V2ReconfigureFundingCycleForm() {
-  const { initialEditingData } = useInitialEditingData(true)
-  const editingProjectData = useEditingProjectData()
+export function V2V3ReconfigureFundingCycleForm() {
+  const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
+  const {
+    nftRewards: { CIDs: nftRewardsCids },
+  } = useContext(NftRewardsContext)
+
   const [memo, setMemo] = useState('')
+  const [fundingDrawerVisible, setFundingDrawerVisible] =
+    useState<boolean>(false)
+  const [tokenDrawerVisible, setTokenDrawerVisible] = useState<boolean>(false)
+  const [rulesDrawerVisible, setRulesDrawerVisible] = useState<boolean>(false)
+  const [unsavedChangesModalVisibile, setUnsavedChangesModalVisible] =
+    useState<boolean>(false)
+
+  const { initialEditingData } = useInitialEditingData({ visible: true })
+  const editingProjectData = useEditingProjectData()
   const {
     fundingHasSavedChanges,
     fundingDrawerHasSavedChanges,
@@ -65,27 +63,15 @@ export function V2ReconfigureFundingCycleForm() {
     editingProjectData,
     initialEditingData,
   })
-  const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
-  const {
-    nftRewards: { CIDs: nftRewardsCids },
-  } = useContext(NftRewardsContext)
 
   const { reconfigureLoading, reconfigureFundingCycle } =
     useReconfigureFundingCycle({ editingProjectData, memo })
-
-  const [fundingDrawerVisible, setFundingDrawerVisible] =
-    useState<boolean>(false)
-  const [tokenDrawerVisible, setTokenDrawerVisible] = useState<boolean>(false)
-  const [rulesDrawerVisible, setRulesDrawerVisible] = useState<boolean>(false)
 
   const closeReconfigureDrawer = () => {
     setFundingDrawerVisible(false)
     setTokenDrawerVisible(false)
     setRulesDrawerVisible(false)
   }
-
-  const [unsavedChangesModalVisibile, setUnsavedChangesModalVisible] =
-    useState<boolean>(false)
 
   // const openUnsavedChangesModal = () => setUnsavedChangesModalVisible(true)
   const closeUnsavedChangesModal = () => setUnsavedChangesModalVisible(false)
@@ -106,34 +92,27 @@ export function V2ReconfigureFundingCycleForm() {
   return (
     <>
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
-        <p>
+        <Callout>
           <V2V3ReconfigureUpcomingMessage />
-        </p>
+        </Callout>
+
         <ReconfigureButton
-          title={t`Distribution limit, duration and payouts`}
+          heading={t`Funding`}
+          description={t`Configure how your project will collect and spend funds.`}
           reconfigureHasChanges={fundingDrawerHasSavedChanges}
           onClick={() => setFundingDrawerVisible(true)}
         />
         <ReconfigureButton
-          title={t`Token`}
+          heading={t`Token`}
+          description={t`Configure your project's token.`}
           reconfigureHasChanges={tokenDrawerHasSavedChanges}
           onClick={() => setTokenDrawerVisible(true)}
         />
         <ReconfigureButton
-          title={t`Rules`}
+          heading={t`Rules`}
+          description={t`Configure restrictions for your funding cycles.`}
           reconfigureHasChanges={rulesDrawerHasSavedChanges}
           onClick={() => setRulesDrawerVisible(true)}
-        />
-        <ReconfigurePreview
-          payoutSplits={editingProjectData.editingPayoutGroupedSplits.splits}
-          reserveSplits={
-            editingProjectData.editingReservedTokensGroupedSplits.splits
-          }
-          fundingCycleMetadata={editingProjectData.editingFundingCycleMetadata}
-          fundingCycleData={editingProjectData.editingFundingCycleData}
-          fundAccessConstraints={
-            editingProjectData.editingFundAccessConstraints
-          }
         />
 
         <Form layout="vertical">
@@ -146,6 +125,22 @@ export function V2ReconfigureFundingCycleForm() {
             <MemoFormInput value={memo} onChange={setMemo} />
           </Form.Item>
         </Form>
+
+        <h3 className="text-primary" style={{ fontSize: '1.2rem' }}>
+          <Trans>Review and deploy</Trans>
+        </h3>
+        <ReconfigurePreview
+          payoutSplits={editingProjectData.editingPayoutGroupedSplits.splits}
+          reserveSplits={
+            editingProjectData.editingReservedTokensGroupedSplits.splits
+          }
+          fundingCycleMetadata={editingProjectData.editingFundingCycleMetadata}
+          fundingCycleData={editingProjectData.editingFundingCycleData}
+          fundAccessConstraints={
+            editingProjectData.editingFundAccessConstraints
+          }
+        />
+
         <Button
           loading={reconfigureLoading}
           onClick={reconfigureFundingCycle}

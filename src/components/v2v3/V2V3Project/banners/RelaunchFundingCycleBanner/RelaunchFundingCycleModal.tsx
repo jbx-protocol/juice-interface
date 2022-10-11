@@ -26,7 +26,7 @@ import {
 } from 'models/v2v3/fundingCycle'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { reloadWindow } from 'utils/windowUtils'
-import ReconfigurePreview from '../../V2V3ProjectSettings/pages/ProjectReconfigureFundingCycleSettingsPage/ReconfigurePreview'
+import ReconfigurePreview from '../../V2V3ProjectSettings/pages/ReconfigureFundingCycleSettingsPage/ReconfigurePreview'
 
 export function RelaunchFundingCycleModal(props: ModalProps) {
   const { projectId } = useContext(ProjectMetadataContext)

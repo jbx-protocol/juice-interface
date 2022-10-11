@@ -1,10 +1,9 @@
-import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Button } from 'antd'
+import { Button, Space } from 'antd'
 import axios from 'axios'
+import Callout from 'components/Callout'
 import { CV_V1, CV_V1_1, CV_V2, CV_V3 } from 'constants/cv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { ThemeContext } from 'contexts/themeContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useWallet } from 'hooks/Wallet'
 import { CV2V3 } from 'models/cv'
@@ -26,14 +25,11 @@ export default function ArchiveProject({
   handle?: string | undefined // Used on V1 projects
   canTakePaymentsWhenArchived?: boolean
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { projectId, projectMetadata, cv } = useContext(ProjectMetadataContext)
 
-  const { userAddress } = useWallet()
-
   const [isLoadingArchive, setIsLoadingArchive] = useState<boolean>(false)
+
+  const { userAddress } = useWallet()
 
   const revalidateProjectAfterArchive = async () => {
     switch (cv) {
@@ -131,40 +127,41 @@ export default function ArchiveProject({
       <h3>
         <Trans>Archive project</Trans>
       </h3>
-      <p>
-        <Trans>
-          Your project will appear archived, and won't be able to receive
-          payments through the juicebox.money app. You can unarchive a project
-          at any time. Allow a few days for your project to appear under the
-          "archived" filter on the Projects page.
-        </Trans>
-      </p>
+      <Space direction="vertical" size="middle">
+        <p>
+          <Trans>
+            Your project will appear archived, and won't be able to receive
+            payments through the juicebox.money app. You can unarchive a project
+            at any time. Allow a few days for your project to appear under the
+            "archived" filter on the Projects page.
+          </Trans>
+        </p>
 
-      <p style={{ marginTop: 10, color: colors.text.secondary }}>
-        <ExclamationCircleOutlined />{' '}
-        {canTakePaymentsWhenArchived ? (
-          <Trans>
-            Your project can still receive payments directly through the
-            Juicebox protocol contracts.
-          </Trans>
-        ) : (
-          <Trans>
-            Unless payments are paused in your funding cycle settings, your
-            project can still receive payments directly through the Juicebox
-            protocol contracts.
-          </Trans>
-        )}
-      </p>
-      <Button
-        onClick={setArchived(true)}
-        loading={isLoadingArchive}
-        size="small"
-        type="primary"
-      >
-        <span>
-          <Trans>Archive project</Trans>
-        </span>
-      </Button>
+        <Callout>
+          {canTakePaymentsWhenArchived ? (
+            <Trans>
+              Your project can still receive payments directly through the
+              Juicebox protocol contracts.
+            </Trans>
+          ) : (
+            <Trans>
+              Unless payments are paused in your funding cycle settings, your
+              project can still receive payments directly through the Juicebox
+              protocol contracts.
+            </Trans>
+          )}
+        </Callout>
+        <Button
+          onClick={setArchived(true)}
+          loading={isLoadingArchive}
+          size="small"
+          type="primary"
+        >
+          <span>
+            <Trans>Archive project</Trans>
+          </span>
+        </Button>
+      </Space>
     </section>
   )
 }

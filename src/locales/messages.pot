@@ -3176,9 +3176,6 @@ msgstr ""
 msgid "You cannot redeem your tokens for ETH because this project's redemption rate is zero."
 msgstr ""
 
-msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
-msgstr ""
-
 msgid "You don't have enough tokens to stake."
 msgstr ""
 
@@ -3279,6 +3276,9 @@ msgid "Your project will immediately appear active on the juicebox.money app. Pl
 msgstr ""
 
 msgid "Your project will withhold all funds raised. Funds can be distributed to payout addresses you set, and the project owner will receive any unallocated funds. Your project will have no overflow, so token holders can't redeem their tokens for ETH."
+msgstr ""
+
+msgid "Your project's current funding cycle has no duration. Changes you make below will take effect immediately."
 msgstr ""
 
 msgid "Your transaction has been submitted and is awaiting confirmation."

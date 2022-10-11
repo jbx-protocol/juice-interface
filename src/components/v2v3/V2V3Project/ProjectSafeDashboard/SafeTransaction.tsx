@@ -1,7 +1,7 @@
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { ThemeContext } from 'contexts/themeContext'
 import { SafeTransactionType } from 'models/safe'
-import { CSSProperties, useContext, useMemo, useState } from 'react'
+import { useContext, useMemo, useState } from 'react'
 import { ReconfigureFundingCyclesOfTransaction } from './juiceboxTransactions/reconfigureFundingCyclesOf'
 import { LinkToSafeButton } from './LinkToSafeButton'
 import { TransactionHeader } from './TransactionHeader'
@@ -10,18 +10,6 @@ export type SafeTransactionComponentProps = {
   transaction: SafeTransactionType
   selected: boolean
   isPastTransaction?: boolean
-}
-
-export const safeTransactionRowStyle: CSSProperties = {
-  justifyContent: 'space-between',
-  fontWeight: 400,
-  width: '100%',
-  padding: '0.5rem 1rem',
-  marginBottom: '1rem',
-  transition: 'background-color 100ms linear',
-  display: 'flex',
-  flexDirection: 'column',
-  cursor: 'pointer',
 }
 
 const GenericSafeTransaction = ({
@@ -35,23 +23,12 @@ const GenericSafeTransaction = ({
 
   const [expanded, setExpanded] = useState<boolean>(selected)
 
-  const rowStyle: CSSProperties = {
-    ...safeTransactionRowStyle,
-    color: colors.text.primary,
-    paddingRight: '1rem',
-  }
-
-  if (selected) {
-    rowStyle.border = `1px solid ${colors.stroke.action.primary}`
-  }
-
   return (
     <div
-      className="clickable-border"
-      style={rowStyle}
       onClick={() => {
         setExpanded(!expanded)
       }}
+      style={{ marginBottom: '1.5rem' }}
       id={`${transaction.safeTxHash}`}
     >
       <div style={{ display: 'flex', width: '100%' }}>
@@ -59,7 +36,7 @@ const GenericSafeTransaction = ({
           transaction={transaction}
           isPastTransaction={isPastTransaction}
         />
-        <div style={{ marginLeft: 10 }}>
+        <div style={{ marginLeft: 10, color: colors.text.tertiary }}>
           {expanded ? <UpOutlined /> : <DownOutlined />}
         </div>
       </div>
@@ -67,9 +44,7 @@ const GenericSafeTransaction = ({
       {expanded ? (
         <LinkToSafeButton
           transaction={transaction}
-          style={{
-            marginTop: '1rem',
-          }}
+          style={{ marginTop: '0.5rem' }}
         />
       ) : null}
     </div>

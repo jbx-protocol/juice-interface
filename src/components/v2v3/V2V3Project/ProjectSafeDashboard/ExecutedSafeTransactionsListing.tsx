@@ -1,6 +1,7 @@
 import { useExecutedSafeTransactions } from 'hooks/safe/ExecutedSafeTransaction'
 import { GnosisSafe, SafeTransactionType } from 'models/safe'
-import { SafeTransaction } from './SafeTransaction'
+import { getUniqueNonces } from 'utils/safe'
+import { SafeNonceRow } from './SafeNonceRow'
 
 export function ExecutedSafeTransactionsListing({
   safe,
@@ -14,22 +15,32 @@ export function ExecutedSafeTransactionsListing({
       safeAddress: safe.address,
     })
 
+  const uniqueNonces = getUniqueNonces(executedSafeTransactions)
+
   if (isLoading) {
     return <div style={{ marginTop: 20 }}>Loading...</div>
   }
 
   return (
     <>
-      {executedSafeTransactions?.map(
-        (transaction: SafeTransactionType, idx: number) => (
-          <SafeTransaction
-            key={`safe-${transaction.nonce}-${idx}`}
-            transaction={transaction}
-            selected={selectedTx === transaction.safeTxHash}
-            isPastTransaction
+      {uniqueNonces?.map((nonce: number, idx: number) => {
+        const transactionsOfNonce: SafeTransactionType[] =
+          executedSafeTransactions.filter(
+            (tx: SafeTransactionType) => tx.nonce === nonce && tx.dataDecoded,
+          )
+
+        if (!transactionsOfNonce.length) return
+
+        return (
+          <SafeNonceRow
+            key={`safe-${nonce}-${idx}`}
+            nonce={nonce}
+            transactions={transactionsOfNonce}
+            safeThreshold={safe.threshold}
+            selectedTx={selectedTx}
           />
-        ),
-      )}
+        )
+      })}
     </>
   )
 }

@@ -14,9 +14,10 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { CSSProperties, useContext } from 'react'
 import { v2v3ProjectRoute } from 'utils/routes'
+import { getUniqueNonces } from 'utils/safe'
 import { BackToProjectButton } from '../BackToProjectButton'
 import { ExecutedSafeTransactionsListing } from './ExecutedSafeTransactionsListing'
-import { SafeTransaction } from './SafeTransaction'
+import { SafeNonceRow } from './SafeNonceRow'
 
 export type SafeTxCategory = 'queued' | 'history'
 const SAFE_TX_QUEUED_KEY: SafeTxCategory = 'queued'
@@ -70,6 +71,9 @@ export function ProjectSafeDashboard() {
     )
   }
 
+  // Returns unique nonces from tx list. Used to group tx's by nonce
+  const uniqueNonces = getUniqueNonces(queuedSafeTransactions)
+
   const projectSafeRoute = `${v2v3ProjectRoute({ projectId, handle })}/safe`
 
   return (
@@ -113,21 +117,32 @@ export function ProjectSafeDashboard() {
             </Link>
           </Space>
 
-          <div style={{ marginTop: '1.5rem' }}>
+          <div
+            style={{
+              marginTop: '1.5rem',
+              borderTop: `1px solid ${colors.stroke.tertiary}`,
+            }}
+          >
             {selectedTab === SAFE_TX_QUEUED_KEY ? (
               <>
-                {queuedSafeTransactions?.map(
-                  (transaction: SafeTransactionType, idx: number) => (
-                    <SafeTransaction
-                      key={`safe-${transaction.nonce}-${idx}`}
-                      transaction={{
-                        ...transaction,
-                        threshold: gnosisSafe?.threshold,
-                      }}
-                      selected={preSelectedTx === transaction.safeTxHash}
+                {uniqueNonces?.map((nonce: number, idx: number) => {
+                  const transactionsOfNonce: SafeTransactionType[] =
+                    queuedSafeTransactions.filter(
+                      (tx: SafeTransactionType) => tx.nonce === nonce,
+                    )
+
+                  if (!transactionsOfNonce.length) return
+
+                  return (
+                    <SafeNonceRow
+                      key={`safe-${nonce}-${idx}`}
+                      nonce={nonce}
+                      transactions={transactionsOfNonce}
+                      safeThreshold={gnosisSafe?.threshold}
+                      selectedTx={preSelectedTx}
                     />
-                  ),
-                )}
+                  )
+                })}
               </>
             ) : selectedTab === SAFE_TX_HISTORY_KEY ? (
               <ExecutedSafeTransactionsListing

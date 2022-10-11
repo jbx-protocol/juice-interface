@@ -18,10 +18,10 @@ const resourcesMenu = (
 )
 
 export function TopLeftNavItems({
-  mobile,
+  desktop,
   onClickMenuItems,
 }: {
-  mobile?: boolean
+  desktop?: boolean
   onClickMenuItems?: VoidFunction
 }) {
   const [resourcesOpen, setResourcesOpen] = useState<boolean>(false)
@@ -75,7 +75,7 @@ export function TopLeftNavItems({
     </Dropdown>
   )
 
-  const menuItems = !mobile
+  const menuItems = desktop
     ? [
         {
           key: 'index',
@@ -150,7 +150,7 @@ export function TopLeftNavItems({
       items={menuItems}
       style={{
         display: 'flex',
-        flexDirection: !mobile ? 'row' : 'column',
+        flexDirection: desktop ? 'row' : 'column',
       }}
     />
   )

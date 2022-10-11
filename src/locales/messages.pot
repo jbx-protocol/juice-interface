@@ -2066,6 +2066,9 @@ msgstr ""
 msgid "Project tokens are not ERC-20 tokens by default. Once you deploy your project, you can issue an ERC-20 for your holders to claim. This is optional."
 msgstr ""
 
+msgid "Project upgrades"
+msgstr ""
+
 msgid "Project {name} will be available soon! Try refreshing the page shortly."
 msgstr ""
 

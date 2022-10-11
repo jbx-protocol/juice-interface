@@ -1145,9 +1145,6 @@ msgstr ""
 msgid "Edit tracked assets"
 msgstr ""
 
-msgid "Empty Step"
-msgstr ""
-
 msgid "Enable unclaimed token spending"
 msgstr ""
 
@@ -1260,6 +1257,9 @@ msgid "Fund anything."
 msgstr ""
 
 msgid "Funding"
+msgstr ""
+
+msgid "Funding Configuration"
 msgstr ""
 
 msgid "Funding Cycle"
@@ -1737,6 +1737,9 @@ msgid "My holdings"
 msgstr ""
 
 msgid "My projects"
+msgstr ""
+
+msgid "NFT Rewards"
 msgstr ""
 
 msgid "NFT Rewards <0/>"
@@ -2351,6 +2354,9 @@ msgstr ""
 msgid "Restricted actions"
 msgstr ""
 
+msgid "Review & Deploy"
+msgstr ""
+
 msgid "Review and confirm stake"
 msgstr ""
 
@@ -2358,6 +2364,9 @@ msgid "Review and deploy"
 msgstr ""
 
 msgid "Review and launch funding cycle"
+msgstr ""
+
+msgid "Review your project data below. Once launched, your first funding cycle can't be changed. You can reconfigure upcoming funding cycles according to your project's reconfiguration rules."
 msgstr ""
 
 msgid "Reward contributors with NFT's."

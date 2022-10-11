@@ -37,6 +37,7 @@ import { featureFlagEnabled } from 'utils/featureFlags'
 import { reloadWindow } from 'utils/windowUtils'
 
 import RichButton from 'components/RichButton'
+import AddERC20ToWalletButton from 'components/v2v3/V2V3Project/V2V3ManageTokensSection/AddERC20ToWalletButton'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { VeNftContext } from 'contexts/veNftContext'
@@ -178,6 +179,7 @@ export default function V2ManageTokensSection() {
                     <div>
                       {tokenSymbol} (
                       <FormattedAddress address={tokenAddress} />)
+                      <AddERC20ToWalletButton />
                     </div>
                   </div>
                 </Descriptions.Item>

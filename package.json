@@ -63,6 +63,7 @@
     "@lingui/detect-locale": "^3.13.0",
     "@lingui/macro": "^3.13.0",
     "@lingui/react": "^3.13.0",
+    "@metamask/providers": "^10.0.0",
     "@pinata/sdk": "^1.1.23",
     "@reduxjs/toolkit": "^1.6.2",
     "@sentry/react": "^6.18.2",

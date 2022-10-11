@@ -1,5 +1,5 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
-import { MenuKey, V2SettingsPageKey, V2VeNftPageKey } from 'models/menu-keys'
+import { MenuKey, V2V3SettingsPageKey, V2VeNftPageKey } from 'models/menu-keys'
 import { NextRouter } from 'next/router'
 
 export const v2v3ProjectRoute = ({
@@ -20,7 +20,7 @@ export function helpPagePath(path: string): string {
 }
 
 export const settingsPagePath = (
-  settingsPage: V2SettingsPageKey,
+  settingsPage: V2V3SettingsPageKey,
   {
     projectId,
     handle,

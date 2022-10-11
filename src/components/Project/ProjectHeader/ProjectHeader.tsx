@@ -169,7 +169,9 @@ export function ProjectHeader({
                 Owned by <FormattedAddress address={projectOwnerAddress} />
               </Trans>
             </span>
-            {!gnosisSafeLoading && gnosisSafe && <GnosisSafeBadge />}
+            {!gnosisSafeLoading && gnosisSafe && (
+              <GnosisSafeBadge href={`${window.location.href}/safe`} />
+            )}
           </div>
         )}
       </div>

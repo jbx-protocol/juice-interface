@@ -7,6 +7,10 @@
   background: unset !important;
 }
 
+.ant-menu-inline .ant-menu-item {
+  width: auto;
+}
+
 .ant-menu-submenu-title {
   color: var(--text-primary) !important;
   font-weight: 600;
@@ -62,8 +66,7 @@
 
 .ant-menu,
 .ant-menu-item,
-.ant-menu-item > a
-.ant-menu-item a {
+.ant-menu-item > a .ant-menu-item a {
   color: var(--text-primary);
   background: transparent;
   border: none;
@@ -78,9 +81,13 @@
 }
 
 .ant-menu.ant-menu-dark {
-  background-color: transparent
+  background-color: transparent;
 }
 
 .ant-menu-light .ant-menu-item-active {
-  color: var(--text-primary)
+  color: var(--text-primary);
+}
+
+ul.ant-dropdown-menu.ant-dropdown-menu-root.ant-dropdown-menu-vertical.ant-dropdown-menu {
+  margin-top: -4px !important;
 }

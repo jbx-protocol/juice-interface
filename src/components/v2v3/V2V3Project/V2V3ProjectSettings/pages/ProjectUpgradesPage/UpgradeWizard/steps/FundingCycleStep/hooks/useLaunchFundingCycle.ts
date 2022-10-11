@@ -1,47 +1,21 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { EditingFundingCycleConfig } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/ReconfigureFundingCycleSettingsPage/hooks/editingFundingCycleConfig'
+import { getWeightArgument } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/ReconfigureFundingCycleSettingsPage/hooks/reconfigureFundingCycle'
+import { CV_V3 } from 'constants/cv'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
-import { useReconfigureV2V3FundingCycleTx } from 'hooks/v2v3/transactor/ReconfigureV2V3FundingCycleTx'
-import { revalidateProject } from 'lib/api/nextjs'
+import { useLoadV2V3Contract } from 'hooks/v2v3/LoadV2V3Contract'
+import { useLaunchFundingCyclesTx } from 'hooks/v2v3/transactor/LaunchFundingCyclesTx'
 import { CV2V3 } from 'models/cv'
+import { V2V3ContractName } from 'models/v2v3/contracts'
 import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton'
 import { useCallback, useContext, useState } from 'react'
-import { fromWad } from 'utils/format/formatNumber'
-import { WEIGHT_UNCHANGED, WEIGHT_ZERO } from 'utils/v2v3/fundingCycle'
-import { EditingFundingCycleConfig } from './editingFundingCycleConfig'
+import { revalidateProject } from 'utils/revalidateProject'
 
-/**
- * Return the value of the `weight` argument to send in the transaction.
- */
-export const getWeightArgument = ({
-  currentFundingCycleWeight,
-  newFundingCycleWeight,
-}: {
-  currentFundingCycleWeight: BigNumber
-  newFundingCycleWeight: BigNumber
-}): BigNumber => {
-  if (newFundingCycleWeight.eq(BigNumber.from(0))) {
-    // if desired weight is 0 (no tokens), send weight=1 to the contract
-    return BigNumber.from(WEIGHT_ZERO)
-  } else if (
-    parseInt(fromWad(newFundingCycleWeight)) ===
-    parseInt(fromWad(currentFundingCycleWeight))
-  ) {
-    // If the weight is unchanged, send weight=0 to the contract
-    return BigNumber.from(WEIGHT_UNCHANGED)
-  }
-
-  // else, return the new weight
-  return newFundingCycleWeight
-}
-
-export const useReconfigureFundingCycle = ({
+export const useLaunchFundingCycle = ({
   editingFundingCycleConfig,
-  memo,
 }: {
   editingFundingCycleConfig: EditingFundingCycleConfig
-  memo?: string
 }) => {
   const { fundingCycle } = useContext(V2V3ProjectContext)
   const { projectId, cv } = useContext(ProjectMetadataContext)
@@ -49,10 +23,18 @@ export const useReconfigureFundingCycle = ({
     nftRewards: { CIDs: nftRewardsCids },
   } = useContext(NftRewardsContext)
 
-  const [reconfigureTxLoading, setReconfigureTxLoading] =
+  const V3JBController = useLoadV2V3Contract({
+    cv: CV_V3,
+    contractName: V2V3ContractName.JBController,
+  })
+
+  const [launchFundingCycleTxLoading, setLaunchFundingCycleTxLoading] =
     useState<boolean>(false)
 
-  const reconfigureV2V3FundingCycleTx = useReconfigureV2V3FundingCycleTx()
+  // TODO(@aeolian) make sure this tx uses the V3 contract.
+  const launchFundingCycles = useLaunchFundingCyclesTx({
+    JBController: V3JBController,
+  })
 
   const {
     editingPayoutGroupedSplits,
@@ -60,19 +42,21 @@ export const useReconfigureFundingCycle = ({
     editingFundingCycleMetadata,
     editingFundingCycleData,
     editingFundAccessConstraints,
+    editingMustStartAtOrAfter,
   } = editingFundingCycleConfig
 
-  const reconfigureFundingCycle = useCallback(async () => {
-    setReconfigureTxLoading(true)
+  const launchFundingCycle = useCallback(async () => {
+    setLaunchFundingCycleTxLoading(true)
     if (
       !(
         fundingCycle &&
         editingFundingCycleData &&
         editingFundingCycleMetadata &&
-        editingFundAccessConstraints
+        editingFundAccessConstraints &&
+        projectId
       )
     ) {
-      setReconfigureTxLoading(false)
+      setLaunchFundingCycleTxLoading(false)
       throw new Error('Error deploying project.')
     }
 
@@ -89,8 +73,9 @@ export const useReconfigureFundingCycle = ({
       newFundingCycleWeight: editingFundingCycleData.weight,
     })
 
-    const txSuccessful = await reconfigureV2V3FundingCycleTx(
+    const txSuccessful = await launchFundingCycles(
       {
+        projectId,
         fundingCycleData: {
           ...editingFundingCycleData,
           weight,
@@ -101,7 +86,7 @@ export const useReconfigureFundingCycle = ({
           editingPayoutGroupedSplits,
           editingReservedTokensGroupedSplits,
         ],
-        memo,
+        mustStartAtOrAfter: editingMustStartAtOrAfter,
       },
       {
         onDone() {
@@ -116,27 +101,30 @@ export const useReconfigureFundingCycle = ({
               projectId: String(projectId),
             })
           }
-          setReconfigureTxLoading(false)
+          setLaunchFundingCycleTxLoading(false)
         },
       },
     )
 
     if (!txSuccessful) {
-      setReconfigureTxLoading(false)
+      setLaunchFundingCycleTxLoading(false)
     }
   }, [
     editingFundingCycleData,
     editingFundingCycleMetadata,
     editingFundAccessConstraints,
-    reconfigureV2V3FundingCycleTx,
+    editingMustStartAtOrAfter,
+    launchFundingCycles,
     editingPayoutGroupedSplits,
     editingReservedTokensGroupedSplits,
     nftRewardsCids,
     fundingCycle,
-    memo,
     projectId,
     cv,
   ])
 
-  return { reconfigureLoading: reconfigureTxLoading, reconfigureFundingCycle }
+  return {
+    launchFundingCycleLoading: launchFundingCycleTxLoading,
+    launchFundingCycle,
+  }
 }

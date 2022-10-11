@@ -33,6 +33,7 @@ const ProgressWithOverflow = ({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+
   return (
     <div
       style={{ display: 'flex', alignItems: 'center', paddingBottom: 8 }}

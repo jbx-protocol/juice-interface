@@ -24,8 +24,8 @@ const V2_GOERLI_CONTRACT_ADDRESSES: { [k in V2V3ContractName]?: string } = {
  */
 const V2_CONTRACT_ABI_OVERRIDES: {
   [k in V2V3ContractName]?: {
-    filename: string
     version: string
+    filename?: string
     addresses?: {
       [k in NetworkName]?: string
     }
@@ -41,7 +41,6 @@ const V2_CONTRACT_ABI_OVERRIDES: {
   },
   JBETHERC20ProjectPayerDeployer: {
     version: 'latest',
-    filename: 'JBETHERC20ProjectPayerDeployer',
     /**
      * This deployment of the JBETHERC20ProjectPayerDeployer has slightly different
      * internals to the one in the contracts-v2-latest package.

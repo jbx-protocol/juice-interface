@@ -14,7 +14,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useContext, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
-import { useEditingProjectData } from './hooks/editingProjectData'
+import { useEditingFundingCycleConfig } from './hooks/editingFundingCycleConfig'
 import { useFundingHasSavedChanges } from './hooks/fundingHasSavedChanges'
 import { useInitialEditingData } from './hooks/initialEditingData'
 import { useReconfigureFundingCycle } from './hooks/reconfigureFundingCycle'
@@ -57,20 +57,19 @@ export function V2V3ReconfigureFundingCycleForm() {
     useState<boolean>(false)
 
   const { initialEditingData } = useInitialEditingData({ visible: true })
-  const editingProjectData = useEditingProjectData()
+  const editingFundingCycleConfig = useEditingFundingCycleConfig()
   const {
     fundingHasSavedChanges,
     fundingDrawerHasSavedChanges,
     tokenDrawerHasSavedChanges,
     rulesDrawerHasSavedChanges,
-    nftDrawerHasSavedChanges,
   } = useFundingHasSavedChanges({
-    editingProjectData,
+    editingFundingCycleConfig,
     initialEditingData,
   })
 
   const { reconfigureLoading, reconfigureFundingCycle } =
-    useReconfigureFundingCycle({ editingProjectData, memo })
+    useReconfigureFundingCycle({ editingFundingCycleConfig, memo })
 
   const closeReconfigureDrawer = () => {
     setFundingDrawerVisible(false)
@@ -146,14 +145,18 @@ export function V2V3ReconfigureFundingCycleForm() {
           <Trans>Review and deploy</Trans>
         </h3>
         <ReconfigurePreview
-          payoutSplits={editingProjectData.editingPayoutGroupedSplits.splits}
-          reserveSplits={
-            editingProjectData.editingReservedTokensGroupedSplits.splits
+          payoutSplits={
+            editingFundingCycleConfig.editingPayoutGroupedSplits.splits
           }
-          fundingCycleMetadata={editingProjectData.editingFundingCycleMetadata}
-          fundingCycleData={editingProjectData.editingFundingCycleData}
+          reserveSplits={
+            editingFundingCycleConfig.editingReservedTokensGroupedSplits.splits
+          }
+          fundingCycleMetadata={
+            editingFundingCycleConfig.editingFundingCycleMetadata
+          }
+          fundingCycleData={editingFundingCycleConfig.editingFundingCycleData}
           fundAccessConstraints={
-            editingProjectData.editingFundAccessConstraints
+            editingFundingCycleConfig.editingFundAccessConstraints
           }
         />
 

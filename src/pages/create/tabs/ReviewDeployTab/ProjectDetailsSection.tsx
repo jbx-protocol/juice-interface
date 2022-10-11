@@ -1,5 +1,6 @@
 import { t, Trans } from '@lingui/macro'
-import { Col, Row, Statistic } from 'antd'
+import { Col, Row, Space, Statistic } from 'antd'
+import Callout from 'components/Callout'
 import ProjectLogo from 'components/ProjectLogo'
 import TooltipLabel from 'components/TooltipLabel'
 import { useAppSelector } from 'hooks/AppSelector'
@@ -14,13 +15,14 @@ export default function ProjectDetailsSection() {
   const { projectMetadata } = useAppSelector(state => state.editingV2Project)
 
   return (
-    <div style={{ marginBottom: '2rem' }}>
+    <Space direction="vertical" style={{ marginBottom: '2rem', width: '100%' }}>
       <h2 style={{ marginBottom: 0 }}>
         <Trans>Project details</Trans>
       </h2>
-      <p>
+      <Callout>
         <Trans>Project details can be edited at any time.</Trans>
-      </p>
+      </Callout>
+
       <Row gutter={rowGutter} style={{ marginBottom: 30 }}>
         <Col md={6} xs={12}>
           <Statistic title={t`Name`} value={orEmpty(projectMetadata.name)} />
@@ -79,6 +81,6 @@ export default function ProjectDetailsSection() {
           />
         </Col>
       </Row>
-    </div>
+    </Space>
   )
 }

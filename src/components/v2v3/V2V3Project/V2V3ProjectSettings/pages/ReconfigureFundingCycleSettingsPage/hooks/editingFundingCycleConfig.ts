@@ -15,21 +15,23 @@ import {
 } from 'models/v2v3/fundingCycle'
 import { NftRewardsData } from 'redux/slices/editingV2Project'
 
-export interface EditingProjectData {
+export interface EditingFundingCycleConfig {
   editingPayoutGroupedSplits: ETHPayoutGroupedSplits
   editingReservedTokensGroupedSplits: ReservedTokensGroupedSplits
   editingFundingCycleMetadata: Omit<V2V3FundingCycleMetadata, 'version'>
   editingFundingCycleData: V2V3FundingCycleData
   editingFundAccessConstraints: V2V3FundAccessConstraint[]
   editingNftRewards: NftRewardsData | undefined
+  editingMustStartAtOrAfter: string
 }
 
-export const useEditingProjectData = () => {
+export const useEditingFundingCycleConfig = (): EditingFundingCycleConfig => {
   // Gets values from the redux state to be used in the modal drawer fields
   const {
     payoutGroupedSplits: editingPayoutGroupedSplits,
     reservedTokensGroupedSplits: editingReservedTokensGroupedSplits,
     nftRewards: editingNftRewards,
+    mustStartAtOrAfter: editingMustStartAtOrAfter,
   } = useAppSelector(state => state.editingV2Project)
   const editingFundingCycleMetadata =
     useEditingV2V3FundingCycleMetadataSelector()
@@ -44,5 +46,6 @@ export const useEditingProjectData = () => {
     editingFundingCycleData,
     editingFundAccessConstraints,
     editingNftRewards,
+    editingMustStartAtOrAfter,
   }
 }

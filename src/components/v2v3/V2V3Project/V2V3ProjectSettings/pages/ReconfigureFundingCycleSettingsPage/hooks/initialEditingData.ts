@@ -38,8 +38,11 @@ export interface InitialEditingData {
   nftRewards: NftRewardsData | undefined
 }
 
-// This hook loads data from project context into the redux state
-export const useInitialEditingData = ({ visible }: { visible?: boolean }) => {
+export const useInitialEditingData = ({
+  visible,
+}: {
+  visible?: boolean
+}): { initialEditingData: InitialEditingData | undefined } => {
   const { contracts } = useContext(V2V3ContractsContext)
   const {
     primaryETHTerminal,

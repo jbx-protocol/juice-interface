@@ -77,8 +77,8 @@ const V1ReconfigureUpcomingMessage = ({
     // If duration is unset/0, changes take effect immediately to current FC
     return (
       <Trans>
-        You don't have a funding cycle duration. Changes you make will take
-        effect immediately.
+        Your project's current funding cycle has no duration. Changes you make
+        below will take effect immediately.
       </Trans>
     )
   } else if (ballotStrategyLength === undefined) {

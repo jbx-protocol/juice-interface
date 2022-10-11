@@ -1,6 +1,5 @@
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
-import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
 
 import { ThemeContext } from 'contexts/themeContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
@@ -11,6 +10,7 @@ import { formatHistoricalDate } from 'utils/format/formatDate'
 import { Trans } from '@lingui/macro'
 import { smallHeaderStyle } from 'components/activityEventElems/styles'
 import ETHAmount from 'components/currency/ETHAmount'
+import ActivityAddressLabel from 'components/v1/V1Project/ProjectActivity/ActivityAddressLabel'
 
 export default function TapEventElem({
   event,
@@ -115,16 +115,7 @@ export default function TapEventElem({
               fontSize: '0.8rem',
             }}
           >
-            <div style={{ fontWeight: 500 }}>
-              {e.modProjectId?.gt(0) ? (
-                <span>
-                  <V1ProjectHandle projectId={e.modProjectId} />
-                </span>
-              ) : (
-                <FormattedAddress address={e.modBeneficiary} />
-              )}
-              :
-            </div>
+            <ActivityAddressLabel e={e} />
 
             <div style={{ color: colors.text.secondary }}>
               <ETHAmount amount={e.modCut} />

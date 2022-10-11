@@ -6,12 +6,9 @@ const { Step } = Steps
 const STEPS = [FundingCycleStep]
 
 export function UpgradeWizard() {
-  const [currentStep] = useState<number>(1)
+  const [currentStep] = useState<number>(0)
 
-  const CurrentStepContent = useMemo(
-    () => STEPS[currentStep - 1],
-    [currentStep],
-  )
+  const CurrentStepContent = useMemo(() => STEPS[currentStep], [currentStep])
 
   return (
     <Row gutter={40}>

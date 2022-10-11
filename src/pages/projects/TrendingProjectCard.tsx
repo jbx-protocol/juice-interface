@@ -1,24 +1,20 @@
+import * as constants from '@ethersproject/constants'
+import { Plural, t, Trans } from '@lingui/macro'
+import { Skeleton } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
 import Loading from 'components/Loading'
 import ProjectLogo from 'components/ProjectLogo'
-
-import { Plural, t, Trans } from '@lingui/macro'
-
-import * as constants from '@ethersproject/constants'
+import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
+import V2V3ProjectHandle from 'components/v2v3/shared/V2V3ProjectHandle'
+import { CV_V2, CV_V3 } from 'constants/cv'
+import { trendingWindowDays } from 'constants/trendingWindowDays'
 import { ThemeContext } from 'contexts/themeContext'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { Project } from 'models/subgraph-entities/vX/project'
-import { CSSProperties, useContext, useMemo } from 'react'
-import { getTerminalVersion } from 'utils/v1/terminals'
-
 import Link from 'next/link'
-
-import { Skeleton } from 'antd'
-
+import { CSSProperties, useContext, useMemo } from 'react'
 import { v2v3ProjectRoute } from 'utils/routes'
-
-import { CV_V2, CV_V3 } from 'constants/cv'
-import { trendingWindowDays } from 'constants/trendingWindowDays'
+import { getTerminalVersion } from 'utils/v1/terminals'
 
 export default function TrendingProjectCard({
   project,
@@ -158,26 +154,14 @@ export default function TrendingProjectCard({
 
               {size === 'sm' ? null : (
                 <div>
-                  {project.handle && (
-                    <span
-                      style={{
-                        color: colors.text.primary,
-                        fontWeight: 500,
-                        marginRight: 10,
-                      }}
-                    >
-                      @{project.handle}
-                    </span>
-                  )}
-                  <span
-                    style={{
-                      color: colors.text.tertiary,
-                      fontSize: '0.7rem',
-                      fontWeight: 500,
-                    }}
-                  >
-                    V{terminalVersion ?? project.cv}
-                  </span>
+                  <V2V3ProjectHandle
+                    projectId={project.projectId}
+                    handle={project.handle}
+                  />{' '}
+                  <ProjectVersionBadge
+                    size="small"
+                    versionText={`V${terminalVersion ?? project.cv}`}
+                  />
                 </div>
               )}
 

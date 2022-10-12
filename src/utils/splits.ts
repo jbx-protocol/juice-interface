@@ -83,8 +83,10 @@ export const getProjectOwnerRemainderSplit = (
  * (Outgoing Split objects have percent and lockedUntil as BigNumbers)
  */
 export const formatOutgoingSplits = (splits: OutgoingSplit[]): Split[] => {
-  return splits.map(
-    (split: OutgoingSplit) =>
-      ({ ...split, percent: split.percent.toNumber() } as Split),
+  return (
+    splits?.map(
+      (split: OutgoingSplit) =>
+        ({ ...split, percent: split.percent.toNumber() } as Split),
+    ) ?? []
   )
 }

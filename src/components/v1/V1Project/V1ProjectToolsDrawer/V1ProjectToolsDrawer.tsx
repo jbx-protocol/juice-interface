@@ -30,6 +30,9 @@ export function V1ProjectToolsDrawer({
   const OwnerTools = (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
       <section>
+        <h3>
+          <Trans>Transfer ownership</Trans>
+        </h3>
         <TransferOwnershipForm
           ownerAddress={owner}
           useTransferProjectOwnershipTx={useSafeTransferFromTx}
@@ -38,7 +41,12 @@ export function V1ProjectToolsDrawer({
 
       <Divider />
 
-      <ArchiveV1Project setUriTx={setUriTx} />
+      <section>
+        <h3>
+          <Trans>Archive project</Trans>
+        </h3>
+        <ArchiveV1Project setUriTx={setUriTx} />
+      </section>
     </Space>
   )
 

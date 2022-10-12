@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Space } from 'antd'
+import { Button, Space, Statistic } from 'antd'
 import axios from 'axios'
 import Callout from 'components/Callout'
 import { CV_V1, CV_V1_1, CV_V2, CV_V3 } from 'constants/cv'
@@ -14,7 +14,7 @@ import { emitErrorNotification } from 'utils/notifications'
 import { revalidateProject } from 'utils/revalidateProject'
 import { reloadWindow } from 'utils/windowUtils'
 
-export default function ArchiveProject({
+export function ArchiveProject({
   storeCidTx,
   owner,
   handle,
@@ -97,17 +97,39 @@ export default function ArchiveProject({
 
   if (projectMetadata?.archived) {
     return (
-      <section>
-        <h3>
-          <Trans>Unarchive project</Trans>
-        </h3>
+      <Space direction="vertical" size="middle">
+        <Statistic
+          title={<Trans>Project state</Trans>}
+          valueRender={() => <Trans>Archived</Trans>}
+        />
+
+        <div>
+          <p>
+            <Trans>Archiving your project will mean the following:</Trans>
+          </p>
+
+          <ul>
+            <Space direction="vertical">
+              <li>
+                <Trans>Your project will appear as 'active'.</Trans>
+              </li>
+              <li>
+                <Trans>
+                  Your project can receive payments through the juicebox.money
+                  app.
+                </Trans>
+              </li>
+            </Space>
+          </ul>
+        </div>
+
         <p>
           <Trans>
-            Your project will immediately appear active on the juicebox.money
-            app. Please allow a few days for it to appear in the "active"
-            projects list on the Projects page.
+            Allow a few days for your project to appear in the "active" projects
+            list on the Projects page.
           </Trans>
         </p>
+
         <Button
           onClick={setArchived(false)}
           loading={isLoadingArchive}
@@ -118,50 +140,74 @@ export default function ArchiveProject({
             <Trans>Unarchive project</Trans>
           </span>
         </Button>
-      </section>
+      </Space>
     )
   }
 
   return (
-    <section>
-      <h3>
-        <Trans>Archive project</Trans>
-      </h3>
-      <Space direction="vertical" size="middle">
+    <Space direction="vertical" size="middle">
+      <Statistic
+        title={<Trans>Project state</Trans>}
+        valueRender={() => <Trans>Active</Trans>}
+      />
+
+      <div>
+        <p>
+          <Trans>Archiving your project will mean the following:</Trans>
+        </p>
+
+        <ul>
+          <Space direction="vertical">
+            <li>
+              <Trans>Your project will appear as 'archived'.</Trans>
+            </li>
+            <li>
+              <Trans>
+                Your project can't receive payments through the juicebox.money
+                app.
+              </Trans>
+            </li>
+            <li>
+              {canTakePaymentsWhenArchived ? (
+                <Trans>
+                  Your project can still receive payments directly through the
+                  Juicebox protocol contracts.
+                </Trans>
+              ) : (
+                <Trans>
+                  Unless payments are paused in your funding cycle settings,
+                  your project can still receive payments directly through the
+                  Juicebox protocol contracts.
+                </Trans>
+              )}
+            </li>
+          </Space>
+        </ul>
+      </div>
+
+      <div>
         <p>
           <Trans>
-            Your project will appear archived, and won't be able to receive
-            payments through the juicebox.money app. You can unarchive a project
-            at any time. Allow a few days for your project to appear under the
-            "archived" filter on the Projects page.
+            Allow a few days for your project to appear in the "archived"
+            projects list on the Projects page.
           </Trans>
         </p>
 
         <Callout>
-          {canTakePaymentsWhenArchived ? (
-            <Trans>
-              Your project can still receive payments directly through the
-              Juicebox protocol contracts.
-            </Trans>
-          ) : (
-            <Trans>
-              Unless payments are paused in your funding cycle settings, your
-              project can still receive payments directly through the Juicebox
-              protocol contracts.
-            </Trans>
-          )}
+          <Trans>You can unarchive your project at any time.</Trans>
         </Callout>
-        <Button
-          onClick={setArchived(true)}
-          loading={isLoadingArchive}
-          size="small"
-          type="primary"
-        >
-          <span>
-            <Trans>Archive project</Trans>
-          </span>
-        </Button>
-      </Space>
-    </section>
+      </div>
+
+      <Button
+        onClick={setArchived(true)}
+        loading={isLoadingArchive}
+        size="small"
+        type="primary"
+      >
+        <span>
+          <Trans>Archive project</Trans>
+        </span>
+      </Button>
+    </Space>
   )
 }

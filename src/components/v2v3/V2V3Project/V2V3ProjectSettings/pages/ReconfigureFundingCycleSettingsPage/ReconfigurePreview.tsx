@@ -109,7 +109,7 @@ export default function ReconfigurePreview({
     ) ?? '0'
 
   return (
-    <Space direction="vertical" size="middle">
+    <Space direction="vertical" size="middle" style={{ width: '100%' }}>
       <Row gutter={gutter}>
         <Col md={12} sm={12}>
           <DurationStatistic duration={fundingCycle.duration} />

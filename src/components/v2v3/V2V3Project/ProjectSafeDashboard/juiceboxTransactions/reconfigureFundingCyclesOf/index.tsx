@@ -2,10 +2,7 @@ import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
 import { ThemeContext } from 'contexts/themeContext'
 import { CSSProperties, useContext, useState } from 'react'
-import {
-  SafeTransactionComponentProps,
-  safeTransactionRowStyle,
-} from '../../SafeTransaction'
+import { SafeTransactionComponentProps } from '../../SafeTransaction'
 import { TransactionHeader } from '../../TransactionHeader'
 import { ReconfigureRichPreview } from './ReconfigurationRichPreview'
 
@@ -21,12 +18,8 @@ export function ReconfigureFundingCyclesOfTransaction({
   const [expanded, setExpanded] = useState<boolean>(selected)
 
   const rowStyle: CSSProperties = {
-    ...safeTransactionRowStyle,
     color: colors.text.primary,
-  }
-
-  if (selected) {
-    rowStyle.border = `1px solid ${colors.stroke.action.primary}`
+    marginBottom: '1.5rem',
   }
 
   return (
@@ -35,7 +28,6 @@ export function ReconfigureFundingCyclesOfTransaction({
       onClick={() => {
         setExpanded(!expanded)
       }}
-      className="clickable-border"
       id={`${transaction.safeTxHash}`}
     >
       <div style={{ display: 'flex', width: '100%' }}>
@@ -44,7 +36,7 @@ export function ReconfigureFundingCyclesOfTransaction({
           title={t`Reconfigure funding cycle`}
           isPastTransaction={isPastTransaction}
         />
-        <div style={{ marginLeft: 10 }}>
+        <div style={{ marginLeft: 10, color: colors.text.tertiary }}>
           {expanded ? <UpOutlined /> : <DownOutlined />}
         </div>
       </div>

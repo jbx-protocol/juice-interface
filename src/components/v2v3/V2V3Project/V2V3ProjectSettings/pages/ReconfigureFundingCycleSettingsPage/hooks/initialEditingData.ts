@@ -1,4 +1,14 @@
+import {
+  ETH_PAYOUT_SPLIT_GROUP,
+  RESERVED_TOKEN_SPLIT_GROUP,
+} from 'constants/splits'
+import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { useAppDispatch } from 'hooks/AppDispatch'
 import useProjectDistributionLimit from 'hooks/v2v3/contractReader/ProjectDistributionLimit'
+import useProjectQueuedFundingCycle from 'hooks/v2v3/contractReader/ProjectQueuedFundingCycle'
 import useProjectSplits from 'hooks/v2v3/contractReader/ProjectSplits'
 import { Split } from 'models/splits'
 import { useContext, useEffect, useState } from 'react'
@@ -13,21 +23,6 @@ import {
   serializeV2V3FundingCycleMetadata,
 } from 'utils/v2v3/serializers'
 
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
-
-import useProjectQueuedFundingCycle from 'hooks/v2v3/contractReader/ProjectQueuedFundingCycle'
-
-import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
-
-import { useAppDispatch } from 'hooks/AppDispatch'
-
-import {
-  ETH_PAYOUT_SPLIT_GROUP,
-  RESERVED_TOKEN_SPLIT_GROUP,
-} from 'constants/splits'
-import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-
 export interface InitialEditingData {
   fundAccessConstraints: SerializedV2V3FundAccessConstraint[]
   fundingCycleData: SerializedV2V3FundingCycleData
@@ -38,20 +33,8 @@ export interface InitialEditingData {
   }
 }
 
-export const useInitialEditingData = (visible: boolean) => {
-  const [initialEditingData, setInitialEditingData] = useState<{
-    fundAccessConstraints: SerializedV2V3FundAccessConstraint[]
-    fundingCycleData: SerializedV2V3FundingCycleData
-    fundingCycleMetadata: SerializedV2V3FundingCycleMetadata
-    payoutGroupedSplits: {
-      payoutGroupedSplits: Split[]
-      reservedTokensGroupedSplits: Split[]
-    }
-  }>()
-
+export const useInitialEditingData = ({ visible }: { visible?: boolean }) => {
   const { contracts } = useContext(V2V3ContractsContext)
-  const dispatch = useAppDispatch()
-
   const {
     primaryETHTerminal,
     fundingCycle,
@@ -63,12 +46,24 @@ export const useInitialEditingData = (visible: boolean) => {
   } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
+  const [initialEditingData, setInitialEditingData] = useState<{
+    fundAccessConstraints: SerializedV2V3FundAccessConstraint[]
+    fundingCycleData: SerializedV2V3FundingCycleData
+    fundingCycleMetadata: SerializedV2V3FundingCycleMetadata
+    payoutGroupedSplits: {
+      payoutGroupedSplits: Split[]
+      reservedTokensGroupedSplits: Split[]
+    }
+  }>()
+
+  const dispatch = useAppDispatch()
+
   const { data: queuedFundingCycleResponse } = useProjectQueuedFundingCycle({
     projectId,
   })
-
   const [queuedFundingCycle, queuedFundingCycleMetadata] =
     queuedFundingCycleResponse ?? []
+
   const { data: queuedPayoutSplits } = useProjectSplits({
     projectId,
     splitGroup: ETH_PAYOUT_SPLIT_GROUP,
@@ -86,22 +81,19 @@ export const useInitialEditingData = (visible: boolean) => {
     configuration: queuedFundingCycle?.configuration.toString(),
     terminal: primaryETHTerminal,
   })
-
   const [queuedDistributionLimit, queuedDistributionLimitCurrency] =
     queuedDistributionLimitData ?? []
 
+  // Use data from the queued funding cycle (if it exists).
   const effectiveFundingCycle = queuedFundingCycle?.number.gt(0)
     ? queuedFundingCycle
     : fundingCycle
-
   const effectiveFundingCycleMetadata = queuedFundingCycle?.number.gt(0)
     ? queuedFundingCycleMetadata
     : fundingCycleMetadata
-
   const effectivePayoutSplits = queuedFundingCycle?.number.gt(0)
     ? queuedPayoutSplits
     : payoutSplits
-
   const effectiveReservedTokensSplits = queuedFundingCycle?.number.gt(0)
     ? queuedReservedTokensSplits
     : reservedTokensSplits

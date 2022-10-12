@@ -83,9 +83,7 @@ export default function FundingCycleTabContent({
             setTokenDrawerVisible(true)
             setTokenDrawerSeen(true)
           }}
-          description={
-            <Trans>Configure the dynamics of your project's token.</Trans>
-          }
+          description={<Trans>Configure your project's token.</Trans>}
           icon={
             tokenDrawerSeen ? (
               <CheckCircleFilled style={{ color: seenColor }} />

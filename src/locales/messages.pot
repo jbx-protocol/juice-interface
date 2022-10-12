@@ -659,13 +659,13 @@ msgstr ""
 msgid "Configure restrictions for your funding cycles."
 msgstr ""
 
-msgid "Configure the dynamics of your project's token."
-msgstr ""
-
 msgid "Configure which Juicebox V1 project you'd like to accept tokens for. Token holders of this V1 project will be able to swap their V1 tokens for V2 tokens."
 msgstr ""
 
 msgid "Configure your project's first funding cycle below."
+msgstr ""
+
+msgid "Configure your project's token."
 msgstr ""
 
 msgid "Configure {projectTitle}"
@@ -1007,9 +1007,6 @@ msgstr ""
 msgid "Distribution limit is infinite. <0>The project will control how all funds are distributed, and none can be redeemed by token holders.</0>"
 msgstr ""
 
-msgid "Distribution limit, duration and payouts"
-msgstr ""
-
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
 msgstr ""
 
@@ -1287,9 +1284,6 @@ msgid "History"
 msgstr ""
 
 msgid "Holders"
-msgstr ""
-
-msgid "Holdings"
 msgstr ""
 
 msgid "Hours"
@@ -1668,6 +1662,9 @@ msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
 msgstr ""
 
 msgid "My VeNFTs"
+msgstr ""
+
+msgid "My holdings"
 msgstr ""
 
 msgid "My projects"
@@ -2066,6 +2063,9 @@ msgstr ""
 msgid "Project tokens are not ERC-20 tokens by default. Once you deploy your project, you can issue an ERC-20 for your holders to claim. This is optional."
 msgstr ""
 
+msgid "Project upgrades"
+msgstr ""
+
 msgid "Project {name} will be available soon! Try refreshing the page shortly."
 msgstr ""
 
@@ -2280,6 +2280,9 @@ msgid "Restricted actions"
 msgstr ""
 
 msgid "Review and confirm stake"
+msgstr ""
+
+msgid "Review and deploy"
 msgstr ""
 
 msgid "Review and launch funding cycle"
@@ -2523,6 +2526,9 @@ msgid "Start raising funds"
 msgstr ""
 
 msgid "Start time (seconds, Unix time)"
+msgstr ""
+
+msgid "Start upgrade"
 msgstr ""
 
 msgid "Step 1. Add V1 token payment terminal"
@@ -3267,6 +3273,9 @@ msgid "Your project cannot receive direct payments while paused."
 msgstr ""
 
 msgid "Your project is funded across funding cycles. A funding cycle has a funding target and a duration. Your project's funding cycle configuration will depend on the kind of project you're starting."
+msgstr ""
+
+msgid "Your project is up to date!"
 msgstr ""
 
 msgid "Your project will appear archived, and won't be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Allow a few days for your project to appear under the \"archived\" filter on the Projects page."

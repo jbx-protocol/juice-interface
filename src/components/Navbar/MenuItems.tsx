@@ -1,11 +1,11 @@
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Dropdown, Menu, Space } from 'antd'
+import { Dropdown, Menu } from 'antd'
 import Link from 'next/link'
 import { CSSProperties, useEffect, useState } from 'react'
 
 import Logo from './Logo'
-import { navMenuItemStyles, topLeftNavStyles } from './navStyles'
+import { navMenuItemStyles } from './navStyles'
 
 import { resourcesMenuItems } from './constants'
 
@@ -17,10 +17,10 @@ const resourcesMenu = (
 )
 
 export function TopLeftNavItems({
-  mobile,
+  desktop,
   onClickMenuItems,
 }: {
-  mobile?: boolean
+  desktop?: boolean
   onClickMenuItems?: VoidFunction
 }) {
   const [resourcesOpen, setResourcesOpen] = useState<boolean>(false)
@@ -50,11 +50,11 @@ export function TopLeftNavItems({
     rel: 'noopener noreferrer',
   }
 
-  const desktopDropDown = !mobile ? (
+  const desktopDropDown = (
     <Dropdown
       overlay={resourcesMenu}
       overlayStyle={{ padding: 0 }}
-      open={resourcesOpen}
+      visible={resourcesOpen}
     >
       <div
         className="nav-menu-item hover-opacity"
@@ -72,29 +72,97 @@ export function TopLeftNavItems({
         )}
       </div>
     </Dropdown>
-  ) : null
+  )
+
+  const menuItems = desktop
+    ? [
+        {
+          key: 'index',
+          label: (
+            <Link href="/">
+              <a style={{ display: 'inline-block' }}>{<Logo />}</a>
+            </Link>
+          ),
+        },
+        {
+          key: 'projects',
+          label: (
+            <Link href="/projects">
+              <a {...menuItemProps}>{t`Projects`}</a>
+            </Link>
+          ),
+        },
+        {
+          key: 'docs',
+          label: (
+            <Link href="https://info.juicebox.money/">
+              <a {...externalMenuLinkProps}>{t`Docs`}</a>
+            </Link>
+          ),
+        },
+        {
+          key: 'blog',
+          label: (
+            <Link href="https://info.juicebox.money/blog">
+              <a {...externalMenuLinkProps}>{t`Blog`}</a>
+            </Link>
+          ),
+        },
+        {
+          key: 'resources',
+          label: desktopDropDown,
+        },
+      ]
+    : [
+        {
+          key: 'projects',
+          label: (
+            <Link href="/projects">
+              <a {...menuItemProps}>{t`Projects`}</a>
+            </Link>
+          ),
+        },
+        {
+          key: 'docs',
+          label: (
+            <Link href="https://info.juicebox.money/">
+              <a {...externalMenuLinkProps}>{t`Docs`}</a>
+            </Link>
+          ),
+        },
+        {
+          key: 'blog',
+          label: (
+            <Link href="https://info.juicebox.money/blog">
+              <a {...externalMenuLinkProps}>{t`Blog`}</a>
+            </Link>
+          ),
+        },
+        {
+          key: 'resources',
+          label: (
+            <Link href="">
+              <a
+                className="nav-menu-item hover-opacity"
+                style={{ ...navMenuItemStyles }}
+              >
+                {t`Resources`}
+              </a>
+            </Link>
+          ),
+          children: [...resourcesMenuItems(true)],
+        },
+      ]
 
   return (
-    <Space
-      size={mobile ? 0 : 'large'}
-      style={{ ...topLeftNavStyles }}
-      direction={mobile ? 'vertical' : 'horizontal'}
-    >
-      {!mobile && (
-        <Link href="/">
-          <a style={{ display: 'inline-block' }}>{<Logo />}</a>
-        </Link>
-      )}
-      <Link href="/projects">
-        <a {...menuItemProps}>{t`Projects`}</a>
-      </Link>
-      <Link href="https://info.juicebox.money/">
-        <a {...externalMenuLinkProps}>{t`Docs`}</a>
-      </Link>
-      <Link href="https://info.juicebox.money/blog">
-        <a {...externalMenuLinkProps}>{t`Blog`}</a>
-      </Link>
-      {desktopDropDown}
-    </Space>
+    <Menu
+      items={menuItems}
+      mode="inline"
+      style={{
+        display: 'flex',
+        flexDirection: desktop ? 'row' : 'column',
+        width: desktop ? 500 : 'auto',
+      }}
+    />
   )
 }

@@ -1,28 +1,24 @@
-import { Skeleton, Tooltip } from 'antd'
-
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
-import { ThemeContext } from 'contexts/themeContext'
-import { useProjectMetadata } from 'hooks/ProjectMetadata'
-import { Project } from 'models/subgraph-entities/vX/project'
-import { CSSProperties, useContext } from 'react'
-import { formatDate } from 'utils/format/formatDate'
-
-import { getTerminalVersion } from 'utils/v1/terminals'
-
 import { Trans } from '@lingui/macro'
-import useSubgraphQuery from 'hooks/SubgraphQuery'
-
-import Link from 'next/link'
-
-import { v2v3ProjectRoute } from 'utils/routes'
-
+import { Skeleton, Tooltip } from 'antd'
 import { CV_V1, CV_V1_1, CV_V2, CV_V3 } from 'constants/cv'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
+import { ThemeContext } from 'contexts/themeContext'
+import { useProjectMetadata } from 'hooks/ProjectMetadata'
+import useSubgraphQuery from 'hooks/SubgraphQuery'
+import { Project } from 'models/subgraph-entities/vX/project'
+import Link from 'next/link'
+import { CSSProperties, useContext } from 'react'
+import { formatDate } from 'utils/format/formatDate'
+import { v2v3ProjectRoute } from 'utils/routes'
+import { getTerminalVersion } from 'utils/v1/terminals'
 import ETHAmount from './currency/ETHAmount'
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'
+import { ProjectVersionBadge } from './ProjectVersionBadge'
+import V2V3ProjectHandle from './v2v3/shared/V2V3ProjectHandle'
 
 export type ProjectCardProject = Pick<
   Project,
@@ -36,6 +32,15 @@ export type ProjectCardProject = Pick<
   | 'cv'
 >
 
+const cardStyle: CSSProperties = {
+  display: 'flex',
+  position: 'relative',
+  alignItems: 'center',
+  whiteSpace: 'pre',
+  overflow: 'hidden',
+  padding: '25px 20px',
+}
+
 export default function ProjectCard({
   project,
 }: {
@@ -44,15 +49,6 @@ export default function ProjectCard({
   const {
     theme: { colors, radii },
   } = useContext(ThemeContext)
-
-  const cardStyle: CSSProperties = {
-    display: 'flex',
-    position: 'relative',
-    alignItems: 'center',
-    whiteSpace: 'pre',
-    overflow: 'hidden',
-    padding: '25px 20px',
-  }
 
   // Get ProjectCardProject object if this component was passed a projectId (bigNumber)
   const projectQuery: ProjectCardProject[] | undefined = useSubgraphQuery(
@@ -158,26 +154,14 @@ export default function ProjectCard({
             )}
 
             <div>
-              {_project?.handle && (
-                <span
-                  style={{
-                    color: colors.text.primary,
-                    fontWeight: 500,
-                    marginRight: 10,
-                  }}
-                >
-                  @{_project?.handle}
-                </span>
-              )}
-              <span
-                style={{
-                  color: colors.text.tertiary,
-                  fontSize: '0.7rem',
-                  fontWeight: 500,
-                }}
-              >
-                V{terminalVersion ?? _project.cv}
-              </span>
+              <V2V3ProjectHandle
+                projectId={_project?.projectId}
+                handle={_project.handle}
+              />{' '}
+              <ProjectVersionBadge
+                size="small"
+                versionText={`V${terminalVersion ?? _project.cv}`}
+              />
             </div>
 
             <div>

@@ -8,7 +8,7 @@ import { layouts } from 'constants/styles/layouts'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
-import { V2SettingsPageKey } from 'models/menu-keys'
+import { V2V3SettingsPageKey } from 'models/menu-keys'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
@@ -17,7 +17,9 @@ import { BackToProjectButton } from '../BackToProjectButton'
 
 type MenuItem = Required<MenuProps>['items'][number]
 
-export const V2SettingsPageKeyTitleMap: { [k in V2SettingsPageKey]: string } = {
+export const V2V3SettingsPageKeyTitleMap: {
+  [k in V2V3SettingsPageKey]: string
+} = {
   general: t`General`,
   projecthandle: t`Project handle`,
   reconfigurefc: t`Reconfigure Funding Cycle`,
@@ -27,6 +29,7 @@ export const V2SettingsPageKeyTitleMap: { [k in V2SettingsPageKey]: string } = {
   transferownership: t`Transfer ownership`,
   archiveproject: t`Archive project`,
   governance: t`Governance`,
+  upgrades: t`Project upgrades`,
 }
 
 function menuItem(
@@ -72,6 +75,9 @@ const items: MenuItem[] = [
       menuItem('Transfer ownership', 'transferownership'),
       menuItem('Archive project', 'archiveproject'),
       menuItem('Governance', 'governance'),
+      featureFlagEnabled(FEATURE_FLAGS.PROJECT_CONTRACT_UPDGRADES)
+        ? menuItem('Project upgrades', 'upgrades')
+        : null,
       featureFlagEnabled(FEATURE_FLAGS.V1_TOKEN_SWAP)
         ? menuItem('V1 token migration', 'v1tokenmigration')
         : null,
@@ -89,10 +95,10 @@ export function V2V3ProjectSettings() {
   const isOwner = useIsUserAddress(projectOwnerAddress)
 
   const canEditProjectHandle = isOwner && !isPreviewMode && !handle
-  const activeSettingsPage = router.query.page as V2SettingsPageKey
+  const activeSettingsPage = router.query.page as V2V3SettingsPageKey
 
   const handleMenuItemClick = (item: MenuItem) => {
-    const key = item?.key as V2SettingsPageKey | undefined
+    const key = item?.key as V2V3SettingsPageKey | undefined
     if (!key) return
 
     pushMenuContent(router, key)

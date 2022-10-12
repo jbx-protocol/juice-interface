@@ -260,6 +260,9 @@ msgstr ""
 msgid "AVAILABLE"
 msgstr ""
 
+msgid "Active"
+msgstr ""
+
 msgid "Activity"
 msgstr ""
 
@@ -374,6 +377,12 @@ msgstr ""
 msgid "Allocate reserved tokens to Ethereum addresses or Juicebox projects. Unallocated reserved tokens are sent to the project owner."
 msgstr ""
 
+msgid "Allow a few days for your project to appear in the \"active\" projects list on the Projects page."
+msgstr ""
+
+msgid "Allow a few days for your project to appear in the \"archived\" projects list on the Projects page."
+msgstr ""
+
 msgid "Allow minting tokens"
 msgstr ""
 
@@ -447,6 +456,9 @@ msgid "Archive project"
 msgstr ""
 
 msgid "Archived"
+msgstr ""
+
+msgid "Archiving your project will mean the following:"
 msgstr ""
 
 msgid "Are you sure you want to start over?"
@@ -2054,6 +2066,9 @@ msgstr ""
 msgid "Project page customizations"
 msgstr ""
 
+msgid "Project state"
+msgstr ""
+
 msgid "Project token"
 msgstr ""
 
@@ -3176,6 +3191,9 @@ msgstr ""
 msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
 msgstr ""
 
+msgid "You can unarchive your project at any time."
+msgstr ""
+
 msgid "You cannot redeem your tokens for ETH because this project has no overflow."
 msgstr ""
 
@@ -3266,7 +3284,13 @@ msgstr ""
 msgid "Your new payment address:"
 msgstr ""
 
+msgid "Your project can receive payments through the juicebox.money app."
+msgstr ""
+
 msgid "Your project can still receive payments directly through the Juicebox protocol contracts."
+msgstr ""
+
+msgid "Your project can't receive payments through the juicebox.money app."
 msgstr ""
 
 msgid "Your project cannot receive direct payments while paused."
@@ -3278,10 +3302,10 @@ msgstr ""
 msgid "Your project is up to date!"
 msgstr ""
 
-msgid "Your project will appear archived, and won't be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Allow a few days for your project to appear under the \"archived\" filter on the Projects page."
+msgid "Your project will appear as 'active'."
 msgstr ""
 
-msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
+msgid "Your project will appear as 'archived'."
 msgstr ""
 
 msgid "Your project will withhold all funds raised. Funds can be distributed to payout addresses you set, and the project owner will receive any unallocated funds. Your project will have no overflow, so token holders can't redeem their tokens for ETH."

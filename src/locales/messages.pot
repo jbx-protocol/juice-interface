@@ -2960,6 +2960,9 @@ msgstr ""
 msgid "Unarchive project"
 msgstr ""
 
+msgid "Unarchiving your project will mean the following:"
+msgstr ""
+
 msgid "Unavailable"
 msgstr ""
 

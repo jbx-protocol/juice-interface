@@ -105,7 +105,7 @@ export function ArchiveProject({
 
         <div>
           <p>
-            <Trans>Archiving your project will mean the following:</Trans>
+            <Trans>Unarchiving your project will mean the following:</Trans>
           </p>
 
           <ul>

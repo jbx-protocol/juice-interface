@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/macro'
 import { useExecutedSafeTransactions } from 'hooks/safe/ExecutedSafeTransaction'
 import { GnosisSafe, SafeTransactionType } from 'models/safe'
 import { getUniqueNonces } from 'utils/safe'
@@ -21,15 +22,22 @@ export function ExecutedSafeTransactionsListing({
     return <div style={{ marginTop: 20 }}>Loading...</div>
   }
 
+  if (!isLoading && !uniqueNonces.length) {
+    return (
+      <div>
+        <Trans>This Safe has no past transactions.</Trans>
+      </div>
+    )
+  }
+
   return (
     <>
       {uniqueNonces?.map((nonce: number, idx: number) => {
         const transactionsOfNonce: SafeTransactionType[] =
           executedSafeTransactions.filter(
-            (tx: SafeTransactionType) => tx.nonce === nonce && tx.dataDecoded,
+            (tx: SafeTransactionType) =>
+              tx.nonce === nonce && tx.dataDecoded && tx.isExecuted,
           )
-
-        if (!transactionsOfNonce.length) return
 
         return (
           <SafeNonceRow
@@ -37,6 +45,7 @@ export function ExecutedSafeTransactionsListing({
             nonce={nonce}
             transactions={transactionsOfNonce}
             safeThreshold={safe.threshold}
+            isHistory
             selectedTx={selectedTx}
           />
         )

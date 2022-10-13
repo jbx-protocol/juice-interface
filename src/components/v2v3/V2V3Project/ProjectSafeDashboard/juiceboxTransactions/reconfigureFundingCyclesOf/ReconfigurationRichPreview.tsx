@@ -77,8 +77,10 @@ export function ReconfigureRichPreview({
   const reservedTokensSplits = decodedData._groupedSplits?.[1]?.splits
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <div style={{ margin: '1rem 1.5rem 0' }}>
+    <div
+      style={{ display: 'flex', flexDirection: 'column', cursor: 'default' }}
+    >
+      <div style={{ margin: '0.5rem 1.5rem 0' }}>
         {decodedData._memo.length ? (
           <i>{decodedData._memo}</i>
         ) : (

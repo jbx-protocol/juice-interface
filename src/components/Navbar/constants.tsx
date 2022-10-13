@@ -1,9 +1,12 @@
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Dropdown } from 'antd'
+import { Button, Dropdown } from 'antd'
 import Link from 'next/link'
 import { CSSProperties } from 'react'
+import Account from './Account'
 import Logo from './Logo'
+import ThemePickerMobile from './Mobile/ThemePickerMobile'
+import NavLanguageSelector from './NavLanguageSelector'
 import { navMenuItemStyles } from './navStyles'
 
 type ResourceItem = {
@@ -157,5 +160,68 @@ export const desktopMenuItems = ({
         }}
       />
     ),
+  },
+]
+
+export const mobileNavItems = ({
+  isConnected,
+  disconnect,
+  collapseNav,
+}: {
+  isConnected: boolean
+  disconnect: () => void
+  collapseNav: () => void
+}) => [
+  {
+    key: 'projects',
+    label: (
+      <Link href="/projects">
+        <a {...{ menuItemProps, collapseNav }}>{t`Projects`}</a>
+      </Link>
+    ),
+  },
+  {
+    key: 'docs',
+    label: (
+      <Link href="https://info.juicebox.money/">
+        <a {...{ ...externalMenuLinkProps, collapseNav }}>{t`Docs`}</a>
+      </Link>
+    ),
+  },
+  {
+    key: 'blog',
+    label: (
+      <Link href="https://info.juicebox.money/blog">
+        <a {...{ ...externalMenuLinkProps, collapseNav }}>{t`Blog`}</a>
+      </Link>
+    ),
+  },
+  {
+    key: 'resources',
+    label: (
+      <Link href="">
+        <a
+          className="nav-menu-item hover-opacity"
+          style={{ ...navMenuItemStyles }}
+        >
+          {t`Resources`}
+        </a>
+      </Link>
+    ),
+    children: [...resourcesMenuItems(true)],
+  },
+  { key: 'language-picker', label: <NavLanguageSelector /> },
+  { key: 'theme-picker', label: <ThemePickerMobile /> },
+  {
+    key: 'account',
+    label: <Account />,
+  },
+  {
+    key: 'disconnect',
+    label: isConnected ? (
+      <Button onClick={disconnect} style={{ marginTop: 10 }} block>
+        <Trans>Disconnect</Trans>
+      </Button>
+    ) : null,
   },
 ]

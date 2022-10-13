@@ -2,6 +2,7 @@ import { ActionCreatorWithPayload } from '@reduxjs/toolkit'
 import { FormInstance } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import { useAppDispatch } from 'hooks/AppDispatch'
+import isEqual from 'lodash/isEqual'
 import { useEffect } from 'react'
 
 /**
@@ -31,7 +32,7 @@ export const useFormDispatchWatch = <
   useEffect(() => {
     if (ignoreUndefined && fieldValue === undefined) return
     const v = formatter(fieldValue)
-    if (v === currentValue) return
+    if (isEqual(v, currentValue)) return
     dispatch(dispatchFunction(v))
   }, [
     currentValue,

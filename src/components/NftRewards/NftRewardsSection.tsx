@@ -99,20 +99,23 @@ export function NftRewardsSection() {
         <RewardTiersLoadingSkeleton />
       ) : (
         <Row style={{ marginTop: '15px' }} gutter={isMobile ? 8 : 24}>
-          {rewardTiers?.map((rewardTier, idx) => (
-            <Col
-              md={8}
-              xs={8}
-              key={`${rewardTier.contributionFloor}-${rewardTier.name}`}
-            >
-              <RewardTier
-                rewardTier={rewardTier}
-                rewardTierUpperLimit={rewardTiers[idx + 1]?.contributionFloor}
-                isSelected={idx === selectedIndex}
-                onClick={() => handleSelected(rewardTier, idx)}
-              />
-            </Col>
-          ))}
+          {rewardTiers
+            ?.sort((a, b) => a.contributionFloor - b.contributionFloor)
+            .map((rewardTier, idx) => (
+              <Col
+                md={8}
+                xs={8}
+                key={`${rewardTier.contributionFloor}-${rewardTier.name}`}
+              >
+                <RewardTier
+                  tierRank={idx + 1}
+                  rewardTier={rewardTier}
+                  rewardTierUpperLimit={rewardTiers[idx + 1]?.contributionFloor}
+                  isSelected={idx === selectedIndex}
+                  onClick={() => handleSelected(rewardTier, idx)}
+                />
+              </Col>
+            ))}
         </Row>
       )}
     </div>

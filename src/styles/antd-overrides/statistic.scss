@@ -1,15 +1,14 @@
 .ant-statistic-content {
   font-family: 'DM Mono', monospace;
-}
-
-.ant-statistic-content {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  color: var(--text-primary);
+  font-weight: 500;
 }
 
 .ant-statistic-title {
-  color: var(--text-brand-primary);
+  color: var(--text-secondary);
+  margin: 0;
+  text-transform: uppercase;
+  font-size: 0.8rem;
 }
 
-.ant-statistic-content {
-  color: var(--text-primary);
-}

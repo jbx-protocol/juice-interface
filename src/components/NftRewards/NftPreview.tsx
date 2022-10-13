@@ -52,11 +52,13 @@ const bodyTextStyle: CSSProperties = {
 }
 
 export function NftPreview({
+  tierRank,
   visible,
   rewardTier,
   onClose,
 }: {
   visible: boolean
+  tierRank: number
   rewardTier: NftRewardTier
   onClose: VoidFunction
 }) {
@@ -85,7 +87,9 @@ export function NftPreview({
       >
         <div style={headerRowStyle}>
           <h3 style={{ ...headerStyle, textTransform: 'uppercase' }}>
-            {projectMetadata?.name} – Tier {rewardTier.tierRank}
+            <Trans>
+              {projectMetadata?.name} – Tier {tierRank}
+            </Trans>
           </h3>
           <CloseOutlined onClick={onClose} style={{ paddingLeft: '15px' }} />
         </div>

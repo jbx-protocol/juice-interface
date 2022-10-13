@@ -76,6 +76,8 @@ export function ProjectSafeDashboard() {
 
   const projectSafeRoute = `${v2v3ProjectRoute({ projectId, handle })}/safe`
 
+  const safeUrl = generateSafeUrl(projectOwnerAddress)
+
   return (
     <div style={containerStyle}>
       <h1 style={{ color: colors.text.primary, marginBottom: 5 }}>
@@ -84,10 +86,7 @@ export function ProjectSafeDashboard() {
 
       {!isLoading ? (
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <ExternalLink
-            href={generateSafeUrl(projectOwnerAddress)}
-            style={{ textDecoration: 'underline' }}
-          >
+          <ExternalLink href={safeUrl} style={{ textDecoration: 'underline' }}>
             <Trans>Go to your Safe</Trans>
           </ExternalLink>
           <BackToProjectButton />
@@ -95,6 +94,12 @@ export function ProjectSafeDashboard() {
       ) : null}
 
       {isLoading && <div style={{ marginTop: 20 }}>Loading...</div>}
+
+      {!isLoading && !uniqueNonces.length ? (
+        <div>
+          <Trans>This Safe has no queued transactions.</Trans>
+        </div>
+      ) : null}
 
       {!isLoading && gnosisSafe && (
         <div style={{ marginTop: '1.5rem' }}>
@@ -120,7 +125,10 @@ export function ProjectSafeDashboard() {
           <div
             style={{
               marginTop: '1.5rem',
-              borderTop: `1px solid ${colors.stroke.tertiary}`,
+              borderTop:
+                !isLoading && uniqueNonces.length
+                  ? `1px solid ${colors.stroke.secondary}`
+                  : 'unset',
             }}
           >
             {selectedTab === SAFE_TX_QUEUED_KEY ? (

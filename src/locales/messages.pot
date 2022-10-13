@@ -212,6 +212,9 @@ msgstr ""
 msgid "<0>Users fund your project by paying to use your app or service, or as a patron or investor by making a payment directly to your project's smart contract (like on this app).</0><1>For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return.</1>"
 msgstr ""
 
+msgid "<0>View transactions.</0>"
+msgstr ""
+
 msgid "<0>Website:</0> <1>{0}</1>"
 msgstr ""
 
@@ -2759,7 +2762,7 @@ msgstr ""
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
 msgstr ""
 
-msgid "This project is owned by a Safe. <0>See transactions</0>."
+msgid "This project is owned by a Safe. <0>View transactions</0>."
 msgstr ""
 
 msgid "This project reserves some of the newly minted tokens for itself."
@@ -3431,6 +3434,9 @@ msgstr ""
 msgid "{0, plural, one {# Payment Address} other {# Payment Addresses}}"
 msgstr ""
 
+msgid "{0, plural, one {# transaction needs} other {# transactions need}}"
+msgstr ""
+
 msgid "{0, plural, one {View deployed Payment Address} other {View deployed Payment Addresses}}"
 msgstr ""
 
@@ -3477,6 +3483,9 @@ msgid "{0} unclaimed"
 msgstr ""
 
 msgid "{0} withdrawn"
+msgstr ""
+
+msgid "{0} your signature."
 msgstr ""
 
 msgid "{0} {tokenTextPlural} reserved"

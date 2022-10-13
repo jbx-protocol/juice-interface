@@ -75,85 +75,44 @@ export default function DeskTopNavigation({
     </Dropdown>
   )
 
-  const menuItems = desktop
-    ? [
-        {
-          key: 'index',
-          label: (
-            <Link href="/">
-              <a style={{ display: 'inline-block' }}>{<Logo />}</a>
-            </Link>
-          ),
-        },
-        {
-          key: 'projects',
-          label: (
-            <Link href="/projects">
-              <a {...menuItemProps}>{t`Projects`}</a>
-            </Link>
-          ),
-        },
-        {
-          key: 'docs',
-          label: (
-            <Link href="https://info.juicebox.money/">
-              <a {...externalMenuLinkProps}>{t`Docs`}</a>
-            </Link>
-          ),
-        },
-        {
-          key: 'blog',
-          label: (
-            <Link href="https://info.juicebox.money/blog">
-              <a {...externalMenuLinkProps}>{t`Blog`}</a>
-            </Link>
-          ),
-        },
-        {
-          key: 'resources',
-          label: desktopDropDown,
-        },
-      ]
-    : [
-        {
-          key: 'projects',
-          label: (
-            <Link href="/projects">
-              <a {...menuItemProps}>{t`Projects`}</a>
-            </Link>
-          ),
-        },
-        {
-          key: 'docs',
-          label: (
-            <Link href="https://info.juicebox.money/">
-              <a {...externalMenuLinkProps}>{t`Docs`}</a>
-            </Link>
-          ),
-        },
-        {
-          key: 'blog',
-          label: (
-            <Link href="https://info.juicebox.money/blog">
-              <a {...externalMenuLinkProps}>{t`Blog`}</a>
-            </Link>
-          ),
-        },
-        {
-          key: 'resources',
-          label: (
-            <Link href="">
-              <a
-                className="nav-menu-item hover-opacity"
-                style={{ ...navMenuItemStyles }}
-              >
-                {t`Resources`}
-              </a>
-            </Link>
-          ),
-          children: [...resourcesMenuItems(true)],
-        },
-      ]
+  const menuItems = [
+    {
+      key: 'index',
+      label: (
+        <Link href="/">
+          <a style={{ display: 'inline-block' }}>{<Logo />}</a>
+        </Link>
+      ),
+    },
+    {
+      key: 'projects',
+      label: (
+        <Link href="/projects">
+          <a {...menuItemProps}>{t`Projects`}</a>
+        </Link>
+      ),
+    },
+    {
+      key: 'docs',
+      label: (
+        <Link href="https://info.juicebox.money/">
+          <a {...externalMenuLinkProps}>{t`Docs`}</a>
+        </Link>
+      ),
+    },
+    {
+      key: 'blog',
+      label: (
+        <Link href="https://info.juicebox.money/blog">
+          <a {...externalMenuLinkProps}>{t`Blog`}</a>
+        </Link>
+      ),
+    },
+    {
+      key: 'resources',
+      label: desktopDropDown,
+    },
+  ]
 
   return (
     <Header className="top-nav" style={{ ...topNavStyles }}>

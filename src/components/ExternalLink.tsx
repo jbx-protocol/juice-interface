@@ -4,7 +4,7 @@ export default function ExternalLink({
 }: React.HTMLProps<HTMLAnchorElement>) {
   return (
     <a {...props} target="_blank" rel="noopener noreferrer">
-      {children}
+      {children ? children : props.href}
     </a>
   )
 }

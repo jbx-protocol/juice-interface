@@ -3476,6 +3476,9 @@ msgstr ""
 msgid "{0} {tokenTextPlural} reserved"
 msgstr ""
 
+msgid "{0} – Tier {tierRank}"
+msgstr ""
+
 msgid "{0}%"
 msgstr ""
 

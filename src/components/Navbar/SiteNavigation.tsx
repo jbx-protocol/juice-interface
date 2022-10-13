@@ -5,7 +5,7 @@ import { CSSProperties, useEffect, useState } from 'react'
 
 import Account from './Account'
 import { desktopMenuItems, resourcesMenuItems } from './constants'
-import MobileCollapse from './Mobile/MobileCollapse'
+import MobileNavigation from './Mobile/MobileNavigation'
 import NavLanguageSelector from './NavLanguageSelector'
 import { navMenuItemStyles, topNavStyles } from './navStyles'
 
@@ -102,5 +102,5 @@ export default function SiteNavigation() {
       </Header>
     )
   }
-  return <MobileCollapse />
+  return <MobileNavigation />
 }

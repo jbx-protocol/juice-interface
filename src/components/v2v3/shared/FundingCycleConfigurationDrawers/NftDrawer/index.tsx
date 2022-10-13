@@ -104,7 +104,7 @@ export default function NftDrawer({
       ),
     )
     dispatch(
-      editingV2ProjectActions.setNftRewardsSymbol(
+      editingV2ProjectActions.setNftRewardsCollectionDescription(
         marketplaceFormValues.collectionDescription,
       ),
     )

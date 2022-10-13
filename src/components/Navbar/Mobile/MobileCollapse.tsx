@@ -3,7 +3,6 @@ import { Collapse, Menu } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { Header } from 'antd/lib/layout/layout'
 import { ThemeContext } from 'contexts/themeContext'
-import useMobile from 'hooks/Mobile'
 import { useWallet } from 'hooks/Wallet'
 import Link from 'next/link'
 import { useContext, useEffect, useState } from 'react'
@@ -21,7 +20,6 @@ export default function MobileCollapse() {
 
   const [activeKey, setActiveKey] = useState<0 | undefined>()
 
-  const isMobile = useMobile()
   const { isConnected, disconnect } = useWallet()
 
   const isNavExpanded = activeKey === NAV_EXPANDED_KEY
@@ -78,22 +76,13 @@ export default function MobileCollapse() {
                 }}
               >
                 <TransactionsList
-                  listStyle={
-                    isMobile
-                      ? {
-                          position: 'absolute',
-                          top: 48,
-                          left: 0,
-                          right: 0,
-                          padding: 12,
-                        }
-                      : {
-                          position: 'absolute',
-                          top: 70, // Position below navbar
-                          right: 30,
-                          width: 300,
-                        }
-                  }
+                  listStyle={{
+                    position: 'absolute',
+                    top: 48,
+                    left: 0,
+                    right: 0,
+                    padding: 12,
+                  }}
                 />
                 <MenuOutlined
                   style={{

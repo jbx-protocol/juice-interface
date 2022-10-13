@@ -12,6 +12,7 @@ import { Allocation, AllocationSplit } from '../../../../Allocation'
 export const PayoutsList = (
   props: FormItemInput<AllocationSplit[]> & {
     payoutsSelection: PayoutsSelection
+    isEditable?: boolean
   },
 ) => {
   const [distributionLimit, setDistributionLimit] =
@@ -40,7 +41,10 @@ export const PayoutsList = (
     >
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
         <OwnerPayoutCard payoutsSelection={props.payoutsSelection} />
-        <Allocation.List addText={t`Add new payout address`}>
+        <Allocation.List
+          addText={t`Add new payout address`}
+          isEditable={props.isEditable}
+        >
           {(
             modal,
             { allocations, removeAllocation, setSelectedAllocation },

@@ -19,7 +19,7 @@ const resourcesMenu = (
   />
 )
 
-export function TopLeftNavItems({
+export default function DeskTopNavigation({
   desktop,
   onClickMenuItems,
 }: {

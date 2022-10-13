@@ -48,8 +48,11 @@ export const useProjectTokensForm = () => {
     const reservedTokensPercentage = fundingCycleMetadata.reservedRate
       ? fromReduxPercent(fundingCycleMetadata.reservedRate)
       : DefaultSettings.reservedTokensPercentage
-    // TODO
-    const reservedTokenAllocation: AllocationSplit[] = []
+    const reservedTokenAllocation: AllocationSplit[] =
+      reservedTokensGroupedSplits.splits.map(s => ({
+        id: `${s.beneficiary}${s.projectId ? `-${s.projectId}` : ''}`,
+        ...s,
+      }))
     // TODO: we should probably block this if no duration set
     const discountRate = fundingCycleData.discountRate
       ? fromReduxPercent(fundingCycleData.discountRate)
@@ -78,6 +81,7 @@ export const useProjectTokensForm = () => {
     fundingCycleMetadata.redemptionRate,
     fundingCycleMetadata.reservedRate,
     projectTokensSelection,
+    reservedTokensGroupedSplits.splits,
   ])
 
   const dispatch = useAppDispatch()
@@ -107,7 +111,7 @@ export const useProjectTokensForm = () => {
     fieldName: 'reservedTokensPercentage',
     dispatchFunction: editingV2ProjectActions.setReservedRate,
     formatter: v => {
-      if (!v || typeof v !== 'number') return ''
+      if (!v || typeof v !== 'number') return '0'
       return toReduxPercent(v)
     },
   })
@@ -129,7 +133,7 @@ export const useProjectTokensForm = () => {
     fieldName: 'discountRate',
     dispatchFunction: editingV2ProjectActions.setDiscountRate,
     formatter: v => {
-      if (!v || typeof v !== 'number') return ''
+      if (!v || typeof v !== 'number') return '0'
       return toReduxPercent(v)
     },
   })

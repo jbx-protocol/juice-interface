@@ -1214,6 +1214,12 @@ msgstr ""
 msgid "File empty or corrupt. Try again."
 msgstr ""
 
+msgid "File must be in a format of {0}"
+msgstr ""
+
+msgid "File must be less than {0}MB"
+msgstr ""
+
 msgid "File must be less than {formattedSize}{unit}"
 msgstr ""
 

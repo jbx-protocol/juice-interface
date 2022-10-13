@@ -2696,6 +2696,12 @@ msgstr ""
 msgid "This Juicebox V2 project also has a project on Juicebox V1. The project owner is allowing you to swap your V1 tokens for V2 tokens."
 msgstr ""
 
+msgid "This Safe has no past transactions."
+msgstr ""
+
+msgid "This Safe has no queued transactions."
+msgstr ""
+
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
 msgstr ""
 

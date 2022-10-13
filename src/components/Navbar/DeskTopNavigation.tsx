@@ -1,6 +1,6 @@
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Dropdown, Menu, Space } from 'antd'
+import { Dropdown, Menu } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
 import Link from 'next/link'
 import { CSSProperties, useEffect, useState } from 'react'
@@ -166,16 +166,27 @@ export default function DeskTopNavigation({
           width: desktop ? 500 : 'auto',
         }}
       />
-      <Space size="middle" style={{ ...topRightNavStyles }}>
-        <TransactionsList
-          listStyle={{
-            position: 'absolute',
-            top: 70,
-            right: 30,
-          }}
-        />
-        <Account />
-      </Space>
+      <Menu
+        style={topRightNavStyles}
+        items={[
+          {
+            key: 'transaction-list',
+            label: (
+              <TransactionsList
+                listStyle={{
+                  position: 'absolute',
+                  top: 70,
+                  right: 30,
+                }}
+              />
+            ),
+          },
+          {
+            key: 'account',
+            label: <Account />,
+          },
+        ]}
+      />
     </Header>
   )
 }

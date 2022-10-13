@@ -15,7 +15,7 @@ const resourcesMenu = (
   />
 )
 
-export default function DeskTopNavigation() {
+export default function SiteNavigation() {
   const [resourcesOpen, setResourcesOpen] = useState<boolean>(false)
   const isMobile = useMobile()
   const desktop = !isMobile

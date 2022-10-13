@@ -59,6 +59,10 @@
   font-weight: 500;
 }
 
+.ant-menu-horizontal > .ant-menu-item {
+  padding: 0 10px !important;
+}
+
 .ant-menu-light .ant-menu-item:hover {
   color: var(--text-primary);
   background-color: var(--background-l2);

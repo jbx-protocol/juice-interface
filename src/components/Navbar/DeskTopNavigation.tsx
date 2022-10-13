@@ -1,14 +1,14 @@
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Dropdown, Menu, Space } from 'antd'
+import { Dropdown, Menu } from 'antd'
+import { Header } from 'antd/lib/layout/layout'
 import Link from 'next/link'
 import { CSSProperties, useEffect, useState } from 'react'
 
 import Logo from './Logo'
 import NavLanguageSelector from './NavLanguageSelector'
-import { navMenuItemStyles, topNavStyles, topRightNavStyles } from './navStyles'
+import { navMenuItemStyles, topNavStyles } from './navStyles'
 
-import { Header } from 'antd/lib/layout/layout'
 import Account from './Account'
 import { resourcesMenuItems } from './constants'
 import ThemePicker from './ThemePicker'
@@ -171,18 +171,49 @@ export default function DesktopNavigation({
         }}
         selectable={false}
       />
-      <Space size="middle" style={{ ...topRightNavStyles }}>
-        <NavLanguageSelector />
-        <ThemePicker />
-        <TransactionsList
-          listStyle={{
-            position: 'absolute',
-            top: 70,
-            right: 30,
-          }}
-        />
-        <Account />
-      </Space>
+      <Menu
+        mode="horizontal"
+        items={[
+          {
+            key: 'navigation-selector',
+            label: (
+              <div style={navMenuItemStyles}>
+                <NavLanguageSelector />
+              </div>
+            ),
+          },
+          {
+            key: 'theme-picker',
+            label: (
+              <div style={navMenuItemStyles}>
+                <ThemePicker />
+              </div>
+            ),
+          },
+          {
+            key: 'transaction-list',
+            label: (
+              <div style={navMenuItemStyles}>
+                <TransactionsList
+                  listStyle={{
+                    position: 'absolute',
+                    top: 70,
+                    right: 30,
+                  }}
+                />
+              </div>
+            ),
+          },
+          {
+            key: 'account',
+            label: (
+              <div style={navMenuItemStyles}>
+                <Account />
+              </div>
+            ),
+          },
+        ]}
+      />
     </Header>
   )
 }

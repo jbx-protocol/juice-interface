@@ -13,7 +13,7 @@ import { TransactionsList } from '../TransactionList'
 
 const NAV_EXPANDED_KEY = 0
 
-export default function MobileCollapse() {
+export default function MobileNavigation() {
   const {
     theme: { colors },
   } = useContext(ThemeContext)

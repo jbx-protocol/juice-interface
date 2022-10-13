@@ -1,6 +1,6 @@
 import { PlusCircleOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
-import { Button, Space } from 'antd'
+import { Button } from 'antd'
 import { useModal } from 'hooks/Modal'
 import { ReactNode, useCallback, useState } from 'react'
 import { AddEditAllocationModal } from './AddEditAllocationModal'
@@ -8,9 +8,11 @@ import { Allocation, AllocationSplit } from './Allocation'
 
 export const AllocationList = ({
   addText,
+  isEditable = true,
   children,
 }: {
   addText?: ReactNode
+  isEditable?: boolean
   children: (
     modalOperations: ReturnType<typeof useModal>,
     allocationOperations: ReturnType<
@@ -41,20 +43,29 @@ export const AllocationList = ({
 
   return (
     <>
-      <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '2rem',
+          width: '100%',
+        }}
+      >
         {children(modal, { ...allocations, setSelectedAllocation })}
-        <Button
-          size="large"
-          style={{
-            width: '100%',
-            textAlign: 'left',
-          }}
-          icon={<PlusCircleOutlined />}
-          onClick={modal.open}
-        >
-          {addText ?? t`Add`}
-        </Button>
-      </Space>
+        {isEditable && (
+          <Button
+            size="large"
+            style={{
+              width: '100%',
+              textAlign: 'left',
+            }}
+            icon={<PlusCircleOutlined />}
+            onClick={modal.open}
+          >
+            {addText ?? t`Add`}
+          </Button>
+        )}
+      </div>
       <AddEditAllocationModal
         editingData={selectedAllocation}
         visible={modal.visible}

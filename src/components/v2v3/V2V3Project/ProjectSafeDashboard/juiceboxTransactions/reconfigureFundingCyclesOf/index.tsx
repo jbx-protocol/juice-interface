@@ -1,9 +1,7 @@
-import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
-import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, useContext, useState } from 'react'
+import { getTransactionVersion } from 'utils/safe'
 import { SafeTransactionComponentProps } from '../../SafeTransaction'
-import { TransactionHeader } from '../../TransactionHeader'
+import { TransactionCollapse } from '../../TransactionCollapse'
 import { ReconfigureRichPreview } from './ReconfigurationRichPreview'
 
 export function ReconfigureFundingCyclesOfTransaction({
@@ -11,37 +9,16 @@ export function ReconfigureFundingCyclesOfTransaction({
   selected,
   isPastTransaction,
 }: SafeTransactionComponentProps) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
-  const [expanded, setExpanded] = useState<boolean>(selected)
-
-  const rowStyle: CSSProperties = {
-    color: colors.text.primary,
-    marginBottom: '1.5rem',
-  }
+  const txVersion = getTransactionVersion(transaction)
 
   return (
-    <div
-      style={rowStyle}
-      onClick={() => {
-        setExpanded(!expanded)
-      }}
-      id={`${transaction.safeTxHash}`}
-    >
-      <div style={{ display: 'flex', width: '100%' }}>
-        <TransactionHeader
-          transaction={transaction}
-          title={t`Reconfigure funding cycle`}
-          isPastTransaction={isPastTransaction}
-        />
-        <div style={{ marginLeft: 10, color: colors.text.tertiary }}>
-          {expanded ? <UpOutlined /> : <DownOutlined />}
-        </div>
-      </div>
-
-      {expanded && <ReconfigureRichPreview transaction={transaction} />}
-    </div>
+    <TransactionCollapse
+      transaction={transaction}
+      title={t`Reconfigure funding cycle`}
+      isPastTransaction={isPastTransaction}
+      version={txVersion}
+      selected={selected}
+      expandedContent={<ReconfigureRichPreview transaction={transaction} />}
+    />
   )
 }

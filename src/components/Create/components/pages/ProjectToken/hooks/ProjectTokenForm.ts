@@ -6,6 +6,7 @@ import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { useDebugValue, useEffect, useMemo } from 'react'
+import { useEditingReservedTokensSplits } from 'redux/hooks/EditingReservedTokensSplits'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { fromReduxPercent, toReduxPercent } from 'redux/util'
 import { formatIssuanceRate, issuanceRateFrom } from 'utils/v2v3/math'
@@ -32,12 +33,9 @@ const DefaultSettings: Required<Omit<ProjectTokensFormProps, 'selection'>> = {
 
 export const useProjectTokensForm = () => {
   const [form] = Form.useForm<ProjectTokensFormProps>()
-  const {
-    fundingCycleMetadata,
-    fundingCycleData,
-    reservedTokensGroupedSplits,
-    projectTokensSelection,
-  } = useAppSelector(state => state.editingV2Project)
+  const { fundingCycleMetadata, fundingCycleData, projectTokensSelection } =
+    useAppSelector(state => state.editingV2Project)
+  const [tokenSplits] = useEditingReservedTokensSplits()
   useDebugValue(form.getFieldsValue())
 
   const initialValues: ProjectTokensFormProps | undefined = useMemo(() => {
@@ -48,11 +46,10 @@ export const useProjectTokensForm = () => {
     const reservedTokensPercentage = fundingCycleMetadata.reservedRate
       ? fromReduxPercent(fundingCycleMetadata.reservedRate)
       : DefaultSettings.reservedTokensPercentage
-    const reservedTokenAllocation: AllocationSplit[] =
-      reservedTokensGroupedSplits.splits.map(s => ({
-        id: `${s.beneficiary}${s.projectId ? `-${s.projectId}` : ''}`,
-        ...s,
-      }))
+    const reservedTokenAllocation: AllocationSplit[] = tokenSplits.map(s => ({
+      id: `${s.beneficiary}${s.projectId ? `-${s.projectId}` : ''}`,
+      ...s,
+    }))
     // TODO: we should probably block this if no duration set
     const discountRate = fundingCycleData.discountRate
       ? fromReduxPercent(fundingCycleData.discountRate)
@@ -81,7 +78,7 @@ export const useProjectTokensForm = () => {
     fundingCycleMetadata.redemptionRate,
     fundingCycleMetadata.reservedRate,
     projectTokensSelection,
-    reservedTokensGroupedSplits.splits,
+    tokenSplits,
   ])
 
   const dispatch = useAppDispatch()
@@ -120,7 +117,7 @@ export const useProjectTokensForm = () => {
     form,
     fieldName: 'reservedTokenAllocation',
     ignoreUndefined: true, // Needed to stop an infinite loop
-    currentValue: reservedTokensGroupedSplits.splits, // Needed to stop an infinite loop
+    currentValue: tokenSplits, // Needed to stop an infinite loop
     dispatchFunction: editingV2ProjectActions.setReservedTokensSplits,
     formatter: v => {
       if (!v || typeof v !== 'object') return []

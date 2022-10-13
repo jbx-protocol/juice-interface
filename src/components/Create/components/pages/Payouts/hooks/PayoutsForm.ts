@@ -5,6 +5,7 @@ import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { useDebugValue, useEffect, useMemo } from 'react'
+import { useEditingPayoutSplits } from 'redux/hooks/EditingPayoutSplits'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { useAvailablePayoutsSelections } from './AvailablePayoutsSelections'
 
@@ -15,11 +16,9 @@ export type PayoutsFormProps = Partial<{
 
 export const usePayoutsForm = () => {
   const [form] = Form.useForm<PayoutsFormProps>()
-  const {
-    payoutGroupedSplits: { splits },
-    payoutsSelection,
-  } = useAppSelector(state => state.editingV2Project)
+  const { payoutsSelection } = useAppSelector(state => state.editingV2Project)
   const availableSelections = useAvailablePayoutsSelections()
+  const [splits, setSplits] = useEditingPayoutSplits()
 
   const overridenSelection = useMemo(
     () =>
@@ -46,9 +45,9 @@ export const usePayoutsForm = () => {
   const selection = useWatch('selection', form)
 
   useEffect(() => {
-    dispatch(editingV2ProjectActions.setPayoutSplits(payoutsList ?? []))
+    setSplits(payoutsList ?? [])
     dispatch(editingV2ProjectActions.setPayoutsSelection(selection))
-  }, [dispatch, payoutsList, selection])
+  }, [dispatch, payoutsList, selection, setSplits])
 
   return { form, initialValues }
 }

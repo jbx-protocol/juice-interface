@@ -8,6 +8,7 @@ import {
   FundingConfigurationReview,
   ProjectDetailsReview,
   ProjectTokenReview,
+  RewardsReview,
   RulesReview,
 } from './components'
 
@@ -64,7 +65,9 @@ export const ReviewDeployPage = () => {
               <Trans>NFT Rewards</Trans>
             </Header>
           }
-        ></CreateCollapse.Panel>
+        >
+          <RewardsReview />
+        </CreateCollapse.Panel>
         <CreateCollapse.Panel
           key={4}
           header={

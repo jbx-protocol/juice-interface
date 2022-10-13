@@ -854,6 +854,9 @@ msgstr ""
 msgid "Custom token beneficiary"
 msgstr ""
 
+msgid "Customize Pay Button"
+msgstr ""
+
 msgid "Customize how your NFT collection will appear on NFT marketplaces (like OpenSea)."
 msgstr ""
 

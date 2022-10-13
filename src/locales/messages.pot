@@ -497,6 +497,9 @@ msgstr ""
 msgid "Automate funding cycles"
 msgstr ""
 
+msgid "Automated"
+msgstr ""
+
 msgid "Automated Funding Cycles <0/>"
 msgstr ""
 
@@ -1298,6 +1301,9 @@ msgstr ""
 msgid "Funding cycle target"
 msgstr ""
 
+msgid "Funding cycles"
+msgstr ""
+
 msgid "Funding distribution"
 msgstr ""
 
@@ -1641,6 +1647,9 @@ msgid "Manage your {0}"
 msgstr ""
 
 msgid "Manage {tokenText}"
+msgstr ""
+
+msgid "Manual"
 msgstr ""
 
 msgid "Manual Funding Cycles"
@@ -2001,6 +2010,9 @@ msgid "Payments to this project will mint new project tokens."
 msgstr ""
 
 msgid "Payments to this project won't mint new project tokens."
+msgstr ""
+
+msgid "Payout addresses"
 msgstr ""
 
 msgid "Payout is locked"

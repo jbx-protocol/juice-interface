@@ -1,15 +1,13 @@
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Dropdown, Menu, Space } from 'antd'
+import { Header } from 'antd/lib/layout/layout'
 import Link from 'next/link'
 import { CSSProperties, useEffect, useState } from 'react'
-
-import Logo from './Logo'
-import { navMenuItemStyles, topNavStyles, topRightNavStyles } from './navStyles'
-
-import { Header } from 'antd/lib/layout/layout'
 import Account from './Account'
 import { resourcesMenuItems } from './constants'
+import Logo from './Logo'
+import { navMenuItemStyles, topNavStyles, topRightNavStyles } from './navStyles'
 import { TransactionsList } from './TransactionList'
 
 const resourcesMenu = (

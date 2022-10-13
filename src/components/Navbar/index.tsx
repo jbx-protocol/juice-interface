@@ -1,5 +1,5 @@
-import DesktopNavigation from './DeskTopNavigation'
+import SiteNavigation from './SiteNavigation'
 
 export default function Navbar() {
-  return <DesktopNavigation />
+  return <SiteNavigation />
 }

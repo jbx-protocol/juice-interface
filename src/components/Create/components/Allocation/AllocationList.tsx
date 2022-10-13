@@ -1,17 +1,10 @@
 import { PlusCircleOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
 import { Button, Space } from 'antd'
+import { useModal } from 'hooks/Modal'
 import { ReactNode, useCallback, useState } from 'react'
 import { AddEditAllocationModal } from './AddEditAllocationModal'
 import { Allocation, AllocationSplit } from './Allocation'
-
-const useModal = () => {
-  const [visible, setVisible] = useState<boolean>(false)
-  const open = useCallback(() => setVisible(true), [setVisible])
-  const close = useCallback(() => setVisible(false), [setVisible])
-
-  return { visible, open, close }
-}
 
 export const AllocationList = ({
   addText,

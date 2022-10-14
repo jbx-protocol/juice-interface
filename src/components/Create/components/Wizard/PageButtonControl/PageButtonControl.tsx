@@ -26,7 +26,11 @@ export const PageButtonControl = ({
         {!isFinalPage ? (
           <NextButton disabled={!isNextEnabled} onClick={onPageDone} />
         ) : (
-          <DoneButton text={doneText} onClick={onPageDone} />
+          <DoneButton
+            disabled={!isNextEnabled}
+            text={doneText}
+            onClick={onPageDone}
+          />
         )}
       </div>
     </div>

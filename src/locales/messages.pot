@@ -485,6 +485,9 @@ msgstr ""
 msgid "Are you sure you want to start over?"
 msgstr ""
 
+msgid "Are you sure?"
+msgstr ""
+
 msgid "Assets"
 msgstr ""
 
@@ -1400,6 +1403,9 @@ msgstr ""
 msgid "I accept this project's <0>risks</0>."
 msgstr ""
 
+msgid "I have read and accept the <0>Terms of Service</0>, and understand that I WILL NOT be able to make changes to my project's funding configuration until AFTER Funding Cycle #1 has finished."
+msgstr ""
+
 msgid "I have read and accept the <0>Terms of Service</0>."
 msgstr ""
 
@@ -1649,6 +1655,9 @@ msgstr ""
 msgid "MAX"
 msgstr ""
 
+msgid "Made a mistake?"
+msgstr ""
+
 msgid "Manage"
 msgstr ""
 
@@ -1871,7 +1880,13 @@ msgstr ""
 msgid "No upcoming funding cycle."
 msgstr ""
 
+msgid "No, keep editing"
+msgstr ""
+
 msgid "Not a valid ETH address"
+msgstr ""
+
+msgid "Not quite ready to launch? Your project details will be saved as a 'draft' as long as you don't clear your browser's cookies."
 msgstr ""
 
 msgid "Not set"
@@ -2660,6 +2675,9 @@ msgstr ""
 msgid "Start upgrade"
 msgstr ""
 
+msgid "Starting over will erase all currently saved progress."
+msgstr ""
+
 msgid "Step 1. Add V1 token payment terminal"
 msgstr ""
 
@@ -3303,6 +3321,9 @@ msgid "Would you like to issue an ERC-20 token to be used as this project's toke
 msgstr ""
 
 msgid "Yes"
+msgstr ""
+
+msgid "Yes, start over"
 msgstr ""
 
 msgid "You are agreeing to IRREVOCABLY lock your tokens for {formattedLockDuration} in exchange for {votingPower} $ve{tokenSymbolDisplayText}"

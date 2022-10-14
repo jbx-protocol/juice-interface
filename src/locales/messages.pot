@@ -230,6 +230,9 @@ msgstr ""
 msgid "@{handle} not found"
 msgstr ""
 
+msgid "A custom reconfiguration rule has been selected. Please ensure that you understand the implications of the underlying rule contract address."
+msgstr ""
+
 msgid "A project can reserve a percentage of tokens minted from every payment it receives. Reserved tokens can be distributed according to the allocation below at any time."
 msgstr ""
 
@@ -2873,7 +2876,13 @@ msgstr ""
 msgid "This list is using an experimental data index and may be inaccurate for some projects."
 msgstr ""
 
+msgid "This means that you will be able to submit changes to your funding at any time. These changes will be visible to your contributors."
+msgstr ""
+
 msgid "This means that you will have to submit changes to your funding AT LEAST 3 days before your next funding cycle starts. These changes will be visible to your contributors."
+msgstr ""
+
+msgid "This means that you will have to submit changes to your funding AT LEAST 7 days before your next funding cycle starts. These changes will be visible to your contributors."
 msgstr ""
 
 msgid "This project has no distributions."

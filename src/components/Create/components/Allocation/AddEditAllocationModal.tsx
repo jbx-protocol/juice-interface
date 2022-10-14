@@ -28,42 +28,48 @@ type AddEditAllocationModalResult = Split & { id: string }
 
 export const AddEditAllocationModal = ({
   editingData,
+  availableModes,
   visible,
   onOk,
   onCancel,
 }: {
   editingData?: AllocationSplit | undefined
+  availableModes: Set<'amount' | 'percentage'>
   visible?: boolean
   onOk: (split: AddEditAllocationModalResult) => void
   onCancel: VoidFunction
 }) => {
+  if (availableModes.size === 0) {
+    console.error('AddEditAllocationModal: no available modes')
+    return null
+  }
   const { totalAllocationAmount, allocations } =
     Allocation.useAllocationInstance()
   const [form] = Form.useForm<AddEditAllocationModalFormProps>()
   const [amountType, setAmountType] = useState<'amount' | 'percentage'>(
-    'amount',
+    () => [...availableModes][0],
   )
   const [recipient, setRecipient] = useState<
     'walletAddress' | 'juiceboxProject'
   >('walletAddress')
 
   const isEditing = !!editingData
-  const fundingTargetType = useFundingTargetType(totalAllocationAmount)
-  const hasSpecificFundingTarget = fundingTargetType === 'specific'
+
+  useEffect(() => {
+    setAmountType(() => [...availableModes][0])
+  }, [availableModes])
 
   useEffect(() => {
     if (!visible) return
 
     if (!editingData) {
       setRecipient('walletAddress')
-      setAmountType(hasSpecificFundingTarget ? 'amount' : 'percentage')
       return
     }
 
     setRecipient(
       editingData.projectId !== undefined ? 'juiceboxProject' : 'walletAddress',
     )
-    setAmountType(hasSpecificFundingTarget ? 'amount' : 'percentage')
     form.setFieldsValue({
       juiceboxProjectId: editingData.projectId,
       address: editingData.beneficiary,
@@ -80,13 +86,7 @@ export const AddEditAllocationModal = ({
         ? Moment.default(editingData.lockedUntil * 1000)
         : undefined,
     })
-  }, [
-    hasSpecificFundingTarget,
-    editingData,
-    form,
-    visible,
-    totalAllocationAmount,
-  ])
+  }, [editingData, form, visible, totalAllocationAmount])
 
   const onModalOk = useCallback(async () => {
     const fields = await form.validateFields()
@@ -125,7 +125,7 @@ export const AddEditAllocationModal = ({
       destroyOnClose
     >
       <Form form={form} preserve={false} colon={false} layout="vertical">
-        {isEditing && hasSpecificFundingTarget && (
+        {availableModes.size > 1 && (
           <Radio.Group
             optionType="button"
             defaultValue="amount"

@@ -186,7 +186,9 @@ function Landing() {
                   forThemeOption &&
                   forThemeOption({
                     [ThemeOption.dark]: bananaOd,
+                    [ThemeOption.dark1]: bananaOd,
                     [ThemeOption.light]: bananaOl,
+                    [ThemeOption.light1]: bananaOl,
                   })
                 }
                 alt="Chill banana drinking juice"
@@ -295,7 +297,9 @@ function Landing() {
             forThemeOption &&
             forThemeOption({
               [ThemeOption.dark]: orangeLadyOd,
+              [ThemeOption.dark1]: orangeLadyOd,
               [ThemeOption.light]: orangeLadyOl,
+              [ThemeOption.light1]: orangeLadyOl,
             })
           }
           alt="Powerlifting orange hitting an olympic deadlift"

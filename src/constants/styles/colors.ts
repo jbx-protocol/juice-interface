@@ -34,3 +34,34 @@ export const darkColors = {
   red: '#ff6c6c',
   yellow: '#FCDC9C',
 }
+
+export const newColors = {
+  bannySplit: '#f5a312',
+  grapeUltra: '#6041fa',
+  koolMint: '#2ed3b7',
+  candyDream: '#f78fd7',
+  tangerine: '#f45e0b',
+}
+
+export const light1Colors = {
+  ...newColors,
+  black: '#000',
+  white: '#fff',
+  dark0: '#000000ee',
+  dark1: '#00000099',
+  dark2: '#00000055',
+  dark3: '#00000044',
+}
+
+export const dark1Colors = {
+  ...newColors,
+  black: '#000',
+  white: '#fff',
+  light0: '#e1e0e8',
+  light1: '#e1e0e8d8',
+  light2: '#e1e0e8a4',
+  light3: '#e1e0e844',
+  dark0: '#1c1b21',
+  dark1: '#2e2b3c',
+  dark2: '#494361',
+}

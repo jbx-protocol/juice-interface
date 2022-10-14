@@ -17,7 +17,9 @@ export default function Logo({ height }: { height?: number }) {
         forThemeOption &&
         forThemeOption({
           [ThemeOption.light]: '/assets/juice_logo-ol.png',
+          [ThemeOption.light1]: '/assets/juice_logo-ol.png',
           [ThemeOption.dark]: '/assets/juice_logo-od.png',
+          [ThemeOption.dark1]: '/assets/juice_logo-od.png',
         })
       }
       alt="Juicebox logo"

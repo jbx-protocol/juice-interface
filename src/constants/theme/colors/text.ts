@@ -1,6 +1,11 @@
 import { SemanticColors } from 'models/semantic-theme/colors'
 
-import { darkColors, lightColors } from 'constants/styles/colors'
+import {
+  dark1Colors,
+  darkColors,
+  light1Colors,
+  lightColors,
+} from 'constants/styles/colors'
 import { ThemeOption } from 'constants/theme/theme-option'
 
 export const textColors: Record<ThemeOption, SemanticColors['text']> = {
@@ -72,6 +77,76 @@ export const textColors: Record<ThemeOption, SemanticColors['text']> = {
       warn: darkColors.white,
       failure: darkColors.white,
       disabled: darkColors.light2,
+    },
+  },
+  [ThemeOption.light1]: {
+    primary: light1Colors.dark0,
+    secondary: light1Colors.dark1,
+    tertiary: light1Colors.dark2,
+    placeholder: light1Colors.dark2,
+    disabled: light1Colors.dark3,
+    success: lightColors.green,
+    warn: lightColors.yellow,
+    failure: lightColors.red,
+    header: light1Colors.bannySplit,
+    action: {
+      primary: light1Colors.grapeUltra,
+      secondary: light1Colors.grapeUltra,
+      highlight: light1Colors.grapeUltra,
+    },
+    brand: {
+      primary: light1Colors.bannySplit,
+      secondary: light1Colors.bannySplit,
+    },
+    over: {
+      brand: {
+        primary: light1Colors.white,
+        secondary: light1Colors.black,
+      },
+      action: {
+        primary: light1Colors.white,
+        secondary: light1Colors.grapeUltra,
+        highlight: light1Colors.dark0,
+      },
+      success: light1Colors.white,
+      warn: light1Colors.white,
+      failure: light1Colors.white,
+      disabled: light1Colors.dark2,
+    },
+  },
+  [ThemeOption.dark1]: {
+    primary: dark1Colors.light0,
+    secondary: dark1Colors.light1,
+    tertiary: dark1Colors.light2,
+    placeholder: dark1Colors.light3,
+    disabled: dark1Colors.light2,
+    success: darkColors.green,
+    warn: darkColors.yellow,
+    failure: darkColors.red,
+    header: dark1Colors.bannySplit,
+    action: {
+      primary: dark1Colors.grapeUltra,
+      secondary: dark1Colors.grapeUltra,
+      highlight: dark1Colors.grapeUltra,
+    },
+    brand: {
+      primary: dark1Colors.bannySplit,
+      secondary: dark1Colors.bannySplit,
+    },
+    over: {
+      brand: {
+        primary: dark1Colors.white,
+        secondary: dark1Colors.black,
+      },
+      action: {
+        primary: dark1Colors.dark0,
+        secondary: dark1Colors.light0,
+        highlight: dark1Colors.dark0,
+      },
+      success: dark1Colors.white,
+      warn: dark1Colors.white,
+      failure: dark1Colors.white,
+      disabled: dark1Colors.light2,
     },
   },
 }

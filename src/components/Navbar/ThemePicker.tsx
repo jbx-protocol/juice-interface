@@ -1,74 +1,18 @@
-import Moon from 'components/icons/Moon'
-import Sun from 'components/icons/Sun'
-
-import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, useContext } from 'react'
-
+import { Select } from 'antd'
 import { ThemeOption } from 'constants/theme/theme-option'
+import { ThemeContext } from 'contexts/themeContext'
+import { useContext } from 'react'
 
 export default function ThemePicker() {
-  const {
-    themeOption,
-    setThemeOption,
-    theme: { colors },
-  } = useContext(ThemeContext)
-
-  const iconSize = 18
-  const padding = 6
-  const height = iconSize + padding * 2
-  const selectedColor = colors.icon.primary
-  const unselectedColor = colors.icon.tertiary
-
-  const iconStyle: CSSProperties = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: padding,
-    paddingBottom: padding,
-  }
-
-  const switchStyle: CSSProperties = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    cursor: 'pointer',
-    width: iconSize * 2 + padding * 4,
-    height,
-    borderRadius: height / 2,
-  }
+  const { themeOption, setThemeOption } = useContext(ThemeContext)
 
   return (
-    <div
-      className="clickable-border"
-      style={switchStyle}
-      role="switch"
-      aria-checked={themeOption === ThemeOption.dark}
-      onClick={() =>
-        setThemeOption(
-          themeOption === ThemeOption.dark
-            ? ThemeOption.light
-            : ThemeOption.dark,
-        )
-      }
-    >
-      <div
-        style={{
-          ...iconStyle,
-          color:
-            themeOption === ThemeOption.light ? selectedColor : unselectedColor,
-        }}
-      >
-        <Sun size={iconSize} />
-      </div>
-      <div
-        style={{
-          ...iconStyle,
-          color:
-            themeOption === ThemeOption.dark ? selectedColor : unselectedColor,
-        }}
-      >
-        <Moon size={iconSize} />
-      </div>
-    </div>
+    <Select value={themeOption} onChange={v => setThemeOption(v)}>
+      {Object.values(ThemeOption).map(t => (
+        <Select.Option key={t} value={t}>
+          {t}
+        </Select.Option>
+      ))}
+    </Select>
   )
 }

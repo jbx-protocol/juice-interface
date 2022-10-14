@@ -27,7 +27,9 @@ export default function SectionHeader({
       forThemeOption &&
       forThemeOption({
         [ThemeOption.light]: 500,
+        [ThemeOption.light1]: 500,
         [ThemeOption.dark]: 400,
+        [ThemeOption.dark1]: 400,
       }),
     ...style,
   }

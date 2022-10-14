@@ -3,7 +3,7 @@ import type { ThemeContextType } from 'contexts/themeContext'
 import { useEffect, useState } from 'react'
 
 import { juiceTheme } from 'constants/theme'
-import { ThemeOption } from 'constants/theme/theme-option'
+import { darkThemes, ThemeOption } from 'constants/theme/theme-option'
 
 const flattenNestedObject = (
   nestedObj: Record<string, any>, // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -28,7 +28,7 @@ export function useJuiceTheme(storageKey = 'jb_theme'): ThemeContextType {
     useState<ThemeOption>(initialThemeOption)
 
   const [isDarkMode, setIsDarkMode] = useState<boolean>(
-    initialThemeOption === ThemeOption.dark,
+    darkThemes.has(initialThemeOption),
   )
 
   const setRootVarsForThemeOption = (themeOption: ThemeOption) => {
@@ -52,7 +52,7 @@ export function useJuiceTheme(storageKey = 'jb_theme'): ThemeContextType {
   )
 
   useEffect(() => {
-    setIsDarkMode(currentThemeOption === ThemeOption.dark)
+    setIsDarkMode(darkThemes.has(currentThemeOption))
     document.documentElement.style.setProperty(
       'color-scheme',
       currentThemeOption,
@@ -62,7 +62,7 @@ export function useJuiceTheme(storageKey = 'jb_theme'): ThemeContextType {
   return {
     themeOption: currentThemeOption,
     theme: juiceTheme(currentThemeOption),
-    isDarkMode: isDarkMode,
+    isDarkMode,
     forThemeOption: map => map[currentThemeOption],
     setThemeOption: (themeOption: ThemeOption) => {
       setRootVarsForThemeOption(themeOption)

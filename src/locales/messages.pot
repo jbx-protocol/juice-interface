@@ -3440,7 +3440,7 @@ msgstr ""
 msgid "{0, plural, one {# Payment Address} other {# Payment Addresses}}"
 msgstr ""
 
-msgid "{0, plural, one {# transaction needs} other {# transactions need}}"
+msgid "{0, plural, one {# transaction needs your signature} other {# transactions need your signature}}"
 msgstr ""
 
 msgid "{0, plural, one {View deployed Payment Address} other {View deployed Payment Addresses}}"
@@ -3491,9 +3491,6 @@ msgstr ""
 msgid "{0} withdrawn"
 msgstr ""
 
-msgid "{0} your signature."
-msgstr ""
-
 msgid "{0} {tokenTextPlural} reserved"
 msgstr ""
 
@@ -3513,6 +3510,9 @@ msgid "{0}% to <0/>"
 msgstr ""
 
 msgid "{0}% to {1}"
+msgstr ""
+
+msgid "{0}."
 msgstr ""
 
 msgid "{0}/{1} withdrawn"

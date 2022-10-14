@@ -1,6 +1,6 @@
 import { CV_V2, CV_V3 } from 'constants/cv'
 import { useLoadV2V3Contract } from 'hooks/v2v3/LoadV2V3Contract'
-import { GnosisSafe, GnosisSignature, SafeTransactionType } from 'models/safe'
+import { GnosisSafe, SafeTransactionType } from 'models/safe'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 
 // e.g. [ {nonce: 69}, {nonce: 45}, {nonce: 69}] returns [69, 45]
@@ -13,24 +13,19 @@ export function getUniqueNonces(transactions: SafeTransactionType[]) {
 }
 
 // returns subset of given transactions for which a given address has not signed
-export function getUnsignedTxsOfUser({
+export function getUnsignedTxsForAddress({
   address,
   transactions,
 }: {
   address: string
   transactions: SafeTransactionType[]
 }) {
-  const unsignedTxs: SafeTransactionType[] = []
-  transactions.forEach((transaction: SafeTransactionType) => {
-    let hasSigned = false
-    transaction.confirmations?.forEach((confirmation: GnosisSignature) => {
-      if (confirmation.owner.toLowerCase() === address) {
-        hasSigned = true
-      }
-    })
-    if (!hasSigned) unsignedTxs.push(transaction)
-  })
-  return unsignedTxs
+  return transactions.filter(
+    (tx: SafeTransactionType) =>
+      !tx?.confirmations?.some(
+        confirmation => confirmation.owner.toLowerCase() === address,
+      ),
+  )
 }
 
 // returns whether given wallet is member of a given Safe multisig

@@ -1,5 +1,6 @@
 import { t } from '@lingui/macro'
 import { useCallback, useContext, useMemo } from 'react'
+import { useEditingCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { WizardContext } from '../contexts'
 
 const stepNames: Record<string, string> = {
@@ -13,8 +14,16 @@ const stepNames: Record<string, string> = {
   reviewDeploy: t`Deploy`,
 }
 
+const isStepDisabled = (stepName: string, furthestStep: string) => {
+  const stepIndex = Object.keys(stepNames).indexOf(stepName)
+  const furthestStepIndex = Object.keys(stepNames).indexOf(furthestStep)
+  return stepIndex > furthestStepIndex
+}
+
 export const useSteps = () => {
   const { pages, currentPage, goToPage } = useContext(WizardContext)
+  const { furthestPageReached } = useEditingCreateFurthestPageReached()
+  const furthertStepIndex = Object.keys(stepNames).indexOf(furthestPageReached)
   if (!pages?.length || !currentPage) {
     console.warn(
       'Steps used but no pages found. Did you forget to add WizardContext.Provider, or add pages?',
@@ -23,8 +32,13 @@ export const useSteps = () => {
   }
 
   const steps = useMemo(
-    () => pages?.map(p => ({ id: p.name, title: stepNames[p.name] })),
-    [pages],
+    () =>
+      pages?.map(p => ({
+        id: p.name,
+        title: stepNames[p.name],
+        disabled: isStepDisabled(p.name, furthestPageReached),
+      })),
+    [furthestPageReached, pages],
   )
 
   const currentIndex = useMemo(
@@ -34,11 +48,15 @@ export const useSteps = () => {
 
   const onStepClicked = useCallback(
     (index: number) => {
-      if (index > (currentIndex ?? -1)) return
       goToPage?.(pages?.[index].name ?? '')
     },
-    [currentIndex, goToPage, pages],
+    [goToPage, pages],
   )
 
-  return { steps, current: { index: currentIndex }, onStepClicked }
+  return {
+    steps,
+    current: { index: currentIndex },
+    furthestStepReached: { index: furthertStepIndex },
+    onStepClicked,
+  }
 }

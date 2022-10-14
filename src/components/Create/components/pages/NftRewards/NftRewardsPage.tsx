@@ -2,12 +2,14 @@ import { QuestionCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Form, Input, Space } from 'antd'
 import { useContext } from 'react'
+import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { RewardsList } from '../../RewardsList'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { useNftRewardsForm } from './hooks'
 
 export const NftRewardsPage = () => {
+  useSetCreateFurthestPageReached('nftRewards')
   const { form, initialValues } = useNftRewardsForm()
   const { goToNextPage } = useContext(PageContext)
   return (

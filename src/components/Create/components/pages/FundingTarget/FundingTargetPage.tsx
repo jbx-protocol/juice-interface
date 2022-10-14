@@ -7,6 +7,7 @@ import { t, Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import { useContext } from 'react'
+import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { CurrencySelectInput } from '../../CurrencySelectInput'
 import { RecallCard } from '../../RecallCard'
 import { Selection } from '../../Selection'
@@ -15,6 +16,7 @@ import { PageContext } from '../../Wizard/contexts/PageContext'
 import { useFundingTargetForm } from './hooks'
 
 export const FundingTargetPage: React.FC = () => {
+  useSetCreateFurthestPageReached('fundingTarget')
   const { goToNextPage } = useContext(PageContext)
   const { form, initialValues } = useFundingTargetForm()
 

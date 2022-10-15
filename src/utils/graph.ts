@@ -63,6 +63,11 @@ import {
   VeNftTokenJson,
 } from 'models/subgraph-entities/v2/venft-token'
 import {
+  AddToBalanceEvent,
+  AddToBalanceEventJson,
+  parseAddToBalanceEventJson,
+} from 'models/subgraph-entities/vX/add-to-balance-event'
+import {
   DeployedERC20Event,
   DeployedERC20EventJson,
   parseDeployedERC20EventJson,
@@ -122,6 +127,7 @@ export interface SubgraphEntities {
   project: Project
   projectSearch: Project
   payEvent: PayEvent
+  addToBalanceEvent: AddToBalanceEvent
   redeemEvent: RedeemEvent
   participant: Participant
   tapEvent: TapEvent
@@ -148,6 +154,7 @@ export interface SubgraphQueryReturnTypes {
   project: { projects: ProjectJson[] }
   projectSearch: { projectSearch: ProjectJson[] }
   payEvent: { payEvents: PayEventJson[] }
+  addToBalanceEvent: { addToBalanceEvents: AddToBalanceEventJson[] }
   redeemEvent: { redeemEvents: RedeemEventJson[] }
   participant: { participants: ParticipantJson[] }
   tapEvent: { tapEvents: TapEventJson[] }
@@ -373,6 +380,12 @@ export function formatGraphResponse<E extends EntityKey>(
       if ('payEvents' in response) {
         // @ts-ignore
         return response.payEvents.map(parsePayEventJson)
+      }
+      break
+    case 'addToBalanceEvent':
+      if ('addToBalanceEvents' in response) {
+        // @ts-ignore
+        return response.addToBalanceEvents.map(parseAddToBalanceEventJson)
       }
       break
     case 'redeemEvent':

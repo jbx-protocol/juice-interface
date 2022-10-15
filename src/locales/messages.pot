@@ -332,6 +332,9 @@ msgstr ""
 msgid "Add wallet addresses or juicebox projects to receive payouts."
 msgstr ""
 
+msgid "Added to balance"
+msgstr ""
+
 msgid "Address"
 msgstr ""
 

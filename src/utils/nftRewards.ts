@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { juiceboxEmojiImageUri } from 'constants/images'
+import { readNetwork } from 'constants/networks'
 import {
   ContractNftRewardTier,
   IpfsNftCollectionMetadata,
@@ -15,7 +16,7 @@ export const MAX_NFT_REWARD_TIERS = 3
 // TODO: will need to incorporate `networkName` into this first function when contracts deployed to mainnet
 async function getLatestNftContractDeployments() {
   const latestNftContractDeployments = await import(
-    '@jbx-protocol/juice-nft-rewards/broadcast/Deploy.s.sol/4/run-latest.json'
+    `@jbx-protocol/juice-nft-rewards/broadcast/Deploy.s.sol/${readNetwork.chainId}/run-latest.json`
   )
   return latestNftContractDeployments
 }

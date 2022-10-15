@@ -141,6 +141,16 @@ export function useProjectsSearch(handle: string | undefined) {
 }
 
 export function useTrendingProjects(count: number) {
+  const whereQuery: WhereConfig<'project'>[] = []
+
+  if (ARCHIVED_SUBGRAPH_IDS.length) {
+    whereQuery.push({
+      key: 'id',
+      value: ARCHIVED_SUBGRAPH_IDS,
+      operator: 'not_in',
+    })
+  }
+
   return useSubgraphQuery({
     entity: 'project',
     keys: [
@@ -153,13 +163,7 @@ export function useTrendingProjects(count: number) {
     first: count,
     orderBy: 'trendingScore',
     orderDirection: 'desc',
-    where: [
-      {
-        key: 'id',
-        value: ARCHIVED_SUBGRAPH_IDS,
-        operator: 'not_in',
-      },
-    ],
+    where: whereQuery,
   })
 }
 

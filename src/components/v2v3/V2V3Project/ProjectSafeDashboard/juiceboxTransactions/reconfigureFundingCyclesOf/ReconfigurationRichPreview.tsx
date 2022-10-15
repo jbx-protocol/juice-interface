@@ -77,8 +77,10 @@ export function ReconfigureRichPreview({
   const reservedTokensSplits = decodedData._groupedSplits?.[1]?.splits
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <div style={{ margin: '1rem 3rem 0' }}>
+    <div
+      style={{ display: 'flex', flexDirection: 'column', cursor: 'default' }}
+    >
+      <div style={{ margin: '0.5rem 1.5rem 0' }}>
         {decodedData._memo.length ? (
           <i>{decodedData._memo}</i>
         ) : (
@@ -91,7 +93,7 @@ export function ReconfigureRichPreview({
       </div>
       <Space
         size={'middle'}
-        style={{ margin: '1rem 2rem' }}
+        style={{ margin: '1rem 1.5rem' }}
         direction={'vertical'}
         onClick={e => e.stopPropagation()}
       >
@@ -105,16 +107,14 @@ export function ReconfigureRichPreview({
         </MinimalCollapse>
         <MinimalCollapse header={t`Funding distribution`} light>
           {distributionLimit?.gt(0) ? (
-            payoutSplits ? (
-              <SplitList
-                splits={formatOutgoingSplits(payoutSplits)}
-                currency={distributionLimitCurrency}
-                totalValue={distributionLimit}
-                projectOwnerAddress={projectOwnerAddress}
-                showSplitValues={!distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)}
-                valueFormatProps={{ precision: 4 }}
-              />
-            ) : null
+            <SplitList
+              splits={formatOutgoingSplits(payoutSplits)}
+              currency={distributionLimitCurrency}
+              totalValue={distributionLimit}
+              projectOwnerAddress={projectOwnerAddress}
+              showSplitValues={!distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)}
+              valueFormatProps={{ precision: 4 }}
+            />
           ) : (
             <span style={{ color: colors.text.tertiary }}>
               <Trans>No distributions configured.</Trans>
@@ -123,14 +123,12 @@ export function ReconfigureRichPreview({
         </MinimalCollapse>
         <MinimalCollapse header={t`Reserved token allocation`} light>
           {reservedRate?.gt(0) ? (
-            reservedTokensSplits ? (
-              <SplitList
-                splits={formatOutgoingSplits(reservedTokensSplits)}
-                projectOwnerAddress={projectOwnerAddress}
-                totalValue={undefined}
-                reservedRate={parseFloat(formatReservedRate(reservedRate))}
-              />
-            ) : null
+            <SplitList
+              splits={formatOutgoingSplits(reservedTokensSplits)}
+              projectOwnerAddress={projectOwnerAddress}
+              totalValue={undefined}
+              reservedRate={parseFloat(formatReservedRate(reservedRate))}
+            />
           ) : (
             <span style={{ color: colors.text.tertiary }}>
               <Trans>No reserved tokens configured.</Trans>
@@ -138,12 +136,7 @@ export function ReconfigureRichPreview({
           )}
         </MinimalCollapse>
       </Space>
-      <LinkToSafeButton
-        transaction={transaction}
-        style={{
-          marginTop: '1rem',
-        }}
-      />
+      <LinkToSafeButton transaction={transaction} />
     </div>
   )
 }

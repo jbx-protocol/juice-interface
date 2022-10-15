@@ -13,7 +13,14 @@ export function LinkToSafeButton({
   style?: CSSProperties
 }) {
   return (
-    <div style={{ ...style, display: 'flex' }}>
+    <div
+      style={{
+        ...style,
+        display: 'flex',
+        marginLeft: '1.5rem',
+        fontSize: '0.8rem',
+      }}
+    >
       <ExternalLink
         href={generateSafeTxUrl(transaction)}
         style={{ textDecoration: 'underline' }}

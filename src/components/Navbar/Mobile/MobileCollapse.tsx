@@ -14,7 +14,6 @@ import { TopLeftNavItems } from '../MenuItems'
 import NavLanguageSelector from '../NavLanguageSelector'
 import { topNavStyles } from '../navStyles'
 import { TransactionsList } from '../TransactionList'
-import ResourcesDropdownMobile from './ResourcesDropdownMobile'
 import ThemePickerMobile from './ThemePickerMobile'
 
 const NAV_EXPANDED_KEY = 0
@@ -113,9 +112,10 @@ export default function MobileCollapse() {
           }
         >
           <Menu mode="inline" defaultSelectedKeys={['resources']}>
-            <TopLeftNavItems mobile onClickMenuItems={() => collapseNav()} />
-
-            <ResourcesDropdownMobile />
+            <TopLeftNavItems
+              desktop={false}
+              onClickMenuItems={() => collapseNav()}
+            />
 
             <div style={{ marginLeft: 15 }}>
               <Menu.Item key="language-selector">

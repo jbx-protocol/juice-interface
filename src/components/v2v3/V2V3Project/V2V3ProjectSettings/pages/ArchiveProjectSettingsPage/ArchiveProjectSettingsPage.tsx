@@ -1,4 +1,4 @@
-import ArchiveProject from 'components/ArchiveProject'
+import { ArchiveProject } from 'components/Project/ArchiveProject'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useEditProjectDetailsTx } from 'hooks/v2v3/transactor/EditProjectDetailsTx'
 import React, { useContext } from 'react'

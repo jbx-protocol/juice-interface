@@ -49,16 +49,6 @@ export const NETWORKS: Record<number, NetworkInfo> = {
     blockExplorer: 'https://kovan.etherscan.io/',
     faucet: 'https://gitter.im/kovan-testnet/faucet', //https://faucet.kovan.network/
   },
-  4: {
-    name: NetworkName.rinkeby,
-    label: 'Rinkeby',
-    token: 'RINK ETH',
-    color: '#e0d068',
-    chainId: 4,
-    rpcUrl: `https://rinkeby.infura.io/v3/${infuraId}`,
-    faucet: 'https://faucet.rinkeby.io/',
-    blockExplorer: 'https://rinkeby.etherscan.io/',
-  },
   3: {
     name: NetworkName.ropsten,
     label: 'Ropsten',

@@ -31,7 +31,7 @@ const V1ArchivedProjectIdsByNetwork: Partial<Record<NetworkName, number[]>> = {
     CITYMONK,
     JUS_DAO,
   ],
-  [NetworkName.rinkeby]: [],
+  [NetworkName.goerli]: [],
 }
 
 export const V1ArchivedProjectIds =

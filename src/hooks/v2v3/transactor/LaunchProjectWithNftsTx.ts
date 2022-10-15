@@ -59,17 +59,19 @@ async function getJBDeployTiered721DelegateData({
     )
     const maxSupply = nftRewards[cid].maxSupply
     const initialQuantity = maxSupply ?? MaxUint48
-
+    const remainingQuantity = 0 // TODO
     const encodedIPFSUri = encodeIPFSUri(cid)
 
     return {
       contributionFloor: contributionFloorWei,
       lockedUntil: BigNumber.from(0),
+      remainingQuantity,
       initialQuantity,
       votingUnits: 0,
       reservedRate: 0,
       reservedTokenBeneficiary: constants.AddressZero,
       encodedIPFSUri,
+      allowManualMint: false,
       shouldUseBeneficiaryAsDefault: false,
     }
   })

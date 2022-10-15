@@ -1,6 +1,7 @@
 import { DownloadOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Select, Space } from 'antd'
+import AddToBalanceEventElem from 'components/activityEventElems/AddToBalanceEventElem'
 import DeployedERC20EventElem from 'components/activityEventElems/DeployedERC20EventElem'
 import PayEventElem from 'components/activityEventElems/PayEventElem'
 import ProjectCreateEventElem from 'components/activityEventElems/ProjectCreateEventElem'
@@ -13,6 +14,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
 import { PrintReservesEvent } from 'models/subgraph-entities/v1/print-reserves-event'
 import { TapEvent } from 'models/subgraph-entities/v1/tap-event'
+import { AddToBalanceEvent } from 'models/subgraph-entities/vX/add-to-balance-event'
 import { DeployedERC20Event } from 'models/subgraph-entities/vX/deployed-erc20-event'
 import { PayEvent } from 'models/subgraph-entities/vX/pay-event'
 import { ProjectCreateEvent } from 'models/subgraph-entities/vX/project-create-event'
@@ -27,6 +29,7 @@ import { V1DownloadActivityModal } from './V1DownloadActivityModal'
 type EventFilter =
   | 'all'
   | 'pay'
+  | 'addToBalance'
   | 'redeem'
   | 'withdraw'
   | 'printReserves'
@@ -78,6 +81,9 @@ export default function ProjectActivity() {
       case 'pay':
         key = 'payEvent'
         break
+      case 'addToBalance':
+        key = 'addToBalanceEvent'
+        break
       case 'printReserves':
         key = 'printReservesEvent'
         break
@@ -121,6 +127,10 @@ export default function ProjectActivity() {
       {
         entity: 'payEvent',
         keys: ['amount', 'timestamp', 'beneficiary', 'note', 'id', 'txHash'],
+      },
+      {
+        entity: 'addToBalanceEvent',
+        keys: ['amount', 'timestamp', 'caller', 'id', 'txHash'],
       },
       {
         entity: 'deployedERC20Event',
@@ -182,6 +192,13 @@ export default function ProjectActivity() {
 
           if (e.payEvent) {
             elem = <PayEventElem event={e.payEvent as PayEvent} />
+          }
+          if (e.addToBalanceEvent) {
+            elem = (
+              <AddToBalanceEventElem
+                event={e.addToBalanceEvent as AddToBalanceEvent}
+              />
+            )
           }
           if (e.tapEvent) {
             elem = <TapEventElem event={e.tapEvent as TapEvent} />
@@ -315,6 +332,9 @@ export default function ProjectActivity() {
             </Select.Option>
             <Select.Option value="pay">
               <Trans>Paid</Trans>
+            </Select.Option>
+            <Select.Option value="addToBalance">
+              <Trans>Added to balance</Trans>
             </Select.Option>
             {/* TODO */}
             {/* <Select.Option value="mintTokens">

@@ -42,25 +42,30 @@ export function AmountFormItem({
     if (!fee || !amount || amount === '0') return null
 
     const feePercentage = formatFee(fee)
-    const amountSubFeeValue = amountSubFee(parseWad(stripCommas(amount)), fee)
+    try {
+      const amountSubFeeValue = amountSubFee(parseWad(stripCommas(amount)), fee)
 
-    return (
-      <TooltipLabel
-        label={
-          <Trans>
-            <CurrencySymbol currency={currencyName} />
-            {formatWad(amountSubFeeValue, { precision: 4 })} after{' '}
-            {feePercentage}% JBX membership fee
-          </Trans>
-        }
-        tip={
-          <Trans>
-            Payouts to Ethereum addresses incur a {feePercentage}% fee. Your
-            project will receive JBX in return at the current issuance rate.
-          </Trans>
-        }
-      />
-    )
+      return (
+        <TooltipLabel
+          label={
+            <Trans>
+              <CurrencySymbol currency={currencyName} />
+              {formatWad(amountSubFeeValue, { precision: 4 })} after{' '}
+              {feePercentage}% JBX membership fee
+            </Trans>
+          }
+          tip={
+            <Trans>
+              Payouts to Ethereum addresses incur a {feePercentage}% fee. Your
+              project will receive JBX in return at the current issuance rate.
+            </Trans>
+          }
+        />
+      )
+    } catch (e) {
+      console.error(e)
+      return null
+    }
   }
 
   return (

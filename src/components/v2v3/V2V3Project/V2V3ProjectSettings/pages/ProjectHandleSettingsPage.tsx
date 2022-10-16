@@ -1,21 +1,21 @@
 import { CheckCircleFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-import { Button, Divider, Form } from 'antd'
+import { Button, Divider, Form, Space, Statistic } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
+import Callout from 'components/Callout'
 import ExternalLink from 'components/ExternalLink'
 import { FormItems } from 'components/formItems'
-
-import { ThemeContext } from 'contexts/themeContext'
+import { MinimalCollapse } from 'components/MinimalCollapse'
+import { projectHandleENSTextRecordKey } from 'constants/projectHandleENSTextRecordKey'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import useProjectENSName from 'hooks/v2v3/contractReader/ProjectENSName'
 import { useProjectHandleENSTextRecord } from 'hooks/v2v3/contractReader/ProjectHandleENSTextRecord'
 import { useEditV2V3ProjectHandleTx } from 'hooks/v2v3/transactor/EditV2V3ProjectHandleTx'
 import { useSetENSTextRecordForHandleTx } from 'hooks/v2v3/transactor/SetENSTextRecordForHandleTx'
+import Link from 'next/link'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { v2v3ProjectRoute } from 'utils/routes'
-
-import { projectHandleENSTextRecordKey } from 'constants/projectHandleENSTextRecordKey'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 
 export function ProjectHandleSettingsPage() {
   const { handle } = useContext(V2V3ProjectContext)
@@ -34,14 +34,8 @@ export function ProjectHandleSettingsPage() {
 
   const { data: projectEnsName } = useProjectENSName({ projectId })
 
-  const { colors } = useContext(ThemeContext).theme
-
   const editV2V3ProjectHandleTx = useEditV2V3ProjectHandleTx()
   const setENSTextRecordForHandleTx = useSetENSTextRecordForHandleTx()
-
-  useEffect(() => {
-    if (projectEnsName?.length) setEnsNameInputDisabled(true)
-  }, [projectEnsName])
 
   function onSetENSNameFormSaved() {
     setLoadingSetENSName(true)
@@ -81,74 +75,105 @@ export function ProjectHandleSettingsPage() {
   }, [ensNameForm, projectEnsName])
 
   useEffect(() => {
+    if (projectEnsName?.length) setEnsNameInputDisabled(true)
+  }, [projectEnsName])
+
+  useEffect(() => {
     resetHandleForm()
   }, [resetHandleForm])
 
+  const exampleHandleUrl = `juicebox.money${v2v3ProjectRoute({
+    handle: 'handle',
+  })}`
+  const projectIdUrl = `juicebox.money${v2v3ProjectRoute({ projectId })}`
+
   return (
     <>
-      <h3>
-        {handle ? (
-          <Trans>Change project handle</Trans>
-        ) : (
-          <Trans>Set project handle</Trans>
+      <Space direction="vertical">
+        {handle && (
+          <Statistic
+            title={<Trans>Current handle</Trans>}
+            value={`@${handle}`}
+          />
         )}
-      </h3>
 
-      {handle && (
-        <div style={{ fontWeight: 'bold', fontSize: '1.4rem' }}>@{handle}</div>
-      )}
+        <div>
+          <p>
+            <Trans>
+              Juicebox projects use{' '}
+              <ExternalLink href="https://ens.domains/">ENS names</ExternalLink>{' '}
+              as handles. Projects with a handle have the following features:
+            </Trans>
+          </p>
+          <p>
+            <ul>
+              <Space direction="vertical">
+                <li>
+                  <Trans>
+                    Included in search results on the{' '}
+                    <Link href="/projects">Projects</Link> page.
+                  </Trans>
+                </li>
+                <li>
+                  <Trans>
+                    Accessible via the URL <strong>{exampleHandleUrl}</strong>.
+                  </Trans>
+                </li>
+                <li>
+                  <Trans>
+                    The original URL <strong>{projectIdUrl}</strong> will remain
+                    active.
+                  </Trans>
+                </li>
+              </Space>
+            </ul>
+          </p>
 
-      <p>
-        <Trans>
-          Projects with a handle:
-          <br />
-          <br />
-          1. Are included in search results on the projects page
-          <br />
-          2. Can be accessed via the URL:{' '}
-          <b>juicebox.money{v2v3ProjectRoute({ handle: 'handle' })}</b>
-          <br />
-          <br />
-          (The original URL{' '}
-          <b>juicebox.money{v2v3ProjectRoute({ projectId })}</b> will continue
-          to work.)
-        </Trans>
-      </p>
+          <p style={{ margin: 0 }}>
+            <Trans>
+              Setting a handle requires 2 transactions:{' '}
+              <strong>Set ENS name</strong> and <strong>Set text record</strong>
+              .
+            </Trans>
+          </p>
+        </div>
+      </Space>
 
       <Divider />
 
-      <p style={{ color: colors.text.primary }}>
-        <Trans>
-          Juicebox projects use{' '}
-          <ExternalLink href="https://ens.domains/">ENS names</ExternalLink> as
-          handles. Setting a handle involves 2 transactions:
-        </Trans>
-      </p>
-
-      <br />
-
-      <h4>
+      <h3>
         <Trans>1. Set ENS name</Trans>
-      </h4>
+      </h3>
 
-      <p style={{ color: colors.text.primary }}>
+      <p>
         <Trans>
           Choose an ENS name to use as the project's handle. Subdomains are
           allowed and will be included in the handle. Handles won't include the
           ".eth" extension.
-          <br />
-          <br />
-          juicebox.eth = @juicebox
-          <br />
-          dao.juicebox.eth = @dao.juicebox
         </Trans>
       </p>
 
+      <MinimalCollapse
+        header={<Trans>See example</Trans>}
+        style={{ marginBottom: '1rem' }}
+      >
+        <ul>
+          <Space direction="vertical">
+            <li>juicebox.eth = @juicebox</li>
+            <li>dao.juicebox.eth = @dao.juicebox</li>
+          </Space>
+        </ul>
+      </MinimalCollapse>
+
       {ensNameInputDisabled ? (
         <div>
-          <strong>ENS Name:</strong> {projectEnsName}.eth
-          <br />
-          <br />
+          <p>
+            <Statistic
+              title={<Trans>Project ENS name</Trans>}
+              value={`${projectEnsName}.eth`}
+            />
+          </p>
+
           <Button onClick={() => setEnsNameInputDisabled(false)} type="primary">
             <Trans>Change ENS name</Trans>
           </Button>
@@ -181,11 +206,11 @@ export function ProjectHandleSettingsPage() {
 
       <Divider />
 
-      <h4>
+      <h3>
         <Trans>2. Set text record</Trans>
-      </h4>
+      </h3>
 
-      <p style={{ color: colors.text.primary }}>
+      <p>
         <Trans>
           Set a text record for{' '}
           {handle ? <strong>{handle}.eth</strong> : 'that ENS name'} with the
@@ -195,7 +220,7 @@ export function ProjectHandleSettingsPage() {
           <ExternalLink
             href={
               projectEnsName
-                ? `https://app.ens.domains/name/${projectEnsName}/details`
+                ? `https://app.ens.domains/name/${projectEnsName}.eth/details`
                 : 'https://app.ens.domains'
             }
           >
@@ -226,9 +251,9 @@ export function ProjectHandleSettingsPage() {
       )}
 
       {!projectEnsName && (
-        <p style={{ color: colors.text.secondary }}>
-          Choose an ENS name before setting the text record
-        </p>
+        <Callout>
+          <Trans>Choose an ENS name before setting the text record</Trans>
+        </Callout>
       )}
     </>
   )

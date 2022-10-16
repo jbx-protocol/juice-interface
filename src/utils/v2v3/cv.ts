@@ -46,10 +46,10 @@ export async function isV3Project(projectId: number): Promise<boolean> {
     loadV3JBController(),
   ])
   if (!V3JBDirectory) {
-    throw new Error(`contract not found ${V2V3ContractName.JBDirectory}`)
+    throw new Error(`contract not found: ${V2V3ContractName.JBDirectory}`)
   }
   if (!V3JBController) {
-    throw new Error(`contract not found ${V2V3ContractName.JBController}`)
+    throw new Error(`contract not found: ${V2V3ContractName.JBController}`)
   }
 
   const projectControllerAddress = await V3JBDirectory.controllerOf(projectId)

@@ -10,7 +10,7 @@ import { useIsUserAddress } from 'hooks/IsUserAddress'
 
 import useTwitterVerified from 'hooks/TwitterVerified'
 import Link from 'next/link'
-import { useContext } from 'react'
+import { useContext, useMemo } from 'react'
 import { settingsPagePath } from 'utils/routes'
 
 const TwitterVerificationIcon = () => {
@@ -24,7 +24,7 @@ const TwitterVerificationIcon = () => {
 
   const canVerify = useIsUserAddress(projectOwnerAddress)
 
-  const renderUnverifiedMessage = () => {
+  const renderUnverifiedMessage = useMemo(() => {
     return (
       <>
         <Trans>Twitter handle unverified.</Trans>
@@ -43,7 +43,8 @@ const TwitterVerificationIcon = () => {
         )}
       </>
     )
-  }
+  }, [canVerify, handle, projectId])
+
   return (
     <div>
       {isVerified ? (

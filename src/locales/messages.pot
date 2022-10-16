@@ -2951,9 +2951,6 @@ msgstr ""
 msgid "Twitter account disconnected."
 msgstr ""
 
-msgid "Twitter already connected"
-msgstr ""
-
 msgid "Twitter authentication failed."
 msgstr ""
 

@@ -97,7 +97,7 @@ export const VerifyTwitterSettingsPage = () => {
     return (
       <>
         <h4>
-          <Trans>Twitter already connected</Trans>
+          <Trans>Twitter connected</Trans>
         </h4>
         <p>
           <Trans>

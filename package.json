@@ -57,7 +57,7 @@
     "@jbx-protocol/juice-contracts-v3": "2.0.2",
     "@jbx-protocol/juice-nft-rewards": "^4.0.0",
     "@jbx-protocol/juice-v1-token-terminal": "1.0.1",
-    "@jbx-protocol/project-handles": "^2.0.0",
+    "@jbx-protocol/project-handles": "2.0.2",
     "@jbx-protocol/ve-nft": "0.0.6",
     "@lingui/cli": "^3.13.0",
     "@lingui/detect-locale": "^3.13.0",

@@ -3923,7 +3923,7 @@
   resolved "https://registry.yarnpkg.com/@jbx-protocol/contracts-v2/-/contracts-v2-8.0.4.tgz#ceb72c01f56d528691d048d488fef2566961bb88"
   integrity sha512-AXEMkQzBOlllI0QNUadH1O+vkNnXCxfVXxff1OYWkx3qEqWNyPKifAv9ISECvEiFeN025dutivk3jNWjvbs+tQ==
 
-"@jbx-protocol/juice-contracts-v3@2.0.2":
+"@jbx-protocol/juice-contracts-v3@2.0.2", "@jbx-protocol/juice-contracts-v3@^2.0.0":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-contracts-v3/-/juice-contracts-v3-2.0.2.tgz#8bf7f451a1169473ae6e4f79f2fe40511c4623ce"
   integrity sha512-Xf9ZJbpIKjEwrcFfWKLMO8WmAO2OOZ/cJCV06XZZkApHHyJls901wyxX+EUZJHQkODO6zFjBGf8IHPla4YFYAw==
@@ -3943,10 +3943,12 @@
   resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-v1-token-terminal/-/juice-v1-token-terminal-1.0.1.tgz#b3855be69d4ebce57747cee2603df88f7ed23aad"
   integrity sha512-HZXbb6eOxCKmb/VCXDTcLEKyX6jsJhfHAS4mUu+VR18ReibNnwcdjltqsCBkNJlPOMDd3q1MVTXMrnGaOEHzIA==
 
-"@jbx-protocol/project-handles@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@jbx-protocol/project-handles/-/project-handles-2.0.0.tgz#9b70cdd34d4e985003c59f48643063a983322557"
-  integrity sha512-kpfIuUYzF9wTUjFw02e1Pl3GkV7PtrnNddcKxveE/IgLhVp4qlVuukasJockaLrYeV4qzQ/2YVg+6RTjMNZ38Q==
+"@jbx-protocol/project-handles@2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@jbx-protocol/project-handles/-/project-handles-2.0.2.tgz#276f2530092455136d00d0a78d18a17cb1450111"
+  integrity sha512-8ebDxeT+2G2+e+54/Jn82TBg+qT5a5Vwa7fu9ihjkmHe3SWt1GwzzKA/cVeN6xu2N/tM4Mbjz1xqbUS0hdn8oQ==
+  dependencies:
+    "@jbx-protocol/juice-contracts-v3" "^2.0.0"
 
 "@jbx-protocol/ve-nft@0.0.6":
   version "0.0.6"

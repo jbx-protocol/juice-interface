@@ -260,6 +260,9 @@ msgstr ""
 msgid "AVAILABLE"
 msgstr ""
 
+msgid "Accessible via the URL <0>{exampleHandleUrl}</0>."
+msgstr ""
+
 msgid "Active"
 msgstr ""
 
@@ -590,9 +593,6 @@ msgstr ""
 msgid "Change networks to deploy"
 msgstr ""
 
-msgid "Change project handle"
-msgstr ""
-
 msgid "Changes to payouts will take effect immediately."
 msgstr ""
 
@@ -614,7 +614,10 @@ msgstr ""
 msgid "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC-20 tokens later."
 msgstr ""
 
-msgid "Choose an ENS name to use as the project's handle. Subdomains are allowed and will be included in the handle. Handles won't include the \".eth\" extension.<0/><1/>juicebox.eth = @juicebox<2/>dao.juicebox.eth = @dao.juicebox"
+msgid "Choose an ENS name before setting the text record"
+msgstr ""
+
+msgid "Choose an ENS name to use as the project's handle. Subdomains are allowed and will be included in the handle. Handles won't include the \".eth\" extension."
 msgstr ""
 
 msgid "Choose how you would like to configure your payouts."
@@ -810,6 +813,9 @@ msgid "Current"
 msgstr ""
 
 msgid "Current 3rd Party Exchange Rates"
+msgstr ""
+
+msgid "Current handle"
 msgstr ""
 
 msgid "Current owner: {ownerAddress}"
@@ -1400,6 +1406,9 @@ msgstr ""
 msgid "Incentives"
 msgstr ""
 
+msgid "Included in search results on the <0>Projects</0> page."
+msgstr ""
+
 msgid "Indie creators and builders"
 msgstr ""
 
@@ -1490,7 +1499,7 @@ msgstr ""
 msgid "Juicebox projects are funded in cycles. You can think of this as a set period of time in which your project settings are locked."
 msgstr ""
 
-msgid "Juicebox projects use <0>ENS names</0> as handles. Setting a handle involves 2 transactions:"
+msgid "Juicebox projects use <0>ENS names</0> as handles. Projects with a handle have the following features:"
 msgstr ""
 
 msgid "LINK TO NFT"
@@ -2000,6 +2009,9 @@ msgstr ""
 msgid "Project Details"
 msgstr ""
 
+msgid "Project ENS name"
+msgstr ""
+
 msgid "Project ID must be a number."
 msgstr ""
 
@@ -2121,9 +2133,6 @@ msgid "Projects that you hold tokens for."
 msgstr ""
 
 msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will appear risky to contributors, as a relatively small number of tokens will be received in exchange for paying your project."
-msgstr ""
-
-msgid "Projects with a handle:<0/><1/>1. Are included in search results on the projects page<2/>2. Can be accessed via the URL: <3>juicebox.money{0}</3><4/><5/>(The original URL <6>juicebox.money{1}</6> will continue to work.)"
 msgstr ""
 
 msgid "Provide a link to additional information about this NFT."
@@ -2396,6 +2405,9 @@ msgstr ""
 msgid "See Tx on Safe"
 msgstr ""
 
+msgid "See example"
+msgstr ""
+
 msgid "Select the option that best suits your project’s funding requirements."
 msgstr ""
 
@@ -2462,9 +2474,6 @@ msgstr ""
 msgid "Set payouts of {projectTitle}"
 msgstr ""
 
-msgid "Set project handle"
-msgstr ""
-
 msgid "Set reserved tokens of {projectTitle}"
 msgstr ""
 
@@ -2508,6 +2517,9 @@ msgid "Set veNFT operator for {projectTitle}"
 msgstr ""
 
 msgid "Set your funding target"
+msgstr ""
+
+msgid "Setting a handle requires 2 transactions: <0>Set ENS name</0> and <1>Set text record</1>."
 msgstr ""
 
 msgid "Should you Juicebox?"
@@ -2664,6 +2676,9 @@ msgid "The number of project tokens minted when 1 ETH is contributed."
 msgstr ""
 
 msgid "The onchain memo for each payment made to this address. The project's payment feed will include the memo alongside the payment."
+msgstr ""
+
+msgid "The original URL <0>{projectIdUrl}</0> will remain active."
 msgstr ""
 
 msgid "The percentage this individual receives of the overall {reservedRate}% reserved token allocation"

@@ -260,7 +260,7 @@ msgstr ""
 msgid "AVAILABLE"
 msgstr ""
 
-msgid "Accessible via the URL <0>juicebox.money{0}</0>."
+msgid "Accessible via the URL <0>{exampleHandleUrl}</0>."
 msgstr ""
 
 msgid "Active"
@@ -2678,7 +2678,7 @@ msgstr ""
 msgid "The onchain memo for each payment made to this address. The project's payment feed will include the memo alongside the payment."
 msgstr ""
 
-msgid "The original URL <0>juicebox.money{0}</0> will remain active."
+msgid "The original URL <0>{projectIdUrl}</0> will remain active."
 msgstr ""
 
 msgid "The percentage this individual receives of the overall {reservedRate}% reserved token allocation"

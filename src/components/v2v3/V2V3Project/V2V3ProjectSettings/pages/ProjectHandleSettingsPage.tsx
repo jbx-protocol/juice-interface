@@ -82,6 +82,11 @@ export function ProjectHandleSettingsPage() {
     resetHandleForm()
   }, [resetHandleForm])
 
+  const exampleHandleUrl = `juicebox.money${v2v3ProjectRoute({
+    handle: 'handle',
+  })}`
+  const projectIdUrl = `juicebox.money${v2v3ProjectRoute({ projectId })}`
+
   return (
     <>
       <Space direction="vertical">
@@ -111,20 +116,13 @@ export function ProjectHandleSettingsPage() {
                 </li>
                 <li>
                   <Trans>
-                    Accessible via the URL{' '}
-                    <strong>
-                      juicebox.money{v2v3ProjectRoute({ handle: 'handle' })}
-                    </strong>
-                    .
+                    Accessible via the URL <strong>{exampleHandleUrl}</strong>.
                   </Trans>
                 </li>
                 <li>
                   <Trans>
-                    The original URL{' '}
-                    <strong>
-                      juicebox.money{v2v3ProjectRoute({ projectId })}
-                    </strong>{' '}
-                    will remain active.
+                    The original URL <strong>{projectIdUrl}</strong> will remain
+                    active.
                   </Trans>
                 </li>
               </Space>

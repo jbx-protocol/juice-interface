@@ -212,7 +212,7 @@ msgstr ""
 msgid "<0>Users fund your project by paying to use your app or service, or as a patron or investor by making a payment directly to your project's smart contract (like on this app).</0><1>For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return.</1>"
 msgstr ""
 
-msgid "<0>Verify here</0>."
+msgid "<0>Verify Twitter handle</0>."
 msgstr ""
 
 msgid "<0>Website:</0> <1>{0}</1>"
@@ -926,6 +926,9 @@ msgstr ""
 msgid "Disconnect"
 msgstr ""
 
+msgid "Disconnect Twitter"
+msgstr ""
+
 msgid "Discord"
 msgstr ""
 
@@ -1191,6 +1194,9 @@ msgid "Extend veNFT lock"
 msgstr ""
 
 msgid "FAQs"
+msgstr ""
+
+msgid "Failed to disconnect Twitter account."
 msgstr ""
 
 msgid "Failed to issue ERC20 token. Check transaction and try again."
@@ -1988,6 +1994,9 @@ msgstr ""
 msgid "Project Token"
 msgstr ""
 
+msgid "Project Twitter currently set to: <0>@{0}</0>"
+msgstr ""
+
 msgid "Project configuration"
 msgstr ""
 
@@ -2750,7 +2759,7 @@ msgstr ""
 msgid "This will enable your project's veNFT contract to spend unclaimed tokens in addition to project ERC-20 tokens."
 msgstr ""
 
-msgid "This will pop a window allowing you to connect to Twitter and verify you are the owner of the project's Twitter account."
+msgid "This will open a window asking you to connect to Twitter."
 msgstr ""
 
 msgid "This will reset the data for your new project. All changes will be lost."
@@ -2936,13 +2945,19 @@ msgstr ""
 msgid "Twitter"
 msgstr ""
 
-msgid "Twitter Already Connected"
-msgstr ""
-
 msgid "Twitter Verified"
 msgstr ""
 
 msgid "Twitter account disconnected."
+msgstr ""
+
+msgid "Twitter already connected"
+msgstr ""
+
+msgid "Twitter authentication failed."
+msgstr ""
+
+msgid "Twitter connected"
 msgstr ""
 
 msgid "Twitter handle"
@@ -3056,7 +3071,10 @@ msgstr ""
 msgid "Verify Twitter"
 msgstr ""
 
-msgid "Verify you are the project owner in order to disconnect your Twitter account."
+msgid "Verify Twitter handle"
+msgstr ""
+
+msgid "Verify you own this project before disconnecting your Twitter account."
 msgstr ""
 
 msgid "Version of the terminal contract used by this project."
@@ -3270,6 +3288,9 @@ msgid "Your <0>@{v1ProjectHandle}</0> V1 token balance."
 msgstr ""
 
 msgid "Your Juicebox project has no active funding cycle. Launch a funding cycle to re-enable payments on your project."
+msgstr ""
+
+msgid "Your Twitter account is connected and currently set to: <0>@{0}</0>"
 msgstr ""
 
 msgid "Your V1 balance"

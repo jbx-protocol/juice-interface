@@ -6,25 +6,23 @@ import { t, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { useIsUserAddress } from 'hooks/IsUserAddress'
 
 import useTwitterVerified from 'hooks/TwitterVerified'
-import { useWallet } from 'hooks/Wallet'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { settingsPagePath } from 'utils/routes'
 
-const TwitterVerified = () => {
+const TwitterVerificationIcon = () => {
   const { handle, projectOwnerAddress } = useContext(V2V3ProjectContext)
   const { projectId, projectMetadata } = useContext(ProjectMetadataContext)
-  const { userAddress } = useWallet()
   const verification = useTwitterVerified()
   const isVerified =
     verification &&
     projectMetadata?.twitter &&
     verification.username === projectMetadata.twitter
 
-  const canVerify =
-    projectOwnerAddress?.toLowerCase() === userAddress?.toLowerCase()
+  const canVerify = useIsUserAddress(projectOwnerAddress)
 
   const renderUnverifiedMessage = () => {
     return (
@@ -37,7 +35,7 @@ const TwitterVerified = () => {
               <Link
                 href={settingsPagePath('verifytwitter', { projectId, handle })}
               >
-                Verify here
+                Verify Twitter handle
               </Link>
               .
             </Trans>
@@ -61,4 +59,4 @@ const TwitterVerified = () => {
   )
 }
 
-export default TwitterVerified
+export default TwitterVerificationIcon

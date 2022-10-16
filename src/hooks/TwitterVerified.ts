@@ -8,7 +8,7 @@ import { firestore } from 'utils/firebase/firebaseApp'
 const useTwitterVerified = () => {
   const { projectId, cv } = useContext(ProjectMetadataContext)
   const [value] = useDocumentData(
-    doc(firestore, 'twitterVerification', `${projectId}-${cv}`),
+    doc(firestore, 'twitterVerification', `${cv}-${projectId}`),
     {
       snapshotListenOptions: { includeMetadataChanges: true },
     },

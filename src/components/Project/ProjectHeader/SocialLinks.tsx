@@ -1,7 +1,7 @@
 import { TwitterOutlined } from '@ant-design/icons'
 import { Space } from 'antd'
 import Discord from 'components/icons/Discord'
-import TwitterVerified from 'components/Project/ProjectHeader/TwitterVerified'
+import TwitterVerified from 'components/Project/ProjectHeader/TwitterVerificationIcon'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { CSSProperties } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'

@@ -4,6 +4,7 @@ import axios from 'axios'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { useIsUserAddress } from 'hooks/IsUserAddress'
 import { useTwitterAuth } from 'hooks/SocialAuth'
 import useTwitterVerified from 'hooks/TwitterVerified'
 import { useWallet } from 'hooks/Wallet'
@@ -16,15 +17,16 @@ import { verifyWallet } from 'utils/signature'
 
 export const VerifyTwitterSettingsPage = () => {
   const { projectOwnerAddress } = useContext(V2V3ProjectContext)
-  const { signer, userAddress } = useWallet()
   const { projectId, projectMetadata, cv } = useContext(ProjectMetadataContext)
-  const { onOpen } = useTwitterAuth()
+  const { colors } = useContext(ThemeContext).theme
+
   const [isDisconnecting, setIsDisconnecting] = useState(false)
   const [isAuthenticating, setIsAuthenticating] = useState(false)
-  const { colors } = useContext(ThemeContext).theme
+
+  const { signer } = useWallet()
+  const { onOpen } = useTwitterAuth()
   const verification = useTwitterVerified()
-  const isOwner =
-    projectOwnerAddress?.toLowerCase() === userAddress?.toLowerCase()
+  const isOwner = useIsUserAddress(projectOwnerAddress)
 
   const initiateAuthRequest = async () => {
     if (!projectId || !projectMetadata?.twitter) return
@@ -36,7 +38,7 @@ export const VerifyTwitterSettingsPage = () => {
       })
       onOpen()
     } catch (error) {
-      emitErrorNotification(t`Something went wrong.`)
+      emitErrorNotification(t`Twitter authentication failed.`)
       setIsAuthenticating(false)
     }
   }
@@ -44,7 +46,7 @@ export const VerifyTwitterSettingsPage = () => {
   const disconnectRequest = async () => {
     if (!signer) return
     setIsDisconnecting(true)
-    const message = t`Verify you are the project owner in order to disconnect your Twitter account.`
+    const message = t`Verify you own this project before disconnecting your Twitter account.`
     try {
       const signature = await verifyWallet(signer, message)
       await axios.post(`/api/auth/twitter/disconnect`, {
@@ -57,7 +59,7 @@ export const VerifyTwitterSettingsPage = () => {
       emitSuccessNotification(t`Twitter account disconnected.`)
     } catch (error) {
       console.error(error)
-      emitErrorNotification(t`Something went wrong.`)
+      emitErrorNotification(t`Failed to disconnect Twitter account.`)
     }
     setIsDisconnecting(false)
   }
@@ -71,20 +73,21 @@ export const VerifyTwitterSettingsPage = () => {
 
         <p style={{ color: colors.text.primary }}>
           <Trans>
-            This will pop a window allowing you to connect to Twitter and verify
-            you are the owner of the project's Twitter account.
+            This will open a window asking you to connect to Twitter.
           </Trans>
         </p>
         <p>
-          Project Twitter currently set to:{' '}
-          <strong>@{projectMetadata?.twitter}</strong>
+          <Trans>
+            Project Twitter currently set to:{' '}
+            <strong>@{projectMetadata?.twitter}</strong>
+          </Trans>
         </p>
         <Button
           type="primary"
           onClick={initiateAuthRequest}
           loading={isAuthenticating}
         >
-          <Trans>Verify Twitter</Trans>
+          <Trans>Verify Twitter handle</Trans>
         </Button>
       </>
     )
@@ -94,11 +97,13 @@ export const VerifyTwitterSettingsPage = () => {
     return (
       <>
         <h4>
-          <Trans>Twitter Already Connected</Trans>
+          <Trans>Twitter already connected</Trans>
         </h4>
         <p>
-          Your Twitter account is connected and currently set to:{' '}
-          <strong>@{verification?.username}</strong>
+          <Trans>
+            Your Twitter account is connected and currently set to:{' '}
+            <strong>@{verification?.username}</strong>
+          </Trans>
         </p>
         {isOwner ? (
           <Button
@@ -106,11 +111,11 @@ export const VerifyTwitterSettingsPage = () => {
             type="primary"
             onClick={disconnectRequest}
           >
-            Disconnect Twitter
+            <Trans>Disconnect Twitter</Trans>
           </Button>
         ) : (
           <Button disabled type="primary">
-            Twitter Connected
+            <Trans>Twitter connected</Trans>
           </Button>
         )}
       </>

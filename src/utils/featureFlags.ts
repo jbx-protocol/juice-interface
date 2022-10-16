@@ -13,6 +13,7 @@ const FEATURE_FLAG_DEFAULTS: {
   },
   [FEATURE_FLAGS.V3]: {
     goerli: true,
+    mainnet: true,
   },
 }
 

@@ -5,6 +5,7 @@ import { parseEther } from '@ethersproject/units'
 import { t } from '@lingui/macro'
 import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
 import { MaxUint48 } from 'constants/numbers'
+import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 import { TransactionContext } from 'contexts/transactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { TransactorInstance } from 'hooks/Transactor'
@@ -23,9 +24,9 @@ import { isValidMustStartAtOrAfter } from 'utils/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../ProjectTitle'
 
 enum JB721GovernanceType {
-  NONE = 'NONE',
-  TIERED = 'TIERED',
-  GLOBAL = 'GLOBAL',
+  NONE,
+  TIERED,
+  GLOBAL,
 }
 
 const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
@@ -42,6 +43,7 @@ async function getJBDeployTiered721DelegateData({
   ownerAddress,
   directory,
   JBFundingCycleStoreAddress,
+  JBPricesAddress,
 }: {
   collectionCID: string
   collectionName: string
@@ -50,22 +52,21 @@ async function getJBDeployTiered721DelegateData({
   ownerAddress: string
   directory: string
   JBFundingCycleStoreAddress: string
+  JBPricesAddress: string
 }) {
   const JBTiered721DelegateStoreAddress =
     await getLatestNftDelegateStoreContractAddress()
-  const tiersArg = Object.keys(nftRewards).map(cid => {
+  const tiers = Object.keys(nftRewards).map(cid => {
     const contributionFloorWei = parseEther(
       nftRewards[cid].contributionFloor.toString(),
     )
     const maxSupply = nftRewards[cid].maxSupply
     const initialQuantity = maxSupply ?? MaxUint48
-    const remainingQuantity = 0 // TODO
     const encodedIPFSUri = encodeIPFSUri(cid)
 
     return {
       contributionFloor: contributionFloorWei,
       lockedUntil: BigNumber.from(0),
-      remainingQuantity,
       initialQuantity,
       votingUnits: 0,
       reservedRate: 0,
@@ -76,6 +77,13 @@ async function getJBDeployTiered721DelegateData({
     }
   })
 
+  const pricing = {
+    tiers,
+    currency: ETH_TOKEN_ADDRESS,
+    decimals: 18,
+    prices: JBPricesAddress,
+  }
+
   return {
     directory,
     name: collectionName,
@@ -85,7 +93,7 @@ async function getJBDeployTiered721DelegateData({
     tokenUriResolver: constants.AddressZero,
     contractUri: ipfsCidUrl(collectionCID),
     owner: ownerAddress,
-    pricing: tiersArg,
+    pricing,
     reservedTokenBeneficiary: constants.AddressZero,
     store: JBTiered721DelegateStoreAddress,
     flags: {
@@ -137,7 +145,22 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
       !contracts ||
       !isValidMustStartAtOrAfter(mustStartAtOrAfter, fundingCycleData.duration)
     ) {
-      txOpts?.onDone?.()
+      const missingParam = !transactor
+        ? 'transactor'
+        : !userAddress
+        ? 'userAddress'
+        : !contracts
+        ? 'contracts'
+        : null
+
+      txOpts?.onError?.(
+        new DOMException(
+          `Transaction failed, missing argument "${
+            missingParam ?? '<unknown>'
+          }".`,
+        ),
+      )
+
       return Promise.resolve(false)
     }
 
@@ -151,6 +174,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
       JBFundingCycleStoreAddress: getAddress(
         contracts.JBFundingCycleStore.address,
       ),
+      JBPricesAddress: getAddress(contracts.JBPrices.address),
     })
 
     const args = [

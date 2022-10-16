@@ -76,7 +76,7 @@ export function IssueErc20TokenModal({
           onClose()
           onConfirmed?.()
         },
-        onError: (e: DOMException) => {
+        onError: (e: Error) => {
           setTransactionPending(false)
           setLoading(false)
           emitErrorNotification(e.message)

@@ -1,6 +1,13 @@
+import { ExternalProvider } from '@ethersproject/providers'
 import type { MetaMaskInpageProvider } from '@metamask/providers'
 import { useWallet } from 'hooks/Wallet/Wallet'
 import { useMemo } from 'react'
+
+declare global {
+  interface Window {
+    ethereum?: ExternalProvider
+  }
+}
 
 export const useProviderIsMetamask = () => {
   const { signer } = useWallet()

@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import { Row } from 'antd'
 import { AllocationSplit } from 'components/Create/components/Allocation'
-import { formatFundingCycle } from 'components/Create/utils/formatFundingCycle'
+import { formatFundingCycleDuration } from 'components/Create/utils/formatFundingCycleDuration'
 import { formatFundingTarget } from 'components/Create/utils/formatFundingTarget'
 import { useAppSelector } from 'hooks/AppSelector'
 import { Split } from 'models/splits'
@@ -23,7 +23,7 @@ export const FundingConfigurationReview = () => {
   )
 
   const duration = useMemo(
-    () => formatFundingCycle(fundingCycleData.duration),
+    () => formatFundingCycleDuration(fundingCycleData.duration),
     [fundingCycleData.duration],
   )
 

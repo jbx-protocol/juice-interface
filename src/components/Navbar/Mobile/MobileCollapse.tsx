@@ -1,5 +1,5 @@
 import { MenuOutlined } from '@ant-design/icons'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Button, Collapse, Menu } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { Header } from 'antd/lib/layout/layout'
@@ -9,10 +9,10 @@ import { useWallet } from 'hooks/Wallet'
 import Link from 'next/link'
 import { useContext, useEffect, useState } from 'react'
 import Account from '../Account'
+import { resourcesMenuItems } from '../constants'
 import Logo from '../Logo'
-import { TopLeftNavItems } from '../MenuItems'
 import NavLanguageSelector from '../NavLanguageSelector'
-import { topNavStyles } from '../navStyles'
+import { navMenuItemStyles, topNavStyles } from '../navStyles'
 import { TransactionsList } from '../TransactionList'
 import ThemePickerMobile from './ThemePickerMobile'
 
@@ -33,6 +33,18 @@ export default function MobileCollapse() {
   const collapseNav = () => setActiveKey(undefined)
   const expandNav = () => setActiveKey(NAV_EXPANDED_KEY)
   const toggleNav = () => (isNavExpanded ? collapseNav() : expandNav())
+
+  const menuItemProps = {
+    onClick: () => collapseNav,
+    style: navMenuItemStyles,
+    className: 'nav-menu-item hover-opacity',
+  }
+
+  const externalMenuLinkProps = {
+    ...menuItemProps,
+    target: '_blank',
+    rel: 'noopener noreferrer',
+  }
 
   // Close collapse when clicking anywhere in the window except the collapse items
   useEffect(() => {
@@ -111,36 +123,64 @@ export default function MobileCollapse() {
             </div>
           }
         >
-          <Menu mode="inline" defaultSelectedKeys={['resources']}>
-            <TopLeftNavItems
-              desktop={false}
-              onClickMenuItems={() => collapseNav()}
-            />
-
-            <div style={{ marginLeft: 15 }}>
-              <Menu.Item key="language-selector">
-                <NavLanguageSelector mobile />
-              </Menu.Item>
-              <Menu.Item key="theme-picker">
-                <ThemePickerMobile />
-              </Menu.Item>
-            </div>
-          </Menu>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              marginTop: '1rem',
-            }}
-          >
-            <Account />
-            {isConnected ? (
-              <Button onClick={disconnect} style={{ marginTop: 10 }} block>
-                <Trans>Disconnect</Trans>
-              </Button>
-            ) : null}
-          </div>
+          <Menu
+            mode="inline"
+            items={[
+              {
+                key: 'projects',
+                label: (
+                  <Link href="/projects">
+                    <a {...menuItemProps}>{t`Projects`}</a>
+                  </Link>
+                ),
+              },
+              {
+                key: 'docs',
+                label: (
+                  <Link href="https://info.juicebox.money/">
+                    <a {...externalMenuLinkProps}>{t`Docs`}</a>
+                  </Link>
+                ),
+              },
+              {
+                key: 'blog',
+                label: (
+                  <Link href="https://info.juicebox.money/blog">
+                    <a {...externalMenuLinkProps}>{t`Blog`}</a>
+                  </Link>
+                ),
+              },
+              {
+                key: 'resources',
+                label: (
+                  <Link href="">
+                    <a
+                      className="nav-menu-item hover-opacity"
+                      style={{ ...navMenuItemStyles }}
+                    >
+                      {t`Resources`}
+                    </a>
+                  </Link>
+                ),
+                children: [...resourcesMenuItems(true)],
+              },
+              { key: 'language-picker', label: <NavLanguageSelector /> },
+              { key: 'theme-picker', label: <ThemePickerMobile /> },
+              {
+                key: 'account',
+                label: <Account />,
+              },
+              {
+                key: 'disconnect',
+                label: isConnected ? (
+                  <Button onClick={disconnect} style={{ marginTop: 10 }} block>
+                    <Trans>Disconnect</Trans>
+                  </Button>
+                ) : null,
+              },
+            ]}
+            defaultSelectedKeys={['resources']}
+          />
         </CollapsePanel>
       </Collapse>
     </Header>

@@ -41,7 +41,9 @@ function DefaultBadge({ href }: { href: string }) {
         </Trans>
       }
     >
-      <Icon component={() => <SafeIcon href={href} />} />
+      <span>
+        <SafeIcon href={href} />
+      </span>
     </Tooltip>
   )
 }

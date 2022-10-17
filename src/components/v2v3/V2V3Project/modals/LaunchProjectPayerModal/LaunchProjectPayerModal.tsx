@@ -64,11 +64,12 @@ export function LaunchProjectPayerModal({
     setLoadingProjectPayer(true)
 
     const fields = advancedOptionsForm.getFieldsValue(true)
+    const memo = [fields.memo ?? '', fields.memoImageUrl ?? ''].join(' ').trim()
 
     const txSuccess = await deployProjectPayerTx(
       {
         customBeneficiaryAddress: fields.customBeneficiaryAddress,
-        customMemo: `${fields.memo} ${fields.memoImageUrl ?? ''}`,
+        customMemo: memo.length > 0 ? memo : undefined,
         tokenMintingEnabled: fields.tokenMintingEnabled,
         preferClaimed: fields.preferClaimed,
       },

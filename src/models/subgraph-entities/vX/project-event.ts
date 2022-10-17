@@ -50,6 +50,11 @@ import {
   UseAllowanceEventJson,
 } from '../v2/use-allowance-event'
 import {
+  AddToBalanceEvent,
+  AddToBalanceEventJson,
+  parseAddToBalanceEventJson,
+} from './add-to-balance-event'
+import {
   DeployedERC20Event,
   DeployedERC20EventJson,
   parseDeployedERC20EventJson,
@@ -80,6 +85,7 @@ export type ProjectEvent = {
 
   // V1 & V2
   payEvent: Partial<PayEvent> | null
+  addToBalanceEvent: Partial<AddToBalanceEvent> | null
   mintTokensEvent: Partial<MintTokensEvent> | null
   redeemEvent: Partial<RedeemEvent> | null
   deployedERC20Event: Partial<DeployedERC20Event> | null
@@ -106,6 +112,7 @@ export type ProjectEventJson = Pick<
 > & {
   cv: CV
   payEvent: PayEventJson | null
+  addToBalanceEvent: AddToBalanceEventJson | null
   mintTokensEvent: MintTokensEventJson | null
   redeemEvent: RedeemEventJson | null
   deployedERC20Event: DeployedERC20EventJson | null
@@ -127,6 +134,9 @@ export type ProjectEventJson = Pick<
 export const parseProjectEventJson = (j: ProjectEventJson): ProjectEvent => ({
   ...j,
   payEvent: j.payEvent ? parsePayEventJson(j.payEvent) : null,
+  addToBalanceEvent: j.addToBalanceEvent
+    ? parseAddToBalanceEventJson(j.addToBalanceEvent)
+    : null,
   mintTokensEvent: j.mintTokensEvent
     ? parseMintTokensEventJson(j.mintTokensEvent)
     : null,

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-10-09 00:39\n"
+"PO-Revision-Date: 2022-10-16 00:46\n"
 "Last-Translator: \n"
 "Language: pt_BR\n"
 "Language-Team: Portuguese, Brazilian\n"
@@ -196,6 +196,9 @@ msgstr "<0>Esste é o plano, mas o principais contratos do Juicebox serão, prim
 msgid "<0>The Juicebox V2 smart contracts have had multiple security audits. <1>Read the audit reports.</1></0><2>While Juicebox has been audited, it is still experimental software, and there are risks. Please use Juicebox with caution.</2><3><4>Learn more</4> about the risks.</3>"
 msgstr ""
 
+msgid "<0>The Rinkeby testnet is deprecated.</0> Use the Goerli testnet instead: <1>https://goerli.juicebox.money</1>"
+msgstr ""
+
 msgid "<0>There are unit tests written for every condition of every function in the contracts, and integration tests for every workflow that the protocol supports.</0><1>There was also a script written to iteratively run the integration tests using a random input generator, prioritizing edge cases. The code has successfully passed over 1 million test cases through this stress-testing script.</1> <2>The code could always use more eyes and more critique to further the community's confidence. Join our <3>Discord</3> and check out the code on <4>GitHub</4> to work with us.</2>"
 msgstr "<0> Existem testes de unidades para cada condição de cada função nos contratos, e testes de integração para cada fluxo de trabalho que o protocolo apoia.</0><1> Existe também um script escrito para rodar iterativamente os testes de integração, utilizando um gerador de input aleatório, priorizando casos extremos. O código passou, satisfatoriamente, mais de 1 milhão de testes através desse script de stress-testing.</1><2> O código sempre pode utilizar de mais olhos e críticas para continuar com a confiança da comunidade. Entre em nosso <3>Discord</3> e confira o código no <4>GitHub</4> para trabalhar conosco.</2>"
 
@@ -261,6 +264,9 @@ msgstr "ARQUIVADO"
 
 msgid "AVAILABLE"
 msgstr "DISPONÍVEL"
+
+msgid "Active"
+msgstr ""
 
 msgid "Activity"
 msgstr "Atividade"
@@ -331,6 +337,9 @@ msgstr "Adicionar alocação de token"
 msgid "Add wallet addresses or juicebox projects to receive payouts."
 msgstr ""
 
+msgid "Added to balance"
+msgstr ""
+
 msgid "Address"
 msgstr "Endereço"
 
@@ -374,6 +383,12 @@ msgid "Allocate a portion of your project's reserved tokens to other Ethereum wa
 msgstr "Defina uma porção dos tokens reservados por seu projeto para outras carteiras de Ethereum ou projetos do Juicebox."
 
 msgid "Allocate reserved tokens to Ethereum addresses or Juicebox projects. Unallocated reserved tokens are sent to the project owner."
+msgstr ""
+
+msgid "Allow a few days for your project to appear in the \"active\" projects list on the Projects page."
+msgstr ""
+
+msgid "Allow a few days for your project to appear in the \"archived\" projects list on the Projects page."
 msgstr ""
 
 msgid "Allow minting tokens"
@@ -450,6 +465,9 @@ msgstr "Arquivar projeto"
 
 msgid "Archived"
 msgstr "Arquivado"
+
+msgid "Archiving your project will mean the following:"
+msgstr ""
 
 msgid "Are you sure you want to start over?"
 msgstr "Você tem certeza que quer começar novamente?"
@@ -640,6 +658,12 @@ msgstr "Fechar"
 msgid "Close, I'll do these later"
 msgstr "Feche, eu farei isso depois"
 
+msgid "Collection Name"
+msgstr ""
+
+msgid "Collection Symbol"
+msgstr ""
+
 msgid "Collection description"
 msgstr ""
 
@@ -661,13 +685,13 @@ msgstr ""
 msgid "Configure restrictions for your funding cycles."
 msgstr "Configurar restrições para seus ciclos de financiamento."
 
-msgid "Configure the dynamics of your project's token."
-msgstr "Configurar as dinâmicas de seu token de projeto."
-
 msgid "Configure which Juicebox V1 project you'd like to accept tokens for. Token holders of this V1 project will be able to swap their V1 tokens for V2 tokens."
 msgstr ""
 
 msgid "Configure your project's first funding cycle below."
+msgstr ""
+
+msgid "Configure your project's token."
 msgstr ""
 
 msgid "Configure {projectTitle}"
@@ -859,6 +883,9 @@ msgstr "Deletar alocação de token"
 msgid "Deploy Payment Address contract"
 msgstr ""
 
+msgid "Deploy Payment Address for {projectTitle}"
+msgstr ""
+
 msgid "Deploy Snapshot space"
 msgstr ""
 
@@ -866,9 +893,6 @@ msgid "Deploy funding cycle configuration"
 msgstr "Implemente a configuração do ciclo de financiamento"
 
 msgid "Deploy project"
-msgstr ""
-
-msgid "Deploy project payer for {projectTitle}"
 msgstr ""
 
 msgid "Deploy project to {0}"
@@ -1008,9 +1032,6 @@ msgstr "O limite de distribuição é 0: Todos os fundos serão considerados ove
 
 msgid "Distribution limit is infinite. <0>The project will control how all funds are distributed, and none can be redeemed by token holders.</0>"
 msgstr "O limite de distribuição é infinito. <0>O projeto controlará como todos os fundos serão distribuídos e nenhum fundo poderá ser resgatado pelos titulares de tokens.</0>"
-
-msgid "Distribution limit, duration and payouts"
-msgstr "Limite de distribuição, duração e pagamentos"
 
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
 msgstr "Tenho que fazer meu projeto de código aberto para usar Juicebox como seu modelo de negócios?"
@@ -1201,6 +1222,12 @@ msgstr ""
 msgid "File empty or corrupt. Try again."
 msgstr ""
 
+msgid "File must be in a format of {0}"
+msgstr ""
+
+msgid "File must be less than {0}MB"
+msgstr ""
+
 msgid "File must be less than {formattedSize}{unit}"
 msgstr "O arquivo deve ter menos que {formattedSize}{unit}"
 
@@ -1290,9 +1317,6 @@ msgstr "Histórico"
 
 msgid "Holders"
 msgstr "Titulares"
-
-msgid "Holdings"
-msgstr "Propriedades"
 
 msgid "Hours"
 msgstr "Horas"
@@ -1600,6 +1624,9 @@ msgstr "Memo (opcional)"
 msgid "Memo included on-chain"
 msgstr ""
 
+msgid "Memos appear on the project's activity feed when the Payment Address receives a payment."
+msgstr ""
+
 msgid "Message"
 msgstr ""
 
@@ -1669,6 +1696,9 @@ msgstr "Mova seus {tokensLabel} do contrato do Juicebox para sua carteira."
 msgid "My VeNFTs"
 msgstr ""
 
+msgid "My holdings"
+msgstr ""
+
 msgid "My projects"
 msgstr ""
 
@@ -1696,7 +1726,10 @@ msgstr "Nome"
 msgid "New"
 msgstr "Novo"
 
-msgid "New project tokens are automatically minted as ERC-20's. The gas to pay this contract will be higher than normal."
+msgid "New project tokens are minted as ERC-20 tokens by default. Payments to this Payment Address will incur a higher gas fee than regular Juicebox payments."
+msgstr ""
+
+msgid "New project tokens will be minted to the address that made the payment."
 msgstr ""
 
 msgid "Newly minted {tokenSymbolPlural} <0>received by contributors</0> per ETH they contribute to the treasury."
@@ -1912,6 +1945,12 @@ msgstr ""
 msgid "Payments paused"
 msgstr "Pagamentos pausados"
 
+msgid "Payments to this project will mint new project tokens."
+msgstr ""
+
+msgid "Payments to this project won't mint new project tokens."
+msgstr ""
+
 msgid "Payout is locked"
 msgstr "O pagamento está bloqueado"
 
@@ -2047,6 +2086,9 @@ msgstr "Donos de projeto podem configurar um período de demora, que significa q
 msgid "Project page customizations"
 msgstr ""
 
+msgid "Project state"
+msgstr ""
+
 msgid "Project token"
 msgstr "Token do Projeto"
 
@@ -2056,7 +2098,7 @@ msgstr ""
 msgid "Project tokens are not ERC-20 tokens by default. Once you deploy your project, you can issue an ERC-20 for your holders to claim. This is optional."
 msgstr ""
 
-msgid "Project tokens will be minted to whoever pays this payer contract."
+msgid "Project upgrades"
 msgstr ""
 
 msgid "Project {name} will be available soon! Try refreshing the page shortly."
@@ -2273,6 +2315,9 @@ msgid "Restricted actions"
 msgstr "Ações restritas"
 
 msgid "Review and confirm stake"
+msgstr ""
+
+msgid "Review and deploy"
 msgstr ""
 
 msgid "Review and launch funding cycle"
@@ -2518,6 +2563,9 @@ msgstr ""
 msgid "Start time (seconds, Unix time)"
 msgstr "Hora de início (segundos, tempo Unix)"
 
+msgid "Start upgrade"
+msgstr ""
+
 msgid "Step 1. Add V1 token payment terminal"
 msgstr ""
 
@@ -2614,9 +2662,6 @@ msgstr "A quantidade máxima de fundos que pode ser distribuída deste projeto e
 msgid "The maximum supply of this NFT in circulation."
 msgstr ""
 
-msgid "The memo that appears on the project's Juicebox page activity feed when this payer contract is paid."
-msgstr ""
-
 msgid "The number of project tokens minted when 1 ETH is contributed in the first funding cycle."
 msgstr "O número de tokens do projeto emitidos quanto 1 ETH é contribuído no primeiro ciclo de financiamento."
 
@@ -2686,6 +2731,12 @@ msgstr "Não há recipientes de tokens reservados definidos para este ciclo de f
 msgid "This Juicebox V2 project also has a project on Juicebox V1. The project owner is allowing you to swap your V1 tokens for V2 tokens."
 msgstr ""
 
+msgid "This Safe has no past transactions."
+msgstr ""
+
+msgid "This Safe has no queued transactions."
+msgstr ""
+
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
 msgstr "Este endereço é um contrato de estratégia não reconhecido. Tenha certeza que está correto!"
 
@@ -2747,6 +2798,9 @@ msgid "This will enable your project's veNFT contract to spend unclaimed tokens 
 msgstr ""
 
 msgid "This will reset the data for your new project. All changes will be lost."
+msgstr ""
+
+msgid "Tier {tier}"
 msgstr ""
 
 msgid "Time Remaining"
@@ -2860,9 +2914,6 @@ msgstr ""
 msgid "Tokens to redeem"
 msgstr ""
 
-msgid "Tokens will be minted as a result of paying this project."
-msgstr ""
-
 msgid "Tokens:"
 msgstr ""
 
@@ -2937,6 +2988,9 @@ msgstr ""
 
 msgid "Unarchive project"
 msgstr "Desarquivar projeto"
+
+msgid "Unarchiving your project will mean the following:"
+msgstr ""
 
 msgid "Unavailable"
 msgstr "Indisponível"
@@ -3106,11 +3160,11 @@ msgstr ""
 msgid "When enabled, your project cannot receive direct payments."
 msgstr "Quando ativado, seu projeto não pode receber pagamentos diretos."
 
-msgid "When someone pays this payer contract, project tokens will always be minted to this address, <0>not to the person who paid.</0>"
-msgstr ""
-
 msgid "When someone pays your project, they'll receive your project's tokens in return. Tokens can be redeemed for a portion of your project's overflow funds; when you win, your community wins with you. Leverage your project's token to grant governance rights, community access, or other membership perks."
 msgstr "Quando alguém paga por seu projeto, eles recebem tokens em troca. Tokens podem ser resgatados por uma porção dos fundos de overflow do seu projeto; quando você ganha, sua comunidade ganha com você. Utilize os tokens do seu projeto para garatir direitos administrativos, acesso à comunidade ou outros benefícios de membro."
+
+msgid "When the Payment Address receives a payment, project tokens will be minted to this token beneficiary address. The address that made the payment <0>won't receive any project tokens.</0>"
+msgstr ""
 
 msgid "When token minting is allowed, the owner of this project has permission to mint any number of tokens to any address at their discretion. This has the effect of diluting all current token holders, without increasing the project's treasury balance. The project owner can reconfigure this along with all other properties of the funding cycle."
 msgstr "Quando a criação de tokens é permitida, o dono deste projeto tem permissão de criar qualquer número de tokens para qualquer endereço à seu critério. Isso tem o efeito de diluir os detentores de token, sem aumentar o saldo do projeto. O dono do projeto pode reconfigurar isso junto de todas as outras propriedades do ciclo de financiamento."
@@ -3169,14 +3223,14 @@ msgstr "Você pode resgatar seus {tokenTextLong} para overflow sem reivindica-lo
 msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
 msgstr "Você ainda pode resgatar seus tokens {tokenSymbol} para overflow sem reivindica-los e pode transferir seus tokens {tokenSymbol} não-reivindicados para outro endereço do menu de Ferramentas, o qual pode ser acessado pelo icone de chave-inglesa no canto superior direito deste projeto."
 
+msgid "You can unarchive your project at any time."
+msgstr ""
+
 msgid "You cannot redeem your tokens for ETH because this project has no overflow."
 msgstr ""
 
 msgid "You cannot redeem your tokens for ETH because this project's redemption rate is zero."
 msgstr ""
-
-msgid "You don't have a funding cycle duration. Changes you make will take effect immediately."
-msgstr "Você não possui uma duração de ciclo de financiamento. Mudanças que você fizer terão efeito imediatamente."
 
 msgid "You don't have enough tokens to stake."
 msgstr ""
@@ -3262,8 +3316,14 @@ msgstr "A configuração do seu ciclo de financiamento tem sido pré-preenchida 
 msgid "Your new payment address:"
 msgstr ""
 
+msgid "Your project can receive payments through the juicebox.money app."
+msgstr ""
+
 msgid "Your project can still receive payments directly through the Juicebox protocol contracts."
 msgstr "Seu projeto ainda pode receber pagamentos diretamente através do protocolo de contratos Juicebox."
+
+msgid "Your project can't receive payments through the juicebox.money app."
+msgstr ""
 
 msgid "Your project cannot receive direct payments while paused."
 msgstr "O seu projeto não poderá receber pagamentos diretos enquanto se encontrar pausado."
@@ -3271,13 +3331,19 @@ msgstr "O seu projeto não poderá receber pagamentos diretos enquanto se encont
 msgid "Your project is funded across funding cycles. A funding cycle has a funding target and a duration. Your project's funding cycle configuration will depend on the kind of project you're starting."
 msgstr "O seu projeto é financiado através dos ciclos de financiamento. Um ciclo de financiamento tem um objetivo e uma duração. A configuração do ciclo de financiamento de seu projeto dependerá do tipo de projeto que você esteja iniciando."
 
-msgid "Your project will appear archived, and won't be able to receive payments through the juicebox.money app. You can unarchive a project at any time. Allow a few days for your project to appear under the \"archived\" filter on the Projects page."
-msgstr "O seu projeto aparecerá arquivado e não poderá receber pagamentos através do app juicebox.money. Você pode desarquivar um projeto a qualquer momento. Aguarde alguns dias para que o seu projeto apareça sob o filtro \"arquivado\" na Página de Projetos."
+msgid "Your project is up to date!"
+msgstr ""
 
-msgid "Your project will immediately appear active on the juicebox.money app. Please allow a few days for it to appear in the \"active\" projects list on the Projects page."
-msgstr "O seu projeto irá imediatamente aparecer ativo no app juicebox.money. Por favor, aguarde alguns dias para que apareça na lista de projetos \"ativos\" na Página de Projetos."
+msgid "Your project will appear as 'active'."
+msgstr ""
+
+msgid "Your project will appear as 'archived'."
+msgstr ""
 
 msgid "Your project will withhold all funds raised. Funds can be distributed to payout addresses you set, and the project owner will receive any unallocated funds. Your project will have no overflow, so token holders can't redeem their tokens for ETH."
+msgstr ""
+
+msgid "Your project's current funding cycle has no duration. Changes you make below will take effect immediately."
 msgstr ""
 
 msgid "Your transaction has been submitted and is awaiting confirmation."
@@ -3429,6 +3495,9 @@ msgstr "{0} retirado"
 
 msgid "{0} {tokenTextPlural} reserved"
 msgstr "{0} {tokenTextPlural} reservados"
+
+msgid "{0} – Tier {tierRank}"
+msgstr ""
 
 msgid "{0}%"
 msgstr ""

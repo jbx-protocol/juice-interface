@@ -80,6 +80,10 @@ export const ReconfigurationRulesPage = () => {
   )
 }
 
+const calloutDayText = (days: number) => {
+  return t`Changes to your funding cycle must be submitted AT LEAST ${days} days before the next funding cycle starts.`
+}
+
 const ReconfigurationCallout = ({
   selection,
 }: {
@@ -88,16 +92,16 @@ const ReconfigurationCallout = ({
   let calloutText = undefined
   switch (selection) {
     case 'threeDay':
-      calloutText = t`This means that you will have to submit changes to your funding AT LEAST 3 days before your next funding cycle starts. These changes will be visible to your contributors.`
+      calloutText = calloutDayText(3)
       break
     case 'sevenDay':
-      calloutText = t`This means that you will have to submit changes to your funding AT LEAST 7 days before your next funding cycle starts. These changes will be visible to your contributors.`
+      calloutText = calloutDayText(7)
       break
     case 'custom':
-      calloutText = t`A custom reconfiguration rule has been selected. Please ensure that you understand the implications of the underlying rule contract address.`
+      calloutText = t`You're using a custom reconfiguration strategy. Make sure you understand the behavior of this custom contract.`
       break
     case 'none':
-      calloutText = t`This means that you will be able to submit changes to your funding at any time. These changes will be visible to your contributors.`
+      calloutText = t`You can submit changes to your funding at any time.`
       break
   }
   return calloutText ? <Callout>{calloutText}</Callout> : null

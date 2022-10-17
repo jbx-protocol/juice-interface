@@ -5,12 +5,12 @@ import Link from 'next/link'
 import { CSSProperties, useEffect, useState } from 'react'
 
 import Logo from './Logo'
+import NavLanguageSelector from './NavLanguageSelector'
 import { navMenuItemStyles, topNavStyles, topRightNavStyles } from './navStyles'
 
 import { Header } from 'antd/lib/layout/layout'
 import Account from './Account'
 import { resourcesMenuItems } from './constants'
-import NavLanguageSelector from './NavLanguageSelector'
 import ThemePicker from './ThemePicker'
 import { TransactionsList } from './TransactionList'
 

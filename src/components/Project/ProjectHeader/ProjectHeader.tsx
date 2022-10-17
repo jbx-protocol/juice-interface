@@ -170,7 +170,10 @@ export function ProjectHeader({
               </Trans>
             </span>
             {!gnosisSafeLoading && gnosisSafe && (
-              <GnosisSafeBadge href={`${window.location.href}/safe`} />
+              <GnosisSafeBadge
+                safe={gnosisSafe}
+                href={`${window.location.href}/safe`}
+              />
             )}
           </div>
         )}

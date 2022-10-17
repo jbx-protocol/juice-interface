@@ -5,7 +5,6 @@ import { parseEther } from '@ethersproject/units'
 import { t } from '@lingui/macro'
 import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
 import { MaxUint48 } from 'constants/numbers'
-import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 import { TransactionContext } from 'contexts/transactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { TransactorInstance } from 'hooks/Transactor'
@@ -20,6 +19,7 @@ import {
 import { useContext } from 'react'
 import { encodeIPFSUri, ipfsCidUrl } from 'utils/ipfs'
 import { getLatestNftDelegateStoreContractAddress } from 'utils/nftRewards'
+import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { isValidMustStartAtOrAfter } from 'utils/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../ProjectTitle'
 
@@ -79,7 +79,7 @@ async function getJBDeployTiered721DelegateData({
 
   const pricing = {
     tiers,
-    currency: ETH_TOKEN_ADDRESS,
+    currency: V2V3_CURRENCY_ETH,
     decimals: 18,
     prices: JBPricesAddress,
   }

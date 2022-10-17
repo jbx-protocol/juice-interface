@@ -1,13 +1,17 @@
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Dropdown, Menu, Space } from 'antd'
-import { Header } from 'antd/lib/layout/layout'
 import Link from 'next/link'
 import { CSSProperties, useEffect, useState } from 'react'
-import Account from './Account'
-import { resourcesMenuItems } from './constants'
+
 import Logo from './Logo'
 import { navMenuItemStyles, topNavStyles, topRightNavStyles } from './navStyles'
+
+import { Header } from 'antd/lib/layout/layout'
+import Account from './Account'
+import { resourcesMenuItems } from './constants'
+import NavLanguageSelector from './NavLanguageSelector'
+import ThemePicker from './ThemePicker'
 import { TransactionsList } from './TransactionList'
 
 const resourcesMenu = (
@@ -55,7 +59,7 @@ export default function DeskTopNavigation({
     <Dropdown
       overlay={resourcesMenu}
       overlayStyle={{ padding: 0 }}
-      visible={resourcesOpen}
+      open={resourcesOpen}
     >
       <div
         className="nav-menu-item hover-opacity"
@@ -165,8 +169,11 @@ export default function DeskTopNavigation({
           flexDirection: desktop ? 'row' : 'column',
           width: desktop ? 500 : 'auto',
         }}
+        selectable={false}
       />
       <Space size="middle" style={{ ...topRightNavStyles }}>
+        <NavLanguageSelector />
+        <ThemePicker />
         <TransactionsList
           listStyle={{
             position: 'absolute',

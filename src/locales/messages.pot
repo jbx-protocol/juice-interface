@@ -248,6 +248,9 @@ msgstr ""
 msgid "A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
 msgstr ""
 
+msgid "A tier at this amount already exists"
+msgstr ""
+
 msgid "A tier at this amount already exists."
 msgstr ""
 
@@ -273,6 +276,9 @@ msgid "Add"
 msgstr ""
 
 msgid "Add Lock Duration Option"
+msgstr ""
+
+msgid "Add NFT Reward"
 msgstr ""
 
 msgid "Add NFT reward"
@@ -309,6 +315,9 @@ msgid "Add payout"
 msgstr ""
 
 msgid "Add payout recipient"
+msgstr ""
+
+msgid "Add reward"
 msgstr ""
 
 msgid "Add reward tier"
@@ -770,6 +779,9 @@ msgstr ""
 msgid "Contributors will receive a relatively small portion of tokens in exchange for paying this project."
 msgstr ""
 
+msgid "Contributors will receive this NFT when they contribute at least this amount."
+msgstr ""
+
 msgid "Contributors will see this message before they pay your project."
 msgstr ""
 
@@ -1100,6 +1112,9 @@ msgstr ""
 msgid "Each project has its own <0>tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr ""
 
+msgid "Edit NFT Reward"
+msgstr ""
+
 msgid "Edit NFT reward"
 msgstr ""
 
@@ -1206,6 +1221,9 @@ msgid "Extend lock successful. Results will be indexed in a few moments."
 msgstr ""
 
 msgid "Extend veNFT lock"
+msgstr ""
+
+msgid "External link"
 msgstr ""
 
 msgid "FAQs"
@@ -1389,6 +1407,9 @@ msgid "If you're unsure if you need to claim, you probably don't."
 msgstr ""
 
 msgid "Image file"
+msgstr ""
+
+msgid "Image will be cropped to a 1:1 square in thumbnail previews on the Juicebox app."
 msgstr ""
 
 msgid "Image will be cropped to a square in thumbnail previews on the Juicebox app."
@@ -1622,6 +1643,9 @@ msgstr ""
 msgid "Marketplace customizations"
 msgstr ""
 
+msgid "Max Supply"
+msgstr ""
+
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
 msgstr ""
 
@@ -1644,6 +1668,9 @@ msgid "Migrate to Juicebox V1.1"
 msgstr ""
 
 msgid "Migrate {projectTitle}"
+msgstr ""
+
+msgid "Minimum Contribution"
 msgstr ""
 
 msgid "Mint NFT to a custom address"
@@ -2385,6 +2412,9 @@ msgid "Save project details"
 msgstr ""
 
 msgid "Save reconfiguration"
+msgstr ""
+
+msgid "Save reward"
 msgstr ""
 
 msgid "Save rules"

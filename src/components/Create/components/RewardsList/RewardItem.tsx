@@ -1,9 +1,9 @@
-import { LinkOutlined } from '@ant-design/icons'
+import { DeleteOutlined, EditOutlined, LinkOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-import { Button } from 'antd'
+import { Button, Space } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { CSSProperties } from 'react'
-import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
+import { RewardImage } from '../RewardImage'
 import { Reward } from './types'
 
 // START: CSS
@@ -31,18 +31,44 @@ const detailsTextStyle: CSSProperties = {
 
 export const RewardItem = ({
   tier,
-  title,
-  minimumContribution,
-  description,
-  maximumSupply,
-  url,
-  imgUrl,
-}: Reward) => {
+  reward,
+  onEditClicked,
+  onDeleteClicked,
+}: {
+  tier: number
+  reward: Reward
+  onEditClicked?: () => void
+  onDeleteClicked?: () => void
+}) => {
+  const {
+    title,
+    minimumContribution,
+    description,
+    maximumSupply,
+    url,
+    imgUrl,
+  } = reward
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       {/* Tier line */}
-      <div style={{ ...emphasisedTextStyle, fontSize: '1.125rem' }}>
-        <Trans>Tier {tier}</Trans>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
+        <div style={{ ...emphasisedTextStyle, fontSize: '1.125rem' }}>
+          <Trans>Tier {tier}</Trans>
+        </div>
+        <Space size="middle">
+          <Button style={{ padding: 0 }} type="link" onClick={onEditClicked}>
+            <EditOutlined />
+          </Button>
+          <Button style={{ padding: 0 }} type="link" onClick={onDeleteClicked}>
+            <DeleteOutlined />
+          </Button>
+        </Space>
       </div>
 
       <div style={{ position: 'relative' }}>
@@ -53,13 +79,7 @@ export const RewardItem = ({
             style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}
           >
             {/* Image */}
-            <img
-              src={imgUrl.toString()}
-              style={{
-                width: '11rem',
-                height: '11rem',
-              }}
-            />
+            <RewardImage size="11rem" src={imgUrl.toString()} />
             <div
               style={{
                 display: 'flex',
@@ -71,25 +91,24 @@ export const RewardItem = ({
                 textOverflow: 'ellipsis',
               }}
             >
-              <div style={detailsTextStyle}>Supply: {maximumSupply}</div>
-              <div
-                style={{
-                  ...detailsTextStyle,
-                  display: 'flex',
-                  gap: '0.5rem',
-                  alignItems: 'center',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                }}
-              >
-                <LinkOutlined />
-                <div style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                  <ExternalLink
-                    href={url.toString()}
-                    style={{ textOverflow: 'ellipsis', overflow: 'hidden' }}
-                  />
+              {maximumSupply && (
+                <div style={detailsTextStyle}>Supply: {maximumSupply}</div>
+              )}
+              {url && (
+                <div
+                  style={{
+                    ...detailsTextStyle,
+                    display: 'flex',
+                    gap: '0.5rem',
+                    alignItems: 'center',
+                  }}
+                >
+                  <LinkOutlined />
+                  <div style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    <ExternalLink href={url} />
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
           {/* Description Col */}
@@ -129,37 +148,25 @@ export const RewardItem = ({
               >
                 <div style={headerTextStyle}>Minimum Contribution</div>
                 <div style={emphasisedTextStyle}>
-                  {formatCurrencyAmount(minimumContribution)}
+                  {minimumContribution.toString()} ETH
                 </div>
               </div>
             </div>
             {/* Bottom */}
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '0.5rem',
-              }}
-            >
-              <div style={headerTextStyle}>Description</div>
-              <div style={descriptionTextStyle}>{description}</div>
-            </div>
+            {description && (
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '0.5rem',
+                }}
+              >
+                <div style={headerTextStyle}>Description</div>
+                <div style={descriptionTextStyle}>{description}</div>
+              </div>
+            )}
           </div>
         </div>
-        {/* Edit Button */}
-        <Button
-          type="link"
-          style={{
-            position: 'absolute',
-            display: 'flex',
-            padding: 0,
-            top: 0,
-            left: '100%',
-            marginLeft: '2rem',
-          }}
-        >
-          Edit
-        </Button>
       </div>
     </div>
   )

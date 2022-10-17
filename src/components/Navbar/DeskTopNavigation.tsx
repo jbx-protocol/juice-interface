@@ -21,7 +21,7 @@ const resourcesMenu = (
   />
 )
 
-export default function DeskTopNavigation({
+export default function DesktopNavigation({
   desktop,
   onClickMenuItems,
 }: {

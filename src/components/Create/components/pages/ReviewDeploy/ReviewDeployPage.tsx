@@ -5,6 +5,7 @@ import Callout from 'components/Callout'
 import ExternalLink from 'components/ExternalLink'
 import { ThemeContext } from 'contexts/themeContext'
 import { useModal } from 'hooks/Modal'
+import { useRouter } from 'next/router'
 import { useCallback, useContext } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
@@ -35,6 +36,7 @@ export const ReviewDeployPage = () => {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const router = useRouter()
   useSetCreateFurthestPageReached('reviewDeploy')
   const [form] = Form.useForm<{ termsAccepted: boolean }>()
   const termsAccepted = Form.useWatch('termsAccepted', form)
@@ -46,6 +48,12 @@ export const ReviewDeployPage = () => {
     dispatch(editingV2ProjectActions.resetState())
     window.location.reload()
   }, [dispatch])
+
+  const onDeploy = useCallback(() => {
+    router.push({ query: { deployedProjectId: 1 } }, '/create', {
+      shallow: true,
+    })
+  }, [router])
 
   const isNextEnabled = termsAccepted
   return (
@@ -102,7 +110,11 @@ export const ReviewDeployPage = () => {
           <RulesReview />
         </CreateCollapse.Panel>
       </CreateCollapse>
-      <Form form={form} initialValues={{ termsAccepted: false }}>
+      <Form
+        form={form}
+        initialValues={{ termsAccepted: false }}
+        onFinish={onDeploy}
+      >
         <Callout iconComponent={null}>
           <div style={{ display: 'flex', gap: '1rem' }}>
             <Form.Item noStyle name="termsAccepted" valuePropName="checked">

@@ -3,6 +3,7 @@ import ExternalLink from 'components/ExternalLink'
 import { CV_V2, CV_V3 } from 'constants/cv'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { useWallet } from 'hooks/Wallet'
+import { useRouter } from 'next/router'
 import { TransactionProvider } from 'providers/TransactionProvider'
 import { V2V3ContractsProvider } from 'providers/v2v3/V2V3ContractsProvider'
 import { V2V3CurrencyProvider } from 'providers/v2v3/V2V3CurrencyProvider'
@@ -19,10 +20,18 @@ import {
   ReviewDeployPage,
 } from './components'
 import { CreateBadge } from './components/CreateBadge'
+import { DeploySuccess } from './components/pages/ReviewDeploy/components/DeploySuccess'
 import { Wizard } from './components/Wizard'
 
 export function Create() {
   const { chain } = useWallet()
+  const router = useRouter()
+  const deployedProjectId = router.query.deployedProjectId as string
+  if (deployedProjectId) {
+    const projectId = parseInt(deployedProjectId)
+    return <DeploySuccess projectId={projectId} />
+  }
+
   return (
     <V2V3ContractsProvider
       initialCv={featureFlagEnabled(FEATURE_FLAGS.V3) ? CV_V3 : CV_V2}

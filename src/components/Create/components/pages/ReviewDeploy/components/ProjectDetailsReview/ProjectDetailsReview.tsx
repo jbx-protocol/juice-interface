@@ -39,7 +39,7 @@ export const ProjectDetailsReview = () => {
         <DescriptionCol
           span={18}
           title={t`Project description`}
-          optional={t`No description`}
+          placeholder={t`No description`}
           desc={description}
         />
         {/* TODO: Hide edit button for now */}
@@ -106,7 +106,7 @@ export const ProjectDetailsReview = () => {
                   title={t`Pay button text`}
                   desc={
                     payButton ? (
-                      <div style={emphasisedTextStyle()}>Pay Now</div>
+                      <div style={emphasisedTextStyle()}>{payButton}</div>
                     ) : null
                   }
                 />
@@ -115,7 +115,7 @@ export const ProjectDetailsReview = () => {
                 <DescriptionCol
                   flex={1}
                   title={t`Pay disclaimer`}
-                  desc={payDisclosure ? payDisclosure : null}
+                  desc={payDisclosure ?? null}
                 />
               </Col>
             </Row>

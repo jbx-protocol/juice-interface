@@ -36,16 +36,9 @@ export const FundingConfigurationReview = () => {
     [distributionLimit?.amount, distributionLimit?.currency],
   )
 
-  const splitToAllocation = useCallback((split: Split): AllocationSplit => {
-    return {
-      id: `${split.beneficiary}${split.projectId ? `-${split.projectId}` : ''}`,
-      ...split,
-    }
-  }, [])
-
   const allocationSplits = useMemo(
     () => payoutSplits.map(splitToAllocation),
-    [payoutSplits, splitToAllocation],
+    [payoutSplits],
   )
   const setAllocationSplits = useCallback(
     (splits: AllocationSplit[]) => setPayoutSplits(splits),

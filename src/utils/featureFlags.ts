@@ -6,10 +6,7 @@ const FEATURE_FLAG_DEFAULTS: {
   [featureFlag: string]: { [networkName in NetworkName]?: boolean }
 } = {
   [FEATURE_FLAGS.NFT_REWARDS]: {
-    rinkeby: true,
-  },
-  [FEATURE_FLAGS.VENFT]: {
-    rinkeby: true,
+    goerli: true,
   },
   [FEATURE_FLAGS.V3]: {
     goerli: true,

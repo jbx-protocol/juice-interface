@@ -3899,8 +3899,7 @@
   resolved "https://registry.yarnpkg.com/@jbx-protocol/contracts-v1/-/contracts-v1-2.0.0.tgz#616dd2adb8603dd1067d29fa613e704737adc243"
   integrity sha512-70BvKKor6iM8eBTa4klH7iOA5+/oa0J5gMpazK5nECrn8U0xeKTB19v+jXmTu+26JYruZHzCKZVdV5aH+c8qnA==
 
-"@jbx-protocol/contracts-v2-4.0.0@npm:@jbx-protocol/contracts-v2@4.0.0", "@jbx-protocol/contracts-v2@^4.0.0":
-  name "@jbx-protocol/contracts-v2-4.0.0"
+"@jbx-protocol/contracts-v2-4.0.0@npm:@jbx-protocol/contracts-v2@4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@jbx-protocol/contracts-v2/-/contracts-v2-4.0.0.tgz#0e1758c3be932993c7dbfa6b23addd10cc1855ea"
   integrity sha512-8B3UBPZYS4HCvRY25M8ROZi7mQdDrUMfq7dT3ucPVlE1KQLC8nBMwV2PiihgUamKpbQES9vhs7T4UIZbAv79rg==
@@ -3928,12 +3927,12 @@
   resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-contracts-v3/-/juice-contracts-v3-2.0.2.tgz#8bf7f451a1169473ae6e4f79f2fe40511c4623ce"
   integrity sha512-Xf9ZJbpIKjEwrcFfWKLMO8WmAO2OOZ/cJCV06XZZkApHHyJls901wyxX+EUZJHQkODO6zFjBGf8IHPla4YFYAw==
 
-"@jbx-protocol/juice-nft-rewards@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-nft-rewards/-/juice-nft-rewards-4.0.0.tgz#d9e1a3924b035d80ff55b978c964f4dc2d25fb2c"
-  integrity sha512-DQAepbNbZG9tt54dATUrnvcHz1ER3jSLiM1PDbHrNLv2FMYTj5xmufYtDoSAkXUuKGZcw0/UNxasfCcHcAWnWw==
+"@jbx-protocol/juice-nft-rewards@6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-nft-rewards/-/juice-nft-rewards-6.0.0.tgz#850c136609ca24680a168375072bc7cb16339081"
+  integrity sha512-X7blUYJQFd6cBf7uVzZphjXzu/KmGygZElzXhStIofIbWXgMfrS5jN8NV/IKyWC/nSaymtPkpkxVHWyyY2wusA==
   dependencies:
-    "@jbx-protocol/contracts-v2" "^4.0.0"
+    "@jbx-protocol/juice-contracts-v3" "^2.0.0"
     "@openzeppelin/contracts" "^4.6.0"
     "@paulrberg/contracts" "^3.7.0"
     prb-math "^2.4.3"

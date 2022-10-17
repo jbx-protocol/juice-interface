@@ -15,9 +15,6 @@ const PROJECT_TYPES_BY_NETWORK: Partial<
     [DEFI_DAO]: 'bidpool',
     [CONSTITUTION_DAO]: 'bidpool',
   },
-  [NetworkName.rinkeby]: {
-    12: 'bidpool',
-  },
 }
 
 export const PROJECT_TYPES = PROJECT_TYPES_BY_NETWORK[readNetwork.name] ?? {}

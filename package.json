@@ -55,7 +55,7 @@
     "@jbx-protocol/contracts-v2-4.0.0": "npm:@jbx-protocol/contracts-v2@4.0.0",
     "@jbx-protocol/contracts-v2-latest": "npm:@jbx-protocol/contracts-v2@8.0.4",
     "@jbx-protocol/juice-contracts-v3": "2.0.2",
-    "@jbx-protocol/juice-nft-rewards": "^4.0.0",
+    "@jbx-protocol/juice-nft-rewards": "6.0.0",
     "@jbx-protocol/juice-v1-token-terminal": "1.0.1",
     "@jbx-protocol/project-handles": "2.0.2",
     "@jbx-protocol/ve-nft": "0.0.6",

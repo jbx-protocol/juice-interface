@@ -1,20 +1,17 @@
-import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
-import { useWallet } from 'hooks/Wallet'
-import {
-  V2V3FundAccessConstraint,
-  V2V3FundingCycleData,
-} from 'models/v2v3/fundingCycle'
-import { useContext } from 'react'
-
-import { GroupedSplits, SplitGroup } from 'models/splits'
-import { isValidMustStartAtOrAfter } from 'utils/v2v3/fundingCycle'
-
 import { t } from '@lingui/macro'
 import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
 import { TransactionContext } from 'contexts/transactionContext'
+import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { TransactorInstance } from 'hooks/Transactor'
-
-import { V2V3FundingCycleMetadata } from 'models/v2v3/fundingCycle'
+import { useWallet } from 'hooks/Wallet'
+import { GroupedSplits, SplitGroup } from 'models/splits'
+import {
+  V2V3FundAccessConstraint,
+  V2V3FundingCycleData,
+  V2V3FundingCycleMetadata,
+} from 'models/v2v3/fundingCycle'
+import { useContext } from 'react'
+import { isValidMustStartAtOrAfter } from 'utils/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../ProjectTitle'
 
 const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately

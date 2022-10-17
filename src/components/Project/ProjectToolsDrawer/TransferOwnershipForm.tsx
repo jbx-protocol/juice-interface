@@ -30,7 +30,7 @@ export function TransferOwnershipForm({
           setLoadingTransferOwnership(false)
           transferOwnershipForm.resetFields()
         },
-        onError: (error: DOMException) => {
+        onError: (error: Error) => {
           setLoadingTransferOwnership(false)
           emitErrorNotification(error.message)
         },

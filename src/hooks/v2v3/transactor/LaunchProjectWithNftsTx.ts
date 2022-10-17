@@ -18,7 +18,7 @@ import {
 } from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
 import { encodeIPFSUri, ipfsCidUrl } from 'utils/ipfs'
-import { getLatestNftDelegateStoreContractAddress } from 'utils/nftRewards'
+import { findJBTiered721DelegateStoreAddress } from 'utils/nftRewards'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { isValidMustStartAtOrAfter } from 'utils/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../ProjectTitle'
@@ -55,7 +55,7 @@ async function getJBDeployTiered721DelegateData({
   JBPricesAddress: string
 }) {
   const JBTiered721DelegateStoreAddress =
-    await getLatestNftDelegateStoreContractAddress()
+    await findJBTiered721DelegateStoreAddress()
   const tiers = Object.keys(nftRewards).map(cid => {
     const contributionFloorWei = parseEther(
       nftRewards[cid].contributionFloor.toString(),

@@ -9,31 +9,31 @@ import {
 } from 'models/nftRewardTier'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import { decodeEncodedIPFSUri, IPFS_TAGS } from 'utils/ipfs'
-
+import { ForgeDeploy } from './v2v3/loadV2V3Contract'
 export const MAX_NFT_REWARD_TIERS = 3
 
 // Following three functions get the latest deployments of the NFT contracts from the NPM package
-// TODO: will need to incorporate `networkName` into this first function when contracts deployed to mainnet
-async function getLatestNftContractDeployments() {
-  const latestNftContractDeployments = await import(
+async function loadNftRewardsDeployment() {
+  const latestNftContractDeployments = (await import(
     `@jbx-protocol/juice-nft-rewards/broadcast/Deploy.s.sol/${readNetwork.chainId}/run-latest.json`
-  )
+  )) as ForgeDeploy
+
   return latestNftContractDeployments
 }
 
-export async function getLatestNftProjectDeployerContractAddress() {
-  const latestNftContractDeployments = await getLatestNftContractDeployments()
-  return latestNftContractDeployments.default.transactions.filter(
+export async function findJBTiered721DelegateProjectDeployerAddress() {
+  const latestNftContractDeployments = await loadNftRewardsDeployment()
+  return latestNftContractDeployments.transactions.find(
     tx =>
       tx.contractName === V2V3ContractName.JBTiered721DelegateProjectDeployer,
-  )?.[0]?.contractAddress
+  )?.contractAddress
 }
 
-export async function getLatestNftDelegateStoreContractAddress() {
-  const latestNftContractDeployments = await getLatestNftContractDeployments()
-  return latestNftContractDeployments.default.transactions.filter(
+export async function findJBTiered721DelegateStoreAddress() {
+  const latestNftContractDeployments = await loadNftRewardsDeployment()
+  return latestNftContractDeployments.transactions.find(
     tx => tx.contractName === V2V3ContractName.JBTiered721DelegateStore,
-  )?.[0]?.contractAddress
+  )?.contractAddress
 }
 
 // Returns the highest NFT reward tier that a payer is eligible given their pay amount

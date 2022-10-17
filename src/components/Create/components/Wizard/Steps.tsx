@@ -12,10 +12,9 @@ export const Steps = () => {
         size="small"
         onChange={onStepClicked}
       >
-        {!!steps &&
-          steps.map(({ id, title }) => (
-            <AntSteps.Step key={id} title={title} />
-          ))}
+        {steps?.map(({ id, title }) => (
+          <AntSteps.Step key={id} title={title} />
+        )) ?? null}
       </AntSteps>
     </div>
   )

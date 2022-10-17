@@ -16,6 +16,7 @@ import {
   ProjectDetailsPage,
   ProjectTokenPage,
   ReconfigurationRulesPage,
+  ReviewDeployPage,
 } from './components'
 import { CreateBadge } from './components/CreateBadge'
 import { Wizard } from './components/Wizard'
@@ -112,9 +113,19 @@ export function Create() {
             >
               <ReconfigurationRulesPage />
             </Wizard.Page>
-            <Wizard.Page name="nextStep" title={t`Empty Step`}>
-              <div>TODO</div>
-              <Wizard.Page.ButtonControl />
+            <Wizard.Page
+              name="reviewDeploy"
+              title={t`Review & Deploy`}
+              description={
+                <Trans>
+                  Review your project data below. Once launched, your first
+                  funding cycle can't be changed. You can reconfigure upcoming
+                  funding cycles according to your project's reconfiguration
+                  rules.
+                </Trans>
+              }
+            >
+              <ReviewDeployPage />
             </Wizard.Page>
           </Wizard>
         </V2V3CurrencyProvider>

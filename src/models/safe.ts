@@ -5,6 +5,14 @@ export type GnosisSafe = {
   threshold: number
 }
 
+export type GnosisSignature = {
+  owner: string
+  submissionDate: string
+  transactionHash: string
+  signature: string
+  signatureType: string
+}
+
 export interface SafeTransactionType {
   nonce: number
   origin: string
@@ -18,13 +26,7 @@ export interface SafeTransactionType {
   safeTxHash: string
   submissionDate: string
   executionDate: string
-  confirmations?: {
-    owner: string
-    submissionDate: string
-    transactionHash: string
-    signature: string
-    signatureType: string
-  }[]
+  confirmations?: GnosisSignature[]
   threshold?: number
   safe: string
   to: string

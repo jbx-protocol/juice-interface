@@ -21,7 +21,9 @@ export const NftRewardsPage = () => {
       scrollToFirstError
     >
       <div style={{ display: 'flex', flexDirection: 'column', gap: '4rem' }}>
-        <RewardsList />
+        <Form.Item noStyle name="rewards">
+          <RewardsList />
+        </Form.Item>
         <Space direction="vertical">
           <Form.Item
             name="collectionName"

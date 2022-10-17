@@ -58,7 +58,7 @@ export function TransferUnclaimedTokensModal({
           setLoading(false)
           onConfirmed?.()
         },
-        onError: (e: DOMException) => {
+        onError: (e: Error) => {
           setTransactionPending(false)
           setLoading(false)
           emitErrorNotification(e.message)

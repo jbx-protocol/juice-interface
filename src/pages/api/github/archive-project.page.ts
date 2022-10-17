@@ -53,8 +53,8 @@ const handler = async (
       'archive request',
       cv === CV_V3 ? 'V3' : cv === CV_V2 ? 'V2' : 'V1',
       'bot',
-      readNetwork.name === 'goerli' ? 'goerli' : undefined,
-      readNetwork.name === 'mainnet' ? 'mainnet' : undefined,
+      readNetwork.name === 'goerli' ? 'site:goerli' : undefined,
+      readNetwork.name === 'mainnet' ? 'site:mainnet' : undefined,
     ].filter(Boolean)
 
     const data = {

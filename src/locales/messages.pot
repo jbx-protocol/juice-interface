@@ -1403,7 +1403,7 @@ msgstr ""
 msgid "I accept this project's <0>risks</0>."
 msgstr ""
 
-msgid "I have read and accept the <0>Terms of Service</0>, and understand that I WILL NOT be able to make changes to my project's funding configuration until AFTER Funding Cycle #1 has finished."
+msgid "I have read and accept the <0>Terms of Service</0>, and understand that I CANNOT make changes to my project's funding configuration until AFTER Funding Cycle #1 has finished."
 msgstr ""
 
 msgid "I have read and accept the <0>Terms of Service</0>."

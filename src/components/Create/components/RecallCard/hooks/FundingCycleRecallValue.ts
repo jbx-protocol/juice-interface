@@ -1,4 +1,4 @@
-import { formatFundingCycle } from 'components/Create/utils/formatFundingCycle'
+import { formatFundingCycleDuration } from 'components/Create/utils/formatFundingCycleDuration'
 import { useAppSelector } from 'hooks/AppSelector'
 
 export const useFundingCycleRecallValue = () => {
@@ -10,5 +10,5 @@ export const useFundingCycleRecallValue = () => {
 
   if (duration === '0') return 'No duration'
 
-  return formatFundingCycle(duration)
+  return formatFundingCycleDuration(duration)
 }

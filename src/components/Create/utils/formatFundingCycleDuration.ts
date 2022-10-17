@@ -10,7 +10,7 @@ const formatUnit = ({ unit, plural }: { unit: string; plural: boolean }) => {
   return formatted
 }
 
-export const formatFundingCycle = (duration: string) => {
+export const formatFundingCycleDuration = (duration: string) => {
   const durationAsNumber = parseInt(duration)
   if (isNaN(durationAsNumber)) return 'No duration'
 

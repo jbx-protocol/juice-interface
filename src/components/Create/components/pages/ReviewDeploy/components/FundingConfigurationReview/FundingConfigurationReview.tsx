@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import { Row } from 'antd'
 import { AllocationSplit } from 'components/Create/components/Allocation'
-import { formatFundingCycle } from 'components/Create/utils/formatFundingCycle'
+import { formatFundingCycleDuration } from 'components/Create/utils/formatFundingCycleDuration'
 import { formatFundingTarget } from 'components/Create/utils/formatFundingTarget'
 import { useAppSelector } from 'hooks/AppSelector'
 import { Split } from 'models/splits'
@@ -11,6 +11,13 @@ import { useEditingPayoutSplits } from 'redux/hooks/EditingPayoutSplits'
 import { PayoutsList } from '../../../Payouts/components/PayoutsList'
 import { DescriptionCol } from '../DescriptionCol'
 import { emphasisedTextStyle, flexColumnStyle } from '../styles'
+
+const splitToAllocation = (split: Split): AllocationSplit => {
+  return {
+    id: `${split.beneficiary}${split.projectId ? `-${split.projectId}` : ''}`,
+    ...split,
+  }
+}
 
 export const FundingConfigurationReview = () => {
   const { fundingCycleData } = useAppSelector(state => state.editingV2Project)
@@ -23,7 +30,7 @@ export const FundingConfigurationReview = () => {
   )
 
   const duration = useMemo(
-    () => formatFundingCycle(fundingCycleData.duration),
+    () => formatFundingCycleDuration(fundingCycleData.duration),
     [fundingCycleData.duration],
   )
 
@@ -36,16 +43,9 @@ export const FundingConfigurationReview = () => {
     [distributionLimit?.amount, distributionLimit?.currency],
   )
 
-  const splitToAllocation = useCallback((split: Split): AllocationSplit => {
-    return {
-      id: `${split.beneficiary}${split.projectId ? `-${split.projectId}` : ''}`,
-      ...split,
-    }
-  }, [])
-
   const allocationSplits = useMemo(
     () => payoutSplits.map(splitToAllocation),
-    [payoutSplits, splitToAllocation],
+    [payoutSplits],
   )
   const setAllocationSplits = useCallback(
     (splits: AllocationSplit[]) => setPayoutSplits(splits),

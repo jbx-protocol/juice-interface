@@ -2,6 +2,9 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { TransactionReceipt } from '@ethersproject/providers'
 import { Trans } from '@lingui/macro'
 import { Button, FormInstance } from 'antd'
+import TransactionModal from 'components/TransactionModal'
+import { readNetwork } from 'constants/networks'
+import { useAppDispatch } from 'hooks/AppDispatch'
 import {
   useAppSelector,
   useEditingV2V3FundAccessConstraintsSelector,
@@ -12,22 +15,14 @@ import {
   TxNftArg,
   useLaunchProjectWithNftsTx,
 } from 'hooks/v2v3/transactor/LaunchProjectWithNftsTx'
+import { useWallet } from 'hooks/Wallet'
+import { TransactionOptions } from 'models/transaction'
+import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
+import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { uploadProjectMetadata } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
-
-import TransactionModal from 'components/TransactionModal'
-
-import { useAppDispatch } from 'hooks/AppDispatch'
-import { useWallet } from 'hooks/Wallet'
-
-import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
-
-import { useRouter } from 'next/router'
 import { v2v3ProjectRoute } from 'utils/routes'
-
-import { readNetwork } from 'constants/networks'
-import { TransactionOptions } from 'models/transaction'
 import { findTransactionReceipt } from './utils'
 
 const NFT_CREATE_EVENT_IDX = 2
@@ -53,18 +48,15 @@ const getProjectIdFromNftLaunchReceipt = (
 }
 
 export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
-  const launchProjectWithNftsTx = useLaunchProjectWithNftsTx()
-  const router = useRouter()
+  const [deployLoading, setDeployLoading] = useState<boolean>()
+  const [transactionPending, setTransactionPending] = useState<boolean>()
 
+  const router = useRouter()
   const { chainUnsupported, isConnected, changeNetworks, connect } = useWallet()
 
   const {
     projectMetadata: { name: projectName },
   } = useAppSelector(state => state.editingV2Project)
-
-  const [deployLoading, setDeployLoading] = useState<boolean>()
-  const [transactionPending, setTransactionPending] = useState<boolean>()
-
   const {
     projectMetadata,
     reservedTokensGroupedSplits,
@@ -85,8 +77,9 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
   const fundAccessConstraints = useEditingV2V3FundAccessConstraintsSelector()
   const dispatch = useAppDispatch()
 
+  const launchProjectWithNftsTx = useLaunchProjectWithNftsTx()
+
   const deployProject = useCallback(async () => {
-    setDeployLoading(true)
     if (
       !(
         projectMetadata?.name &&
@@ -95,9 +88,10 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
         fundAccessConstraints
       )
     ) {
-      setDeployLoading(false)
       throw new Error('Error deploying project.')
     }
+
+    setDeployLoading(true)
 
     // Upload project metadata
     const uploadedMetadata = await uploadProjectMetadata({
@@ -145,49 +139,43 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
       },
     }
 
-    const handleProjectLaunchFailed = (error: Error) => {
-      emitErrorNotification(`Failure: ${error}`)
-      setDeployLoading(false)
-      setTransactionPending(false)
-    }
-
-    const groupedSplits = [payoutGroupedSplits, reservedTokensGroupedSplits]
-
-    let txSuccessful: boolean
-
     try {
-      if (projectName && CIDs) {
-        // create mapping from cids -> contributionFloor
-        const nftRewardsArg: TxNftArg = {}
+      if (!(projectName && CIDs)) {
+        throw new Error('Data missing.')
+      }
 
-        CIDs.map((cid, index) => {
-          nftRewardsArg[cid] = rewardTiers[index]
-        })
+      // create mapping from cids -> contributionFloor
+      const nftRewardsArg: TxNftArg = {}
 
-        txSuccessful = await launchProjectWithNftsTx(
-          {
-            collectionCID: collectionCID ?? '',
-            collectionName: collectionName ?? projectName,
-            collectionSymbol: collectionSymbol ?? '',
-            projectMetadataCID: uploadedMetadata.IpfsHash,
-            fundingCycleData,
-            fundingCycleMetadata: {
-              ...fundingCycleMetadata,
-              ...NFT_FUNDING_CYCLE_METADATA_OVERRIDES,
-            },
-            fundAccessConstraints,
-            groupedSplits,
-            nftRewards: nftRewardsArg,
+      CIDs.map((cid, index) => {
+        nftRewardsArg[cid] = rewardTiers[index]
+      })
+
+      const txSuccessful = await launchProjectWithNftsTx(
+        {
+          collectionCID: collectionCID ?? '',
+          collectionName: collectionName ?? projectName,
+          collectionSymbol: collectionSymbol ?? '',
+          projectMetadataCID: uploadedMetadata.IpfsHash,
+          fundingCycleData,
+          fundingCycleMetadata: {
+            ...fundingCycleMetadata,
+            ...NFT_FUNDING_CYCLE_METADATA_OVERRIDES,
           },
-          txOpts,
-        )
-        if (!txSuccessful) {
-          setDeployLoading(false)
-          setTransactionPending(false)
-        }
+          fundAccessConstraints,
+          groupedSplits: [payoutGroupedSplits, reservedTokensGroupedSplits],
+          nftRewards: nftRewardsArg,
+        },
+        txOpts,
+      )
+
+      if (!txSuccessful) {
+        throw new Error('Transaction failed.')
       }
     } catch (error) {
-      handleProjectLaunchFailed(error as Error)
+      emitErrorNotification(`Failed to launch project: ${error}`)
+      setDeployLoading(false)
+      setTransactionPending(false)
     }
   }, [
     postPayModal,

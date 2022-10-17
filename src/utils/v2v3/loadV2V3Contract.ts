@@ -14,6 +14,7 @@ import { loadVeTokenUriResolver } from './contractLoaders/VeTokenUriResolver'
 
 export interface ForgeDeploy {
   receipts: { contractAddress: string }[]
+  transactions: { contractName: string; contractAddress: string }[]
 }
 
 export const loadV2V3Contract = async (

@@ -27,10 +27,7 @@ const V2ArchivedProjectIdsByNetwork: Partial<Record<NetworkName, number[]>> = {
     WEB3_COOL_KIDS,
     SCHIZO_DAO,
   ],
-  [NetworkName.rinkeby]: [
-    83, // AngelDAO
-    63, // CauseFund.coin
-  ],
+  [NetworkName.goerli]: [],
 }
 
 export const V2ArchivedProjectIds =

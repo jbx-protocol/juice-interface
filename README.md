@@ -14,7 +14,6 @@
 | Name                      | Link                                                                                                                                |
 | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | Mainnet site              | https://juicebox.money                                                                                                              |
-| Rinkeby site (deprecated) | https://rinkeby.juicebox.money                                                                                                      |
 | Goerli                    | https://goerli.juicebox.money                                                                                                       |
 | Subgraph                  | [https://thegraph.com/explorer/subgraph...](https://thegraph.com/explorer/subgraph?id=FVmuv3TndQDNd2BWARV8Y27yuKKukryKXPzvAS5E7htC) |
 

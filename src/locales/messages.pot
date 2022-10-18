@@ -2258,6 +2258,9 @@ msgstr ""
 msgid "Recommended for new users. <0>View details</0>."
 msgstr ""
 
+msgid "Reconfiguration"
+msgstr ""
+
 msgid "Reconfiguration Rules"
 msgstr ""
 

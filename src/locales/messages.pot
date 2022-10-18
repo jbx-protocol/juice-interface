@@ -866,6 +866,9 @@ msgstr ""
 msgid "Cycle #{0}"
 msgstr ""
 
+msgid "Cycles"
+msgstr ""
+
 msgid "DAOs"
 msgstr ""
 
@@ -903,6 +906,9 @@ msgid "Delete payout"
 msgstr ""
 
 msgid "Delete token allocation"
+msgstr ""
+
+msgid "Deploy"
 msgstr ""
 
 msgid "Deploy Payment Address contract"
@@ -2409,6 +2415,9 @@ msgid "Reward contributors with NFTs when they meet your configured funding crit
 msgstr ""
 
 msgid "Reward contributors with NFTs when they meet your funding criteria."
+msgstr ""
+
+msgid "Rewards"
 msgstr ""
 
 msgid "Rules"

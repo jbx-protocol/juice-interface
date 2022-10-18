@@ -66,7 +66,13 @@ export async function getProjectProps(
 
     const cv = isV3ProjectResult ? CV_V3 : CV_V2
 
-    return { props: { metadata, projectId, cv } }
+    return {
+      props: {
+        metadata,
+        projectId,
+        cv,
+      },
+    }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (e: any) {

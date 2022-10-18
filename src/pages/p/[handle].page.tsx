@@ -2,7 +2,6 @@ import { AppWrapper, SEO } from 'components/common'
 import { DesmosScript } from 'components/common/Head/scripts/DesmosScript'
 import { FeedbackFormButton } from 'components/FeedbackFormButton'
 import Loading from 'components/Loading'
-import NewDeployNotAvailable from 'components/NewDeployNotAvailable'
 import Project404 from 'components/Project404'
 import ScrollToTopButton from 'components/ScrollToTopButton'
 import { V1Project } from 'components/v1/V1Project'
@@ -65,7 +64,10 @@ export const getStaticProps: GetStaticProps<{
     const metadata = await findProjectMetadata({
       metadataCid: projects[0].metadataUri,
     })
-    return { props: { metadata, handle } }
+    return {
+      props: { metadata, handle },
+      revalidate: 10, // 10 seconds https://nextjs.org/docs/api-reference/data-fetching/get-static-props#revalidate
+    }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (e: any) {
@@ -122,17 +124,11 @@ function V1Dashboard() {
   const { projectId } = useContext(ProjectMetadataContext)
   const router = useRouter()
 
-  // Checks URL to see if user was just directed from project deploy
   const handle = router.query.handle as string
-  const isNewDeploy = Boolean(router.query.newDeploy)
 
   if (!handle) return <Project404 projectId={handle} />
   if (!projectId) return <Loading />
   if (projectId === 0) {
-    if (isNewDeploy) {
-      return <NewDeployNotAvailable handleOrId={handle} />
-    }
-
     return <Project404 projectId={handle} />
   }
 

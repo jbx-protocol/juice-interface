@@ -3518,7 +3518,7 @@ msgstr ""
 msgid "{0} ago"
 msgstr ""
 
-msgid "{0} are distributed to anyone who pays this project. If the project has set a distribution limit, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
+msgid "{0} are distributed to anyone who pays this project. If the project has a distribution limit, tokens can be redeemed for a portion of the project's overflow."
 msgstr ""
 
 msgid "{0} balance"

@@ -1,4 +1,3 @@
-import * as constants from '@ethersproject/constants'
 import { Trans } from '@lingui/macro'
 import { Button, Form } from 'antd'
 import ExternalLink from 'components/ExternalLink'
@@ -7,7 +6,6 @@ import FormItemWarningText from 'components/FormItemWarningText'
 import SwitchHeading from 'components/SwitchHeading'
 import { shadowCard } from 'constants/styles/shadowCard'
 import { DurationUnitsOption } from 'constants/time'
-import { DEFAULT_BALLOT_STRATEGY } from 'constants/v2v3/ballotStrategies'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
@@ -27,7 +25,6 @@ import {
   useState,
 } from 'react'
 import {
-  defaultFundingCycleData,
   defaultFundingCycleMetadata,
   editingV2ProjectActions,
 } from 'redux/slices/editingV2Project'
@@ -222,22 +219,6 @@ export default function FundingForm({
         ),
       )
       dispatch(editingV2ProjectActions.setDuration(durationInSeconds ?? '0'))
-
-      if (!durationInSeconds || durationInSeconds === '0') {
-        // reset discount rate if duration is 0
-        dispatch(
-          editingV2ProjectActions.setDiscountRate(
-            defaultFundingCycleData.discountRate,
-          ),
-        )
-        // set ballot to 0x00 if duration is 0
-        dispatch(editingV2ProjectActions.setBallot(constants.AddressZero))
-      } else {
-        // if duration is set, reset the ballot to the "default" ballot
-        dispatch(
-          editingV2ProjectActions.setBallot(DEFAULT_BALLOT_STRATEGY.address),
-        )
-      }
 
       // reset redemption rate if distributionLimit is 0
       if (!distributionLimit || distributionLimit === '0') {

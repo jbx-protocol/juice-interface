@@ -20,6 +20,7 @@ export const Steps = () => {
       return steps.map((step, index) => {
         return (
           <AntSteps.Step
+            className="create-steps-item"
             key={step.title}
             title={step.title}
             disabled={step.disabled}
@@ -32,7 +33,7 @@ export const Steps = () => {
   )
 
   return (
-    <div style={{ padding: '2.5rem 5rem' }}>
+    <div style={{ padding: '2.5rem 0', width: '840px' }}>
       <AntSteps
         current={current.index}
         progressDot

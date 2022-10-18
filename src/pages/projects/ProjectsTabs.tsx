@@ -8,10 +8,17 @@ const TAB_TYPE_NAMES: { [k in ProjectCategory]: string } = {
   all: t`All`,
   holdings: t`My holdings`,
   myprojects: t`My projects`,
+  mybookmarks: t`My bookmarks`,
   trending: t`Trending`,
 }
 
-const TABS: ProjectCategory[] = ['all', 'trending', 'holdings', 'myprojects']
+const TABS: ProjectCategory[] = [
+  'all',
+  'trending',
+  'holdings',
+  'myprojects',
+  'mybookmarks',
+]
 
 const ProjectTab = ({
   type,

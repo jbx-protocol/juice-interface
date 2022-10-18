@@ -26,6 +26,7 @@ import { helpPagePath } from 'utils/routes'
 
 import { CV_V1, CV_V1_1, CV_V2, CV_V3 } from 'constants/cv'
 import { layouts } from 'constants/styles/layouts'
+import MyBookmarks from 'pages/projects/MyBookmarks'
 import ArchivedProjectsMessage from './ArchivedProjectsMessage'
 import HoldingsProjects from './HoldingsProjects'
 import MyProjects from './MyProjects'
@@ -70,6 +71,8 @@ function Projects() {
           return 'holdings'
         case 'myprojects':
           return 'myprojects'
+        case 'mybookmarks':
+          return 'mybookmarks'
         default:
           return defaultTab
       }
@@ -286,6 +289,10 @@ function Projects() {
       ) : selectedTab === 'trending' ? (
         <div style={{ paddingBottom: 50 }}>
           <TrendingProjects count={12} />
+        </div>
+      ) : selectedTab === 'mybookmarks' ? (
+        <div style={{ paddingBottom: 50 }}>
+          <MyBookmarks />
         </div>
       ) : null}
 

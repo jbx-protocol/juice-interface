@@ -2,7 +2,6 @@ import { AppWrapper, SEO } from 'components/common'
 import { DesmosScript } from 'components/common/Head/scripts/DesmosScript'
 import { FeedbackFormButton } from 'components/FeedbackFormButton'
 import Loading from 'components/Loading'
-import NewDeployNotAvailable from 'components/NewDeployNotAvailable'
 import Project404 from 'components/Project404'
 import ScrollToTopButton from 'components/ScrollToTopButton'
 import { V1Project } from 'components/v1/V1Project'
@@ -122,17 +121,11 @@ function V1Dashboard() {
   const { projectId } = useContext(ProjectMetadataContext)
   const router = useRouter()
 
-  // Checks URL to see if user was just directed from project deploy
   const handle = router.query.handle as string
-  const isNewDeploy = Boolean(router.query.newDeploy)
 
   if (!handle) return <Project404 projectId={handle} />
   if (!projectId) return <Loading />
   if (projectId === 0) {
-    if (isNewDeploy) {
-      return <NewDeployNotAvailable handleOrId={handle} />
-    }
-
     return <Project404 projectId={handle} />
   }
 

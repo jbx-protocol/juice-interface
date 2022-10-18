@@ -72,7 +72,7 @@ export default function V2ProjectPage({
             metadata={metadata}
             cv={cv}
           >
-            <V2V3Dashboard projectId={projectId} />
+            <V2V3Dashboard />
           </V2V3ProjectPageProvider>
         ) : (
           <Loading />

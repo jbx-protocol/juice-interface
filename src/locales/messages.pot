@@ -1808,6 +1808,9 @@ msgstr ""
 msgid "No beneficiary selected. Is your wallet connected?"
 msgstr ""
 
+msgid "No description"
+msgstr ""
+
 msgid "No distributions configured."
 msgstr ""
 
@@ -1935,6 +1938,9 @@ msgid "Pay amount must be greater than 0."
 msgstr ""
 
 msgid "Pay button text"
+msgstr ""
+
+msgid "Pay disclaimer"
 msgstr ""
 
 msgid "Pay disclosure"
@@ -2112,6 +2118,9 @@ msgid "Project launch successful"
 msgstr ""
 
 msgid "Project links"
+msgstr ""
+
+msgid "Project logo"
 msgstr ""
 
 msgid "Project name"

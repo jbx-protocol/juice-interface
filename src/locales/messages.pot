@@ -3452,6 +3452,12 @@ msgstr ""
 msgid "Your project cannot receive direct payments while paused."
 msgstr ""
 
+msgid "Your project has successfully launched on {0}!"
+msgstr ""
+
+msgid "Your project has successfully launched!"
+msgstr ""
+
 msgid "Your project is funded across funding cycles. A funding cycle has a funding target and a duration. Your project's funding cycle configuration will depend on the kind of project you're starting."
 msgstr ""
 

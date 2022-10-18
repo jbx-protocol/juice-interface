@@ -5,6 +5,7 @@ import {
   Allocation,
   AllocationSplit,
 } from 'components/Create/components/Allocation'
+import { OwnerPayoutCard } from 'components/Create/components/PayoutCard'
 import { formatPercent } from 'components/Create/utils/formatPercent'
 import FormattedAddress from 'components/FormattedAddress'
 import { FormItemInput } from 'models/formItemInput'
@@ -19,6 +20,7 @@ export const ReservedTokensList: React.FC<
   return (
     <Allocation value={value} onChange={onChange}>
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+        <OwnerPayoutCard payoutsSelection={'percentages'} />
         <Allocation.List
           availableModes={new Set(['percentage'])}
           addText={t`Add token allocation`}

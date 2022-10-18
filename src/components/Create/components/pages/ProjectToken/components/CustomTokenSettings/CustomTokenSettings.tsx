@@ -52,17 +52,23 @@ export const CustomTokenSettings = () => {
         <ReservedTokenRateCallout />
       </Form.Item>
       <Form.Item label={t`Reserved token allocation`} requiredMark="optional">
-        <Trans>
-          Allocate reserved tokens to Ethereum addresses or Juicebox projects.
-          Unallocated reserved tokens are sent to the project owner.
-        </Trans>
-        <Form.Item
-          noStyle
-          name="reservedTokenAllocation"
-          rules={[inputMustExistRule({ label: t`Reserved token allocation` })]}
+        <div
+          style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}
         >
-          <ReservedTokensList />
-        </Form.Item>
+          <Trans>
+            Allocate reserved tokens to Ethereum addresses or Juicebox projects.
+            Unallocated reserved tokens are sent to the project owner.
+          </Trans>
+          <Form.Item
+            noStyle
+            name="reservedTokenAllocation"
+            rules={[
+              inputMustExistRule({ label: t`Reserved token allocation` }),
+            ]}
+          >
+            <ReservedTokensList />
+          </Form.Item>
+        </div>
       </Form.Item>
 
       <Divider />

@@ -1,5 +1,5 @@
 import { DownOutlined } from '@ant-design/icons'
-import { Collapse } from 'antd'
+import { Collapse, CollapsePanelProps, Divider } from 'antd'
 
 export const CreateCollapse: React.FC & { Panel: typeof Collapse.Panel } = ({
   children,
@@ -19,4 +19,17 @@ export const CreateCollapse: React.FC & { Panel: typeof Collapse.Panel } = ({
   )
 }
 
-CreateCollapse.Panel = Collapse.Panel
+const OverridenPanel: React.FC<CollapsePanelProps> = props => {
+  return (
+    <Collapse.Panel {...props}>
+      {
+        <>
+          {props.children}
+          <Divider style={{ marginBottom: '0' }} />
+        </>
+      }
+    </Collapse.Panel>
+  )
+}
+
+CreateCollapse.Panel = OverridenPanel

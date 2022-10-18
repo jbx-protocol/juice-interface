@@ -64,17 +64,21 @@ export default function V2V3DownloadPaymentsModal(props: ModalProps) {
 
         if (date.includes(',')) date = date.split(',')[1]
 
-        rows.push([fromWad(p.amount), date, p.caller, p.beneficiary, p.note])
+        rows.push([
+          fromWad(p.amount),
+          date,
+          p.caller,
+          p.beneficiary,
+          `"${p.note.replace('\n', ' ').trim()}"`,
+        ])
       })
 
-      downloadCsvFile(
-        `project-${projectId}_payments-block${blockNumber}.csv`,
-        rows,
-      )
+      downloadCsvFile(`project-${projectId}_payments-block${blockNumber}`, rows)
 
       setLoading(false)
     } catch (e) {
       console.error('Error downloading payments', e)
+      emitErrorNotification(t`Error downloading payments, try again.`)
       setLoading(false)
     }
   }, [projectId, setLoading, blockNumber, cv])

@@ -1,9 +1,12 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Form, Space } from 'antd'
+import { Divider, Form, Space } from 'antd'
+import Callout from 'components/Callout'
 import CurrencySymbol from 'components/CurrencySymbol'
 import InputAccessoryButton from 'components/InputAccessoryButton'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import TransactionModal from 'components/TransactionModal'
 import SplitList from 'components/v2v3/shared/SplitList'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
@@ -14,11 +17,7 @@ import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useContext, useEffect, useState } from 'react'
 import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
 import { V2V3CurrencyName, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
-import { amountSubFee, feeForAmount } from 'utils/v2v3/math'
-
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import TransactionModal from 'components/TransactionModal'
-import { formatFee } from 'utils/v2v3/math'
+import { amountSubFee, feeForAmount, formatFee } from 'utils/v2v3/math'
 
 export default function DistributePayoutsModal({
   visible,
@@ -29,8 +28,6 @@ export default function DistributePayoutsModal({
   onCancel?: VoidFunction
   onConfirmed?: VoidFunction
 }) {
-  const [loading, setLoading] = useState<boolean>()
-  const [distributionAmount, setDistributionAmount] = useState<string>()
   const {
     balanceInDistributionLimitCurrency,
     distributionLimit,
@@ -42,7 +39,10 @@ export default function DistributePayoutsModal({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+
   const [transactionPending, setTransactionPending] = useState<boolean>()
+  const [loading, setLoading] = useState<boolean>()
+  const [distributionAmount, setDistributionAmount] = useState<string>()
 
   const distributePayoutsTx = useDistributePayoutsTx()
   const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
@@ -152,11 +152,13 @@ export default function DistributePayoutsModal({
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Trans>Total funds:</Trans>{' '}
-            <div>
-              <CurrencySymbol currency={distributionCurrencyName} />
-              {grossAvailableAmount}
-            </div>
+            <Trans>
+              Total funds:{' '}
+              <div>
+                <CurrencySymbol currency={distributionCurrencyName} />
+                {grossAvailableAmount}
+              </div>
+            </Trans>
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -169,12 +171,13 @@ export default function DistributePayoutsModal({
             </div>
           </div>
 
+          <Divider style={{ margin: '4px 0' }} />
+
           <div
             style={{
               display: 'flex',
               justifyContent: 'space-between',
               fontWeight: 500,
-              borderTop: `1px solid ${colors.stroke.tertiary}`,
             }}
           >
             <div>
@@ -186,6 +189,7 @@ export default function DistributePayoutsModal({
             </div>
           </div>
         </div>
+
         <Form layout="vertical">
           <Form.Item
             label={<Trans>Amount to distribute</Trans>}
@@ -240,12 +244,12 @@ export default function DistributePayoutsModal({
           </h4>
 
           {payoutSplits?.length === 0 ? (
-            <p>
+            <Callout style={{ marginBottom: '1rem' }}>
               <Trans>
                 There are no payouts defined for this funding cycle. The project
                 owner will receive all available funds.
               </Trans>
-            </p>
+            </Callout>
           ) : null}
 
           <SplitList

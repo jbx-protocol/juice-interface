@@ -1106,6 +1106,9 @@ msgstr ""
 msgid "Download Template"
 msgstr ""
 
+msgid "Download payments CSV"
+msgstr ""
+
 msgid "Duration"
 msgstr ""
 
@@ -1202,6 +1205,9 @@ msgstr ""
 msgid "Enter your project’s details. You can edit your project's details at any time after you deploy project your project, but the transaction will cost gas."
 msgstr ""
 
+msgid "Error downloading payments, try again."
+msgstr ""
+
 msgid "Error loading holders"
 msgstr ""
 
@@ -1224,6 +1230,9 @@ msgid "Export data"
 msgstr ""
 
 msgid "Export payouts CSV"
+msgstr ""
+
+msgid "Export project activity"
 msgstr ""
 
 msgid "Export the current funding cycle's payouts to CSV."

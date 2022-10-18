@@ -72,14 +72,23 @@ export function V1DownloadPaymentsModal({
 
         if (date.includes(',')) date = date.split(',')[1]
 
-        rows.push([fromWad(p.amount), date, p.caller, p.beneficiary, p.note])
+        rows.push([
+          fromWad(p.amount),
+          date,
+          p.caller,
+          p.beneficiary,
+          `"${p.note.replace('\n', ' ').trim()}"`,
+        ])
       })
 
-      downloadCsvFile(`@${handle}_payments-block${blockNumber}.csv`, rows)
+      downloadCsvFile(`@${handle}_payments-block${blockNumber}`, rows)
 
       setLoading(false)
     } catch (e) {
       console.error('Error downloading payments', e)
+      emitErrorNotification(
+        'Error downloading payments, try again in a few minutes.',
+      )
       setLoading(false)
     }
   }, [projectId, cv, setLoading, blockNumber, handle])

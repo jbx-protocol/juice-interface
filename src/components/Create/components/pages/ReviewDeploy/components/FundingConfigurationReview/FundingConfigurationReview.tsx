@@ -9,11 +9,14 @@ import { useCallback, useMemo } from 'react'
 import { useEditingDistributionLimit } from 'redux/hooks/EditingDistributionLimit'
 import { useEditingPayoutSplits } from 'redux/hooks/EditingPayoutSplits'
 import { PayoutsList } from '../../../Payouts/components/PayoutsList'
+import { useAvailablePayoutsSelections } from '../../../Payouts/hooks'
 import { DescriptionCol } from '../DescriptionCol'
 import { emphasisedTextStyle, flexColumnStyle } from '../styles'
 
 export const FundingConfigurationReview = () => {
-  const { fundingCycleData } = useAppSelector(state => state.editingV2Project)
+  const { fundingCycleData, payoutsSelection } = useAppSelector(
+    state => state.editingV2Project,
+  )
   const [distributionLimit] = useEditingDistributionLimit()
   const [payoutSplits, setPayoutSplits] = useEditingPayoutSplits()
 
@@ -35,6 +38,17 @@ export const FundingConfigurationReview = () => {
       }),
     [distributionLimit?.amount, distributionLimit?.currency],
   )
+
+  const availableSelections = useAvailablePayoutsSelections()
+  const selection = useMemo(() => {
+    const overrideSelection =
+      availableSelections.size === 1 ? [...availableSelections][0] : undefined
+    return overrideSelection || payoutsSelection
+  }, [availableSelections, payoutsSelection])
+
+  const payoutsText = useMemo(() => {
+    return selection === 'amounts' ? t`Amounts` : t`Percentages`
+  }, [selection])
 
   const allocationSplits = useMemo(
     () => payoutSplits.map(splitToAllocation),
@@ -80,7 +94,7 @@ export const FundingConfigurationReview = () => {
           span={6}
           title={t`Payouts`}
           // TODO: Add support for this to show correct value - we probably need to borrow code from the FundingTarget component
-          desc={<div style={emphasisedTextStyle()}>{'Amounts'}</div>}
+          desc={<div style={emphasisedTextStyle()}>{payoutsText}</div>}
         />
         <DescriptionCol
           span={18}
@@ -89,7 +103,7 @@ export const FundingConfigurationReview = () => {
             <PayoutsList
               value={allocationSplits}
               onChange={setAllocationSplits}
-              payoutsSelection="amounts"
+              payoutsSelection={selection ?? 'amounts'}
               isEditable={false}
             />
           }

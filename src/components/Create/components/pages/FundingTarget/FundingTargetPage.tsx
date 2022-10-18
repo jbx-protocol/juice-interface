@@ -6,9 +6,12 @@ import {
 import { t, Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
+import InputAccessoryButton from 'components/InputAccessoryButton'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import { FormItemInput } from 'models/formItemInput'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
-import { CurrencySelectInput } from '../../CurrencySelectInput'
+import { CurrencySelectInputValue } from '../../CurrencySelectInput'
 import { RecallCard } from '../../RecallCard'
 import { Selection } from '../../Selection'
 import { Wizard } from '../../Wizard'
@@ -58,7 +61,7 @@ export const FundingTargetPage: React.FC = () => {
                   </Trans>
                 }
               >
-                <CurrencySelectInput />
+                <FormattedNumberInputWrapper />
               </Form.Item>
             </Selection.Card>
             <Selection.Card
@@ -79,5 +82,29 @@ export const FundingTargetPage: React.FC = () => {
         <Wizard.Page.ButtonControl isNextEnabled={isNextEnabled} />
       </Space>
     </Form>
+  )
+}
+
+const FormattedNumberInputWrapper: React.FC<
+  FormItemInput<CurrencySelectInputValue>
+> = props => {
+  const currency = props.value?.currency ?? 'eth'
+  return (
+    <FormattedNumberInput
+      value={props.value?.amount}
+      onChange={amount => props.onChange?.({ amount, currency })}
+      accessory={
+        <InputAccessoryButton
+          withArrow
+          content={currency === 'eth' ? 'ETH' : 'USD'}
+          onClick={() =>
+            props.onChange?.({
+              amount: props.value?.amount ?? '0',
+              currency: currency === 'eth' ? 'usd' : 'eth',
+            })
+          }
+        />
+      }
+    />
   )
 }

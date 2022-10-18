@@ -76,13 +76,12 @@ export default function V2ManageTokensSection() {
   const { contractAddress: veNftAddress } = useContext(VeNftContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
-  const { userAddress } = useWallet()
-
   const [manageTokensModalVisible, setManageTokensModalVisible] =
     useState<boolean>(false)
   const [participantsModalVisible, setParticipantsModalVisible] =
     useState<boolean>(false)
 
+  const { userAddress } = useWallet()
   const { data: claimedBalance } = useERC20BalanceOf(tokenAddress, userAddress)
   const { data: unclaimedBalance } = useUserUnclaimedTokenBalance()
   const { totalLocked } = useVeNftSummaryStats()
@@ -90,14 +89,17 @@ export default function V2ManageTokensSection() {
   const { data: v1ProjectId } = useV1ProjectIdOfV2Project(projectId)
   const hasV1TokenPaymentTerminal = useHasV1TokenPaymentTerminal()
   const v1ProjectHandle = useV1HandleForProjectId(v1ProjectId)
-  const hasV1ProjectId = Boolean(v1ProjectId?.toNumber() ?? 0 > 0)
-  const v1TokenSwapEnabled = featureFlagEnabled(FEATURE_FLAGS.V1_TOKEN_SWAP)
 
+  const totalTokenSupplyDiscrete = parseInt(fromWad(totalTokenSupply))
   const totalBalanceWithLock = parseInt(fromWad(totalBalance)) + totalLocked
 
   // %age of tokens the user owns.
   const userOwnershipPercentage =
-    formatPercent(parseWad(totalBalanceWithLock), totalTokenSupply) || '0'
+    formatPercent(
+      parseWad(totalBalanceWithLock),
+      parseWad(totalTokenSupplyDiscrete),
+    ) || '0'
+
   const claimedBalanceFormatted = formatWad(claimedBalance ?? 0, {
     precision: 0,
   })
@@ -115,23 +117,24 @@ export default function V2ManageTokensSection() {
   const redeemDisabled = Boolean(
     !hasOverflow || fundingCycleMetadata?.redemptionRate.eq(0),
   )
-
+  const v1TokenSwapEnabled = featureFlagEnabled(FEATURE_FLAGS.V1_TOKEN_SWAP)
+  const veNftEnabled = Boolean(
+    featureFlagEnabled(FEATURE_FLAGS.VENFT) && veNftAddress,
+  )
   const hasIssuedERC20 = tokenAddress !== constants.AddressZero
   const hasIssueTicketsPermission = useV2ConnectedWalletHasPermission(
     V2OperatorPermission.ISSUE,
   )
   const showIssueErc20TokenButton =
     !hasIssuedERC20 && hasIssueTicketsPermission && !isPreviewMode
+
+  const hasV1ProjectId = Boolean(v1ProjectId?.toNumber() ?? 0 > 0)
   const showV1ProjectTokensSection =
     v1TokenSwapEnabled && hasV1ProjectId && hasV1TokenPaymentTerminal
-
   const userHasMintPermission = Boolean(
     useV2ConnectedWalletHasPermission(V2OperatorPermission.MINT),
   )
   const projectAllowsMint = Boolean(fundingCycleMetadata?.allowMinting)
-  const veNftEnabled = Boolean(
-    featureFlagEnabled(FEATURE_FLAGS.VENFT) && veNftAddress,
-  )
 
   return (
     <>
@@ -155,9 +158,8 @@ export default function V2ManageTokensSection() {
                       includeTokenWord: true,
                     })}{' '}
                     are distributed to anyone who pays this project. If the
-                    project has set a distribution limit, tokens can be redeemed
-                    for a portion of the project's overflow whether or not they
-                    have been claimed yet.
+                    project has a distribution limit, tokens can be redeemed for
+                    a portion of the project's overflow.
                   </Trans>
                 }
               />
@@ -200,8 +202,7 @@ export default function V2ManageTokensSection() {
                 >
                   <div>
                     <div>
-                      {formatWad(totalTokenSupply, { precision: 0 })}{' '}
-                      {tokenText}
+                      {totalTokenSupplyDiscrete} {tokenText}
                     </div>
                     <TextButton
                       onClick={() => setParticipantsModalVisible(true)}

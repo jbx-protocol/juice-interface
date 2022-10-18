@@ -3,6 +3,7 @@ import { TransactionReceipt } from '@ethersproject/providers'
 import { Trans } from '@lingui/macro'
 import { Button, FormInstance } from 'antd'
 import TransactionModal from 'components/TransactionModal'
+import { NEW_DEPLOY_QUERY_PARAM } from 'components/v2v3/V2V3Project/modals/NewDeployModal'
 import { readNetwork } from 'constants/networks'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import {
@@ -131,7 +132,9 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
         // Reset Redux state/localstorage after deploying
         dispatch(editingV2ProjectActions.resetState())
 
-        router.push(`${v2v3ProjectRoute({ projectId })}?newDeploy=true`)
+        router.push(
+          `${v2v3ProjectRoute({ projectId })}?${NEW_DEPLOY_QUERY_PARAM}=1`,
+        )
       },
       onCancelled() {
         setDeployLoading(false)

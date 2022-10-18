@@ -15,6 +15,8 @@ import Link from 'next/link'
 import { settingsPagePath } from 'utils/routes'
 import { LaunchProjectPayerModal } from './LaunchProjectPayerModal'
 
+export const NEW_DEPLOY_QUERY_PARAM = 'np'
+
 export default function NewDeployModal({
   visible,
   onClose,

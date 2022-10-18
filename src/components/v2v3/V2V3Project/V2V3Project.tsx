@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Col, Row, Space } from 'antd'
+import { useModalFromUrlQuery } from 'components/modals/hooks/useModalFromUrlQuery'
 import { PayProjectForm } from 'components/Project/PayProjectForm'
 import { ProjectHeader } from 'components/Project/ProjectHeader'
 import { TextButton } from 'components/TextButton'
@@ -11,15 +12,12 @@ import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 import useMobile from 'hooks/Mobile'
 import { useValidatePrimaryEthTerminal } from 'hooks/v2v3/ValidatePrimaryEthTerminal'
-import { useRouter } from 'next/router'
 import { V2V3PayProjectFormProvider } from 'providers/v2v3/V2V3PayProjectFormProvider'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
-import { v2v3ProjectRoute } from 'utils/routes'
 import { NftRewardsSection } from '../../NftRewards/NftRewardsSection'
-import { NftPostPayModal } from '../shared/NftPostPayModal'
 import { ProjectBanners } from './banners/ProjectBanners'
-import NewDeployModal from './modals/NewDeployModal'
+import NewDeployModal, { NEW_DEPLOY_QUERY_PARAM } from './modals/NewDeployModal'
 import { V2V3ProjectTokenBalancesModal } from './modals/V2V3ProjectTokenBalancesModal/V2V3ProjectTokenBalancesModal'
 import ProjectActivity from './ProjectActivity'
 import TreasuryStats from './TreasuryStats'
@@ -57,18 +55,13 @@ export function V2V3Project() {
     projectOwnerAddress,
     handle,
   } = useContext(V2V3ProjectContext)
-  const { projectMetadata, projectId, cv } = useContext(ProjectMetadataContext)
+  const { projectId, cv } = useContext(ProjectMetadataContext)
   const {
     nftRewards: { rewardTiers: nftRewardTiers },
   } = useContext(NftRewardsContext)
 
-  const [newDeployModalVisible, setNewDeployModalVisible] =
-    useState<boolean>(false)
-  const [nftPostPayModalVisible, setNftPostPayModalVisible] =
-    useState<boolean>(false)
-
-  // Checks URL to see if user was just directed from project deploy
-  const { replace: routerReplace, query } = useRouter()
+  const { visible: newDeployModalVisible, hide: hideNewDeployModal } =
+    useModalFromUrlQuery(NEW_DEPLOY_QUERY_PARAM)
 
   const isMobile = useMobile()
   const isOwner = useIsUserAddress(projectOwnerAddress)
@@ -86,52 +79,6 @@ export function V2V3Project() {
   const showNftSection = nftRewardsEnabled && hasNftRewards
 
   const colSizeMd = isPreviewMode ? 24 : 12
-
-  /**
-   * When the router is ready,
-   * check if the user was just redirected from:
-   * - project deploy, or;
-   * - successful NFT rewards payment.
-   *
-   * This should only run once: on initial load.
-   *
-   * The reason for this useEffect is because `query` doesn't appear to
-   * update when `router.replace` is called to remove the query params.
-   */
-  useEffect(() => {
-    if (query.newDeploy === 'true') {
-      setNewDeployModalVisible(true)
-    }
-    if (query.nftPurchaseConfirmed === 'true') {
-      setNftPostPayModalVisible(true)
-    }
-  }, [query])
-
-  const closeNewDeployModal = () => {
-    // Wipes query param
-    routerReplace(
-      {
-        pathname: v2v3ProjectRoute({ projectId }),
-      },
-      undefined,
-      { shallow: true },
-    )
-    setNewDeployModalVisible(false)
-  }
-
-  const closeNftPostPayModal = () => {
-    // `Next` `query.nftPurchaseConfirmed` not updating unless a new
-    // `nftPurchaseConfirmed` value is given
-    routerReplace(
-      {
-        pathname: v2v3ProjectRoute({ projectId }),
-        query: { nftPurchaseConfirmed: 'null' },
-      },
-      undefined,
-      { shallow: true },
-    )
-    setNftPostPayModalVisible(false)
-  }
 
   if (projectId === undefined) return null
 
@@ -208,15 +155,8 @@ export function V2V3Project() {
 
       <NewDeployModal
         visible={newDeployModalVisible}
-        onClose={closeNewDeployModal}
+        onClose={hideNewDeployModal}
       />
-      {projectMetadata?.nftPaymentSuccessModal?.content ? (
-        <NftPostPayModal
-          visible={nftPostPayModalVisible}
-          onClose={closeNftPostPayModal}
-          config={projectMetadata.nftPaymentSuccessModal}
-        />
-      ) : null}
     </Space>
   )
 }

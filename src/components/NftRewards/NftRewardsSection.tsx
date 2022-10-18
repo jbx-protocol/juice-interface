@@ -1,10 +1,15 @@
 import { t, Trans } from '@lingui/macro'
 import { Col, Row } from 'antd'
+import {
+  NftPostPayModal,
+  NFT_PAYMENT_CONFIRMED_QUERY_PARAM,
+} from 'components/NftRewards/NftPostPayModal'
 import { PayProjectFormContext } from 'components/Project/PayProjectForm/payProjectFormContext'
 import SectionHeader from 'components/SectionHeader'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { CurrencyContext } from 'contexts/currencyContext'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useMobile from 'hooks/Mobile'
@@ -13,6 +18,7 @@ import { useContext, useEffect, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { fromWad } from 'utils/format/formatNumber'
 import { getNftRewardTier, MAX_NFT_REWARD_TIERS } from 'utils/nftRewards'
+import { useModalFromUrlQuery } from '../modals/hooks/useModalFromUrlQuery'
 import { RewardTier } from './RewardTier'
 
 function RewardTiersLoadingSkeleton() {
@@ -40,10 +46,14 @@ export function NftRewardsSection() {
     currencies: { ETH },
   } = useContext(CurrencyContext)
   const { form: payProjectForm } = useContext(PayProjectFormContext)
+  const { projectMetadata } = useContext(ProjectMetadataContext)
+
   const { payAmount, payInCurrency, setPayAmount, setPayInCurrency } =
     payProjectForm ?? {}
-
   const [selectedIndex, setSelectedIndex] = useState<number>()
+
+  const { visible: nftPostPayModalVisible, hide: hideNftPostPayModal } =
+    useModalFromUrlQuery(NFT_PAYMENT_CONFIRMED_QUERY_PARAM)
 
   const converter = useCurrencyConverter()
   const isMobile = useMobile()
@@ -118,6 +128,14 @@ export function NftRewardsSection() {
             ))}
         </Row>
       )}
+
+      {projectMetadata?.nftPaymentSuccessModal?.content ? (
+        <NftPostPayModal
+          open={nftPostPayModalVisible}
+          onClose={hideNftPostPayModal}
+          config={projectMetadata.nftPaymentSuccessModal}
+        />
+      ) : null}
     </div>
   )
 }

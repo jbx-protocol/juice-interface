@@ -4,6 +4,7 @@ import { Descriptions, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Callout from 'components/Callout'
 import FormattedAddress from 'components/FormattedAddress'
+import { NFT_PAYMENT_CONFIRMED_QUERY_PARAM } from 'components/NftRewards/NftPostPayModal'
 import Paragraph from 'components/Paragraph'
 import TooltipLabel from 'components/TooltipLabel'
 import TransactionModal from 'components/TransactionModal'
@@ -104,7 +105,7 @@ export function V2V3ConfirmPayModal({
   }
 
   const handlePaySuccess = () => {
-    if (onCancel) onCancel()
+    onCancel?.()
     setLoading(false)
     setTransactionPending(false)
 
@@ -112,7 +113,10 @@ export function V2V3ConfirmPayModal({
 
     if (nftRewardTier && projectMetadata?.nftPaymentSuccessModal) {
       router.replace(
-        `${v2v3ProjectRoute({ handle, projectId })}?nftPurchaseConfirmed=true`,
+        `${v2v3ProjectRoute({
+          handle,
+          projectId,
+        })}?${NFT_PAYMENT_CONFIRMED_QUERY_PARAM}=1`,
       )
     }
   }

@@ -6,7 +6,7 @@ import { CV2V3 } from 'models/cv'
 import { NetworkName } from 'models/network-name'
 import { ProjectMetadataV5 } from 'models/project-metadata'
 import { V2V3ContractName } from 'models/v2v3/contracts'
-import { GetServerSidePropsResult } from 'next'
+import { GetServerSidePropsResult, GetStaticPropsResult } from 'next'
 import { findProjectMetadata } from 'utils/server'
 import { isV3Project } from 'utils/v2v3/cv'
 import { loadV2V3Contract } from 'utils/v2v3/loadV2V3Contract'
@@ -51,7 +51,10 @@ async function getMetadataCidFromContract(projectId: number) {
 
 export async function getProjectProps(
   projectId: number,
-): Promise<GetServerSidePropsResult<ProjectPageProps>> {
+): Promise<
+  | GetServerSidePropsResult<ProjectPageProps>
+  | GetStaticPropsResult<ProjectPageProps>
+> {
   if (isNaN(projectId)) {
     return { notFound: true }
   }
@@ -66,7 +69,14 @@ export async function getProjectProps(
 
     const cv = isV3ProjectResult ? CV_V3 : CV_V2
 
-    return { props: { metadata, projectId, cv } }
+    return {
+      props: {
+        metadata,
+        projectId,
+        cv,
+      },
+      revalidate: 10, // 10 seconds https://nextjs.org/docs/api-reference/data-fetching/get-static-props#revalidate
+    }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (e: any) {

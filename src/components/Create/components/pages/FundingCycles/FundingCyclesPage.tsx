@@ -8,6 +8,7 @@ import { Form, Space } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import Callout from 'components/Callout'
 import { useContext } from 'react'
+import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { CreateBadge } from '../../CreateBadge'
 import { DurationInput } from '../../DurationInput'
 import { Selection } from '../../Selection/Selection'
@@ -54,6 +55,7 @@ const FundingCycleCallout: React.FC = () => {
 // TODO: We need to add some state handling for this function. We might want to
 //       consider adding some stuff to handle the local storage state better.
 export const FundingCyclesPage = () => {
+  useSetCreateFurthestPageReached('fundingCycles')
   const { goToNextPage } = useContext(PageContext)
   const { form, initialValues } = useFundingCyclesForm()
 

@@ -1,8 +1,35 @@
 import { Steps as AntSteps } from 'antd'
+import { useCallback } from 'react'
 import { useSteps } from './hooks/Steps'
 
 export const Steps = () => {
-  const { steps, current, onStepClicked } = useSteps()
+  const { steps, current, furthestStepReached, onStepClicked } = useSteps()
+
+  const renderSteps = useCallback(
+    (steps: { id: string; title: string; disabled: boolean }[]) => {
+      const getStatus = (index: number) => {
+        if (index <= furthestStepReached.index) {
+          if (index < (current.index ?? -1)) {
+            return 'finish'
+          }
+          return 'process'
+        }
+        return 'wait'
+      }
+
+      return steps.map((step, index) => {
+        return (
+          <AntSteps.Step
+            key={step.title}
+            title={step.title}
+            disabled={step.disabled}
+            status={getStatus(index)}
+          />
+        )
+      })
+    },
+    [current.index, furthestStepReached.index],
+  )
 
   return (
     <div style={{ padding: '2.5rem 5rem' }}>
@@ -12,9 +39,7 @@ export const Steps = () => {
         size="small"
         onChange={onStepClicked}
       >
-        {steps?.map(({ id, title }) => (
-          <AntSteps.Step key={id} title={title} />
-        )) ?? null}
+        {!!steps?.length && renderSteps(steps)}
       </AntSteps>
     </div>
   )

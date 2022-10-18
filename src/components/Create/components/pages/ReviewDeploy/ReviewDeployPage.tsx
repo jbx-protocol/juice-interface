@@ -2,6 +2,7 @@ import { CheckCircleFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
+import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { CreateCollapse } from '../../CreateCollapse'
 import { Wizard } from '../../Wizard'
 import {
@@ -25,6 +26,7 @@ const Header: React.FC = ({ children }) => {
 }
 
 export const ReviewDeployPage = () => {
+  useSetCreateFurthestPageReached('reviewDeploy')
   return (
     <>
       <CreateCollapse>

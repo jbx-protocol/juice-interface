@@ -4,6 +4,7 @@ import { Form, Space } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import Callout from 'components/Callout'
 import { useContext } from 'react'
+import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { CreateBadge } from '../../CreateBadge'
 import { Selection } from '../../Selection'
 import { Wizard } from '../../Wizard'
@@ -12,6 +13,7 @@ import { CustomTokenSettings } from './components'
 import { useProjectTokensForm } from './hooks/ProjectTokenForm'
 
 export const ProjectTokenPage: React.FC = () => {
+  useSetCreateFurthestPageReached('projectToken')
   const { goToNextPage } = useContext(PageContext)
   const { form, initialValues } = useProjectTokensForm()
 

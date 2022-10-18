@@ -2207,9 +2207,6 @@ msgstr ""
 msgid "Project upgrades"
 msgstr ""
 
-msgid "Project {name} will be available soon! Try refreshing the page shortly."
-msgstr ""
-
 msgid "Project {projectId} not found"
 msgstr ""
 
@@ -2370,9 +2367,6 @@ msgid "Redemption rate:"
 msgstr ""
 
 msgid "Redemption value"
-msgstr ""
-
-msgid "Refresh"
 msgstr ""
 
 msgid "Relaunch your funding cycle on the new Juicebox V2 contracts."
@@ -3324,9 +3318,6 @@ msgid "With manual funding cycles selected, the project's owner can start a new 
 msgstr ""
 
 msgid "With no funding cycles, the project's owner can start a new funding cycle (Funding Cycle #2) on-demand. <0>Learn more.</0>"
-msgstr ""
-
-msgid "Would you like to issue an ERC-20 token to be used as this project's token?"
 msgstr ""
 
 msgid "Yes"

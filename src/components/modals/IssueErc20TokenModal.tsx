@@ -8,7 +8,6 @@ import { useV1IssueErc20TokenTx } from 'hooks/v1/transactor/IssueErc20TokenTx'
 import { useV2IssueErc20TokenTx } from 'hooks/v2/transactor/V2IssueErc20TokenTx'
 import { useV3IssueErc20TokenTx } from 'hooks/v3/transactor/V3IssueErc20TokenTx'
 import { useContext, useState } from 'react'
-
 import { emitErrorNotification } from 'utils/notifications'
 import { IssueErc20TokenTxArgs } from '../IssueErc20TokenButton'
 import TransactionModal from '../TransactionModal'
@@ -38,12 +37,10 @@ const useIssueErc20TokenTx = ():
 export function IssueErc20TokenModal({
   visible,
   onClose,
-  isNewDeploy,
   onConfirmed,
 }: {
   visible: boolean
   onClose: VoidFunction
-  isNewDeploy?: boolean
   onConfirmed?: VoidFunction
 }) {
   const [transactionPending, setTransactionPending] = useState<boolean>()
@@ -107,17 +104,10 @@ export function IssueErc20TokenModal({
       transactionPending={transactionPending}
     >
       <p>
-        {!isNewDeploy ? (
-          <Trans>
-            Issue an ERC-20 to be used as this project's token. Once issued,
-            anyone can claim their existing token balance in the new token.
-          </Trans>
-        ) : (
-          <Trans>
-            Would you like to issue an ERC-20 token to be used as this project's
-            token?
-          </Trans>
-        )}
+        <Trans>
+          Issue an ERC-20 to be used as this project's token. Once issued,
+          anyone can claim their existing token balance in the new token.
+        </Trans>
       </p>
       <Form form={form} layout="vertical">
         <Form.Item

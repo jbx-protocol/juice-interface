@@ -106,7 +106,10 @@ export function V2V3ProjectSettings() {
     if (!key) return
 
     pushMenuContent(router, key)
-    setCollapsed(true)
+
+    if (isMobile) {
+      setCollapsed(true)
+    }
   }
 
   return (

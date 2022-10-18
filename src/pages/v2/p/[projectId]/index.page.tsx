@@ -37,9 +37,14 @@ export const getStaticProps: GetStaticProps<
   if (!context.params) throw new Error('params not supplied')
 
   const projectId = parseInt(context.params.projectId as string)
-  return getProjectProps(projectId) as Promise<
-    GetStaticPropsResult<ProjectPageProps>
-  >
+  const props = (await getProjectProps(
+    projectId,
+  )) as GetStaticPropsResult<ProjectPageProps>
+
+  return {
+    ...props,
+    revalidate: 10, // 10 seconds https://nextjs.org/docs/api-reference/data-fetching/get-static-props#revalidate
+  }
 }
 
 export default function V2ProjectPage({
@@ -72,7 +77,7 @@ export default function V2ProjectPage({
             metadata={metadata}
             cv={cv}
           >
-            <V2V3Dashboard projectId={projectId} />
+            <V2V3Dashboard />
           </V2V3ProjectPageProvider>
         ) : (
           <Loading />

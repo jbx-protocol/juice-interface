@@ -2,6 +2,9 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { TransactionReceipt } from '@ethersproject/providers'
 import { Button, FormInstance } from 'antd'
 import { DeployButtonText } from 'components/DeployProjectButtonText'
+import TransactionModal from 'components/TransactionModal'
+import { NEW_DEPLOY_QUERY_PARAM } from 'components/v2v3/V2V3Project/modals/NewDeployModal'
+import { useAppDispatch } from 'hooks/AppDispatch'
 import {
   useAppSelector,
   useEditingV2V3FundAccessConstraintsSelector,
@@ -10,19 +13,12 @@ import {
 } from 'hooks/AppSelector'
 import { useLaunchProjectTx } from 'hooks/v2v3/transactor/LaunchProjectTx'
 import { useWallet } from 'hooks/Wallet'
+import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
+import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { uploadProjectMetadata } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
-
-import TransactionModal from 'components/TransactionModal'
-
-import { useAppDispatch } from 'hooks/AppDispatch'
-
-import { useRouter } from 'next/router'
-import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
-
 import { v2v3ProjectRoute } from 'utils/routes'
-
 import { findTransactionReceipt } from './utils'
 
 const CREATE_EVENT_IDX = 0
@@ -115,7 +111,9 @@ export function DeployProjectButton({ form }: { form: FormInstance }) {
             // Reset Redux state/localstorage after deploying
             dispatch(editingV2ProjectActions.resetState())
 
-            router.push(`${v2v3ProjectRoute({ projectId })}?newDeploy=true`)
+            router.push(
+              `${v2v3ProjectRoute({ projectId })}?${NEW_DEPLOY_QUERY_PARAM}=1`,
+            )
           },
           onCancelled() {
             setDeployLoading(false)

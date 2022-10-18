@@ -2,8 +2,8 @@ import { EyeOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, FormInstance } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
+import { NftPostPayModal } from 'components/NftRewards/NftPostPayModal'
 import { useState } from 'react'
-import { NftPostPayModal } from '../../NftPostPayModal'
 import { NftPostPayModalFormFields } from './formFields'
 
 export function NftPostPayModalPreviewButton({
@@ -23,7 +23,7 @@ export function NftPostPayModalPreviewButton({
         <EyeOutlined style={{ marginLeft: 10 }} />
       </Button>
       <NftPostPayModal
-        visible={modalVisible}
+        open={modalVisible}
         config={form.getFieldsValue(true)}
         onClose={() => setModalVisible(false)}
       />

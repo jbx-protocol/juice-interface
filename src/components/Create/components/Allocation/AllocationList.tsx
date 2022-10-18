@@ -9,10 +9,12 @@ import { Allocation, AllocationSplit } from './Allocation'
 export const AllocationList = ({
   addText,
   isEditable = true,
+  availableModes,
   children,
 }: {
   addText?: ReactNode
   isEditable?: boolean
+  availableModes: Set<'amount' | 'percentage'>
   children: (
     modalOperations: ReturnType<typeof useModal>,
     allocationOperations: ReturnType<
@@ -67,6 +69,7 @@ export const AllocationList = ({
         )}
       </div>
       <AddEditAllocationModal
+        availableModes={availableModes}
         editingData={selectedAllocation}
         visible={modal.visible}
         onOk={onModalOk}

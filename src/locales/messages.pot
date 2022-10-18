@@ -3041,6 +3041,9 @@ msgstr ""
 msgid "Total funds:"
 msgstr ""
 
+msgid "Total funds: <0><1/>{grossAvailableAmount}</0>"
+msgstr ""
+
 msgid "Total locked period"
 msgstr ""
 

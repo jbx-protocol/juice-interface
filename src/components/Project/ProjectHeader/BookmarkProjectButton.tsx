@@ -9,6 +9,7 @@ import { useWallet } from 'hooks/Wallet'
 import { BookmarkProjectData } from 'pages/api/bookmark/index.page'
 import React, { useContext } from 'react'
 import { compositeProjectId } from 'utils/db/dbUtils'
+import { emitErrorNotification } from 'utils/notifications'
 
 const BookmarkProjectButton = () => {
   const { userAddress } = useWallet()
@@ -34,11 +35,28 @@ const BookmarkProjectButton = () => {
       await axios.post(`/api/bookmark`, data)
     } catch (error) {
       console.error(error)
+      emitErrorNotification(t`Failed to bookmark project`)
     }
   }
 
   const unbokmarkProject = async () => {
-    return
+    if (!userAddress || !projectId || !cv) {
+      return
+    }
+
+    const data: BookmarkProjectData = {
+      address: userAddress,
+      projectId,
+      cv,
+      shouldUnbookmark: true,
+    }
+
+    try {
+      await axios.post(`/api/bookmark`, data)
+    } catch (error) {
+      console.error(error)
+      emitErrorNotification(t`Failed to unbookmark project`)
+    }
   }
 
   return (

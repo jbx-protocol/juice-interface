@@ -1,8 +1,9 @@
+import { firestore } from 'firebase-admin'
 import { CV } from 'models/cv'
 import { compositeProjectId } from 'utils/db/dbUtils'
 import { firestoreAdmin } from 'utils/db/firebase/firebaseAdmin'
 
-const bookmarkProject = (address: string, projectId: number, cv: CV) => {
+export const bookmarkProject = (address: string, projectId: number, cv: CV) => {
   const compositeId = compositeProjectId(projectId, cv)
   return firestoreAdmin
     .collection('bookmarks')
@@ -15,4 +16,16 @@ const bookmarkProject = (address: string, projectId: number, cv: CV) => {
     )
 }
 
-export default bookmarkProject
+export const unbookmarkProject = (
+  address: string,
+  projectId: number,
+  cv: CV,
+) => {
+  const compositeId = compositeProjectId(projectId, cv)
+  return firestoreAdmin
+    .collection('bookmarks')
+    .doc(address)
+    .update({
+      [compositeId]: firestore.FieldValue.delete(),
+    })
+}

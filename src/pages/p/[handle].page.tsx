@@ -64,7 +64,10 @@ export const getStaticProps: GetStaticProps<{
     const metadata = await findProjectMetadata({
       metadataCid: projects[0].metadataUri,
     })
-    return { props: { metadata, handle } }
+    return {
+      props: { metadata, handle },
+      revalidate: 10, // 10 seconds https://nextjs.org/docs/api-reference/data-fetching/get-static-props#revalidate
+    }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (e: any) {

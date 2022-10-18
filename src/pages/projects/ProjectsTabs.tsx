@@ -1,8 +1,10 @@
 import { t } from '@lingui/macro'
 import { Space } from 'antd'
 import { Tab } from 'components/Tab'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ProjectCategory } from 'models/project-visibility'
 import Link from 'next/link'
+import { featureFlagEnabled } from 'utils/featureFlags'
 
 const TAB_TYPE_NAMES: { [k in ProjectCategory]: string } = {
   all: t`All`,
@@ -12,13 +14,11 @@ const TAB_TYPE_NAMES: { [k in ProjectCategory]: string } = {
   trending: t`Trending`,
 }
 
-const TABS: ProjectCategory[] = [
-  'all',
-  'trending',
-  'holdings',
-  'myprojects',
-  'mybookmarks',
-]
+const bookmarksEnabled = featureFlagEnabled(FEATURE_FLAGS.BOOKMARKS)
+
+const TABS: ProjectCategory[] = bookmarksEnabled
+  ? ['all', 'trending', 'holdings', 'myprojects', 'mybookmarks']
+  : ['all', 'trending', 'holdings', 'myprojects']
 
 const ProjectTab = ({
   type,

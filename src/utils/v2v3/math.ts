@@ -28,9 +28,11 @@ const MAX_FEE = ONE_BILLION
  * @param discountRate - discount rate as parts-per-billion.
  * @returns {string} discount rate expressed as a percentage.
  */
-export const formatDiscountRate = (discountRate: BigNumber): string => {
+export const formatDiscountRate = (
+  discountRate: BigNumber | string,
+): string => {
   return (
-    discountRate
+    BigNumber.from(discountRate)
       .mul(100)
       .div(MAX_DISCOUNT_RATE / 100)
       .toNumber() / 100
@@ -42,9 +44,10 @@ export const formatDiscountRate = (discountRate: BigNumber): string => {
  * @param percentage - value as a percentage.
  * @returns {BigNumber} percentage expressed as parts-per-billion.
  */
-export const discountRateFrom = (percentage: string): BigNumber => {
+export const discountRateFrom = (percentage: string | number): BigNumber => {
+  const percentageAsNumber = Number(percentage)
   return BigNumber.from(
-    Math.floor((parseFloat(percentage) * MAX_DISCOUNT_RATE) / 100),
+    Math.floor((percentageAsNumber * MAX_DISCOUNT_RATE) / 100),
   )
 }
 
@@ -96,11 +99,11 @@ export const splitPercentFrom = (percentage: number): BigNumber => {
  * @returns {string} reserved rate expressed as a percentage.
  */
 export const formatReservedRate = (
-  reservedRate: BigNumber | undefined,
+  reservedRate: BigNumber | string | undefined,
 ): string => {
   return reservedRate
     ? (
-        reservedRate
+        BigNumber.from(reservedRate)
           .mul(100)
           .div(MAX_RESERVED_RATE / 100)
           .toNumber() / 100
@@ -113,9 +116,10 @@ export const formatReservedRate = (
  * @param percentage - value as a percentage.
  * @returns {BigNumber} percentage expressed as parts-per-thousand.
  */
-export const reservedRateFrom = (percentage: string): BigNumber => {
+export const reservedRateFrom = (percentage: string | number): BigNumber => {
+  const percentageAsNumber = Number(percentage)
   return BigNumber.from(
-    Math.floor((parseFloat(percentage) * MAX_RESERVED_RATE) / 100),
+    Math.floor((percentageAsNumber * MAX_RESERVED_RATE) / 100),
   )
 }
 
@@ -124,9 +128,11 @@ export const reservedRateFrom = (percentage: string): BigNumber => {
  * @param redemptionRate - redemption rate as parts-per-thousand.
  * @returns {string} redemption rate expressed as a percentage.
  */
-export const formatRedemptionRate = (redemptionRate: BigNumber): string => {
+export const formatRedemptionRate = (
+  redemptionRate: BigNumber | string,
+): string => {
   return (
-    redemptionRate
+    BigNumber.from(redemptionRate)
       .mul(100)
       .div(MAX_REDEMPTION_RATE / 100)
       .toNumber() / 100
@@ -138,9 +144,10 @@ export const formatRedemptionRate = (redemptionRate: BigNumber): string => {
  * @param percentage - value as a percentage.
  * @returns {BigNumber} percentage expressed as parts-per-thousand.
  */
-export const redemptionRateFrom = (percentage: string): BigNumber => {
+export const redemptionRateFrom = (percentage: string | number): BigNumber => {
+  const percentageAsNumber = Number(percentage)
   return BigNumber.from(
-    Math.floor((parseFloat(percentage) * MAX_REDEMPTION_RATE) / 100),
+    Math.floor((percentageAsNumber * MAX_REDEMPTION_RATE) / 100),
   )
 }
 

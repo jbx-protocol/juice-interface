@@ -47,5 +47,6 @@ export const useSetCreateFurthestPageReached = (page: CreatePage) => {
   const { setFurthestPageReached } = useEditingCreateFurthestPageReached()
   useEffect(() => {
     setFurthestPageReached(page)
-  }, [page, setFurthestPageReached])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 }

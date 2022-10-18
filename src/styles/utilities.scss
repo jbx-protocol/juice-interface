@@ -1,9 +1,14 @@
 .text-primary {
   color: var(--text-primary);
 }
-
 .text-secondary {
   color: var(--text-secondary);
+}
+.text-tertiary {
+  color: var(--text-tertiary);
+}
+.text-tertiary\! {
+  color: var(--text-tertiary) !important;
 }
 
 .border {
@@ -32,6 +37,11 @@
 .hover-text-action-primary {
   &:hover {
     color: var(--text-action-primary);
+  }
+}
+.hover-text-action-primary\! {
+  &:hover {
+    color: var(--text-action-primary) !important;
   }
 }
 

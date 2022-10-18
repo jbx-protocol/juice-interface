@@ -6,3 +6,13 @@
 .ant-divider {
   border-color: var(--stroke-tertiary);
 }
+
+.ant-layout-sider-zero-width-trigger {
+  color: var(--text-primary);
+  background-color: var(--background-l0);
+}
+
+.settings-layout .ant-layout-sider-zero-width-trigger {
+  top: -3px;
+  font-size: 1.5rem;
+}

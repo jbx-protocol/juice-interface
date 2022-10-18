@@ -8,9 +8,10 @@ import { layouts } from 'constants/styles/layouts'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
+import useMobile from 'hooks/Mobile'
 import { V2V3SettingsPageKey } from 'models/menu-keys'
 import { useRouter } from 'next/router'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { pushMenuContent } from 'utils/routes'
 import { BackToProjectButton } from '../BackToProjectButton'
@@ -91,8 +92,11 @@ export function V2V3ProjectSettings() {
     useContext(V2V3ProjectContext)
   const { isDarkMode } = useContext(ThemeContext)
 
+  const [collapsed, setCollapsed] = useState<boolean>(false)
+
   const router = useRouter()
   const isOwner = useIsUserAddress(projectOwnerAddress)
+  const isMobile = useMobile()
 
   const canEditProjectHandle = isOwner && !isPreviewMode && !handle
   const activeSettingsPage = router.query.page as V2V3SettingsPageKey
@@ -102,6 +106,7 @@ export function V2V3ProjectSettings() {
     if (!key) return
 
     pushMenuContent(router, key)
+    setCollapsed(true)
   }
 
   return (
@@ -112,17 +117,24 @@ export function V2V3ProjectSettings() {
           handle={handle}
           projectOwnerAddress={projectOwnerAddress}
           canEditProjectHandle={canEditProjectHandle}
+          hideDescription={isMobile}
         />
         <Layout
           style={{
             minHeight: '100vh',
             background: 'transparent',
             marginBottom: '4rem',
+            width: '100%',
           }}
         >
           <Layout.Sider
+            breakpoint="lg"
             style={{ background: 'transparent', marginRight: '3rem' }}
             width={250}
+            collapsedWidth="0"
+            className="settings-layout"
+            collapsed={collapsed}
+            onCollapse={setCollapsed}
           >
             <Space direction="vertical" size="middle" style={{ width: '100%' }}>
               <BackToProjectButton />

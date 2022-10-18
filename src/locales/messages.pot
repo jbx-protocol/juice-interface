@@ -845,7 +845,7 @@ msgstr ""
 msgid "Current handle"
 msgstr ""
 
-msgid "Current owner: {ownerAddress}"
+msgid "Current owner"
 msgstr ""
 
 msgid "Currently worth: <0><1/></0>"

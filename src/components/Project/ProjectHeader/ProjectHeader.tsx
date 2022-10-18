@@ -20,11 +20,13 @@ export function ProjectHeader({
   actions,
   canEditProjectHandle,
   projectOwnerAddress,
+  hideDescription,
 }: {
   handle: string | undefined
   actions: JSX.Element | undefined
   projectOwnerAddress: string | undefined
   canEditProjectHandle?: boolean
+  hideDescription?: boolean
 }) {
   const {
     theme: { colors },
@@ -147,7 +149,7 @@ export function ProjectHeader({
           />
         </div>
 
-        {projectMetadata?.description && (
+        {projectMetadata?.description && !hideDescription && (
           <Paragraph
             description={projectMetadata.description}
             characterLimit={250}

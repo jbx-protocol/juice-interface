@@ -124,6 +124,7 @@ export function Create() {
                   rules.
                 </Trans>
               }
+              width="800px"
             >
               <ReviewDeployPage />
             </Wizard.Page>

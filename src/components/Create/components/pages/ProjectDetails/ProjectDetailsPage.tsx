@@ -2,6 +2,7 @@ import { t } from '@lingui/macro'
 import { Col, Form, Input, Row, Space } from 'antd'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { useContext } from 'react'
+import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { CreateCollapse } from '../../CreateCollapse'
 import { OptionalHeader } from '../../OptionalHeader'
 import { Wizard } from '../../Wizard'
@@ -10,6 +11,8 @@ import { inputMustExistRule } from '../utils'
 import { useProjectDetailsForm } from './hooks/ProjectDetailsForm'
 
 export const ProjectDetailsPage: React.FC = () => {
+  useSetCreateFurthestPageReached('projectDetails')
+
   const { goToNextPage } = useContext(PageContext)
   const formProps = useProjectDetailsForm()
 

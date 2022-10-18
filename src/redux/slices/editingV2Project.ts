@@ -36,6 +36,7 @@ import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
+import { CreatePage } from 'models/create-page'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
@@ -58,6 +59,7 @@ interface V2ProjectState {
     postPayModal: NftPostPayModalConfig | undefined
   }
   reconfigurationRuleSelection: ReconfigurationStrategy | undefined
+  createFurthestPageReached: CreatePage
 }
 
 // Increment this version by 1 when making breaking changes.
@@ -170,6 +172,7 @@ export const defaultProjectState: V2ProjectState = {
     postPayModal: undefined,
   },
   reconfigurationRuleSelection: undefined,
+  createFurthestPageReached: 'projectDetails',
 }
 
 const editingV2ProjectSlice = createSlice({
@@ -325,6 +328,12 @@ const editingV2ProjectSlice = createSlice({
       action: PayloadAction<ReconfigurationStrategy | undefined>,
     ) => {
       state.reconfigurationRuleSelection = action.payload
+    },
+    setCreateFurthestPageReached: (
+      state,
+      action: PayloadAction<CreatePage>,
+    ) => {
+      state.createFurthestPageReached = action.payload
     },
   },
 })

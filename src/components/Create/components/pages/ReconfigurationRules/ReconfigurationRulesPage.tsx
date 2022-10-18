@@ -6,6 +6,7 @@ import { Selection } from 'components/Create/components/Selection'
 import { JuiceSwitch } from 'components/JuiceSwitch'
 import { readNetwork } from 'constants/networks'
 import { useContext } from 'react'
+import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { CreateCollapse } from '../../CreateCollapse'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
@@ -16,6 +17,7 @@ import {
 } from './hooks'
 
 export const ReconfigurationRulesPage = () => {
+  useSetCreateFurthestPageReached('reconfigurationRules')
   const { form, initialValues } = useReconfigurationRulesForm()
   const { goToNextPage } = useContext(PageContext)
 

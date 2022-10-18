@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const getDataFromLocalstorage = <T>(
+const getDataFromLocalStorage = <T>(
   key: string,
   initialValue: T,
   shouldSaveInitial = false,
@@ -25,7 +25,7 @@ const useLocalStorage = <T>(
   shouldSaveInitial = false,
 ) => {
   const [storedValue, setStoredValue] = useState<T>(() =>
-    getDataFromLocalstorage(key, initialValue, shouldSaveInitial),
+    getDataFromLocalStorage(key, initialValue, shouldSaveInitial),
   )
 
   const setValue = (value: T | ((val: T) => T)) => {

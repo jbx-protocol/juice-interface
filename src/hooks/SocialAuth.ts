@@ -98,7 +98,7 @@ const useOauthPopupWindow = (url: string, oauthOptions: OauthOptions) => {
 export const useTwitterAuth = () =>
   useOauthPopupWindow('https://twitter.com/i/oauth2/authorize', {
     client_id: process.env.NEXT_PUBLIC_TWITTER_CLIENT_ID as string,
-    scope: 'offline.access users.read tweet.read',
+    scope: 'users.read tweet.read',
     code_challenge: 'challenge',
     code_challenge_method: 'plain',
   })

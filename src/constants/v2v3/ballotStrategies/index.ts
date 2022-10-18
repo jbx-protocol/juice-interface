@@ -71,4 +71,4 @@ export function ballotStrategies(network?: NetworkName): BallotStrategy[] {
   ]
 }
 
-export const DEFAULT_BALLOT_STRATEGY = ballotStrategies()[1]
+export const DEFAULT_BALLOT_STRATEGY = ballotStrategies()[0]

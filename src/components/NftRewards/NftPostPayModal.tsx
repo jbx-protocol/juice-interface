@@ -3,12 +3,14 @@ import Modal from 'antd/lib/modal/Modal'
 import { NftPostPayModalConfig } from 'models/nftRewardTier'
 import { withHttps } from 'utils/externalLink'
 
+export const NFT_PAYMENT_CONFIRMED_QUERY_PARAM = 'nft_s'
+
 export function NftPostPayModal({
-  visible,
+  open,
   config,
   onClose,
 }: {
-  visible: boolean
+  open: boolean
   config: NftPostPayModalConfig
   onClose: VoidFunction
 }) {
@@ -19,7 +21,7 @@ export function NftPostPayModal({
   }
   return (
     <Modal
-      visible={visible}
+      open={open}
       onCancel={onClose}
       onOk={onOk}
       title={t`NFT mint confirmed`}

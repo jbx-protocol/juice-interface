@@ -135,7 +135,7 @@ export const ReviewDeployPage = () => {
         <div>
           <Trans>
             Not quite ready to launch? Your project details will be saved as a
-            'draft' as long as you don't clear your browser's cookies.
+            'draft' as long as you don't clear your browser's data.
           </Trans>
         </div>
         <span>

@@ -133,7 +133,7 @@ export function V2V3ProjectSettings() {
           <Layout.Sider
             breakpoint="lg"
             style={{ background: 'transparent', marginRight: '3rem' }}
-            width={250}
+            width={200}
             collapsedWidth="0"
             className="settings-layout"
             collapsed={collapsed}

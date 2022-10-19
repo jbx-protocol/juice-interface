@@ -20,7 +20,7 @@ export function useTransferTokensTx(): TransactorInstance<{
   const { transactor, contracts } = useContext(V1UserContext)
   const { userAddress } = useWallet()
   const { tokenSymbol } = useContext(V1ProjectContext)
-  const { projectId, cv } = useContext(ProjectMetadataContext)
+  const { projectId, pv } = useContext(ProjectMetadataContext)
 
   return ({ amount, to }, txOpts) => {
     try {
@@ -60,7 +60,7 @@ export function useTransferTokensTx(): TransactorInstance<{
         txOpts,
         missingParam,
         functionName: 'transfer',
-        cv,
+        pv,
       })
     }
   }

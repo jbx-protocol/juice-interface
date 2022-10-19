@@ -16,7 +16,7 @@ export function ReconfigureFundingCyclesOfTransaction({
       transaction={transaction}
       title={t`Reconfigure funding cycle`}
       isPastTransaction={isPastTransaction}
-      version={txVersion}
+      cv={txVersion}
       selected={selected}
       expandedContent={<ReconfigureRichPreview transaction={transaction} />}
     />

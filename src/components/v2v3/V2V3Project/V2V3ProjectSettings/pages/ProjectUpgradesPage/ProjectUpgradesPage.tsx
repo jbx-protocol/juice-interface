@@ -1,12 +1,13 @@
 import { Trans } from '@lingui/macro'
-import { Button, Space, Statistic } from 'antd'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { useContext, useState } from 'react'
+import { Button, Space } from 'antd'
+import { useState } from 'react'
+
 import { useIsUpgradeAvailable } from './hooks/useIsUpgradeAvailable'
 import { UpgradeWizard } from './UpgradeWizard/UpgradeWizard'
 
+// TODO should this page be removed?
 export function ProjectUpgradesPage() {
-  const { cv } = useContext(ProjectMetadataContext)
+  // const { cv } = useContext(ProjectMetadataContext)
 
   const [upgradeWizardOpen, setUpgradeWizardOpen] = useState(false)
 
@@ -17,7 +18,7 @@ export function ProjectUpgradesPage() {
   return (
     <div>
       <Space direction="vertical" size="large">
-        <Statistic title="Current version" value={`V${cv}`} />
+        {/* <Statistic title="Current version" value={`V${cv}`} /> */}
         {!isUpgradeAvailable && (
           <p>
             <Trans>Your project is up to date!</Trans>

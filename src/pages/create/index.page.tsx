@@ -3,7 +3,6 @@ import { Tabs } from 'antd'
 import { AppWrapper, Head } from 'components/common'
 import { DesmosScript } from 'components/common/Head/scripts/DesmosScript'
 import { Create } from 'components/Create'
-import { CV_V2, CV_V3 } from 'constants/cv'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
@@ -86,7 +85,7 @@ function V2Create() {
 
   return (
     <V2V3ContractsProvider
-      initialCv={featureFlagEnabled(FEATURE_FLAGS.V3) ? CV_V3 : CV_V2}
+      initialCv={featureFlagEnabled(FEATURE_FLAGS.V3) ? '3' : '2'}
     >
       <TransactionProvider>
         <V2V3CurrencyProvider>

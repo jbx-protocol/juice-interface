@@ -48,7 +48,7 @@ export default function ProjectActivity() {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { projectId, cv } = useContext(ProjectMetadataContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
   const [eventFilter, setEventFilter] = useState<EventFilter>('all')
@@ -63,19 +63,16 @@ export default function ProjectActivity() {
         key: 'useAllowanceEvent',
         value: null, // Exclude all useAllowanceEvents, no UI support yet
       },
+      {
+        key: 'pv',
+        value: '2',
+      },
     ]
 
     if (projectId) {
       _where.push({
         key: 'projectId',
         value: projectId,
-      })
-    }
-
-    if (cv) {
-      _where.push({
-        key: 'cv',
-        value: cv,
       })
     }
 
@@ -117,7 +114,7 @@ export default function ProjectActivity() {
     }
 
     return _where
-  }, [projectId, eventFilter, cv])
+  }, [projectId, eventFilter])
 
   const {
     data: projectEvents,

@@ -5,7 +5,7 @@ import ETHAmount from 'components/currency/ETHAmount'
 import Loading from 'components/Loading'
 import { ProjectCardProject } from 'components/ProjectCard'
 import ProjectLogo from 'components/ProjectLogo'
-import { CV_V2, CV_V3 } from 'constants/cv'
+import { PV_V2 } from 'constants/pv'
 import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
@@ -33,9 +33,9 @@ const SmallProjectCardMobile = ({
 
   return (
     <Link
-      key={`${project.id}_${project.cv}`}
+      key={`${project.id}_${project.pv}`}
       href={
-        project.cv === CV_V2 || project.cv === CV_V3
+        project.pv === PV_V2
           ? v2v3ProjectRoute(project)
           : `/p/${project?.handle}`
       }
@@ -110,9 +110,9 @@ const SmallProjectCard = ({ project }: { project: ProjectCardProject }) => {
 
   return (
     <Link
-      key={`${project.id}_${project.cv}`}
+      key={`${project.id}_${project.pv}`}
       href={
-        project.cv === CV_V2 || project.cv === CV_V3
+        project.pv === PV_V2
           ? v2v3ProjectRoute(project)
           : `/p/${project?.handle}`
       }

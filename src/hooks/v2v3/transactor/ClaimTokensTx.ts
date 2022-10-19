@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
+import { PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactionContext } from 'contexts/transactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
@@ -19,7 +20,7 @@ export function useClaimTokensTx(): TransactorInstance<{
   const { transactor } = useContext(TransactionContext)
   const { contracts } = useContext(V2V3ContractsContext)
   const { tokenSymbol } = useContext(V2V3ProjectContext)
-  const { projectId, cv } = useContext(ProjectMetadataContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const { userAddress } = useWallet()
 
@@ -55,7 +56,7 @@ export function useClaimTokensTx(): TransactorInstance<{
         txOpts,
         missingParam,
         functionName: 'claimFor',
-        cv,
+        pv: PV_V2,
       })
     }
   }

@@ -10,6 +10,7 @@ import {
 } from 'hooks/Transactor'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
+
 import { useV2ProjectTitle } from '../ProjectTitle'
 
 const DEFAULT_METADATA = 0
@@ -19,7 +20,7 @@ export function useAddToBalanceTx(): TransactorInstance<{
 }> {
   const { transactor } = useContext(TransactionContext)
   const { contracts } = useContext(V2V3ProjectContractsContext)
-  const { projectId, cv } = useContext(ProjectMetadataContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const projectTitle = useV2ProjectTitle()
 
@@ -55,7 +56,7 @@ export function useAddToBalanceTx(): TransactorInstance<{
       return handleTransactionException({
         txOpts,
         missingParam,
-        cv,
+        pv: '2',
         functionName: 'addToBalanceOf',
       })
     }

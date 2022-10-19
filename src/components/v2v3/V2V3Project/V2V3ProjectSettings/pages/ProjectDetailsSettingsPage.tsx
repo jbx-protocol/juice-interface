@@ -7,12 +7,11 @@ import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useEditProjectDetailsTx } from 'hooks/v2v3/transactor/EditProjectDetailsTx'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { revalidateProject } from 'lib/api/nextjs'
-import { CV2V3 } from 'models/cv'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 
 export function ProjectDetailsSettingsPage() {
   const { projectId } = useContext(ProjectMetadataContext)
-  const { projectMetadata, cv } = useContext(ProjectMetadataContext)
+  const { projectMetadata } = useContext(ProjectMetadataContext)
 
   const [loadingSaveChanges, setLoadingSaveChanges] = useState<boolean>()
   const [projectForm] = useForm<ProjectDetailsFormFields>()
@@ -47,7 +46,7 @@ export function ProjectDetailsSettingsPage() {
         onConfirmed: async () => {
           if (projectId) {
             await revalidateProject({
-              cv: cv as CV2V3,
+              pv: '2',
               projectId: String(projectId),
             })
           }

@@ -1,7 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { DeployButtonText } from 'components/DeployProjectButtonText'
 import ExternalLink from 'components/ExternalLink'
-import { CV_V2, CV_V3 } from 'constants/cv'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ThemeContext } from 'contexts/themeContext'
 import { useRouter } from 'next/router'
@@ -11,6 +10,7 @@ import { V2V3CurrencyProvider } from 'providers/v2v3/V2V3CurrencyProvider'
 import { useContext } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { helpPagePath } from 'utils/routes'
+
 import {
   FundingCyclesPage,
   FundingTargetPage,
@@ -39,7 +39,7 @@ export function Create() {
 
   return (
     <V2V3ContractsProvider
-      initialCv={featureFlagEnabled(FEATURE_FLAGS.V3) ? CV_V3 : CV_V2}
+      initialCv={featureFlagEnabled(FEATURE_FLAGS.V3) ? '3' : '2'}
     >
       <TransactionProvider>
         <V2V3CurrencyProvider>

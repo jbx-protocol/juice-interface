@@ -3,6 +3,7 @@ import { Select, Space } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
 
 import { ThemeContext } from 'contexts/themeContext'
+import { PV } from 'models/pv'
 import moment from 'moment'
 import {
   CSSProperties,
@@ -36,12 +37,12 @@ export default function VolumeChart({
   style: { height },
   createdAt,
   projectId,
-  cv,
+  pv,
 }: {
   style: { height: number }
   createdAt: number | undefined
   projectId: number | undefined
-  cv: string
+  pv: PV
 }) {
   const [events, setEvents] = useState<EventRef[]>([])
   // const [blockRefs, setBlockRefs] = useState<BlockRef[]>([])
@@ -72,7 +73,7 @@ export default function VolumeChart({
         blockRefs,
         showGraph,
         projectId,
-        cv,
+        pv,
       })
       if (!projectEvents) return
       const domain = loadDomain(projectEvents)
@@ -94,7 +95,7 @@ export default function VolumeChart({
       setLoading(false)
     })
     // loadEvents(blockRefs)
-  }, [cv, duration, projectId, showGraph])
+  }, [pv, duration, projectId, showGraph])
 
   const buttonStyle: CSSProperties = {
     fontSize: '0.75rem',

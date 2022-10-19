@@ -1,18 +1,16 @@
-import { t, Trans } from '@lingui/macro'
-import { Button, Space, Statistic } from 'antd'
-import axios from 'axios'
-import Callout from 'components/Callout'
-import { CV_V1, CV_V1_1, CV_V2, CV_V3 } from 'constants/cv'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { TransactorInstance } from 'hooks/Transactor'
-import { useWallet } from 'hooks/Wallet'
-import { uploadProjectMetadata } from 'lib/api/ipfs'
-import { revalidateProject } from 'lib/api/nextjs'
-import { CV2V3 } from 'models/cv'
-import { V1TerminalVersion } from 'models/v1/terminals'
-import { useContext, useState } from 'react'
-import { emitErrorNotification } from 'utils/notifications'
-import { reloadWindow } from 'utils/windowUtils'
+import { t, Trans } from '@lingui/macro';
+import { Button, Space, Statistic } from 'antd';
+import axios from 'axios';
+import Callout from 'components/Callout';
+import { PV_V1, PV_V1_1, PV_V2 } from 'constants/pv';
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext';
+import { TransactorInstance } from 'hooks/Transactor';
+import { useWallet } from 'hooks/Wallet';
+import { uploadProjectMetadata } from 'lib/api/ipfs';
+import { revalidateProject } from 'lib/api/nextjs';
+import { useContext, useState } from 'react';
+import { emitErrorNotification } from 'utils/notifications';
+import { reloadWindow } from 'utils/windowUtils';
 
 export function ArchiveProject({
   storeCidTx,
@@ -25,28 +23,27 @@ export function ArchiveProject({
   handle?: string | undefined // Used on V1 projects
   canTakePaymentsWhenArchived?: boolean
 }) {
-  const { projectId, projectMetadata, cv } = useContext(ProjectMetadataContext)
+  const { projectId, projectMetadata, pv } = useContext(ProjectMetadataContext)
 
   const [isLoadingArchive, setIsLoadingArchive] = useState<boolean>(false)
 
   const { userAddress } = useWallet()
 
   const revalidateProjectAfterArchive = async () => {
-    switch (cv) {
-      case CV_V1:
-      case CV_V1_1:
+    switch (pv) {
+      case PV_V1:
+      case PV_V1_1:
         if (handle) {
           await revalidateProject({
-            cv: cv as V1TerminalVersion,
+            pv,
             handle,
           })
         }
         break
-      case CV_V2:
-      case CV_V3:
+      case PV_V2:
         if (projectId) {
           await revalidateProject({
-            cv: cv as CV2V3,
+            pv,
             projectId: String(projectId),
           })
         }
@@ -76,7 +73,7 @@ export function ArchiveProject({
       projectId,
       projectMetadata,
       handle,
-      cv,
+      pv,
     })
 
     const txSuccessful = await storeCidTx(

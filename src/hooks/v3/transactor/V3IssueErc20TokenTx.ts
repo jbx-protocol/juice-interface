@@ -3,6 +3,7 @@ import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
 
+import { PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactionContext } from 'contexts/transactionContext'
 import {
@@ -16,7 +17,7 @@ export function useV3IssueErc20TokenTx(): TransactorInstance<{
 }> {
   const { transactor } = useContext(TransactionContext)
   const { contracts } = useContext(V2V3ContractsContext)
-  const { projectId, cv } = useContext(ProjectMetadataContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   return ({ name, symbol }, txOpts) => {
     try {
@@ -49,7 +50,7 @@ export function useV3IssueErc20TokenTx(): TransactorInstance<{
         txOpts,
         missingParam,
         functionName: 'issueTokenFor',
-        cv,
+        pv: PV_V2,
       })
     }
   }

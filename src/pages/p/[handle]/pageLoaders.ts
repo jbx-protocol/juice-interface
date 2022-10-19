@@ -1,4 +1,4 @@
-import { CV_V1, CV_V1_1 } from 'constants/cv'
+import { PV_V1, PV_V1_1 } from 'constants/pv'
 import { paginateDepleteProjectsQueryCall } from 'lib/apollo'
 import { ProjectMetadataV5 } from 'models/project-metadata'
 import { GetStaticPaths, GetStaticProps } from 'next'
@@ -8,7 +8,7 @@ export const getV1StaticPaths: GetStaticPaths = async () => {
   if (process.env.BUILD_CACHE_V1_PROJECTS === 'true') {
     const projects = await paginateDepleteProjectsQueryCall({
       variables: {
-        where: { cv_in: [CV_V1, CV_V1_1] },
+        where: { cv_in: [PV_V1, PV_V1_1] },
       },
     })
     const paths = projects
@@ -34,7 +34,7 @@ export const getV1StaticProps: GetStaticProps<{
   const handle = context.params.handle as string
   const projects = await paginateDepleteProjectsQueryCall({
     variables: {
-      where: { cv_in: [CV_V1, CV_V1_1], handle },
+      where: { cv_in: [PV_V1, PV_V1_1], handle },
       first: 1,
     },
   })

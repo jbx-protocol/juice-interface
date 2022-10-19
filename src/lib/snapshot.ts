@@ -2,6 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import axios from 'axios'
 import { juiceboxEmojiImageUri } from 'constants/images'
 import { readNetwork } from 'constants/networks'
+import { WAD_DECIMALS } from 'constants/numbers'
 import { ProjectMetadataV5 } from 'models/project-metadata'
 import { IPFS_TAGS } from 'utils/ipfs'
 
@@ -34,7 +35,7 @@ const generateSnapshotSpaceSettings = ({
         args: ['%{address}', BigNumber.from(projectId).toHexString()],
         symbol: tokenSymbol,
         address: JBTokenStoreAddress,
-        decimals: 18,
+        decimals: WAD_DECIMALS,
         methodABI: {
           name: 'balanceOf',
           type: 'function',

@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { useMemo } from 'react'
+import { fromWad } from 'utils/format/formatNumber'
 import { useFundingTargetType } from '../../../hooks/FundingTargetType'
 import { AllocationSplit } from '../components/Allocation'
 
@@ -33,7 +34,7 @@ export const usePayoutSplitAmountPercentage = ({
     if (!hasSpecificFundingTarget || !totalAllocationAmount) return undefined
     if (!allocationId) {
       // If allocation is not passed, assume this is for owner
-      return (totalAllocationAmount.toNumber() * ownerPercent) / 100
+      return (parseFloat(fromWad(totalAllocationAmount)) * ownerPercent) / 100
     }
 
     const allocation = allocations.find(a => a.id === allocationId)
@@ -44,7 +45,9 @@ export const usePayoutSplitAmountPercentage = ({
       )
       return NaN
     }
-    return (allocation.percent * totalAllocationAmount.toNumber()) / 100
+    return (
+      (allocation.percent * parseFloat(fromWad(totalAllocationAmount))) / 100
+    )
   }, [
     allocationId,
     allocations,

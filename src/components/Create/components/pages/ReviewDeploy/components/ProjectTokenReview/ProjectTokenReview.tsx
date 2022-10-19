@@ -1,18 +1,26 @@
 import { t } from '@lingui/macro'
 import { Row } from 'antd'
 import { AllocationSplit } from 'components/Create/components/Allocation'
-import { formatPercent } from 'components/Create/utils/formatPercent'
 import { splitToAllocation } from 'components/Create/utils/splitToAllocation'
+import { useAppSelector } from 'hooks/AppSelector'
 import { useCallback, useMemo } from 'react'
 import { useEditingReservedTokensSplits } from 'redux/hooks/EditingReservedTokensSplits'
 import { formatAmount } from 'utils/formatAmount'
+import {
+  formatDiscountRate,
+  formatIssuanceRate,
+  formatRedemptionRate,
+  formatReservedRate,
+} from 'utils/v2v3/math'
 import { ReservedTokensList } from '../../../ProjectToken/components/CustomTokenSettings/components'
-import { useProjectTokensForm } from '../../../ProjectToken/hooks/ProjectTokenForm'
 import { DescriptionCol } from '../DescriptionCol'
 import { emphasisedTextStyle, flexColumnStyle } from '../styles'
 
 export const ProjectTokenReview = () => {
-  const { initialValues } = useProjectTokensForm()
+  const {
+    fundingCycleData: { weight, discountRate },
+    fundingCycleMetadata: { allowMinting, reservedRate, redemptionRate },
+  } = useAppSelector(state => state.editingV2Project)
   const [tokenSplits, setTokenSplits] = useEditingReservedTokensSplits()
 
   const allocationSplits = useMemo(
@@ -25,8 +33,8 @@ export const ProjectTokenReview = () => {
   )
 
   const allowTokenMinting = useMemo(
-    () => (initialValues.tokenMinting ? t`Yes` : t`No`),
-    [initialValues.tokenMinting],
+    () => (allowMinting ? t`Yes` : t`No`),
+    [allowMinting],
   )
 
   return (
@@ -45,7 +53,7 @@ export const ProjectTokenReview = () => {
             title={t`Initial mint rate`}
             desc={
               <div style={emphasisedTextStyle()}>
-                {formatAmount(initialValues.initialMintRate ?? 0)}
+                {formatAmount(formatIssuanceRate(weight) ?? 0)}
               </div>
             }
           />
@@ -54,7 +62,7 @@ export const ProjectTokenReview = () => {
             title={t`Reserved tokens`}
             desc={
               <div style={emphasisedTextStyle()}>
-                {formatPercent(initialValues.reservedTokensPercentage ?? 0)}
+                {formatReservedRate(reservedRate) + '%'}
               </div>
             }
           />
@@ -76,7 +84,7 @@ export const ProjectTokenReview = () => {
             title={t`Discount rate`}
             desc={
               <div style={emphasisedTextStyle()}>
-                {formatPercent(initialValues.discountRate ?? 0)}
+                {formatDiscountRate(discountRate) + '%'}
               </div>
             }
           />
@@ -85,7 +93,7 @@ export const ProjectTokenReview = () => {
             title={t`Redemption rate`}
             desc={
               <div style={emphasisedTextStyle()}>
-                {formatPercent(initialValues.redemptionRate ?? 0)}
+                {formatRedemptionRate(redemptionRate) + '%'}
               </div>
             }
           />

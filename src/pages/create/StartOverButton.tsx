@@ -30,7 +30,7 @@ export function StartOverButton() {
         </span>
       </Button>
       <Modal
-        visible={startOverModalVisible}
+        open={startOverModalVisible}
         okText={t`Start over`}
         title={t`Are you sure you want to start over?`}
         onOk={resetV2CreateFlow}

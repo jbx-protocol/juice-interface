@@ -273,7 +273,7 @@ export default function DistributionSplitCard({
       )}
       {!isLocked ? (
         <DistributionSplitModal
-          visible={editSplitModalOpen}
+          open={editSplitModalOpen}
           overrideDistTypeWithPercentage={editInputMode === 'Percentage'}
           onSplitsChanged={onSplitsChanged}
           mode={'Edit'}

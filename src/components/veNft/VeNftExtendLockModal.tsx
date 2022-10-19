@@ -13,7 +13,7 @@ import { useVeNftLockDurationOptions } from 'hooks/veNft/VeNftLockDurationOption
 import { useWallet } from 'hooks/Wallet'
 
 type VeNftExtendLockModalProps = {
-  visible: boolean
+  open: boolean
   token: VeNftToken
   onCancel: VoidFunction
   onCompleted: VoidFunction
@@ -24,7 +24,7 @@ interface ExtendLockFormProps {
 }
 
 const VeNftExtendLockModal = ({
-  visible,
+  open,
   token,
   onCancel,
   onCompleted,
@@ -99,7 +99,7 @@ const VeNftExtendLockModal = ({
 
   return (
     <TransactionModal
-      visible={visible}
+      open={open}
       title={t`Extend Lock`}
       onCancel={onCancel}
       onOk={extendLock}

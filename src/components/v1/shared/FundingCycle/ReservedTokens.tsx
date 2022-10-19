@@ -108,7 +108,7 @@ export default function ReservedTokens({
           </Button>
 
           <DistributeTokensModal
-            visible={modalIsVisible}
+            open={modalIsVisible}
             reservedRate={parseFloat(
               perbicentToPercent(metadata?.reservedRate),
             )}

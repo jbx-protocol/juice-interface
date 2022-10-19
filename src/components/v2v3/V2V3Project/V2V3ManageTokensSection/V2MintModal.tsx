@@ -15,11 +15,11 @@ import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export default function V2MintModal({
-  visible,
+  open,
   onCancel,
   onConfirmed,
 }: {
-  visible?: boolean
+  open?: boolean
   onCancel?: VoidFunction
   onConfirmed?: VoidFunction
 }) {
@@ -92,7 +92,7 @@ export default function V2MintModal({
 
   return (
     <TransactionModal
-      visible={visible}
+      open={open}
       title={t`Mint ${tokensTokenLower}`}
       onOk={executeMintTx}
       confirmLoading={loading}

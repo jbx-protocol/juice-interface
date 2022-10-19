@@ -14,14 +14,14 @@ import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export function TransferUnclaimedTokensModal({
-  visible,
+  open,
   onCancel,
   onConfirmed,
   tokenSymbol,
   unclaimedBalance,
   useTransferUnclaimedTokensTx,
 }: {
-  visible: boolean
+  open: boolean
   onCancel: VoidFunction
   onConfirmed: VoidFunction
   tokenSymbol: string | undefined
@@ -95,7 +95,7 @@ export function TransferUnclaimedTokensModal({
     <TransactionModal
       transactionPending={transactionPending}
       title={t`Transfer unclaimed ${tokenTextShort}`}
-      visible={visible}
+      open={open}
       confirmLoading={loading}
       onOk={() => {
         transferTokens()

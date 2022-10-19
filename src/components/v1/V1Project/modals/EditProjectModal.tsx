@@ -35,12 +35,12 @@ type HandleFormFields = {
 
 export default function EditProjectModal({
   handle,
-  visible,
+  open,
   onSuccess,
   onCancel,
 }: {
   handle: string | undefined
-  visible?: boolean
+  open?: boolean
   onSuccess?: VoidFunction
   onCancel?: VoidFunction
 }) {
@@ -145,7 +145,7 @@ export default function EditProjectModal({
   return (
     <Modal
       title={t`Edit project`}
-      visible={visible}
+      open={open}
       onCancel={onCancel}
       cancelButtonProps={{ hidden: true }}
       okButtonProps={{ hidden: true }}

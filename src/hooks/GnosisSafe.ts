@@ -24,6 +24,7 @@ export const useGnosisSafe = (address?: string) => {
     },
     {
       retry: false,
+      refetchOnWindowFocus: false,
     },
   )
 }

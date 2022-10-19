@@ -96,7 +96,7 @@ export default function Spending({
       </Space>
 
       <WithdrawModal
-        visible={withdrawModalVisible}
+        open={withdrawModalVisible}
         onCancel={() => setWithdrawModalVisible(false)}
         onConfirmed={() => router.reload()}
       />

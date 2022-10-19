@@ -178,7 +178,7 @@ export function DeployProjectButton({ form }: { form: FormInstance }) {
       </Button>
       <TransactionModal
         transactionPending={transactionPending}
-        visible={transactionPending}
+        open={transactionPending}
       />
     </>
   )

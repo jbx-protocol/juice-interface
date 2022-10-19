@@ -20,11 +20,11 @@ import { V2V3CurrencyName, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { amountSubFee, feeForAmount, formatFee } from 'utils/v2v3/math'
 
 export default function DistributePayoutsModal({
-  visible,
+  open,
   onCancel,
   onConfirmed,
 }: {
-  visible?: boolean
+  open?: boolean
   onCancel?: VoidFunction
   onConfirmed?: VoidFunction
 }) {
@@ -134,7 +134,7 @@ export default function DistributePayoutsModal({
   return (
     <TransactionModal
       title={<Trans>Distribute funds</Trans>}
-      visible={visible}
+      open={open}
       onOk={executeDistributePayoutsTx}
       onCancel={() => {
         setDistributionAmount(undefined)

@@ -135,7 +135,7 @@ export default function ProjectPayoutMods({
       </Space>
 
       <ProjectPayoutModsModal
-        visible={editingModalVisible}
+        open={editingModalVisible}
         target={target}
         feePercentage={feePercentage}
         mods={mods}

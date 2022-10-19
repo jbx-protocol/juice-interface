@@ -29,13 +29,13 @@ type AddEditAllocationModalResult = Split & { id: string }
 export const AddEditAllocationModal = ({
   editingData,
   availableModes,
-  visible,
+  open,
   onOk,
   onCancel,
 }: {
   editingData?: AllocationSplit | undefined
   availableModes: Set<'amount' | 'percentage'>
-  visible?: boolean
+  open?: boolean
   onOk: (split: AddEditAllocationModalResult) => void
   onCancel: VoidFunction
 }) => {
@@ -60,7 +60,7 @@ export const AddEditAllocationModal = ({
   }, [availableModes])
 
   useEffect(() => {
-    if (!visible) return
+    if (!open) return
 
     if (!editingData) {
       setRecipient('walletAddress')
@@ -86,7 +86,7 @@ export const AddEditAllocationModal = ({
         ? Moment.default(editingData.lockedUntil * 1000)
         : undefined,
     })
-  }, [editingData, form, visible, totalAllocationAmount])
+  }, [editingData, form, open, totalAllocationAmount])
 
   const onModalOk = useCallback(async () => {
     const fields = await form.validateFields()
@@ -119,7 +119,7 @@ export const AddEditAllocationModal = ({
     <Modal
       title={<h2>{isEditing ? t`Edit payout` : t`Add new payout`}</h2>}
       okText={t`Add payout`}
-      visible={visible}
+      open={open}
       onOk={onModalOk}
       onCancel={onModalCancel}
       destroyOnClose

@@ -238,7 +238,7 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
       </Button>
       <TransactionModal
         transactionPending={transactionPending}
-        visible={transactionPending}
+        open={transactionPending}
       />
     </>
   )

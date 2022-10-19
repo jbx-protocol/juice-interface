@@ -27,7 +27,7 @@ export default function V2V3DownloadActivityModal(props: ModalProps) {
       </div>
 
       <V2V3DownloadPaymentsModal
-        visible={paymentsModalVisible}
+        open={paymentsModalVisible}
         onCancel={() => setPaymentsModalVisible(false)}
       />
     </Modal>

@@ -3,17 +3,17 @@ import { Modal } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 
 export default function PayWarningModal({
-  visible,
+  open,
   onOk,
   onCancel,
 }: {
-  visible: boolean
+  open: boolean
   onOk: VoidFunction
   onCancel: VoidFunction
 }) {
   return (
     <Modal
-      visible={visible}
+      open={open}
       onOk={onOk}
       onCancel={onCancel}
       okText={t`I understand`}

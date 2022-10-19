@@ -8,13 +8,13 @@ import TooltipLabel from 'components/TooltipLabel'
 import { CurrencyName } from 'constants/currency'
 
 export default function SpecificLimitModal({
-  visible,
+  open,
   onClose,
   setDistributionLimit,
   currencyName,
   onCurrencyChange,
 }: {
-  visible: boolean
+  open: boolean
   onClose: VoidFunction
   setDistributionLimit: (distributionLimit: string) => void
   currencyName: CurrencyName
@@ -40,7 +40,7 @@ export default function SpecificLimitModal({
 
   return (
     <Modal
-      visible={visible}
+      open={open}
       onCancel={onClose}
       title={
         <TooltipLabel

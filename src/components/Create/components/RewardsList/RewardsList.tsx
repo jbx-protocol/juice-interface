@@ -95,7 +95,7 @@ export const RewardsList: React.FC<RewardsListProps> &
         </Button>
       </div>
       <AddEditRewardModal
-        visible={modal.visible}
+        open={modal.visible}
         editingData={selectedReward}
         onOk={onModalOk}
         onCancel={onModalCancel}

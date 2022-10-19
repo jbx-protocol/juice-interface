@@ -18,10 +18,10 @@ import { LaunchProjectPayerModal } from './LaunchProjectPayerModal'
 export const NEW_DEPLOY_QUERY_PARAM = 'np'
 
 export default function NewDeployModal({
-  visible,
+  open,
   onClose,
 }: {
-  visible: boolean
+  open: boolean
   onClose: VoidFunction
 }) {
   const {
@@ -48,7 +48,7 @@ export default function NewDeployModal({
 
   return (
     <Modal
-      visible={visible}
+      open={open}
       onOk={onClose}
       onCancel={onClose}
       okButtonProps={{ hidden: !completedAllSteps }}
@@ -126,12 +126,12 @@ export default function NewDeployModal({
         />
       </div>
       <IssueErc20TokenModal
-        visible={issueTokenModalVisible}
+        open={issueTokenModalVisible}
         onClose={() => setIssueTokenModalVisible(false)}
         onConfirmed={() => setHasIssuedToken(true)}
       />
       <LaunchProjectPayerModal
-        visible={launchProjectPayerModalVisible}
+        open={launchProjectPayerModalVisible}
         onClose={() => setLaunchProjectPayerModalVisible(false)}
         useDeployProjectPayerTx={useDeployProjectPayerTx}
         onConfirmed={() => setHasLaunchedPayableAddress(true)}

@@ -5,10 +5,10 @@ import FundingCycleDrawer from './FundingCycleDrawer'
 import { useFundingCycleDrawer } from './useFundingCycleDrawer'
 
 export default function RulesDrawer({
-  visible,
+  open,
   onClose,
 }: {
-  visible: boolean
+  open: boolean
   onClose: VoidFunction
 }) {
   const {
@@ -23,13 +23,13 @@ export default function RulesDrawer({
     <>
       <FundingCycleDrawer
         title={t`Rules`}
-        visible={visible}
+        open={open}
         onClose={handleDrawerCloseClick}
       >
         <RulesForm onFinish={emitDrawerClose} onFormUpdated={setFormUpdated} />
       </FundingCycleDrawer>
       <UnsavedChangesModal
-        visible={unsavedChangesModalVisible}
+        open={unsavedChangesModalVisible}
         onOk={() => {
           closeModal()
           emitDrawerClose()

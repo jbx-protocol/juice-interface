@@ -139,7 +139,7 @@ export default function FundingHistory({
 
       {selectedFC && (
         <Modal
-          visible={!!selectedFC}
+          open={!!selectedFC}
           width={600}
           title={`Cycle #${selectedFC.number.toString()}`}
           onCancel={() => setSelectedIndex(undefined)}

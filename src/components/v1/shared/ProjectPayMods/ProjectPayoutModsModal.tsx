@@ -51,7 +51,7 @@ type ProjectPayoutModsForm = {
 }
 
 export const ProjectPayoutModsModal = ({
-  visible,
+  open,
   mods,
   editingModIndex,
   target,
@@ -61,7 +61,7 @@ export const ProjectPayoutModsModal = ({
   onOk,
   onCancel,
 }: {
-  visible: boolean
+  open: boolean
   mods: PayoutMod[]
   target: string
   editingModIndex: number | undefined
@@ -194,7 +194,7 @@ export const ProjectPayoutModsModal = ({
   return (
     <Modal
       title={modalMode === 'Edit' ? t`Edit payout` : t`Add new payout`}
-      visible={visible}
+      open={open}
       onOk={validateAndSave}
       okText={modalMode === 'Edit' ? t`Save payout` : t`Add payout`}
       onCancel={discardAndClose}

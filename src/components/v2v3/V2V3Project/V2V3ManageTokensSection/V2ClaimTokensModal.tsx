@@ -16,11 +16,11 @@ import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export default function V2ClaimTokensModal({
-  visible,
+  open,
   onCancel,
   onConfirmed,
 }: {
-  visible?: boolean
+  open?: boolean
   onCancel?: VoidFunction
   onConfirmed?: VoidFunction
 }) {
@@ -92,7 +92,7 @@ export default function V2ClaimTokensModal({
     <TransactionModal
       title={t`Claim ${tokenTextShort} as ERC-20 tokens`}
       connectWalletText={t`Connect wallet to claim`}
-      visible={visible}
+      open={open}
       onOk={executeClaimTokensTx}
       okText={t`Claim ${tokenTextShort}`}
       confirmLoading={loading}

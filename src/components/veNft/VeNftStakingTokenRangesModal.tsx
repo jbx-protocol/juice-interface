@@ -5,13 +5,13 @@ import { useVeNftVariants } from 'hooks/veNft/VeNftVariants'
 import { getVeNftBaseImage } from 'utils/veNft'
 
 type StakingTokenRangesModalProps = {
-  visible: boolean
+  open: boolean
   tokenSymbolDisplayText: string
   onCancel: VoidFunction
 }
 
 export default function StakingTokenRangesModal({
-  visible,
+  open,
   tokenSymbolDisplayText,
   onCancel,
 }: StakingTokenRangesModalProps) {
@@ -19,7 +19,7 @@ export default function StakingTokenRangesModal({
 
   return (
     <Modal
-      visible={visible}
+      open={open}
       onCancel={onCancel}
       cancelText="Close"
       okButtonProps={{ style: { display: 'none' } }}

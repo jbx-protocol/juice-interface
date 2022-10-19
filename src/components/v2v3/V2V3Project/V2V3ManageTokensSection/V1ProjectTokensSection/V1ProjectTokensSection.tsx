@@ -63,7 +63,7 @@ export function V1ProjectTokensSection({
           v1TokenBalance={parseInt(fromWad(v1TokenBalance))}
           v1TokenSymbol={v1TokenSymbol}
           v1ProjectHandle={v1ProjectHandle}
-          visible={migrateTokensModalVisible}
+          open={migrateTokensModalVisible}
           onCancel={() => setMigrateTokensModalVisible(false)}
         />
       )}

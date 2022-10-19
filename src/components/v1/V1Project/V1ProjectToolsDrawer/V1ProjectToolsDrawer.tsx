@@ -16,10 +16,10 @@ import { ExportTicketModsButton } from './ExportTicketModsButton'
 const { TabPane } = Tabs
 
 export function V1ProjectToolsDrawer({
-  visible,
+  open,
   onClose,
 }: {
-  visible?: boolean
+  open?: boolean
   onClose?: VoidFunction
 }) {
   const { owner } = useContext(V1ProjectContext)
@@ -52,7 +52,7 @@ export function V1ProjectToolsDrawer({
 
   return (
     <Drawer
-      visible={visible}
+      open={open}
       onClose={onClose}
       width={600}
       drawerStyle={{ paddingBottom: '2rem' }}

@@ -11,7 +11,7 @@ type ModalMode = 'Add' | 'Edit' | undefined
 
 export default function ReservedTokenReceiverModal({
   mode,
-  visible,
+  open,
   form,
   onOk,
   onCancel,
@@ -20,7 +20,7 @@ export default function ReservedTokenReceiverModal({
   reservedRate,
 }: {
   mode: ModalMode
-  visible: boolean
+  open: boolean
   form: FormInstance
   onOk: VoidFunction
   onCancel: VoidFunction
@@ -57,7 +57,7 @@ export default function ReservedTokenReceiverModal({
       title={
         mode === 'Add' ? t`Add token allocation` : t`Edit token allocation`
       } // Full sentences for translation purposes
-      visible={visible}
+      open={open}
       // Must reset the state in case user opens this modal for another receiver straight away
       onOk={() => {
         setPercent(undefined)

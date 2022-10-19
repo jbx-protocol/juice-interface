@@ -17,11 +17,11 @@ import { downloadCsvFile } from 'utils/csv'
 
 export function DownloadParticipantsModal({
   tokenSymbol,
-  visible,
+  open,
   onCancel,
 }: {
   tokenSymbol: string | undefined
-  visible: boolean | undefined
+  open: boolean | undefined
   onCancel: VoidFunction | undefined
 }) {
   const { projectId, projectMetadata, cv } = useContext(ProjectMetadataContext)
@@ -124,7 +124,7 @@ export function DownloadParticipantsModal({
 
   return (
     <Modal
-      visible={visible}
+      open={open}
       onCancel={onCancel}
       onOk={download}
       okText={t`Download CSV`}

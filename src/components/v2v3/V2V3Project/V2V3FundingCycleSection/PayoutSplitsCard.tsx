@@ -85,7 +85,7 @@ export default function PayoutSplitsCard({
     return (
       <Tooltip
         title={<Trans>No funds available to distribute.</Trans>}
-        visible={distributeButtonDisabled ? undefined : false}
+        open={distributeButtonDisabled ? undefined : false}
       >
         <Button
           type="ghost"
@@ -197,7 +197,7 @@ export default function PayoutSplitsCard({
       </Space>
 
       <DistributePayoutsModal
-        visible={distributePayoutsModalVisible}
+        open={distributePayoutsModalVisible}
         onCancel={() => setDistributePayoutsModalVisible(false)}
         onConfirmed={reloadWindow}
       />

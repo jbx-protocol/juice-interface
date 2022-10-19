@@ -12,12 +12,12 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 
 export default function DistributeTokensModal({
-  visible,
+  open,
   onCancel,
   onConfirmed,
   reservedRate,
 }: {
-  visible?: boolean
+  open?: boolean
   onCancel?: VoidFunction
   onConfirmed?: VoidFunction
   reservedRate: number
@@ -52,7 +52,7 @@ export default function DistributeTokensModal({
         capitalize: false,
         plural: true,
       })}`}
-      visible={visible}
+      open={open}
       onOk={distribute}
       okText={`Distribute ${tokenSymbolText({
         tokenSymbol,

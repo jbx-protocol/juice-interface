@@ -202,7 +202,8 @@ export default function V2ManageTokensSection() {
                 >
                   <div>
                     <div>
-                      {totalTokenSupplyDiscrete} {tokenText}
+                      {formatWad(totalTokenSupply, { precision: 0 })}{' '}
+                      {tokenText}
                     </div>
                     <TextButton
                       onClick={() => setParticipantsModalVisible(true)}
@@ -317,7 +318,7 @@ export default function V2ManageTokensSection() {
       </Space>
 
       <ManageTokensModal
-        visible={manageTokensModalVisible}
+        open={manageTokensModalVisible}
         onCancel={() => setManageTokensModalVisible(false)}
         projectAllowsMint={projectAllowsMint}
         userHasMintPermission={userHasMintPermission}
@@ -349,7 +350,7 @@ export default function V2ManageTokensSection() {
         tokenSymbol={tokenSymbol}
         tokenAddress={tokenAddress}
         totalTokenSupply={totalTokenSupply}
-        visible={participantsModalVisible}
+        open={participantsModalVisible}
         onCancel={() => setParticipantsModalVisible(false)}
       />
     </>

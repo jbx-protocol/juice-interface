@@ -12,7 +12,7 @@ import CustomBeneficiaryInput from 'components/veNft/formControls/CustomBenefici
 import { useWallet } from 'hooks/Wallet'
 
 type UnlockModalProps = {
-  visible: boolean
+  open: boolean
   token: VeNftToken
   tokenSymbolDisplayText: string
   onCancel: VoidFunction
@@ -20,7 +20,7 @@ type UnlockModalProps = {
 }
 
 const UnlockModal = ({
-  visible,
+  open,
   token,
   tokenSymbolDisplayText,
   onCancel,
@@ -86,7 +86,7 @@ const UnlockModal = ({
 
   return (
     <TransactionModal
-      visible={visible}
+      open={open}
       title={t`Unlock veNFT`}
       onCancel={onCancel}
       onOk={unlock}

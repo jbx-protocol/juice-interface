@@ -6,11 +6,11 @@ import FundingCycleDrawer from './FundingCycleDrawer'
 import { useFundingCycleDrawer } from './useFundingCycleDrawer'
 
 export default function TokenDrawer({
-  visible,
+  open,
   onClose,
   isCreate,
 }: {
-  visible: boolean
+  open: boolean
   onClose: VoidFunction
   isCreate?: boolean
 }) {
@@ -26,7 +26,7 @@ export default function TokenDrawer({
     <>
       <FundingCycleDrawer
         title={t`Project token`}
-        visible={visible}
+        open={open}
         onClose={handleDrawerCloseClick}
       >
         <p>
@@ -47,7 +47,7 @@ export default function TokenDrawer({
         />
       </FundingCycleDrawer>
       <UnsavedChangesModal
-        visible={unsavedChangesModalVisible}
+        open={unsavedChangesModalVisible}
         onOk={() => {
           closeModal()
           emitDrawerClose()

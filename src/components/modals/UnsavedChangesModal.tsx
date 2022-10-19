@@ -2,11 +2,11 @@ import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
 
 export default function UnsavedChangesModal({
-  visible,
+  open,
   onOk,
   onCancel,
 }: {
-  visible: boolean
+  open: boolean
   onOk: () => void
   onCancel: () => void
 }) {
@@ -14,7 +14,7 @@ export default function UnsavedChangesModal({
     <Modal
       title={t`Unsaved changes`}
       okText={t`Discard`}
-      visible={visible}
+      open={open}
       onOk={onOk}
       onCancel={onCancel}
       destroyOnClose

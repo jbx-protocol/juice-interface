@@ -25,7 +25,10 @@ import { CV } from 'models/cv'
 import { helpPagePath } from 'utils/routes'
 
 import { CV_V1, CV_V1_1, CV_V2, CV_V3 } from 'constants/cv'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { layouts } from 'constants/styles/layouts'
+import MyBookmarks from 'pages/projects/MyBookmarks'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import ArchivedProjectsMessage from './ArchivedProjectsMessage'
 import HoldingsProjects from './HoldingsProjects'
 import MyProjects from './MyProjects'
@@ -59,6 +62,8 @@ function Projects() {
     (router.query.search as string | undefined) ?? '',
   )
 
+  const bookmarksEnabled = featureFlagEnabled(FEATURE_FLAGS.BOOKMARKS)
+
   useEffect(() => {
     setSelectedTab(() => {
       switch (router.query.tab) {
@@ -70,6 +75,8 @@ function Projects() {
           return 'holdings'
         case 'myprojects':
           return 'myprojects'
+        case 'mybookmarks':
+          return 'mybookmarks'
         default:
           return defaultTab
       }
@@ -286,6 +293,10 @@ function Projects() {
       ) : selectedTab === 'trending' ? (
         <div style={{ paddingBottom: 50 }}>
           <TrendingProjects count={12} />
+        </div>
+      ) : selectedTab === 'mybookmarks' && bookmarksEnabled ? (
+        <div style={{ paddingBottom: 50 }}>
+          <MyBookmarks />
         </div>
       ) : null}
 

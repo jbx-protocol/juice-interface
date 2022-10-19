@@ -33,28 +33,22 @@ export default function V2CreatePage() {
   )
 }
 
-const { TabPane } = Tabs
-
-const TabText: React.FC = ({ children }) => {
-  return <span style={{ fontSize: 18 }}>{children}</span>
-}
-
 type TabConfig = {
-  title: string
+  label: string
   component: ({ onFinish }: TabContentProps) => JSX.Element
 }
 
 const TABS: TabConfig[] = [
   {
-    title: t`1. Project details`,
+    label: t`1. Project details`,
     component: ProjectDetailsTabContent,
   },
   {
-    title: t`2. Funding cycle`,
+    label: t`2. Funding cycle`,
     component: FundingCycleTabContent,
   },
   {
-    title: t`3. Review and deploy`,
+    label: t`3. Review and deploy`,
     component: ReviewDeployTab,
   },
 ]
@@ -64,6 +58,24 @@ function V2Create() {
   const [activeTab, setActiveTab] = useState<string>('0')
 
   const isMobile = useMobile()
+
+  const TAB_ITEMS = TABS.map((tab, idx) => {
+    return {
+      label: tab.label,
+      key: idx.toString(),
+      children: (
+        <tab.component
+          onFinish={() => {
+            // bail if on last tab.
+            if (idx === TABS.length - 1) return
+
+            setActiveTab(`${idx + 1}`)
+            scrollToTop()
+          }}
+        />
+      ),
+    }
+  })
 
   return (
     <V2V3ContractsProvider
@@ -92,21 +104,8 @@ function V2Create() {
               onChange={setActiveTab}
               tabBarGutter={50}
               size="large"
-            >
-              {TABS.map((tab, idx) => (
-                <TabPane tab={<TabText>{tab.title}</TabText>} key={idx}>
-                  <tab.component
-                    onFinish={() => {
-                      // bail if on last tab.
-                      if (idx === TABS.length - 1) return
-
-                      setActiveTab(`${idx + 1}`)
-                      scrollToTop()
-                    }}
-                  />
-                </TabPane>
-              ))}
-            </Tabs>
+              items={TAB_ITEMS}
+            />
           </div>
         </V2V3CurrencyProvider>
       </TransactionProvider>

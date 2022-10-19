@@ -13,21 +13,11 @@ import ArchiveV1Project from './ArchiveV1Project'
 import { ExportPayoutModsButton } from './ExportPayoutModsButton'
 import { ExportTicketModsButton } from './ExportTicketModsButton'
 
-const { TabPane } = Tabs
-
-export function V1ProjectToolsDrawer({
-  open,
-  onClose,
-}: {
-  open?: boolean
-  onClose?: VoidFunction
-}) {
+const OwnerTools = () => {
+  const setUriTx = useSetProjectUriTx()
   const { owner } = useContext(V1ProjectContext)
 
-  const setUriTx = useSetProjectUriTx()
-  const isOwnerWallet = useIsUserAddress(owner)
-
-  const OwnerTools = (
+  return (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
       <section>
         <h3>
@@ -49,6 +39,47 @@ export function V1ProjectToolsDrawer({
       </section>
     </Space>
   )
+}
+
+export function V1ProjectToolsDrawer({
+  open,
+  onClose,
+}: {
+  open?: boolean
+  onClose?: VoidFunction
+}) {
+  const { owner } = useContext(V1ProjectContext)
+
+  const isOwnerWallet = useIsUserAddress(owner)
+
+  const TABS = [
+    {
+      label: <Trans>General</Trans>,
+      key: '1',
+      children: (
+        <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+          <section>
+            <AddToProjectBalanceForm useAddToBalanceTx={useAddToBalanceTx} />
+          </section>
+
+          <Divider />
+
+          <ExportSection
+            exportPayoutsButton={<ExportPayoutModsButton />}
+            exportReservedTokensButton={<ExportTicketModsButton />}
+          />
+        </Space>
+      ),
+    },
+  ]
+
+  if (isOwnerWallet) {
+    TABS.push({
+      label: <Trans>Owner tools</Trans>,
+      key: '2',
+      children: <OwnerTools />,
+    })
+  }
 
   return (
     <Drawer
@@ -61,27 +92,7 @@ export function V1ProjectToolsDrawer({
         <Trans>Tools</Trans>
       </h1>
 
-      <Tabs>
-        <TabPane tab={<Trans>General</Trans>} key="1">
-          <Space direction="vertical" size="middle" style={{ width: '100%' }}>
-            <section>
-              <AddToProjectBalanceForm useAddToBalanceTx={useAddToBalanceTx} />
-            </section>
-
-            <Divider />
-
-            <ExportSection
-              exportPayoutsButton={<ExportPayoutModsButton />}
-              exportReservedTokensButton={<ExportTicketModsButton />}
-            />
-          </Space>
-        </TabPane>
-        {isOwnerWallet && (
-          <TabPane tab={<Trans>Owner tools</Trans>} key="2">
-            {OwnerTools}
-          </TabPane>
-        )}
-      </Tabs>
+      <Tabs items={TABS} />
     </Drawer>
   )
 }

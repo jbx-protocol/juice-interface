@@ -17,4 +17,5 @@ export const V1_PROJECT_IDS = {
   LUNAR_DAO: 287,
   CITYMONK: 566,
   JUS_DAO: 332,
+  DEMU: 41,
 }

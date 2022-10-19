@@ -202,7 +202,8 @@ export default function V2ManageTokensSection() {
                 >
                   <div>
                     <div>
-                      {totalTokenSupplyDiscrete} {tokenText}
+                      {formatWad(totalTokenSupply, { precision: 0 })}{' '}
+                      {tokenText}
                     </div>
                     <TextButton
                       onClick={() => setParticipantsModalVisible(true)}

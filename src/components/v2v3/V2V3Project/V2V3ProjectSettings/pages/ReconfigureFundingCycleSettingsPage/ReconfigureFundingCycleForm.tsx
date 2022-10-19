@@ -154,17 +154,11 @@ export function V2V3ReconfigureFundingCycleForm() {
       </Space>
 
       <FundingDrawer
-        visible={fundingDrawerVisible}
+        open={fundingDrawerVisible}
         onClose={closeReconfigureDrawer}
       />
-      <TokenDrawer
-        visible={tokenDrawerVisible}
-        onClose={closeReconfigureDrawer}
-      />
-      <RulesDrawer
-        visible={rulesDrawerVisible}
-        onClose={closeReconfigureDrawer}
-      />
+      <TokenDrawer open={tokenDrawerVisible} onClose={closeReconfigureDrawer} />
+      <RulesDrawer open={rulesDrawerVisible} onClose={closeReconfigureDrawer} />
       <UnsavedChangesModal
         open={unsavedChangesModalVisibile}
         onOk={closeUnsavedChangesModalAndExit}

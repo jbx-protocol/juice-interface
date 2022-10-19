@@ -22,10 +22,10 @@ import { PaymentAddressSection } from './PaymentAddressSection'
 const { TabPane } = Tabs
 
 export function V2V3ProjectToolsDrawer({
-  visible,
+  open,
   onClose,
 }: {
-  visible?: boolean
+  open?: boolean
   onClose?: VoidFunction
 }) {
   const { projectOwnerAddress, payoutSplits, reservedTokensSplits, handle } =
@@ -37,7 +37,7 @@ export function V2V3ProjectToolsDrawer({
 
   return (
     <Drawer
-      visible={visible}
+      open={open}
       onClose={onClose}
       width={!isMobile ? 600 : undefined}
       drawerStyle={{ paddingBottom: '2rem' }}

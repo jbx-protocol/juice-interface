@@ -121,11 +121,11 @@ const DistributionLimitHeader = ({
 export const V2V3EditPayouts = ({
   editingSplits,
   setEditingSplits,
-  visible,
+  open,
 }: {
   editingSplits: Split[]
   setEditingSplits: (splits: Split[]) => void
-  visible?: boolean
+  open?: boolean
 }) => {
   const {
     theme: { colors },
@@ -168,7 +168,7 @@ export const V2V3EditPayouts = ({
   // Load original splits from context into editing splits.
   useEffect(() => {
     setEditingSplits(contextPayoutSplits ?? [])
-  }, [contextPayoutSplits, setEditingSplits, visible])
+  }, [contextPayoutSplits, setEditingSplits, open])
 
   const lockedSplits = useMemo(
     () => editingSplits.filter(split => isLockedSplit({ split })),

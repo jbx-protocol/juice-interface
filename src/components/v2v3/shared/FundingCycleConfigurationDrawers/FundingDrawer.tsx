@@ -5,11 +5,11 @@ import FundingCycleDrawer from './FundingCycleDrawer'
 import { useFundingCycleDrawer } from './useFundingCycleDrawer'
 
 export default function FundingDrawer({
-  visible,
+  open,
   onClose,
   isCreate,
 }: {
-  visible: boolean
+  open: boolean
   onClose: VoidFunction
   isCreate?: boolean
 }) {
@@ -25,7 +25,7 @@ export default function FundingDrawer({
     <>
       <FundingCycleDrawer
         title={t`Funding`}
-        visible={visible}
+        open={open}
         onClose={handleDrawerCloseClick}
       >
         <FundingForm

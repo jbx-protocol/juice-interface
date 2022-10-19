@@ -43,10 +43,10 @@ export const NFT_REWARDS_EXPLAINATION: JSX.Element = (
 )
 
 export default function NftDrawer({
-  visible,
+  open,
   onClose,
 }: {
-  visible: boolean
+  open: boolean
   onClose: VoidFunction
 }) {
   const {
@@ -187,7 +187,7 @@ export default function NftDrawer({
     <>
       <FundingCycleDrawer
         title={t`NFT rewards`}
-        visible={visible}
+        open={open}
         onClose={handleDrawerCloseClick}
       >
         <div

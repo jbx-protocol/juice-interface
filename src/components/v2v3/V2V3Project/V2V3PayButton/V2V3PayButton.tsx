@@ -51,7 +51,7 @@ export function V2V3PayButton({ disabled, wrapperStyle }: PayButtonProps) {
   return (
     <div style={{ textAlign: 'center', ...wrapperStyle }}>
       <Tooltip
-        visible={isPayDisabled ? undefined : false}
+        open={isPayDisabled ? undefined : false}
         title={disabledMessage}
         className="block"
       >

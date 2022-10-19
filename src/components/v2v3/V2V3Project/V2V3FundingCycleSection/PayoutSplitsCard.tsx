@@ -85,7 +85,7 @@ export default function PayoutSplitsCard({
     return (
       <Tooltip
         title={<Trans>No funds available to distribute.</Trans>}
-        visible={distributeButtonDisabled ? undefined : false}
+        open={distributeButtonDisabled ? undefined : false}
       >
         <Button
           type="ghost"

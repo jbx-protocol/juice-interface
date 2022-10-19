@@ -575,7 +575,7 @@ export default function ReconfigureFCModal({
       </div>
 
       <Drawer
-        visible={budgetFormModalVisible}
+        open={budgetFormModalVisible}
         {...drawerStyle}
         onClose={() => {
           setBudgetFormModalVisible(false)
@@ -596,7 +596,7 @@ export default function ReconfigureFCModal({
       </Drawer>
 
       <Drawer
-        visible={payModsModalVisible}
+        open={payModsModalVisible}
         {...drawerStyle}
         onClose={() => {
           setPayModsFormModalVisible(false)
@@ -618,7 +618,7 @@ export default function ReconfigureFCModal({
       </Drawer>
 
       <Drawer
-        visible={ticketingFormModalVisible}
+        open={ticketingFormModalVisible}
         {...drawerStyle}
         onClose={() => {
           resetTicketingForm()
@@ -639,7 +639,7 @@ export default function ReconfigureFCModal({
       </Drawer>
 
       <ReconfigurationStrategyDrawer
-        visible={rulesFormModalVisible}
+        open={rulesFormModalVisible}
         style={drawerStyle}
         onClose={() => {
           setCurrentStep(undefined)
@@ -654,7 +654,7 @@ export default function ReconfigureFCModal({
       />
 
       <Drawer
-        visible={incentivesFormModalVisible}
+        open={incentivesFormModalVisible}
         {...drawerStyle}
         onClose={() => {
           setIncentivesFormModalVisible(false)
@@ -675,7 +675,7 @@ export default function ReconfigureFCModal({
 
       {terminal.version === '1.1' && (
         <Drawer
-          visible={restrictedActionsFormModalVisible}
+          open={restrictedActionsFormModalVisible}
           {...drawerStyle}
           onClose={() => {
             resetRestrictedActionsForm()

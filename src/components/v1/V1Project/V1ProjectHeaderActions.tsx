@@ -99,7 +99,7 @@ export default function V1ProjectHeaderActions() {
         onCancel={() => setMigrateDrawerVisible(false)}
       />
       <V1ProjectToolsDrawer
-        visible={toolDrawerVisible}
+        open={toolDrawerVisible}
         onClose={() => setToolDrawerVisible(false)}
       />
       <EditProjectModal

@@ -7,16 +7,16 @@ import { PropsWithChildren } from 'react'
  */
 export default function FundingCycleDrawer({
   title,
-  visible,
+  open,
   onClose,
   children,
 }: PropsWithChildren<{
   title: string
-  visible: boolean
+  open: boolean
   onClose: VoidFunction
 }>) {
   return (
-    <Drawer {...drawerStyle} visible={visible} onClose={onClose} destroyOnClose>
+    <Drawer {...drawerStyle} open={open} onClose={onClose} destroyOnClose>
       <h1>{title}</h1>
       {children}
     </Drawer>

@@ -94,7 +94,7 @@ export function V1PayButton({ wrapperStyle, disabled }: PayButtonProps) {
       <Tooltip
         title={disabledMessage}
         className="block"
-        visible={disabledMessage ? undefined : false}
+        open={disabledMessage ? undefined : false}
       >
         <Button
           style={{ width: '100%' }}

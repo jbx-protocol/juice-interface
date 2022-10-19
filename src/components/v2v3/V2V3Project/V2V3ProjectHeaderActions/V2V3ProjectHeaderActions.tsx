@@ -82,7 +82,7 @@ export function V2V3ProjectHeaderActions() {
       </Space>
 
       <V2V3ProjectToolsDrawer
-        visible={toolDrawerVisible}
+        open={toolDrawerVisible}
         onClose={() => setToolDrawerVisible(false)}
       />
     </>

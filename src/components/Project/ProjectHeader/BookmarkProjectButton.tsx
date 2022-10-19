@@ -4,7 +4,7 @@ import { Button, Tooltip } from 'antd'
 import axios from 'axios'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { useIsProjectBookmarked } from 'hooks/db/firebase/IsProjectBookmarked'
+import { useProjectBookmarks } from 'hooks/db/firebase/ProjectBookmarks'
 import { useWallet } from 'hooks/Wallet'
 import { BookmarkProjectData } from 'pages/api/bookmark/index.page'
 import React, { useContext } from 'react'
@@ -14,7 +14,7 @@ import { emitErrorNotification } from 'utils/notifications'
 const BookmarkProjectButton = () => {
   const { userAddress } = useWallet()
   const { projectId, cv } = useContext(ProjectMetadataContext)
-  const [value, isLoading] = useIsProjectBookmarked()
+  const [value, isLoading] = useProjectBookmarks()
   const isBookmarked = value && value[compositeProjectId(projectId!, cv!)]
   const {
     theme: { colors },

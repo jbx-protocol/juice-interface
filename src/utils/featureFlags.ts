@@ -11,6 +11,9 @@ const FEATURE_FLAG_DEFAULTS: {
   [FEATURE_FLAGS.V3]: {
     goerli: true,
   },
+  [FEATURE_FLAGS.BOOKMARKS]: {
+    goerli: true,
+  },
 }
 
 const featureFlagKey = (baseKey: string) => {

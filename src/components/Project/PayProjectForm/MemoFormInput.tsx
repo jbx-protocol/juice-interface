@@ -50,7 +50,7 @@ export function MemoFormInput({
         />
       </div>
       <AttachStickerModal
-        visible={attachStickerModalVisible}
+        open={attachStickerModalVisible}
         onClose={() => setAttachStickerModalVisible(false)}
         onSelect={sticker => {
           if (typeof window === 'undefined') {

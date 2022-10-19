@@ -92,7 +92,7 @@ export function PastFundingCycle({
       </div>
 
       <Modal
-        visible={modalVisible}
+        open={modalVisible}
         title={`Cycle #${fundingCycle?.number.toString()}`}
         onCancel={() => setModalVisible(false)}
         onOk={() => setModalVisible(false)}

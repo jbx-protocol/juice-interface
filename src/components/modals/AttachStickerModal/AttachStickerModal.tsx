@@ -29,18 +29,18 @@ const PAYMENT_MEMO_STICKERS: PaymentMemoSticker[] = [
 ]
 
 export function AttachStickerModal({
-  visible,
+  open,
   onSelect,
   onClose,
 }: {
-  visible: boolean
+  open: boolean
   onSelect: (sticker: PaymentMemoSticker) => void
   onClose: VoidFunction
 }) {
   return (
     <Modal
       title={t`Attach a sticker`}
-      visible={visible}
+      open={open}
       onCancel={onClose}
       okButtonProps={{ hidden: true }}
       cancelText={t`Cancel`}

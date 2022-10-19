@@ -37,11 +37,11 @@ import { NftRewardCell } from './NftRewardCell'
 import { V2V3PayForm, V2V3PayFormType } from './V2V3PayForm'
 
 export function V2V3ConfirmPayModal({
-  visible,
+  open,
   weiAmount,
   onCancel,
 }: {
-  visible?: boolean
+  open?: boolean
   weiAmount: BigNumber | undefined
   onCancel?: VoidFunction
 }) {
@@ -185,7 +185,7 @@ export function V2V3ConfirmPayModal({
     <TransactionModal
       transactionPending={transactionPending}
       title={t`Pay ${projectMetadata.name}`}
-      visible={visible}
+      open={open}
       onOk={() => form.submit()}
       okText={t`Pay`}
       connectWalletText={t`Connect wallet to pay`}

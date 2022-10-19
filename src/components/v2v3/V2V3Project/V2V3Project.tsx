@@ -40,7 +40,7 @@ const AllAssetsButton = () => {
         <Trans>All assets</Trans>
       </TextButton>
       <V2V3ProjectTokenBalancesModal
-        visible={balancesModalVisible}
+        open={balancesModalVisible}
         onCancel={() => setBalancesModalVisible(false)}
       />
     </>
@@ -154,7 +154,7 @@ export function V2V3Project() {
       </V2V3PayProjectFormProvider>
 
       <NewDeployModal
-        visible={newDeployModalVisible}
+        open={newDeployModalVisible}
         onClose={hideNewDeployModal}
       />
     </Space>

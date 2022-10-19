@@ -205,7 +205,7 @@ export function TreasuryStatsSection() {
       </div>
 
       <V1BalancesModal
-        visible={balancesModalVisible}
+        open={balancesModalVisible}
         onCancel={() => setBalancesModalVisible(false)}
       />
     </>

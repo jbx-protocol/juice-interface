@@ -36,12 +36,12 @@ export interface AdvancedOptionsFields {
 }
 
 export function LaunchProjectPayerModal({
-  visible,
+  open,
   onClose,
   useDeployProjectPayerTx,
   onConfirmed,
 }: {
-  visible: boolean
+  open: boolean
   onClose: VoidFunction
   useDeployProjectPayerTx: () =>
     | TransactorInstance<DeployProjectPayerTxArgs>
@@ -109,7 +109,7 @@ export function LaunchProjectPayerModal({
   return (
     <>
       <TransactionModal
-        visible={visible}
+        open={open}
         title={t`Create Payment Address`}
         okText={t`Deploy Payment Address contract`}
         connectWalletText={t`Connect wallet to deploy`}
@@ -144,7 +144,7 @@ export function LaunchProjectPayerModal({
         </Space>
       </TransactionModal>
       <Modal
-        visible={confirmedModalVisible}
+        open={confirmedModalVisible}
         onOk={() => setConfirmedModalVisible(false)}
         cancelButtonProps={{ hidden: true }}
         okText={t`Done`}

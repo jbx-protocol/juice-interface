@@ -205,7 +205,7 @@ export function TokensSection() {
       </Space>
 
       <ManageTokensModal
-        visible={manageTokensModalVisible}
+        open={manageTokensModalVisible}
         onCancel={() => setManageTokensModalVisible(false)}
         projectAllowsMint={projectAllowsMint}
         userHasMintPermission={userHasMintPermission}
@@ -223,7 +223,7 @@ export function TokensSection() {
         tokenSymbol={tokenSymbol}
         tokenAddress={tokenAddress}
         totalTokenSupply={totalSupply}
-        visible={participantsModalVisible}
+        open={participantsModalVisible}
         onCancel={() => setParticipantsModalVisible(false)}
       />
     </div>

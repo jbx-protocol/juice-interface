@@ -26,11 +26,11 @@ import { formatRedemptionRate } from 'utils/v2v3/math'
 
 // This doubles as the 'Redeem' and 'Burn' modal depending on if project has overflow
 export default function V2RedeemModal({
-  visible,
+  open,
   onCancel,
   onConfirmed,
 }: {
-  visible?: boolean
+  open?: boolean
   onCancel?: VoidFunction
   onConfirmed?: VoidFunction
 }) {
@@ -159,7 +159,7 @@ export default function V2RedeemModal({
     <TransactionModal
       transactionPending={transactionPending}
       title={modalTitle}
-      visible={visible}
+      open={open}
       confirmLoading={loading}
       onOk={() => {
         executeRedeemTransaction()

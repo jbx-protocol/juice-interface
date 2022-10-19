@@ -302,7 +302,7 @@ export default function DistributionSplitsSection({
         </div>
       </Space>
       <DistributionSplitModal
-        visible={addSplitModalVisible}
+        open={addSplitModalVisible}
         onSplitsChanged={onSplitsChanged}
         mode={'Add'}
         splits={allSplits}
@@ -313,7 +313,7 @@ export default function DistributionSplitsSection({
         onClose={() => setAddSplitModalVisible(false)}
       />
       <SpecificLimitModal
-        visible={specificLimitModalOpen}
+        open={specificLimitModalOpen}
         onClose={() => setSpecificLimitModalOpen(false)}
         setDistributionLimit={setDistributionLimit}
         currencyName={currencyName}

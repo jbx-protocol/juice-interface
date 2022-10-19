@@ -18,14 +18,14 @@ export type VeNftFormFields = {
 
 export default function VeNftRewardTierModal({
   id,
-  visible,
+  open,
   onClose,
   onChange,
   mode,
   variant,
 }: {
   id: number
-  visible: boolean
+  open: boolean
   onClose: VoidFunction
   mode: ModalMode
   variant?: VeNftVariant
@@ -63,7 +63,7 @@ export default function VeNftRewardTierModal({
 
   return (
     <Modal
-      visible={visible}
+      open={open}
       okText={mode === 'Edit' ? t`Save NFT reward` : t`Add NFT reward`}
       onOk={onFormSaved}
       onCancel={onClose}

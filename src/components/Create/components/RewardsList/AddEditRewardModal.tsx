@@ -33,12 +33,12 @@ interface AddEditRewardModalFormProps {
 
 export const AddEditRewardModal = ({
   editingData,
-  visible,
+  open,
   onOk,
   onCancel,
 }: {
   editingData?: Reward | undefined
-  visible?: boolean
+  open?: boolean
   onOk: (reward: Reward) => void
   onCancel: VoidFunction
 }) => {
@@ -54,7 +54,7 @@ export const AddEditRewardModal = ({
   const [limitedSupply, setLimitedSupply] = useState<boolean>(false)
 
   useEffect(() => {
-    if (!visible) return
+    if (!open) return
 
     if (!editingData) {
       setLimitedSupply(false)
@@ -70,7 +70,7 @@ export const AddEditRewardModal = ({
       maxSupply: editingData.maximumSupply,
       externalUrl: editingData.url,
     })
-  }, [editingData, form, visible])
+  }, [editingData, form, open])
 
   const onModalOk = useCallback(async () => {
     const fields = await form.validateFields()
@@ -103,7 +103,7 @@ export const AddEditRewardModal = ({
     <Modal
       title={<h2>{isEditing ? t`Edit NFT Reward` : t`Add NFT Reward`}</h2>}
       okText={isEditing ? t`Save reward` : t`Add reward`}
-      visible={visible}
+      open={open}
       onOk={onModalOk}
       onCancel={onModalCancel}
       destroyOnClose

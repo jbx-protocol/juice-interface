@@ -28,11 +28,11 @@ import { V1_CURRENCY_USD } from 'constants/v1/currency'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 
 export default function WithdrawModal({
-  visible,
+  open,
   onCancel,
   onConfirmed,
 }: {
-  visible?: boolean
+  open?: boolean
   onCancel?: VoidFunction
   onConfirmed?: VoidFunction
 }) {
@@ -119,7 +119,7 @@ export default function WithdrawModal({
   return (
     <TransactionModal
       title={t`Distribute funds`}
-      visible={visible}
+      open={open}
       onOk={executeTapTx}
       onCancel={() => {
         setTapAmount(undefined)

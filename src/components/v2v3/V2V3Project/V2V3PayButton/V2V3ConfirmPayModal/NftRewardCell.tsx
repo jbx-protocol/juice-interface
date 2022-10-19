@@ -57,7 +57,7 @@ export function NftRewardCell({
       </ExternalLink>
       <Tooltip
         title={nftReward.description}
-        visible={nftReward.description ? undefined : false}
+        open={nftReward.description ? undefined : false}
       >
         {nftImage}
       </Tooltip>

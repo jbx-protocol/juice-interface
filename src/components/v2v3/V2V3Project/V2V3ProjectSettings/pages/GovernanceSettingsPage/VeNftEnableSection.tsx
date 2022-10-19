@@ -115,7 +115,7 @@ const VeNftEnableSection = () => {
       </>
       {setupModalVisible && (
         <VeNftSetupModal
-          visible={setupModalVisible}
+          open={setupModalVisible}
           onCancel={() => setSetupModalVisible(false)}
         />
       )}

@@ -23,7 +23,7 @@ export function LaunchProjectPayerButton({
       </Button>
 
       <LaunchProjectPayerModal
-        visible={modalVisible}
+        open={modalVisible}
         onClose={() => setModalVisible(false)}
         useDeployProjectPayerTx={useDeployProjectPayerTx}
       />

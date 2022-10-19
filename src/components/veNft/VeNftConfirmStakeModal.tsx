@@ -19,7 +19,7 @@ import {
 import { reloadWindow } from 'utils/windowUtils'
 
 type ConfirmStakeModalProps = {
-  visible: boolean
+  open: boolean
   tokenSymbolDisplayText: string
   tokensStaked: number
   lockDuration: number
@@ -33,7 +33,7 @@ type ConfirmStakeModalProps = {
 }
 
 export default function ConfirmStakeModal({
-  visible,
+  open,
   tokenSymbolDisplayText,
   tokensStaked,
   lockDuration,
@@ -118,7 +118,7 @@ export default function ConfirmStakeModal({
 
   return (
     <TransactionModal
-      visible={visible}
+      open={open}
       title={t`Confirm Stake`}
       onCancel={onCancel}
       onOk={lock}

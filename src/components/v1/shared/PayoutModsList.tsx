@@ -200,7 +200,7 @@ export default function PayoutModsList({
           }}
         >
           <Modal
-            visible={modalVisible}
+            open={modalVisible}
             title={<Trans>Edit payouts</Trans>}
             okText={
               <span>

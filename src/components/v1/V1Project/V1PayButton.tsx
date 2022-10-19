@@ -94,7 +94,7 @@ export function V1PayButton({ wrapperStyle, disabled }: PayButtonProps) {
       <Tooltip
         title={disabledMessage}
         className="block"
-        visible={disabledMessage ? undefined : false}
+        open={disabledMessage ? undefined : false}
       >
         <Button
           style={{ width: '100%' }}
@@ -113,7 +113,7 @@ export function V1PayButton({ wrapperStyle, disabled }: PayButtonProps) {
         </div>
       )}
       <PayWarningModal
-        visible={payWarningModalVisible}
+        open={payWarningModalVisible}
         onOk={() => {
           setPayWarningModalVisible(false)
           setPayModalVisible(true)
@@ -121,7 +121,7 @@ export function V1PayButton({ wrapperStyle, disabled }: PayButtonProps) {
         onCancel={() => setPayWarningModalVisible(false)}
       />
       <V1ConfirmPayOwnerModal
-        visible={payModalVisible}
+        open={payModalVisible}
         onSuccess={() => setPayModalVisible(false)}
         onCancel={() => setPayModalVisible(false)}
         weiAmount={weiPayAmt}

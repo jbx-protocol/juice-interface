@@ -17,14 +17,14 @@ import { useWallet } from 'hooks/Wallet'
 
 type VeNftRedeemModalProps = {
   token: VeNftToken
-  visible: boolean
+  open: boolean
   onCancel: VoidFunction
   onCompleted: VoidFunction
 }
 
 const VeNftRedeemModal = ({
   token,
-  visible,
+  open,
   onCancel,
   onCompleted,
 }: VeNftRedeemModalProps) => {
@@ -94,7 +94,7 @@ const VeNftRedeemModal = ({
 
   return (
     <TransactionModal
-      visible={visible}
+      open={open}
       title={t`Redeem veNFT`}
       onCancel={onCancel}
       onOk={redeem}

@@ -53,11 +53,11 @@ const bodyTextStyle: CSSProperties = {
 
 export function NftPreview({
   tierRank,
-  visible,
+  open,
   rewardTier,
   onClose,
 }: {
-  visible: boolean
+  open: boolean
   tierRank: number
   rewardTier: NftRewardTier
   onClose: VoidFunction
@@ -66,7 +66,7 @@ export function NftPreview({
 
   const isMobile = useMobile()
 
-  if (!visible) return null
+  if (!open) return null
 
   const hasLimitedSupply = Boolean(
     rewardTier.remainingSupply &&

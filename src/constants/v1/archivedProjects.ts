@@ -15,6 +15,7 @@ const {
   BLUECOLLARDS,
   CITYMONK,
   JUS_DAO,
+  DEMU,
 } = V1_PROJECT_IDS
 
 const V1ArchivedProjectIdsByNetwork: Partial<Record<NetworkName, number[]>> = {
@@ -30,6 +31,7 @@ const V1ArchivedProjectIdsByNetwork: Partial<Record<NetworkName, number[]>> = {
     BLUECOLLARDS,
     CITYMONK,
     JUS_DAO,
+    DEMU,
   ],
   [NetworkName.goerli]: [],
 }

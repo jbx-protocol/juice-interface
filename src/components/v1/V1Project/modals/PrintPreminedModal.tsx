@@ -17,11 +17,11 @@ import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 
 export default function PrintPreminedModal({
-  visible,
+  open,
   onCancel,
   onConfirmed,
 }: {
-  visible?: boolean
+  open?: boolean
   onCancel?: VoidFunction
   onConfirmed?: VoidFunction
 }) {
@@ -95,7 +95,7 @@ export default function PrintPreminedModal({
   return (
     <Modal
       title={<Trans>Mint tokens</Trans>}
-      visible={visible}
+      open={open}
       onOk={() => form.submit()}
       confirmLoading={loading}
       onCancel={onCancel}

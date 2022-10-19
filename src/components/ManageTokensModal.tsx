@@ -45,14 +45,14 @@ const RedeemButtonTooltip = ({
 }
 
 type ModalProps = {
-  visible: boolean
+  open: boolean
   onCancel: VoidFunction
   onConfirmed: VoidFunction
 }
 
 export default function ManageTokensModal({
   onCancel,
-  visible,
+  open,
   projectAllowsMint,
   userHasMintPermission,
   hasOverflow,
@@ -71,7 +71,7 @@ export default function ManageTokensModal({
   userHasMintPermission: boolean
   projectAllowsMint: boolean
   onCancel?: VoidFunction
-  visible?: boolean
+  open?: boolean
   hasOverflow: boolean | undefined
   redeemDisabled: boolean | undefined
   tokenSymbol: string | undefined
@@ -113,7 +113,7 @@ export default function ManageTokensModal({
           plural: true,
           includeTokenWord: true,
         })}`}
-        visible={visible}
+        open={open}
         onCancel={onCancel}
         okButtonProps={{ hidden: true }}
         centered
@@ -219,22 +219,22 @@ export default function ManageTokensModal({
       </Modal>
 
       <RedeemModal
-        visible={redeemModalVisible}
+        open={redeemModalVisible}
         onCancel={() => setRedeemModalVisible(false)}
         onConfirmed={reloadWindow}
       />
       <ClaimTokensModal
-        visible={unstakeModalVisible}
+        open={unstakeModalVisible}
         onCancel={() => setUnstakeModalVisible(false)}
         onConfirmed={reloadWindow}
       />
       <MintModal
-        visible={mintModalVisible}
+        open={mintModalVisible}
         onCancel={() => setMintModalVisible(false)}
         onConfirmed={reloadWindow}
       />
       <TransferUnclaimedTokensModal
-        visible={transferTokensModalVisible}
+        open={transferTokensModalVisible}
         onCancel={() => setTransferTokensModalVisible(false)}
         onConfirmed={reloadWindow}
         tokenSymbol={tokenSymbol}

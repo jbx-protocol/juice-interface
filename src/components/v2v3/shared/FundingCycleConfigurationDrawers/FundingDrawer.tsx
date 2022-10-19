@@ -35,7 +35,7 @@ export default function FundingDrawer({
         />
       </FundingCycleDrawer>
       <UnsavedChangesModal
-        visible={unsavedChangesModalVisible}
+        open={unsavedChangesModalVisible}
         onOk={() => {
           closeModal()
           emitDrawerClose()

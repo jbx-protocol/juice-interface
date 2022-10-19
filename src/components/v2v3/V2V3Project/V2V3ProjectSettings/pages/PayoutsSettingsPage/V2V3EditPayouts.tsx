@@ -321,7 +321,7 @@ export const V2V3EditPayouts = ({
         </Button>
       </Space>
       <DistributionSplitModal
-        visible={addSplitModalVisible}
+        open={addSplitModalVisible}
         onSplitsChanged={onSplitsChanged}
         mode={'Add'}
         splits={editingSplits}

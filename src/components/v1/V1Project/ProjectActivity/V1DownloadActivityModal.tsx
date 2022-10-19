@@ -4,17 +4,17 @@ import { useState } from 'react'
 import { V1DownloadPaymentsModal } from './V1DownloadPaymentsModal'
 
 export function V1DownloadActivityModal({
-  visible,
+  open,
   onCancel,
 }: {
-  visible: boolean | undefined
+  open: boolean | undefined
   onCancel: VoidFunction | undefined
 }) {
   const [paymentsModalVisible, setPaymentsModalVisible] = useState<boolean>()
 
   return (
     <Modal
-      visible={visible}
+      open={open}
       onCancel={onCancel}
       cancelText={t`Close`}
       okButtonProps={{ hidden: true }}
@@ -33,7 +33,7 @@ export function V1DownloadActivityModal({
       </div>
 
       <V1DownloadPaymentsModal
-        visible={paymentsModalVisible}
+        open={paymentsModalVisible}
         onCancel={() => setPaymentsModalVisible(false)}
       />
     </Modal>

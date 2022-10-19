@@ -9,10 +9,10 @@ import { useContext, useState } from 'react'
 import { getTerminalAddress } from 'utils/v1/terminals'
 
 export default function MigrateV1Pt1Modal({
-  visible,
+  open,
   onCancel,
 }: {
-  visible: boolean
+  open: boolean
   onCancel: VoidFunction
 }) {
   const [loadingAddToBalance, setLoadingAddToBalance] = useState<boolean>()
@@ -54,7 +54,7 @@ export default function MigrateV1Pt1Modal({
 
   return (
     <Modal
-      visible={visible}
+      open={open}
       onOk={migrate}
       onCancel={onCancel}
       okText="Migrate to V1.1"

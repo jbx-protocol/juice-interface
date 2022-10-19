@@ -11,11 +11,11 @@ import { formatWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export default function DistributeReservedTokensModal({
-  visible,
+  open,
   onCancel,
   onConfirmed,
 }: {
-  visible?: boolean
+  open?: boolean
   onCancel?: VoidFunction
   onConfirmed?: VoidFunction
 }) {
@@ -75,7 +75,7 @@ export default function DistributeReservedTokensModal({
   return (
     <TransactionModal
       title={<Trans>Distribute reserved {tokenTextPlural}</Trans>}
-      visible={visible}
+      open={open}
       onOk={() => distributeReservedTokens()}
       okText={t`Distribute ${tokenTextPlural}`}
       connectWalletText={t`Connect wallet to distribute`}

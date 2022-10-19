@@ -213,7 +213,7 @@ export function RewardTier({
       </div>
       {rewardTier && tierRank ? (
         <NftPreview
-          visible={previewVisible}
+          open={previewVisible}
           tierRank={tierRank}
           rewardTier={rewardTier}
           onClose={() => setPreviewVisible(false)}

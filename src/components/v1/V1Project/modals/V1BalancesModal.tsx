@@ -22,10 +22,10 @@ import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 
 export function V1BalancesModal({
-  visible,
+  open,
   onCancel,
 }: {
-  visible: boolean | undefined
+  open: boolean | undefined
   onCancel: () => void
 }) {
   const { owner, handle } = useContext(V1ProjectContext)
@@ -82,7 +82,7 @@ export function V1BalancesModal({
 
   return (
     <Modal
-      visible={visible}
+      open={open}
       onCancel={onCancel}
       footer={
         <div
@@ -142,7 +142,7 @@ export function V1BalancesModal({
 
         <Modal
           title={t`Edit tracked assets`}
-          visible={editModalVisible}
+          open={editModalVisible}
           onCancel={() => setEditModalVisible(false)}
           cancelText={t`Cancel`}
           width={600}

@@ -152,7 +152,7 @@ export function V2V3ProjectTokenBalancesModal(props: ModalProps) {
 
         <Modal
           title={t`Edit tracked assets`}
-          visible={editModalVisible}
+          open={editModalVisible}
           onCancel={() => setEditModalVisible(false)}
           cancelText={t`Cancel`}
           width={600}

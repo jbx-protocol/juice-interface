@@ -10,11 +10,11 @@ export type FormFields = {
 }
 
 export default function VeNftAddLockDurationModal({
-  visible,
+  open,
   onClose,
   onChange,
 }: {
-  visible: boolean
+  open: boolean
   onClose: VoidFunction
   onChange: (lockDurationOption: number) => void
 }) {
@@ -33,7 +33,7 @@ export default function VeNftAddLockDurationModal({
 
   return (
     <Modal
-      visible={visible}
+      open={open}
       okText={t`Save Option`}
       onOk={onFormSaved}
       onCancel={onClose}

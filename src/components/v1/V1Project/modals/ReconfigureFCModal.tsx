@@ -130,10 +130,10 @@ const V1ReconfigureUpcomingMessage = ({
 }
 
 export default function ReconfigureFCModal({
-  visible,
+  open,
   onDone,
 }: {
-  visible?: boolean
+  open?: boolean
   onDone?: VoidFunction
 }) {
   const { colors, radii } = useContext(ThemeContext).theme
@@ -247,13 +247,7 @@ export default function ReconfigureFCModal({
       ? queuedTicketMods
       : currentTicketMods
 
-    if (
-      !visible ||
-      isPreviewMode ||
-      !fundingCycle ||
-      !ticketMods ||
-      !payoutMods
-    )
+    if (!open || isPreviewMode || !fundingCycle || !ticketMods || !payoutMods)
       return
 
     const metadata = decodeFundingCycleMetadata(fundingCycle.metadata)
@@ -297,7 +291,7 @@ export default function ReconfigureFCModal({
     incentivesForm,
     restrictedActionsForm,
     isPreviewMode,
-    visible,
+    open,
   ])
 
   async function reconfigure() {
@@ -397,7 +391,7 @@ export default function ReconfigureFCModal({
   return (
     <Modal
       title={<Trans>Project configuration</Trans>}
-      visible={visible}
+      open={open}
       onOk={reconfigure}
       confirmLoading={loading}
       onCancel={onDone}

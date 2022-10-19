@@ -27,16 +27,19 @@ export default function ParticipantsModal({
   tokenSymbol,
   tokenAddress,
   totalTokenSupply,
-  visible,
+  open,
   onCancel,
 }: {
   tokenSymbol: string | undefined
   tokenAddress: string | undefined
   totalTokenSupply: BigNumber | undefined
-  visible: boolean | undefined
+  open: boolean | undefined
   onCancel: VoidFunction | undefined
 }) {
   const { projectId, cv } = useContext(ProjectMetadataContext)
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
 
   const [loading, setLoading] = useState<boolean>()
   const [participants, setParticipants] = useState<Participant[]>([])
@@ -46,14 +49,11 @@ export default function ParticipantsModal({
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
   const [sortPayerReportsDirection, setSortPayerReportsDirection] =
     useState<OrderDirection>('desc')
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
 
   useEffect(() => {
     setLoading(true)
 
-    if (!projectId || !visible || !cv) {
+    if (!projectId || !open || !cv) {
       setParticipants([])
       return
     }
@@ -119,7 +119,7 @@ export default function ParticipantsModal({
     cv,
     sortPayerReportsDirection,
     sortPayerReports,
-    visible,
+    open,
   ])
 
   const contentLineHeight = '1.4rem'
@@ -264,7 +264,7 @@ export default function ParticipantsModal({
 
   return (
     <Modal
-      visible={visible}
+      open={open}
       onCancel={onCancel}
       onOk={onCancel}
       okText={t`Done`}
@@ -327,7 +327,7 @@ export default function ParticipantsModal({
 
       <DownloadParticipantsModal
         tokenSymbol={tokenSymbol}
-        visible={downloadModalVisible}
+        open={downloadModalVisible}
         onCancel={() => setDownloadModalVisible(false)}
       />
     </Modal>

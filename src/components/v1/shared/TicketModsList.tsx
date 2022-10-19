@@ -146,7 +146,7 @@ export default function TicketModsList({
 
       {fundingCycle ? (
         <Modal
-          visible={modalVisible}
+          open={modalVisible}
           title={t`Edit reserved token allocation`}
           okText={t`Save token allocation`}
           onOk={() => setMods()}

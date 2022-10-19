@@ -326,7 +326,7 @@ export default function ProjectTicketMods({
         </Button>
       </Space>
       <ReservedTokenReceiverModal
-        visible={editingModIndex !== undefined}
+        open={editingModIndex !== undefined}
         onOk={setReceiver}
         mode={modalMode}
         form={form}

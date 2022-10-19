@@ -295,12 +295,12 @@ const VeNftStakingForm = ({
         </div>
       </Form>
       <StakingTokenRangesModal
-        visible={tokenRangesModalVisible}
+        open={tokenRangesModalVisible}
         tokenSymbolDisplayText={tokenSymbolDisplayText}
         onCancel={() => setTokenRangesModalVisible(false)}
       />
       <ConfirmStakeModal
-        visible={confirmStakeModalVisible}
+        open={confirmStakeModalVisible}
         tokenSymbolDisplayText={tokenSymbolDisplayText}
         tokensStaked={tokensStaked}
         lockDuration={lockDuration}

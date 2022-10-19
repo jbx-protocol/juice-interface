@@ -166,7 +166,7 @@ export function V2V3ReconfigureFundingCycleForm() {
         onClose={closeReconfigureDrawer}
       />
       <UnsavedChangesModal
-        visible={unsavedChangesModalVisibile}
+        open={unsavedChangesModalVisibile}
         onOk={closeUnsavedChangesModalAndExit}
         onCancel={closeUnsavedChangesModal}
       />

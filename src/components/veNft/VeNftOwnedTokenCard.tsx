@@ -127,19 +127,19 @@ export default function OwnedVeNftCard({
         </Space>
       </div>
       <VeNftExtendLockModal
-        visible={extendLockModalVisible}
+        open={extendLockModalVisible}
         onCancel={() => setExtendLockModalVisible(false)}
         token={token}
         onCompleted={() => setExtendLockModalVisible(false)}
       />
       <VeNftRedeemModal
-        visible={redeemModalVisible}
+        open={redeemModalVisible}
         onCancel={() => setRedeemModalVisible(false)}
         token={token}
         onCompleted={() => setRedeemModalVisible(false)}
       />
       <VeNftUnlockModal
-        visible={unlockModalVisible}
+        open={unlockModalVisible}
         onCancel={() => setUnlockModalVisible(false)}
         token={token}
         onCompleted={() => setUnlockModalVisible(false)}

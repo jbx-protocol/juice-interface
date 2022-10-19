@@ -34,7 +34,7 @@ type DistributionType = 'amount' | 'percent' | 'both'
 // but the state is necessary to link the percent and amount fields, and the form
 // is useful for its features such as field validation.
 export function DistributionSplitModal({
-  visible,
+  open,
   mode,
   overrideDistTypeWithPercentage = false,
   splits, // Locked and editable splits
@@ -46,7 +46,7 @@ export function DistributionSplitModal({
   currencyName,
   onCurrencyChange,
 }: {
-  visible: boolean
+  open: boolean
   mode: ModalMode // 'Add' or 'Edit' or 'Undefined'
   overrideDistTypeWithPercentage?: boolean
   splits: Split[]
@@ -107,7 +107,7 @@ export function DistributionSplitModal({
       return
     }
     setDistributionType(distributionLimitIsInfinite ? 'percent' : 'amount')
-  }, [distributionLimitIsInfinite, overrideDistTypeWithPercentage, visible])
+  }, [distributionLimitIsInfinite, overrideDistTypeWithPercentage, open])
 
   // Set the initial info for form from split
   // If editing, format the lockedUntil and projectId
@@ -150,13 +150,7 @@ export function DistributionSplitModal({
     } else {
       form.setFieldsValue({ amount: undefined })
     }
-  }, [
-    distributionLimit,
-    distributionLimitIsInfinite,
-    editingSplit,
-    form,
-    visible,
-  ])
+  }, [distributionLimit, distributionLimitIsInfinite, editingSplit, form, open])
 
   const resetStates = () => {
     setProjectId(undefined)
@@ -282,7 +276,7 @@ export function DistributionSplitModal({
   return (
     <Modal
       title={mode === 'Edit' ? t`Edit payout` : t`Add new payout`}
-      visible={visible}
+      open={open}
       onOk={confirmSplit}
       okText={mode === 'Edit' ? t`Save payout` : t`Add payout`}
       onCancel={() => {

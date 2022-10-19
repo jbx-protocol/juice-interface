@@ -25,14 +25,14 @@ export type NftFormFields = {
 const MAX_DESCRIPTION_CHARS = 256
 
 export default function NftRewardTierModal({
-  visible,
+  open,
   rewardTier,
   validateContributionFloor,
   onClose,
   mode,
   onChange,
 }: {
-  visible: boolean
+  open: boolean
   rewardTier?: NftRewardTier // null when mode === 'Add'
   validateContributionFloor: (floor: number) => boolean
   onClose: VoidFunction
@@ -79,7 +79,7 @@ export default function NftRewardTierModal({
 
   return (
     <Modal
-      visible={visible}
+      open={open}
       okText={mode === 'Edit' ? t`Save NFT reward` : t`Add NFT reward`}
       onOk={onFormSaved}
       onCancel={onClose}

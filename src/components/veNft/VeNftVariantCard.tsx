@@ -117,7 +117,7 @@ export default function VeNftVariantCard({
       </Row>
       <VeNftRewardTierModal
         id={variant.id}
-        visible={editTierModalVisible}
+        open={editTierModalVisible}
         variant={variant}
         mode="Edit"
         onClose={() => setEditTierModalVisible(false)}

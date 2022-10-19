@@ -71,7 +71,7 @@ export const AllocationList = ({
       <AddEditAllocationModal
         availableModes={availableModes}
         editingData={selectedAllocation}
-        visible={modal.visible}
+        open={modal.visible}
         onOk={onModalOk}
         onCancel={onModalCancel}
       />

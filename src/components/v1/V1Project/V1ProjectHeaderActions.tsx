@@ -95,7 +95,7 @@ export default function V1ProjectHeaderActions() {
       </div>
 
       <MigrateV1Pt1Modal
-        visible={migrateDrawerVisible}
+        open={migrateDrawerVisible}
         onCancel={() => setMigrateDrawerVisible(false)}
       />
       <V1ProjectToolsDrawer
@@ -103,7 +103,7 @@ export default function V1ProjectHeaderActions() {
         onClose={() => setToolDrawerVisible(false)}
       />
       <EditProjectModal
-        visible={editProjectModalVisible}
+        open={editProjectModalVisible}
         handle={handle}
         onSuccess={() => setEditProjectModalVisible(false)}
         onCancel={() => setEditProjectModalVisible(false)}

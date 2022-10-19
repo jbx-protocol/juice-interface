@@ -44,7 +44,7 @@ export default function ReconfigureFundingModalTrigger({
       {localStoreRef.current && (
         <Provider store={localStoreRef.current}>
           <ReconfigureFCModal
-            visible={reconfigureModalVisible}
+            open={reconfigureModalVisible}
             onDone={() => setReconfigureModalVisible(false)}
           />
         </Provider>

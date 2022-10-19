@@ -421,7 +421,7 @@ export default function ProjectActivity() {
       {listStatus}
 
       <V2V3DownloadActivityModal
-        visible={downloadModalVisible}
+        open={downloadModalVisible}
         onCancel={() => setDownloadModalVisible(false)}
       />
     </div>

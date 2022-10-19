@@ -78,7 +78,7 @@ export function V2V3PayButton({ disabled, wrapperStyle }: PayButtonProps) {
       )}
 
       <PayWarningModal
-        visible={payWarningModalVisible}
+        open={payWarningModalVisible}
         onOk={() => {
           setPayWarningModalVisible(false)
           setPayModalVisible(true)
@@ -86,7 +86,7 @@ export function V2V3PayButton({ disabled, wrapperStyle }: PayButtonProps) {
         onCancel={() => setPayWarningModalVisible(false)}
       />
       <V2V3ConfirmPayModal
-        visible={payModalVisible}
+        open={payModalVisible}
         onCancel={() => setPayModalVisible(false)}
         weiAmount={weiPayAmt}
       />

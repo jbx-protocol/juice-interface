@@ -13,11 +13,11 @@ import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export default function ConfirmUnstakeTokensModal({
-  visible,
+  open,
   onCancel,
   onConfirmed,
 }: {
-  visible?: boolean
+  open?: boolean
   onCancel?: VoidFunction
   onConfirmed?: VoidFunction
 }) {
@@ -62,7 +62,7 @@ export default function ConfirmUnstakeTokensModal({
   return (
     <Modal
       title={t`Claim ${tokenTextPlural} as ERC-20 tokens`}
-      visible={visible}
+      open={open}
       onOk={unstake}
       okText={t`Claim ${tokenTextPlural}`}
       confirmLoading={loading}

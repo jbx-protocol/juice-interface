@@ -12,11 +12,11 @@ import EtherscanLink from 'components/EtherscanLink'
 import useMobile from 'hooks/Mobile'
 
 export function PaymentAddressesModal({
-  visible,
+  open,
   onCancel,
   projectPayers,
 }: {
-  visible: boolean | undefined
+  open: boolean | undefined
   onCancel: VoidFunction | undefined
   projectPayers:
     | Pick<
@@ -37,7 +37,7 @@ export function PaymentAddressesModal({
 
   return (
     <Modal
-      visible={visible}
+      open={open}
       onCancel={onCancel}
       cancelText="Done"
       title={t`Payment Addresses`}

@@ -12,10 +12,10 @@ import { querySubgraphExhaustive } from 'utils/graph'
 import { emitErrorNotification } from 'utils/notifications'
 
 export function V1DownloadPaymentsModal({
-  visible,
+  open,
   onCancel,
 }: {
-  visible: boolean | undefined
+  open: boolean | undefined
   onCancel: VoidFunction | undefined
 }) {
   const { projectId, cv } = useContext(ProjectMetadataContext)
@@ -95,7 +95,7 @@ export function V1DownloadPaymentsModal({
 
   return (
     <Modal
-      visible={visible}
+      open={open}
       onCancel={onCancel}
       onOk={download}
       okText={t`Download CSV`}

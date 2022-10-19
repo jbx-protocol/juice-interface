@@ -26,11 +26,11 @@ import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 
 // This double as the 'Redeem' and 'Burn' modal depending on if project has overflow
 export default function RedeemModal({
-  visible,
+  open,
   onOk,
   onCancel,
 }: {
-  visible?: boolean
+  open?: boolean
   onOk?: VoidFunction
   onCancel?: VoidFunction
 }) {
@@ -137,7 +137,7 @@ export default function RedeemModal({
   return (
     <Modal
       title={modalTitle}
-      visible={visible}
+      open={open}
       confirmLoading={loading}
       onOk={() => {
         redeem()

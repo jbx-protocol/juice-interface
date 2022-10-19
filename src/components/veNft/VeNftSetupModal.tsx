@@ -13,7 +13,7 @@ import VeNftAddLockDurationModal from './VeNftAddLockDurationModal'
 import VeNftLockDurationOptionCard from './VeNftLockDurationOptionCard'
 
 interface VeNftSetupModalProps {
-  visible: boolean
+  open: boolean
   onCancel: VoidFunction
 }
 
@@ -44,7 +44,7 @@ const DEFAULT_VARIANTS: VeNftVariant[] = [
   },
 ]
 
-const VeNftSetupModal = ({ visible, onCancel }: VeNftSetupModalProps) => {
+const VeNftSetupModal = ({ open, onCancel }: VeNftSetupModalProps) => {
   const [addTierModalVisible, setAddTierModalVisible] = useState(false)
   const [addLockDurationModalVisible, setAddLockDurationModalVisible] =
     useState(false)
@@ -100,7 +100,7 @@ const VeNftSetupModal = ({ visible, onCancel }: VeNftSetupModalProps) => {
     <>
       <TransactionModal
         title={t`Set Up veNFT Governance`}
-        visible={visible}
+        open={open}
         onCancel={onCancel}
         okText={t`Launch veNFT`}
       >
@@ -174,7 +174,7 @@ const VeNftSetupModal = ({ visible, onCancel }: VeNftSetupModalProps) => {
       {addTierModalVisible && (
         <VeNftRewardTierModal
           id={variants.length}
-          visible={addTierModalVisible}
+          open={addTierModalVisible}
           onChange={handleAddVariant}
           onClose={() => setAddTierModalVisible(false)}
           mode="Add"
@@ -182,7 +182,7 @@ const VeNftSetupModal = ({ visible, onCancel }: VeNftSetupModalProps) => {
       )}
       {addLockDurationModalVisible && (
         <VeNftAddLockDurationModal
-          visible={addLockDurationModalVisible}
+          open={addLockDurationModalVisible}
           onChange={handleAddLockDurationOption}
           onClose={() => setAddLockDurationModalVisible(false)}
         />

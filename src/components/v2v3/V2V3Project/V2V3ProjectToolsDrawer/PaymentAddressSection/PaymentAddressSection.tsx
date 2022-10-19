@@ -46,7 +46,7 @@ export function PaymentAddressSection({
               })}
             </Button>
             <PaymentAddressesModal
-              visible={projectPayersModalIsVisible}
+              open={projectPayersModalIsVisible}
               onCancel={() => setProjectPayersModalIsVisible(false)}
               projectPayers={projectPayers}
             />

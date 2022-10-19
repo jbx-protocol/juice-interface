@@ -239,7 +239,7 @@ export const V2V3PayForm = ({
         </Space>
       </Form>
       <AttachStickerModal
-        visible={attachStickerModalVisible}
+        open={attachStickerModalVisible}
         onClose={() => setAttachStickerModalVisible(false)}
         onSelect={sticker => {
           if (typeof window === 'undefined') {
@@ -256,7 +256,7 @@ export const V2V3PayForm = ({
       />
       <Modal
         title={<Trans>Potential risks</Trans>}
-        visible={riskModalVisible}
+        open={riskModalVisible}
         okButtonProps={{ hidden: true }}
         onCancel={() => setRiskModalVisible(false)}
         cancelText={<Trans>Close</Trans>}

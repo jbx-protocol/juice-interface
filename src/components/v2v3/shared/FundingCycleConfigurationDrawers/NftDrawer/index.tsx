@@ -277,7 +277,7 @@ export default function NftDrawer({
         </Button>
       </FundingCycleDrawer>
       <NftRewardTierModal
-        visible={addTierModalVisible}
+        open={addTierModalVisible}
         validateContributionFloor={validateContributionFloor}
         onChange={handleAddRewardTier}
         mode="Add"
@@ -285,7 +285,7 @@ export default function NftDrawer({
         isCreate
       />
       <UnsavedChangesModal
-        visible={unsavedChangesModalVisible}
+        open={unsavedChangesModalVisible}
         onOk={() => {
           closeModal()
           emitDrawerClose()

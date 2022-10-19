@@ -47,7 +47,7 @@ export default function TokenDrawer({
         />
       </FundingCycleDrawer>
       <UnsavedChangesModal
-        visible={unsavedChangesModalVisible}
+        open={unsavedChangesModalVisible}
         onOk={() => {
           closeModal()
           emitDrawerClose()

@@ -29,7 +29,7 @@ export default function RulesDrawer({
         <RulesForm onFinish={emitDrawerClose} onFormUpdated={setFormUpdated} />
       </FundingCycleDrawer>
       <UnsavedChangesModal
-        visible={unsavedChangesModalVisible}
+        open={unsavedChangesModalVisible}
         onOk={() => {
           closeModal()
           emitDrawerClose()

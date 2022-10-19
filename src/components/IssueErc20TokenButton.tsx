@@ -50,7 +50,7 @@ export function IssueErc20TokenButton({
         </Button>
       </Tooltip>
       <IssueErc20TokenModal
-        visible={modalVisible}
+        open={modalVisible}
         onClose={onClose}
         onConfirmed={onCompleted}
       />

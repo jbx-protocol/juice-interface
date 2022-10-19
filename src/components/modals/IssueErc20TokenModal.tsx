@@ -35,11 +35,11 @@ const useIssueErc20TokenTx = ():
 }
 
 export function IssueErc20TokenModal({
-  visible,
+  open,
   onClose,
   onConfirmed,
 }: {
-  visible: boolean
+  open: boolean
   onClose: VoidFunction
   onConfirmed?: VoidFunction
 }) {
@@ -93,7 +93,7 @@ export function IssueErc20TokenModal({
 
   return (
     <TransactionModal
-      visible={visible}
+      open={open}
       title={t`Issue ERC-20 token`}
       okText={t`Issue token`}
       cancelText={t`Later`}

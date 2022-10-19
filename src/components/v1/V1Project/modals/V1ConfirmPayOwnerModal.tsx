@@ -41,13 +41,13 @@ interface V1PayFormType {
 }
 
 export default function V1ConfirmPayOwnerModal({
-  visible,
+  open,
   weiAmount,
   onSuccess,
   onCancel,
   payButtonText,
 }: {
-  visible?: boolean
+  open?: boolean
   weiAmount: BigNumber | undefined
   onSuccess?: VoidFunction
   onCancel?: VoidFunction
@@ -180,7 +180,7 @@ export default function V1ConfirmPayOwnerModal({
   return (
     <Modal
       title={t`Pay ${projectMetadata.name}`}
-      visible={visible}
+      open={open}
       onOk={pay}
       okText={userAddress ? payButtonText : t`Connect wallet to pay`}
       onCancel={onCancel}
@@ -311,7 +311,7 @@ export default function V1ConfirmPayOwnerModal({
           )}
         </Form>
         <AttachStickerModal
-          visible={attachStickerModalVisible}
+          open={attachStickerModalVisible}
           onClose={() => setAttachStickerModalVisible(false)}
           onSelect={sticker => {
             if (typeof window === 'undefined') {

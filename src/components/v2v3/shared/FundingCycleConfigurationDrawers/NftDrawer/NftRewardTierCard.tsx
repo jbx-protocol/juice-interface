@@ -152,7 +152,7 @@ export default function NftRewardTierCard({
         </Col>
       </Row>
       <NftRewardTierModal
-        visible={editTierModalVisible}
+        open={editTierModalVisible}
         rewardTier={rewardTier}
         validateContributionFloor={validateContributionFloor}
         mode="Edit"

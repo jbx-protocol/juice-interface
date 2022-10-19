@@ -64,7 +64,7 @@ export function V1TokenMigrationSetupSection() {
       </Button>
 
       <V1TokenMigrationSetupModal
-        visible={migrationModalVisible}
+        open={migrationModalVisible}
         onOk={() => setMigrationModalVisible(false)}
         onCancel={() => setMigrationModalVisible(false)}
       />

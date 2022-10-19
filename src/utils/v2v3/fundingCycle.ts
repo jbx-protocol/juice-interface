@@ -11,7 +11,12 @@ import { fromWad, parseWad } from '../format/formatNumber'
 import { FundingCycleRiskFlags } from 'constants/fundingWarningText'
 import { MaxUint54 } from 'constants/numbers'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
-import { MAX_DISTRIBUTION_LIMIT } from './math'
+import {
+  formatDiscountRate,
+  formatIssuanceRate,
+  issuanceRateFrom,
+  MAX_DISTRIBUTION_LIMIT,
+} from './math'
 import {
   SerializedV2V3FundAccessConstraint,
   SerializedV2V3FundingCycleData,
@@ -94,4 +99,37 @@ export const isValidMustStartAtOrAfter = (
   return BigNumber.from(mustStartAtOrAfter)
     .add(fundingCycleDuration)
     .lt(MaxUint54)
+}
+
+// Derives next FC's issuance rate from previous FC's weight and discount
+export const deriveNextIssuanceRate = ({
+  weight,
+  previousFC,
+}: {
+  weight: BigNumber
+  previousFC: V2V3FundingCycle | undefined
+}) => {
+  const previousWeight = previousFC?.weight
+  // When setting issue rate to 0, we pass 1 to contracts
+  if (weight.eq(BigNumber.from(1))) {
+    return BigNumber.from(0)
+
+    // If no previous FC exists, return given weight
+  } else if (!previousWeight) {
+    return weight
+
+    // If weight=0 passed, derive next weight from previous weight
+  } else if (weight.eq(0)) {
+    const weightNumber = parseFloat(
+      formatIssuanceRate(previousWeight.toString()),
+    )
+    const discountRateNumber =
+      parseFloat(formatDiscountRate(previousFC.discountRate)) / 100
+    const newWeightNumber = Math.round(
+      weightNumber - weightNumber * discountRateNumber,
+    )
+
+    return BigNumber.from(issuanceRateFrom(newWeightNumber.toString()))
+  }
+  return weight
 }

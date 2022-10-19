@@ -103,6 +103,7 @@ export function ReconfigureRichPreview({
             fundingCycle={decodedData._data}
             distributionLimit={distributionLimit}
             distributionLimitCurrency={distributionLimitCurrency}
+            isOutgoingData
           />
         </MinimalCollapse>
         <MinimalCollapse header={t`Funding distribution`} light>

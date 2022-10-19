@@ -8,6 +8,7 @@ import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'pages/create/tabs/ReviewDe
 import { useCallback, useContext, useState } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { revalidateProject } from 'utils/revalidateProject'
+import { WEIGHT_UNCHANGED, WEIGHT_ZERO } from 'utils/v2v3/fundingCycle'
 import { EditingProjectData } from './editingProjectData'
 
 /**
@@ -22,13 +23,13 @@ const getWeightArgument = ({
 }): BigNumber => {
   if (newFundingCycleWeight.eq(BigNumber.from(0))) {
     // if desired weight is 0 (no tokens), send weight=1 to the contract
-    return BigNumber.from(1)
+    return BigNumber.from(WEIGHT_ZERO)
   } else if (
     parseInt(fromWad(newFundingCycleWeight)) ===
     parseInt(fromWad(currentFundingCycleWeight))
   ) {
     // If the weight is unchanged, send weight=0 to the contract
-    return BigNumber.from(0)
+    return BigNumber.from(WEIGHT_UNCHANGED)
   }
 
   // else, return the new weight

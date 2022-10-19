@@ -22,6 +22,9 @@ import {
   SerializedV2V3FundingCycleData,
 } from './serializers'
 
+export const WEIGHT_ZERO = 1 // send `1` when we want to set the weight to `0`
+export const WEIGHT_UNCHANGED = 0 // send `0` when we don't want to change the weight.
+
 export const hasDistributionLimit = (
   fundAccessConstraint: SerializedV2V3FundAccessConstraint | undefined,
 ): boolean => {
@@ -110,8 +113,7 @@ export const deriveNextIssuanceRate = ({
   previousFC: V2V3FundingCycle | undefined
 }) => {
   const previousWeight = previousFC?.weight
-  // When setting issue rate to 0, we pass 1 to contracts
-  if (weight.eq(BigNumber.from(1))) {
+  if (weight.eq(WEIGHT_ZERO)) {
     return BigNumber.from(0)
 
     // If no previous FC exists, return given weight
@@ -119,7 +121,7 @@ export const deriveNextIssuanceRate = ({
     return weight
 
     // If weight=0 passed, derive next weight from previous weight
-  } else if (weight.eq(0)) {
+  } else if (weight.eq(WEIGHT_UNCHANGED)) {
     const weightNumber = parseFloat(
       formatIssuanceRate(previousWeight.toString()),
     )

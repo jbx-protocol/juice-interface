@@ -3620,6 +3620,9 @@ msgstr ""
 msgid "{0} reserved"
 msgstr ""
 
+msgid "{0} tokens/ETH"
+msgstr ""
+
 msgid "{0} total"
 msgstr ""
 
@@ -3663,9 +3666,6 @@ msgid "{count} total"
 msgstr ""
 
 msgid "{exchangeName} has no market for {tokenSymbol}."
-msgstr ""
-
-msgid "{formattedIssuanceRate} tokens/ETH"
 msgstr ""
 
 msgid "{formattedTimeLeft} left"

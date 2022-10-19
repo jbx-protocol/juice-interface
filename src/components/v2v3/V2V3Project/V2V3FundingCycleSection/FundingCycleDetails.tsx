@@ -18,10 +18,7 @@ import { V2V3CurrencyName } from 'utils/v2v3/currency'
 import EtherscanLink from 'components/EtherscanLink'
 import FundingCycleDetailWarning from 'components/Project/FundingCycleDetailWarning'
 
-import {
-  deriveNextIssuanceRate,
-  getUnsafeV2V3FundingCycleProperties,
-} from 'utils/v2v3/fundingCycle'
+import { getUnsafeV2V3FundingCycleProperties } from 'utils/v2v3/fundingCycle'
 
 import { detailedTimeString } from 'utils/format/formatTime'
 
@@ -50,20 +47,17 @@ export default function FundingCycleDetails({
   fundingCycleMetadata,
   distributionLimit,
   distributionLimitCurrency,
-  isOutgoingData, // data being used in transactions such as reconfig and being displayed on Safe page
 }: {
   fundingCycle: V2V3FundingCycle | undefined
   fundingCycleMetadata: V2V3FundingCycleMetadata | undefined
   distributionLimit: BigNumber | undefined
   distributionLimitCurrency: BigNumber | undefined
-  isOutgoingData?: boolean
 }) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { tokenSymbol, fundingCycle: currentFC } =
-    useContext(V2V3ProjectContext)
+  const { tokenSymbol } = useContext(V2V3ProjectContext)
 
   if (!fundingCycle || !fundingCycleMetadata) return null
 
@@ -141,17 +135,6 @@ export default function FundingCycleDetails({
   const ballotWarningText = unsafeFundingCycleProperties.noBallot
     ? riskWarningText.noBallot
     : riskWarningText.customBallot
-
-  const issuanceRate = isOutgoingData
-    ? deriveNextIssuanceRate({
-        weight: fundingCycle?.weight,
-        previousFC: currentFC,
-      })
-    : fundingCycle?.weight
-
-  const formattedIssuanceRate = formattedNum(
-    formatIssuanceRate(issuanceRate?.toString() ?? ''),
-  )
 
   return (
     <div>
@@ -256,7 +239,10 @@ export default function FundingCycleDetails({
           span={2}
           contentStyle={{ minWidth: '10em' }}
         >
-          <Trans>{formattedIssuanceRate} tokens/ETH</Trans>
+          <Trans>
+            {formattedNum(formatIssuanceRate(fundingCycle?.weight.toString()))}{' '}
+            tokens/ETH
+          </Trans>
         </Descriptions.Item>
 
         <Descriptions.Item

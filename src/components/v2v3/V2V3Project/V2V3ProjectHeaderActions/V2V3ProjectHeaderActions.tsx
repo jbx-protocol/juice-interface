@@ -1,6 +1,7 @@
 import { SettingOutlined, SmileOutlined, ToolOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
 import { Button, Space, Tooltip } from 'antd'
+import BookmarkProjectButton from 'components/Project/ProjectHeader/BookmarkProjectButton'
 import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
 import { V2V3ProjectToolsDrawer } from 'components/v2v3/V2V3Project/V2V3ProjectToolsDrawer/V2V3ProjectToolsDrawer'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
@@ -26,6 +27,7 @@ export function V2V3ProjectHeaderActions() {
     V2OperatorPermission.RECONFIGURE,
   )
   const veNftEnabled = Boolean(veNftContractAddress)
+  const bookmarksEnabled = featureFlagEnabled(FEATURE_FLAGS.BOOKMARKS)
 
   return (
     <>
@@ -51,6 +53,8 @@ export function V2V3ProjectHeaderActions() {
             alignItems: 'center',
           }}
         >
+          {bookmarksEnabled && <BookmarkProjectButton />}
+
           <Tooltip title={t`Tools`} placement="bottom">
             <Button
               onClick={() => setToolDrawerVisible(true)}

@@ -12,6 +12,7 @@ import { SafeTransactionType } from 'models/safe'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import { useContext } from 'react'
 import { formatOutgoingSplits } from 'utils/splits'
+import { deriveNextIssuanceRate } from 'utils/v2v3/fundingCycle'
 import { formatReservedRate, MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { LinkToSafeButton } from '../../LinkToSafeButton'
 
@@ -42,7 +43,8 @@ export function ReconfigureRichPreview({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { projectOwnerAddress } = useContext(V2V3ProjectContext)
+  const { projectOwnerAddress, fundingCycle: currentFC } =
+    useContext(V2V3ProjectContext)
 
   const JBController = useTransactionJBController(transaction)
   if (!JBController) return null
@@ -76,6 +78,11 @@ export function ReconfigureRichPreview({
   const payoutSplits = decodedData._groupedSplits?.[0]?.splits
   const reservedTokensSplits = decodedData._groupedSplits?.[1]?.splits
 
+  const weight = deriveNextIssuanceRate({
+    weight: decodedData._data.weight,
+    previousFC: currentFC,
+  })
+
   return (
     <div
       style={{ display: 'flex', flexDirection: 'column', cursor: 'default' }}
@@ -100,7 +107,10 @@ export function ReconfigureRichPreview({
         <MinimalCollapse header={t`Funding cycle details`} light>
           <FundingCycleDetails
             fundingCycleMetadata={decodedData._metadata}
-            fundingCycle={decodedData._data}
+            fundingCycle={{
+              ...decodedData._data,
+              weight,
+            }}
             distributionLimit={distributionLimit}
             distributionLimitCurrency={distributionLimitCurrency}
           />

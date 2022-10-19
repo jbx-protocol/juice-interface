@@ -31,7 +31,7 @@ const TAB_NAMES: { [k in SafeTxCategory]: string } = {
 }
 
 export function ProjectSafeDashboard() {
-  const { projectOwnerAddress, handle } = useContext(V2V3ProjectContext)
+  const { handle, projectOwnerAddress } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
   const {
     theme: { colors },

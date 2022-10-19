@@ -39,7 +39,7 @@ const BookmarkProjectButton = () => {
     }
   }
 
-  const unbokmarkProject = async () => {
+  const unbookmarkProject = async () => {
     if (!userAddress || !projectId || !cv) {
       return
     }
@@ -61,11 +61,11 @@ const BookmarkProjectButton = () => {
 
   return (
     <>
-      {isLoading && <></>}
+      {isLoading && <StarOutlined />}
       {isBookmarked ? (
         <Tooltip title={t`Bookmarked`} placement="bottom">
           <Button
-            onClick={unbokmarkProject}
+            onClick={unbookmarkProject}
             type="text"
             icon={<StarFilled style={{ color: colors.text.brand.primary }} />}
           />

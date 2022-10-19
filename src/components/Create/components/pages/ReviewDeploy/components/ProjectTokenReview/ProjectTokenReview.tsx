@@ -13,6 +13,7 @@ import {
   formatReservedRate,
 } from 'utils/v2v3/math'
 import { ReservedTokensList } from '../../../ProjectToken/components/CustomTokenSettings/components'
+import * as ProjectTokenForm from '../../../ProjectToken/hooks/ProjectTokenForm'
 import { DescriptionCol } from '../DescriptionCol'
 import { emphasisedTextStyle, flexColumnStyle } from '../styles'
 
@@ -53,7 +54,11 @@ export const ProjectTokenReview = () => {
             title={t`Initial mint rate`}
             desc={
               <div style={emphasisedTextStyle()}>
-                {formatAmount(formatIssuanceRate(weight) ?? 0)}
+                {formatAmount(
+                  weight
+                    ? formatIssuanceRate(weight)
+                    : ProjectTokenForm.DefaultSettings.initialMintRate,
+                )}
               </div>
             }
           />
@@ -62,7 +67,11 @@ export const ProjectTokenReview = () => {
             title={t`Reserved tokens`}
             desc={
               <div style={emphasisedTextStyle()}>
-                {formatReservedRate(reservedRate) + '%'}
+                {formatReservedRate(
+                  reservedRate
+                    ? reservedRate
+                    : ProjectTokenForm.DefaultSettings.reservedTokensPercentage.toString(),
+                ) + '%'}
               </div>
             }
           />
@@ -84,7 +93,11 @@ export const ProjectTokenReview = () => {
             title={t`Discount rate`}
             desc={
               <div style={emphasisedTextStyle()}>
-                {formatDiscountRate(discountRate) + '%'}
+                {formatDiscountRate(
+                  discountRate
+                    ? discountRate
+                    : ProjectTokenForm.DefaultSettings.discountRate.toString(),
+                ) + '%'}
               </div>
             }
           />
@@ -93,7 +106,11 @@ export const ProjectTokenReview = () => {
             title={t`Redemption rate`}
             desc={
               <div style={emphasisedTextStyle()}>
-                {formatRedemptionRate(redemptionRate) + '%'}
+                {formatRedemptionRate(
+                  redemptionRate
+                    ? redemptionRate
+                    : ProjectTokenForm.DefaultSettings.redemptionRate.toString(),
+                ) + '%'}
               </div>
             }
           />

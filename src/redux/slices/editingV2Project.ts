@@ -27,10 +27,15 @@ import {
 } from 'models/nftRewardTier'
 import {
   DEFAULT_MINT_RATE,
+  discountRateFrom,
+  formatIssuanceRate,
   issuanceRateFrom,
   redemptionRateFrom,
+  reservedRateFrom,
 } from 'utils/v2v3/math'
 
+import { AllocationSplit } from 'components/Create/components/Allocation'
+import { allocationToSplit } from 'components/Create/utils/splitToAllocation'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
@@ -334,6 +339,35 @@ const editingV2ProjectSlice = createSlice({
       action: PayloadAction<CreatePage>,
     ) => {
       state.createFurthestPageReached = action.payload
+    },
+    setTokenSettings: (
+      state,
+      action: PayloadAction<{
+        initialMintRate: string
+        reservedTokensPercentage: number
+        reservedTokenAllocation: AllocationSplit[]
+        discountRate: number
+        redemptionRate: number
+        tokenMinting: boolean
+      }>,
+    ) => {
+      state.fundingCycleData.weight = formatIssuanceRate(
+        action.payload.initialMintRate,
+      )
+      state.fundingCycleMetadata.reservedRate = reservedRateFrom(
+        action.payload.reservedTokensPercentage,
+      ).toHexString()
+      state.reservedTokensGroupedSplits = {
+        ...EMPTY_RESERVED_TOKENS_GROUPED_SPLITS,
+        splits: action.payload.reservedTokenAllocation.map(allocationToSplit),
+      }
+      state.fundingCycleData.discountRate = discountRateFrom(
+        action.payload.discountRate,
+      ).toHexString()
+      state.fundingCycleMetadata.redemptionRate = redemptionRateFrom(
+        action.payload.redemptionRate,
+      ).toHexString()
+      state.fundingCycleMetadata.allowMinting = action.payload.tokenMinting
     },
   },
 })

@@ -34,7 +34,9 @@ export type ProjectTokensFormProps = Partial<{
   tokenMinting: boolean | undefined
 }>
 
-const DefaultSettings: Required<Omit<ProjectTokensFormProps, 'selection'>> = {
+export const DefaultSettings: Required<
+  Omit<ProjectTokensFormProps, 'selection'>
+> = {
   initialMintRate: ONE_MILLION.toString(),
   reservedTokensPercentage: 0,
   reservedTokenAllocation: [],
@@ -43,6 +45,9 @@ const DefaultSettings: Required<Omit<ProjectTokensFormProps, 'selection'>> = {
   tokenMinting: false,
 }
 
+/**
+ * There is a lot of witchcraft going on here. Maintainers beware.
+ */
 export const useProjectTokensForm = () => {
   const [form] = Form.useForm<ProjectTokensFormProps>()
   const { fundingCycleMetadata, fundingCycleData, projectTokensSelection } =
@@ -95,12 +100,21 @@ export const useProjectTokensForm = () => {
   const selection = useWatch('selection', form)
 
   useEffect(() => {
+    // We only want to update changes when selection is set
+    if (selection === undefined) return
     dispatch(editingV2ProjectActions.setProjectTokensSelection(selection))
 
     if (selection === 'default') {
       form.setFieldsValue({ ...DefaultSettings })
+      dispatch(editingV2ProjectActions.setTokenSettings(DefaultSettings))
       return
     }
+    dispatch(
+      editingV2ProjectActions.setTokenSettings({
+        ...DefaultSettings,
+        ...form.getFieldsValue(),
+      }),
+    )
   }, [dispatch, form, selection])
 
   useFormDispatchWatch({
@@ -108,7 +122,8 @@ export const useProjectTokensForm = () => {
     fieldName: 'initialMintRate',
     dispatchFunction: editingV2ProjectActions.setWeight,
     formatter: v => {
-      if (!v || typeof v !== 'string') return ''
+      if (v === undefined || typeof v !== 'string')
+        return issuanceRateFrom(DefaultSettings.initialMintRate)
       return issuanceRateFrom(v)
     },
   })
@@ -118,7 +133,10 @@ export const useProjectTokensForm = () => {
     fieldName: 'reservedTokensPercentage',
     dispatchFunction: editingV2ProjectActions.setReservedRate,
     formatter: v => {
-      if (!v || typeof v !== 'number') return '0'
+      if (v === undefined || typeof v !== 'number')
+        return reservedRateFrom(
+          DefaultSettings.reservedTokensPercentage,
+        ).toHexString()
       return reservedRateFrom(v).toHexString()
     },
   })
@@ -130,7 +148,7 @@ export const useProjectTokensForm = () => {
     currentValue: tokenSplits, // Needed to stop an infinite loop
     dispatchFunction: editingV2ProjectActions.setReservedTokensSplits,
     formatter: v => {
-      if (!v || typeof v !== 'object') return []
+      if (v === undefined || typeof v !== 'object') return []
       return v.map(allocationToSplit)
     },
   })
@@ -140,7 +158,8 @@ export const useProjectTokensForm = () => {
     fieldName: 'discountRate',
     dispatchFunction: editingV2ProjectActions.setDiscountRate,
     formatter: v => {
-      if (!v || typeof v !== 'number') return '0'
+      if (v === undefined || typeof v !== 'number')
+        return discountRateFrom(DefaultSettings.discountRate).toHexString()
       return discountRateFrom(v).toHexString()
     },
   })
@@ -150,7 +169,8 @@ export const useProjectTokensForm = () => {
     fieldName: 'redemptionRate',
     dispatchFunction: editingV2ProjectActions.setRedemptionRate,
     formatter: v => {
-      if (!v || typeof v !== 'number') return ''
+      if (v === undefined || typeof v !== 'number')
+        return redemptionRateFrom(DefaultSettings.redemptionRate).toHexString()
       return redemptionRateFrom(v).toHexString()
     },
   })
@@ -159,7 +179,8 @@ export const useProjectTokensForm = () => {
     fieldName: 'redemptionRate',
     dispatchFunction: editingV2ProjectActions.setBallotRedemptionRate,
     formatter: v => {
-      if (!v || typeof v !== 'number') return ''
+      if (v === undefined || typeof v !== 'number')
+        return redemptionRateFrom(DefaultSettings.redemptionRate).toHexString()
       return redemptionRateFrom(v).toHexString()
     },
   })

@@ -63,6 +63,7 @@ interface V2ProjectState {
     collectionMetadata: NftCollectionMetadata
     postPayModal: NftPostPayModalConfig | undefined
   }
+  fundingCyclesPageSelection: 'automated' | 'manual' | undefined
   reconfigurationRuleSelection: ReconfigurationStrategy | undefined
   createFurthestPageReached: CreatePage
 }
@@ -177,6 +178,7 @@ export const defaultProjectState: V2ProjectState = {
     postPayModal: undefined,
   },
   reconfigurationRuleSelection: undefined,
+  fundingCyclesPageSelection: undefined,
   createFurthestPageReached: 'projectDetails',
 }
 
@@ -327,6 +329,12 @@ const editingV2ProjectSlice = createSlice({
     },
     setAllowSetTerminals: (state, action: PayloadAction<boolean>) => {
       state.fundingCycleMetadata.global.allowSetTerminals = action.payload
+    },
+    setFundingCyclesPageSelection: (
+      state,
+      action: PayloadAction<'manual' | 'automated' | undefined>,
+    ) => {
+      state.fundingCyclesPageSelection = action.payload
     },
     setReconfigurationRuleSelection: (
       state,

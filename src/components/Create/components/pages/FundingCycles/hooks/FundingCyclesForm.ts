@@ -17,11 +17,13 @@ export type FundingCyclesFormProps = Partial<{
 
 export const useFundingCyclesForm = () => {
   const [form] = useForm<FundingCyclesFormProps>()
-  const { fundingCycleData } = useAppSelector(state => state.editingV2Project)
+  const { fundingCycleData, fundingCyclesPageSelection } = useAppSelector(
+    state => state.editingV2Project,
+  )
   useDebugValue(form.getFieldsValue())
 
   const initialValues: FundingCyclesFormProps | undefined = useMemo(() => {
-    if (!fundingCycleData.duration?.length) {
+    if (!fundingCyclesPageSelection || !fundingCycleData.duration?.length) {
       return undefined
     }
 
@@ -38,13 +40,15 @@ export const useFundingCyclesForm = () => {
       selection,
       duration: { duration, unit: durationUnit },
     }
-  }, [fundingCycleData.duration])
+  }, [fundingCycleData.duration, fundingCyclesPageSelection])
 
   const dispatch = useAppDispatch()
   const selection = useWatch('selection', form)
   const duration = useWatch('duration', form)
 
   useEffect(() => {
+    dispatch(editingV2ProjectActions.setFundingCyclesPageSelection(selection))
+
     // We need to handle manual case first as duration might be undefined, but
     // manual set.
     if (selection === 'manual') {

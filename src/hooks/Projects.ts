@@ -262,6 +262,22 @@ export function useMyProjectsQuery(wallet: string | undefined) {
   }
 }
 
+export function useManyProjectsByIdQuery(ids: string[]) {
+  const projectsQuery = useSubgraphQuery({
+    entity: 'project',
+    keys: DEFAULT_ENTITY_KEYS,
+    where: {
+      key: 'id',
+      operator: 'in',
+      value: ids,
+    },
+  })
+
+  return {
+    ...projectsQuery,
+  }
+}
+
 export function useInfiniteProjectsQuery(opts: ProjectsOptions) {
   return useInfiniteSubgraphQuery(
     queryOpts(opts) as InfiniteGraphQueryOpts<'project', EntityKeys<'project'>>,

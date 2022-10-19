@@ -27,6 +27,7 @@ export function V2V3ProjectHeaderActions() {
     V2OperatorPermission.RECONFIGURE,
   )
   const veNftEnabled = Boolean(veNftContractAddress)
+  const bookmarksEnabled = featureFlagEnabled(FEATURE_FLAGS.BOOKMARKS)
 
   return (
     <>
@@ -52,7 +53,7 @@ export function V2V3ProjectHeaderActions() {
             alignItems: 'center',
           }}
         >
-          <BookmarkProjectButton />
+          {bookmarksEnabled && <BookmarkProjectButton />}
 
           <Tooltip title={t`Tools`} placement="bottom">
             <Button

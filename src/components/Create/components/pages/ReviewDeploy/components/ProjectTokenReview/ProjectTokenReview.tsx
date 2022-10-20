@@ -1,7 +1,10 @@
 import { t } from '@lingui/macro'
 import { Row } from 'antd'
 import { AllocationSplit } from 'components/Create/components/Allocation'
-import { splitToAllocation } from 'components/Create/utils/splitToAllocation'
+import {
+  allocationToSplit,
+  splitToAllocation,
+} from 'components/Create/utils/splitToAllocation'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useCallback, useMemo } from 'react'
 import { useEditingReservedTokensSplits } from 'redux/hooks/EditingReservedTokensSplits'
@@ -29,7 +32,8 @@ export const ProjectTokenReview = () => {
     [tokenSplits],
   )
   const setAllocationSplits = useCallback(
-    (splits: AllocationSplit[]) => setTokenSplits(splits),
+    (allocations: AllocationSplit[]) =>
+      setTokenSplits(allocations.map(allocationToSplit)),
     [setTokenSplits],
   )
 

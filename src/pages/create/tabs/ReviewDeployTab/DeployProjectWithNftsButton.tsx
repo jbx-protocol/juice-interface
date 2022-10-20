@@ -148,11 +148,13 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
       }
 
       // create mapping from cids -> contributionFloor
-      const nftRewardsArg: TxNftArg = {}
-
-      CIDs.map((cid, index) => {
-        nftRewardsArg[cid] = rewardTiers[index]
-      })
+      const nftRewardsArg: TxNftArg = CIDs.reduce(
+        (acc, cid, idx) => ({
+          ...acc,
+          [cid]: rewardTiers[idx],
+        }),
+        {},
+      )
 
       const txSuccessful = await launchProjectWithNftsTx(
         {

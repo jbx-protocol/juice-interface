@@ -5,8 +5,6 @@ import { ReactNode, useCallback, useContext, useMemo } from 'react'
 import { CheckedCircle, RadialBackgroundIcon } from './components'
 import { SelectionContext } from './Selection'
 
-// TODO: These colors are not final and we need more work related to defocusing
-
 const Container: React.FC<{ isSelected: boolean; isDefocused: boolean }> = ({
   isDefocused,
   isSelected,
@@ -20,7 +18,6 @@ const Container: React.FC<{ isSelected: boolean; isDefocused: boolean }> = ({
   const borderColor = isSelected
     ? colors.stroke.action.primary
     : colors.background.l2
-  // TODO: These colors are not final and we need more work related to defocusing
   const backgroundColor = useMemo(() => {
     if (isDarkMode) {
       if (isSelected) {

@@ -9,7 +9,6 @@ export const WarningCallout: React.FC = ({ children }) => {
   } = useContext(ThemeContext)
   return (
     <Callout
-      // TODO: These colors are not final and we need more work
       style={{
         backgroundColor: colors.background.warn,
         color: colors.text.warn,

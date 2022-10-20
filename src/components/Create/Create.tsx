@@ -83,7 +83,11 @@ export function Create() {
                 <Trans>
                   Design how your project's tokens should work. You can use your
                   project tokens for governance, ownership & treasury
-                  redemptions. <a href="#TODO">Learn more</a>.
+                  redemptions.{' '}
+                  <ExternalLink href="https://info.juicebox.money/dev/learn/glossary/tokens">
+                    Learn more
+                  </ExternalLink>
+                  .
                 </Trans>
               }
             >

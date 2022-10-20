@@ -37,7 +37,7 @@ export function Create() {
     >
       <TransactionProvider>
         <V2V3CurrencyProvider>
-          <Wizard doneText={<DeployButtonText />}>
+          <Wizard className="wizard-create" doneText={<DeployButtonText />}>
             <Wizard.Page
               name="projectDetails"
               title={t`Project Details`}

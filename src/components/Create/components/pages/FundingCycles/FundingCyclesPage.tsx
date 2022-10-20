@@ -1,16 +1,13 @@
-import {
-  InfoCircleOutlined,
-  PullRequestOutlined,
-  RedoOutlined,
-} from '@ant-design/icons'
+import { InfoCircleOutlined, RedoOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
-import Callout from 'components/Callout'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { CreateBadge } from '../../CreateBadge'
+import { CreateCallout } from '../../CreateCallout'
 import { DurationInput } from '../../DurationInput'
+import { Icons } from '../../Icons'
 import { Selection } from '../../Selection/Selection'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
@@ -26,7 +23,7 @@ const FundingCycleCallout: React.FC = () => {
   switch (selection) {
     case 'automated':
       return (
-        <Callout>
+        <CreateCallout.Warning>
           <Space direction="vertical" size="middle">
             <Trans>
               Funding Cycle #1 will start immediately after you launch your
@@ -37,17 +34,17 @@ const FundingCycleCallout: React.FC = () => {
               Cycle #2) at any time within the bounds of the rules you set.
             </Trans>
           </Space>
-        </Callout>
+        </CreateCallout.Warning>
       )
     case 'manual':
       return (
-        <Callout>
+        <CreateCallout.Warning>
           <Trans>
             With manual funding cycles selected, the project's owner can start a
             new funding cycle on-demand. This may pose a risk to some
             contributors.
           </Trans>
-        </Callout>
+        </CreateCallout.Warning>
       )
   }
 }
@@ -106,7 +103,7 @@ export const FundingCyclesPage = () => {
                 name="manual"
                 title={t`Manual Funding Cycles`}
                 description={t`The project’s owner can change the project's settings and start a new funding cycle at any time.`}
-                icon={<PullRequestOutlined />}
+                icon={<Icons.ManualSettings />}
               />
             </Selection>
           </Form.Item>

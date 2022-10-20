@@ -94,7 +94,7 @@ export const FundingCyclesPage = () => {
                     inputMustExistRule({ label: t`Funding cycle duration` }),
                   ]}
                 >
-                  <DurationInput style={{ width: '23rem' }} />
+                  <DurationInput />
                 </Form.Item>
               </Selection.Card>
               <Selection.Card

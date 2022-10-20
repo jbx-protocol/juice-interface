@@ -28,7 +28,7 @@ export const CustomStrategyInput: React.FC<
         }
       >
         <Input
-          style={{ width: 400 }}
+          style={{ maxWidth: 400 }}
           value={value}
           placeholder={constants.AddressZero}
           onChange={e => onChange?.(e.target.value.toLowerCase())}

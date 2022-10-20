@@ -5,7 +5,8 @@ import { V2V3ContractName } from 'models/v2v3/contracts'
 import { loadV2V3Contract } from './loadV2V3Contract'
 
 /**
- * Determine if a project has a funding cycle on the V3 funding cycle store.
+ * Determine if a project has a funding cycle on the
+ * given version of the funding cycle store.
  */
 export async function hasFundingCycle(
   projectId: number,

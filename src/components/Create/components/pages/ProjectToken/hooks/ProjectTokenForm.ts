@@ -65,7 +65,6 @@ export const useProjectTokensForm = () => {
       : DefaultSettings.reservedTokensPercentage
     const reservedTokenAllocation: AllocationSplit[] =
       tokenSplits.map(splitToAllocation)
-    // TODO: we should probably block this if no duration set
     const discountRate = fundingCycleData.discountRate
       ? parseFloat(formatDiscountRate(fundingCycleData.discountRate))
       : DefaultSettings.discountRate

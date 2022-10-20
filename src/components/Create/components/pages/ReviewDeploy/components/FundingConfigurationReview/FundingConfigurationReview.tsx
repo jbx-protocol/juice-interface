@@ -97,7 +97,6 @@ export const FundingConfigurationReview = () => {
         <DescriptionCol
           span={6}
           title={t`Payouts`}
-          // TODO: Add support for this to show correct value - we probably need to borrow code from the FundingTarget component
           desc={<div style={emphasisedTextStyle()}>{payoutsText}</div>}
         />
         <DescriptionCol

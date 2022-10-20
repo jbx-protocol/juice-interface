@@ -1826,6 +1826,9 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
+msgid "Next:"
+msgstr ""
+
 msgid "Next: Funding cycle"
 msgstr ""
 
@@ -3015,6 +3018,9 @@ msgid "Tokens cannot be claimed because no ERC-20 token has been issued for this
 msgstr ""
 
 msgid "Tokens for you"
+msgstr ""
+
+msgid "Tokens per ETH contributed"
 msgstr ""
 
 msgid "Tokens receiver"

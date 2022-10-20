@@ -134,7 +134,7 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
             </div>
             <div
               style={{
-                flex: 1,
+                flex: '1 2',
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '0.25rem',

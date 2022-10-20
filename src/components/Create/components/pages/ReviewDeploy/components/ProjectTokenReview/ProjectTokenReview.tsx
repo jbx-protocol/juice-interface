@@ -1,15 +1,7 @@
 import { t } from '@lingui/macro'
 import { Row } from 'antd'
-import { AllocationSplit } from 'components/Create/components/Allocation'
-import {
-  allocationToSplit,
-  splitToAllocation,
-} from 'components/Create/utils/splitToAllocation'
-import { useAppSelector } from 'hooks/AppSelector'
-import { useCallback, useMemo } from 'react'
-import { useEditingReservedTokensSplits } from 'redux/hooks/EditingReservedTokensSplits'
+import useMobile from 'hooks/Mobile'
 import { formatAmount } from 'utils/formatAmount'
-import { formatBoolean } from 'utils/formatBoolean'
 import {
   formatDiscountRate,
   formatIssuanceRate,
@@ -20,29 +12,20 @@ import { ReservedTokensList } from '../../../ProjectToken/components/CustomToken
 import * as ProjectTokenForm from '../../../ProjectToken/hooks/ProjectTokenForm'
 import { DescriptionCol } from '../DescriptionCol'
 import { emphasisedTextStyle, flexColumnStyle } from '../styles'
+import { useProjectTokenReview } from './hooks/ProjectTokenReview'
+import { MobileProjectTokenReview } from './MobileProjectTokenReview'
 
 export const ProjectTokenReview = () => {
+  const isMobile = useMobile()
   const {
-    fundingCycleData: { weight, discountRate },
-    fundingCycleMetadata: { allowMinting, reservedRate, redemptionRate },
-  } = useAppSelector(state => state.editingV2Project)
-  const [tokenSplits, setTokenSplits] = useEditingReservedTokensSplits()
-
-  const allocationSplits = useMemo(
-    () => tokenSplits.map(splitToAllocation),
-    [tokenSplits],
-  )
-  const setAllocationSplits = useCallback(
-    (allocations: AllocationSplit[]) =>
-      setTokenSplits(allocations.map(allocationToSplit)),
-    [setTokenSplits],
-  )
-
-  const allowTokenMinting = useMemo(
-    () => formatBoolean(allowMinting),
-    [allowMinting],
-  )
-
+    allocationSplits,
+    allowTokenMinting,
+    discountRate,
+    redemptionRate,
+    reservedRate,
+    setAllocationSplits,
+    weight,
+  } = useProjectTokenReview()
   return (
     <>
       <div
@@ -53,78 +36,87 @@ export const ProjectTokenReview = () => {
           paddingBottom: '3rem',
         }}
       >
-        <Row>
-          <DescriptionCol
-            span={6}
-            title={t`Initial mint rate`}
-            desc={
-              <div style={emphasisedTextStyle()}>
-                {formatAmount(
-                  weight
-                    ? formatIssuanceRate(weight)
-                    : ProjectTokenForm.DefaultSettings.initialMintRate,
-                )}
-              </div>
-            }
-          />
-          <DescriptionCol
-            span={6}
-            title={t`Reserved tokens`}
-            desc={
-              <div style={emphasisedTextStyle()}>
-                {formatReservedRate(
-                  reservedRate
-                    ? reservedRate
-                    : ProjectTokenForm.DefaultSettings.reservedTokensPercentage.toString(),
-                ) + '%'}
-              </div>
-            }
-          />
-          <DescriptionCol
-            span={12}
-            title={t`Reserved token allocation`}
-            desc={
-              <ReservedTokensList
-                isEditable={false}
-                value={allocationSplits}
-                onChange={setAllocationSplits}
+        {/* TODO: There is probably a more elegant solution to this */}
+        {isMobile ? (
+          <MobileProjectTokenReview />
+        ) : (
+          <>
+            <Row>
+              <DescriptionCol
+                span={6}
+                title={t`Initial mint rate`}
+                desc={
+                  <div style={emphasisedTextStyle()}>
+                    {formatAmount(
+                      weight
+                        ? formatIssuanceRate(weight)
+                        : ProjectTokenForm.DefaultSettings.initialMintRate,
+                    )}
+                  </div>
+                }
               />
-            }
-          />
-        </Row>
-        <Row>
-          <DescriptionCol
-            span={6}
-            title={t`Discount rate`}
-            desc={
-              <div style={emphasisedTextStyle()}>
-                {formatDiscountRate(
-                  discountRate
-                    ? discountRate
-                    : ProjectTokenForm.DefaultSettings.discountRate.toString(),
-                ) + '%'}
-              </div>
-            }
-          />
-          <DescriptionCol
-            span={6}
-            title={t`Redemption rate`}
-            desc={
-              <div style={emphasisedTextStyle()}>
-                {formatRedemptionRate(
-                  redemptionRate
-                    ? redemptionRate
-                    : ProjectTokenForm.DefaultSettings.redemptionRate.toString(),
-                ) + '%'}
-              </div>
-            }
-          />
-          <DescriptionCol
-            span={12}
-            title={t`Allow token minting`}
-            desc={<div style={emphasisedTextStyle()}>{allowTokenMinting}</div>}
-          />
-        </Row>
+              <DescriptionCol
+                span={6}
+                title={t`Reserved tokens`}
+                desc={
+                  <div style={emphasisedTextStyle()}>
+                    {formatReservedRate(
+                      reservedRate
+                        ? reservedRate
+                        : ProjectTokenForm.DefaultSettings.reservedTokensPercentage.toString(),
+                    ) + '%'}
+                  </div>
+                }
+              />
+              <DescriptionCol
+                span={12}
+                title={t`Reserved token allocation`}
+                desc={
+                  <ReservedTokensList
+                    isEditable={false}
+                    value={allocationSplits}
+                    onChange={setAllocationSplits}
+                  />
+                }
+              />
+            </Row>
+            <Row>
+              <DescriptionCol
+                span={6}
+                title={t`Discount rate`}
+                desc={
+                  <div style={emphasisedTextStyle()}>
+                    {formatDiscountRate(
+                      discountRate
+                        ? discountRate
+                        : ProjectTokenForm.DefaultSettings.discountRate.toString(),
+                    ) + '%'}
+                  </div>
+                }
+              />
+              <DescriptionCol
+                span={6}
+                title={t`Redemption rate`}
+                desc={
+                  <div style={emphasisedTextStyle()}>
+                    {formatRedemptionRate(
+                      redemptionRate
+                        ? redemptionRate
+                        : ProjectTokenForm.DefaultSettings.redemptionRate.toString(),
+                    ) + '%'}
+                  </div>
+                }
+              />
+              <DescriptionCol
+                span={12}
+                title={t`Allow token minting`}
+                desc={
+                  <div style={emphasisedTextStyle()}>{allowTokenMinting}</div>
+                }
+              />
+            </Row>
+          </>
+        )}
       </div>
     </>
   )

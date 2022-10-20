@@ -163,6 +163,7 @@ export function TopLeftNavItems({
         flexDirection: desktop ? 'row' : 'column',
         width: desktop ? 500 : 'auto',
       }}
+      selectable={false}
     />
   )
 }

@@ -1,4 +1,4 @@
-import { createContext } from 'react'
+import { createContext, ReactNode } from 'react'
 import { PageProps } from '../Page'
 
 export const WizardContext: React.Context<
@@ -6,6 +6,6 @@ export const WizardContext: React.Context<
     currentPage: string
     goToPage: (page: string) => void
     pages: PageProps[]
-    doneText: string
+    doneText: ReactNode
   }>
 > = createContext({})

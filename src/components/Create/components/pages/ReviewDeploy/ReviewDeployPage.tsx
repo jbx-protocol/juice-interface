@@ -2,9 +2,12 @@ import { CheckCircleFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Checkbox, Form, Modal } from 'antd'
 import Callout from 'components/Callout'
+import { useDeployProject } from 'components/Create/hooks/DeployProject'
 import ExternalLink from 'components/ExternalLink'
+import TransactionModal from 'components/TransactionModal'
 import { ThemeContext } from 'contexts/themeContext'
 import { useModal } from 'hooks/Modal'
+import { useWallet } from 'hooks/Wallet'
 import { useRouter } from 'next/router'
 import { useCallback, useContext } from 'react'
 import { useDispatch } from 'react-redux'
@@ -25,22 +28,31 @@ const Header: React.FC = ({ children }) => {
     theme: { colors },
   } = useContext(ThemeContext)
   return (
-    <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+    <h2
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '0.5rem',
+      }}
+    >
       {children}
       <CheckCircleFilled style={{ color: colors.background.action.primary }} />
-    </h3>
+    </h2>
   )
 }
 
 export const ReviewDeployPage = () => {
+  useSetCreateFurthestPageReached('reviewDeploy')
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const { chainUnsupported, changeNetworks, isConnected, connect } = useWallet()
   const router = useRouter()
-  useSetCreateFurthestPageReached('reviewDeploy')
   const [form] = Form.useForm<{ termsAccepted: boolean }>()
   const termsAccepted = Form.useWatch('termsAccepted', form)
   const modal = useModal()
+  const { deployProject, isDeploying, deployTransactionPending } =
+    useDeployProject()
 
   const dispatch = useDispatch()
 
@@ -49,16 +61,35 @@ export const ReviewDeployPage = () => {
     window.location.reload()
   }, [dispatch])
 
-  const onDeploy = useCallback(() => {
-    router.push({ query: { deployedProjectId: 1 } }, '/create', {
-      shallow: true,
+  const onFinish = useCallback(async () => {
+    if (chainUnsupported) {
+      await changeNetworks()
+      return
+    }
+    if (!isConnected) {
+      await connect()
+      return
+    }
+
+    await deployProject({
+      onProjectDeployed: deployedProjectId =>
+        router.push({ query: { deployedProjectId } }, '/create', {
+          shallow: true,
+        }),
     })
-  }, [router])
+  }, [
+    chainUnsupported,
+    changeNetworks,
+    connect,
+    deployProject,
+    isConnected,
+    router,
+  ])
 
   const isNextEnabled = termsAccepted
   return (
     <>
-      <CreateCollapse>
+      <CreateCollapse accordion defaultActiveKey={0}>
         <CreateCollapse.Panel
           key={0}
           header={
@@ -113,7 +144,7 @@ export const ReviewDeployPage = () => {
       <Form
         form={form}
         initialValues={{ termsAccepted: false }}
-        onFinish={onDeploy}
+        onFinish={onFinish}
       >
         <Callout iconComponent={null}>
           <div style={{ display: 'flex', gap: '1rem' }}>
@@ -132,7 +163,10 @@ export const ReviewDeployPage = () => {
             </div>
           </div>
         </Callout>
-        <Wizard.Page.ButtonControl isNextEnabled={isNextEnabled} />
+        <Wizard.Page.ButtonControl
+          isNextLoading={isDeploying}
+          isNextEnabled={isNextEnabled}
+        />
       </Form>
 
       <div
@@ -158,6 +192,10 @@ export const ReviewDeployPage = () => {
           .
         </span>
       </div>
+      <TransactionModal
+        transactionPending={deployTransactionPending}
+        visible={deployTransactionPending}
+      />
       <Modal
         title={
           <h2>

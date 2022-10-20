@@ -3,7 +3,10 @@ import { Row } from 'antd'
 import { AllocationSplit } from 'components/Create/components/Allocation'
 import { formatFundingCycleDuration } from 'components/Create/utils/formatFundingCycleDuration'
 import { formatFundingTarget } from 'components/Create/utils/formatFundingTarget'
-import { splitToAllocation } from 'components/Create/utils/splitToAllocation'
+import {
+  allocationToSplit,
+  splitToAllocation,
+} from 'components/Create/utils/splitToAllocation'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useCallback, useMemo } from 'react'
 import { useEditingDistributionLimit } from 'redux/hooks/EditingDistributionLimit'
@@ -33,7 +36,7 @@ export const FundingConfigurationReview = () => {
   const fundingTarget = useMemo(
     () =>
       formatFundingTarget({
-        distributionLimit: distributionLimit?.amount.toString(),
+        distributionLimitWad: distributionLimit?.amount,
         distributionLimitCurrency: distributionLimit?.currency.toString(),
       }),
     [distributionLimit?.amount, distributionLimit?.currency],
@@ -55,7 +58,8 @@ export const FundingConfigurationReview = () => {
     [payoutSplits],
   )
   const setAllocationSplits = useCallback(
-    (splits: AllocationSplit[]) => setPayoutSplits(splits),
+    (allocations: AllocationSplit[]) =>
+      setPayoutSplits(allocations.map(allocationToSplit)),
     [setPayoutSplits],
   )
 
@@ -93,7 +97,6 @@ export const FundingConfigurationReview = () => {
         <DescriptionCol
           span={6}
           title={t`Payouts`}
-          // TODO: Add support for this to show correct value - we probably need to borrow code from the FundingTarget component
           desc={<div style={emphasisedTextStyle()}>{payoutsText}</div>}
         />
         <DescriptionCol

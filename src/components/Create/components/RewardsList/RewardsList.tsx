@@ -1,8 +1,9 @@
 import { PlusCircleOutlined } from '@ant-design/icons'
-import { Button, Divider } from 'antd'
+import { Divider } from 'antd'
 import { useModal } from 'hooks/Modal'
 import { FormItemInput } from 'models/formItemInput'
 import { createContext, useCallback, useContext, useState } from 'react'
+import { CreateButton } from '../CreateButton'
 import { AddEditRewardModal } from './AddEditRewardModal'
 import { useRewards } from './hooks'
 import { RewardItem } from './RewardItem'
@@ -79,20 +80,16 @@ export const RewardsList: React.FC<RewardsListProps> &
               ))}
           </>
         )}
-        <Button
-          type="dashed"
+        <CreateButton
           icon={<PlusCircleOutlined />}
           style={{
             height: '6rem',
-            // TODO: Use proper imported colors
-            backgroundColor: 'magenta',
-            // backgroundColor: '#E8F5F7', // Light Theme/Primary/Blue Hint
           }}
           disabled={rewards.length >= 3}
           onClick={modal.open}
         >
           Add NFT reward tier
-        </Button>
+        </CreateButton>
       </div>
       <AddEditRewardModal
         open={modal.visible}

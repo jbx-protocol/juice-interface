@@ -1,8 +1,8 @@
 import { PlusCircleOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
-import { Button } from 'antd'
 import { useModal } from 'hooks/Modal'
 import { ReactNode, useCallback, useState } from 'react'
+import { CreateButton } from '../CreateButton'
 import { AddEditAllocationModal } from './AddEditAllocationModal'
 import { Allocation, AllocationSplit } from './Allocation'
 
@@ -55,7 +55,7 @@ export const AllocationList = ({
       >
         {children(modal, { ...allocations, setSelectedAllocation })}
         {isEditable && (
-          <Button
+          <CreateButton
             size="large"
             style={{
               width: '100%',
@@ -65,7 +65,7 @@ export const AllocationList = ({
             onClick={modal.open}
           >
             {addText ?? t`Add`}
-          </Button>
+          </CreateButton>
         )}
       </div>
       <AddEditAllocationModal

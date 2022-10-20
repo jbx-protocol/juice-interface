@@ -49,7 +49,21 @@ export function useLaunchProjectTx(): TransactorInstance<{
       !contracts.JBETHPaymentTerminal ||
       !isValidMustStartAtOrAfter(mustStartAtOrAfter, fundingCycleData.duration)
     ) {
-      txOpts?.onDone?.()
+      const missingParam = !transactor
+        ? 'transactor'
+        : !userAddress
+        ? 'userAddress'
+        : !contracts
+        ? 'contracts'
+        : null
+
+      txOpts?.onError?.(
+        new DOMException(
+          `Transaction failed, missing argument "${
+            missingParam ?? '<unknown>'
+          }".`,
+        ),
+      )
       return Promise.resolve(false)
     }
 

@@ -4,6 +4,7 @@ import { useContext } from 'react'
 
 export const CheckedCircle: React.FC<{ checked: boolean }> = ({ checked }) => {
   const {
+    isDarkMode,
     theme: { colors },
   } = useContext(ThemeContext)
   if (checked) {
@@ -19,8 +20,8 @@ export const CheckedCircle: React.FC<{ checked: boolean }> = ({ checked }) => {
         height: '1.25rem',
         width: '1.25rem',
         borderRadius: '50%',
-        border: 'solid 1px',
-        borderColor: colors.stroke.tertiary,
+        border: isDarkMode ? undefined : `solid 1px ${colors.stroke.tertiary}`,
+        backgroundColor: isDarkMode ? colors.background.l2 : undefined,
       }}
     />
   )

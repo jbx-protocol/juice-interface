@@ -1,4 +1,4 @@
-import { FieldBinaryOutlined, PercentageOutlined } from '@ant-design/icons'
+import { SettingOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
@@ -6,6 +6,7 @@ import Callout from 'components/Callout'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { CreateBadge } from '../../CreateBadge'
+import { Icons } from '../../Icons'
 import { Selection } from '../../Selection'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
@@ -40,8 +41,7 @@ export const ProjectTokenPage: React.FC = () => {
                   Default Token Settings <CreateBadge.Default />
                 </Trans>
               }
-              // TODO ICON
-              icon={<PercentageOutlined style={{ color: 'magenta' }} />}
+              icon={<Icons.Tokens />}
               description={
                 <Trans>
                   Recommended for new users. <a href="#TODO">View details</a>.
@@ -51,8 +51,7 @@ export const ProjectTokenPage: React.FC = () => {
             <Selection.Card
               name="custom"
               title={t`Custom Token Settings`}
-              // TODO ICON
-              icon={<FieldBinaryOutlined style={{ color: 'magenta' }} />}
+              icon={<SettingOutlined />}
               description={
                 <Trans>
                   Set custom rules & parameters for your project tokens.

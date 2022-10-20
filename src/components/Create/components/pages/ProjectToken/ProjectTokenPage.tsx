@@ -42,9 +42,10 @@ export const ProjectTokenPage: React.FC = () => {
               <Selection.Card
                 name="default"
                 title={
-                  <Trans>
-                    Default Token Settings <CreateBadge.Default />
-                  </Trans>
+                  <span>
+                    <Trans> Default Token Settings</Trans>{' '}
+                    <CreateBadge.Default />
+                  </span>
                 }
                 icon={<Icons.Tokens />}
                 description={

@@ -7,6 +7,7 @@ import ExternalLink from 'components/ExternalLink'
 import TransactionModal from 'components/TransactionModal'
 import { ThemeContext } from 'contexts/themeContext'
 import { useModal } from 'hooks/Modal'
+import { useWallet } from 'hooks/Wallet'
 import { useRouter } from 'next/router'
 import { useCallback, useContext } from 'react'
 import { useDispatch } from 'react-redux'
@@ -39,11 +40,13 @@ export const ReviewDeployPage = () => {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const { chainUnsupported, changeNetworks, isConnected, connect } = useWallet()
   const router = useRouter()
   const [form] = Form.useForm<{ termsAccepted: boolean }>()
   const termsAccepted = Form.useWatch('termsAccepted', form)
   const modal = useModal()
-  const { deployProject, deployTransactionPending } = useDeployProject()
+  const { deployProject, isDeploying, deployTransactionPending } =
+    useDeployProject()
 
   const dispatch = useDispatch()
 
@@ -53,13 +56,29 @@ export const ReviewDeployPage = () => {
   }, [dispatch])
 
   const onFinish = useCallback(async () => {
+    if (chainUnsupported) {
+      await changeNetworks()
+      return
+    }
+    if (!isConnected) {
+      await connect()
+      return
+    }
+
     await deployProject({
       onProjectDeployed: deployedProjectId =>
         router.push({ query: { deployedProjectId } }, '/create', {
           shallow: true,
         }),
     })
-  }, [deployProject, router])
+  }, [
+    chainUnsupported,
+    changeNetworks,
+    connect,
+    deployProject,
+    isConnected,
+    router,
+  ])
 
   const isNextEnabled = termsAccepted
   return (
@@ -138,7 +157,10 @@ export const ReviewDeployPage = () => {
             </div>
           </div>
         </Callout>
-        <Wizard.Page.ButtonControl isNextEnabled={isNextEnabled} />
+        <Wizard.Page.ButtonControl
+          isNextLoading={isDeploying}
+          isNextEnabled={isNextEnabled}
+        />
       </Form>
 
       <div

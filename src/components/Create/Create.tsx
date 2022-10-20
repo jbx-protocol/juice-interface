@@ -1,8 +1,8 @@
 import { t, Trans } from '@lingui/macro'
+import { DeployButtonText } from 'components/DeployProjectButtonText'
 import ExternalLink from 'components/ExternalLink'
 import { CV_V2, CV_V3 } from 'constants/cv'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { useWallet } from 'hooks/Wallet'
 import { useRouter } from 'next/router'
 import { TransactionProvider } from 'providers/TransactionProvider'
 import { V2V3ContractsProvider } from 'providers/v2v3/V2V3ContractsProvider'
@@ -24,7 +24,6 @@ import { DeploySuccess } from './components/pages/ReviewDeploy/components/Deploy
 import { Wizard } from './components/Wizard'
 
 export function Create() {
-  const { chain } = useWallet()
   const router = useRouter()
   const deployedProjectId = router.query.deployedProjectId as string
   if (deployedProjectId) {
@@ -38,14 +37,7 @@ export function Create() {
     >
       <TransactionProvider>
         <V2V3CurrencyProvider>
-          <Wizard
-            doneText={
-              // TODO: Handle wallet connect event and text changes
-              chain?.name
-                ? t`Deploy project to ${chain?.name}`
-                : t`Deploy project`
-            }
-          >
+          <Wizard doneText={<DeployButtonText />}>
             <Wizard.Page
               name="projectDetails"
               title={t`Project Details`}

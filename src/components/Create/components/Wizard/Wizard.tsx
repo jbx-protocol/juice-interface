@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { WizardContext } from './contexts'
 import { useWizard } from './hooks'
 import { Page } from './Page'
@@ -21,7 +21,7 @@ const WizardContainer: React.FC = ({ children }) => {
   )
 }
 
-export const Wizard: React.FC<{ doneText?: string }> & {
+export const Wizard: React.FC<{ doneText?: ReactNode }> & {
   Page: typeof Page
 } = props => {
   const { currentPage, pages, goToPage } = useWizard({

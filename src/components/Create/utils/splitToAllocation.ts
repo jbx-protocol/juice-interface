@@ -5,7 +5,9 @@ import { AllocationSplit } from '../components/Allocation'
 
 export const splitToAllocation = (split: Split): AllocationSplit => {
   return {
-    id: `${split.beneficiary}${split.projectId ? `-${split.projectId}` : ''}`,
+    id: `${split.beneficiary}${
+      split.projectId !== '0x00' ? `-${split.projectId}` : ''
+    }`,
     ...split,
     percent: preciseFormatSplitPercent(split.percent),
   }

@@ -3,7 +3,10 @@ import { Row } from 'antd'
 import { AllocationSplit } from 'components/Create/components/Allocation'
 import { formatFundingCycleDuration } from 'components/Create/utils/formatFundingCycleDuration'
 import { formatFundingTarget } from 'components/Create/utils/formatFundingTarget'
-import { splitToAllocation } from 'components/Create/utils/splitToAllocation'
+import {
+  allocationToSplit,
+  splitToAllocation,
+} from 'components/Create/utils/splitToAllocation'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useCallback, useMemo } from 'react'
 import { useEditingDistributionLimit } from 'redux/hooks/EditingDistributionLimit'
@@ -55,7 +58,8 @@ export const FundingConfigurationReview = () => {
     [payoutSplits],
   )
   const setAllocationSplits = useCallback(
-    (splits: AllocationSplit[]) => setPayoutSplits(splits),
+    (allocations: AllocationSplit[]) =>
+      setPayoutSplits(allocations.map(allocationToSplit)),
     [setPayoutSplits],
   )
 

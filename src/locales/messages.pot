@@ -2069,9 +2069,6 @@ msgstr ""
 msgid "Payouts to Ethereum addresses incur a {feePercentage}% fee. Your project will receive JBX in return at the current issuance rate."
 msgstr ""
 
-msgid "PeelDAO"
-msgstr ""
-
 msgid "Percent"
 msgstr ""
 

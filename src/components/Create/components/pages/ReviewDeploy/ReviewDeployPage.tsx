@@ -28,10 +28,16 @@ const Header: React.FC = ({ children }) => {
     theme: { colors },
   } = useContext(ThemeContext)
   return (
-    <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+    <h2
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '0.5rem',
+      }}
+    >
       {children}
       <CheckCircleFilled style={{ color: colors.background.action.primary }} />
-    </h3>
+    </h2>
   )
 }
 
@@ -83,7 +89,7 @@ export const ReviewDeployPage = () => {
   const isNextEnabled = termsAccepted
   return (
     <>
-      <CreateCollapse>
+      <CreateCollapse accordion defaultActiveKey={0}>
         <CreateCollapse.Panel
           key={0}
           header={

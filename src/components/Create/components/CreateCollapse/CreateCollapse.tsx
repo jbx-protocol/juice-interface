@@ -1,17 +1,27 @@
 import { DownOutlined } from '@ant-design/icons'
-import { Collapse, CollapsePanelProps, Divider } from 'antd'
+import { Collapse } from 'antd'
+import * as styleColors from 'constants/styles/colors'
+import { CreateCollapsePanel } from './CreateCollapsePanel'
 
-export const CreateCollapse: React.FC & { Panel: typeof Collapse.Panel } = ({
-  children,
-}) => {
+export const CreateCollapse: React.FC<{
+  defaultActiveKey?: number
+  accordion?: boolean
+}> & {
+  Panel: typeof CreateCollapsePanel
+} = ({ defaultActiveKey, accordion, children }) => {
   return (
     <Collapse
+      accordion={accordion}
+      defaultActiveKey={defaultActiveKey}
       className="create-collapse"
       expandIconPosition="end"
       bordered={false}
       ghost
       expandIcon={({ isActive }) => (
-        <DownOutlined rotate={isActive ? 180 : 0} />
+        <DownOutlined
+          rotate={isActive ? 180 : 0}
+          style={{ color: styleColors.lightColors.gray500 }}
+        />
       )}
     >
       {children}
@@ -19,17 +29,4 @@ export const CreateCollapse: React.FC & { Panel: typeof Collapse.Panel } = ({
   )
 }
 
-const OverridenPanel: React.FC<CollapsePanelProps> = props => {
-  return (
-    <Collapse.Panel {...props}>
-      {
-        <>
-          {props.children}
-          <Divider style={{ marginBottom: '0' }} />
-        </>
-      }
-    </Collapse.Panel>
-  )
-}
-
-CreateCollapse.Panel = OverridenPanel
+CreateCollapse.Panel = CreateCollapsePanel

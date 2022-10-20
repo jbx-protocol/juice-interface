@@ -1,10 +1,10 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Form } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import { CurrencySelectInputValue } from 'components/Create/components/CurrencySelectInput'
 import { FundingTargetType } from 'models/fundingTargetType'
 import { useDebugValue, useEffect, useMemo } from 'react'
 import { useEditingDistributionLimit } from 'redux/hooks/EditingDistributionLimit'
+import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 
@@ -37,7 +37,7 @@ export const useFundingTargetForm = () => {
 
     return {
       targetSelection,
-      amount: { amount: distributionLimit.amount.toString(), currency },
+      amount: { amount: fromWad(distributionLimit.amount), currency },
     }
   }, [distributionLimit])
 
@@ -59,7 +59,7 @@ export const useFundingTargetForm = () => {
     }
     if (targetSelection === 'specific') {
       setDistributionLimit({
-        amount: BigNumber.from(amount.amount),
+        amount: parseWad(amount.amount),
         currency:
           amount.currency === 'eth' ? V2V3_CURRENCY_ETH : V2V3_CURRENCY_USD,
       })

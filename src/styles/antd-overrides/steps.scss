@@ -1,3 +1,34 @@
 .create-steps-item {
-  min-width: 100px;
+  min-width: 80px;
+}
+
+.ant-steps-item-title {
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+// Process steps
+.ant-steps-item-process
+  > .ant-steps-item-container
+  > .ant-steps-item-content
+  > .ant-steps-item-title {
+  color: var(--text-primary);
+}
+
+// Finish steps
+.ant-steps-item-finish
+  > .ant-steps-item-container
+  > .ant-steps-item-content
+  > .ant-steps-item-title {
+  color: var(--text-secondary);
+}
+
+// Wait steps
+.ant-steps-item-wait
+  > .ant-steps-item-container
+  > .ant-steps-item-content
+  > .ant-steps-item-title {
+  color: var(--text-disabled);
 }

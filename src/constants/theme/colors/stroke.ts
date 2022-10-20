@@ -9,7 +9,7 @@ export const strokeColors: Record<ThemeOption, SemanticColors['stroke']> = {
     secondary: '#00000032',
     tertiary: '#00000018',
     success: lightColors.green,
-    warn: lightColors.yellow,
+    warn: lightColors.juiceLight,
     failure: lightColors.red,
     disabled: '#00000018',
     action: {
@@ -23,7 +23,7 @@ export const strokeColors: Record<ThemeOption, SemanticColors['stroke']> = {
     secondary: darkColors.light2,
     tertiary: darkColors.light3,
     success: darkColors.green,
-    warn: darkColors.yellow,
+    warn: darkColors.juiceDark,
     failure: darkColors.red,
     disabled: darkColors.light0 + '24',
     action: {

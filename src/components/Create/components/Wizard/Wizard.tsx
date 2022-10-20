@@ -1,13 +1,17 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { WizardContext } from './contexts'
 import { useWizard } from './hooks'
 import { Page } from './Page'
 import { Steps } from './Steps'
 
 // TODO: Make responsive and mobile friendly
-const WizardContainer: React.FC = ({ children }) => {
+const WizardContainer: React.FC<{ className?: string }> = ({
+  children,
+  className,
+}) => {
   return (
     <div
+      className={className}
       style={{
         margin: '0 auto',
         display: 'flex',
@@ -21,7 +25,7 @@ const WizardContainer: React.FC = ({ children }) => {
   )
 }
 
-export const Wizard: React.FC<{ doneText?: string }> & {
+export const Wizard: React.FC<{ className?: string; doneText?: ReactNode }> & {
   Page: typeof Page
 } = props => {
   const { currentPage, pages, goToPage } = useWizard({
@@ -32,7 +36,7 @@ export const Wizard: React.FC<{ doneText?: string }> & {
     <WizardContext.Provider
       value={{ currentPage, goToPage, pages, doneText: props.doneText }}
     >
-      <WizardContainer>
+      <WizardContainer className={props.className}>
         <Steps />
         {props.children}
       </WizardContainer>

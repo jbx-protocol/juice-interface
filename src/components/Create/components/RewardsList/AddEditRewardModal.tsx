@@ -4,7 +4,7 @@ import {
   UploadOutlined,
 } from '@ant-design/icons'
 import { t } from '@lingui/macro'
-import { Button, Form, Input, Modal, Space } from 'antd'
+import { Form, Input, Modal, Space } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { JuiceSwitch } from 'components/JuiceSwitch'
@@ -14,6 +14,7 @@ import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
 import { ipfsCidUrl, pinFileToIpfs } from 'utils/ipfs'
 import { v4 } from 'uuid'
+import { CreateButton } from '../CreateButton'
 import { inputMustExistRule } from '../pages'
 import { inputAlreadyExistsRule } from '../pages/utils/rules/inputAlreadyExistsRule'
 import { inputIsValidUrlRule } from '../pages/utils/rules/inputIsValidUrlRule'
@@ -215,19 +216,15 @@ export const AddEditRewardModal = ({
 
 const UploadButton = () => {
   return (
-    <Button
-      type="dashed"
+    <CreateButton
       icon={<UploadOutlined />}
       style={{
         height: '6rem',
         width: '100%',
-        // TODO: use proper imported colors
-        backgroundColor: 'magenta',
-        // backgroundColor: '#E8F5F7', // Light Theme/Primary/Blue Hint
       }}
     >
       Upload image
-    </Button>
+    </CreateButton>
   )
 }
 

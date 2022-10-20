@@ -1,4 +1,4 @@
-import { createContext } from 'react'
+import { createContext, ReactNode } from 'react'
 
 export const PageContext: React.Context<
   Partial<{
@@ -6,7 +6,7 @@ export const PageContext: React.Context<
     isHidden: boolean
     canGoBack: boolean
     isFinalPage: boolean
-    doneText: string | undefined
+    doneText: ReactNode
     goToNextPage: () => void
     goToPreviousPage: () => void
   }>

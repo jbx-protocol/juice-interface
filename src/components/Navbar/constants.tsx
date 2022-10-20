@@ -43,8 +43,8 @@ export const resourcesMenuItems = (mobile?: boolean): ResourceItem[] => {
     {
       key: 'peel',
       label: (
-        <a href="https://discord.gg/XvmfY4Hkcz" {...linkStyle}>
-          <Trans>PeelDAO</Trans>
+        <a href="https://discord.gg/6jXrJSyDFf" {...linkStyle}>
+          Discord
         </a>
       ),
     },

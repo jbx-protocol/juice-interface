@@ -1,6 +1,6 @@
-import { Button, Space } from 'antd'
-
+import { WarningOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
+import { Button, Space } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
@@ -35,7 +35,9 @@ export default function Account() {
         {chainUnsupported && (
           <Button
             size="small"
+            icon={<WarningOutlined style={{ color: colors.icon.warn }} />}
             style={{
+              backgroundColor: colors.background.warn,
               borderColor: colors.stroke.warn,
               color: colors.text.warn,
             }}

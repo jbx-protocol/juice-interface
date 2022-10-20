@@ -12,7 +12,6 @@ type NftRewardsFormProps = Partial<{
   collectionSymbol?: string
 }>
 
-// TODO: Upload is not called here, but we need to remember to call it in the final deploy - uploadNftRewardsToIPFS
 export const useNftRewardsForm = () => {
   const [form] = Form.useForm<NftRewardsFormProps>()
   const { collectionMetadata, rewardTiers } = useAppSelector(

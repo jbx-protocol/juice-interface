@@ -9,6 +9,7 @@ import { useAppSelector } from 'hooks/AppSelector'
 import { useCallback, useMemo } from 'react'
 import { useEditingReservedTokensSplits } from 'redux/hooks/EditingReservedTokensSplits'
 import { formatAmount } from 'utils/formatAmount'
+import { formatBoolean } from 'utils/formatBoolean'
 import {
   formatDiscountRate,
   formatIssuanceRate,
@@ -38,7 +39,7 @@ export const ProjectTokenReview = () => {
   )
 
   const allowTokenMinting = useMemo(
-    () => (allowMinting ? t`Yes` : t`No`),
+    () => formatBoolean(allowMinting),
     [allowMinting],
   )
 

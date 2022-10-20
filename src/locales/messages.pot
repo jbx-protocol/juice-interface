@@ -899,6 +899,9 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
+msgid "Default Token Settings"
+msgstr ""
+
 msgid "Default Token Settings <0/>"
 msgstr ""
 

@@ -1,6 +1,10 @@
 import { Form } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import { AllocationSplit } from 'components/Create/components/Allocation'
+import {
+  allocationToSplit,
+  splitToAllocation,
+} from 'components/Create/utils/splitToAllocation'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import { PayoutsSelection } from 'models/payoutsSelection'
@@ -33,10 +37,7 @@ export const usePayoutsForm = () => {
     if (!splits.length) {
       return { selection }
     }
-    const payoutsList: AllocationSplit[] = splits.map(s => ({
-      id: `${s.beneficiary}${s.projectId ? `-${s.projectId}` : ''}`,
-      ...s,
-    }))
+    const payoutsList: AllocationSplit[] = splits.map(splitToAllocation)
     return { payoutsList, selection }
   }, [overridenSelection, payoutsSelection, splits])
 
@@ -45,7 +46,7 @@ export const usePayoutsForm = () => {
   const selection = useWatch('selection', form)
 
   useEffect(() => {
-    setSplits(payoutsList ?? [])
+    setSplits(payoutsList?.map(allocationToSplit) ?? [])
     dispatch(editingV2ProjectActions.setPayoutsSelection(selection))
   }, [dispatch, payoutsList, selection, setSplits])
 

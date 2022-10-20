@@ -1,12 +1,13 @@
 import { formatFundingTarget } from 'components/Create/utils/formatFundingTarget'
-import { useAppSelector } from 'hooks/AppSelector'
+import { useEditingDistributionLimit } from 'redux/hooks/EditingDistributionLimit'
 
 export const useFundingTarget = () => {
-  const { fundAccessConstraints } = useAppSelector(
-    state => state.editingV2Project,
-  )
+  const [distributionLimit] = useEditingDistributionLimit()
 
-  if (!fundAccessConstraints[0]?.distributionLimit.length) return null
+  if (!distributionLimit) return null
 
-  return formatFundingTarget(fundAccessConstraints[0])
+  return formatFundingTarget({
+    distributionLimitWad: distributionLimit.amount,
+    distributionLimitCurrency: distributionLimit.currency.toString(),
+  })
 }

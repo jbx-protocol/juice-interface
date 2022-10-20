@@ -1,6 +1,10 @@
 import { Form } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import { AllocationSplit } from 'components/Create/components/Allocation'
+import {
+  allocationToSplit,
+  splitToAllocation,
+} from 'components/Create/utils/splitToAllocation'
 import { ONE_MILLION } from 'constants/numbers'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
@@ -8,8 +12,16 @@ import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { useDebugValue, useEffect, useMemo } from 'react'
 import { useEditingReservedTokensSplits } from 'redux/hooks/EditingReservedTokensSplits'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
-import { fromReduxPercent, toReduxPercent } from 'redux/util'
-import { formatIssuanceRate, issuanceRateFrom } from 'utils/v2v3/math'
+import {
+  discountRateFrom,
+  formatDiscountRate,
+  formatIssuanceRate,
+  formatRedemptionRate,
+  formatReservedRate,
+  issuanceRateFrom,
+  redemptionRateFrom,
+  reservedRateFrom,
+} from 'utils/v2v3/math'
 import { useFormDispatchWatch } from '../../hooks'
 
 export type ProjectTokensFormProps = Partial<{
@@ -44,18 +56,16 @@ export const useProjectTokensForm = () => {
       ? formatIssuanceRate(fundingCycleData.weight)
       : DefaultSettings.initialMintRate
     const reservedTokensPercentage = fundingCycleMetadata.reservedRate
-      ? fromReduxPercent(fundingCycleMetadata.reservedRate)
+      ? parseFloat(formatReservedRate(fundingCycleMetadata.reservedRate))
       : DefaultSettings.reservedTokensPercentage
-    const reservedTokenAllocation: AllocationSplit[] = tokenSplits.map(s => ({
-      id: `${s.beneficiary}${s.projectId ? `-${s.projectId}` : ''}`,
-      ...s,
-    }))
+    const reservedTokenAllocation: AllocationSplit[] =
+      tokenSplits.map(splitToAllocation)
     // TODO: we should probably block this if no duration set
     const discountRate = fundingCycleData.discountRate
-      ? fromReduxPercent(fundingCycleData.discountRate)
+      ? parseFloat(formatDiscountRate(fundingCycleData.discountRate))
       : DefaultSettings.discountRate
     const redemptionRate = fundingCycleMetadata.redemptionRate
-      ? fromReduxPercent(fundingCycleMetadata.redemptionRate)
+      ? parseFloat(formatRedemptionRate(fundingCycleMetadata.redemptionRate))
       : DefaultSettings.redemptionRate
     const tokenMinting =
       fundingCycleMetadata.allowMinting !== undefined
@@ -109,7 +119,7 @@ export const useProjectTokensForm = () => {
     dispatchFunction: editingV2ProjectActions.setReservedRate,
     formatter: v => {
       if (!v || typeof v !== 'number') return '0'
-      return toReduxPercent(v)
+      return reservedRateFrom(v).toHexString()
     },
   })
 
@@ -121,7 +131,7 @@ export const useProjectTokensForm = () => {
     dispatchFunction: editingV2ProjectActions.setReservedTokensSplits,
     formatter: v => {
       if (!v || typeof v !== 'object') return []
-      return v
+      return v.map(allocationToSplit)
     },
   })
 
@@ -131,7 +141,7 @@ export const useProjectTokensForm = () => {
     dispatchFunction: editingV2ProjectActions.setDiscountRate,
     formatter: v => {
       if (!v || typeof v !== 'number') return '0'
-      return toReduxPercent(v)
+      return discountRateFrom(v).toHexString()
     },
   })
 
@@ -141,7 +151,16 @@ export const useProjectTokensForm = () => {
     dispatchFunction: editingV2ProjectActions.setRedemptionRate,
     formatter: v => {
       if (!v || typeof v !== 'number') return ''
-      return toReduxPercent(v)
+      return redemptionRateFrom(v).toHexString()
+    },
+  })
+  useFormDispatchWatch({
+    form,
+    fieldName: 'redemptionRate',
+    dispatchFunction: editingV2ProjectActions.setBallotRedemptionRate,
+    formatter: v => {
+      if (!v || typeof v !== 'number') return ''
+      return redemptionRateFrom(v).toHexString()
     },
   })
 

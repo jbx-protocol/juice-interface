@@ -1,8 +1,4 @@
-import {
-  InfoCircleOutlined,
-  PushpinOutlined,
-  RetweetOutlined,
-} from '@ant-design/icons'
+import { InfoCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
@@ -12,6 +8,7 @@ import { FormItemInput } from 'models/formItemInput'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { CurrencySelectInputValue } from '../../CurrencySelectInput'
+import { Icons } from '../../Icons'
 import { RecallCard } from '../../RecallCard'
 import { Selection } from '../../Selection'
 import { Wizard } from '../../Wizard'
@@ -43,7 +40,7 @@ export const FundingTargetPage: React.FC = () => {
             <Selection.Card
               name="specific"
               title={t`Specific Funding Target`}
-              icon={<PushpinOutlined />}
+              icon={<Icons.Target />}
               description={
                 <Trans>
                   Set a specific amount to distribute to nominated addresses
@@ -67,7 +64,7 @@ export const FundingTargetPage: React.FC = () => {
             <Selection.Card
               name="infinite"
               title={t`Infinite Funding Target`}
-              icon={<RetweetOutlined />}
+              icon={<Icons.Infinity />}
               description={
                 <Trans>
                   Your project will withhold all funds raised. Funds can be

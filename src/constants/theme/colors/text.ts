@@ -11,7 +11,7 @@ export const textColors: Record<ThemeOption, SemanticColors['text']> = {
     placeholder: lightColors.dark2,
     disabled: lightColors.dark3,
     success: lightColors.green,
-    warn: lightColors.yellow,
+    warn: lightColors.juiceDarkest,
     failure: lightColors.red,
     header: lightColors.juiceOrange,
     action: {
@@ -46,7 +46,7 @@ export const textColors: Record<ThemeOption, SemanticColors['text']> = {
     placeholder: darkColors.light3,
     disabled: darkColors.light2,
     success: darkColors.green,
-    warn: darkColors.yellow,
+    warn: darkColors.juiceLight,
     failure: darkColors.red,
     header: darkColors.juiceOrange,
     action: {

@@ -1,0 +1,32 @@
+.wizard-create h1 {
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 33px;
+  color: var(--text-primary);
+}
+
+.wizard-create h2 {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--text-primary);
+}
+
+.wizard-create .ant-input {
+  background-color: var(--background-l3);
+  border-color: var(--stroke-disabled);
+}
+
+.wizard-create .ant-collapse-header-text {
+  color: var(--text-primary);
+  span {
+    color: var(--text-secondary);
+  }
+}
+
+.wizard-create .select-card-header {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 28px;
+}

@@ -115,7 +115,7 @@ export const ProjectDetailsReview = () => {
                 <DescriptionCol
                   flex={1}
                   title={t`Pay disclaimer`}
-                  desc={payDisclosure ?? null}
+                  desc={payDisclosure ? payDisclosure : null}
                 />
               </Col>
             </Row>

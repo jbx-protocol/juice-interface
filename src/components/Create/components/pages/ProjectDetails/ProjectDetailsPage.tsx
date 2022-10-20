@@ -69,6 +69,7 @@ export const ProjectDetailsPage: React.FC = () => {
           <CreateCollapse.Panel
             key={1}
             header={<OptionalHeader header={t`Customize Pay Button`} />}
+            hideDivider
           >
             <Row gutter={32} style={{ paddingBottom: '2rem' }}>
               <Col span={12}>

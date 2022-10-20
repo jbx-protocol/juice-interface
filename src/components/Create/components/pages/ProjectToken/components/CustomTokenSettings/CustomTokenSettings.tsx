@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Divider, Form, Space } from 'antd'
-import Callout from 'components/Callout'
+import { CreateCallout } from 'components/Create/components/CreateCallout'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import NumberSlider from 'components/inputs/NumberSlider'
 import { JuiceSwitch } from 'components/JuiceSwitch'
@@ -10,11 +10,6 @@ import { useContext } from 'react'
 import { MAX_MINT_RATE } from 'utils/v2v3/math'
 import { inputMustExistRule } from '../../../utils'
 import { ReservedTokenRateCallout, ReservedTokensList } from './components'
-
-// TODO: This is here to remind us we need to fix the colors
-const TODOCallout: React.FC = ({ children }) => (
-  <Callout style={{ backgroundColor: 'magenta' }}>{children}</Callout>
-)
 
 export const CustomTokenSettings = () => {
   const {
@@ -88,7 +83,7 @@ export const CustomTokenSettings = () => {
         >
           <NumberSlider min={0} defaultValue={0} suffix="%" step={0.5} />
         </Form.Item>
-        <TODOCallout>
+        <CreateCallout.Info>
           <Space direction="vertical">
             <Trans>
               Contributors will receive 5% more tokens for contributions they
@@ -100,7 +95,7 @@ export const CustomTokenSettings = () => {
               funding cycle, and so on.
             </Trans>
           </Space>
-        </TODOCallout>
+        </CreateCallout.Info>
       </Form.Item>
 
       <Divider />
@@ -132,12 +127,12 @@ export const CustomTokenSettings = () => {
         >
           <JuiceSwitch label={t`Allow token minting`} />
         </Form.Item>
-        <TODOCallout>
+        <CreateCallout.Warning>
           <Trans>
             Token minting is not recommended as it allows the project owner to
             create unlimited tokens. This is a risk factor for contributors.
           </Trans>
-        </TODOCallout>
+        </CreateCallout.Warning>
       </>
     </>
   )

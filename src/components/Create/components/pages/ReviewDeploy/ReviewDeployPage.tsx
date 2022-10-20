@@ -2,7 +2,9 @@ import { CheckCircleFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Checkbox, Form, Modal } from 'antd'
 import Callout from 'components/Callout'
+import { useDeployProject } from 'components/Create/hooks/DeployProject'
 import ExternalLink from 'components/ExternalLink'
+import TransactionModal from 'components/TransactionModal'
 import { ThemeContext } from 'contexts/themeContext'
 import { useModal } from 'hooks/Modal'
 import { useRouter } from 'next/router'
@@ -33,14 +35,15 @@ const Header: React.FC = ({ children }) => {
 }
 
 export const ReviewDeployPage = () => {
+  useSetCreateFurthestPageReached('reviewDeploy')
   const {
     theme: { colors },
   } = useContext(ThemeContext)
   const router = useRouter()
-  useSetCreateFurthestPageReached('reviewDeploy')
   const [form] = Form.useForm<{ termsAccepted: boolean }>()
   const termsAccepted = Form.useWatch('termsAccepted', form)
   const modal = useModal()
+  const { deployProject, deployTransactionPending } = useDeployProject()
 
   const dispatch = useDispatch()
 
@@ -49,11 +52,14 @@ export const ReviewDeployPage = () => {
     window.location.reload()
   }, [dispatch])
 
-  const onDeploy = useCallback(() => {
-    router.push({ query: { deployedProjectId: 1 } }, '/create', {
-      shallow: true,
+  const onFinish = useCallback(async () => {
+    await deployProject({
+      onProjectDeployed: deployedProjectId =>
+        router.push({ query: { deployedProjectId } }, '/create', {
+          shallow: true,
+        }),
     })
-  }, [router])
+  }, [deployProject, router])
 
   const isNextEnabled = termsAccepted
   return (
@@ -113,7 +119,7 @@ export const ReviewDeployPage = () => {
       <Form
         form={form}
         initialValues={{ termsAccepted: false }}
-        onFinish={onDeploy}
+        onFinish={onFinish}
       >
         <Callout iconComponent={null}>
           <div style={{ display: 'flex', gap: '1rem' }}>
@@ -158,6 +164,10 @@ export const ReviewDeployPage = () => {
           .
         </span>
       </div>
+      <TransactionModal
+        transactionPending={deployTransactionPending}
+        visible={deployTransactionPending}
+      />
       <Modal
         title={
           <h2>

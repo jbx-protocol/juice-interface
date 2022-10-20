@@ -14,9 +14,6 @@ import { formatDate } from 'utils/format/formatDate'
 export const ReservedTokensList: React.FC<
   FormItemInput<AllocationSplit[]> & { isEditable?: boolean }
 > = ({ isEditable, value, onChange }) => {
-  {
-    /* TODO: Fix modal to show correct data for allocations */
-  }
   return (
     <Allocation value={value} onChange={onChange}>
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>

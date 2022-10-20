@@ -1,6 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Divider, Form, Space } from 'antd'
 import { CreateCallout } from 'components/Create/components/CreateCallout'
+import ExternalLink from 'components/ExternalLink'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import NumberSlider from 'components/inputs/NumberSlider'
 import { JuiceSwitch } from 'components/JuiceSwitch'
@@ -103,7 +104,10 @@ export const CustomTokenSettings = () => {
       <Form.Item label={t`Redemption rate`}>
         <Trans>
           The redemption rate determines the amount of overflow each token can
-          be redeemed for. <a href="#TODO">Learn more.</a>
+          be redeemed for.{' '}
+          <ExternalLink href="https://info.juicebox.money/dev/learn/glossary/redemption-rate">
+            Learn more.
+          </ExternalLink>
         </Trans>
         <Form.Item
           noStyle

@@ -49,8 +49,6 @@ const FundingCycleCallout: React.FC = () => {
   }
 }
 
-// TODO: We need to add some state handling for this function. We might want to
-//       consider adding some stuff to handle the local storage state better.
 export const FundingCyclesPage = () => {
   useSetCreateFurthestPageReached('fundingCycles')
   const { goToNextPage } = useContext(PageContext)

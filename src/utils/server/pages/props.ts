@@ -8,13 +8,14 @@ import { ProjectMetadataV5 } from 'models/project-metadata'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import { GetServerSidePropsResult } from 'next'
 import { findProjectMetadata } from 'utils/server'
-import { isV3Project } from 'utils/v2v3/cv'
+import { hasFundingCycle } from 'utils/v2v3/cv'
 import { loadV2V3Contract } from 'utils/v2v3/loadV2V3Contract'
 
 export interface ProjectPageProps {
   metadata: ProjectMetadataV5
   projectId: number
-  cv: CV2V3
+  initialCv: CV2V3
+  cvs?: CV2V3[]
 }
 
 async function loadJBProjects() {
@@ -58,19 +59,24 @@ export async function getProjectProps(
 
   try {
     const metadataCid = await getMetadataCidFromContract(projectId)
-
-    const [metadata, isV3ProjectResult] = await Promise.all([
+    const [metadata, hasV2FundingCycle, hasV3FundingCycle] = await Promise.all([
       findProjectMetadata({ metadataCid }),
-      isV3Project(projectId),
+      hasFundingCycle(projectId, CV_V2),
+      hasFundingCycle(projectId, CV_V3),
     ])
 
-    const cv = isV3ProjectResult ? CV_V3 : CV_V2
+    const initialCv = hasV3FundingCycle ? CV_V3 : CV_V2
+
+    const cvs: CV2V3[] = []
+    if (hasV2FundingCycle) cvs.push(CV_V2)
+    if (hasV3FundingCycle) cvs.push(CV_V3)
 
     return {
       props: {
         metadata,
         projectId,
-        cv,
+        initialCv,
+        cvs,
       },
     }
 

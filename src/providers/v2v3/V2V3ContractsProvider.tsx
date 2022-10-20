@@ -5,7 +5,8 @@ import { useState } from 'react'
 
 export const V2V3ContractsProvider: React.FC<{
   initialCv: CV2V3
-}> = ({ children, initialCv }) => {
+  cvs?: CV2V3[]
+}> = ({ children, initialCv, cvs }) => {
   const [cv, setCv] = useState<CV2V3>(initialCv)
 
   const contracts = useV2V3ContractLoader({ cv })
@@ -22,6 +23,7 @@ export const V2V3ContractsProvider: React.FC<{
         },
         cv,
         contracts,
+        cvs,
       }}
     >
       {children}

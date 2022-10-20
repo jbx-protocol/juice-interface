@@ -1,3 +1,4 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { DatePicker, Form, InputNumber, Modal, Radio } from 'antd'
 import { RuleObject } from 'antd/lib/form'
@@ -9,7 +10,8 @@ import NumberSlider from 'components/inputs/NumberSlider'
 import { useFundingTargetType } from 'hooks/FundingTargetType'
 import { Split } from 'models/splits'
 import moment, * as Moment from 'moment'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { fromWad } from 'utils/format/formatNumber'
 import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { amountFromPercent } from 'utils/v2v3/distributions'
 import { inputMustBeEthAddressRule, inputMustExistRule } from '../pages/utils'
@@ -53,6 +55,13 @@ export const AddEditAllocationModal = ({
     'walletAddress' | 'juiceboxProject'
   >('walletAddress')
 
+  const isValidJuiceboxProject = useMemo(
+    () =>
+      editingData?.projectId &&
+      editingData.projectId !== BigNumber.from(0).toHexString(),
+    [editingData?.projectId],
+  )
+
   const isEditing = !!editingData
 
   useEffect(() => {
@@ -67,18 +76,18 @@ export const AddEditAllocationModal = ({
       return
     }
 
-    setRecipient(
-      editingData.projectId !== undefined ? 'juiceboxProject' : 'walletAddress',
-    )
+    setRecipient(isValidJuiceboxProject ? 'juiceboxProject' : 'walletAddress')
     form.setFieldsValue({
-      juiceboxProjectId: editingData.projectId,
+      juiceboxProjectId: isValidJuiceboxProject
+        ? editingData.projectId
+        : undefined,
       address: editingData.beneficiary,
       amount: {
         percentage: editingData.percent.toString(),
         amount: totalAllocationAmount
           ? amountFromPercent({
               percent: editingData.percent,
-              amount: totalAllocationAmount.toString(),
+              amount: fromWad(totalAllocationAmount),
             }).toString()
           : undefined,
       },
@@ -86,7 +95,7 @@ export const AddEditAllocationModal = ({
         ? Moment.default(editingData.lockedUntil * 1000)
         : undefined,
     })
-  }, [editingData, form, open, totalAllocationAmount])
+  }, [editingData, form, open, totalAllocationAmount, isValidJuiceboxProject])
 
   const onModalOk = useCallback(async () => {
     const fields = await form.validateFields()
@@ -264,7 +273,7 @@ const DistributionAmountInput = ({
         !isNaN(parseFloat(amount))
       ) {
         const percentage = (
-          (parseFloat(amount) / totalAllocationAmount.toNumber()) *
+          (parseFloat(amount) / parseFloat(fromWad(totalAllocationAmount))) *
           100
         )
           .toFixed(2)
@@ -278,7 +287,7 @@ const DistributionAmountInput = ({
         if (totalAllocationAmount && hasSpecificFundingTarget) {
           amount = amountFromPercent({
             percent: parseFloat(percentage),
-            amount: totalAllocationAmount.toString(),
+            amount: fromWad(totalAllocationAmount),
           }).toString()
         }
         setAmount({ amount, percentage })

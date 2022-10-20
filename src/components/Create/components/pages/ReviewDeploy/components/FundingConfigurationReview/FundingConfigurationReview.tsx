@@ -33,7 +33,7 @@ export const FundingConfigurationReview = () => {
   const fundingTarget = useMemo(
     () =>
       formatFundingTarget({
-        distributionLimit: distributionLimit?.amount.toString(),
+        distributionLimitWad: distributionLimit?.amount,
         distributionLimitCurrency: distributionLimit?.currency.toString(),
       }),
     [distributionLimit?.amount, distributionLimit?.currency],

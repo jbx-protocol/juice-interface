@@ -3,9 +3,7 @@ import { Space } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { Tab } from 'components/Tab'
 import { layouts } from 'constants/styles/layouts'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useGnosisSafe } from 'hooks/GnosisSafe'
 import { useQueuedSafeTransactions } from 'hooks/safe/QueuedSafeTransactions'
 import { generateSafeUrl } from 'lib/safe'
@@ -13,7 +11,6 @@ import { SafeTransactionType } from 'models/safe'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { CSSProperties, useContext } from 'react'
-import { v2v3ProjectRoute } from 'utils/routes'
 import { getUniqueNonces } from 'utils/safe'
 import { BackToProjectButton } from '../BackToProjectButton'
 import { ExecutedSafeTransactionsListing } from './ExecutedSafeTransactionsListing'
@@ -30,9 +27,13 @@ const TAB_NAMES: { [k in SafeTxCategory]: string } = {
   history: t`History`,
 }
 
-export function ProjectSafeDashboard() {
-  const { handle, projectOwnerAddress } = useContext(V2V3ProjectContext)
-  const { projectId } = useContext(ProjectMetadataContext)
+export function ProjectSafeDashboard({
+  projectPageUrl,
+  projectOwnerAddress,
+}: {
+  projectPageUrl: string
+  projectOwnerAddress: string
+}) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -74,7 +75,7 @@ export function ProjectSafeDashboard() {
   // Returns unique nonces from tx list. Used to group tx's by nonce
   const uniqueNonces = getUniqueNonces(queuedSafeTransactions)
 
-  const projectSafeRoute = `${v2v3ProjectRoute({ projectId, handle })}/safe`
+  const projectSafeRoute = `${projectPageUrl}/safe`
 
   const safeUrl = generateSafeUrl(projectOwnerAddress)
 
@@ -89,7 +90,7 @@ export function ProjectSafeDashboard() {
           <ExternalLink href={safeUrl} style={{ textDecoration: 'underline' }}>
             <Trans>Go to your Safe</Trans>
           </ExternalLink>
-          <BackToProjectButton />
+          <BackToProjectButton projectPageUrl={projectPageUrl} />
         </div>
       ) : null}
 

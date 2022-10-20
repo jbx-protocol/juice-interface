@@ -1,10 +1,14 @@
 import { AppWrapper } from 'components/common'
-import { ProjectSafeDashboard } from 'components/v2v3/V2V3Project/ProjectSafeDashboard'
+import { ProjectSafeDashboard } from 'components/ProjectSafeDashboard'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { CV2V3 } from 'models/cv'
 import { ProjectMetadataV5 } from 'models/project-metadata'
 import { GetServerSideProps } from 'next'
 import { TransactionProvider } from 'providers/TransactionProvider'
 import { V2V3ProjectPageProvider } from 'providers/v2v3/V2V3ProjectPageProvider'
+import { useContext } from 'react'
+import { v2v3ProjectRoute } from 'utils/routes'
 import { getProjectProps, ProjectPageProps } from 'utils/server/pages/props'
 
 export const getServerSideProps: GetServerSideProps<
@@ -16,7 +20,20 @@ export const getServerSideProps: GetServerSideProps<
   return getProjectProps(projectId)
 }
 
-export default function ProjectSafeDashboardPage({
+function V2V3ProjectSafeDashboard() {
+  const { handle, projectOwnerAddress } = useContext(V2V3ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
+
+  if (!projectOwnerAddress) return null
+  return (
+    <ProjectSafeDashboard
+      projectPageUrl={v2v3ProjectRoute({ handle, projectId })}
+      projectOwnerAddress={projectOwnerAddress}
+    />
+  )
+}
+
+export default function V2V3ProjectSafeDashboardPage({
   projectId,
   metadata,
   cv,
@@ -33,7 +50,7 @@ export default function ProjectSafeDashboardPage({
         cv={cv}
       >
         <TransactionProvider>
-          <ProjectSafeDashboard />
+          <V2V3ProjectSafeDashboard />
         </TransactionProvider>
       </V2V3ProjectPageProvider>
     </AppWrapper>

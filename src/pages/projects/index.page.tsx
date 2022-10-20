@@ -32,6 +32,7 @@ import MyProjects from './MyProjects'
 import ProjectsFilterAndSort from './ProjectsFilterAndSort'
 import ProjectsTabs from './ProjectsTabs'
 import TrendingProjects from './TrendingProjects'
+import LatestProjects from './LatestProjects'
 
 export default function ProjectsPage() {
   return (
@@ -66,6 +67,8 @@ function Projects() {
           return 'trending'
         case 'all':
           return 'all'
+        case 'latest':
+          return 'latest'
         case 'holdings':
           return 'holdings'
         case 'myprojects':
@@ -286,6 +289,10 @@ function Projects() {
       ) : selectedTab === 'trending' ? (
         <div style={{ paddingBottom: 50 }}>
           <TrendingProjects count={12} />
+        </div>
+      ) : selectedTab === 'latest' ? (
+        <div style={{ paddingBottom: 50 }}>
+          <LatestProjects />
         </div>
       ) : null}
 

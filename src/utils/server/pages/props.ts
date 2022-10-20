@@ -3,7 +3,6 @@ import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
 import { CV2V3 } from 'models/cv'
-import { NetworkName } from 'models/network-name'
 import { ProjectMetadataV5 } from 'models/project-metadata'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import { GetServerSidePropsResult } from 'next'
@@ -19,18 +18,11 @@ export interface ProjectPageProps {
 }
 
 async function loadJBProjects() {
-  // Note: v2 and v3 use the same JBProjects, so the CV doesn't matter.
-  // Goerli doesn't have a V3 deployment so we must use CV_V3.
-  // Rinkeby doesn't have a V2 deployment so we must use CV_V2.
-  const contractsVersion =
-    readNetwork.name === NetworkName.goerli ? CV_V3 : CV_V2
-
-  const network = readNetwork.name
   const contract = await loadV2V3Contract(
     V2V3ContractName.JBProjects,
-    network,
+    readNetwork.name,
     readProvider,
-    contractsVersion,
+    CV_V3, // Note: v2 and v3 use the same JBProjects, so the CV doesn't matter.
   )
 
   return contract

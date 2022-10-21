@@ -129,7 +129,7 @@ export function Create() {
                   rules.
                 </Trans>
               }
-              width="800px"
+              maxWidth="800px"
             >
               <ReviewDeployPage />
             </Wizard.Page>

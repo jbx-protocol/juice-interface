@@ -8,6 +8,6 @@ export const useFundingTarget = () => {
 
   return formatFundingTarget({
     distributionLimitWad: distributionLimit.amount,
-    distributionLimitCurrency: distributionLimit.currency.toString(),
+    distributionLimitCurrency: distributionLimit.currency,
   })
 }

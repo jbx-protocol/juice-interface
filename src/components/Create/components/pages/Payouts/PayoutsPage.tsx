@@ -8,6 +8,7 @@ import { RecallCard } from '../../RecallCard'
 import { Selection } from '../../Selection'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
+import { allocationTotalPercentDoNotExceedTotalRule } from '../utils'
 import { PayoutsList } from './components/PayoutsList'
 import { useAvailablePayoutsSelections, usePayoutsForm } from './hooks'
 
@@ -79,7 +80,10 @@ export const PayoutsPage: React.FC = () => {
                 Add wallet addresses or juicebox projects to receive payouts.
               </Trans>
             </p>
-            <Form.Item noStyle name="payoutsList">
+            <Form.Item
+              name="payoutsList"
+              rules={[allocationTotalPercentDoNotExceedTotalRule()]}
+            >
               <PayoutsList payoutsSelection={selection} />
             </Form.Item>
           </Space>

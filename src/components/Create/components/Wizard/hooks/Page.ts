@@ -15,6 +15,11 @@ export const usePage = ({ name }: { name: string }) => {
     [pageIndex, pages?.length],
   )
 
+  const nextPageName = useMemo(
+    () => (!isFinalPage && pages ? pages[pageIndex + 1].title : undefined),
+    [isFinalPage, pageIndex, pages],
+  )
+
   const goToNextPage = useCallback(() => {
     if (!pages || !goToPage) return
     if (pageIndex === pages.length - 1) return
@@ -35,6 +40,7 @@ export const usePage = ({ name }: { name: string }) => {
     canGoBack,
     isFinalPage,
     doneText,
+    nextPageName,
     goToNextPage,
     goToPreviousPage,
   }

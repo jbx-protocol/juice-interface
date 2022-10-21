@@ -6,27 +6,31 @@ import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import NumberSlider from 'components/inputs/NumberSlider'
 import { JuiceSwitch } from 'components/JuiceSwitch'
 import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph'
-import { ThemeContext } from 'contexts/themeContext'
-import { useContext } from 'react'
+import useMobile from 'hooks/Mobile'
 import { MAX_MINT_RATE } from 'utils/v2v3/math'
 import { inputMustExistRule } from '../../../utils'
 import { ReservedTokenRateCallout, ReservedTokensList } from './components'
 
 export const CustomTokenSettings = () => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
+  const isMobile = useMobile()
+
+  const initalMintRateAccessory = (
+    <span style={{ marginRight: 20 }}>
+      <Trans>Tokens per ETH contributed</Trans>
+    </span>
+  )
+
   return (
     <>
-      <Form.Item name="initialMintRate" label={t`Initial Mint Rate`}>
+      <Form.Item
+        name="initialMintRate"
+        label={t`Initial Mint Rate`}
+        extra={isMobile ? initalMintRateAccessory : undefined}
+      >
         <FormattedNumberInput
           min={0}
           max={MAX_MINT_RATE}
-          accessory={
-            <span style={{ color: colors.text.primary, marginRight: 20 }}>
-              <Trans>tokens per ETH contributed</Trans>
-            </span>
-          }
+          accessory={!isMobile ? initalMintRateAccessory : undefined}
         />
       </Form.Item>
 

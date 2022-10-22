@@ -6,6 +6,7 @@ import { useDeployProject } from 'components/Create/hooks/DeployProject'
 import ExternalLink from 'components/ExternalLink'
 import TransactionModal from 'components/TransactionModal'
 import { ThemeContext } from 'contexts/themeContext'
+import useMobile from 'hooks/Mobile'
 import { useModal } from 'hooks/Modal'
 import { useWallet } from 'hooks/Wallet'
 import { useRouter } from 'next/router'
@@ -43,6 +44,7 @@ const Header: React.FC = ({ children }) => {
 
 export const ReviewDeployPage = () => {
   useSetCreateFurthestPageReached('reviewDeploy')
+  const isMobile = useMobile()
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -89,7 +91,7 @@ export const ReviewDeployPage = () => {
   const isNextEnabled = termsAccepted
   return (
     <>
-      <CreateCollapse accordion defaultActiveKey={0}>
+      <CreateCollapse accordion defaultActiveKey={!isMobile ? 0 : undefined}>
         <CreateCollapse.Panel
           key={0}
           header={

@@ -899,7 +899,7 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-msgid "Default Token Settings <0/>"
+msgid "Default Token Settings"
 msgstr ""
 
 msgid "Delete NFT"
@@ -1824,6 +1824,9 @@ msgid "Newsletter"
 msgstr ""
 
 msgid "Next"
+msgstr ""
+
+msgid "Next:"
 msgstr ""
 
 msgid "Next: Funding cycle"
@@ -3015,6 +3018,9 @@ msgid "Tokens cannot be claimed because no ERC-20 token has been issued for this
 msgstr ""
 
 msgid "Tokens for you"
+msgstr ""
+
+msgid "Tokens per ETH contributed"
 msgstr ""
 
 msgid "Tokens receiver"

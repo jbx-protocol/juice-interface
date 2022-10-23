@@ -1,16 +1,45 @@
 import { ShareAltOutlined } from '@ant-design/icons'
-import { t } from '@lingui/macro'
-import { Button } from 'antd'
+import { t, Trans } from '@lingui/macro'
+import { Button, Space } from 'antd'
+import ExternalLink from 'components/ExternalLink'
+import { NEW_DEPLOY_QUERY_PARAM } from 'components/v2v3/V2V3Project/modals/NewDeployModal'
 import { useWallet } from 'hooks/Wallet'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
+import { useCallback, useMemo } from 'react'
 
 export const DeploySuccess = ({ projectId }: { projectId: number }) => {
   console.info('Deploy: SUCCESS', projectId)
+  const router = useRouter()
   const { chain } = useWallet()
   let deployGreeting = t`Your project has successfully launched!`
   if (chain?.name) {
     deployGreeting = t`Your project has successfully launched on ${chain.name}!`
   }
+
+  /**
+   * Generate a twitter share link based on the project id.
+   */
+  const twitterShareUrl = useMemo(() => {
+    let juiceboxUrl = `https://juicebox.money/v2/p/${projectId}`
+    const chainId = chain?.name.toLowerCase() ?? 'mainnet'
+    if (chainId !== 'mainnet') {
+      juiceboxUrl = `https://${chainId}.juicebox.money/v2/p/${projectId}`
+    }
+    const message = `Check out my project on ${
+      chain?.name ? `${chain.name} ` : ''
+    }Juicebox!\n${juiceboxUrl}`
+    return `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+      message,
+    )}`
+  }, [chain, projectId])
+
+  const handleGoToProject = useCallback(() => {
+    router.push(
+      `/v2/p/${projectId}?${NEW_DEPLOY_QUERY_PARAM}=1`,
+      `/v2/p/${projectId}`,
+    )
+  }, [projectId, router])
 
   return (
     <div
@@ -44,8 +73,18 @@ export const DeploySuccess = ({ projectId }: { projectId: number }) => {
         {deployGreeting}
       </div>
       <div style={{ display: 'flex', gap: '0.5rem', paddingTop: '4rem' }}>
-        <Button icon={<ShareAltOutlined />}>Share project</Button>
-        <Button type="primary">Go to project</Button>
+        <ExternalLink href={twitterShareUrl}>
+          <Button>
+            {/* Spacing is weird when you use button icon - do this instead */}
+            <Space>
+              <ShareAltOutlined />
+              <Trans> Share project</Trans>
+            </Space>
+          </Button>
+        </ExternalLink>
+        <Button type="primary" onClick={handleGoToProject}>
+          <Trans>Go to project</Trans>
+        </Button>
       </div>
     </div>
   )

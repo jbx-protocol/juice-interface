@@ -680,6 +680,9 @@ msgstr ""
 msgid "Close, I'll do these later"
 msgstr ""
 
+msgid "Collection Description"
+msgstr ""
+
 msgid "Collection Name"
 msgstr ""
 
@@ -1685,6 +1688,9 @@ msgstr ""
 msgid "Manual Funding Cycles"
 msgstr ""
 
+msgid "Marketplace Customizations"
+msgstr ""
+
 msgid "Marketplace customizations"
 msgstr ""
 
@@ -2016,6 +2022,9 @@ msgid "Payment Address created"
 msgstr ""
 
 msgid "Payment Addresses"
+msgstr ""
+
+msgid "Payment Success Popup"
 msgstr ""
 
 msgid "Payment equivalent"
@@ -3675,9 +3684,6 @@ msgid "{formattedTimeLeft} left"
 msgstr ""
 
 msgid "{formattedTimeLeft} until #{0}"
-msgstr ""
-
-msgid "{header} <0>(Optional)</0>"
 msgstr ""
 
 msgid "{inflationRate} tokens / ETH"

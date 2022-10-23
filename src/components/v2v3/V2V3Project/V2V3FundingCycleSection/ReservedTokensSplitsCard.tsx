@@ -151,7 +151,7 @@ export default function ReservedTokensSplitsCard({
             <TooltipLabel
               label={
                 <h4 style={{ display: 'inline-block' }}>
-                  <Trans>Reserved {tokensText}</Trans> (
+                  <Trans>Reserved {tokensText} splits</Trans> (
                   {formatReservedRate(reservedRate)}%)
                 </h4>
               }

@@ -206,6 +206,9 @@ msgstr ""
 msgid "<0>This website (juicebox.money) connects to the Juicebox protocol's smart contracts, deployed on the Ethereum network. (note: anyone else can make a website that also connects to these same smart contracts. For now, don't trust any site other than this one to access the Juicebox protocol).</0><1>Creating a Juicebox project mints you an NFT (ERC-721) representing ownership over it. Whoever owns this NFT can configure the rules of the game and how payouts are distributed.</1><2>The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The amount of tokens minted and distributed are proportional to the volume of payments received, weighted by the project's discount rate over time.</2>"
 msgstr ""
 
+msgid "<0>Total project tokens minted when 1 ETH is contributed.</0> This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
+msgstr ""
+
 msgid "<0>Total project tokens minted</0> when 1 ETH is contributed. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
 msgstr ""
 
@@ -437,10 +440,10 @@ msgstr ""
 msgid "Amount of ERC-20 tokens to claim"
 msgstr ""
 
-msgid "Amount of newly minted project tokens <0>reserved for the project</0> when 1 ETH is contributed. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner."
+msgid "Amount of newly minted project tokens <0>reserved for the project</0> when 1 ETH is contributed."
 msgstr ""
 
-msgid "Amount of newly minted project tokens <0>reserved for the project</0> when 1 ETH is contributed. The project owner is allocated all reserved tokens by default, but they can also be allocated to other wallet addresses."
+msgid "Amount of newly minted project tokens <0>reserved for the project</0> when 1 ETH is contributed. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner."
 msgstr ""
 
 msgid "Amount paid"
@@ -1817,7 +1820,7 @@ msgstr ""
 msgid "New project tokens will be minted to the address that made the payment."
 msgstr ""
 
-msgid "Newly minted {tokenSymbolPlural} <0>received by contributors</0> per ETH they contribute to the treasury."
+msgid "Newly minted project tokens <0>received by contributors</0> when they contribute 1 ETH to the treasury."
 msgstr ""
 
 msgid "Newsletter"
@@ -2021,6 +2024,9 @@ msgstr ""
 msgid "Payment equivalent"
 msgstr ""
 
+msgid "Payment issuance rate"
+msgstr ""
+
 msgid "Payment memo"
 msgstr ""
 
@@ -2076,6 +2082,9 @@ msgid "Percent"
 msgstr ""
 
 msgid "Percentage allocation"
+msgstr ""
+
+msgid "Percentage of newly minted tokens reserved for the project. The project owner is allocated all reserved tokens by default, but they can also be allocated to other wallet addresses (see <0>Reserved token splits</0>)."
 msgstr ""
 
 msgid "Percentage:"
@@ -2405,7 +2414,7 @@ msgstr ""
 msgid "Reserved {tokenTextPlural}: <0>{reservedTokensFormatted} {tokenTextPlural}</0>"
 msgstr ""
 
-msgid "Reserved {tokensText}"
+msgid "Reserved {tokensText} splits"
 msgstr ""
 
 msgid "Resources"
@@ -2772,6 +2781,9 @@ msgid "The maximum amount of funds allowed to be distributed from the project's 
 msgstr ""
 
 msgid "The maximum amount of funds that can be distributed from the treasury each funding cycle."
+msgstr ""
+
+msgid "The maximum amount of funds that can be distributed from the treasury in a funding cycle."
 msgstr ""
 
 msgid "The maximum amount of funds that can be distributed from this project in one funding cycle. Funds will be withdrawn in ETH no matter the currency you choose."
@@ -3711,9 +3723,6 @@ msgid "{payerRate} {tokenSymbolPlural}/ETH"
 msgstr ""
 
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
-msgstr ""
-
-msgid "{reservedRate} {tokenSymbolPlural}/ETH ({0}%)"
 msgstr ""
 
 msgid "{tokenSymbolDisplayText} range"

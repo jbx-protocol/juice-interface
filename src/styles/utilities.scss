@@ -72,3 +72,8 @@
 .selected-box-shadow {
   box-shadow: 2px 0px 10px 0px var(--boxShadow-primary);
 }
+
+.dashed-underline {
+  border-bottom: 1px dashed var(--stroke-tertiary);
+  margin-bottom: 3px;
+}

@@ -83,6 +83,9 @@ msgstr ""
 msgid "<0/> Your project’s settings cannot be edited or changed during the first funding cycle."
 msgstr ""
 
+msgid "<0/> Your project’s settings will not be able to be edited or changed during the first funding cycle."
+msgstr ""
+
 msgid "<0/> contributed"
 msgstr ""
 
@@ -93,9 +96,6 @@ msgid "<0/> owner balance"
 msgstr ""
 
 msgid "<0/> will go to the project owner: <1/>"
-msgstr ""
-
-msgid "<0/> your project’s settings will not be able to be edited or changed during the first funding cycle."
 msgstr ""
 
 msgid "<0/>{0} after {feePercentage}% JBX membership fee"
@@ -347,7 +347,7 @@ msgstr ""
 msgid "Add token allocation"
 msgstr ""
 
-msgid "Add wallet addresses or juicebox projects to receive payouts."
+msgid "Add wallet addresses or Juicebox projects to receive payouts."
 msgstr ""
 
 msgid "Added to balance"
@@ -1211,7 +1211,7 @@ msgstr ""
 msgid "End"
 msgstr ""
 
-msgid "Enter your project’s details. You can edit your project's details at any time after you deploy project your project, but the transaction will cost gas."
+msgid "Enter your project's details. You can edit your project's details at any time after you deploy your project, but the transaction will cost gas."
 msgstr ""
 
 msgid "Error downloading payments, try again."
@@ -1427,7 +1427,7 @@ msgstr ""
 msgid "I accept this project's <0>risks</0>."
 msgstr ""
 
-msgid "I have read and accept the <0>Terms of Service</0>, and understand that I CANNOT make changes to my project's funding configuration until AFTER Funding Cycle #1 has finished."
+msgid "I have read and accept the <0>Terms of Service</0>, and understand that any changes I make to my project's funding cycle will not be applied until AFTER Funding Cycle #1 has finished."
 msgstr ""
 
 msgid "I have read and accept the <0>Terms of Service</0>."

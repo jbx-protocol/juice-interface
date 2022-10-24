@@ -53,7 +53,7 @@ export const FundingTargetPage: React.FC = () => {
                 label={t`Set your funding target`}
                 extra={
                   <Trans>
-                    <InfoCircleOutlined /> your project’s settings will not be
+                    <InfoCircleOutlined /> Your project’s settings will not be
                     able to be edited or changed during the first funding cycle.
                   </Trans>
                 }

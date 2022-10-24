@@ -163,8 +163,9 @@ export const ReviewDeployPage = () => {
                 <ExternalLink href="https://info.juicebox.money/tos/">
                   Terms of Service
                 </ExternalLink>
-                , and understand that I CANNOT make changes to my project's
-                funding configuration until AFTER Funding Cycle #1 has finished.
+                , and understand that any changes I make to my project's funding
+                cycle will not be applied until AFTER Funding Cycle #1 has
+                finished.
               </Trans>
             </div>
           </div>

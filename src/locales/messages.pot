@@ -575,6 +575,9 @@ msgstr ""
 msgid "Burn {tokensTextLong}"
 msgstr ""
 
+msgid "Button Text"
+msgstr ""
+
 msgid "Button will close the modal if no link is given."
 msgstr ""
 
@@ -2801,6 +2804,12 @@ msgstr ""
 msgid "The maximum supply of this NFT in circulation."
 msgstr ""
 
+msgid "The message that will be shown to the user after they pay for an NFT."
+msgstr ""
+
+msgid "The name of the collection that will be shown on NFT marketplaces (e.g. OpenSea)."
+msgstr ""
+
 msgid "The number of project tokens minted when 1 ETH is contributed in the first funding cycle."
 msgstr ""
 
@@ -2858,7 +2867,13 @@ msgstr ""
 msgid "The redemption rate determines the amount of overflow each token can be redeemed for. <0>Learn more.</0>"
 msgstr ""
 
+msgid "The symbol of the collection that will be shown on NFT marketplaces (e.g. OpenSea)."
+msgstr ""
+
 msgid "The target for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
+msgstr ""
+
+msgid "The text that will be shown to the user on the button post pay popup.<0/><1>For more information, see the preview.</1>"
 msgstr ""
 
 msgid "The total funds this Juicebox project has received since it was created."

@@ -1,10 +1,8 @@
 import { getAddress } from '@ethersproject/address'
-import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
-import { parseEther } from '@ethersproject/units'
 import { t } from '@lingui/macro'
 import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
-import { MaxUint48, WAD_DECIMALS } from 'constants/numbers'
+import { WAD_DECIMALS } from 'constants/numbers'
 import { TransactionContext } from 'contexts/transactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { TransactorInstance } from 'hooks/Transactor'
@@ -17,8 +15,11 @@ import {
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
-import { encodeIPFSUri, ipfsCidUrl } from 'utils/ipfs'
-import { findJBTiered721DelegateStoreAddress } from 'utils/nftRewards'
+import { ipfsCidUrl } from 'utils/ipfs'
+import {
+  buildJB721TierParams,
+  findJBTiered721DelegateStoreAddress,
+} from 'utils/nftRewards'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { isValidMustStartAtOrAfter } from 'utils/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../ProjectTitle'
@@ -32,7 +33,7 @@ enum JB721GovernanceType {
 const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
 const DEFAULT_MEMO = ''
 
-// Maps cid to contributionFloor
+// Maps cid to NftRewardTier obj
 export type TxNftArg = { [cid: string]: NftRewardTier }
 
 async function getJBDeployTiered721DelegateData({
@@ -56,26 +57,7 @@ async function getJBDeployTiered721DelegateData({
 }) {
   const JBTiered721DelegateStoreAddress =
     await findJBTiered721DelegateStoreAddress()
-  const tiers = Object.keys(nftRewards).map(cid => {
-    const contributionFloorWei = parseEther(
-      nftRewards[cid].contributionFloor.toString(),
-    )
-    const maxSupply = nftRewards[cid].maxSupply
-    const initialQuantity = maxSupply ?? MaxUint48
-    const encodedIPFSUri = encodeIPFSUri(cid)
-
-    return {
-      contributionFloor: contributionFloorWei,
-      lockedUntil: BigNumber.from(0),
-      initialQuantity,
-      votingUnits: 0,
-      reservedRate: 0,
-      reservedTokenBeneficiary: constants.AddressZero,
-      encodedIPFSUri,
-      allowManualMint: false,
-      shouldUseBeneficiaryAsDefault: false,
-    }
-  })
+  const tiers = buildJB721TierParams(nftRewards)
 
   const pricing = {
     tiers,

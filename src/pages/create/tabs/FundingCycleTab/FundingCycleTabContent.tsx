@@ -144,7 +144,7 @@ export default function FundingCycleTabContent({
         isCreate
       />
       <TokenDrawer open={tokenDrawerVisible} onClose={closeDrawer} isCreate />
-      <NftDrawer open={NftDrawerVisible} onClose={closeDrawer} />
+      <NftDrawer open={NftDrawerVisible} onClose={closeDrawer} isCreate />
       <RulesDrawer open={rulesDrawerVisible} onClose={closeDrawer} />
     </ProjectConfigurationFieldsContainer>
   )

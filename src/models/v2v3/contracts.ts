@@ -26,6 +26,7 @@ export enum V2V3ContractName {
 
   JBTiered721DelegateProjectDeployer = 'JBTiered721DelegateProjectDeployer',
   JBTiered721DelegateStore = 'JBTiered721DelegateStore',
+  JBTiered721Delegate = 'JBTiered721Delegate',
 }
 
 export type V2V3Contracts = Record<V2V3ContractName, Contract>

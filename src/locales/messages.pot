@@ -713,6 +713,9 @@ msgstr ""
 msgid "Configure which Juicebox V1 project you'd like to accept tokens for. Token holders of this V1 project will be able to swap their V1 tokens for V2 tokens."
 msgstr ""
 
+msgid "Configure your project's NFT rewards."
+msgstr ""
+
 msgid "Configure your project's first funding cycle below."
 msgstr ""
 
@@ -1803,6 +1806,9 @@ msgid "NFT Rewards"
 msgstr ""
 
 msgid "NFT Rewards <0/>"
+msgstr ""
+
+msgid "NFT adjust tiers"
 msgstr ""
 
 msgid "NFT mint confirmed"

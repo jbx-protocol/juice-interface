@@ -57,8 +57,9 @@ export function V2V3Project() {
   } = useContext(V2V3ProjectContext)
   const { projectId, cv } = useContext(ProjectMetadataContext)
   const {
-    nftRewards: { rewardTiers: nftRewardTiers },
+    nftRewards: { rewardTiers: nftRewardTiers, collectionMetadata },
   } = useContext(NftRewardsContext)
+  console.info('projectpage nft: ', nftRewardTiers, collectionMetadata)
 
   const { visible: newDeployModalVisible, hide: hideNewDeployModal } =
     useModalFromUrlQuery(NEW_DEPLOY_QUERY_PARAM)

@@ -1,6 +1,11 @@
+import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
 import axios from 'axios'
 import { juiceboxEmojiImageUri } from 'constants/images'
 import { readNetwork } from 'constants/networks'
+import { MaxUint48 } from 'constants/numbers'
+import { parseEther } from 'ethers/lib/utils'
+import { TxNftArg } from 'hooks/v2v3/transactor/LaunchProjectWithNftsTx'
 import {
   ContractNftRewardTier,
   IpfsNftCollectionMetadata,
@@ -8,8 +13,9 @@ import {
   NftRewardTier,
 } from 'models/nftRewardTier'
 import { V2V3ContractName } from 'models/v2v3/contracts'
-import { decodeEncodedIPFSUri, IPFS_TAGS } from 'utils/ipfs'
+import { decodeEncodedIPFSUri, encodeIPFSUri, IPFS_TAGS } from 'utils/ipfs'
 import { ForgeDeploy } from './v2v3/loadV2V3Contract'
+
 export const MAX_NFT_REWARD_TIERS = 3
 
 // Following three functions get the latest deployments of the NFT contracts from the NPM package
@@ -198,5 +204,46 @@ export function tiersEqual({
     tier1.imageUrl === tier2.imageUrl &&
     tier1.maxSupply === tier2.maxSupply &&
     tier1.name === tier2.name
+  )
+}
+
+// converts txNftArg[] into JB721TierParams[] (see juice-nft-rewards:structs/JB721TierParams.sol)
+export function buildJB721TierParams(nftRewards: TxNftArg) {
+  return Object.keys(nftRewards).map(cid => {
+    const contributionFloorWei = parseEther(
+      nftRewards[cid].contributionFloor.toString(),
+    )
+    const maxSupply = nftRewards[cid].maxSupply
+    const initialQuantity = maxSupply ?? MaxUint48
+    const encodedIPFSUri = encodeIPFSUri(cid)
+
+    return {
+      contributionFloor: contributionFloorWei,
+      lockedUntil: BigNumber.from(0),
+      initialQuantity,
+      votingUnits: 0,
+      reservedRate: 0,
+      reservedTokenBeneficiary: constants.AddressZero,
+      encodedIPFSUri,
+      allowManualMint: false,
+      shouldUseBeneficiaryAsDefault: false,
+    }
+  })
+}
+
+// returns util arg send to nft Tx's
+export function buildNftTxArg({
+  cids,
+  rewardTiers,
+}: {
+  cids: string[]
+  rewardTiers: NftRewardTier[] | undefined
+}): TxNftArg {
+  return cids.reduce(
+    (acc, cid, idx) => ({
+      ...acc,
+      [cid]: rewardTiers?.[idx] ?? undefined,
+    }),
+    {},
   )
 }

@@ -22,6 +22,7 @@ import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { uploadProjectMetadata } from 'utils/ipfs'
+import { buildNftTxArg } from 'utils/nftRewards'
 import { emitErrorNotification } from 'utils/notifications'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { findTransactionReceipt } from './utils'
@@ -148,13 +149,7 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
       }
 
       // create mapping from cids -> contributionFloor
-      const nftRewardsArg: TxNftArg = CIDs.reduce(
-        (acc, cid, idx) => ({
-          ...acc,
-          [cid]: rewardTiers[idx],
-        }),
-        {},
-      )
+      const nftRewardsArg: TxNftArg = buildNftTxArg({ cids: CIDs, rewardTiers })
 
       const txSuccessful = await launchProjectWithNftsTx(
         {

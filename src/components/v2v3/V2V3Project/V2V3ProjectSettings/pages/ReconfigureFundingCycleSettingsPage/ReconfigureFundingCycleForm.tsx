@@ -5,12 +5,15 @@ import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
 import { MemoFormInput } from 'components/Project/PayProjectForm/MemoFormInput'
 import RichButton, { RichButtonProps } from 'components/RichButton'
 import FundingDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawers/FundingDrawer'
+import NftDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer'
 import RulesDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawers/RulesDrawer'
 import TokenDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawers/TokenDrawer'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useContext, useState } from 'react'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { useEditingProjectData } from './hooks/editingProjectData'
 import { useFundingHasSavedChanges } from './hooks/fundingHasSavedChanges'
 import { useInitialEditingData } from './hooks/initialEditingData'
@@ -48,6 +51,7 @@ export function V2V3ReconfigureFundingCycleForm() {
   const [fundingDrawerVisible, setFundingDrawerVisible] =
     useState<boolean>(false)
   const [tokenDrawerVisible, setTokenDrawerVisible] = useState<boolean>(false)
+  const [nftDrawerVisible, setNftDrawerVisible] = useState<boolean>(false)
   const [rulesDrawerVisible, setRulesDrawerVisible] = useState<boolean>(false)
   const [unsavedChangesModalVisibile, setUnsavedChangesModalVisible] =
     useState<boolean>(false)
@@ -59,6 +63,7 @@ export function V2V3ReconfigureFundingCycleForm() {
     fundingDrawerHasSavedChanges,
     tokenDrawerHasSavedChanges,
     rulesDrawerHasSavedChanges,
+    nftDrawerHasSavedChanges,
   } = useFundingHasSavedChanges({
     editingProjectData,
     initialEditingData,
@@ -71,6 +76,7 @@ export function V2V3ReconfigureFundingCycleForm() {
     setFundingDrawerVisible(false)
     setTokenDrawerVisible(false)
     setRulesDrawerVisible(false)
+    setNftDrawerVisible(false)
   }
 
   // const openUnsavedChangesModal = () => setUnsavedChangesModalVisible(true)
@@ -88,6 +94,8 @@ export function V2V3ReconfigureFundingCycleForm() {
   const nftsWithFalseDataSourceForPay = Boolean(
     nftRewardsCids?.length && !fundingCycleMetadata?.useDataSourceForPay,
   )
+
+  const nftsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
 
   return (
     <>
@@ -108,6 +116,14 @@ export function V2V3ReconfigureFundingCycleForm() {
           reconfigureHasChanges={tokenDrawerHasSavedChanges}
           onClick={() => setTokenDrawerVisible(true)}
         />
+        {nftsEnabled ? (
+          <ReconfigureButton
+            heading={t`NFT rewards`}
+            description={t`Configure your project's NFT rewards.`}
+            reconfigureHasChanges={nftDrawerHasSavedChanges}
+            onClick={() => setNftDrawerVisible(true)}
+          />
+        ) : null}
         <ReconfigureButton
           heading={t`Rules`}
           description={t`Configure restrictions for your funding cycles.`}
@@ -159,6 +175,9 @@ export function V2V3ReconfigureFundingCycleForm() {
       />
       <TokenDrawer open={tokenDrawerVisible} onClose={closeReconfigureDrawer} />
       <RulesDrawer open={rulesDrawerVisible} onClose={closeReconfigureDrawer} />
+      {nftsEnabled ? (
+        <NftDrawer open={nftDrawerVisible} onClose={closeReconfigureDrawer} />
+      ) : null}
       <UnsavedChangesModal
         open={unsavedChangesModalVisibile}
         onOk={closeUnsavedChangesModalAndExit}

@@ -8,6 +8,7 @@ import { useLaunchProjectWithNftsTx } from 'hooks/v2v3/transactor/LaunchProjectW
 import { TransactionCallbacks } from 'models/transaction'
 import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton'
 import { useCallback, useMemo } from 'react'
+import { buildNftTxArg } from 'utils/nftRewards'
 
 /**
  * Hook that returns a function that deploys a project with NFT rewards.
@@ -81,13 +82,10 @@ export const useDeployNftProject = () => {
           },
           fundAccessConstraints,
           groupedSplits,
-          nftRewards: rewardTierCids.reduce(
-            (acc, cid, idx) => ({
-              ...acc,
-              [cid]: nftRewards.rewardTiers[idx],
-            }),
-            {},
-          ),
+          nftRewards: buildNftTxArg({
+            cids: rewardTierCids,
+            rewardTiers: nftRewards.rewardTiers,
+          }),
         },
         {
           onDone,

@@ -47,6 +47,12 @@ import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
 import { featureFlagEnabled } from 'utils/featureFlags'
 
+export type NftRewardsData = {
+  rewardTiers: NftRewardTier[] | undefined
+  CIDs: string[] | undefined // points to locations of the NFTs' json on IPFS
+  collectionMetadata: NftCollectionMetadata
+  postPayModal: NftPostPayModalConfig | undefined
+}
 interface V2ProjectState {
   version: number
   projectMetadata: ProjectMetadataV5
@@ -57,12 +63,7 @@ interface V2ProjectState {
   payoutsSelection: PayoutsSelection | undefined
   reservedTokensGroupedSplits: ReservedTokensGroupedSplits
   projectTokensSelection: ProjectTokensSelection | undefined
-  nftRewards: {
-    rewardTiers: NftRewardTier[]
-    CIDs: string[] | undefined // points to locations of the NFTs' json on IPFS
-    collectionMetadata: NftCollectionMetadata
-    postPayModal: NftPostPayModalConfig | undefined
-  }
+  nftRewards: NftRewardsData
   fundingCyclesPageSelection: 'automated' | 'manual' | undefined
   reconfigurationRuleSelection: ReconfigurationStrategy | undefined
   createFurthestPageReached: CreatePage
@@ -154,7 +155,7 @@ const EMPTY_RESERVED_TOKENS_GROUPED_SPLITS = {
   splits: [],
 }
 
-const EMPTY_NFT_COLLECTION_METADATA = {
+export const EMPTY_NFT_COLLECTION_METADATA = {
   symbol: undefined,
   name: undefined,
   CID: undefined,
@@ -290,6 +291,9 @@ const editingV2ProjectSlice = createSlice({
     },
     setBallot: (state, action: PayloadAction<string>) => {
       state.fundingCycleData.ballot = action.payload
+    },
+    setNftRewards: (state, action: PayloadAction<NftRewardsData>) => {
+      state.nftRewards = action.payload
     },
     setNftRewardTiers: (state, action: PayloadAction<NftRewardTier[]>) => {
       state.nftRewards.rewardTiers = action.payload

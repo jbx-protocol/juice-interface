@@ -3,6 +3,7 @@ import {
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
+import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
@@ -12,7 +13,10 @@ import useProjectQueuedFundingCycle from 'hooks/v2v3/contractReader/ProjectQueue
 import useProjectSplits from 'hooks/v2v3/contractReader/ProjectSplits'
 import { Split } from 'models/splits'
 import { useContext, useEffect, useState } from 'react'
-import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import {
+  editingV2ProjectActions,
+  NftRewardsData,
+} from 'redux/slices/editingV2Project'
 import { fromWad } from 'utils/format/formatNumber'
 import { NO_CURRENCY, V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import {
@@ -31,8 +35,10 @@ export interface InitialEditingData {
     payoutGroupedSplits: Split[]
     reservedTokensGroupedSplits: Split[]
   }
+  nftRewards: NftRewardsData | undefined
 }
 
+// This hook loads data from project context into the redux state
 export const useInitialEditingData = ({ visible }: { visible?: boolean }) => {
   const { contracts } = useContext(V2V3ContractsContext)
   const {
@@ -44,8 +50,9 @@ export const useInitialEditingData = ({ visible }: { visible?: boolean }) => {
     distributionLimit,
     distributionLimitCurrency,
   } = useContext(V2V3ProjectContext)
-  const { projectId } = useContext(ProjectMetadataContext)
 
+  const { nftRewards } = useContext(NftRewardsContext)
+  const { projectId } = useContext(ProjectMetadataContext)
   const [initialEditingData, setInitialEditingData] = useState<{
     fundAccessConstraints: SerializedV2V3FundAccessConstraint[]
     fundingCycleData: SerializedV2V3FundingCycleData
@@ -54,6 +61,7 @@ export const useInitialEditingData = ({ visible }: { visible?: boolean }) => {
       payoutGroupedSplits: Split[]
       reservedTokensGroupedSplits: Split[]
     }
+    nftRewards: NftRewardsData
   }>()
 
   const dispatch = useAppDispatch()
@@ -179,6 +187,9 @@ export const useInitialEditingData = ({ visible }: { visible?: boolean }) => {
       ),
     )
 
+    // Set nft rewards
+    dispatch(editingV2ProjectActions.setNftRewards(nftRewards))
+
     setInitialEditingData({
       fundAccessConstraints: editingFundAccessConstraints,
       fundingCycleData: editingFundingCycleData,
@@ -187,6 +198,7 @@ export const useInitialEditingData = ({ visible }: { visible?: boolean }) => {
         payoutGroupedSplits: effectivePayoutSplits ?? [],
         reservedTokensGroupedSplits: effectiveReservedTokensSplits ?? [],
       },
+      nftRewards: nftRewards,
     })
   }, [
     contracts,
@@ -198,6 +210,7 @@ export const useInitialEditingData = ({ visible }: { visible?: boolean }) => {
     effectiveDistributionLimitCurrency,
     fundingCycle,
     visible,
+    nftRewards,
     dispatch,
   ])
 

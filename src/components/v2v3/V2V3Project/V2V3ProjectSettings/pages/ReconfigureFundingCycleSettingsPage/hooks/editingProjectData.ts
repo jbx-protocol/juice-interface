@@ -13,6 +13,7 @@ import {
   V2V3FundingCycleData,
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
+import { NftRewardsData } from 'redux/slices/editingV2Project'
 
 export interface EditingProjectData {
   editingPayoutGroupedSplits: ETHPayoutGroupedSplits
@@ -20,6 +21,7 @@ export interface EditingProjectData {
   editingFundingCycleMetadata: Omit<V2V3FundingCycleMetadata, 'version'>
   editingFundingCycleData: V2V3FundingCycleData
   editingFundAccessConstraints: V2V3FundAccessConstraint[]
+  editingNftRewards: NftRewardsData | undefined
 }
 
 export const useEditingProjectData = () => {
@@ -27,6 +29,7 @@ export const useEditingProjectData = () => {
   const {
     payoutGroupedSplits: editingPayoutGroupedSplits,
     reservedTokensGroupedSplits: editingReservedTokensGroupedSplits,
+    nftRewards: editingNftRewards,
   } = useAppSelector(state => state.editingV2Project)
   const editingFundingCycleMetadata =
     useEditingV2V3FundingCycleMetadataSelector()
@@ -40,5 +43,6 @@ export const useEditingProjectData = () => {
     editingFundingCycleMetadata,
     editingFundingCycleData,
     editingFundAccessConstraints,
+    editingNftRewards,
   }
 }

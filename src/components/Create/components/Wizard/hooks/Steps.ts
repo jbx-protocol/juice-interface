@@ -31,7 +31,7 @@ export const useSteps = () => {
 
   const firstIndexOfLockedPage = useMemo(() => {
     const index = Object.keys(stepNames).findIndex(stepName =>
-      softLockedPageQueue.includes(stepName as CreatePage),
+      softLockedPageQueue?.includes(stepName as CreatePage),
     )
     return index === -1 ? undefined : index
   }, [softLockedPageQueue])

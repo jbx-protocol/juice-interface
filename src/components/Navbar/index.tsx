@@ -1,5 +1,5 @@
 import useMobile from 'hooks/Mobile'
-import { TopLeftNavItems } from './MenuItems'
+import DesktopNavigation from './DeskTopNavigation'
 import MobileCollapse from './Mobile/MobileCollapse'
 
 export default function Navbar() {
@@ -8,5 +8,5 @@ export default function Navbar() {
 
   if (isMobile) return <MobileCollapse />
 
-  return <TopLeftNavItems desktop={desktop} />
+  return <DesktopNavigation desktop={desktop} />
 }

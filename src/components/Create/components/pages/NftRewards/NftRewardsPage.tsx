@@ -1,7 +1,8 @@
-import { EyeOutlined, QuestionCircleOutlined } from '@ant-design/icons'
+import { EyeOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Form, Input, Space } from 'antd'
 import { NftPostPayModal } from 'components/NftRewards/NftPostPayModal'
+import TooltipLabel from 'components/TooltipLabel'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useModal } from 'hooks/Modal'
 import { useContext } from 'react'
@@ -49,10 +50,15 @@ export const NftRewardsPage = () => {
                 <Form.Item
                   name="collectionName"
                   label={
-                    <Space>
-                      <Trans>Collection Name</Trans>
-                      <QuestionCircleOutlined />
-                    </Space>
+                    <TooltipLabel
+                      label={t`Collection Name`}
+                      tip={
+                        <Trans>
+                          The name of the collection that will be shown on NFT
+                          marketplaces (e.g. OpenSea).
+                        </Trans>
+                      }
+                    />
                   }
                 >
                   <Input />
@@ -60,10 +66,15 @@ export const NftRewardsPage = () => {
                 <Form.Item
                   name="collectionSymbol"
                   label={
-                    <Space>
-                      <Trans>Collection Symbol</Trans>
-                      <QuestionCircleOutlined />
-                    </Space>
+                    <TooltipLabel
+                      label={t`Collection Symbol`}
+                      tip={
+                        <Trans>
+                          The symbol of the collection that will be shown on NFT
+                          marketplaces (e.g. OpenSea).
+                        </Trans>
+                      }
+                    />
                   }
                 >
                   <Input />
@@ -85,10 +96,15 @@ export const NftRewardsPage = () => {
                 <Form.Item
                   name="postPayMessage"
                   label={
-                    <Space>
-                      <Trans>Message</Trans>
-                      <QuestionCircleOutlined />
-                    </Space>
+                    <TooltipLabel
+                      label={t`Message`}
+                      tip={
+                        <Trans>
+                          The message that will be shown to the user after they
+                          pay for an NFT.
+                        </Trans>
+                      }
+                    />
                   }
                 >
                   <Input.TextArea autoSize={{ minRows: 4, maxRows: 6 }} />
@@ -96,10 +112,19 @@ export const NftRewardsPage = () => {
                 <Form.Item
                   name="postPayButtonText"
                   label={
-                    <Space>
-                      <Trans>Call-to-action button text</Trans>
-                      <QuestionCircleOutlined />
-                    </Space>
+                    <TooltipLabel
+                      label={t`Button Text`}
+                      tip={
+                        <Trans>
+                          The text that will be shown to the user on the button
+                          post pay popup.
+                          <br />
+                          <strong>
+                            For more information, see the preview.
+                          </strong>
+                        </Trans>
+                      }
+                    />
                   }
                 >
                   <Input />

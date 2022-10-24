@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro'
+import { t } from '@lingui/macro'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import { CurrencyContext } from 'contexts/currencyContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -27,10 +27,8 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
     setPayAmount,
     payInCurrency,
     setPayInCurrency,
-    mustBeGreaterThanZeroError,
-    setMustBeGreaterThanZeroError,
-    mustBeLessThanBalanceError,
-    setMustBeLessThanBalanceError,
+    errorMessage,
+    setErrorMessage,
   } = payProjectForm ?? {}
 
   const togglePayInCurrency = () => {
@@ -42,19 +40,10 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
 
   return (
     <>
-      {mustBeGreaterThanZeroError && (
+      {errorMessage && (
         <div style={{ height: '22px' }}>
           <span style={{ color: colors.text.failure, fontSize: '0.7rem' }}>
-            <Trans>Pay amount must be greater than 0.</Trans>
-          </span>
-        </div>
-      )}
-      {!mustBeGreaterThanZeroError && mustBeLessThanBalanceError && (
-        <div style={{ height: '22px' }}>
-          <span style={{ color: colors.text.failure, fontSize: '0.7rem' }}>
-            <Trans>
-              Pay amount must be less than or equal to wallet balance.
-            </Trans>
+            {errorMessage}
           </span>
         </div>
       )}
@@ -70,9 +59,16 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
           <FormattedNumberInput
             placeholder="0"
             onChange={val => {
-              setMustBeGreaterThanZeroError?.(Number(val) <= 0)
-              setMustBeLessThanBalanceError?.(Number(val) > formattedBalance)
               setPayAmount?.(val ?? '0')
+              if (Number(val) <= 0) {
+                setErrorMessage?.(t`Payment amount can't be 0`)
+              } else if (Number(val) > formattedBalance) {
+                setErrorMessage?.(
+                  t`Payment amount can't exceed your wallet balance.`,
+                )
+              } else {
+                setErrorMessage?.('')
+              }
             }}
             value={payAmount}
             min={0}
@@ -94,9 +90,7 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
 
         <PayButton
           wrapperStyle={{ flex: 1 }}
-          disabled={
-            disabled || mustBeGreaterThanZeroError || mustBeLessThanBalanceError
-          }
+          disabled={disabled || errorMessage !== ''}
         />
       </div>
     </>

@@ -22,7 +22,11 @@ import ReviewDeployTab from './tabs/ReviewDeployTab'
 export default function V2CreatePage() {
   return (
     <>
-      <Head />
+      <Head
+        title={t`Create a project`}
+        url={process.env.NEXT_PUBLIC_SITE_URL + '/create'}
+        description={t`Create a project on Juicebox`}
+      />
       <NextHead>
         <DesmosScript />
       </NextHead>

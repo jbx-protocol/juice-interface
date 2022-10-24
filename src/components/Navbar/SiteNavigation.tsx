@@ -1,14 +1,12 @@
-import { Menu } from 'antd'
+import { Menu, Space } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
 import useMobile from 'hooks/Mobile'
 import { CSSProperties, useEffect, useState } from 'react'
-
 import Account from './Account'
 import { desktopMenuItems, resourcesMenuItems } from './constants'
 import MobileNavigation from './Mobile/MobileNavigation'
 import NavLanguageSelector from './NavLanguageSelector'
-import { navMenuItemStyles, topNavStyles } from './navStyles'
-
+import { topNavStyles } from './navStyles'
 import ThemePicker from './ThemePicker'
 import { TransactionsList } from './TransactionList'
 
@@ -22,7 +20,6 @@ const resourcesMenu = (
 export default function SiteNavigation() {
   const [resourcesOpen, setResourcesOpen] = useState<boolean>(false)
   const isMobile = useMobile()
-  const desktop = !isMobile
   const dropdownIconStyle: CSSProperties = {
     fontSize: 13,
     marginLeft: 7,
@@ -44,63 +41,35 @@ export default function SiteNavigation() {
     dropdownIconStyle,
   })
 
-  if (desktop) {
-    return (
-      <Header className="top-nav" style={{ ...topNavStyles }}>
-        <Menu
-          items={menuItems}
-          mode="inline"
-          style={{
-            display: 'flex',
-            flexDirection: desktop ? 'row' : 'column',
-            width: desktop ? 500 : 'auto',
+  if (isMobile) return <MobileNavigation />
+
+  return (
+    <Header className="top-nav" style={{ ...topNavStyles }}>
+      <Menu
+        items={menuItems}
+        mode="inline"
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          width: 500,
+        }}
+      />
+
+      <Space size="large">
+        <NavLanguageSelector />
+
+        <ThemePicker />
+
+        <TransactionsList
+          listStyle={{
+            position: 'absolute',
+            top: 70,
+            right: 30,
           }}
         />
-        <Menu
-          mode="horizontal"
-          items={[
-            {
-              key: 'navigation-selector',
-              label: (
-                <div style={navMenuItemStyles}>
-                  <NavLanguageSelector />
-                </div>
-              ),
-            },
-            {
-              key: 'theme-picker',
-              label: (
-                <div style={navMenuItemStyles}>
-                  <ThemePicker />
-                </div>
-              ),
-            },
-            {
-              key: 'transaction-list',
-              label: (
-                <div style={navMenuItemStyles}>
-                  <TransactionsList
-                    listStyle={{
-                      position: 'absolute',
-                      top: 70,
-                      right: 30,
-                    }}
-                  />
-                </div>
-              ),
-            },
-            {
-              key: 'account',
-              label: (
-                <div style={navMenuItemStyles}>
-                  <Account />
-                </div>
-              ),
-            },
-          ]}
-        />
-      </Header>
-    )
-  }
-  return <MobileNavigation />
+
+        <Account />
+      </Space>
+    </Header>
+  )
 }

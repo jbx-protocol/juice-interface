@@ -5,6 +5,7 @@ import Callout from 'components/Callout'
 import { useDeployProject } from 'components/Create/hooks/DeployProject'
 import ExternalLink from 'components/ExternalLink'
 import TransactionModal from 'components/TransactionModal'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
 import { useModal } from 'hooks/Modal'
@@ -14,6 +15,7 @@ import { useCallback, useContext } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { CreateCollapse } from '../../CreateCollapse'
 import { Wizard } from '../../Wizard'
 import {
@@ -122,16 +124,18 @@ export const ReviewDeployPage = () => {
         >
           <ProjectTokenReview />
         </CreateCollapse.Panel>
-        <CreateCollapse.Panel
-          key={3}
-          header={
-            <Header>
-              <Trans>NFT Rewards</Trans>
-            </Header>
-          }
-        >
-          <RewardsReview />
-        </CreateCollapse.Panel>
+        {featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS) && (
+          <CreateCollapse.Panel
+            key={3}
+            header={
+              <Header>
+                <Trans>NFT Rewards</Trans>
+              </Header>
+            }
+          >
+            <RewardsReview />
+          </CreateCollapse.Panel>
+        )}
         <CreateCollapse.Panel
           key={4}
           header={

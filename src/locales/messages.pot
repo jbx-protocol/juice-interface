@@ -794,7 +794,7 @@ msgstr ""
 msgid "Contributors will be rewarded this amount of your project's tokens per ETH contributed."
 msgstr ""
 
-msgid "Contributors will receive 5% more tokens for contributions they make this funding cycle compared to the next funding cycle."
+msgid "Contributors will not receive any extra tokens for paying the project early."
 msgstr ""
 
 msgid "Contributors will receive <0>no extra tokens</0> this funding cycle."
@@ -806,7 +806,13 @@ msgstr ""
 msgid "Contributors will receive a relatively small portion of tokens in exchange for paying this project."
 msgstr ""
 
+msgid "Contributors will receive the total amount of tokens available through issuance. All subsequent funding cycles will have a mint rate of 0."
+msgstr ""
+
 msgid "Contributors will receive this NFT when they contribute at least this amount."
+msgstr ""
+
+msgid "Contributors will receive {discountRate}% more tokens for contributions they make this funding cycle compared to the next funding cycle."
 msgstr ""
 
 msgid "Contributors will see this message before they pay your project."
@@ -2804,13 +2810,16 @@ msgstr ""
 msgid "The balance of this project in the Juicebox contract."
 msgstr ""
 
+msgid "The discount rate cannot be set while the funding cycle duration is not set."
+msgstr ""
+
 msgid "The distribution limit for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
 msgstr ""
 
 msgid "The future will be led by creators, and owned by communities."
 msgstr ""
 
-msgid "The issuance rate of your second funding cycle will be 950,000 tokens per 1 ETH, then 902,500 tokens per 1 ETH for your third funding cycle, and so on."
+msgid "The issuance rate of your second funding cycle will be {0} tokens per 1 ETH, then {1} tokens per 1 ETH for your third funding cycle, and so on."
 msgstr ""
 
 msgid "The maximum amount of funds allowed to be distributed from the project's treasury each funding cycle."
@@ -2876,7 +2885,7 @@ msgstr ""
 msgid "The project token's issuance rate decreases by the <0>discount rate</0> every funding cycle. A higher discount rate incentivizes contributors to fund the project earlier."
 msgstr ""
 
-msgid "The project token's issuance rate will decrease by this percentage every funding cycle (14 days). A higher discount rate will incentivize contributors to pay the project earlier."
+msgid "The project token's issuance rate will decrease by this percentage every funding cycle ({0}). A higher discount rate will incentivize contributors to pay the project earlier."
 msgstr ""
 
 msgid "The project’s owner can change the project's settings and start a new funding cycle at any time."

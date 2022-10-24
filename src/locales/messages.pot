@@ -1355,6 +1355,9 @@ msgstr ""
 msgid "Go to <0>{snapshotUrl}</0>"
 msgstr ""
 
+msgid "Go to project"
+msgstr ""
+
 msgid "Go to your Safe"
 msgstr ""
 
@@ -2637,6 +2640,9 @@ msgid "Set your funding target"
 msgstr ""
 
 msgid "Setting a handle requires 2 transactions: <0>Set ENS name</0> and <1>Set text record</1>."
+msgstr ""
+
+msgid "Share project"
 msgstr ""
 
 msgid "Should you Juicebox?"

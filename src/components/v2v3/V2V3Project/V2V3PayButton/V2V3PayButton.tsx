@@ -27,7 +27,8 @@ export function V2V3PayButton({ disabled, wrapperStyle }: PayButtonProps) {
   const [payWarningModalVisible, setPayWarningModalVisible] =
     useState<boolean>(false)
 
-  const { payInCurrency, payAmount, setError } = payProjectForm ?? {}
+  const { payInCurrency, payAmount, setMustBeGreaterThanZeroError } =
+    payProjectForm ?? {}
 
   const weiPayAmt = useWeiConverter<V2V3CurrencyOption>({
     currency: payInCurrency as V2V3CurrencyOption,
@@ -60,7 +61,7 @@ export function V2V3PayButton({ disabled, wrapperStyle }: PayButtonProps) {
           type="primary"
           onClick={() => {
             if (weiPayAmt?.eq(0)) {
-              return setError?.(true)
+              return setMustBeGreaterThanZeroError?.(true)
             }
             setPayWarningModalVisible(true)
           }}

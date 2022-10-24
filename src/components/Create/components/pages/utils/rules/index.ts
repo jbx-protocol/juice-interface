@@ -1,5 +1,6 @@
 export * from './allocationInputAlreadyExistsRule'
 export * from './allocationTotalPercentDoNotExceedTotalRule'
+export * from './durationMustExistRule'
 export * from './inputAlreadyExistsRule'
 export * from './inputIsIntegerRule'
 export * from './inputIsValidUrlRule'

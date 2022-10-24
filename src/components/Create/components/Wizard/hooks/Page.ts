@@ -1,7 +1,11 @@
+import { useAppDispatch } from 'hooks/AppDispatch'
+import { CreatePage } from 'models/create-page'
 import { useCallback, useContext, useMemo } from 'react'
+import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { WizardContext } from '../contexts'
 
 export const usePage = ({ name }: { name: string }) => {
+  const dispatch = useAppDispatch()
   const { currentPage, pages, goToPage, doneText } = useContext(WizardContext)
 
   const pageIndex = useMemo(
@@ -35,6 +39,19 @@ export const usePage = ({ name }: { name: string }) => {
     goToPage(previousPage)
   }, [goToPage, pageIndex, pages])
 
+  const lockPageProgress = useCallback(() => {
+    dispatch(
+      editingV2ProjectActions.addCreateSoftLockedPage(name as CreatePage),
+    )
+  }, [dispatch, name])
+
+  const unlockPageProgress = useCallback(() => {
+    // We need to make sure pages can't unsoftlock other pages :\
+    dispatch(
+      editingV2ProjectActions.removeCreateSoftLockedPage(name as CreatePage),
+    )
+  }, [dispatch, name])
+
   return {
     isHidden,
     canGoBack,
@@ -43,5 +60,7 @@ export const usePage = ({ name }: { name: string }) => {
     nextPageName,
     goToNextPage,
     goToPreviousPage,
+    lockPageProgress,
+    unlockPageProgress,
   }
 }

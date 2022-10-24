@@ -9,5 +9,7 @@ export const PageContext: React.Context<
     doneText: ReactNode
     goToNextPage: () => void
     goToPreviousPage: () => void
+    lockPageProgress: () => void
+    unlockPageProgress: () => void
   }>
 > = createContext({})

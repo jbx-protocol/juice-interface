@@ -1,4 +1,6 @@
 import { t } from '@lingui/macro'
+import { useAppSelector } from 'hooks/AppSelector'
+import { CreatePage } from 'models/create-page'
 import { useCallback, useContext, useMemo } from 'react'
 import { useEditingCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { WizardContext } from '../contexts'
@@ -23,7 +25,22 @@ const isStepDisabled = (stepName: string, furthestStep: string) => {
 export const useSteps = () => {
   const { pages, currentPage, goToPage } = useContext(WizardContext)
   const { furthestPageReached } = useEditingCreateFurthestPageReached()
-  const furthertStepIndex = Object.keys(stepNames).indexOf(furthestPageReached)
+  const softLockedPageQueue = useAppSelector(
+    state => state.editingV2Project.createSoftLockPageQueue,
+  )
+
+  const firstIndexOfLockedPage = useMemo(() => {
+    const index = Object.keys(stepNames).findIndex(stepName =>
+      softLockedPageQueue.includes(stepName as CreatePage),
+    )
+    return index === -1 ? undefined : index
+  }, [softLockedPageQueue])
+
+  const furthertStepIndex = useMemo(() => {
+    if (firstIndexOfLockedPage !== undefined) return firstIndexOfLockedPage
+    return Object.keys(stepNames).indexOf(furthestPageReached)
+  }, [firstIndexOfLockedPage, furthestPageReached])
+
   if (!pages?.length || !currentPage) {
     console.warn(
       'Steps used but no pages found. Did you forget to add WizardContext.Provider, or add pages?',
@@ -33,12 +50,14 @@ export const useSteps = () => {
 
   const steps = useMemo(
     () =>
-      pages?.map(p => ({
+      pages?.map((p, i) => ({
         id: p.name,
         title: stepNames[p.name],
-        disabled: isStepDisabled(p.name, furthestPageReached),
+        disabled:
+          (firstIndexOfLockedPage && i > firstIndexOfLockedPage) ||
+          isStepDisabled(p.name, furthestPageReached),
       })),
-    [furthestPageReached, pages],
+    [firstIndexOfLockedPage, furthestPageReached, pages],
   )
 
   const currentIndex = useMemo(

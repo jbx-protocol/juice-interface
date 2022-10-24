@@ -1,19 +1,19 @@
 import { t, Trans } from '@lingui/macro'
 import { Tabs } from 'antd'
-import { AppWrapper } from 'components/common'
+import { AppWrapper, Head } from 'components/common'
 import { DesmosScript } from 'components/common/Head/scripts/DesmosScript'
+import { Create } from 'components/Create'
 import { CV_V2, CV_V3 } from 'constants/cv'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
-import Head from 'next/head'
+import NextHead from 'next/head'
 import { TransactionProvider } from 'providers/TransactionProvider'
 import { V2V3ContractsProvider } from 'providers/v2v3/V2V3ContractsProvider'
 import { V2V3CurrencyProvider } from 'providers/v2v3/V2V3CurrencyProvider'
 import { useContext, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { scrollToTop } from 'utils/windowUtils'
-
 import { TabContentProps } from './models'
 import FundingCycleTabContent from './tabs/FundingCycleTab/FundingCycleTabContent'
 import ProjectDetailsTabContent from './tabs/ProjectDetailsTab/ProjectDetailsTabContent'
@@ -22,12 +22,17 @@ import ReviewDeployTab from './tabs/ReviewDeployTab'
 export default function V2CreatePage() {
   return (
     <>
-      <Head>
+      <Head />
+      <NextHead>
         <DesmosScript />
-      </Head>
+      </NextHead>
 
       <AppWrapper>
-        <V2Create />
+        {featureFlagEnabled(FEATURE_FLAGS.EXPERIMENTAL_CREATE_FLOW) ? (
+          <Create />
+        ) : (
+          <V2Create />
+        )}
       </AppWrapper>
     </>
   )

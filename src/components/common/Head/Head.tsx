@@ -1,12 +1,12 @@
 import { VFC } from 'react'
 
-import { SEO } from '../SEO'
+import { SEO, SEOProps } from '../SEO'
 import { FathomScript } from './scripts/FathomScript'
 import { HotjarScript } from './scripts/HotjarScript'
 
-export const Head: VFC = () => {
+export const Head: VFC<SEOProps> = props => {
   return (
-    <SEO>
+    <SEO {...props}>
       <meta
         key="viewport"
         name="viewport"

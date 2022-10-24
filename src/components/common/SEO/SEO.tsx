@@ -9,7 +9,7 @@ import {
   TwitterMetaTagsProps,
 } from './TwitterMetaTags'
 
-interface Props {
+export interface SEOProps {
   url?: string
   title?: string
   description?: string
@@ -18,7 +18,7 @@ interface Props {
   children?: ReactNode
 }
 
-export const SEO: FC<Props> = ({
+export const SEO: FC<SEOProps> = ({
   url,
   title,
   description,

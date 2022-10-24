@@ -827,6 +827,12 @@ msgstr ""
 msgid "Create a Payment Address (optional)"
 msgstr ""
 
+msgid "Create a project"
+msgstr ""
+
+msgid "Create a project on Juicebox"
+msgstr ""
+
 msgid "Create an Ethereum address for your project. Enables direct payments without going through your project's Juicebox page."
 msgstr ""
 

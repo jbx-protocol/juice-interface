@@ -33,7 +33,7 @@ export const useFundingConfigurationReview = () => {
     () =>
       formatFundingTarget({
         distributionLimitWad: distributionLimit?.amount,
-        distributionLimitCurrency: distributionLimit?.currency.toString(),
+        distributionLimitCurrency: distributionLimit?.currency,
       }),
     [distributionLimit?.amount, distributionLimit?.currency],
   )

@@ -7,10 +7,10 @@ import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 
 export function formatFundingTarget({
   distributionLimitWad,
-  distributionLimitCurrency = V2V3_CURRENCY_ETH.toString(),
+  distributionLimitCurrency = V2V3_CURRENCY_ETH,
 }: {
   distributionLimitWad: BigNumber | undefined
-  distributionLimitCurrency: string | undefined
+  distributionLimitCurrency: V2V3CurrencyOption | undefined
 }) {
   const limit = distributionLimitWad ?? BigNumber.from(0)
   if (limit.eq(0)) {
@@ -22,6 +22,6 @@ export function formatFundingTarget({
 
   return formatCurrencyAmount({
     amount: parseFloat(fromWad(limit)),
-    currency: parseInt(distributionLimitCurrency) as V2V3CurrencyOption,
+    currency: distributionLimitCurrency,
   })
 }

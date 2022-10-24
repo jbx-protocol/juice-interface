@@ -1,4 +1,3 @@
-import { InfoCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
@@ -6,8 +5,10 @@ import { useLockPageRulesWrapper } from 'components/Create/hooks/useLockPageRule
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { FormItemInput } from 'models/formItemInput'
+import { FundingTargetType } from 'models/fundingTargetType'
 import { useContext, useEffect } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
+import { CreateCallout } from '../../CreateCallout'
 import { CurrencySelectInputValue } from '../../CurrencySelectInput'
 import { Icons } from '../../Icons'
 import { RecallCard } from '../../RecallCard'
@@ -76,12 +77,6 @@ export const FundingTargetPage: React.FC = () => {
                     label: t`Funding Target`,
                   }),
                 ])}
-                extra={
-                  <Trans>
-                    <InfoCircleOutlined /> Your project’s settings will not be
-                    able to be edited or changed during the first funding cycle.
-                  </Trans>
-                }
               >
                 <FormattedNumberInputWrapper />
               </Form.Item>
@@ -101,6 +96,7 @@ export const FundingTargetPage: React.FC = () => {
             />
           </Selection>
         </Form.Item>
+        {selection ? <TargetCallout selection={selection} /> : null}
         <Wizard.Page.ButtonControl isNextEnabled={isNextEnabled} />
       </Space>
     </Form>
@@ -129,4 +125,19 @@ const FormattedNumberInputWrapper: React.FC<
       }
     />
   )
+}
+
+const TargetCallout = ({ selection }: { selection: FundingTargetType }) => {
+  let calloutText = undefined
+  switch (selection) {
+    case 'infinite':
+      calloutText = t`Having an Infinite Funding Target means contributors WILL NOT be able to redeem their tokens for a portion of the treasury funds. Payout splits will be nominated in percentages only.`
+      break
+    case 'specific':
+      calloutText = t`Your Funding Target can be changed in future funding cycles. USD amounts will be paid out in ETH, this conversion will be resolved at moment of distribution.`
+      break
+  }
+  return calloutText ? (
+    <CreateCallout.Info>{calloutText}</CreateCallout.Info>
+  ) : null
 }

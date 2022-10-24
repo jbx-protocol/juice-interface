@@ -1,13 +1,18 @@
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Dropdown, Menu } from 'antd'
+import { Dropdown, Menu, Space } from 'antd'
 import Link from 'next/link'
 import { CSSProperties, useEffect, useState } from 'react'
 
 import Logo from './Logo'
-import { navMenuItemStyles } from './navStyles'
+import { navMenuItemStyles, topNavStyles, topRightNavStyles } from './navStyles'
 
+import { Header } from 'antd/lib/layout/layout'
+import Account from './Account'
 import { resourcesMenuItems } from './constants'
+import NavLanguageSelector from './NavLanguageSelector'
+import ThemePicker from './ThemePicker'
+import { TransactionsList } from './TransactionList'
 
 const resourcesMenu = (
   <Menu
@@ -155,15 +160,29 @@ export function TopLeftNavItems({
       ]
 
   return (
-    <Menu
-      items={menuItems}
-      mode="inline"
-      style={{
-        display: 'flex',
-        flexDirection: desktop ? 'row' : 'column',
-        width: desktop ? 500 : 'auto',
-      }}
-      selectable={false}
-    />
+    <Header className="top-nav" style={{ ...topNavStyles }}>
+      <Menu
+        items={menuItems}
+        mode="inline"
+        style={{
+          display: 'flex',
+          flexDirection: desktop ? 'row' : 'column',
+          width: desktop ? 500 : 'auto',
+        }}
+        selectable={false}
+      />
+      <Space size="middle" style={{ ...topRightNavStyles }}>
+        <NavLanguageSelector />
+        <ThemePicker />
+        <TransactionsList
+          listStyle={{
+            position: 'absolute',
+            top: 70,
+            right: 30,
+          }}
+        />
+        <Account />
+      </Space>
+    </Header>
   )
 }

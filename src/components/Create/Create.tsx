@@ -41,7 +41,7 @@ export function Create() {
             <Wizard.Page
               name="projectDetails"
               title={t`Project Details`}
-              description={t`Enter your project’s details. You can edit your project's details at any time after you deploy project your project, but the transaction will cost gas.`}
+              description={t`Enter your project's details. You can edit your project's details at any time after you deploy your project, but the transaction will cost gas.`}
             >
               <ProjectDetailsPage />
             </Wizard.Page>

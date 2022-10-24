@@ -77,7 +77,7 @@ export const PayoutsPage: React.FC = () => {
             </h2>
             <p>
               <Trans>
-                Add wallet addresses or juicebox projects to receive payouts.
+                Add wallet addresses or Juicebox projects to receive payouts.
               </Trans>
             </p>
             <Form.Item

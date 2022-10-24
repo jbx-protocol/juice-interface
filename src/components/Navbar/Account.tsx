@@ -31,21 +31,20 @@ export default function Account() {
 
   if (chainUnsupported) {
     return (
-      <Space direction="horizontal">
-        {chainUnsupported && (
-          <Button
-            size="small"
-            icon={<WarningOutlined style={{ color: colors.icon.warn }} />}
-            style={{
-              backgroundColor: colors.background.warn,
-              borderColor: colors.stroke.warn,
-              color: colors.text.warn,
-            }}
-            onClick={changeNetworks}
-          >
-            Wrong network
-          </Button>
-        )}
+      <Space>
+        <Button
+          size="small"
+          icon={<WarningOutlined style={{ color: colors.icon.warn }} />}
+          style={{
+            backgroundColor: colors.background.warn,
+            borderColor: colors.stroke.warn,
+            color: colors.text.warn,
+          }}
+          onClick={changeNetworks}
+        >
+          Wrong network
+        </Button>
+
         <Wallet userAddress={userAddress} />
       </Space>
     )

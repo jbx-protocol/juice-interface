@@ -2006,12 +2006,6 @@ msgstr ""
 msgid "Pay amount"
 msgstr ""
 
-msgid "Pay amount must be greater than 0."
-msgstr ""
-
-msgid "Pay amount must be less than or equal to wallet balance."
-msgstr ""
-
 msgid "Pay button text"
 msgstr ""
 
@@ -2046,6 +2040,12 @@ msgid "Payment Addresses"
 msgstr ""
 
 msgid "Payment Success Popup"
+msgstr ""
+
+msgid "Payment amount can't be 0"
+msgstr ""
+
+msgid "Payment amount can't exceed your wallet balance."
 msgstr ""
 
 msgid "Payment equivalent"

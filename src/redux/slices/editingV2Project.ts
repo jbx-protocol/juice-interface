@@ -66,7 +66,7 @@ interface V2ProjectState {
   fundingCyclesPageSelection: 'automated' | 'manual' | undefined
   reconfigurationRuleSelection: ReconfigurationStrategy | undefined
   createFurthestPageReached: CreatePage
-  createSoftLockPageQueue: CreatePage[]
+  createSoftLockPageQueue: CreatePage[] | undefined
 }
 
 // Increment this version by 1 when making breaking changes.
@@ -356,6 +356,7 @@ const editingV2ProjectSlice = createSlice({
       state.createSoftLockPageQueue = [...set]
     },
     removeCreateSoftLockedPage: (state, action: PayloadAction<CreatePage>) => {
+      if (!state.createSoftLockPageQueue) return
       if (state.createSoftLockPageQueue.includes(action.payload)) {
         state.createSoftLockPageQueue.splice(
           state.createSoftLockPageQueue.indexOf(action.payload),

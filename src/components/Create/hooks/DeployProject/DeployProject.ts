@@ -51,7 +51,10 @@ export const useDeployProject = () => {
 
   const deployStandardProject = useDeployStandardProject()
 
-  const { projectMetadata } = useAppSelector(state => state.editingV2Project)
+  const {
+    projectMetadata,
+    nftRewards: { postPayModal },
+  } = useAppSelector(state => state.editingV2Project)
   const fundingCycleMetadata = useEditingV2V3FundingCycleMetadataSelector()
   const fundingCycleData = useEditingV2V3FundingCycleDataSelector()
   const fundAccessConstraints = useEditingV2V3FundAccessConstraintsSelector()
@@ -139,9 +142,11 @@ export const useDeployProject = () => {
 
       let projectMetadataCid: string | undefined
       try {
-        // TODO: nftPaymentSuccessModal
         projectMetadataCid = (
-          await uploadProjectMetadata({ ...projectMetadata })
+          await uploadProjectMetadata({
+            ...projectMetadata,
+            nftPaymentSuccessModal: postPayModal,
+          })
         ).IpfsHash
       } catch (error) {
         handleDeployFailure(error)
@@ -182,6 +187,7 @@ export const useDeployProject = () => {
       handleDeployFailure,
       isNftProject,
       operationCallbacks,
+      postPayModal,
       projectMetadata,
       uploadNftRewards,
     ],

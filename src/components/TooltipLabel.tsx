@@ -1,5 +1,5 @@
 import { TooltipProps } from 'antd'
-import { CSSProperties } from 'react'
+import { CSSProperties, ReactNode } from 'react'
 
 import TooltipIcon from './TooltipIcon'
 
@@ -10,7 +10,7 @@ export default function TooltipLabel({
   style,
 }: {
   label: string | JSX.Element
-  tip?: string | JSX.Element
+  tip?: string | JSX.Element | ReactNode
   placement?: TooltipProps['placement']
   style?: CSSProperties
 }) {

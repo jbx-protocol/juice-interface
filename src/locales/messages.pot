@@ -2009,6 +2009,9 @@ msgstr ""
 msgid "Pay amount must be greater than 0."
 msgstr ""
 
+msgid "Pay amount must be less than or equal to wallet balance."
+msgstr ""
+
 msgid "Pay button text"
 msgstr ""
 

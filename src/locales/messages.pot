@@ -791,6 +791,9 @@ msgstr ""
 msgid "Contributors will receive 5% more tokens for contributions they make this funding cycle compared to the next funding cycle."
 msgstr ""
 
+msgid "Contributors will receive <0>no extra tokens</0> this funding cycle."
+msgstr ""
+
 msgid "Contributors will receive <0>{discountRatePercent}%</0> more tokens for contributions they make this funding cycle compared to the next funding cycle."
 msgstr ""
 
@@ -960,6 +963,9 @@ msgid "Design your project"
 msgstr ""
 
 msgid "Details"
+msgstr ""
+
+msgid "Determines the <0>amount of overflow</0> each token can be redeemed for."
 msgstr ""
 
 msgid "Determines whether tokens will be minted from payments to this address."
@@ -2811,6 +2817,9 @@ msgid "The percentage this individual receives of the overall {reservedRate}% re
 msgstr ""
 
 msgid "The programmable funding protocol for builders and creators. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
+msgstr ""
+
+msgid "The project owner <0>cannot manually mint</0> any amount of tokens to any address."
 msgstr ""
 
 msgid "The project owner can add and remove payment terminals."

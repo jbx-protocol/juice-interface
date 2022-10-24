@@ -28,29 +28,30 @@ export function TransactionsList({
     }
   }, [hasPendingTxs])
 
+  const hasTransactions = !!transactions?.length
+  if (!hasTransactions) return null
+
   return (
     <div style={{ ...style }}>
-      {!!transactions?.length && (
-        <div
-          className="clickable-border"
-          role="button"
-          style={{
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            paddingLeft: 10,
-            paddingRight: 5,
-            borderRadius: 15,
-            userSelect: 'none',
-          }}
-          onClick={() => setIsExpanded(!isExpanded)}
-        >
-          {hasPendingTxs ? <Loading size="small" /> : <ThunderboltOutlined />}
-          <span style={{ minWidth: 20, textAlign: 'center', fontWeight: 600 }}>
-            {isExpanded ? <CaretDownOutlined /> : transactions.length}
-          </span>
-        </div>
-      )}
+      <div
+        className="clickable-border"
+        role="button"
+        style={{
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          paddingLeft: 10,
+          paddingRight: 5,
+          borderRadius: 15,
+          userSelect: 'none',
+        }}
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
+        {hasPendingTxs ? <Loading size="small" /> : <ThunderboltOutlined />}
+        <span style={{ minWidth: 20, textAlign: 'center', fontWeight: 600 }}>
+          {isExpanded ? <CaretDownOutlined /> : transactions.length}
+        </span>
+      </div>
 
       {isExpanded && (
         <div

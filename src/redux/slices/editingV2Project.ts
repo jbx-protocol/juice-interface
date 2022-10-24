@@ -66,6 +66,7 @@ interface V2ProjectState {
   fundingCyclesPageSelection: 'automated' | 'manual' | undefined
   reconfigurationRuleSelection: ReconfigurationStrategy | undefined
   createFurthestPageReached: CreatePage
+  createSoftLockPageQueue: CreatePage[]
 }
 
 // Increment this version by 1 when making breaking changes.
@@ -180,6 +181,7 @@ export const defaultProjectState: V2ProjectState = {
   reconfigurationRuleSelection: undefined,
   fundingCyclesPageSelection: undefined,
   createFurthestPageReached: 'projectDetails',
+  createSoftLockPageQueue: [],
 }
 
 const editingV2ProjectSlice = createSlice({
@@ -347,6 +349,19 @@ const editingV2ProjectSlice = createSlice({
       action: PayloadAction<CreatePage>,
     ) => {
       state.createFurthestPageReached = action.payload
+    },
+    addCreateSoftLockedPage: (state, action: PayloadAction<CreatePage>) => {
+      const set = new Set(state.createSoftLockPageQueue)
+      set.add(action.payload)
+      state.createSoftLockPageQueue = [...set]
+    },
+    removeCreateSoftLockedPage: (state, action: PayloadAction<CreatePage>) => {
+      if (state.createSoftLockPageQueue.includes(action.payload)) {
+        state.createSoftLockPageQueue.splice(
+          state.createSoftLockPageQueue.indexOf(action.payload),
+          1,
+        )
+      }
     },
     setTokenSettings: (
       state,

@@ -1,7 +1,7 @@
 import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
 import { RinkebyDeprecationBroadcastMessage } from 'components/broadcastMessages/RinkebyDeprecationBroadcastMessage'
-import Navbar from 'components/Navbar'
+import SiteNavigation from 'components/Navbar/SiteNavigation'
 import useMobile from 'hooks/Mobile'
 import { useRouter } from 'next/router'
 import { EtherPriceProvider } from 'providers/EtherPriceProvider'
@@ -60,9 +60,7 @@ const _Wrapper: React.FC = ({ children }) => {
         }}
       >
         <RinkebyDeprecationBroadcastMessage />
-
-        <Navbar />
-
+        <SiteNavigation />
         <Content style={isMobile ? { paddingTop: 64 } : {}}>{children}</Content>
       </Layout>
     </>

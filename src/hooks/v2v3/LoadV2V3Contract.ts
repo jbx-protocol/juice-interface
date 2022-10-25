@@ -4,6 +4,7 @@ import { CV2V3 } from 'models/cv'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import { useEffect, useState } from 'react'
 import { loadJuiceboxV2OrV3Contract } from 'utils/v2v3/contractLoaders/JuiceboxV2OrV3'
+import { ContractJson } from 'utils/v2v3/loadV2V3Contract'
 
 /**
  * Load a JB V2 or V3 contract, depending on the given [cv].
@@ -19,10 +20,7 @@ export const useLoadV2V3Contract = ({
   cv: CV2V3 | undefined
   address?: string // optional address, to override the default address
 }) => {
-  const [contractJson, setContractJson] = useState<{
-    address: string
-    abi: string
-  }>()
+  const [contractJson, setContractJson] = useState<ContractJson>()
 
   useEffect(() => {
     async function loadAbi() {

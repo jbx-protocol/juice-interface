@@ -1046,9 +1046,6 @@ msgstr ""
 msgid "Distribute reserved {tokenTextPlural}"
 msgstr ""
 
-msgid "Distribute your project's funds. Distribution to addresses other than other Juicebox projects will incur a 2.5% platform fee."
-msgstr ""
-
 msgid "Distribute {tokenTextPlural}"
 msgstr ""
 
@@ -1089,6 +1086,9 @@ msgid "Distribution limit is 0: All funds will be considered overflow and can be
 msgstr ""
 
 msgid "Distribution limit is infinite. <0>The project will control how all funds are distributed, and none can be redeemed by token holders.</0>"
+msgstr ""
+
+msgid "Distributions to Ethereum addresses incur a 2.5% JBX membership fee."
 msgstr ""
 
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
@@ -3557,9 +3557,6 @@ msgstr ""
 msgid "days"
 msgstr ""
 
-msgid "fee"
-msgstr ""
-
 msgid "handle"
 msgstr ""
 
@@ -3714,6 +3711,9 @@ msgid "{count} total"
 msgstr ""
 
 msgid "{exchangeName} has no market for {tokenSymbol}."
+msgstr ""
+
+msgid "{feeAmountFormatted} fee"
 msgstr ""
 
 msgid "{formattedTimeLeft} left"

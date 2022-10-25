@@ -131,12 +131,11 @@ export default function DistributePayoutsModal({
       width={640}
     >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
-        <p>
+        <Callout>
           <Trans>
-            Distribute your project's funds. Distribution to addresses other
-            than other Juicebox projects will incur a 2.5% platform fee.
+            Distributions to Ethereum addresses incur a 2.5% JBX membership fee.
           </Trans>
-        </p>
+        </Callout>
 
         <Form layout="vertical">
           <Form.Item

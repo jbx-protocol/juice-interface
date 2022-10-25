@@ -5,6 +5,7 @@ import { Tooltip } from 'antd'
 import ETHToUSD from 'components/currency/ETHToUSD'
 import CurrencySymbol from 'components/CurrencySymbol'
 import FormattedAddress from 'components/FormattedAddress'
+import { Parenthesis } from 'components/Parenthesis'
 import TooltipIcon from 'components/TooltipIcon'
 import TooltipLabel from 'components/TooltipLabel'
 import { ThemeContext } from 'contexts/themeContext'
@@ -15,6 +16,7 @@ import { useContext } from 'react'
 import { formatDate } from 'utils/format/formatDate'
 import { formatWad } from 'utils/format/formatNumber'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
+import { isJuiceboxProjectSplit } from 'utils/v2v3/distributions'
 import {
   feeForAmount,
   formatSplitPercent,
@@ -30,7 +32,7 @@ const LockedText = ({ lockedUntil }: { lockedUntil: number }) => {
   const lockedUntilFormatted = formatDate(lockedUntil * 1000, 'yyyy-MM-DD')
 
   return (
-    <div style={{ fontSize: '.8rem', color: colors.text.secondary }}>
+    <div style={{ fontSize: '.875rem', color: colors.text.secondary }}>
       <LockOutlined /> <Trans>locked until {lockedUntilFormatted}</Trans>
     </div>
   )
@@ -123,12 +125,10 @@ const SplitValue = ({
   valueSuffix,
   valueFormatProps,
   currency,
-  isJuiceboxProject,
   showFees = false,
 }: {
   split: Split
   totalValue: BigNumber | undefined
-  isJuiceboxProject: boolean
   valueSuffix?: string | JSX.Element
   valueFormatProps?: { precision?: number }
   currency?: BigNumber
@@ -140,6 +140,7 @@ const SplitValue = ({
 
   const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
   const splitValue = totalValue?.mul(split.percent).div(SPLITS_TOTAL_PERCENT)
+  const isJuiceboxProject = isJuiceboxProjectSplit(split)
   const feeAmount = !isJuiceboxProject
     ? feeForAmount(splitValue, ETHPaymentTerminalFee)
     : BigNumber.from(0)
@@ -177,12 +178,10 @@ const SplitValue = ({
         }}
       >
         {showFees && !isJuiceboxProject && (
-          <>
-            {`(`}
+          <Parenthesis>
             <CurrencySymbol currency={curr} />
-            {feeAmountFormatted}
-            {` ${t`fee`})`}
-          </>
+            {t` ${feeAmountFormatted} fee`}
+          </Parenthesis>
         )}
       </div>
     </Tooltip>
@@ -210,9 +209,7 @@ export default function SplitItem({
   currency?: BigNumber
   showFees?: boolean
 }) {
-  const isJuiceboxProject = split.projectId
-    ? BigNumber.from(split.projectId).gt(0)
-    : false
+  const isJuiceboxProject = isJuiceboxProjectSplit(split)
 
   const formattedSplitPercent = formatSplitPercent(
     BigNumber.from(split.percent),
@@ -258,7 +255,6 @@ export default function SplitItem({
               valueFormatProps={valueFormatProps}
               currency={currency}
               showFees={showFees}
-              isJuiceboxProject={isJuiceboxProject}
             />
           </span>
         ) : null}

@@ -20,7 +20,7 @@ export function ProjectVersionBadge({
         padding: size === 'small' ? '0 4px' : '2px 4px',
         background: colors.background.l2,
         color: colors.text.secondary,
-        fontSize: size === 'small' ? '0.7rem' : 'auto',
+        fontSize: size === 'small' ? '0.75rem' : 'auto',
         ...style,
       }}
     >

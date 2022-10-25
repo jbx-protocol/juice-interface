@@ -1,5 +1,6 @@
 import { t } from '@lingui/macro'
 import { Col, Form, Input, Row, Space } from 'antd'
+import { useLockPageRulesWrapper } from 'components/Create/hooks/useLockPageRulesWrapper'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
@@ -15,6 +16,7 @@ export const ProjectDetailsPage: React.FC = () => {
 
   const { goToNextPage } = useContext(PageContext)
   const formProps = useProjectDetailsForm()
+  const lockPageRulesWrapper = useLockPageRulesWrapper()
 
   return (
     <Form
@@ -30,7 +32,9 @@ export const ProjectDetailsPage: React.FC = () => {
           name="projectName"
           label={t`Project Name`}
           required
-          rules={[inputMustExistRule({ label: t`Project Name` })]}
+          rules={lockPageRulesWrapper([
+            inputMustExistRule({ label: t`Project Name` }),
+          ])}
         >
           <Input />
         </Form.Item>
@@ -69,6 +73,7 @@ export const ProjectDetailsPage: React.FC = () => {
           <CreateCollapse.Panel
             key={1}
             header={<OptionalHeader header={t`Customize Pay Button`} />}
+            hideDivider
           >
             <Row gutter={32} style={{ paddingBottom: '2rem' }}>
               <Col span={12}>

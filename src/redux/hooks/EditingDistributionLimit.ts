@@ -6,6 +6,7 @@ import { useAppSelector } from 'hooks/AppSelector'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useCallback, useContext, useMemo } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 
 interface ReduxDistributionLimit {
@@ -35,7 +36,7 @@ export const useEditingDistributionLimit = (): [
     ) {
       return undefined
     }
-    const distributionLimit = BigNumber.from(
+    const distributionLimit = parseWad(
       fundAccessConstraints[0].distributionLimit,
     )
     const distributionLimitCurrency = (parseInt(
@@ -58,7 +59,7 @@ export const useEditingDistributionLimit = (): [
           {
             terminal: contracts.JBETHPaymentTerminal.address,
             token: ETH_TOKEN_ADDRESS,
-            distributionLimit: input.amount.toString(),
+            distributionLimit: fromWad(input.amount),
             distributionLimitCurrency,
             overflowAllowance: '0',
             overflowAllowanceCurrency: '0',

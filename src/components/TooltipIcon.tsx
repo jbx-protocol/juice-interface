@@ -1,14 +1,14 @@
 import { QuestionCircleOutlined } from '@ant-design/icons'
 import { Tooltip, TooltipProps } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, useContext } from 'react'
+import { CSSProperties, ReactNode, useContext } from 'react'
 
 export default function TooltipIcon({
   tip,
   placement,
   iconStyle,
 }: {
-  tip?: string | JSX.Element
+  tip?: string | JSX.Element | ReactNode
   placement?: TooltipProps['placement']
   iconStyle?: CSSProperties
 }) {

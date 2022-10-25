@@ -54,7 +54,7 @@ export default function ReconfigurationStrategySelector({
           content={
             <div>
               <p>{strategy.description}</p>
-              <p style={{ fontSize: '0.7rem', color: colors.text.tertiary }}>
+              <p style={{ fontSize: '0.75rem', color: colors.text.tertiary }}>
                 <Trans>Contract address: {strategy.address}</Trans>
               </p>
             </div>

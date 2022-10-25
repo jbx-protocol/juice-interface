@@ -2,14 +2,20 @@ import { CheckCircleFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Checkbox, Form, Modal } from 'antd'
 import Callout from 'components/Callout'
+import { useDeployProject } from 'components/Create/hooks/DeployProject'
 import ExternalLink from 'components/ExternalLink'
+import TransactionModal from 'components/TransactionModal'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ThemeContext } from 'contexts/themeContext'
+import useMobile from 'hooks/Mobile'
 import { useModal } from 'hooks/Modal'
+import { useWallet } from 'hooks/Wallet'
 import { useRouter } from 'next/router'
 import { useCallback, useContext } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { CreateCollapse } from '../../CreateCollapse'
 import { Wizard } from '../../Wizard'
 import {
@@ -25,22 +31,32 @@ const Header: React.FC = ({ children }) => {
     theme: { colors },
   } = useContext(ThemeContext)
   return (
-    <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+    <h2
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '0.5rem',
+      }}
+    >
       {children}
       <CheckCircleFilled style={{ color: colors.background.action.primary }} />
-    </h3>
+    </h2>
   )
 }
 
 export const ReviewDeployPage = () => {
+  useSetCreateFurthestPageReached('reviewDeploy')
+  const isMobile = useMobile()
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const { chainUnsupported, changeNetworks, isConnected, connect } = useWallet()
   const router = useRouter()
-  useSetCreateFurthestPageReached('reviewDeploy')
   const [form] = Form.useForm<{ termsAccepted: boolean }>()
   const termsAccepted = Form.useWatch('termsAccepted', form)
   const modal = useModal()
+  const { deployProject, isDeploying, deployTransactionPending } =
+    useDeployProject()
 
   const dispatch = useDispatch()
 
@@ -49,16 +65,35 @@ export const ReviewDeployPage = () => {
     window.location.reload()
   }, [dispatch])
 
-  const onDeploy = useCallback(() => {
-    router.push({ query: { deployedProjectId: 1 } }, '/create', {
-      shallow: true,
+  const onFinish = useCallback(async () => {
+    if (chainUnsupported) {
+      await changeNetworks()
+      return
+    }
+    if (!isConnected) {
+      await connect()
+      return
+    }
+
+    await deployProject({
+      onProjectDeployed: deployedProjectId =>
+        router.push({ query: { deployedProjectId } }, '/create', {
+          shallow: true,
+        }),
     })
-  }, [router])
+  }, [
+    chainUnsupported,
+    changeNetworks,
+    connect,
+    deployProject,
+    isConnected,
+    router,
+  ])
 
   const isNextEnabled = termsAccepted
   return (
     <>
-      <CreateCollapse>
+      <CreateCollapse accordion defaultActiveKey={!isMobile ? 0 : undefined}>
         <CreateCollapse.Panel
           key={0}
           header={
@@ -89,16 +124,18 @@ export const ReviewDeployPage = () => {
         >
           <ProjectTokenReview />
         </CreateCollapse.Panel>
-        <CreateCollapse.Panel
-          key={3}
-          header={
-            <Header>
-              <Trans>NFT Rewards</Trans>
-            </Header>
-          }
-        >
-          <RewardsReview />
-        </CreateCollapse.Panel>
+        {featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS) && (
+          <CreateCollapse.Panel
+            key={3}
+            header={
+              <Header>
+                <Trans>NFT Rewards</Trans>
+              </Header>
+            }
+          >
+            <RewardsReview />
+          </CreateCollapse.Panel>
+        )}
         <CreateCollapse.Panel
           key={4}
           header={
@@ -113,7 +150,7 @@ export const ReviewDeployPage = () => {
       <Form
         form={form}
         initialValues={{ termsAccepted: false }}
-        onFinish={onDeploy}
+        onFinish={onFinish}
       >
         <Callout iconComponent={null}>
           <div style={{ display: 'flex', gap: '1rem' }}>
@@ -126,13 +163,17 @@ export const ReviewDeployPage = () => {
                 <ExternalLink href="https://info.juicebox.money/tos/">
                   Terms of Service
                 </ExternalLink>
-                , and understand that I CANNOT make changes to my project's
-                funding configuration until AFTER Funding Cycle #1 has finished.
+                , and understand that any changes I make to my project's funding
+                cycle will not be applied until AFTER Funding Cycle #1 has
+                finished.
               </Trans>
             </div>
           </div>
         </Callout>
-        <Wizard.Page.ButtonControl isNextEnabled={isNextEnabled} />
+        <Wizard.Page.ButtonControl
+          isNextLoading={isDeploying}
+          isNextEnabled={isNextEnabled}
+        />
       </Form>
 
       <div
@@ -158,6 +199,10 @@ export const ReviewDeployPage = () => {
           .
         </span>
       </div>
+      <TransactionModal
+        transactionPending={deployTransactionPending}
+        visible={deployTransactionPending}
+      />
       <Modal
         title={
           <h2>

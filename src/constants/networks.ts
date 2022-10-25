@@ -67,6 +67,15 @@ export const NETWORKS: Record<number, NetworkInfo> = {
     blockExplorer: 'https://goerli.etherscan.io/',
     rpcUrl: `https://goerli.infura.io/v3/${infuraId}`,
   },
+  4: {
+    name: NetworkName.rinkeby,
+    label: 'Rinkeby',
+    color: '#e0d068',
+    chainId: 4,
+    rpcUrl: `https://rinkeby.infura.io/v3/${infuraId}`,
+    faucet: 'https://faucet.rinkeby.io/',
+    blockExplorer: 'https://rinkeby.etherscan.io/',
+  },
   100: {
     name: NetworkName.xdai,
     label: 'XDAI',

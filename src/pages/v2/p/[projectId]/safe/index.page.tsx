@@ -2,9 +2,7 @@ import { AppWrapper } from 'components/common'
 import { ProjectSafeDashboard } from 'components/ProjectSafeDashboard'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
-import { CV2V3 } from 'models/cv'
-import { ProjectMetadataV5 } from 'models/project-metadata'
-import { GetServerSideProps } from 'next'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { TransactionProvider } from 'providers/TransactionProvider'
 import { V2V3ProjectPageProvider } from 'providers/v2v3/V2V3ProjectPageProvider'
 import { useContext } from 'react'
@@ -36,18 +34,14 @@ function V2V3ProjectSafeDashboard() {
 export default function V2V3ProjectSafeDashboardPage({
   projectId,
   metadata,
-  cv,
-}: {
-  projectId: number
-  metadata: ProjectMetadataV5
-  cv: CV2V3
-}) {
+  initialCv,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <AppWrapper>
       <V2V3ProjectPageProvider
         projectId={projectId}
         metadata={metadata}
-        cv={cv}
+        initialCv={initialCv}
       >
         <TransactionProvider>
           <V2V3ProjectSafeDashboard />

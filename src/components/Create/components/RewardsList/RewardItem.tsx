@@ -13,7 +13,6 @@ const headerTextStyle: CSSProperties = {
   fontWeight: 400,
   textTransform: 'uppercase',
   fontSize: '0.75rem',
-  // TODO: Color
 }
 
 const descriptionTextStyle: CSSProperties = {

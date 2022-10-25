@@ -2,7 +2,7 @@ import { SemanticColors } from 'models/semantic-theme/colors'
 import { CSSProperties } from 'react'
 
 export const smallHeaderStyle = (colors: SemanticColors) => ({
-  fontSize: '.7rem',
+  fontSize: '0.75rem',
   color: colors.text.tertiary,
 })
 

@@ -47,6 +47,6 @@ export interface SemanticColors {
     SemanticColor.Brand &
     SemanticColor.ActionHighlight &
     SemanticColor.Disabled &
-    Record<'l0' | 'l1' | 'l2', Property.Color>
+    Record<'l0' | 'l1' | 'l2' | 'l3', Property.Color>
   boxShadow: SemanticColor.Primary
 }

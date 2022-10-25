@@ -227,7 +227,7 @@ export default function RedeemModal({
                 <RedeemAMMPrices
                   tokenSymbol={tokenSymbol}
                   tokenAddress={tokenAddress}
-                  style={{ fontSize: '.65rem' }}
+                  style={{ fontSize: '0.75rem' }}
                 />
               ) : null}
             </Form.Item>

@@ -1,31 +1,25 @@
 import { MenuOutlined } from '@ant-design/icons'
-import { Trans } from '@lingui/macro'
-import { Button, Collapse, Menu } from 'antd'
+import { Collapse, Menu } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { Header } from 'antd/lib/layout/layout'
 import { ThemeContext } from 'contexts/themeContext'
-import useMobile from 'hooks/Mobile'
 import { useWallet } from 'hooks/Wallet'
 import Link from 'next/link'
 import { useContext, useEffect, useState } from 'react'
-import Account from '../Account'
+import { mobileNavItems } from '../constants'
 import Logo from '../Logo'
-import { TopLeftNavItems } from '../MenuItems'
-import NavLanguageSelector from '../NavLanguageSelector'
 import { topNavStyles } from '../navStyles'
 import { TransactionsList } from '../TransactionList'
-import ThemePickerMobile from './ThemePickerMobile'
 
 const NAV_EXPANDED_KEY = 0
 
-export default function MobileCollapse() {
+export default function MobileNavigation() {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
   const [activeKey, setActiveKey] = useState<0 | undefined>()
 
-  const isMobile = useMobile()
   const { isConnected, disconnect } = useWallet()
 
   const isNavExpanded = activeKey === NAV_EXPANDED_KEY
@@ -82,22 +76,13 @@ export default function MobileCollapse() {
                 }}
               >
                 <TransactionsList
-                  listStyle={
-                    isMobile
-                      ? {
-                          position: 'absolute',
-                          top: 48,
-                          left: 0,
-                          right: 0,
-                          padding: 12,
-                        }
-                      : {
-                          position: 'absolute',
-                          top: 70, // Position below navbar
-                          right: 30,
-                          width: 300,
-                        }
-                  }
+                  listStyle={{
+                    position: 'absolute',
+                    top: 48,
+                    left: 0,
+                    right: 0,
+                    padding: 12,
+                  }}
                 />
                 <MenuOutlined
                   style={{
@@ -111,36 +96,11 @@ export default function MobileCollapse() {
             </div>
           }
         >
-          <Menu mode="inline" defaultSelectedKeys={['resources']}>
-            <TopLeftNavItems
-              desktop={false}
-              onClickMenuItems={() => collapseNav()}
-            />
-
-            <div style={{ marginLeft: 15 }}>
-              <Menu.Item key="language-selector">
-                <NavLanguageSelector mobile />
-              </Menu.Item>
-              <Menu.Item key="theme-picker">
-                <ThemePickerMobile />
-              </Menu.Item>
-            </div>
-          </Menu>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              marginTop: '1rem',
-            }}
-          >
-            <Account />
-            {isConnected ? (
-              <Button onClick={disconnect} style={{ marginTop: 10 }} block>
-                <Trans>Disconnect</Trans>
-              </Button>
-            ) : null}
-          </div>
+          <Menu
+            mode="inline"
+            items={mobileNavItems({ isConnected, disconnect, collapseNav })}
+            defaultSelectedKeys={['resources']}
+          />
         </CollapsePanel>
       </Collapse>
     </Header>

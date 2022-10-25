@@ -1,8 +1,8 @@
 import { t, Trans } from '@lingui/macro'
+import { DeployButtonText } from 'components/DeployProjectButtonText'
 import ExternalLink from 'components/ExternalLink'
 import { CV_V2, CV_V3 } from 'constants/cv'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { useWallet } from 'hooks/Wallet'
 import { useRouter } from 'next/router'
 import { TransactionProvider } from 'providers/TransactionProvider'
 import { V2V3ContractsProvider } from 'providers/v2v3/V2V3ContractsProvider'
@@ -24,7 +24,6 @@ import { DeploySuccess } from './components/pages/ReviewDeploy/components/Deploy
 import { Wizard } from './components/Wizard'
 
 export function Create() {
-  const { chain } = useWallet()
   const router = useRouter()
   const deployedProjectId = router.query.deployedProjectId as string
   if (deployedProjectId) {
@@ -38,18 +37,11 @@ export function Create() {
     >
       <TransactionProvider>
         <V2V3CurrencyProvider>
-          <Wizard
-            doneText={
-              // TODO: Handle wallet connect event and text changes
-              chain?.name
-                ? t`Deploy project to ${chain?.name}`
-                : t`Deploy project`
-            }
-          >
+          <Wizard className="wizard-create" doneText={<DeployButtonText />}>
             <Wizard.Page
               name="projectDetails"
               title={t`Project Details`}
-              description={t`Enter your project’s details. You can edit your project's details at any time after you deploy project your project, but the transaction will cost gas.`}
+              description={t`Enter your project's details. You can edit your project's details at any time after you deploy your project, but the transaction will cost gas.`}
             >
               <ProjectDetailsPage />
             </Wizard.Page>
@@ -91,28 +83,34 @@ export function Create() {
                 <Trans>
                   Design how your project's tokens should work. You can use your
                   project tokens for governance, ownership & treasury
-                  redemptions. <a href="#TODO">Learn more</a>.
+                  redemptions.{' '}
+                  <ExternalLink href="https://info.juicebox.money/dev/learn/glossary/tokens">
+                    Learn more
+                  </ExternalLink>
+                  .
                 </Trans>
               }
             >
               <ProjectTokenPage />
             </Wizard.Page>
-            <Wizard.Page
-              name="nftRewards"
-              title={
-                <Trans>
-                  NFT Rewards <CreateBadge.Optional />
-                </Trans>
-              }
-              description={
-                <Trans>
-                  Reward contributors with NFTs when they meet your funding
-                  criteria.
-                </Trans>
-              }
-            >
-              <NftRewardsPage />
-            </Wizard.Page>
+            {featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS) && (
+              <Wizard.Page
+                name="nftRewards"
+                title={
+                  <Trans>
+                    NFT Rewards <CreateBadge.Optional />
+                  </Trans>
+                }
+                description={
+                  <Trans>
+                    Reward contributors with NFTs when they meet your funding
+                    criteria.
+                  </Trans>
+                }
+              >
+                <NftRewardsPage />
+              </Wizard.Page>
+            )}
             <Wizard.Page
               name="reconfigurationRules"
               title={<Trans>Reconfiguration Rules</Trans>}
@@ -133,7 +131,7 @@ export function Create() {
                   rules.
                 </Trans>
               }
-              width="800px"
+              maxWidth="800px"
             >
               <ReviewDeployPage />
             </Wizard.Page>

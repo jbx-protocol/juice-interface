@@ -39,12 +39,14 @@ function menuItem(
   key: React.Key,
   children?: MenuItem[],
   type?: 'group' | 'divider',
+  className?: string,
 ): MenuItem {
   return {
     key,
     children,
     label,
     type,
+    className,
   }
 }
 
@@ -53,8 +55,14 @@ const items: MenuItem[] = [
     'Project',
     'project',
     [
-      menuItem('General', 'general'),
-      menuItem('Project handle', 'projecthandle'),
+      menuItem('General', 'general', undefined, undefined, 'menu-item-sider'),
+      menuItem(
+        'Project handle',
+        'projecthandle',
+        undefined,
+        undefined,
+        'menu-item-sider',
+      ),
     ],
     'group',
   ),
@@ -63,9 +71,21 @@ const items: MenuItem[] = [
     'Funding',
     'funding',
     [
-      menuItem('Funding cycle', 'reconfigurefc'),
-      menuItem('Payouts', 'payouts'),
-      menuItem('Reserved tokens', 'reservedtokens'),
+      menuItem(
+        'Funding cycle',
+        'reconfigurefc',
+        undefined,
+        undefined,
+        'menu-item-sider',
+      ),
+      menuItem('Payouts', 'payouts', undefined, undefined, 'menu-item-sider'),
+      menuItem(
+        'Reserved tokens',
+        'reservedtokens',
+        undefined,
+        undefined,
+        'menu-item-sider',
+      ),
     ],
     'group',
   ),
@@ -74,14 +94,44 @@ const items: MenuItem[] = [
     'Manage',
     'manage',
     [
-      menuItem('Transfer ownership', 'transferownership'),
-      menuItem('Archive project', 'archiveproject'),
-      menuItem('Governance', 'governance'),
+      menuItem(
+        'Transfer ownership',
+        'transferownership',
+        undefined,
+        undefined,
+        'menu-item-sider',
+      ),
+      menuItem(
+        'Archive project',
+        'archiveproject',
+        undefined,
+        undefined,
+        'menu-item-sider',
+      ),
+      menuItem(
+        'Governance',
+        'governance',
+        undefined,
+        undefined,
+        'menu-item-sider',
+      ),
       featureFlagEnabled(FEATURE_FLAGS.PROJECT_CONTRACT_UPDGRADES)
-        ? menuItem('Project upgrades', 'upgrades')
+        ? menuItem(
+            'Project upgrades',
+            'upgrades',
+            undefined,
+            undefined,
+            'menu-item-sider',
+          )
         : null,
       featureFlagEnabled(FEATURE_FLAGS.V1_TOKEN_SWAP)
-        ? menuItem('V1 token migration', 'v1tokenmigration')
+        ? menuItem(
+            'V1 token migration',
+            'v1tokenmigration',
+            undefined,
+            undefined,
+            'menu-item-sider',
+          )
         : null,
     ],
     'group',

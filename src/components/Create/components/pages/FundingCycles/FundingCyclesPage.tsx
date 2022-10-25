@@ -1,20 +1,18 @@
-import {
-  InfoCircleOutlined,
-  PullRequestOutlined,
-  RedoOutlined,
-} from '@ant-design/icons'
+import { InfoCircleOutlined, RedoOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
-import Callout from 'components/Callout'
-import { useContext } from 'react'
+import { useLockPageRulesWrapper } from 'components/Create/hooks/useLockPageRulesWrapper'
+import { useContext, useEffect } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { CreateBadge } from '../../CreateBadge'
+import { CreateCallout } from '../../CreateCallout'
 import { DurationInput } from '../../DurationInput'
+import { Icons } from '../../Icons'
 import { Selection } from '../../Selection/Selection'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
-import { inputMustExistRule } from '../utils'
+import { durationMustExistRule } from '../utils'
 import { FundingCyclesFormProps, useFundingCyclesForm } from './hooks'
 
 const FundingCycleCallout: React.FC = () => {
@@ -26,7 +24,7 @@ const FundingCycleCallout: React.FC = () => {
   switch (selection) {
     case 'automated':
       return (
-        <Callout>
+        <CreateCallout.Warning>
           <Space direction="vertical" size="middle">
             <Trans>
               Funding Cycle #1 will start immediately after you launch your
@@ -37,30 +35,46 @@ const FundingCycleCallout: React.FC = () => {
               Cycle #2) at any time within the bounds of the rules you set.
             </Trans>
           </Space>
-        </Callout>
+        </CreateCallout.Warning>
       )
     case 'manual':
       return (
-        <Callout>
+        <CreateCallout.Warning>
           <Trans>
             With manual funding cycles selected, the project's owner can start a
             new funding cycle on-demand. This may pose a risk to some
             contributors.
           </Trans>
-        </Callout>
+        </CreateCallout.Warning>
       )
   }
 }
 
-// TODO: We need to add some state handling for this function. We might want to
-//       consider adding some stuff to handle the local storage state better.
 export const FundingCyclesPage = () => {
   useSetCreateFurthestPageReached('fundingCycles')
-  const { goToNextPage } = useContext(PageContext)
+  const { goToNextPage, lockPageProgress, unlockPageProgress } =
+    useContext(PageContext)
   const { form, initialValues } = useFundingCyclesForm()
+  const lockPageRulesWrapper = useLockPageRulesWrapper()
 
   const selection = useWatch('selection', form)
   const isNextEnabled = !!selection
+
+  // A bit of a workaround to soft lock the page when the user edits data.
+  useEffect(() => {
+    if (!selection) {
+      lockPageProgress?.()
+      return
+    }
+    if (selection === 'automated') {
+      const duration = form.getFieldValue('duration')
+      if (!duration?.duration) {
+        lockPageProgress?.()
+        return
+      }
+    }
+    unlockPageProgress?.()
+  }, [form, isNextEnabled, lockPageProgress, selection, unlockPageProgress])
 
   return (
     <Form
@@ -95,18 +109,18 @@ export const FundingCyclesPage = () => {
                       edited or changed during the first funding cycle.
                     </Trans>
                   }
-                  rules={[
-                    inputMustExistRule({ label: t`Funding cycle duration` }),
-                  ]}
+                  rules={lockPageRulesWrapper([
+                    durationMustExistRule({ label: t`Funding cycle duration` }),
+                  ])}
                 >
-                  <DurationInput style={{ width: '23rem' }} />
+                  <DurationInput />
                 </Form.Item>
               </Selection.Card>
               <Selection.Card
                 name="manual"
                 title={t`Manual Funding Cycles`}
                 description={t`The project’s owner can change the project's settings and start a new funding cycle at any time.`}
-                icon={<PullRequestOutlined />}
+                icon={<Icons.ManualSettings />}
               />
             </Selection>
           </Form.Item>

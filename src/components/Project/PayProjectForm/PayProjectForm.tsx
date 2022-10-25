@@ -36,7 +36,7 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
     <>
       <div style={{ height: '22px' }}>
         {error ? (
-          <span style={{ color: colors.text.failure, fontSize: '0.7rem' }}>
+          <span style={{ color: colors.text.failure, fontSize: '0.75rem' }}>
             <Trans>Pay amount must be greater than 0.</Trans>
           </span>
         ) : null}

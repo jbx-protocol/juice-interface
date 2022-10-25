@@ -27,10 +27,15 @@ import {
 } from 'models/nftRewardTier'
 import {
   DEFAULT_MINT_RATE,
+  discountRateFrom,
+  formatIssuanceRate,
   issuanceRateFrom,
   redemptionRateFrom,
+  reservedRateFrom,
 } from 'utils/v2v3/math'
 
+import { AllocationSplit } from 'components/Create/components/Allocation'
+import { allocationToSplit } from 'components/Create/utils/splitToAllocation'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
@@ -58,8 +63,10 @@ interface V2ProjectState {
     collectionMetadata: NftCollectionMetadata
     postPayModal: NftPostPayModalConfig | undefined
   }
+  fundingCyclesPageSelection: 'automated' | 'manual' | undefined
   reconfigurationRuleSelection: ReconfigurationStrategy | undefined
   createFurthestPageReached: CreatePage
+  createSoftLockPageQueue: CreatePage[] | undefined
 }
 
 // Increment this version by 1 when making breaking changes.
@@ -172,7 +179,9 @@ export const defaultProjectState: V2ProjectState = {
     postPayModal: undefined,
   },
   reconfigurationRuleSelection: undefined,
+  fundingCyclesPageSelection: undefined,
   createFurthestPageReached: 'projectDetails',
+  createSoftLockPageQueue: [],
 }
 
 const editingV2ProjectSlice = createSlice({
@@ -323,6 +332,12 @@ const editingV2ProjectSlice = createSlice({
     setAllowSetTerminals: (state, action: PayloadAction<boolean>) => {
       state.fundingCycleMetadata.global.allowSetTerminals = action.payload
     },
+    setFundingCyclesPageSelection: (
+      state,
+      action: PayloadAction<'manual' | 'automated' | undefined>,
+    ) => {
+      state.fundingCyclesPageSelection = action.payload
+    },
     setReconfigurationRuleSelection: (
       state,
       action: PayloadAction<ReconfigurationStrategy | undefined>,
@@ -334,6 +349,49 @@ const editingV2ProjectSlice = createSlice({
       action: PayloadAction<CreatePage>,
     ) => {
       state.createFurthestPageReached = action.payload
+    },
+    addCreateSoftLockedPage: (state, action: PayloadAction<CreatePage>) => {
+      const set = new Set(state.createSoftLockPageQueue)
+      set.add(action.payload)
+      state.createSoftLockPageQueue = [...set]
+    },
+    removeCreateSoftLockedPage: (state, action: PayloadAction<CreatePage>) => {
+      if (!state.createSoftLockPageQueue) return
+      if (state.createSoftLockPageQueue.includes(action.payload)) {
+        state.createSoftLockPageQueue.splice(
+          state.createSoftLockPageQueue.indexOf(action.payload),
+          1,
+        )
+      }
+    },
+    setTokenSettings: (
+      state,
+      action: PayloadAction<{
+        initialMintRate: string
+        reservedTokensPercentage: number
+        reservedTokenAllocation: AllocationSplit[]
+        discountRate: number
+        redemptionRate: number
+        tokenMinting: boolean
+      }>,
+    ) => {
+      state.fundingCycleData.weight = formatIssuanceRate(
+        action.payload.initialMintRate,
+      )
+      state.fundingCycleMetadata.reservedRate = reservedRateFrom(
+        action.payload.reservedTokensPercentage,
+      ).toHexString()
+      state.reservedTokensGroupedSplits = {
+        ...EMPTY_RESERVED_TOKENS_GROUPED_SPLITS,
+        splits: action.payload.reservedTokenAllocation.map(allocationToSplit),
+      }
+      state.fundingCycleData.discountRate = discountRateFrom(
+        action.payload.discountRate,
+      ).toHexString()
+      state.fundingCycleMetadata.redemptionRate = redemptionRateFrom(
+        action.payload.redemptionRate,
+      ).toHexString()
+      state.fundingCycleMetadata.allowMinting = action.payload.tokenMinting
     },
   },
 })

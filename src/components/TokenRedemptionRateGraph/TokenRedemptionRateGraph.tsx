@@ -120,59 +120,61 @@ export const TokenRedemptionRateGraph = ({
     <table
       style={{ tableLayout: 'fixed', width: graphSize, height: graphSize }}
     >
-      <tr>
-        <td style={{ ...labelStyle }}>
-          <div style={{ display: 'table' }}>
-            <div style={{ padding: '50% 0.5rem', height: 0 }}>
-              <div
-                style={{
-                  display: 'block',
-                  transformOrigin: 'top left',
-                  transform: 'rotate(-90deg) translate(-100%)',
-                  marginTop: '-50%',
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                <Trans>Token redeem value</Trans>
+      <tbody>
+        <tr>
+          <td style={{ ...labelStyle }}>
+            <div style={{ display: 'table' }}>
+              <div style={{ padding: '50% 0.5rem', height: 0 }}>
+                <div
+                  style={{
+                    display: 'block',
+                    transformOrigin: 'top left',
+                    transform: 'rotate(-90deg) translate(-100%)',
+                    marginTop: '-50%',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  <Trans>Token redeem value</Trans>
+                </div>
               </div>
             </div>
-          </div>
-        </td>
-        <td
-          style={{
-            width: graphSize - graphPad,
-            borderLeft: '1px solid',
-            borderBottom: '1px solid',
-            borderColor: colors.stroke.secondary,
-          }}
-        >
-          <div
-            ref={graphRef}
+          </td>
+          <td
             style={{
               width: graphSize - graphPad,
-              height: graphSize - graphPad,
+              borderLeft: '1px solid',
+              borderBottom: '1px solid',
+              borderColor: colors.stroke.secondary,
             }}
-          />
-        </td>
-      </tr>
-      <tr
-        style={{
-          height: graphPad,
-          width: '100%',
-          textAlign: 'center',
-          ...labelStyle,
-        }}
-      >
-        <td style={{ width: graphPad }} />
-        <td
+          >
+            <div
+              ref={graphRef}
+              style={{
+                width: graphSize - graphPad,
+                height: graphSize - graphPad,
+              }}
+            />
+          </td>
+        </tr>
+        <tr
           style={{
-            whiteSpace: 'nowrap',
+            height: graphPad,
+            width: '100%',
             textAlign: 'center',
+            ...labelStyle,
           }}
         >
-          <Trans>% tokens redeemed</Trans>
-        </td>
-      </tr>
+          <td style={{ width: graphPad }} />
+          <td
+            style={{
+              whiteSpace: 'nowrap',
+              textAlign: 'center',
+            }}
+          >
+            <Trans>% tokens redeemed</Trans>
+          </td>
+        </tr>
+      </tbody>
     </table>
   )
 }

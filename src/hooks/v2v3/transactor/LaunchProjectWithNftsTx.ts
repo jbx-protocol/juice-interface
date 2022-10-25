@@ -4,7 +4,7 @@ import * as constants from '@ethersproject/constants'
 import { parseEther } from '@ethersproject/units'
 import { t } from '@lingui/macro'
 import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
-import { MaxUint48 } from 'constants/numbers'
+import { MaxUint48, WAD_DECIMALS } from 'constants/numbers'
 import { TransactionContext } from 'contexts/transactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { TransactorInstance } from 'hooks/Transactor'
@@ -80,7 +80,7 @@ async function getJBDeployTiered721DelegateData({
   const pricing = {
     tiers,
     currency: V2V3_CURRENCY_ETH,
-    decimals: 18,
+    decimals: WAD_DECIMALS,
     prices: JBPricesAddress,
   }
 

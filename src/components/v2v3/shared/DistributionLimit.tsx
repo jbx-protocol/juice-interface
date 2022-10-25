@@ -6,7 +6,7 @@ import { formatWad } from 'utils/format/formatNumber'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 
 import { ThemeContext } from 'contexts/themeContext'
-import { useContext } from 'react'
+import { CSSProperties, useContext } from 'react'
 
 import { CurrencyName } from 'constants/currency'
 
@@ -14,10 +14,12 @@ export default function DistributionLimit({
   distributionLimit,
   currencyName,
   showTooltip,
+  style,
 }: {
   distributionLimit: BigNumber | undefined
   currencyName: CurrencyName | undefined
   showTooltip?: boolean
+  style?: CSSProperties
 }) {
   const {
     theme: { colors },
@@ -66,7 +68,7 @@ export default function DistributionLimit({
   )
 
   return (
-    <span style={{ color: colors.text.primary }}>
+    <span style={{ color: colors.text.primary, ...style }}>
       {_text}
       {_tooltip}
     </span>

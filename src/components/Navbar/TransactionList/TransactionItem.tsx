@@ -44,7 +44,7 @@ export function TransactionItem({
             alignItems: 'baseline',
             gap: 10,
             color: colors.text.tertiary,
-            fontSize: '0.7rem',
+            fontSize: '0.75rem',
           }}
         >
           <TxStatusElem status={tx.status} />{' '}

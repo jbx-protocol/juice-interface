@@ -36,7 +36,7 @@ export default function SpendingStats({
   } = useContext(ThemeContext)
 
   const smallHeaderStyle: CSSProperties = {
-    fontSize: '.7rem',
+    fontSize: '0.75rem',
     fontWeight: 500,
     cursor: 'default',
     color: colors.text.secondary,

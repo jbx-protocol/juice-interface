@@ -525,7 +525,7 @@ export default function ReconfigureFCModal({
               return (
                 <div>
                   {ballot.name}{' '}
-                  <div style={{ fontSize: '0.7rem' }}>{ballot.address}</div>
+                  <div style={{ fontSize: '0.75rem' }}>{ballot.address}</div>
                 </div>
               )
             }}

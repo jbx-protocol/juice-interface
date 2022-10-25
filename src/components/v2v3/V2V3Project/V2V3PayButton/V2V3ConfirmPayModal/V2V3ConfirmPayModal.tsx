@@ -225,7 +225,7 @@ export function V2V3ConfirmPayModal({
             <div>
               {formatWad(receivedTickets, { precision: 0 })} {tokenText}
             </div>
-            <div style={{ fontSize: '0.7rem' }}>
+            <div style={{ fontSize: '0.75rem' }}>
               {userAddress ? (
                 <Trans>
                   To: <FormattedAddress address={userAddress} />

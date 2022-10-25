@@ -199,7 +199,7 @@ export default function ProjectCard({
                 right: 0,
                 padding: '2px 4px',
                 background: colors.background.l1,
-                fontSize: '0.7rem',
+                fontSize: '0.75rem',
                 color: colors.text.tertiary,
                 fontWeight: 500,
               }}

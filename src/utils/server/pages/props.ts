@@ -3,33 +3,26 @@ import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
 import { CV2V3 } from 'models/cv'
-import { NetworkName } from 'models/network-name'
 import { ProjectMetadataV5 } from 'models/project-metadata'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import { GetServerSidePropsResult } from 'next'
 import { findProjectMetadata } from 'utils/server'
-import { isV3Project } from 'utils/v2v3/cv'
+import { hasFundingCycle } from 'utils/v2v3/cv'
 import { loadV2V3Contract } from 'utils/v2v3/loadV2V3Contract'
 
 export interface ProjectPageProps {
   metadata: ProjectMetadataV5
   projectId: number
-  cv: CV2V3
+  initialCv: CV2V3
+  cvs?: CV2V3[]
 }
 
 async function loadJBProjects() {
-  // Note: v2 and v3 use the same JBProjects, so the CV doesn't matter.
-  // Goerli doesn't have a V3 deployment so we must use CV_V3.
-  // Rinkeby doesn't have a V2 deployment so we must use CV_V2.
-  const contractsVersion =
-    readNetwork.name === NetworkName.goerli ? CV_V3 : CV_V2
-
-  const network = readNetwork.name
   const contract = await loadV2V3Contract(
     V2V3ContractName.JBProjects,
-    network,
+    readNetwork.name,
     readProvider,
-    contractsVersion,
+    CV_V3, // Note: v2 and v3 use the same JBProjects, so the CV doesn't matter.
   )
 
   return contract
@@ -58,19 +51,24 @@ export async function getProjectProps(
 
   try {
     const metadataCid = await getMetadataCidFromContract(projectId)
-
-    const [metadata, isV3ProjectResult] = await Promise.all([
+    const [metadata, hasV2FundingCycle, hasV3FundingCycle] = await Promise.all([
       findProjectMetadata({ metadataCid }),
-      isV3Project(projectId),
+      hasFundingCycle(projectId, CV_V2),
+      hasFundingCycle(projectId, CV_V3),
     ])
 
-    const cv = isV3ProjectResult ? CV_V3 : CV_V2
+    const initialCv = hasV3FundingCycle ? CV_V3 : CV_V2
+
+    const cvs: CV2V3[] = []
+    if (hasV2FundingCycle) cvs.push(CV_V2)
+    if (hasV3FundingCycle) cvs.push(CV_V3)
 
     return {
       props: {
         metadata,
         projectId,
-        cv,
+        initialCv,
+        cvs,
       },
     }
 

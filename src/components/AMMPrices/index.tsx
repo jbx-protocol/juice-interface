@@ -36,7 +36,7 @@ export default function AMMPrices({
 
   return (
     <div style={{ ...style }}>
-      <p style={{ fontSize: '0.7rem' }}>
+      <p style={{ fontSize: '0.75rem' }}>
         <Trans>Current 3rd Party Exchange Rates</Trans>
       </p>
       <TokenAMMPriceRow

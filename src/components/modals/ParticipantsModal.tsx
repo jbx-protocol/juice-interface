@@ -126,7 +126,7 @@ export default function ParticipantsModal({
 
   const list = useMemo(() => {
     const smallHeaderStyle = {
-      fontSize: '.7rem',
+      fontSize: '0.75rem',
       color: colors.text.tertiary,
     }
 

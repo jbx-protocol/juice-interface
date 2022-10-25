@@ -21,7 +21,7 @@ export function FundingCycleDetailsRow({
         <h4
           style={{
             color: colors.text.secondary,
-            fontSize: '0.8rem',
+            fontSize: '0.875rem',
             fontWeight: 500,
             whiteSpace: 'nowrap',
             paddingRight: '10px',

@@ -50,14 +50,14 @@ export default function DistributedRatio({ style }: { style?: CSSProperties }) {
               currency={distributionLimitCurrency}
             />{' '}
             <>
-              /{' '}
-              {distributionLimit.eq(MAX_DISTRIBUTION_LIMIT) ? (
-                <Trans>NO LIMIT</Trans>
-              ) : (
-                <V2V3CurrencyAmount
-                  amount={distributionLimit}
-                  currency={distributionLimitCurrency}
-                />
+              {distributionLimit.eq(MAX_DISTRIBUTION_LIMIT) ? null : (
+                <>
+                  {'/ '}
+                  <V2V3CurrencyAmount
+                    amount={distributionLimit}
+                    currency={distributionLimitCurrency}
+                  />
+                </>
               )}
             </>
           </div>

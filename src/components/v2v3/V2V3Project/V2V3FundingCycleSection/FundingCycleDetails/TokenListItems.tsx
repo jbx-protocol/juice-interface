@@ -85,16 +85,6 @@ export function TokenListItems({
   return (
     <>
       <FundingCycleListItem
-        name={t`Discount rate`}
-        value={`${formatDiscountRate(fundingCycle.discountRate)}%`}
-        helperText={DISCOUNT_RATE_EXPLANATION}
-      />
-      <FundingCycleListItem
-        name={t`Redemption rate`}
-        value={`${formatRedemptionRate(fundingCycleMetadata?.redemptionRate)}%`}
-        helperText={REDEMPTION_RATE_EXPLANATION}
-      />
-      <FundingCycleListItem
         name={t`Mint rate`}
         value={
           <Trans>
@@ -130,6 +120,16 @@ export function TokenListItems({
         name={t`Payment issuance rate`}
         value={<ContributorRateText />}
         helperText={CONTRIBUTOR_RATE_EXPLAINATION}
+      />
+      <FundingCycleListItem
+        name={t`Discount rate`}
+        value={`${formatDiscountRate(fundingCycle.discountRate)}%`}
+        helperText={DISCOUNT_RATE_EXPLANATION}
+      />
+      <FundingCycleListItem
+        name={t`Redemption rate`}
+        value={`${formatRedemptionRate(fundingCycleMetadata?.redemptionRate)}%`}
+        helperText={REDEMPTION_RATE_EXPLANATION}
       />
     </>
   )

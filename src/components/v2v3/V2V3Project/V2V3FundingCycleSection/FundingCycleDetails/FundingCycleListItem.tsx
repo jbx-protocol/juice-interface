@@ -44,10 +44,10 @@ export function FundingCycleListItem({
   if (helperText) {
     return (
       <div style={{ ...containerStyle, cursor: 'default' }}>
-        <Tooltip title={helperText}>
+        <Tooltip title={helperText} overlayInnerStyle={{ width: '400px' }}>
           <div style={{ fontWeight: 500, display: 'flex' }}>
             <div
-              className="dashed-underline"
+              className="text-decoration-underline text-decoration-dashed text-decoration-secondary"
               style={{ height: subItem ? '1rem' : '1.2rem' }}
             >
               {name}

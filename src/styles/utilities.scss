@@ -45,11 +45,7 @@
   }
 }
 
-.hover-text-primary {
-  &:hover {
-    color: var(--text-primary);
-  }
-}
+
 
 .hover-text-decoration-underline {
   &:hover {
@@ -73,7 +69,19 @@
   box-shadow: 2px 0px 10px 0px var(--boxShadow-primary);
 }
 
-.dashed-underline {
-  border-bottom: 1px dashed var(--stroke-tertiary);
-  margin-bottom: 3px;
+
+.text-decoration-underline {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.text-decoration-dashed {
+  text-decoration-style: dashed;
+}
+.text-decoration-secondary {
+  text-decoration-color: var(--stroke-secondary);
+}
+.hover-text-primary {
+  &:hover {
+    color: var(--text-primary);
+  }
 }

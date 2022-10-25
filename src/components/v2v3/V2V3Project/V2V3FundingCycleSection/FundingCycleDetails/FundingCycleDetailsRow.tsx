@@ -15,10 +15,11 @@ export function FundingCycleDetailsRow({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+
   return (
     <div style={{ paddingBottom: '1.1rem', ...style }}>
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <h4
+        <h5
           style={{
             color: colors.text.secondary,
             fontSize: '0.875rem',
@@ -29,7 +30,7 @@ export function FundingCycleDetailsRow({
           }}
         >
           {header}
-        </h4>
+        </h5>
         <Divider style={{ margin: '2px 0 10px', minWidth: 'unset' }} />
       </div>
       <div>{items}</div>

@@ -42,7 +42,8 @@ export default function SpendingStats({
     color: colors.text.secondary,
   }
 
-  const formattedDistributionLimit = !targetAmount.eq(MAX_DISTRIBUTION_LIMIT)
+  const hasDistributionLimit = !targetAmount.eq(MAX_DISTRIBUTION_LIMIT)
+  const formattedDistributionLimit = hasDistributionLimit
     ? formatWad(targetAmount, { precision: 4 })
     : t`NO LIMIT`
 
@@ -85,7 +86,7 @@ export default function SpendingStats({
           <Trans>
             <CurrencySymbol currency={currency} />
             {formatWad(distributedAmount, { precision: 4 }) || '0'}
-            {hasFundingTarget ? (
+            {hasFundingTarget && hasDistributionLimit ? (
               <span>/{formattedDistributionLimit} </span>
             ) : null}{' '}
             distributed

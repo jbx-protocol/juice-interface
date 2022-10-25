@@ -50,7 +50,8 @@ export const getStaticProps: GetStaticProps<
 export default function V2ProjectPage({
   metadata,
   projectId,
-  cv,
+  initialCv,
+  cvs,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
@@ -75,7 +76,8 @@ export default function V2ProjectPage({
           <V2V3ProjectPageProvider
             projectId={projectId}
             metadata={metadata}
-            cv={cv}
+            initialCv={initialCv}
+            cvs={cvs}
           >
             <V2V3Dashboard />
           </V2V3ProjectPageProvider>

@@ -41,6 +41,10 @@
   background: none !important;
 }
 
+.menu-item-sider:hover {
+  background: var(--background-l2) !important;
+}
+
 .ant-menu-item-group-title {
   text-transform: uppercase;
   padding-bottom: 0;

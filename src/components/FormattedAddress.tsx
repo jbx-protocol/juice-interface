@@ -121,7 +121,7 @@ export default function FormattedAddress({
   return (
     <Tooltip
       title={
-        <span style={{ fontSize: '0.8rem' }}>
+        <span style={{ fontSize: '0.875rem' }}>
           {address} <CopyTextButton value={address} />
         </span>
       }

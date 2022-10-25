@@ -1,4 +1,5 @@
 import { CV_V2, CV_V3 } from 'constants/cv'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
@@ -6,6 +7,7 @@ import { CV2V3 } from 'models/cv'
 import { ProjectMetadataV5 } from 'models/project-metadata'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import { GetServerSidePropsResult } from 'next'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { findProjectMetadata } from 'utils/server'
 import { hasFundingCycle } from 'utils/v2v3/cv'
 import { loadV2V3Contract } from 'utils/v2v3/loadV2V3Contract'
@@ -57,7 +59,8 @@ export async function getProjectProps(
       hasFundingCycle(projectId, CV_V3),
     ])
 
-    const initialCv = hasV3FundingCycle ? CV_V3 : CV_V2
+    const initialCv =
+      hasV3FundingCycle && featureFlagEnabled(FEATURE_FLAGS.V3) ? CV_V3 : CV_V2
 
     const cvs: CV2V3[] = []
     if (hasV2FundingCycle) cvs.push(CV_V2)

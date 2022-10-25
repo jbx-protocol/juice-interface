@@ -67,6 +67,13 @@
     tslib "^2.3.0"
     zen-observable-ts "^1.2.5"
 
+"@arcxmoney/analytics@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@arcxmoney/analytics/-/analytics-1.0.1.tgz#1ae5bd88c15c2b6d69ae8a4a959f6ccbe967f28f"
+  integrity sha512-LKSCJXOCwMSrTlaU16AeNhky1ijXB3U4zAjTP0jj26VPDmvH/1bcgqZAkrg8xxjC3sXays9nHe4J4ipTx8UT1A==
+  dependencies:
+    "@restless/sanitizers" "^0.2.5"
+
 "@ardatan/relay-compiler@12.0.0":
   version "12.0.0"
   resolved "https://registry.yarnpkg.com/@ardatan/relay-compiler/-/relay-compiler-12.0.0.tgz#2e4cca43088e807adc63450e8cab037020e91106"
@@ -4719,6 +4726,11 @@
     redux "^4.1.0"
     redux-thunk "^2.3.0"
     reselect "^4.0.0"
+
+"@restless/sanitizers@^0.2.5":
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/@restless/sanitizers/-/sanitizers-0.2.5.tgz#96a5cfa3edb52abd8fa14e77798738f3a067dbec"
+  integrity sha512-utsOFwv5owNnbj8HijF7uML/AURgUl5YvY4S2gpxQsrp2D1EP/4rQU/HSyYdIQaL89BoZ/5NHveRJrcFyuHo/w==
 
 "@rushstack/eslint-patch@^1.1.0":
   version "1.1.4"

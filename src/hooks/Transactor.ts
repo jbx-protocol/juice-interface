@@ -2,18 +2,20 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { hexlify } from '@ethersproject/bytes'
 import { Contract } from '@ethersproject/contracts'
 import { Deferrable } from '@ethersproject/properties'
-import { TransactionRequest } from '@ethersproject/providers'
+import {
+  TransactionRequest,
+  TransactionResponse,
+} from '@ethersproject/providers'
 import { parseUnits } from '@ethersproject/units'
-import { useCallback, useContext } from 'react'
-
-import { emitErrorNotification } from 'utils/notifications'
-
 import { t } from '@lingui/macro'
 import * as Sentry from '@sentry/browser'
-
+import { readNetwork } from 'constants/networks'
 import { TxHistoryContext } from 'contexts/txHistoryContext'
+import { getArcxClient } from 'lib/arcx'
 import { CV } from 'models/cv'
 import { TransactionOptions } from 'models/transaction'
+import { useCallback, useContext } from 'react'
+import { emitErrorNotification } from 'utils/notifications'
 import { useWallet } from './Wallet'
 
 type TxOpts = Omit<TransactionOptions, 'value'>
@@ -108,12 +110,13 @@ export function useTransactor({
       const txTitle = options?.title ?? functionName
 
       try {
-        let result
+        let result: unknown
+
         if (tx instanceof Promise) {
           console.info('Transactor::AWAITING TX', tx)
           result = await tx
 
-          addTransaction?.(txTitle, result, {
+          addTransaction?.(txTitle, result as TransactionResponse, {
             onConfirmed: options?.onConfirmed,
             onCancelled: options?.onCancelled,
           })
@@ -124,14 +127,23 @@ export function useTransactor({
           if (!tx.gasLimit) tx.gasLimit = hexlify(120000)
 
           result = await signer.sendTransaction(tx)
+          const txResponse = result as TransactionResponse
 
-          addTransaction?.(txTitle, result, {
+          addTransaction?.(txTitle, txResponse, {
             onConfirmed: options?.onConfirmed,
             onCancelled: options?.onCancelled,
           })
 
-          await result.wait()
+          await txResponse.wait()
+
+          getArcxClient().then(arcx => {
+            arcx?.transaction({
+              chain: readNetwork.chainId, // required(string) - chain ID that the transaction is taking place on
+              transactionHash: txResponse.hash as string,
+            })
+          })
         }
+
         console.info('Transactor::RESULT::', result)
 
         // transaction was submitted, but not confirmed/mined yet.

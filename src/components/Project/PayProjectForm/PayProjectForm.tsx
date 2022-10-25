@@ -1,13 +1,19 @@
-import { Trans } from '@lingui/macro'
+import { t } from '@lingui/macro'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import { CurrencyContext } from 'contexts/currencyContext'
 import { ThemeContext } from 'contexts/themeContext'
+import { useEthBalanceQuery } from 'hooks/EthBalance'
+import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
+import { fromWad } from 'utils/format/formatNumber'
 import FormattedNumberInput from '../../inputs/FormattedNumberInput'
 import PayInputSubText from './PayInputSubText'
 import { PayProjectFormContext } from './payProjectFormContext'
 
 export function PayProjectForm({ disabled }: { disabled?: boolean }) {
+  const { userAddress } = useWallet()
+  const { data: balance } = useEthBalanceQuery(userAddress)
+  const formattedBalance = parseFloat(fromWad(balance))
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -21,8 +27,8 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
     setPayAmount,
     payInCurrency,
     setPayInCurrency,
-    error,
-    setError,
+    errorMessage,
+    setErrorMessage,
   } = payProjectForm ?? {}
 
   const togglePayInCurrency = () => {
@@ -34,13 +40,13 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
 
   return (
     <>
-      <div style={{ height: '22px' }}>
-        {error ? (
-          <span style={{ color: colors.text.failure, fontSize: '0.75rem' }}>
-            <Trans>Pay amount must be greater than 0.</Trans>
+      {errorMessage && (
+        <div style={{ height: '22px' }}>
+          <span style={{ color: colors.text.failure, fontSize: '0.7rem' }}>
+            {errorMessage}
           </span>
-        ) : null}
-      </div>
+        </div>
+      )}
       <div
         style={{
           display: 'flex',
@@ -53,8 +59,16 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
           <FormattedNumberInput
             placeholder="0"
             onChange={val => {
-              setError?.(Number(val) <= 0)
               setPayAmount?.(val ?? '0')
+              if (Number(val) <= 0) {
+                setErrorMessage?.(t`Payment amount can't be 0`)
+              } else if (Number(val) > formattedBalance) {
+                setErrorMessage?.(
+                  t`Payment amount can't exceed your wallet balance.`,
+                )
+              } else {
+                setErrorMessage?.('')
+              }
             }}
             value={payAmount}
             min={0}
@@ -74,7 +88,10 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
           />
         </div>
 
-        <PayButton wrapperStyle={{ flex: 1 }} disabled={disabled} />
+        <PayButton
+          wrapperStyle={{ flex: 1 }}
+          disabled={disabled || errorMessage !== ''}
+        />
       </div>
     </>
   )

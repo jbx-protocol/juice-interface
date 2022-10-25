@@ -14,8 +14,8 @@ const TAB_TYPE_NAMES: { [k in ProjectCategory]: string } = {
 
 const TABS: ProjectCategory[] = [
   'all',
-  'latest',
   'trending',
+  'latest',
   'holdings',
   'myprojects',
 ]

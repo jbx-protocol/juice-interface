@@ -26,13 +26,14 @@ import { helpPagePath } from 'utils/routes'
 
 import { CV_V1, CV_V1_1, CV_V2, CV_V3 } from 'constants/cv'
 import { layouts } from 'constants/styles/layouts'
+import { useLoadMoreContent } from 'hooks/LoadMore'
 import ArchivedProjectsMessage from './ArchivedProjectsMessage'
 import HoldingsProjects from './HoldingsProjects'
+import LatestProjects from './LatestProjects'
 import MyProjects from './MyProjects'
 import ProjectsFilterAndSort from './ProjectsFilterAndSort'
 import ProjectsTabs from './ProjectsTabs'
 import TrendingProjects from './TrendingProjects'
-import LatestProjects from './LatestProjects'
 
 export default function ProjectsPage() {
   return (
@@ -117,30 +118,22 @@ function Projects() {
   const { data: searchPages, isLoading: isLoadingSearch } =
     useProjectsSearch(searchText)
 
-  // When we scroll within 200px of our loadMoreContainerRef, fetch the next page.
-  useEffect(() => {
-    if (loadMoreContainerRef.current && selectedTab !== 'trending') {
-      const observer = new IntersectionObserver(
-        entries => {
-          if (entries.find(e => e.isIntersecting) && hasNextPage) {
-            fetchNextPage()
-          }
-        },
-        {
-          rootMargin: '200px',
-        },
-      )
-      observer.observe(loadMoreContainerRef.current)
-
-      return () => observer.disconnect()
-    }
-  }, [selectedTab, fetchNextPage, hasNextPage])
+  const [visible] = useLoadMoreContent({
+    loadMoreContainerRef,
+    hasNextPage,
+  })
 
   const isLoading = isLoadingProjects || isLoadingSearch
 
   const concatenatedPages = searchText?.length
     ? searchPages
     : pages?.pages?.reduce((prev, group) => [...prev, ...group], [])
+
+  useEffect(() => {
+    if (visible) {
+      fetchNextPage()
+    }
+  }, [fetchNextPage, visible])
 
   return (
     <div style={{ ...layouts.maxWidth }}>

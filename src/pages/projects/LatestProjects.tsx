@@ -5,6 +5,7 @@ import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
 import { ThemeContext } from 'contexts/themeContext'
 import { useInfiniteProjectsQuery } from 'hooks/Projects'
 import { useContext, useEffect, useRef } from 'react'
+import { useLoadMoreContent } from '../../hooks/LoadMore'
 
 export default function LatestProjects() {
   const pageSize = 20
@@ -24,29 +25,21 @@ export default function LatestProjects() {
   })
   const loadMoreContainerRef = useRef<HTMLDivElement>(null)
 
+  const [visible] = useLoadMoreContent({
+    loadMoreContainerRef,
+    hasNextPage,
+  })
   const concatenatedPages = pages?.pages?.reduce(
     (prev, group) => [...prev, ...group],
     [],
   )
 
-  // When we scroll within 200px of our loadMoreContainerRef, fetch the next page.
   useEffect(() => {
-    if (loadMoreContainerRef.current) {
-      const observer = new IntersectionObserver(
-        entries => {
-          if (entries.find(e => e.isIntersecting) && hasNextPage) {
-            fetchNextPage()
-          }
-        },
-        {
-          rootMargin: '200px',
-        },
-      )
-      observer.observe(loadMoreContainerRef.current)
-
-      return () => observer.disconnect()
+    if (visible) {
+      fetchNextPage()
     }
-  }, [fetchNextPage, hasNextPage])
+  }, [fetchNextPage, visible])
+
   return (
     <>
       {concatenatedPages && (

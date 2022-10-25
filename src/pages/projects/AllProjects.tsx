@@ -1,38 +1,59 @@
 import { t, Trans } from '@lingui/macro'
 import Grid from 'components/Grid'
+
 import Loading from 'components/Loading'
 import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
 import { ThemeContext } from 'contexts/themeContext'
-import { useInfiniteProjectsQuery } from 'hooks/Projects'
+import { useLoadMoreContent } from 'hooks/LoadMore'
+import { useInfiniteProjectsQuery, useProjectsSearch } from 'hooks/Projects'
+import { CV } from 'models/cv'
 import { useContext, useEffect, useRef } from 'react'
-import { useLoadMoreContent } from '../../hooks/LoadMore'
 
-export default function LatestProjects() {
-  const pageSize = 20
+export default function AllProjects({
+  cv,
+  searchText,
+  orderBy,
+  showArchived,
+}: {
+  cv: CV[] | undefined
+  searchText: string
+  orderBy: 'createdAt' | 'totalPaid'
+  showArchived: boolean
+}) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+
+  const loadMoreContainerRef = useRef<HTMLDivElement>(null)
+  const pageSize = 20
+
   const {
     data: pages,
-    isLoading,
+    isLoading: isLoadingProjects,
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
   } = useInfiniteProjectsQuery({
-    orderBy: 'createdAt',
+    orderBy,
     pageSize,
     orderDirection: 'desc',
+    state: showArchived ? 'archived' : 'active',
+    cv,
   })
-  const loadMoreContainerRef = useRef<HTMLDivElement>(null)
+
+  const { data: searchPages, isLoading: isLoadingSearch } =
+    useProjectsSearch(searchText)
 
   const [scrolledToBottom] = useLoadMoreContent({
     loadMoreContainerRef,
     hasNextPage,
   })
-  const concatenatedPages = pages?.pages?.reduce(
-    (prev, group) => [...prev, ...group],
-    [],
-  )
+
+  const isLoading = isLoadingProjects || isLoadingSearch
+
+  const concatenatedPages = searchText?.length
+    ? searchPages
+    : pages?.pages?.reduce((prev, group) => [...prev, ...group], [])
 
   useEffect(() => {
     if (scrolledToBottom) {
@@ -74,7 +95,8 @@ export default function LatestProjects() {
           <Trans>Load more</Trans>
         </div>
       ) : (
-        !isLoading && (
+        !isLoadingSearch &&
+        !isLoadingProjects && (
           <div
             style={{
               textAlign: 'center',
@@ -85,6 +107,7 @@ export default function LatestProjects() {
           >
             {concatenatedPages?.length}{' '}
             {concatenatedPages?.length === 1 ? t`project` : t`projects`}{' '}
+            {searchText ? t`matching "${searchText}"` : ''}
           </div>
         )
       )}

@@ -7,16 +7,16 @@ export const useLoadMoreContent = ({
   loadMoreContainerRef: RefObject<HTMLDivElement>
   hasNextPage: boolean | undefined
 }) => {
-  const [visible, setIsVisible] = useState<boolean>(false)
+  const [scrolledToBottom, setScrolledToBottom] = useState<boolean>(false)
 
   // When we scroll within 200px of our loadMoreContainerRef, fetch the next page.
   useEffect(() => {
     if (loadMoreContainerRef.current) {
       const observer = new IntersectionObserver(
         entries => {
-          setIsVisible(false)
+          setScrolledToBottom(false)
           if (entries.find(e => e.isIntersecting) && hasNextPage) {
-            setIsVisible(true)
+            setScrolledToBottom(true)
           }
         },
         {
@@ -31,5 +31,5 @@ export const useLoadMoreContent = ({
     }
   }, [hasNextPage, loadMoreContainerRef])
 
-  return [visible]
+  return [scrolledToBottom]
 }

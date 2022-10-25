@@ -107,7 +107,7 @@ export const FormImageUploader = ({
         {imageUrl ? (
           <span
             style={{
-              fontSize: '.7rem',
+              fontSize: '0.75rem',
               wordBreak: 'break-all',
               textOverflow: 'ellipsis',
             }}

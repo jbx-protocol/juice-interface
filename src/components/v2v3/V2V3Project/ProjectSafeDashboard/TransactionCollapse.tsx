@@ -85,7 +85,7 @@ export function TransactionCollapse({
             {versionText ? (
               <ProjectVersionBadge
                 versionText={versionText}
-                style={{ marginLeft: '0.7rem' }}
+                style={{ marginLeft: '00.75rem' }}
               />
             ) : null}
           </div>

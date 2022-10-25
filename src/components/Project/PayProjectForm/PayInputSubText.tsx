@@ -110,7 +110,7 @@ export default function PayInputSubText({
     <div
       style={{
         marginTop: '0.3rem',
-        fontSize: '.65rem',
+        fontSize: '0.75rem',
         width: '100%',
         color: colors.text.secondary,
       }}

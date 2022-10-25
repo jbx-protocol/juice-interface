@@ -28,7 +28,7 @@ type Props = {
 }
 
 const fontStyle = {
-  fontSize: '0.7rem',
+  fontSize: '0.75rem',
   fontWeight: 400,
 }
 

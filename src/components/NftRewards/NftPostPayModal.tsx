@@ -16,7 +16,7 @@ export function NftPostPayModal({
 }) {
   const onOk = () => {
     if (!config.ctaLink) {
-      onClose()
+      onClose?.()
     }
   }
   return (

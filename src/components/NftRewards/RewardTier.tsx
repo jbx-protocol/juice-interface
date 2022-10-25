@@ -96,7 +96,7 @@ export function RewardTier({
     return (
       <Tooltip
         title={
-          <span style={{ fontSize: '0.7rem' }}>
+          <span style={{ fontSize: '0.75rem' }}>
             {rewardTierUpperLimit ? (
               <Trans>
                 Receive this NFT when you contribute{' '}
@@ -203,7 +203,7 @@ export function RewardTier({
             <span
               style={{
                 color: colors.text.secondary,
-                fontSize: '0.7rem',
+                fontSize: '0.75rem',
               }}
             >
               {rewardTier?.contributionFloor} ETH

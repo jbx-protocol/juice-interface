@@ -1,30 +1,26 @@
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useRouter } from 'next/router'
-import qs from 'qs'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useMemo } from 'react'
 import { v2v3ProjectRoute } from 'utils/routes'
 
 export function useModalFromUrlQuery(paramName: string) {
+  const router = useRouter()
   const { projectId } = useContext(ProjectMetadataContext)
 
-  const [modalVisible, setModalVisible] = useState<boolean>(false)
-
-  const { asPath, replace } = useRouter()
-
-  useEffect(() => {
-    // can't use router.query because it doesn't update when we remove the query parameter.
-    const query = qs.parse(asPath.split('?')?.[1])
-
-    const shouldShowModal = Boolean(query[paramName])
-    setModalVisible(shouldShowModal)
-  }, [asPath, paramName])
+  const modalVisible = useMemo(
+    () => router.query[paramName] === '1',
+    [paramName, router.query],
+  )
 
   const hide = useCallback(() => {
-    setModalVisible(false)
-    replace(v2v3ProjectRoute({ projectId }), undefined, {
-      shallow: true,
-    })
-  }, [setModalVisible, replace, projectId])
+    const query = router.query
+    query[paramName] = '0'
+    router.replace(
+      { pathname: v2v3ProjectRoute({ projectId }), query },
+      v2v3ProjectRoute({ projectId }),
+      { shallow: true },
+    )
+  }, [router, paramName, projectId])
 
   return { visible: modalVisible, hide }
 }

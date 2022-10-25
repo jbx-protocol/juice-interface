@@ -1,8 +1,10 @@
 import { Form } from 'antd'
 import { Reward } from 'components/Create/components/RewardsList'
+import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import { withHttps } from 'utils/externalLink'
 import { v4 } from 'uuid'
 import { useFormDispatchWatch } from '../../hooks'
 
@@ -10,6 +12,10 @@ type NftRewardsFormProps = Partial<{
   rewards: Reward[]
   collectionName?: string
   collectionSymbol?: string
+  collectionDescription?: string
+  postPayMessage?: string
+  postPayButtonText?: string
+  postPayButtonLink?: string
 }>
 
 export const useNftRewardsForm = () => {
@@ -20,6 +26,7 @@ export const useNftRewardsForm = () => {
   const initialValues: NftRewardsFormProps = useMemo(() => {
     const collectionName = collectionMetadata.name
     const collectionSymbol = collectionMetadata.symbol
+    const collectionDescription = collectionMetadata.description
 
     const rewards: Reward[] = rewardTiers?.map(t => ({
       id: v4(),
@@ -31,8 +38,13 @@ export const useNftRewardsForm = () => {
       imgUrl: t.imageUrl,
     }))
 
-    return { rewards, collectionName, collectionSymbol }
-  }, [collectionMetadata.name, collectionMetadata.symbol, rewardTiers])
+    return { rewards, collectionName, collectionSymbol, collectionDescription }
+  }, [
+    collectionMetadata.description,
+    collectionMetadata.name,
+    collectionMetadata.symbol,
+    rewardTiers,
+  ])
 
   useFormDispatchWatch({
     form,
@@ -77,5 +89,35 @@ export const useNftRewardsForm = () => {
       return v
     },
   })
+
+  useFormDispatchWatch({
+    form,
+    fieldName: 'collectionDescription',
+    dispatchFunction:
+      editingV2ProjectActions.setNftRewardsCollectionDescription,
+    formatter: v => {
+      if (!v || typeof v !== 'string') return ''
+      return v
+    },
+  })
+
+  const dispatch = useAppDispatch()
+  const postPayMessage = Form.useWatch('postPayMessage', form)
+  const postPayButtonText = Form.useWatch('postPayButtonText', form)
+  const postPayButtonLink = Form.useWatch('postPayButtonLink', form)
+
+  useEffect(() => {
+    if (!postPayMessage && !postPayButtonText && !postPayButtonLink) {
+      dispatch(editingV2ProjectActions.setNftPostPayModalConfig(undefined))
+      return
+    }
+    dispatch(
+      editingV2ProjectActions.setNftPostPayModalConfig({
+        content: postPayMessage,
+        ctaText: postPayButtonText,
+        ctaLink: withHttps(postPayButtonLink),
+      }),
+    )
+  }, [dispatch, form, postPayButtonLink, postPayButtonText, postPayMessage])
   return { form, initialValues }
 }

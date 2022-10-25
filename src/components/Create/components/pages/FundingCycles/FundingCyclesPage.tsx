@@ -2,7 +2,8 @@ import { InfoCircleOutlined, RedoOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
-import { useContext } from 'react'
+import { useLockPageRulesWrapper } from 'components/Create/hooks/useLockPageRulesWrapper'
+import { useContext, useEffect } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { CreateBadge } from '../../CreateBadge'
 import { CreateCallout } from '../../CreateCallout'
@@ -11,7 +12,7 @@ import { Icons } from '../../Icons'
 import { Selection } from '../../Selection/Selection'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
-import { inputMustExistRule } from '../utils'
+import { durationMustExistRule } from '../utils'
 import { FundingCyclesFormProps, useFundingCyclesForm } from './hooks'
 
 const FundingCycleCallout: React.FC = () => {
@@ -51,11 +52,29 @@ const FundingCycleCallout: React.FC = () => {
 
 export const FundingCyclesPage = () => {
   useSetCreateFurthestPageReached('fundingCycles')
-  const { goToNextPage } = useContext(PageContext)
+  const { goToNextPage, lockPageProgress, unlockPageProgress } =
+    useContext(PageContext)
   const { form, initialValues } = useFundingCyclesForm()
+  const lockPageRulesWrapper = useLockPageRulesWrapper()
 
   const selection = useWatch('selection', form)
   const isNextEnabled = !!selection
+
+  // A bit of a workaround to soft lock the page when the user edits data.
+  useEffect(() => {
+    if (!selection) {
+      lockPageProgress?.()
+      return
+    }
+    if (selection === 'automated') {
+      const duration = form.getFieldValue('duration')
+      if (!duration?.duration) {
+        lockPageProgress?.()
+        return
+      }
+    }
+    unlockPageProgress?.()
+  }, [form, isNextEnabled, lockPageProgress, selection, unlockPageProgress])
 
   return (
     <Form
@@ -90,9 +109,9 @@ export const FundingCyclesPage = () => {
                       edited or changed during the first funding cycle.
                     </Trans>
                   }
-                  rules={[
-                    inputMustExistRule({ label: t`Funding cycle duration` }),
-                  ]}
+                  rules={lockPageRulesWrapper([
+                    durationMustExistRule({ label: t`Funding cycle duration` }),
+                  ])}
                 >
                   <DurationInput />
                 </Form.Item>

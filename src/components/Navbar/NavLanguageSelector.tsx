@@ -19,7 +19,6 @@ export default function NavLanguageSelector({
     alignItems: 'center',
     justifyContent: 'space-evenly',
     cursor: 'pointer',
-    height: 30,
     fontWeight: 500,
   }
 

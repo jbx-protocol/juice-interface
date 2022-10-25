@@ -2,10 +2,11 @@ import { InfoCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
+import { useLockPageRulesWrapper } from 'components/Create/hooks/useLockPageRulesWrapper'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { FormItemInput } from 'models/formItemInput'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { CurrencySelectInputValue } from '../../CurrencySelectInput'
 import { Icons } from '../../Icons'
@@ -13,15 +14,34 @@ import { RecallCard } from '../../RecallCard'
 import { Selection } from '../../Selection'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
+import { currencyAmountMustExistRuleionMustExistRule } from '../utils/rules/currencyAmountMustExistRule'
 import { useFundingTargetForm } from './hooks'
 
 export const FundingTargetPage: React.FC = () => {
   useSetCreateFurthestPageReached('fundingTarget')
-  const { goToNextPage } = useContext(PageContext)
+  const { goToNextPage, lockPageProgress, unlockPageProgress } =
+    useContext(PageContext)
   const { form, initialValues } = useFundingTargetForm()
+  const lockPageRulesWrapper = useLockPageRulesWrapper()
 
   const selection = useWatch('targetSelection', form)
   const isNextEnabled = !!selection
+
+  // A bit of a workaround to soft lock the page when the user edits data.
+  useEffect(() => {
+    if (!selection) {
+      lockPageProgress?.()
+      return
+    }
+    if (selection === 'specific') {
+      const amount = form.getFieldValue('amount')
+      if (amount?.amount === undefined) {
+        lockPageProgress?.()
+        return
+      }
+    }
+    unlockPageProgress?.()
+  }, [form, isNextEnabled, lockPageProgress, selection, unlockPageProgress])
 
   return (
     <Form
@@ -51,9 +71,14 @@ export const FundingTargetPage: React.FC = () => {
               <Form.Item
                 name="amount"
                 label={t`Set your funding target`}
+                rules={lockPageRulesWrapper([
+                  currencyAmountMustExistRuleionMustExistRule({
+                    label: t`Funding Target`,
+                  }),
+                ])}
                 extra={
                   <Trans>
-                    <InfoCircleOutlined /> your project’s settings will not be
+                    <InfoCircleOutlined /> Your project’s settings will not be
                     able to be edited or changed during the first funding cycle.
                   </Trans>
                 }

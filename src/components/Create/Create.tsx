@@ -41,7 +41,7 @@ export function Create() {
             <Wizard.Page
               name="projectDetails"
               title={t`Project Details`}
-              description={t`Enter your project’s details. You can edit your project's details at any time after you deploy project your project, but the transaction will cost gas.`}
+              description={t`Enter your project's details. You can edit your project's details at any time after you deploy your project, but the transaction will cost gas.`}
             >
               <ProjectDetailsPage />
             </Wizard.Page>
@@ -93,22 +93,24 @@ export function Create() {
             >
               <ProjectTokenPage />
             </Wizard.Page>
-            <Wizard.Page
-              name="nftRewards"
-              title={
-                <Trans>
-                  NFT Rewards <CreateBadge.Optional />
-                </Trans>
-              }
-              description={
-                <Trans>
-                  Reward contributors with NFTs when they meet your funding
-                  criteria.
-                </Trans>
-              }
-            >
-              <NftRewardsPage />
-            </Wizard.Page>
+            {featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS) && (
+              <Wizard.Page
+                name="nftRewards"
+                title={
+                  <Trans>
+                    NFT Rewards <CreateBadge.Optional />
+                  </Trans>
+                }
+                description={
+                  <Trans>
+                    Reward contributors with NFTs when they meet your funding
+                    criteria.
+                  </Trans>
+                }
+              >
+                <NftRewardsPage />
+              </Wizard.Page>
+            )}
             <Wizard.Page
               name="reconfigurationRules"
               title={<Trans>Reconfiguration Rules</Trans>}

@@ -35,8 +35,8 @@ export const useLoadV2V3Contract = ({
       )
 
       setContractJson({
-        address: address ?? contractJson.address,
-        abi: contractJson.abi,
+        address: address ?? contractJson?.address,
+        abi: contractJson?.abi,
       })
     }
 

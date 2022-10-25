@@ -157,7 +157,9 @@ export const redemptionRateFrom = (percentage: string | number): BigNumber => {
  * @returns {string} issuance rate in parts per 1e18
  */
 export const issuanceRateFrom = (issuanceRate: string): string => {
-  return constants.WeiPerEther.mul(issuanceRate).toString()
+  return constants.WeiPerEther.mul(
+    Math.floor(parseFloat(issuanceRate)),
+  ).toString()
 }
 
 /**

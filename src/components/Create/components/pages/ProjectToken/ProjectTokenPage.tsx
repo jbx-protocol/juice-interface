@@ -2,12 +2,12 @@ import { SettingOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
-import Callout from 'components/Callout'
 import { useModal } from 'hooks/Modal'
 import { useContext, useEffect } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { CreateBadge } from '../../CreateBadge'
+import { CreateCallout } from '../../CreateCallout'
 import { Icons } from '../../Icons'
 import { Selection } from '../../Selection'
 import { Wizard } from '../../Wizard'
@@ -89,13 +89,13 @@ export const ProjectTokenPage: React.FC = () => {
               </Selection.Card>
             </Selection>
           </Form.Item>
-          <Callout>
+          <CreateCallout.Info>
             <Trans>
               Project tokens are not ERC-20 tokens by default. Once you deploy
               your project, you can issue an ERC-20 for your holders to claim.
               This is optional.
             </Trans>
-          </Callout>
+          </CreateCallout.Info>
           <Wizard.Page.ButtonControl isNextEnabled={isNextEnabled} />
         </Space>
       </Form>

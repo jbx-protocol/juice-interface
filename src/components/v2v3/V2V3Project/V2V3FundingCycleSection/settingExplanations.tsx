@@ -9,49 +9,53 @@ export const DISTRIBUTION_LIMIT_EXPLANATION = (
 
 export const DISCOUNT_RATE_EXPLANATION = (
   <Trans>
-    The project token's issuance rate will decrease by this percentage every
-    funding cycle. A higher discount rate will incentivize contributors to pay
-    the project earlier.
+    The project token's issuance rate decreases by the{' '}
+    <strong>discount rate</strong> every funding cycle. A higher discount rate
+    incentivizes contributors to fund the project earlier.
   </Trans>
 )
 
 export const REDEMPTION_RATE_EXPLANATION = (
   <Trans>
-    The redemption rate determines the amount of overflow each token can be
-    redeemed for at any given time. On a lower redemption rate, redeeming a
-    token increases the value of each remaining token, creating an incentive to
-    hold tokens longer than other holders. A redemption rate of 100% means all
-    tokens will have equal value regardless of when they are redeemed.
+    <p>
+      The redemption rate determines the amount of overflow each token can be
+      redeemed for at any given time.
+    </p>
+    <p>
+      A redemption rate of 100% means all tokens will have equal value
+      regardless of when they are redeemed.
+    </p>
+    <p>
+      On a lower redemption rate, redeeming a token increases the value of each
+      remaining token, creating an incentive to hold tokens longer than other
+      holders.
+    </p>
   </Trans>
 )
 
 export const MINT_RATE_EXPLANATION = (
   <Trans>
-    <strong>Total project tokens minted when 1 ETH is contributed.</strong> This
-    can change over time according to the discount rate and reserved tokens
-    amount of future funding cycles.
+    Total project tokens minted the project receives 1 ETH. The project's{' '}
+    <strong>discount rate</strong> and <strong>reserved rate</strong> affect the
+    total mint rate over time.
   </Trans>
 )
 
 export const CONTRIBUTOR_RATE_EXPLAINATION = (
   <Trans>
-    Newly minted project tokens <strong>received by contributors</strong> when
-    they contribute 1 ETH to the treasury.
+    The amount of project tokens contributors will recieve when they contribute
+    1 ETH to this project.
   </Trans>
 )
 
 export const RESERVED_RATE_EXPLAINATION = (
-  <Trans>
-    Percentage of newly minted tokens reserved for the project. The project
-    owner is allocated all reserved tokens by default, but they can also be
-    allocated to other wallet addresses (see <i>Reserved token splits</i>).
-  </Trans>
+  <Trans>The percentage of newly minted tokens reserved for the project.</Trans>
 )
 
 export const RESERVED_TOKENS_EXPLAINATION = (
   <Trans>
-    Amount of newly minted project tokens{' '}
-    <strong>reserved for the project</strong> when 1 ETH is contributed.
+    The amount of newly minted project tokens reserved for the project when 1
+    ETH is contributed.
   </Trans>
 )
 
@@ -66,5 +70,5 @@ export const TERMINAL_CONFIG_EXPLAINATION = (
 )
 
 export const RECONFIG_RULES_EXPLAINATION = (
-  <Trans>Rules for determining how funding cycles can be reconfigured</Trans>
+  <Trans>Rules for determining how funding cycles can be reconfigured.</Trans>
 )

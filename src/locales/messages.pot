@@ -194,6 +194,9 @@ msgstr ""
 msgid "<0>The Rinkeby testnet is deprecated.</0> Use the Goerli testnet instead: <1>https://goerli.juicebox.money</1>"
 msgstr ""
 
+msgid "<0>The redemption rate determines the amount of overflow each token can be redeemed for at any given time.</0><1>A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed.</1><2>On a lower redemption rate, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than other holders.</2>"
+msgstr ""
+
 msgid "<0>There are unit tests written for every condition of every function in the contracts, and integration tests for every workflow that the protocol supports.</0><1>There was also a script written to iteratively run the integration tests using a random input generator, prioritizing edge cases. The code has successfully passed over 1 million test cases through this stress-testing script.</1> <2>The code could always use more eyes and more critique to further the community's confidence. Join our <3>Discord</3> and check out the code on <4>GitHub</4> to work with us.</2>"
 msgstr ""
 
@@ -204,9 +207,6 @@ msgid "<0>This project has no overflow</0>. You won't receive any ETH for burnin
 msgstr ""
 
 msgid "<0>This website (juicebox.money) connects to the Juicebox protocol's smart contracts, deployed on the Ethereum network. (note: anyone else can make a website that also connects to these same smart contracts. For now, don't trust any site other than this one to access the Juicebox protocol).</0><1>Creating a Juicebox project mints you an NFT (ERC-721) representing ownership over it. Whoever owns this NFT can configure the rules of the game and how payouts are distributed.</1><2>The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The amount of tokens minted and distributed are proportional to the volume of payments received, weighted by the project's discount rate over time.</2>"
-msgstr ""
-
-msgid "<0>Total project tokens minted when 1 ETH is contributed.</0> This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
 msgstr ""
 
 msgid "<0>Total project tokens minted</0> when 1 ETH is contributed. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
@@ -438,9 +438,6 @@ msgid "Amount is required."
 msgstr ""
 
 msgid "Amount of ERC-20 tokens to claim"
-msgstr ""
-
-msgid "Amount of newly minted project tokens <0>reserved for the project</0> when 1 ETH is contributed."
 msgstr ""
 
 msgid "Amount of newly minted project tokens <0>reserved for the project</0> when 1 ETH is contributed. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner."
@@ -1820,9 +1817,6 @@ msgstr ""
 msgid "New project tokens will be minted to the address that made the payment."
 msgstr ""
 
-msgid "Newly minted project tokens <0>received by contributors</0> when they contribute 1 ETH to the treasury."
-msgstr ""
-
 msgid "Newsletter"
 msgstr ""
 
@@ -2082,9 +2076,6 @@ msgid "Percent"
 msgstr ""
 
 msgid "Percentage allocation"
-msgstr ""
-
-msgid "Percentage of newly minted tokens reserved for the project. The project owner is allocated all reserved tokens by default, but they can also be allocated to other wallet addresses (see <0>Reserved token splits</0>)."
 msgstr ""
 
 msgid "Percentage:"
@@ -2456,6 +2447,9 @@ msgstr ""
 msgid "Rules for determining how funding cycles can be reconfigured"
 msgstr ""
 
+msgid "Rules for determining how funding cycles can be reconfigured."
+msgstr ""
+
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr ""
 
@@ -2753,6 +2747,12 @@ msgstr ""
 msgid "The amount distributed from the Juicebox balance in this funding cycle, out of the current funding target. No more than the funding target can be distributed in a single funding cycle. Any remaining ETH in Juicebox is overflow until the next cycle begins."
 msgstr ""
 
+msgid "The amount of newly minted project tokens reserved for the project when 1 ETH is contributed."
+msgstr ""
+
+msgid "The amount of project tokens contributors will recieve when they contribute 1 ETH to this project."
+msgstr ""
+
 msgid "The amount of tokens minted to the receiver will be calculated based on if they had paid this amount to the project in the current funding cycle."
 msgstr ""
 
@@ -2804,6 +2804,9 @@ msgstr ""
 msgid "The original URL <0>{projectIdUrl}</0> will remain active."
 msgstr ""
 
+msgid "The percentage of newly minted tokens reserved for the project."
+msgstr ""
+
 msgid "The percentage this individual receives of the overall {reservedRate}% reserved token allocation"
 msgstr ""
 
@@ -2825,19 +2828,16 @@ msgstr ""
 msgid "The project owner may start a new funding cycle with a new configuration at any time."
 msgstr ""
 
-msgid "The project token's issuance rate will decrease by this percentage every funding cycle (14 days). A higher discount rate will incentivize contributors to pay the project earlier."
+msgid "The project token's issuance rate decreases by the <0>discount rate</0> every funding cycle. A higher discount rate incentivizes contributors to fund the project earlier."
 msgstr ""
 
-msgid "The project token's issuance rate will decrease by this percentage every funding cycle. A higher discount rate will incentivize contributors to pay the project earlier."
+msgid "The project token's issuance rate will decrease by this percentage every funding cycle (14 days). A higher discount rate will incentivize contributors to pay the project earlier."
 msgstr ""
 
 msgid "The project’s owner can change the project's settings and start a new funding cycle at any time."
 msgstr ""
 
 msgid "The ratio of tokens rewarded per payment amount will decrease by this percentage with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier than later."
-msgstr ""
-
-msgid "The redemption rate determines the amount of overflow each token can be redeemed for at any given time. On a lower redemption rate, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than other holders. A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed."
 msgstr ""
 
 msgid "The redemption rate determines the amount of overflow each token can be redeemed for."
@@ -3063,6 +3063,9 @@ msgid "Total locked period"
 msgstr ""
 
 msgid "Total locked {tokenSymbolDisplayText}"
+msgstr ""
+
+msgid "Total project tokens minted the project receives 1 ETH. The project's <0>discount rate</0> and <1>reserved rate</1> affect the total mint rate over time."
 msgstr ""
 
 msgid "Total raised"

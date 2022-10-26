@@ -7,6 +7,7 @@ import ExternalLink from 'components/ExternalLink'
 import TransactionModal from 'components/TransactionModal'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ThemeContext } from 'contexts/themeContext'
+import { useAppSelector } from 'hooks/AppSelector'
 import useMobile from 'hooks/Mobile'
 import { useModal } from 'hooks/Modal'
 import { useWallet } from 'hooks/Wallet'
@@ -57,6 +58,11 @@ export const ReviewDeployPage = () => {
   const modal = useModal()
   const { deployProject, isDeploying, deployTransactionPending } =
     useDeployProject()
+  const nftRewards = useAppSelector(
+    state => state.editingV2Project.nftRewards.rewardTiers,
+  )
+
+  const nftRewardsAreSet = nftRewards.length > 0
 
   const dispatch = useDispatch()
 
@@ -124,7 +130,7 @@ export const ReviewDeployPage = () => {
         >
           <ProjectTokenReview />
         </CreateCollapse.Panel>
-        {featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS) && (
+        {featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS) && nftRewardsAreSet && (
           <CreateCollapse.Panel
             key={3}
             header={

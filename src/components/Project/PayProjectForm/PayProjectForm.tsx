@@ -42,7 +42,7 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
     <>
       {errorMessage && (
         <div style={{ height: '22px' }}>
-          <span style={{ color: colors.text.failure, fontSize: '0.7rem' }}>
+          <span style={{ color: colors.text.failure, fontSize: '0.75rem' }}>
             {errorMessage}
           </span>
         </div>

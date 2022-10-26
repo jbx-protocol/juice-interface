@@ -41,6 +41,10 @@
   background: none !important;
 }
 
+.menu-item-sider:hover {
+  background: var(--background-l2) !important;
+}
+
 .ant-menu-item-group-title {
   text-transform: uppercase;
   padding-bottom: 0;
@@ -57,6 +61,12 @@
   background-color: var(--background-l2);
   color: var(--text-primary);
   font-weight: 500;
+}
+
+.ant-menu:not(.ant-menu-horizontal) {
+  .ant-menu-item-selected {
+    background-color: var(--background-l4);
+  }
 }
 
 .ant-menu-light .ant-menu-item:hover {

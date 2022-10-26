@@ -17,14 +17,18 @@ export interface ForgeDeploy {
   transactions: { contractName: string; contractAddress: string }[]
 }
 
+export interface ContractJson {
+  address: string | undefined
+  abi: ContractInterface | undefined
+}
+
 export const loadV2V3Contract = async (
   contractName: V2V3ContractName,
   network: NetworkName,
   signerOrProvider: SignerOrProvider,
   version: CV2V3,
 ): Promise<Contract | undefined> => {
-  let contractJson: { abi: ContractInterface; address: string } | undefined =
-    undefined
+  let contractJson: ContractJson | undefined = undefined
 
   if (contractName === V2V3ContractName.JBProjectHandles) {
     contractJson = await loadJBProjectHandlesContract(network)
@@ -50,7 +54,7 @@ export const loadV2V3Contract = async (
     )
   }
 
-  if (!contractJson) {
+  if (!contractJson || !contractJson.address || !contractJson.abi) {
     console.info(
       `Contract load skipped [contract=${contractName} network=${network}, version=${version}]`,
     )

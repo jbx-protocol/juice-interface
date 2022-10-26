@@ -94,7 +94,7 @@ function DiscountRateExtra({
   )
 
   return (
-    <div style={{ fontSize: '0.9rem' }}>
+    <div style={{ fontSize: '0.875rem' }}>
       {!hasDuration && (
         <FormItemWarningText>
           <Trans>

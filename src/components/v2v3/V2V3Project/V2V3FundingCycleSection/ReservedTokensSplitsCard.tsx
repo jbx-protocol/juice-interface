@@ -53,7 +53,7 @@ export default function ReservedTokensSplitsCard({
   )
 
   const smallHeaderStyle: CSSProperties = {
-    fontSize: '.7rem',
+    fontSize: '0.75rem',
     fontWeight: 500,
     cursor: 'default',
     color: colors.text.secondary,
@@ -151,7 +151,7 @@ export default function ReservedTokensSplitsCard({
             <TooltipLabel
               label={
                 <h4 style={{ display: 'inline-block' }}>
-                  <Trans>Reserved {tokensText}</Trans> (
+                  <Trans>Reserved {tokensText} splits</Trans> (
                   {formatReservedRate(reservedRate)}%)
                 </h4>
               }

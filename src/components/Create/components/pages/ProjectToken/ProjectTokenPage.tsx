@@ -4,7 +4,7 @@ import { Form, Space } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import Callout from 'components/Callout'
 import { useModal } from 'hooks/Modal'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { CreateBadge } from '../../CreateBadge'
@@ -17,13 +17,33 @@ import { useProjectTokensForm } from './hooks/ProjectTokenForm'
 
 export const ProjectTokenPage: React.FC = () => {
   useSetCreateFurthestPageReached('projectToken')
-  const { goToNextPage } = useContext(PageContext)
+  const { goToNextPage, lockPageProgress, unlockPageProgress } =
+    useContext(PageContext)
   const { form, initialValues } = useProjectTokensForm()
 
   const modal = useModal()
 
   const selection = useWatch('selection', form)
   const isNextEnabled = !!selection
+
+  // A bit of a workaround to soft lock the page when the user edits data.
+  useEffect(() => {
+    if (!selection) {
+      lockPageProgress?.()
+      return
+    }
+    if (selection === 'custom') {
+      try {
+        form.validateFields().catch(e => {
+          lockPageProgress?.()
+          throw e
+        })
+      } catch (e) {
+        return
+      }
+    }
+    unlockPageProgress?.()
+  }, [form, lockPageProgress, selection, unlockPageProgress])
 
   return (
     <>

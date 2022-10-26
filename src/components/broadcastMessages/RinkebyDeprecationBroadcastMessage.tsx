@@ -23,6 +23,7 @@ export function RinkebyDeprecationBroadcastMessage() {
         alignItems: 'center',
         padding: '1.5rem',
         justifyContent: 'center',
+        flexDirection: 'column',
         marginTop: isMobile ? '64px' : 0,
         color: '#000',
       }}
@@ -40,6 +41,12 @@ export function RinkebyDeprecationBroadcastMessage() {
           </a>
         </Trans>
       </p>
+      <img
+        src="/assets/stickers/banny_funeral.png"
+        alt="Banny funeral"
+        width={200}
+        style={{ marginTop: 20 }}
+      />
     </div>
   )
 }

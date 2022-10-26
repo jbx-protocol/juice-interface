@@ -38,7 +38,7 @@
   }
 }
 .ant-collapse.minimal.light .ant-collapse-header-text {
-  font-weight: 400
+  font-weight: 400;
 }
 
 // Top Nav Select
@@ -97,9 +97,6 @@
     padding: 7px 0 15px;
     border: none;
     border-bottom: 1px solid var(--stroke-secondary);
-  }
-  .nav-menu-item {
-    padding: 10px 15px;
   }
 
   .nav-subsection {

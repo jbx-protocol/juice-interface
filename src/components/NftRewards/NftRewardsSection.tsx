@@ -99,7 +99,7 @@ export function NftRewardsSection() {
       <span
         style={{
           color: colors.text.tertiary,
-          fontSize: '0.69rem',
+          fontSize: '0.75rem',
         }}
       >
         <Trans>Contribute to unlock an NFT reward.</Trans>

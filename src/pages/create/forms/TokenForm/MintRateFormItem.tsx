@@ -59,6 +59,7 @@ export default function MintRateFormItem({
           }
           value={value}
           onChange={onChange}
+          isInteger
           style={{ paddingRight: 15 }}
         />
       </Form.Item>

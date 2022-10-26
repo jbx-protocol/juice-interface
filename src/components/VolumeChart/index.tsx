@@ -97,7 +97,7 @@ export default function VolumeChart({
   }, [cv, duration, projectId, showGraph])
 
   const buttonStyle: CSSProperties = {
-    fontSize: '0.7rem',
+    fontSize: '0.75rem',
     textTransform: 'uppercase',
   }
 
@@ -296,7 +296,7 @@ export default function VolumeChart({
                   >
                     <div
                       style={{
-                        fontSize: '0.7rem',
+                        fontSize: '0.75rem',
                         color: colors.text.tertiary,
                       }}
                     >
@@ -308,7 +308,7 @@ export default function VolumeChart({
                         {payload[0].payload.tapped}
                         <div
                           style={{
-                            fontSize: '0.7rem',
+                            fontSize: '0.75rem',
                             fontWeight: 500,
                             color: colors.text.secondary,
                           }}

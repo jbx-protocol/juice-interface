@@ -2,8 +2,9 @@ import { CloseCircleFilled, FileImageOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, message, Row, Space, Upload } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
+import { pinFileToIpfs } from 'lib/api/ipfs'
 import { useContext, useState } from 'react'
-import { cidFromUrl, ipfsCidUrl, pinFileToIpfs } from 'utils/ipfs'
+import { cidFromUrl, ipfsUrl, restrictedIpfsUrl } from 'utils/ipfs'
 
 import ExternalLink from '../ExternalLink'
 
@@ -27,21 +28,21 @@ export const FormImageUploader = ({
   maxSizeKBs?: number
   text?: string
 }) => {
+  const { theme } = useContext(ThemeContext)
+
   const [loadingUpload, setLoadingUpload] = useState<boolean>(false)
   const [imageCid, setImageCid] = useState<string | undefined>(
-    cidFromUrl(value),
+    value ? cidFromUrl(value) : undefined,
   )
-
-  const { theme } = useContext(ThemeContext)
 
   const setValue = (cid?: string) => {
     setImageCid(cid)
     // storing images in `ipfs://` format where possible (see issue #1726)
-    const ipfsUrl = cid ? `ipfs://${cid}` : undefined
-    onChange?.(ipfsUrl)
+    const url = cid ? ipfsUrl(cid) : undefined
+    onChange?.(url)
   }
 
-  const imageUrl = imageCid ? ipfsCidUrl(imageCid) : undefined
+  const imageUrl = imageCid ? restrictedIpfsUrl(imageCid) : undefined
 
   return (
     <Row
@@ -107,7 +108,7 @@ export const FormImageUploader = ({
         {imageUrl ? (
           <span
             style={{
-              fontSize: '.7rem',
+              fontSize: '0.75rem',
               wordBreak: 'break-all',
               textOverflow: 'ellipsis',
             }}

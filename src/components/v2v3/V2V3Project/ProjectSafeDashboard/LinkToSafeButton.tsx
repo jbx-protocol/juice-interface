@@ -27,7 +27,7 @@ export function LinkToSafeButton({
         className="text-primary hover-text-action-primary"
       >
         <Trans>See Tx on Safe</Trans>
-        <RightOutlined style={{ fontSize: '0.7rem', marginLeft: 5 }} />
+        <RightOutlined style={{ fontSize: '0.75rem', marginLeft: 5 }} />
       </ExternalLink>
     </div>
   )

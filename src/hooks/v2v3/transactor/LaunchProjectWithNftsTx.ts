@@ -15,7 +15,7 @@ import {
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
-import { ipfsCidUrl } from 'utils/ipfs'
+import { restrictedIpfsUrl } from 'utils/ipfs'
 import {
   buildJB721TierParams,
   findJBTiered721DelegateStoreAddress,
@@ -71,9 +71,9 @@ async function getJBDeployTiered721DelegateData({
     name: collectionName,
     symbol: collectionSymbol,
     fundingCycleStore: JBFundingCycleStoreAddress,
-    baseUri: ipfsCidUrl(''),
+    baseUri: restrictedIpfsUrl(''),
     tokenUriResolver: constants.AddressZero,
-    contractUri: ipfsCidUrl(collectionCID),
+    contractUri: restrictedIpfsUrl(collectionCID),
     owner: ownerAddress,
     pricing,
     reservedTokenBeneficiary: constants.AddressZero,

@@ -2,6 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import axios from 'axios'
 import { juiceboxEmojiImageUri } from 'constants/images'
+import { IPFS_TAGS } from 'constants/ipfs'
 import { readNetwork } from 'constants/networks'
 import { MaxUint48 } from 'constants/numbers'
 import { parseEther } from 'ethers/lib/utils'
@@ -13,7 +14,8 @@ import {
   NftRewardTier,
 } from 'models/nftRewardTier'
 import { V2V3ContractName } from 'models/v2v3/contracts'
-import { decodeEncodedIPFSUri, encodeIPFSUri, IPFS_TAGS } from 'utils/ipfs'
+import { decodeEncodedIPFSUri, encodeIPFSUri } from 'utils/ipfs'
+
 import { ForgeDeploy } from './v2v3/loadV2V3Contract'
 
 export const MAX_NFT_REWARD_TIERS = 3

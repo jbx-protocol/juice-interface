@@ -17,11 +17,12 @@ import {
   useLaunchProjectWithNftsTx,
 } from 'hooks/v2v3/transactor/LaunchProjectWithNftsTx'
 import { useWallet } from 'hooks/Wallet'
+import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { TransactionOptions } from 'models/transaction'
 import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
-import { uploadProjectMetadata } from 'utils/ipfs'
+
 import { buildNftTxArg } from 'utils/nftRewards'
 import { emitErrorNotification } from 'utils/notifications'
 import { v2v3ProjectRoute } from 'utils/routes'

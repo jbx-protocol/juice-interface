@@ -10,9 +10,10 @@ import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { JuiceSwitch } from 'components/JuiceSwitch'
 import { UploadNoStyle } from 'components/UploadNoStyle'
 import { ThemeContext } from 'contexts/themeContext'
+import { pinFileToIpfs } from 'lib/api/ipfs'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
-import { ipfsCidUrl, pinFileToIpfs } from 'utils/ipfs'
+import { restrictedIpfsUrl } from 'utils/ipfs'
 import { v4 } from 'uuid'
 import { CreateButton } from '../CreateButton'
 import { inputMustExistRule } from '../pages'
@@ -95,7 +96,7 @@ export const AddEditRewardModal = ({
 
   const onCustomRequest = useCallback(async (file: File | string | Blob) => {
     const res = await pinFileToIpfs(file)
-    const url = ipfsCidUrl(res.IpfsHash)
+    const url = restrictedIpfsUrl(res.IpfsHash)
     return url
   }, [])
 

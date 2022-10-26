@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import ProjectLogo from 'components/ProjectLogo'
 import { useAppSelector } from 'hooks/AppSelector'
-import { cidFromUrl, ipfsCidUrl } from 'utils/ipfs'
+import { cidFromUrl, restrictedIpfsUrl } from 'utils/ipfs'
 import { DescriptionCol } from '../DescriptionCol'
 import { emphasisedTextStyle } from '../styles'
 
@@ -32,9 +32,7 @@ export const MobileProjectDetailsReview = () => {
         desc={
           <ProjectLogo
             size={140}
-            uri={
-              cidFromUrl(logoUri) ? ipfsCidUrl(cidFromUrl(logoUri)!) : undefined
-            }
+            uri={logoUri ? restrictedIpfsUrl(cidFromUrl(logoUri)!) : undefined}
             name={name}
           />
         }

@@ -5,10 +5,10 @@ import ProjectDetailsForm, {
 import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useEditProjectDetailsTx } from 'hooks/v2v3/transactor/EditProjectDetailsTx'
+import { uploadProjectMetadata } from 'lib/api/ipfs'
+import { revalidateProject } from 'lib/api/nextjs'
 import { CV2V3 } from 'models/cv'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { uploadProjectMetadata } from 'utils/ipfs'
-import { revalidateProject } from 'utils/revalidateProject'
 
 export function ProjectDetailsSettingsPage() {
   const { projectId } = useContext(ProjectMetadataContext)

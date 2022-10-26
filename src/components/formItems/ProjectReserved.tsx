@@ -68,7 +68,7 @@ export default function ProjectReserved({
   return (
     <Form.Item
       extra={
-        <div style={{ fontSize: '0.9rem' }}>
+        <div style={{ fontSize: '0.875rem' }}>
           <p>
             <Trans>
               Reserve a percentage of freshly minted tokens for your project to

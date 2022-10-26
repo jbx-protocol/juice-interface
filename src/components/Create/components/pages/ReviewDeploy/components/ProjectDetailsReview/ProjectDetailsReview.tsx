@@ -3,7 +3,7 @@ import { Col, Row } from 'antd'
 import ProjectLogo from 'components/ProjectLogo'
 import { useAppSelector } from 'hooks/AppSelector'
 import useMobile from 'hooks/Mobile'
-import { cidFromUrl, ipfsCidUrl } from 'utils/ipfs'
+import { cidFromUrl, restrictedIpfsUrl } from 'utils/ipfs'
 import { DescriptionCol } from '../DescriptionCol'
 import { emphasisedTextStyle, flexColumnStyle } from '../styles'
 import { MobileProjectDetailsReview } from './MobileProjectDetailsReview'
@@ -66,8 +66,8 @@ export const ProjectDetailsReview = () => {
                 <ProjectLogo
                   size={140}
                   uri={
-                    cidFromUrl(logoUri)
-                      ? ipfsCidUrl(cidFromUrl(logoUri)!)
+                    logoUri
+                      ? restrictedIpfsUrl(cidFromUrl(logoUri)!)
                       : undefined
                   }
                   name={name}

@@ -7,8 +7,8 @@ export interface PayProjectForm {
   setPayAmount: Dispatch<SetStateAction<string>>
   payInCurrency: CurrencyOption
   setPayInCurrency: Dispatch<SetStateAction<CurrencyOption>>
-  error: boolean
-  setError: Dispatch<SetStateAction<boolean>>
+  errorMessage: string
+  setErrorMessage: Dispatch<SetStateAction<string>>
 }
 
 export function usePayProjectForm(): PayProjectForm {
@@ -18,7 +18,7 @@ export function usePayProjectForm(): PayProjectForm {
 
   const [payAmount, setPayAmount] = useState<string>('0')
   const [payInCurrency, setPayInCurrency] = useState<CurrencyOption>(ETH)
-  const [error, setError] = useState<boolean>(false)
+  const [errorMessage, setErrorMessage] = useState<string>('')
 
   return {
     payAmount,
@@ -27,7 +27,7 @@ export function usePayProjectForm(): PayProjectForm {
     payInCurrency,
     setPayInCurrency,
 
-    error,
-    setError,
+    errorMessage,
+    setErrorMessage,
   }
 }

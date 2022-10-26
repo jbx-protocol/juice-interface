@@ -3551,7 +3551,7 @@ msgstr ""
 msgid "Your project's current funding cycle has no duration. Changes you make below will take effect immediately."
 msgstr ""
 
-msgid "Your transaction has been submitted and is awaiting confirmation {0}"
+msgid "Your transaction has been submitted and is awaiting confirmation"
 msgstr ""
 
 msgid "Your unclaimed token balance: {0}"

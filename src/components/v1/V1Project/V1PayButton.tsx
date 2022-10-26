@@ -106,7 +106,7 @@ export function V1PayButton({ wrapperStyle, disabled }: PayButtonProps) {
         </Button>
       </Tooltip>
       {payInCurrency === V1_CURRENCY_USD && (
-        <div style={{ fontSize: '.75rem' }}>
+        <div style={{ fontSize: '0.75rem' }}>
           <Trans>
             Paid as <ETHAmount amount={weiPayAmt} />
           </Trans>

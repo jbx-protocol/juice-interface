@@ -35,7 +35,7 @@ export default function SplitList({
         .sort((a, b) => (a.percent < b.percent ? 1 : -1))
         .map(split => (
           <div
-            key={`${split.beneficiary}-${split.percent}`}
+            key={`${split.beneficiary}-${split.projectId}-${split.percent}`}
             style={{ marginBottom: 5 }}
           >
             <SplitItem

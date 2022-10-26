@@ -37,6 +37,7 @@ const Header: React.FC = ({ children }) => {
         display: 'flex',
         alignItems: 'center',
         gap: '0.5rem',
+        marginBottom: 0,
       }}
     >
       {children}
@@ -157,6 +158,12 @@ export const ReviewDeployPage = () => {
         form={form}
         initialValues={{ termsAccepted: false }}
         onFinish={onFinish}
+        style={{
+          marginTop: '2rem',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '2rem',
+        }}
       >
         <CreateCallout.Info noIcon collapsible={false}>
           <div style={{ display: 'flex', gap: '1rem' }}>

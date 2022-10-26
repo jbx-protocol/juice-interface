@@ -1,7 +1,7 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Divider, Form, Space } from 'antd'
+import { Form, Space } from 'antd'
 import Callout from 'components/Callout'
 import CurrencySymbol from 'components/CurrencySymbol'
 import InputAccessoryButton from 'components/InputAccessoryButton'
@@ -17,7 +17,6 @@ import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useContext, useEffect, useState } from 'react'
 import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
 import { V2V3CurrencyName, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
-import { amountSubFee, feeForAmount, formatFee } from 'utils/v2v3/math'
 
 export default function DistributePayoutsModal({
   open,
@@ -111,25 +110,7 @@ export default function DistributePayoutsModal({
     ? unusedFunds
     : balanceInDistributionLimitCurrency
 
-  const feePercentage = formatFee(ETHPaymentTerminalFee)
   const grossAvailableAmount = formatWad(distributable, { precision: 4 })
-  const feeAmount = formatWad(
-    feeForAmount(distributable, ETHPaymentTerminalFee) ?? 0,
-    {
-      precision: 4,
-    },
-  )
-  const netAvailableAmount =
-    amountSubFee(distributable, ETHPaymentTerminalFee) ?? BigNumber.from(0)
-
-  const netAvailableAmountFormatted = formatWad(netAvailableAmount, {
-    precision: 4,
-  })
-  const netDistributionAmount = formatWad(
-    distributionAmount
-      ? amountSubFee(parseWad(distributionAmount), ETHPaymentTerminalFee)
-      : BigNumber.from(0),
-  )
 
   return (
     <TransactionModal
@@ -150,45 +131,11 @@ export default function DistributePayoutsModal({
       width={640}
     >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
-        <div>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Trans>
-              Total funds:{' '}
-              <div>
-                <CurrencySymbol currency={distributionCurrencyName} />
-                {grossAvailableAmount}
-              </div>
-            </Trans>
-          </div>
-
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <div>
-              <Trans>JBX Fee ({feePercentage}%):</Trans>
-            </div>
-            <div>
-              - <CurrencySymbol currency={distributionCurrencyName} />
-              {feeAmount}
-            </div>
-          </div>
-
-          <Divider style={{ margin: '4px 0' }} />
-
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              fontWeight: 500,
-            }}
-          >
-            <div>
-              <Trans>Available after fee:</Trans>
-            </div>
-            <div>
-              <CurrencySymbol currency={distributionCurrencyName} />
-              {netAvailableAmountFormatted}
-            </div>
-          </div>
-        </div>
+        <Callout>
+          <Trans>
+            Distributions to Ethereum addresses incur a 2.5% JBX membership fee.
+          </Trans>
+        </Callout>
 
         <Form layout="vertical">
           <Form.Item
@@ -199,9 +146,9 @@ export default function DistributePayoutsModal({
                 <Trans>
                   <span style={{ fontWeight: 500 }}>
                     <CurrencySymbol currency={distributionCurrencyName} />
-                    {netDistributionAmount}
+                    {grossAvailableAmount}
                   </span>{' '}
-                  after {feePercentage}% JBX fee
+                  available to distribute
                 </Trans>
               </div>
             }
@@ -210,6 +157,7 @@ export default function DistributePayoutsModal({
               placeholder="0"
               value={distributionAmount}
               onChange={value => setDistributionAmount(value)}
+              min={0}
               accessory={
                 <div
                   style={{
@@ -253,11 +201,12 @@ export default function DistributePayoutsModal({
           ) : null}
 
           <SplitList
-            totalValue={netAvailableAmount}
+            totalValue={parseWad(distributionAmount)}
             currency={distributionLimitCurrency}
             splits={payoutSplits ?? []}
             projectOwnerAddress={projectOwnerAddress}
             showSplitValues
+            showFees
           />
         </div>
         <p style={{ fontSize: '0.8rem' }}>

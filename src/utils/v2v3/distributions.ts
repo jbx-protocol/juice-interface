@@ -1,3 +1,4 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { Split } from 'models/splits'
 
 import { preciseFormatSplitPercent, splitPercentFrom } from './math'
@@ -110,4 +111,8 @@ export function getNewDistributionLimit({
     parseFloat(currentDistributionLimit) - previousSplitAmount + newSplitAmount
 
   return parseFloat(newDistributionLimit.toFixed(4)) // round to 4dp
+}
+
+export function isJuiceboxProjectSplit(split: Split) {
+  return split.projectId ? BigNumber.from(split.projectId).gt(0) : false
 }

@@ -5,16 +5,23 @@ import { Tooltip } from 'antd'
 import ETHToUSD from 'components/currency/ETHToUSD'
 import CurrencySymbol from 'components/CurrencySymbol'
 import FormattedAddress from 'components/FormattedAddress'
+import { Parenthesis } from 'components/Parenthesis'
 import TooltipIcon from 'components/TooltipIcon'
 import TooltipLabel from 'components/TooltipLabel'
 import { ThemeContext } from 'contexts/themeContext'
+import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/ETHPaymentTerminalFee'
 import { Split } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useContext } from 'react'
 import { formatDate } from 'utils/format/formatDate'
 import { formatWad } from 'utils/format/formatNumber'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
-import { formatSplitPercent, SPLITS_TOTAL_PERCENT } from 'utils/v2v3/math'
+import { isJuiceboxProjectSplit } from 'utils/v2v3/distributions'
+import {
+  feeForAmount,
+  formatSplitPercent,
+  SPLITS_TOTAL_PERCENT,
+} from 'utils/v2v3/math'
 import V2V3ProjectHandle from './V2V3ProjectHandle'
 
 const LockedText = ({ lockedUntil }: { lockedUntil: number }) => {
@@ -25,7 +32,7 @@ const LockedText = ({ lockedUntil }: { lockedUntil: number }) => {
   const lockedUntilFormatted = formatDate(lockedUntil * 1000, 'yyyy-MM-DD')
 
   return (
-    <div style={{ fontSize: '.8rem', color: colors.text.secondary }}>
+    <div style={{ fontSize: '.875rem', color: colors.text.secondary }}>
       <LockOutlined /> <Trans>locked until {lockedUntilFormatted}</Trans>
     </div>
   )
@@ -118,15 +125,35 @@ const SplitValue = ({
   valueSuffix,
   valueFormatProps,
   currency,
+  showFees = false,
 }: {
   split: Split
   totalValue: BigNumber | undefined
   valueSuffix?: string | JSX.Element
   valueFormatProps?: { precision?: number }
   currency?: BigNumber
+  showFees?: boolean
 }) => {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+
+  const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
   const splitValue = totalValue?.mul(split.percent).div(SPLITS_TOTAL_PERCENT)
-  const splitValueFormatted = formatWad(splitValue, { ...valueFormatProps })
+  const isJuiceboxProject = isJuiceboxProjectSplit(split)
+  const feeAmount = !isJuiceboxProject
+    ? feeForAmount(splitValue, ETHPaymentTerminalFee)
+    : BigNumber.from(0)
+  const splitValueFormatted =
+    splitValue &&
+    feeAmount &&
+    formatWad(splitValue.sub(feeAmount), {
+      ...valueFormatProps,
+    })
+  const feeAmountFormatted = formatWad(feeAmount, {
+    ...valueFormatProps,
+  })
+
   const curr = V2V3CurrencyName(
     currency?.toNumber() as V2V3CurrencyOption | undefined,
   )
@@ -143,6 +170,22 @@ const SplitValue = ({
         {splitValueFormatted}
         {valueSuffix ? <span> {valueSuffix}</span> : null})
       </span>
+      <div
+        style={{
+          fontSize: '.8rem',
+          color: colors.text.secondary,
+          marginLeft: 10,
+        }}
+      >
+        {showFees && !isJuiceboxProject && (
+          <Parenthesis>
+            <Trans>
+              <CurrencySymbol currency={curr} />
+              {feeAmountFormatted} fee
+            </Trans>
+          </Parenthesis>
+        )}
+      </div>
     </Tooltip>
   )
 }
@@ -150,6 +193,7 @@ const SplitValue = ({
 export default function SplitItem({
   split,
   showSplitValue,
+  showFees,
   totalValue,
   projectOwnerAddress,
   reservedRate,
@@ -165,10 +209,9 @@ export default function SplitItem({
   valueSuffix?: string | JSX.Element
   valueFormatProps?: { precision?: number }
   currency?: BigNumber
+  showFees?: boolean
 }) {
-  const isJuiceboxProject = split.projectId
-    ? BigNumber.from(split.projectId).gt(0)
-    : false
+  const isJuiceboxProject = isJuiceboxProjectSplit(split)
 
   const formattedSplitPercent = formatSplitPercent(
     BigNumber.from(split.percent),
@@ -213,6 +256,7 @@ export default function SplitItem({
               valueSuffix={valueSuffix}
               valueFormatProps={valueFormatProps}
               currency={currency}
+              showFees={showFees}
             />
           </span>
         ) : null}

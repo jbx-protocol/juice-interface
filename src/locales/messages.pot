@@ -104,6 +104,9 @@ msgstr ""
 msgid "<0/>{0}{1} distributed"
 msgstr ""
 
+msgid "<0/>{feeAmountFormatted} fee"
+msgstr ""
+
 msgid "<0><1/>{0}</0> Distribution Limit"
 msgstr ""
 
@@ -3711,9 +3714,6 @@ msgid "{count} total"
 msgstr ""
 
 msgid "{exchangeName} has no market for {tokenSymbol}."
-msgstr ""
-
-msgid "{feeAmountFormatted} fee"
 msgstr ""
 
 msgid "{formattedTimeLeft} left"

@@ -1,6 +1,6 @@
 import { CrownFilled, LockOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import ETHToUSD from 'components/currency/ETHToUSD'
 import CurrencySymbol from 'components/CurrencySymbol'
@@ -179,8 +179,10 @@ const SplitValue = ({
       >
         {showFees && !isJuiceboxProject && (
           <Parenthesis>
-            <CurrencySymbol currency={curr} />
-            {t` ${feeAmountFormatted} fee`}
+            <Trans>
+              <CurrencySymbol currency={curr} />
+              {feeAmountFormatted} fee
+            </Trans>
           </Parenthesis>
         )}
       </div>

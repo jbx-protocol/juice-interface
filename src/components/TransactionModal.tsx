@@ -49,10 +49,10 @@ const PendingTransactionModalBody = () => {
         <p>
           <Trans>
             Your transaction has been submitted and is awaiting confirmation{' '}
-            {pendingTx ? (
-              <EtherscanLink value={pendingTx.tx?.hash} type="tx" />
-            ) : null}
-          </Trans>
+          </Trans>{' '}
+          {pendingTx ? (
+            <EtherscanLink value={pendingTx.tx?.hash} type="tx" />
+          ) : null}
         </p>
       </div>
     </div>

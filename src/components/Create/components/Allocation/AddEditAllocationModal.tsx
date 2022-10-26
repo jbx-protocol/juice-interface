@@ -199,10 +199,19 @@ export const AddEditAllocationModal = ({
 
         <Form.Item
           name="amount"
-          label={t`Distribution Amount`}
+          label={
+            amountType === 'amount'
+              ? t`Distribution Amount`
+              : t`Distribution Percentage`
+          }
           required
           rules={[
-            inputMustExistRule({ label: t`Distribution Amount` }),
+            inputMustExistRule({
+              label:
+                amountType === 'amount'
+                  ? t`Distribution Amount`
+                  : t`Distribution Percentage`,
+            }),
             distributionAmountIsValidRule({ validatorTrigger: 'onSubmit' }),
           ]}
         >

@@ -24,20 +24,22 @@ export const useFundingTargetForm = () => {
       return undefined
     }
 
-    let targetSelection: FundingTargetType
-
-    if (distributionLimit.amount.eq(MAX_DISTRIBUTION_LIMIT)) {
-      targetSelection = 'infinite'
-    } else {
-      targetSelection = 'specific'
-    }
-
     const currency =
       distributionLimit.currency === V2V3_CURRENCY_ETH ? 'eth' : 'usd'
 
-    return {
-      targetSelection,
-      amount: { amount: fromWad(distributionLimit.amount), currency },
+    if (distributionLimit.amount.eq(MAX_DISTRIBUTION_LIMIT)) {
+      return {
+        targetSelection: 'infinite',
+        amount: { amount: undefined, currency },
+      }
+    } else {
+      return {
+        targetSelection: 'specific',
+        amount: {
+          amount: fromWad(distributionLimit.amount),
+          currency,
+        },
+      }
     }
   }, [distributionLimit])
 

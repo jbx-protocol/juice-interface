@@ -104,10 +104,13 @@ msgstr ""
 msgid "<0/>{0}{1} distributed"
 msgstr ""
 
+msgid "<0/>{feeAmountFormatted} fee"
+msgstr ""
+
 msgid "<0><1/>{0}</0> Distribution Limit"
 msgstr ""
 
-msgid "<0><1/>{netDistributionAmount}</0> after {feePercentage}% JBX fee"
+msgid "<0><1/>{grossAvailableAmount}</0> available to distribute"
 msgstr ""
 
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
@@ -1088,6 +1091,9 @@ msgstr ""
 msgid "Distribution limit is infinite. <0>The project will control how all funds are distributed, and none can be redeemed by token holders.</0>"
 msgstr ""
 
+msgid "Distributions to Ethereum addresses incur a 2.5% JBX membership fee."
+msgstr ""
+
 msgid "Do I have to make my project open source to use Juicebox as its business model?"
 msgstr ""
 
@@ -1551,9 +1557,6 @@ msgid "It'd be a lot cooler if you did"
 msgstr ""
 
 msgid "JBX Fee ({0}%):"
-msgstr ""
-
-msgid "JBX Fee ({feePercentage}%):"
 msgstr ""
 
 msgid "Join <0>hundreds of projects</0> sippin' the Juice."
@@ -3102,9 +3105,6 @@ msgid "Tools"
 msgstr ""
 
 msgid "Total funds:"
-msgstr ""
-
-msgid "Total funds: <0><1/>{grossAvailableAmount}</0>"
 msgstr ""
 
 msgid "Total locked period"

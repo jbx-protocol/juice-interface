@@ -183,15 +183,14 @@ export function RewardTier({
             title={false}
             paragraph={{ rows: 1, width: ['100%'] }}
           >
-            <h5
+            <span
               style={{
                 color: isSelected ? colors.text.primary : colors.text.tertiary,
-                marginBottom: 0,
-                lineHeight: '13px',
+                fontSize: '0.75rem',
               }}
             >
               {rewardTier?.name}
-            </h5>
+            </span>
           </Skeleton>
           <Skeleton
             loading={loading}

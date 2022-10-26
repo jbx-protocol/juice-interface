@@ -28,7 +28,7 @@ function BondingCurveRateExtra({
   } = useContext(ThemeContext)
 
   return (
-    <Space style={{ fontSize: '0.9rem' }} direction="vertical" size="large">
+    <Space style={{ fontSize: '0.875rem' }} direction="vertical" size="large">
       <p style={{ margin: 0 }}>
         <Trans>
           The redemption rate determines the amount of overflow each token can

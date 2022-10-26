@@ -7,11 +7,11 @@ import {
   useEditingV2V3FundingCycleDataSelector,
   useEditingV2V3FundingCycleMetadataSelector,
 } from 'hooks/AppSelector'
+import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { TransactionCallbacks } from 'models/transaction'
 import { findTransactionReceipt } from 'pages/create/tabs/ReviewDeployTab/utils'
 import { useCallback, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
-import { uploadProjectMetadata } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
 import { useDeployStandardProject } from './hooks'
 import {

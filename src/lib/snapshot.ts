@@ -1,10 +1,10 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import axios from 'axios'
 import { juiceboxEmojiImageUri } from 'constants/images'
+import { IPFS_TAGS } from 'constants/ipfs'
 import { readNetwork } from 'constants/networks'
 import { WAD_DECIMALS } from 'constants/numbers'
 import { ProjectMetadataV5 } from 'models/project-metadata'
-import { IPFS_TAGS } from 'utils/ipfs'
 
 /**
  * JB Docs:
@@ -111,7 +111,7 @@ export async function uploadSnapshotSettingsToIPFS({
   projectMetadata: ProjectMetadataV5
   projectOwnerAddress: string
   JBTokenStoreAddress: string
-}): Promise<string | undefined> {
+}): Promise<string> {
   const snapshotSettings = generateSnapshotSpaceSettings({
     handle,
     tokenSymbol,
@@ -133,6 +133,7 @@ export async function uploadSnapshotSettingsToIPFS({
     },
   })
   console.info('Uploaded snapshot settings to IPFS: ', res.data.IpfsHash)
+
   return res.data.IpfsHash as string
 }
 

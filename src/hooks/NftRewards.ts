@@ -6,7 +6,7 @@ import {
   NftRewardTier,
 } from 'models/nftRewardTier'
 import { useQuery, UseQueryResult } from 'react-query'
-import { decodeEncodedIPFSUri, ipfsCidUrl } from 'utils/ipfs'
+import { decodeEncodedIPFSUri, restrictedIpfsUrl } from 'utils/ipfs'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { MaxUint48 } from 'constants/numbers'
@@ -22,7 +22,7 @@ async function getRewardTierFromIPFS({
   contractNftRewardTier: ContractNftRewardTier
   index: number
 }): Promise<NftRewardTier> {
-  const url = ipfsCidUrl(
+  const url = restrictedIpfsUrl(
     decodeEncodedIPFSUri(contractNftRewardTier.encodedIPFSUri),
   )
 

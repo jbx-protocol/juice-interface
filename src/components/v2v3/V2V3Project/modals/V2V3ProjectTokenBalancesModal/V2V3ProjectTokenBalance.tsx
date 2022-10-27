@@ -15,21 +15,18 @@ export const V2V3ProjectTokenBalance = ({
   style?: CSSProperties
   precision?: number
 }) => {
+  const { projectOwnerAddress } = useContext(V2V3ProjectContext)
+
   const { data: tokenAddress } = useProjectToken({ projectId })
   const tokenSymbol = useSymbolOfERC20(tokenAddress)
-  const { projectOwnerAddress } = useContext(V2V3ProjectContext)
   const { data: balance } = useTotalBalanceOf(projectOwnerAddress, projectId)
 
   return (
     <div style={{ ...style }}>
-      {tokenSymbol !== undefined ? (
-        <>
-          {formatWad(balance, { precision: precision ?? 0 })}{' '}
-          {tokenSymbolText({ tokenSymbol, plural: true })}
-        </>
-      ) : (
-        '--'
-      )}
+      {formatWad(balance, { precision: precision ?? 0 })}{' '}
+      {tokenSymbol
+        ? tokenSymbolText({ tokenSymbol, plural: true })
+        : `tokens for Project #${projectId}`}
     </div>
   )
 }

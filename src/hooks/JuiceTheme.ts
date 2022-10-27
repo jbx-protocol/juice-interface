@@ -18,11 +18,15 @@ const flattenNestedObject = (
   }, {})
 
 const userPrefersDarkMode = (): boolean => {
+  if (typeof window === 'undefined') {
+    return false
+  }
+
   return window.matchMedia?.('(prefers-color-scheme: dark)')?.matches ?? false
 }
 
 const getInitialThemeOption = (storageKey: string) => {
-  const storedThemeOption = localStorage.getItem(storageKey)
+  const storedThemeOption = localStorage?.getItem(storageKey)
   if (storedThemeOption) {
     return storedThemeOption as ThemeOption
   }

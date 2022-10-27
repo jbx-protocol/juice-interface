@@ -1,6 +1,6 @@
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useMemo, useState } from 'react'
-import { formatIpfsLink, isIpfsUrl } from 'utils/ipfs'
+import { ipfsToHttps, isIpfsUrl } from 'utils/ipfs'
 
 // Override select project logos.
 const IMAGE_URI_OVERRIDES: { [k: number]: string } = {
@@ -33,7 +33,7 @@ export default function ProjectLogo({
     if (!isIpfsUrl(uri)) {
       return uri
     }
-    return formatIpfsLink(uri)
+    return ipfsToHttps(uri)
   }, [uri, projectId])
 
   return (

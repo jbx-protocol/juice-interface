@@ -17,7 +17,6 @@ export default function V2V3ProjectMetadataProvider({
   const { cv } = useContext(V2V3ContractsContext)
 
   const hasMetadata = Boolean(metadata)
-
   const { data: metadataCid } = useProjectMetadataContent(
     hasMetadata ? projectId : undefined,
   )

@@ -3,12 +3,12 @@ import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { useV2V3ContractLoader } from 'hooks/v2v3/V2V3ContractLoader'
 import { CV2V3 } from 'models/cv'
-import { useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { hasFundingCycle } from 'utils/v2v3/cv'
 
 export const useSetCv = (projectId: number | undefined) => {
-  const { setVersion, setCvs } = useContext(V2V3ContractsContext)
+  const { setCv, setCvs } = useContext(V2V3ContractsContext)
 
   useEffect(() => {
     async function load() {
@@ -27,12 +27,12 @@ export const useSetCv = (projectId: number | undefined) => {
       if (hasV2FundingCycle) cvs.push(CV_V2)
       if (hasV3FundingCycle) cvs.push(CV_V3)
 
-      setVersion?.(cv)
+      setCv?.(cv)
       setCvs?.(cvs)
     }
 
     load()
-  }, [projectId, setVersion, setCvs])
+  }, [projectId, setCvs, setCv])
 }
 
 // TODO this needs to probably be reverted, and there
@@ -45,19 +45,24 @@ export const V2V3ContractsProvider: React.FC<{
 
   const contracts = useV2V3ContractLoader({ cv })
 
+  const setCvWithLog = useCallback(
+    (newCv: CV2V3) => {
+      console.info(
+        'V2V3ContractsProvider::Switching contracts version to',
+        newCv,
+      )
+      setCv(newCv)
+    },
+    [setCv],
+  )
+
   return (
     <V2V3ContractsContext.Provider
       value={{
         contracts,
         cv,
         cvs,
-        setVersion: (newCv: CV2V3) => {
-          console.info(
-            'V2V3ContractsProvider::Switching contracts version to',
-            newCv,
-          )
-          setCv(newCv)
-        },
+        setCv: setCvWithLog,
         setCvs,
       }}
     >

@@ -131,10 +131,10 @@ const TargetCallout = ({ selection }: { selection: FundingTargetType }) => {
   let calloutText = undefined
   switch (selection) {
     case 'infinite':
-      calloutText = t`Having an Infinite Funding Target means contributors WILL NOT be able to redeem their tokens for a portion of the treasury funds. Payout splits will be nominated in percentages only.`
+      calloutText = t`An Infinite Funding Target means contributors cannot redeem their tokens for a portion of the treasury funds. Payout splits will can only be nominated in percentages.`
       break
     case 'specific':
-      calloutText = t`Your Funding Target can be changed in future funding cycles. USD amounts will be paid out in ETH, this conversion will be resolved at moment of distribution.`
+      calloutText = t`Your Funding Target can be changed in future funding cycles. Payouts denominated in USD are paid out in ETH at the current exchange rate.`
       break
   }
   return calloutText ? (

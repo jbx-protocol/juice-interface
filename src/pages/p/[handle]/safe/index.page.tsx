@@ -9,7 +9,7 @@ import { useContext } from 'react'
 
 function V1ProjectSafeDashboard({ handle }: { handle: string }) {
   const { owner } = useContext(V1ProjectContext)
-  if (!owner) return null
+
   return (
     <ProjectSafeDashboard
       projectPageUrl={`/p/${handle}`}

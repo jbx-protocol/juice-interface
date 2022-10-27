@@ -9,9 +9,8 @@ export function useV2ConnectedWalletHasPermission(
   permission: V2OperatorPermission | V2OperatorPermission[],
 ) {
   const { userAddress } = useWallet()
-  const { isPreviewMode } = useContext(V2V3ProjectContext)
+  const { isPreviewMode, projectOwnerAddress } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
-  const { projectOwnerAddress } = useContext(V2V3ProjectContext)
 
   const hasOperatorPermission = useV2HasPermissions({
     operator: userAddress,

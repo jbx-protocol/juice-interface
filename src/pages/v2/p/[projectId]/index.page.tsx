@@ -1,6 +1,5 @@
 import { AppWrapper, SEO } from 'components/common'
 import { DesmosScript } from 'components/common/Head/scripts/DesmosScript'
-import Loading from 'components/Loading'
 import { CV_V2, CV_V3 } from 'constants/cv'
 import { V2V3_PROJECT_IDS } from 'constants/v2v3/projectIds'
 import { paginateDepleteProjectsQueryCall } from 'lib/apollo'
@@ -66,13 +65,9 @@ export default function V2ProjectPage({
         </SEO>
       ) : null}
       <AppWrapper>
-        {metadata ? (
-          <V2V3ProjectPageProvider projectId={projectId} metadata={metadata}>
-            <V2V3Dashboard />
-          </V2V3ProjectPageProvider>
-        ) : (
-          <Loading />
-        )}
+        <V2V3ProjectPageProvider projectId={projectId} metadata={metadata}>
+          <V2V3Dashboard />
+        </V2V3ProjectPageProvider>
       </AppWrapper>
     </>
   )

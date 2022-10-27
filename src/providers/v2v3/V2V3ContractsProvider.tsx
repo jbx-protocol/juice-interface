@@ -7,12 +7,16 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { hasFundingCycle } from 'utils/v2v3/cv'
 
-export const useSetCv = (projectId: number | undefined) => {
+export const useLoadProjectCvs = (projectId: number | undefined) => {
   const { setCv, setCvs } = useContext(V2V3ContractsContext)
+
+  const [loadingCsv, setLoadingCsv] = useState<boolean>(true)
 
   useEffect(() => {
     async function load() {
       if (!projectId) return
+
+      setLoadingCsv(true)
 
       const [hasV2FundingCycle, hasV3FundingCycle] = await Promise.all([
         hasFundingCycle(projectId, CV_V2),
@@ -29,10 +33,14 @@ export const useSetCv = (projectId: number | undefined) => {
 
       setCv?.(cv)
       setCvs?.(cvs)
+
+      setLoadingCsv(false)
     }
 
     load()
   }, [projectId, setCvs, setCv])
+
+  return { loading: loadingCsv }
 }
 
 // TODO this needs to probably be reverted, and there

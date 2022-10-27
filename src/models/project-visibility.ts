@@ -1,7 +1,7 @@
 export type ProjectState = 'active' | 'archived'
 export type ProjectCategory =
   | 'all'
-  | 'latest'
+  | 'new'
   | 'holdings'
   | 'myprojects'
   | 'trending' //| 'metaverse' | 'defi' | 'nft' | 'web3'

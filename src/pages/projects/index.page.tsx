@@ -59,8 +59,8 @@ function Projects() {
           return 'trending'
         case 'all':
           return 'all'
-        case 'latest':
-          return 'latest'
+        case 'new':
+          return 'new'
         case 'holdings':
           return 'holdings'
         case 'myprojects':
@@ -192,7 +192,7 @@ function Projects() {
         <div style={{ paddingBottom: 50 }}>
           <TrendingProjects count={12} />
         </div>
-      ) : selectedTab === 'latest' ? (
+      ) : selectedTab === 'new' ? (
         <div style={{ paddingBottom: 50 }}>
           <LatestProjects />
         </div>

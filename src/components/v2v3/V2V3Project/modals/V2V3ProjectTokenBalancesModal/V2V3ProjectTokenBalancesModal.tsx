@@ -9,13 +9,13 @@ import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
 import { useEditProjectDetailsTx } from 'hooks/v2v3/transactor/EditProjectDetailsTx'
+import { uploadProjectMetadata } from 'lib/api/ipfs'
+import { revalidateProject } from 'lib/api/nextjs'
 import { CV2V3 } from 'models/cv'
 import { ProjectMetadataV5 } from 'models/project-metadata'
 import { TokenRef } from 'models/token-ref'
 import { V2OperatorPermission } from 'models/v2v3/permissions'
 import { useContext, useEffect, useState } from 'react'
-import { uploadProjectMetadata } from 'utils/ipfs'
-import { revalidateProject } from 'utils/revalidateProject'
 import { AssetInputType, TokenRefs } from './TokenRefs'
 import { V2V3ProjectTokenBalance } from './V2V3ProjectTokenBalance'
 
@@ -150,24 +150,26 @@ export function V2V3ProjectTokenBalancesModal(props: ModalProps) {
           )}
         </Space>
 
-        <Modal
-          title={t`Edit tracked assets`}
-          open={editModalVisible}
-          onCancel={() => setEditModalVisible(false)}
-          cancelText={t`Cancel`}
-          width={600}
-          confirmLoading={loading}
-          onOk={updateTokenRefs}
-          okText={t`Save tracked assets`}
-        >
-          <p style={{ marginBottom: 40 }}>
-            <Trans>
-              Display ERC-20 and other Juicebox project tokens that this project
-              owner holds.
-            </Trans>
-          </p>
-          <TokenRefs form={form} />
-        </Modal>
+        {hasEditPermission ? (
+          <Modal
+            title={t`Edit tracked assets`}
+            open={editModalVisible}
+            onCancel={() => setEditModalVisible(false)}
+            cancelText={t`Cancel`}
+            width={600}
+            confirmLoading={loading}
+            onOk={updateTokenRefs}
+            okText={t`Save tracked assets`}
+          >
+            <p style={{ marginBottom: 40 }}>
+              <Trans>
+                Display ERC-20 and other Juicebox project tokens that this
+                project owner holds.
+              </Trans>
+            </p>
+            <TokenRefs form={form} />
+          </Modal>
+        ) : null}
       </div>
     </Modal>
   )

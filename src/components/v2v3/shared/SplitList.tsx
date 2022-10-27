@@ -8,6 +8,7 @@ import SplitItem from './SplitItem'
 export default function SplitList({
   splits,
   showSplitValues = false,
+  showFees = false,
   currency,
   totalValue,
   projectOwnerAddress,
@@ -20,6 +21,7 @@ export default function SplitList({
   totalValue: BigNumber | undefined
   projectOwnerAddress: string | undefined
   showSplitValues?: boolean
+  showFees?: boolean
   valueSuffix?: string | JSX.Element
   valueFormatProps?: { precision?: number }
   reservedRate?: number
@@ -35,7 +37,7 @@ export default function SplitList({
         .sort((a, b) => (a.percent < b.percent ? 1 : -1))
         .map(split => (
           <div
-            key={`${split.beneficiary}-${split.percent}`}
+            key={`${split.beneficiary}-${split.projectId}-${split.percent}`}
             style={{ marginBottom: 5 }}
           >
             <SplitItem
@@ -47,6 +49,7 @@ export default function SplitList({
               valueSuffix={valueSuffix}
               valueFormatProps={valueFormatProps}
               reservedRate={reservedRate}
+              showFees={showFees}
             />
           </div>
         ))}
@@ -60,6 +63,7 @@ export default function SplitList({
           valueSuffix={valueSuffix}
           valueFormatProps={valueFormatProps}
           reservedRate={reservedRate}
+          showFees={showFees}
         />
       ) : null}
     </div>

@@ -6,16 +6,15 @@ import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useSetProjectHandleTx } from 'hooks/v1/transactor/SetProjectHandleTx'
 import { useSetProjectUriTx } from 'hooks/v1/transactor/SetProjectUriTx'
+import { editMetadataForCid, uploadProjectMetadata } from 'lib/api/ipfs'
+import { revalidateProject } from 'lib/api/nextjs'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { useContext, useEffect, useState } from 'react'
 import {
   cidFromUrl,
-  editMetadataForCid,
   logoNameForHandle,
   metadataNameForHandle,
-  uploadProjectMetadata,
 } from 'utils/ipfs'
-import { revalidateProject } from 'utils/revalidateProject'
 
 type ProjectInfoFormFields = {
   name: string

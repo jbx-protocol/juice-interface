@@ -1,6 +1,6 @@
 import { useAppSelector } from 'hooks/AppSelector'
+import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { useCallback } from 'react'
-import { uploadProjectMetadata } from 'utils/ipfs'
 
 /**
  * Hook that returns a function that uploads project metadata to IPFS.

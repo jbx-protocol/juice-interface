@@ -1,3 +1,17 @@
+body.Space-Grotesk {
+  // $font: 'Space Grotesk';
+  font-family: 'Space Grotesk';
+  code {
+    font-family: 'Space Grotesk';
+  }
+  div,
+  p,
+  button,
+  a {
+    font-family: 'Space Grotesk';
+  }
+}
+
 body.Capsules {
   font-family: 'Capsules';
   code {
@@ -126,4 +140,28 @@ body.Tarnac-Sans {
   font-family: 'Tarnac Sans';
   font-weight: 700 900;
   src: url('/fonts/TarnacSansTRIAL-Black.ttf');
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  font-weight: 100 300;
+  src: url('/fonts/SpaceGrotesk-Light.otf');
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  font-weight: 400;
+  src: url('/fonts/SpaceGrotesk-Regular.otf');
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  font-weight: 500 600;
+  src: url('/fonts/SpaceGrotesk-Medium.otf');
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  font-weight: 700 900;
+  src: url('/fonts/SpaceGrotesk-Bold.otf');
 }

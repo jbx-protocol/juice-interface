@@ -3,6 +3,7 @@ import { useLayoutEffect, useState } from 'react'
 
 const FONT_OPTIONS = [
   'DM-Mono',
+  'Space-Grotesk',
   'Tarnac-Sans',
   'Centra-Mono',
   'GT-Pressura-Mono',

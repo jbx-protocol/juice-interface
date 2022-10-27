@@ -12,7 +12,7 @@ export function V1ProjectMetadataProvider({
   children,
 }: PropsWithChildren<{
   handle: string
-  metadata: ProjectMetadataV5
+  metadata: ProjectMetadataV5 | undefined
 }>) {
   const projectId = useProjectIdForHandle(handle)
 

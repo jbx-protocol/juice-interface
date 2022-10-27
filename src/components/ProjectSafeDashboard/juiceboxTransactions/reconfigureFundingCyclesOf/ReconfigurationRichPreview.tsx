@@ -35,6 +35,7 @@ const useTransactionJBController = (transaction: SafeTransactionType) => {
   }
 }
 
+// Currently only supports V2V3 reconfig transactions
 export function ReconfigureRichPreview({
   transaction,
 }: {

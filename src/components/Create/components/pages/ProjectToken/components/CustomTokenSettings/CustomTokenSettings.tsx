@@ -167,8 +167,8 @@ export const CustomTokenSettings = () => {
                   <Trans>
                     The issuance rate of your second funding cycle will be{' '}
                     {formatAmount(secondFundingCycleMintRate)} tokens per 1 ETH,
-                    then {formatAmount(thirdFundingCycleMintRate)} tokens per 1
-                    ETH for your third funding cycle, and so on.
+                    {formatAmount(thirdFundingCycleMintRate)} tokens per 1 ETH
+                    for your third funding cycle, and so on.
                   </Trans>
                 </>
               )}

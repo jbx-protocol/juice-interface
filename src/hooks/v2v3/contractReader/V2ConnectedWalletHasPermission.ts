@@ -3,8 +3,6 @@ import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useWallet } from 'hooks/Wallet'
 import { V2OperatorPermission } from 'models/v2v3/permissions'
 import { useContext } from 'react'
-
-import useProjectOwner from './ProjectOwner'
 import { useV2HasPermissions } from './V2HasPermissions'
 
 export function useV2ConnectedWalletHasPermission(
@@ -13,12 +11,11 @@ export function useV2ConnectedWalletHasPermission(
   const { userAddress } = useWallet()
   const { isPreviewMode } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
-
-  const { data: owner } = useProjectOwner(projectId)
+  const { projectOwnerAddress } = useContext(V2V3ProjectContext)
 
   const hasOperatorPermission = useV2HasPermissions({
     operator: userAddress,
-    account: owner,
+    account: projectOwnerAddress,
     domain: projectId,
     permissions: Array.isArray(permission) ? permission : [permission],
   })
@@ -26,7 +23,9 @@ export function useV2ConnectedWalletHasPermission(
   if (isPreviewMode) return false
 
   const isOwner =
-    userAddress && owner && userAddress.toLowerCase() === owner.toLowerCase()
+    userAddress &&
+    projectOwnerAddress &&
+    userAddress.toLowerCase() === projectOwnerAddress.toLowerCase()
 
   return (
     isOwner ||

@@ -150,24 +150,26 @@ export function V2V3ProjectTokenBalancesModal(props: ModalProps) {
           )}
         </Space>
 
-        <Modal
-          title={t`Edit tracked assets`}
-          open={editModalVisible}
-          onCancel={() => setEditModalVisible(false)}
-          cancelText={t`Cancel`}
-          width={600}
-          confirmLoading={loading}
-          onOk={updateTokenRefs}
-          okText={t`Save tracked assets`}
-        >
-          <p style={{ marginBottom: 40 }}>
-            <Trans>
-              Display ERC-20 and other Juicebox project tokens that this project
-              owner holds.
-            </Trans>
-          </p>
-          <TokenRefs form={form} />
-        </Modal>
+        {hasEditPermission ? (
+          <Modal
+            title={t`Edit tracked assets`}
+            open={editModalVisible}
+            onCancel={() => setEditModalVisible(false)}
+            cancelText={t`Cancel`}
+            width={600}
+            confirmLoading={loading}
+            onOk={updateTokenRefs}
+            okText={t`Save tracked assets`}
+          >
+            <p style={{ marginBottom: 40 }}>
+              <Trans>
+                Display ERC-20 and other Juicebox project tokens that this
+                project owner holds.
+              </Trans>
+            </p>
+            <TokenRefs form={form} />
+          </Modal>
+        ) : null}
       </div>
     </Modal>
   )

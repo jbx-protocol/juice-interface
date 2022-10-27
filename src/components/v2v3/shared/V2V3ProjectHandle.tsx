@@ -20,7 +20,7 @@ export default function V2V3ProjectHandle({
 
   return (
     <Link href={v2v3ProjectRoute({ projectId, handle: handleToRender })}>
-      <a
+      <span
         style={{ fontWeight: 500, ...style }}
         className="text-primary hover-text-action-primary hover-text-decoration-underline"
       >
@@ -29,7 +29,7 @@ export default function V2V3ProjectHandle({
         ) : (
           <Trans>Project #{projectId}</Trans>
         )}
-      </a>
+      </span>
     </Link>
   )
 }

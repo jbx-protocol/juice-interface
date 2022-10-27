@@ -26,19 +26,19 @@ export const ReservedTokenRateCallout: React.FC = () => {
 
   return (
     <CreateCallout.Info noIcon collapsible={false}>
-      <span>
-        <Trans>Contributor rate:</Trans>
-      </span>{' '}
-      <span style={{ whiteSpace: 'nowrap' }}>
-        {formattedNum(contributorTokens)} / 1 ETH
-      </span>
+      <Trans>
+        <span>Contributor rate:</span>{' '}
+        <span style={{ whiteSpace: 'nowrap' }}>
+          {formattedNum(contributorTokens)} / 1 ETH
+        </span>
+      </Trans>
       <br />
-      <span>
-        <Trans>Reserved rate:</Trans>
-      </span>{' '}
-      <span style={{ whiteSpace: 'nowrap' }}>
-        {formattedNum(reservedTokens)} / 1 ETH
-      </span>
+      <Trans>
+        <span>Reserved rate:</span>{' '}
+        <span style={{ whiteSpace: 'nowrap' }}>
+          {formattedNum(reservedTokens)} / 1 ETH
+        </span>
+      </Trans>
     </CreateCallout.Info>
   )
 }

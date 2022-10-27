@@ -54,6 +54,10 @@ const dynamicActivate = async (locale: string) => {
   }
 }
 
+// TODO eventually we need to uncomment the below line.
+// https://github.com/jbx-protocol/juice-interface/issues/2391
+// activateDefaultLocale()
+
 export default function LanguageProvider({
   children,
 }: {

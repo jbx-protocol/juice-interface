@@ -58,6 +58,7 @@ export default function Callout({
         ...style,
       }}
       onClick={collapsible ? handleToggleExpand : undefined}
+      role={collapsible ? 'button' : undefined}
     >
       {iconComponent !== null && (
         <span style={{ lineHeight: 1.6 }}>

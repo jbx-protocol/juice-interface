@@ -137,8 +137,8 @@ export const CustomTokenSettings = () => {
         {discountRateDisabled ? (
           <CreateCallout.Warning>
             <Trans>
-              The discount rate cannot be set while the funding cycle duration
-              is not set.
+              The discount rate cannot be set when the funding cycle duration is
+              not set.
             </Trans>
           </CreateCallout.Warning>
         ) : (

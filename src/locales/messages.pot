@@ -125,6 +125,9 @@ msgstr ""
 msgid "<0>Contribution floor:</0> {0} ETH"
 msgstr ""
 
+msgid "<0>Contributor rate:</0> <1>{0} / 1 ETH</1>"
+msgstr ""
+
 msgid "<0>Description: </0><1/>"
 msgstr ""
 
@@ -177,6 +180,9 @@ msgid "<0>Peel</0> is the DAO that manages the juicebox.money frontend interface
 msgstr ""
 
 msgid "<0>Recurring funding cycles</0>. For example, distribute funds from your project's treasury every week."
+msgstr ""
+
+msgid "<0>Reserved rate:</0> <1>{0} / 1 ETH</1>"
 msgstr ""
 
 msgid "<0>Snapshot</0> is an off-chain voting system. You can use your Juicebox project tokens in a Snapshot voting strategy. <1>Learn more about Snapshot</1>."
@@ -780,9 +786,6 @@ msgid "Contribution threshold"
 msgstr ""
 
 msgid "Contributor rate"
-msgstr ""
-
-msgid "Contributor rate:"
 msgstr ""
 
 msgid "Contributors receive the NFT when they contribute at least this amount."
@@ -2420,9 +2423,6 @@ msgstr ""
 msgid "Reserved rate is 0% but has reserved token allocation. Consider adding a reserved rate that is greater than zero, or remove the token allocation."
 msgstr ""
 
-msgid "Reserved rate:"
-msgstr ""
-
 msgid "Reserved token allocation"
 msgstr ""
 
@@ -2810,7 +2810,7 @@ msgstr ""
 msgid "The balance of this project in the Juicebox contract."
 msgstr ""
 
-msgid "The discount rate cannot be set while the funding cycle duration is not set."
+msgid "The discount rate cannot be set when the funding cycle duration is not set."
 msgstr ""
 
 msgid "The distribution limit for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."

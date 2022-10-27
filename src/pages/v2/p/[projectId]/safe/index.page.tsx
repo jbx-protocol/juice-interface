@@ -22,7 +22,6 @@ function V2V3ProjectSafeDashboard() {
   const { handle, projectOwnerAddress } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
-  if (!projectOwnerAddress) return null
   return (
     <ProjectSafeDashboard
       projectPageUrl={v2v3ProjectRoute({ handle, projectId })}

@@ -2819,7 +2819,7 @@ msgstr ""
 msgid "The future will be led by creators, and owned by communities."
 msgstr ""
 
-msgid "The issuance rate of your second funding cycle will be {0} tokens per 1 ETH, then {1} tokens per 1 ETH for your third funding cycle, and so on."
+msgid "The issuance rate of your second funding cycle will be {0} tokens per 1 ETH,{1} tokens per 1 ETH for your third funding cycle, and so on."
 msgstr ""
 
 msgid "The maximum amount of funds allowed to be distributed from the project's treasury each funding cycle."

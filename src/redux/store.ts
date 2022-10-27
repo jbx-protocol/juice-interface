@@ -1,4 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import { safeLocalStorage } from 'utils/windowUtils'
 
 import getLocalStoragePreloadedState from './localStoragePreload'
 import editingProjectReducer from './slices/editingProject'
@@ -22,13 +23,12 @@ export function createStore() {
 const store = createStore()
 
 store.subscribe(() => {
-  localStorage &&
-    localStorage.setItem(
-      REDUX_STATE_LOCALSTORAGE_KEY,
-      JSON.stringify({
-        reduxState: store.getState(),
-      }),
-    )
+  safeLocalStorage?.setItem(
+    REDUX_STATE_LOCALSTORAGE_KEY,
+    JSON.stringify({
+      reduxState: store.getState(),
+    }),
+  )
 })
 
 export type RootState = ReturnType<typeof rootReducer>

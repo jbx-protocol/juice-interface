@@ -2,7 +2,7 @@ import { GlobalOutlined } from '@ant-design/icons'
 import { Select } from 'antd'
 import { CSSProperties, useEffect, useState } from 'react'
 
-import { reloadWindow } from 'utils/windowUtils'
+import { reloadWindow, safeLocalStorage } from 'utils/windowUtils'
 
 import { Languages } from 'constants/languages/language-options'
 
@@ -36,14 +36,13 @@ export default function NavLanguageSelector({
     )
   }
 
-  let currentSelectedLanguage =
-    (localStorage && localStorage.getItem('lang')) || 'en'
+  let currentSelectedLanguage = safeLocalStorage?.getItem('lang') || 'en'
 
   // Sets the new language with localStorage and reloads the page
   const setLanguage = (newLanguage: string) => {
-    if (localStorage) {
+    if (safeLocalStorage) {
       currentSelectedLanguage = newLanguage
-      localStorage.setItem('lang', newLanguage)
+      safeLocalStorage.setItem('lang', newLanguage)
       reloadWindow()
     }
   }

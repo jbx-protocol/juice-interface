@@ -1,6 +1,7 @@
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { readNetwork } from 'constants/networks'
 import { NetworkName } from 'models/network-name'
+import { safeLocalStorage } from './windowUtils'
 
 const FEATURE_FLAG_DEFAULTS: {
   [featureFlag: string]: { [networkName in NetworkName]?: boolean }
@@ -21,8 +22,10 @@ const featureFlagKey = (baseKey: string) => {
 }
 
 const setFeatureFlag = (featureFlag: string, enabled: boolean) => {
-  localStorage &&
-    localStorage.setItem(featureFlagKey(featureFlag), JSON.stringify(enabled))
+  safeLocalStorage?.setItem(
+    featureFlagKey(featureFlag),
+    JSON.stringify(enabled),
+  )
 }
 
 export const enableFeatureFlag = (featureFlag: string) => {
@@ -45,8 +48,10 @@ export const featureFlagEnabled = (featureFlag: string): boolean => {
   const defaultEnabled = featureFlagDefaultEnabled(featureFlag)
 
   try {
-    const localStorageEnabled = localStorage
-      ? JSON.parse(localStorage.getItem(featureFlagKey(featureFlag)) || 'null')
+    const localStorageEnabled = safeLocalStorage
+      ? JSON.parse(
+          safeLocalStorage.getItem(featureFlagKey(featureFlag)) || 'null',
+        )
       : null
 
     return localStorageEnabled ?? defaultEnabled

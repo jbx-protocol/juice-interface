@@ -1,3 +1,4 @@
+import { safeLocalStorage } from 'utils/windowUtils'
 import {
   defaultProjectState as defaultV1ProjectState,
   REDUX_STORE_V1_PROJECT_VERSION,
@@ -15,8 +16,7 @@ interface PreloadedState {
 
 export default function getLocalStoragePreloadedState(): RootState | undefined {
   try {
-    const stateString =
-      localStorage && localStorage.getItem(REDUX_STATE_LOCALSTORAGE_KEY)
+    const stateString = safeLocalStorage?.getItem(REDUX_STATE_LOCALSTORAGE_KEY)
     if (!stateString) {
       return undefined
     }
@@ -52,11 +52,10 @@ export default function getLocalStoragePreloadedState(): RootState | undefined {
     }
 
     // update local storage with the (maybe) new state
-    localStorage &&
-      localStorage.setItem(
-        REDUX_STATE_LOCALSTORAGE_KEY,
-        JSON.stringify(parsedState),
-      )
+    safeLocalStorage?.setItem(
+      REDUX_STATE_LOCALSTORAGE_KEY,
+      JSON.stringify(parsedState),
+    )
 
     return parsedState.reduxState
   } catch (e) {

@@ -4,7 +4,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import Link from 'next/link'
 import { CSSProperties, useContext } from 'react'
 
-import { reloadWindow, scrollToTop } from 'utils/windowUtils'
+import { reloadWindow, safeLocalStorage, scrollToTop } from 'utils/windowUtils'
 
 import { Languages } from 'constants/languages/language-options'
 import { TERMS_OF_SERVICE_URL } from 'constants/links'
@@ -49,7 +49,7 @@ export default function Footer() {
 
   // Sets the new language with localStorage and reloads the page
   const setLanguage = (newLanguage: string) => {
-    localStorage && localStorage.setItem('lang', newLanguage)
+    safeLocalStorage?.setItem('lang', newLanguage)
     reloadWindow()
     scrollToTop()
   }

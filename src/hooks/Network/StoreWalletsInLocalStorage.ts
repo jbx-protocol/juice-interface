@@ -1,5 +1,6 @@
 import { WalletState } from '@web3-onboard/core'
 import { useCallback } from 'react'
+import { safeLocalStorage } from 'utils/windowUtils'
 
 export function useStoreWalletsInLocalStorage() {
   const storeWalletsInLocalStorage = useCallback(
@@ -7,7 +8,7 @@ export function useStoreWalletsInLocalStorage() {
       if (!wallets.length) return
 
       const connectedWalletsLabelArray = wallets.map(({ label }) => label)
-      window.localStorage.setItem(
+      safeLocalStorage?.setItem(
         'connectedWallets',
         JSON.stringify(connectedWalletsLabelArray),
       )

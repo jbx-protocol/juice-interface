@@ -2,6 +2,7 @@ import { useWallet } from 'hooks/Wallet'
 import { TransactionLog, TxStatus } from 'models/transaction'
 import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import { clearInterval, setInterval } from 'timers'
+import { safeLocalStorage } from 'utils/windowUtils'
 
 import { readProvider } from '../constants/readProvider'
 import {
@@ -75,7 +76,7 @@ export default function TxHistoryProvider({
     (txs: TransactionLog[]) => {
       if (!localStorageKey) return
 
-      localStorage.setItem(localStorageKey, JSON.stringify(txs))
+      safeLocalStorage?.setItem(localStorageKey, JSON.stringify(txs))
       setTransactions(txs)
     },
     [localStorageKey],
@@ -86,7 +87,7 @@ export default function TxHistoryProvider({
     if (!localStorageKey) return
 
     _setTransactions(
-      JSON.parse(localStorage.getItem(localStorageKey) || '[]')
+      JSON.parse(safeLocalStorage?.getItem(localStorageKey) || '[]')
         // Only persist txs that are failed/pending
         // or were created within history window
         .filter(

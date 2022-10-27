@@ -10,6 +10,7 @@ import { truncateEthAddress } from 'utils/format/formatAddress'
 
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { readProvider } from 'constants/readProvider'
+import { safeLocalStorage } from 'utils/windowUtils'
 
 type EnsRecord = {
   name: string | null
@@ -19,10 +20,10 @@ type EnsRecord = {
 const getStorageKey = () => 'jb_ensDict_' + readProvider?.network?.chainId ?? ''
 
 const getEnsDict = () => {
-  if (typeof window !== 'undefined') {
+  if (safeLocalStorage) {
     try {
       return JSON.parse(
-        window.localStorage.getItem(getStorageKey()) ?? '{}',
+        safeLocalStorage.getItem(getStorageKey()) ?? '{}',
       ) as Record<string, EnsRecord>
     } catch (e) {
       console.info('ENS storage not found')
@@ -85,7 +86,7 @@ export default function FormattedAddress({
         console.error('Error looking up ENS name for address', address, e)
       }
 
-      window.localStorage?.setItem(
+      safeLocalStorage?.setItem(
         getStorageKey(),
         JSON.stringify({
           ...getEnsDict(),

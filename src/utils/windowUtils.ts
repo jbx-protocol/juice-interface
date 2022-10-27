@@ -12,3 +12,6 @@ export const scrollToTop = () => {
   if (typeof window === 'undefined') return
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
+
+export const safeLocalStorage =
+  typeof window !== 'undefined' ? window.localStorage : null

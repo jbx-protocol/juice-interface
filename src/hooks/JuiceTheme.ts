@@ -1,9 +1,8 @@
-import type { ThemeContextType } from 'contexts/themeContext'
-
-import { useEffect, useState } from 'react'
-
 import { juiceTheme } from 'constants/theme'
 import { ThemeOption } from 'constants/theme/theme-option'
+import type { ThemeContextType } from 'contexts/themeContext'
+import { useEffect, useState } from 'react'
+import { safeLocalStorage } from 'utils/windowUtils'
 
 const flattenNestedObject = (
   nestedObj: Record<string, any>, // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -21,8 +20,7 @@ const flattenNestedObject = (
 
 export function useJuiceTheme(storageKey = 'jb_theme'): ThemeContextType {
   const initialThemeOption =
-    (localStorage && (localStorage.getItem(storageKey) as ThemeOption)) ||
-    ThemeOption.light
+    (safeLocalStorage?.getItem(storageKey) as ThemeOption) || ThemeOption.light
 
   const [currentThemeOption, setCurrentThemeOption] =
     useState<ThemeOption>(initialThemeOption)
@@ -67,7 +65,7 @@ export function useJuiceTheme(storageKey = 'jb_theme'): ThemeContextType {
     setThemeOption: (themeOption: ThemeOption) => {
       setRootVarsForThemeOption(themeOption)
       setCurrentThemeOption(themeOption)
-      localStorage && localStorage.setItem(storageKey, themeOption)
+      safeLocalStorage?.setItem(storageKey, themeOption)
     },
   }
 }

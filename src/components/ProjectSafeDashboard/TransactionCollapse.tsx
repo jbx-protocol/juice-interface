@@ -1,5 +1,6 @@
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
+import { CV_V2, CV_V3 } from 'constants/cv'
 import { ThemeContext } from 'contexts/themeContext'
 import { SafeTransactionType } from 'models/safe'
 import { CV2V3 } from 'models/v2v3/cv'
@@ -44,10 +45,10 @@ export function TransactionCollapse({
     // case '1':
     //   versionText = 'V1'
     //   break
-    case '2':
+    case CV_V2:
       versionText = 'V2'
       break
-    case '3':
+    case CV_V3:
       versionText = 'V3'
       break
   }

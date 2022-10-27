@@ -1,3 +1,4 @@
+import { CV_V2, CV_V3 } from 'constants/cv'
 import { useLoadV2V3Contract } from 'hooks/v2v3/LoadV2V3Contract'
 import { GnosisSafe, SafeTransactionType } from 'models/safe'
 import { V2V3ContractName } from 'models/v2v3/contracts'
@@ -48,19 +49,19 @@ export function getTransactionVersion(
   transaction: SafeTransactionType,
 ): CV2V3 | undefined {
   const V2JBController = useLoadV2V3Contract({
-    cv: '2',
+    cv: CV_V2,
     contractName: V2V3ContractName.JBController,
   })
   const V3JBController = useLoadV2V3Contract({
-    cv: '3',
+    cv: CV_V3,
     contractName: V2V3ContractName.JBController,
   })
 
   if (transaction.to === V2JBController?.address) {
-    return '2'
+    return CV_V2
   }
 
   if (transaction.to === V3JBController?.address) {
-    return '3'
+    return CV_V3
   }
 }

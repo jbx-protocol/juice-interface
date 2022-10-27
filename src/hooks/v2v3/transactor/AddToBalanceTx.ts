@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
+import { PV_V2 } from 'constants/pv'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactionContext } from 'contexts/transactionContext'
@@ -56,7 +57,7 @@ export function useAddToBalanceTx(): TransactorInstance<{
       return handleTransactionException({
         txOpts,
         missingParam,
-        pv: '2',
+        pv: PV_V2,
         functionName: 'addToBalanceOf',
       })
     }

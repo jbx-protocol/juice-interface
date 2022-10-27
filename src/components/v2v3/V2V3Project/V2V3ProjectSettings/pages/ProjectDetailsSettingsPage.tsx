@@ -3,6 +3,7 @@ import ProjectDetailsForm, {
   ProjectDetailsFormFields,
 } from 'components/forms/ProjectDetailsForm'
 import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
+import { PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useEditProjectDetailsTx } from 'hooks/v2v3/transactor/EditProjectDetailsTx'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
@@ -46,7 +47,7 @@ export function ProjectDetailsSettingsPage() {
         onConfirmed: async () => {
           if (projectId) {
             await revalidateProject({
-              pv: '2',
+              pv: PV_V2,
               projectId: String(projectId),
             })
           }

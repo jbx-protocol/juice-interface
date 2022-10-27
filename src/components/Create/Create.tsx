@@ -1,6 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { DeployButtonText } from 'components/DeployProjectButtonText'
 import ExternalLink from 'components/ExternalLink'
+import { CV_V2, CV_V3 } from 'constants/cv'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ThemeContext } from 'contexts/themeContext'
 import { useRouter } from 'next/router'
@@ -39,7 +40,7 @@ export function Create() {
 
   return (
     <V2V3ContractsProvider
-      initialCv={featureFlagEnabled(FEATURE_FLAGS.V3) ? '3' : '2'}
+      initialCv={featureFlagEnabled(FEATURE_FLAGS.V3) ? CV_V3 : CV_V2}
     >
       <TransactionProvider>
         <V2V3CurrencyProvider>

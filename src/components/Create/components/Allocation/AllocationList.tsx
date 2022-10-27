@@ -49,7 +49,7 @@ export const AllocationList = ({
         style={{
           display: 'flex',
           flexDirection: 'column',
-          gap: '2rem',
+          gap: '1rem',
           width: '100%',
         }}
       >
@@ -58,6 +58,7 @@ export const AllocationList = ({
           <CreateButton
             size="large"
             style={{
+              marginTop: '1rem',
               width: '100%',
               textAlign: 'left',
             }}

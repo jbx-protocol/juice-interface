@@ -17,8 +17,10 @@ export default function V2V3ProjectMetadataProvider({
   const { cv } = useContext(V2V3ContractsContext)
 
   const hasMetadata = Boolean(metadata)
+
+  // only load metadata if it hasn't been previously loaded into the prop.
   const { data: metadataCid } = useProjectMetadataContent(
-    hasMetadata ? projectId : undefined,
+    !hasMetadata ? projectId : undefined,
   )
   const { data: _metadata } = useProjectMetadata(metadataCid)
 

@@ -10,8 +10,12 @@ import {
   BaseProjectEntityJson,
   parseBaseProjectEntityJson,
 } from '../base/base-project-entity'
+import { TerminalEventEntity } from '../base/terminal-event'
 
-export interface AddToBalanceEvent extends BaseProjectEntity, BaseEventEntity {
+export interface AddToBalanceEvent
+  extends BaseProjectEntity,
+    BaseEventEntity,
+    TerminalEventEntity {
   fundingCycleId: BigNumber
   caller: string
   amount: BigNumber

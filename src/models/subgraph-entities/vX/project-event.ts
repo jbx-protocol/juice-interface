@@ -10,6 +10,7 @@ import {
 } from 'models/subgraph-entities/v1/tap-event'
 
 import { PV } from '../../pv'
+import { TerminalEventEntity } from '../base/terminal-event'
 import {
   DistributeToPayoutModEvent,
   DistributeToPayoutModEventJson,
@@ -76,7 +77,7 @@ import {
   RedeemEventJson,
 } from './redeem-event'
 
-export type ProjectEvent = {
+export interface ProjectEvent extends TerminalEventEntity {
   id: string
   timestamp: number
   project: string

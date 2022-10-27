@@ -10,8 +10,12 @@ import {
   BaseProjectEntityJson,
   parseBaseProjectEntityJson,
 } from '../base/base-project-entity'
+import { TerminalEventEntity } from '../base/terminal-event'
 
-export interface RedeemEvent extends BaseProjectEntity, BaseEventEntity {
+export interface RedeemEvent
+  extends BaseProjectEntity,
+    BaseEventEntity,
+    TerminalEventEntity {
   id: string
   holder: string
   beneficiary: string

@@ -10,8 +10,12 @@ import {
   BaseProjectEntityJson,
   parseBaseProjectEntityJson,
 } from '../base/base-project-entity'
+import { TerminalEventEntity } from '../base/terminal-event'
 
-export interface PayEvent extends BaseProjectEntity, BaseEventEntity {
+export interface PayEvent
+  extends BaseProjectEntity,
+    BaseEventEntity,
+    TerminalEventEntity {
   fundingCycleId: BigNumber
   beneficiary: string
   amount: BigNumber

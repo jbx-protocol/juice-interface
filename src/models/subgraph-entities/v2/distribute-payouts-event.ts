@@ -10,6 +10,7 @@ import {
   BaseProjectEntityJson,
   parseBaseProjectEntityJson,
 } from '../base/base-project-entity'
+import { TerminalEventEntity } from '../base/terminal-event'
 import {
   DistributeToPayoutSplitEvent,
   DistributeToPayoutSplitEventJson,
@@ -18,7 +19,8 @@ import {
 
 export interface DistributePayoutsEvent
   extends BaseEventEntity,
-    BaseProjectEntity {
+    BaseProjectEntity,
+    TerminalEventEntity {
   fundingCycleConfiguration: BigNumber
   fundingCycleNumber: number
   beneficiary: string

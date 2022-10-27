@@ -200,7 +200,7 @@ export type OrderDirection = 'asc' | 'desc'
 
 export type WhereConfig<E extends EntityKey> = {
   key: EntityKeys<E>
-  value: string | number | boolean | string[] | number[] | null
+  value: string | number | boolean | null | (string | number | boolean | null)[]
   operator?:
     | 'not'
     | 'gt'

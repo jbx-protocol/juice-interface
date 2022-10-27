@@ -1,6 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Space } from 'antd'
 import ExternalLink from 'components/ExternalLink'
+import Loading from 'components/Loading'
 import { Tab } from 'components/Tab'
 import { layouts } from 'constants/styles/layouts'
 import { ThemeContext } from 'contexts/themeContext'
@@ -17,11 +18,10 @@ import { ExecutedSafeTransactionsListing } from './ExecutedSafeTransactionsListi
 import { SafeNonceRow } from './SafeNonceRow'
 
 export type SafeTxCategory = 'queued' | 'history'
+
 const SAFE_TX_QUEUED_KEY: SafeTxCategory = 'queued'
 const SAFE_TX_HISTORY_KEY: SafeTxCategory = 'history'
-
 const DEFAULT_TAB: SafeTxCategory = SAFE_TX_QUEUED_KEY
-
 const TAB_NAMES: { [k in SafeTxCategory]: string } = {
   queued: t`Queued`,
   history: t`History`,
@@ -32,20 +32,37 @@ export function ProjectSafeDashboard({
   projectOwnerAddress,
 }: {
   projectPageUrl: string
-  projectOwnerAddress: string
+  projectOwnerAddress?: string
 }) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
   const router = useRouter()
-  const { data: queuedSafeTransactions, isLoading } = useQueuedSafeTransactions(
-    {
+  const { data: queuedSafeTransactions, isLoading: isTransactionsLoading } =
+    useQueuedSafeTransactions({
       safeAddress: projectOwnerAddress,
-    },
-  )
+    })
   const { data: gnosisSafe, isLoading: gnosisSafeLoading } =
     useGnosisSafe(projectOwnerAddress)
+
+  const isLoading =
+    isTransactionsLoading || gnosisSafeLoading || !projectOwnerAddress
+
+  if (isLoading) return <Loading />
+
+  const containerStyle: CSSProperties = {
+    ...layouts.maxWidth,
+    margin: '2rem auto',
+  }
+
+  if (!gnosisSafeLoading && !gnosisSafe) {
+    return (
+      <div style={containerStyle}>
+        <Trans>Project is not owned by a Safe.</Trans>
+      </div>
+    )
+  }
 
   const url = new URL(router.asPath, process.env.NEXT_PUBLIC_BASE_URL)
   const preSelectedTx = url.hash.slice(1) as string
@@ -56,21 +73,6 @@ export function ProjectSafeDashboard({
   }
 
   const selectedTab = (router.query.tab as SafeTxCategory) ?? DEFAULT_TAB
-
-  const containerStyle: CSSProperties = {
-    ...layouts.maxWidth,
-    margin: '2rem auto',
-  }
-
-  if (!projectOwnerAddress) return null
-
-  if (!gnosisSafeLoading && !gnosisSafe) {
-    return (
-      <div style={containerStyle}>
-        <Trans>Project is not owned by a Safe.</Trans>
-      </div>
-    )
-  }
 
   // Returns unique nonces from tx list. Used to group tx's by nonce
   const uniqueNonces = getUniqueNonces(queuedSafeTransactions)
@@ -85,24 +87,20 @@ export function ProjectSafeDashboard({
         <Trans>Safe transactions</Trans>
       </h1>
 
-      {!isLoading ? (
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <ExternalLink href={safeUrl} style={{ textDecoration: 'underline' }}>
-            <Trans>Go to your Safe</Trans>
-          </ExternalLink>
-          <BackToProjectButton projectPageUrl={projectPageUrl} />
-        </div>
-      ) : null}
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <ExternalLink href={safeUrl} style={{ textDecoration: 'underline' }}>
+          <Trans>Go to your Safe</Trans>
+        </ExternalLink>
+        <BackToProjectButton projectPageUrl={projectPageUrl} />
+      </div>
 
-      {isLoading && <div style={{ marginTop: 20 }}>Loading...</div>}
-
-      {!isLoading && !uniqueNonces.length ? (
+      {!uniqueNonces.length ? (
         <div>
           <Trans>This Safe has no queued transactions.</Trans>
         </div>
       ) : null}
 
-      {!isLoading && gnosisSafe && (
+      {gnosisSafe && (
         <div style={{ marginTop: '1.5rem' }}>
           <Space size="large">
             <Link href={`${projectSafeRoute}?tab=queued`}>

@@ -7,6 +7,8 @@ import { TransactorInstance } from 'hooks/Transactor'
 import { useV1IssueErc20TokenTx } from 'hooks/v1/transactor/IssueErc20TokenTx'
 import { useV2IssueErc20TokenTx } from 'hooks/v2/transactor/V2IssueErc20TokenTx'
 import { useV3IssueErc20TokenTx } from 'hooks/v3/transactor/V3IssueErc20TokenTx'
+import { V1TerminalVersion } from 'models/v1/terminals'
+import { CV2V3 } from 'models/v2v3/cv'
 import { useContext, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 
@@ -33,18 +35,15 @@ const useIssueErc20TokenTx = ():
   } else {
     return v1Tx
   }
-
-  // TODO pv cannot be '3' ?
-  // if (cv === CV_V3) {
-  //   return useV3IssueErc20TokenTx()
-  // }
 }
 
 export function IssueErc20TokenModal({
+  cv,
   open,
   onClose,
   onConfirmed,
 }: {
+  cv: CV2V3 | V1TerminalVersion
   open: boolean
   onClose: VoidFunction
   onConfirmed?: VoidFunction

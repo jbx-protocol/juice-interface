@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { V2V3Project } from 'components/v2v3/V2V3Project/V2V3Project'
+import { PV_V2 } from 'constants/pv'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import {
@@ -92,7 +93,7 @@ export function ProjectPreview() {
         projectMetadata,
         isArchived: false,
         projectId: 0,
-        pv: '2',
+        pv: PV_V2,
       }}
     >
       <V2V3ProjectContext.Provider value={project}>

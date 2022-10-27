@@ -1,6 +1,8 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
+import { V1TerminalVersion } from 'models/v1/terminals'
+import { CV2V3 } from 'models/v2v3/cv'
 
 import { useRouter } from 'next/router'
 import { useState } from 'react'
@@ -13,8 +15,10 @@ export type IssueErc20TokenTxArgs = {
 }
 
 export function IssueErc20TokenButton({
+  cv,
   onCompleted,
 }: {
+  cv: CV2V3 | V1TerminalVersion
   onCompleted?: VoidFunction
 }) {
   const [modalVisible, setModalVisible] = useState<boolean>(false)
@@ -50,6 +54,7 @@ export function IssueErc20TokenButton({
         </Button>
       </Tooltip>
       <IssueErc20TokenModal
+        cv={cv}
         open={modalVisible}
         onClose={onClose}
         onConfirmed={onCompleted}

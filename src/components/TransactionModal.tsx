@@ -7,8 +7,7 @@ import { useWallet } from 'hooks/Wallet'
 import { TxStatus } from 'models/transaction'
 import Image from 'next/image'
 import { PropsWithChildren, useContext, useMemo } from 'react'
-import { etherscanLink } from 'utils/etherscan'
-import ExternalLink from './ExternalLink'
+import EtherscanLink from './EtherscanLink'
 import quint from '/public/assets/quint.gif'
 
 type TransactionModalProps = PropsWithChildren<
@@ -54,17 +53,13 @@ const PendingTransactionModalBody = () => {
         </p>
         <p>
           {pendingTx ? (
-            <ExternalLink
-              href={
-                pendingTx.tx?.hash
-                  ? etherscanLink('tx', pendingTx.tx.hash)
-                  : undefined
-              }
+            <EtherscanLink
+              value={pendingTx.tx?.hash}
               style={{ fontSize: '0.85rem' }}
-              className="text-primary hover-text-decoration-underline"
+              type="tx"
             >
               <Trans>View in Etherscan</Trans>
-            </ExternalLink>
+            </EtherscanLink>
           ) : null}
         </p>
       </div>

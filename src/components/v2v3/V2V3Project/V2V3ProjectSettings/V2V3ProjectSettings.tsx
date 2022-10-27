@@ -5,6 +5,7 @@ import { V2V3ProjectHeaderActions } from 'components/v2v3/V2V3Project/V2V3Projec
 import { ProjectSettingsContent } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/ProjectSettingsContent'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { layouts } from 'constants/styles/layouts'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
@@ -13,8 +14,8 @@ import { V2V3SettingsPageKey } from 'models/menu-keys'
 import { useRouter } from 'next/router'
 import { useContext, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
-import { pushMenuContent } from 'utils/routes'
-import { BackToProjectButton } from '../BackToProjectButton'
+import { pushMenuContent, v2v3ProjectRoute } from 'utils/routes'
+import { BackToProjectButton } from '../../../BackToProjectButton'
 
 type MenuItem = Required<MenuProps>['items'][number]
 
@@ -140,6 +141,7 @@ const items: MenuItem[] = [
 export function V2V3ProjectSettings() {
   const { isPreviewMode, projectOwnerAddress, handle } =
     useContext(V2V3ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
   const { isDarkMode } = useContext(ThemeContext)
 
   const [collapsed, setCollapsed] = useState<boolean>(false)
@@ -190,7 +192,9 @@ export function V2V3ProjectSettings() {
             onCollapse={setCollapsed}
           >
             <Space direction="vertical" size="middle" style={{ width: '100%' }}>
-              <BackToProjectButton />
+              <BackToProjectButton
+                projectPageUrl={v2v3ProjectRoute({ projectId, handle })}
+              />
               <Menu
                 defaultOpenKeys={['project', 'funding', 'manage']}
                 defaultSelectedKeys={[activeSettingsPage]}

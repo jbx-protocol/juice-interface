@@ -1,7 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, Row, Space } from 'antd'
 import { AppWrapper } from 'components/common'
-import { FeedbackFormButton } from 'components/FeedbackFormButton'
 import { ThemeOption } from 'constants/theme/theme-option'
 import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
@@ -182,13 +181,10 @@ function Landing() {
                   maxWidth: '50vw',
                   objectFit: 'contain',
                 }}
-                src={
-                  forThemeOption &&
-                  forThemeOption({
-                    [ThemeOption.dark]: bananaOd,
-                    [ThemeOption.light]: bananaOl,
-                  })
-                }
+                src={forThemeOption?.({
+                  [ThemeOption.dark]: bananaOd,
+                  [ThemeOption.light]: bananaOl,
+                })}
                 alt="Chill banana drinking juice"
               />
             </Col>
@@ -291,13 +287,10 @@ function Landing() {
             objectPosition: 'center',
             marginBottom: -10,
           }}
-          src={
-            forThemeOption &&
-            forThemeOption({
-              [ThemeOption.dark]: orangeLadyOd,
-              [ThemeOption.light]: orangeLadyOl,
-            })
-          }
+          src={forThemeOption?.({
+            [ThemeOption.dark]: orangeLadyOd,
+            [ThemeOption.light]: orangeLadyOl,
+          })}
           alt="Powerlifting orange hitting an olympic deadlift"
           loading="lazy"
         />
@@ -318,7 +311,6 @@ function Landing() {
           </Trans>
         </p>
       </div>
-      <FeedbackFormButton />
       <Footer />
     </div>
   )

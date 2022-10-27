@@ -22,7 +22,7 @@ export default function V2V3ProjectMetadataProvider({
   )
   const { data: _metadata } = useProjectMetadata(metadataCid)
 
-  const projectMetadata = metadata || _metadata
+  const projectMetadata = metadata ?? _metadata
 
   const isArchived = projectId
     ? V2ArchivedProjectIds.includes(projectId) || projectMetadata?.archived

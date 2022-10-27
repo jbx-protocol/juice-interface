@@ -14,8 +14,6 @@ import { useBallotState } from 'hooks/v2v3/contractReader/BallotState'
 import { usePaymentTerminalBalance } from 'hooks/v2v3/contractReader/PaymentTerminalBalance'
 import useProjectCurrentFundingCycle from 'hooks/v2v3/contractReader/ProjectCurrentFundingCycle'
 import useProjectDistributionLimit from 'hooks/v2v3/contractReader/ProjectDistributionLimit'
-import useProjectHandle from 'hooks/v2v3/contractReader/ProjectHandle'
-import useProjectOwner from 'hooks/v2v3/contractReader/ProjectOwner'
 import useProjectSplits from 'hooks/v2v3/contractReader/ProjectSplits'
 import useProjectTerminals from 'hooks/v2v3/contractReader/ProjectTerminals'
 import useProjectToken from 'hooks/v2v3/contractReader/ProjectToken'
@@ -73,23 +71,18 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
   } = useContext(V2V3ProjectContractsContext)
 
   /**
-   * Load additional project metadata
-   */
-  const { data: handle } = useProjectHandle({
-    projectId,
-  })
-  const { data: projectOwnerAddress } = useProjectOwner(projectId)
-
-  /**
-   * Load project stats
+   * Load some project data from the subgraph
    */
   const { data: projects } = useProjectsQuery({
     projectId,
-    keys: ['createdAt', 'totalPaid'],
+    keys: ['createdAt', 'totalPaid', 'owner', 'handle'],
     cv: cv ? [cv] : undefined,
   })
-  const createdAt = first(projects)?.createdAt
-  const totalVolume = first(projects)?.totalPaid
+  const graphProject = first(projects)
+  const createdAt = graphProject?.createdAt
+  const totalVolume = graphProject?.totalPaid
+  const projectOwnerAddress = graphProject?.owner
+  const handle = graphProject?.handle ?? undefined
 
   /**
    * Load funding cycle data

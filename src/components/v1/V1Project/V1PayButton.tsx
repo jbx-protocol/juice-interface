@@ -26,7 +26,7 @@ export function V1PayButton({ wrapperStyle, disabled }: PayButtonProps) {
   )
 
   const { form: payProjectForm } = useContext(PayProjectFormContext)
-  const { payInCurrency, payAmount, setError } = payProjectForm ?? {}
+  const { payInCurrency, payAmount, setErrorMessage } = payProjectForm ?? {}
 
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
   const [payWarningModalVisible, setPayWarningModalVisible] =
@@ -82,7 +82,7 @@ export function V1PayButton({ wrapperStyle, disabled }: PayButtonProps) {
 
   const onPayButtonClick = () => {
     if (parseFloat(fromWad(weiPayAmt)) === 0) {
-      return setError?.(true)
+      setErrorMessage?.(t`Payment amount can't be 0`)
     }
 
     setPayWarningModalVisible(true)

@@ -1,12 +1,12 @@
+import { LoadingOutlined, UploadOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Form, FormInstance, Image, Upload } from 'antd'
 import { RcFile } from 'antd/lib/upload'
 import TooltipLabel from 'components/TooltipLabel'
-import { CSSProperties, useContext, useState } from 'react'
-
-import { LoadingOutlined, UploadOutlined } from '@ant-design/icons'
 import { ThemeContext } from 'contexts/themeContext'
-import { ipfsCidUrl, pinFileToIpfs } from 'utils/ipfs'
+import { pinFileToIpfs } from 'lib/api/ipfs'
+import { CSSProperties, useContext, useState } from 'react'
+import { restrictedIpfsUrl } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
 
 const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif']
@@ -22,7 +22,7 @@ export default function NftUpload({ form }: { form: FormInstance }) {
   const [imageRenderLoading, setImageRenderLoading] = useState<boolean>()
 
   const setValue = (cid?: string) => {
-    const newUrl = cid ? ipfsCidUrl(cid) : undefined
+    const newUrl = cid ? restrictedIpfsUrl(cid) : undefined
     form.setFieldsValue({ imageUrl: newUrl })
     setImageRenderLoading(true)
     setUploading(false)

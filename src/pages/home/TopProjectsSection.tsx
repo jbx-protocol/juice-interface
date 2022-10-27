@@ -265,7 +265,7 @@ export function TopProjectsSection() {
               <div
                 role="button"
                 style={{
-                  fontSize: '0.9rem',
+                  fontSize: '0.875rem',
                   color: colors.text.secondary,
                   cursor: 'pointer',
                 }}

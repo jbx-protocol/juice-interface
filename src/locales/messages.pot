@@ -629,9 +629,6 @@ msgstr ""
 msgid "Changes to payouts will take effect immediately."
 msgstr ""
 
-msgid "Changes to your funding cycle must be submitted AT LEAST {days} days before the next funding cycle starts."
-msgstr ""
-
 msgid "Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
 msgstr ""
 
@@ -3422,9 +3419,6 @@ msgstr ""
 msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
 msgstr ""
 
-msgid "You can submit changes to your funding at any time."
-msgstr ""
-
 msgid "You can unarchive your project at any time."
 msgstr ""
 
@@ -3492,9 +3486,6 @@ msgid "You'll be able to issue ERC-20 tokens once your project contract has been
 msgstr ""
 
 msgid "You're all set!"
-msgstr ""
-
-msgid "You're using a custom reconfiguration strategy. Make sure you understand the behavior of this custom contract."
 msgstr ""
 
 msgid "You've completed this step."

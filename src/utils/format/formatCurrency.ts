@@ -10,10 +10,6 @@ export class CurrencyUtils {
 
   constructor(usdPerEth: number | undefined) {
     if (!usdPerEth) {
-      console.info(
-        'Failed to construct CurrencyUtils, received a usdPerEth value of',
-        usdPerEth,
-      )
       return
     }
 

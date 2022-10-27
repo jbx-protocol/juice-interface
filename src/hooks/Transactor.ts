@@ -11,11 +11,11 @@ import { t } from '@lingui/macro'
 import * as Sentry from '@sentry/browser'
 import { readNetwork } from 'constants/networks'
 import { TxHistoryContext } from 'contexts/txHistoryContext'
-import { getArcxClient } from 'lib/arcx'
 import { CV } from 'models/cv'
 import { TransactionOptions } from 'models/transaction'
 import { useCallback, useContext } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
+import { useArcx } from './Arcx'
 import { useWallet } from './Wallet'
 
 type TxOpts = Omit<TransactionOptions, 'value'>
@@ -62,6 +62,7 @@ export function useTransactor({
   const { chain, signer } = useWallet()
   const { chainUnsupported, isConnected, changeNetworks, connect } = useWallet()
   const { addTransaction } = useContext(TxHistoryContext)
+  const arcx = useArcx()
 
   return useCallback(
     async (
@@ -136,11 +137,9 @@ export function useTransactor({
 
           await txResponse.wait()
 
-          getArcxClient().then(arcx => {
-            arcx?.transaction({
-              chain: readNetwork.chainId, // required(string) - chain ID that the transaction is taking place on
-              transactionHash: txResponse.hash as string,
-            })
+          arcx?.transaction({
+            chain: readNetwork.chainId, // required(string) - chain ID that the transaction is taking place on
+            transactionHash: txResponse.hash as string,
           })
         }
 
@@ -178,6 +177,7 @@ export function useTransactor({
       }
     },
     [
+      arcx,
       chainUnsupported,
       isConnected,
       signer,

@@ -1,6 +1,6 @@
 import { ArcxAnalyticsSdk } from '@arcxmoney/analytics'
 
-const ARCX_API_KEY = ''
+const ARCX_API_KEY = process.env.NEXT_PUBLIC_ARCX_API_KEY
 
 let client: ArcxAnalyticsSdk
 

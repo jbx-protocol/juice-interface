@@ -9,12 +9,13 @@ import V2V3ProjectProvider from './V2V3ProjectProvider'
  */
 export const V2V3ProjectPageProvider: React.FC<ProjectPageProps> = ({
   projectId,
+  metadata,
   children,
 }) => {
   return (
     <V2V3ContractsProvider>
       <V2V3ProjectContractsProvider projectId={projectId}>
-        <V2V3ProjectMetadataProvider projectId={projectId}>
+        <V2V3ProjectMetadataProvider projectId={projectId} metadata={metadata}>
           <V2V3ProjectProvider projectId={projectId}>
             {children}
           </V2V3ProjectProvider>

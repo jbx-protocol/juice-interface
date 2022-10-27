@@ -67,7 +67,7 @@ export default function V2ProjectPage({
       ) : null}
       <AppWrapper>
         {metadata ? (
-          <V2V3ProjectPageProvider projectId={projectId}>
+          <V2V3ProjectPageProvider projectId={projectId} metadata={metadata}>
             <V2V3Dashboard />
           </V2V3ProjectPageProvider>
         ) : (

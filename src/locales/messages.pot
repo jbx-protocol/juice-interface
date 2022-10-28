@@ -1367,9 +1367,6 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-msgid "Give feedback"
-msgstr ""
-
 msgid "Give this NFT a name."
 msgstr ""
 

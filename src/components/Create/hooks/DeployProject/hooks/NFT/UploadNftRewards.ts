@@ -17,6 +17,7 @@ export const useUploadNftRewards = () => {
   } = useAppSelector(state => state.editingV2Project)
 
   return useCallback(async () => {
+    if (!nftRewards?.rewardTiers || !nftRewards?.collectionMetadata) return
     const [rewardTiersCids, nftCollectionMetadataCid] = await Promise.all([
       uploadNftRewardsToIPFS(nftRewards.rewardTiers),
       uploadNftCollectionMetadataToIPFS({

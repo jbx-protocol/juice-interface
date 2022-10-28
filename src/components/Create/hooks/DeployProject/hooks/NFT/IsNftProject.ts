@@ -9,7 +9,7 @@ export const useIsNftProject = () => {
   const { nftRewards } = useAppSelector(state => state.editingV2Project)
 
   return useMemo(
-    () => nftRewards.rewardTiers.length > 0,
+    () => Boolean(nftRewards?.rewardTiers && nftRewards.rewardTiers.length > 0),
     [nftRewards.rewardTiers],
   )
 }

@@ -1,4 +1,4 @@
-import { ContractNftRewardTier } from 'models/nftRewardTier'
+import { JB721TierParams } from 'models/nftRewardTier'
 
 import * as constants from '@ethersproject/constants'
 import { V2V3ContractName } from 'models/v2v3/contracts'
@@ -9,7 +9,7 @@ import useV2ContractReader from './V2ContractReader'
 export function useNftRewardTiersOf(dataSourceAddress: string | undefined) {
   const hasDataSource =
     dataSourceAddress && dataSourceAddress !== constants.AddressZero
-  return useV2ContractReader<ContractNftRewardTier[]>({
+  return useV2ContractReader<JB721TierParams[]>({
     contract: V2V3ContractName.JBTiered721DelegateStore,
     functionName: 'tiers',
     // send null when project has no dataSource, so the fetch doesn't execute.

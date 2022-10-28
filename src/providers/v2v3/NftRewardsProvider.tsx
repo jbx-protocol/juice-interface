@@ -2,11 +2,10 @@ import * as constants from '@ethersproject/constants'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
-import useNftCollectionMetadata from 'hooks/NftCollectionMetadata'
 import useNftRewards from 'hooks/NftRewards'
-import { useNftRewardContractUri } from 'hooks/v2v3/contractReader/NftRewardContractUri'
 import { useNftRewardTiersOf } from 'hooks/v2v3/contractReader/NftRewardTiersOf'
 import { useContext } from 'react'
+import { EMPTY_NFT_COLLECTION_METADATA } from 'redux/slices/editingV2Project'
 import { CIDsOfNftRewardTiersResponse } from 'utils/nftRewards'
 
 export const NftRewardsProvider: React.FC = ({ children }) => {
@@ -26,11 +25,6 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
   const { data: rewardTiers, isLoading: nftRewardTiersLoading } = useNftRewards(
     nftRewardTiersResponse ?? [],
   )
-  const { data: collectionMetadataCID } = useNftRewardContractUri(dataSource)
-
-  const { data: collectionMetadata } = useNftCollectionMetadata(
-    collectionMetadataCID,
-  )
 
   // Assumes having `dataSource` means there are NFTs initially
   // In worst case, if has `dataSource` but isn't for NFTs:
@@ -49,7 +43,7 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
           loading,
           rewardTiers,
           CIDs,
-          collectionMetadata,
+          collectionMetadata: EMPTY_NFT_COLLECTION_METADATA,
           postPayModal: projectMetadata?.nftPaymentSuccessModal,
         },
       }}

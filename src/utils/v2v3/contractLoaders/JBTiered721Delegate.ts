@@ -1,19 +1,15 @@
 import { Contract } from '@ethersproject/contracts'
-import { readProvider } from 'constants/readProvider'
-import { useWallet } from 'hooks/Wallet'
+import { SignerOrProvider } from 'models/signerOrProvider'
 
 export const loadJBTiered721DelegateContract = async (
   address: string,
+  signerOrProvider: SignerOrProvider,
 ): Promise<Contract> => {
-  const { signer } = useWallet()
-
-  const signerOrProvider = signer ?? readProvider
-
   const nftDelegateContractJson = {
     address: address,
     abi: (
       await import(
-        `@jbx-protocol/juice-nft-rewards/out/IJBTiered721Delegate.sol/IJBTiered721Delegate.json`
+        `@jbx-protocol/juice-721-delegate/out/IJBTiered721Delegate.sol/IJBTiered721Delegate.json`
       )
     ).abi,
   }

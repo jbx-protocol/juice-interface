@@ -28,15 +28,16 @@ export const useNftRewardsForm = () => {
     const collectionSymbol = collectionMetadata.symbol
     const collectionDescription = collectionMetadata.description
 
-    const rewards: Reward[] = rewardTiers?.map(t => ({
-      id: v4(),
-      title: t.name,
-      minimumContribution: t.contributionFloor,
-      description: t.description,
-      maximumSupply: t.maxSupply,
-      url: t.externalLink,
-      imgUrl: t.imageUrl,
-    }))
+    const rewards: Reward[] =
+      rewardTiers?.map(t => ({
+        id: v4(),
+        title: t.name,
+        minimumContribution: t.contributionFloor,
+        description: t.description,
+        maximumSupply: t.maxSupply,
+        url: t.externalLink,
+        imgUrl: t.imageUrl,
+      })) ?? []
 
     return { rewards, collectionName, collectionSymbol, collectionDescription }
   }, [

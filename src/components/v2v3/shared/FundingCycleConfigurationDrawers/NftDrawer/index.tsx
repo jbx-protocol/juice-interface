@@ -8,10 +8,10 @@ import { useAppSelector } from 'hooks/AppSelector'
 
 import { useForm } from 'antd/lib/form/Form'
 import { NftRewardTier } from 'models/nftRewardTier'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import {
-  buildNftTxArg,
+  buildJB721TierParams,
   defaultNftCollectionDescription,
   defaultNftCollectionName,
   MAX_NFT_REWARD_TIERS,
@@ -26,9 +26,14 @@ import { shadowCard } from 'constants/styles/shadowCard'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
 import TooltipIcon from 'components/TooltipIcon'
+import { readProvider } from 'constants/readProvider'
+import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useNftRewardsAdjustTiersTx } from 'hooks/v2v3/transactor/NftRewardsAdjustTiersTx'
+import { useWallet } from 'hooks/Wallet'
 import { withHttps } from 'utils/externalLink'
+import { loadJBTiered721DelegateContract } from 'utils/v2v3/contractLoaders/JBTiered721Delegate'
+import { reloadWindow } from 'utils/windowUtils'
 import FundingCycleDrawer from '../FundingCycleDrawer'
 import { useFundingCycleDrawer } from '../useFundingCycleDrawer'
 import { AddRewardTierButton } from './AddRewardTierButton'
@@ -48,22 +53,28 @@ export const NFT_REWARDS_EXPLAINATION: JSX.Element = (
 export default function NftDrawer({
   open,
   onClose,
-  isCreate,
 }: {
   open: boolean
   onClose: VoidFunction
-  isCreate?: boolean
 }) {
   const {
     theme,
     theme: { colors },
   } = useContext(ThemeContext)
 
+  const {
+    nftRewards: { rewardTiers: initialRewardTiers },
+  } = useContext(NftRewardsContext)
+
   const dispatch = useAppDispatch()
   const {
     nftRewards,
     projectMetadata: { name: projectName, logoUri, infoUri },
   } = useAppSelector(state => state.editingV2Project)
+
+  const reduxRewardTiers = useMemo(() => nftRewards.rewardTiers, [nftRewards])
+
+  const { signer } = useWallet()
 
   const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
 
@@ -74,14 +85,26 @@ export default function NftDrawer({
   const [submitLoading, setSubmitLoading] = useState<boolean>(false)
 
   const [rewardTiers, setRewardTiers] = useState<NftRewardTier[]>(
-    nftRewards?.rewardTiers ?? [],
+    reduxRewardTiers ?? [],
   )
+
+  useEffect(() => {
+    if (!rewardTiers.length) {
+      setRewardTiers(reduxRewardTiers ?? [])
+    }
+  }, [reduxRewardTiers, rewardTiers])
+
   // a list of the `tierRanks` (IDs) of tiers that have been edited
-  const [editedRewardTiers, setEditedRewardTiers] = useState<number[]>([])
+  const [editedRewardTierIds, setEditedRewardTierIds] = useState<number[]>([])
+
+  const editingRewardTierIDsPush = (tierId: number | undefined) => {
+    // only need to send tiers that have changed to adjustTiers
+    // when id == undefined, tier is new
+    if (!tierId || editedRewardTierIds.includes(tierId)) return
+    setEditedRewardTierIds([...editedRewardTierIds, tierId])
+  }
 
   const nftRewardsAdjustTiersTx = useNftRewardsAdjustTiersTx()
-
-  useEffect(() => setRewardTiers(nftRewards?.rewardTiers ?? []), [nftRewards])
 
   const {
     handleDrawerCloseClick,
@@ -92,9 +115,10 @@ export default function NftDrawer({
   } = useFundingCycleDrawer(onClose)
 
   const onNftFormSaved = useCallback(async () => {
+    if (!rewardTiers) return
     setSubmitLoading(true)
-    // no metadata is changed in reconfig
-    if (isCreate) {
+    // call `JBTiered721DelegateProjectDeployer.reconfigureFundingCyclesOf` when a project without NFT configures a new NFT collection
+    if (!initialRewardTiers?.length) {
       const marketplaceFormValues = marketplaceForm.getFieldsValue(true)
       const collectionName = marketplaceFormValues.collectionName
 
@@ -145,21 +169,40 @@ export default function NftDrawer({
       )
       // Store cid (link to nfts on IPFS) to be used later in the deploy tx
       dispatch(editingV2ProjectActions.setNftRewardsCIDs(rewardTiersCIDs))
-    } else {
-      const rewardTiersCIDs = await uploadNftRewardsToIPFS(rewardTiers)
-      // adjustTiers hook
-      const txSuccessful = await nftRewardsAdjustTiersTx(
-        {
-          dataSourceAddress: fundingCycleMetadata?.dataSource,
-          nftRewards: buildNftTxArg({ cids: rewardTiersCIDs, rewardTiers }),
-          tierIdsChanged: editedRewardTiers,
-        },
-        // txOpts,
-      )
+    }
+    // Call `dataSource.adjustTiers` for projects that are reconfiguring NFTs they have already launched.
+    else if (fundingCycleMetadata && fundingCycleMetadata.dataSource) {
+      dispatch(editingV2ProjectActions.setNftRewardTiers(rewardTiers))
+      const newRewardTiers = rewardTiers.filter(
+        rewardTier =>
+          rewardTier.id === undefined ||
+          editedRewardTierIds.includes(rewardTier.id),
+      ) // rewardTiers with id==undefined are new
 
-      if (!txSuccessful) {
-        throw new Error('Transaction failed.')
-      }
+      // upload new rewardTiers and get their CIDs
+      const rewardTiersCIDs = await uploadNftRewardsToIPFS(newRewardTiers)
+      const dataSourceContract = await loadJBTiered721DelegateContract(
+        fundingCycleMetadata.dataSource,
+        signer ?? readProvider,
+      )
+      const newTiers = buildJB721TierParams({
+        cids: rewardTiersCIDs,
+        rewardTiers: newRewardTiers,
+      })
+      await nftRewardsAdjustTiersTx(
+        {
+          dataSourceContract,
+          newTiers,
+          tierIdsChanged: editedRewardTierIds,
+        },
+        {
+          onConfirmed: () => {
+            // reloading because if you go to edit again before new tiers have
+            // loaded from contracts it could cause problems (no tier.id's)
+            reloadWindow()
+          },
+        },
+      )
       dispatch(editingV2ProjectActions.setNftRewardsCIDs(rewardTiersCIDs))
     }
     setSubmitLoading(false)
@@ -170,7 +213,8 @@ export default function NftDrawer({
     rewardTiers,
     fundingCycleMetadata,
     nftRewardsAdjustTiersTx,
-    editedRewardTiers,
+    signer,
+    editedRewardTierIds,
     dispatch,
     onClose,
     marketplaceForm,
@@ -178,11 +222,14 @@ export default function NftDrawer({
     projectName,
     logoUri,
     infoUri,
-    isCreate,
+    initialRewardTiers,
   ])
 
   const handleAddRewardTier = (newRewardTier: NftRewardTier) => {
-    setRewardTiers(sortNftRewardTiers([...rewardTiers, newRewardTier]))
+    const newRewardTiers = rewardTiers
+      ? sortNftRewardTiers([...rewardTiers, newRewardTier])
+      : [newRewardTier]
+    setRewardTiers(newRewardTiers)
     setFormUpdated(true)
   }
 
@@ -193,33 +240,45 @@ export default function NftDrawer({
     index: number
     newRewardTier: NftRewardTier
   }) => {
-    if (!tiersEqual({ tier1: newRewardTier, tier2: rewardTiers[index] })) {
+    if (
+      rewardTiers &&
+      !tiersEqual({ tier1: newRewardTier, tier2: rewardTiers[index] })
+    ) {
       setFormUpdated(true)
-      setEditedRewardTiers([...editedRewardTiers, index + 1])
+      editingRewardTierIDsPush(rewardTiers[index].id)
     }
-    const newRewardTiers = rewardTiers.map((tier, i) =>
-      i === index
-        ? {
-            ...tier,
-            ...newRewardTier,
-          }
-        : tier,
-    )
+    const newRewardTiers = rewardTiers
+      ? rewardTiers.map((tier, i) =>
+          i === index
+            ? {
+                ...tier,
+                ...newRewardTier,
+              }
+            : tier,
+        )
+      : [newRewardTier]
     setRewardTiers(newRewardTiers)
   }
 
   const handleDeleteRewardTier = (tierIndex: number) => {
-    setRewardTiers([
+    if (!rewardTiers) return
+    const newRewardTiers = [
       ...rewardTiers.slice(0, tierIndex),
       ...rewardTiers.slice(tierIndex + 1),
-    ])
+    ]
+    setRewardTiers(newRewardTiers)
+    editingRewardTierIDsPush(rewardTiers[tierIndex].id)
   }
 
   // Determine if a give `contributionFloor` already exists in the current array of `rewardTiers`
-  const validateContributionFloor = (contributionFloor: number) =>
-    rewardTiers.filter(
-      (tier: NftRewardTier) => tier.contributionFloor == contributionFloor,
-    ).length === 0
+  const validateContributionFloor = (contributionFloor: number) => {
+    if (!rewardTiers) return true
+    return (
+      rewardTiers?.filter(
+        (tier: NftRewardTier) => tier.contributionFloor == contributionFloor,
+      ).length === 0
+    )
+  }
 
   return (
     <>
@@ -239,7 +298,7 @@ export default function NftDrawer({
           <p>{NFT_REWARDS_EXPLAINATION}</p>
 
           <Space direction="vertical" size="large" style={{ width: '100%' }}>
-            {rewardTiers.map((rewardTier, index) => (
+            {rewardTiers?.map((rewardTier, index) => (
               <NftRewardTierCard
                 key={index}
                 rewardTier={rewardTier}
@@ -264,11 +323,11 @@ export default function NftDrawer({
             onClick={() => {
               setAddTierModalVisible(true)
             }}
-            disabled={rewardTiers.length >= MAX_NFT_REWARD_TIERS}
+            disabled={rewardTiers && rewardTiers.length >= MAX_NFT_REWARD_TIERS}
             style={{ marginBottom: 30 }}
           />
           {
-            isCreate ? (
+            !initialRewardTiers?.length ? (
               <>
                 <MinimalCollapse
                   header={

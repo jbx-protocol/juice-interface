@@ -1,23 +1,23 @@
 import * as constants from '@ethersproject/constants'
 
+import { Contract } from '@ethersproject/contracts'
 import { t } from '@lingui/macro'
 import { TransactionContext } from 'contexts/transactionContext'
 import { TransactorInstance } from 'hooks/Transactor'
+import { JB721TierParams } from 'models/nftRewardTier'
 import { useContext } from 'react'
-import { buildJB721TierParams } from 'utils/nftRewards'
-import { loadJBTiered721DelegateContract } from 'utils/v2v3/contractLoaders/JBTiered721Delegate'
-import { TxNftArg } from './LaunchProjectWithNftsTx'
 
 export function useNftRewardsAdjustTiersTx(): TransactorInstance<{
-  dataSourceAddress: string | undefined
-  nftRewards: TxNftArg
+  dataSourceContract: Contract
+  newTiers: JB721TierParams[]
   tierIdsChanged: number[]
 }> {
   const { transactor } = useContext(TransactionContext)
 
-  return async ({ dataSourceAddress, nftRewards, tierIdsChanged }, txOpts) => {
+  return async ({ dataSourceContract, newTiers, tierIdsChanged }, txOpts) => {
     const hasDataSource =
-      dataSourceAddress && dataSourceAddress !== constants.AddressZero
+      dataSourceContract.address &&
+      dataSourceContract.address !== constants.AddressZero
     if (!transactor || !hasDataSource) {
       const missingParam = !transactor
         ? 'transactor'
@@ -34,10 +34,7 @@ export function useNftRewardsAdjustTiersTx(): TransactorInstance<{
 
       return Promise.resolve(false)
     }
-    const args = [buildJB721TierParams(nftRewards), tierIdsChanged]
-    const dataSourceContract = await loadJBTiered721DelegateContract(
-      dataSourceAddress,
-    )
+    const args = [newTiers, tierIdsChanged]
     return transactor(dataSourceContract, 'adjustTiers', args, {
       ...txOpts,
       title: t`NFT adjust tiers`,

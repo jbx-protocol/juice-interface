@@ -8,7 +8,7 @@ import { useLaunchProjectWithNftsTx } from 'hooks/v2v3/transactor/LaunchProjectW
 import { TransactionCallbacks } from 'models/transaction'
 import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton'
 import { useCallback, useMemo } from 'react'
-import { buildNftTxArg } from 'utils/nftRewards'
+import { buildJB721TierParams } from 'utils/nftRewards'
 
 /**
  * Hook that returns a function that deploys a project with NFT rewards.
@@ -65,10 +65,14 @@ export const useDeployNftProject = () => {
       'onCancelled' | 'onConfirmed' | 'onDone'
     >) => {
       if (!collectionName) throw new Error('No collection name or project name')
-      if (!rewardTierCids.length) throw new Error('No reward tiers')
+      if (!(rewardTierCids.length && nftRewards.rewardTiers))
+        throw new Error('No reward tiers')
 
       const groupedSplits = [payoutGroupedSplits, reservedTokensGroupedSplits]
-
+      const tiers = buildJB721TierParams({
+        cids: rewardTierCids,
+        rewardTiers: nftRewards.rewardTiers,
+      })
       return await launchProjectWithNftsTx(
         {
           collectionCID: nftCollectionMetadataCid,
@@ -82,10 +86,7 @@ export const useDeployNftProject = () => {
           },
           fundAccessConstraints,
           groupedSplits,
-          nftRewards: buildNftTxArg({
-            cids: rewardTierCids,
-            rewardTiers: nftRewards.rewardTiers,
-          }),
+          tiers,
         },
         {
           onDone,

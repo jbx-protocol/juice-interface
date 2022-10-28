@@ -4,22 +4,19 @@ import { Button } from 'antd'
 import Search from 'antd/lib/input/Search'
 import { AppWrapper } from 'components/common'
 import ExternalLink from 'components/ExternalLink'
-import Grid from 'components/Grid'
-import Loading from 'components/Loading'
-import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
 import { CV_V1, CV_V1_1, CV_V2, CV_V3 } from 'constants/cv'
 import { layouts } from 'constants/styles/layouts'
-import { ThemeContext } from 'contexts/themeContext'
-import { useInfiniteProjectsQuery, useProjectsSearch } from 'hooks/Projects'
 import { useWallet } from 'hooks/Wallet'
 import { CV } from 'models/cv'
 import { ProjectCategory } from 'models/project-visibility'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { helpPagePath } from 'utils/routes'
+import AllProjects from './AllProjects'
 import ArchivedProjectsMessage from './ArchivedProjectsMessage'
 import HoldingsProjects from './HoldingsProjects'
+import LatestProjects from './LatestProjects'
 import MyProjects from './MyProjects'
 import ProjectsFilterAndSort from './ProjectsFilterAndSort'
 import ProjectsTabs from './ProjectsTabs'
@@ -34,8 +31,6 @@ export default function ProjectsPage() {
 }
 
 type OrderByOption = 'createdAt' | 'totalPaid'
-
-const pageSize = 20
 
 const defaultTab: ProjectCategory = 'trending'
 
@@ -58,6 +53,8 @@ function Projects() {
           return 'trending'
         case 'all':
           return 'all'
+        case 'new':
+          return 'new'
         case 'holdings':
           return 'holdings'
         case 'myprojects':
@@ -75,12 +72,6 @@ function Projects() {
   const [includeV2, setIncludeV2] = useState<boolean>(true)
   const [showArchived, setShowArchived] = useState<boolean>(false)
 
-  const loadMoreContainerRef = useRef<HTMLDivElement>(null)
-
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const cv: CV[] | undefined = useMemo(() => {
     const _cv: CV[] = []
     if (includeV1) _cv.push(CV_V1)
@@ -88,48 +79,6 @@ function Projects() {
     if (includeV2) _cv.push(CV_V2, CV_V3)
     return _cv.length ? _cv : [CV_V1, CV_V1_1, CV_V2, CV_V3]
   }, [includeV1, includeV1_1, includeV2])
-
-  const {
-    data: pages,
-    isLoading: isLoadingProjects,
-    isFetchingNextPage,
-    hasNextPage,
-    fetchNextPage,
-  } = useInfiniteProjectsQuery({
-    orderBy,
-    pageSize,
-    orderDirection: 'desc',
-    state: showArchived ? 'archived' : 'active',
-    cv,
-  })
-
-  const { data: searchPages, isLoading: isLoadingSearch } =
-    useProjectsSearch(searchText)
-
-  // When we scroll within 200px of our loadMoreContainerRef, fetch the next page.
-  useEffect(() => {
-    if (loadMoreContainerRef.current && selectedTab !== 'trending') {
-      const observer = new IntersectionObserver(
-        entries => {
-          if (entries.find(e => e.isIntersecting) && hasNextPage) {
-            fetchNextPage()
-          }
-        },
-        {
-          rootMargin: '200px',
-        },
-      )
-      observer.observe(loadMoreContainerRef.current)
-
-      return () => observer.disconnect()
-    }
-  }, [selectedTab, fetchNextPage, hasNextPage])
-
-  const isLoading = isLoadingProjects || isLoadingSearch
-
-  const concatenatedPages = searchText?.length
-    ? searchPages
-    : pages?.pages?.reduce((prev, group) => [...prev, ...group], [])
 
   return (
     <div style={{ ...layouts.maxWidth }}>
@@ -217,56 +166,14 @@ function Projects() {
       </div>
 
       {selectedTab === 'all' ? (
-        <>
-          {concatenatedPages && (
-            <Grid>
-              {concatenatedPages.map(p => (
-                <ProjectCard
-                  key={`${p.id}_${p.cv}`}
-                  project={p as ProjectCardProject}
-                />
-              ))}
-            </Grid>
-          )}
-
-          {(isLoading || isFetchingNextPage) && <Loading />}
-
-          {/* Place a div below the grid that we can connect to an intersection observer */}
-          <div ref={loadMoreContainerRef} />
-
-          {hasNextPage &&
-          !isFetchingNextPage &&
-          (concatenatedPages?.length || 0) > pageSize ? (
-            <div
-              role="button"
-              style={{
-                textAlign: 'center',
-                color: colors.text.secondary,
-                cursor: 'pointer',
-                padding: 20,
-              }}
-              onClick={() => fetchNextPage()}
-            >
-              <Trans>Load more</Trans>
-            </div>
-          ) : (
-            !isLoadingSearch &&
-            !isLoadingProjects && (
-              <div
-                style={{
-                  textAlign: 'center',
-                  color: colors.text.disabled,
-                  padding: 20,
-                  paddingTop: concatenatedPages?.length === 0 ? 0 : 20,
-                }}
-              >
-                {concatenatedPages?.length}{' '}
-                {concatenatedPages?.length === 1 ? t`project` : t`projects`}{' '}
-                {searchText ? t`matching "${searchText}"` : ''}
-              </div>
-            )
-          )}
-        </>
+        <div style={{ paddingBottom: 50 }}>
+          <AllProjects
+            cv={cv}
+            searchText={searchText}
+            orderBy={orderBy}
+            showArchived={showArchived}
+          />
+        </div>
       ) : selectedTab === 'holdings' ? (
         <div style={{ paddingBottom: 50 }}>
           <HoldingsProjects />
@@ -278,6 +185,10 @@ function Projects() {
       ) : selectedTab === 'trending' ? (
         <div style={{ paddingBottom: 50 }}>
           <TrendingProjects count={12} />
+        </div>
+      ) : selectedTab === 'new' ? (
+        <div style={{ paddingBottom: 50 }}>
+          <LatestProjects />
         </div>
       ) : null}
     </div>

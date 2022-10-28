@@ -7,7 +7,8 @@ import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, Form, Input, Row, Tooltip } from 'antd'
 import { FormInstance } from 'antd/lib/form/Form'
-import { useState } from 'react'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { useContext, useState } from 'react'
 import { EditTrackedAssetsForm } from './V2V3ProjectTokenBalancesModal'
 
 export type AssetInputType = 'project' | 'erc20'
@@ -97,8 +98,19 @@ export function TokenRefs({
 }: {
   form: FormInstance<EditTrackedAssetsForm>
 }) {
+  const { projectMetadata } = useContext(ProjectMetadataContext)
+
+  const initialTokens = (
+    projectMetadata?.tokens ?? [{ type: 'erc20', value: '' }]
+  ).map(r => ({ ...r }))
+  const initialValues = {
+    tokenRefs: initialTokens.map(t => ({
+      assetInput: { input: t.value, type: t.type },
+    })),
+  }
+
   return (
-    <Form form={form}>
+    <Form form={form} initialValues={initialValues}>
       <Form.List name="tokenRefs">
         {(fields, { add, remove }) => (
           <>

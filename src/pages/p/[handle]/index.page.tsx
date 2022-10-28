@@ -1,6 +1,5 @@
 import { AppWrapper, SEO } from 'components/common'
 import { DesmosScript } from 'components/common/Head/scripts/DesmosScript'
-import { FeedbackFormButton } from 'components/FeedbackFormButton'
 import Loading from 'components/Loading'
 import Project404 from 'components/Project404'
 import ScrollToTopButton from 'components/ScrollToTopButton'
@@ -88,7 +87,6 @@ function V1Dashboard() {
       <div style={{ textAlign: 'center', padding: 20 }}>
         <ScrollToTopButton />
       </div>
-      <FeedbackFormButton projectHandle={handle} />
     </div>
   )
 }

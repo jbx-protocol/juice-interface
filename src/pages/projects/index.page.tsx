@@ -3,29 +3,21 @@ import { t, Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import Search from 'antd/lib/input/Search'
 import { AppWrapper } from 'components/common'
-import { FeedbackFormButton } from 'components/FeedbackFormButton'
-import Loading from 'components/Loading'
-
-import { ProjectCategory } from 'models/project-visibility'
-import { useContext, useEffect, useMemo, useRef, useState } from 'react'
-
-import Grid from 'components/Grid'
-import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
-
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-
-import { useInfiniteProjectsQuery, useProjectsSearch } from 'hooks/Projects'
-
-import { ThemeContext } from 'contexts/themeContext'
-import { useWallet } from 'hooks/Wallet'
-
 import ExternalLink from 'components/ExternalLink'
-import { CV } from 'models/cv'
-import { helpPagePath } from 'utils/routes'
-
+import Grid from 'components/Grid'
+import Loading from 'components/Loading'
+import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
 import { CV_V1, CV_V1_1, CV_V2, CV_V3 } from 'constants/cv'
 import { layouts } from 'constants/styles/layouts'
+import { ThemeContext } from 'contexts/themeContext'
+import { useInfiniteProjectsQuery, useProjectsSearch } from 'hooks/Projects'
+import { useWallet } from 'hooks/Wallet'
+import { CV } from 'models/cv'
+import { ProjectCategory } from 'models/project-visibility'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { helpPagePath } from 'utils/routes'
 import ArchivedProjectsMessage from './ArchivedProjectsMessage'
 import HoldingsProjects from './HoldingsProjects'
 import MyProjects from './MyProjects'
@@ -288,8 +280,6 @@ function Projects() {
           <TrendingProjects count={12} />
         </div>
       ) : null}
-
-      <FeedbackFormButton />
     </div>
   )
 }

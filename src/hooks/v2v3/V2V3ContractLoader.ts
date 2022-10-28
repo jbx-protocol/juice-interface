@@ -9,12 +9,14 @@ import { readProvider } from 'constants/readProvider'
 import { CV2V3 } from 'models/cv'
 import { emitErrorNotification } from 'utils/notifications'
 
-export function useV2V3ContractLoader({ cv }: { cv: CV2V3 }) {
+export function useV2V3ContractLoader({ cv }: { cv?: CV2V3 }) {
   const { signer } = useWallet()
   const [contracts, setContracts] = useState<V2V3Contracts>()
 
   useEffect(() => {
     async function loadContracts() {
+      if (!cv) return
+
       console.info(`Loading v${cv} contracts...`)
       try {
         const network = readNetwork.name

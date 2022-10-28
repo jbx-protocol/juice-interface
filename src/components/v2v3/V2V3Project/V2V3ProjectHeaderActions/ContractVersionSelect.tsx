@@ -15,7 +15,7 @@ const CV_LABELS = {
  * A Select component to switch between V2 and V3 contracts.
  */
 export function ContractVersionSelect() {
-  const { setVersion, cv, cvs } = useContext(V2V3ContractsContext)
+  const { setCv, cv, cvs } = useContext(V2V3ContractsContext)
 
   const SELECT_OPTIONS: BaseOptionType[] =
     cvs?.map(cv => ({
@@ -32,7 +32,7 @@ export function ContractVersionSelect() {
       defaultValue={cv}
       bordered={false}
       className="ant-select-color-secondary"
-      onSelect={(value: CV2V3) => setVersion?.(value)}
+      onSelect={(value: CV2V3) => setCv?.(value)}
       options={SELECT_OPTIONS}
     />
   )

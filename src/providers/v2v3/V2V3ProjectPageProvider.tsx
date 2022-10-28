@@ -11,11 +11,9 @@ export const V2V3ProjectPageProvider: React.FC<ProjectPageProps> = ({
   projectId,
   metadata,
   children,
-  initialCv,
-  cvs,
 }) => {
   return (
-    <V2V3ContractsProvider initialCv={initialCv} cvs={cvs}>
+    <V2V3ContractsProvider>
       <V2V3ProjectContractsProvider projectId={projectId}>
         <V2V3ProjectMetadataProvider projectId={projectId} metadata={metadata}>
           <V2V3ProjectProvider projectId={projectId}>

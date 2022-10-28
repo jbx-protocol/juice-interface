@@ -13,13 +13,10 @@ export default function Logo({ height }: { height?: number }) {
   return (
     <img
       style={{ height }}
-      src={
-        forThemeOption &&
-        forThemeOption({
-          [ThemeOption.light]: '/assets/juice_logo-ol.png',
-          [ThemeOption.dark]: '/assets/juice_logo-od.png',
-        })
-      }
+      src={forThemeOption?.({
+        [ThemeOption.light]: '/assets/juice_logo-ol.png',
+        [ThemeOption.dark]: '/assets/juice_logo-od.png',
+      })}
       alt="Juicebox logo"
     />
   )

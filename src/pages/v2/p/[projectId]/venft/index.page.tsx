@@ -1,32 +1,21 @@
 import { AppWrapper } from 'components/common'
 import { VeNft } from 'components/veNft/VeNft'
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import { useRouter } from 'next/router'
 import { TransactionProvider } from 'providers/TransactionProvider'
 import { V2V3ProjectPageProvider } from 'providers/v2v3/V2V3ProjectPageProvider'
 import { VeNftProvider } from 'providers/v2v3/VeNftProvider'
-import { getProjectProps, ProjectPageProps } from 'utils/server/pages/props'
 
-export const getServerSideProps: GetServerSideProps<
-  ProjectPageProps
-> = async context => {
-  if (!context.params) throw new Error('params not supplied')
+export default function VeNftPage() {
+  const router = useRouter()
 
-  const projectId = parseInt(context.params.projectId as string)
-  return getProjectProps(projectId)
-}
+  const { projectId: rawProjectId } = router.query
+  if (!rawProjectId) return null
 
-export default function V2V3ProjectSettingsPage({
-  projectId,
-  metadata,
-  initialCv,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const projectId = parseInt(rawProjectId as string)
+
   return (
     <AppWrapper>
-      <V2V3ProjectPageProvider
-        projectId={projectId}
-        metadata={metadata}
-        initialCv={initialCv}
-      >
+      <V2V3ProjectPageProvider projectId={projectId}>
         <TransactionProvider>
           <VeNftProvider projectId={projectId}>
             <VeNft />

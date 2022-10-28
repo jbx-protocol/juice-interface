@@ -1367,9 +1367,6 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-msgid "Give feedback"
-msgstr ""
-
 msgid "Give this NFT a name."
 msgstr ""
 
@@ -3621,6 +3618,9 @@ msgid "token"
 msgstr ""
 
 msgid "tokens"
+msgstr ""
+
+msgid "tokens for Project #{projectId}"
 msgstr ""
 
 msgid "tokens per ETH contributed"

@@ -3,22 +3,16 @@ import { t, Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import Search from 'antd/lib/input/Search'
 import { AppWrapper } from 'components/common'
-import { FeedbackFormButton } from 'components/FeedbackFormButton'
-
-import { ProjectCategory } from 'models/project-visibility'
-import { useEffect, useMemo, useState } from 'react'
-
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-
-import { useWallet } from 'hooks/Wallet'
-
 import ExternalLink from 'components/ExternalLink'
-import { CV } from 'models/cv'
-import { helpPagePath } from 'utils/routes'
-
 import { CV_V1, CV_V1_1, CV_V2, CV_V3 } from 'constants/cv'
 import { layouts } from 'constants/styles/layouts'
+import { useWallet } from 'hooks/Wallet'
+import { CV } from 'models/cv'
+import { ProjectCategory } from 'models/project-visibility'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useEffect, useMemo, useState } from 'react'
+import { helpPagePath } from 'utils/routes'
 import AllProjects from './AllProjects'
 import ArchivedProjectsMessage from './ArchivedProjectsMessage'
 import HoldingsProjects from './HoldingsProjects'
@@ -197,8 +191,6 @@ function Projects() {
           <LatestProjects />
         </div>
       ) : null}
-
-      <FeedbackFormButton />
     </div>
   )
 }

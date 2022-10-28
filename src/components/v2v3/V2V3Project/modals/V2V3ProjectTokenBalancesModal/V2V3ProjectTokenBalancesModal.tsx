@@ -1,8 +1,7 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Button, Modal, ModalProps, Space } from 'antd'
-import { useForm } from 'antd/lib/form/Form'
+import { Button, Form, Modal, ModalProps, Space } from 'antd'
 import ERC20TokenBalance from 'components/ERC20TokenBalance'
 import { V2V3_PROJECT_IDS } from 'constants/v2v3/projectIds'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
@@ -15,7 +14,7 @@ import { CV2V3 } from 'models/cv'
 import { ProjectMetadataV5 } from 'models/project-metadata'
 import { TokenRef } from 'models/token-ref'
 import { V2OperatorPermission } from 'models/v2v3/permissions'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { AssetInputType, TokenRefs } from './TokenRefs'
 import { V2V3ProjectTokenBalance } from './V2V3ProjectTokenBalance'
 
@@ -23,34 +22,20 @@ export interface EditTrackedAssetsForm {
   tokenRefs: { assetInput: { input: string; type: AssetInputType } }[]
 }
 
-export function V2V3ProjectTokenBalancesModal(props: ModalProps) {
-  const { projectId, projectMetadata, cv } = useContext(ProjectMetadataContext)
-  const { projectOwnerAddress } = useContext(V2V3ProjectContext)
-
-  const [editModalVisible, setEditModalVisible] = useState<boolean>()
+function EditTrackedAssetsModal({
+  close,
+  ...props
+}: ModalProps & { close: VoidFunction }) {
   const [loading, setLoading] = useState<boolean>()
-  const [form] = useForm<EditTrackedAssetsForm>()
+  const { projectId, projectMetadata, cv } = useContext(ProjectMetadataContext)
 
-  const hasEditPermission = useV2ConnectedWalletHasPermission(
-    V2OperatorPermission.RECONFIGURE,
-  )
+  const [form] = Form.useForm<EditTrackedAssetsForm>()
 
   const editV2ProjectDetailsTx = useEditProjectDetailsTx()
 
-  const projectName = projectMetadata?.name
-
-  useEffect(() => {
-    const initialTokens = (
-      projectMetadata?.tokens ?? [{ type: 'erc20', value: '' }]
-    ).map(r => ({ ...r }))
-    form.setFieldsValue({
-      tokenRefs: initialTokens.map(t => ({
-        assetInput: { input: t.value, type: t.type },
-      })),
-    })
-  }, [form, projectMetadata, editModalVisible])
-
   async function updateTokenRefs() {
+    const projectName = projectMetadata?.name
+
     if (!projectName || !cv) return
 
     await form.validateFields()
@@ -86,12 +71,54 @@ export function V2V3ProjectTokenBalancesModal(props: ModalProps) {
             })
           }
           setLoading(false)
-          setEditModalVisible(false)
+          close?.()
           form.resetFields()
         },
       },
     )
   }
+
+  return (
+    <Modal
+      title={t`Edit tracked assets`}
+      cancelText={t`Cancel`}
+      width={600}
+      confirmLoading={loading}
+      onOk={updateTokenRefs}
+      okText={t`Save tracked assets`}
+      onCancel={close}
+      {...props}
+    >
+      <p style={{ marginBottom: 40 }}>
+        <Trans>
+          Display ERC-20 and other Juicebox project tokens that this project
+          owner holds.
+        </Trans>
+      </p>
+
+      <TokenRefs form={form} />
+    </Modal>
+  )
+}
+
+export function V2V3ProjectTokenBalancesModal(props: ModalProps) {
+  const { projectMetadata } = useContext(ProjectMetadataContext)
+  const { projectOwnerAddress } = useContext(V2V3ProjectContext)
+
+  const [editModalVisible, setEditModalVisible] = useState<boolean>()
+
+  const hasEditPermission = useV2ConnectedWalletHasPermission(
+    V2OperatorPermission.RECONFIGURE,
+  )
+
+  // Filter out JBDAO tokens, because we always display that balance.
+  const trackedTokens = (projectMetadata as ProjectMetadataV5)?.tokens?.filter(
+    t =>
+      !(
+        t.type === 'project' &&
+        parseInt(t.value) === V2V3_PROJECT_IDS.JUICEBOX_DAO
+      ),
+  )
 
   return (
     <Modal
@@ -134,8 +161,7 @@ export function V2V3ProjectTokenBalancesModal(props: ModalProps) {
 
         <Space direction="vertical" style={{ width: '100%', marginTop: 20 }}>
           <V2V3ProjectTokenBalance projectId={V2V3_PROJECT_IDS.JUICEBOX_DAO} />
-
-          {(projectMetadata as ProjectMetadataV5)?.tokens?.map(t =>
+          {trackedTokens?.map(t =>
             t.type === 'erc20' ? (
               <ERC20TokenBalance
                 key={t.value}
@@ -151,24 +177,10 @@ export function V2V3ProjectTokenBalancesModal(props: ModalProps) {
         </Space>
 
         {hasEditPermission ? (
-          <Modal
-            title={t`Edit tracked assets`}
+          <EditTrackedAssetsModal
             open={editModalVisible}
-            onCancel={() => setEditModalVisible(false)}
-            cancelText={t`Cancel`}
-            width={600}
-            confirmLoading={loading}
-            onOk={updateTokenRefs}
-            okText={t`Save tracked assets`}
-          >
-            <p style={{ marginBottom: 40 }}>
-              <Trans>
-                Display ERC-20 and other Juicebox project tokens that this
-                project owner holds.
-              </Trans>
-            </p>
-            <TokenRefs form={form} />
-          </Modal>
+            close={() => setEditModalVisible(false)}
+          />
         ) : null}
       </div>
     </Modal>

@@ -1,17 +1,14 @@
 import { AppWrapper, SEO } from 'components/common'
 import { DesmosScript } from 'components/common/Head/scripts/DesmosScript'
-import Loading from 'components/Loading'
 import { CV_V2, CV_V3 } from 'constants/cv'
 import { V2V3_PROJECT_IDS } from 'constants/v2v3/projectIds'
 import { paginateDepleteProjectsQueryCall } from 'lib/apollo'
-import {
-  GetStaticPaths,
-  GetStaticProps,
-  GetStaticPropsResult,
-  InferGetStaticPropsType,
-} from 'next'
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { V2V3ProjectPageProvider } from 'providers/v2v3/V2V3ProjectPageProvider'
-import { getProjectProps, ProjectPageProps } from 'utils/server/pages/props'
+import {
+  getProjectStaticProps,
+  ProjectPageProps,
+} from 'utils/server/pages/props'
 import { V2V3Dashboard } from './components/V2V3Dashboard'
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -37,9 +34,7 @@ export const getStaticProps: GetStaticProps<
   if (!context.params) throw new Error('params not supplied')
 
   const projectId = parseInt(context.params.projectId as string)
-  const props = (await getProjectProps(
-    projectId,
-  )) as GetStaticPropsResult<ProjectPageProps>
+  const props = await getProjectStaticProps(projectId)
 
   return {
     ...props,
@@ -50,8 +45,6 @@ export const getStaticProps: GetStaticProps<
 export default function V2ProjectPage({
   metadata,
   projectId,
-  initialCv,
-  cvs,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
@@ -72,18 +65,9 @@ export default function V2ProjectPage({
         </SEO>
       ) : null}
       <AppWrapper>
-        {metadata ? (
-          <V2V3ProjectPageProvider
-            projectId={projectId}
-            metadata={metadata}
-            initialCv={initialCv}
-            cvs={cvs}
-          >
-            <V2V3Dashboard />
-          </V2V3ProjectPageProvider>
-        ) : (
-          <Loading />
-        )}
+        <V2V3ProjectPageProvider projectId={projectId} metadata={metadata}>
+          <V2V3Dashboard />
+        </V2V3ProjectPageProvider>
       </AppWrapper>
     </>
   )

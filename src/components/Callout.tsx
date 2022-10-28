@@ -51,7 +51,6 @@ export default function Callout({
         display: 'flex',
         alignItems: 'flex-start',
         gap: '1rem',
-
         cursor: collapsible ? 'pointer' : undefined,
         userSelect: collapsible ? 'none' : undefined,
 
@@ -61,24 +60,45 @@ export default function Callout({
       role={collapsible ? 'button' : undefined}
     >
       {iconComponent !== null && (
-        <span style={{ lineHeight: 1.6 }}>
+        <span
+          style={{
+            lineHeight: 1.6,
+            flexGrow: 0,
+            flexShrink: 0,
+          }}
+        >
           {iconComponent ?? <InfoCircleOutlined />}
         </span>
       )}
       <div
         style={{
+          display: 'grid', // Unsure why, but this stops it from being 100% width
+          flexShrink: 1,
+          flexGrow: 1,
           minWidth: 0,
-          whiteSpace: childrenWhiteSpace,
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
         }}
       >
-        {children}
+        <div
+          style={{
+            display: 'inline-block',
+            whiteSpace: childrenWhiteSpace,
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+          }}
+        >
+          {children}
+        </div>
       </div>
       {collapsible && (
         <DownOutlined
           rotate={expanded ? 180 : 0}
-          style={{ fontSize: '1rem', width: '1rem', flexShrink: 0 }}
+          style={{
+            flexShrink: 0,
+            flexGrow: 0,
+            lineHeight: 1.6,
+            width: '1rem',
+            fontSize: '1rem',
+          }}
         />
       )}
     </div>

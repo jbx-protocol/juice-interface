@@ -158,7 +158,7 @@ export const ReviewDeployPage = () => {
         initialValues={{ termsAccepted: false }}
         onFinish={onFinish}
       >
-        <CreateCallout.Info noIcon>
+        <CreateCallout.Info noIcon collapsible={false}>
           <div style={{ display: 'flex', gap: '1rem' }}>
             <Form.Item noStyle name="termsAccepted" valuePropName="checked">
               <Checkbox />

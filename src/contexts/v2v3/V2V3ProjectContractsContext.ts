@@ -8,6 +8,7 @@ export interface V2V3ProjectContracts {
 
 export const V2V3ProjectContractsContext: React.Context<{
   contracts: V2V3ProjectContracts
+  cvsLoading?: boolean
 }> = createContext({
   contracts: {},
 })

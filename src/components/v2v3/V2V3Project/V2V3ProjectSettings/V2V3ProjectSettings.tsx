@@ -1,5 +1,6 @@
 import { t } from '@lingui/macro'
 import { Layout, Menu, MenuProps, Space } from 'antd'
+import Loading from 'components/Loading'
 import { ProjectHeader } from 'components/Project/ProjectHeader'
 import { V2V3ProjectHeaderActions } from 'components/v2v3/V2V3Project/V2V3ProjectHeaderActions'
 import { ProjectSettingsContent } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/ProjectSettingsContent'
@@ -141,7 +142,7 @@ const items: MenuItem[] = [
 export function V2V3ProjectSettings() {
   const { isPreviewMode, projectOwnerAddress, handle } =
     useContext(V2V3ProjectContext)
-  const { projectId } = useContext(ProjectMetadataContext)
+  const { projectId, projectMetadata } = useContext(ProjectMetadataContext)
   const { isDarkMode } = useContext(ThemeContext)
 
   const [collapsed, setCollapsed] = useState<boolean>(false)
@@ -162,6 +163,10 @@ export function V2V3ProjectSettings() {
     if (isMobile) {
       setCollapsed(true)
     }
+  }
+
+  if (!projectMetadata) {
+    return <Loading />
   }
 
   return (

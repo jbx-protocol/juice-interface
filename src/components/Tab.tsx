@@ -6,7 +6,7 @@ export function Tab({
   isSelected,
   onClick,
 }: {
-  name: string
+  name: string | JSX.Element
   isSelected: boolean
   href?: string
   onClick?: VoidFunction

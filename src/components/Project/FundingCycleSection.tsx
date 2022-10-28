@@ -1,10 +1,10 @@
 import { Trans } from '@lingui/macro'
 import { Space } from 'antd'
-import { ThemeContext } from 'contexts/themeContext'
 
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 
 import SectionHeader from 'components/SectionHeader'
+import { Tab } from 'components/Tab'
 
 export type TabType = {
   key: string
@@ -19,10 +19,6 @@ export default function FundingCycleSection({
   tabs: TabType[]
   reconfigureButton: JSX.Element | null
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const [selectedTabKey, setSelectedTabKey] = useState<string>(tabs[0]?.key)
 
   const currentTabContent = tabs.find(
@@ -55,23 +51,14 @@ export default function FundingCycleSection({
         {reconfigureButton}
       </div>
 
-      <Space style={{ fontSize: '.8rem', marginBottom: 12 }} size="middle">
+      <Space style={{ fontSize: '.8rem', marginBottom: 20 }} size="middle">
         {tabs.map(tab => (
-          <div
+          <Tab
             key={tab.key}
-            style={{
-              textTransform: 'uppercase',
-              cursor: 'pointer',
-              ...(tab.key === selectedTabKey
-                ? { color: colors.text.secondary, fontWeight: 600 }
-                : { color: colors.text.tertiary, fontWeight: 500 }),
-            }}
-            className="hover-text-secondary"
-            role="button"
+            name={tab.label}
+            isSelected={selectedTabKey === tab.key}
             onClick={() => setSelectedTabKey(tab.key)}
-          >
-            {tab.label}
-          </div>
+          />
         ))}
       </Space>
 

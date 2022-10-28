@@ -42,6 +42,14 @@ const V2_CONTRACT_ABI_OVERRIDES: {
   JBETHERC20ProjectPayerDeployer: {
     version: 'latest',
     filename: 'JBETHERC20ProjectPayerDeployer',
+    /**
+     * This deployment of the JBETHERC20ProjectPayerDeployer has slightly different
+     * internals to the one in the contracts-v2-latest package.
+     *
+     * It sets the beneficiary to tx.origin, instead of msg.sender.
+     *
+     * It was only deployed on mainnet, so we'll override it for mainnet only.
+     */
     addresses: {
       [NetworkName.mainnet]: '0x325Ba0eFC2c750e0317561e79cFa6911e29B24CC',
     },

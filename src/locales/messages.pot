@@ -83,9 +83,6 @@ msgstr ""
 msgid "<0/> Your project’s settings cannot be edited or changed during the first funding cycle."
 msgstr ""
 
-msgid "<0/> Your project’s settings will not be able to be edited or changed during the first funding cycle."
-msgstr ""
-
 msgid "<0/> contributed"
 msgstr ""
 
@@ -459,6 +456,9 @@ msgid "Amount:"
 msgstr ""
 
 msgid "Amounts"
+msgstr ""
+
+msgid "An Infinite Funding Target means contributors cannot redeem their tokens for a portion of the treasury funds. Payout splits will can only be nominated in percentages."
 msgstr ""
 
 msgid "Any changes you make will take effect in <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
@@ -3486,6 +3486,9 @@ msgid "You've completed this step."
 msgstr ""
 
 msgid "Your <0>@{v1ProjectHandle}</0> V1 token balance."
+msgstr ""
+
+msgid "Your Funding Target can be changed in future funding cycles. Payouts denominated in USD are paid out in ETH at the current exchange rate."
 msgstr ""
 
 msgid "Your Juicebox project has no active funding cycle. Launch a funding cycle to re-enable payments on your project."

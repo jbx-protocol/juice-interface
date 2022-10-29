@@ -1,6 +1,7 @@
 import { t } from '@lingui/macro'
+import * as styleColors from 'constants/styles/colors'
 import { ThemeContext } from 'contexts/themeContext'
-import { useCallback, useContext } from 'react'
+import { useCallback, useContext, useMemo } from 'react'
 import { WizardContext } from '../Wizard/contexts'
 import { useFundingCycleRecallValue, useFundingTarget } from './hooks'
 
@@ -58,9 +59,15 @@ const FundingTargetRecallOption: React.FC = () => {
 export const RecallCard: React.FC<{
   show: PresentableRecall[]
 }> = ({ show }) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
+  const { isDarkMode } = useContext(ThemeContext)
+
+  const backgroundColor = useMemo(
+    () =>
+      isDarkMode
+        ? styleColors.darkColors.darkGray700
+        : styleColors.lightColors.warmGray100,
+    [isDarkMode],
+  )
 
   if (!show.length) return null
 
@@ -69,7 +76,7 @@ export const RecallCard: React.FC<{
       style={{
         width: '100%',
         padding: '0.625rem 1rem',
-        backgroundColor: colors.background.l2,
+        backgroundColor,
       }}
     >
       {show.includes('fundingCycles') && <FundingCycleRecallOption />}

@@ -15,29 +15,26 @@ const Container: React.FC<{ isSelected: boolean; isDefocused: boolean }> = ({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const borderColor = isSelected
-    ? colors.stroke.action.primary
-    : colors.background.l2
-  const backgroundColor = useMemo(() => {
-    if (isDarkMode) {
-      if (isSelected) {
-        return colors.background.l1
-      }
-      if (isDefocused) {
-        return colors.background.l0
-      }
-    }
-
+  const borderColor = useMemo(() => {
+    if (isSelected) return colors.stroke.action.primary
     if (isDefocused) {
-      return styleColors.lightColors.juiceLightest
+      return isDarkMode
+        ? styleColors.darkColors.darkGray500
+        : styleColors.lightColors.warmGray200
     }
-  }, [
-    colors.background.l0,
-    colors.background.l1,
-    isDarkMode,
-    isDefocused,
-    isSelected,
-  ])
+    return isDarkMode
+      ? styleColors.darkColors.darkGray300
+      : styleColors.lightColors.warmGray300
+  }, [colors.stroke.action.primary, isDarkMode, isDefocused, isSelected])
+
+  const backgroundColor = useMemo(() => {
+    if (isDefocused) {
+      return isDarkMode
+        ? styleColors.darkColors.darkGray800
+        : styleColors.lightColors.juiceLightest
+    }
+    return isDarkMode ? styleColors.darkColors.darkGray600 : undefined
+  }, [isDarkMode, isDefocused])
 
   const className = !isSelected ? 'clickable-border' : 'border'
 
@@ -126,7 +123,9 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
               gap: '1rem',
             }}
           >
-            {checkPosition === 'left' && <CheckedCircle checked={isSelected} />}
+            {checkPosition === 'left' && (
+              <CheckedCircle checked={isSelected} defocused={defocused} />
+            )}
             <div>
               {icon && (
                 <RadialBackgroundIcon isDefocused={defocused} icon={icon} />
@@ -149,7 +148,7 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
               {isSelected && description && <div>{description}</div>}
             </div>
             {checkPosition === 'right' && (
-              <CheckedCircle checked={isSelected} />
+              <CheckedCircle checked={isSelected} defocused={defocused} />
             )}
           </div>
         </div>

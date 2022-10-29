@@ -59,4 +59,13 @@ export const darkColors = {
   red: '#ff6c6c',
   yellow: '#FCDC9C',
   grape: '#36365c',
+  darkGray900: '#121115',
+  darkGray800: '#1c1b21',
+  darkGray700: '#25232E',
+  darkGray600: '#2e2b3c',
+  darkGray500: '#494361',
+  darkGray400: '#5F5C7A',
+  darkGray300: '#A29FB7',
+  darkGray200: '#E1E0E8',
+  darkGray100: '#F0EFF4',
 }

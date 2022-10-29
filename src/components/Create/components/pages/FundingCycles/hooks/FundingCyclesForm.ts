@@ -23,11 +23,16 @@ export const useFundingCyclesForm = () => {
   useDebugValue(form.getFieldsValue())
 
   const initialValues: FundingCyclesFormProps | undefined = useMemo(() => {
-    if (!fundingCyclesPageSelection || !fundingCycleData.duration?.length) {
-      return undefined
-    }
-
     const selection = fundingCycleData.duration === '0' ? 'manual' : 'automated'
+
+    if (
+      !fundingCyclesPageSelection ||
+      !fundingCycleData.duration?.length ||
+      selection === 'manual'
+    ) {
+      // Return default values if the user hasn't selected a funding cycle type yet.
+      return { duration: { duration: 14, unit: 'days' }, selection }
+    }
 
     const durationInSeconds = parseInt(fundingCycleData.duration)
     const durationUnit = deriveDurationUnit(durationInSeconds)

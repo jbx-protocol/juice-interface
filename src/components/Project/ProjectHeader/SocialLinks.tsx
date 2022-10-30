@@ -1,7 +1,8 @@
-import { TwitterOutlined } from '@ant-design/icons'
+import { GlobalOutlined, TwitterOutlined } from '@ant-design/icons'
 import { Space } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import Discord from 'components/icons/Discord'
+import Link from 'next/link'
 import { CSSProperties } from 'react'
 
 const prettyUrl = (url: string) => {
@@ -42,39 +43,9 @@ export default function SocialLinks({
       size="middle"
       style={{ flexWrap: 'wrap', columnGap: '1.5rem', rowGap: '0.5rem' }}
     >
-      {infoUri && (
-        <span>
-          <ExternalLink style={{ ...linkStyle }} href={linkUrl(infoUri)}>
-            {prettyUrl(infoUri)}
-          </ExternalLink>
-        </span>
-      )}
-      {twitter && (
-        <ExternalLink
-          style={{
-            ...linkStyle,
-          }}
-          href={'https://twitter.com/' + twitter}
-        >
-          <span style={{ marginRight: 4 }}>
-            <TwitterOutlined />
-          </span>
-          @{prettyUrl(twitter)}
-        </ExternalLink>
-      )}
-      {discord && (
-        <ExternalLink
-          style={{
-            ...linkStyle,
-          }}
-          href={linkUrl(discord)}
-        >
-          <span style={{ marginRight: 4 }}>
-            <Discord size={11} />
-          </span>
-          Discord
-        </ExternalLink>
-      )}
+      {infoUri && <GlobalOutlined />}
+      {twitter && <TwitterOutlined />}
+      {discord && <Discord />}
     </Space>
   )
 }

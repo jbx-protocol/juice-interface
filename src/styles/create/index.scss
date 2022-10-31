@@ -38,3 +38,17 @@
   font-size: 18px;
   line-height: 28px;
 }
+
+.create-steps-modal {
+  h2 {
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 28px;
+    color: var(--text-primary);
+  }
+}
+
+.create-steps-modal .ant-modal-body {
+  padding: 0 0 1rem 0;
+}

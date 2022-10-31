@@ -39,6 +39,7 @@ export const CustomTokenSettings = () => {
     Form.useWatch('initialMintRate', form) ??
       ProjectTokenForm.DefaultSettings.initialMintRate,
   )
+  const tokenMinting = Form.useWatch('tokenMinting', form) ?? false
 
   const discountRateDisabled = !parseInt(duration)
 
@@ -207,12 +208,14 @@ export const CustomTokenSettings = () => {
         >
           <JuiceSwitch label={t`Allow token minting`} />
         </Form.Item>
-        <CreateCallout.Warning>
-          <Trans>
-            Token minting is not recommended as it allows the project owner to
-            create unlimited tokens. This is a risk factor for contributors.
-          </Trans>
-        </CreateCallout.Warning>
+        {tokenMinting && (
+          <CreateCallout.Warning>
+            <Trans>
+              Token minting is not recommended as it allows the project owner to
+              create unlimited tokens. This is a risk factor for contributors.
+            </Trans>
+          </CreateCallout.Warning>
+        )}
       </>
     </>
   )

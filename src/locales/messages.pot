@@ -3293,6 +3293,9 @@ msgstr ""
 msgid "Version of the terminal contract used by this project."
 msgstr ""
 
+msgid "View in Etherscan"
+msgstr ""
+
 msgid "View token ranges"
 msgstr ""
 

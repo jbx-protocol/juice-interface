@@ -1,2 +1,2 @@
 export * from './CustomTokenSettings'
-export * from './DefaultSettingsModal'
+export * from './DefaultSettings'

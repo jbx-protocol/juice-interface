@@ -1,12 +1,12 @@
 import { t, Trans } from '@lingui/macro'
-import { Divider, Modal, ModalProps, Space } from 'antd'
+import { Divider, Space } from 'antd'
 import TooltipLabel from 'components/TooltipLabel'
 import { ReactNode, useMemo } from 'react'
 import { formatAmount } from 'utils/formatAmount'
 import { formatBoolean } from 'utils/formatBoolean'
 import * as ProjectTokenForm from '../../hooks/ProjectTokenForm'
 
-export const DefaultSettingsModal: React.FC<ModalProps> = props => {
+export const DefaultSettings: React.FC = () => {
   const data: Record<string, { data: string; tooltip: ReactNode }> = useMemo(
     () => ({
       [t`Initial mint rate`]: {
@@ -60,31 +60,21 @@ export const DefaultSettingsModal: React.FC<ModalProps> = props => {
     [],
   )
   return (
-    <Modal
-      {...props}
-      title={
-        <div className="wizard-create">
-          <h2>
-            <Trans>Default Token Settings</Trans>
-          </h2>
-        </div>
-      }
-      cancelButtonProps={{ style: { display: 'none' } }}
-      okText={t`Close`}
-      destroyOnClose
-    >
-      {Object.entries(data).map(([key, { data, tooltip }], i) => (
-        <>
+    <>
+      {Object.entries(data).map(([key, { data: text, tooltip }], i) => (
+        <div key={key}>
           {i === 0 && <Divider style={{ margin: '0  0 1rem' }} />}
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <Space size="small">
               <TooltipLabel label={key} tip={tooltip} />
             </Space>
-            <span>{data}</span>
+            <span>{text}</span>
           </div>
-          <Divider style={{ margin: '1rem 0' }} />
-        </>
+          {i < Object.entries(data).length - 1 && (
+            <Divider style={{ margin: '1rem 0' }} />
+          )}
+        </div>
       ))}
-    </Modal>
+    </>
   )
 }

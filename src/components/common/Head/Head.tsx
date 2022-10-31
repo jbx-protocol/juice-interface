@@ -10,7 +10,7 @@ export const Head: VFC<SEOProps> = props => {
       <meta
         key="viewport"
         name="viewport"
-        content="width=device-width, initial-scale=1"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
       />
       <meta name="theme-color" content="#f5a312" />
       <meta name="msapplication-TileColor" content="#f5a312" />

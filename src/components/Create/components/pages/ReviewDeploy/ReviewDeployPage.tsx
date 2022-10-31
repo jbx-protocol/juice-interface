@@ -162,7 +162,6 @@ export const ReviewDeployPage = () => {
           marginTop: '2rem',
           display: 'flex',
           flexDirection: 'column',
-          gap: '2rem',
         }}
       >
         <CreateCallout.Info noIcon collapsible={false}>

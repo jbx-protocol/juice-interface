@@ -17,7 +17,7 @@ export const PageButtonControl = ({
   return (
     <div
       style={{
-        marginTop: '1rem',
+        marginTop: '3rem',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',

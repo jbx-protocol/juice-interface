@@ -345,7 +345,7 @@ const DistributionAmountInput = ({
   if (mode === 'percentage') {
     return (
       <NumberSlider
-        sliderValue={value?.percentage ? parseInt(value.percentage) : 0}
+        sliderValue={value?.percentage ? parseFloat(value.percentage) : 0}
         onChange={percentage =>
           onAmountInputChange({ percentage: percentage?.toString() })
         }

@@ -30,7 +30,7 @@ const EtherscanLink: React.FC<{
   if (type === 'tx') {
     return (
       <ExternalLink onClick={onClick} {...linkProps}>
-        <LinkOutlined />
+        {children} <LinkOutlined />
       </ExternalLink>
     )
   }

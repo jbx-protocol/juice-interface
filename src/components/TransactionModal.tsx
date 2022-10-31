@@ -2,9 +2,12 @@ import { t, Trans } from '@lingui/macro'
 import { Modal, ModalProps } from 'antd'
 import { readNetwork } from 'constants/networks'
 import { ThemeContext } from 'contexts/themeContext'
+import { TxHistoryContext } from 'contexts/txHistoryContext'
 import { useWallet } from 'hooks/Wallet'
+import { TxStatus } from 'models/transaction'
 import Image from 'next/image'
 import { PropsWithChildren, useContext, useMemo } from 'react'
+import EtherscanLink from './EtherscanLink'
 import quint from '/public/assets/quint.gif'
 
 type TransactionModalProps = PropsWithChildren<
@@ -19,6 +22,10 @@ const PendingTransactionModalBody = () => {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const { transactions } = useContext(TxHistoryContext)
+
+  const pendingTx = transactions?.find(tx => tx.status === TxStatus.pending)
+  const pendingTxHash = pendingTx?.tx?.hash
 
   return (
     <div
@@ -45,6 +52,13 @@ const PendingTransactionModalBody = () => {
             Your transaction has been submitted and is awaiting confirmation.
           </Trans>
         </p>
+        {pendingTxHash ? (
+          <p>
+            <EtherscanLink value={pendingTxHash} type="tx">
+              <Trans>View in Etherscan</Trans>
+            </EtherscanLink>
+          </p>
+        ) : null}
       </div>
     </div>
   )

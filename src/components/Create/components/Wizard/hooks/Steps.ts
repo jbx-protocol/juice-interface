@@ -16,12 +16,6 @@ const stepNames: Record<string, string> = {
   reviewDeploy: t`Deploy`,
 }
 
-const isStepDisabled = (stepName: string, furthestStep: string) => {
-  const stepIndex = Object.keys(stepNames).indexOf(stepName)
-  const furthestStepIndex = Object.keys(stepNames).indexOf(furthestStep)
-  return stepIndex > furthestStepIndex
-}
-
 export const useSteps = () => {
   const { pages, currentPage, goToPage } = useContext(WizardContext)
   const { furthestPageReached } = useEditingCreateFurthestPageReached()
@@ -53,11 +47,9 @@ export const useSteps = () => {
       pages?.map((p, i) => ({
         id: p.name,
         title: stepNames[p.name],
-        disabled:
-          (firstIndexOfLockedPage && i > firstIndexOfLockedPage) ||
-          isStepDisabled(p.name, furthestPageReached),
+        disabled: i > furthertStepIndex,
       })),
-    [firstIndexOfLockedPage, furthestPageReached, pages],
+    [furthertStepIndex, pages],
   )
 
   const currentIndex = useMemo(

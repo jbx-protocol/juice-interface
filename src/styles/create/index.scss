@@ -17,11 +17,19 @@
   border-color: var(--stroke-disabled);
 }
 
+.wizard-create .ant-collapse-header {
+  padding: 1.5rem 0 !important;
+}
+
 .wizard-create .ant-collapse-header-text {
   color: var(--text-primary);
   span {
     color: var(--text-secondary);
   }
+}
+
+.wizard-create .ant-collapse-content-box {
+  padding-bottom: 0 !important;
 }
 
 .wizard-create .select-card-header {

@@ -1,5 +1,6 @@
 import { ThemeContext } from 'contexts/themeContext'
-import { useContext, useState } from 'react'
+import { useContext, useMemo, useState } from 'react'
+import { ipfsToHttps, isIpfsUrl } from 'utils/ipfs'
 
 // Override select project logos.
 const IMAGE_URI_OVERRIDES: { [k: number]: string } = {
@@ -24,7 +25,16 @@ export default function ProjectLogo({
   } = useContext(ThemeContext)
   const _size = size ?? 80
 
-  const _uri = projectId ? IMAGE_URI_OVERRIDES[projectId] ?? uri : uri
+  const _uri = useMemo(() => {
+    if (projectId && IMAGE_URI_OVERRIDES[projectId]) {
+      return IMAGE_URI_OVERRIDES[projectId]
+    }
+    if (!uri) return undefined
+    if (!isIpfsUrl(uri)) {
+      return uri
+    }
+    return ipfsToHttps(uri)
+  }, [uri, projectId])
 
   return (
     <div

@@ -23,7 +23,13 @@ const V2_GOERLI_CONTRACT_ADDRESSES: { [k in V2V3ContractName]?: string } = {
  *  Defines the ABI filename to use for a given V2V3ContractName.
  */
 const V2_CONTRACT_ABI_OVERRIDES: {
-  [k in V2V3ContractName]?: { filename: string; version: string }
+  [k in V2V3ContractName]?: {
+    filename: string
+    version: string
+    addresses?: {
+      [k in NetworkName]?: string
+    }
+  }
 } = {
   DeprecatedJBSplitsStore: {
     version: '4.0.0',
@@ -32,6 +38,21 @@ const V2_CONTRACT_ABI_OVERRIDES: {
   DeprecatedJBDirectory: {
     version: '4.0.0',
     filename: 'JBDirectory',
+  },
+  JBETHERC20ProjectPayerDeployer: {
+    version: 'latest',
+    filename: 'JBETHERC20ProjectPayerDeployer',
+    /**
+     * This deployment of the JBETHERC20ProjectPayerDeployer has slightly different
+     * internals to the one in the contracts-v2-latest package.
+     *
+     * It sets the beneficiary to tx.origin, instead of msg.sender.
+     *
+     * It was only deployed on mainnet, so we'll override it for mainnet only.
+     */
+    addresses: {
+      [NetworkName.mainnet]: '0x325Ba0eFC2c750e0317561e79cFa6911e29B24CC',
+    },
   },
 }
 
@@ -67,10 +88,17 @@ export const loadJuiceboxV2Contract = async (
   }
 
   const contractOverride = V2_CONTRACT_ABI_OVERRIDES[contractName]
+
   const version = contractOverride?.version ?? 'latest'
   const filename = contractOverride?.filename ?? contractName
-
-  return (await import(
+  const contractJson = (await import(
     `@jbx-protocol/contracts-v2-${version}/deployments/${network}/${filename}.json`
   )) as ContractJson
+
+  const address = contractOverride?.addresses?.[network] ?? contractJson.address
+
+  return {
+    ...contractJson,
+    address,
+  }
 }

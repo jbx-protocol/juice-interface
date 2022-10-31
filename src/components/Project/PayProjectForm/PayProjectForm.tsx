@@ -89,7 +89,7 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
         </div>
 
         <PayButton
-          wrapperStyle={{ flex: 1 }}
+          wrapperStyle={{ flex: 1, maxWidth: '100%' }}
           disabled={disabled || errorMessage !== ''}
         />
       </div>

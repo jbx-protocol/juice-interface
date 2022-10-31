@@ -1,12 +1,12 @@
 import { CheckCircleFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Checkbox, Form, Modal } from 'antd'
-import Callout from 'components/Callout'
 import { useDeployProject } from 'components/Create/hooks/DeployProject'
 import ExternalLink from 'components/ExternalLink'
 import TransactionModal from 'components/TransactionModal'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ThemeContext } from 'contexts/themeContext'
+import { useAppSelector } from 'hooks/AppSelector'
 import useMobile from 'hooks/Mobile'
 import { useModal } from 'hooks/Modal'
 import { useWallet } from 'hooks/Wallet'
@@ -16,6 +16,7 @@ import { useDispatch } from 'react-redux'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { featureFlagEnabled } from 'utils/featureFlags'
+import { CreateCallout } from '../../CreateCallout'
 import { CreateCollapse } from '../../CreateCollapse'
 import { Wizard } from '../../Wizard'
 import {
@@ -36,6 +37,7 @@ const Header: React.FC = ({ children }) => {
         display: 'flex',
         alignItems: 'center',
         gap: '0.5rem',
+        marginBottom: 0,
       }}
     >
       {children}
@@ -57,6 +59,11 @@ export const ReviewDeployPage = () => {
   const modal = useModal()
   const { deployProject, isDeploying, deployTransactionPending } =
     useDeployProject()
+  const nftRewards = useAppSelector(
+    state => state.editingV2Project.nftRewards.rewardTiers,
+  )
+
+  const nftRewardsAreSet = nftRewards.length > 0
 
   const dispatch = useDispatch()
 
@@ -124,7 +131,7 @@ export const ReviewDeployPage = () => {
         >
           <ProjectTokenReview />
         </CreateCollapse.Panel>
-        {featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS) && (
+        {featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS) && nftRewardsAreSet && (
           <CreateCollapse.Panel
             key={3}
             header={
@@ -151,8 +158,14 @@ export const ReviewDeployPage = () => {
         form={form}
         initialValues={{ termsAccepted: false }}
         onFinish={onFinish}
+        style={{
+          marginTop: '2rem',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '2rem',
+        }}
       >
-        <Callout iconComponent={null}>
+        <CreateCallout.Info noIcon collapsible={false}>
           <div style={{ display: 'flex', gap: '1rem' }}>
             <Form.Item noStyle name="termsAccepted" valuePropName="checked">
               <Checkbox />
@@ -169,7 +182,7 @@ export const ReviewDeployPage = () => {
               </Trans>
             </div>
           </div>
-        </Callout>
+        </CreateCallout.Info>
         <Wizard.Page.ButtonControl
           isNextLoading={isDeploying}
           isNextEnabled={isNextEnabled}

@@ -1,9 +1,7 @@
-import type { ThemeContextType } from 'contexts/themeContext'
-
-import { useEffect, useState } from 'react'
-
 import { juiceTheme } from 'constants/theme'
 import { ThemeOption } from 'constants/theme/theme-option'
+import type { ThemeContextType } from 'contexts/themeContext'
+import { useEffect, useState } from 'react'
 
 const flattenNestedObject = (
   nestedObj: Record<string, any>, // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -19,32 +17,45 @@ const flattenNestedObject = (
     }
   }, {})
 
-export function useJuiceTheme(storageKey = 'jb_theme'): ThemeContextType {
-  const initialThemeOption =
-    (localStorage && (localStorage.getItem(storageKey) as ThemeOption)) ||
-    ThemeOption.light
+const userPrefersDarkMode = (): boolean => {
+  if (typeof window === 'undefined') {
+    return false
+  }
 
+  return window.matchMedia?.('(prefers-color-scheme: dark)')?.matches ?? false
+}
+
+const getInitialThemeOption = (storageKey: string) => {
+  const storedThemeOption = localStorage?.getItem(storageKey)
+  if (storedThemeOption) {
+    return storedThemeOption as ThemeOption
+  }
+
+  return userPrefersDarkMode() ? ThemeOption.dark : ThemeOption.light
+}
+
+const setRootVarsForThemeOption = (themeOption: ThemeOption) => {
+  Object.entries(flattenNestedObject(juiceTheme(themeOption).colors)).forEach(
+    ([key, value]) =>
+      document.documentElement.style.setProperty('--' + key, value),
+  )
+
+  Object.entries(juiceTheme(themeOption).radii).forEach(([key, value]) => {
+    if (!value) return
+    document.documentElement.style.setProperty(
+      '--radius-' + key,
+      value.toString(),
+    )
+  })
+}
+
+export function useJuiceTheme(storageKey = 'jb_theme'): ThemeContextType {
+  const initialThemeOption = getInitialThemeOption(storageKey)
   const [currentThemeOption, setCurrentThemeOption] =
     useState<ThemeOption>(initialThemeOption)
-
   const [isDarkMode, setIsDarkMode] = useState<boolean>(
     initialThemeOption === ThemeOption.dark,
   )
-
-  const setRootVarsForThemeOption = (themeOption: ThemeOption) => {
-    Object.entries(flattenNestedObject(juiceTheme(themeOption).colors)).forEach(
-      ([key, value]) =>
-        document.documentElement.style.setProperty('--' + key, value),
-    )
-
-    Object.entries(juiceTheme(themeOption).radii).forEach(([key, value]) => {
-      if (!value) return
-      document.documentElement.style.setProperty(
-        '--radius-' + key,
-        value.toString(),
-      )
-    })
-  }
 
   useEffect(
     () => setRootVarsForThemeOption(initialThemeOption),
@@ -62,12 +73,12 @@ export function useJuiceTheme(storageKey = 'jb_theme'): ThemeContextType {
   return {
     themeOption: currentThemeOption,
     theme: juiceTheme(currentThemeOption),
-    isDarkMode: isDarkMode,
+    isDarkMode,
     forThemeOption: map => map[currentThemeOption],
     setThemeOption: (themeOption: ThemeOption) => {
       setRootVarsForThemeOption(themeOption)
       setCurrentThemeOption(themeOption)
-      localStorage && localStorage.setItem(storageKey, themeOption)
+      localStorage?.setItem(storageKey, themeOption)
     },
   }
 }

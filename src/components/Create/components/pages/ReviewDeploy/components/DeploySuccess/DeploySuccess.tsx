@@ -6,7 +6,7 @@ import { NEW_DEPLOY_QUERY_PARAM } from 'components/v2v3/V2V3Project/modals/NewDe
 import { useWallet } from 'hooks/Wallet'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 export const DeploySuccess = ({ projectId }: { projectId: number }) => {
   console.info('Deploy: SUCCESS', projectId)
@@ -16,6 +16,8 @@ export const DeploySuccess = ({ projectId }: { projectId: number }) => {
   if (chain?.name) {
     deployGreeting = t`Your project has successfully launched on ${chain.name}!`
   }
+
+  const [gotoProjectClicked, setGotoProjectClicked] = useState<boolean>(false)
 
   /**
    * Generate a twitter share link based on the project id.
@@ -35,6 +37,7 @@ export const DeploySuccess = ({ projectId }: { projectId: number }) => {
   }, [chain, projectId])
 
   const handleGoToProject = useCallback(() => {
+    setGotoProjectClicked(true)
     router.push(
       `/v2/p/${projectId}?${NEW_DEPLOY_QUERY_PARAM}=1`,
       `/v2/p/${projectId}`,
@@ -82,7 +85,11 @@ export const DeploySuccess = ({ projectId }: { projectId: number }) => {
             </Space>
           </Button>
         </ExternalLink>
-        <Button type="primary" onClick={handleGoToProject}>
+        <Button
+          type="primary"
+          onClick={handleGoToProject}
+          loading={gotoProjectClicked}
+        >
           <Trans>Go to project</Trans>
         </Button>
       </div>

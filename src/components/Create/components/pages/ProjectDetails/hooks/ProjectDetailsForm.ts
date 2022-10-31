@@ -17,7 +17,9 @@ export type ProjectDetailsFormProps = Partial<{
 
 export const useProjectDetailsForm = () => {
   const [form] = useForm<ProjectDetailsFormProps>()
-  const { projectMetadata } = useAppSelector(state => state.editingV2Project)
+  const projectMetadata = useAppSelector(
+    state => state.editingV2Project.projectMetadata,
+  )
 
   const initialValues: ProjectDetailsFormProps = useMemo(
     () => ({
@@ -45,48 +47,56 @@ export const useProjectDetailsForm = () => {
   useFormDispatchWatch({
     form,
     fieldName: 'projectName',
+    ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setName,
     formatter: v => v ?? '',
   })
   useFormDispatchWatch({
     form,
     fieldName: 'projectDescription',
+    ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setDescription,
     formatter: v => v ?? '',
   })
   useFormDispatchWatch({
     form,
     fieldName: 'logo',
+    ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setLogoUri,
     formatter: v => v ?? '',
   })
   useFormDispatchWatch({
     form,
     fieldName: 'projectWebsite',
+    ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setInfoUri,
     formatter: v => v ?? '',
   })
   useFormDispatchWatch({
     form,
     fieldName: 'projectTwitter',
+    ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setTwitter,
     formatter: v => v ?? '',
   })
   useFormDispatchWatch({
     form,
     fieldName: 'projectDiscord',
+    ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setDiscord,
     formatter: v => v ?? '',
   })
   useFormDispatchWatch({
     form,
     fieldName: 'payButtonText',
+    ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setPayButton,
     formatter: v => v ?? '',
   })
   useFormDispatchWatch({
     form,
     fieldName: 'payDisclosure',
+    ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setPayDisclosure,
     formatter: v => v ?? '',
   })

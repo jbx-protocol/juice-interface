@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Form } from 'antd'
-import Callout from 'components/Callout'
+import { CreateCallout } from 'components/Create/components/CreateCallout'
 import { useMemo } from 'react'
 import { formattedNum } from 'utils/format/formatNumber'
 import { ProjectTokensFormProps } from '../../../../hooks/ProjectTokenForm'
@@ -25,12 +25,20 @@ export const ReservedTokenRateCallout: React.FC = () => {
   }, [initialMintRate, reservedTokens])
 
   return (
-    <Callout>
+    <CreateCallout.Info noIcon collapsible={false}>
       <Trans>
-        Contributor rate: {formattedNum(contributorTokens)} / 1 ETH
-        <br />
-        Reserved rate: {formattedNum(reservedTokens)} / 1 ETH
+        <span>Contributor rate:</span>{' '}
+        <span style={{ whiteSpace: 'nowrap' }}>
+          {formattedNum(contributorTokens)} / 1 ETH
+        </span>
       </Trans>
-    </Callout>
+      <br />
+      <Trans>
+        <span>Reserved rate:</span>{' '}
+        <span style={{ whiteSpace: 'nowrap' }}>
+          {formattedNum(reservedTokens)} / 1 ETH
+        </span>
+      </Trans>
+    </CreateCallout.Info>
   )
 }

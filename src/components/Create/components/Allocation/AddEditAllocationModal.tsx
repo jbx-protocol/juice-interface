@@ -199,10 +199,19 @@ export const AddEditAllocationModal = ({
 
         <Form.Item
           name="amount"
-          label={t`Distribution Amount`}
+          label={
+            amountType === 'amount'
+              ? t`Distribution Amount`
+              : t`Distribution Percentage`
+          }
           required
           rules={[
-            inputMustExistRule({ label: t`Distribution Amount` }),
+            inputMustExistRule({
+              label:
+                amountType === 'amount'
+                  ? t`Distribution Amount`
+                  : t`Distribution Percentage`,
+            }),
             distributionAmountIsValidRule({ validatorTrigger: 'onSubmit' }),
           ]}
         >
@@ -336,7 +345,7 @@ const DistributionAmountInput = ({
   if (mode === 'percentage') {
     return (
       <NumberSlider
-        sliderValue={value?.percentage ? parseInt(value.percentage) : 0}
+        sliderValue={value?.percentage ? parseFloat(value.percentage) : 0}
         onChange={percentage =>
           onAmountInputChange({ percentage: percentage?.toString() })
         }

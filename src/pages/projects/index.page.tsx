@@ -88,6 +88,7 @@ function Projects() {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'baseline',
+            paddingBottom: '12px',
           }}
         >
           <h1>

@@ -8,7 +8,7 @@ export const getV1StaticPaths: GetStaticPaths = async () => {
   if (process.env.BUILD_CACHE_V1_PROJECTS === 'true') {
     const projects = await paginateDepleteProjectsQueryCall({
       variables: {
-        where: { cv_in: [PV_V1, PV_V1_1] },
+        where: { pv_in: [PV_V1, PV_V1_1] },
       },
     })
     const paths = projects
@@ -34,7 +34,7 @@ export const getV1StaticProps: GetStaticProps<{
   const handle = context.params.handle as string
   const projects = await paginateDepleteProjectsQueryCall({
     variables: {
-      where: { cv_in: [PV_V1, PV_V1_1], handle },
+      where: { pv_in: [PV_V1, PV_V1_1], handle },
       first: 1,
     },
   })

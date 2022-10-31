@@ -118,8 +118,6 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
           <div
             style={{
               display: 'flex',
-              //TODO: This is probably not the best way to handle pushing content, could do with some help here
-              alignItems: isSelected ? 'baseline' : 'center',
               gap: '1rem',
             }}
           >
@@ -141,7 +139,7 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
             >
               <div
                 className="select-card-header"
-                style={{ color: titleColor, margin: 0 }}
+                style={{ color: titleColor, margin: 0, marginTop: '0.25rem' }}
               >
                 {title}
               </div>

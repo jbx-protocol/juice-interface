@@ -102,6 +102,7 @@ export const useReconfigurationRulesForm = () => {
   useFormDispatchWatch({
     form,
     fieldName: 'pausePayments',
+    ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setPausePay,
     formatter: v => !!v,
   })
@@ -109,6 +110,7 @@ export const useReconfigurationRulesForm = () => {
   useFormDispatchWatch({
     form,
     fieldName: 'allowTerminalConfiguration',
+    ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setAllowSetTerminals,
     formatter: v => !!v,
   })

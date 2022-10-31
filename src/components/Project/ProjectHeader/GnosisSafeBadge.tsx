@@ -57,15 +57,16 @@ function BadgeMightHaveNotice({
   safe: GnosisSafe
   href: string
 }) {
+  const { userAddress } = useWallet()
   const { data: queuedSafeTransactions, isLoading } = useQueuedSafeTransactions(
     {
       safeAddress: safe.address,
     },
   )
 
-  const { userAddress } = useWallet()
-
-  if (isLoading || !userAddress) return <DefaultBadge href={href} />
+  if (isLoading || !userAddress) {
+    return <DefaultBadge href={href} />
+  }
 
   const unsignedNoncesOfUser = getUniqueNonces(
     getUnsignedTxsForAddress({

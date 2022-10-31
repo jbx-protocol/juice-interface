@@ -57,6 +57,7 @@ export function TransactionCollapse({
     borderTop: 'unset',
     borderRight: 'unset',
     borderLeft: 'unset',
+    cursor: 'pointer',
   }
 
   return (

@@ -133,12 +133,11 @@ export function ProjectSafeDashboard({
             {selectedTab === SAFE_TX_QUEUED_KEY ? (
               <>
                 {uniqueNonces?.map((nonce: number, idx: number) => {
-                  const transactionsOfNonce: SafeTransactionType[] =
-                    queuedSafeTransactions.filter(
-                      (tx: SafeTransactionType) => tx.nonce === nonce,
-                    )
+                  const transactionsOfNonce = queuedSafeTransactions?.filter(
+                    (tx: SafeTransactionType) => tx.nonce === nonce,
+                  )
 
-                  if (!transactionsOfNonce.length) return
+                  if (!transactionsOfNonce?.length) return null
 
                   return (
                     <SafeNonceRow

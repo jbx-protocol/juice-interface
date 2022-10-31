@@ -1,3 +1,4 @@
+import { LoadingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { useExecutedSafeTransactions } from 'hooks/safe/ExecutedSafeTransaction'
 import { GnosisSafe, SafeTransactionType } from 'models/safe'
@@ -16,11 +17,15 @@ export function ExecutedSafeTransactionsListing({
       safeAddress: safe.address,
     })
 
-  const uniqueNonces = getUniqueNonces(executedSafeTransactions)
-
   if (isLoading) {
-    return <div style={{ marginTop: 20 }}>Loading...</div>
+    return (
+      <div style={{ marginTop: 20 }}>
+        <LoadingOutlined />
+      </div>
+    )
   }
+
+  const uniqueNonces = getUniqueNonces(executedSafeTransactions)
 
   if (!isLoading && !uniqueNonces.length) {
     return (
@@ -33,11 +38,12 @@ export function ExecutedSafeTransactionsListing({
   return (
     <>
       {uniqueNonces?.map((nonce: number, idx: number) => {
-        const transactionsOfNonce: SafeTransactionType[] =
-          executedSafeTransactions.filter(
-            (tx: SafeTransactionType) =>
-              tx.nonce === nonce && tx.dataDecoded && tx.isExecuted,
-          )
+        const transactionsOfNonce = executedSafeTransactions?.filter(
+          (tx: SafeTransactionType) =>
+            tx.nonce === nonce && tx.dataDecoded && tx.isExecuted,
+        )
+
+        if (!transactionsOfNonce) return null
 
         return (
           <SafeNonceRow

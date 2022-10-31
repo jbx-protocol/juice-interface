@@ -25,6 +25,7 @@ const PendingTransactionModalBody = () => {
   const { transactions } = useContext(TxHistoryContext)
 
   const pendingTx = transactions?.find(tx => tx.status === TxStatus.pending)
+  const pendingTxHash = pendingTx?.tx?.hash
 
   return (
     <div
@@ -48,20 +49,16 @@ const PendingTransactionModalBody = () => {
         </h2>
         <p>
           <Trans>
-            Your transaction has been submitted and is awaiting confirmation{' '}
+            Your transaction has been submitted and is awaiting confirmation.
           </Trans>
         </p>
-        <p>
-          {pendingTx ? (
-            <EtherscanLink
-              value={pendingTx.tx?.hash}
-              style={{ fontSize: '0.85rem' }}
-              type="tx"
-            >
+        {pendingTxHash ? (
+          <p>
+            <EtherscanLink value={pendingTxHash} type="tx">
               <Trans>View in Etherscan</Trans>
             </EtherscanLink>
-          ) : null}
-        </p>
+          </p>
+        ) : null}
       </div>
     </div>
   )

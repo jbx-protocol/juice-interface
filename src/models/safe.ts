@@ -30,4 +30,5 @@ export interface SafeTransactionType {
   threshold?: number
   safe: string
   to: string
+  blockNumber: number | null
 }

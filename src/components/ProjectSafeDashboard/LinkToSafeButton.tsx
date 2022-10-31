@@ -18,7 +18,6 @@ export function LinkToSafeButton({
         ...style,
         display: 'flex',
         marginLeft: '1.5rem',
-        fontSize: '0.8rem',
       }}
     >
       <ExternalLink

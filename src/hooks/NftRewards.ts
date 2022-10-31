@@ -9,11 +9,11 @@ import { useQuery, UseQueryResult } from 'react-query'
 import { decodeEncodedIPFSUri, restrictedIpfsUrl } from 'utils/ipfs'
 
 import { BigNumber } from '@ethersproject/bignumber'
-import { MaxUint40 } from 'constants/numbers'
+import { ONE_BILLION } from 'constants/numbers'
 import { withHttps } from 'utils/externalLink'
 import { formatWad } from 'utils/format/formatNumber'
 
-export const DEFAULT_NFT_MAX_SUPPLY = MaxUint40
+export const DEFAULT_NFT_MAX_SUPPLY = ONE_BILLION - 1
 
 async function getRewardTierFromIPFS({
   tier,

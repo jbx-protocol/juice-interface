@@ -5,7 +5,6 @@ import { useState } from 'react'
 import { useIsUpgradeAvailable } from './hooks/useIsUpgradeAvailable'
 import { UpgradeWizard } from './UpgradeWizard/UpgradeWizard'
 
-// TODO should this page be removed?
 export function ProjectUpgradesPage() {
   // const { cv } = useContext(ProjectMetadataContext)
 

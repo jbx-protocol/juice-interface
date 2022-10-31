@@ -3,6 +3,7 @@ import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
 import { CV_V2, CV_V3 } from 'constants/cv'
 import { ThemeContext } from 'contexts/themeContext'
 import { SafeTransactionType } from 'models/safe'
+import { V1TerminalVersion } from 'models/v1/terminals'
 import { CV2V3 } from 'models/v2v3/cv'
 import Link from 'next/link'
 import { CSSProperties, useContext, useState } from 'react'
@@ -28,7 +29,7 @@ export function TransactionCollapse({
   selected?: boolean
   title?: string
   isPastTransaction?: boolean
-  cv?: CV2V3
+  cv?: CV2V3 | V1TerminalVersion
   expandedContent?: JSX.Element
 }) {
   const {
@@ -41,10 +42,10 @@ export function TransactionCollapse({
 
   let versionText: string | undefined
   switch (cv) {
-    // TODO why do we need '1' here on V2V3 component?
-    // case '1':
-    //   versionText = 'V1'
-    //   break
+    case '1':
+    case '1.1':
+      versionText = 'V1'
+      break
     case CV_V2:
       versionText = 'V2'
       break

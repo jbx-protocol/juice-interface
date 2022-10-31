@@ -51,6 +51,7 @@
   },
   "dependencies": {
     "@apollo/client": "3.6.9",
+    "@arcxmoney/analytics": "^1.0.1",
     "@jbx-protocol/contracts-v1": "2.0.0",
     "@jbx-protocol/contracts-v2-4.0.0": "npm:@jbx-protocol/contracts-v2@4.0.0",
     "@jbx-protocol/contracts-v2-latest": "npm:@jbx-protocol/contracts-v2@8.0.4",

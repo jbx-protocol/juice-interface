@@ -78,3 +78,8 @@ export function decodeEncodedIPFSUri(hex: string) {
   const hashStr = base58.encode(hashBytes)
   return hashStr
 }
+
+// Determines if a string is a valid IPFS url.
+export function isIpfsUrl(url: string) {
+  return url.startsWith('ipfs://')
+}

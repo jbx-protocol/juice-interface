@@ -60,7 +60,7 @@ export const Steps = () => {
   }
 
   return (
-    <div style={{ padding: '2.5rem 0', maxWidth: '840px' }}>
+    <div style={{ maxWidth: '840px' }}>
       <AntSteps
         current={current.index}
         progressDot

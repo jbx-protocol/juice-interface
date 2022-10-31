@@ -39,12 +39,12 @@ function Projects() {
 
   // Checks URL to see if tab has been set
   const router = useRouter()
+  const search = Array.isArray(router.query.search)
+    ? router.query.search[0]
+    : router.query.search
 
   const { userAddress } = useWallet()
-
-  const [searchText, setSearchText] = useState<string>(
-    (router.query.search as string | undefined) ?? '',
-  )
+  const [searchText, setSearchText] = useState<typeof search>(search)
 
   useEffect(() => {
     setSelectedTab(() => {
@@ -63,8 +63,8 @@ function Projects() {
           return defaultTab
       }
     })
-    setSearchText(router.query.search as string)
-  }, [userAddress, router.query.tab, router.query.search])
+    setSearchText(search)
+  }, [userAddress, router.query.tab, search])
 
   const [orderBy, setOrderBy] = useState<OrderByOption>('totalPaid')
   const [includeV1, setIncludeV1] = useState<boolean>(true)

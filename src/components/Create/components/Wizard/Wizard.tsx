@@ -19,6 +19,7 @@ const WizardContainer: React.FC<{ className?: string }> = ({
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'column',
+        gap: '4rem',
         padding: isMobile ? '2rem 1rem' : '2rem 4rem',
       }}
     >

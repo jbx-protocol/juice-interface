@@ -1,7 +1,6 @@
 import { CheckCircleFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Checkbox, Form, Modal } from 'antd'
-import Callout from 'components/Callout'
 import { useDeployProject } from 'components/Create/hooks/DeployProject'
 import ExternalLink from 'components/ExternalLink'
 import TransactionModal from 'components/TransactionModal'
@@ -17,6 +16,7 @@ import { useDispatch } from 'react-redux'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { featureFlagEnabled } from 'utils/featureFlags'
+import { CreateCallout } from '../../CreateCallout'
 import { CreateCollapse } from '../../CreateCollapse'
 import { Wizard } from '../../Wizard'
 import {
@@ -158,7 +158,7 @@ export const ReviewDeployPage = () => {
         initialValues={{ termsAccepted: false }}
         onFinish={onFinish}
       >
-        <Callout iconComponent={null}>
+        <CreateCallout.Info noIcon collapsible={false}>
           <div style={{ display: 'flex', gap: '1rem' }}>
             <Form.Item noStyle name="termsAccepted" valuePropName="checked">
               <Checkbox />
@@ -175,7 +175,7 @@ export const ReviewDeployPage = () => {
               </Trans>
             </div>
           </div>
-        </Callout>
+        </CreateCallout.Info>
         <Wizard.Page.ButtonControl
           isNextLoading={isDeploying}
           isNextEnabled={isNextEnabled}

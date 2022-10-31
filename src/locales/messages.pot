@@ -2684,6 +2684,9 @@ msgstr ""
 msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."
 msgstr ""
 
+msgid "Skipped"
+msgstr ""
+
 msgid "Snapshot voting"
 msgstr ""
 

@@ -11,6 +11,7 @@ import { t } from '@lingui/macro'
 import * as Sentry from '@sentry/browser'
 import { readNetwork } from 'constants/networks'
 import { TxHistoryContext } from 'contexts/txHistoryContext'
+import { simulateTransaction } from 'lib/tenderly'
 import { CV } from 'models/cv'
 import { TransactionOptions } from 'models/transaction'
 import { useCallback, useContext } from 'react'
@@ -59,7 +60,7 @@ export function useTransactor({
 }: {
   gasPrice?: BigNumber
 }): Transactor | undefined {
-  const { chain, signer } = useWallet()
+  const { chain, signer, userAddress } = useWallet()
   const { chainUnsupported, isConnected, changeNetworks, connect } = useWallet()
   const { addTransaction } = useContext(TxHistoryContext)
   const arcx = useArcx()
@@ -101,6 +102,10 @@ export function useTransactor({
           }),
           {},
         )
+
+      if (process.env.NODE_ENV === 'development') {
+        await simulateTransaction({ contract, functionName, args, userAddress })
+      }
 
       console.info(
         '🧃 Transactor::Calling ' + functionName + '() with args:',
@@ -186,6 +191,7 @@ export function useTransactor({
       connect,
       gasPrice,
       addTransaction,
+      userAddress,
     ],
   )
 }

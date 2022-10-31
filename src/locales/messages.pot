@@ -1088,6 +1088,9 @@ msgstr ""
 msgid "Distribution Limit <0/>:"
 msgstr ""
 
+msgid "Distribution Percentage"
+msgstr ""
+
 msgid "Distribution amount"
 msgstr ""
 

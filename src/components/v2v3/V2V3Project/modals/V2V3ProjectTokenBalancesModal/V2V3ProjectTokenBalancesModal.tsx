@@ -1,15 +1,9 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-<<<<<<< HEAD
 import { Button, Form, Modal, ModalProps, Space } from 'antd'
 import ERC20TokenBalance from 'components/ERC20TokenBalance'
-=======
-import { Button, Modal, ModalProps, Space } from 'antd'
-import { useForm } from 'antd/lib/form/Form'
-import ERC20TokenBalance from 'components/ERC20TokenBalance'
 import { PV_V2 } from 'constants/pv'
->>>>>>> 0a6c82507 (use constants)
 import { V2V3_PROJECT_IDS } from 'constants/v2v3/projectIds'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
@@ -20,12 +14,8 @@ import { revalidateProject } from 'lib/api/nextjs'
 import { ProjectMetadataV5 } from 'models/project-metadata'
 import { TokenRef } from 'models/token-ref'
 import { V2OperatorPermission } from 'models/v2v3/permissions'
-<<<<<<< HEAD
 import { useContext, useState } from 'react'
-=======
-import { useContext, useEffect, useState } from 'react'
 
->>>>>>> 0a6c82507 (use constants)
 import { AssetInputType, TokenRefs } from './TokenRefs'
 import { V2V3ProjectTokenBalance } from './V2V3ProjectTokenBalance'
 

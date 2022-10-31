@@ -37,6 +37,19 @@ export function Create() {
     >
       <TransactionProvider>
         <V2V3CurrencyProvider>
+          <h1
+            style={{
+              textAlign: 'center',
+              textTransform: 'uppercase',
+              fontWeight: 500,
+              fontSize: '1rem',
+              lineHeight: '33px',
+              color: 'black',
+              marginBottom: 0,
+            }}
+          >
+            <Trans>Create a project</Trans>
+          </h1>
           <Wizard className="wizard-create" doneText={<DeployButtonText />}>
             <Wizard.Page
               name="projectDetails"

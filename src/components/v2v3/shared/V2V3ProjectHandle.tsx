@@ -20,16 +20,16 @@ export default function V2V3ProjectHandle({
 
   return (
     <Link href={v2v3ProjectRoute({ projectId, handle: handleToRender })}>
-      <a
-        style={{ fontWeight: 500, ...style }}
+      <div
         className="text-primary hover-text-action-primary hover-text-decoration-underline"
+        style={{ fontWeight: 500, display: 'inline', ...style }}
       >
         {handleToRender ? (
           `@${handleToRender}`
         ) : (
           <Trans>Project #{projectId}</Trans>
         )}
-      </a>
+      </div>
     </Link>
   )
 }

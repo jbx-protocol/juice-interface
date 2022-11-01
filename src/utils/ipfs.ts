@@ -50,9 +50,14 @@ export const cidFromUrl = (url: string) => url.split('/').pop()
 /**
  * Returns a native IPFS link (`ipfs://`) as a https link.
  */
-export function ipfsToHttps(ipfsUri: string): string {
+export function ipfsToHttps(
+  ipfsUri: string,
+  { gatewayHostname }: { gatewayHostname?: string } = {},
+): string {
   const suffix = ipfsUri.match(IPFS_URL_REGEX)?.[1]
-  return publicIpfsUrl(suffix)
+  return gatewayHostname
+    ? ipfsGatewayUrl(suffix, gatewayHostname)
+    : publicIpfsUrl(suffix)
 }
 
 /**

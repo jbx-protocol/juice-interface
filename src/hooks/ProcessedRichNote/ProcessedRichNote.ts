@@ -1,4 +1,7 @@
-import { IPFS_LINK_REGEX } from 'constants/ipfs'
+import {
+  IPFS_LINK_REGEX,
+  RESTRICTED_IPFS_GATEWAY_HOSTNAME,
+} from 'constants/ipfs'
 import { ProjectPreferences } from 'constants/projectPreferences'
 import { useEffect, useMemo, useState } from 'react'
 import { ipfsToHttps } from 'utils/ipfs'
@@ -30,7 +33,10 @@ export const useProcessedRichNote = (note: string | undefined) => {
     noteParts // split with space or newline
       .map(word => {
         if (word.match(IPFS_LINK_REGEX)) {
-          return `\n${ipfsToHttps(word)}`
+          return `\n${ipfsToHttps(word, {
+            // TODO temporary fix while we wait for Pinata to fix the 'restricted'
+            gatewayHostname: RESTRICTED_IPFS_GATEWAY_HOSTNAME,
+          })}`
         } else if (word.match(URLRegex)) {
           return `\n${word}`
         }

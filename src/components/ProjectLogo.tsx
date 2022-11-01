@@ -1,4 +1,5 @@
 import { ThemeContext } from 'contexts/themeContext'
+import DOMPurify from 'dompurify'
 import { useContext, useMemo, useState } from 'react'
 import { ipfsToHttps, isIpfsUrl } from 'utils/ipfs'
 
@@ -36,6 +37,26 @@ export default function ProjectLogo({
     return ipfsToHttps(uri)
   }, [uri, projectId])
 
+  const _sanitizedUri = useMemo(() => {
+    let sanitizedUri = ''
+    const string = validImg
+      ? `<img alt="${name}" style="max-height: 100%; min-width: 100%; object-fit: 'cover'; object-position: 'center'" src="${_uri}" onerror="${() =>
+          setSrcLoadError(true)}"/>`
+      : `<div
+          style={{
+            fontSize: '2.5rem',
+          }}
+        >
+          🧃
+        </div>`
+    try {
+      sanitizedUri = DOMPurify.sanitize(string ?? '')
+    } catch (e) {
+      console.error(e)
+    }
+    return sanitizedUri
+  }, [_uri, validImg, name])
+
   return (
     <div
       style={{
@@ -48,29 +69,7 @@ export default function ProjectLogo({
         borderRadius: radii.xl,
         background: validImg ? undefined : colors.background.l1,
       }}
-    >
-      {validImg ? (
-        <img
-          style={{
-            maxHeight: '100%',
-            minWidth: '100%',
-            objectFit: 'cover',
-            objectPosition: 'center',
-          }}
-          src={_uri}
-          alt={name + ' logo'}
-          onError={() => setSrcLoadError(true)}
-          loading="lazy"
-        />
-      ) : (
-        <div
-          style={{
-            fontSize: '2.5rem',
-          }}
-        >
-          🧃
-        </div>
-      )}
-    </div>
+      dangerouslySetInnerHTML={{ __html: _sanitizedUri }}
+    ></div>
   )
 }

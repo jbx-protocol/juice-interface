@@ -3,6 +3,7 @@ import { Trans } from '@lingui/macro'
 import { Button, Space } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { CSSProperties } from 'react'
+import { prettyUrl } from 'utils/url'
 import { RewardImage } from '../RewardImage'
 import { Reward } from './types'
 
@@ -104,7 +105,7 @@ export const RewardItem = ({
                 >
                   <LinkOutlined />
                   <div style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                    <ExternalLink href={url} />
+                    <ExternalLink href={url}>{prettyUrl(url)}</ExternalLink>
                   </div>
                 </div>
               )}

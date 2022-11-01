@@ -7,7 +7,7 @@ import { TransactionContext } from 'contexts/transactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useWallet } from 'hooks/Wallet'
-import _ from 'lodash'
+import omit from 'lodash/omit'
 import { JB721TierParams } from 'models/nftRewardTier'
 import { GroupedSplits, SplitGroup } from 'models/splits'
 import {
@@ -154,7 +154,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
     })
 
     // NFT launch tx does not accept `useDataSourceForPay` and `dataSource` (see contracts:`JBPayDataSourceFundingCycleMetadata`)
-    const dataSourceFCMetadata: JBPayDataSourceFundingCycleMetadata = _.omit(
+    const dataSourceFCMetadata: JBPayDataSourceFundingCycleMetadata = omit(
       fundingCycleMetadata,
       ['useDataSourceForPay', 'dataSource'],
     )

@@ -61,10 +61,18 @@ export default function NftDrawer({
     theme,
     theme: { colors },
   } = useContext(ThemeContext)
-
   const {
     nftRewards: { rewardTiers: initialRewardTiers },
   } = useContext(NftRewardsContext)
+  const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
+
+  const [addTierModalVisible, setAddTierModalVisible] = useState<boolean>(false)
+  const [submitLoading, setSubmitLoading] = useState<boolean>(false)
+
+  const [rewardTiers, setRewardTiers] = useState<NftRewardTier[]>([])
+
+  const [marketplaceForm] = useForm<MarketplaceFormFields>()
+  const [postPayModalForm] = useForm<NftPostPayModalFormFields>()
 
   const dispatch = useAppDispatch()
   const {
@@ -76,26 +84,14 @@ export default function NftDrawer({
 
   const { signer } = useWallet()
 
-  const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
-
-  const [marketplaceForm] = useForm<MarketplaceFormFields>()
-  const [postPayModalForm] = useForm<NftPostPayModalFormFields>()
-
-  const [addTierModalVisible, setAddTierModalVisible] = useState<boolean>(false)
-  const [submitLoading, setSubmitLoading] = useState<boolean>(false)
-
-  const [rewardTiers, setRewardTiers] = useState<NftRewardTier[]>(
-    reduxRewardTiers ?? [],
-  )
+  // a list of the `tierRanks` (IDs) of tiers that have been edited
+  const [editedRewardTierIds, setEditedRewardTierIds] = useState<number[]>([])
 
   useEffect(() => {
     if (!rewardTiers.length) {
       setRewardTiers(reduxRewardTiers ?? [])
     }
   }, [reduxRewardTiers, rewardTiers])
-
-  // a list of the `tierRanks` (IDs) of tiers that have been edited
-  const [editedRewardTierIds, setEditedRewardTierIds] = useState<number[]>([])
 
   const editingRewardTierIDsPush = (tierId: number | undefined) => {
     // only need to send tiers that have changed to adjustTiers
@@ -114,121 +110,142 @@ export default function NftDrawer({
     closeModal,
   } = useFundingCycleDrawer(onClose)
 
+  // When project didn't have any NFTs before reconfiguring.
+  //    i.e. reconfiguring with a new NFT collection (calls `721Deployer.reconfigureFundingCyclesOf`
+  //         when executing reconfiguration on settings page)
+  const saveNewCollection = useCallback(async () => {
+    const marketplaceFormValues = marketplaceForm.getFieldsValue(true)
+    const collectionName = marketplaceFormValues.collectionName
+
+    const [rewardTiersCIDs, nftCollectionMetadataCID] = await Promise.all([
+      uploadNftRewardsToIPFS(rewardTiers),
+      uploadNftCollectionMetadataToIPFS({
+        collectionName: marketplaceFormValues.collectionName?.length
+          ? marketplaceFormValues.collectionName
+          : defaultNftCollectionName(projectName),
+        collectionDescription: marketplaceFormValues.collectionDescription
+          ?.length
+          ? marketplaceFormValues.collectionDescription
+          : defaultNftCollectionDescription(projectName),
+        collectionLogoUri: logoUri,
+        collectionInfoUri: infoUri,
+      }),
+    ])
+
+    dispatch(editingV2ProjectActions.setNftRewardsName(collectionName))
+    dispatch(
+      editingV2ProjectActions.setNftRewardsSymbol(
+        marketplaceFormValues.collectionSymbol,
+      ),
+    )
+    dispatch(
+      editingV2ProjectActions.setNftRewardsCollectionDescription(
+        marketplaceFormValues.collectionDescription,
+      ),
+    )
+    dispatch(editingV2ProjectActions.setNftRewardTiers(rewardTiers))
+    dispatch(
+      editingV2ProjectActions.setNftRewardsCollectionMetadataCID(
+        nftCollectionMetadataCID,
+      ),
+    )
+
+    const postPayModalContent = postPayModalForm.getFieldValue('content')
+    dispatch(
+      editingV2ProjectActions.setNftPostPayModalConfig(
+        postPayModalContent
+          ? {
+              ctaLink: withHttps(postPayModalForm.getFieldValue('ctaLink')),
+              ctaText: postPayModalForm.getFieldValue('ctaText'),
+              content: postPayModalContent,
+            }
+          : undefined,
+      ),
+    )
+    // Store cid (link to nfts on IPFS) to be used later in the deploy tx
+    dispatch(editingV2ProjectActions.setNftRewardsCIDs(rewardTiersCIDs))
+  }, [
+    dispatch,
+    infoUri,
+    logoUri,
+    marketplaceForm,
+    postPayModalForm,
+    projectName,
+    rewardTiers,
+  ])
+
+  // When projects with NFTs are reconfiguring those NFTs
+  // Calls `dataSource.adjustTiers`
+  const saveEditedCollection = useCallback(async () => {
+    if (!fundingCycleMetadata) return
+
+    dispatch(editingV2ProjectActions.setNftRewardTiers(rewardTiers))
+    const newRewardTiers = rewardTiers.filter(
+      rewardTier =>
+        rewardTier.id === undefined ||
+        editedRewardTierIds.includes(rewardTier.id),
+    ) // rewardTiers with id==undefined are new
+
+    // upload new rewardTiers and get their CIDs
+    const rewardTiersCIDs = await uploadNftRewardsToIPFS(newRewardTiers)
+    const dataSourceContract = await loadJBTiered721DelegateContract(
+      fundingCycleMetadata.dataSource,
+      signer ?? readProvider,
+    )
+    const newTiers = buildJB721TierParams({
+      cids: rewardTiersCIDs,
+      rewardTiers: newRewardTiers,
+    })
+    await nftRewardsAdjustTiersTx(
+      {
+        dataSourceContract,
+        newTiers,
+        tierIdsChanged: editedRewardTierIds,
+      },
+      {
+        onConfirmed: () => {
+          // reloading because if you go to edit again before new tiers have
+          // loaded from contracts it could cause problems (no tier.id's)
+          reloadWindow()
+        },
+      },
+    )
+    dispatch(editingV2ProjectActions.setNftRewardsCIDs(rewardTiersCIDs))
+  }, [
+    dispatch,
+    editedRewardTierIds,
+    fundingCycleMetadata,
+    nftRewardsAdjustTiersTx,
+    rewardTiers,
+    signer,
+  ])
+
   const onNftFormSaved = useCallback(async () => {
     if (!rewardTiers) return
     setSubmitLoading(true)
-    // call `JBTiered721DelegateProjectDeployer.reconfigureFundingCyclesOf` when a project without NFT configures a new NFT collection
     if (!initialRewardTiers?.length) {
-      const marketplaceFormValues = marketplaceForm.getFieldsValue(true)
-      const collectionName = marketplaceFormValues.collectionName
-
-      const [rewardTiersCIDs, nftCollectionMetadataCID] = await Promise.all([
-        uploadNftRewardsToIPFS(rewardTiers),
-        uploadNftCollectionMetadataToIPFS({
-          collectionName: marketplaceFormValues.collectionName?.length
-            ? marketplaceFormValues.collectionName
-            : defaultNftCollectionName(projectName),
-          collectionDescription: marketplaceFormValues.collectionDescription
-            ?.length
-            ? marketplaceFormValues.collectionDescription
-            : defaultNftCollectionDescription(projectName),
-          collectionLogoUri: logoUri,
-          collectionInfoUri: infoUri,
-        }),
-      ])
-
-      dispatch(editingV2ProjectActions.setNftRewardsName(collectionName))
-      dispatch(
-        editingV2ProjectActions.setNftRewardsSymbol(
-          marketplaceFormValues.collectionSymbol,
-        ),
-      )
-      dispatch(
-        editingV2ProjectActions.setNftRewardsCollectionDescription(
-          marketplaceFormValues.collectionDescription,
-        ),
-      )
-      dispatch(editingV2ProjectActions.setNftRewardTiers(rewardTiers))
-      dispatch(
-        editingV2ProjectActions.setNftRewardsCollectionMetadataCID(
-          nftCollectionMetadataCID,
-        ),
-      )
-
-      const postPayModalContent = postPayModalForm.getFieldValue('content')
-      dispatch(
-        editingV2ProjectActions.setNftPostPayModalConfig(
-          postPayModalContent
-            ? {
-                ctaLink: withHttps(postPayModalForm.getFieldValue('ctaLink')),
-                ctaText: postPayModalForm.getFieldValue('ctaText'),
-                content: postPayModalContent,
-              }
-            : undefined,
-        ),
-      )
-      // Store cid (link to nfts on IPFS) to be used later in the deploy tx
-      dispatch(editingV2ProjectActions.setNftRewardsCIDs(rewardTiersCIDs))
-    }
-    // Call `dataSource.adjustTiers` for projects that are reconfiguring NFTs they have already launched.
-    else if (fundingCycleMetadata && fundingCycleMetadata.dataSource) {
-      dispatch(editingV2ProjectActions.setNftRewardTiers(rewardTiers))
-      const newRewardTiers = rewardTiers.filter(
-        rewardTier =>
-          rewardTier.id === undefined ||
-          editedRewardTierIds.includes(rewardTier.id),
-      ) // rewardTiers with id==undefined are new
-
-      // upload new rewardTiers and get their CIDs
-      const rewardTiersCIDs = await uploadNftRewardsToIPFS(newRewardTiers)
-      const dataSourceContract = await loadJBTiered721DelegateContract(
-        fundingCycleMetadata.dataSource,
-        signer ?? readProvider,
-      )
-      const newTiers = buildJB721TierParams({
-        cids: rewardTiersCIDs,
-        rewardTiers: newRewardTiers,
-      })
-      await nftRewardsAdjustTiersTx(
-        {
-          dataSourceContract,
-          newTiers,
-          tierIdsChanged: editedRewardTierIds,
-        },
-        {
-          onConfirmed: () => {
-            // reloading because if you go to edit again before new tiers have
-            // loaded from contracts it could cause problems (no tier.id's)
-            reloadWindow()
-          },
-        },
-      )
-      dispatch(editingV2ProjectActions.setNftRewardsCIDs(rewardTiersCIDs))
+      await saveNewCollection()
+    } else if (fundingCycleMetadata && fundingCycleMetadata.dataSource) {
+      await saveEditedCollection()
     }
     setSubmitLoading(false)
     setFormUpdated(false)
     onClose?.()
   }, [
-    postPayModalForm,
     rewardTiers,
     fundingCycleMetadata,
-    nftRewardsAdjustTiersTx,
-    signer,
-    editedRewardTierIds,
-    dispatch,
+    saveNewCollection,
+    saveEditedCollection,
     onClose,
-    marketplaceForm,
     setFormUpdated,
-    projectName,
-    logoUri,
-    infoUri,
     initialRewardTiers,
   ])
 
   const handleAddRewardTier = (newRewardTier: NftRewardTier) => {
-    const newRewardTiers = rewardTiers
-      ? sortNftRewardTiers([...rewardTiers, newRewardTier])
-      : [newRewardTier]
+    const newRewardTiers = sortNftRewardTiers([
+      ...(rewardTiers ?? []),
+      newRewardTier,
+    ])
     setRewardTiers(newRewardTiers)
     setFormUpdated(true)
   }

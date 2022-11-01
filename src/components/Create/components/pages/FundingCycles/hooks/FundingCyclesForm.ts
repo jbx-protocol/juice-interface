@@ -17,18 +17,28 @@ export type FundingCyclesFormProps = Partial<{
 
 export const useFundingCyclesForm = () => {
   const [form] = useForm<FundingCyclesFormProps>()
-  const { fundingCycleData, fundingCyclesPageSelection } = useAppSelector(
-    state => state.editingV2Project,
-  )
+  const {
+    fundingCycleData,
+    fundingCyclesPageSelection,
+    createFurthestPageReached,
+  } = useAppSelector(state => state.editingV2Project)
   useDebugValue(form.getFieldsValue())
 
   const initialValues: FundingCyclesFormProps | undefined = useMemo(() => {
-    const selection = fundingCycleData.duration === '0' ? 'manual' : 'automated'
+    // TODO: This is a hack to stop page from having manual auto-set.
+    // This should really be undefined by default in the underlying redux data.
+    let selection: 'automated' | 'manual' | undefined
+    if (
+      createFurthestPageReached !== 'fundingCycles' &&
+      !!fundingCycleData.duration
+    ) {
+      selection = fundingCycleData.duration === '0' ? 'manual' : 'automated'
+    }
 
     if (
       !fundingCyclesPageSelection ||
       !fundingCycleData.duration?.length ||
-      selection === 'manual'
+      !selection
     ) {
       // Return default values if the user hasn't selected a funding cycle type yet.
       return { duration: { duration: 14, unit: 'days' }, selection }
@@ -45,7 +55,11 @@ export const useFundingCyclesForm = () => {
       selection,
       duration: { duration, unit: durationUnit },
     }
-  }, [fundingCycleData.duration, fundingCyclesPageSelection])
+  }, [
+    createFurthestPageReached,
+    fundingCycleData.duration,
+    fundingCyclesPageSelection,
+  ])
 
   const dispatch = useAppDispatch()
   const selection = useWatch('selection', form)

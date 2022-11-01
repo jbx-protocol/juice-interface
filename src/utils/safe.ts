@@ -4,7 +4,9 @@ import { GnosisSafe, SafeTransactionType } from 'models/safe'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 
 // e.g. [ {nonce: 69}, {nonce: 45}, {nonce: 69}] returns [69, 45]
-export function getUniqueNonces(transactions: SafeTransactionType[]) {
+export function getUniqueNonces(
+  transactions: SafeTransactionType[] | undefined,
+) {
   return [
     ...new Set<number>(
       transactions?.map((tx: SafeTransactionType) => tx.nonce),
@@ -18,9 +20,9 @@ export function getUnsignedTxsForAddress({
   transactions,
 }: {
   address: string
-  transactions: SafeTransactionType[]
+  transactions: SafeTransactionType[] | undefined
 }) {
-  return transactions.filter(
+  return transactions?.filter(
     (tx: SafeTransactionType) =>
       !tx?.confirmations?.some(
         confirmation => confirmation.owner.toLowerCase() === address,

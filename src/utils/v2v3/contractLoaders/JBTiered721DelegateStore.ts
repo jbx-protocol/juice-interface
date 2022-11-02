@@ -13,7 +13,7 @@ export const loadJBTiered721DelegateStoreContract = async () => {
     address: JBTiered721DelegateStoreContractAddress,
     abi: (
       await import(
-        `@jbx-protocol/juice-nft-rewards/out/IJBTiered721DelegateStore.sol/IJBTiered721DelegateStore.json`
+        `@jbx-protocol/juice-721-delegate/out/IJBTiered721DelegateStore.sol/IJBTiered721DelegateStore.json`
       )
     ).abi,
   }

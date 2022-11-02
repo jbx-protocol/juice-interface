@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { CurrencyOption } from './currencyOption'
 
 // How we store reward tiers for use around the app
 export type NftRewardTier = {
@@ -7,23 +8,28 @@ export type NftRewardTier = {
   remainingSupply: number | undefined
   imageUrl: string // link to ipfs
   name: string
+  id?: number
   /* @deprecated - now derived from comparing contributionFloor between each */
-  tierRank?: number | undefined // cheapest tier is 1
+  tierRank?: number // cheapest tier is 1
   externalLink: string | undefined
   description: string | undefined
 }
 
 // How the reward tiers are stored in the contracts
-export type ContractNftRewardTier = {
-  id: number
+export type JB721TierParams = {
+  id?: BigNumber //undefined for outgoing tier (in launch or adjustTiers tx)
+  remainingQuantity?: BigNumber //undefined for outgoing tier (in launch or adjustTiers tx)
+
   contributionFloor: BigNumber //uint128
   lockedUntil: BigNumber
-  remainingQuantity: BigNumber
   initialQuantity: BigNumber //uint64
   votingUnits: number
   reservedRate: number
   reservedTokenBeneficiary: string
   encodedIPFSUri: string // encoded link to the rewardTier on IPFS
+  allowManualMint: boolean
+  shouldUseBeneficiaryAsDefault: boolean
+  transfersPausable: boolean
 }
 
 type OpenSeaAttribute = {
@@ -70,4 +76,37 @@ export type NftPostPayModalConfig = {
   ctaText: string | undefined
   ctaLink: string | undefined
   content: string | undefined
+}
+
+export enum JB721GovernanceType {
+  NONE,
+  TIERED,
+  GLOBAL,
+}
+
+export interface JB721PricingParams {
+  tiers: JB721TierParams[]
+  currency: CurrencyOption
+  decimals: number
+  prices: string
+}
+
+export interface JBDeployTiered721DelegateData {
+  directory: string
+  name: string
+  symbol: string
+  fundingCycleStore: string
+  baseUri: string
+  tokenUriResolver: string
+  contractUri: string
+  owner: string
+  pricing: JB721PricingParams
+  reservedTokenBeneficiary: string
+  store: string
+  flags: {
+    lockReservedTokenChanges: boolean
+    lockVotingUnitChanges: boolean
+    lockManualMintingChanges: boolean
+  }
+  governanceType: JB721GovernanceType
 }

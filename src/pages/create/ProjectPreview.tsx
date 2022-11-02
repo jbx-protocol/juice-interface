@@ -16,6 +16,7 @@ import {
 import { useWallet } from 'hooks/Wallet'
 import { V2V3FundingCycle } from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
+import { EMPTY_NFT_COLLECTION_METADATA } from 'redux/slices/editingV2Project'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { getDefaultFundAccessConstraint } from 'utils/v2v3/fundingCycle'
 
@@ -97,10 +98,12 @@ export function ProjectPreview() {
           <NftRewardsContext.Provider
             value={{
               nftRewards: {
-                CIDs: nftRewardsCIDs,
                 rewardTiers: nftRewardTiers,
-                loading: undefined,
+                CIDs: nftRewardsCIDs,
+                collectionMetadata: EMPTY_NFT_COLLECTION_METADATA,
+                postPayModal: projectMetadata?.nftPaymentSuccessModal,
               },
+              loading: false,
             }}
           >
             <V2V3Project />

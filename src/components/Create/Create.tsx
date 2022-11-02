@@ -3,10 +3,12 @@ import { DeployButtonText } from 'components/DeployProjectButtonText'
 import ExternalLink from 'components/ExternalLink'
 import { CV_V2, CV_V3 } from 'constants/cv'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { ThemeContext } from 'contexts/themeContext'
 import { useRouter } from 'next/router'
 import { TransactionProvider } from 'providers/TransactionProvider'
 import { V2V3ContractsProvider } from 'providers/v2v3/V2V3ContractsProvider'
 import { V2V3CurrencyProvider } from 'providers/v2v3/V2V3CurrencyProvider'
+import { useContext } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { helpPagePath } from 'utils/routes'
 import {
@@ -24,6 +26,9 @@ import { DeploySuccess } from './components/pages/ReviewDeploy/components/Deploy
 import { Wizard } from './components/Wizard'
 
 export function Create() {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
   const router = useRouter()
   const deployedProjectId = router.query.deployedProjectId as string
   if (deployedProjectId) {
@@ -44,7 +49,7 @@ export function Create() {
               fontWeight: 500,
               fontSize: '1rem',
               lineHeight: '33px',
-              color: 'black',
+              color: colors.text.primary,
               marginBottom: 0,
             }}
           >

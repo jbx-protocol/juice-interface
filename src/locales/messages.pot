@@ -3638,9 +3638,6 @@ msgstr ""
 msgid "tokens"
 msgstr ""
 
-msgid "tokens for Project #{projectId}"
-msgstr ""
-
 msgid "tokens per ETH contributed"
 msgstr ""
 
@@ -3714,6 +3711,9 @@ msgid "{0} unclaimed"
 msgstr ""
 
 msgid "{0} withdrawn"
+msgstr ""
+
+msgid "{0} {1}"
 msgstr ""
 
 msgid "{0} {tokenTextPlural} reserved"

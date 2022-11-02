@@ -3,6 +3,7 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Space } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { NEW_DEPLOY_QUERY_PARAM } from 'components/v2v3/V2V3Project/modals/NewDeployModal'
+import useMobile from 'hooks/Mobile'
 import { useWallet } from 'hooks/Wallet'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -10,6 +11,7 @@ import { useCallback, useMemo, useState } from 'react'
 
 export const DeploySuccess = ({ projectId }: { projectId: number }) => {
   console.info('Deploy: SUCCESS', projectId)
+  const isMobile = useMobile()
   const router = useRouter()
   const { chain } = useWallet()
   let deployGreeting = t`Your project has successfully launched!`
@@ -47,11 +49,12 @@ export const DeploySuccess = ({ projectId }: { projectId: number }) => {
   return (
     <div
       style={{
-        height: '100vw',
+        marginTop: isMobile ? '1rem' : '7rem',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+        textAlign: 'center',
       }}
     >
       <Image src="/assets/dancing.gif" width={218} height={218} />

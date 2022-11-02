@@ -1100,7 +1100,7 @@ msgstr ""
 msgid "Distribution limit is 0: All funds will be considered overflow and can be redeemed by token holders."
 msgstr ""
 
-msgid "Distribution limit is infinite. <0>The project will control how all funds are distributed, and none can be redeemed by token holders.</0>"
+msgid "Distribution limit is infinite. <0>The project will control how all funds are distributed. Token holders cannot redeem any funds raised.</0>"
 msgstr ""
 
 msgid "Distributions to Ethereum addresses incur a 2.5% JBX membership fee."

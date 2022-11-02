@@ -70,7 +70,11 @@ export function V2V3ReconfigureFundingCycleForm() {
   })
 
   const { reconfigureLoading, reconfigureFundingCycle } =
-    useReconfigureFundingCycle({ editingFundingCycleConfig, memo })
+    useReconfigureFundingCycle({
+      editingFundingCycleConfig,
+      memo,
+      launchedNewNfts: nftDrawerHasSavedChanges,
+    })
 
   const closeReconfigureDrawer = () => {
     setFundingDrawerVisible(false)

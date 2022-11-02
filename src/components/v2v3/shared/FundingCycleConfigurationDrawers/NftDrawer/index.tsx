@@ -385,23 +385,23 @@ export default function NftDrawer({
             <Trans>Save NFTs</Trans>
           </span>
         </Button>
+        <NftRewardTierModal
+          open={addTierModalVisible}
+          validateContributionFloor={validateContributionFloor}
+          onChange={handleAddRewardTier}
+          mode="Add"
+          onClose={() => setAddTierModalVisible(false)}
+          isCreate
+        />
+        <UnsavedChangesModal
+          open={unsavedChangesModalVisible}
+          onOk={() => {
+            closeModal()
+            emitDrawerClose()
+          }}
+          onCancel={closeModal}
+        />
       </FundingCycleDrawer>
-      <NftRewardTierModal
-        open={addTierModalVisible}
-        validateContributionFloor={validateContributionFloor}
-        onChange={handleAddRewardTier}
-        mode="Add"
-        onClose={() => setAddTierModalVisible(false)}
-        isCreate
-      />
-      <UnsavedChangesModal
-        open={unsavedChangesModalVisible}
-        onOk={() => {
-          closeModal()
-          emitDrawerClose()
-        }}
-        onCancel={closeModal}
-      />
     </>
   )
 }

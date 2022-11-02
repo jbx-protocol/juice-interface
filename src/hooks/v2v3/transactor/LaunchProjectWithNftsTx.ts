@@ -31,7 +31,7 @@ import { useV2ProjectTitle } from '../ProjectTitle'
 const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
 const DEFAULT_MEMO = ''
 
-async function getJBDeployTiered721DelegateData({
+export async function getJBDeployTiered721DelegateData({
   collectionCID,
   collectionName,
   collectionSymbol,

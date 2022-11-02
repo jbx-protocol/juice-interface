@@ -97,8 +97,8 @@ export const FundingTargetPage: React.FC = () => {
           </Selection>
         </Form.Item>
         {selection ? <TargetCallout selection={selection} /> : null}
-        <Wizard.Page.ButtonControl isNextEnabled={isNextEnabled} />
       </Space>
+      <Wizard.Page.ButtonControl isNextEnabled={isNextEnabled} />
     </Form>
   )
 }

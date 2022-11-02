@@ -8,7 +8,12 @@ import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useWallet } from 'hooks/Wallet'
 import omit from 'lodash/omit'
-import { JB721TierParams } from 'models/nftRewardTier'
+import {
+  JB721GovernanceType,
+  JB721PricingParams,
+  JB721TierParams,
+  JBDeployTiered721DelegateData,
+} from 'models/nftRewardTier'
 import { GroupedSplits, SplitGroup } from 'models/splits'
 import {
   JBPayDataSourceFundingCycleMetadata,
@@ -23,12 +28,6 @@ import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { isValidMustStartAtOrAfter } from 'utils/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../ProjectTitle'
 
-enum JB721GovernanceType {
-  NONE,
-  TIERED,
-  GLOBAL,
-}
-
 const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
 const DEFAULT_MEMO = ''
 
@@ -38,23 +37,22 @@ async function getJBDeployTiered721DelegateData({
   collectionSymbol,
   tiers,
   ownerAddress,
-  directory,
+  JBDirectoryAddress,
   JBFundingCycleStoreAddress,
   JBPricesAddress,
+  JBTiered721DelegateStoreAddress,
 }: {
   collectionCID: string
   collectionName: string
   collectionSymbol: string
   tiers: JB721TierParams[]
   ownerAddress: string
-  directory: string
+  JBDirectoryAddress: string
   JBFundingCycleStoreAddress: string
   JBPricesAddress: string
-}) {
-  const JBTiered721DelegateStoreAddress =
-    await findJBTiered721DelegateStoreAddress()
-
-  const pricing = {
+  JBTiered721DelegateStoreAddress: string
+}): Promise<JBDeployTiered721DelegateData> {
+  const pricing: JB721PricingParams = {
     tiers,
     currency: V2V3_CURRENCY_ETH,
     decimals: WAD_DECIMALS,
@@ -62,7 +60,7 @@ async function getJBDeployTiered721DelegateData({
   }
 
   return {
-    directory,
+    directory: JBDirectoryAddress,
     name: collectionName,
     symbol: collectionSymbol,
     fundingCycleStore: JBFundingCycleStoreAddress,
@@ -115,10 +113,14 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
     },
     txOpts,
   ) => {
+    const JBTiered721DelegateStoreAddress =
+      await findJBTiered721DelegateStoreAddress()
+
     if (
       !transactor ||
       !userAddress ||
       !contracts ||
+      !JBTiered721DelegateStoreAddress ||
       !isValidMustStartAtOrAfter(mustStartAtOrAfter, fundingCycleData.duration)
     ) {
       const missingParam = !transactor
@@ -127,6 +129,8 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
         ? 'userAddress'
         : !contracts
         ? 'contracts'
+        : !JBTiered721DelegateStoreAddress
+        ? 'JBTiered721DelegateStoreAddress'
         : null
 
       txOpts?.onError?.(
@@ -146,11 +150,12 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
       collectionSymbol,
       tiers,
       ownerAddress: userAddress,
-      directory: getAddress(contracts.JBDirectory.address),
+      JBDirectoryAddress: getAddress(contracts.JBDirectory.address),
       JBFundingCycleStoreAddress: getAddress(
         contracts.JBFundingCycleStore.address,
       ),
       JBPricesAddress: getAddress(contracts.JBPrices.address),
+      JBTiered721DelegateStoreAddress,
     })
 
     // NFT launch tx does not accept `useDataSourceForPay` and `dataSource` (see contracts:`JBPayDataSourceFundingCycleMetadata`)

@@ -2252,6 +2252,9 @@ msgstr ""
 msgid "Project upgrades"
 msgstr ""
 
+msgid "Project {projectId}"
+msgstr ""
+
 msgid "Project {projectId} not found"
 msgstr ""
 

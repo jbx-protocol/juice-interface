@@ -5,7 +5,7 @@ import { Button, Col, Row, Space, Tooltip } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
 import FormattedAddress from 'components/FormattedAddress'
 import TooltipIcon from 'components/TooltipIcon'
-import V2V3ProjectHandle from 'components/v2v3/shared/V2V3ProjectHandle'
+import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 import { CurrencyName } from 'constants/currency'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
@@ -119,7 +119,7 @@ export default function DistributionSplitCard({
                   justifyContent: 'space-between',
                 }}
               >
-                <V2V3ProjectHandle projectId={parseInt(split.projectId)} />
+                <V2V3ProjectHandleLink projectId={parseInt(split.projectId)} />
               </div>
             </Col>
           </Row>

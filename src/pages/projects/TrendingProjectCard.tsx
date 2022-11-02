@@ -5,10 +5,10 @@ import ETHAmount from 'components/currency/ETHAmount'
 import Loading from 'components/Loading'
 import ProjectLogo from 'components/ProjectLogo'
 import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
-import V2V3ProjectHandle from 'components/v2v3/shared/V2V3ProjectHandle'
 import { CV_V2, CV_V3 } from 'constants/cv'
 import { trendingWindowDays } from 'constants/trendingWindowDays'
 import { ThemeContext } from 'contexts/themeContext'
+import { useProjectHandleText } from 'hooks/ProjectHandleText'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { Project } from 'models/subgraph-entities/vX/project'
 import Link from 'next/link'
@@ -40,27 +40,12 @@ export default function TrendingProjectCard({
     theme: { colors, radii },
   } = useContext(ThemeContext)
 
-  const cardStyle: CSSProperties = {
-    display: 'flex',
-    alignItems: 'center',
-    whiteSpace: 'pre',
-    height: '100%',
-    overflow: 'hidden',
-    padding: '25px 20px',
-  }
-
-  const rankStyle: CSSProperties = {
-    fontSize: 22,
-    color: colors.text.primary,
-    fontWeight: 400,
-    marginRight: 15,
-    width: 25,
-    textAlign: 'center',
-  }
-
-  const { data: metadata } = useProjectMetadata(project?.metadataUri)
-
-  const terminalVersion = getTerminalVersion(project?.terminal)
+  const { data: metadata } = useProjectMetadata(project.metadataUri)
+  const { handleText } = useProjectHandleText({
+    handle: project.handle,
+    projectId: project.projectId,
+  })
+  const terminalVersion = getTerminalVersion(project.terminal)
 
   // If the total paid is greater than 0, but less than 10 ETH, show two decimal places.
   const precision =
@@ -99,13 +84,31 @@ export default function TrendingProjectCard({
 
   const paymentCount = project.trendingPaymentsCount
 
+  const cardStyle: CSSProperties = {
+    display: 'flex',
+    alignItems: 'center',
+    whiteSpace: 'pre',
+    height: '100%',
+    overflow: 'hidden',
+    padding: '25px 20px',
+  }
+
+  const rankStyle: CSSProperties = {
+    fontSize: 22,
+    color: colors.text.primary,
+    fontWeight: 400,
+    marginRight: 15,
+    width: 25,
+    textAlign: 'center',
+  }
+
   return (
     <Link
       key={project.handle}
       href={
         project.cv === CV_V2 || project.cv === CV_V3
           ? v2v3ProjectRoute(project)
-          : `/p/${project?.handle}`
+          : `/p/${project.handle}`
       }
     >
       <a>
@@ -154,10 +157,9 @@ export default function TrendingProjectCard({
 
               {size === 'sm' ? null : (
                 <div>
-                  <V2V3ProjectHandle
-                    projectId={project.projectId}
-                    handle={project.handle}
-                  />{' '}
+                  <span style={{ color: colors.text.primary, fontWeight: 500 }}>
+                    {handleText}
+                  </span>{' '}
                   <ProjectVersionBadge
                     size="small"
                     versionText={`V${terminalVersion ?? project.cv}`}

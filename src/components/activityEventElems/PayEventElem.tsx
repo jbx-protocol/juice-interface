@@ -8,7 +8,7 @@ import { PayEvent } from 'models/subgraph-entities/vX/pay-event'
 import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/format/formatDate'
 
-import V2V3ProjectHandle from '../v2v3/shared/V2V3ProjectHandle'
+import V2V3ProjectHandleLink from '../v2v3/shared/V2V3ProjectHandleLink'
 
 import {
   contentLineHeight,
@@ -87,7 +87,7 @@ export default function PayEventElem({
           <Trans>
             Fee from{' '}
             <span>
-              <V2V3ProjectHandle projectId={event.feeFromV2Project} />
+              <V2V3ProjectHandleLink projectId={event.feeFromV2Project} />
             </span>
           </Trans>
         </div>

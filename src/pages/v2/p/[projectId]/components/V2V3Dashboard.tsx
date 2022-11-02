@@ -10,7 +10,9 @@ import { useContext } from 'react'
 
 export function V2V3Dashboard() {
   const { projectId, projectMetadata } = useContext(ProjectMetadataContext)
-  const { cvsLoading } = useContext(V2V3ProjectContractsContext)
+  const {
+    loading: { cvsLoading },
+  } = useContext(V2V3ProjectContractsContext)
 
   if (cvsLoading || !projectMetadata) return <Loading />
 

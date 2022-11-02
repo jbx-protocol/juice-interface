@@ -1,5 +1,7 @@
 import isEqual from 'lodash/isEqual'
+import { NftRewardTier } from 'models/nftRewardTier'
 import { useMemo } from 'react'
+import { tiersEqual } from 'utils/nftRewards'
 import {
   serializeFundAccessConstraint,
   serializeV2V3FundingCycleData,
@@ -22,6 +24,7 @@ export const useFundingHasSavedChanges = ({
     editingFundingCycleMetadata,
     editingFundingCycleData,
     editingFundAccessConstraints,
+    editingNftRewards,
   } = editingProjectData
 
   const fundingHasSavedChanges = useMemo(() => {
@@ -41,6 +44,7 @@ export const useFundingHasSavedChanges = ({
         payoutGroupedSplits: editingPayoutGroupedSplits.splits,
         reservedTokensGroupedSplits: editingReservedTokensGroupedSplits.splits,
       },
+      nftRewards: editingNftRewards,
     }
     return !isEqual(initialEditingData, editedChanges)
   }, [
@@ -49,6 +53,7 @@ export const useFundingHasSavedChanges = ({
     editingFundingCycleMetadata,
     editingPayoutGroupedSplits,
     editingReservedTokensGroupedSplits,
+    editingNftRewards,
     initialEditingData,
   ])
 
@@ -166,10 +171,29 @@ export const useFundingHasSavedChanges = ({
     initialEditingData,
   ])
 
+  const nftDrawerHasSavedChanges = useMemo(() => {
+    const editingNftRewards = editingProjectData.editingNftRewards
+    const initialNftRewards = initialEditingData?.nftRewards
+    if (!editingNftRewards) return false
+    if (!initialNftRewards && editingNftRewards) return true
+
+    const rewardTiersChanged = Boolean(
+      editingNftRewards.rewardTiers?.some(
+        (rewardTier: NftRewardTier, index: number) => {
+          const initialRewardTier = initialNftRewards?.rewardTiers?.[index]
+          if (!initialRewardTier) return true
+          return !tiersEqual({ tier1: rewardTier, tier2: initialRewardTier })
+        },
+      ),
+    )
+    return rewardTiersChanged
+  }, [editingProjectData, initialEditingData])
+
   return {
     fundingHasSavedChanges,
     fundingDrawerHasSavedChanges,
     tokenDrawerHasSavedChanges,
     rulesDrawerHasSavedChanges,
+    nftDrawerHasSavedChanges,
   }
 }

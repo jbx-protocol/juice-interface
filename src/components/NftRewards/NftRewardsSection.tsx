@@ -35,12 +35,32 @@ function RewardTiersLoadingSkeleton() {
   )
 }
 
-export function NftRewardsSection() {
+function Header() {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  return (
+    <>
+      <SectionHeader
+        text={t`Unlockable NFT rewards`}
+        style={{ marginBottom: 0 }}
+      />
+      <span
+        style={{
+          color: colors.text.tertiary,
+          fontSize: '0.75rem',
+        }}
+      >
+        <Trans>Contribute to unlock an NFT reward.</Trans>
+      </span>
+    </>
+  )
+}
+
+export function NftRewardsSection() {
   const {
-    nftRewards: { CIDs, rewardTiers, loading: nftsLoading },
+    nftRewards: { CIDs, rewardTiers },
+    loading: nftsLoading,
   } = useContext(NftRewardsContext)
   const {
     currencies: { ETH },
@@ -57,18 +77,8 @@ export function NftRewardsSection() {
 
   const converter = useCurrencyConverter()
   const isMobile = useMobile()
-
-  const nftRewardsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
   const payAmountETH =
     payInCurrency === ETH ? payAmount : fromWad(converter.usdToWei(payAmount))
-
-  const hasCIDs = Boolean(CIDs?.length)
-
-  const handleSelected = (rewardTier: NftRewardTier, idx: number) => {
-    setSelectedIndex(idx)
-    setPayAmount?.(rewardTier.contributionFloor.toString())
-    setPayInCurrency?.(ETH)
-  }
 
   useEffect(() => {
     if (!rewardTiers || !payAmountETH) return
@@ -86,56 +96,56 @@ export function NftRewardsSection() {
     }
   }, [payAmountETH, rewardTiers])
 
+  const handleSelected = (rewardTier: NftRewardTier, idx: number) => {
+    setSelectedIndex(idx)
+    setPayAmount?.(rewardTier.contributionFloor.toString())
+    setPayInCurrency?.(ETH)
+  }
+
+  const nftRewardsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
+  const hasCIDs = Boolean(CIDs?.length)
+
   if ((!hasCIDs && !nftsLoading) || !nftRewardsEnabled) {
     return null
   }
 
+  const renderRewardTiers = [...(rewardTiers ?? [])]?.sort(
+    (a, b) => a.contributionFloor - b.contributionFloor,
+  )
+
   return (
     <div style={{ width: 'unset' }}>
-      <SectionHeader
-        text={t`Unlockable NFT rewards`}
-        style={{ marginBottom: 0 }}
-      />
-      <span
-        style={{
-          color: colors.text.tertiary,
-          fontSize: '0.75rem',
-        }}
-      >
-        <Trans>Contribute to unlock an NFT reward.</Trans>
-      </span>
+      <Header />
 
       {nftsLoading ? (
         <RewardTiersLoadingSkeleton />
       ) : (
         <Row style={{ marginTop: '15px' }} gutter={isMobile ? 8 : 24}>
-          {rewardTiers
-            ?.sort((a, b) => a.contributionFloor - b.contributionFloor)
-            .map((rewardTier, idx) => (
-              <Col
-                md={8}
-                xs={8}
-                key={`${rewardTier.contributionFloor}-${rewardTier.name}`}
-              >
-                <RewardTier
-                  tierRank={idx + 1}
-                  rewardTier={rewardTier}
-                  rewardTierUpperLimit={rewardTiers[idx + 1]?.contributionFloor}
-                  isSelected={idx === selectedIndex}
-                  onClick={() => handleSelected(rewardTier, idx)}
-                />
-              </Col>
-            ))}
+          {renderRewardTiers?.map((rewardTier, idx) => (
+            <Col
+              md={8}
+              xs={8}
+              key={`${rewardTier.contributionFloor}-${rewardTier.name}`}
+            >
+              <RewardTier
+                tierRank={idx + 1}
+                rewardTier={rewardTier}
+                rewardTierUpperLimit={rewardTiers?.[idx + 1]?.contributionFloor}
+                isSelected={idx === selectedIndex}
+                onClick={() => handleSelected(rewardTier, idx)}
+              />
+            </Col>
+          ))}
         </Row>
       )}
 
-      {projectMetadata?.nftPaymentSuccessModal?.content ? (
+      {projectMetadata?.nftPaymentSuccessModal?.content && (
         <NftPostPayModal
           open={nftPostPayModalVisible}
           onClose={hideNftPostPayModal}
           config={projectMetadata.nftPaymentSuccessModal}
         />
-      ) : null}
+      )}
     </div>
   )
 }

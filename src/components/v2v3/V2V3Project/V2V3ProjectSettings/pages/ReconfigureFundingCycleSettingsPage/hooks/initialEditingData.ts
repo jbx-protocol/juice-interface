@@ -198,7 +198,7 @@ export const useInitialEditingData = ({ visible }: { visible?: boolean }) => {
         payoutGroupedSplits: effectivePayoutSplits ?? [],
         reservedTokensGroupedSplits: effectiveReservedTokensSplits ?? [],
       },
-      nftRewards: nftRewards,
+      nftRewards,
     })
   }, [
     contracts,

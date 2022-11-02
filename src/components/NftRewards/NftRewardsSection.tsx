@@ -59,7 +59,8 @@ function Header() {
 
 export function NftRewardsSection() {
   const {
-    nftRewards: { CIDs, rewardTiers, loading: nftsLoading },
+    nftRewards: { CIDs, rewardTiers },
+    loading: nftsLoading,
   } = useContext(NftRewardsContext)
   const {
     currencies: { ETH },
@@ -108,7 +109,7 @@ export function NftRewardsSection() {
     return null
   }
 
-  const renderRewardTiers = rewardTiers?.sort(
+  const renderRewardTiers = [...(rewardTiers ?? [])]?.sort(
     (a, b) => a.contributionFloor - b.contributionFloor,
   )
 

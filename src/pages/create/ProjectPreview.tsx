@@ -98,12 +98,12 @@ export function ProjectPreview() {
           <NftRewardsContext.Provider
             value={{
               nftRewards: {
-                loading: undefined,
                 rewardTiers: nftRewardTiers,
                 CIDs: nftRewardsCIDs,
                 collectionMetadata: EMPTY_NFT_COLLECTION_METADATA,
                 postPayModal: projectMetadata?.nftPaymentSuccessModal,
               },
+              loading: false,
             }}
           >
             <V2V3Project />

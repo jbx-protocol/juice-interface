@@ -40,12 +40,12 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
     <NftRewardsContext.Provider
       value={{
         nftRewards: {
-          loading,
           rewardTiers,
           CIDs,
           collectionMetadata: EMPTY_NFT_COLLECTION_METADATA,
           postPayModal: projectMetadata?.nftPaymentSuccessModal,
         },
+        loading,
       }}
     >
       {children}

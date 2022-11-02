@@ -20,8 +20,8 @@ export const OPEN_IPFS_GATEWAY_HOSTNAME =
 
 // This is a restricted gateway. It only exposes content we pin against it.
 // Use when pinning content (like project metadata), and for retreiving content we've pinned.
-export const RESTRICTED_IPFS_GATEWAY_HOSTNAME =
-  process.env.NEXT_PUBLIC_PINATA_GATEWAY_HOSTNAME
+export const RESTRICTED_IPFS_GATEWAY_HOSTNAME = process.env
+  .NEXT_PUBLIC_PINATA_GATEWAY_HOSTNAME as string
 
 export const IPFS_TAGS = {
   METADATA:

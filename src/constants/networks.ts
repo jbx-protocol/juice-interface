@@ -120,4 +120,4 @@ export const NETWORKS_BY_NAME = Object.values(NETWORKS).reduce(
 )
 
 export const readNetwork =
-  NETWORKS_BY_NAME[process.env.NEXT_PUBLIC_INFURA_NETWORK]
+  NETWORKS_BY_NAME[process.env.NEXT_PUBLIC_INFURA_NETWORK as NetworkName]

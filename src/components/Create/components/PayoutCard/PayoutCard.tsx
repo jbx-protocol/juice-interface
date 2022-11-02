@@ -2,7 +2,9 @@ import { DeleteOutlined, LockFilled } from '@ant-design/icons'
 import { t } from '@lingui/macro'
 import { Space, Tooltip } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
+import useMobile from 'hooks/Mobile'
 import { PayoutsSelection } from 'models/payoutsSelection'
+import { stopPropagation } from 'react-stop-propagation'
 import { formatDate } from 'utils/format/formatDate'
 import { Allocation, AllocationSplit } from '../Allocation'
 import { Amount } from './Amount'
@@ -18,6 +20,7 @@ export const PayoutCard = ({
   onClick?: VoidFunction
   onDeleteClick?: VoidFunction
 }) => {
+  const isMobile = useMobile()
   return (
     <Allocation.Item
       title={
@@ -43,10 +46,8 @@ export const PayoutCard = ({
       }
       extra={
         <DeleteOutlined
-          onClick={e => {
-            e.stopPropagation()
-            onDeleteClick?.()
-          }}
+          style={{ fontSize: isMobile ? '18px' : undefined }}
+          onClick={stopPropagation(onDeleteClick)}
         />
       }
       onClick={onClick}

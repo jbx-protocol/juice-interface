@@ -15,7 +15,7 @@ import { useAppSelector } from 'hooks/AppSelector'
 import { useNftRewardsAdjustTiersTx } from 'hooks/v2v3/transactor/NftRewardsAdjustTiersTx'
 import { useWallet } from 'hooks/Wallet'
 import { NftRewardTier } from 'models/nftRewardTier'
-import { useCallback, useContext, useMemo, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { withHttps } from 'utils/externalLink'
 import {
@@ -71,10 +71,12 @@ export default function NftDrawer({
     nftRewards,
     projectMetadata: { name: projectName, logoUri, infoUri },
   } = useAppSelector(state => state.editingV2Project)
-  const reduxRewardTiers = useMemo(() => nftRewards.rewardTiers, [nftRewards])
-  const [rewardTiers, setRewardTiers] = useState<NftRewardTier[]>(
-    reduxRewardTiers ?? [],
-  )
+  const [rewardTiers, setRewardTiers] = useState<NftRewardTier[]>()
+
+  // Load the redux state into the state variable
+  useEffect(() => {
+    setRewardTiers(nftRewards.rewardTiers)
+  }, [nftRewards.rewardTiers])
 
   const editingRewardTierIDsPush = (tierId: number | undefined) => {
     // only need to send tiers that have changed to adjustTiers

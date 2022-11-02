@@ -53,16 +53,8 @@ export const useInitialEditingData = ({ visible }: { visible?: boolean }) => {
 
   const { nftRewards } = useContext(NftRewardsContext)
   const { projectId } = useContext(ProjectMetadataContext)
-  const [initialEditingData, setInitialEditingData] = useState<{
-    fundAccessConstraints: SerializedV2V3FundAccessConstraint[]
-    fundingCycleData: SerializedV2V3FundingCycleData
-    fundingCycleMetadata: SerializedV2V3FundingCycleMetadata
-    payoutGroupedSplits: {
-      payoutGroupedSplits: Split[]
-      reservedTokensGroupedSplits: Split[]
-    }
-    nftRewards: NftRewardsData
-  }>()
+  const [initialEditingData, setInitialEditingData] =
+    useState<InitialEditingData>()
 
   const dispatch = useAppDispatch()
 

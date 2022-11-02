@@ -1,15 +1,20 @@
+import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
 import axios from 'axios'
 import { juiceboxEmojiImageUri } from 'constants/images'
 import { IPFS_TAGS } from 'constants/ipfs'
 import { readNetwork } from 'constants/networks'
+import { parseEther } from 'ethers/lib/utils'
+import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/NftRewards'
 import {
-  ContractNftRewardTier,
   IpfsNftCollectionMetadata,
   IPFSNftRewardTier,
+  JB721TierParams,
   NftRewardTier,
 } from 'models/nftRewardTier'
 import { V2V3ContractName } from 'models/v2v3/contracts'
-import { decodeEncodedIPFSUri } from 'utils/ipfs'
+import { decodeEncodedIPFSUri, encodeIPFSUri } from 'utils/ipfs'
+
 import { ForgeDeploy } from './v2v3/loadV2V3Contract'
 
 export const MAX_NFT_REWARD_TIERS = 3
@@ -17,7 +22,7 @@ export const MAX_NFT_REWARD_TIERS = 3
 // Following three functions get the latest deployments of the NFT contracts from the NPM package
 async function loadNftRewardsDeployment() {
   const latestNftContractDeployments = (await import(
-    `@jbx-protocol/juice-nft-rewards/broadcast/Deploy.s.sol/${readNetwork.chainId}/run-latest.json`
+    `@jbx-protocol/juice-721-delegate/broadcast/Deploy.s.sol/${readNetwork.chainId}/run-latest.json`
   )) as ForgeDeploy
 
   return latestNftContractDeployments
@@ -75,10 +80,10 @@ export function sortNftRewardTiers(
 
 // returns an array of CIDs from a given array of RewardTier obj's
 export function CIDsOfNftRewardTiersResponse(
-  nftRewardTiersResponse: ContractNftRewardTier[],
+  nftRewardTiersResponse: JB721TierParams[],
 ): string[] {
   const cids: string[] = nftRewardTiersResponse
-    .map((contractRewardTier: ContractNftRewardTier) => {
+    .map((contractRewardTier: JB721TierParams) => {
       return decodeEncodedIPFSUri(contractRewardTier.encodedIPFSUri)
     })
     .filter(cid => cid.length > 0)
@@ -201,4 +206,36 @@ export function tiersEqual({
     tier1.maxSupply === tier2.maxSupply &&
     tier1.name === tier2.name
   )
+}
+
+// Builds JB721TierParams[] (see juice-721-delegate:structs/JB721TierParams.sol)
+export function buildJB721TierParams({
+  cids,
+  rewardTiers,
+}: {
+  cids: string[]
+  rewardTiers: NftRewardTier[]
+}): JB721TierParams[] {
+  // `cids` are ordered the same as `rewardTiers` so can get corresponding values from same index
+  return cids.map((cid, index) => {
+    const contributionFloorWei = parseEther(
+      rewardTiers[index].contributionFloor.toString(),
+    )
+    const maxSupply = rewardTiers[index].maxSupply
+    const initialQuantity = BigNumber.from(maxSupply ?? DEFAULT_NFT_MAX_SUPPLY)
+    const encodedIPFSUri = encodeIPFSUri(cid)
+
+    return {
+      contributionFloor: contributionFloorWei,
+      lockedUntil: BigNumber.from(0),
+      initialQuantity,
+      votingUnits: 0,
+      reservedRate: 0,
+      reservedTokenBeneficiary: constants.AddressZero,
+      encodedIPFSUri,
+      allowManualMint: false,
+      shouldUseBeneficiaryAsDefault: false,
+      transfersPausable: false,
+    } as JB721TierParams
+  })
 }

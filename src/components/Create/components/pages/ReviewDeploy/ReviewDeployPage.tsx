@@ -16,6 +16,7 @@ import { useDispatch } from 'react-redux'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { featureFlagEnabled } from 'utils/featureFlags'
+import { CreateBadge } from '../../CreateBadge'
 import { CreateCallout } from '../../CreateCallout'
 import { CreateCollapse } from '../../CreateCollapse'
 import { Wizard } from '../../Wizard'
@@ -27,7 +28,10 @@ import {
   RulesReview,
 } from './components'
 
-const Header: React.FC = ({ children }) => {
+const Header: React.FC<{ skipped?: boolean }> = ({
+  children,
+  skipped = false,
+}) => {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -41,7 +45,15 @@ const Header: React.FC = ({ children }) => {
       }}
     >
       {children}
-      <CheckCircleFilled style={{ color: colors.background.action.primary }} />
+      {skipped ? (
+        <span>
+          <CreateBadge.Skipped />
+        </span>
+      ) : (
+        <CheckCircleFilled
+          style={{ color: colors.background.action.primary }}
+        />
+      )}
     </h2>
   )
 }
@@ -63,7 +75,7 @@ export const ReviewDeployPage = () => {
     state => state.editingV2Project.nftRewards.rewardTiers,
   )
 
-  const nftRewardsAreSet = nftRewards.length > 0
+  const nftRewardsAreSet = nftRewards && nftRewards?.length > 0
 
   const dispatch = useDispatch()
 
@@ -131,11 +143,12 @@ export const ReviewDeployPage = () => {
         >
           <ProjectTokenReview />
         </CreateCollapse.Panel>
-        {featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS) && nftRewardsAreSet && (
+        {featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS) && (
           <CreateCollapse.Panel
             key={3}
+            collapsible={nftRewardsAreSet ? 'header' : 'disabled'}
             header={
-              <Header>
+              <Header skipped={!nftRewardsAreSet}>
                 <Trans>NFT Rewards</Trans>
               </Header>
             }
@@ -162,7 +175,6 @@ export const ReviewDeployPage = () => {
           marginTop: '2rem',
           display: 'flex',
           flexDirection: 'column',
-          gap: '2rem',
         }}
       >
         <CreateCallout.Info noIcon collapsible={false}>
@@ -214,7 +226,7 @@ export const ReviewDeployPage = () => {
       </div>
       <TransactionModal
         transactionPending={deployTransactionPending}
-        visible={deployTransactionPending}
+        open={deployTransactionPending}
       />
       <Modal
         title={

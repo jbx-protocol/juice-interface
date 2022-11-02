@@ -194,9 +194,12 @@ export const CustomTokenSettings = () => {
         >
           <NumberSlider min={0.1} defaultValue={0} suffix="%" step={0.5} />
         </Form.Item>
-        <Form.Item noStyle name="redemptionRate">
-          <TokenRedemptionRateGraph graphPad={50} graphSize={300} />
-        </Form.Item>
+        {/* TODO: Hide on mobile due to pushing out of bound viewport */}
+        {!isMobile && (
+          <Form.Item noStyle name="redemptionRate">
+            <TokenRedemptionRateGraph graphPad={50} graphSize={300} />
+          </Form.Item>
+        )}
       </Form.Item>
 
       <Divider />

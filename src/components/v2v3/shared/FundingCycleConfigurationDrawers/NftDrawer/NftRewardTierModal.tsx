@@ -4,7 +4,7 @@ import { useForm } from 'antd/lib/form/Form'
 import { ModalMode } from 'components/formItems/formHelpers'
 import TooltipLabel from 'components/TooltipLabel'
 import { NftRewardTier } from 'models/nftRewardTier'
-import { useEffect } from 'react'
+import { useMemo } from 'react'
 
 import ContributionFloorFormItem from './ContributionFloorFormItem'
 import NftUpload from './NftUpload'
@@ -64,18 +64,20 @@ export default function NftRewardTierModal({
     }
   }
 
-  useEffect(() => {
-    if (rewardTier) {
-      nftForm.setFieldsValue({
-        imageUrl: rewardTier.imageUrl,
-        maxSupply: rewardTier.maxSupply,
-        name: rewardTier.name,
-        externalLink: rewardTier.externalLink?.slice(8), // removes 'https://'
-        description: rewardTier.description,
-        contributionFloor: rewardTier.contributionFloor,
-      })
-    }
-  })
+  const initialValues = useMemo(
+    () =>
+      rewardTier
+        ? {
+            imageUrl: rewardTier.imageUrl,
+            maxSupply: rewardTier.maxSupply,
+            name: rewardTier.name,
+            externalLink: rewardTier.externalLink?.slice(8), // removes 'https://'
+            description: rewardTier.description,
+            contributionFloor: rewardTier.contributionFloor,
+          }
+        : undefined,
+    [rewardTier],
+  )
 
   return (
     <Modal
@@ -86,7 +88,7 @@ export default function NftRewardTierModal({
       title={mode === 'Edit' ? t`Edit NFT reward` : t`Add NFT reward`}
     >
       <p>{NFT_REWARDS_EXPLAINATION}</p>
-      <Form layout="vertical" form={nftForm}>
+      <Form layout="vertical" form={nftForm} initialValues={initialValues}>
         <Form.Item
           name={'name'}
           label={

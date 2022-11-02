@@ -12,16 +12,15 @@ import {
   useEditingV2V3FundingCycleDataSelector,
   useEditingV2V3FundingCycleMetadataSelector,
 } from 'hooks/AppSelector'
-import {
-  TxNftArg,
-  useLaunchProjectWithNftsTx,
-} from 'hooks/v2v3/transactor/LaunchProjectWithNftsTx'
+import { useLaunchProjectWithNftsTx } from 'hooks/v2v3/transactor/LaunchProjectWithNftsTx'
 import { useWallet } from 'hooks/Wallet'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { TransactionOptions } from 'models/transaction'
 import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import { buildJB721TierParams } from 'utils/nftRewards'
+
 import { emitErrorNotification } from 'utils/notifications'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { findTransactionReceipt } from './utils'
@@ -143,19 +142,11 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
     }
 
     try {
-      if (!(projectName && CIDs)) {
+      if (!(projectName && CIDs && rewardTiers)) {
         throw new Error('Data missing.')
       }
 
-      // create mapping from cids -> contributionFloor
-      const nftRewardsArg: TxNftArg = CIDs.reduce(
-        (acc, cid, idx) => ({
-          ...acc,
-          [cid]: rewardTiers[idx],
-        }),
-        {},
-      )
-
+      const tiers = buildJB721TierParams({ cids: CIDs, rewardTiers })
       const txSuccessful = await launchProjectWithNftsTx(
         {
           collectionCID: collectionCID ?? '',
@@ -169,7 +160,7 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
           },
           fundAccessConstraints,
           groupedSplits: [payoutGroupedSplits, reservedTokensGroupedSplits],
-          nftRewards: nftRewardsArg,
+          tiers,
         },
         txOpts,
       )

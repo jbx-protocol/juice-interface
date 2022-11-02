@@ -23,13 +23,9 @@ export const useFundingCyclesForm = () => {
   useDebugValue(form.getFieldsValue())
 
   const initialValues: FundingCyclesFormProps | undefined = useMemo(() => {
-    const selection = fundingCycleData.duration === '0' ? 'manual' : 'automated'
+    const selection = fundingCyclesPageSelection
 
-    if (
-      !fundingCyclesPageSelection ||
-      !fundingCycleData.duration?.length ||
-      selection === 'manual'
-    ) {
+    if (!fundingCycleData.duration?.length || selection !== 'automated') {
       // Return default values if the user hasn't selected a funding cycle type yet.
       return { duration: { duration: 14, unit: 'days' }, selection }
     }

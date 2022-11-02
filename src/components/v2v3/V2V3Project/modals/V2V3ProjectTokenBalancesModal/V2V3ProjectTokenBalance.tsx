@@ -23,20 +23,22 @@ export const V2V3ProjectTokenBalance = ({
   const { data: tokenAddress } = useProjectToken({ projectId })
   const tokenSymbol = useSymbolOfERC20(tokenAddress)
   const { data: balance } = useTotalBalanceOf(projectOwnerAddress, projectId)
+  const formattedBalance = formatWad(balance, { precision: precision ?? 0 })
 
   return (
     <div style={{ ...style }}>
-      <Trans>
-        {formatWad(balance, { precision: precision ?? 0 })}{' '}
-        {tokenSymbol ? (
-          tokenSymbolText({ tokenSymbol, plural: true })
-        ) : (
-          <span>
-            tokens for{' '}
+      {tokenSymbol ? (
+        <span>
+          {formattedBalance} {tokenSymbolText({ tokenSymbol, plural: true })}
+        </span>
+      ) : (
+        <span>
+          <Trans>
+            {formattedBalance} tokens for{' '}
             <V2V3ProjectHandle projectId={projectId} handle={handle} />
-          </span>
-        )}
-      </Trans>
+          </Trans>
+        </span>
+      )}
     </div>
   )
 }

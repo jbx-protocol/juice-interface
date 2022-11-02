@@ -3713,9 +3713,6 @@ msgstr ""
 msgid "{0} withdrawn"
 msgstr ""
 
-msgid "{0} {1}"
-msgstr ""
-
 msgid "{0} {tokenTextPlural} reserved"
 msgstr ""
 
@@ -3750,6 +3747,9 @@ msgid "{count} total"
 msgstr ""
 
 msgid "{exchangeName} has no market for {tokenSymbol}."
+msgstr ""
+
+msgid "{formattedBalance} tokens for <0/>"
 msgstr ""
 
 msgid "{formattedTimeLeft} left"

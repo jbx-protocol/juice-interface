@@ -7,7 +7,7 @@ import { TransactionContext } from 'contexts/transactionContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useV2ProjectTitle } from '../ProjectTitle'
 
-export function useEditV2V3ProjectHandleLinkTx(): TransactorInstance<{
+export function useEditV2V3ProjectHandleTx(): TransactorInstance<{
   ensName: string
 }> {
   const { transactor } = useContext(TransactionContext)

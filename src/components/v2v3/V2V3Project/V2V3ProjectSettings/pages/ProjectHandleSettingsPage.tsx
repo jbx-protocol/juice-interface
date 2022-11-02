@@ -11,7 +11,7 @@ import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import useProjectENSName from 'hooks/v2v3/contractReader/ProjectENSName'
 import { useProjectHandleENSTextRecord } from 'hooks/v2v3/contractReader/ProjectHandleENSTextRecord'
-import { useEditV2V3ProjectHandleLinkTx } from 'hooks/v2v3/transactor/EditV2V3ProjectHandleLinkTx'
+import { useEditV2V3ProjectHandleTx } from 'hooks/v2v3/transactor/EditV2V3ProjectHandleTx'
 import { useSetENSTextRecordForHandleTx } from 'hooks/v2v3/transactor/SetENSTextRecordForHandleTx'
 import Link from 'next/link'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
@@ -34,7 +34,7 @@ export function ProjectHandleSettingsPage() {
 
   const { data: projectEnsName } = useProjectENSName({ projectId })
 
-  const editV2V3ProjectHandleLinkTx = useEditV2V3ProjectHandleLinkTx()
+  const editV2V3ProjectHandleTx = useEditV2V3ProjectHandleTx()
   const setENSTextRecordForHandleTx = useSetENSTextRecordForHandleTx()
 
   function onSetENSNameFormSaved() {
@@ -44,7 +44,7 @@ export function ProjectHandleSettingsPage() {
       .toLowerCase()
       .trim()
 
-    editV2V3ProjectHandleLinkTx(
+    editV2V3ProjectHandleTx(
       { ensName },
       {
         onDone: () => setLoadingSetENSName(false),

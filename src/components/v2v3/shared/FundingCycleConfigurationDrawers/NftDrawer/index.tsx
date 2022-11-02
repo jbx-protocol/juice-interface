@@ -1,3 +1,4 @@
+import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Button, Empty, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
@@ -70,7 +71,10 @@ export default function NftDrawer({
     nftRewards,
     projectMetadata: { name: projectName, logoUri, infoUri },
   } = useAppSelector(state => state.editingV2Project)
-  const rewardTiers = useMemo(() => nftRewards.rewardTiers, [nftRewards])
+  const reduxRewardTiers = useMemo(() => nftRewards.rewardTiers, [nftRewards])
+  const [rewardTiers, setRewardTiers] = useState<NftRewardTier[]>(
+    reduxRewardTiers ?? [],
+  )
 
   const editingRewardTierIDsPush = (tierId: number | undefined) => {
     // only need to send tiers that have changed to adjustTiers
@@ -204,11 +208,13 @@ export default function NftDrawer({
     if (!rewardTiers) return
 
     setSubmitLoading(true)
-
-    if (!rewardTiers?.length) {
-      await saveNewCollection()
-    } else if (fundingCycleMetadata?.dataSource) {
+    if (
+      fundingCycleMetadata?.dataSource &&
+      fundingCycleMetadata.dataSource !== constants.AddressZero
+    ) {
       await saveEditedCollection()
+    } else {
+      await saveNewCollection()
     }
 
     setSubmitLoading(false)
@@ -225,8 +231,7 @@ export default function NftDrawer({
 
   const handleAddRewardTier = (newRewardTier: NftRewardTier) => {
     const newRewardTiers = [...(rewardTiers ?? []), newRewardTier]
-
-    dispatch(editingV2ProjectActions.setNftRewardTiers(newRewardTiers))
+    setRewardTiers(newRewardTiers)
     setFormUpdated(true)
   }
 
@@ -253,8 +258,7 @@ export default function NftDrawer({
           }
         : tier,
     ) ?? [newRewardTier]
-
-    dispatch(editingV2ProjectActions.setNftRewardTiers(newRewardTiers))
+    setRewardTiers(newRewardTiers)
   }
 
   const handleDeleteRewardTier = (tierIndex: number) => {
@@ -263,7 +267,7 @@ export default function NftDrawer({
       ...rewardTiers.slice(0, tierIndex),
       ...rewardTiers.slice(tierIndex + 1),
     ]
-    dispatch(editingV2ProjectActions.setNftRewardTiers(newRewardTiers))
+    setRewardTiers(newRewardTiers)
     editingRewardTierIDsPush(rewardTiers[tierIndex].id)
   }
 

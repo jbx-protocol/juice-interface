@@ -126,8 +126,8 @@ export const FundingCyclesPage = () => {
           </Form.Item>
         </Space>
         <FundingCycleCallout />
-        <Wizard.Page.ButtonControl isNextEnabled={isNextEnabled} />
       </Space>
+      <Wizard.Page.ButtonControl isNextEnabled={isNextEnabled} />
     </Form>
   )
 }

@@ -147,8 +147,8 @@ export const NftRewardsPage = () => {
               </Space>
             </CreateCollapse.Panel>
           </CreateCollapse>
-          <Wizard.Page.ButtonControl />
         </div>
+        <Wizard.Page.ButtonControl />
       </Form>
       {postPayModalData && (
         <NftPostPayModal

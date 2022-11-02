@@ -83,13 +83,14 @@ export const PayoutsPage: React.FC = () => {
             <Form.Item
               name="payoutsList"
               rules={[allocationTotalPercentDoNotExceedTotalRule()]}
+              style={{ marginBottom: 0 }}
             >
               <PayoutsList payoutsSelection={selection} />
             </Form.Item>
           </Space>
         )}
-        <Wizard.Page.ButtonControl isNextEnabled={isNextEnabled} />
       </Space>
+      <Wizard.Page.ButtonControl isNextEnabled={isNextEnabled} />
     </Form>
   )
 }

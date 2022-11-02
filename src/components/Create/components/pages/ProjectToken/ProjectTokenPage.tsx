@@ -96,8 +96,8 @@ export const ProjectTokenPage: React.FC = () => {
               This is optional.
             </Trans>
           </CreateCallout.Info>
-          <Wizard.Page.ButtonControl isNextEnabled={isNextEnabled} />
         </Space>
+        <Wizard.Page.ButtonControl isNextEnabled={isNextEnabled} />
       </Form>
       <DefaultSettingsModal
         open={modal.visible}

@@ -1,6 +1,8 @@
-import { t } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
+import V2V3ProjectHandle from 'components/v2v3/shared/V2V3ProjectHandle'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import useSymbolOfERC20 from 'hooks/SymbolOfERC20'
+import useProjectHandle from 'hooks/v2v3/contractReader/ProjectHandle'
 import useProjectToken from 'hooks/v2v3/contractReader/ProjectToken'
 import useTotalBalanceOf from 'hooks/v2v3/contractReader/TotalBalanceOf'
 import { CSSProperties, useContext } from 'react'
@@ -17,17 +19,26 @@ export const V2V3ProjectTokenBalance = ({
   precision?: number
 }) => {
   const { projectOwnerAddress } = useContext(V2V3ProjectContext)
-
+  const { data: handle } = useProjectHandle({ projectId })
   const { data: tokenAddress } = useProjectToken({ projectId })
   const tokenSymbol = useSymbolOfERC20(tokenAddress)
   const { data: balance } = useTotalBalanceOf(projectOwnerAddress, projectId)
+  const formattedBalance = formatWad(balance, { precision: precision ?? 0 })
 
   return (
     <div style={{ ...style }}>
-      {formatWad(balance, { precision: precision ?? 0 })}{' '}
-      {tokenSymbol
-        ? tokenSymbolText({ tokenSymbol, plural: true })
-        : t`tokens for Project #${projectId}`}
+      {tokenSymbol ? (
+        <span>
+          {formattedBalance} {tokenSymbolText({ tokenSymbol, plural: true })}
+        </span>
+      ) : (
+        <span>
+          <Trans>
+            {formattedBalance} tokens for{' '}
+            <V2V3ProjectHandle projectId={projectId} handle={handle} />
+          </Trans>
+        </span>
+      )}
     </div>
   )
 }

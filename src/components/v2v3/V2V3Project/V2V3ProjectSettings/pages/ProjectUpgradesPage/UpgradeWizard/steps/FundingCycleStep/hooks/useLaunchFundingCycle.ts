@@ -33,7 +33,6 @@ export const useLaunchFundingCycle = ({
   const [launchFundingCycleTxLoading, setLaunchFundingCycleTxLoading] =
     useState<boolean>(false)
 
-  // TODO(@aeolian) make sure this tx uses the V3 contract.
   const launchFundingCycles = useLaunchFundingCyclesTx({
     JBController: V3JBController,
   })

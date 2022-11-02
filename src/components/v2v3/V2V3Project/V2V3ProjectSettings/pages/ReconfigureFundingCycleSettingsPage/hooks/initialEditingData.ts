@@ -38,6 +38,11 @@ export interface InitialEditingData {
   nftRewards: NftRewardsData | undefined
 }
 
+/**
+ * Populate the redux store with the in-context project data.
+ *
+ * Used to initiate redux when a user wants to edit their project somehow.s
+ */
 export const useInitialEditingData = ({
   visible,
 }: {

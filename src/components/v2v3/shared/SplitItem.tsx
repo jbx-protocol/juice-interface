@@ -22,7 +22,7 @@ import {
   formatSplitPercent,
   SPLITS_TOTAL_PERCENT,
 } from 'utils/v2v3/math'
-import V2V3ProjectHandle from './V2V3ProjectHandle'
+import V2V3ProjectHandleLink from './V2V3ProjectHandleLink'
 
 const LockedText = ({ lockedUntil }: { lockedUntil: number }) => {
   const {
@@ -55,7 +55,7 @@ const JuiceboxProjectBeneficiary = ({
 
   return (
     <div>
-      <V2V3ProjectHandle projectId={parseInt(split.projectId)} />
+      <V2V3ProjectHandleLink projectId={parseInt(split.projectId)} />
 
       <div
         style={{

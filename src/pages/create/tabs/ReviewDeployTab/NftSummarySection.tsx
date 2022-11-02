@@ -5,6 +5,7 @@ import Paragraph from 'components/Paragraph'
 import { NFT_IMAGE_SIDE_LENGTH } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload'
 import { ThemeContext } from 'contexts/themeContext'
 import { useAppSelector } from 'hooks/AppSelector'
+import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/NftRewards'
 import { useContext } from 'react'
 
 export default function NftSummarySection() {
@@ -64,14 +65,15 @@ export default function NftSummarySection() {
                 {rewardTier.contributionFloor} ETH
               </Trans>
             </p>
-            {rewardTier.maxSupply && (
+            {rewardTier.maxSupply &&
+            rewardTier.maxSupply !== DEFAULT_NFT_MAX_SUPPLY ? (
               <span>
                 <Trans>
                   <strong>Max. supply:</strong>{' '}
                   <span>{rewardTier.maxSupply}</span>
                 </Trans>
               </span>
-            )}
+            ) : null}
             {rewardTier.externalLink && (
               <span>
                 <Trans>

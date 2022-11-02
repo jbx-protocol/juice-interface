@@ -1,31 +1,33 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Empty, Space } from 'antd'
+import { useForm } from 'antd/lib/form/Form'
+import { MinimalCollapse } from 'components/MinimalCollapse'
+import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
+import TooltipIcon from 'components/TooltipIcon'
 import NftRewardTierModal from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal'
+import { readProvider } from 'constants/readProvider'
+import { shadowCard } from 'constants/styles/shadowCard'
 import { ThemeContext } from 'contexts/themeContext'
-
+import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
-
-import { useForm } from 'antd/lib/form/Form'
+import { useNftRewardsAdjustTiersTx } from 'hooks/v2v3/transactor/NftRewardsAdjustTiersTx'
+import { useWallet } from 'hooks/Wallet'
 import { NftRewardTier } from 'models/nftRewardTier'
-import { useCallback, useContext, useState } from 'react'
+import { useCallback, useContext, useMemo, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import { withHttps } from 'utils/externalLink'
 import {
+  buildJB721TierParams,
   defaultNftCollectionDescription,
   defaultNftCollectionName,
   MAX_NFT_REWARD_TIERS,
-  sortNftRewardTiers,
   tiersEqual,
   uploadNftCollectionMetadataToIPFS,
   uploadNftRewardsToIPFS,
 } from 'utils/nftRewards'
-
-import { shadowCard } from 'constants/styles/shadowCard'
-
-import { MinimalCollapse } from 'components/MinimalCollapse'
-import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
-import TooltipIcon from 'components/TooltipIcon'
-import { withHttps } from 'utils/externalLink'
+import { loadJBTiered721DelegateContract } from 'utils/v2v3/contractLoaders/JBTiered721Delegate'
+import { reloadWindow } from 'utils/windowUtils'
 import FundingCycleDrawer from '../FundingCycleDrawer'
 import { useFundingCycleDrawer } from '../useFundingCycleDrawer'
 import { AddRewardTierButton } from './AddRewardTierButton'
@@ -53,21 +55,31 @@ export default function NftDrawer({
     theme,
     theme: { colors },
   } = useContext(ThemeContext)
-  const dispatch = useAppDispatch()
-  const {
-    nftRewards: { rewardTiers: savedRewardTiers },
-    projectMetadata: { name: projectName, logoUri, infoUri },
-  } = useAppSelector(state => state.editingV2Project)
+  const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
+  const [addTierModalVisible, setAddTierModalVisible] = useState<boolean>(false)
+  const [submitLoading, setSubmitLoading] = useState<boolean>(false)
+  // a list of the `tierRanks` (IDs) of tiers that have been edited
+  const [editedRewardTierIds, setEditedRewardTierIds] = useState<number[]>([])
 
   const [marketplaceForm] = useForm<MarketplaceFormFields>()
   const [postPayModalForm] = useForm<NftPostPayModalFormFields>()
 
-  const [addTierModalVisible, setAddTierModalVisible] = useState<boolean>(false)
-  const [submitLoading, setSubmitLoading] = useState<boolean>(false)
+  const { signer } = useWallet()
+  const dispatch = useAppDispatch()
+  const {
+    nftRewards,
+    projectMetadata: { name: projectName, logoUri, infoUri },
+  } = useAppSelector(state => state.editingV2Project)
+  const rewardTiers = useMemo(() => nftRewards.rewardTiers, [nftRewards])
 
-  const [rewardTiers, setRewardTiers] = useState<NftRewardTier[]>(
-    savedRewardTiers ?? [],
-  )
+  const editingRewardTierIDsPush = (tierId: number | undefined) => {
+    // only need to send tiers that have changed to adjustTiers
+    // when id == undefined, tier is new
+    if (!tierId || editedRewardTierIds.includes(tierId)) return
+    setEditedRewardTierIds([...editedRewardTierIds, tierId])
+  }
+
+  const nftRewardsAdjustTiersTx = useNftRewardsAdjustTiersTx()
 
   const {
     handleDrawerCloseClick,
@@ -77,10 +89,15 @@ export default function NftDrawer({
     closeModal,
   } = useFundingCycleDrawer(onClose)
 
-  const onNftFormSaved = useCallback(async () => {
-    setSubmitLoading(true)
+  // When project didn't have any NFTs before reconfiguring.
+  //    i.e. reconfiguring with a new NFT collection (calls `721Deployer.reconfigureFundingCyclesOf`
+  //         when executing reconfiguration on settings page)
+  const saveNewCollection = useCallback(async () => {
+    if (!rewardTiers) return // TODO emit error notificaiton
+
     const marketplaceFormValues = marketplaceForm.getFieldsValue(true)
     const collectionName = marketplaceFormValues.collectionName
+    const postPayModalContent = postPayModalForm.getFieldValue('content')
 
     const [rewardTiersCIDs, nftCollectionMetadataCID] = await Promise.all([
       uploadNftRewardsToIPFS(rewardTiers),
@@ -114,8 +131,6 @@ export default function NftDrawer({
         nftCollectionMetadataCID,
       ),
     )
-
-    const postPayModalContent = postPayModalForm.getFieldValue('content')
     dispatch(
       editingV2ProjectActions.setNftPostPayModalConfig(
         postPayModalContent
@@ -129,23 +144,89 @@ export default function NftDrawer({
     )
     // Store cid (link to nfts on IPFS) to be used later in the deploy tx
     dispatch(editingV2ProjectActions.setNftRewardsCIDs(rewardTiersCIDs))
+  }, [
+    dispatch,
+    infoUri,
+    logoUri,
+    marketplaceForm,
+    postPayModalForm,
+    projectName,
+    rewardTiers,
+  ])
+
+  // When projects with NFTs are reconfiguring those NFTs
+  // Calls `dataSource.adjustTiers`
+  const saveEditedCollection = useCallback(async () => {
+    if (!fundingCycleMetadata || !rewardTiers) return // TODO emit error notificaiton
+
+    dispatch(editingV2ProjectActions.setNftRewardTiers(rewardTiers))
+    const newRewardTiers = rewardTiers.filter(
+      rewardTier =>
+        rewardTier.id === undefined ||
+        editedRewardTierIds.includes(rewardTier.id),
+    ) // rewardTiers with id==undefined are new
+
+    // upload new rewardTiers and get their CIDs
+    const rewardTiersCIDs = await uploadNftRewardsToIPFS(newRewardTiers)
+    const dataSourceContract = await loadJBTiered721DelegateContract(
+      fundingCycleMetadata.dataSource,
+      signer ?? readProvider,
+    )
+    const newTiers = buildJB721TierParams({
+      cids: rewardTiersCIDs,
+      rewardTiers: newRewardTiers,
+    })
+    await nftRewardsAdjustTiersTx(
+      {
+        dataSourceContract,
+        newTiers,
+        tierIdsChanged: editedRewardTierIds,
+      },
+      {
+        onConfirmed: () => {
+          // reloading because if you go to edit again before new tiers have
+          // loaded from contracts it could cause problems (no tier.id's)
+          reloadWindow()
+        },
+      },
+    )
+    dispatch(editingV2ProjectActions.setNftRewardsCIDs(rewardTiersCIDs))
+  }, [
+    dispatch,
+    editedRewardTierIds,
+    fundingCycleMetadata,
+    nftRewardsAdjustTiersTx,
+    rewardTiers,
+    signer,
+  ])
+
+  const onNftFormSaved = useCallback(async () => {
+    if (!rewardTiers) return
+
+    setSubmitLoading(true)
+
+    if (!rewardTiers?.length) {
+      await saveNewCollection()
+    } else if (fundingCycleMetadata?.dataSource) {
+      await saveEditedCollection()
+    }
+
     setSubmitLoading(false)
     setFormUpdated(false)
     onClose?.()
   }, [
-    postPayModalForm,
     rewardTiers,
-    dispatch,
+    fundingCycleMetadata,
+    saveNewCollection,
+    saveEditedCollection,
     onClose,
-    marketplaceForm,
     setFormUpdated,
-    projectName,
-    logoUri,
-    infoUri,
   ])
 
   const handleAddRewardTier = (newRewardTier: NftRewardTier) => {
-    setRewardTiers(sortNftRewardTiers([...rewardTiers, newRewardTier]))
+    const newRewardTiers = [...(rewardTiers ?? []), newRewardTier]
+
+    dispatch(editingV2ProjectActions.setNftRewardTiers(newRewardTiers))
     setFormUpdated(true)
   }
 
@@ -156,32 +237,45 @@ export default function NftDrawer({
     index: number
     newRewardTier: NftRewardTier
   }) => {
-    if (!tiersEqual({ tier1: newRewardTier, tier2: rewardTiers[index] })) {
+    if (
+      rewardTiers &&
+      !tiersEqual({ tier1: newRewardTier, tier2: rewardTiers[index] })
+    ) {
       setFormUpdated(true)
+      editingRewardTierIDsPush(rewardTiers[index].id)
     }
-    const newRewardTiers = rewardTiers.map((tier, i) =>
+
+    const newRewardTiers = rewardTiers?.map((tier, i) =>
       i === index
         ? {
             ...tier,
             ...newRewardTier,
           }
         : tier,
-    )
-    setRewardTiers(newRewardTiers)
+    ) ?? [newRewardTier]
+
+    dispatch(editingV2ProjectActions.setNftRewardTiers(newRewardTiers))
   }
 
   const handleDeleteRewardTier = (tierIndex: number) => {
-    setRewardTiers([
+    if (!rewardTiers) return
+    const newRewardTiers = [
       ...rewardTiers.slice(0, tierIndex),
       ...rewardTiers.slice(tierIndex + 1),
-    ])
+    ]
+    dispatch(editingV2ProjectActions.setNftRewardTiers(newRewardTiers))
+    editingRewardTierIDsPush(rewardTiers[tierIndex].id)
   }
 
   // Determine if a give `contributionFloor` already exists in the current array of `rewardTiers`
-  const validateContributionFloor = (contributionFloor: number) =>
-    rewardTiers.filter(
-      (tier: NftRewardTier) => tier.contributionFloor == contributionFloor,
-    ).length === 0
+  const validateContributionFloor = (contributionFloor: number) => {
+    if (!rewardTiers) return true
+    return (
+      rewardTiers?.filter(
+        (tier: NftRewardTier) => tier.contributionFloor == contributionFloor,
+      ).length === 0
+    )
+  }
 
   return (
     <>
@@ -201,7 +295,7 @@ export default function NftDrawer({
           <p>{NFT_REWARDS_EXPLAINATION}</p>
 
           <Space direction="vertical" size="large" style={{ width: '100%' }}>
-            {rewardTiers.map((rewardTier, index) => (
+            {rewardTiers?.map((rewardTier, index) => (
               <NftRewardTierCard
                 key={index}
                 rewardTier={rewardTier}
@@ -226,43 +320,53 @@ export default function NftDrawer({
             onClick={() => {
               setAddTierModalVisible(true)
             }}
-            disabled={rewardTiers.length >= MAX_NFT_REWARD_TIERS}
+            disabled={rewardTiers && rewardTiers.length >= MAX_NFT_REWARD_TIERS}
             style={{ marginBottom: 30 }}
           />
-          <MinimalCollapse
-            header={
+          {
+            !rewardTiers?.length ? (
               <>
-                <Trans>Marketplace customizations</Trans>
-                <TooltipIcon
-                  tip={t`Customize how your NFT collection will appear on NFT marketplaces (like OpenSea).`}
-                  iconStyle={{ marginLeft: 10 }}
-                />
+                <MinimalCollapse
+                  header={
+                    <>
+                      <Trans>Marketplace customizations</Trans>
+                      <TooltipIcon
+                        tip={t`Customize how your NFT collection will appear on NFT marketplaces (like OpenSea).`}
+                        iconStyle={{ marginLeft: 10 }}
+                      />
+                    </>
+                  }
+                >
+                  <NftMarketplaceCustomizationForm
+                    form={marketplaceForm}
+                    onFormUpdated={setFormUpdated}
+                  />
+                </MinimalCollapse>
+                <MinimalCollapse
+                  header={
+                    <>
+                      <Trans>Payment success popup</Trans>
+                      <TooltipIcon
+                        tip={t`Show your contributors a message after they receive their NFT reward.`}
+                        iconStyle={{ marginLeft: 10 }}
+                      />
+                    </>
+                  }
+                  style={{ marginTop: '1rem' }}
+                >
+                  <NftPostPayModalForm
+                    form={postPayModalForm}
+                    onFormUpdated={setFormUpdated}
+                  />
+                  <NftPostPayModalPreviewButton form={postPayModalForm} />
+                </MinimalCollapse>
               </>
-            }
-          >
-            <NftMarketplaceCustomizationForm
-              form={marketplaceForm}
-              onFormUpdated={setFormUpdated}
-            />
-          </MinimalCollapse>
-          <MinimalCollapse
-            header={
-              <>
-                <Trans>Payment success popup</Trans>
-                <TooltipIcon
-                  tip={t`Show your contributors a message after they receive their NFT reward.`}
-                  iconStyle={{ marginLeft: 10 }}
-                />
-              </>
-            }
-            style={{ marginTop: '1rem' }}
-          >
-            <NftPostPayModalForm
-              form={postPayModalForm}
-              onFormUpdated={setFormUpdated}
-            />
-            <NftPostPayModalPreviewButton form={postPayModalForm} />
-          </MinimalCollapse>
+            ) : null
+            // Can't modify marketplaceForm in reconfig because `adjustTiers` doesnt cover it. Needs a `setContractUri` call
+
+            // Can't modify postPayForm from reconfigureFundingCycle because it's a property of project metadata.
+            // TODO: add setting in settings->project details to modify postPayForm
+          }
         </div>
         <Button
           onClick={onNftFormSaved}

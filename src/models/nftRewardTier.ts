@@ -7,23 +7,25 @@ export type NftRewardTier = {
   remainingSupply: number | undefined
   imageUrl: string // link to ipfs
   name: string
+  id?: number
   /* @deprecated - now derived from comparing contributionFloor between each */
-  tierRank?: number | undefined // cheapest tier is 1
+  tierRank?: number // cheapest tier is 1
   externalLink: string | undefined
   description: string | undefined
 }
 
 // How the reward tiers are stored in the contracts
-export type ContractNftRewardTier = {
-  id: number
+export type JB721TierParams = {
+  id?: BigNumber //undefined for outgoing tier (in launch or adjustTiers tx)
   contributionFloor: BigNumber //uint128
   lockedUntil: BigNumber
-  remainingQuantity: BigNumber
+  remainingQuantity?: BigNumber
   initialQuantity: BigNumber //uint64
   votingUnits: number
   reservedRate: number
   reservedTokenBeneficiary: string
   encodedIPFSUri: string // encoded link to the rewardTier on IPFS
+  transfersPausable?: boolean
 }
 
 type OpenSeaAttribute = {

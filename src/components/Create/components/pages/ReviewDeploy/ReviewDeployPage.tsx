@@ -75,7 +75,7 @@ export const ReviewDeployPage = () => {
     state => state.editingV2Project.nftRewards.rewardTiers,
   )
 
-  const nftRewardsAreSet = nftRewards.length > 0
+  const nftRewardsAreSet = nftRewards && nftRewards?.length > 0
 
   const dispatch = useDispatch()
 

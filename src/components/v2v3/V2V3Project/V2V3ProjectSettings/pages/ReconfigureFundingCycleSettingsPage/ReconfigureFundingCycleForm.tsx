@@ -63,6 +63,7 @@ export function V2V3ReconfigureFundingCycleForm() {
     fundingDrawerHasSavedChanges,
     tokenDrawerHasSavedChanges,
     rulesDrawerHasSavedChanges,
+    nftDrawerHasSavedChanges,
   } = useFundingHasSavedChanges({
     editingFundingCycleConfig,
     initialEditingData,

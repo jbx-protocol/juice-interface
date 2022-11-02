@@ -1,3 +1,4 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { EditingFundingCycleConfig } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/ReconfigureFundingCycleSettingsPage/hooks/editingFundingCycleConfig'
 import { getWeightArgument } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/ReconfigureFundingCycleSettingsPage/hooks/reconfigureFundingCycle'
 import { CV_V3 } from 'constants/cv'
@@ -6,11 +7,12 @@ import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useLoadV2V3Contract } from 'hooks/v2v3/LoadV2V3Contract'
 import { useLaunchFundingCyclesTx } from 'hooks/v2v3/transactor/LaunchFundingCyclesTx'
+import { revalidateProject } from 'lib/api/nextjs'
 import { CV2V3 } from 'models/cv'
 import { V2V3ContractName } from 'models/v2v3/contracts'
+import { V3FundingCycleMetadata } from 'models/v3/fundingCycle'
 import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton'
 import { useCallback, useContext, useState } from 'react'
-import { revalidateProject } from 'utils/revalidateProject'
 
 export const useLaunchFundingCycle = ({
   editingFundingCycleConfig,
@@ -73,38 +75,48 @@ export const useLaunchFundingCycle = ({
       newFundingCycleWeight: editingFundingCycleData.weight,
     })
 
-    const txSuccessful = await launchFundingCycles(
-      {
-        projectId,
-        fundingCycleData: {
-          ...editingFundingCycleData,
-          weight,
-        },
-        fundingCycleMetadata,
-        fundAccessConstraints: editingFundAccessConstraints,
-        groupedSplits: [
-          editingPayoutGroupedSplits,
-          editingReservedTokensGroupedSplits,
-        ],
-        mustStartAtOrAfter: editingMustStartAtOrAfter,
+    // add in new V3 properties
+    const v3FundingCycleMetadata: V3FundingCycleMetadata = {
+      ...fundingCycleMetadata,
+      global: {
+        ...fundingCycleMetadata.global,
+        pauseTransfers: false,
       },
-      {
-        onDone() {
-          console.info(
-            'Reconfigure transaction executed. Awaiting confirmation...',
-          )
-        },
-        async onConfirmed() {
-          if (projectId) {
-            await revalidateProject({
-              cv: cv as CV2V3,
-              projectId: String(projectId),
-            })
-          }
-          setLaunchFundingCycleTxLoading(false)
-        },
+      preferClaimedTokenOverride: false,
+      metadata: BigNumber.from(0),
+    }
+
+    const launchData = {
+      projectId,
+      fundingCycleData: {
+        ...editingFundingCycleData,
+        weight,
       },
-    )
+      fundingCycleMetadata: v3FundingCycleMetadata,
+      fundAccessConstraints: editingFundAccessConstraints,
+      groupedSplits: [
+        editingPayoutGroupedSplits,
+        editingReservedTokensGroupedSplits,
+      ],
+      mustStartAtOrAfter: editingMustStartAtOrAfter,
+    }
+
+    const txSuccessful = await launchFundingCycles(launchData, {
+      onDone() {
+        console.info(
+          'Reconfigure transaction executed. Awaiting confirmation...',
+        )
+      },
+      async onConfirmed() {
+        if (projectId) {
+          await revalidateProject({
+            cv: cv as CV2V3,
+            projectId: String(projectId),
+          })
+        }
+        setLaunchFundingCycleTxLoading(false)
+      },
+    })
 
     if (!txSuccessful) {
       setLaunchFundingCycleTxLoading(false)

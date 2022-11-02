@@ -226,7 +226,7 @@ export const ReviewDeployPage = () => {
       </div>
       <TransactionModal
         transactionPending={deployTransactionPending}
-        visible={deployTransactionPending}
+        open={deployTransactionPending}
       />
       <Modal
         title={

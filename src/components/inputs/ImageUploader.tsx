@@ -1,6 +1,5 @@
 import { CloseCircleFilled, FileImageOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { PinataMetadata } from '@pinata/sdk'
 import { Button, Col, message, Row, Space, Upload } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { pinFileToIpfs } from 'lib/api/ipfs'
@@ -23,7 +22,7 @@ export default function ImageUploader({
   text,
 }: {
   initialUrl?: string
-  metadata?: PinataMetadata
+  metadata?: Record<string | number, any> // eslint-disable-line @typescript-eslint/no-explicit-any
   onSuccess?: (url?: string) => void
   maxSizeKBs?: number // KB
   text?: string

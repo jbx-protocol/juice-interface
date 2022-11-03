@@ -127,7 +127,7 @@ export async function uploadSnapshotSettingsToIPFS({
       pinataMetadata: {
         keyvalues: {
           tag: IPFS_TAGS.SNAPSHOT_SETTINGS,
-        },
+        } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
         name: projectMetadata?.name,
       },
     },

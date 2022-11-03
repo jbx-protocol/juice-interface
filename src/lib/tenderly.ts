@@ -42,8 +42,11 @@ export const simulateTransaction = async ({
     headers,
   )
 
+  const simulationUrl = `https://dashboard.tenderly.co/codalabs/project/simulator/${resp.data.simulation.id}`
+
   if (resp.data.simulation.status === false) {
-    console.error(resp.data)
+    console.error()
+    console.error(`View simulation on Tenderly: ${simulationUrl}`, resp.data)
 
     throw new Error('Transaction is going to fail')
   }

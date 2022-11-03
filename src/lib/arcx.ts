@@ -6,7 +6,7 @@ let client: ArcxAnalyticsSdk
 
 export async function getArcxClient() {
   if (!ARCX_API_KEY) {
-    console.error('ARCX_API_KEY environment variable not set.')
+    console.info('💡 ARCX_API_KEY environment variable not set.')
     return
   }
 

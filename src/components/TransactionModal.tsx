@@ -42,7 +42,7 @@ const PendingTransactionModalBody = () => {
         <Image
           src={quint}
           alt={t`Juicebox loading animation`}
-          style={{ maxWidth: 100, marginBottom: '1rem' }}
+          style={{ marginBottom: '1rem' }}
         />
         <h2 style={{ color: colors.text.primary }}>
           <Trans>Transaction pending...</Trans>

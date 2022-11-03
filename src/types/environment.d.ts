@@ -15,20 +15,30 @@ export type PublicBaseURLS =
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      NEXT_PUBLIC_INFURA_ID: string
+      PINATA_PINNER_KEY: string
+      PINATA_PINNER_SECRET: string
+      NEXT_PUBLIC_PINATA_GATEWAY_HOSTNAME: PinataGatewayHostnameURLS
+
+      GITHUB_ACCESS_TOKEN: string
+
       PRE_RENDER_INFURA_ID: Networks
+      NEXT_PUBLIC_INFURA_ID: string
       NEXT_PUBLIC_INFURA_NETWORK: Networks
+
       // Ask in Discord for the goerli subgraph url
       // for both SCHEMA and SUBGRAPH_URL
       NEXT_PUBLIC_SUBGRAPH_URL: string
       GRAPHQL_SCHEMA_SUBGRAPH_URL: string
-      NEXT_PUBLIC_PINATA_GATEWAY_HOSTNAME: PinataGatewayHostnameURLS
+
       NEXT_PUBLIC_BASE_URL: PublicBaseURLS
+
       NEXT_PUBLIC_SENTRY_DSN: string
-      PINATA_PINNER_KEY: string
-      PINATA_PINNER_SECRET: string
-      GITHUB_ACCESS_TOKEN: string
+
       NEXT_PUBLIC_ARCX_API_KEY: string
+
+      NEXT_PUBLIC_TENDERLY_API_KEY: string
+      NEXT_PUBLIC_TENDERLY_PROJECT_NAME: string
+      NEXT_PUBLIC_TENDERLY_ACCOUNT: string
     }
   }
 }

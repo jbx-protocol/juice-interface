@@ -1,12 +1,5 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import { hexlify } from '@ethersproject/bytes'
 import { Contract } from '@ethersproject/contracts'
-import { Deferrable } from '@ethersproject/properties'
-import {
-  TransactionRequest,
-  TransactionResponse,
-} from '@ethersproject/providers'
-import { parseUnits } from '@ethersproject/units'
+import { TransactionResponse } from '@ethersproject/providers'
 import { t } from '@lingui/macro'
 import * as Sentry from '@sentry/browser'
 import { readNetwork } from 'constants/networks'
@@ -21,32 +14,54 @@ import { useWallet } from './Wallet'
 
 type TxOpts = Omit<TransactionOptions, 'value'>
 
-export function handleTransactionException({
-  txOpts,
-  missingParam,
+function logTx({
   functionName,
-  cv,
+  contract,
+  args,
 }: {
-  txOpts?: TxOpts
-  missingParam?: string
   functionName: string
-  cv: CV | undefined
+  contract: Contract
+  args: unknown[]
 }) {
-  txOpts?.onError?.(
-    new DOMException(
-      `Missing ${missingParam ?? 'unknown'} parameter in ${functionName}${
-        cv ? ` v${cv}` : ''
-      }`,
-    ),
+  const reportArgs = Object.values(contract.interface.functions)
+    .find(f => f.name === functionName)
+    ?.inputs.reduce(
+      (acc, input, i) => ({
+        ...acc,
+        [input.name]: args[i],
+      }),
+      {},
+    )
+
+  console.info(
+    '🧃 Transactor::Calling ' + functionName + '() with args:',
+    reportArgs,
   )
-  txOpts?.onDone?.()
-  return Promise.resolve(false)
+}
+
+function prepareTransaction({
+  functionName,
+  contract,
+  args,
+  options,
+}: {
+  functionName: string
+  contract: Contract
+  args: unknown[]
+  options?: TransactionOptions
+}) {
+  const tx =
+    options?.value !== undefined
+      ? contract[functionName](...args, { value: options.value })
+      : contract[functionName](...args)
+
+  return tx
 }
 
 export type Transactor = (
   contract: Contract,
   functionName: string,
-  args: any[], // eslint-disable-line @typescript-eslint/no-explicit-any
+  args: unknown[],
   options?: TransactionOptions,
 ) => Promise<boolean>
 
@@ -55,21 +70,18 @@ export type TransactorInstance<T = undefined> = (
   txOpts?: TxOpts,
 ) => ReturnType<Transactor>
 
-export function useTransactor({
-  gasPrice,
-}: {
-  gasPrice?: BigNumber
-}): Transactor | undefined {
+export function useTransactor(): Transactor | undefined {
+  const { addTransaction } = useContext(TxHistoryContext)
+
   const { chain, signer, userAddress } = useWallet()
   const { chainUnsupported, isConnected, changeNetworks, connect } = useWallet()
-  const { addTransaction } = useContext(TxHistoryContext)
   const arcx = useArcx()
 
   return useCallback(
     async (
       contract: Contract,
       functionName: string,
-      args: any[], // eslint-disable-line @typescript-eslint/no-explicit-any
+      args: unknown[],
       options?: TransactionOptions,
     ) => {
       if (chainUnsupported) {
@@ -82,82 +94,45 @@ export function useTransactor({
         options?.onDone?.()
         return false
       }
-
       if (!signer || !chain) {
         options?.onDone?.()
         return false
       }
 
-      const tx: Deferrable<TransactionRequest> =
-        options?.value !== undefined
-          ? contract[functionName](...args, { value: options.value })
-          : contract[functionName](...args)
-
-      const reportArgs = Object.values(contract.interface.functions)
-        .find(f => f.name === functionName)
-        ?.inputs.reduce(
-          (acc, input, i) => ({
-            ...acc,
-            [input.name]: args[i],
-          }),
-          {},
-        )
+      logTx({ functionName, contract, args })
 
       if (process.env.NODE_ENV === 'development') {
         await simulateTransaction({ contract, functionName, args, userAddress })
       }
 
-      console.info(
-        '🧃 Transactor::Calling ' + functionName + '() with args:',
-        reportArgs,
-        tx,
-      )
-
-      const txTitle = options?.title ?? functionName
-
       try {
-        let result: unknown
+        const tx = prepareTransaction({ functionName, contract, args })
+        const result: TransactionResponse = await tx
 
-        if (tx instanceof Promise) {
-          console.info('Transactor::AWAITING TX', tx)
-          result = await tx
-
-          addTransaction?.(txTitle, result as TransactionResponse, {
-            onConfirmed: options?.onConfirmed,
-            onCancelled: options?.onCancelled,
-          })
-        } else {
-          console.info('Transactor::RUNNING TX', tx)
-
-          if (!tx.gasPrice) tx.gasPrice = gasPrice ?? parseUnits('4.1', 'gwei')
-          if (!tx.gasLimit) tx.gasLimit = hexlify(120000)
-
-          result = await signer.sendTransaction(tx)
-          const txResponse = result as TransactionResponse
-
-          addTransaction?.(txTitle, txResponse, {
-            onConfirmed: options?.onConfirmed,
-            onCancelled: options?.onCancelled,
-          })
-
-          await txResponse.wait()
-
-          arcx?.transaction({
-            chain: readNetwork.chainId, // required(string) - chain ID that the transaction is taking place on
-            transactionHash: txResponse.hash as string,
-          })
-        }
-
-        console.info('Transactor::RESULT::', result)
+        console.info('✅ Transactor::submitted', result)
 
         // transaction was submitted, but not confirmed/mined yet.
         options?.onDone?.()
+
+        // add transaction to the history UI
+        const txTitle = options?.title ?? functionName
+        addTransaction?.(txTitle, result as TransactionResponse, {
+          onConfirmed: options?.onConfirmed,
+          onCancelled: options?.onCancelled,
+        })
+
+        // log transaction in Arcx
+        arcx?.transaction({
+          chain: readNetwork.chainId, // required(string) - chain ID that the transaction is taking place on
+          transactionHash: result?.hash as string,
+        })
 
         return true
       } catch (e) {
         const message = (e as Error).message
 
-        console.error('Transactor::Transaction Error:', message)
+        console.error('Transactor::error', message)
+
         Sentry.captureException(e, {
           tags: {
             contract_function: functionName,
@@ -165,7 +140,6 @@ export function useTransactor({
         })
 
         let description: string
-
         try {
           let json = message.split('(error=')[1]
           json = json.split(', method=')[0]
@@ -189,9 +163,30 @@ export function useTransactor({
       chain,
       changeNetworks,
       connect,
-      gasPrice,
       addTransaction,
       userAddress,
     ],
   )
+}
+
+export function handleTransactionException({
+  txOpts,
+  missingParam,
+  functionName,
+  cv,
+}: {
+  txOpts?: TxOpts
+  missingParam?: string
+  functionName: string
+  cv: CV | undefined
+}) {
+  txOpts?.onError?.(
+    new DOMException(
+      `Missing ${missingParam ?? 'unknown'} parameter in ${functionName}${
+        cv ? ` v${cv}` : ''
+      }`,
+    ),
+  )
+  txOpts?.onDone?.()
+  return Promise.resolve(false)
 }

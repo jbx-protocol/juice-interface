@@ -2252,6 +2252,9 @@ msgstr ""
 msgid "Project upgrades"
 msgstr ""
 
+msgid "Project {projectId}"
+msgstr ""
+
 msgid "Project {projectId} not found"
 msgstr ""
 
@@ -3641,9 +3644,6 @@ msgstr ""
 msgid "tokens"
 msgstr ""
 
-msgid "tokens for Project #{projectId}"
-msgstr ""
-
 msgid "tokens per ETH contributed"
 msgstr ""
 
@@ -3753,6 +3753,9 @@ msgid "{count} total"
 msgstr ""
 
 msgid "{exchangeName} has no market for {tokenSymbol}."
+msgstr ""
+
+msgid "{formattedBalance} tokens for <0/>"
 msgstr ""
 
 msgid "{formattedTimeLeft} left"

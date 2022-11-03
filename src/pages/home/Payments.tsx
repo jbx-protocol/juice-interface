@@ -4,7 +4,7 @@ import Loading from 'components/Loading'
 import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
 import RichNote from 'components/RichNote'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
-import V2V3ProjectHandle from 'components/v2v3/shared/V2V3ProjectHandle'
+import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 import { CV_V1, CV_V1_1 } from 'constants/cv'
 import { ThemeContext } from 'contexts/themeContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
@@ -44,7 +44,7 @@ export default function Payments() {
           />
         ) : (
           <div style={{ display: 'flex', alignItems: 'baseline' }}>
-            <V2V3ProjectHandle
+            <V2V3ProjectHandleLink
               projectId={project.projectId}
               handle={project.handle}
               style={{ marginRight: '0.5rem' }}

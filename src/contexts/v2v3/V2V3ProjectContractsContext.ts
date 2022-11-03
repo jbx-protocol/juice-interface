@@ -8,7 +8,14 @@ export interface V2V3ProjectContracts {
 
 export const V2V3ProjectContractsContext: React.Context<{
   contracts: V2V3ProjectContracts
-  cvsLoading?: boolean
+  loading: {
+    cvsLoading?: boolean
+    projectContractsLoading?: {
+      JBControllerLoading: boolean
+      JBETHPaymentTerminalLoading: boolean
+    }
+  }
 }> = createContext({
   contracts: {},
+  loading: {},
 })

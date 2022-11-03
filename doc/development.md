@@ -24,7 +24,6 @@
 
 - [Infura](https://infura.io)
 - [Piñata](https://pinata.cloud)
-- [Blocknative](https://www.blocknative.com)
 
 The following sections describe how to set up each service for local development.
 
@@ -88,3 +87,31 @@ Take the following steps to set up Juicebox's subgraph for local development:
    yarn build
    yarn start
    ```
+
+## Transaction simulation
+
+In development, you can simulate transactions using [Tenderly](https://tenderly.co/). Tenderly produces a stacktrace that you can use to debug failing transactions.
+
+Set up Tenderly for your development environment using the following steps:
+
+1. Create a Tenderly account
+2. Set the following variables in your `.env` file (**without the comments**):
+
+   ```
+   # .env
+   NEXT_PUBLIC_TENDERLY_API_KEY= # your user tenderly api key
+   NEXT_PUBLIC_TENDERLY_PROJECT_NAME= # your tenderly project
+   NEXT_PUBLIC_TENDERLY_ACCOUNT=  # your user account name
+   ```
+
+3. Start your development server.
+
+   ```bash
+   yarn dev
+   ```
+
+Once set up, every transaction that you submit will be simulated using Tenderly.
+
+When a simulation fails, an error is logged to the development console. This log contains a link to the simulation in Tenderly.
+
+> Note: there is a 50 simulation per month limit per account.

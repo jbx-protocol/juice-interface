@@ -1,5 +1,6 @@
 import { CloseCircleFilled, FileImageOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
+import { PinataMetadata } from '@pinata/sdk'
 import { Button, Col, message, Row, Space, Upload } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { pinFileToIpfs } from 'lib/api/ipfs'
@@ -24,7 +25,7 @@ export const FormImageUploader = ({
 }: {
   value?: string // IPFS link: `ipfs://${cid}`
   onChange?: (value?: string) => void
-  metadata?: Record<string | number, any> // eslint-disable-line @typescript-eslint/no-explicit-any
+  metadata?: PinataMetadata
   maxSizeKBs?: number
   text?: string
 }) => {

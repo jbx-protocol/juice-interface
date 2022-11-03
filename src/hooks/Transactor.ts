@@ -121,11 +121,20 @@ export function useTransactor(): Transactor | undefined {
           onCancelled: options?.onCancelled,
         })
 
-        // log transaction in Arcx
-        arcx?.transaction({
-          chain: readNetwork.chainId, // required(string) - chain ID that the transaction is taking place on
-          transactionHash: result?.hash as string,
-        })
+        try {
+          // log transaction in Arcx
+          arcx?.transaction({
+            chain: readNetwork.chainId, // required(string) - chain ID that the transaction is taking place on
+            transactionHash: result?.hash as string,
+            metadata: {
+              functionName,
+              title: txTitle,
+            },
+          })
+        } catch (_) {
+          // ignore
+          console.warn('Arcx transaction logging failed')
+        }
 
         return true
       } catch (e) {

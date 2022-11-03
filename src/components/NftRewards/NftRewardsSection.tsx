@@ -105,7 +105,7 @@ export function NftRewardsSection() {
   const nftRewardsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
   const hasCIDs = Boolean(CIDs?.length)
 
-  if ((!hasCIDs && !nftsLoading) || !nftRewardsEnabled) {
+  if (!hasCIDs || !nftRewardsEnabled) {
     return null
   }
 

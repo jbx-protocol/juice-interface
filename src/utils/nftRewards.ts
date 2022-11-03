@@ -80,13 +80,15 @@ export function sortNftRewardTiers(
 
 // returns an array of CIDs from a given array of RewardTier obj's
 export function CIDsOfNftRewardTiersResponse(
-  nftRewardTiersResponse: JB721TierParams[],
+  nftRewardTiersResponse: JB721TierParams[] | undefined,
 ): string[] {
-  const cids: string[] = nftRewardTiersResponse
-    .map((contractRewardTier: JB721TierParams) => {
-      return decodeEncodedIPFSUri(contractRewardTier.encodedIPFSUri)
-    })
-    .filter(cid => cid.length > 0)
+  const cids =
+    nftRewardTiersResponse
+      ?.map((contractRewardTier: JB721TierParams) => {
+        return decodeEncodedIPFSUri(contractRewardTier.encodedIPFSUri)
+      })
+      .filter(cid => cid.length > 0) ?? []
+
   return cids
 }
 

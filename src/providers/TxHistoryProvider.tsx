@@ -39,7 +39,7 @@ const pollTransaction = async (
 
   // Tx has been mined
   if (response.confirmations > 0 && txLog.status === TxStatus.pending) {
-    console.info('TxHistoryProvider::calling `onConfirmed` callback', response)
+    console.info('CALLING ONCONFIRMED', response)
     txLog.callbacks?.onConfirmed?.(response)
     return {
       ...txLog,

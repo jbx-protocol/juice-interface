@@ -134,7 +134,7 @@ async function uploadNftRewardToIPFS(
       pinataMetadata: {
         keyvalues: {
           tag: IPFS_TAGS.NFT_REWARDS,
-        },
+        } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
         name: ipfsNftRewardTier.name,
       },
     },
@@ -182,7 +182,7 @@ export async function uploadNftCollectionMetadataToIPFS({
       pinataMetadata: {
         keyvalues: {
           tag: IPFS_TAGS.NFT_REWARDS_COLLECTION_METADATA,
-        },
+        } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
         name: collectionName,
       },
     },

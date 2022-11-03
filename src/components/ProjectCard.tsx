@@ -124,10 +124,30 @@ export default function ProjectCard({
       ? 2
       : 0
 
+  /**
+   * We need to set the `as` prop for V2V3 projects
+   * so that NextJs's prefetching works.
+   *
+   * The `href` prop will always be the project ID route,
+   * but if there is a handle, we use that as the `as` prop
+   * for pretty URLs.
+   *
+   * https://web.dev/route-prefetching-in-nextjs/
+   */
   const projectCardHref =
     projectCardData.cv === CV_V2 || projectCardData.cv === CV_V3
-      ? v2v3ProjectRoute(projectCardData)
+      ? v2v3ProjectRoute({
+          projectId: projectCardData.projectId,
+        })
       : `/p/${projectCardData.handle}`
+
+  const projectCardUrl =
+    projectCardData.cv === CV_V2 || projectCardData.cv === CV_V3
+      ? v2v3ProjectRoute({
+          projectId: projectCardData.projectId,
+          handle: projectCardData.handle,
+        })
+      : projectCardHref
 
   const isArchived =
     ((projectCardData.cv === CV_V1 || projectCardData.cv === CV_V1_1) &&
@@ -137,10 +157,7 @@ export default function ProjectCard({
     metadata?.archived
 
   return (
-    <Link
-      key={`${projectCardData.id}_${projectCardData.cv}`}
-      href={projectCardHref}
-    >
+    <Link href={projectCardHref} as={projectCardUrl}>
       <a>
         <div
           style={{

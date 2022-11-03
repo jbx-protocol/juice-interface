@@ -18,7 +18,10 @@ export default function V2V3ProjectHandleLink({
   })
 
   return (
-    <Link href={v2v3ProjectRoute({ projectId, handle: resolvedHandle })}>
+    <Link
+      href={v2v3ProjectRoute({ projectId })}
+      as={v2v3ProjectRoute({ projectId, handle: resolvedHandle })}
+    >
       <a
         style={{ fontWeight: 500, ...style }}
         className="text-primary hover-text-action-primary hover-text-decoration-underline"

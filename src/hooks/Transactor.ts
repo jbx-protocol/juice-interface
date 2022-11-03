@@ -102,7 +102,16 @@ export function useTransactor(): Transactor | undefined {
       logTx({ functionName, contract, args })
 
       if (process.env.NODE_ENV === 'development') {
-        await simulateTransaction({ contract, functionName, args, userAddress })
+        try {
+          await simulateTransaction({
+            contract,
+            functionName,
+            args,
+            userAddress,
+          })
+        } catch (e) {
+          console.warn('Simulation failed', e)
+        }
       }
 
       try {

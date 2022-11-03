@@ -48,7 +48,7 @@ function prepareTransaction({
   functionName: string
   contract: Contract
   args: unknown[]
-  options?: TransactionOptions
+  options: TransactionOptions | undefined
 }) {
   const tx =
     options?.value !== undefined
@@ -106,7 +106,7 @@ export function useTransactor(): Transactor | undefined {
       }
 
       try {
-        const tx = prepareTransaction({ functionName, contract, args })
+        const tx = prepareTransaction({ functionName, contract, args, options })
         const result: TransactionResponse = await tx
 
         console.info('✅ Transactor::submitted', result)

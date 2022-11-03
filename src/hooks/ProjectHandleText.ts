@@ -28,7 +28,7 @@ export function useProjectHandleText({
 
   const handleText = resolvedHandle
     ? `@${resolvedHandle}`
-    : t`Project ${projectId}`
+    : t`Project #${projectId}`
 
   return {
     handleText,

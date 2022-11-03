@@ -68,7 +68,7 @@ export const uploadProjectMetadata = async (
       pinataMetadata: {
         keyvalues: {
           tag: IPFS_TAGS.METADATA,
-        } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+        },
         name: handle
           ? metadataNameForHandle(handle)
           : 'juicebox-project-metadata.json',

@@ -2573,6 +2573,9 @@ msgstr ""
 msgid "Set ENS text record for {ensName}"
 msgstr ""
 
+msgid "Set NFT operator permissions"
+msgstr ""
+
 msgid "Set URI for {projectTitle}"
 msgstr ""
 
@@ -2619,6 +2622,9 @@ msgid "Set handle @{handle}"
 msgstr ""
 
 msgid "Set operator for {projectTitle}"
+msgstr ""
+
+msgid "Set operator permissions for projectId={projectId} to allow NFTs"
 msgstr ""
 
 msgid "Set payouts of {projectTitle}"

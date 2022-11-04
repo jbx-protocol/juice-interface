@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Form, Space } from 'antd'
+import { Form, Space } from 'antd'
 import Callout from 'components/Callout'
 import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
 import { MemoFormInput } from 'components/Project/PayProjectForm/MemoFormInput'
@@ -14,12 +14,14 @@ import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useContext, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
+import { DeployConfigurationButton } from './DeployConfigurationButton'
 import { useEditingFundingCycleConfig } from './hooks/editingFundingCycleConfig'
 import { useFundingHasSavedChanges } from './hooks/fundingHasSavedChanges'
 import { useInitialEditingData } from './hooks/initialEditingData'
 import { useReconfigureFundingCycle } from './hooks/reconfigureFundingCycle'
 import ReconfigurePreview from './ReconfigurePreview'
 import V2V3ReconfigureUpcomingMessage from './ReconfigureUpcomingMessage'
+import { SetNftOperatorPermissionsButton } from './SetNftOperatorPermissionsButton'
 
 function ReconfigureButton({
   reconfigureHasChanges,
@@ -55,6 +57,8 @@ export function V2V3ReconfigureFundingCycleForm() {
   const [rulesDrawerVisible, setRulesDrawerVisible] = useState<boolean>(false)
   const [unsavedChangesModalVisibile, setUnsavedChangesModalVisible] =
     useState<boolean>(false)
+
+  const [nftOperatorConfirmed, setNftOperatorConfirmed] = useState<boolean>()
 
   const { initialEditingData } = useInitialEditingData({ visible: true })
   const editingFundingCycleConfig = useEditingFundingCycleConfig()
@@ -164,17 +168,33 @@ export function V2V3ReconfigureFundingCycleForm() {
             editingFundingCycleConfig.editingFundAccessConstraints
           }
         />
-
-        <Button
-          loading={reconfigureLoading}
-          onClick={reconfigureFundingCycle}
-          disabled={!fundingHasSavedChanges && !nftsWithFalseDataSourceForPay}
-          type="primary"
-        >
-          <span>
-            <Trans>Deploy funding cycle configuration</Trans>
-          </span>
-        </Button>
+        {nftDrawerHasSavedChanges ? (
+          <Space size="middle" direction="vertical">
+            <div style={{ display: 'flex' }}>
+              <h2 style={{ marginRight: 5 }}>1.</h2>
+              <SetNftOperatorPermissionsButton
+                onConfirmed={() => setNftOperatorConfirmed(true)}
+              />
+            </div>
+            <div style={{ display: 'flex' }}>
+              <h2 style={{ marginRight: 5 }}>2.</h2>
+              <DeployConfigurationButton
+                loading={reconfigureLoading}
+                onClick={reconfigureFundingCycle}
+                disabled={
+                  (!fundingHasSavedChanges || !nftOperatorConfirmed) &&
+                  !nftsWithFalseDataSourceForPay
+                }
+              />
+            </div>
+          </Space>
+        ) : (
+          <DeployConfigurationButton
+            loading={reconfigureLoading}
+            onClick={reconfigureFundingCycle}
+            disabled={!fundingHasSavedChanges && !nftsWithFalseDataSourceForPay}
+          />
+        )}
       </Space>
 
       <FundingDrawer

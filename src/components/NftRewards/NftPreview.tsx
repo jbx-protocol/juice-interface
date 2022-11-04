@@ -8,6 +8,7 @@ import { CSSProperties, useContext } from 'react'
 
 import { darkColors } from 'constants/styles/colors'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { cidFromPinataUrl, restrictedIpfsUrl } from 'utils/ipfs'
 
 const containerStyle: CSSProperties = {
   zIndex: 10000,
@@ -76,6 +77,10 @@ export function NftPreview({
 
   const maxImageDimensions = '600px'
   const containerWidth = !isMobile ? maxImageDimensions : '90vw'
+  const imageCid = rewardTier?.imageUrl
+    ? cidFromPinataUrl(rewardTier?.imageUrl)
+    : ''
+  const imageUrl = restrictedIpfsUrl(imageCid)
 
   return (
     <div style={containerStyle} onClick={onClose}>
@@ -99,7 +104,7 @@ export function NftPreview({
         >
           <img
             alt={rewardTier.name}
-            src={rewardTier.imageUrl}
+            src={imageUrl}
             style={{
               maxWidth: containerWidth,
               maxHeight: !isMobile ? '60vh' : '50vh',

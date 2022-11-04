@@ -124,12 +124,16 @@ export function NftRewardsSection() {
       {nftsLoading ? (
         <RewardTiersLoadingSkeleton />
       ) : (
-        <Row style={{ marginTop: '15px' }} gutter={isMobile ? 8 : 24}>
+        <Row
+          style={{ marginTop: '15px', overflowY: 'scroll', maxHeight: 400 }}
+          gutter={isMobile ? 8 : 24}
+        >
           {renderRewardTiers?.map((rewardTier, idx) => (
             <Col
               md={8}
               xs={8}
               key={`${rewardTier.contributionFloor}-${rewardTier.name}`}
+              style={{ marginBottom: '15px' }}
             >
               <RewardTier
                 tierRank={idx + 1}

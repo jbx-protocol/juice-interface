@@ -24,6 +24,7 @@ import { useContext, useState } from 'react'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { formattedNum, formatWad } from 'utils/format/formatNumber'
+import { encodePayMetadata } from 'utils/nftRewards'
 import { emitErrorNotification } from 'utils/notifications'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -131,7 +132,8 @@ export function V2V3ConfirmPayModal({
       stickerUrls,
       uploadedImage,
     } = form.getFieldsValue()
-    const txBeneficiary = beneficiary ? beneficiary : userAddress
+    const txBeneficiary = beneficiary ?? userAddress
+    const delegateMetadata = encodePayMetadata(payProjectForm?.payMetadata)
 
     // Prompt wallet connect if no wallet connected
     if (chainUnsupported) {
@@ -142,6 +144,7 @@ export function V2V3ConfirmPayModal({
       await connect()
       return
     }
+
     setLoading(true)
 
     try {
@@ -155,6 +158,7 @@ export function V2V3ConfirmPayModal({
           preferClaimedTokens: Boolean(preferClaimedTokens),
           beneficiary: txBeneficiary,
           value: weiAmount,
+          delegateMetadata,
         },
         {
           onConfirmed() {

@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import axios from 'axios'
+import { JB721DelegatePayMetadata } from 'components/Project/PayProjectForm/usePayProjectForm'
 import { juiceboxEmojiImageUri } from 'constants/images'
 import { IPFS_TAGS } from 'constants/ipfs'
 import { readNetwork } from 'constants/networks'
@@ -256,17 +257,25 @@ export function hasNftRewards(
   return Boolean(fundingCycleMetadata?.dataSource)
 }
 
-export function encodePayMetadata(metadata: JB721DelegatePayMetadata) {
-  return defaultAbiCoder.encode(
+export function encodePayMetadata(
+  metadata: JB721DelegatePayMetadata | undefined,
+) {
+  if (!metadata) return undefined
+
+  const args = [
+    0,
+    0,
+    0,
+    metadata.dontMint ?? false,
+    metadata.expectMintFromExtraFunds ?? false,
+    metadata.dontOverspend ?? false,
+    metadata.tierIdsToMint,
+  ]
+
+  const encoded = defaultAbiCoder.encode(
     ['bytes32', 'bytes32', 'bytes4', 'bool', 'bool', 'bool', 'uint16[]'],
-    [
-      0,
-      0,
-      0,
-      metadata.dontMint,
-      metadata.expectMintFromExtraFunds,
-      metadata.dontOverspend,
-      metadata.tierIdsToMint,
-    ],
+    args,
   )
+
+  return encoded
 }

@@ -1,3 +1,4 @@
+import { getAddress } from '@ethersproject/address'
 import { t, Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
 import Callout from 'components/Callout'
@@ -10,8 +11,12 @@ import RulesDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawers
 import TokenDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawers/TokenDrawer'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
+import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { useV2HasPermissions } from 'hooks/v2v3/contractReader/V2HasPermissions'
+import { V2OperatorPermission } from 'models/v2v3/permissions'
 import { useContext, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { DeployConfigurationButton } from './DeployConfigurationButton'
@@ -44,7 +49,10 @@ function ReconfigureButton({
 }
 
 export function V2V3ReconfigureFundingCycleForm() {
-  const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
+  const { fundingCycleMetadata, projectOwnerAddress } =
+    useContext(V2V3ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
+  const { contracts } = useContext(V2V3ContractsContext)
   const {
     nftRewards: { CIDs: nftRewardsCids },
   } = useContext(NftRewardsContext)
@@ -104,6 +112,18 @@ export function V2V3ReconfigureFundingCycleForm() {
   )
 
   const nftsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
+
+  const nftDeployerAddress = contracts
+    ? getAddress(contracts.JBTiered721DelegateProjectDeployer.address)
+    : undefined
+  const { data: nftContractHasPermission } = contracts
+    ? useV2HasPermissions({
+        operator: nftDeployerAddress,
+        account: projectOwnerAddress,
+        domain: projectId,
+        permissions: [V2OperatorPermission.RECONFIGURE],
+      })
+    : { data: undefined }
 
   return (
     <>
@@ -167,8 +187,9 @@ export function V2V3ReconfigureFundingCycleForm() {
           fundAccessConstraints={
             editingFundingCycleConfig.editingFundAccessConstraints
           }
+          nftRewards={editingProjectData.editingNftRewards.rewardTiers}
         />
-        {nftDrawerHasSavedChanges ? (
+        {nftDrawerHasSavedChanges && !nftContractHasPermission ? (
           <Space size="middle" direction="vertical">
             <div style={{ display: 'flex' }}>
               <h2 style={{ marginRight: 5 }}>1.</h2>

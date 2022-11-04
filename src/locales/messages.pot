@@ -419,6 +419,9 @@ msgstr ""
 msgid "Allow terminal configuration"
 msgstr ""
 
+msgid "Allow the <0>Juicebox NFT deployer contract</0> to reconfigure this project's funding cycle."
+msgstr ""
+
 msgid "Allow token minting"
 msgstr ""
 

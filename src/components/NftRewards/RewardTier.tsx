@@ -10,10 +10,10 @@ import { NftPreview } from './NftPreview'
 const rewardTierContainerStyle: CSSProperties = {
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'flex-start',
   cursor: 'pointer',
   transition: 'box-shadow 100ms linear',
   height: '100%',
+  width: '100%',
 }
 
 const loadingImageContainerStyle: CSSProperties = {

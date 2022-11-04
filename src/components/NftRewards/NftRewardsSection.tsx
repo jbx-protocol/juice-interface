@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Col, Row } from 'antd'
+import { Col, Row, Space } from 'antd'
 import {
   NftPostPayModal,
   NFT_PAYMENT_CONFIRMED_QUERY_PARAM,
@@ -82,7 +82,6 @@ export function NftRewardsSection() {
     useModalFromUrlQuery(NFT_PAYMENT_CONFIRMED_QUERY_PARAM)
 
   const converter = useCurrencyConverter()
-  const isMobile = useMobile()
   const payAmountETH =
     payInCurrency === ETH ? payAmount : fromWad(converter.usdToWei(payAmount))
 
@@ -118,33 +117,48 @@ export function NftRewardsSection() {
   )
 
   return (
-    <div style={{ width: 'unset' }}>
+    <Space direction="vertical" size="large" style={{ width: '100%' }}>
       <Header />
 
       {nftsLoading ? (
         <RewardTiersLoadingSkeleton />
       ) : (
-        <Row
-          style={{ marginTop: '15px', overflowY: 'scroll', maxHeight: 400 }}
-          gutter={isMobile ? 8 : 24}
+        <div
+          style={{
+            overflowY: 'scroll',
+            maxHeight: 400,
+            paddingBottom: '12px',
+            // hax to make scrollbars look nice
+            marginTop: '-12px',
+            paddingTop: '12px',
+            paddingLeft: '12px',
+            marginLeft: '-12px',
+
+            marginRight: '-20px',
+            paddingRight: '20px',
+          }}
         >
-          {renderRewardTiers?.map((rewardTier, idx) => (
-            <Col
-              md={8}
-              xs={8}
-              key={`${rewardTier.contributionFloor}-${rewardTier.name}`}
-              style={{ marginBottom: '15px' }}
-            >
-              <RewardTier
-                tierRank={idx + 1}
-                rewardTier={rewardTier}
-                rewardTierUpperLimit={rewardTiers?.[idx + 1]?.contributionFloor}
-                isSelected={idx === selectedIndex}
-                onClick={() => handleSelected(rewardTier, idx)}
-              />
-            </Col>
-          ))}
-        </Row>
+          <Row gutter={24}>
+            {renderRewardTiers?.map((rewardTier, idx) => (
+              <Col
+                md={8}
+                xs={8}
+                key={`${rewardTier.contributionFloor}-${rewardTier.name}`}
+                style={{ marginBottom: '15px' }}
+              >
+                <RewardTier
+                  tierRank={idx + 1}
+                  rewardTier={rewardTier}
+                  rewardTierUpperLimit={
+                    rewardTiers?.[idx + 1]?.contributionFloor
+                  }
+                  isSelected={idx === selectedIndex}
+                  onClick={() => handleSelected(rewardTier, idx)}
+                />
+              </Col>
+            ))}
+          </Row>
+        </div>
       )}
 
       {projectMetadata?.nftPaymentSuccessModal?.content && (
@@ -154,6 +168,6 @@ export function NftRewardsSection() {
           config={projectMetadata.nftPaymentSuccessModal}
         />
       )}
-    </div>
+    </Space>
   )
 }

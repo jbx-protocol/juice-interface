@@ -38,7 +38,7 @@ export const V2V3PayForm = ({
   ...props
 }: {
   form: FormInstance<V2V3PayFormType>
-  nftRewardTier: NftRewardTier | null
+  nftRewardTier: NftRewardTier | undefined
 } & FormProps) => {
   const {
     theme: { colors },
@@ -60,6 +60,7 @@ export const V2V3PayForm = ({
       ? getV2V3FundingCycleRiskCount(fundingCycle, fundingCycleMetadata)
       : undefined
 
+  // add the NFT image to the pay memo
   const imageCid = nftRewardTier?.imageUrl
     ? cidFromUrl(nftRewardTier.imageUrl)
     : undefined

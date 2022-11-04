@@ -15,7 +15,7 @@ import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useMobile from 'hooks/Mobile'
 import { NftRewardTier } from 'models/nftRewardTier'
-import { useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { fromWad } from 'utils/format/formatNumber'
 import {
@@ -74,16 +74,37 @@ export function NftRewardsSection() {
   const { projectMetadata } = useContext(ProjectMetadataContext)
   const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
 
-  const { payAmount, payInCurrency, setPayAmount, setPayInCurrency } =
-    payProjectForm ?? {}
   const [selectedIndex, setSelectedIndex] = useState<number>()
 
   const { visible: nftPostPayModalVisible, hide: hideNftPostPayModal } =
     useModalFromUrlQuery(NFT_PAYMENT_CONFIRMED_QUERY_PARAM)
+  const {
+    payAmount,
+    payInCurrency,
+    setPayAmount,
+    setPayInCurrency,
+    setPayMetadata,
+  } = payProjectForm ?? {}
 
   const converter = useCurrencyConverter()
   const payAmountETH =
     payInCurrency === ETH ? payAmount : fromWad(converter.usdToWei(payAmount))
+
+  const selectTier = useCallback(
+    (tierIndex: number) => {
+      const tierId = rewardTiers?.[tierIndex]?.id
+      if (!tierId) return
+
+      setPayMetadata?.({ tierIdsToMint: [tierId] })
+      setSelectedIndex(tierIndex)
+    },
+    [setPayMetadata, rewardTiers],
+  )
+
+  const deselectTier = useCallback(() => {
+    setPayMetadata?.(undefined)
+    setSelectedIndex(undefined)
+  }, [setPayMetadata])
 
   useEffect(() => {
     if (!rewardTiers || !payAmountETH) return
@@ -95,14 +116,14 @@ export function NftRewardsSection() {
 
     // set selected as highest reward tier above a certain amount
     if (highestEligibleRewardTier) {
-      setSelectedIndex(rewardTiers.indexOf(highestEligibleRewardTier))
+      selectTier(rewardTiers.indexOf(highestEligibleRewardTier))
     } else {
-      setSelectedIndex(undefined)
+      deselectTier()
     }
-  }, [payAmountETH, rewardTiers])
+  }, [payAmountETH, rewardTiers, deselectTier, selectTier])
 
   const handleSelected = (rewardTier: NftRewardTier, idx: number) => {
-    setSelectedIndex(idx)
+    selectTier(idx)
     setPayAmount?.(rewardTier.contributionFloor.toString())
     setPayInCurrency?.(ETH)
   }

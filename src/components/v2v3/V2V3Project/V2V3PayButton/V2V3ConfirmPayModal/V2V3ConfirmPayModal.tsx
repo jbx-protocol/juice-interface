@@ -6,6 +6,7 @@ import Callout from 'components/Callout'
 import FormattedAddress from 'components/FormattedAddress'
 import { NFT_PAYMENT_CONFIRMED_QUERY_PARAM } from 'components/NftRewards/NftPostPayModal'
 import Paragraph from 'components/Paragraph'
+import { PayProjectFormContext } from 'components/Project/PayProjectForm/payProjectFormContext'
 import TooltipLabel from 'components/TooltipLabel'
 import TransactionModal from 'components/TransactionModal'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
@@ -22,8 +23,7 @@ import { useRouter } from 'next/router'
 import { useContext, useState } from 'react'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
 import { featureFlagEnabled } from 'utils/featureFlags'
-import { formattedNum, formatWad, fromWad } from 'utils/format/formatNumber'
-import { getNftRewardTier } from 'utils/nftRewards'
+import { formattedNum, formatWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -54,6 +54,7 @@ export function V2V3ConfirmPayModal({
   const {
     nftRewards: { rewardTiers },
   } = useContext(NftRewardsContext)
+  const { form: payProjectForm } = useContext(PayProjectFormContext)
 
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
@@ -72,7 +73,6 @@ export function V2V3ConfirmPayModal({
   } = useWallet()
 
   const usdAmount = converter.weiToUsd(weiAmount)
-  const nftRewardTiers = rewardTiers //rewardTiers
 
   if (!fundingCycle || !projectId || !projectMetadata) return null
 
@@ -96,12 +96,12 @@ export function V2V3ConfirmPayModal({
     plural: true,
   })
 
-  let nftRewardTier: NftRewardTier | null = null
-  if (nftRewardTiers && featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)) {
-    nftRewardTier = getNftRewardTier({
-      nftRewardTiers,
-      payAmountETH: parseFloat(fromWad(weiAmount)),
-    })
+  let nftRewardTier: NftRewardTier | undefined
+  if (rewardTiers && featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)) {
+    // assume we only ever want to mint one tier
+    nftRewardTier = rewardTiers.find(
+      r => r.id === payProjectForm?.payMetadata?.tierIdsToMint[0],
+    )
   }
 
   const handlePaySuccess = () => {

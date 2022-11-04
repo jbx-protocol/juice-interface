@@ -4,7 +4,7 @@ import axios from 'axios'
 import { juiceboxEmojiImageUri } from 'constants/images'
 import { IPFS_TAGS } from 'constants/ipfs'
 import { readNetwork } from 'constants/networks'
-import { parseEther } from 'ethers/lib/utils'
+import { defaultAbiCoder, parseEther } from 'ethers/lib/utils'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/NftRewards'
 import {
   IpfsNftCollectionMetadata,
@@ -254,4 +254,19 @@ export function hasNftRewards(
   fundingCycleMetadata: V2V3FundingCycleMetadata | undefined,
 ) {
   return Boolean(fundingCycleMetadata?.dataSource)
+}
+
+export function encodePayMetadata(metadata: JB721DelegatePayMetadata) {
+  return defaultAbiCoder.encode(
+    ['bytes32', 'bytes32', 'bytes4', 'bool', 'bool', 'bool', 'uint16[]'],
+    [
+      0,
+      0,
+      0,
+      metadata.dontMint,
+      metadata.expectMintFromExtraFunds,
+      metadata.dontOverspend,
+      metadata.tierIdsToMint,
+    ],
+  )
 }

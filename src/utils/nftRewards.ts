@@ -20,6 +20,7 @@ import { decodeEncodedIPFSUri, encodeIPFSUri } from 'utils/ipfs'
 import { ForgeDeploy } from './v2v3/loadV2V3Contract'
 
 export const MAX_NFT_REWARD_TIERS = 3
+const IJB721Delegate_INTERFACE_ID = '0xb3bcbb79'
 
 // Following three functions get the latest deployments of the NFT contracts from the NPM package
 async function loadNftRewardsDeployment() {
@@ -263,9 +264,9 @@ export function encodePayMetadata(
   if (!metadata) return undefined
 
   const args = [
-    0,
-    0,
-    0,
+    constants.HashZero,
+    constants.HashZero,
+    IJB721Delegate_INTERFACE_ID,
     metadata.dontMint ?? false,
     metadata.expectMintFromExtraFunds ?? false,
     metadata.dontOverspend ?? false,

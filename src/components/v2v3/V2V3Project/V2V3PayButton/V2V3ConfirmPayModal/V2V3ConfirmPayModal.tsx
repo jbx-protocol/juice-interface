@@ -24,7 +24,7 @@ import { useContext, useState } from 'react'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { formattedNum, formatWad } from 'utils/format/formatNumber'
-import { encodePayMetadata } from 'utils/nftRewards'
+import { encodeJB721DelegatePayMetadata } from 'utils/nftRewards'
 import { emitErrorNotification } from 'utils/notifications'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -133,7 +133,9 @@ export function V2V3ConfirmPayModal({
       uploadedImage,
     } = form.getFieldsValue()
     const txBeneficiary = beneficiary ?? userAddress
-    const delegateMetadata = encodePayMetadata(payProjectForm?.payMetadata)
+    const delegateMetadata = encodeJB721DelegatePayMetadata(
+      payProjectForm?.payMetadata,
+    )
 
     // Prompt wallet connect if no wallet connected
     if (chainUnsupported) {

@@ -258,7 +258,7 @@ export function hasNftRewards(
   return Boolean(fundingCycleMetadata?.dataSource)
 }
 
-export function encodePayMetadata(
+export function encodeJB721DelegatePayMetadata(
   metadata: JB721DelegatePayMetadata | undefined,
 ) {
   if (!metadata) return undefined

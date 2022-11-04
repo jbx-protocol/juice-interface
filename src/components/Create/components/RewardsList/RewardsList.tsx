@@ -26,7 +26,9 @@ const useRewardsInstance = () => {
   return useContext(RewardsListContext)
 }
 
-export type RewardsListProps = FormItemInput<Reward[]>
+export type RewardsListProps = FormItemInput<Reward[]> & {
+  allowCreate?: boolean
+}
 
 export interface RewardsListChildrenExports {
   Item: typeof RewardItem
@@ -34,7 +36,11 @@ export interface RewardsListChildrenExports {
 }
 
 export const RewardsList: React.FC<RewardsListProps> &
-  RewardsListChildrenExports = ({ value, onChange }: RewardsListProps) => {
+  RewardsListChildrenExports = ({
+  allowCreate = false,
+  value,
+  onChange,
+}: RewardsListProps) => {
   const rewardsHook = useRewards({ value, onChange })
   const [selectedReward, setSelectedReward] = useState<Reward>()
   const modal = useModal()
@@ -80,16 +86,18 @@ export const RewardsList: React.FC<RewardsListProps> &
               ))}
           </>
         )}
-        <CreateButton
-          icon={<PlusCircleOutlined />}
-          style={{
-            height: '6rem',
-          }}
-          disabled={rewards.length >= 3}
-          onClick={modal.open}
-        >
-          Add NFT reward tier
-        </CreateButton>
+        {allowCreate && (
+          <CreateButton
+            icon={<PlusCircleOutlined />}
+            style={{
+              height: '6rem',
+            }}
+            disabled={rewards.length >= 3}
+            onClick={modal.open}
+          >
+            Add NFT reward tier
+          </CreateButton>
+        )}
       </div>
       <AddEditRewardModal
         open={modal.visible}

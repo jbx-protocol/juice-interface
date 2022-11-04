@@ -48,7 +48,7 @@ function prepareTransaction({
   functionName: string
   contract: Contract
   args: unknown[]
-  options?: TransactionOptions
+  options: TransactionOptions | undefined
 }) {
   const tx =
     options?.value !== undefined
@@ -102,11 +102,20 @@ export function useTransactor(): Transactor | undefined {
       logTx({ functionName, contract, args })
 
       if (process.env.NODE_ENV === 'development') {
-        await simulateTransaction({ contract, functionName, args, userAddress })
+        try {
+          await simulateTransaction({
+            contract,
+            functionName,
+            args,
+            userAddress,
+          })
+        } catch (e) {
+          console.warn('Simulation failed', e)
+        }
       }
 
       try {
-        const tx = prepareTransaction({ functionName, contract, args })
+        const tx = prepareTransaction({ functionName, contract, args, options })
         const result: TransactionResponse = await tx
 
         console.info('✅ Transactor::submitted', result)

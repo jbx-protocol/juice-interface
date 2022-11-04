@@ -55,8 +55,8 @@
     "@jbx-protocol/contracts-v1": "2.0.0",
     "@jbx-protocol/contracts-v2-4.0.0": "npm:@jbx-protocol/contracts-v2@4.0.0",
     "@jbx-protocol/contracts-v2-latest": "npm:@jbx-protocol/contracts-v2@8.0.4",
-    "@jbx-protocol/juice-contracts-v3": "2.0.2",
     "@jbx-protocol/juice-721-delegate": "2.0.1",
+    "@jbx-protocol/juice-contracts-v3": "2.0.2",
     "@jbx-protocol/juice-v1-token-terminal": "1.0.1",
     "@jbx-protocol/project-handles": "2.0.2",
     "@jbx-protocol/ve-nft": "0.0.6",
@@ -103,6 +103,7 @@
     "react-stop-propagation": "^0.2.0",
     "recharts": "2.1.12",
     "sass": "^1.52.1",
+    "sharp": "^0.31.1",
     "tiny-invariant": "^1.2.0",
     "use-deep-compare-effect": "^1.6.1",
     "uuid": "^8.3.2"

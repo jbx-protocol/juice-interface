@@ -13,6 +13,7 @@ import {
   NftRewardTier,
 } from 'models/nftRewardTier'
 import { V2V3ContractName } from 'models/v2v3/contracts'
+import { V2V3FundingCycleMetadata } from 'models/v2v3/fundingCycle'
 import { decodeEncodedIPFSUri, encodeIPFSUri } from 'utils/ipfs'
 
 import { ForgeDeploy } from './v2v3/loadV2V3Contract'
@@ -240,4 +241,17 @@ export function buildJB721TierParams({
       transfersPausable: false,
     } as JB721TierParams
   })
+}
+
+/**
+ * Assume that any project with a data source has "NFT Rewards"
+ * In other words, uses the JB721Delegate.
+ *
+ * @TODO this is a TERRIBLE assumption. If someone starts using a different datasource,
+ * the UI will break badly. We should probably be validating that the datasource address adheres to a particular interface.ƒ
+ */
+export function hasNftRewards(
+  fundingCycleMetadata: V2V3FundingCycleMetadata | undefined,
+) {
+  return Boolean(fundingCycleMetadata?.dataSource)
 }

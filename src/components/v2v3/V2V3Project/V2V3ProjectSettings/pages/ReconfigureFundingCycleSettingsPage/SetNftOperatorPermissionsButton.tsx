@@ -51,13 +51,15 @@ export function SetNftOperatorPermissionsButton({
           fontSize: '0.7rem',
         }}
       >
-        Allow the{' '}
-        <ExternalLink
-          href={`https://github.com/jbx-protocol/juice-721-delegate/blob/main/contracts/JBTiered721DelegateDeployer.sol`}
-        >
-          Juicebox NFT deployer contract
-        </ExternalLink>{' '}
-        to executed reconfiguration transactions on this project's behalf.
+        <Trans>
+          Allow the{' '}
+          <ExternalLink
+            href={`https://github.com/jbx-protocol/juice-721-delegate/blob/main/contracts/JBTiered721DelegateDeployer.sol`}
+          >
+            Juicebox NFT deployer contract
+          </ExternalLink>{' '}
+          to reconfigure this project's funding cycle.
+        </Trans>
       </div>
     </div>
   )

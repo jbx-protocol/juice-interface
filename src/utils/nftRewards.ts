@@ -1,10 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import axios from 'axios'
+import { JB721DelegatePayMetadata } from 'components/Project/PayProjectForm/usePayProjectForm'
 import { juiceboxEmojiImageUri } from 'constants/images'
 import { IPFS_TAGS } from 'constants/ipfs'
 import { readNetwork } from 'constants/networks'
-import { parseEther } from 'ethers/lib/utils'
+import { defaultAbiCoder, parseEther } from 'ethers/lib/utils'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/NftRewards'
 import {
   IpfsNftCollectionMetadata,
@@ -19,6 +20,7 @@ import { decodeEncodedIPFSUri, encodeIPFSUri } from 'utils/ipfs'
 import { ForgeDeploy } from './v2v3/loadV2V3Contract'
 
 export const MAX_NFT_REWARD_TIERS = 3
+const IJB721Delegate_INTERFACE_ID = '0xb3bcbb79'
 
 // Following three functions get the latest deployments of the NFT contracts from the NPM package
 async function loadNftRewardsDeployment() {
@@ -254,4 +256,27 @@ export function hasNftRewards(
   fundingCycleMetadata: V2V3FundingCycleMetadata | undefined,
 ) {
   return Boolean(fundingCycleMetadata?.dataSource)
+}
+
+export function encodeJB721DelegatePayMetadata(
+  metadata: JB721DelegatePayMetadata | undefined,
+) {
+  if (!metadata) return undefined
+
+  const args = [
+    constants.HashZero,
+    constants.HashZero,
+    IJB721Delegate_INTERFACE_ID,
+    metadata.dontMint ?? false,
+    metadata.expectMintFromExtraFunds ?? false,
+    metadata.dontOverspend ?? false,
+    metadata.tierIdsToMint,
+  ]
+
+  const encoded = defaultAbiCoder.encode(
+    ['bytes32', 'bytes32', 'bytes4', 'bool', 'bool', 'bool', 'uint16[]'],
+    args,
+  )
+
+  return encoded
 }

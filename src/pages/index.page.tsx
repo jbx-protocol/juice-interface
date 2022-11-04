@@ -175,12 +175,6 @@ function Landing() {
             <Col xs={24} md={11}>
               <Image
                 className="hide-mobile"
-                style={{
-                  minHeight: 300,
-                  width: '100%',
-                  maxWidth: '50vw',
-                  objectFit: 'contain',
-                }}
                 src={forThemeOption?.({
                   [ThemeOption.dark]: bananaOd,
                   [ThemeOption.light]: bananaOl,
@@ -238,7 +232,6 @@ function Landing() {
 
             <Col xs={24} md={10}>
               <Image
-                style={{ maxWidth: '100%' }}
                 src={blueBerry}
                 alt="Sexy blueberry with bright pink lipstick spraying a can of spraypaint"
                 loading="lazy"
@@ -275,18 +268,10 @@ function Landing() {
         style={{
           display: 'flex',
           justifyContent: 'center',
+          marginBottom: -12,
         }}
       >
         <Image
-          style={{
-            height: '40vh',
-            maxHeight: 400,
-            minHeight: 300,
-            maxWidth: '100%',
-            objectFit: 'contain',
-            objectPosition: 'center',
-            marginBottom: -10,
-          }}
           src={forThemeOption?.({
             [ThemeOption.dark]: orangeLadyOd,
             [ThemeOption.light]: orangeLadyOl,

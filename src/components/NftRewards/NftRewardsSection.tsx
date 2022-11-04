@@ -11,13 +11,18 @@ import { CurrencyContext } from 'contexts/currencyContext'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useMobile from 'hooks/Mobile'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useContext, useEffect, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { fromWad } from 'utils/format/formatNumber'
-import { getNftRewardTier, MAX_NFT_REWARD_TIERS } from 'utils/nftRewards'
+import {
+  getNftRewardTier,
+  hasNftRewards,
+  MAX_NFT_REWARD_TIERS,
+} from 'utils/nftRewards'
 import { useModalFromUrlQuery } from '../modals/hooks/useModalFromUrlQuery'
 import { RewardTier } from './RewardTier'
 
@@ -27,7 +32,7 @@ function RewardTiersLoadingSkeleton() {
   return (
     <Row style={{ marginTop: '15px' }} gutter={isMobile ? 8 : 24}>
       {[...Array(MAX_NFT_REWARD_TIERS)]?.map(index => (
-        <Col md={8} xs={8} key={index}>
+        <Col md={8} xs={8} key={`rewardTierLoading-${index}`}>
           <RewardTier loading />
         </Col>
       ))}
@@ -59,7 +64,7 @@ function Header() {
 
 export function NftRewardsSection() {
   const {
-    nftRewards: { CIDs, rewardTiers },
+    nftRewards: { rewardTiers },
     loading: nftsLoading,
   } = useContext(NftRewardsContext)
   const {
@@ -67,6 +72,7 @@ export function NftRewardsSection() {
   } = useContext(CurrencyContext)
   const { form: payProjectForm } = useContext(PayProjectFormContext)
   const { projectMetadata } = useContext(ProjectMetadataContext)
+  const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
 
   const { payAmount, payInCurrency, setPayAmount, setPayInCurrency } =
     payProjectForm ?? {}
@@ -103,9 +109,7 @@ export function NftRewardsSection() {
   }
 
   const nftRewardsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
-  const hasCIDs = Boolean(CIDs?.length)
-
-  if ((!hasCIDs && !nftsLoading) || !nftRewardsEnabled) {
+  if (!hasNftRewards(fundingCycleMetadata) || !nftRewardsEnabled) {
     return null
   }
 

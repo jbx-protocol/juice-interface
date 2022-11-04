@@ -18,13 +18,11 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
    */
   const { data: nftRewardTiersResponse, loading: nftRewardsCIDsLoading } =
     useNftRewardTiersOf(dataSource)
-  let CIDs: string[] = []
-  if (nftRewardTiersResponse) {
-    CIDs = CIDsOfNftRewardTiersResponse(nftRewardTiersResponse)
-  }
   const { data: rewardTiers, isLoading: nftRewardTiersLoading } = useNftRewards(
     nftRewardTiersResponse ?? [],
   )
+
+  const CIDs = CIDsOfNftRewardTiersResponse(nftRewardTiersResponse)
 
   // Assumes having `dataSource` means there are NFTs initially
   // In worst case, if has `dataSource` but isn't for NFTs:

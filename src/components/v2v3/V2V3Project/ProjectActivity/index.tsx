@@ -11,7 +11,6 @@ import SectionHeader from 'components/SectionHeader'
 import { PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
 import { DeployETHERC20ProjectPayerEvent } from 'models/subgraph-entities/v2/deploy-eth-erc20-project-payer-event'
 import { DistributePayoutsEvent } from 'models/subgraph-entities/v2/distribute-payouts-event'
@@ -50,7 +49,6 @@ export default function ProjectActivity() {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { primaryETHTerminal } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
@@ -71,14 +69,6 @@ export default function ProjectActivity() {
         value: PV_V2,
       },
     ]
-
-    if (primaryETHTerminal) {
-      _where.push({
-        key: 'terminal',
-        value: [null, primaryETHTerminal], // Include null because some project events will not have a terminal property
-        operator: 'in',
-      })
-    }
 
     if (projectId) {
       _where.push({
@@ -125,7 +115,7 @@ export default function ProjectActivity() {
     }
 
     return _where
-  }, [projectId, eventFilter, primaryETHTerminal])
+  }, [projectId, eventFilter])
 
   const {
     data: projectEvents,
@@ -148,6 +138,7 @@ export default function ProjectActivity() {
           'id',
           'txHash',
           'feeFromV2Project',
+          'terminal',
         ],
       },
       {
@@ -179,6 +170,7 @@ export default function ProjectActivity() {
           'txHash',
           'timestamp',
           'returnAmount',
+          'terminal',
         ],
       },
       {
@@ -196,6 +188,7 @@ export default function ProjectActivity() {
           'beneficiaryDistributionAmount',
           'distributedAmount',
           'memo',
+          'terminal',
         ],
       },
       {

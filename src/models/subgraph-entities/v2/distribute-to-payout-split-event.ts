@@ -10,7 +10,10 @@ import {
   BaseProjectEntityJson,
   parseBaseProjectEntityJson,
 } from '../base/base-project-entity'
-import { TerminalEventEntity } from '../base/terminal-event'
+import {
+  parseTerminalEventEntity,
+  TerminalEventEntity,
+} from '../base/terminal-event'
 
 export interface DistributeToPayoutSplitEvent
   extends BaseEventEntity,
@@ -38,6 +41,7 @@ export type DistributeToPayoutSplitEventJson = Partial<
 export const parseDistributeToPayoutSplitEventJson = (
   j: DistributeToPayoutSplitEventJson,
 ): Partial<DistributeToPayoutSplitEvent> => ({
+  ...parseTerminalEventEntity(j),
   ...parseBaseEventEntityJson(j),
   ...parseBaseProjectEntityJson(j),
   domain: j.domain ? BigNumber.from(j.domain) : undefined,

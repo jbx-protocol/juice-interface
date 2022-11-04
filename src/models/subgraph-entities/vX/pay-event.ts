@@ -10,7 +10,10 @@ import {
   BaseProjectEntityJson,
   parseBaseProjectEntityJson,
 } from '../base/base-project-entity'
-import { TerminalEventEntity } from '../base/terminal-event'
+import {
+  parseTerminalEventEntity,
+  TerminalEventEntity,
+} from '../base/terminal-event'
 
 export interface PayEvent
   extends BaseProjectEntity,
@@ -28,6 +31,7 @@ export type PayEventJson = Partial<
 >
 
 export const parsePayEventJson = (j: PayEventJson): Partial<PayEvent> => ({
+  ...parseTerminalEventEntity(j),
   ...parseBaseProjectEntityJson(j),
   ...parseBaseEventEntityJson(j),
   fundingCycleId: j.fundingCycleId

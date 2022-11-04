@@ -10,7 +10,10 @@ import {
   BaseProjectEntityJson,
   parseBaseProjectEntityJson,
 } from '../base/base-project-entity'
-import { TerminalEventEntity } from '../base/terminal-event'
+import {
+  parseTerminalEventEntity,
+  TerminalEventEntity,
+} from '../base/terminal-event'
 import {
   DistributeToPayoutSplitEvent,
   DistributeToPayoutSplitEventJson,
@@ -43,6 +46,7 @@ export type DistributePayoutsEventJson = Partial<
 export const parseDistributePayoutsEventJson = (
   j: DistributePayoutsEventJson,
 ): Partial<DistributePayoutsEvent> => ({
+  ...parseTerminalEventEntity(j),
   ...parseBaseEventEntityJson(j),
   ...parseBaseProjectEntityJson(j),
   fundingCycleConfiguration: j.fundingCycleConfiguration

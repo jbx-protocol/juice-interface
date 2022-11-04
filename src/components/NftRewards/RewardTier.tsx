@@ -1,20 +1,19 @@
+import { CheckOutlined, LoadingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Skeleton, Tooltip } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { CSSProperties, MouseEventHandler, useContext, useState } from 'react'
-
-import { CheckOutlined, LoadingOutlined } from '@ant-design/icons'
-
+import { cidFromPinataUrl, restrictedIpfsUrl } from 'utils/ipfs'
 import { NftPreview } from './NftPreview'
 
 const rewardTierContainerStyle: CSSProperties = {
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'flex-start',
   cursor: 'pointer',
   transition: 'box-shadow 100ms linear',
   height: '100%',
+  width: '100%',
 }
 
 const loadingImageContainerStyle: CSSProperties = {
@@ -70,6 +69,10 @@ export function RewardTier({
   } = useContext(ThemeContext)
 
   const [previewVisible, setPreviewVisible] = useState<boolean>(false)
+  const imageCid = rewardTier?.imageUrl
+    ? cidFromPinataUrl(rewardTier?.imageUrl)
+    : ''
+  const imageUrl = restrictedIpfsUrl(imageCid)
 
   const backgroundColor = isSelected
     ? colors.background.l0
@@ -160,7 +163,7 @@ export function RewardTier({
           ) : (
             <img
               alt={rewardTier?.name}
-              src={rewardTier?.imageUrl}
+              src={imageUrl}
               style={{
                 ...imageStyle,
                 filter: isSelected ? 'unset' : 'brightness(50%)',

@@ -22,7 +22,7 @@ export const metadataNameForHandle = (handle: string) =>
  * Return a URL to the public (open) IPFS gateway for the given cid.
  */
 export const publicIpfsUrl = (cid: string | undefined): string => {
-  return ipfsGatewayUrl(cid, OPEN_IPFS_GATEWAY_HOSTNAME)
+  return ipfsGatewayUrl(cid, OPEN_IPFS_GATEWAY_HOSTNAME as string)
 }
 
 /**
@@ -48,6 +48,8 @@ export function ipfsUrl(cid: string, path?: string) {
 export const cidFromUrl = (url: string) => url.split('/').pop()
 
 export const cidFromPinataUrl = (url: string) => url.split('/ipfs/').pop()
+export const cidFromIpfsUri = (ipfsUri: string) =>
+  ipfsUri.match(IPFS_URL_REGEX)?.[1]
 
 /**
  * Returns a native IPFS link (`ipfs://`) as a https link.
@@ -56,7 +58,7 @@ export function ipfsToHttps(
   ipfsUri: string,
   { gatewayHostname }: { gatewayHostname?: string } = {},
 ): string {
-  const suffix = ipfsUri.match(IPFS_URL_REGEX)?.[1]
+  const suffix = cidFromIpfsUri(ipfsUri)
   return gatewayHostname
     ? ipfsGatewayUrl(suffix, gatewayHostname)
     : publicIpfsUrl(suffix)

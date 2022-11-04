@@ -31,7 +31,7 @@ function RewardTiersLoadingSkeleton() {
 
   return (
     <Row style={{ marginTop: '15px' }} gutter={isMobile ? 8 : 24}>
-      {[...Array(MAX_NFT_REWARD_TIERS)]?.map(index => (
+      {[...Array(MAX_NFT_REWARD_TIERS)]?.map((_, index) => (
         <Col md={8} xs={8} key={`rewardTierLoading-${index}`}>
           <RewardTier loading />
         </Col>

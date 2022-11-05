@@ -46,7 +46,11 @@ export const NftRewardsPage = () => {
               header={<OptionalHeader header={t`Marketplace Customizations`} />}
               hideDivider
             >
-              <Space direction="vertical" style={{ width: '100%' }}>
+              <Space
+                direction="vertical"
+                size="middle"
+                style={{ width: '100%', padding: '0.75rem 0 0.5rem 0' }}
+              >
                 <Form.Item
                   name="collectionName"
                   label={
@@ -92,7 +96,11 @@ export const NftRewardsPage = () => {
               header={<OptionalHeader header={t`Payment Success Popup`} />}
               hideDivider
             >
-              <Space direction="vertical" style={{ width: '100%' }}>
+              <Space
+                direction="vertical"
+                size="middle"
+                style={{ width: '100%', padding: '0.75rem 0 0.5rem 0' }}
+              >
                 <Form.Item
                   name="postPayMessage"
                   label={

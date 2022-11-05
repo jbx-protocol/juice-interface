@@ -38,7 +38,7 @@ export const NftRewardsPage = () => {
       >
         <div style={{ display: 'flex', flexDirection: 'column', gap: '4rem' }}>
           <Form.Item noStyle name="rewards">
-            <RewardsList />
+            <RewardsList allowCreate />
           </Form.Item>
           <CreateCollapse>
             <CreateCollapse.Panel

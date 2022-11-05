@@ -72,22 +72,26 @@ export const CustomTokenSettings = () => {
         />
       </Form.Item>
 
-      <Divider />
+      <Divider style={{ margin: '2rem 0' }} />
 
       <Form.Item label={t`Reserved tokens`}>
-        <Trans>
-          Set aside a percentage of freshly minted tokens, which you can
-          allocate below.
-        </Trans>
-        <Form.Item
-          noStyle
-          name="reservedTokensPercentage"
-          valuePropName="sliderValue"
-          rules={[inputMustExistRule({ label: t`Reserved tokens` })]}
+        <div
+          style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
         >
-          <NumberSlider min={0} defaultValue={0} suffix="%" step={0.5} />
-        </Form.Item>
-        <ReservedTokenRateCallout />
+          <Trans>
+            Set aside a percentage of freshly minted tokens, which you can
+            allocate below.
+          </Trans>
+          <Form.Item
+            noStyle
+            name="reservedTokensPercentage"
+            valuePropName="sliderValue"
+            rules={[inputMustExistRule({ label: t`Reserved tokens` })]}
+          >
+            <NumberSlider min={0} defaultValue={0} suffix="%" step={0.5} />
+          </Form.Item>
+          <ReservedTokenRateCallout />
+        </div>
       </Form.Item>
       <Form.Item label={t`Reserved token allocation`} requiredMark="optional">
         <div
@@ -109,100 +113,109 @@ export const CustomTokenSettings = () => {
         </div>
       </Form.Item>
 
-      <Divider />
+      <Divider style={{ margin: '2rem 0' }} />
 
       {/* TODO: Allow disabling */}
       <Form.Item label={t`Discount rate`}>
-        {!discountRateDisabled && (
-          <Trans>
-            The project token's issuance rate will decrease by this percentage
-            every funding cycle ({formatFundingCycleDuration(duration)}). A
-            higher discount rate will incentivize contributors to pay the
-            project earlier.
-          </Trans>
-        )}
-        <Form.Item
-          noStyle
-          name="discountRate"
-          valuePropName="sliderValue"
-          rules={[inputMustExistRule({ label: t`Discount Rate` })]}
+        <div
+          style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
         >
-          <NumberSlider
-            disabled={discountRateDisabled}
-            min={0}
-            defaultValue={0}
-            suffix="%"
-            step={0.5}
-          />
-        </Form.Item>
-        {discountRateDisabled ? (
-          <CreateCallout.Warning>
+          {!discountRateDisabled && (
             <Trans>
-              The discount rate cannot be set when the funding cycle duration is
-              not set.
+              The project token's issuance rate will decrease by this percentage
+              every funding cycle ({formatFundingCycleDuration(duration)}). A
+              higher discount rate will incentivize contributors to pay the
+              project earlier.
             </Trans>
-          </CreateCallout.Warning>
-        ) : (
-          <CreateCallout.Info>
-            <Space direction="vertical">
-              {discountRate === 0 ? (
-                <Trans>
-                  Contributors will not receive any extra tokens for paying the
-                  project early.
-                </Trans>
-              ) : discountRate === 100 ? (
-                <Trans>
-                  Contributors will receive the total amount of tokens available
-                  through issuance. All subsequent funding cycles will have a
-                  mint rate of 0.
-                </Trans>
-              ) : (
-                <>
+          )}
+          <Form.Item
+            noStyle
+            name="discountRate"
+            valuePropName="sliderValue"
+            rules={[inputMustExistRule({ label: t`Discount Rate` })]}
+          >
+            <NumberSlider
+              disabled={discountRateDisabled}
+              min={0}
+              defaultValue={0}
+              suffix="%"
+              step={0.5}
+            />
+          </Form.Item>
+          {discountRateDisabled ? (
+            <CreateCallout.Warning>
+              <Trans>
+                The discount rate cannot be set when the funding cycle duration
+                is not set.
+              </Trans>
+            </CreateCallout.Warning>
+          ) : (
+            <CreateCallout.Info>
+              <Space direction="vertical">
+                {discountRate === 0 ? (
                   <Trans>
-                    Contributors will receive {discountRate}% more tokens for
-                    contributions they make this funding cycle compared to the
-                    next funding cycle.
+                    Contributors will not receive any extra tokens for paying
+                    the project early.
                   </Trans>
+                ) : discountRate === 100 ? (
                   <Trans>
-                    The issuance rate of your second funding cycle will be{' '}
-                    {formatAmount(secondFundingCycleMintRate)} tokens per 1 ETH,
-                    {formatAmount(thirdFundingCycleMintRate)} tokens per 1 ETH
-                    for your third funding cycle, and so on.
+                    Contributors will receive the total amount of tokens
+                    available through issuance. All subsequent funding cycles
+                    will have a mint rate of 0.
                   </Trans>
-                </>
-              )}
-            </Space>
-          </CreateCallout.Info>
-        )}
+                ) : (
+                  <>
+                    <Trans>
+                      Contributors will receive {discountRate}% more tokens for
+                      contributions they make this funding cycle compared to the
+                      next funding cycle.
+                    </Trans>
+                    <Trans>
+                      The issuance rate of your second funding cycle will be{' '}
+                      {formatAmount(secondFundingCycleMintRate)} tokens per 1
+                      ETH,
+                      {formatAmount(thirdFundingCycleMintRate)} tokens per 1 ETH
+                      for your third funding cycle, and so on.
+                    </Trans>
+                  </>
+                )}
+              </Space>
+            </CreateCallout.Info>
+          )}
+        </div>
       </Form.Item>
 
-      <Divider />
+      <Divider style={{ margin: '2rem 0' }} />
 
       <Form.Item label={t`Redemption rate`}>
-        <Trans>
-          The redemption rate determines the amount of overflow each token can
-          be redeemed for.{' '}
-          <ExternalLink href="https://info.juicebox.money/dev/learn/glossary/redemption-rate">
-            Learn more.
-          </ExternalLink>
-        </Trans>
-        <Form.Item
-          noStyle
-          name="redemptionRate"
-          valuePropName="sliderValue"
-          rules={[inputMustExistRule({ label: t`Redemption Rate` })]}
+        <div
+          style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
         >
-          <NumberSlider min={0.1} defaultValue={0} suffix="%" step={0.5} />
-        </Form.Item>
-        {/* TODO: Hide on mobile due to pushing out of bound viewport */}
-        {!isMobile && (
-          <Form.Item noStyle name="redemptionRate">
-            <TokenRedemptionRateGraph graphPad={50} graphSize={300} />
+          <Trans>
+            The redemption rate determines the amount of overflow each token can
+            be redeemed for.{' '}
+            <ExternalLink href="https://info.juicebox.money/dev/learn/glossary/redemption-rate">
+              Learn more.
+            </ExternalLink>
+          </Trans>
+          <Form.Item
+            noStyle
+            name="redemptionRate"
+            valuePropName="sliderValue"
+            rules={[inputMustExistRule({ label: t`Redemption Rate` })]}
+          >
+            <NumberSlider min={0.1} defaultValue={0} suffix="%" step={0.5} />
           </Form.Item>
-        )}
+          {/* TODO: Hide on mobile due to pushing out of bound viewport */}
+          {!isMobile && (
+            <Form.Item noStyle name="redemptionRate">
+              <TokenRedemptionRateGraph graphPad={50} graphSize={300} />
+            </Form.Item>
+          )}
+        </div>
       </Form.Item>
 
-      <Divider />
+      <Divider style={{ margin: '2rem 0' }} />
 
       <>
         <Form.Item

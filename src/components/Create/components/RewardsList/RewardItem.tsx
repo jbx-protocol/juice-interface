@@ -1,9 +1,10 @@
 import { DeleteOutlined, EditOutlined, LinkOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-import { Button, Space } from 'antd'
+import { Space } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { CSSProperties } from 'react'
 import { RewardImage } from '../RewardImage'
+import { RewardItemButton } from './RewardItemButton'
 import { Reward } from './types'
 
 // START: CSS
@@ -61,12 +62,12 @@ export const RewardItem = ({
           <Trans>Tier {tier}</Trans>
         </div>
         <Space size="middle">
-          <Button style={{ padding: 0 }} type="link" onClick={onEditClicked}>
+          <RewardItemButton onClick={onEditClicked}>
             <EditOutlined />
-          </Button>
-          <Button style={{ padding: 0 }} type="link" onClick={onDeleteClicked}>
+          </RewardItemButton>
+          <RewardItemButton onClick={onDeleteClicked}>
             <DeleteOutlined />
-          </Button>
+          </RewardItemButton>
         </Space>
       </div>
 

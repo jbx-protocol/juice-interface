@@ -77,6 +77,10 @@ export const RecallCard: React.FC<{
         width: '100%',
         padding: '0.625rem 1rem',
         backgroundColor,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '0.5rem',
+        fontWeight: 500,
       }}
     >
       {show.includes('fundingCycles') && <FundingCycleRecallOption />}

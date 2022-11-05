@@ -284,10 +284,10 @@ msgstr ""
 msgid "Add Lock Duration Option"
 msgstr ""
 
-msgid "Add NFT Reward"
+msgid "Add NFT"
 msgstr ""
 
-msgid "Add NFT reward"
+msgid "Add NFT reward tier"
 msgstr ""
 
 msgid "Add a payout"
@@ -321,9 +321,6 @@ msgid "Add payout"
 msgstr ""
 
 msgid "Add payout recipient"
-msgstr ""
-
-msgid "Add reward"
 msgstr ""
 
 msgid "Add reward tier"
@@ -1175,10 +1172,7 @@ msgstr ""
 msgid "Each project has its own <0>tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr ""
 
-msgid "Edit NFT Reward"
-msgstr ""
-
-msgid "Edit NFT reward"
+msgid "Edit NFT reward tier"
 msgstr ""
 
 msgid "Edit allocation"
@@ -1826,12 +1820,6 @@ msgstr ""
 msgid "My projects"
 msgstr ""
 
-msgid "NFT Rewards"
-msgstr ""
-
-msgid "NFT Rewards <0/>"
-msgstr ""
-
 msgid "NFT adjust tiers"
 msgstr ""
 
@@ -1842,6 +1830,9 @@ msgid "NFT projects"
 msgstr ""
 
 msgid "NFT rewards"
+msgstr ""
+
+msgid "NFTs"
 msgstr ""
 
 msgid "NFTs for you"
@@ -2486,9 +2477,6 @@ msgstr ""
 msgid "Reward contributors with NFTs when they meet your funding criteria."
 msgstr ""
 
-msgid "Rewards"
-msgstr ""
-
 msgid "Rules"
 msgstr ""
 
@@ -2507,10 +2495,13 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-msgid "Save NFT reward"
+msgid "Save NFT"
 msgstr ""
 
-msgid "Save NFT rewards"
+msgid "Save NFT reward tier"
+msgstr ""
+
+msgid "Save NFTs"
 msgstr ""
 
 msgid "Save Option"
@@ -2535,9 +2526,6 @@ msgid "Save project details"
 msgstr ""
 
 msgid "Save reconfiguration"
-msgstr ""
-
-msgid "Save reward"
 msgstr ""
 
 msgid "Save rules"

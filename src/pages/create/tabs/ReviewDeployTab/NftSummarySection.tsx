@@ -17,7 +17,7 @@ export default function NftSummarySection() {
   return (
     <div style={{ marginTop: 20 }}>
       <h2 style={{ marginBottom: 0 }}>
-        <Trans>NFT rewards</Trans>
+        <Trans>NFTs</Trans>
       </h2>
       {rewardTiers?.map((rewardTier, index) => (
         <Row

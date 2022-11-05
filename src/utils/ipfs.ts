@@ -63,6 +63,8 @@ export function ipfsToHttps(
   ipfsUri: string,
   { gatewayHostname }: { gatewayHostname?: string } = {},
 ): string {
+  if (!isIpfsUrl(ipfsUri)) return ipfsUri
+
   const suffix = cidFromIpfsUri(ipfsUri)
   return gatewayHostname
     ? ipfsGatewayUrl(suffix, gatewayHostname)

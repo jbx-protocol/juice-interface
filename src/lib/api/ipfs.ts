@@ -1,6 +1,7 @@
 import { PinataMetadata, PinataPinResponse } from '@pinata/sdk'
 import axios from 'axios'
 import { IPFS_TAGS } from 'constants/ipfs'
+import { ipfsGet } from 'lib/infura/ipfs'
 import { consolidateMetadata, ProjectMetadataV5 } from 'models/project-metadata'
 import {
   metadataNameForHandle,
@@ -20,13 +21,14 @@ export const editMetadataForCid = async (
   return pinRes.data
 }
 
+// TODO after the move to Infura for IPFS, we can probably look at removing this.
 export const ipfsGetWithFallback = async (hash: string) => {
   try {
     const response = await axios.get(restrictedIpfsUrl(hash))
     return response
   } catch (error) {
     console.info(`ipfs::falling back to public gateway for ${hash}`)
-    const response = await axios.get(publicIpfsUrl(hash))
+    const response = await ipfsGet(publicIpfsUrl(hash))
     return response
   }
 }

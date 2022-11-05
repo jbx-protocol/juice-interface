@@ -46,17 +46,14 @@ function Header() {
   } = useContext(ThemeContext)
   return (
     <>
-      <SectionHeader
-        text={t`Unlockable NFT rewards`}
-        style={{ marginBottom: 0 }}
-      />
+      <SectionHeader text={t`Unlockable NFTs`} style={{ marginBottom: 0 }} />
       <span
         style={{
           color: colors.text.tertiary,
           fontSize: '0.75rem',
         }}
       >
-        <Trans>Contribute to unlock an NFT reward.</Trans>
+        <Trans>Contribute funds to receive NFTs.</Trans>
       </span>
     </>
   )

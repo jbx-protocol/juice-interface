@@ -779,7 +779,7 @@ msgstr ""
 msgid "Contract address: {0}"
 msgstr ""
 
-msgid "Contribute to unlock an NFT reward."
+msgid "Contribute funds to receive NFTs."
 msgstr ""
 
 msgid "Contribution threshold"
@@ -1841,10 +1841,10 @@ msgstr ""
 msgid "NFT projects"
 msgstr ""
 
-msgid "NFT reward"
+msgid "NFT rewards"
 msgstr ""
 
-msgid "NFT rewards"
+msgid "NFTs for you"
 msgstr ""
 
 msgid "NO LIMIT"
@@ -3224,7 +3224,7 @@ msgstr ""
 msgid "Unlock veNFT"
 msgstr ""
 
-msgid "Unlockable NFT rewards"
+msgid "Unlockable NFTs"
 msgstr ""
 
 msgid "Unlocking this staking position will burn your NFT and return ${tokenSymbolDisplayText}."
@@ -3482,7 +3482,7 @@ msgstr ""
 msgid "You must review and accept the risks."
 msgstr ""
 
-msgid "You receive this NFT for contributing over <0>{0} ETH</0>."
+msgid "You receive these NFTs for contributing <0>{0} ETH or more</0>."
 msgstr ""
 
 msgid "You will receive <0/>"

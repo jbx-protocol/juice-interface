@@ -5,7 +5,7 @@ import { Button, Col, message, Row, Space, Upload } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { pinFileToIpfs } from 'lib/api/ipfs'
 import { useContext, useState } from 'react'
-import { cidFromUrl, ipfsUrl, restrictedIpfsUrl } from 'utils/ipfs'
+import { cidFromIpfsUri, ipfsUrl, restrictedIpfsUrl } from 'utils/ipfs'
 
 import ExternalLink from '../ExternalLink'
 
@@ -33,7 +33,7 @@ export const FormImageUploader = ({
 
   const [loadingUpload, setLoadingUpload] = useState<boolean>(false)
   const [imageCid, setImageCid] = useState<string | undefined>(
-    value ? cidFromUrl(value) : undefined,
+    value ? cidFromIpfsUri(value) : undefined,
   )
 
   const setValue = (cid?: string) => {
@@ -65,6 +65,7 @@ export const FormImageUploader = ({
               }}
               src={imageUrl}
               alt="Uploaded user content"
+              crossOrigin="anonymous"
             />
           ) : null}
 

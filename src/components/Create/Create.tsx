@@ -55,7 +55,11 @@ export function Create() {
           >
             <Trans>Create a project</Trans>
           </h1>
-          <Wizard className="wizard-create" doneText={<DeployButtonText />}>
+          <Wizard
+            className="wizard-create"
+            doneText={<DeployButtonText />}
+            style={{ paddingBottom: '100px' }}
+          >
             <Wizard.Page
               name="projectDetails"
               title={t`Project Details`}

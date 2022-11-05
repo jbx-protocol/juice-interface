@@ -2,7 +2,7 @@ import { FieldBinaryOutlined, PercentageOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
-import { useContext } from 'react'
+import { useContext, useEffect, useMemo } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { Selection } from '../../Selection'
 import { Wizard } from '../../Wizard'
@@ -13,12 +13,35 @@ import { useAvailablePayoutsSelections, usePayoutsForm } from './hooks'
 
 export const PayoutsPage: React.FC = () => {
   useSetCreateFurthestPageReached('payouts')
-  const { goToNextPage } = useContext(PageContext)
+  const { goToNextPage, lockPageProgress, unlockPageProgress } =
+    useContext(PageContext)
   const { form, initialValues } = usePayoutsForm()
   const availableSelections = useAvailablePayoutsSelections()
 
   const selection = useWatch('selection', form)
-  const isNextEnabled = !!selection
+  const payoutsList = useWatch('payoutsList', form)
+
+  const expensesExceedsFundingTarget = useMemo(() => {
+    const totalPercent =
+      payoutsList?.reduce((acc, allocation) => acc + allocation.percent, 0) ?? 0
+    return totalPercent > 100
+  }, [payoutsList])
+
+  // Lock the page of the input data is invalid.
+  useEffect(() => {
+    if (expensesExceedsFundingTarget || !selection) {
+      lockPageProgress?.()
+      return
+    }
+    unlockPageProgress?.()
+  }, [
+    expensesExceedsFundingTarget,
+    lockPageProgress,
+    selection,
+    unlockPageProgress,
+  ])
+
+  const isNextEnabled = !!selection && !expensesExceedsFundingTarget
 
   return (
     <Form

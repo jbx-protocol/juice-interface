@@ -2,7 +2,8 @@ import { DeleteOutlined, EditOutlined, LinkOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Space } from 'antd'
 import ExternalLink from 'components/ExternalLink'
-import { CSSProperties } from 'react'
+import useMobile from 'hooks/Mobile'
+import { CSSProperties, ReactNode } from 'react'
 import { RewardImage } from '../RewardImage'
 import { RewardItemButton } from './RewardItemButton'
 import { Reward } from './types'
@@ -40,6 +41,7 @@ export const RewardItem = ({
   onEditClicked?: () => void
   onDeleteClicked?: () => void
 }) => {
+  const isMobile = useMobile()
   const {
     title,
     minimumContribution,
@@ -71,7 +73,14 @@ export const RewardItem = ({
         </Space>
       </div>
 
-      <div style={{ position: 'relative' }}>
+      <div
+        style={{
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1.5rem',
+        }}
+      >
         {/* Main Body */}
         <div style={{ display: 'flex', gap: '2rem' }}>
           {/* Image Col */}
@@ -80,36 +89,9 @@ export const RewardItem = ({
           >
             {/* Image */}
             <RewardImage size="11rem" src={imgUrl.toString()} />
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '0.25rem',
-                maxWidth: '11rem',
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-              }}
-            >
-              {maximumSupply && (
-                <div style={detailsTextStyle}>Supply: {maximumSupply}</div>
-              )}
-              {url && (
-                <div
-                  style={{
-                    ...detailsTextStyle,
-                    display: 'flex',
-                    gap: '0.5rem',
-                    alignItems: 'center',
-                  }}
-                >
-                  <LinkOutlined />
-                  <div style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                    <ExternalLink href={url} />
-                  </div>
-                </div>
-              )}
-            </div>
+            {!isMobile && (
+              <TertiaryDetails maximumSupply={maximumSupply} url={url} />
+            )}
           </div>
           {/* Description Col */}
           <div
@@ -124,6 +106,8 @@ export const RewardItem = ({
             <div
               style={{
                 display: 'flex',
+                flexDirection: isMobile ? 'column' : 'row',
+                gap: isMobile ? '1.5rem' : undefined,
                 justifyContent: 'space-between',
               }}
             >
@@ -153,21 +137,74 @@ export const RewardItem = ({
               </div>
             </div>
             {/* Bottom */}
-            {description && (
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '0.5rem',
-                }}
-              >
-                <div style={headerTextStyle}>Description</div>
-                <div style={descriptionTextStyle}>{description}</div>
-              </div>
+            {!isMobile && description && (
+              <Description description={description} />
             )}
           </div>
         </div>
+        {isMobile ? (
+          <>
+            {description && <Description description={description} />}
+            <TertiaryDetails maximumSupply={maximumSupply} url={url} />
+          </>
+        ) : null}
       </div>
+    </div>
+  )
+}
+
+const Description = ({ description }: { description: ReactNode }) => {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '0.5rem',
+      }}
+    >
+      <div style={headerTextStyle}>Description</div>
+      <div style={descriptionTextStyle}>{description}</div>
+    </div>
+  )
+}
+
+const TertiaryDetails = ({
+  maximumSupply,
+  url,
+}: {
+  maximumSupply: ReactNode
+  url: string | undefined
+}) => {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '0.25rem',
+        maxWidth: '11rem',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+      }}
+    >
+      {maximumSupply && (
+        <div style={detailsTextStyle}>Supply: {maximumSupply}</div>
+      )}
+      {url && (
+        <div
+          style={{
+            ...detailsTextStyle,
+            display: 'flex',
+            gap: '0.5rem',
+            alignItems: 'center',
+          }}
+        >
+          <LinkOutlined />
+          <div style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            <ExternalLink href={url} />
+          </div>
+        </div>
+      )}
     </div>
   )
 }

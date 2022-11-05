@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Button, Divider, Space } from 'antd'
 import { CreateCallout } from 'components/Create/components/CreateCallout'
 import { OwnerPayoutCard } from 'components/Create/components/PayoutCard'
@@ -176,12 +176,25 @@ export const PayoutsList = (
         )}
         {!distributionLimit?.amount.eq(MAX_DISTRIBUTION_LIMIT) &&
           expensesExceedsFundingTarget && (
-            <CreateCallout.Warning>
-              <h3>Funding Target Exceeded</h3>
+            <CreateCallout.Warning collapsible={false}>
+              <div
+                style={{
+                  fontWeight: 500,
+                  fontSize: '1.17em',
+                  paddingBottom: '0.5rem',
+                }}
+              >
+                <Trans>Funding Target Exceeded</Trans>
+              </div>
               <p>
-                The sum of your expenses is currently different to your funding
-                target. Do you want to sync your funding target to match
-                expenses?
+                <Trans>
+                  The sum of your expenses is currently different to your
+                  funding target. Do you want to sync your funding target to
+                  match expenses?
+                  <br />
+                  <br />
+                  If not, please edit one or more of your payouts.
+                </Trans>
               </p>
               <Button
                 type="text"

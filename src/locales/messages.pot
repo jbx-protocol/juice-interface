@@ -1343,6 +1343,9 @@ msgstr ""
 msgid "Funding Target"
 msgstr ""
 
+msgid "Funding Target Exceeded"
+msgstr ""
+
 msgid "Funding cycle"
 msgstr ""
 
@@ -2904,6 +2907,9 @@ msgid "The redemption rate determines the amount of overflow each token can be r
 msgstr ""
 
 msgid "The redemption rate determines the amount of overflow each token can be redeemed for. <0>Learn more.</0>"
+msgstr ""
+
+msgid "The sum of your expenses is currently different to your funding target. Do you want to sync your funding target to match expenses?<0/><1/>If not, please edit one or more of your payouts."
 msgstr ""
 
 msgid "The symbol of the collection that will be shown on NFT marketplaces (e.g. OpenSea)."

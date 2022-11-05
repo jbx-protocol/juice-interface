@@ -1,5 +1,6 @@
 import {
   OPEN_IPFS_GATEWAY_HOSTNAME,
+  PUBLIC_PINATA_GATEWAY_HOSTNAME,
   RESTRICTED_IPFS_GATEWAY_HOSTNAME,
 } from 'constants/ipfs'
 import { base58 } from 'ethers/lib/utils'
@@ -9,7 +10,10 @@ const IPFS_URL_REGEX = /ipfs:\/\/(.+)/
 /**
  * Return a HTTP URL to the IPFS gateway at the given [hostname] for the given [cid].
  */
-const ipfsGatewayUrl = (cid: string | undefined = '', hostname: string) => {
+export const ipfsGatewayUrl = (
+  cid: string | undefined = '',
+  hostname: string,
+) => {
   return `https://${hostname}/ipfs/${cid}`
 }
 
@@ -35,6 +39,18 @@ export const openIpfsUrl = (cid: string | undefined): string => {
  */
 export const restrictedIpfsUrl = (cid: string | undefined): string => {
   return ipfsGatewayUrl(cid, RESTRICTED_IPFS_GATEWAY_HOSTNAME)
+}
+
+/**
+ * Return a URL to the Pinata IPFS gateway for the given cid.
+ *
+ * This gateway returns any content that is available on IPFS,
+ * not just the content we have pinned.
+ *
+ * SHould rarely be used due to heavy ratelimit.
+ */
+export const publicIpfsUrl = (cid: string | undefined): string => {
+  return ipfsGatewayUrl(cid, PUBLIC_PINATA_GATEWAY_HOSTNAME)
 }
 
 /**

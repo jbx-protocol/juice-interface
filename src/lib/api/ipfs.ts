@@ -1,9 +1,10 @@
 import { PinataMetadata, PinataPinResponse } from '@pinata/sdk'
 import axios from 'axios'
-import { IPFS_TAGS } from 'constants/ipfs'
+import { IPFS_TAGS, PUBLIC_PINATA_GATEWAY_HOSTNAME } from 'constants/ipfs'
 import { ipfsGet } from 'lib/infura/ipfs'
 import { consolidateMetadata, ProjectMetadataV5 } from 'models/project-metadata'
 import {
+  ipfsGatewayUrl,
   metadataNameForHandle,
   openIpfsUrl,
   restrictedIpfsUrl,
@@ -22,13 +23,18 @@ export const editMetadataForCid = async (
 }
 
 // TODO after the move to Infura for IPFS, we can probably look at removing this.
-export const ipfsGetWithFallback = async (hash: string) => {
+export const ipfsGetWithFallback = async (
+  hash: string,
+  { fallbackHostname }: { fallbackHostname?: string } = {},
+) => {
   try {
     const response = await axios.get(restrictedIpfsUrl(hash))
     return response
   } catch (error) {
     console.info(`ipfs::falling back to open gateway for ${hash}`)
-    const response = await ipfsGet(openIpfsUrl(hash))
+    const response = fallbackHostname
+      ? await axios.get(ipfsGatewayUrl(hash, PUBLIC_PINATA_GATEWAY_HOSTNAME))
+      : await ipfsGet(openIpfsUrl(hash))
     return response
   }
 }

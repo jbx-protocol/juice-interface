@@ -23,6 +23,7 @@ import {
 } from './components'
 import { CreateBadge } from './components/CreateBadge'
 import { DeploySuccess } from './components/pages/ReviewDeploy/components/DeploySuccess'
+import { RecallCard } from './components/RecallCard'
 import { Wizard } from './components/Wizard'
 
 export function Create() {
@@ -87,14 +88,42 @@ export function Create() {
             <Wizard.Page
               name="fundingTarget"
               title={t`Funding Target`}
-              description={t`Select the option that best suits your project’s funding requirements.`}
+              description={
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '1rem',
+                  }}
+                >
+                  <Trans>
+                    Select the option that best suits your project’s funding
+                    requirements.
+                  </Trans>
+                  <RecallCard show={['fundingCycles']} />
+                </div>
+              }
             >
               <FundingTargetPage />
             </Wizard.Page>
             <Wizard.Page
               name="payouts"
               title={t`Payouts`}
-              description={t`Choose which addresses to pay and how to split the total payout amount each funding cycle. How do I decide?`}
+              description={
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '1rem',
+                  }}
+                >
+                  <Trans>
+                    Choose which addresses to pay and how to split the total
+                    payout amount each funding cycle. How do I decide?
+                  </Trans>
+                  <RecallCard show={['fundingCycles', 'fundingTarget']} />
+                </div>
+              }
             >
               <PayoutsPage />
             </Wizard.Page>

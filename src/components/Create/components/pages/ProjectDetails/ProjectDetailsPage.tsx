@@ -48,9 +48,13 @@ export const ProjectDetailsPage: React.FC = () => {
           <CreateCollapse.Panel
             key={0}
             header={<OptionalHeader header={t`Project Links`} />}
+            hideDivider
           >
             {/* Adding paddingBottom is a bit of a hack, but horizontal gutters not working */}
-            <Row gutter={32} style={{ paddingBottom: '2rem' }}>
+            <Row
+              gutter={32}
+              style={{ paddingBottom: '2rem', paddingTop: '1.25rem' }}
+            >
               <Col span={12}>
                 <Form.Item name="projectWebsite" label={t`Website`}>
                   <Input />
@@ -62,7 +66,7 @@ export const ProjectDetailsPage: React.FC = () => {
                 </Form.Item>
               </Col>
             </Row>
-            <Row gutter={32}>
+            <Row gutter={32} style={{ marginBottom: '1.5rem' }}>
               <Col span={12}>
                 <Form.Item name="projectDiscord" label={t`Discord`}>
                   <Input />
@@ -75,7 +79,10 @@ export const ProjectDetailsPage: React.FC = () => {
             header={<OptionalHeader header={t`Customize Pay Button`} />}
             hideDivider
           >
-            <Row gutter={32} style={{ paddingBottom: '2rem' }}>
+            <Row
+              gutter={32}
+              style={{ paddingBottom: '2rem', paddingTop: '1.25rem' }}
+            >
               <Col span={12}>
                 <Form.Item name="payButtonText" label={t`Pay Button Text`}>
                   <Input />

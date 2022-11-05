@@ -5,7 +5,7 @@ import { ipfsGet } from 'lib/infura/ipfs'
 import { consolidateMetadata, ProjectMetadataV5 } from 'models/project-metadata'
 import {
   metadataNameForHandle,
-  publicIpfsUrl,
+  openIpfsUrl,
   restrictedIpfsUrl,
 } from 'utils/ipfs'
 
@@ -27,8 +27,8 @@ export const ipfsGetWithFallback = async (hash: string) => {
     const response = await axios.get(restrictedIpfsUrl(hash))
     return response
   } catch (error) {
-    console.info(`ipfs::falling back to public gateway for ${hash}`)
-    const response = await ipfsGet(publicIpfsUrl(hash))
+    console.info(`ipfs::falling back to open gateway for ${hash}`)
+    const response = await ipfsGet(openIpfsUrl(hash))
     return response
   }
 }

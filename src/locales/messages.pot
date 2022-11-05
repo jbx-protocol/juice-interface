@@ -2909,6 +2909,9 @@ msgstr ""
 msgid "The ratio of tokens rewarded per payment amount will decrease by this percentage with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier than later."
 msgstr ""
 
+msgid "The redemption rate cannot be set when the funding target is infinite."
+msgstr ""
+
 msgid "The redemption rate determines the amount of overflow each token can be redeemed for."
 msgstr ""
 

@@ -9,8 +9,9 @@ import { JuiceSwitch } from 'components/JuiceSwitch'
 import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph'
 import { useAppSelector } from 'hooks/AppSelector'
 import useMobile from 'hooks/Mobile'
+import { useEditingDistributionLimit } from 'redux/hooks/EditingDistributionLimit'
 import { formatAmount } from 'utils/formatAmount'
-import { MAX_MINT_RATE } from 'utils/v2v3/math'
+import { MAX_DISTRIBUTION_LIMIT, MAX_MINT_RATE } from 'utils/v2v3/math'
 import { inputMustExistRule } from '../../../utils'
 import * as ProjectTokenForm from '../../hooks/ProjectTokenForm'
 import { ProjectTokensFormProps } from '../../hooks/ProjectTokenForm'
@@ -31,6 +32,7 @@ export const CustomTokenSettings = () => {
   const duration = useAppSelector(
     state => state.editingV2Project.fundingCycleData.duration,
   )
+  const [distributionLimit] = useEditingDistributionLimit()
   const form = Form.useFormInstance<ProjectTokensFormProps>()
   const discountRate =
     Form.useWatch('discountRate', form) ??
@@ -42,6 +44,9 @@ export const CustomTokenSettings = () => {
   const tokenMinting = Form.useWatch('tokenMinting', form) ?? false
 
   const discountRateDisabled = !parseInt(duration)
+
+  const redemptionRateDisabled =
+    !distributionLimit || distributionLimit.amount.eq(MAX_DISTRIBUTION_LIMIT)
 
   const initalMintRateAccessory = (
     <span style={{ marginRight: 20 }}>
@@ -120,14 +125,12 @@ export const CustomTokenSettings = () => {
         <div
           style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
         >
-          {!discountRateDisabled && (
-            <Trans>
-              The project token's issuance rate will decrease by this percentage
-              every funding cycle ({formatFundingCycleDuration(duration)}). A
-              higher discount rate will incentivize contributors to pay the
-              project earlier.
-            </Trans>
-          )}
+          <Trans>
+            The project token's issuance rate will decrease by this percentage
+            every funding cycle ({formatFundingCycleDuration(duration)}). A
+            higher discount rate will incentivize contributors to pay the
+            project earlier.
+          </Trans>
           <Form.Item
             noStyle
             name="discountRate"
@@ -191,26 +194,43 @@ export const CustomTokenSettings = () => {
         <div
           style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
         >
-          <Trans>
-            The redemption rate determines the amount of overflow each token can
-            be redeemed for.{' '}
-            <ExternalLink href="https://info.juicebox.money/dev/learn/glossary/redemption-rate">
-              Learn more.
-            </ExternalLink>
-          </Trans>
+          <span>
+            <Trans>
+              The redemption rate determines the amount of overflow each token
+              can be redeemed for.{' '}
+              <ExternalLink href="https://info.juicebox.money/dev/learn/glossary/redemption-rate">
+                Learn more.
+              </ExternalLink>
+            </Trans>
+          </span>
           <Form.Item
             noStyle
             name="redemptionRate"
             valuePropName="sliderValue"
             rules={[inputMustExistRule({ label: t`Redemption Rate` })]}
           >
-            <NumberSlider min={0.1} defaultValue={0} suffix="%" step={0.5} />
+            <NumberSlider
+              min={0.1}
+              defaultValue={0}
+              suffix="%"
+              step={0.5}
+              disabled={redemptionRateDisabled}
+            />
           </Form.Item>
-          {/* TODO: Hide on mobile due to pushing out of bound viewport */}
-          {!isMobile && (
-            <Form.Item noStyle name="redemptionRate">
-              <TokenRedemptionRateGraph graphPad={50} graphSize={300} />
-            </Form.Item>
+          {redemptionRateDisabled ? (
+            <CreateCallout.Warning>
+              <Trans>
+                The redemption rate cannot be set when the funding target is
+                infinite.
+              </Trans>
+            </CreateCallout.Warning>
+          ) : (
+            // TODO: Hide on mobile due to pushing out of bound viewport
+            !isMobile && (
+              <Form.Item noStyle name="redemptionRate">
+                <TokenRedemptionRateGraph graphPad={50} graphSize={300} />
+              </Form.Item>
+            )
           )}
         </div>
       </Form.Item>

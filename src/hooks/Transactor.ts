@@ -5,8 +5,8 @@ import * as Sentry from '@sentry/browser'
 import { readNetwork } from 'constants/networks'
 import { TxHistoryContext } from 'contexts/txHistoryContext'
 import { simulateTransaction } from 'lib/tenderly'
-import { PV } from 'models/pv'
 import { TransactionOptions } from 'models/transaction'
+import { CV2V3 } from 'models/v2v3/cv'
 import { useCallback, useContext } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 import { useArcx } from './Arcx'
@@ -191,17 +191,17 @@ export function handleTransactionException({
   txOpts,
   missingParam,
   functionName,
-  pv,
+  cv,
 }: {
   txOpts?: TxOpts
   missingParam?: string
   functionName: string
-  pv: PV | undefined // TODO should this be CV?
+  cv: '1' | CV2V3 | undefined // TODO should this be CV?
 }) {
   txOpts?.onError?.(
     new DOMException(
       `Missing ${missingParam ?? 'unknown'} parameter in ${functionName}${
-        pv ? ` v${pv}` : ''
+        cv ? ` v${cv}` : ''
       }`,
     ),
   )

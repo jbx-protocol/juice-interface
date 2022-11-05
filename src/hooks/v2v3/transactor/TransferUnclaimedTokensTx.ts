@@ -1,17 +1,15 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
-import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
-import { useWallet } from 'hooks/Wallet'
-import { useContext } from 'react'
-
-import { PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactionContext } from 'contexts/transactionContext'
+import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import {
   handleTransactionException,
   TransactorInstance,
 } from 'hooks/Transactor'
+import { useWallet } from 'hooks/Wallet'
+import { useContext } from 'react'
 import invariant from 'tiny-invariant'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
@@ -20,7 +18,7 @@ export function useTransferUnclaimedTokensTx(): TransactorInstance<{
   to: string
 }> {
   const { transactor } = useContext(TransactionContext)
-  const { contracts } = useContext(V2V3ContractsContext)
+  const { contracts, cv } = useContext(V2V3ContractsContext)
   const { tokenSymbol } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
@@ -58,7 +56,7 @@ export function useTransferUnclaimedTokensTx(): TransactorInstance<{
         txOpts,
         missingParam,
         functionName: 'transferFrom',
-        pv: PV_V2,
+        cv,
       })
     }
   }

@@ -1,9 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
-import { PV_V2 } from 'constants/pv'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactionContext } from 'contexts/transactionContext'
+import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/V2V3ProjectContractsContext'
 import {
   handleTransactionException,
@@ -21,6 +21,7 @@ export function useAddToBalanceTx(): TransactorInstance<{
 }> {
   const { transactor } = useContext(TransactionContext)
   const { contracts } = useContext(V2V3ProjectContractsContext)
+  const { cv } = useContext(V2V3ContractsContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
   const projectTitle = useV2ProjectTitle()
@@ -57,7 +58,7 @@ export function useAddToBalanceTx(): TransactorInstance<{
       return handleTransactionException({
         txOpts,
         missingParam,
-        pv: PV_V2,
+        cv,
         functionName: 'addToBalanceOf',
       })
     }

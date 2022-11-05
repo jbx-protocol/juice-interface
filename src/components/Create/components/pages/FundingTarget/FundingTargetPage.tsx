@@ -11,7 +11,6 @@ import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthe
 import { CreateCallout } from '../../CreateCallout'
 import { CurrencySelectInputValue } from '../../CurrencySelectInput'
 import { Icons } from '../../Icons'
-import { RecallCard } from '../../RecallCard'
 import { Selection } from '../../Selection'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
@@ -55,7 +54,6 @@ export const FundingTargetPage: React.FC = () => {
       scrollToFirstError
     >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
-        <RecallCard show={['fundingCycles']} />
         <Form.Item noStyle name="targetSelection">
           <Selection defocusOnSelect style={{ width: '100%' }}>
             <Selection.Card

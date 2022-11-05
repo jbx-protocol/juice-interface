@@ -8,6 +8,9 @@ export const OPEN_IPFS_GATEWAY_HOSTNAME =
 export const RESTRICTED_IPFS_GATEWAY_HOSTNAME =
   process.env.NEXT_PUBLIC_PINATA_GATEWAY_HOSTNAME
 
+// Heavily rate-limited, don't use unless you have to.
+export const PUBLIC_PINATA_GATEWAY_HOSTNAME = 'gateway.pinata.cloud'
+
 export const IPFS_TAGS = {
   METADATA:
     process.env.NODE_ENV === 'production'

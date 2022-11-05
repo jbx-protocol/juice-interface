@@ -9,7 +9,10 @@ const IPFS_URL_REGEX = /ipfs:\/\/(.+)/
 /**
  * Return a HTTP URL to the IPFS gateway at the given [hostname] for the given [cid].
  */
-const ipfsGatewayUrl = (cid: string | undefined = '', hostname: string) => {
+export const ipfsGatewayUrl = (
+  cid: string | undefined = '',
+  hostname: string,
+) => {
   return `https://${hostname}/ipfs/${cid}`
 }
 

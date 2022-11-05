@@ -32,3 +32,9 @@
   > .ant-steps-item-title {
   color: var(--text-disabled);
 }
+
+.create-steps-item-hover {
+  &:hover {
+    background-color: var(--background-over-action-primary);
+  }
+}

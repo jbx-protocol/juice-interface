@@ -197,9 +197,6 @@ msgstr ""
 msgid "<0>The Juicebox V2 smart contracts have had multiple security audits. <1>Read the audit reports.</1></0><2>While Juicebox has been audited, it is still experimental software, and there are risks. Please use Juicebox with caution.</2><3><4>Learn more</4> about the risks.</3>"
 msgstr ""
 
-msgid "<0>The Rinkeby testnet is deprecated.</0> Use the Goerli testnet instead: <1>https://goerli.juicebox.money</1>"
-msgstr ""
-
 msgid "<0>The redemption rate determines the amount of overflow each token can be redeemed for at any given time.</0><1>A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed.</1><2>On a lower redemption rate, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than other holders.</2>"
 msgstr ""
 

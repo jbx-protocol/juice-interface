@@ -1,5 +1,15 @@
 const webpack = require('webpack')
 
+const ContentSecurityPolicy = `
+  default-src 'none';
+  script-src 'self' https://static.hotjar.com https://script.hotjar.com 'unsafe-inline' 'unsafe-eval';
+  style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
+  font-src 'self' https://fonts.gstatic.com data:;
+  img-src 'self' https://*.juicebox.money https://juicebox.money https://*.infura-ipfs.io https://jbx.mypinata.cloud data:;
+  connect-src 'self' https://*.juicebox.money https://juicebox.money https://*.infura.io https://*.infura-ipfs.io https://jbx.mypinata.cloud https://api.studio.thegraph.com https://gateway.thegraph.com https://api.arcx.money https://api.tenderly.co https://*.hotjar.com https://*.hotjar.io wss://*.hotjar.com https://*.gnosis.io https://*.safe.global https://*.snapshot.org;
+  manifest-src 'self';
+`
+
 module.exports = {
   staticPageGenerationTimeout: 90,
   webpack5: true,
@@ -33,6 +43,20 @@ module.exports = {
       {
         source: '/@:projectId',
         destination: '/v2/p/:projectId',
+      },
+    ]
+  },
+  async headers() {
+    return [
+      {
+        // Apply these headers to all routes in your application.
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
+          },
+        ],
       },
     ]
   },

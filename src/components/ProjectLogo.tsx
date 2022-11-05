@@ -61,6 +61,7 @@ export default function ProjectLogo({
           alt={name + ' logo'}
           onError={() => setSrcLoadError(true)}
           loading="lazy"
+          crossOrigin="anonymous"
         />
       ) : (
         <div

@@ -110,6 +110,7 @@ export function NftPreview({
               maxHeight: !isMobile ? '60vh' : '50vh',
             }}
             onClick={e => e.stopPropagation()}
+            crossOrigin="anonymous"
           />
         </div>
         <h3 style={{ ...headerStyle, marginTop: '20px' }}>{rewardTier.name}</h3>

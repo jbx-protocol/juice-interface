@@ -1,17 +1,15 @@
-import axios from 'axios'
-
+import { BigNumber } from '@ethersproject/bignumber'
+import { ONE_BILLION } from 'constants/numbers'
+import { ipfsGet } from 'lib/infura/ipfs'
 import {
   IPFSNftRewardTier,
   JB721TierParams,
   NftRewardTier,
 } from 'models/nftRewardTier'
 import { useQuery, UseQueryResult } from 'react-query'
-import { decodeEncodedIPFSUri, restrictedIpfsUrl } from 'utils/ipfs'
-
-import { BigNumber } from '@ethersproject/bignumber'
-import { ONE_BILLION } from 'constants/numbers'
 import { withHttps } from 'utils/externalLink'
 import { formatWad } from 'utils/format/formatNumber'
+import { decodeEncodedIPFSUri, publicIpfsUrl } from 'utils/ipfs'
 
 export const DEFAULT_NFT_MAX_SUPPLY = ONE_BILLION - 1
 
@@ -22,10 +20,12 @@ async function getRewardTierFromIPFS({
   tier: JB721TierParams
   index: number
 }): Promise<NftRewardTier> {
-  const url = restrictedIpfsUrl(decodeEncodedIPFSUri(tier.encodedIPFSUri))
+  const tierCid = decodeEncodedIPFSUri(tier.encodedIPFSUri)
+  const url = publicIpfsUrl(tierCid)
 
-  const response = await axios.get(url)
+  const response = await ipfsGet(url)
   const ipfsRewardTier: IPFSNftRewardTier = response.data
+
   const maxSupply = tier.initialQuantity.eq(
     BigNumber.from(DEFAULT_NFT_MAX_SUPPLY),
   )

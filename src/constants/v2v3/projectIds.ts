@@ -18,6 +18,6 @@ export const V2V3_PROJECT_IDS_NETWORK: {
   [k in NetworkName]?: { [k: string]: number }
 } = {
   [NetworkName.goerli]: {
-    DEFIFA: 116,
+    DEFIFA: 117,
   },
 }

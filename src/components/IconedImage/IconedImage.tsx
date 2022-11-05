@@ -17,7 +17,7 @@ export const IconedImage = ({
 }) => {
   return (
     <div style={{ position: 'relative', padding: '1rem 0' }}>
-      <Image key={url} width={width} src={url} />
+      <Image key={url} width={width} src={url} crossOrigin="anonymous" />
       <div
         role="button"
         style={{

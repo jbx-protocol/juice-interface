@@ -197,9 +197,6 @@ msgstr ""
 msgid "<0>The Juicebox V2 smart contracts have had multiple security audits. <1>Read the audit reports.</1></0><2>While Juicebox has been audited, it is still experimental software, and there are risks. Please use Juicebox with caution.</2><3><4>Learn more</4> about the risks.</3>"
 msgstr ""
 
-msgid "<0>The Rinkeby testnet is deprecated.</0> Use the Goerli testnet instead: <1>https://goerli.juicebox.money</1>"
-msgstr ""
-
 msgid "<0>The redemption rate determines the amount of overflow each token can be redeemed for at any given time.</0><1>A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed.</1><2>On a lower redemption rate, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than other holders.</2>"
 msgstr ""
 
@@ -287,10 +284,10 @@ msgstr ""
 msgid "Add Lock Duration Option"
 msgstr ""
 
-msgid "Add NFT Reward"
+msgid "Add NFT"
 msgstr ""
 
-msgid "Add NFT reward"
+msgid "Add NFT reward tier"
 msgstr ""
 
 msgid "Add a payout"
@@ -324,9 +321,6 @@ msgid "Add payout"
 msgstr ""
 
 msgid "Add payout recipient"
-msgstr ""
-
-msgid "Add reward"
 msgstr ""
 
 msgid "Add reward tier"
@@ -782,7 +776,7 @@ msgstr ""
 msgid "Contract address: {0}"
 msgstr ""
 
-msgid "Contribute to unlock an NFT reward."
+msgid "Contribute funds to receive NFTs."
 msgstr ""
 
 msgid "Contribution threshold"
@@ -1178,10 +1172,7 @@ msgstr ""
 msgid "Each project has its own <0>tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr ""
 
-msgid "Edit NFT Reward"
-msgstr ""
-
-msgid "Edit NFT reward"
+msgid "Edit NFT reward tier"
 msgstr ""
 
 msgid "Edit allocation"
@@ -1829,12 +1820,6 @@ msgstr ""
 msgid "My projects"
 msgstr ""
 
-msgid "NFT Rewards"
-msgstr ""
-
-msgid "NFT Rewards <0/>"
-msgstr ""
-
 msgid "NFT adjust tiers"
 msgstr ""
 
@@ -1844,10 +1829,13 @@ msgstr ""
 msgid "NFT projects"
 msgstr ""
 
-msgid "NFT reward"
+msgid "NFT rewards"
 msgstr ""
 
-msgid "NFT rewards"
+msgid "NFTs"
+msgstr ""
+
+msgid "NFTs for you"
 msgstr ""
 
 msgid "NO LIMIT"
@@ -2489,9 +2477,6 @@ msgstr ""
 msgid "Reward contributors with NFTs when they meet your funding criteria."
 msgstr ""
 
-msgid "Rewards"
-msgstr ""
-
 msgid "Rules"
 msgstr ""
 
@@ -2510,10 +2495,13 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-msgid "Save NFT reward"
+msgid "Save NFT"
 msgstr ""
 
-msgid "Save NFT rewards"
+msgid "Save NFT reward tier"
+msgstr ""
+
+msgid "Save NFTs"
 msgstr ""
 
 msgid "Save Option"
@@ -2538,9 +2526,6 @@ msgid "Save project details"
 msgstr ""
 
 msgid "Save reconfiguration"
-msgstr ""
-
-msgid "Save reward"
 msgstr ""
 
 msgid "Save rules"
@@ -3227,7 +3212,7 @@ msgstr ""
 msgid "Unlock veNFT"
 msgstr ""
 
-msgid "Unlockable NFT rewards"
+msgid "Unlockable NFTs"
 msgstr ""
 
 msgid "Unlocking this staking position will burn your NFT and return ${tokenSymbolDisplayText}."
@@ -3485,7 +3470,7 @@ msgstr ""
 msgid "You must review and accept the risks."
 msgstr ""
 
-msgid "You receive this NFT for contributing over <0>{0} ETH</0>."
+msgid "You receive these NFTs for contributing <0>{0} ETH or more</0>."
 msgstr ""
 
 msgid "You will receive <0/>"

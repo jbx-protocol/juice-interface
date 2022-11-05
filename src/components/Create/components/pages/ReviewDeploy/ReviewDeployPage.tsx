@@ -181,7 +181,7 @@ export const ReviewDeployPage = () => {
             collapsible={nftRewardsAreSet ? 'header' : 'disabled'}
             header={
               <Header skipped={!nftRewardsAreSet}>
-                <Trans>NFT Rewards</Trans>
+                <Trans>NFTs</Trans>
               </Header>
             }
           >

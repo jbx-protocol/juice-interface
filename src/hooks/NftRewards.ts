@@ -9,7 +9,7 @@ import {
 import { useQuery, UseQueryResult } from 'react-query'
 import { withHttps } from 'utils/externalLink'
 import { formatWad } from 'utils/format/formatNumber'
-import { decodeEncodedIPFSUri, publicIpfsUrl } from 'utils/ipfs'
+import { decodeEncodedIPFSUri, openIpfsUrl } from 'utils/ipfs'
 
 export const DEFAULT_NFT_MAX_SUPPLY = ONE_BILLION - 1
 
@@ -21,7 +21,7 @@ async function getRewardTierFromIPFS({
   index: number
 }): Promise<NftRewardTier> {
   const tierCid = decodeEncodedIPFSUri(tier.encodedIPFSUri)
-  const url = publicIpfsUrl(tierCid)
+  const url = openIpfsUrl(tierCid)
 
   const response = await ipfsGet(url)
   const ipfsRewardTier: IPFSNftRewardTier = response.data

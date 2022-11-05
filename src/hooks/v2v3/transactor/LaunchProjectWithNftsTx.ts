@@ -22,7 +22,7 @@ import {
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
-import { restrictedIpfsUrl } from 'utils/ipfs'
+import { ipfsUrl } from 'utils/ipfs'
 import { findJBTiered721DelegateStoreAddress } from 'utils/nftRewards'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { isValidMustStartAtOrAfter } from 'utils/v2v3/fundingCycle'
@@ -64,9 +64,9 @@ async function getJBDeployTiered721DelegateData({
     name: collectionName,
     symbol: collectionSymbol,
     fundingCycleStore: JBFundingCycleStoreAddress,
-    baseUri: restrictedIpfsUrl(''),
+    baseUri: ipfsUrl(''),
     tokenUriResolver: constants.AddressZero,
-    contractUri: restrictedIpfsUrl(collectionCID),
+    contractUri: ipfsUrl(collectionCID),
     owner: ownerAddress,
     pricing,
     reservedTokenBeneficiary: constants.AddressZero,

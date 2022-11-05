@@ -148,9 +148,10 @@ export function Create() {
               <Wizard.Page
                 name="nftRewards"
                 title={
-                  <Trans>
-                    NFT Rewards <CreateBadge.Optional />
-                  </Trans>
+                  <>
+                    <Trans>NFTs</Trans>
+                    <CreateBadge.Optional />
+                  </>
                 }
                 description={
                   <Trans>

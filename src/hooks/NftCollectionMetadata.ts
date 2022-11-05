@@ -11,16 +11,17 @@ export default function useNftCollectionMetadata(uri: string | undefined) {
       if (!uri) {
         throw new Error('NFT Contract URI not specified.')
       }
+
       const cid = cidFromUrl(uri)
       if (!cid) {
         throw new Error('NFT Contract URI invalid.')
       }
+
       const response = await ipfsGetWithFallback(cid)
       return response.data as NftCollectionMetadata
     },
     {
       enabled: !!uri,
-      staleTime: 60000,
     },
   )
 }

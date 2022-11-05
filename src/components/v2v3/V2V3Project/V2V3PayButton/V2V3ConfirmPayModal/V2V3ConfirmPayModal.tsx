@@ -259,11 +259,14 @@ export function V2V3ConfirmPayModal({
             <Descriptions.Item
               label={
                 <TooltipLabel
-                  label={t`NFT reward`}
+                  label={t`NFTs for you`}
                   tip={
                     <Trans>
-                      You receive this NFT for contributing over{' '}
-                      <strong>{nftRewardTier.contributionFloor} ETH</strong>.
+                      You receive these NFTs for contributing{' '}
+                      <strong>
+                        {nftRewardTier.contributionFloor} ETH or more
+                      </strong>
+                      .
                     </Trans>
                   }
                 />

@@ -4,7 +4,7 @@ import { Skeleton, Tooltip } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { CSSProperties, MouseEventHandler, useContext, useState } from 'react'
-import { cidFromIpfsUri, publicIpfsUrl } from 'utils/ipfs'
+import { cidFromIpfsUri, openIpfsUrl } from 'utils/ipfs'
 import { NftPreview } from './NftPreview'
 
 const rewardTierContainerStyle: CSSProperties = {
@@ -76,7 +76,7 @@ export function RewardTier({
     ? cidFromIpfsUri(rewardTier?.imageUrl)
     : ''
 
-  const imageUrl = publicIpfsUrl(imageCid)
+  const imageUrl = openIpfsUrl(imageCid)
 
   const backgroundColor = isSelected
     ? colors.background.l0

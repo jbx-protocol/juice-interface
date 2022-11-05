@@ -19,14 +19,19 @@ export const metadataNameForHandle = (handle: string) =>
   `juicebox-@${handle}-metadata`
 
 /**
- * Return a URL to the public (open) IPFS gateway for the given cid.
+ * Return a URL to our open IPFS gateway for the given cid.
+ *
+ * The 'open' gateway returns any content that is available on IPFS,
+ * not just the content we have pinned.
  */
-export const publicIpfsUrl = (cid: string | undefined): string => {
+export const openIpfsUrl = (cid: string | undefined): string => {
   return ipfsGatewayUrl(cid, OPEN_IPFS_GATEWAY_HOSTNAME)
 }
 
 /**
  * Return a URL to the restricted IPFS gateway for the given cid.
+ *
+ * The 'restricted' gateway only returns content that we have pinned.
  */
 export const restrictedIpfsUrl = (cid: string | undefined): string => {
   return ipfsGatewayUrl(cid, RESTRICTED_IPFS_GATEWAY_HOSTNAME)
@@ -61,7 +66,7 @@ export function ipfsToHttps(
   const suffix = cidFromIpfsUri(ipfsUri)
   return gatewayHostname
     ? ipfsGatewayUrl(suffix, gatewayHostname)
-    : publicIpfsUrl(suffix)
+    : openIpfsUrl(suffix)
 }
 
 /**

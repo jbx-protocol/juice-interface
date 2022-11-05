@@ -284,9 +284,6 @@ msgstr ""
 msgid "Activity"
 msgstr ""
 
-msgid "Add"
-msgstr ""
-
 msgid "Add Lock Duration Option"
 msgstr ""
 
@@ -320,7 +317,7 @@ msgstr ""
 msgid "Add new payout"
 msgstr ""
 
-msgid "Add new payout address"
+msgid "Add new {allocationName}"
 msgstr ""
 
 msgid "Add payout"
@@ -357,6 +354,12 @@ msgid "Add token allocation"
 msgstr ""
 
 msgid "Add wallet addresses or Juicebox projects to receive payouts."
+msgstr ""
+
+msgid "Add {0}"
+msgstr ""
+
+msgid "Add {allocationName}"
 msgstr ""
 
 msgid "Added to balance"
@@ -1206,6 +1209,9 @@ msgid "Edit token allocation"
 msgstr ""
 
 msgid "Edit tracked assets"
+msgstr ""
+
+msgid "Edit {allocationName}"
 msgstr ""
 
 msgid "Enable unclaimed token spending"
@@ -3590,6 +3596,9 @@ msgstr ""
 msgid "after {0}% JBX fee"
 msgstr ""
 
+msgid "allocation"
+msgstr ""
+
 msgid "called by <0/>"
 msgstr ""
 
@@ -3626,6 +3635,9 @@ msgstr ""
 msgid "or <0><1>sell {tokenSymbol} on exchange.</1></0>"
 msgstr ""
 
+msgid "payout"
+msgstr ""
+
 msgid "project"
 msgstr ""
 
@@ -3639,6 +3651,9 @@ msgid "seconds"
 msgstr ""
 
 msgid "token"
+msgstr ""
+
+msgid "token allocation"
 msgstr ""
 
 msgid "tokens"

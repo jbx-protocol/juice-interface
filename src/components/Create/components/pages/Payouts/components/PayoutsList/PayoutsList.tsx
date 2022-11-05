@@ -126,7 +126,7 @@ export const PayoutsList = (
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
         <OwnerPayoutCard payoutsSelection={props.payoutsSelection} />
         <Allocation.List
-          addText={t`Add new payout address`}
+          allocationName={t`payout`}
           isEditable={props.isEditable}
           availableModes={availableModes}
         >

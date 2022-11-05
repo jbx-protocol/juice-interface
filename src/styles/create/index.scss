@@ -12,7 +12,8 @@
   color: var(--text-primary);
 }
 
-.wizard-create .ant-input {
+.wizard-create .ant-input,
+.ant-input-affix-wrapper {
   background-color: var(--background-l3);
   border-color: var(--stroke-disabled);
 }

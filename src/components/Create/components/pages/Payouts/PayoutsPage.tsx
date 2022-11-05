@@ -4,7 +4,6 @@ import { Form, Space } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
-import { RecallCard } from '../../RecallCard'
 import { Selection } from '../../Selection'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
@@ -32,7 +31,6 @@ export const PayoutsPage: React.FC = () => {
       scrollToFirstError
     >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
-        <RecallCard show={['fundingCycles', 'fundingTarget']} />
         <h2>
           <Trans>How would you like to distribute payments?</Trans>
         </h2>

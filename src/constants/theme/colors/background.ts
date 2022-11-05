@@ -25,6 +25,23 @@ export const backgroundColors: Record<
       secondary: '#32c8db44',
       highlight: '#3dd1e4',
     },
+    over: {
+      action: {
+        primary: lightColors.warmGray150,
+        // TODO: START - all colors
+        secondary: lightColors.cta,
+        highlight: lightColors.ctaHighlight,
+      },
+      brand: {
+        primary: lightColors.white,
+        secondary: lightColors.black,
+      },
+      disabled: lightColors.white,
+      failure: lightColors.white,
+      success: lightColors.white,
+      warn: lightColors.white,
+      // TODO: END - all colors
+    },
   },
   [ThemeOption.dark]: {
     l0: darkColors.dark0,
@@ -43,6 +60,23 @@ export const backgroundColors: Record<
       primary: darkColors.cta,
       secondary: darkColors.ctaHint,
       highlight: darkColors.ctaHighlight,
+    },
+    over: {
+      action: {
+        primary: darkColors.darkGray400,
+        // TODO: START - all colors
+        secondary: darkColors.cta,
+        highlight: darkColors.ctaHighlight,
+      },
+      brand: {
+        primary: darkColors.white,
+        secondary: darkColors.black,
+      },
+      disabled: darkColors.white,
+      failure: darkColors.white,
+      success: darkColors.white,
+      warn: darkColors.white,
+      // TODO: END - all colors
     },
   },
 }

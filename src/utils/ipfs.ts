@@ -22,7 +22,7 @@ export const metadataNameForHandle = (handle: string) =>
  * Return a URL to the public (open) IPFS gateway for the given cid.
  */
 export const publicIpfsUrl = (cid: string | undefined): string => {
-  return ipfsGatewayUrl(cid, OPEN_IPFS_GATEWAY_HOSTNAME as string)
+  return ipfsGatewayUrl(cid, OPEN_IPFS_GATEWAY_HOSTNAME)
 }
 
 /**

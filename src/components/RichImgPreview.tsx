@@ -44,6 +44,7 @@ export default function RichImgPreview({
           }}
           alt={t`Payment memo image`}
           loading="lazy"
+          crossOrigin="anonymous"
         />
       </div>
     )

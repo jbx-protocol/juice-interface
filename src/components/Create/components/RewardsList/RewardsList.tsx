@@ -26,7 +26,9 @@ const useRewardsInstance = () => {
   return useContext(RewardsListContext)
 }
 
-export type RewardsListProps = FormItemInput<Reward[]>
+export type RewardsListProps = FormItemInput<Reward[]> & {
+  allowCreate?: boolean
+}
 
 export interface RewardsListChildrenExports {
   Item: typeof RewardItem
@@ -34,7 +36,11 @@ export interface RewardsListChildrenExports {
 }
 
 export const RewardsList: React.FC<RewardsListProps> &
-  RewardsListChildrenExports = ({ value, onChange }: RewardsListProps) => {
+  RewardsListChildrenExports = ({
+  allowCreate = false,
+  value,
+  onChange,
+}: RewardsListProps) => {
   const rewardsHook = useRewards({ value, onChange })
   const [selectedReward, setSelectedReward] = useState<Reward>()
   const modal = useModal()
@@ -54,6 +60,12 @@ export const RewardsList: React.FC<RewardsListProps> &
     setSelectedReward(undefined)
   }, [modal])
 
+  // returns true only when a allowCreate is true and is not the last item
+  const shouldRenderNftDivider = useCallback(
+    (index: number) => allowCreate || index !== rewards.length - 1,
+    [allowCreate, rewards],
+  )
+
   return (
     <RewardsListContext.Provider value={rewardsHook}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '4rem' }}>
@@ -62,9 +74,8 @@ export const RewardsList: React.FC<RewardsListProps> &
             {rewards
               .sort((a, b) => a.minimumContribution - b.minimumContribution)
               .map((reward, i) => (
-                <>
+                <div key={reward.id}>
                   <RewardItem
-                    key={reward.id}
                     tier={i + 1}
                     reward={reward}
                     onEditClicked={() => {
@@ -75,21 +86,25 @@ export const RewardsList: React.FC<RewardsListProps> &
                       removeReward(reward.id)
                     }}
                   />
-                  <Divider style={{ margin: 0 }} />
-                </>
+                  {shouldRenderNftDivider(i) ? (
+                    <Divider style={{ margin: 0, marginTop: '4rem' }} />
+                  ) : null}
+                </div>
               ))}
           </>
         )}
-        <CreateButton
-          icon={<PlusCircleOutlined />}
-          style={{
-            height: '6rem',
-          }}
-          disabled={rewards.length >= 3}
-          onClick={modal.open}
-        >
-          Add NFT reward tier
-        </CreateButton>
+        {allowCreate && (
+          <CreateButton
+            icon={<PlusCircleOutlined />}
+            style={{
+              height: '6rem',
+            }}
+            disabled={rewards.length >= 3}
+            onClick={modal.open}
+          >
+            Add NFT reward tier
+          </CreateButton>
+        )}
       </div>
       <AddEditRewardModal
         open={modal.visible}

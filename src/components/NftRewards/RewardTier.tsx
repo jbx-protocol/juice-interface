@@ -172,6 +172,7 @@ export function RewardTier({
                 ...imageStyle,
                 filter: isSelected ? 'unset' : 'brightness(50%)',
               }}
+              crossOrigin="use-credentials"
             />
           )}
           {isSelected ? <RewardIcon /> : null}

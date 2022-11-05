@@ -128,7 +128,7 @@ export const PayoutsList = (
           <OwnerPayoutCard payoutsSelection={props.payoutsSelection} />
         )}
         <Allocation.List
-          addText={t`Add new payout address`}
+          allocationName={t`payout`}
           isEditable={props.isEditable}
           availableModes={availableModes}
         >

@@ -27,7 +27,7 @@ export const ipfsGetWithFallback = async (hash: string) => {
     const response = await axios.get(restrictedIpfsUrl(hash))
     return response
   } catch (error) {
-    console.info(`ipfs::falling back to public gateway for ${hash}`)
+    console.info(`ipfs::falling back to open gateway for ${hash}`)
     const response = await ipfsGet(openIpfsUrl(hash))
     return response
   }

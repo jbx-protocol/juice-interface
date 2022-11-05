@@ -124,9 +124,7 @@ export const PayoutsList = (
       setAllocationCurrency={setCurrency}
     >
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
-        {!(Math.round(totalPercent * 10000) / 10000 >= 100) && (
-          <OwnerPayoutCard payoutsSelection={props.payoutsSelection} />
-        )}
+        <OwnerPayoutCard payoutsSelection={props.payoutsSelection} />
         <Allocation.List
           addText={t`Add new payout address`}
           isEditable={props.isEditable}

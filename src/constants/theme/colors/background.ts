@@ -9,7 +9,7 @@ export const backgroundColors: Record<
 > = {
   [ThemeOption.light]: {
     l0: '#FEFDFB',
-    l1: '#e7e3dc',
+    l1: lightColors.warmGray200,
     l2: '#f5f4ef',
     l3: '#FBF9F6',
     disabled: '#00000018',
@@ -25,6 +25,7 @@ export const backgroundColors: Record<
       secondary: '#32c8db44',
       highlight: '#3dd1e4',
     },
+    deselected: lightColors.warmGray200,
     over: {
       action: {
         primary: lightColors.warmGray150,
@@ -61,6 +62,7 @@ export const backgroundColors: Record<
       secondary: darkColors.ctaHint,
       highlight: darkColors.ctaHighlight,
     },
+    deselected: darkColors.darkGray500,
     over: {
       action: {
         primary: darkColors.darkGray400,

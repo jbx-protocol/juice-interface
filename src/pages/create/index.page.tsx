@@ -32,11 +32,7 @@ export default function V2CreatePage() {
       </NextHead>
 
       <AppWrapper>
-        {featureFlagEnabled(FEATURE_FLAGS.EXPERIMENTAL_CREATE_FLOW) ? (
-          <Create />
-        ) : (
-          <V2Create />
-        )}
+        <Create />
       </AppWrapper>
     </>
   )
@@ -62,6 +58,8 @@ const TABS: TabConfig[] = [
   },
 ]
 
+// TODO: Delete this and other related code after we're sure new create page is working.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function V2Create() {
   const { colors } = useContext(ThemeContext).theme
   const [activeTab, setActiveTab] = useState<string>('0')

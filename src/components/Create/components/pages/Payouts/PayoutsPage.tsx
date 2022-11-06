@@ -63,32 +63,30 @@ export const PayoutsPage: React.FC = () => {
             defocusOnSelect
             style={{ width: '100%' }}
           >
-            {availableSelections.has('percentages') && (
-              <Selection.Card
-                name="percentages"
-                title={t`Percentages`}
-                icon={<PercentageOutlined />}
-                description={
-                  <Trans>
-                    Distribute a percentage of all funds received between the
-                    entities nominated in the next step.
-                  </Trans>
-                }
-              />
-            )}
-            {availableSelections.has('amounts') && (
-              <Selection.Card
-                name="amounts"
-                title={t`Specific Amounts`}
-                icon={<FieldBinaryOutlined />}
-                description={
-                  <Trans>
-                    Distribute a specific amount of funds to each entity
-                    nominated in the next step.
-                  </Trans>
-                }
-              />
-            )}
+            <Selection.Card
+              name="percentages"
+              title={t`Percentages`}
+              icon={<PercentageOutlined />}
+              isDisabled={!availableSelections.has('percentages')}
+              description={
+                <Trans>
+                  Distribute a percentage of all funds received between the
+                  entities nominated in the next step.
+                </Trans>
+              }
+            />
+            <Selection.Card
+              name="amounts"
+              title={t`Specific Amounts`}
+              icon={<FieldBinaryOutlined />}
+              isDisabled={!availableSelections.has('amounts')}
+              description={
+                <Trans>
+                  Distribute a specific amount of funds to each entity nominated
+                  in the next step.
+                </Trans>
+              }
+            />
           </Selection>
         </Form.Item>
         {selection && (

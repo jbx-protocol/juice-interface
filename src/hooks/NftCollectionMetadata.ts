@@ -4,7 +4,7 @@ import { useQuery } from 'react-query'
 import { cidFromUrl } from 'utils/ipfs'
 
 // gets Nft Collection metadata from IPFS
-export default function useNftCollectionMetadata(uri: string | undefined) {
+export function useNftCollectionMetadata(uri: string | undefined) {
   return useQuery(
     ['nft-collection-metadata', uri],
     async () => {

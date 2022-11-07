@@ -68,7 +68,7 @@ export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<R
     const collectionName =
       collectionMetadata.name ?? defaultNftCollectionName(projectTitle)
     const delegateData = await getJBDeployTiered721DelegateData({
-      collectionCID: collectionMetadata.CID ?? '',
+      collectionUri: collectionMetadata.uri ?? '',
       collectionName,
       collectionSymbol: collectionMetadata.symbol ?? '',
       tiers,

@@ -113,13 +113,13 @@ msgstr ""
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
 msgstr ""
 
-msgid "<0>A bonding curve rewards people who wait longer to redeem your tokens for overflow.</0><1>For example, with a bonding curve of 70%, redeeming 10% of the token supply at any given time will claim around 7% of the total overflow.</1><2>The rest is left to share between token holders.</2>,<3>For more info, check out this <4>short video</4> on bonding curves.</3>"
-msgstr ""
-
 msgid "<0>A mechanism like Juicebox where upfront financial commitments should be honored over time is only guaranteed within an ecosystem like Ethereum.</0><1>Ethereum provides a public environment where internet apps like Juicebox can run in a permission-less, trustless, and unstoppable fashion.</1><2>This means that anyone can see the code that they're using, anyone can use the code without asking for permission, and no one can mess with the code or take it down.</2><3>People using Juicebox are interacting with each other through public infrastructure—not a private, profit-seeking corporate service that brokers the exchange.</3><4>Juicebox was built to allow people and projects to get paid for creating public art and infrastructure, as much as or more than they would working towards corporate ends. No more shady business.</4>"
 msgstr ""
 
 msgid "<0>A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project.</0><1>Holding these tokens entitles a project to a portion of its own overflow.</1>"
+msgstr ""
+
+msgid "<0>A redemption rate rewards people who wait longer to redeem your tokens for overflow.</0><1>For example, with a redemption rate of 70%, redeeming 10% of the token supply at any given time will claim around 7% of the total overflow.</1><2>The rest is left to share between token holders.</2><3>For more info, check out this <4>short video</4> on redemption rate.</3>"
 msgstr ""
 
 msgid "<0>Contribution floor:</0> {0} ETH"
@@ -3350,10 +3350,10 @@ msgstr ""
 msgid "What is the V1 Token Payment Terminal?"
 msgstr ""
 
-msgid "What's a bonding curve?"
+msgid "What's a discount rate?"
 msgstr ""
 
-msgid "What's a discount rate?"
+msgid "What's a redemption rate?"
 msgstr ""
 
 msgid "What's going on under the hood?"

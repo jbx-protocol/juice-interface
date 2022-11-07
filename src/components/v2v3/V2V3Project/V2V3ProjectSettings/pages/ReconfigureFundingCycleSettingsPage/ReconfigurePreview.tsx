@@ -10,6 +10,7 @@ import {
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
 
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import {
@@ -28,6 +29,7 @@ import {
   ReservedTokensStatistic,
 } from 'pages/create/tabs/ReviewDeployTab/FundingAttributes'
 import NftSummarySection from 'pages/create/tabs/ReviewDeployTab/NftSummarySection'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { formattedNum } from 'utils/format/formatNumber'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
 import { getDefaultFundAccessConstraint } from 'utils/v2v3/fundingCycle'
@@ -81,6 +83,7 @@ export default function ReconfigurePreview({
 
   const duration = fundingCycle.duration
   const hasDuration = duration?.gt(0)
+  const nftsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
 
   const issuanceRate =
     formattedNum(
@@ -197,7 +200,7 @@ export default function ReconfigurePreview({
           projectOwnerAddress={userAddress}
         />
       )}
-      {nftRewards ? <NftSummarySection /> : null}
+      {nftRewards && nftsEnabled ? <NftSummarySection /> : null}
     </Space>
   )
 }

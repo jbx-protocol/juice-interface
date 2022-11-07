@@ -40,7 +40,7 @@ export default function ReviewDeployTab() {
           marginBottom: '2rem',
         }}
       >
-        <Space direction="vertical" style={{ width: '100%', gap: 20 }}>
+        <Space direction="vertical" style={{ width: '100%' }}>
           <ProjectDetailsSection />
           <FundingSummarySection />
           {hasNfts ? <NftSummarySection /> : null}

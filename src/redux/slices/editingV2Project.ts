@@ -68,12 +68,15 @@ interface V2ProjectState {
   reconfigurationRuleSelection: ReconfigurationStrategy | undefined
   createFurthestPageReached: CreatePage
   createSoftLockPageQueue: CreatePage[] | undefined
+  mustStartAtOrAfter: string
 }
 
 // Increment this version by 1 when making breaking changes.
 // When users return to the site and their local version is less than
 // this number, their state will be reset.
 export const REDUX_STORE_V2_PROJECT_VERSION = 9
+
+const DEFAULT_MUST_START_AT_OR_AFTER = '1'
 
 const defaultProjectMetadataState: ProjectMetadataV5 = {
   name: '',
@@ -183,6 +186,7 @@ export const defaultProjectState: V2ProjectState = {
   fundingCyclesPageSelection: undefined,
   createFurthestPageReached: 'projectDetails',
   createSoftLockPageQueue: [],
+  mustStartAtOrAfter: DEFAULT_MUST_START_AT_OR_AFTER,
 }
 
 const editingV2ProjectSlice = createSlice({
@@ -353,6 +357,9 @@ const editingV2ProjectSlice = createSlice({
       action: PayloadAction<CreatePage>,
     ) => {
       state.createFurthestPageReached = action.payload
+    },
+    setMustStartAtOrAfter: (state, action: PayloadAction<string>) => {
+      state.mustStartAtOrAfter = action.payload
     },
     addCreateSoftLockedPage: (state, action: PayloadAction<CreatePage>) => {
       const set = new Set(state.createSoftLockPageQueue)

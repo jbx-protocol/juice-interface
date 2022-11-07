@@ -15,6 +15,17 @@
   > .ant-steps-item-content
   > .ant-steps-item-title {
   color: var(--text-primary);
+  font-weight: 500;
+}
+
+// Process steps
+.ant-steps
+  > .ant-steps-item-process:not(.ant-steps-item-active)
+  > .ant-steps-item-container
+  > .ant-steps-item-content
+  > .ant-steps-item-title {
+  color: var(--text-secondary);
+  font-weight: 400;
 }
 
 // Finish steps
@@ -31,6 +42,7 @@
   > .ant-steps-item-content
   > .ant-steps-item-title {
   color: var(--text-disabled);
+  font-weight: 400;
 }
 
 .create-steps-item-hover {

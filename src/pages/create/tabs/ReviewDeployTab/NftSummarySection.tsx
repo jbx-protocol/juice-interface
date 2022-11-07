@@ -16,26 +16,26 @@ export default function NftSummarySection() {
     theme: { colors },
   } = useContext(ThemeContext)
   return (
-    <div style={{ marginTop: 20 }}>
-      <h2 style={{ marginBottom: 0 }}>
+    <div>
+      <h4 style={{ marginBottom: 0, color: colors.text.primary }}>
         <Trans>NFTs</Trans>
-      </h2>
+      </h4>
       {rewardTiers?.map((rewardTier, index) => (
         <Row
           style={{
             borderBottom:
               index !== rewardTiers.length - 1
                 ? `1px solid ${colors.stroke.tertiary}`
-                : 'unset',
+                : undefined,
             display: 'flex',
             width: '100%',
-            marginTop: 30,
-            paddingBottom: '1.6875rem',
+            padding: '1rem 0',
           }}
           key={index}
+          gutter={16}
         >
           <Col
-            md={3}
+            md={4}
             style={{
               display: 'flex',
               justifyContent: 'center',
@@ -51,17 +51,25 @@ export default function NftSummarySection() {
             />
           </Col>
           <Col
-            md={7}
+            md={8}
             style={{
               display: 'flex',
               justifyContent: 'center',
               flexDirection: 'column',
             }}
           >
-            <h3>{rewardTier.name}</h3>
+            <span
+              style={{
+                color: colors.text.primary,
+                fontSize: '1.2rem',
+                fontWeight: 500,
+              }}
+            >
+              {rewardTier.name}
+            </span>
             <p style={{ marginBottom: 0 }}>
               <Trans>
-                <strong>Contribution floor:</strong>{' '}
+                <span style={{ fontWeight: 500 }}>Contribution floor:</span>{' '}
                 {rewardTier.contributionFloor} ETH
               </Trans>
             </p>
@@ -69,7 +77,7 @@ export default function NftSummarySection() {
             rewardTier.maxSupply !== DEFAULT_NFT_MAX_SUPPLY ? (
               <span>
                 <Trans>
-                  <strong>Max. supply:</strong>{' '}
+                  <span style={{ fontWeight: 500 }}>Max. supply:</span>{' '}
                   <span>{rewardTier.maxSupply}</span>
                 </Trans>
               </span>
@@ -77,7 +85,7 @@ export default function NftSummarySection() {
             {rewardTier.externalLink && (
               <span>
                 <Trans>
-                  <strong>Website:</strong>{' '}
+                  <span style={{ fontWeight: 500 }}>Website:</span>{' '}
                   <ExternalLink href={rewardTier.externalLink}>
                     {rewardTier.externalLink}
                   </ExternalLink>
@@ -96,7 +104,7 @@ export default function NftSummarySection() {
             {rewardTier.description && (
               <div style={{ marginTop: '47px' }}>
                 <Trans>
-                  <strong>Description: </strong>
+                  <span style={{ fontWeight: 500 }}>Description: </span>
                   <Paragraph
                     description={rewardTier.description}
                     characterLimit={124}

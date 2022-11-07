@@ -49,10 +49,12 @@ async function getRewardTierFromIPFS({
 export default function useNftRewards(
   tiers: JB721TierParams[],
 ): UseQueryResult<NftRewardTier[]> {
+  const hasTiers = Boolean(tiers?.length)
+
   return useQuery(
     'nft-rewards',
     async () => {
-      if (!tiers?.length) {
+      if (!hasTiers) {
         return
       }
 
@@ -65,6 +67,6 @@ export default function useNftRewards(
         ),
       )
     },
-    { enabled: Boolean(tiers?.length) },
+    { enabled: hasTiers },
   )
 }

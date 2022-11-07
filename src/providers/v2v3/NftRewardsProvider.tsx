@@ -36,6 +36,7 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
       dataSourceAddress: fundingCycleMetadata?.dataSource,
       limit: limitOverride(projectId),
     })
+
   const { data: rewardTiers, isLoading: nftRewardTiersLoading } = useNftRewards(
     nftRewardTiersResponse ?? [],
   )

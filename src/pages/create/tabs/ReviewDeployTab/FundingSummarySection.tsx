@@ -117,11 +117,11 @@ export default function FundingSummarySection() {
     ) ?? '0'
 
   return (
-    <div>
-      <h2>
+    <Space direction="vertical" style={{ width: '100%' }}>
+      <h2 style={{ margin: 0 }}>
         <Trans>Funding cycle details</Trans>
       </h2>
-      <Callout style={{ marginBottom: 15 }}>
+      <Callout>
         {hasDuration ? (
           <Trans>
             Once launched, your first funding cycle{' '}
@@ -131,8 +131,8 @@ export default function FundingSummarySection() {
           </Trans>
         ) : (
           <Trans>
-            Since you have not set a funding duration, changes to these settings
-            will be applied immediately.
+            Since you have not set a funding duration, future changes to these
+            settings will be applied immediately.
           </Trans>
         )}
       </Callout>
@@ -229,6 +229,6 @@ export default function FundingSummarySection() {
           )}
         </Row>
       </Space>
-    </div>
+    </Space>
   )
 }

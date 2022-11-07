@@ -21,16 +21,20 @@ const useIssueErc20TokenTx = ():
   | undefined => {
   const { cv } = useContext(ProjectMetadataContext)
 
+  const v1Tx = useV1IssueErc20TokenTx()
+  const v2Tx = useV2IssueErc20TokenTx()
+  const v3Tx = useV3IssueErc20TokenTx()
+
   if (cv === CV_V1 || cv === CV_V1_1) {
-    return useV1IssueErc20TokenTx()
+    return v1Tx
   }
 
   if (cv === CV_V2) {
-    return useV2IssueErc20TokenTx()
+    return v2Tx
   }
 
   if (cv === CV_V3) {
-    return useV3IssueErc20TokenTx()
+    return v3Tx
   }
 }
 

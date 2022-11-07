@@ -2678,7 +2678,7 @@ msgstr ""
 msgid "Show your contributors a message after they receive their NFT reward."
 msgstr ""
 
-msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."
+msgid "Since you have not set a funding duration, future changes to these settings will be applied immediately."
 msgstr ""
 
 msgid "Skipped"

@@ -133,18 +133,20 @@ async function uploadNftRewardToIPFS(
       },
     ],
   }
-  const res = await axios.post('/api/ipfs/pin', {
+
+  const res = await axios.post<{ IpfsHash: string }>('/api/ipfs/pin', {
     data: ipfsNftRewardTier,
     options: {
       pinataMetadata: {
         keyvalues: {
           tag: IPFS_TAGS.NFT_REWARDS,
         },
-        name: ipfsNftRewardTier.name,
+        name: `nft-rewards_${ipfsNftRewardTier.name}`,
       },
     },
   })
-  return res.data.IpfsHash as string
+
+  return res.data.IpfsHash
 }
 
 // Uploads each nft reward tier to an individual location on IPFS
@@ -181,7 +183,7 @@ export async function uploadNftCollectionMetadataToIPFS({
       : 'https://juicebox.money',
     fee_recipient: undefined,
   }
-  const res = await axios.post('/api/ipfs/pin', {
+  const res = await axios.post<{ IpfsHash: string }>('/api/ipfs/pin', {
     data: ipfsNftCollectionMetadata,
     options: {
       pinataMetadata: {
@@ -192,7 +194,7 @@ export async function uploadNftCollectionMetadataToIPFS({
       },
     },
   })
-  return res.data.IpfsHash as string
+  return res.data.IpfsHash
 }
 
 // Determines if two NFT reward tiers are equal

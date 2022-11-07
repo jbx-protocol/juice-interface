@@ -11,9 +11,6 @@ const FEATURE_FLAG_DEFAULTS: {
   [FEATURE_FLAGS.V3]: {
     goerli: true,
   },
-  [FEATURE_FLAGS.EXPERIMENTAL_CREATE_FLOW]: {
-    goerli: true,
-  },
 }
 
 const featureFlagKey = (baseKey: string) => {

@@ -5,5 +5,4 @@ export const FEATURE_FLAGS = {
   VENFT_CREATOR: 'veNftCreator',
   V3: 'V3',
   PROJECT_CONTRACT_UPDGRADES: 'projectContractUpgrades',
-  EXPERIMENTAL_CREATE_FLOW: 'experimentalCreateFlow',
 }

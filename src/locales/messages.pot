@@ -419,6 +419,9 @@ msgstr ""
 msgid "Allow terminal configuration"
 msgstr ""
 
+msgid "Allow the <0>Juicebox NFT deployer contract</0> to reconfigure this project's funding cycle."
+msgstr ""
+
 msgid "Allow token minting"
 msgstr ""
 
@@ -2363,6 +2366,9 @@ msgstr ""
 msgid "Reconfigure {projectTitle}"
 msgstr ""
 
+msgid "Reconfigure {projectTitle} with new NFTs"
+msgstr ""
+
 msgid "Redeem"
 msgstr ""
 
@@ -2570,6 +2576,9 @@ msgstr ""
 msgid "Set ENS text record for {ensName}"
 msgstr ""
 
+msgid "Set NFT operator permissions"
+msgstr ""
+
 msgid "Set URI for {projectTitle}"
 msgstr ""
 
@@ -2616,6 +2625,9 @@ msgid "Set handle @{handle}"
 msgstr ""
 
 msgid "Set operator for {projectTitle}"
+msgstr ""
+
+msgid "Set operator permissions for projectId={projectId} to allow NFTs"
 msgstr ""
 
 msgid "Set payouts of {projectTitle}"

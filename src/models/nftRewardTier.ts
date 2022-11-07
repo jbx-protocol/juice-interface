@@ -68,7 +68,7 @@ export type IpfsNftCollectionMetadata = {
 export type NftCollectionMetadata = {
   symbol: string | undefined
   name: string | undefined
-  CID: string | undefined
+  uri?: string
   description: string | undefined
 }
 

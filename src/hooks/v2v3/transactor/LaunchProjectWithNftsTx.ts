@@ -32,7 +32,7 @@ const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
 const DEFAULT_MEMO = ''
 
 export async function getJBDeployTiered721DelegateData({
-  collectionCID,
+  collectionUri,
   collectionName,
   collectionSymbol,
   tiers,
@@ -42,7 +42,7 @@ export async function getJBDeployTiered721DelegateData({
   JBPricesAddress,
   JBTiered721DelegateStoreAddress,
 }: {
-  collectionCID: string
+  collectionUri: string
   collectionName: string
   collectionSymbol: string
   tiers: JB721TierParams[]
@@ -66,7 +66,7 @@ export async function getJBDeployTiered721DelegateData({
     fundingCycleStore: JBFundingCycleStoreAddress,
     baseUri: restrictedIpfsUrl(''),
     tokenUriResolver: constants.AddressZero,
-    contractUri: restrictedIpfsUrl(collectionCID),
+    contractUri: restrictedIpfsUrl(collectionUri),
     owner: ownerAddress,
     pricing,
     reservedTokenBeneficiary: constants.AddressZero,
@@ -81,7 +81,7 @@ export async function getJBDeployTiered721DelegateData({
 }
 
 export function useLaunchProjectWithNftsTx(): TransactorInstance<{
-  collectionCID: string
+  collectionUri: string
   collectionName: string
   collectionSymbol: string
   projectMetadataCID: string
@@ -100,7 +100,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
 
   return async (
     {
-      collectionCID,
+      collectionUri,
       collectionName,
       collectionSymbol,
       projectMetadataCID,
@@ -145,7 +145,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<{
     }
 
     const delegateData = await getJBDeployTiered721DelegateData({
-      collectionCID,
+      collectionUri,
       collectionName,
       collectionSymbol,
       tiers,

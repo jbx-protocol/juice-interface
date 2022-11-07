@@ -737,6 +737,9 @@ msgstr ""
 msgid "Configure {projectTitle}"
 msgstr ""
 
+msgid "Confirm"
+msgstr ""
+
 msgid "Confirm Stake"
 msgstr ""
 
@@ -2352,6 +2355,9 @@ msgid "Reconfigure Funding Cycle"
 msgstr ""
 
 msgid "Reconfigure funding cycle"
+msgstr ""
+
+msgid "Reconfigure marketplace customizations"
 msgstr ""
 
 msgid "Reconfigure payouts as percentages of your distribution limit."

@@ -20,7 +20,9 @@ export function ReconfigureNftMetadataModal({
   const [txLoading, setTxLoading] = useState<boolean>()
   const [marketplaceForm] = useForm<MarketplaceFormFields>()
 
-  const reconfigureNftCollectionMetadata = useReconfigureNftCollectionMetadata()
+  const reconfigureNftCollectionMetadata = useReconfigureNftCollectionMetadata({
+    dataSourceAddress: fundingCycleMetadata?.dataSource,
+  })
 
   const submitCollectionMetadata = async () => {
     if (!fundingCycleMetadata?.dataSource) return

@@ -1,22 +1,16 @@
 import { CheckCircleFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
-import RichButton from 'components/RichButton'
-import { useDeployProjectPayerTx } from 'hooks/v2v3/transactor/DeployProjectPayerTx'
-import { CSSProperties, useContext, useState } from 'react'
-
-import { ThemeContext } from 'contexts/themeContext'
-
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
-
 import { IssueErc20TokenModal } from 'components/modals/IssueErc20TokenModal'
-import { CV_V2, CV_V3 } from 'constants/cv'
-import { readNetwork } from 'constants/networks'
+import RichButton from 'components/RichButton'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { NetworkName } from 'models/network-name'
-import { CV2V3 } from 'models/v2v3/cv'
+import { ThemeContext } from 'contexts/themeContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { useDeployProjectPayerTx } from 'hooks/v2v3/transactor/DeployProjectPayerTx'
 import Link from 'next/link'
+import { CSSProperties, useContext, useState } from 'react'
 import { settingsPagePath } from 'utils/routes'
+
 import { LaunchProjectPayerModal } from './LaunchProjectPayerModal'
 
 export const NEW_DEPLOY_QUERY_PARAM = 'np'
@@ -33,9 +27,6 @@ export default function NewDeployModal({
   } = useContext(ThemeContext)
   const { handle } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
-
-  // TODO use feature flag
-  const cv: CV2V3 = readNetwork.name === NetworkName.goerli ? CV_V3 : CV_V2
 
   const [issueTokenModalVisible, setIssueTokenModalVisible] =
     useState<boolean>(false)
@@ -133,7 +124,6 @@ export default function NewDeployModal({
         />
       </div>
       <IssueErc20TokenModal
-        cv={cv}
         open={issueTokenModalVisible}
         onClose={() => setIssueTokenModalVisible(false)}
         onConfirmed={() => setHasIssuedToken(true)}

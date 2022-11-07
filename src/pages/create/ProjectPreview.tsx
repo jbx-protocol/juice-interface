@@ -1,8 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { V2V3Project } from 'components/v2v3/V2V3Project/V2V3Project'
+import { PV_V2 } from 'constants/pv'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import {
   V2V3ProjectContext,
   V2V3ProjectContextType,
@@ -15,7 +15,6 @@ import {
 } from 'hooks/AppSelector'
 import { useWallet } from 'hooks/Wallet'
 import { V2V3FundingCycle } from 'models/v2v3/fundingCycle'
-import { useContext } from 'react'
 import { EMPTY_NFT_COLLECTION_METADATA } from 'redux/slices/editingV2Project'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { getDefaultFundAccessConstraint } from 'utils/v2v3/fundingCycle'
@@ -31,7 +30,6 @@ export function ProjectPreview() {
   const fundingCycleData = useEditingV2V3FundingCycleDataSelector()
   const fundAccessConstraints = useEditingV2V3FundAccessConstraintsSelector()
   const { userAddress } = useWallet()
-  const { cv } = useContext(V2V3ContractsContext)
 
   const fundingCycle: V2V3FundingCycle = {
     ...fundingCycleData,
@@ -91,7 +89,12 @@ export function ProjectPreview() {
 
   return (
     <ProjectMetadataContext.Provider
-      value={{ projectMetadata, isArchived: false, projectId: 0, cv }}
+      value={{
+        projectMetadata,
+        isArchived: false,
+        projectId: 0,
+        pv: PV_V2,
+      }}
     >
       <V2V3ProjectContext.Provider value={project}>
         <div>

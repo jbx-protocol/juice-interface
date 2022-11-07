@@ -9,7 +9,8 @@ import {
   TapEventJson,
 } from 'models/subgraph-entities/v1/tap-event'
 
-import { CV } from '../../cv'
+import { PV } from '../../pv'
+import { TerminalEventEntity } from '../base/terminal-event'
 import {
   DistributeToPayoutModEvent,
   DistributeToPayoutModEventJson,
@@ -76,12 +77,13 @@ import {
   RedeemEventJson,
 } from './redeem-event'
 
-export type ProjectEvent = {
+export interface ProjectEvent extends TerminalEventEntity {
   id: string
   timestamp: number
   project: string
   projectId: number
-  cv: CV
+  pv: PV
+  terminal: string
 
   // V1 & V2
   payEvent: Partial<PayEvent> | null
@@ -110,7 +112,8 @@ export type ProjectEventJson = Pick<
   ProjectEvent,
   'id' | 'timestamp' | 'projectId' | 'project' // primitive types
 > & {
-  cv: CV
+  pv: PV
+  terminal: string
   payEvent: PayEventJson | null
   addToBalanceEvent: AddToBalanceEventJson | null
   mintTokensEvent: MintTokensEventJson | null

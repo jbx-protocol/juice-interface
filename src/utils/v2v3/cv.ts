@@ -1,7 +1,7 @@
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
-import { CV2V3 } from 'models/cv'
 import { V2V3ContractName } from 'models/v2v3/contracts'
+import { CV2V3 } from 'models/v2v3/cv'
 import { loadV2V3Contract } from './loadV2V3Contract'
 
 /**

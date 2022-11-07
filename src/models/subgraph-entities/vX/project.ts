@@ -4,7 +4,7 @@ import {
   ParticipantJson,
 } from 'models/subgraph-entities/vX/participant'
 
-import { CV } from '../../cv'
+import { PV } from '../../pv'
 import {
   DistributeToPayoutModEvent,
   DistributeToPayoutModEventJson,
@@ -47,7 +47,7 @@ import {
 type BaseProject = {
   id: string
   projectId: number
-  cv: CV
+  pv: PV
   owner: string
   createdAt: number
   trendingPaymentsCount: number

@@ -10,8 +10,15 @@ import {
   BaseProjectEntityJson,
   parseBaseProjectEntityJson,
 } from '../base/base-project-entity'
+import {
+  parseTerminalEventEntity,
+  TerminalEventEntity,
+} from '../base/terminal-event'
 
-export interface RedeemEvent extends BaseProjectEntity, BaseEventEntity {
+export interface RedeemEvent
+  extends BaseProjectEntity,
+    BaseEventEntity,
+    TerminalEventEntity {
   id: string
   holder: string
   beneficiary: string
@@ -29,6 +36,7 @@ export type RedeemEventJson = Partial<
 export const parseRedeemEventJson = (
   j: RedeemEventJson,
 ): Partial<RedeemEvent> => ({
+  ...parseTerminalEventEntity(j),
   ...parseBaseEventEntityJson(j),
   ...parseBaseProjectEntityJson(j),
   id: j.id,

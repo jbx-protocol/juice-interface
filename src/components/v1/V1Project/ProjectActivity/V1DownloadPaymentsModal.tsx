@@ -18,7 +18,7 @@ export function V1DownloadPaymentsModal({
   open: boolean | undefined
   onCancel: VoidFunction | undefined
 }) {
-  const { projectId, cv } = useContext(ProjectMetadataContext)
+  const { projectId, pv } = useContext(ProjectMetadataContext)
 
   const [latestBlockNumber, setLatestBlockNumber] = useState<number>()
   const [blockNumber, setBlockNumber] = useState<number>()
@@ -33,7 +33,7 @@ export function V1DownloadPaymentsModal({
   }, [])
 
   const download = useCallback(async () => {
-    if (blockNumber === undefined || !projectId || !cv) return
+    if (blockNumber === undefined || !projectId || !pv) return
 
     setLoading(true)
 
@@ -56,8 +56,8 @@ export function V1DownloadPaymentsModal({
             value: projectId,
           },
           {
-            key: 'cv',
-            value: cv,
+            key: 'pv',
+            value: pv,
           },
         ],
       })
@@ -91,7 +91,7 @@ export function V1DownloadPaymentsModal({
       )
       setLoading(false)
     }
-  }, [projectId, cv, setLoading, blockNumber, handle])
+  }, [projectId, pv, setLoading, blockNumber, handle])
 
   return (
     <Modal

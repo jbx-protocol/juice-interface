@@ -1,10 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import axios from 'axios'
+import { JB721DelegatePayMetadata } from 'components/Project/PayProjectForm/usePayProjectForm'
 import { juiceboxEmojiImageUri } from 'constants/images'
 import { IPFS_TAGS } from 'constants/ipfs'
 import { readNetwork } from 'constants/networks'
-import { parseEther } from 'ethers/lib/utils'
+import { defaultAbiCoder, parseEther } from 'ethers/lib/utils'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/NftRewards'
 import {
   IpfsNftCollectionMetadata,
@@ -13,11 +14,13 @@ import {
   NftRewardTier,
 } from 'models/nftRewardTier'
 import { V2V3ContractName } from 'models/v2v3/contracts'
+import { V2V3FundingCycleMetadata } from 'models/v2v3/fundingCycle'
 import { decodeEncodedIPFSUri, encodeIPFSUri } from 'utils/ipfs'
 
 import { ForgeDeploy } from './v2v3/loadV2V3Contract'
 
 export const MAX_NFT_REWARD_TIERS = 3
+const IJB721Delegate_INTERFACE_ID = '0xb3bcbb79'
 
 // Following three functions get the latest deployments of the NFT contracts from the NPM package
 async function loadNftRewardsDeployment() {
@@ -80,13 +83,15 @@ export function sortNftRewardTiers(
 
 // returns an array of CIDs from a given array of RewardTier obj's
 export function CIDsOfNftRewardTiersResponse(
-  nftRewardTiersResponse: JB721TierParams[],
+  nftRewardTiersResponse: JB721TierParams[] | undefined,
 ): string[] {
-  const cids: string[] = nftRewardTiersResponse
-    .map((contractRewardTier: JB721TierParams) => {
-      return decodeEncodedIPFSUri(contractRewardTier.encodedIPFSUri)
-    })
-    .filter(cid => cid.length > 0)
+  const cids =
+    nftRewardTiersResponse
+      ?.map((contractRewardTier: JB721TierParams) => {
+        return decodeEncodedIPFSUri(contractRewardTier.encodedIPFSUri)
+      })
+      .filter(cid => cid.length > 0) ?? []
+
   return cids
 }
 
@@ -128,18 +133,20 @@ async function uploadNftRewardToIPFS(
       },
     ],
   }
-  const res = await axios.post('/api/ipfs/pin', {
+
+  const res = await axios.post<{ IpfsHash: string }>('/api/ipfs/pin', {
     data: ipfsNftRewardTier,
     options: {
       pinataMetadata: {
         keyvalues: {
           tag: IPFS_TAGS.NFT_REWARDS,
         },
-        name: ipfsNftRewardTier.name,
+        name: `nft-rewards_${ipfsNftRewardTier.name}`,
       },
     },
   })
-  return res.data.IpfsHash as string
+
+  return res.data.IpfsHash
 }
 
 // Uploads each nft reward tier to an individual location on IPFS
@@ -176,7 +183,7 @@ export async function uploadNftCollectionMetadataToIPFS({
       : 'https://juicebox.money',
     fee_recipient: undefined,
   }
-  const res = await axios.post('/api/ipfs/pin', {
+  const res = await axios.post<{ IpfsHash: string }>('/api/ipfs/pin', {
     data: ipfsNftCollectionMetadata,
     options: {
       pinataMetadata: {
@@ -187,7 +194,7 @@ export async function uploadNftCollectionMetadataToIPFS({
       },
     },
   })
-  return res.data.IpfsHash as string
+  return res.data.IpfsHash
 }
 
 // Determines if two NFT reward tiers are equal
@@ -238,4 +245,40 @@ export function buildJB721TierParams({
       transfersPausable: false,
     } as JB721TierParams
   })
+}
+
+/**
+ * Assume that any project with a data source has "NFT Rewards"
+ * In other words, uses the JB721Delegate.
+ *
+ * @TODO this is a TERRIBLE assumption. If someone starts using a different datasource,
+ * the UI will break badly. We should probably be validating that the datasource address adheres to a particular interface.ƒ
+ */
+export function hasNftRewards(
+  fundingCycleMetadata: V2V3FundingCycleMetadata | undefined,
+) {
+  return Boolean(fundingCycleMetadata?.dataSource)
+}
+
+export function encodeJB721DelegatePayMetadata(
+  metadata: JB721DelegatePayMetadata | undefined,
+) {
+  if (!metadata) return undefined
+
+  const args = [
+    constants.HashZero,
+    constants.HashZero,
+    IJB721Delegate_INTERFACE_ID,
+    metadata.dontMint ?? false,
+    metadata.expectMintFromExtraFunds ?? false,
+    metadata.dontOverspend ?? false,
+    metadata.tierIdsToMint,
+  ]
+
+  const encoded = defaultAbiCoder.encode(
+    ['bytes32', 'bytes32', 'bytes4', 'bool', 'bool', 'bool', 'uint16[]'],
+    args,
+  )
+
+  return encoded
 }

@@ -8,6 +8,7 @@ import TooltipIcon from 'components/TooltipIcon'
 import NftRewardTierModal from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal'
 import { readProvider } from 'constants/readProvider'
 import { shadowCard } from 'constants/styles/shadowCard'
+import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
@@ -56,6 +57,9 @@ export default function NftDrawer({
     theme,
     theme: { colors },
   } = useContext(ThemeContext)
+  const {
+    nftRewards: { rewardTiers: contextRewardTiers },
+  } = useContext(NftRewardsContext)
   const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
   const [addTierModalVisible, setAddTierModalVisible] = useState<boolean>(false)
   const [submitLoading, setSubmitLoading] = useState<boolean>(false)
@@ -330,7 +334,7 @@ export default function NftDrawer({
             style={{ marginBottom: 30 }}
           />
           {
-            !rewardTiers?.length ? (
+            !contextRewardTiers?.length ? (
               <>
                 <MinimalCollapse
                   header={
@@ -382,26 +386,26 @@ export default function NftDrawer({
           style={{ marginTop: 30 }}
         >
           <span>
-            <Trans>Save NFT rewards</Trans>
+            <Trans>Save NFTs</Trans>
           </span>
         </Button>
+        <NftRewardTierModal
+          open={addTierModalVisible}
+          validateContributionFloor={validateContributionFloor}
+          onChange={handleAddRewardTier}
+          mode="Add"
+          onClose={() => setAddTierModalVisible(false)}
+          isCreate
+        />
+        <UnsavedChangesModal
+          open={unsavedChangesModalVisible}
+          onOk={() => {
+            closeModal()
+            emitDrawerClose()
+          }}
+          onCancel={closeModal}
+        />
       </FundingCycleDrawer>
-      <NftRewardTierModal
-        open={addTierModalVisible}
-        validateContributionFloor={validateContributionFloor}
-        onChange={handleAddRewardTier}
-        mode="Add"
-        onClose={() => setAddTierModalVisible(false)}
-        isCreate
-      />
-      <UnsavedChangesModal
-        open={unsavedChangesModalVisible}
-        onOk={() => {
-          closeModal()
-          emitDrawerClose()
-        }}
-        onCancel={closeModal}
-      />
     </>
   )
 }

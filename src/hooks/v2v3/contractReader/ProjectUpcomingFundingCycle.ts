@@ -1,10 +1,8 @@
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import {
   BallotState,
   V2V3FundingCycle,
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
-import { useContext } from 'react'
 import { useProjectLatestConfiguredFundingCycle } from './ProjectLatestConfiguredFundingCycle'
 import useProjectQueuedFundingCycle from './ProjectQueuedFundingCycle'
 import { ContractReadResult } from './V2ContractReader'
@@ -19,9 +17,11 @@ type UpcomingFundingCycleDataType = [
  * If the latestConfiguredFundingCycleOf has an active ballot, return latestConfiguredFundingCycleOf.
  * Else, return queuedFundingCycleOf.
  */
-export function useProjectUpcomingFundingCycle(): ContractReadResult<UpcomingFundingCycleDataType> {
-  const { projectId } = useContext(ProjectMetadataContext)
-
+export function useProjectUpcomingFundingCycle({
+  projectId,
+}: {
+  projectId: number | undefined
+}): ContractReadResult<UpcomingFundingCycleDataType> {
   /**
    * Get Latest Configured Funding Cycle.
    */

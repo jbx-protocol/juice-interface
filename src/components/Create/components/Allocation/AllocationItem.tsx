@@ -1,5 +1,6 @@
-import { Col, Row, Space } from 'antd'
+import { Col, Divider, Row, Space } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
+import useMobile from 'hooks/Mobile'
 import { ReactNode, useContext } from 'react'
 
 export const AllocationItem = ({
@@ -13,11 +14,46 @@ export const AllocationItem = ({
   extra?: ReactNode
   onClick?: VoidFunction
 }) => {
+  const isMobile = useMobile()
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
   const isClickable = !!onClick
+
+  if (isMobile) {
+    return (
+      <div
+        className={isClickable ? 'clickable-border' : 'border'}
+        style={{
+          padding: '12px 0',
+          backgroundColor: colors.background.l2,
+          userSelect: 'none',
+          cursor: isClickable ? 'pointer' : undefined,
+        }}
+        onClick={onClick}
+      >
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            padding: '0 12px 0 28px',
+          }}
+        >
+          <div>{title}</div>
+          {extra}
+        </div>
+        <Divider style={{ margin: '12px 0' }} />
+        <div
+          style={{
+            padding: '0 12px 0 28px',
+          }}
+        >
+          {amount}
+        </div>
+      </div>
+    )
+  }
 
   return (
     <Row

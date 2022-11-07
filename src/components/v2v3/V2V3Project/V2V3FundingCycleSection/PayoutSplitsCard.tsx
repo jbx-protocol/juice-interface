@@ -163,7 +163,7 @@ export default function PayoutSplitsCard({
                 </Trans>
               }
             />
-            {canEditPayouts && effectiveDistributionLimit.gt(0) && (
+            {canEditPayouts && (
               <Link href={settingsPagePath('payouts', { projectId, handle })}>
                 <Button
                   size="small"
@@ -177,17 +177,15 @@ export default function PayoutSplitsCard({
               </Link>
             )}
           </div>
-          {effectiveDistributionLimit.gt(0) ? (
-            payoutSplits ? (
-              <SplitList
-                splits={payoutSplits}
-                currency={distributionLimitCurrency}
-                totalValue={distributionLimit}
-                projectOwnerAddress={projectOwnerAddress}
-                showSplitValues={!distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)}
-                valueFormatProps={{ precision: 4 }}
-              />
-            ) : null
+          {payoutSplits ? (
+            <SplitList
+              splits={payoutSplits}
+              currency={distributionLimitCurrency}
+              totalValue={distributionLimit}
+              projectOwnerAddress={projectOwnerAddress}
+              showSplitValues={!distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)}
+              valueFormatProps={{ precision: 4 }}
+            />
           ) : (
             <span style={{ color: colors.text.tertiary }}>
               <Trans>This project has no distributions.</Trans>

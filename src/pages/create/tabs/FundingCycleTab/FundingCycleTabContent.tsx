@@ -94,7 +94,7 @@ export default function FundingCycleTabContent({
         {isNftRewardsEnabled ? (
           <RichButton
             prefix="3"
-            heading={<Trans>NFT rewards</Trans>}
+            heading={<Trans>NFTs</Trans>}
             onClick={() => {
               setNftDrawerVisible(true)
               setNftDrawerSeen(true)

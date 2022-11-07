@@ -1,6 +1,5 @@
 import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
-import { RinkebyDeprecationBroadcastMessage } from 'components/broadcastMessages/RinkebyDeprecationBroadcastMessage'
 import SiteNavigation from 'components/Navbar/SiteNavigation'
 import useMobile from 'hooks/Mobile'
 import { useRouter } from 'next/router'
@@ -62,7 +61,6 @@ const _Wrapper: React.FC = ({ children }) => {
           background: 'transparent',
         }}
       >
-        <RinkebyDeprecationBroadcastMessage />
         <SiteNavigation />
         <Content style={isMobile ? { paddingTop: 64 } : {}}>{children}</Content>
       </Layout>

@@ -4,6 +4,7 @@ import ExternalLink from 'components/ExternalLink'
 
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useState } from 'react'
+import { ipfsToHttps } from 'utils/ipfs'
 
 export function NftRewardCell({
   nftReward,
@@ -13,10 +14,10 @@ export function NftRewardCell({
   const [imageLoading, setImageLoading] = useState<boolean>(true)
 
   const nftImage = (
-    <div style={{ marginLeft: 15 }}>
+    <div style={{ marginLeft: 15, display: 'flex', alignItems: 'center' }}>
       {imageLoading ? <LoadingOutlined style={{ fontSize: '20px' }} /> : null}
       <Image
-        src={nftReward.imageUrl}
+        src={ipfsToHttps(nftReward.imageUrl)}
         alt={nftReward.name}
         height={'50px'}
         style={{
@@ -26,6 +27,7 @@ export function NftRewardCell({
         }}
         onLoad={() => setImageLoading(false)}
         onClick={e => e.stopPropagation()}
+        crossOrigin="anonymous"
       />
     </div>
   )

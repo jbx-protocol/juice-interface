@@ -5,8 +5,13 @@ const ARCX_API_KEY = process.env.NEXT_PUBLIC_ARCX_API_KEY
 let client: ArcxAnalyticsSdk
 
 export async function getArcxClient() {
+  // only load arcx in prod
+  if (process.env.NODE_ENV !== 'production') {
+    return
+  }
+
   if (!ARCX_API_KEY) {
-    console.info('💡 ARCX_API_KEY environment variable not set.')
+    console.warn('ARCX_API_KEY environment variable not set.')
     return
   }
 

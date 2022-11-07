@@ -2,6 +2,7 @@ import { CrownFilled, QuestionCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
+import useMobile from 'hooks/Mobile'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { useContext } from 'react'
 import { Allocation } from '../Allocation'
@@ -12,6 +13,7 @@ export const OwnerPayoutCard = ({
 }: {
   payoutsSelection: PayoutsSelection
 }) => {
+  const isMobile = useMobile()
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -35,7 +37,9 @@ export const OwnerPayoutCard = ({
             </Trans>
           }
         >
-          <QuestionCircleOutlined />
+          <QuestionCircleOutlined
+            style={{ fontSize: isMobile ? '18px' : undefined }}
+          />
         </Tooltip>
       }
     />

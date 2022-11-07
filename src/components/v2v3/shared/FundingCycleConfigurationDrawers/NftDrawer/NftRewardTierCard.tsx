@@ -7,6 +7,7 @@ import { Trans } from '@lingui/macro'
 import { Button, Col, Image, Row, Tooltip } from 'antd'
 import Paragraph from 'components/Paragraph'
 import { ThemeContext } from 'contexts/themeContext'
+import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/NftRewards'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useContext, useState } from 'react'
 
@@ -101,14 +102,15 @@ export default function NftRewardTierCard({
               </Trans>
             </div>
           )}
-          {rewardTier.maxSupply && (
+          {rewardTier.maxSupply &&
+          rewardTier.maxSupply !== DEFAULT_NFT_MAX_SUPPLY ? (
             <div style={{ fontSize: 13, marginTop: 15 }}>
               <Trans>
                 <strong>Max. supply:</strong>{' '}
                 <span>{rewardTier.maxSupply}</span>
               </Trans>
             </div>
-          )}
+          ) : null}
         </Col>
         <Col
           md={5}

@@ -2,9 +2,8 @@ import { FieldBinaryOutlined, PercentageOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
-import { useContext } from 'react'
+import { useContext, useEffect, useMemo } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
-import { RecallCard } from '../../RecallCard'
 import { Selection } from '../../Selection'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
@@ -14,12 +13,35 @@ import { useAvailablePayoutsSelections, usePayoutsForm } from './hooks'
 
 export const PayoutsPage: React.FC = () => {
   useSetCreateFurthestPageReached('payouts')
-  const { goToNextPage } = useContext(PageContext)
+  const { goToNextPage, lockPageProgress, unlockPageProgress } =
+    useContext(PageContext)
   const { form, initialValues } = usePayoutsForm()
   const availableSelections = useAvailablePayoutsSelections()
 
   const selection = useWatch('selection', form)
-  const isNextEnabled = !!selection
+  const payoutsList = useWatch('payoutsList', form)
+
+  const expensesExceedsFundingTarget = useMemo(() => {
+    const totalPercent =
+      payoutsList?.reduce((acc, allocation) => acc + allocation.percent, 0) ?? 0
+    return totalPercent > 100
+  }, [payoutsList])
+
+  // Lock the page of the input data is invalid.
+  useEffect(() => {
+    if (expensesExceedsFundingTarget || !selection) {
+      lockPageProgress?.()
+      return
+    }
+    unlockPageProgress?.()
+  }, [
+    expensesExceedsFundingTarget,
+    lockPageProgress,
+    selection,
+    unlockPageProgress,
+  ])
+
+  const isNextEnabled = !!selection && !expensesExceedsFundingTarget
 
   return (
     <Form
@@ -32,7 +54,6 @@ export const PayoutsPage: React.FC = () => {
       scrollToFirstError
     >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
-        <RecallCard show={['fundingCycles', 'fundingTarget']} />
         <h2>
           <Trans>How would you like to distribute payments?</Trans>
         </h2>
@@ -42,32 +63,30 @@ export const PayoutsPage: React.FC = () => {
             defocusOnSelect
             style={{ width: '100%' }}
           >
-            {availableSelections.has('percentages') && (
-              <Selection.Card
-                name="percentages"
-                title={t`Percentages`}
-                icon={<PercentageOutlined />}
-                description={
-                  <Trans>
-                    Distribute a percentage of all funds received between the
-                    entities nominated in the next step.
-                  </Trans>
-                }
-              />
-            )}
-            {availableSelections.has('amounts') && (
-              <Selection.Card
-                name="amounts"
-                title={t`Specific Amounts`}
-                icon={<FieldBinaryOutlined />}
-                description={
-                  <Trans>
-                    Distribute a specific amount of funds to each entity
-                    nominated in the next step.
-                  </Trans>
-                }
-              />
-            )}
+            <Selection.Card
+              name="percentages"
+              title={t`Percentages`}
+              icon={<PercentageOutlined />}
+              isDisabled={!availableSelections.has('percentages')}
+              description={
+                <Trans>
+                  Distribute a percentage of all funds received between the
+                  entities nominated in the next step.
+                </Trans>
+              }
+            />
+            <Selection.Card
+              name="amounts"
+              title={t`Specific Amounts`}
+              icon={<FieldBinaryOutlined />}
+              isDisabled={!availableSelections.has('amounts')}
+              description={
+                <Trans>
+                  Distribute a specific amount of funds to each entity nominated
+                  in the next step.
+                </Trans>
+              }
+            />
           </Selection>
         </Form.Item>
         {selection && (

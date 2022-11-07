@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
+import Callout from 'components/Callout'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useContext } from 'react'
 
@@ -20,25 +21,27 @@ export default function V2V3ReconfigureUpcomingMessage() {
 
   const secondsUntilNextFC = secondsUntil(fundingCycle.start.add(duration))
 
+  let message
+
   // Separating the full message out like this for translation purposes
   // (they need full sentences, can't chop and change)
   if (!duration || duration === 0) {
     // If duration is unset/0, changes take effect immediately to current FC
-    return (
+    message = (
       <Trans>
         Your project's current funding cycle has no duration. Changes you make
         below will take effect immediately.
       </Trans>
     )
   } else if (ballotStrategyLength === undefined) {
-    return (
+    message = (
       <Trans>
         Changes will take effect according to the project's custom ballot
         contract.
       </Trans>
     )
   } else if (ballotStrategyLength > secondsUntilNextFC) {
-    return (
+    message = (
       <Trans>
         Changes you make will take effect according to your{' '}
         <strong>{ballotStrategy.name}</strong> reconfiguration rule (the first
@@ -53,7 +56,7 @@ export default function V2V3ReconfigureUpcomingMessage() {
       </Trans>
     )
   } else {
-    return (
+    message = (
       <>
         <div>
           <Trans>
@@ -82,4 +85,6 @@ export default function V2V3ReconfigureUpcomingMessage() {
       </>
     )
   }
+
+  return !message ? null : <Callout>{message}</Callout>
 }

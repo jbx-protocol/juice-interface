@@ -3,18 +3,19 @@ import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useReconfigureV2V3FundingCycleTx } from 'hooks/v2v3/transactor/ReconfigureV2V3FundingCycleTx'
+import { useReconfigureV2V3FundingCycleWithNftsTx } from 'hooks/v2v3/transactor/ReconfigureV2V3FundingCycleWithNftsTx'
 import { revalidateProject } from 'lib/api/nextjs'
 import { CV2V3 } from 'models/cv'
 import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton'
 import { useCallback, useContext, useState } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { WEIGHT_UNCHANGED, WEIGHT_ZERO } from 'utils/v2v3/fundingCycle'
-import { EditingProjectData } from './editingProjectData'
+import { EditingFundingCycleConfig } from './editingFundingCycleConfig'
 
 /**
  * Return the value of the `weight` argument to send in the transaction.
  */
-const getWeightArgument = ({
+export const getWeightArgument = ({
   currentFundingCycleWeight,
   newFundingCycleWeight,
 }: {
@@ -37,11 +38,13 @@ const getWeightArgument = ({
 }
 
 export const useReconfigureFundingCycle = ({
-  editingProjectData,
+  editingFundingCycleConfig,
   memo,
+  launchedNewNfts,
 }: {
-  editingProjectData: EditingProjectData
+  editingFundingCycleConfig: EditingFundingCycleConfig
   memo: string
+  launchedNewNfts?: boolean
 }) => {
   const { fundingCycle } = useContext(V2V3ProjectContext)
   const { projectId, cv } = useContext(ProjectMetadataContext)
@@ -53,6 +56,8 @@ export const useReconfigureFundingCycle = ({
     useState<boolean>(false)
 
   const reconfigureV2V3FundingCycleTx = useReconfigureV2V3FundingCycleTx()
+  const reconfigureV2V3FundingCycleWithNftsTx =
+    useReconfigureV2V3FundingCycleWithNftsTx()
 
   const {
     editingPayoutGroupedSplits,
@@ -60,7 +65,8 @@ export const useReconfigureFundingCycle = ({
     editingFundingCycleMetadata,
     editingFundingCycleData,
     editingFundAccessConstraints,
-  } = editingProjectData
+    editingNftRewards,
+  } = editingFundingCycleConfig
 
   const reconfigureFundingCycle = useCallback(async () => {
     setReconfigureTxLoading(true)
@@ -89,37 +95,52 @@ export const useReconfigureFundingCycle = ({
       newFundingCycleWeight: editingFundingCycleData.weight,
     })
 
-    const txSuccessful = await reconfigureV2V3FundingCycleTx(
-      {
-        fundingCycleData: {
-          ...editingFundingCycleData,
-          weight,
-        },
-        fundingCycleMetadata,
-        fundAccessConstraints: editingFundAccessConstraints,
-        groupedSplits: [
-          editingPayoutGroupedSplits,
-          editingReservedTokensGroupedSplits,
-        ],
-        memo,
+    const reconfigureFundingCycleData = {
+      fundingCycleData: {
+        ...editingFundingCycleData,
+        weight,
       },
-      {
-        onDone() {
-          console.info(
-            'Reconfigure transaction executed. Awaiting confirmation...',
-          )
-        },
-        async onConfirmed() {
-          if (projectId) {
-            await revalidateProject({
-              cv: cv as CV2V3,
-              projectId: String(projectId),
-            })
-          }
-          setReconfigureTxLoading(false)
-        },
+      fundingCycleMetadata,
+      fundAccessConstraints: editingFundAccessConstraints,
+      groupedSplits: [
+        editingPayoutGroupedSplits,
+        editingReservedTokensGroupedSplits,
+      ],
+      memo,
+    }
+
+    const txOpts = {
+      onDone() {
+        console.info(
+          'Reconfigure transaction executed. Awaiting confirmation...',
+        )
       },
-    )
+      async onConfirmed() {
+        if (projectId) {
+          await revalidateProject({
+            cv: cv as CV2V3,
+            projectId: String(projectId),
+          })
+        }
+        setReconfigureTxLoading(false)
+      },
+    }
+
+    let txSuccessful: boolean
+    if (launchedNewNfts && editingNftRewards?.rewardTiers) {
+      txSuccessful = await reconfigureV2V3FundingCycleWithNftsTx(
+        {
+          ...reconfigureFundingCycleData,
+          ...editingNftRewards,
+        },
+        txOpts,
+      )
+    } else {
+      txSuccessful = await reconfigureV2V3FundingCycleTx(
+        reconfigureFundingCycleData,
+        txOpts,
+      )
+    }
 
     if (!txSuccessful) {
       setReconfigureTxLoading(false)
@@ -129,6 +150,9 @@ export const useReconfigureFundingCycle = ({
     editingFundingCycleMetadata,
     editingFundAccessConstraints,
     reconfigureV2V3FundingCycleTx,
+    reconfigureV2V3FundingCycleWithNftsTx,
+    launchedNewNfts,
+    editingNftRewards,
     editingPayoutGroupedSplits,
     editingReservedTokensGroupedSplits,
     nftRewardsCids,

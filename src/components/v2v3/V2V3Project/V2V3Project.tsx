@@ -76,6 +76,7 @@ export function V2V3Project() {
 
   const nftRewardsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
   const hasNftRewards = Boolean(nftRewardTiers?.length)
+
   const showNftSection = nftRewardsEnabled && hasNftRewards
 
   const colSizeMd = isPreviewMode ? 24 : 12

@@ -1,26 +1,11 @@
-import { Contract } from '@ethersproject/contracts'
-import { readProvider } from 'constants/readProvider'
-import { useWallet } from 'hooks/Wallet'
-import { useEffect, useState } from 'react'
-import { loadJBTiered721DelegateContract } from 'utils/v2v3/contractLoaders/JBTiered721Delegate'
+import { useJB721TieredDelegate } from 'hooks/contracts/JB721Delegate/useJB721TieredDelegate'
 
 import useV2ContractReader from './V2ContractReader'
 
 export function useNftCollectionSymbol(dataSourceAddress: string | undefined) {
-  const { signer } = useWallet()
-
-  const [delegateContract, setDelegateContract] = useState<Contract>()
-  useEffect(() => {
-    async function fetchDataSourceContract() {
-      if (!dataSourceAddress) return
-      const _delegateContract = await loadJBTiered721DelegateContract(
-        dataSourceAddress,
-        signer ?? readProvider,
-      )
-      setDelegateContract(_delegateContract)
-    }
-    fetchDataSourceContract()
-  }, [dataSourceAddress, signer])
+  const delegateContract = useJB721TieredDelegate({
+    address: dataSourceAddress,
+  })
   return useV2ContractReader<string>({
     contract: delegateContract,
     functionName: 'symbol',

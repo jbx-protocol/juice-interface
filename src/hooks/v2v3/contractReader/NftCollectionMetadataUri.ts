@@ -1,16 +1,15 @@
-import * as constants from '@ethersproject/constants'
-import { V2V3ContractName } from 'models/v2v3/contracts'
-
+import { useStoreOfJB721TieredDelegate } from 'hooks/contracts/JB721Delegate/useStoreofJB721TieredDelegate'
 import useV2ContractReader from './V2ContractReader'
 
 export function useNftCollectionMetadataUri(
   dataSourceAddress: string | undefined,
 ) {
-  const hasDataSource =
-    dataSourceAddress && dataSourceAddress !== constants.AddressZero
+  const JBTiered721DelegateStore = useStoreOfJB721TieredDelegate({
+    JB721TieredDelegateAddress: dataSourceAddress,
+  })
   return useV2ContractReader<string>({
-    contract: V2V3ContractName.JBTiered721DelegateStore,
+    contract: JBTiered721DelegateStore,
     functionName: 'contractUriOf',
-    args: hasDataSource ? [dataSourceAddress] : null,
+    args: [dataSourceAddress],
   })
 }

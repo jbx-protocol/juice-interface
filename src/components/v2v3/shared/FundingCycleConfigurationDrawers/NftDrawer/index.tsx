@@ -6,7 +6,6 @@ import { MinimalCollapse } from 'components/MinimalCollapse'
 import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
 import TooltipIcon from 'components/TooltipIcon'
 import NftRewardTierModal from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal'
-import { readProvider } from 'constants/readProvider'
 import { shadowCard } from 'constants/styles/shadowCard'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -14,7 +13,6 @@ import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useNftRewardsAdjustTiersTx } from 'hooks/v2v3/transactor/NftRewardsAdjustTiersTx'
-import { useWallet } from 'hooks/Wallet'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
@@ -28,7 +26,6 @@ import {
   uploadNftCollectionMetadataToIPFS,
   uploadNftRewardsToIPFS,
 } from 'utils/nftRewards'
-import { loadJBTiered721DelegateContract } from 'utils/v2v3/contractLoaders/JBTiered721Delegate'
 import { reloadWindow } from 'utils/windowUtils'
 import FundingCycleDrawer from '../FundingCycleDrawer'
 import { useFundingCycleDrawer } from '../useFundingCycleDrawer'
@@ -72,7 +69,6 @@ export default function NftDrawer({
   const [marketplaceForm] = useForm<MarketplaceFormFields>()
   const [postPayModalForm] = useForm<NftPostPayModalFormFields>()
 
-  const { signer } = useWallet()
   const dispatch = useAppDispatch()
   const {
     nftRewards,
@@ -92,7 +88,9 @@ export default function NftDrawer({
     setEditedRewardTierIds([...editedRewardTierIds, tierId])
   }
 
-  const nftRewardsAdjustTiersTx = useNftRewardsAdjustTiersTx()
+  const nftRewardsAdjustTiersTx = useNftRewardsAdjustTiersTx({
+    dataSourceAddress: fundingCycleMetadata?.dataSource,
+  })
 
   const {
     handleDrawerCloseClick,
@@ -181,17 +179,13 @@ export default function NftDrawer({
 
     // upload new rewardTiers and get their CIDs
     const rewardTiersCIDs = await uploadNftRewardsToIPFS(newRewardTiers)
-    const dataSourceContract = await loadJBTiered721DelegateContract(
-      fundingCycleMetadata.dataSource,
-      signer ?? readProvider,
-    )
+
     const newTiers = buildJB721TierParams({
       cids: rewardTiersCIDs,
       rewardTiers: newRewardTiers,
     })
     await nftRewardsAdjustTiersTx(
       {
-        dataSourceContract,
         newTiers,
         tierIdsChanged: editedRewardTierIds,
       },
@@ -210,7 +204,6 @@ export default function NftDrawer({
     fundingCycleMetadata,
     nftRewardsAdjustTiersTx,
     rewardTiers,
-    signer,
   ])
 
   const onNftFormSaved = useCallback(async () => {

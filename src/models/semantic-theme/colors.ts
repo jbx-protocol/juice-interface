@@ -15,6 +15,7 @@ namespace SemanticColor {
   export type Brand = { brand: Primary & Secondary }
   export type Status = Success & Warn & Failure
   export type Disabled = { disabled: Property.Color }
+  export type Deselected = { deselected: Property.Color }
   export type Placeholder = { placeholder: Property.Color }
   export type Over = { over: ActionHighlight & Brand & Status & Disabled }
 }
@@ -47,6 +48,8 @@ export interface SemanticColors {
     SemanticColor.Brand &
     SemanticColor.ActionHighlight &
     SemanticColor.Disabled &
+    SemanticColor.Deselected &
+    SemanticColor.Over &
     Record<'l0' | 'l1' | 'l2' | 'l3', Property.Color>
   boxShadow: SemanticColor.Primary
 }

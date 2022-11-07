@@ -64,10 +64,12 @@ export default function VeNftRewardTierModal({
   return (
     <Modal
       open={open}
-      okText={mode === 'Edit' ? t`Save NFT reward` : t`Add NFT reward`}
+      okText={
+        mode === 'Edit' ? t`Save NFT reward tier` : t`Add NFT reward tier`
+      }
       onOk={onFormSaved}
       onCancel={onClose}
-      title={mode === 'Edit' ? t`Edit NFT reward` : t`Add NFT reward`}
+      title={mode === 'Edit' ? t`Edit NFT reward tier` : t`Add NFT reward tier`}
     >
       <Form layout="vertical" form={nftForm}>
         <TokensStakedMinInput form={nftForm} />

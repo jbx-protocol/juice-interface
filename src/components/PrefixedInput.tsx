@@ -1,11 +1,11 @@
 import { Input } from 'antd'
 
-export default function PrefixInput({
-  prefix = 'https://',
+export default function PrefixedInput({
+  prefix,
   value,
   onChange,
 }: {
-  prefix?: string
+  prefix: string
   value?: string
   onChange?: (val: string) => void
 }) {

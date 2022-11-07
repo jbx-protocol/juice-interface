@@ -8,7 +8,7 @@ import { Form, Input, Modal, Space } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { JuiceSwitch } from 'components/JuiceSwitch'
-import PrefixInput from 'components/PrefixInput'
+import PrefixedInput from 'components/PrefixedInput'
 import { UploadNoStyle } from 'components/UploadNoStyle'
 import { ThemeContext } from 'contexts/themeContext'
 import { pinFileToIpfs } from 'lib/api/ipfs'
@@ -104,8 +104,10 @@ export const AddEditRewardModal = ({
   const isEditing = !!editingData
   return (
     <Modal
-      title={<h2>{isEditing ? t`Edit NFT Reward` : t`Add NFT Reward`}</h2>}
-      okText={isEditing ? t`Save reward` : t`Add reward`}
+      title={
+        <h2>{isEditing ? t`Edit NFT reward tier` : t`Add NFT reward tier`}</h2>
+      }
+      okText={isEditing ? t`Save NFT` : t`Add NFT`}
       open={open}
       onOk={onModalOk}
       onCancel={onModalCancel}
@@ -209,7 +211,7 @@ export const AddEditRewardModal = ({
             }),
           ]}
         >
-          <PrefixInput />
+          <PrefixedInput prefix="https://" />
         </Form.Item>
       </Form>
     </Modal>

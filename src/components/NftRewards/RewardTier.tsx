@@ -1,20 +1,19 @@
+import { CheckOutlined, LoadingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Skeleton, Tooltip } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { CSSProperties, MouseEventHandler, useContext, useState } from 'react'
-
-import { CheckOutlined, LoadingOutlined } from '@ant-design/icons'
-
+import { ipfsToHttps } from 'utils/ipfs'
 import { NftPreview } from './NftPreview'
 
 const rewardTierContainerStyle: CSSProperties = {
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'flex-start',
   cursor: 'pointer',
   transition: 'box-shadow 100ms linear',
   height: '100%',
+  width: '100%',
 }
 
 const loadingImageContainerStyle: CSSProperties = {
@@ -70,6 +69,10 @@ export function RewardTier({
   } = useContext(ThemeContext)
 
   const [previewVisible, setPreviewVisible] = useState<boolean>(false)
+
+  const imageUrl = rewardTier?.imageUrl
+    ? ipfsToHttps(rewardTier.imageUrl)
+    : rewardTier?.imageUrl
 
   const backgroundColor = isSelected
     ? colors.background.l0
@@ -160,11 +163,12 @@ export function RewardTier({
           ) : (
             <img
               alt={rewardTier?.name}
-              src={rewardTier?.imageUrl}
+              src={imageUrl}
               style={{
                 ...imageStyle,
                 filter: isSelected ? 'unset' : 'brightness(50%)',
               }}
+              crossOrigin="anonymous"
             />
           )}
           {isSelected ? <RewardIcon /> : null}
@@ -216,6 +220,7 @@ export function RewardTier({
           tierRank={tierRank}
           rewardTier={rewardTier}
           onClose={() => setPreviewVisible(false)}
+          imageUrl={imageUrl}
         />
       ) : null}
     </>

@@ -56,11 +56,13 @@ export function NftPreview({
   open,
   rewardTier,
   onClose,
+  imageUrl,
 }: {
   open: boolean
   tierRank: number
   rewardTier: NftRewardTier
   onClose: VoidFunction
+  imageUrl: string | undefined
 }) {
   const { projectMetadata } = useContext(ProjectMetadataContext)
 
@@ -99,12 +101,13 @@ export function NftPreview({
         >
           <img
             alt={rewardTier.name}
-            src={rewardTier.imageUrl}
+            src={imageUrl}
             style={{
               maxWidth: containerWidth,
               maxHeight: !isMobile ? '60vh' : '50vh',
             }}
             onClick={e => e.stopPropagation()}
+            crossOrigin="anonymous"
           />
         </div>
         <h3 style={{ ...headerStyle, marginTop: '20px' }}>{rewardTier.name}</h3>

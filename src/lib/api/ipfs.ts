@@ -1,10 +1,12 @@
 import { PinataMetadata, PinataPinResponse } from '@pinata/sdk'
 import axios from 'axios'
 import { IPFS_TAGS } from 'constants/ipfs'
+import { ipfsGet } from 'lib/infura/ipfs'
 import { consolidateMetadata, ProjectMetadataV5 } from 'models/project-metadata'
 import {
+  ipfsGatewayUrl,
   metadataNameForHandle,
-  publicIpfsUrl,
+  openIpfsUrl,
   restrictedIpfsUrl,
 } from 'utils/ipfs'
 
@@ -20,13 +22,19 @@ export const editMetadataForCid = async (
   return pinRes.data
 }
 
-export const ipfsGetWithFallback = async (hash: string) => {
+// TODO after the move to Infura for IPFS, we can probably look at removing this.
+export const ipfsGetWithFallback = async (
+  hash: string,
+  { fallbackHostname }: { fallbackHostname?: string } = {},
+) => {
   try {
     const response = await axios.get(restrictedIpfsUrl(hash))
     return response
   } catch (error) {
-    console.info(`ipfs::falling back to public gateway for ${hash}`)
-    const response = await axios.get(publicIpfsUrl(hash))
+    console.info(`ipfs::falling back to open gateway for ${hash}`)
+    const response = fallbackHostname
+      ? await axios.get(ipfsGatewayUrl(hash, fallbackHostname))
+      : await ipfsGet(openIpfsUrl(hash))
     return response
   }
 }
@@ -68,7 +76,7 @@ export const uploadProjectMetadata = async (
       pinataMetadata: {
         keyvalues: {
           tag: IPFS_TAGS.METADATA,
-        } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+        },
         name: handle
           ? metadataNameForHandle(handle)
           : 'juicebox-project-metadata.json',

@@ -2,7 +2,7 @@ import { t } from '@lingui/macro'
 import { Col, Form, Input, Row, Space } from 'antd'
 import { useLockPageRulesWrapper } from 'components/Create/hooks/useLockPageRulesWrapper'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
-import PrefixInput from 'components/PrefixInput'
+import PrefixedInput from 'components/PrefixedInput'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { CreateCollapse } from '../../CreateCollapse'
@@ -49,24 +49,28 @@ export const ProjectDetailsPage: React.FC = () => {
           <CreateCollapse.Panel
             key={0}
             header={<OptionalHeader header={t`Project Links`} />}
+            hideDivider
           >
             {/* Adding paddingBottom is a bit of a hack, but horizontal gutters not working */}
-            <Row gutter={32} style={{ paddingBottom: '2rem' }}>
+            <Row
+              gutter={32}
+              style={{ paddingBottom: '2rem', paddingTop: '1.25rem' }}
+            >
               <Col span={12}>
                 <Form.Item name="projectWebsite" label={t`Website`}>
-                  <PrefixInput />
+                  <PrefixedInput prefix="https://" />
                 </Form.Item>
               </Col>
               <Col span={12}>
                 <Form.Item name="projectTwitter" label={t`Twitter`}>
-                  <PrefixInput />
+                  <PrefixedInput prefix="https://" />
                 </Form.Item>
               </Col>
             </Row>
-            <Row gutter={32}>
+            <Row gutter={32} style={{ marginBottom: '1.5rem' }}>
               <Col span={12}>
                 <Form.Item name="projectDiscord" label={t`Discord`}>
-                  <PrefixInput />
+                  <PrefixedInput prefix="https://" />
                 </Form.Item>
               </Col>
             </Row>
@@ -76,7 +80,10 @@ export const ProjectDetailsPage: React.FC = () => {
             header={<OptionalHeader header={t`Customize Pay Button`} />}
             hideDivider
           >
-            <Row gutter={32} style={{ paddingBottom: '2rem' }}>
+            <Row
+              gutter={32}
+              style={{ paddingBottom: '2rem', paddingTop: '1.25rem' }}
+            >
               <Col span={12}>
                 <Form.Item name="payButtonText" label={t`Pay Button Text`}>
                   <Input />

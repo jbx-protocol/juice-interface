@@ -37,6 +37,13 @@ export const MobileStep = ({
     return 'pointer'
   }, [selected, step.disabled])
 
+  const backgroundColor = useMemo(() => {
+    if (!selected) return undefined
+    return isDarkMode
+      ? styleColors.darkColors.darkGray500
+      : styleColors.lightColors.warmGray200
+  }, [isDarkMode, selected])
+
   const handleOnClick = useCallback(() => {
     if (step.disabled) return
     onClick?.(index)
@@ -47,9 +54,7 @@ export const MobileStep = ({
       className={className}
       style={{
         lineHeight: '20px',
-        backgroundColor: selected
-          ? styleColors.lightColors.warmGray200
-          : undefined,
+        backgroundColor,
         color,
         fontSize: '1rem',
         fontWeight: selected ? 500 : 400,

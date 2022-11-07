@@ -33,7 +33,7 @@ export default function ProjectsFilterAndSort({
   showArchived: boolean
   setShowArchived: CheckboxOnChange
   orderBy: OrderByOption
-  setOrderBy: any // eslint-disable-line @typescript-eslint/no-explicit-any
+  setOrderBy: (value: OrderByOption) => void
 }) {
   const {
     theme: { colors },

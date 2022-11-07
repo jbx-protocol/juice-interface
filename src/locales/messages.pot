@@ -113,13 +113,13 @@ msgstr ""
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
 msgstr ""
 
-msgid "<0>A bonding curve rewards people who wait longer to redeem your tokens for overflow.</0><1>For example, with a bonding curve of 70%, redeeming 10% of the token supply at any given time will claim around 7% of the total overflow.</1><2>The rest is left to share between token holders.</2>,<3>For more info, check out this <4>short video</4> on bonding curves.</3>"
-msgstr ""
-
 msgid "<0>A mechanism like Juicebox where upfront financial commitments should be honored over time is only guaranteed within an ecosystem like Ethereum.</0><1>Ethereum provides a public environment where internet apps like Juicebox can run in a permission-less, trustless, and unstoppable fashion.</1><2>This means that anyone can see the code that they're using, anyone can use the code without asking for permission, and no one can mess with the code or take it down.</2><3>People using Juicebox are interacting with each other through public infrastructure—not a private, profit-seeking corporate service that brokers the exchange.</3><4>Juicebox was built to allow people and projects to get paid for creating public art and infrastructure, as much as or more than they would working towards corporate ends. No more shady business.</4>"
 msgstr ""
 
 msgid "<0>A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project.</0><1>Holding these tokens entitles a project to a portion of its own overflow.</1>"
+msgstr ""
+
+msgid "<0>A redemption rate rewards people who wait longer to redeem your tokens for overflow.</0><1>For example, with a redemption rate of 70%, redeeming 10% of the token supply at any given time will claim around 7% of the total overflow.</1><2>The rest is left to share between token holders.</2><3>For more info, check out this <4>short video</4> on redemption rate.</3>"
 msgstr ""
 
 msgid "<0>Contribution floor:</0> {0} ETH"
@@ -195,9 +195,6 @@ msgid "<0>That's the plan, but the core Juicebox contracts will first be deploye
 msgstr ""
 
 msgid "<0>The Juicebox V2 smart contracts have had multiple security audits. <1>Read the audit reports.</1></0><2>While Juicebox has been audited, it is still experimental software, and there are risks. Please use Juicebox with caution.</2><3><4>Learn more</4> about the risks.</3>"
-msgstr ""
-
-msgid "<0>The Rinkeby testnet is deprecated.</0> Use the Goerli testnet instead: <1>https://goerli.juicebox.money</1>"
 msgstr ""
 
 msgid "<0>The redemption rate determines the amount of overflow each token can be redeemed for at any given time.</0><1>A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed.</1><2>On a lower redemption rate, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than other holders.</2>"
@@ -284,16 +281,13 @@ msgstr ""
 msgid "Activity"
 msgstr ""
 
-msgid "Add"
-msgstr ""
-
 msgid "Add Lock Duration Option"
 msgstr ""
 
-msgid "Add NFT Reward"
+msgid "Add NFT"
 msgstr ""
 
-msgid "Add NFT reward"
+msgid "Add NFT reward tier"
 msgstr ""
 
 msgid "Add a payout"
@@ -320,16 +314,13 @@ msgstr ""
 msgid "Add new payout"
 msgstr ""
 
-msgid "Add new payout address"
+msgid "Add new {allocationName}"
 msgstr ""
 
 msgid "Add payout"
 msgstr ""
 
 msgid "Add payout recipient"
-msgstr ""
-
-msgid "Add reward"
 msgstr ""
 
 msgid "Add reward tier"
@@ -357,6 +348,12 @@ msgid "Add token allocation"
 msgstr ""
 
 msgid "Add wallet addresses or Juicebox projects to receive payouts."
+msgstr ""
+
+msgid "Add {0}"
+msgstr ""
+
+msgid "Add {allocationName}"
 msgstr ""
 
 msgid "Added to balance"
@@ -422,6 +419,9 @@ msgstr ""
 msgid "Allow terminal configuration"
 msgstr ""
 
+msgid "Allow the <0>Juicebox NFT deployer contract</0> to reconfigure this project's funding cycle."
+msgstr ""
+
 msgid "Allow token minting"
 msgstr ""
 
@@ -464,7 +464,7 @@ msgstr ""
 msgid "Amounts"
 msgstr ""
 
-msgid "An Infinite Funding Target means contributors cannot redeem their tokens for a portion of the treasury funds. Payout splits will can only be nominated in percentages."
+msgid "An Infinite Funding Target means contributors cannot redeem their tokens for a portion of the treasury funds. Payouts can only be nominated in percentages."
 msgstr ""
 
 msgid "Any changes you make will take effect in <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
@@ -779,7 +779,7 @@ msgstr ""
 msgid "Contract address: {0}"
 msgstr ""
 
-msgid "Contribute to unlock an NFT reward."
+msgid "Contribute funds to receive NFTs."
 msgstr ""
 
 msgid "Contribution threshold"
@@ -1175,10 +1175,7 @@ msgstr ""
 msgid "Each project has its own <0>tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr ""
 
-msgid "Edit NFT Reward"
-msgstr ""
-
-msgid "Edit NFT reward"
+msgid "Edit NFT reward tier"
 msgstr ""
 
 msgid "Edit allocation"
@@ -1206,6 +1203,9 @@ msgid "Edit token allocation"
 msgstr ""
 
 msgid "Edit tracked assets"
+msgstr ""
+
+msgid "Edit {allocationName}"
 msgstr ""
 
 msgid "Enable unclaimed token spending"
@@ -1341,6 +1341,9 @@ msgid "Funding Cycles"
 msgstr ""
 
 msgid "Funding Target"
+msgstr ""
+
+msgid "Funding Target Exceeded"
 msgstr ""
 
 msgid "Funding cycle"
@@ -1820,12 +1823,6 @@ msgstr ""
 msgid "My projects"
 msgstr ""
 
-msgid "NFT Rewards"
-msgstr ""
-
-msgid "NFT Rewards <0/>"
-msgstr ""
-
 msgid "NFT adjust tiers"
 msgstr ""
 
@@ -1835,10 +1832,13 @@ msgstr ""
 msgid "NFT projects"
 msgstr ""
 
-msgid "NFT reward"
+msgid "NFT rewards"
 msgstr ""
 
-msgid "NFT rewards"
+msgid "NFTs"
+msgstr ""
+
+msgid "NFTs for you"
 msgstr ""
 
 msgid "NO LIMIT"
@@ -2366,6 +2366,9 @@ msgstr ""
 msgid "Reconfigure {projectTitle}"
 msgstr ""
 
+msgid "Reconfigure {projectTitle} with new NFTs"
+msgstr ""
+
 msgid "Redeem"
 msgstr ""
 
@@ -2480,9 +2483,6 @@ msgstr ""
 msgid "Reward contributors with NFTs when they meet your funding criteria."
 msgstr ""
 
-msgid "Rewards"
-msgstr ""
-
 msgid "Rules"
 msgstr ""
 
@@ -2501,10 +2501,13 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-msgid "Save NFT reward"
+msgid "Save NFT"
 msgstr ""
 
-msgid "Save NFT rewards"
+msgid "Save NFT reward tier"
+msgstr ""
+
+msgid "Save NFTs"
 msgstr ""
 
 msgid "Save Option"
@@ -2529,9 +2532,6 @@ msgid "Save project details"
 msgstr ""
 
 msgid "Save reconfiguration"
-msgstr ""
-
-msgid "Save reward"
 msgstr ""
 
 msgid "Save rules"
@@ -2574,6 +2574,9 @@ msgid "Set ENS name"
 msgstr ""
 
 msgid "Set ENS text record for {ensName}"
+msgstr ""
+
+msgid "Set NFT operator permissions"
 msgstr ""
 
 msgid "Set URI for {projectTitle}"
@@ -2622,6 +2625,9 @@ msgid "Set handle @{handle}"
 msgstr ""
 
 msgid "Set operator for {projectTitle}"
+msgstr ""
+
+msgid "Set operator permissions for projectId={projectId} to allow NFTs"
 msgstr ""
 
 msgid "Set payouts of {projectTitle}"
@@ -2684,7 +2690,7 @@ msgstr ""
 msgid "Show your contributors a message after they receive their NFT reward."
 msgstr ""
 
-msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."
+msgid "Since you have not set a funding duration, future changes to these settings will be applied immediately."
 msgstr ""
 
 msgid "Skipped"
@@ -2900,10 +2906,16 @@ msgstr ""
 msgid "The ratio of tokens rewarded per payment amount will decrease by this percentage with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier than later."
 msgstr ""
 
+msgid "The redemption rate cannot be set when the funding target is infinite."
+msgstr ""
+
 msgid "The redemption rate determines the amount of overflow each token can be redeemed for."
 msgstr ""
 
 msgid "The redemption rate determines the amount of overflow each token can be redeemed for. <0>Learn more.</0>"
+msgstr ""
+
+msgid "The sum of your expenses is currently different to your funding target. Do you want to sync your funding target to match expenses?<0/><1/>If not, please edit one or more of your payouts."
 msgstr ""
 
 msgid "The symbol of the collection that will be shown on NFT marketplaces (e.g. OpenSea)."
@@ -3215,7 +3227,7 @@ msgstr ""
 msgid "Unlock veNFT"
 msgstr ""
 
-msgid "Unlockable NFT rewards"
+msgid "Unlockable NFTs"
 msgstr ""
 
 msgid "Unlocking this staking position will burn your NFT and return ${tokenSymbolDisplayText}."
@@ -3338,10 +3350,10 @@ msgstr ""
 msgid "What is the V1 Token Payment Terminal?"
 msgstr ""
 
-msgid "What's a bonding curve?"
+msgid "What's a discount rate?"
 msgstr ""
 
-msgid "What's a discount rate?"
+msgid "What's a redemption rate?"
 msgstr ""
 
 msgid "What's going on under the hood?"
@@ -3473,7 +3485,7 @@ msgstr ""
 msgid "You must review and accept the risks."
 msgstr ""
 
-msgid "You receive this NFT for contributing over <0>{0} ETH</0>."
+msgid "You receive these NFTs for contributing <0>{0} ETH or more</0>."
 msgstr ""
 
 msgid "You will receive <0/>"
@@ -3584,6 +3596,9 @@ msgstr ""
 msgid "after {0}% JBX fee"
 msgstr ""
 
+msgid "allocation"
+msgstr ""
+
 msgid "called by <0/>"
 msgstr ""
 
@@ -3620,6 +3635,9 @@ msgstr ""
 msgid "or <0><1>sell {tokenSymbol} on exchange.</1></0>"
 msgstr ""
 
+msgid "payout"
+msgstr ""
+
 msgid "project"
 msgstr ""
 
@@ -3633,6 +3651,9 @@ msgid "seconds"
 msgstr ""
 
 msgid "token"
+msgstr ""
+
+msgid "token allocation"
 msgstr ""
 
 msgid "tokens"

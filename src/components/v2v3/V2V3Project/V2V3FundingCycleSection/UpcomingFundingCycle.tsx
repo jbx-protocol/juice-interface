@@ -22,7 +22,7 @@ export function UpcomingFundingCycle() {
   const { projectId } = useContext(ProjectMetadataContext)
 
   const { data: upcomingFundingCycleResponse, loading } =
-    useProjectUpcomingFundingCycle()
+    useProjectUpcomingFundingCycle({ projectId })
   const [upcomingFundingCycle, upcomingFundingCycleMetadata, ballotState] =
     upcomingFundingCycleResponse ?? []
 

@@ -231,6 +231,12 @@ export function ProjectHandleSettingsPage() {
         </Trans>
       </p>
 
+      {!projectEnsName && (
+        <Callout style={{ marginBottom: '1rem' }}>
+          <Trans>Choose an ENS name before setting the text record</Trans>
+        </Callout>
+      )}
+
       {projectId && textRecordValue.data === projectId ? (
         <Button type="primary" disabled>
           <CheckCircleFilled /> <Trans>Text record is set</Trans>
@@ -248,12 +254,6 @@ export function ProjectHandleSettingsPage() {
             </Trans>
           </span>
         </Button>
-      )}
-
-      {!projectEnsName && (
-        <Callout>
-          <Trans>Choose an ENS name before setting the text record</Trans>
-        </Callout>
       )}
     </>
   )

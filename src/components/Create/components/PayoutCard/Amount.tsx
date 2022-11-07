@@ -19,6 +19,8 @@ export const Amount = ({
     theme: { colors },
   } = useContext(ThemeContext)
 
+  const isOwner = allocationId === undefined
+
   const { allocations, totalAllocationAmount, allocationCurrency } =
     Allocation.useAllocationInstance()
 
@@ -27,16 +29,27 @@ export const Amount = ({
     allocations,
     totalAllocationAmount: totalAllocationAmount,
   })
-  const formattedAmount =
-    amount !== undefined
-      ? formatCurrencyAmount({
-          amount,
-          currency: allocationCurrency,
-        })
-      : undefined
+  const formattedAmount = useMemo(() => {
+    if (amount === undefined) return undefined
+    let _amount = amount
+    if (isOwner && amount <= 0) {
+      _amount = 0
+    }
+    return formatCurrencyAmount({
+      amount: _amount,
+      currency: allocationCurrency,
+    })
+  }, [allocationCurrency, amount, isOwner])
+
+  const formattedPercent = useMemo(() => {
+    let _percent = percent
+    if (isOwner && percent <= 0) {
+      _percent = 0
+    }
+    return formatPercent(_percent)
+  }, [isOwner, percent])
 
   const [primaryText, secondaryText] = useMemo(() => {
-    const formattedPercent = formatPercent(percent)
     if (payoutsSelection === 'amounts') {
       return [formattedAmount, formattedPercent]
     }
@@ -45,7 +58,7 @@ export const Amount = ({
     }
 
     throw new Error('Unexpected end of function')
-  }, [formattedAmount, payoutsSelection, percent])
+  }, [formattedAmount, formattedPercent, payoutsSelection])
 
   return (
     <Space size="small">

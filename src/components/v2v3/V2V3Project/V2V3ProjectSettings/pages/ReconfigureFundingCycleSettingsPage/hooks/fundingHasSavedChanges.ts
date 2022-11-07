@@ -8,14 +8,14 @@ import {
   serializeV2V3FundingCycleMetadata,
 } from 'utils/v2v3/serializers'
 
-import { EditingProjectData } from './editingProjectData'
+import { EditingFundingCycleConfig } from './editingFundingCycleConfig'
 import { InitialEditingData } from './initialEditingData'
 
 export const useFundingHasSavedChanges = ({
-  editingProjectData,
+  editingFundingCycleConfig,
   initialEditingData,
 }: {
-  editingProjectData: EditingProjectData
+  editingFundingCycleConfig: EditingFundingCycleConfig
   initialEditingData: InitialEditingData | undefined
 }) => {
   const {
@@ -25,7 +25,7 @@ export const useFundingHasSavedChanges = ({
     editingFundingCycleData,
     editingFundAccessConstraints,
     editingNftRewards,
-  } = editingProjectData
+  } = editingFundingCycleConfig
 
   const fundingHasSavedChanges = useMemo(() => {
     if (!initialEditingData) {
@@ -172,7 +172,6 @@ export const useFundingHasSavedChanges = ({
   ])
 
   const nftDrawerHasSavedChanges = useMemo(() => {
-    const editingNftRewards = editingProjectData.editingNftRewards
     const initialNftRewards = initialEditingData?.nftRewards
     if (!editingNftRewards) return false
     if (!initialNftRewards && editingNftRewards) return true
@@ -187,7 +186,7 @@ export const useFundingHasSavedChanges = ({
       ),
     )
     return rewardTiersChanged
-  }, [editingProjectData, initialEditingData])
+  }, [initialEditingData, editingNftRewards])
 
   return {
     fundingHasSavedChanges,

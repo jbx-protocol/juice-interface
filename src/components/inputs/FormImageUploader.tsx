@@ -1,10 +1,11 @@
 import { CloseCircleFilled, FileImageOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
+import { PinataMetadata } from '@pinata/sdk'
 import { Button, Col, message, Row, Space, Upload } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { pinFileToIpfs } from 'lib/api/ipfs'
 import { useContext, useState } from 'react'
-import { cidFromUrl, ipfsUrl, restrictedIpfsUrl } from 'utils/ipfs'
+import { cidFromIpfsUri, ipfsUrl, restrictedIpfsUrl } from 'utils/ipfs'
 
 import ExternalLink from '../ExternalLink'
 
@@ -24,7 +25,7 @@ export const FormImageUploader = ({
 }: {
   value?: string // IPFS link: `ipfs://${cid}`
   onChange?: (value?: string) => void
-  metadata?: Record<string | number, any> // eslint-disable-line @typescript-eslint/no-explicit-any
+  metadata?: PinataMetadata
   maxSizeKBs?: number
   text?: string
 }) => {
@@ -32,7 +33,7 @@ export const FormImageUploader = ({
 
   const [loadingUpload, setLoadingUpload] = useState<boolean>(false)
   const [imageCid, setImageCid] = useState<string | undefined>(
-    value ? cidFromUrl(value) : undefined,
+    value ? cidFromIpfsUri(value) : undefined,
   )
 
   const setValue = (cid?: string) => {
@@ -64,6 +65,7 @@ export const FormImageUploader = ({
               }}
               src={imageUrl}
               alt="Uploaded user content"
+              crossOrigin="anonymous"
             />
           ) : null}
 

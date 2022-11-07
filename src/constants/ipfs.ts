@@ -1,27 +1,15 @@
-import { NetworkName } from 'models/network-name'
-import { readNetwork } from './networks'
-
-const GOERLI_IPFS_OPEN_GATEWAY = 'jbx-goerli.mypinata.cloud' // restricted to goerli.juicebox.money.
-const MAINNET_IPFS_OPEN_GATEWAY = 'jbx-mainnet.mypinata.cloud' // restricted to juicebox.money.
-const PINATA_PUBLIC_GATEWAY = 'gateway.pinata.cloud' // heavily rate-limited, shouldn't be used in prod.
-
-const GATEWAYS: {
-  [key in NetworkName]?: string
-} = {
-  [NetworkName.mainnet]: MAINNET_IPFS_OPEN_GATEWAY,
-  [NetworkName.goerli]: GOERLI_IPFS_OPEN_GATEWAY,
-}
-
 // This is an open gateway. It exposes any ipfs content, not just the content we pin.
 // Use when fetching public content (like images).
 export const OPEN_IPFS_GATEWAY_HOSTNAME =
-  (process.env.NODE_ENV === 'production' && GATEWAYS[readNetwork.name]) ||
-  PINATA_PUBLIC_GATEWAY
+  process.env.NEXT_PUBLIC_INFURA_IPFS_HOSTNAME
 
 // This is a restricted gateway. It only exposes content we pin against it.
 // Use when pinning content (like project metadata), and for retreiving content we've pinned.
-export const RESTRICTED_IPFS_GATEWAY_HOSTNAME = process.env
-  .NEXT_PUBLIC_PINATA_GATEWAY_HOSTNAME as string
+export const RESTRICTED_IPFS_GATEWAY_HOSTNAME =
+  process.env.NEXT_PUBLIC_PINATA_GATEWAY_HOSTNAME
+
+// Heavily rate-limited, don't use unless you have to.
+export const PUBLIC_PINATA_GATEWAY_HOSTNAME = 'gateway.pinata.cloud'
 
 export const IPFS_TAGS = {
   METADATA:

@@ -14,7 +14,7 @@ import {
 import { isValidMustStartAtOrAfter } from 'utils/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../ProjectTitle'
 
-const DEFAULT_MUST_START_AT_OR_AFTER = '1'
+export const DEFAULT_MUST_START_AT_OR_AFTER = '1'
 const DEFAULT_MEMO = '1'
 
 export type ReconfigureTxArgs = {

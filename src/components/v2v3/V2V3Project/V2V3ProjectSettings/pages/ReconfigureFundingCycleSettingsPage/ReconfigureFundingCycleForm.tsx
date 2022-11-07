@@ -187,7 +187,7 @@ export function V2V3ReconfigureFundingCycleForm() {
           fundAccessConstraints={
             editingFundingCycleConfig.editingFundAccessConstraints
           }
-          nftRewards={editingProjectData.editingNftRewards.rewardTiers}
+          nftRewards={editingFundingCycleConfig.editingNftRewards?.rewardTiers}
         />
         {nftDrawerHasSavedChanges && !nftContractHasPermission ? (
           <Space size="middle" direction="vertical">

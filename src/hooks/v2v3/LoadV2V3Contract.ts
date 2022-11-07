@@ -1,7 +1,7 @@
 import { readNetwork } from 'constants/networks'
 import { useLoadContractFromAddress } from 'hooks/LoadContractFromAddress'
-import { CV2V3 } from 'models/cv'
 import { V2V3ContractName } from 'models/v2v3/contracts'
+import { CV2V3 } from 'models/v2v3/cv'
 import { useEffect, useState } from 'react'
 import { loadJuiceboxV2OrV3Contract } from 'utils/v2v3/contractLoaders/JuiceboxV2OrV3'
 import { ContractJson } from 'utils/v2v3/loadV2V3Contract'

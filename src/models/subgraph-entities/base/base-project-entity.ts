@@ -1,10 +1,10 @@
-import { CV } from 'models/cv'
+import { PV } from 'models/pv'
 
 import { parseProjectJson, Project, ProjectJson } from '../vX/project'
 
 export interface BaseProjectEntity {
   id: string
-  cv: CV
+  pv: PV
   project: Partial<Project>
   projectId: number
 }
@@ -19,7 +19,7 @@ export const parseBaseProjectEntityJson = (
   j: BaseProjectEntityJson,
 ): Partial<BaseProjectEntity> => ({
   id: j.id,
-  cv: j.cv ? (j.cv as CV) : undefined,
+  pv: j.pv ? (j.pv as PV) : undefined,
   project: j.project ? parseProjectJson(j.project) : undefined,
   projectId: j.projectId ? parseInt(j.projectId) : undefined,
 })

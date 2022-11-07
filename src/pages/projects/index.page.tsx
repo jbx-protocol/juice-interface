@@ -4,15 +4,16 @@ import { Button } from 'antd'
 import Search from 'antd/lib/input/Search'
 import { AppWrapper } from 'components/common'
 import ExternalLink from 'components/ExternalLink'
-import { CV_V1, CV_V1_1, CV_V2, CV_V3 } from 'constants/cv'
+import { PV_V1, PV_V1_1, PV_V2 } from 'constants/pv'
 import { layouts } from 'constants/styles/layouts'
 import { useWallet } from 'hooks/Wallet'
-import { CV } from 'models/cv'
 import { ProjectCategory } from 'models/project-visibility'
+import { PV } from 'models/pv'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useMemo, useState } from 'react'
 import { helpPagePath } from 'utils/routes'
+
 import AllProjects from './AllProjects'
 import ArchivedProjectsMessage from './ArchivedProjectsMessage'
 import HoldingsProjects from './HoldingsProjects'
@@ -72,12 +73,12 @@ function Projects() {
   const [includeV2, setIncludeV2] = useState<boolean>(true)
   const [showArchived, setShowArchived] = useState<boolean>(false)
 
-  const cv: CV[] | undefined = useMemo(() => {
-    const _cv: CV[] = []
-    if (includeV1) _cv.push(CV_V1)
-    if (includeV1_1) _cv.push(CV_V1_1)
-    if (includeV2) _cv.push(CV_V2, CV_V3)
-    return _cv.length ? _cv : [CV_V1, CV_V1_1, CV_V2, CV_V3]
+  const pv: PV[] | undefined = useMemo(() => {
+    const _pv: PV[] = []
+    if (includeV1) _pv.push(PV_V1)
+    if (includeV1_1) _pv.push(PV_V1_1)
+    if (includeV2) _pv.push(PV_V2)
+    return _pv.length ? _pv : [PV_V1, PV_V1_1, PV_V2]
   }, [includeV1, includeV1_1, includeV2])
 
   return (
@@ -169,7 +170,7 @@ function Projects() {
       {selectedTab === 'all' ? (
         <div style={{ paddingBottom: 50 }}>
           <AllProjects
-            cv={cv}
+            pv={pv}
             searchText={searchText}
             orderBy={orderBy}
             showArchived={showArchived}

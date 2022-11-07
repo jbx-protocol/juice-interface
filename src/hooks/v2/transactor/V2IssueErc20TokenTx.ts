@@ -16,8 +16,8 @@ export function useV2IssueErc20TokenTx(): TransactorInstance<{
   symbol: string
 }> {
   const { transactor } = useContext(TransactionContext)
-  const { contracts } = useContext(V2V3ContractsContext)
-  const { projectId, cv } = useContext(ProjectMetadataContext)
+  const { contracts, cv } = useContext(V2V3ContractsContext)
+  const { projectId } = useContext(ProjectMetadataContext)
   const {
     contracts: { JBController },
   } = useContext(V2V3ProjectContractsContext)

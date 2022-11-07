@@ -8,7 +8,7 @@ import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useLoadV2V3Contract } from 'hooks/v2v3/LoadV2V3Contract'
 import { useLaunchFundingCyclesTx } from 'hooks/v2v3/transactor/LaunchFundingCyclesTx'
 import { revalidateProject } from 'lib/api/nextjs'
-import { CV2V3 } from 'models/cv'
+import { PV2 } from 'models/pv'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import { V3FundingCycleMetadata } from 'models/v3/fundingCycle'
 import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton'
@@ -20,7 +20,7 @@ export const useLaunchFundingCycle = ({
   editingFundingCycleConfig: EditingFundingCycleConfig
 }) => {
   const { fundingCycle } = useContext(V2V3ProjectContext)
-  const { projectId, cv } = useContext(ProjectMetadataContext)
+  const { projectId, pv } = useContext(ProjectMetadataContext)
   const {
     nftRewards: { CIDs: nftRewardsCids },
   } = useContext(NftRewardsContext)
@@ -54,7 +54,8 @@ export const useLaunchFundingCycle = ({
         editingFundingCycleData &&
         editingFundingCycleMetadata &&
         editingFundAccessConstraints &&
-        projectId
+        projectId &&
+        pv
       )
     ) {
       setLaunchFundingCycleTxLoading(false)
@@ -109,7 +110,7 @@ export const useLaunchFundingCycle = ({
       async onConfirmed() {
         if (projectId) {
           await revalidateProject({
-            cv: cv as CV2V3,
+            pv: pv as PV2,
             projectId: String(projectId),
           })
         }
@@ -131,7 +132,7 @@ export const useLaunchFundingCycle = ({
     nftRewardsCids,
     fundingCycle,
     projectId,
-    cv,
+    pv,
   ])
 
   return {

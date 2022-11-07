@@ -2,7 +2,7 @@ import { LoadingOutlined } from '@ant-design/icons'
 import { Col, Row } from 'antd'
 import { PayProjectForm } from 'components/Project/PayProjectForm'
 import { ProjectHeader } from 'components/Project/ProjectHeader'
-import { CV_V1 } from 'constants/cv'
+import { PV_V1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1PayProjectFormProvider } from 'providers/v1/V1PayProjectFormProvider'
@@ -57,7 +57,7 @@ export function V1Project({
                   style={{ height: 240 }}
                   projectId={projectId}
                   createdAt={createdAt}
-                  cv={CV_V1}
+                  pv={PV_V1}
                 />
               </Suspense>
             </div>

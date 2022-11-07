@@ -3,10 +3,10 @@ import { BaseOptionType } from 'antd/lib/select'
 import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
 import { CV_V2, CV_V3 } from 'constants/cv'
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
-import { CV2V3 } from 'models/cv'
+import { CV2V3 } from 'models/v2v3/cv'
 import { useContext } from 'react'
 
-const CV_LABELS = {
+const CV_LABELS: Record<CV2V3, string> = {
   [CV_V2]: 'V2',
   [CV_V3]: 'V3',
 }

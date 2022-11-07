@@ -1,3 +1,4 @@
+import { PV } from 'models/pv'
 import { Project } from 'models/subgraph-entities/vX/project'
 import { fromWad } from 'utils/format/formatNumber'
 import { querySubgraph, WhereConfig } from 'utils/graph'
@@ -8,12 +9,12 @@ export const loadProjectEvents = async ({
   blockRefs,
   showGraph,
   projectId,
-  cv,
+  pv,
 }: {
   blockRefs: BlockRef[]
   showGraph: ShowGraph
   projectId: number
-  cv: string
+  pv: PV
 }) => {
   const newEvents: EventRef[] = []
   const promises: Promise<void>[] = []
@@ -37,8 +38,8 @@ export const loadProjectEvents = async ({
     if (projectId) {
       whereOpts.push({ key: 'projectId', value: projectId })
     }
-    if (cv) {
-      whereOpts.push({ key: 'cv', value: cv })
+    if (pv) {
+      whereOpts.push({ key: 'pv', value: pv })
     }
 
     // For block == null, don't specify block param

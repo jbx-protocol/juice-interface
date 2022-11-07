@@ -15,7 +15,8 @@ import invariant from 'tiny-invariant'
 export function useSetNftOperatorPermissionsTx(): TransactorInstance {
   const { transactor } = useContext(TransactionContext)
   const { contracts } = useContext(V2V3ContractsContext)
-  const { projectId, cv } = useContext(ProjectMetadataContext)
+  const { projectId } = useContext(ProjectMetadataContext)
+  const { cv } = useContext(V2V3ContractsContext)
 
   const { userAddress } = useWallet()
 

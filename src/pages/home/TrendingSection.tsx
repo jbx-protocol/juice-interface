@@ -58,7 +58,7 @@ export default function TrendingSection() {
                   project={p}
                   size="sm"
                   rank={i + 1}
-                  key={`${p.id}_${p.cv}`}
+                  key={`${p.id}_${p.pv}`}
                 />
               ))}
             </Grid>

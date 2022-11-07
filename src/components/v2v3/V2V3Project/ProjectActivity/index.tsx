@@ -8,6 +8,7 @@ import ProjectCreateEventElem from 'components/activityEventElems/ProjectCreateE
 import RedeemEventElem from 'components/activityEventElems/RedeemEventElem'
 import Loading from 'components/Loading'
 import SectionHeader from 'components/SectionHeader'
+import { PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
@@ -48,7 +49,7 @@ export default function ProjectActivity() {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { projectId, cv } = useContext(ProjectMetadataContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
   const [eventFilter, setEventFilter] = useState<EventFilter>('all')
@@ -63,19 +64,16 @@ export default function ProjectActivity() {
         key: 'useAllowanceEvent',
         value: null, // Exclude all useAllowanceEvents, no UI support yet
       },
+      {
+        key: 'pv',
+        value: PV_V2,
+      },
     ]
 
     if (projectId) {
       _where.push({
         key: 'projectId',
         value: projectId,
-      })
-    }
-
-    if (cv) {
-      _where.push({
-        key: 'cv',
-        value: cv,
       })
     }
 
@@ -117,7 +115,7 @@ export default function ProjectActivity() {
     }
 
     return _where
-  }, [projectId, eventFilter, cv])
+  }, [projectId, eventFilter])
 
   const {
     data: projectEvents,
@@ -140,6 +138,7 @@ export default function ProjectActivity() {
           'id',
           'txHash',
           'feeFromV2Project',
+          'terminal',
         ],
       },
       {
@@ -171,6 +170,7 @@ export default function ProjectActivity() {
           'txHash',
           'timestamp',
           'returnAmount',
+          'terminal',
         ],
       },
       {
@@ -188,6 +188,7 @@ export default function ProjectActivity() {
           'beneficiaryDistributionAmount',
           'distributedAmount',
           'memo',
+          'terminal',
         ],
       },
       {

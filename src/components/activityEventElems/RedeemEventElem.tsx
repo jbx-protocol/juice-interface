@@ -2,8 +2,10 @@ import { Trans } from '@lingui/macro'
 import ETHAmount from 'components/currency/ETHAmount'
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
+import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
 import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { useV2V3TerminalVersion } from 'hooks/V2V3TerminalVersion'
 import { RedeemEvent } from 'models/subgraph-entities/vX/redeem-event'
 import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/format/formatDate'
@@ -28,6 +30,7 @@ export default function RedeemEventElem({
         | 'txHash'
         | 'timestamp'
         | 'returnAmount'
+        | 'terminal'
       >
     | undefined
 }) {
@@ -35,6 +38,8 @@ export default function RedeemEventElem({
     theme: { colors },
   } = useContext(ThemeContext)
   const { tokenSymbol } = useContext(V1ProjectContext)
+
+  const terminalVersion = useV2V3TerminalVersion(event?.terminal)
 
   if (!event) return null
 
@@ -73,6 +78,12 @@ export default function RedeemEventElem({
               textAlign: 'right',
             }}
           >
+            {terminalVersion && (
+              <ProjectVersionBadge
+                style={{ padding: 0, background: 'transparent' }}
+                versionText={'V' + terminalVersion}
+              />
+            )}{' '}
             {event.timestamp && (
               <span>{formatHistoricalDate(event.timestamp * 1000)}</span>
             )}{' '}

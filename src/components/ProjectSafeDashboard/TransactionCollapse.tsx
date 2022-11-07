@@ -1,9 +1,10 @@
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
-import { CV_V1, CV_V2, CV_V3 } from 'constants/cv'
+import { CV_V2, CV_V3 } from 'constants/cv'
 import { ThemeContext } from 'contexts/themeContext'
-import { CV } from 'models/cv'
 import { SafeTransactionType } from 'models/safe'
+import { V1TerminalVersion } from 'models/v1/terminals'
+import { CV2V3 } from 'models/v2v3/cv'
 import Link from 'next/link'
 import { CSSProperties, useContext, useState } from 'react'
 import { formatHistoricalDate } from 'utils/format/formatDate'
@@ -21,14 +22,14 @@ export function TransactionCollapse({
   selected,
   title,
   isPastTransaction,
-  version,
+  cv,
   expandedContent,
 }: {
   transaction: SafeTransactionType
   selected?: boolean
   title?: string
   isPastTransaction?: boolean
-  version?: CV
+  cv?: CV2V3 | V1TerminalVersion
   expandedContent?: JSX.Element
 }) {
   const {
@@ -40,8 +41,9 @@ export function TransactionCollapse({
   const [expanded, setExpanded] = useState<boolean>(Boolean(selected))
 
   let versionText: string | undefined
-  switch (version) {
-    case CV_V1:
+  switch (cv) {
+    case '1':
+    case '1.1':
       versionText = 'V1'
       break
     case CV_V2:

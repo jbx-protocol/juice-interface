@@ -43,7 +43,7 @@ export default function EditProjectModal({
   onSuccess?: VoidFunction
   onCancel?: VoidFunction
 }) {
-  const { cv, projectMetadata } = useContext(ProjectMetadataContext)
+  const { pv, projectMetadata } = useContext(ProjectMetadataContext)
 
   const [loadingSetURI, setLoadingSetURI] = useState<boolean>()
   const [loadingSetHandle, setLoadingSetHandle] = useState<boolean>()
@@ -106,8 +106,8 @@ export default function EditProjectModal({
         onConfirmed: async () => {
           if (onSuccess) onSuccess()
 
-          if (cv) {
-            await revalidateProject({ cv: cv as V1TerminalVersion, handle })
+          if (pv) {
+            await revalidateProject({ pv: pv as V1TerminalVersion, handle })
           }
 
           // Set name for new metadata file

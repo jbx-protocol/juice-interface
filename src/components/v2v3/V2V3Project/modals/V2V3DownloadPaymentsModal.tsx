@@ -11,7 +11,7 @@ import { querySubgraphExhaustive } from 'utils/graph'
 import { emitErrorNotification } from 'utils/notifications'
 
 export default function V2V3DownloadPaymentsModal(props: ModalProps) {
-  const { projectId, cv } = useContext(ProjectMetadataContext)
+  const { projectId, pv } = useContext(ProjectMetadataContext)
 
   const [latestBlockNumber, setLatestBlockNumber] = useState<number>()
   const [blockNumber, setBlockNumber] = useState<number>()
@@ -25,7 +25,7 @@ export default function V2V3DownloadPaymentsModal(props: ModalProps) {
   }, [])
 
   const download = useCallback(async () => {
-    if (blockNumber === undefined || !projectId || !cv) return
+    if (blockNumber === undefined || !projectId || !pv) return
 
     setLoading(true)
 
@@ -48,8 +48,8 @@ export default function V2V3DownloadPaymentsModal(props: ModalProps) {
             value: projectId,
           },
           {
-            key: 'cv',
-            value: cv,
+            key: 'pv',
+            value: pv,
           },
         ],
       })
@@ -81,7 +81,7 @@ export default function V2V3DownloadPaymentsModal(props: ModalProps) {
       emitErrorNotification(t`Error downloading payments, try again.`)
       setLoading(false)
     }
-  }, [projectId, setLoading, blockNumber, cv])
+  }, [projectId, setLoading, blockNumber, pv])
 
   return (
     <Modal

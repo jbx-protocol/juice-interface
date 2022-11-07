@@ -6,16 +6,16 @@ import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
 import { ThemeContext } from 'contexts/themeContext'
 import { useLoadMoreContent } from 'hooks/LoadMore'
 import { useInfiniteProjectsQuery, useProjectsSearch } from 'hooks/Projects'
-import { CV } from 'models/cv'
+import { PV } from 'models/pv'
 import { useContext, useEffect, useRef } from 'react'
 
 export default function AllProjects({
-  cv,
+  pv,
   searchText,
   orderBy,
   showArchived,
 }: {
-  cv: CV[] | undefined
+  pv: PV[] | undefined
   searchText: string
   orderBy: 'createdAt' | 'totalPaid'
   showArchived: boolean
@@ -38,7 +38,7 @@ export default function AllProjects({
     pageSize,
     orderDirection: 'desc',
     state: showArchived ? 'archived' : 'active',
-    cv,
+    pv,
   })
 
   const { data: searchPages, isLoading: isLoadingSearch } =
@@ -67,7 +67,7 @@ export default function AllProjects({
         <Grid>
           {concatenatedPages.map(p => (
             <ProjectCard
-              key={`${p.id}_${p.cv}`}
+              key={`${p.id}_${p.pv}`}
               project={p as ProjectCardProject}
             />
           ))}

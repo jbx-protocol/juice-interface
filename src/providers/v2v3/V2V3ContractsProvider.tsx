@@ -1,6 +1,6 @@
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { useV2V3ContractLoader } from 'hooks/v2v3/V2V3ContractLoader'
-import { CV2V3 } from 'models/cv'
+import { CV2V3 } from 'models/v2v3/cv'
 import { useCallback, useState } from 'react'
 
 export const V2V3ContractsProvider: React.FC<{

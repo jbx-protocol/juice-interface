@@ -11,7 +11,7 @@ import Callout from 'components/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
 import FormattedAddress from 'components/FormattedAddress'
 import Loading from 'components/Loading'
-import { CV_V1, CV_V1_1 } from 'constants/cv'
+import { PV_V1, PV_V1_1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { Participant } from 'models/subgraph-entities/vX/participant'
@@ -36,7 +36,7 @@ export default function ParticipantsModal({
   open: boolean | undefined
   onCancel: VoidFunction | undefined
 }) {
-  const { projectId, cv } = useContext(ProjectMetadataContext)
+  const { projectId, pv } = useContext(ProjectMetadataContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -53,22 +53,22 @@ export default function ParticipantsModal({
   useEffect(() => {
     setLoading(true)
 
-    if (!projectId || !open || !cv) {
+    if (!projectId || !open || !pv) {
       setParticipants([])
       return
     }
 
-    // Projects that migrate between 1 & 1.1 may change their CV without the CV of their participants being updated. This should be fixed by better subgraph infrastructure, but this fix will make sure the UI works for now.
-    const cvOpt: GraphQueryOpts<'participant', keyof Participant>['where'] =
-      cv === CV_V1 || cv === CV_V1_1
+    // Projects that migrate between 1 & 1.1 may change their PV without the PV of their participants being updated. This should be fixed by better subgraph infrastructure, but this fix will make sure the UI works for now.
+    const pvOpt: GraphQueryOpts<'participant', keyof Participant>['where'] =
+      pv === PV_V1 || pv === PV_V1_1
         ? {
-            key: 'cv',
+            key: 'pv',
             operator: 'in',
-            value: [CV_V1, CV_V1_1],
+            value: [PV_V1, PV_V1_1],
           }
         : {
-            key: 'cv',
-            value: cv,
+            key: 'pv',
+            value: pv,
           }
 
     querySubgraph({
@@ -86,13 +86,13 @@ export default function ParticipantsModal({
       orderBy: sortPayerReports,
       orderDirection: sortPayerReportsDirection,
       where:
-        projectId && cv
+        projectId && pv
           ? [
               {
                 key: 'projectId',
                 value: projectId,
               },
-              cvOpt,
+              pvOpt,
               {
                 key: 'balance',
                 value: 0,
@@ -116,7 +116,7 @@ export default function ParticipantsModal({
   }, [
     pageNumber,
     projectId,
-    cv,
+    pv,
     sortPayerReportsDirection,
     sortPayerReports,
     open,

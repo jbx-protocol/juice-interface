@@ -1,9 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { PV_V2 } from 'constants/pv'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
-import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { V2V3ProjectContextType } from 'contexts/v2v3/V2V3ProjectContext'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/V2V3ProjectContractsContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
@@ -67,7 +67,6 @@ const useBalanceInDistributionLimitCurrency = ({
 }
 
 export function useV2V3ProjectState({ projectId }: { projectId: number }) {
-  const { cv } = useContext(V2V3ContractsContext)
   const {
     contracts: { JBETHPaymentTerminal },
   } = useContext(V2V3ProjectContractsContext)
@@ -86,7 +85,7 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
   const { data: projects } = useProjectsQuery({
     projectId,
     keys: ['createdAt', 'totalPaid'],
-    cv: cv ? [cv] : undefined,
+    pv: [PV_V2],
   })
   const createdAt = first(projects)?.createdAt
   const totalVolume = first(projects)?.totalPaid

@@ -3,6 +3,7 @@ import * as constants from '@ethersproject/constants'
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactionContext } from 'contexts/transactionContext'
+import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/V2V3ProjectContractsContext'
 import {
@@ -23,8 +24,9 @@ export function useRedeemTokensTx(): TransactorInstance<{
 }> {
   const { transactor } = useContext(TransactionContext)
   const { contracts } = useContext(V2V3ProjectContractsContext)
+  const { cv } = useContext(V2V3ContractsContext)
   const { tokenSymbol } = useContext(V2V3ProjectContext)
-  const { projectId, cv } = useContext(ProjectMetadataContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const { userAddress } = useWallet()
 

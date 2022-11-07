@@ -7,12 +7,12 @@ import { AddEditAllocationModal } from './AddEditAllocationModal'
 import { Allocation, AllocationSplit } from './Allocation'
 
 export const AllocationList = ({
-  addText,
+  allocationName = t`allocation`,
   isEditable = true,
   availableModes,
   children,
 }: {
-  addText?: ReactNode
+  allocationName?: string
   isEditable?: boolean
   availableModes: Set<'amount' | 'percentage'>
   children: (
@@ -65,11 +65,12 @@ export const AllocationList = ({
             icon={<PlusCircleOutlined />}
             onClick={modal.open}
           >
-            {addText ?? t`Add`}
+            {t`Add ${allocationName ? ` ${allocationName}` : ''}`}
           </CreateButton>
         )}
       </div>
       <AddEditAllocationModal
+        allocationName={allocationName}
         availableModes={availableModes}
         editingData={selectedAllocation}
         open={modal.visible}

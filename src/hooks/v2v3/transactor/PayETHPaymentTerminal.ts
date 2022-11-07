@@ -14,8 +14,9 @@ const DEFAULT_MIN_RETURNED_TOKENS = 0 // TODO will need a field for this in V2Co
 type PayV2ProjectTx = TransactorInstance<{
   memo: string
   preferClaimedTokens: boolean
-  beneficiary?: string
   value: BigNumber
+  beneficiary?: string
+  delegateMetadata?: string
 }>
 
 export function usePayETHPaymentTerminalTx(): PayV2ProjectTx {
@@ -25,7 +26,10 @@ export function usePayETHPaymentTerminalTx(): PayV2ProjectTx {
 
   const projectTitle = useV2ProjectTitle()
 
-  return ({ memo, preferClaimedTokens, beneficiary, value }, txOpts) => {
+  return (
+    { memo, preferClaimedTokens, beneficiary, value, delegateMetadata },
+    txOpts,
+  ) => {
     if (
       !transactor ||
       !projectId ||
@@ -47,7 +51,7 @@ export function usePayETHPaymentTerminalTx(): PayV2ProjectTx {
         DEFAULT_MIN_RETURNED_TOKENS, // minReturnedTokens
         preferClaimedTokens, // _preferClaimedTokens
         memo || '',
-        DEFAULT_DELEGATE_METADATA, //delegateMetadata
+        delegateMetadata ?? DEFAULT_DELEGATE_METADATA, //delegateMetadata
       ],
       {
         ...txOpts,

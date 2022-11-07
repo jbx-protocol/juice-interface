@@ -59,6 +59,7 @@ export interface SelectionCardProps {
   titleBadge?: ReactNode
   description?: ReactNode
   isSelected?: boolean
+  isDisabled?: boolean
   checkPosition?: 'left' | 'right'
 }
 
@@ -68,6 +69,7 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
   icon,
   description,
   checkPosition = 'right',
+  isDisabled = false,
   children,
 }) => {
   const {
@@ -79,14 +81,16 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
   const isSelected = selection === name
 
   const onClick = useCallback(() => {
+    if (isDisabled) return
     if (isSelected) {
       setSelection?.(undefined)
       return
     }
     setSelection?.(name)
-  }, [isSelected, name, setSelection])
+  }, [isDisabled, isSelected, name, setSelection])
 
-  const defocused = !!defocusOnSelect && !!selection && !isSelected
+  const defocused =
+    (!!defocusOnSelect && !!selection && !isSelected) || isDisabled
 
   const childGap = 42 + 32
 
@@ -110,7 +114,7 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
         style={{
           padding: '1.5rem 0',
           userSelect: 'none',
-          cursor: 'pointer',
+          cursor: isDisabled ? 'not-allowed' : 'pointer',
         }}
         onClick={onClick}
       >

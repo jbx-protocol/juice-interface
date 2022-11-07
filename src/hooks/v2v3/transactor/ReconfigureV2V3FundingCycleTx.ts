@@ -15,6 +15,7 @@ import { isValidMustStartAtOrAfter } from 'utils/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../ProjectTitle'
 
 export const DEFAULT_MUST_START_AT_OR_AFTER = '1'
+const DEFAULT_MEMO = '1'
 
 export type ReconfigureTxArgs = {
   fundingCycleData: V2V3FundingCycleData
@@ -22,7 +23,7 @@ export type ReconfigureTxArgs = {
   fundAccessConstraints: V2V3FundAccessConstraint[]
   groupedSplits?: GroupedSplits<SplitGroup>[]
   mustStartAtOrAfter?: string // epoch seconds. anything less than "now" will start immediately.
-  memo: string
+  memo?: string
 }
 
 export function useReconfigureV2V3FundingCycleTx(): TransactorInstance<ReconfigureTxArgs> {
@@ -39,7 +40,7 @@ export function useReconfigureV2V3FundingCycleTx(): TransactorInstance<Reconfigu
       fundAccessConstraints,
       groupedSplits = [],
       mustStartAtOrAfter = DEFAULT_MUST_START_AT_OR_AFTER,
-      memo,
+      memo = DEFAULT_MEMO,
     },
     txOpts,
   ) => {

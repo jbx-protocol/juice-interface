@@ -1,7 +1,6 @@
 import { getAddress } from '@ethersproject/address'
 import { t, Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
-import Callout from 'components/Callout'
 import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
 import { MemoFormInput } from 'components/Project/PayProjectForm/MemoFormInput'
 import RichButton, { RichButtonProps } from 'components/RichButton'
@@ -20,7 +19,7 @@ import { V2OperatorPermission } from 'models/v2v3/permissions'
 import { useContext, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { DeployConfigurationButton } from './DeployConfigurationButton'
-import { useEditingProjectData } from './hooks/editingProjectData'
+import { useEditingFundingCycleConfig } from './hooks/editingFundingCycleConfig'
 import { useFundingHasSavedChanges } from './hooks/fundingHasSavedChanges'
 import { useInitialEditingData } from './hooks/initialEditingData'
 import { useReconfigureFundingCycle } from './hooks/reconfigureFundingCycle'
@@ -69,7 +68,7 @@ export function V2V3ReconfigureFundingCycleForm() {
   const [nftOperatorConfirmed, setNftOperatorConfirmed] = useState<boolean>()
 
   const { initialEditingData } = useInitialEditingData({ visible: true })
-  const editingProjectData = useEditingProjectData()
+  const editingFundingCycleConfig = useEditingFundingCycleConfig()
   const {
     fundingHasSavedChanges,
     fundingDrawerHasSavedChanges,
@@ -77,13 +76,13 @@ export function V2V3ReconfigureFundingCycleForm() {
     rulesDrawerHasSavedChanges,
     nftDrawerHasSavedChanges,
   } = useFundingHasSavedChanges({
-    editingProjectData,
+    editingFundingCycleConfig,
     initialEditingData,
   })
 
   const { reconfigureLoading, reconfigureFundingCycle } =
     useReconfigureFundingCycle({
-      editingProjectData,
+      editingFundingCycleConfig,
       memo,
       launchedNewNfts: nftDrawerHasSavedChanges,
     })
@@ -113,7 +112,7 @@ export function V2V3ReconfigureFundingCycleForm() {
 
   const nftsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
 
-  const nftDeployerAddress = contracts
+  const nftDeployerAddress = contracts?.JBTiered721DelegateProjectDeployer
     ? getAddress(contracts.JBTiered721DelegateProjectDeployer.address)
     : undefined
   const { data: nftContractHasPermission } = contracts
@@ -128,9 +127,7 @@ export function V2V3ReconfigureFundingCycleForm() {
   return (
     <>
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
-        <Callout>
-          <V2V3ReconfigureUpcomingMessage />
-        </Callout>
+        <V2V3ReconfigureUpcomingMessage />
 
         <ReconfigureButton
           heading={t`Funding`}
@@ -174,18 +171,24 @@ export function V2V3ReconfigureFundingCycleForm() {
           <Trans>Review and deploy</Trans>
         </h3>
         <ReconfigurePreview
-          payoutSplits={editingProjectData.editingPayoutGroupedSplits.splits}
+          payoutSplits={
+            editingFundingCycleConfig.editingPayoutGroupedSplits.splits
+          }
           reserveSplits={
-            editingProjectData.editingReservedTokensGroupedSplits.splits
+            editingFundingCycleConfig.editingReservedTokensGroupedSplits.splits
           }
-          fundingCycleMetadata={editingProjectData.editingFundingCycleMetadata}
-          fundingCycleData={editingProjectData.editingFundingCycleData}
+          fundingCycleMetadata={
+            editingFundingCycleConfig.editingFundingCycleMetadata
+          }
+          fundingCycleData={editingFundingCycleConfig.editingFundingCycleData}
           fundAccessConstraints={
-            editingProjectData.editingFundAccessConstraints
+            editingFundingCycleConfig.editingFundAccessConstraints
           }
-          nftRewards={editingProjectData.editingNftRewards.rewardTiers}
+          nftRewards={editingFundingCycleConfig.editingNftRewards?.rewardTiers}
         />
-        {nftDrawerHasSavedChanges && !nftContractHasPermission ? (
+        {nftsEnabled &&
+        nftDrawerHasSavedChanges &&
+        !nftContractHasPermission ? (
           <Space size="middle" direction="vertical">
             <div style={{ display: 'flex' }}>
               <h2 style={{ marginRight: 5 }}>1.</h2>

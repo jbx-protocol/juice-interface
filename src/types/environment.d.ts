@@ -2,10 +2,7 @@ export {}
 import { NetworkName } from 'models/network-name'
 type Networks = keyof typeof NetworkName
 
-export type PinataGatewayHostnameURLS =
-  | 'gateway.pinata.cloud'
-  | 'jbx-goerli.mypinata.cloud'
-  | 'jbx-mainnet.mypinata.cloud'
+export type PinataGatewayHostnameURL = 'jbx.mypinata.cloud'
 
 export type PublicBaseURLS =
   | 'http://localhost:3000'
@@ -17,7 +14,7 @@ declare global {
     interface ProcessEnv {
       PINATA_PINNER_KEY: string
       PINATA_PINNER_SECRET: string
-      NEXT_PUBLIC_PINATA_GATEWAY_HOSTNAME: PinataGatewayHostnameURLS
+      NEXT_PUBLIC_PINATA_GATEWAY_HOSTNAME: PinataGatewayHostnameURL
 
       GITHUB_ACCESS_TOKEN: string
 
@@ -39,6 +36,10 @@ declare global {
       NEXT_PUBLIC_TENDERLY_API_KEY: string
       NEXT_PUBLIC_TENDERLY_PROJECT_NAME: string
       NEXT_PUBLIC_TENDERLY_ACCOUNT: string
+
+      NEXT_PUBLIC_INFURA_IPFS_PROJECT_ID: string
+      NEXT_PUBLIC_INFURA_IPFS_API_SECRET: string
+      NEXT_PUBLIC_INFURA_IPFS_HOSTNAME: string
     }
   }
 }

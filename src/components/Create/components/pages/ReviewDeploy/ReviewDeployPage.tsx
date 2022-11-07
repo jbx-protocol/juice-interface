@@ -11,7 +11,7 @@ import useMobile from 'hooks/Mobile'
 import { useModal } from 'hooks/Modal'
 import { useWallet } from 'hooks/Wallet'
 import { useRouter } from 'next/router'
-import { useCallback, useContext } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
@@ -27,6 +27,14 @@ import {
   RewardsReview,
   RulesReview,
 } from './components'
+
+enum ReviewDeployKey {
+  ProjectDetails = 0,
+  FundingConfiguration = 1,
+  ProjectToken = 2,
+  Rewards = 3,
+  Rules = 4,
+}
 
 const Header: React.FC<{ skipped?: boolean }> = ({
   children,
@@ -75,7 +83,10 @@ export const ReviewDeployPage = () => {
     state => state.editingV2Project.nftRewards.rewardTiers,
   )
 
-  const nftRewardsAreSet = nftRewards && nftRewards?.length > 0
+  const nftRewardsAreSet = useMemo(
+    () => nftRewards && nftRewards?.length > 0,
+    [nftRewards],
+  )
 
   const dispatch = useDispatch()
 
@@ -109,12 +120,33 @@ export const ReviewDeployPage = () => {
     router,
   ])
 
+  const [activeKey, setActiveKey] = useState<ReviewDeployKey[]>(
+    !isMobile ? [ReviewDeployKey.ProjectDetails] : [],
+  )
+
+  const handleOnChange = (key: string | string[]) => {
+    if (typeof key === 'string') {
+      setActiveKey([parseInt(key)])
+    } else {
+      setActiveKey(key.map(k => parseInt(k)))
+    }
+  }
+
+  // Remove the nft rewards panel if there are no nft rewards
+  useEffect(() => {
+    if (!nftRewardsAreSet) {
+      setActiveKey(activeKey.filter(k => k !== ReviewDeployKey.Rewards))
+    }
+    // Only run this effect when the nft rewards are set
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nftRewardsAreSet])
+
   const isNextEnabled = termsAccepted
   return (
     <>
-      <CreateCollapse accordion defaultActiveKey={!isMobile ? 0 : undefined}>
+      <CreateCollapse activeKey={activeKey} onChange={handleOnChange}>
         <CreateCollapse.Panel
-          key={0}
+          key={ReviewDeployKey.ProjectDetails}
           header={
             <Header>
               <Trans>Project Details</Trans>
@@ -124,7 +156,7 @@ export const ReviewDeployPage = () => {
           <ProjectDetailsReview />
         </CreateCollapse.Panel>
         <CreateCollapse.Panel
-          key={1}
+          key={ReviewDeployKey.FundingConfiguration}
           header={
             <Header>
               <Trans>Funding Configuration</Trans>
@@ -134,7 +166,7 @@ export const ReviewDeployPage = () => {
           <FundingConfigurationReview />
         </CreateCollapse.Panel>
         <CreateCollapse.Panel
-          key={2}
+          key={ReviewDeployKey.ProjectToken}
           header={
             <Header>
               <Trans>Project Token</Trans>
@@ -145,11 +177,11 @@ export const ReviewDeployPage = () => {
         </CreateCollapse.Panel>
         {featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS) && (
           <CreateCollapse.Panel
-            key={3}
+            key={ReviewDeployKey.Rewards}
             collapsible={nftRewardsAreSet ? 'header' : 'disabled'}
             header={
               <Header skipped={!nftRewardsAreSet}>
-                <Trans>NFT Rewards</Trans>
+                <Trans>NFTs</Trans>
               </Header>
             }
           >
@@ -157,7 +189,7 @@ export const ReviewDeployPage = () => {
           </CreateCollapse.Panel>
         )}
         <CreateCollapse.Panel
-          key={4}
+          key={ReviewDeployKey.Rules}
           header={
             <Header>
               <Trans>Rules</Trans>

@@ -387,7 +387,7 @@ export default function NftDrawer({
           style={{ marginTop: 30 }}
         >
           <span>
-            <Trans>Save NFT rewards</Trans>
+            <Trans>Save NFTs</Trans>
           </span>
         </Button>
         <ReconfigureNftMetadataModal

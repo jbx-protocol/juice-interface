@@ -35,6 +35,7 @@ export const MobileProgressModal: React.FC<{
       {steps?.map((step, index) => {
         return (
           <MobileStep
+            className="create-steps-item-hover"
             selected={currentStepIndex === index}
             isCompleted={
               index <= furthestStepIndex && index !== currentStepIndex

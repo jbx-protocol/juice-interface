@@ -4,11 +4,14 @@ import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
 import { useContext } from 'react'
 
-export const WarningCallout: React.FC = ({ children }) => {
+export const WarningCallout: React.FC<{
+  collapsible?: boolean
+}> = ({ collapsible, children }) => {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
   const isMobile = useMobile()
+  const collapse = collapsible ?? isMobile
   return (
     <Callout
       style={{
@@ -22,7 +25,7 @@ export const WarningCallout: React.FC = ({ children }) => {
           style={{ fontSize: '1.5rem', color: colors.icon.warn }}
         />
       }
-      collapsible={isMobile}
+      collapsible={collapse}
     >
       {children}
     </Callout>

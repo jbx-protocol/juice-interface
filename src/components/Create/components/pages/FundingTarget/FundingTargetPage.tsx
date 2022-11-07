@@ -11,7 +11,6 @@ import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthe
 import { CreateCallout } from '../../CreateCallout'
 import { CurrencySelectInputValue } from '../../CurrencySelectInput'
 import { Icons } from '../../Icons'
-import { RecallCard } from '../../RecallCard'
 import { Selection } from '../../Selection'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
@@ -55,7 +54,6 @@ export const FundingTargetPage: React.FC = () => {
       scrollToFirstError
     >
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
-        <RecallCard show={['fundingCycles']} />
         <Form.Item noStyle name="targetSelection">
           <Selection defocusOnSelect style={{ width: '100%' }}>
             <Selection.Card
@@ -131,7 +129,7 @@ const TargetCallout = ({ selection }: { selection: FundingTargetType }) => {
   let calloutText = undefined
   switch (selection) {
     case 'infinite':
-      calloutText = t`An Infinite Funding Target means contributors cannot redeem their tokens for a portion of the treasury funds. Payout splits will can only be nominated in percentages.`
+      calloutText = t`An Infinite Funding Target means contributors cannot redeem their tokens for a portion of the treasury funds. Payouts can only be nominated in percentages.`
       break
     case 'specific':
       calloutText = t`Your Funding Target can be changed in future funding cycles. Payouts denominated in USD are paid out in ETH at the current exchange rate.`

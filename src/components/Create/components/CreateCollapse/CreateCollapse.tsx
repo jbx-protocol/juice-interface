@@ -4,15 +4,13 @@ import * as styleColors from 'constants/styles/colors'
 import { CreateCollapsePanel } from './CreateCollapsePanel'
 
 export const CreateCollapse: React.FC<{
-  defaultActiveKey?: number
-  accordion?: boolean
+  activeKey?: string | number | (string | number)[]
+  onChange?: (key: string | string[]) => void
 }> & {
   Panel: typeof CreateCollapsePanel
-} = ({ defaultActiveKey, accordion, children }) => {
+} = ({ activeKey, onChange, children }) => {
   return (
     <Collapse
-      accordion={accordion}
-      defaultActiveKey={defaultActiveKey}
       className="create-collapse"
       expandIconPosition="end"
       bordered={false}
@@ -23,6 +21,8 @@ export const CreateCollapse: React.FC<{
           style={{ color: styleColors.lightColors.gray500 }}
         />
       )}
+      onChange={onChange}
+      {...(activeKey ? { activeKey } : {})}
     >
       {children}
     </Collapse>

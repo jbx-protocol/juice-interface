@@ -10,12 +10,12 @@ import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'pages/create/tabs/ReviewDe
 import { useCallback, useContext, useState } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { WEIGHT_UNCHANGED, WEIGHT_ZERO } from 'utils/v2v3/fundingCycle'
-import { EditingProjectData } from './editingProjectData'
+import { EditingFundingCycleConfig } from './editingFundingCycleConfig'
 
 /**
  * Return the value of the `weight` argument to send in the transaction.
  */
-const getWeightArgument = ({
+export const getWeightArgument = ({
   currentFundingCycleWeight,
   newFundingCycleWeight,
 }: {
@@ -38,11 +38,11 @@ const getWeightArgument = ({
 }
 
 export const useReconfigureFundingCycle = ({
-  editingProjectData,
+  editingFundingCycleConfig,
   memo,
   launchedNewNfts,
 }: {
-  editingProjectData: EditingProjectData
+  editingFundingCycleConfig: EditingFundingCycleConfig
   memo: string
   launchedNewNfts?: boolean
 }) => {
@@ -66,7 +66,7 @@ export const useReconfigureFundingCycle = ({
     editingFundingCycleData,
     editingFundAccessConstraints,
     editingNftRewards,
-  } = editingProjectData
+  } = editingFundingCycleConfig
 
   const reconfigureFundingCycle = useCallback(async () => {
     setReconfigureTxLoading(true)

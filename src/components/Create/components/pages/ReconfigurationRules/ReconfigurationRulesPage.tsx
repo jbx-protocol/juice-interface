@@ -64,8 +64,9 @@ export const ReconfigurationRulesPage = () => {
         )}
 
         <CreateCollapse>
-          <CreateCollapse.Panel key={0} header={t`Advanced Rules`}>
+          <CreateCollapse.Panel key={0} header={t`Advanced Rules`} hideDivider>
             <Form.Item
+              style={{ paddingTop: '2rem' }}
               name="pausePayments"
               extra={t`When enabled, the payments to the project are paused, and no new tokens will be issued.`}
             >

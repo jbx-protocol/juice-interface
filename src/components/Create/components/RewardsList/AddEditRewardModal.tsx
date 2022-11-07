@@ -103,8 +103,10 @@ export const AddEditRewardModal = ({
   const isEditing = !!editingData
   return (
     <Modal
-      title={<h2>{isEditing ? t`Edit NFT Reward` : t`Add NFT Reward`}</h2>}
-      okText={isEditing ? t`Save reward` : t`Add reward`}
+      title={
+        <h2>{isEditing ? t`Edit NFT reward tier` : t`Add NFT reward tier`}</h2>
+      }
+      okText={isEditing ? t`Save NFT` : t`Add NFT`}
       open={open}
       onOk={onModalOk}
       onCancel={onModalCancel}

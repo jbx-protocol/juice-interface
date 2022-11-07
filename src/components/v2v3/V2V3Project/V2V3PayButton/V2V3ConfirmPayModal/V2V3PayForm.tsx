@@ -18,7 +18,6 @@ import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { isAddress } from 'ethers/lib/utils'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useContext, useState } from 'react'
-import { cidFromUrl, ipfsUrl } from 'utils/ipfs'
 import {
   getUnsafeV2V3FundingCycleProperties,
   getV2V3FundingCycleRiskCount,
@@ -38,7 +37,7 @@ export const V2V3PayForm = ({
   ...props
 }: {
   form: FormInstance<V2V3PayFormType>
-  nftRewardTier: NftRewardTier | null
+  nftRewardTier: NftRewardTier | undefined
 } & FormProps) => {
   const {
     theme: { colors },
@@ -60,11 +59,6 @@ export const V2V3PayForm = ({
       ? getV2V3FundingCycleRiskCount(fundingCycle, fundingCycleMetadata)
       : undefined
 
-  const imageCid = nftRewardTier?.imageUrl
-    ? cidFromUrl(nftRewardTier.imageUrl)
-    : undefined
-  const imageUrl = imageCid ? ipfsUrl(imageCid) : undefined
-
   const hasIssuedTokens = tokenAddress !== constants.AddressZero
   const canAddMoreStickers =
     (stickerUrls ?? []).length < ProjectPreferences.MAX_IMAGES_PAYMENT_MEMO
@@ -76,7 +70,10 @@ export const V2V3PayForm = ({
         layout="vertical"
         {...props}
         initialValues={{
-          stickerUrls: imageUrl ? [imageUrl] : undefined,
+          // add the NFT image to the pay memo.
+          stickerUrls: nftRewardTier?.imageUrl
+            ? [nftRewardTier.imageUrl]
+            : undefined,
         }}
       >
         <Space direction="vertical" size="large">

@@ -196,7 +196,7 @@ export function handleTransactionException({
   txOpts?: TxOpts
   missingParam?: string
   functionName: string
-  cv: '1' | CV2V3 | undefined // TODO should this be CV?
+  cv: '1' | CV2V3 | undefined
 }) {
   txOpts?.onError?.(
     new DOMException(

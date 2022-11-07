@@ -56,7 +56,7 @@ export function useMintTokensTx(): TransactorInstance<{
     } catch {
       const missingParam = !transactor
         ? 'transactor'
-        : JBController
+        : !JBController
         ? 'JBController'
         : !projectId
         ? 'projectId'

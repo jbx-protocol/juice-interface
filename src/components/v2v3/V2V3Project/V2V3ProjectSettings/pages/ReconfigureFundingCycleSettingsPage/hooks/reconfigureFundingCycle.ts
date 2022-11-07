@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { PV_V2 } from 'constants/pv'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
@@ -117,7 +118,7 @@ export const useReconfigureFundingCycle = ({
       async onConfirmed() {
         if (projectId) {
           await revalidateProject({
-            pv: '2',
+            pv: PV_V2,
             projectId: String(projectId),
           })
         }

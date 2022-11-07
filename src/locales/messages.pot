@@ -629,6 +629,9 @@ msgstr ""
 msgid "Changes to payouts will take effect immediately."
 msgstr ""
 
+msgid "Changes to your collection details may not be reflected in some marketplaces (for example, Opensea). Please contact the marketplace for support."
+msgstr ""
+
 msgid "Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
 msgstr ""
 
@@ -699,6 +702,9 @@ msgid "Collection Symbol"
 msgstr ""
 
 msgid "Collection description"
+msgstr ""
+
+msgid "Collection details"
 msgstr ""
 
 msgid "Collection name"
@@ -1724,12 +1730,6 @@ msgstr ""
 msgid "Manual Funding Cycles"
 msgstr ""
 
-msgid "Marketplace Customizations"
-msgstr ""
-
-msgid "Marketplace customizations"
-msgstr ""
-
 msgid "Max Supply"
 msgstr ""
 
@@ -2351,10 +2351,10 @@ msgstr ""
 msgid "Reconfigure Funding Cycle"
 msgstr ""
 
-msgid "Reconfigure funding cycle"
+msgid "Reconfigure collection details"
 msgstr ""
 
-msgid "Reconfigure marketplace customizations"
+msgid "Reconfigure funding cycle"
 msgstr ""
 
 msgid "Reconfigure payouts as percentages of your distribution limit."
@@ -2373,6 +2373,9 @@ msgid "Reconfigure {projectTitle}"
 msgstr ""
 
 msgid "Reconfigure {projectTitle} with new NFTs"
+msgstr ""
+
+msgid "Reconfigure {projectTitle}'s NFT marketplace metadata."
 msgstr ""
 
 msgid "Redeem"

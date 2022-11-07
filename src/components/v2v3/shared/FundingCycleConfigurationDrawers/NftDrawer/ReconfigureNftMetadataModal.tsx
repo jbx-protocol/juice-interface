@@ -1,6 +1,7 @@
-import { t } from '@lingui/macro'
-import { Modal } from 'antd'
+import { t, Trans } from '@lingui/macro'
+import { Modal, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
+import Callout from 'components/Callout'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useReconfigureNftCollectionMetadata } from 'hooks/v2v3/transactor/ReconfigureNftCollectionMetadata'
 import { NftCollectionMetadata } from 'models/nftRewardTier'
@@ -44,7 +45,7 @@ export function ReconfigureNftMetadataModal({
 
   return (
     <Modal
-      title={t`Reconfigure marketplace customizations`}
+      title={t`Reconfigure collection details`}
       open={open}
       onCancel={onClose}
       okText={t`Confirm`}
@@ -54,11 +55,20 @@ export function ReconfigureNftMetadataModal({
       onOk={submitCollectionMetadata}
       confirmLoading={txLoading}
     >
-      <NftMarketplaceCustomizationForm
-        form={marketplaceForm}
-        onFormUpdated={() => setFormHasUpdated(true)}
-        isReconfigure
-      />
+      <Space size="large" direction="vertical">
+        <Callout>
+          <Trans>
+            Changes to your collection details may not be reflected in some
+            marketplaces (for example, Opensea). Please contact the marketplace
+            for support.
+          </Trans>
+        </Callout>
+        <NftMarketplaceCustomizationForm
+          form={marketplaceForm}
+          onFormUpdated={() => setFormHasUpdated(true)}
+          isReconfigure
+        />
+      </Space>
     </Modal>
   )
 }

@@ -5,7 +5,7 @@ import { useJB721TieredDelegate } from 'hooks/contracts/JB721Delegate/useJB721Ti
 import { TransactorInstance } from 'hooks/Transactor'
 import { NftCollectionMetadata } from 'models/nftRewardTier'
 import { useContext } from 'react'
-import { restrictedIpfsUrl } from 'utils/ipfs'
+import { ipfsUrl } from 'utils/ipfs'
 import {
   defaultNftCollectionDescription,
   defaultNftCollectionName,
@@ -44,16 +44,9 @@ export function useReconfigureNftCollectionMetadata({
       collectionInfoUri: projectMetadata?.infoUri,
     })
 
-    console.info('restrictedIpfsUrl(uri): ', restrictedIpfsUrl(uri))
-
-    return transactor(
-      JB721TieredDelegate,
-      'setContractUri',
-      [restrictedIpfsUrl(uri)],
-      {
-        ...txOpts,
-        title: t`Reconfigure ${projectTitle} with new NFTs`,
-      },
-    )
+    return transactor(JB721TieredDelegate, 'setContractUri', [ipfsUrl(uri)], {
+      ...txOpts,
+      title: t`Reconfigure ${projectTitle}'s NFT marketplace metadata.`,
+    })
   }
 }

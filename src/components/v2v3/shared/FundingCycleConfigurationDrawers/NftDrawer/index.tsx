@@ -334,7 +334,7 @@ export default function NftDrawer({
               <MinimalCollapse
                 header={
                   <>
-                    <Trans>Marketplace customizations</Trans>
+                    <Trans>Collection details</Trans>
                     <TooltipIcon
                       tip={t`Customize how your NFT collection will appear on NFT marketplaces (like OpenSea).`}
                       iconStyle={{ marginLeft: 10 }}
@@ -368,7 +368,7 @@ export default function NftDrawer({
             </>
           ) : (
             <Button onClick={() => setNftMetadataModalOpen(true)}>
-              <Trans>Reconfigure marketplace customizations</Trans>
+              <Trans>Reconfigure collection details</Trans>
             </Button>
           )}
         </div>

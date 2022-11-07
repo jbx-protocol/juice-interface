@@ -14,7 +14,8 @@ export default function Faq() {
             <Image
               src={qa.img.src}
               alt={qa.img.alt}
-              style={{ maxWidth: '100%' }}
+              width={qa.img.width}
+              height={qa.img.height}
               loading="lazy"
             />
           )}

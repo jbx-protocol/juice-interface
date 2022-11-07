@@ -42,7 +42,7 @@ export async function findJBTiered721DelegateProjectDeployerAddress() {
 export async function findJBTiered721DelegateStoreAddress() {
   const latestNftContractDeployments = await loadNftRewardsDeployment()
   return latestNftContractDeployments.transactions.find(
-    tx => tx.contractName === V2V3ContractName.JBTiered721DelegateStore,
+    tx => tx.contractName === 'JBTiered721DelegateStore',
   )?.contractAddress
 }
 

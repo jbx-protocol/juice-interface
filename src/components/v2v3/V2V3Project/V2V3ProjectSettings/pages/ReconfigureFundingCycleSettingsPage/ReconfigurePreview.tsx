@@ -10,6 +10,7 @@ import {
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
 
+import { NftRewardTier } from 'models/nftRewardTier'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import {
   AllowMintingStatistic,
@@ -26,6 +27,7 @@ import {
   ReservedSplitsStatistic,
   ReservedTokensStatistic,
 } from 'pages/create/tabs/ReviewDeployTab/FundingAttributes'
+import NftSummarySection from 'pages/create/tabs/ReviewDeployTab/NftSummarySection'
 import { formattedNum } from 'utils/format/formatNumber'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
 import { getDefaultFundAccessConstraint } from 'utils/v2v3/fundingCycle'
@@ -44,12 +46,14 @@ export default function ReconfigurePreview({
   fundingCycleMetadata,
   fundingCycleData,
   fundAccessConstraints,
+  nftRewards,
 }: {
   payoutSplits: Split[]
   reserveSplits: Split[]
   fundingCycleMetadata: V2V3FundingCycleMetadata
   fundingCycleData: V2V3FundingCycleData
   fundAccessConstraints: V2V3FundAccessConstraint[]
+  nftRewards?: NftRewardTier[]
 }) {
   const { userAddress } = useWallet()
 
@@ -193,6 +197,7 @@ export default function ReconfigurePreview({
           projectOwnerAddress={userAddress}
         />
       )}
+      {nftRewards ? <NftSummarySection /> : null}
     </Space>
   )
 }

@@ -1,5 +1,6 @@
+import { getAddress } from '@ethersproject/address'
 import { t, Trans } from '@lingui/macro'
-import { Button, Form, Space } from 'antd'
+import { Form, Space } from 'antd'
 import Callout from 'components/Callout'
 import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
 import { MemoFormInput } from 'components/Project/PayProjectForm/MemoFormInput'
@@ -10,16 +11,22 @@ import RulesDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawers
 import TokenDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawers/TokenDrawer'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
+import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { useV2HasPermissions } from 'hooks/v2v3/contractReader/V2HasPermissions'
+import { V2OperatorPermission } from 'models/v2v3/permissions'
 import { useContext, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
+import { DeployConfigurationButton } from './DeployConfigurationButton'
 import { useEditingFundingCycleConfig } from './hooks/editingFundingCycleConfig'
 import { useFundingHasSavedChanges } from './hooks/fundingHasSavedChanges'
 import { useInitialEditingData } from './hooks/initialEditingData'
 import { useReconfigureFundingCycle } from './hooks/reconfigureFundingCycle'
 import ReconfigurePreview from './ReconfigurePreview'
 import V2V3ReconfigureUpcomingMessage from './ReconfigureUpcomingMessage'
+import { SetNftOperatorPermissionsButton } from './SetNftOperatorPermissionsButton'
 
 function ReconfigureButton({
   reconfigureHasChanges,
@@ -42,7 +49,10 @@ function ReconfigureButton({
 }
 
 export function V2V3ReconfigureFundingCycleForm() {
-  const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
+  const { fundingCycleMetadata, projectOwnerAddress } =
+    useContext(V2V3ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
+  const { contracts } = useContext(V2V3ContractsContext)
   const {
     nftRewards: { CIDs: nftRewardsCids },
   } = useContext(NftRewardsContext)
@@ -55,6 +65,8 @@ export function V2V3ReconfigureFundingCycleForm() {
   const [rulesDrawerVisible, setRulesDrawerVisible] = useState<boolean>(false)
   const [unsavedChangesModalVisibile, setUnsavedChangesModalVisible] =
     useState<boolean>(false)
+
+  const [nftOperatorConfirmed, setNftOperatorConfirmed] = useState<boolean>()
 
   const { initialEditingData } = useInitialEditingData({ visible: true })
   const editingFundingCycleConfig = useEditingFundingCycleConfig()
@@ -70,7 +82,11 @@ export function V2V3ReconfigureFundingCycleForm() {
   })
 
   const { reconfigureLoading, reconfigureFundingCycle } =
-    useReconfigureFundingCycle({ editingFundingCycleConfig, memo })
+    useReconfigureFundingCycle({
+      editingFundingCycleConfig,
+      memo,
+      launchedNewNfts: nftDrawerHasSavedChanges,
+    })
 
   const closeReconfigureDrawer = () => {
     setFundingDrawerVisible(false)
@@ -96,6 +112,18 @@ export function V2V3ReconfigureFundingCycleForm() {
   )
 
   const nftsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
+
+  const nftDeployerAddress = contracts
+    ? getAddress(contracts.JBTiered721DelegateProjectDeployer.address)
+    : undefined
+  const { data: nftContractHasPermission } = contracts
+    ? useV2HasPermissions({
+        operator: nftDeployerAddress,
+        account: projectOwnerAddress,
+        domain: projectId,
+        permissions: [V2OperatorPermission.RECONFIGURE],
+      })
+    : { data: undefined }
 
   return (
     <>
@@ -159,18 +187,35 @@ export function V2V3ReconfigureFundingCycleForm() {
           fundAccessConstraints={
             editingFundingCycleConfig.editingFundAccessConstraints
           }
+          nftRewards={editingFundingCycleConfig.editingNftRewards?.rewardTiers}
         />
-
-        <Button
-          loading={reconfigureLoading}
-          onClick={reconfigureFundingCycle}
-          disabled={!fundingHasSavedChanges && !nftsWithFalseDataSourceForPay}
-          type="primary"
-        >
-          <span>
-            <Trans>Deploy funding cycle configuration</Trans>
-          </span>
-        </Button>
+        {nftDrawerHasSavedChanges && !nftContractHasPermission ? (
+          <Space size="middle" direction="vertical">
+            <div style={{ display: 'flex' }}>
+              <h2 style={{ marginRight: 5 }}>1.</h2>
+              <SetNftOperatorPermissionsButton
+                onConfirmed={() => setNftOperatorConfirmed(true)}
+              />
+            </div>
+            <div style={{ display: 'flex' }}>
+              <h2 style={{ marginRight: 5 }}>2.</h2>
+              <DeployConfigurationButton
+                loading={reconfigureLoading}
+                onClick={reconfigureFundingCycle}
+                disabled={
+                  (!fundingHasSavedChanges || !nftOperatorConfirmed) &&
+                  !nftsWithFalseDataSourceForPay
+                }
+              />
+            </div>
+          </Space>
+        ) : (
+          <DeployConfigurationButton
+            loading={reconfigureLoading}
+            onClick={reconfigureFundingCycle}
+            disabled={!fundingHasSavedChanges && !nftsWithFalseDataSourceForPay}
+          />
+        )}
       </Space>
 
       <FundingDrawer

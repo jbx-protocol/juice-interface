@@ -2,9 +2,10 @@ import { t } from '@lingui/macro'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import { CurrencyContext } from 'contexts/currencyContext'
 import { ThemeContext } from 'contexts/themeContext'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useEthBalanceQuery } from 'hooks/EthBalance'
 import { useWallet } from 'hooks/Wallet'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import FormattedNumberInput from '../../inputs/FormattedNumberInput'
 import PayInputSubText from './PayInputSubText'
@@ -12,8 +13,9 @@ import { PayProjectFormContext } from './payProjectFormContext'
 
 export function PayProjectForm({ disabled }: { disabled?: boolean }) {
   const { userAddress } = useWallet()
+  const converter = useCurrencyConverter()
   const { data: balance } = useEthBalanceQuery(userAddress)
-  const formattedBalance = parseFloat(fromWad(balance))
+  const balanceUSD = converter.wadToCurrency(balance, 'USD', 'ETH')
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -30,11 +32,32 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
     errorMessage,
     setErrorMessage,
   } = payProjectForm ?? {}
+  const formattedBalance =
+    payInCurrency === ETH
+      ? parseFloat(fromWad(balance))
+      : parseFloat(fromWad(balanceUSD))
 
   const togglePayInCurrency = () => {
     const newPayInCurrency = payInCurrency === ETH ? USD : ETH
     setPayInCurrency?.(newPayInCurrency)
   }
+
+  useEffect(() => {
+    if (payInCurrency === ETH) {
+      if (Number(payAmount) > formattedBalance) {
+        setErrorMessage?.(t`Payment amount can't exceed your wallet balance.`)
+      } else {
+        setErrorMessage?.('')
+      }
+    } else {
+      if (Number(payAmount) > formattedBalance) {
+        setErrorMessage?.(t`Payment amount can't exceed your wallet balance.`)
+      } else {
+        setErrorMessage?.('')
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [balance, balanceUSD, payInCurrency])
 
   if (!PayButton) return null
 

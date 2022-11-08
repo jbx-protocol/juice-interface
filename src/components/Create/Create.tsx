@@ -1,4 +1,5 @@
 import { t, Trans } from '@lingui/macro'
+import { Space } from 'antd'
 import { DeployButtonText } from 'components/DeployProjectButtonText'
 import ExternalLink from 'components/ExternalLink'
 import { CV_V2, CV_V3 } from 'constants/cv'
@@ -149,10 +150,10 @@ export function Create() {
               <Wizard.Page
                 name="nftRewards"
                 title={
-                  <>
+                  <Space>
                     <Trans>NFTs</Trans>
                     <CreateBadge.Optional />
-                  </>
+                  </Space>
                 }
                 description={
                   <Trans>

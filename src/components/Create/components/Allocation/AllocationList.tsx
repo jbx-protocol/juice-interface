@@ -1,5 +1,6 @@
 import { PlusCircleOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
+import useMobile from 'hooks/Mobile'
 import { useModal } from 'hooks/Modal'
 import { ReactNode, useCallback, useState } from 'react'
 import { CreateButton } from '../CreateButton'
@@ -22,6 +23,7 @@ export const AllocationList = ({
     > & { setSelectedAllocation: (a: AllocationSplit | undefined) => void },
   ) => ReactNode
 }) => {
+  const isMobile = useMobile()
   const allocations = Allocation.useAllocationInstance()
   const { upsertAllocation } = allocations
 
@@ -60,12 +62,13 @@ export const AllocationList = ({
             style={{
               marginTop: '1rem',
               width: '100%',
-              textAlign: 'left',
             }}
             icon={<PlusCircleOutlined />}
             onClick={modal.open}
           >
-            {t`Add ${allocationName ? ` ${allocationName}` : ''}`}
+            {isMobile
+              ? t`Add`
+              : t`Add ${allocationName ? ` ${allocationName}` : ''}`}
           </CreateButton>
         )}
       </div>

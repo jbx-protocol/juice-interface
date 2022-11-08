@@ -2981,13 +2981,16 @@ msgstr ""
 msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
 msgstr ""
 
+msgid "This project is funded on Juicebox V2 and V3. Select which data to display."
+msgstr ""
+
 msgid "This project is owned by a Safe. <0>View transactions</0>."
 msgstr ""
 
-msgid "This project reserves some of the newly minted tokens for itself."
+msgid "This project is stored on the V2 Juicebox contract."
 msgstr ""
 
-msgid "This project uses the V2 version of the Juicebox contracts."
+msgid "This project reserves some of the newly minted tokens for itself."
 msgstr ""
 
 msgid "This project's balance in the Juicebox contract."
@@ -3300,6 +3303,9 @@ msgid "Value has already been submitted"
 msgstr ""
 
 msgid "VeNFT contract created successfully. Results will be indexed in a few moments."
+msgstr ""
+
+msgid "Version"
 msgstr ""
 
 msgid "Version of the terminal contract used by this project."

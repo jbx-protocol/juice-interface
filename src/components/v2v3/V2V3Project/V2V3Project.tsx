@@ -3,11 +3,13 @@ import { Col, Row, Space } from 'antd'
 import { useModalFromUrlQuery } from 'components/modals/hooks/useModalFromUrlQuery'
 import { PayProjectForm } from 'components/Project/PayProjectForm'
 import { ProjectHeader } from 'components/Project/ProjectHeader'
+import StatLine from 'components/Project/StatLine'
 import { TextButton } from 'components/TextButton'
 import VolumeChart from 'components/VolumeChart'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 import useMobile from 'hooks/Mobile'
@@ -23,6 +25,7 @@ import ProjectActivity from './ProjectActivity'
 import TreasuryStats from './TreasuryStats'
 import { V2V3FundingCycleSection } from './V2V3FundingCycleSection'
 import V2ManageTokensSection from './V2V3ManageTokensSection'
+import { ContractVersionSelect } from './V2V3ProjectHeaderActions/ContractVersionSelect'
 import { V2V3ProjectHeaderActions } from './V2V3ProjectHeaderActions/V2V3ProjectHeaderActions'
 
 const GUTTER_PX = 40
@@ -44,6 +47,26 @@ const AllAssetsButton = () => {
         onCancel={() => setBalancesModalVisible(false)}
       />
     </>
+  )
+}
+
+function VersionSelectorLine() {
+  const { cvs } = useContext(V2V3ContractsContext)
+
+  if (!cvs || cvs.length === 1) return null
+
+  return (
+    <StatLine
+      statLabel={<Trans>Version</Trans>}
+      statValue={<ContractVersionSelect />}
+      statLabelTip={
+        <Trans>
+          This project is funded on Juicebox V2 and V3. Select which data to
+          display.
+        </Trans>
+      }
+      style={{ marginBottom: '0.75rem' }}
+    />
   )
 }
 
@@ -98,6 +121,7 @@ export function V2V3Project() {
         <Space direction="vertical" size={GUTTER_PX} style={{ width: '100%' }}>
           <Row gutter={GUTTER_PX} align={'bottom'}>
             <Col md={colSizeMd} xs={24}>
+              <VersionSelectorLine />
               <TreasuryStats />
               <div style={{ textAlign: 'right' }}>
                 <AllAssetsButton />

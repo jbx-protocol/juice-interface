@@ -21,6 +21,7 @@ export function ProjectVersionBadge({
         background: colors.background.l2,
         color: colors.text.secondary,
         fontSize: size === 'small' ? '0.75rem' : 'auto',
+        cursor: 'default',
         ...style,
       }}
     >

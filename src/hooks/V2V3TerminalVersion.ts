@@ -1,52 +1,32 @@
-import { readNetwork } from 'constants/networks'
+import { getAddress } from '@ethersproject/address'
+import { CV_V2, CV_V3 } from 'constants/cv'
+import { V2V3ContractName } from 'models/v2v3/contracts'
 import { CV2V3 } from 'models/v2v3/cv'
-import { useEffect, useState } from 'react'
-import { ContractJson } from 'utils/v2v3/loadV2V3Contract'
+import { useLoadV2V3Contract } from './v2v3/LoadV2V3Contract'
 
 export function useV2V3TerminalVersion(
   address: string | undefined,
 ): CV2V3 | undefined {
-  const [v2Address, setV2Address] = useState<string>()
-  const [v3Address, setV3Address] = useState<string>()
+  const V2Terminal = useLoadV2V3Contract({
+    cv: CV_V2,
+    contractName: V2V3ContractName.JBETHPaymentTerminal,
+  })
+  const V3Terminal = useLoadV2V3Contract({
+    cv: CV_V3,
+    contractName: V2V3ContractName.JBETHPaymentTerminal,
+  })
 
-  useEffect(() => {
-    async function loadV2() {
-      const address = (
-        (await import(
-          `@jbx-protocol/contracts-v2-latest/deployments/${readNetwork.name}/JBETHPaymentTerminal.json`
-        )) as ContractJson
-      ).address
+  if (!(V2Terminal && V3Terminal)) return
 
-      try {
-        setV2Address(address)
-      } catch (e) {
-        console.error('Failed to load V2 JBETHPaymentTerminal', e)
-      }
-    }
-    async function loadV3() {
-      const address = (
-        (await import(
-          `@jbx-protocol/juice-contracts-v3/deployments/${readNetwork.name}/JBETHPaymentTerminal.json`
-        )) as ContractJson
-      ).address
-
-      try {
-        setV3Address(address)
-      } catch (e) {
-        console.error('Failed to load V3 JBETHPaymentTerminal', e)
-      }
-    }
-
-    loadV2()
-    loadV3()
-  }, [])
+  const v2TerminalAddress = getAddress(V2Terminal.address)
+  const v3TerminalAddress = getAddress(V3Terminal.address)
 
   if (!address) return
 
-  switch (address.toLowerCase()) {
-    case v2Address?.toLowerCase():
-      return '2'
-    case v3Address?.toLowerCase():
-      return '3'
+  switch (getAddress(address)) {
+    case v2TerminalAddress:
+      return CV_V2
+    case v3TerminalAddress:
+      return CV_V3
   }
 }

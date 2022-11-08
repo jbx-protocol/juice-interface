@@ -32,7 +32,11 @@ export default function StatLine({
       }}
     >
       <div style={textSecondary(theme)}>
-        <TooltipLabel label={statLabel} tip={statLabelTip} />
+        <TooltipLabel
+          label={statLabel}
+          tip={statLabelTip}
+          tooltipInnerStyle={{ width: '400px' }}
+        />
       </div>
 
       {loading ? (

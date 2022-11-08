@@ -6,6 +6,23 @@
   background-color: var(--background-action-primary);
 }
 
-.ant-radio-wrapper {
+.ant-radio-wrapper, 
+.ant-radio-button-wrapper {
   color: var(--text-primary);
+  &:hover {
+    color: var(--text-primary);
+  }
 }
+
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled),
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover,
+.ant-radio-button-wrapper-checked:not([class*=' ant-radio-button-wrapper-disabled']).ant-radio-button-wrapper:first-child,
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):first-child {
+  border-color: var(--stroke-action-primary);
+  color: var(--text-action-primary);
+
+  &::before {
+    background-color: var(--stroke-action-primary);
+  }
+}
+

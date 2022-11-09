@@ -51,7 +51,7 @@ export const useDeployNftProject = () => {
     async ({
       metadataCid,
       rewardTierCids,
-      nftCollectionMetadataCid,
+      nftCollectionMetadataUri,
 
       onDone,
       onConfirmed,
@@ -59,7 +59,7 @@ export const useDeployNftProject = () => {
     }: {
       metadataCid: string
       rewardTierCids: string[]
-      nftCollectionMetadataCid: string
+      nftCollectionMetadataUri: string
     } & Pick<
       TransactionCallbacks,
       'onCancelled' | 'onConfirmed' | 'onDone'
@@ -75,7 +75,7 @@ export const useDeployNftProject = () => {
       })
       return await launchProjectWithNftsTx(
         {
-          collectionCID: nftCollectionMetadataCid,
+          collectionUri: nftCollectionMetadataUri,
           collectionName,
           collectionSymbol,
           projectMetadataCID: metadataCid,

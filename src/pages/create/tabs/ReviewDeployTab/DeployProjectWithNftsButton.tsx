@@ -67,7 +67,7 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
       collectionMetadata: {
         name: collectionName,
         symbol: collectionSymbol,
-        CID: collectionCID,
+        uri: collectionUri,
       },
       postPayModal,
     },
@@ -149,7 +149,7 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
       const tiers = buildJB721TierParams({ cids: CIDs, rewardTiers })
       const txSuccessful = await launchProjectWithNftsTx(
         {
-          collectionCID: collectionCID ?? '',
+          collectionUri: collectionUri ?? '',
           collectionName: collectionName ?? projectName,
           collectionSymbol: collectionSymbol ?? '',
           projectMetadataCID: uploadedMetadata.IpfsHash,
@@ -187,7 +187,7 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
     rewardTiers,
     collectionName,
     collectionSymbol,
-    collectionCID,
+    collectionUri,
     dispatch,
     router,
   ])

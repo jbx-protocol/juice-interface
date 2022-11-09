@@ -6,11 +6,7 @@ import { TransactorInstance } from 'hooks/Transactor'
 import { NftCollectionMetadata } from 'models/nftRewardTier'
 import { useContext } from 'react'
 import { ipfsUrl } from 'utils/ipfs'
-import {
-  defaultNftCollectionDescription,
-  defaultNftCollectionName,
-  uploadNftCollectionMetadataToIPFS,
-} from 'utils/nftRewards'
+import { uploadNftCollectionMetadataToIPFS } from 'utils/nftRewards'
 import { useV2ProjectTitle } from '../ProjectTitle'
 
 export function useReconfigureNftCollectionMetadata({
@@ -28,25 +24,21 @@ export function useReconfigureNftCollectionMetadata({
   const projectTitle = useV2ProjectTitle()
 
   return async ({ name, description }, txOpts) => {
-    if (!transactor || !JB721TieredDelegate) {
+    if (!transactor || !JB721TieredDelegate || !name) {
       txOpts?.onDone?.()
       return Promise.resolve(false)
     }
 
     const uri = await uploadNftCollectionMetadataToIPFS({
-      collectionName: name?.length
-        ? name
-        : defaultNftCollectionName(projectTitle),
-      collectionDescription: description?.length
-        ? description
-        : defaultNftCollectionDescription(projectTitle),
+      collectionName: name,
+      collectionDescription: description ?? '',
       collectionLogoUri: projectMetadata?.logoUri,
       collectionInfoUri: projectMetadata?.infoUri,
     })
 
     return transactor(JB721TieredDelegate, 'setContractUri', [ipfsUrl(uri)], {
       ...txOpts,
-      title: t`Reconfigure ${projectTitle}'s NFT marketplace metadata.`,
+      title: t`Update ${projectTitle}'s NFT collection details.`,
     })
   }
 }

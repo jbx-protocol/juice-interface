@@ -142,8 +142,8 @@ export function V2V3ReconfigureFundingCycleForm() {
         />
         {nftsEnabled ? (
           <ReconfigureButton
-            heading={t`NFT rewards`}
-            description={t`Configure your project's NFT rewards.`}
+            heading={t`NFTs`}
+            description={t`Configure your project's NFTs.`}
             reconfigureHasChanges={nftDrawerHasSavedChanges}
             onClick={() => setNftDrawerVisible(true)}
           />

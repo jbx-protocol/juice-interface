@@ -47,6 +47,7 @@ export default function NftRewardTierCard({
           padding: '15px 8px 15px 20px',
         }}
         onClick={() => setEditTierModalVisible(true)}
+        gutter={8}
       >
         <Col
           md={16}

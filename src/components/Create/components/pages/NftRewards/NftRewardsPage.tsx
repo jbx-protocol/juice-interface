@@ -100,6 +100,11 @@ export const NftRewardsPage = () => {
                   size="middle"
                   style={{ width: '100%', padding: '0.75rem 0 0.5rem 0' }}
                 >
+                  <p>
+                    <Trans>
+                      Show contributors a popup when they receive an NFT.
+                    </Trans>
+                  </p>
                   <Form.Item
                     name="postPayMessage"
                     label={
@@ -138,7 +143,7 @@ export const NftRewardsPage = () => {
                   </Form.Item>
                   <Form.Item
                     name="postPayButtonLink"
-                    label={<Trans>Call-to-action button link</Trans>}
+                    label={<Trans>Button link</Trans>}
                     extra={t`Button will close the modal if no link is given.`}
                   >
                     <Input prefix={'https://'} />

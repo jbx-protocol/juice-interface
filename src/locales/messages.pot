@@ -590,6 +590,12 @@ msgstr ""
 msgid "Button Text"
 msgstr ""
 
+msgid "Button link"
+msgstr ""
+
+msgid "Button text"
+msgstr ""
+
 msgid "Button will close the modal if no link is given."
 msgstr ""
 
@@ -606,12 +612,6 @@ msgid "CSV data wasn't ready for export. Wait a few seconds and try again."
 msgstr ""
 
 msgid "CSV download failed."
-msgstr ""
-
-msgid "Call-to-action button link"
-msgstr ""
-
-msgid "Call-to-action button text"
 msgstr ""
 
 msgid "Can I change my project's contract after it's been created?"
@@ -2697,6 +2697,9 @@ msgid "Share project"
 msgstr ""
 
 msgid "Should you Juicebox?"
+msgstr ""
+
+msgid "Show contributors a popup when they receive an NFT."
 msgstr ""
 
 msgid "Show your contributors a message after they receive their NFT reward."

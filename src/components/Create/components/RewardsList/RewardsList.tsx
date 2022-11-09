@@ -102,7 +102,7 @@ export const RewardsList: React.FC<RewardsListProps> &
             disabled={rewards.length >= 3}
             onClick={modal.open}
           >
-            Add NFT reward tier
+            Add NFT tier
           </CreateButton>
         )}
       </div>

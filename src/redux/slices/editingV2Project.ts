@@ -334,7 +334,7 @@ const editingV2ProjectSlice = createSlice({
     ) => {
       state.nftRewards.postPayModal = action.payload
     },
-    setNftRewardsName: (state, action: PayloadAction<string | undefined>) => {
+    setNftRewardsName: (state, action: PayloadAction<string>) => {
       state.nftRewards.collectionMetadata.name = action.payload
     },
     setAllowSetTerminals: (state, action: PayloadAction<boolean>) => {

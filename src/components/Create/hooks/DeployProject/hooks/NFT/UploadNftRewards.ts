@@ -34,18 +34,18 @@ export const useUploadNftRewards = () => {
     ])
 
     if (rewardTiersCids.length !== nftRewards.rewardTiers.length) {
-      console.error('Failed to upload all reward tiers', {
+      console.error('Failed to upload all NFT tiers', {
         rewardTiersCids,
         inputRewardTiers: nftRewards.rewardTiers,
       })
-      throw new Error('Failed to upload all nft reward tiers')
+      throw new Error('Failed to upload all NFT tiers')
     }
     if (!nftCollectionMetadataCid.length) {
-      console.error('Failed to upload nft collection metadata', {
+      console.error('Failed to upload NFT collection metadata', {
         nftCollectionMetadataCid,
         inputNftCollectionMetadata: nftRewards.collectionMetadata,
       })
-      throw new Error('Failed to upload nft collection metadata')
+      throw new Error('Failed to upload NFT collection metadata')
     }
 
     return {

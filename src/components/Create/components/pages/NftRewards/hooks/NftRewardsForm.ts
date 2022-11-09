@@ -5,6 +5,10 @@ import { useAppSelector } from 'hooks/AppSelector'
 import { useEffect, useMemo } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { withHttps, withoutHttp } from 'utils/externalLink'
+import {
+  defaultNftCollectionDescription,
+  defaultNftCollectionName,
+} from 'utils/nftRewards'
 import { v4 } from 'uuid'
 import { useFormDispatchWatch } from '../../hooks'
 
@@ -23,10 +27,15 @@ export const useNftRewardsForm = () => {
   const { collectionMetadata, rewardTiers, postPayModal } = useAppSelector(
     state => state.editingV2Project.nftRewards,
   )
+  const { projectMetadata } = useAppSelector(state => state.editingV2Project)
   const initialValues: NftRewardsFormProps = useMemo(() => {
-    const collectionName = collectionMetadata.name
-    const collectionSymbol = collectionMetadata.symbol
-    const collectionDescription = collectionMetadata.description
+    const collectionName =
+      collectionMetadata?.name ??
+      defaultNftCollectionName(projectMetadata.name!)
+    const collectionDescription =
+      collectionMetadata?.description ??
+      defaultNftCollectionDescription(projectMetadata.name!)
+    const collectionSymbol = collectionMetadata?.symbol
 
     const rewards: Reward[] =
       rewardTiers?.map(t => ({
@@ -56,6 +65,7 @@ export const useNftRewardsForm = () => {
     postPayModal?.ctaLink,
     postPayModal?.ctaText,
     rewardTiers,
+    projectMetadata.name,
   ])
 
   useFormDispatchWatch({

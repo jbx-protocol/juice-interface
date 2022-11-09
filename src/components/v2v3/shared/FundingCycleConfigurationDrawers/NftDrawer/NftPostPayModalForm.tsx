@@ -47,11 +47,7 @@ export function NftPostPayModalForm({
       <Form.Item name="content" label={t`Message`}>
         <TextArea autoComplete="off" />
       </Form.Item>
-      <Form.Item
-        requiredMark="optional"
-        name="ctaText"
-        label={t`Call-to-action button text`}
-      >
+      <Form.Item requiredMark="optional" name="ctaText" label={t`Button text`}>
         <Input
           type="string"
           autoComplete="off"
@@ -63,7 +59,7 @@ export function NftPostPayModalForm({
       <Form.Item
         requiredMark="optional"
         name="ctaLink"
-        label={t`Call-to-action button link`}
+        label={t`Button link`}
         extra={t`Button will close the modal if no link is given.`}
       >
         <Input type="string" autoComplete="off" prefix="https://" />

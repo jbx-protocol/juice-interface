@@ -1,7 +1,6 @@
 import { PinataMetadata, PinataPinResponse } from '@pinata/sdk'
 import axios from 'axios'
 import { IPFS_TAGS } from 'constants/ipfs'
-import { ipfsGet } from 'lib/infura/ipfs'
 import { consolidateMetadata, ProjectMetadataV5 } from 'models/project-metadata'
 import {
   ipfsGatewayUrl,
@@ -34,7 +33,7 @@ export const ipfsGetWithFallback = async (
     console.info(`ipfs::falling back to open gateway for ${hash}`)
     const response = fallbackHostname
       ? await axios.get(ipfsGatewayUrl(hash, fallbackHostname))
-      : await ipfsGet(openIpfsUrl(hash))
+      : await axios.get(openIpfsUrl(hash))
     return response
   }
 }

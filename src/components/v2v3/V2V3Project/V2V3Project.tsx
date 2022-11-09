@@ -6,7 +6,6 @@ import { ProjectHeader } from 'components/Project/ProjectHeader'
 import { TextButton } from 'components/TextButton'
 import VolumeChart from 'components/VolumeChart'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
@@ -15,6 +14,7 @@ import { useValidatePrimaryEthTerminal } from 'hooks/v2v3/ValidatePrimaryEthTerm
 import { V2V3PayProjectFormProvider } from 'providers/v2v3/V2V3PayProjectFormProvider'
 import { useContext, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
+import { hasNftRewards } from 'utils/nftRewards'
 import { NftRewardsSection } from '../../NftRewards/NftRewardsSection'
 import { ProjectBanners } from './banners/ProjectBanners'
 import NewDeployModal, { NEW_DEPLOY_QUERY_PARAM } from './modals/NewDeployModal'
@@ -54,11 +54,9 @@ export function V2V3Project() {
     isPreviewMode,
     projectOwnerAddress,
     handle,
+    fundingCycleMetadata,
   } = useContext(V2V3ProjectContext)
   const { projectId, pv } = useContext(ProjectMetadataContext)
-  const {
-    nftRewards: { rewardTiers: nftRewardTiers },
-  } = useContext(NftRewardsContext)
 
   const { visible: newDeployModalVisible, hide: hideNewDeployModal } =
     useModalFromUrlQuery(NEW_DEPLOY_QUERY_PARAM)
@@ -75,9 +73,9 @@ export function V2V3Project() {
     isPreviewMode || !hasCurrentFundingCycle || !isPrimaryETHTerminalValid
 
   const nftRewardsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
-  const hasNftRewards = Boolean(nftRewardTiers?.length)
+  const _hasNftRewards = hasNftRewards(fundingCycleMetadata)
 
-  const showNftSection = nftRewardsEnabled && hasNftRewards
+  const showNftSection = nftRewardsEnabled && _hasNftRewards
 
   const colSizeMd = isPreviewMode ? 24 : 12
 

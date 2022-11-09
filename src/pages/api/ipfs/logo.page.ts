@@ -1,7 +1,6 @@
 import { t } from '@lingui/macro'
 import formidable from 'formidable'
 import fs from 'fs'
-import { pin } from 'lib/infura/ipfs'
 import { getPinata } from 'lib/pinata'
 import { NextApiRequest, NextApiResponse } from 'next'
 
@@ -36,9 +35,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       pinata
         .pinFileToIPFS(stream, options)
         .then(result => {
-          // pin on Infura too.
-          // TODO eventually we should only pin on Infura.
-          pin(result.IpfsHash)
           return res.status(200).json(result)
         })
         .catch(err => {

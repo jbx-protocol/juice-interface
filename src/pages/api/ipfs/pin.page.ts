@@ -1,5 +1,4 @@
 import { PinataMetadata } from '@pinata/sdk'
-import { pin } from 'lib/infura/ipfs'
 import { getPinata, getPinnedListByTag } from 'lib/pinata'
 import { NextApiRequest, NextApiResponse } from 'next'
 
@@ -33,12 +32,7 @@ const handler = async (req: ApiRequest, res: NextApiResponse) => {
       const { data, options } = req.body
 
       const pinata = getPinata()
-      // pin on Pinata
       const pinData = await pinata.pinJSONToIPFS(data, options)
-
-      // pin on Infura too.
-      // TODO eventually we should only pin on Infura.
-      pin(pinData.IpfsHash)
 
       return res.status(200).json({
         ...pinData,

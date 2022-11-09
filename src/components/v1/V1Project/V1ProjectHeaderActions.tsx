@@ -2,7 +2,7 @@ import { SettingOutlined, ToolOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import { V1ProjectToolsDrawer } from 'components/v1/V1Project/V1ProjectToolsDrawer/V1ProjectToolsDrawer'
-import { CV_V1 } from 'constants/cv'
+import { PV_V1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
@@ -30,7 +30,7 @@ export default function V1ProjectHeaderActions() {
   ])
   const isOwner = useIsUserAddress(owner)
 
-  const allowMigrate = isOwner && terminal?.version === CV_V1
+  const allowMigrate = isOwner && terminal?.version === PV_V1
 
   const {
     theme: { colors },

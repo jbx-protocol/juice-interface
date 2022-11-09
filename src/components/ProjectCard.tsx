@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { Trans } from '@lingui/macro'
 import { Skeleton, Tooltip } from 'antd'
-import { CV_V1, CV_V1_1, CV_V2, CV_V3 } from 'constants/cv'
+import { PV_V1, PV_V1_1, PV_V2 } from 'constants/pv'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
 import { ThemeContext } from 'contexts/themeContext'
@@ -29,7 +29,7 @@ export type ProjectCardProject = Pick<
   | 'createdAt'
   | 'terminal'
   | 'projectId'
-  | 'cv'
+  | 'pv'
 >
 
 const cardStyle: CSSProperties = {
@@ -78,7 +78,7 @@ function useProjectCardData(project?: ProjectCardProject | BigNumber) {
             'createdAt',
             'terminal',
             'projectId',
-            'cv',
+            'pv',
           ],
           where: {
             key: 'projectId',
@@ -135,14 +135,14 @@ export default function ProjectCard({
    * https://web.dev/route-prefetching-in-nextjs/
    */
   const projectCardHref =
-    projectCardData.cv === CV_V2 || projectCardData.cv === CV_V3
+    projectCardData.pv === PV_V2
       ? v2v3ProjectRoute({
           projectId: projectCardData.projectId,
         })
       : `/p/${projectCardData.handle}`
 
   const projectCardUrl =
-    projectCardData.cv === CV_V2 || projectCardData.cv === CV_V3
+    projectCardData.pv === PV_V2
       ? v2v3ProjectRoute({
           projectId: projectCardData.projectId,
           handle: projectCardData.handle,
@@ -150,9 +150,9 @@ export default function ProjectCard({
       : projectCardHref
 
   const isArchived =
-    ((projectCardData.cv === CV_V1 || projectCardData.cv === CV_V1_1) &&
+    ((projectCardData.pv === PV_V1 || projectCardData.pv === PV_V1_1) &&
       V1ArchivedProjectIds.includes(projectCardData.projectId)) ||
-    (projectCardData.cv === CV_V2 &&
+    (projectCardData.pv === PV_V2 &&
       V2ArchivedProjectIds.includes(projectCardData.projectId)) ||
     metadata?.archived
 
@@ -206,7 +206,7 @@ export default function ProjectCard({
               </span>{' '}
               <ProjectVersionBadge
                 size="small"
-                versionText={`V${terminalVersion ?? projectCardData.cv}`}
+                versionText={`V${terminalVersion ?? projectCardData.pv}`}
               />
             </div>
 

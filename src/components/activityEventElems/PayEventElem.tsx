@@ -2,8 +2,10 @@ import { Trans } from '@lingui/macro'
 import ETHAmount from 'components/currency/ETHAmount'
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
+import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
 import RichNote from 'components/RichNote'
 import { ThemeContext } from 'contexts/themeContext'
+import { useV2V3TerminalVersion } from 'hooks/V2V3TerminalVersion'
 import { PayEvent } from 'models/subgraph-entities/vX/pay-event'
 import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/format/formatDate'
@@ -29,12 +31,15 @@ export default function PayEventElem({
         | 'id'
         | 'txHash'
         | 'feeFromV2Project'
+        | 'terminal'
       >
     | undefined
 }) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+
+  const terminalVersion = useV2V3TerminalVersion(event?.terminal)
 
   if (!event) return null
 
@@ -62,12 +67,16 @@ export default function PayEventElem({
         </div>
 
         <div style={{ textAlign: 'right' }}>
-          {event.timestamp && (
-            <div style={smallHeaderStyle(colors)}>
-              {formatHistoricalDate(event.timestamp * 1000)}{' '}
-              <EtherscanLink value={event.txHash} type="tx" />
-            </div>
-          )}
+          <div style={smallHeaderStyle(colors)}>
+            {terminalVersion && (
+              <ProjectVersionBadge
+                style={{ padding: 0, background: 'transparent' }}
+                versionText={'V' + terminalVersion}
+              />
+            )}{' '}
+            {event.timestamp && formatHistoricalDate(event.timestamp * 1000)}{' '}
+            <EtherscanLink value={event.txHash} type="tx" />
+          </div>
           <div
             style={{
               ...smallHeaderStyle(colors),

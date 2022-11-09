@@ -55,7 +55,7 @@ export function V2V3Project() {
     projectOwnerAddress,
     handle,
   } = useContext(V2V3ProjectContext)
-  const { projectId, cv } = useContext(ProjectMetadataContext)
+  const { projectId, pv } = useContext(ProjectMetadataContext)
   const {
     nftRewards: { rewardTiers: nftRewardTiers },
   } = useContext(NftRewardsContext)
@@ -121,12 +121,12 @@ export function V2V3Project() {
                 size={GUTTER_PX}
                 style={{ width: '100%' }}
               >
-                {!isPreviewMode && cv ? (
+                {!isPreviewMode && pv ? (
                   <VolumeChart
                     style={{ height: 240 }}
                     createdAt={createdAt}
                     projectId={projectId}
-                    cv={cv}
+                    pv={pv}
                   />
                 ) : null}
                 <V2ManageTokensSection />

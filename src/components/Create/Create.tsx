@@ -1,4 +1,5 @@
 import { t, Trans } from '@lingui/macro'
+import { Space } from 'antd'
 import { DeployButtonText } from 'components/DeployProjectButtonText'
 import ExternalLink from 'components/ExternalLink'
 import { CV_V2, CV_V3 } from 'constants/cv'
@@ -11,6 +12,7 @@ import { V2V3CurrencyProvider } from 'providers/v2v3/V2V3CurrencyProvider'
 import { useContext } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { helpPagePath } from 'utils/routes'
+
 import {
   FundingCyclesPage,
   FundingTargetPage,
@@ -148,10 +150,10 @@ export function Create() {
               <Wizard.Page
                 name="nftRewards"
                 title={
-                  <>
+                  <Space>
                     <Trans>NFTs</Trans>
                     <CreateBadge.Optional />
-                  </>
+                  </Space>
                 }
                 description={
                   <Trans>

@@ -281,6 +281,9 @@ msgstr ""
 msgid "Activity"
 msgstr ""
 
+msgid "Add"
+msgstr ""
+
 msgid "Add Lock Duration Option"
 msgstr ""
 

@@ -11,6 +11,10 @@ import {
   parseBaseProjectEntityJson,
 } from '../base/base-project-entity'
 import {
+  parseTerminalEventEntity,
+  TerminalEventEntity,
+} from '../base/terminal-event'
+import {
   DistributeToPayoutSplitEvent,
   DistributeToPayoutSplitEventJson,
   parseDistributeToPayoutSplitEventJson,
@@ -18,7 +22,8 @@ import {
 
 export interface DistributePayoutsEvent
   extends BaseEventEntity,
-    BaseProjectEntity {
+    BaseProjectEntity,
+    TerminalEventEntity {
   fundingCycleConfiguration: BigNumber
   fundingCycleNumber: number
   beneficiary: string
@@ -41,6 +46,7 @@ export type DistributePayoutsEventJson = Partial<
 export const parseDistributePayoutsEventJson = (
   j: DistributePayoutsEventJson,
 ): Partial<DistributePayoutsEvent> => ({
+  ...parseTerminalEventEntity(j),
   ...parseBaseEventEntityJson(j),
   ...parseBaseProjectEntityJson(j),
   fundingCycleConfiguration: j.fundingCycleConfiguration

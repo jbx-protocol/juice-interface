@@ -1,18 +1,16 @@
 import { CheckCircleFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
-import RichButton from 'components/RichButton'
-import { useDeployProjectPayerTx } from 'hooks/v2v3/transactor/DeployProjectPayerTx'
-import { CSSProperties, useContext, useState } from 'react'
-
-import { ThemeContext } from 'contexts/themeContext'
-
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
-
 import { IssueErc20TokenModal } from 'components/modals/IssueErc20TokenModal'
+import RichButton from 'components/RichButton'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { ThemeContext } from 'contexts/themeContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { useDeployProjectPayerTx } from 'hooks/v2v3/transactor/DeployProjectPayerTx'
 import Link from 'next/link'
+import { CSSProperties, useContext, useState } from 'react'
 import { settingsPagePath } from 'utils/routes'
+
 import { LaunchProjectPayerModal } from './LaunchProjectPayerModal'
 
 export const NEW_DEPLOY_QUERY_PARAM = 'np'

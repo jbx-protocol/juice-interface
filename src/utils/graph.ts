@@ -1,7 +1,7 @@
 // TODO: Should we fix these ts-ignore. At very least, we should consider documenting why it is done
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import axios from 'axios'
-import { CV } from 'models/cv'
+import { PV } from 'models/pv'
 import {
   DistributeToPayoutModEvent,
   DistributeToPayoutModEventJson,
@@ -200,7 +200,7 @@ export type OrderDirection = 'asc' | 'desc'
 
 export type WhereConfig<E extends EntityKey> = {
   key: EntityKeys<E>
-  value: string | number | boolean | string[] | number[] | null
+  value: string | number | boolean | null | (string | number | boolean | null)[]
   operator?:
     | 'not'
     | 'gt'
@@ -582,13 +582,13 @@ const isPluralQuery = (key: EntityKey): boolean => {
 }
 
 /**
- * Get the subgraph representation of a project ID, based on given [cv] and [projectId]
+ * Get the subgraph representation of a project ID, based on given [pv] and [projectId]
  *
  * Reference implementation: https://github.com/jbx-protocol/juice-subgraph/blob/main/src/utils.ts#L84
  *
- * @param cv Contracts version
+ * @param pv Contracts version
  * @param projectId the on-chain project ID
  */
-export const getSubgraphIdForProject = (cv: CV, projectId: number) => {
-  return `${cv}-${projectId}`
+export const getSubgraphIdForProject = (pv: PV, projectId: number) => {
+  return `${pv}-${projectId}`
 }

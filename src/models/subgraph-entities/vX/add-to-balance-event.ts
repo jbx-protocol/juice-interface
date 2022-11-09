@@ -10,8 +10,15 @@ import {
   BaseProjectEntityJson,
   parseBaseProjectEntityJson,
 } from '../base/base-project-entity'
+import {
+  parseTerminalEventEntity,
+  TerminalEventEntity,
+} from '../base/terminal-event'
 
-export interface AddToBalanceEvent extends BaseProjectEntity, BaseEventEntity {
+export interface AddToBalanceEvent
+  extends BaseProjectEntity,
+    BaseEventEntity,
+    TerminalEventEntity {
   fundingCycleId: BigNumber
   caller: string
   amount: BigNumber
@@ -27,6 +34,7 @@ export type AddToBalanceEventJson = Partial<
 export const parseAddToBalanceEventJson = (
   j: AddToBalanceEventJson,
 ): Partial<AddToBalanceEvent> => ({
+  ...parseTerminalEventEntity(j),
   ...parseBaseProjectEntityJson(j),
   ...parseBaseEventEntityJson(j),
   fundingCycleId: j.fundingCycleId

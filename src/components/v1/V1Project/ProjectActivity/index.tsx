@@ -8,7 +8,7 @@ import ProjectCreateEventElem from 'components/activityEventElems/ProjectCreateE
 import RedeemEventElem from 'components/activityEventElems/RedeemEventElem'
 import Loading from 'components/Loading'
 import SectionHeader from 'components/SectionHeader'
-import { CV_V1, CV_V1_1 } from 'constants/cv'
+import { PV_V1, PV_V1_1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
@@ -51,9 +51,9 @@ export default function ProjectActivity() {
   const where: WhereConfig<'projectEvent'>[] = useMemo(() => {
     const _where: WhereConfig<'projectEvent'>[] = [
       {
-        key: 'cv',
+        key: 'pv',
         operator: 'in',
-        value: [CV_V1, CV_V1_1],
+        value: [PV_V1, PV_V1_1],
       },
       {
         key: 'mintTokensEvent',

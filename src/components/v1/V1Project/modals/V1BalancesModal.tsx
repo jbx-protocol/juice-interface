@@ -29,7 +29,7 @@ export function V1BalancesModal({
   onCancel: () => void
 }) {
   const { owner, handle } = useContext(V1ProjectContext)
-  const { projectMetadata, cv } = useContext(ProjectMetadataContext)
+  const { projectMetadata, pv } = useContext(ProjectMetadataContext)
 
   const [editModalVisible, setEditModalVisible] = useState<boolean>()
   const [loading, setLoading] = useState<boolean>()
@@ -70,8 +70,8 @@ export function V1BalancesModal({
       { cid: uploadedMetadata.IpfsHash },
       {
         onDone: async () => {
-          if (cv) {
-            await revalidateProject({ cv: cv as V1TerminalVersion, handle })
+          if (pv) {
+            await revalidateProject({ pv: pv as V1TerminalVersion, handle })
           }
           setLoading(false)
           setEditModalVisible(false)

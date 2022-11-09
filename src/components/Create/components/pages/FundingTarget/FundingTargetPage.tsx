@@ -1,3 +1,4 @@
+import { QuestionCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
@@ -75,6 +76,15 @@ export const FundingTargetPage: React.FC = () => {
                     label: t`Funding Target`,
                   }),
                 ])}
+                extra={
+                  <Space style={{ alignItems: 'start' }}>
+                    <QuestionCircleOutlined />
+                    <Trans>
+                      Any funds raised over this amount are considered
+                      'overflow' and are redeemable by your contributors.
+                    </Trans>
+                  </Space>
+                }
               >
                 <FormattedNumberInputWrapper />
               </Form.Item>
@@ -108,7 +118,7 @@ const FormattedNumberInputWrapper: React.FC<
   return (
     <FormattedNumberInput
       value={props.value?.amount}
-      onChange={amount => props.onChange?.({ amount, currency })}
+      onChange={amount => props.onChange?.({ amount: amount ?? '', currency })}
       accessory={
         <InputAccessoryButton
           withArrow

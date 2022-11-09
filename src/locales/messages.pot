@@ -473,6 +473,9 @@ msgstr ""
 msgid "Any changes you make will take effect in <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
 msgstr ""
 
+msgid "Any funds raised over this amount are considered 'overflow' and are redeemable by your contributors."
+msgstr ""
+
 msgid "Any reconfiguration to an upcoming funding cycle will take effect once the current cycle ends. A project with no strategy may be vulnerable to being rug-pulled by its owner."
 msgstr ""
 

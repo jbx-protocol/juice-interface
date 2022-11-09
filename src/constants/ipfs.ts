@@ -8,6 +8,8 @@ export const OPEN_IPFS_GATEWAY_HOSTNAME =
 export const RESTRICTED_IPFS_GATEWAY_HOSTNAME =
   process.env.NEXT_PUBLIC_PINATA_GATEWAY_HOSTNAME
 
+export const INFURA_IPFS_API_BASE_URL = 'https://ipfs.infura.io:5001'
+
 // Heavily rate-limited, don't use unless you have to.
 export const PUBLIC_PINATA_GATEWAY_HOSTNAME = 'gateway.pinata.cloud'
 

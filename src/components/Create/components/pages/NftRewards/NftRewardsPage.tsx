@@ -43,7 +43,7 @@ export const NftRewardsPage = () => {
           <CreateCollapse>
             <CreateCollapse.Panel
               key={0}
-              header={<OptionalHeader header={t`Marketplace Customizations`} />}
+              header={<OptionalHeader header={t`Collection details`} />}
               hideDivider
             >
               <Space

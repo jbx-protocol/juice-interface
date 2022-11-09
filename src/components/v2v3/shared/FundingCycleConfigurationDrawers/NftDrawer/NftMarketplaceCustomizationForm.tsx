@@ -1,7 +1,10 @@
 import { t } from '@lingui/macro'
 import { Form, FormInstance, Input } from 'antd'
+import Loading from 'components/Loading'
+import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { useAppSelector } from 'hooks/AppSelector'
-import { useCallback, useEffect, useMemo } from 'react'
+import { useNftCollectionMetadata } from 'hooks/NftCollectionMetadata'
+import { useCallback, useContext, useEffect, useMemo } from 'react'
 import {
   defaultNftCollectionDescription,
   defaultNftCollectionName,
@@ -12,9 +15,11 @@ import { MarketplaceFormFields } from './formFields'
 export function NftMarketplaceCustomizationForm({
   form,
   onFormUpdated,
+  isReconfigure,
 }: {
   form: FormInstance<MarketplaceFormFields>
   onFormUpdated: (updated: boolean) => void
+  isReconfigure?: boolean
 }) {
   const {
     nftRewards: {
@@ -22,14 +27,25 @@ export function NftMarketplaceCustomizationForm({
     },
     projectMetadata: { name: projectName },
   } = useAppSelector(state => state.editingV2Project)
+  const {
+    nftRewards: {
+      collectionMetadata: { uri: collectionMetadataUri },
+    },
+  } = useContext(NftRewardsContext)
 
+  const { data: collectionMetadata, isLoading } = useNftCollectionMetadata(
+    collectionMetadataUri,
+  )
+
+  // tries from redux first (in case of saving without submitting and going back), if not
+  // reads data based on current nft collection metadata uri
   const initialValues = useMemo(
     () => ({
-      collectionName: name,
-      collectionDescription: description,
-      collectionSymbol: symbol,
+      collectionName: name ?? collectionMetadata?.name,
+      collectionDescription: description ?? collectionMetadata?.description,
+      collectionSymbol: symbol ?? collectionMetadata?.symbol,
     }),
-    [name, description, symbol],
+    [name, description, symbol, collectionMetadata],
   )
 
   const handleFormChange = useCallback(() => {
@@ -42,6 +58,8 @@ export function NftMarketplaceCustomizationForm({
   }, [form, initialValues, onFormUpdated])
 
   useEffect(() => handleFormChange(), [handleFormChange])
+
+  if (isLoading) return <Loading />
 
   return (
     <Form
@@ -61,13 +79,15 @@ export function NftMarketplaceCustomizationForm({
           placeholder={defaultNftCollectionName(projectName)}
         />
       </Form.Item>
-      <Form.Item
-        requiredMark="optional"
-        name="collectionSymbol"
-        label={t`Collection symbol`}
-      >
-        <Input type="string" autoComplete="off" />
-      </Form.Item>
+      {!isReconfigure ? (
+        <Form.Item
+          requiredMark="optional"
+          name="collectionSymbol"
+          label={t`Collection symbol`}
+        >
+          <Input type="string" autoComplete="off" />
+        </Form.Item>
+      ) : null}
       <Form.Item
         requiredMark="optional"
         name="collectionDescription"

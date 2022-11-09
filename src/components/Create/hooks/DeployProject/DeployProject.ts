@@ -159,7 +159,7 @@ export const useDeployProject = () => {
           tx = await deployNftProject({
             metadataCid: projectMetadataCid,
             rewardTierCids: nftCids!.rewardTiers,
-            nftCollectionMetadataCid: nftCids!.nfCollectionMetadata,
+            nftCollectionMetadataUri: nftCids!.nfCollectionMetadata,
             ...operationCallbacks(onProjectDeployed),
           })
         } else {

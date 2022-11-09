@@ -22,17 +22,19 @@ export const metadataNameForHandle = (handle: string) =>
   `juicebox-@${handle}-metadata`
 
 /**
- * Return a URL to our open IPFS gateway for the given cid.
+ * Return a URL to our open IPFS gateway for the given cid USING INFURA.
  *
  * The 'open' gateway returns any content that is available on IPFS,
  * not just the content we have pinned.
+ *
+ * Its use is origin-restriced.
  */
 export const openIpfsUrl = (cid: string | undefined): string => {
   return ipfsGatewayUrl(cid, OPEN_IPFS_GATEWAY_HOSTNAME)
 }
 
 /**
- * Return a URL to the restricted IPFS gateway for the given cid.
+ * Return a URL to the restricted IPFS gateway for the given cid ON PINATA.
  *
  * The 'restricted' gateway only returns content that we have pinned.
  */

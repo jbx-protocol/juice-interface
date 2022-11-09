@@ -2498,6 +2498,9 @@ msgstr ""
 msgid "Save NFT tier"
 msgstr ""
 
+msgid "Save NFTs"
+msgstr ""
+
 msgid "Save Option"
 msgstr ""
 

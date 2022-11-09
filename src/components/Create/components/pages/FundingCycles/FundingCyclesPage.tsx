@@ -93,9 +93,24 @@ export const FundingCyclesPage = () => {
               <Selection.Card
                 name="automated"
                 title={
-                  <Trans>
-                    Automated Funding Cycles <CreateBadge.Recommended />
-                  </Trans>
+                  <>
+                    <Trans>Automated Funding Cycles</Trans>{' '}
+                    <CreateBadge.Recommended
+                      tooltip={
+                        <span>
+                          <Trans>
+                            With Automated Funding Cycles, your funding
+                            configuration is locked for a set time period.
+                            <br />
+                            <br />
+                            <b>
+                              This helps build trust with your contributors.
+                            </b>
+                          </Trans>
+                        </span>
+                      }
+                    />
+                  </>
                 }
                 description={t`Set a duration for automatically recurring funding cycles. Funds may only be distributed once per cycle.`}
                 icon={<RedoOutlined />}

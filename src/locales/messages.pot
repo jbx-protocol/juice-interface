@@ -512,7 +512,7 @@ msgstr ""
 msgid "Automated"
 msgstr ""
 
-msgid "Automated Funding Cycles <0/>"
+msgid "Automated Funding Cycles"
 msgstr ""
 
 msgid "Automated funding cycles enable the following characteristics:"
@@ -3399,6 +3399,9 @@ msgid "Will be rounded to <0/>{0}"
 msgstr ""
 
 msgid "Will it work on L2s?"
+msgstr ""
+
+msgid "With Automated Funding Cycles, your funding configuration is locked for a set time period.<0/><1/><2>This helps build trust with your contributors.</2>"
 msgstr ""
 
 msgid "With Juicebox, projects are built and maintained by motivated punks getting paid transparently, and funded by a community of users and patrons who are rewarded as the projects they support succeed."

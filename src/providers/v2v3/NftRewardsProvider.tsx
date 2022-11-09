@@ -10,7 +10,7 @@ import { useContext } from 'react'
 import { EMPTY_NFT_COLLECTION_METADATA } from 'redux/slices/editingV2Project'
 import { CIDsOfNftRewardTiersResponse } from 'utils/nftRewards'
 
-/**ƒ
+/**
  * Get the limit of tiers to load for specific projects.
  *
  * By default we only load 3 tiers, but for some projects they have more (like Defifa has 32)

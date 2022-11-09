@@ -290,7 +290,7 @@ msgstr ""
 msgid "Add NFT"
 msgstr ""
 
-msgid "Add NFT reward tier"
+msgid "Add NFT tier"
 msgstr ""
 
 msgid "Add a payout"
@@ -324,9 +324,6 @@ msgid "Add payout"
 msgstr ""
 
 msgid "Add payout recipient"
-msgstr ""
-
-msgid "Add reward tier"
 msgstr ""
 
 msgid "Add terminal"
@@ -1181,7 +1178,7 @@ msgstr ""
 msgid "Each project has its own <0>tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr ""
 
-msgid "Edit NFT reward tier"
+msgid "Edit NFT tier"
 msgstr ""
 
 msgid "Edit allocation"
@@ -1871,7 +1868,7 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-msgid "No NFT reward tiers"
+msgid "No NFT tiers"
 msgstr ""
 
 msgid "No active funding cycle."
@@ -2498,7 +2495,7 @@ msgstr ""
 msgid "Save NFT"
 msgstr ""
 
-msgid "Save NFT reward tier"
+msgid "Save NFT tier"
 msgstr ""
 
 msgid "Save Option"

@@ -299,7 +299,7 @@ export default function NftDrawer({
 
           {rewardTiers?.length === 0 && (
             <Empty
-              description={t`No NFT reward tiers`}
+              description={t`No NFT tiers`}
               image={Empty.PRESENTED_IMAGE_SIMPLE}
               style={{ marginBottom: 0 }}
             />

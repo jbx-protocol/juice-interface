@@ -29,7 +29,7 @@ export function AddRewardTierButton({
       icon={<PlusCircleOutlined />}
     >
       <span>
-        <Trans>Add reward tier</Trans>
+        <Trans>Add NFT tier</Trans>
       </span>
     </Button>
   )

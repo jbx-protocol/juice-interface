@@ -37,9 +37,11 @@ export function useNftRewardsAdjustTiersTx({
     }
 
     // Contract expects tiers to be sorted by price.
-    const newTiersAscending = newTiers.sort((a, b) =>
-      a.contributionFloor.sub(b.contributionFloor).toNumber(),
-    )
+    const newTiersAscending = newTiers.sort((a, b) => {
+      if (a.contributionFloor.lt(b.contributionFloor)) return -1
+      if (a.contributionFloor.gt(b.contributionFloor)) return 1
+      return 0
+    })
 
     const args = [newTiersAscending, tierIdsChanged]
 

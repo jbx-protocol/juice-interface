@@ -73,31 +73,28 @@ export default function FundingForm({
   const { contracts } = useContext(V2V3ContractsContext)
   const { payoutSplits } = useContext(V2V3ProjectContext)
 
-  const dispatch = useAppDispatch()
-
+  const [splits, setSplits] = useState<Split[]>([])
+  // Must differentiate between splits loaded from redux and
+  // ones just added to be able to still edit splits you've
+  // added with a lockedUntil
+  const [editingSplits, setEditingSplits] = useState<Split[]>([])
+  const [distributionLimit, setDistributionLimit] = useState<
+    string | undefined
+  >('0')
+  const [distributionLimitCurrency, setDistributionLimitCurrency] =
+    useState<V2V3CurrencyOption>(V2V3_CURRENCY_ETH)
+  const [durationEnabled, setDurationEnabled] = useState<boolean>(false)
   const [fundingForm] = Form.useForm<FundingFormFields>()
 
-  // Load redux state (will be empty in create flow)
+  const dispatch = useAppDispatch()
+
+  // Load redux state
   const { fundAccessConstraints, fundingCycleData, payoutGroupedSplits } =
     useAppSelector(state => state.editingV2Project)
   const fundAccessConstraint =
     getDefaultFundAccessConstraint<SerializedV2V3FundAccessConstraint>(
       fundAccessConstraints,
     )
-
-  const [splits, setSplits] = useState<Split[]>([])
-  // Must differentiate between splits loaded from redux and
-  // ones just added to be able to still edit splits you've
-  // added with a lockedUntil
-  const [editingSplits, setEditingSplits] = useState<Split[]>([])
-
-  const [distributionLimit, setDistributionLimit] = useState<
-    string | undefined
-  >('0')
-
-  const [distributionLimitCurrency, setDistributionLimitCurrency] =
-    useState<V2V3CurrencyOption>(V2V3_CURRENCY_ETH)
-  const [durationEnabled, setDurationEnabled] = useState<boolean>(false)
 
   // Form initial values set by default
   const initialValues = useMemo(
@@ -151,8 +148,6 @@ export default function FundingForm({
       editableSplits,
     }
   }, [splits, isCreate, payoutSplits])
-
-  useLayoutEffect(() => setEditingSplits(editableSplits), [editableSplits])
 
   // Loads redux state into form
   const resetProjectForm = useCallback(() => {
@@ -247,11 +242,6 @@ export default function FundingForm({
     ],
   )
 
-  // initially fill form with any existing redux state
-  useLayoutEffect(() => {
-    resetProjectForm()
-  }, [resetProjectForm])
-
   // Ensures total split percentages do not exceed 100
   const validateTotalSplitsPercentage = () => {
     if (fundingForm.getFieldValue('totalSplitsPercentage') > 100)
@@ -288,6 +278,13 @@ export default function FundingForm({
     distributionLimitCurrency,
     distributionLimit,
   ])
+
+  useLayoutEffect(() => setEditingSplits(editableSplits), [editableSplits])
+
+  // initially fill form with any existing redux state
+  useLayoutEffect(() => {
+    resetProjectForm()
+  }, [resetProjectForm])
 
   useEffect(() => {
     onFormChange()

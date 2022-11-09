@@ -27,9 +27,10 @@ import { useFundingCycleDrawer } from '../useFundingCycleDrawer'
 import { AddRewardTierButton } from './AddRewardTierButton'
 import { EditCollectionDetailsSection } from './EditCollectionDetailsSection'
 import { MarketplaceFormFields, NftPostPayModalFormFields } from './formFields'
+import { NftCollectionDetailsForm } from './NftCollectionDetailsForm'
 import NftRewardTierCard from './NftRewardTierCard'
 
-export const NFT_REWARDS_EXPLAINATION: JSX.Element = (
+const NFT_REWARDS_EXPLAINATION: JSX.Element = (
   <Trans>
     Reward contributors with NFTs when they meet your configured funding
     criteria.
@@ -316,6 +317,10 @@ export default function NftDrawer({
             style={{ marginBottom: 30 }}
           />
 
+          {!hasExistingNfts && (
+            <NftCollectionDetailsForm form={marketplaceForm} />
+          )}
+
           <Button
             onClick={onNftFormSaved}
             htmlType="submit"
@@ -333,18 +338,20 @@ export default function NftDrawer({
           </Button>
         </div>
 
-        <div
-          style={{
-            padding: '2rem',
-            marginBottom: 10,
-            ...shadowCard(theme),
-            color: colors.text.primary,
-          }}
-        >
-          <h2>Edit collection details</h2>
+        {hasExistingNfts && (
+          <div
+            style={{
+              padding: '2rem',
+              marginBottom: 10,
+              ...shadowCard(theme),
+              color: colors.text.primary,
+            }}
+          >
+            <h2>Edit collection details</h2>
 
-          <EditCollectionDetailsSection />
-        </div>
+            <EditCollectionDetailsSection />
+          </div>
+        )}
 
         <NftRewardTierModal
           open={addTierModalVisible}

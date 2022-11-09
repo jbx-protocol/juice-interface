@@ -19,7 +19,7 @@ export function NftCollectionDetailsForm({
   ...props
 }: {
   form: FormInstance<MarketplaceFormFields>
-  onFormUpdated: (updated: boolean) => void
+  onFormUpdated?: (updated: boolean) => void
   isReconfigure?: boolean
 } & FormProps) {
   const {
@@ -60,7 +60,7 @@ export function NftCollectionDetailsForm({
       initialValues.collectionDescription !==
         form.getFieldValue('collectionDescription') ||
       initialValues.collectionSymbol !== form.getFieldValue('collectionSymbol')
-    onFormUpdated(hasUpdated)
+    onFormUpdated?.(hasUpdated)
   }, [form, initialValues, onFormUpdated])
 
   useEffect(() => handleFormChange(), [handleFormChange])

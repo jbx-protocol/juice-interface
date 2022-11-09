@@ -64,7 +64,6 @@ export function V2V3ReconfigureFundingCycleForm() {
   const [rulesDrawerVisible, setRulesDrawerVisible] = useState<boolean>(false)
   const [unsavedChangesModalVisibile, setUnsavedChangesModalVisible] =
     useState<boolean>(false)
-
   const [nftOperatorConfirmed, setNftOperatorConfirmed] = useState<boolean>()
 
   const { initialEditingData } = useInitialEditingData({ visible: true })

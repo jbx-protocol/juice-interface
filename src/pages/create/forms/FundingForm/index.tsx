@@ -16,14 +16,7 @@ import isEqual from 'lodash/isEqual'
 import { Split } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import DistributionSplitsSection from 'pages/create/forms/FundingForm/DistributionSplitsSection'
-import {
-  useCallback,
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useState,
-} from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import {
   defaultFundingCycleMetadata,
   editingV2ProjectActions,
@@ -279,10 +272,10 @@ export default function FundingForm({
     distributionLimit,
   ])
 
-  useLayoutEffect(() => setEditingSplits(editableSplits), [editableSplits])
+  useEffect(() => setEditingSplits(editableSplits), [editableSplits])
 
   // initially fill form with any existing redux state
-  useLayoutEffect(() => {
+  useEffect(() => {
     resetProjectForm()
   }, [resetProjectForm])
 

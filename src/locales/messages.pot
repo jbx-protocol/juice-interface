@@ -2864,9 +2864,6 @@ msgstr ""
 msgid "The message that will be shown to the user after they pay for an NFT."
 msgstr ""
 
-msgid "The name of the collection that will be shown on NFT marketplaces (e.g. OpenSea)."
-msgstr ""
-
 msgid "The number of project tokens minted when 1 ETH is contributed in the first funding cycle."
 msgstr ""
 
@@ -2928,9 +2925,6 @@ msgid "The redemption rate determines the amount of overflow each token can be r
 msgstr ""
 
 msgid "The sum of your expenses is currently different to your funding target. Do you want to sync your funding target to match expenses?<0/><1/>If not, please edit one or more of your payouts."
-msgstr ""
-
-msgid "The symbol of the collection that will be shown on NFT marketplaces (e.g. OpenSea)."
 msgstr ""
 
 msgid "The target for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
@@ -3540,6 +3534,12 @@ msgid "Your V1 {tokenSymbolFormatted} balance"
 msgstr ""
 
 msgid "Your balance"
+msgstr ""
+
+msgid "Your collection's name is used on NFT marketplaces (for example, OpenSea)."
+msgstr ""
+
+msgid "Your collection's symbol is used on NFT marketplaces (for example, OpenSea)."
 msgstr ""
 
 msgid "Your funding cycle configuration has been pre-populated using the configuration you originally launched with. If you need to customize it, contact us."

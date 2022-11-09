@@ -36,126 +36,126 @@ export const NftRewardsPage = () => {
         onFinish={goToNextPage}
         scrollToFirstError
       >
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '4rem' }}>
+        <Space style={{ width: '100%' }} direction="vertical" size="large">
           <Form.Item noStyle name="rewards">
             <RewardsList allowCreate />
           </Form.Item>
-          <CreateCollapse>
-            <CreateCollapse.Panel
-              key={0}
-              header={<OptionalHeader header={t`Collection details`} />}
-              hideDivider
+
+          <Space
+            direction="vertical"
+            size="middle"
+            style={{ width: '100%', padding: '0.75rem 0 0.5rem 0' }}
+          >
+            <Form.Item
+              name="collectionName"
+              label={
+                <TooltipLabel
+                  label={t`Collection Name`}
+                  tip={
+                    <Trans>
+                      Your collection's name is used on NFT marketplaces (for
+                      example, OpenSea).
+                    </Trans>
+                  }
+                />
+              }
+              required
             >
-              <Space
-                direction="vertical"
-                size="middle"
-                style={{ width: '100%', padding: '0.75rem 0 0.5rem 0' }}
-              >
-                <Form.Item
-                  name="collectionName"
-                  label={
-                    <TooltipLabel
-                      label={t`Collection Name`}
-                      tip={
-                        <Trans>
-                          The name of the collection that will be shown on NFT
-                          marketplaces (e.g. OpenSea).
-                        </Trans>
-                      }
-                    />
+              <Input />
+            </Form.Item>
+
+            <Form.Item
+              name="collectionSymbol"
+              label={
+                <TooltipLabel
+                  label={t`Collection Symbol`}
+                  tip={
+                    <Trans>
+                      Your collection's symbol is used on NFT marketplaces (for
+                      example, OpenSea).
+                    </Trans>
                   }
-                >
-                  <Input />
-                </Form.Item>
-                <Form.Item
-                  name="collectionSymbol"
-                  label={
-                    <TooltipLabel
-                      label={t`Collection Symbol`}
-                      tip={
-                        <Trans>
-                          The symbol of the collection that will be shown on NFT
-                          marketplaces (e.g. OpenSea).
-                        </Trans>
-                      }
-                    />
-                  }
-                >
-                  <Input />
-                </Form.Item>
-                <Form.Item
-                  name="collectionDescription"
-                  label={<Trans>Collection Description</Trans>}
-                >
-                  <Input.TextArea autoSize={{ minRows: 4, maxRows: 6 }} />
-                </Form.Item>
-              </Space>
-            </CreateCollapse.Panel>
-            <CreateCollapse.Panel
-              key={1}
-              header={<OptionalHeader header={t`Payment Success Popup`} />}
-              hideDivider
+                />
+              }
+              required
             >
-              <Space
-                direction="vertical"
-                size="middle"
-                style={{ width: '100%', padding: '0.75rem 0 0.5rem 0' }}
+              <Input />
+            </Form.Item>
+
+            <Form.Item
+              name="collectionDescription"
+              label={<Trans>Collection Description</Trans>}
+            >
+              <Input.TextArea autoSize={{ minRows: 4, maxRows: 6 }} />
+            </Form.Item>
+
+            <CreateCollapse>
+              <CreateCollapse.Panel
+                key={1}
+                header={<OptionalHeader header={t`Payment Success Popup`} />}
+                hideDivider
               >
-                <Form.Item
-                  name="postPayMessage"
-                  label={
-                    <TooltipLabel
-                      label={t`Message`}
-                      tip={
-                        <Trans>
-                          The message that will be shown to the user after they
-                          pay for an NFT.
-                        </Trans>
-                      }
-                    />
-                  }
+                <Space
+                  direction="vertical"
+                  size="middle"
+                  style={{ width: '100%', padding: '0.75rem 0 0.5rem 0' }}
                 >
-                  <Input.TextArea autoSize={{ minRows: 4, maxRows: 6 }} />
-                </Form.Item>
-                <Form.Item
-                  name="postPayButtonText"
-                  label={
-                    <TooltipLabel
-                      label={t`Button Text`}
-                      tip={
-                        <Trans>
-                          The text that will be shown to the user on the button
-                          post pay popup.
-                          <br />
-                          <strong>
-                            For more information, see the preview.
-                          </strong>
-                        </Trans>
-                      }
-                    />
-                  }
-                >
-                  <Input />
-                </Form.Item>
-                <Form.Item
-                  name="postPayButtonLink"
-                  label={<Trans>Call-to-action button link</Trans>}
-                  extra={t`Button will close the modal if no link is given.`}
-                >
-                  <Input prefix={'https://'} />
-                </Form.Item>
-                <CreateButton
-                  disabled={!postPayModalData}
-                  style={{ border: '1px solid' }}
-                  icon={<EyeOutlined />}
-                  onClick={postPayModal.open}
-                >
-                  Preview
-                </CreateButton>
-              </Space>
-            </CreateCollapse.Panel>
-          </CreateCollapse>
-        </div>
+                  <Form.Item
+                    name="postPayMessage"
+                    label={
+                      <TooltipLabel
+                        label={t`Message`}
+                        tip={
+                          <Trans>
+                            The message that will be shown to the user after
+                            they pay for an NFT.
+                          </Trans>
+                        }
+                      />
+                    }
+                  >
+                    <Input.TextArea autoSize={{ minRows: 4, maxRows: 6 }} />
+                  </Form.Item>
+                  <Form.Item
+                    name="postPayButtonText"
+                    label={
+                      <TooltipLabel
+                        label={t`Button Text`}
+                        tip={
+                          <Trans>
+                            The text that will be shown to the user on the
+                            button post pay popup.
+                            <br />
+                            <strong>
+                              For more information, see the preview.
+                            </strong>
+                          </Trans>
+                        }
+                      />
+                    }
+                  >
+                    <Input />
+                  </Form.Item>
+                  <Form.Item
+                    name="postPayButtonLink"
+                    label={<Trans>Call-to-action button link</Trans>}
+                    extra={t`Button will close the modal if no link is given.`}
+                  >
+                    <Input prefix={'https://'} />
+                  </Form.Item>
+                  <CreateButton
+                    disabled={!postPayModalData}
+                    style={{ border: '1px solid' }}
+                    icon={<EyeOutlined />}
+                    onClick={postPayModal.open}
+                  >
+                    Preview
+                  </CreateButton>
+                </Space>
+              </CreateCollapse.Panel>
+            </CreateCollapse>
+          </Space>
+        </Space>
         <Wizard.Page.ButtonControl />
       </Form>
       {postPayModalData && (

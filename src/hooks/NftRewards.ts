@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import axios from 'axios'
 import { ONE_BILLION } from 'constants/numbers'
-import { ipfsGet } from 'lib/infura/ipfs'
 import {
   IPFSNftRewardTier,
   JB721TierParams,
@@ -23,7 +23,7 @@ async function getRewardTierFromIPFS({
   const tierCid = decodeEncodedIPFSUri(tier.encodedIPFSUri)
   const url = openIpfsUrl(tierCid)
 
-  const response = await ipfsGet(url)
+  const response = await axios.get(url)
   const ipfsRewardTier: IPFSNftRewardTier = response.data
 
   const maxSupply = tier.initialQuantity.eq(

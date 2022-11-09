@@ -57,6 +57,10 @@ export default function NftDrawer({
   const [marketplaceForm] = useForm<MarketplaceFormFields>()
   const [postPayModalForm] = useForm<NftPostPayModalFormFields>()
 
+  const hasExistingNfts =
+    fundingCycleMetadata?.dataSource &&
+    fundingCycleMetadata.dataSource !== constants.AddressZero
+
   const dispatch = useAppDispatch()
   const {
     nftRewards,
@@ -192,25 +196,24 @@ export default function NftDrawer({
     if (!rewardTiers) return
 
     setSubmitLoading(true)
-    if (
-      fundingCycleMetadata?.dataSource &&
-      fundingCycleMetadata.dataSource !== constants.AddressZero
-    ) {
+
+    if (hasExistingNfts) {
       await saveEditedCollection()
     } else {
       await saveNewCollection()
     }
 
     setSubmitLoading(false)
+
     setFormUpdated(false)
     onClose?.()
   }, [
     rewardTiers,
-    fundingCycleMetadata,
     saveNewCollection,
     saveEditedCollection,
     onClose,
     setFormUpdated,
+    hasExistingNfts,
   ])
 
   const handleAddRewardTier = (newRewardTier: NftRewardTier) => {
@@ -280,7 +283,7 @@ export default function NftDrawer({
             color: colors.text.primary,
           }}
         >
-          <h2>Edit NFT tiers</h2>
+          {hasExistingNfts ? <h2>Edit NFT tiers</h2> : <h2>Add NFT tiers</h2>}
           <p>{NFT_REWARDS_EXPLAINATION}</p>
 
           <Space direction="vertical" size="large" style={{ width: '100%' }}>
@@ -321,7 +324,11 @@ export default function NftDrawer({
             style={{ marginTop: 30 }}
           >
             <span>
-              <Trans>Deploy NFTs</Trans>
+              {hasExistingNfts ? (
+                <Trans>Deploy NFTs</Trans>
+              ) : (
+                <Trans>Save NFTs</Trans>
+              )}
             </span>
           </Button>
         </div>

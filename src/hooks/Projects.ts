@@ -254,6 +254,8 @@ export function useMyProjectsQuery(wallet: string | undefined) {
             operator: 'in',
             value: [wallet],
           },
+          orderBy: 'createdAt',
+          orderDirection: 'desc',
         }
       : null,
   )

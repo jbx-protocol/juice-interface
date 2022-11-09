@@ -66,7 +66,7 @@ export const useDeployNftProject = () => {
     >) => {
       if (!collectionName) throw new Error('No collection name or project name')
       if (!(rewardTierCids.length && nftRewards.rewardTiers))
-        throw new Error('No reward tiers')
+        throw new Error('No NFT tiers')
 
       const groupedSplits = [payoutGroupedSplits, reservedTokensGroupedSplits]
       const tiers = buildJB721TierParams({

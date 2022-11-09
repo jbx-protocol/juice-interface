@@ -42,6 +42,7 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
 
   const { data: rewardTiers, isLoading: nftRewardTiersLoading } = useNftRewards(
     nftRewardTiersResponse ?? [],
+    projectId,
   )
 
   const { data: collectionMetadataUri, loading: collectionUriLoading } =

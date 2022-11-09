@@ -139,7 +139,7 @@ const VeNftSetupModal = ({ open, onCancel }: VeNftSetupModalProps) => {
             style={{ marginTop: 15 }}
             block
           >
-            <Trans>Add reward tier</Trans>
+            <Trans>Add NFT tier</Trans>
           </Button>
         </MinimalCollapse>
         <MinimalCollapse

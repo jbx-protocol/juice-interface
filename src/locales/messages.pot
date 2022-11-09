@@ -290,7 +290,7 @@ msgstr ""
 msgid "Add NFT"
 msgstr ""
 
-msgid "Add NFT reward tier"
+msgid "Add NFT tier"
 msgstr ""
 
 msgid "Add a payout"
@@ -324,9 +324,6 @@ msgid "Add payout"
 msgstr ""
 
 msgid "Add payout recipient"
-msgstr ""
-
-msgid "Add reward tier"
 msgstr ""
 
 msgid "Add terminal"
@@ -590,6 +587,12 @@ msgstr ""
 msgid "Button Text"
 msgstr ""
 
+msgid "Button link"
+msgstr ""
+
+msgid "Button text"
+msgstr ""
+
 msgid "Button will close the modal if no link is given."
 msgstr ""
 
@@ -606,12 +609,6 @@ msgid "CSV data wasn't ready for export. Wait a few seconds and try again."
 msgstr ""
 
 msgid "CSV download failed."
-msgstr ""
-
-msgid "Call-to-action button link"
-msgstr ""
-
-msgid "Call-to-action button text"
 msgstr ""
 
 msgid "Can I change my project's contract after it's been created?"
@@ -632,7 +629,7 @@ msgstr ""
 msgid "Changes to payouts will take effect immediately."
 msgstr ""
 
-msgid "Changes to your collection details may not be reflected in some marketplaces (for example, Opensea). Please contact the marketplace for support."
+msgid "Changes to your collection details may not be reflected in some marketplaces (for example, Opensea). Contact the marketplace for support."
 msgstr ""
 
 msgid "Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
@@ -707,9 +704,6 @@ msgstr ""
 msgid "Collection description"
 msgstr ""
 
-msgid "Collection details"
-msgstr ""
-
 msgid "Collection name"
 msgstr ""
 
@@ -731,7 +725,7 @@ msgstr ""
 msgid "Configure which Juicebox V1 project you'd like to accept tokens for. Token holders of this V1 project will be able to swap their V1 tokens for V2 tokens."
 msgstr ""
 
-msgid "Configure your project's NFT rewards."
+msgid "Configure your project's NFTs."
 msgstr ""
 
 msgid "Configure your project's first funding cycle below."
@@ -741,9 +735,6 @@ msgid "Configure your project's token."
 msgstr ""
 
 msgid "Configure {projectTitle}"
-msgstr ""
-
-msgid "Confirm"
 msgstr ""
 
 msgid "Confirm Stake"
@@ -902,9 +893,6 @@ msgstr ""
 msgid "Customize Pay Button"
 msgstr ""
 
-msgid "Customize how your NFT collection will appear on NFT marketplaces (like OpenSea)."
-msgstr ""
-
 msgid "Customize your project's \"pay\" button. Leave blank to use the default."
 msgstr ""
 
@@ -954,6 +942,9 @@ msgid "Delete token allocation"
 msgstr ""
 
 msgid "Deploy"
+msgstr ""
+
+msgid "Deploy NFTs"
 msgstr ""
 
 msgid "Deploy Payment Address contract"
@@ -1187,7 +1178,7 @@ msgstr ""
 msgid "Each project has its own <0>tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr ""
 
-msgid "Edit NFT reward tier"
+msgid "Edit NFT tier"
 msgstr ""
 
 msgid "Edit allocation"
@@ -1838,9 +1829,6 @@ msgstr ""
 msgid "NFT projects"
 msgstr ""
 
-msgid "NFT rewards"
-msgstr ""
-
 msgid "NFTs"
 msgstr ""
 
@@ -1880,7 +1868,7 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-msgid "No NFT reward tiers"
+msgid "No NFT tiers"
 msgstr ""
 
 msgid "No active funding cycle."
@@ -2079,9 +2067,6 @@ msgid "Payment memo image"
 msgstr ""
 
 msgid "Payment options"
-msgstr ""
-
-msgid "Payment success popup"
 msgstr ""
 
 msgid "Payments"
@@ -2354,9 +2339,6 @@ msgstr ""
 msgid "Reconfigure Funding Cycle"
 msgstr ""
 
-msgid "Reconfigure collection details"
-msgstr ""
-
 msgid "Reconfigure funding cycle"
 msgstr ""
 
@@ -2376,9 +2358,6 @@ msgid "Reconfigure {projectTitle}"
 msgstr ""
 
 msgid "Reconfigure {projectTitle} with new NFTs"
-msgstr ""
-
-msgid "Reconfigure {projectTitle}'s NFT marketplace metadata."
 msgstr ""
 
 msgid "Redeem"
@@ -2516,7 +2495,7 @@ msgstr ""
 msgid "Save NFT"
 msgstr ""
 
-msgid "Save NFT reward tier"
+msgid "Save NFT tier"
 msgstr ""
 
 msgid "Save NFTs"
@@ -2699,7 +2678,7 @@ msgstr ""
 msgid "Should you Juicebox?"
 msgstr ""
 
-msgid "Show your contributors a message after they receive their NFT reward."
+msgid "Show contributors a popup when they receive an NFT."
 msgstr ""
 
 msgid "Since you have not set a funding duration, future changes to these settings will be applied immediately."
@@ -2864,9 +2843,6 @@ msgstr ""
 msgid "The message that will be shown to the user after they pay for an NFT."
 msgstr ""
 
-msgid "The name of the collection that will be shown on NFT marketplaces (e.g. OpenSea)."
-msgstr ""
-
 msgid "The number of project tokens minted when 1 ETH is contributed in the first funding cycle."
 msgstr ""
 
@@ -2928,9 +2904,6 @@ msgid "The redemption rate determines the amount of overflow each token can be r
 msgstr ""
 
 msgid "The sum of your expenses is currently different to your funding target. Do you want to sync your funding target to match expenses?<0/><1/>If not, please edit one or more of your payouts."
-msgstr ""
-
-msgid "The symbol of the collection that will be shown on NFT marketplaces (e.g. OpenSea)."
 msgstr ""
 
 msgid "The target for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
@@ -3263,6 +3236,9 @@ msgstr ""
 msgid "Update your veNFT's lock duration."
 msgstr ""
 
+msgid "Update {projectTitle}'s NFT collection details."
+msgstr ""
+
 msgid "Upload"
 msgstr ""
 
@@ -3540,6 +3516,12 @@ msgid "Your V1 {tokenSymbolFormatted} balance"
 msgstr ""
 
 msgid "Your balance"
+msgstr ""
+
+msgid "Your collection's name is used on NFT marketplaces (for example, OpenSea)."
+msgstr ""
+
+msgid "Your collection's symbol is used on NFT marketplaces (for example, OpenSea)."
 msgstr ""
 
 msgid "Your funding cycle configuration has been pre-populated using the configuration you originally launched with. If you need to customize it, contact us."

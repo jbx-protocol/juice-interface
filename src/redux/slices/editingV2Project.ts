@@ -313,11 +313,11 @@ const editingV2ProjectSlice = createSlice({
     ) => {
       state.nftRewards.collectionMetadata = action.payload
     },
-    setNftRewardsCollectionMetadataCID: (
+    setNftRewardsCollectionMetadataUri: (
       state,
       action: PayloadAction<string | undefined>,
     ) => {
-      state.nftRewards.collectionMetadata.CID = action.payload
+      state.nftRewards.collectionMetadata.uri = action.payload
     },
     setNftRewardsSymbol: (state, action: PayloadAction<string | undefined>) => {
       state.nftRewards.collectionMetadata.symbol = action.payload

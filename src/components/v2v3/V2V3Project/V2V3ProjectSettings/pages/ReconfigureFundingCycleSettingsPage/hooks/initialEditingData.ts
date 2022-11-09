@@ -12,11 +12,12 @@ import useProjectDistributionLimit from 'hooks/v2v3/contractReader/ProjectDistri
 import useProjectQueuedFundingCycle from 'hooks/v2v3/contractReader/ProjectQueuedFundingCycle'
 import useProjectSplits from 'hooks/v2v3/contractReader/ProjectSplits'
 import { Split } from 'models/splits'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import {
   editingV2ProjectActions,
   NftRewardsData,
 } from 'redux/slices/editingV2Project'
+import useDeepCompareEffect from 'use-deep-compare-effect'
 import { fromWad } from 'utils/format/formatNumber'
 import { NO_CURRENCY, V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import {
@@ -120,7 +121,7 @@ export const useInitialEditingData = ({
   }
 
   // Populates the local redux state from V2V3ProjectContext values
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     if (!visible || !effectiveFundingCycle || !effectiveFundingCycleMetadata)
       return
 

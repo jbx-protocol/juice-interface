@@ -48,6 +48,8 @@ export const Head: VFC<SEOProps> = props => {
           <HotjarScript />
         </>
       )}
+
+      {props.children}
     </SEO>
   )
 }

@@ -24,23 +24,24 @@ async function getRewardTierFromIPFS({
   const url = openIpfsUrl(tierCid)
 
   const response = await axios.get(url)
-  const ipfsRewardTier: IPFSNftRewardTier = response.data
+  const tierMetadata: IPFSNftRewardTier = response.data
 
   const maxSupply = tier.initialQuantity.eq(
     BigNumber.from(DEFAULT_NFT_MAX_SUPPLY),
   )
     ? DEFAULT_NFT_MAX_SUPPLY
     : tier.initialQuantity.toNumber()
+
   return {
     id: tier.id?.toNumber(),
-    name: ipfsRewardTier.name,
-    description: ipfsRewardTier.description,
-    externalLink: withHttps(ipfsRewardTier.externalLink),
+    name: tierMetadata.name,
+    description: tierMetadata.description,
+    externalLink: withHttps(tierMetadata.externalLink),
     contributionFloor: parseFloat(formatWad(tier.contributionFloor) ?? '0'),
     tierRank: index + 1,
     maxSupply,
     remainingSupply: tier.remainingQuantity?.toNumber() ?? maxSupply,
-    imageUrl: ipfsRewardTier.image,
+    imageUrl: tierMetadata.image,
   }
 }
 

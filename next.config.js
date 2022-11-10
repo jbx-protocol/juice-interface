@@ -2,11 +2,11 @@ const webpack = require('webpack')
 
 const ContentSecurityPolicy = `
   default-src 'none';
-  script-src 'self' https://static.hotjar.com https://script.hotjar.com 'unsafe-inline' 'unsafe-eval';
+  script-src 'self' https://static.hotjar.com https://script.hotjar.com https://*.juicebox.money 'unsafe-inline' 'unsafe-eval';
   style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
   font-src 'self' https://fonts.gstatic.com data:;
   img-src 'self' https://*.juicebox.money https://juicebox.money https://*.infura-ipfs.io https://jbx.mypinata.cloud data:;
-  connect-src 'self' https://*.juicebox.money https://juicebox.money https://*.infura.io https://*.infura-ipfs.io https://jbx.mypinata.cloud https://api.studio.thegraph.com https://gateway.thegraph.com https://api.arcx.money https://api.tenderly.co https://*.hotjar.com https://*.hotjar.io wss://*.hotjar.com https://*.gnosis.io https://*.safe.global https://*.snapshot.org https://*.wallet.coinbase.com;
+  connect-src 'self' https://*.juicebox.money https://juicebox.money https://*.infura.io https://*.infura-ipfs.io https://jbx.mypinata.cloud https://api.studio.thegraph.com https://gateway.thegraph.com https://api.arcx.money https://api.tenderly.co https://*.hotjar.com https://*.hotjar.io wss://*.hotjar.com https://*.gnosis.io https://*.safe.global https://*.snapshot.org https://*.wallet.coinbase.com https://*.walletconnect.com;
   manifest-src 'self';
   prefetch-src 'self';
 `

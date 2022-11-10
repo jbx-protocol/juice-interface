@@ -12,6 +12,7 @@ const infuraApi = axios.create({
   baseURL: INFURA_IPFS_API_BASE_URL,
   headers: {
     Authorization: AUTH_HEADER,
+    origin: 'https://juicebox.money',
   },
 })
 

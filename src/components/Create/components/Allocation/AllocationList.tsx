@@ -73,6 +73,7 @@ export const AllocationList = ({
         )}
       </div>
       <AddEditAllocationModal
+        className="wizard-create-modal"
         allocationName={allocationName}
         availableModes={availableModes}
         editingData={selectedAllocation}

@@ -107,6 +107,7 @@ export const RewardsList: React.FC<RewardsListProps> &
         )}
       </div>
       <AddEditRewardModal
+        className="wizard-create-modal"
         open={modal.visible}
         editingData={selectedReward}
         onOk={onModalOk}

@@ -1,4 +1,3 @@
-import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Button, Empty, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
@@ -16,6 +15,7 @@ import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { withHttps } from 'utils/externalLink'
 import {
   buildJB721TierParams,
+  hasNftRewards,
   MAX_NFT_REWARD_TIERS,
   tiersEqual,
   uploadNftCollectionMetadataToIPFS,
@@ -58,9 +58,7 @@ export default function NftDrawer({
   const [marketplaceForm] = useForm<MarketplaceFormFields>()
   const [postPayModalForm] = useForm<NftPostPayModalFormFields>()
 
-  const hasExistingNfts =
-    fundingCycleMetadata?.dataSource &&
-    fundingCycleMetadata.dataSource !== constants.AddressZero
+  const hasExistingNfts = hasNftRewards(fundingCycleMetadata)
 
   const dispatch = useAppDispatch()
   const {

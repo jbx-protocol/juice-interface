@@ -257,7 +257,11 @@ export function buildJB721TierParams({
 export function hasNftRewards(
   fundingCycleMetadata: V2V3FundingCycleMetadata | undefined,
 ) {
-  return Boolean(fundingCycleMetadata?.dataSource)
+  return Boolean(
+    fundingCycleMetadata?.dataSource &&
+      fundingCycleMetadata.dataSource !== constants.AddressZero &&
+      fundingCycleMetadata?.useDataSourceForPay,
+  )
 }
 
 export function encodeJB721DelegatePayMetadata(

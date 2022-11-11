@@ -24,7 +24,7 @@ export default function V2CreatePage() {
     <>
       <Head
         title={t`Create a project`}
-        url={process.env.NEXT_PUBLIC_SITE_URL + '/create'}
+        url={process.env.NEXT_PUBLIC_BASE_URL + '/create'}
         description={t`Create a project on Juicebox`}
       />
       <NextHead>

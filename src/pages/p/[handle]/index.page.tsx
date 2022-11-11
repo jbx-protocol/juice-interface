@@ -1,5 +1,4 @@
 import { AppWrapper, SEO } from 'components/common'
-import { DesmosScript } from 'components/common/Head/scripts/DesmosScript'
 import Loading from 'components/Loading'
 import Project404 from 'components/Project404'
 import ScrollToTopButton from 'components/ScrollToTopButton'
@@ -46,9 +45,7 @@ export default function V1HandlePage({
             image: metadata.logoUri,
             site: metadata.twitter,
           }}
-        >
-          <DesmosScript />
-        </SEO>
+        />
       ) : null}
       <AppWrapper>
         {metadata ? (

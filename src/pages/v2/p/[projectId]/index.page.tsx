@@ -59,7 +59,7 @@ export default function V2ProjectPage({
             image: metadata.logoUri,
             site: metadata.twitter,
           }}
-        ></SEO>
+        />
       ) : null}
       <AppWrapper>
         <V2V3ProjectPageProvider projectId={projectId} metadata={metadata}>

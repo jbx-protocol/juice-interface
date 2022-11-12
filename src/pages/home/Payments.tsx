@@ -1,7 +1,6 @@
 import ETHAmount from 'components/currency/ETHAmount'
 import FormattedAddress from 'components/FormattedAddress'
 import Loading from 'components/Loading'
-import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
 import RichNote from 'components/RichNote'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
@@ -48,11 +47,6 @@ export default function Payments() {
               projectId={project.projectId}
               handle={project.handle}
               style={{ marginRight: '0.5rem' }}
-            />
-            <ProjectVersionBadge
-              versionText={`V${project.pv}`}
-              size="small"
-              style={{ backgroundColor: colors.background.l1 }}
             />
           </div>
         )}

@@ -11,6 +11,7 @@ const FEATURE_FLAG_DEFAULTS: {
   },
   [FEATURE_FLAGS.V3]: {
     goerli: true,
+    mainnet: true,
   },
   [FEATURE_FLAGS.PROJECT_CONTRACT_UPDGRADES]: {
     goerli: true,

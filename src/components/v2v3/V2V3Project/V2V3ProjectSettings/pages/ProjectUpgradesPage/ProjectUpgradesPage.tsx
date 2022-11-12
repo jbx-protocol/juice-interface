@@ -18,6 +18,9 @@ export function ProjectUpgradesPage() {
   return (
     <div>
       <Space direction="vertical" size="large">
+        {/* This isn't great because if the project owner has selected V2 on the version selector, it'll just say V2 here, which isn't what we want.
+        Good enuf for now.
+         */}
         <Statistic title="Current version" value={`V${cv}`} />
         {!isUpgradeAvailable && (
           <p>

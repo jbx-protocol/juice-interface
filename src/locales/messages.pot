@@ -1625,6 +1625,9 @@ msgstr ""
 msgid "Launch @{handle}"
 msgstr ""
 
+msgid "Launch V3 funding cycle"
+msgstr ""
+
 msgid "Launch funding cycle"
 msgstr ""
 

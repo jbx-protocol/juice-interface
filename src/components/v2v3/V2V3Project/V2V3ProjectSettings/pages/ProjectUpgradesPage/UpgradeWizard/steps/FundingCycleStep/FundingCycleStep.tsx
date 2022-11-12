@@ -1,3 +1,5 @@
+import { Space } from 'antd'
+import Callout from 'components/Callout'
 import { useRef } from 'react'
 import { Provider } from 'react-redux'
 import store, { createStore } from 'redux/store'
@@ -32,7 +34,19 @@ export function FundingCycleStep() {
     <>
       {localStoreRef.current && (
         <Provider store={localStoreRef.current}>
-          <RelaunchV2FundingCycleForm />
+          <Space direction="vertical">
+            <h3>Launch V3 funding cycle</h3>
+            <p>
+              You currently have a funding cycle on Juicebox V2. Use the form
+              below to relaunch your funding cycle on Juicebox V3.
+            </p>
+
+            <Callout>
+              Your V2 funding cycle configuration has been prefilled.
+            </Callout>
+
+            <RelaunchV2FundingCycleForm />
+          </Space>
         </Provider>
       )}
     </>

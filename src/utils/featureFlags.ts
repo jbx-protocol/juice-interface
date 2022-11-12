@@ -13,6 +13,10 @@ const FEATURE_FLAG_DEFAULTS: {
     goerli: true,
     mainnet: true,
   },
+  [FEATURE_FLAGS.PROJECT_CONTRACT_UPDGRADES]: {
+    goerli: true,
+    mainnet: true,
+  },
 }
 
 const featureFlagKey = (baseKey: string) => {

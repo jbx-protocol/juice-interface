@@ -1,10 +1,12 @@
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Col, Form, Input, Row, Space } from 'antd'
 import { useLockPageRulesWrapper } from 'components/Create/hooks/useLockPageRulesWrapper'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import PrefixedInput from 'components/PrefixedInput'
+import TooltipIcon from 'components/TooltipIcon'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
+import { getBaseUrlOrigin } from 'utils/baseUrl'
 import { CreateCollapse } from '../../CreateCollapse'
 import { OptionalHeader } from '../../OptionalHeader'
 import { Wizard } from '../../Wizard'
@@ -58,19 +60,20 @@ export const ProjectDetailsPage: React.FC = () => {
             >
               <Col span={12}>
                 <Form.Item name="projectWebsite" label={t`Website`}>
-                  <PrefixedInput prefix="https://" />
+                  {/* Set placeholder as url string origin without port */}
+                  <Input placeholder={getBaseUrlOrigin()} />
                 </Form.Item>
               </Col>
               <Col span={12}>
                 <Form.Item name="projectTwitter" label={t`Twitter`}>
-                  <PrefixedInput prefix="https://" />
+                  <PrefixedInput prefix={'@'} />
                 </Form.Item>
               </Col>
             </Row>
             <Row gutter={32} style={{ marginBottom: '1.5rem' }}>
               <Col span={12}>
                 <Form.Item name="projectDiscord" label={t`Discord`}>
-                  <PrefixedInput prefix="https://" />
+                  <Input placeholder="https://discord.gg" />
                 </Form.Item>
               </Col>
             </Row>
@@ -85,12 +88,32 @@ export const ProjectDetailsPage: React.FC = () => {
               style={{ paddingBottom: '2rem', paddingTop: '1.25rem' }}
             >
               <Col span={12}>
-                <Form.Item name="payButtonText" label={t`Pay Button Text`}>
-                  <Input />
+                <Form.Item
+                  name="payButtonText"
+                  label={
+                    <span>
+                      <Trans>Pay Button Text</Trans>{' '}
+                      <TooltipIcon
+                        tip={t`This is the button that contributors will click to pay your project`}
+                      />
+                    </span>
+                  }
+                >
+                  <Input placeholder={t`Pay`} />
                 </Form.Item>
               </Col>
             </Row>
-            <Form.Item name="payDisclosure" label={t`Pay Disclosure`}>
+            <Form.Item
+              name="payDisclosure"
+              label={
+                <span>
+                  <Trans>Pay Disclosure</Trans>{' '}
+                  <TooltipIcon
+                    tip={t`Display a message or warning to contributors before they approve a payment to your project`}
+                  />
+                </span>
+              }
+            >
               <Input.TextArea autoSize={{ minRows: 4, maxRows: 6 }} />
             </Form.Item>
           </CreateCollapse.Panel>

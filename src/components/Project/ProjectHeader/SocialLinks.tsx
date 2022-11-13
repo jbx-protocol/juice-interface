@@ -1,9 +1,9 @@
-import { TwitterOutlined } from '@ant-design/icons'
+import { GlobalOutlined, TwitterOutlined } from '@ant-design/icons'
 import { Space } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import Discord from 'components/icons/Discord'
 import { CSSProperties } from 'react'
-import { linkUrl, prettyUrl } from 'utils/url'
+import { linkUrl } from 'utils/url'
 
 const linkStyle: CSSProperties = {
   maxWidth: '20rem',
@@ -14,6 +14,28 @@ const linkStyle: CSSProperties = {
   display: 'block',
 }
 
+function SocialButton({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        padding: 9,
+        borderRadius: '50%',
+        backgroundColor: '#E1E0E0',
+        border: '1px solid #AAA49A',
+      }}
+    >
+      {children}
+    </div>
+  )
+}
+
+const iconStyle: CSSProperties = {
+  color: '#AAA49A',
+  fontSize: '20px',
+  backgroundColor: '#E1E0E0',
+}
 export default function SocialLinks({
   infoUri,
   twitter,
@@ -25,15 +47,16 @@ export default function SocialLinks({
 }) {
   return (
     <Space
-      size="middle"
-      style={{ flexWrap: 'wrap', columnGap: '1.5rem', rowGap: '0.5rem' }}
+      style={{
+        flexWrap: 'wrap',
+        columnGap: 6,
+        paddingRight: 14,
+      }}
     >
       {infoUri && (
-        <span>
-          <ExternalLink style={{ ...linkStyle }} href={linkUrl(infoUri)}>
-            {prettyUrl(infoUri)}
-          </ExternalLink>
-        </span>
+        <SocialButton>
+          <GlobalOutlined style={iconStyle} />
+        </SocialButton>
       )}
       {twitter && (
         <ExternalLink
@@ -42,10 +65,9 @@ export default function SocialLinks({
           }}
           href={'https://twitter.com/' + twitter}
         >
-          <span style={{ marginRight: 4 }}>
-            <TwitterOutlined />
-          </span>
-          @{prettyUrl(twitter)}
+          <SocialButton>
+            <TwitterOutlined style={iconStyle} />
+          </SocialButton>
         </ExternalLink>
       )}
       {discord && (
@@ -55,10 +77,9 @@ export default function SocialLinks({
           }}
           href={linkUrl(discord)}
         >
-          <span style={{ marginRight: 4 }}>
-            <Discord size={11} />
-          </span>
-          Discord
+          <SocialButton>
+            <Discord style={{ ...iconStyle, width: 20, height: 20 }} />
+          </SocialButton>
         </ExternalLink>
       )}
     </Space>

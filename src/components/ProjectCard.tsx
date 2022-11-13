@@ -7,7 +7,6 @@ import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
 import { ThemeContext } from 'contexts/themeContext'
 import { useProjectHandleText } from 'hooks/ProjectHandleText'
-import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { Project } from 'models/subgraph-entities/vX/project'
 import Link from 'next/link'
@@ -19,6 +18,8 @@ import ETHAmount from './currency/ETHAmount'
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'
 import { ProjectVersionBadge } from './ProjectVersionBadge'
+
+import { useProjectMetadata } from 'hooks/ProjectMetadata'
 
 export type ProjectCardProject = Pick<
   Project,

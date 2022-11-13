@@ -143,7 +143,17 @@ export const NftRewardsPage = () => {
                   </Form.Item>
                   <Form.Item
                     name="postPayButtonLink"
-                    label={<Trans>Button link</Trans>}
+                    label={
+                      <TooltipLabel
+                        label={t`Button link`}
+                        tip={
+                          <Trans>
+                            Link contributors to another page after they
+                            successfully mint one of your project's NFTs.
+                          </Trans>
+                        }
+                      />
+                    }
                     extra={t`Button will close the modal if no link is given.`}
                   >
                     <Input prefix={'https://'} />

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-11-06 00:35\n"
+"PO-Revision-Date: 2022-11-13 00:32\n"
 "Last-Translator: \n"
 "Language: tr_TR\n"
 "Language-Team: Turkish\n"
@@ -118,14 +118,14 @@ msgstr ""
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
 msgstr "<0><1>Bu projede taşma bulunmadığından</1> token'ları yakma karşılığında ETH almayacaksınız.</0>"
 
-msgid "<0>A bonding curve rewards people who wait longer to redeem your tokens for overflow.</0><1>For example, with a bonding curve of 70%, redeeming 10% of the token supply at any given time will claim around 7% of the total overflow.</1><2>The rest is left to share between token holders.</2>,<3>For more info, check out this <4>short video</4> on bonding curves.</3>"
-msgstr "<0>Bir bağlılık eğrisi, token'larınızı taşma için kullanmak üzere daha uzun süre bekleyen kişileri ödüllendirir.</0><1>Örneğin, %70'lik bir bağlılık eğrisiyle, herhangi bir zamanda token arzının %10'unu kullanmak, toplam taşma miktarının yaklaşık %7'sini talep edecektir.</1><2> Geri kalan, token sahipleri arasında paylaşılmak üzere bırakılır.</2>,<3>Daha fazla bilgi için, bağlılık eğrisi ile ilgili bu <4>kısa videoyu</4> izleyin.</3>"
-
 msgid "<0>A mechanism like Juicebox where upfront financial commitments should be honored over time is only guaranteed within an ecosystem like Ethereum.</0><1>Ethereum provides a public environment where internet apps like Juicebox can run in a permission-less, trustless, and unstoppable fashion.</1><2>This means that anyone can see the code that they're using, anyone can use the code without asking for permission, and no one can mess with the code or take it down.</2><3>People using Juicebox are interacting with each other through public infrastructure—not a private, profit-seeking corporate service that brokers the exchange.</3><4>Juicebox was built to allow people and projects to get paid for creating public art and infrastructure, as much as or more than they would working towards corporate ends. No more shady business.</4>"
 msgstr "<0>Juicebox gibi, önceden verilen finansal taahhütlerin zaman içinde yerine getirilmesi gereken bir mekanizma, yalnızca Ethereum gibi bir ekosistem içinde garanti edilebilir.</0><1>Ethereum, Juicebox gibi internet uygulamalarının izne veya güvene dayalı olmadan çalışabileceği, durdurulamaz ve herkese açık bir ortam sağlar.</1><2>Bunun anlamı herkesin kullanılan kodu görebileceği, herkesin izin istemeden kodu kullanabileceği ve hiç kimsenin koda müdahale edemeyeceği veya kaldıramayacağıdır. </2><3>Juicebox'ı kullanan kişiler, herkese açık bir altyapı aracılığıyla birbirleriyle etkileşime girer. Borsaya aracılık eden özel, kâr amaçlı kurumsal bir hizmet aracılığıyla değil.</3><4>Juicebox, insanların ve projelerin herkese açık sanat ve altyapı yaratmak için çalışırken, kurumsal amaçlar için çalıştıklarında kazanacaklarına eşit veya daha fazla kazanmalarını sağlayabilmek için inşa edildi. Artık karanlık işlere yer yok.</4>"
 
 msgid "<0>A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project.</0><1>Holding these tokens entitles a project to a portion of its own overflow.</1>"
 msgstr "<0>Bir proje, token'ların bir yüzdesini kendisi için rezerve etmeyi seçebilir. Bu token yüzdesi, ödeme yapan kullanıcılara dağıtılmak yerine proje için basılır.</0><1>Bu token'ları tutmak, projeye kendi taşma payının bir kısmını alma hakkı verir.</1>"
+
+msgid "<0>A redemption rate rewards people who wait longer to redeem your tokens for overflow.</0><1>For example, with a redemption rate of 70%, redeeming 10% of the token supply at any given time will claim around 7% of the total overflow.</1><2>The rest is left to share between token holders.</2><3>For more info, check out this <4>short video</4> on redemption rate.</3>"
+msgstr ""
 
 msgid "<0>Contribution floor:</0> {0} ETH"
 msgstr ""
@@ -286,13 +286,16 @@ msgstr ""
 msgid "Activity"
 msgstr "Etkinlik"
 
+msgid "Add"
+msgstr ""
+
 msgid "Add Lock Duration Option"
 msgstr ""
 
 msgid "Add NFT"
 msgstr ""
 
-msgid "Add NFT reward tier"
+msgid "Add NFT tier"
 msgstr ""
 
 msgid "Add a payout"
@@ -326,9 +329,6 @@ msgid "Add payout"
 msgstr "Ödeme ekle"
 
 msgid "Add payout recipient"
-msgstr ""
-
-msgid "Add reward tier"
 msgstr ""
 
 msgid "Add terminal"
@@ -422,6 +422,9 @@ msgid "Allow public lock extension"
 msgstr ""
 
 msgid "Allow terminal configuration"
+msgstr ""
+
+msgid "Allow the <0>Juicebox NFT deployer contract</0> to reconfigure this project's funding cycle."
 msgstr ""
 
 msgid "Allow token minting"
@@ -589,6 +592,12 @@ msgstr "{tokensTextLong} yak"
 msgid "Button Text"
 msgstr ""
 
+msgid "Button link"
+msgstr ""
+
+msgid "Button text"
+msgstr ""
+
 msgid "Button will close the modal if no link is given."
 msgstr ""
 
@@ -607,12 +616,6 @@ msgstr ""
 msgid "CSV download failed."
 msgstr ""
 
-msgid "Call-to-action button link"
-msgstr ""
-
-msgid "Call-to-action button text"
-msgstr ""
-
 msgid "Can I change my project's contract after it's been created?"
 msgstr "Projemin sözleşmesini oluşturulduktan sonra değiştirebilir miyim?"
 
@@ -629,6 +632,9 @@ msgid "Change networks to deploy"
 msgstr ""
 
 msgid "Changes to payouts will take effect immediately."
+msgstr ""
+
+msgid "Changes to your collection details may not be reflected in some marketplaces (for example, Opensea). Contact the marketplace for support."
 msgstr ""
 
 msgid "Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
@@ -724,7 +730,7 @@ msgstr "Finansman döngüleriniz için kısıtlamaları yapılandırın."
 msgid "Configure which Juicebox V1 project you'd like to accept tokens for. Token holders of this V1 project will be able to swap their V1 tokens for V2 tokens."
 msgstr ""
 
-msgid "Configure your project's NFT rewards."
+msgid "Configure your project's NFTs."
 msgstr ""
 
 msgid "Configure your project's first funding cycle below."
@@ -892,9 +898,6 @@ msgstr "Özel token faydalanıcısı"
 msgid "Customize Pay Button"
 msgstr ""
 
-msgid "Customize how your NFT collection will appear on NFT marketplaces (like OpenSea)."
-msgstr ""
-
 msgid "Customize your project's \"pay\" button. Leave blank to use the default."
 msgstr "Projenizin \"Ödeme\" butonunu özelleştirin. Varsayılanı kullanmak için boş bırakın."
 
@@ -944,6 +947,9 @@ msgid "Delete token allocation"
 msgstr "Token tahsisini sil"
 
 msgid "Deploy"
+msgstr ""
+
+msgid "Deploy NFTs"
 msgstr ""
 
 msgid "Deploy Payment Address contract"
@@ -1177,7 +1183,7 @@ msgstr "Her ödeme, finansman döngülerinin her birinde, hazinede yeterli tutar
 msgid "Each project has its own <0>tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr ""
 
-msgid "Edit NFT reward tier"
+msgid "Edit NFT tier"
 msgstr ""
 
 msgid "Edit allocation"
@@ -1624,6 +1630,9 @@ msgstr "Son ödemeler"
 msgid "Launch @{handle}"
 msgstr ""
 
+msgid "Launch V3 funding cycle"
+msgstr ""
+
 msgid "Launch funding cycle"
 msgstr "Finansman döngüsünü başlat"
 
@@ -1721,12 +1730,6 @@ msgid "Manual"
 msgstr ""
 
 msgid "Manual Funding Cycles"
-msgstr ""
-
-msgid "Marketplace Customizations"
-msgstr ""
-
-msgid "Marketplace customizations"
 msgstr ""
 
 msgid "Max Supply"
@@ -1834,9 +1837,6 @@ msgstr ""
 msgid "NFT projects"
 msgstr ""
 
-msgid "NFT rewards"
-msgstr ""
-
 msgid "NFTs"
 msgstr ""
 
@@ -1876,7 +1876,7 @@ msgstr "Sonraki: İncele ve başlat"
 msgid "No"
 msgstr "Hayır"
 
-msgid "No NFT reward tiers"
+msgid "No NFT tiers"
 msgstr ""
 
 msgid "No active funding cycle."
@@ -2075,9 +2075,6 @@ msgid "Payment memo image"
 msgstr "Ödeme notu görüntüsü"
 
 msgid "Payment options"
-msgstr ""
-
-msgid "Payment success popup"
 msgstr ""
 
 msgid "Payments"
@@ -2368,6 +2365,9 @@ msgstr "Yaklaşan finansman döngülerini yeniden yapılandır"
 msgid "Reconfigure {projectTitle}"
 msgstr ""
 
+msgid "Reconfigure {projectTitle} with new NFTs"
+msgstr ""
+
 msgid "Redeem"
 msgstr ""
 
@@ -2503,7 +2503,7 @@ msgstr "Kaydet"
 msgid "Save NFT"
 msgstr ""
 
-msgid "Save NFT reward tier"
+msgid "Save NFT tier"
 msgstr ""
 
 msgid "Save NFTs"
@@ -2575,6 +2575,9 @@ msgstr ""
 msgid "Set ENS text record for {ensName}"
 msgstr ""
 
+msgid "Set NFT operator permissions"
+msgstr ""
+
 msgid "Set URI for {projectTitle}"
 msgstr ""
 
@@ -2621,6 +2624,9 @@ msgid "Set handle @{handle}"
 msgstr ""
 
 msgid "Set operator for {projectTitle}"
+msgstr ""
+
+msgid "Set operator permissions for projectId={projectId} to allow NFTs"
 msgstr ""
 
 msgid "Set payouts of {projectTitle}"
@@ -2680,11 +2686,11 @@ msgstr ""
 msgid "Should you Juicebox?"
 msgstr "Juicebox’a katılmalı mısın?"
 
-msgid "Show your contributors a message after they receive their NFT reward."
+msgid "Show contributors a popup when they receive an NFT."
 msgstr ""
 
-msgid "Since you have not set a funding duration, changes to these settings will be applied immediately."
-msgstr "Bir finansman süresi belirlemediğiniz için bu ayarlarda yapılan değişiklikler hemen uygulanacaktır."
+msgid "Since you have not set a funding duration, future changes to these settings will be applied immediately."
+msgstr ""
 
 msgid "Skipped"
 msgstr ""
@@ -2845,9 +2851,6 @@ msgstr ""
 msgid "The message that will be shown to the user after they pay for an NFT."
 msgstr ""
 
-msgid "The name of the collection that will be shown on NFT marketplaces (e.g. OpenSea)."
-msgstr ""
-
 msgid "The number of project tokens minted when 1 ETH is contributed in the first funding cycle."
 msgstr "İlk finansman döngüsüne 1 ETH katkıda bulunulduğunda basılan proje token'larının sayısı."
 
@@ -2909,9 +2912,6 @@ msgid "The redemption rate determines the amount of overflow each token can be r
 msgstr ""
 
 msgid "The sum of your expenses is currently different to your funding target. Do you want to sync your funding target to match expenses?<0/><1/>If not, please edit one or more of your payouts."
-msgstr ""
-
-msgid "The symbol of the collection that will be shown on NFT marketplaces (e.g. OpenSea)."
 msgstr ""
 
 msgid "The target for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
@@ -3244,6 +3244,9 @@ msgstr "Yaklaşan"
 msgid "Update your veNFT's lock duration."
 msgstr ""
 
+msgid "Update {projectTitle}'s NFT collection details."
+msgstr ""
+
 msgid "Upload"
 msgstr "Yükle"
 
@@ -3343,11 +3346,11 @@ msgstr "Taşma nedir?"
 msgid "What is the V1 Token Payment Terminal?"
 msgstr ""
 
-msgid "What's a bonding curve?"
-msgstr "Bağlılık eğrisi nedir?"
-
 msgid "What's a discount rate?"
 msgstr "İndirim oranı nedir?"
+
+msgid "What's a redemption rate?"
+msgstr ""
 
 msgid "What's going on under the hood?"
 msgstr "Kaputun altında neler oluyor?"
@@ -3522,6 +3525,12 @@ msgstr ""
 
 msgid "Your balance"
 msgstr "Bakiyeniz"
+
+msgid "Your collection's name is used on NFT marketplaces (for example, OpenSea)."
+msgstr ""
+
+msgid "Your collection's symbol is used on NFT marketplaces (for example, OpenSea)."
+msgstr ""
 
 msgid "Your funding cycle configuration has been pre-populated using the configuration you originally launched with. If you need to customize it, contact us."
 msgstr "Finansman döngüsü yapılandırmanız, ilk başlattığınız yapılandırma kullanılarak önceden doldurulmuştur. Özelleştirmeniz gerekiyorsa, bizimle iletişime geçin."

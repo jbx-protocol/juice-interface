@@ -99,13 +99,15 @@ export const FundingCyclesPage = () => {
                       tooltip={
                         <span>
                           <Trans>
-                            With Automated Funding Cycles, your funding
-                            configuration is locked for a set time period.
-                            <br />
-                            <br />
-                            <b>
-                              This helps build trust with your contributors.
-                            </b>
+                            <p>
+                              With Automated Funding Cycles, your funding
+                              configuration is locked for a set time period.
+                            </p>
+                            <p>
+                              <strong>
+                                This helps build trust with your contributors.
+                              </strong>
+                            </p>
                           </Trans>
                         </span>
                       }

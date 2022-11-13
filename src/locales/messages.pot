@@ -224,6 +224,9 @@ msgstr ""
 msgid "<0>Website:</0> <1>{0}</1>"
 msgstr ""
 
+msgid "<0>With Automated Funding Cycles, your funding configuration is locked for a set time period.</0><1><2>This helps build trust with your contributors.</2></1>"
+msgstr ""
+
 msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
 msgstr ""
 
@@ -3399,9 +3402,6 @@ msgid "Will be rounded to <0/>{0}"
 msgstr ""
 
 msgid "Will it work on L2s?"
-msgstr ""
-
-msgid "With Automated Funding Cycles, your funding configuration is locked for a set time period.<0/><1/><2>This helps build trust with your contributors.</2>"
 msgstr ""
 
 msgid "With Juicebox, projects are built and maintained by motivated punks getting paid transparently, and funded by a community of users and patrons who are rewarded as the projects they support succeed."

@@ -7,7 +7,6 @@ import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
 import { ThemeContext } from 'contexts/themeContext'
 import { useProjectHandleText } from 'hooks/ProjectHandleText'
-import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { Project } from 'models/subgraph-entities/vX/project'
 import Link from 'next/link'
@@ -108,7 +107,6 @@ export default function ProjectCard({
   } = useContext(ThemeContext)
 
   const projectCardData = useProjectCardData(project)
-  const { data: metadata } = useProjectMetadata(projectCardData?.metadataUri)
   const { handleText } = useProjectHandleText({
     handle: projectCardData?.handle,
     projectId: projectCardData?.projectId,

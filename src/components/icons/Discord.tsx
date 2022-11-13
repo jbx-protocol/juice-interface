@@ -1,12 +1,13 @@
-export default function Discord({ size }: { size?: number }) {
-  const widthToHeight = 71 / 55
-  const height = size ?? 55
-
+export default function Discord({
+  size,
+  style,
+}: {
+  size?: number
+  style?: React.CSSProperties
+}) {
   return (
     <svg
-      style={{ height, width: widthToHeight * height }}
-      width="71"
-      height="55"
+      style={{ height: size, width: size, ...style }}
       viewBox="0 0 71 55"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

@@ -127,36 +127,44 @@ export function ProjectHeader({
             style={{
               color: colors.text.secondary,
               fontWeight: 600,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 6,
             }}
           >
-            {handle ? (
-              <Tooltip title={t`Project ID: ${projectId}`}>
-                <span>@{handle}</span>
-              </Tooltip>
-            ) : (
-              <Trans>Project #{projectId}</Trans>
-            )}
+            <span>
+              {true && (
+                <Tooltip title={t`Project ID: ${projectId}`}>
+                  <span>@{handle}derpderpderp</span>
+                </Tooltip>
+              )}
+            </span>
+            <SocialLinks
+              discord={projectMetadata?.discord}
+              twitter={projectMetadata?.twitter}
+              infoUri={projectMetadata?.infoUri}
+            />
           </span>
+        </div>
+        <span
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 4,
+          }}
+        >
+          {projectMetadata?.description && !hideDescription && (
+            <Paragraph
+              description={projectMetadata.description}
+              characterLimit={250}
+              style={{ color: colors.text.secondary }}
+            />
+          )}
 
           {!handle && canEditProjectHandle && projectId ? (
             <EditProjectHandleButton />
           ) : null}
-
-          <SocialLinks
-            discord={projectMetadata?.discord}
-            twitter={projectMetadata?.twitter}
-            infoUri={projectMetadata?.infoUri}
-          />
-        </div>
-
-        {projectMetadata?.description && !hideDescription && (
-          <Paragraph
-            description={projectMetadata.description}
-            characterLimit={250}
-            style={{ color: colors.text.secondary }}
-          />
-        )}
-
+        </span>
         {projectOwnerAddress && (
           <div
             style={{

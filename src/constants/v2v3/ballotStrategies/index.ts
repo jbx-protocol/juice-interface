@@ -49,7 +49,7 @@ export function ballotStrategies(network?: NetworkName): BallotStrategy[] {
   return [
     {
       id: 'none',
-      name: t`No strategy`,
+      name: t`No delay`,
       description: t`Any reconfiguration to an upcoming funding cycle will take effect once the current cycle ends. A project with no strategy may be vulnerable to being rug-pulled by its owner.`,
       address: constants.AddressZero,
       durationSeconds: 0,

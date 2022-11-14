@@ -210,7 +210,7 @@ export const CustomTokenSettings = () => {
             rules={[inputMustExistRule({ label: t`Redemption Rate` })]}
           >
             <NumberSlider
-              min={0.1}
+              min={0}
               defaultValue={0}
               suffix="%"
               step={0.5}

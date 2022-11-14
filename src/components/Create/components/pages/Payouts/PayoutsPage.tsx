@@ -1,10 +1,11 @@
 import { FieldBinaryOutlined, PercentageOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Form, Space } from 'antd'
+import { Form, Space, Tooltip } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import { useContext, useEffect, useMemo } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { Selection } from '../../Selection'
+import { SelectionCardProps } from '../../Selection/SelectionCard'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { allocationTotalPercentDoNotExceedTotalRule } from '../utils'
@@ -63,11 +64,12 @@ export const PayoutsPage: React.FC = () => {
             defocusOnSelect
             style={{ width: '100%' }}
           >
-            <Selection.Card
+            <DisabledTooltip
               name="percentages"
               title={t`Percentages`}
               icon={<PercentageOutlined />}
               isDisabled={!availableSelections.has('percentages')}
+              fundingTargetDisabledReason={t`zero`}
               description={
                 <Trans>
                   Distribute a percentage of all funds received between the
@@ -75,11 +77,12 @@ export const PayoutsPage: React.FC = () => {
                 </Trans>
               }
             />
-            <Selection.Card
+            <DisabledTooltip
               name="amounts"
               title={t`Specific Amounts`}
               icon={<FieldBinaryOutlined />}
               isDisabled={!availableSelections.has('amounts')}
+              fundingTargetDisabledReason={t`infinite`}
               description={
                 <Trans>
                   Distribute a specific amount of funds to each entity nominated
@@ -113,3 +116,22 @@ export const PayoutsPage: React.FC = () => {
     </Form>
   )
 }
+
+const DisabledTooltip = (
+  props: SelectionCardProps & { fundingTargetDisabledReason: string },
+) => (
+  <Tooltip
+    title={
+      props.isDisabled ? (
+        <Trans>
+          {props.title} is disabled when <b>Funding Target</b> is{' '}
+          {props.fundingTargetDisabledReason}.
+        </Trans>
+      ) : undefined
+    }
+  >
+    <div>
+      <Selection.Card {...props} />
+    </div>
+  </Tooltip>
+)

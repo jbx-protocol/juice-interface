@@ -224,6 +224,9 @@ msgstr ""
 msgid "<0>Website:</0> <1>{0}</1>"
 msgstr ""
 
+msgid "<0>With Automated Funding Cycles, your funding configuration is locked for a set time period.</0><1><2>This helps build trust with your contributors.</2></1>"
+msgstr ""
+
 msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
 msgstr ""
 
@@ -512,7 +515,7 @@ msgstr ""
 msgid "Automated"
 msgstr ""
 
-msgid "Automated Funding Cycles <0/>"
+msgid "Automated Funding Cycles"
 msgstr ""
 
 msgid "Automated funding cycles enable the following characteristics:"

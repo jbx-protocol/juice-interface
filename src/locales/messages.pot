@@ -2756,6 +2756,9 @@ msgstr ""
 msgid "Sum of percentages cannot exceed 100%."
 msgstr ""
 
+msgid "Supply: {maximumSupply}"
+msgstr ""
+
 msgid "Swap V1 {tokenSymbolFormattedPlural} for V2 {tokenSymbolFormattedPlural}"
 msgstr ""
 
@@ -3009,6 +3012,9 @@ msgid "Time Remaining"
 msgstr ""
 
 msgid "Time remaining for changes made to affect the next funding cycle:"
+msgstr ""
+
+msgid "Title"
 msgstr ""
 
 msgid "To do so, you need to give your V1 token holders the ability to exchange their V1 tokens for V2 tokens. Select <0>Set up token migration</0> below to get started."

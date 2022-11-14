@@ -119,7 +119,9 @@ export const RewardItem = ({
                   gap: '0.5rem',
                 }}
               >
-                <div style={headerTextStyle}>Title</div>
+                <div style={headerTextStyle}>
+                  <Trans>Title</Trans>
+                </div>
                 <div style={emphasisedTextStyle}>{title}</div>
               </div>
               {/* Contribution */}
@@ -130,7 +132,9 @@ export const RewardItem = ({
                   gap: '0.5rem',
                 }}
               >
-                <div style={headerTextStyle}>Minimum Contribution</div>
+                <div style={headerTextStyle}>
+                  <Trans>Minimum Contribution</Trans>
+                </div>
                 <div style={emphasisedTextStyle}>
                   {minimumContribution.toString()} ETH
                 </div>
@@ -162,7 +166,9 @@ const Description = ({ description }: { description: ReactNode }) => {
         gap: '0.5rem',
       }}
     >
-      <div style={headerTextStyle}>Description</div>
+      <div style={headerTextStyle}>
+        <Trans>Description</Trans>
+      </div>
       <div style={descriptionTextStyle}>{description}</div>
     </div>
   )
@@ -188,7 +194,9 @@ const TertiaryDetails = ({
       }}
     >
       {maximumSupply && (
-        <div style={detailsTextStyle}>Supply: {maximumSupply}</div>
+        <div style={detailsTextStyle}>
+          <Trans>Supply: {maximumSupply}</Trans>
+        </div>
       )}
       {url && (
         <div

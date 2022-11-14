@@ -5,11 +5,10 @@ import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 
 export const useFundingTargetType = (
   fundingTargetAmount: BigNumber | undefined,
-): FundingTargetType => {
+): FundingTargetType | undefined => {
   return useMemo(() => {
-    if (!fundingTargetAmount) return 'none'
+    if (!fundingTargetAmount || fundingTargetAmount.eq(0)) return undefined
     if (fundingTargetAmount.eq(MAX_DISTRIBUTION_LIMIT)) return 'infinite'
-    if (fundingTargetAmount.eq(0)) return 'none'
     return 'specific'
   }, [fundingTargetAmount])
 }

@@ -80,8 +80,8 @@ export const FundingTargetPage: React.FC = () => {
                   <Space style={{ alignItems: 'start' }}>
                     <QuestionCircleOutlined />
                     <Trans>
-                      Any funds raised over this amount are considered
-                      'overflow' and are redeemable by your contributors.
+                      Any funds raised over this amount are considered{' '}
+                      <i>overflow</i> and are redeemable by your contributors.
                     </Trans>
                   </Space>
                 }

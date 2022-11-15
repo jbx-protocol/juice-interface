@@ -13,7 +13,9 @@
 }
 
 .wizard-create .ant-input,
-.ant-input-affix-wrapper {
+.ant-input-affix-wrapper,
+.ant-input-number,
+.ant-picker {
   background-color: var(--background-l3);
   border-color: var(--stroke-disabled);
 }

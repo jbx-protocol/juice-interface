@@ -2546,6 +2546,9 @@ msgstr ""
 msgid "Save tracked assets"
 msgstr ""
 
+msgid "Search projects"
+msgstr ""
+
 msgid "Search projects by handle"
 msgstr ""
 

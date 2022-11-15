@@ -207,7 +207,8 @@ textarea.ant-input::placeholder {
 }
 
 .ant-input-search-button {
-  border: 1px solid var(--stroke-primary);
+  border: 1px solid var(--stroke-tertiary);
+  border-left: 1px solid transparent;
   color: var(--icon-action-primary) !important;
 }
 

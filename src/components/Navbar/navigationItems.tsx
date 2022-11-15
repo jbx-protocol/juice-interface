@@ -95,11 +95,19 @@ export const resourcesMenuItems = (mobile?: boolean): ResourceItem[] => {
       ),
     },
     {
-      key: 'peel',
+      key: 'discord',
       label: (
         <a href="https://discord.gg/6jXrJSyDFf" {...linkStyle}>
           Discord
         </a>
+      ),
+    },
+    {
+      key: 'blog',
+      label: (
+        <Link href="https://info.juicebox.money/blog">
+          <a {...linkStyle}>{t`Blog`}</a>
+        </Link>
       ),
     },
   ]
@@ -137,14 +145,6 @@ export const desktopMenuItems = ({
     label: (
       <Link href="https://info.juicebox.money/">
         <a {...externalMenuLinkProps}>{t`Docs`}</a>
-      </Link>
-    ),
-  },
-  {
-    key: 'blog',
-    label: (
-      <Link href="https://info.juicebox.money/blog">
-        <a {...externalMenuLinkProps}>{t`Blog`}</a>
       </Link>
     ),
   },

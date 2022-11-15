@@ -3,7 +3,7 @@ import { Input, Select } from 'antd'
 import { ChangeEvent, CSSProperties, useMemo } from 'react'
 
 export interface CurrencySelectInputValue {
-  amount: string | undefined
+  amount: string
   currency: 'eth' | 'usd'
 }
 
@@ -19,7 +19,7 @@ export const CurrencySelectInput: React.FC<{
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const currency = value?.currency ?? 'eth'
     if (!e.target.value) {
-      handleChange({ amount: undefined, currency })
+      handleChange({ amount: '', currency })
       return
     }
 

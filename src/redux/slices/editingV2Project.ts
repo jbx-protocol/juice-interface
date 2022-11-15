@@ -42,6 +42,7 @@ import {
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
 import { CreatePage } from 'models/create-page'
+import { FundingTargetType } from 'models/fundingTargetType'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
@@ -59,6 +60,7 @@ interface V2ProjectState {
   fundingCycleData: SerializedV2V3FundingCycleData
   fundingCycleMetadata: SerializedV2V3FundingCycleMetadata
   fundAccessConstraints: SerializedV2V3FundAccessConstraint[]
+  fundingTargetSelection: FundingTargetType | undefined
   payoutGroupedSplits: ETHPayoutGroupedSplits
   payoutsSelection: PayoutsSelection | undefined
   reservedTokensGroupedSplits: ReservedTokensGroupedSplits
@@ -172,6 +174,7 @@ export const defaultProjectState: V2ProjectState = {
   fundingCycleData: { ...defaultFundingCycleData },
   fundingCycleMetadata: { ...defaultFundingCycleMetadata },
   fundAccessConstraints: [],
+  fundingTargetSelection: undefined,
   payoutGroupedSplits: EMPTY_PAYOUT_GROUPED_SPLITS,
   payoutsSelection: undefined,
   reservedTokensGroupedSplits: EMPTY_RESERVED_TOKENS_GROUPED_SPLITS,
@@ -264,6 +267,12 @@ const editingV2ProjectSlice = createSlice({
         state.fundAccessConstraints[0].distributionLimitCurrency =
           action.payload
       }
+    },
+    setFundingTargetSelection: (
+      state,
+      action: PayloadAction<'specific' | 'infinite' | undefined>,
+    ) => {
+      state.fundingTargetSelection = action.payload
     },
     setPayoutSplits: (state, action: PayloadAction<Split[]>) => {
       state.payoutGroupedSplits = {

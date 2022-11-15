@@ -1,1 +1,1 @@
-export type FundingTargetType = 'specific' | 'infinite' | 'none'
+export type FundingTargetType = 'specific' | 'infinite'

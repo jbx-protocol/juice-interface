@@ -34,11 +34,13 @@ interface AddEditRewardModalFormProps {
 }
 
 export const AddEditRewardModal = ({
+  className,
   editingData,
   open,
   onOk,
   onCancel,
 }: {
+  className?: string
   editingData?: Reward | undefined
   open?: boolean
   onOk: (reward: Reward) => void
@@ -103,6 +105,7 @@ export const AddEditRewardModal = ({
   const isEditing = !!editingData
   return (
     <Modal
+      className={className}
       title={<h2>{isEditing ? t`Edit NFT tier` : t`Add NFT tier`}</h2>}
       okText={isEditing ? t`Save NFT` : t`Add NFT`}
       open={open}

@@ -12,12 +12,17 @@
   color: var(--text-primary);
 }
 
-.wizard-create .ant-input,
-.ant-input-affix-wrapper,
-.ant-input-number,
-.ant-picker {
-  background-color: var(--background-l3);
-  border-color: var(--stroke-disabled);
+.wizard-create,
+.wizard-create-modal {
+  .ant-input,
+  .ant-input-affix-wrapper,
+  .ant-input-number,
+  .ant-radio-inner,
+  .ant-picker {
+    background-color: var(--background-l3);
+    background: var(--background-l3);
+    border-color: var(--stroke-disabled);
+  }
 }
 
 .wizard-create .ant-collapse-header {

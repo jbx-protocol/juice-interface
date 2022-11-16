@@ -29,6 +29,7 @@ interface AddEditAllocationModalFormProps {
 type AddEditAllocationModalResult = Split & { id: string }
 
 export const AddEditAllocationModal = ({
+  className,
   allocationName,
   editingData,
   availableModes,
@@ -36,6 +37,7 @@ export const AddEditAllocationModal = ({
   onOk,
   onCancel,
 }: {
+  className?: string
   allocationName: string
   editingData?: AllocationSplit | undefined
   availableModes: Set<'amount' | 'percentage'>
@@ -128,6 +130,7 @@ export const AddEditAllocationModal = ({
 
   return (
     <Modal
+      className={className}
       title={
         <h2>
           {isEditing ? t`Edit ${allocationName}` : t`Add new ${allocationName}`}

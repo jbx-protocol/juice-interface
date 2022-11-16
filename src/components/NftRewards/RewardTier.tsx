@@ -3,7 +3,13 @@ import { Trans } from '@lingui/macro'
 import { Skeleton, Tooltip } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { NftRewardTier } from 'models/nftRewardTier'
-import { CSSProperties, MouseEventHandler, useContext, useState } from 'react'
+import {
+  CSSProperties,
+  MouseEvent,
+  MouseEventHandler,
+  useContext,
+  useState,
+} from 'react'
 import { ipfsToHttps } from 'utils/ipfs'
 import { NftPreview } from './NftPreview'
 
@@ -56,6 +62,7 @@ export function RewardTier({
   rewardTierUpperLimit,
   isSelected,
   onClick,
+  onRemove,
 }: {
   loading?: boolean
   tierRank?: number
@@ -63,6 +70,7 @@ export function RewardTier({
   rewardTierUpperLimit?: number | undefined
   isSelected?: boolean
   onClick?: MouseEventHandler<HTMLDivElement>
+  onRemove?: () => void
 }) {
   const {
     theme: { colors, radii },
@@ -91,9 +99,16 @@ export function RewardTier({
       borderRadius: '100%',
       height: '25px',
       width: '25px',
-      display: 'flex',
+      display: !isSelected ? 'none' : 'flex',
       justifyContent: 'center',
       alignItems: 'center',
+    }
+
+    const onRemoveTier = (
+      event: MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
+    ) => {
+      event.stopPropagation()
+      onRemove?.()
     }
 
     return (
@@ -121,7 +136,7 @@ export function RewardTier({
         }}
         placement={'bottom'}
       >
-        <div style={iconStyle}>
+        <div style={iconStyle} onClick={onRemoveTier}>
           <CheckOutlined />
         </div>
       </Tooltip>
@@ -140,7 +155,13 @@ export function RewardTier({
           borderRadius: radii.sm,
           transition: 'box-shadow 100ms linear',
         }}
-        onClick={!isSelected ? onClick : () => setPreviewVisible(true)}
+        onClick={
+          !isSelected
+            ? onClick
+            : () => {
+                setPreviewVisible(true)
+              }
+        }
         role="button"
       >
         {/* Image container */}

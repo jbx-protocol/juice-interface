@@ -1667,6 +1667,9 @@ msgstr ""
 msgid "Link Juicebox V1 project"
 msgstr ""
 
+msgid "Link contributors to another page after they successfully mint one of your project's NFTs."
+msgstr ""
+
 msgid "Load more"
 msgstr ""
 

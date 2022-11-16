@@ -1,11 +1,10 @@
 import { Contract, ContractInterface } from '@ethersproject/contracts'
-import { CV2V3 } from 'models/cv'
 import { NetworkName } from 'models/network-name'
 import { SignerOrProvider } from 'models/signerOrProvider'
 import { V2V3ContractName } from 'models/v2v3/contracts'
+import { CV2V3 } from 'models/v2v3/cv'
 import { loadJBProjectHandlesContract } from './contractLoaders/JBProjectHandles'
 import { loadJBTiered721DelegateProjectDeployerContract } from './contractLoaders/JBTiered721DelegateProjectDeployer'
-import { loadJBTiered721DelegateStoreContract } from './contractLoaders/JBTiered721DelegateStore'
 import { loadJuiceboxV2OrV3Contract } from './contractLoaders/JuiceboxV2OrV3'
 import { loadPublicResolverContract } from './contractLoaders/PublicResolver'
 import { loadJBV1TokenPaymentTerminalContract } from './contractLoaders/V1TokenPaymentTerminal'
@@ -40,8 +39,6 @@ export const loadV2V3Contract = async (
     contractName === V2V3ContractName.JBTiered721DelegateProjectDeployer
   ) {
     contractJson = await loadJBTiered721DelegateProjectDeployerContract()
-  } else if (contractName === V2V3ContractName.JBTiered721DelegateStore) {
-    contractJson = await loadJBTiered721DelegateStoreContract()
   } else if (contractName === V2V3ContractName.JBVeNftDeployer) {
     contractJson = await loadVeNftDeployer()
   } else if (contractName === V2V3ContractName.JBVeTokenUriResolver) {

@@ -1,12 +1,13 @@
 import { Trans } from '@lingui/macro'
 import { Button, Space, Statistic } from 'antd'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { useContext, useState } from 'react'
+
 import { useIsUpgradeAvailable } from './hooks/useIsUpgradeAvailable'
 import { UpgradeWizard } from './UpgradeWizard/UpgradeWizard'
 
 export function ProjectUpgradesPage() {
-  const { cv } = useContext(ProjectMetadataContext)
+  const { cv } = useContext(V2V3ContractsContext)
 
   const [upgradeWizardOpen, setUpgradeWizardOpen] = useState(false)
 
@@ -17,6 +18,9 @@ export function ProjectUpgradesPage() {
   return (
     <div>
       <Space direction="vertical" size="large">
+        {/* This isn't great because if the project owner has selected V2 on the version selector, it'll just say V2 here, which isn't what we want.
+        Good enuf for now.
+         */}
         <Statistic title="Current version" value={`V${cv}`} />
         {!isUpgradeAvailable && (
           <p>

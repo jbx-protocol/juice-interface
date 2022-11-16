@@ -20,4 +20,7 @@ export const V2V3_PROJECT_IDS_NETWORK: {
   [NetworkName.goerli]: {
     DEFIFA: 117,
   },
+  [NetworkName.mainnet]: {
+    DEFIFA: 305,
+  },
 }

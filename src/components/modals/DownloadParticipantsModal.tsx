@@ -9,7 +9,7 @@ import { GraphQueryOpts, querySubgraphExhaustive } from 'utils/graph'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { CV_V1, CV_V1_1 } from 'constants/cv'
+import { PV_V1, PV_V1_1 } from 'constants/pv'
 import { readProvider } from 'constants/readProvider'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { Participant } from 'models/subgraph-entities/vX/participant'
@@ -24,7 +24,7 @@ export function DownloadParticipantsModal({
   open: boolean | undefined
   onCancel: VoidFunction | undefined
 }) {
-  const { projectId, projectMetadata, cv } = useContext(ProjectMetadataContext)
+  const { projectId, projectMetadata, pv } = useContext(ProjectMetadataContext)
 
   const [latestBlockNumber, setLatestBlockNumber] = useState<number>()
   const [blockNumber, setBlockNumber] = useState<number>()
@@ -38,19 +38,19 @@ export function DownloadParticipantsModal({
   }, [])
 
   const download = useCallback(async () => {
-    if (blockNumber === undefined || !projectId || !cv) return
+    if (blockNumber === undefined || !projectId || !pv) return
 
-    // Projects that migrate between 1 & 1.1 may change their CV without the CV of their participants being updated. This should be fixed by better subgraph infrastructure, but this fix will make sure the UI works for now.
-    const cvOpt: GraphQueryOpts<'participant', keyof Participant>['where'] =
-      cv === CV_V1 || cv === CV_V1_1
+    // Projects that migrate between 1 & 1.1 may change their PV without the PV of their participants being updated. This should be fixed by better subgraph infrastructure, but this fix will make sure the UI works for now.
+    const pvOpt: GraphQueryOpts<'participant', keyof Participant>['where'] =
+      pv === PV_V1 || pv === PV_V1_1
         ? {
-            key: 'cv',
+            key: 'pv',
             operator: 'in',
-            value: [CV_V1, CV_V1_1],
+            value: [PV_V1, PV_V1_1],
           }
         : {
-            key: 'cv',
-            value: cv,
+            key: 'pv',
+            value: pv,
           }
 
     const rows = [
@@ -86,7 +86,7 @@ export function DownloadParticipantsModal({
             key: 'projectId',
             value: projectId,
           },
-          cvOpt,
+          pvOpt,
         ],
       })
 
@@ -120,7 +120,7 @@ export function DownloadParticipantsModal({
       console.error('Error downloading participants', e)
       setLoading(false)
     }
-  }, [blockNumber, projectId, tokenSymbol, projectMetadata, cv])
+  }, [blockNumber, projectId, tokenSymbol, projectMetadata, pv])
 
   return (
     <Modal

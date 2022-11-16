@@ -42,6 +42,7 @@ import {
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
 import { CreatePage } from 'models/create-page'
+import { FundingTargetType } from 'models/fundingTargetType'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
@@ -59,6 +60,7 @@ interface V2ProjectState {
   fundingCycleData: SerializedV2V3FundingCycleData
   fundingCycleMetadata: SerializedV2V3FundingCycleMetadata
   fundAccessConstraints: SerializedV2V3FundAccessConstraint[]
+  fundingTargetSelection: FundingTargetType | undefined
   payoutGroupedSplits: ETHPayoutGroupedSplits
   payoutsSelection: PayoutsSelection | undefined
   reservedTokensGroupedSplits: ReservedTokensGroupedSplits
@@ -74,7 +76,7 @@ interface V2ProjectState {
 // Increment this version by 1 when making breaking changes.
 // When users return to the site and their local version is less than
 // this number, their state will be reset.
-export const REDUX_STORE_V2_PROJECT_VERSION = 9
+export const REDUX_STORE_V2_PROJECT_VERSION = 10
 
 const DEFAULT_MUST_START_AT_OR_AFTER = '1'
 
@@ -172,6 +174,7 @@ export const defaultProjectState: V2ProjectState = {
   fundingCycleData: { ...defaultFundingCycleData },
   fundingCycleMetadata: { ...defaultFundingCycleMetadata },
   fundAccessConstraints: [],
+  fundingTargetSelection: undefined,
   payoutGroupedSplits: EMPTY_PAYOUT_GROUPED_SPLITS,
   payoutsSelection: undefined,
   reservedTokensGroupedSplits: EMPTY_RESERVED_TOKENS_GROUPED_SPLITS,
@@ -265,6 +268,12 @@ const editingV2ProjectSlice = createSlice({
           action.payload
       }
     },
+    setFundingTargetSelection: (
+      state,
+      action: PayloadAction<'specific' | 'infinite' | undefined>,
+    ) => {
+      state.fundingTargetSelection = action.payload
+    },
     setPayoutSplits: (state, action: PayloadAction<Split[]>) => {
       state.payoutGroupedSplits = {
         ...EMPTY_PAYOUT_GROUPED_SPLITS,
@@ -313,11 +322,11 @@ const editingV2ProjectSlice = createSlice({
     ) => {
       state.nftRewards.collectionMetadata = action.payload
     },
-    setNftRewardsCollectionMetadataCID: (
+    setNftRewardsCollectionMetadataUri: (
       state,
       action: PayloadAction<string | undefined>,
     ) => {
-      state.nftRewards.collectionMetadata.CID = action.payload
+      state.nftRewards.collectionMetadata.uri = action.payload
     },
     setNftRewardsSymbol: (state, action: PayloadAction<string | undefined>) => {
       state.nftRewards.collectionMetadata.symbol = action.payload
@@ -334,7 +343,7 @@ const editingV2ProjectSlice = createSlice({
     ) => {
       state.nftRewards.postPayModal = action.payload
     },
-    setNftRewardsName: (state, action: PayloadAction<string | undefined>) => {
+    setNftRewardsName: (state, action: PayloadAction<string>) => {
       state.nftRewards.collectionMetadata.name = action.payload
     },
     setAllowSetTerminals: (state, action: PayloadAction<boolean>) => {

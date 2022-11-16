@@ -99,8 +99,10 @@ export function NftRewardsSection() {
   )
 
   const deselectTier = useCallback(() => {
+    setPayAmount?.('0')
     setPayMetadata?.(undefined)
     setSelectedIndex(undefined)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setPayMetadata])
 
   useEffect(() => {
@@ -172,6 +174,7 @@ export function NftRewardsSection() {
                   }
                   isSelected={idx === selectedIndex}
                   onClick={() => handleSelected(rewardTier, idx)}
+                  onRemove={deselectTier}
                 />
               </Col>
             ))}

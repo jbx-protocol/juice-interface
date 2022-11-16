@@ -2,8 +2,10 @@ import { DeleteOutlined, EditOutlined, LinkOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Space } from 'antd'
 import ExternalLink from 'components/ExternalLink'
+import * as styleColors from 'constants/styles/colors'
+import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
-import { CSSProperties, ReactNode } from 'react'
+import { CSSProperties, ReactNode, useContext } from 'react'
 import { prettyUrl } from 'utils/url'
 import { RewardImage } from '../RewardImage'
 import { RewardItemButton } from './RewardItemButton'
@@ -12,11 +14,14 @@ import { Reward } from './types'
 // START: CSS
 const emphasisedTextStyle: CSSProperties = { fontWeight: 500, fontSize: '1rem' }
 
-const headerTextStyle: CSSProperties = {
+const headerTextStyle = (isDarkMode: boolean): CSSProperties => ({
+  color: isDarkMode
+    ? styleColors.darkColors.darkGray300
+    : styleColors.lightColors.gray600,
   fontWeight: 400,
   textTransform: 'uppercase',
   fontSize: '0.75rem',
-}
+})
 
 const descriptionTextStyle: CSSProperties = {
   fontWeight: 400,
@@ -42,6 +47,7 @@ export const RewardItem = ({
   onEditClicked?: () => void
   onDeleteClicked?: () => void
 }) => {
+  const { isDarkMode } = useContext(ThemeContext)
   const isMobile = useMobile()
   const {
     title,
@@ -120,7 +126,9 @@ export const RewardItem = ({
                   gap: '0.5rem',
                 }}
               >
-                <div style={headerTextStyle}>Title</div>
+                <div style={headerTextStyle(isDarkMode)}>
+                  <Trans>Title</Trans>
+                </div>
                 <div style={emphasisedTextStyle}>{title}</div>
               </div>
               {/* Contribution */}
@@ -131,7 +139,9 @@ export const RewardItem = ({
                   gap: '0.5rem',
                 }}
               >
-                <div style={headerTextStyle}>Minimum Contribution</div>
+                <div style={headerTextStyle(isDarkMode)}>
+                  <Trans>Minimum Contribution</Trans>
+                </div>
                 <div style={emphasisedTextStyle}>
                   {minimumContribution.toString()} ETH
                 </div>
@@ -155,6 +165,7 @@ export const RewardItem = ({
 }
 
 const Description = ({ description }: { description: ReactNode }) => {
+  const { isDarkMode } = useContext(ThemeContext)
   return (
     <div
       style={{
@@ -163,7 +174,9 @@ const Description = ({ description }: { description: ReactNode }) => {
         gap: '0.5rem',
       }}
     >
-      <div style={headerTextStyle}>Description</div>
+      <div style={headerTextStyle(isDarkMode)}>
+        <Trans>Description</Trans>
+      </div>
       <div style={descriptionTextStyle}>{description}</div>
     </div>
   )
@@ -189,7 +202,9 @@ const TertiaryDetails = ({
       }}
     >
       {maximumSupply && (
-        <div style={detailsTextStyle}>Supply: {maximumSupply}</div>
+        <div style={detailsTextStyle}>
+          <Trans>Supply: {maximumSupply}</Trans>
+        </div>
       )}
       {url && (
         <div

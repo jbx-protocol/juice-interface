@@ -1,8 +1,8 @@
-import { CV_V1, CV_V2 } from 'constants/cv'
+import { PV_V1, PV_V2 } from 'constants/pv'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
-import { CV } from 'models/cv'
 import { ProjectState } from 'models/project-visibility'
+import { PV } from 'models/pv'
 import { Project } from 'models/subgraph-entities/vX/project'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { useEffect, useState } from 'react'
@@ -15,6 +15,7 @@ import {
   WhereConfig,
 } from 'utils/graph'
 import { getTerminalAddress } from 'utils/v1/terminals'
+
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
 
 interface ProjectsOptions {
@@ -26,7 +27,7 @@ interface ProjectsOptions {
   state?: ProjectState
   keys?: (keyof Project)[]
   terminalVersion?: V1TerminalVersion
-  cv?: CV[]
+  pv?: PV[]
 }
 
 const DEFAULT_STALE_TIME = 60 * 1000 // 60 seconds
@@ -42,13 +43,13 @@ const DEFAULT_ENTITY_KEYS: (keyof Project)[] = [
   'totalPaid',
   'totalRedeemed',
   'terminal',
-  'cv',
+  'pv',
 ]
 const V1_ARCHIVED_SUBGRAPH_IDS = V1ArchivedProjectIds.map(projectId =>
-  getSubgraphIdForProject(CV_V1, projectId),
+  getSubgraphIdForProject(PV_V1, projectId),
 )
 const V2_ARCHIVED_SUBGRAPH_IDS = V2ArchivedProjectIds.map(projectId =>
-  getSubgraphIdForProject(CV_V2, projectId),
+  getSubgraphIdForProject(PV_V2, projectId),
 )
 const ARCHIVED_SUBGRAPH_IDS = [
   ...V1_ARCHIVED_SUBGRAPH_IDS,
@@ -72,10 +73,10 @@ const queryOpts = (
     })
   }
 
-  if (opts.cv) {
+  if (opts.pv) {
     where.push({
-      key: 'cv',
-      value: opts.cv,
+      key: 'pv',
+      value: opts.pv,
       operator: 'in',
     })
   }
@@ -253,6 +254,8 @@ export function useMyProjectsQuery(wallet: string | undefined) {
             operator: 'in',
             value: [wallet],
           },
+          orderBy: 'createdAt',
+          orderDirection: 'desc',
         }
       : null,
   )

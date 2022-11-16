@@ -8,6 +8,7 @@ import FundingDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawe
 import NftDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer'
 import RulesDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawers/RulesDrawer'
 import TokenDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawers/TokenDrawer'
+import { CV_V3 } from 'constants/cv'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
@@ -51,7 +52,7 @@ export function V2V3ReconfigureFundingCycleForm() {
   const { fundingCycleMetadata, projectOwnerAddress } =
     useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
-  const { contracts } = useContext(V2V3ContractsContext)
+  const { contracts, cv } = useContext(V2V3ContractsContext)
   const {
     nftRewards: { CIDs: nftRewardsCids },
   } = useContext(NftRewardsContext)
@@ -64,7 +65,6 @@ export function V2V3ReconfigureFundingCycleForm() {
   const [rulesDrawerVisible, setRulesDrawerVisible] = useState<boolean>(false)
   const [unsavedChangesModalVisibile, setUnsavedChangesModalVisible] =
     useState<boolean>(false)
-
   const [nftOperatorConfirmed, setNftOperatorConfirmed] = useState<boolean>()
 
   const { initialEditingData } = useInitialEditingData({ visible: true })
@@ -111,6 +111,7 @@ export function V2V3ReconfigureFundingCycleForm() {
   )
 
   const nftsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
+  const isV3 = cv === CV_V3
 
   const nftDeployerAddress = contracts?.JBTiered721DelegateProjectDeployer
     ? getAddress(contracts.JBTiered721DelegateProjectDeployer.address)
@@ -141,10 +142,10 @@ export function V2V3ReconfigureFundingCycleForm() {
           reconfigureHasChanges={tokenDrawerHasSavedChanges}
           onClick={() => setTokenDrawerVisible(true)}
         />
-        {nftsEnabled ? (
+        {nftsEnabled && isV3 ? (
           <ReconfigureButton
-            heading={t`NFT rewards`}
-            description={t`Configure your project's NFT rewards.`}
+            heading={t`NFTs`}
+            description={t`Configure your project's NFTs.`}
             reconfigureHasChanges={nftDrawerHasSavedChanges}
             onClick={() => setNftDrawerVisible(true)}
           />

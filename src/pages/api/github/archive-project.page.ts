@@ -1,10 +1,10 @@
 import axios from 'axios'
-import { CV } from 'models/cv'
 import { ProjectMetadataV5 } from 'models/project-metadata'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { CV_V2, CV_V3 } from 'constants/cv'
 import { readNetwork } from 'constants/networks'
+import { PV_V2 } from 'constants/pv'
+import { PV } from 'models/pv'
 
 interface ArchiveProjectNextApiRequest extends NextApiRequest {
   body: {
@@ -12,7 +12,7 @@ interface ArchiveProjectNextApiRequest extends NextApiRequest {
     projectId: number | undefined
     metadata: ProjectMetadataV5 | undefined
     handle: string | undefined
-    cv: CV
+    pv: PV
   }
 }
 
@@ -29,7 +29,7 @@ const handler = async (
   }
 
   try {
-    const { archived, projectId, metadata, handle, cv } = req.body
+    const { archived, projectId, metadata, handle, pv } = req.body
 
     if (!projectId || !metadata || !handle) {
       throw new Error()
@@ -51,7 +51,7 @@ const handler = async (
 
     const labels = [
       'archive request',
-      cv === CV_V3 ? 'V3' : cv === CV_V2 ? 'V2' : 'V1',
+      pv === PV_V2 ? 'V2' : 'V1',
       'bot',
       readNetwork.name === 'goerli' ? 'site:goerli' : undefined,
       readNetwork.name === 'mainnet' ? 'site:mainnet' : undefined,

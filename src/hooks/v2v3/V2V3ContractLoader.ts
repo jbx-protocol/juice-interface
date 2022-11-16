@@ -6,10 +6,10 @@ import { loadV2V3Contract } from 'utils/v2v3/loadV2V3Contract'
 
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
-import { CV2V3 } from 'models/cv'
+import { CV2V3 } from 'models/v2v3/cv'
 import { emitErrorNotification } from 'utils/notifications'
 
-export function useV2V3ContractLoader({ cv }: { cv?: CV2V3 }) {
+export function useV2V3ContractLoader({ cv }: { cv: CV2V3 | undefined }) {
   const { signer } = useWallet()
   const [contracts, setContracts] = useState<V2V3Contracts>()
 

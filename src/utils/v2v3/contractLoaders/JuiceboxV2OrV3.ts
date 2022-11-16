@@ -1,13 +1,13 @@
 import { CV_V2, CV_V3 } from 'constants/cv'
-import { CV } from 'models/cv'
 import { NetworkName } from 'models/network-name'
 import { V2V3ContractName } from 'models/v2v3/contracts'
+import { CV2V3 } from 'models/v2v3/cv'
 import { ContractJson } from '../loadV2V3Contract'
 import { loadJuiceboxV2Contract } from './JuiceboxV2'
 import { loadJuiceboxV3Contract } from './JuiceboxV3'
 
 export async function loadJuiceboxV2OrV3Contract(
-  cv: CV,
+  cv: CV2V3,
   contractName: V2V3ContractName,
   network: NetworkName,
 ): Promise<ContractJson | undefined> {

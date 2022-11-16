@@ -5,7 +5,7 @@ import ETHAmount from 'components/currency/ETHAmount'
 import Loading from 'components/Loading'
 import ProjectLogo from 'components/ProjectLogo'
 import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
-import { CV_V2, CV_V3 } from 'constants/cv'
+import { PV_V2 } from 'constants/pv'
 import { trendingWindowDays } from 'constants/trendingWindowDays'
 import { ThemeContext } from 'contexts/themeContext'
 import { useProjectHandleText } from 'hooks/ProjectHandleText'
@@ -30,7 +30,7 @@ export default function TrendingProjectCard({
     | 'trendingPaymentsCount'
     | 'createdWithinTrendingWindow'
     | 'handle'
-    | 'cv'
+    | 'pv'
     | 'projectId'
   >
   size?: 'sm' | 'lg'
@@ -106,7 +106,7 @@ export default function TrendingProjectCard({
     <Link
       key={project.handle}
       href={
-        project.cv === CV_V2 || project.cv === CV_V3
+        project.pv === PV_V2
           ? v2v3ProjectRoute(project)
           : `/p/${project.handle}`
       }
@@ -162,7 +162,7 @@ export default function TrendingProjectCard({
                   </span>{' '}
                   <ProjectVersionBadge
                     size="small"
-                    versionText={`V${terminalVersion ?? project.cv}`}
+                    versionText={`V${terminalVersion ?? project.pv}`}
                   />
                 </div>
               )}

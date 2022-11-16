@@ -11,7 +11,6 @@ import { useContext } from 'react'
 import { NftRewardsData } from 'redux/slices/editingV2Project'
 import {
   buildJB721TierParams,
-  defaultNftCollectionName,
   findJBTiered721DelegateStoreAddress,
 } from 'utils/nftRewards'
 import { isValidMustStartAtOrAfter } from 'utils/v2v3/fundingCycle'
@@ -49,6 +48,8 @@ export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<R
     const JBTiered721DelegateStoreAddress =
       await findJBTiered721DelegateStoreAddress()
 
+    const collectionName = collectionMetadata.name
+
     if (
       !transactor ||
       !projectId ||
@@ -57,7 +58,11 @@ export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<R
       !JBTiered721DelegateStoreAddress ||
       !projectOwnerAddress ||
       !contracts ||
-      !isValidMustStartAtOrAfter(mustStartAtOrAfter, fundingCycleData.duration)
+      !isValidMustStartAtOrAfter(
+        mustStartAtOrAfter,
+        fundingCycleData.duration,
+      ) ||
+      !collectionName
     ) {
       txOpts?.onDone?.()
       return Promise.resolve(false)
@@ -65,10 +70,9 @@ export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<R
 
     // build `delegateData`
     const tiers = buildJB721TierParams({ cids: CIDs, rewardTiers })
-    const collectionName =
-      collectionMetadata.name ?? defaultNftCollectionName(projectTitle)
+
     const delegateData = await getJBDeployTiered721DelegateData({
-      collectionCID: collectionMetadata.CID ?? '',
+      collectionUri: collectionMetadata.uri ?? '',
       collectionName,
       collectionSymbol: collectionMetadata.symbol ?? '',
       tiers,

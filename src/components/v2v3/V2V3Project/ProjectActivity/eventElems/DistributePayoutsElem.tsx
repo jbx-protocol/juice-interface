@@ -13,7 +13,9 @@ import {
   smallHeaderStyle,
 } from 'components/activityEventElems/styles'
 import ETHAmount from 'components/currency/ETHAmount'
+import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
+import { useV2V3TerminalVersion } from 'hooks/V2V3TerminalVersion'
 import { DistributePayoutsEvent } from 'models/subgraph-entities/v2/distribute-payouts-event'
 
 export default function DistributePayoutsElem({
@@ -30,6 +32,7 @@ export default function DistributePayoutsElem({
         | 'beneficiaryDistributionAmount'
         | 'distributedAmount'
         | 'memo'
+        | 'terminal'
       >
     | undefined
 }) {
@@ -56,6 +59,8 @@ export default function DistributePayoutsElem({
         }
       : undefined,
   })
+
+  const terminalVersion = useV2V3TerminalVersion(event?.terminal)
 
   if (!event) return null
 
@@ -90,6 +95,12 @@ export default function DistributePayoutsElem({
           }}
         >
           <div style={smallHeaderStyle(colors)}>
+            {terminalVersion && (
+              <ProjectVersionBadge
+                style={{ padding: 0, background: 'transparent' }}
+                versionText={'V' + terminalVersion}
+              />
+            )}{' '}
             {event.timestamp && (
               <span>{formatHistoricalDate(event.timestamp * 1000)}</span>
             )}{' '}

@@ -1,40 +1,37 @@
 import { t, Trans } from '@lingui/macro'
 import { Form, Input } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { CV_V1, CV_V1_1, CV_V2, CV_V3 } from 'constants/cv'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { CV_V2, CV_V3 } from 'constants/cv'
+import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useV1IssueErc20TokenTx } from 'hooks/v1/transactor/IssueErc20TokenTx'
 import { useV2IssueErc20TokenTx } from 'hooks/v2/transactor/V2IssueErc20TokenTx'
 import { useV3IssueErc20TokenTx } from 'hooks/v3/transactor/V3IssueErc20TokenTx'
 import { useContext, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
+
 import { IssueErc20TokenTxArgs } from '../IssueErc20TokenButton'
 import TransactionModal from '../TransactionModal'
 
 /**
- * Return the appropriate issue erc20 token hook for the given contract version [cv].
+ * Return the appropriate issue erc20 token hook for the given project version [pv].
  * @returns
  */
 const useIssueErc20TokenTx = ():
   | TransactorInstance<IssueErc20TokenTxArgs>
   | undefined => {
-  const { cv } = useContext(ProjectMetadataContext)
+  const { cv } = useContext(V2V3ContractsContext)
 
   const v1Tx = useV1IssueErc20TokenTx()
   const v2Tx = useV2IssueErc20TokenTx()
   const v3Tx = useV3IssueErc20TokenTx()
 
-  if (cv === CV_V1 || cv === CV_V1_1) {
-    return v1Tx
-  }
-
   if (cv === CV_V2) {
     return v2Tx
-  }
-
-  if (cv === CV_V3) {
+  } else if (cv === CV_V3) {
     return v3Tx
+  } else {
+    return v1Tx
   }
 }
 

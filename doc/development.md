@@ -33,8 +33,8 @@ Juicebox uses [Infura](https://infura.io) to connect to an Ethereum network (mai
 
 Take the following steps to create an Infura project for local development:
 
-1. Select **Create New Project** to begin creating a new Infura project.
-1. Select the **Ethereum** option from the **Product** dropdown.
+1. Select **Create New Key** to begin creating a new Infura project.
+1. Select the **Web 3 API** option from the **Network** dropdown.
 1. Enter a **Name** (for example, `juicebox-local`).
 1. Select **Create** to create the project.
 
@@ -42,6 +42,19 @@ Next, copy the following fields into your `.env` file:
 
 - **Project ID**. In the `.env` file, copy the **Project ID** into the `NEXT_PUBLIC_INFURA_ID` variable.
 - **Endpoint**. This is the Ethereum network that will be used for testing. If you don't know which endpoint to use, select **mainnet**. In the `.env` file, copy the network name (e.g. 'mainnet', not the url) into the `NEXT_PUBLIC_INFURA_NETWORK` variable.
+
+#### Infura IPFS gateway
+
+1. Select **Create new key** to begin creating a new Infura project.
+1. Select **IPFS** from the **NETWORK** dropdown.
+1. Enter a **Name** (for example, `juicebox-ipfs-local`).
+1. Select **Create** to create the project.
+
+Next, copy the following fields into your `.env` file:
+
+- **PROJECT ID**. In the `.env` file, copy the **Project ID** into the `INFURA_IPFS_PROJECT_ID` variable.
+- **API KEY SECRET**. In the `.env` file, copy the **API KEY SECRET** into the `INFURA_IPFS_API_SECRET` variable.
+- **DEDICATED GATEWAY SUBDOMAIN**. In the `.env` file, copy the **DEDICATED GATEWAY SUBDOMAIN** into the `NEXT_PUBLIC_INFURA_IPFS_HOSTNAME` variable *without the `https://` prefix*.
 
 ### Piñata
 
@@ -55,7 +68,7 @@ Take the following steps to set up Piñata for local development:
    - **API Key**. In the `.env` file, copy the **API Key** into the `PINATA_PINNER_KEY` variable.
    - **API Secret**. In the `.env` file, copy the **API Secret** into the `PINATA_PINNER_SECRET` variable.
 
-Note: Once you pass Piñata's free tier of 1GB of storage, you'll need to get access to the premium `PINATA_PINNER_KEY` and `PINATA_PINNER_SECRET` keys. Contact the Peel team in discord to get access. Piñata will constantly give a 429 error if the free tier of API requests has been reached.
+Note: Once you pass Piñata's free tier of 1GB of storage, you'll need to get access to the premium `PINATA_PINNER_KEY` and `PINATA_PINNER_SECRET` keys. Contact the Peel team in Discord to get access. Piñata will constantly give a 429 error if the free tier of API requests has been reached.
 
 ### The Graph
 

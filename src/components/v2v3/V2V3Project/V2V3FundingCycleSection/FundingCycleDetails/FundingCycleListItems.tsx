@@ -45,7 +45,7 @@ export function FundingCycleListItems({
   const riskWarningText = FUNDING_CYCLE_WARNING_TEXT()
   return (
     <>
-      {fundingCycle.duration.gt(0) && formattedStartTime ? (
+      {formattedStartTime ? (
         <FundingCycleListItem
           name={t`Start`}
           value={

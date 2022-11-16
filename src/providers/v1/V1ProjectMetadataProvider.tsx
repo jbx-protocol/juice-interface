@@ -29,7 +29,7 @@ export function V1ProjectMetadataProvider({
         projectMetadata: metadata,
         isArchived,
         projectId: projectId?.toNumber(),
-        cv: terminalVersion,
+        pv: terminalVersion,
       }}
     >
       {children}

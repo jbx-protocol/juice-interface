@@ -1,11 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { PV_V2 } from 'constants/pv'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useReconfigureV2V3FundingCycleTx } from 'hooks/v2v3/transactor/ReconfigureV2V3FundingCycleTx'
 import { useReconfigureV2V3FundingCycleWithNftsTx } from 'hooks/v2v3/transactor/ReconfigureV2V3FundingCycleWithNftsTx'
 import { revalidateProject } from 'lib/api/nextjs'
-import { CV2V3 } from 'models/cv'
 import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton'
 import { useCallback, useContext, useState } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
@@ -47,7 +47,7 @@ export const useReconfigureFundingCycle = ({
   launchedNewNfts?: boolean
 }) => {
   const { fundingCycle } = useContext(V2V3ProjectContext)
-  const { projectId, cv } = useContext(ProjectMetadataContext)
+  const { projectId } = useContext(ProjectMetadataContext)
   const {
     nftRewards: { CIDs: nftRewardsCids },
   } = useContext(NftRewardsContext)
@@ -118,7 +118,7 @@ export const useReconfigureFundingCycle = ({
       async onConfirmed() {
         if (projectId) {
           await revalidateProject({
-            cv: cv as CV2V3,
+            pv: PV_V2,
             projectId: String(projectId),
           })
         }
@@ -159,7 +159,6 @@ export const useReconfigureFundingCycle = ({
     fundingCycle,
     memo,
     projectId,
-    cv,
   ])
 
   return { reconfigureLoading: reconfigureTxLoading, reconfigureFundingCycle }

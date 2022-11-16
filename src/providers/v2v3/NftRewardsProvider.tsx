@@ -4,12 +4,13 @@ import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import useNftRewards from 'hooks/NftRewards'
+import { useNftCollectionMetadataUri } from 'hooks/v2v3/contractReader/NftCollectionMetadataUri'
 import { useNftRewardTiersOf } from 'hooks/v2v3/contractReader/NftRewardTiersOf'
 import { useContext } from 'react'
 import { EMPTY_NFT_COLLECTION_METADATA } from 'redux/slices/editingV2Project'
 import { CIDsOfNftRewardTiersResponse } from 'utils/nftRewards'
 
-/**ƒ
+/**
  * Get the limit of tiers to load for specific projects.
  *
  * By default we only load 3 tiers, but for some projects they have more (like Defifa has 32)
@@ -28,18 +29,24 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
   const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
   const { projectMetadata, projectId } = useContext(ProjectMetadataContext)
 
+  const dataSourceAddress = fundingCycleMetadata?.dataSource
+
   /**
    * Load NFT Rewards data
    */
   const { data: nftRewardTiersResponse, loading: nftRewardsCIDsLoading } =
     useNftRewardTiersOf({
-      dataSourceAddress: fundingCycleMetadata?.dataSource,
+      dataSourceAddress: dataSourceAddress,
       limit: limitOverride(projectId),
     })
 
   const { data: rewardTiers, isLoading: nftRewardTiersLoading } = useNftRewards(
     nftRewardTiersResponse ?? [],
+    projectId,
   )
+
+  const { data: collectionMetadataUri, loading: collectionUriLoading } =
+    useNftCollectionMetadataUri(dataSourceAddress)
 
   const CIDs = CIDsOfNftRewardTiersResponse(nftRewardTiersResponse)
 
@@ -47,7 +54,10 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
   // In worst case, if has `dataSource` but isn't for NFTs:
   //    - loading will be true briefly
   //    - will resolve false when `useNftRewardTiersOf` fails
-  const loading = nftRewardTiersLoading || nftRewardsCIDsLoading
+
+  const loading = Boolean(
+    nftRewardTiersLoading || nftRewardsCIDsLoading || collectionUriLoading,
+  )
 
   return (
     <NftRewardsContext.Provider
@@ -55,7 +65,10 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
         nftRewards: {
           rewardTiers,
           CIDs,
-          collectionMetadata: EMPTY_NFT_COLLECTION_METADATA,
+          collectionMetadata: {
+            ...EMPTY_NFT_COLLECTION_METADATA, // only load the metadata CID in the context - other data not necessary
+            uri: collectionMetadataUri,
+          },
           postPayModal: projectMetadata?.nftPaymentSuccessModal,
         },
         loading,

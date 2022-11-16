@@ -1,9 +1,11 @@
 import { DeleteOutlined, LockFilled } from '@ant-design/icons'
-import { t } from '@lingui/macro'
-import { Space, Tooltip } from 'antd'
+import { t, Trans } from '@lingui/macro'
+import { Modal, Space, Tooltip } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
 import useMobile from 'hooks/Mobile'
+import { useModal } from 'hooks/Modal'
 import { PayoutsSelection } from 'models/payoutsSelection'
+import { useCallback } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
 import { formatDate } from 'utils/format/formatDate'
 import { Allocation, AllocationSplit } from '../Allocation'
@@ -21,36 +23,62 @@ export const PayoutCard = ({
   onDeleteClick?: VoidFunction
 }) => {
   const isMobile = useMobile()
+  const deleteConfirmationModal = useModal()
+
+  const handleDeleteConfirmationModalOk = useCallback(() => {
+    onDeleteClick?.()
+    deleteConfirmationModal.close()
+  }, [deleteConfirmationModal, onDeleteClick])
+
   return (
-    <Allocation.Item
-      title={
-        <Space>
-          <FormattedAddress address={allocation.beneficiary} />
-          {!!allocation.lockedUntil && (
-            <Tooltip
-              title={t`Locked until ${formatDate(
-                allocation.lockedUntil * 1000,
-                'yyyy-MM-DD',
-              )}`}
-            >
-              <LockFilled />
-            </Tooltip>
-          )}
-        </Space>
-      }
-      amount={
-        <Amount
-          allocationId={allocation.id}
-          payoutsSelection={payoutsSelection}
-        />
-      }
-      extra={
-        <DeleteOutlined
-          style={{ fontSize: isMobile ? '18px' : undefined }}
-          onClick={stopPropagation(onDeleteClick)}
-        />
-      }
-      onClick={onClick}
-    />
+    <>
+      <Allocation.Item
+        title={
+          <Space>
+            <FormattedAddress address={allocation.beneficiary} />
+            {!!allocation.lockedUntil && (
+              <Tooltip
+                title={t`Locked until ${formatDate(
+                  allocation.lockedUntil * 1000,
+                  'yyyy-MM-DD',
+                )}`}
+              >
+                <LockFilled />
+              </Tooltip>
+            )}
+          </Space>
+        }
+        amount={
+          <Amount
+            allocationId={allocation.id}
+            payoutsSelection={payoutsSelection}
+          />
+        }
+        extra={
+          <DeleteOutlined
+            style={{ fontSize: isMobile ? '18px' : undefined }}
+            onClick={stopPropagation(deleteConfirmationModal.open)}
+          />
+        }
+        onClick={onClick}
+      />
+      <Modal
+        title={
+          <h2>
+            <Trans>Are you sure?</Trans>
+          </h2>
+        }
+        okText={t`Yes, delete`}
+        cancelText={t`No, keep`}
+        open={deleteConfirmationModal.visible}
+        onOk={handleDeleteConfirmationModalOk}
+        onCancel={deleteConfirmationModal.close}
+      >
+        <Trans>
+          This will delete the payout for{' '}
+          <FormattedAddress address={allocation.beneficiary} />.
+        </Trans>
+      </Modal>
+    </>
   )
 }

@@ -29,7 +29,7 @@ export const useFundingTargetForm = () => {
     const selection = fundingTargetSelection
 
     const currency =
-      distributionLimit?.currency === V2V3_CURRENCY_USD ? 'usd' : 'eth'
+      distributionLimit?.currency === V2V3_CURRENCY_ETH ? 'eth' : 'usd'
     let amount: CurrencySelectInputValue = { amount: '0', currency }
 
     if (distributionLimit) {

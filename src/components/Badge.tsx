@@ -39,9 +39,9 @@ const variantStyleDark: { [k in BadgeVariant]: CSSProperties } = {
     backgroundColor: '#32c8db22',
   },
   tertiary: {
-    color: '#969696',
-    border: '1px solid #969696',
-    backgroundColor: '#EFECE6',
+    color: '#A29FB7',
+    border: '1px solid #A29FB7',
+    backgroundColor: '#2E2B3C',
   },
 }
 

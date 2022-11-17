@@ -120,8 +120,8 @@ export function Create() {
                   }}
                 >
                   <Trans>
-                    Choose which addresses to pay and how to split the total
-                    payout amount each funding cycle. How do I decide?
+                    Select how you would like to distribute payouts. Then,
+                    choose which Ethereum wallets to pay each funding cycle.
                   </Trans>
                   <RecallCard show={['fundingCycles', 'fundingTarget']} />
                 </div>

@@ -659,9 +659,6 @@ msgstr ""
 msgid "Choose how you would like to configure your payouts."
 msgstr ""
 
-msgid "Choose which addresses to pay and how to split the total payout amount each funding cycle. How do I decide?"
-msgstr ""
-
 msgid "Claim {0}"
 msgstr ""
 
@@ -2565,6 +2562,9 @@ msgid "See Tx on Safe"
 msgstr ""
 
 msgid "See example"
+msgstr ""
+
+msgid "Select how you would like to distribute payouts. Then, choose which Ethereum wallets to pay each funding cycle."
 msgstr ""
 
 msgid "Select the option that best suits your project’s funding requirements."

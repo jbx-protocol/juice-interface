@@ -7,23 +7,13 @@ import { NftFormFields } from './NftRewardTierModal'
 
 export default function ContributionFloorFormItem({
   form,
-  validateDuplicate,
-  initialValue,
 }: {
   form: FormInstance<NftFormFields>
-  validateDuplicate: (floor: number) => boolean
-  initialValue?: number
 }) {
   const validateContributionFloorAmount = () => {
     const value = form.getFieldValue('contributionFloor')
     if (value === undefined || value <= 0) {
       return Promise.reject(t`Amount required`)
-    }
-    const isInitialValue = initialValue == value
-    // Check this `contributionFloor` isn't already in another tier
-    // - But allow if tier is being edited and its `contributionFloor` hasn't changed
-    if (!validateDuplicate(value) && !isInitialValue) {
-      return Promise.reject(t`A tier at this amount already exists.`)
     }
     return Promise.resolve()
   }

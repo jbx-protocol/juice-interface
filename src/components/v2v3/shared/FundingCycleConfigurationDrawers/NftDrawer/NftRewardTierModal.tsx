@@ -24,14 +24,12 @@ const MAX_DESCRIPTION_CHARS = 256
 export default function NftRewardTierModal({
   open,
   rewardTier,
-  validateContributionFloor,
   onClose,
   mode,
   onChange,
 }: {
   open: boolean
   rewardTier?: NftRewardTier // null when mode === 'Add'
-  validateContributionFloor: (floor: number) => boolean
   onClose: VoidFunction
   isCreate?: boolean
   mode: ModalMode
@@ -94,11 +92,7 @@ export default function NftRewardTierModal({
         >
           <Input type="string" autoComplete="off" />
         </Form.Item>
-        <ContributionFloorFormItem
-          form={nftForm}
-          validateDuplicate={validateContributionFloor}
-          initialValue={rewardTier?.contributionFloor}
-        />
+        <ContributionFloorFormItem form={nftForm} />
         <NftUpload form={nftForm} />
         <MaxSupplyFormItem
           value={nftForm.getFieldValue('maxSupply')}

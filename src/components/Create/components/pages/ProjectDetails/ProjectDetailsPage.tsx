@@ -2,6 +2,7 @@ import { t } from '@lingui/macro'
 import { Col, Form, Input, Row, Space } from 'antd'
 import { useLockPageRulesWrapper } from 'components/Create/hooks/useLockPageRulesWrapper'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
+import PrefixedInput from 'components/PrefixedInput'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { CreateCollapse } from '../../CreateCollapse'
@@ -57,19 +58,19 @@ export const ProjectDetailsPage: React.FC = () => {
             >
               <Col span={12}>
                 <Form.Item name="projectWebsite" label={t`Website`}>
-                  <Input />
+                  <PrefixedInput prefix="https://" />
                 </Form.Item>
               </Col>
               <Col span={12}>
                 <Form.Item name="projectTwitter" label={t`Twitter`}>
-                  <Input />
+                  <PrefixedInput prefix="https://" />
                 </Form.Item>
               </Col>
             </Row>
             <Row gutter={32} style={{ marginBottom: '1.5rem' }}>
               <Col span={12}>
                 <Form.Item name="projectDiscord" label={t`Discord`}>
-                  <Input />
+                  <PrefixedInput prefix="https://" />
                 </Form.Item>
               </Col>
             </Row>

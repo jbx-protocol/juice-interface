@@ -6,6 +6,7 @@ import * as styleColors from 'constants/styles/colors'
 import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
 import { CSSProperties, ReactNode, useContext } from 'react'
+import { prettyUrl } from 'utils/url'
 import { RewardImage } from '../RewardImage'
 import { RewardItemButton } from './RewardItemButton'
 import { Reward } from './types'
@@ -216,7 +217,7 @@ const TertiaryDetails = ({
         >
           <LinkOutlined />
           <div style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
-            <ExternalLink href={url} />
+            <ExternalLink href={url}>{prettyUrl(url)}</ExternalLink>
           </div>
         </div>
       )}

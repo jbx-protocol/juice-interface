@@ -12,17 +12,15 @@ import PrefixedInput from 'components/PrefixedInput'
 import { UploadNoStyle } from 'components/UploadNoStyle'
 import { ThemeContext } from 'contexts/themeContext'
 import { pinFileToIpfs } from 'lib/api/ipfs'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
 import { restrictedIpfsUrl } from 'utils/ipfs'
 import { v4 } from 'uuid'
 import { CreateButton } from '../CreateButton'
 import { inputMustExistRule } from '../pages'
-import { inputAlreadyExistsRule } from '../pages/utils/rules/inputAlreadyExistsRule'
 import { inputIsValidUrlRule } from '../pages/utils/rules/inputIsValidUrlRule'
 import { inputNonZeroRule } from '../pages/utils/rules/inputNonZeroRule'
 import { RewardImage } from '../RewardImage'
-import { RewardsList } from './RewardsList'
 import { Reward } from './types'
 
 interface AddEditRewardModalFormProps {
@@ -47,14 +45,6 @@ export const AddEditRewardModal = ({
   onOk: (reward: Reward) => void
   onCancel: VoidFunction
 }) => {
-  const { rewards } = RewardsList.useRewardsInstance()
-  const existingMinimumContributions = useMemo(
-    () =>
-      rewards
-        .filter(r => r.id !== editingData?.id)
-        .map(({ minimumContribution }) => minimumContribution.toString()),
-    [editingData?.id, rewards],
-  )
   const [form] = Form.useForm<AddEditRewardModalFormProps>()
   const [limitedSupply, setLimitedSupply] = useState<boolean>(false)
 
@@ -169,10 +159,6 @@ export const AddEditRewardModal = ({
           rules={[
             inputMustExistRule({ label: t`Minimum Contribution` }),
             inputNonZeroRule({ label: t`Minimum Contribution` }),
-            inputAlreadyExistsRule({
-              inputs: existingMinimumContributions,
-              msg: t`A tier at this amount already exists`,
-            }),
           ]}
         >
           <FormattedNumberInput

@@ -1034,6 +1034,9 @@ msgstr ""
 msgid "Display ERC-20 tokens and other Juicebox project tokens that are in this project's owner's wallet."
 msgstr ""
 
+msgid "Display a message or warning to contributors before they approve a payment to your project"
+msgstr ""
+
 msgid "Distribute a percentage of all funds received between the entities nominated in the next step."
 msgstr ""
 
@@ -2961,6 +2964,9 @@ msgid "This funding cycle may pose risks to contributors. Check the funding cycl
 msgstr ""
 
 msgid "This funding cycle's distribution limit."
+msgstr ""
+
+msgid "This is the button that contributors will click to pay your project"
 msgstr ""
 
 msgid "This is the maximum amount of funds that can leave the treasury each funding cycle."

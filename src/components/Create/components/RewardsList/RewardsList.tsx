@@ -3,6 +3,7 @@ import { Divider } from 'antd'
 import { useModal } from 'hooks/Modal'
 import { FormItemInput } from 'models/formItemInput'
 import { createContext, useCallback, useContext, useState } from 'react'
+import { MAX_NFT_REWARD_TIERS } from 'utils/nftRewards'
 import { CreateButton } from '../CreateButton'
 import { AddEditRewardModal } from './AddEditRewardModal'
 import { useRewards } from './hooks'
@@ -99,7 +100,7 @@ export const RewardsList: React.FC<RewardsListProps> &
             style={{
               height: '6rem',
             }}
-            disabled={rewards.length >= 3}
+            disabled={rewards.length >= MAX_NFT_REWARD_TIERS}
             onClick={modal.open}
           >
             Add NFT tier

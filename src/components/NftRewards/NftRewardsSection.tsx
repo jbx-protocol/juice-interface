@@ -18,11 +18,7 @@ import { NftRewardTier } from 'models/nftRewardTier'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { fromWad } from 'utils/format/formatNumber'
-import {
-  getNftRewardTier,
-  hasNftRewards,
-  MAX_NFT_REWARD_TIERS,
-} from 'utils/nftRewards'
+import { getNftRewardTier, hasNftRewards } from 'utils/nftRewards'
 import { useModalFromUrlQuery } from '../modals/hooks/useModalFromUrlQuery'
 import { RewardTier } from './RewardTier'
 
@@ -31,7 +27,7 @@ function RewardTiersLoadingSkeleton() {
 
   return (
     <Row style={{ marginTop: '15px' }} gutter={isMobile ? 8 : 24}>
-      {[...Array(MAX_NFT_REWARD_TIERS)]?.map((_, index) => (
+      {[...Array(3)]?.map((_, index) => (
         <Col md={8} xs={8} key={`rewardTierLoading-${index}`}>
           <RewardTier loading />
         </Col>

@@ -257,16 +257,6 @@ export default function NftDrawer({
     editingRewardTierIDsPush(rewardTiers[tierIndex].id)
   }
 
-  // Determine if a give `contributionFloor` already exists in the current array of `rewardTiers`
-  const validateContributionFloor = (contributionFloor: number) => {
-    if (!rewardTiers) return true
-    return (
-      rewardTiers?.filter(
-        (tier: NftRewardTier) => tier.contributionFloor == contributionFloor,
-      ).length === 0
-    )
-  }
-
   return (
     <>
       <FundingCycleDrawer
@@ -290,7 +280,6 @@ export default function NftDrawer({
               <NftRewardTierCard
                 key={index}
                 rewardTier={rewardTier}
-                validateContributionFloor={validateContributionFloor}
                 onChange={newRewardTier =>
                   handleEditRewardTier({ newRewardTier, index })
                 }
@@ -353,7 +342,6 @@ export default function NftDrawer({
 
         <NftRewardTierModal
           open={addTierModalVisible}
-          validateContributionFloor={validateContributionFloor}
           onChange={handleAddRewardTier}
           mode="Add"
           onClose={() => setAddTierModalVisible(false)}

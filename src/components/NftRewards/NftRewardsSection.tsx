@@ -101,9 +101,16 @@ export function NftRewardsSection() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setPayMetadata])
 
+  // sets highest eligible NFT based on pay input amount
   useEffect(() => {
     if (!rewardTiers || !payAmountETH) return
 
+    // if the already selected tier's floor is equal to pay input, we dont want to change the selected tier
+    if (
+      selectedIndex !== undefined &&
+      parseFloat(payAmountETH) === rewardTiers[selectedIndex].contributionFloor
+    )
+      return
     const highestEligibleRewardTier = getNftRewardTier({
       nftRewardTiers: rewardTiers,
       payAmountETH: parseFloat(payAmountETH),
@@ -115,7 +122,7 @@ export function NftRewardsSection() {
     } else {
       deselectTier()
     }
-  }, [payAmountETH, rewardTiers, deselectTier, selectTier])
+  }, [payAmountETH, rewardTiers, deselectTier, selectTier, selectedIndex])
 
   const handleSelected = (rewardTier: NftRewardTier, idx: number) => {
     selectTier(idx)
@@ -141,7 +148,7 @@ export function NftRewardsSection() {
       ) : (
         <div
           style={{
-            overflowY: 'scroll',
+            overflow: 'auto',
             maxHeight: 400,
             paddingBottom: '12px',
             // hax to make scrollbars look nice

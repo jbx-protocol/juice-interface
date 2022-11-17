@@ -8,6 +8,7 @@ import { Form, Input, Modal, Space } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { JuiceSwitch } from 'components/JuiceSwitch'
+import PrefixedInput from 'components/PrefixedInput'
 import { UploadNoStyle } from 'components/UploadNoStyle'
 import { ThemeContext } from 'contexts/themeContext'
 import { pinFileToIpfs } from 'lib/api/ipfs'
@@ -211,7 +212,7 @@ export const AddEditRewardModal = ({
             }),
           ]}
         >
-          <Input prefix="https://" />
+          <PrefixedInput prefix="https://" />
         </Form.Item>
       </Form>
     </Modal>

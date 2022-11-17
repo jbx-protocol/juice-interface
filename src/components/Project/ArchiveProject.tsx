@@ -1,16 +1,16 @@
-import { t, Trans } from '@lingui/macro';
-import { Button, Space, Statistic } from 'antd';
-import axios from 'axios';
-import Callout from 'components/Callout';
-import { PV_V1, PV_V1_1, PV_V2 } from 'constants/pv';
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext';
-import { TransactorInstance } from 'hooks/Transactor';
-import { useWallet } from 'hooks/Wallet';
-import { uploadProjectMetadata } from 'lib/api/ipfs';
-import { revalidateProject } from 'lib/api/nextjs';
-import { useContext, useState } from 'react';
-import { emitErrorNotification } from 'utils/notifications';
-import { reloadWindow } from 'utils/windowUtils';
+import { t, Trans } from '@lingui/macro'
+import { Button, Space, Statistic } from 'antd'
+import axios from 'axios'
+import Callout from 'components/Callout'
+import { PV_V1, PV_V1_1, PV_V2 } from 'constants/pv'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { TransactorInstance } from 'hooks/Transactor'
+import { useWallet } from 'hooks/Wallet'
+import { uploadProjectMetadata } from 'lib/api/ipfs'
+import { revalidateProject } from 'lib/api/nextjs'
+import { useContext, useState } from 'react'
+import { emitErrorNotification } from 'utils/notifications'
+import { reloadWindow } from 'utils/windowUtils'
 
 export function ArchiveProject({
   storeCidTx,

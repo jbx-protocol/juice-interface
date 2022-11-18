@@ -286,3 +286,27 @@ export function encodeJB721DelegatePayMetadata(
 
   return encoded
 }
+
+// returns list of tier Ids from a given list of indices of a given list of rewardTiers
+export function tierIdsFromTierIndices({
+  rewardTiers,
+  indices,
+}: {
+  rewardTiers: NftRewardTier[]
+  indices: number[]
+}): number[] {
+  return rewardTiers
+    .map((tier, idx) => {
+      if (indices.includes(idx)) {
+        return tier.id
+      }
+    })
+    .filter(Number) as number[]
+}
+
+export function sumTierFloors(rewardTiers: NftRewardTier[]) {
+  return rewardTiers.reduce(
+    (subSum, tier) => subSum + tier.contributionFloor,
+    0,
+  )
+}

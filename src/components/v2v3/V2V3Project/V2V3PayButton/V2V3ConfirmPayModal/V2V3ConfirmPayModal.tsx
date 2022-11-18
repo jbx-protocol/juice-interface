@@ -24,7 +24,7 @@ import { useContext, useState } from 'react'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { formattedNum, formatWad } from 'utils/format/formatNumber'
-import { encodeJB721DelegatePayMetadata } from 'utils/nftRewards'
+import { encodeJB721DelegatePayMetadata, sumTierFloors } from 'utils/nftRewards'
 import { emitErrorNotification } from 'utils/notifications'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -97,11 +97,10 @@ export function V2V3ConfirmPayModal({
     plural: true,
   })
 
-  let nftRewardTier: NftRewardTier | undefined
+  let nftRewardTiers: NftRewardTier[] | undefined
   if (rewardTiers && featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)) {
-    // assume we only ever want to mint one tier
-    nftRewardTier = rewardTiers.find(
-      r => r.id === payProjectForm?.payMetadata?.tierIdsToMint[0],
+    nftRewardTiers = rewardTiers.filter(r =>
+      payProjectForm?.payMetadata?.tierIdsToMint.includes(r.id ?? -1),
     )
   }
 
@@ -112,7 +111,7 @@ export function V2V3ConfirmPayModal({
 
     form.resetFields()
 
-    if (nftRewardTier && projectMetadata?.nftPaymentSuccessModal) {
+    if (nftRewardTiers && projectMetadata?.nftPaymentSuccessModal) {
       router.replace(
         `${v2v3ProjectRoute({
           handle,
@@ -255,7 +254,7 @@ export function V2V3ConfirmPayModal({
           >
             {formatWad(ownerTickets, { precision: 0 })} {tokenText}
           </Descriptions.Item>
-          {nftRewardTier ? (
+          {nftRewardTiers?.length ? (
             <Descriptions.Item
               label={
                 <TooltipLabel
@@ -264,7 +263,7 @@ export function V2V3ConfirmPayModal({
                     <Trans>
                       You receive these NFTs for contributing{' '}
                       <strong>
-                        {nftRewardTier.contributionFloor} ETH or more
+                        {sumTierFloors(nftRewardTiers)} ETH or more
                       </strong>
                       .
                     </Trans>
@@ -273,7 +272,7 @@ export function V2V3ConfirmPayModal({
               }
               style={{ padding: '0.625rem 1.5rem' }}
             >
-              <NftRewardCell nftReward={nftRewardTier} />
+              <NftRewardCell nftRewards={nftRewardTiers} />
             </Descriptions.Item>
           ) : null}
         </Descriptions>
@@ -281,7 +280,7 @@ export function V2V3ConfirmPayModal({
         <V2V3PayForm
           form={form}
           onFinish={() => pay()}
-          nftRewardTier={nftRewardTier}
+          nftRewardTiers={nftRewardTiers}
         />
       </Space>
     </TransactionModal>

@@ -14,11 +14,14 @@ import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useMobile from 'hooks/Mobile'
-import { NftRewardTier } from 'models/nftRewardTier'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { fromWad } from 'utils/format/formatNumber'
-import { getNftRewardTier, hasNftRewards } from 'utils/nftRewards'
+import {
+  getNftRewardTier,
+  hasNftRewards,
+  tierIdsFromTierIndices,
+} from 'utils/nftRewards'
 import { useModalFromUrlQuery } from '../modals/hooks/useModalFromUrlQuery'
 import { RewardTier } from './RewardTier'
 
@@ -67,7 +70,7 @@ export function NftRewardsSection() {
   const { projectMetadata } = useContext(ProjectMetadataContext)
   const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
 
-  const [selectedIndex, setSelectedIndex] = useState<number>()
+  const [selectedIndices, setSelectedIndices] = useState<number[]>([])
 
   const { visible: nftPostPayModalVisible, hide: hideNftPostPayModal } =
     useModalFromUrlQuery(NFT_PAYMENT_CONFIRMED_QUERY_PARAM)
@@ -77,40 +80,69 @@ export function NftRewardsSection() {
     setPayAmount,
     setPayInCurrency,
     setPayMetadata,
+    validatePayAmount,
   } = payProjectForm ?? {}
 
   const converter = useCurrencyConverter()
   const payAmountETH =
     payInCurrency === ETH ? payAmount : fromWad(converter.usdToWei(payAmount))
 
+  const tierIdsFromIndices = (indices: number[]) => {
+    if (!rewardTiers) return []
+    return tierIdsFromTierIndices({
+      rewardTiers,
+      indices,
+    })
+  }
+
+  const sumSelectedTiers = (newSelectedIndices: number[]) => {
+    return newSelectedIndices.reduce((subSum, index) => {
+      return subSum + (rewardTiers?.[index]?.contributionFloor ?? 0)
+    }, 0)
+  }
+
   const selectTier = useCallback(
     (tierIndex: number) => {
       const tierId = rewardTiers?.[tierIndex]?.id
-      if (!tierId) return
-
-      setPayMetadata?.({ tierIdsToMint: [tierId] })
-      setSelectedIndex(tierIndex)
+      if (tierId === undefined || !rewardTiers) return
+      const newSelectedIndices = [...selectedIndices, tierIndex]
+      setSelectedIndices(newSelectedIndices)
+      setPayMetadata?.({
+        tierIdsToMint: tierIdsFromIndices(newSelectedIndices),
+      })
     },
-    [setPayMetadata, rewardTiers],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [setPayMetadata, rewardTiers, selectedIndices],
   )
 
-  const deselectTier = useCallback(() => {
-    setPayAmount?.('0')
-    setPayMetadata?.(undefined)
-    setSelectedIndex(undefined)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setPayMetadata])
+  const deselectTier = useCallback(
+    tierIndex => {
+      const selectedIndex = selectedIndices.indexOf(tierIndex)
+      const newSelectedIndices =
+        selectedIndices.length > 1
+          ? [
+              ...selectedIndices.slice(0, selectedIndex),
+              ...selectedIndices.slice(selectedIndex + 1),
+            ]
+          : []
 
-  // sets highest eligible NFT based on pay input amount
+      setPayMetadata?.({
+        tierIdsToMint: tierIdsFromIndices(newSelectedIndices),
+      })
+      setSelectedIndices(newSelectedIndices)
+
+      const newPayAmount = sumSelectedTiers(newSelectedIndices).toString()
+      setPayAmount?.(newPayAmount)
+      validatePayAmount?.(newPayAmount)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    [setPayMetadata, selectedIndices],
+  )
+
+  // sets highest eligible NFT based on pay input amount when pay input amount increases from 0
   useEffect(() => {
-    if (!rewardTiers || !payAmountETH) return
+    if (!rewardTiers || !payAmountETH || selectedIndices.length > 0) return
 
-    // if the already selected tier's floor is equal to pay input, we dont want to change the selected tier
-    if (
-      selectedIndex !== undefined &&
-      parseFloat(payAmountETH) === rewardTiers[selectedIndex].contributionFloor
-    )
-      return
     const highestEligibleRewardTier = getNftRewardTier({
       nftRewardTiers: rewardTiers,
       payAmountETH: parseFloat(payAmountETH),
@@ -119,14 +151,33 @@ export function NftRewardsSection() {
     // set selected as highest reward tier above a certain amount
     if (highestEligibleRewardTier) {
       selectTier(rewardTiers.indexOf(highestEligibleRewardTier))
-    } else {
-      deselectTier()
     }
-  }, [payAmountETH, rewardTiers, deselectTier, selectTier, selectedIndex])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedIndices, payAmountETH])
 
-  const handleSelected = (rewardTier: NftRewardTier, idx: number) => {
+  // sets pay input when selected nft's sum to greater than the current pay input amount
+  useEffect(() => {
+    if (sumSelectedTiers(selectedIndices) > parseFloat(payAmountETH ?? '0')) {
+      const newPayAmount = sumSelectedTiers(selectedIndices).toString()
+      setPayAmount?.(newPayAmount)
+      validatePayAmount?.(newPayAmount)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedIndices])
+
+  // deselects nft's when pay input amount is changed and drops below the sum of the nft amounts
+  useEffect(() => {
+    if (
+      selectedIndices.length > 0 &&
+      parseFloat(payAmountETH ?? '0') < sumSelectedTiers(selectedIndices)
+    ) {
+      setSelectedIndices([])
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [payAmountETH])
+
+  const handleSelected = (idx: number) => {
     selectTier(idx)
-    setPayAmount?.(rewardTier.contributionFloor.toString())
     setPayInCurrency?.(ETH)
   }
 
@@ -175,9 +226,9 @@ export function NftRewardsSection() {
                   rewardTierUpperLimit={
                     rewardTiers?.[idx + 1]?.contributionFloor
                   }
-                  isSelected={idx === selectedIndex}
-                  onClick={() => handleSelected(rewardTier, idx)}
-                  onRemove={deselectTier}
+                  isSelected={selectedIndices.includes(idx)}
+                  onClick={() => handleSelected(idx)}
+                  onRemove={() => deselectTier(idx)}
                 />
               </Col>
             ))}

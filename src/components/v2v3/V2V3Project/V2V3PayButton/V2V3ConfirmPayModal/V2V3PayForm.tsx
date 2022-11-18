@@ -33,11 +33,11 @@ export interface V2V3PayFormType {
 
 export const V2V3PayForm = ({
   form,
-  nftRewardTier,
+  nftRewardTiers,
   ...props
 }: {
   form: FormInstance<V2V3PayFormType>
-  nftRewardTier: NftRewardTier | undefined
+  nftRewardTiers: NftRewardTier[] | undefined
 } & FormProps) => {
   const {
     theme: { colors },
@@ -63,6 +63,10 @@ export const V2V3PayForm = ({
   const canAddMoreStickers =
     (stickerUrls ?? []).length < ProjectPreferences.MAX_IMAGES_PAYMENT_MEMO
 
+  const initialStickerUrls = nftRewardTiers?.map(
+    (tier: NftRewardTier) => tier.imageUrl,
+  )
+
   return (
     <>
       <Form
@@ -71,9 +75,7 @@ export const V2V3PayForm = ({
         {...props}
         initialValues={{
           // add the NFT image to the pay memo.
-          stickerUrls: nftRewardTier?.imageUrl
-            ? [nftRewardTier.imageUrl]
-            : undefined,
+          stickerUrls: initialStickerUrls,
         }}
       >
         <Space direction="vertical" size="large">

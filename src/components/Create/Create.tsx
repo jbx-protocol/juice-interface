@@ -2,15 +2,13 @@ import { t, Trans } from '@lingui/macro'
 import { Space } from 'antd'
 import { DeployButtonText } from 'components/DeployProjectButtonText'
 import ExternalLink from 'components/ExternalLink'
-import { CV_V2, CV_V3 } from 'constants/cv'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { CV_V3 } from 'constants/cv'
 import { ThemeContext } from 'contexts/themeContext'
 import { useRouter } from 'next/router'
 import { TransactionProvider } from 'providers/TransactionProvider'
 import { V2V3ContractsProvider } from 'providers/v2v3/V2V3ContractsProvider'
 import { V2V3CurrencyProvider } from 'providers/v2v3/V2V3CurrencyProvider'
 import { useContext } from 'react'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { helpPagePath } from 'utils/routes'
 
 import {
@@ -40,9 +38,8 @@ export function Create() {
   }
 
   return (
-    <V2V3ContractsProvider
-      initialCv={featureFlagEnabled(FEATURE_FLAGS.V3) ? CV_V3 : CV_V2}
-    >
+    // New projects will be launched using V3 contracts.
+    <V2V3ContractsProvider initialCv={CV_V3}>
       <TransactionProvider>
         <V2V3CurrencyProvider>
           <h1

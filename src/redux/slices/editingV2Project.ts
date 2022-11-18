@@ -1,30 +1,31 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-
+import { AllocationSplit } from 'components/Create/components/Allocation'
+import { allocationToSplit } from 'components/Create/utils/splitToAllocation'
 import {
-  LATEST_METADATA_VERSION,
-  ProjectMetadataV5,
-} from 'models/project-metadata'
-
-import {
-  ETHPayoutGroupedSplits,
-  ReservedTokensGroupedSplits,
-  Split,
-} from 'models/splits'
-import {
-  SerializedV2V3FundAccessConstraint,
-  SerializedV2V3FundingCycleData,
-  SerializedV2V3FundingCycleMetadata,
-  serializeV2V3FundingCycleData,
-  serializeV2V3FundingCycleMetadata,
-} from 'utils/v2v3/serializers'
-
+  ETH_PAYOUT_SPLIT_GROUP,
+  RESERVED_TOKEN_SPLIT_GROUP,
+} from 'constants/splits'
+import { CreatePage } from 'models/create-page'
+import { FundingTargetType } from 'models/fundingTargetType'
 import {
   NftCollectionMetadata,
   NftPostPayModalConfig,
   NftRewardTier,
 } from 'models/nftRewardTier'
+import { PayoutsSelection } from 'models/payoutsSelection'
+import {
+  LATEST_METADATA_VERSION,
+  ProjectMetadataV5,
+} from 'models/project-metadata'
+import { ProjectTokensSelection } from 'models/projectTokenSelection'
+import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
+import {
+  ETHPayoutGroupedSplits,
+  ReservedTokensGroupedSplits,
+  Split,
+} from 'models/splits'
 import {
   DEFAULT_MINT_RATE,
   discountRateFrom,
@@ -33,20 +34,13 @@ import {
   redemptionRateFrom,
   reservedRateFrom,
 } from 'utils/v2v3/math'
-
-import { AllocationSplit } from 'components/Create/components/Allocation'
-import { allocationToSplit } from 'components/Create/utils/splitToAllocation'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import {
-  ETH_PAYOUT_SPLIT_GROUP,
-  RESERVED_TOKEN_SPLIT_GROUP,
-} from 'constants/splits'
-import { CreatePage } from 'models/create-page'
-import { FundingTargetType } from 'models/fundingTargetType'
-import { PayoutsSelection } from 'models/payoutsSelection'
-import { ProjectTokensSelection } from 'models/projectTokenSelection'
-import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
-import { featureFlagEnabled } from 'utils/featureFlags'
+  SerializedV2V3FundAccessConstraint,
+  SerializedV2V3FundingCycleData,
+  SerializedV2V3FundingCycleMetadata,
+  serializeV2V3FundingCycleData,
+  serializeV2V3FundingCycleMetadata,
+} from 'utils/v2v3/serializers'
 
 export type NftRewardsData = {
   rewardTiers: NftRewardTier[] | undefined
@@ -54,6 +48,7 @@ export type NftRewardsData = {
   collectionMetadata: NftCollectionMetadata
   postPayModal: NftPostPayModalConfig | undefined
 }
+
 interface V2ProjectState {
   version: number
   projectMetadata: ProjectMetadataV5
@@ -101,55 +96,30 @@ export const defaultFundingCycleData: SerializedV2V3FundingCycleData =
   })
 
 export const defaultFundingCycleMetadata: SerializedV2V3FundingCycleMetadata =
-  serializeV2V3FundingCycleMetadata(
-    featureFlagEnabled(FEATURE_FLAGS.V3)
-      ? {
-          global: {
-            allowSetTerminals: false,
-            allowSetController: false,
-            pauseTransfers: false,
-          },
-          reservedRate: BigNumber.from(0), // A number from 0-10,000
-          redemptionRate: redemptionRateFrom('100'), // A number from 0-10,000
-          ballotRedemptionRate: redemptionRateFrom('100'), // A number from 0-10,000
-          pausePay: false,
-          pauseDistributions: false,
-          pauseRedeem: false,
-          allowMinting: false,
-          pauseBurn: false,
-          preferClaimedTokenOverride: false,
-          allowTerminalMigration: false,
-          allowControllerMigration: false,
-          holdFees: false,
-          useTotalOverflowForRedemptions: false,
-          useDataSourceForPay: false,
-          useDataSourceForRedeem: false,
-          dataSource: constants.AddressZero,
-          metadata: BigNumber.from(0),
-        }
-      : {
-          global: {
-            allowSetTerminals: false,
-            allowSetController: false,
-          },
-          reservedRate: BigNumber.from(0), // A number from 0-10,000
-          redemptionRate: redemptionRateFrom('100'), // A number from 0-10,000
-          ballotRedemptionRate: redemptionRateFrom('100'), // A number from 0-10,000
-          pausePay: false,
-          pauseDistributions: false,
-          pauseRedeem: false,
-          allowMinting: false,
-          pauseBurn: false,
-          allowChangeToken: false,
-          allowTerminalMigration: false,
-          allowControllerMigration: false,
-          holdFees: false,
-          useTotalOverflowForRedemptions: false,
-          useDataSourceForPay: false,
-          useDataSourceForRedeem: false,
-          dataSource: constants.AddressZero,
-        },
-  ) ?? {}
+  serializeV2V3FundingCycleMetadata({
+    global: {
+      allowSetTerminals: false,
+      allowSetController: false,
+      pauseTransfers: false,
+    },
+    reservedRate: BigNumber.from(0), // A number from 0-10,000
+    redemptionRate: redemptionRateFrom('100'), // A number from 0-10,000
+    ballotRedemptionRate: redemptionRateFrom('100'), // A number from 0-10,000
+    pausePay: false,
+    pauseDistributions: false,
+    pauseRedeem: false,
+    allowMinting: false,
+    pauseBurn: false,
+    preferClaimedTokenOverride: false,
+    allowTerminalMigration: false,
+    allowControllerMigration: false,
+    holdFees: false,
+    useTotalOverflowForRedemptions: false,
+    useDataSourceForPay: false,
+    useDataSourceForRedeem: false,
+    dataSource: constants.AddressZero,
+    metadata: BigNumber.from(0),
+  }) ?? {}
 
 const EMPTY_PAYOUT_GROUPED_SPLITS = {
   group: ETH_PAYOUT_SPLIT_GROUP,

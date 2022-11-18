@@ -6,7 +6,6 @@ import {
 } from 'components/NftRewards/NftPostPayModal'
 import { PayProjectFormContext } from 'components/Project/PayProjectForm/payProjectFormContext'
 import SectionHeader from 'components/SectionHeader'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { CurrencyContext } from 'contexts/currencyContext'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
@@ -16,7 +15,6 @@ import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useMobile from 'hooks/Mobile'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { fromWad } from 'utils/format/formatNumber'
 import { getNftRewardTier, hasNftRewards } from 'utils/nftRewards'
 import { useModalFromUrlQuery } from '../modals/hooks/useModalFromUrlQuery'
@@ -130,8 +128,7 @@ export function NftRewardsSection() {
     setPayInCurrency?.(ETH)
   }
 
-  const nftRewardsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
-  if (!hasNftRewards(fundingCycleMetadata) || !nftRewardsEnabled) {
+  if (!hasNftRewards(fundingCycleMetadata)) {
     return null
   }
 

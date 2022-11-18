@@ -9,7 +9,6 @@ import NftDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawers/N
 import RulesDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawers/RulesDrawer'
 import TokenDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawers/TokenDrawer'
 import { CV_V3 } from 'constants/cv'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -18,7 +17,6 @@ import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useV2HasPermissions } from 'hooks/v2v3/contractReader/V2HasPermissions'
 import { V2OperatorPermission } from 'models/v2v3/permissions'
 import { useContext, useState } from 'react'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { DeployConfigurationButton } from './DeployConfigurationButton'
 import { useEditingFundingCycleConfig } from './hooks/editingFundingCycleConfig'
 import { useFundingHasSavedChanges } from './hooks/fundingHasSavedChanges'
@@ -110,7 +108,6 @@ export function V2V3ReconfigureFundingCycleForm() {
     nftRewardsCids?.length && !fundingCycleMetadata?.useDataSourceForPay,
   )
 
-  const nftsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
   const isV3 = cv === CV_V3
 
   const nftDeployerAddress = contracts?.JBTiered721DelegateProjectDeployer
@@ -142,7 +139,7 @@ export function V2V3ReconfigureFundingCycleForm() {
           reconfigureHasChanges={tokenDrawerHasSavedChanges}
           onClick={() => setTokenDrawerVisible(true)}
         />
-        {nftsEnabled && isV3 ? (
+        {isV3 ? (
           <ReconfigureButton
             heading={t`NFTs`}
             description={t`Configure your project's NFTs.`}
@@ -187,9 +184,7 @@ export function V2V3ReconfigureFundingCycleForm() {
           }
           nftRewards={editingFundingCycleConfig.editingNftRewards?.rewardTiers}
         />
-        {nftsEnabled &&
-        nftDrawerHasSavedChanges &&
-        !nftContractHasPermission ? (
+        {nftDrawerHasSavedChanges && !nftContractHasPermission ? (
           <Space size="middle" direction="vertical">
             <div style={{ display: 'flex' }}>
               <h2 style={{ marginRight: 5 }}>1.</h2>
@@ -224,9 +219,8 @@ export function V2V3ReconfigureFundingCycleForm() {
       />
       <TokenDrawer open={tokenDrawerVisible} onClose={closeReconfigureDrawer} />
       <RulesDrawer open={rulesDrawerVisible} onClose={closeReconfigureDrawer} />
-      {nftsEnabled ? (
-        <NftDrawer open={nftDrawerVisible} onClose={closeReconfigureDrawer} />
-      ) : null}
+      <NftDrawer open={nftDrawerVisible} onClose={closeReconfigureDrawer} />
+
       <UnsavedChangesModal
         open={unsavedChangesModalVisibile}
         onOk={closeUnsavedChangesModalAndExit}

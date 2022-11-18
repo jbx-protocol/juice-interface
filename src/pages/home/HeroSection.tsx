@@ -58,26 +58,36 @@ const CallToAction = () => {
         flexDirection: isMobile ? 'column' : 'row',
       }}
     >
-      <Link href="/create">
-        <Button
-          type="primary"
-          size="large"
-          block={isMobile}
-          onClick={() => {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            ;(fathom as any)?.trackGoal('IIYVJKNC', 0)
-          }}
-          style={{
-            marginRight: isMobile ? 0 : '0.8rem',
-            marginBottom: isMobile ? '0.8rem' : 0,
-          }}
-        >
-          <Trans>Create a project</Trans>
-        </Button>
+      <Link href="/projects">
+        <a>
+          <Button
+            type="primary"
+            size="large"
+            block={isMobile}
+            style={{
+              marginRight: isMobile ? 0 : '0.8rem',
+              marginBottom: isMobile ? '0.8rem' : 0,
+            }}
+          >
+            <Trans>Explore projects</Trans>
+          </Button>
+        </a>
       </Link>
-      <Button size="large" block={isMobile} href="/projects">
-        <Trans>Explore projects</Trans>
-      </Button>
+
+      <Link href="/create">
+        <a>
+          <Button
+            size="large"
+            block={isMobile}
+            onClick={() => {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              ;(fathom as any)?.trackGoal('IIYVJKNC', 0)
+            }}
+          >
+            <Trans>Create a project</Trans>
+          </Button>
+        </a>
+      </Link>
     </div>
   )
 }

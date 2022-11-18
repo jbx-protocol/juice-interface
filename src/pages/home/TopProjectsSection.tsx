@@ -6,6 +6,7 @@ import Loading from 'components/Loading'
 import { ProjectCardProject } from 'components/ProjectCard'
 import ProjectLogo from 'components/ProjectLogo'
 import { PV_V2 } from 'constants/pv'
+import { LAYOUT_MAX_WIDTH_PX } from 'constants/styles/layouts'
 import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
@@ -157,7 +158,10 @@ const SmallProjectCard = ({ project }: { project: ProjectCardProject }) => {
                   margin: 0,
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  display: 'block',
                 }}
+                title={metadata.name}
               >
                 {metadata.name}
               </span>
@@ -201,7 +205,7 @@ export function TopProjectsSection() {
         padding: '2rem',
       }}
     >
-      <div style={{ margin: '40px auto', maxWidth: 1080 }}>
+      <div style={{ margin: '40px auto', maxWidth: LAYOUT_MAX_WIDTH_PX }}>
         <Space direction="vertical" style={{ width: '100%' }} size="large">
           <div>
             <SectionHeading>
@@ -257,30 +261,33 @@ export function TopProjectsSection() {
           <div style={{ textAlign: 'center' }}>
             <Space direction="vertical" style={{ width: '100%' }} size="large">
               <Link href="/create">
-                <Button size="large" type="primary" block={isMobile}>
-                  <Trans>Start raising funds</Trans>
-                </Button>
+                <a>
+                  <Button size="large" type="primary" block={isMobile}>
+                    <Trans>Create a project</Trans>
+                  </Button>
+                </a>
               </Link>
-
-              <div
-                role="button"
-                style={{
-                  fontSize: '0.875rem',
-                  color: colors.text.secondary,
-                  cursor: 'pointer',
-                }}
-                className="hover-text-decoration-underline"
-                onClick={() => {
-                  document
-                    .getElementById('how-it-works')
-                    ?.scrollIntoView({ behavior: 'smooth' })
-                }}
-              >
-                <Space size="small">
-                  <Trans>How does it work?</Trans>
-                  <RightCircleOutlined />
-                </Space>
-              </div>
+              <Link href="#how-it-works">
+                <a
+                  role="button"
+                  style={{
+                    fontSize: '0.875rem',
+                    color: colors.text.secondary,
+                    cursor: 'pointer',
+                  }}
+                  className="hover-text-decoration-underline"
+                  onClick={() => {
+                    document
+                      .getElementById('how-it-works')
+                      ?.scrollIntoView({ behavior: 'smooth' })
+                  }}
+                >
+                  <Space size="small">
+                    <Trans>How does it work?</Trans>
+                    <RightCircleOutlined />
+                  </Space>
+                </a>
+              </Link>
             </Space>
           </div>
         </Space>

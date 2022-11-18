@@ -130,8 +130,8 @@ export const useReconfigureFundingCycle = ({
     if (launchedNewNfts && editingNftRewards?.rewardTiers) {
       txSuccessful = await reconfigureV2V3FundingCycleWithNftsTx(
         {
-          ...reconfigureFundingCycleData,
-          ...editingNftRewards,
+          projectData: reconfigureFundingCycleData,
+          tiered721DelegateData: editingNftRewards,
         },
         txOpts,
       )

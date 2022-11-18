@@ -6,11 +6,9 @@ import FundingDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawe
 import NftDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer'
 import RulesDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawers/RulesDrawer'
 import TokenDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawers/TokenDrawer'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { useEditingFundingCycleConfig } from '../../../../ReconfigureFundingCycleSettingsPage/hooks/editingFundingCycleConfig'
 import ReconfigurePreview from '../../../../ReconfigureFundingCycleSettingsPage/ReconfigurePreview'
 import { useLaunchFundingCycle } from './hooks/useLaunchFundingCycle'
@@ -40,8 +38,6 @@ export function LaunchFundingCycleForm() {
     closeUnsavedChangesModal()
   }
 
-  const nftsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
-
   return (
     <>
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
@@ -55,13 +51,11 @@ export function LaunchFundingCycleForm() {
           description={t`Configure your project's token.`}
           onClick={() => setTokenDrawerVisible(true)}
         />
-        {nftsEnabled ? (
-          <RichButton
-            heading={t`NFTs`}
-            description={t`Configure your project's NFTs.`}
-            onClick={() => setNftDrawerVisible(true)}
-          />
-        ) : null}
+        <RichButton
+          heading={t`NFTs`}
+          description={t`Configure your project's NFTs.`}
+          onClick={() => setNftDrawerVisible(true)}
+        />
         <RichButton
           heading={t`Rules`}
           description={t`Configure restrictions for your funding cycles.`}

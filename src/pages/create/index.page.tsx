@@ -3,6 +3,7 @@ import { Tabs } from 'antd'
 import { AppWrapper, Head } from 'components/common'
 import { Create } from 'components/Create'
 import { CV_V3 } from 'constants/cv'
+import { LAYOUT_MAX_WIDTH_PX } from 'constants/styles/layouts'
 import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
 import { TransactionProvider } from 'providers/TransactionProvider'
@@ -84,7 +85,7 @@ function V2Create() {
         <V2V3CurrencyProvider>
           <div
             style={{
-              maxWidth: 1200,
+              maxWidth: LAYOUT_MAX_WIDTH_PX,
               margin: '0 auto',
               padding: !isMobile ? '2rem 4rem' : '2rem 1rem',
             }}
@@ -95,7 +96,7 @@ function V2Create() {
                 fontSize: 28,
               }}
             >
-              <Trans>Launch your project</Trans>
+              <Trans>Create a project</Trans>
             </h1>
 
             <Tabs

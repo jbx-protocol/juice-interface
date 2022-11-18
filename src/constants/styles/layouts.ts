@@ -2,6 +2,8 @@ import { CSSProperties } from 'react'
 
 import { padding } from './padding'
 
+export const LAYOUT_MAX_WIDTH_PX = 1080
+
 export const layouts: Record<string, CSSProperties> = {
   centered: {
     display: 'flex',
@@ -10,7 +12,7 @@ export const layouts: Record<string, CSSProperties> = {
     justifyContent: 'center',
   },
   maxWidth: {
-    maxWidth: 1080,
+    maxWidth: LAYOUT_MAX_WIDTH_PX,
     margin: '0 auto',
     padding: padding.app,
   },

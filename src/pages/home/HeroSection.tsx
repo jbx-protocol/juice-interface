@@ -129,21 +129,23 @@ export function HeroSection() {
 
                   <BuiltForList />
                 </div>
+
                 <CallToAction />
               </Space>
             </div>
           </Col>
-
-          <Col xs={24} md={11}>
-            <Image
-              className="hide-mobile"
-              src={forThemeOption?.({
-                [ThemeOption.dark]: bananaOd,
-                [ThemeOption.light]: bananaOl,
-              })}
-              alt="Chill banana drinking juice"
-            />
-          </Col>
+          {!isMobile && (
+            <Col xs={24} md={11}>
+              <Image
+                className="hide-mobile"
+                src={forThemeOption?.({
+                  [ThemeOption.dark]: bananaOd,
+                  [ThemeOption.light]: bananaOl,
+                })}
+                alt="Chill banana drinking juice"
+              />
+            </Col>
+          )}
         </Row>
       </div>
     </section>

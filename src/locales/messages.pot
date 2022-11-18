@@ -980,9 +980,6 @@ msgstr ""
 msgid "Design how your tokens should work."
 msgstr ""
 
-msgid "Design your project"
-msgstr ""
-
 msgid "Details"
 msgstr ""
 

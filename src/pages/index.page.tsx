@@ -100,7 +100,7 @@ const CallToAction = () => {
             marginBottom: isMobile ? '0.8rem' : 0,
           }}
         >
-          <Trans>Launch your project</Trans>
+          <Trans>Create a project</Trans>
         </Button>
       </Link>
       <Button size="large" block={isMobile} href="/projects">
@@ -186,11 +186,11 @@ function Landing() {
         </div>
       </section>
 
-      <TopProjectsSection />
-
       <StatsSection />
 
       <TrendingSection />
+
+      <TopProjectsSection />
 
       <HowItWorksSection />
 
@@ -207,7 +207,10 @@ function Landing() {
           <Row align="middle" gutter={40}>
             <Col xs={24} md={14}>
               <div style={{ display: 'grid', rowGap: 20 }}>
-                <BigHeader text={t`Should you Juicebox?`} />
+                <BigHeader
+                  text={t`Should you Juicebox?`}
+                  style={{ color: colors.text.primary }}
+                />
                 <div style={{ color: colors.text.over.brand.secondary }}>
                   <p className="ol">
                     <Trans>Almost definitely.</Trans>

@@ -258,7 +258,7 @@ export function TopProjectsSection() {
             <Space direction="vertical" style={{ width: '100%' }} size="large">
               <Link href="/create">
                 <Button size="large" type="primary" block={isMobile}>
-                  <Trans>Start raising funds</Trans>
+                  <Trans>Create a project</Trans>
                 </Button>
               </Link>
 

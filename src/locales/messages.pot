@@ -1448,7 +1448,7 @@ msgstr ""
 msgid "How the {reservedPercentage}% of your project's reserved tokens will be split."
 msgstr ""
 
-msgid "How to Juice."
+msgid "How to Juice"
 msgstr ""
 
 msgid "How would you like to distribute payments?"
@@ -1638,9 +1638,6 @@ msgid "Launch veNFT"
 msgstr ""
 
 msgid "Launch veNFT {symbol}"
-msgstr ""
-
-msgid "Launch your project"
 msgstr ""
 
 msgid "Launch {projectTitle}"
@@ -2733,9 +2730,6 @@ msgid "Start"
 msgstr ""
 
 msgid "Start over"
-msgstr ""
-
-msgid "Start raising funds"
 msgstr ""
 
 msgid "Start time (seconds, Unix time)"

@@ -2,17 +2,31 @@ import { InfoCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, Divider, Row } from 'antd'
 import ExternalLink from 'components/ExternalLink'
+import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
 import Image from 'next/image'
-import { CSSProperties } from 'react'
+import { CSSProperties, useContext } from 'react'
 import { helpPagePath } from 'utils/routes'
 
 import { OverflowVideoLink } from './QAs'
 import { SectionHeading } from './SectionHeading'
 
-const SmallHeader = ({ text }: { text: string }) => (
-  <h3 style={{ fontWeight: 600, margin: 0 }}>{text}</h3>
-)
+const SmallHeader = ({ text }: { text: string }) => {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+  return (
+    <h3
+      style={{
+        fontWeight: 600,
+        margin: 0,
+        color: colors.text.primary,
+      }}
+    >
+      {text}
+    </h3>
+  )
+}
 
 const FourthCol = ({
   header,
@@ -45,7 +59,7 @@ export function HowItWorksSection() {
           marginBottom: '4rem',
         }}
       >
-        <Trans>How to Juice.</Trans>
+        <Trans>How to Juice</Trans>
       </SectionHeading>
 
       <div

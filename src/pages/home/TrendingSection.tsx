@@ -2,13 +2,12 @@ import { InfoCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, Col, Row, Space, Tooltip } from 'antd'
 import Grid from 'components/Grid'
-import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
 import { useTrendingProjects } from 'hooks/Projects'
 import Link from 'next/link'
 import RankingExplanation from 'pages/projects/RankingExplanation'
 import TrendingProjectCard from 'pages/projects/TrendingProjectCard'
-import { CSSProperties, useContext } from 'react'
+import { CSSProperties } from 'react'
 import Payments from './Payments'
 
 const TRENDING_PROJECTS_LIMIT = 6
@@ -18,16 +17,9 @@ const SmallHeader = ({ text }: { text: string | JSX.Element }) => (
 )
 
 export default function TrendingSection() {
-  const {
-    theme: { colors },
-    isDarkMode,
-  } = useContext(ThemeContext)
-
   const isMobile = useMobile()
 
   const trendingProjectsStyle: CSSProperties = {
-    // Light theme uses a slightly lighter background than background-l1
-    backgroundColor: isDarkMode ? colors.background.l1 : '#faf7f5',
     padding: '2rem',
     margin: '0 auto',
   }
@@ -77,6 +69,7 @@ export default function TrendingSection() {
             </Link>
           </Row>
         </Col>
+
         <Col xs={24} md={12}>
           <Space direction="vertical" style={{ width: '100%' }} size="middle">
             <SmallHeader text={<Trans>Latest payments</Trans>} />

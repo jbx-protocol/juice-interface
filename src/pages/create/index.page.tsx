@@ -95,7 +95,7 @@ function V2Create() {
                 fontSize: 28,
               }}
             >
-              <Trans>Launch your project</Trans>
+              <Trans>Create a project</Trans>
             </h1>
 
             <Tabs

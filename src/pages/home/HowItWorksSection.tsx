@@ -137,14 +137,20 @@ export function HowItWorksSection() {
                   !
                 </Trans>
               </p>
+
+              <div>
+                <Button
+                  size="large"
+                  type="primary"
+                  href="/create"
+                  block={isMobile}
+                >
+                  <Trans>Create a project</Trans>
+                </Button>
+              </div>
             </div>
           </Col>
         </Row>
-        <div style={{ textAlign: 'center' }}>
-          <Button size="large" type="primary" href="/create" block={isMobile}>
-            <Trans>Create a project</Trans>
-          </Button>
-        </div>
       </div>
     </section>
   )

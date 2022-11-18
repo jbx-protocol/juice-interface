@@ -34,7 +34,7 @@ const Stat = ({
         style={{
           fontSize: isMobile ? '1.8rem' : '2.5rem',
           fontWeight: 600,
-          color: colors.text.primary,
+          color: colors.text.brand.primary,
         }}
       >
         {loading ? '-' : value}

@@ -158,7 +158,10 @@ const SmallProjectCard = ({ project }: { project: ProjectCardProject }) => {
                   margin: 0,
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  display: 'block',
                 }}
+                title={metadata.name}
               >
                 {metadata.name}
               </span>
@@ -205,7 +208,7 @@ export function TopProjectsSection() {
       <div style={{ margin: '40px auto', maxWidth: LAYOUT_MAX_WIDTH_PX }}>
         <Space direction="vertical" style={{ width: '100%' }} size="large">
           <div>
-            <SectionHeading style={{ color: colors.text.primary }}>
+            <SectionHeading>
               <TopProjectsHeading />
             </SectionHeading>
 

@@ -2,19 +2,35 @@ import { InfoCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, Col, Row, Space, Tooltip } from 'antd'
 import Grid from 'components/Grid'
+import { LAYOUT_MAX_WIDTH_PX } from 'constants/styles/layouts'
+import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
 import { useTrendingProjects } from 'hooks/Projects'
 import Link from 'next/link'
 import RankingExplanation from 'pages/projects/RankingExplanation'
 import TrendingProjectCard from 'pages/projects/TrendingProjectCard'
-import { CSSProperties } from 'react'
+import { CSSProperties, useContext } from 'react'
 import Payments from './Payments'
 
 const TRENDING_PROJECTS_LIMIT = 6
 
-const SmallHeader = ({ text }: { text: string | JSX.Element }) => (
-  <h3 style={{ fontWeight: 600, margin: 0, fontSize: '1.3rem' }}>{text}</h3>
-)
+const SmallHeader = ({ text }: { text: string | JSX.Element }) => {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+  return (
+    <h3
+      style={{
+        fontWeight: 600,
+        margin: 0,
+        fontSize: '1.3rem',
+        color: colors.text.primary,
+      }}
+    >
+      {text}
+    </h3>
+  )
+}
 
 export default function TrendingSection() {
   const isMobile = useMobile()
@@ -30,7 +46,10 @@ export default function TrendingSection() {
 
   return (
     <section style={trendingProjectsStyle}>
-      <Row style={{ maxWidth: 1200, margin: '0 auto' }} gutter={40}>
+      <Row
+        style={{ maxWidth: LAYOUT_MAX_WIDTH_PX, margin: '0 auto', rowGap: 40 }}
+        gutter={40}
+      >
         <Col xs={24} md={12}>
           <Space direction="vertical" style={{ width: '100%' }} size="middle">
             <SmallHeader
@@ -54,20 +73,13 @@ export default function TrendingSection() {
                 />
               ))}
             </Grid>
-          </Space>
 
-          <Row
-            justify="center"
-            style={{
-              padding: '1rem 0 2rem 0',
-            }}
-          >
             <Link href="/projects">
               <Button size="large" block={isMobile}>
                 <Trans>More trending projects</Trans>
               </Button>
             </Link>
-          </Row>
+          </Space>
         </Col>
 
         <Col xs={24} md={12}>

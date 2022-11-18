@@ -11,20 +11,22 @@ import {
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
+import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
 import { isValidMustStartAtOrAfter } from 'utils/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../ProjectTitle'
 
-const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
 const DEFAULT_MEMO = ''
 
-export function useLaunchProjectTx(): TransactorInstance<{
+export interface LaunchProjectData {
   projectMetadataCID: string
   fundingCycleData: V2V3FundingCycleData
   fundingCycleMetadata: V2V3FundingCycleMetadata
   fundAccessConstraints: V2V3FundAccessConstraint[]
   groupedSplits?: GroupedSplits<SplitGroup>[]
   mustStartAtOrAfter?: string // epoch seconds. anything less than "now" will start immediately.
-}> {
+}
+
+export function useLaunchProjectTx(): TransactorInstance<LaunchProjectData> {
   const { transactor } = useContext(TransactionContext)
   const { contracts } = useContext(V2V3ContractsContext)
   const { userAddress } = useWallet()

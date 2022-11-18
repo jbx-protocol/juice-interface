@@ -149,18 +149,22 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
       const tiers = buildJB721TierParams({ cids: CIDs, rewardTiers })
       const txSuccessful = await launchProjectWithNftsTx(
         {
-          collectionUri: collectionUri ?? '',
-          collectionName: collectionName ?? projectName,
-          collectionSymbol: collectionSymbol ?? '',
-          projectMetadataCID: uploadedMetadata.IpfsHash,
-          fundingCycleData,
-          fundingCycleMetadata: {
-            ...fundingCycleMetadata,
-            ...NFT_FUNDING_CYCLE_METADATA_OVERRIDES,
+          tiered721DelegateData: {
+            collectionUri: collectionUri ?? '',
+            collectionName: collectionName ?? projectName,
+            collectionSymbol: collectionSymbol ?? '',
+            tiers,
           },
-          fundAccessConstraints,
-          groupedSplits: [payoutGroupedSplits, reservedTokensGroupedSplits],
-          tiers,
+          projectData: {
+            projectMetadataCID: uploadedMetadata.IpfsHash,
+            fundingCycleData,
+            fundingCycleMetadata: {
+              ...fundingCycleMetadata,
+              ...NFT_FUNDING_CYCLE_METADATA_OVERRIDES,
+            },
+            fundAccessConstraints,
+            groupedSplits: [payoutGroupedSplits, reservedTokensGroupedSplits],
+          },
         },
         txOpts,
       )

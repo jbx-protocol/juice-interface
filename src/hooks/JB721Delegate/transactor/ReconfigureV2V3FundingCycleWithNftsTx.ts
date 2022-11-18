@@ -8,20 +8,23 @@ import { TransactorInstance } from 'hooks/Transactor'
 import omit from 'lodash/omit'
 import { JBPayDataSourceFundingCycleMetadata } from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
-import { NftRewardsData } from 'redux/slices/editingV2Project'
+import {
+  DEFAULT_MUST_START_AT_OR_AFTER,
+  NftRewardsData,
+} from 'redux/slices/editingV2Project'
 import {
   buildJB721TierParams,
+  buildJBDeployTiered721DelegateData,
   findJBTiered721DelegateStoreAddress,
 } from 'utils/nftRewards'
 import { isValidMustStartAtOrAfter } from 'utils/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../../v2v3/ProjectTitle'
-import {
-  DEFAULT_MUST_START_AT_OR_AFTER,
-  ReconfigureTxArgs,
-} from '../../v2v3/transactor/ReconfigureV2V3FundingCycleTx'
-import { getJBDeployTiered721DelegateData } from './LaunchProjectWithNftsTx'
+import { ReconfigureTxArgs } from '../../v2v3/transactor/ReconfigureV2V3FundingCycleTx'
 
-export type ReconfigureWithNftsTxArgs = ReconfigureTxArgs & NftRewardsData
+type ReconfigureWithNftsTxArgs = {
+  reconfigureData: ReconfigureTxArgs
+  tiered721DelegateData: NftRewardsData
+}
 
 export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<ReconfigureWithNftsTxArgs> {
   const { transactor } = useContext(TransactionContext)
@@ -33,15 +36,15 @@ export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<R
 
   return async (
     {
-      fundingCycleData,
-      fundingCycleMetadata,
-      fundAccessConstraints,
-      groupedSplits = [],
-      mustStartAtOrAfter = DEFAULT_MUST_START_AT_OR_AFTER,
-      memo,
-      rewardTiers,
-      CIDs,
-      collectionMetadata,
+      reconfigureData: {
+        fundingCycleData,
+        fundingCycleMetadata,
+        fundAccessConstraints,
+        groupedSplits = [],
+        mustStartAtOrAfter = DEFAULT_MUST_START_AT_OR_AFTER,
+        memo,
+      },
+      tiered721DelegateData: { rewardTiers, CIDs, collectionMetadata },
     },
     txOpts,
   ) => {
@@ -71,18 +74,20 @@ export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<R
     // build `delegateData`
     const tiers = buildJB721TierParams({ cids: CIDs, rewardTiers })
 
-    const delegateData = await getJBDeployTiered721DelegateData({
+    const delegateData = buildJBDeployTiered721DelegateData({
       collectionUri: collectionMetadata.uri ?? '',
       collectionName,
       collectionSymbol: collectionMetadata.symbol ?? '',
       tiers,
       ownerAddress: projectOwnerAddress,
-      JBDirectoryAddress: getAddress(contracts.JBDirectory.address),
-      JBFundingCycleStoreAddress: getAddress(
-        contracts.JBFundingCycleStore.address,
-      ),
-      JBPricesAddress: getAddress(contracts.JBPrices.address),
-      JBTiered721DelegateStoreAddress,
+      contractAddresses: {
+        JBDirectoryAddress: getAddress(contracts.JBDirectory.address),
+        JBFundingCycleStoreAddress: getAddress(
+          contracts.JBFundingCycleStore.address,
+        ),
+        JBPricesAddress: getAddress(contracts.JBPrices.address),
+        JBTiered721DelegateStoreAddress,
+      },
     })
 
     // NFT launch tx does not accept `useDataSourceForPay` and `dataSource` (see contracts:`JBPayDataSourceFundingCycleMetadata`)

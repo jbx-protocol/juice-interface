@@ -75,18 +75,22 @@ export const useDeployNftProject = () => {
       })
       return await launchProjectWithNftsTx(
         {
-          collectionUri: nftCollectionMetadataUri,
-          collectionName,
-          collectionSymbol,
-          projectMetadataCID: metadataCid,
-          fundingCycleData,
-          fundingCycleMetadata: {
-            ...fundingCycleMetadata,
-            ...NFT_FUNDING_CYCLE_METADATA_OVERRIDES,
+          tiered721DelegateData: {
+            collectionUri: nftCollectionMetadataUri,
+            collectionName,
+            collectionSymbol,
+            tiers,
           },
-          fundAccessConstraints,
-          groupedSplits,
-          tiers,
+          projectData: {
+            projectMetadataCID: metadataCid,
+            fundingCycleData,
+            fundingCycleMetadata: {
+              ...fundingCycleMetadata,
+              ...NFT_FUNDING_CYCLE_METADATA_OVERRIDES,
+            },
+            fundAccessConstraints,
+            groupedSplits,
+          },
         },
         {
           onDone,

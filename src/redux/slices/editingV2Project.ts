@@ -73,7 +73,7 @@ interface V2ProjectState {
 // this number, their state will be reset.
 export const REDUX_STORE_V2_PROJECT_VERSION = 10
 
-const DEFAULT_MUST_START_AT_OR_AFTER = '1'
+export const DEFAULT_MUST_START_AT_OR_AFTER = '1'
 
 const defaultProjectMetadataState: ProjectMetadataV5 = {
   name: '',

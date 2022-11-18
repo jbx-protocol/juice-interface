@@ -6,6 +6,7 @@ import Loading from 'components/Loading'
 import { ProjectCardProject } from 'components/ProjectCard'
 import ProjectLogo from 'components/ProjectLogo'
 import { PV_V2 } from 'constants/pv'
+import { LAYOUT_MAX_WIDTH_PX } from 'constants/styles/layouts'
 import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
@@ -201,10 +202,10 @@ export function TopProjectsSection() {
         padding: '2rem',
       }}
     >
-      <div style={{ margin: '40px auto', maxWidth: 1080 }}>
+      <div style={{ margin: '40px auto', maxWidth: LAYOUT_MAX_WIDTH_PX }}>
         <Space direction="vertical" style={{ width: '100%' }} size="large">
           <div>
-            <SectionHeading>
+            <SectionHeading style={{ color: colors.text.primary }}>
               <TopProjectsHeading />
             </SectionHeading>
 

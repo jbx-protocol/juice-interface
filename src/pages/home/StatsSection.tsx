@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/macro'
 import ETHAmount from 'components/currency/ETHAmount'
+import { LAYOUT_MAX_WIDTH_PX } from 'constants/styles/layouts'
 import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
@@ -65,7 +66,7 @@ export function StatsSection() {
       <div
         style={{
           margin: 'auto',
-          maxWidth: 1080,
+          maxWidth: LAYOUT_MAX_WIDTH_PX,
           display: 'flex',
           justifyContent: 'space-between',
           padding: '4rem 2rem',

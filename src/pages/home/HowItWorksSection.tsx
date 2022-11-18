@@ -2,12 +2,12 @@ import { InfoCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, Divider, Row } from 'antd'
 import ExternalLink from 'components/ExternalLink'
+import { LAYOUT_MAX_WIDTH_PX } from 'constants/styles/layouts'
 import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
 import Image from 'next/image'
-import { CSSProperties, useContext } from 'react'
+import { useContext } from 'react'
 import { helpPagePath } from 'utils/routes'
-
 import { OverflowVideoLink } from './QAs'
 import { SectionHeading } from './SectionHeading'
 
@@ -40,12 +40,7 @@ const FourthCol = ({
 
 export function HowItWorksSection() {
   const isMobile = useMobile()
-  const totalMaxWidth = 1080
 
-  const wrapper: CSSProperties = {
-    maxWidth: totalMaxWidth,
-    margin: '0 auto',
-  }
   return (
     <section
       id="how-it-works"
@@ -64,7 +59,8 @@ export function HowItWorksSection() {
 
       <div
         style={{
-          ...wrapper,
+          maxWidth: LAYOUT_MAX_WIDTH_PX,
+          margin: '0 auto',
         }}
       >
         <Row align="middle">
@@ -146,7 +142,7 @@ export function HowItWorksSection() {
         </Row>
         <div style={{ textAlign: 'center' }}>
           <Button size="large" type="primary" href="/create" block={isMobile}>
-            <Trans>Design your project</Trans>
+            <Trans>Create a project</Trans>
           </Button>
         </div>
       </div>

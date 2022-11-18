@@ -1,9 +1,7 @@
 import { CV_V2, CV_V3 } from 'constants/cv'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { CV2V3 } from 'models/v2v3/cv'
 import { useContext, useEffect, useState } from 'react'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { hasFundingCycle } from 'utils/v2v3/cv'
 
 export const useLoadV2V3ProjectCvs = (projectId: number | undefined) => {
@@ -19,9 +17,7 @@ export const useLoadV2V3ProjectCvs = (projectId: number | undefined) => {
 
       const [hasV2FundingCycle, hasV3FundingCycle] = await Promise.all([
         hasFundingCycle(projectId, CV_V2),
-        featureFlagEnabled(FEATURE_FLAGS.V3)
-          ? hasFundingCycle(projectId, CV_V3)
-          : Promise.resolve(false),
+        hasFundingCycle(projectId, CV_V3),
       ])
 
       const cv = hasV3FundingCycle ? CV_V3 : CV_V2

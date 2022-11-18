@@ -1,9 +1,11 @@
+import { useIsNftProject } from 'components/Create/hooks/DeployProject/hooks'
 import { EditingFundingCycleConfig } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/ReconfigureFundingCycleSettingsPage/hooks/editingFundingCycleConfig'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { revalidateProject } from 'lib/api/nextjs'
 import { PV2 } from 'models/pv'
 import { useCallback, useContext, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
+import { useLaunchNftFundingCycles } from './LaunchNftFundingCycle'
 import { useLaunchStandardFundingCycles } from './LaunchStandardFundingCycle'
 
 export const useLaunchFundingCycles = ({
@@ -18,6 +20,11 @@ export const useLaunchFundingCycles = ({
   const launchStandardFundingCycles = useLaunchStandardFundingCycles(
     editingFundingCycleConfig,
   )
+  const launchNftFundingCycles = useLaunchNftFundingCycles(
+    editingFundingCycleConfig,
+  )
+
+  const isNftFundingCycle = useIsNftProject()
 
   const launchFundingCycle = useCallback(async () => {
     setLaunchFundingCycleTxLoading(true)
@@ -40,13 +47,21 @@ export const useLaunchFundingCycles = ({
       },
     }
 
-    const txSuccessful = await launchStandardFundingCycles(callbacks)
+    const txSuccessful = isNftFundingCycle
+      ? await launchNftFundingCycles(callbacks)
+      : await launchStandardFundingCycles(callbacks)
 
     if (!txSuccessful) {
       setLaunchFundingCycleTxLoading(false)
       emitErrorNotification('Failed to launch funding cycles.')
     }
-  }, [launchStandardFundingCycles, projectId, pv])
+  }, [
+    launchStandardFundingCycles,
+    launchNftFundingCycles,
+    isNftFundingCycle,
+    projectId,
+    pv,
+  ])
 
   return {
     launchFundingCycleLoading: launchFundingCycleTxLoading,

@@ -76,9 +76,11 @@ export function LaunchFundingCycleForm() {
             />
           </Form.Item>
         </Form>
+
         <h3 className="text-primary" style={{ fontSize: '1.2rem' }}>
           <Trans>Review and deploy</Trans>
         </h3>
+
         <ReconfigurePreview
           payoutSplits={
             editingFundingCycleConfig.editingPayoutGroupedSplits.splits

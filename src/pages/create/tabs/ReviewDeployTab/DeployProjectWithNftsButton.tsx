@@ -12,7 +12,7 @@ import {
   useEditingV2V3FundingCycleDataSelector,
   useEditingV2V3FundingCycleMetadataSelector,
 } from 'hooks/AppSelector'
-import { useLaunchProjectWithNftsTx } from 'hooks/v2v3/transactor/LaunchProjectWithNftsTx'
+import { useLaunchProjectWithNftsTx } from 'hooks/JB721Delegate/transactor/LaunchProjectWithNftsTx'
 import { useWallet } from 'hooks/Wallet'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { TransactionOptions } from 'models/transaction'
@@ -149,18 +149,22 @@ export function DeployProjectWithNftsButton({ form }: { form: FormInstance }) {
       const tiers = buildJB721TierParams({ cids: CIDs, rewardTiers })
       const txSuccessful = await launchProjectWithNftsTx(
         {
-          collectionUri: collectionUri ?? '',
-          collectionName: collectionName ?? projectName,
-          collectionSymbol: collectionSymbol ?? '',
-          projectMetadataCID: uploadedMetadata.IpfsHash,
-          fundingCycleData,
-          fundingCycleMetadata: {
-            ...fundingCycleMetadata,
-            ...NFT_FUNDING_CYCLE_METADATA_OVERRIDES,
+          tiered721DelegateData: {
+            collectionUri: collectionUri ?? '',
+            collectionName: collectionName ?? projectName,
+            collectionSymbol: collectionSymbol ?? '',
+            tiers,
           },
-          fundAccessConstraints,
-          groupedSplits: [payoutGroupedSplits, reservedTokensGroupedSplits],
-          tiers,
+          projectData: {
+            projectMetadataCID: uploadedMetadata.IpfsHash,
+            fundingCycleData,
+            fundingCycleMetadata: {
+              ...fundingCycleMetadata,
+              ...NFT_FUNDING_CYCLE_METADATA_OVERRIDES,
+            },
+            fundAccessConstraints,
+            groupedSplits: [payoutGroupedSplits, reservedTokensGroupedSplits],
+          },
         },
         txOpts,
       )

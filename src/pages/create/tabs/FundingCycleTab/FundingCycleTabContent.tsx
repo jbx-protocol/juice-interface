@@ -6,10 +6,8 @@ import FundingDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawe
 import NftDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer'
 import RulesDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawers/RulesDrawer'
 import TokenDrawer from 'components/v2v3/shared/FundingCycleConfigurationDrawers/TokenDrawer'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useState } from 'react'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import FundingCycleExplainer from '../../FundingCycleExplainer'
 import { ProjectConfigurationFieldsContainer } from '../../ProjectConfigurationFieldsContainer'
 
@@ -41,8 +39,6 @@ export default function FundingCycleTabContent({
     setRulesDrawerVisible(false)
     setNftDrawerVisible(false)
   }
-
-  const isNftRewardsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
 
   return (
     <ProjectConfigurationFieldsContainer showPreview>
@@ -91,26 +87,24 @@ export default function FundingCycleTabContent({
           }
           primaryColor={tokenDrawerSeen ? seenColor : undefined}
         />
-        {isNftRewardsEnabled ? (
-          <RichButton
-            prefix="3"
-            heading={<Trans>NFTs</Trans>}
-            onClick={() => {
-              setNftDrawerVisible(true)
-              setNftDrawerSeen(true)
-            }}
-            description={<Trans>Reward contributors with NFT's.</Trans>}
-            icon={
-              NftDrawerSeen ? (
-                <CheckCircleFilled style={{ color: seenColor }} />
-              ) : undefined
-            }
-            primaryColor={NftDrawerSeen ? colors.text.tertiary : undefined}
-          />
-        ) : null}
+        <RichButton
+          prefix="3"
+          heading={<Trans>NFTs</Trans>}
+          onClick={() => {
+            setNftDrawerVisible(true)
+            setNftDrawerSeen(true)
+          }}
+          description={<Trans>Reward contributors with NFT's.</Trans>}
+          icon={
+            NftDrawerSeen ? (
+              <CheckCircleFilled style={{ color: seenColor }} />
+            ) : undefined
+          }
+          primaryColor={NftDrawerSeen ? colors.text.tertiary : undefined}
+        />
 
         <RichButton
-          prefix={isNftRewardsEnabled ? '4' : '3'}
+          prefix="4"
           heading={<Trans>Rules</Trans>}
           onClick={() => {
             setRulesDrawerVisible(true)

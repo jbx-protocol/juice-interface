@@ -5,17 +5,22 @@ import { JB721DelegatePayMetadata } from 'components/Project/PayProjectForm/useP
 import { juiceboxEmojiImageUri } from 'constants/images'
 import { IPFS_TAGS } from 'constants/ipfs'
 import { readNetwork } from 'constants/networks'
+import { WAD_DECIMALS } from 'constants/numbers'
 import { defaultAbiCoder, parseEther } from 'ethers/lib/utils'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/NftRewards'
 import {
   IpfsNftCollectionMetadata,
   IPFSNftRewardTier,
+  JB721GovernanceType,
+  JB721PricingParams,
   JB721TierParams,
+  JBDeployTiered721DelegateData,
   NftRewardTier,
 } from 'models/nftRewardTier'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import { V2V3FundingCycleMetadata } from 'models/v2v3/fundingCycle'
-import { decodeEncodedIPFSUri, encodeIPFSUri } from 'utils/ipfs'
+import { decodeEncodedIPFSUri, encodeIPFSUri, ipfsUrl } from 'utils/ipfs'
+import { V2V3_CURRENCY_ETH } from './v2v3/currency'
 
 import { ForgeDeploy } from './v2v3/loadV2V3Contract'
 
@@ -304,9 +309,63 @@ export function tierIdsFromTierIndices({
     .filter(Number) as number[]
 }
 
+// sums the contribution floors of a given list of nftRewardTiers
 export function sumTierFloors(rewardTiers: NftRewardTier[]) {
   return rewardTiers.reduce(
     (subSum, tier) => subSum + tier.contributionFloor,
     0,
   )
+}
+
+export function buildJBDeployTiered721DelegateData({
+  collectionUri,
+  collectionName,
+  collectionSymbol,
+  tiers,
+  ownerAddress,
+  contractAddresses: {
+    JBDirectoryAddress,
+    JBFundingCycleStoreAddress,
+    JBPricesAddress,
+    JBTiered721DelegateStoreAddress,
+  },
+}: {
+  collectionUri: string
+  collectionName: string
+  collectionSymbol: string
+  tiers: JB721TierParams[]
+  ownerAddress: string
+  contractAddresses: {
+    JBDirectoryAddress: string
+    JBFundingCycleStoreAddress: string
+    JBPricesAddress: string
+    JBTiered721DelegateStoreAddress: string
+  }
+}): JBDeployTiered721DelegateData {
+  const pricing: JB721PricingParams = {
+    tiers,
+    currency: V2V3_CURRENCY_ETH,
+    decimals: WAD_DECIMALS,
+    prices: JBPricesAddress,
+  }
+
+  return {
+    directory: JBDirectoryAddress,
+    name: collectionName,
+    symbol: collectionSymbol,
+    fundingCycleStore: JBFundingCycleStoreAddress,
+    baseUri: ipfsUrl(''),
+    tokenUriResolver: constants.AddressZero,
+    contractUri: ipfsUrl(collectionUri),
+    owner: ownerAddress,
+    pricing,
+    reservedTokenBeneficiary: constants.AddressZero,
+    store: JBTiered721DelegateStoreAddress,
+    flags: {
+      lockReservedTokenChanges: false,
+      lockVotingUnitChanges: false,
+      lockManualMintingChanges: false,
+    },
+    governanceType: JB721GovernanceType.TIERED,
+  }
 }

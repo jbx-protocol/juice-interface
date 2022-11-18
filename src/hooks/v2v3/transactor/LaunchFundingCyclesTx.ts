@@ -4,31 +4,23 @@ import { TransactionContext } from 'contexts/transactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useWallet } from 'hooks/Wallet'
-import { GroupedSplits, SplitGroup } from 'models/splits'
-import {
-  V2V3FundAccessConstraint,
-  V2V3FundingCycleData,
-  V2V3FundingCycleMetadata,
-} from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
+import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
 import { isValidMustStartAtOrAfter } from 'utils/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../ProjectTitle'
+import { LaunchProjectData } from './LaunchProjectTx'
 
-const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
 const DEFAULT_MEMO = ''
 
 export function useLaunchFundingCyclesTx({
   JBController,
 }: {
   JBController?: Contract
-} = {}): TransactorInstance<{
-  projectId: number
-  fundingCycleData: V2V3FundingCycleData
-  fundingCycleMetadata: V2V3FundingCycleMetadata
-  fundAccessConstraints: V2V3FundAccessConstraint[]
-  groupedSplits?: GroupedSplits<SplitGroup>[]
-  mustStartAtOrAfter?: string // epoch seconds. anything less than "now" will start immediately.
-}> {
+} = {}): TransactorInstance<
+  {
+    projectId: number
+  } & Omit<LaunchProjectData, 'projectMetadataCID'>
+> {
   const { transactor } = useContext(TransactionContext)
   const { contracts } = useContext(V2V3ContractsContext)
 

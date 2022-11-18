@@ -4,7 +4,7 @@ import {
   useEditingV2V3FundingCycleDataSelector,
   useEditingV2V3FundingCycleMetadataSelector,
 } from 'hooks/AppSelector'
-import { useLaunchProjectWithNftsTx } from 'hooks/v2v3/transactor/LaunchProjectWithNftsTx'
+import { useLaunchProjectWithNftsTx } from 'hooks/JB721Delegate/transactor/LaunchProjectWithNftsTx'
 import { TransactionCallbacks } from 'models/transaction'
 import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton'
 import { useCallback, useMemo } from 'react'
@@ -75,18 +75,22 @@ export const useDeployNftProject = () => {
       })
       return await launchProjectWithNftsTx(
         {
-          collectionUri: nftCollectionMetadataUri,
-          collectionName,
-          collectionSymbol,
-          projectMetadataCID: metadataCid,
-          fundingCycleData,
-          fundingCycleMetadata: {
-            ...fundingCycleMetadata,
-            ...NFT_FUNDING_CYCLE_METADATA_OVERRIDES,
+          tiered721DelegateData: {
+            collectionUri: nftCollectionMetadataUri,
+            collectionName,
+            collectionSymbol,
+            tiers,
           },
-          fundAccessConstraints,
-          groupedSplits,
-          tiers,
+          projectData: {
+            projectMetadataCID: metadataCid,
+            fundingCycleData,
+            fundingCycleMetadata: {
+              ...fundingCycleMetadata,
+              ...NFT_FUNDING_CYCLE_METADATA_OVERRIDES,
+            },
+            fundAccessConstraints,
+            groupedSplits,
+          },
         },
         {
           onDone,

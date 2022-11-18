@@ -5,7 +5,6 @@ import { PayProjectForm } from 'components/Project/PayProjectForm'
 import { ProjectHeader } from 'components/Project/ProjectHeader'
 import { TextButton } from 'components/TextButton'
 import VolumeChart from 'components/VolumeChart'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
@@ -13,7 +12,6 @@ import useMobile from 'hooks/Mobile'
 import { useValidatePrimaryEthTerminal } from 'hooks/v2v3/ValidatePrimaryEthTerminal'
 import { V2V3PayProjectFormProvider } from 'providers/v2v3/V2V3PayProjectFormProvider'
 import { useContext, useState } from 'react'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { hasNftRewards } from 'utils/nftRewards'
 import { NftRewardsSection } from '../../NftRewards/NftRewardsSection'
 import { ProjectBanners } from './banners/ProjectBanners'
@@ -72,10 +70,7 @@ export function V2V3Project() {
   const payProjectFormDisabled =
     isPreviewMode || !hasCurrentFundingCycle || !isPrimaryETHTerminalValid
 
-  const nftRewardsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
-  const _hasNftRewards = hasNftRewards(fundingCycleMetadata)
-
-  const showNftSection = nftRewardsEnabled && _hasNftRewards
+  const showNftSection = hasNftRewards(fundingCycleMetadata)
 
   const colSizeMd = isPreviewMode ? 24 : 12
 

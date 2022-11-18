@@ -9,7 +9,6 @@ import Paragraph from 'components/Paragraph'
 import { PayProjectFormContext } from 'components/Project/PayProjectForm/payProjectFormContext'
 import TooltipLabel from 'components/TooltipLabel'
 import TransactionModal from 'components/TransactionModal'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -22,7 +21,6 @@ import { NftRewardTier } from 'models/nftRewardTier'
 import { useRouter } from 'next/router'
 import { useContext, useState } from 'react'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { formattedNum, formatWad } from 'utils/format/formatNumber'
 import { encodeJB721DelegatePayMetadata, sumTierFloors } from 'utils/nftRewards'
 import { emitErrorNotification } from 'utils/notifications'
@@ -98,7 +96,7 @@ export function V2V3ConfirmPayModal({
   })
 
   let nftRewardTiers: NftRewardTier[] | undefined
-  if (rewardTiers && featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)) {
+  if (rewardTiers) {
     nftRewardTiers = rewardTiers.filter(r =>
       payProjectForm?.payMetadata?.tierIdsToMint.includes(r.id ?? -1),
     )

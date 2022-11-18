@@ -659,9 +659,6 @@ msgstr ""
 msgid "Choose how you would like to configure your payouts."
 msgstr ""
 
-msgid "Choose which addresses to pay and how to split the total payout amount each funding cycle. How do I decide?"
-msgstr ""
-
 msgid "Claim {0}"
 msgstr ""
 
@@ -1032,6 +1029,9 @@ msgid "Display ERC-20 and other Juicebox project tokens that this project owner 
 msgstr ""
 
 msgid "Display ERC-20 tokens and other Juicebox project tokens that are in this project's owner's wallet."
+msgstr ""
+
+msgid "Display a message or warning to contributors before they approve a payment to your project"
 msgstr ""
 
 msgid "Distribute a percentage of all funds received between the entities nominated in the next step."
@@ -2564,6 +2564,9 @@ msgstr ""
 msgid "See example"
 msgstr ""
 
+msgid "Select how you would like to distribute payouts. Then, choose which Ethereum wallets to pay each funding cycle."
+msgstr ""
+
 msgid "Select the option that best suits your project’s funding requirements."
 msgstr ""
 
@@ -2963,6 +2966,9 @@ msgstr ""
 msgid "This funding cycle's distribution limit."
 msgstr ""
 
+msgid "This is the button that contributors will click to pay your project"
+msgstr ""
+
 msgid "This is the maximum amount of funds that can leave the treasury each funding cycle."
 msgstr ""
 
@@ -2985,9 +2991,6 @@ msgid "This project is owned by a Safe. <0>View transactions</0>."
 msgstr ""
 
 msgid "This project reserves some of the newly minted tokens for itself."
-msgstr ""
-
-msgid "This project uses the V2 version of the Juicebox contracts."
 msgstr ""
 
 msgid "This project's balance in the Juicebox contract."

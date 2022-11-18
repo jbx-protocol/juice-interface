@@ -112,9 +112,7 @@ export function LaunchFundingCycleForm() {
         onClose={closeReconfigureDrawer}
       />
       <TokenDrawer open={tokenDrawerVisible} onClose={closeReconfigureDrawer} />
-      {nftsEnabled ? (
-        <NftDrawer open={nftDrawerVisible} onClose={closeReconfigureDrawer} />
-      ) : null}
+      <NftDrawer open={nftDrawerVisible} onClose={closeReconfigureDrawer} />
       <RulesDrawer open={rulesDrawerVisible} onClose={closeReconfigureDrawer} />
       <UnsavedChangesModal
         open={unsavedChangesModalVisibile}

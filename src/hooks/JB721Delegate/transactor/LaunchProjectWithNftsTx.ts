@@ -26,7 +26,7 @@ import { ipfsUrl } from 'utils/ipfs'
 import { findJBTiered721DelegateStoreAddress } from 'utils/nftRewards'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { isValidMustStartAtOrAfter } from 'utils/v2v3/fundingCycle'
-import { useV2ProjectTitle } from '../ProjectTitle'
+import { useV2ProjectTitle } from '../../v2v3/ProjectTitle'
 
 const DEFAULT_MUST_START_AT_OR_AFTER = '1' // start immediately
 const DEFAULT_MEMO = ''

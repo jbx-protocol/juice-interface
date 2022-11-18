@@ -4,7 +4,10 @@ import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useReconfigureV2V3FundingCycleWithNftsTx } from 'hooks/JB721Delegate/transactor/ReconfigureV2V3FundingCycleWithNftsTx'
-import { useReconfigureV2V3FundingCycleTx } from 'hooks/v2v3/transactor/ReconfigureV2V3FundingCycleTx'
+import {
+  ReconfigureTxArgs,
+  useReconfigureV2V3FundingCycleTx,
+} from 'hooks/v2v3/transactor/ReconfigureV2V3FundingCycleTx'
 import { revalidateProject } from 'lib/api/nextjs'
 import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton'
 import { useCallback, useContext, useState } from 'react'
@@ -95,7 +98,7 @@ export const useReconfigureFundingCycle = ({
       newFundingCycleWeight: editingFundingCycleData.weight,
     })
 
-    const reconfigureFundingCycleData = {
+    const reconfigureFundingCycleData: ReconfigureTxArgs = {
       fundingCycleData: {
         ...editingFundingCycleData,
         weight,
@@ -130,8 +133,8 @@ export const useReconfigureFundingCycle = ({
     if (launchedNewNfts && editingNftRewards?.rewardTiers) {
       txSuccessful = await reconfigureV2V3FundingCycleWithNftsTx(
         {
-          ...reconfigureFundingCycleData,
-          ...editingNftRewards,
+          reconfigureData: reconfigureFundingCycleData,
+          tiered721DelegateData: editingNftRewards,
         },
         txOpts,
       )

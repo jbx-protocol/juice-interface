@@ -1,6 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Col, Row } from 'antd'
 import { AppWrapper } from 'components/common'
+import { lightColors } from 'constants/styles/colors'
 import { LAYOUT_MAX_WIDTH_PX } from 'constants/styles/layouts'
 import { ThemeContext } from 'contexts/themeContext'
 import Image from 'next/image'
@@ -50,7 +51,7 @@ function Landing() {
               <div style={{ display: 'grid', rowGap: 20 }}>
                 <BigHeading
                   text={t`Should you Juicebox?`}
-                  style={{ color: colors.text.primary }}
+                  style={{ color: lightColors.dark0 }}
                 />
                 <div style={{ color: colors.text.over.brand.secondary }}>
                   <p className="ol">

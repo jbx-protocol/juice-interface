@@ -261,30 +261,33 @@ export function TopProjectsSection() {
           <div style={{ textAlign: 'center' }}>
             <Space direction="vertical" style={{ width: '100%' }} size="large">
               <Link href="/create">
-                <Button size="large" type="primary" block={isMobile}>
-                  <Trans>Create a project</Trans>
-                </Button>
+                <a>
+                  <Button size="large" type="primary" block={isMobile}>
+                    <Trans>Create a project</Trans>
+                  </Button>
+                </a>
               </Link>
-
-              <div
-                role="button"
-                style={{
-                  fontSize: '0.875rem',
-                  color: colors.text.secondary,
-                  cursor: 'pointer',
-                }}
-                className="hover-text-decoration-underline"
-                onClick={() => {
-                  document
-                    .getElementById('how-it-works')
-                    ?.scrollIntoView({ behavior: 'smooth' })
-                }}
-              >
-                <Space size="small">
-                  <Trans>How does it work?</Trans>
-                  <RightCircleOutlined />
-                </Space>
-              </div>
+              <Link href="#how-it-works">
+                <a
+                  role="button"
+                  style={{
+                    fontSize: '0.875rem',
+                    color: colors.text.secondary,
+                    cursor: 'pointer',
+                  }}
+                  className="hover-text-decoration-underline"
+                  onClick={() => {
+                    document
+                      .getElementById('how-it-works')
+                      ?.scrollIntoView({ behavior: 'smooth' })
+                  }}
+                >
+                  <Space size="small">
+                    <Trans>How does it work?</Trans>
+                    <RightCircleOutlined />
+                  </Space>
+                </a>
+              </Link>
             </Space>
           </div>
         </Space>

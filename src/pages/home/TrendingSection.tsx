@@ -75,9 +75,11 @@ export default function TrendingSection() {
             </Grid>
 
             <Link href="/projects">
-              <Button size="large" block={isMobile}>
-                <Trans>More trending projects</Trans>
-              </Button>
+              <a>
+                <Button size="large" block={isMobile}>
+                  <Trans>More trending projects</Trans>
+                </Button>
+              </a>
             </Link>
           </Space>
         </Col>

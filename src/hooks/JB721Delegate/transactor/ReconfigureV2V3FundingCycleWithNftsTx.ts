@@ -14,12 +14,12 @@ import {
   findJBTiered721DelegateStoreAddress,
 } from 'utils/nftRewards'
 import { isValidMustStartAtOrAfter } from 'utils/v2v3/fundingCycle'
-import { useV2ProjectTitle } from '../ProjectTitle'
-import { getJBDeployTiered721DelegateData } from './LaunchProjectWithNftsTx'
+import { useV2ProjectTitle } from '../../v2v3/ProjectTitle'
 import {
   DEFAULT_MUST_START_AT_OR_AFTER,
   ReconfigureTxArgs,
-} from './ReconfigureV2V3FundingCycleTx'
+} from '../../v2v3/transactor/ReconfigureV2V3FundingCycleTx'
+import { getJBDeployTiered721DelegateData } from './LaunchProjectWithNftsTx'
 
 export type ReconfigureWithNftsTxArgs = ReconfigureTxArgs & NftRewardsData
 

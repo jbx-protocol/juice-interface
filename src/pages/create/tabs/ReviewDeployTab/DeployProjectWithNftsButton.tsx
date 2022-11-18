@@ -12,7 +12,7 @@ import {
   useEditingV2V3FundingCycleDataSelector,
   useEditingV2V3FundingCycleMetadataSelector,
 } from 'hooks/AppSelector'
-import { useLaunchProjectWithNftsTx } from 'hooks/v2v3/transactor/LaunchProjectWithNftsTx'
+import { useLaunchProjectWithNftsTx } from 'hooks/JB721Delegate/transactor/LaunchProjectWithNftsTx'
 import { useWallet } from 'hooks/Wallet'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { TransactionOptions } from 'models/transaction'

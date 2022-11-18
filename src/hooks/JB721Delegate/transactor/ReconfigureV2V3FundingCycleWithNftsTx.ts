@@ -22,9 +22,8 @@ import { useV2ProjectTitle } from '../../v2v3/ProjectTitle'
 import { ReconfigureTxArgs } from '../../v2v3/transactor/ReconfigureV2V3FundingCycleTx'
 
 type ReconfigureWithNftsTxArgs = {
-  projectData: Omit<ReconfigureTxArgs, 'memo'>
+  reconfigureData: ReconfigureTxArgs
   tiered721DelegateData: NftRewardsData
-  memo?: string
 }
 
 export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<ReconfigureWithNftsTxArgs> {
@@ -37,15 +36,15 @@ export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<R
 
   return async (
     {
-      projectData: {
+      reconfigureData: {
         fundingCycleData,
         fundingCycleMetadata,
         fundAccessConstraints,
         groupedSplits = [],
         mustStartAtOrAfter = DEFAULT_MUST_START_AT_OR_AFTER,
+        memo,
       },
       tiered721DelegateData: { rewardTiers, CIDs, collectionMetadata },
-      memo,
     },
     txOpts,
   ) => {

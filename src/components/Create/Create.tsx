@@ -146,25 +146,23 @@ export function Create() {
             >
               <ProjectTokenPage />
             </Wizard.Page>
-            {featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS) && (
-              <Wizard.Page
-                name="nftRewards"
-                title={
-                  <Space>
-                    <Trans>NFTs</Trans>
-                    <CreateBadge.Optional />
-                  </Space>
-                }
-                description={
-                  <Trans>
-                    Reward contributors with NFTs when they meet your funding
-                    criteria.
-                  </Trans>
-                }
-              >
-                <NftRewardsPage />
-              </Wizard.Page>
-            )}
+            <Wizard.Page
+              name="nftRewards"
+              title={
+                <Space>
+                  <Trans>NFTs</Trans>
+                  <CreateBadge.Optional />
+                </Space>
+              }
+              description={
+                <Trans>
+                  Reward contributors with NFTs when they meet your funding
+                  criteria.
+                </Trans>
+              }
+            >
+              <NftRewardsPage />
+            </Wizard.Page>
             <Wizard.Page
               name="reconfigurationRules"
               title={<Trans>Reconfiguration Rules</Trans>}

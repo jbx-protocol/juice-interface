@@ -2,17 +2,15 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Col, Row, Space } from 'antd'
 import { parseEther } from 'ethers/lib/utils'
 import { useWallet } from 'hooks/Wallet'
+import { NftRewardTier } from 'models/nftRewardTier'
 import { Split } from 'models/splits'
+import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import {
   V2V3FundAccessConstraint,
   V2V3FundingCycle,
   V2V3FundingCycleData,
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
-
-import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { NftRewardTier } from 'models/nftRewardTier'
-import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import {
   AllowMintingStatistic,
   AllowSetTerminalsStatistic,
@@ -29,7 +27,6 @@ import {
   ReservedTokensStatistic,
 } from 'pages/create/tabs/ReviewDeployTab/FundingAttributes'
 import NftSummarySection from 'pages/create/tabs/ReviewDeployTab/NftSummarySection'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { formattedNum } from 'utils/format/formatNumber'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
 import { getDefaultFundAccessConstraint } from 'utils/v2v3/fundingCycle'
@@ -83,7 +80,6 @@ export default function ReconfigurePreview({
 
   const duration = fundingCycle.duration
   const hasDuration = duration?.gt(0)
-  const nftsEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS)
 
   const issuanceRate =
     formattedNum(
@@ -200,7 +196,7 @@ export default function ReconfigurePreview({
           projectOwnerAddress={userAddress}
         />
       )}
-      {nftRewards && nftsEnabled ? <NftSummarySection /> : null}
+      {nftRewards ? <NftSummarySection /> : null}
     </Space>
   )
 }

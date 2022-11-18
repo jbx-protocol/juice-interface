@@ -4,7 +4,6 @@ import { Checkbox, Form, Modal } from 'antd'
 import { useDeployProject } from 'components/Create/hooks/DeployProject'
 import ExternalLink from 'components/ExternalLink'
 import TransactionModal from 'components/TransactionModal'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ThemeContext } from 'contexts/themeContext'
 import { useAppSelector } from 'hooks/AppSelector'
 import useMobile from 'hooks/Mobile'
@@ -15,7 +14,6 @@ import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { CreateBadge } from '../../CreateBadge'
 import { CreateCallout } from '../../CreateCallout'
 import { CreateCollapse } from '../../CreateCollapse'
@@ -175,19 +173,17 @@ export const ReviewDeployPage = () => {
         >
           <ProjectTokenReview />
         </CreateCollapse.Panel>
-        {featureFlagEnabled(FEATURE_FLAGS.NFT_REWARDS) && (
-          <CreateCollapse.Panel
-            key={ReviewDeployKey.Rewards}
-            collapsible={nftRewardsAreSet ? 'header' : 'disabled'}
-            header={
-              <Header skipped={!nftRewardsAreSet}>
-                <Trans>NFTs</Trans>
-              </Header>
-            }
-          >
-            <RewardsReview />
-          </CreateCollapse.Panel>
-        )}
+        <CreateCollapse.Panel
+          key={ReviewDeployKey.Rewards}
+          collapsible={nftRewardsAreSet ? 'header' : 'disabled'}
+          header={
+            <Header skipped={!nftRewardsAreSet}>
+              <Trans>NFTs</Trans>
+            </Header>
+          }
+        >
+          <RewardsReview />
+        </CreateCollapse.Panel>
         <CreateCollapse.Panel
           key={ReviewDeployKey.Rules}
           header={

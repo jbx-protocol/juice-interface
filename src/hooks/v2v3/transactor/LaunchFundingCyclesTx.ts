@@ -63,7 +63,7 @@ export function useLaunchFundingCyclesTx({
       mustStartAtOrAfter, // _mustStartAtOrAfter
       groupedSplits, // _groupedSplits,
       fundAccessConstraints, // _fundAccessConstraints,
-      getTerminalsFromFundAccessConstraints(fundAccessConstraints), //  _terminals
+      getTerminalsFromFundAccessConstraints(fundAccessConstraints), // _terminals
       DEFAULT_MEMO,
     ]
 

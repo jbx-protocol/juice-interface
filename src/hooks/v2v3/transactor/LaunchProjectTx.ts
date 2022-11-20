@@ -80,7 +80,7 @@ export function useLaunchProjectTx(): TransactorInstance<LaunchProjectData> {
       mustStartAtOrAfter, // _mustStartAtOrAfter
       groupedSplits, // _groupedSplits,
       fundAccessConstraints, // _fundAccessConstraints,
-      getTerminalsFromFundAccessConstraints(fundAccessConstraints), //  _terminals
+      getTerminalsFromFundAccessConstraints(fundAccessConstraints), // _terminals
       DEFAULT_MEMO,
     ]
 

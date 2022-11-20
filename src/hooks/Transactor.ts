@@ -2,12 +2,14 @@ import { Contract } from '@ethersproject/contracts'
 import { TransactionResponse } from '@ethersproject/providers'
 import { t } from '@lingui/macro'
 import * as Sentry from '@sentry/browser'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { readNetwork } from 'constants/networks'
 import { TxHistoryContext } from 'contexts/txHistoryContext'
 import { simulateTransaction } from 'lib/tenderly'
 import { TransactionOptions } from 'models/transaction'
 import { CV2V3 } from 'models/v2v3/cv'
 import { useCallback, useContext } from 'react'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { emitErrorNotification } from 'utils/notifications'
 import { useArcx } from './Arcx'
 import { useWallet } from './Wallet'
@@ -101,7 +103,10 @@ export function useTransactor(): Transactor | undefined {
 
       logTx({ functionName, contract, args })
 
-      if (process.env.NODE_ENV === 'development') {
+      if (
+        process.env.NODE_ENV === 'development' ||
+        featureFlagEnabled(FEATURE_FLAGS.SIMULATE_TXS)
+      ) {
         try {
           await simulateTransaction({
             contract,

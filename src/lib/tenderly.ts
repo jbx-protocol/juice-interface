@@ -17,7 +17,12 @@ export const simulateTransaction = async ({
   args: unknown[]
   userAddress: string | undefined
 }) => {
-  if (!(API_KEY && PROJECT && ACCOUNT)) return
+  if (!(API_KEY && PROJECT && ACCOUNT)) {
+    console.warn(
+      'Missing Tenderly API key, project, or account for simulation.',
+    )
+    return
+  }
 
   const unsignedTx = await contract.populateTransaction[functionName](...args)
 

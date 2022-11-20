@@ -6,11 +6,19 @@ import { TransactorInstance } from 'hooks/Transactor'
 import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
-import { isValidMustStartAtOrAfter } from 'utils/v2v3/fundingCycle'
+import {
+  getTerminalsFromFundAccessConstraints,
+  isValidMustStartAtOrAfter,
+} from 'utils/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../ProjectTitle'
 import { LaunchProjectData } from './LaunchProjectTx'
 
 const DEFAULT_MEMO = ''
+
+export type LaunchFundingCyclesData = Omit<
+  LaunchProjectData,
+  'projectMetadataCID'
+>
 
 export function useLaunchFundingCyclesTx({
   JBController,
@@ -19,7 +27,7 @@ export function useLaunchFundingCyclesTx({
 } = {}): TransactorInstance<
   {
     projectId: number
-  } & Omit<LaunchProjectData, 'projectMetadataCID'>
+  } & LaunchFundingCyclesData
 > {
   const { transactor } = useContext(TransactionContext)
   const { contracts } = useContext(V2V3ContractsContext)
@@ -55,7 +63,7 @@ export function useLaunchFundingCyclesTx({
       mustStartAtOrAfter, // _mustStartAtOrAfter
       groupedSplits, // _groupedSplits,
       fundAccessConstraints, // _fundAccessConstraints,
-      [contracts.JBETHPaymentTerminal.address], //  _terminals (contract address of the JBETHPaymentTerminal)
+      getTerminalsFromFundAccessConstraints(fundAccessConstraints), // _terminals
       DEFAULT_MEMO,
     ]
 

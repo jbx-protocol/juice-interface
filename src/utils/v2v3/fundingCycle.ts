@@ -55,6 +55,9 @@ export function getDefaultFundAccessConstraint<T>(
   return fundAccessConstraints[0]
 }
 
+/**
+ * Returns the terminal addresses for the given fund access constraints.
+ */
 export function getTerminalsFromFundAccessConstraints(
   fundAccessConstraints: (
     | SerializedV2V3FundAccessConstraint

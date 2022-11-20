@@ -40,9 +40,9 @@ export interface InitialEditingData {
 }
 
 /**
- * Populate the redux store with the in-context project data.
+ * Populate the Redux store with the in-context project data.
  *
- * Used to initiate redux when a user wants to edit their project somehow.s
+ * Used to set up Redux when a user wants to edit their project somehow.
  */
 export const useInitialEditingData = ({
   visible,

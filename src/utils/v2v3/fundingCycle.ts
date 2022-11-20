@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import {
+  V2V3FundAccessConstraint,
   V2V3FundingCycle,
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
@@ -52,6 +53,17 @@ export function getDefaultFundAccessConstraint<T>(
   fundAccessConstraints: T[],
 ): T | undefined {
   return fundAccessConstraints[0]
+}
+
+export function getTerminalsFromFundAccessConstraints(
+  fundAccessConstraints: (
+    | SerializedV2V3FundAccessConstraint
+    | V2V3FundAccessConstraint
+  )[],
+) {
+  return fundAccessConstraints.map(
+    fundAccessConstraint => fundAccessConstraint.terminal,
+  )
 }
 
 /**

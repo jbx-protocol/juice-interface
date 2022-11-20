@@ -3,4 +3,5 @@ export const FEATURE_FLAGS = {
   VENFT: 'veNft',
   VENFT_CREATOR: 'veNftCreator',
   PROJECT_CONTRACT_UPDGRADES: 'projectContractUpgrades',
+  SIMULATE_TXS: 'simulateTxs',
 }

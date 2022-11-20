@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { useEditingFundingCycleConfig } from '../../../../ReconfigureFundingCycleSettingsPage/hooks/editingFundingCycleConfig'
 import ReconfigurePreview from '../../../../ReconfigureFundingCycleSettingsPage/ReconfigurePreview'
-import { useLaunchFundingCycle } from './hooks/useLaunchFundingCycle'
+import { useLaunchFundingCycles } from './hooks/LaunchFundingCycles'
 
 export function LaunchFundingCycleForm() {
   const [fundingDrawerVisible, setFundingDrawerVisible] =
@@ -25,7 +25,7 @@ export function LaunchFundingCycleForm() {
   const dispatch = useDispatch()
   const editingFundingCycleConfig = useEditingFundingCycleConfig()
   const { launchFundingCycleLoading, launchFundingCycle } =
-    useLaunchFundingCycle({ editingFundingCycleConfig })
+    useLaunchFundingCycles({ editingFundingCycleConfig })
 
   const closeReconfigureDrawer = () => {
     setFundingDrawerVisible(false)

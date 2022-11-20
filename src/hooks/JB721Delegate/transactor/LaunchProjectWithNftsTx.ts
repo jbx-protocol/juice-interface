@@ -15,18 +15,23 @@ import {
   buildJBDeployTiered721DelegateData,
   findJBTiered721DelegateStoreAddress,
 } from 'utils/nftRewards'
-import { isValidMustStartAtOrAfter } from 'utils/v2v3/fundingCycle'
+import {
+  getTerminalsFromFundAccessConstraints,
+  isValidMustStartAtOrAfter,
+} from 'utils/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../../v2v3/ProjectTitle'
 
 const DEFAULT_MEMO = ''
 
+export interface DeployTiered721DelegateData {
+  collectionUri: string
+  collectionName: string
+  collectionSymbol: string
+  tiers: JB721TierParams[]
+}
+
 interface LaunchProjectWithNftsTxArgs {
-  tiered721DelegateData: {
-    collectionUri: string
-    collectionName: string
-    collectionSymbol: string
-    tiers: JB721TierParams[]
-  }
+  tiered721DelegateData: DeployTiered721DelegateData
   projectData: LaunchProjectData
 }
 
@@ -122,7 +127,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
         mustStartAtOrAfter,
         groupedSplits,
         fundAccessConstraints,
-        terminals: [contracts.JBETHPaymentTerminal.address], //  _terminals (contract address of the JBETHPaymentTerminal),
+        terminals: getTerminalsFromFundAccessConstraints(fundAccessConstraints),
         memo: DEFAULT_MEMO,
       }, // _launchProjectData
     ]

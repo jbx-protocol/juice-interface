@@ -12,7 +12,10 @@ import {
 } from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
-import { isValidMustStartAtOrAfter } from 'utils/v2v3/fundingCycle'
+import {
+  getTerminalsFromFundAccessConstraints,
+  isValidMustStartAtOrAfter,
+} from 'utils/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../ProjectTitle'
 
 const DEFAULT_MEMO = ''
@@ -77,7 +80,7 @@ export function useLaunchProjectTx(): TransactorInstance<LaunchProjectData> {
       mustStartAtOrAfter, // _mustStartAtOrAfter
       groupedSplits, // _groupedSplits,
       fundAccessConstraints, // _fundAccessConstraints,
-      [contracts.JBETHPaymentTerminal.address], //  _terminals (contract address of the JBETHPaymentTerminal)
+      getTerminalsFromFundAccessConstraints(fundAccessConstraints), // _terminals
       DEFAULT_MEMO,
     ]
 

@@ -133,7 +133,7 @@ export const useInitialEditingData = ({
         effectiveDistributionLimitCurrency?.toNumber() ?? V2V3_CURRENCY_ETH
 
       fundAccessConstraint = {
-        terminal: contracts?.JBETHPaymentTerminal.address ?? '',
+        terminal: primaryETHTerminal ?? '',
         token: ETH_TOKEN_ADDRESS,
         distributionLimit: fromWad(effectiveDistributionLimit),
         distributionLimitCurrency:

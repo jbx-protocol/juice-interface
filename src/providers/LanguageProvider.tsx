@@ -23,6 +23,9 @@ i18n.loadLocaleData({
   fr: { plurals: fr },
 })
 
+i18n.load(DEFAULT_LOCALE, defaultLocale.messages)
+i18n.activate(DEFAULT_LOCALE)
+
 const getLocale = (): string => {
   let locale =
     detect(fromUrl('lang'), fromStorage('lang'), fromNavigator()) ??
@@ -35,16 +38,15 @@ const getLocale = (): string => {
   return locale
 }
 
-const activateDefaultLocale = () => {
-  const { messages } = defaultLocale
+const activateDefaultLocale = async () => {
+  const messages = await import(`../locales/${getLocale()}/messages.po`)
   i18n.load(DEFAULT_LOCALE, messages)
   i18n.activate(DEFAULT_LOCALE)
 }
 
-const dynamicActivate = async (locale: string) => {
+export const dynamicActivate = async (locale: string) => {
   try {
-    const { messages } = await import(`../locales/${locale}/messages`)
-
+    const { messages } = await import('../locales/en/messages')
     i18n.load(locale, messages)
     i18n.activate(locale)
   } catch (e) {
@@ -64,12 +66,16 @@ export default function LanguageProvider({
   children: ReactNode
 }) {
   useEffect(() => {
-    const locale = getLocale()
-    if (locale === DEFAULT_LOCALE) {
-      return activateDefaultLocale()
+    async function fetchI18nData() {
+      const locale = getLocale()
+      if (locale === DEFAULT_LOCALE) {
+        return activateDefaultLocale()
+      }
+
+      await dynamicActivate(locale)
     }
 
-    dynamicActivate(locale)
+    fetchI18nData()
   }, [])
 
   return <I18nProvider i18n={i18n}>{children}</I18nProvider>

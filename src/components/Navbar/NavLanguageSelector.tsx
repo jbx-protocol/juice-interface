@@ -27,11 +27,11 @@ export default function NavLanguageSelector({
   }
 
   let currentSelectedLanguage =
-    (localStorage && localStorage.getItem('lang')) || 'en'
+    typeof window === 'undefined' ? 'en' : localStorage.getItem('lang')
 
   // Sets the new language with localStorage and reloads the page
   const setLanguage = (newLanguage: string) => {
-    if (localStorage) {
+    if (typeof window !== 'undefined') {
       currentSelectedLanguage = newLanguage
       localStorage.setItem('lang', newLanguage)
       reloadWindow()
@@ -39,8 +39,8 @@ export default function NavLanguageSelector({
   }
 
   const selectHeader = mobile
-    ? Languages[currentSelectedLanguage].long
-    : Languages[currentSelectedLanguage].short
+    ? Languages[currentSelectedLanguage ?? 'en'].long
+    : Languages[currentSelectedLanguage ?? 'en'].short
 
   // Close dropdown when clicking anywhere in the window except the collapse items
   useEffect(() => {

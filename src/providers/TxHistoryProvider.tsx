@@ -74,8 +74,9 @@ export default function TxHistoryProvider({
   const _setTransactions = useCallback(
     (txs: TransactionLog[]) => {
       if (!localStorageKey) return
-
-      localStorage.setItem(localStorageKey, JSON.stringify(txs))
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(localStorageKey, JSON.stringify(txs))
+      }
       setTransactions(txs)
     },
     [localStorageKey],
@@ -84,17 +85,18 @@ export default function TxHistoryProvider({
   // Load initial state
   useEffect(() => {
     if (!localStorageKey) return
-
-    _setTransactions(
-      JSON.parse(localStorage.getItem(localStorageKey) || '[]')
-        // Only persist txs that are failed/pending
-        // or were created within history window
-        .filter(
-          (tx: TransactionLog) =>
-            tx.status !== TxStatus.success ||
-            nowSeconds() - TX_HISTORY_TIME_SECS < tx.createdAt,
-        ) as TransactionLog[],
-    )
+    if (typeof window !== 'undefined') {
+      _setTransactions(
+        JSON.parse(localStorage.getItem(localStorageKey) || '[]')
+          // Only persist txs that are failed/pending
+          // or were created within history window
+          .filter(
+            (tx: TransactionLog) =>
+              tx.status !== TxStatus.success ||
+              nowSeconds() - TX_HISTORY_TIME_SECS < tx.createdAt,
+          ) as TransactionLog[],
+      )
+    }
   }, [_setTransactions, localStorageKey])
 
   // Setup poller for refreshing transactions

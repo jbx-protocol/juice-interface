@@ -6,7 +6,9 @@ export function useDisconnect() {
   const disconnect = useCallback(async () => {
     if (wallet) {
       await disconnectHook(wallet)
-      window.localStorage.removeItem('connectedWallets')
+      if (typeof window !== 'undefined') {
+        window.localStorage.removeItem('connectedWallets')
+      }
     }
   }, [disconnectHook, wallet])
   return disconnect

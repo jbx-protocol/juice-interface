@@ -19,8 +19,9 @@ const featureFlagKey = (baseKey: string) => {
 }
 
 const setFeatureFlag = (featureFlag: string, enabled: boolean) => {
-  localStorage &&
+  if (typeof window !== 'undefined') {
     localStorage.setItem(featureFlagKey(featureFlag), JSON.stringify(enabled))
+  }
 }
 
 export const enableFeatureFlag = (featureFlag: string) => {

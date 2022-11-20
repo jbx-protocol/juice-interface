@@ -7,10 +7,12 @@ export function useStoreWalletsInLocalStorage() {
       if (!wallets.length) return
 
       const connectedWalletsLabelArray = wallets.map(({ label }) => label)
-      window.localStorage.setItem(
-        'connectedWallets',
-        JSON.stringify(connectedWalletsLabelArray),
-      )
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(
+          'connectedWallets',
+          JSON.stringify(connectedWalletsLabelArray),
+        )
+      }
     },
     [],
   )

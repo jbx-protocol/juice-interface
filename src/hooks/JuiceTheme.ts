@@ -26,8 +26,8 @@ const userPrefersDarkMode = (): boolean => {
 }
 
 const getInitialThemeOption = (storageKey: string) => {
-  const storedThemeOption = localStorage?.getItem(storageKey)
-  if (storedThemeOption) {
+  if (typeof window !== 'undefined') {
+    const storedThemeOption = localStorage?.getItem(storageKey)
     return storedThemeOption as ThemeOption
   }
 
@@ -88,7 +88,9 @@ export function useJuiceTheme(storageKey = 'jb_theme'): ThemeContextType {
     setThemeOption: (themeOption: ThemeOption) => {
       setRootVarsForThemeOption(themeOption)
       setCurrentThemeOption(themeOption)
-      localStorage?.setItem(storageKey, themeOption)
+      if (typeof window !== 'undefined') {
+        localStorage?.setItem(storageKey, themeOption)
+      }
     },
   }
 }

@@ -24,6 +24,17 @@ module.exports = {
   webpack: config => {
     config.resolve.fallback = { fs: false, module: false }
     // Adds __DEV__ to the build to fix bug in apollo client `__DEV__ is not defined`.
+    config.module.rules = [
+      ...config.module.rules,
+      {
+        test: /\.po/,
+        use: [
+          {
+            loader: '@lingui/loader',
+          },
+        ],
+      },
+    ]
     config.plugins.push(
       new webpack.DefinePlugin({
         __DEV__: process.env.NODE_ENV !== 'production',

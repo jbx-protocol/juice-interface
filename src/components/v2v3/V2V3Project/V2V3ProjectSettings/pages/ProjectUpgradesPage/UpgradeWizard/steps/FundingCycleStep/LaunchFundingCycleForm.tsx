@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { useEditingFundingCycleConfig } from '../../../../ReconfigureFundingCycleSettingsPage/hooks/editingFundingCycleConfig'
 import ReconfigurePreview from '../../../../ReconfigureFundingCycleSettingsPage/ReconfigurePreview'
-import { useLaunchFundingCycles } from './hooks/LaunchFundingCycles'
+import { useLaunchFundingCycle } from './hooks/useLaunchFundingCycle'
 
 export function LaunchFundingCycleForm() {
   const [fundingDrawerVisible, setFundingDrawerVisible] =
@@ -25,7 +25,7 @@ export function LaunchFundingCycleForm() {
   const dispatch = useDispatch()
   const editingFundingCycleConfig = useEditingFundingCycleConfig()
   const { launchFundingCycleLoading, launchFundingCycle } =
-    useLaunchFundingCycles({ editingFundingCycleConfig })
+    useLaunchFundingCycle({ editingFundingCycleConfig })
 
   const closeReconfigureDrawer = () => {
     setFundingDrawerVisible(false)
@@ -76,11 +76,9 @@ export function LaunchFundingCycleForm() {
             />
           </Form.Item>
         </Form>
-
         <h3 className="text-primary" style={{ fontSize: '1.2rem' }}>
           <Trans>Review and deploy</Trans>
         </h3>
-
         <ReconfigurePreview
           payoutSplits={
             editingFundingCycleConfig.editingPayoutGroupedSplits.splits

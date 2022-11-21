@@ -2,37 +2,13 @@ import { DeleteOutlined, EditOutlined, LinkOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Space } from 'antd'
 import ExternalLink from 'components/ExternalLink'
-import * as styleColors from 'constants/styles/colors'
-import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
-import { CSSProperties, ReactNode, useContext } from 'react'
+import { ReactNode } from 'react'
+import { classNames } from 'utils/classNames'
 import { prettyUrl } from 'utils/url'
 import { RewardImage } from '../RewardImage'
 import { RewardItemButton } from './RewardItemButton'
 import { Reward } from './types'
-
-// START: CSS
-const emphasisedTextStyle: CSSProperties = { fontWeight: 500, fontSize: '1rem' }
-
-const headerTextStyle = (isDarkMode: boolean): CSSProperties => ({
-  color: isDarkMode
-    ? styleColors.darkColors.darkGray300
-    : styleColors.lightColors.gray600,
-  fontWeight: 400,
-  textTransform: 'uppercase',
-  fontSize: '0.75rem',
-})
-
-const descriptionTextStyle: CSSProperties = {
-  fontWeight: 400,
-  fontSize: '0.875rem',
-  lineHeight: '1.5rem',
-}
-
-const detailsTextStyle: CSSProperties = {
-  fontWeight: 400,
-  fontSize: '0.75rem',
-}
 
 // END: CSS
 
@@ -45,7 +21,6 @@ export const RewardItem = ({
   onEditClicked?: () => void
   onDeleteClicked?: () => void
 }) => {
-  const { isDarkMode } = useContext(ThemeContext)
   const isMobile = useMobile()
   const {
     title,
@@ -56,18 +31,10 @@ export const RewardItem = ({
     imgUrl,
   } = reward
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      {/* Tier line */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}
-      >
-        <div style={{ ...emphasisedTextStyle, fontSize: '1.125rem' }}>
-          {title}
-        </div>
+    <div className="flex flex-col gap-4">
+      {/* Title line */}
+      <div className="flex items-center justify-between">
+        <div className="font-medium text-lg">{title}</div>
         <Space size="middle">
           <RewardItemButton onClick={onEditClicked}>
             <EditOutlined />
@@ -78,56 +45,31 @@ export const RewardItem = ({
         </Space>
       </div>
 
-      <div
-        style={{
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1.5rem',
-        }}
-      >
+      <div className="relative flex flex-col gap-6">
         {/* Main Body */}
-        <div style={{ display: 'flex', gap: '2rem' }}>
+        <div className="flex gap-8">
           {/* Image Col */}
-          <div
-            style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}
-          >
+          <div className="flex flex-col gap-2">
             {/* Image */}
-            <RewardImage size="11rem" src={imgUrl.toString()} />
+            <RewardImage className="h-44 w-44" src={imgUrl.toString()} />
             {!isMobile && (
               <TertiaryDetails maximumSupply={maximumSupply} url={url} />
             )}
           </div>
           {/* Description Col */}
-          <div
-            style={{
-              flex: 1,
-              gap: '2rem',
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          >
+          <div className="flex flex-col flex-1 gap-8">
             {/* Top */}
             <div
-              style={{
-                display: 'flex',
-                flexDirection: isMobile ? 'column' : 'row',
-                gap: isMobile ? '1.5rem' : undefined,
-                justifyContent: 'space-between',
-              }}
+              className={classNames(
+                'flex justify-between',
+                isMobile ? 'flex-col gap-6' : 'flex-row',
+              )}
             >
-              {/* Contribution */}
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '0.5rem',
-                }}
-              >
-                <div style={headerTextStyle(isDarkMode)}>
+              <div className="flex flex-col gap-2">
+                <div className="text-grey-600 dark:text-slate-200 font-normal uppercase text-xs">
                   <Trans>Minimum Contribution</Trans>
                 </div>
-                <div style={emphasisedTextStyle}>
+                <div className="font-medium text-base">
                   {minimumContribution.toString()} ETH
                 </div>
               </div>
@@ -150,19 +92,12 @@ export const RewardItem = ({
 }
 
 const Description = ({ description }: { description: ReactNode }) => {
-  const { isDarkMode } = useContext(ThemeContext)
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '0.5rem',
-      }}
-    >
-      <div style={headerTextStyle(isDarkMode)}>
+    <div className="flex flex-col gap-2">
+      <div className="text-grey-600 dark:text-slate-200 font-normal uppercase text-xs">
         <Trans>Description</Trans>
       </div>
-      <div style={descriptionTextStyle}>{description}</div>
+      <div className="font-normal text-sm">{description}</div>
     </div>
   )
 }
@@ -175,33 +110,16 @@ const TertiaryDetails = ({
   url: string | undefined
 }) => {
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '0.25rem',
-        maxWidth: '11rem',
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-      }}
-    >
+    <div className="flex flex-col gap-1 max-w-[11rem] whitespace-nowrap overflow-hidden overflow-ellipsis">
       {maximumSupply && (
-        <div style={detailsTextStyle}>
+        <div className="font-normal text-xs">
           <Trans>Supply: {maximumSupply}</Trans>
         </div>
       )}
       {url && (
-        <div
-          style={{
-            ...detailsTextStyle,
-            display: 'flex',
-            gap: '0.5rem',
-            alignItems: 'center',
-          }}
-        >
+        <div className="font-normal text-xs flex gap-2 items-center">
           <LinkOutlined />
-          <div style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          <div className="overflow-hidden overflow-ellipsis">
             <ExternalLink href={url}>{prettyUrl(url)}</ExternalLink>
           </div>
         </div>

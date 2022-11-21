@@ -1,26 +1,15 @@
 import { Button, ButtonProps } from 'antd'
-import * as styleColors from 'constants/styles/colors'
-import { ThemeContext } from 'contexts/themeContext'
-import { useContext } from 'react'
+import { classNames } from 'utils/classNames'
 
 export const CreateButton: React.FC<ButtonProps> = props => {
-  const {
-    isDarkMode,
-    theme: { colors },
-  } = useContext(ThemeContext)
-
-  // TODO: dark mode TBD
-  const backgroundColor = isDarkMode ? undefined : styleColors.lightColors.hint
   return (
     <Button
       {...props}
+      className={classNames(
+        'text-haze-400 dark:text-haze-300 bg-haze-50 dark:bg-haze-900 border-haze-400',
+        props.className,
+      )}
       type="dashed"
-      style={{
-        ...props.style,
-        color: colors.text.action.primary,
-        borderColor: colors.text.action.primary,
-        backgroundColor,
-      }}
     >
       {props.children}
     </Button>

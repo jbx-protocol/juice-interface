@@ -1,49 +1,20 @@
 import { CheckCircleFilled } from '@ant-design/icons'
-import * as styleColors from 'constants/styles/colors'
-import { ThemeContext } from 'contexts/themeContext'
-import { useCallback, useContext, useMemo } from 'react'
+import { useCallback } from 'react'
+import { classNames } from 'utils/classNames'
 
 export const MobileStep = ({
   step,
   index,
   selected,
   isCompleted,
-  className,
   onClick,
 }: {
   step: { id: string; title: string; disabled: boolean }
   index: number
   selected: boolean
   isCompleted: boolean
-  className?: string
   onClick?: (index: number) => void
 }) => {
-  const {
-    theme: { colors },
-    isDarkMode,
-  } = useContext(ThemeContext)
-
-  const color = useMemo(() => {
-    if (step.disabled) {
-      return isDarkMode
-        ? colors.background.l2
-        : styleColors.lightColors.warmGray400
-    }
-  }, [colors.background.l2, isDarkMode, step.disabled])
-
-  const cursor = useMemo(() => {
-    if (selected) return undefined
-    if (step.disabled) return 'not-allowed'
-    return 'pointer'
-  }, [selected, step.disabled])
-
-  const backgroundColor = useMemo(() => {
-    if (!selected) return undefined
-    return isDarkMode
-      ? styleColors.darkColors.darkGray500
-      : styleColors.lightColors.warmGray200
-  }, [isDarkMode, selected])
-
   const handleOnClick = useCallback(() => {
     if (step.disabled) return
     onClick?.(index)
@@ -51,34 +22,23 @@ export const MobileStep = ({
 
   return (
     <div
-      className={className}
-      style={{
-        lineHeight: '20px',
-        backgroundColor,
-        color,
-        fontSize: '1rem',
-        fontWeight: selected ? 500 : 400,
-        userSelect: 'none',
-        cursor,
-      }}
+      className={classNames(
+        'hover:bg-smoke-100 dark:hover:bg-slate-300 text-base leading-5 select-none',
+        selected ? 'font-medium' : 'font-normal',
+        !selected
+          ? step.disabled
+            ? 'cursor-not-allowed'
+            : 'cursor-pointer'
+          : 'bg-smoke-200 dark:bg-slate-400',
+        step.disabled ? 'text-grey-400 dark:text-slate-400' : '',
+      )}
       onClick={handleOnClick}
     >
-      <div
-        style={{
-          display: 'flex',
-          gap: '0.25rem',
-          alignItems: 'center',
-          padding: '1.125rem 1.5rem',
-        }}
-      >
+      <div className="flex gap-1 items-center py-4 px-6">
         <span>
           {index + 1}. {step.title}
         </span>
-        {isCompleted && (
-          <CheckCircleFilled
-            style={{ color: colors.background.action.primary }}
-          />
-        )}
+        {isCompleted && <CheckCircleFilled className="text-haze-400" />}
       </div>
     </div>
   )

@@ -1,4 +1,4 @@
-import { Input } from 'antd'
+import { JuiceInput } from './inputs/JuiceTextInput'
 
 export default function PrefixedInput({
   prefix,
@@ -19,7 +19,7 @@ export default function PrefixedInput({
   }
 
   return (
-    <Input
+    <JuiceInput
       prefix={prefix}
       value={value?.includes(prefix) ? value.replaceAll(prefix, '') : value}
       onChange={e => onValueChange(e.target.value)}

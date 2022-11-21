@@ -1,6 +1,5 @@
-import * as styleColors from 'constants/styles/colors'
-import { ThemeContext } from 'contexts/themeContext'
-import { ReactNode, useContext, useMemo } from 'react'
+import { ReactNode } from 'react'
+import { classNames } from 'utils/classNames'
 
 export const RadialBackgroundIcon = ({
   icon,
@@ -9,54 +8,14 @@ export const RadialBackgroundIcon = ({
   icon: ReactNode
   isDefocused: boolean
 }) => {
-  const {
-    isDarkMode,
-    theme: { colors },
-  } = useContext(ThemeContext)
-
-  const backgroundColor = useMemo(() => {
-    if (isDarkMode) {
-      // TODO: Nuanced color being used here
-      return isDefocused ? colors.background.l1 : '#004351'
-    }
-    return isDefocused
-      ? styleColors.lightColors.warmGray150
-      : colors.background.action.secondary
-  }, [
-    colors.background.action.secondary,
-    colors.background.l1,
-    isDarkMode,
-    isDefocused,
-  ])
-  const iconColor = useMemo(() => {
-    if (isDarkMode) {
-      return isDefocused ? colors.background.l2 : colors.text.action.primary
-    }
-    return isDefocused
-      ? styleColors.lightColors.warmGray400
-      : colors.text.action.primary
-  }, [
-    colors.background.l2,
-    colors.text.action.primary,
-    isDarkMode,
-    isDefocused,
-  ])
-
   return (
     <div
-      style={{
-        width: '2.625rem',
-        height: '2.625rem',
-        minWidth: '2.625rem',
-        fontSize: '1.3rem',
-        backgroundColor,
-        color: iconColor,
-        fill: iconColor,
-        borderRadius: '50%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
+      className={classNames(
+        'w-10 h-10 min-w-[2.5rem] text-xl rounded-full flex justify-center items-center',
+        isDefocused
+          ? 'bg-smoke-100 dark:bg-slate-600 fill-smoke-400 dark:fill-slate-400 text-smoke-400 dark:text-slate-400'
+          : 'bg-haze-100 dark:bg-haze-800 fill-haze-400 text-haze-400',
+      )}
     >
       {icon}
     </div>

@@ -1,10 +1,19 @@
 .create-collapse {
   .ant-collapse-header {
+    padding: 1.5rem 0 !important;
     padding-left: 0 !important;
     border-bottom: solid 1px var(--stroke-tertiary);
   }
 
+  .ant-collapse-header-text {
+    color: var(--text-primary);
+    span {
+      color: var(--text-secondary);
+    }
+  }
+
   .ant-collapse-content-box {
+    padding-bottom: 0 !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
   }

@@ -86,10 +86,10 @@ export const FundingCyclesPage = () => {
       onFinish={goToNextPage}
       scrollToFirstError
     >
-      <Space direction="vertical" size="large" style={{ width: '100%' }}>
-        <Space direction="vertical" size="large" style={{ width: '100%' }}>
+      <Space className="w-full" direction="vertical" size="large">
+        <Space className="w-full" direction="vertical" size="large">
           <Form.Item noStyle name="selection">
-            <Selection defocusOnSelect style={{ width: '100%' }}>
+            <Selection className="w-full" defocusOnSelect>
               <Selection.Card
                 name="automated"
                 title={

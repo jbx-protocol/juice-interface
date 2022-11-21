@@ -10,7 +10,6 @@ import { FundingTargetType } from 'models/fundingTargetType'
 import { useContext, useEffect } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { CreateCallout } from '../../CreateCallout'
-import { CurrencySelectInputValue } from '../../CurrencySelectInput'
 import { Icons } from '../../Icons'
 import { Selection } from '../../Selection'
 import { Wizard } from '../../Wizard'
@@ -54,9 +53,9 @@ export const FundingTargetPage: React.FC = () => {
       onFinish={goToNextPage}
       scrollToFirstError
     >
-      <Space direction="vertical" size="large" style={{ width: '100%' }}>
+      <Space className="w-full" direction="vertical" size="large">
         <Form.Item noStyle name="targetSelection">
-          <Selection defocusOnSelect style={{ width: '100%' }}>
+          <Selection className="w-full" defocusOnSelect>
             <Selection.Card
               name="specific"
               title={t`Specific Funding Target`}
@@ -77,7 +76,7 @@ export const FundingTargetPage: React.FC = () => {
                   }),
                 ])}
                 extra={
-                  <Space style={{ alignItems: 'start' }}>
+                  <Space className="items-start">
                     <QuestionCircleOutlined />
                     <Trans>
                       Any funds raised over this amount are considered{' '}
@@ -112,7 +111,10 @@ export const FundingTargetPage: React.FC = () => {
 }
 
 const FormattedNumberInputWrapper: React.FC<
-  FormItemInput<CurrencySelectInputValue>
+  FormItemInput<{
+    amount: string
+    currency: 'eth' | 'usd'
+  }>
 > = props => {
   const currency = props.value?.currency ?? 'eth'
   return (

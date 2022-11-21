@@ -1,7 +1,5 @@
 import { t } from '@lingui/macro'
-import * as styleColors from 'constants/styles/colors'
-import { ThemeContext } from 'contexts/themeContext'
-import { useCallback, useContext, useMemo } from 'react'
+import { useCallback, useContext } from 'react'
 import { WizardContext } from '../Wizard/contexts'
 import { useFundingCycleRecallValue, useFundingTarget } from './hooks'
 
@@ -13,11 +11,11 @@ const RecallOption: React.FC<{
   onClick: VoidFunction
 }> = ({ option, value, onClick }) => {
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+    <div className="flex justify-between">
       <span>
         {option}: {value}
       </span>
-      <a style={{ textDecoration: 'underline' }} onClick={onClick}>
+      <a className="underline" onClick={onClick}>
         Edit
       </a>
     </div>
@@ -59,30 +57,10 @@ const FundingTargetRecallOption: React.FC = () => {
 export const RecallCard: React.FC<{
   show: PresentableRecall[]
 }> = ({ show }) => {
-  const { isDarkMode } = useContext(ThemeContext)
-
-  const backgroundColor = useMemo(
-    () =>
-      isDarkMode
-        ? styleColors.darkColors.darkGray700
-        : styleColors.lightColors.warmGray100,
-    [isDarkMode],
-  )
-
   if (!show.length) return null
 
   return (
-    <div
-      style={{
-        width: '100%',
-        padding: '0.625rem 1rem',
-        backgroundColor,
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '0.5rem',
-        fontWeight: 500,
-      }}
-    >
+    <div className="w-full py-3 px-4 bg-smoke-100 dark:bg-slate-600 flex flex-col gap-2 font-medium">
       {show.includes('fundingCycles') && <FundingCycleRecallOption />}
       {show.includes('fundingTarget') && <FundingTargetRecallOption />}
     </div>

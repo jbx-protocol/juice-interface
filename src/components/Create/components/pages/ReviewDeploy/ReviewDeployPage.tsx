@@ -1,16 +1,16 @@
 import { CheckCircleFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Checkbox, Form, Modal } from 'antd'
+import { Checkbox, Form } from 'antd'
 import { useDeployProject } from 'components/Create/hooks/DeployProject'
 import ExternalLink from 'components/ExternalLink'
+import { JuiceModal } from 'components/JuiceModal'
 import TransactionModal from 'components/TransactionModal'
-import { ThemeContext } from 'contexts/themeContext'
 import { useAppSelector } from 'hooks/AppSelector'
 import useMobile from 'hooks/Mobile'
 import { useModal } from 'hooks/Modal'
 import { useWallet } from 'hooks/Wallet'
 import { useRouter } from 'next/router'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
@@ -38,27 +38,15 @@ const Header: React.FC<{ skipped?: boolean }> = ({
   children,
   skipped = false,
 }) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   return (
-    <h2
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '0.5rem',
-        marginBottom: 0,
-      }}
-    >
+    <h2 className="flex items-center gap-2 mb-0 font-medium text-lg text-black dark:text-grey-200">
       {children}
       {skipped ? (
         <span>
           <CreateBadge.Skipped />
         </span>
       ) : (
-        <CheckCircleFilled
-          style={{ color: colors.background.action.primary }}
-        />
+        <CheckCircleFilled className="text-haze-400" />
       )}
     </h2>
   )
@@ -67,9 +55,6 @@ const Header: React.FC<{ skipped?: boolean }> = ({
 export const ReviewDeployPage = () => {
   useSetCreateFurthestPageReached('reviewDeploy')
   const isMobile = useMobile()
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { chainUnsupported, changeNetworks, isConnected, connect } = useWallet()
   const router = useRouter()
   const [form] = Form.useForm<{ termsAccepted: boolean }>()
@@ -199,14 +184,10 @@ export const ReviewDeployPage = () => {
         form={form}
         initialValues={{ termsAccepted: false }}
         onFinish={onFinish}
-        style={{
-          marginTop: '2rem',
-          display: 'flex',
-          flexDirection: 'column',
-        }}
+        className="mt-8 flex flex-col"
       >
         <CreateCallout.Info noIcon collapsible={false}>
-          <div style={{ display: 'flex', gap: '1rem' }}>
+          <div className="flex gap-4">
             <Form.Item noStyle name="termsAccepted" valuePropName="checked">
               <Checkbox />
             </Form.Item>
@@ -229,15 +210,7 @@ export const ReviewDeployPage = () => {
         />
       </Form>
 
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1rem',
-          paddingTop: '4.5rem',
-          color: colors.text.tertiary,
-        }}
-      >
+      <div className="flex flex-col gap-4 pt-20 text-grey-400 dark:text-slate-200">
         <div>
           <Trans>
             Not quite ready to launch? Your project details will be saved as a
@@ -256,9 +229,9 @@ export const ReviewDeployPage = () => {
         transactionPending={deployTransactionPending}
         open={deployTransactionPending}
       />
-      <Modal
+      <JuiceModal
         title={
-          <h2>
+          <h2 className="font-medium text-xl text-black dark:text-grey-200">
             <Trans>Are you sure?</Trans>
           </h2>
         }
@@ -269,7 +242,7 @@ export const ReviewDeployPage = () => {
         onCancel={modal.close}
       >
         <Trans>Starting over will erase all currently saved progress.</Trans>
-      </Modal>
+      </JuiceModal>
     </>
   )
 }

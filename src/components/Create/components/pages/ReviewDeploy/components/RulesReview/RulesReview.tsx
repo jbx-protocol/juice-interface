@@ -3,7 +3,6 @@ import { Row } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
 import useMobile from 'hooks/Mobile'
 import { DescriptionCol } from '../DescriptionCol'
-import { emphasisedTextStyle, flexColumnStyle } from '../styles'
 import { useRulesReview } from './hooks/RulesReview'
 import { MobileRulesReview } from './MobileRulesReview'
 
@@ -12,14 +11,7 @@ export const RulesReview = () => {
   const { customAddress, pausePayments, strategy, terminalConfiguration } =
     useRulesReview()
   return (
-    <div
-      style={{
-        ...flexColumnStyle,
-        gap: '2.5rem',
-        paddingTop: '1.25rem',
-        paddingBottom: '3rem',
-      }}
-    >
+    <div className="flex flex-col gap-10 pt-5 pb-12">
       {isMobile ? (
         <MobileRulesReview />
       ) : (
@@ -28,7 +20,7 @@ export const RulesReview = () => {
             span={6}
             title={t`Reconfiguration`}
             desc={
-              <div style={emphasisedTextStyle()}>
+              <div className="font-medium text-base">
                 {strategy ? (
                   strategy
                 ) : customAddress ? (
@@ -42,13 +34,15 @@ export const RulesReview = () => {
           <DescriptionCol
             span={6}
             title={t`Pause payments`}
-            desc={<div style={emphasisedTextStyle()}>{pausePayments}</div>}
+            desc={<div className="font-medium text-base">{pausePayments}</div>}
           />
           <DescriptionCol
             span={6}
             title={t`Terminal configuration`}
             desc={
-              <div style={emphasisedTextStyle()}>{terminalConfiguration}</div>
+              <div className="font-medium text-base">
+                {terminalConfiguration}
+              </div>
             }
           />
         </Row>

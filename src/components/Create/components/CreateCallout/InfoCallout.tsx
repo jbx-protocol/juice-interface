@@ -11,7 +11,7 @@ export const InfoCallout: React.FC<{
   return (
     <Callout
       iconComponent={
-        !noIcon ? <InfoCircleOutlined style={{ fontSize: '1.5rem' }} /> : null
+        !noIcon ? <InfoCircleOutlined className="text-2xl" /> : null
       }
       collapsible={collapse}
     >

@@ -9,7 +9,6 @@ import {
 import { ReservedTokensList } from '../../../ProjectToken/components/CustomTokenSettings/components'
 import * as ProjectTokenForm from '../../../ProjectToken/hooks/ProjectTokenForm'
 import { DescriptionCol } from '../DescriptionCol'
-import { emphasisedTextStyle } from '../styles'
 import { useProjectTokenReview } from './hooks/ProjectTokenReview'
 
 export const MobileProjectTokenReview = () => {
@@ -27,7 +26,7 @@ export const MobileProjectTokenReview = () => {
       <DescriptionCol
         title={t`Initial mint rate`}
         desc={
-          <div style={emphasisedTextStyle()}>
+          <div className="font-medium text-base">
             {formatAmount(
               weight
                 ? formatIssuanceRate(weight)
@@ -39,7 +38,7 @@ export const MobileProjectTokenReview = () => {
       <DescriptionCol
         title={t`Reserved tokens`}
         desc={
-          <div style={emphasisedTextStyle()}>
+          <div className="font-medium text-base">
             {formatReservedRate(
               reservedRate
                 ? reservedRate
@@ -61,7 +60,7 @@ export const MobileProjectTokenReview = () => {
       <DescriptionCol
         title={t`Discount rate`}
         desc={
-          <div style={emphasisedTextStyle()}>
+          <div className="font-medium text-base">
             {formatDiscountRate(
               discountRate
                 ? discountRate
@@ -73,7 +72,7 @@ export const MobileProjectTokenReview = () => {
       <DescriptionCol
         title={t`Redemption rate`}
         desc={
-          <div style={emphasisedTextStyle()}>
+          <div className="font-medium text-base">
             {formatRedemptionRate(
               redemptionRate
                 ? redemptionRate
@@ -84,7 +83,7 @@ export const MobileProjectTokenReview = () => {
       />
       <DescriptionCol
         title={t`Allow token minting`}
-        desc={<div style={emphasisedTextStyle()}>{allowTokenMinting}</div>}
+        desc={<div className="font-medium text-base">{allowTokenMinting}</div>}
       />
     </>
   )

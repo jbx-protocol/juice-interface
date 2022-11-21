@@ -1,12 +1,15 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { DatePicker, Form, InputNumber, Modal, Radio } from 'antd'
+import { Form, Radio } from 'antd'
 import { RuleObject } from 'antd/lib/form'
 import CurrencySwitch from 'components/CurrencySwitch'
 import { validatePercentage } from 'components/formItems/formHelpers'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'
+import { JuiceInputNumber } from 'components/inputs/JuiceInputNumber'
 import NumberSlider from 'components/inputs/NumberSlider'
+import { JuiceModal } from 'components/JuiceModal'
 import { useFundingTargetType } from 'hooks/FundingTargetType'
 import { Split } from 'models/splits'
 import moment, * as Moment from 'moment'
@@ -129,10 +132,10 @@ export const AddEditAllocationModal = ({
     recipient === 'juiceboxProject' ? t`Token beneficiary address` : t`Address`
 
   return (
-    <Modal
+    <JuiceModal
       className={className}
       title={
-        <h2>
+        <h2 className="text-black dark:text-grey-200 font-medium text-lg">
           {isEditing ? t`Edit ${allocationName}` : t`Add new ${allocationName}`}
         </h2>
       }
@@ -182,7 +185,7 @@ export const AddEditAllocationModal = ({
               inputIsIntegerRule({ label: t`Juicebox Project ID` }),
             ]}
           >
-            <InputNumber min={1} step={1} style={{ width: '100%' }} />
+            <JuiceInputNumber className="w-full" min={1} step={1} />
           </Form.Item>
         )}
         <Form.Item
@@ -237,13 +240,13 @@ export const AddEditAllocationModal = ({
             </Trans>
           }
         >
-          <DatePicker
+          <JuiceDatePicker
             placeholder=""
             disabledDate={current => current < moment().endOf('day')}
           />
         </Form.Item>
       </Form>
-    </Modal>
+    </JuiceModal>
   )
 }
 
@@ -317,16 +320,9 @@ const DistributionAmountInput = ({
 
   if (mode === 'amount') {
     return (
-      <div
-        style={{
-          display: 'flex',
-          width: '100%',
-          gap: '1rem',
-          alignItems: 'center',
-        }}
-      >
+      <div className="flex w-full gap-4 items-center">
         <FormattedNumberInput
-          style={{ flex: 1 }}
+          className="flex-1"
           value={amount?.amount}
           onChange={amount => onAmountInputChange({ amount })}
           accessory={

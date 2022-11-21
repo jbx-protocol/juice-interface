@@ -3,7 +3,6 @@ import ProjectLogo from 'components/ProjectLogo'
 import { useAppSelector } from 'hooks/AppSelector'
 import { cidFromUrl, restrictedIpfsUrl } from 'utils/ipfs'
 import { DescriptionCol } from '../DescriptionCol'
-import { emphasisedTextStyle } from '../styles'
 
 export const MobileProjectDetailsReview = () => {
   const {
@@ -20,7 +19,7 @@ export const MobileProjectDetailsReview = () => {
     <>
       <DescriptionCol
         title={t`Project name`}
-        desc={<div style={emphasisedTextStyle()}>{name}</div>}
+        desc={<div className="font-medium text-base">{name}</div>}
       />
       <DescriptionCol
         title={t`Project description`}
@@ -40,38 +39,36 @@ export const MobileProjectDetailsReview = () => {
       <DescriptionCol
         title={t`Twitter`}
         desc={
-          twitter ? (
-            <div style={emphasisedTextStyle('0.875rem')}>{twitter}</div>
-          ) : null
+          twitter ? <div className="font-medium text-sm">{twitter}</div> : null
         }
       />
       <DescriptionCol
         title={t`Discord`}
         desc={
-          discord ? (
-            <div style={emphasisedTextStyle('0.875rem')}>{discord}</div>
-          ) : null
+          discord ? <div className="font-medium text-sm">{discord}</div> : null
         }
       />
       <DescriptionCol
         title={t`Website`}
         desc={
-          infoUri ? (
-            <div style={emphasisedTextStyle('0.875rem')}>{infoUri}</div>
-          ) : null
+          infoUri ? <div className="font-medium text-sm">{infoUri}</div> : null
         }
       />
       <DescriptionCol
         title={t`Pay button text`}
         desc={
           payButton ? (
-            <div style={emphasisedTextStyle()}>{payButton}</div>
+            <div className="font-medium text-base">{payButton}</div>
           ) : null
         }
       />
       <DescriptionCol
         title={t`Pay disclaimer`}
-        desc={payDisclosure ? payDisclosure : null}
+        desc={
+          payDisclosure ? (
+            <div className="font-medium text-base">{payDisclosure}</div>
+          ) : null
+        }
       />
     </>
   )

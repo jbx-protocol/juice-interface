@@ -1,12 +1,14 @@
 import { DeleteOutlined, LockFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Modal, Space, Tooltip } from 'antd'
+import { Space, Tooltip } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
+import { JuiceModal } from 'components/JuiceModal'
 import useMobile from 'hooks/Mobile'
 import { useModal } from 'hooks/Modal'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { useCallback } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
+import { classNames } from 'utils/classNames'
 import { formatDate } from 'utils/format/formatDate'
 import { Allocation, AllocationSplit } from '../Allocation'
 import { Amount } from './Amount'
@@ -56,15 +58,15 @@ export const PayoutCard = ({
         }
         extra={
           <DeleteOutlined
-            style={{ fontSize: isMobile ? '18px' : undefined }}
+            className={classNames(isMobile ? 'text-lg' : 'text-sm')}
             onClick={stopPropagation(deleteConfirmationModal.open)}
           />
         }
         onClick={onClick}
       />
-      <Modal
+      <JuiceModal
         title={
-          <h2>
+          <h2 className="font-medium text-xl text-black dark:text-grey-200">
             <Trans>Are you sure?</Trans>
           </h2>
         }
@@ -78,7 +80,7 @@ export const PayoutCard = ({
           This will delete the payout for{' '}
           <FormattedAddress address={allocation.beneficiary} />.
         </Trans>
-      </Modal>
+      </JuiceModal>
     </>
   )
 }

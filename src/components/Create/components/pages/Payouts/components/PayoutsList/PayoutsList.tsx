@@ -5,11 +5,10 @@ import { CreateCallout } from 'components/Create/components/CreateCallout'
 import { OwnerPayoutCard } from 'components/Create/components/PayoutCard'
 import { PayoutCard } from 'components/Create/components/PayoutCard/PayoutCard'
 import { useFundingTarget } from 'components/Create/components/RecallCard/hooks'
-import { ThemeContext } from 'contexts/themeContext'
 import { FormItemInput } from 'models/formItemInput'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
-import { useCallback, useContext, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useEditingDistributionLimit } from 'redux/hooks/EditingDistributionLimit'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
@@ -32,9 +31,6 @@ export const PayoutsList = (
     isEditable?: boolean
   },
 ) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const [distributionLimit, setDistributionLimit] =
     useEditingDistributionLimit()
   const fundingTarget = useFundingTarget()
@@ -123,7 +119,7 @@ export const PayoutsList = (
       totalAllocationAmount={distributionLimit?.amount}
       setAllocationCurrency={setCurrency}
     >
-      <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+      <Space className="w-full" direction="vertical" size="middle">
         <OwnerPayoutCard payoutsSelection={props.payoutsSelection} />
         <Allocation.List
           allocationName={t`payout`}
@@ -152,18 +148,9 @@ export const PayoutsList = (
         </Allocation.List>
         {!distributionLimit?.amount.eq(MAX_DISTRIBUTION_LIMIT) && (
           <>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                paddingTop: '1rem',
-              }}
-            >
+            <div className="flex items-center pt-4">
               <span>Current Funding Target: {fundingTarget}</span>
-              <Divider
-                type="vertical"
-                style={{ height: '1.5rem', margin: '0 1rem' }}
-              />
+              <Divider type="vertical" className="h-6 mx-4" />
               <span>
                 Expenses:{' '}
                 {formatCurrencyAmount({
@@ -177,13 +164,7 @@ export const PayoutsList = (
         {!distributionLimit?.amount.eq(MAX_DISTRIBUTION_LIMIT) &&
           expensesExceedsFundingTarget && (
             <CreateCallout.Warning collapsible={false}>
-              <div
-                style={{
-                  fontWeight: 500,
-                  fontSize: '1.17em',
-                  paddingBottom: '0.5rem',
-                }}
-              >
+              <div className="font-medium text-base pb-2">
                 <Trans>Funding Target Exceeded</Trans>
               </div>
               <p>
@@ -198,10 +179,7 @@ export const PayoutsList = (
               </p>
               <Button
                 type="text"
-                style={{
-                  backgroundColor: colors.text.warn,
-                  color: colors.text.over.action.primary,
-                }}
+                className="text-white dark:text-black bg-warning-800 dark:bg-warning-100"
                 onClick={syncExpenses}
               >
                 Sync now

@@ -14,7 +14,7 @@ export const CustomRuleCard = () => {
         <Form.Item
           // Can't use noStyle, so remove margin
           // noStyle causes rule errors to disappear :(
-          style={{ margin: 0 }}
+          className="m-0"
           name="customAddress"
           rules={[
             inputMustExistRule({ label: t`Custom strategy` }),

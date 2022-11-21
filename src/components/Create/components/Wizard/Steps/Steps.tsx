@@ -29,7 +29,7 @@ export const Steps = () => {
       return steps.map((step, index) => {
         return (
           <AntSteps.Step
-            className="create-steps-item"
+            className="min-w-0"
             key={step.title}
             title={step.title}
             disabled={step.disabled}
@@ -45,14 +45,14 @@ export const Steps = () => {
     return (
       <>
         <div
-          style={{ userSelect: 'none', cursor: 'pointer' }}
+          className="select-none cursor-pointer"
           onClick={progressModal.open}
         >
           <Progress
             strokeColor={colors.background.action.primary}
             width={80}
             format={() => (
-              <div style={{ color: colors.text.primary }}>
+              <div className="text-black dark:text-grey-200">
                 {current.index !== undefined ? current.index + 1 : '??'}/
                 {steps?.length ?? '??'}
               </div>
@@ -78,7 +78,7 @@ export const Steps = () => {
   }
 
   return (
-    <div style={{ maxWidth: '840px' }}>
+    <div className="max-w-[840px]">
       <AntSteps
         current={current.index}
         progressDot

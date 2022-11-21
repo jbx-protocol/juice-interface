@@ -47,22 +47,12 @@ export const AllocationList = ({
 
   return (
     <>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1rem',
-          width: '100%',
-        }}
-      >
+      <div className="flex flex-col gap-4 w-full">
         {children(modal, { ...allocations, setSelectedAllocation })}
         {isEditable && (
           <CreateButton
             size="large"
-            style={{
-              marginTop: '1rem',
-              width: '100%',
-            }}
+            className="mt-4"
             icon={<PlusCircleOutlined />}
             onClick={modal.open}
           >
@@ -73,7 +63,6 @@ export const AllocationList = ({
         )}
       </div>
       <AddEditAllocationModal
-        className="wizard-create-modal"
         allocationName={allocationName}
         availableModes={availableModes}
         editingData={selectedAllocation}

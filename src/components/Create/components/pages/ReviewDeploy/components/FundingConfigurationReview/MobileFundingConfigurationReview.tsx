@@ -1,7 +1,6 @@
 import { t } from '@lingui/macro'
 import { PayoutsList } from '../../../Payouts/components/PayoutsList'
 import { DescriptionCol } from '../DescriptionCol'
-import { emphasisedTextStyle } from '../styles'
 import { useFundingConfigurationReview } from './hooks/FundingConfigurationReview'
 
 export const MobileFundingConfigurationReview = () => {
@@ -19,21 +18,23 @@ export const MobileFundingConfigurationReview = () => {
     <>
       <DescriptionCol
         title={t`Funding cycles`}
-        desc={<div style={emphasisedTextStyle()}>{fundingCycles}</div>}
+        desc={<div className="font-medium text-base">{fundingCycles}</div>}
       />
       <DescriptionCol
         title={t`Duration`}
         desc={
-          duration ? <div style={emphasisedTextStyle()}>{duration}</div> : null
+          duration ? (
+            <div className="font-medium text-base">{duration}</div>
+          ) : null
         }
       />
       <DescriptionCol
         title={t`Funding target`}
-        desc={<div style={emphasisedTextStyle()}>{fundingTarget}</div>}
+        desc={<div className="font-medium text-base">{fundingTarget}</div>}
       />
       <DescriptionCol
         title={t`Payouts`}
-        desc={<div style={emphasisedTextStyle()}>{payoutsText}</div>}
+        desc={<div className="font-medium text-base">{payoutsText}</div>}
       />
       <DescriptionCol
         title={t`Payout addresses`}

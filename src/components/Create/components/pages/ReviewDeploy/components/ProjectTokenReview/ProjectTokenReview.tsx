@@ -11,7 +11,6 @@ import {
 import { ReservedTokensList } from '../../../ProjectToken/components/CustomTokenSettings/components'
 import * as ProjectTokenForm from '../../../ProjectToken/hooks/ProjectTokenForm'
 import { DescriptionCol } from '../DescriptionCol'
-import { emphasisedTextStyle, flexColumnStyle } from '../styles'
 import { useProjectTokenReview } from './hooks/ProjectTokenReview'
 import { MobileProjectTokenReview } from './MobileProjectTokenReview'
 
@@ -28,14 +27,7 @@ export const ProjectTokenReview = () => {
   } = useProjectTokenReview()
   return (
     <>
-      <div
-        style={{
-          ...flexColumnStyle,
-          gap: '2.5rem',
-          paddingTop: '1.25rem',
-          paddingBottom: '3rem',
-        }}
-      >
+      <div className="flex flex-col gap-10 pt-5 pb-12">
         {/* TODO: There is probably a more elegant solution to this */}
         {isMobile ? (
           <MobileProjectTokenReview />
@@ -46,7 +38,7 @@ export const ProjectTokenReview = () => {
                 span={6}
                 title={t`Initial mint rate`}
                 desc={
-                  <div style={emphasisedTextStyle()}>
+                  <div className="font-medium text-base">
                     {formatAmount(
                       weight
                         ? formatIssuanceRate(weight)
@@ -59,7 +51,7 @@ export const ProjectTokenReview = () => {
                 span={6}
                 title={t`Reserved tokens`}
                 desc={
-                  <div style={emphasisedTextStyle()}>
+                  <div className="font-medium text-base">
                     {formatReservedRate(
                       reservedRate
                         ? reservedRate
@@ -85,7 +77,7 @@ export const ProjectTokenReview = () => {
                 span={6}
                 title={t`Discount rate`}
                 desc={
-                  <div style={emphasisedTextStyle()}>
+                  <div className="font-medium text-base">
                     {formatDiscountRate(
                       discountRate
                         ? discountRate
@@ -98,7 +90,7 @@ export const ProjectTokenReview = () => {
                 span={6}
                 title={t`Redemption rate`}
                 desc={
-                  <div style={emphasisedTextStyle()}>
+                  <div className="font-medium text-base">
                     {formatRedemptionRate(
                       redemptionRate
                         ? redemptionRate
@@ -111,7 +103,9 @@ export const ProjectTokenReview = () => {
                 span={12}
                 title={t`Allow token minting`}
                 desc={
-                  <div style={emphasisedTextStyle()}>{allowTokenMinting}</div>
+                  <div className="font-medium text-base">
+                    {allowTokenMinting}
+                  </div>
                 }
               />
             </Row>

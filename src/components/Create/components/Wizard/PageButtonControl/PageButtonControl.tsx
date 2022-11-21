@@ -15,16 +15,9 @@ export const PageButtonControl = ({
     useContext(PageContext)
 
   return (
-    <div
-      style={{
-        marginTop: '3rem',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      }}
-    >
+    <div className="mt-12 flex justify-between items-center">
       {canGoBack && <BackButton onClick={goToPreviousPage} />}
-      <div style={{ marginLeft: 'auto' }}>
+      <div className="ml-auto">
         {!isFinalPage ? (
           <NextButton
             loading={isNextLoading}

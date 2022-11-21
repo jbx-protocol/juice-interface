@@ -4,15 +4,17 @@ import {
   UploadOutlined,
 } from '@ant-design/icons'
 import { t } from '@lingui/macro'
-import { Form, Input, Modal, Space } from 'antd'
+import { Form, Space } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
+import { JuiceInput } from 'components/inputs/JuiceTextInput'
+import { JuiceModal } from 'components/JuiceModal'
 import { JuiceSwitch } from 'components/JuiceSwitch'
 import PrefixedInput from 'components/PrefixedInput'
 import { UploadNoStyle } from 'components/UploadNoStyle'
-import { ThemeContext } from 'contexts/themeContext'
 import { pinFileToIpfs } from 'lib/api/ipfs'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
 import { restrictedIpfsUrl } from 'utils/ipfs'
 import { v4 } from 'uuid'
@@ -95,9 +97,13 @@ export const AddEditRewardModal = ({
 
   const isEditing = !!editingData
   return (
-    <Modal
+    <JuiceModal
       className={className}
-      title={<h2>{isEditing ? t`Edit NFT` : t`Add NFT`}</h2>}
+      title={
+        <h2 className="font-medium text-xl text-black dark:text-grey-200">
+          {isEditing ? t`Edit NFT` : t`Add NFT`}
+        </h2>
+      }
       okText={isEditing ? t`Save NFT` : t`Add NFT`}
       open={open}
       onOk={onModalOk}
@@ -142,10 +148,10 @@ export const AddEditRewardModal = ({
           required
           rules={[inputMustExistRule({ label: t`Name` })]}
         >
-          <Input />
+          <JuiceInput />
         </Form.Item>
         <Form.Item name="description" label={t`Description`}>
-          <Input.TextArea
+          <JuiceTextArea
             maxLength={256}
             showCount
             autoSize={{ minRows: 4, maxRows: 6 }}
@@ -162,12 +168,12 @@ export const AddEditRewardModal = ({
           ]}
         >
           <FormattedNumberInput
-            style={{ width: '50%' }}
+            className="w-1/2"
             accessory={<InputAccessoryButton content="ETH" />}
           />
         </Form.Item>
         <Form.Item>
-          <Space direction="vertical" size="small" style={{ width: '100%' }}>
+          <Space className="w-full" direction="vertical" size="small">
             <JuiceSwitch
               value={limitedSupply}
               onChange={setLimitedSupply}
@@ -201,19 +207,13 @@ export const AddEditRewardModal = ({
           <PrefixedInput prefix="https://" />
         </Form.Item>
       </Form>
-    </Modal>
+    </JuiceModal>
   )
 }
 
 const UploadButton = () => {
   return (
-    <CreateButton
-      icon={<UploadOutlined />}
-      style={{
-        height: '6rem',
-        width: '100%',
-      }}
-    >
+    <CreateButton icon={<UploadOutlined />} className="h-24 w-full">
       Upload image
     </CreateButton>
   )
@@ -226,33 +226,14 @@ const UploadedImage = ({
   imageUrl: string
   onRemoveImageClicked?: VoidFunction
 }) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        border: '1px dashed',
-        borderColor: colors.stroke.tertiary,
-        paddingTop: '0.5rem',
-        paddingBottom: '0.5rem',
-        backgroundColor: colors.background.l1,
-      }}
-    >
-      <div style={{ position: 'relative' }}>
-        <RewardImage size="11.5rem" src={imageUrl} />
+    <div className="flex justify-center py-2 bg-smoke-200 dark:bg-slate-600">
+      <div className="relative">
+        <RewardImage className="h-[11.5rem] w-[11.5rem]" src={imageUrl} />
         <CloseCircleFilled
-          style={{
-            cursor: 'pointer',
-            color: colors.icon.action.primary,
-            fontSize: '1.375rem',
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            transform: 'translate(50%, -50%)',
-          }}
+          className="cursor-pointer text-haze-400 text-2xl absolute top-0 right-0"
+          // TODO: We require @tailwind base to do this in className, so use style for now
+          style={{ transform: 'translate(50%, -50%)' }}
           onClick={stopPropagation(onRemoveImageClicked)}
         />
       </div>

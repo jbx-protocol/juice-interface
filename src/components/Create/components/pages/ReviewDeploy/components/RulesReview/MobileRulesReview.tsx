@@ -1,7 +1,6 @@
 import { t } from '@lingui/macro'
 import FormattedAddress from 'components/FormattedAddress'
 import { DescriptionCol } from '../DescriptionCol'
-import { emphasisedTextStyle } from '../styles'
 import { useRulesReview } from './hooks/RulesReview'
 
 export const MobileRulesReview = () => {
@@ -13,7 +12,7 @@ export const MobileRulesReview = () => {
         span={6}
         title={t`Reconfiguration`}
         desc={
-          <div style={emphasisedTextStyle()}>
+          <div className="font-medium text-base">
             {strategy ? (
               strategy
             ) : customAddress ? (
@@ -27,12 +26,14 @@ export const MobileRulesReview = () => {
       <DescriptionCol
         span={6}
         title={t`Pause payments`}
-        desc={<div style={emphasisedTextStyle()}>{pausePayments}</div>}
+        desc={<div className="font-medium text-base">{pausePayments}</div>}
       />
       <DescriptionCol
         span={6}
         title={t`Terminal configuration`}
-        desc={<div style={emphasisedTextStyle()}>{terminalConfiguration}</div>}
+        desc={
+          <div className="font-medium text-base">{terminalConfiguration}</div>
+        }
       />
     </>
   )

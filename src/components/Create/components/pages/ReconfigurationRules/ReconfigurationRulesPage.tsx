@@ -38,14 +38,10 @@ export const ReconfigurationRulesPage = () => {
       onFinish={goToNextPage}
       scrollToFirstError
     >
-      <Space direction="vertical" size="large" style={{ width: '100%' }}>
-        <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+      <Space className="w-full" direction="vertical" size="large">
+        <Space className="w-full" direction="vertical" size="middle">
           <Form.Item noStyle name="selection">
-            <Selection
-              allowDeselect={false}
-              defocusOnSelect
-              style={{ width: '100%' }}
-            >
+            <Selection className="w-full" allowDeselect={false} defocusOnSelect>
               {reconfigurationStrategies.map(strategy => (
                 <RuleCard strategy={strategy} key={strategy.id} />
               ))}
@@ -66,7 +62,7 @@ export const ReconfigurationRulesPage = () => {
         <CreateCollapse>
           <CreateCollapse.Panel key={0} header={t`Advanced Rules`} hideDivider>
             <Form.Item
-              style={{ paddingTop: '2rem' }}
+              className="pt-8"
               name="pausePayments"
               extra={t`When enabled, the payments to the project are paused, and no new tokens will be issued.`}
             >

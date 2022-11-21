@@ -13,6 +13,7 @@ export const Selection: React.FC<{
   defocusOnSelect?: boolean
   disableInteractivity?: boolean
   allowDeselect?: boolean
+  className?: string
   style?: CSSProperties
   onChange?: (value: string | undefined) => void
 }> & { Card: typeof SelectionCard } = ({
@@ -20,7 +21,7 @@ export const Selection: React.FC<{
   disableInteractivity,
   allowDeselect = true,
   value,
-  style,
+  className,
   onChange,
   children,
 }) => {
@@ -44,7 +45,7 @@ export const Selection: React.FC<{
         setSelection: !disableInteractivity ? setSelectionWrapper : undefined,
       }}
     >
-      <Space direction="vertical" size="middle" style={style}>
+      <Space className={className} direction="vertical" size="middle">
         {children}
       </Space>
     </SelectionContext.Provider>

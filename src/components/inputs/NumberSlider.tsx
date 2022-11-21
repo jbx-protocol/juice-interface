@@ -1,9 +1,10 @@
-import { Form, InputNumber, Slider } from 'antd'
+import { Form, Slider } from 'antd'
 import { CSSProperties, useEffect, useState } from 'react'
 
 import { roundDown } from 'components/formItems/formHelpers'
 
 import { FormItemExt } from '../formItems/formItemExt'
+import { JuiceInputNumber } from './JuiceInputNumber'
 
 export default function NumberSlider({
   min,
@@ -67,7 +68,7 @@ export default function NumberSlider({
           rules={formItemProps?.rules ?? []}
           style={{ marginBottom: 0 }}
         >
-          <InputNumber
+          <JuiceInputNumber
             {...inputConfig}
             value={_value}
             disabled={disabled}

@@ -1,5 +1,6 @@
 import { Button } from 'antd'
 import useMobile from 'hooks/Mobile'
+import { classNames } from 'utils/classNames'
 
 export const RewardItemButton: React.FC<{ onClick?: VoidFunction }> = ({
   onClick,
@@ -8,19 +9,10 @@ export const RewardItemButton: React.FC<{ onClick?: VoidFunction }> = ({
   const isMobile = useMobile()
   return (
     <div
-      style={
-        isMobile
-          ? {
-              width: '2.75rem',
-              height: '2.75rem',
-              display: 'flex',
-              justifyContent: 'center',
-            }
-          : undefined
-      }
+      className={classNames(isMobile ? 'h-11 w-11 flex justify-center' : '')}
     >
       <Button
-        style={isMobile ? { fontSize: '1.5rem' } : { padding: 0 }}
+        className={classNames(isMobile ? 'text-2xl' : 'p-0')}
         type="link"
         onClick={onClick}
       >

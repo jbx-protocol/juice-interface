@@ -1,8 +1,6 @@
 import { CreateBadge } from 'components/Create/components/CreateBadge'
 import { Selection } from 'components/Create/components/Selection'
 import FormattedAddress from 'components/FormattedAddress'
-import { ThemeContext } from 'contexts/themeContext'
-import { useContext } from 'react'
 import { AvailableReconfigurationStrategy } from '../hooks'
 
 export const RuleCard = ({
@@ -10,9 +8,6 @@ export const RuleCard = ({
 }: {
   strategy: AvailableReconfigurationStrategy
 }) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   return (
     <Selection.Card
       key={strategy.id}
@@ -32,7 +27,7 @@ export const RuleCard = ({
       description={
         <>
           {strategy.description}
-          <div style={{ color: colors.text.tertiary }}>
+          <div className="text-grey-400 dark:text-slate-200">
             Contract address:{' '}
             <FormattedAddress
               truncateTo={16}

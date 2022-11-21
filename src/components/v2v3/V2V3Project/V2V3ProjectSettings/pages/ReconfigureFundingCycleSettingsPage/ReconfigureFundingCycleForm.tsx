@@ -1,6 +1,5 @@
-import { getAddress } from '@ethersproject/address'
 import { t, Trans } from '@lingui/macro'
-import { Form, Space } from 'antd'
+import { Divider, Form, Space } from 'antd'
 import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
 import { MemoFormInput } from 'components/Project/PayProjectForm/MemoFormInput'
 import RichButton, { RichButtonProps } from 'components/RichButton'
@@ -14,8 +13,7 @@ import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
-import { useV2HasPermissions } from 'hooks/v2v3/contractReader/V2HasPermissions'
-import { V2OperatorPermission } from 'models/v2v3/permissions'
+import { useNftDeployerCanReconfigure } from 'hooks/JB721Delegate/contractReader/NftDeployerCanReconfigure'
 import { useContext, useState } from 'react'
 import { DeployConfigurationButton } from './DeployConfigurationButton'
 import { useEditingFundingCycleConfig } from './hooks/editingFundingCycleConfig'
@@ -50,7 +48,7 @@ export function V2V3ReconfigureFundingCycleForm() {
   const { fundingCycleMetadata, projectOwnerAddress } =
     useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
-  const { contracts, cv } = useContext(V2V3ContractsContext)
+  const { cv } = useContext(V2V3ContractsContext)
   const {
     nftRewards: { CIDs: nftRewardsCids },
   } = useContext(NftRewardsContext)
@@ -110,17 +108,10 @@ export function V2V3ReconfigureFundingCycleForm() {
 
   const isV3 = cv === CV_V3
 
-  const nftDeployerAddress = contracts?.JBTiered721DelegateProjectDeployer
-    ? getAddress(contracts.JBTiered721DelegateProjectDeployer.address)
-    : undefined
-  const { data: nftContractHasPermission } = contracts
-    ? useV2HasPermissions({
-        operator: nftDeployerAddress,
-        account: projectOwnerAddress,
-        domain: projectId,
-        permissions: [V2OperatorPermission.RECONFIGURE],
-      })
-    : { data: undefined }
+  const nftDeployerCanReconfigure = useNftDeployerCanReconfigure({
+    projectId,
+    projectOwnerAddress,
+  })
 
   return (
     <>
@@ -159,11 +150,13 @@ export function V2V3ReconfigureFundingCycleForm() {
             name="memo"
             label={t`Memo (optional)`}
             className={'antd-no-number-handler'}
-            extra={t`Add an on-chain memo to this reconfiguration.`}
+            extra={t`Add a note about this reconfiguration on-chain.`}
           >
             <MemoFormInput value={memo} onChange={setMemo} />
           </Form.Item>
         </Form>
+
+        <Divider />
 
         <h3 className="text-primary" style={{ fontSize: '1.2rem' }}>
           <Trans>Review and deploy</Trans>
@@ -184,16 +177,21 @@ export function V2V3ReconfigureFundingCycleForm() {
           }
           nftRewards={editingFundingCycleConfig.editingNftRewards?.rewardTiers}
         />
-        {nftDrawerHasSavedChanges && !nftContractHasPermission ? (
-          <Space size="middle" direction="vertical">
+
+        {nftDrawerHasSavedChanges && !nftDeployerCanReconfigure ? (
+          <Space
+            size="middle"
+            direction="vertical"
+            style={{ marginTop: '1rem' }}
+          >
             <div style={{ display: 'flex' }}>
-              <h2 style={{ marginRight: 5 }}>1.</h2>
+              <span style={{ marginRight: 5 }}>1.</span>
               <SetNftOperatorPermissionsButton
                 onConfirmed={() => setNftOperatorConfirmed(true)}
               />
             </div>
             <div style={{ display: 'flex' }}>
-              <h2 style={{ marginRight: 5 }}>2.</h2>
+              <span style={{ marginRight: 5 }}>2.</span>
               <DeployConfigurationButton
                 loading={reconfigureLoading}
                 onClick={reconfigureFundingCycle}

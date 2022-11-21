@@ -5,6 +5,7 @@ import { revalidateProject } from 'lib/api/nextjs'
 import { PV2 } from 'models/pv'
 import { useCallback, useContext, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
+import { reloadWindow } from 'utils/windowUtils'
 import { useLaunchNftFundingCycles } from './LaunchNftFundingCycle'
 import { useLaunchStandardFundingCycles } from './LaunchStandardFundingCycle'
 
@@ -44,6 +45,9 @@ export const useLaunchFundingCycles = ({
             projectId: String(projectId),
           })
         }
+
+        // reload window to force-reflect latest changes
+        reloadWindow()
       },
     }
 

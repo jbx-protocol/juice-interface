@@ -1832,6 +1832,9 @@ msgstr ""
 msgid "NFTs"
 msgstr ""
 
+msgid "NFTs (optional)"
+msgstr ""
+
 msgid "NFTs for you"
 msgstr ""
 
@@ -3432,9 +3435,6 @@ msgid "Yes, start over"
 msgstr ""
 
 msgid "You are agreeing to IRREVOCABLY lock your tokens for {formattedLockDuration} in exchange for {votingPower} $ve{tokenSymbolDisplayText}"
-msgstr ""
-
-msgid "You can edit your project details after creation at any time, but the transaction will cost gas."
 msgstr ""
 
 msgid "You can reconfigure your project's next funding cycle (Funding Cycle #2) at any time within the bounds of the rules you set."

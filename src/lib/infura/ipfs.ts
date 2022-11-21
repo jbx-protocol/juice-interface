@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { INFURA_IPFS_API_BASE_URL } from 'constants/ipfs'
+import { getBaseUrl } from 'utils/baseUrl'
 
 const INFURA_IPFS_PROJECT_ID = process.env.INFURA_IPFS_PROJECT_ID
 const INFURA_IPFS_API_SECRET = process.env.INFURA_IPFS_API_SECRET
@@ -12,7 +13,7 @@ const infuraApi = axios.create({
   baseURL: INFURA_IPFS_API_BASE_URL,
   headers: {
     Authorization: AUTH_HEADER,
-    origin: 'https://juicebox.money',
+    origin: getBaseUrl()?.origin ?? 'https://juicebox.money',
   },
 })
 

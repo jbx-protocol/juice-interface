@@ -50,7 +50,7 @@ export function SetNftOperatorPermissionsButton({
         style={{
           color: colors.text.secondary,
           marginTop: 5,
-          fontSize: '0.7rem',
+          fontSize: '0.75rem',
         }}
       >
         <Trans>

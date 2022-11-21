@@ -82,7 +82,7 @@ export function LaunchFundingCycleForm() {
           onClick={() => setTokenDrawerVisible(true)}
         />
         <RichButton
-          heading={t`NFTs`}
+          heading={t`NFTs (optional)`}
           description={t`Configure your project's NFTs.`}
           onClick={() => setNftDrawerVisible(true)}
         />

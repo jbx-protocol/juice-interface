@@ -3,7 +3,7 @@ import { Button, Space, Statistic } from 'antd'
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { useContext, useState } from 'react'
 
-import { useIsUpgradeAvailable } from './hooks/useIsUpgradeAvailable'
+import { useIsUpgradeAvailable } from './hooks/IsUpgradeAvailable'
 import { UpgradeWizard } from './UpgradeWizard/UpgradeWizard'
 
 export function ProjectUpgradesPage() {

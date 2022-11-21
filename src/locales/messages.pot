@@ -290,13 +290,13 @@ msgstr ""
 msgid "Add NFT tier"
 msgstr ""
 
+msgid "Add a note about this reconfiguration on-chain."
+msgstr ""
+
 msgid "Add a payout"
 msgstr ""
 
 msgid "Add an on-chain memo to this payment."
-msgstr ""
-
-msgid "Add an on-chain memo to this reconfiguration."
 msgstr ""
 
 msgid "Add funds to this project's balance without minting tokens."
@@ -1830,6 +1830,9 @@ msgid "NFT projects"
 msgstr ""
 
 msgid "NFTs"
+msgstr ""
+
+msgid "NFTs (optional)"
 msgstr ""
 
 msgid "NFTs for you"
@@ -3426,9 +3429,6 @@ msgid "Yes, start over"
 msgstr ""
 
 msgid "You are agreeing to IRREVOCABLY lock your tokens for {formattedLockDuration} in exchange for {votingPower} $ve{tokenSymbolDisplayText}"
-msgstr ""
-
-msgid "You can edit your project details after creation at any time, but the transaction will cost gas."
 msgstr ""
 
 msgid "You can reconfigure your project's next funding cycle (Funding Cycle #2) at any time within the bounds of the rules you set."

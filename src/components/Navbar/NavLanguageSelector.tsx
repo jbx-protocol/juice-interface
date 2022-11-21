@@ -1,10 +1,11 @@
 import { GlobalOutlined } from '@ant-design/icons'
 import { Select } from 'antd'
-import { CSSProperties, useEffect, useState } from 'react'
+import { CSSProperties, useContext, useEffect, useState } from 'react'
 
 import { reloadWindow } from 'utils/windowUtils'
 
 import { Languages } from 'constants/languages/language-options'
+import { ThemeContext } from 'contexts/themeContext'
 
 // Language select tool seen in top nav
 export default function NavLanguageSelector({
@@ -14,6 +15,9 @@ export default function NavLanguageSelector({
   disableLang?: string
   mobile?: boolean
 }) {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
   const selectStyle: CSSProperties = {
     display: 'flex',
     alignItems: 'center',
@@ -74,7 +78,7 @@ export default function NavLanguageSelector({
         setDropdownOpen(!dropdownOpen)
       }}
     >
-      <GlobalOutlined style={{ marginBottom: 2 }} />
+      <GlobalOutlined style={{ marginBottom: 2, color: colors.icon.primary }} />
       <Select
         className="medium"
         style={{

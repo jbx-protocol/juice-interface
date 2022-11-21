@@ -8,6 +8,7 @@ import Logo from './Logo'
 import ThemePickerMobile from './Mobile/ThemePickerMobile'
 import NavLanguageSelector from './NavLanguageSelector'
 import { navMenuItemStyles } from './navStyles'
+import { ProjectSearchBar } from './ProjectSearchBar'
 
 type ResourceItem = {
   label: JSX.Element
@@ -209,6 +210,10 @@ export const mobileNavItems = ({
       </Link>
     ),
     children: [...resourcesMenuItems(true)],
+  },
+  {
+    key: 'search',
+    label: <ProjectSearchBar />,
   },
   { key: 'language-picker', label: <NavLanguageSelector /> },
   { key: 'theme-picker', label: <ThemePickerMobile /> },

@@ -1175,6 +1175,9 @@ msgstr ""
 msgid "Each project has its own <0>tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr ""
 
+msgid "Edit NFT"
+msgstr ""
+
 msgid "Edit NFT tier"
 msgstr ""
 
@@ -1871,7 +1874,7 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-msgid "No NFT tiers"
+msgid "No NFTs"
 msgstr ""
 
 msgid "No active funding cycle."

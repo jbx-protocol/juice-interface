@@ -11,7 +11,7 @@ const AUTH_HEADER = `Basic ${Buffer.from(
 ).toString('base64')}`
 
 const DEV_ORIGIN = 'http://localhost:3000'
-const GOERLI_ORIGIN = 'http://goerli.juicebox.money'
+const GOERLI_ORIGIN = 'https://goerli.juicebox.money'
 const MAINNET_ORIGIN = 'https://juicebox.money'
 
 const origin =

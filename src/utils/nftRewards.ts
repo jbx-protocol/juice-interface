@@ -292,25 +292,12 @@ export function encodeJB721DelegatePayMetadata(
   return encoded
 }
 
-// returns list of tier Ids from a given list of indices of a given list of rewardTiers
-export function tierIdsFromTierIndices({
-  rewardTiers,
-  indices,
-}: {
-  rewardTiers: NftRewardTier[]
-  indices: number[]
-}): number[] {
-  return rewardTiers
-    .map((tier, idx) => {
-      if (indices.includes(idx)) {
-        return tier.id
-      }
-    })
-    .filter(Number) as number[]
-}
-
 // sums the contribution floors of a given list of nftRewardTiers
-export function sumTierFloors(rewardTiers: NftRewardTier[]) {
+//    - optional select only an array of ids
+export function sumTierFloors(rewardTiers: NftRewardTier[], ids?: number[]) {
+  if (ids) {
+    rewardTiers = rewardTiers.filter(tier => ids.includes(tier.id ?? -1))
+  }
   return rewardTiers.reduce(
     (subSum, tier) => subSum + tier.contributionFloor,
     0,
@@ -368,4 +355,15 @@ export function buildJBDeployTiered721DelegateData({
     },
     governanceType: JB721GovernanceType.TIERED,
   }
+}
+
+// returns a tier of a given id from a given array of tiers
+export function tierOfId({
+  rewardTiers,
+  id,
+}: {
+  rewardTiers: NftRewardTier[]
+  id: number
+}) {
+  return rewardTiers.find(tier => tier.id === id)
 }

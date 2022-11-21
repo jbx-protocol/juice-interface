@@ -17,7 +17,6 @@ import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useMobile from 'hooks/Mobile'
 import { usePayETHPaymentTerminalTx } from 'hooks/v2v3/transactor/PayETHPaymentTerminal'
 import { useWallet } from 'hooks/Wallet'
-import { NftRewardTier } from 'models/nftRewardTier'
 import { useRouter } from 'next/router'
 import { useContext, useState } from 'react'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
@@ -95,12 +94,9 @@ export function V2V3ConfirmPayModal({
     plural: true,
   })
 
-  let nftRewardTiers: NftRewardTier[] | undefined
-  if (rewardTiers) {
-    nftRewardTiers = rewardTiers.filter(r =>
-      payProjectForm?.payMetadata?.tierIdsToMint.includes(r.id ?? -1),
-    )
-  }
+  const nftRewardTiers = rewardTiers?.filter(r =>
+    payProjectForm?.payMetadata?.tierIdsToMint.includes(r.id ?? -1),
+  )
 
   const handlePaySuccess = () => {
     onCancel?.()

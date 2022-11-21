@@ -1,4 +1,5 @@
 import { DeployedERC20Event } from 'models/subgraph-entities/vX/deployed-erc20-event'
+
 import { ActivityEvent } from './ActivityElement/ActivityElement'
 import { primaryContentFontSize } from './styles'
 

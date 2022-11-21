@@ -1,11 +1,10 @@
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import ETHAmount from 'components/currency/ETHAmount'
 import RichNote from 'components/RichNote'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 import { PayEvent } from 'models/subgraph-entities/vX/pay-event'
 
 import { ActivityEvent } from './ActivityElement'
-import { primaryContentFontSize } from './styles'
 
 export default function PayEventElem({
   event,
@@ -27,14 +26,8 @@ export default function PayEventElem({
   if (!event) return null
   return (
     <ActivityEvent
-      header={t`Paid`}
-      subject={
-        <>
-          <div style={{ fontSize: primaryContentFontSize }}>
-            <ETHAmount amount={event.amount} />
-          </div>
-        </>
-      }
+      header="Paid"
+      subject={<ETHAmount amount={event.amount} />}
       extra={
         event.feeFromV2Project ? (
           <Trans>

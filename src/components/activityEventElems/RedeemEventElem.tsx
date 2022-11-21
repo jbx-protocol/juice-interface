@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import ETHAmount from 'components/currency/ETHAmount'
 import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
@@ -32,9 +32,10 @@ export default function RedeemEventElem({
   } = useContext(ThemeContext)
 
   if (!event) return null
+
   return (
     <ActivityEvent
-      header={t`Redeemed`}
+      header="Redeemed"
       subject={
         <div style={{ fontSize: primaryContentFontSize }}>
           {formatWad(event.amount, { precision: 0 })}{' '}

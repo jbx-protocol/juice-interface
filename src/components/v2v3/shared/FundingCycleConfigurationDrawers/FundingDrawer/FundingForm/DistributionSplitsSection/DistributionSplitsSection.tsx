@@ -21,7 +21,7 @@ import {
   getTotalSplitsPercentage,
 } from 'utils/v2v3/distributions'
 import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2v3/math'
-import { DistributionSplitModal } from '../../DistributionSplitModal'
+import { DistributionSplitModal } from '../../../DistributionSplitModal'
 import { PayoutConfigurationExplainerCollapse } from './PayoutConfigurationExplainerCollapse'
 import SpecificLimitModal from './SpecificLimitModal'
 

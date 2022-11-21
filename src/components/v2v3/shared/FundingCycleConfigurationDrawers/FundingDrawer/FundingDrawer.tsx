@@ -1,10 +1,10 @@
 import { t } from '@lingui/macro'
 import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
-import FundingCycleDrawer from './FundingCycleDrawer'
+import FundingCycleDrawer from '../FundingCycleDrawer'
+import { useFundingCycleDrawer } from '../useFundingCycleDrawer'
 import { FundingForm } from './FundingForm'
-import { useFundingCycleDrawer } from './useFundingCycleDrawer'
 
-export default function FundingDrawer({
+export function FundingDrawer({
   open,
   onClose,
   isCreate,

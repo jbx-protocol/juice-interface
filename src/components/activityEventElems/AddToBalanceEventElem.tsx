@@ -1,3 +1,4 @@
+import { t } from '@lingui/macro'
 import ETHAmount from 'components/currency/ETHAmount'
 import RichNote from 'components/RichNote'
 import { AddToBalanceEvent } from 'models/subgraph-entities/vX/add-to-balance-event'
@@ -19,7 +20,7 @@ export default function AddToBalanceEventElem({
   return (
     <ActivityEvent
       event={event}
-      header="Added to balance"
+      header={t`Added to balance`}
       subject={<ETHAmount amount={event.amount} />}
       extra={
         <RichNote

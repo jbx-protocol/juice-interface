@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import FormattedAddress from 'components/FormattedAddress'
 import RichNote from 'components/RichNote'
@@ -19,7 +19,7 @@ export default function DeployETHERC20ProjectPayerEventElem({
   return (
     <ActivityEvent
       event={event}
-      header="Created Payment Address"
+      header={t`Created Payment Address`}
       subject={
         <Trans>
           called by <FormattedAddress address={event.caller} />

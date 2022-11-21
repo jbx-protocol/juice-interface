@@ -1,3 +1,4 @@
+import { t } from '@lingui/macro'
 import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import ETHAmount from 'components/currency/ETHAmount'
 import FormattedAddress from 'components/FormattedAddress'
@@ -59,7 +60,7 @@ export default function TapEventElem({
   return (
     <ActivityEvent
       event={event}
-      header="Distributed funds"
+      header={t`Distributed funds`}
       subject={
         <div
           style={{

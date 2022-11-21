@@ -1,4 +1,3 @@
-import { Trans } from '@lingui/macro'
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
 import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
@@ -6,6 +5,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useV2V3TerminalVersion } from 'hooks/V2V3TerminalVersion'
 import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/format/formatDate'
+
 import { contentLineHeight, smallHeaderStyle } from '../styles'
 import { ActivityElementEvent } from './activityElementEvent'
 
@@ -39,11 +39,7 @@ function Header({ header }: { header: string | JSX.Element }) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  return (
-    <div style={smallHeaderStyle(colors)}>
-      {typeof header === 'string' ? <Trans>{header}</Trans> : header}
-    </div>
-  )
+  return <div style={smallHeaderStyle(colors)}>{header}</div>
 }
 
 function SideDetails({ event }: { event: ActivityElementEvent }) {

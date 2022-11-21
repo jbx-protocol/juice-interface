@@ -1,11 +1,13 @@
-import { getAddress } from '@ethersproject/address'
 import { t } from '@lingui/macro'
+import { CV_V3 } from 'constants/cv'
 import { TransactionContext } from 'contexts/transactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { TransactorInstance } from 'hooks/Transactor'
+import { useLoadV2V3Contract } from 'hooks/v2v3/LoadV2V3Contract'
 import { LaunchFundingCyclesData } from 'hooks/v2v3/transactor/LaunchFundingCyclesTx'
 import omit from 'lodash/omit'
+import { V2V3ContractName } from 'models/v2v3/contracts'
 import { JBPayDataSourceFundingCycleMetadata } from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
 import {
@@ -37,6 +39,18 @@ export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFun
   const { projectOwnerAddress } = useContext(V2V3ProjectContext)
 
   const projectTitle = useV2ProjectTitle()
+  const V3JBDirectory = useLoadV2V3Contract({
+    cv: CV_V3,
+    contractName: V2V3ContractName.JBDirectory,
+  })
+  const V3JBFundingCycleStore = useLoadV2V3Contract({
+    cv: CV_V3,
+    contractName: V2V3ContractName.JBFundingCycleStore,
+  })
+  const V3JBPrices = useLoadV2V3Contract({
+    cv: CV_V3,
+    contractName: V2V3ContractName.JBPrices,
+  })
 
   return async (
     {
@@ -56,27 +70,31 @@ export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFun
       await findJBTiered721DelegateStoreAddress()
     const collectionName = collectionMetadata.name
 
+    const contractsLoaded =
+      contracts &&
+      V3JBDirectory &&
+      V3JBFundingCycleStore &&
+      V3JBPrices &&
+      JBTiered721DelegateStoreAddress
+
     if (
       !transactor ||
       !projectOwnerAddress ||
-      !contracts ||
-      !JBTiered721DelegateStoreAddress ||
       !isValidMustStartAtOrAfter(
         mustStartAtOrAfter,
         fundingCycleData.duration,
       ) ||
       !collectionName ||
       !CIDs ||
-      !rewardTiers
+      !rewardTiers ||
+      !contractsLoaded
     ) {
       const missingParam = !transactor
         ? 'transactor'
         : !projectOwnerAddress
         ? 'projectOwnerAddress'
-        : !contracts
+        : !contractsLoaded
         ? 'contracts'
-        : !JBTiered721DelegateStoreAddress
-        ? 'JBTiered721DelegateStoreAddress'
         : null
 
       txOpts?.onError?.(
@@ -98,11 +116,9 @@ export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFun
       tiers,
       ownerAddress: projectOwnerAddress,
       contractAddresses: {
-        JBDirectoryAddress: getAddress(contracts.JBDirectory.address),
-        JBFundingCycleStoreAddress: getAddress(
-          contracts.JBFundingCycleStore.address,
-        ),
-        JBPricesAddress: getAddress(contracts.JBPrices.address),
+        JBDirectoryAddress: V3JBDirectory.address,
+        JBFundingCycleStoreAddress: V3JBFundingCycleStore.address,
+        JBPricesAddress: V3JBPrices.address,
         JBTiered721DelegateStoreAddress,
       },
     })

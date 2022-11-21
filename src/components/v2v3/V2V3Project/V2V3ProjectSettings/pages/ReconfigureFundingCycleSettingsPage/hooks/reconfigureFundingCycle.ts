@@ -9,9 +9,9 @@ import {
   useReconfigureV2V3FundingCycleTx,
 } from 'hooks/v2v3/transactor/ReconfigureV2V3FundingCycleTx'
 import { revalidateProject } from 'lib/api/nextjs'
-import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton'
 import { useCallback, useContext, useState } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
+import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'utils/nftFundingCycleMetadataOverrides'
 import { WEIGHT_UNCHANGED, WEIGHT_ZERO } from 'utils/v2v3/fundingCycle'
 import { EditingFundingCycleConfig } from './editingFundingCycleConfig'
 

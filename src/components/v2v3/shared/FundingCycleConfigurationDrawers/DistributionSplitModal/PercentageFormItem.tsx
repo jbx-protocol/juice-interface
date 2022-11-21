@@ -1,7 +1,7 @@
 import { Form, FormInstance } from 'antd'
 import NumberSlider from 'components/inputs/NumberSlider'
 import { AddOrEditSplitFormFields } from './types'
-import { percentageValidator } from './util'
+import { percentageValidator } from './utils'
 
 export function PercentageFormItem({
   form,

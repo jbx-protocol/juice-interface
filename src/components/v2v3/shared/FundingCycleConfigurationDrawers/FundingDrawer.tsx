@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
-import FundingForm from 'pages/create/forms/FundingForm'
 import FundingCycleDrawer from './FundingCycleDrawer'
+import { FundingForm } from './FundingForm'
 import { useFundingCycleDrawer } from './useFundingCycleDrawer'
 
 export default function FundingDrawer({

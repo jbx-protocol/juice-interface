@@ -4,6 +4,7 @@ import { Button, Form, Radio, Space } from 'antd'
 import { FormItemExt } from 'components/formItems/formItemExt'
 import TooltipIcon from 'components/TooltipIcon'
 import DistributionLimit from 'components/v2v3/shared/DistributionLimit'
+import { DistributionSplitCard } from 'components/v2v3/shared/DistributionSplitCard'
 import { CurrencyName } from 'constants/currency'
 import { ThemeContext } from 'contexts/themeContext'
 import { useWallet } from 'hooks/Wallet'
@@ -20,14 +21,13 @@ import {
   getTotalSplitsPercentage,
 } from 'utils/v2v3/distributions'
 import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2v3/math'
-import DistributionSplitCard from './DistributionSplitCard'
-import { DistributionSplitModal } from './DistributionSplitModal'
+import { DistributionSplitModal } from '../../DistributionSplitModal'
 import { PayoutConfigurationExplainerCollapse } from './PayoutConfigurationExplainerCollapse'
 import SpecificLimitModal from './SpecificLimitModal'
 
 type DistributionType = 'amount' | 'percent'
 
-export default function DistributionSplitsSection({
+export function DistributionSplitsSection({
   distributionLimit,
   setDistributionLimit,
   currencyName,

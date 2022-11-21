@@ -3,8 +3,8 @@ import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useLaunchFundingCyclesWithNftsTx } from 'hooks/JB721Delegate/transactor/LaunchFundingCyclesWithNftsTx'
 import { LaunchFundingCyclesData } from 'hooks/v2v3/transactor/LaunchFundingCyclesTx'
 import { TransactionCallbacks } from 'models/transaction'
-import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton'
 import { useContext } from 'react'
+import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'utils/nftFundingCycleMetadataOverrides'
 import { useLaunchFundingCyclesData } from './LaunchFundingCyclesData'
 
 function transformLaunchDataForNfts(

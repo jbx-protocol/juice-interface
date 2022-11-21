@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { TransactionReceipt } from '@ethersproject/providers'
+import { readProvider } from 'constants/readProvider'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import {
   useAppSelector,
@@ -9,7 +10,6 @@ import {
 } from 'hooks/AppSelector'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { TransactionCallbacks } from 'models/transaction'
-import { findTransactionReceipt } from 'pages/create/tabs/ReviewDeployTab/utils'
 import { useCallback, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { emitErrorNotification } from 'utils/notifications'
@@ -35,6 +35,31 @@ const getProjectIdFromNftLaunchReceipt = (
   const projectId = BigNumber.from(projectIdHex).toNumber()
 
   return projectId
+}
+
+/**
+ * Attempt to find the transaction receipt from a transaction hash.
+
+ * Will retry up to 5 times with a 2 second delay between each attempt. If no
+ * receipt is found after 5 attempts, undefined is returned.
+ * 
+ * @param txHash transaction hash
+ * @returns transaction receipt or undefined
+ */
+const findTransactionReceipt = async (txHash: string) => {
+  let retries = 5
+  let receipt
+  while (retries > 0 && !receipt) {
+    receipt = await readProvider.getTransactionReceipt(txHash)
+    if (receipt) break
+
+    retries -= 1
+    // wait 2s
+    await new Promise(r => setTimeout(r, 2000))
+    console.info('Retrying tx receipt lookup...')
+  }
+
+  return receipt
 }
 
 /**

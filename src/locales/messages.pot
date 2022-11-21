@@ -29,16 +29,10 @@ msgstr ""
 msgid "1. Get funded."
 msgstr ""
 
-msgid "1. Project details"
-msgstr ""
-
 msgid "1. Set ENS name"
 msgstr ""
 
 msgid "100% overflow"
-msgstr ""
-
-msgid "2. Funding cycle"
 msgstr ""
 
 msgid "2. Give ownership"
@@ -54,9 +48,6 @@ msgid "3-day delay"
 msgstr ""
 
 msgid "3. Manage your funds"
-msgstr ""
-
-msgid "3. Review and deploy"
 msgstr ""
 
 msgid "30 days"
@@ -491,9 +482,6 @@ msgstr ""
 msgid "Archiving your project will mean the following:"
 msgstr ""
 
-msgid "Are you sure you want to start over?"
-msgstr ""
-
 msgid "Are you sure?"
 msgstr ""
 
@@ -725,9 +713,6 @@ msgstr ""
 msgid "Configure your project's NFTs."
 msgstr ""
 
-msgid "Configure your project's first funding cycle below."
-msgstr ""
-
 msgid "Configure your project's token."
 msgstr ""
 
@@ -816,9 +801,6 @@ msgid "Contributors will receive this NFT when they contribute at least this amo
 msgstr ""
 
 msgid "Contributors will receive {discountRate}% more tokens for contributions they make this funding cycle compared to the next funding cycle."
-msgstr ""
-
-msgid "Contributors will see this message before they pay your project."
 msgstr ""
 
 msgid "Contributors won't receive any tokens when they pay this project."
@@ -1460,9 +1442,6 @@ msgstr ""
 msgid "I have read and accept the <0>Terms of Service</0>, and understand that any changes I make to my project's funding cycle will not be applied until AFTER Funding Cycle #1 has finished."
 msgstr ""
 
-msgid "I have read and accept the <0>Terms of Service</0>."
-msgstr ""
-
 msgid "I understand"
 msgstr ""
 
@@ -1599,9 +1578,6 @@ msgid "Juicebox project"
 msgstr ""
 
 msgid "Juicebox projects are funded in cycles. A Funding Cycle is a set period of time in which your project settings are locked. <0>Learn more.</0>"
-msgstr ""
-
-msgid "Juicebox projects are funded in cycles. You can think of this as a set period of time in which your project settings are locked."
 msgstr ""
 
 msgid "Juicebox projects use <0>ENS names</0> as handles. Projects with a handle have the following features:"
@@ -1865,12 +1841,6 @@ msgstr ""
 msgid "Next:"
 msgstr ""
 
-msgid "Next: Funding cycle"
-msgstr ""
-
-msgid "Next: Review and deploy"
-msgstr ""
-
 msgid "No"
 msgstr ""
 
@@ -1956,9 +1926,6 @@ msgid "Note: Tokens can be minted manually when allowed in the current funding c
 msgstr ""
 
 msgid "Notice from {0}"
-msgstr ""
-
-msgid "Once launched, your first funding cycle <0>can't be changed</0>. You can reconfigure upcoming funding cycles according to the project's <1>reconfiguration rules</1>."
 msgstr ""
 
 msgid "Only lowercase letters"
@@ -2184,12 +2151,6 @@ msgid "Project created by"
 msgstr ""
 
 msgid "Project description"
-msgstr ""
-
-msgid "Project details"
-msgstr ""
-
-msgid "Project details can be edited at any time."
 msgstr ""
 
 msgid "Project handle"
@@ -2477,9 +2438,6 @@ msgstr ""
 msgid "Review your project data below. Once launched, your first funding cycle can't be changed. You can reconfigure upcoming funding cycles according to your project's reconfiguration rules."
 msgstr ""
 
-msgid "Reward contributors with NFT's."
-msgstr ""
-
 msgid "Reward contributors with NFTs when they meet your configured funding criteria."
 msgstr ""
 
@@ -2694,9 +2652,6 @@ msgid "Should you Juicebox?"
 msgstr ""
 
 msgid "Show contributors a popup when they receive an NFT."
-msgstr ""
-
-msgid "Since you have not set a funding duration, future changes to these settings will be applied immediately."
 msgstr ""
 
 msgid "Skipped"
@@ -3006,9 +2961,6 @@ msgid "This will delete the payout for <0/>."
 msgstr ""
 
 msgid "This will enable your project's veNFT contract to spend unclaimed tokens in addition to project ERC-20 tokens."
-msgstr ""
-
-msgid "This will reset the data for your new project. All changes will be lost."
 msgstr ""
 
 msgid "Time Remaining"
@@ -3480,9 +3432,6 @@ msgid "You must grant permission to swap your tokens."
 msgstr ""
 
 msgid "You must own this V1 project."
-msgstr ""
-
-msgid "You must review and accept the Terms of Service."
 msgstr ""
 
 msgid "You must review and accept the risks."

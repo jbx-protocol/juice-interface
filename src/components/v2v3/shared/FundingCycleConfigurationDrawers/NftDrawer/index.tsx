@@ -272,7 +272,7 @@ export default function NftDrawer({
             color: colors.text.primary,
           }}
         >
-          {hasExistingNfts ? <h2>Edit NFT tiers</h2> : <h2>Add NFT tiers</h2>}
+          {hasExistingNfts ? <h2>Edit NFTs</h2> : <h2>Add NFTs</h2>}
           <p>{NFT_REWARDS_EXPLAINATION}</p>
 
           <Space direction="vertical" size="large" style={{ width: '100%' }}>
@@ -290,7 +290,7 @@ export default function NftDrawer({
 
           {rewardTiers?.length === 0 && (
             <Empty
-              description={t`No NFT tiers`}
+              description={t`No NFTs`}
               image={Empty.PRESENTED_IMAGE_SIMPLE}
               style={{ marginBottom: 0 }}
             />

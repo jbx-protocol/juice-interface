@@ -77,10 +77,10 @@ export default function NftRewardTierModal({
   return (
     <Modal
       open={open}
-      okText={mode === 'Edit' ? t`Save NFT tier` : t`Add NFT tier`}
+      okText={mode === 'Edit' ? t`Save NFT` : t`Add NFT`}
       onOk={onFormSaved}
       onCancel={onClose}
-      title={mode === 'Edit' ? t`Edit NFT tier` : t`Add NFT tier`}
+      title={mode === 'Edit' ? t`Edit NFT` : t`Add NFT`}
     >
       <Form layout="vertical" form={nftForm} initialValues={initialValues}>
         <Form.Item

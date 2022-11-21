@@ -1,14 +1,11 @@
-import EtherscanLink from 'components/EtherscanLink'
+import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
+import ETHAmount from 'components/currency/ETHAmount'
 import FormattedAddress from 'components/FormattedAddress'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
-
+import { ThemeContext } from 'contexts/themeContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { TapEvent } from 'models/subgraph-entities/v1/tap-event'
-import { formatHistoricalDate } from 'utils/format/formatDate'
-
-import { Trans } from '@lingui/macro'
-import ETHAmount from 'components/currency/ETHAmount'
-import { classNames } from 'utils/classNames'
+import { useContext } from 'react'
 
 export default function TapEventElem({
   event,
@@ -26,6 +23,11 @@ export default function TapEventElem({
       >
     | undefined
 }) {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+
+  // Load individual DistributeToPayoutMod events, emitted by internal transactions of the Tap transaction
   const { data: payoutEvents } = useSubgraphQuery(
     event?.id
       ? {
@@ -55,79 +57,76 @@ export default function TapEventElem({
   if (!event) return null
 
   return (
-    <div>
-      <div className="flex content-between justify-between">
+    <ActivityEvent
+      event={event}
+      header="Distributed funds"
+      subject={
+        <div
+          style={{
+            color: colors.text.primary,
+            fontWeight: 500,
+          }}
+        >
+          <ETHAmount amount={event.netTransferAmount} />
+        </div>
+      }
+      extra={
         <div>
-          <div className="text-xs text-grey-400 dark:text-slate-200">
-            <Trans>Distributed funds</Trans>
-          </div>
-          {payoutEvents?.length ? (
-            <div className="font-medium text-black dark:text-slate-100">
-              <ETHAmount amount={event.netTransferAmount} />
-            </div>
-          ) : null}
-        </div>
-
-        <div className="text-right">
-          <div className="text-xs text-grey-400 dark:text-slate-200">
-            {event.timestamp && (
-              <span>{formatHistoricalDate(event.timestamp * 1000)}</span>
-            )}{' '}
-            <EtherscanLink value={event.txHash} type="tx" />
-          </div>
-          <div className="text-xs text-grey-400 dark:text-slate-200">
-            <Trans>
-              called by <FormattedAddress address={event.caller} />
-            </Trans>
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-1">
-        {payoutEvents?.map(e => (
-          <div
-            className="flex content-between items-baseline text-sm"
-            key={e.id}
-          >
-            <div className="font-medium">
-              {e.modProjectId?.gt(0) ? (
-                <span>
-                  <V1ProjectHandle projectId={e.modProjectId} />
-                </span>
-              ) : (
-                <FormattedAddress address={e.modBeneficiary} />
-              )}
-              :
-            </div>
-
-            <div className="text-grey-500 dark:text-grey-300">
-              <ETHAmount amount={e.modCut} />
-            </div>
-          </div>
-        ))}
-
-        {event.beneficiaryTransferAmount?.gt(0) && (
-          <div
-            className={classNames(
-              'flex items-baseline justify-between',
-              payoutEvents?.length && payoutEvents.length > 1 ? 'text-sm' : '',
-            )}
-          >
-            <div className="font-medium">
-              <FormattedAddress address={event.beneficiary} />:
-            </div>
+          {payoutEvents?.map(e => (
             <div
-              className={classNames(
-                payoutEvents?.length && payoutEvents.length > 1
-                  ? 'text-grey-500 dark:text-grey-300'
-                  : 'font-medium',
-              )}
+              key={e.id}
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'baseline',
+                fontSize: '0.8rem',
+              }}
             >
-              <ETHAmount amount={event.beneficiaryTransferAmount} />
+              <div style={{ fontWeight: 500 }}>
+                {e.modProjectId?.gt(0) ? (
+                  <span>
+                    <V1ProjectHandle projectId={e.modProjectId} />
+                  </span>
+                ) : (
+                  <FormattedAddress address={e.modBeneficiary} />
+                )}
+                :
+              </div>
+
+              <div style={{ color: colors.text.secondary }}>
+                <ETHAmount amount={e.modCut} />
+              </div>
             </div>
-          </div>
-        )}
-      </div>
-    </div>
+          ))}
+
+          {event.beneficiaryTransferAmount?.gt(0) && (
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'baseline',
+                fontSize:
+                  payoutEvents?.length && payoutEvents.length > 1
+                    ? '0.8rem'
+                    : undefined,
+              }}
+            >
+              <div style={{ fontWeight: 500 }}>
+                <FormattedAddress address={event.beneficiary} />:
+              </div>
+              <div
+                style={
+                  payoutEvents?.length && payoutEvents.length > 1
+                    ? { color: colors.text.secondary }
+                    : { fontWeight: 500 }
+                }
+              >
+                <ETHAmount amount={event.beneficiaryTransferAmount} />
+              </div>
+            </div>
+          )}
+        </div>
+      }
+    />
   )
 }

@@ -35,13 +35,13 @@ const ExtraContainer: React.FC = ({ children }) => {
   )
 }
 
-function Header({ header }: { header: string }) {
+function Header({ header }: { header: string | JSX.Element }) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
   return (
     <div style={smallHeaderStyle(colors)}>
-      <Trans>{header}</Trans>
+      {typeof header === 'string' ? <Trans>{header}</Trans> : header}
     </div>
   )
 }
@@ -96,16 +96,23 @@ function Subject({ subject }: { subject: string | JSX.Element | null }) {
   )
 }
 
+/**
+ *
+ * @param header Text that concisely labels the event
+ * @param subject The primary information from a specific event
+ * @param event Project activity event object
+ * @param extra Optional content added beneath the subject
+ */
 export function ActivityEvent({
   header,
   subject,
-  event,
   extra,
+  event,
 }: {
-  header: string
+  header: string | JSX.Element
   subject: string | JSX.Element | null
-  extra?: string | JSX.Element | null
   event: ActivityElementEvent
+  extra?: string | JSX.Element | null
 }) {
   return (
     <>

@@ -1,6 +1,7 @@
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import FormattedAddress from 'components/FormattedAddress'
 import { ProjectCreateEvent } from 'models/subgraph-entities/vX/project-create-event'
+
 import { ActivityEvent } from './ActivityElement'
 
 export default function ProjectCreateEventElem({
@@ -10,7 +11,7 @@ export default function ProjectCreateEventElem({
 }) {
   return (
     <ActivityEvent
-      header={t`Created`}
+      header="Created"
       subject={
         <Trans>
           Project created by <FormattedAddress address={event.caller} />

@@ -1,6 +1,7 @@
 import { Space } from 'antd'
 import Callout from 'components/Callout'
-import { useRef } from 'react'
+import { ThemeContext } from 'contexts/themeContext'
+import { useContext, useRef } from 'react'
 import { Provider } from 'react-redux'
 import store, { createStore } from 'redux/store'
 import { useInitialEditingData } from '../../../../ReconfigureFundingCycleSettingsPage/hooks/initialEditingData'
@@ -25,6 +26,10 @@ function RelaunchV2FundingCycleForm() {
 // }
 
 export function FundingCycleStep() {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+
   const localStoreRef = useRef<typeof store>()
   if (!localStoreRef.current) {
     localStoreRef.current = createStore()
@@ -35,13 +40,15 @@ export function FundingCycleStep() {
       {localStoreRef.current && (
         <Provider store={localStoreRef.current}>
           <Space direction="vertical">
-            <h3>Launch V3 funding cycle</h3>
+            <h3 style={{ color: colors.text.primary }}>
+              Launch V3 funding cycle
+            </h3>
             <p>
               You currently have a funding cycle on Juicebox V2. Use the form
               below to relaunch your funding cycle on Juicebox V3.
             </p>
 
-            <Callout>
+            <Callout style={{ marginBottom: '2rem' }}>
               Your V2 funding cycle configuration has been prefilled.
             </Callout>
 

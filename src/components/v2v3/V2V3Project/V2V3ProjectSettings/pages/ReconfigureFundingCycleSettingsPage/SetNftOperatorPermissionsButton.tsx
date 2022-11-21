@@ -1,6 +1,6 @@
 import { CheckCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-import { Button } from 'antd'
+import { Button, ButtonProps } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { ThemeContext } from 'contexts/themeContext'
 import { useSetNftOperatorPermissionsTx } from 'hooks/v2v3/transactor/SetNftOperatorPermissionsTx'
@@ -8,9 +8,10 @@ import { useContext, useState } from 'react'
 
 export function SetNftOperatorPermissionsButton({
   onConfirmed,
+  ...props
 }: {
   onConfirmed: VoidFunction
-}) {
+} & ButtonProps) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -38,6 +39,7 @@ export function SetNftOperatorPermissionsButton({
         onClick={setPermissions}
         type="primary"
         disabled={txExecuted}
+        {...props}
       >
         <span>
           <Trans>Set NFT operator permissions</Trans>

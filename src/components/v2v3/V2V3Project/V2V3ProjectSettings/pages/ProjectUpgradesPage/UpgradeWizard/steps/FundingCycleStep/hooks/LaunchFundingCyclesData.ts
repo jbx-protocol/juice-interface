@@ -1,6 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { EditingFundingCycleConfig } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/ReconfigureFundingCycleSettingsPage/hooks/editingFundingCycleConfig'
-import { getWeightArgument } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/ReconfigureFundingCycleSettingsPage/hooks/reconfigureFundingCycle'
 import { CV_V3 } from 'constants/cv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
@@ -81,17 +80,9 @@ export function useLaunchFundingCyclesData({
     return
   }
 
-  const weight = getWeightArgument({
-    currentFundingCycleWeight: fundingCycle.weight,
-    newFundingCycleWeight: editingFundingCycleData.weight,
-  })
-
   const initialLaunchData = {
     projectId,
-    fundingCycleData: {
-      ...editingFundingCycleData,
-      weight,
-    },
+    fundingCycleData: editingFundingCycleData,
     fundingCycleMetadata: editingFundingCycleMetadata,
     fundAccessConstraints: editingFundAccessConstraints,
     groupedSplits: [

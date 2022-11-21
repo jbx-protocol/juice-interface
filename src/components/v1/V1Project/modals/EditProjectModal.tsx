@@ -1,7 +1,8 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Divider, Form, Modal } from 'antd'
+import { Button, Divider, Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { FormItems } from 'components/formItems'
+import { JuiceModal } from 'components/JuiceModal'
 import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useSetProjectHandleTx } from 'hooks/v1/transactor/SetProjectHandleTx'
@@ -142,7 +143,7 @@ export default function EditProjectModal({
   }
 
   return (
-    <Modal
+    <JuiceModal
       title={t`Edit project`}
       open={open}
       onCancel={onCancel}
@@ -188,6 +189,6 @@ export default function EditProjectModal({
           </Button>
         </Form.Item>
       </Form>
-    </Modal>
+    </JuiceModal>
   )
 }

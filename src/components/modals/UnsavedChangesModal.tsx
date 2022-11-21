@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Modal } from 'antd'
+import { JuiceModal } from 'components/JuiceModal'
 
 export default function UnsavedChangesModal({
   open,
@@ -11,7 +11,7 @@ export default function UnsavedChangesModal({
   onCancel: () => void
 }) {
   return (
-    <Modal
+    <JuiceModal
       title={t`Unsaved changes`}
       okText={t`Discard`}
       open={open}
@@ -22,6 +22,6 @@ export default function UnsavedChangesModal({
       <Trans>
         You have unsaved changes. Are you sure you want to discard them?
       </Trans>
-    </Modal>
+    </JuiceModal>
   )
 }

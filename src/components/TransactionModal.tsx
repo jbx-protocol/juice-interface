@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Modal, ModalProps } from 'antd'
+import { ModalProps } from 'antd'
 import { readNetwork } from 'constants/networks'
 import { ThemeContext } from 'contexts/themeContext'
 import { TxHistoryContext } from 'contexts/txHistoryContext'
@@ -8,6 +8,7 @@ import { TxStatus } from 'models/transaction'
 import Image from 'next/image'
 import { PropsWithChildren, useContext, useMemo } from 'react'
 import EtherscanLink from './EtherscanLink'
+import { JuiceModal } from './JuiceModal'
 import quint from '/public/assets/quint.gif'
 
 type TransactionModalProps = PropsWithChildren<
@@ -102,12 +103,12 @@ export default function TransactionModal(props: TransactionModalProps) {
   }
 
   return (
-    <Modal {...modalProps}>
+    <JuiceModal {...modalProps}>
       {props.transactionPending ? (
         <PendingTransactionModalBody />
       ) : (
         props.children
       )}
-    </Modal>
+    </JuiceModal>
   )
 }

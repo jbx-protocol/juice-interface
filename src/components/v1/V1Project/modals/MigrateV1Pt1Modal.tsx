@@ -1,7 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
-import { Button, Modal } from 'antd'
+import { Button } from 'antd'
 import ExternalLink from 'components/ExternalLink'
+import { JuiceModal } from 'components/JuiceModal'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useAddToBalanceTx } from 'hooks/v1/transactor/AddToBalanceTx'
 import { useMigrateV1ProjectTx } from 'hooks/v1/transactor/MigrateV1ProjectTx'
@@ -53,7 +54,7 @@ export default function MigrateV1Pt1Modal({
   }
 
   return (
-    <Modal
+    <JuiceModal
       open={open}
       onOk={migrate}
       onCancel={onCancel}
@@ -105,6 +106,6 @@ export default function MigrateV1Pt1Modal({
           </p>
         </div>
       )}
-    </Modal>
+    </JuiceModal>
   )
 }

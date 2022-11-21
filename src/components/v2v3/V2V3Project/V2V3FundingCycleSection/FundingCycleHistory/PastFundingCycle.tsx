@@ -1,7 +1,8 @@
 import { CaretRightOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Modal, Space } from 'antd'
+import { Space } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
+import { JuiceModal } from 'components/JuiceModal'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import useProjectDistributionLimit from 'hooks/v2v3/contractReader/ProjectDistributionLimit'
@@ -91,7 +92,7 @@ export function PastFundingCycle({
         </Space>
       </div>
 
-      <Modal
+      <JuiceModal
         open={modalVisible}
         title={`Cycle #${fundingCycle?.number.toString()}`}
         onCancel={() => setModalVisible(false)}
@@ -105,7 +106,7 @@ export function PastFundingCycle({
           distributionLimit={distributionLimit}
           distributionLimitCurrency={distributionLimitCurrency}
         />
-      </Modal>
+      </JuiceModal>
     </>
   )
 }

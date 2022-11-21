@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
-import { Modal } from 'antd'
 import ExternalLink from 'components/ExternalLink'
+import { JuiceModal } from './JuiceModal'
 
 export default function PayWarningModal({
   open,
@@ -12,7 +12,7 @@ export default function PayWarningModal({
   onCancel: VoidFunction
 }) {
   return (
-    <Modal
+    <JuiceModal
       open={open}
       onOk={onOk}
       onCancel={onCancel}
@@ -34,6 +34,6 @@ export default function PayWarningModal({
           losses by projects or their supporters.
         </Trans>
       </p>
-    </Modal>
+    </JuiceModal>
   )
 }

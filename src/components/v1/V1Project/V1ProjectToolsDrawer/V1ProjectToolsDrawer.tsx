@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/macro'
-import { Divider, Drawer, Space, Tabs } from 'antd'
+import { Divider, Space, Tabs } from 'antd'
+import { JuiceDrawer } from 'components/JuiceDrawer'
 import { AddToProjectBalanceForm } from 'components/Project/ProjectToolsDrawer/AddToProjectBalanceForm'
 import { ExportSection } from 'components/Project/ProjectToolsDrawer/ExportSection'
 import { TransferOwnershipForm } from 'components/Project/ProjectToolsDrawer/TransferOwnershipForm'
@@ -82,7 +83,7 @@ export function V1ProjectToolsDrawer({
   }
 
   return (
-    <Drawer
+    <JuiceDrawer
       open={open}
       onClose={onClose}
       width={600}
@@ -93,6 +94,6 @@ export function V1ProjectToolsDrawer({
       </h1>
 
       <Tabs items={TABS} />
-    </Drawer>
+    </JuiceDrawer>
   )
 }

@@ -2,29 +2,27 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Statistic } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
-import TooltipLabel from 'components/TooltipLabel'
-import { formatWad } from 'utils/format/formatNumber'
-import {
-  formatDiscountRate,
-  formatRedemptionRate,
-  MAX_DISTRIBUTION_LIMIT,
-} from 'utils/v2v3/math'
-
 import FundingCycleDetailWarning from 'components/Project/FundingCycleDetailWarning'
+import TooltipLabel from 'components/TooltipLabel'
 import SplitList from 'components/v2v3/shared/SplitList'
 import {
   DISCOUNT_RATE_EXPLANATION,
   REDEMPTION_RATE_EXPLANATION,
 } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
-import { Split } from 'models/splits'
-import { detailedTimeString } from 'utils/format/formatTime'
-
 import { CurrencyName } from 'constants/currency'
 import {
   FUNDING_CYCLE_WARNING_TEXT,
   RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
 } from 'constants/fundingWarningText'
+import { Split } from 'models/splits'
+import { formatWad } from 'utils/format/formatNumber'
+import { detailedTimeString } from 'utils/format/formatTime'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
+import {
+  formatDiscountRate,
+  formatRedemptionRate,
+  MAX_DISTRIBUTION_LIMIT,
+} from 'utils/v2v3/math'
 
 export function DistributionLimitStatistic({
   distributionLimit,

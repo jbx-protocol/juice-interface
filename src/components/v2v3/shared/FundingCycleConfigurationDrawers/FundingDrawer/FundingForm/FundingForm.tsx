@@ -15,7 +15,6 @@ import { useAppSelector } from 'hooks/AppSelector'
 import isEqual from 'lodash/isEqual'
 import { Split } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
-import DistributionSplitsSection from 'pages/create/forms/FundingForm/DistributionSplitsSection'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import {
   defaultFundingCycleMetadata,
@@ -38,6 +37,7 @@ import { getTotalSplitsPercentage } from 'utils/v2v3/distributions'
 import { getDefaultFundAccessConstraint } from 'utils/v2v3/fundingCycle'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { SerializedV2V3FundAccessConstraint } from 'utils/v2v3/serializers'
+import { DistributionSplitsSection } from './DistributionSplitsSection'
 import DurationInputAndSelect from './DurationInputAndSelect'
 import { FundingCycleExplainerCollapse } from './FundingCycleExplainerCollapse'
 
@@ -50,7 +50,7 @@ type FundingFormFields = {
 
 const DEFAULT_FUNDING_CYCLE_DURATION_DAYS = 14
 
-export default function FundingForm({
+export function FundingForm({
   onFormUpdated,
   onFinish,
   isCreate,

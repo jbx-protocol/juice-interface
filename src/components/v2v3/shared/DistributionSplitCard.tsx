@@ -21,7 +21,7 @@ import {
   preciseFormatSplitPercent,
   SPLITS_TOTAL_PERCENT,
 } from 'utils/v2v3/math'
-import { DistributionSplitModal } from './DistributionSplitModal'
+import { DistributionSplitModal } from './FundingCycleConfigurationDrawers/DistributionSplitModal/DistributionSplitModal'
 
 const Parens = ({
   withParens = false,
@@ -35,7 +35,7 @@ const gutter = 10
 const labelColSpan = 9
 const dataColSpan = 15
 
-export default function DistributionSplitCard({
+export function DistributionSplitCard({
   split,
   splits,
   distributionLimit,

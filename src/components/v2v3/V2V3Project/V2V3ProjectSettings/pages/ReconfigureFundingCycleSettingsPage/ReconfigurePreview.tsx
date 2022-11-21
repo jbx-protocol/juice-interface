@@ -11,6 +11,16 @@ import {
   V2V3FundingCycleData,
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
+
+import { formattedNum } from 'utils/format/formatNumber'
+import { V2V3CurrencyName } from 'utils/v2v3/currency'
+import { getDefaultFundAccessConstraint } from 'utils/v2v3/fundingCycle'
+import {
+  formatIssuanceRate,
+  formatReservedRate,
+  MAX_DISTRIBUTION_LIMIT,
+  weightAmountPermyriad,
+} from 'utils/v2v3/math'
 import {
   AllowMintingStatistic,
   AllowSetTerminalsStatistic,
@@ -25,17 +35,8 @@ import {
   RedemptionRateStatistic,
   ReservedSplitsStatistic,
   ReservedTokensStatistic,
-} from 'pages/create/tabs/ReviewDeployTab/FundingAttributes'
-import NftSummarySection from 'pages/create/tabs/ReviewDeployTab/NftSummarySection'
-import { formattedNum } from 'utils/format/formatNumber'
-import { V2V3CurrencyName } from 'utils/v2v3/currency'
-import { getDefaultFundAccessConstraint } from 'utils/v2v3/fundingCycle'
-import {
-  formatIssuanceRate,
-  formatReservedRate,
-  MAX_DISTRIBUTION_LIMIT,
-  weightAmountPermyriad,
-} from 'utils/v2v3/math'
+} from './FundingAttributes'
+import NftSummarySection from './NftSummarySection'
 
 const gutter = 20
 

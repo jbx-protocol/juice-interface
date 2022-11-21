@@ -6,8 +6,8 @@ import {
 } from 'hooks/AppSelector'
 import { useLaunchProjectWithNftsTx } from 'hooks/JB721Delegate/transactor/LaunchProjectWithNftsTx'
 import { TransactionCallbacks } from 'models/transaction'
-import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'pages/create/tabs/ReviewDeployTab/DeployProjectWithNftsButton'
 import { useCallback, useMemo } from 'react'
+import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'utils/nftFundingCycleMetadataOverrides'
 import { buildJB721TierParams } from 'utils/nftRewards'
 
 /**

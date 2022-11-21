@@ -290,13 +290,13 @@ msgstr ""
 msgid "Add NFT tier"
 msgstr ""
 
+msgid "Add a note about this reconfiguration on-chain."
+msgstr ""
+
 msgid "Add a payout"
 msgstr ""
 
 msgid "Add an on-chain memo to this payment."
-msgstr ""
-
-msgid "Add an on-chain memo to this reconfiguration."
 msgstr ""
 
 msgid "Add funds to this project's balance without minting tokens."

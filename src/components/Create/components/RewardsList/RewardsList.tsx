@@ -77,7 +77,6 @@ export const RewardsList: React.FC<RewardsListProps> &
               .map((reward, i) => (
                 <div key={reward.id}>
                   <RewardItem
-                    tier={i + 1}
                     reward={reward}
                     onEditClicked={() => {
                       setSelectedReward(reward)

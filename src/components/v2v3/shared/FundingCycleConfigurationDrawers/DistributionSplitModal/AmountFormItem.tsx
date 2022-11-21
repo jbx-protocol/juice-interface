@@ -13,7 +13,7 @@ import { useContext } from 'react'
 import { formatWad, parseWad, stripCommas } from 'utils/format/formatNumber'
 import { amountSubFee, formatFee } from 'utils/v2v3/math'
 import { AddOrEditSplitFormFields, SplitType } from './types'
-import { percentageValidator } from './util'
+import { percentageValidator } from './utils'
 
 export function AmountFormItem({
   form,

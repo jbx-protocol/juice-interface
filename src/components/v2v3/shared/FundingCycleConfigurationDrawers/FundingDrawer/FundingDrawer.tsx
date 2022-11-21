@@ -1,15 +1,17 @@
 import { t } from '@lingui/macro'
 import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
-import RulesForm from 'pages/create/forms/RulesForm'
-import FundingCycleDrawer from './FundingCycleDrawer'
-import { useFundingCycleDrawer } from './useFundingCycleDrawer'
+import FundingCycleDrawer from '../FundingCycleDrawer'
+import { useFundingCycleDrawer } from '../useFundingCycleDrawer'
+import { FundingForm } from './FundingForm'
 
-export default function RulesDrawer({
+export function FundingDrawer({
   open,
   onClose,
+  isCreate,
 }: {
   open: boolean
   onClose: VoidFunction
+  isCreate?: boolean
 }) {
   const {
     handleDrawerCloseClick,
@@ -22,11 +24,15 @@ export default function RulesDrawer({
   return (
     <>
       <FundingCycleDrawer
-        title={t`Rules`}
+        title={t`Funding`}
         open={open}
         onClose={handleDrawerCloseClick}
       >
-        <RulesForm onFinish={emitDrawerClose} onFormUpdated={setFormUpdated} />
+        <FundingForm
+          onFinish={emitDrawerClose}
+          onFormUpdated={setFormUpdated}
+          isCreate={isCreate}
+        />
       </FundingCycleDrawer>
       <UnsavedChangesModal
         open={unsavedChangesModalVisible}

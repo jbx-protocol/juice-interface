@@ -1,11 +1,11 @@
 import { Trans } from '@lingui/macro'
 import { Button, Form, Space } from 'antd'
 import { ItemNoInput } from 'components/formItems/ItemNoInput'
+import ReservedTokensFormItem from 'components/v2v3/shared/FundingCycleConfigurationDrawers/TokenDrawer/TokenForm/ReservedTokensFormItem'
 import { ThemeContext } from 'contexts/themeContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import round from 'lodash/round'
-import ReservedTokensFormItem from 'pages/create/forms/TokenForm/ReservedTokensFormItem'
 
 import {
   CSSProperties,
@@ -137,7 +137,7 @@ function DiscountRateExtra({
   )
 }
 
-export default function TokenForm({
+export function TokenForm({
   onFormUpdated,
   onFinish,
   isCreate,

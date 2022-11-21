@@ -43,7 +43,7 @@ export default function ProjectDetailsForm({
       style={style}
       onValuesChange={() => onValuesChange?.()}
     >
-      <Space direction="vertical" size="large">
+      <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <div>
           <FormItems.ProjectName
             name="name"

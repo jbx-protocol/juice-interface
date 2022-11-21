@@ -1,3 +1,4 @@
+import { t } from '@lingui/macro'
 import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import ETHAmount from 'components/currency/ETHAmount'
 import FormattedAddress from 'components/FormattedAddress'
@@ -55,7 +56,7 @@ export default function DistributePayoutsElem({
   return (
     <ActivityEvent
       event={event}
-      header="Distributed funds"
+      header={t`Distributed funds`}
       subject={
         distributePayoutsEvents?.length ? (
           <ETHAmount amount={event.distributedAmount} />

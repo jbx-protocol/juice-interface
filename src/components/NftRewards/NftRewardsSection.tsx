@@ -82,6 +82,8 @@ export function NftRewardsSection() {
     payInCurrency === ETH ? payAmount : fromWad(converter.usdToWei(payAmount))
 
   const onTierDeselect = (tierId: number | undefined) => {
+    // Note: We don't reset the pay amount on deselecting to allow the user to make a payment without minting a NFT
+
     if (tierId === undefined || !rewardTiers || !payMetadata) return
 
     const newSelectedTierIds = [...payMetadata.tierIdsToMint].filter(
@@ -92,14 +94,6 @@ export function NftRewardsSection() {
       tierIdsToMint: newSelectedTierIds,
       dontMint: !newSelectedTierIds.length,
     })
-
-    const newPayAmount = sumTierFloors(
-      rewardTiers,
-      newSelectedTierIds,
-    ).toString()
-
-    setPayAmount?.(newPayAmount)
-    validatePayAmount?.(newPayAmount)
   }
 
   const onTierSelect = (tierId: number | undefined) => {

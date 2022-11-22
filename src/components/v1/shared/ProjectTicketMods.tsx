@@ -67,6 +67,7 @@ export default function ProjectTicketMods({
 
       return (
         <div
+          className="transition-colors border border-solid border-smoke-300 dark:border-slate-300 hover:border-smoke-500 dark:hover:border-slate-100"
           style={{
             display: 'flex',
             padding: 10,
@@ -74,7 +75,6 @@ export default function ProjectTicketMods({
             borderRadius: radii.md,
           }}
           key={mod.beneficiary ?? '' + index}
-          className="clickable-border"
         >
           <Space
             direction="vertical"

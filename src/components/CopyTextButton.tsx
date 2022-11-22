@@ -42,7 +42,7 @@ export default function CopyTextButton({
         style={{ ...style, color: colors.text.primary, cursor: 'pointer' }}
         role="button"
       >
-        {button ?? <CopyOutlined className="copyIcon" />}
+        {button ?? <CopyOutlined />}
       </span>
     </Tooltip>
   )

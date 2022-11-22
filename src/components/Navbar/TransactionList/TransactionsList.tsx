@@ -34,7 +34,7 @@ export function TransactionsList({
   return (
     <div style={{ ...style }}>
       <div
-        className="clickable-border"
+        className="transition-colors border border-solid border-smoke-300 dark:border-slate-300 hover:border-smoke-500 dark:hover:border-slate-100"
         role="button"
         style={{
           cursor: 'pointer',

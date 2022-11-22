@@ -36,7 +36,7 @@ type DistributionType = 'amount' | 'percent' | 'both'
 export function DistributionSplitModal({
   open,
   mode,
-  overrideDistTypeWithPercentage = false,
+  payoutPage = false,
   splits, // Locked and editable splits
   editingSplit, // Split that is currently being edited (only in the case mode ==='Edit')
   onSplitsChanged,
@@ -49,6 +49,7 @@ export function DistributionSplitModal({
   open: boolean
   mode: ModalMode // 'Add' or 'Edit' or 'Undefined'
   overrideDistTypeWithPercentage?: boolean
+  payoutPage?: boolean
   splits: Split[]
   editingSplit?: Split
   onSplitsChanged?: (splits: Split[]) => void
@@ -102,12 +103,12 @@ export function DistributionSplitModal({
   }, [editingSplitType, form])
 
   useEffect(() => {
-    if (overrideDistTypeWithPercentage) {
-      setDistributionType('percent')
+    if (payoutPage && distributionLimit) {
+      setDistributionType('both')
       return
     }
     setDistributionType(distributionLimitIsInfinite ? 'percent' : 'amount')
-  }, [distributionLimitIsInfinite, overrideDistTypeWithPercentage, open])
+  }, [distributionLimit, distributionLimitIsInfinite, open, payoutPage])
 
   // Set the initial info for form from split
   // If editing, format the lockedUntil and projectId
@@ -307,7 +308,6 @@ export function DistributionSplitModal({
             </Radio>
           </Radio.Group>
         </Form.Item>
-
         {editingSplitType === 'address' ? (
           <Form.Item
             name="beneficiary"
@@ -354,9 +354,9 @@ export function DistributionSplitModal({
             <EthAddressInput />
           </Form.Item>
         ) : null}
-
         {/* Only show amount input if project distribution limit is not infinite */}
-        {distributionLimit && distributionType === 'amount' ? (
+        {!distributionLimitIsInfinite &&
+        (distributionType === 'amount' || distributionType === 'both') ? (
           <AmountFormItem
             form={form}
             currencyName={currencyName}
@@ -366,9 +366,10 @@ export function DistributionSplitModal({
             distributionLimit={distributionLimit}
             onCurrencyChange={onCurrencyChange}
           />
-        ) : (
+        ) : null}
+        {distributionType === 'percent' || distributionType === 'both' ? (
           <PercentageFormItem form={form} />
-        )}
+        ) : null}
         <Form.Item
           name="lockedUntil"
           label={t`Lock until`}

@@ -191,6 +191,9 @@ export const V2V3EditPayouts = ({
   const remainingSplitsPercentage = 100 - totalSplitsPercentage
   const ownerSplitCardVisible =
     remainingSplitsPercentage > 0 && distributionLimit?.gt(0)
+  const distributionLimitIsInfinite = distributionLimit?.eq(
+    MAX_DISTRIBUTION_LIMIT,
+  )
 
   const onSplitsChanged = useCallback(
     (newSplits: Split[]) => {
@@ -201,14 +204,11 @@ export const V2V3EditPayouts = ({
 
   const renderSplitCard = useCallback(
     (split: Split, index: number, isLocked?: boolean) => {
-      const distributionLimitIsInfinite = distributionLimit?.eq(
-        MAX_DISTRIBUTION_LIMIT,
-      ) // hack to work around rounding error in parseWad in `DistributionSplitCard
       return (
         <DistributionSplitCard
           key={split.beneficiary ?? index}
-          editInputMode="Percentage" // Required for edit payouts
           split={split}
+          isPayoutPage={true}
           splits={editingSplits}
           distributionLimit={
             distributionLimitIsInfinite
@@ -229,8 +229,9 @@ export const V2V3EditPayouts = ({
       )
     },
     [
-      distributionLimit,
       editingSplits,
+      distributionLimitIsInfinite,
+      distributionLimit,
       currencyName,
       onSplitsChanged,
       editableSplits,
@@ -287,7 +288,6 @@ export const V2V3EditPayouts = ({
             <Trans>Sum of percentages cannot exceed 100%.</Trans>
           </span>
         )}
-
         <div
           style={{
             display: 'flex',
@@ -306,7 +306,6 @@ export const V2V3EditPayouts = ({
             <Trans>Total: {totalSplitsPercentage.toFixed(2)}%</Trans>
           </div>
         </div>
-
         <Button
           type="dashed"
           onClick={() => {
@@ -321,7 +320,13 @@ export const V2V3EditPayouts = ({
         </Button>
       </Space>
       <DistributionSplitModal
+        payoutPage={true}
         open={addSplitModalVisible}
+        distributionLimit={
+          distributionLimitIsInfinite
+            ? undefined
+            : formatWad(distributionLimit, { thousandsSeparator: '' })
+        }
         onSplitsChanged={onSplitsChanged}
         mode={'Add'}
         splits={editingSplits}

@@ -1,7 +1,9 @@
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import { CurrencyContext } from 'contexts/currencyContext'
+import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
+
 import FormattedNumberInput from '../../inputs/FormattedNumberInput'
 import PayInputSubText from './PayInputSubText'
 import { PayProjectFormContext } from './payProjectFormContext'
@@ -14,10 +16,14 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
     currencyMetadata,
     currencies: { USD, ETH },
   } = useContext(CurrencyContext)
+  const {
+    nftRewards: { rewardTiers },
+  } = useContext(NftRewardsContext)
   const { PayButton, form: payProjectForm } = useContext(PayProjectFormContext)
   const {
     payAmount,
     setPayAmount,
+    setPayMetadata,
     payInCurrency,
     setPayInCurrency,
     errorMessage,
@@ -33,6 +39,24 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
     const newPayAmount = value ?? '0'
     setPayAmount?.(newPayAmount)
     validatePayAmount?.(newPayAmount)
+
+    // TODO block pay input / notify user if NFTs still loading?
+    if (!rewardTiers) return
+
+    // Get ID of the most expensive reward tier that can be afforded by the current pay amount
+    const highestAffordableTierId = rewardTiers
+      .filter(tier => tier.contributionFloor <= parseFloat(newPayAmount))
+      .sort((a, b) =>
+        a.contributionFloor > b.contributionFloor ? -1 : 1,
+      )[0]?.id
+
+    const tierIdsToMint =
+      highestAffordableTierId !== undefined ? [highestAffordableTierId] : []
+
+    setPayMetadata?.({
+      tierIdsToMint,
+      dontMint: !tierIdsToMint.length,
+    })
   }
 
   if (!PayButton) return null

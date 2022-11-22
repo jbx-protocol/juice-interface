@@ -23,7 +23,7 @@ export const MobileStep = ({
   return (
     <div
       className={classNames(
-        'hover:bg-smoke-100 dark:hover:bg-slate-300 text-base leading-5 select-none',
+        'select-none text-base leading-5 hover:bg-smoke-100 dark:hover:bg-slate-300',
         selected ? 'font-medium' : 'font-normal',
         !selected
           ? step.disabled
@@ -34,7 +34,7 @@ export const MobileStep = ({
       )}
       onClick={handleOnClick}
     >
-      <div className="flex gap-1 items-center py-4 px-6">
+      <div className="flex items-center gap-1 py-4 px-6">
         <span>
           {index + 1}. {step.title}
         </span>

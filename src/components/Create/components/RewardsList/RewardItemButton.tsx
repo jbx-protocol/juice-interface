@@ -9,7 +9,7 @@ export const RewardItemButton: React.FC<{ onClick?: VoidFunction }> = ({
   const isMobile = useMobile()
   return (
     <div
-      className={classNames(isMobile ? 'h-11 w-11 flex justify-center' : '')}
+      className={classNames(isMobile ? 'flex h-11 w-11 justify-center' : '')}
     >
       <Button
         className={classNames(isMobile ? 'text-2xl' : 'p-0')}

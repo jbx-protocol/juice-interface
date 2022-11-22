@@ -34,7 +34,7 @@ export const RewardItem = ({
     <div className="flex flex-col gap-4">
       {/* Title line */}
       <div className="flex items-center justify-between">
-        <div className="font-medium text-lg">{title}</div>
+        <div className="text-lg font-medium">{title}</div>
         <Space size="middle">
           <RewardItemButton onClick={onEditClicked}>
             <EditOutlined />
@@ -57,7 +57,7 @@ export const RewardItem = ({
             )}
           </div>
           {/* Description Col */}
-          <div className="flex flex-col flex-1 gap-8">
+          <div className="flex flex-1 flex-col gap-8">
             {/* Top */}
             <div
               className={classNames(
@@ -66,10 +66,10 @@ export const RewardItem = ({
               )}
             >
               <div className="flex flex-col gap-2">
-                <div className="text-grey-600 dark:text-slate-200 font-normal uppercase text-xs">
+                <div className="text-xs font-normal uppercase text-grey-600 dark:text-slate-200">
                   <Trans>Minimum Contribution</Trans>
                 </div>
-                <div className="font-medium text-base">
+                <div className="text-base font-medium">
                   {minimumContribution.toString()} ETH
                 </div>
               </div>
@@ -94,10 +94,10 @@ export const RewardItem = ({
 const Description = ({ description }: { description: ReactNode }) => {
   return (
     <div className="flex flex-col gap-2">
-      <div className="text-grey-600 dark:text-slate-200 font-normal uppercase text-xs">
+      <div className="text-xs font-normal uppercase text-grey-600 dark:text-slate-200">
         <Trans>Description</Trans>
       </div>
-      <div className="font-normal text-sm">{description}</div>
+      <div className="text-sm font-normal">{description}</div>
     </div>
   )
 }
@@ -110,14 +110,14 @@ const TertiaryDetails = ({
   url: string | undefined
 }) => {
   return (
-    <div className="flex flex-col gap-1 max-w-[11rem] whitespace-nowrap overflow-hidden overflow-ellipsis">
+    <div className="flex max-w-[11rem] flex-col gap-1 overflow-hidden overflow-ellipsis whitespace-nowrap">
       {maximumSupply && (
-        <div className="font-normal text-xs">
+        <div className="text-xs font-normal">
           <Trans>Supply: {maximumSupply}</Trans>
         </div>
       )}
       {url && (
-        <div className="font-normal text-xs flex gap-2 items-center">
+        <div className="flex items-center gap-2 text-xs font-normal">
           <LinkOutlined />
           <div className="overflow-hidden overflow-ellipsis">
             <ExternalLink href={url}>{prettyUrl(url)}</ExternalLink>

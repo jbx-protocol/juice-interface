@@ -30,7 +30,7 @@ export const FundingConfigurationReview = () => {
               span={6}
               title={t`Funding cycles`}
               desc={
-                <div className="font-medium text-base">{fundingCycles}</div>
+                <div className="text-base font-medium">{fundingCycles}</div>
               }
             />
             <DescriptionCol
@@ -38,7 +38,7 @@ export const FundingConfigurationReview = () => {
               title={t`Duration`}
               desc={
                 duration ? (
-                  <div className="font-medium text-base">{duration}</div>
+                  <div className="text-base font-medium">{duration}</div>
                 ) : null
               }
             />
@@ -46,7 +46,7 @@ export const FundingConfigurationReview = () => {
               span={6}
               title={t`Funding target`}
               desc={
-                <div className="font-medium text-base">{fundingTarget}</div>
+                <div className="text-base font-medium">{fundingTarget}</div>
               }
             />
           </Row>
@@ -54,7 +54,7 @@ export const FundingConfigurationReview = () => {
             <DescriptionCol
               span={6}
               title={t`Payouts`}
-              desc={<div className="font-medium text-base">{payoutsText}</div>}
+              desc={<div className="text-base font-medium">{payoutsText}</div>}
             />
             <DescriptionCol
               span={18}

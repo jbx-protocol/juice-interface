@@ -60,7 +60,7 @@ export const RecallCard: React.FC<{
   if (!show.length) return null
 
   return (
-    <div className="w-full py-3 px-4 bg-smoke-100 dark:bg-slate-600 flex flex-col gap-2 font-medium">
+    <div className="flex w-full flex-col gap-2 bg-smoke-100 py-3 px-4 font-medium dark:bg-slate-600">
       {show.includes('fundingCycles') && <FundingCycleRecallOption />}
       {show.includes('fundingTarget') && <FundingTargetRecallOption />}
     </div>

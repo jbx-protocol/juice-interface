@@ -6,7 +6,7 @@ export const CreateButton: React.FC<ButtonProps> = props => {
     <Button
       {...props}
       className={classNames(
-        'text-haze-400 dark:text-haze-300 bg-haze-50 dark:bg-haze-900 border-haze-400',
+        'border-haze-400 bg-haze-50 text-haze-400 dark:bg-haze-900 dark:text-haze-300',
         props.className,
       )}
       type="dashed"

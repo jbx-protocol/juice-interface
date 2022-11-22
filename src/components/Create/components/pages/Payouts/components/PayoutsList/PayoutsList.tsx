@@ -150,7 +150,7 @@ export const PayoutsList = (
           <>
             <div className="flex items-center pt-4">
               <span>Current Funding Target: {fundingTarget}</span>
-              <Divider type="vertical" className="h-6 mx-4" />
+              <Divider type="vertical" className="mx-4 h-6" />
               <span>
                 Expenses:{' '}
                 {formatCurrencyAmount({
@@ -164,7 +164,7 @@ export const PayoutsList = (
         {!distributionLimit?.amount.eq(MAX_DISTRIBUTION_LIMIT) &&
           expensesExceedsFundingTarget && (
             <CreateCallout.Warning collapsible={false}>
-              <div className="font-medium text-base pb-2">
+              <div className="pb-2 text-base font-medium">
                 <Trans>Funding Target Exceeded</Trans>
               </div>
               <p>
@@ -179,7 +179,7 @@ export const PayoutsList = (
               </p>
               <Button
                 type="text"
-                className="text-white dark:text-black bg-warning-800 dark:bg-warning-100"
+                className="bg-warning-800 text-white dark:bg-warning-100 dark:text-black"
                 onClick={syncExpenses}
               >
                 Sync now

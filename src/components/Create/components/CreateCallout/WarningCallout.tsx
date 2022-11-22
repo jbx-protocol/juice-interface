@@ -9,7 +9,7 @@ export const WarningCallout: React.FC<{
   const collapse = collapsible ?? isMobile
   return (
     <Callout
-      className="bg-warning-50 dark:bg-warning-900 text-warning-800 dark:text-warning-100 border-warning-200 dark:border-warning-500 border border-solid"
+      className="border border-solid border-warning-200 bg-warning-50 text-warning-800 dark:border-warning-500 dark:bg-warning-900 dark:text-warning-100"
       iconComponent={<WarningOutlined className="text-2xl text-warning-500" />}
       collapsible={collapse}
     >

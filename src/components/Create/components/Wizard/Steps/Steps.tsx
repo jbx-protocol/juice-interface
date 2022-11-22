@@ -45,7 +45,7 @@ export const Steps = () => {
     return (
       <>
         <div
-          className="select-none cursor-pointer"
+          className="cursor-pointer select-none"
           onClick={progressModal.open}
         >
           <Progress

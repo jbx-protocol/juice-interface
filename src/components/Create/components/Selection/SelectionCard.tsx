@@ -27,7 +27,7 @@ const Container: React.FC<{
   return (
     <div
       className={classNames(
-        'transition-colors border rounded-sm border-solid',
+        'rounded-sm border border-solid transition-colors',
         borderColorClassNames,
         backgroundColorClassNames,
       )}
@@ -89,7 +89,7 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
       <div
         role="button"
         className={classNames(
-          'py-6 select-none',
+          'select-none py-6',
           isDisabled ? 'cursor-not-allowed' : 'cursor-pointer',
         )}
         onClick={onClick}
@@ -107,7 +107,7 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
             <div className="flex flex-1 flex-col gap-1">
               <div
                 className={classNames(
-                  'font-medium text-lg m-0 mt-1',
+                  'm-0 mt-1 text-lg font-medium',
                   titleColorClassNames,
                 )}
               >

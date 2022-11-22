@@ -35,7 +35,7 @@ export function Create() {
     <V2V3ContractsProvider initialCv={CV_V3}>
       <TransactionProvider>
         <V2V3CurrencyProvider>
-          <h1 className="text-center uppercase font-medium text-base text-black dark:text-slate-100">
+          <h1 className="text-center text-base font-medium uppercase text-black dark:text-slate-100">
             <Trans>Create a project</Trans>
           </h1>
           {/* TODO: Remove wizard-create once form item css override is replaced */}

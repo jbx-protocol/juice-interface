@@ -15,7 +15,7 @@ export const PageButtonControl = ({
     useContext(PageContext)
 
   return (
-    <div className="mt-12 flex justify-between items-center">
+    <div className="mt-12 flex items-center justify-between">
       {canGoBack && <BackButton onClick={goToPreviousPage} />}
       <div className="ml-auto">
         {!isFinalPage ? (

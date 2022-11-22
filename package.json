@@ -146,6 +146,7 @@
     "postcss-cli": "10.0.0",
     "prettier": "^2.7.1",
     "prettier-plugin-organize-imports": "^3.1.0",
+    "prettier-plugin-tailwindcss": "^0.1.13",
     "react-error-overlay": "6.0.9",
     "react-test-renderer": "^17",
     "tailwindcss": "3.2.3",

@@ -19,7 +19,7 @@ export const MobileProjectDetailsReview = () => {
     <>
       <DescriptionCol
         title={t`Project name`}
-        desc={<div className="font-medium text-base">{name}</div>}
+        desc={<div className="text-base font-medium">{name}</div>}
       />
       <DescriptionCol
         title={t`Project description`}
@@ -39,26 +39,26 @@ export const MobileProjectDetailsReview = () => {
       <DescriptionCol
         title={t`Twitter`}
         desc={
-          twitter ? <div className="font-medium text-sm">{twitter}</div> : null
+          twitter ? <div className="text-sm font-medium">{twitter}</div> : null
         }
       />
       <DescriptionCol
         title={t`Discord`}
         desc={
-          discord ? <div className="font-medium text-sm">{discord}</div> : null
+          discord ? <div className="text-sm font-medium">{discord}</div> : null
         }
       />
       <DescriptionCol
         title={t`Website`}
         desc={
-          infoUri ? <div className="font-medium text-sm">{infoUri}</div> : null
+          infoUri ? <div className="text-sm font-medium">{infoUri}</div> : null
         }
       />
       <DescriptionCol
         title={t`Pay button text`}
         desc={
           payButton ? (
-            <div className="font-medium text-base">{payButton}</div>
+            <div className="text-base font-medium">{payButton}</div>
           ) : null
         }
       />
@@ -66,7 +66,7 @@ export const MobileProjectDetailsReview = () => {
         title={t`Pay disclaimer`}
         desc={
           payDisclosure ? (
-            <div className="font-medium text-base">{payDisclosure}</div>
+            <div className="text-base font-medium">{payDisclosure}</div>
           ) : null
         }
       />

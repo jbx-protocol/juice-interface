@@ -18,23 +18,23 @@ export const MobileFundingConfigurationReview = () => {
     <>
       <DescriptionCol
         title={t`Funding cycles`}
-        desc={<div className="font-medium text-base">{fundingCycles}</div>}
+        desc={<div className="text-base font-medium">{fundingCycles}</div>}
       />
       <DescriptionCol
         title={t`Duration`}
         desc={
           duration ? (
-            <div className="font-medium text-base">{duration}</div>
+            <div className="text-base font-medium">{duration}</div>
           ) : null
         }
       />
       <DescriptionCol
         title={t`Funding target`}
-        desc={<div className="font-medium text-base">{fundingTarget}</div>}
+        desc={<div className="text-base font-medium">{fundingTarget}</div>}
       />
       <DescriptionCol
         title={t`Payouts`}
-        desc={<div className="font-medium text-base">{payoutsText}</div>}
+        desc={<div className="text-base font-medium">{payoutsText}</div>}
       />
       <DescriptionCol
         title={t`Payout addresses`}

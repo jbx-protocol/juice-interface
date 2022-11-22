@@ -39,7 +39,7 @@ const Header: React.FC<{ skipped?: boolean }> = ({
   skipped = false,
 }) => {
   return (
-    <h2 className="flex items-center gap-2 mb-0 font-medium text-lg text-black dark:text-grey-200">
+    <h2 className="mb-0 flex items-center gap-2 text-lg font-medium text-black dark:text-grey-200">
       {children}
       {skipped ? (
         <span>
@@ -231,7 +231,7 @@ export const ReviewDeployPage = () => {
       />
       <JuiceModal
         title={
-          <h2 className="font-medium text-xl text-black dark:text-grey-200">
+          <h2 className="text-xl font-medium text-black dark:text-grey-200">
             <Trans>Are you sure?</Trans>
           </h2>
         }

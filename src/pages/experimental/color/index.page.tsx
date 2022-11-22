@@ -7,7 +7,7 @@ export default function Colors() {
   const swathe = themeToSwathe(a.theme as any)
 
   return (
-    <div className="px-16 py-16 grid grid-cols-12 gap-y-16">
+    <div className="grid grid-cols-12 gap-y-16 px-16 py-16">
       {swathe.map(gradient => (
         <ColorGradient key={gradient.name} gradient={gradient} />
       ))}
@@ -33,9 +33,9 @@ const ColorGradient = ({ gradient }: { gradient: Gradient }) => {
 
 const ColorSquare = ({ name, color }: Color) => {
   return (
-    <div className="w-32 h-32 rounded-xl shadow-xl overflow-hidden flex-shrink-0">
+    <div className="h-32 w-32 flex-shrink-0 overflow-hidden rounded-xl shadow-xl">
       <div className="h-1/2 w-full" style={{ backgroundColor: color }}></div>
-      <div className="h-1/2 w-full m-2">
+      <div className="m-2 h-1/2 w-full">
         <div className="font-medium">{name}</div>
         <div className="text-[#525252]">{color}</div>
       </div>

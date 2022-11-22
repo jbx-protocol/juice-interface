@@ -23,7 +23,7 @@ export const MobileProgressModal: React.FC<{
       width="280px"
       title={
         <>
-          <h2 className="font-medium text-xl text-black dark:text-grey-200">
+          <h2 className="text-xl font-medium text-black dark:text-grey-200">
             <Trans>Create a project</Trans>
           </h2>
         </>

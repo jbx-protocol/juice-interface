@@ -34,7 +34,7 @@ export const ProjectDetailsReview = () => {
             <DescriptionCol
               span={6}
               title={t`Project name`}
-              desc={<div className="font-medium text-base">{name}</div>}
+              desc={<div className="text-base font-medium">{name}</div>}
             />
             <DescriptionCol
               span={18}
@@ -68,7 +68,7 @@ export const ProjectDetailsReview = () => {
                     title={t`Twitter`}
                     desc={
                       twitter ? (
-                        <div className="font-medium text-sm">{twitter}</div>
+                        <div className="text-sm font-medium">{twitter}</div>
                       ) : null
                     }
                   />
@@ -77,7 +77,7 @@ export const ProjectDetailsReview = () => {
                     title={t`Discord`}
                     desc={
                       discord ? (
-                        <div className="font-medium text-sm">{discord}</div>
+                        <div className="text-sm font-medium">{discord}</div>
                       ) : null
                     }
                   />
@@ -86,7 +86,7 @@ export const ProjectDetailsReview = () => {
                     title={t`Website`}
                     desc={
                       infoUri ? (
-                        <div className="font-medium text-sm">{infoUri}</div>
+                        <div className="text-sm font-medium">{infoUri}</div>
                       ) : null
                     }
                   />
@@ -98,7 +98,7 @@ export const ProjectDetailsReview = () => {
                       title={t`Pay button text`}
                       desc={
                         payButton ? (
-                          <div className="font-medium text-base">
+                          <div className="text-base font-medium">
                             {payButton}
                           </div>
                         ) : null
@@ -111,7 +111,7 @@ export const ProjectDetailsReview = () => {
                       title={t`Pay disclaimer`}
                       desc={
                         payDisclosure ? (
-                          <div className="font-medium text-base">
+                          <div className="text-base font-medium">
                             {payDisclosure}
                           </div>
                         ) : null

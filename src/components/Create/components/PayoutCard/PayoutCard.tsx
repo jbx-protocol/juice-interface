@@ -66,7 +66,7 @@ export const PayoutCard = ({
       />
       <JuiceModal
         title={
-          <h2 className="font-medium text-xl text-black dark:text-grey-200">
+          <h2 className="text-xl font-medium text-black dark:text-grey-200">
             <Trans>Are you sure?</Trans>
           </h2>
         }

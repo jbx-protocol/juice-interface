@@ -19,7 +19,7 @@ export const DescriptionCol = ({
       <div className="flex flex-col gap-2">
         <div
           className={
-            'text-grey-600 dark:text-slate-200 font-normal uppercase text-xs'
+            'text-xs font-normal uppercase text-grey-600 dark:text-slate-200'
           }
         >
           {title}

@@ -55,7 +55,7 @@ export const PayoutsPage: React.FC = () => {
       scrollToFirstError
     >
       <Space className="w-full" direction="vertical" size="large">
-        <h3 className="text-black dark:text-grey-200 font-medium text-lg">
+        <h3 className="text-lg font-medium text-black dark:text-grey-200">
           <Trans>How would you like to distribute payments?</Trans>
         </h3>
         <Form.Item noStyle name="selection">
@@ -94,7 +94,7 @@ export const PayoutsPage: React.FC = () => {
         </Form.Item>
         {selection && (
           <Space className="w-full" direction="vertical">
-            <h3 className="text-black dark:text-grey-200 font-medium text-lg">
+            <h3 className="text-lg font-medium text-black dark:text-grey-200">
               <Trans>Who's getting paid?</Trans>
             </h3>
             <p>

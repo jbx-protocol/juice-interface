@@ -47,7 +47,7 @@ export const AllocationList = ({
 
   return (
     <>
-      <div className="flex flex-col gap-4 w-full">
+      <div className="flex w-full flex-col gap-4">
         {children(modal, { ...allocations, setSelectedAllocation })}
         {isEditable && (
           <CreateButton

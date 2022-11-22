@@ -100,7 +100,7 @@ export const AddEditRewardModal = ({
     <JuiceModal
       className={className}
       title={
-        <h2 className="font-medium text-xl text-black dark:text-grey-200">
+        <h2 className="text-xl font-medium text-black dark:text-grey-200">
           {isEditing ? t`Edit NFT` : t`Add NFT`}
         </h2>
       }
@@ -227,11 +227,11 @@ const UploadedImage = ({
   onRemoveImageClicked?: VoidFunction
 }) => {
   return (
-    <div className="flex justify-center py-2 bg-smoke-200 dark:bg-slate-600">
+    <div className="flex justify-center bg-smoke-200 py-2 dark:bg-slate-600">
       <div className="relative">
         <RewardImage className="h-[11.5rem] w-[11.5rem]" src={imageUrl} />
         <CloseCircleFilled
-          className="cursor-pointer text-haze-400 text-2xl absolute top-0 right-0"
+          className="absolute top-0 right-0 cursor-pointer text-2xl text-haze-400"
           // TODO: We require @tailwind base to do this in className, so use style for now
           style={{ transform: 'translate(50%, -50%)' }}
           onClick={stopPropagation(onRemoveImageClicked)}

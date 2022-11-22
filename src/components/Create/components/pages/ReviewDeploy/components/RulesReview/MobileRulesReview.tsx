@@ -12,7 +12,7 @@ export const MobileRulesReview = () => {
         span={6}
         title={t`Reconfiguration`}
         desc={
-          <div className="font-medium text-base">
+          <div className="text-base font-medium">
             {strategy ? (
               strategy
             ) : customAddress ? (
@@ -26,13 +26,13 @@ export const MobileRulesReview = () => {
       <DescriptionCol
         span={6}
         title={t`Pause payments`}
-        desc={<div className="font-medium text-base">{pausePayments}</div>}
+        desc={<div className="text-base font-medium">{pausePayments}</div>}
       />
       <DescriptionCol
         span={6}
         title={t`Terminal configuration`}
         desc={
-          <div className="font-medium text-base">{terminalConfiguration}</div>
+          <div className="text-base font-medium">{terminalConfiguration}</div>
         }
       />
     </>

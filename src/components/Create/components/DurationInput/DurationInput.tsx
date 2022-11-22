@@ -43,7 +43,7 @@ export const DurationInput: React.FC<{
         onChange={handleInputChange}
       />
       <JuiceSelect
-        className="flex-1 min-w-[6.75rem]"
+        className="min-w-[6.75rem] flex-1"
         defaultValue="days"
         value={value?.unit}
         onChange={unit =>

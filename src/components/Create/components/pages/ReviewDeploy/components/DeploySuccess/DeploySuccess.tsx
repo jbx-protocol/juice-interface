@@ -55,8 +55,8 @@ export const DeploySuccess = ({ projectId }: { projectId: number }) => {
       )}
     >
       <Image src="/assets/dancing.gif" width={218} height={218} />
-      <div className="pt-8 font-medium text-4xl">Congratulations!</div>
-      <div className="mt-6 font-normal text-xl">{deployGreeting}</div>
+      <div className="pt-8 text-4xl font-medium">Congratulations!</div>
+      <div className="mt-6 text-xl font-normal">{deployGreeting}</div>
       <div className="flex gap-2 pt-16">
         <ExternalLink href={twitterShareUrl}>
           <Button>

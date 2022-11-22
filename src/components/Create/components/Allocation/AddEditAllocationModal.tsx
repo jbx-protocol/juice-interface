@@ -135,7 +135,7 @@ export const AddEditAllocationModal = ({
     <JuiceModal
       className={className}
       title={
-        <h2 className="text-black dark:text-grey-200 font-medium text-lg">
+        <h2 className="text-lg font-medium text-black dark:text-grey-200">
           {isEditing ? t`Edit ${allocationName}` : t`Add new ${allocationName}`}
         </h2>
       }
@@ -320,7 +320,7 @@ const DistributionAmountInput = ({
 
   if (mode === 'amount') {
     return (
-      <div className="flex w-full gap-4 items-center">
+      <div className="flex w-full items-center gap-4">
         <FormattedNumberInput
           className="flex-1"
           value={amount?.amount}

@@ -34,7 +34,7 @@ export const AllocationItem = ({
           <div>{title}</div>
           {extra}
         </div>
-        <Divider className="my-3 m-0" />
+        <Divider className="m-0 my-3" />
         <div className="pr-3 pl-7">{amount}</div>
       </div>
     )
@@ -44,7 +44,7 @@ export const AllocationItem = ({
     <Row className={classNames(containerClasses, className)} onClick={onClick}>
       <Col
         span={13}
-        className="py-3 pl-7 border-0 border-r-[1px] border-solid border-smoke-200  dark:border-slate-300"
+        className="border-0 border-r-[1px] border-solid border-smoke-200 py-3 pl-7  dark:border-slate-300"
       >
         {title}
       </Col>

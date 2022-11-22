@@ -26,7 +26,7 @@ export const MobileProjectTokenReview = () => {
       <DescriptionCol
         title={t`Initial mint rate`}
         desc={
-          <div className="font-medium text-base">
+          <div className="text-base font-medium">
             {formatAmount(
               weight
                 ? formatIssuanceRate(weight)
@@ -38,7 +38,7 @@ export const MobileProjectTokenReview = () => {
       <DescriptionCol
         title={t`Reserved tokens`}
         desc={
-          <div className="font-medium text-base">
+          <div className="text-base font-medium">
             {formatReservedRate(
               reservedRate
                 ? reservedRate
@@ -60,7 +60,7 @@ export const MobileProjectTokenReview = () => {
       <DescriptionCol
         title={t`Discount rate`}
         desc={
-          <div className="font-medium text-base">
+          <div className="text-base font-medium">
             {formatDiscountRate(
               discountRate
                 ? discountRate
@@ -72,7 +72,7 @@ export const MobileProjectTokenReview = () => {
       <DescriptionCol
         title={t`Redemption rate`}
         desc={
-          <div className="font-medium text-base">
+          <div className="text-base font-medium">
             {formatRedemptionRate(
               redemptionRate
                 ? redemptionRate
@@ -83,7 +83,7 @@ export const MobileProjectTokenReview = () => {
       />
       <DescriptionCol
         title={t`Allow token minting`}
-        desc={<div className="font-medium text-base">{allowTokenMinting}</div>}
+        desc={<div className="text-base font-medium">{allowTokenMinting}</div>}
       />
     </>
   )

@@ -39,7 +39,7 @@ export default function ThemePicker() {
 
   return (
     <div
-      className="transition-colors border border-solid border-smoke-300 dark:border-slate-300 hover:border-smoke-500 dark:hover:border-slate-100"
+      className="border border-solid border-smoke-300 transition-colors hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100"
       style={switchStyle}
       role="switch"
       aria-checked={themeOption === ThemeOption.dark}

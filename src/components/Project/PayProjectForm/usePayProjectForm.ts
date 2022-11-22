@@ -16,6 +16,11 @@ export interface JB721DelegatePayMetadata {
 
 export type PayMetadata = JB721DelegatePayMetadata // in future, maybe more
 
+const DEFAULT_PAY_METADATA: PayMetadata = {
+  dontMint: true,
+  tierIdsToMint: [],
+}
+
 export interface PayProjectForm {
   payAmount: string
   setPayAmount: Dispatch<SetStateAction<string>>
@@ -39,7 +44,9 @@ export function usePayProjectForm(): PayProjectForm {
 
   const [payAmount, setPayAmount] = useState<string>('0')
   const [payInCurrency, setPayInCurrency] = useState<CurrencyOption>(ETH)
-  const [payMetadata, setPayMetadata] = useState<PayMetadata | undefined>()
+  const [payMetadata, setPayMetadata] = useState<PayMetadata | undefined>(
+    DEFAULT_PAY_METADATA,
+  )
   const [errorMessage, setErrorMessage] = useState<string>('')
 
   const { userAddress } = useWallet()

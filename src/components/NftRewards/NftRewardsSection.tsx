@@ -13,13 +13,9 @@ import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useMobile from 'hooks/Mobile'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
-import {
-  getNftRewardTier,
-  hasNftRewards,
-  sumTierFloors,
-} from 'utils/nftRewards'
+import { hasNftRewards, sumTierFloors } from 'utils/nftRewards'
 import { useModalFromUrlQuery } from '../modals/hooks/useModalFromUrlQuery'
 import { RewardTier } from './RewardTier'
 
@@ -85,89 +81,47 @@ export function NftRewardsSection() {
   const payAmountETH =
     payInCurrency === ETH ? payAmount : fromWad(converter.usdToWei(payAmount))
 
-  const selectTier = useCallback(
-    (id: number) => {
-      if (!rewardTiers) return
-      const newSelectedTierIds = [...selectedTierIds, id]
-      setSelectedTierIds(newSelectedTierIds)
-      setPayMetadata?.({
-        tierIdsToMint: newSelectedTierIds,
-      })
-    },
-    [setPayMetadata, rewardTiers, selectedTierIds],
-  )
+  const onTierDeselect = (tierId: number | undefined) => {
+    if (tierId === undefined || !rewardTiers) return
 
-  const deselectTier = useCallback(
-    (id: number | undefined) => {
-      if (id === undefined || !rewardTiers) return
-      const newSelectedTierIds = [...selectedTierIds].filter(_id => _id !== id)
-      setPayMetadata?.({
-        tierIdsToMint: newSelectedTierIds,
-      })
-      setSelectedTierIds(newSelectedTierIds)
-
-      const newPayAmount = sumTierFloors(
-        rewardTiers,
-        newSelectedTierIds,
-      ).toString()
-      setPayAmount?.(newPayAmount)
-      validatePayAmount?.(newPayAmount)
-    },
-    [
-      setPayMetadata,
-      selectedTierIds,
-      setPayAmount,
-      rewardTiers,
-      validatePayAmount,
-    ],
-  )
-
-  // sets highest eligible NFT based on pay input amount when pay input amount increases from 0
-  useEffect(() => {
-    if (!rewardTiers || !payAmountETH || selectedTierIds.length > 0) return
-
-    const highestEligibleRewardTier = getNftRewardTier({
-      nftRewardTiers: rewardTiers,
-      payAmountETH: parseFloat(payAmountETH),
+    const newSelectedTierIds = [...selectedTierIds].filter(
+      selectedTierId => selectedTierId !== tierId,
+    )
+    setPayMetadata?.({
+      tierIdsToMint: newSelectedTierIds,
+      dontMint: !newSelectedTierIds.length,
     })
 
-    // set selected as highest reward tier above a certain amount
-    if (highestEligibleRewardTier?.id) {
-      selectTier(highestEligibleRewardTier.id)
-    }
-  }, [payAmountETH, rewardTiers, selectTier, selectedTierIds])
+    setSelectedTierIds(newSelectedTierIds)
 
-  // sets pay input when selected nft's sum to greater than the current pay input amount
-  // *Only want this to run when clicking NFTs (selectedTierIds changes)*
-  useEffect(() => {
-    if (!rewardTiers) return
-    const sumSelectedTiers = sumTierFloors(rewardTiers, selectedTierIds)
+    const newPayAmount = sumTierFloors(
+      rewardTiers,
+      newSelectedTierIds,
+    ).toString()
+
+    setPayAmount?.(newPayAmount)
+    validatePayAmount?.(newPayAmount)
+  }
+
+  const onTierSelect = (tierId: number | undefined) => {
+    if (!tierId || !rewardTiers) return
+
+    const newSelectedTierIds = [...selectedTierIds, tierId]
+    setSelectedTierIds(newSelectedTierIds)
+    setPayMetadata?.({
+      tierIdsToMint: newSelectedTierIds,
+      dontMint: false,
+    })
+
+    setPayInCurrency?.(ETH)
+
+    // sets pay input when selected nft's sum to greater than the current pay input amount
+    const sumSelectedTiers = sumTierFloors(rewardTiers, newSelectedTierIds)
     if (sumSelectedTiers > parseFloat(payAmountETH ?? '0')) {
       const newPayAmount = sumSelectedTiers.toString()
       setPayAmount?.(newPayAmount)
       validatePayAmount?.(newPayAmount)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedTierIds])
-
-  // Deselects nft's when pay input amount is changed and drops below the sum of the nft amounts
-  // *Only want this to run when pay input in changed*
-  useEffect(() => {
-    if (!rewardTiers) return
-    if (
-      selectedTierIds.length > 0 &&
-      parseFloat(payAmountETH ?? '0') <
-        sumTierFloors(rewardTiers, selectedTierIds)
-    ) {
-      setSelectedTierIds([])
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [payAmountETH])
-
-  const handleSelected = (id: number | undefined) => {
-    if (!id) return
-    selectTier(id)
-    setPayInCurrency?.(ETH)
   }
 
   if (!hasNftRewards(fundingCycleMetadata)) {
@@ -215,8 +169,8 @@ export function NftRewardsSection() {
                     rewardTiers?.[idx + 1]?.contributionFloor
                   }
                   isSelected={selectedTierIds.includes(rewardTier.id ?? -1)}
-                  onClick={() => handleSelected(rewardTier.id)}
-                  onRemove={() => deselectTier(rewardTier.id)}
+                  onClick={() => onTierSelect(rewardTier.id)}
+                  onRemove={() => onTierDeselect(rewardTier.id)}
                 />
               </Col>
             ))}

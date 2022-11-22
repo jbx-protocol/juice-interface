@@ -188,7 +188,12 @@ export function V2V3ConfirmPayModal({
       onOk={() => form.submit()}
       okText={t`Pay`}
       connectWalletText={t`Connect wallet to pay`}
-      onCancel={onCancel}
+      onCancel={() => {
+        form.resetFields()
+        // resetFields sets to initialValues, which includes NFTs, so have to remove them manually
+        form.setFieldValue('stickerUrls', [])
+        onCancel?.()
+      }}
       confirmLoading={loading}
       width={640}
       centered

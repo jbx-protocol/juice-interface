@@ -22,10 +22,10 @@ export default function ReconfigurationStrategyOption({
   return (
     <div
       className={classNames(
-        'flex p-4 rounded-sm transition-colors bg-white dark:bg-slate-700 border border-solid',
+        'flex rounded-sm border border-solid bg-white p-4 transition-colors dark:bg-slate-700',
         selected
           ? 'border-haze-400'
-          : 'cursor-pointer border-smoke-300 dark:border-slate-300 hover:border-smoke-500 dark:hover:border-slate-100',
+          : 'cursor-pointer border-smoke-300 hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100',
       )}
       onClick={() => onSelectBallot(strategy)}
     >

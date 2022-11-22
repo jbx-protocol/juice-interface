@@ -17,7 +17,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { isAddress } from 'ethers/lib/utils'
 import { NftRewardTier } from 'models/nftRewardTier'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import {
   getUnsafeV2V3FundingCycleProperties,
   getV2V3FundingCycleRiskCount,
@@ -33,11 +33,11 @@ export interface V2V3PayFormType {
 
 export const V2V3PayForm = ({
   form,
-  nftRewardTier,
+  nftRewardTiers,
   ...props
 }: {
   form: FormInstance<V2V3PayFormType>
-  nftRewardTier: NftRewardTier | undefined
+  nftRewardTiers: NftRewardTier[] | undefined
 } & FormProps) => {
   const {
     theme: { colors },
@@ -63,19 +63,16 @@ export const V2V3PayForm = ({
   const canAddMoreStickers =
     (stickerUrls ?? []).length < ProjectPreferences.MAX_IMAGES_PAYMENT_MEMO
 
+  useEffect(() => {
+    const initialStickerUrls = nftRewardTiers?.map(
+      (tier: NftRewardTier) => tier.imageUrl,
+    )
+    form.setFieldsValue({ stickerUrls: initialStickerUrls })
+  })
+
   return (
     <>
-      <Form
-        form={form}
-        layout="vertical"
-        {...props}
-        initialValues={{
-          // add the NFT image to the pay memo.
-          stickerUrls: nftRewardTier?.imageUrl
-            ? [nftRewardTier.imageUrl]
-            : undefined,
-        }}
-      >
+      <Form form={form} layout="vertical" {...props}>
         <Space direction="vertical" size="large">
           {hasIssuedTokens && (
             <Form.Item
@@ -101,7 +98,10 @@ export const V2V3PayForm = ({
             </Form.Item>
           )}
 
-          <MinimalCollapse header={<Trans>Payment options</Trans>}>
+          <MinimalCollapse
+            header={<Trans>Payment options</Trans>}
+            defaultOpen={Boolean(nftRewardTiers?.length)}
+          >
             <Form.Item
               label={t`Memo (optional)`}
               className={'antd-no-number-handler'}
@@ -143,9 +143,10 @@ export const V2V3PayForm = ({
                   />
                 }
               </div>
-              <Form.Item name="stickerUrls">
-                <StickerSelection />
-              </Form.Item>
+            </Form.Item>
+
+            <Form.Item name="stickerUrls">
+              <StickerSelection />
             </Form.Item>
 
             <Form.Item name="uploadedImage">

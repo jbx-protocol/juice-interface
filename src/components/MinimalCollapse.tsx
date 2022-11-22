@@ -7,11 +7,13 @@ export function MinimalCollapse({
   header,
   style,
   light,
+  defaultOpen,
   ...props
 }: PropsWithChildren<{
   header: string | JSX.Element
   style?: CSSProperties
   light?: boolean
+  defaultOpen?: boolean
 }> &
   CollapseProps) {
   return (
@@ -25,6 +27,7 @@ export function MinimalCollapse({
       className={`minimal ant-collapse-header-text-primary ant-collapse-header-p-0 ${
         light ? 'light' : ''
       }`}
+      defaultActiveKey={defaultOpen ? ['1'] : []}
       {...props}
     >
       <CollapsePanel key="1" header={header}>

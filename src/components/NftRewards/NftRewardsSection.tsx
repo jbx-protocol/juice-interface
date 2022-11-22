@@ -13,9 +13,10 @@ import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useMobile from 'hooks/Mobile'
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { hasNftRewards, sumTierFloors } from 'utils/nftRewards'
+
 import { useModalFromUrlQuery } from '../modals/hooks/useModalFromUrlQuery'
 import { RewardTier } from './RewardTier'
 
@@ -64,12 +65,11 @@ export function NftRewardsSection() {
   const { projectMetadata } = useContext(ProjectMetadataContext)
   const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
 
-  const [selectedTierIds, setSelectedTierIds] = useState<number[]>([])
-
   const { visible: nftPostPayModalVisible, hide: hideNftPostPayModal } =
     useModalFromUrlQuery(NFT_PAYMENT_CONFIRMED_QUERY_PARAM)
   const {
     payAmount,
+    payMetadata,
     payInCurrency,
     setPayAmount,
     setPayInCurrency,
@@ -82,17 +82,16 @@ export function NftRewardsSection() {
     payInCurrency === ETH ? payAmount : fromWad(converter.usdToWei(payAmount))
 
   const onTierDeselect = (tierId: number | undefined) => {
-    if (tierId === undefined || !rewardTiers) return
+    if (tierId === undefined || !rewardTiers || !payMetadata) return
 
-    const newSelectedTierIds = [...selectedTierIds].filter(
+    const newSelectedTierIds = [...payMetadata.tierIdsToMint].filter(
       selectedTierId => selectedTierId !== tierId,
     )
+
     setPayMetadata?.({
       tierIdsToMint: newSelectedTierIds,
       dontMint: !newSelectedTierIds.length,
     })
-
-    setSelectedTierIds(newSelectedTierIds)
 
     const newPayAmount = sumTierFloors(
       rewardTiers,
@@ -106,8 +105,7 @@ export function NftRewardsSection() {
   const onTierSelect = (tierId: number | undefined) => {
     if (!tierId || !rewardTiers) return
 
-    const newSelectedTierIds = [...selectedTierIds, tierId]
-    setSelectedTierIds(newSelectedTierIds)
+    const newSelectedTierIds = [...(payMetadata?.tierIdsToMint ?? []), tierId]
     setPayMetadata?.({
       tierIdsToMint: newSelectedTierIds,
       dontMint: false,
@@ -167,7 +165,9 @@ export function NftRewardsSection() {
                   rewardTierUpperLimit={
                     rewardTiers?.[idx + 1]?.contributionFloor
                   }
-                  isSelected={selectedTierIds.includes(rewardTier.id ?? -1)}
+                  isSelected={payMetadata?.tierIdsToMint.includes(
+                    rewardTier.id ?? -1,
+                  )}
                   onClick={() => onTierSelect(rewardTier.id)}
                   onRemove={() => onTierDeselect(rewardTier.id)}
                 />

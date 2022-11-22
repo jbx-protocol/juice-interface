@@ -1,6 +1,7 @@
 import { Collapse, CollapseProps } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { CSSProperties, PropsWithChildren } from 'react'
+import { classNames } from 'utils/classNames'
 
 export function MinimalCollapse({
   children,
@@ -24,9 +25,10 @@ export function MinimalCollapse({
         background: 'transparent',
         ...style,
       }}
-      className={`minimal ant-collapse-header-text-primary ant-collapse-header-p-0 ${
-        light ? 'light' : ''
-      }`}
+      className={classNames(
+        'minimal ant-collapse-header-text-primary ant-collapse-header-p-0',
+        light ? 'light' : '',
+      )}
       defaultActiveKey={defaultOpen ? ['1'] : []}
       {...props}
     >

@@ -93,7 +93,7 @@ export function DistributionSplitCard({
         borderRadius: radii.md,
       }}
       role="button"
-      className="clickable-border"
+      className="transition-colors border border-solid border-smoke-300 dark:border-slate-300 hover:border-smoke-500 dark:hover:border-slate-100"
     >
       <Space
         direction="vertical"

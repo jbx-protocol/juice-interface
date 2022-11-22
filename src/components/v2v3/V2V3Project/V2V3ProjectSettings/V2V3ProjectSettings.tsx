@@ -116,7 +116,7 @@ const items: MenuItem[] = [
         undefined,
         'menu-item-sider',
       ),
-      featureFlagEnabled(FEATURE_FLAGS.PROJECT_CONTRACT_UPDGRADES)
+      featureFlagEnabled(FEATURE_FLAGS.PROJECT_CONTRACT_UPGRADES)
         ? menuItem(
             'Project upgrades',
             'upgrades',

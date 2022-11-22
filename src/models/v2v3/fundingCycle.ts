@@ -33,7 +33,7 @@ export type JBPayDataSourceFundingCycleMetadata = Omit<
 >
 
 export type V2V3FundAccessConstraint = {
-  terminal: string // address probably
+  terminal: string // address
   token: string // address
   distributionLimit: BigNumber
   distributionLimitCurrency: BigNumber

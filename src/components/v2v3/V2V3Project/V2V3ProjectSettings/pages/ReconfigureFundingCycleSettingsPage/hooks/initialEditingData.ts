@@ -40,9 +40,9 @@ export interface InitialEditingData {
 }
 
 /**
- * Populate the redux store with the in-context project data.
+ * Populate the Redux store with the in-context project data.
  *
- * Used to initiate redux when a user wants to edit their project somehow.s
+ * Used to set up Redux when a user wants to edit their project somehow.
  */
 export const useInitialEditingData = ({
   visible,
@@ -133,7 +133,7 @@ export const useInitialEditingData = ({
         effectiveDistributionLimitCurrency?.toNumber() ?? V2V3_CURRENCY_ETH
 
       fundAccessConstraint = {
-        terminal: contracts?.JBETHPaymentTerminal.address ?? '',
+        terminal: primaryETHTerminal ?? '',
         token: ETH_TOKEN_ADDRESS,
         distributionLimit: fromWad(effectiveDistributionLimit),
         distributionLimitCurrency:

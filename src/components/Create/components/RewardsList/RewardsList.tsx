@@ -77,7 +77,6 @@ export const RewardsList: React.FC<RewardsListProps> &
               .map((reward, i) => (
                 <div key={reward.id}>
                   <RewardItem
-                    tier={i + 1}
                     reward={reward}
                     onEditClicked={() => {
                       setSelectedReward(reward)
@@ -103,7 +102,7 @@ export const RewardsList: React.FC<RewardsListProps> &
             disabled={rewards.length >= MAX_NFT_REWARD_TIERS}
             onClick={modal.open}
           >
-            Add NFT tier
+            Add NFT
           </CreateButton>
         )}
       </div>

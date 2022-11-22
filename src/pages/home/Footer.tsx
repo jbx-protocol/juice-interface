@@ -1,16 +1,22 @@
+import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import ExternalLink from 'components/ExternalLink'
-import { ThemeContext } from 'contexts/themeContext'
-import Link from 'next/link'
-import { CSSProperties, useContext } from 'react'
-
-import { reloadWindow, scrollToTop } from 'utils/windowUtils'
-
 import { Languages } from 'constants/languages/language-options'
 import { TERMS_OF_SERVICE_URL } from 'constants/links'
+import { ThemeOption } from 'constants/theme/theme-option'
+import { ThemeContext } from 'contexts/themeContext'
+import Image from 'next/image'
+import Link from 'next/link'
+import { CSSProperties, useContext } from 'react'
+import { reloadWindow, scrollToTop } from 'utils/windowUtils'
+import orangeLadyOd from '/public/assets/orange_lady-od.png'
+import orangeLadyOl from '/public/assets/orange_lady-ol.png'
 
 export default function Footer() {
-  const { colors } = useContext(ThemeContext).theme
+  const {
+    theme: { colors },
+    forThemeOption,
+  } = useContext(ThemeContext)
 
   const footerLinksStyles: CSSProperties = {
     display: 'flex',
@@ -58,34 +64,68 @@ export default function Footer() {
   const gitCommitLink = `https://github.com/jbx-protocol/juice-interface/commit/${gitCommit}`
 
   return (
-    <div
-      style={{
-        display: 'grid',
-        rowGap: 20,
-        padding: 30,
-        background: 'black',
-        textAlign: 'center',
-      }}
-    >
-      <div style={{ ...footerLinksStyles }}>
-        {Object.keys(Languages).map(languageLink)}
-      </div>
-      <div style={{ ...footerLinksStyles }}>
-        {link('Discord', 'https://discord.gg/6jXrJSyDFf')}
-        {link('GitHub', 'https://github.com/jbx-protocol/juice-interface')}
-        {link('Twitter', 'https://twitter.com/juiceboxETH')}
-        {link('Privacy Policy', '/privacy')}
-        {link('Terms of Service', TERMS_OF_SERVICE_URL)}
+    <div>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          marginBottom: -12,
+        }}
+      >
+        <Image
+          src={forThemeOption?.({
+            [ThemeOption.dark]: orangeLadyOd,
+            [ThemeOption.light]: orangeLadyOl,
+          })}
+          alt="Powerlifting orange hitting an olympic deadlift"
+          loading="lazy"
+        />
       </div>
 
-      {gitCommit ? (
-        <span style={{ color: 'white' }}>
-          Version:{' '}
-          <ExternalLink href={gitCommitLink} style={{ fontSize: '0.8rem' }}>
-            #{gitCommit}
-          </ExternalLink>
-        </span>
-      ) : null}
+      <div
+        style={{
+          background: 'black',
+          padding: 40,
+          textAlign: 'center',
+        }}
+      >
+        <div style={{ fontSize: 20, marginBottom: 20 }}>🧃⚡️</div>
+        <p style={{ color: 'white', margin: 0 }}>
+          <Trans>
+            Big ups to the Ethereum community for crafting the infrastructure
+            and economy to make Juicebox possible.
+          </Trans>
+        </p>
+      </div>
+      <div
+        style={{
+          display: 'grid',
+          rowGap: 20,
+          padding: 30,
+          background: 'black',
+          textAlign: 'center',
+        }}
+      >
+        <div style={{ ...footerLinksStyles }}>
+          {Object.keys(Languages).map(languageLink)}
+        </div>
+        <div style={{ ...footerLinksStyles }}>
+          {link('Discord', 'https://discord.gg/6jXrJSyDFf')}
+          {link('GitHub', 'https://github.com/jbx-protocol/juice-interface')}
+          {link('Twitter', 'https://twitter.com/juiceboxETH')}
+          {link('Privacy Policy', '/privacy')}
+          {link('Terms of Service', TERMS_OF_SERVICE_URL)}
+        </div>
+
+        {gitCommit ? (
+          <span style={{ color: 'white' }}>
+            Version:{' '}
+            <ExternalLink href={gitCommitLink} style={{ fontSize: '0.8rem' }}>
+              #{gitCommit}
+            </ExternalLink>
+          </span>
+        ) : null}
+      </div>
     </div>
   )
 }

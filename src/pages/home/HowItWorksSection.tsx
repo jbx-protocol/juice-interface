@@ -2,17 +2,31 @@ import { InfoCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, Divider, Row } from 'antd'
 import ExternalLink from 'components/ExternalLink'
+import { LAYOUT_MAX_WIDTH_PX } from 'constants/styles/layouts'
+import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
 import Image from 'next/image'
-import { CSSProperties } from 'react'
+import { useContext } from 'react'
 import { helpPagePath } from 'utils/routes'
-
 import { OverflowVideoLink } from './QAs'
 import { SectionHeading } from './SectionHeading'
 
-const SmallHeader = ({ text }: { text: string }) => (
-  <h3 style={{ fontWeight: 600, margin: 0 }}>{text}</h3>
-)
+const SmallHeader = ({ text }: { text: string }) => {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+  return (
+    <h3
+      style={{
+        fontWeight: 600,
+        margin: 0,
+        color: colors.text.primary,
+      }}
+    >
+      {text}
+    </h3>
+  )
+}
 
 const FourthCol = ({
   header,
@@ -26,12 +40,7 @@ const FourthCol = ({
 
 export function HowItWorksSection() {
   const isMobile = useMobile()
-  const totalMaxWidth = 1080
 
-  const wrapper: CSSProperties = {
-    maxWidth: totalMaxWidth,
-    margin: '0 auto',
-  }
   return (
     <section
       id="how-it-works"
@@ -45,12 +54,13 @@ export function HowItWorksSection() {
           marginBottom: '4rem',
         }}
       >
-        <Trans>How to Juice.</Trans>
+        <Trans>How to Juice</Trans>
       </SectionHeading>
 
       <div
         style={{
-          ...wrapper,
+          maxWidth: LAYOUT_MAX_WIDTH_PX,
+          margin: '0 auto',
         }}
       >
         <Row align="middle">
@@ -127,14 +137,20 @@ export function HowItWorksSection() {
                   !
                 </Trans>
               </p>
+
+              <div>
+                <Button
+                  size="large"
+                  type="primary"
+                  href="/create"
+                  block={isMobile}
+                >
+                  <Trans>Create a project</Trans>
+                </Button>
+              </div>
             </div>
           </Col>
         </Row>
-        <div style={{ textAlign: 'center' }}>
-          <Button size="large" type="primary" href="/create" block={isMobile}>
-            <Trans>Design your project</Trans>
-          </Button>
-        </div>
       </div>
     </section>
   )

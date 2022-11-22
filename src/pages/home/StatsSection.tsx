@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/macro'
 import ETHAmount from 'components/currency/ETHAmount'
+import { LAYOUT_MAX_WIDTH_PX } from 'constants/styles/layouts'
 import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
@@ -44,6 +45,11 @@ const Stat = ({
 }
 
 export function StatsSection() {
+  const {
+    theme: { colors },
+    isDarkMode,
+  } = useContext(ThemeContext)
+
   const { data: protocolLogs, isLoading } = useSubgraphQuery({
     entity: 'protocolLog',
     keys: ['erc20Count', 'paymentsCount', 'projectsCount', 'volumePaid'],
@@ -54,30 +60,36 @@ export function StatsSection() {
   return (
     <section
       style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        maxWidth: 1200,
-        margin: '0 auto',
-        padding: '4rem 2rem',
-        flexWrap: 'wrap',
-        gap: '1rem',
+        backgroundColor: isDarkMode ? colors.background.l1 : '#faf7f5',
       }}
     >
-      <Stat
-        value={stats?.projectsCount}
-        label={<Trans>Projects on Juicebox</Trans>}
-        loading={isLoading}
-      />
-      <Stat
-        value={<ETHAmount amount={stats?.volumePaid} precision={0} />}
-        label={<Trans>Raised on Juicebox</Trans>}
-        loading={isLoading}
-      />
-      <Stat
-        value={formattedNum(stats?.paymentsCount)}
-        label={<Trans>Payments made</Trans>}
-        loading={isLoading}
-      />
+      <div
+        style={{
+          margin: 'auto',
+          maxWidth: LAYOUT_MAX_WIDTH_PX,
+          display: 'flex',
+          justifyContent: 'space-between',
+          padding: '4rem 2rem',
+          flexWrap: 'wrap',
+          gap: '1rem',
+        }}
+      >
+        <Stat
+          value={stats?.projectsCount}
+          label={<Trans>Projects on Juicebox</Trans>}
+          loading={isLoading}
+        />
+        <Stat
+          value={<ETHAmount amount={stats?.volumePaid} precision={0} />}
+          label={<Trans>Raised on Juicebox</Trans>}
+          loading={isLoading}
+        />
+        <Stat
+          value={formattedNum(stats?.paymentsCount)}
+          label={<Trans>Payments made</Trans>}
+          loading={isLoading}
+        />
+      </div>
     </section>
   )
 }

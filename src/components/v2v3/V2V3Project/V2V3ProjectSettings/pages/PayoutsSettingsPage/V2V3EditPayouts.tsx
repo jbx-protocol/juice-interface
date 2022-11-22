@@ -10,8 +10,6 @@ import filter from 'lodash/filter'
 import isEqual from 'lodash/isEqual'
 import { defaultSplit, Split } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
-import DistributionSplitCard from 'pages/create/forms/FundingForm/DistributionSplitsSection/DistributionSplitCard'
-import { DistributionSplitModal } from 'pages/create/forms/FundingForm/DistributionSplitsSection/DistributionSplitModal'
 import React, {
   useCallback,
   useContext,
@@ -25,6 +23,8 @@ import { getTotalSplitsPercentage } from 'utils/v2v3/distributions'
 import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2v3/math'
 
 import CurrencySymbol from 'components/CurrencySymbol'
+import { DistributionSplitCard } from 'components/v2v3/shared/DistributionSplitCard'
+import { DistributionSplitModal } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/DistributionSplitModal'
 import { useUserAddress } from 'hooks/Wallet/hooks'
 import { parseV2SplitsCsv } from 'utils/csv'
 

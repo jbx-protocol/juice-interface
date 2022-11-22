@@ -37,12 +37,10 @@ const detailsTextStyle: CSSProperties = {
 // END: CSS
 
 export const RewardItem = ({
-  tier,
   reward,
   onEditClicked,
   onDeleteClicked,
 }: {
-  tier: number
   reward: Reward
   onEditClicked?: () => void
   onDeleteClicked?: () => void
@@ -68,7 +66,7 @@ export const RewardItem = ({
         }}
       >
         <div style={{ ...emphasisedTextStyle, fontSize: '1.125rem' }}>
-          <Trans>Tier {tier}</Trans>
+          {title}
         </div>
         <Space size="middle">
           <RewardItemButton onClick={onEditClicked}>
@@ -118,19 +116,6 @@ export const RewardItem = ({
                 justifyContent: 'space-between',
               }}
             >
-              {/* Title */}
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '0.5rem',
-                }}
-              >
-                <div style={headerTextStyle(isDarkMode)}>
-                  <Trans>Title</Trans>
-                </div>
-                <div style={emphasisedTextStyle}>{title}</div>
-              </div>
               {/* Contribution */}
               <div
                 style={{

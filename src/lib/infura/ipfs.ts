@@ -8,11 +8,17 @@ const AUTH_HEADER = `Basic ${Buffer.from(
   `${INFURA_IPFS_PROJECT_ID}:${INFURA_IPFS_API_SECRET}`,
 ).toString('base64')}`
 
+const DEV_ORIGIN = 'http://localhost:3000'
+const MAINNET_ORIGIN = 'https://juicebox.money'
+
+const origin =
+  process.env.NODE_ENV === 'development' ? DEV_ORIGIN : MAINNET_ORIGIN
+
 const infuraApi = axios.create({
   baseURL: INFURA_IPFS_API_BASE_URL,
   headers: {
     Authorization: AUTH_HEADER,
-    origin: 'https://juicebox.money',
+    origin,
   },
 })
 

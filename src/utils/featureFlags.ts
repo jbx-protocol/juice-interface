@@ -5,9 +5,9 @@ import { NetworkName } from 'models/network-name'
 const FEATURE_FLAG_DEFAULTS: {
   [featureFlag: string]: { [networkName in NetworkName]?: boolean }
 } = {
-  [FEATURE_FLAGS.PROJECT_CONTRACT_UPDGRADES]: {
+  [FEATURE_FLAGS.PROJECT_CONTRACT_UPGRADES]: {
     goerli: true,
-    // mainnet: true,
+    mainnet: true,
   },
 }
 

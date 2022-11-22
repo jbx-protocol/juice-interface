@@ -163,7 +163,6 @@ export function NftRewardsSection() {
                 style={{ marginBottom: '15px' }}
               >
                 <RewardTier
-                  tierRank={idx + 1}
                   rewardTier={rewardTier}
                   rewardTierUpperLimit={
                     rewardTiers?.[idx + 1]?.contributionFloor

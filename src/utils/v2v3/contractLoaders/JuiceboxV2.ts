@@ -6,7 +6,7 @@ import { ContractJson } from '../loadV2V3Contract'
  * Courtesey of ser DrGorilla.eth
  */
 const V2_GOERLI_CONTRACT_ADDRESSES: { [k in V2V3ContractName]?: string } = {
-  JBOperatorStore: '0xF4144dFa5441818B815BbbAcA30e94DBB424354C',
+  JBOperatorStore: '0x99dB6b517683237dE9C494bbd17861f3608F3585',
   JBPrices: '0x57bF7C005B77d487074AB3b6Dcd3E5f4D420E3C1',
   JBProjects: '0x21263a042aFE4bAE34F08Bb318056C181bD96D3b',
   JBDirectory: '0xeFA8232c90EB523AA4eAe5C0CA2Dd63b5bDC91a1',

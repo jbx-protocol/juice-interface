@@ -1,7 +1,5 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Form, FormInstance, Space } from 'antd'
-
-import Callout from 'components/Callout'
 import { FormItems } from 'components/formItems'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import { CSSProperties } from 'react'
@@ -45,13 +43,7 @@ export default function ProjectDetailsForm({
       style={style}
       onValuesChange={() => onValuesChange?.()}
     >
-      <Space direction="vertical" size="large">
-        <Callout>
-          <Trans>
-            You can edit your project details after creation at any time, but
-            the transaction will cost gas.
-          </Trans>
-        </Callout>
+      <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <div>
           <FormItems.ProjectName
             name="name"

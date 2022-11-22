@@ -1,8 +1,8 @@
 import { Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
 
+import FormItemLabel from 'components/FormItemLabel'
 import { ThemeContext } from 'contexts/themeContext'
-import FormItemLabel from 'pages/create/FormItemLabel'
 import { CSSProperties, useContext, useState } from 'react'
 
 import ExternalLink from 'components/ExternalLink'

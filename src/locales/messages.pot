@@ -2027,9 +2027,6 @@ msgstr ""
 msgid "Payment Success Popup"
 msgstr ""
 
-msgid "Payment amount can't be 0"
-msgstr ""
-
 msgid "Payment amount can't exceed your wallet balance."
 msgstr ""
 

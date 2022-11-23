@@ -5,7 +5,6 @@ import InputAccessoryButton from 'components/InputAccessoryButton'
 import { isAddress } from '@ethersproject/address'
 import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
-import Callout from 'components/Callout'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { usePrintTokensTx } from 'hooks/v1/transactor/PrintTokensTx'
 import { useContext, useMemo, useState } from 'react'
@@ -15,6 +14,7 @@ import { RuleObject } from 'antd/lib/form'
 import { StoreValue } from 'antd/lib/form/interface'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'
+import { Callout } from 'components/Callout'
 
 export default function PrintPreminedModal({
   open,
@@ -101,13 +101,13 @@ export default function PrintPreminedModal({
       onCancel={onCancel}
       okText={t`Mint tokens`}
     >
-      <Callout style={{ marginBottom: 20 }}>
+      <Callout.Info className="mb-5">
         <Trans>
           Tokens can be minted manually when allowed in the current funding
           cycle. The project owner can enable or disable minting for upcoming
           cycles.
         </Trans>
-      </Callout>
+      </Callout.Info>
 
       <Form layout="vertical" form={form} onFinish={mint}>
         <Form.Item
@@ -126,7 +126,7 @@ export default function PrintPreminedModal({
         >
           <Input placeholder={constants.AddressZero} />
         </Form.Item>
-        <div style={{ marginBottom: '1rem' }}>
+        <div className="mb-4">
           <Form.Item
             {...formItemProps}
             name="amount"

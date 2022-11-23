@@ -3,29 +3,17 @@ import { t, Trans } from '@lingui/macro'
 import Grid from 'components/Grid'
 import Loading from 'components/Loading'
 import ProjectCard from 'components/ProjectCard'
-import { ThemeContext } from 'contexts/themeContext'
 import { useHoldingsProjectsQuery } from 'hooks/Projects'
 import { useWallet } from 'hooks/Wallet'
-import { useContext } from 'react'
 
 export default function HoldingsProjects() {
   const { userAddress } = useWallet()
 
   const { data: projects, isLoading } = useHoldingsProjectsQuery(userAddress)
 
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   if (!userAddress) {
     return (
-      <div
-        style={{
-          textAlign: 'center',
-          padding: 20,
-        }}
-        hidden={isLoading}
-      >
+      <div className="p-5 text-center" hidden={isLoading}>
         <Trans>Connect your wallet to see your holdings.</Trans>
       </div>
     )
@@ -45,35 +33,25 @@ export default function HoldingsProjects() {
         projects &&
         (projects.length === 0 ? (
           <div
-            style={{
-              textAlign: 'center',
-              color: colors.text.disabled,
-              padding: 20,
-            }}
+            className="p-5 text-center text-grey-400 dark:text-slate-200"
             hidden={isLoading}
           >
             <Trans>You don't hold tokens for any Juicebox project.</Trans>
           </div>
         ) : (
-          <div
-            style={{
-              textAlign: 'center',
-              color: colors.text.disabled,
-              padding: 20,
-            }}
-          >
+          <div className="p-5 text-center text-grey-400 dark:text-slate-200">
             {projects.length} {projects.length === 1 ? t`project` : t`projects`}{' '}
           </div>
         ))}
 
       {isLoading && (
-        <div style={{ marginTop: 40 }}>
+        <div className="mt-10">
           <Loading />
         </div>
       )}
 
       {projects?.length !== 0 && (
-        <p style={{ marginBottom: 40, marginTop: 40, maxWidth: 800 }}>
+        <p className="my-10 max-w-[800px]">
           <InfoCircleOutlined />{' '}
           <Trans>Projects that you hold tokens for.</Trans>
         </p>

@@ -1,21 +1,19 @@
 import useMobile from 'hooks/Mobile'
-import { CSSProperties } from 'react'
+import { classNames } from 'utils/classNames'
 
-export const SectionHeading: React.FC<{ style?: CSSProperties }> = ({
+export const SectionHeading: React.FC<{ className?: string }> = ({
   children,
-  style,
+  className,
 }) => {
   const isMobile = useMobile()
 
   return (
     <h2
-      style={{
-        fontSize: isMobile ? '1.8rem' : '2.5rem',
-        textAlign: 'center',
-        fontWeight: 600,
-        marginBottom: '0.8rem',
-        ...style,
-      }}
+      className={classNames(
+        'text-center font-semibold',
+        isMobile ? 'text-3xl' : 'text-4xl',
+        className,
+      )}
     >
       {children}
     </h2>

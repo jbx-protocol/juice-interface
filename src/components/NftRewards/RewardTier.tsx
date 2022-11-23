@@ -1,58 +1,11 @@
 import { CheckOutlined, LoadingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Skeleton, Tooltip } from 'antd'
-import { ThemeContext } from 'contexts/themeContext'
 import { NftRewardTier } from 'models/nftRewardTier'
-import {
-  CSSProperties,
-  MouseEvent,
-  MouseEventHandler,
-  useContext,
-  useState,
-} from 'react'
+import { MouseEvent, MouseEventHandler, useState } from 'react'
+import { classNames } from 'utils/classNames'
 import { ipfsToHttps } from 'utils/ipfs'
 import { NftPreview } from './NftPreview'
-
-const rewardTierContainerStyle: CSSProperties = {
-  display: 'flex',
-  flexDirection: 'column',
-  cursor: 'pointer',
-  transition: 'box-shadow 100ms linear',
-  height: '100%',
-  width: '100%',
-}
-
-const loadingImageContainerStyle: CSSProperties = {
-  width: '100%',
-  height: '151px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}
-
-const imageStyle: CSSProperties = {
-  objectFit: 'cover',
-  width: '100%',
-  position: 'absolute',
-  top: 0,
-  height: '100%',
-}
-
-const nftTitleSectionStyle: CSSProperties = {
-  width: '100%',
-  height: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center,',
-}
-
-const imageContainerStyle: CSSProperties = {
-  width: '100%',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  position: 'relative',
-}
 
 // The clickable cards on the project page
 export function RewardTier({
@@ -70,38 +23,13 @@ export function RewardTier({
   onClick?: MouseEventHandler<HTMLDivElement>
   onRemove?: () => void
 }) {
-  const {
-    theme: { colors, radii },
-  } = useContext(ThemeContext)
-
   const [previewVisible, setPreviewVisible] = useState<boolean>(false)
 
   const imageUrl = rewardTier?.imageUrl
     ? ipfsToHttps(rewardTier.imageUrl)
     : rewardTier?.imageUrl
 
-  const backgroundColor = isSelected
-    ? colors.background.l0
-    : colors.background.l2
-
   function RewardIcon() {
-    const iconStyle: CSSProperties = {
-      position: 'absolute',
-      right: 10,
-      top: 10,
-      fontSize: 15,
-      color: isSelected ? colors.background.l0 : colors.text.secondary,
-      backgroundColor: isSelected
-        ? colors.background.action.primary
-        : colors.background.l0,
-      borderRadius: '100%',
-      height: '25px',
-      width: '25px',
-      display: !isSelected ? 'none' : 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-    }
-
     const onRemoveTier = (
       event: MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
     ) => {
@@ -112,7 +40,7 @@ export function RewardTier({
     return (
       <Tooltip
         title={
-          <span style={{ fontSize: '0.75rem' }}>
+          <span className="text-xs">
             {rewardTierUpperLimit ? (
               <Trans>
                 Receive this NFT when you contribute{' '}
@@ -134,7 +62,13 @@ export function RewardTier({
         }}
         placement={'bottom'}
       >
-        <div style={iconStyle} onClick={onRemoveTier}>
+        <div
+          className={classNames(
+            'absolute right-2 top-2 h-6 w-6 items-center justify-center rounded-full text-base',
+            isSelected ? 'flex bg-haze-400 text-smoke-25' : 'hidden',
+          )}
+          onClick={onRemoveTier}
+        >
           <CheckOutlined />
         </div>
       </Tooltip>
@@ -144,15 +78,12 @@ export function RewardTier({
   return (
     <>
       <div
-        className={`${isSelected ? 'selected-box-shadow' : ''}`}
-        style={{
-          ...rewardTierContainerStyle,
-          outline: isSelected
-            ? `2px solid ${colors.stroke.action.primary}`
-            : 'rgba(0,0,0,0)',
-          borderRadius: radii.sm,
-          transition: 'box-shadow 100ms linear',
-        }}
+        className={classNames(
+          'flex h-full w-full cursor-pointer flex-col rounded-sm transition-shadow duration-100',
+          isSelected
+            ? 'shadow-[2px_0px_10px_0px_var(--boxShadow-primary)] outline outline-2 outline-haze-400'
+            : '',
+        )}
         onClick={
           !isSelected
             ? onClick
@@ -164,27 +95,26 @@ export function RewardTier({
       >
         {/* Image container */}
         <div
-          style={{
-            ...imageContainerStyle,
-            paddingTop: !loading ? '100%' : 'unset',
-            backgroundColor,
-          }}
+          className={classNames(
+            'relative flex w-full items-center justify-center',
+            !loading ? 'pt-[100%]' : 'pt-[unset]',
+            isSelected
+              ? 'bg-smoke-25 dark:bg-slate-800'
+              : 'bg-smoke-100 dark:bg-slate-600',
+          )}
         >
           {loading ? (
-            <div
-              style={{
-                ...loadingImageContainerStyle,
-                borderBottom: `1px solid ${colors.stroke.tertiary}`,
-              }}
-            >
+            <div className="flex h-[151px] w-full items-center justify-center border border-solid border-smoke-200 dark:border-grey-600">
               <LoadingOutlined />
             </div>
           ) : (
             <img
+              className={classNames(
+                'absolute top-0 h-full w-full object-cover',
+              )}
               alt={rewardTier?.name}
               src={imageUrl}
               style={{
-                ...imageStyle,
                 filter: isSelected ? 'unset' : 'brightness(50%)',
               }}
               crossOrigin="anonymous"
@@ -194,11 +124,13 @@ export function RewardTier({
         </div>
         {/* Details section below image */}
         <div
-          style={{
-            ...nftTitleSectionStyle,
-            backgroundColor,
-            padding: `${!loading ? 8 : 4}px 10px 5px`,
-          }}
+          className={classNames(
+            'flex h-full w-full flex-col justify-center px-3 pb-1.5',
+            isSelected
+              ? 'bg-smoke-25 dark:bg-slate-800'
+              : 'bg-smoke-100 dark:bg-slate-600',
+            !loading ? 'pt-2' : 'pt-1',
+          )}
         >
           <Skeleton
             loading={loading}
@@ -207,27 +139,24 @@ export function RewardTier({
             paragraph={{ rows: 1, width: ['100%'] }}
           >
             <span
-              style={{
-                color: isSelected ? colors.text.primary : colors.text.tertiary,
-                fontSize: '0.75rem',
-              }}
+              className={classNames(
+                'text-xs',
+                isSelected
+                  ? 'text-black dark:text-slate-100'
+                  : 'text-grey-400 dark:text-slate-200',
+              )}
             >
               {rewardTier?.name}
             </span>
           </Skeleton>
           <Skeleton
+            className="mt-1"
             loading={loading}
             active
             title={false}
             paragraph={{ rows: 1, width: ['50%'] }}
-            style={{ marginTop: '3px' }}
           >
-            <span
-              style={{
-                color: colors.text.secondary,
-                fontSize: '0.75rem',
-              }}
-            >
+            <span className="text-xs text-grey-500 dark:text-grey-300">
               {rewardTier?.contributionFloor} ETH
             </span>
           </Skeleton>

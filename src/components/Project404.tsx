@@ -1,8 +1,5 @@
 import { Trans } from '@lingui/macro'
 
-import { layouts } from 'constants/styles/layouts'
-import { padding } from 'constants/styles/padding'
-
 export default function Project404({
   projectId,
   handle,
@@ -11,13 +8,7 @@ export default function Project404({
   handle?: string
 }) {
   return (
-    <div
-      style={{
-        padding: padding.app,
-        height: '100%',
-        ...layouts.centered,
-      }}
-    >
+    <div className="flex h-full flex-col items-center justify-center p-5">
       <h2>
         {handle ? (
           <Trans>@{handle} not found</Trans>

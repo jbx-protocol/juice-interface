@@ -1,9 +1,8 @@
 import { t, Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import FormItemLabel from 'components/FormItemLabel'
-import { ThemeContext } from 'contexts/themeContext'
 import round from 'lodash/round'
-import { CSSProperties, useContext, useState } from 'react'
+import { useState } from 'react'
 import { defaultFundingCycleMetadata } from 'redux/slices/editingV2Project'
 import { formattedNum } from 'utils/format/formatNumber'
 import { DEFAULT_MINT_RATE } from 'utils/v2v3/math'
@@ -24,23 +23,17 @@ export default function ProjectReserved({
   hideLabel,
   formItemProps,
   value,
-  style = {},
   onChange,
   checked,
   onToggled,
   issuanceRate,
 }: {
   value: number | undefined
-  style?: CSSProperties
   onChange: (val?: number) => void
   checked?: boolean
   onToggled?: (checked: boolean) => void
   issuanceRate?: number
 } & FormItemExt) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const [showRiskWarning, setShowRiskWarning] = useState<boolean>(
     (value ?? 0) > RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
   )
@@ -68,28 +61,15 @@ export default function ProjectReserved({
   return (
     <Form.Item
       extra={
-        <div style={{ fontSize: '0.875rem' }}>
+        <div className="text-sm">
           <p>
             <Trans>
               Reserve a percentage of freshly minted tokens for your project to
               use.
             </Trans>
           </p>
-          <div
-            style={{
-              backgroundColor: colors.background.l1,
-              width: '100%',
-              padding: '1rem',
-            }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                width: '100%',
-                marginBottom: '5px',
-              }}
-            >
+          <div className="w-full bg-smoke-100 p-4 dark:bg-slate-600">
+            <div className="mb-1 flex w-full justify-between">
               <span>
                 <TooltipLabel
                   label={t`Contributor rate`}
@@ -104,13 +84,7 @@ export default function ProjectReserved({
               </span>
               {formattedNum(contributorIssuanceRate)} tokens / 1 ETH
             </div>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                width: '100%',
-              }}
-            >
+            <div className="flex w-full justify-between">
               <span>
                 <TooltipLabel
                   label={t`Reserved rate`}
@@ -137,11 +111,7 @@ export default function ProjectReserved({
               <SwitchHeading checked={Boolean(checked)} onChange={onToggled}>
                 <Trans>Reserved tokens</Trans>
                 {!checked && (
-                  <span
-                    style={{
-                      color: colors.text.tertiary,
-                    }}
-                  >
+                  <span className="text-grey-400 dark:text-slate-200">
                     {' '}
                     ({defaultFundingCycleMetadata.reservedRate}%)
                   </span>
@@ -152,7 +122,7 @@ export default function ProjectReserved({
                 <Trans>Reserved rate</Trans>
               </FormItemLabel>
             )}
-            <div style={{ paddingBottom: 11, paddingLeft: 14 }}>
+            <div className="pb-3 pl-4">
               <FundingCycleDetailWarning
                 showWarning={showRiskWarning}
                 tooltipTitle={FUNDING_CYCLE_WARNING_TEXT().metadataReservedRate}
@@ -161,7 +131,6 @@ export default function ProjectReserved({
           </>
         )
       }
-      style={style}
       {...formItemProps}
     >
       {checked && (

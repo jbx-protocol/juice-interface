@@ -2,10 +2,9 @@ import { Divider, Layout } from 'antd'
 import MintVeNftContent from 'components/veNft/MintVeNftContent'
 import MyVeNftsContent from 'components/veNft/MyVeNftsContent'
 import { V2VeNftPageKeyTitleMap } from 'components/veNft/VeNft'
-import { ThemeContext } from 'contexts/themeContext'
 import { V2VeNftPageKey } from 'models/menu-keys'
 import { useRouter } from 'next/router'
-import { useContext, useMemo } from 'react'
+import { useMemo } from 'react'
 
 const VeNftPageComponents: { [k in V2VeNftPageKey]: () => JSX.Element } = {
   mint: MintVeNftContent,
@@ -15,10 +14,6 @@ const VeNftPageComponents: { [k in V2VeNftPageKey]: () => JSX.Element } = {
 const DEFAULT_SETTINGS_PAGE = 'mint'
 
 export function VeNftContent() {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const router = useRouter()
 
   const activePage =
@@ -29,14 +24,14 @@ export function VeNftContent() {
   )
 
   return (
-    <Layout style={{ background: 'transparent' }}>
-      <h2 style={{ color: colors.text.primary, marginBottom: 0 }}>
+    <Layout className="bg-transparent">
+      <h2 className="mb-0 text-black dark:text-slate-100">
         {V2VeNftPageKeyTitleMap[activePage]}
       </h2>
 
       <Divider />
 
-      <Layout.Content style={{ margin: '0 16px' }}>
+      <Layout.Content className="my-0 mx-4">
         <ActiveSettingsPage />
       </Layout.Content>
     </Layout>

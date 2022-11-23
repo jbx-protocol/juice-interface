@@ -7,19 +7,13 @@ import Account from './Account'
 import Logo from './Logo'
 import ThemePickerMobile from './Mobile/ThemePickerMobile'
 import NavLanguageSelector from './NavLanguageSelector'
-import { navMenuItemStyles } from './navStyles'
 
 type ResourceItem = {
   label: JSX.Element
   key: string
 }
-const menuItemProps = {
-  style: navMenuItemStyles,
-  className: 'nav-menu-item hover-opacity',
-}
 
 const externalMenuLinkProps = {
-  ...menuItemProps,
   target: '_blank',
   rel: 'noopener noreferrer',
 }
@@ -28,40 +22,32 @@ export const DesktopDropDown = ({
   resourcesMenu,
   resourcesOpen,
   setResourcesOpen,
-  dropdownIconStyle,
 }: {
   resourcesMenu: JSX.Element
   resourcesOpen: boolean
   setResourcesOpen: (resource: boolean) => void
-  dropdownIconStyle: CSSProperties
 }): JSX.Element => {
   return (
     <Dropdown
+      overlayClassName="p-0"
       overlay={resourcesMenu}
-      overlayStyle={{ padding: 0 }}
       open={resourcesOpen}
     >
       <div
-        className="nav-menu-item hover-opacity"
+        className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100"
         onClick={e => {
           setResourcesOpen(!resourcesOpen)
           e.stopPropagation()
         }}
-        style={{ ...navMenuItemStyles }}
       >
         <Trans>Resources</Trans>
-        {resourcesOpen ? (
-          <UpOutlined style={dropdownIconStyle} />
-        ) : (
-          <DownOutlined style={dropdownIconStyle} />
-        )}
+        {resourcesOpen ? <UpOutlined /> : <DownOutlined />}
       </div>
     </Dropdown>
   )
 }
 export const resourcesMenuItems = (mobile?: boolean): ResourceItem[] => {
   const linkStyle = {
-    className: 'nav-dropdown-item',
     target: '_blank',
     rel: 'noopener noreferrer',
     style: {
@@ -128,7 +114,7 @@ export const desktopMenuItems = ({
     key: 'index',
     label: (
       <Link href="/">
-        <a style={{ display: 'inline-block' }}>{<Logo />}</a>
+        <a className="inline-block">{<Logo />}</a>
       </Link>
     ),
   },
@@ -136,7 +122,7 @@ export const desktopMenuItems = ({
     key: 'projects',
     label: (
       <Link href="/projects">
-        <a {...menuItemProps}>{t`Projects`}</a>
+        <a className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100">{t`Projects`}</a>
       </Link>
     ),
   },
@@ -144,7 +130,10 @@ export const desktopMenuItems = ({
     key: 'docs',
     label: (
       <Link href="https://info.juicebox.money/">
-        <a {...externalMenuLinkProps}>{t`Docs`}</a>
+        <a
+          className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100"
+          {...externalMenuLinkProps}
+        >{t`Docs`}</a>
       </Link>
     ),
   },
@@ -176,7 +165,10 @@ export const mobileNavItems = ({
     key: 'projects',
     label: (
       <Link href="/projects">
-        <a {...{ ...menuItemProps, ...collapseNav }}>{t`Projects`}</a>
+        <a
+          className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100"
+          {...{ ...collapseNav }}
+        >{t`Projects`}</a>
       </Link>
     ),
   },
@@ -184,7 +176,10 @@ export const mobileNavItems = ({
     key: 'docs',
     label: (
       <Link href="https://info.juicebox.money/">
-        <a {...{ ...externalMenuLinkProps, ...collapseNav }}>{t`Docs`}</a>
+        <a
+          className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100"
+          {...{ ...externalMenuLinkProps, ...collapseNav }}
+        >{t`Docs`}</a>
       </Link>
     ),
   },
@@ -192,7 +187,10 @@ export const mobileNavItems = ({
     key: 'blog',
     label: (
       <Link href="https://info.juicebox.money/blog">
-        <a {...{ ...externalMenuLinkProps, ...collapseNav }}>{t`Blog`}</a>
+        <a
+          className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100"
+          {...{ ...externalMenuLinkProps, ...collapseNav }}
+        >{t`Blog`}</a>
       </Link>
     ),
   },
@@ -200,10 +198,7 @@ export const mobileNavItems = ({
     key: 'resources',
     label: (
       <Link href="">
-        <a
-          className="nav-menu-item hover-opacity"
-          style={{ ...navMenuItemStyles }}
-        >
+        <a className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100">
           {t`Resources`}
         </a>
       </Link>
@@ -219,7 +214,7 @@ export const mobileNavItems = ({
   {
     key: 'disconnect',
     label: isConnected ? (
-      <Button onClick={disconnect} style={{ marginTop: 10 }} block>
+      <Button className="mt-2" onClick={disconnect} block>
         <Trans>Disconnect</Trans>
       </Button>
     ) : null,

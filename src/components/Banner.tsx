@@ -2,8 +2,7 @@ import Icon, {
   ExclamationCircleOutlined,
   WarningOutlined,
 } from '@ant-design/icons'
-import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, useContext } from 'react'
+import { classNames } from 'utils/classNames'
 
 type BannerVariant = 'warning' | 'info'
 
@@ -18,18 +17,17 @@ export default function Banner({
   actions?: JSX.Element
   variant?: BannerVariant
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
-  const variantStyle: { [k in BannerVariant]: CSSProperties } = {
+  const variantClasses: {
+    [k in BannerVariant]: { textClasses: string; backgroundClasses: string }
+  } = {
     warning: {
-      color: '#8F4700',
-      backgroundColor: '#FFF8E5',
-      border: '1px solid ' + colors.text.brand.secondary,
+      textClasses: 'text-warning-800  dark:text-warning-200',
+      backgroundClasses:
+        'bg-warning-200 dark:bg-warning-800 border border-solid border-warning-800 dark:border-warning-200',
     },
     info: {
-      backgroundColor: colors.background.l2,
+      textClasses: '',
+      backgroundClasses: 'bg-smoke-75 dark:bg-slate-400',
     },
   }
 
@@ -40,28 +38,18 @@ export default function Banner({
     info: ExclamationCircleOutlined,
   }
 
-  const style = variantStyle[variant]
   const IconComponent = variantIcon[variant]
 
-  return (
-    <div
-      style={{
-        padding: '1rem 3.3rem',
-        position: 'relative',
-        ...style,
-      }}
-    >
-      <IconComponent style={{ position: 'absolute', left: 20, top: 18 }} />
+  const { textClasses, backgroundClasses } = variantClasses[variant]
 
-      <h2
-        style={{
-          color: style.color ?? colors.text.primary,
-          fontSize: 14,
-          fontWeight: 600,
-        }}
-      >
-        {title}
-      </h2>
+  return (
+    <div className={classNames('py-4 px-12', textClasses, backgroundClasses)}>
+      <span className="mb-2 flex items-center gap-2">
+        <IconComponent />
+        <h2 className={classNames('m-0 text-sm font-medium', textClasses)}>
+          {title}
+        </h2>
+      </span>
       <div>{body}</div>
 
       {actions && <div>{actions}</div>}

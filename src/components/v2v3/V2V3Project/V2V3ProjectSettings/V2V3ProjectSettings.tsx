@@ -5,7 +5,6 @@ import { ProjectHeader } from 'components/Project/ProjectHeader'
 import { V2V3ProjectHeaderActions } from 'components/v2v3/V2V3Project/V2V3ProjectHeaderActions'
 import { ProjectSettingsContent } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/ProjectSettingsContent'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { layouts } from 'constants/styles/layouts'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
@@ -170,8 +169,8 @@ export function V2V3ProjectSettings() {
   }
 
   return (
-    <div style={layouts.maxWidth}>
-      <Space direction="vertical" size={40} style={{ width: '100%' }}>
+    <div className="my-0 mx-auto max-w-[1080px] p-5">
+      <Space direction="vertical" size={40} className="w-full">
         <ProjectHeader
           actions={!isPreviewMode ? <V2V3ProjectHeaderActions /> : undefined}
           handle={handle}
@@ -179,24 +178,16 @@ export function V2V3ProjectSettings() {
           canEditProjectHandle={canEditProjectHandle}
           hideDescription={isMobile}
         />
-        <Layout
-          style={{
-            minHeight: '100vh',
-            background: 'transparent',
-            marginBottom: '4rem',
-            width: '100%',
-          }}
-        >
+        <Layout className="mb-16 min-h-screen w-full bg-transparent">
           <Layout.Sider
+            className="settings-layout mr-12 bg-transparent"
             breakpoint="lg"
-            style={{ background: 'transparent', marginRight: '3rem' }}
             width={200}
             collapsedWidth="0"
-            className="settings-layout"
             collapsed={collapsed}
             onCollapse={setCollapsed}
           >
-            <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+            <Space direction="vertical" size="middle" className="w-full">
               <BackToProjectButton
                 projectPageUrl={v2v3ProjectRoute({ projectId, handle })}
               />

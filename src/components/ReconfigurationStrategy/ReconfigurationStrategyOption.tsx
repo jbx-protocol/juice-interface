@@ -1,7 +1,5 @@
 import { CheckCircleFilled } from '@ant-design/icons'
-import { ThemeContext } from 'contexts/themeContext'
 import { BallotStrategy } from 'models/ballot'
-import { useContext } from 'react'
 import { classNames } from 'utils/classNames'
 
 export default function ReconfigurationStrategyOption({
@@ -17,8 +15,6 @@ export default function ReconfigurationStrategyOption({
   selected: boolean
   onSelectBallot: (strategy: BallotStrategy) => void
 }) {
-  const { colors } = useContext(ThemeContext).theme
-
   return (
     <div
       className={classNames(
@@ -29,20 +25,16 @@ export default function ReconfigurationStrategyOption({
       )}
       onClick={() => onSelectBallot(strategy)}
     >
-      <div
-        style={{
-          marginRight: 10,
-          minWidth: 20,
-          color: colors.text.action.primary,
-        }}
-      >
+      <div className="mr-2 min-w-[20px] text-haze-400 dark:text-haze-300">
         {selected ? <CheckCircleFilled /> : null}
       </div>
-      <div style={{ color: colors.text.primary }}>
+      <div className="text-black dark:text-slate-100">
         <h3
-          style={{
-            color: selected ? colors.text.action.primary : colors.text.primary,
-          }}
+          className={classNames(
+            selected
+              ? 'text-haze-400 dark:text-haze-300'
+              : 'text-black dark:text-slate-100',
+          )}
         >
           {title}
         </h3>

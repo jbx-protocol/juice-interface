@@ -1,27 +1,13 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Progress, Tooltip } from 'antd'
-import { Property } from 'csstype'
 
 import { t } from '@lingui/macro'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useMemo, useState } from 'react'
 import { fracDiv } from 'utils/format/formatNumber'
 
-const TargetIndicatorLine = (
-  props: { color: Property.Color } & React.DOMAttributes<HTMLDivElement>,
-) => (
-  <div
-    {...props}
-    style={{
-      minWidth: 4,
-      height: 15,
-      borderRadius: 2,
-      background: props.color,
-      marginLeft: 5,
-      marginRight: 5,
-      marginTop: 3,
-    }}
-  ></div>
+const TargetIndicatorLine = () => (
+  <div className="mx-1 mt-0.5 h-4 min-w-[4px] rounded-full bg-black dark:bg-slate-100" />
 )
 
 const ProgressWithOverflow = ({
@@ -35,7 +21,7 @@ const ProgressWithOverflow = ({
   } = useContext(ThemeContext)
   return (
     <div
-      style={{ display: 'flex', alignItems: 'center', paddingBottom: 8 }}
+      className="flex items-center pb-2"
       onMouseOver={() => setShowTooltips(true)}
       onMouseEnter={() => setShowTooltips(true)}
       onMouseLeave={() => setShowTooltips(false)}
@@ -46,9 +32,9 @@ const ProgressWithOverflow = ({
         placement="bottomLeft"
       >
         <Progress
+          className="min-w-[12px]"
           style={{
             width: (1 - percentOverflow) * 100 + '%',
-            minWidth: 12,
           }}
           percent={100}
           showInfo={false}
@@ -56,13 +42,13 @@ const ProgressWithOverflow = ({
         />
       </Tooltip>
 
-      <TargetIndicatorLine color={colors.text.primary} />
+      <TargetIndicatorLine />
 
       <Tooltip title={t`Overflow`} open={showTooltips} placement="topRight">
         <Progress
+          className="min-w-[12px]"
           style={{
             width: percentOverflow * 100 + '%',
-            minWidth: 12,
           }}
           percent={100}
           showInfo={false}

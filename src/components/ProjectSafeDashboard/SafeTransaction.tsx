@@ -21,10 +21,7 @@ const GenericSafeTransaction = ({
       selected={selected}
       isPastTransaction={isPastTransaction}
       expandedContent={
-        <LinkToSafeButton
-          transaction={transaction}
-          style={{ marginTop: '0.5rem' }}
-        />
+        <LinkToSafeButton className="mt-2" transaction={transaction} />
       }
     />
   )

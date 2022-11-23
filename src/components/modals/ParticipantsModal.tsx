@@ -7,13 +7,12 @@ import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Button, Modal, Select, Space } from 'antd'
-import Callout from 'components/Callout'
+import { Callout } from 'components/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
 import FormattedAddress from 'components/FormattedAddress'
 import Loading from 'components/Loading'
 import { PV_V1, PV_V1_1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { ThemeContext } from 'contexts/themeContext'
 import { Participant } from 'models/subgraph-entities/vX/participant'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { formatPercent, formatWad } from 'utils/format/formatNumber'
@@ -37,9 +36,6 @@ export default function ParticipantsModal({
   onCancel: VoidFunction | undefined
 }) {
   const { projectId, pv } = useContext(ProjectMetadataContext)
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
 
   const [loading, setLoading] = useState<boolean>()
   const [participants, setParticipants] = useState<Participant[]>([])
@@ -122,27 +118,12 @@ export default function ParticipantsModal({
     open,
   ])
 
-  const contentLineHeight = '1.4rem'
-
   const list = useMemo(() => {
-    const smallHeaderStyle = {
-      fontSize: '0.75rem',
-      color: colors.text.tertiary,
-    }
-
     return (
       <div>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: 20,
-            width: '100%',
-          }}
-        >
+        <div className="mb-5 flex w-full items-center justify-between">
           <Select
-            style={{ flex: 1 }}
+            className="flex-1"
             onChange={(val: keyof Participant) => {
               setParticipants([])
               setSortPayerReports(val)
@@ -166,7 +147,7 @@ export default function ParticipantsModal({
             </Select.Option>
           </Select>
           <div
-            style={{ cursor: 'pointer', padding: 10 }}
+            className="cursor-pointer p-2"
             onClick={() => {
               setParticipants([])
               setSortPayerReportsDirection(
@@ -190,42 +171,23 @@ export default function ParticipantsModal({
 
         {participants.map(p => (
           <div
-            style={{
-              marginBottom: 20,
-              paddingBottom: 20,
-              borderBottom: '1px solid ' + colors.stroke.tertiary,
-            }}
+            className="border-b-1 mb-5 border border-l-0 border-t-0 border-r-0 border-solid border-smoke-200 pb-5 dark:border-grey-600"
             key={p.id}
           >
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignContent: 'space-between',
-              }}
-            >
+            <div className="flex content-between justify-between">
               <div>
-                <div
-                  style={{
-                    lineHeight: contentLineHeight,
-                    marginRight: 10,
-                  }}
-                >
+                <div className="mr-2 leading-6">
                   <FormattedAddress address={p.wallet} />
                 </div>
-                <div style={smallHeaderStyle}>
+                <div className="text-xs text-grey-400 dark:text-slate-200">
                   <Trans>
                     <ETHAmount amount={p.totalPaid} /> contributed
                   </Trans>
                 </div>
               </div>
 
-              <div style={{ textAlign: 'right' }}>
-                <div
-                  style={{
-                    lineHeight: contentLineHeight,
-                  }}
-                >
+              <div className="text-right">
+                <div className="leading-6">
                   {formatWad(p.balance, { precision: 0 })}{' '}
                   {tokenSymbolText({
                     tokenSymbol,
@@ -234,7 +196,7 @@ export default function ParticipantsModal({
                   })}{' '}
                   ({formatPercent(p.balance, totalTokenSupply)}%)
                 </div>
-                <div style={smallHeaderStyle}>
+                <div className="text-xs text-grey-400 dark:text-slate-200">
                   {formatWad(p.stakedBalance, { precision: 0 })}{' '}
                   <Trans>
                     {tokenSymbolText({
@@ -252,8 +214,6 @@ export default function ParticipantsModal({
       </div>
     )
   }, [
-    colors.text.tertiary,
-    colors.stroke.tertiary,
     sortPayerReports,
     tokenSymbol,
     sortPayerReportsDirection,
@@ -278,19 +238,19 @@ export default function ParticipantsModal({
         </h4>
         <Space direction="vertical">
           {tokenAddress && tokenAddress !== constants.AddressZero && (
-            <div style={{ marginBottom: 20 }}>
+            <div className="mb-5">
               <Trans>
                 Token address: <FormattedAddress address={tokenAddress} />
               </Trans>
             </div>
           )}
 
-          <Callout>
+          <Callout.Info>
             <Trans>
               This list is using an experimental data index and may be
               inaccurate for some projects.
             </Trans>
-          </Callout>
+          </Callout.Info>
 
           {list}
 
@@ -302,23 +262,13 @@ export default function ParticipantsModal({
 
           {participants?.length % pageSize === 0 && !loading ? (
             <div
-              style={{
-                textAlign: 'center',
-                color: colors.text.secondary,
-                cursor: 'pointer',
-              }}
+              className="cursor-pointer text-center text-grey-500 dark:text-grey-300"
               onClick={() => setPageNumber(pageNumber + 1)}
             >
               <Trans>Load more</Trans>
             </div>
           ) : loading ? null : (
-            <div
-              style={{
-                textAlign: 'center',
-                padding: 10,
-                color: colors.text.secondary,
-              }}
-            >
+            <div className="p-2 text-center text-grey-500 dark:text-grey-300">
               <Trans>{participants.length} total</Trans>
             </div>
           )}

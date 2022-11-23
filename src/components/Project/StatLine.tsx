@@ -1,46 +1,29 @@
 import { Skeleton } from 'antd'
-import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, useContext } from 'react'
-
-import { textSecondary } from 'constants/styles/text'
-
 import TooltipLabel from '../TooltipLabel'
 
 export default function StatLine({
   statLabel,
   statLabelTip,
   statValue,
-  style = {},
   loading = false,
 }: {
   statLabel: JSX.Element
   statLabelTip: JSX.Element
   statValue: JSX.Element
-  style?: CSSProperties
   loading?: boolean
 }) {
-  const { theme } = useContext(ThemeContext)
-
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'baseline',
-        flexWrap: 'nowrap',
-        ...style,
-      }}
-    >
-      <div style={textSecondary(theme)}>
+    <div className="flex flex-nowrap items-baseline justify-between">
+      <div className="text-sm font-medium uppercase text-grey-400 dark:text-grey-600">
         <TooltipLabel
+          innerClassName="w-[400px]"
           label={statLabel}
           tip={statLabelTip}
-          tooltipInnerStyle={{ width: '400px' }}
         />
       </div>
 
       {loading ? (
-        <div style={{ width: 60, height: 16 }}>
+        <div className="h-4 w-16">
           <Skeleton
             paragraph={{ rows: 1, width: '100%' }}
             title={false}
@@ -48,13 +31,7 @@ export default function StatLine({
           />
         </div>
       ) : (
-        <div
-          style={{
-            marginLeft: 10,
-          }}
-        >
-          {statValue}
-        </div>
+        <div className="ml-2">{statValue}</div>
       )}
     </div>
   )

@@ -4,19 +4,10 @@ import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
 import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
 import RichNote from 'components/RichNote'
-import { ThemeContext } from 'contexts/themeContext'
 import { useV2V3TerminalVersion } from 'hooks/V2V3TerminalVersion'
 import { PayEvent } from 'models/subgraph-entities/vX/pay-event'
-import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/format/formatDate'
-
 import V2V3ProjectHandleLink from '../v2v3/shared/V2V3ProjectHandleLink'
-
-import {
-  contentLineHeight,
-  primaryContentFontSize,
-  smallHeaderStyle,
-} from './styles'
 
 export default function PayEventElem({
   event,
@@ -35,64 +26,46 @@ export default function PayEventElem({
       >
     | undefined
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const terminalVersion = useV2V3TerminalVersion(event?.terminal)
 
   if (!event) return null
 
   return (
     <div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignContent: 'space-between',
-        }}
-      >
+      <div className="flex content-between justify-between">
         <div>
-          <div style={smallHeaderStyle(colors)}>
+          <div className="text-xs text-grey-400 dark:text-slate-200">
             <Trans>Paid</Trans>
           </div>
-          <div
-            style={{
-              lineHeight: contentLineHeight,
-              fontSize: primaryContentFontSize,
-            }}
-          >
+          <div className="text-base">
             <ETHAmount amount={event.amount} />
           </div>
         </div>
 
-        <div style={{ textAlign: 'right' }}>
-          <div style={smallHeaderStyle(colors)}>
+        <div className="text-right">
+          <div className="text-xs text-grey-400 dark:text-slate-200">
             {terminalVersion && (
               <ProjectVersionBadge
-                style={{ padding: 0, background: 'transparent' }}
+                className="p-0"
+                transparent
+                size="small"
                 versionText={'V' + terminalVersion}
               />
             )}{' '}
             {event.timestamp && formatHistoricalDate(event.timestamp * 1000)}{' '}
             <EtherscanLink value={event.txHash} type="tx" />
           </div>
-          <div
-            style={{
-              ...smallHeaderStyle(colors),
-              lineHeight: contentLineHeight,
-            }}
-          >
+          <div className="text-xs leading-6 text-grey-400 dark:text-slate-200">
             <FormattedAddress
+              className="font-normal"
               address={event.beneficiary}
-              style={{ fontWeight: 400 }}
             />
           </div>
         </div>
       </div>
 
       {event.feeFromV2Project ? (
-        <div style={{ marginTop: 5 }}>
+        <div className="mt-1">
           <Trans>
             Fee from{' '}
             <span>
@@ -101,10 +74,10 @@ export default function PayEventElem({
           </Trans>
         </div>
       ) : (
-        <div style={{ marginTop: 5 }}>
+        <div className="mt-1">
           <RichNote
+            className="text-grey-900 dark:text-slate-100"
             note={event.note ?? ''}
-            style={{ color: colors.text.secondary }}
           />
         </div>
       )}

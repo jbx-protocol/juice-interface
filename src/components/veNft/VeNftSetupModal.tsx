@@ -109,13 +109,13 @@ const VeNftSetupModal = ({ open, onCancel }: VeNftSetupModalProps) => {
         </p>
         <MinimalCollapse
           header={
-            <h3 style={{ marginBottom: 0 }}>
+            <h3 className="mb-0">
               {t`veNFT Tiers (${variants.length} variants)`}
             </h3>
           }
           defaultActiveKey={['1']}
         >
-          <Space direction="vertical" size="large" style={{ width: '100%' }}>
+          <Space direction="vertical" size="large" className="w-full">
             {variants.map((variant, index) => (
               <VeNftvariantCard
                 key={index}
@@ -132,11 +132,11 @@ const VeNftSetupModal = ({ open, onCancel }: VeNftSetupModalProps) => {
           </Space>
 
           <Button
+            className="mt-4"
             type="dashed"
             onClick={() => {
               setAddTierModalVisible(true)
             }}
-            style={{ marginTop: 15 }}
             block
           >
             <Trans>Add NFT tier</Trans>
@@ -144,13 +144,11 @@ const VeNftSetupModal = ({ open, onCancel }: VeNftSetupModalProps) => {
         </MinimalCollapse>
         <MinimalCollapse
           header={
-            <h3
-              style={{ marginBottom: 0 }}
-            >{t`Lock Durations (${lockDurationOptions.length} options)`}</h3>
+            <h3 className="mb-0">{t`Lock Durations (${lockDurationOptions.length} options)`}</h3>
           }
           defaultActiveKey={['1']}
         >
-          <Space direction="vertical" size="large" style={{ width: '100%' }}>
+          <Space direction="vertical" size="large" className="w-full">
             {lockDurationOptions.map((lockDurationOption, index) => (
               <VeNftLockDurationOptionCard
                 key={index}
@@ -160,11 +158,11 @@ const VeNftSetupModal = ({ open, onCancel }: VeNftSetupModalProps) => {
             ))}
           </Space>
           <Button
+            className="mt-4"
             type="dashed"
             onClick={() => {
               setAddLockDurationModalVisible(true)
             }}
-            style={{ marginTop: 15 }}
             block
           >
             <Trans>Add lock duration option</Trans>

@@ -2,29 +2,15 @@ import { InfoCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, Divider, Row } from 'antd'
 import ExternalLink from 'components/ExternalLink'
-import { LAYOUT_MAX_WIDTH_PX } from 'constants/styles/layouts'
-import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
 import Image from 'next/image'
-import { useContext } from 'react'
 import { helpPagePath } from 'utils/routes'
 import { OverflowVideoLink } from './QAs'
 import { SectionHeading } from './SectionHeading'
 
 const SmallHeader = ({ text }: { text: string }) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   return (
-    <h3
-      style={{
-        fontWeight: 600,
-        margin: 0,
-        color: colors.text.primary,
-      }}
-    >
-      {text}
-    </h3>
+    <h3 className="m-0 font-medium text-black dark:text-slate-100">{text}</h3>
   )
 }
 
@@ -34,7 +20,7 @@ const FourthCol = ({
 }: React.PropsWithChildren<{ header: string }>) => (
   <div>
     <SmallHeader text={header} />
-    <p style={{ marginBottom: 0, marginTop: 5 }}>{children}</p>
+    <p className="mb-0 mt-1">{children}</p>
   </div>
 )
 
@@ -42,34 +28,17 @@ export function HowItWorksSection() {
   const isMobile = useMobile()
 
   return (
-    <section
-      id="how-it-works"
-      style={{
-        margin: '40px 0',
-        padding: '2rem',
-      }}
-    >
-      <SectionHeading
-        style={{
-          marginBottom: '4rem',
-        }}
-      >
+    <section className="my-10 p-1" id="how-it-works">
+      <SectionHeading className="mb-16">
         <Trans>How to Juice</Trans>
       </SectionHeading>
 
-      <div
-        style={{
-          maxWidth: LAYOUT_MAX_WIDTH_PX,
-          margin: '0 auto',
-        }}
-      >
+      <div className="my-0 mx-auto max-w-[1080px] p-5">
         <Row align="middle">
           {!isMobile && (
             <Col xs={24} sm={11}>
               <Image
-                style={{
-                  marginBottom: 40,
-                }}
+                className="mb-10"
                 width={486}
                 height={486}
                 src="/assets/pina.png"
@@ -80,7 +49,7 @@ export function HowItWorksSection() {
           )}
 
           <Col xs={24} sm={13}>
-            <div style={{ display: 'grid', rowGap: 20, marginBottom: 40 }}>
+            <div className="mb-10 grid gap-y-5">
               <FourthCol header={t`1. Get funded.`}>
                 <Trans>
                   Crowdfund your project with ETH. Set a funding target to cover
@@ -114,9 +83,7 @@ export function HowItWorksSection() {
                 </Trans>
               </FourthCol>
 
-              <Divider
-                style={{ width: '50px', margin: '0 auto', minWidth: 'unset' }}
-              />
+              <Divider className="mx-0 my-auto w-12 min-w-[unset]" />
 
               <p>
                 <InfoCircleOutlined />{' '}

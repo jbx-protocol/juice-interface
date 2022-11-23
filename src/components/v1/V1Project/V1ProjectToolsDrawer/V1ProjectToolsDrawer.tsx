@@ -18,7 +18,7 @@ const OwnerTools = () => {
   const { owner } = useContext(V1ProjectContext)
 
   return (
-    <Space direction="vertical" size="large" style={{ width: '100%' }}>
+    <Space direction="vertical" size="large" className="w-full">
       <section>
         <h3>
           <Trans>Transfer ownership</Trans>
@@ -57,7 +57,7 @@ export function V1ProjectToolsDrawer({
       label: <Trans>General</Trans>,
       key: '1',
       children: (
-        <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+        <Space direction="vertical" size="middle" className="w-full">
           <section>
             <AddToProjectBalanceForm useAddToBalanceTx={useAddToBalanceTx} />
           </section>

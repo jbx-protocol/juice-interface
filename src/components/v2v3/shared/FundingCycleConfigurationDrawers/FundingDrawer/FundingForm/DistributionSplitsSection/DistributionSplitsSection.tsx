@@ -6,13 +6,13 @@ import TooltipIcon from 'components/TooltipIcon'
 import DistributionLimit from 'components/v2v3/shared/DistributionLimit'
 import { DistributionSplitCard } from 'components/v2v3/shared/DistributionSplitCard'
 import { CurrencyName } from 'constants/currency'
-import { ThemeContext } from 'contexts/themeContext'
 import { useWallet } from 'hooks/Wallet'
 import filter from 'lodash/filter'
 import isEqual from 'lodash/isEqual'
 import { Split } from 'models/splits'
 import Link from 'next/link'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { classNames } from 'utils/classNames'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { v2v3ProjectRoute } from 'utils/routes'
 import {
@@ -45,9 +45,6 @@ export function DistributionSplitsSection({
   lockedSplits: Split[]
   onSplitsChanged: (splits: Split[]) => void
 } & FormItemExt) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { userAddress } = useWallet()
 
   const distributionLimitIsInfinite =
@@ -161,24 +158,14 @@ export function DistributionSplitsSection({
   return (
     <Form.Item
       {...formItemProps}
-      style={{
-        ...formItemProps?.style,
-        display: 'block',
-        marginBottom: 0,
-      }}
+      className={classNames('mb-0 block', formItemProps?.className)}
     >
-      <Space
-        direction="vertical"
-        style={{ width: '100%', minHeight: 0 }}
-        size="large"
-      >
-        <Form.Item style={{ marginBottom: 0 }}>
-          <p style={{ color: colors.text.primary }}>
+      <Space className="min-h-0 w-full" direction="vertical" size="large">
+        <Form.Item className="mb-0">
+          <p className="text-black dark:text-slate-100">
             <Trans>Choose how you would like to configure your payouts.</Trans>
           </p>
-          <PayoutConfigurationExplainerCollapse
-            style={{ marginBottom: '1rem' }}
-          />
+          <PayoutConfigurationExplainerCollapse className="mb-4" />
           <Radio.Group
             onChange={e => {
               const newType = e.target.value
@@ -205,7 +192,7 @@ export function DistributionSplitsSection({
             <Space direction="vertical">
               <Radio value="amount">
                 <Trans>Amounts</Trans>
-                <p style={{ fontWeight: 400, fontSize: '0.8rem' }}>
+                <p className="text-sm font-normal">
                   <Trans>
                     Distribute a specific amount of funds to entities each
                     funding cycle. Your distribution limit will equal the{' '}
@@ -215,7 +202,7 @@ export function DistributionSplitsSection({
               </Radio>
               <Radio value="percent">
                 <Trans>Percentages</Trans>
-                <p style={{ fontWeight: 400, fontSize: '0.8rem' }}>
+                <p className="text-sm font-normal">
                   <Trans>
                     Distribute a percentage of all funds received to entities.
                     Your distribution limit will be <strong>infinite</strong>.
@@ -226,18 +213,18 @@ export function DistributionSplitsSection({
           </Radio.Group>
         </Form.Item>
 
-        <Space style={{ width: '100%' }} direction="vertical" size="small">
+        <Space className="w-full" direction="vertical" size="small">
           {editableSplits.map((split, index) => renderSplitCard(split, index))}
         </Space>
         {lockedSplits ? (
-          <Space style={{ width: '100%' }} direction="vertical" size="small">
+          <Space className="w-full" direction="vertical" size="small">
             {lockedSplits.map((split, index) =>
               renderSplitCard(split, index, true),
             )}
           </Space>
         ) : null}
         {totalSplitsPercentageInvalid ? (
-          <span style={{ color: colors.text.failure, fontWeight: 600 }}>
+          <span className="font-medium text-error-500 dark:text-error-400">
             <Trans>Sum of percentages cannot exceed 100%.</Trans>
           </span>
         ) : remainingSplitsPercentage > 0 && distributionLimit !== '0' ? (
@@ -278,14 +265,14 @@ export function DistributionSplitsSection({
             </span>
           </Button>
         </Form.Item>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <span style={{ color: colors.text.primary }}>
+        <div className="flex justify-between">
+          <span className="text-black dark:text-slate-100">
             <Trans>
               Distribution Limit{' '}
               <TooltipIcon
                 tip={t`The maximum amount of funds that can be distributed from the treasury each funding cycle.`}
                 placement={'topLeft'}
-                iconStyle={{ marginRight: 5 }}
+                iconClassName="mr-1"
               />
               :
             </Trans>

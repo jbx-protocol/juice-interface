@@ -1,10 +1,9 @@
+import * as constants from '@ethersproject/constants'
 import { Trans } from '@lingui/macro'
 import { Button, Divider, Form, Space, Switch } from 'antd'
-import { FormItems } from 'components/formItems'
-
-import * as constants from '@ethersproject/constants'
 import ExternalLink from 'components/ExternalLink'
-import { ThemeContext } from 'contexts/themeContext'
+import { FormItems } from 'components/formItems'
+import FormItemWarningText from 'components/FormItemWarningText'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useEditingV1FundingCycleSelector } from 'hooks/AppSelector'
@@ -16,8 +15,6 @@ import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { helpPagePath } from 'utils/routes'
 import { getV1CurrencyOption, V1CurrencyName } from 'utils/v1/currency'
 import { hasFundingTarget, isRecurring } from 'utils/v1/fundingCycle'
-
-import FormItemWarningText from 'components/FormItemWarningText'
 import {
   targetSubFeeToTargetFormatted,
   targetToTargetSubFeeFormatted,
@@ -38,9 +35,6 @@ export default function BudgetForm({
   initialDuration: string
   onSave: (currency: V1CurrencyOption, target: string, duration: string) => void
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   // State objects avoid antd form input dependency rerendering issues
   const [currency, setCurrency] = useState<CurrencyName>('ETH')
   const [target, setTarget] = useState<string>('0')
@@ -72,7 +66,7 @@ export default function BudgetForm({
   }, [target, maxIntStr])
 
   return (
-    <Space direction="vertical" size="large" style={{ width: '100%' }}>
+    <Space direction="vertical" size="large" className="w-full">
       <h1>
         <Trans>Funding cycle</Trans>
       </h1>
@@ -92,7 +86,7 @@ export default function BudgetForm({
       </p>
 
       <Form layout="vertical">
-        <div style={{ color: colors.text.secondary }}>
+        <div className="text-grey-500 dark:text-grey-300">
           <h4>
             <Trans>Funding cycle target</Trans>
           </h4>
@@ -142,8 +136,8 @@ export default function BudgetForm({
         </Form.Item>
 
         {!hasTarget && (
-          <p style={{ color: colors.text.primary }}>
-            <span style={{ fontWeight: 600 }}>
+          <p className="text-black dark:text-slate-100">
+            <span className="font-medium">
               <Trans>No target set.</Trans>{' '}
             </span>
             <Trans>
@@ -180,10 +174,10 @@ export default function BudgetForm({
         )}
 
         {showFundingFields && target === '0' && (
-          <p style={{ color: colors.text.primary }}>
+          <p className="text-black dark:text-slate-100">
             <Trans>
-              <span style={{ fontWeight: 600 }}>Target is 0.</span> The
-              project's entire balance will be considered overflow.{' '}
+              <span className="font-medium">Target is 0.</span> The project's
+              entire balance will be considered overflow.{' '}
               <ExternalLink href={helpPagePath('dev/learn/glossary/overflow')}>
                 Learn more
               </ExternalLink>{' '}
@@ -192,18 +186,13 @@ export default function BudgetForm({
           </p>
         )}
 
-        <Divider
-          style={{
-            margin: '40px 0',
-            borderColor: colors.stroke.tertiary,
-          }}
-        />
+        <Divider className="my-10 mx-0 border-smoke-200 dark:border-grey-600" />
 
         <div>
           <h4>
             <Trans>Funding cycle duration</Trans>
           </h4>
-          <p style={{ color: colors.text.secondary }}>
+          <p className="text-grey-500 dark:text-grey-300">
             <Trans>Set the length of your funding cycles.</Trans>{' '}
             <Trans>
               <ExternalLink
@@ -216,8 +205,8 @@ export default function BudgetForm({
           </p>
 
           {hasTarget && (
-            <p style={{ color: colors.text.secondary }}>
-              <span style={{ fontWeight: 600 }}>
+            <p className="text-grey-500 dark:text-grey-300">
+              <span className="font-medium">
                 <Trans>You have set a funding cycle target.</Trans>
               </span>{' '}
               <Trans>
@@ -243,9 +232,9 @@ export default function BudgetForm({
         />
 
         {duration === '0' && (
-          <p style={{ color: colors.text.primary, marginTop: 20 }}>
+          <p className="mt-5 text-black dark:text-slate-100">
             <Trans>
-              <span style={{ fontWeight: 600 }}>No duration set.</span>
+              <span className="font-medium">No duration set.</span>
               Funding can be reconfigured at any time. Reconfigurations will
               start a new funding cycle.
             </Trans>
@@ -260,7 +249,7 @@ export default function BudgetForm({
 
         <Form.Item>
           <Button
-            style={{ marginTop: 20 }}
+            className="mt-5"
             htmlType="submit"
             type="primary"
             onClick={() =>

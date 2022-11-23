@@ -60,7 +60,7 @@ const VeNftEnableSection = () => {
   }
 
   return (
-    <Space direction="vertical" size="large" style={{ width: '100%' }}>
+    <Space direction="vertical" size="large" className="w-full">
       <>
         <section>
           {!veNftContractAddress ? (

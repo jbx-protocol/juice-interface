@@ -1,6 +1,5 @@
 import { CardSection } from 'components/CardSection'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useContext } from 'react'
 import PayoutModsList from '../PayoutModsList'
@@ -8,10 +7,6 @@ import FundingCycleDetails from './FundingCycleDetails'
 import ReservedTokens from './ReservedTokens'
 
 export default function QueuedFundingCycle() {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const { queuedFC, queuedPayoutMods, queuedTicketMods } =
     useContext(V1ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
@@ -21,7 +16,7 @@ export default function QueuedFundingCycle() {
   return (
     <div>
       {queuedFC?.number.gt(0) ? (
-        <div style={{ position: 'relative' }}>
+        <div className="relative">
           <CardSection>
             <FundingCycleDetails fundingCycle={queuedFC} />
           </CardSection>
@@ -40,17 +35,7 @@ export default function QueuedFundingCycle() {
               hideActions={true}
             />
           </CardSection>
-          <div
-            style={{
-              position: 'absolute',
-              zIndex: -1,
-              left: 10,
-              right: -10,
-              top: 10,
-              bottom: 0,
-              background: colors.background.l1,
-            }}
-          ></div>
+          <div className="absolute left-2 -right-2 top-2 bottom-0 -z-[1] bg-smoke-100 dark:bg-slate-600" />
         </div>
       ) : (
         <div>No upcoming funding cycle</div>

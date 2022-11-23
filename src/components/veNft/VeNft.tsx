@@ -4,7 +4,6 @@ import { Button, Layout, Menu, MenuProps, Space } from 'antd'
 import { ProjectHeader } from 'components/Project/ProjectHeader'
 import { V2V3ProjectHeaderActions } from 'components/v2v3/V2V3Project/V2V3ProjectHeaderActions'
 import { VeNftContent } from 'components/veNft/VeNftContent'
-import { layouts } from 'constants/styles/layouts'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
@@ -65,26 +64,17 @@ export function VeNft() {
   }
 
   return (
-    <div style={layouts.maxWidth}>
-      <Space direction="vertical" size={40} style={{ width: '100%' }}>
+    <div className="my-0 mx-auto max-w-[1080px] p-5">
+      <Space direction="vertical" size={40} className="w-full">
         <ProjectHeader
           actions={!isPreviewMode ? <V2V3ProjectHeaderActions /> : undefined}
           handle={handle}
           projectOwnerAddress={projectOwnerAddress}
           canEditProjectHandle={canEditProjectHandle}
         />
-        <Layout
-          style={{
-            minHeight: '100vh',
-            background: 'transparent',
-            marginBottom: '4rem',
-          }}
-        >
-          <Layout.Sider
-            style={{ background: 'transparent', marginRight: '3rem' }}
-            width={250}
-          >
-            <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+        <Layout className="mb-16 min-h-screen bg-transparent">
+          <Layout.Sider className="mr-12 bg-transparent" width={250}>
+            <Space direction="vertical" size="middle" className="w-full">
               <Link href={v2v3ProjectRoute({ projectId, handle })}>
                 <Button type="link" icon={<LeftOutlined />} size="small">
                   <span>

@@ -55,7 +55,7 @@ export function LaunchFundingCycleForm() {
 
   return (
     <>
-      <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+      <Space direction="vertical" size="middle" className="w-full">
         <Form layout="vertical">
           <Form.Item
             label={<Trans>Start time (seconds, Unix time)</Trans>}
@@ -94,10 +94,10 @@ export function LaunchFundingCycleForm() {
 
         <Divider />
 
-        <h3 className="text-primary" style={{ fontSize: '1.2rem' }}>
+        <h3 className="text-xl text-black dark:text-grey-100">
           <Trans>Review and deploy</Trans>
         </h3>
-        <div style={{ marginBottom: '1rem' }}>
+        <div className="mb-4">
           <ReconfigurePreview
             payoutSplits={
               editingFundingCycleConfig.editingPayoutGroupedSplits.splits
@@ -121,19 +121,15 @@ export function LaunchFundingCycleForm() {
 
         {isNftFundingCycle && !nftDeployerCanReconfigure ? (
           <Space size="large" direction="vertical">
-            <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-              <span style={{ marginRight: '0.75rem', fontSize: '1.1rem' }}>
-                1.
-              </span>
+            <div className="flex items-start">
+              <span className="mr-3 text-lg">1.</span>
               <SetNftOperatorPermissionsButton
                 onConfirmed={() => setNftOperatorConfirmed(true)}
                 size="large"
               />
             </div>
-            <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-              <span style={{ marginRight: '0.75rem', fontSize: '1.1rem' }}>
-                2.
-              </span>
+            <div className="flex items-start">
+              <span className="mr-3 text-lg">2.</span>
               <Button
                 loading={launchFundingCycleLoading}
                 onClick={launchFundingCycle}

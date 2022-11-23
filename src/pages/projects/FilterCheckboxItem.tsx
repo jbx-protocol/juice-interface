@@ -1,7 +1,5 @@
 import { Checkbox } from 'antd'
-import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, useContext } from 'react'
-
+import { classNames } from 'utils/classNames'
 import { CheckboxOnChange } from './ProjectsFilterAndSort'
 
 export default function FilterCheckboxItem({
@@ -15,27 +13,16 @@ export default function FilterCheckboxItem({
   onChange: CheckboxOnChange
   disabled?: boolean
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
-  const filterDropdownItemStyles: CSSProperties = {
-    display: 'flex',
-    alignItems: 'center',
-    height: 40,
-  }
-
   return (
     <div
-      style={{
-        ...filterDropdownItemStyles,
-        color: disabled ? colors.text.tertiary : '',
-        cursor: 'pointer',
-      }}
+      className={classNames(
+        'flex h-10 cursor-pointer items-center',
+        disabled ? 'text-grey-400 dark:text-slate-200' : '',
+      )}
       onClick={() => onChange(!checked)}
     >
       <Checkbox
-        style={{ marginRight: 10 }}
+        className="mr-2"
         checked={checked}
         onChange={() => onChange(!checked)}
         disabled={disabled}

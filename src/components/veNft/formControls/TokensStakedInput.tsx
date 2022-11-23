@@ -65,7 +65,7 @@ const TokensStakedInput = ({
         name="tokensStaked"
         value={tokensStaked}
         min={0}
-        style={{ width: '100%' }}
+        className="w-full"
         onChange={val => {
           form.setFieldsValue({ tokensStaked: val })
         }}

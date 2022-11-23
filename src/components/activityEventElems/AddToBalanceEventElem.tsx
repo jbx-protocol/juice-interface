@@ -3,16 +3,8 @@ import ETHAmount from 'components/currency/ETHAmount'
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
 import RichNote from 'components/RichNote'
-import { ThemeContext } from 'contexts/themeContext'
 import { AddToBalanceEvent } from 'models/subgraph-entities/vX/add-to-balance-event'
-import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/format/formatDate'
-
-import {
-  contentLineHeight,
-  primaryContentFontSize,
-  smallHeaderStyle,
-} from './styles'
 
 export default function AddToBalanceEventElem({
   event,
@@ -24,61 +16,38 @@ export default function AddToBalanceEventElem({
       >
     | undefined
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   if (!event) return null
 
   return (
     <div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignContent: 'space-between',
-        }}
-      >
+      <div className="flex content-between justify-between">
         <div>
-          <div style={smallHeaderStyle(colors)}>
+          <div className="text-xs text-grey-400 dark:text-slate-200">
             <Trans>Added to balance</Trans>
           </div>
-          <div
-            style={{
-              lineHeight: contentLineHeight,
-              fontSize: primaryContentFontSize,
-            }}
-          >
+          <div className="text-base">
             <ETHAmount amount={event.amount} />
           </div>
         </div>
 
-        <div style={{ textAlign: 'right' }}>
+        <div className="text-right">
           {event.timestamp && (
-            <div style={smallHeaderStyle(colors)}>
+            <div className="text-xs text-grey-400 dark:text-slate-200">
               {formatHistoricalDate(event.timestamp * 1000)}{' '}
               <EtherscanLink value={event.txHash} type="tx" />
             </div>
           )}
-          <div
-            style={{
-              ...smallHeaderStyle(colors),
-              lineHeight: contentLineHeight,
-            }}
-          >
-            <FormattedAddress
-              address={event.caller}
-              style={{ fontWeight: 400 }}
-            />
+          <div className="text-xs leading-6 text-grey-400 dark:text-slate-200">
+            <FormattedAddress className="font-normal" address={event.caller} />
           </div>
         </div>
       </div>
 
       {
-        <div style={{ marginTop: 5 }}>
+        <div className="mt-1">
           <RichNote
+            className="text-grey-900 dark:text-slate-100"
             note={event.note ?? ''}
-            style={{ color: colors.text.secondary }}
           />
         </div>
       }

@@ -32,7 +32,7 @@ export default function ReconfigureFundingModalTrigger({
   }
 
   return (
-    <div style={{ textAlign: 'right' }}>
+    <div className="text-right">
       <Button onClick={handleModalOpen} size="small" disabled={isPreviewMode}>
         {fundingDuration?.gt(0) ? (
           <Trans>Reconfigure upcoming</Trans>

@@ -2,29 +2,18 @@ import { Trans } from '@lingui/macro'
 import { Button, Form, Space } from 'antd'
 import { ItemNoInput } from 'components/formItems/ItemNoInput'
 import ReservedTokensFormItem from 'components/v2v3/shared/FundingCycleConfigurationDrawers/TokenDrawer/TokenForm/ReservedTokensFormItem'
-import { ThemeContext } from 'contexts/themeContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import round from 'lodash/round'
 
-import {
-  CSSProperties,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   defaultFundingCycleData,
   defaultFundingCycleMetadata,
   editingV2ProjectActions,
 } from 'redux/slices/editingV2Project'
-
 import { sanitizeSplit } from 'utils/splits'
-
 import { Split } from 'models/splits'
-
 import {
   DEFAULT_MINT_RATE,
   discountRateFrom,
@@ -36,34 +25,24 @@ import {
   redemptionRateFrom,
   reservedRateFrom,
 } from 'utils/v2v3/math'
-
 import { BigNumber } from '@ethersproject/bignumber'
-
 import { FormItems } from 'components/formItems'
-
 import {
   getDefaultFundAccessConstraint,
   hasDistributionLimit,
   hasFundingDuration,
 } from 'utils/v2v3/fundingCycle'
-
 import { SerializedV2V3FundAccessConstraint } from 'utils/v2v3/serializers'
-
 import SwitchHeading from 'components/SwitchHeading'
-
 import NumberSlider from 'components/inputs/NumberSlider'
-
 import { DEFAULT_BONDING_CURVE_RATE_PERCENTAGE } from 'components/formItems/ProjectRedemptionRate'
 import FormItemWarningText from 'components/FormItemWarningText'
 import { formattedNum } from 'utils/format/formatNumber'
-
 import { useForm } from 'antd/lib/form/Form'
-import Callout from 'components/Callout'
 import { DISCOUNT_RATE_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { getTotalSplitsPercentage } from 'utils/v2v3/distributions'
-
-import { shadowCard } from 'constants/styles/shadowCard'
 import MintRateFormItem from './MintRateFormItem'
+import { Callout } from 'components/Callout'
 
 const MAX_DISCOUNT_RATE = 20 // this is an opinionated limit
 
@@ -78,10 +57,6 @@ function DiscountRateExtra({
   discountRatePercent: number
   isCreate?: boolean
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const discountRateDecimal = discountRatePercent * 0.01
   const secondIssuanceRate = round(
     initialIssuanceRate - initialIssuanceRate * discountRateDecimal,
@@ -94,7 +69,7 @@ function DiscountRateExtra({
   )
 
   return (
-    <div style={{ fontSize: '0.875rem' }}>
+    <div className="text-sm">
       {!hasDuration && (
         <FormItemWarningText>
           <Trans>
@@ -105,9 +80,7 @@ function DiscountRateExtra({
       <p>{DISCOUNT_RATE_EXPLANATION}</p>
       {discountRatePercent > 0 && isCreate && (
         <>
-          <Callout
-            style={{ marginTop: 20, backgroundColor: colors.background.l1 }}
-          >
+          <Callout.Info className="mt-5 dark:bg-slate-500" transparent>
             <p>
               <Trans>
                 Contributors will receive{' '}
@@ -120,17 +93,17 @@ function DiscountRateExtra({
               <Trans>
                 The <strong>issuance rate</strong> of your second funding cycle
                 will be{' '}
-                <strong style={{ whiteSpace: 'nowrap' }}>
+                <strong className="whitespace-nowrap">
                   {formattedNum(secondIssuanceRate)} tokens per 1 ETH
                 </strong>
                 , then{' '}
-                <strong style={{ whiteSpace: 'nowrap' }}>
+                <strong className="whitespace-nowrap">
                   {formattedNum(thirdIssuanceRate)} tokens per 1 ETH{' '}
                 </strong>
                 for your third funding cycle, and so on.
               </Trans>
             </p>
-          </Callout>
+          </Callout.Info>
         </>
       )}
     </div>
@@ -146,11 +119,6 @@ export function TokenForm({
   onFinish: VoidFunction
   isCreate?: boolean // If the instance of this form is in the create flow (not reconfig)
 }) {
-  const {
-    theme,
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const [tokenForm] = useForm<{ totalReservedSplitPercent: number }>()
 
   const dispatch = useAppDispatch()
@@ -273,10 +241,6 @@ export function TokenForm({
     onFormUpdated?.(hasFormUpdated)
   })
 
-  const defaultValueStyle: CSSProperties = {
-    color: colors.text.tertiary,
-  }
-
   const reservedRatePercent = parseFloat(
     formatReservedRate(BigNumber.from(reservedRate)),
   )
@@ -312,6 +276,7 @@ export function TokenForm({
             isCreate={Boolean(isCreate)}
           />
           <ReservedTokensFormItem
+            className="mb-2 rounded-sm bg-smoke-75 p-6 shadow-[10px_10px_0px_0px_#E7E3DC] dark:bg-slate-400 dark:shadow-[10px_10px_0px_0px_#2D293A]"
             initialValue={reservedRatePercent}
             onChange={newReservedRatePercentage => {
               setReservedRate(
@@ -320,13 +285,13 @@ export function TokenForm({
                 ).toString(),
               )
             }}
-            style={{ ...shadowCard(theme), padding: 25, marginBottom: 10 }}
             reservedTokensSplits={reservedTokensSplits}
             onReservedTokensSplitsChange={setReservedTokensSplits}
             issuanceRate={parseInt(weight)}
           />
 
           <Form.Item
+            className="mb-2 rounded-sm bg-smoke-75 p-6 shadow-[10px_10px_0px_0px_#E7E3DC] dark:bg-slate-400 dark:shadow-[10px_10px_0px_0px_#2D293A]"
             extra={
               <DiscountRateExtra
                 hasDuration={canSetDiscountRate}
@@ -347,14 +312,13 @@ export function TokenForm({
               >
                 <Trans>Discount rate</Trans>
                 {!discountRateChecked && canSetDiscountRate && (
-                  <span style={defaultValueStyle}>
+                  <span className="text-grey-400 dark:text-slate-200">
                     {' '}
                     ({defaultFundingCycleData.discountRate}%)
                   </span>
                 )}
               </SwitchHeading>
             }
-            style={{ ...shadowCard(theme), padding: 25, marginBottom: 10 }}
           >
             {canSetDiscountRate && discountRateChecked && (
               <NumberSlider
@@ -372,11 +336,12 @@ export function TokenForm({
           </Form.Item>
 
           <FormItems.ProjectRedemptionRate
+            className="mb-2 rounded-sm bg-smoke-75 p-6 shadow-[10px_10px_0px_0px_#E7E3DC] dark:bg-slate-400 dark:shadow-[10px_10px_0px_0px_#2D293A]"
             label={
               <>
                 <Trans>Redemption rate</Trans>
                 {!redemptionRateChecked && canSetRedemptionRate && (
-                  <span style={defaultValueStyle}>
+                  <span className="text-grey-400 dark:text-slate-200">
                     {' '}
                     ({DEFAULT_BONDING_CURVE_RATE_PERCENTAGE}%)
                   </span>
@@ -391,7 +356,6 @@ export function TokenForm({
                 ).toString(),
               )
             }}
-            style={{ ...shadowCard(theme), padding: 25, marginBottom: 10 }}
             onToggled={setRedemptionRateChecked}
             checked={redemptionRateChecked}
             disabled={!canSetRedemptionRate}

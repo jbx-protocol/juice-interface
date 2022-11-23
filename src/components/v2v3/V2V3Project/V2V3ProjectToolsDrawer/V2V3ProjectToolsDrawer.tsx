@@ -37,7 +37,7 @@ export function V2V3ProjectToolsDrawer({
         <Trans>Tools</Trans>
       </h1>
 
-      <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+      <Space direction="vertical" size="middle" className="w-full">
         <section>
           <h3>
             <Trans>Create Payment Address</Trans>

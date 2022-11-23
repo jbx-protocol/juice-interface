@@ -1,31 +1,27 @@
-import { ThemeContext } from 'contexts/themeContext'
 import useSymbolOfERC20 from 'hooks/SymbolOfERC20'
 import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
 import useTokenAddressOfProject from 'hooks/v1/contractReader/TokenAddressOfProject'
 import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
-import { CSSProperties, useContext } from 'react'
 import { formatWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { getTerminalName } from 'utils/v1/terminals'
 
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
+import { classNames } from 'utils/classNames'
 
 export default function V1ProjectTokenBalance({
+  className,
   projectId,
   wallet,
-  style,
   precision,
   hideHandle,
 }: {
+  className?: string
   projectId: number
   wallet: string | undefined
-  style?: CSSProperties
   precision?: number
   hideHandle?: boolean
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const tokenAddress = useTokenAddressOfProject(projectId)
   const tokenSymbol = useSymbolOfERC20(tokenAddress)
   const terminalAddress = useTerminalOfProject(projectId)
@@ -35,7 +31,7 @@ export default function V1ProjectTokenBalance({
   const balance = useTotalBalanceOf(wallet, projectId, terminalName)
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', ...style }}>
+    <div className={classNames('flex justify-between', className)}>
       <span>
         {tokenSymbol !== undefined ? (
           <>
@@ -49,7 +45,8 @@ export default function V1ProjectTokenBalance({
 
       {!hideHandle && (
         <V1ProjectHandle
-          style={{ color: colors.text.tertiary }}
+          // text.tertiary
+          className="text-grey-400 dark:text-slate-200"
           projectId={projectId}
         />
       )}

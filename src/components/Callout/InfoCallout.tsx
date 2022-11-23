@@ -1,15 +1,28 @@
 import { InfoCircleOutlined } from '@ant-design/icons'
-import Callout from 'components/Callout'
 import useMobile from 'hooks/Mobile'
+import { classNames } from 'utils/classNames'
+import { Callout } from './Callout'
 
 export const InfoCallout: React.FC<{
+  className?: string
   noIcon?: boolean
   collapsible?: boolean
-}> = ({ children, noIcon = false, collapsible }) => {
+  transparent?: boolean
+}> = ({
+  className,
+  children,
+  noIcon = false,
+  transparent = false,
+  collapsible,
+}) => {
   const isMobile = useMobile()
   const collapse = collapsible ?? isMobile
   return (
     <Callout
+      className={classNames(
+        className,
+        !transparent ? 'bg-smoke-75 dark:bg-slate-400' : undefined,
+      )}
       iconComponent={
         !noIcon ? <InfoCircleOutlined className="text-2xl" /> : null
       }

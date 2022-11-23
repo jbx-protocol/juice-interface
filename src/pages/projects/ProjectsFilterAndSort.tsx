@@ -1,11 +1,10 @@
 import { t, Trans } from '@lingui/macro'
 import { Collapse, Select } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
-import { CSSProperties, useContext, useEffect, useState } from 'react'
-
+import { useContext, useEffect, useState } from 'react'
 import { FilterOutlined } from '@ant-design/icons'
 import { ThemeContext } from 'contexts/themeContext'
-
+import { classNames } from 'utils/classNames'
 import FilterCheckboxItem from './FilterCheckboxItem'
 
 type OrderByOption = 'createdAt' | 'totalPaid'
@@ -35,19 +34,9 @@ export default function ProjectsFilterAndSort({
   orderBy: OrderByOption
   setOrderBy: (value: OrderByOption) => void
 }) {
-  const {
-    theme: { colors },
-    isDarkMode,
-  } = useContext(ThemeContext)
+  const { isDarkMode } = useContext(ThemeContext)
 
   const [activeKey, setActiveKey] = useState<0 | undefined>()
-
-  const filterCollapseStyle: CSSProperties = {
-    border: 'none',
-    marginTop: 0,
-    marginBottom: 0,
-    marginRight: 15,
-  }
 
   // Close collapse when clicking anywhere in the window except the collapse items
   useEffect(() => {
@@ -59,36 +48,28 @@ export default function ProjectsFilterAndSort({
   }, [])
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        whiteSpace: 'pre',
-        flexWrap: 'wrap',
-        maxWidth: '100vw',
-      }}
-    >
+    <div className="flex max-w-[100vw] flex-wrap items-center whitespace-pre">
       <Collapse
-        className={`projects-filter-collapse ${isDarkMode ? 'dark' : ''}`}
-        style={filterCollapseStyle}
+        className={classNames(
+          `projects-filter-collapse ${isDarkMode ? 'dark' : ''}`,
+          'my-0 mr-4 border-none',
+        )}
         activeKey={activeKey}
       >
         <CollapsePanel
-          style={{
-            border: 'none',
-          }}
+          className="border-none"
           key={0}
           showArrow={false}
           header={
             <span
-              style={{ color: colors.text.secondary }}
+              className="text-grey-500 dark:text-grey-300"
               onClick={e => {
                 setActiveKey(activeKey === 0 ? undefined : 0)
                 e.stopPropagation()
               }}
             >
               <FilterOutlined />{' '}
-              <label style={{ cursor: 'pointer' }}>Filter</label>
+              <label className="cursor-pointer">Filter</label>
             </span>
           }
         >
@@ -118,15 +99,7 @@ export default function ProjectsFilterAndSort({
         </CollapsePanel>
       </Collapse>
 
-      <Select
-        value={orderBy}
-        onChange={setOrderBy}
-        style={{
-          width: 180,
-          marginTop: 10,
-          marginBottom: 10,
-        }}
-      >
+      <Select className="my-2 w-44" value={orderBy} onChange={setOrderBy}>
         <Select.Option value="totalPaid">
           <Trans>Total raised</Trans>
         </Select.Option>

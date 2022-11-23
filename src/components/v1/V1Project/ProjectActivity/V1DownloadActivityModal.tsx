@@ -25,7 +25,7 @@ export function V1DownloadActivityModal({
           <Trans>Download CSV of project activity</Trans>
         </h4>
 
-        <div style={{ marginTop: 20 }}>
+        <div className="mt-5">
           <Button block onClick={() => setPaymentsModalVisible(true)}>
             Payments
           </Button>

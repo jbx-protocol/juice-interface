@@ -30,7 +30,7 @@ export const MobileProjectDetailsReview = () => {
         title={t`Project logo`}
         desc={
           <ProjectLogo
-            size={140}
+            className="h-36 w-36"
             uri={logoUri ? restrictedIpfsUrl(cidFromUrl(logoUri)!) : undefined}
             name={name}
           />

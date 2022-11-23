@@ -28,10 +28,7 @@ export function V1TokenMigrationSetupSection() {
         </Trans>
       </p>
 
-      <MinimalCollapse
-        header={<Trans>Do I need this?</Trans>}
-        style={{ marginBottom: '1rem' }}
-      >
+      <MinimalCollapse className="mb-4" header={<Trans>Do I need this?</Trans>}>
         <p>
           <Trans>
             If you have Juicebox project on Juicebox V1 and V2, we recommend you

@@ -2,8 +2,6 @@ import { Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TooltipLabel from 'components/TooltipLabel'
-import { ThemeContext } from 'contexts/themeContext'
-import { useContext } from 'react'
 import { MAX_MINT_RATE } from 'utils/v2v3/math'
 
 export default function MintRateFormItem({
@@ -17,11 +15,8 @@ export default function MintRateFormItem({
   hasDuration: boolean
   isCreate: boolean
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   return (
-    <div style={{ display: 'flex' }}>
+    <div className="flex">
       <Form.Item
         label={
           <TooltipLabel
@@ -46,21 +41,21 @@ export default function MintRateFormItem({
             }
           />
         }
-        style={{ width: '100%' }}
+        className="w-full"
         required
       >
         <FormattedNumberInput
+          className="pr-4"
           min={0}
           max={MAX_MINT_RATE}
           accessory={
-            <span style={{ color: colors.text.primary, marginRight: 20 }}>
+            <span className="mr-5 text-black dark:text-slate-100">
               <Trans>tokens per ETH contributed</Trans>
             </span>
           }
           value={value}
           onChange={onChange}
           isInteger
-          style={{ paddingRight: 15 }}
         />
       </Form.Item>
     </div>

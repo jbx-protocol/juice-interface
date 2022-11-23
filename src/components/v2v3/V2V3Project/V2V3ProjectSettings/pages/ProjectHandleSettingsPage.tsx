@@ -2,7 +2,7 @@ import { CheckCircleFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, Divider, Form, Space, Statistic } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import Callout from 'components/Callout'
+import { Callout } from 'components/Callout'
 import ExternalLink from 'components/ExternalLink'
 import { FormItems } from 'components/formItems'
 import { MinimalCollapse } from 'components/MinimalCollapse'
@@ -129,7 +129,7 @@ export function ProjectHandleSettingsPage() {
             </ul>
           </p>
 
-          <p style={{ margin: 0 }}>
+          <p className="m-0">
             <Trans>
               Setting a handle requires 2 transactions:{' '}
               <strong>Set ENS name</strong> and <strong>Set text record</strong>
@@ -153,10 +153,7 @@ export function ProjectHandleSettingsPage() {
         </Trans>
       </p>
 
-      <MinimalCollapse
-        header={<Trans>See example</Trans>}
-        style={{ marginBottom: '1rem' }}
-      >
+      <MinimalCollapse className="mb-4" header={<Trans>See example</Trans>}>
         <ul>
           <Space direction="vertical">
             <li>juicebox.eth = @juicebox</li>
@@ -232,9 +229,9 @@ export function ProjectHandleSettingsPage() {
       </p>
 
       {!projectEnsName && (
-        <Callout style={{ marginBottom: '1rem' }}>
+        <Callout.Info className="mb-4">
           <Trans>Choose an ENS name before setting the text record</Trans>
-        </Callout>
+        </Callout.Info>
       )}
 
       {projectId && textRecordValue.data === projectId ? (

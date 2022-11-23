@@ -14,7 +14,10 @@ export function V2BugNoticeBanner() {
             contracts. This version of the contracts contains a minor bug.{' '}
             <strong>No funds are in danger</strong> and projects are unlikely to
             be affected.{' '}
-            <ExternalLink href="https://github.com/jbx-protocol/juice-contracts-v2/blob/main/security/postmortem/5.24.2022.md">
+            <ExternalLink
+              className="text-black underline hover:text-haze-400 dark:text-smoke-200 dark:hover:text-haze-400"
+              href="https://github.com/jbx-protocol/juice-contracts-v2/blob/main/security/postmortem/5.24.2022.md"
+            >
               Read the postmortem.
             </ExternalLink>
           </p>

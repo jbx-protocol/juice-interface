@@ -1,16 +1,16 @@
 import { useProjectHandleText } from 'hooks/ProjectHandleText'
 import Link from 'next/link'
-import { CSSProperties } from 'react'
+import { classNames } from 'utils/classNames'
 import { v2v3ProjectRoute } from 'utils/routes'
 
 export default function V2V3ProjectHandleLink({
+  className,
   projectId,
   handle,
-  style,
 }: {
+  className?: string
   projectId: number
   handle?: string | null
-  style?: CSSProperties
 }) {
   const { handle: resolvedHandle, handleText } = useProjectHandleText({
     projectId,
@@ -23,8 +23,10 @@ export default function V2V3ProjectHandleLink({
       as={v2v3ProjectRoute({ projectId, handle: resolvedHandle })}
     >
       <a
-        style={{ fontWeight: 500, ...style }}
-        className="text-primary hover-text-action-primary hover-text-decoration-underline"
+        className={classNames(
+          'font-medium text-black hover:text-haze-400 hover:underline dark:text-grey-100 dark:hover:text-haze-400',
+          className,
+        )}
       >
         {handleText}
       </a>

@@ -6,18 +6,18 @@ import { Space } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import CurrencySymbol from 'components/CurrencySymbol'
 import Loading from 'components/Loading'
-import { ThemeContext } from 'contexts/themeContext'
 import useContractReader from 'hooks/v1/contractReader/ContractReader'
 import { V1ContractName } from 'models/v1/contracts'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
-import { useCallback, useContext, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { formatHistoricalDate } from 'utils/format/formatDate'
 import { formatWad } from 'utils/format/formatNumber'
 import { deepEqFundingCycles } from 'utils/v1/deepEqFundingCycles'
 import { hasFundingTarget } from 'utils/v1/fundingCycle'
 
 import FundingCycleDetails from 'components/v1/shared/FundingCycle/FundingCycleDetails'
+import { classNames } from 'utils/classNames'
 import { V1CurrencyName } from 'utils/v1/currency'
 
 export default function FundingHistory({
@@ -28,9 +28,6 @@ export default function FundingHistory({
   const [selectedIndex, setSelectedIndex] = useState<number>()
   const [fundingCycles, setFundingCycles] = useState<V1FundingCycle[]>([])
   const [cycleIds, setCycleIds] = useState<BigNumber[]>([])
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
 
   //startId = currentFC.basedOn
   if (startId?.gt(0) && !cycleIds.length) setCycleIds([startId])
@@ -68,29 +65,23 @@ export default function FundingHistory({
   })
 
   const fundingCycleElems = (
-    <Space direction="vertical" size="large" style={{ width: '100%' }}>
+    <Space direction="vertical" size="large" className="w-full">
       {fundingCycles.length ? (
         fundingCycles.map((cycle, i) => (
           <div
+            className={classNames(
+              'flex cursor-pointer items-baseline justify-between',
+              i < fundingCycles.length - 1
+                ? 'border-x-0 border-t-0 border-b border-solid border-grey-400 pb-5 dark:border-slate-200'
+                : '',
+            )}
             key={cycle.id.toString()}
             onClick={() => setSelectedIndex(i)}
-            style={{
-              display: 'flex',
-              alignItems: 'baseline',
-              justifyContent: 'space-between',
-              cursor: 'pointer',
-              ...(i < fundingCycles.length - 1
-                ? {
-                    paddingBottom: 20,
-                    borderBottom: '1px solid ' + colors.stroke.tertiary,
-                  }
-                : {}),
-            }}
           >
             <Space align="baseline">
               <h3>#{cycle.number.toString()}</h3>
 
-              <div style={{ fontSize: '.8rem', marginLeft: 10 }}>
+              <div className="ml-2 text-sm">
                 <CurrencySymbol
                   currency={V1CurrencyName(
                     cycle.currency.toNumber() as V1CurrencyOption,
@@ -113,9 +104,9 @@ export default function FundingHistory({
               </div>
             </Space>
 
-            <div style={{ flex: 1 }}></div>
+            <div className="flex-1"></div>
 
-            <Space align="baseline" style={{ fontSize: '.8rem' }}>
+            <Space className="text-sm" align="baseline">
               {formatHistoricalDate(
                 cycle.start.add(cycle.duration).mul(1000).toNumber(),
               )}

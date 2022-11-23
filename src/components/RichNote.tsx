@@ -2,16 +2,17 @@ import { Space } from 'antd'
 import Autolinker from 'autolinker'
 import RichImgPreview from 'components/RichImgPreview'
 import { useProcessedRichNote } from 'hooks/ProcessedRichNote'
+import { classNames } from 'utils/classNames'
 
 type RichNoteProps = {
+  className?: string
   note: string | undefined
   ignoreMediaLinks?: boolean
-  style?: React.CSSProperties | undefined
 }
 
 export default function RichNote({
+  className,
   note,
-  style,
   ignoreMediaLinks,
   children,
 }: React.PropsWithChildren<RichNoteProps>) {
@@ -22,13 +23,10 @@ export default function RichNote({
   if (noteToRender === undefined) return null
 
   return (
-    <div style={{ marginTop: 5, ...style }}>
+    <div className={classNames('mt-1', className)}>
       {noteToRender.length ? (
         <span
-          style={{
-            overflowWrap: 'break-word',
-            paddingRight: '0.5rem',
-          }}
+          className="break-words pr-2"
           dangerouslySetInnerHTML={{
             __html: Autolinker.link(noteToRender, {
               sanitizeHtml: true,
@@ -44,16 +42,13 @@ export default function RichNote({
       {children}
 
       {!ignoreMediaLinks && formattedMediaLinks?.length ? (
-        <div style={{ display: 'block' }}>
+        <div className="block">
           <Space size="middle">
             {formattedMediaLinks.map((link, i) => (
               <RichImgPreview
+                className="mt-2 h-auto max-h-24 w-auto p-2"
                 key={i}
                 src={link}
-                style={{ marginTop: '0.5rem', padding: '0.5rem' }}
-                maxHeight="6rem"
-                height="auto"
-                width="auto"
               />
             ))}
           </Space>

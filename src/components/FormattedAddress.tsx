@@ -1,23 +1,24 @@
 import { Tooltip } from 'antd'
-import { CSSProperties, MouseEventHandler } from 'react'
+import { MouseEventHandler } from 'react'
 import CopyTextButton from 'components/CopyTextButton'
 import EtherscanLink from 'components/EtherscanLink'
 import { truncateEthAddress } from 'utils/format/formatAddress'
 import { useEnsName } from 'hooks/ensName'
+import { classNames } from 'utils/classNames'
 
 export default function FormattedAddress({
+  className,
   address,
   label,
   tooltipDisabled,
   truncateTo,
-  style,
   onClick,
 }: {
+  className?: string
   address: string | undefined
   label?: string
   tooltipDisabled?: boolean
   truncateTo?: number
-  style?: CSSProperties
   onClick?: MouseEventHandler
 }) {
   const ensName = useEnsName(address)
@@ -27,15 +28,12 @@ export default function FormattedAddress({
   const formatted =
     ensName ?? label ?? truncateEthAddress({ address, truncateTo })
 
-  const mergedStyle: CSSProperties = {
-    userSelect: 'all',
-    lineHeight: '22px',
-    ...style,
-  }
-
   if (tooltipDisabled) {
     return (
-      <span onClick={onClick} style={mergedStyle}>
+      <span
+        className={classNames('select-all leading-[22px]', className)}
+        onClick={onClick}
+      >
         {formatted}
       </span>
     )
@@ -44,17 +42,17 @@ export default function FormattedAddress({
   return (
     <Tooltip
       title={
-        <span style={{ fontSize: '0.875rem' }}>
+        <span className="text-sm">
           {address} <CopyTextButton value={address} />
         </span>
       }
     >
       <span>
         <EtherscanLink
+          className={classNames('select-all leading-[22px]', className)}
           onClick={onClick}
           type="address"
           value={address}
-          style={mergedStyle}
         >
           {formatted}
         </EtherscanLink>

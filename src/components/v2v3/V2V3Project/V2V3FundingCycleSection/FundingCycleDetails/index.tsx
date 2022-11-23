@@ -43,7 +43,6 @@ export default function FundingCycleDetails({
       />
       <FundingCycleDetailsRow
         header={t`Rules`}
-        style={{ paddingBottom: 0 }}
         items={
           <RulesListItems
             fundingCycle={fundingCycle}

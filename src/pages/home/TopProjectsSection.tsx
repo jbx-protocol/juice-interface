@@ -6,13 +6,10 @@ import Loading from 'components/Loading'
 import { ProjectCardProject } from 'components/ProjectCard'
 import ProjectLogo from 'components/ProjectLogo'
 import { PV_V2 } from 'constants/pv'
-import { LAYOUT_MAX_WIDTH_PX } from 'constants/styles/layouts'
-import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { useProjectsQuery } from 'hooks/Projects'
 import Link from 'next/link'
-import { useContext } from 'react'
 import { v2v3ProjectRoute } from 'utils/routes'
 
 import { SectionHeading } from './SectionHeading'
@@ -27,9 +24,6 @@ const SmallProjectCardMobile = ({
 }: {
   project: ProjectCardProject
 }) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { data: metadata } = useProjectMetadata(project?.metadataUri)
 
   return (
@@ -41,60 +35,26 @@ const SmallProjectCardMobile = ({
           : `/p/${project?.handle}`
       }
     >
-      <a
-        className="border border-solid border-smoke-300 transition-colors hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100"
-        style={{
-          cursor: 'pointer',
-          overflow: 'hidden',
-          width: '100%',
-          padding: '0.5rem 1rem',
-          textAlign: 'center',
-          display: 'flex',
-          alignItems: 'center',
-          gap: 10,
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        >
+      <a className="flex w-full cursor-pointer items-center gap-2 overflow-hidden border border-solid border-smoke-300 py-2 px-4 text-center transition-colors hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100">
+        <div className="flex justify-center">
           <ProjectLogo
+            className="h-16 w-16"
             uri={metadata?.logoUri}
             name={metadata?.name}
-            size={60}
             projectId={project.projectId}
           />
         </div>
 
-        <div
-          style={{
-            fontWeight: 400,
-            width: '100%',
-          }}
-        >
+        <div className="w-full font-normal">
           {metadata ? (
-            <span
-              style={{
-                color: colors.text.primary,
-                margin: 0,
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-              }}
-            >
+            <span className="m-0 overflow-hidden text-ellipsis text-black dark:text-slate-100">
               {metadata.name}
             </span>
           ) : (
             <Skeleton paragraph={false} title={{ width: 120 }} active />
           )}
 
-          <div
-            style={{
-              color: colors.text.primary,
-              fontWeight: 500,
-            }}
-          >
+          <div className="font-medium text-black dark:text-slate-100">
             <ETHAmount amount={project?.totalPaid} precision={0} /> raised
           </div>
         </div>
@@ -104,9 +64,6 @@ const SmallProjectCardMobile = ({
 }
 
 const SmallProjectCard = ({ project }: { project: ProjectCardProject }) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { data: metadata } = useProjectMetadata(project?.metadataUri)
 
   return (
@@ -119,48 +76,20 @@ const SmallProjectCard = ({ project }: { project: ProjectCardProject }) => {
       }
     >
       <a>
-        <div
-          className="border border-solid border-smoke-300 transition-colors hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100"
-          style={{
-            cursor: 'pointer',
-            overflow: 'hidden',
-            width: 180,
-            padding: '1rem',
-            textAlign: 'center',
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              marginBottom: '0.5rem',
-            }}
-          >
+        <div className="w-44 cursor-pointer overflow-hidden border border-solid border-smoke-300 p-4 text-center transition-colors hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100">
+          <div className="mb-2 flex justify-center">
             <ProjectLogo
+              className="h-24 w-24"
               uri={metadata?.logoUri}
               name={metadata?.name}
-              size={90}
               projectId={project.projectId}
             />
           </div>
 
-          <div
-            style={{
-              flex: 1,
-              minWidth: 0,
-              fontWeight: 400,
-            }}
-          >
+          <div className="min-w-0 flex-1 font-normal">
             {metadata ? (
               <span
-                style={{
-                  color: colors.text.primary,
-                  margin: 0,
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
-                  display: 'block',
-                }}
+                className="m-0 block overflow-hidden text-ellipsis whitespace-nowrap text-black dark:text-slate-100"
                 title={metadata.name}
               >
                 {metadata.name}
@@ -170,13 +99,7 @@ const SmallProjectCard = ({ project }: { project: ProjectCardProject }) => {
             )}
 
             <div>
-              <span
-                style={{
-                  color: colors.text.primary,
-                  fontSize: '1rem',
-                  fontWeight: 500,
-                }}
-              >
+              <span className="text-base font-medium text-black dark:text-slate-100">
                 <ETHAmount amount={project?.totalPaid} precision={0} /> raised
               </span>
             </div>
@@ -188,10 +111,6 @@ const SmallProjectCard = ({ project }: { project: ProjectCardProject }) => {
 }
 
 export function TopProjectsSection() {
-  const {
-    theme: { colors },
-    isDarkMode,
-  } = useContext(ThemeContext)
   const isMobile = useMobile()
 
   const { data: previewProjects } = useProjectsQuery({
@@ -199,52 +118,25 @@ export function TopProjectsSection() {
   })
 
   return (
-    <section
-      style={{
-        backgroundColor: isDarkMode ? colors.background.l1 : '#faf7f5',
-        padding: '2rem',
-      }}
-    >
-      <div style={{ margin: '40px auto', maxWidth: LAYOUT_MAX_WIDTH_PX }}>
-        <Space direction="vertical" style={{ width: '100%' }} size="large">
+    <section className="bg-smoke-75 p-8 dark:bg-slate-600">
+      <div className="my-10 mx-auto max-w-[1080px]">
+        <Space direction="vertical" className="w-full" size="large">
           <div>
             <SectionHeading>
               <TopProjectsHeading />
             </SectionHeading>
 
-            <p
-              style={{
-                textAlign: 'center',
-                fontSize: '1rem',
-                marginBottom: '0.3rem',
-                color: colors.text.primary,
-              }}
-            >
+            <p className="mb-1 text-center text-base text-black dark:text-slate-100">
               <TopProjectsSubheadingOne />
             </p>
-            <p
-              style={{
-                textAlign: 'center',
-                fontSize: '1rem',
-                marginBottom: '0.8rem',
-              }}
-            >
+            <p className="mb-3 text-center text-base">
               <TopProjectsSubheadingTwo />
             </p>
           </div>
 
-          <div style={{ marginBottom: '0.8rem' }}>
+          <div className="mb-3">
             {previewProjects ? (
-              <div
-                style={{
-                  display: 'flex',
-                  gap: 10,
-                  width: '80%',
-                  justifyContent: 'space-between',
-                  margin: '0 auto',
-                  flexWrap: 'wrap',
-                }}
-              >
+              <div className="my-0 mx-auto flex w-4/5 flex-wrap justify-between gap-2">
                 {previewProjects.map(p =>
                   isMobile ? (
                     <SmallProjectCardMobile key={p.metadataUri} project={p} />
@@ -258,8 +150,8 @@ export function TopProjectsSection() {
             )}
           </div>
 
-          <div style={{ textAlign: 'center' }}>
-            <Space direction="vertical" style={{ width: '100%' }} size="large">
+          <div className="text-center">
+            <Space direction="vertical" className="w-full" size="large">
               <Link href="/create">
                 <a>
                   <Button size="large" type="primary" block={isMobile}>
@@ -269,13 +161,9 @@ export function TopProjectsSection() {
               </Link>
               <Link href="#how-it-works">
                 <a
+                  // todo get rid of hover-text
+                  className="hover-text-decoration-underline cursor-pointer text-sm text-grey-500 dark:text-grey-300"
                   role="button"
-                  style={{
-                    fontSize: '0.875rem',
-                    color: colors.text.secondary,
-                    cursor: 'pointer',
-                  }}
-                  className="hover-text-decoration-underline"
                   onClick={() => {
                     document
                       .getElementById('how-it-works')

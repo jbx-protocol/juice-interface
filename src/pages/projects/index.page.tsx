@@ -5,7 +5,6 @@ import Search from 'antd/lib/input/Search'
 import { AppWrapper } from 'components/common'
 import ExternalLink from 'components/ExternalLink'
 import { PV_V1, PV_V1_1, PV_V2 } from 'constants/pv'
-import { layouts } from 'constants/styles/layouts'
 import { useWallet } from 'hooks/Wallet'
 import { ProjectCategory } from 'models/project-visibility'
 import { PV } from 'models/pv'
@@ -82,20 +81,11 @@ function Projects() {
   }, [includeV1, includeV1_1, includeV2])
 
   return (
-    <div style={{ ...layouts.maxWidth }}>
-      <Space direction="vertical" style={{ width: '100%' }} size="large">
+    <div className="my-0 mx-auto max-w-[1080px] p-5">
+      <Space direction="vertical" className="w-full" size="large">
         <div>
-          <header
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              flexWrap: 'wrap',
-              rowGap: '1rem',
-              paddingBottom: '12px',
-            }}
-          >
-            <h1 style={{ marginBottom: 0 }}>
+          <header className="flex flex-wrap items-center justify-between gap-y-4 pb-3">
+            <h1 className="mb-0">
               <Trans>Projects on Juicebox</Trans>
             </h1>
 
@@ -108,7 +98,7 @@ function Projects() {
             </Link>
           </header>
 
-          <p style={{ maxWidth: 800, margin: 0 }}>
+          <p className="m-0 max-w-[800px]">
             <Trans>
               <InfoCircleOutlined /> The Juicebox protocol is open to anyone,
               and project configurations can vary widely. There are risks
@@ -125,8 +115,8 @@ function Projects() {
 
         <div>
           <Search
+            className="mb-4 flex-1"
             autoFocus
-            style={{ flex: 1, marginBottom: '1rem' }}
             prefix="@"
             placeholder={t`Search projects by handle`}
             onSearch={val => {
@@ -139,15 +129,8 @@ function Projects() {
           />
 
           <div
+            className="flex min-h-[52px] max-w-[100vw] flex-wrap items-center justify-between"
             hidden={!!searchText}
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              flexWrap: 'wrap',
-              minHeight: 52,
-              maxWidth: '100vw',
-            }}
           >
             <ProjectsTabs selectedTab={selectedTab} />
 

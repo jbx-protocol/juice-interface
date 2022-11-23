@@ -129,13 +129,13 @@ export default function PayoutModsList({
             .sort((a, b) => (a.percent < b.percent ? 1 : -1))
             .map((mod, i) => (
               <div
+                className="mb-1"
                 key={`${mod.beneficiary ?? mod.percent}-${i}`}
-                style={{ marginBottom: 5 }}
               >
                 <Mod
                   mod={mod}
                   value={
-                    <span style={{ fontWeight: 400 }}>
+                    <span className="font-normal">
                       {permyriadToPercent(mod.percent)}%
                       {!fundingCycle.target.eq(constants.MaxUint256) && (
                         <>
@@ -162,7 +162,7 @@ export default function PayoutModsList({
         <Mod
           mod={{ beneficiary: owner, percent: ownerPercent }}
           value={
-            <div style={{ fontWeight: 400 }}>
+            <div className="font-normal">
               {permyriadToPercent(ownerPercent)}%
               {!targetIsInfinite && (
                 <>
@@ -184,7 +184,7 @@ export default function PayoutModsList({
       )}
 
       {fundingCycle && projectId && hasEditPermission ? (
-        <div style={{ marginTop: 10 }}>
+        <div className="mt-2">
           <Button size="small" onClick={() => setModalVisible(true)}>
             Edit payouts
           </Button>
@@ -227,7 +227,7 @@ export default function PayoutModsList({
               </p>
             </div>
 
-            <div style={{ textAlign: 'right' }}>
+            <div className="text-right">
               <CsvUpload
                 onChange={onModsChanged}
                 templateUrl={'/assets/csv/v1-payouts-template.csv'}

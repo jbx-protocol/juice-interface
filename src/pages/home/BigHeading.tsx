@@ -1,23 +1,11 @@
-import { CSSProperties } from 'react'
+import { classNames } from 'utils/classNames'
 
 export function BigHeading({
+  className,
   text,
-  style,
 }: {
+  className?: string
   text: string | JSX.Element
-  style?: CSSProperties
 }) {
-  return (
-    <h1
-      style={{
-        fontSize: '2.4rem',
-        fontWeight: 600,
-        lineHeight: 1.2,
-        margin: 0,
-        ...style,
-      }}
-    >
-      {text}
-    </h1>
-  )
+  return <h1 className={classNames('m-0 font-semibold', className)}>{text}</h1>
 }

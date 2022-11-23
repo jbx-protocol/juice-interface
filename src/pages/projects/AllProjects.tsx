@@ -1,13 +1,12 @@
 import { t, Trans } from '@lingui/macro'
 import Grid from 'components/Grid'
-
 import Loading from 'components/Loading'
 import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
-import { ThemeContext } from 'contexts/themeContext'
 import { useLoadMoreContent } from 'hooks/LoadMore'
 import { useInfiniteProjectsQuery, useProjectsSearch } from 'hooks/Projects'
 import { PV } from 'models/pv'
-import { useContext, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import { classNames } from 'utils/classNames'
 
 export default function AllProjects({
   pv,
@@ -20,10 +19,6 @@ export default function AllProjects({
   orderBy: 'createdAt' | 'totalPaid'
   showArchived: boolean
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const loadMoreContainerRef = useRef<HTMLDivElement>(null)
   const pageSize = 20
 
@@ -83,13 +78,8 @@ export default function AllProjects({
       !isFetchingNextPage &&
       (concatenatedPages?.length || 0) > pageSize ? (
         <div
+          className="cursor-pointer p-5 text-center text-grey-500 dark:text-grey-300"
           role="button"
-          style={{
-            textAlign: 'center',
-            color: colors.text.secondary,
-            cursor: 'pointer',
-            padding: 20,
-          }}
           onClick={() => fetchNextPage()}
         >
           <Trans>Load more</Trans>
@@ -98,14 +88,10 @@ export default function AllProjects({
         !isLoadingSearch &&
         !isLoadingProjects && (
           <div
-            style={{
-              textAlign: 'center',
-              color: colors.text.disabled,
-              paddingBottom: 20,
-              paddingLeft: 20,
-              paddingRight: 20,
-              paddingTop: concatenatedPages?.length === 0 ? 0 : 20,
-            }}
+            className={classNames(
+              'px-5 pb-5 text-center text-grey-400 dark:text-slate-200',
+              concatenatedPages?.length !== 0 ? 'pt-5' : '',
+            )}
           >
             {concatenatedPages?.length}{' '}
             {concatenatedPages?.length === 1 ? t`project` : t`projects`}{' '}

@@ -29,12 +29,12 @@ export default function TrendingProjects({
       )}
 
       {(!projects?.length || isLoading) && (
-        <div style={{ marginTop: 40 }}>
+        <div className="mt-10">
           <Loading />
         </div>
       )}
 
-      <p style={{ marginBottom: 40, marginTop: 40, maxWidth: 800 }}>
+      <p className="my-10 max-w-[800px]">
         <InfoCircleOutlined /> <RankingExplanation />
       </p>
     </div>

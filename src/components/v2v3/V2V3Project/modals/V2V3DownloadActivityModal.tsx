@@ -19,7 +19,7 @@ export default function V2V3DownloadActivityModal(props: ModalProps) {
           <Trans>Export project activity</Trans>
         </h4>
 
-        <div style={{ marginTop: 20 }}>
+        <div className="mt-5">
           <Button block onClick={() => setPaymentsModalVisible(true)}>
             <Trans>Download payments CSV</Trans>
           </Button>

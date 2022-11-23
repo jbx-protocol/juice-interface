@@ -2,7 +2,7 @@ import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Checkbox, Form, Input, Modal, Space, Switch } from 'antd'
 import { FormInstance, FormProps, useWatch } from 'antd/lib/form/Form'
-import Callout from 'components/Callout'
+import { Callout } from 'components/Callout'
 import Sticker from 'components/icons/Sticker'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
@@ -13,11 +13,11 @@ import ProjectRiskNotice from 'components/ProjectRiskNotice'
 import TooltipIcon from 'components/TooltipIcon'
 import { ProjectPreferences } from 'constants/projectPreferences'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { isAddress } from 'ethers/lib/utils'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useContext, useEffect, useState } from 'react'
+import { classNames } from 'utils/classNames'
 import {
   getUnsafeV2V3FundingCycleProperties,
   getV2V3FundingCycleRiskCount,
@@ -39,9 +39,6 @@ export const V2V3PayForm = ({
   form: FormInstance<V2V3PayFormType>
   nftRewardTiers: NftRewardTier[] | undefined
 } & FormProps) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { tokenAddress, fundingCycle, fundingCycleMetadata } =
     useContext(V2V3ProjectContext)
   const { projectMetadata } = useContext(ProjectMetadataContext)
@@ -78,7 +75,7 @@ export const V2V3PayForm = ({
             <Form.Item
               name="preferClaimedTokens"
               valuePropName="checked"
-              style={{ margin: 0 }}
+              className="m-0"
               extra={
                 <Trans>Mint this project's ERC-20 tokens to your wallet.</Trans>
               }
@@ -104,13 +101,12 @@ export const V2V3PayForm = ({
           >
             <Form.Item
               label={t`Memo (optional)`}
-              className={'antd-no-number-handler'}
-              style={{ marginBottom: 0 }}
+              className="antd-no-number-handler mb-0"
             >
               <Form.Item
+                className="mb-0"
                 name="memo"
                 extra={t`Add an on-chain memo to this payment.`}
-                style={{ marginBottom: 0 }}
               >
                 <Input.TextArea
                   placeholder={t`WAGMI!`}
@@ -120,20 +116,15 @@ export const V2V3PayForm = ({
                   autoSize
                 />
               </Form.Item>
-              <div
-                style={{
-                  fontSize: '.8rem',
-                  position: 'absolute',
-                  right: 7,
-                  top: 7,
-                }}
-              >
+              <div className="absolute right-2 top-2 text-sm">
                 {
                   <Sticker
-                    style={{
-                      color: colors.text.secondary,
-                      cursor: canAddMoreStickers ? 'pointer' : 'not-allowed',
-                    }}
+                    className={classNames(
+                      'text-grey-500 dark:text-grey-300',
+                      canAddMoreStickers
+                        ? 'cursor-pointer'
+                        : 'cursor-not-allowed',
+                    )}
                     size={20}
                     onClick={() => {
                       canAddMoreStickers
@@ -159,13 +150,13 @@ export const V2V3PayForm = ({
                   checked={customBeneficiaryEnabled}
                   onChange={setCustomBeneficiaryEnabled}
                 />
-                <span style={{ color: colors.text.primary, fontWeight: 500 }}>
+                <span className="font-medium text-black dark:text-slate-100">
                   <Trans>Custom token beneficiary</Trans>
                 </span>
               </Space>
               {customBeneficiaryEnabled && (
                 <Form.Item
-                  style={{ marginTop: '1rem', marginBottom: 0 }}
+                  className="mt-4 mb-0"
                   name="beneficiary"
                   rules={[
                     {
@@ -190,18 +181,19 @@ export const V2V3PayForm = ({
           </MinimalCollapse>
 
           {projectMetadata && (
-            <Callout>
+            <Callout.Info>
               <Trans>
                 Paying <strong>{projectMetadata.name}</strong> is not an
                 investment — it's a way to support the project.{' '}
                 <strong>{projectMetadata.name}</strong> determines any value or
                 utility of the tokens you receive.
               </Trans>
-            </Callout>
+            </Callout.Info>
           )}
 
           {riskCount && fundingCycle ? (
             <Form.Item
+              className="mb-0 border border-solid border-grey-300 p-4 dark:border-slate-200"
               name="riskCheckbox"
               valuePropName="checked"
               rules={[
@@ -214,11 +206,6 @@ export const V2V3PayForm = ({
                         ),
                 },
               ]}
-              style={{
-                padding: '1rem',
-                border: `1px solid ${colors.stroke.secondary}`,
-                marginBottom: 0,
-              }}
             >
               <Checkbox>
                 <Trans>

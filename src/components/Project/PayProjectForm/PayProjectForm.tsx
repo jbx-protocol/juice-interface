@@ -55,7 +55,6 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
 
     setPayMetadata?.({
       tierIdsToMint,
-      dontMint: !tierIdsToMint.length,
     })
   }
 

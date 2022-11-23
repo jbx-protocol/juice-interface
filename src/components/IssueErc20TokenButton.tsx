@@ -1,9 +1,10 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-import { Button, Tooltip } from 'antd'
+import { Button } from 'antd'
 
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { JuiceTooltip } from './JuiceTooltip'
 
 import { IssueErc20TokenModal } from './modals/IssueErc20TokenModal'
 
@@ -30,7 +31,7 @@ export function IssueErc20TokenButton({
 
   return (
     <>
-      <Tooltip
+      <JuiceTooltip
         title={
           <Trans>
             Issue an ERC-20 to be used as this project's token. Once issued,
@@ -48,7 +49,7 @@ export function IssueErc20TokenButton({
             <Trans>Issue ERC-20</Trans>
           </span>
         </Button>
-      </Tooltip>
+      </JuiceTooltip>
       <IssueErc20TokenModal
         open={modalVisible}
         onClose={onClose}

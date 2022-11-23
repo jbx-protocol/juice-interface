@@ -1,6 +1,7 @@
 import { CrownFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Space, Tooltip } from 'antd'
+import { Space } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import CurrencySymbol from 'components/CurrencySymbol'
 import Balance from 'components/Navbar/Balance'
 import TooltipLabel from 'components/TooltipLabel'
@@ -49,7 +50,7 @@ export default function SpendingStats({
   return (
     <div>
       <div>
-        <Tooltip
+        <JuiceTooltip
           title={
             currency === 'ETH' && distributableAmount?.gt(0) ? (
               <ETHToUSD ethAmount={distributableAmount} />
@@ -65,7 +66,7 @@ export default function SpendingStats({
             <CurrencySymbol currency={currency} />
             {formatWad(distributableAmount, { precision: 4 }) || '0'}{' '}
           </span>
-        </Tooltip>
+        </JuiceTooltip>
         <TooltipLabel
           style={smallHeaderStyle}
           label={<Trans>AVAILABLE</Trans>}
@@ -95,7 +96,7 @@ export default function SpendingStats({
         <div>
           <Space>
             <Balance address={ownerAddress} />
-            <Tooltip
+            <JuiceTooltip
               title={<Trans>Balance of the project owner's wallet.</Trans>}
             >
               <span>
@@ -103,7 +104,7 @@ export default function SpendingStats({
                   <CrownFilled /> owner balance
                 </Trans>
               </span>
-            </Tooltip>
+            </JuiceTooltip>
           </Space>
         </div>
       </div>

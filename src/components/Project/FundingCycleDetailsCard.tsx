@@ -1,7 +1,8 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
-import { Collapse, Tooltip } from 'antd'
+import { Collapse } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { ThemeContext } from 'contexts/themeContext'
 import { BallotState } from 'models/v2v3/fundingCycle'
@@ -60,7 +61,9 @@ export default function FundingCycleDetailsCard({
     const fundingCycleDurationMilliseconds = endTimeSeconds.mul(1000).toNumber()
 
     return (
-      <Tooltip title={`${formatDateToUTC(fundingCycleDurationMilliseconds)}`}>
+      <JuiceTooltip
+        title={`${formatDateToUTC(fundingCycleDurationMilliseconds)}`}
+      >
         <span style={{ color: colors.text.secondary, marginLeft: 10 }}>
           {isFundingCycleRecurring ? (
             <Trans>
@@ -70,7 +73,7 @@ export default function FundingCycleDetailsCard({
             <Trans>{formattedTimeLeft} left</Trans>
           )}
         </span>
-      </Tooltip>
+      </JuiceTooltip>
     )
   }
 
@@ -107,7 +110,7 @@ export default function FundingCycleDetailsCard({
 
               {fundingCycleRiskCount > 0 && (
                 <span style={{ marginLeft: 10, color: colors.text.secondary }}>
-                  <Tooltip
+                  <JuiceTooltip
                     title={
                       <Trans>
                         Some funding cycle settings may put project contributors
@@ -116,7 +119,7 @@ export default function FundingCycleDetailsCard({
                     }
                   >
                     <ExclamationCircleOutlined />
-                  </Tooltip>
+                  </JuiceTooltip>
                 </span>
               )}
             </div>

@@ -1,6 +1,7 @@
 import { SettingOutlined, SmileOutlined, ToolOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
-import { Button, Space, Tooltip } from 'antd'
+import { Button, Space } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import { V2V3ProjectToolsDrawer } from 'components/v2v3/V2V3Project/V2V3ProjectToolsDrawer/V2V3ProjectToolsDrawer'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
@@ -40,32 +41,32 @@ export function V2V3ProjectHeaderActions() {
             alignItems: 'center',
           }}
         >
-          <Tooltip title={t`Tools`} placement="bottom">
+          <JuiceTooltip title={t`Tools`} placement="bottom">
             <Button
               onClick={() => setToolDrawerVisible(true)}
               icon={<ToolOutlined />}
               type="text"
             />
-          </Tooltip>
+          </JuiceTooltip>
 
           {canReconfigure && (
-            <Tooltip title={t`Project Settings`} placement="bottom">
+            <JuiceTooltip title={t`Project Settings`} placement="bottom">
               <div>
                 <Link href={settingsPagePath('general', { handle, projectId })}>
                   <Button type="text" icon={<SettingOutlined />} />
                 </Link>
               </div>
-            </Tooltip>
+            </JuiceTooltip>
           )}
 
           {veNftEnabled && (
-            <Tooltip title={t`veNFT`} placement="bottom">
+            <JuiceTooltip title={t`veNFT`} placement="bottom">
               <div>
                 <Link href={veNftPagePath('mint', { handle, projectId })}>
                   <Button type="text" icon={<SmileOutlined />} />
                 </Link>
               </div>
-            </Tooltip>
+            </JuiceTooltip>
           )}
         </div>
       </Space>

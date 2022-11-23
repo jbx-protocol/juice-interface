@@ -1,6 +1,7 @@
 import { InfoCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-import { Button, Col, Row, Space, Tooltip } from 'antd'
+import { Button, Col, Row, Space } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import Grid from 'components/Grid'
 import { LAYOUT_MAX_WIDTH_PX } from 'constants/styles/layouts'
 import { ThemeContext } from 'contexts/themeContext'
@@ -56,9 +57,12 @@ export default function TrendingSection() {
               text={
                 <span>
                   <Trans>Trending projects</Trans>{' '}
-                  <Tooltip title={<RankingExplanation />} placement="bottom">
+                  <JuiceTooltip
+                    title={<RankingExplanation />}
+                    placement="bottom"
+                  >
                     <InfoCircleOutlined style={{ fontSize: 20 }} />
-                  </Tooltip>
+                  </JuiceTooltip>
                 </span>
               }
             />

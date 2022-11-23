@@ -4,7 +4,8 @@ import {
   LoadingOutlined,
 } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-import { Button, Col, Image, Row, Tooltip } from 'antd'
+import { Button, Col, Image, Row } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import Paragraph from 'components/Paragraph'
 import { ThemeContext } from 'contexts/themeContext'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/NftRewards'
@@ -138,7 +139,7 @@ export default function NftRewardTierCard({
           />
         </Col>
         <Col md={3}>
-          <Tooltip title={<Trans>Delete NFT</Trans>}>
+          <JuiceTooltip title={<Trans>Delete NFT</Trans>}>
             <Button
               type="text"
               onClick={e => {
@@ -149,7 +150,7 @@ export default function NftRewardTierCard({
               icon={<DeleteOutlined />}
               style={{ height: 16, float: 'right' }}
             />
-          </Tooltip>
+          </JuiceTooltip>
         </Col>
       </Row>
       <NftRewardTierModal

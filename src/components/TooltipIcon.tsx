@@ -1,5 +1,6 @@
 import { QuestionCircleOutlined } from '@ant-design/icons'
-import { Tooltip, TooltipProps } from 'antd'
+import { TooltipProps } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import { ThemeContext } from 'contexts/themeContext'
 import { CSSProperties, ReactNode, useContext } from 'react'
 
@@ -19,7 +20,7 @@ export default function TooltipIcon({
   } = useContext(ThemeContext)
 
   return (
-    <Tooltip
+    <JuiceTooltip
       title={tip}
       placement={placement}
       trigger={['hover', 'click']}
@@ -28,6 +29,6 @@ export default function TooltipIcon({
       <QuestionCircleOutlined
         style={{ color: colors.text.primary, ...iconStyle }}
       />
-    </Tooltip>
+    </JuiceTooltip>
   )
 }

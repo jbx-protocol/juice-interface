@@ -1,4 +1,4 @@
-import { Tooltip } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import { ThemeContext } from 'contexts/themeContext'
 import { CSSProperties, useContext } from 'react'
 
@@ -44,7 +44,7 @@ export function FundingCycleListItem({
   if (helperText) {
     return (
       <div style={{ ...containerStyle, cursor: 'default' }}>
-        <Tooltip title={helperText} overlayInnerStyle={{ width: '400px' }}>
+        <JuiceTooltip title={helperText} overlayInnerStyle={{ width: '400px' }}>
           <div style={{ fontWeight: 500, display: 'flex' }}>
             <div
               className="text-decoration-underline text-decoration-dashed text-decoration-secondary"
@@ -54,7 +54,7 @@ export function FundingCycleListItem({
             </div>
             :
           </div>{' '}
-        </Tooltip>
+        </JuiceTooltip>
 
         <ListItemValue value={value} />
       </div>

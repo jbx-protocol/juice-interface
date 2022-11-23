@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Tooltip } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import { Badge } from 'components/Badge'
 import FormattedAddress from 'components/FormattedAddress'
 import Paragraph from 'components/Paragraph'
@@ -130,9 +130,9 @@ export function ProjectHeader({
             }}
           >
             {handle ? (
-              <Tooltip title={t`Project ID: ${projectId}`}>
+              <JuiceTooltip title={t`Project ID: ${projectId}`}>
                 <span>@{handle}</span>
-              </Tooltip>
+              </JuiceTooltip>
             ) : (
               <Trans>Project #{projectId}</Trans>
             )}

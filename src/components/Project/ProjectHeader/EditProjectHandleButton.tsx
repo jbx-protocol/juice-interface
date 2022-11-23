@@ -1,6 +1,7 @@
 import { EditOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Button, Tooltip } from 'antd'
+import { Button } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import Link from 'next/link'
@@ -12,7 +13,7 @@ export function EditProjectHandleButton() {
   const { handle } = useContext(V2V3ProjectContext)
 
   return (
-    <Tooltip
+    <JuiceTooltip
       placement="bottom"
       title={t`A project's handle is used in its URL, and allows it to be included in search results on the projects page.`}
     >
@@ -34,6 +35,6 @@ export function EditProjectHandleButton() {
           </Button>
         </Link>
       </div>
-    </Tooltip>
+    </JuiceTooltip>
   )
 }

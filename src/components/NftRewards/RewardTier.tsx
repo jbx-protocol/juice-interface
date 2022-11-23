@@ -1,6 +1,7 @@
 import { CheckOutlined, LoadingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-import { Skeleton, Tooltip } from 'antd'
+import { Skeleton } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import { ThemeContext } from 'contexts/themeContext'
 import { NftRewardTier } from 'models/nftRewardTier'
 import {
@@ -110,7 +111,7 @@ export function RewardTier({
     }
 
     return (
-      <Tooltip
+      <JuiceTooltip
         title={
           <span style={{ fontSize: '0.75rem' }}>
             {rewardTierUpperLimit ? (
@@ -137,7 +138,7 @@ export function RewardTier({
         <div style={iconStyle} onClick={onRemoveTier}>
           <CheckOutlined />
         </div>
-      </Tooltip>
+      </JuiceTooltip>
     )
   }
 

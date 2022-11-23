@@ -4,7 +4,8 @@ import {
   PlusCircleOutlined,
 } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Button, Col, Form, Row, Space, Tooltip } from 'antd'
+import { Button, Col, Form, Row, Space } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import { useForm } from 'antd/lib/form/Form'
 import FormattedAddress from 'components/FormattedAddress'
 import {
@@ -159,7 +160,7 @@ export default function ProjectTicketMods({
           {locked ? (
             <LockOutlined style={{ color: colors.icon.disabled }} />
           ) : (
-            <Tooltip title={t`Delete token allocation`}>
+            <JuiceTooltip title={t`Delete token allocation`}>
               <Button
                 type="text"
                 onClick={e => {
@@ -171,7 +172,7 @@ export default function ProjectTicketMods({
                 }}
                 icon={<DeleteOutlined />}
               />
-            </Tooltip>
+            </JuiceTooltip>
           )}
         </div>
       )

@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/macro'
-import { Button, Tooltip } from 'antd'
+import { Button } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import ExternalLink from 'components/ExternalLink'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
@@ -86,7 +87,7 @@ export function SnapshotSettingsSection() {
 
   const launchButtonText = <Trans>Deploy Snapshot space</Trans>
   const launchButtonElement = !handle ? (
-    <Tooltip
+    <JuiceTooltip
       overlay={
         <Trans>
           Project handle required.{' '}
@@ -97,7 +98,7 @@ export function SnapshotSettingsSection() {
       }
     >
       <Button disabled>{launchButtonText}</Button>
-    </Tooltip>
+    </JuiceTooltip>
   ) : (
     <Button onClick={launchSnapshot} type="primary" loading={launchLoading}>
       <span>{launchButtonText}</span>

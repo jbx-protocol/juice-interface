@@ -1,6 +1,6 @@
 import Icon from '@ant-design/icons'
 import { plural, Trans } from '@lingui/macro'
-import { Tooltip } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import { darkColors, lightColors } from 'constants/styles/colors'
 import { ThemeContext } from 'contexts/themeContext'
 import { useQueuedSafeTransactions } from 'hooks/safe/QueuedSafeTransactions'
@@ -32,7 +32,7 @@ function SafeIcon({ href }: { href: string }) {
 // Badge with no notice about unsigned transactions
 function DefaultBadge({ href }: { href: string }) {
   return (
-    <Tooltip
+    <JuiceTooltip
       placement="bottom"
       title={
         <Trans>
@@ -44,7 +44,7 @@ function DefaultBadge({ href }: { href: string }) {
       <span>
         <SafeIcon href={href} />
       </span>
-    </Tooltip>
+    </JuiceTooltip>
   )
 }
 
@@ -78,7 +78,7 @@ function BadgeMightHaveNotice({
     return <DefaultBadge href={href} />
   }
   return (
-    <Tooltip
+    <JuiceTooltip
       placement="bottom"
       overlayStyle={{ width: 700 }}
       title={
@@ -104,7 +104,7 @@ function BadgeMightHaveNotice({
         <Icon component={() => <SafeIcon href={href} />} />
         <Notice />
       </div>
-    </Tooltip>
+    </JuiceTooltip>
   )
 }
 

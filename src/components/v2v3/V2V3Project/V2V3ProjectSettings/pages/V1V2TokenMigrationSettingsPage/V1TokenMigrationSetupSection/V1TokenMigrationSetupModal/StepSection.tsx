@@ -1,6 +1,6 @@
 import { CheckCircleFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-import { Tooltip } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import { ThemeContext } from 'contexts/themeContext'
 import { PropsWithChildren, useContext } from 'react'
 
@@ -22,9 +22,9 @@ export function StepSection({
       >
         {title}{' '}
         {completed && (
-          <Tooltip title={<Trans>You've completed this step.</Trans>}>
+          <JuiceTooltip title={<Trans>You've completed this step.</Trans>}>
             <CheckCircleFilled />
-          </Tooltip>
+          </JuiceTooltip>
         )}
       </h3>
 

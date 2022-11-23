@@ -1,7 +1,8 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
-import { Button, Skeleton, Space, Tooltip } from 'antd'
+import { Button, Skeleton, Space } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import { CardSection } from 'components/CardSection'
 import SpendingStats from 'components/Project/SpendingStats'
 import TooltipLabel from 'components/TooltipLabel'
@@ -83,7 +84,7 @@ export default function PayoutSplitsCard({
 
   function DistributeButton(): JSX.Element {
     return (
-      <Tooltip
+      <JuiceTooltip
         title={<Trans>No funds available to distribute.</Trans>}
         open={distributeButtonDisabled ? undefined : false}
       >
@@ -95,7 +96,7 @@ export default function PayoutSplitsCard({
         >
           <Trans>Distribute funds</Trans>
         </Button>
-      </Tooltip>
+      </JuiceTooltip>
     )
   }
 

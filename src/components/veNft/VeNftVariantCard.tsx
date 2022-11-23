@@ -1,6 +1,7 @@
 import { DeleteOutlined, LoadingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-import { Button, Col, Image, Row, Tooltip } from 'antd'
+import { Button, Col, Image, Row } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import { ThemeContext } from 'contexts/themeContext'
 import { VeNftVariant } from 'models/veNft'
 import { useContext, useState } from 'react'
@@ -101,7 +102,7 @@ export default function VeNftVariantCard({
           />
         </Col>
         <Col md={3}>
-          <Tooltip title={<Trans>Delete NFT</Trans>}>
+          <JuiceTooltip title={<Trans>Delete NFT</Trans>}>
             <Button
               type="text"
               onClick={e => {
@@ -112,7 +113,7 @@ export default function VeNftVariantCard({
               icon={<DeleteOutlined />}
               style={{ height: 16, float: 'right' }}
             />
-          </Tooltip>
+          </JuiceTooltip>
         </Col>
       </Row>
       <VeNftRewardTierModal

@@ -1,6 +1,6 @@
 import { CopyOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
-import { Tooltip } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import { ThemeContext } from 'contexts/themeContext'
 import { CSSProperties, useContext, useState } from 'react'
 
@@ -30,7 +30,7 @@ export default function CopyTextButton({
   const _tooltipText = tooltipText ?? t`Copy to clipboard`
 
   return (
-    <Tooltip
+    <JuiceTooltip
       trigger={['hover']}
       title={<span>{copied ? t`Copied!` : _tooltipText}</span>}
     >
@@ -44,6 +44,6 @@ export default function CopyTextButton({
       >
         {button ?? <CopyOutlined />}
       </span>
-    </Tooltip>
+    </JuiceTooltip>
   )
 }

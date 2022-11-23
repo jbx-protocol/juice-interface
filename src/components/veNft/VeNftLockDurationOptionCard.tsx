@@ -1,6 +1,7 @@
 import { DeleteOutlined } from '@ant-design/icons'
 import { Plural, t, Trans } from '@lingui/macro'
-import { Button, Col, Row, Tooltip } from 'antd'
+import { Button, Col, Row } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 
@@ -79,7 +80,7 @@ export default function VeNftLockDurationOptionCard({
         </Col>
         <Col md={5}></Col>
         <Col md={3}>
-          <Tooltip title={<Trans>Delete Option</Trans>}>
+          <JuiceTooltip title={<Trans>Delete Option</Trans>}>
             <Button
               type="text"
               onClick={e => {
@@ -90,7 +91,7 @@ export default function VeNftLockDurationOptionCard({
               icon={<DeleteOutlined />}
               style={{ height: 16, float: 'right' }}
             />
-          </Tooltip>
+          </JuiceTooltip>
         </Col>
       </Row>
     </>

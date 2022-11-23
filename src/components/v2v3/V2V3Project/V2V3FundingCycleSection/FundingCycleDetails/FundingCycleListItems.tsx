@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Tooltip } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import ETHToUSD from 'components/currency/ETHToUSD'
 import FundingCycleDetailWarning from 'components/Project/FundingCycleDetailWarning'
 import DistributionLimit from 'components/v2v3/shared/DistributionLimit'
@@ -49,9 +49,9 @@ export function FundingCycleListItems({
         <FundingCycleListItem
           name={t`Start`}
           value={
-            <Tooltip title={formatDateToUTC(fundingCycle.start.mul(1000))}>
+            <JuiceTooltip title={formatDateToUTC(fundingCycle.start.mul(1000))}>
               {formattedStartTime}
-            </Tooltip>
+            </JuiceTooltip>
           }
         />
       ) : null}
@@ -59,13 +59,13 @@ export function FundingCycleListItems({
         <FundingCycleListItem
           name={t`End`}
           value={
-            <Tooltip
+            <JuiceTooltip
               title={formatDateToUTC(
                 fundingCycle.start.add(fundingCycle.duration).mul(1000),
               )}
             >
               {formattedEndTime}
-            </Tooltip>
+            </JuiceTooltip>
           }
         />
       ) : null}
@@ -90,7 +90,7 @@ export function FundingCycleListItems({
         name={t`Distribution limit`}
         value={
           <span style={{ whiteSpace: 'nowrap' }}>
-            <Tooltip
+            <JuiceTooltip
               title={
                 currency === 'ETH' && distributionLimit?.gt(0) ? (
                   <ETHToUSD ethAmount={distributionLimit} />
@@ -103,7 +103,7 @@ export function FundingCycleListItems({
                 currencyName={currency}
                 style={{ color: colors.text.secondary }}
               />
-            </Tooltip>
+            </JuiceTooltip>
           </span>
         }
         helperText={DISTRIBUTION_LIMIT_EXPLANATION}

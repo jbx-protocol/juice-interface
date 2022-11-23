@@ -1,7 +1,7 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
 
-import { Tooltip } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 
 import moment from 'moment'
 
@@ -17,9 +17,9 @@ export const formatDateToUTC = (
 
 export function formatHistoricalDate(dateMillis: BigNumberish) {
   return (
-    <Tooltip title={`${formatDateToUTC(dateMillis)}`}>
+    <JuiceTooltip title={`${formatDateToUTC(dateMillis)}`}>
       {t`${moment(BigNumber.from(dateMillis).toNumber()).fromNow(true)} ago`}
-    </Tooltip>
+    </JuiceTooltip>
   )
 }
 

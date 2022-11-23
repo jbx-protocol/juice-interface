@@ -1,4 +1,5 @@
-import { Space, Tooltip } from 'antd'
+import { Space } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import ExternalLink from 'components/ExternalLink'
 
 import { NftRewardTier } from 'models/nftRewardTier'
@@ -25,8 +26,8 @@ export function NftRewardCell({
             key={idx}
             style={{
               display: 'flex',
-              alignItems: 'center',
               justifyContent: 'flex-end',
+              alignItems: 'center',
             }}
           >
             <ExternalLink
@@ -39,12 +40,12 @@ export function NftRewardCell({
             >
               {tier.name}
             </ExternalLink>
-            <Tooltip
+            <JuiceTooltip
               title={tier.description}
               open={tier.description ? undefined : false}
             >
               <NftRewardImagePreview rewardTier={tier} />
-            </Tooltip>
+            </JuiceTooltip>
           </div>
         )
       })}

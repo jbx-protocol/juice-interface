@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { Tooltip } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import AMMPrices from 'components/AMMPrices'
 import { ThemeContext } from 'contexts/themeContext'
 import { CSSProperties, useContext } from 'react'
@@ -21,7 +21,7 @@ export const RedeemAMMPrices = ({
     <span style={style}>
       <Trans>
         or{' '}
-        <Tooltip
+        <JuiceTooltip
           title={
             <AMMPrices
               mode="redeem"
@@ -42,7 +42,7 @@ export const RedeemAMMPrices = ({
           >
             sell {tokenSymbol} on exchange.
           </span>
-        </Tooltip>
+        </JuiceTooltip>
       </Trans>
     </span>
   )

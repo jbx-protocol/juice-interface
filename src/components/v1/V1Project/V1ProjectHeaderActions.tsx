@@ -1,6 +1,7 @@
 import { SettingOutlined, ToolOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
-import { Button, Tooltip } from 'antd'
+import { Button } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import { V1ProjectToolsDrawer } from 'components/v1/V1Project/V1ProjectToolsDrawer/V1ProjectToolsDrawer'
 import { PV_V1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
@@ -52,7 +53,7 @@ export default function V1ProjectHeaderActions() {
         }}
       >
         {terminal?.version && (
-          <Tooltip
+          <JuiceTooltip
             title={t`Version of the terminal contract used by this project.`}
           >
             <span
@@ -68,20 +69,20 @@ export default function V1ProjectHeaderActions() {
             >
               V{terminal.version}
             </span>
-          </Tooltip>
+          </JuiceTooltip>
         )}
       </span>
 
       <div>
-        <Tooltip title={t`Tools`} placement="bottom">
+        <JuiceTooltip title={t`Tools`} placement="bottom">
           <Button
             onClick={() => setToolDrawerVisible(true)}
             icon={<ToolOutlined />}
             type="text"
           />
-        </Tooltip>
+        </JuiceTooltip>
         {hasEditPermission && (
-          <Tooltip
+          <JuiceTooltip
             title={t`Reconfigure project and funding details`}
             placement="bottom"
           >
@@ -90,7 +91,7 @@ export default function V1ProjectHeaderActions() {
               icon={<SettingOutlined />}
               type="text"
             />
-          </Tooltip>
+          </JuiceTooltip>
         )}
       </div>
 

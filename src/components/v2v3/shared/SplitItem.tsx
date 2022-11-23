@@ -1,7 +1,7 @@
 import { CrownFilled, LockOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
-import { Tooltip } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import ETHToUSD from 'components/currency/ETHToUSD'
 import CurrencySymbol from 'components/CurrencySymbol'
 import FormattedAddress from 'components/FormattedAddress'
@@ -75,9 +75,9 @@ const JuiceboxProjectBeneficiary = ({
         />{' '}
         <FormattedAddress address={split.beneficiary} />{' '}
         {isProjectOwner && (
-          <Tooltip title={<Trans>Project owner</Trans>}>
+          <JuiceTooltip title={<Trans>Project owner</Trans>}>
             <CrownFilled />
-          </Tooltip>
+          </JuiceTooltip>
         )}
       </div>
     </div>
@@ -109,9 +109,9 @@ const ETHAddressBeneficiary = ({
       ) : null}
       {isProjectOwner && (
         <span style={{ marginLeft: 5 }}>
-          <Tooltip title={<Trans>Project owner</Trans>}>
+          <JuiceTooltip title={<Trans>Project owner</Trans>}>
             <CrownFilled />
-          </Tooltip>
+          </JuiceTooltip>
         </span>
       )}
       :
@@ -163,7 +163,7 @@ const SplitValue = ({
     ) : undefined
 
   return (
-    <Tooltip title={tooltipTitle}>
+    <JuiceTooltip title={tooltipTitle}>
       <span>
         (
         <CurrencySymbol currency={curr} />
@@ -186,7 +186,7 @@ const SplitValue = ({
           </Parenthesis>
         )}
       </div>
-    </Tooltip>
+    </JuiceTooltip>
   )
 }
 

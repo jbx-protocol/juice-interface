@@ -5,7 +5,8 @@ import {
 } from '@ant-design/icons'
 import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
-import { Button, Col, Form, Input, Row, Tooltip } from 'antd'
+import { Button, Col, Form, Input, Row } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import { FormInstance } from 'antd/lib/form/Form'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useContext, useState } from 'react'
@@ -137,7 +138,7 @@ export function TokenRefs({
                   </Form.Item>
                 </Col>
                 <Col flex="none">
-                  <Tooltip title={t`Untrack token`}>
+                  <JuiceTooltip title={t`Untrack token`}>
                     <Button
                       type="text"
                       style={{ marginLeft: 10 }}
@@ -145,7 +146,7 @@ export function TokenRefs({
                       block
                       onClick={() => remove(name)}
                     />
-                  </Tooltip>
+                  </JuiceTooltip>
                 </Col>
               </Row>
             ))}

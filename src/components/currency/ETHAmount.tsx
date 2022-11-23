@@ -1,4 +1,4 @@
-import { Tooltip } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { betweenZeroAndOne } from 'utils/bigNumbers'
@@ -45,7 +45,7 @@ export default function ETHAmount({
 
   if (amount?.lte(MIN_AMOUNT)) {
     return (
-      <Tooltip
+      <JuiceTooltip
         title={
           <span>
             <CurrencySymbol currency="ETH" />
@@ -56,7 +56,7 @@ export default function ETHAmount({
       >
         <CurrencySymbol currency="ETH" />
         ~0
-      </Tooltip>
+      </JuiceTooltip>
     )
   }
 
@@ -66,12 +66,12 @@ export default function ETHAmount({
   })
 
   return (
-    <Tooltip
+    <JuiceTooltip
       title={<ETHToUSD ethAmount={amount} />}
       open={hideTooltip ? !hideTooltip : undefined}
     >
       <CurrencySymbol currency="ETH" />
       {formattedETHAmount}
-    </Tooltip>
+    </JuiceTooltip>
   )
 }

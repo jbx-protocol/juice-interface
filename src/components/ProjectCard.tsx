@@ -1,7 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { Trans } from '@lingui/macro'
-import { Skeleton, Tooltip } from 'antd'
+import { Skeleton } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import { PV_V1, PV_V1_1, PV_V2 } from 'constants/pv'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
@@ -226,7 +227,7 @@ export default function ProjectCard({
             </div>
 
             {metadata?.description && (
-              <Tooltip title={metadata.description} placement="bottom">
+              <JuiceTooltip title={metadata.description} placement="bottom">
                 <div
                   style={{
                     maxHeight: 20,
@@ -237,7 +238,7 @@ export default function ProjectCard({
                 >
                   {metadata.description}
                 </div>
-              </Tooltip>
+              </JuiceTooltip>
             )}
           </div>
 

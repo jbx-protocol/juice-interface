@@ -1,6 +1,7 @@
 import { ExclamationCircleOutlined, SettingOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Button, Tooltip } from 'antd'
+import { Button } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import { CardSection } from 'components/CardSection'
 import Loading from 'components/Loading'
 import FundingCycleSection, {
@@ -45,7 +46,7 @@ const TabText = ({
   }
 
   return (
-    <Tooltip
+    <JuiceTooltip
       title={
         <Trans>
           This funding cycle may pose risks to contributors. Check the funding
@@ -62,7 +63,7 @@ const TabText = ({
           }}
         />
       </span>
-    </Tooltip>
+    </JuiceTooltip>
   )
 }
 

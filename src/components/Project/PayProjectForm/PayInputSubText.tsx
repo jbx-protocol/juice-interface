@@ -7,7 +7,7 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import { CurrencyContext } from 'contexts/currencyContext'
 
-import { Tooltip } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import AMMPrices from 'components/AMMPrices'
 import { ThemeContext } from 'contexts/themeContext'
 
@@ -122,7 +122,7 @@ export default function PayInputSubText({
         <div>
           <Trans>
             or{' '}
-            <Tooltip
+            <JuiceTooltip
               title={
                 <AMMPrices
                   mode="buy"
@@ -144,7 +144,7 @@ export default function PayInputSubText({
               >
                 buy {tokenText} on exchange.
               </span>
-            </Tooltip>
+            </JuiceTooltip>
           </Trans>
         </div>
       )}

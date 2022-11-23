@@ -2,13 +2,14 @@ import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 
 import { t, Trans } from '@lingui/macro'
-import { Space, Tooltip } from 'antd'
+import { Space } from 'antd'
 import RichButton from 'components/RichButton'
 import { TransactorInstance } from 'hooks/Transactor'
 import { PropsWithChildren, useState } from 'react'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { reloadWindow } from 'utils/windowUtils'
 import { JuiceModal } from './JuiceModal'
+import { JuiceTooltip } from './JuiceTooltip'
 import { TransferUnclaimedTokensModal } from './modals/TransferUnclaimedTokensModal'
 
 type RedeemDisabledReason = 'redemptionRateZero' | 'overflowZero'
@@ -24,7 +25,7 @@ const RedeemButtonTooltip = ({
   if (!buttonDisabled) return <>{children}</>
 
   return (
-    <Tooltip
+    <JuiceTooltip
       title={
         redeemDisabledReason === 'overflowZero' ? (
           <Trans>
@@ -41,7 +42,7 @@ const RedeemButtonTooltip = ({
       placement="right"
     >
       {children}
-    </Tooltip>
+    </JuiceTooltip>
   )
 }
 
@@ -175,7 +176,7 @@ export default function ManageTokensModal({
           )}
 
           {userHasMintPermission && projectAllowsMint && (
-            <Tooltip
+            <JuiceTooltip
               title={
                 <Trans>
                   Token minting is only available for V1.1 projects. Token
@@ -199,7 +200,7 @@ export default function ManageTokensModal({
                   disabled={!projectAllowsMint}
                 />
               </div>
-            </Tooltip>
+            </JuiceTooltip>
           )}
           {tokenUnclaimedBalance?.gt(0) ? (
             <RichButton

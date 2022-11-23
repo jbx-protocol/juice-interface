@@ -1,6 +1,7 @@
 import { LoadingOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Button, Tooltip } from 'antd'
+import { Button } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import ETHAmount from 'components/currency/ETHAmount'
 import PayWarningModal from 'components/PayWarningModal'
 import {
@@ -50,7 +51,7 @@ export function V2V3PayButton({ disabled, wrapperStyle }: PayButtonProps) {
 
   return (
     <div style={{ textAlign: 'center', ...wrapperStyle }}>
-      <Tooltip
+      <JuiceTooltip
         open={isPayDisabled ? undefined : false}
         title={disabledMessage}
         className="block"
@@ -65,7 +66,7 @@ export function V2V3PayButton({ disabled, wrapperStyle }: PayButtonProps) {
         >
           {fundingCycleLoading ? <LoadingOutlined /> : payButtonText}
         </Button>
-      </Tooltip>
+      </JuiceTooltip>
       {payInCurrency === V2V3_CURRENCY_USD && (
         <div style={{ fontSize: '0.75rem' }}>
           <Trans>

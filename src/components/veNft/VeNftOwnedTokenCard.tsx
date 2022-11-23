@@ -1,13 +1,4 @@
-import {
-  Button,
-  Card,
-  Col,
-  Descriptions,
-  Image,
-  Row,
-  Space,
-  Tooltip,
-} from 'antd'
+import { Button, Card, Col, Descriptions, Image, Row, Space } from 'antd'
 
 import { ThemeContext } from 'contexts/themeContext'
 
@@ -22,6 +13,7 @@ import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'
 import VeNftExtendLockModal from './VeNftExtendLockModal'
 import VeNftRedeemModal from './VeNftRedeemModal'
 import VeNftUnlockModal from './VeNftUnlockModal'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 
 type OwnedVeNftCardProps = {
   token: VeNftToken
@@ -62,7 +54,7 @@ export default function OwnedVeNftCard({
       )
     } else {
       return (
-        <Tooltip
+        <JuiceTooltip
           trigger={['hover']}
           title={
             <Trans>
@@ -74,7 +66,7 @@ export default function OwnedVeNftCard({
           <Button block disabled>
             <Trans>Redeem</Trans>
           </Button>
-        </Tooltip>
+        </JuiceTooltip>
       )
     }
   }

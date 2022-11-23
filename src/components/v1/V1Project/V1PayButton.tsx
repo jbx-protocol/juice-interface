@@ -1,5 +1,6 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Tooltip } from 'antd'
+import { Button } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import ETHAmount from 'components/currency/ETHAmount'
 import PayWarningModal from 'components/PayWarningModal'
 import {
@@ -86,7 +87,7 @@ export function V1PayButton({ wrapperStyle, disabled }: PayButtonProps) {
   // Pay enabled
   return (
     <div style={{ textAlign: 'center', ...wrapperStyle }}>
-      <Tooltip
+      <JuiceTooltip
         title={disabledMessage}
         className="block"
         open={disabledMessage ? undefined : false}
@@ -99,7 +100,7 @@ export function V1PayButton({ wrapperStyle, disabled }: PayButtonProps) {
         >
           {payButtonText}
         </Button>
-      </Tooltip>
+      </JuiceTooltip>
       {payInCurrency === V1_CURRENCY_USD && (
         <div style={{ fontSize: '0.75rem' }}>
           <Trans>

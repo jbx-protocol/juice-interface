@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Progress, Tooltip } from 'antd'
+import { Progress } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import { Property } from 'csstype'
 
 import { t } from '@lingui/macro'
@@ -40,7 +41,7 @@ const ProgressWithOverflow = ({
       onMouseEnter={() => setShowTooltips(true)}
       onMouseLeave={() => setShowTooltips(false)}
     >
-      <Tooltip
+      <JuiceTooltip
         title={t`Distributed`}
         open={showTooltips}
         placement="bottomLeft"
@@ -54,11 +55,15 @@ const ProgressWithOverflow = ({
           showInfo={false}
           strokeColor={colors.text.brand.primary}
         />
-      </Tooltip>
+      </JuiceTooltip>
 
       <TargetIndicatorLine color={colors.text.primary} />
 
-      <Tooltip title={t`Overflow`} open={showTooltips} placement="topRight">
+      <JuiceTooltip
+        title={t`Overflow`}
+        open={showTooltips}
+        placement="topRight"
+      >
         <Progress
           style={{
             width: percentOverflow * 100 + '%',
@@ -68,7 +73,7 @@ const ProgressWithOverflow = ({
           showInfo={false}
           strokeColor={colors.text.brand.primary}
         />
-      </Tooltip>
+      </JuiceTooltip>
     </div>
   )
 }

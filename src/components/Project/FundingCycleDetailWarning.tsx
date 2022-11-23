@@ -1,5 +1,5 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons'
-import { Tooltip } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import { ThemeContext } from 'contexts/themeContext'
 import { PropsWithChildren, useContext } from 'react'
 
@@ -21,9 +21,9 @@ export default function FundingCycleDetailWarning({
     <div style={{ display: 'flex' }}>
       <span style={{ fontWeight: 500 }}>{children} </span>
       <span style={{ color: colors.text.warn, marginLeft: '0.5rem' }}>
-        <Tooltip title={tooltipTitle} placement="top">
+        <JuiceTooltip title={tooltipTitle} placement="top">
           <ExclamationCircleOutlined />
-        </Tooltip>
+        </JuiceTooltip>
       </span>
     </div>
   )

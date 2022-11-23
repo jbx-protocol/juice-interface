@@ -1,6 +1,7 @@
 import { parseEther } from '@ethersproject/units'
 import { Trans } from '@lingui/macro'
-import { Descriptions, Tooltip } from 'antd'
+import { Descriptions } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import CurrencySymbol from 'components/CurrencySymbol'
 
 import { ThemeContext } from 'contexts/themeContext'
@@ -156,15 +157,15 @@ export default function FundingCycleDetails({
 
         {fundingCycle.duration.gt(0) && (
           <Descriptions.Item label={<Trans>Start</Trans>}>
-            <Tooltip title={formatDateToUTC(fundingCycle.start.mul(1000))}>
+            <JuiceTooltip title={formatDateToUTC(fundingCycle.start.mul(1000))}>
               {formattedStartTime}
-            </Tooltip>
+            </JuiceTooltip>
           </Descriptions.Item>
         )}
 
         {fundingCycle.duration.gt(0) && (
           <Descriptions.Item label={<Trans>End</Trans>}>
-            <Tooltip
+            <JuiceTooltip
               title={formatDateToUTC(
                 fundingCycle.start
                   .add(fundingCycle.duration.mul(SECONDS_IN_DAY))
@@ -172,7 +173,7 @@ export default function FundingCycleDetails({
               )}
             >
               {formattedEndTime}
-            </Tooltip>
+            </JuiceTooltip>
           </Descriptions.Item>
         )}
 

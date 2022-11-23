@@ -1,6 +1,6 @@
 import { isAddress } from '@ethersproject/address'
 
-import { Tooltip } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 
 import { CSSProperties, MouseEventHandler, useEffect, useState } from 'react'
 
@@ -119,7 +119,7 @@ export default function FormattedAddress({
   }
 
   return (
-    <Tooltip
+    <JuiceTooltip
       title={
         <span style={{ fontSize: '0.875rem' }}>
           {address} <CopyTextButton value={address} />
@@ -136,6 +136,6 @@ export default function FormattedAddress({
           {formatted}
         </EtherscanLink>
       </span>
-    </Tooltip>
+    </JuiceTooltip>
   )
 }

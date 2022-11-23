@@ -1,7 +1,8 @@
 import { CrownFilled, DeleteOutlined, LockOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Button, Col, Row, Space, Tooltip } from 'antd'
+import { Button, Col, Row, Space } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import CurrencySymbol from 'components/CurrencySymbol'
 import FormattedAddress from 'components/FormattedAddress'
 import TooltipIcon from 'components/TooltipIcon'
@@ -148,9 +149,9 @@ export function DistributionSplitCard({
                   </span>
                 )}
                 {isOwner && (
-                  <Tooltip title={t`Project owner`}>
+                  <JuiceTooltip title={t`Project owner`}>
                     <CrownFilled />
-                  </Tooltip>
+                  </JuiceTooltip>
                 )}
               </div>
             </Col>
@@ -240,11 +241,11 @@ export function DistributionSplitCard({
       {isLocked ? (
         <>
           {!isOwner ? (
-            <Tooltip title={<Trans>Payout is locked</Trans>}>
+            <JuiceTooltip title={<Trans>Payout is locked</Trans>}>
               <LockOutlined
                 style={{ color: colors.icon.disabled, paddingTop: '4px' }}
               />
-            </Tooltip>
+            </JuiceTooltip>
           ) : (
             <TooltipIcon
               iconStyle={{ paddingTop: '4px' }}
@@ -259,7 +260,7 @@ export function DistributionSplitCard({
           )}
         </>
       ) : (
-        <Tooltip title={<Trans>Delete payout</Trans>}>
+        <JuiceTooltip title={<Trans>Delete payout</Trans>}>
           <Button
             type="text"
             onClick={e => {
@@ -269,7 +270,7 @@ export function DistributionSplitCard({
             icon={<DeleteOutlined />}
             style={{ height: 16 }}
           />
-        </Tooltip>
+        </JuiceTooltip>
       )}
       {!isLocked ? (
         <DistributionSplitModal

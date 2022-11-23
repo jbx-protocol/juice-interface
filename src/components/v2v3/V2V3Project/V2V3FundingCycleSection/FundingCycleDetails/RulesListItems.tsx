@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Tooltip } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import FormattedAddress from 'components/FormattedAddress'
 import FundingCycleDetailWarning from 'components/Project/FundingCycleDetailWarning'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
@@ -84,11 +84,13 @@ export function RulesListItems({
             }
             tooltipTitle={ballotWarningText}
           >
-            <Tooltip title={<FormattedAddress address={fundingCycle.ballot} />}>
+            <JuiceTooltip
+              title={<FormattedAddress address={fundingCycle.ballot} />}
+            >
               <span style={{ textDecoration: 'underline' }}>
                 {ballotStrategy.name}
               </span>
-            </Tooltip>
+            </JuiceTooltip>
           </FundingCycleDetailWarning>
         }
         helperText={RECONFIG_RULES_EXPLAINATION}

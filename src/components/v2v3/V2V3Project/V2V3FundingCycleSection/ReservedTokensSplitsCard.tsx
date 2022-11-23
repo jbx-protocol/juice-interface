@@ -1,7 +1,8 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Button, Skeleton, Space, Tooltip } from 'antd'
+import { Button, Skeleton, Space } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import { CardSection } from 'components/CardSection'
 import TooltipLabel from 'components/TooltipLabel'
 import SplitList from 'components/v2v3/shared/SplitList'
@@ -128,11 +129,13 @@ export default function ReservedTokensSplitsCard({
               />
             </div>
             {reservedTokens?.eq(0) ? (
-              <Tooltip title={t`No reserved tokens available to distribute.`}>
+              <JuiceTooltip
+                title={t`No reserved tokens available to distribute.`}
+              >
                 <div>
                   <DistributeButton />
                 </div>
-              </Tooltip>
+              </JuiceTooltip>
             ) : (
               <DistributeButton />
             )}

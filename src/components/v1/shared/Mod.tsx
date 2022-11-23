@@ -1,7 +1,7 @@
 import { CrownFilled, LockOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Tooltip } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import FormattedAddress from 'components/FormattedAddress'
 import TooltipLabel from 'components/TooltipLabel'
 import { ThemeContext } from 'contexts/themeContext'
@@ -63,9 +63,9 @@ export default function Mod({
                 />{' '}
                 <FormattedAddress address={mod.beneficiary} />{' '}
                 {owner === mod.beneficiary && (
-                  <Tooltip title={t`Project owner`}>
+                  <JuiceTooltip title={t`Project owner`}>
                     <CrownFilled />
-                  </Tooltip>
+                  </JuiceTooltip>
                 )}
               </div>
             </div>
@@ -80,9 +80,9 @@ export default function Mod({
               <FormattedAddress address={mod.beneficiary} />
               {owner === mod.beneficiary && (
                 <span style={{ marginLeft: 5 }}>
-                  <Tooltip title={t`Project owner`}>
+                  <JuiceTooltip title={t`Project owner`}>
                     <CrownFilled />
-                  </Tooltip>
+                  </JuiceTooltip>
                 </span>
               )}
               :

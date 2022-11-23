@@ -1,6 +1,6 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Tooltip } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import { CardSection } from 'components/CardSection'
 import FundingCycleSection from 'components/Project/FundingCycleSection'
 import CurrentFundingCycle from 'components/v1/shared/FundingCycle/CurrentFundingCycle'
@@ -36,7 +36,7 @@ export default function FundingCycles() {
     }
 
     return (
-      <Tooltip
+      <JuiceTooltip
         title={
           <Trans>
             This funding cycle may pose risks to contributors. Check the funding
@@ -53,7 +53,7 @@ export default function FundingCycles() {
             }}
           />
         </span>
-      </Tooltip>
+      </JuiceTooltip>
     )
   }
 

@@ -1,6 +1,6 @@
 import { InfoCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Tooltip } from 'antd'
+import { JuiceTooltip } from 'components/JuiceTooltip'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 
@@ -21,7 +21,7 @@ export default function ArchivedProjectsMessage({
           deleted on-chain. They can still be interacted with directly through
           the Juicebox contracts.
         </Trans>{' '}
-        <Tooltip
+        <JuiceTooltip
           title={t`Project owners can archive their Juicebox projects in their project's settings page.`}
         >
           <span
@@ -35,7 +35,7 @@ export default function ArchivedProjectsMessage({
           >
             <Trans>How do I archive a project?</Trans>
           </span>
-        </Tooltip>
+        </JuiceTooltip>
       </p>
     )
   }

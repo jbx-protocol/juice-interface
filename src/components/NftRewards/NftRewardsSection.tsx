@@ -90,7 +90,6 @@ export function NftRewardsSection() {
 
     setPayMetadata?.({
       tierIdsToMint: newSelectedTierIds,
-      dontMint: !newSelectedTierIds.length,
     })
 
     const newPayAmount = sumTierFloors(

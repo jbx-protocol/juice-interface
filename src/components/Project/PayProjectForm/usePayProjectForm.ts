@@ -62,10 +62,6 @@ export function usePayProjectForm(): PayProjectForm {
     const balanceToCompare =
       payInCurrency === ETH ? userBalanceWei : userBalanceUsd
 
-    if (payAmountWei.lte(0)) {
-      return setErrorMessage?.(t`Payment amount can't be 0`)
-    }
-
     if (balanceToCompare?.lte(payAmountWei)) {
       return setErrorMessage?.(
         t`Payment amount can't exceed your wallet balance.`,

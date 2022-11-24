@@ -190,7 +190,7 @@ const SplitValue = ({
   )
 }
 
-export default function SplitItem({
+export function SplitItem({
   split,
   showSplitValue,
   showFees,
@@ -223,7 +223,7 @@ export default function SplitItem({
         display: 'flex',
         alignItems: 'baseline',
         justifyContent: 'space-between',
-        marginBottom: 5,
+        flexWrap: 'wrap',
       }}
     >
       <div style={{ lineHeight: 1.4 }}>
@@ -245,10 +245,10 @@ export default function SplitItem({
           <LockedText lockedUntil={split.lockedUntil} />
         ) : null}
       </div>
-      <div>
-        <span>{formattedSplitPercent}%</span>
+      <div style={{ whiteSpace: 'nowrap' }}>
+        {formattedSplitPercent}%
         {totalValue?.gt(0) && showSplitValue ? (
-          <span style={{ marginLeft: '0.2rem' }}>
+          <>
             {' '}
             <SplitValue
               split={split}
@@ -258,7 +258,7 @@ export default function SplitItem({
               currency={currency}
               showFees={showFees}
             />
-          </span>
+          </>
         ) : null}
         {reservedRate ? (
           <TooltipIcon

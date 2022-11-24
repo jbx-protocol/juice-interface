@@ -93,61 +93,54 @@ export function AccountBalanceDescription() {
 
   return (
     <>
-      <div
-        style={{
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
+      <div>
+        {hasIssuedERC20 && (
+          <div>
+            {claimedBalanceFormatted} {tokenText}
+          </div>
+        )}
         <div>
-          {hasIssuedERC20 && (
+          {hasIssuedERC20 ? (
+            <Trans>
+              {unclaimedBalanceFormatted} {tokenText} claimable
+            </Trans>
+          ) : (
+            <>
+              {unclaimedBalanceFormatted} {tokenText}
+            </>
+          )}
+        </div>
+        <div>
+          {veNftAddress && (
             <div>
-              {claimedBalanceFormatted} {tokenText}
+              {totalLocked} {tokenText}{' '}
+              <Link
+                href={veNftPagePath('myvenfts', {
+                  projectId,
+                  handle,
+                })}
+              >
+                locked
+              </Link>
             </div>
           )}
-          <div>
-            {hasIssuedERC20 ? (
-              <Trans>
-                {unclaimedBalanceFormatted} {tokenText} claimable
-              </Trans>
-            ) : (
-              <>
-                {unclaimedBalanceFormatted} {tokenText}
-              </>
-            )}
-          </div>
-          <div>
-            {veNftAddress && (
-              <div>
-                {totalLocked} {tokenText}{' '}
-                <Link
-                  href={veNftPagePath('myvenfts', {
-                    projectId,
-                    handle,
-                  })}
-                >
-                  locked
-                </Link>
-              </div>
-            )}
-          </div>
-          <div
-            style={{
-              cursor: 'default',
-              fontSize: '0.8rem',
-              fontWeight: 500,
-              color: colors.text.tertiary,
-            }}
-          >
-            <Trans>{userOwnershipPercentage}% of total supply</Trans>
-          </div>
         </div>
-
-        <Button size="small" onClick={() => setManageTokensModalVisible(true)}>
-          <Trans>Manage {tokenText}</Trans>
-        </Button>
+        <div
+          style={{
+            cursor: 'default',
+            fontSize: '0.8rem',
+            fontWeight: 500,
+            color: colors.text.tertiary,
+          }}
+        >
+          <Trans>{userOwnershipPercentage}% of total supply</Trans>
+        </div>
       </div>
+
+      <Button size="small" onClick={() => setManageTokensModalVisible(true)}>
+        <Trans>Manage {tokenText}</Trans>
+      </Button>
+
       <ManageTokensModal
         open={manageTokensModalVisible}
         onCancel={() => setManageTokensModalVisible(false)}

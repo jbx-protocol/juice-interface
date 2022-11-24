@@ -42,7 +42,7 @@ export function ProjectHeader({
   const projectTitle = projectMetadata?.name || t`Untitled project`
 
   return (
-    <div
+    <header
       style={{
         display: 'flex',
         flexWrap: 'wrap',
@@ -180,6 +180,6 @@ export function ProjectHeader({
           </div>
         )}
       </div>
-    </div>
+    </header>
   )
 }

@@ -35,8 +35,13 @@ function logTx({
       {},
     )
 
+  const log = [
+    `functionName=${functionName}`,
+    `contractAddress=${contract.address}`,
+  ].join('\n')
+
   console.info(
-    '🧃 Transactor::Calling ' + functionName + '() with args:',
+    `🧃 Transactor::submitting transaction => \n${log}\nargs=`,
     reportArgs,
   )
 }

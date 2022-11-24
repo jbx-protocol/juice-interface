@@ -1,51 +1,36 @@
 import { Divider } from 'antd'
-import * as styleColors from 'constants/styles/colors'
-import { ThemeContext } from 'contexts/themeContext'
 import { ReactNode, useCallback, useContext, useMemo } from 'react'
+import { classNames } from 'utils/classNames'
 import { CheckedCircle, RadialBackgroundIcon } from './components'
 import { SelectionContext } from './Selection'
 
-const Container: React.FC<{ isSelected: boolean; isDefocused: boolean }> = ({
-  isDefocused,
-  isSelected,
-  children,
-}) => {
-  const {
-    isDarkMode,
-    theme: { colors },
-  } = useContext(ThemeContext)
+const Container: React.FC<{
+  isSelected: boolean
+  isDefocused: boolean
+  isDisabled: boolean
+}> = ({ isDefocused, isSelected, isDisabled, children }) => {
+  const borderColorClassNames = useMemo(() => {
+    if (isSelected) return 'border-haze-500'
+    return classNames(
+      !isDisabled ? 'hover:border-smoke-500 dark:hover:border-slate-100' : '',
+      isDefocused
+        ? 'border-smoke-200 dark:border-slate-500'
+        : 'border-smoke-300 dark:border-slate-300',
+    )
+  }, [isDefocused, isDisabled, isSelected])
 
-  const borderColor = useMemo(() => {
-    if (isSelected) return colors.stroke.action.primary
-    if (isDefocused) {
-      return isDarkMode
-        ? styleColors.darkColors.darkGray500
-        : styleColors.lightColors.warmGray200
-    }
-    return isDarkMode
-      ? styleColors.darkColors.darkGray300
-      : styleColors.lightColors.warmGray300
-  }, [colors.stroke.action.primary, isDarkMode, isDefocused, isSelected])
-
-  const backgroundColor = useMemo(() => {
-    if (isDefocused) {
-      return isDarkMode
-        ? styleColors.darkColors.darkGray800
-        : styleColors.lightColors.juiceLightest
-    }
-    return isDarkMode ? styleColors.darkColors.darkGray600 : undefined
-  }, [isDarkMode, isDefocused])
-
-  const className = !isSelected ? 'clickable-border' : 'border'
+  const backgroundColorClassNames = useMemo(() => {
+    if (isDefocused) return 'bg-smoke-50 dark:bg-slate-800'
+    return 'dark:bg-slate-600'
+  }, [isDefocused])
 
   return (
     <div
-      className={className}
-      style={{
-        borderRadius: '1px',
-        borderColor,
-        backgroundColor,
-      }}
+      className={classNames(
+        'rounded-sm border border-solid transition-colors',
+        borderColorClassNames,
+        backgroundColorClassNames,
+      )}
     >
       {children}
     </div>
@@ -72,10 +57,6 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
   isDisabled = false,
   children,
 }) => {
-  const {
-    isDarkMode,
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { selection, defocusOnSelect, setSelection } =
     useContext(SelectionContext)
   const isSelected = selection === name
@@ -92,39 +73,29 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
   const defocused =
     (!!defocusOnSelect && !!selection && !isSelected) || isDisabled
 
-  const childGap = 42 + 32
-
   /**
    * Undefined means default color.
    */
-  const titleColor = useMemo(() => {
-    if (isDarkMode && defocused) {
-      return colors.background.l2
-    }
-
-    if (defocused) {
-      return styleColors.lightColors.gray400
-    }
-  }, [colors.background.l2, defocused, isDarkMode])
+  const titleColorClassNames = useMemo(() => {
+    if (defocused) return 'text-grey-400 dark:text-slate-400'
+  }, [defocused])
 
   return (
-    <Container isSelected={isSelected} isDefocused={defocused}>
+    <Container
+      isSelected={isSelected}
+      isDefocused={defocused}
+      isDisabled={isDisabled}
+    >
       <div
         role="button"
-        style={{
-          padding: '1.5rem 0',
-          userSelect: 'none',
-          cursor: isDisabled ? 'not-allowed' : 'pointer',
-        }}
+        className={classNames(
+          'select-none py-6',
+          isDisabled ? 'cursor-not-allowed' : 'cursor-pointer',
+        )}
         onClick={onClick}
       >
-        <div style={{ padding: '0 1rem' }}>
-          <div
-            style={{
-              display: 'flex',
-              gap: '1rem',
-            }}
-          >
+        <div className="px-4">
+          <div className="flex gap-4">
             {checkPosition === 'left' && (
               <CheckedCircle checked={isSelected} defocused={defocused} />
             )}
@@ -133,17 +104,12 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
                 <RadialBackgroundIcon isDefocused={defocused} icon={icon} />
               )}
             </div>
-            <div
-              style={{
-                flex: '1 2',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '0.25rem',
-              }}
-            >
+            <div className="flex flex-1 flex-col gap-1">
               <div
-                className="select-card-header"
-                style={{ color: titleColor, margin: 0, marginTop: '0.25rem' }}
+                className={classNames(
+                  'm-0 mt-1 text-lg font-medium',
+                  titleColorClassNames,
+                )}
               >
                 {title}
               </div>
@@ -156,9 +122,9 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
         </div>
       </div>
       {isSelected && children && (
-        <div style={{ paddingBottom: '1.75rem' }}>
-          <Divider style={{ marginTop: 0, marginBottom: '2rem' }} />
-          <div style={{ padding: `0 ${childGap}px` }}>{children}</div>
+        <div className="pb-7">
+          <Divider className="mt-0 mb-8" />
+          <div className={`px-[calc(42px+32px)]`}>{children}</div>
         </div>
       )}
     </Container>

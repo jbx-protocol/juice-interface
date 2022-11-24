@@ -16,7 +16,7 @@ export const ReservedTokensList: React.FC<
 > = ({ isEditable, value, onChange }) => {
   return (
     <Allocation value={value} onChange={onChange}>
-      <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+      <Space className="w-full" direction="vertical" size="middle">
         <OwnerPayoutCard payoutsSelection={'percentages'} />
         <Allocation.List
           allocationName={t`token allocation`}

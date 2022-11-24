@@ -54,15 +54,15 @@ export const PayoutsPage: React.FC = () => {
       onFinish={goToNextPage}
       scrollToFirstError
     >
-      <Space direction="vertical" size="large" style={{ width: '100%' }}>
-        <h2>
+      <Space className="w-full" direction="vertical" size="large">
+        <h3 className="text-lg font-medium text-black dark:text-grey-200">
           <Trans>How would you like to distribute payments?</Trans>
-        </h2>
+        </h3>
         <Form.Item noStyle name="selection">
           <Selection
+            className="w-full"
             disableInteractivity={availableSelections.size === 1}
             defocusOnSelect
-            style={{ width: '100%' }}
           >
             <DisabledTooltip
               name="percentages"
@@ -93,19 +93,19 @@ export const PayoutsPage: React.FC = () => {
           </Selection>
         </Form.Item>
         {selection && (
-          <Space direction="vertical" style={{ width: '100%' }}>
-            <h2>
+          <Space className="w-full" direction="vertical">
+            <h3 className="text-lg font-medium text-black dark:text-grey-200">
               <Trans>Who's getting paid?</Trans>
-            </h2>
+            </h3>
             <p>
               <Trans>
                 Add wallet addresses or Juicebox projects to receive payouts.
               </Trans>
             </p>
             <Form.Item
+              className="mb-0"
               name="payoutsList"
               rules={[allocationTotalPercentDoNotExceedTotalRule()]}
-              style={{ marginBottom: 0 }}
             >
               <PayoutsList payoutsSelection={selection} />
             </Form.Item>

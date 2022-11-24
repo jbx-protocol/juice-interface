@@ -49,7 +49,7 @@ export const CustomTokenSettings = () => {
     !distributionLimit || distributionLimit.amount.eq(MAX_DISTRIBUTION_LIMIT)
 
   const initalMintRateAccessory = (
-    <span style={{ marginRight: 20 }}>
+    <span className="mr-5">
       <Trans>Tokens per ETH contributed</Trans>
     </span>
   )
@@ -77,12 +77,10 @@ export const CustomTokenSettings = () => {
         />
       </Form.Item>
 
-      <Divider style={{ margin: '2rem 0' }} />
+      <Divider className="my-8" />
 
       <Form.Item label={t`Reserved tokens`}>
-        <div
-          style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
-        >
+        <div className="flex flex-col gap-6">
           <Trans>
             Set aside a percentage of freshly minted tokens, which you can
             allocate below.
@@ -99,9 +97,7 @@ export const CustomTokenSettings = () => {
         </div>
       </Form.Item>
       <Form.Item label={t`Reserved token allocation`} requiredMark="optional">
-        <div
-          style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}
-        >
+        <div className="flex flex-col gap-7">
           <Trans>
             Allocate reserved tokens to Ethereum addresses or Juicebox projects.
             Unallocated reserved tokens are sent to the project owner.
@@ -118,13 +114,10 @@ export const CustomTokenSettings = () => {
         </div>
       </Form.Item>
 
-      <Divider style={{ margin: '2rem 0' }} />
+      <Divider className="my-8" />
 
-      {/* TODO: Allow disabling */}
       <Form.Item label={t`Discount rate`}>
-        <div
-          style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
-        >
+        <div className="flex flex-col gap-6">
           <Trans>
             The project token's issuance rate will decrease by this percentage
             every funding cycle ({formatFundingCycleDuration(duration)}). A
@@ -188,12 +181,10 @@ export const CustomTokenSettings = () => {
         </div>
       </Form.Item>
 
-      <Divider style={{ margin: '2rem 0' }} />
+      <Divider className="my-8" />
 
       <Form.Item label={t`Redemption rate`}>
-        <div
-          style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
-        >
+        <div className="flex flex-col gap-6">
           <span>
             <Trans>
               The redemption rate determines the amount of overflow each token
@@ -225,7 +216,6 @@ export const CustomTokenSettings = () => {
               </Trans>
             </CreateCallout.Warning>
           ) : (
-            // TODO: Hide on mobile due to pushing out of bound viewport
             !isMobile && (
               <Form.Item noStyle name="redemptionRate">
                 <TokenRedemptionRateGraph graphPad={50} graphSize={300} />
@@ -235,7 +225,7 @@ export const CustomTokenSettings = () => {
         </div>
       </Form.Item>
 
-      <Divider style={{ margin: '2rem 0' }} />
+      <Divider className="my-8" />
 
       <>
         <Form.Item

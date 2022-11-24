@@ -1,7 +1,9 @@
 import { Trans } from '@lingui/macro'
-import { Input, Select } from 'antd'
+import { Select } from 'antd'
+import { JuiceSelect } from 'components/inputs/JuiceSelect'
+import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import { DurationUnitsOption } from 'constants/time'
-import { ChangeEvent, CSSProperties } from 'react'
+import { ChangeEvent } from 'react'
 
 export interface DurationInputValue {
   duration: number | undefined
@@ -9,10 +11,9 @@ export interface DurationInputValue {
 }
 
 export const DurationInput: React.FC<{
-  style?: CSSProperties
   value?: DurationInputValue
   onChange?: (value: DurationInputValue | undefined) => void
-}> = ({ style, value, onChange }) => {
+}> = ({ value, onChange }) => {
   const handleChange = (incoming: DurationInputValue) => {
     onChange?.(incoming)
   }
@@ -35,14 +36,14 @@ export const DurationInput: React.FC<{
   }
 
   return (
-    <div style={{ display: 'flex', gap: '0.625rem', ...style }}>
-      <Input
+    <div className="flex gap-2">
+      <JuiceInput
         placeholder="14"
         value={value?.duration ?? ''}
         onChange={handleInputChange}
       />
-      <Select
-        style={{ flex: 1, minWidth: '6.75rem' }}
+      <JuiceSelect
+        className="min-w-[6.75rem] flex-1"
         defaultValue="days"
         value={value?.unit}
         onChange={unit =>
@@ -64,7 +65,7 @@ export const DurationInput: React.FC<{
         <Select.Option value="seconds">
           <Trans>Seconds</Trans>
         </Select.Option>
-      </Select>
+      </JuiceSelect>
     </div>
   )
 }

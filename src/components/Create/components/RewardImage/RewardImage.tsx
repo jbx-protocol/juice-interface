@@ -1,22 +1,14 @@
 import { LoadingOutlined } from '@ant-design/icons'
 import { Image, ImageProps } from 'antd'
 import { stopPropagation } from 'react-stop-propagation'
+import { classNames } from 'utils/classNames'
 
-interface RewardImageProps extends ImageProps {
-  size: string | number
-}
-
-export const RewardImage = (props: RewardImageProps) => {
+export const RewardImage = (props: ImageProps) => {
   return (
     <Image
       {...props}
+      className={classNames('object-cover object-center', props.className)}
       placeholder={<LoadingOutlined />}
-      style={{
-        width: props.size,
-        height: props.size,
-        objectFit: 'cover',
-        objectPosition: 'center',
-      }}
       onClick={stopPropagation(props.onClick)}
     />
   )

@@ -69,7 +69,7 @@ export const RewardsList: React.FC<RewardsListProps> &
 
   return (
     <RewardsListContext.Provider value={rewardsHook}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '4rem' }}>
+      <div className="flex flex-col gap-16">
         {!!rewards.length && (
           <>
             {rewards
@@ -87,7 +87,7 @@ export const RewardsList: React.FC<RewardsListProps> &
                     }}
                   />
                   {shouldRenderNftDivider(i) ? (
-                    <Divider style={{ margin: 0, marginTop: '4rem' }} />
+                    <Divider className="m-0 mt-16" />
                   ) : null}
                 </div>
               ))}
@@ -96,9 +96,7 @@ export const RewardsList: React.FC<RewardsListProps> &
         {allowCreate && (
           <CreateButton
             icon={<PlusCircleOutlined />}
-            style={{
-              height: '6rem',
-            }}
+            className="h-24"
             disabled={rewards.length >= MAX_NFT_REWARD_TIERS}
             onClick={modal.open}
           >
@@ -107,7 +105,6 @@ export const RewardsList: React.FC<RewardsListProps> &
         )}
       </div>
       <AddEditRewardModal
-        className="wizard-create-modal"
         open={modal.visible}
         editingData={selectedReward}
         onOk={onModalOk}

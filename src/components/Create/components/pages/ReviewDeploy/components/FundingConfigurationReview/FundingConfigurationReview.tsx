@@ -3,7 +3,6 @@ import { Row } from 'antd'
 import useMobile from 'hooks/Mobile'
 import { PayoutsList } from '../../../Payouts/components/PayoutsList'
 import { DescriptionCol } from '../DescriptionCol'
-import { emphasisedTextStyle, flexColumnStyle } from '../styles'
 import { useFundingConfigurationReview } from './hooks/FundingConfigurationReview'
 import { MobileFundingConfigurationReview } from './MobileFundingConfigurationReview'
 
@@ -20,14 +19,7 @@ export const FundingConfigurationReview = () => {
   } = useFundingConfigurationReview()
 
   return (
-    <div
-      style={{
-        ...flexColumnStyle,
-        gap: '2.5rem',
-        paddingTop: '1.25rem',
-        paddingBottom: '3rem',
-      }}
-    >
+    <div className="flex flex-col gap-10 pt-5 pb-12">
       {/* TODO: There is probably a more elegant solution to this */}
       {isMobile ? (
         <MobileFundingConfigurationReview />
@@ -37,28 +29,32 @@ export const FundingConfigurationReview = () => {
             <DescriptionCol
               span={6}
               title={t`Funding cycles`}
-              desc={<div style={emphasisedTextStyle()}>{fundingCycles}</div>}
+              desc={
+                <div className="text-base font-medium">{fundingCycles}</div>
+              }
             />
             <DescriptionCol
               span={6}
               title={t`Duration`}
               desc={
                 duration ? (
-                  <div style={emphasisedTextStyle()}>{duration}</div>
+                  <div className="text-base font-medium">{duration}</div>
                 ) : null
               }
             />
             <DescriptionCol
               span={6}
               title={t`Funding target`}
-              desc={<div style={emphasisedTextStyle()}>{fundingTarget}</div>}
+              desc={
+                <div className="text-base font-medium">{fundingTarget}</div>
+              }
             />
           </Row>
           <Row>
             <DescriptionCol
               span={6}
               title={t`Payouts`}
-              desc={<div style={emphasisedTextStyle()}>{payoutsText}</div>}
+              desc={<div className="text-base font-medium">{payoutsText}</div>}
             />
             <DescriptionCol
               span={18}

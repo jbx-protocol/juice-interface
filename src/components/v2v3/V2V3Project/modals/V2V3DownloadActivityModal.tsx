@@ -1,5 +1,6 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Modal, ModalProps } from 'antd'
+import { Button, ModalProps } from 'antd'
+import { JuiceModal } from 'components/JuiceModal'
 import { useState } from 'react'
 
 import V2V3DownloadPaymentsModal from './V2V3DownloadPaymentsModal'
@@ -8,7 +9,7 @@ export default function V2V3DownloadActivityModal(props: ModalProps) {
   const [paymentsModalVisible, setPaymentsModalVisible] = useState<boolean>()
 
   return (
-    <Modal
+    <JuiceModal
       cancelText={t`Close`}
       okButtonProps={{ hidden: true }}
       centered
@@ -30,6 +31,6 @@ export default function V2V3DownloadActivityModal(props: ModalProps) {
         open={paymentsModalVisible}
         onCancel={() => setPaymentsModalVisible(false)}
       />
-    </Modal>
+    </JuiceModal>
   )
 }

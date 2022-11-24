@@ -23,18 +23,21 @@ export default function SectionHeader({
 
   const _style: CSSProperties = {
     color: colors.text.header,
-    fontWeight:
-      forThemeOption &&
-      forThemeOption({
-        [ThemeOption.light]: 500,
-        [ThemeOption.dark]: 400,
-      }),
+    fontWeight: forThemeOption?.({
+      [ThemeOption.light]: 500,
+      [ThemeOption.dark]: 400,
+    }),
+    fontSize: '0.875rem',
     ...style,
   }
 
   if (tip !== undefined) {
-    return <TooltipLabel label={text} tip={tip} style={_style} />
+    return (
+      <h2 style={_style}>
+        <TooltipLabel label={text} tip={tip} />
+      </h2>
+    )
   } else {
-    return <h4 style={_style}>{text}</h4>
+    return <h2 style={_style}>{text}</h2>
   }
 }

@@ -73,19 +73,6 @@ export function getNftRewardTier({
   return nftReward
 }
 
-// Sorts array of nft reward tiers by contributionFloor
-export function sortNftRewardTiers(
-  rewardTiers: NftRewardTier[],
-): NftRewardTier[] {
-  return rewardTiers.sort((a, b) =>
-    a.contributionFloor > b.contributionFloor
-      ? 1
-      : b.contributionFloor > a.contributionFloor
-      ? -1
-      : 0,
-  )
-}
-
 // returns an array of CIDs from a given array of RewardTier obj's
 export function CIDsOfNftRewardTiersResponse(
   nftRewardTiersResponse: JB721TierParams[] | undefined,
@@ -355,15 +342,4 @@ export function buildJBDeployTiered721DelegateData({
     },
     governanceType: JB721GovernanceType.TIERED,
   }
-}
-
-// returns a tier of a given id from a given array of tiers
-export function tierOfId({
-  rewardTiers,
-  id,
-}: {
-  rewardTiers: NftRewardTier[]
-  id: number
-}) {
-  return rewardTiers.find(tier => tier.id === id)
 }

@@ -8,7 +8,7 @@ export const CreateCollapsePanel: React.FC<
       {
         <>
           {props.children}
-          {!props.hideDivider && <Divider style={{ marginBottom: '0' }} />}
+          {!props.hideDivider && <Divider className="mb-0" />}
         </>
       }
     </Collapse.Panel>

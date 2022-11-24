@@ -2,9 +2,8 @@ import { Space } from 'antd'
 import { usePayoutSplitAmountPercentage } from 'components/Create/hooks/PayoutSplitAmountPercentage'
 import { formatPercent } from 'components/Create/utils/formatPercent'
 import { Parenthesis } from 'components/Parenthesis'
-import { ThemeContext } from 'contexts/themeContext'
 import { PayoutsSelection } from 'models/payoutsSelection'
-import { useContext, useMemo } from 'react'
+import { useMemo } from 'react'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { Allocation } from '../Allocation'
 
@@ -15,10 +14,6 @@ export const Amount = ({
   allocationId?: string
   payoutsSelection: PayoutsSelection
 }) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const isOwner = allocationId === undefined
 
   const { allocations, totalAllocationAmount, allocationCurrency } =
@@ -63,7 +58,7 @@ export const Amount = ({
   return (
     <Space size="small">
       {!!primaryText && primaryText}
-      <span style={{ color: colors.text.tertiary }}>
+      <span className="text-grey-400 dark:text-slate-200">
         <Parenthesis>{!!secondaryText && secondaryText}</Parenthesis>
       </span>
     </Space>

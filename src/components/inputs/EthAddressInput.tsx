@@ -1,11 +1,11 @@
 import { CheckCircleFilled, LoadingOutlined } from '@ant-design/icons'
 import * as constants from '@ethersproject/constants'
-import { Input } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
 import { isAddress } from 'ethers/lib/utils'
 import { useContext, useState } from 'react'
 
 import { readProvider } from 'constants/readProvider'
+import { JuiceInput } from './JuiceTextInput'
 
 const isENS = (address = '') => address.endsWith('.eth')
 
@@ -85,7 +85,7 @@ export function EthAddressInput({
 
   return (
     <div style={{ width: '100%' }}>
-      <Input
+      <JuiceInput
         allowClear={true}
         type="text"
         spellCheck={false}

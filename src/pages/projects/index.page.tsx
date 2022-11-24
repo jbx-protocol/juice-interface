@@ -1,6 +1,6 @@
 import { InfoCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Button } from 'antd'
+import { Button, Space } from 'antd'
 import Search from 'antd/lib/input/Search'
 import { AppWrapper } from 'components/common'
 import ExternalLink from 'components/ExternalLink'
@@ -83,30 +83,32 @@ function Projects() {
 
   return (
     <div style={{ ...layouts.maxWidth }}>
-      <div style={{ marginBottom: 20 }}>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'baseline',
-            paddingBottom: '12px',
-          }}
-        >
-          <h1>
-            <Trans>Projects on Juicebox</Trans>
-          </h1>
-
-          <Link href="/create">
-            <a>
-              <Button type="primary" size="large">
-                <Trans>Create project</Trans>
-              </Button>
-            </a>
-          </Link>
-        </div>
-
+      <Space direction="vertical" style={{ width: '100%' }} size="large">
         <div>
-          <p style={{ maxWidth: 800, marginBottom: 20 }}>
+          <header
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              rowGap: '1rem',
+              paddingBottom: '12px',
+            }}
+          >
+            <h1 style={{ marginBottom: 0 }}>
+              <Trans>Projects on Juicebox</Trans>
+            </h1>
+
+            <Link href="/create">
+              <a>
+                <Button type="primary" size="large">
+                  <Trans>Create project</Trans>
+                </Button>
+              </a>
+            </Link>
+          </header>
+
+          <p style={{ maxWidth: 800, margin: 0 }}>
             <Trans>
               <InfoCircleOutlined /> The Juicebox protocol is open to anyone,
               and project configurations can vary widely. There are risks
@@ -121,78 +123,74 @@ function Projects() {
           </p>
         </div>
 
-        <Search
-          autoFocus
-          style={{ flex: 1, marginBottom: 20, marginRight: 20 }}
-          prefix="@"
-          placeholder={t`Search projects by handle`}
-          onSearch={val => {
-            setSearchText(val)
-            router.push(`/projects?tab=all${val ? `&search=${val}` : ''}`)
-          }}
-          defaultValue={searchText}
-          key={searchText}
-          allowClear
-        />
+        <div>
+          <Search
+            size="large"
+            autoFocus
+            style={{ flex: 1, marginBottom: '1rem' }}
+            prefix="@"
+            placeholder={t`Search projects by handle`}
+            onSearch={val => {
+              setSearchText(val)
+              router.push(`/projects?tab=all${val ? `&search=${val}` : ''}`)
+            }}
+            defaultValue={searchText}
+            key={searchText}
+            allowClear
+          />
 
-        <div
-          hidden={!!searchText}
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'flex-start',
-            flexWrap: 'wrap',
-            maxWidth: '100vw',
-          }}
-        >
-          <ProjectsTabs selectedTab={selectedTab} />
+          <div
+            hidden={!!searchText}
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              minHeight: 52,
+              maxWidth: '100vw',
+            }}
+          >
+            <ProjectsTabs selectedTab={selectedTab} />
 
+            {selectedTab === 'all' ? (
+              <ProjectsFilterAndSort
+                includeV1={includeV1}
+                includeV1_1={includeV1_1}
+                includeV2={includeV2}
+                setIncludeV1={setIncludeV1}
+                setIncludeV1_1={setIncludeV1_1}
+                setIncludeV2={setIncludeV2}
+                showArchived={showArchived}
+                setShowArchived={setShowArchived}
+                orderBy={orderBy}
+                setOrderBy={setOrderBy}
+              />
+            ) : null}
+          </div>
+        </div>
+
+        <div>
+          <ArchivedProjectsMessage
+            hidden={!showArchived || selectedTab !== 'all'}
+          />
           {selectedTab === 'all' ? (
-            <ProjectsFilterAndSort
-              includeV1={includeV1}
-              includeV1_1={includeV1_1}
-              includeV2={includeV2}
-              setIncludeV1={setIncludeV1}
-              setIncludeV1_1={setIncludeV1_1}
-              setIncludeV2={setIncludeV2}
-              showArchived={showArchived}
-              setShowArchived={setShowArchived}
+            <AllProjects
+              pv={pv}
+              searchText={searchText}
               orderBy={orderBy}
-              setOrderBy={setOrderBy}
+              showArchived={showArchived}
             />
+          ) : selectedTab === 'holdings' ? (
+            <HoldingsProjects />
+          ) : selectedTab === 'myprojects' ? (
+            <MyProjects />
+          ) : selectedTab === 'trending' ? (
+            <TrendingProjects count={12} />
+          ) : selectedTab === 'new' ? (
+            <LatestProjects />
           ) : null}
         </div>
-        <ArchivedProjectsMessage
-          hidden={!showArchived || selectedTab !== 'all'}
-        />
-      </div>
-
-      {selectedTab === 'all' ? (
-        <div style={{ paddingBottom: 50 }}>
-          <AllProjects
-            pv={pv}
-            searchText={searchText}
-            orderBy={orderBy}
-            showArchived={showArchived}
-          />
-        </div>
-      ) : selectedTab === 'holdings' ? (
-        <div style={{ paddingBottom: 50 }}>
-          <HoldingsProjects />
-        </div>
-      ) : selectedTab === 'myprojects' ? (
-        <div style={{ paddingBottom: 50 }}>
-          <MyProjects />
-        </div>
-      ) : selectedTab === 'trending' ? (
-        <div style={{ paddingBottom: 50 }}>
-          <TrendingProjects count={12} />
-        </div>
-      ) : selectedTab === 'new' ? (
-        <div style={{ paddingBottom: 50 }}>
-          <LatestProjects />
-        </div>
-      ) : null}
+      </Space>
     </div>
   )
 }

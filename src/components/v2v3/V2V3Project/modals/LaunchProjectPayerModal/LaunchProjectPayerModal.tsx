@@ -1,11 +1,12 @@
 import { ToolOutlined } from '@ant-design/icons'
 import { TransactionReceipt } from '@ethersproject/providers'
 import { t, Trans } from '@lingui/macro'
-import { Modal, Space } from 'antd'
+import { Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import Callout from 'components/Callout'
 import CopyTextButton from 'components/CopyTextButton'
 import EtherscanLink from 'components/EtherscanLink'
+import { JuiceModal } from 'components/JuiceModal'
 import TransactionModal from 'components/TransactionModal'
 import { readProvider } from 'constants/readProvider'
 import { TransactorInstance } from 'hooks/Transactor'
@@ -143,7 +144,7 @@ export function LaunchProjectPayerModal({
           <AdvancedOptionsCollapse form={advancedOptionsForm} />
         </Space>
       </TransactionModal>
-      <Modal
+      <JuiceModal
         open={confirmedModalVisible}
         onOk={() => setConfirmedModalVisible(false)}
         cancelButtonProps={{ hidden: true }}
@@ -165,7 +166,7 @@ export function LaunchProjectPayerModal({
             <ToolOutlined />) on the project page.
           </Trans>
         </p>
-      </Modal>
+      </JuiceModal>
     </>
   )
 }

@@ -1,8 +1,9 @@
-import { InputNumber } from 'antd'
 import { CSSProperties } from 'react'
 import { formattedNum } from 'utils/format/formatNumber'
+import { JuiceInputNumber } from './JuiceInputNumber'
 
 export default function FormattedNumberInput({
+  className,
   style,
   min,
   max,
@@ -17,6 +18,7 @@ export default function FormattedNumberInput({
   onBlur,
   isInteger,
 }: {
+  className?: string
   style?: CSSProperties
   min?: number
   max?: number
@@ -54,6 +56,7 @@ export default function FormattedNumberInput({
 
   return (
     <div
+      className={className}
       style={{
         display: 'flex',
         alignItems: 'center',
@@ -61,7 +64,7 @@ export default function FormattedNumberInput({
         ...style,
       }}
     >
-      <InputNumber
+      <JuiceInputNumber
         className={accessory ? 'antd-no-number-handler' : ''}
         min={min}
         max={max}

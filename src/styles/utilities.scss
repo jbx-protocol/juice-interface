@@ -11,10 +11,6 @@
   color: var(--text-tertiary) !important;
 }
 
-.border {
-  border: 1px solid var(--stroke-tertiary);
-}
-
 .clickable-border {
   border: 1px solid var(--stroke-tertiary);
   transition: border-color 100ms linear;
@@ -45,8 +41,6 @@
   }
 }
 
-
-
 .hover-text-decoration-underline {
   &:hover {
     text-decoration: underline;
@@ -68,7 +62,6 @@
 .selected-box-shadow {
   box-shadow: 2px 0px 10px 0px var(--boxShadow-primary);
 }
-
 
 .text-decoration-underline {
   text-decoration: underline;

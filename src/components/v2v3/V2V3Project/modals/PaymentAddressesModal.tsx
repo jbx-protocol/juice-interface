@@ -1,5 +1,5 @@
 import { plural, t, Trans } from '@lingui/macro'
-import { Modal, Space } from 'antd'
+import { Space } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
 import TooltipLabel from 'components/TooltipLabel'
 import { ThemeContext } from 'contexts/themeContext'
@@ -9,6 +9,7 @@ import { useContext } from 'react'
 import * as constants from '@ethersproject/constants'
 import CopyTextButton from 'components/CopyTextButton'
 import EtherscanLink from 'components/EtherscanLink'
+import { JuiceModal } from 'components/JuiceModal'
 import useMobile from 'hooks/Mobile'
 
 export function PaymentAddressesModal({
@@ -36,7 +37,7 @@ export function PaymentAddressesModal({
   const isMobile = useMobile()
 
   return (
-    <Modal
+    <JuiceModal
       open={open}
       onCancel={onCancel}
       cancelText="Done"
@@ -183,6 +184,6 @@ export function PaymentAddressesModal({
           })}
         </div>
       ) : null}
-    </Modal>
+    </JuiceModal>
   )
 }

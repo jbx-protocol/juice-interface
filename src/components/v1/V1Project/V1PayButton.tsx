@@ -15,7 +15,6 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useWeiConverter from 'hooks/WeiConverter'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useState } from 'react'
-import { fromWad } from 'utils/format/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import V1ConfirmPayOwnerModal from './modals/V1ConfirmPayOwnerModal'
 
@@ -26,7 +25,7 @@ export function V1PayButton({ wrapperStyle, disabled }: PayButtonProps) {
   )
 
   const { form: payProjectForm } = useContext(PayProjectFormContext)
-  const { payInCurrency, payAmount, setErrorMessage } = payProjectForm ?? {}
+  const { payInCurrency, payAmount } = payProjectForm ?? {}
 
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
   const [payWarningModalVisible, setPayWarningModalVisible] =
@@ -81,10 +80,6 @@ export function V1PayButton({ wrapperStyle, disabled }: PayButtonProps) {
   }
 
   const onPayButtonClick = () => {
-    if (parseFloat(fromWad(weiPayAmt)) === 0) {
-      setErrorMessage?.(t`Payment amount can't be 0`)
-    }
-
     setPayWarningModalVisible(true)
   }
 

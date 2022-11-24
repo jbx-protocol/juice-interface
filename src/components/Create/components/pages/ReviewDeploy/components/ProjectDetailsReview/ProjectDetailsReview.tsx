@@ -5,7 +5,6 @@ import { useAppSelector } from 'hooks/AppSelector'
 import useMobile from 'hooks/Mobile'
 import { cidFromUrl, restrictedIpfsUrl } from 'utils/ipfs'
 import { DescriptionCol } from '../DescriptionCol'
-import { emphasisedTextStyle, flexColumnStyle } from '../styles'
 import { MobileProjectDetailsReview } from './MobileProjectDetailsReview'
 
 // END: CSS
@@ -24,14 +23,7 @@ export const ProjectDetailsReview = () => {
   } = useAppSelector(state => state.editingV2Project.projectMetadata)
 
   return (
-    <div
-      style={{
-        ...flexColumnStyle,
-        gap: '2.5rem',
-        paddingTop: '1.25rem',
-        paddingBottom: '3rem',
-      }}
-    >
+    <div className="flex flex-col gap-10 pt-5 pb-12">
       {/* TODO: This is a bit of a hack - im sure there is a more elegant solution */}
       {isMobile ? (
         <MobileProjectDetailsReview />
@@ -42,7 +34,7 @@ export const ProjectDetailsReview = () => {
             <DescriptionCol
               span={6}
               title={t`Project name`}
-              desc={<div style={emphasisedTextStyle()}>{name}</div>}
+              desc={<div className="text-base font-medium">{name}</div>}
             />
             <DescriptionCol
               span={18}
@@ -50,12 +42,6 @@ export const ProjectDetailsReview = () => {
               placeholder={t`No description`}
               desc={description}
             />
-            {/* TODO: Hide edit button for now */}
-            {/* <Col offset={2} span={1}>
-          <Button style={{ padding: 0 }} type="link">
-            <EditOutlined />
-          </Button>
-        </Col> */}
           </Row>
           {/* Bottom */}
           <Row>
@@ -75,22 +61,14 @@ export const ProjectDetailsReview = () => {
               }
             />
             <Col span={18}>
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '2.5rem',
-                }}
-              >
+              <div className="flex flex-col gap-10">
                 <Row>
                   <DescriptionCol
                     span={8}
                     title={t`Twitter`}
                     desc={
                       twitter ? (
-                        <div style={emphasisedTextStyle('0.875rem')}>
-                          {twitter}
-                        </div>
+                        <div className="text-sm font-medium">{twitter}</div>
                       ) : null
                     }
                   />
@@ -99,9 +77,7 @@ export const ProjectDetailsReview = () => {
                     title={t`Discord`}
                     desc={
                       discord ? (
-                        <div style={emphasisedTextStyle('0.875rem')}>
-                          {discord}
-                        </div>
+                        <div className="text-sm font-medium">{discord}</div>
                       ) : null
                     }
                   />
@@ -110,9 +86,7 @@ export const ProjectDetailsReview = () => {
                     title={t`Website`}
                     desc={
                       infoUri ? (
-                        <div style={emphasisedTextStyle('0.875rem')}>
-                          {infoUri}
-                        </div>
+                        <div className="text-sm font-medium">{infoUri}</div>
                       ) : null
                     }
                   />
@@ -124,7 +98,9 @@ export const ProjectDetailsReview = () => {
                       title={t`Pay button text`}
                       desc={
                         payButton ? (
-                          <div style={emphasisedTextStyle()}>{payButton}</div>
+                          <div className="text-base font-medium">
+                            {payButton}
+                          </div>
                         ) : null
                       }
                     />
@@ -133,7 +109,13 @@ export const ProjectDetailsReview = () => {
                     <DescriptionCol
                       flex={1}
                       title={t`Pay disclaimer`}
-                      desc={payDisclosure ? payDisclosure : null}
+                      desc={
+                        payDisclosure ? (
+                          <div className="text-base font-medium">
+                            {payDisclosure}
+                          </div>
+                        ) : null
+                      }
                     />
                   </Col>
                 </Row>

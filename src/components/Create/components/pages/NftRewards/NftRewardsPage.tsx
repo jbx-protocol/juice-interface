@@ -1,6 +1,8 @@
 import { EyeOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Form, Input, Space } from 'antd'
+import { Form, Space } from 'antd'
+import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
+import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import { NftPostPayModal } from 'components/NftRewards/NftPostPayModal'
 import TooltipLabel from 'components/TooltipLabel'
 import { useAppSelector } from 'hooks/AppSelector'
@@ -36,15 +38,15 @@ export const NftRewardsPage = () => {
         onFinish={goToNextPage}
         scrollToFirstError
       >
-        <Space style={{ width: '100%' }} direction="vertical" size="large">
+        <Space className="w-full" direction="vertical" size="large">
           <Form.Item noStyle name="rewards">
             <RewardsList allowCreate />
           </Form.Item>
 
           <Space
+            className="w-full pt-3 pb-2"
             direction="vertical"
             size="middle"
-            style={{ width: '100%', padding: '0.75rem 0 0.5rem 0' }}
           >
             <Form.Item
               name="collectionName"
@@ -61,7 +63,7 @@ export const NftRewardsPage = () => {
               }
               required
             >
-              <Input />
+              <JuiceInput />
             </Form.Item>
 
             <Form.Item
@@ -79,14 +81,14 @@ export const NftRewardsPage = () => {
               }
               required
             >
-              <Input />
+              <JuiceInput />
             </Form.Item>
 
             <Form.Item
               name="collectionDescription"
               label={<Trans>Collection Description</Trans>}
             >
-              <Input.TextArea autoSize={{ minRows: 4, maxRows: 6 }} />
+              <JuiceTextArea autoSize={{ minRows: 4, maxRows: 6 }} />
             </Form.Item>
 
             <CreateCollapse>
@@ -96,9 +98,9 @@ export const NftRewardsPage = () => {
                 hideDivider
               >
                 <Space
+                  className="w-full pt-3 pb-2"
                   direction="vertical"
                   size="middle"
-                  style={{ width: '100%', padding: '0.75rem 0 0.5rem 0' }}
                 >
                   <p>
                     <Trans>
@@ -119,7 +121,7 @@ export const NftRewardsPage = () => {
                       />
                     }
                   >
-                    <Input.TextArea autoSize={{ minRows: 4, maxRows: 6 }} />
+                    <JuiceTextArea autoSize={{ minRows: 4, maxRows: 6 }} />
                   </Form.Item>
                   <Form.Item
                     name="postPayButtonText"
@@ -139,7 +141,7 @@ export const NftRewardsPage = () => {
                       />
                     }
                   >
-                    <Input />
+                    <JuiceInput />
                   </Form.Item>
                   <Form.Item
                     name="postPayButtonLink"
@@ -156,11 +158,11 @@ export const NftRewardsPage = () => {
                     }
                     extra={t`Button will close the modal if no link is given.`}
                   >
-                    <Input prefix={'https://'} />
+                    <JuiceInput prefix={'https://'} />
                   </Form.Item>
                   <CreateButton
+                    className="border border-solid"
                     disabled={!postPayModalData}
-                    style={{ border: '1px solid' }}
                     icon={<EyeOutlined />}
                     onClick={postPayModal.open}
                   >

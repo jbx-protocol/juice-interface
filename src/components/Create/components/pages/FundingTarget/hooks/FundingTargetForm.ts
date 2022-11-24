@@ -1,6 +1,5 @@
 import { Form } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
-import { CurrencySelectInputValue } from 'components/Create/components/CurrencySelectInput'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import { FundingTargetType } from 'models/fundingTargetType'
@@ -13,7 +12,10 @@ import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 
 export type FundingTargetFormProps = Partial<{
   targetSelection: FundingTargetType
-  amount: CurrencySelectInputValue
+  amount: {
+    amount: string
+    currency: 'eth' | 'usd'
+  }
 }>
 
 export const useFundingTargetForm = () => {
@@ -30,7 +32,10 @@ export const useFundingTargetForm = () => {
 
     const currency =
       distributionLimit?.currency === V2V3_CURRENCY_ETH ? 'eth' : 'usd'
-    let amount: CurrencySelectInputValue = { amount: '0', currency }
+    let amount: {
+      amount: string
+      currency: 'eth' | 'usd'
+    } = { amount: '0', currency }
 
     if (distributionLimit) {
       if (distributionLimit.amount.eq(MAX_DISTRIBUTION_LIMIT)) {

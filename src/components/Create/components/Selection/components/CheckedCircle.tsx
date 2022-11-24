@@ -1,44 +1,21 @@
 import { CheckCircleFilled } from '@ant-design/icons'
-import * as styleColors from 'constants/styles/colors'
-import { ThemeContext } from 'contexts/themeContext'
-import { useContext, useMemo } from 'react'
+import { classNames } from 'utils/classNames'
 
 export const CheckedCircle: React.FC<{
   checked: boolean
   defocused: boolean
 }> = ({ checked, defocused }) => {
-  const {
-    isDarkMode,
-    theme: { colors },
-  } = useContext(ThemeContext)
-
-  const borderColor = useMemo(() => {
-    if (defocused) {
-      return isDarkMode
-        ? styleColors.darkColors.darkGray500
-        : styleColors.lightColors.warmGray200
-    }
-    return isDarkMode
-      ? styleColors.darkColors.darkGray300
-      : styleColors.lightColors.warmGray300
-  }, [defocused, isDarkMode])
-
   if (checked) {
-    return (
-      <CheckCircleFilled
-        style={{ fontSize: '1.25rem', color: colors.background.action.primary }}
-      />
-    )
+    return <CheckCircleFilled className="text-xl text-haze-400" />
   }
   return (
     <div
-      style={{
-        height: '1.25rem',
-        width: '1.25rem',
-        borderRadius: '50%',
-        border: `solid 1px ${borderColor}`,
-        // backgroundColor: isDarkMode ? colors.background.l2 : undefined,
-      }}
+      className={classNames(
+        'h-5 w-5 rounded-full border border-solid',
+        defocused
+          ? 'border-smoke-200 dark:border-slate-400'
+          : 'border-smoke-300 dark:border-slate-200',
+      )}
     />
   )
 }

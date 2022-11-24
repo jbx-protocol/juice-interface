@@ -6,31 +6,37 @@ import { useNftRewardTiersOf } from 'hooks/JB721Delegate/contractReader/NftRewar
 import useNftRewards from 'hooks/NftRewards'
 import { useContext } from 'react'
 import { EMPTY_NFT_COLLECTION_METADATA } from 'redux/slices/editingV2Project'
-import { CIDsOfNftRewardTiersResponse } from 'utils/nftRewards'
+import { CIDsOfNftRewardTiersResponse, hasNftRewards } from 'utils/nftRewards'
 
 export const NftRewardsProvider: React.FC = ({ children }) => {
   const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
   const { projectMetadata, projectId } = useContext(ProjectMetadataContext)
 
   const dataSourceAddress = fundingCycleMetadata?.dataSource
+  // don't fetch stuff if there's no datasource in the first place.
+  const shouldFetch = hasNftRewards(fundingCycleMetadata)
 
   /**
    * Load NFT Rewards data
    */
   const { data: nftRewardTiersResponse, loading: nftRewardsCIDsLoading } =
     useNftRewardTiersOf({
-      dataSourceAddress: dataSourceAddress,
+      dataSourceAddress,
+      shouldFetch,
     })
+  // catchall to ensure nfts are never loaded if hasNftRewards is false (there's no datasource).
+  const tierData = shouldFetch ? nftRewardTiersResponse ?? [] : []
 
   const { data: rewardTiers, isLoading: nftRewardTiersLoading } = useNftRewards(
-    nftRewardTiersResponse ?? [],
+    tierData,
     projectId,
+    dataSourceAddress,
   )
 
   const { data: collectionMetadataUri, loading: collectionUriLoading } =
     useNftCollectionMetadataUri(dataSourceAddress)
 
-  const CIDs = CIDsOfNftRewardTiersResponse(nftRewardTiersResponse)
+  const CIDs = CIDsOfNftRewardTiersResponse(tierData)
 
   // Assumes having `dataSource` means there are NFTs initially
   // In worst case, if has `dataSource` but isn't for NFTs:

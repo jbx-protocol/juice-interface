@@ -647,6 +647,9 @@ msgstr ""
 msgid "Choose how you would like to configure your payouts."
 msgstr ""
 
+msgid "Choose which addresses to pay and how to split the total payout amount each funding cycle."
+msgstr ""
+
 msgid "Claim {0}"
 msgstr ""
 
@@ -1146,9 +1149,6 @@ msgid "ERC20 deployed"
 msgstr ""
 
 msgid "ERC20 transaction not ready. Try again."
-msgstr ""
-
-msgid "ETH"
 msgstr ""
 
 msgid "Each payout will receive their percent of this total each funding cycle if there is enough in the treasury. Otherwise, they will receive their percent of whatever is in the treasury."
@@ -2027,9 +2027,6 @@ msgstr ""
 msgid "Payment Success Popup"
 msgstr ""
 
-msgid "Payment amount can't be 0"
-msgstr ""
-
 msgid "Payment amount can't exceed your wallet balance."
 msgstr ""
 
@@ -2414,9 +2411,6 @@ msgstr ""
 msgid "Reserved {tokenTextPlural}: <0>{reservedTokensFormatted} {tokenTextPlural}</0>"
 msgstr ""
 
-msgid "Reserved {tokensText} splits"
-msgstr ""
-
 msgid "Resources"
 msgstr ""
 
@@ -2520,9 +2514,6 @@ msgid "See Tx on Safe"
 msgstr ""
 
 msgid "See example"
-msgstr ""
-
-msgid "Select how you would like to distribute payouts. Then, choose which Ethereum wallets to pay each funding cycle."
 msgstr ""
 
 msgid "Select the option that best suits your project’s funding requirements."
@@ -3149,9 +3140,6 @@ msgstr ""
 msgid "Twitter handle"
 msgstr ""
 
-msgid "USD"
-msgstr ""
-
 msgid "Unarchive project"
 msgstr ""
 
@@ -3659,9 +3647,6 @@ msgstr ""
 msgid "{0} ago"
 msgstr ""
 
-msgid "{0} are distributed to anyone who pays this project. If the project has a distribution limit, tokens can be redeemed for a portion of the project's overflow."
-msgstr ""
-
 msgid "{0} balance"
 msgstr ""
 
@@ -3795,6 +3780,9 @@ msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."
 msgstr ""
 
 msgid "{tokenTextSingular} recipients"
+msgstr ""
+
+msgid "{tokenText} are distributed to anyone who pays this project. If the project has a distribution limit, tokens can be redeemed for a portion of the project's overflow."
 msgstr ""
 
 msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."

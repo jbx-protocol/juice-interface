@@ -63,16 +63,14 @@ export const DefaultSettings: React.FC = () => {
     <>
       {Object.entries(data).map(([key, { data: text, tooltip }], i) => (
         <div key={key}>
-          {i === 0 && <Divider style={{ margin: '0  0 1rem' }} />}
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          {i === 0 && <Divider className="m-0 mb-4" />}
+          <div className="flex justify-between">
             <Space size="small">
               <TooltipLabel label={key} tip={tooltip} />
             </Space>
             <span>{text}</span>
           </div>
-          {i < Object.entries(data).length - 1 && (
-            <Divider style={{ margin: '1rem 0' }} />
-          )}
+          {i < Object.entries(data).length - 1 && <Divider className="my-4" />}
         </div>
       ))}
     </>

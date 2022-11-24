@@ -28,14 +28,14 @@ export const ReservedTokenRateCallout: React.FC = () => {
     <CreateCallout.Info noIcon collapsible={false}>
       <Trans>
         <span>Contributor rate:</span>{' '}
-        <span style={{ whiteSpace: 'nowrap' }}>
+        <span className="whitespace-nowrap">
           {formattedNum(contributorTokens)} / 1 ETH
         </span>
       </Trans>
       <br />
       <Trans>
         <span>Reserved rate:</span>{' '}
-        <span style={{ whiteSpace: 'nowrap' }}>
+        <span className="whitespace-nowrap">
           {formattedNum(reservedTokens)} / 1 ETH
         </span>
       </Trans>

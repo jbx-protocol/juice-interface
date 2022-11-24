@@ -18,6 +18,8 @@ import type { AppProps } from 'next/app'
 import React, { useEffect } from 'react'
 import { unpadLeadingZerosString } from 'utils/bigNumbers'
 import { installJuiceboxWindowObject } from '../lib/juicebox'
+import '../styles/globals.css'
+
 import '../styles/antd.css'
 import '../styles/index.scss'
 

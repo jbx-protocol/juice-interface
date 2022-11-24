@@ -1,6 +1,5 @@
 import { DownOutlined } from '@ant-design/icons'
 import { Collapse } from 'antd'
-import * as styleColors from 'constants/styles/colors'
 import { CreateCollapsePanel } from './CreateCollapsePanel'
 
 export const CreateCollapse: React.FC<{
@@ -11,15 +10,12 @@ export const CreateCollapse: React.FC<{
 } = ({ activeKey, onChange, children }) => {
   return (
     <Collapse
-      className="create-collapse"
+      className="create-collapse" // ant override
       expandIconPosition="end"
       bordered={false}
       ghost
       expandIcon={({ isActive }) => (
-        <DownOutlined
-          rotate={isActive ? 180 : 0}
-          style={{ color: styleColors.lightColors.gray500 }}
-        />
+        <DownOutlined className="text-grey-500" rotate={isActive ? 180 : 0} />
       )}
       onChange={onChange}
       {...(activeKey ? { activeKey } : {})}

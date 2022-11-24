@@ -2411,9 +2411,6 @@ msgstr ""
 msgid "Reserved {tokenTextPlural}: <0>{reservedTokensFormatted} {tokenTextPlural}</0>"
 msgstr ""
 
-msgid "Reserved {tokensText} splits"
-msgstr ""
-
 msgid "Resources"
 msgstr ""
 

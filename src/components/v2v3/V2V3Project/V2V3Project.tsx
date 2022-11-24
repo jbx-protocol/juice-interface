@@ -89,7 +89,11 @@ export function V2V3Project() {
 
       <V2V3PayProjectFormProvider>
         <Space direction="vertical" size={GUTTER_PX} style={{ width: '100%' }}>
-          <Row gutter={GUTTER_PX} align={'bottom'}>
+          <Row
+            gutter={GUTTER_PX}
+            align={'bottom'}
+            style={{ rowGap: GUTTER_PX }}
+          >
             <Col md={colSizeMd} xs={24}>
               <section>
                 <TreasuryStats />

@@ -20,7 +20,7 @@ import { V2V3ProjectTokenBalancesModal } from './modals/V2V3ProjectTokenBalances
 import ProjectActivity from './ProjectActivity'
 import TreasuryStats from './TreasuryStats'
 import { V2V3FundingCycleSection } from './V2V3FundingCycleSection'
-import V2ManageTokensSection from './V2V3ManageTokensSection'
+import { V2V3ManageTokensSection } from './V2V3ManageTokensSection'
 import { V2V3ProjectHeaderActions } from './V2V3ProjectHeaderActions/V2V3ProjectHeaderActions'
 
 const GUTTER_PX = 40
@@ -89,20 +89,28 @@ export function V2V3Project() {
 
       <V2V3PayProjectFormProvider>
         <Space direction="vertical" size={GUTTER_PX} style={{ width: '100%' }}>
-          <Row gutter={GUTTER_PX} align={'bottom'}>
+          <Row
+            gutter={GUTTER_PX}
+            align={'bottom'}
+            style={{ rowGap: GUTTER_PX }}
+          >
             <Col md={colSizeMd} xs={24}>
-              <TreasuryStats />
-              <div style={{ textAlign: 'right' }}>
-                <AllAssetsButton />
-              </div>
+              <section>
+                <TreasuryStats />
+                <div style={{ textAlign: 'right' }}>
+                  <AllAssetsButton />
+                </div>
+              </section>
             </Col>
 
             <Col md={colSizeMd} xs={24}>
-              <PayProjectForm disabled={payProjectFormDisabled} />
+              <section>
+                <PayProjectForm disabled={payProjectFormDisabled} />
+              </section>
               {(isMobile && showNftSection) || isPreviewMode ? (
-                <div style={{ marginTop: '30px' }}>
+                <section style={{ marginTop: '30px' }}>
                   <NftRewardsSection />
-                </div>
+                </section>
               ) : null}
             </Col>
           </Row>
@@ -115,15 +123,21 @@ export function V2V3Project() {
                 style={{ width: '100%' }}
               >
                 {!isPreviewMode && pv ? (
-                  <VolumeChart
-                    style={{ height: 240 }}
-                    createdAt={createdAt}
-                    projectId={projectId}
-                    pv={pv}
-                  />
+                  <section>
+                    <VolumeChart
+                      style={{ height: 240 }}
+                      createdAt={createdAt}
+                      projectId={projectId}
+                      pv={pv}
+                    />
+                  </section>
                 ) : null}
-                <V2ManageTokensSection />
-                <V2V3FundingCycleSection />
+                <section>
+                  <V2V3ManageTokensSection />
+                </section>
+                <section>
+                  <V2V3FundingCycleSection />
+                </section>
               </Space>
             </Col>
 
@@ -139,7 +153,9 @@ export function V2V3Project() {
                   style={{ width: '100%' }}
                 >
                   {!isMobile && showNftSection ? <NftRewardsSection /> : null}
-                  <ProjectActivity />
+                  <section>
+                    <ProjectActivity />
+                  </section>
                 </Space>
               </Col>
             ) : null}

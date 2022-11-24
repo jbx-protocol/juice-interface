@@ -79,7 +79,9 @@ export default function LatestProjects() {
             style={{
               textAlign: 'center',
               color: colors.text.disabled,
-              padding: 20,
+              paddingLeft: 20,
+              paddingRight: 20,
+              paddingBottom: 20,
               paddingTop: concatenatedPages?.length === 0 ? 0 : 20,
             }}
           >

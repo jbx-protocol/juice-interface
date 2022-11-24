@@ -4,11 +4,11 @@ import * as a from '../../../../tailwind.config.js'
 export default function Colors() {
   if (!a.theme) return null
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const swathe = themeToSwathe(a.theme as any)
+  const swatch = themeToSwatch(a.theme as any)
 
   return (
     <div className="grid grid-cols-12 gap-y-16 px-16 py-16">
-      {swathe.map(gradient => (
+      {swatch.map(gradient => (
         <ColorGradient key={gradient.name} gradient={gradient} />
       ))}
     </div>
@@ -43,10 +43,10 @@ const ColorSquare = ({ name, color }: Color) => {
   )
 }
 
-function themeToSwathe(theme: ThemeConfig): Swathe {
+function themeToSwatch(theme: ThemeConfig): Swatch {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const colors = theme?.colors as Record<string, any>
-  const swathe: Swathe = Object.entries(colors)
+  const swatch: Swatch = Object.entries(colors)
     .map(([color, keys]) => {
       if (color === 'extend') return null
       return {
@@ -57,10 +57,10 @@ function themeToSwathe(theme: ThemeConfig): Swathe {
         })),
       }
     })
-    .filter(Boolean) as Swathe
-  return swathe
+    .filter(Boolean) as Swatch
+  return swatch
 }
 
-type Swathe = Gradient[]
+type Swatch = Gradient[]
 type Gradient = { name: string; colors: Color[] }
 type Color = { name: string; color: string }

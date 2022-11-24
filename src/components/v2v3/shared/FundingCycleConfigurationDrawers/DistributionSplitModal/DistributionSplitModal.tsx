@@ -38,7 +38,7 @@ type DistributionType = 'amount' | 'percent' | 'both'
 export function DistributionSplitModal({
   open,
   mode,
-  payoutPage = false,
+  isEditPayoutPage = false,
   splits, // Locked and editable splits
   editingSplit, // Split that is currently being edited (only in the case mode ==='Edit')
   onSplitsChanged,
@@ -51,7 +51,7 @@ export function DistributionSplitModal({
   open: boolean
   mode: ModalMode // 'Add' or 'Edit' or 'Undefined'
   overrideDistTypeWithPercentage?: boolean
-  payoutPage?: boolean
+  isEditPayoutPage?: boolean
   splits: Split[]
   editingSplit?: Split
   onSplitsChanged?: (splits: Split[]) => void
@@ -105,12 +105,12 @@ export function DistributionSplitModal({
   }, [editingSplitType, form])
 
   useEffect(() => {
-    if (payoutPage && distributionLimit) {
+    if (isEditPayoutPage && distributionLimit) {
       setDistributionType('both')
       return
     }
     setDistributionType(distributionLimitIsInfinite ? 'percent' : 'amount')
-  }, [distributionLimit, distributionLimitIsInfinite, open, payoutPage])
+  }, [distributionLimit, distributionLimitIsInfinite, open, isEditPayoutPage])
 
   // Set the initial info for form from split
   // If editing, format the lockedUntil and projectId
@@ -226,9 +226,9 @@ export function DistributionSplitModal({
 
     const newPercent = getDistributionPercentFromAmount({
       amount: newAmount,
-      distributionLimit: !payoutPage
-        ? newDistributionLimit
-        : parseFloat(distributionLimit ?? '0'),
+      distributionLimit: isEditPayoutPage
+        ? parseFloat(distributionLimit ?? '0')
+        : newDistributionLimit,
     })
 
     setNewDistributionLimit(newDistributionLimit.toString())
@@ -236,7 +236,7 @@ export function DistributionSplitModal({
       percent: preciseFormatSplitPercent(newPercent),
     })
   }, [
-    payoutPage,
+    isEditPayoutPage,
     amount,
     distributionLimit,
     distributionLimitIsInfinite,
@@ -368,7 +368,7 @@ export function DistributionSplitModal({
             editingSplitType={editingSplitType}
             fee={ETHPaymentTerminalFee}
             isFirstSplit={isFirstSplit}
-            payoutPage={payoutPage}
+            isEditPayoutPage={isEditPayoutPage}
             distributionLimit={distributionLimit}
             onCurrencyChange={onCurrencyChange}
           />

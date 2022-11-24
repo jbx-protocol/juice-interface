@@ -42,7 +42,7 @@ export function DistributionSplitCard({
   currencyName,
   isLocked,
   isProjectOwner,
-  payoutPage,
+  isEditPayoutPage,
   onSplitsChanged,
   onSplitDelete,
   setDistributionLimit,
@@ -54,7 +54,7 @@ export function DistributionSplitCard({
   currencyName: CurrencyName
   isLocked?: boolean
   isProjectOwner?: boolean
-  payoutPage?: boolean
+  isEditPayoutPage?: boolean
   onSplitsChanged?: (splits: Split[]) => void
   onSplitDelete?: (split: Split) => void
   setDistributionLimit?: (distributionLimit: string) => void
@@ -276,7 +276,7 @@ export function DistributionSplitCard({
           open={editSplitModalOpen}
           onSplitsChanged={onSplitsChanged}
           mode={'Edit'}
-          payoutPage={payoutPage}
+          isEditPayoutPage={isEditPayoutPage}
           splits={splits}
           editingSplit={split}
           distributionLimit={distributionLimit}

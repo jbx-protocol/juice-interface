@@ -208,7 +208,7 @@ export const V2V3EditPayouts = ({
         <DistributionSplitCard
           key={split.beneficiary ?? index}
           split={split}
-          payoutPage={true}
+          isEditPayoutPage={true}
           splits={editingSplits}
           distributionLimit={
             distributionLimitIsInfinite
@@ -320,7 +320,7 @@ export const V2V3EditPayouts = ({
         </Button>
       </Space>
       <DistributionSplitModal
-        payoutPage={true}
+        isEditPayoutPage={true}
         open={addSplitModalVisible}
         distributionLimit={
           distributionLimitIsInfinite

@@ -1,9 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { Space } from 'antd'
 import { Split } from 'models/splits'
 import { useMemo } from 'react'
 import { getProjectOwnerRemainderSplit } from 'utils/splits'
-
-import SplitItem from './SplitItem'
+import { SplitItem } from './SplitItem'
 
 export default function SplitList({
   splits,
@@ -32,26 +32,22 @@ export default function SplitList({
   }, [projectOwnerAddress, splits])
 
   return (
-    <div>
+    <Space direction="vertical" size={5} style={{ width: '100%' }}>
       {[...splits]
         .sort((a, b) => (a.percent < b.percent ? 1 : -1))
         .map(split => (
-          <div
+          <SplitItem
+            split={split}
+            showSplitValue={showSplitValues}
+            currency={currency}
+            totalValue={totalValue}
+            projectOwnerAddress={projectOwnerAddress}
+            valueSuffix={valueSuffix}
+            valueFormatProps={valueFormatProps}
+            reservedRate={reservedRate}
+            showFees={showFees}
             key={`${split.beneficiary}-${split.projectId}-${split.percent}`}
-            style={{ marginBottom: 5 }}
-          >
-            <SplitItem
-              split={split}
-              showSplitValue={showSplitValues}
-              currency={currency}
-              totalValue={totalValue}
-              projectOwnerAddress={projectOwnerAddress}
-              valueSuffix={valueSuffix}
-              valueFormatProps={valueFormatProps}
-              reservedRate={reservedRate}
-              showFees={showFees}
-            />
-          </div>
+          />
         ))}
       {ownerSplit?.percent ? (
         <SplitItem
@@ -66,6 +62,6 @@ export default function SplitList({
           showFees={showFees}
         />
       ) : null}
-    </div>
+    </Space>
   )
 }

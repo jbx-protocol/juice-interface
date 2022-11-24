@@ -6,6 +6,9 @@ export const topNavStyles: CSSProperties = {
   alignItems: 'center',
   background: 'var(--background-l0)',
   zIndex: 1,
+  height: '64px',
+  padding: '0 50px',
+  lineHeight: '64px',
 }
 
 export const topRightNavStyles: CSSProperties = {

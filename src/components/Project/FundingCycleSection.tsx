@@ -26,12 +26,13 @@ export default function FundingCycleSection({
   )?.content
 
   return (
-    <div>
+    <Space direction="vertical" style={{ width: '100%' }}>
       <div
         style={{
           display: 'flex',
           flexWrap: 'wrap',
           justifyContent: 'space-between',
+          columnGap: 5,
         }}
       >
         <SectionHeader
@@ -63,6 +64,6 @@ export default function FundingCycleSection({
       </Space>
 
       {currentTabContent && <div>{currentTabContent}</div>}
-    </div>
+    </Space>
   )
 }

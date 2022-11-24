@@ -1,5 +1,4 @@
 import { Menu, Space } from 'antd'
-import { Header } from 'antd/lib/layout/layout'
 import useMobile from 'hooks/Mobile'
 import { CSSProperties, useEffect, useState } from 'react'
 import Account from './Account'
@@ -44,7 +43,7 @@ export default function SiteNavigation() {
   if (isMobile) return <MobileNavigation />
 
   return (
-    <Header className="top-nav" style={{ ...topNavStyles }}>
+    <nav className="top-nav" style={{ ...topNavStyles }}>
       <Menu
         items={menuItems}
         mode="inline"
@@ -70,6 +69,6 @@ export default function SiteNavigation() {
 
         <Account />
       </Space>
-    </Header>
+    </nav>
   )
 }

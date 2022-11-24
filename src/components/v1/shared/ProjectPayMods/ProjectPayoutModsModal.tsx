@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { DatePicker, Form, Modal, Select } from 'antd'
+import { DatePicker, Form, Select } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
 import { FormItems } from 'components/formItems'
 import {
@@ -37,6 +37,7 @@ import { useForm } from 'antd/lib/form/Form'
 import { CurrencyName } from 'constants/currency'
 
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import { JuiceModal } from 'components/JuiceModal'
 import { EditingPayoutMod } from './types'
 
 type ModType = 'project' | 'address'
@@ -192,7 +193,7 @@ export const ProjectPayoutModsModal = ({
   }
 
   return (
-    <Modal
+    <JuiceModal
       title={modalMode === 'Edit' ? t`Edit payout` : t`Add new payout`}
       open={open}
       onOk={validateAndSave}
@@ -352,6 +353,6 @@ export const ProjectPayoutModsModal = ({
           <DatePicker />
         </Form.Item>
       </Form>
-    </Modal>
+    </JuiceModal>
   )
 }

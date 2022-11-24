@@ -1,10 +1,8 @@
 import { t } from '@lingui/macro'
 import { DatePicker, Form, FormInstance } from 'antd'
-import Modal from 'antd/lib/modal/Modal'
-
 import NumberSlider from 'components/inputs/NumberSlider'
+import { JuiceModal } from 'components/JuiceModal'
 import { useState } from 'react'
-
 import { EthAddressInput } from '../inputs/EthAddressInput'
 
 type ModalMode = 'Add' | 'Edit' | undefined
@@ -53,7 +51,7 @@ export default function ReservedTokenReceiverModal({
   }
 
   return (
-    <Modal
+    <JuiceModal
       title={
         mode === 'Add' ? t`Add token allocation` : t`Edit token allocation`
       } // Full sentences for translation purposes
@@ -120,6 +118,6 @@ export default function ReservedTokenReceiverModal({
           <DatePicker />
         </Form.Item>
       </Form>
-    </Modal>
+    </JuiceModal>
   )
 }

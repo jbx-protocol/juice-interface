@@ -1,6 +1,6 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button, Modal, Space } from 'antd'
+import { Button, Space } from 'antd'
 import ERC20TokenBalance from 'components/ERC20TokenBalance'
 import { FormItems } from 'components/formItems'
 import V1ProjectTokenBalance from 'components/v1/shared/V1ProjectTokenBalance'
@@ -18,6 +18,7 @@ import { t, Trans } from '@lingui/macro'
 import { revalidateProject } from 'lib/api/nextjs'
 import { V1TerminalVersion } from 'models/v1/terminals'
 
+import { JuiceModal } from 'components/JuiceModal'
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 
@@ -81,7 +82,7 @@ export function V1BalancesModal({
   }
 
   return (
-    <Modal
+    <JuiceModal
       open={open}
       onCancel={onCancel}
       footer={
@@ -140,7 +141,7 @@ export function V1BalancesModal({
           )}
         </Space>
 
-        <Modal
+        <JuiceModal
           title={t`Edit tracked assets`}
           open={editModalVisible}
           onCancel={() => setEditModalVisible(false)}
@@ -160,8 +161,8 @@ export function V1BalancesModal({
             refs={editingTokenRefs}
             onRefsChange={setEditingTokenRefs}
           />
-        </Modal>
+        </JuiceModal>
       </div>
-    </Modal>
+    </JuiceModal>
   )
 }

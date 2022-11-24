@@ -1,4 +1,4 @@
-import { Form, Input, Modal, Switch } from 'antd'
+import { Form, Input, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 
@@ -14,6 +14,7 @@ import { parseWad } from 'utils/format/formatNumber'
 import { RuleObject } from 'antd/lib/form'
 import { StoreValue } from 'antd/lib/form/interface'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import { JuiceModal } from 'components/JuiceModal'
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 
 export default function PrintPreminedModal({
@@ -93,7 +94,7 @@ export default function PrintPreminedModal({
     tokenSymbol && tokenAddress && tokenAddress !== constants.AddressZero
 
   return (
-    <Modal
+    <JuiceModal
       title={<Trans>Mint tokens</Trans>}
       open={open}
       onOk={() => form.submit()}
@@ -163,6 +164,6 @@ export default function PrintPreminedModal({
           <Switch disabled={!erc20Issued} />
         </Form.Item>
       </Form>
-    </Modal>
+    </JuiceModal>
   )
 }

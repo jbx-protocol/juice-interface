@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro'
-import { Form, Input, Modal } from 'antd'
+import { Form, Input } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ModalMode } from 'components/formItems/formHelpers'
 import TooltipLabel from 'components/TooltipLabel'
@@ -8,6 +8,7 @@ import NftUpload from 'components/v2v3/shared/FundingCycleConfigurationDrawers/N
 import { VeNftVariant } from 'models/veNft'
 import { useEffect } from 'react'
 
+import { JuiceModal } from 'components/JuiceModal'
 import TokensStakedMinInput from 'components/veNft/formControls/TokensStakedMinInput'
 
 export type VeNftFormFields = {
@@ -62,7 +63,7 @@ export default function VeNftRewardTierModal({
   })
 
   return (
-    <Modal
+    <JuiceModal
       open={open}
       okText={mode === 'Edit' ? t`Save NFT tier` : t`Add NFT tier`}
       onOk={onFormSaved}
@@ -82,6 +83,6 @@ export default function VeNftRewardTierModal({
           <Input type="string" autoComplete="off" />
         </Form.Item>
       </Form>
-    </Modal>
+    </JuiceModal>
   )
 }

@@ -1,6 +1,5 @@
 import { t } from '@lingui/macro'
 import { RuleObject } from 'antd/lib/form'
-import { CurrencySelectInputValue } from 'components/Create/components/CurrencySelectInput'
 
 /**
  * Rule to be used in an Ant Design Form.Item object.
@@ -11,7 +10,15 @@ import { CurrencySelectInputValue } from 'components/Create/components/CurrencyS
 export const currencyAmountMustExistRuleionMustExistRule = (props?: {
   label?: string
 }) => ({
-  validator: (rule: RuleObject, value: unknown | CurrencySelectInputValue) => {
+  validator: (
+    rule: RuleObject,
+    value:
+      | unknown
+      | {
+          amount: string
+          currency: 'eth' | 'usd'
+        },
+  ) => {
     if (
       value === null ||
       value === undefined ||

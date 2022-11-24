@@ -8,6 +8,7 @@ import { useWallet } from 'hooks/Wallet'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useCallback, useMemo, useState } from 'react'
+import { classNames } from 'utils/classNames'
 
 export const DeploySuccess = ({ projectId }: { projectId: number }) => {
   console.info('Deploy: SUCCESS', projectId)
@@ -48,37 +49,15 @@ export const DeploySuccess = ({ projectId }: { projectId: number }) => {
 
   return (
     <div
-      style={{
-        marginTop: isMobile ? '1rem' : '7rem',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        textAlign: 'center',
-      }}
+      className={classNames(
+        'flex flex-col items-center justify-center text-center',
+        isMobile ? 'mt-4' : 'mt-28',
+      )}
     >
       <Image src="/assets/dancing.gif" width={218} height={218} />
-      <div
-        style={{
-          paddingTop: '30px',
-          fontWeight: 500,
-          fontSize: '38px',
-          lineHeight: '24px',
-        }}
-      >
-        Congratulations!
-      </div>
-      <div
-        style={{
-          marginTop: '1.5rem',
-          fontWeight: 400,
-          fontSize: '18px',
-          lineHeight: '34px',
-        }}
-      >
-        {deployGreeting}
-      </div>
-      <div style={{ display: 'flex', gap: '0.5rem', paddingTop: '4rem' }}>
+      <div className="pt-8 text-4xl font-medium">Congratulations!</div>
+      <div className="mt-6 text-xl font-normal">{deployGreeting}</div>
+      <div className="flex gap-2 pt-16">
         <ExternalLink href={twitterShareUrl}>
           <Button>
             {/* Spacing is weird when you use button icon - do this instead */}

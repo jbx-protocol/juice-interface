@@ -1,28 +1,22 @@
 import useMobile from 'hooks/Mobile'
-import React, { CSSProperties, ReactNode } from 'react'
+import React, { ReactNode } from 'react'
+import { classNames } from 'utils/classNames'
 import { WizardContext } from './contexts'
 import { useWizard } from './hooks'
 import { Page } from './Page'
 import { Steps } from './Steps'
 
-// TODO: Make responsive and mobile friendly
 const WizardContainer: React.FC<{
   className?: string
-  style?: CSSProperties
-}> = ({ children, className, style }) => {
+}> = ({ children, className }) => {
   const isMobile = useMobile()
   return (
     <div
-      className={className}
-      style={{
-        margin: '0 auto',
-        display: 'flex',
-        alignItems: 'center',
-        flexDirection: 'column',
-        gap: '4rem',
-        padding: isMobile ? '2rem 1rem' : '2rem 4rem',
-        ...style,
-      }}
+      className={classNames(
+        className,
+        'm-auto flex flex-col items-center gap-16 py-8',
+        isMobile ? 'px-4' : 'px-16',
+      )}
     >
       {children}
     </div>
@@ -31,7 +25,6 @@ const WizardContainer: React.FC<{
 
 export const Wizard: React.FC<{
   className?: string
-  style?: CSSProperties
   doneText?: ReactNode
 }> & {
   Page: typeof Page
@@ -45,7 +38,7 @@ export const Wizard: React.FC<{
     <WizardContext.Provider
       value={{ currentPage, goToPage, pages, doneText: props.doneText }}
     >
-      <WizardContainer className={props.className} style={props.style}>
+      <WizardContainer className={props.className}>
         {!isMobile && <Steps />}
         {props.children}
       </WizardContainer>

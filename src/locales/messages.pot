@@ -647,6 +647,9 @@ msgstr ""
 msgid "Choose how you would like to configure your payouts."
 msgstr ""
 
+msgid "Choose which addresses to pay and how to split the total payout amount each funding cycle."
+msgstr ""
+
 msgid "Claim {0}"
 msgstr ""
 
@@ -1146,9 +1149,6 @@ msgid "ERC20 deployed"
 msgstr ""
 
 msgid "ERC20 transaction not ready. Try again."
-msgstr ""
-
-msgid "ETH"
 msgstr ""
 
 msgid "Each payout will receive their percent of this total each funding cycle if there is enough in the treasury. Otherwise, they will receive their percent of whatever is in the treasury."
@@ -2519,9 +2519,6 @@ msgstr ""
 msgid "See example"
 msgstr ""
 
-msgid "Select how you would like to distribute payouts. Then, choose which Ethereum wallets to pay each funding cycle."
-msgstr ""
-
 msgid "Select the option that best suits your project’s funding requirements."
 msgstr ""
 
@@ -3144,9 +3141,6 @@ msgid "Twitter"
 msgstr ""
 
 msgid "Twitter handle"
-msgstr ""
-
-msgid "USD"
 msgstr ""
 
 msgid "Unarchive project"

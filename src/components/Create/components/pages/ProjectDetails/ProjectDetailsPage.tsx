@@ -1,7 +1,9 @@
 import { t, Trans } from '@lingui/macro'
-import { Col, Form, Input, Row, Space } from 'antd'
+import { Col, Form, Row, Space } from 'antd'
 import { useLockPageRulesWrapper } from 'components/Create/hooks/useLockPageRulesWrapper'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
+import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
+import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import PrefixedInput from 'components/PrefixedInput'
 import TooltipIcon from 'components/TooltipIcon'
 import { useContext } from 'react'
@@ -30,7 +32,7 @@ export const ProjectDetailsPage: React.FC = () => {
       onFinish={goToNextPage}
       scrollToFirstError
     >
-      <Space direction="vertical" size="large" style={{ width: '100%' }}>
+      <Space className="w-full" direction="vertical" size="large">
         <Form.Item
           name="projectName"
           label={t`Project Name`}
@@ -39,10 +41,10 @@ export const ProjectDetailsPage: React.FC = () => {
             inputMustExistRule({ label: t`Project Name` }),
           ])}
         >
-          <Input />
+          <JuiceInput />
         </Form.Item>
         <Form.Item name="projectDescription" label={t`Project Description`}>
-          <Input.TextArea autoSize={{ minRows: 4, maxRows: 6 }} />
+          <JuiceTextArea autoSize={{ minRows: 4, maxRows: 6 }} />
         </Form.Item>
         <Form.Item name="logo" label={t`Logo`}>
           <FormImageUploader text={t`Upload`} />
@@ -54,14 +56,11 @@ export const ProjectDetailsPage: React.FC = () => {
             hideDivider
           >
             {/* Adding paddingBottom is a bit of a hack, but horizontal gutters not working */}
-            <Row
-              gutter={32}
-              style={{ paddingBottom: '2rem', paddingTop: '1.25rem' }}
-            >
+            <Row className="pb-8 pt-5" gutter={32}>
               <Col span={12}>
                 <Form.Item name="projectWebsite" label={t`Website`}>
                   {/* Set placeholder as url string origin without port */}
-                  <Input placeholder={getBaseUrlOrigin()} />
+                  <JuiceInput placeholder={getBaseUrlOrigin()} />
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -70,10 +69,10 @@ export const ProjectDetailsPage: React.FC = () => {
                 </Form.Item>
               </Col>
             </Row>
-            <Row gutter={32} style={{ marginBottom: '1.5rem' }}>
+            <Row className="mb-6" gutter={32}>
               <Col span={12}>
                 <Form.Item name="projectDiscord" label={t`Discord`}>
-                  <Input placeholder="https://discord.gg" />
+                  <JuiceInput placeholder="https://discord.gg" />
                 </Form.Item>
               </Col>
             </Row>
@@ -83,10 +82,7 @@ export const ProjectDetailsPage: React.FC = () => {
             header={<OptionalHeader header={t`Customize Pay Button`} />}
             hideDivider
           >
-            <Row
-              gutter={32}
-              style={{ paddingBottom: '2rem', paddingTop: '1.25rem' }}
-            >
+            <Row className="pb-8 pt-5" gutter={32}>
               <Col span={12}>
                 <Form.Item
                   name="payButtonText"
@@ -99,7 +95,7 @@ export const ProjectDetailsPage: React.FC = () => {
                     </span>
                   }
                 >
-                  <Input placeholder={t`Pay`} />
+                  <JuiceInput placeholder={t`Pay`} />
                 </Form.Item>
               </Col>
             </Row>
@@ -114,7 +110,7 @@ export const ProjectDetailsPage: React.FC = () => {
                 </span>
               }
             >
-              <Input.TextArea autoSize={{ minRows: 4, maxRows: 6 }} />
+              <JuiceTextArea autoSize={{ minRows: 4, maxRows: 6 }} />
             </Form.Item>
           </CreateCollapse.Panel>
         </CreateCollapse>

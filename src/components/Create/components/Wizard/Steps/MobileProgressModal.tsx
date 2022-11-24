@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { Modal } from 'antd'
+import { JuiceModal } from 'components/JuiceModal'
 import { MobileStep } from './MobileStep'
 
 export const MobileProgressModal: React.FC<{
@@ -18,12 +18,12 @@ export const MobileProgressModal: React.FC<{
   onCancel,
 }) => {
   return (
-    <Modal
-      className="create-steps-modal"
+    <JuiceModal
+      className="create-steps-modal" // ant override
       width="280px"
       title={
         <>
-          <h2>
+          <h2 className="text-xl font-medium text-black dark:text-grey-200">
             <Trans>Create a project</Trans>
           </h2>
         </>
@@ -35,7 +35,6 @@ export const MobileProgressModal: React.FC<{
       {steps?.map((step, index) => {
         return (
           <MobileStep
-            className="create-steps-item-hover"
             selected={currentStepIndex === index}
             isCompleted={
               index <= furthestStepIndex && index !== currentStepIndex
@@ -47,6 +46,6 @@ export const MobileProgressModal: React.FC<{
           />
         )
       })}
-    </Modal>
+    </JuiceModal>
   )
 }

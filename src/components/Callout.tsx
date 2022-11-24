@@ -10,12 +10,14 @@ import {
 } from 'react'
 
 export default function Callout({
+  className,
   style,
   transparent,
   children,
   iconComponent,
   collapsible = false,
 }: PropsWithChildren<{
+  className?: string
   style?: CSSProperties
   transparent?: boolean
   iconComponent?: JSX.Element | null
@@ -43,6 +45,7 @@ export default function Callout({
 
   return (
     <div
+      className={className}
       style={{
         color: colors.text.primary,
         padding: '1rem',

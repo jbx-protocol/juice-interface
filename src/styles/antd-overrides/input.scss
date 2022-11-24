@@ -1,3 +1,9 @@
+// Special case where ant input with prefix/suffix needs to be overriden.
+.ant-input-affix-wrapper .ant-input,
+.ant-input-textarea textarea {
+  color: var(--text-primary);
+}
+
 .ant-input-number,
 .ant-input,
 .ant-input-affix-wrapper,

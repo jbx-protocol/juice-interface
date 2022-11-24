@@ -4,7 +4,7 @@ export const OptionalHeader = ({ header }: { header: string }) => {
   return (
     <>
       {header}{' '}
-      <span style={{ fontWeight: 'lighter' }}>
+      <span className="font-light">
         (<Trans>Optional</Trans>)
       </span>
     </>

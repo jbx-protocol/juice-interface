@@ -51,9 +51,9 @@ export const ProjectTokenPage: React.FC = () => {
       onFinish={goToNextPage}
       scrollToFirstError
     >
-      <Space direction="vertical" size="large" style={{ width: '100%' }}>
+      <Space className="w-full" direction="vertical" size="large">
         <Form.Item noStyle name="selection">
-          <Selection defocusOnSelect style={{ width: '100%' }}>
+          <Selection className="w-full" defocusOnSelect>
             <Selection.Card
               name="default"
               title={

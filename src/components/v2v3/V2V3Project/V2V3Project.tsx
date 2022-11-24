@@ -20,7 +20,7 @@ import { V2V3ProjectTokenBalancesModal } from './modals/V2V3ProjectTokenBalances
 import ProjectActivity from './ProjectActivity'
 import TreasuryStats from './TreasuryStats'
 import { V2V3FundingCycleSection } from './V2V3FundingCycleSection'
-import V2ManageTokensSection from './V2V3ManageTokensSection'
+import { V2V3ManageTokensSection } from './V2V3ManageTokensSection'
 import { V2V3ProjectHeaderActions } from './V2V3ProjectHeaderActions/V2V3ProjectHeaderActions'
 
 const GUTTER_PX = 40
@@ -122,7 +122,7 @@ export function V2V3Project() {
                     pv={pv}
                   />
                 ) : null}
-                <V2ManageTokensSection />
+                <V2V3ManageTokensSection />
                 <V2V3FundingCycleSection />
               </Space>
             </Col>

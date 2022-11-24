@@ -1,7 +1,8 @@
 import { t, Trans } from '@lingui/macro'
-import { Form, Modal } from 'antd'
+import { Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import { JuiceModal } from 'components/JuiceModal'
 
 import { SECONDS_IN_DAY } from 'constants/numbers'
 
@@ -32,7 +33,7 @@ export default function VeNftAddLockDurationModal({
   }
 
   return (
-    <Modal
+    <JuiceModal
       open={open}
       okText={t`Save Option`}
       onOk={onFormSaved}
@@ -48,6 +49,6 @@ export default function VeNftAddLockDurationModal({
           <FormattedNumberInput suffix={t` days`} min={1} />
         </Form.Item>
       </Form>
-    </Modal>
+    </JuiceModal>
   )
 }

@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/macro'
-import { Divider, Drawer, Space } from 'antd'
+import { Divider, Space } from 'antd'
+import { JuiceDrawer } from 'components/JuiceDrawer'
 import { AddToProjectBalanceForm } from 'components/Project/ProjectToolsDrawer/AddToProjectBalanceForm'
 import { ExportSection } from 'components/Project/ProjectToolsDrawer/ExportSection'
 import {
@@ -27,7 +28,7 @@ export function V2V3ProjectToolsDrawer({
   const isMobile = useMobile()
 
   return (
-    <Drawer
+    <JuiceDrawer
       open={open}
       onClose={onClose}
       width={!isMobile ? 600 : undefined}
@@ -83,6 +84,6 @@ export function V2V3ProjectToolsDrawer({
           }
         />
       </Space>
-    </Drawer>
+    </JuiceDrawer>
   )
 }

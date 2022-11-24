@@ -1,12 +1,14 @@
-import { t, Trans } from '@lingui/macro'
-import { Button, Form, Input, Modal } from 'antd'
-import { useForm } from 'antd/lib/form/Form'
-import CurrencySymbol from 'components/CurrencySymbol'
-import { getTotalPercentage } from 'components/formItems/formHelpers'
-import Mod from 'components/v1/shared/Mod'
-
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
+import { t, Trans } from '@lingui/macro'
+import { Button, Form, Input } from 'antd'
+import { useForm } from 'antd/lib/form/Form'
+import { CsvUpload } from 'components/CsvUpload/CsvUpload'
+import CurrencySymbol from 'components/CurrencySymbol'
+import { getTotalPercentage } from 'components/formItems/formHelpers'
+import { JuiceModal } from 'components/JuiceModal'
+import Mod from 'components/v1/shared/Mod'
+import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
 import { useSetPayoutModsTx } from 'hooks/v1/transactor/SetPayoutModsTx'
@@ -21,19 +23,15 @@ import {
   useMemo,
   useState,
 } from 'react'
+import { parseV1PayoutModsCsv } from 'utils/csv'
 import {
   formatWad,
   fromWad,
   perbicentToPercent,
   permyriadToPercent,
 } from 'utils/format/formatNumber'
-import { amountSubFee } from 'utils/v1/math'
-
 import { V1CurrencyName } from 'utils/v1/currency'
-
-import { CsvUpload } from 'components/CsvUpload/CsvUpload'
-import { V1_CURRENCY_ETH } from 'constants/v1/currency'
-import { parseV1PayoutModsCsv } from 'utils/csv'
+import { amountSubFee } from 'utils/v1/math'
 import { MODS_TOTAL_PERCENT } from 'utils/v1/mods'
 import ProjectPayoutMods from './ProjectPayMods/ProjectPayoutMods'
 
@@ -199,7 +197,7 @@ export default function PayoutModsList({
             if (e.key === 'Enter') setMods()
           }}
         >
-          <Modal
+          <JuiceModal
             open={modalVisible}
             title={<Trans>Edit payouts</Trans>}
             okText={
@@ -267,7 +265,7 @@ export default function PayoutModsList({
               feePercentage={perbicentToPercent(feePerbicent)}
               targetIsInfinite={targetIsInfinite}
             />
-          </Modal>
+          </JuiceModal>
         </Form>
       ) : null}
     </div>

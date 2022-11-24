@@ -224,7 +224,9 @@ export function DistributionSplitModal({
 
     const newPercent = getDistributionPercentFromAmount({
       amount: newAmount,
-      distributionLimit: newDistributionLimit,
+      distributionLimit: !payoutPage
+        ? newDistributionLimit
+        : parseFloat(distributionLimit ?? '0'),
     })
 
     setNewDistributionLimit(newDistributionLimit.toString())
@@ -232,6 +234,7 @@ export function DistributionSplitModal({
       percent: preciseFormatSplitPercent(newPercent),
     })
   }, [
+    payoutPage,
     amount,
     distributionLimit,
     distributionLimitIsInfinite,
@@ -363,12 +366,16 @@ export function DistributionSplitModal({
             editingSplitType={editingSplitType}
             fee={ETHPaymentTerminalFee}
             isFirstSplit={isFirstSplit}
+            payoutPage={payoutPage}
             distributionLimit={distributionLimit}
             onCurrencyChange={onCurrencyChange}
           />
         ) : null}
         {distributionType === 'percent' || distributionType === 'both' ? (
-          <PercentageFormItem form={form} />
+          <PercentageFormItem
+            form={form}
+            distributionLimit={distributionLimit}
+          />
         ) : null}
         <Form.Item
           name="lockedUntil"

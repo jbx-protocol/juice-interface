@@ -82,18 +82,6 @@ export const REDUX_STORE_V2_PROJECT_VERSION = 10
 
 export const DEFAULT_MUST_START_AT_OR_AFTER = '1'
 
-const defaultProjectMetadataState: ProjectMetadataV5 = {
-  name: '',
-  infoUri: '',
-  logoUri: '',
-  description: '',
-  twitter: '',
-  discord: '',
-  tokens: [],
-  nftPaymentSuccessModal: undefined,
-  version: LATEST_METADATA_VERSION,
-}
-
 export const defaultFundingCycleData: SerializedV2V3FundingCycleData =
   serializeV2V3FundingCycleData({
     duration: BigNumber.from(0),
@@ -154,6 +142,19 @@ const defaultCreateState: CreateState = {
   payoutsSelection: undefined,
   projectTokensSelection: undefined,
 }
+
+const defaultProjectMetadataState: ProjectMetadataV5 = {
+  name: '',
+  infoUri: '',
+  logoUri: '',
+  description: '',
+  twitter: '',
+  discord: '',
+  tokens: [],
+  nftPaymentSuccessModal: undefined,
+  version: LATEST_METADATA_VERSION,
+}
+
 export const defaultProjectState: ProjectState = {
   projectMetadata: { ...defaultProjectMetadataState },
   fundingCycleData: { ...defaultFundingCycleData },

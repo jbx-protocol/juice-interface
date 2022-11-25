@@ -13,6 +13,7 @@ import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
 import { PrintReservesEvent } from 'models/subgraph-entities/v1/print-reserves-event'
 import { TapEvent } from 'models/subgraph-entities/v1/tap-event'
+import { V1ConfigureEvent } from 'models/subgraph-entities/v1/v1-configure'
 import { AddToBalanceEvent } from 'models/subgraph-entities/vX/add-to-balance-event'
 import { DeployedERC20Event } from 'models/subgraph-entities/vX/deployed-erc20-event'
 import { PayEvent } from 'models/subgraph-entities/vX/pay-event'
@@ -21,8 +22,10 @@ import { ProjectEvent } from 'models/subgraph-entities/vX/project-event'
 import { RedeemEvent } from 'models/subgraph-entities/vX/redeem-event'
 import { useContext, useMemo, useState } from 'react'
 import { WhereConfig } from 'utils/graph'
+
 import ReservesEventElem from './eventElems/ReservesEventElem'
 import TapEventElem from './eventElems/TapEventElem'
+import V1ConfigureEventElem from './eventElems/V1ConfigureEventElem'
 import { V1DownloadActivityModal } from './V1DownloadActivityModal'
 
 type EventFilter =
@@ -34,6 +37,7 @@ type EventFilter =
   | 'printReserves'
   | 'deployERC20'
   | 'projectCreate'
+  | 'configure'
 // | 'mintTokens' TODO
 
 const pageSize = 50
@@ -91,6 +95,9 @@ export default function ProjectActivity() {
         break
       case 'withdraw':
         key = 'tapEvent'
+        break
+      case 'configure':
+        key = 'v1ConfigureEvent'
         break
       // TODO
       // case 'mintTokens':
@@ -171,6 +178,22 @@ export default function ProjectActivity() {
         entity: 'projectCreateEvent',
         keys: ['id', 'txHash', 'timestamp', 'caller'],
       },
+      {
+        entity: 'v1ConfigureEvent',
+        keys: [
+          'id',
+          'timestamp',
+          'txHash',
+          'caller',
+          'ballot',
+          'discountRate',
+          'duration',
+          'target',
+          'bondingCurveRate',
+          'reservedRate',
+          'currency',
+        ],
+      },
     ],
     orderDirection: 'desc',
     orderBy: 'timestamp',
@@ -220,6 +243,13 @@ export default function ProjectActivity() {
             elem = (
               <DeployedERC20EventElem
                 event={e.deployedERC20Event as DeployedERC20Event}
+              />
+            )
+          }
+          if (e.v1ConfigureEvent) {
+            elem = (
+              <V1ConfigureEventElem
+                event={e.v1ConfigureEvent as V1ConfigureEvent}
               />
             )
           }
@@ -299,9 +329,6 @@ export default function ProjectActivity() {
             <Select.Option value="pay">
               <Trans>Paid</Trans>
             </Select.Option>
-            <Select.Option value="addToBalance">
-              <Trans>Added to balance</Trans>
-            </Select.Option>
             {/* TODO */}
             {/* <Select.Option value="mintTokens">
               <Trans>Minted Tokens</Trans>
@@ -315,11 +342,17 @@ export default function ProjectActivity() {
             <Select.Option value="printReserves">
               <Trans>Distributed reserves</Trans>
             </Select.Option>
+            <Select.Option value="configure">
+              <Trans>Configured FC</Trans>
+            </Select.Option>
             <Select.Option value="deployERC20">
               <Trans>ERC20 Deployed</Trans>
             </Select.Option>
             <Select.Option value="projectCreate">
               <Trans>Project created</Trans>
+            </Select.Option>
+            <Select.Option value="addToBalance">
+              <Trans>Added to balance</Trans>
             </Select.Option>
           </Select>
         </Space>

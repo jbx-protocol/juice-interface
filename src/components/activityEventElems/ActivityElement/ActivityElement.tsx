@@ -39,7 +39,11 @@ function Header({ header }: { header: string | JSX.Element }) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  return <div style={smallHeaderStyle(colors)}>{header}</div>
+  return (
+    <div style={{ ...smallHeaderStyle(colors), textTransform: 'capitalize' }}>
+      {header}
+    </div>
+  )
 }
 
 function SideDetails({ event }: { event: ActivityElementEvent }) {

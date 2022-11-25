@@ -49,7 +49,14 @@ export type NftRewardsData = {
   postPayModal: NftPostPayModalConfig | undefined
 }
 
-interface V2ProjectState {
+interface CreateState {
+  fundingCyclesPageSelection: 'automated' | 'manual' | undefined
+  reconfigurationRuleSelection: ReconfigurationStrategy | undefined
+  createFurthestPageReached: CreatePage
+  createSoftLockPageQueue: CreatePage[] | undefined
+}
+
+type V2ProjectState = {
   version: number
   projectMetadata: ProjectMetadataV5
   fundingCycleData: SerializedV2V3FundingCycleData
@@ -61,12 +68,8 @@ interface V2ProjectState {
   reservedTokensGroupedSplits: ReservedTokensGroupedSplits
   projectTokensSelection: ProjectTokensSelection | undefined
   nftRewards: NftRewardsData
-  fundingCyclesPageSelection: 'automated' | 'manual' | undefined
-  reconfigurationRuleSelection: ReconfigurationStrategy | undefined
-  createFurthestPageReached: CreatePage
-  createSoftLockPageQueue: CreatePage[] | undefined
   mustStartAtOrAfter: string
-}
+} & CreateState
 
 // Increment this version by 1 when making breaking changes.
 // When users return to the site and their local version is less than
@@ -138,6 +141,12 @@ export const EMPTY_NFT_COLLECTION_METADATA = {
   description: undefined,
 }
 
+const defaultCreateState: CreateState = {
+  reconfigurationRuleSelection: undefined,
+  fundingCyclesPageSelection: undefined,
+  createFurthestPageReached: 'projectDetails',
+  createSoftLockPageQueue: [],
+}
 export const defaultProjectState: V2ProjectState = {
   version: REDUX_STORE_V2_PROJECT_VERSION,
   projectMetadata: { ...defaultProjectMetadataState },
@@ -155,17 +164,17 @@ export const defaultProjectState: V2ProjectState = {
     collectionMetadata: EMPTY_NFT_COLLECTION_METADATA,
     postPayModal: undefined,
   },
-  reconfigurationRuleSelection: undefined,
-  fundingCyclesPageSelection: undefined,
-  createFurthestPageReached: 'projectDetails',
-  createSoftLockPageQueue: [],
   mustStartAtOrAfter: DEFAULT_MUST_START_AT_OR_AFTER,
+  ...defaultCreateState,
 }
 
 const editingV2ProjectSlice = createSlice({
   name: 'editingV2Project',
   initialState: defaultProjectState,
   reducers: {
+    setState: (_, action: PayloadAction<V2ProjectState>) => {
+      return action.payload
+    },
     resetState: () => defaultProjectState,
     setName: (state, action: PayloadAction<string>) => {
       state.projectMetadata.name = action.payload

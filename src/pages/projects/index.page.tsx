@@ -125,7 +125,6 @@ function Projects() {
 
         <div>
           <Search
-            size="large"
             autoFocus
             style={{ flex: 1, marginBottom: '1rem' }}
             prefix="@"

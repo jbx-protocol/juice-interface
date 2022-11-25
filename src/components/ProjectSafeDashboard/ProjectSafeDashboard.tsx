@@ -94,12 +94,6 @@ export function ProjectSafeDashboard({
         <BackToProjectButton projectPageUrl={projectPageUrl} />
       </div>
 
-      {!uniqueNonces.length ? (
-        <div>
-          <Trans>This Safe has no queued transactions.</Trans>
-        </div>
-      ) : null}
-
       {gnosisSafe && (
         <div style={{ marginTop: '1.5rem' }}>
           <Space size="large">
@@ -120,6 +114,12 @@ export function ProjectSafeDashboard({
               </a>
             </Link>
           </Space>
+
+          {!uniqueNonces.length && selectedTab === SAFE_TX_QUEUED_KEY ? (
+            <div>
+              <Trans>This Safe has no queued transactions.</Trans>
+            </div>
+          ) : null}
 
           <div
             style={{
@@ -144,7 +144,7 @@ export function ProjectSafeDashboard({
                       key={`safe-${nonce}-${idx}`}
                       nonce={nonce}
                       transactions={transactionsOfNonce}
-                      safeThreshold={gnosisSafe?.threshold}
+                      safe={gnosisSafe}
                       selectedTx={preSelectedTx}
                     />
                   )

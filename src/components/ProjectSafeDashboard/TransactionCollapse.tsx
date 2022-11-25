@@ -2,12 +2,13 @@ import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
 import { CV_V2, CV_V3 } from 'constants/cv'
 import { ThemeContext } from 'contexts/themeContext'
-import { SafeTransactionType } from 'models/safe'
+import { GnosisSafe, SafeTransactionType } from 'models/safe'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { CV2V3 } from 'models/v2v3/cv'
 import Link from 'next/link'
 import { CSSProperties, useContext, useState } from 'react'
 import { formatHistoricalDate } from 'utils/format/formatDate'
+import { SignSafeTxButton } from './SignSafeTxButton'
 import { TransactionSigStatus } from './TransactionSigStatus'
 
 const headerRowStyle: CSSProperties = {
@@ -18,6 +19,7 @@ const headerRowStyle: CSSProperties = {
 }
 
 export function TransactionCollapse({
+  safe,
   transaction,
   selected,
   title,
@@ -25,6 +27,7 @@ export function TransactionCollapse({
   cv,
   expandedContent,
 }: {
+  safe: GnosisSafe
   transaction: SafeTransactionType
   selected?: boolean
   title?: string
@@ -104,6 +107,7 @@ export function TransactionCollapse({
             {isPastTransaction ? null : (
               <TransactionSigStatus transaction={transaction} />
             )}
+            <SignSafeTxButton transaction={transaction} safe={safe} />
             {formatHistoricalDate(
               new Date(transaction.submissionDate).valueOf(),
             )}

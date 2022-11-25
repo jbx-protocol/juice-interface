@@ -1,22 +1,25 @@
-import { SafeTransactionType } from 'models/safe'
+import { GnosisSafe, SafeTransactionType } from 'models/safe'
 import { useMemo } from 'react'
 import { ReconfigureFundingCyclesOfTransaction } from './juiceboxTransactions/reconfigureFundingCyclesOf'
 import { LinkToSafeButton } from './LinkToSafeButton'
 import { TransactionCollapse } from './TransactionCollapse'
 
 export type SafeTransactionComponentProps = {
+  safe: GnosisSafe
   transaction: SafeTransactionType
   selected: boolean
   isPastTransaction?: boolean
 }
 
 const GenericSafeTransaction = ({
+  safe,
   transaction,
   selected,
   isPastTransaction,
 }: SafeTransactionComponentProps) => {
   return (
     <TransactionCollapse
+      safe={safe}
       transaction={transaction}
       selected={selected}
       isPastTransaction={isPastTransaction}
@@ -37,6 +40,7 @@ const TRANSACTION_METHOD_COMPONENTS_MAP: {
 }
 
 export function SafeTransaction({
+  safe,
   transaction,
   selected,
   isPastTransaction,
@@ -50,6 +54,7 @@ export function SafeTransaction({
 
   return (
     <TransactionContent
+      safe={safe}
       transaction={transaction}
       selected={selected}
       isPastTransaction={isPastTransaction}

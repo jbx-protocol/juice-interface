@@ -3404,6 +3404,9 @@ msgstr ""
 msgid "You have <0>{0}</0> tokens on <1>Juicebox V1</1>. You can swap your <2>{1}</2> V1 tokens for V2 tokens"
 msgstr ""
 
+msgid "You have already signed this transaction."
+msgstr ""
+
 msgid "You have configured for all funds to be distributed from the treasury. Your current payouts do not sum to 100%, so the remainder will go to the project owner."
 msgstr ""
 

@@ -1,5 +1,5 @@
 import { ThemeContext } from 'contexts/themeContext'
-import { SafeTransactionType } from 'models/safe'
+import { GnosisSafe, SafeTransactionType } from 'models/safe'
 import { CSSProperties, useContext } from 'react'
 import { SafeTransaction } from './SafeTransaction'
 
@@ -12,6 +12,7 @@ export const safeNonceRowStyle: CSSProperties = {
   borderTop: 'unset',
   borderLeft: 'unset',
   borderRight: 'unset',
+  paddingLeft: '1rem',
 }
 
 export function SafeNonceRow({
@@ -19,13 +20,13 @@ export function SafeNonceRow({
   transactions,
   selectedTx,
   isHistory,
-  safeThreshold,
+  safe,
 }: {
   nonce: number
   transactions: SafeTransactionType[]
   isHistory?: boolean
   selectedTx: string | undefined
-  safeThreshold: number
+  safe: GnosisSafe
 }) {
   const {
     theme: { colors },
@@ -67,7 +68,8 @@ export function SafeNonceRow({
             }}
           >
             <SafeTransaction
-              transaction={{ ...tx, threshold: safeThreshold }}
+              safe={safe}
+              transaction={{ ...tx, threshold: safe.threshold }}
               selected={selectedTx === tx.safeTxHash}
               isPastTransaction={isHistory}
             />

@@ -17,7 +17,6 @@ import { percentageValidator } from './utils'
 
 export function AmountFormItem({
   form,
-  isEditPayoutPage,
   distributionLimit,
   fee,
   editingSplitType,
@@ -112,12 +111,7 @@ export function AmountFormItem({
         >
           <div style={{ flex: 1 }}>
             <FormattedNumberInput
-              max={
-                isEditPayoutPage
-                  ? parseFloat(distributionLimit ?? '0')
-                  : undefined
-              }
-              value={amount}
+              defaultValue={form.getFieldValue('amount')}
               placeholder={'0'}
               accessory={
                 isFirstSplit && onCurrencyChange ? (

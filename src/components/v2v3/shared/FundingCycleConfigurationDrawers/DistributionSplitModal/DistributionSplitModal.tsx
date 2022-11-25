@@ -368,7 +368,6 @@ export function DistributionSplitModal({
             editingSplitType={editingSplitType}
             fee={ETHPaymentTerminalFee}
             isFirstSplit={isFirstSplit}
-            isEditPayoutPage={isEditPayoutPage}
             distributionLimit={distributionLimit}
             onCurrencyChange={onCurrencyChange}
           />

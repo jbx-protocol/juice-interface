@@ -8,6 +8,7 @@ export default function FormattedNumberInput({
   min,
   max,
   step,
+  defaultValue,
   value,
   disabled,
   placeholder,
@@ -23,6 +24,7 @@ export default function FormattedNumberInput({
   min?: number
   max?: number
   step?: number
+  defaultValue?: string
   value?: string
   placeholder?: string
   disabled?: boolean
@@ -69,6 +71,7 @@ export default function FormattedNumberInput({
         min={min}
         max={max}
         style={{ width: '100%' }}
+        defaultValue={defaultValue}
         value={value !== undefined ? parseFloat(value) : undefined}
         step={step ?? 1}
         stringMode={true}

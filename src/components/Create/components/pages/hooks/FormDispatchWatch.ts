@@ -31,8 +31,10 @@ export const useFormDispatchWatch = <
 
   useEffect(() => {
     if (ignoreUndefined && fieldValue === undefined) return
+
     const v = formatter(fieldValue)
     if (isEqual(v, currentValue)) return
+
     dispatch(dispatchFunction(v))
   }, [
     currentValue,

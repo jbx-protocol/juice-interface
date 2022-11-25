@@ -14,11 +14,13 @@ export default function FundingCycleDetails({
   fundingCycleMetadata,
   distributionLimit,
   distributionLimitCurrency,
+  showDiffs,
 }: {
   fundingCycle: V2V3FundingCycle
   fundingCycleMetadata: V2V3FundingCycleMetadata
   distributionLimit: BigNumber | undefined
   distributionLimitCurrency: BigNumber | undefined
+  showDiffs?: boolean
 }) {
   return (
     <>
@@ -29,6 +31,7 @@ export default function FundingCycleDetails({
             fundingCycle={fundingCycle}
             distributionLimit={distributionLimit}
             distributionLimitCurrency={distributionLimitCurrency}
+            showDiffs={showDiffs}
           />
         }
       />

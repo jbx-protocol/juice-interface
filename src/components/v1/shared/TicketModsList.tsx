@@ -1,8 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Button, Space } from 'antd'
+import { Button, Modal, Space } from 'antd'
 import { CsvUpload } from 'components/CsvUpload/CsvUpload'
-import { JuiceModal } from 'components/JuiceModal'
 import Mod from 'components/v1/shared/Mod'
 import ProjectTicketMods from 'components/v1/shared/ProjectTicketMods'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
@@ -146,7 +145,7 @@ export default function TicketModsList({
       ) : null}
 
       {fundingCycle ? (
-        <JuiceModal
+        <Modal
           open={modalVisible}
           title={t`Edit reserved token allocation`}
           okText={t`Save token allocation`}
@@ -179,7 +178,7 @@ export default function TicketModsList({
               reservedRate={reservedRate}
             />
           </Space>
-        </JuiceModal>
+        </Modal>
       ) : null}
     </div>
   )

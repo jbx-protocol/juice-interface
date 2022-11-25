@@ -1,12 +1,11 @@
 import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
-import { Checkbox, Form, Input, Space, Switch } from 'antd'
+import { Checkbox, Form, Input, Modal, Space, Switch } from 'antd'
 import { FormInstance, FormProps, useWatch } from 'antd/lib/form/Form'
 import Callout from 'components/Callout'
 import Sticker from 'components/icons/Sticker'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
-import { JuiceModal } from 'components/JuiceModal'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import { AttachStickerModal } from 'components/modals/AttachStickerModal'
 import { StickerSelection } from 'components/Project/StickerSelection'
@@ -255,7 +254,7 @@ export const V2V3PayForm = ({
           })
         }}
       />
-      <JuiceModal
+      <Modal
         title={<Trans>Potential risks</Trans>}
         open={riskModalVisible}
         okButtonProps={{ hidden: true }}
@@ -270,7 +269,7 @@ export const V2V3PayForm = ({
             )}
           />
         )}
-      </JuiceModal>
+      </Modal>
     </>
   )
 }

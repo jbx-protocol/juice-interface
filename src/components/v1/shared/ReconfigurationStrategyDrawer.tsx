@@ -1,12 +1,11 @@
 import { Trans } from '@lingui/macro'
-import { Button, DrawerProps } from 'antd'
+import { Button, Drawer, DrawerProps } from 'antd'
 
 import ReconfigurationStrategySelector from 'components/ReconfigurationStrategy/ReconfigurationStrategySelector'
 import { ThemeContext } from 'contexts/themeContext'
 import { BallotStrategy } from 'models/ballot'
 import { useContext, useEffect, useState } from 'react'
 
-import { JuiceDrawer } from 'components/JuiceDrawer'
 import { ballotStrategies } from 'constants/v1/ballotStrategies'
 
 export default function ReconfigurationStrategyDrawer({
@@ -35,7 +34,7 @@ export default function ReconfigurationStrategyDrawer({
   }, [initialSelectedStrategy])
 
   return (
-    <JuiceDrawer open={open} {...style} onClose={onClose}>
+    <Drawer open={open} {...style} onClose={onClose}>
       <h1>
         <Trans>Reconfiguration rules</Trans>
       </h1>
@@ -58,6 +57,6 @@ export default function ReconfigurationStrategyDrawer({
       >
         <Trans>Save rules</Trans>
       </Button>
-    </JuiceDrawer>
+    </Drawer>
   )
 }

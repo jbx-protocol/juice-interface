@@ -1,8 +1,7 @@
 import { t } from '@lingui/macro'
-import { Form, Input } from 'antd'
+import { Form, Input, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ModalMode } from 'components/formItems/formHelpers'
-import { JuiceModal } from 'components/JuiceModal'
 import TooltipLabel from 'components/TooltipLabel'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useMemo } from 'react'
@@ -76,7 +75,7 @@ export default function NftRewardTierModal({
   )
 
   return (
-    <JuiceModal
+    <Modal
       open={open}
       okText={mode === 'Edit' ? t`Save NFT` : t`Add NFT`}
       onOk={onFormSaved}
@@ -122,6 +121,6 @@ export default function NftRewardTierModal({
           />
         </Form.Item>
       </Form>
-    </JuiceModal>
+    </Modal>
   )
 }

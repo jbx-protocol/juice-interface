@@ -59,7 +59,7 @@ interface CreateState {
   projectTokensSelection: ProjectTokensSelection | undefined
 }
 
-interface ProjectState {
+export interface ProjectState {
   projectMetadata: ProjectMetadataV5
   fundingCycleData: SerializedV2V3FundingCycleData
   fundingCycleMetadata: SerializedV2V3FundingCycleMetadata

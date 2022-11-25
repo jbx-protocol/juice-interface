@@ -98,8 +98,8 @@ export function AmountFormItem({
         }}
       >
         <Form.Item
-          noStyle
           name="amount"
+          noStyle
           required
           rules={[
             {
@@ -111,7 +111,7 @@ export function AmountFormItem({
         >
           <div style={{ flex: 1 }}>
             <FormattedNumberInput
-              defaultValue={form.getFieldValue('amount')}
+              value={amount}
               placeholder={'0'}
               accessory={
                 isFirstSplit && onCurrencyChange ? (

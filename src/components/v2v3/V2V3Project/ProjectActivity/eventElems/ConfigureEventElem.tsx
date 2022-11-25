@@ -7,6 +7,7 @@ import { ConfigureEvent } from 'models/subgraph-entities/v2/configure'
 import { useContext } from 'react'
 import { formatWad } from 'utils/format/formatNumber'
 import { detailedTimeString } from 'utils/format/formatTime'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 
 export default function ConfigureEventElem({
@@ -52,7 +53,7 @@ export default function ConfigureEventElem({
           sections={[
             [
               {
-                key: 'Duration',
+                key: t`Duration`,
                 value: detailedTimeString({
                   timeSeconds: event.duration,
                   fullWords: true,
@@ -60,39 +61,40 @@ export default function ConfigureEventElem({
               },
             ],
             [
-              { key: 'Reserved rate', value: event.reservedRate / 100 + '%' },
+              { key: t`Reserved rate`, value: event.reservedRate / 100 + '%' },
               {
-                key: 'Redemption rate',
+                key: t`Redemption rate`,
                 value: event.redemptionRate / 100 + '%',
               },
               {
-                key: 'Discount rate',
+                key: t`Discount rate`,
                 value: event.discountRate / 10_000_000 + '%',
               },
               {
-                key: 'Mint rate',
-                value: `${formatWad(event.weight)} ${
-                  tokenSymbol ?? 'tokens'
-                }/ETH`,
+                key: t`Mint rate`,
+                value: `${formatWad(event.weight)} ${tokenSymbolText({
+                  tokenSymbol,
+                  plural: true,
+                })}/ETH`,
               },
             ],
             [
               {
-                key: 'Reconfiguration strategy',
+                key: t`Reconfiguration strategy`,
                 value: BallotStrategyElem(event.ballot),
               },
             ],
             [
               {
-                key: 'Pay paused',
+                key: t`Pay paused`,
                 value: event.payPaused,
               },
               {
-                key: 'Redeem paused',
+                key: t`Redeem paused`,
                 value: event.redeemPaused,
               },
               {
-                key: 'Owner minting enabled',
+                key: t`Owner minting enabled`,
                 value: event.mintingAllowed,
               },
             ],

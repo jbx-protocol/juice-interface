@@ -548,6 +548,9 @@ msgstr ""
 msgid "Blog"
 msgstr ""
 
+msgid "Bonding curve"
+msgstr ""
+
 msgid "Built for:"
 msgstr ""
 
@@ -714,6 +717,12 @@ msgid "Configure your project's token."
 msgstr ""
 
 msgid "Configure {projectTitle}"
+msgstr ""
+
+msgid "Configured FC"
+msgstr ""
+
+msgid "Configured funding cycles"
 msgstr ""
 
 msgid "Confirm Stake"
@@ -1955,6 +1964,9 @@ msgstr ""
 msgid "Owner isn't allowed to set the project's payment terminals."
 msgstr ""
 
+msgid "Owner minting enabled"
+msgstr ""
+
 msgid "Owner token minting"
 msgstr ""
 
@@ -1995,6 +2007,9 @@ msgid "Pay disclaimer"
 msgstr ""
 
 msgid "Pay disclosure"
+msgstr ""
+
+msgid "Pay paused"
 msgstr ""
 
 msgid "Pay {0}"
@@ -2328,6 +2343,9 @@ msgid "Reconfigure {projectTitle} with new NFTs"
 msgstr ""
 
 msgid "Redeem"
+msgstr ""
+
+msgid "Redeem paused"
 msgstr ""
 
 msgid "Redeem successful. Results will be indexed in a few moments."

@@ -52,14 +52,14 @@ export default function V1ConfigureEventElem({
           sections={[
             [
               {
-                key: 'Duration',
+                key: t`Duration`,
                 value: detailedTimeString({
                   timeSeconds: event.duration * SECONDS_IN_DAY,
                   fullWords: true,
                 }),
               },
               {
-                key: 'Target',
+                key: t`Target`,
                 value: (
                   <span>
                     <CurrencySymbol
@@ -77,21 +77,21 @@ export default function V1ConfigureEventElem({
             ],
             [
               {
-                key: 'Reserved rate',
+                key: t`Reserved rate`,
                 value: perbicentToPercent(event.reservedRate) + '%',
               },
               {
-                key: 'Bonding curve',
+                key: t`Bonding curve`,
                 value: perbicentToPercent(event.bondingCurveRate) + '%',
               },
               {
-                key: 'Discount rate',
+                key: t`Discount rate`,
                 value: permilleToPercent(event.discountRate) + '%',
               },
             ],
             [
               {
-                key: 'Reconfiguration strategy',
+                key: t`Reconfiguration strategy`,
                 value: BallotStrategyElem(event.ballot),
               },
             ],

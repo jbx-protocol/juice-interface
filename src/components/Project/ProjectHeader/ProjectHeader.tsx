@@ -38,7 +38,6 @@ export function ProjectHeader({
   const isMobile = useMobile()
   const { data: gnosisSafe, isLoading: gnosisSafeLoading } =
     useGnosisSafe(projectOwnerAddress)
-
   const projectTitle = projectMetadata?.name || t`Untitled project`
 
   return (
@@ -46,7 +45,6 @@ export function ProjectHeader({
       style={{
         display: 'flex',
         flexWrap: 'wrap',
-        justifyContent: 'space-between',
         alignItems: 'flex-start',
       }}
     >
@@ -54,6 +52,7 @@ export function ProjectHeader({
         style={{
           marginRight: '1.25rem',
           marginBottom: '1.25rem',
+          flexDirection: 'column',
           height: '100%',
         }}
       >
@@ -65,19 +64,24 @@ export function ProjectHeader({
         />
       </div>
 
-      <div style={{ flex: 1, minWidth: '70%' }}>
+      <div
+        style={{
+          flex: 1,
+          minWidth: '70%',
+        }}
+      >
         <div
           style={{
             display: 'flex',
-            justifyContent: 'space-between',
             flexWrap: 'wrap',
-            alignItems: 'flex-start',
+            justifyContent: 'flex-end',
           }}
         >
           <div
             style={{
               maxWidth: isMobile ? '100%' : '75%',
               display: 'flex',
+              flex: 1,
               alignItems: 'center',
             }}
           >
@@ -108,7 +112,13 @@ export function ProjectHeader({
               </Badge>
             )}
           </div>
-
+          {!isMobile && (
+            <SocialLinks
+              discord={projectMetadata?.discord}
+              twitter={projectMetadata?.twitter}
+              infoUri={projectMetadata?.infoUri}
+            />
+          )}
           {actions ?? null}
         </div>
 
@@ -128,24 +138,51 @@ export function ProjectHeader({
               color: colors.text.secondary,
               fontWeight: 600,
               display: 'flex',
-              flexDirection: 'column',
+              alignItems: 'baseline',
               gap: 6,
             }}
           >
             <span>
-              {true && (
-                <Tooltip title={t`Project ID: ${projectId}`}>
-                  <span>@{handle}derpderpderp</span>
-                </Tooltip>
-              )}
+              <Tooltip title={t`Project ID: ${projectId}`}>
+                <span>@{handle}dddd</span>
+              </Tooltip>
             </span>
-            <SocialLinks
-              discord={projectMetadata?.discord}
-              twitter={projectMetadata?.twitter}
-              infoUri={projectMetadata?.infoUri}
-            />
+            |
+            {projectOwnerAddress && (
+              <div
+                style={{
+                  color: colors.text.secondary,
+                  marginTop: '0.4rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                <span style={{ marginRight: '0.4rem' }}>
+                  <Trans>
+                    Owned by <FormattedAddress address={projectOwnerAddress} />
+                  </Trans>
+                </span>
+                {!gnosisSafeLoading && gnosisSafe && (
+                  <GnosisSafeBadge
+                    safe={gnosisSafe}
+                    href={`${window.location.href}/safe`}
+                  />
+                )}
+
+                {!handle && canEditProjectHandle && projectId ? (
+                  <EditProjectHandleButton />
+                ) : null}
+              </div>
+            )}
           </span>
         </div>
+        {isMobile && (
+          <SocialLinks
+            discord={projectMetadata?.discord}
+            twitter={projectMetadata?.twitter}
+            infoUri={projectMetadata?.infoUri}
+          />
+        )}
         <span
           style={{
             display: 'flex',
@@ -160,33 +197,7 @@ export function ProjectHeader({
               style={{ color: colors.text.secondary }}
             />
           )}
-
-          {!handle && canEditProjectHandle && projectId ? (
-            <EditProjectHandleButton />
-          ) : null}
         </span>
-        {projectOwnerAddress && (
-          <div
-            style={{
-              color: colors.text.secondary,
-              marginTop: '0.4rem',
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            <span style={{ marginRight: '0.4rem' }}>
-              <Trans>
-                Owned by <FormattedAddress address={projectOwnerAddress} />
-              </Trans>
-            </span>
-            {!gnosisSafeLoading && gnosisSafe && (
-              <GnosisSafeBadge
-                safe={gnosisSafe}
-                href={`${window.location.href}/safe`}
-              />
-            )}
-          </div>
-        )}
       </div>
     </header>
   )

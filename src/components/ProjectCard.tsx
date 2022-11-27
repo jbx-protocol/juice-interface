@@ -19,6 +19,8 @@ import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'
 import { ProjectVersionBadge } from './ProjectVersionBadge'
 
+import { useProjectMetadata } from 'hooks/ProjectMetadata'
+
 export type ProjectCardProject = Pick<
   Project,
   | 'id'
@@ -107,6 +109,7 @@ export default function ProjectCard({
   } = useContext(ThemeContext)
 
   const projectCardData = useProjectCardData(project)
+  const { data: metadata } = useProjectMetadata(projectCardData?.metadataUri)
   const { handleText } = useProjectHandleText({
     handle: projectCardData?.handle,
     projectId: projectCardData?.projectId,

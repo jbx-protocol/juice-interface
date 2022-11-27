@@ -14,10 +14,6 @@ const linkStyle: CSSProperties = {
   display: 'block',
 }
 
-// <ExternalLink style={{ ...linkStyle }} href={linkUrl(infoUri)}>
-//   {prettyUrl(infoUri)}
-// </ExternalLink>s
-
 function SocialButton({ children }: { children: React.ReactNode }) {
   return (
     <div
@@ -27,7 +23,7 @@ function SocialButton({ children }: { children: React.ReactNode }) {
         padding: 9,
         borderRadius: '50%',
         backgroundColor: '#E1E0E0',
-        border: '1px solid #E0DBD2',
+        border: '1px solid #AAA49A',
       }}
     >
       {children}
@@ -50,7 +46,13 @@ export default function SocialLinks({
   discord?: string
 }) {
   return (
-    <Space style={{ flexWrap: 'wrap', columnGap: 6 }}>
+    <Space
+      style={{
+        flexWrap: 'wrap',
+        columnGap: 6,
+        paddingRight: 14,
+      }}
+    >
       {infoUri && (
         <SocialButton>
           <GlobalOutlined style={iconStyle} />

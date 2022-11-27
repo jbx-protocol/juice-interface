@@ -1,20 +1,14 @@
 import { SECONDS_IN_DAY } from 'constants/numbers'
+import { EnsCacheContext } from 'contexts/ensCacheContext'
 import { resolveAddress } from 'lib/ens/resolver'
-import {
-  cacheEnsRecord,
-  EnsCacheRecord,
-  getEnsCache,
-} from 'providers/EnsCacheProvider'
-import { useEffect, useState } from 'react'
+import { cacheEnsRecord } from 'providers/EnsCacheProvider'
+import { useContext, useEffect } from 'react'
 
 /**
  * Try to resolve an address to an ENS name.
  */
 export function useEnsName(address: string | undefined) {
-  const [cache, setCache] = useState<Record<string, EnsCacheRecord>>(
-    getEnsCache(),
-  )
-  const [pending, setPending] = useState<Record<string, boolean>>({})
+  const { cache, pending, setCache, setPending } = useContext(EnsCacheContext)
 
   const now = new Date().valueOf()
 
@@ -40,7 +34,7 @@ export function useEnsName(address: string | undefined) {
       // if a fetch is already in progress, bail
       if (ensNameFromCache !== undefined || pending[address]) return
 
-      setPending({ ...pending, [address]: true })
+      setPending?.({ ...pending, [address]: true })
       const name = await resolveAddress(address)
 
       const newRecord = {
@@ -49,14 +43,14 @@ export function useEnsName(address: string | undefined) {
       }
 
       // update state
-      setCache({ ...cache, [address]: newRecord })
-      setPending({ ...pending, [address]: false })
+      setCache?.({ ...cache, [address]: newRecord })
+      setPending?.({ ...pending, [address]: false })
       // sync with localstorage
       cacheEnsRecord(address, newRecord)
     }
 
     loadEnsName()
-  }, [address, cache, pending, now])
+  }, [address, cache, pending, now, setCache, setPending])
 
   if (!address) return
 

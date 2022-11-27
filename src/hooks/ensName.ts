@@ -1,7 +1,6 @@
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { readProvider } from 'constants/readProvider'
 import { getAddress } from 'ethers/lib/utils'
-import { resolveAddress } from 'lib/ens/resolver'
 import { useEffect, useState } from 'react'
 
 export type EnsCacheRecord = {
@@ -77,7 +76,7 @@ export function useEnsName(address: string | undefined) {
       }
 
       setLoading(true)
-      const name = await resolveAddress(normalizedAddress)
+      const name = await readProvider.lookupAddress(normalizedAddress)
 
       const newRecord = {
         name: name ?? null, // set name to null to indicate no ENS name.

@@ -5,8 +5,8 @@ import { getContract } from './getContract'
 export function convertUpdateOnArrayToSubscriptions<C extends string>({
   updateOn,
   contracts,
-  listener,
-}: {
+}: // listener,
+{
   updateOn: ContractUpdateOn<C>[] | undefined
   contracts: Record<C, Contract> | undefined
   listener: VoidFunction
@@ -23,12 +23,14 @@ export function convertUpdateOnArrayToSubscriptions<C extends string>({
 
       if (!u.eventName || !_contract) return
 
-      const filter = _contract.filters[u.eventName](...(u.topics ?? []))
-      _contract?.on(filter, listener)
-      subscriptions.push({
-        contract: _contract,
-        filter,
-      })
+      // TODO temporarily removed to allevaite Infura pressure.
+      // https://github.com/jbx-protocol/juice-interface/issues/2572
+      // const filter = _contract.filters[u.eventName](...(u.topics ?? []))
+      // _contract?.on(filter, listener)
+      // subscriptions.push({
+      //   contract: _contract,
+      //   filter,
+      // })
     })
   }
   return subscriptions

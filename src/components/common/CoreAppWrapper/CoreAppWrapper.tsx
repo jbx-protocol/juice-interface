@@ -4,6 +4,7 @@ import SiteNavigation from 'components/Navbar/SiteNavigation'
 import useMobile from 'hooks/Mobile'
 import { useRouter } from 'next/router'
 import { ArcxProvider } from 'providers/ArcxProvider'
+import { EnsCacheProvider } from 'providers/EnsCacheProvider'
 import { EtherPriceProvider } from 'providers/EtherPriceProvider'
 import LanguageProvider from 'providers/LanguageProvider'
 import ReactQueryProvider from 'providers/ReactQueryProvider'
@@ -32,7 +33,9 @@ export const AppWrapper: React.FC = ({ children }) => {
               <ThemeProvider>
                 <EtherPriceProvider>
                   <ArcxProvider>
-                    <_Wrapper>{children}</_Wrapper>
+                    <EnsCacheProvider>
+                      <_Wrapper>{children}</_Wrapper>
+                    </EnsCacheProvider>
                   </ArcxProvider>
                 </EtherPriceProvider>
               </ThemeProvider>

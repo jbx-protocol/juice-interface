@@ -1,5 +1,6 @@
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { readProvider } from 'constants/readProvider'
+import { getAddress } from 'ethers/lib/utils'
 import { resolveAddress } from 'lib/ens/resolver'
 import { useEffect, useState } from 'react'
 
@@ -61,7 +62,9 @@ export function useEnsName(address: string | undefined) {
     async function loadEnsName() {
       if (!address) return
 
-      const ensNameFromCache = getEnsNameFromCache(address, now)
+      const normalizedAddress = getAddress(address)
+
+      const ensNameFromCache = getEnsNameFromCache(normalizedAddress, now)
       // if cache hit, don't fetch
       if (ensNameFromCache !== undefined) {
         setEnsName(ensNameFromCache)
@@ -74,7 +77,7 @@ export function useEnsName(address: string | undefined) {
       }
 
       setLoading(true)
-      const name = await resolveAddress(address)
+      const name = await resolveAddress(normalizedAddress)
 
       const newRecord = {
         name: name ?? null, // set name to null to indicate no ENS name.
@@ -84,14 +87,13 @@ export function useEnsName(address: string | undefined) {
       // update state
       setEnsName(name)
       setLoading(false)
+
       // sync with localstorage
-      cacheEnsRecord(address, newRecord)
+      cacheEnsRecord(normalizedAddress, newRecord)
     }
 
     loadEnsName()
   }, [address, loading])
-
-  if (!address) return
 
   return ensName
 }

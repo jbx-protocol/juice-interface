@@ -1,13 +1,9 @@
 import { isAddress } from '@ethersproject/address'
-
 import { Tooltip } from 'antd'
-
 import { CSSProperties, MouseEventHandler, useEffect, useState } from 'react'
-
 import CopyTextButton from 'components/CopyTextButton'
 import EtherscanLink from 'components/EtherscanLink'
 import { truncateEthAddress } from 'utils/format/formatAddress'
-
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { readProvider } from 'constants/readProvider'
 
@@ -16,20 +12,72 @@ type EnsRecord = {
   expires: number
 }
 
-const getStorageKey = () => 'jb_ensDict_' + readProvider?.network?.chainId ?? ''
+const ENS_LOCALSTORAGE_KEY = `jb_ensDict_${readProvider.network.chainId}`
 
 const getEnsDict = () => {
-  if (typeof window !== 'undefined') {
-    try {
-      return JSON.parse(
-        window.localStorage.getItem(getStorageKey()) ?? '{}',
-      ) as Record<string, EnsRecord>
-    } catch (e) {
-      console.info('ENS storage not found')
-      return {}
-    }
-  } else {
+  if (typeof window === 'undefined') return {}
+
+  try {
+    return JSON.parse(
+      window.localStorage.getItem(ENS_LOCALSTORAGE_KEY) ?? '{}',
+    ) as Record<string, EnsRecord>
+  } catch (e) {
+    console.warn('ENS storage not found', e)
     return {}
+  }
+}
+
+const cacheEnsRecord = (address: string, record: EnsRecord) => {
+  window.localStorage?.setItem(
+    ENS_LOCALSTORAGE_KEY,
+    JSON.stringify({
+      ...getEnsDict(),
+      [address]: record,
+    }),
+  )
+}
+
+const resolveAddress = async (address: string) => {
+  const name = await readProvider.lookupAddress(address)
+
+  // Reverse lookup to check validity
+  if (
+    name &&
+    (await readProvider.resolveName(name))?.toLowerCase() ===
+      address.toLowerCase()
+  ) {
+    return name
+  }
+}
+
+const getEnsRecord = async (
+  address: string,
+): Promise<EnsRecord | undefined> => {
+  const now = new Date().valueOf()
+
+  // Try getting from cache first
+  const cache = getEnsDict()
+  const record = cache[address]
+  if (record?.expires > now) {
+    return record
+  }
+
+  // If no cache hit, resolve address
+  try {
+    const name = await resolveAddress(address)
+    if (!name) return
+
+    const newRecord = {
+      name,
+      expires: now + SECONDS_IN_DAY * 1000, // Expires in one day
+    }
+
+    // cache the newly resolved address
+    cacheEnsRecord(address, newRecord)
+
+    return newRecord
+  } catch (e) {
+    return
   }
 }
 
@@ -50,54 +98,18 @@ export default function FormattedAddress({
 }) {
   const [ensName, setEnsName] = useState<string | null>()
 
-  const now = new Date().valueOf()
-
   useEffect(() => {
-    if (!address || !isAddress(address)) return
+    async function loadEnsName() {
+      if (!address || !isAddress(address)) return
 
-    const _address = address.toLowerCase()
+      const ensRecord = await getEnsRecord(address.toLowerCase())
+      if (!ensRecord) return
 
-    const tryUpdateENSDict = async () => {
-      const record = getEnsDict()[_address]
-
-      if (record?.expires > now) {
-        setEnsName(record.name)
-        return
-      }
-
-      const newRecord = {
-        name: null,
-        expires: now + SECONDS_IN_DAY * 1000, // Expires in one day
-      } as EnsRecord
-
-      try {
-        const name = await readProvider.lookupAddress(_address)
-
-        // Reverse lookup to check validity
-        if (
-          name &&
-          (await readProvider.resolveName(name))?.toLowerCase() ===
-            _address.toLowerCase()
-        ) {
-          newRecord.name = name
-        }
-      } catch (e) {
-        console.error('Error looking up ENS name for address', address, e)
-      }
-
-      window.localStorage?.setItem(
-        getStorageKey(),
-        JSON.stringify({
-          ...getEnsDict(),
-          [_address]: newRecord,
-        }),
-      )
-
-      setEnsName(newRecord.name)
+      setEnsName(ensRecord.name)
     }
 
-    tryUpdateENSDict()
-  }, [address, now])
+    loadEnsName()
+  }, [address])
 
   if (!address) return null
 

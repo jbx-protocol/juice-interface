@@ -1,7 +1,7 @@
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { readProvider } from 'constants/readProvider'
 import { getAddress } from 'ethers/lib/utils'
-import { resolveAddress } from 'lib/ens/resolver'
+import { resolveAddress } from 'lib/api/ens'
 import { useEffect, useState } from 'react'
 
 export type EnsCacheRecord = {

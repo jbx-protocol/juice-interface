@@ -86,16 +86,10 @@ msgstr ""
 msgid "<0/> will go to the project owner: <1/>"
 msgstr ""
 
-msgid "<0/>{0} after {feePercentage}% JBX membership fee"
-msgstr ""
-
 msgid "<0/>{0}{1} distributed"
 msgstr ""
 
 msgid "<0/>{feeAmountFormatted} fee"
-msgstr ""
-
-msgid "<0><1/>{0}</0> Distribution Limit"
 msgstr ""
 
 msgid "<0><1/>{grossAvailableAmount}</0> available to distribute"
@@ -222,6 +216,9 @@ msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
 msgstr ""
 
 msgid "<0>Zero</0> Distribution Limit"
+msgstr ""
+
+msgid "<0>{0}</0> Distribution Limit"
 msgstr ""
 
 msgid "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
@@ -3642,6 +3639,9 @@ msgid "{0}"
 msgstr ""
 
 msgid "{0} after JBX fee"
+msgstr ""
+
+msgid "{0} after {feePercentage}% JBX membership fee"
 msgstr ""
 
 msgid "{0} ago"

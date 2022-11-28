@@ -1,12 +1,6 @@
 import { resolveAddress } from 'lib/ens/resolver'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-}
-
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'GET') {
     return res.status(404)

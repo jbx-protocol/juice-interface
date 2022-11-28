@@ -13,7 +13,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   // cache for a day
-  res.setHeader('Cache-Control', 'public, maxage=86400')
+  res.setHeader('Cache-Control', 's-maxage=86400')
 
   try {
     const { address } = req.query

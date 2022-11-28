@@ -9,6 +9,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { CSSProperties, useContext } from 'react'
 
 import { CurrencyName } from 'constants/currency'
+import ETHAmount from 'components/currency/ETHAmount'
 
 export default function DistributionLimit({
   distributionLimit,
@@ -62,8 +63,14 @@ export default function DistributionLimit({
     <Trans>Zero</Trans>
   ) : (
     <>
-      <CurrencySymbol currency={currencyName} />
-      {formatWad(distributionLimit)}
+      {currencyName === 'ETH' ? (
+        <ETHAmount amount={distributionLimit} />
+      ) : (
+        <>
+          <CurrencySymbol currency={currencyName} />
+          {formatWad(distributionLimit)}
+        </>
+      )}
     </>
   )
 

@@ -2,6 +2,7 @@ import { CrownFilled, DeleteOutlined, LockOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, Row, Space, Tooltip } from 'antd'
+import ETHAmount from 'components/currency/ETHAmount'
 import CurrencySymbol from 'components/CurrencySymbol'
 import FormattedAddress from 'components/FormattedAddress'
 import TooltipIcon from 'components/TooltipIcon'
@@ -83,6 +84,13 @@ export function DistributionSplitCard({
     (split.percent / SPLITS_TOTAL_PERCENT).toString().split('.')[1]?.length > 4
 
   const cursor = isLocked ? 'default' : 'pointer'
+  const amountFromPerc = round(
+    amountFromPercent({
+      percent: preciseFormatSplitPercent(split.percent),
+      amount: distributionLimit ?? '0',
+    }),
+    currencyName === 'USD' ? 4 : 2,
+  )
 
   return (
     <div
@@ -201,13 +209,13 @@ export function DistributionSplitCard({
                 <Space size="small" direction="horizontal">
                   {!distributionLimitIsInfinite && (
                     <span>
-                      <CurrencySymbol currency={currencyName} />
-                      {round(
-                        amountFromPercent({
-                          percent: preciseFormatSplitPercent(split.percent),
-                          amount: distributionLimit,
-                        }),
-                        currencyName === 'USD' ? 4 : 2,
+                      {currencyName === 'ETH' ? (
+                        <ETHAmount amount={parseWad(amountFromPerc)} />
+                      ) : (
+                        <>
+                          <CurrencySymbol currency={currencyName} />
+                          {amountFromPerc}
+                        </>
                       )}
                     </span>
                   )}

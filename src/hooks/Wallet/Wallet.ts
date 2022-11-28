@@ -6,13 +6,11 @@ import {
   useChangeNetworks,
   useDisconnect,
   useIsConnected,
-  useProvider,
   useSigner,
   useUserAddress,
 } from './hooks'
 
 export function useWallet() {
-  const provider = useProvider()
   const signer = useSigner()
   const userAddress = useUserAddress()
   const isConnected = useIsConnected()
@@ -25,7 +23,6 @@ export function useWallet() {
 
   return {
     signer,
-    provider,
     userAddress,
     isConnected,
     chain,

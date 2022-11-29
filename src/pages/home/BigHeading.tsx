@@ -1,4 +1,4 @@
-import { classNames } from 'utils/classNames'
+import { twMerge } from 'tailwind-merge'
 
 export function BigHeading({
   className,
@@ -7,5 +7,7 @@ export function BigHeading({
   className?: string
   text: string | JSX.Element
 }) {
-  return <h1 className={classNames('m-0 font-semibold', className)}>{text}</h1>
+  return (
+    <h1 className={twMerge('m-0 text-4xl font-semibold', className)}>{text}</h1>
+  )
 }

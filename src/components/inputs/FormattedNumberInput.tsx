@@ -1,3 +1,4 @@
+import { twMerge } from 'tailwind-merge'
 import { classNames } from 'utils/classNames'
 import { formattedNum } from 'utils/format/formatNumber'
 import { JuiceInputNumber } from './JuiceInputNumber'
@@ -53,7 +54,7 @@ export default function FormattedNumberInput({
   }
 
   return (
-    <div className={classNames('relative flex items-center', className)}>
+    <div className={twMerge('relative flex items-center', className)}>
       <JuiceInputNumber
         className={classNames(
           'w-full',

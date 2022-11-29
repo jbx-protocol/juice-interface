@@ -23,7 +23,7 @@ const AssetTypeSwitcherButton = ({
   const formattedType = type === 'project' ? 'Project' : 'ERC-20'
   return (
     <Button
-      className="mr-5 w-full"
+      className="mr-5 w-24"
       type="text"
       icon={<CaretDownFilled />}
       onClick={onClick}

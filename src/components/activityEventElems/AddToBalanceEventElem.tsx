@@ -37,9 +37,10 @@ export default function AddToBalanceEventElem({
               <EtherscanLink value={event.txHash} type="tx" />
             </div>
           )}
-          <div className="text-xs leading-6 text-grey-400 dark:text-slate-200">
-            <FormattedAddress className="font-normal" address={event.caller} />
-          </div>
+          <FormattedAddress
+            className="text-xs font-normal leading-6 text-grey-400 dark:text-slate-200"
+            address={event.caller}
+          />
         </div>
       </div>
 

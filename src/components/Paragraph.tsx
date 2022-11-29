@@ -1,8 +1,7 @@
 import { t } from '@lingui/macro'
 import { Button } from 'antd'
-
 import { useMemo, useState } from 'react'
-import { classNames } from 'utils/classNames'
+import { twMerge } from 'tailwind-merge'
 
 import RichNote from './RichNote'
 
@@ -32,7 +31,7 @@ export default function Paragraph({
   return (
     <>
       <RichNote
-        className={classNames('inline max-w-[700px] ', className)} // good line length for reading
+        className={twMerge('inline max-w-[700px] ', className)} // good line length for reading
         note={
           !expanded && CHARACTER_LIMIT_EXCEEDED ? shortDescription : description
         }

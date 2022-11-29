@@ -1,6 +1,6 @@
 import { InfoCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-import { Button, Col, Row, Space, Tooltip } from 'antd'
+import { Button, Col, Row, Tooltip } from 'antd'
 import Grid from 'components/Grid'
 import useMobile from 'hooks/Mobile'
 import { useTrendingProjects } from 'hooks/Projects'
@@ -13,7 +13,7 @@ const TRENDING_PROJECTS_LIMIT = 6
 
 const SmallHeader = ({ text }: { text: string | JSX.Element }) => {
   return (
-    <h3 className="m-0 text-xl font-medium text-black dark:text-slate-100">
+    <h3 className="m-0 text-xl font-semibold text-black dark:text-slate-100">
       {text}
     </h3>
   )
@@ -27,10 +27,10 @@ export default function TrendingSection() {
   )
 
   return (
-    <section className="my-0 mx-auto p-8">
+    <section className="my-0 mx-auto p-16">
       <Row className="my-0 mx-auto max-w-[1080px] gap-y-10" gutter={40}>
         <Col xs={24} md={12}>
-          <Space direction="vertical" className="w-full" size="middle">
+          <div className="flex flex-col gap-9">
             <SmallHeader
               text={
                 <span>
@@ -60,16 +60,16 @@ export default function TrendingSection() {
                 </Button>
               </a>
             </Link>
-          </Space>
+          </div>
         </Col>
 
         <Col xs={24} md={12}>
-          <Space direction="vertical" className="w-full" size="middle">
+          <div className="flex flex-col gap-9">
             <SmallHeader text={<Trans>Latest payments</Trans>} />
             <div className="max-h-[784px] overflow-auto">
               <Payments />
             </div>
-          </Space>
+          </div>
         </Col>
       </Row>
     </section>

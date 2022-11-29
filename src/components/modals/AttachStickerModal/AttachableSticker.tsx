@@ -9,7 +9,7 @@ export const AttachableSticker = ({
 }) => {
   return (
     <div
-      className="flex cursor-pointer content-center items-center py-4 hover:bg-slate-400"
+      className="flex cursor-pointer content-center items-center justify-center py-4 hover:bg-smoke-75  dark:hover:bg-slate-400"
       role="button"
       onClick={onClick}
     >

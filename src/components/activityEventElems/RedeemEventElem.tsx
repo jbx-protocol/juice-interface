@@ -65,12 +65,10 @@ export default function RedeemEventElem({
             )}{' '}
             <EtherscanLink value={event.txHash} type="tx" />
           </div>
-          <div className="text-right text-xs leading-6 text-grey-400 dark:text-slate-200">
-            <FormattedAddress
-              className="font-normal"
-              address={event.beneficiary}
-            />
-          </div>
+          <FormattedAddress
+            className="text-right text-xs font-normal leading-6 text-grey-400 dark:text-slate-200"
+            address={event.beneficiary}
+          />
         </div>
       </div>
 

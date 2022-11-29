@@ -89,7 +89,7 @@ export default function ReservedTokensSplitsCard({
               <TooltipLabel
                 className="cursor-default whitespace-nowrap text-xs font-medium text-grey-900 dark:text-slate-100"
                 label={
-                  <span className="uppercase">
+                  <span className="uppercase text-grey-500 dark:text-slate-100">
                     <Trans>{tokensText} reserved</Trans>
                   </span>
                 }
@@ -117,7 +117,7 @@ export default function ReservedTokensSplitsCard({
           <div className="flex flex-wrap justify-between gap-2">
             <TooltipLabel
               label={
-                <h3 className="inline-block text-sm">
+                <h3 className="inline-block text-sm uppercase text-black dark:text-slate-100">
                   <Trans>Reserved tokens</Trans> (
                   {formatReservedRate(reservedRate)}%)
                 </h3>

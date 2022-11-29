@@ -153,7 +153,7 @@ export default function VolumeChart({
         </div>
 
         <Select
-          className="small w-full text-xs uppercase"
+          className="small w-24 text-xs uppercase"
           value={duration}
           onChange={val => setDuration(val)}
         >

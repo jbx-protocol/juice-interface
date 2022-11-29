@@ -62,7 +62,7 @@ export default function SpendingStats({
         />
       </div>
 
-      <div className="dark:text-grey-300” cursor-default text-sm font-medium text-grey-500">
+      <div className="cursor-default text-sm font-medium text-grey-500 dark:text-slate-200">
         <div>
           <Trans>
             <CurrencySymbol currency={currency} />
@@ -78,6 +78,7 @@ export default function SpendingStats({
           <Space>
             <Balance address={ownerAddress} />
             <Tooltip
+              className="text-grey-400 dark:text-slate-200"
               title={<Trans>Balance of the project owner's wallet.</Trans>}
             >
               <span>

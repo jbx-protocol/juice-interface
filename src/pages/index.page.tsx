@@ -31,7 +31,7 @@ function Landing() {
             <Col xs={24} md={14}>
               <div className="grid gap-y-5">
                 <BigHeading
-                  className="text-4xl text-black"
+                  className="text-black"
                   text={t`Should you Juicebox?`}
                 />
                 <div className="text-black dark:text-black">

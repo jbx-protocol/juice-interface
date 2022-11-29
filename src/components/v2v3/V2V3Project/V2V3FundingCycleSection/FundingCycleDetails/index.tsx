@@ -21,7 +21,7 @@ export default function FundingCycleDetails({
   distributionLimitCurrency: BigNumber | undefined
 }) {
   return (
-    <>
+    <div className="flex flex-col gap-8">
       <FundingCycleDetailsRow
         header={t`Funding cycle`}
         items={
@@ -50,6 +50,6 @@ export default function FundingCycleDetails({
           />
         }
       />
-    </>
+    </div>
   )
 }

@@ -39,7 +39,7 @@ export default function MobileNavigation() {
         e.stopPropagation()
       }}
     >
-      <Collapse className="border-none" activeKey={activeKey}>
+      <Collapse className="border-none bg-transparent" activeKey={activeKey}>
         <CollapsePanel
           className="border-none"
           key={0}

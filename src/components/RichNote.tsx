@@ -2,7 +2,7 @@ import { Space } from 'antd'
 import Autolinker from 'autolinker'
 import RichImgPreview from 'components/RichImgPreview'
 import { useProcessedRichNote } from 'hooks/ProcessedRichNote'
-import { classNames } from 'utils/classNames'
+import { twMerge } from 'tailwind-merge'
 
 type RichNoteProps = {
   className?: string
@@ -23,7 +23,7 @@ export default function RichNote({
   if (noteToRender === undefined) return null
 
   return (
-    <div className={classNames('mt-1', className)}>
+    <div className={twMerge('mt-1', className)}>
       {noteToRender.length ? (
         <span
           className="break-words pr-2"

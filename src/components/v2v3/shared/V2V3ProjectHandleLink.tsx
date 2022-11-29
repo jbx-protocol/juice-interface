@@ -1,6 +1,6 @@
 import { useProjectHandleText } from 'hooks/ProjectHandleText'
 import Link from 'next/link'
-import { classNames } from 'utils/classNames'
+import { twMerge } from 'tailwind-merge'
 import { v2v3ProjectRoute } from 'utils/routes'
 
 export default function V2V3ProjectHandleLink({
@@ -23,7 +23,7 @@ export default function V2V3ProjectHandleLink({
       as={v2v3ProjectRoute({ projectId, handle: resolvedHandle })}
     >
       <a
-        className={classNames(
+        className={twMerge(
           'font-medium text-black hover:text-haze-400 hover:underline dark:text-grey-100 dark:hover:text-haze-400',
           className,
         )}

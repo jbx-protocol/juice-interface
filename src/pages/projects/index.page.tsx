@@ -85,7 +85,7 @@ function Projects() {
       <Space direction="vertical" className="w-full" size="large">
         <div>
           <header className="flex flex-wrap items-center justify-between gap-y-4 pb-3">
-            <h1 className="mb-0">
+            <h1 className="mb-0 text-4xl text-black dark:text-slate-100">
               <Trans>Projects on Juicebox</Trans>
             </h1>
 
@@ -98,7 +98,7 @@ function Projects() {
             </Link>
           </header>
 
-          <p className="m-0 max-w-[800px]">
+          <p className="m-0 my-3 max-w-[800px] text-grey-500 dark:text-grey-300">
             <Trans>
               <InfoCircleOutlined /> The Juicebox protocol is open to anyone,
               and project configurations can vary widely. There are risks

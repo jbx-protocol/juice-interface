@@ -16,7 +16,7 @@ import bolt from '/public/assets/icons/bolt.svg'
 
 function BuiltForList() {
   return (
-    <div className="grid grid-flow-row gap-y-2 font-medium">
+    <div className="grid grid-flow-row gap-y-2 text-base font-medium">
       <p className="mb-1">
         <Trans>Built for:</Trans>
       </p>
@@ -87,10 +87,7 @@ export function HeroSection() {
           <Col className="flex items-center pb-6" xs={24} md={13}>
             <div>
               <Space direction="vertical" size="large">
-                <BigHeading
-                  className={classNames(!isMobile ? 'text-6xl' : 'text-4xl')}
-                  text={<HeroHeading />}
-                />
+                <BigHeading className="md:text-6xl" text={<HeroHeading />} />
                 <div className="mb-4">
                   <div className="mb-4 text-base font-medium">
                     <HeroSubheading />

@@ -1,5 +1,5 @@
 import { PropsWithChildren, useMemo } from 'react'
-import { classNames } from 'utils/classNames'
+import { twMerge } from 'tailwind-merge'
 
 export type BadgeVariant = 'warning' | 'danger' | 'info' | 'tertiary'
 
@@ -28,7 +28,7 @@ export function Badge({
 
   return (
     <span
-      className={classNames(
+      className={twMerge(
         className,
         'rounded-xl py-[0.1rem] px-2 text-xs font-normal dark:border dark:border-solid',
         upperCase ? 'uppercase' : '',

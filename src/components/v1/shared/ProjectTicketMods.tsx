@@ -105,7 +105,7 @@ export default function ProjectTicketMods({
               </Col>
               <Col span={17}>
                 <div className="flex w-full items-center justify-between">
-                  <span className="mr-2 w-full max-w-[100px]">
+                  <span className="mr-2 w-24 max-w-[100px]">
                     {permyriadToPercent(mod.percent)}%
                   </span>
                 </div>

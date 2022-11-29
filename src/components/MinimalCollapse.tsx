@@ -1,7 +1,7 @@
 import { Collapse, CollapseProps } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { PropsWithChildren } from 'react'
-import { classNames } from 'utils/classNames'
+import { twMerge } from 'tailwind-merge'
 
 export function MinimalCollapse({
   className,
@@ -21,7 +21,7 @@ export function MinimalCollapse({
     <Collapse
       bordered={false}
       ghost
-      className={classNames(
+      className={twMerge(
         'minimal ant-collapse-header-text-primary ant-collapse-header-p-0',
         'bg-transparent',
         light ? 'light' : '',

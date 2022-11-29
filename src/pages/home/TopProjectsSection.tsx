@@ -118,7 +118,7 @@ export function TopProjectsSection() {
   })
 
   return (
-    <section className="bg-smoke-75 p-8 dark:bg-slate-600">
+    <section className="bg-smoke-50 p-8 dark:bg-slate-600">
       <div className="my-10 mx-auto max-w-[1080px]">
         <Space direction="vertical" className="w-full" size="large">
           <div>

@@ -4,7 +4,7 @@ import CopyTextButton from 'components/CopyTextButton'
 import EtherscanLink from 'components/EtherscanLink'
 import { truncateEthAddress } from 'utils/format/formatAddress'
 import { useEnsName } from 'hooks/ensName'
-import { classNames } from 'utils/classNames'
+import { twMerge } from 'tailwind-merge'
 
 export default function FormattedAddress({
   className,
@@ -31,7 +31,7 @@ export default function FormattedAddress({
   if (tooltipDisabled) {
     return (
       <span
-        className={classNames('select-all leading-[22px]', className)}
+        className={twMerge('select-all leading-[22px]', className)}
         onClick={onClick}
       >
         {formatted}
@@ -49,7 +49,7 @@ export default function FormattedAddress({
     >
       <span>
         <EtherscanLink
-          className={classNames('select-all leading-[22px]', className)}
+          className={twMerge('select-all leading-[22px]', className)}
           onClick={onClick}
           type="address"
           value={address}

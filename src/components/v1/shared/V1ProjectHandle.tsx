@@ -1,7 +1,7 @@
 import { BigNumberish } from '@ethersproject/bignumber'
 import useHandleForProjectId from 'hooks/v1/contractReader/HandleForProjectId'
 import Link from 'next/link'
-import { classNames } from 'utils/classNames'
+import { twMerge } from 'tailwind-merge'
 
 export default function V1ProjectHandle({
   className,
@@ -18,7 +18,7 @@ export default function V1ProjectHandle({
   return (
     <Link href={`/p/${handleToRender}`}>
       <a
-        className={classNames(
+        className={twMerge(
           'font-medium text-black hover:text-haze-400 hover:underline dark:text-grey-100 dark:hover:text-haze-400',
           className,
         )}

@@ -133,7 +133,7 @@ export default function PayoutSplitsCard({
           <div className="flex flex-wrap justify-between gap-2">
             <TooltipLabel
               label={
-                <h3 className="inline-block text-sm">
+                <h3 className="inline-block text-sm uppercase text-black dark:text-slate-100">
                   <Trans>Funding distribution</Trans>
                 </h3>
               }

@@ -3,7 +3,7 @@ import { Trans } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
 import { generateSafeTxUrl } from 'lib/safe'
 import { SafeTransactionType } from 'models/safe'
-import { classNames } from 'utils/classNames'
+import { twMerge } from 'tailwind-merge'
 
 export function LinkToSafeButton({
   className,
@@ -13,7 +13,7 @@ export function LinkToSafeButton({
   transaction: SafeTransactionType
 }) {
   return (
-    <div className={classNames('ml-6 flex', className)}>
+    <div className={twMerge('ml-6 flex', className)}>
       <ExternalLink
         className="text-black underline hover:text-haze-400 hover:underline dark:text-grey-100 dark:hover:text-haze-400"
         href={generateSafeTxUrl(transaction)}

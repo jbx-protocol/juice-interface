@@ -1,4 +1,4 @@
-import { classNames } from 'utils/classNames'
+import { twMerge } from 'tailwind-merge'
 
 export function ProjectVersionBadge({
   className,
@@ -13,7 +13,7 @@ export function ProjectVersionBadge({
 }) {
   return (
     <span
-      className={classNames(
+      className={twMerge(
         'cursor-default text-grey-900 dark:text-slate-100',
         !transparent ? 'bg-smoke-75 dark:bg-slate-400' : '',
         size === 'small' ? 'py-0 px-1 text-xs' : 'py-0.5 px-1 text-sm',

@@ -1,5 +1,5 @@
 import TooltipLabel from 'components/TooltipLabel'
-import { classNames } from 'utils/classNames'
+import { twMerge } from 'tailwind-merge'
 
 export default function SectionHeader({
   className,
@@ -14,20 +14,28 @@ export default function SectionHeader({
 
   if (tip !== undefined) {
     return (
-      <h2
-        className={classNames(
-          'text-sm font-medium text-juice-400 dark:font-normal',
-          className,
-        )}
-      >
-        <TooltipLabel label={text} tip={tip} />
+      <h2>
+        <TooltipLabel
+          className="text-sm"
+          label={
+            <span
+              className={twMerge(
+                'text-lg font-medium text-grey-900 dark:text-slate-100',
+                className,
+              )}
+            >
+              {text}
+            </span>
+          }
+          tip={tip}
+        />
       </h2>
     )
   } else {
     return (
       <h2
-        className={classNames(
-          'text-sm font-medium text-juice-400 dark:font-normal',
+        className={twMerge(
+          'text-lg font-medium text-grey-900 dark:text-slate-100',
           className,
         )}
       >

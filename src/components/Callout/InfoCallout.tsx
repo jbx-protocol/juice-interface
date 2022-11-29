@@ -1,6 +1,6 @@
 import { InfoCircleOutlined } from '@ant-design/icons'
 import useMobile from 'hooks/Mobile'
-import { classNames } from 'utils/classNames'
+import { twMerge } from 'tailwind-merge'
 import { Callout } from './Callout'
 
 export const InfoCallout: React.FC<{
@@ -19,7 +19,7 @@ export const InfoCallout: React.FC<{
   const collapse = collapsible ?? isMobile
   return (
     <Callout
-      className={classNames(
+      className={twMerge(
         className,
         !transparent ? 'bg-smoke-75 dark:bg-slate-400' : undefined,
       )}

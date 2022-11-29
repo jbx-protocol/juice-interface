@@ -7,7 +7,7 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { getTerminalName } from 'utils/v1/terminals'
 
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
-import { classNames } from 'utils/classNames'
+import { twMerge } from 'tailwind-merge'
 
 export default function V1ProjectTokenBalance({
   className,
@@ -31,7 +31,7 @@ export default function V1ProjectTokenBalance({
   const balance = useTotalBalanceOf(wallet, projectId, terminalName)
 
   return (
-    <div className={classNames('flex justify-between', className)}>
+    <div className={twMerge('flex justify-between', className)}>
       <span>
         {tokenSymbol !== undefined ? (
           <>

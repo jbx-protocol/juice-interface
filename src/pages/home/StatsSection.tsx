@@ -17,11 +17,11 @@ const Stat = ({
   const isMobile = useMobile()
 
   return (
-    <div className="my-0 mx-auto w-full max-w-[200px] text-center">
+    <div className="my-0 mx-auto flex w-full max-w-[200px] flex-col gap-2 text-center">
       <div
         className={classNames(
-          'font-medium text-juice-400 dark:text-juice-300',
-          isMobile ? 'text-3xl' : 'text-4xl',
+          'font-semibold text-juice-400 dark:text-juice-300',
+          isMobile ? 'text-4xl' : 'text-5xl',
         )}
       >
         {loading ? '-' : value}

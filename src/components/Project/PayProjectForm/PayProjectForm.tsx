@@ -89,7 +89,7 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
         </div>
 
         <PayButton
-          wrapperClassName="flex max-w-full"
+          wrapperClassName="flex-1 max-w-full"
           disabled={disabled || errorMessage !== ''}
         />
       </div>

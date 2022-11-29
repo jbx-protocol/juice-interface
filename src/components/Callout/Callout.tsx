@@ -1,5 +1,6 @@
 import { DownOutlined, InfoCircleOutlined } from '@ant-design/icons'
 import { PropsWithChildren, useCallback, useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 import { classNames } from 'utils/classNames'
 import { InfoCallout } from './InfoCallout'
 import { WarningCallout } from './WarningCallout'
@@ -31,7 +32,7 @@ export const Callout: React.FC<CalloutProps> & CalloutTypes = ({
 
   return (
     <div
-      className={classNames(
+      className={twMerge(
         'flex items-start gap-4 p-4',
         collapsible ? 'cursor-pointer select-none' : undefined,
         className,

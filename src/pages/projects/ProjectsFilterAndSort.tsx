@@ -1,9 +1,8 @@
+import { FilterOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Collapse, Select } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
-import { useContext, useEffect, useState } from 'react'
-import { FilterOutlined } from '@ant-design/icons'
-import { ThemeContext } from 'contexts/themeContext'
+import { useEffect, useState } from 'react'
 import { classNames } from 'utils/classNames'
 import FilterCheckboxItem from './FilterCheckboxItem'
 
@@ -34,8 +33,6 @@ export default function ProjectsFilterAndSort({
   orderBy: OrderByOption
   setOrderBy: (value: OrderByOption) => void
 }) {
-  const { isDarkMode } = useContext(ThemeContext)
-
   const [activeKey, setActiveKey] = useState<0 | undefined>()
 
   // Close collapse when clicking anywhere in the window except the collapse items
@@ -51,8 +48,8 @@ export default function ProjectsFilterAndSort({
     <div className="flex max-w-[100vw] flex-wrap items-center whitespace-pre">
       <Collapse
         className={classNames(
-          `projects-filter-collapse ${isDarkMode ? 'dark' : ''}`,
-          'my-0 mr-4 border-none',
+          `projects-filter-collapse`,
+          'my-0 mr-4 border-none bg-transparent',
         )}
         activeKey={activeKey}
       >

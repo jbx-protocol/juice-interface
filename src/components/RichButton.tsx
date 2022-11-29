@@ -1,5 +1,6 @@
 import { CaretRightFilled } from '@ant-design/icons'
 import { ComponentPropsWithoutRef } from 'react'
+import { twMerge } from 'tailwind-merge'
 import { classNames } from 'utils/classNames'
 
 export type RichButtonProps = {
@@ -24,7 +25,7 @@ export default function RichButton({
 }: RichButtonProps) {
   return (
     <div
-      className={classNames(
+      className={twMerge(
         'flex cursor-pointer justify-between rounded-sm border border-solid border-smoke-300 bg-smoke-25 py-4 pl-4 transition-colors hover:border-smoke-500 dark:border-slate-300 dark:bg-slate-700 dark:hover:border-slate-100',
         className,
       )}

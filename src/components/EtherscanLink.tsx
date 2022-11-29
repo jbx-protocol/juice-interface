@@ -1,6 +1,6 @@
 import { LinkOutlined } from '@ant-design/icons'
 import { MouseEventHandler } from 'react'
-import { classNames } from 'utils/classNames'
+import { twMerge } from 'tailwind-merge'
 import { etherscanLink } from 'utils/etherscan'
 import { truncateEthAddress } from 'utils/format/formatAddress'
 import ExternalLink from './ExternalLink'
@@ -23,8 +23,8 @@ const EtherscanLink: React.FC<{
   if (type === 'tx') {
     return (
       <ExternalLink
-        className={classNames(
-          'text-grey-400 hover:text-haze-400 hover:underline',
+        className={twMerge(
+          'text-grey-700 hover:text-haze-400 hover:underline dark:text-slate-100',
           className,
         )}
         href={etherscanLink(type, value)}
@@ -37,8 +37,8 @@ const EtherscanLink: React.FC<{
 
   return (
     <ExternalLink
-      className={classNames(
-        'text-grey-400 hover:text-haze-400 hover:underline',
+      className={twMerge(
+        'text-grey-700 hover:text-haze-400 hover:underline dark:text-slate-100',
         className,
       )}
       href={etherscanLink(type, value)}

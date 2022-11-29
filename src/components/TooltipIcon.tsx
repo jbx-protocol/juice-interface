@@ -1,7 +1,7 @@
 import { QuestionCircleOutlined } from '@ant-design/icons'
 import { Tooltip, TooltipProps } from 'antd'
 import { ReactNode } from 'react'
-import { classNames } from 'utils/classNames'
+import { twMerge } from 'tailwind-merge'
 
 export default function TooltipIcon({
   className,
@@ -22,7 +22,7 @@ export default function TooltipIcon({
       overlayClassName={className}
     >
       <QuestionCircleOutlined
-        className={classNames('text-black dark:text-slate-100', iconClassName)}
+        className={twMerge('text-black dark:text-slate-100', iconClassName)}
       />
     </Tooltip>
   )

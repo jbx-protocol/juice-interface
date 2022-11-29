@@ -2,10 +2,10 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import CurrencySymbol from 'components/CurrencySymbol'
 import TooltipIcon from 'components/TooltipIcon'
+import { CurrencyName } from 'constants/currency'
+import { twMerge } from 'tailwind-merge'
 import { formatWad } from 'utils/format/formatNumber'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
-import { CurrencyName } from 'constants/currency'
-import { classNames } from 'utils/classNames'
 
 export default function DistributionLimit({
   className,
@@ -61,7 +61,7 @@ export default function DistributionLimit({
   )
 
   return (
-    <span className={classNames(className, 'text-black dark:text-slate-100')}>
+    <span className={twMerge(className, 'text-black dark:text-slate-100')}>
       {_text}
       {_tooltip}
     </span>

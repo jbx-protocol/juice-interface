@@ -19,7 +19,7 @@ export default function TokenRefs({
         <div key={`token_${r.value}`}>
           <div className="flex h-10 items-baseline">
             <Button
-              className="mr-5 w-full"
+              className="mr-5 w-24"
               type="text"
               icon={<CaretDownFilled />}
               onClick={() =>

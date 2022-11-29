@@ -42,14 +42,14 @@ export function ProjectSettingsContent() {
   )
 
   return (
-    <Layout className="bg-transparent">
+    <Layout className="bg-transparent pl-4">
       <h2 className="mb-0 text-black dark:text-slate-100">
         {V2V3SettingsPageKeyTitleMap[activeSettingsPage]}
       </h2>
 
-      <Divider />
+      <Divider className="mt-3" />
 
-      <Layout.Content className="my-0 mx-4">
+      <Layout.Content className="my-0">
         <ActiveSettingsPage />
       </Layout.Content>
     </Layout>

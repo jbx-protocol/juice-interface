@@ -141,12 +141,12 @@ export function V2V3Project() {
                 md={colSizeMd}
                 xs={24}
               >
-                <Space size="large" direction="vertical" className="w-full">
+                <div className="flex flex-col gap-12">
                   {!isMobile && showNftSection ? <NftRewardsSection /> : null}
                   <section>
                     <ProjectActivity />
                   </section>
-                </Space>
+                </div>
               </Col>
             ) : null}
           </Row>

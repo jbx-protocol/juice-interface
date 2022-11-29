@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 
 import { PlusCircleOutlined } from '@ant-design/icons'
-import { classNames } from 'utils/classNames'
+import { twMerge } from 'tailwind-merge'
 
 export function AddRewardTierButton({
   className,
@@ -15,7 +15,7 @@ export function AddRewardTierButton({
 }) {
   return (
     <Button
-      className={classNames('mt-4', className)}
+      className={twMerge('mt-4', className)}
       type="dashed"
       onClick={onClick}
       disabled={disabled}

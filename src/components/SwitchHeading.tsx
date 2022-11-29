@@ -1,6 +1,6 @@
 import { Switch } from 'antd'
 import { PropsWithChildren } from 'react'
-import { classNames } from 'utils/classNames'
+import { twMerge } from 'tailwind-merge'
 
 export default function SwitchHeading({
   className,
@@ -15,7 +15,7 @@ export default function SwitchHeading({
   onChange?: (checked: boolean) => void
 }>) {
   return (
-    <div className={classNames('flex items-center', className)}>
+    <div className={twMerge('flex items-center', className)}>
       <Switch
         className="mr-2"
         checked={checked}

@@ -28,7 +28,7 @@ export function HowItWorksSection() {
   const isMobile = useMobile()
 
   return (
-    <section className="my-10 p-1" id="how-it-works">
+    <section className="my-24 p-1" id="how-it-works">
       <SectionHeading className="mb-16">
         <Trans>How to Juice</Trans>
       </SectionHeading>
@@ -49,8 +49,8 @@ export function HowItWorksSection() {
           )}
 
           <Col xs={24} sm={13}>
-            <div className="mb-10 grid gap-y-5">
-              <FourthCol header={t`1. Get funded.`}>
+            <div className="grid gap-y-5">
+              <FourthCol header={t`1. Get funded`}>
                 <Trans>
                   Crowdfund your project with ETH. Set a funding target to cover
                   predictable expenses, and any extra funds (
@@ -74,7 +74,7 @@ export function HowItWorksSection() {
                   get paid, so do they.
                 </Trans>
               </FourthCol>
-              <FourthCol header={t`4. Build trust.`}>
+              <FourthCol header={t`4. Build trust`}>
                 <Trans>
                   Changes to your project's funding configuration require a
                   community-approved period to take effect, which acts as a

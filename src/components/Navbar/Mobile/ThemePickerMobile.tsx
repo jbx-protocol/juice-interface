@@ -12,7 +12,7 @@ export default function ThemePickerMobile() {
 
   return (
     <div
-      style={{ display: 'flex', cursor: 'pointer', alignItems: 'center' }}
+      className="flex cursor-pointer items-center"
       onClick={() =>
         setThemeOption(
           themeOption === ThemeOption.dark
@@ -24,14 +24,14 @@ export default function ThemePickerMobile() {
       {themeOption === ThemeOption.dark ? (
         <>
           <Sun size={16} />
-          <div style={{ margin: '0 0 2px 10px' }}>
+          <div className="mb-1 ml-2">
             <Trans>Light theme</Trans>
           </div>
         </>
       ) : (
         <>
           <Moon size={16} />
-          <div style={{ margin: '0 0 2px 10px' }}>
+          <div className="mb-1 ml-2">
             <Trans>Dark theme</Trans>
           </div>
         </>

@@ -19,7 +19,7 @@ export function ExecutedSafeTransactionsListing({
 
   if (isLoading) {
     return (
-      <div style={{ marginTop: 20 }}>
+      <div className="mt-5">
         <LoadingOutlined />
       </div>
     )

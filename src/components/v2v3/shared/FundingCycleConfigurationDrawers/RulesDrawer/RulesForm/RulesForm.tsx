@@ -1,26 +1,18 @@
+import { isAddress } from '@ethersproject/address'
 import { Trans } from '@lingui/macro'
 import { Button, Form, Space, Switch } from 'antd'
-
-import { ThemeContext } from 'contexts/themeContext'
-import { useAppDispatch } from 'hooks/AppDispatch'
-import { useAppSelector } from 'hooks/AppSelector'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
-
-import { isAddress } from '@ethersproject/address'
-
-import ReconfigurationStrategySelector from 'components/ReconfigurationStrategy/ReconfigurationStrategySelector'
-
-import { BallotStrategy } from 'models/ballot'
-
-import isEqual from 'lodash/isEqual'
-
 import FormItemLabel from 'components/FormItemLabel'
-import { shadowCard } from 'constants/styles/shadowCard'
+import ReconfigurationStrategySelector from 'components/ReconfigurationStrategy/ReconfigurationStrategySelector'
 import {
   ballotStrategies,
   DEFAULT_BALLOT_STRATEGY,
 } from 'constants/v2v3/ballotStrategies'
+import { useAppDispatch } from 'hooks/AppDispatch'
+import { useAppSelector } from 'hooks/AppSelector'
+import isEqual from 'lodash/isEqual'
+import { BallotStrategy } from 'models/ballot'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 import TokenMintingExtra from './TokenMintingExtra'
 
@@ -31,8 +23,6 @@ export default function RulesForm({
   onFormUpdated?: (updated: boolean) => void
   onFinish: VoidFunction
 }) {
-  const { theme } = useContext(ThemeContext)
-
   const dispatch = useAppDispatch()
   const { fundingCycleMetadata, fundingCycleData } = useAppSelector(
     state => state.editingV2Project,
@@ -95,19 +85,13 @@ export default function RulesForm({
     allowSetTerminals,
   ])
 
-  const switchContainerStyle = {
-    display: 'flex',
-    color: theme.colors.text.primary,
-    fontWeight: 500,
-  }
-
   const disableSaveButton =
     !ballotStrategy || !isAddress(ballotStrategy.address)
 
   return (
     <Form layout="vertical" onFinish={onFormSaved}>
       <Space direction="vertical" size="large">
-        <div style={{ ...shadowCard(theme), padding: '2rem' }}>
+        <div className="rounded-sm bg-smoke-75 stroke-none p-8 shadow-[10px_10px_0px_0px_#E7E3DC] dark:bg-slate-400 dark:shadow-[10px_10px_0px_0px_#2D293A]">
           <Form.Item
             extra={
               <Trans>
@@ -115,14 +99,10 @@ export default function RulesForm({
               </Trans>
             }
           >
-            <div
-              style={{
-                ...switchContainerStyle,
-              }}
-            >
+            <div className="flex font-medium text-black dark:text-slate-100">
               <Switch
+                className="mr-2"
                 onChange={setPausePay}
-                style={{ marginRight: '0.5rem' }}
                 checked={pausePay}
               />
               <Trans>Pause payments</Trans>
@@ -133,17 +113,13 @@ export default function RulesForm({
               <TokenMintingExtra showMintingWarning={showMintingWarning} />
             }
           >
-            <div
-              style={{
-                ...switchContainerStyle,
-              }}
-            >
+            <div className="flex text-black dark:text-slate-100">
               <Switch
+                className="mr-2"
                 onChange={checked => {
                   setShowMintingWarning(checked)
                   setAllowMinting(checked)
                 }}
-                style={{ marginRight: '0.5rem' }}
                 checked={allowMinting}
               />
               <Trans>Allow token minting</Trans>
@@ -158,16 +134,12 @@ export default function RulesForm({
               </Trans>
             }
           >
-            <div
-              style={{
-                ...switchContainerStyle,
-              }}
-            >
+            <div className="flex font-medium text-black dark:text-slate-100">
               <Switch
+                className="mr-2"
                 onChange={checked => {
                   setAllowSetTerminals(checked)
                 }}
-                style={{ marginRight: '0.5rem' }}
                 checked={allowSetTerminals}
               />
               <Trans>Allow terminal configuration</Trans>
@@ -176,7 +148,7 @@ export default function RulesForm({
         </div>
 
         <Form.Item
-          style={{ ...shadowCard(theme), padding: '2rem' }}
+          className="rounded-sm bg-smoke-75 stroke-none p-8 shadow-[10px_10px_0px_0px_#E7E3DC] dark:bg-slate-400 dark:shadow-[10px_10px_0px_0px_#2D293A]"
           label={
             <FormItemLabel>
               <Trans>Reconfiguration rules</Trans>

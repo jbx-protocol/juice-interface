@@ -1,14 +1,7 @@
 import { Plural, t, Trans } from '@lingui/macro'
 import { Descriptions } from 'antd'
-
-import { ThemeContext } from 'contexts/themeContext'
-import { useContext } from 'react'
-
 import { useVeNftSummaryStats } from 'hooks/veNft/VeNftSummaryStats'
-
 import { formattedNum } from 'utils/format/formatNumber'
-
-import { shadowCard } from 'constants/styles/shadowCard'
 
 interface VeNftSummaryStatsSectionProps {
   tokenSymbolDisplayText: string
@@ -17,7 +10,6 @@ interface VeNftSummaryStatsSectionProps {
 const VeNftSummaryStatsSection = ({
   tokenSymbolDisplayText,
 }: VeNftSummaryStatsSectionProps) => {
-  const { theme } = useContext(ThemeContext)
   const { totalLocked, totalLockedPeriod } = useVeNftSummaryStats()
   const totalLockedPeriodInDays = totalLockedPeriod / (60 * 60 * 24)
   const formattedtotalLockedPeriod = formattedNum(totalLockedPeriodInDays, {
@@ -25,7 +17,7 @@ const VeNftSummaryStatsSection = ({
   })
 
   return (
-    <div style={{ ...shadowCard(theme), padding: 25, marginBottom: 10 }}>
+    <div className="mb-2 rounded-sm bg-smoke-75 stroke-none p-6 shadow-[10px_10px_0px_0px_#E7E3DC] dark:bg-slate-400 dark:shadow-[10px_10px_0px_0px_#2D293A]">
       <Descriptions
         title={
           <h3>

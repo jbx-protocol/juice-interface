@@ -85,9 +85,7 @@ export function RulesListItems({
             tooltipTitle={ballotWarningText}
           >
             <Tooltip title={<FormattedAddress address={fundingCycle.ballot} />}>
-              <span style={{ textDecoration: 'underline' }}>
-                {ballotStrategy.name}
-              </span>
+              <span className="underline">{ballotStrategy.name}</span>
             </Tooltip>
           </FundingCycleDetailWarning>
         }

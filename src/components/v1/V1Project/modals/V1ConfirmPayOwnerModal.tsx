@@ -3,7 +3,7 @@ import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Checkbox, Descriptions, Form, Input, Modal, Space } from 'antd'
 import { useForm, useWatch } from 'antd/lib/form/Form'
-import Callout from 'components/Callout'
+import { Callout } from 'components/Callout'
 import FormattedAddress from 'components/FormattedAddress'
 import Sticker from 'components/icons/Sticker'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
@@ -15,13 +15,13 @@ import ProjectRiskNotice from 'components/ProjectRiskNotice'
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 import { ProjectPreferences } from 'constants/v1/projectPreferences'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { usePayV1ProjectTx } from 'hooks/v1/transactor/PayV1ProjectTx'
 import { useWallet } from 'hooks/Wallet'
 import { useContext, useState } from 'react'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
+import { classNames } from 'utils/classNames'
 import { formattedNum, formatWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -53,9 +53,6 @@ export default function V1ConfirmPayOwnerModal({
   onCancel?: VoidFunction
   payButtonText: string
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { tokenSymbol, tokenAddress, currentFC } = useContext(V1ProjectContext)
   const { projectMetadata } = useContext(ProjectMetadataContext)
 
@@ -165,14 +162,14 @@ export default function V1ConfirmPayOwnerModal({
   const renderRiskNotice = () => {
     if (currentFC && riskCount && riskCount > 0) {
       return (
-        <Callout>
+        <Callout.Info>
           <strong>
             <Trans>Potential risks</Trans>
           </strong>
           <ProjectRiskNotice
             unsafeProperties={getUnsafeV1FundingCycleProperties(currentFC)}
           />
-        </Callout>
+        </Callout.Info>
       )
     }
   }
@@ -189,11 +186,10 @@ export default function V1ConfirmPayOwnerModal({
       centered={true}
       zIndex={1}
     >
-      <Space direction="vertical" size="large" style={{ width: '100%' }}>
+      <Space direction="vertical" size="large" className="w-full">
         <p>
           <Trans>
-            Paying{' '}
-            <span style={{ fontWeight: 'bold' }}>{projectMetadata.name}</span>{' '}
+            Paying <span className="font-medium">{projectMetadata.name}</span>{' '}
             is not an investment — it's a way to support the project. Any value
             or utility of the tokens you receive is determined by{' '}
             {projectMetadata.name}.
@@ -243,13 +239,12 @@ export default function V1ConfirmPayOwnerModal({
           </Descriptions.Item>
         </Descriptions>
         <Form form={form} layout="vertical">
-          <div style={{ position: 'relative' }}>
+          <div className="relative">
             <Form.Item
               name="memo"
               label={t`Memo (optional)`}
-              className={'antd-no-number-handler'}
+              className="antd-no-number-handler mb-0"
               extra={t`Add an on-chain memo to this payment.`}
-              style={{ marginBottom: 0 }}
             >
               <Input.TextArea
                 placeholder={t`WAGMI!`}
@@ -260,20 +255,15 @@ export default function V1ConfirmPayOwnerModal({
               />
             </Form.Item>
             {/* Sticker select icon (right side of memo input) */}
-            <div
-              style={{
-                fontSize: '.8rem',
-                position: 'absolute',
-                right: 7,
-                top: 36,
-              }}
-            >
+            <div className="right[7px] absolute top-[36px] text-sm">
               {
                 <Sticker
-                  style={{
-                    color: colors.text.secondary,
-                    cursor: canAddMoreStickers ? 'pointer' : 'not-allowed',
-                  }}
+                  className={classNames(
+                    'text-grey-500 dark:text-grey-300',
+                    canAddMoreStickers
+                      ? 'cursor-pointer'
+                      : 'cursor-not-allowed',
+                  )}
                   size={20}
                   onClick={() => {
                     canAddMoreStickers

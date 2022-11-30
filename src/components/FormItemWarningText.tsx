@@ -1,17 +1,12 @@
 import { InfoCircleOutlined } from '@ant-design/icons'
-import { ThemeContext } from 'contexts/themeContext'
-import { PropsWithChildren, useContext } from 'react'
+import { PropsWithChildren } from 'react'
 
 export default function FormItemWarningText({
   children,
   icon = <InfoCircleOutlined />,
 }: PropsWithChildren<{ icon?: JSX.Element }>) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   return (
-    <p style={{ color: colors.text.warn }}>
+    <p className="text-warning-800 dark:text-warning-100">
       {icon} {children}
     </p>
   )

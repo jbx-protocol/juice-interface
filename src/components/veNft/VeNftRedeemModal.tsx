@@ -2,14 +2,10 @@ import { t, Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { useContext, useState } from 'react'
-
-import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useRedeemVeNftTx } from 'hooks/veNft/transactor/VeNftRedeemTx'
 import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'
-
 import { emitSuccessNotification } from 'utils/notifications'
-
 import { MemoFormInput } from 'components/Project/PayProjectForm/MemoFormInput'
 import TransactionModal from 'components/TransactionModal'
 import CustomBeneficiaryInput from 'components/veNft/formControls/CustomBeneficiaryInput'
@@ -41,9 +37,6 @@ const VeNftRedeemModal = ({
   const [loading, setLoading] = useState(false)
   const [transactionPending, setTransactionPending] = useState(false)
   const [memo, setMemo] = useState('')
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
 
   const redeemTx = useRedeemVeNftTx()
 
@@ -102,7 +95,7 @@ const VeNftRedeemModal = ({
       confirmLoading={loading}
       transactionPending={transactionPending}
     >
-      <div style={{ color: colors.text.secondary }}>
+      <div className="text-grey-500 dark:text-grey-300">
         <p>
           <Trans>
             Redeeming this NFT will burn the token, as well as the underlying

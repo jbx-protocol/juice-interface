@@ -1,5 +1,5 @@
 import { Form, Slider } from 'antd'
-import { CSSProperties, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { roundDown } from 'components/formItems/formHelpers'
 
@@ -7,6 +7,7 @@ import { FormItemExt } from '../formItems/formItemExt'
 import { JuiceInputNumber } from './JuiceInputNumber'
 
 export default function NumberSlider({
+  className,
   min,
   max,
   step,
@@ -17,8 +18,8 @@ export default function NumberSlider({
   disabled,
   name, // Name is required for form validation
   formItemProps,
-  style,
 }: {
+  className?: string
   min?: number
   max?: number
   step?: number
@@ -26,7 +27,6 @@ export default function NumberSlider({
   suffix?: string
   onChange?: (num: number | undefined) => void
   defaultValue?: number
-  style?: CSSProperties
 } & FormItemExt) {
   const [_value, setValue] = useState<number | undefined>(
     sliderValue ?? defaultValue,
@@ -50,23 +50,21 @@ export default function NumberSlider({
   }, [sliderValue])
 
   return (
-    <div style={style}>
-      <div
-        style={{ display: 'flex', alignItems: 'baseline', marginBottom: 15 }}
-      >
+    <div className={className}>
+      <div className="mb-4 flex items-baseline">
         <Slider
+          className="mr-5 flex-1"
           {...inputConfig}
           tooltipVisible={false}
-          style={{ flex: 1, marginRight: 20 }}
           value={_value}
           onChange={(val: number) => updateValue(val)}
           defaultValue={defaultValue}
           disabled={disabled}
         />
         <Form.Item
+          className="mb-0"
           name={name}
           rules={formItemProps?.rules ?? []}
-          style={{ marginBottom: 0 }}
         >
           <JuiceInputNumber
             {...inputConfig}

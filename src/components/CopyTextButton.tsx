@@ -1,22 +1,20 @@
 import { CopyOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
-import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, useContext, useState } from 'react'
+import { useState } from 'react'
 
 // Copies a given text to clipboard when clicked
 export default function CopyTextButton({
+  className,
   value,
-  style = {},
   button,
   tooltipText,
 }: {
+  className?: string
   value: string | undefined
-  style?: CSSProperties
   button?: JSX.Element
   tooltipText?: string
 }) {
-  const { colors } = useContext(ThemeContext).theme
   const [copied, setCopied] = useState<boolean>(false)
 
   const handleCopy = () => {
@@ -31,15 +29,16 @@ export default function CopyTextButton({
 
   return (
     <Tooltip
+      className={className}
       trigger={['hover']}
       title={<span>{copied ? t`Copied!` : _tooltipText}</span>}
     >
       <span
+        className="cursor-pointer text-black dark:text-grey-100"
         onClick={e => {
           e.stopPropagation()
           handleCopy()
         }}
-        style={{ ...style, color: colors.text.primary, cursor: 'pointer' }}
         role="button"
       >
         {button ?? <CopyOutlined />}

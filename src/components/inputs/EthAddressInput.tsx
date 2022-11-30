@@ -1,8 +1,7 @@
 import { CheckCircleFilled, LoadingOutlined } from '@ant-design/icons'
 import * as constants from '@ethersproject/constants'
-import { ThemeContext } from 'contexts/themeContext'
 import { isAddress } from 'ethers/lib/utils'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 
 import { readProvider } from 'constants/readProvider'
 import { JuiceInput } from './JuiceTextInput'
@@ -18,10 +17,6 @@ export function EthAddressInput({
   value?: string
   onChange?: (value: string) => void
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const [input, setInput] = useState<string>(value ?? '')
 
   const [addressForENSName, setAddressForENSName] = useState<string>()
@@ -84,7 +79,7 @@ export function EthAddressInput({
   const extraText = ensName && addressForENSName ? addressForENSName : ''
 
   return (
-    <div style={{ width: '100%' }}>
+    <div className="w-full">
       <JuiceInput
         allowClear={true}
         type="text"
@@ -96,7 +91,7 @@ export function EthAddressInput({
         onChange={onInputChange}
       />
       {extraText ? (
-        <div style={{ fontSize: '0.75rem', color: colors.text.secondary }}>
+        <div className="text-sm text-grey-500 dark:text-grey-300">
           <CheckCircleFilled /> {extraText}
         </div>
       ) : null}

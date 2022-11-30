@@ -55,7 +55,7 @@ export function AddTerminalSection({
       <p>
         <Trans>Add the V1 Token Payment Terminal to your project.</Trans>
       </p>
-      <div style={{ marginBottom: '1rem' }}>
+      <div className="mb-4">
         <MinimalCollapse
           header={<Trans>What is the V1 Token Payment Terminal?</Trans>}
         >

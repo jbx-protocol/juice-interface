@@ -1,18 +1,6 @@
-import { ThemeContext } from 'contexts/themeContext'
 import { SafeTransactionType } from 'models/safe'
-import { CSSProperties, useContext } from 'react'
+import { classNames } from 'utils/classNames'
 import { SafeTransaction } from './SafeTransaction'
-
-export const safeNonceRowStyle: CSSProperties = {
-  justifyContent: 'space-between',
-  fontWeight: 400,
-  width: '100%',
-  transition: 'background-color 100ms linear',
-  display: 'flex',
-  borderTop: 'unset',
-  borderLeft: 'unset',
-  borderRight: 'unset',
-}
 
 export function SafeNonceRow({
   nonce,
@@ -27,44 +15,37 @@ export function SafeNonceRow({
   selectedTx: string | undefined
   safeThreshold: number
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const containsSelectedTx = transactions.some(
     (tx: SafeTransactionType) => tx.safeTxHash === selectedTx,
   )
 
-  const rowStyle: CSSProperties = {
-    ...safeNonceRowStyle,
-    color: colors.text.primary,
-    borderBottom: `1px solid ${
-      containsSelectedTx
-        ? colors.stroke.action.primary
-        : colors.stroke.secondary
-    }`,
-  }
-
   return (
-    <div style={rowStyle} id={`safe-nonce-${nonce}`}>
+    <div
+      className={classNames(
+        'w-full justify-between border border-b border-l-0 border-r-0 border-t-0 border-solid font-normal text-black transition-colors duration-100 ease-in-out dark:text-slate-100',
+        containsSelectedTx
+          ? 'border-b-haze-400 dark:border-b-haze-400'
+          : 'border-b-grey-300 dark:border-b-slate-200',
+      )}
+      id={`safe-nonce-${nonce}`}
+    >
       <div
-        style={{
-          color: colors.text.secondary,
-          paddingRight: '2rem',
-          paddingTop: '1.2rem',
-          minWidth: '3.6rem', // account for double/triple digit nonces (keep tx titles in line)
-        }}
+        className={classNames(
+          'pr-8 pt-5 text-grey-500 dark:text-grey-300',
+          'min-w-[3.6.rem]', // account for double/triple digit nonces (keep tx titles in line)
+        )}
       >
         {nonce}
       </div>
-      <div style={{ width: '100%' }}>
+      <div className="w-full">
         {transactions.map((tx: SafeTransactionType, idx: number) => (
           <div
+            className={classNames(
+              idx === 0
+                ? 'border border-x-0 border-t border-b-0 border-solid border-smoke-200 dark:border-grey-600'
+                : '',
+            )}
             key={idx}
-            style={{
-              borderTop:
-                idx === 0 ? 'unset' : `1px solid ${colors.stroke.tertiary}`,
-            }}
           >
             <SafeTransaction
               transaction={{ ...tx, threshold: safeThreshold }}

@@ -1,7 +1,6 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { Tooltip } from 'antd'
-import { ThemeContext } from 'contexts/themeContext'
-import { PropsWithChildren, useContext } from 'react'
+import { PropsWithChildren } from 'react'
 
 export default function FundingCycleDetailWarning({
   tooltipTitle,
@@ -11,16 +10,12 @@ export default function FundingCycleDetailWarning({
   tooltipTitle?: string
   showWarning?: boolean
 }>) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   if (!showWarning) return <span>{children}</span>
 
   return (
-    <div style={{ display: 'flex' }}>
-      <span style={{ fontWeight: 500 }}>{children} </span>
-      <span style={{ color: colors.text.warn, marginLeft: '0.5rem' }}>
+    <div className="flex">
+      <span className="font-medium">{children} </span>
+      <span className="ml-2 text-warning-800 dark:text-warning-100">
         <Tooltip title={tooltipTitle} placement="top">
           <ExclamationCircleOutlined />
         </Tooltip>

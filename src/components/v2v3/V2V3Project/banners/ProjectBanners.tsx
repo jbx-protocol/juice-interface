@@ -53,7 +53,7 @@ export function ProjectBanners() {
   if (!hasBanners) return null
 
   return (
-    <Space direction="vertical" size="small" style={{ width: '100%' }}>
+    <Space direction="vertical" size="small" className="w-full">
       {showV2BugNoticeBanner && <V2BugNoticeBanner />}
       {showRelaunchFundingCycleBanner && <RelaunchFundingCycleBanner />}
     </Space>

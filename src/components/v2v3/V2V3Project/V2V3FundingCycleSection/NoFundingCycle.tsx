@@ -5,8 +5,9 @@ import SectionHeader from 'components/SectionHeader'
 
 export default function NoFundingCycle() {
   return (
-    <Space direction="vertical" style={{ width: '100%' }}>
+    <Space direction="vertical" className="w-full">
       <SectionHeader
+        className="mb-2"
         text={<Trans>Funding cycle</Trans>}
         tip={
           <Trans>
@@ -15,9 +16,6 @@ export default function NoFundingCycle() {
             the duration of the cycle.
           </Trans>
         }
-        style={{
-          marginBottom: 10,
-        }}
       />
       <CardSection>
         <Trans>No active funding cycle.</Trans>

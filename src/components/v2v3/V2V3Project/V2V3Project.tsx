@@ -12,6 +12,7 @@ import useMobile from 'hooks/Mobile'
 import { useValidatePrimaryEthTerminal } from 'hooks/v2v3/ValidatePrimaryEthTerminal'
 import { V2V3PayProjectFormProvider } from 'providers/v2v3/V2V3PayProjectFormProvider'
 import { useContext, useState } from 'react'
+import { classNames } from 'utils/classNames'
 import { hasNftRewards } from 'utils/nftRewards'
 import { NftRewardsSection } from '../../NftRewards/NftRewardsSection'
 import { ProjectBanners } from './banners/ProjectBanners'
@@ -32,8 +33,8 @@ const AllAssetsButton = () => {
   return (
     <>
       <TextButton
+        className="text-sm font-normal"
         onClick={() => setBalancesModalVisible(true)}
-        style={{ fontWeight: 400, fontSize: '0.8rem' }}
       >
         <Trans>All assets</Trans>
       </TextButton>
@@ -77,7 +78,7 @@ export function V2V3Project() {
   if (projectId === undefined) return null
 
   return (
-    <Space direction="vertical" size={GUTTER_PX} style={{ width: '100%' }}>
+    <Space direction="vertical" size={GUTTER_PX} className="w-full">
       <ProjectBanners />
 
       <ProjectHeader
@@ -88,16 +89,12 @@ export function V2V3Project() {
       />
 
       <V2V3PayProjectFormProvider>
-        <Space direction="vertical" size={GUTTER_PX} style={{ width: '100%' }}>
-          <Row
-            gutter={GUTTER_PX}
-            align={'bottom'}
-            style={{ rowGap: GUTTER_PX }}
-          >
+        <Space direction="vertical" size={GUTTER_PX} className="w-full">
+          <Row className="gap-y-10" gutter={GUTTER_PX} align={'bottom'}>
             <Col md={colSizeMd} xs={24}>
               <section>
                 <TreasuryStats />
-                <div style={{ textAlign: 'right' }}>
+                <div className="text-right">
                   <AllAssetsButton />
                 </div>
               </section>
@@ -108,7 +105,7 @@ export function V2V3Project() {
                 <PayProjectForm disabled={payProjectFormDisabled} />
               </section>
               {(isMobile && showNftSection) || isPreviewMode ? (
-                <section style={{ marginTop: '30px' }}>
+                <section className="mt-7">
                   <NftRewardsSection />
                 </section>
               ) : null}
@@ -117,14 +114,11 @@ export function V2V3Project() {
 
           <Row gutter={GUTTER_PX}>
             <Col md={colSizeMd} xs={24}>
-              <Space
-                direction="vertical"
-                size={GUTTER_PX}
-                style={{ width: '100%' }}
-              >
+              <Space direction="vertical" size={GUTTER_PX} className="w-full">
                 {!isPreviewMode && pv ? (
                   <section>
                     <VolumeChart
+                      // TODO: Change this
                       style={{ height: 240 }}
                       createdAt={createdAt}
                       projectId={projectId}
@@ -143,20 +137,16 @@ export function V2V3Project() {
 
             {!isPreviewMode ? (
               <Col
+                className={classNames(isMobile ? 'mt-10' : '')}
                 md={colSizeMd}
                 xs={24}
-                style={{ marginTop: isMobile ? GUTTER_PX : 0 }}
               >
-                <Space
-                  size="large"
-                  direction="vertical"
-                  style={{ width: '100%' }}
-                >
+                <div className="flex flex-col gap-12">
                   {!isMobile && showNftSection ? <NftRewardsSection /> : null}
                   <section>
                     <ProjectActivity />
                   </section>
-                </Space>
+                </div>
               </Col>
             ) : null}
           </Row>

@@ -32,7 +32,7 @@ export default function SplitList({
   }, [projectOwnerAddress, splits])
 
   return (
-    <Space direction="vertical" size={5} style={{ width: '100%' }}>
+    <Space direction="vertical" size={5} className="w-full">
       {[...splits]
         .sort((a, b) => (a.percent < b.percent ? 1 : -1))
         .map(split => (

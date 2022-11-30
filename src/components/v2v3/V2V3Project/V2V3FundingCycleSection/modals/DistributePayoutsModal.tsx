@@ -2,13 +2,12 @@ import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
-import Callout from 'components/Callout'
+import { Callout } from 'components/Callout'
 import CurrencySymbol from 'components/CurrencySymbol'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/TransactionModal'
 import SplitList from 'components/v2v3/shared/SplitList'
-import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/ETHPaymentTerminalFee'
@@ -35,9 +34,6 @@ export default function DistributePayoutsModal({
     payoutSplits,
     projectOwnerAddress,
   } = useContext(V2V3ProjectContext)
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
 
   const [transactionPending, setTransactionPending] = useState<boolean>()
   const [loading, setLoading] = useState<boolean>()
@@ -130,21 +126,21 @@ export default function DistributePayoutsModal({
       connectWalletText={t`Connect wallet to distribute`}
       width={640}
     >
-      <Space direction="vertical" size="large" style={{ width: '100%' }}>
-        <Callout>
+      <Space direction="vertical" size="large" className="w-full">
+        <Callout.Info>
           <Trans>
             Distributions to Ethereum addresses incur a 2.5% JBX membership fee.
           </Trans>
-        </Callout>
+        </Callout.Info>
 
         <Form layout="vertical">
           <Form.Item
+            className="mb-0"
             label={<Trans>Amount to distribute</Trans>}
-            style={{ marginBottom: 0 }}
             extra={
-              <div style={{ color: colors.text.primary, marginBottom: 10 }}>
+              <div className="mb-2 text-black dark:text-slate-100">
                 <Trans>
-                  <span style={{ fontWeight: 500 }}>
+                  <span className="font-medium">
                     <CurrencySymbol currency={distributionCurrencyName} />
                     {grossAvailableAmount}
                   </span>{' '}
@@ -159,18 +155,8 @@ export default function DistributePayoutsModal({
               onChange={value => setDistributionAmount(value)}
               min={0}
               accessory={
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                  }}
-                >
-                  <span
-                    style={{
-                      marginRight: 8,
-                      color: colors.text.primary,
-                    }}
-                  >
+                <div className="flex items-center">
+                  <span className="mr-2 text-black dark:text-slate-100">
                     {V2V3CurrencyName(
                       distributionLimitCurrency?.toNumber() as V2V3CurrencyOption,
                     )}
@@ -192,12 +178,12 @@ export default function DistributePayoutsModal({
           </h4>
 
           {payoutSplits?.length === 0 ? (
-            <Callout style={{ marginBottom: '1rem' }}>
+            <Callout.Info className="mb-4">
               <Trans>
                 There are no payouts defined for this funding cycle. The project
                 owner will receive all available funds.
               </Trans>
-            </Callout>
+            </Callout.Info>
           ) : null}
 
           <SplitList
@@ -209,7 +195,7 @@ export default function DistributePayoutsModal({
             showFees
           />
         </div>
-        <p style={{ fontSize: '0.8rem' }}>
+        <p className="text-sm">
           <ExclamationCircleOutlined />{' '}
           <Trans>Recipients will receive payouts in ETH.</Trans>
         </p>

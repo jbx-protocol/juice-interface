@@ -23,7 +23,7 @@ export default function PayWarningModal({
       <h2>
         <Trans>Heads up</Trans>
       </h2>
-      <p style={{ fontWeight: 500 }}>
+      <p className="font-medium">
         <Trans>
           The{' '}
           <ExternalLink href="https://github.com/jbx-protocol/juice-contracts">

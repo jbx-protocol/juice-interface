@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import { Space } from 'antd'
 import useMobile from 'hooks/Mobile'
 import { ReactNode } from 'react'
-import { classNames } from 'utils/classNames'
+import { twMerge } from 'tailwind-merge'
 import { PageContext } from './contexts/PageContext'
 import { usePage } from './hooks'
 import { PageButtonControl } from './PageButtonControl'
@@ -50,7 +50,7 @@ export const Page: React.FC<PageProps> & {
       }}
     >
       <Space
-        className={classNames('max-w-[600px]', className)}
+        className={twMerge('max-w-[600px]', className)}
         direction="vertical"
         size="large"
       >

@@ -7,15 +7,6 @@
 .text-tertiary {
   color: var(--text-tertiary);
 }
-.text-tertiary\! {
-  color: var(--text-tertiary) !important;
-}
-
-.hover-opacity {
-  &:hover {
-    opacity: 0.7;
-  }
-}
 
 .color-unset {
   color: unset;
@@ -24,11 +15,6 @@
 .hover-text-action-primary {
   &:hover {
     color: var(--text-action-primary);
-  }
-}
-.hover-text-action-primary\! {
-  &:hover {
-    color: var(--text-action-primary) !important;
   }
 }
 

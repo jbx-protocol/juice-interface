@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { CSSProperties, useState } from 'react'
+import { useState } from 'react'
 
 import { FormItems } from 'components/formItems'
 import { FormItemExt } from 'components/formItems/formItemExt'
@@ -9,19 +9,19 @@ import { defaultFundingCycleMetadata } from 'redux/slices/editingV2Project'
 import { toMod, toSplit } from 'utils/splits'
 
 export default function ReservedTokensFormItem({
+  className,
   hideLabel,
   initialValue,
   reservedTokensSplits,
   onReservedTokensSplitsChange,
-  style = {},
   onChange,
   issuanceRate,
 }: {
+  className?: string
   initialValue: number | undefined
   reservedTokensSplits: Split[]
   onReservedTokensSplitsChange: (splits: Split[]) => void
   onChange: (val?: number) => void
-  style?: CSSProperties
   issuanceRate?: number
 } & FormItemExt) {
   // Using a state here because relying on the form does not
@@ -43,7 +43,7 @@ export default function ReservedTokensFormItem({
   )
 
   return (
-    <div style={style}>
+    <div className={className}>
       <FormItems.ProjectReserved
         value={reservedRate}
         onChange={val => {

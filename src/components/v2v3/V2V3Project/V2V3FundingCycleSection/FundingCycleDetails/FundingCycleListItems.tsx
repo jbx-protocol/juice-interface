@@ -5,10 +5,8 @@ import ETHToUSD from 'components/currency/ETHToUSD'
 import FundingCycleDetailWarning from 'components/Project/FundingCycleDetailWarning'
 import DistributionLimit from 'components/v2v3/shared/DistributionLimit'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
-import { ThemeContext } from 'contexts/themeContext'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { V2V3FundingCycle } from 'models/v2v3/fundingCycle'
-import { useContext } from 'react'
 import { formatDate, formatDateToUTC } from 'utils/format/formatDate'
 import { detailedTimeString } from 'utils/format/formatTime'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
@@ -24,10 +22,6 @@ export function FundingCycleListItems({
   distributionLimit: BigNumber | undefined
   distributionLimitCurrency: BigNumber | undefined
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const formattedStartTime = fundingCycle.start
     ? formatDate(fundingCycle.start.mul(1000))
     : undefined
@@ -89,7 +83,7 @@ export function FundingCycleListItems({
       <FundingCycleListItem
         name={t`Distribution limit`}
         value={
-          <span style={{ whiteSpace: 'nowrap' }}>
+          <span className="whitespace-nowrap">
             <Tooltip
               title={
                 currency === 'ETH' && distributionLimit?.gt(0) ? (
@@ -99,9 +93,9 @@ export function FundingCycleListItems({
             >
               {''}
               <DistributionLimit
+                className="text-grey-900 dark:text-slate-100"
                 distributionLimit={distributionLimit}
                 currencyName={currency}
-                style={{ color: colors.text.secondary }}
               />
             </Tooltip>
           </span>

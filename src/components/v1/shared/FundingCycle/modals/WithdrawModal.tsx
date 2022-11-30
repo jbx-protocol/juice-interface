@@ -1,14 +1,14 @@
 import { t, Trans } from '@lingui/macro'
 import { Space } from 'antd'
-
+import ETHAmount from 'components/currency/ETHAmount'
 import CurrencySymbol from 'components/CurrencySymbol'
 import FormattedAddress from 'components/FormattedAddress'
 import InputAccessoryButton from 'components/InputAccessoryButton'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/TransactionModal'
 import PayoutModsList from 'components/v1/shared/PayoutModsList'
-
-import ETHAmount from 'components/currency/ETHAmount'
-import { ThemeContext } from 'contexts/themeContext'
+import { V1_CURRENCY_USD } from 'constants/v1/currency'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useTapProjectTx } from 'hooks/v1/transactor/TapProjectTx'
@@ -23,10 +23,6 @@ import {
 import { V1CurrencyName } from 'utils/v1/currency'
 import { amountSubFee, feeForAmount } from 'utils/v1/math'
 
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { V1_CURRENCY_USD } from 'constants/v1/currency'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-
 export default function WithdrawModal({
   open,
   onCancel,
@@ -36,9 +32,6 @@ export default function WithdrawModal({
   onCancel?: VoidFunction
   onConfirmed?: VoidFunction
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { balanceInCurrency, currentFC, currentPayoutMods, owner } =
     useContext(V1ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
@@ -134,16 +127,16 @@ export default function WithdrawModal({
       connectWalletText={t`Connect wallet to distribute`}
       width={640}
     >
-      <Space direction="vertical" size="large" style={{ width: '100%' }}>
+      <Space direction="vertical" size="large" className="w-full">
         <div>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div className="flex justify-between">
             <Trans>Total funds:</Trans>{' '}
             <div>
               <CurrencySymbol currency={currentFCCurrency} />
               {formatWad(withdrawable, { precision: 4 })}
             </div>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div className="flex justify-between">
             <div>
               <Trans>JBX Fee ({perbicentToPercent(currentFC.fee)}%):</Trans>
             </div>
@@ -154,13 +147,7 @@ export default function WithdrawModal({
               })}
             </div>
           </div>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              fontWeight: 500,
-            }}
-          >
+          <div className="flex justify-between font-medium">
             <div>
               <Trans>Available after fee:</Trans>
             </div>
@@ -178,18 +165,8 @@ export default function WithdrawModal({
             value={tapAmount}
             onChange={value => setTapAmount(value)}
             accessory={
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                <span
-                  style={{
-                    marginRight: 8,
-                    color: colors.text.primary,
-                  }}
-                >
+              <div className="flex items-center">
+                <span className="mr-2 text-black dark:text-slate-100">
                   {V1CurrencyName(
                     currentFC.currency.toNumber() as V1CurrencyOption,
                   )}
@@ -202,8 +179,8 @@ export default function WithdrawModal({
             }
           />
 
-          <div style={{ color: colors.text.primary, marginBottom: 10 }}>
-            <span style={{ fontWeight: 500 }}>
+          <div className="mb-2 text-black dark:text-slate-100">
+            <span className="font-medium">
               <ETHAmount amount={convertedAmountSubFee} />
             </span>{' '}
             <Trans>

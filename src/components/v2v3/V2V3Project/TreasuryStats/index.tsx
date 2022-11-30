@@ -3,20 +3,13 @@ import FundingProgressBar from 'components/Project/FundingProgressBar'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import useTerminalCurrentOverflow from 'hooks/v2v3/contractReader/TerminalCurrentOverflow'
 import { useContext } from 'react'
-
 import { VolumeStatLine } from 'components/Project/VolumeStatLine'
-
-import { ThemeContext } from 'contexts/themeContext'
-
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import DistributedRatio from './DistributedRatio'
 import OwnerBalance from './OwnerBalance'
 import ProjectBalance from './ProjectBalance'
 
 export default function TreasuryStats() {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const {
     balanceInDistributionLimitCurrency,
     distributionLimit,
@@ -37,8 +30,8 @@ export default function TreasuryStats() {
     (!isPreviewMode && overflowLoading) || distributionLimitLoading
 
   return (
-    <Space direction="vertical" style={{ display: 'flex' }}>
-      <VolumeStatLine totalVolume={totalVolume} color={colors.text.primary} />
+    <Space className="flex" direction="vertical">
+      <VolumeStatLine totalVolume={totalVolume} />
       <ProjectBalance />
       <DistributedRatio />
       <Skeleton

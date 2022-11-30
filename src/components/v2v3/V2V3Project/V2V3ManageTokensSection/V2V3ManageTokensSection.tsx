@@ -60,14 +60,7 @@ export function V2V3ManageTokensSection() {
 
   return (
     <Space direction="vertical">
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'space-between',
-          columnGap: 5,
-        }}
-      >
+      <div className="flex flex-wrap justify-between gap-x-1">
         <SectionHeader
           text={<Trans>Tokens</Trans>}
           tip={

@@ -26,16 +26,15 @@ export default function FundingCycleSection({
   )?.content
 
   return (
-    <Space direction="vertical" style={{ width: '100%' }}>
+    <Space direction="vertical" className="w-full">
       <div
+        className="flex flex-wrap justify-between"
         style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'space-between',
           columnGap: 5,
         }}
       >
         <SectionHeader
+          className="mb-2"
           text={<Trans>Funding cycle</Trans>}
           tip={
             <Trans>
@@ -44,15 +43,12 @@ export default function FundingCycleSection({
               for the duration of the cycle.
             </Trans>
           }
-          style={{
-            marginBottom: 10,
-          }}
         />
 
         {reconfigureButton}
       </div>
 
-      <Space style={{ fontSize: '.8rem', marginBottom: 20 }} size="large">
+      <Space className="mb-5 text-sm" size="large">
         {tabs.map(tab => (
           <Tab
             key={tab.key}

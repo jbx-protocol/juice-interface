@@ -2,27 +2,22 @@ import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 
 import { PlusCircleOutlined } from '@ant-design/icons'
-import { CSSProperties } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 export function AddRewardTierButton({
+  className,
   onClick,
   disabled,
-  style,
 }: {
+  className?: string
   onClick: VoidFunction
   disabled?: boolean
-  style?: CSSProperties
 }) {
-  const buttonStyle: CSSProperties = {
-    ...style,
-    marginTop: 15,
-  }
-
   return (
     <Button
+      className={twMerge('mt-4', className)}
       type="dashed"
       onClick={onClick}
-      style={buttonStyle}
       disabled={disabled}
       block
       size="large"

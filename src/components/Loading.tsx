@@ -4,14 +4,7 @@ import { SpinSize } from 'antd/lib/spin'
 
 export default function Loading({ size }: { size?: SpinSize }) {
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100%',
-      }}
-    >
+    <div className="flex h-full items-center justify-center">
       <Spin size={size ?? 'large'} indicator={<LoadingOutlined />}></Spin>
     </div>
   )

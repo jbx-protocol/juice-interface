@@ -5,13 +5,11 @@ import { Skeleton, Tooltip } from 'antd'
 import { PV_V1, PV_V1_1, PV_V2 } from 'constants/pv'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
-import { ThemeContext } from 'contexts/themeContext'
 import { useProjectHandleText } from 'hooks/ProjectHandleText'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { Project } from 'models/subgraph-entities/vX/project'
 import Link from 'next/link'
-import { CSSProperties, useContext } from 'react'
 import { formatDate } from 'utils/format/formatDate'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { getTerminalVersion } from 'utils/v1/terminals'
@@ -32,33 +30,9 @@ export type ProjectCardProject = Pick<
   | 'pv'
 >
 
-const cardStyle: CSSProperties = {
-  display: 'flex',
-  position: 'relative',
-  alignItems: 'center',
-  whiteSpace: 'pre',
-  overflow: 'hidden',
-  padding: '25px 20px',
-}
-
 function ArchivedBadge() {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   return (
-    <div
-      style={{
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        padding: '2px 4px',
-        background: colors.background.l1,
-        fontSize: '0.75rem',
-        color: colors.text.tertiary,
-        fontWeight: 500,
-      }}
-    >
+    <div className="absolute top-0 right-0 bg-smoke-100 py-0.5 px-1 text-xs font-medium text-grey-400 dark:bg-slate-600 dark:text-slate-200">
       <Trans>ARCHIVED</Trans>
     </div>
   )
@@ -103,10 +77,6 @@ export default function ProjectCard({
 }: {
   project?: ProjectCardProject | BigNumber
 }) {
-  const {
-    theme: { colors, radii },
-  } = useContext(ThemeContext)
-
   const projectCardData = useProjectCardData(project)
   const { data: metadata } = useProjectMetadata(projectCardData?.metadataUri)
   const { handleText } = useProjectHandleText({
@@ -159,41 +129,18 @@ export default function ProjectCard({
   return (
     <Link href={projectCardHref} as={projectCardUrl}>
       <a>
-        <div
-          style={{
-            borderRadius: radii.lg,
-            cursor: 'pointer',
-            overflow: 'hidden',
-
-            ...cardStyle,
-          }}
-          className="border border-solid border-smoke-300 transition-colors hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100"
-        >
-          <div style={{ marginRight: 20 }}>
+        <div className="relative flex cursor-pointer items-center overflow-hidden whitespace-pre rounded-sm border border-solid border-smoke-300 py-6 px-5 transition-colors hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100">
+          <div className="mr-5">
             <ProjectLogo
+              className="h-28 w-28"
               uri={metadata?.logoUri}
               name={metadata?.name}
-              size={110}
               projectId={projectCardData.projectId}
             />
           </div>
-          <div
-            style={{
-              flex: 1,
-              minWidth: 0,
-              fontWeight: 400,
-            }}
-          >
+          <div className="min-w-0 flex-1 font-normal">
             {metadata ? (
-              <h2
-                style={{
-                  color: colors.text.primary,
-                  margin: 0,
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  fontSize: 21,
-                }}
-              >
+              <h2 className="m-0 overflow-hidden overflow-ellipsis text-xl leading-8 text-black dark:text-slate-100">
                 {metadata.name}
               </h2>
             ) : (
@@ -201,7 +148,7 @@ export default function ProjectCard({
             )}
 
             <div>
-              <span style={{ color: colors.text.primary, fontWeight: 500 }}>
+              <span className="font-medium text-black dark:text-slate-100">
                 {handleText}
               </span>{' '}
               <ProjectVersionBadge
@@ -211,14 +158,14 @@ export default function ProjectCard({
             </div>
 
             <div>
-              <span style={{ color: colors.text.primary, fontWeight: 500 }}>
+              <span className="font-medium text-black dark:text-slate-100">
                 <ETHAmount
                   amount={projectCardData.totalPaid}
                   precision={precision}
                 />{' '}
               </span>
 
-              <span style={{ color: colors.text.secondary }}>
+              <span className="text-grey-500 dark:text-grey-300">
                 since{' '}
                 {!!projectCardData.createdAt &&
                   formatDate(projectCardData.createdAt * 1000, 'yyyy-MM-DD')}
@@ -227,14 +174,7 @@ export default function ProjectCard({
 
             {metadata?.description && (
               <Tooltip title={metadata.description} placement="bottom">
-                <div
-                  style={{
-                    maxHeight: 20,
-                    color: colors.text.tertiary,
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                  }}
-                >
+                <div className="max-h-5 overflow-hidden overflow-ellipsis text-grey-400 dark:text-slate-200">
                   {metadata.description}
                 </div>
               </Tooltip>

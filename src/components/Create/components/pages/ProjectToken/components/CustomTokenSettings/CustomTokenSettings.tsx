@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Divider, Form, Space } from 'antd'
-import { CreateCallout } from 'components/Create/components/CreateCallout'
+import { Callout } from 'components/Callout'
 import { formatFundingCycleDuration } from 'components/Create/utils/formatFundingCycleDuration'
 import ExternalLink from 'components/ExternalLink'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
@@ -139,14 +139,14 @@ export const CustomTokenSettings = () => {
             />
           </Form.Item>
           {discountRateDisabled ? (
-            <CreateCallout.Warning>
+            <Callout.Warning>
               <Trans>
                 The discount rate cannot be set when the funding cycle duration
                 is not set.
               </Trans>
-            </CreateCallout.Warning>
+            </Callout.Warning>
           ) : (
-            <CreateCallout.Info>
+            <Callout.Info>
               <Space direction="vertical">
                 {discountRate === 0 ? (
                   <Trans>
@@ -176,7 +176,7 @@ export const CustomTokenSettings = () => {
                   </>
                 )}
               </Space>
-            </CreateCallout.Info>
+            </Callout.Info>
           )}
         </div>
       </Form.Item>
@@ -209,12 +209,12 @@ export const CustomTokenSettings = () => {
             />
           </Form.Item>
           {redemptionRateDisabled ? (
-            <CreateCallout.Warning>
+            <Callout.Warning>
               <Trans>
                 The redemption rate cannot be set when the funding target is
                 infinite.
               </Trans>
-            </CreateCallout.Warning>
+            </Callout.Warning>
           ) : (
             !isMobile && (
               <Form.Item noStyle name="redemptionRate">
@@ -235,12 +235,12 @@ export const CustomTokenSettings = () => {
           <JuiceSwitch label={t`Allow token minting`} />
         </Form.Item>
         {tokenMinting && (
-          <CreateCallout.Warning>
+          <Callout.Warning>
             <Trans>
               Token minting is not recommended as it allows the project owner to
               create unlimited tokens. This is a risk factor for contributors.
             </Trans>
-          </CreateCallout.Warning>
+          </Callout.Warning>
         )}
       </>
     </>

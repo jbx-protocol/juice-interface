@@ -2,8 +2,6 @@ import { Trans } from '@lingui/macro'
 import { Form, Switch } from 'antd'
 
 import FormItemLabel from 'components/FormItemLabel'
-import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, useContext } from 'react'
 import { defaultFundingCycleData } from 'redux/slices/editingV2Project'
 
 import { DISCOUNT_RATE_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
@@ -32,30 +30,24 @@ export default function ProjectDiscountRate({
   hideLabel,
   formItemProps,
   value,
-  style = {},
   onChange,
   checked,
   disabled,
   onToggle,
 }: {
   value: string | undefined
-  style?: CSSProperties
   onChange: (val?: number) => void
   checked?: boolean
   disabled?: boolean
   onToggle?: (checked: boolean) => void
 } & FormItemExt) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   return (
     <Form.Item
       extra={<DiscountRateExtra disabled={disabled} />}
       name={name}
       label={
         hideLabel ? undefined : (
-          <div style={{ display: 'flex' }}>
+          <div className="flex">
             <FormItemLabel>
               <Trans>Discount rate</Trans>
             </FormItemLabel>
@@ -63,7 +55,7 @@ export default function ProjectDiscountRate({
               <>
                 <Switch checked={checked} onChange={onToggle} />{' '}
                 {!checked ? (
-                  <span style={{ color: colors.text.tertiary, marginLeft: 10 }}>
+                  <span className="ml-2 text-grey-400 dark:text-slate-200">
                     ({defaultFundingCycleData.discountRate}%)
                   </span>
                 ) : null}
@@ -72,7 +64,6 @@ export default function ProjectDiscountRate({
           </div>
         )
       }
-      style={style}
       {...formItemProps}
     >
       <NumberSlider

@@ -299,10 +299,10 @@ export function DistributionSplitModal({
             value={editingSplitType}
             onChange={e => setEditingSplitType(e.target.value)}
           >
-            <Radio value="address" style={{ fontWeight: 400 }}>
+            <Radio value="address" className="font-normal">
               <Trans>Wallet address</Trans>
             </Radio>
-            <Radio value="project" style={{ fontWeight: 400 }}>
+            <Radio value="project" className="font-normal">
               <Trans>Juicebox project</Trans>
             </Radio>
           </Radio.Group>
@@ -331,7 +331,7 @@ export function DistributionSplitModal({
           >
             <InputNumber
               value={parseInt(projectId ?? '')}
-              style={{ width: '100%' }}
+              className="w-full"
               onChange={(projectId: number | null) => {
                 setProjectId(projectId?.toString())
               }}

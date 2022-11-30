@@ -65,8 +65,8 @@ export default function DistributeTokensModal({
       width={640}
       centered={true}
     >
-      <Space direction="vertical" style={{ width: '100%' }} size="large">
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <Space direction="vertical" className="w-full" size="large">
+        <div className="flex justify-between">
           <Trans>Available:</Trans>{' '}
           <div>
             {tokenSymbol

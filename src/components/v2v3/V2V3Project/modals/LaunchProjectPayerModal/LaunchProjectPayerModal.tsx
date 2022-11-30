@@ -3,7 +3,7 @@ import { TransactionReceipt } from '@ethersproject/providers'
 import { t, Trans } from '@lingui/macro'
 import { Modal, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import Callout from 'components/Callout'
+import { Callout } from 'components/Callout'
 import CopyTextButton from 'components/CopyTextButton'
 import EtherscanLink from 'components/EtherscanLink'
 import TransactionModal from 'components/TransactionModal'
@@ -133,13 +133,13 @@ export function LaunchProjectPayerModal({
             </Trans>
           </div>
 
-          <Callout>
+          <Callout.Info>
             <Trans>
               Contributors who pay this address from a custodial service
               platform (like Coinbase){' '}
               <strong>won't receive project tokens</strong>.
             </Trans>
-          </Callout>
+          </Callout.Info>
           <AdvancedOptionsCollapse form={advancedOptionsForm} />
         </Space>
       </TransactionModal>
@@ -150,16 +150,16 @@ export function LaunchProjectPayerModal({
         okText={t`Done`}
         centered
       >
-        <h4 style={{ marginBottom: 30 }}>
+        <h4 className="mb-7">
           <Trans>Your new payment address:</Trans>
         </h4>
         <EtherscanLink
+          className="text-base"
           value={projectPayerAddress}
-          style={{ fontSize: 15 }}
           type="address"
         />{' '}
-        <CopyTextButton value={projectPayerAddress} style={{ fontSize: 25 }} />
-        <p style={{ marginTop: 30 }}>
+        <CopyTextButton className="text-2xl" value={projectPayerAddress} />
+        <p className="mt-7">
           <Trans>
             Deployed payment addresses can be found in the Tools drawer (
             <ToolOutlined />) on the project page.

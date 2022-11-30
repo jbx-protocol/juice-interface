@@ -10,13 +10,8 @@ export function PercentageFormItem({
 }) {
   return (
     <Form.Item>
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-        }}
-      >
-        <div style={{ flex: 1 }}>
+      <div className="flex items-center">
+        <div className="flex-1">
           <NumberSlider
             onChange={(percentage: number | undefined) => {
               form.setFieldsValue({ percent: percentage })

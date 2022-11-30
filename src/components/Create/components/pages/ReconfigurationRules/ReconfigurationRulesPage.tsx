@@ -1,12 +1,12 @@
 import { t, Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
+import { Callout } from 'components/Callout'
 import { Selection } from 'components/Create/components/Selection'
 import { JuiceSwitch } from 'components/JuiceSwitch'
 import { readNetwork } from 'constants/networks'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
-import { CreateCallout } from '../../CreateCallout'
 import { CreateCollapse } from '../../CreateCollapse'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
@@ -51,12 +51,12 @@ export const ReconfigurationRulesPage = () => {
         </Space>
 
         {selection === 'none' && (
-          <CreateCallout.Warning>
+          <Callout.Warning>
             <Trans>
               Using a reconfiguration strategy is recommended. Projects with no
               strategy will appear risky to contributors.
             </Trans>
-          </CreateCallout.Warning>
+          </Callout.Warning>
         )}
 
         <CreateCollapse>

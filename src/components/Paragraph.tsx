@@ -1,18 +1,18 @@
 import { t } from '@lingui/macro'
 import { Button } from 'antd'
-
-import { CSSProperties, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 import RichNote from './RichNote'
 
 export default function Paragraph({
+  className,
   description,
   characterLimit,
-  style,
 }: {
+  className?: string
   description: string
   characterLimit?: number
-  style?: CSSProperties
 }) {
   const CHARACTER_LIMIT_EXCEEDED =
     (characterLimit && description.length > characterLimit) ||
@@ -29,9 +29,9 @@ export default function Paragraph({
   }, [characterLimit, description])
 
   return (
-    <div>
+    <>
       <RichNote
-        style={{ maxWidth: '700px', display: 'inline', ...style }} // good line length for reading
+        className={twMerge('inline max-w-[700px] ', className)} // good line length for reading
         note={
           !expanded && CHARACTER_LIMIT_EXCEEDED ? shortDescription : description
         }
@@ -40,7 +40,7 @@ export default function Paragraph({
         {CHARACTER_LIMIT_EXCEEDED && (
           <Button
             type="link"
-            style={{ padding: 0, paddingBottom: 0, height: 'auto' }}
+            className="h-auto p-0"
             onClick={e => {
               toggleExpanded()
               e.stopPropagation()
@@ -50,6 +50,6 @@ export default function Paragraph({
           </Button>
         )}
       </RichNote>
-    </div>
+    </>
   )
 }

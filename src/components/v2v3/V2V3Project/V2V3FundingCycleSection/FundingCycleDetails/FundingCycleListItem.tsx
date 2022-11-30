@@ -1,20 +1,9 @@
 import { Tooltip } from 'antd'
-import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, useContext } from 'react'
+import { classNames } from 'utils/classNames'
 
 function ListItemValue({ value }: { value: string | JSX.Element }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   return (
-    <div
-      style={{
-        color: colors.text.secondary,
-        whiteSpace: 'nowrap',
-        marginLeft: '6px',
-      }}
-    >
+    <div className="ml-1 whitespace-nowrap text-grey-500 dark:text-grey-300">
       {value}
     </div>
   )
@@ -32,23 +21,21 @@ export function FundingCycleListItem({
   helperText?: string | JSX.Element
   subItem?: boolean
 }) {
-  const containerStyle: CSSProperties = {
-    paddingTop: '3px',
-    paddingBottom: '4px',
-    fontSize: subItem ? '0.75rem' : '0.875rem',
-    display: 'flex',
-    flexWrap: 'wrap',
-    marginLeft: subItem ? '20px' : 'unset',
-  }
-
   if (helperText) {
     return (
-      <div style={{ ...containerStyle, cursor: 'default' }}>
+      <div
+        className={classNames(
+          'flex cursor-default flex-wrap pt-1 pb-2',
+          subItem ? 'ml-5 text-xs' : 'text-sm',
+        )}
+      >
         <Tooltip title={helperText} overlayInnerStyle={{ width: '400px' }}>
-          <div style={{ fontWeight: 500, display: 'flex' }}>
+          <div className="flex font-medium">
             <div
-              className="text-decoration-underline text-decoration-dashed text-decoration-secondary"
-              style={{ height: subItem ? '1rem' : '1.2rem' }}
+              className={classNames(
+                'text-decoration-underline text-decoration-dashed text-decoration-secondary',
+                subItem ? 'h-4' : 'h5',
+              )}
             >
               {name}
             </div>
@@ -62,9 +49,13 @@ export function FundingCycleListItem({
   }
 
   return (
-    <div style={containerStyle}>
-      <div style={{ fontWeight: 500 }}>{name}:</div>{' '}
-      <ListItemValue value={value} />
+    <div
+      className={classNames(
+        'flex  flex-wrap pt-1 pb-2',
+        subItem ? 'ml-5 text-xs' : 'text-sm',
+      )}
+    >
+      <div className="font-medium">{name}:</div> <ListItemValue value={value} />
     </div>
   )
 }

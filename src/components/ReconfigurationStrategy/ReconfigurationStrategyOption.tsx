@@ -1,40 +1,32 @@
 import { CheckCircleFilled } from '@ant-design/icons'
 import { ThemeContext } from 'contexts/themeContext'
 import { BallotStrategy } from 'models/ballot'
-import { CSSProperties, useContext } from 'react'
+import { useContext } from 'react'
+import { classNames } from 'utils/classNames'
 
 export default function ReconfigurationStrategyOption({
   title,
   content,
   strategy,
   selected,
-  background,
   onSelectBallot,
 }: {
   title: string
   content: JSX.Element
   strategy: BallotStrategy
   selected: boolean
-  background?: string
   onSelectBallot: (strategy: BallotStrategy) => void
 }) {
-  const { colors, radii } = useContext(ThemeContext).theme
-
-  const cardStyles: CSSProperties = {
-    display: 'flex',
-    padding: '1rem',
-    borderRadius: radii.md,
-    cursor: 'pointer',
-    ...(selected
-      ? { border: '1px solid ' + colors.stroke.action.primary }
-      : { border: '1px solid ' + colors.stroke.primary }),
-    background: background ?? colors.background.l0,
-  }
+  const { colors } = useContext(ThemeContext).theme
 
   return (
     <div
-      className="clickable-border"
-      style={cardStyles}
+      className={classNames(
+        'flex rounded-sm border border-solid bg-white p-4 transition-colors dark:bg-slate-700',
+        selected
+          ? 'border-haze-400'
+          : 'cursor-pointer border-smoke-300 hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100',
+      )}
       onClick={() => onSelectBallot(strategy)}
     >
       <div

@@ -167,7 +167,7 @@ export default function ProjectCard({
 
             ...cardStyle,
           }}
-          className="clickable-border"
+          className="border border-solid border-smoke-300 transition-colors hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100"
         >
           <div style={{ marginRight: 20 }}>
             <ProjectLogo

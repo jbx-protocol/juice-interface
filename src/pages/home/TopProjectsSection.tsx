@@ -42,7 +42,7 @@ const SmallProjectCardMobile = ({
       }
     >
       <a
-        className="clickable-border"
+        className="border border-solid border-smoke-300 transition-colors hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100"
         style={{
           cursor: 'pointer',
           overflow: 'hidden',
@@ -120,7 +120,7 @@ const SmallProjectCard = ({ project }: { project: ProjectCardProject }) => {
     >
       <a>
         <div
-          className="clickable-border"
+          className="border border-solid border-smoke-300 transition-colors hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100"
           style={{
             cursor: 'pointer',
             overflow: 'hidden',

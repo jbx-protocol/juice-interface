@@ -1,7 +1,7 @@
 import { juiceTheme } from 'constants/theme'
 import { ThemeOption } from 'constants/theme/theme-option'
 import type { ThemeContextType } from 'contexts/themeContext'
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 
 const flattenNestedObject = (
   nestedObj: Record<string, any>, // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -61,6 +61,16 @@ export function useJuiceTheme(storageKey = 'jb_theme'): ThemeContextType {
     () => setRootVarsForThemeOption(initialThemeOption),
     [initialThemeOption],
   )
+
+  // Set the theme on the body element
+  // This is needed for tailwind css dark theme classes to work
+  useLayoutEffect(() => {
+    if (currentThemeOption === ThemeOption.dark) {
+      document.body.classList.add('dark')
+    } else {
+      document.body.classList.remove('dark')
+    }
+  }, [currentThemeOption])
 
   useEffect(() => {
     setIsDarkMode(currentThemeOption === ThemeOption.dark)

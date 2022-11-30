@@ -119,7 +119,10 @@ export default function TrendingProjectCard({
             overflow: 'hidden',
           }}
         >
-          <div style={cardStyle} className="clickable-border">
+          <div
+            style={cardStyle}
+            className="border border-solid border-smoke-300 transition-colors hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100"
+          >
             <div
               style={{ marginRight: 20, display: 'flex', alignItems: 'center' }}
             >

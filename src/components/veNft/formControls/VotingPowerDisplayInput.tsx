@@ -1,7 +1,5 @@
 import { t, Trans } from '@lingui/macro'
 import { Form, Input } from 'antd'
-import { ThemeContext } from 'contexts/themeContext'
-import { useContext } from 'react'
 
 interface VotingPowerDisplayInputProps {
   votingPower: number
@@ -10,14 +8,10 @@ interface VotingPowerDisplayInputProps {
 const VotingPowerDisplayInput = ({
   votingPower,
 }: VotingPowerDisplayInputProps) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   return (
     <Form.Item
       label={
-        <h3 style={{ marginBottom: 0, color: colors.text.primary }}>
+        <h3 className="mb-0 text-black dark:text-slate-100">
           <Trans>Your voting power</Trans>
         </h3>
       }

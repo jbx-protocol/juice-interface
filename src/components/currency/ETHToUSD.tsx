@@ -34,5 +34,5 @@ export default function ETHToUSD({
       </span>
     )
   }
-  return <LoadingOutlined style={{ fontSize: 16 }} />
+  return <LoadingOutlined className="text-base" />
 }

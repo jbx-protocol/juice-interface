@@ -7,14 +7,13 @@ import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { RedeemAMMPrices } from 'components/Project/RedeemAMMPrices'
 import { V1_CURRENCY_USD } from 'constants/v1/currency'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useClaimableOverflowOf from 'hooks/v1/contractReader/ClaimableOverflowOf'
 import { useRedeemRate } from 'hooks/v1/contractReader/RedeemRate'
 import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
 import { useRedeemTokensTx } from 'hooks/v1/transactor/RedeemTokensTx'
 import { useWallet } from 'hooks/Wallet'
-import { CSSProperties, useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import {
   formattedNum,
   formatWad,
@@ -34,9 +33,6 @@ export default function RedeemModal({
   onOk?: VoidFunction
   onCancel?: VoidFunction
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { tokenSymbol, tokenAddress, currentFC, terminal, overflow } =
     useContext(V1ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
@@ -83,12 +79,6 @@ export default function RedeemModal({
         },
       },
     )
-  }
-
-  const statsStyle: CSSProperties = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'baseline',
   }
 
   const tokensTextLong = tokenSymbolText({
@@ -154,9 +144,9 @@ export default function RedeemModal({
       width={540}
       centered
     >
-      <Space direction="vertical" style={{ width: '100%' }}>
+      <Space direction="vertical" className="w-full">
         <div>
-          <p style={statsStyle}>
+          <p className="flex items-baseline justify-between">
             <Trans>Redemption rate:</Trans>{' '}
             <span>
               {fcMetadata?.bondingCurveRate !== undefined
@@ -165,13 +155,13 @@ export default function RedeemModal({
               %
             </span>
           </p>
-          <p style={statsStyle}>
+          <p className="flex items-baseline justify-between">
             {tokenSymbolText({ tokenSymbol, capitalize: true })} balance:{' '}
             <span>
               {formatWad(totalBalance ?? 0, { precision: 0 })} {tokensTextShort}
             </span>
           </p>
-          <p style={statsStyle}>
+          <p className="flex items-baseline justify-between">
             <Trans>
               Currently worth:{' '}
               <span>
@@ -185,13 +175,13 @@ export default function RedeemModal({
             <Trans>
               Tokens can be redeemed for a portion of this project's overflow,
               according to the redemption rate of the current funding cycle.{' '}
-              <span style={{ fontWeight: 500, color: colors.text.warn }}>
+              <span className="font-medium text-warning-800 dark:text-warning-100">
                 Tokens are burned when they are redeemed.
               </span>
             </Trans>
           ) : (
             <Trans>
-              <span style={{ fontWeight: 500, color: colors.text.warn }}>
+              <span className="font-medium text-warning-800 dark:text-warning-100">
                 <strong>This project has no overflow</strong>, so you will not
                 receive any ETH for burning tokens.
               </span>
@@ -225,15 +215,15 @@ export default function RedeemModal({
               />
               {tokenSymbol && tokenAddress ? (
                 <RedeemAMMPrices
+                  className="text-xs"
                   tokenSymbol={tokenSymbol}
                   tokenAddress={tokenAddress}
-                  style={{ fontSize: '0.75rem' }}
                 />
               ) : null}
             </Form.Item>
           </Form>
           {overflow?.gt(0) ? (
-            <div style={{ fontWeight: 500, marginTop: 20 }}>
+            <div className="mt-5 font-medium">
               <Trans>
                 You will receive{' '}
                 {currentFC?.currency.eq(V1_CURRENCY_USD) ? 'minimum ' : ' '}

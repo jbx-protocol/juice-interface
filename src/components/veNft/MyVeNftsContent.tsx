@@ -1,21 +1,13 @@
 import { Space } from 'antd'
-
-import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
-
 import { Trans } from '@lingui/macro'
-
 import OwnedVeNftCard from 'components/veNft/VeNftOwnedTokenCard'
-
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
-
-import { shadowCard } from 'constants/styles/shadowCard'
 import { useVeNftUserTokens } from 'hooks/veNft/VeNftUserTokens'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import VeNftSummaryStatsSection from './VeNftSummaryStatsSection'
 
 export default function MyVeNftsContent() {
-  const { theme } = useContext(ThemeContext)
   const { data: userTokens } = useVeNftUserTokens()
   const { primaryTerminalCurrentOverflow, tokenSymbol } =
     useContext(V2V3ProjectContext)
@@ -26,7 +18,7 @@ export default function MyVeNftsContent() {
     <div>
       {userTokens && userTokens.length > 0 ? (
         <>
-          <div style={{ ...shadowCard(theme), padding: 25, marginBottom: 10 }}>
+          <div className="mb-2 rounded-sm bg-smoke-75 stroke-none p-6 shadow-[10px_10px_0px_0px_#E7E3DC] dark:bg-slate-400 dark:shadow-[10px_10px_0px_0px_#2D293A]">
             <h3>$ve{tokenSymbolDisplayText} NFTs:</h3>
             <Space direction="vertical">
               {userTokens.map((token, i) => (
@@ -44,7 +36,7 @@ export default function MyVeNftsContent() {
           />
         </>
       ) : (
-        <div style={{ ...shadowCard(theme), padding: 25, marginBottom: 10 }}>
+        <div className="mb-2 rounded-sm bg-smoke-75 stroke-none p-6 shadow-[10px_10px_0px_0px_#E7E3DC] dark:bg-slate-400 dark:shadow-[10px_10px_0px_0px_#2D293A]">
           <h3>
             <Trans>You don't own any veNFTs!</Trans>
           </h3>

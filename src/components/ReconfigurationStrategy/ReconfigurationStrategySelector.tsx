@@ -1,14 +1,9 @@
 import { t, Trans } from '@lingui/macro'
 import { Space } from 'antd'
-import { ThemeContext } from 'contexts/themeContext'
-import { useContext, useState } from 'react'
-
+import { useState } from 'react'
 import ReconfigurationStrategyOption from 'components/ReconfigurationStrategy/ReconfigurationStrategyOption'
-
 import { BallotStrategy } from 'models/ballot'
-
 import { createCustomStrategy } from 'utils/ballot'
-
 import FormItemWarningText from '../FormItemWarningText'
 import { CustomStrategyInput } from './CustomStrategyInput'
 
@@ -23,8 +18,6 @@ export default function ReconfigurationStrategySelector({
   selectedStrategy: BallotStrategy
   onChange: (strategy: BallotStrategy) => void
 }) {
-  const { colors } = useContext(ThemeContext).theme
-
   const selectedStrategyIndex = ballotStrategies.findIndex(s => {
     return s.address?.toLowerCase() === selectedStrategy.address?.toLowerCase()
   })
@@ -54,7 +47,7 @@ export default function ReconfigurationStrategySelector({
           content={
             <div>
               <p>{strategy.description}</p>
-              <p style={{ fontSize: '0.75rem', color: colors.text.tertiary }}>
+              <p className="text-xs text-grey-400 dark:text-slate-200">
                 <Trans>Contract address: {strategy.address}</Trans>
               </p>
             </div>

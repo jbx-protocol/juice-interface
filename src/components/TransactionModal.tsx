@@ -1,7 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Modal, ModalProps } from 'antd'
 import { readNetwork } from 'constants/networks'
-import { ThemeContext } from 'contexts/themeContext'
 import { TxHistoryContext } from 'contexts/txHistoryContext'
 import { useWallet } from 'hooks/Wallet'
 import { TxStatus } from 'models/transaction'
@@ -19,32 +18,20 @@ type TransactionModalProps = PropsWithChildren<
 >
 
 const PendingTransactionModalBody = () => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { transactions } = useContext(TxHistoryContext)
 
   const pendingTx = transactions?.find(tx => tx.status === TxStatus.pending)
   const pendingTxHash = pendingTx?.tx?.hash
 
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        margin: '2rem 0',
-      }}
-    >
-      <div style={{ textAlign: 'center', maxWidth: 400 }}>
+    <div className="my-8 mx-0 flex h-full w-full items-center justify-center">
+      <div className="text-center font-normal">
         <Image
+          className="mb-4"
           src={quint}
           alt={t`Juicebox loading animation`}
-          style={{ marginBottom: '1rem' }}
         />
-        <h2 style={{ color: colors.text.primary }}>
+        <h2 className="text-black dark:text-slate-100">
           <Trans>Transaction pending...</Trans>
         </h2>
         <p>

@@ -7,11 +7,11 @@ import FormattedAddress from 'components/FormattedAddress'
 import TooltipIcon from 'components/TooltipIcon'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 import { CurrencyName } from 'constants/currency'
-import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import round from 'lodash/round'
 import { Split } from 'models/splits'
 import { PropsWithChildren, useContext, useState } from 'react'
+import { classNames } from 'utils/classNames'
 import { formatDate } from 'utils/format/formatDate'
 import { parseWad } from 'utils/format/formatNumber'
 import { amountFromPercent } from 'utils/v2v3/distributions'
@@ -60,9 +60,6 @@ export function DistributionSplitCard({
   setDistributionLimit?: (distributionLimit: string) => void
   onCurrencyChange?: (currencyName: CurrencyName) => void
 }) {
-  const {
-    theme: { colors, radii },
-  } = useContext(ThemeContext)
   const { projectOwnerAddress } = useContext(V2V3ProjectContext)
 
   const [editSplitModalOpen, setEditSplitModalOpen] = useState<boolean>(false)
@@ -82,68 +79,64 @@ export function DistributionSplitCard({
     split.percent !== SPLITS_TOTAL_PERCENT &&
     (split.percent / SPLITS_TOTAL_PERCENT).toString().split('.')[1]?.length > 4
 
-  const cursor = isLocked ? 'default' : 'pointer'
-
   return (
     <div
-      style={{
-        display: 'flex',
-        padding: 10,
-        border: isLocked ? '1px solid' + colors.stroke.disabled : undefined,
-        borderRadius: radii.md,
-      }}
+      className={classNames(
+        'flex rounded-sm  border border-solid  p-2 transition-colors hover:border-smoke-500 dark:hover:border-slate-100',
+        !isLocked
+          ? 'border-smoke-300 dark:border-slate-300'
+          : 'border-grey-200 dark:border-grey-700',
+      )}
       role="button"
-      className="border border-solid border-smoke-300 transition-colors hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100"
     >
       <Space
+        className={classNames(
+          'w-full text-black dark:text-slate-100',
+          isLocked ? 'cursor-default' : 'cursor-pointer',
+        )}
         direction="vertical"
-        style={{
-          width: '100%',
-          color: colors.text.primary,
-          cursor,
-        }}
         onClick={!isLocked ? () => setEditSplitModalOpen(true) : undefined}
       >
         {split.projectId && parseInt(split.projectId) > 0 ? (
-          <Row gutter={gutter} style={{ width: '100%' }} align="middle">
+          <Row gutter={gutter} className="w-full" align="middle">
             <Col span={labelColSpan}>
-              <label style={{ cursor }}>
+              <label
+                className={classNames(
+                  isLocked ? 'cursor-default' : 'cursor-pointer',
+                )}
+              >
                 <Trans>Project:</Trans>
               </label>{' '}
             </Col>
             <Col span={dataColSpan}>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}
-              >
+              <div className="flex items-center justify-between">
                 <V2V3ProjectHandleLink projectId={parseInt(split.projectId)} />
               </div>
             </Col>
           </Row>
         ) : (
-          <Row gutter={gutter} style={{ width: '100%' }} align="middle">
+          <Row gutter={gutter} className="w-full" align="middle">
             <Col span={labelColSpan}>
-              <label style={{ cursor }}>
+              <label
+                className={classNames(
+                  isLocked ? 'cursor-default' : 'cursor-pointer',
+                )}
+              >
                 <Trans>Address:</Trans>
               </label>{' '}
             </Col>
             <Col span={dataColSpan}>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}
-              >
+              <div className="flex items-center justify-between">
                 {isOwner && !split.beneficiary ? (
-                  <span style={{ cursor }}>
+                  <span
+                    className={classNames(
+                      isLocked ? 'cursor-default' : 'cursor-pointer',
+                    )}
+                  >
                     <Trans>Project owner (you)</Trans>
                   </span>
                 ) : (
-                  <span style={{ cursor: 'pointer' }}>
+                  <span className="cursor-pointer">
                     <FormattedAddress address={split.beneficiary} />
                   </span>
                 )}
@@ -160,21 +153,29 @@ export function DistributionSplitCard({
         {parseInt(split.projectId ?? '0') > 0 ? (
           <Row>
             <Col span={labelColSpan}>
-              <label style={{ cursor }}>
+              <label
+                className={classNames(
+                  isLocked ? 'cursor-default' : 'cursor-pointer',
+                )}
+              >
                 <Trans>Token beneficiary:</Trans>
               </label>
             </Col>
             <Col span={dataColSpan}>
-              <span style={{ cursor: 'pointer' }}>
+              <span className="cursor-pointer">
                 <FormattedAddress address={split.beneficiary} />
               </span>
             </Col>
           </Row>
         ) : null}
 
-        <Row gutter={gutter} style={{ width: '100%' }} align="middle">
+        <Row gutter={gutter} className="w-full" align="middle">
           <Col span={labelColSpan}>
-            <label style={{ cursor }}>
+            <label
+              className={classNames(
+                isLocked ? 'cursor-default' : 'cursor-pointer',
+              )}
+            >
               {distributionLimitIsInfinite ? (
                 <Trans>Percentage:</Trans>
               ) : (
@@ -183,21 +184,8 @@ export function DistributionSplitCard({
             </label>
           </Col>
           <Col span={dataColSpan}>
-            <div
-              style={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
-              <span
-                style={{
-                  marginRight: 10,
-                  width: 100,
-                  maxWidth: 100,
-                }}
-              >
+            <div className="flex w-full items-center justify-between">
+              <span className="mr-2 w-[100px] max-w-[100px]">
                 <Space size="small" direction="horizontal">
                   {!distributionLimitIsInfinite && (
                     <span>
@@ -224,9 +212,13 @@ export function DistributionSplitCard({
         </Row>
 
         {split.lockedUntil ? (
-          <Row gutter={gutter} style={{ width: '100%' }} align="middle">
+          <Row gutter={gutter} className="w-full" align="middle">
             <Col span={labelColSpan}>
-              <label style={{ cursor }}>
+              <label
+                className={classNames(
+                  isLocked ? 'cursor-default' : 'cursor-pointer',
+                )}
+              >
                 <Trans>Locked:</Trans>
               </label>
             </Col>
@@ -241,13 +233,11 @@ export function DistributionSplitCard({
         <>
           {!isOwner ? (
             <Tooltip title={<Trans>Payout is locked</Trans>}>
-              <LockOutlined
-                style={{ color: colors.icon.disabled, paddingTop: '4px' }}
-              />
+              <LockOutlined className="pt-1 text-grey-400 dark:text-grey-400" />
             </Tooltip>
           ) : (
             <TooltipIcon
-              iconStyle={{ paddingTop: '4px' }}
+              iconClassName="pt-1"
               tip={
                 <Trans>
                   You have configured for all funds to be distributed from the
@@ -261,13 +251,13 @@ export function DistributionSplitCard({
       ) : (
         <Tooltip title={<Trans>Delete payout</Trans>}>
           <Button
+            className="h-4"
             type="text"
             onClick={e => {
               onSplitDelete?.(split)
               e.stopPropagation()
             }}
             icon={<DeleteOutlined />}
-            style={{ height: 16 }}
           />
         </Tooltip>
       )}

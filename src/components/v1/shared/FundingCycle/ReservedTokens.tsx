@@ -52,7 +52,7 @@ export default function ReservedTokens({
       <div>
         <TooltipLabel
           label={
-            <h4 style={{ display: 'inline-block' }}>
+            <h4 className="inline-block">
               <Trans>
                 Reserved{' '}
                 {tokenSymbolText({
@@ -84,14 +84,7 @@ export default function ReservedTokens({
       ) : null}
 
       {!hideActions && !isConstitutionDAO && !isSharkDAO && (
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'baseline',
-            marginBottom: 20,
-          }}
-        >
+        <div className="mb-5 flex items-baseline justify-between">
           <span>
             <Trans>
               {formatWad(reservedTokens, { precision: 0 }) || 0}{' '}
@@ -99,7 +92,7 @@ export default function ReservedTokens({
             </Trans>
           </span>
           <Button
-            style={{ marginLeft: 10 }}
+            className="ml-2"
             size="small"
             onClick={() => setModalIsVisible(true)}
             disabled={isPreviewMode}

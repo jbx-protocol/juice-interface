@@ -1,7 +1,7 @@
 import { CheckCircleFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Modal, ModalProps, Space } from 'antd'
-import Callout from 'components/Callout'
+import { Callout } from 'components/Callout'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useV1ProjectIdOfV2Project } from 'hooks/v2v3/contractReader/V1ProjectIdOfV2Project'
 import { useHasV1TokenPaymentTerminal } from 'hooks/v2v3/hasV1TokenPaymentTerminal'
@@ -34,7 +34,7 @@ export function V1TokenMigrationSetupModal({ ...props }: ModalProps) {
       cancelText={<Trans>Close</Trans>}
       {...props}
     >
-      <p style={{ marginBottom: '2rem' }}>
+      <p className="mb-8">
         <Trans>
           Set up your Juicebox V2 project for migration from your Juicebox V1
           project.
@@ -53,11 +53,14 @@ export function V1TokenMigrationSetupModal({ ...props }: ModalProps) {
         />
 
         {completed && (
-          <Callout iconComponent={<CheckCircleFilled />}>
+          <Callout
+            className="bg-smoke-75 dark:bg-slate-400"
+            iconComponent={<CheckCircleFilled />}
+          >
             <p>
               <Trans>You're all set!</Trans> 🎉
             </p>
-            <p style={{ margin: 0 }}>
+            <p className="m-0">
               <Trans>
                 V1 token holders can swap their tokens for your V2 tokens on
                 your V2 project's <strong>Tokens</strong> section.

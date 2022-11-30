@@ -23,7 +23,7 @@ const AssetTypeSwitcherButton = ({
   const formattedType = type === 'project' ? 'Project' : 'ERC-20'
   return (
     <Button
-      style={{ marginRight: 20, width: 100 }}
+      className="mr-5 w-24"
       type="text"
       icon={<CaretDownFilled />}
       onClick={onClick}
@@ -66,7 +66,7 @@ const AssetInput = ({
   }
 
   return (
-    <div style={{ display: 'inline-flex', width: '100%' }}>
+    <div className="inline-flex w-full">
       <AssetTypeSwitcherButton
         type={value?.type ?? type}
         onClick={() => {
@@ -139,8 +139,8 @@ export function TokenRefs({
                 <Col flex="none">
                   <Tooltip title={t`Untrack token`}>
                     <Button
+                      className="ml-2"
                       type="text"
-                      style={{ marginLeft: 10 }}
                       icon={<DeleteOutlined />}
                       block
                       onClick={() => remove(name)}

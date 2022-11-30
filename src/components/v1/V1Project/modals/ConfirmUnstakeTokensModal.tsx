@@ -4,7 +4,6 @@ import { Form, Modal, Space } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceOfUser'
 import { useUnstakeTokensTx } from 'hooks/v1/transactor/UnstakeTokensTx'
@@ -23,9 +22,7 @@ export default function ConfirmUnstakeTokensModal({
 }) {
   const [loading, setLoading] = useState<boolean>()
   const [unstakeAmount, setUnstakeAmount] = useState<string>()
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
+
   const { tokenSymbol, tokenAddress } = useContext(V1ProjectContext)
   const unstakeTokensTx = useUnstakeTokensTx()
 
@@ -73,7 +70,7 @@ export default function ConfirmUnstakeTokensModal({
     >
       <Space direction="vertical" size="large">
         {!ticketsIssued && (
-          <div style={{ padding: 10, background: colors.background.l1 }}>
+          <div className="bg-smoke-100 p-2 dark:bg-slate-600">
             <Trans>
               <b>Note:</b> Tokens cannot be claimed because no ERC-20 token has
               been issued for this project. ERC-20 tokens must be issued by the
@@ -89,7 +86,7 @@ export default function ConfirmUnstakeTokensModal({
               balance to ERC-20 tokens and mint them to your wallet.
             </Trans>
           </p>
-          <p style={{ fontWeight: 600 }}>
+          <p className="font-medium">
             <Trans>
               If you're unsure if you need to claim, you probably don't.
             </Trans>

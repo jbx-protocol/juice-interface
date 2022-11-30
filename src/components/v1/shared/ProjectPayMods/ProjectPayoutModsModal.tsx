@@ -12,11 +12,9 @@ import {
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import NumberSlider from 'components/inputs/NumberSlider'
-
-import { ThemeContext } from 'contexts/themeContext'
 import { isAddress } from 'ethers/lib/utils'
 import { PayoutMod } from 'models/mods'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import {
   fromWad,
   parseWad,
@@ -26,16 +24,11 @@ import {
 } from 'utils/format/formatNumber'
 import { amountSubFee } from 'utils/v1/math'
 import { getAmountFromPercent, getPercentFromAmount } from 'utils/v1/payouts'
-
 import * as constants from '@ethersproject/constants'
 import * as moment from 'moment'
-
 import { BigNumber } from '@ethersproject/bignumber'
-
 import { useForm } from 'antd/lib/form/Form'
-
 import { CurrencyName } from 'constants/currency'
-
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { EditingPayoutMod } from './types'
 
@@ -71,10 +64,6 @@ export const ProjectPayoutModsModal = ({
   onOk: (mods: EditingPayoutMod[]) => void
   onCancel: VoidFunction
 }) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const [modalMode, setModalMode] = useState<ModalMode>('Add') //either 'Add', or 'Edit'
   const [editingModType, setEditingModType] = useState<ModType>('address')
   const [editingModHandle, setEditingModHandle] = useState<string | BigNumber>()
@@ -296,13 +285,7 @@ export const ProjectPayoutModsModal = ({
             }
             rules={[{ validator: validatePayout }]}
           >
-            <div
-              style={{
-                display: 'flex',
-                color: colors.text.primary,
-                alignItems: 'center',
-              }}
-            >
+            <div className="flex items-center text-black dark:text-slate-100">
               <FormattedNumberInput
                 value={form.getFieldValue('amount')}
                 placeholder={'0'}
@@ -314,8 +297,8 @@ export const ProjectPayoutModsModal = ({
         ) : null}
 
         <Form.Item label={t`Percent`}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <span style={{ flex: 1 }}>
+          <div className="flex items-center">
+            <span className="flex-1">
               <NumberSlider
                 onChange={(percent: number | undefined) => {
                   const newAmount = getAmountFromPercent(

@@ -15,10 +15,11 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useWeiConverter from 'hooks/WeiConverter'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import V1ConfirmPayOwnerModal from './modals/V1ConfirmPayOwnerModal'
 
-export function V1PayButton({ wrapperStyle, disabled }: PayButtonProps) {
+export function V1PayButton({ wrapperClassName, disabled }: PayButtonProps) {
   const { currentFC, terminal } = useContext(V1ProjectContext)
   const { projectId, isArchived, projectMetadata } = useContext(
     ProjectMetadataContext,
@@ -85,14 +86,14 @@ export function V1PayButton({ wrapperStyle, disabled }: PayButtonProps) {
 
   // Pay enabled
   return (
-    <div style={{ textAlign: 'center', ...wrapperStyle }}>
+    <div className={twMerge('text-center', wrapperClassName)}>
       <Tooltip
         title={disabledMessage}
         className="block"
         open={disabledMessage ? undefined : false}
       >
         <Button
-          style={{ width: '100%' }}
+          className="w-full"
           type="primary"
           onClick={onPayButtonClick}
           disabled={shouldDisableButton}
@@ -101,7 +102,7 @@ export function V1PayButton({ wrapperStyle, disabled }: PayButtonProps) {
         </Button>
       </Tooltip>
       {payInCurrency === V1_CURRENCY_USD && (
-        <div style={{ fontSize: '0.75rem' }}>
+        <div className="text-xs">
           <Trans>
             Paid as <ETHAmount amount={weiPayAmt} />
           </Trans>

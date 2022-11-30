@@ -1,8 +1,7 @@
 import { Input } from 'antd'
 import Sticker from 'components/icons/Sticker'
 import { AttachStickerModal } from 'components/modals/AttachStickerModal'
-import { ThemeContext } from 'contexts/themeContext'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 
 export function MemoFormInput({
   value,
@@ -13,20 +12,12 @@ export function MemoFormInput({
   onChange?: (memo: string) => void
   placeholder?: string
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const [attachStickerModalVisible, setAttachStickerModalVisible] =
     useState<boolean>(false)
 
   return (
     <>
-      <div
-        style={{
-          position: 'relative',
-        }}
-      >
+      <div className="relative">
         <Input.TextArea
           placeholder={placeholder ?? undefined}
           maxLength={256}
@@ -38,13 +29,7 @@ export function MemoFormInput({
         <Sticker
           onClick={() => setAttachStickerModalVisible(true)}
           size={20}
-          style={{
-            color: colors.text.secondary,
-            fontSize: '.8rem',
-            position: 'absolute',
-            right: 5,
-            top: 7,
-          }}
+          className="absolute right-[5px] top-[7px] text-sm text-grey-500 dark:text-grey-300"
         />
       </div>
       <AttachStickerModal

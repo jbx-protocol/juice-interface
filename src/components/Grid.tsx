@@ -22,7 +22,7 @@ export default function Grid({
   if (!isReactNodeArray(children)) return <>{children}</>
 
   return list ? (
-    <Space style={{ width: '100%' }} direction="vertical">
+    <Space className="w-full" direction="vertical">
       {children}
     </Space>
   ) : (

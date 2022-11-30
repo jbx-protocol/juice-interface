@@ -1,29 +1,24 @@
-import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, useContext } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 export function ProjectVersionBadge({
+  className,
+  transparent = false,
   versionText,
   size,
-  style,
 }: {
+  className?: string
+  transparent?: boolean
   versionText: string
   size?: 'small'
-  style?: CSSProperties
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   return (
     <span
-      style={{
-        padding: size === 'small' ? '0 4px' : '2px 4px',
-        background: colors.background.l2,
-        color: colors.text.secondary,
-        fontSize: size === 'small' ? '0.75rem' : 'auto',
-        cursor: 'default',
-        ...style,
-      }}
+      className={twMerge(
+        'cursor-default text-grey-900 dark:text-slate-100',
+        !transparent ? 'bg-smoke-75 dark:bg-slate-400' : '',
+        size === 'small' ? 'py-0 px-1 text-xs' : 'py-0.5 px-1 text-sm',
+        className,
+      )}
     >
       {versionText}
     </span>

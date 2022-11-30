@@ -7,7 +7,6 @@ import FundingCycleSection, {
   TabType,
 } from 'components/Project/FundingCycleSection'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
 import { V2OperatorPermission } from 'models/v2v3/permissions'
@@ -30,9 +29,6 @@ const TabText = ({
   text: string
   hideRiskFlag?: boolean
 }) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { fundingCycle, fundingCycleMetadata } = useContext(V2V3ProjectContext)
 
   const hasRisks =
@@ -55,12 +51,7 @@ const TabText = ({
     >
       <span>
         {text}
-        <ExclamationCircleOutlined
-          style={{
-            color: colors.text.warn,
-            marginLeft: 4,
-          }}
-        />
+        <ExclamationCircleOutlined className="ml-1 text-warning-800 dark:text-warning-100" />
       </span>
     </Tooltip>
   )

@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Descriptions, Form, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import Callout from 'components/Callout'
+import { Callout } from 'components/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
@@ -173,13 +173,13 @@ export default function V2RedeemModal({
       width={540}
       centered
     >
-      <Space direction="vertical" style={{ width: '100%' }} size="large">
+      <Space direction="vertical" className="w-full" size="large">
         <div>
           {canRedeem ? (
             <Space direction="vertical" size="middle">
-              <Callout>
+              <Callout.Info>
                 <Trans>Tokens are burned when they are redeemed.</Trans>
-              </Callout>
+              </Callout.Info>
               <div>
                 <Trans>
                   Redeem your tokens for a portion of this project's overflow.
@@ -189,7 +189,7 @@ export default function V2RedeemModal({
               </div>
             </Space>
           ) : (
-            <Callout>
+            <Callout.Info>
               {!hasOverflow && (
                 <Trans>
                   <strong>This project has no overflow</strong>. You won't
@@ -202,7 +202,7 @@ export default function V2RedeemModal({
                   won't receive any ETH for burning your tokens.
                 </Trans>
               )}
-            </Callout>
+            </Callout.Info>
           )}
         </div>
 
@@ -260,9 +260,9 @@ export default function V2RedeemModal({
               />
               {tokenSymbol && tokenAddress ? (
                 <RedeemAMMPrices
+                  className="text-xs"
                   tokenSymbol={tokenSymbol}
                   tokenAddress={tokenAddress}
-                  style={{ fontSize: '0.75rem' }}
                 />
               ) : null}
             </Form.Item>
@@ -273,7 +273,7 @@ export default function V2RedeemModal({
           </Form>
 
           {canRedeem && !totalSupplyExceeded && minReturnedTokens?.gt(0) ? (
-            <div style={{ fontWeight: 500, marginTop: 20 }}>
+            <div className="mt-5 font-medium">
               <>
                 {/* If USD denominated, can only define the lower limit (not exact amount), hence 'at least' */}
                 {/* Using 4 full sentences for translation purposes */}

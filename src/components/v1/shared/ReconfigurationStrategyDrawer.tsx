@@ -2,29 +2,28 @@ import { Trans } from '@lingui/macro'
 import { Button, Drawer, DrawerProps } from 'antd'
 
 import ReconfigurationStrategySelector from 'components/ReconfigurationStrategy/ReconfigurationStrategySelector'
-import { ThemeContext } from 'contexts/themeContext'
 import { BallotStrategy } from 'models/ballot'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { ballotStrategies } from 'constants/v1/ballotStrategies'
 
 export default function ReconfigurationStrategyDrawer({
+  className,
   open,
   onClose,
   initialSelectedStrategy,
-  style = {},
+  placement,
+  width,
   onSave,
 }: {
+  className?: string
+  placement?: DrawerProps['placement']
+  width?: DrawerProps['width']
   open: boolean
   onClose: () => void
   initialSelectedStrategy: BallotStrategy
-  style?: Partial<DrawerProps>
   onSave: (strategy: BallotStrategy) => void
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const [strategy, setStrategy] = useState<BallotStrategy>(
     initialSelectedStrategy,
   )
@@ -34,11 +33,17 @@ export default function ReconfigurationStrategyDrawer({
   }, [initialSelectedStrategy])
 
   return (
-    <Drawer open={open} {...style} onClose={onClose}>
+    <Drawer
+      className={className}
+      open={open}
+      placement={placement}
+      width={width}
+      onClose={onClose}
+    >
       <h1>
         <Trans>Reconfiguration rules</Trans>
       </h1>
-      <p style={{ color: colors.text.secondary }}>
+      <p className="text-grey-500 dark:text-grey-300">
         <Trans>
           Rules for how this project's funding cycles can be reconfigured.
         </Trans>
@@ -50,11 +55,7 @@ export default function ReconfigurationStrategyDrawer({
         onChange={strategy => setStrategy(strategy)}
       />
 
-      <Button
-        type="primary"
-        onClick={() => onSave(strategy)}
-        style={{ marginTop: '1rem' }}
-      >
+      <Button className="mt-4" type="primary" onClick={() => onSave(strategy)}>
         <Trans>Save rules</Trans>
       </Button>
     </Drawer>

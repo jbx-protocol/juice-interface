@@ -1,9 +1,8 @@
 import { t, Trans } from '@lingui/macro'
 import { Form, FormInstance, Space, Switch } from 'antd'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
-import { ThemeContext } from 'contexts/themeContext'
 import { isAddress } from 'ethers/lib/utils'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 
 interface CustomBeneficiaryInputProps {
   form: FormInstance
@@ -14,10 +13,6 @@ const CustomBeneficiaryInput = ({
   form,
   labelText,
 }: CustomBeneficiaryInputProps) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const [customBeneficiaryEnabled, setCustomBeneficiaryEnabled] =
     useState(false)
 
@@ -38,13 +33,13 @@ const CustomBeneficiaryInput = ({
           checked={customBeneficiaryEnabled}
           onChange={setCustomBeneficiaryEnabled}
         />
-        <span style={{ color: colors.text.primary, fontWeight: 500 }}>
+        <span className="font-medium text-black dark:text-slate-100">
           <Trans>Custom token beneficiary</Trans>
         </span>
       </Space>
       {customBeneficiaryEnabled && (
         <Form.Item
-          style={{ marginTop: '1rem', marginBottom: 0 }}
+          className="mt-4 mb-0"
           name="beneficiary"
           rules={[
             {

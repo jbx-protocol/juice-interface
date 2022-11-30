@@ -6,7 +6,7 @@ import { PV_V1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1PayProjectFormProvider } from 'providers/v1/V1PayProjectFormProvider'
-import { CSSProperties, lazy, Suspense, useContext } from 'react'
+import { lazy, Suspense, useContext } from 'react'
 import FundingCycles from './FundingCycles'
 import ProjectActivity from './ProjectActivity'
 import { TokensSection } from './TokensSection'
@@ -17,19 +17,13 @@ const VolumeChart = lazy(() => import('components/VolumeChart'))
 
 const gutter = 40
 
-export function V1Project({
-  style,
-  column,
-}: {
-  style?: CSSProperties
-  column?: boolean
-}) {
+export function V1Project({ column }: { column?: boolean }) {
   const { createdAt, handle, isPreviewMode, owner } =
     useContext(V1ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
   return (
-    <div style={style}>
+    <>
       <ProjectHeader
         handle={handle}
         projectOwnerAddress={owner}
@@ -37,23 +31,24 @@ export function V1Project({
       />
 
       <Row gutter={gutter} align="bottom">
-        <Col xs={24} md={column ? 24 : 12} style={{ marginTop: gutter }}>
+        <Col className="mt-10" xs={24} md={column ? 24 : 12}>
           <TreasuryStatsSection />
         </Col>
 
-        <Col xs={24} md={column ? 24 : 12} style={{ marginTop: gutter }}>
+        <Col className="mt-10" xs={24} md={column ? 24 : 12}>
           <V1PayProjectFormProvider>
             <PayProjectForm />
           </V1PayProjectFormProvider>
         </Col>
       </Row>
 
-      <Row gutter={gutter} style={{ paddingBottom: gutter }}>
-        <Col xs={24} md={column ? 24 : 12} style={{ marginTop: gutter }}>
+      <Row className="pb-10" gutter={gutter}>
+        <Col xs={24} md={column ? 24 : 12} className="mt-10">
           {projectId && (
-            <div style={{ marginBottom: gutter }}>
+            <div className="mb-10">
               <Suspense fallback={<LoadingOutlined />}>
                 <VolumeChart
+                  // TODO: Remove later
                   style={{ height: 240 }}
                   projectId={projectId}
                   createdAt={createdAt}
@@ -63,18 +58,18 @@ export function V1Project({
             </div>
           )}
 
-          <div style={{ marginBottom: gutter }}>
+          <div className="mb-10">
             <TokensSection />
           </div>
 
           <FundingCycles />
         </Col>
         {!isPreviewMode ? (
-          <Col xs={24} md={column ? 24 : 12} style={{ marginTop: gutter }}>
+          <Col className="mt-10" xs={24} md={column ? 24 : 12}>
             <ProjectActivity />
           </Col>
         ) : null}
       </Row>
-    </div>
+    </>
   )
 }

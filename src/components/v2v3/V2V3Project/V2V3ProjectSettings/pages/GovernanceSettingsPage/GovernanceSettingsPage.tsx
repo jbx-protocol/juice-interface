@@ -25,7 +25,7 @@ export function GovernanceSettingsPage() {
 
   return (
     <div>
-      <Space direction="vertical" size="large" style={{ width: '100%' }}>
+      <Space direction="vertical" size="large" className="w-full">
         {readNetwork.name === 'mainnet' && <SnapshotSettingsSection />}
 
         {featureFlagEnabled(FEATURE_FLAGS.VENFT) && (

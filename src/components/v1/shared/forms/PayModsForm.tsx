@@ -3,7 +3,6 @@ import { t, Trans } from '@lingui/macro'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Form, Input, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { ThemeContext } from 'contexts/themeContext'
 import { PayoutMod } from 'models/mods'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useLayoutEffect, useState } from 'react'
@@ -38,10 +37,6 @@ export default function PayModsForm({
   }>()
 
   const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
-  const {
     currencies: { ETH },
   } = useContext(CurrencyContext)
 
@@ -74,8 +69,8 @@ export default function PayModsForm({
   }
 
   return (
-    <Space direction="vertical" size="large" style={{ width: '100%' }}>
-      <div style={{ color: colors.text.secondary }}>
+    <Space direction="vertical" size="large" className="w-full">
+      <div className="text-grey-500 dark:text-grey-300">
         <h1>
           <Trans>Funding distribution</Trans>
         </h1>
@@ -96,7 +91,7 @@ export default function PayModsForm({
         </p>
       </div>
 
-      <div style={{ textAlign: 'right' }}>
+      <div className="text-right">
         <CsvUpload
           onChange={onModsChanged}
           templateUrl={'/assets/csv/v1-payouts-template.csv'}
@@ -136,7 +131,7 @@ export default function PayModsForm({
         />
         <Form.Item>
           <Button
-            style={{ marginTop: 20 }}
+            className="mt-5"
             htmlType="submit"
             type="primary"
             onClick={validateAndSaveMods}

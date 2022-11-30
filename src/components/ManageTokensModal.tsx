@@ -118,7 +118,7 @@ export default function ManageTokensModal({
         okButtonProps={{ hidden: true }}
         centered
       >
-        <Space direction="vertical" style={{ width: '100%' }}>
+        <Space direction="vertical" className="w-full">
           <RedeemButtonTooltip
             buttonDisabled={redeemDisabled}
             redeemDisabledReason={redeemDisabledReason}

@@ -20,14 +20,14 @@ export default function MaxSupplyFormItem({
     <>
       <Form.Item
         label={
-          <div style={{ display: 'flex' }}>
+          <div className="flex">
             <Switch
+              className="mr-2"
               checked={limitedSupplyEnabled}
               onChange={() => {
                 setLimitedSupplyEnabled(!limitedSupplyEnabled)
                 onChange(undefined)
               }}
-              style={{ marginRight: '10px' }}
             />
             <TooltipLabel
               label={t`Limited supply`}
@@ -35,17 +35,17 @@ export default function MaxSupplyFormItem({
             />
           </div>
         }
-        style={{ width: '100%' }}
+        className="w-full"
       >
-        <div style={{ display: 'flex' }}>
+        <div className="flex">
           {limitedSupplyEnabled ? (
             <Form.Item
+              className="mb-0 w-full"
               extra={
                 limitedSupplyEnabled
                   ? t`The maximum supply of this NFT in circulation.`
                   : null
               }
-              style={{ width: '100%', marginBottom: 0 }}
               name={'maxSupply'}
             >
               <FormattedNumberInput isInteger />

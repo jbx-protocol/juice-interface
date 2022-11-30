@@ -47,11 +47,11 @@ export function AttachStickerModal({
       centered
     >
       <Space
+        className="max-h-[400px] w-full overflow-y-scroll"
         size="large"
         direction="vertical"
-        style={{ width: '100%', maxHeight: '400px', overflowY: 'scroll' }}
       >
-        <Row style={{ width: '100%' }}>
+        <Row className="w-full">
           {PAYMENT_MEMO_STICKERS.map((sticker, index) => (
             <Col md={8} key={index}>
               <AttachableSticker

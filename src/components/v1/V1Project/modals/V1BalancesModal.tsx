@@ -85,13 +85,7 @@ export function V1BalancesModal({
       open={open}
       onCancel={onCancel}
       footer={
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            marginTop: 20,
-          }}
-        >
+        <div className="mt-5 flex justify-between">
           {hasEditPermission ? (
             <Button
               type="text"
@@ -118,7 +112,7 @@ export function V1BalancesModal({
           <Trans>Other assets in this project's owner's wallet.</Trans>
         </p>
 
-        <Space direction="vertical" style={{ width: '100%', marginTop: 20 }}>
+        <Space className="mt-5 w-full" direction="vertical">
           <V1ProjectTokenBalance
             wallet={owner}
             projectId={V1_PROJECT_IDS.JUICEBOX_DAO}
@@ -150,7 +144,7 @@ export function V1BalancesModal({
           onOk={updateTokenRefs}
           okText={t`Save tracked assets`}
         >
-          <p style={{ marginBottom: 40 }}>
+          <p className="mb-10">
             <Trans>
               Display ERC-20 tokens and other Juicebox project tokens that are
               in this project's owner's wallet.

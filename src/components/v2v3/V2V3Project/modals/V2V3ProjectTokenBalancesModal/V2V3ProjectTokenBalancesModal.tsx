@@ -90,7 +90,7 @@ function EditTrackedAssetsModal({
       onCancel={close}
       {...props}
     >
-      <p style={{ marginBottom: 40 }}>
+      <p className="mb-10">
         <Trans>
           Display ERC-20 and other Juicebox project tokens that this project
           owner holds.
@@ -124,13 +124,7 @@ export function V2V3ProjectTokenBalancesModal(props: ModalProps) {
   return (
     <Modal
       footer={
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            marginTop: 20,
-          }}
-        >
+        <div className="mt-5 flex justify-between">
           {hasEditPermission ? (
             <Button
               type="text"
@@ -160,7 +154,7 @@ export function V2V3ProjectTokenBalancesModal(props: ModalProps) {
           <Trans>Other assets in this project's owner's wallet.</Trans>
         </p>
 
-        <Space direction="vertical" style={{ width: '100%', marginTop: 20 }}>
+        <Space className="mt-5 w-full" direction="vertical">
           <V2V3ProjectTokenBalance projectId={V2V3_PROJECT_IDS.JUICEBOX_DAO} />
           {trackedTokens?.map(t =>
             t.type === 'erc20' ? (

@@ -5,17 +5,15 @@ import useSymbolOfERC20 from 'hooks/SymbolOfERC20'
 import useProjectHandle from 'hooks/v2v3/contractReader/ProjectHandle'
 import useProjectToken from 'hooks/v2v3/contractReader/ProjectToken'
 import useTotalBalanceOf from 'hooks/v2v3/contractReader/TotalBalanceOf'
-import { CSSProperties, useContext } from 'react'
+import { useContext } from 'react'
 import { formatWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export const V2V3ProjectTokenBalance = ({
   projectId,
-  style,
   precision,
 }: {
   projectId: number
-  style?: CSSProperties
   precision?: number
 }) => {
   const { projectOwnerAddress } = useContext(V2V3ProjectContext)
@@ -26,7 +24,7 @@ export const V2V3ProjectTokenBalance = ({
   const formattedBalance = formatWad(balance, { precision: precision ?? 0 })
 
   return (
-    <div style={{ ...style }}>
+    <>
       {tokenSymbol ? (
         <span>
           {formattedBalance} {tokenSymbolText({ tokenSymbol, plural: true })}
@@ -39,6 +37,6 @@ export const V2V3ProjectTokenBalance = ({
           </Trans>
         </span>
       )}
-    </div>
+    </>
   )
 }

@@ -4,13 +4,11 @@ import { Modal } from 'antd'
 import { IssueErc20TokenModal } from 'components/modals/IssueErc20TokenModal'
 import RichButton from 'components/RichButton'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useDeployProjectPayerTx } from 'hooks/v2v3/transactor/DeployProjectPayerTx'
 import Link from 'next/link'
-import { CSSProperties, useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import { settingsPagePath } from 'utils/routes'
-
 import { LaunchProjectPayerModal } from './LaunchProjectPayerModal'
 
 export const NEW_DEPLOY_QUERY_PARAM = 'np'
@@ -22,9 +20,6 @@ export default function NewDeployModal({
   open: boolean
   onClose: VoidFunction
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { handle } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
@@ -37,12 +32,6 @@ export default function NewDeployModal({
     useState<boolean>()
 
   const completedAllSteps = hasIssuedToken && hasLaunchedPayableAddress
-
-  const seenColor = colors.text.tertiary
-
-  const stepButtonStyle: CSSProperties = {
-    marginBottom: 15,
-  }
 
   return (
     <Modal
@@ -66,6 +55,7 @@ export default function NewDeployModal({
       <div>
         <Link href={settingsPagePath('projecthandle', { handle, projectId })}>
           <RichButton
+            className="mb-4"
             prefix="1"
             heading={<Trans>Set a project handle (optional)</Trans>}
             description={
@@ -77,14 +67,16 @@ export default function NewDeployModal({
             disabled={!!handle}
             icon={
               handle ? (
-                <CheckCircleFilled style={{ color: seenColor }} />
+                <CheckCircleFilled className="text-grey-400 dark:text-slate-200" />
               ) : undefined
             }
-            primaryColor={handle ? seenColor : undefined}
-            style={stepButtonStyle}
+            primaryColorClassName={
+              handle ? 'text-grey-400 dark:text-slate-200' : undefined
+            }
           />
         </Link>
         <RichButton
+          className="mb-4"
           prefix="2"
           heading={<Trans>Issue an ERC-20 token (optional)</Trans>}
           description={
@@ -97,13 +89,15 @@ export default function NewDeployModal({
           disabled={hasIssuedToken}
           icon={
             hasIssuedToken ? (
-              <CheckCircleFilled style={{ color: seenColor }} />
+              <CheckCircleFilled className="text-grey-400 dark:text-slate-200" />
             ) : undefined
           }
-          primaryColor={hasIssuedToken ? seenColor : undefined}
-          style={stepButtonStyle}
+          primaryColorClassName={
+            hasIssuedToken ? 'text-grey-400 dark:text-slate-200' : undefined
+          }
         />
         <RichButton
+          className="mb-4"
           prefix="3"
           heading={<Trans>Create a Payment Address (optional)</Trans>}
           description={
@@ -116,11 +110,14 @@ export default function NewDeployModal({
           disabled={hasLaunchedPayableAddress}
           icon={
             hasLaunchedPayableAddress ? (
-              <CheckCircleFilled style={{ color: seenColor }} />
+              <CheckCircleFilled className="text-grey-400 dark:text-slate-200" />
             ) : undefined
           }
-          primaryColor={hasLaunchedPayableAddress ? seenColor : undefined}
-          style={stepButtonStyle}
+          primaryColorClassName={
+            hasLaunchedPayableAddress
+              ? 'text-grey-400 dark:text-slate-200'
+              : undefined
+          }
         />
       </div>
       <IssueErc20TokenModal

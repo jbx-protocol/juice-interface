@@ -3,8 +3,6 @@ import { Button, Empty, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
 import NftRewardTierModal from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal'
-import { shadowCard } from 'constants/styles/shadowCard'
-import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
@@ -44,11 +42,6 @@ export default function NftDrawer({
   open: boolean
   onClose: VoidFunction
 }) {
-  const {
-    theme,
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
   const [addTierModalVisible, setAddTierModalVisible] = useState<boolean>(false)
   const [submitLoading, setSubmitLoading] = useState<boolean>(false)
@@ -264,18 +257,11 @@ export default function NftDrawer({
         open={open}
         onClose={handleDrawerCloseClick}
       >
-        <div
-          style={{
-            padding: '2rem',
-            marginBottom: 10,
-            ...shadowCard(theme),
-            color: colors.text.primary,
-          }}
-        >
+        <div className="mb-2 rounded-sm bg-smoke-75 stroke-none p-8 text-black shadow-[10px_10px_0px_0px_#E7E3DC] dark:bg-slate-400 dark:text-slate-100 dark:shadow-[10px_10px_0px_0px_#2D293A]">
           {hasExistingNfts ? <h2>Edit NFTs</h2> : <h2>Add NFTs</h2>}
           <p>{NFT_REWARDS_EXPLAINATION}</p>
 
-          <Space direction="vertical" size="large" style={{ width: '100%' }}>
+          <Space direction="vertical" size="large" className="w-full">
             {rewardTiers?.map((rewardTier, index) => (
               <NftRewardTierCard
                 key={index}
@@ -290,18 +276,18 @@ export default function NftDrawer({
 
           {rewardTiers?.length === 0 && (
             <Empty
+              className="mb-0"
               description={t`No NFTs`}
               image={Empty.PRESENTED_IMAGE_SIMPLE}
-              style={{ marginBottom: 0 }}
             />
           )}
 
           <AddRewardTierButton
+            className="mb-8"
             onClick={() => {
               setAddTierModalVisible(true)
             }}
             disabled={rewardTiers && rewardTiers.length >= MAX_NFT_REWARD_TIERS}
-            style={{ marginBottom: 30 }}
           />
 
           {!hasExistingNfts && (
@@ -309,11 +295,11 @@ export default function NftDrawer({
           )}
 
           <Button
+            className="mt-7"
             onClick={onNftFormSaved}
             htmlType="submit"
             type="primary"
             loading={submitLoading}
-            style={{ marginTop: 30 }}
           >
             <span>
               {hasExistingNfts ? (
@@ -326,14 +312,7 @@ export default function NftDrawer({
         </div>
 
         {hasExistingNfts && (
-          <div
-            style={{
-              padding: '2rem',
-              marginBottom: 10,
-              ...shadowCard(theme),
-              color: colors.text.primary,
-            }}
-          >
+          <div className="mb-2 rounded-sm bg-smoke-75 stroke-none p-8 text-black shadow-[10px_10px_0px_0px_#E7E3DC] dark:bg-slate-400 dark:text-slate-100 dark:shadow-[10px_10px_0px_0px_#2D293A]">
             <h2>Edit collection details</h2>
 
             <EditCollectionDetailsSection />

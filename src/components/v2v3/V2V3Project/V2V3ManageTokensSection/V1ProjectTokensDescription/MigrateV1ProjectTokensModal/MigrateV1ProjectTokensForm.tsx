@@ -25,7 +25,7 @@ export function MigrateV1ProjectTokensForm({
 
   return (
     <Form form={form} layout="vertical" {...props}>
-      <Space direction="vertical" size="large" style={{ width: '100%' }}>
+      <Space direction="vertical" size="large" className="w-full">
         <Statistic
           title={<Trans>Your V1 {tokenSymbolFormatted} balance</Trans>}
           value={formattedNum(v1TokenBalance)}

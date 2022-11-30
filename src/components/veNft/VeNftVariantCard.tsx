@@ -1,12 +1,10 @@
 import { DeleteOutlined, LoadingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, Col, Image, Row, Tooltip } from 'antd'
-import { ThemeContext } from 'contexts/themeContext'
 import { VeNftVariant } from 'models/veNft'
-import { useContext, useState } from 'react'
-
+import { useState } from 'react'
+import { classNames } from 'utils/classNames'
 import { truncateLongNumber } from 'utils/format/formatNumber'
-
 import VeNftRewardTierModal from './VeNftRewardTierModal'
 
 export default function VeNftVariantCard({
@@ -20,10 +18,6 @@ export default function VeNftVariantCard({
   onChange: (variant: VeNftVariant) => void
   onDelete: VoidFunction
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const [editTierModalVisible, setEditTierModalVisible] =
     useState<boolean>(false)
   const [imageLoading, setImageLoading] = useState<boolean>(true)
@@ -42,60 +36,29 @@ export default function VeNftVariantCard({
   return (
     <>
       <Row
-        style={{
-          background: colors.background.l0,
-          border: `1px solid ${colors.stroke.tertiary}`,
-          display: 'flex',
-          width: '100%',
-          cursor: 'pointer',
-          padding: '15px 8px 15px 20px',
-        }}
+        className="flex w-full cursor-pointer border border-solid border-smoke-200 bg-smoke-25 py-4 pr-2 pl-5 dark:border-grey-600 dark:bg-slate-800"
         onClick={() => setEditTierModalVisible(true)}
       >
-        <Col
-          md={16}
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            flexDirection: 'column',
-          }}
-        >
-          <Row
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              fontSize: 17,
-              width: '100%',
-            }}
-          >
-            <Col style={{ color: colors.text.action.primary }} md={7}>
+        <Col className="flex flex-col justify-center" md={16}>
+          <Row className="flex w-full items-center text-base">
+            <Col className="text-haze-400 dark:text-haze-300" md={7}>
               {tokensStakedLabel()}
             </Col>
-            <Col style={{ display: 'flex', fontWeight: 500 }} md={15}>
+            <Col className="flex font-medium" md={15}>
               <span>{variant.name}</span>
             </Col>
           </Row>
         </Col>
-        <Col
-          md={5}
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          {imageLoading ? (
-            <LoadingOutlined style={{ fontSize: '30px' }} />
-          ) : null}
+        <Col className="flex items-center justify-center" md={5}>
+          {imageLoading ? <LoadingOutlined className="text-3xl" /> : null}
           <Image
+            className={classNames(
+              'max-w-[90px] object-cover',
+              imageLoading ? 'hidden' : '',
+            )}
             src={variant.imageUrl}
             alt={variant.name}
             height={'60px'}
-            style={{
-              display: imageLoading ? 'none' : 'unset',
-              objectFit: 'cover',
-              maxWidth: '90px',
-            }}
             onLoad={() => setImageLoading(false)}
             onClick={e => e.stopPropagation()}
           />
@@ -103,6 +66,7 @@ export default function VeNftVariantCard({
         <Col md={3}>
           <Tooltip title={<Trans>Delete NFT</Trans>}>
             <Button
+              className="float-right h-4"
               type="text"
               onClick={e => {
                 onDelete()
@@ -110,7 +74,6 @@ export default function VeNftVariantCard({
                 e.stopPropagation()
               }}
               icon={<DeleteOutlined />}
-              style={{ height: 16, float: 'right' }}
             />
           </Tooltip>
         </Col>

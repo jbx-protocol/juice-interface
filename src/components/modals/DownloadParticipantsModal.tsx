@@ -140,7 +140,7 @@ export function DownloadParticipantsModal({
           </Trans>
         </h4>
 
-        <label style={{ display: 'block', marginTop: 20, marginBottom: 5 }}>
+        <label className="mt-5 mb-1 block">
           <Trans>Block number</Trans>
         </label>
         <FormattedNumberInput

@@ -2,13 +2,13 @@ import { Trans } from '@lingui/macro'
 import { Button, Form, Space } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
 import { FormItemExt } from 'components/formItems/formItemExt'
-import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useContext, useState } from 'react'
 import { permyriadToPercent } from 'utils/format/formatNumber'
 
 import { CurrencyName } from 'constants/currency'
 
+import { classNames } from 'utils/classNames'
 import { ProjectModInput } from './ProjectModInput'
 import { ProjectPayoutModsModal } from './ProjectPayoutModsModal'
 import { EditingPayoutMod } from './types'
@@ -37,10 +37,6 @@ export default function ProjectPayoutMods({
 
   const { owner } = useContext(V1ProjectContext)
 
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const openModalWithModIndex = (index: number) => {
     setEditingModIndex(index)
     setEditingModalVisible(true)
@@ -58,15 +54,13 @@ export default function ProjectPayoutMods({
   return (
     <Form.Item
       {...formItemProps}
+      className={classNames('block', formItemProps?.className)}
+      // TODO: Remove later
       style={{ ...formItemProps?.style, display: 'block' }}
     >
-      <Space
-        direction="vertical"
-        style={{ width: '100%', minHeight: 0 }}
-        size="large"
-      >
+      <Space className="min-h-0 w-full" direction="vertical" size="large">
         {lockedMods && (
-          <Space style={{ width: '100%' }} direction="vertical" size="small">
+          <Space className="w-full" direction="vertical" size="small">
             {lockedMods.map((v, i) =>
               ProjectModInput({
                 mod: v,
@@ -80,7 +74,7 @@ export default function ProjectPayoutMods({
             )}
           </Space>
         )}
-        <Space style={{ width: '100%' }} direction="vertical" size="small">
+        <Space className="w-full" direction="vertical" size="small">
           {mods.map((v, i) => (
             <ProjectModInput
               mod={v}
@@ -100,17 +94,13 @@ export default function ProjectPayoutMods({
             />
           ))}
         </Space>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            color: colors.text.secondary,
-          }}
-        >
+        <div className="flex justify-between text-grey-500 dark:text-grey-300">
           <div
-            style={{
-              color: total > 100 ? colors.text.failure : colors.text.secondary,
-            }}
+            className={
+              total > 100
+                ? 'text-error-500 dark:text-error-400'
+                : 'text-grey-500 dark:text-grey-300'
+            }
           >
             <Trans>Total: {total.toFixed(2)}%</Trans>
           </div>

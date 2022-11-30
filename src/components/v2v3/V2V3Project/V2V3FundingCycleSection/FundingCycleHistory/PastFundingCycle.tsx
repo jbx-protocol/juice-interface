@@ -52,19 +52,14 @@ export function PastFundingCycle({
   return (
     <>
       <div
+        className="flex cursor-pointer items-baseline justify-between"
         role="button"
         onClick={() => setModalVisible(true)}
-        style={{
-          display: 'flex',
-          alignItems: 'baseline',
-          justifyContent: 'space-between',
-          cursor: 'pointer',
-        }}
       >
         <Space align="baseline">
           <h3>#{fundingCycle.number.toString()}</h3>
 
-          <div style={{ fontSize: '.8rem', marginLeft: 10 }}>
+          <div className="ml-2 text-sm">
             <CurrencySymbol
               currency={V2V3CurrencyName(
                 distributionLimitCurrency?.toNumber() as V2V3CurrencyOption,
@@ -83,7 +78,7 @@ export function PastFundingCycle({
           </div>
         </Space>
 
-        <Space align="baseline" style={{ fontSize: '.8rem' }}>
+        <Space className="text-sm" align="baseline">
           {formatHistoricalDate(
             fundingCycle.start.add(fundingCycle.duration).mul(1000).toNumber(),
           )}

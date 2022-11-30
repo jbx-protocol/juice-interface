@@ -3,6 +3,7 @@ import { t, Trans } from '@lingui/macro'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { Space } from 'antd'
+import Modal from 'antd/lib/modal/Modal'
 import CurrencySymbol from 'components/CurrencySymbol'
 import Loading from 'components/Loading'
 import { ThemeContext } from 'contexts/themeContext'
@@ -16,7 +17,6 @@ import { formatWad } from 'utils/format/formatNumber'
 import { deepEqFundingCycles } from 'utils/v1/deepEqFundingCycles'
 import { hasFundingTarget } from 'utils/v1/fundingCycle'
 
-import { JuiceModal } from 'components/JuiceModal'
 import FundingCycleDetails from 'components/v1/shared/FundingCycle/FundingCycleDetails'
 import { V1CurrencyName } from 'utils/v1/currency'
 
@@ -138,7 +138,7 @@ export default function FundingHistory({
       {allCyclesLoaded ? null : <Loading />}
 
       {selectedFC && (
-        <JuiceModal
+        <Modal
           open={!!selectedFC}
           width={600}
           title={`Cycle #${selectedFC.number.toString()}`}
@@ -148,7 +148,7 @@ export default function FundingHistory({
           okText={t`Done`}
         >
           <FundingCycleDetails fundingCycle={selectedFC} />
-        </JuiceModal>
+        </Modal>
       )}
     </div>
   )

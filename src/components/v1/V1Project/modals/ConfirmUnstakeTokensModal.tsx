@@ -1,10 +1,9 @@
 import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
-import { Form, Space } from 'antd'
+import { Form, Modal, Space } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { JuiceModal } from 'components/JuiceModal'
 import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceOfUser'
@@ -61,7 +60,7 @@ export default function ConfirmUnstakeTokensModal({
   const tokenTextPlural = tokenSymbolText({ tokenSymbol, plural: true })
 
   return (
-    <JuiceModal
+    <Modal
       title={t`Claim ${tokenTextPlural} as ERC-20 tokens`}
       open={open}
       onOk={unstake}
@@ -142,6 +141,6 @@ export default function ConfirmUnstakeTokensModal({
           </Form.Item>
         </Form>
       </Space>
-    </JuiceModal>
+    </Modal>
   )
 }

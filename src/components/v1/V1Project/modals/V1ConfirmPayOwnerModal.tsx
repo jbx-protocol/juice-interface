@@ -1,13 +1,12 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
-import { Checkbox, Descriptions, Form, Input, Space } from 'antd'
+import { Checkbox, Descriptions, Form, Input, Modal, Space } from 'antd'
 import { useForm, useWatch } from 'antd/lib/form/Form'
 import Callout from 'components/Callout'
 import FormattedAddress from 'components/FormattedAddress'
 import Sticker from 'components/icons/Sticker'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
-import { JuiceModal } from 'components/JuiceModal'
 import { AttachStickerModal } from 'components/modals/AttachStickerModal'
 import { PaymentMemoSticker } from 'components/modals/AttachStickerModal/paymentMemoSticker'
 import Paragraph from 'components/Paragraph'
@@ -179,7 +178,7 @@ export default function V1ConfirmPayOwnerModal({
   }
 
   return (
-    <JuiceModal
+    <Modal
       title={t`Pay ${projectMetadata.name}`}
       open={open}
       onOk={pay}
@@ -322,6 +321,6 @@ export default function V1ConfirmPayOwnerModal({
           }}
         />
       </Space>
-    </JuiceModal>
+    </Modal>
   )
 }

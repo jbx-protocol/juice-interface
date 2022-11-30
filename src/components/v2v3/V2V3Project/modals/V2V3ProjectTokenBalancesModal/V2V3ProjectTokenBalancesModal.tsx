@@ -1,9 +1,8 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Button, Form, ModalProps, Space } from 'antd'
+import { Button, Form, Modal, ModalProps, Space } from 'antd'
 import ERC20TokenBalance from 'components/ERC20TokenBalance'
-import { JuiceModal } from 'components/JuiceModal'
 import { PV_V2 } from 'constants/pv'
 import { V2V3_PROJECT_IDS } from 'constants/v2v3/projectIds'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
@@ -81,7 +80,7 @@ function EditTrackedAssetsModal({
   }
 
   return (
-    <JuiceModal
+    <Modal
       title={t`Edit tracked assets`}
       cancelText={t`Cancel`}
       width={600}
@@ -99,7 +98,7 @@ function EditTrackedAssetsModal({
       </p>
 
       <TokenRefs form={form} />
-    </JuiceModal>
+    </Modal>
   )
 }
 
@@ -123,7 +122,7 @@ export function V2V3ProjectTokenBalancesModal(props: ModalProps) {
   )
 
   return (
-    <JuiceModal
+    <Modal
       footer={
         <div
           style={{
@@ -185,6 +184,6 @@ export function V2V3ProjectTokenBalancesModal(props: ModalProps) {
           />
         ) : null}
       </div>
-    </JuiceModal>
+    </Modal>
   )
 }

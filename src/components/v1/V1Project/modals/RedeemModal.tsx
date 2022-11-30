@@ -1,10 +1,9 @@
 import { t, Trans } from '@lingui/macro'
-import { Form, Space } from 'antd'
+import { Form, Modal, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import ETHAmount from 'components/currency/ETHAmount'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { JuiceModal } from 'components/JuiceModal'
 import { RedeemAMMPrices } from 'components/Project/RedeemAMMPrices'
 import { V1_CURRENCY_USD } from 'constants/v1/currency'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
@@ -136,7 +135,7 @@ export default function RedeemModal({
   }
 
   return (
-    <JuiceModal
+    <Modal
       title={modalTitle}
       open={open}
       confirmLoading={loading}
@@ -244,6 +243,6 @@ export default function RedeemModal({
           ) : null}
         </div>
       </Space>
-    </JuiceModal>
+    </Modal>
   )
 }

@@ -1,6 +1,6 @@
 import { CheckCircleFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { JuiceModal } from 'components/JuiceModal'
+import { Modal } from 'antd'
 import { IssueErc20TokenModal } from 'components/modals/IssueErc20TokenModal'
 import RichButton from 'components/RichButton'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
@@ -45,7 +45,7 @@ export default function NewDeployModal({
   }
 
   return (
-    <JuiceModal
+    <Modal
       open={open}
       onOk={onClose}
       onCancel={onClose}
@@ -134,6 +134,6 @@ export default function NewDeployModal({
         useDeployProjectPayerTx={useDeployProjectPayerTx}
         onConfirmed={() => setHasLaunchedPayableAddress(true)}
       />
-    </JuiceModal>
+    </Modal>
   )
 }

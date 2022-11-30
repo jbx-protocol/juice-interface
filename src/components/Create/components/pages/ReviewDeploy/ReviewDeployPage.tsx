@@ -1,9 +1,8 @@
 import { CheckCircleFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Checkbox, Form } from 'antd'
+import { Checkbox, Form, Modal } from 'antd'
 import { useDeployProject } from 'components/Create/hooks/DeployProject'
 import ExternalLink from 'components/ExternalLink'
-import { JuiceModal } from 'components/JuiceModal'
 import TransactionModal from 'components/TransactionModal'
 import { useAppSelector } from 'hooks/AppSelector'
 import useMobile from 'hooks/Mobile'
@@ -229,7 +228,7 @@ export const ReviewDeployPage = () => {
         transactionPending={deployTransactionPending}
         open={deployTransactionPending}
       />
-      <JuiceModal
+      <Modal
         title={
           <h2 className="text-xl font-medium text-black dark:text-grey-200">
             <Trans>Are you sure?</Trans>
@@ -242,7 +241,7 @@ export const ReviewDeployPage = () => {
         onCancel={modal.close}
       >
         <Trans>Starting over will erase all currently saved progress.</Trans>
-      </JuiceModal>
+      </Modal>
     </>
   )
 }

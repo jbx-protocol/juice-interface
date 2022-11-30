@@ -1,8 +1,7 @@
 import { DeleteOutlined, LockFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Space, Tooltip } from 'antd'
+import { Modal, Space, Tooltip } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
-import { JuiceModal } from 'components/JuiceModal'
 import useMobile from 'hooks/Mobile'
 import { useModal } from 'hooks/Modal'
 import { PayoutsSelection } from 'models/payoutsSelection'
@@ -64,7 +63,7 @@ export const PayoutCard = ({
         }
         onClick={onClick}
       />
-      <JuiceModal
+      <Modal
         title={
           <h2 className="text-xl font-medium text-black dark:text-grey-200">
             <Trans>Are you sure?</Trans>
@@ -80,7 +79,7 @@ export const PayoutCard = ({
           This will delete the payout for{' '}
           <FormattedAddress address={allocation.beneficiary} />.
         </Trans>
-      </JuiceModal>
+      </Modal>
     </>
   )
 }

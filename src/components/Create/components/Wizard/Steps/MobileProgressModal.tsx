@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { JuiceModal } from 'components/JuiceModal'
+import { Modal } from 'antd'
 import { MobileStep } from './MobileStep'
 
 export const MobileProgressModal: React.FC<{
@@ -18,7 +18,7 @@ export const MobileProgressModal: React.FC<{
   onCancel,
 }) => {
   return (
-    <JuiceModal
+    <Modal
       className="create-steps-modal" // ant override
       width="280px"
       title={
@@ -46,6 +46,6 @@ export const MobileProgressModal: React.FC<{
           />
         )
       })}
-    </JuiceModal>
+    </Modal>
   )
 }

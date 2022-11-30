@@ -2,8 +2,9 @@ import { CaretRightFilled } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
-import { DrawerProps, Space, Statistic } from 'antd'
+import { Drawer, DrawerProps, Space, Statistic } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
+import Modal from 'antd/lib/modal/Modal'
 import Callout from 'components/Callout'
 import CurrencySymbol from 'components/CurrencySymbol'
 import IncentivesForm, {
@@ -15,8 +16,6 @@ import RestrictedActionsForm, {
 import TicketingForm, {
   TicketingFormFields,
 } from 'components/forms/TicketingForm'
-import { JuiceDrawer } from 'components/JuiceDrawer'
-import { JuiceModal } from 'components/JuiceModal'
 import BudgetForm from 'components/v1/shared/forms/BudgetForm'
 import PayModsForm from 'components/v1/shared/forms/PayModsForm'
 import PayoutModsList from 'components/v1/shared/PayoutModsList'
@@ -390,7 +389,7 @@ export default function ReconfigureFCModal({
   if (!terminal?.version) return null
 
   return (
-    <JuiceModal
+    <Modal
       title={<Trans>Project configuration</Trans>}
       open={open}
       onOk={reconfigure}
@@ -575,7 +574,7 @@ export default function ReconfigureFCModal({
         </Space>
       </div>
 
-      <JuiceDrawer
+      <Drawer
         open={budgetFormModalVisible}
         {...drawerStyle}
         onClose={() => {
@@ -594,9 +593,9 @@ export default function ReconfigureFCModal({
             setCurrentStep(undefined)
           }}
         />
-      </JuiceDrawer>
+      </Drawer>
 
-      <JuiceDrawer
+      <Drawer
         open={payModsModalVisible}
         {...drawerStyle}
         onClose={() => {
@@ -616,9 +615,9 @@ export default function ReconfigureFCModal({
             setCurrentStep(undefined)
           }}
         />
-      </JuiceDrawer>
+      </Drawer>
 
-      <JuiceDrawer
+      <Drawer
         open={ticketingFormModalVisible}
         {...drawerStyle}
         onClose={() => {
@@ -637,7 +636,7 @@ export default function ReconfigureFCModal({
             setCurrentStep(undefined)
           }}
         />
-      </JuiceDrawer>
+      </Drawer>
 
       <ReconfigurationStrategyDrawer
         open={rulesFormModalVisible}
@@ -654,7 +653,7 @@ export default function ReconfigureFCModal({
         }}
       />
 
-      <JuiceDrawer
+      <Drawer
         open={incentivesFormModalVisible}
         {...drawerStyle}
         onClose={() => {
@@ -672,10 +671,10 @@ export default function ReconfigureFCModal({
             setCurrentStep(undefined)
           }}
         />
-      </JuiceDrawer>
+      </Drawer>
 
       {terminal.version === '1.1' && (
-        <JuiceDrawer
+        <Drawer
           open={restrictedActionsFormModalVisible}
           {...drawerStyle}
           onClose={() => {
@@ -692,8 +691,8 @@ export default function ReconfigureFCModal({
               setCurrentStep(undefined)
             }}
           />
-        </JuiceDrawer>
+        </Drawer>
       )}
-    </JuiceModal>
+    </Modal>
   )
 }

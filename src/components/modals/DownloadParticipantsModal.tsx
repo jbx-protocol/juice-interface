@@ -1,17 +1,19 @@
 import { t, Trans } from '@lingui/macro'
+import { Modal } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
+import { emitErrorNotification } from 'utils/notifications'
+
+import { useCallback, useContext, useEffect, useState } from 'react'
+import { fromWad } from 'utils/format/formatNumber'
+import { GraphQueryOpts, querySubgraphExhaustive } from 'utils/graph'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
+
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { JuiceModal } from 'components/JuiceModal'
 import { PV_V1, PV_V1_1 } from 'constants/pv'
 import { readProvider } from 'constants/readProvider'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { Participant } from 'models/subgraph-entities/vX/participant'
-import { useCallback, useContext, useEffect, useState } from 'react'
 import { downloadCsvFile } from 'utils/csv'
-import { fromWad } from 'utils/format/formatNumber'
-import { GraphQueryOpts, querySubgraphExhaustive } from 'utils/graph'
-import { emitErrorNotification } from 'utils/notifications'
-import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export function DownloadParticipantsModal({
   tokenSymbol,
@@ -121,7 +123,7 @@ export function DownloadParticipantsModal({
   }, [blockNumber, projectId, tokenSymbol, projectMetadata, pv])
 
   return (
-    <JuiceModal
+    <Modal
       open={open}
       onCancel={onCancel}
       onOk={download}
@@ -153,6 +155,6 @@ export function DownloadParticipantsModal({
           }
         />
       </div>
-    </JuiceModal>
+    </Modal>
   )
 }

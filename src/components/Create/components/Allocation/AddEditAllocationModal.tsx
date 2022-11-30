@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Form, Radio } from 'antd'
+import { Form, Modal, Radio } from 'antd'
 import { RuleObject } from 'antd/lib/form'
 import CurrencySwitch from 'components/CurrencySwitch'
 import { validatePercentage } from 'components/formItems/formHelpers'
@@ -9,7 +9,6 @@ import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'
 import { JuiceInputNumber } from 'components/inputs/JuiceInputNumber'
 import NumberSlider from 'components/inputs/NumberSlider'
-import { JuiceModal } from 'components/JuiceModal'
 import { useFundingTargetType } from 'hooks/FundingTargetType'
 import { Split } from 'models/splits'
 import moment, * as Moment from 'moment'
@@ -132,7 +131,7 @@ export const AddEditAllocationModal = ({
     recipient === 'juiceboxProject' ? t`Token beneficiary address` : t`Address`
 
   return (
-    <JuiceModal
+    <Modal
       className={className}
       title={
         <h2 className="text-lg font-medium text-black dark:text-grey-200">
@@ -246,7 +245,7 @@ export const AddEditAllocationModal = ({
           />
         </Form.Item>
       </Form>
-    </JuiceModal>
+    </Modal>
   )
 }
 

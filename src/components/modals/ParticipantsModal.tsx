@@ -6,11 +6,10 @@ import {
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
-import { Button, Select, Space } from 'antd'
+import { Button, Modal, Select, Space } from 'antd'
 import Callout from 'components/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
 import FormattedAddress from 'components/FormattedAddress'
-import { JuiceModal } from 'components/JuiceModal'
 import Loading from 'components/Loading'
 import { PV_V1, PV_V1_1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
@@ -264,7 +263,7 @@ export default function ParticipantsModal({
   ])
 
   return (
-    <JuiceModal
+    <Modal
       open={open}
       onCancel={onCancel}
       onOk={onCancel}
@@ -331,6 +330,6 @@ export default function ParticipantsModal({
         open={downloadModalVisible}
         onCancel={() => setDownloadModalVisible(false)}
       />
-    </JuiceModal>
+    </Modal>
   )
 }

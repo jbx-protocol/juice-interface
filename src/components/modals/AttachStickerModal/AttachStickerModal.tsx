@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
-import { Col, Row, Space } from 'antd'
-import { JuiceModal } from 'components/JuiceModal'
+import { Col, Modal, Row, Space } from 'antd'
+
 import { AttachableSticker } from './AttachableSticker'
 import { PaymentMemoSticker } from './paymentMemoSticker'
 
@@ -38,7 +38,7 @@ export function AttachStickerModal({
   onClose: VoidFunction
 }) {
   return (
-    <JuiceModal
+    <Modal
       title={t`Attach a sticker`}
       open={open}
       onCancel={onClose}
@@ -65,6 +65,6 @@ export function AttachStickerModal({
           ))}
         </Row>
       </Space>
-    </JuiceModal>
+    </Modal>
   )
 }

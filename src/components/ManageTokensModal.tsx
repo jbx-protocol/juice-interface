@@ -2,13 +2,12 @@ import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 
 import { t, Trans } from '@lingui/macro'
-import { Space, Tooltip } from 'antd'
+import { Modal, Space, Tooltip } from 'antd'
 import RichButton from 'components/RichButton'
 import { TransactorInstance } from 'hooks/Transactor'
 import { PropsWithChildren, useState } from 'react'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { reloadWindow } from 'utils/windowUtils'
-import { JuiceModal } from './JuiceModal'
 import { TransferUnclaimedTokensModal } from './modals/TransferUnclaimedTokensModal'
 
 type RedeemDisabledReason = 'redemptionRateZero' | 'overflowZero'
@@ -107,7 +106,7 @@ export default function ManageTokensModal({
 
   return (
     <>
-      <JuiceModal
+      <Modal
         title={t`Manage your ${tokenSymbolText({
           tokenSymbol,
           capitalize: false,
@@ -217,7 +216,7 @@ export default function ManageTokensModal({
 
           {children}
         </Space>
-      </JuiceModal>
+      </Modal>
 
       <RedeemModal
         open={redeemModalVisible}

@@ -1,8 +1,7 @@
 import { CheckCircleFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-import { ModalProps, Space } from 'antd'
+import { Modal, ModalProps, Space } from 'antd'
 import Callout from 'components/Callout'
-import { JuiceModal } from 'components/JuiceModal'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useV1ProjectIdOfV2Project } from 'hooks/v2v3/contractReader/V1ProjectIdOfV2Project'
 import { useHasV1TokenPaymentTerminal } from 'hooks/v2v3/hasV1TokenPaymentTerminal'
@@ -29,7 +28,7 @@ export function V1TokenMigrationSetupModal({ ...props }: ModalProps) {
   const completed = hasMigrationTerminal && hasSetV1Project
 
   return (
-    <JuiceModal
+    <Modal
       title={<Trans>Set up V1 token migration</Trans>}
       okButtonProps={{ hidden: true }}
       cancelText={<Trans>Close</Trans>}
@@ -67,6 +66,6 @@ export function V1TokenMigrationSetupModal({ ...props }: ModalProps) {
           </Callout>
         )}
       </Space>
-    </JuiceModal>
+    </Modal>
   )
 }

@@ -109,22 +109,20 @@ export function AmountFormItem({
             },
           ]}
         >
-          <div style={{ flex: 1 }}>
-            <FormattedNumberInput
-              value={amount}
-              placeholder={'0'}
-              accessory={
-                isFirstSplit && onCurrencyChange ? (
-                  <CurrencySwitch
-                    onCurrencyChange={onCurrencyChange}
-                    currency={currencyName}
-                  />
-                ) : (
-                  <InputAccessoryButton content={currencyName} />
-                )
-              }
-            />
-          </div>
+          <FormattedNumberInput
+            style={{ flex: 1 }}
+            placeholder={'0'}
+            accessory={
+              isFirstSplit && onCurrencyChange ? (
+                <CurrencySwitch
+                  onCurrencyChange={onCurrencyChange}
+                  currency={currencyName}
+                />
+              ) : (
+                <InputAccessoryButton content={currencyName} />
+              )
+            }
+          />
         </Form.Item>
         <div
           style={{

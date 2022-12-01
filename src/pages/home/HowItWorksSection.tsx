@@ -36,9 +36,8 @@ export function HowItWorksSection() {
       <div className="my-0 mx-auto max-w-[1080px] p-5">
         <Row align="middle">
           {!isMobile && (
-            <Col xs={24} sm={11}>
+            <Col className="mb-10" xs={24} sm={11}>
               <Image
-                className="mb-10"
                 width={486}
                 height={486}
                 src="/assets/pina.png"

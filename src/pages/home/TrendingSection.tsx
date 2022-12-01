@@ -27,9 +27,9 @@ export default function TrendingSection() {
   )
 
   return (
-    <section className="my-0 mx-auto p-16">
+    <section className="my-0 mx-auto p-12">
       <Row className="my-0 mx-auto max-w-[1080px] gap-y-10" gutter={40}>
-        <Col xs={24} md={12}>
+        <Col xs={24} md={12} className="px-0 md:px-5">
           <div className="flex flex-col gap-9">
             <SmallHeader
               text={
@@ -63,7 +63,7 @@ export default function TrendingSection() {
           </div>
         </Col>
 
-        <Col xs={24} md={12}>
+        <Col xs={24} md={12} className="px-0 md:px-5">
           <div className="flex flex-col gap-9">
             <SmallHeader text={<Trans>Latest payments</Trans>} />
             <div className="max-h-[784px] overflow-auto">

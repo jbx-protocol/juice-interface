@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
+import { Modal } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { JuiceModal } from 'components/JuiceModal'
 import { readProvider } from 'constants/readProvider'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
@@ -94,7 +94,7 @@ export function V1DownloadPaymentsModal({
   }, [projectId, pv, setLoading, blockNumber, handle])
 
   return (
-    <JuiceModal
+    <Modal
       open={open}
       onCancel={onCancel}
       onOk={download}
@@ -109,7 +109,7 @@ export function V1DownloadPaymentsModal({
           <Trans>Download CSV of payments</Trans>
         </h4>
 
-        <label style={{ display: 'block', marginTop: 20, marginBottom: 5 }}>
+        <label className="mt-5 mb-1 block">
           <Trans>Block number</Trans>
         </label>
         <FormattedNumberInput
@@ -124,6 +124,6 @@ export function V1DownloadPaymentsModal({
           }
         />
       </div>
-    </JuiceModal>
+    </Modal>
   )
 }

@@ -4,12 +4,12 @@ import { Button, Tooltip } from 'antd'
 import { V1ProjectToolsDrawer } from 'components/v1/V1Project/V1ProjectToolsDrawer/V1ProjectToolsDrawer'
 import { PV_V1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import { useContext, useState } from 'react'
+import { classNames } from 'utils/classNames'
 import EditProjectModal from './modals/EditProjectModal'
 import MigrateV1Pt1Modal from './modals/MigrateV1Pt1Modal'
 
@@ -32,35 +32,20 @@ export default function V1ProjectHeaderActions() {
 
   const allowMigrate = isOwner && terminal?.version === PV_V1
 
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   if (isPreviewMode || !projectId) return null
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-      }}
-    >
-      <span
-        style={{
-          color: colors.text.tertiary,
-          paddingRight: 10,
-        }}
-      >
+    <div className="flex items-center">
+      <span className="pr-2 text-grey-400 dark:text-slate-200">
         {terminal?.version && (
           <Tooltip
             title={t`Version of the terminal contract used by this project.`}
           >
             <span
-              style={{
-                padding: '2px 4px',
-                background: colors.background.l1,
-                cursor: allowMigrate ? 'pointer' : 'default',
-              }}
+              className={classNames(
+                'bg-smoke-100 py-0.5 px-1 dark:bg-slate-600',
+                allowMigrate ? 'cursor-pointer' : 'cursor-default',
+              )}
               onClick={() => {
                 if (!allowMigrate) return
                 setMigrateDrawerVisible(true)

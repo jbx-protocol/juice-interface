@@ -9,7 +9,6 @@ import SectionHeader from 'components/SectionHeader'
 import { CurrencyContext } from 'contexts/currencyContext'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useMobile from 'hooks/Mobile'
@@ -24,7 +23,7 @@ function RewardTiersLoadingSkeleton() {
   const isMobile = useMobile()
 
   return (
-    <Row style={{ marginTop: '15px' }} gutter={isMobile ? 8 : 24}>
+    <Row className="mt-4" gutter={isMobile ? 8 : 24}>
       {[...Array(3)]?.map((_, index) => (
         <Col md={8} xs={8} key={`rewardTierLoading-${index}`}>
           <RewardTier loading />
@@ -35,18 +34,10 @@ function RewardTiersLoadingSkeleton() {
 }
 
 function Header() {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   return (
     <>
-      <SectionHeader text={t`Unlockable NFTs`} style={{ marginBottom: 0 }} />
-      <span
-        style={{
-          color: colors.text.tertiary,
-          fontSize: '0.75rem',
-        }}
-      >
+      <SectionHeader className="mb-0" text={t`Unlockable NFTs`} />
+      <span className="text-xs text-grey-400 dark:text-slate-200">
         <Trans>Contribute funds to receive NFTs.</Trans>
       </span>
     </>
@@ -130,34 +121,23 @@ export function NftRewardsSection() {
   )
 
   return (
-    <Space direction="vertical" size="large" style={{ width: '100%' }}>
+    <Space direction="vertical" size="large" className="w-full">
       <Header />
 
       {nftsLoading ? (
         <RewardTiersLoadingSkeleton />
       ) : (
         <div
-          style={{
-            overflow: 'auto',
-            maxHeight: 400,
-            paddingBottom: '12px',
-            // hax to make scrollbars look nice
-            marginTop: '-12px',
-            paddingTop: '12px',
-            paddingLeft: '12px',
-            marginLeft: '-12px',
-
-            marginRight: '-20px',
-            paddingRight: '20px',
-          }}
+          // hax to make scrollbars look nice
+          className="-mt-3 -ml-3 -mr-5 max-h-[400px] overflow-auto pb-3 pt-3 pl-3 pr-5"
         >
           <Row gutter={24}>
             {renderRewardTiers?.map((rewardTier, idx) => (
               <Col
+                className="mb-4"
                 md={8}
                 xs={8}
                 key={`${rewardTier.contributionFloor}-${rewardTier.name}`}
-                style={{ marginBottom: '15px' }}
               >
                 <RewardTier
                   rewardTier={rewardTier}

@@ -2,17 +2,7 @@ import { TwitterOutlined } from '@ant-design/icons'
 import { Space } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import Discord from 'components/icons/Discord'
-import { CSSProperties } from 'react'
 import { linkUrl, prettyUrl } from 'utils/url'
-
-const linkStyle: CSSProperties = {
-  maxWidth: '20rem',
-  textOverflow: 'ellipsis',
-  overflow: 'hidden',
-  fontWeight: 500,
-  whiteSpace: 'pre',
-  display: 'block',
-}
 
 export default function SocialLinks({
   infoUri,
@@ -24,25 +14,23 @@ export default function SocialLinks({
   discord?: string
 }) {
   return (
-    <Space
-      size="middle"
-      style={{ flexWrap: 'wrap', columnGap: '1.5rem', rowGap: '0.5rem' }}
-    >
+    <Space className="flex-wrap gap-x-6 gap-y-2" size="middle">
       {infoUri && (
         <span>
-          <ExternalLink style={{ ...linkStyle }} href={linkUrl(infoUri)}>
+          <ExternalLink
+            className="block max-w-xs overflow-hidden text-ellipsis whitespace-pre font-medium"
+            href={linkUrl(infoUri)}
+          >
             {prettyUrl(infoUri)}
           </ExternalLink>
         </span>
       )}
       {twitter && (
         <ExternalLink
-          style={{
-            ...linkStyle,
-          }}
+          className="block max-w-xs overflow-hidden text-ellipsis whitespace-pre font-medium"
           href={'https://twitter.com/' + twitter}
         >
-          <span style={{ marginRight: 4 }}>
+          <span className="mr-1">
             <TwitterOutlined />
           </span>
           @{prettyUrl(twitter)}
@@ -50,12 +38,10 @@ export default function SocialLinks({
       )}
       {discord && (
         <ExternalLink
-          style={{
-            ...linkStyle,
-          }}
+          className="block max-w-xs overflow-hidden text-ellipsis whitespace-pre font-medium"
           href={linkUrl(discord)}
         >
-          <span style={{ marginRight: 4 }}>
+          <span className="mr-1">
             <Discord size={11} />
           </span>
           Discord

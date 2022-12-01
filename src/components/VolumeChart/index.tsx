@@ -5,14 +5,7 @@ import CurrencySymbol from 'components/CurrencySymbol'
 import { ThemeContext } from 'contexts/themeContext'
 import { PV } from 'models/pv'
 import moment from 'moment'
-import {
-  CSSProperties,
-  SVGProps,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react'
+import { SVGProps, useContext, useEffect, useMemo, useState } from 'react'
 import {
   CartesianGrid,
   Line,
@@ -22,6 +15,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
+import { classNames } from 'utils/classNames'
 
 import { daysToMillis } from './daysToMillis'
 import { useDuration } from './hooks/useDuration'
@@ -97,11 +91,6 @@ export default function VolumeChart({
     // loadEvents(blockRefs)
   }, [pv, duration, projectId, showGraph])
 
-  const buttonStyle: CSSProperties = {
-    fontSize: '0.75rem',
-    textTransform: 'uppercase',
-  }
-
   const axisStyle: SVGProps<SVGTextElement> = {
     fontSize: 11,
     fill: colors.text.tertiary,
@@ -140,13 +129,12 @@ export default function VolumeChart({
 
     return (
       <div
-        style={{
-          textTransform: 'uppercase',
-          fontSize: '0.8rem',
-          fontWeight: selected ? 600 : 400,
-          color: selected ? colors.text.secondary : colors.text.tertiary,
-          cursor: 'pointer',
-        }}
+        className={classNames(
+          'cursor-pointer text-sm uppercase',
+          selected
+            ? 'font-medium text-grey-500 dark:text-grey-300'
+            : 'font-normal text-grey-400 dark:text-slate-200',
+        )}
         onClick={() => setShowGraph(tab)}
       >
         {text}
@@ -156,13 +144,7 @@ export default function VolumeChart({
 
   return (
     <div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'baseline',
-        }}
-      >
+      <div className="flex items-baseline justify-between">
         <div>
           <Space size="large">
             {tab('volume')}
@@ -171,11 +153,7 @@ export default function VolumeChart({
         </div>
 
         <Select
-          className="small"
-          style={{
-            ...buttonStyle,
-            width: 100,
-          }}
+          className="small w-24 text-xs uppercase"
           value={duration}
           onChange={val => setDuration(val)}
         >
@@ -196,11 +174,14 @@ export default function VolumeChart({
           </Select.Option>
         </Select>
       </div>
-      <div style={{ position: 'relative' }}>
+      <div className="relative">
         <ResponsiveContainer width={'100%'} height={height}>
-          <LineChart style={{ opacity: loading ? 0.5 : 1 }} data={events}>
+          <LineChart
+            className={classNames(loading ? 'opacity-50' : '')}
+            data={events}
+          >
             <CartesianGrid
-              style={{ paddingLeft: 200 }}
+              className="pl-48"
               stroke={colors.stroke.tertiary}
               strokeDasharray="4 2"
             />
@@ -288,32 +269,15 @@ export default function VolumeChart({
                 if (!active || !payload?.length) return null
 
                 return (
-                  <div
-                    style={{
-                      padding: 10,
-                      background: colors.background.l0,
-                      border: '1px solid ' + colors.stroke.tertiary,
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontSize: '0.75rem',
-                        color: colors.text.tertiary,
-                      }}
-                    >
+                  <div className="border border-solid border-smoke-200 bg-smoke-25 p-2 dark:border-grey-600 dark:bg-slate-800">
+                    <div className="text-xs text-grey-400 dark:text-slate-200">
                       {dateStringForBlockTime(payload[0].payload.timestamp)}
                     </div>
                     {payload[0].payload.tapped ? (
                       <div>
                         -<CurrencySymbol currency="ETH" />
                         {payload[0].payload.tapped}
-                        <div
-                          style={{
-                            fontSize: '0.75rem',
-                            fontWeight: 500,
-                            color: colors.text.secondary,
-                          }}
-                        >
+                        <div className="text-xs font-medium text-grey-500 dark:text-grey-300">
                           withdraw
                         </div>
                       </div>
@@ -332,19 +296,8 @@ export default function VolumeChart({
         </ResponsiveContainer>
 
         {loading && (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              position: 'absolute',
-              left: 0,
-              top: 0,
-              right: 0,
-              bottom: 20,
-            }}
-          >
-            <div style={{ color: colors.text.disabled }}>
+          <div className="absolute left-0 right-0 top-0 bottom-5 flex items-center justify-center">
+            <div className="text-grey-400 dark:text-slate-200">
               <Trans>loading</Trans>...
             </div>
           </div>

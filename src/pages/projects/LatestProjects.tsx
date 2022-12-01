@@ -2,16 +2,14 @@ import { t, Trans } from '@lingui/macro'
 import Grid from 'components/Grid'
 import Loading from 'components/Loading'
 import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
-import { ThemeContext } from 'contexts/themeContext'
 import { useInfiniteProjectsQuery } from 'hooks/Projects'
-import { useContext, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import { classNames } from 'utils/classNames'
 import { useLoadMoreContent } from '../../hooks/LoadMore'
 
 export default function LatestProjects() {
   const pageSize = 20
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
+
   const {
     data: pages,
     isLoading,
@@ -62,13 +60,8 @@ export default function LatestProjects() {
       !isFetchingNextPage &&
       (concatenatedPages?.length || 0) > pageSize ? (
         <div
+          className="cursor-pointer p-5 text-center text-grey-500 dark:text-grey-300"
           role="button"
-          style={{
-            textAlign: 'center',
-            color: colors.text.secondary,
-            cursor: 'pointer',
-            padding: 20,
-          }}
           onClick={() => fetchNextPage()}
         >
           <Trans>Load more</Trans>
@@ -76,14 +69,10 @@ export default function LatestProjects() {
       ) : (
         !isLoading && (
           <div
-            style={{
-              textAlign: 'center',
-              color: colors.text.disabled,
-              paddingLeft: 20,
-              paddingRight: 20,
-              paddingBottom: 20,
-              paddingTop: concatenatedPages?.length === 0 ? 0 : 20,
-            }}
+            className={classNames(
+              'px-5 pb-5 text-center text-grey-400 dark:text-slate-200',
+              concatenatedPages?.length !== 0 ? 'pt-5' : '',
+            )}
           >
             {concatenatedPages?.length}{' '}
             {concatenatedPages?.length === 1 ? t`project` : t`projects`}{' '}

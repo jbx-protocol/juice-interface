@@ -1,11 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Col, Row } from 'antd'
 import { AppWrapper } from 'components/common'
-import { lightColors } from 'constants/styles/colors'
-import { LAYOUT_MAX_WIDTH_PX } from 'constants/styles/layouts'
-import { ThemeContext } from 'contexts/themeContext'
 import Image from 'next/image'
-import { CSSProperties, useContext } from 'react'
 import { BigHeading } from './home/BigHeading'
 import Faq from './home/Faq'
 import Footer from './home/Footer'
@@ -15,15 +11,8 @@ import { StatsSection } from './home/StatsSection'
 import { TopProjectsSection } from './home/TopProjectsSection'
 import TrendingSection from './home/TrendingSection'
 import blueBerry from '/public/assets/blueberry-ol.png'
+
 function Landing() {
-  const { theme } = useContext(ThemeContext)
-  const colors = theme.colors
-
-  const wrapper: CSSProperties = {
-    maxWidth: LAYOUT_MAX_WIDTH_PX,
-    margin: '0 auto',
-  }
-
   return (
     <div>
       <HeroSection />
@@ -36,24 +25,16 @@ function Landing() {
 
       <HowItWorksSection />
 
-      <section
-        style={{
-          padding: 30,
-          paddingTop: 80,
-          paddingBottom: 80,
-          background: colors.background.brand.secondary,
-          color: colors.text.over.brand.secondary,
-        }}
-      >
-        <div style={wrapper}>
+      <section className="bg-juice-100 py-20 px-7 text-black dark:bg-juice-100 dark:text-black">
+        <div className="my-0 mx-auto max-w-[1080px]">
           <Row align="middle" gutter={40}>
             <Col xs={24} md={14}>
-              <div style={{ display: 'grid', rowGap: 20 }}>
+              <div className="grid gap-y-5">
                 <BigHeading
+                  className="text-black"
                   text={t`Should you Juicebox?`}
-                  style={{ color: lightColors.dark0 }}
                 />
-                <div style={{ color: colors.text.over.brand.secondary }}>
+                <div className="text-black dark:text-black">
                   <p className="ol">
                     <Trans>Almost definitely.</Trans>
                   </p>
@@ -87,22 +68,8 @@ function Landing() {
       </section>
 
       <section>
-        <div
-          id="faq"
-          style={{
-            ...wrapper,
-            paddingTop: 80,
-            paddingBottom: 80,
-            maxWidth: 800,
-          }}
-        >
-          <div
-            style={{
-              display: 'grid',
-              rowGap: 60,
-              padding: '0 1.5rem',
-            }}
-          >
+        <div id="faq" className="my-0 mx-auto max-w-[800px] py-20 ">
+          <div className="grid gap-y-14 px-6">
             <BigHeading text={t`FAQs`} />
             <Faq />
           </div>

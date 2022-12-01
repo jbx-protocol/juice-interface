@@ -1,24 +1,22 @@
 import { CheckCircleFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
-import { ThemeContext } from 'contexts/themeContext'
-import { PropsWithChildren, useContext } from 'react'
+import { PropsWithChildren } from 'react'
+import { classNames } from 'utils/classNames'
 
 export function StepSection({
   children,
   completed,
   title,
 }: PropsWithChildren<{ completed: boolean; title: string | JSX.Element }>) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   return (
     <section>
       <h3
-        style={{
-          color: completed ? colors.text.secondary : colors.text.brand.primary,
-        }}
+        className={classNames(
+          completed
+            ? 'text-grey-500 dark:text-grey-300'
+            : 'text-juice-400 dark:text-juice-300',
+        )}
       >
         {title}{' '}
         {completed && (

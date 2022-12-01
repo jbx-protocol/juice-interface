@@ -3,7 +3,6 @@ import { Trans } from '@lingui/macro'
 import { Descriptions, Tooltip } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
 
-import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
@@ -39,10 +38,6 @@ export default function FundingCycleDetails({
 }: {
   fundingCycle: V1FundingCycle | undefined
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const { tokenSymbol } = useContext(V1ProjectContext)
 
   if (!fundingCycle) return null
@@ -307,7 +302,7 @@ export default function FundingCycleDetails({
       </Descriptions>
 
       <div>
-        <span style={{ fontWeight: 600, color: colors.text.secondary }}>
+        <span className="font-medium text-grey-500 dark:text-grey-300">
           <TooltipLabel
             label={<Trans>Reconfiguration strategy</Trans>}
             tip={
@@ -327,8 +322,8 @@ export default function FundingCycleDetails({
         >
           {ballotStrategy.name}
         </FundingCycleDetailWarning>
-        <div style={{ color: colors.text.secondary }}>
-          <div style={{ fontSize: '0.75rem' }}>
+        <div className="text-grey-500 dark:text-grey-300">
+          <div className="text-xs">
             <Trans>
               Address:{' '}
               <EtherscanLink value={ballotStrategy.address} type="address" />

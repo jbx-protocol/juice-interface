@@ -8,6 +8,7 @@ module.exports = {
   important: true,
   theme: {
     colors: {
+      transparent: '#00000000',
       black: '#000000',
       white: '#FFFFFF',
       haze: {

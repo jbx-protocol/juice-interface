@@ -10,7 +10,6 @@ import Loading from 'components/Loading'
 import SectionHeader from 'components/SectionHeader'
 import { PV_V1, PV_V1_1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { ThemeContext } from 'contexts/themeContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
 import { PrintReservesEvent } from 'models/subgraph-entities/v1/print-reserves-event'
 import { TapEvent } from 'models/subgraph-entities/v1/tap-event'
@@ -40,9 +39,6 @@ type EventFilter =
 const pageSize = 50
 
 export default function ProjectActivity() {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
@@ -232,19 +228,15 @@ export default function ProjectActivity() {
 
           return (
             <div
+              className="mb-5 border-x-0 border-t-0 border-b border-solid border-smoke-200 pb-5 dark:border-grey-600"
               key={e.id}
-              style={{
-                marginBottom: 20,
-                paddingBottom: 20,
-                borderBottom: '1px solid ' + colors.stroke.tertiary,
-              }}
             >
               {elem}
             </div>
           )
         }),
       ),
-    [colors, projectEvents],
+    [projectEvents],
   )
 
   const listStatus = useMemo(() => {
@@ -258,13 +250,7 @@ export default function ProjectActivity() {
 
     if (count === 0 && !isLoading) {
       return (
-        <div
-          style={{
-            color: colors.text.secondary,
-            paddingTop: 20,
-            borderTop: '1px solid ' + colors.stroke.tertiary,
-          }}
-        >
+        <div className="border-x-0 border-b-0 border-t border-solid border-smoke-200 pt-5 text-grey-500 dark:border-grey-600 dark:text-grey-300">
           <Trans>No activity yet</Trans>
         </div>
       )
@@ -273,11 +259,7 @@ export default function ProjectActivity() {
     if (hasNextPage) {
       return (
         <div
-          style={{
-            textAlign: 'center',
-            color: colors.text.secondary,
-            cursor: 'pointer',
-          }}
+          className="cursor-pointer text-center text-grey-500 dark:text-grey-300"
           onClick={() => fetchNextPage()}
         >
           <Trans>Load more</Trans>
@@ -286,29 +268,16 @@ export default function ProjectActivity() {
     }
 
     return (
-      <div
-        style={{
-          textAlign: 'center',
-          padding: 10,
-          color: colors.text.secondary,
-        }}
-      >
+      <div className="p-2 text-center text-grey-500 dark:text-grey-300">
         <Trans>{count} total</Trans>
       </div>
     )
-  }, [isLoading, isFetchingNextPage, hasNextPage, fetchNextPage, colors, count])
+  }, [isLoading, isFetchingNextPage, hasNextPage, fetchNextPage, count])
 
   return (
     <div>
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'baseline',
-          justifyContent: 'space-between',
-          marginBottom: 20,
-        }}
-      >
-        <SectionHeader text={t`Activity`} style={{ margin: 0 }} />
+      <div className="mb-5 flex items-baseline justify-between">
+        <SectionHeader className="m-0" text={t`Activity`} />
 
         <Space direction="horizontal" align="center" size="small">
           {count > 0 && (
@@ -320,10 +289,7 @@ export default function ProjectActivity() {
           )}
 
           <Select
-            className="small"
-            style={{
-              width: 200,
-            }}
+            className="small w-48"
             value={eventFilter}
             onChange={val => setEventFilter(val)}
           >

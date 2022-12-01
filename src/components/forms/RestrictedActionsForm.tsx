@@ -1,8 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Form, FormInstance, Space, Switch } from 'antd'
-
-import { ThemeContext } from 'contexts/themeContext'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import FormItemWarningText from '../FormItemWarningText'
 
@@ -27,13 +25,9 @@ export default function RestrictedActionsForm({
     setShowTicketPrintingWarning(form.getFieldValue('ticketPrintingIsAllowed'))
   }, [form])
 
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   return (
     <Space direction="vertical" size="large">
-      <div style={{ color: colors.text.secondary }}>
+      <div className="text-grey-500 dark:text-grey-300">
         <h1>
           <Trans>Restricted actions</Trans>
         </h1>

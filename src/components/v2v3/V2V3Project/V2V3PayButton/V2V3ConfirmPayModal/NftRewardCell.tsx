@@ -1,8 +1,8 @@
 import { Space, Tooltip } from 'antd'
 import ExternalLink from 'components/ExternalLink'
-
 import { NftRewardTier } from 'models/nftRewardTier'
 import { NftRewardImagePreview } from './NftRewardImagePreview'
+import { classNames } from 'utils/classNames'
 
 export function NftRewardCell({
   nftRewards,
@@ -10,31 +10,19 @@ export function NftRewardCell({
   nftRewards: NftRewardTier[]
 }): JSX.Element {
   return (
-    <Space size={'middle'} direction={'vertical'} style={{ width: '100%' }}>
+    <Space size={'middle'} direction={'vertical'} className="w-full">
       {nftRewards.map((tier: NftRewardTier, idx) => {
         const isLink = tier.externalLink
 
-        const className = `text-primary ${
-          isLink
-            ? 'hover-text-action-primary hover-text-decoration-underline'
-            : 'hover-color-unset'
-        }`
-
         return (
-          <div
-            key={idx}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-            }}
-          >
+          <div className="flex items-center justify-end" key={idx}>
             <ExternalLink
-              style={{
-                fontWeight: 500,
-                cursor: isLink ? 'pointer' : 'default',
-              }}
-              className={className}
+              className={classNames(
+                'font-medium text-black dark:text-grey-100',
+                isLink
+                  ? 'cursor-pointer text-black hover:text-haze-400 hover:underline dark:text-grey-100 dark:hover:text-haze-400'
+                  : 'cursor-default',
+              )}
               href={isLink ? tier.externalLink : undefined}
             >
               {tier.name}

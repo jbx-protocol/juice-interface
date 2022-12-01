@@ -14,26 +14,18 @@ export default function DurationInputAndSelect({
   defaultDurationUnit: DurationUnitsOption | undefined
 }) {
   return (
-    <div style={{ display: 'flex' }}>
+    <div className="flex">
       <Form.Item
         name="duration"
         label={<Trans>Funding cycle duration</Trans>}
-        style={{ width: '100%' }}
+        className="w-full"
         required
       >
-        <FormattedNumberInput
-          placeholder="30"
-          min={1}
-          style={{ paddingRight: 15 }}
-        />
+        <FormattedNumberInput className="pr-4" placeholder="30" min={1} />
       </Form.Item>
       <Form.Item name="durationUnit" label={<span></span>}>
         <Select
-          className="medium"
-          style={{
-            minWidth: 125,
-            height: 32,
-          }}
+          className="medium h-8 min-w-[125px]"
           defaultValue={defaultDurationUnit}
         >
           {DURATION_UNIT_OPTIONS.map(value => (

@@ -1,8 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Button, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import Callout from 'components/Callout'
-import { ThemeContext } from 'contexts/themeContext'
+import { Callout } from 'components/Callout'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useReconfigureNftCollectionMetadata } from 'hooks/v2v3/transactor/ReconfigureNftCollectionMetadata'
 import { NftCollectionMetadata } from 'models/nftRewardTier'
@@ -12,9 +11,6 @@ import { NftCollectionDetailsForm } from './NftCollectionDetailsForm'
 
 export function EditCollectionDetailsSection() {
   const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
 
   const [formHasUpdated, setFormHasUpdated] = useState<boolean>()
   const [txLoading, setTxLoading] = useState<boolean>()
@@ -43,13 +39,13 @@ export function EditCollectionDetailsSection() {
 
   return (
     <Space size="large" direction="vertical">
-      <Callout style={{ backgroundColor: colors.background.l1 }}>
+      <Callout.Info className="dark:bg-slate-500" transparent>
         <Trans>
           Changes to your collection details may not be reflected in some
           marketplaces (for example, Opensea). Contact the marketplace for
           support.
         </Trans>
-      </Callout>
+      </Callout.Info>
       <NftCollectionDetailsForm
         form={marketplaceForm}
         onFormUpdated={() => setFormHasUpdated(true)}

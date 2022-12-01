@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
-import { Col, Row, Space } from 'antd'
-import { JuiceModal } from 'components/JuiceModal'
+import { Col, Modal, Row, Space } from 'antd'
+
 import { AttachableSticker } from './AttachableSticker'
 import { PaymentMemoSticker } from './paymentMemoSticker'
 
@@ -38,7 +38,7 @@ export function AttachStickerModal({
   onClose: VoidFunction
 }) {
   return (
-    <JuiceModal
+    <Modal
       title={t`Attach a sticker`}
       open={open}
       onCancel={onClose}
@@ -47,11 +47,11 @@ export function AttachStickerModal({
       centered
     >
       <Space
+        className="max-h-[400px] w-full overflow-y-scroll"
         size="large"
         direction="vertical"
-        style={{ width: '100%', maxHeight: '400px', overflowY: 'scroll' }}
       >
-        <Row style={{ width: '100%' }}>
+        <Row className="w-full">
           {PAYMENT_MEMO_STICKERS.map((sticker, index) => (
             <Col md={8} key={index}>
               <AttachableSticker
@@ -65,6 +65,6 @@ export function AttachStickerModal({
           ))}
         </Row>
       </Space>
-    </JuiceModal>
+    </Modal>
   )
 }

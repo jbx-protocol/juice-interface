@@ -17,9 +17,9 @@ export default function TokenRefs({
     <div>
       {refs.map((r, i) => (
         <div key={`token_${r.value}`}>
-          <div style={{ display: 'flex', alignItems: 'baseline', height: 40 }}>
+          <div className="flex h-10 items-baseline">
             <Button
-              style={{ marginRight: 20, width: 100 }}
+              className="mr-5 w-24"
               type="text"
               icon={<CaretDownFilled />}
               onClick={() =>
@@ -38,7 +38,7 @@ export default function TokenRefs({
               {r.type === 'erc20' ? 'ERC-20' : 'Project'}
             </Button>
 
-            <div style={{ flex: 1 }}>
+            <div className="flex-1">
               {r.type === 'erc20' ? (
                 <Form.Item>
                   <Input
@@ -72,7 +72,7 @@ export default function TokenRefs({
 
             {refs.length > 1 && (
               <CloseCircleOutlined
-                style={{ marginLeft: 10, flexShrink: 1 }}
+                className="ml-2 flex-shrink"
                 onClick={() => onRefsChange(refs.filter((_r, _i) => _i !== i))}
               />
             )}
@@ -81,7 +81,7 @@ export default function TokenRefs({
       ))}
 
       <Button
-        style={{ marginTop: 10 }}
+        className="mt-2"
         size="small"
         block
         onClick={() => onRefsChange([...refs, { type: 'erc20', value: '' }])}

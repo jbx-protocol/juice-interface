@@ -67,7 +67,7 @@ export function DistributionLimitStatistic({
             {showDetail ? (
               <Trans>
                 Distribution limit is infinite.{' '}
-                <p style={{ fontSize: '1rem' }}>
+                <p className="text-base">
                   The project will control how all funds are distributed. Token
                   holders cannot redeem any funds raised.
                 </p>
@@ -331,8 +331,7 @@ export function ReconfigurationStatistic({
             tooltipTitle={ballotWarningText}
           >
             <div>
-              {ballot.name}{' '}
-              <div style={{ fontSize: '0.75rem' }}>{ballot.address}</div>
+              {ballot.name} <div className="text-xs">{ballot.address}</div>
             </div>
           </FundingCycleDetailWarning>
         )
@@ -376,7 +375,7 @@ export function DistributionSplitsStatistic({
         />
       }
       valueRender={() => (
-        <div style={{ fontSize: '0.875rem' }}>
+        <div className="text-sm">
           <SplitList
             splits={splits}
             currency={currency}
@@ -409,7 +408,7 @@ export function ReservedSplitsStatistic({
         />
       }
       valueRender={() => (
-        <div style={{ fontSize: '0.875rem' }}>
+        <div className="text-sm">
           <SplitList
             splits={splits}
             projectOwnerAddress={projectOwnerAddress}

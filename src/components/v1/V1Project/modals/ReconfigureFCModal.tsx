@@ -2,9 +2,9 @@ import { CaretRightFilled } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
-import { DrawerProps, Space, Statistic } from 'antd'
+import { Drawer, DrawerProps, Modal, Space, Statistic } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import Callout from 'components/Callout'
+import { Callout } from 'components/Callout'
 import CurrencySymbol from 'components/CurrencySymbol'
 import IncentivesForm, {
   IncentivesFormFields,
@@ -15,8 +15,6 @@ import RestrictedActionsForm, {
 import TicketingForm, {
   TicketingFormFields,
 } from 'components/forms/TicketingForm'
-import { JuiceDrawer } from 'components/JuiceDrawer'
-import { JuiceModal } from 'components/JuiceModal'
 import BudgetForm from 'components/v1/shared/forms/BudgetForm'
 import PayModsForm from 'components/v1/shared/forms/PayModsForm'
 import PayoutModsList from 'components/v1/shared/PayoutModsList'
@@ -24,7 +22,6 @@ import ReconfigurationStrategyDrawer from 'components/v1/shared/ReconfigurationS
 import TicketModsList from 'components/v1/shared/TicketModsList'
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
-import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useEditingV1FundingCycleSelector } from 'hooks/AppSelector'
@@ -36,6 +33,7 @@ import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { V1FundingCycle, V1FundingCycleMetadata } from 'models/v1/fundingCycle'
 import { useCallback, useContext, useLayoutEffect, useState } from 'react'
 import { editingProjectActions } from 'redux/slices/editingProject'
+import { classNames } from 'utils/classNames'
 import { drawerWidth } from 'utils/drawerWidth'
 import {
   formattedNum,
@@ -137,7 +135,6 @@ export default function ReconfigureFCModal({
   open?: boolean
   onDone?: VoidFunction
 }) {
-  const { colors, radii } = useContext(ThemeContext).theme
   const {
     queuedFC,
     currentFC,
@@ -329,53 +326,46 @@ export default function ReconfigureFCModal({
     )
   }
 
-  const drawerStyle: Partial<DrawerProps> = {
+  const drawerProps: Partial<DrawerProps> = {
     placement: 'right',
     width: drawerWidth(),
   }
 
   const buildSteps = useCallback(
     (steps: { title: string; callback: VoidFunction }[]) => (
-      <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+      <Space direction="vertical" size="middle" className="w-full">
         {steps.map((step, i) => {
           const active = currentStep === i
 
           return (
             <div
+              className={classNames(
+                'flex cursor-pointer justify-between rounded-sm border border-solid p-2',
+                active
+                  ? 'border-haze-400 dark:border-haze-300'
+                  : 'border-[#32c8db44] dark:border-[#e1e0e844]',
+              )}
               key={step.title}
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                cursor: 'pointer',
-                padding: 10,
-                borderRadius: radii.sm,
-                border:
-                  '1px solid ' +
-                  (active
-                    ? colors.stroke.action.primary
-                    : colors.stroke.action.secondary),
-              }}
               onClick={() => {
                 setCurrentStep(i)
                 step.callback()
               }}
             >
               <div
-                style={{
-                  fontWeight: active ? 600 : 500,
-                  color: active
-                    ? colors.text.action.primary
-                    : colors.text.primary,
-                }}
+                className={classNames(
+                  active
+                    ? 'font-medium text-haze-400 dark:text-haze-300'
+                    : 'font-normal text-black dark:text-slate-100',
+                )}
               >
                 {step.title}
               </div>
               <div
-                style={{
-                  color: active
-                    ? colors.icon.action.primary
-                    : colors.icon.primary,
-                }}
+                className={classNames(
+                  active
+                    ? 'text-haze-400 dark:text-haze-300'
+                    : 'text-black dark:text-slate-100',
+                )}
               >
                 <CaretRightFilled />
               </div>
@@ -384,13 +374,13 @@ export default function ReconfigureFCModal({
         })}
       </Space>
     ),
-    [currentStep, colors, radii],
+    [currentStep],
   )
 
   if (!terminal?.version) return null
 
   return (
-    <JuiceModal
+    <Modal
       title={<Trans>Project configuration</Trans>}
       open={open}
       onOk={reconfigure}
@@ -400,14 +390,14 @@ export default function ReconfigureFCModal({
       width={600}
     >
       <div>
-        <h4 style={{ marginBottom: 0 }}>
+        <h4 className="mb-0">
           <Trans>Reconfigure upcoming funding cycles</Trans>
         </h4>
-        <Callout>
+        <Callout.Info>
           <V1ReconfigureUpcomingMessage currentFC={currentFC} />
-        </Callout>
+        </Callout.Info>
 
-        <Space direction="vertical" size="large" style={{ width: '100%' }}>
+        <Space direction="vertical" size="large" className="w-full">
           <div>
             {buildSteps([
               {
@@ -467,7 +457,7 @@ export default function ReconfigureFCModal({
                   <span>
                     <CurrencySymbol currency={editingFCCurrency} />
                     {formatWad(editingFC.target)}{' '}
-                    <span style={{ fontSize: '0.8rem' }}>
+                    <span className="text-sm">
                       (
                       {terminalFee?.gt(0) ? (
                         <span>
@@ -525,8 +515,7 @@ export default function ReconfigureFCModal({
               const ballot = getBallotStrategyByAddress(editingFC.ballot)
               return (
                 <div>
-                  {ballot.name}{' '}
-                  <div style={{ fontSize: '0.75rem' }}>{ballot.address}</div>
+                  {ballot.name} <div className="text-xs">{ballot.address}</div>
                 </div>
               )
             }}
@@ -575,9 +564,9 @@ export default function ReconfigureFCModal({
         </Space>
       </div>
 
-      <JuiceDrawer
+      <Drawer
         open={budgetFormModalVisible}
-        {...drawerStyle}
+        {...drawerProps}
         onClose={() => {
           setBudgetFormModalVisible(false)
           setCurrentStep(undefined)
@@ -594,11 +583,11 @@ export default function ReconfigureFCModal({
             setCurrentStep(undefined)
           }}
         />
-      </JuiceDrawer>
+      </Drawer>
 
-      <JuiceDrawer
+      <Drawer
         open={payModsModalVisible}
-        {...drawerStyle}
+        {...drawerProps}
         onClose={() => {
           setPayModsFormModalVisible(false)
           setCurrentStep(undefined)
@@ -616,11 +605,11 @@ export default function ReconfigureFCModal({
             setCurrentStep(undefined)
           }}
         />
-      </JuiceDrawer>
+      </Drawer>
 
-      <JuiceDrawer
+      <Drawer
         open={ticketingFormModalVisible}
-        {...drawerStyle}
+        {...drawerProps}
         onClose={() => {
           resetTicketingForm()
           setTicketingFormModalVisible(false)
@@ -637,11 +626,11 @@ export default function ReconfigureFCModal({
             setCurrentStep(undefined)
           }}
         />
-      </JuiceDrawer>
+      </Drawer>
 
       <ReconfigurationStrategyDrawer
         open={rulesFormModalVisible}
-        style={drawerStyle}
+        {...drawerProps}
         onClose={() => {
           setCurrentStep(undefined)
           setRulesFormModalVisible(false)
@@ -654,9 +643,9 @@ export default function ReconfigureFCModal({
         }}
       />
 
-      <JuiceDrawer
+      <Drawer
         open={incentivesFormModalVisible}
-        {...drawerStyle}
+        {...drawerProps}
         onClose={() => {
           setIncentivesFormModalVisible(false)
           setCurrentStep(undefined)
@@ -672,12 +661,12 @@ export default function ReconfigureFCModal({
             setCurrentStep(undefined)
           }}
         />
-      </JuiceDrawer>
+      </Drawer>
 
       {terminal.version === '1.1' && (
-        <JuiceDrawer
+        <Drawer
           open={restrictedActionsFormModalVisible}
-          {...drawerStyle}
+          {...drawerProps}
           onClose={() => {
             resetRestrictedActionsForm()
             setRestrictedActionsFormModalVisible(false)
@@ -692,8 +681,8 @@ export default function ReconfigureFCModal({
               setCurrentStep(undefined)
             }}
           />
-        </JuiceDrawer>
+        </Drawer>
       )}
-    </JuiceModal>
+    </Modal>
   )
 }

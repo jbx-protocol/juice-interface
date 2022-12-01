@@ -5,48 +5,40 @@ import { ItemType } from 'antd/lib/menu/hooks/useItems'
 import CopyTextButton from 'components/CopyTextButton'
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
-import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
 import { useWallet } from 'hooks/Wallet'
 import Link from 'next/link'
-import { useContext } from 'react'
 import Balance from './Balance'
 
 export default function Wallet({ userAddress }: { userAddress: string }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const isMobile = useMobile()
-
-  const height = 45
 
   const { disconnect } = useWallet()
 
   const CopyableAddress = () => (
-    <div style={{ color: colors.text.primary }}>
+    <div className="text-black dark:text-slate-100">
       <EtherscanLink value={userAddress} type="address" truncated />{' '}
-      <CopyTextButton value={userAddress} style={{ zIndex: 1 }} />
+      <CopyTextButton value={userAddress} className="z-10" />
     </div>
   )
 
   const MyProjects = () => (
     <>
       <Link href="/projects?tab=myprojects">
-        <a style={{ fontWeight: 400, color: colors.text.primary }}>
+        <a className="font-base text-black dark:text-slate-100">
           <Trans>My projects</Trans>
         </a>
       </Link>
-      <CrownOutlined style={{ color: colors.text.primary }} />
+      <CrownOutlined className="text-black dark:text-slate-100" />
     </>
   )
 
   const Disconnect = () => (
     <>
-      <span style={{ color: colors.text.primary }}>
+      <span className="text-black dark:text-slate-100">
         <Trans>Disconnect</Trans>
       </span>
-      <LogoutOutlined style={{ color: colors.text.primary }} rotate={-90} />
+      <LogoutOutlined className="text-black dark:text-slate-100" rotate={-90} />
     </>
   )
 
@@ -74,22 +66,9 @@ export default function Wallet({ userAddress }: { userAddress: string }) {
     <Dropdown
       overlay={<Menu items={items} />}
       placement={!isMobile ? 'bottomRight' : 'top'}
-      overlayStyle={{ padding: 0 }}
+      overlayClassName="p-0"
     >
-      <div
-        style={{
-          height,
-          borderRadius: 2,
-          padding: '4px 19px 7px',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          background: colors.background.l2,
-          cursor: 'default',
-          userSelect: 'all',
-          width: '100%',
-        }}
-      >
+      <div className="flex h-11 w-full cursor-default select-all flex-col items-center rounded-sm bg-smoke-75 px-5 pt-1 pb-2 dark:bg-slate-400">
         <FormattedAddress address={userAddress} tooltipDisabled={true} />
         <Balance address={userAddress} hideTooltip />
       </div>

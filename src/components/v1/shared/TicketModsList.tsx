@@ -1,8 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Button, Space } from 'antd'
+import { Button, Modal, Space } from 'antd'
 import { CsvUpload } from 'components/CsvUpload/CsvUpload'
-import { JuiceModal } from 'components/JuiceModal'
 import Mod from 'components/v1/shared/Mod'
 import ProjectTicketMods from 'components/v1/shared/ProjectTicketMods'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
@@ -93,10 +92,7 @@ export default function TicketModsList({
         ? [...mods]
             .sort((a, b) => (a.percent < b.percent ? 1 : -1))
             .map(mod => (
-              <div
-                key={mod.beneficiary ?? '' + mod.percent}
-                style={{ marginBottom: 5 }}
-              >
+              <div className="mb-1" key={mod.beneficiary ?? '' + mod.percent}>
                 <Mod
                   mod={mod}
                   value={
@@ -121,7 +117,7 @@ export default function TicketModsList({
         <Mod
           mod={{ beneficiary: owner, percent: ownerPercent }}
           value={
-            <span style={{ fontWeight: 400 }}>
+            <span className="font-normal">
               {permyriadToPercent(ownerPercent)}%
               {total
                 ? ` (${formatWad(total?.mul(ownerPercent).div(10000), {
@@ -138,7 +134,7 @@ export default function TicketModsList({
       )}
 
       {fundingCycle && projectId && hasEditPermission ? (
-        <div style={{ marginTop: 10 }}>
+        <div className="mt-2">
           <Button size="small" onClick={() => setModalVisible(true)}>
             <Trans>Edit token allocation</Trans>
           </Button>
@@ -146,7 +142,7 @@ export default function TicketModsList({
       ) : null}
 
       {fundingCycle ? (
-        <JuiceModal
+        <Modal
           open={modalVisible}
           title={t`Edit reserved token allocation`}
           okText={t`Save token allocation`}
@@ -158,12 +154,8 @@ export default function TicketModsList({
           confirmLoading={loading}
           width={720}
         >
-          <Space
-            direction="vertical"
-            style={{ width: '100%', minHeight: 0 }}
-            size="middle"
-          >
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Space className="min-h-0 w-full" direction="vertical" size="middle">
+            <div className="flex justify-between">
               <Trans>Reserved token allocation</Trans>
 
               <CsvUpload
@@ -179,7 +171,7 @@ export default function TicketModsList({
               reservedRate={reservedRate}
             />
           </Space>
-        </JuiceModal>
+        </Modal>
       ) : null}
     </div>
   )

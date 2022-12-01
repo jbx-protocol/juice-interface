@@ -1,27 +1,22 @@
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import AMMPrices from 'components/AMMPrices'
-import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, useContext } from 'react'
 
 export const RedeemAMMPrices = ({
+  className,
   tokenSymbol,
   tokenAddress,
-  style,
 }: {
+  className?: string
   tokenSymbol: string
   tokenAddress: string
-  style?: CSSProperties
 }) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   return (
-    <span style={style}>
+    <span className={className}>
       <Trans>
         or{' '}
         <Tooltip
+          overlayClassName="min-w-[300px]"
           title={
             <AMMPrices
               mode="redeem"
@@ -30,16 +25,8 @@ export const RedeemAMMPrices = ({
             />
           }
           placement="bottomLeft"
-          overlayStyle={{ minWidth: '300px' }}
         >
-          <span
-            style={{
-              cursor: 'default',
-              paddingTop: '0.5rem',
-              paddingBottom: '1px',
-              borderBottom: '1px dashed ' + colors.stroke.secondary,
-            }}
-          >
+          <span className="cursor-default pt-2 pb-4 underline decoration-dashed">
             sell {tokenSymbol} on exchange.
           </span>
         </Tooltip>

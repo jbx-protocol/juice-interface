@@ -1,10 +1,9 @@
 import { t, Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { ThemeContext } from 'contexts/themeContext'
 import { useUnlockTx } from 'hooks/veNft/transactor/VeNftUnlockTx'
 import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { emitSuccessNotification } from 'utils/notifications'
 
 import TransactionModal from 'components/TransactionModal'
@@ -37,9 +36,6 @@ const UnlockModal = ({
   const [loading, setLoading] = useState(false)
   const [transactionPending, setTransactionPending] = useState(false)
   const [form] = useForm<{ beneficiary: string }>()
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
 
   const unlockTx = useUnlockTx()
 
@@ -94,7 +90,7 @@ const UnlockModal = ({
       confirmLoading={loading}
       transactionPending={transactionPending}
     >
-      <div style={{ color: colors.text.secondary }}>
+      <div className="text-grey-500 dark:text-grey-300">
         <p>
           <Trans>
             Unlocking this staking position will burn your NFT and return $

@@ -174,17 +174,17 @@ export function RelaunchFundingCycleModal(props: ModalProps) {
         'Loading...'
       ) : (
         <>
-          <p style={{ marginBottom: '2rem' }}>
+          <p className="mb-8">
             <Trans>
               Relaunch your funding cycle on the new Juicebox V2 contracts.
             </Trans>
           </p>
-          <Form layout="vertical" style={{ marginBottom: '1rem' }}>
-            <div style={{ display: 'flex', gap: 20 }}>
+          <Form className="mb-4" layout="vertical">
+            <div className="flex gap-5">
               <Form.Item
                 label={<Trans>Duration (seconds)</Trans>}
                 required
-                style={{ width: '100%' }}
+                className="w-full"
                 extra={
                   newDuration.toNumber() > 0
                     ? `= ${newDuration.toNumber() / 86400} days`
@@ -203,7 +203,7 @@ export function RelaunchFundingCycleModal(props: ModalProps) {
 
               <Form.Item
                 label={<Trans>Start time (seconds, Unix time)</Trans>}
-                style={{ width: '100%' }}
+                className="w-full"
                 extra={<Trans>Leave blank to start immediately.</Trans>}
               >
                 <Input

@@ -4,24 +4,18 @@ import { Button } from 'antd'
 import Grid from 'components/Grid'
 import Loading from 'components/Loading'
 import ProjectCard from 'components/ProjectCard'
-import { ThemeContext } from 'contexts/themeContext'
 import { useMyProjectsQuery } from 'hooks/Projects'
 import { useWallet } from 'hooks/Wallet'
 import Link from 'next/link'
-import { useContext } from 'react'
 
 export default function MyProjects() {
   const { userAddress } = useWallet()
 
   const { data: projects, isLoading } = useMyProjectsQuery(userAddress)
 
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   if (isLoading) {
     return (
-      <div style={{ marginTop: 40 }}>
+      <div className="mt-10">
         <Loading />
       </div>
     )
@@ -29,12 +23,7 @@ export default function MyProjects() {
 
   if (!userAddress) {
     return (
-      <div
-        style={{
-          textAlign: 'center',
-          padding: 20,
-        }}
-      >
+      <div className="p-5 text-center">
         <Trans>Connect your wallet to see your projects.</Trans>
       </div>
     )
@@ -52,12 +41,7 @@ export default function MyProjects() {
 
       {projects &&
         (projects.length === 0 ? (
-          <div
-            style={{
-              textAlign: 'center',
-              padding: 20,
-            }}
-          >
+          <div className="p-5 text-center">
             <p>
               <Trans>You haven't created any projects yet.</Trans>
             </p>
@@ -71,19 +55,13 @@ export default function MyProjects() {
             </Link>
           </div>
         ) : (
-          <div
-            style={{
-              textAlign: 'center',
-              color: colors.text.disabled,
-              padding: 20,
-            }}
-          >
+          <div className="p-5 text-center text-grey-400 dark:text-slate-200">
             {projects.length} {projects.length === 1 ? t`project` : t`projects`}{' '}
           </div>
         ))}
 
       {projects?.length !== 0 && (
-        <p style={{ marginBottom: 40, marginTop: 40, maxWidth: 800 }}>
+        <p className="my-10 max-w-[800px]">
           <InfoCircleOutlined /> <Trans>Projects that you have created.</Trans>
         </p>
       )}

@@ -21,14 +21,12 @@ export function TokenSwapDescription({
 
   return (
     <div>
-      <p style={{ marginBottom: '0.5rem' }}>
+      <p className="mb-2">
         <Trans>
-          You have{' '}
-          <span style={{ fontWeight: 600 }}>{projectMetadata?.name}</span>{' '}
+          You have <span className="font-medium">{projectMetadata?.name}</span>{' '}
           tokens on <a href={`/p/${v1ProjectHandle}`}>Juicebox V1</a>. You can
-          swap your{' '}
-          <span style={{ fontWeight: 600 }}>{projectMetadata?.name}</span> V1
-          tokens for V2 tokens
+          swap your <span className="font-medium">{projectMetadata?.name}</span>{' '}
+          V1 tokens for V2 tokens
         </Trans>{' '}
         <TooltipIcon tip={<TooltipDescription />} />
       </p>

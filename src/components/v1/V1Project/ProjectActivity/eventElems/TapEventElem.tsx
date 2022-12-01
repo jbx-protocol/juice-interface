@@ -2,15 +2,13 @@ import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
 
-import { ThemeContext } from 'contexts/themeContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { TapEvent } from 'models/subgraph-entities/v1/tap-event'
-import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/format/formatDate'
 
 import { Trans } from '@lingui/macro'
-import { smallHeaderStyle } from 'components/activityEventElems/styles'
 import ETHAmount from 'components/currency/ETHAmount'
+import { classNames } from 'utils/classNames'
 
 export default function TapEventElem({
   event,
@@ -28,10 +26,6 @@ export default function TapEventElem({
       >
     | undefined
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const { data: payoutEvents } = useSubgraphQuery(
     event?.id
       ? {
@@ -62,41 +56,26 @@ export default function TapEventElem({
 
   return (
     <div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignContent: 'space-between',
-        }}
-      >
+      <div className="flex content-between justify-between">
         <div>
-          <div style={smallHeaderStyle(colors)}>
+          <div className="text-xs text-grey-400 dark:text-slate-200">
             <Trans>Distributed funds</Trans>
           </div>
           {payoutEvents?.length ? (
-            <div
-              style={{
-                color: colors.text.primary,
-                fontWeight: 500,
-              }}
-            >
+            <div className="font-medium text-black dark:text-slate-100">
               <ETHAmount amount={event.netTransferAmount} />
             </div>
           ) : null}
         </div>
 
-        <div
-          style={{
-            textAlign: 'right',
-          }}
-        >
-          <div style={smallHeaderStyle(colors)}>
+        <div className="text-right">
+          <div className="text-xs text-grey-400 dark:text-slate-200">
             {event.timestamp && (
               <span>{formatHistoricalDate(event.timestamp * 1000)}</span>
             )}{' '}
             <EtherscanLink value={event.txHash} type="tx" />
           </div>
-          <div style={smallHeaderStyle(colors)}>
+          <div className="text-xs text-grey-400 dark:text-slate-200">
             <Trans>
               called by <FormattedAddress address={event.caller} />
             </Trans>
@@ -104,18 +83,13 @@ export default function TapEventElem({
         </div>
       </div>
 
-      <div style={{ marginTop: 5 }}>
+      <div className="mt-1">
         {payoutEvents?.map(e => (
           <div
+            className="flex content-between items-baseline text-sm"
             key={e.id}
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'baseline',
-              fontSize: '0.8rem',
-            }}
           >
-            <div style={{ fontWeight: 500 }}>
+            <div className="font-medium">
               {e.modProjectId?.gt(0) ? (
                 <span>
                   <V1ProjectHandle projectId={e.modProjectId} />
@@ -126,7 +100,7 @@ export default function TapEventElem({
               :
             </div>
 
-            <div style={{ color: colors.text.secondary }}>
+            <div className="text-grey-500 dark:text-grey-300">
               <ETHAmount amount={e.modCut} />
             </div>
           </div>
@@ -134,25 +108,20 @@ export default function TapEventElem({
 
         {event.beneficiaryTransferAmount?.gt(0) && (
           <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'baseline',
-              fontSize:
-                payoutEvents?.length && payoutEvents.length > 1
-                  ? '0.8rem'
-                  : undefined,
-            }}
+            className={classNames(
+              'flex items-baseline justify-between',
+              payoutEvents?.length && payoutEvents.length > 1 ? 'text-sm' : '',
+            )}
           >
-            <div style={{ fontWeight: 500 }}>
+            <div className="font-medium">
               <FormattedAddress address={event.beneficiary} />:
             </div>
             <div
-              style={
+              className={classNames(
                 payoutEvents?.length && payoutEvents.length > 1
-                  ? { color: colors.text.secondary }
-                  : { fontWeight: 500 }
-              }
+                  ? 'text-grey-500 dark:text-grey-300'
+                  : 'font-medium',
+              )}
             >
               <ETHAmount amount={event.beneficiaryTransferAmount} />
             </div>

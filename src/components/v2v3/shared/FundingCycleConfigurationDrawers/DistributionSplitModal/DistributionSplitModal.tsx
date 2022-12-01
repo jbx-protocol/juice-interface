@@ -1,12 +1,10 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
-import { Form, InputNumber, Radio } from 'antd'
+import { DatePicker, Form, InputNumber, Modal, Radio } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ModalMode, validateEthAddress } from 'components/formItems/formHelpers'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
-import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'
-import { JuiceModal } from 'components/JuiceModal'
 import { CurrencyName } from 'constants/currency'
 import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/ETHPaymentTerminalFee'
 import findIndex from 'lodash/findIndex'
@@ -280,7 +278,7 @@ export function DistributionSplitModal({
     current && current < moment().endOf('day')
 
   return (
-    <JuiceModal
+    <Modal
       title={mode === 'Edit' ? t`Edit payout` : t`Add new payout`}
       open={open}
       onOk={confirmSplit}
@@ -305,10 +303,10 @@ export function DistributionSplitModal({
             value={editingSplitType}
             onChange={e => setEditingSplitType(e.target.value)}
           >
-            <Radio value="address" style={{ fontWeight: 400 }}>
+            <Radio value="address" className="font-normal">
               <Trans>Wallet address</Trans>
             </Radio>
-            <Radio value="project" style={{ fontWeight: 400 }}>
+            <Radio value="project" className="font-normal">
               <Trans>Juicebox project</Trans>
             </Radio>
           </Radio.Group>
@@ -336,7 +334,7 @@ export function DistributionSplitModal({
           >
             <InputNumber
               value={parseInt(projectId ?? '')}
-              style={{ width: '100%' }}
+              className="w-full"
               onChange={(projectId: number | null) => {
                 setProjectId(projectId?.toString())
               }}
@@ -388,12 +386,12 @@ export function DistributionSplitModal({
             </Trans>
           }
         >
-          <JuiceDatePicker
+          <DatePicker
             disabledDate={disabledDate}
             onChange={lockedUntil => setLockedUntil(lockedUntil)}
           />
         </Form.Item>
       </Form>
-    </JuiceModal>
+    </Modal>
   )
 }

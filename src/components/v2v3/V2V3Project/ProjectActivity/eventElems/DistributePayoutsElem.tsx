@@ -1,22 +1,14 @@
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
-
-import { ThemeContext } from 'contexts/themeContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
-import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/format/formatDate'
-
 import { Trans } from '@lingui/macro'
-import {
-  contentLineHeight,
-  primaryContentFontSize,
-  smallHeaderStyle,
-} from 'components/activityEventElems/styles'
 import ETHAmount from 'components/currency/ETHAmount'
 import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 import { useV2V3TerminalVersion } from 'hooks/V2V3TerminalVersion'
 import { DistributePayoutsEvent } from 'models/subgraph-entities/v2/distribute-payouts-event'
+import { classNames } from 'utils/classNames'
 
 export default function DistributePayoutsElem({
   event,
@@ -36,10 +28,6 @@ export default function DistributePayoutsElem({
       >
     | undefined
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const { data: distributePayoutsEvents } = useSubgraphQuery({
     entity: 'distributeToPayoutSplitEvent',
     keys: [
@@ -66,38 +54,25 @@ export default function DistributePayoutsElem({
 
   return (
     <div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignContent: 'space-between',
-        }}
-      >
+      <div className="flex content-between justify-between">
         <div>
-          <div style={smallHeaderStyle(colors)}>
+          <div className="text-xs text-grey-400 dark:text-slate-200">
             <Trans>Distributed funds</Trans>
           </div>
           {distributePayoutsEvents?.length ? (
-            <div
-              style={{
-                lineHeight: contentLineHeight,
-                fontSize: primaryContentFontSize,
-              }}
-            >
+            <div className="text-base">
               <ETHAmount amount={event.distributedAmount} />
             </div>
           ) : null}
         </div>
 
-        <div
-          style={{
-            textAlign: 'right',
-          }}
-        >
-          <div style={smallHeaderStyle(colors)}>
+        <div className="text-right">
+          <div className="text-xs text-grey-400 dark:text-slate-200">
             {terminalVersion && (
               <ProjectVersionBadge
-                style={{ padding: 0, background: 'transparent' }}
+                className="p-0"
+                transparent
+                size="small"
                 versionText={'V' + terminalVersion}
               />
             )}{' '}
@@ -106,7 +81,7 @@ export default function DistributePayoutsElem({
             )}{' '}
             <EtherscanLink value={event.txHash} type="tx" />
           </div>
-          <div style={smallHeaderStyle(colors)}>
+          <div className="text-xs text-grey-400 dark:text-slate-200">
             <Trans>
               called by <FormattedAddress address={event.caller} />
             </Trans>
@@ -114,18 +89,13 @@ export default function DistributePayoutsElem({
         </div>
       </div>
 
-      <div style={{ marginTop: 5 }}>
+      <div className="mt-1">
         {distributePayoutsEvents?.map(e => (
           <div
+            className="flex items-baseline justify-between text-sm"
             key={e.id}
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'baseline',
-              fontSize: '0.8rem',
-            }}
           >
-            <div style={{ fontWeight: 500 }}>
+            <div className="font-medium">
               {e.splitProjectId ? (
                 <V2V3ProjectHandleLink projectId={e.splitProjectId} />
               ) : (
@@ -134,7 +104,7 @@ export default function DistributePayoutsElem({
               :
             </div>
 
-            <div style={{ color: colors.text.secondary }}>
+            <div className="text-grey-500 dark:text-grey-300">
               <ETHAmount amount={e.amount} />
             </div>
           </div>
@@ -142,21 +112,19 @@ export default function DistributePayoutsElem({
 
         {event.beneficiaryDistributionAmount?.gt(0) && (
           <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'baseline',
-              fontSize: distributePayoutsEvents?.length ? '0.8rem' : undefined,
-            }}
+            className={classNames(
+              'flex items-baseline justify-between',
+              distributePayoutsEvents?.length ? 'text-sm' : '',
+            )}
           >
-            <div style={{ fontWeight: 500 }}>
+            <div className="font-medium">
               <FormattedAddress address={event.beneficiary} />:
             </div>
             <div
-              style={
+              className={
                 distributePayoutsEvents?.length
-                  ? { color: colors.text.secondary }
-                  : { fontWeight: 500 }
+                  ? 'text-grey-500 dark:text-grey-300'
+                  : 'font-medium'
               }
             >
               <ETHAmount amount={event.beneficiaryDistributionAmount} />

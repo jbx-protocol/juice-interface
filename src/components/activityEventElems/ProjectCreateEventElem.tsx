@@ -1,49 +1,28 @@
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
-import { ThemeContext } from 'contexts/themeContext'
 import { ProjectCreateEvent } from 'models/subgraph-entities/vX/project-create-event'
-import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/format/formatDate'
 
 import { Trans } from '@lingui/macro'
-
-import { contentLineHeight, smallHeaderStyle } from './styles'
 
 export default function ProjectCreateEventElem({
   event,
 }: {
   event: Pick<ProjectCreateEvent, 'id' | 'caller' | 'timestamp' | 'txHash'>
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignContent: 'space-between',
-      }}
-    >
+    <div className="flex content-between justify-between">
       <div>
-        <div style={smallHeaderStyle(colors)}>Created</div>
-        <div
-          style={{
-            lineHeight: contentLineHeight,
-          }}
-        >
+        <div className="text-xs text-grey-400 dark:text-slate-200">Created</div>
+        <div className="leading-6">
           <Trans>Project created by</Trans>{' '}
-          <FormattedAddress
-            address={event.caller}
-            style={{ fontWeight: 400 }}
-          />
+          <FormattedAddress className="font-normal" address={event.caller} />
         </div>
       </div>
 
-      <div style={{ textAlign: 'right' }}>
+      <div className="text-right">
         {event.timestamp && (
-          <div style={smallHeaderStyle(colors)}>
+          <div className="text-xs text-grey-400 dark:text-slate-200">
             {formatHistoricalDate(event.timestamp * 1000)}{' '}
             <EtherscanLink value={event.txHash} type="tx" />
           </div>

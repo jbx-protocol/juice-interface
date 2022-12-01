@@ -55,9 +55,9 @@ export function FundingCycleHistory() {
 
   return (
     <Space
+      className="max-h-[80vh] w-full overflow-auto"
       direction="vertical"
       size="large"
-      style={{ width: '100%', maxHeight: '80vh', overflow: 'auto' }}
     >
       {pastFundingCycles.map(([fundingCycle, fundingCycleMetadata]) => (
         <PastFundingCycle

@@ -1,6 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { Divider, Space, Tabs } from 'antd'
-import { JuiceDrawer } from 'components/JuiceDrawer'
+import { Divider, Drawer, Space, Tabs } from 'antd'
 import { AddToProjectBalanceForm } from 'components/Project/ProjectToolsDrawer/AddToProjectBalanceForm'
 import { ExportSection } from 'components/Project/ProjectToolsDrawer/ExportSection'
 import { TransferOwnershipForm } from 'components/Project/ProjectToolsDrawer/TransferOwnershipForm'
@@ -19,7 +18,7 @@ const OwnerTools = () => {
   const { owner } = useContext(V1ProjectContext)
 
   return (
-    <Space direction="vertical" size="large" style={{ width: '100%' }}>
+    <Space direction="vertical" size="large" className="w-full">
       <section>
         <h3>
           <Trans>Transfer ownership</Trans>
@@ -58,7 +57,7 @@ export function V1ProjectToolsDrawer({
       label: <Trans>General</Trans>,
       key: '1',
       children: (
-        <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+        <Space direction="vertical" size="middle" className="w-full">
           <section>
             <AddToProjectBalanceForm useAddToBalanceTx={useAddToBalanceTx} />
           </section>
@@ -83,7 +82,7 @@ export function V1ProjectToolsDrawer({
   }
 
   return (
-    <JuiceDrawer
+    <Drawer
       open={open}
       onClose={onClose}
       width={600}
@@ -94,6 +93,6 @@ export function V1ProjectToolsDrawer({
       </h1>
 
       <Tabs items={TABS} />
-    </JuiceDrawer>
+    </Drawer>
   )
 }

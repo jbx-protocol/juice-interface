@@ -3,15 +3,13 @@ import { Space } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import Loading from 'components/Loading'
 import { Tab } from 'components/Tab'
-import { layouts } from 'constants/styles/layouts'
-import { ThemeContext } from 'contexts/themeContext'
 import { useGnosisSafe } from 'hooks/safe/GnosisSafe'
 import { useQueuedSafeTransactions } from 'hooks/safe/QueuedSafeTransactions'
 import { generateSafeUrl } from 'lib/safe'
 import { SafeTransactionType } from 'models/safe'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { CSSProperties, useContext } from 'react'
+import { classNames } from 'utils/classNames'
 import { getUniqueNonces } from 'utils/safe'
 import { BackToProjectButton } from '../BackToProjectButton'
 import { ExecutedSafeTransactionsListing } from './ExecutedSafeTransactionsListing'
@@ -34,10 +32,6 @@ export function ProjectSafeDashboard({
   projectPageUrl: string
   projectOwnerAddress?: string
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const router = useRouter()
   const { data: queuedSafeTransactions, isLoading: isTransactionsLoading } =
     useQueuedSafeTransactions({
@@ -51,14 +45,9 @@ export function ProjectSafeDashboard({
 
   if (isLoading) return <Loading />
 
-  const containerStyle: CSSProperties = {
-    ...layouts.maxWidth,
-    margin: '2rem auto',
-  }
-
   if (!gnosisSafeLoading && !gnosisSafe) {
     return (
-      <div style={containerStyle}>
+      <div className="my-8 mx-auto max-w-[1080px] p-5">
         <Trans>Project is not owned by a Safe.</Trans>
       </div>
     )
@@ -82,13 +71,13 @@ export function ProjectSafeDashboard({
   const safeUrl = generateSafeUrl(projectOwnerAddress)
 
   return (
-    <div style={containerStyle}>
-      <h1 style={{ color: colors.text.primary, marginBottom: 5 }}>
+    <div className="my-8 mx-auto max-w-[1080px] p-5">
+      <h1 className="mb-1 text-black dark:text-slate-100">
         <Trans>Safe transactions</Trans>
       </h1>
 
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <ExternalLink href={safeUrl} style={{ textDecoration: 'underline' }}>
+      <div className="flex justify-between">
+        <ExternalLink className="underline" href={safeUrl}>
           <Trans>Go to your Safe</Trans>
         </ExternalLink>
         <BackToProjectButton projectPageUrl={projectPageUrl} />
@@ -101,7 +90,7 @@ export function ProjectSafeDashboard({
       ) : null}
 
       {gnosisSafe && (
-        <div style={{ marginTop: '1.5rem' }}>
+        <div className="mt-6">
           <Space size="large">
             <Link href={`${projectSafeRoute}?tab=queued`}>
               <a>
@@ -122,13 +111,12 @@ export function ProjectSafeDashboard({
           </Space>
 
           <div
-            style={{
-              marginTop: '1.5rem',
-              borderTop:
-                !isLoading && uniqueNonces.length
-                  ? `1px solid ${colors.stroke.secondary}`
-                  : 'unset',
-            }}
+            className={classNames(
+              'mt-6',
+              !isLoading && uniqueNonces.length
+                ? 'border border-t border-r-0 border-b-0 border-l-0 border-solid border-grey-300 dark:border-slate-200'
+                : '',
+            )}
           >
             {selectedTab === SAFE_TX_QUEUED_KEY ? (
               <>

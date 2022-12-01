@@ -1,16 +1,11 @@
 import { Trans } from '@lingui/macro'
-import {
-  contentLineHeight,
-  primaryContentFontSize,
-  smallHeaderStyle,
-} from 'components/activityEventElems/styles'
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
-import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { DistributeReservedTokensEvent } from 'models/subgraph-entities/v2/distribute-reserved-tokens-event'
 import { useContext } from 'react'
+import { classNames } from 'utils/classNames'
 import { formatHistoricalDate } from 'utils/format/formatDate'
 import { formatWad, fromWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -31,9 +26,6 @@ export default function DistributeReservedTokensEventElem({
       >
     | undefined
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { tokenSymbol } = useContext(V1ProjectContext)
 
   const { data: distributeEvents } = useSubgraphQuery(
@@ -63,15 +55,9 @@ export default function DistributeReservedTokensEventElem({
 
   return (
     <div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignContent: 'space-between',
-        }}
-      >
+      <div className="flex content-between justify-between">
         <div>
-          <div style={smallHeaderStyle(colors)}>
+          <div className="text-xs text-grey-400 dark:text-slate-200">
             <Trans>
               Distributed reserved{' '}
               {tokenSymbolText({
@@ -82,12 +68,7 @@ export default function DistributeReservedTokensEventElem({
             </Trans>
           </div>
           {distributeEvents?.length ? (
-            <div
-              style={{
-                lineHeight: contentLineHeight,
-                fontSize: primaryContentFontSize,
-              }}
-            >
+            <div className="text-base">
               {formatWad(event.tokenCount, { precision: 0 })}{' '}
               {tokenSymbolText({
                 tokenSymbol,
@@ -99,13 +80,13 @@ export default function DistributeReservedTokensEventElem({
         </div>
 
         <div>
-          <div style={{ ...smallHeaderStyle(colors), textAlign: 'right' }}>
+          <div className="text-right text-xs text-grey-400 dark:text-slate-200">
             {event.timestamp && (
               <span>{formatHistoricalDate(event.timestamp * 1000)}</span>
             )}{' '}
             <EtherscanLink value={event.txHash} type="tx" />
           </div>
-          <div style={smallHeaderStyle(colors)}>
+          <div className="text-xs text-grey-400 dark:text-slate-200">
             <Trans>
               called by <FormattedAddress address={event.caller} />
             </Trans>
@@ -113,26 +94,19 @@ export default function DistributeReservedTokensEventElem({
         </div>
       </div>
 
-      <div style={{ marginTop: 5 }}>
+      <div className="mt-1">
         {distributeEvents?.map(e => (
-          <div
-            key={e.id}
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'baseline',
-            }}
-          >
-            <div style={{ fontWeight: 500, fontSize: '0.8rem' }}>
+          <div className="flex items-baseline justify-between" key={e.id}>
+            <div className="text-sm font-medium">
               <FormattedAddress address={e.beneficiary} />:
             </div>
 
             <div
-              style={
+              className={classNames(
                 distributeEvents.length > 1
-                  ? { color: colors.text.secondary, fontSize: '0.8rem' }
-                  : { fontWeight: 500 }
-              }
+                  ? 'text-sm text-grey-500 dark:text-grey-300'
+                  : 'font-medium',
+              )}
             >
               {formatWad(e.tokenCount, { precision: 0 })}
             </div>
@@ -140,17 +114,11 @@ export default function DistributeReservedTokensEventElem({
         ))}
 
         {event.beneficiaryTokenCount?.gt(0) && (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'baseline',
-            }}
-          >
-            <div style={{ fontWeight: 500 }}>
+          <div className="flex items-baseline justify-between">
+            <div className="font-medium">
               <FormattedAddress address={event.beneficiary} />:
             </div>
-            <div style={{ color: colors.text.secondary }}>
+            <div className="text-grey-500 dark:text-grey-300">
               {formatWad(event.beneficiaryTokenCount, {
                 precision: 0,
               })}

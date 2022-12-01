@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Button, Divider, Space } from 'antd'
-import { CreateCallout } from 'components/Create/components/CreateCallout'
+import { Callout } from 'components/Callout'
 import { OwnerPayoutCard } from 'components/Create/components/PayoutCard'
 import { PayoutCard } from 'components/Create/components/PayoutCard/PayoutCard'
 import { useFundingTarget } from 'components/Create/components/RecallCard/hooks'
@@ -163,7 +163,7 @@ export const PayoutsList = (
         )}
         {!distributionLimit?.amount.eq(MAX_DISTRIBUTION_LIMIT) &&
           expensesExceedsFundingTarget && (
-            <CreateCallout.Warning collapsible={false}>
+            <Callout.Warning collapsible={false}>
               <div className="pb-2 text-base font-medium">
                 <Trans>Funding Target Exceeded</Trans>
               </div>
@@ -184,7 +184,7 @@ export const PayoutsList = (
               >
                 Sync now
               </Button>
-            </CreateCallout.Warning>
+            </Callout.Warning>
           )}
       </Space>
     </Allocation>

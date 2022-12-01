@@ -1,6 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { Col, Image, Row } from 'antd'
-import { JuiceModal } from 'components/JuiceModal'
+import { Col, Image, Modal, Row } from 'antd'
 import { VARIANTS_HASH } from 'constants/veNft/veNftProject'
 import { useVeNftVariants } from 'hooks/veNft/VeNftVariants'
 import { getVeNftBaseImage } from 'utils/veNft'
@@ -19,7 +18,7 @@ export default function StakingTokenRangesModal({
   const { data: variants } = useVeNftVariants()
 
   return (
-    <JuiceModal
+    <Modal
       open={open}
       onCancel={onCancel}
       cancelText="Close"
@@ -59,6 +58,6 @@ export default function StakingTokenRangesModal({
             </Row>
           )
         })}
-    </JuiceModal>
+    </Modal>
   )
 }

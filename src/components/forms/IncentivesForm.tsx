@@ -41,7 +41,7 @@ export default function IncentivesForm({
   )
 
   return (
-    <Space direction="vertical" size="large" style={{ width: '100%' }}>
+    <Space direction="vertical" size="large" className="w-full">
       <h1>
         <Trans>Incentives</Trans>
       </h1>

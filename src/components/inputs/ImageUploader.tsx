@@ -2,9 +2,8 @@ import { CloseCircleFilled, FileImageOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { PinataMetadata } from '@pinata/sdk'
 import { Button, Col, message, Row, Space, Upload } from 'antd'
-import { ThemeContext } from 'contexts/themeContext'
 import { pinFileToIpfs } from 'lib/api/ipfs'
-import { useContext, useLayoutEffect, useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import { restrictedIpfsUrl } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
 
@@ -31,8 +30,6 @@ export default function ImageUploader({
   const [url, setUrl] = useState<string | undefined>(initialUrl)
   const [loadingUpload, setLoadingUpload] = useState<boolean>()
 
-  const { theme } = useContext(ThemeContext)
-
   const setValue = (cid?: string) => {
     const newUrl = cid ? restrictedIpfsUrl(cid) : undefined
     setUrl(newUrl)
@@ -42,23 +39,12 @@ export default function ImageUploader({
   useLayoutEffect(() => setUrl(initialUrl), [initialUrl])
 
   return (
-    <Row
-      style={{
-        color: theme.colors.text.secondary,
-      }}
-      gutter={30}
-    >
+    <Row className="text-grey-500 dark:text-grey-300" gutter={30}>
       <Col xs={24} md={7}>
         <Space align="start">
           {url && (
             <img
-              style={{
-                maxHeight: 80,
-                maxWidth: 120,
-                objectFit: 'cover',
-                objectPosition: 'center',
-                borderRadius: theme.radii.md,
-              }}
+              className="max-h-[80px] max-w-[120px] rounded-sm object-cover object-center"
               src={url}
               alt="Uploaded user content"
             />
@@ -107,13 +93,7 @@ export default function ImageUploader({
 
       <Col xs={24} md={17}>
         {url?.length ? (
-          <span
-            style={{
-              fontSize: '0.75rem',
-              wordBreak: 'break-all',
-              textOverflow: 'ellipsis',
-            }}
-          >
+          <span className="text-ellipsis break-all text-xs">
             <Trans>
               Uploaded to: <ExternalLink href={url}>{url}</ExternalLink>
             </Trans>

@@ -3,15 +3,11 @@ import { MaxUint256 } from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, Form, Row, Space } from 'antd'
 import { useForm, useWatch } from 'antd/lib/form/Form'
-import { ThemeContext } from 'contexts/themeContext'
 import { useContext, useEffect, useMemo, useState } from 'react'
-
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
-
 import useERC20Allowance from 'hooks/ERC20Allowance'
 import useERC20BalanceOf from 'hooks/ERC20BalanceOf'
 import useERC20Approve from 'hooks/veNft/transactor/ERC20ApproveTx'
-
 import CustomBeneficiaryInput from 'components/veNft/formControls/CustomBeneficiaryInput'
 import LockDurationSelectInput from 'components/veNft/formControls/LockDurationSelectInput'
 import StakingFormActionButton from 'components/veNft/formControls/StakingFormActionButton'
@@ -21,23 +17,14 @@ import VeNftCarousel from 'components/veNft/VeNftCarousel'
 import ConfirmStakeModal from 'components/veNft/VeNftConfirmStakeModal'
 import StakingTokenRangesModal from 'components/veNft/VeNftStakingTokenRangesModal'
 import { useWallet } from 'hooks/Wallet'
-
 import { parseWad } from 'utils/format/formatNumber'
 import { reloadWindow } from 'utils/windowUtils'
-
 import { emitSuccessNotification } from 'utils/notifications'
-
 import { useVeNftTokenMetadata } from 'hooks/veNft/VeNftTokenMetadata'
-
 import { useVeNftResolverTokenUri } from 'hooks/veNft/VeNftResolverTokenUri'
-
 import { VeNftContext } from 'contexts/veNftContext'
-
 import useUserUnclaimedTokenBalance from 'hooks/v2v3/contractReader/UserUnclaimedTokenBalance'
-
 import { MinimalCollapse } from 'components/MinimalCollapse'
-
-import { shadowCard } from 'constants/styles/shadowCard'
 import { VARIANTS_HASH } from 'constants/veNft/veNftProject'
 import { useVeNftHasProjectTokenPermission } from 'hooks/veNft/VeNftHasProjectTokenPermission'
 import { useVeNftLockDurationOptions } from 'hooks/veNft/VeNftLockDurationOptions'
@@ -72,7 +59,6 @@ const VeNftStakingForm = ({
   const { contractAddress } = useContext(VeNftContext)
   const { data: variants } = useVeNftVariants()
   const { data: lockDurationOptions } = useVeNftLockDurationOptions()
-  const { theme } = useContext(ThemeContext)
 
   const [form] = useForm<StakingFormProps>()
 
@@ -188,12 +174,12 @@ const VeNftStakingForm = ({
     <>
       <Form
         layout="vertical"
-        style={{ width: '100%' }}
+        className="w-full"
         form={form}
         initialValues={initialValues}
       >
-        <div style={{ ...shadowCard(theme), padding: 25 }}>
-          <Space direction="vertical" size={'large'} style={{ width: '100%' }}>
+        <div className="rounded-sm bg-smoke-75 stroke-none p-6 shadow-[10px_10px_0px_0px_#E7E3DC] dark:bg-slate-400 dark:shadow-[10px_10px_0px_0px_#2D293A]">
+          <Space direction="vertical" size={'large'} className="w-full">
             <VeNftTokenSelectInput form={form} />
             {cannotSpendProjectToken && (
               <p>
@@ -248,7 +234,7 @@ const VeNftStakingForm = ({
 
                 <MinimalCollapse
                   header={
-                    <h3 style={{ margin: 0 }}>
+                    <h3 className="m-0">
                       <Trans>Advanced Options</Trans>
                     </h3>
                   }
@@ -270,11 +256,7 @@ const VeNftStakingForm = ({
                   />
                 )}
 
-                <Space
-                  size="middle"
-                  direction="vertical"
-                  style={{ width: '100%' }}
-                >
+                <Space size="middle" direction="vertical" className="w-full">
                   <Button
                     block
                     onClick={() => setTokenRangesModalVisible(true)}

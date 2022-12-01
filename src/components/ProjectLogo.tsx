@@ -1,5 +1,5 @@
-import { ThemeContext } from 'contexts/themeContext'
-import { useContext, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 import { ipfsToHttps, isIpfsUrl } from 'utils/ipfs'
 
 // Override select project logos.
@@ -8,22 +8,18 @@ const IMAGE_URI_OVERRIDES: { [k: number]: string } = {
 }
 
 export default function ProjectLogo({
+  className,
   uri,
   name,
-  size,
   projectId,
 }: {
+  className?: string
   uri: string | undefined
   name: string | undefined
-  size?: number
   projectId?: number | undefined
 }) {
   const [srcLoadError, setSrcLoadError] = useState(false)
   const validImg = uri && !srcLoadError
-  const {
-    theme: { colors, radii },
-  } = useContext(ThemeContext)
-  const _size = size ?? 80
 
   const _uri = useMemo(() => {
     if (projectId && IMAGE_URI_OVERRIDES[projectId]) {
@@ -38,25 +34,15 @@ export default function ProjectLogo({
 
   return (
     <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        overflow: 'hidden',
-        height: _size,
-        width: _size,
-        borderRadius: radii.xl,
-        background: validImg ? undefined : colors.background.l1,
-      }}
+      className={twMerge(
+        'flex h-20 w-20 items-center justify-center overflow-hidden rounded-sm',
+        !validImg ? 'bg-smoke-100 dark:bg-slate-600' : 'undefined',
+        className,
+      )}
     >
       {validImg ? (
         <img
-          style={{
-            maxHeight: '100%',
-            minWidth: '100%',
-            objectFit: 'cover',
-            objectPosition: 'center',
-          }}
+          className="max-h-full max-w-full object-cover object-center"
           src={_uri}
           alt={name + ' logo'}
           onError={() => setSrcLoadError(true)}
@@ -64,13 +50,7 @@ export default function ProjectLogo({
           crossOrigin="anonymous"
         />
       ) : (
-        <div
-          style={{
-            fontSize: '2.5rem',
-          }}
-        >
-          🧃
-        </div>
+        <div className="text-4xl">🧃</div>
       )}
     </div>
   )

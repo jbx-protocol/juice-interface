@@ -1,7 +1,6 @@
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import { CurrencyContext } from 'contexts/currencyContext'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
-import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 
 import FormattedNumberInput from '../../inputs/FormattedNumberInput'
@@ -9,9 +8,6 @@ import PayInputSubText from './PayInputSubText'
 import { PayProjectFormContext } from './payProjectFormContext'
 
 export function PayProjectForm({ disabled }: { disabled?: boolean }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const {
     currencyMetadata,
     currencies: { USD, ETH },
@@ -63,21 +59,14 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
   return (
     <>
       {errorMessage && (
-        <div style={{ height: '22px' }}>
-          <span style={{ color: colors.text.failure, fontSize: '0.75rem' }}>
+        <div className="h-5">
+          <span className="text-xs text-error-600 dark:text-error-500">
             {errorMessage}
           </span>
         </div>
       )}
-      <div
-        style={{
-          display: 'flex',
-          width: '100%',
-          flexWrap: 'wrap',
-          gap: 10,
-        }}
-      >
-        <div style={{ flex: 2, minWidth: '50%' }}>
+      <div className="flex w-full flex-wrap gap-2">
+        <div className="min-w-[50%] flex-[2]">
           <FormattedNumberInput
             placeholder="0"
             onChange={onPayAmountChange}
@@ -100,7 +89,7 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
         </div>
 
         <PayButton
-          wrapperStyle={{ flex: 1, maxWidth: '100%' }}
+          wrapperClassName="flex-1 max-w-full"
           disabled={disabled || errorMessage !== ''}
         />
       </div>

@@ -8,17 +8,12 @@ import {
   Space,
   Tooltip,
 } from 'antd'
-
-import { ThemeContext } from 'contexts/themeContext'
-
-import { CSSProperties, useContext, useState } from 'react'
+import { useState } from 'react'
 import { formattedNum, fromWad } from 'utils/format/formatNumber'
 import { detailedTimeString } from 'utils/format/formatTime'
-
 import { t, Trans } from '@lingui/macro'
 import { useVeNftTokenMetadata } from 'hooks/veNft/VeNftTokenMetadata'
 import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'
-
 import VeNftExtendLockModal from './VeNftExtendLockModal'
 import VeNftRedeemModal from './VeNftRedeemModal'
 import VeNftUnlockModal from './VeNftUnlockModal'
@@ -43,15 +38,6 @@ export default function OwnedVeNftCard({
   const thumbnailUri = metadata?.thumbnailUri
 
   const remaining = Math.max(Math.round(lockEnd - Date.now() / 1000), 0)
-
-  const { colors, radii } = useContext(ThemeContext).theme
-
-  const cardStyles: CSSProperties = {
-    display: 'flex',
-    padding: '1rem',
-    borderRadius: radii.md,
-    background: colors.background.l0,
-  }
 
   const renderRedeemButton = () => {
     if (hasOverflow) {
@@ -80,8 +66,8 @@ export default function OwnedVeNftCard({
   }
 
   return (
-    <Card style={cardStyles}>
-      <div style={{ color: colors.text.primary }}>
+    <Card className="flex rounded-sm bg-smoke-25 p-4 dark:bg-slate-800">
+      <div className="text-black dark:text-slate-100">
         <Row>
           <Col span={14}>
             <Descriptions column={1}>
@@ -106,7 +92,7 @@ export default function OwnedVeNftCard({
             <Image src={thumbnailUri} alt="nft" preview={false} />
           </Col>
         </Row>
-        <Space direction="vertical" style={{ width: '100%' }}>
+        <Space direction="vertical" className="w-full">
           <Row>
             <Button block onClick={() => setExtendLockModalVisible(true)}>
               <Trans>Extend Lock</Trans>

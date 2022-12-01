@@ -1,7 +1,5 @@
 import { AppWrapper } from 'components/common'
-
 import ExternalLink from 'components/ExternalLink'
-import { LAYOUT_MAX_WIDTH_PX } from 'constants/styles/layouts'
 
 export default function PrivacyPolicyPage() {
   return (
@@ -13,13 +11,7 @@ export default function PrivacyPolicyPage() {
 
 function PrivacyPolicy() {
   return (
-    <div
-      style={{
-        padding: '40px',
-        maxWidth: LAYOUT_MAX_WIDTH_PX,
-        margin: '0 auto',
-      }}
-    >
+    <div className="my-0 mx-auto max-w-[1080px] p-10">
       <h1>Privacy Policy</h1>
       <p>
         We want to process as little personal information as possible when you

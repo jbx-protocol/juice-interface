@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
-import Callout from 'components/Callout'
+import { Callout } from 'components/Callout'
 import { CsvUpload } from 'components/CsvUpload/CsvUpload'
 import { FormItems } from 'components/formItems'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
@@ -35,18 +35,14 @@ export function V2V3EditReservedTokens({
 
   return (
     <>
-      <Callout style={{ marginBottom: '1rem' }}>
+      <Callout.Info className="mb-4">
         <Trans>
           Changes to your reserved token allocation will take effect
           immediately.
         </Trans>
-      </Callout>
-      <Space
-        direction="vertical"
-        style={{ width: '100%', minHeight: 0 }}
-        size="middle"
-      >
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      </Callout.Info>
+      <Space className="min-h-0 w-full" direction="vertical" size="middle">
+        <div className="flex justify-between">
           <Trans>Reserved token allocation</Trans>
           <CsvUpload
             onChange={onSplitsChanged}

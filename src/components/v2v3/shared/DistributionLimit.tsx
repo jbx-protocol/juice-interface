@@ -1,31 +1,24 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
+import ETHAmount from 'components/currency/ETHAmount'
 import CurrencySymbol from 'components/CurrencySymbol'
 import TooltipIcon from 'components/TooltipIcon'
+import { CurrencyName } from 'constants/currency'
+import { twMerge } from 'tailwind-merge'
 import { formatWad } from 'utils/format/formatNumber'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 
-import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, useContext } from 'react'
-
-import { CurrencyName } from 'constants/currency'
-import ETHAmount from 'components/currency/ETHAmount'
-
 export default function DistributionLimit({
+  className,
   distributionLimit,
   currencyName,
   showTooltip,
-  style,
 }: {
+  className?: string
   distributionLimit: BigNumber | undefined
   currencyName: CurrencyName | undefined
   showTooltip?: boolean
-  style?: CSSProperties
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const distributionLimitIsInfinite = distributionLimit?.eq(
     MAX_DISTRIBUTION_LIMIT,
   )
@@ -53,7 +46,7 @@ export default function DistributionLimit({
         )
       }
       placement={'topLeft'}
-      iconStyle={{ marginLeft: 5 }}
+      iconClassName="ml-1"
     />
   ) : null
 
@@ -75,7 +68,7 @@ export default function DistributionLimit({
   )
 
   return (
-    <span style={{ color: colors.text.primary, ...style }}>
+    <span className={twMerge(className, 'text-black dark:text-slate-100')}>
       {_text}
       {_tooltip}
     </span>

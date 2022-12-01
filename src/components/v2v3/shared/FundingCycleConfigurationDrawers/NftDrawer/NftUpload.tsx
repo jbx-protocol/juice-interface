@@ -3,9 +3,9 @@ import { t, Trans } from '@lingui/macro'
 import { Form, FormInstance, Image, Upload } from 'antd'
 import { RcFile } from 'antd/lib/upload'
 import TooltipLabel from 'components/TooltipLabel'
-import { ThemeContext } from 'contexts/themeContext'
 import { pinFileToIpfs } from 'lib/api/ipfs'
-import { CSSProperties, useContext, useState } from 'react'
+import { useState } from 'react'
+import { classNames } from 'utils/classNames'
 import { restrictedIpfsUrl } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
 
@@ -15,9 +15,6 @@ const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif']
 export const NFT_IMAGE_SIDE_LENGTH = '90px'
 
 export default function NftUpload({ form }: { form: FormInstance }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const [uploading, setUploading] = useState<boolean>()
   const [imageRenderLoading, setImageRenderLoading] = useState<boolean>()
 
@@ -43,11 +40,6 @@ export default function NftUpload({ form }: { form: FormInstance }) {
     return fileIsAllowed && isLt50000M
   }
 
-  const iconStyle: CSSProperties = {
-    fontSize: '20px',
-    color: colors.text.action.primary,
-  }
-
   const imageUrl = form.getFieldValue('imageUrl')
 
   const validateImageUrl = () => {
@@ -62,22 +54,17 @@ export default function NftUpload({ form }: { form: FormInstance }) {
   const uploadButton = (
     <div>
       {uploading ? (
-        <LoadingOutlined style={iconStyle} />
+        <LoadingOutlined className="text-xl text-haze-400 dark:text-haze-300" />
       ) : (
-        <UploadOutlined style={iconStyle} />
+        <UploadOutlined className="text-xl text-haze-400 dark:text-haze-300" />
       )}
-      <div
-        style={{
-          marginTop: 8,
-          width: '100%',
-        }}
-      >
-        <div style={{ fontSize: 14 }}>
+      <div className="mt-2 w-full">
+        <div className="text-sm">
           <strong>
             <Trans>Upload an image</Trans>
           </strong>
         </div>
-        <div style={{ color: colors.text.secondary, fontSize: 12 }}>
+        <div className="text-xs text-grey-500 dark:text-grey-300">
           JPG, PNG, GIF
         </div>
       </div>
@@ -107,25 +94,19 @@ export default function NftUpload({ form }: { form: FormInstance }) {
           const res = await pinFileToIpfs(req.file)
           setValue(res.IpfsHash)
         }}
-        style={{ height: 'unset' }}
       >
         {imageUrl ? (
           <>
             {imageRenderLoading ? (
-              <LoadingOutlined
-                style={{ fontSize: '30px', color: colors.text.action.primary }}
-              />
+              <LoadingOutlined className="text-3xl text-haze-400 dark:text-haze-300" />
             ) : null}
             <Image
+              className={classNames(
+                'h-24 w-24 object-cover object-center',
+                imageRenderLoading ? 'hidden' : '',
+              )}
               src={imageUrl}
               alt={form.getFieldValue('name') ?? 'New NFT reward'}
-              style={{
-                display: imageRenderLoading ? 'none' : 'unset',
-                width: NFT_IMAGE_SIDE_LENGTH,
-                height: NFT_IMAGE_SIDE_LENGTH,
-                objectFit: 'cover',
-                objectPosition: 'center',
-              }}
               onLoad={() => setImageRenderLoading(false)}
               onClick={e => e.stopPropagation()}
             />

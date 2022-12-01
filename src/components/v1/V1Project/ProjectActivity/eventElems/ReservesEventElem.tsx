@@ -1,12 +1,11 @@
 import { Trans } from '@lingui/macro'
-import { smallHeaderStyle } from 'components/activityEventElems/styles'
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
-import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { PrintReservesEvent } from 'models/subgraph-entities/v1/print-reserves-event'
 import { useContext } from 'react'
+import { classNames } from 'utils/classNames'
 import { formatHistoricalDate } from 'utils/format/formatDate'
 import { formatWad, fromWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -27,9 +26,6 @@ export default function ReservesEventElem({
       >
     | undefined
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { tokenSymbol } = useContext(V1ProjectContext)
 
   const { data: distributeEvents } = useSubgraphQuery(
@@ -51,15 +47,9 @@ export default function ReservesEventElem({
 
   return (
     <div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignContent: 'space-between',
-        }}
-      >
+      <div className="flex content-between justify-between">
         <div>
-          <div style={smallHeaderStyle(colors)}>
+          <div className="text-xs text-grey-400 dark:text-slate-200">
             <Trans>
               Distributed reserved{' '}
               {tokenSymbolText({
@@ -70,12 +60,7 @@ export default function ReservesEventElem({
             </Trans>
           </div>
           {distributeEvents?.length ? (
-            <div
-              style={{
-                color: colors.text.primary,
-                fontWeight: 500,
-              }}
-            >
+            <div className="font-medium text-black dark:text-slate-100">
               {formatWad(event.count, { precision: 0 })}{' '}
               {tokenSymbolText({
                 tokenSymbol,
@@ -86,14 +71,14 @@ export default function ReservesEventElem({
           ) : null}
         </div>
 
-        <div style={{ textAlign: 'right' }}>
-          <div style={smallHeaderStyle(colors)}>
+        <div className="text-right">
+          <div className="text-xs text-grey-400 dark:text-slate-200">
             {event.timestamp && (
               <span>{formatHistoricalDate(event.timestamp * 1000)}</span>
             )}{' '}
             <EtherscanLink value={event.txHash} type="tx" />
           </div>
-          <div style={smallHeaderStyle(colors)}>
+          <div className="text-xs text-grey-400 dark:text-slate-200">
             <Trans>
               called by <FormattedAddress address={event.caller} />
             </Trans>
@@ -101,26 +86,19 @@ export default function ReservesEventElem({
         </div>
       </div>
 
-      <div style={{ marginTop: 5 }}>
+      <div className="mt-1">
         {distributeEvents?.map(e => (
-          <div
-            key={e.id}
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'baseline',
-            }}
-          >
-            <div style={{ fontWeight: 500, fontSize: '0.8rem' }}>
+          <div className="flex items-baseline justify-between" key={e.id}>
+            <div className="text-sm font-medium">
               <FormattedAddress address={e.modBeneficiary} />:
             </div>
 
             <div
-              style={
+              className={classNames(
                 distributeEvents.length > 1
-                  ? { color: colors.text.secondary, fontSize: '0.8rem' }
-                  : { fontWeight: 500 }
-              }
+                  ? 'text-sm text-grey-500 dark:text-grey-300'
+                  : 'font-medium',
+              )}
             >
               {formatWad(e.modCut, { precision: 0 })}
             </div>
@@ -128,17 +106,11 @@ export default function ReservesEventElem({
         ))}
 
         {event.beneficiaryTicketAmount?.gt(0) && (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'baseline',
-            }}
-          >
-            <div style={{ fontWeight: 500 }}>
+          <div className="flex items-baseline justify-between">
+            <div className="font-medium">
               <FormattedAddress address={event.beneficiary} />:
             </div>
-            <div style={{ color: colors.text.secondary }}>
+            <div className="text-grey-500 dark:text-grey-300">
               {formatWad(event.beneficiaryTicketAmount, {
                 precision: 0,
               })}

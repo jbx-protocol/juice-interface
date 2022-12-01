@@ -1,11 +1,8 @@
 import { Trans } from '@lingui/macro'
-import { smallHeaderStyle } from 'components/activityEventElems/styles'
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
 import RichNote from 'components/RichNote'
-import { ThemeContext } from 'contexts/themeContext'
 import { DeployETHERC20ProjectPayerEvent } from 'models/subgraph-entities/v2/deploy-eth-erc20-project-payer-event'
-import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/format/formatDate'
 
 export default function DeployETHERC20ProjectPayerEventElem({
@@ -18,32 +15,23 @@ export default function DeployETHERC20ProjectPayerEventElem({
       >
     | undefined
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   if (!event) return null
 
   return (
     <div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
-        <div style={smallHeaderStyle(colors)}>
+      <div className="flex justify-between">
+        <div className="text-xs text-grey-400 dark:text-slate-200">
           <Trans>Created Payment Address</Trans>
         </div>
 
-        <div style={{ textAlign: 'right' }}>
-          <div style={smallHeaderStyle(colors)}>
+        <div className="text-right">
+          <div className="text-xs text-grey-400 dark:text-slate-200">
             {event.timestamp && (
               <span>{formatHistoricalDate(event.timestamp * 1000)}</span>
             )}{' '}
             <EtherscanLink value={event.txHash} type="tx" />
           </div>
-          <div style={smallHeaderStyle(colors)}>
+          <div className="text-xs text-grey-400 dark:text-slate-200">
             <Trans>
               called by <FormattedAddress address={event.caller} />
             </Trans>
@@ -51,14 +39,14 @@ export default function DeployETHERC20ProjectPayerEventElem({
         </div>
       </div>
 
-      <div style={{ marginTop: 5 }}>
+      <div className="mt-1">
         <Trans>
           Address: <FormattedAddress address={event.address} />
         </Trans>
       </div>
 
       {event.memo && (
-        <div style={{ marginTop: 5 }}>
+        <div className="mt-1">
           <RichNote note={event.memo} />
         </div>
       )}

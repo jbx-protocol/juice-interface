@@ -8,11 +8,9 @@ import FormattedAddress from 'components/FormattedAddress'
 import { Parenthesis } from 'components/Parenthesis'
 import TooltipIcon from 'components/TooltipIcon'
 import TooltipLabel from 'components/TooltipLabel'
-import { ThemeContext } from 'contexts/themeContext'
 import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/ETHPaymentTerminalFee'
 import { Split } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
-import { useContext } from 'react'
 import { formatDate } from 'utils/format/formatDate'
 import { formatWad } from 'utils/format/formatNumber'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
@@ -25,14 +23,10 @@ import {
 import V2V3ProjectHandleLink from './V2V3ProjectHandleLink'
 
 const LockedText = ({ lockedUntil }: { lockedUntil: number }) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const lockedUntilFormatted = formatDate(lockedUntil * 1000, 'yyyy-MM-DD')
 
   return (
-    <div style={{ fontSize: '.875rem', color: colors.text.secondary }}>
+    <div className="text-sm text-grey-500 dark:text-grey-300">
       <LockOutlined /> <Trans>locked until {lockedUntilFormatted}</Trans>
     </div>
   )
@@ -45,10 +39,6 @@ const JuiceboxProjectBeneficiary = ({
   split: Split
   projectOwnerAddress: string | undefined
 }) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   if (!split.projectId) return null
 
   const isProjectOwner = projectOwnerAddress === split.beneficiary
@@ -57,13 +47,7 @@ const JuiceboxProjectBeneficiary = ({
     <div>
       <V2V3ProjectHandleLink projectId={parseInt(split.projectId)} />
 
-      <div
-        style={{
-          fontSize: '.8rem',
-          color: colors.text.secondary,
-          marginLeft: 10,
-        }}
-      >
+      <div className="ml-2 text-sm text-grey-500 dark:text-grey-300">
         <TooltipLabel
           label={<Trans>Tokens:</Trans>}
           tip={
@@ -94,13 +78,7 @@ const ETHAddressBeneficiary = ({
   const isProjectOwner = projectOwnerAddress === split.beneficiary
 
   return (
-    <div
-      style={{
-        fontWeight: 500,
-        display: 'flex',
-        alignItems: 'baseline',
-      }}
-    >
+    <div className="flex items-baseline font-medium">
       {split.beneficiary ? (
         <FormattedAddress address={split.beneficiary} />
       ) : null}
@@ -108,7 +86,7 @@ const ETHAddressBeneficiary = ({
         <Trans>Project owner (you)</Trans>
       ) : null}
       {isProjectOwner && (
-        <span style={{ marginLeft: 5 }}>
+        <span className="ml-1">
           <Tooltip title={<Trans>Project owner</Trans>}>
             <CrownFilled />
           </Tooltip>
@@ -134,10 +112,6 @@ const SplitValue = ({
   currency?: BigNumber
   showFees?: boolean
 }) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
   const splitValue = totalValue?.mul(split.percent).div(SPLITS_TOTAL_PERCENT)
   const isJuiceboxProject = isJuiceboxProjectSplit(split)
@@ -170,13 +144,7 @@ const SplitValue = ({
         {splitValueFormatted}
         {valueSuffix ? <span> {valueSuffix}</span> : null})
       </span>
-      <div
-        style={{
-          fontSize: '.8rem',
-          color: colors.text.secondary,
-          marginLeft: 10,
-        }}
-      >
+      <div className="ml-2 text-sm text-grey-500 dark:text-grey-300">
         {showFees && !isJuiceboxProject && (
           <Parenthesis>
             <Trans>
@@ -218,16 +186,9 @@ export function SplitItem({
   )
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'baseline',
-        justifyContent: 'space-between',
-        flexWrap: 'wrap',
-      }}
-    >
-      <div style={{ lineHeight: 1.4 }}>
-        <div style={{ display: 'flex', alignItems: 'baseline' }}>
+    <div className="flex flex-wrap items-baseline justify-between">
+      <div className="leading-6">
+        <div className="flex items-baseline">
           {isJuiceboxProject ? (
             <JuiceboxProjectBeneficiary
               projectOwnerAddress={projectOwnerAddress}
@@ -245,7 +206,7 @@ export function SplitItem({
           <LockedText lockedUntil={split.lockedUntil} />
         ) : null}
       </div>
-      <div style={{ whiteSpace: 'nowrap' }}>
+      <div className="whitespace-nowrap">
         {formattedSplitPercent}%
         {totalValue?.gt(0) && showSplitValue ? (
           <>
@@ -262,7 +223,7 @@ export function SplitItem({
         ) : null}
         {reservedRate ? (
           <TooltipIcon
-            iconStyle={{ marginLeft: 7 }}
+            iconClassName="ml-7"
             tip={
               <Trans>
                 {(reservedRate * parseFloat(formattedSplitPercent)) / 100}% of

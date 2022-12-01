@@ -2,45 +2,19 @@ import Moon from 'components/icons/Moon'
 import Sun from 'components/icons/Sun'
 
 import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, useContext } from 'react'
+import { useContext } from 'react'
 
 import { ThemeOption } from 'constants/theme/theme-option'
+import { classNames } from 'utils/classNames'
 
 export default function ThemePicker() {
-  const {
-    themeOption,
-    setThemeOption,
-    theme: { colors },
-  } = useContext(ThemeContext)
+  const { themeOption, setThemeOption } = useContext(ThemeContext)
 
   const iconSize = 18
-  const padding = 6
-  const height = iconSize + padding * 2
-  const selectedColor = colors.icon.primary
-  const unselectedColor = colors.icon.tertiary
-
-  const iconStyle: CSSProperties = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: padding,
-    paddingBottom: padding,
-  }
-
-  const switchStyle: CSSProperties = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    cursor: 'pointer',
-    width: iconSize * 2 + padding * 4,
-    height,
-    borderRadius: height / 2,
-  }
 
   return (
     <div
-      className="clickable-border"
-      style={switchStyle}
+      className="flex h-8 w-16 cursor-pointer items-center justify-evenly rounded-full border border-solid border-smoke-300 transition-colors hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100"
       role="switch"
       aria-checked={themeOption === ThemeOption.dark}
       onClick={() =>
@@ -52,20 +26,22 @@ export default function ThemePicker() {
       }
     >
       <div
-        style={{
-          ...iconStyle,
-          color:
-            themeOption === ThemeOption.light ? selectedColor : unselectedColor,
-        }}
+        className={classNames(
+          'flex items-center justify-center py-2',
+          themeOption === ThemeOption.light
+            ? 'text-black dark:text-slate-100'
+            : 'text-grey-400 dark:text-slate-200',
+        )}
       >
         <Sun size={iconSize} />
       </div>
       <div
-        style={{
-          ...iconStyle,
-          color:
-            themeOption === ThemeOption.dark ? selectedColor : unselectedColor,
-        }}
+        className={classNames(
+          'flex items-center justify-center py-2',
+          themeOption === ThemeOption.dark
+            ? 'text-black dark:text-slate-100'
+            : 'text-grey-400 dark:text-slate-200',
+        )}
       >
         <Moon size={iconSize} />
       </div>

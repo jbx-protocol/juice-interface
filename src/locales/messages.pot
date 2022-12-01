@@ -26,7 +26,7 @@ msgstr ""
 msgid "1 year"
 msgstr ""
 
-msgid "1. Get funded."
+msgid "1. Get funded"
 msgstr ""
 
 msgid "1. Set ENS name"
@@ -53,7 +53,7 @@ msgstr ""
 msgid "30 days"
 msgstr ""
 
-msgid "4. Build trust."
+msgid "4. Build trust"
 msgstr ""
 
 msgid "7 days"
@@ -699,9 +699,6 @@ msgid "Commit portions of your funds to the people or projects you want to suppo
 msgstr ""
 
 msgid "Configure how your project will collect and spend funds."
-msgstr ""
-
-msgid "Configure restrictions for your funding cycle."
 msgstr ""
 
 msgid "Configure restrictions for your funding cycles."
@@ -2631,6 +2628,9 @@ msgid "Set your funding target"
 msgstr ""
 
 msgid "Setting a handle requires 2 transactions: <0>Set ENS name</0> and <1>Set text record</1>."
+msgstr ""
+
+msgid "Setting a reconfiguration delay means changes to your funding cycle settings only take effect after the delay period has passed. This helps build trust with your contributors."
 msgstr ""
 
 msgid "Share project"

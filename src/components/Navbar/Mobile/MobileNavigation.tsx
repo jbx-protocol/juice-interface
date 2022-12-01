@@ -2,22 +2,16 @@ import { MenuOutlined } from '@ant-design/icons'
 import { Collapse, Menu } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { Header } from 'antd/lib/layout/layout'
-import { ThemeContext } from 'contexts/themeContext'
 import { useWallet } from 'hooks/Wallet'
 import Link from 'next/link'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Logo from '../Logo'
 import { mobileNavItems } from '../navigationItems'
-import { topNavStyles } from '../navStyles'
 import { TransactionsList } from '../TransactionList'
 
 const NAV_EXPANDED_KEY = 0
 
 export default function MobileNavigation() {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const [activeKey, setActiveKey] = useState<0 | undefined>()
 
   const { isConnected, disconnect } = useWallet()
@@ -39,56 +33,26 @@ export default function MobileNavigation() {
 
   return (
     <Header
-      className="top-nav top-nav-mobile"
+      // ant override for .top-nav
+      className="top-nav top-nav-mobile fixed z-[1] flex h-16 w-full items-center  justify-between bg-smoke-25 py-4 px-2 leading-[64px] dark:bg-slate-800"
       onClick={e => {
         e.stopPropagation()
       }}
-      style={{
-        ...topNavStyles,
-        padding: '16px 8px',
-        width: '100%',
-        position: 'fixed',
-      }}
     >
-      <Collapse style={{ border: 'none' }} activeKey={activeKey}>
+      <Collapse className="border-none bg-transparent" activeKey={activeKey}>
         <CollapsePanel
-          style={{ border: 'none' }}
+          className="border-none"
           key={0}
           showArrow={false}
           header={
-            <div
-              style={{
-                width: '100%',
-                display: 'flex',
-                justifyContent: 'space-between',
-              }}
-            >
+            <div className="flex w-full justify-between">
               <Link href="/">
-                <a style={{ display: 'inline-block' }}>
-                  {<Logo height={30} />}
-                </a>
+                <a className="inline-block">{<Logo className="h-8" />}</a>
               </Link>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 30,
-                }}
-              >
-                <TransactionsList
-                  listStyle={{
-                    position: 'absolute',
-                    top: 48,
-                    left: 0,
-                    right: 0,
-                    padding: 12,
-                  }}
-                />
+              <div className="flex items-center gap-7">
+                <TransactionsList listClassName="absolute top-12 left-0 right-0 p-3" />
                 <MenuOutlined
-                  style={{
-                    color: colors.icon.primary,
-                    fontSize: '1.5rem',
-                  }}
+                  className="text-2xl text-black dark:text-slate-100"
                   onClick={toggleNav}
                   role="button"
                 />

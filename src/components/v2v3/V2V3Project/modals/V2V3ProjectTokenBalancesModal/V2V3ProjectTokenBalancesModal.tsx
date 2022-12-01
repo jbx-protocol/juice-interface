@@ -1,9 +1,8 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Button, Form, ModalProps, Space } from 'antd'
+import { Button, Form, Modal, ModalProps, Space } from 'antd'
 import ERC20TokenBalance from 'components/ERC20TokenBalance'
-import { JuiceModal } from 'components/JuiceModal'
 import { PV_V2 } from 'constants/pv'
 import { V2V3_PROJECT_IDS } from 'constants/v2v3/projectIds'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
@@ -81,7 +80,7 @@ function EditTrackedAssetsModal({
   }
 
   return (
-    <JuiceModal
+    <Modal
       title={t`Edit tracked assets`}
       cancelText={t`Cancel`}
       width={600}
@@ -91,7 +90,7 @@ function EditTrackedAssetsModal({
       onCancel={close}
       {...props}
     >
-      <p style={{ marginBottom: 40 }}>
+      <p className="mb-10">
         <Trans>
           Display ERC-20 and other Juicebox project tokens that this project
           owner holds.
@@ -99,7 +98,7 @@ function EditTrackedAssetsModal({
       </p>
 
       <TokenRefs form={form} />
-    </JuiceModal>
+    </Modal>
   )
 }
 
@@ -123,15 +122,9 @@ export function V2V3ProjectTokenBalancesModal(props: ModalProps) {
   )
 
   return (
-    <JuiceModal
+    <Modal
       footer={
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            marginTop: 20,
-          }}
-        >
+        <div className="mt-5 flex justify-between">
           {hasEditPermission ? (
             <Button
               type="text"
@@ -161,7 +154,7 @@ export function V2V3ProjectTokenBalancesModal(props: ModalProps) {
           <Trans>Other assets in this project's owner's wallet.</Trans>
         </p>
 
-        <Space direction="vertical" style={{ width: '100%', marginTop: 20 }}>
+        <Space className="mt-5 w-full" direction="vertical">
           <V2V3ProjectTokenBalance projectId={V2V3_PROJECT_IDS.JUICEBOX_DAO} />
           {trackedTokens?.map(t =>
             t.type === 'erc20' ? (
@@ -185,6 +178,6 @@ export function V2V3ProjectTokenBalancesModal(props: ModalProps) {
           />
         ) : null}
       </div>
-    </JuiceModal>
+    </Modal>
   )
 }

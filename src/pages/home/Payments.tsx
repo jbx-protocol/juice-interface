@@ -5,17 +5,12 @@ import RichNote from 'components/RichNote'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 import { PV_V1, PV_V1_1 } from 'constants/pv'
-import { ThemeContext } from 'contexts/themeContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { Project } from 'models/subgraph-entities/vX/project'
-import { useContext } from 'react'
+import { classNames } from 'utils/classNames'
 import { formatHistoricalDate } from 'utils/format/formatDate'
 
 export default function Payments() {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const { data: events, isLoading } = useSubgraphQuery({
     entity: 'payEvent',
     keys: [
@@ -35,18 +30,18 @@ export default function Payments() {
     if (!project?.projectId) return null
 
     return (
-      <div style={{ color: colors.text.action.primary, fontWeight: 500 }}>
+      <div className="font-medium text-haze-400 dark:text-haze-300">
         {project.pv === PV_V1 || project.pv === PV_V1_1 ? (
           <V1ProjectHandle
             projectId={project.projectId}
             handle={project.handle}
           />
         ) : (
-          <div style={{ display: 'flex', alignItems: 'baseline' }}>
+          <div className="flex items-baseline">
             <V2V3ProjectHandleLink
+              className="mr-2"
               projectId={project.projectId}
               handle={project.handle}
-              style={{ marginRight: '0.5rem' }}
             />
           </div>
         )}
@@ -60,37 +55,21 @@ export default function Payments() {
         <div>
           {events?.map((e, i) => (
             <div
+              className={classNames(
+                'mb-2 border-x-0 border-t-0 border-b border-solid border-smoke-200 pb-5 dark:border-grey-600',
+                i !== 0 ? 'pt-2' : '',
+              )}
               key={e.id}
-              style={{
-                paddingTop: i === 0 ? 0 : 10,
-                paddingBottom: 20,
-                marginBottom: 10,
-                borderBottom: '1px solid ' + colors.stroke.tertiary,
-              }}
             >
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'baseline',
-                }}
-              >
+              <div className="flex items-baseline justify-between">
                 <ProjectHandle project={e.project} />
 
-                <div
-                  style={{ fontSize: '0.75rem', color: colors.text.secondary }}
-                >
+                <div className="text-xs text-grey-500 dark:text-grey-300">
                   {e.timestamp && formatHistoricalDate(e.timestamp * 1000)}
                 </div>
               </div>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'baseline',
-                }}
-              >
-                <span style={{ fontSize: '1rem', fontWeight: 500 }}>
+              <div className="flex items-baseline justify-between">
+                <span className="text-base font-medium">
                   <ETHAmount amount={e.amount} precision={2} />
                 </span>
                 <span>
@@ -99,8 +78,8 @@ export default function Payments() {
               </div>
               <div>
                 <RichNote
+                  className="text-grey-900 dark:text-slate-100"
                   note={e.note}
-                  style={{ color: colors.text.secondary }}
                 />
               </div>
             </div>

@@ -1,16 +1,13 @@
 import { plural, t, Trans } from '@lingui/macro'
-import { Space } from 'antd'
+import { Modal, Space } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
 import TooltipLabel from 'components/TooltipLabel'
-import { ThemeContext } from 'contexts/themeContext'
 import { ETHERC20ProjectPayer } from 'models/subgraph-entities/v2/eth-erc20-project-payer'
-import { useContext } from 'react'
-
 import * as constants from '@ethersproject/constants'
 import CopyTextButton from 'components/CopyTextButton'
 import EtherscanLink from 'components/EtherscanLink'
-import { JuiceModal } from 'components/JuiceModal'
 import useMobile from 'hooks/Mobile'
+import { classNames } from 'utils/classNames'
 
 export function PaymentAddressesModal({
   open,
@@ -30,14 +27,10 @@ export function PaymentAddressesModal({
       >[]
     | undefined
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const isMobile = useMobile()
 
   return (
-    <JuiceModal
+    <Modal
       open={open}
       onCancel={onCancel}
       cancelText="Done"
@@ -45,31 +38,15 @@ export function PaymentAddressesModal({
       okButtonProps={{ hidden: true }}
     >
       {projectPayers?.length ? (
-        <Space direction="vertical" style={{ width: '100%' }}>
+        <Space direction="vertical" className="w-full">
           {projectPayers.map(p => (
             <div
-              style={{
-                padding: 10,
-                border: `1px solid ${colors.stroke.tertiary}`,
-                marginBottom: '10px',
-                fontWeight: 500,
-                color: colors.text.secondary,
-              }}
+              className="mb-2 border border-solid border-smoke-200 p-2 font-medium text-grey-500 dark:border-grey-600 dark:text-grey-300"
               key={p.address}
             >
-              <Space direction="vertical" style={{ width: '100%' }}>
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    fontWeight: 600,
-                    fontSize: '1rem',
-                    marginBottom: '10px',
-                    marginTop: '10px',
-                    color: colors.text.primary,
-                  }}
-                >
-                  <span style={{ textDecoration: 'underline' }}>
+              <Space direction="vertical" className="w-full">
+                <div className="my-2 flex items-center text-base font-medium text-black dark:text-slate-100">
+                  <span className="underline">
                     <EtherscanLink
                       value={p.address}
                       type={'address'}
@@ -79,9 +56,7 @@ export function PaymentAddressesModal({
                   </span>{' '}
                   <CopyTextButton value={p.address} />
                 </div>
-                <div
-                  style={{ display: 'flex', justifyContent: 'space-between' }}
-                >
+                <div className="flex justify-between">
                   <span>
                     <Trans>Mints tokens:</Trans>
                   </span>
@@ -92,15 +67,13 @@ export function PaymentAddressesModal({
                         : t`Payments to this project will mint new project tokens.`
                     }
                     label={
-                      <span style={{ textTransform: 'capitalize' }}>
+                      <span className="capitalize">
                         {(!p.preferAddToBalance).toString()}
                       </span>
                     }
                   />
                 </div>
-                <div
-                  style={{ display: 'flex', justifyContent: 'space-between' }}
-                >
+                <div className="flex justify-between">
                   <Trans>Token beneficiary:</Trans>
                   {p.beneficiary !== constants.AddressZero ? (
                     <TooltipLabel
@@ -127,16 +100,14 @@ export function PaymentAddressesModal({
                   )}
                 </div>
                 {p.preferClaimedTokens ? (
-                  <div
-                    style={{ display: 'flex', justifyContent: 'space-between' }}
-                  >
+                  <div className="flex justify-between">
                     <span>
                       <Trans>Mints tokens as ERC-20:</Trans>
                     </span>
                     <TooltipLabel
                       tip={t`New project tokens are minted as ERC-20 tokens by default. Payments to this Payment Address will incur a higher gas fee than regular Juicebox payments.`}
                       label={
-                        <span style={{ textTransform: 'capitalize' }}>
+                        <span className="capitalize">
                           {p.preferClaimedTokens.toString()}
                         </span>
                       }
@@ -144,9 +115,7 @@ export function PaymentAddressesModal({
                   </div>
                 ) : null}
                 {p?.memo?.length ? (
-                  <div
-                    style={{ display: 'flex', justifyContent: 'space-between' }}
-                  >
+                  <div className="flex justify-between">
                     <span>
                       <TooltipLabel
                         tip={t`Memos appear on the project's activity feed when the Payment Address receives a payment.`}
@@ -155,10 +124,10 @@ export function PaymentAddressesModal({
                       :
                     </span>
                     <div
-                      style={{
-                        maxWidth: isMobile ? '75%' : '385px',
-                        textAlign: 'right',
-                      }}
+                      className={classNames(
+                        'text-right',
+                        isMobile ? 'max-w-[75%]' : 'max-w-[385px]',
+                      )}
                     >
                       "{p.memo}"
                     </div>
@@ -171,19 +140,13 @@ export function PaymentAddressesModal({
       ) : null}
 
       {projectPayers ? (
-        <div
-          style={{
-            color: colors.text.tertiary,
-            marginTop: '20px',
-            textAlign: 'center',
-          }}
-        >
+        <div className="mt-5 text-center text-grey-400 dark:text-slate-200">
           {plural(projectPayers.length, {
             one: '# Payment Address',
             other: '# Payment Addresses',
           })}
         </div>
       ) : null}
-    </JuiceModal>
+    </Modal>
   )
 }

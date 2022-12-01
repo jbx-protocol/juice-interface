@@ -60,6 +60,7 @@ export default function ProjectDuration({
       />
 
       <Form.Item
+        className={showDurationInput ? 'block' : 'none'}
         extra={
           <p>
             <Trans>
@@ -73,7 +74,6 @@ export default function ProjectDuration({
         name={name}
         label={hideLabel ? undefined : t`Funding cycle duration`}
         {...formItemProps}
-        style={{ display: showDurationInput ? 'block' : 'none' }}
       >
         <FormattedNumberInput
           placeholder="30"

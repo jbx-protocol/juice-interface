@@ -1,8 +1,6 @@
 import { DeleteOutlined } from '@ant-design/icons'
 import { Plural, t, Trans } from '@lingui/macro'
 import { Button, Col, Row, Tooltip } from 'antd'
-import { ThemeContext } from 'contexts/themeContext'
-import { useContext } from 'react'
 
 import { SECONDS_IN_DAY } from 'constants/numbers'
 
@@ -13,10 +11,6 @@ export default function VeNftLockDurationOptionCard({
   lockDurationOption: number
   onDelete: VoidFunction
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const lockDurationOptionInDays = lockDurationOption / SECONDS_IN_DAY
   const lockDurationOptionLabel = () => {
     if (lockDurationOption > SECONDS_IN_DAY) {
@@ -45,34 +39,11 @@ export default function VeNftLockDurationOptionCard({
   }
   return (
     <>
-      <Row
-        style={{
-          background: colors.background.l0,
-          border: `1px solid ${colors.stroke.tertiary}`,
-          display: 'flex',
-          width: '100%',
-          cursor: 'pointer',
-          padding: '15px 8px 15px 20px',
-        }}
-      >
-        <Col
-          md={16}
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            flexDirection: 'column',
-          }}
-        >
-          <Row
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              fontSize: 17,
-              width: '100%',
-            }}
-          >
-            <Col style={{ color: colors.text.action.primary }} md={7}></Col>
-            <Col style={{ display: 'flex', fontWeight: 500 }} md={15}>
+      <Row className="flex w-full cursor-pointer border border-solid border-smoke-200 bg-smoke-25 py-4 pr-2 pl-5 dark:border-grey-600 dark:bg-slate-800">
+        <Col className="flex flex-col justify-center" md={16}>
+          <Row className="flex w-full items-center text-base">
+            <Col className="text-haze-400 dark:text-haze-300 " md={7}></Col>
+            <Col className="flex font-medium" md={15}>
               <span>{lockDurationOptionLabel()}</span>
             </Col>
           </Row>
@@ -81,6 +52,7 @@ export default function VeNftLockDurationOptionCard({
         <Col md={3}>
           <Tooltip title={<Trans>Delete Option</Trans>}>
             <Button
+              className="float-right h-4"
               type="text"
               onClick={e => {
                 onDelete()
@@ -88,7 +60,6 @@ export default function VeNftLockDurationOptionCard({
                 e.stopPropagation()
               }}
               icon={<DeleteOutlined />}
-              style={{ height: 16, float: 'right' }}
             />
           </Tooltip>
         </Col>

@@ -1,19 +1,15 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { parseEther } from '@ethersproject/units'
 import { Trans } from '@lingui/macro'
-import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-import { useContext, useMemo } from 'react'
-import { tokenSymbolText } from 'utils/tokenSymbolText'
-
-import { CurrencyContext } from 'contexts/currencyContext'
-
 import { Tooltip } from 'antd'
 import AMMPrices from 'components/AMMPrices'
-import { ThemeContext } from 'contexts/themeContext'
-
+import { CurrencyContext } from 'contexts/currencyContext'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useWeiConverter from 'hooks/WeiConverter'
 import { CurrencyOption } from 'models/currencyOption'
+import { useContext, useMemo } from 'react'
 import { formattedNum } from 'utils/format/formatNumber'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { formatIssuanceRate } from 'utils/v2v3/math'
 import { PayProjectFormContext } from './payProjectFormContext'
 
@@ -32,9 +28,6 @@ export default function PayInputSubText({
   payInCurrency: CurrencyOption
   amount: string | undefined
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const {
     currencyMetadata,
     currencies: { ETH },
@@ -107,14 +100,7 @@ export default function PayInputSubText({
   ])
 
   return (
-    <div
-      style={{
-        marginTop: '0.3rem',
-        fontSize: '0.75rem',
-        width: '100%',
-        color: colors.text.secondary,
-      }}
-    >
+    <div className="mt-1 w-full text-xs text-grey-500 dark:text-grey-300">
       <span>
         <Trans>Receive {receiveText}</Trans>
       </span>
@@ -131,17 +117,10 @@ export default function PayInputSubText({
                 />
               }
               placement="bottomLeft"
-              overlayStyle={{ minWidth: '300px' }}
+              overlayClassName="min-w-[300px]"
               overlayInnerStyle={{ padding: '1rem' }}
             >
-              <span
-                style={{
-                  cursor: 'default',
-                  paddingTop: '0.5rem',
-                  paddingBottom: '1px',
-                  borderBottom: '1px dashed' + colors.stroke.secondary,
-                }}
-              >
+              <span className="cursor-default border border-t-0 border-l-0 border-r-0 border-b border-solid border-b-grey-300 pt-2 pb-4 dark:border-b-slate-200">
                 buy {tokenText} on exchange.
               </span>
             </Tooltip>

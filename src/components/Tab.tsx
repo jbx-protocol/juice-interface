@@ -1,5 +1,4 @@
-import { ThemeContext } from 'contexts/themeContext'
-import { useContext } from 'react'
+import { classNames } from 'utils/classNames'
 
 export function Tab({
   name,
@@ -11,27 +10,16 @@ export function Tab({
   href?: string
   onClick?: VoidFunction
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
-  const className = [
-    isSelected ? 'text-primary' : 'text-secondary',
-    'hover-text-primary',
-  ].join(' ')
-
   return (
     <span
       role="button"
       onClick={onClick}
-      className={className}
-      style={{
-        textTransform: 'uppercase',
-        cursor: 'pointer',
-        paddingBottom: 6,
-        fontWeight: 500,
-        borderBottom: isSelected ? '2px solid ' + colors.text.primary : 'none',
-      }}
+      className={classNames(
+        'cursor-pointer pb-1 font-medium uppercase hover:text-black dark:hover:text-grey-100',
+        isSelected
+          ? 'border-l-0 border-r-0 border-t-0 border-b-2 border-solid text-black dark:text-slate-100'
+          : 'text-grey-500 dark:text-slate-200',
+      )}
     >
       {name}
     </span>

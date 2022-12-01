@@ -1,9 +1,8 @@
 import { UploadOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import TooltipIcon from 'components/TooltipIcon'
-import { ThemeContext } from 'contexts/themeContext'
 import { Split } from 'models/splits'
-import { ChangeEventHandler, useContext } from 'react'
+import { ChangeEventHandler } from 'react'
 import { readFile } from 'utils/file'
 import { emitErrorNotification } from 'utils/notifications'
 import { splitPercentFrom } from 'utils/v2v3/math'
@@ -45,10 +44,6 @@ export function SplitCsvUpload({
 }: {
   onChange: (splits: Split[]) => void
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const onUploadChange: ChangeEventHandler<HTMLInputElement> = async e => {
     e.preventDefault()
     e.stopPropagation()
@@ -76,7 +71,7 @@ export function SplitCsvUpload({
 
   return (
     <label
-      style={{ cursor: 'pointer', fontWeight: 400, color: colors.text.primary }}
+      className="cursor-pointer font-normal text-black dark:text-slate-100"
       role="button"
       htmlFor="csv-upload"
     >

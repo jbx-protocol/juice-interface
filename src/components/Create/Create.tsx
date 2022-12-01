@@ -136,7 +136,12 @@ export function Create() {
                 name="reconfigurationRules"
                 title={<Trans>Reconfiguration Rules</Trans>}
                 description={
-                  <Trans>Configure restrictions for your funding cycle.</Trans>
+                  <Trans>
+                    Setting a reconfiguration delay means changes to your
+                    funding cycle settings only take effect after the delay
+                    period has passed. This helps build trust with your
+                    contributors.
+                  </Trans>
                 }
               >
                 <ReconfigurationRulesPage />

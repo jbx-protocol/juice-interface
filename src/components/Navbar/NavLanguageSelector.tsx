@@ -1,10 +1,8 @@
 import { GlobalOutlined } from '@ant-design/icons'
 import { Select } from 'antd'
-import { CSSProperties, useEffect, useState } from 'react'
-
-import { reloadWindow } from 'utils/windowUtils'
-
 import { Languages } from 'constants/languages/language-options'
+import { useEffect, useState } from 'react'
+import { reloadWindow } from 'utils/windowUtils'
 
 // Language select tool seen in top nav
 export default function NavLanguageSelector({
@@ -14,14 +12,6 @@ export default function NavLanguageSelector({
   disableLang?: string
   mobile?: boolean
 }) {
-  const selectStyle: CSSProperties = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    cursor: 'pointer',
-    fontWeight: 500,
-  }
-
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false)
 
   // Renders Select Option for each language available on Juicebox
@@ -48,10 +38,6 @@ export default function NavLanguageSelector({
     }
   }
 
-  const desktopDropdownStyle: CSSProperties = {
-    marginRight: 20,
-  }
-
   const selectHeader = mobile
     ? Languages[currentSelectedLanguage].long
     : Languages[currentSelectedLanguage].short
@@ -67,20 +53,17 @@ export default function NavLanguageSelector({
 
   return (
     <div
-      className="language-selector"
-      style={{ cursor: 'pointer' }}
+      // language-selector is antd override
+      className="language-selector flex w-full cursor-pointer items-center"
       onClick={e => {
         e.stopPropagation()
         setDropdownOpen(!dropdownOpen)
       }}
     >
-      <GlobalOutlined style={{ marginBottom: 2 }} />
+      <GlobalOutlined className="mb-2" />
       <Select
-        className="medium"
-        style={{
-          ...selectStyle,
-        }}
-        dropdownStyle={mobile ? {} : desktopDropdownStyle}
+        className="flex cursor-pointer items-center justify-evenly font-medium"
+        popupClassName={!mobile ? 'mr-5' : ''}
         open={dropdownOpen}
         value={selectHeader ?? 'EN'}
         onChange={newLanguage => {

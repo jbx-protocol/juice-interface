@@ -1,6 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { Divider, Space } from 'antd'
-import { JuiceDrawer } from 'components/JuiceDrawer'
+import { Divider, Drawer, Space } from 'antd'
 import { AddToProjectBalanceForm } from 'components/Project/ProjectToolsDrawer/AddToProjectBalanceForm'
 import { ExportSection } from 'components/Project/ProjectToolsDrawer/ExportSection'
 import {
@@ -28,7 +27,7 @@ export function V2V3ProjectToolsDrawer({
   const isMobile = useMobile()
 
   return (
-    <JuiceDrawer
+    <Drawer
       open={open}
       onClose={onClose}
       width={!isMobile ? 600 : undefined}
@@ -38,7 +37,7 @@ export function V2V3ProjectToolsDrawer({
         <Trans>Tools</Trans>
       </h1>
 
-      <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+      <Space direction="vertical" size="middle" className="w-full">
         <section>
           <h3>
             <Trans>Create Payment Address</Trans>
@@ -84,6 +83,6 @@ export function V2V3ProjectToolsDrawer({
           }
         />
       </Space>
-    </JuiceDrawer>
+    </Drawer>
   )
 }

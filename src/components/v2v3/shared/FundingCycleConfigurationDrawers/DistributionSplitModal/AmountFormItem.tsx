@@ -9,8 +9,6 @@ import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TooltipIcon from 'components/TooltipIcon'
 import TooltipLabel from 'components/TooltipLabel'
 import { CurrencyName } from 'constants/currency'
-import { ThemeContext } from 'contexts/themeContext'
-import { useContext } from 'react'
 import { formatWad, parseWad, stripCommas } from 'utils/format/formatNumber'
 import { amountSubFee, formatFee } from 'utils/v2v3/math'
 import { AddOrEditSplitFormFields, SplitType } from './types'
@@ -33,10 +31,6 @@ export function AmountFormItem({
   isFirstSplit: boolean
   onCurrencyChange?: (currencyName: CurrencyName) => void
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const amount = Form.useWatch('amount', form)
 
   function AfterFeeMessage() {
@@ -96,13 +90,7 @@ export function AmountFormItem({
         ) : null
       }
     >
-      <div
-        style={{
-          display: 'flex',
-          color: colors.text.primary,
-          alignItems: 'center',
-        }}
-      >
+      <div className="flex items-center text-black dark:text-slate-100">
         <Form.Item
           noStyle
           name="amount"
@@ -115,7 +103,7 @@ export function AmountFormItem({
             },
           ]}
         >
-          <div style={{ flex: 1 }}>
+          <div className="flex-1">
             <FormattedNumberInput
               placeholder={'0'}
               accessory={
@@ -131,13 +119,7 @@ export function AmountFormItem({
             />
           </div>
         </Form.Item>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            marginLeft: 10,
-          }}
-        >
+        <div className="ml-2 flex items-center">
           <Trans>{form.getFieldValue('percent') ?? '0'}%</Trans>
           <TooltipIcon
             tip={
@@ -149,7 +131,7 @@ export function AmountFormItem({
               </Trans>
             }
             placement={'topLeft'}
-            iconStyle={{ marginLeft: 5 }}
+            iconClassName={'ml-1'}
           />
         </div>
       </div>

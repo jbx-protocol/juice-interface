@@ -2,6 +2,7 @@ import { Col, Image } from 'antd'
 
 import { VeNftTokenMetadata, VeNftVariant } from 'models/veNft'
 import { useCallback } from 'react'
+import { classNames } from 'utils/classNames'
 import { getVeNftBaseImage } from 'utils/veNft'
 
 interface VeNftCarouselItemProps {
@@ -22,14 +23,15 @@ const VeNftCarouselItem = ({
   dims,
 }: VeNftCarouselItemProps) => {
   const imgDims = dims || 150
-  const style = { opacity: isActive ? 1 : 0.3 }
-  const labelStyle = {
-    opacity: isActive ? 1 : 0.8,
-  }
 
   const variantRangeInfo = (variant: VeNftVariant) => {
     return (
-      <p style={{ textAlign: 'center', ...labelStyle }}>
+      <p
+        className={classNames(
+          'text-center',
+          isActive ? 'opacity-100' : 'opacity-80',
+        )}
+      >
         {variant.tokensStakedMin}-
         {variant.tokensStakedMax ? variant.tokensStakedMax : '+'}
       </p>
@@ -57,10 +59,10 @@ const VeNftCarouselItem = ({
       {variant && (
         <>
           <Image
+            className={classNames(isActive ? 'opacity-100' : 'opacity-30')}
             src={getCarouselImage({ useFallback: false })}
             fallback={getCarouselImage({ useFallback: true })}
             preview={false}
-            style={style}
             width={imgDims}
             height={imgDims}
             onClick={() => handleImageClick(variant)}

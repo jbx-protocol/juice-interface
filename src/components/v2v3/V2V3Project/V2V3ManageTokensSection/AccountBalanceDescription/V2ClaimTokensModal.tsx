@@ -6,7 +6,6 @@ import FormattedAddress from 'components/FormattedAddress'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/TransactionModal'
-import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import useUserUnclaimedTokenBalance from 'hooks/v2v3/contractReader/UserUnclaimedTokenBalance'
 import { useClaimTokensTx } from 'hooks/v2v3/transactor/ClaimTokensTx'
@@ -27,9 +26,7 @@ export default function V2ClaimTokensModal({
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
   const [claimAmount, setClaimAmount] = useState<string>()
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
+
   const { tokenSymbol, tokenAddress } = useContext(V2V3ProjectContext)
   const claimTokensTx = useClaimTokensTx()
 
@@ -104,7 +101,7 @@ export default function V2ClaimTokensModal({
     >
       <Space direction="vertical" size="large">
         {!ticketsIssued && (
-          <div style={{ padding: 10, background: colors.background.l1 }}>
+          <div className="bg-smoke-100 p-2 dark:bg-slate-600">
             <WarningOutlined />{' '}
             <Trans>
               Tokens cannot be claimed because no ERC-20 token has been issued
@@ -121,7 +118,7 @@ export default function V2ClaimTokensModal({
               balance to ERC-20 tokens and mint them to your wallet.
             </Trans>
           </p>
-          <p style={{ fontWeight: 600 }}>
+          <p className="font-medium">
             <Trans>
               If you're unsure if you need to claim, you probably don't.
             </Trans>

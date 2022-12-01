@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Space, Statistic } from 'antd'
 import axios from 'axios'
-import Callout from 'components/Callout'
+import { Callout } from 'components/Callout'
 import { PV_V1, PV_V1_1, PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactorInstance } from 'hooks/Transactor'
@@ -190,9 +190,9 @@ export function ArchiveProject({
           </Trans>
         </p>
 
-        <Callout>
+        <Callout.Info>
           <Trans>You can unarchive your project at any time.</Trans>
-        </Callout>
+        </Callout.Info>
       </div>
 
       <Button

@@ -10,7 +10,6 @@ import { TokenDrawer } from 'components/v2v3/shared/FundingCycleConfigurationDra
 import { CV_V3 } from 'constants/cv'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useNftDeployerCanReconfigure } from 'hooks/JB721Delegate/contractReader/NftDeployerCanReconfigure'
@@ -30,16 +29,14 @@ function ReconfigureButton({
 }: {
   reconfigureHasChanges: boolean
 } & RichButtonProps) {
-  const { colors } = useContext(ThemeContext).theme
-
   return (
     <RichButton
       {...props}
-      buttonStyle={{
-        border: reconfigureHasChanges
-          ? '1px solid ' + colors.stroke.action.primary
-          : undefined,
-      }}
+      className={
+        reconfigureHasChanges
+          ? 'border-2 border-solid border-haze-400 dark:border dark:border-haze-400'
+          : ''
+      }
     />
   )
 }
@@ -115,7 +112,7 @@ export function V2V3ReconfigureFundingCycleForm() {
 
   return (
     <>
-      <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+      <Space direction="vertical" size="middle" className="w-full">
         <V2V3ReconfigureUpcomingMessage />
 
         <ReconfigureButton
@@ -158,7 +155,7 @@ export function V2V3ReconfigureFundingCycleForm() {
 
         <Divider />
 
-        <h3 className="text-primary" style={{ fontSize: '1.2rem' }}>
+        <h3 className="text-xl text-black dark:text-grey-100">
           <Trans>Review and deploy</Trans>
         </h3>
         <ReconfigurePreview
@@ -179,19 +176,15 @@ export function V2V3ReconfigureFundingCycleForm() {
         />
 
         {nftDrawerHasSavedChanges && !nftDeployerCanReconfigure ? (
-          <Space
-            size="middle"
-            direction="vertical"
-            style={{ marginTop: '1rem' }}
-          >
-            <div style={{ display: 'flex' }}>
-              <span style={{ marginRight: 5 }}>1.</span>
+          <Space className="mt-4" size="middle" direction="vertical">
+            <div className="flex">
+              <span className="mr-1">1.</span>
               <SetNftOperatorPermissionsButton
                 onConfirmed={() => setNftOperatorConfirmed(true)}
               />
             </div>
-            <div style={{ display: 'flex' }}>
-              <span style={{ marginRight: 5 }}>2.</span>
+            <div className="flex">
+              <span className="mr-1">2.</span>
               <DeployConfigurationButton
                 loading={reconfigureLoading}
                 onClick={reconfigureFundingCycle}

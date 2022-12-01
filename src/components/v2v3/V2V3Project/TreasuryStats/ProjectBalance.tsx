@@ -2,18 +2,13 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import ETHAmount from 'components/currency/ETHAmount'
 import StatLine from 'components/Project/StatLine'
-import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
-import { CSSProperties, useContext } from 'react'
+import { useContext } from 'react'
 import { NO_CURRENCY, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 
 import V2V3CurrencyAmount from 'components/v2v3/shared/V2V3CurrencyAmount'
 
-import { textPrimary, textSecondary } from 'constants/styles/text'
-
-export default function ProjectBalance({ style }: { style?: CSSProperties }) {
-  const { theme } = useContext(ThemeContext)
-  const { colors } = theme
+export default function ProjectBalance() {
   const {
     ETHBalance,
     balanceInDistributionLimitCurrency,
@@ -29,15 +24,9 @@ export default function ProjectBalance({ style }: { style?: CSSProperties }) {
         <Trans>This project's balance in the Juicebox contract.</Trans>
       }
       statValue={
-        <div
-          style={{
-            ...textPrimary,
-            color: colors.text.brand.primary,
-            marginLeft: 10,
-          }}
-        >
+        <div className="ml-2 text-lg font-medium text-juice-400 dark:text-juice-300">
           {distributionLimitCurrency?.eq(V2V3_CURRENCY_USD) && (
-            <span style={textSecondary(theme)}>
+            <span className="text-sm font-medium uppercase text-grey-400 dark:text-grey-600">
               <ETHAmount amount={ETHBalance} padEnd />{' '}
             </span>
           )}
@@ -47,7 +36,6 @@ export default function ProjectBalance({ style }: { style?: CSSProperties }) {
           />
         </div>
       }
-      style={style}
     />
   )
 }

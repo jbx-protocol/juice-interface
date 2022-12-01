@@ -60,7 +60,7 @@ export const UploadNoStyle = (props: UploadNoStyleProps) => {
   return (
     <Upload
       {...props}
-      style={{ width: '100%' }}
+      className="w-full"
       onChange={undefined}
       beforeUpload={handleBeforeUpload}
       customRequest={

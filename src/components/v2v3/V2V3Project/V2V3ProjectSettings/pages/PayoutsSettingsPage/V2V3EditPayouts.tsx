@@ -1,32 +1,26 @@
 import { PlusCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, Skeleton, Space } from 'antd'
-import Callout from 'components/Callout'
 import { CsvUpload } from 'components/CsvUpload/CsvUpload'
 import TooltipLabel from 'components/TooltipLabel'
-import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import filter from 'lodash/filter'
 import isEqual from 'lodash/isEqual'
 import { defaultSplit, Split } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { formatWad } from 'utils/format/formatNumber'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
 import { getTotalSplitsPercentage } from 'utils/v2v3/distributions'
 import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2v3/math'
 
+import { Callout } from 'components/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
 import CurrencySymbol from 'components/CurrencySymbol'
 import { DistributionSplitCard } from 'components/v2v3/shared/DistributionSplitCard'
 import { DistributionSplitModal } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/DistributionSplitModal'
 import { useUserAddress } from 'hooks/Wallet/hooks'
+import { classNames } from 'utils/classNames'
 import { parseV2SplitsCsv } from 'utils/csv'
 
 const OwnerSplitCard = ({ splits }: { splits: Split[] }) => {
@@ -65,11 +59,7 @@ const OwnerSplitCard = ({ splits }: { splits: Split[] }) => {
   )
 }
 
-const DistributionLimitHeader = ({
-  style,
-}: {
-  style?: React.CSSProperties
-}) => {
+const DistributionLimitHeader = () => {
   const {
     distributionLimit,
     distributionLimitCurrency,
@@ -85,7 +75,7 @@ const DistributionLimitHeader = ({
   const projectLoading = distributionLimitLoading && fundingCycleLoading
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', ...style }}>
+    <div className="flex justify-between">
       <Skeleton
         loading={projectLoading}
         paragraph={{ rows: 1, width: ['80%'] }}
@@ -134,10 +124,6 @@ export const V2V3EditPayouts = ({
   setEditingSplits: (splits: Split[]) => void
   open?: boolean
 }) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const {
     payoutSplits: contextPayoutSplits,
     distributionLimitCurrency,
@@ -247,27 +233,19 @@ export const V2V3EditPayouts = ({
 
   return (
     <>
-      <Space
-        direction="vertical"
-        size="middle"
-        style={{ width: '100%', marginBottom: '2rem' }}
-      >
+      <Space className="mb-8 w-full" direction="vertical" size="middle">
         <div>
           <Trans>
             Reconfigure payouts as percentages of your distribution limit.
           </Trans>
         </div>
-        <Callout>
+        <Callout.Info>
           <Trans>Changes to payouts will take effect immediately.</Trans>
-        </Callout>
+        </Callout.Info>
       </Space>
 
-      <Space
-        direction="vertical"
-        style={{ width: '100%', minHeight: 0 }}
-        size="middle"
-      >
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <Space className="min-h-0 w-full" direction="vertical" size="middle">
+        <div className="flex justify-between">
           <DistributionLimitHeader />
 
           <CsvUpload
@@ -276,11 +254,11 @@ export const V2V3EditPayouts = ({
             parser={parseV2SplitsCsv}
           />
         </div>
-        <Space style={{ width: '100%' }} direction="vertical" size="small">
+        <Space className="w-full" direction="vertical" size="small">
           {editableSplits.map((split, index) => renderSplitCard(split, index))}
         </Space>
         {lockedSplits ? (
-          <Space style={{ width: '100%' }} direction="vertical" size="small">
+          <Space className="w-full" direction="vertical" size="small">
             {lockedSplits.map((split, index) =>
               renderSplitCard(split, index, true),
             )}
@@ -290,25 +268,18 @@ export const V2V3EditPayouts = ({
           <OwnerSplitCard splits={editingSplits} />
         ) : null}
         {totalSplitsPercentageInvalid && (
-          <span style={{ color: colors.text.failure }}>
+          <span className="text-error-500 dark:text-error-400">
             <Trans>Sum of percentages cannot exceed 100%.</Trans>
           </span>
         )}
 
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            color: colors.text.secondary,
-          }}
-        >
+        <div className="flex justify-between text-grey-500 dark:text-grey-300">
           <div
-            style={{
-              color:
-                totalSplitsPercentage > 100
-                  ? colors.text.warn
-                  : colors.text.secondary,
-            }}
+            className={classNames(
+              totalSplitsPercentage > 100
+                ? 'text-warning-800 dark:text-warning-100'
+                : 'text-grey-900 dark:text-slate-100',
+            )}
           >
             <Trans>Total: {totalSplitsPercentage.toFixed(2)}%</Trans>
           </div>

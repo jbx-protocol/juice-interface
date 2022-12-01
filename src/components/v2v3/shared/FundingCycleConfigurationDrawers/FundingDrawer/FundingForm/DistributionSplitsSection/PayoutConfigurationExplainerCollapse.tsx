@@ -1,16 +1,18 @@
 import { Trans } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
 import { MinimalCollapse } from 'components/MinimalCollapse'
-import { CSSProperties } from 'react'
 import { helpPagePath } from 'utils/routes'
 
 export function PayoutConfigurationExplainerCollapse({
-  style,
+  className,
 }: {
-  style?: CSSProperties
+  className?: string
 }) {
   return (
-    <MinimalCollapse header={<Trans>How do I decide?</Trans>} style={style}>
+    <MinimalCollapse
+      className={className}
+      header={<Trans>How do I decide?</Trans>}
+    >
       <p>
         <Trans>
           Use <strong>Amounts</strong> when you want to configure a{' '}

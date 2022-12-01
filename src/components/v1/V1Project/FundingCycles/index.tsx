@@ -6,7 +6,6 @@ import FundingCycleSection from 'components/Project/FundingCycleSection'
 import CurrentFundingCycle from 'components/v1/shared/FundingCycle/CurrentFundingCycle'
 import QueuedFundingCycle from 'components/v1/shared/FundingCycle/QueuedFundingCycle'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
@@ -17,9 +16,6 @@ import FundingHistory from './FundingHistory'
 import ReconfigureFundingModalTrigger from './ReconfigureFundingModalTrigger'
 
 export default function FundingCycles() {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { currentFC, queuedFC } = useContext(V1ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
@@ -46,12 +42,7 @@ export default function FundingCycles() {
       >
         <span>
           {text}
-          <ExclamationCircleOutlined
-            style={{
-              color: colors.text.warn,
-              marginLeft: 4,
-            }}
-          />
+          <ExclamationCircleOutlined className="ml-1 text-warning-800 dark:text-warning-100" />
         </span>
       </Tooltip>
     )

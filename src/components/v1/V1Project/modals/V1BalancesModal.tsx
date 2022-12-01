@@ -1,6 +1,6 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
-import { Button, Space } from 'antd'
+import { Button, Modal, Space } from 'antd'
 import ERC20TokenBalance from 'components/ERC20TokenBalance'
 import { FormItems } from 'components/formItems'
 import V1ProjectTokenBalance from 'components/v1/shared/V1ProjectTokenBalance'
@@ -18,7 +18,6 @@ import { t, Trans } from '@lingui/macro'
 import { revalidateProject } from 'lib/api/nextjs'
 import { V1TerminalVersion } from 'models/v1/terminals'
 
-import { JuiceModal } from 'components/JuiceModal'
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 
@@ -82,17 +81,11 @@ export function V1BalancesModal({
   }
 
   return (
-    <JuiceModal
+    <Modal
       open={open}
       onCancel={onCancel}
       footer={
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            marginTop: 20,
-          }}
-        >
+        <div className="mt-5 flex justify-between">
           {hasEditPermission ? (
             <Button
               type="text"
@@ -119,7 +112,7 @@ export function V1BalancesModal({
           <Trans>Other assets in this project's owner's wallet.</Trans>
         </p>
 
-        <Space direction="vertical" style={{ width: '100%', marginTop: 20 }}>
+        <Space className="mt-5 w-full" direction="vertical">
           <V1ProjectTokenBalance
             wallet={owner}
             projectId={V1_PROJECT_IDS.JUICEBOX_DAO}
@@ -141,7 +134,7 @@ export function V1BalancesModal({
           )}
         </Space>
 
-        <JuiceModal
+        <Modal
           title={t`Edit tracked assets`}
           open={editModalVisible}
           onCancel={() => setEditModalVisible(false)}
@@ -151,7 +144,7 @@ export function V1BalancesModal({
           onOk={updateTokenRefs}
           okText={t`Save tracked assets`}
         >
-          <p style={{ marginBottom: 40 }}>
+          <p className="mb-10">
             <Trans>
               Display ERC-20 tokens and other Juicebox project tokens that are
               in this project's owner's wallet.
@@ -161,8 +154,8 @@ export function V1BalancesModal({
             refs={editingTokenRefs}
             onRefsChange={setEditingTokenRefs}
           />
-        </JuiceModal>
+        </Modal>
       </div>
-    </JuiceModal>
+    </Modal>
   )
 }

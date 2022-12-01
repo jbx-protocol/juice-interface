@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Form, FormInstance } from 'antd'
+import ETHAmount from 'components/currency/ETHAmount'
 import CurrencySwitch from 'components/CurrencySwitch'
 import CurrencySymbol from 'components/CurrencySymbol'
 import InputAccessoryButton from 'components/InputAccessoryButton'
@@ -43,9 +44,15 @@ export function AmountFormItem({
         <TooltipLabel
           label={
             <Trans>
-              <CurrencySymbol currency={currencyName} />
-              {formatWad(amountSubFeeValue, { precision: 4 })} after{' '}
-              {feePercentage}% JBX membership fee
+              {currencyName === 'ETH' ? (
+                <ETHAmount amount={amountSubFeeValue} />
+              ) : (
+                <>
+                  <CurrencySymbol currency={currencyName} />
+                  {formatWad(amountSubFeeValue, { precision: 4 })}
+                </>
+              )}{' '}
+              after {feePercentage}% JBX membership fee
             </Trans>
           }
           tip={

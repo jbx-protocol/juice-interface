@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Statistic } from 'antd'
+import ETHAmount from 'components/currency/ETHAmount'
 import CurrencySymbol from 'components/CurrencySymbol'
 import FundingCycleDetailWarning from 'components/Project/FundingCycleDetailWarning'
 import TooltipLabel from 'components/TooltipLabel'
@@ -58,8 +59,14 @@ export function DistributionLimitStatistic({
             </span>
           ) : (
             <span>
-              <CurrencySymbol currency={currencyName} />
-              {formatWad(distributionLimit)}{' '}
+              {currencyName === 'ETH' ? (
+                <ETHAmount amount={distributionLimit} />
+              ) : (
+                <>
+                  <CurrencySymbol currency={currencyName} />
+                  {formatWad(distributionLimit)}
+                </>
+              )}
             </span>
           )
         ) : (

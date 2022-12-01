@@ -15,6 +15,7 @@ import { getTotalSplitsPercentage } from 'utils/v2v3/distributions'
 import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2v3/math'
 
 import { Callout } from 'components/Callout'
+import ETHAmount from 'components/currency/ETHAmount'
 import CurrencySymbol from 'components/CurrencySymbol'
 import { DistributionSplitCard } from 'components/v2v3/shared/DistributionSplitCard'
 import { DistributionSplitModal } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/DistributionSplitModal'
@@ -94,8 +95,14 @@ const DistributionLimitHeader = () => {
               ) : (
                 <Trans>
                   <strong>
-                    <CurrencySymbol currency={currency} />
-                    {formatWad(distributionLimit)}
+                    {currency === 'ETH' ? (
+                      <ETHAmount amount={distributionLimit} />
+                    ) : (
+                      <>
+                        <CurrencySymbol currency={currency} />
+                        {formatWad(distributionLimit)}
+                      </>
+                    )}
                   </strong>{' '}
                   Distribution Limit
                 </Trans>

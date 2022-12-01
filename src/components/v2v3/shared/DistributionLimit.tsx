@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
+import ETHAmount from 'components/currency/ETHAmount'
 import CurrencySymbol from 'components/CurrencySymbol'
 import TooltipIcon from 'components/TooltipIcon'
 import { CurrencyName } from 'constants/currency'
@@ -55,8 +56,14 @@ export default function DistributionLimit({
     <Trans>Zero</Trans>
   ) : (
     <>
-      <CurrencySymbol currency={currencyName} />
-      {formatWad(distributionLimit)}
+      {currencyName === 'ETH' ? (
+        <ETHAmount amount={distributionLimit} />
+      ) : (
+        <>
+          <CurrencySymbol currency={currencyName} />
+          {formatWad(distributionLimit)}
+        </>
+      )}
     </>
   )
 

@@ -22,6 +22,7 @@ import '../styles/globals.css'
 
 import '../styles/antd.css'
 import '../styles/index.scss'
+import ErrorBoundary from 'components/common/ErrorBoundry'
 
 const injected = injectedModule()
 const gnosis = gnosisModule()
@@ -84,10 +85,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   }, [])
 
   return (
-    <>
+    <ErrorBoundary>
       {/* Default HEAD - overwritten by specific page SEO */}
       <Head />
       <Component {...pageProps} />
-    </>
+    </ErrorBoundary>
   )
 }

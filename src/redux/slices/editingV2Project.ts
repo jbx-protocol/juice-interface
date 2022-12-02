@@ -49,24 +49,31 @@ export type NftRewardsData = {
   postPayModal: NftPostPayModalConfig | undefined
 }
 
-interface V2ProjectState {
-  version: number
-  projectMetadata: ProjectMetadataV5
-  fundingCycleData: SerializedV2V3FundingCycleData
-  fundingCycleMetadata: SerializedV2V3FundingCycleMetadata
-  fundAccessConstraints: SerializedV2V3FundAccessConstraint[]
-  fundingTargetSelection: FundingTargetType | undefined
-  payoutGroupedSplits: ETHPayoutGroupedSplits
-  payoutsSelection: PayoutsSelection | undefined
-  reservedTokensGroupedSplits: ReservedTokensGroupedSplits
-  projectTokensSelection: ProjectTokensSelection | undefined
-  nftRewards: NftRewardsData
+interface CreateState {
   fundingCyclesPageSelection: 'automated' | 'manual' | undefined
   reconfigurationRuleSelection: ReconfigurationStrategy | undefined
   createFurthestPageReached: CreatePage
   createSoftLockPageQueue: CreatePage[] | undefined
+  fundingTargetSelection: FundingTargetType | undefined
+  payoutsSelection: PayoutsSelection | undefined
+  projectTokensSelection: ProjectTokensSelection | undefined
+}
+
+export interface ProjectState {
+  projectMetadata: ProjectMetadataV5
+  fundingCycleData: SerializedV2V3FundingCycleData
+  fundingCycleMetadata: SerializedV2V3FundingCycleMetadata
+  fundAccessConstraints: SerializedV2V3FundAccessConstraint[]
+  payoutGroupedSplits: ETHPayoutGroupedSplits
+  reservedTokensGroupedSplits: ReservedTokensGroupedSplits
+  nftRewards: NftRewardsData
   mustStartAtOrAfter: string
 }
+
+type ReduxState = {
+  version: number
+} & ProjectState &
+  CreateState
 
 // Increment this version by 1 when making breaking changes.
 // When users return to the site and their local version is less than
@@ -74,18 +81,6 @@ interface V2ProjectState {
 export const REDUX_STORE_V2_PROJECT_VERSION = 10
 
 export const DEFAULT_MUST_START_AT_OR_AFTER = '1'
-
-const defaultProjectMetadataState: ProjectMetadataV5 = {
-  name: '',
-  infoUri: '',
-  logoUri: '',
-  description: '',
-  twitter: '',
-  discord: '',
-  tokens: [],
-  nftPaymentSuccessModal: undefined,
-  version: LATEST_METADATA_VERSION,
-}
 
 export const defaultFundingCycleData: SerializedV2V3FundingCycleData =
   serializeV2V3FundingCycleData({
@@ -138,35 +133,58 @@ export const EMPTY_NFT_COLLECTION_METADATA = {
   description: undefined,
 }
 
-export const defaultProjectState: V2ProjectState = {
-  version: REDUX_STORE_V2_PROJECT_VERSION,
+const defaultCreateState: CreateState = {
+  reconfigurationRuleSelection: undefined,
+  fundingCyclesPageSelection: undefined,
+  createFurthestPageReached: 'projectDetails',
+  createSoftLockPageQueue: [],
+  fundingTargetSelection: undefined,
+  payoutsSelection: undefined,
+  projectTokensSelection: undefined,
+}
+
+const defaultProjectMetadataState: ProjectMetadataV5 = {
+  name: '',
+  infoUri: '',
+  logoUri: '',
+  description: '',
+  twitter: '',
+  discord: '',
+  tokens: [],
+  nftPaymentSuccessModal: undefined,
+  version: LATEST_METADATA_VERSION,
+}
+
+export const defaultProjectState: ProjectState = {
   projectMetadata: { ...defaultProjectMetadataState },
   fundingCycleData: { ...defaultFundingCycleData },
   fundingCycleMetadata: { ...defaultFundingCycleMetadata },
   fundAccessConstraints: [],
-  fundingTargetSelection: undefined,
   payoutGroupedSplits: EMPTY_PAYOUT_GROUPED_SPLITS,
-  payoutsSelection: undefined,
   reservedTokensGroupedSplits: EMPTY_RESERVED_TOKENS_GROUPED_SPLITS,
-  projectTokensSelection: undefined,
   nftRewards: {
     rewardTiers: [],
     CIDs: undefined,
     collectionMetadata: EMPTY_NFT_COLLECTION_METADATA,
     postPayModal: undefined,
   },
-  reconfigurationRuleSelection: undefined,
-  fundingCyclesPageSelection: undefined,
-  createFurthestPageReached: 'projectDetails',
-  createSoftLockPageQueue: [],
   mustStartAtOrAfter: DEFAULT_MUST_START_AT_OR_AFTER,
+}
+
+export const defaultReduxState: ReduxState = {
+  version: REDUX_STORE_V2_PROJECT_VERSION,
+  ...defaultProjectState,
+  ...defaultCreateState,
 }
 
 const editingV2ProjectSlice = createSlice({
   name: 'editingV2Project',
-  initialState: defaultProjectState,
+  initialState: defaultReduxState,
   reducers: {
-    resetState: () => defaultProjectState,
+    setState: (_, action: PayloadAction<ReduxState>) => {
+      return action.payload
+    },
+    resetState: () => defaultReduxState,
     setName: (state, action: PayloadAction<string>) => {
       state.projectMetadata.name = action.payload
     },

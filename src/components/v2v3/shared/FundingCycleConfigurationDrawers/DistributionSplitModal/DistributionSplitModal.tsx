@@ -103,8 +103,11 @@ export function DistributionSplitModal({
   }, [editingSplitType, form])
 
   useEffect(() => {
-    if (isEditPayoutPage && distributionLimit) {
+    if (isEditPayoutPage && parseWad(distributionLimit).gt(0)) {
       setDistributionType('both')
+      return
+    } else if (isEditPayoutPage && parseWad(distributionLimit).eq(0)) {
+      setDistributionType('percent')
       return
     }
     setDistributionType(distributionLimitIsInfinite ? 'percent' : 'amount')

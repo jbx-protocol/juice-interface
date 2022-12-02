@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AllocationSplit } from 'components/Create/components/Allocation'
-import { allocationToSplit } from 'components/Create/utils/splitToAllocation'
+import { projectTokenSettingsToReduxFormat } from 'components/Create/utils/projectTokenSettingsToReduxFormat'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
@@ -28,11 +28,8 @@ import {
 } from 'models/splits'
 import {
   DEFAULT_MINT_RATE,
-  discountRateFrom,
-  formatIssuanceRate,
   issuanceRateFrom,
   redemptionRateFrom,
-  reservedRateFrom,
 } from 'utils/v2v3/math'
 import {
   SerializedV2V3FundAccessConstraint,
@@ -49,14 +46,14 @@ export type NftRewardsData = {
   postPayModal: NftPostPayModalConfig | undefined
 }
 
-interface CreateState {
+export interface CreateState {
   fundingCyclesPageSelection: 'automated' | 'manual' | undefined
-  reconfigurationRuleSelection: ReconfigurationStrategy | undefined
-  createFurthestPageReached: CreatePage
-  createSoftLockPageQueue: CreatePage[] | undefined
   fundingTargetSelection: FundingTargetType | undefined
   payoutsSelection: PayoutsSelection | undefined
   projectTokensSelection: ProjectTokensSelection | undefined
+  reconfigurationRuleSelection: ReconfigurationStrategy | undefined
+  createFurthestPageReached: CreatePage
+  createSoftLockPageQueue: CreatePage[] | undefined
 }
 
 export interface ProjectState {
@@ -70,10 +67,9 @@ export interface ProjectState {
   mustStartAtOrAfter: string
 }
 
-type ReduxState = {
+export interface ReduxState extends CreateState, ProjectState {
   version: number
-} & ProjectState &
-  CreateState
+}
 
 // Increment this version by 1 when making breaking changes.
 // When users return to the site and their local version is less than
@@ -121,7 +117,7 @@ const EMPTY_PAYOUT_GROUPED_SPLITS = {
   splits: [],
 }
 
-const EMPTY_RESERVED_TOKENS_GROUPED_SPLITS = {
+export const EMPTY_RESERVED_TOKENS_GROUPED_SPLITS = {
   group: RESERVED_TOKEN_SPLIT_GROUP,
   splits: [],
 }
@@ -383,23 +379,14 @@ const editingV2ProjectSlice = createSlice({
         tokenMinting: boolean
       }>,
     ) => {
-      state.fundingCycleData.weight = formatIssuanceRate(
-        action.payload.initialMintRate,
-      )
-      state.fundingCycleMetadata.reservedRate = reservedRateFrom(
-        action.payload.reservedTokensPercentage,
-      ).toHexString()
-      state.reservedTokensGroupedSplits = {
-        ...EMPTY_RESERVED_TOKENS_GROUPED_SPLITS,
-        splits: action.payload.reservedTokenAllocation.map(allocationToSplit),
-      }
-      state.fundingCycleData.discountRate = discountRateFrom(
-        action.payload.discountRate,
-      ).toHexString()
-      state.fundingCycleMetadata.redemptionRate = redemptionRateFrom(
-        action.payload.redemptionRate,
-      ).toHexString()
-      state.fundingCycleMetadata.allowMinting = action.payload.tokenMinting
+      const converted = projectTokenSettingsToReduxFormat(action.payload)
+
+      state.fundingCycleData.weight = converted.weight
+      state.fundingCycleMetadata.reservedRate = converted.reservedRate
+      state.reservedTokensGroupedSplits = converted.reservedTokensGroupedSplits
+      state.fundingCycleData.discountRate = converted.discountRate
+      state.fundingCycleMetadata.redemptionRate = converted.redemptionRate
+      state.fundingCycleMetadata.allowMinting = converted.allowMinting
     },
   },
 })

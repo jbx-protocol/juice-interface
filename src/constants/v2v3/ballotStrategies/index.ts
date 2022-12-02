@@ -45,7 +45,7 @@ interface BallotStrategy {
 const durationBallotStrategyDescription = (days: number) =>
   t`A reconfiguration to an upcoming funding cycle must be submitted at least ${days} days before it starts.`
 
-export function ballotStrategies(network?: NetworkName): BallotStrategy[] {
+export function ballotStrategiesFn(network?: NetworkName): BallotStrategy[] {
   return [
     {
       id: 'none',
@@ -71,4 +71,6 @@ export function ballotStrategies(network?: NetworkName): BallotStrategy[] {
   ]
 }
 
-export const DEFAULT_BALLOT_STRATEGY = ballotStrategies()[0]
+export const ballotStrategies = ballotStrategiesFn()
+
+export const DEFAULT_BALLOT_STRATEGY = ballotStrategiesFn()[0]

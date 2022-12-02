@@ -21,6 +21,7 @@ import { CreateBadge } from './components/CreateBadge'
 import { DeploySuccess } from './components/pages/ReviewDeploy/components/DeploySuccess'
 import { RecallCard } from './components/RecallCard'
 import { Wizard } from './components/Wizard'
+import { useSetInitialStateFromQuery } from './hooks/SetInitialStateFromQuery'
 
 export function Create() {
   const router = useRouter()
@@ -29,6 +30,8 @@ export function Create() {
     const projectId = parseInt(deployedProjectId)
     return <DeploySuccess projectId={projectId} />
   }
+
+  useSetInitialStateFromQuery()
 
   return (
     // New projects will be launched using V3 contracts.

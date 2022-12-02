@@ -3,7 +3,7 @@ import {
   REDUX_STORE_V1_PROJECT_VERSION,
 } from './slices/editingProject'
 import {
-  defaultProjectState as defaultV2ProjectState,
+  defaultReduxState as defaultV2ProjectState,
   REDUX_STORE_V2_PROJECT_VERSION,
 } from './slices/editingV2Project'
 

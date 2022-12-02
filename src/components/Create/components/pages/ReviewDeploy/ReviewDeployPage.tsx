@@ -10,13 +10,14 @@ import useMobile from 'hooks/Mobile'
 import { useModal } from 'hooks/Modal'
 import { useWallet } from 'hooks/Wallet'
 import { useRouter } from 'next/router'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { CreateBadge } from '../../CreateBadge'
 import { CreateCollapse } from '../../CreateCollapse'
 import { Wizard } from '../../Wizard'
+import { WizardContext } from '../../Wizard/contexts'
 import {
   FundingConfigurationReview,
   ProjectDetailsReview,
@@ -53,6 +54,7 @@ const Header: React.FC<{ skipped?: boolean }> = ({
 
 export const ReviewDeployPage = () => {
   useSetCreateFurthestPageReached('reviewDeploy')
+  const { goToPage } = useContext(WizardContext)
   const isMobile = useMobile()
   const { chainUnsupported, changeNetworks, isConnected, connect } = useWallet()
   const router = useRouter()
@@ -73,9 +75,11 @@ export const ReviewDeployPage = () => {
   const dispatch = useDispatch()
 
   const handleStartOverClicked = useCallback(() => {
+    router.push('/create')
+    goToPage?.('projectDetails')
+    modal.close()
     dispatch(editingV2ProjectActions.resetState())
-    window.location.reload()
-  }, [dispatch])
+  }, [dispatch, goToPage, modal, router])
 
   const onFinish = useCallback(async () => {
     if (chainUnsupported) {

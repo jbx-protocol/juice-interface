@@ -2,7 +2,8 @@ import { CheckOutlined, LoadingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Skeleton, Tooltip } from 'antd'
 import { NftRewardTier } from 'models/nftRewardTier'
-import { MouseEvent, MouseEventHandler, useState } from 'react'
+import { MouseEventHandler, useState } from 'react'
+import { stopPropagation } from 'react-stop-propagation'
 import { classNames } from 'utils/classNames'
 import { ipfsToHttps } from 'utils/ipfs'
 import { NftPreview } from './NftPreview'
@@ -30,13 +31,6 @@ export function RewardTier({
     : rewardTier?.imageUrl
 
   function RewardIcon() {
-    const onRemoveTier = (
-      event: MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
-    ) => {
-      event.stopPropagation()
-      onRemove?.()
-    }
-
     return (
       <Tooltip
         title={
@@ -67,7 +61,7 @@ export function RewardTier({
             'absolute right-2 top-2 h-6 w-6 items-center justify-center rounded-full text-base',
             isSelected ? 'flex bg-haze-400 text-smoke-25' : 'hidden',
           )}
-          onClick={onRemoveTier}
+          onClick={onRemove ? stopPropagation(onRemove) : undefined}
         >
           <CheckOutlined />
         </div>
@@ -131,6 +125,9 @@ export function RewardTier({
               : 'bg-smoke-100 dark:bg-slate-600',
             !loading ? 'pt-2' : 'pt-1',
           )}
+          onClick={
+            isSelected && onRemove ? stopPropagation(onRemove) : undefined
+          }
         >
           <Skeleton
             loading={loading}

@@ -121,7 +121,7 @@ export function TreasuryStatsSection() {
               }
             />
           ) : (
-            <div className="text-right text-sm font-medium uppercase text-grey-400 dark:text-grey-600">
+            <div className="text-right text-sm font-medium uppercase text-grey-400 dark:text-slate-200">
               <TooltipLabel
                 tip={
                   <Trans>

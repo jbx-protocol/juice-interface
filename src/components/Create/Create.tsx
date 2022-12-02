@@ -1,6 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { DeployButtonText } from 'components/DeployProjectButtonText'
 import ExternalLink from 'components/ExternalLink'
+import Loading from 'components/Loading'
 import { CV_V3 } from 'constants/cv'
 import { useRouter } from 'next/router'
 import { TransactionProvider } from 'providers/TransactionProvider'
@@ -21,6 +22,7 @@ import { CreateBadge } from './components/CreateBadge'
 import { DeploySuccess } from './components/pages/ReviewDeploy/components/DeploySuccess'
 import { RecallCard } from './components/RecallCard'
 import { Wizard } from './components/Wizard'
+import { useLoadingInitialStateFromQuery } from './hooks/LoadInitialStateFromQuery'
 
 export function Create() {
   const router = useRouter()
@@ -30,8 +32,12 @@ export function Create() {
     return <DeploySuccess projectId={projectId} />
   }
 
+  const initialStateLoading = useLoadingInitialStateFromQuery()
+
+  if (initialStateLoading) return <Loading />
+
   return (
-    // New projects will be launched using V3 contracts.
+    //  New projects will be launched using V3 contracts.
     <V2V3ContractsProvider initialCv={CV_V3}>
       <TransactionProvider>
         <V2V3CurrencyProvider>
@@ -147,7 +153,7 @@ export function Create() {
                 <ReconfigurationRulesPage />
               </Wizard.Page>
               <Wizard.Page
-                className="max-w-[800px]"
+                className="max-w-full md:max-w-[800px]"
                 name="reviewDeploy"
                 title={t`Review & Deploy`}
                 description={

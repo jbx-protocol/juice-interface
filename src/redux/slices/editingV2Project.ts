@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AllocationSplit } from 'components/Create/components/Allocation'
-import { allocationToSplit } from 'components/Create/utils/splitToAllocation'
+import { projectTokenSettingsToReduxFormat } from 'components/Create/utils/projectTokenSettingsToReduxFormat'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
@@ -28,11 +28,8 @@ import {
 } from 'models/splits'
 import {
   DEFAULT_MINT_RATE,
-  discountRateFrom,
-  formatIssuanceRate,
   issuanceRateFrom,
   redemptionRateFrom,
-  reservedRateFrom,
 } from 'utils/v2v3/math'
 import {
   SerializedV2V3FundAccessConstraint,
@@ -49,23 +46,29 @@ export type NftRewardsData = {
   postPayModal: NftPostPayModalConfig | undefined
 }
 
-interface V2ProjectState {
-  version: number
+export interface CreateState {
+  fundingCyclesPageSelection: 'automated' | 'manual' | undefined
+  fundingTargetSelection: FundingTargetType | undefined
+  payoutsSelection: PayoutsSelection | undefined
+  projectTokensSelection: ProjectTokensSelection | undefined
+  reconfigurationRuleSelection: ReconfigurationStrategy | undefined
+  createFurthestPageReached: CreatePage
+  createSoftLockPageQueue: CreatePage[] | undefined
+}
+
+export interface ProjectState {
   projectMetadata: ProjectMetadataV5
   fundingCycleData: SerializedV2V3FundingCycleData
   fundingCycleMetadata: SerializedV2V3FundingCycleMetadata
   fundAccessConstraints: SerializedV2V3FundAccessConstraint[]
-  fundingTargetSelection: FundingTargetType | undefined
   payoutGroupedSplits: ETHPayoutGroupedSplits
-  payoutsSelection: PayoutsSelection | undefined
   reservedTokensGroupedSplits: ReservedTokensGroupedSplits
-  projectTokensSelection: ProjectTokensSelection | undefined
   nftRewards: NftRewardsData
-  fundingCyclesPageSelection: 'automated' | 'manual' | undefined
-  reconfigurationRuleSelection: ReconfigurationStrategy | undefined
-  createFurthestPageReached: CreatePage
-  createSoftLockPageQueue: CreatePage[] | undefined
   mustStartAtOrAfter: string
+}
+
+export interface ReduxState extends CreateState, ProjectState {
+  version: number
 }
 
 // Increment this version by 1 when making breaking changes.
@@ -74,18 +77,6 @@ interface V2ProjectState {
 export const REDUX_STORE_V2_PROJECT_VERSION = 10
 
 export const DEFAULT_MUST_START_AT_OR_AFTER = '1'
-
-const defaultProjectMetadataState: ProjectMetadataV5 = {
-  name: '',
-  infoUri: '',
-  logoUri: '',
-  description: '',
-  twitter: '',
-  discord: '',
-  tokens: [],
-  nftPaymentSuccessModal: undefined,
-  version: LATEST_METADATA_VERSION,
-}
 
 export const defaultFundingCycleData: SerializedV2V3FundingCycleData =
   serializeV2V3FundingCycleData({
@@ -126,7 +117,7 @@ const EMPTY_PAYOUT_GROUPED_SPLITS = {
   splits: [],
 }
 
-const EMPTY_RESERVED_TOKENS_GROUPED_SPLITS = {
+export const EMPTY_RESERVED_TOKENS_GROUPED_SPLITS = {
   group: RESERVED_TOKEN_SPLIT_GROUP,
   splits: [],
 }
@@ -138,35 +129,58 @@ export const EMPTY_NFT_COLLECTION_METADATA = {
   description: undefined,
 }
 
-export const defaultProjectState: V2ProjectState = {
-  version: REDUX_STORE_V2_PROJECT_VERSION,
+const defaultCreateState: CreateState = {
+  reconfigurationRuleSelection: undefined,
+  fundingCyclesPageSelection: undefined,
+  createFurthestPageReached: 'projectDetails',
+  createSoftLockPageQueue: [],
+  fundingTargetSelection: undefined,
+  payoutsSelection: undefined,
+  projectTokensSelection: undefined,
+}
+
+const defaultProjectMetadataState: ProjectMetadataV5 = {
+  name: '',
+  infoUri: '',
+  logoUri: '',
+  description: '',
+  twitter: '',
+  discord: '',
+  tokens: [],
+  nftPaymentSuccessModal: undefined,
+  version: LATEST_METADATA_VERSION,
+}
+
+export const defaultProjectState: ProjectState = {
   projectMetadata: { ...defaultProjectMetadataState },
   fundingCycleData: { ...defaultFundingCycleData },
   fundingCycleMetadata: { ...defaultFundingCycleMetadata },
   fundAccessConstraints: [],
-  fundingTargetSelection: undefined,
   payoutGroupedSplits: EMPTY_PAYOUT_GROUPED_SPLITS,
-  payoutsSelection: undefined,
   reservedTokensGroupedSplits: EMPTY_RESERVED_TOKENS_GROUPED_SPLITS,
-  projectTokensSelection: undefined,
   nftRewards: {
     rewardTiers: [],
     CIDs: undefined,
     collectionMetadata: EMPTY_NFT_COLLECTION_METADATA,
     postPayModal: undefined,
   },
-  reconfigurationRuleSelection: undefined,
-  fundingCyclesPageSelection: undefined,
-  createFurthestPageReached: 'projectDetails',
-  createSoftLockPageQueue: [],
   mustStartAtOrAfter: DEFAULT_MUST_START_AT_OR_AFTER,
+}
+
+export const defaultReduxState: ReduxState = {
+  version: REDUX_STORE_V2_PROJECT_VERSION,
+  ...defaultProjectState,
+  ...defaultCreateState,
 }
 
 const editingV2ProjectSlice = createSlice({
   name: 'editingV2Project',
-  initialState: defaultProjectState,
+  initialState: defaultReduxState,
   reducers: {
-    resetState: () => defaultProjectState,
+    setState: (_, action: PayloadAction<ReduxState>) => {
+      return action.payload
+    },
+    resetState: () => defaultReduxState,
     setName: (state, action: PayloadAction<string>) => {
       state.projectMetadata.name = action.payload
     },
@@ -365,23 +379,14 @@ const editingV2ProjectSlice = createSlice({
         tokenMinting: boolean
       }>,
     ) => {
-      state.fundingCycleData.weight = formatIssuanceRate(
-        action.payload.initialMintRate,
-      )
-      state.fundingCycleMetadata.reservedRate = reservedRateFrom(
-        action.payload.reservedTokensPercentage,
-      ).toHexString()
-      state.reservedTokensGroupedSplits = {
-        ...EMPTY_RESERVED_TOKENS_GROUPED_SPLITS,
-        splits: action.payload.reservedTokenAllocation.map(allocationToSplit),
-      }
-      state.fundingCycleData.discountRate = discountRateFrom(
-        action.payload.discountRate,
-      ).toHexString()
-      state.fundingCycleMetadata.redemptionRate = redemptionRateFrom(
-        action.payload.redemptionRate,
-      ).toHexString()
-      state.fundingCycleMetadata.allowMinting = action.payload.tokenMinting
+      const converted = projectTokenSettingsToReduxFormat(action.payload)
+
+      state.fundingCycleData.weight = converted.weight
+      state.fundingCycleMetadata.reservedRate = converted.reservedRate
+      state.reservedTokensGroupedSplits = converted.reservedTokensGroupedSplits
+      state.fundingCycleData.discountRate = converted.discountRate
+      state.fundingCycleMetadata.redemptionRate = converted.redemptionRate
+      state.fundingCycleMetadata.allowMinting = converted.allowMinting
     },
   },
 })

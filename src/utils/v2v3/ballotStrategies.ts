@@ -1,11 +1,11 @@
-import { ballotStrategies } from 'constants/v2v3/ballotStrategies'
+import { ballotStrategiesFn } from 'constants/v2v3/ballotStrategies'
 import { BallotStrategy } from 'models/ballot'
 import { createCustomStrategy } from 'utils/ballot'
 
 // Put in separate files because lingui.js t macro was not working on ballot strategies
 export const getBallotStrategyByAddress = (address: string): BallotStrategy => {
   const s =
-    ballotStrategies().find(
+    ballotStrategiesFn().find(
       s => s.address.toLowerCase() === address.toLowerCase(),
     ) ?? createCustomStrategy(address)
   return s

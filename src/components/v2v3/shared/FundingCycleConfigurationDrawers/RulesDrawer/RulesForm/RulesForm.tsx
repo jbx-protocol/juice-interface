@@ -4,7 +4,7 @@ import { Button, Form, Space, Switch } from 'antd'
 import FormItemLabel from 'components/FormItemLabel'
 import ReconfigurationStrategySelector from 'components/ReconfigurationStrategy/ReconfigurationStrategySelector'
 import {
-  ballotStrategies,
+  ballotStrategiesFn,
   DEFAULT_BALLOT_STRATEGY,
 } from 'constants/v2v3/ballotStrategies'
 import { useAppDispatch } from 'hooks/AppDispatch'
@@ -156,7 +156,7 @@ export default function RulesForm({
           }
         >
           <ReconfigurationStrategySelector
-            ballotStrategies={ballotStrategies()}
+            ballotStrategies={ballotStrategiesFn()}
             selectedStrategy={ballotStrategy}
             onChange={setBallotStrategy}
           />

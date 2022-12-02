@@ -14,7 +14,7 @@ export default function StatLine({
 }) {
   return (
     <div className="flex flex-nowrap items-baseline justify-between">
-      <div className="text-sm font-medium uppercase text-grey-400 dark:text-grey-600">
+      <div className="text-sm font-medium uppercase text-grey-400 dark:text-slate-200">
         <TooltipLabel
           innerClassName="w-[400px]"
           label={statLabel}

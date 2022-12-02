@@ -1,9 +1,9 @@
-import { ballotStrategies } from 'constants/v2v3/ballotStrategies'
+import { ballotStrategiesFn } from 'constants/v2v3/ballotStrategies'
 import { NetworkName } from 'models/network-name'
 import { ArrayElement } from 'utils/arrayElement'
 
 export const useAvailableReconfigurationStrategies = (network: NetworkName) => {
-  const strategies = ballotStrategies(network).map(s =>
+  const strategies = ballotStrategiesFn(network).map(s =>
     s.id === 'threeDay'
       ? { ...s, isDefault: true }
       : { ...s, isDefault: false },

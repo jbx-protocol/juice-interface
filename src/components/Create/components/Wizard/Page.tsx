@@ -50,7 +50,7 @@ export const Page: React.FC<PageProps> & {
       }}
     >
       <Space
-        className={twMerge('max-w-[600px]', className)}
+        className={twMerge('max-w-full md:max-w-[600px]', className)}
         direction="vertical"
         size="large"
       >

@@ -33,7 +33,9 @@ export function NftPostPayModal({
       cancelButtonProps={{
         hidden: true,
       }}
-      okText={config.ctaText}
+      okText={
+        <div className="overflow-hidden text-ellipsis">{config.ctaText}</div>
+      }
       destroyOnClose
     >
       {config.content}

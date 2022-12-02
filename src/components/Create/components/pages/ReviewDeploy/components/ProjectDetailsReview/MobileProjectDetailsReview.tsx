@@ -19,12 +19,18 @@ export const MobileProjectDetailsReview = () => {
     <>
       <DescriptionCol
         title={t`Project name`}
-        desc={<div className="text-base font-medium">{name}</div>}
+        desc={
+          <div className="overflow-hidden text-ellipsis text-base font-medium">
+            {name}
+          </div>
+        }
       />
       <DescriptionCol
         title={t`Project description`}
         placeholder={t`No description`}
-        desc={description}
+        desc={
+          <div className="overflow-hidden text-ellipsis">{description}</div>
+        }
       />
       <DescriptionCol
         title={t`Project logo`}
@@ -39,26 +45,40 @@ export const MobileProjectDetailsReview = () => {
       <DescriptionCol
         title={t`Twitter`}
         desc={
-          twitter ? <div className="text-sm font-medium">{twitter}</div> : null
+          twitter ? (
+            <div className="overflow-hidden text-ellipsis text-sm font-medium">
+              {twitter}
+            </div>
+          ) : null
         }
       />
       <DescriptionCol
         title={t`Discord`}
         desc={
-          discord ? <div className="text-sm font-medium">{discord}</div> : null
+          discord ? (
+            <div className="overflow-hidden text-ellipsis text-sm font-medium">
+              {discord}
+            </div>
+          ) : null
         }
       />
       <DescriptionCol
         title={t`Website`}
         desc={
-          infoUri ? <div className="text-sm font-medium">{infoUri}</div> : null
+          infoUri ? (
+            <div className="overflow-hidden text-ellipsis text-sm font-medium">
+              {infoUri}
+            </div>
+          ) : null
         }
       />
       <DescriptionCol
         title={t`Pay button text`}
         desc={
           payButton ? (
-            <div className="text-base font-medium">{payButton}</div>
+            <div className="overflow-hidden text-ellipsis text-base font-medium">
+              {payButton}
+            </div>
           ) : null
         }
       />
@@ -66,7 +86,9 @@ export const MobileProjectDetailsReview = () => {
         title={t`Pay disclaimer`}
         desc={
           payDisclosure ? (
-            <div className="text-base font-medium">{payDisclosure}</div>
+            <div className="overflow-hidden text-ellipsis text-base font-medium">
+              {payDisclosure}
+            </div>
           ) : null
         }
       />

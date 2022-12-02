@@ -4,7 +4,7 @@ import { CreatePage } from 'models/create-page'
 import { FundingTargetType } from 'models/fundingTargetType'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { useRouter } from 'next/router'
-import { useLayoutEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import {
   CreateState,
@@ -120,13 +120,19 @@ const parseCreateFlowStateFromInitialState = (
 /**
  * Load redux state from a URL query parameter.
  */
-export function useSetInitialStateFromQuery() {
+export function useLoadingInitialStateFromQuery() {
   const dispatch = useDispatch()
   const router = useRouter()
 
-  useLayoutEffect(() => {
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    if (!router.isReady) return
     const { initialState } = router.query
-    if (!initialState) return
+    if (!initialState) {
+      setLoading(false)
+      return
+    }
 
     try {
       // TODO we can probably validate this object better in future.
@@ -147,5 +153,8 @@ export function useSetInitialStateFromQuery() {
     } catch (e) {
       console.warn('Error parsing initialState:', e)
     }
+    setLoading(false)
   }, [router, dispatch])
+
+  return loading
 }

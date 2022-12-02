@@ -1,6 +1,5 @@
 import { DeleteOutlined, EditOutlined, LinkOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-import { Space } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import useMobile from 'hooks/Mobile'
 import { ReactNode } from 'react'
@@ -34,15 +33,17 @@ export const RewardItem = ({
     <div className="flex flex-col gap-4">
       {/* Title line */}
       <div className="flex items-center justify-between">
-        <div className="text-lg font-medium">{title}</div>
-        <Space size="middle">
+        <div className="w-4/5 overflow-hidden text-ellipsis text-lg font-medium">
+          {title}
+        </div>
+        <div className="flex gap-4">
           <RewardItemButton onClick={onEditClicked}>
             <EditOutlined />
           </RewardItemButton>
           <RewardItemButton onClick={onDeleteClicked}>
             <DeleteOutlined />
           </RewardItemButton>
-        </Space>
+        </div>
       </div>
 
       <div className="relative flex flex-col gap-6">
@@ -57,7 +58,7 @@ export const RewardItem = ({
             )}
           </div>
           {/* Description Col */}
-          <div className="flex flex-1 flex-col gap-8">
+          <div className="flex flex-1 flex-col gap-8 overflow-hidden">
             {/* Top */}
             <div
               className={classNames(
@@ -97,7 +98,9 @@ const Description = ({ description }: { description: ReactNode }) => {
       <div className="text-xs font-normal uppercase text-grey-600 dark:text-slate-200">
         <Trans>Description</Trans>
       </div>
-      <div className="text-sm font-normal">{description}</div>
+      <div className="overflow-hidden text-ellipsis text-sm font-normal">
+        {description}
+      </div>
     </div>
   )
 }

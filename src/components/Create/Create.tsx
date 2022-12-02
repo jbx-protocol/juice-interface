@@ -147,7 +147,7 @@ export function Create() {
                 <ReconfigurationRulesPage />
               </Wizard.Page>
               <Wizard.Page
-                className="max-w-[800px]"
+                className="max-w-full md:max-w-[800px]"
                 name="reviewDeploy"
                 title={t`Review & Deploy`}
                 description={

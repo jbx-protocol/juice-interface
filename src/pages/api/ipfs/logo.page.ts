@@ -15,42 +15,31 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const incoming = new formidable.IncomingForm()
 
-    incoming.parse(req, async (err, fields, files) => {
-      if (err) {
-        return res.status(500).json({
-          error: t`Error parsing form`,
-        })
-      }
-      const file = files.file as formidable.File
-      const stream = fs.createReadStream(file.filepath)
-      let options
-      if (fields.pinataMetadata) {
-        const pinataMetadata = JSON.parse(fields.pinataMetadata as string)
-        options = {
-          pinataMetadata,
+    const result = await new Promise((resolve, reject) => {
+      incoming.parse(req, async (err, fields, files) => {
+        if (err) {
+          reject(err)
         }
-      } else {
-        options = undefined
-      }
-      const pinata = getPinata()
-      return pinata
-        .pinFileToIPFS(stream, options)
-        .then(result => {
-          // pin on Infura too.
-          // TODO eventually we should only pin on Infura.
-          try {
-            pin(result.IpfsHash)
-          } catch (e) {
-            console.error(e)
+        try {
+          const file = files.file as formidable.File
+          const stream = fs.createReadStream(file.filepath)
+          let options = undefined
+          if (fields.pinataMetadata) {
+            const pinataMetadata = JSON.parse(fields.pinataMetadata as string)
+            options = {
+              pinataMetadata,
+            }
           }
-          return res.status(200).json(result)
-        })
-        .catch(err => {
-          return res.status(500).json({
-            error: err.message,
-          })
-        })
+          const pinata = getPinata()
+          const pinResult = await pinata.pinFileToIPFS(stream, options)
+          await pin(pinResult.IpfsHash)
+          resolve(pinResult)
+        } catch (err) {
+          reject(err)
+        }
+      })
     })
+    return res.status(200).json(result)
   } catch (err) {
     return res.status(500).json({
       error: t`Error uploading file`,

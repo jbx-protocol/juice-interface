@@ -54,7 +54,7 @@ const _Wrapper: React.FC = ({ children }) => {
 
   return (
     <>
-      <Layout className="flex h-full flex-col bg-transparent">
+      <Layout className="flex h-screen flex-col bg-transparent">
         <SiteNavigation />
         <Content className={classNames(isMobile ? 'pt-16' : '')}>
           {children}

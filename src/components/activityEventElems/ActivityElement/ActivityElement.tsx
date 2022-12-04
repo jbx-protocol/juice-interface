@@ -59,8 +59,11 @@ function SideDetails({ event }: { event: ActivityElementEvent }) {
         <div style={smallHeaderStyle(colors)}>
           {terminalVersion && (
             <ProjectVersionBadge
-              transparent
               versionText={'V' + terminalVersion}
+              style={{
+                ...smallHeaderStyle(colors),
+                color: colors.text.secondary,
+              }}
             />
           )}{' '}
           {formatHistoricalDate(event.timestamp * 1000)}{' '}

@@ -41,25 +41,29 @@ export const parseV1ConfigureEventJson = (
   j: V1ConfigureEventJson,
 ): Partial<V1ConfigureEvent> => ({
   ...parseBaseEventEntityJson(j),
-  projectId: j.projectId ? parseInt(j.projectId) : undefined,
+  projectId: j.projectId !== undefined ? parseInt(j.projectId) : undefined,
   project: j.project ? parseProjectJson(j.project) : undefined,
   target: j.target ? BigNumber.from(j.target) : undefined,
-  currency: j.currency ? parseInt(j.currency) : undefined,
-  duration: j.duration ? parseInt(j.duration) : undefined,
-  cycleLimit: j.cycleLimit ? parseInt(j.cycleLimit) : undefined,
-  discountRate: j.discountRate ? parseInt(j.discountRate) : undefined,
+  currency: j.currency !== undefined ? parseInt(j.currency) : undefined,
+  duration: j.duration !== undefined ? parseInt(j.duration) : undefined,
+  cycleLimit: j.cycleLimit !== undefined ? parseInt(j.cycleLimit) : undefined,
+  discountRate:
+    j.discountRate !== undefined ? parseInt(j.discountRate) : undefined,
   ballot: j.ballot,
-  fundingCycleId: j.fundingCycleId ? parseInt(j.fundingCycleId) : undefined,
-  reconfigured: j.reconfigured ? parseInt(j.reconfigured) : undefined,
+  fundingCycleId:
+    j.fundingCycleId !== undefined ? parseInt(j.fundingCycleId) : undefined,
+  reconfigured:
+    j.reconfigured !== undefined ? parseInt(j.reconfigured) : undefined,
   metadata: j.metadata ? BigNumber.from(j.metadata) : undefined,
-  version: j.version ? parseInt(j.version) : undefined,
-  reservedRate: j.reservedRate ? parseInt(j.reservedRate) : undefined,
-  bondingCurveRate: j.bondingCurveRate
-    ? parseInt(j.bondingCurveRate)
-    : undefined,
-  reconfigurationBondingCurveRate: j.reconfigurationBondingCurveRate
-    ? parseInt(j.reconfigurationBondingCurveRate)
-    : undefined,
+  version: j.version !== undefined ? parseInt(j.version) : undefined,
+  reservedRate:
+    j.reservedRate !== undefined ? parseInt(j.reservedRate) : undefined,
+  bondingCurveRate:
+    j.bondingCurveRate !== undefined ? parseInt(j.bondingCurveRate) : undefined,
+  reconfigurationBondingCurveRate:
+    j.reconfigurationBondingCurveRate !== undefined
+      ? parseInt(j.reconfigurationBondingCurveRate)
+      : undefined,
   payIsPaused: j.payIsPaused !== undefined ? !!j.payIsPaused : undefined,
   ticketPrintingIsAllowed:
     j.ticketPrintingIsAllowed !== undefined

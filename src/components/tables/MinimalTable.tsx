@@ -23,6 +23,8 @@ export default function MinimalTable({ sections }: MinimalTableProps) {
                 ? r.value
                   ? 'Yes'
                   : 'No'
+                : r.value === undefined
+                ? '--'
                 : r.value}
             </div>
           ))}

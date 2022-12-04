@@ -31,6 +31,8 @@ export default function V1ConfigureEventElem({
         | 'bondingCurveRate'
         | 'reservedRate'
         | 'currency'
+        | 'payIsPaused'
+        | 'ticketPrintingIsAllowed'
       >
     | undefined
 }) {
@@ -93,6 +95,16 @@ export default function V1ConfigureEventElem({
               {
                 key: t`Reconfiguration strategy`,
                 value: BallotStrategyElem(event.ballot),
+              },
+            ],
+            [
+              {
+                key: t`Token printing allowed`,
+                value: event.ticketPrintingIsAllowed,
+              },
+              {
+                key: t`Payments paused`,
+                value: event.payIsPaused,
               },
             ],
           ]}

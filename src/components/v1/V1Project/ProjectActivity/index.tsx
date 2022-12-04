@@ -192,6 +192,8 @@ export default function ProjectActivity() {
           'bondingCurveRate',
           'reservedRate',
           'currency',
+          'ticketPrintingIsAllowed',
+          'payIsPaused',
         ],
       },
     ],

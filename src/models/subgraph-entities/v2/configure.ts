@@ -53,16 +53,19 @@ export const parseConfigureEventJson = (
   j: ConfigureEventJson,
 ): Partial<ConfigureEvent> => ({
   ...parseBaseEventEntityJson(j),
-  projectId: j.projectId ? parseInt(j.projectId) : undefined,
+  projectId: j.projectId !== undefined ? parseInt(j.projectId) : undefined,
   project: j.project ? parseProjectJson(j.project) : undefined,
-  duration: j.duration ? parseInt(j.duration) : undefined,
+  duration: j.duration !== undefined ? parseInt(j.duration) : undefined,
   weight: j.weight ? BigNumber.from(j.weight) : undefined,
-  discountRate: j.discountRate ? parseInt(j.discountRate) : undefined,
+  discountRate:
+    j.discountRate !== undefined ? parseInt(j.discountRate) : undefined,
   ballot: j.ballot,
-  mustStartAtOrAfter: j.mustStartAtOrAfter
-    ? parseInt(j.mustStartAtOrAfter)
-    : undefined,
-  configuration: j.configuration ? parseInt(j.configuration) : undefined,
+  mustStartAtOrAfter:
+    j.mustStartAtOrAfter !== undefined
+      ? parseInt(j.mustStartAtOrAfter)
+      : undefined,
+  configuration:
+    j.configuration !== undefined ? parseInt(j.configuration) : undefined,
   metadata: j.metadata ? BigNumber.from(j.metadata) : undefined,
   setTerminalsAllowed:
     j.setTerminalsAllowed !== undefined ? !!j.setTerminalsAllowed : undefined,
@@ -70,8 +73,10 @@ export const parseConfigureEventJson = (
     j.setControllerAllowed !== undefined ? !!j.setControllerAllowed : undefined,
   transfersPaused:
     j.transfersPaused !== undefined ? !!j.transfersPaused : undefined,
-  reservedRate: j.reservedRate ? parseInt(j.reservedRate) : undefined,
-  redemptionRate: j.redemptionRate ? parseInt(j.redemptionRate) : undefined,
+  reservedRate:
+    j.reservedRate !== undefined ? parseInt(j.reservedRate) : undefined,
+  redemptionRate:
+    j.redemptionRate !== undefined ? parseInt(j.redemptionRate) : undefined,
   ballotRedemptionRate: j.ballotRedemptionRate
     ? parseInt(j.ballotRedemptionRate)
     : undefined,
@@ -107,5 +112,6 @@ export const parseConfigureEventJson = (
       ? !!j.useDataSourceForRedeem
       : undefined,
   dataSource: j.dataSource,
-  metametadata: j.metametadata ? parseInt(j.metametadata) : undefined,
+  metametadata:
+    j.metametadata !== undefined ? parseInt(j.metametadata) : undefined,
 })

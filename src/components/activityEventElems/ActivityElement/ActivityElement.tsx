@@ -5,8 +5,8 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useV2V3TerminalVersion } from 'hooks/V2V3TerminalVersion'
 import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/format/formatDate'
-
 import { contentLineHeight, smallHeaderStyle } from '../styles'
+
 import { ActivityElementEvent } from './activityElementEvent'
 
 const DetailsContainer: React.FC = ({ children }) => {
@@ -59,7 +59,7 @@ function SideDetails({ event }: { event: ActivityElementEvent }) {
         <div style={smallHeaderStyle(colors)}>
           {terminalVersion && (
             <ProjectVersionBadge
-              style={{ padding: 0, background: 'transparent' }}
+              transparent
               versionText={'V' + terminalVersion}
             />
           )}{' '}
@@ -76,7 +76,7 @@ function SideDetails({ event }: { event: ActivityElementEvent }) {
         >
           <FormattedAddress
             address={event.beneficiary}
-            style={{ fontWeight: 400 }}
+            className="font-medium"
           />
         </div>
       ) : null}

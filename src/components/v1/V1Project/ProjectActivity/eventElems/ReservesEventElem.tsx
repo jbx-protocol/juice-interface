@@ -1,12 +1,11 @@
 import { Trans } from '@lingui/macro'
-import EtherscanLink from 'components/EtherscanLink'
+import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import FormattedAddress from 'components/FormattedAddress'
+import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { PrintReservesEvent } from 'models/subgraph-entities/v1/print-reserves-event'
 import { useContext } from 'react'
-import { classNames } from 'utils/classNames'
-import { formatHistoricalDate } from 'utils/format/formatDate'
 import { formatWad, fromWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
@@ -27,7 +26,11 @@ export default function ReservesEventElem({
     | undefined
 }) {
   const { tokenSymbol } = useContext(V1ProjectContext)
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
 
+  // Load individual DistributeToTicketMod events, emitted by internal transactions of the PrintReserves transaction
   const { data: distributeEvents } = useSubgraphQuery(
     event?.id
       ? {
@@ -46,78 +49,75 @@ export default function ReservesEventElem({
   if (!event) return null
 
   return (
-    <div>
-      <div className="flex content-between justify-between">
+    <ActivityEvent
+      event={event}
+      header={
+        <Trans>
+          Distributed reserved{' '}
+          {tokenSymbolText({
+            tokenSymbol,
+            capitalize: false,
+            plural: true,
+          })}
+        </Trans>
+      }
+      subject={
+        <div className="font-medium text-black dark:text-slate-100">
+          {formatWad(event.count, { precision: 0 })}{' '}
+          {tokenSymbolText({
+            tokenSymbol,
+            capitalize: false,
+            plural: parseInt(fromWad(event.count) || '0') !== 1,
+          })}
+        </div>
+      }
+      extra={
         <div>
-          <div className="text-xs text-grey-400 dark:text-slate-200">
-            <Trans>
-              Distributed reserved{' '}
-              {tokenSymbolText({
-                tokenSymbol,
-                capitalize: false,
-                plural: true,
-              })}
-            </Trans>
-          </div>
-          {distributeEvents?.length ? (
-            <div className="font-medium text-black dark:text-slate-100">
-              {formatWad(event.count, { precision: 0 })}{' '}
-              {tokenSymbolText({
-                tokenSymbol,
-                capitalize: false,
-                plural: parseInt(fromWad(event.count) || '0') !== 1,
-              })}
-            </div>
-          ) : null}
-        </div>
-
-        <div className="text-right">
-          <div className="text-xs text-grey-400 dark:text-slate-200">
-            {event.timestamp && (
-              <span>{formatHistoricalDate(event.timestamp * 1000)}</span>
-            )}{' '}
-            <EtherscanLink value={event.txHash} type="tx" />
-          </div>
-          <div className="text-xs text-grey-400 dark:text-slate-200">
-            <Trans>
-              called by <FormattedAddress address={event.caller} />
-            </Trans>
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-1">
-        {distributeEvents?.map(e => (
-          <div className="flex items-baseline justify-between" key={e.id}>
-            <div className="text-sm font-medium">
-              <FormattedAddress address={e.modBeneficiary} />:
-            </div>
-
+          {distributeEvents?.map(e => (
             <div
-              className={classNames(
-                distributeEvents.length > 1
-                  ? 'text-sm text-grey-500 dark:text-grey-300'
-                  : 'font-medium',
-              )}
+              key={e.id}
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'baseline',
+              }}
             >
-              {formatWad(e.modCut, { precision: 0 })}
-            </div>
-          </div>
-        ))}
+              <div style={{ fontWeight: 500, fontSize: '0.8rem' }}>
+                <FormattedAddress address={e.modBeneficiary} />:
+              </div>
 
-        {event.beneficiaryTicketAmount?.gt(0) && (
-          <div className="flex items-baseline justify-between">
-            <div className="font-medium">
-              <FormattedAddress address={event.beneficiary} />:
+              <div
+                style={
+                  distributeEvents.length > 1
+                    ? { color: colors.text.secondary, fontSize: '0.8rem' }
+                    : { fontWeight: 500 }
+                }
+              >
+                {formatWad(e.modCut, { precision: 0 })}
+              </div>
             </div>
-            <div className="text-grey-500 dark:text-grey-300">
-              {formatWad(event.beneficiaryTicketAmount, {
-                precision: 0,
-              })}
+          ))}
+
+          {event.beneficiaryTicketAmount?.gt(0) && (
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'baseline',
+              }}
+            >
+              <div className="font-medium">
+                <FormattedAddress address={event.beneficiary} />:
+              </div>
+              <div className="text-grey-500 dark:text-grey-300">
+                {formatWad(event.beneficiaryTicketAmount, {
+                  precision: 0,
+                })}
+              </div>
             </div>
-          </div>
-        )}
-      </div>
-    </div>
+          )}
+        </div>
+      }
+    />
   )
 }

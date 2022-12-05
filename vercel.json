@@ -1,6 +1,6 @@
 {
   "functions": {
-    "/api/ens/resolve/[address].page.ts": {
+    "api/ens/resolve/[address].page.ts": {
       "maxDuration": 10
     }
   }

@@ -548,6 +548,9 @@ msgstr ""
 msgid "Blog"
 msgstr ""
 
+msgid "Bonding curve"
+msgstr ""
+
 msgid "Built for:"
 msgstr ""
 
@@ -716,6 +719,12 @@ msgstr ""
 msgid "Configure {projectTitle}"
 msgstr ""
 
+msgid "Configured FC"
+msgstr ""
+
+msgid "Configured funding cycles"
+msgstr ""
+
 msgid "Confirm Stake"
 msgstr ""
 
@@ -831,6 +840,9 @@ msgid "Create project"
 msgstr ""
 
 msgid "Create your own ERC-20 token to represent stake in your project. Contributors will receive these tokens when they pay your project."
+msgstr ""
+
+msgid "Created"
 msgstr ""
 
 msgid "Created Payment Address"
@@ -1952,6 +1964,9 @@ msgstr ""
 msgid "Owner isn't allowed to set the project's payment terminals."
 msgstr ""
 
+msgid "Owner minting enabled"
+msgstr ""
+
 msgid "Owner token minting"
 msgstr ""
 
@@ -1992,6 +2007,9 @@ msgid "Pay disclaimer"
 msgstr ""
 
 msgid "Pay disclosure"
+msgstr ""
+
+msgid "Pay paused"
 msgstr ""
 
 msgid "Pay {0}"
@@ -2144,7 +2162,7 @@ msgstr ""
 msgid "Project created"
 msgstr ""
 
-msgid "Project created by"
+msgid "Project created by <0/>"
 msgstr ""
 
 msgid "Project description"
@@ -2331,6 +2349,9 @@ msgid "Reconfigure {projectTitle} with new NFTs"
 msgstr ""
 
 msgid "Redeem"
+msgstr ""
+
+msgid "Redeem paused"
 msgstr ""
 
 msgid "Redeem successful. Results will be indexed in a few moments."
@@ -3015,6 +3036,9 @@ msgid "Token name"
 msgstr ""
 
 msgid "Token name is required"
+msgstr ""
+
+msgid "Token printing allowed"
 msgstr ""
 
 msgid "Token redeem value"

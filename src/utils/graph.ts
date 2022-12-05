@@ -23,6 +23,14 @@ import {
   TapEventJson,
 } from 'models/subgraph-entities/v1/tap-event'
 import {
+  V1ConfigureEvent,
+  V1ConfigureEventJson,
+} from 'models/subgraph-entities/v1/v1-configure'
+import {
+  ConfigureEvent,
+  ConfigureEventJson,
+} from 'models/subgraph-entities/v2/configure'
+import {
   DeployETHERC20ProjectPayerEvent,
   DeployETHERC20ProjectPayerEventJson,
   parseDeployETHERC20ProjectPayerEventJson,
@@ -144,6 +152,8 @@ export interface SubgraphEntities {
   deployETHERC20ProjectPayerEvent: DeployETHERC20ProjectPayerEvent
   veNftToken: VeNftToken
   veNftContract: VeNftContract
+  configureEvent: ConfigureEvent
+  v1ConfigureEvent: V1ConfigureEvent
 }
 
 export interface SubgraphQueryReturnTypes {
@@ -187,6 +197,8 @@ export interface SubgraphQueryReturnTypes {
   }
   veNftToken: { veNftTokens: VeNftTokenJson[] }
   veNftContract: { veNftContracts: VeNftContractJson[] }
+  configureEvent: { configureEvents: ConfigureEventJson[] }
+  v1ConfigureEvent: { v1ConfigureEvents: V1ConfigureEventJson[] }
 }
 
 export type EntityKey = keyof SubgraphEntities

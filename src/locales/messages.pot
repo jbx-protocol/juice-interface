@@ -3026,6 +3026,9 @@ msgstr ""
 msgid "Token name is required"
 msgstr ""
 
+msgid "Token printing allowed"
+msgstr ""
+
 msgid "Token redeem value"
 msgstr ""
 

@@ -1,4 +1,7 @@
 const webpack = require('webpack')
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
 
 const WALLET_CONNECT_URLS = [
   'https://*.walletconnect.com',
@@ -18,7 +21,7 @@ const ContentSecurityPolicy = `
   frame-src 'self' https://vars.hotjar.com/ https://gnosis-safe.io https://app.safe.global;
 `
 
-module.exports = {
+module.exports = withBundleAnalyzer({
   staticPageGenerationTimeout: 90,
   webpack5: true,
   webpack: config => {
@@ -69,4 +72,4 @@ module.exports = {
     ]
   },
   pageExtensions: ['page.tsx', 'page.ts', 'page.jsx', 'page.js'],
-}
+})

@@ -27,7 +27,8 @@
     "prestart": "yarn compile-styles",
     "start": "NEXT_PUBLIC_VERSION=$(git rev-parse --short HEAD) next start",
     "test": "jest test",
-    "ts:compile": "tsc --noEmit --incremental"
+    "ts:compile": "tsc --noEmit --incremental",
+    "analyze": "ANALYZE=true yarn build"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json,css}": [
@@ -65,6 +66,7 @@
     "@lingui/macro": "^3.13.0",
     "@lingui/react": "^3.13.0",
     "@metamask/providers": "^10.0.0",
+    "@next/bundle-analyzer": "^13.0.5",
     "@pinata/sdk": "^1.1.23",
     "@reduxjs/toolkit": "^1.6.2",
     "@sentry/react": "^6.18.2",

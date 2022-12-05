@@ -3,10 +3,10 @@ import { t } from '@lingui/macro'
 import Input from 'antd/lib/input/Input'
 import Modal from 'antd/lib/modal/Modal'
 import { PV_V2 } from 'constants/pv'
-import { ThemeContext } from 'contexts/themeContext'
 import { useProjectsSearch } from 'hooks/Projects'
 import { useRouter } from 'next/router'
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 import Loading from './Loading'
 import { ProjectVersionBadge } from './ProjectVersionBadge'
@@ -16,7 +16,6 @@ import V2V3ProjectHandleLink from './v2v3/shared/V2V3ProjectHandleLink'
 const HOT_KEY = 'k'
 const INPUT_ID = 'quickProjectSearch'
 const MAX_RESULTS = 8
-const PADDING = 10
 
 export default function QuickProjectSearch() {
   const [searchText, setSearchText] = useState<string>()
@@ -24,10 +23,6 @@ export default function QuickProjectSearch() {
   const [spotlightActive, setSpotlightActive] = useState<boolean>()
 
   const router = useRouter()
-
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
 
   const { data: searchPages, isLoading: isLoadingSearch } =
     useProjectsSearch(searchText)
@@ -40,9 +35,7 @@ export default function QuickProjectSearch() {
     if (!project) return
 
     router.push(
-      project.pv === PV_V2
-        ? `/@${project.handle}`
-        : `/p/id/${project.projectId}`,
+      project.pv === PV_V2 ? `/@${project.handle}` : `/p/${project.projectId}`,
     )
   }, [router, searchPages, highlightIndex])
 
@@ -70,12 +63,14 @@ export default function QuickProjectSearch() {
         }
       } else if (e.key === HOT_KEY && (e.metaKey || e.ctrlKey)) {
         setSpotlightActive(true)
-        setTimeout(() => {
-          // delay to wait for render when opening modal
-          ;(
-            document.getElementById(INPUT_ID) as HTMLInputElement | null
-          )?.focus()
-        }, 100)
+        setTimeout(
+          () =>
+            // delay to wait for render when opening modal
+            (
+              document.getElementById(INPUT_ID) as HTMLInputElement | null
+            )?.focus(),
+          100,
+        )
       }
     }
 
@@ -84,19 +79,24 @@ export default function QuickProjectSearch() {
     return () => window.removeEventListener('keypress', listener)
   }, [spotlightActive, searchText, router, goToProject, reset])
 
-  // Arrow key up/down select listener
+  // Arrow key up/down / tab listener
   useEffect(() => {
     const listener = (e: KeyboardEvent) => {
       if (!searchPages || isLoadingSearch) return
 
-      if (e.key === 'ArrowUp') {
-        setHighlightIndex(i => (i === undefined ? 0 : Math.max(i - 1, 0)))
-        e.stopPropagation()
+      switch (e.key) {
+        case 'ArrowUp':
+          setHighlightIndex(i => (i === undefined ? 0 : Math.max(i - 1, 0)))
+          break
+        case 'ArrowDown':
+        case 'Tab':
+          setHighlightIndex(i =>
+            i === undefined ? 0 : Math.min(i + 1, searchPages.length - 1),
+          )
+          break
       }
-      if (e.key === 'ArrowDown') {
-        setHighlightIndex(i => (i === undefined ? 0 : i + 1))
-        e.stopPropagation()
-      }
+
+      e.stopPropagation()
     }
 
     window.addEventListener('keyup', listener)
@@ -123,14 +123,7 @@ export default function QuickProjectSearch() {
       destroyOnClose
       bodyStyle={{ padding: 0 }}
     >
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          padding: PADDING * 2,
-          gap: PADDING * 2,
-        }}
-      >
+      <div className="flex items-center gap-5 p-5">
         <CloseCircleOutlined onClick={() => setSpotlightActive(false)} />
         <Input
           id={INPUT_ID}
@@ -140,31 +133,14 @@ export default function QuickProjectSearch() {
       </div>
       {isLoadingSearch && <Loading />}
       {!!searchPages?.length && (
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            paddingTop: PADDING,
-            paddingBottom: PADDING,
-          }}
-        >
+        <div className="flex flex-col pb-5">
           {searchPages.slice(0, MAX_RESULTS).map((p, i) => (
             <div
               key={p.id}
-              style={{
-                display: 'flex',
-                alignItems: 'baseline',
-                gap: PADDING,
-                paddingTop: PADDING,
-                paddingBottom: PADDING,
-                paddingLeft: PADDING * 2,
-                paddingRight: PADDING * 2,
-                cursor: 'pointer',
-                background:
-                  highlightIndex === i
-                    ? colors.background.l1
-                    : colors.background.l0,
-              }}
+              className={twMerge(
+                'flex cursor-pointer items-baseline gap-2 py-2 px-5',
+                highlightIndex === i ? 'bg-slate-600' : '',
+              )}
               onClick={goToProject}
               onMouseEnter={() => setHighlightIndex(i)}
             >
@@ -176,6 +152,7 @@ export default function QuickProjectSearch() {
               ) : (
                 <V1ProjectHandle projectId={p.projectId} handle={p.handle} />
               )}
+
               <div style={{ flex: 1 }}>
                 <ProjectVersionBadge
                   transparent
@@ -183,6 +160,7 @@ export default function QuickProjectSearch() {
                   versionText={`V${p.pv}`}
                 />
               </div>
+
               {highlightIndex === i && <ArrowRightOutlined />}
             </div>
           ))}

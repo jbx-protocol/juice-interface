@@ -23,7 +23,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   } catch (err) {
     console.error('api::ens::resolve::error', err)
 
-    return res.status(500)
+    return res.status(500).json({ error: 'failed to resolve ens name' })
   }
 }
 

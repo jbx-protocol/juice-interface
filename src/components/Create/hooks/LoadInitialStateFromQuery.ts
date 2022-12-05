@@ -148,6 +148,26 @@ export function useLoadingInitialStateFromQuery() {
           ...defaultReduxState,
           ...createFlowState,
           ...parsedInitialState,
+          ...{
+            projectMetadata: {
+              ...defaultReduxState.projectMetadata,
+              ...parsedInitialState.projectMetadata,
+            },
+            fundingCycleMetadata: {
+              ...defaultReduxState.fundingCycleMetadata,
+              ...parsedInitialState.fundingCycleMetadata,
+            },
+            fundingCycleData: {
+              ...defaultReduxState.fundingCycleData,
+              ...parsedInitialState.fundingCycleData,
+            },
+            fundAccessConstraints: [
+              {
+                ...defaultReduxState.fundAccessConstraints[0],
+                ...parsedInitialState.fundAccessConstraints[0],
+              },
+            ],
+          },
         }),
       )
     } catch (e) {

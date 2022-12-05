@@ -1,6 +1,6 @@
 {
   "functions": {
-    "api/ens/resolve/*": {
+    "api/ens/resolve/*.ts": {
       "maxDuration": 10
     }
   }

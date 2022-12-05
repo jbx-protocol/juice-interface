@@ -1307,6 +1307,9 @@ msgstr ""
 msgid "File upload failed. Try again."
 msgstr ""
 
+msgid "Find a project"
+msgstr ""
+
 msgid "Fund and operate your thing, your way."
 msgstr ""
 

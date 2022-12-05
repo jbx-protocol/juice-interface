@@ -10,6 +10,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react'
 
 import Loading from './Loading'
 import { ProjectVersionBadge } from './ProjectVersionBadge'
+import V1ProjectHandle from './v1/shared/V1ProjectHandle'
 import V2V3ProjectHandleLink from './v2v3/shared/V2V3ProjectHandleLink'
 
 const HOT_KEY = 'k'
@@ -31,7 +32,7 @@ export default function QuickProjectSearch() {
   const { data: searchPages, isLoading: isLoadingSearch } =
     useProjectsSearch(searchText)
 
-  const search = useCallback(() => {
+  const goToProject = useCallback(() => {
     if (highlightIndex === undefined) return
 
     const project = searchPages?.[highlightIndex]
@@ -63,7 +64,7 @@ export default function QuickProjectSearch() {
             break
           case 'Return':
           case 'Enter':
-            search()
+            goToProject()
             reset()
             break
         }
@@ -81,7 +82,7 @@ export default function QuickProjectSearch() {
     window.addEventListener('keypress', listener)
 
     return () => window.removeEventListener('keypress', listener)
-  }, [spotlightActive, searchText, router, search, reset])
+  }, [spotlightActive, searchText, router, goToProject, reset])
 
   // Arrow key up/down select listener
   useEffect(() => {
@@ -105,7 +106,7 @@ export default function QuickProjectSearch() {
     spotlightActive,
     searchText,
     router,
-    search,
+    goToProject,
     searchPages,
     isLoadingSearch,
   ])
@@ -152,16 +153,23 @@ export default function QuickProjectSearch() {
                 alignItems: 'baseline',
                 gap: PADDING,
                 padding: PADDING,
+                cursor: 'pointer',
                 background:
                   highlightIndex === i
                     ? colors.background.l1
                     : colors.background.l0,
               }}
+              onClick={goToProject}
+              onMouseEnter={() => setHighlightIndex(i)}
             >
-              <V2V3ProjectHandleLink
-                projectId={p.projectId}
-                handle={p.handle}
-              />
+              {p.pv === PV_V2 ? (
+                <V2V3ProjectHandleLink
+                  projectId={p.projectId}
+                  handle={p.handle}
+                />
+              ) : (
+                <V1ProjectHandle projectId={p.projectId} handle={p.handle} />
+              )}
               <div style={{ flex: 1 }}>
                 <ProjectVersionBadge
                   transparent
@@ -169,7 +177,7 @@ export default function QuickProjectSearch() {
                   versionText={`V${p.pv}`}
                 />
               </div>
-              <ArrowRightOutlined onClick={search} />
+              {highlightIndex === i && <ArrowRightOutlined />}
             </div>
           ))}
         </div>

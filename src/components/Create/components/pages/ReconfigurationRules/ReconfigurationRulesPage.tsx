@@ -3,6 +3,7 @@ import { Form, Space } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
 import { Selection } from 'components/Create/components/Selection'
+import ExternalLink from 'components/ExternalLink'
 import { JuiceSwitch } from 'components/JuiceSwitch'
 import { readNetwork } from 'constants/networks'
 import { useContext } from 'react'
@@ -73,6 +74,20 @@ export const ReconfigurationRulesPage = () => {
               extra={t`When enabled, the project owner can set the project's payment terminals.`}
             >
               <JuiceSwitch label={t`Allow terminal configuration`} />
+            </Form.Item>
+            <Form.Item
+              name="holdFees"
+              extra={
+                <Trans>
+                  This allows you to borrow from your own treasury and pay back
+                  later without incurring fees.{' '}
+                  <ExternalLink href="https://info.juicebox.money/dev/learn/overview/#hold-fees">
+                    Learn more.
+                  </ExternalLink>
+                </Trans>
+              }
+            >
+              <JuiceSwitch label={t`Hold fees`} />
             </Form.Item>
           </CreateCollapse.Panel>
         </CreateCollapse>

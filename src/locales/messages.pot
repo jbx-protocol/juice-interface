@@ -1388,6 +1388,9 @@ msgstr ""
 msgid "History"
 msgstr ""
 
+msgid "Hold fees"
+msgstr ""
+
 msgid "Holders"
 msgstr ""
 
@@ -2898,6 +2901,9 @@ msgid "This address will receive any tokens minted when the recipient project ge
 msgstr ""
 
 msgid "This address will receive the tokens minted from paying this project."
+msgstr ""
+
+msgid "This allows you to borrow from your own treasury and pay back later without incurring fees. <0>Learn more.</0>"
 msgstr ""
 
 msgid "This funding cycle may pose risks to contributors. Check the funding cycle details before paying this project."

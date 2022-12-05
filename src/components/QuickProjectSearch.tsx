@@ -35,7 +35,7 @@ export default function QuickProjectSearch() {
     if (!project) return
 
     router.push(
-      project.pv === PV_V2 ? `/@${project.handle}` : `/p/${project.projectId}`,
+      project.pv === PV_V2 ? `/@${project.handle}` : `/p/${project.handle}`,
     )
   }, [router, searchPages, highlightIndex])
 
@@ -139,7 +139,7 @@ export default function QuickProjectSearch() {
               key={p.id}
               className={twMerge(
                 'flex cursor-pointer items-baseline gap-2 py-2 px-5',
-                highlightIndex === i ? 'bg-slate-600' : '',
+                highlightIndex === i ? 'bg-smoke-75 dark:bg-slate-600' : '',
               )}
               onClick={goToProject}
               onMouseEnter={() => setHighlightIndex(i)}

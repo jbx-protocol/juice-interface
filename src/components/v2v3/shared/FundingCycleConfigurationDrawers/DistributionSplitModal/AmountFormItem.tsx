@@ -17,6 +17,7 @@ import { percentageValidator } from './utils'
 export function AmountFormItem({
   form,
   distributionLimit,
+  distributionType,
   fee,
   editingSplitType,
   currencyName,
@@ -24,6 +25,7 @@ export function AmountFormItem({
   onCurrencyChange,
 }: {
   form: FormInstance<AddOrEditSplitFormFields>
+  distributionType: 'amount' | 'percent' | 'both'
   isEditPayoutPage?: boolean
   distributionLimit?: string
   fee: BigNumber | undefined
@@ -119,21 +121,23 @@ export function AmountFormItem({
             }
           />
         </Form.Item>
-        <div className="ml-2 flex items-center">
-          <Trans>{form.getFieldValue('percent') ?? '0'}%</Trans>
-          <TooltipIcon
-            tip={
-              <Trans>
-                If you don't raise the sum of all your payouts (
-                <CurrencySymbol currency={currencyName} />
-                {distributionLimit}), this address will receive{' '}
-                {form.getFieldValue('percent')}% of all the funds you raise.
-              </Trans>
-            }
-            placement={'topLeft'}
-            iconClassName={'ml-1'}
-          />
-        </div>
+        {distributionType === 'amount' ? (
+          <div className="ml-2 flex items-center">
+            <Trans>{form.getFieldValue('percent') ?? '0'}%</Trans>
+            <TooltipIcon
+              tip={
+                <Trans>
+                  If you don't raise the sum of all your payouts (
+                  <CurrencySymbol currency={currencyName} />
+                  {distributionLimit}), this address will receive{' '}
+                  {form.getFieldValue('percent')}% of all the funds you raise.
+                </Trans>
+              }
+              placement={'topLeft'}
+              iconClassName={'ml-1'}
+            />
+          </div>
+        ) : null}
       </div>
     </Form.Item>
   )

@@ -366,6 +366,7 @@ export function DistributionSplitModal({
           <AmountFormItem
             form={form}
             currencyName={currencyName}
+            distributionType={distributionType}
             editingSplitType={editingSplitType}
             fee={ETHPaymentTerminalFee}
             isFirstSplit={isFirstSplit}
@@ -376,7 +377,9 @@ export function DistributionSplitModal({
         {distributionType === 'percent' || distributionType === 'both' ? (
           <PercentageFormItem
             form={form}
+            distributionType={distributionType}
             distributionLimit={distributionLimit}
+            currencyName={currencyName}
           />
         ) : null}
         <Form.Item

@@ -52,8 +52,10 @@ export function V2V3ProjectToolsDrawer({
         <Divider />
 
         <section>
-          <AddToProjectBalanceForm useAddToBalanceTx={useAddToBalanceTx} />
-          <HeldFeesSection />
+          <Space direction="vertical" size="middle">
+            <AddToProjectBalanceForm useAddToBalanceTx={useAddToBalanceTx} />
+            <HeldFeesSection />
+          </Space>
         </section>
 
         <Divider />

@@ -1,18 +1,55 @@
 import { t, Trans } from '@lingui/macro'
 import { Col, Row } from 'antd'
-import { AppWrapper } from 'components/common'
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
+import { ReactElement } from 'react'
+import {
+  NextPageWithLayout,
+  StaticAppWrapper,
+} from '../components/common/CoreAppWrapper/CoreAppWrapper'
 import { BigHeading } from './home/BigHeading'
-import Faq from './home/Faq'
-import Footer from './home/Footer'
-import { HeroSection } from './home/HeroSection'
-import { HowItWorksSection } from './home/HowItWorksSection'
-import { StatsSection } from './home/StatsSection'
 import { TopProjectsSection } from './home/TopProjectsSection'
-import TrendingSection from './home/TrendingSection'
 import blueBerry from '/public/assets/blueberry-ol.png'
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface NoPropsType {}
 
-function Landing() {
+const HeroSection = dynamic<NoPropsType>(
+  () => import('./home/HeroSection').then(module => module.HeroSection),
+  { ssr: true },
+)
+
+const StatsSection = dynamic<NoPropsType>(
+  () => import('./home/StatsSection').then(module => module.StatsSection),
+  { ssr: false },
+)
+
+const TrendingSection = dynamic<NoPropsType>(
+  () => import('./home/TrendingSection'),
+  {
+    loading: () => <div>Loading...</div>,
+    ssr: false,
+  },
+)
+const Footer = dynamic<NoPropsType>(() => import('./home/Footer'), {
+  loading: () => <div>Loading...</div>,
+  ssr: false,
+})
+
+const HowItWorksSection = dynamic<NoPropsType>(
+  () =>
+    import('./home/HowItWorksSection').then(module => module.HowItWorksSection),
+  {
+    loading: () => <div>Loading...</div>,
+    ssr: false,
+  },
+)
+
+const Faq = dynamic<NoPropsType>(() => import('./home/Faq'), {
+  loading: () => <div>Loading...</div>,
+  ssr: false,
+})
+
+const Landing: NextPageWithLayout = () => {
   return (
     <div>
       <HeroSection />
@@ -80,11 +117,8 @@ function Landing() {
     </div>
   )
 }
-
-export default function LandingPage() {
-  return (
-    <AppWrapper>
-      <Landing />
-    </AppWrapper>
-  )
+Landing.getLayout = function getLayout(page: ReactElement) {
+  return <StaticAppWrapper>{page}</StaticAppWrapper>
 }
+
+export default Landing

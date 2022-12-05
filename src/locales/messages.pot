@@ -1229,9 +1229,6 @@ msgstr ""
 msgid "Error loading payments"
 msgstr ""
 
-msgid "Error parsing form"
-msgstr ""
-
 msgid "Error reading transaction data"
 msgstr ""
 

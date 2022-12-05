@@ -1571,6 +1571,9 @@ msgstr ""
 msgid "It'd be a lot cooler if you did"
 msgstr ""
 
+msgid "It's strongly recommended that you visit the <0>Juicebox Discord</0> for help and advice on this process."
+msgstr ""
+
 msgid "JBX Fee ({0}%):"
 msgstr ""
 
@@ -2295,6 +2298,9 @@ msgid "Range"
 msgstr ""
 
 msgid "Rankings based on number of contributions and volume gained in the last {trendingWindowDays} days. <0>See code</0>"
+msgstr ""
+
+msgid "Re-launch on V3"
 msgstr ""
 
 msgid "Re-launch project"
@@ -3252,9 +3258,6 @@ msgid "Update your veNFT's lock duration."
 msgstr ""
 
 msgid "Update {projectTitle}'s NFT collection details."
-msgstr ""
-
-msgid "Upgrade to V3"
 msgstr ""
 
 msgid "Upload"

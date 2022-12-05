@@ -2105,6 +2105,12 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
+msgid "Process held fees"
+msgstr ""
+
+msgid "Process project #{projectId}'s held fees"
+msgstr ""
+
 msgid "Project #{projectId}"
 msgstr ""
 
@@ -2783,6 +2789,9 @@ msgstr ""
 msgid "The future will be led by creators, and owned by communities."
 msgstr ""
 
+msgid "The held fees will reset as new funds are added to the project's balance with the <0>Add to balance</0> transaction above."
+msgstr ""
+
 msgid "The issuance rate of your second funding cycle will be {0} tokens per 1 ETH,{1} tokens per 1 ETH for your third funding cycle, and so on."
 msgstr ""
 
@@ -2919,6 +2928,9 @@ msgid "This is the maximum amount of funds that can leave the treasury each fund
 msgstr ""
 
 msgid "This list is using an experimental data index and may be inaccurate for some projects."
+msgstr ""
+
+msgid "This project has <0>{heldFees} ETH</0> held fees. The project owner or JuiceboxDAO can process these fees at an time."
 msgstr ""
 
 msgid "This project has no distributions."

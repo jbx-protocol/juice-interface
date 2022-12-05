@@ -3,6 +3,7 @@ import { Trans } from '@lingui/macro'
 import { Button, Form, Space, Switch } from 'antd'
 import FormItemLabel from 'components/FormItemLabel'
 import ReconfigurationStrategySelector from 'components/ReconfigurationStrategy/ReconfigurationStrategySelector'
+import { HOLD_FEES_EXPLAINATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import {
   ballotStrategiesFn,
   DEFAULT_BALLOT_STRATEGY,
@@ -37,6 +38,7 @@ export default function RulesForm({
         fundingCycleData.ballot ?? DEFAULT_BALLOT_STRATEGY.address,
       ),
       allowSetTerminals: fundingCycleMetadata.global.allowSetTerminals,
+      holdFees: fundingCycleMetadata.holdFees,
     }),
     [fundingCycleData, fundingCycleMetadata],
   )
@@ -52,6 +54,7 @@ export default function RulesForm({
   const [allowMinting, setAllowMinting] = useState<boolean>(
     initialValues.allowMinting,
   )
+  const [holdFees, setHoldFees] = useState<boolean>(initialValues.holdFees)
 
   useEffect(() => {
     const hasFormUpdated =
@@ -75,6 +78,7 @@ export default function RulesForm({
     dispatch(editingV2ProjectActions.setAllowMinting(allowMinting))
     dispatch(editingV2ProjectActions.setAllowSetTerminals(allowSetTerminals))
     dispatch(editingV2ProjectActions.setBallot(ballotStrategy.address))
+    dispatch(editingV2ProjectActions.setHoldFees(holdFees))
     onFinish?.()
   }, [
     dispatch,
@@ -83,6 +87,7 @@ export default function RulesForm({
     pausePay,
     allowMinting,
     allowSetTerminals,
+    holdFees,
   ])
 
   const disableSaveButton =
@@ -144,6 +149,16 @@ export default function RulesForm({
               />
               <Trans>Allow terminal configuration</Trans>
             </div>
+          </Form.Item>
+          <Form.Item name="holdfees" extra={HOLD_FEES_EXPLAINATION}>
+            <Switch
+              className="mr-2"
+              onChange={checked => {
+                setHoldFees(checked)
+              }}
+              checked={holdFees}
+            />
+            <Trans>Hold fees</Trans>
           </Form.Item>
         </div>
 

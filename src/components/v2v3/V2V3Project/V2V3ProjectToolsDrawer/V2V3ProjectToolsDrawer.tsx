@@ -2,6 +2,7 @@ import { Trans } from '@lingui/macro'
 import { Divider, Drawer, Space } from 'antd'
 import { AddToProjectBalanceForm } from 'components/Project/ProjectToolsDrawer/AddToProjectBalanceForm'
 import { ExportSection } from 'components/Project/ProjectToolsDrawer/ExportSection'
+import { HeldFeesSection } from 'components/Project/ProjectToolsDrawer/HeldFeesSection'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
@@ -52,6 +53,7 @@ export function V2V3ProjectToolsDrawer({
 
         <section>
           <AddToProjectBalanceForm useAddToBalanceTx={useAddToBalanceTx} />
+          <HeldFeesSection />
         </section>
 
         <Divider />

@@ -1,38 +1,57 @@
+import { ArrowRightOutlined, CloseCircleOutlined } from '@ant-design/icons'
+import { t } from '@lingui/macro'
 import Input from 'antd/lib/input/Input'
-import { CloseCircleOutlined, ArrowRightOutlined } from '@ant-design/icons'
 import Modal from 'antd/lib/modal/Modal'
-import { useRouter } from 'next/router'
-import React, { useCallback, useEffect, useState } from 'react'
+import { PV_V2 } from 'constants/pv'
+import { ThemeContext } from 'contexts/themeContext'
 import { useProjectsSearch } from 'hooks/Projects'
+import { useRouter } from 'next/router'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
+
 import Loading from './Loading'
+import { ProjectVersionBadge } from './ProjectVersionBadge'
 import V2V3ProjectHandleLink from './v2v3/shared/V2V3ProjectHandleLink'
 
 const HOT_KEY = 'k'
-const INPUT_ID = 'hotsearch'
+const INPUT_ID = 'quickProjectSearch'
+const MAX_RESULTS = 8
+const PADDING = 10
 
-export default function HotSearch() {
-  const [text, setText] = useState<string>()
+export default function QuickProjectSearch() {
+  const [searchText, setSearchText] = useState<string>()
   const [highlightIndex, setHighlightIndex] = useState<number>()
   const [spotlightActive, setSpotlightActive] = useState<boolean>()
 
   const router = useRouter()
 
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+
   const { data: searchPages, isLoading: isLoadingSearch } =
-    useProjectsSearch(text)
+    useProjectsSearch(searchText)
 
   const search = useCallback(() => {
     if (highlightIndex === undefined) return
 
-    router.push(`/@${searchPages?.[highlightIndex]?.handle}`)
-    // router.push(`/projects?tab=all${text ? `&search=${text}` : ''}`)
+    const project = searchPages?.[highlightIndex]
+
+    if (!project) return
+
+    router.push(
+      project.pv === PV_V2
+        ? `/@${project.handle}`
+        : `/p/id/${project.projectId}`,
+    )
   }, [router, searchPages, highlightIndex])
 
   const reset = useCallback(() => {
     setSpotlightActive(false)
     setHighlightIndex(undefined)
-    setText(undefined)
+    setSearchText(undefined)
   }, [])
 
+  // Hot key listener
   useEffect(() => {
     const listener = (e: KeyboardEvent) => {
       if (e.isComposing) return // i think right idk
@@ -62,8 +81,9 @@ export default function HotSearch() {
     window.addEventListener('keypress', listener)
 
     return () => window.removeEventListener('keypress', listener)
-  }, [spotlightActive, text, router, search, reset])
+  }, [spotlightActive, searchText, router, search, reset])
 
+  // Arrow key up/down select listener
   useEffect(() => {
     const listener = (e: KeyboardEvent) => {
       if (!searchPages || isLoadingSearch) return
@@ -81,46 +101,75 @@ export default function HotSearch() {
     window.addEventListener('keyup', listener)
 
     return () => window.removeEventListener('keyup', listener)
-  }, [spotlightActive, text, router, search, searchPages, isLoadingSearch])
+  }, [
+    spotlightActive,
+    searchText,
+    router,
+    search,
+    searchPages,
+    isLoadingSearch,
+  ])
 
   return (
     <Modal
       centered
       open={spotlightActive}
-      onCancel={() => setSpotlightActive(false)}
+      onCancel={reset}
       okButtonProps={{ hidden: true }}
       cancelButtonProps={{ hidden: true }}
       footer={null}
       closeIcon
       destroyOnClose
     >
-      <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: PADDING * 2,
+        }}
+      >
         <CloseCircleOutlined onClick={() => setSpotlightActive(false)} />
         <Input
           id={INPUT_ID}
-          placeholder="Search projects"
-          onChange={e => setText(e.target.value)}
+          placeholder={t`Find a project`}
+          onChange={e => setSearchText(e.target.value)}
         />
-        <ArrowRightOutlined onClick={search} />
       </div>
       {isLoadingSearch && <Loading />}
-      {searchPages && (
+      {!!searchPages?.length && (
         <div
-          style={{ display: 'flex', flexDirection: 'column', paddingTop: 10 }}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            paddingTop: PADDING,
+          }}
         >
-          {searchPages.map((p, i) => (
+          {searchPages.slice(0, MAX_RESULTS).map((p, i) => (
             <div
               key={p.id}
               style={{
-                paddingTop: 10,
-                paddingBottom: 10,
-                opacity: highlightIndex === i ? 1 : 0.5,
+                display: 'flex',
+                alignItems: 'baseline',
+                gap: PADDING,
+                padding: PADDING,
+                background:
+                  highlightIndex === i
+                    ? colors.background.l1
+                    : colors.background.l0,
               }}
             >
               <V2V3ProjectHandleLink
                 projectId={p.projectId}
                 handle={p.handle}
               />
+              <div style={{ flex: 1 }}>
+                <ProjectVersionBadge
+                  transparent
+                  size="small"
+                  versionText={`V${p.pv}`}
+                />
+              </div>
+              <ArrowRightOutlined onClick={search} />
             </div>
           ))}
         </div>

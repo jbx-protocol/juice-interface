@@ -1,5 +1,5 @@
 import { Menu, Space } from 'antd'
-import HotSearch from 'components/HotSearch'
+import QuickProjectSearch from 'components/QuickProjectSearch'
 import useMobile from 'hooks/Mobile'
 import { CSSProperties, useEffect, useState } from 'react'
 
@@ -58,7 +58,7 @@ export default function SiteNavigation() {
 
         <Account />
 
-        <HotSearch />
+        <QuickProjectSearch />
       </Space>
     </nav>
   )

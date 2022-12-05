@@ -121,11 +121,13 @@ export default function QuickProjectSearch() {
       footer={null}
       closeIcon
       destroyOnClose
+      bodyStyle={{ padding: 0 }}
     >
       <div
         style={{
           display: 'flex',
           alignItems: 'center',
+          padding: PADDING * 2,
           gap: PADDING * 2,
         }}
       >
@@ -143,6 +145,7 @@ export default function QuickProjectSearch() {
             display: 'flex',
             flexDirection: 'column',
             paddingTop: PADDING,
+            paddingBottom: PADDING,
           }}
         >
           {searchPages.slice(0, MAX_RESULTS).map((p, i) => (
@@ -152,7 +155,10 @@ export default function QuickProjectSearch() {
                 display: 'flex',
                 alignItems: 'baseline',
                 gap: PADDING,
-                padding: PADDING,
+                paddingTop: PADDING,
+                paddingBottom: PADDING,
+                paddingLeft: PADDING * 2,
+                paddingRight: PADDING * 2,
                 cursor: 'pointer',
                 background:
                   highlightIndex === i

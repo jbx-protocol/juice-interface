@@ -41,23 +41,22 @@ export function PercentageFormItem({
             formItemProps={{
               rules: [{ validator: percentageValidator }],
             }}
-          >
-            {distributionType === 'both' ? (
-              <TooltipIcon
-                tip={
-                  <Trans>
-                    If you don't raise the sum of all your payouts (
-                    <CurrencySymbol currency={currencyName} />
-                    {distributionLimit}), this address will receive{' '}
-                    {form.getFieldValue('percent')}% of all the funds you raise.
-                  </Trans>
-                }
-                placement={'topLeft'}
-                iconClassName={'ml-3'}
-              />
-            ) : null}
-          </NumberSlider>
+          />
         </div>
+        {distributionType === 'both' ? (
+          <TooltipIcon
+            tip={
+              <Trans>
+                If you don't raise the sum of all your payouts (
+                <CurrencySymbol currency={currencyName} />
+                {distributionLimit}), this address will receive{' '}
+                {form.getFieldValue('percent')}% of all the funds you raise.
+              </Trans>
+            }
+            placement={'topLeft'}
+            iconClassName={'ml-3 mb-4'}
+          />
+        ) : null}
       </div>
     </Form.Item>
   )

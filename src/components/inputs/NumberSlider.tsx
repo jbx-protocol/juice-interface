@@ -1,5 +1,5 @@
 import { Form, Slider } from 'antd'
-import { PropsWithChildren, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { roundDown } from 'components/formItems/formHelpers'
 
@@ -18,8 +18,7 @@ export default function NumberSlider({
   disabled,
   name, // Name is required for form validation
   formItemProps,
-  children,
-}: PropsWithChildren<{
+}: {
   className?: string
   min?: number
   max?: number
@@ -28,8 +27,7 @@ export default function NumberSlider({
   suffix?: string
   onChange?: (num: number | undefined) => void
   defaultValue?: number
-}> &
-  FormItemExt) {
+} & FormItemExt) {
   const [_value, setValue] = useState<number | undefined>(
     sliderValue ?? defaultValue,
   )
@@ -92,7 +90,6 @@ export default function NumberSlider({
             defaultValue={defaultValue}
           />
         </Form.Item>
-        {children}
       </div>
       {formItemProps?.extra ? (
         <div className="ant-form-item-extra">{formItemProps.extra}</div>

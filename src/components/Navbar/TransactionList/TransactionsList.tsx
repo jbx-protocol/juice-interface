@@ -56,7 +56,7 @@ export function TransactionsList({
       </div>
 
       {isExpanded && (
-        <div className={classNames('flex flex-col gap-2', listClassName)}>
+        <div className={classNames('z-10 flex flex-col gap-2', listClassName)}>
           {transactions?.length ? (
             transactions
               .sort((a, b) =>

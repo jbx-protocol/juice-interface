@@ -17,6 +17,7 @@ import { percentageValidator } from './utils'
 export function AmountFormItem({
   form,
   distributionLimit,
+  distributionType,
   fee,
   editingSplitType,
   currencyName,
@@ -24,6 +25,8 @@ export function AmountFormItem({
   onCurrencyChange,
 }: {
   form: FormInstance<AddOrEditSplitFormFields>
+  distributionType: 'amount' | 'percent' | 'both'
+  isEditPayoutPage?: boolean
   distributionLimit?: string
   fee: BigNumber | undefined
   editingSplitType: SplitType
@@ -92,8 +95,8 @@ export function AmountFormItem({
     >
       <div className="flex items-center text-black dark:text-slate-100">
         <Form.Item
-          noStyle
           name="amount"
+          noStyle
           required
           rules={[
             {
@@ -103,37 +106,38 @@ export function AmountFormItem({
             },
           ]}
         >
-          <div className="flex-1">
-            <FormattedNumberInput
-              placeholder={'0'}
-              accessory={
-                isFirstSplit && onCurrencyChange ? (
-                  <CurrencySwitch
-                    onCurrencyChange={onCurrencyChange}
-                    currency={currencyName}
-                  />
-                ) : (
-                  <InputAccessoryButton content={currencyName} />
-                )
+          <FormattedNumberInput
+            className="flex-1"
+            placeholder={'0'}
+            accessory={
+              isFirstSplit && onCurrencyChange ? (
+                <CurrencySwitch
+                  onCurrencyChange={onCurrencyChange}
+                  currency={currencyName}
+                />
+              ) : (
+                <InputAccessoryButton content={currencyName} />
+              )
+            }
+          />
+        </Form.Item>
+        {distributionType === 'amount' ? (
+          <div className="ml-2 flex items-center">
+            <Trans>{form.getFieldValue('percent') ?? '0'}%</Trans>
+            <TooltipIcon
+              tip={
+                <Trans>
+                  If you don't raise the sum of all your payouts (
+                  <CurrencySymbol currency={currencyName} />
+                  {distributionLimit}), this address will receive{' '}
+                  {form.getFieldValue('percent')}% of all the funds you raise.
+                </Trans>
               }
+              placement={'topLeft'}
+              iconClassName={'ml-1'}
             />
           </div>
-        </Form.Item>
-        <div className="ml-2 flex items-center">
-          <Trans>{form.getFieldValue('percent') ?? '0'}%</Trans>
-          <TooltipIcon
-            tip={
-              <Trans>
-                If you don't raise the sum of all your payouts (
-                <CurrencySymbol currency={currencyName} />
-                {distributionLimit}), this address will receive{' '}
-                {form.getFieldValue('percent')}% of all the funds you raise.
-              </Trans>
-            }
-            placement={'topLeft'}
-            iconClassName={'ml-1'}
-          />
-        </div>
+        ) : null}
       </div>
     </Form.Item>
   )

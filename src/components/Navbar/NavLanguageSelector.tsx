@@ -60,7 +60,7 @@ export default function NavLanguageSelector({
         setDropdownOpen(!dropdownOpen)
       }}
     >
-      <GlobalOutlined className="mb-2" />
+      <GlobalOutlined className="mb-0.5" />
       <Select
         className="flex cursor-pointer items-center justify-evenly font-medium"
         popupClassName={!mobile ? 'mr-5' : ''}

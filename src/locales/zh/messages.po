@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-11-27 00:32\n"
+"PO-Revision-Date: 2022-12-04 00:28\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: Chinese Simplified\n"
@@ -31,8 +31,8 @@ msgstr "0% 费率"
 msgid "1 year"
 msgstr "1 年"
 
-msgid "1. Get funded."
-msgstr "1. 获得资助"
+msgid "1. Get funded"
+msgstr ""
 
 msgid "1. Set ENS name"
 msgstr "1. 设置 ENS 名称"
@@ -58,8 +58,8 @@ msgstr "3. 管理你的资金"
 msgid "30 days"
 msgstr "30 天"
 
-msgid "4. Build trust."
-msgstr "4. 建立信任"
+msgid "4. Build trust"
+msgstr ""
 
 msgid "7 days"
 msgstr "7 天"
@@ -91,17 +91,11 @@ msgstr "<0/> 项目钱包余额"
 msgid "<0/> will go to the project owner: <1/>"
 msgstr "<0/> 将会付给项目方： <1/>"
 
-msgid "<0/>{0} after {feePercentage}% JBX membership fee"
-msgstr "<0/>{0} 扣除 {feePercentage}% JBX 成员费用之后"
-
 msgid "<0/>{0}{1} distributed"
 msgstr "<0/>{0}{1} 已分发"
 
 msgid "<0/>{feeAmountFormatted} fee"
 msgstr "<0/>{feeAmountFormatted} 费用"
-
-msgid "<0><1/>{0}</0> Distribution Limit"
-msgstr "<0><1/>{0}</0> 分配限额"
 
 msgid "<0><1/>{grossAvailableAmount}</0> available to distribute"
 msgstr "<0><1/>{grossAvailableAmount}</0> 可分配"
@@ -228,6 +222,9 @@ msgstr "<0>你当前未领取的 {tokenSymbol} 代币数量：</0> {0}"
 
 msgid "<0>Zero</0> Distribution Limit"
 msgstr "<0>零</0> 分配限额"
+
+msgid "<0>{0}</0> Distribution Limit"
+msgstr ""
 
 msgid "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
 msgstr "<0>{tokenSymbol} ERC-20 地址：</0><1/>"
@@ -708,9 +705,6 @@ msgstr "提前设定把您资金的一部分自动分拨给您想要支持的人
 
 msgid "Configure how your project will collect and spend funds."
 msgstr "设置你的项目接收及使用资金的方式。"
-
-msgid "Configure restrictions for your funding cycle."
-msgstr "为你的筹款周期配置限制条件。"
 
 msgid "Configure restrictions for your funding cycles."
 msgstr "对你的筹款周期设置限制条件。"
@@ -2641,6 +2635,9 @@ msgstr "设置你的筹款目标"
 msgid "Setting a handle requires 2 transactions: <0>Set ENS name</0> and <1>Set text record</1>."
 msgstr "设置句柄需要进行 2 个交易： <0>设置 ENS 名称</0> 及 <1>设置文本记录</1>。"
 
+msgid "Setting a reconfiguration delay means changes to your funding cycle settings only take effect after the delay period has passed. This helps build trust with your contributors."
+msgstr ""
+
 msgid "Share project"
 msgstr "分享项目"
 
@@ -3648,6 +3645,9 @@ msgstr ""
 
 msgid "{0} after JBX fee"
 msgstr "收取 JBX 费用之后 {0}"
+
+msgid "{0} after {feePercentage}% JBX membership fee"
+msgstr ""
 
 msgid "{0} ago"
 msgstr "{0} 之前"

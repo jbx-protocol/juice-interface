@@ -36,7 +36,7 @@ type DistributionType = 'amount' | 'percent' | 'both'
 export function DistributionSplitModal({
   open,
   mode,
-  overrideDistTypeWithPercentage = false,
+  isEditPayoutPage = false,
   splits, // Locked and editable splits
   editingSplit, // Split that is currently being edited (only in the case mode ==='Edit')
   onSplitsChanged,
@@ -49,6 +49,7 @@ export function DistributionSplitModal({
   open: boolean
   mode: ModalMode // 'Add' or 'Edit' or 'Undefined'
   overrideDistTypeWithPercentage?: boolean
+  isEditPayoutPage?: boolean
   splits: Split[]
   editingSplit?: Split
   onSplitsChanged?: (splits: Split[]) => void
@@ -102,12 +103,15 @@ export function DistributionSplitModal({
   }, [editingSplitType, form])
 
   useEffect(() => {
-    if (overrideDistTypeWithPercentage) {
+    if (isEditPayoutPage && parseWad(distributionLimit).gt(0)) {
+      setDistributionType('both')
+      return
+    } else if (isEditPayoutPage && parseWad(distributionLimit).eq(0)) {
       setDistributionType('percent')
       return
     }
     setDistributionType(distributionLimitIsInfinite ? 'percent' : 'amount')
-  }, [distributionLimitIsInfinite, overrideDistTypeWithPercentage, open])
+  }, [distributionLimit, distributionLimitIsInfinite, open, isEditPayoutPage])
 
   // Set the initial info for form from split
   // If editing, format the lockedUntil and projectId
@@ -223,7 +227,9 @@ export function DistributionSplitModal({
 
     const newPercent = getDistributionPercentFromAmount({
       amount: newAmount,
-      distributionLimit: newDistributionLimit,
+      distributionLimit: isEditPayoutPage
+        ? parseFloat(distributionLimit ?? '0')
+        : newDistributionLimit,
     })
 
     setNewDistributionLimit(newDistributionLimit.toString())
@@ -231,6 +237,7 @@ export function DistributionSplitModal({
       percent: preciseFormatSplitPercent(newPercent),
     })
   }, [
+    isEditPayoutPage,
     amount,
     distributionLimit,
     distributionLimitIsInfinite,
@@ -307,7 +314,6 @@ export function DistributionSplitModal({
             </Radio>
           </Radio.Group>
         </Form.Item>
-
         {editingSplitType === 'address' ? (
           <Form.Item
             name="beneficiary"
@@ -354,21 +360,28 @@ export function DistributionSplitModal({
             <EthAddressInput />
           </Form.Item>
         ) : null}
-
         {/* Only show amount input if project distribution limit is not infinite */}
-        {distributionLimit && distributionType === 'amount' ? (
+        {!distributionLimitIsInfinite &&
+        (distributionType === 'amount' || distributionType === 'both') ? (
           <AmountFormItem
             form={form}
             currencyName={currencyName}
+            distributionType={distributionType}
             editingSplitType={editingSplitType}
             fee={ETHPaymentTerminalFee}
             isFirstSplit={isFirstSplit}
             distributionLimit={distributionLimit}
             onCurrencyChange={onCurrencyChange}
           />
-        ) : (
-          <PercentageFormItem form={form} />
-        )}
+        ) : null}
+        {distributionType === 'percent' || distributionType === 'both' ? (
+          <PercentageFormItem
+            form={form}
+            distributionType={distributionType}
+            distributionLimit={distributionLimit}
+            currencyName={currencyName}
+          />
+        ) : null}
         <Form.Item
           name="lockedUntil"
           label={t`Lock until`}

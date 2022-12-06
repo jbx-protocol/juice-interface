@@ -39,7 +39,7 @@ export function TransactionsList({
         role="button"
         onClick={() => setIsExpanded(!isExpanded)}
       >
-        <span className="flex items-center justify-center">
+        <span className="mt-0.5 flex items-center justify-center">
           {hasPendingTxs ? (
             <Loading size="small" />
           ) : (

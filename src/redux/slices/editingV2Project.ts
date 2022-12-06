@@ -285,6 +285,9 @@ const editingV2ProjectSlice = createSlice({
     setPausePay: (state, action: PayloadAction<boolean>) => {
       state.fundingCycleMetadata.pausePay = action.payload
     },
+    setHoldFees: (state, action: PayloadAction<boolean>) => {
+      state.fundingCycleMetadata.holdFees = action.payload
+    },
     setAllowMinting: (state, action: PayloadAction<boolean>) => {
       state.fundingCycleMetadata.allowMinting = action.payload
     },

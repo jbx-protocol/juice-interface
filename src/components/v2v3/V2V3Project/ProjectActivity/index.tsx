@@ -11,6 +11,7 @@ import SectionHeader from 'components/SectionHeader'
 import { PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
+import { ConfigureEvent } from 'models/subgraph-entities/v2/configure'
 import { DeployETHERC20ProjectPayerEvent } from 'models/subgraph-entities/v2/deploy-eth-erc20-project-payer-event'
 import { DistributePayoutsEvent } from 'models/subgraph-entities/v2/distribute-payouts-event'
 import { DistributeReservedTokensEvent } from 'models/subgraph-entities/v2/distribute-reserved-tokens-event'
@@ -24,6 +25,7 @@ import { useContext, useMemo, useState } from 'react'
 import { WhereConfig } from 'utils/graph'
 
 import V2V3DownloadActivityModal from '../modals/V2V3DownloadActivityModal'
+import ConfigureEventElem from './eventElems/ConfigureEventElem'
 import DeployETHERC20ProjectPayerEventElem from './eventElems/DeployETHERC20ProjectPayerEventElem'
 import DistributePayoutsElem from './eventElems/DistributePayoutsElem'
 import DistributeReservedTokensEventElem from './eventElems/DistributeReservedTokensElem'
@@ -40,6 +42,7 @@ type EventFilter =
   | 'distributeTokens'
   | 'distributeReservedTokens'
   | 'deployETHERC20ProjectPayer'
+  | 'configure'
 // TODO | 'useAllowanceEvent'
 
 const pageSize = 50
@@ -99,6 +102,9 @@ export default function ProjectActivity() {
         break
       case 'deployETHERC20ProjectPayer':
         key = 'deployETHERC20ProjectPayerEvent'
+        break
+      case 'configure':
+        key = 'configureEvent'
         break
     }
 
@@ -203,6 +209,25 @@ export default function ProjectActivity() {
         entity: 'deployETHERC20ProjectPayerEvent',
         keys: ['id', 'timestamp', 'txHash', 'caller', 'address', 'memo'],
       },
+      {
+        entity: 'configureEvent',
+        keys: [
+          'id',
+          'timestamp',
+          'txHash',
+          'caller',
+          'ballot',
+          'dataSource',
+          'discountRate',
+          'duration',
+          'mintingAllowed',
+          'payPaused',
+          'redeemPaused',
+          'redemptionRate',
+          'reservedRate',
+          'weight',
+        ],
+      },
     ],
     orderDirection: 'desc',
     orderBy: 'timestamp',
@@ -268,6 +293,11 @@ export default function ProjectActivity() {
                   e.deployETHERC20ProjectPayerEvent as DeployETHERC20ProjectPayerEvent
                 }
               />
+            )
+          }
+          if (e.configureEvent) {
+            elem = (
+              <ConfigureEventElem event={e.configureEvent as ConfigureEvent} />
             )
           }
           if (e.useAllowanceEvent) {
@@ -354,9 +384,6 @@ export default function ProjectActivity() {
             <Select.Option value="pay">
               <Trans>Paid</Trans>
             </Select.Option>
-            <Select.Option value="addToBalance">
-              <Trans>Added to balance</Trans>
-            </Select.Option>
             <Select.Option value="redeem">
               <Trans>Redeemed</Trans>
             </Select.Option>
@@ -365,6 +392,12 @@ export default function ProjectActivity() {
             </Select.Option>
             <Select.Option value="distributeTokens">
               <Trans>Distributed tokens</Trans>
+            </Select.Option>
+            <Select.Option value="configure">
+              <Trans>Configured FC</Trans>
+            </Select.Option>
+            <Select.Option value="addToBalance">
+              <Trans>Added to balance</Trans>
             </Select.Option>
             {/* TODO */}
             {/* <Select.Option value="useAllowance">

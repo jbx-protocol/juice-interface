@@ -548,6 +548,9 @@ msgstr ""
 msgid "Blog"
 msgstr ""
 
+msgid "Bonding curve"
+msgstr ""
+
 msgid "Built for:"
 msgstr ""
 
@@ -716,6 +719,12 @@ msgstr ""
 msgid "Configure {projectTitle}"
 msgstr ""
 
+msgid "Configured FC"
+msgstr ""
+
+msgid "Configured funding cycles"
+msgstr ""
+
 msgid "Confirm Stake"
 msgstr ""
 
@@ -831,6 +840,9 @@ msgid "Create project"
 msgstr ""
 
 msgid "Create your own ERC-20 token to represent stake in your project. Contributors will receive these tokens when they pay your project."
+msgstr ""
+
+msgid "Created"
 msgstr ""
 
 msgid "Created Payment Address"
@@ -1229,9 +1241,6 @@ msgstr ""
 msgid "Error loading payments"
 msgstr ""
 
-msgid "Error parsing form"
-msgstr ""
-
 msgid "Error reading transaction data"
 msgstr ""
 
@@ -1386,6 +1395,9 @@ msgid "Heads up"
 msgstr ""
 
 msgid "History"
+msgstr ""
+
+msgid "Hold fees"
 msgstr ""
 
 msgid "Holders"
@@ -1952,6 +1964,9 @@ msgstr ""
 msgid "Owner isn't allowed to set the project's payment terminals."
 msgstr ""
 
+msgid "Owner minting enabled"
+msgstr ""
+
 msgid "Owner token minting"
 msgstr ""
 
@@ -1992,6 +2007,9 @@ msgid "Pay disclaimer"
 msgstr ""
 
 msgid "Pay disclosure"
+msgstr ""
+
+msgid "Pay paused"
 msgstr ""
 
 msgid "Pay {0}"
@@ -2102,6 +2120,12 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
+msgid "Process held fees"
+msgstr ""
+
+msgid "Process project #{projectId}'s held fees"
+msgstr ""
+
 msgid "Project #{projectId}"
 msgstr ""
 
@@ -2138,7 +2162,7 @@ msgstr ""
 msgid "Project created"
 msgstr ""
 
-msgid "Project created by"
+msgid "Project created by <0/>"
 msgstr ""
 
 msgid "Project description"
@@ -2325,6 +2349,9 @@ msgid "Reconfigure {projectTitle} with new NFTs"
 msgstr ""
 
 msgid "Redeem"
+msgstr ""
+
+msgid "Redeem paused"
 msgstr ""
 
 msgid "Redeem successful. Results will be indexed in a few moments."
@@ -2780,6 +2807,9 @@ msgstr ""
 msgid "The future will be led by creators, and owned by communities."
 msgstr ""
 
+msgid "The held fees will reset as new funds are added to the project's balance with the <0>Add to balance</0> transaction above."
+msgstr ""
+
 msgid "The issuance rate of your second funding cycle will be {0} tokens per 1 ETH,{1} tokens per 1 ETH for your third funding cycle, and so on."
 msgstr ""
 
@@ -2915,6 +2945,9 @@ msgstr ""
 msgid "This list is using an experimental data index and may be inaccurate for some projects."
 msgstr ""
 
+msgid "This project has <0>{heldFees} ETH</0> held fees. The project owner or JuiceboxDAO can process these fees at an time."
+msgstr ""
+
 msgid "This project has no distributions."
 msgstr ""
 
@@ -3003,6 +3036,9 @@ msgid "Token name"
 msgstr ""
 
 msgid "Token name is required"
+msgstr ""
+
+msgid "Token printing allowed"
 msgstr ""
 
 msgid "Token redeem value"
@@ -3315,6 +3351,9 @@ msgid "When enabled, the project owner can set the project's payment terminals."
 msgstr ""
 
 msgid "When enabled, your project cannot receive direct payments."
+msgstr ""
+
+msgid "When enabled, your project will hold the fee amount in ETH instead of being processed automatically. <0>Learn more.</0>"
 msgstr ""
 
 msgid "When someone pays your project, they'll receive your project's tokens in return. Tokens can be redeemed for a portion of your project's overflow funds; when you win, your community wins with you. Leverage your project's token to grant governance rights, community access, or other membership perks."

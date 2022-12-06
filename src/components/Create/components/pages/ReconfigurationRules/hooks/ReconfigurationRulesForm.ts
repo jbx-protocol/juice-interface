@@ -15,6 +15,7 @@ export type ReconfigurationRulesFormProps = Partial<{
   customAddress?: string
   pausePayments: boolean
   allowTerminalConfiguration: boolean
+  holdFees: boolean
 }>
 
 export const useReconfigurationRulesForm = () => {
@@ -47,6 +48,7 @@ export const useReconfigurationRulesForm = () => {
       const pausePayments = fundingCycleMetadata.pausePay
       const allowTerminalConfiguration =
         fundingCycleMetadata.global.allowSetTerminals
+      const holdFees = fundingCycleMetadata.holdFees
       // By default, ballot is addressZero
       if (!reconfigurationRuleSelection && ballot === constants.AddressZero)
         return {
@@ -62,6 +64,7 @@ export const useReconfigurationRulesForm = () => {
           customAddress: ballot,
           pausePayments,
           allowTerminalConfiguration,
+          holdFees,
         }
       }
 
@@ -69,12 +72,14 @@ export const useReconfigurationRulesForm = () => {
         selection: found.name,
         pausePayments,
         allowTerminalConfiguration,
+        holdFees,
       }
     }, [
       ballot,
       defaultStrategy.name,
       fundingCycleMetadata.global.allowSetTerminals,
       fundingCycleMetadata.pausePay,
+      fundingCycleMetadata.holdFees,
       reconfigurationRuleSelection,
       strategies,
     ])
@@ -112,6 +117,14 @@ export const useReconfigurationRulesForm = () => {
     fieldName: 'allowTerminalConfiguration',
     ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setAllowSetTerminals,
+    formatter: v => !!v,
+  })
+
+  useFormDispatchWatch({
+    form,
+    fieldName: 'holdFees',
+    ignoreUndefined: true,
+    dispatchFunction: editingV2ProjectActions.setHoldFees,
     formatter: v => !!v,
   })
 

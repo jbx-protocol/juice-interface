@@ -118,7 +118,7 @@ export const AddEditRewardModal = ({
           rules={[inputMustExistRule({ label: t`Image file` })]}
         >
           <UploadNoStyle
-            sizeLimit={5 * 1024 * 1024}
+            sizeLimit={100 * 1024 * 1024} // 100 MB
             supportedFileTypes={
               new Set(['image/jpeg', 'image/png', 'image/gif'])
             }

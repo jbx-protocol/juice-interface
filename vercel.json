@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "pages/api/ens/resolve/*.ts": {
+      "maxDuration": 10
+    }
+  }
+}

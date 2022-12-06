@@ -14,7 +14,7 @@ export function TransactionItem({
   onRemoveTransaction?: VoidFunction
 }) {
   return (
-    <div className="jusitfy-between box-border flex w-full items-center gap-6 border border-solid border-grey-300 bg-smoke-25 py-1 px-5 dark:border-slate-200 dark:bg-slate-800">
+    <div className="box-border flex w-full items-center justify-between gap-6 border border-solid border-grey-300 bg-smoke-25 py-1 px-5 dark:border-slate-200 dark:bg-slate-800">
       <div className="leading-6">
         <div className="flex items-center gap-2 text-sm text-grey-400 dark:text-slate-200">
           <TxStatusElem status={tx.status} />{' '}

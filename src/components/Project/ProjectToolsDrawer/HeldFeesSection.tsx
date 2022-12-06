@@ -1,13 +1,21 @@
 import { Trans } from '@lingui/macro'
+import { Space, Statistic } from 'antd'
 import TransactorButton from 'components/TransactorButton'
+import { ThemeContext } from 'contexts/themeContext'
 import { useHeldFeesOf } from 'hooks/v2v3/contractReader/HeldFeesOf'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
 import { useProcessHeldFeesTx } from 'hooks/v2v3/transactor/ProcessHeldFeesTx'
 import { V2OperatorPermission } from 'models/v2v3/permissions'
-import { useState } from 'react'
+import Link from 'next/link'
+import { useContext, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
+import { v2v3ProjectRoute } from 'utils/routes'
 
 export function HeldFeesSection() {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+
   const [processingHeldFees, setProcessingHeldFees] = useState<boolean>()
 
   const heldFees = useHeldFeesOf()
@@ -40,27 +48,39 @@ export function HeldFeesSection() {
   if (!heldFees) return null
 
   return (
-    <>
-      <p>
-        <Trans>
-          This project has <strong>{heldFees} ETH</strong> held fees. The
-          project owner or JuiceboxDAO can process these fees at an time.
-        </Trans>
-      </p>
-      <p>
-        <Trans>
-          The held fees will reset as new funds are added to the project's
-          balance with the <strong>Add to balance</strong> transaction above.
-        </Trans>
-      </p>
-      <TransactorButton
-        onClick={processHeldFees}
-        loading={processingHeldFees}
-        size="small"
-        type="primary"
-        text={<Trans>Process held fees</Trans>}
-        disabled={!canProcessHeldFees}
-      />
-    </>
+    <div>
+      <h3>
+        <Trans>Held fees</Trans>
+      </h3>
+      <Space direction="vertical" size="small">
+        <Statistic
+          title={<Trans>Fees held</Trans>}
+          valueRender={() => <span>{heldFees} ETH</span>}
+        />
+        <p>
+          <Trans>
+            The held fees will reset as new funds are added to the project's
+            balance with the <strong>Add to balance</strong> transaction above.
+          </Trans>
+        </p>
+        <div>
+          <TransactorButton
+            onClick={processHeldFees}
+            loading={processingHeldFees}
+            size="small"
+            type="primary"
+            text={<Trans>Process held fees</Trans>}
+            disabled={!canProcessHeldFees}
+          />
+          <p className="mt-2 text-xs" style={{ color: colors.text.tertiary }}>
+            <Trans>
+              Processing held fees will pay{' '}
+              <Link href={v2v3ProjectRoute({ projectId: 1 })}>JuiceboxDAO</Link>{' '}
+              and mint JBX to the project owner's address.
+            </Trans>
+          </p>
+        </div>
+      </Space>
+    </div>
   )
 }

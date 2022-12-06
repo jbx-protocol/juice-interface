@@ -1292,6 +1292,9 @@ msgstr ""
 msgid "Fee from <0><1/></0>"
 msgstr ""
 
+msgid "Fees held"
+msgstr ""
+
 msgid "File empty or corrupt. Try again."
 msgstr ""
 
@@ -1392,6 +1395,9 @@ msgid "Has Juicebox been audited?"
 msgstr ""
 
 msgid "Heads up"
+msgstr ""
+
+msgid "Held fees"
 msgstr ""
 
 msgid "History"
@@ -2124,6 +2130,9 @@ msgid "Process held fees"
 msgstr ""
 
 msgid "Process project #{projectId}'s held fees"
+msgstr ""
+
+msgid "Processing held fees will pay <0>JuiceboxDAO</0> and mint JBX to the project owner's address."
 msgstr ""
 
 msgid "Project #{projectId}"
@@ -2943,9 +2952,6 @@ msgid "This is the maximum amount of funds that can leave the treasury each fund
 msgstr ""
 
 msgid "This list is using an experimental data index and may be inaccurate for some projects."
-msgstr ""
-
-msgid "This project has <0>{heldFees} ETH</0> held fees. The project owner or JuiceboxDAO can process these fees at an time."
 msgstr ""
 
 msgid "This project has no distributions."

@@ -120,7 +120,7 @@ export default function PayInputSubText({
               overlayClassName="min-w-[300px]"
               overlayInnerStyle={{ padding: '1rem' }}
             >
-              <span className="cursor-default border border-t-0 border-l-0 border-r-0 border-b border-solid border-b-grey-300 pt-2 pb-4 dark:border-b-slate-200">
+              <span className="cursor-default border-0 border-b border-dashed border-b-grey-300 pt-2 dark:border-b-slate-200">
                 buy {tokenText} on exchange.
               </span>
             </Tooltip>

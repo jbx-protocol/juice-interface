@@ -1,6 +1,8 @@
 import { Menu, Space } from 'antd'
+import QuickProjectSearch from 'components/QuickProjectSearch'
 import useMobile from 'hooks/Mobile'
 import { CSSProperties, useEffect, useState } from 'react'
+
 import Account from './Account'
 import MobileNavigation from './Mobile/MobileNavigation'
 import { desktopMenuItems, resourcesMenuItems } from './navigationItems'
@@ -55,6 +57,8 @@ export default function SiteNavigation() {
         <TransactionsList listClassName="absolute top-[70px] right-[30px]" />
 
         <Account />
+
+        <QuickProjectSearch />
       </Space>
     </nav>
   )

@@ -117,7 +117,7 @@ export default function FundingCycleDetails({
   return (
     <div>
       <Descriptions
-        labelStyle={{ fontWeight: 600 }}
+        labelStyle={{ fontWeight: 500 }}
         size="small"
         column={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1, xxl: 2 }}
       >

@@ -52,7 +52,7 @@ export default function MobileNavigation() {
               <div className="flex items-center gap-7">
                 <TransactionsList listClassName="absolute top-12 left-0 right-0 p-3" />
                 <MenuOutlined
-                  className="text-2xl text-black dark:text-slate-100"
+                  className="text-2xl leading-none text-black dark:text-slate-100"
                   onClick={toggleNav}
                   role="button"
                 />

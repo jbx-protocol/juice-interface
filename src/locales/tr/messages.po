@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-11-27 00:32\n"
+"PO-Revision-Date: 2022-12-04 00:28\n"
 "Last-Translator: \n"
 "Language: tr_TR\n"
 "Language-Team: Turkish\n"
@@ -31,7 +31,7 @@ msgstr "%0 ücret"
 msgid "1 year"
 msgstr "1 yıl"
 
-msgid "1. Get funded."
+msgid "1. Get funded"
 msgstr ""
 
 msgid "1. Set ENS name"
@@ -58,7 +58,7 @@ msgstr ""
 msgid "30 days"
 msgstr "30 gün"
 
-msgid "4. Build trust."
+msgid "4. Build trust"
 msgstr ""
 
 msgid "7 days"
@@ -91,16 +91,10 @@ msgstr "<0/> sahip bakiyesi"
 msgid "<0/> will go to the project owner: <1/>"
 msgstr ""
 
-msgid "<0/>{0} after {feePercentage}% JBX membership fee"
-msgstr "%{feePercentage} JBX üyelik ücretinden sonra kalan <0/>{0}"
-
 msgid "<0/>{0}{1} distributed"
 msgstr "<0/>{0}{1} dağıtıldı"
 
 msgid "<0/>{feeAmountFormatted} fee"
-msgstr ""
-
-msgid "<0><1/>{0}</0> Distribution Limit"
 msgstr ""
 
 msgid "<0><1/>{grossAvailableAmount}</0> available to distribute"
@@ -227,6 +221,9 @@ msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
 msgstr "<0>Hak talebinde bulunulmamış {tokenSymbol} token'larınız:</0> {0}"
 
 msgid "<0>Zero</0> Distribution Limit"
+msgstr ""
+
+msgid "<0>{0}</0> Distribution Limit"
 msgstr ""
 
 msgid "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
@@ -708,9 +705,6 @@ msgstr "Gelirinizin bir kısmını, desteklemek istediğiniz kişilere veya proj
 
 msgid "Configure how your project will collect and spend funds."
 msgstr "Projenizin nasıl fon toplayacağını ve harcayacağını yapılandırın."
-
-msgid "Configure restrictions for your funding cycle."
-msgstr ""
 
 msgid "Configure restrictions for your funding cycles."
 msgstr "Finansman döngüleriniz için kısıtlamaları yapılandırın."
@@ -2641,6 +2635,9 @@ msgstr ""
 msgid "Setting a handle requires 2 transactions: <0>Set ENS name</0> and <1>Set text record</1>."
 msgstr ""
 
+msgid "Setting a reconfiguration delay means changes to your funding cycle settings only take effect after the delay period has passed. This helps build trust with your contributors."
+msgstr ""
+
 msgid "Share project"
 msgstr ""
 
@@ -3648,6 +3645,9 @@ msgstr ""
 
 msgid "{0} after JBX fee"
 msgstr "JBX ücreti sonrası {0}"
+
+msgid "{0} after {feePercentage}% JBX membership fee"
+msgstr ""
 
 msgid "{0} ago"
 msgstr "{0} önce"

@@ -138,6 +138,8 @@ export function RewardTier({
             <span
               className={classNames(
                 'text-xs',
+                'text-ellipsis',
+                'overflow-hidden',
                 isSelected
                   ? 'text-black dark:text-slate-100'
                   : 'text-grey-400 dark:text-slate-200',

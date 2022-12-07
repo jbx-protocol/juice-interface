@@ -10,6 +10,7 @@ import {
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 import { getUnsafeV2V3FundingCycleProperties } from 'utils/v2v3/fundingCycle'
 import {
+  HOLD_FEES_EXPLAINATION,
   OWNER_MINTING_EXPLAINATION,
   RECONFIG_RULES_EXPLAINATION,
   TERMINAL_CONFIG_EXPLAINATION,
@@ -90,6 +91,17 @@ export function RulesListItems({
           </FundingCycleDetailWarning>
         }
         helperText={RECONFIG_RULES_EXPLAINATION}
+      />
+      <FundingCycleListItem
+        name={t`Hold fees`}
+        value={
+          fundingCycleMetadata?.holdFees ? (
+            <Trans>Enabled</Trans>
+          ) : (
+            <Trans>Disabled</Trans>
+          )
+        }
+        helperText={HOLD_FEES_EXPLAINATION}
       />
     </>
   )

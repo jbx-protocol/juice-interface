@@ -18,14 +18,16 @@ export default function MinimalTable({ sections }: MinimalTableProps) {
         <div key={s[0].key}>
           {s.map(r => (
             <div key={r.key}>
-              <strong>{r.key}:</strong>{' '}
-              {typeof r.value === 'boolean'
-                ? r.value
-                  ? 'Yes'
-                  : 'No'
-                : r.value === undefined
-                ? '--'
-                : r.value}
+              <span className="font-medium">{r.key}:</span>{' '}
+              <span className="text-grey-500 dark:text-grey-400">
+                {typeof r.value === 'boolean'
+                  ? r.value
+                    ? 'Yes'
+                    : 'No'
+                  : r.value === undefined
+                  ? '--'
+                  : r.value}
+              </span>
             </div>
           ))}
         </div>

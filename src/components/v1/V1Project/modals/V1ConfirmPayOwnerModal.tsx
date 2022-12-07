@@ -255,7 +255,7 @@ export default function V1ConfirmPayOwnerModal({
               />
             </Form.Item>
             {/* Sticker select icon (right side of memo input) */}
-            <div className="right[7px] absolute top-[36px] text-sm">
+            <div className="absolute right-2 top-9 text-sm">
               {
                 <Sticker
                   className={classNames(

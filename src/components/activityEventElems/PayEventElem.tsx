@@ -29,7 +29,7 @@ export default function PayEventElem({
       event={event}
       header={t`Paid`}
       subject={
-        <span className="text-base">
+        <span className="text-base font-medium">
           <ETHAmount amount={event.amount} />
         </span>
       }

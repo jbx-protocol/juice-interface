@@ -72,7 +72,7 @@ function SideDetails({ event }: { event: ActivityElementEvent }) {
           style={{
             lineHeight: contentLineHeight,
           }}
-          className="text-xs text-grey-500 dark:text-grey-300"
+          className="text-sm text-grey-500 dark:text-grey-300"
         >
           <FormattedAddress address={event.beneficiary} />
         </div>

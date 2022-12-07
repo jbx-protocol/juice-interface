@@ -48,7 +48,7 @@ export const sanitizeSplit = (split: Split): Split => {
     lockedUntil: split.lockedUntil ?? 0,
     projectId: split.projectId ?? BigNumber.from(0).toHexString(),
     beneficiary: split.beneficiary ?? constants.AddressZero,
-    allocator: constants.AddressZero,
+    allocator: split.allocator ?? constants.AddressZero,
     preferClaimed: false,
     percent: split.percent,
   }

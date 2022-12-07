@@ -38,6 +38,7 @@ type ProjectPayoutModsForm = {
   projectId: string
   handle: string
   beneficiary: string
+  allocator: string
   percent: number
   amount: number
   lockedUntil: moment.Moment
@@ -67,6 +68,7 @@ export const ProjectPayoutModsModal = ({
   const [modalMode, setModalMode] = useState<ModalMode>('Add') //either 'Add', or 'Edit'
   const [editingModType, setEditingModType] = useState<ModType>('address')
   const [editingModHandle, setEditingModHandle] = useState<string | BigNumber>()
+  const [editingModAllocator, setEditingModAllocator] = useState<string>()
   const [, setEditingPercent] = useState<number>()
   const [form] = useForm<ProjectPayoutModsForm>()
 
@@ -77,6 +79,7 @@ export const ProjectPayoutModsModal = ({
         BigNumber.from(mod.projectId ?? '0').gt(0) ? 'project' : 'address',
       )
       setEditingModHandle(mod.handle ?? mod.projectId)
+      setEditingModAllocator(mod.allocator)
       const percent = parseFloat(permyriadToPercent(mod.percent))
       setEditingPercent(percent)
       form.setFieldsValue({
@@ -97,6 +100,7 @@ export const ProjectPayoutModsModal = ({
       setModalMode('Add')
       setEditingModType('address')
       setEditingModHandle(undefined)
+      setEditingModAllocator(undefined)
       setEditingPercent(undefined)
     }
 
@@ -150,6 +154,7 @@ export const ProjectPayoutModsModal = ({
 
     const handle = form.getFieldValue('handle')
     const beneficiary = form.getFieldValue('beneficiary')
+    const allocator = form.getFieldValue('allocator')
     const percent = percentToPermyriad(form.getFieldValue('percent')).toNumber()
     const _projectId = form.getFieldValue('projectId')
     const projectId = _projectId ? BigNumber.from(_projectId) : undefined
@@ -162,7 +167,14 @@ export const ProjectPayoutModsModal = ({
       : undefined
 
     // Store handle in mod object only to repopulate handle input while editing
-    const newMod = { beneficiary, percent, handle, lockedUntil, projectId }
+    const newMod = {
+      beneficiary,
+      percent,
+      allocator,
+      handle,
+      lockedUntil,
+      projectId,
+    }
 
     let modsToReturn = [...mods, newMod]
     if (editingModIndex !== undefined && editingModIndex < mods.length) {
@@ -229,16 +241,10 @@ export const ProjectPayoutModsModal = ({
             <EthAddressInput />
           </Form.Item>
         ) : (
-          <FormItems.ProjectHandleFormItem
-            name="handle"
-            requireState="exists"
-            initialValue={editingModHandle}
-            returnValue="id"
-            onValueChange={id => form.setFieldsValue({ projectId: id })}
-            formItemProps={{
-              label: t`Project handle`,
-            }}
-            required
+          <FormItems.ProjectPayoutFormItem
+            initialHandle={editingModHandle}
+            initialAllocator={editingModAllocator}
+            onChange={id => form.setFieldsValue({ projectId: id })}
           />
         )}
         {editingModType === 'project' ? (

@@ -8,4 +8,5 @@ export type AddOrEditSplitFormFields = {
   percent: number
   amount: string | undefined
   lockedUntil: Moment.Moment | undefined | null
+  allocator: string | undefined
 }

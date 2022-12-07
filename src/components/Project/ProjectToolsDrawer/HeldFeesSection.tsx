@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Space, Statistic } from 'antd'
+import ExternalLink from 'components/ExternalLink'
 import TransactorButton from 'components/TransactorButton'
 import { ThemeContext } from 'contexts/themeContext'
 import { useHeldFeesOf } from 'hooks/v2v3/contractReader/HeldFeesOf'
@@ -9,7 +10,7 @@ import { V2OperatorPermission } from 'models/v2v3/permissions'
 import Link from 'next/link'
 import { useContext, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
-import { v2v3ProjectRoute } from 'utils/routes'
+import { helpPagePath, v2v3ProjectRoute } from 'utils/routes'
 
 export function HeldFeesSection() {
   const {
@@ -61,7 +62,10 @@ export function HeldFeesSection() {
           <Trans>
             The held fees will reset as new funds are added to the project's
             balance with the <strong>Add to balance</strong> transaction above.
-          </Trans>
+          </Trans>{' '}
+          <ExternalLink href={helpPagePath('/dev/learn/glossary/hold-fees/')}>
+            Learn more.
+          </ExternalLink>
         </p>
         <div>
           <TransactorButton

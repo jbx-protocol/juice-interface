@@ -79,7 +79,7 @@ export const HOLD_FEES_EXPLAINATION = (
   <Trans>
     When enabled, your project will hold the fee amount in ETH instead of being
     processed automatically.{' '}
-    <ExternalLink href={helpPagePath('/dev/learn/overview/#hold-fees')}>
+    <ExternalLink href={helpPagePath('/dev/learn/glossary/hold-fees/')}>
       Learn more.
     </ExternalLink>
   </Trans>

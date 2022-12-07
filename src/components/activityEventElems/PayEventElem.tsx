@@ -28,7 +28,11 @@ export default function PayEventElem({
     <ActivityEvent
       event={event}
       header={t`Paid`}
-      subject={<ETHAmount amount={event.amount} />}
+      subject={
+        <span className="text-base">
+          <ETHAmount amount={event.amount} />
+        </span>
+      }
       extra={
         event.feeFromV2Project ? (
           <Trans>

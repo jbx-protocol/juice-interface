@@ -70,7 +70,7 @@ export default function DistributeReservedTokensEventElem({
         </Trans>
       }
       subject={
-        <div>
+        <div className="text-base">
           {formatWad(event.tokenCount, { precision: 0 })}{' '}
           {tokenSymbolText({
             tokenSymbol,
@@ -90,15 +90,15 @@ export default function DistributeReservedTokensEventElem({
                 alignItems: 'baseline',
               }}
             >
-              <div style={{ fontWeight: 500, fontSize: '0.8rem' }}>
+              <div style={{ fontWeight: 500 }} className="text-sm">
                 <FormattedAddress address={e.beneficiary} />:
               </div>
 
               <div
-                style={
+                className={
                   distributeEvents.length > 1
-                    ? { color: colors.text.secondary, fontSize: '0.8rem' }
-                    : { fontWeight: 500 }
+                    ? 'text-gray-500 text-sm'
+                    : 'font-medium'
                 }
               >
                 {formatWad(e.tokenCount, { precision: 0 })}

@@ -59,7 +59,9 @@ export default function DistributePayoutsElem({
       header={t`Distributed funds`}
       subject={
         distributePayoutsEvents?.length ? (
-          <ETHAmount amount={event.distributedAmount} />
+          <span className="text-base">
+            <ETHAmount amount={event.distributedAmount} />
+          </span>
         ) : null
       }
       extra={
@@ -71,8 +73,8 @@ export default function DistributePayoutsElem({
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'baseline',
-                fontSize: '0.8rem',
               }}
+              className="text-sm"
             >
               <div style={{ fontWeight: 500 }}>
                 {e.splitProjectId ? (

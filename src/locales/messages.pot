@@ -227,6 +227,9 @@ msgstr ""
 msgid "@{handle} not found"
 msgstr ""
 
+msgid "A payout to this project may mint some of the project's tokens. Set the address that will receive the tokens."
+msgstr ""
+
 msgid "A project can reserve a percentage of tokens minted from every payment it receives. Reserved tokens can be distributed according to the allocation below at any time."
 msgstr ""
 
@@ -2231,6 +2234,9 @@ msgstr ""
 msgid "Project token"
 msgstr ""
 
+msgid "Project token beneficiary address"
+msgstr ""
+
 msgid "Project tokens <0>aren't ERC-20 tokens</0> by default. Once you deploy your project, you can issue an ERC-20 for your holders to claim. This is <1>optional</1>."
 msgstr ""
 
@@ -3009,9 +3015,6 @@ msgid "Token address: <0/>"
 msgstr ""
 
 msgid "Token amount"
-msgstr ""
-
-msgid "Token beneficiary address"
 msgstr ""
 
 msgid "Token beneficiary:"

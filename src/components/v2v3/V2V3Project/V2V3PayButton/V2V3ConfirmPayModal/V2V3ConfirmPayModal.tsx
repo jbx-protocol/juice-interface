@@ -199,7 +199,7 @@ export function V2V3ConfirmPayModal({
         {projectMetadata.payDisclosure && (
           <Callout.Info className="border border-solid border-grey-200 dark:border-grey-400">
             <strong>
-              <Trans>Notice from {projectMetadata.name}</Trans>
+              <Trans>Notice from {projectMetadata.name}</Trans>{' '}
             </strong>
             <Paragraph
               className="text-sm"

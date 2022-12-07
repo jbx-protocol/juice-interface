@@ -128,7 +128,13 @@ export const AddEditAllocationModal = ({
   }, [form, onCancel])
 
   const addressLabel =
-    recipient === 'juiceboxProject' ? t`Token beneficiary address` : t`Address`
+    recipient === 'juiceboxProject'
+      ? t`Project token beneficiary address`
+      : t`Address`
+  const addressExtra =
+    recipient === 'juiceboxProject'
+      ? t`A payout to this project may mint some of the project's tokens. Set the address that will receive the tokens.`
+      : undefined
 
   return (
     <Modal
@@ -190,6 +196,7 @@ export const AddEditAllocationModal = ({
         <Form.Item
           name="address"
           label={addressLabel}
+          extra={addressExtra}
           required
           rules={[
             inputMustExistRule({ label: addressLabel }),

@@ -77,9 +77,9 @@ export const RECONFIG_RULES_EXPLAINATION = (
 
 export const HOLD_FEES_EXPLAINATION = (
   <Trans>
-    When enabled, your project will hold the fee amount in ETH instead of being
-    processed automatically.{' '}
-    <ExternalLink href={helpPagePath('/dev/learn/glossary/hold-fees/')}>
+    When enabled, the project will hold the fee amount in ETH instead of the
+    fees being processed automatically.{' '}
+    <ExternalLink href={helpPagePath('/dev/learn/glossary/hold-fees')}>
       Learn more.
     </ExternalLink>
   </Trans>

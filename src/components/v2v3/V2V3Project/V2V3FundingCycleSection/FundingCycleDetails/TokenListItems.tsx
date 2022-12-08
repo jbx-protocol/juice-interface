@@ -22,6 +22,7 @@ import { formattedNum } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { getUnsafeV2V3FundingCycleProperties } from 'utils/v2v3/fundingCycle'
 import {
+  computePaymentIssuanceRate,
   formatDiscountRate,
   formatIssuanceRate,
   formatRedemptionRate,
@@ -50,25 +51,21 @@ export function TokenListItems({
     plural: true,
   })
 
-  const ContributorRateText = () => {
-    const payerRate = formattedNum(
-      formatIssuanceRate(
-        weightAmountPermyriad(
-          fundingCycle?.weight,
-          fundingCycleMetadata?.reservedRate.toNumber(),
-          parseEther('1'),
-          'payer',
-        ) ?? '',
-      ),
+  const PaymentIssuanceRate = () => {
+    const paymentIssuanceRate = computePaymentIssuanceRate(
+      fundingCycle,
+      fundingCycleMetadata,
     )
 
     return (
       <FundingCycleDetailWarning
-        showWarning={unsafeFundingCycleProperties.zeroWeightNoDataSource}
-        tooltipTitle={riskWarningText.zeroWeightNoDataSource}
+        showWarning={
+          unsafeFundingCycleProperties.zeroPaymentIssuanceNoDataSource
+        }
+        tooltipTitle={riskWarningText.zeroPaymentIssuanceNoDataSource}
       >
         <Trans>
-          {payerRate} {tokenSymbolPlural}/ETH
+          {paymentIssuanceRate} {tokenSymbolPlural}/ETH
         </Trans>
       </FundingCycleDetailWarning>
     )
@@ -121,7 +118,7 @@ export function TokenListItems({
       />
       <FundingCycleListItem
         name={t`Payment issuance rate`}
-        value={<ContributorRateText />}
+        value={<PaymentIssuanceRate />}
         helperText={CONTRIBUTOR_RATE_EXPLAINATION}
       />
       <FundingCycleListItem

@@ -9,7 +9,7 @@ export type FundingCycleRiskFlags = {
   allowMinting: boolean
   metadataReservedRate: boolean
   metadataMaxReservedRate: boolean
-  zeroWeightNoDataSource: boolean
+  zeroPaymentIssuanceNoDataSource: boolean
 }
 
 export const FUNDING_CYCLE_WARNING_TEXT: () => {
@@ -22,6 +22,6 @@ export const FUNDING_CYCLE_WARNING_TEXT: () => {
     allowMinting: t`The project owner may mint new tokens at any time, diluting existing contributors share of tokens.`,
     metadataMaxReservedRate: t`Contributors won't receive any tokens when they pay this project.`,
     metadataReservedRate: t`Contributors receive a relatively small amount of tokens from paying this project.`,
-    zeroWeightNoDataSource: t`Contributors don't receive any tokens from paying this project. Funds cannot be redeemed.`,
+    zeroPaymentIssuanceNoDataSource: t`Contributors don't receive any tokens from paying this project. Funds cannot be redeemed.`,
   }
 }

@@ -4,22 +4,21 @@ import {
   FundingCycleRiskFlags,
   RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
 } from 'constants/fundingWarningText'
-import { BigNumber } from '@ethersproject/bignumber'
 
 export default function unsafeFundingCycleProperties({
   ballot,
   reservedRatePercentage,
   hasFundingDuration,
   allowMinting,
-  weight,
-  useDataSourceForRedeeem,
+  paymentIssuanceRate,
+  useDataSourceForRedeem,
 }: {
   ballot: BallotStrategy
   reservedRatePercentage: number | undefined
   hasFundingDuration: boolean | undefined
   allowMinting: boolean | undefined
-  weight: BigNumber | undefined
-  useDataSourceForRedeeem: boolean | undefined
+  paymentIssuanceRate?: string
+  useDataSourceForRedeem?: boolean
 }): FundingCycleRiskFlags {
   // when we set one of these values to true, we're saying it's potentially unsafe.
   // This object is based on type FundingCycle
@@ -30,7 +29,7 @@ export default function unsafeFundingCycleProperties({
     allowMinting: false,
     metadataReservedRate: false,
     metadataMaxReservedRate: false,
-    zeroWeightNoDataSource: false,
+    zeroPaymentIssuanceNoDataSource: false,
   }
 
   /**
@@ -85,8 +84,8 @@ export default function unsafeFundingCycleProperties({
    * Weight is 0 and datasource isn't used for redemptions.
    * Contributors will receive no tokens in exchange for paying the project.
    */
-  if (weight?.eq(0) && !useDataSourceForRedeeem) {
-    configFlags.zeroWeightNoDataSource = true
+  if (paymentIssuanceRate === '0' && !useDataSourceForRedeem) {
+    configFlags.zeroPaymentIssuanceNoDataSource = true
   }
 
   return configFlags

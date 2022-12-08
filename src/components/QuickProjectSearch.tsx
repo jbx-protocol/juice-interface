@@ -28,14 +28,12 @@ export default function QuickProjectSearch() {
 
   // Debounce typing. Only set new `searchText` if `inputText` doesn't change for `DEBOUNCE_MILLIS`
   useEffect(() => {
-    let timer: NodeJS.Timeout | undefined = undefined
-
-    timer = setTimeout(() => {
+    const timer = setTimeout(() => {
       setSearchText(inputText)
     }, DEBOUNCE_MILLIS)
 
     return () => {
-      if (timer) clearTimeout(timer)
+      clearTimeout(timer)
     }
   }, [inputText])
 
@@ -89,14 +87,13 @@ export default function QuickProjectSearch() {
   }, [modalVisible, searchText, router, goToProject, reset])
 
   useEffect(() => {
-    let timer: NodeJS.Timeout | undefined = undefined
+    const timer = setTimeout(() => {
+      // timeout to wait for dom render after opening modal
 
-    if (modalVisible) {
-      timer = setTimeout(() => {
-        // timeout to wait for dom render after opening modal
+      if (modalVisible) {
         ;(document.getElementById(INPUT_ID) as HTMLInputElement | null)?.focus()
-      }, 0)
-    }
+      }
+    }, 0)
 
     return () => {
       if (timer) clearTimeout(timer)
@@ -156,42 +153,48 @@ export default function QuickProjectSearch() {
         />
       </div>
 
-      {isLoadingSearch && <Loading />}
+      <div hidden={!searchText} className="pb-5">
+        {isLoadingSearch && <Loading />}
 
-      {!!searchPages?.length && (
-        <div className="flex flex-col pb-5">
-          {searchPages.slice(0, MAX_RESULTS).map((p, i) => (
-            <div
-              key={p.id}
-              className={twMerge(
-                'flex cursor-pointer items-baseline gap-2 py-2 px-5',
-                highlightIndex === i ? 'bg-smoke-75 dark:bg-slate-600' : '',
-              )}
-              onClick={goToProject}
-              onMouseEnter={() => setHighlightIndex(i)}
-            >
-              {p.pv === PV_V2 ? (
-                <V2V3ProjectHandleLink
-                  projectId={p.projectId}
-                  handle={p.handle}
-                />
-              ) : (
-                <V1ProjectHandle projectId={p.projectId} handle={p.handle} />
-              )}
+        {!!searchPages?.length && (
+          <div className="flex flex-col">
+            {searchPages.slice(0, MAX_RESULTS).map((p, i) => (
+              <div
+                key={p.id}
+                className={twMerge(
+                  'flex cursor-pointer items-baseline gap-2 py-2 px-5',
+                  highlightIndex === i ? 'bg-smoke-75 dark:bg-slate-600' : '',
+                )}
+                onClick={goToProject}
+                onMouseEnter={() => setHighlightIndex(i)}
+              >
+                {p.pv === PV_V2 ? (
+                  <V2V3ProjectHandleLink
+                    projectId={p.projectId}
+                    handle={p.handle}
+                  />
+                ) : (
+                  <V1ProjectHandle projectId={p.projectId} handle={p.handle} />
+                )}
 
-              <div style={{ flex: 1 }}>
-                <ProjectVersionBadge
-                  transparent
-                  size="small"
-                  versionText={`V${p.pv}`}
-                />
+                <div style={{ flex: 1 }}>
+                  <ProjectVersionBadge
+                    transparent
+                    size="small"
+                    versionText={`V${p.pv}`}
+                  />
+                </div>
+
+                {highlightIndex === i && <ArrowRightOutlined />}
               </div>
+            ))}
+          </div>
+        )}
 
-              {highlightIndex === i && <ArrowRightOutlined />}
-            </div>
-          ))}
-        </div>
-      )}
+        {searchText && !isLoadingSearch && searchPages?.length === 0 && (
+          <div className="text-center text-grey-400">No results</div>
+        )}
+      </div>
     </Modal>
   )
 }

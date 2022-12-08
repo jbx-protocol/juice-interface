@@ -35,10 +35,9 @@ export default function QueuedFundingCycle() {
               hideActions={true}
             />
           </CardSection>
-          <div className="absolute left-2 -right-2 top-2 bottom-0 -z-[1] bg-smoke-100 dark:bg-slate-600" />
         </div>
       ) : (
-        <div>No upcoming funding cycle</div>
+        <div className="text-gray-500 dark:text-slate-100">No upcoming funding cycle</div>
       )}
     </div>
   )

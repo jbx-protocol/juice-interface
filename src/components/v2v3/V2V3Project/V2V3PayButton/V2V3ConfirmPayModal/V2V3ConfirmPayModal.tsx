@@ -198,7 +198,7 @@ export function V2V3ConfirmPayModal({
       <Space direction="vertical" size="large" className="w-full">
         {projectMetadata.payDisclosure && (
           <Callout.Info className="border border-solid border-grey-200 dark:border-grey-400">
-            <strong>
+            <strong className="block">
               <Trans>Notice from {projectMetadata.name}</Trans>
             </strong>
             <Paragraph

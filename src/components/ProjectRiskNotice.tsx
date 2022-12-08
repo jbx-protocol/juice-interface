@@ -22,13 +22,15 @@ export default function ProjectRiskNotice({
     <div>
       <p>
         <Trans>
-          Some of the project's current funding cycle properties may indicate
-          risk for contributors.
+          This project's current funding cycle configuration may pose risks for
+          contributors:
         </Trans>
       </p>
       <ul>
         {warnings.map((text, i) => (
-          <li key={i}>{text}</li>
+          <li key={i} className="mb-3">
+            {text}
+          </li>
         ))}
       </ul>
     </div>

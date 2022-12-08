@@ -20,7 +20,7 @@ export default function InputAccessoryButton({
       className={classNames(
         'select-none whitespace-nowrap px-1.5 py-[1px] font-medium',
         onClick && !disabled
-          ? 'cursor-pointer bg-haze-200 text-haze-500 hover:text-haze-600 dark:bg-haze-300 dark:text-haze-900 dark:hover:text-haze-800'
+          ? 'cursor-pointer bg-haze-200 text-haze-500 hover:text-haze-600 dark:bg-haze-700 dark:text-haze-300 dark:hover:text-haze-200'
           : 'cursor-default',
         placement === 'suffix' ? 'ml-2' : undefined,
         placement === 'prefix' ? 'mr-2' : undefined,

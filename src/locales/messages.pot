@@ -776,6 +776,12 @@ msgstr ""
 msgid "Contributor rate"
 msgstr ""
 
+msgid "Contributors don't receive any tokens from paying this project. Funds cannot be redeemed."
+msgstr ""
+
+msgid "Contributors receive a relatively small amount of tokens from paying this project."
+msgstr ""
+
 msgid "Contributors receive the NFT when they contribute at least this amount."
 msgstr ""
 
@@ -792,9 +798,6 @@ msgid "Contributors will receive <0>no extra tokens</0> this funding cycle."
 msgstr ""
 
 msgid "Contributors will receive <0>{discountRatePercent}%</0> more tokens for contributions they make this funding cycle compared to the next funding cycle."
-msgstr ""
-
-msgid "Contributors will receive a relatively small portion of tokens in exchange for paying this project."
 msgstr ""
 
 msgid "Contributors will receive the total amount of tokens available through issuance. All subsequent funding cycles will have a mint rate of 0."
@@ -1448,7 +1451,7 @@ msgstr ""
 msgid "How would you like to distribute payments?"
 msgstr ""
 
-msgid "I accept this project's <0>risks</0>."
+msgid "I accept this project's <0>unique risks</0>."
 msgstr ""
 
 msgid "I have read and accept the <0>Terms of Service</0>, and understand that any changes I make to my project's funding cycle will not be applied until AFTER Funding Cycle #1 has finished."
@@ -2684,9 +2687,6 @@ msgstr ""
 msgid "Some funding cycle settings may put project contributors at risk."
 msgstr ""
 
-msgid "Some of the project's current funding cycle properties may indicate risk for contributors."
-msgstr ""
-
 msgid "Something went wrong."
 msgstr ""
 
@@ -2858,6 +2858,9 @@ msgstr ""
 msgid "The programmable funding protocol for builders and creators. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
 msgstr ""
 
+msgid "The project is using an unknown contract for its reconfiguration strategy."
+msgstr ""
+
 msgid "The project owner <0>cannot manually mint</0> any amount of tokens to any address."
 msgstr ""
 
@@ -2867,10 +2870,7 @@ msgstr ""
 msgid "The project owner can change the next funding cycle’s configuration at any time."
 msgstr ""
 
-msgid "The project owner is using an unverified contract for its reconfiguration strategy."
-msgstr ""
-
-msgid "The project owner may mint any supply of tokens at any time, diluting the token share of all existing contributors."
+msgid "The project owner may mint new tokens at any time, diluting existing contributors share of tokens."
 msgstr ""
 
 msgid "The project owner may start a new funding cycle with a new configuration at any time."
@@ -2970,6 +2970,9 @@ msgid "This project reserves some of the newly minted tokens for itself."
 msgstr ""
 
 msgid "This project's balance in the Juicebox contract."
+msgstr ""
+
+msgid "This project's current funding cycle configuration may pose risks for contributors:"
 msgstr ""
 
 msgid "This proposed reconfiguration hasn't passed the {0} period. It's not guaranteed to take effect in the upcoming funding cycle."
@@ -3801,6 +3804,9 @@ msgid "{payerRate} {tokenSymbolPlural}/ETH"
 msgstr ""
 
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
+msgstr ""
+
+msgid "{paymentIssuanceRate} {tokenSymbolPlural}/ETH"
 msgstr ""
 
 msgid "{tokenSymbolDisplayText} range"

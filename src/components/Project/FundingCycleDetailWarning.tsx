@@ -14,8 +14,8 @@ export default function FundingCycleDetailWarning({
 
   return (
     <div className="flex">
-      <span className="font-medium">{children} </span>
-      <span className="ml-2 text-warning-800 dark:text-warning-100">
+      <span>{children} </span>
+      <span className="ml-2 text-warning-600 dark:text-warning-300">
         <Tooltip title={tooltipTitle} placement="top">
           <ExclamationCircleOutlined />
         </Tooltip>

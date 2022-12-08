@@ -2297,6 +2297,9 @@ msgstr ""
 msgid "Receive ERC-20 tokens"
 msgstr ""
 
+msgid "Receive this NFT when you contribute <0>{0} ETH</0>."
+msgstr ""
+
 msgid "Receive this NFT when you contribute <0>{0}</0> - <<1>{rewardTierUpperLimit} ETH</1>."
 msgstr ""
 

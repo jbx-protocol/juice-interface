@@ -121,7 +121,7 @@ export function AccountBalanceDescription() {
             </div>
           )}
         </div>
-        <div className="cursor-default text-sm font-medium text-grey-400 dark:text-slate-200">
+        <div className="cursor-default text-xs text-grey-400 dark:text-slate-200">
           <Trans>{userOwnershipPercentage}% of total supply</Trans>
         </div>
       </div>

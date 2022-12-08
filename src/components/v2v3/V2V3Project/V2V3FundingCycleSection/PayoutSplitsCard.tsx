@@ -169,7 +169,7 @@ export default function PayoutSplitsCard({
               valueFormatProps={{ precision: 4 }}
             />
           ) : (
-            <span className="text-grey-400 dark:text-slate-200">
+            <span className="text-grey-500 dark:text-slate-100">
               <Trans>This project has no distributions.</Trans>
             </span>
           )}

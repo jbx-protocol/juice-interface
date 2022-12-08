@@ -107,7 +107,7 @@ export function ProjectHeader({
         )}
 
         {projectOwnerAddress && (
-          <div className="mt-2 flex items-center text-grey-500 dark:text-grey-300">
+          <div className="mt-2 flex items-center">
             <span className="mr-2">
               <Trans>
                 Owned by <FormattedAddress address={projectOwnerAddress} />

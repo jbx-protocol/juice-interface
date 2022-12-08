@@ -80,9 +80,6 @@ msgstr ""
 msgid "<0/> overflow received"
 msgstr ""
 
-msgid "<0/> owner balance"
-msgstr ""
-
 msgid "<0/> will go to the project owner: <1/>"
 msgstr ""
 
@@ -528,9 +525,6 @@ msgid "Back to top"
 msgstr ""
 
 msgid "Balance exceeded"
-msgstr ""
-
-msgid "Balance of the project owner's wallet."
 msgstr ""
 
 msgid "Before locking your project ERC-20 token, you must approve the veNFT contract for spending."

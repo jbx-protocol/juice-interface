@@ -1,28 +1,36 @@
 import * as constants from '@ethersproject/constants'
 import { BallotStrategy } from 'models/ballot'
-
-import { RESERVED_RATE_WARNING_THRESHOLD_PERCENT } from 'constants/fundingWarningText'
+import {
+  FundingCycleRiskFlags,
+  RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
+} from 'constants/fundingWarningText'
+import { BigNumber } from '@ethersproject/bignumber'
 
 export default function unsafeFundingCycleProperties({
   ballot,
   reservedRatePercentage,
   hasFundingDuration,
   allowMinting,
+  weight,
+  useDataSourceForRedeeem,
 }: {
   ballot: BallotStrategy
   reservedRatePercentage: number | undefined
   hasFundingDuration: boolean | undefined
   allowMinting: boolean | undefined
-}) {
+  weight: BigNumber | undefined
+  useDataSourceForRedeeem: boolean | undefined
+}): FundingCycleRiskFlags {
   // when we set one of these values to true, we're saying it's potentially unsafe.
   // This object is based on type FundingCycle
-  const configFlags = {
+  const configFlags: FundingCycleRiskFlags = {
     duration: false,
     noBallot: false,
     customBallot: false,
     allowMinting: false,
     metadataReservedRate: false,
     metadataMaxReservedRate: false,
+    zeroWeightNoDataSource: false,
   }
 
   /**
@@ -71,6 +79,14 @@ export default function unsafeFundingCycleProperties({
   if (reservedRatePercentage === 100) {
     configFlags.metadataReservedRate = false
     configFlags.metadataMaxReservedRate = true
+  }
+
+  /**
+   * Weight is 0 and datasource isn't used for redemptions.
+   * Contributors will receive no tokens in exchange for paying the project.
+   */
+  if (weight?.eq(0) && !useDataSourceForRedeeem) {
+    configFlags.zeroWeightNoDataSource = true
   }
 
   return configFlags

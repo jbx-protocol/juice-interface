@@ -51,7 +51,7 @@ const TabText = ({
     >
       <span>
         {text}
-        <ExclamationCircleOutlined className="ml-1 text-warning-800 dark:text-warning-100" />
+        <ExclamationCircleOutlined className="ml-1 text-warning-600 dark:text-warning-300" />
       </span>
     </Tooltip>
   )

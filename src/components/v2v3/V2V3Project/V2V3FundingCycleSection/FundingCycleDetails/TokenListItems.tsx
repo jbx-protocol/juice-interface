@@ -63,11 +63,14 @@ export function TokenListItems({
     )
 
     return (
-      <span>
+      <FundingCycleDetailWarning
+        showWarning={unsafeFundingCycleProperties.zeroWeightNoDataSource}
+        tooltipTitle={riskWarningText.zeroWeightNoDataSource}
+      >
         <Trans>
           {payerRate} {tokenSymbolPlural}/ETH
         </Trans>
-      </span>
+      </FundingCycleDetailWarning>
     )
   }
 

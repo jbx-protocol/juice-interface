@@ -90,6 +90,8 @@ export const getUnsafeV2V3FundingCycleProperties = (
     reservedRatePercentage,
     hasFundingDuration: fundingCycle.duration?.gt(0),
     allowMinting,
+    weight: fundingCycle.weight,
+    useDataSourceForRedeeem: fundingCycleMetadata.useDataSourceForRedeem,
   })
 }
 

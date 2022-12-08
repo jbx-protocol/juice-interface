@@ -11,7 +11,7 @@ export function FundingCycleDetailsRow({
   return (
     <div>
       <div className="flex items-center">
-        <h5 className="whitespace-nowrap pr-2 text-sm font-medium uppercase text-grey-500 dark:text-grey-300">
+        <h5 className="mr-2 whitespace-nowrap text-sm font-medium uppercase text-grey-500 dark:text-grey-300">
           {header}
         </h5>
         <Divider className="mt-0.5 mb-2 min-w-[unset]" />

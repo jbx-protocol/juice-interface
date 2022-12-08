@@ -761,6 +761,9 @@ msgstr ""
 msgid "Connected wallet not authorized"
 msgstr ""
 
+msgid "Contract"
+msgstr ""
+
 msgid "Contract address:"
 msgstr ""
 
@@ -894,6 +897,9 @@ msgid "DAOs"
 msgstr ""
 
 msgid "Dark theme"
+msgstr ""
+
+msgid "Data source"
 msgstr ""
 
 msgid "Date"
@@ -3249,6 +3255,12 @@ msgid "Use <0>Amounts</0> when you want to configure a <1>distribution limit</1>
 msgstr ""
 
 msgid "Use <0>Percentages</0> when you want to configure an <1>infinite distribution limit.</1> With an infinite distribution limit, your project reserves all funds for itself. Your project won't have overflow, so tokens can never be redeemed for ETH. <2>Learn more</2>."
+msgstr ""
+
+msgid "Use for payments"
+msgstr ""
+
+msgid "Use for redemptions"
 msgstr ""
 
 msgid "Using a duration is recommended. Allowing funding cycles to be reconfigured at any time will appear risky to contributors."

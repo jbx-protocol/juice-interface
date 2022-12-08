@@ -40,7 +40,7 @@ function DefaultBadge({ href }: { href: string }) {
         </Trans>
       }
     >
-      <span>
+      <span className="flex">
         <SafeIcon href={href} />
       </span>
     </Tooltip>

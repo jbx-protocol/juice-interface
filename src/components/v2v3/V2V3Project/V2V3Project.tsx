@@ -32,10 +32,7 @@ const AllAssetsButton = () => {
 
   return (
     <>
-      <TextButton
-        className="text-sm font-normal"
-        onClick={() => setBalancesModalVisible(true)}
-      >
+      <TextButton onClick={() => setBalancesModalVisible(true)}>
         <Trans>All assets</Trans>
       </TextButton>
       <V2V3ProjectTokenBalancesModal

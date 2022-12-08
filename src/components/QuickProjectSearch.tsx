@@ -1,5 +1,5 @@
 import { ArrowRightOutlined, CloseCircleOutlined } from '@ant-design/icons'
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import Input from 'antd/lib/input/Input'
 import Modal from 'antd/lib/modal/Modal'
 import { PV_V2 } from 'constants/pv'
@@ -192,7 +192,9 @@ export default function QuickProjectSearch() {
         )}
 
         {searchText && !isLoadingSearch && searchPages?.length === 0 && (
-          <div className="text-center text-grey-400">No results</div>
+          <div className="text-center text-grey-400">
+            <Trans>No results</Trans>
+          </div>
         )}
       </div>
     </Modal>

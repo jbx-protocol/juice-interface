@@ -6,6 +6,7 @@ import { juiceboxEmojiImageUri } from 'constants/images'
 import { IPFS_TAGS } from 'constants/ipfs'
 import { readNetwork } from 'constants/networks'
 import { WAD_DECIMALS } from 'constants/numbers'
+import { V2V3_PROJECT_IDS } from 'constants/v2v3/projectIds'
 import { defaultAbiCoder, parseEther } from 'ethers/lib/utils'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/NftRewards'
 import {
@@ -342,4 +343,19 @@ export function buildJBDeployTiered721DelegateData({
     },
     governanceType: JB721GovernanceType.TIERED,
   }
+}
+
+/**
+ * Return some hard-coded metadata overrides for specific projects.
+ */
+export function payMetadataOverrides(
+  projectId: number,
+): Omit<JB721DelegatePayMetadata, 'tierIdsToMint'> {
+  // ConstitutionDAO2 wanted to _not_ overspend. That is, to not allow any payment amount that
+  // doesn't equal one of the NFT tier amounts.
+  if (projectId === V2V3_PROJECT_IDS.CDAO2) {
+    return { dontOverspend: true }
+  }
+
+  return {}
 }

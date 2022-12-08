@@ -89,7 +89,7 @@ export function TreasuryStatsSection() {
               )}
             >
               {currentFC.currency.eq(V1_CURRENCY_USD) ? (
-                <span className="text-sm font-medium uppercase text-grey-400 dark:text-grey-600">
+                <span className="text-sm font-medium uppercase text-grey-400 dark:text-grey-300">
                   <ETHAmount amount={balance} precision={2} padEnd={true} />{' '}
                 </span>
               ) : (
@@ -156,7 +156,7 @@ export function TreasuryStatsSection() {
         }
         statValue={
           <span>
-            <span className="text-sm font-medium uppercase text-grey-400 dark:text-grey-600">
+            <span className="text-sm font-medium uppercase text-grey-400 dark:text-grey-300">
               <V1ProjectTokenBalance
                 className="inline-block"
                 wallet={owner}
@@ -174,7 +174,7 @@ export function TreasuryStatsSection() {
 
       <div className="text-right">
         <span
-          className="cursor-pointer text-sm font-medium uppercase text-grey-400 dark:text-grey-600"
+          className="cursor-pointer text-sm font-medium uppercase text-grey-400 dark:text-grey-300"
           onClick={() => setBalancesModalVisible(true)}
           role="button"
         >

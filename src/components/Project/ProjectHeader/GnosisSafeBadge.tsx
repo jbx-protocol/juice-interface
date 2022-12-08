@@ -110,7 +110,7 @@ function BadgeMightHaveNotice({
 // Red dot that appears conditionally next to Safe badge when connected user is on multisig and has unsiged tranctions
 function Notice() {
   return (
-    <div className="absolute top-0 left-3 h-4 w-1 rounded-full bg-error-500 dark:bg-error-400" />
+    <div className="absolute top-0 left-3 h-2 w-2 rounded-full bg-error-500 dark:bg-error-400" />
   )
 }
 

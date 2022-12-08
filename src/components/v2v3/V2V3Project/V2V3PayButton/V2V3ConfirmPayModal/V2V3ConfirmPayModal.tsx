@@ -7,6 +7,7 @@ import FormattedAddress from 'components/FormattedAddress'
 import { NFT_PAYMENT_CONFIRMED_QUERY_PARAM } from 'components/NftRewards/NftPostPayModal'
 import Paragraph from 'components/Paragraph'
 import { PayProjectFormContext } from 'components/Project/PayProjectForm/payProjectFormContext'
+import { JB721DelegatePayMetadata } from 'components/Project/PayProjectForm/usePayProjectForm'
 import TooltipLabel from 'components/TooltipLabel'
 import TransactionModal from 'components/TransactionModal'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
@@ -20,7 +21,11 @@ import { useRouter } from 'next/router'
 import { useContext, useState } from 'react'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
 import { formattedNum, formatWad } from 'utils/format/formatNumber'
-import { encodeJB721DelegatePayMetadata, sumTierFloors } from 'utils/nftRewards'
+import {
+  encodeJB721DelegatePayMetadata,
+  payMetadataOverrides,
+  sumTierFloors,
+} from 'utils/nftRewards'
 import { emitErrorNotification } from 'utils/notifications'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -112,7 +117,7 @@ export function V2V3ConfirmPayModal({
   }
 
   async function pay() {
-    if (!weiAmount) return
+    if (!weiAmount || !projectId) return
 
     const {
       beneficiary,
@@ -121,10 +126,12 @@ export function V2V3ConfirmPayModal({
       stickerUrls,
       uploadedImage,
     } = form.getFieldsValue()
+
     const txBeneficiary = beneficiary ?? userAddress
-    const delegateMetadata = encodeJB721DelegatePayMetadata(
-      payProjectForm?.payMetadata,
-    )
+    const delegateMetadata = encodeJB721DelegatePayMetadata({
+      ...(payProjectForm?.payMetadata as JB721DelegatePayMetadata),
+      ...payMetadataOverrides(projectId),
+    })
 
     // Prompt wallet connect if no wallet connected
     if (chainUnsupported) {

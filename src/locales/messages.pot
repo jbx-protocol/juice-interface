@@ -3254,6 +3254,9 @@ msgstr ""
 msgid "Use <0>Percentages</0> when you want to configure an <1>infinite distribution limit.</1> With an infinite distribution limit, your project reserves all funds for itself. Your project won't have overflow, so tokens can never be redeemed for ETH. <2>Learn more</2>."
 msgstr ""
 
+msgid "Use data source for redeem"
+msgstr ""
+
 msgid "Using a duration is recommended. Allowing funding cycles to be reconfigured at any time will appear risky to contributors."
 msgstr ""
 
@@ -3345,6 +3348,9 @@ msgid "When checked, payments to this address will mint this project's ERC-20 to
 msgstr ""
 
 msgid "When distributing, payouts to Ethereum addresses incur a 2.5% JBX membership fee. Payouts to other Juicebox projects don't incur fees. Your project will receive (the <0>JuiceboxDAO</0> token) in return at the current issuance rate."
+msgstr ""
+
+msgid "When enabled, the data source will be used for redeem transactions."
 msgstr ""
 
 msgid "When enabled, the payments to the project are paused, and no new tokens will be issued."

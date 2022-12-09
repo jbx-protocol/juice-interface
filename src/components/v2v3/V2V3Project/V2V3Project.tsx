@@ -10,6 +10,7 @@ import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 import useMobile from 'hooks/Mobile'
 import { useValidatePrimaryEthTerminal } from 'hooks/v2v3/ValidatePrimaryEthTerminal'
+import { useWallet } from 'hooks/Wallet'
 import { V2V3PayProjectFormProvider } from 'providers/v2v3/V2V3PayProjectFormProvider'
 import { useContext, useState } from 'react'
 import { classNames } from 'utils/classNames'
@@ -59,6 +60,7 @@ export function V2V3Project() {
     useModalFromUrlQuery(NEW_DEPLOY_QUERY_PARAM)
 
   const isMobile = useMobile()
+  const { isConnected } = useWallet()
   const isOwner = useIsUserAddress(projectOwnerAddress)
   const isPrimaryETHTerminalValid = useValidatePrimaryEthTerminal()
 
@@ -128,7 +130,11 @@ export function V2V3Project() {
                   <V2V3ManageTokensSection />
                 </section>
 
-                <ManageNftsSection />
+                {hasNftRewards(fundingCycleMetadata) && isConnected ? (
+                  <section>
+                    <ManageNftsSection />
+                  </section>
+                ) : null}
 
                 <section>
                   <V2V3FundingCycleSection />

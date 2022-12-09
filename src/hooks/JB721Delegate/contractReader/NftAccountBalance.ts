@@ -10,19 +10,23 @@ export function useNftAccountBalance({
   dataSourceAddress: string | undefined
   accountAddress: string | undefined
 }) {
-  return useSubgraphQuery({
-    entity: 'jb721DelegateToken',
-    keys: ['tokenId', 'address', 'tokenUri'],
-    where: [
-      {
-        key: 'address',
-        value: dataSourceAddress ?? '',
-      },
-      {
-        key: 'owner',
-        value: `{ wallet: "${accountAddress ?? ''}" }`,
-        nested: true,
-      },
-    ],
-  })
+  return useSubgraphQuery(
+    dataSourceAddress && accountAddress
+      ? {
+          entity: 'jb721DelegateToken',
+          keys: ['tokenId', 'address', 'tokenUri'],
+          where: [
+            {
+              key: 'address',
+              value: dataSourceAddress ?? '',
+            },
+            {
+              key: 'owner',
+              value: `{ wallet: "${accountAddress ?? ''}" }`,
+              nested: true,
+            },
+          ],
+        }
+      : null,
+  )
 }

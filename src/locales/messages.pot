@@ -761,6 +761,9 @@ msgstr ""
 msgid "Connected wallet not authorized"
 msgstr ""
 
+msgid "Contract"
+msgstr ""
+
 msgid "Contract address:"
 msgstr ""
 
@@ -894,6 +897,9 @@ msgid "DAOs"
 msgstr ""
 
 msgid "Dark theme"
+msgstr ""
+
+msgid "Data source"
 msgstr ""
 
 msgid "Date"
@@ -3255,6 +3261,12 @@ msgid "Use <0>Percentages</0> when you want to configure an <1>infinite distribu
 msgstr ""
 
 msgid "Use data source for redeem"
+msgstr ""
+
+msgid "Use for payments"
+msgstr ""
+
+msgid "Use for redemptions"
 msgstr ""
 
 msgid "Using a duration is recommended. Allowing funding cycles to be reconfigured at any time will appear risky to contributors."

@@ -1,13 +1,10 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Descriptions, Space } from 'antd'
+import { Descriptions, Space } from 'antd'
 import SectionHeader from 'components/SectionHeader'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useNftAccountBalance } from 'hooks/JB721Delegate/contractReader/NftAccountBalance'
 import { useWallet } from 'hooks/Wallet'
-import { CSSProperties, useContext, useState } from 'react'
-import { featureFlagEnabled } from 'utils/featureFlags'
-import { RedeemNftsModal } from './RedeemNftsModal'
+import { CSSProperties, useContext } from 'react'
 
 const labelStyle: CSSProperties = {
   width: '10.5rem',
@@ -22,9 +19,6 @@ const contentStyle: CSSProperties = {
 
 export function ManageNftsSection() {
   const { isConnected, userAddress } = useWallet()
-  const [redeemNftsModalVisible, setRedeemNftsModalVisible] =
-    useState<boolean>(false)
-  const nftRedeemEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REDEEM)
   const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
 
   const { data: nfts, isLoading } = useNftAccountBalance({
@@ -35,7 +29,7 @@ export function ManageNftsSection() {
   const nftBalanceFormatted = nfts?.length ?? 0
 
   // hide section when wallet not connected
-  if (!isConnected || !nftRedeemEnabled || isLoading) return null
+  if (!isConnected || isLoading) return null
 
   return (
     <>
@@ -48,27 +42,12 @@ export function ManageNftsSection() {
             labelStyle={labelStyle}
             contentStyle={contentStyle}
           >
-            <div>{nftBalanceFormatted} NFTs</div>
-            {nftRedeemEnabled ? (
-              <div>
-                <Button
-                  size="small"
-                  onClick={() => {
-                    setRedeemNftsModalVisible(true)
-                  }}
-                >
-                  Redeem for ETH
-                </Button>
-              </div>
-            ) : null}
+            <div>
+              <Trans>{nftBalanceFormatted} NFTs</Trans>
+            </div>
           </Descriptions.Item>
         </Descriptions>
       </Space>
-
-      <RedeemNftsModal
-        open={redeemNftsModalVisible}
-        onCancel={() => setRedeemNftsModalVisible(false)}
-      />
     </>
   )
 }

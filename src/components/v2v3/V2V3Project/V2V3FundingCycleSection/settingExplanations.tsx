@@ -84,3 +84,9 @@ export const HOLD_FEES_EXPLAINATION = (
     </ExternalLink>
   </Trans>
 )
+
+export const USE_DATASOURCE_FOR_REDEEM_EXPLAINATION = (
+  <Trans>
+    When enabled, the data source will be used for redeem transactions.
+  </Trans>
+)

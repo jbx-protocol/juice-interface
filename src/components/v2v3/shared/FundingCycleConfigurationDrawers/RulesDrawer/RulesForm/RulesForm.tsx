@@ -3,7 +3,10 @@ import { Trans } from '@lingui/macro'
 import { Button, Form, Space, Switch } from 'antd'
 import FormItemLabel from 'components/FormItemLabel'
 import ReconfigurationStrategySelector from 'components/ReconfigurationStrategy/ReconfigurationStrategySelector'
-import { HOLD_FEES_EXPLAINATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+import {
+  HOLD_FEES_EXPLAINATION,
+  USE_DATASOURCE_FOR_REDEEM_EXPLAINATION,
+} from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import {
   ballotStrategiesFn,
   DEFAULT_BALLOT_STRATEGY,
@@ -39,6 +42,7 @@ export default function RulesForm({
       ),
       allowSetTerminals: fundingCycleMetadata.global.allowSetTerminals,
       holdFees: fundingCycleMetadata.holdFees,
+      useDataSourceForRedeem: fundingCycleMetadata.useDataSourceForRedeem,
     }),
     [fundingCycleData, fundingCycleMetadata],
   )
@@ -55,6 +59,9 @@ export default function RulesForm({
     initialValues.allowMinting,
   )
   const [holdFees, setHoldFees] = useState<boolean>(initialValues.holdFees)
+  const [useDataSourceForRedeem, setUseDataSourceForRedeem] = useState<boolean>(
+    initialValues.useDataSourceForRedeem,
+  )
 
   useEffect(() => {
     const hasFormUpdated =
@@ -79,6 +86,9 @@ export default function RulesForm({
     dispatch(editingV2ProjectActions.setAllowSetTerminals(allowSetTerminals))
     dispatch(editingV2ProjectActions.setBallot(ballotStrategy.address))
     dispatch(editingV2ProjectActions.setHoldFees(holdFees))
+    dispatch(
+      editingV2ProjectActions.setUseDataSourceForRedeem(useDataSourceForRedeem),
+    )
     onFinish?.()
   }, [
     dispatch,
@@ -88,6 +98,7 @@ export default function RulesForm({
     allowMinting,
     allowSetTerminals,
     holdFees,
+    useDataSourceForRedeem,
   ])
 
   const disableSaveButton =
@@ -159,6 +170,19 @@ export default function RulesForm({
               checked={holdFees}
             />
             <Trans>Hold fees</Trans>
+          </Form.Item>
+          <Form.Item
+            name="useDataSourceForRedeem"
+            extra={USE_DATASOURCE_FOR_REDEEM_EXPLAINATION}
+          >
+            <Switch
+              className="mr-2"
+              onChange={checked => {
+                setUseDataSourceForRedeem(checked)
+              }}
+              checked={useDataSourceForRedeem}
+            />
+            <Trans>Use data source for redeem</Trans>
           </Form.Item>
         </div>
 

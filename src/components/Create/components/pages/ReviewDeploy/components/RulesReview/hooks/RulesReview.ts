@@ -36,5 +36,28 @@ export const useRulesReview = () => {
     )?.name
   }, [availableBallotStrategies, reconfigurationRuleSelection])
 
-  return { customAddress, pausePayments, terminalConfiguration, strategy }
+  const holdFees = useMemo(() => {
+    if (fundingCycleMetadata.holdFees) {
+      return t`Yes`
+    } else {
+      return t`No`
+    }
+  }, [fundingCycleMetadata.holdFees])
+
+  const useDataSourceForRedeem = useMemo(() => {
+    if (fundingCycleMetadata.useDataSourceForRedeem) {
+      return t`Yes`
+    } else {
+      return t`No`
+    }
+  }, [fundingCycleMetadata.useDataSourceForRedeem])
+
+  return {
+    customAddress,
+    pausePayments,
+    terminalConfiguration,
+    strategy,
+    holdFees,
+    useDataSourceForRedeem,
+  }
 }

@@ -2720,6 +2720,9 @@ msgstr ""
 msgid "Start over"
 msgstr ""
 
+msgid "Start the V3 cycle as soon as the current V2 cycle ends <0>({0})</0>."
+msgstr ""
+
 msgid "Start time (seconds, Unix time)"
 msgstr ""
 
@@ -2760,6 +2763,9 @@ msgid "Swap v1 project tokens {projectTitle}"
 msgstr ""
 
 msgid "Switch network to {0}"
+msgstr ""
+
+msgid "Sync start time with current V2 funding cycle."
 msgstr ""
 
 msgid "Tap {projectTitle}"

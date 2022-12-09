@@ -43,7 +43,7 @@ export function FundingCycleStep() {
               below to relaunch your funding cycle on Juicebox V3.
             </p>
 
-            <Callout.Info className="mb-8">
+            <Callout.Info className="mb-6">
               Your V2 funding cycle configuration has been prefilled.
             </Callout.Info>
 

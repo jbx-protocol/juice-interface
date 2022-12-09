@@ -371,6 +371,9 @@ const editingV2ProjectSlice = createSlice({
         )
       }
     },
+    setUseDataSourceForRedeem: (state, action: PayloadAction<boolean>) => {
+      state.fundingCycleMetadata.useDataSourceForRedeem = action.payload
+    },
     setTokenSettings: (
       state,
       action: PayloadAction<{

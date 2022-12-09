@@ -5,7 +5,6 @@ import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useNftAccountBalance } from 'hooks/JB721Delegate/contractReader/NftAccountBalance'
 import { useWallet } from 'hooks/Wallet'
 import { CSSProperties, useContext } from 'react'
-import { hasNftRewards } from 'utils/nftRewards'
 
 const labelStyle: CSSProperties = {
   width: '10.5rem',
@@ -19,7 +18,7 @@ const contentStyle: CSSProperties = {
 }
 
 export function ManageNftsSection() {
-  const { isConnected, userAddress } = useWallet()
+  const { userAddress } = useWallet()
   const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
 
   const { data: nfts, isLoading } = useNftAccountBalance({
@@ -29,11 +28,10 @@ export function ManageNftsSection() {
 
   const nftBalanceFormatted = nfts?.length ?? 0
 
-  if (!isConnected || isLoading || !hasNftRewards(fundingCycleMetadata))
-    return null
+  if (isLoading) return null
 
   return (
-    <section>
+    <>
       <Space direction="vertical">
         <SectionHeader className="mb-0" text={<Trans>NFTs</Trans>} />
 
@@ -54,6 +52,6 @@ export function ManageNftsSection() {
           </Descriptions.Item>
         </Descriptions>
       </Space>
-    </section>
+    </>
   )
 }

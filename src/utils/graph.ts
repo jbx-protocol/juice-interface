@@ -126,6 +126,11 @@ import {
   ETHERC20ProjectPayerJson,
   parseETHERC20ProjectPayer,
 } from '../models/subgraph-entities/v2/eth-erc20-project-payer'
+import {
+  JB721DelegateToken,
+  JB721DelegateTokenJson,
+  parseJB721DelegateTokens,
+} from '../models/subgraph-entities/v2/jb-721-delegate-tokens'
 
 export interface SubgraphEntities {
   protocolLog: ProtocolLog
@@ -154,6 +159,7 @@ export interface SubgraphEntities {
   veNftContract: VeNftContract
   configureEvent: ConfigureEvent
   v1ConfigureEvent: V1ConfigureEvent
+  jb721DelegateToken: JB721DelegateToken
 }
 
 export interface SubgraphQueryReturnTypes {
@@ -199,6 +205,7 @@ export interface SubgraphQueryReturnTypes {
   veNftContract: { veNftContracts: VeNftContractJson[] }
   configureEvent: { configureEvents: ConfigureEventJson[] }
   v1ConfigureEvent: { v1ConfigureEvents: V1ConfigureEventJson[] }
+  jb721DelegateToken: { jb721DelegateTokens: JB721DelegateTokenJson[] }
 }
 
 export type EntityKey = keyof SubgraphEntities
@@ -227,6 +234,7 @@ export type WhereConfig<E extends EntityKey> = {
     | 'ends_with'
     | 'not_starts_with'
     | 'not_ends_with'
+  nested?: boolean
 }
 
 type BlockConfig = {
@@ -285,12 +293,14 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
     args += (args.length ? ', ' : '') + `${name}: ` + String(value)
   }
   const formatWhere = (where: WhereConfig<E>) =>
-    `${String(where.key)}${where.operator ? '_' + where.operator : ''}:` +
+    `${String(where.key)}${where.nested ? '_' : ''}${
+      where.operator ? '_' + where.operator : ''
+    }:` +
     (Array.isArray(where.value)
       ? `[${where.value
           .map(v => (typeof v === 'string' ? `"${v}"` : v))
           .join(',')}]`
-      : typeof where.value === 'string'
+      : typeof where.value === 'string' && !where.nested
       ? `"${where.value}"`
       : where.value)
 
@@ -514,6 +524,12 @@ export function formatGraphResponse<E extends EntityKey>(
       if ('veNftContracts' in response) {
         // @ts-ignore
         return response.veNftContracts.map(parseVeNftContractJson)
+      }
+      break
+    case 'jb721DelegateToken':
+      if ('jb721DelegateTokens' in response) {
+        // @ts-ignore
+        return response.jb721DelegateTokens.map(parseJB721DelegateTokens)
       }
   }
 

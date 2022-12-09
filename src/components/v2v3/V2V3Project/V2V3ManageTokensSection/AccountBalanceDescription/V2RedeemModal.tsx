@@ -226,7 +226,7 @@ export default function V2RedeemModal({
           >
             {formatWad(totalBalance ?? 0, { precision: 0 })} {tokensTextShort}
           </Descriptions.Item>
-          <Descriptions.Item label={<Trans>Redemption value</Trans>}>
+          <Descriptions.Item label={<Trans>Total redemption value</Trans>}>
             <ETHAmount amount={maxClaimable} />
           </Descriptions.Item>
         </Descriptions>

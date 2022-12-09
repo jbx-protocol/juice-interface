@@ -27,15 +27,15 @@ export function ManageNftsSection() {
   const nftRedeemEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REDEEM)
   const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
 
-  const { data: nftBalance, loading } = useNftAccountBalance({
+  const { data: nfts, isLoading } = useNftAccountBalance({
     accountAddress: userAddress,
     dataSourceAddress: fundingCycleMetadata?.dataSource,
   })
 
-  const nftBalanceFormatted = nftBalance?.toNumber() ?? 0
+  const nftBalanceFormatted = nfts?.length ?? 0
 
   // hide section when wallet not connected
-  if (!isConnected || !nftRedeemEnabled || loading) return null
+  if (!isConnected || !nftRedeemEnabled || isLoading) return null
 
   return (
     <>
@@ -49,7 +49,7 @@ export function ManageNftsSection() {
             contentStyle={contentStyle}
           >
             <div>{nftBalanceFormatted} NFTs</div>
-            {nftRedeemEnabled && nftBalanceFormatted > 0 ? (
+            {nftRedeemEnabled ? (
               <div>
                 <Button
                   size="small"

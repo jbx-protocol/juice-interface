@@ -1,6 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import { useStoreOfJB721TieredDelegate } from 'hooks/contracts/JB721Delegate/useStoreofJB721TieredDelegate'
-import useV2ContractReader from '../../v2v3/contractReader/V2ContractReader'
+import useSubgraphQuery from 'hooks/SubgraphQuery'
 
 export function useNftAccountBalance({
   dataSourceAddress,
@@ -9,18 +7,19 @@ export function useNftAccountBalance({
   dataSourceAddress: string | undefined
   accountAddress: string | undefined
 }) {
-  const JBTiered721DelegateStore = useStoreOfJB721TieredDelegate({
-    JB721TieredDelegateAddress: dataSourceAddress,
-  })
-
-  const args =
-    accountAddress && accountAddress
-      ? [dataSourceAddress, accountAddress]
-      : null
-
-  return useV2ContractReader<BigNumber>({
-    contract: JBTiered721DelegateStore,
-    functionName: 'balanceOf',
-    args,
+  return useSubgraphQuery({
+    entity: 'jb721DelegateToken',
+    keys: ['tokenId', 'address', 'tokenUri'],
+    where: [
+      {
+        key: 'address',
+        value: dataSourceAddress || '',
+      },
+      {
+        key: 'owner',
+        value: `{ wallet: "${accountAddress || ''}" }`,
+        nested: true,
+      },
+    ],
   })
 }

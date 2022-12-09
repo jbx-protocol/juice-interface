@@ -3,23 +3,23 @@ import { Descriptions, Form, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
-import InputAccessoryButton from 'components/InputAccessoryButton'
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { MemoFormInput } from 'components/Project/PayProjectForm/MemoFormInput'
-import { RedeemAMMPrices } from 'components/Project/RedeemAMMPrices'
 import TransactionModal from 'components/TransactionModal'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { useNftAccountBalance } from 'hooks/JB721Delegate/contractReader/NftAccountBalance'
 import { useETHReceivedFromTokens } from 'hooks/v2v3/contractReader/ETHReceivedFromTokens'
-import useTotalBalanceOf from 'hooks/v2v3/contractReader/TotalBalanceOf'
 import { useRedeemTokensTx } from 'hooks/v2v3/transactor/RedeemTokensTx'
 import { useWallet } from 'hooks/Wallet'
+import { JB721DelegateToken } from 'models/subgraph-entities/v2/jb-721-delegate-tokens'
 import { useContext, useState } from 'react'
-import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
+import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
-import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { formatRedemptionRate } from 'utils/v2v3/math'
+
+export function NftTierAccountHoldings({ nft }: { nft: JB721DelegateToken }) {
+  return <div>{nft.tokenUri}</div>
+}
 
 export function RedeemNftsModal({
   open,
@@ -31,15 +31,12 @@ export function RedeemNftsModal({
   onConfirmed?: VoidFunction
 }) {
   const {
-    tokenSymbol,
-    tokenAddress,
     fundingCycle,
     primaryTerminalCurrentOverflow,
     totalTokenSupply,
     distributionLimitCurrency,
     fundingCycleMetadata,
   } = useContext(V2V3ProjectContext)
-  const { projectId } = useContext(ProjectMetadataContext)
 
   const { userAddress } = useWallet()
 
@@ -52,32 +49,25 @@ export function RedeemNftsModal({
     redeemAmount: string
   }>()
 
-  const { data: totalBalance } = useTotalBalanceOf(userAddress, projectId)
+  const { data: nfts, isLoading } = useNftAccountBalance({
+    dataSourceAddress: fundingCycleMetadata?.dataSource,
+    accountAddress: userAddress,
+  })
+  const totalBalance = '0'
+  const nftBalanceFormatted = nfts?.length ?? 0
   const maxClaimable = useETHReceivedFromTokens({
     tokenAmount: fromWad(totalBalance),
   })
   const rewardAmount = useETHReceivedFromTokens({ tokenAmount: redeemAmount })
   const redeemTokensTx = useRedeemTokensTx()
 
-  if (!fundingCycle || !fundingCycleMetadata) return null
+  if (!fundingCycle || !fundingCycleMetadata || isLoading) return null
 
   // 0.5% slippage for USD-denominated projects
   const minReturnedTokens = distributionLimitCurrency?.eq(V2V3_CURRENCY_USD)
     ? rewardAmount?.mul(1000).div(1005)
     : // ? rewardAmount?.mul(100).div(101)
       rewardAmount
-
-  const tokensTextLong = tokenSymbolText({
-    tokenSymbol,
-    capitalize: false,
-    plural: true,
-    includeTokenWord: true,
-  })
-  const tokensTextShort = tokenSymbolText({
-    tokenSymbol,
-    capitalize: false,
-    plural: true,
-  })
 
   let modalTitle: string
 
@@ -87,23 +77,9 @@ export function RedeemNftsModal({
   const canRedeem = hasOverflow && hasRedemptionRate
 
   if (canRedeem) {
-    modalTitle = t`Redeem ${tokensTextLong} for ETH`
+    modalTitle = t`Redeem NFTs for ETH`
   } else {
-    modalTitle = t`Burn ${tokensTextLong}`
-  }
-
-  const validateRedeemAmount = () => {
-    const redeemBN = parseWad(redeemAmount ?? 0)
-
-    if (redeemBN.eq(0)) {
-      return Promise.reject(t`Required`)
-    } else if (redeemBN.gt(totalBalance ?? 0)) {
-      return Promise.reject(t`Insufficient token balance`)
-    } else if (redeemBN.gt(totalTokenSupply ?? 0)) {
-      // Error message already showing for this case
-      return Promise.reject()
-    }
-    return Promise.resolve()
+    modalTitle = t`Burn NFTs`
   }
 
   const executeRedeemTransaction = async () => {
@@ -177,12 +153,12 @@ export function RedeemNftsModal({
           {canRedeem ? (
             <Space direction="vertical" size="middle">
               <Callout.Info>
-                <Trans>Tokens are burned when they are redeemed.</Trans>
+                <Trans>NFTs are burned when they are redeemed.</Trans>
               </Callout.Info>
               <div>
                 <Trans>
-                  Redeem your tokens for a portion of this project's overflow.
-                  The current funding cycle's <strong>redemption rate</strong>{' '}
+                  Redeem your NFTs for a portion of this project's overflow. The
+                  current funding cycle's <strong>redemption rate</strong>{' '}
                   determines your redemption value.
                 </Trans>
               </div>
@@ -192,13 +168,13 @@ export function RedeemNftsModal({
               {!hasOverflow && (
                 <Trans>
                   <strong>This project has no overflow</strong>. You won't
-                  receive any ETH for burning your tokens.
+                  receive any ETH for burning your NFTs.
                 </Trans>
               )}
               {!hasRedemptionRate && (
                 <Trans>
                   <strong>This project has a 0% redemption rate</strong>. You
-                  won't receive any ETH for burning your tokens.
+                  won't receive any ETH for burning your NFTs.
                 </Trans>
               )}
             </Callout.Info>
@@ -209,62 +185,28 @@ export function RedeemNftsModal({
           column={1}
           contentStyle={{ display: 'block', textAlign: 'right' }}
         >
-          <Descriptions.Item label={<Trans>Redemption rate</Trans>}>
+          <Descriptions.Item
+            label={<Trans>Redemption rate</Trans>}
+            className="pb-1"
+          >
             {formatRedemptionRate(fundingCycleMetadata.redemptionRate)}%
           </Descriptions.Item>
-          <Descriptions.Item
-            label={
-              <Trans>
-                Your{' '}
-                {tokenSymbolText({
-                  tokenSymbol,
-                })}{' '}
-                balance
-              </Trans>
-            }
-          >
-            {formatWad(totalBalance ?? 0, { precision: 0 })} {tokensTextShort}
+          <Descriptions.Item label={<Trans>Your NFTs</Trans>} className="pb-1">
+            {nftBalanceFormatted} NFTs
           </Descriptions.Item>
-          <Descriptions.Item label={<Trans>Redemption value</Trans>}>
+          <Descriptions.Item
+            label={<Trans>Total redemption value</Trans>}
+            className="pb-1"
+          >
             <ETHAmount amount={maxClaimable} />
           </Descriptions.Item>
         </Descriptions>
 
         <div>
           <Form form={form} layout="vertical">
-            <Form.Item
-              name="redeemAmount"
-              label={
-                canRedeem ? (
-                  <Trans>Tokens to redeem</Trans>
-                ) : (
-                  <Trans>Tokens to burn</Trans>
-                )
-              }
-              rules={[{ validator: validateRedeemAmount }]}
-            >
-              <FormattedNumberInput
-                min={0}
-                step={0.001}
-                placeholder="0"
-                value={redeemAmount}
-                accessory={
-                  <InputAccessoryButton
-                    content={t`MAX`}
-                    onClick={() => setRedeemAmount(fromWad(totalBalance))}
-                  />
-                }
-                disabled={totalBalance?.eq(0)}
-                onChange={val => setRedeemAmount(val)}
-              />
-              {tokenSymbol && tokenAddress ? (
-                <RedeemAMMPrices
-                  className="text-xs"
-                  tokenSymbol={tokenSymbol}
-                  tokenAddress={tokenAddress}
-                />
-              ) : null}
-            </Form.Item>
+            {nfts?.map(nft => (
+              <NftTierAccountHoldings key={nft.tokenId} nft={nft} />
+            ))}
 
             <Form.Item label={t`Memo`}>
               <MemoFormInput value={memo} onChange={setMemo} />

@@ -2444,6 +2444,9 @@ msgstr ""
 msgid "Redemptions"
 msgstr ""
 
+msgid "Relaunch a project"
+msgstr ""
+
 msgid "Relaunch on V3"
 msgstr ""
 

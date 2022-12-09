@@ -46,7 +46,11 @@ export function Create() {
       <TransactionProvider>
         <V2V3CurrencyProvider>
           <h1 className="text-center text-base font-medium uppercase text-black dark:text-slate-100">
-            <Trans>Create a project</Trans>
+            {!isMigration ? (
+              <Trans>Create a project</Trans>
+            ) : (
+              <Trans>Relaunch a project</Trans>
+            )}
           </h1>
           {/* TODO: Remove wizard-create once form item css override is replaced */}
           <div className="wizard-create">

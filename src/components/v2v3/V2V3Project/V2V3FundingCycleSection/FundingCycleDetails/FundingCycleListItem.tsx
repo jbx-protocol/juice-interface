@@ -25,7 +25,7 @@ export function FundingCycleListItem({
     return (
       <div
         className={classNames(
-          'flex cursor-default flex-wrap pt-1 pb-2',
+          'mb-2 flex cursor-default flex-wrap',
           subItem ? 'ml-5 text-xs' : 'text-sm',
         )}
       >
@@ -34,7 +34,7 @@ export function FundingCycleListItem({
             <div
               className={classNames(
                 'text-decoration-underline text-decoration-dashed text-decoration-secondary',
-                subItem ? 'h-4' : 'h5',
+                subItem ? 'h-4' : '',
               )}
             >
               {name}
@@ -51,7 +51,7 @@ export function FundingCycleListItem({
   return (
     <div
       className={classNames(
-        'flex  flex-wrap pt-1 pb-2',
+        'mb-2 flex flex-wrap',
         subItem ? 'ml-5 text-xs' : 'text-sm',
       )}
     >

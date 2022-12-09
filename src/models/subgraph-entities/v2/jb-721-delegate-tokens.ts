@@ -4,6 +4,7 @@ import {
   Participant,
 } from '../vX/participant'
 
+// TODO incomplete type, add the rest of the fields.
 export interface JB721DelegateToken {
   tokenId: string
   address: string

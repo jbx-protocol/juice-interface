@@ -127,9 +127,9 @@ export function V2V3Project() {
                 <section>
                   <V2V3ManageTokensSection />
                 </section>
-                <section>
-                  <ManageNftsSection />
-                </section>
+
+                <ManageNftsSection />
+
                 <section>
                   <V2V3FundingCycleSection />
                 </section>

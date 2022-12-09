@@ -1,5 +1,8 @@
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 
+/**
+ * Return all the project's NFTs that are owned by the given account.
+ */
 export function useNftAccountBalance({
   dataSourceAddress,
   accountAddress,
@@ -13,11 +16,11 @@ export function useNftAccountBalance({
     where: [
       {
         key: 'address',
-        value: dataSourceAddress || '',
+        value: dataSourceAddress ?? '',
       },
       {
         key: 'owner',
-        value: `{ wallet: "${accountAddress || ''}" }`,
+        value: `{ wallet: "${accountAddress ?? ''}" }`,
         nested: true,
       },
     ],

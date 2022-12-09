@@ -1,10 +1,11 @@
-import { t, Trans } from '@lingui/macro'
+import { plural, t, Trans } from '@lingui/macro'
 import { Descriptions, Space } from 'antd'
 import SectionHeader from 'components/SectionHeader'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useNftAccountBalance } from 'hooks/JB721Delegate/contractReader/NftAccountBalance'
 import { useWallet } from 'hooks/Wallet'
 import { CSSProperties, useContext } from 'react'
+import { hasNftRewards } from 'utils/nftRewards'
 
 const labelStyle: CSSProperties = {
   width: '10.5rem',
@@ -28,11 +29,11 @@ export function ManageNftsSection() {
 
   const nftBalanceFormatted = nfts?.length ?? 0
 
-  // hide section when wallet not connected
-  if (!isConnected || isLoading) return null
+  if (!isConnected || isLoading || !hasNftRewards(fundingCycleMetadata))
+    return null
 
   return (
-    <>
+    <section>
       <Space direction="vertical">
         <SectionHeader text={<Trans>NFTs</Trans>} />
 
@@ -43,11 +44,15 @@ export function ManageNftsSection() {
             contentStyle={contentStyle}
           >
             <div>
-              <Trans>{nftBalanceFormatted} NFTs</Trans>
+              {nftBalanceFormatted}{' '}
+              {plural(nftBalanceFormatted, {
+                one: 'NFT',
+                other: 'NFTs',
+              })}
             </div>
           </Descriptions.Item>
         </Descriptions>
       </Space>
-    </>
+    </section>
   )
 }

@@ -57,7 +57,7 @@ export function V2V3PayButton({ disabled, wrapperClassName }: PayButtonProps) {
         className="block"
       >
         <Button
-          className="w-full"
+          style={{ width: '100%' }}
           type="primary"
           onClick={() => {
             setPayWarningModalVisible(true)

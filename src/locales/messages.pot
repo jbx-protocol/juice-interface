@@ -380,6 +380,9 @@ msgstr ""
 msgid "All funds received by the treasury will be distributed. Token holders will receive <0>no ETH</0> when burning their tokens."
 msgstr ""
 
+msgid "All payouts have been deleted for this beneficiary. Save to continue..."
+msgstr ""
+
 msgid "All {0} will go to the project owner:"
 msgstr ""
 
@@ -1142,6 +1145,9 @@ msgstr ""
 msgid "Download payments CSV"
 msgstr ""
 
+msgid "Due to incompatibilities between v1 projects, new project ids of payouts need to be assigned."
+msgstr ""
+
 msgid "Duration"
 msgstr ""
 
@@ -1850,6 +1856,9 @@ msgstr ""
 msgid "New"
 msgstr ""
 
+msgid "New V3 Project ID"
+msgstr ""
+
 msgid "New project tokens are minted as ERC-20 tokens by default. Payments to this Payment Address will incur a higher gas fee than regular Juicebox payments."
 msgstr ""
 
@@ -2136,6 +2145,9 @@ msgid "Potential risks"
 msgstr ""
 
 msgid "Preview"
+msgstr ""
+
+msgid "Previous V1 Project ID:"
 msgstr ""
 
 msgid "Process held fees"
@@ -2430,6 +2442,9 @@ msgid "Redemption rate:"
 msgstr ""
 
 msgid "Redemptions"
+msgstr ""
+
+msgid "Relaunch on V3"
 msgstr ""
 
 msgid "Relaunch your funding cycle on the new Juicebox V2 contracts."

@@ -35,13 +35,14 @@ export function ManageNftsSection() {
   return (
     <section>
       <Space direction="vertical">
-        <SectionHeader text={<Trans>NFTs</Trans>} />
+        <SectionHeader className="mb-0" text={<Trans>NFTs</Trans>} />
 
         <Descriptions layout="horizontal" column={1}>
           <Descriptions.Item
             label={t`Your NFTs`}
             labelStyle={labelStyle}
             contentStyle={contentStyle}
+            className="pb-0"
           >
             <div>
               {nftBalanceFormatted}{' '}

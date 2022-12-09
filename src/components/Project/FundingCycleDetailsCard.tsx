@@ -90,7 +90,7 @@ export default function FundingCycleDetailsCard({
               )}
 
               {fundingCycleRiskCount > 0 && (
-                <span className="ml-2 text-grey-500 dark:text-grey-300">
+                <span className="ml-2 text-warning-600 dark:text-warning-300">
                   <Tooltip
                     title={
                       <Trans>

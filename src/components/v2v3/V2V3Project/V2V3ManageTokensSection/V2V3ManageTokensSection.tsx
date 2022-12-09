@@ -91,6 +91,7 @@ export function V2V3ManageTokensSection() {
               label={t`Your balance`}
               labelStyle={labelStyle}
               contentStyle={contentStyle}
+              className="pb-0"
             >
               <AccountBalanceDescription />
             </Descriptions.Item>

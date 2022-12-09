@@ -1,6 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Descriptions, Form, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
+import axios from 'axios'
 import { Callout } from 'components/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
 import { MemoFormInput } from 'components/Project/PayProjectForm/MemoFormInput'
@@ -10,15 +11,117 @@ import { useNftAccountBalance } from 'hooks/JB721Delegate/contractReader/NftAcco
 import { useETHReceivedFromTokens } from 'hooks/v2v3/contractReader/ETHReceivedFromTokens'
 import { useRedeemTokensTx } from 'hooks/v2v3/transactor/RedeemTokensTx'
 import { useWallet } from 'hooks/Wallet'
+import { IPFSNftRewardTier } from 'models/nftRewardTier'
 import { JB721DelegateToken } from 'models/subgraph-entities/v2/jb-721-delegate-tokens'
-import { useContext, useState } from 'react'
+import { MouseEventHandler, useContext, useState } from 'react'
+import { useQuery, UseQueryResult } from 'react-query'
+import { classNames } from 'utils/classNames'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
+import { cidFromIpfsUri, openIpfsUrl } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
 import { V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { formatRedemptionRate } from 'utils/v2v3/math'
+import { LoadingOutlined } from '@ant-design/icons'
+
+function useJB721DelegateTokenMetadata(
+  tokenUri: string | undefined,
+): UseQueryResult<IPFSNftRewardTier> {
+  return useQuery(
+    ['nft-rewards', tokenUri],
+    async (): Promise<IPFSNftRewardTier | undefined> => {
+      if (!tokenUri) return
+
+      const url = openIpfsUrl(cidFromIpfsUri(tokenUri))
+      const response = await axios.get(url)
+      const tierMetadata: IPFSNftRewardTier = response.data
+
+      return tierMetadata
+    },
+  )
+}
+
+function Card({
+  name,
+  imageUrl,
+  isSelected,
+  loading,
+  onClick,
+}: {
+  name: string
+  imageUrl: string
+  isSelected?: boolean
+  loading?: boolean
+  onClick?: MouseEventHandler<HTMLDivElement>
+}) {
+  return (
+    <>
+      <div
+        className={classNames(
+          'flex h-full w-full cursor-pointer flex-col rounded-sm transition-shadow duration-100',
+          isSelected
+            ? 'shadow-[2px_0px_10px_0px_var(--boxShadow-primary)] outline outline-2 outline-haze-400'
+            : '',
+        )}
+        onClick={onClick}
+        role="button"
+      >
+        <div
+          className={classNames(
+            'relative flex w-full items-center justify-center',
+            !loading ? 'pt-[100%]' : 'pt-[unset]',
+            isSelected
+              ? 'bg-smoke-25 dark:bg-slate-800'
+              : 'bg-smoke-100 dark:bg-slate-600',
+          )}
+        >
+          {loading ? (
+            <div className="flex h-[151px] w-full items-center justify-center border border-solid border-smoke-200 dark:border-grey-600">
+              <LoadingOutlined />
+            </div>
+          ) : (
+            <img
+              className={classNames(
+                'absolute top-0 h-full w-full object-cover',
+              )}
+              alt={name}
+              src={imageUrl}
+              style={{
+                filter: isSelected ? 'unset' : 'brightness(50%)',
+              }}
+              crossOrigin="anonymous"
+            />
+          )}
+          {/* {isSelected ? <RewardIcon /> : null} */}
+        </div>
+        {/* Details section below image */}
+        <div
+          className={classNames(
+            'flex h-full w-full flex-col justify-center px-3 pb-1.5',
+            isSelected
+              ? 'bg-smoke-25 dark:bg-slate-800'
+              : 'bg-smoke-100 dark:bg-slate-600',
+            !loading ? 'pt-2' : 'pt-1',
+          )}
+        ></div>
+      </div>
+    </>
+  )
+}
 
 export function NftTierAccountHoldings({ nft }: { nft: JB721DelegateToken }) {
-  return <div>{nft.tokenUri}</div>
+  const { data: tierData } = useJB721DelegateTokenMetadata(nft.tokenUri)
+  if (!tierData) return null
+
+  return (
+    <div>
+      <Card
+        imageUrl={openIpfsUrl(cidFromIpfsUri(tierData.image))}
+        name={tierData.name}
+      />
+
+      {nft.tokenUri}
+    </div>
+  )
 }
 
 export function RedeemNftsModal({

@@ -135,10 +135,6 @@ export function V2V3Project() {
                     <ManageNftsSection />
                   </section>
                 ) : null}
-
-                <section>
-                  <ManageNftsSection />
-                </section>
                 <section>
                   <V2V3FundingCycleSection />
                 </section>

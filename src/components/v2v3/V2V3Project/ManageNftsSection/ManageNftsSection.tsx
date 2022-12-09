@@ -1,10 +1,13 @@
 import { plural, t, Trans } from '@lingui/macro'
-import { Descriptions, Space } from 'antd'
+import { Button, Descriptions, Space } from 'antd'
 import SectionHeader from 'components/SectionHeader'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useNftAccountBalance } from 'hooks/JB721Delegate/contractReader/NftAccountBalance'
 import { useWallet } from 'hooks/Wallet'
-import { CSSProperties, useContext } from 'react'
+import { CSSProperties, useContext, useState } from 'react'
+import { featureFlagEnabled } from 'utils/featureFlags'
+import { RedeemNftsModal } from './RedeemNftsModal'
 
 const labelStyle: CSSProperties = {
   width: '10.5rem',
@@ -20,13 +23,15 @@ const contentStyle: CSSProperties = {
 export function ManageNftsSection() {
   const { userAddress } = useWallet()
   const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
-
+  const [redeemNftsModalVisible, setRedeemNftsModalVisible] =
+    useState<boolean>(false)
   const { data: nfts, isLoading } = useNftAccountBalance({
     accountAddress: userAddress,
     dataSourceAddress: fundingCycleMetadata?.dataSource,
   })
 
   const nftBalanceFormatted = nfts?.length ?? 0
+  const nftRedeemEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REDEEM)
 
   if (isLoading) return null
 
@@ -49,9 +54,25 @@ export function ManageNftsSection() {
                 other: 'NFTs',
               })}
             </div>
+            {nftRedeemEnabled && nftBalanceFormatted > 0 ? (
+              <div>
+                <Button
+                  size="small"
+                  onClick={() => {
+                    setRedeemNftsModalVisible(true)
+                  }}
+                >
+                  Redeem for ETH
+                </Button>
+              </div>
+            ) : null}
           </Descriptions.Item>
         </Descriptions>
       </Space>
+      <RedeemNftsModal
+        open={redeemNftsModalVisible}
+        onCancel={() => setRedeemNftsModalVisible(false)}
+      />
     </>
   )
 }

@@ -223,7 +223,7 @@ export function SplitItem({
         ) : null}
         {reservedRate ? (
           <TooltipIcon
-            iconClassName="ml-7"
+            iconClassName="ml-2"
             tip={
               <Trans>
                 {(reservedRate * parseFloat(formattedSplitPercent)) / 100}% of

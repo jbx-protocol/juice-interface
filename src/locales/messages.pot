@@ -2408,9 +2408,6 @@ msgstr ""
 msgid "Redemption rate:"
 msgstr ""
 
-msgid "Redemption value"
-msgstr ""
-
 msgid "Redemptions"
 msgstr ""
 
@@ -3134,6 +3131,9 @@ msgstr ""
 msgid "Total raised"
 msgstr ""
 
+msgid "Total redemption value"
+msgstr ""
+
 msgid "Total supply"
 msgstr ""
 
@@ -3521,6 +3521,9 @@ msgstr ""
 msgid "Your Juicebox project has no active funding cycle. Launch a funding cycle to re-enable payments on your project."
 msgstr ""
 
+msgid "Your NFTs"
+msgstr ""
+
 msgid "Your V1 balance"
 msgstr ""
 
@@ -3816,6 +3819,9 @@ msgid "{lockDurationOption} {lockDurationOption, plural, one {{0}} other {{1}}}"
 msgstr ""
 
 msgid "{minTokensAllowedToStake, plural, one {You must stake at least # token.} other {You must stake at least # tokens.}}"
+msgstr ""
+
+msgid "{nftBalanceFormatted, plural, one {NFT} other {NFTs}}"
 msgstr ""
 
 msgid "{payerRate} (+ {reservedRate} reserved) {tokenSymbolPlural}/ETH"

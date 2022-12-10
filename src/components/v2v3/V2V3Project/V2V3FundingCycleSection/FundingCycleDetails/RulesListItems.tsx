@@ -19,9 +19,11 @@ import { FundingCycleListItem } from './FundingCycleListItem'
 export function RulesListItems({
   fundingCycle,
   fundingCycleMetadata,
+  showDiffs,
 }: {
   fundingCycle: V2V3FundingCycle
   fundingCycleMetadata: V2V3FundingCycleMetadata
+  showDiffs?: boolean
 }) {
   const riskWarningText = FUNDING_CYCLE_WARNING_TEXT()
   const unsafeFundingCycleProperties = getUnsafeV2V3FundingCycleProperties(
@@ -34,6 +36,8 @@ export function RulesListItems({
   const ballotWarningText = unsafeFundingCycleProperties.noBallot
     ? riskWarningText.noBallot
     : riskWarningText.customBallot
+
+  console.info('TODODO showDiffs: ', showDiffs)
 
   return (
     <>

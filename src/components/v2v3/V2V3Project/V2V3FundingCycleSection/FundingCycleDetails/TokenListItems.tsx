@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro'
+import { t } from '@lingui/macro'
 import {
   V2V3FundingCycle,
   V2V3FundingCycleMetadata,
@@ -13,36 +13,40 @@ import {
 } from '../settingExplanations'
 import { FundingCycleListItem } from './FundingCycleListItem'
 
-import FundingCycleDetailWarning from 'components/Project/FundingCycleDetailWarning'
-import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { parseEther } from 'ethers/lib/utils'
 import { useContext } from 'react'
-import { formattedNum } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { getUnsafeV2V3FundingCycleProperties } from 'utils/v2v3/fundingCycle'
 import {
   formatDiscountRate,
   formatIssuanceRate,
   formatRedemptionRate,
-  formatReservedRate,
   weightAmountPermyriad,
 } from 'utils/v2v3/math'
+import { MintRateValue } from './values/MintRateValue'
+import { ReservedRateValue } from './values/ReservedRateValue'
+import { ContributorOrReservedTokensValue } from './values/ContributorOrReservedTokensValue'
 
 export function TokenListItems({
   fundingCycle,
   fundingCycleMetadata,
+  showDiffs,
 }: {
   fundingCycle: V2V3FundingCycle
   fundingCycleMetadata: V2V3FundingCycleMetadata
+  showDiffs?: boolean
 }) {
-  const { tokenSymbol } = useContext(V2V3ProjectContext)
+  const {
+    tokenSymbol,
+    fundingCycle: oldFundingCycle,
+    fundingCycleMetadata: oldFundingCycleMetadata,
+  } = useContext(V2V3ProjectContext)
 
   const unsafeFundingCycleProperties = getUnsafeV2V3FundingCycleProperties(
     fundingCycle,
     fundingCycleMetadata,
   )
-  const riskWarningText = FUNDING_CYCLE_WARNING_TEXT()
 
   const tokenSymbolPlural = tokenSymbolText({
     tokenSymbol,
@@ -50,85 +54,146 @@ export function TokenListItems({
     plural: true,
   })
 
-  const ContributorRateText = () => {
-    const payerRate = formattedNum(
-      formatIssuanceRate(
-        weightAmountPermyriad(
-          fundingCycle?.weight,
-          fundingCycleMetadata?.reservedRate.toNumber(),
-          parseEther('1'),
-          'payer',
-        ) ?? '',
-      ),
-    )
-
-    return (
-      <span>
-        <Trans>
-          {payerRate} {tokenSymbolPlural}/ETH
-        </Trans>
-      </span>
-    )
-  }
-
-  const reservedRate = formattedNum(
-    formatIssuanceRate(
-      weightAmountPermyriad(
-        fundingCycle?.weight,
-        fundingCycleMetadata?.reservedRate.toNumber(),
-        parseEther('1'),
-        'reserved',
-      ) ?? '',
-    ),
+  const contributorTokens = formatIssuanceRate(
+    weightAmountPermyriad(
+      fundingCycle?.weight,
+      fundingCycleMetadata?.reservedRate.toNumber(),
+      parseEther('1'),
+      'payer',
+    ) ?? '',
   )
+
+  const oldContributorTokens = formatIssuanceRate(
+    weightAmountPermyriad(
+      oldFundingCycle?.weight,
+      oldFundingCycleMetadata?.reservedRate.toNumber(),
+      parseEther('1'),
+      'payer',
+    ) ?? '',
+  )
+
+  const reservedTokens = formatIssuanceRate(
+    weightAmountPermyriad(
+      fundingCycle?.weight,
+      fundingCycleMetadata?.reservedRate.toNumber(),
+      parseEther('1'),
+      'reserved',
+    ) ?? '',
+  )
+
+  const oldReservedTokens = formatIssuanceRate(
+    weightAmountPermyriad(
+      oldFundingCycle?.weight,
+      oldFundingCycleMetadata?.reservedRate.toNumber(),
+      parseEther('1'),
+      'reserved',
+    ) ?? '',
+  )
+
+  const mintRateHasDiff =
+    oldFundingCycle && !fundingCycle.weight.eq(oldFundingCycle.weight)
+  const reservedRateHasDiff =
+    oldFundingCycleMetadata &&
+    !fundingCycleMetadata.reservedRate.eq(oldFundingCycleMetadata.reservedRate)
+
+  const contributorTokensHasDiff =
+    oldContributorTokens && !(contributorTokens === oldContributorTokens)
+  const reservedTokensHasDiff =
+    oldReservedTokens && !(reservedTokens === oldReservedTokens)
+
+  const discountRateHasDiff =
+    oldFundingCycle &&
+    !fundingCycle.discountRate.eq(oldFundingCycle.discountRate)
+  const redemptionHasDiff =
+    oldFundingCycleMetadata &&
+    !fundingCycleMetadata.redemptionRate.eq(
+      oldFundingCycleMetadata.redemptionRate,
+    )
 
   return (
     <>
       <FundingCycleListItem
         name={t`Mint rate`}
-        value={
-          <Trans>
-            {formattedNum(formatIssuanceRate(fundingCycle?.weight.toString()))}{' '}
-            tokens/ETH
-          </Trans>
+        value={<MintRateValue value={fundingCycle.weight} />}
+        oldValue={
+          showDiffs && mintRateHasDiff ? (
+            <MintRateValue value={oldFundingCycle.weight} />
+          ) : undefined
         }
         helperText={MINT_RATE_EXPLANATION}
       />
       <FundingCycleListItem
         name={t`Reserved rate`}
         value={
-          <FundingCycleDetailWarning
+          <ReservedRateValue
+            value={fundingCycleMetadata.reservedRate}
             showWarning={unsafeFundingCycleProperties.metadataReservedRate}
-            tooltipTitle={riskWarningText.metadataReservedRate}
-          >
-            {formatReservedRate(fundingCycleMetadata?.reservedRate)}%
-          </FundingCycleDetailWarning>
+          />
+        }
+        oldValue={
+          showDiffs && reservedRateHasDiff ? (
+            <ReservedRateValue value={oldFundingCycleMetadata.reservedRate} />
+          ) : undefined
         }
         helperText={RESERVED_RATE_EXPLAINATION}
       />
       <FundingCycleListItem
         name={t`Reserved tokens`}
         value={
-          <span>
-            {reservedRate} {tokenSymbolPlural}/ETH
-          </span>
+          <ContributorOrReservedTokensValue
+            value={reservedTokens}
+            tokenSymbol={tokenSymbolPlural}
+          />
+        }
+        oldValue={
+          showDiffs && reservedTokensHasDiff ? (
+            <ContributorOrReservedTokensValue
+              value={oldReservedTokens}
+              tokenSymbol={tokenSymbolPlural}
+            />
+          ) : undefined
         }
         helperText={RESERVED_TOKENS_EXPLAINATION}
         subItem
       />
       <FundingCycleListItem
         name={t`Payment issuance rate`}
-        value={<ContributorRateText />}
+        value={
+          <ContributorOrReservedTokensValue
+            value={contributorTokens}
+            tokenSymbol={tokenSymbolPlural}
+          />
+        }
+        oldValue={
+          showDiffs && contributorTokensHasDiff ? (
+            <ContributorOrReservedTokensValue
+              value={oldContributorTokens}
+              tokenSymbol={tokenSymbolPlural}
+            />
+          ) : undefined
+        }
         helperText={CONTRIBUTOR_RATE_EXPLAINATION}
       />
       <FundingCycleListItem
         name={t`Discount rate`}
         value={`${formatDiscountRate(fundingCycle.discountRate)}%`}
+        oldValue={
+          showDiffs && discountRateHasDiff
+            ? `${formatDiscountRate(oldFundingCycle.discountRate)}%`
+            : undefined
+        }
         helperText={DISCOUNT_RATE_EXPLANATION}
       />
       <FundingCycleListItem
         name={t`Redemption rate`}
         value={`${formatRedemptionRate(fundingCycleMetadata?.redemptionRate)}%`}
+        oldValue={
+          showDiffs && redemptionHasDiff
+            ? `${formatRedemptionRate(
+                oldFundingCycleMetadata?.redemptionRate,
+              )}%`
+            : undefined
+        }
         helperText={REDEMPTION_RATE_EXPLANATION}
       />
     </>

@@ -47,6 +47,14 @@ export function FundingCycleListItems({
       )
     : undefined
 
+  const durationHasDiff =
+    oldFundingCycle && !fundingCycle.duration.eq(oldFundingCycle.duration)
+  const distributionLimitHasDiff =
+    oldDistributionLimit &&
+    !distributionLimit?.eq(oldDistributionLimit) &&
+    oldDistributionLimitCurrency &&
+    !distributionLimitCurrency?.eq(oldDistributionLimitCurrency)
+
   return (
     <>
       {formattedStartTime ? (
@@ -77,7 +85,7 @@ export function FundingCycleListItems({
         name={t`Duration`}
         value={<DurationValue duration={fundingCycle.duration} />}
         oldValue={
-          showDiffs ? (
+          showDiffs && durationHasDiff ? (
             <DurationValue duration={oldFundingCycle?.duration} />
           ) : undefined
         }
@@ -91,10 +99,12 @@ export function FundingCycleListItems({
           />
         }
         oldValue={
-          <DistributionLimitValue
-            distributionLimit={oldDistributionLimit}
-            currency={oldCurrency}
-          />
+          showDiffs && distributionLimitHasDiff ? (
+            <DistributionLimitValue
+              distributionLimit={oldDistributionLimit}
+              currency={oldCurrency}
+            />
+          ) : undefined
         }
         helperText={DISTRIBUTION_LIMIT_EXPLANATION}
       />

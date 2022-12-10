@@ -3689,6 +3689,9 @@ msgstr ""
 msgid "{0} withdrawn"
 msgstr ""
 
+msgid "{0} {tokenSymbol}/ETH"
+msgstr ""
+
 msgid "{0} {tokenTextPlural} reserved"
 msgstr ""
 

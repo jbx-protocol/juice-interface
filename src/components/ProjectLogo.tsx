@@ -12,14 +12,21 @@ export default function ProjectLogo({
   uri,
   name,
   projectId,
+  size = 'default',
 }: {
   className?: string
   uri: string | undefined
   name: string | undefined
   projectId?: number | undefined
+  size?: 'default' | 'thumbnail' | 'large'
 }) {
   const [srcLoadError, setSrcLoadError] = useState(false)
   const validImg = uri && !srcLoadError
+  const imgSize = {
+    default: '256',
+    large: '540',
+    thumbnail: '65',
+  }
 
   const _uri = useMemo(() => {
     if (projectId && IMAGE_URI_OVERRIDES[projectId]) {
@@ -43,7 +50,7 @@ export default function ProjectLogo({
       {validImg ? (
         <img
           className="max-h-full max-w-full object-cover object-center"
-          src={_uri}
+          src={`${_uri}?img-width=${imgSize[size]}&img-height=${imgSize[size]}`}
           alt={name + ' logo'}
           onError={() => setSrcLoadError(true)}
           loading="lazy"

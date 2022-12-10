@@ -8,6 +8,7 @@ type RichNoteProps = {
   className?: string
   note: string | undefined
   ignoreMediaLinks?: boolean
+  size?: string
 }
 
 export default function RichNote({
@@ -49,6 +50,7 @@ export default function RichNote({
                 className="mt-2 h-auto max-h-24 w-auto p-2"
                 key={i}
                 src={link}
+                size="large"
               />
             ))}
           </Space>

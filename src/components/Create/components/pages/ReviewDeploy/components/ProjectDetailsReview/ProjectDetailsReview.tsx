@@ -58,6 +58,7 @@ export const ProjectDetailsReview = () => {
               title={t`Project logo`}
               desc={
                 <ProjectLogo
+                  size="original"
                   className="h-36 w-36"
                   uri={
                     logoUri

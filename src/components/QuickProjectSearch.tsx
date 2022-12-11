@@ -76,6 +76,7 @@ export default function QuickProjectSearch() {
         }
       } else if (e.key === HOT_KEY && (e.metaKey || e.ctrlKey)) {
         setModalVisible(true)
+        e.preventDefault() // Needed to prevent browsers from using default function for quick search command. Some browsers use cmd/ctrl + k to focus url bar
       }
     }
 

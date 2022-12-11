@@ -74,9 +74,9 @@ export default function QuickProjectSearch() {
       }
     }
 
-    window.addEventListener('keypress', listener)
+    window.addEventListener('keydown', listener)
 
-    return () => window.removeEventListener('keypress', listener)
+    return () => window.removeEventListener('keydown', listener)
   }, [spotlightActive, searchText, router, goToProject, reset])
 
   // Arrow key up/down / tab listener
@@ -99,9 +99,9 @@ export default function QuickProjectSearch() {
       e.stopPropagation()
     }
 
-    window.addEventListener('keyup', listener)
+    window.addEventListener('keydown', listener)
 
-    return () => window.removeEventListener('keyup', listener)
+    return () => window.removeEventListener('keydown', listener)
   }, [
     spotlightActive,
     searchText,

@@ -6,11 +6,11 @@ export const emitErrorNotification = (
   message: string,
   {
     description,
-    duration,
+    duration = DEFAULT_ERROR_NOTIFICATION_DURATION_SECONDS,
   }: {
     description?: string
     duration?: number
-  } = { duration: DEFAULT_ERROR_NOTIFICATION_DURATION_SECONDS },
+  },
 ) => {
   const key = new Date().valueOf().toString()
   return notification.error({
@@ -18,9 +18,6 @@ export const emitErrorNotification = (
     message,
     description,
     duration,
-    onClick() {
-      notification.close(key)
-    },
   })
 }
 
@@ -28,11 +25,11 @@ export const emitSuccessNotification = (
   message: string,
   {
     description,
-    duration,
+    duration = DEFAULT_ERROR_NOTIFICATION_DURATION_SECONDS,
   }: {
     description?: string
     duration?: number
-  } = { duration: DEFAULT_ERROR_NOTIFICATION_DURATION_SECONDS },
+  },
 ) => {
   const key = new Date().valueOf().toString()
   return notification.success({
@@ -40,8 +37,5 @@ export const emitSuccessNotification = (
     message,
     description,
     duration,
-    onClick() {
-      notification.close(key)
-    },
   })
 }

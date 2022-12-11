@@ -2,6 +2,7 @@ import { PinataMetadata, PinataPinResponse } from '@pinata/sdk'
 import axios from 'axios'
 import { IPFS_TAGS } from 'constants/ipfs'
 import { consolidateMetadata, ProjectMetadataV5 } from 'models/project-metadata'
+import { IpfsLogoResponse } from 'pages/api/ipfs/logo.page'
 import {
   ipfsGatewayUrl,
   metadataNameForHandle,
@@ -53,14 +54,14 @@ export const pinFileToIpfs = async (
     )
   }
 
-  const res = await axios.post('/api/ipfs/logo', data, {
-    maxContentLength: Infinity, //this is needed to prevent axios from erroring out with large files
+  const res = await axios.post<IpfsLogoResponse>('/api/ipfs/logo', data, {
+    maxContentLength: Infinity, // this is needed to prevent axios from erroring out with large files
     headers: {
       'Content-Type': `multipart/form-data;`,
     },
   })
 
-  return res.data as PinataPinResponse
+  return res.data
 }
 
 export const uploadProjectMetadata = async (

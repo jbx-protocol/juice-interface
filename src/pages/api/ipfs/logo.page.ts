@@ -1,8 +1,8 @@
 import { t } from '@lingui/macro'
 import formidable from 'formidable'
 import fs from 'fs'
-import { getPinata } from 'lib/pinata'
 import { NextApiRequest, NextApiResponse } from 'next'
+import * as infuraIpfsApi from 'lib/infura/ipfs'
 
 export const config = {
   api: {
@@ -10,38 +10,37 @@ export const config = {
   },
 }
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+export interface IpfsLogoResponse {
+  IpfsHash: string
+}
+
+const handler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<IpfsLogoResponse | { error: string }>,
+) => {
   try {
     const incoming = new formidable.IncomingForm()
 
-    const result = await new Promise((resolve, reject) => {
-      incoming.parse(req, async (err, fields, files) => {
-        if (err) {
-          reject(err)
-        }
-
-        const file = files.file as formidable.File
-        const stream = fs.createReadStream(file.filepath)
-
-        let options = undefined
-        if (fields.pinataMetadata) {
-          const pinataMetadata = JSON.parse(fields.pinataMetadata as string)
-          options = {
-            pinataMetadata,
+    const result = await new Promise<infuraIpfsApi.InfuraPinFileResponse>(
+      (resolve, reject) => {
+        incoming.parse(req, async (err, fields, files) => {
+          if (err) {
+            reject(err)
           }
-        }
 
-        const pinata = getPinata()
+          const file = files.file as formidable.File
+          const stream = fs.createReadStream(file.filepath)
 
-        const pinResult = await pinata.pinFileToIPFS(stream, options) // pin to pinata
+          const infuraRes = await infuraIpfsApi.pinFile(stream) // pin to infura
+          resolve(infuraRes)
+        })
+      },
+    )
 
-        resolve(pinResult)
-      })
-    })
-
-    return res.status(200).json(result)
+    return res.status(200).json({ IpfsHash: result.Hash })
   } catch (err) {
     console.error(err)
+
     return res.status(500).json({
       error: t`Error uploading file`,
     })

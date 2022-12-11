@@ -1,5 +1,11 @@
 import axios from 'axios'
 import { INFURA_IPFS_API_BASE_URL } from 'constants/ipfs'
+import FormData from 'form-data'
+import fs from 'fs'
+
+export type InfuraPinFileResponse = {
+  Hash: string
+}
 
 const INFURA_IPFS_PROJECT_ID = process.env.INFURA_IPFS_PROJECT_ID
 const INFURA_IPFS_API_SECRET = process.env.INFURA_IPFS_API_SECRET
@@ -23,8 +29,22 @@ const infuraApi = axios.create({
 })
 
 /**
- * https://docs.infura.io/infura/networks/ipfs/http-api-methods/pin_add
+ * https://docs.infura.io/infura/networks/ipfs/http-api-methodsƒpin_add
  */
 export function pin(hash: string) {
   return infuraApi.post(`/api/v0/pin/add?arg=${hash}`)
+}
+
+/**
+ * https://docs.infura.io/infura/networks/ipfs/http-api-methods/pin
+ */
+export function pinFile(file: fs.ReadStream): Promise<InfuraPinFileResponse> {
+  const formData = new FormData()
+  formData.append('file', file)
+
+  return infuraApi.post('/api/v0/add', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
 }

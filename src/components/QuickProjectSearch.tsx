@@ -1,8 +1,10 @@
+import { SearchOutlined } from '@ant-design/icons'
 import { ArrowRightOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import Input from 'antd/lib/input/Input'
 import Modal from 'antd/lib/modal/Modal'
 import { PV_V2 } from 'constants/pv'
+import { useModal } from 'hooks/Modal'
 import { useProjectsSearch } from 'hooks/Projects'
 import { useRouter } from 'next/router'
 import React, { useCallback, useEffect, useState } from 'react'
@@ -22,7 +24,7 @@ export default function QuickProjectSearch() {
   const [inputText, setInputText] = useState<string>()
   const [searchText, setSearchText] = useState<string>()
   const [highlightIndex, setHighlightIndex] = useState<number>()
-  const [modalVisible, setModalVisible] = useState<boolean>()
+  const modal = useModal()
 
   const router = useRouter()
 
@@ -53,17 +55,17 @@ export default function QuickProjectSearch() {
   }, [router, searchPages, highlightIndex])
 
   const reset = useCallback(() => {
-    setModalVisible(false)
+    modal.close()
     setHighlightIndex(undefined)
     setSearchText(undefined)
-  }, [])
+  }, [modal])
 
   // Hot key listener to open modal
   useEffect(() => {
     const listener = (e: KeyboardEvent) => {
       if (e.isComposing) return // i think right idk
 
-      if (modalVisible) {
+      if (modal.visible) {
         switch (e.key) {
           case 'escape':
             reset()
@@ -75,7 +77,7 @@ export default function QuickProjectSearch() {
             break
         }
       } else if (e.key === HOT_KEY && (e.metaKey || e.ctrlKey)) {
-        setModalVisible(true)
+        modal.open()
         e.preventDefault() // Needed to prevent browsers from using default function for quick search command. Some browsers use cmd/ctrl + k to focus url bar
       }
     }
@@ -85,13 +87,13 @@ export default function QuickProjectSearch() {
     return () => {
       window.removeEventListener('keydown', listener)
     }
-  }, [modalVisible, searchText, router, goToProject, reset])
+  }, [searchText, router, goToProject, reset, modal])
 
   useEffect(() => {
     const timer = setTimeout(() => {
       // timeout to wait for dom render after opening modal
 
-      if (modalVisible) {
+      if (modal.visible) {
         ;(document.getElementById(INPUT_ID) as HTMLInputElement | null)?.focus()
       }
     }, 0)
@@ -99,7 +101,7 @@ export default function QuickProjectSearch() {
     return () => {
       if (timer) clearTimeout(timer)
     }
-  }, [modalVisible])
+  }, [modal.visible])
 
   // Arrow key up/down & tab listener
   useEffect(() => {
@@ -125,7 +127,7 @@ export default function QuickProjectSearch() {
       window.removeEventListener('keydown', listener)
     }
   }, [
-    modalVisible,
+    modal.visible,
     searchText,
     router,
     goToProject,
@@ -134,70 +136,79 @@ export default function QuickProjectSearch() {
   ])
 
   return (
-    <Modal
-      centered
-      open={modalVisible}
-      onCancel={reset}
-      okButtonProps={{ hidden: true }}
-      cancelButtonProps={{ hidden: true }}
-      footer={null}
-      closeIcon
-      destroyOnClose
-      bodyStyle={{ padding: 0 }}
-    >
-      <div className="flex items-center gap-5 p-5">
-        <CloseCircleOutlined onClick={() => setModalVisible(false)} />
-        <Input
-          id={INPUT_ID}
-          placeholder={t`Find a project`}
-          onChange={e => setInputText(e.target.value)}
-        />
-      </div>
+    <>
+      <SearchOutlined
+        className="mt-1 text-2xl leading-none transition-colors hover:text-haze-400"
+        onClick={modal.open}
+      />
+      <Modal
+        centered
+        open={modal.visible}
+        onCancel={reset}
+        okButtonProps={{ hidden: true }}
+        cancelButtonProps={{ hidden: true }}
+        footer={null}
+        closeIcon
+        destroyOnClose
+        bodyStyle={{ padding: 0 }}
+      >
+        <div className="flex items-center gap-5 p-5">
+          <CloseCircleOutlined onClick={modal.close} />
+          <Input
+            id={INPUT_ID}
+            placeholder={t`Find a project`}
+            onChange={e => setInputText(e.target.value)}
+          />
+        </div>
 
-      <div hidden={!searchText} className="pb-5">
-        {isLoadingSearch && <Loading />}
+        <div hidden={!searchText} className="pb-5">
+          {isLoadingSearch && <Loading />}
 
-        {!!searchPages?.length && (
-          <div className="flex flex-col">
-            {searchPages.slice(0, MAX_RESULTS).map((p, i) => (
-              <div
-                key={p.id}
-                className={twMerge(
-                  'flex cursor-pointer items-baseline gap-2 py-2 px-5',
-                  highlightIndex === i ? 'bg-smoke-75 dark:bg-slate-600' : '',
-                )}
-                onClick={goToProject}
-                onMouseEnter={() => setHighlightIndex(i)}
-              >
-                {p.pv === PV_V2 ? (
-                  <V2V3ProjectHandleLink
-                    projectId={p.projectId}
-                    handle={p.handle}
-                  />
-                ) : (
-                  <V1ProjectHandle projectId={p.projectId} handle={p.handle} />
-                )}
+          {!!searchPages?.length && (
+            <div className="flex flex-col">
+              {searchPages.slice(0, MAX_RESULTS).map((p, i) => (
+                <div
+                  key={p.id}
+                  className={twMerge(
+                    'flex cursor-pointer items-baseline gap-2 py-2 px-5',
+                    highlightIndex === i ? 'bg-smoke-75 dark:bg-slate-600' : '',
+                  )}
+                  onClick={goToProject}
+                  onMouseEnter={() => setHighlightIndex(i)}
+                >
+                  {p.pv === PV_V2 ? (
+                    <V2V3ProjectHandleLink
+                      projectId={p.projectId}
+                      handle={p.handle}
+                    />
+                  ) : (
+                    <V1ProjectHandle
+                      projectId={p.projectId}
+                      handle={p.handle}
+                    />
+                  )}
 
-                <div style={{ flex: 1 }}>
-                  <ProjectVersionBadge
-                    transparent
-                    size="small"
-                    versionText={`V${p.pv}`}
-                  />
+                  <div style={{ flex: 1 }}>
+                    <ProjectVersionBadge
+                      transparent
+                      size="small"
+                      versionText={`V${p.pv}`}
+                    />
+                  </div>
+
+                  {highlightIndex === i && <ArrowRightOutlined />}
                 </div>
+              ))}
+            </div>
+          )}
 
-                {highlightIndex === i && <ArrowRightOutlined />}
-              </div>
-            ))}
-          </div>
-        )}
-
-        {searchText && !isLoadingSearch && searchPages?.length === 0 && (
-          <div className="text-center text-grey-400">
-            <Trans>No results</Trans>
-          </div>
-        )}
-      </div>
-    </Modal>
+          {searchText && !isLoadingSearch && searchPages?.length === 0 && (
+            <div className="text-center text-grey-400">
+              <Trans>No results</Trans>
+            </div>
+          )}
+        </div>
+      </Modal>
+    </>
   )
 }

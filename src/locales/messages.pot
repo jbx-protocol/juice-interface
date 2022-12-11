@@ -1910,6 +1910,9 @@ msgstr ""
 msgid "No reserved tokens configured."
 msgstr ""
 
+msgid "No results"
+msgstr ""
+
 msgid "No strategy"
 msgstr ""
 

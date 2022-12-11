@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { t } from '@lingui/macro'
+import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
@@ -45,7 +46,7 @@ export function useSetPayoutModsTx(): TransactorInstance<{
           lockedUntil: BigNumber.from(m.lockedUntil ?? 0).toHexString(),
           beneficiary: m.beneficiary || constants.AddressZero,
           projectId: m.projectId || BigNumber.from(0).toHexString(),
-          allocator: constants.AddressZero,
+          allocator: m.allocator ?? NULL_ALLOCATOR_ADDRESS,
         })),
       ],
       {

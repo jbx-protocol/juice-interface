@@ -3269,6 +3269,9 @@ msgstr ""
 msgid "V1"
 msgstr ""
 
+msgid "V1 Project handle"
+msgstr ""
+
 msgid "V1 token holders can swap their tokens for your V2 tokens on your V2 project's <0>Tokens</0> section."
 msgstr ""
 
@@ -3285,6 +3288,9 @@ msgid "V2"
 msgstr ""
 
 msgid "V3"
+msgstr ""
+
+msgid "V3 Project ID"
 msgstr ""
 
 msgid "Value has already been submitted"

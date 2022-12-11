@@ -1,21 +1,20 @@
-import * as constants from '@ethersproject/constants'
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
-import { V2_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
+import {
+  V1_V3_ALLOCATOR_ADDRESS,
+  V2_V3_ALLOCATOR_ADDRESS,
+} from 'constants/contracts/mainnet/Allocators'
 
 export function AllocatorBadge({
   allocator,
 }: {
   allocator: string | undefined
 }) {
+  const allocatorAddresses = [V2_V3_ALLOCATOR_ADDRESS, V1_V3_ALLOCATOR_ADDRESS]
   const versionName =
-    allocator === constants.AddressZero
-      ? 'V3'
-      : allocator === V2_ALLOCATOR_ADDRESS
-      ? 'V2'
-      : null // TODO: add v1 allocator
+    allocator && allocatorAddresses.includes(allocator) ? 'V3' : undefined
 
   if (!versionName) return null
   return (

@@ -1,7 +1,6 @@
 import { t } from '@lingui/macro'
 import formidable from 'formidable'
 import fs from 'fs'
-import { pin } from 'lib/infura/ipfs'
 import { getPinata } from 'lib/pinata'
 import { NextApiRequest, NextApiResponse } from 'next'
 
@@ -20,27 +19,29 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         if (err) {
           reject(err)
         }
-        try {
-          const file = files.file as formidable.File
-          const stream = fs.createReadStream(file.filepath)
-          let options = undefined
-          if (fields.pinataMetadata) {
-            const pinataMetadata = JSON.parse(fields.pinataMetadata as string)
-            options = {
-              pinataMetadata,
-            }
+
+        const file = files.file as formidable.File
+        const stream = fs.createReadStream(file.filepath)
+
+        let options = undefined
+        if (fields.pinataMetadata) {
+          const pinataMetadata = JSON.parse(fields.pinataMetadata as string)
+          options = {
+            pinataMetadata,
           }
-          const pinata = getPinata()
-          const pinResult = await pinata.pinFileToIPFS(stream, options)
-          await pin(pinResult.IpfsHash)
-          resolve(pinResult)
-        } catch (err) {
-          reject(err)
         }
+
+        const pinata = getPinata()
+
+        const pinResult = await pinata.pinFileToIPFS(stream, options) // pin to pinata
+
+        resolve(pinResult)
       })
     })
+
     return res.status(200).json(result)
   } catch (err) {
+    console.error(err)
     return res.status(500).json({
       error: t`Error uploading file`,
     })

@@ -1,36 +1,36 @@
 import { SettingOutlined, ToolOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
+import { NotificationDot } from 'components/NotificationDot'
 import { V1ProjectToolsDrawer } from 'components/v1/V1Project/V1ProjectToolsDrawer/V1ProjectToolsDrawer'
-import { PV_V1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { useIsUserAddress } from 'hooks/IsUserAddress'
 import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
+import { useRelaunchV1ViaV3Create } from 'hooks/v1/RelaunchV1ViaV3Create'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import { useContext, useState } from 'react'
 import { classNames } from 'utils/classNames'
 import EditProjectModal from './modals/EditProjectModal'
-import MigrateV1Pt1Modal from './modals/MigrateV1Pt1Modal'
 
 export default function V1ProjectHeaderActions() {
-  const { handle, isPreviewMode, terminal, owner } =
-    useContext(V1ProjectContext)
+  const { handle, isPreviewMode, terminal } = useContext(V1ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
-  const [migrateDrawerVisible, setMigrateDrawerVisible] =
-    useState<boolean>(false)
   const [toolDrawerVisible, setToolDrawerVisible] = useState<boolean>(false)
   const [editProjectModalVisible, setEditProjectModalVisible] =
     useState<boolean>(false)
+
+  const { relaunch, isReady } = useRelaunchV1ViaV3Create()
 
   const hasEditPermission = useV1ConnectedWalletHasPermission([
     V1OperatorPermission.SetHandle,
     V1OperatorPermission.SetUri,
   ])
-  const isOwner = useIsUserAddress(owner)
+  const isOwner = useV1ConnectedWalletHasPermission(
+    V1OperatorPermission.Configure,
+  )
 
-  const allowMigrate = isOwner && terminal?.version === PV_V1
+  const allowMigrate = isOwner
 
   if (isPreviewMode || !projectId) return null
 
@@ -38,22 +38,27 @@ export default function V1ProjectHeaderActions() {
     <div className="flex items-center">
       <span className="pr-2 text-grey-400 dark:text-slate-200">
         {terminal?.version && (
-          <Tooltip
-            title={t`Version of the terminal contract used by this project.`}
-          >
-            <span
-              className={classNames(
-                'bg-smoke-100 py-0.5 px-1 dark:bg-slate-600',
-                allowMigrate ? 'cursor-pointer' : 'cursor-default',
-              )}
-              onClick={() => {
-                if (!allowMigrate) return
-                setMigrateDrawerVisible(true)
-              }}
+          <div className="relative">
+            <Tooltip
+              title={t`Version of the terminal contract used by this project.`}
             >
-              V{terminal.version}
-            </span>
-          </Tooltip>
+              <span
+                className={classNames(
+                  'cursor-pointer bg-smoke-100 py-0.5 px-1 dark:bg-slate-600',
+                  allowMigrate && isReady ? 'cursor-pointer' : 'cursor-default',
+                )}
+                onClick={() => {
+                  if (!isReady) return
+                  relaunch()
+                }}
+              >
+                V{terminal.version}
+              </span>
+            </Tooltip>
+            {isReady && allowMigrate && (
+              <NotificationDot className="absolute -top-1 -right-1" />
+            )}
+          </div>
         )}
       </span>
 
@@ -79,10 +84,6 @@ export default function V1ProjectHeaderActions() {
         )}
       </div>
 
-      <MigrateV1Pt1Modal
-        open={migrateDrawerVisible}
-        onCancel={() => setMigrateDrawerVisible(false)}
-      />
       <V1ProjectToolsDrawer
         open={toolDrawerVisible}
         onClose={() => setToolDrawerVisible(false)}

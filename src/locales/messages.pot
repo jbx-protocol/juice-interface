@@ -2297,6 +2297,12 @@ msgstr ""
 msgid "Rankings based on number of contributions and volume gained in the last {trendingWindowDays} days. <0>See code</0>"
 msgstr ""
 
+msgid "Re-launch project"
+msgstr ""
+
+msgid "Re-launch your Juicebox project using the v3 contracts. <0>What's new in V3.</0>"
+msgstr ""
+
 msgid "Read less"
 msgstr ""
 
@@ -3246,6 +3252,9 @@ msgid "Update your veNFT's lock duration."
 msgstr ""
 
 msgid "Update {projectTitle}'s NFT collection details."
+msgstr ""
+
+msgid "Upgrade to V3"
 msgstr ""
 
 msgid "Upload"

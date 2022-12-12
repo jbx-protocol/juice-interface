@@ -32,6 +32,10 @@ export function ManageNftsSection() {
 
   const nftBalanceFormatted = nfts?.length ?? 0
   const nftRedeemEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REDEEM)
+  const nftRedeemAllowed =
+    nftRedeemEnabled &&
+    fundingCycleMetadata?.useDataSourceForRedeem &&
+    nftBalanceFormatted > 0
 
   if (isLoading) return null
 
@@ -54,9 +58,7 @@ export function ManageNftsSection() {
                 other: 'NFTs',
               })}
             </div>
-            {nftRedeemEnabled &&
-            nftBalanceFormatted > 0 &&
-            fundingCycleMetadata?.useDataSourceForRedeem ? (
+            {nftRedeemAllowed ? (
               <div>
                 <Button
                   size="small"
@@ -71,10 +73,12 @@ export function ManageNftsSection() {
           </Descriptions.Item>
         </Descriptions>
       </Space>
-      <RedeemNftsModal
-        open={redeemNftsModalVisible}
-        onCancel={() => setRedeemNftsModalVisible(false)}
-      />
+      {nftRedeemAllowed && (
+        <RedeemNftsModal
+          open={redeemNftsModalVisible}
+          onCancel={() => setRedeemNftsModalVisible(false)}
+        />
+      )}
     </>
   )
 }

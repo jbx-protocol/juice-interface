@@ -217,27 +217,36 @@ export function buildJB721TierParams({
   rewardTiers: NftRewardTier[]
 }): JB721TierParams[] {
   // `cids` are ordered the same as `rewardTiers` so can get corresponding values from same index
-  return cids.map((cid, index) => {
-    const contributionFloorWei = parseEther(
-      rewardTiers[index].contributionFloor.toString(),
-    )
-    const maxSupply = rewardTiers[index].maxSupply
-    const initialQuantity = BigNumber.from(maxSupply ?? DEFAULT_NFT_MAX_SUPPLY)
-    const encodedIPFSUri = encodeIPFSUri(cid)
+  return cids
+    .map((cid, index) => {
+      const contributionFloorWei = parseEther(
+        rewardTiers[index].contributionFloor.toString(),
+      )
+      const maxSupply = rewardTiers[index].maxSupply
+      const initialQuantity = BigNumber.from(
+        maxSupply ?? DEFAULT_NFT_MAX_SUPPLY,
+      )
+      const encodedIPFSUri = encodeIPFSUri(cid)
 
-    return {
-      contributionFloor: contributionFloorWei,
-      lockedUntil: BigNumber.from(0),
-      initialQuantity,
-      votingUnits: 0,
-      reservedRate: 0,
-      reservedTokenBeneficiary: constants.AddressZero,
-      encodedIPFSUri,
-      allowManualMint: false,
-      shouldUseBeneficiaryAsDefault: false,
-      transfersPausable: false,
-    } as JB721TierParams
-  })
+      return {
+        contributionFloor: contributionFloorWei,
+        lockedUntil: BigNumber.from(0),
+        initialQuantity,
+        votingUnits: 0,
+        reservedRate: 0,
+        reservedTokenBeneficiary: constants.AddressZero,
+        encodedIPFSUri,
+        allowManualMint: false,
+        shouldUseBeneficiaryAsDefault: false,
+        transfersPausable: false,
+      } as JB721TierParams
+    })
+    .sort((a, b) => {
+      // Tiers MUST BE in ascending order when sent to contract.
+      if (a.contributionFloor.gt(b.contributionFloor)) return 1
+      if (a.contributionFloor.lt(b.contributionFloor)) return -1
+      return 0
+    })
 }
 
 /**

@@ -12,10 +12,13 @@ import {
 } from 'utils/format/formatNumber'
 import { amountSubFee } from 'utils/v1/math'
 import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
 import { CurrencyName } from 'constants/currency'
 import { classNames } from 'utils/classNames'
 import V1ProjectHandle from '../V1ProjectHandle'
 import { EditingPayoutMod } from './types'
+import { V1_V3_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
+import { AllocatorBadge } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/AllocatorBadge'
 
 const FormattedRow = ({
   label,
@@ -89,6 +92,11 @@ export function ProjectModInput({
 }) {
   const feePerbicent = percentToPerbicent(feePercentage)
 
+  const isV1Project =
+    mod.projectId?.gt(0) && mod.allocator === constants.AddressZero
+  const isV3Project =
+    mod.projectId?.gt(0) && mod.allocator === V1_V3_ALLOCATOR_ADDRESS
+
   return (
     <div
       className={classNames(
@@ -107,9 +115,16 @@ export function ProjectModInput({
         )}
         onClick={() => onSelect?.(index)}
       >
-        {mod.projectId?.gt(0) ? (
+        {mod.projectId && isV1Project ? (
           <FormattedRow label={'Project'}>
             <V1ProjectHandle projectId={mod.projectId} />
+          </FormattedRow>
+        ) : isV3Project ? (
+          <FormattedRow label={'Project ID'}>
+            <Space size="middle">
+              <span>{mod.projectId?.toNumber()}</span>
+              <AllocatorBadge allocator={mod.allocator} />
+            </Space>
           </FormattedRow>
         ) : (
           <FormattedRow label={'Address'}>

@@ -1,4 +1,5 @@
 import ProjectHandleFormItem from 'components/v1/shared/formItems/ProjectHandle/ProjectHandleFormItem'
+import { ProjectPayoutFormItem } from 'components/v1/shared/formItems/ProjectPayoutFormItem'
 import TokenRefs from 'components/v1/shared/formItems/TokenRefs'
 import ProjectTicketMods from 'components/v1/shared/ProjectTicketMods'
 
@@ -27,6 +28,7 @@ export const FormItems = {
   ProjectDiscountRate,
   ProjectDuration,
   ProjectHandleFormItem,
+  ProjectPayoutFormItem,
   ProjectLink,
   ProjectLogoUri,
   ProjectName,

@@ -1,9 +1,15 @@
 import { CrownFilled, LockOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Tooltip } from 'antd'
+import { Space, Tooltip } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
 import TooltipLabel from 'components/TooltipLabel'
+import { AllocatorBadge } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/AllocatorBadge'
+import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
+import {
+  NULL_ALLOCATOR_ADDRESS,
+  V1_V3_ALLOCATOR_ADDRESS,
+} from 'constants/contracts/mainnet/Allocators'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { useContext } from 'react'
@@ -22,18 +28,27 @@ export default function Mod({
 
   if (!mod) return null
 
+  const _mod = mod as PayoutMod
+  const projectId = _mod.projectId as BigNumber
+  const allocator = _mod.allocator
+
+  const isV1Project = projectId && allocator === NULL_ALLOCATOR_ADDRESS
+  const isV3Project = projectId && allocator === V1_V3_ALLOCATOR_ADDRESS
+
   return (
     <div className="mb-1 flex items-baseline justify-between">
       <div className="leading-6">
         <div className="flex items-baseline">
-          {(mod as PayoutMod).projectId &&
-          BigNumber.from((mod as PayoutMod).projectId).gt(0) ? (
+          {projectId?.gt(0) ? (
             <div>
               <div className="font-medium">
-                {(mod as PayoutMod).projectId ? (
-                  <V1ProjectHandle
-                    projectId={(mod as PayoutMod).projectId as BigNumber}
-                  />
+                {isV1Project ? (
+                  <V1ProjectHandle projectId={projectId} />
+                ) : isV3Project ? (
+                  <Space size="middle">
+                    <V2V3ProjectHandleLink projectId={projectId.toNumber()} />
+                    <AllocatorBadge allocator={allocator} />
+                  </Space>
                 ) : (
                   '--'
                 )}

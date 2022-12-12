@@ -2090,6 +2090,9 @@ msgstr ""
 msgid "Payout addresses"
 msgstr ""
 
+msgid "Payout allocated to this project's {versionName} payment terminal. <0>Learn more</0>."
+msgstr ""
+
 msgid "Payout is locked"
 msgstr ""
 
@@ -2244,6 +2247,9 @@ msgid "Project tokens <0>aren't ERC-20 tokens</0> by default. Once you deploy yo
 msgstr ""
 
 msgid "Project tokens are not ERC-20 tokens by default. Once you deploy your project, you can issue an ERC-20 for your holders to claim. This is optional."
+msgstr ""
+
+msgid "Project treasury version"
 msgstr ""
 
 msgid "Project upgrades"
@@ -3281,6 +3287,9 @@ msgstr ""
 msgid "V1"
 msgstr ""
 
+msgid "V1 Project handle"
+msgstr ""
+
 msgid "V1 token holders can swap their tokens for your V2 tokens on your V2 project's <0>Tokens</0> section."
 msgstr ""
 
@@ -3294,6 +3303,12 @@ msgid "V1.1"
 msgstr ""
 
 msgid "V2"
+msgstr ""
+
+msgid "V3"
+msgstr ""
+
+msgid "V3 Project ID"
 msgstr ""
 
 msgid "Value has already been submitted"

@@ -37,7 +37,7 @@ function Header() {
   return (
     <>
       <SectionHeader className="mb-0" text={t`Unlockable NFTs`} />
-      <span className="text-xs text-grey-400 dark:text-slate-200">
+      <span className="text-xs text-grey-500 dark:text-grey-300">
         <Trans>Contribute funds to receive NFTs.</Trans>
       </span>
     </>
@@ -55,6 +55,7 @@ export function NftRewardsSection() {
   const { form: payProjectForm } = useContext(PayProjectFormContext)
   const { projectMetadata } = useContext(ProjectMetadataContext)
   const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
+  const isMobile = useMobile()
 
   const { visible: nftPostPayModalVisible, hide: hideNftPostPayModal } =
     useModalFromUrlQuery(NFT_PAYMENT_CONFIRMED_QUERY_PARAM)
@@ -129,9 +130,9 @@ export function NftRewardsSection() {
       ) : (
         <div
           // hax to make scrollbars look nice
-          className="-mt-3 -ml-3 -mr-5 max-h-[400px] overflow-auto pb-3 pt-3 pl-3 pr-5"
+          className="-mt-3 -ml-3 -mr-5 max-h-[500px] overflow-auto pb-3 pt-3 pl-3 pr-5"
         >
-          <Row gutter={24}>
+          <Row gutter={isMobile ? 12 : 24}>
             {renderRewardTiers?.map((rewardTier, idx) => (
               <Col
                 className="mb-4"

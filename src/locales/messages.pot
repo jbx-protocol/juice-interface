@@ -80,9 +80,6 @@ msgstr ""
 msgid "<0/> overflow received"
 msgstr ""
 
-msgid "<0/> owner balance"
-msgstr ""
-
 msgid "<0/> will go to the project owner: <1/>"
 msgstr ""
 
@@ -225,6 +222,9 @@ msgid "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
 msgstr ""
 
 msgid "@{handle} not found"
+msgstr ""
+
+msgid "A payout to this project may mint some of the project's tokens. Set the address that will receive the tokens."
 msgstr ""
 
 msgid "A project can reserve a percentage of tokens minted from every payment it receives. Reserved tokens can be distributed according to the allocation below at any time."
@@ -527,9 +527,6 @@ msgstr ""
 msgid "Balance exceeded"
 msgstr ""
 
-msgid "Balance of the project owner's wallet."
-msgstr ""
-
 msgid "Before locking your project ERC-20 token, you must approve the veNFT contract for spending."
 msgstr ""
 
@@ -764,6 +761,9 @@ msgstr ""
 msgid "Connected wallet not authorized"
 msgstr ""
 
+msgid "Contract"
+msgstr ""
+
 msgid "Contract address:"
 msgstr ""
 
@@ -777,6 +777,12 @@ msgid "Contribution threshold"
 msgstr ""
 
 msgid "Contributor rate"
+msgstr ""
+
+msgid "Contributors don't receive any tokens from paying this project. Funds cannot be redeemed."
+msgstr ""
+
+msgid "Contributors receive a relatively small amount of tokens from paying this project."
 msgstr ""
 
 msgid "Contributors receive the NFT when they contribute at least this amount."
@@ -795,9 +801,6 @@ msgid "Contributors will receive <0>no extra tokens</0> this funding cycle."
 msgstr ""
 
 msgid "Contributors will receive <0>{discountRatePercent}%</0> more tokens for contributions they make this funding cycle compared to the next funding cycle."
-msgstr ""
-
-msgid "Contributors will receive a relatively small portion of tokens in exchange for paying this project."
 msgstr ""
 
 msgid "Contributors will receive the total amount of tokens available through issuance. All subsequent funding cycles will have a mint rate of 0."
@@ -894,6 +897,9 @@ msgid "DAOs"
 msgstr ""
 
 msgid "Dark theme"
+msgstr ""
+
+msgid "Data source"
 msgstr ""
 
 msgid "Date"
@@ -1310,6 +1316,9 @@ msgstr ""
 msgid "File upload failed. Try again."
 msgstr ""
 
+msgid "Find a project"
+msgstr ""
+
 msgid "Fund and operate your thing, your way."
 msgstr ""
 
@@ -1448,7 +1457,7 @@ msgstr ""
 msgid "How would you like to distribute payments?"
 msgstr ""
 
-msgid "I accept this project's <0>risks</0>."
+msgid "I accept this project's <0>unique risks</0>."
 msgstr ""
 
 msgid "I have read and accept the <0>Terms of Service</0>, and understand that any changes I make to my project's funding cycle will not be applied until AFTER Funding Cycle #1 has finished."
@@ -1901,6 +1910,9 @@ msgstr ""
 msgid "No reserved tokens configured."
 msgstr ""
 
+msgid "No results"
+msgstr ""
+
 msgid "No strategy"
 msgstr ""
 
@@ -1970,9 +1982,6 @@ msgstr ""
 msgid "Owner isn't allowed to set the project's payment terminals."
 msgstr ""
 
-msgid "Owner minting enabled"
-msgstr ""
-
 msgid "Owner token minting"
 msgstr ""
 
@@ -2013,9 +2022,6 @@ msgid "Pay disclaimer"
 msgstr ""
 
 msgid "Pay disclosure"
-msgstr ""
-
-msgid "Pay paused"
 msgstr ""
 
 msgid "Pay {0}"
@@ -2234,6 +2240,9 @@ msgstr ""
 msgid "Project token"
 msgstr ""
 
+msgid "Project token beneficiary address"
+msgstr ""
+
 msgid "Project tokens <0>aren't ERC-20 tokens</0> by default. Once you deploy your project, you can issue an ERC-20 for your holders to claim. This is <1>optional</1>."
 msgstr ""
 
@@ -2298,6 +2307,9 @@ msgid "Receive ERC-20"
 msgstr ""
 
 msgid "Receive ERC-20 tokens"
+msgstr ""
+
+msgid "Receive this NFT when you contribute <0>{0} ETH</0>."
 msgstr ""
 
 msgid "Receive this NFT when you contribute <0>{0}</0> - <<1>{rewardTierUpperLimit} ETH</1>."
@@ -2366,9 +2378,6 @@ msgstr ""
 msgid "Redeem"
 msgstr ""
 
-msgid "Redeem paused"
-msgstr ""
-
 msgid "Redeem successful. Results will be indexed in a few moments."
 msgstr ""
 
@@ -2408,7 +2417,7 @@ msgstr ""
 msgid "Redemption rate:"
 msgstr ""
 
-msgid "Redemption value"
+msgid "Redemptions"
 msgstr ""
 
 msgid "Relaunch your funding cycle on the new Juicebox V2 contracts."
@@ -2693,9 +2702,6 @@ msgstr ""
 msgid "Some funding cycle settings may put project contributors at risk."
 msgstr ""
 
-msgid "Some of the project's current funding cycle properties may indicate risk for contributors."
-msgstr ""
-
 msgid "Something went wrong."
 msgstr ""
 
@@ -2867,6 +2873,9 @@ msgstr ""
 msgid "The programmable funding protocol for builders and creators. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
 msgstr ""
 
+msgid "The project is using an unknown contract for its reconfiguration strategy."
+msgstr ""
+
 msgid "The project owner <0>cannot manually mint</0> any amount of tokens to any address."
 msgstr ""
 
@@ -2876,10 +2885,7 @@ msgstr ""
 msgid "The project owner can change the next funding cycle’s configuration at any time."
 msgstr ""
 
-msgid "The project owner is using an unverified contract for its reconfiguration strategy."
-msgstr ""
-
-msgid "The project owner may mint any supply of tokens at any time, diluting the token share of all existing contributors."
+msgid "The project owner may mint new tokens at any time, diluting existing contributors share of tokens."
 msgstr ""
 
 msgid "The project owner may start a new funding cycle with a new configuration at any time."
@@ -2981,6 +2987,9 @@ msgstr ""
 msgid "This project's balance in the Juicebox contract."
 msgstr ""
 
+msgid "This project's current funding cycle configuration may pose risks for contributors:"
+msgstr ""
+
 msgid "This proposed reconfiguration hasn't passed the {0} period. It's not guaranteed to take effect in the upcoming funding cycle."
 msgstr ""
 
@@ -3015,9 +3024,6 @@ msgid "Token address: <0/>"
 msgstr ""
 
 msgid "Token amount"
-msgstr ""
-
-msgid "Token beneficiary address"
 msgstr ""
 
 msgid "Token beneficiary:"
@@ -3132,6 +3138,9 @@ msgid "Total project tokens minted the project receives 1 ETH. The project's <0>
 msgstr ""
 
 msgid "Total raised"
+msgstr ""
+
+msgid "Total redemption value"
 msgstr ""
 
 msgid "Total supply"
@@ -3260,6 +3269,15 @@ msgstr ""
 msgid "Use <0>Percentages</0> when you want to configure an <1>infinite distribution limit.</1> With an infinite distribution limit, your project reserves all funds for itself. Your project won't have overflow, so tokens can never be redeemed for ETH. <2>Learn more</2>."
 msgstr ""
 
+msgid "Use data source for redeem"
+msgstr ""
+
+msgid "Use for payments"
+msgstr ""
+
+msgid "Use for redemptions"
+msgstr ""
+
 msgid "Using a duration is recommended. Allowing funding cycles to be reconfigured at any time will appear risky to contributors."
 msgstr ""
 
@@ -3362,6 +3380,9 @@ msgstr ""
 msgid "When distributing, payouts to Ethereum addresses incur a 2.5% JBX membership fee. Payouts to other Juicebox projects don't incur fees. Your project will receive (the <0>JuiceboxDAO</0> token) in return at the current issuance rate."
 msgstr ""
 
+msgid "When enabled, the data source will be used for redeem transactions."
+msgstr ""
+
 msgid "When enabled, the payments to the project are paused, and no new tokens will be issued."
 msgstr ""
 
@@ -3371,10 +3392,10 @@ msgstr ""
 msgid "When enabled, the project owner can set the project's payment terminals."
 msgstr ""
 
-msgid "When enabled, your project cannot receive direct payments."
+msgid "When enabled, the project will hold the fee amount in ETH instead of the fees being processed automatically. <0>Learn more.</0>"
 msgstr ""
 
-msgid "When enabled, your project will hold the fee amount in ETH instead of being processed automatically. <0>Learn more.</0>"
+msgid "When enabled, your project cannot receive direct payments."
 msgstr ""
 
 msgid "When someone pays your project, they'll receive your project's tokens in return. Tokens can be redeemed for a portion of your project's overflow funds; when you win, your community wins with you. Leverage your project's token to grant governance rights, community access, or other membership perks."
@@ -3516,6 +3537,9 @@ msgid "Your Funding Target can be changed in future funding cycles. Payouts deno
 msgstr ""
 
 msgid "Your Juicebox project has no active funding cycle. Launch a funding cycle to re-enable payments on your project."
+msgstr ""
+
+msgid "Your NFTs"
 msgstr ""
 
 msgid "Your V1 balance"
@@ -3815,6 +3839,9 @@ msgstr ""
 msgid "{minTokensAllowedToStake, plural, one {You must stake at least # token.} other {You must stake at least # tokens.}}"
 msgstr ""
 
+msgid "{nftBalanceFormatted, plural, one {NFT} other {NFTs}}"
+msgstr ""
+
 msgid "{payerRate} (+ {reservedRate} reserved) {tokenSymbolPlural}/ETH"
 msgstr ""
 
@@ -3822,6 +3849,9 @@ msgid "{payerRate} {tokenSymbolPlural}/ETH"
 msgstr ""
 
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
+msgstr ""
+
+msgid "{paymentIssuanceRate} {tokenSymbolPlural}/ETH"
 msgstr ""
 
 msgid "{tokenSymbolDisplayText} range"

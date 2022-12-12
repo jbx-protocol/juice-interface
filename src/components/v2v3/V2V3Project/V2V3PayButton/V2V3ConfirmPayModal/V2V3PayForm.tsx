@@ -208,18 +208,20 @@ export const V2V3PayForm = ({
               ]}
             >
               <Checkbox>
-                <Trans>
-                  I accept this project's{' '}
-                  <a
-                    onClick={e => {
-                      setRiskModalVisible(true)
-                      e.preventDefault()
-                    }}
-                  >
-                    risks
-                  </a>
-                  .
-                </Trans>
+                <span className="uppercase">
+                  <Trans>
+                    I accept this project's{' '}
+                    <a
+                      onClick={e => {
+                        setRiskModalVisible(true)
+                        e.preventDefault()
+                      }}
+                    >
+                      unique risks
+                    </a>
+                    .
+                  </Trans>
+                </span>
               </Checkbox>
             </Form.Item>
           ) : null}

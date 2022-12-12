@@ -10,6 +10,10 @@ import { detailedTimeString } from 'utils/format/formatTime'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 
+function booleanStatusText(status: boolean) {
+  return status ? t`Enabled` : t`Disabled`
+}
+
 export default function ConfigureEventElem({
   event,
 }: {
@@ -30,6 +34,7 @@ export default function ConfigureEventElem({
         | 'redemptionRate'
         | 'reservedRate'
         | 'weight'
+        | 'shouldHoldFees'
       >
     | undefined
 }) {
@@ -61,6 +66,13 @@ export default function ConfigureEventElem({
               },
             ],
             [
+              {
+                key: t`Mint rate`,
+                value: `${formatWad(event.weight)} ${tokenSymbolText({
+                  tokenSymbol,
+                  plural: true,
+                })}/ETH`,
+              },
               { key: t`Reserved rate`, value: event.reservedRate / 100 + '%' },
               {
                 key: t`Redemption rate`,
@@ -69,13 +81,6 @@ export default function ConfigureEventElem({
               {
                 key: t`Discount rate`,
                 value: event.discountRate / 10_000_000 + '%',
-              },
-              {
-                key: t`Mint rate`,
-                value: `${formatWad(event.weight)} ${tokenSymbolText({
-                  tokenSymbol,
-                  plural: true,
-                })}/ETH`,
               },
             ],
             [
@@ -86,16 +91,20 @@ export default function ConfigureEventElem({
             ],
             [
               {
-                key: t`Pay paused`,
-                value: event.payPaused,
+                key: t`Payments`,
+                value: booleanStatusText(!event.payPaused),
               },
               {
-                key: t`Redeem paused`,
-                value: event.redeemPaused,
+                key: t`Redemptions`,
+                value: booleanStatusText(!event.redeemPaused),
               },
               {
-                key: t`Owner minting enabled`,
-                value: event.mintingAllowed,
+                key: t`Owner token minting`,
+                value: booleanStatusText(event.mintingAllowed),
+              },
+              {
+                key: t`Hold fees`,
+                value: booleanStatusText(event.shouldHoldFees),
               },
             ],
           ]}

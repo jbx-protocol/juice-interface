@@ -95,7 +95,7 @@ export default function FormattedNumberInput({
           onChange?.(_value?.toString())
         }}
       />
-      <div className="absolute right-[5px] z-[10] text-xs">
+      <div className="absolute right-[5px] z-auto text-xs">
         {accessory && <div>{accessory}</div>}
       </div>
     </div>

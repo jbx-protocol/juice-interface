@@ -1,11 +1,13 @@
 import { CheckOutlined, LoadingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Skeleton, Tooltip } from 'antd'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { NftRewardTier } from 'models/nftRewardTier'
-import { MouseEventHandler, useState } from 'react'
+import { MouseEventHandler, useContext, useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
 import { classNames } from 'utils/classNames'
 import { ipfsToHttps } from 'utils/ipfs'
+import { payMetadataOverrides } from 'utils/nftRewards'
 import { NftPreview } from './NftPreview'
 
 // The clickable cards on the project page
@@ -26,6 +28,8 @@ export function RewardTier({
 }) {
   const [previewVisible, setPreviewVisible] = useState<boolean>(false)
 
+  const { projectId } = useContext(ProjectMetadataContext)
+
   const imageUrl = rewardTier?.imageUrl
     ? ipfsToHttps(rewardTier.imageUrl)
     : rewardTier?.imageUrl
@@ -35,7 +39,12 @@ export function RewardTier({
       <Tooltip
         title={
           <span className="text-xs">
-            {rewardTierUpperLimit ? (
+            {payMetadataOverrides(projectId ?? 0).dontOverspend ? (
+              <Trans>
+                Receive this NFT when you contribute{' '}
+                <strong>{rewardTier?.contributionFloor} ETH</strong>.
+              </Trans>
+            ) : rewardTierUpperLimit ? (
               <Trans>
                 Receive this NFT when you contribute{' '}
                 <strong>{rewardTier?.contributionFloor}</strong> - {'<'}
@@ -138,9 +147,11 @@ export function RewardTier({
             <span
               className={classNames(
                 'text-xs',
+                'text-ellipsis',
+                'overflow-hidden',
                 isSelected
                   ? 'text-black dark:text-slate-100'
-                  : 'text-grey-400 dark:text-slate-200',
+                  : 'text-grey-600 dark:text-slate-100',
               )}
             >
               {rewardTier?.name}
@@ -153,7 +164,7 @@ export function RewardTier({
             title={false}
             paragraph={{ rows: 1, width: ['50%'] }}
           >
-            <span className="text-xs text-grey-500 dark:text-grey-300">
+            <span className="text-xs text-grey-900 dark:text-slate-50">
               {rewardTier?.contributionFloor} ETH
             </span>
           </Skeleton>

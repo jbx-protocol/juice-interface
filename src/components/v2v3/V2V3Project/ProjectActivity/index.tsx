@@ -226,6 +226,7 @@ export default function ProjectActivity() {
           'redemptionRate',
           'reservedRate',
           'weight',
+          'shouldHoldFees',
         ],
       },
     ],

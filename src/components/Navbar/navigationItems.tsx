@@ -41,7 +41,9 @@ export const DesktopDropDown = ({
         }}
       >
         <Trans>Resources</Trans>
-        {resourcesOpen ? <UpOutlined /> : <DownOutlined />}
+        <span className="ml-1">
+          {resourcesOpen ? <UpOutlined /> : <DownOutlined />}
+        </span>
       </div>
     </Dropdown>
   )

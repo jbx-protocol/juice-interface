@@ -36,11 +36,8 @@ const ExtraContainer: React.FC = ({ children }) => {
 }
 
 function Header({ header }: { header: string | JSX.Element }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   return (
-    <div style={{ ...smallHeaderStyle(colors), textTransform: 'capitalize' }}>
+    <div className="text-xs capitalize text-grey-500 dark:text-grey-300">
       {header}
     </div>
   )
@@ -56,7 +53,8 @@ function SideDetails({ event }: { event: ActivityElementEvent }) {
   return (
     <div style={{ textAlign: 'right' }}>
       {event.timestamp && (
-        <div style={smallHeaderStyle(colors)}>
+        <div className="text-xs text-grey-500 dark:text-grey-300">
+          {formatHistoricalDate(event.timestamp * 1000)}{' '}
           {terminalVersion && (
             <ProjectVersionBadge
               versionText={'V' + terminalVersion}
@@ -66,21 +64,17 @@ function SideDetails({ event }: { event: ActivityElementEvent }) {
               }}
             />
           )}{' '}
-          {formatHistoricalDate(event.timestamp * 1000)}{' '}
           <EtherscanLink value={event.txHash} type="tx" />
         </div>
       )}
       {event.beneficiary ? (
         <div
           style={{
-            ...smallHeaderStyle(colors),
             lineHeight: contentLineHeight,
           }}
+          className="text-sm text-grey-500 dark:text-grey-300"
         >
-          <FormattedAddress
-            address={event.beneficiary}
-            className="font-medium"
-          />
+          <FormattedAddress address={event.beneficiary} />
         </div>
       ) : null}
     </div>
@@ -93,6 +87,7 @@ function Subject({ subject }: { subject: string | JSX.Element | null }) {
       style={{
         lineHeight: contentLineHeight,
       }}
+      className="text-sm"
     >
       {subject}
     </div>

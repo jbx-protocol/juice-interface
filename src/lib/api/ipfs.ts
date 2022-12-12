@@ -43,9 +43,7 @@ export const pinFileToIpfs = async (
   metadata?: PinataMetadata,
 ) => {
   const data = new FormData()
-
   data.append('file', file)
-
   if (metadata) {
     data.append(
       'pinataMetadata',

@@ -53,13 +53,11 @@ const _Wrapper: React.FC = ({ children }) => {
   const isMobile = useMobile()
 
   return (
-    <>
-      <Layout className="flex h-screen flex-col bg-transparent">
-        <SiteNavigation />
-        <Content className={classNames(isMobile ? 'pt-16' : '')}>
-          {children}
-        </Content>
-      </Layout>
-    </>
+    <Layout className="flex h-screen flex-col bg-transparent">
+      <SiteNavigation />
+      <Content className={classNames(isMobile ? 'pt-16' : '')}>
+        {children}
+      </Content>
+    </Layout>
   )
 }

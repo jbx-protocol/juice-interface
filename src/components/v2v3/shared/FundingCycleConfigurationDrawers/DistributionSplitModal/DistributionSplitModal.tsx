@@ -327,8 +327,8 @@ export function DistributionSplitModal({
         {editingSplitType === 'project' ? (
           <Form.Item
             name="beneficiary"
-            label={t`Token beneficiary address`}
-            extra={t`The address that should receive the tokens minted from paying this project.`}
+            label={t`Project token beneficiary address`}
+            extra={t`A payout to this project may mint some of the project's tokens. Set the address that will receive the tokens.`}
             rules={[
               {
                 validator: validatePayoutAddress,

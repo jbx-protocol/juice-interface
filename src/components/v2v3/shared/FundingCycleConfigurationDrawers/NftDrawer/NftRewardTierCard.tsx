@@ -10,7 +10,6 @@ import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/NftRewards'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useState } from 'react'
 import { classNames } from 'utils/classNames'
-
 import NftRewardTierModal from './NftRewardTierModal'
 import { NFT_IMAGE_SIDE_LENGTH } from './NftUpload'
 
@@ -25,10 +24,10 @@ export default function NftRewardTierCard({
 }) {
   const [editTierModalVisible, setEditTierModalVisible] =
     useState<boolean>(false)
-  const [linkHover, setLinkHover] = useState<boolean>(false)
   const [imageLoading, setImageLoading] = useState<boolean>(true)
 
   if (!rewardTier) return null
+
   return (
     <>
       <Row
@@ -45,20 +44,9 @@ export default function NftRewardTierCard({
               <span>{rewardTier.name}</span>
               {rewardTier.externalLink ? (
                 <a
-                  className={classNames(
-                    'ml-2',
-                    linkHover
-                      ? 'text-haze-400 dark:text-haze-300'
-                      : 'text-black dark:text-slate-100',
-                  )}
+                  className="dark:hovertext-haze-300 ml-2 text-black hover:text-haze-400 dark:text-slate-100"
                   href={rewardTier.externalLink}
                   onClick={e => e.stopPropagation()}
-                  onMouseEnter={() => {
-                    setLinkHover(true)
-                  }}
-                  onMouseLeave={() => {
-                    setLinkHover(false)
-                  }}
                 >
                   <LinkOutlined />
                 </a>

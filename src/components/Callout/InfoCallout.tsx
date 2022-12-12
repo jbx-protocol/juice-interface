@@ -24,7 +24,7 @@ export const InfoCallout: React.FC<{
         !transparent ? 'bg-smoke-75 dark:bg-slate-400' : undefined,
       )}
       iconComponent={
-        !noIcon ? <InfoCircleOutlined className="text-2xl" /> : null
+        !noIcon ? <InfoCircleOutlined className="flex text-2xl" /> : null
       }
       collapsible={collapse}
     >

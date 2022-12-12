@@ -1,7 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { invertPermyriad } from 'utils/bigNumbers'
-import { fromWad, percentToPermyriad } from 'utils/format/formatNumber'
+import {
+  formattedNum,
+  fromWad,
+  percentToPermyriad,
+} from 'utils/format/formatNumber'
 import { WeightFunction } from 'utils/math'
 
 import {
@@ -12,6 +16,11 @@ import {
   TEN_THOUSAND,
 } from 'constants/numbers'
 import { JBFee } from 'models/v2v3/fee'
+import {
+  V2V3FundingCycleData,
+  V2V3FundingCycleMetadata,
+} from 'models/v2v3/fundingCycle'
+import { parseEther } from 'ethers/lib/utils'
 
 export const MAX_RESERVED_RATE = TEN_THOUSAND
 export const MAX_REDEMPTION_RATE = TEN_THOUSAND
@@ -251,4 +260,20 @@ export function sumHeldFees(fees: JBFee[]) {
     const amountNum = parseFloat(fromWad(amountWad))
     return sum + (amountNum ?? 0)
   }, 0)
+}
+
+export function computePaymentIssuanceRate(
+  fundingCycle: V2V3FundingCycleData,
+  fundingCycleMetadata: V2V3FundingCycleMetadata,
+) {
+  return formattedNum(
+    formatIssuanceRate(
+      weightAmountPermyriad(
+        fundingCycle?.weight,
+        fundingCycleMetadata?.reservedRate.toNumber(),
+        parseEther('1'),
+        'payer',
+      ) ?? '',
+    ),
+  )
 }

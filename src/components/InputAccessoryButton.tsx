@@ -18,9 +18,9 @@ export default function InputAccessoryButton({
     <div
       role="button"
       className={classNames(
-        'font-medium, select-none whitespace-nowrap rounded-sm px-1.5 py-[1px]',
+        'select-none whitespace-nowrap px-1.5 py-[1px] font-medium',
         onClick && !disabled
-          ? 'cursor-pointer bg-haze-100 text-haze-400 dark:bg-haze-800 dark:text-haze-300'
+          ? 'cursor-pointer bg-haze-200 text-haze-500 hover:text-haze-600 dark:bg-haze-700 dark:text-haze-300 dark:hover:text-haze-200'
           : 'cursor-default',
         placement === 'suffix' ? 'ml-2' : undefined,
         placement === 'prefix' ? 'mr-2' : undefined,
@@ -28,7 +28,7 @@ export default function InputAccessoryButton({
       onClick={onClick}
     >
       {content}
-      {withArrow && <CaretDownOutlined className="ml-1 text-xs" />}
+      {withArrow && <CaretDownOutlined className="ml-1" />}
     </div>
   ) : null
 }

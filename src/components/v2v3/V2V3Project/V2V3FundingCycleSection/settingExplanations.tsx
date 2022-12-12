@@ -77,10 +77,16 @@ export const RECONFIG_RULES_EXPLAINATION = (
 
 export const HOLD_FEES_EXPLAINATION = (
   <Trans>
-    When enabled, your project will hold the fee amount in ETH instead of being
-    processed automatically.{' '}
-    <ExternalLink href={helpPagePath('/dev/learn/overview/#hold-fees')}>
+    When enabled, the project will hold the fee amount in ETH instead of the
+    fees being processed automatically.{' '}
+    <ExternalLink href={helpPagePath('/dev/learn/glossary/hold-fees')}>
       Learn more.
     </ExternalLink>
+  </Trans>
+)
+
+export const USE_DATASOURCE_FOR_REDEEM_EXPLAINATION = (
+  <Trans>
+    When enabled, the data source will be used for redeem transactions.
   </Trans>
 )

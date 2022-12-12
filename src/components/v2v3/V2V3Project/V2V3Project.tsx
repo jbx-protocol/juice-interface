@@ -10,12 +10,14 @@ import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 import useMobile from 'hooks/Mobile'
 import { useValidatePrimaryEthTerminal } from 'hooks/v2v3/ValidatePrimaryEthTerminal'
+import { useWallet } from 'hooks/Wallet'
 import { V2V3PayProjectFormProvider } from 'providers/v2v3/V2V3PayProjectFormProvider'
 import { useContext, useState } from 'react'
 import { classNames } from 'utils/classNames'
 import { hasNftRewards } from 'utils/nftRewards'
 import { NftRewardsSection } from '../../NftRewards/NftRewardsSection'
 import { ProjectBanners } from './banners/ProjectBanners'
+import { ManageNftsSection } from './ManageNftsSection/ManageNftsSection'
 import NewDeployModal, { NEW_DEPLOY_QUERY_PARAM } from './modals/NewDeployModal'
 import { V2V3ProjectTokenBalancesModal } from './modals/V2V3ProjectTokenBalancesModal/V2V3ProjectTokenBalancesModal'
 import ProjectActivity from './ProjectActivity'
@@ -32,10 +34,7 @@ const AllAssetsButton = () => {
 
   return (
     <>
-      <TextButton
-        className="text-sm font-normal"
-        onClick={() => setBalancesModalVisible(true)}
-      >
+      <TextButton onClick={() => setBalancesModalVisible(true)}>
         <Trans>All assets</Trans>
       </TextButton>
       <V2V3ProjectTokenBalancesModal
@@ -61,6 +60,7 @@ export function V2V3Project() {
     useModalFromUrlQuery(NEW_DEPLOY_QUERY_PARAM)
 
   const isMobile = useMobile()
+  const { isConnected } = useWallet()
   const isOwner = useIsUserAddress(projectOwnerAddress)
   const isPrimaryETHTerminalValid = useValidatePrimaryEthTerminal()
 
@@ -129,6 +129,13 @@ export function V2V3Project() {
                 <section>
                   <V2V3ManageTokensSection />
                 </section>
+
+                {hasNftRewards(fundingCycleMetadata) && isConnected ? (
+                  <section>
+                    <ManageNftsSection />
+                  </section>
+                ) : null}
+
                 <section>
                   <V2V3FundingCycleSection />
                 </section>

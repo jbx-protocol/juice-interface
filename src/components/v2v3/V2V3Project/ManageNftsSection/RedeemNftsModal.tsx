@@ -57,7 +57,7 @@ export function NftCard({
   return (
     <div
       className={classNames(
-        'flex h-full w-full w-1/4 cursor-pointer flex-col rounded-sm transition-shadow duration-100',
+        'flex h-full w-1/4 cursor-pointer flex-col rounded-sm transition-shadow duration-100',
         isSelected
           ? 'shadow-[2px_0px_10px_0px_var(--boxShadow-primary)] outline outline-2 outline-haze-400'
           : '',
@@ -89,7 +89,6 @@ export function NftCard({
             crossOrigin="anonymous"
           />
         )}
-        {/* {isSelected ? <RewardIcon /> : null} */}
       </div>
       {/* Details section below image */}
       <div
@@ -266,7 +265,7 @@ export function RedeemNftsModal({
 
         <div>
           <Form form={form} layout="vertical">
-            <div className="flex flex-wrap gap-4">
+            <div className="mb-4 flex flex-wrap gap-4">
               {nfts?.map(nft => (
                 <NftCard
                   key={nft.tokenId}

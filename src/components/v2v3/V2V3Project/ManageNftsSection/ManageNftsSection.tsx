@@ -54,7 +54,9 @@ export function ManageNftsSection() {
                 other: 'NFTs',
               })}
             </div>
-            {nftRedeemEnabled && nftBalanceFormatted > 0 ? (
+            {nftRedeemEnabled &&
+            nftBalanceFormatted > 0 &&
+            fundingCycleMetadata?.useDataSourceForRedeem ? (
               <div>
                 <Button
                   size="small"

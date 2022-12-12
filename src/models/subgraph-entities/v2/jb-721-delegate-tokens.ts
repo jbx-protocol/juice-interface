@@ -9,7 +9,7 @@ export interface JB721DelegateToken {
   tokenId: string
   address: string
   tokenUri: string
-  owner: Partial<Participant>
+  owner?: Partial<Participant>
 }
 
 export type JB721DelegateTokenJson = Partial<

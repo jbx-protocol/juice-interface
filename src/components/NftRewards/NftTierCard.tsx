@@ -11,7 +11,7 @@ import { payMetadataOverrides } from 'utils/nftRewards'
 import { NftPreview } from './NftPreview'
 
 // The clickable cards on the project page
-export function RewardTier({
+export function NftTierCard({
   loading,
   rewardTier,
   rewardTierUpperLimit,
@@ -19,9 +19,9 @@ export function RewardTier({
   onClick,
   onRemove,
 }: {
-  loading?: boolean
   rewardTier?: NftRewardTier
-  rewardTierUpperLimit?: number | undefined
+  rewardTierUpperLimit?: number
+  loading?: boolean
   isSelected?: boolean
   onClick?: MouseEventHandler<HTMLDivElement>
   onRemove?: () => void

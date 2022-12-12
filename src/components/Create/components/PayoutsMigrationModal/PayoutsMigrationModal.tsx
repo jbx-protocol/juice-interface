@@ -199,7 +199,7 @@ export const PayoutsMigrationModal = ({
         className={className}
         title={
           <h2 className="text-xl font-medium text-black dark:text-grey-200">
-            <Trans>Relaunch on V3</Trans>
+            <Trans>Re-launch on V3</Trans>
           </h2>
         }
         cancelButtonProps={{ hidden: true }}

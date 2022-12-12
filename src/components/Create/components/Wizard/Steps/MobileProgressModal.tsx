@@ -29,7 +29,7 @@ export const MobileProgressModal: React.FC<{
             {!isMigration ? (
               <Trans>Create a project</Trans>
             ) : (
-              <Trans>Relaunch a project</Trans>
+              <Trans>Re-launch a project</Trans>
             )}
           </h2>
         </>

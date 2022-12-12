@@ -49,7 +49,7 @@ export function Create() {
             {!isMigration ? (
               <Trans>Create a project</Trans>
             ) : (
-              <Trans>Relaunch a project</Trans>
+              <Trans>Re-launch a project</Trans>
             )}
           </h1>
           {/* TODO: Remove wizard-create once form item css override is replaced */}

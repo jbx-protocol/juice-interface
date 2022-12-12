@@ -21,6 +21,7 @@ import {
 } from './components'
 import { CreateBadge } from './components/CreateBadge'
 import { DeploySuccess } from './components/pages/ReviewDeploy/components/DeploySuccess'
+import { PayoutsMigrationModal } from './components/PayoutsMigrationModal'
 import { RecallCard } from './components/RecallCard'
 import { Wizard } from './components/Wizard'
 import { useLoadingInitialStateFromQuery } from './hooks/LoadInitialStateFromQuery'
@@ -188,6 +189,7 @@ export function Create() {
               </Wizard.Page>
             </Wizard>
           </div>
+          <PayoutsMigrationModal />
         </V2V3CurrencyProvider>
       </TransactionProvider>
     </V2V3ContractsProvider>

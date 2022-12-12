@@ -68,10 +68,12 @@ export default function ConfigureEventElem({
             [
               {
                 key: t`Mint rate`,
-                value: `${formatWad(event.weight)} ${tokenSymbolText({
-                  tokenSymbol,
-                  plural: true,
-                })}/ETH`,
+                value: event.weight.gt(0)
+                  ? `${formatWad(event.weight)} ${tokenSymbolText({
+                      tokenSymbol,
+                      plural: true,
+                    })}/ETH`
+                  : t`Mint rate unchanged`,
               },
               { key: t`Reserved rate`, value: event.reservedRate / 100 + '%' },
               {

@@ -2,6 +2,7 @@ import { CloseOutlined, LoadingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, Col, Row, Skeleton } from 'antd'
 import { Callout } from 'components/Callout'
+import ExternalLink from 'components/ExternalLink'
 import { PayProjectForm } from 'components/Project/PayProjectForm'
 import { ProjectHeader } from 'components/Project/ProjectHeader'
 import { PV_V1 } from 'constants/pv'
@@ -41,13 +42,22 @@ const RelaunchV1ProjectCallout = ({ className }: { className?: string }) => {
       <div className="flex justify-between">
         <div className="flex flex-col gap-2">
           <strong>
-            <Trans>Upgrade to V3</Trans>
+            <Trans>Re-launch on V3</Trans>
           </strong>
           <p>
             <Trans>
               Re-launch your Juicebox project using the v3 contracts.{' '}
               {/* TODO: Add link */}
               <Link href="#TODO">What's new in V3.</Link>
+            </Trans>
+          </p>
+          <p className="font-medium">
+            <Trans>
+              It's strongly recommended that you visit the{' '}
+              <ExternalLink href="https://discord.gg/6jXrJSyDFf">
+                Juicebox Discord
+              </ExternalLink>{' '}
+              for help and advice on this process.
             </Trans>
           </p>
           {isLoading ? (

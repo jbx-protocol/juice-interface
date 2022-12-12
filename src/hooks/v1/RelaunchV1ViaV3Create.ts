@@ -18,7 +18,7 @@ export const useRelaunchV1ViaV3Create = () => {
   const router = useRouter()
 
   const { projectMetadata } = useContext(ProjectMetadataContext)
-  const { queuedFC, queuedPayoutMods, queuedTicketMods } =
+  const { queuedFC, queuedPayoutMods, queuedTicketMods, terminal } =
     useContext(V1ProjectContext)
   const fundingCycleMetadata = decodeFundingCycleMetadata(queuedFC?.metadata)
 
@@ -27,9 +27,10 @@ export const useRelaunchV1ViaV3Create = () => {
       projectMetadata === undefined ||
       queuedFC === undefined ||
       queuedPayoutMods === undefined ||
-      queuedTicketMods === undefined
+      queuedTicketMods === undefined ||
+      terminal?.version === undefined
     )
-  }, [projectMetadata, queuedFC, queuedPayoutMods, queuedTicketMods])
+  }, [projectMetadata, queuedFC, queuedPayoutMods, queuedTicketMods, terminal])
 
   const v1ConvertedInitialState = useMemo(() => {
     // No idea why we have to do this way but it is what it is.
@@ -140,9 +141,11 @@ export const useRelaunchV1ViaV3Create = () => {
       pathname: '/create',
       query: {
         initialState: JSON.stringify(v1ConvertedInitialState),
+        migration: true,
+        migrationVersion: terminal?.version,
       },
     })
-  }, [router, v1ConvertedInitialState])
+  }, [router, terminal?.version, v1ConvertedInitialState])
 
   return { relaunch, isReady }
 }

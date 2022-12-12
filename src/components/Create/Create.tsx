@@ -1,4 +1,5 @@
 import { t, Trans } from '@lingui/macro'
+import { Callout } from 'components/Callout'
 import { DeployButtonText } from 'components/DeployProjectButtonText'
 import ExternalLink from 'components/ExternalLink'
 import Loading from 'components/Loading'
@@ -32,6 +33,8 @@ export function Create() {
     return <DeploySuccess projectId={projectId} />
   }
 
+  const isMigration = router.query.migration === 'true'
+
   const initialStateLoading = useLoadingInitialStateFromQuery()
 
   if (initialStateLoading) return <Loading />
@@ -47,6 +50,22 @@ export function Create() {
           {/* TODO: Remove wizard-create once form item css override is replaced */}
           <div className="wizard-create">
             <Wizard className="pb-28" doneText={<DeployButtonText />}>
+              {isMigration && (
+                <Callout.Info className="w-full md:w-[800px]">
+                  <strong>
+                    <Trans>Re-launch on V3</Trans>
+                  </strong>
+                  <p className="font-medium">
+                    <Trans>
+                      It's strongly recommended that you visit the{' '}
+                      <ExternalLink href="https://discord.gg/6jXrJSyDFf">
+                        Juicebox Discord
+                      </ExternalLink>{' '}
+                      for help and advice on this process.
+                    </Trans>
+                  </p>
+                </Callout.Info>
+              )}
               <Wizard.Page
                 name="projectDetails"
                 title={t`Project Details`}

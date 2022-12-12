@@ -20,6 +20,7 @@ import { formatRedemptionRate } from 'utils/v2v3/math'
 import { LoadingOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { encodeJB721DelegateRedeemMetadata } from 'utils/nftRewards'
+import { twMerge } from 'tailwind-merge'
 
 function useJB721DelegateTokenMetadata(
   tokenUri: string | undefined,
@@ -56,11 +57,13 @@ export function NftCard({
 
   return (
     <div
-      className={classNames(
-        'flex h-full w-1/4 cursor-pointer flex-col rounded-sm transition-shadow duration-100',
-        isSelected
-          ? 'shadow-[2px_0px_10px_0px_var(--boxShadow-primary)] outline outline-2 outline-haze-400'
-          : '',
+      className={twMerge(
+        classNames(
+          'flex h-full w-1/4 cursor-pointer flex-col rounded-sm outline outline-0 outline-haze-400 transition-shadow duration-100 hover:outline-2',
+          isSelected
+            ? 'shadow-[2px_0px_10px_0px_var(--boxShadow-primary)] outline outline-2 outline-haze-400'
+            : '',
+        ),
       )}
       onClick={onClick}
       role="button"
@@ -265,16 +268,18 @@ export function RedeemNftsModal({
 
         <div>
           <Form form={form} layout="vertical">
-            <div className="mb-4 flex flex-wrap gap-4">
-              {nfts?.map(nft => (
-                <NftCard
-                  key={nft.tokenId}
-                  nft={nft}
-                  onClick={() => onNftClick(nft)}
-                  isSelected={tokenIdsToRedeem.includes(nft.tokenId)}
-                />
-              ))}
-            </div>
+            <Form.Item label={t`Select NFTs to redeem`}>
+              <div className="mb-4 flex flex-wrap gap-4">
+                {nfts?.map(nft => (
+                  <NftCard
+                    key={nft.tokenId}
+                    nft={nft}
+                    onClick={() => onNftClick(nft)}
+                    isSelected={tokenIdsToRedeem.includes(nft.tokenId)}
+                  />
+                ))}
+              </div>
+            </Form.Item>
 
             <Form.Item label={t`Memo`}>
               <MemoFormInput value={memo} onChange={setMemo} />

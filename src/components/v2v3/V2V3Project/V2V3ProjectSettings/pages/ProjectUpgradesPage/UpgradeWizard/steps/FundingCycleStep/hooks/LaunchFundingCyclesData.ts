@@ -80,10 +80,17 @@ export function useLaunchFundingCyclesData({
     return
   }
 
+  // set new v3 funding cycle start to be:
+  //     `current V2 FC start time + `current V2 FC duration`
+  const newStart = fundingCycle.start.add(fundingCycle.duration)
+
   const initialLaunchData = {
     projectId,
     fundingCycleData: editingFundingCycleData,
-    fundingCycleMetadata: editingFundingCycleMetadata,
+    fundingCycleMetadata: {
+      ...editingFundingCycleMetadata,
+      start: newStart,
+    },
     fundAccessConstraints: editingFundAccessConstraints,
     groupedSplits: [
       editingPayoutGroupedSplits,

@@ -22,7 +22,7 @@ export function createStore() {
 const store = createStore()
 
 store.subscribe(() => {
-  if (typeof window === undefined || !window.localStorage) return
+  if (typeof window === 'undefined' || !window.localStorage) return
 
   localStorage.setItem(
     REDUX_STATE_LOCALSTORAGE_KEY,

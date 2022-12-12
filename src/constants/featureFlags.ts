@@ -5,4 +5,5 @@ export const FEATURE_FLAGS = {
   PROJECT_CONTRACT_UPGRADES: 'projectContractUpgrades',
   SIMULATE_TXS: 'simulateTxs',
   SPLIT_ALLOCATORS: 'splitAllocators',
+  NFT_REDEEM: 'nftRedeem',
 }

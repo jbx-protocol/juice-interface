@@ -21,6 +21,7 @@ export function useRedeemTokensTx(): TransactorInstance<{
   redeemAmount: BigNumber
   minReturnedTokens: BigNumber
   memo: string
+  metadata?: string
 }> {
   const { transactor } = useContext(TransactionContext)
   const { contracts } = useContext(V2V3ProjectContractsContext)
@@ -30,7 +31,10 @@ export function useRedeemTokensTx(): TransactorInstance<{
 
   const { userAddress } = useWallet()
 
-  return ({ redeemAmount, minReturnedTokens, memo }, txOpts) => {
+  return (
+    { redeemAmount, minReturnedTokens, memo, metadata = DEFAULT_METADATA },
+    txOpts,
+  ) => {
     try {
       invariant(
         transactor &&
@@ -49,7 +53,7 @@ export function useRedeemTokensTx(): TransactorInstance<{
           minReturnedTokens, // _minReturnedTokens, min amount of ETH to receive
           userAddress, // _beneficiary
           memo, // _memo
-          DEFAULT_METADATA, // _metadata, TODO: metadata
+          metadata, // _metadata
         ],
         {
           ...txOpts,

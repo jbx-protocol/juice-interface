@@ -289,6 +289,21 @@ export function encodeJB721DelegatePayMetadata(
   return encoded
 }
 
+export function encodeJB721DelegateRedeemMetadata(tokenIdsToRedeem: string[]) {
+  const args = [
+    constants.HashZero,
+    IJB721Delegate_INTERFACE_ID,
+    tokenIdsToRedeem,
+  ]
+
+  const encoded = defaultAbiCoder.encode(
+    ['bytes32', 'bytes4', 'uint256[]'],
+    args,
+  )
+
+  return encoded
+}
+
 // sums the contribution floors of a given list of nftRewardTiers
 //    - optional select only an array of ids
 export function sumTierFloors(rewardTiers: NftRewardTier[], ids?: number[]) {

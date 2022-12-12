@@ -7,10 +7,7 @@ import { notification } from 'antd'
  */
 export const emitErrorNotification = (
   message: string,
-  {
-    description,
-    duration = null,
-  }: {
+  opts?: {
     description?: string
     duration?: number | null
   },
@@ -19,17 +16,14 @@ export const emitErrorNotification = (
   return notification.error({
     key,
     message,
-    description,
-    duration,
+    ...opts,
+    duration: opts?.duration ?? null,
   })
 }
 
 export const emitSuccessNotification = (
   message: string,
-  {
-    description,
-    duration = 5,
-  }: {
+  opts?: {
     description?: string
     duration?: number | null
   },
@@ -38,7 +32,7 @@ export const emitSuccessNotification = (
   return notification.success({
     key,
     message,
-    description,
-    duration,
+    ...opts,
+    duration: opts?.duration ?? 5,
   })
 }

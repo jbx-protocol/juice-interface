@@ -2312,6 +2312,9 @@ msgstr ""
 msgid "Rankings based on number of contributions and volume gained in the last {trendingWindowDays} days. <0>See code</0>"
 msgstr ""
 
+msgid "Re-launch a project"
+msgstr ""
+
 msgid "Re-launch on V3"
 msgstr ""
 
@@ -2442,9 +2445,6 @@ msgid "Redemption rate:"
 msgstr ""
 
 msgid "Redemptions"
-msgstr ""
-
-msgid "Relaunch on V3"
 msgstr ""
 
 msgid "Relaunch your funding cycle on the new Juicebox V2 contracts."

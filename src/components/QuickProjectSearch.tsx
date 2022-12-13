@@ -160,6 +160,9 @@ export default function QuickProjectSearch() {
         <div className="dark:bg-slate-700">
           <div className="flex items-center gap-5 px-5 pb-2 pt-8">
             <Input
+              prefix={
+                <SearchOutlined className="mt-1 mr-2 text-2xl leading-none" />
+              }
               allowClear
               className="border-smoke-300 text-black dark:border-slate-300 dark:text-slate-100 dark:placeholder:text-slate-300"
               size="large"

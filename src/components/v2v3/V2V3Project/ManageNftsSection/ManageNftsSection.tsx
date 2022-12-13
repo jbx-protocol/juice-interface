@@ -66,7 +66,7 @@ export function ManageNftsSection() {
                     setRedeemNftsModalVisible(true)
                   }}
                 >
-                  Redeem for ETH
+                  <Trans>Redeem for ETH</Trans>
                 </Button>
               </div>
             ) : null}

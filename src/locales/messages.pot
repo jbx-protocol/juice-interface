@@ -1790,6 +1790,9 @@ msgstr ""
 msgid "Mint rate"
 msgstr ""
 
+msgid "Mint rate unchanged"
+msgstr ""
+
 msgid "Mint this project's ERC-20 tokens to your wallet."
 msgstr ""
 

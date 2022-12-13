@@ -115,15 +115,13 @@ const items: MenuItem[] = [
         undefined,
         'menu-item-sider',
       ),
-      featureFlagEnabled(FEATURE_FLAGS.PROJECT_CONTRACT_UPGRADES)
-        ? menuItem(
-            'Project upgrades',
-            'upgrades',
-            undefined,
-            undefined,
-            'menu-item-sider',
-          )
-        : null,
+      menuItem(
+        'Project upgrades',
+        'upgrades',
+        undefined,
+        undefined,
+        'menu-item-sider',
+      ),
       featureFlagEnabled(FEATURE_FLAGS.V1_TOKEN_SWAP)
         ? menuItem(
             'V1 token migration',

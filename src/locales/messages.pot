@@ -2423,6 +2423,9 @@ msgstr ""
 msgid "Redeem NFTs for ETH"
 msgstr ""
 
+msgid "Redeem for ETH"
+msgstr ""
+
 msgid "Redeem successful. Results will be indexed in a few moments."
 msgstr ""
 

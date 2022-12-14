@@ -18,6 +18,8 @@ export function NftTierCard({
   isSelected,
   onClick,
   onRemove,
+  previewDisabled,
+  hidePrice,
 }: {
   rewardTier?: NftRewardTier
   rewardTierUpperLimit?: number
@@ -25,6 +27,8 @@ export function NftTierCard({
   isSelected?: boolean
   onClick?: MouseEventHandler<HTMLDivElement>
   onRemove?: () => void
+  previewDisabled?: boolean
+  hidePrice?: boolean
 }) {
   const [previewVisible, setPreviewVisible] = useState<boolean>(false)
 
@@ -34,29 +38,33 @@ export function NftTierCard({
     ? ipfsToHttps(rewardTier.imageUrl)
     : rewardTier?.imageUrl
 
+  const _onRemove = onRemove ?? onClick
+
   function RewardIcon() {
     return (
       <Tooltip
         title={
-          <span className="text-xs">
-            {payMetadataOverrides(projectId ?? 0).dontOverspend ? (
-              <Trans>
-                Receive this NFT when you contribute{' '}
-                <strong>{rewardTier?.contributionFloor} ETH</strong>.
-              </Trans>
-            ) : rewardTierUpperLimit ? (
-              <Trans>
-                Receive this NFT when you contribute{' '}
-                <strong>{rewardTier?.contributionFloor}</strong> - {'<'}
-                <strong>{rewardTierUpperLimit} ETH</strong>.
-              </Trans>
-            ) : (
-              <Trans>
-                Receive this NFT when you contribute at least{' '}
-                <strong>{rewardTier?.contributionFloor} ETH</strong>.
-              </Trans>
-            )}
-          </span>
+          !hidePrice ? (
+            <span className="text-xs">
+              {payMetadataOverrides(projectId ?? 0).dontOverspend ? (
+                <Trans>
+                  Receive this NFT when you contribute{' '}
+                  <strong>{rewardTier?.contributionFloor} ETH</strong>.
+                </Trans>
+              ) : rewardTierUpperLimit ? (
+                <Trans>
+                  Receive this NFT when you contribute{' '}
+                  <strong>{rewardTier?.contributionFloor}</strong> - {'<'}
+                  <strong>{rewardTierUpperLimit} ETH</strong>.
+                </Trans>
+              ) : (
+                <Trans>
+                  Receive this NFT when you contribute at least{' '}
+                  <strong>{rewardTier?.contributionFloor} ETH</strong>.
+                </Trans>
+              )}
+            </span>
+          ) : undefined
         }
         overlayInnerStyle={{
           padding: '7px 10px',
@@ -70,7 +78,7 @@ export function NftTierCard({
             'absolute right-2 top-2 h-6 w-6 items-center justify-center rounded-full text-base',
             isSelected ? 'flex bg-haze-400 text-smoke-25' : 'hidden',
           )}
-          onClick={onRemove ? stopPropagation(onRemove) : undefined}
+          onClick={_onRemove ? stopPropagation(_onRemove) : undefined}
         >
           <CheckOutlined />
         </div>
@@ -88,7 +96,7 @@ export function NftTierCard({
             : '',
         )}
         onClick={
-          !isSelected
+          !isSelected || previewDisabled
             ? onClick
             : () => {
                 setPreviewVisible(true)
@@ -135,7 +143,7 @@ export function NftTierCard({
             !loading ? 'pt-2' : 'pt-1',
           )}
           onClick={
-            isSelected && onRemove ? stopPropagation(onRemove) : undefined
+            isSelected && _onRemove ? stopPropagation(_onRemove) : undefined
           }
         >
           <Skeleton
@@ -157,20 +165,22 @@ export function NftTierCard({
               {rewardTier?.name}
             </span>
           </Skeleton>
-          <Skeleton
-            className="mt-1"
-            loading={loading}
-            active
-            title={false}
-            paragraph={{ rows: 1, width: ['50%'] }}
-          >
-            <span className="text-xs text-grey-900 dark:text-slate-50">
-              {rewardTier?.contributionFloor} ETH
-            </span>
-          </Skeleton>
+          {!hidePrice ? (
+            <Skeleton
+              className="mt-1"
+              loading={loading}
+              active
+              title={false}
+              paragraph={{ rows: 1, width: ['50%'] }}
+            >
+              <span className="text-xs text-grey-900 dark:text-slate-50">
+                {rewardTier?.contributionFloor} ETH
+              </span>
+            </Skeleton>
+          ) : null}
         </div>
       </div>
-      {rewardTier ? (
+      {rewardTier && !previewDisabled ? (
         <NftPreview
           open={previewVisible}
           rewardTier={rewardTier}

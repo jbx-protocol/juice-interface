@@ -1,6 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { CurrencyOption } from './currencyOption'
 
+export const NFT_METADATA_CONTRIBUTION_FLOOR_ATTRIBUTES_INDEX = 0
+
 // How we store reward tiers for use around the app
 export type NftRewardTier = {
   contributionFloor: number // ETH amount

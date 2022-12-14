@@ -2468,6 +2468,9 @@ msgstr ""
 msgid "Redemption rate:"
 msgstr ""
 
+msgid "Redemption value"
+msgstr ""
+
 msgid "Redemptions"
 msgstr ""
 

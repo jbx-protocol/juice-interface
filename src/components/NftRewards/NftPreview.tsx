@@ -45,7 +45,7 @@ export function NftPreview({
           <h3 className="mb-0 uppercase text-slate-100">
             <Trans>{projectMetadata?.name}</Trans>
           </h3>
-          <CloseOutlined className="pl-4" onClick={onClose} />
+          <CloseOutlined className="pl-4 text-slate-100" onClick={onClose} />
         </div>
         <div className="flex justify-center" onClick={onClose}>
           <img

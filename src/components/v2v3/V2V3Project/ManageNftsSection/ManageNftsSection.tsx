@@ -77,6 +77,7 @@ export function ManageNftsSection() {
         <RedeemNftsModal
           open={redeemNftsModalVisible}
           onCancel={() => setRedeemNftsModalVisible(false)}
+          onConfirmed={() => setRedeemNftsModalVisible(false)}
         />
       )}
     </>

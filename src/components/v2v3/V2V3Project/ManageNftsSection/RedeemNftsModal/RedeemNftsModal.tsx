@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Descriptions, Form, Space } from 'antd'
+import { Col, Descriptions, Form, Row, Space, Statistic } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
 import { MemoFormInput } from 'components/Project/PayProjectForm/MemoFormInput'
@@ -15,6 +15,10 @@ import { formatRedemptionRate } from 'utils/v2v3/math'
 import { BigNumber } from '@ethersproject/bignumber'
 import { encodeJB721DelegateRedeemMetadata } from 'utils/nftRewards'
 import { RedeemNftCard } from './RedeemNftCard'
+import ETHAmount from 'components/currency/ETHAmount'
+import { useETHReceivedFromNftRedeem } from 'hooks/v2v3/contractReader/ETHReceivedFromNftRedeem'
+import TooltipLabel from 'components/TooltipLabel'
+import { REDEMPTION_RATE_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 
 export function RedeemNftsModal({
   open,
@@ -105,6 +109,10 @@ export function RedeemNftsModal({
     modalTitle = t`Burn NFTs`
   }
 
+  const redeemValue = useETHReceivedFromNftRedeem({
+    tokenIdsToRedeem,
+  })
+
   return (
     <TransactionModal
       transactionPending={transactionPending}
@@ -118,6 +126,7 @@ export function RedeemNftsModal({
         onCancel?.()
       }}
       okText={modalTitle}
+      okButtonProps={{ disabled: !tokenIdsToRedeem.length }}
       width={540}
       centered
     >
@@ -159,7 +168,12 @@ export function RedeemNftsModal({
           contentStyle={{ display: 'block', textAlign: 'right' }}
         >
           <Descriptions.Item
-            label={<Trans>Redemption rate</Trans>}
+            label={
+              <TooltipLabel
+                label={t`Redemption rate`}
+                tip={REDEMPTION_RATE_EXPLANATION}
+              />
+            }
             className="pb-1"
           >
             {formatRedemptionRate(fundingCycleMetadata.redemptionRate)}%
@@ -172,17 +186,24 @@ export function RedeemNftsModal({
         <div>
           <Form form={form} layout="vertical">
             <Form.Item label={t`Select NFTs to redeem`}>
-              <div className="mb-4 flex flex-wrap gap-4">
+              <Row gutter={[20, 20]}>
                 {nfts?.map(nft => (
-                  <RedeemNftCard
-                    key={nft.tokenId}
-                    nft={nft}
-                    onClick={() => onNftClick(nft)}
-                    isSelected={tokenIdsToRedeem.includes(nft.tokenId)}
-                  />
+                  <Col span={8} key={nft.tokenId}>
+                    <RedeemNftCard
+                      nft={nft}
+                      onClick={() => onNftClick(nft)}
+                      isSelected={tokenIdsToRedeem.includes(nft.tokenId)}
+                    />
+                  </Col>
                 ))}
-              </div>
+              </Row>
             </Form.Item>
+
+            <Statistic
+              title={<Trans>Redemption value</Trans>}
+              valueRender={() => <ETHAmount amount={redeemValue} />}
+              className={'pt-5 pb-5'}
+            />
 
             <Form.Item label={t`Memo`}>
               <MemoFormInput value={memo} onChange={setMemo} />

@@ -64,8 +64,10 @@ export const V2V3PayForm = ({
     const initialStickerUrls = nftRewardTiers?.map(
       (tier: NftRewardTier) => tier.imageUrl,
     )
+
     form.setFieldsValue({ stickerUrls: initialStickerUrls })
-  })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nftRewardTiers])
 
   return (
     <>
@@ -238,6 +240,7 @@ export const V2V3PayForm = ({
           const urlString = url.toString()
           const existingStickerUrls = (form.getFieldValue('stickerUrls') ??
             []) as string[]
+
           form.setFieldsValue({
             stickerUrls: existingStickerUrls.concat(urlString),
           })

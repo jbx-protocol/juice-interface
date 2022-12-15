@@ -1,5 +1,10 @@
-import { SearchOutlined } from '@ant-design/icons'
-import { ArrowRightOutlined, CloseCircleOutlined } from '@ant-design/icons'
+import {
+  ArrowDownOutlined,
+  ArrowRightOutlined,
+  ArrowUpOutlined,
+  EnterOutlined,
+  SearchOutlined,
+} from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import Input from 'antd/lib/input/Input'
 import Modal from 'antd/lib/modal/Modal'
@@ -142,73 +147,109 @@ export default function QuickProjectSearch() {
         onClick={modal.open}
       />
       <Modal
-        centered
+        closable={false}
+        className="top-16"
         open={modal.visible}
         onCancel={reset}
         okButtonProps={{ hidden: true }}
         cancelButtonProps={{ hidden: true }}
         footer={null}
-        closeIcon
         destroyOnClose
         bodyStyle={{ padding: 0 }}
       >
-        <div className="flex items-center gap-5 p-5">
-          <CloseCircleOutlined onClick={modal.close} />
-          <Input
-            id={INPUT_ID}
-            placeholder={t`Find a project`}
-            onChange={e => setInputText(e.target.value)}
-          />
-        </div>
+        <div className="dark:bg-slate-700">
+          <div className="flex items-center gap-5 px-5 pb-2 pt-8">
+            <Input
+              prefix={
+                <SearchOutlined className="mt-1 mr-2 text-2xl leading-none" />
+              }
+              allowClear
+              className="border-smoke-300 text-black dark:border-slate-300 dark:text-slate-100 dark:placeholder:text-slate-300"
+              size="large"
+              id={INPUT_ID}
+              placeholder={t`Find a project`}
+              onChange={e => setInputText(e.target.value)}
+            />
+          </div>
 
-        <div hidden={!searchText} className="pb-5">
-          {isLoadingSearch && <Loading />}
+          <div hidden={!searchText}>
+            {isLoadingSearch && <Loading />}
 
-          {!!searchPages?.length && (
-            <div className="flex flex-col">
-              {searchPages.slice(0, MAX_RESULTS).map((p, i) => (
-                <div
-                  key={p.id}
-                  className={twMerge(
-                    'flex cursor-pointer items-baseline gap-2 py-2 px-5',
-                    highlightIndex === i ? 'bg-smoke-75 dark:bg-slate-600' : '',
-                  )}
-                  onClick={goToProject}
-                  onMouseEnter={() => setHighlightIndex(i)}
-                >
-                  {p.pv === PV_V2 ? (
-                    <V2V3ProjectHandleLink
-                      projectId={p.projectId}
-                      handle={p.handle}
-                    />
-                  ) : (
-                    <V1ProjectHandle
-                      projectId={p.projectId}
-                      handle={p.handle}
-                    />
-                  )}
+            {!!searchPages?.length && (
+              <div className="flex flex-col">
+                {searchPages.slice(0, MAX_RESULTS).map((p, i) => (
+                  <div
+                    key={p.id}
+                    className={twMerge(
+                      'flex cursor-pointer items-baseline gap-2 py-2 px-5',
+                      highlightIndex === i
+                        ? 'bg-smoke-75 dark:bg-slate-600'
+                        : '',
+                    )}
+                    onClick={goToProject}
+                    onMouseEnter={() => setHighlightIndex(i)}
+                  >
+                    {p.pv === PV_V2 ? (
+                      <V2V3ProjectHandleLink
+                        projectId={p.projectId}
+                        handle={p.handle}
+                      />
+                    ) : (
+                      <V1ProjectHandle
+                        projectId={p.projectId}
+                        handle={p.handle}
+                      />
+                    )}
 
-                  <div style={{ flex: 1 }}>
-                    <ProjectVersionBadge
-                      transparent
-                      size="small"
-                      versionText={`V${p.pv}`}
-                    />
+                    <div style={{ flex: 1 }}>
+                      <ProjectVersionBadge
+                        transparent
+                        size="small"
+                        versionText={`V${p.pv}`}
+                      />
+                    </div>
+
+                    {highlightIndex === i && <ArrowRightOutlined />}
                   </div>
+                ))}
+              </div>
+            )}
 
-                  {highlightIndex === i && <ArrowRightOutlined />}
-                </div>
-              ))}
-            </div>
-          )}
+            {searchText && !isLoadingSearch && searchPages?.length === 0 && (
+              <div className="text-center text-grey-400">
+                <Trans>No results</Trans>
+              </div>
+            )}
+          </div>
 
-          {searchText && !isLoadingSearch && searchPages?.length === 0 && (
-            <div className="text-center text-grey-400">
-              <Trans>No results</Trans>
-            </div>
-          )}
+          <div className="mt-5 flex gap-6 border-t border-r-0 border-b-0 border-l-0 border-solid border-t-smoke-200 bg-smoke-75 py-4 px-5 text-xs dark:border-t-slate-300 dark:bg-slate-600">
+            <span>
+              <KeyboardButton>
+                <EnterOutlined />
+              </KeyboardButton>{' '}
+              to select
+            </span>
+            <span>
+              <KeyboardButton>
+                <ArrowUpOutlined />
+              </KeyboardButton>
+              <KeyboardButton>
+                <ArrowDownOutlined />
+              </KeyboardButton>{' '}
+              to navigate
+            </span>
+            <span>
+              <KeyboardButton>esc</KeyboardButton> to close
+            </span>
+          </div>
         </div>
       </Modal>
     </>
   )
 }
+
+const KeyboardButton = ({ children }: { children: React.ReactNode }) => (
+  <span className="rounded bg-white px-1.5 py-0.5 dark:bg-slate-700">
+    {children}
+  </span>
+)

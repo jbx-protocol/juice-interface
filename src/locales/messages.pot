@@ -2318,6 +2318,9 @@ msgstr ""
 msgid "REMAINING SUPPLY: {0}/{1}"
 msgstr ""
 
+msgid "REMAINING: {remainingSupply}"
+msgstr ""
+
 msgid "Raised on Juicebox"
 msgstr ""
 
@@ -3273,6 +3276,9 @@ msgid "Unknown Project"
 msgstr ""
 
 msgid "Unless payments are paused in your funding cycle settings, your project can still receive payments directly through the Juicebox protocol contracts."
+msgstr ""
+
+msgid "Unlimited"
 msgstr ""
 
 msgid "Unlock"

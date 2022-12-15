@@ -7,7 +7,14 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--text-primary);
-  background: var(--background-l0);
+
+  // smoke-25
+  background: #fefdfb;
+}
+
+body.dark {
+  // slate-800
+  background: #1a181f;
 }
 
 div#__next {
@@ -43,6 +50,11 @@ a {
 input {
   background: var(--background-l0);
   color: var(--text-primary);
+}
+
+b,
+strong {
+  font-weight: 500;
 }
 
 h1,
@@ -89,7 +101,6 @@ button {
 }
 
 body,
-.top-nav,
 div {
   transition: background-color 250ms linear;
 }

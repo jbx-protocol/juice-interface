@@ -1,26 +1,22 @@
+import { isAddress } from '@ethersproject/address'
 import { Trans } from '@lingui/macro'
 import { Button, Form, Space, Switch } from 'antd'
-
-import { ThemeContext } from 'contexts/themeContext'
-import { useAppDispatch } from 'hooks/AppDispatch'
-import { useAppSelector } from 'hooks/AppSelector'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
-
-import { isAddress } from '@ethersproject/address'
-
-import ReconfigurationStrategySelector from 'components/ReconfigurationStrategy/ReconfigurationStrategySelector'
-
-import { BallotStrategy } from 'models/ballot'
-
-import isEqual from 'lodash/isEqual'
-
 import FormItemLabel from 'components/FormItemLabel'
-import { shadowCard } from 'constants/styles/shadowCard'
+import ReconfigurationStrategySelector from 'components/ReconfigurationStrategy/ReconfigurationStrategySelector'
 import {
-  ballotStrategies,
+  HOLD_FEES_EXPLAINATION,
+  USE_DATASOURCE_FOR_REDEEM_EXPLAINATION,
+} from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+import {
+  ballotStrategiesFn,
   DEFAULT_BALLOT_STRATEGY,
 } from 'constants/v2v3/ballotStrategies'
+import { useAppDispatch } from 'hooks/AppDispatch'
+import { useAppSelector } from 'hooks/AppSelector'
+import isEqual from 'lodash/isEqual'
+import { BallotStrategy } from 'models/ballot'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 import TokenMintingExtra from './TokenMintingExtra'
 
@@ -31,8 +27,6 @@ export default function RulesForm({
   onFormUpdated?: (updated: boolean) => void
   onFinish: VoidFunction
 }) {
-  const { theme } = useContext(ThemeContext)
-
   const dispatch = useAppDispatch()
   const { fundingCycleMetadata, fundingCycleData } = useAppSelector(
     state => state.editingV2Project,
@@ -47,6 +41,8 @@ export default function RulesForm({
         fundingCycleData.ballot ?? DEFAULT_BALLOT_STRATEGY.address,
       ),
       allowSetTerminals: fundingCycleMetadata.global.allowSetTerminals,
+      holdFees: fundingCycleMetadata.holdFees,
+      useDataSourceForRedeem: fundingCycleMetadata.useDataSourceForRedeem,
     }),
     [fundingCycleData, fundingCycleMetadata],
   )
@@ -61,6 +57,10 @@ export default function RulesForm({
   )
   const [allowMinting, setAllowMinting] = useState<boolean>(
     initialValues.allowMinting,
+  )
+  const [holdFees, setHoldFees] = useState<boolean>(initialValues.holdFees)
+  const [useDataSourceForRedeem, setUseDataSourceForRedeem] = useState<boolean>(
+    initialValues.useDataSourceForRedeem,
   )
 
   useEffect(() => {
@@ -85,6 +85,10 @@ export default function RulesForm({
     dispatch(editingV2ProjectActions.setAllowMinting(allowMinting))
     dispatch(editingV2ProjectActions.setAllowSetTerminals(allowSetTerminals))
     dispatch(editingV2ProjectActions.setBallot(ballotStrategy.address))
+    dispatch(editingV2ProjectActions.setHoldFees(holdFees))
+    dispatch(
+      editingV2ProjectActions.setUseDataSourceForRedeem(useDataSourceForRedeem),
+    )
     onFinish?.()
   }, [
     dispatch,
@@ -93,13 +97,9 @@ export default function RulesForm({
     pausePay,
     allowMinting,
     allowSetTerminals,
+    holdFees,
+    useDataSourceForRedeem,
   ])
-
-  const switchContainerStyle = {
-    display: 'flex',
-    color: theme.colors.text.primary,
-    fontWeight: 500,
-  }
 
   const disableSaveButton =
     !ballotStrategy || !isAddress(ballotStrategy.address)
@@ -107,7 +107,7 @@ export default function RulesForm({
   return (
     <Form layout="vertical" onFinish={onFormSaved}>
       <Space direction="vertical" size="large">
-        <div style={{ ...shadowCard(theme), padding: '2rem' }}>
+        <div className="rounded-sm bg-smoke-75 stroke-none p-8 shadow-[10px_10px_0px_0px_#E7E3DC] dark:bg-slate-400 dark:shadow-[10px_10px_0px_0px_#2D293A]">
           <Form.Item
             extra={
               <Trans>
@@ -115,14 +115,10 @@ export default function RulesForm({
               </Trans>
             }
           >
-            <div
-              style={{
-                ...switchContainerStyle,
-              }}
-            >
+            <div className="flex font-medium text-black dark:text-slate-100">
               <Switch
+                className="mr-2"
                 onChange={setPausePay}
-                style={{ marginRight: '0.5rem' }}
                 checked={pausePay}
               />
               <Trans>Pause payments</Trans>
@@ -133,17 +129,13 @@ export default function RulesForm({
               <TokenMintingExtra showMintingWarning={showMintingWarning} />
             }
           >
-            <div
-              style={{
-                ...switchContainerStyle,
-              }}
-            >
+            <div className="flex text-black dark:text-slate-100">
               <Switch
+                className="mr-2"
                 onChange={checked => {
                   setShowMintingWarning(checked)
                   setAllowMinting(checked)
                 }}
-                style={{ marginRight: '0.5rem' }}
                 checked={allowMinting}
               />
               <Trans>Allow token minting</Trans>
@@ -158,25 +150,44 @@ export default function RulesForm({
               </Trans>
             }
           >
-            <div
-              style={{
-                ...switchContainerStyle,
-              }}
-            >
+            <div className="flex font-medium text-black dark:text-slate-100">
               <Switch
+                className="mr-2"
                 onChange={checked => {
                   setAllowSetTerminals(checked)
                 }}
-                style={{ marginRight: '0.5rem' }}
                 checked={allowSetTerminals}
               />
               <Trans>Allow terminal configuration</Trans>
             </div>
           </Form.Item>
+          <Form.Item name="holdfees" extra={HOLD_FEES_EXPLAINATION}>
+            <Switch
+              className="mr-2"
+              onChange={checked => {
+                setHoldFees(checked)
+              }}
+              checked={holdFees}
+            />
+            <Trans>Hold fees</Trans>
+          </Form.Item>
+          <Form.Item
+            name="useDataSourceForRedeem"
+            extra={USE_DATASOURCE_FOR_REDEEM_EXPLAINATION}
+          >
+            <Switch
+              className="mr-2"
+              onChange={checked => {
+                setUseDataSourceForRedeem(checked)
+              }}
+              checked={useDataSourceForRedeem}
+            />
+            <Trans>Use data source for redeem</Trans>
+          </Form.Item>
         </div>
 
         <Form.Item
-          style={{ ...shadowCard(theme), padding: '2rem' }}
+          className="rounded-sm bg-smoke-75 stroke-none p-8 shadow-[10px_10px_0px_0px_#E7E3DC] dark:bg-slate-400 dark:shadow-[10px_10px_0px_0px_#2D293A]"
           label={
             <FormItemLabel>
               <Trans>Reconfiguration rules</Trans>
@@ -184,7 +195,7 @@ export default function RulesForm({
           }
         >
           <ReconfigurationStrategySelector
-            ballotStrategies={ballotStrategies()}
+            ballotStrategies={ballotStrategiesFn()}
             selectedStrategy={ballotStrategy}
             onChange={setBallotStrategy}
           />

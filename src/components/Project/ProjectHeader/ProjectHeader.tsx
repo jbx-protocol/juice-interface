@@ -6,14 +6,12 @@ import Paragraph from 'components/Paragraph'
 import { GnosisSafeBadge } from 'components/Project/ProjectHeader/GnosisSafeBadge'
 import ProjectLogo from 'components/ProjectLogo'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
 import { useGnosisSafe } from 'hooks/safe/GnosisSafe'
 import { useContext } from 'react'
+import { classNames } from 'utils/classNames'
 import { EditProjectHandleButton } from './EditProjectHandleButton'
 import SocialLinks from './SocialLinks'
-
-const headerHeight = 120
 
 export function ProjectHeader({
   handle,
@@ -28,9 +26,6 @@ export function ProjectHeader({
   canEditProjectHandle?: boolean
   hideDescription?: boolean
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { projectMetadata, projectId, isArchived } = useContext(
     ProjectMetadataContext,
   )
@@ -42,68 +37,37 @@ export function ProjectHeader({
   const projectTitle = projectMetadata?.name || t`Untitled project`
 
   return (
-    <header
-      style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
-      }}
-    >
-      <div
-        style={{
-          marginRight: '1.25rem',
-          marginBottom: '1.25rem',
-          height: '100%',
-        }}
-      >
+    <header className="flex flex-wrap items-start justify-between">
+      <div className="mr-5 mb-5 h-full">
         <ProjectLogo
+          className="h-32 w-32"
           uri={projectMetadata?.logoUri}
           name={projectMetadata?.name}
-          size={headerHeight}
           projectId={projectId}
         />
       </div>
 
-      <div style={{ flex: 1, minWidth: '70%' }}>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            alignItems: 'flex-start',
-          }}
-        >
+      <div className="min-w-[70%] flex-1">
+        <div className="flex flex-wrap items-start justify-between">
           <div
-            style={{
-              maxWidth: isMobile ? '100%' : '75%',
-              display: 'flex',
-              alignItems: 'center',
-            }}
+            className={classNames(
+              'flex items-center',
+              isMobile ? 'max-w-full' : 'max-w-[75%]',
+            )}
           >
             <h1
-              style={{
-                fontSize: '2.4rem',
-                lineHeight: '2.8rem',
-                margin: 0,
-                color: projectMetadata?.name
-                  ? colors.text.primary
-                  : colors.text.placeholder,
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-              }}
+              className={classNames(
+                'm-0 overflow-hidden text-ellipsis text-4xl',
+                projectMetadata?.name
+                  ? 'text-black dark:text-slate-100'
+                  : 'text-grey-400 dark:text-grey-600',
+              )}
               title={projectTitle}
             >
               {projectTitle}
             </h1>
             {isArchived && (
-              <Badge
-                variant="warning"
-                style={{
-                  textTransform: 'uppercase',
-                  marginLeft: '1rem',
-                }}
-              >
+              <Badge className="ml-4" upperCase variant="warning">
                 <Trans>Archived</Trans>
               </Badge>
             )}
@@ -112,23 +76,8 @@ export function ProjectHeader({
           {actions ?? null}
         </div>
 
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'baseline',
-            flexWrap: 'wrap',
-            paddingTop: 8,
-            paddingBottom: 4,
-            fontWeight: 500,
-            columnGap: 20,
-          }}
-        >
-          <span
-            style={{
-              color: colors.text.secondary,
-              fontWeight: 600,
-            }}
-          >
+        <div className="flex flex-wrap items-baseline gap-x-5 pt-2 pb-1 font-medium">
+          <span className="font-medium text-grey-500 dark:text-grey-300">
             {handle ? (
               <Tooltip title={t`Project ID: ${projectId}`}>
                 <span>@{handle}</span>
@@ -151,22 +100,15 @@ export function ProjectHeader({
 
         {projectMetadata?.description && !hideDescription && (
           <Paragraph
+            className="text-grey-900 dark:text-slate-100"
             description={projectMetadata.description}
             characterLimit={250}
-            style={{ color: colors.text.secondary }}
           />
         )}
 
         {projectOwnerAddress && (
-          <div
-            style={{
-              color: colors.text.secondary,
-              marginTop: '0.4rem',
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            <span style={{ marginRight: '0.4rem' }}>
+          <div className="mt-2 flex items-center">
+            <span className="mr-2">
               <Trans>
                 Owned by <FormattedAddress address={projectOwnerAddress} />
               </Trans>

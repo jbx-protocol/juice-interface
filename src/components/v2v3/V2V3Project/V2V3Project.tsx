@@ -10,11 +10,14 @@ import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 import useMobile from 'hooks/Mobile'
 import { useValidatePrimaryEthTerminal } from 'hooks/v2v3/ValidatePrimaryEthTerminal'
+import { useWallet } from 'hooks/Wallet'
 import { V2V3PayProjectFormProvider } from 'providers/v2v3/V2V3PayProjectFormProvider'
 import { useContext, useState } from 'react'
+import { classNames } from 'utils/classNames'
 import { hasNftRewards } from 'utils/nftRewards'
 import { NftRewardsSection } from '../../NftRewards/NftRewardsSection'
 import { ProjectBanners } from './banners/ProjectBanners'
+import { ManageNftsSection } from './ManageNftsSection/ManageNftsSection'
 import NewDeployModal, { NEW_DEPLOY_QUERY_PARAM } from './modals/NewDeployModal'
 import { V2V3ProjectTokenBalancesModal } from './modals/V2V3ProjectTokenBalancesModal/V2V3ProjectTokenBalancesModal'
 import ProjectActivity from './ProjectActivity'
@@ -31,10 +34,7 @@ const AllAssetsButton = () => {
 
   return (
     <>
-      <TextButton
-        onClick={() => setBalancesModalVisible(true)}
-        style={{ fontWeight: 400, fontSize: '0.8rem' }}
-      >
+      <TextButton onClick={() => setBalancesModalVisible(true)}>
         <Trans>All assets</Trans>
       </TextButton>
       <V2V3ProjectTokenBalancesModal
@@ -60,6 +60,7 @@ export function V2V3Project() {
     useModalFromUrlQuery(NEW_DEPLOY_QUERY_PARAM)
 
   const isMobile = useMobile()
+  const { isConnected } = useWallet()
   const isOwner = useIsUserAddress(projectOwnerAddress)
   const isPrimaryETHTerminalValid = useValidatePrimaryEthTerminal()
 
@@ -77,7 +78,7 @@ export function V2V3Project() {
   if (projectId === undefined) return null
 
   return (
-    <Space direction="vertical" size={GUTTER_PX} style={{ width: '100%' }}>
+    <Space direction="vertical" size={GUTTER_PX} className="w-full">
       <ProjectBanners />
 
       <ProjectHeader
@@ -88,16 +89,12 @@ export function V2V3Project() {
       />
 
       <V2V3PayProjectFormProvider>
-        <Space direction="vertical" size={GUTTER_PX} style={{ width: '100%' }}>
-          <Row
-            gutter={GUTTER_PX}
-            align={'bottom'}
-            style={{ rowGap: GUTTER_PX }}
-          >
+        <Space direction="vertical" size={GUTTER_PX} className="w-full">
+          <Row className="gap-y-10" gutter={GUTTER_PX} align={'bottom'}>
             <Col md={colSizeMd} xs={24}>
               <section>
                 <TreasuryStats />
-                <div style={{ textAlign: 'right' }}>
+                <div className="text-right">
                   <AllAssetsButton />
                 </div>
               </section>
@@ -108,7 +105,7 @@ export function V2V3Project() {
                 <PayProjectForm disabled={payProjectFormDisabled} />
               </section>
               {(isMobile && showNftSection) || isPreviewMode ? (
-                <section style={{ marginTop: '30px' }}>
+                <section className="mt-7">
                   <NftRewardsSection />
                 </section>
               ) : null}
@@ -117,14 +114,11 @@ export function V2V3Project() {
 
           <Row gutter={GUTTER_PX}>
             <Col md={colSizeMd} xs={24}>
-              <Space
-                direction="vertical"
-                size={GUTTER_PX}
-                style={{ width: '100%' }}
-              >
+              <Space direction="vertical" size={GUTTER_PX} className="w-full">
                 {!isPreviewMode && pv ? (
                   <section>
                     <VolumeChart
+                      // TODO: Change this
                       style={{ height: 240 }}
                       createdAt={createdAt}
                       projectId={projectId}
@@ -135,6 +129,12 @@ export function V2V3Project() {
                 <section>
                   <V2V3ManageTokensSection />
                 </section>
+
+                {hasNftRewards(fundingCycleMetadata) && isConnected ? (
+                  <section>
+                    <ManageNftsSection />
+                  </section>
+                ) : null}
                 <section>
                   <V2V3FundingCycleSection />
                 </section>
@@ -143,20 +143,16 @@ export function V2V3Project() {
 
             {!isPreviewMode ? (
               <Col
+                className={classNames(isMobile ? 'mt-10' : '')}
                 md={colSizeMd}
                 xs={24}
-                style={{ marginTop: isMobile ? GUTTER_PX : 0 }}
               >
-                <Space
-                  size="large"
-                  direction="vertical"
-                  style={{ width: '100%' }}
-                >
+                <div className="flex flex-col gap-12">
                   {!isMobile && showNftSection ? <NftRewardsSection /> : null}
                   <section>
                     <ProjectActivity />
                   </section>
-                </Space>
+                </div>
               </Col>
             ) : null}
           </Row>

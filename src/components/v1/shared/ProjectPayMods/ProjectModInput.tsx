@@ -2,9 +2,7 @@ import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
 import { Button, Col, Row, Space } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
 import FormattedAddress from 'components/FormattedAddress'
-
-import { ThemeContext } from 'contexts/themeContext'
-import { PropsWithChildren, useContext } from 'react'
+import { PropsWithChildren } from 'react'
 import { formatDate } from 'utils/format/formatDate'
 import {
   formatWad,
@@ -13,31 +11,27 @@ import {
   permyriadToPercent,
 } from 'utils/format/formatNumber'
 import { amountSubFee } from 'utils/v1/math'
-
 import { BigNumber } from '@ethersproject/bignumber'
-
+import * as constants from '@ethersproject/constants'
 import { CurrencyName } from 'constants/currency'
+import { classNames } from 'utils/classNames'
 import V1ProjectHandle from '../V1ProjectHandle'
 import { EditingPayoutMod } from './types'
+import { V1_V3_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
+import { AllocatorBadge } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/AllocatorBadge'
 
 const FormattedRow = ({
   label,
   children,
 }: PropsWithChildren<{ label: string; disabled?: boolean }>) => {
   return (
-    <Row gutter={10} style={{ width: '100%' }} align="middle">
+    <Row gutter={10} className="w-full" align="middle">
       <Col span={7}>
         <label>{label}:</label>{' '}
       </Col>
       <Col span={17}>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <span style={{ cursor: 'default' }}>{children}</span>
+        <div className="flex items-center justify-between">
+          <span className="cursor-default">{children}</span>
         </div>
       </Col>
     </Row>
@@ -96,36 +90,41 @@ export function ProjectModInput({
   onSelect?: (index: number) => void
   onDelete?: (index: number) => void
 }) {
-  const {
-    theme: { colors, radii },
-  } = useContext(ThemeContext)
-
   const feePerbicent = percentToPerbicent(feePercentage)
+
+  const isV1Project =
+    mod.projectId?.gt(0) && mod.allocator === constants.AddressZero
+  const isV3Project =
+    mod.projectId?.gt(0) && mod.allocator === V1_V3_ALLOCATOR_ADDRESS
 
   return (
     <div
-      style={{
-        display: 'flex',
-        padding: 10,
-        border:
-          '1px solid ' +
-          (locked ? colors.stroke.disabled : colors.stroke.tertiary),
-        borderRadius: radii.md,
-      }}
+      className={classNames(
+        'flex rounded-sm border border-solid p-2',
+        locked
+          ? 'border-grey-200 dark:border-grey-700'
+          : 'border-smoke-200 dark:border-grey-600',
+      )}
       key={mod.beneficiary ?? '' + index}
     >
       <Space
         direction="vertical"
-        style={{
-          width: '100%',
-          color: colors.text.primary,
-          cursor: locked ? 'default' : 'pointer',
-        }}
+        className={classNames(
+          'w-full text-black dark:text-slate-100',
+          locked ? 'cursor-default' : 'cursor-pointer',
+        )}
         onClick={() => onSelect?.(index)}
       >
-        {mod.projectId?.gt(0) ? (
+        {mod.projectId && isV1Project ? (
           <FormattedRow label={'Project'}>
             <V1ProjectHandle projectId={mod.projectId} />
+          </FormattedRow>
+        ) : isV3Project ? (
+          <FormattedRow label={'Project ID'}>
+            <Space size="middle">
+              <span>{mod.projectId?.toNumber()}</span>
+              <AllocatorBadge allocator={mod.allocator} />
+            </Space>
           </FormattedRow>
         ) : (
           <FormattedRow label={'Address'}>
@@ -154,7 +153,7 @@ export function ProjectModInput({
       </Space>
 
       {locked ? (
-        <LockOutlined style={{ color: colors.icon.disabled }} />
+        <LockOutlined className="text-grey-400 dark:text-grey-400" />
       ) : (
         <Button
           type="text"

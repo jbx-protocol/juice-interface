@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import { DEFAULT_BONDING_CURVE_RATE_PERCENTAGE } from 'components/formItems/ProjectRedemptionRate'
 import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, useCallback, useContext, useMemo } from 'react'
+import { useCallback, useContext, useMemo } from 'react'
 import { CartesianGrid, Label, Line, LineChart, XAxis, YAxis } from 'recharts'
 
 const NUM_POINTS = 10
@@ -17,11 +17,6 @@ export const TokenRedemptionRateGraph = ({
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-
-  const labelStyle: CSSProperties = {
-    fontSize: '.9rem',
-    fontWeight: 500,
-  }
 
   const axisProps = {
     domain: [0, 10],
@@ -63,8 +58,8 @@ export const TokenRedemptionRateGraph = ({
           dataKey="x"
           label={
             <Label
+              className="text-sm font-medium"
               value={t`% tokens redeemed`}
-              style={labelStyle}
               fill={colors.text.primary}
             />
           }
@@ -74,10 +69,10 @@ export const TokenRedemptionRateGraph = ({
           dataKey="y"
           label={
             <Label
+              className="text-sm font-medium"
               transform="rotate(-90)"
               value={t`Token redeem value`}
               angle={-90}
-              style={labelStyle}
               fill={colors.text.primary}
             />
           }

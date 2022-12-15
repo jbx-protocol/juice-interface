@@ -7,12 +7,12 @@ import ProjectLogo from 'components/ProjectLogo'
 import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
 import { PV_V2 } from 'constants/pv'
 import { trendingWindowDays } from 'constants/trendingWindowDays'
-import { ThemeContext } from 'contexts/themeContext'
 import { useProjectHandleText } from 'hooks/ProjectHandleText'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { Project } from 'models/subgraph-entities/vX/project'
 import Link from 'next/link'
-import { CSSProperties, useContext, useMemo } from 'react'
+import { useMemo } from 'react'
+import { classNames } from 'utils/classNames'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { getTerminalVersion } from 'utils/v1/terminals'
 
@@ -36,10 +36,6 @@ export default function TrendingProjectCard({
   size?: 'sm' | 'lg'
   rank: number
 }) {
-  const {
-    theme: { colors, radii },
-  } = useContext(ThemeContext)
-
   const { data: metadata } = useProjectMetadata(project.metadataUri)
   const { handleText } = useProjectHandleText({
     handle: project.handle,
@@ -84,24 +80,6 @@ export default function TrendingProjectCard({
 
   const paymentCount = project.trendingPaymentsCount
 
-  const cardStyle: CSSProperties = {
-    display: 'flex',
-    alignItems: 'center',
-    whiteSpace: 'pre',
-    height: '100%',
-    overflow: 'hidden',
-    padding: '25px 20px',
-  }
-
-  const rankStyle: CSSProperties = {
-    fontSize: 22,
-    color: colors.text.primary,
-    fontWeight: 400,
-    marginRight: 15,
-    width: 25,
-    textAlign: 'center',
-  }
-
   return (
     <Link
       key={project.handle}
@@ -112,42 +90,29 @@ export default function TrendingProjectCard({
       }
     >
       <a>
-        <div
-          style={{
-            borderRadius: radii.lg,
-            cursor: 'pointer',
-            overflow: 'hidden',
-          }}
-        >
-          <div style={cardStyle} className="clickable-border">
-            <div
-              style={{ marginRight: 20, display: 'flex', alignItems: 'center' }}
-            >
-              <div style={rankStyle}>{rank}</div>
+        <div className="cursor-pointer overflow-hidden rounded-sm">
+          <div className="flex h-full items-center overflow-hidden whitespace-pre border border-solid border-smoke-300 py-6 px-5 transition-colors hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100">
+            <div className="mr-5 flex items-center">
+              <div className="mr-4 w-6 text-center text-xl font-normal text-black dark:text-slate-100">
+                {rank}
+              </div>
               <ProjectLogo
+                className={classNames(
+                  size === 'sm' ? 'h-16 w-16' : 'h-28 w-28',
+                )}
                 uri={metadata?.logoUri}
                 name={metadata?.name}
-                size={size === 'sm' ? 70 : 110}
                 projectId={project.projectId}
               />
             </div>
 
-            <div
-              style={{
-                flex: 1,
-                minWidth: 0,
-                fontWeight: 400,
-              }}
-            >
+            <div className="min-w-0 flex-1 font-normal">
               {metadata ? (
                 <h2
-                  style={{
-                    color: colors.text.primary,
-                    margin: 0,
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    fontSize: size === 'sm' ? 16 : 21,
-                  }}
+                  className={classNames(
+                    'm-0 overflow-hidden text-ellipsis text-black dark:text-slate-100',
+                    size === 'sm' ? 'text-base' : 'text-xl',
+                  )}
                 >
                   {metadata.name}
                 </h2>
@@ -157,7 +122,7 @@ export default function TrendingProjectCard({
 
               {size === 'sm' ? null : (
                 <div>
-                  <span style={{ color: colors.text.primary, fontWeight: 500 }}>
+                  <span className="font-medium text-black dark:text-slate-100">
                     {handleText}
                   </span>{' '}
                   <ProjectVersionBadge
@@ -167,46 +132,24 @@ export default function TrendingProjectCard({
                 </div>
               )}
 
-              <div
-                style={{
-                  color: colors.text.primary,
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  width: '100%',
-                }}
-              >
-                <span
-                  style={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    alignItems: 'baseline',
-                  }}
-                >
-                  <span style={{ fontWeight: 600, marginTop: 3 }}>
+              <div className="flex w-full flex-wrap text-black dark:text-slate-100">
+                <span className="flex flex-wrap items-baseline">
+                  <span className="mt-1 font-medium">
                     <ETHAmount
                       amount={project.trendingVolume}
                       precision={precision}
                     />{' '}
                   </span>
-                  <span
-                    style={{ fontWeight: 400, color: colors.text.secondary }}
-                  >
+                  <span className="font-medium text-grey-500 dark:text-grey-300">
                     <Trans>last {trendingWindowDays} days</Trans>{' '}
                   </span>
-                  <span style={{ fontWeight: 600, color: colors.text.header }}>
+                  <span className="font-medium text-juice-400 dark:text-juice-300">
                     {percentGainText && <>{percentGainText}</>}
                   </span>
                 </span>
               </div>
 
-              <div
-                style={{
-                  fontWeight: 400,
-                  color: colors.text.secondary,
-                  fontSize: 13,
-                  marginTop: 2,
-                }}
-              >
+              <div className="mt-0.5 text-sm font-normal text-grey-500 dark:text-grey-300">
                 <Plural
                   value={paymentCount}
                   one="# payment"

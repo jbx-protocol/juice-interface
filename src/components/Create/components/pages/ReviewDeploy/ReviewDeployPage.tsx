@@ -1,23 +1,23 @@
 import { CheckCircleFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Checkbox, Form } from 'antd'
+import { Checkbox, Form, Modal } from 'antd'
+import { Callout } from 'components/Callout'
 import { useDeployProject } from 'components/Create/hooks/DeployProject'
 import ExternalLink from 'components/ExternalLink'
-import { JuiceModal } from 'components/JuiceModal'
 import TransactionModal from 'components/TransactionModal'
 import { useAppSelector } from 'hooks/AppSelector'
 import useMobile from 'hooks/Mobile'
 import { useModal } from 'hooks/Modal'
 import { useWallet } from 'hooks/Wallet'
 import { useRouter } from 'next/router'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { CreateBadge } from '../../CreateBadge'
-import { CreateCallout } from '../../CreateCallout'
 import { CreateCollapse } from '../../CreateCollapse'
 import { Wizard } from '../../Wizard'
+import { WizardContext } from '../../Wizard/contexts'
 import {
   FundingConfigurationReview,
   ProjectDetailsReview,
@@ -54,6 +54,7 @@ const Header: React.FC<{ skipped?: boolean }> = ({
 
 export const ReviewDeployPage = () => {
   useSetCreateFurthestPageReached('reviewDeploy')
+  const { goToPage } = useContext(WizardContext)
   const isMobile = useMobile()
   const { chainUnsupported, changeNetworks, isConnected, connect } = useWallet()
   const router = useRouter()
@@ -74,9 +75,11 @@ export const ReviewDeployPage = () => {
   const dispatch = useDispatch()
 
   const handleStartOverClicked = useCallback(() => {
+    router.push('/create')
+    goToPage?.('projectDetails')
+    modal.close()
     dispatch(editingV2ProjectActions.resetState())
-    window.location.reload()
-  }, [dispatch])
+  }, [dispatch, goToPage, modal, router])
 
   const onFinish = useCallback(async () => {
     if (chainUnsupported) {
@@ -186,7 +189,7 @@ export const ReviewDeployPage = () => {
         onFinish={onFinish}
         className="mt-8 flex flex-col"
       >
-        <CreateCallout.Info noIcon collapsible={false}>
+        <Callout.Info noIcon collapsible={false}>
           <div className="flex gap-4">
             <Form.Item noStyle name="termsAccepted" valuePropName="checked">
               <Checkbox />
@@ -203,7 +206,7 @@ export const ReviewDeployPage = () => {
               </Trans>
             </div>
           </div>
-        </CreateCallout.Info>
+        </Callout.Info>
         <Wizard.Page.ButtonControl
           isNextLoading={isDeploying}
           isNextEnabled={isNextEnabled}
@@ -229,7 +232,7 @@ export const ReviewDeployPage = () => {
         transactionPending={deployTransactionPending}
         open={deployTransactionPending}
       />
-      <JuiceModal
+      <Modal
         title={
           <h2 className="text-xl font-medium text-black dark:text-grey-200">
             <Trans>Are you sure?</Trans>
@@ -242,7 +245,7 @@ export const ReviewDeployPage = () => {
         onCancel={modal.close}
       >
         <Trans>Starting over will erase all currently saved progress.</Trans>
-      </JuiceModal>
+      </Modal>
     </>
   )
 }

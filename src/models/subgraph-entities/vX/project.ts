@@ -22,6 +22,11 @@ import {
 } from '../v1/print-reserves-event'
 import { parseTapEventJson, TapEvent, TapEventJson } from '../v1/tap-event'
 import {
+  parseV1ConfigureEventJson,
+  V1ConfigureEventJson,
+} from '../v1/v1-configure'
+import { ConfigureEventJson, parseConfigureEventJson } from '../v2/configure'
+import {
   parseVeNftContractJson,
   VeNftContract,
   VeNftContractJson,
@@ -96,6 +101,8 @@ export type ProjectJson = Partial<
     | 'deployedERC20Events'
     | 'distributeToPayoutModEvents'
     | 'distributeToTicketModEvents'
+    | 'v1ConfigureEvents'
+    | 'configureEvents'
     | 'trendingScore'
     | 'trendingVolume'
     | 'totalPaid'
@@ -112,6 +119,8 @@ export type ProjectJson = Partial<
     deployedERC20Events: DeployedERC20EventJson[]
     distributeToPayoutModEvents: DistributeToPayoutModEventJson[]
     distributeToTicketModEvents: DistributeToTicketModEventJson[]
+    v1ConfigureEvents: V1ConfigureEventJson[]
+    configureEvents: ConfigureEventJson[]
     veNftContract: VeNftContractJson
     trendingScore: string
     trendingVolume: string
@@ -139,6 +148,10 @@ export const parseProjectJson = (project: ProjectJson): Partial<Project> =>
     payEvents: project.payEvents?.map(parsePayEventJson) ?? undefined,
     tapEvents: project.tapEvents?.map(parseTapEventJson) ?? undefined,
     redeemEvents: project.redeemEvents?.map(parseRedeemEventJson) ?? undefined,
+    configureEvents:
+      project.configureEvents?.map(parseConfigureEventJson) ?? undefined,
+    v1ConfigureEvents:
+      project.v1ConfigureEvents?.map(parseV1ConfigureEventJson) ?? undefined,
     printReservesEvents:
       project.printReservesEvents?.map(parsePrintReservesEventJson) ??
       undefined,

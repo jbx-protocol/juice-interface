@@ -8,16 +8,22 @@ import { MobileRulesReview } from './MobileRulesReview'
 
 export const RulesReview = () => {
   const isMobile = useMobile()
-  const { customAddress, pausePayments, strategy, terminalConfiguration } =
-    useRulesReview()
+  const {
+    customAddress,
+    pausePayments,
+    strategy,
+    terminalConfiguration,
+    holdFees,
+    useDataSourceForRedeem,
+  } = useRulesReview()
   return (
-    <div className="flex flex-col gap-10 pt-5 pb-12">
+    <div className="flex flex-col gap-10 pt-5 pb-8">
       {isMobile ? (
         <MobileRulesReview />
       ) : (
-        <Row>
+        <Row gutter={20}>
           <DescriptionCol
-            span={6}
+            span={5}
             title={t`Reconfiguration`}
             desc={
               <div className="text-base font-medium">
@@ -32,16 +38,30 @@ export const RulesReview = () => {
             }
           />
           <DescriptionCol
-            span={6}
+            span={5}
             title={t`Pause payments`}
             desc={<div className="text-base font-medium">{pausePayments}</div>}
           />
           <DescriptionCol
-            span={6}
+            span={5}
             title={t`Terminal configuration`}
             desc={
               <div className="text-base font-medium">
                 {terminalConfiguration}
+              </div>
+            }
+          />
+          <DescriptionCol
+            span={5}
+            title={t`Hold fees`}
+            desc={<div className="text-base font-medium">{holdFees}</div>}
+          />
+          <DescriptionCol
+            span={4}
+            title={t`Use data source for redeem`}
+            desc={
+              <div className="text-base font-medium">
+                {useDataSourceForRedeem}
               </div>
             }
           />

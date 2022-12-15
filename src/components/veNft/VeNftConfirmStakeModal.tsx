@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Col, Descriptions, Image, Row } from 'antd'
-import Callout from 'components/Callout'
+import { Callout } from 'components/Callout'
 import FormattedAddress from 'components/FormattedAddress'
 import TransactionModal from 'components/TransactionModal'
 
@@ -126,13 +126,13 @@ export default function ConfirmStakeModal({
       confirmLoading={loading}
       transactionPending={transactionPending}
     >
-      <Callout>
+      <Callout.Info>
         <Trans>
           You are agreeing to IRREVOCABLY lock your tokens for{' '}
           {formattedLockDuration} in exchange for {votingPower} $ve
           {tokenSymbolDisplayText}
         </Trans>
-      </Callout>
+      </Callout.Info>
       <Row>
         <Col span={14}>
           <Descriptions column={1}>

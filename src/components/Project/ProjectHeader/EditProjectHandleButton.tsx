@@ -23,11 +23,7 @@ export function EditProjectHandleButton() {
             handle,
           })}
         >
-          <Button
-            type="link"
-            icon={<EditOutlined />}
-            style={{ paddingLeft: 0 }}
-          >
+          <Button className="pl-0" type="link" icon={<EditOutlined />}>
             <span>
               <Trans>Add handle</Trans>
             </span>

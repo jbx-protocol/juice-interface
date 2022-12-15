@@ -5,7 +5,6 @@ import ManageTokensModal from 'components/ManageTokensModal'
 import RichButton from 'components/RichButton'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { VeNftContext } from 'contexts/veNftContext'
 import useERC20BalanceOf from 'hooks/ERC20BalanceOf'
@@ -32,9 +31,6 @@ import V2MintModal from './V2MintModal'
 import V2RedeemModal from './V2RedeemModal'
 
 export function AccountBalanceDescription() {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { contractAddress: veNftAddress } = useContext(VeNftContext)
   const {
     tokenAddress,
@@ -125,14 +121,7 @@ export function AccountBalanceDescription() {
             </div>
           )}
         </div>
-        <div
-          style={{
-            cursor: 'default',
-            fontSize: '0.8rem',
-            fontWeight: 500,
-            color: colors.text.tertiary,
-          }}
-        >
+        <div className="cursor-default text-xs text-grey-400 dark:text-slate-200">
           <Trans>{userOwnershipPercentage}% of total supply</Trans>
         </div>
       </div>

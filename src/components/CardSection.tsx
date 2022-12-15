@@ -1,45 +1,28 @@
-import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, PropsWithChildren, useContext } from 'react'
+import { PropsWithChildren } from 'react'
 
-import { shadowCard } from 'constants/styles/shadowCard'
+import { classNames } from 'utils/classNames'
 
 export function CardSection({
   header,
-  padded = true,
   noShadow,
   children,
-  style,
 }: PropsWithChildren<{
   header?: string
-  padded?: boolean
   noShadow?: boolean
-  style?: CSSProperties
 }>) {
-  const { theme } = useContext(ThemeContext)
   return (
-    <div
-      style={{
-        marginBottom: noShadow ? 0 : 10,
-        marginRight: noShadow ? 0 : 10,
-      }}
-    >
-      {header && (
-        <h2
-          style={{
-            margin: 0,
-            fontWeight: 600,
-          }}
-        >
-          {header}
-        </h2>
-      )}
+    <div className={classNames(noShadow ? 'mb-0 mr-0' : 'mb-[10px] mr-[10px]')}>
+      {header && <h2 className="m-0 font-medium">{header}</h2>}
       <div
-        style={{
-          ...shadowCard(theme),
-          overflow: 'hidden',
-          ...style,
-          ...(padded ? { padding: 20 } : {}),
-        }}
+        // TODO: Consider turning this into a component
+        className={classNames(
+          'overflow-hidden rounded-sm bg-smoke-75 p-5 dark:bg-slate-400',
+          !noShadow
+            ? // #E7E3DC is smoke-200
+              // 2D293A is slate-600
+              'shadow-[10px_10px_0px_0px_#E7E3DC] dark:shadow-[10px_10px_0px_0px_#2D293A]'
+            : '',
+        )}
       >
         {children}
       </div>

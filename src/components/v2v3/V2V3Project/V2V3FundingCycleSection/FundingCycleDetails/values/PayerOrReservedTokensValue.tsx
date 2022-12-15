@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { formattedNum } from 'utils/format/formatNumber'
 
-export function ContributorOrReservedTokensValue({
+export function PayerOrReservedTokensValue({
   value,
   tokenSymbol,
 }: {

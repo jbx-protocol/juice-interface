@@ -15,7 +15,7 @@ export default function CurrentFundingCycle() {
   if (!projectId) return null
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div className="relative">
       <CardSection>
         <FundingCyclePreview fundingCycle={currentFC} />
       </CardSection>

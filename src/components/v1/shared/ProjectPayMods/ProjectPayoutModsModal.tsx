@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { DatePicker, Form, Select } from 'antd'
+import { DatePicker, Form, Modal, Select } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
 import { FormItems } from 'components/formItems'
 import {
@@ -12,11 +12,9 @@ import {
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import NumberSlider from 'components/inputs/NumberSlider'
-
-import { ThemeContext } from 'contexts/themeContext'
 import { isAddress } from 'ethers/lib/utils'
 import { PayoutMod } from 'models/mods'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import {
   fromWad,
   parseWad,
@@ -26,18 +24,12 @@ import {
 } from 'utils/format/formatNumber'
 import { amountSubFee } from 'utils/v1/math'
 import { getAmountFromPercent, getPercentFromAmount } from 'utils/v1/payouts'
-
 import * as constants from '@ethersproject/constants'
 import * as moment from 'moment'
-
 import { BigNumber } from '@ethersproject/bignumber'
-
 import { useForm } from 'antd/lib/form/Form'
-
 import { CurrencyName } from 'constants/currency'
-
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { JuiceModal } from 'components/JuiceModal'
 import { EditingPayoutMod } from './types'
 
 type ModType = 'project' | 'address'
@@ -46,6 +38,7 @@ type ProjectPayoutModsForm = {
   projectId: string
   handle: string
   beneficiary: string
+  allocator: string
   percent: number
   amount: number
   lockedUntil: moment.Moment
@@ -72,13 +65,10 @@ export const ProjectPayoutModsModal = ({
   onOk: (mods: EditingPayoutMod[]) => void
   onCancel: VoidFunction
 }) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const [modalMode, setModalMode] = useState<ModalMode>('Add') //either 'Add', or 'Edit'
   const [editingModType, setEditingModType] = useState<ModType>('address')
   const [editingModHandle, setEditingModHandle] = useState<string | BigNumber>()
+  const [editingModAllocator, setEditingModAllocator] = useState<string>()
   const [, setEditingPercent] = useState<number>()
   const [form] = useForm<ProjectPayoutModsForm>()
 
@@ -89,6 +79,7 @@ export const ProjectPayoutModsModal = ({
         BigNumber.from(mod.projectId ?? '0').gt(0) ? 'project' : 'address',
       )
       setEditingModHandle(mod.handle ?? mod.projectId)
+      setEditingModAllocator(mod.allocator)
       const percent = parseFloat(permyriadToPercent(mod.percent))
       setEditingPercent(percent)
       form.setFieldsValue({
@@ -109,6 +100,7 @@ export const ProjectPayoutModsModal = ({
       setModalMode('Add')
       setEditingModType('address')
       setEditingModHandle(undefined)
+      setEditingModAllocator(undefined)
       setEditingPercent(undefined)
     }
 
@@ -162,6 +154,7 @@ export const ProjectPayoutModsModal = ({
 
     const handle = form.getFieldValue('handle')
     const beneficiary = form.getFieldValue('beneficiary')
+    const allocator = form.getFieldValue('allocator')
     const percent = percentToPermyriad(form.getFieldValue('percent')).toNumber()
     const _projectId = form.getFieldValue('projectId')
     const projectId = _projectId ? BigNumber.from(_projectId) : undefined
@@ -174,7 +167,14 @@ export const ProjectPayoutModsModal = ({
       : undefined
 
     // Store handle in mod object only to repopulate handle input while editing
-    const newMod = { beneficiary, percent, handle, lockedUntil, projectId }
+    const newMod = {
+      beneficiary,
+      percent,
+      allocator,
+      handle,
+      lockedUntil,
+      projectId,
+    }
 
     let modsToReturn = [...mods, newMod]
     if (editingModIndex !== undefined && editingModIndex < mods.length) {
@@ -193,7 +193,7 @@ export const ProjectPayoutModsModal = ({
   }
 
   return (
-    <JuiceModal
+    <Modal
       title={modalMode === 'Edit' ? t`Edit payout` : t`Add new payout`}
       open={open}
       onOk={validateAndSave}
@@ -241,16 +241,10 @@ export const ProjectPayoutModsModal = ({
             <EthAddressInput />
           </Form.Item>
         ) : (
-          <FormItems.ProjectHandleFormItem
-            name="handle"
-            requireState="exists"
-            initialValue={editingModHandle}
-            returnValue="id"
-            onValueChange={id => form.setFieldsValue({ projectId: id })}
-            formItemProps={{
-              label: t`Project handle`,
-            }}
-            required
+          <FormItems.ProjectPayoutFormItem
+            initialHandle={editingModHandle}
+            initialAllocator={editingModAllocator}
+            onChange={id => form.setFieldsValue({ projectId: id })}
           />
         )}
         {editingModType === 'project' ? (
@@ -297,13 +291,7 @@ export const ProjectPayoutModsModal = ({
             }
             rules={[{ validator: validatePayout }]}
           >
-            <div
-              style={{
-                display: 'flex',
-                color: colors.text.primary,
-                alignItems: 'center',
-              }}
-            >
+            <div className="flex items-center text-black dark:text-slate-100">
               <FormattedNumberInput
                 value={form.getFieldValue('amount')}
                 placeholder={'0'}
@@ -315,8 +303,8 @@ export const ProjectPayoutModsModal = ({
         ) : null}
 
         <Form.Item label={t`Percent`}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <span style={{ flex: 1 }}>
+          <div className="flex items-center">
+            <span className="flex-1">
               <NumberSlider
                 onChange={(percent: number | undefined) => {
                   const newAmount = getAmountFromPercent(
@@ -353,6 +341,6 @@ export const ProjectPayoutModsModal = ({
           <DatePicker />
         </Form.Item>
       </Form>
-    </JuiceModal>
+    </Modal>
   )
 }

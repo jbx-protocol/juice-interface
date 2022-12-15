@@ -4,52 +4,10 @@ import ExternalLink from 'components/ExternalLink'
 import useMobile from 'hooks/Mobile'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/NftRewards'
 import { NftRewardTier } from 'models/nftRewardTier'
-import { CSSProperties, useContext } from 'react'
+import { useContext } from 'react'
 
-import { darkColors } from 'constants/styles/colors'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-
-const containerStyle: CSSProperties = {
-  zIndex: 10000,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  backgroundColor: 'rgba(0,0,0,0.8)',
-  overflow: 'auto',
-}
-
-const headerRowStyle: CSSProperties = {
-  display: 'flex',
-  width: '100%',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  marginBottom: '15px',
-}
-
-const headerStyle: CSSProperties = {
-  marginBottom: 0,
-  color: darkColors.light0,
-  fontWeight: 500,
-}
-
-const linkStyle: CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  cursor: 'pointer',
-  color: darkColors.light0,
-}
-
-const bodyTextStyle: CSSProperties = {
-  display: 'flex',
-  marginTop: '20px',
-  fontSize: '0.75rem',
-  color: darkColors.light0,
-}
+import { classNames } from 'utils/classNames'
 
 export function NftPreview({
   open,
@@ -74,44 +32,38 @@ export function NftPreview({
       rewardTier.remainingSupply !== DEFAULT_NFT_MAX_SUPPLY,
   )
 
-  const maxImageDimensions = '600px'
-  const containerWidth = !isMobile ? maxImageDimensions : '90vw'
-
   return (
-    <div style={containerStyle} onClick={onClose}>
+    <div
+      className="fixed top-0 left-0 z-[10000] flex h-full w-full items-center justify-center overflow-auto bg-[rgba(0,0,0,0.8)]"
+      onClick={onClose}
+    >
       <div
-        style={{
-          width: containerWidth,
-        }}
+        className={classNames(!isMobile ? 'w-[600px]' : 'w-[90vw]')}
         onClick={e => e.stopPropagation()}
       >
-        <div style={headerRowStyle}>
-          <h3 style={{ ...headerStyle, textTransform: 'uppercase' }}>
+        <div className="mb-4 flex w-full items-center justify-between">
+          <h3 className="mb-0 uppercase text-slate-100">
             <Trans>{projectMetadata?.name}</Trans>
           </h3>
-          <CloseOutlined onClick={onClose} style={{ paddingLeft: '15px' }} />
+          <CloseOutlined className="pl-4 text-slate-100" onClick={onClose} />
         </div>
-        <div
-          style={{ display: 'flex', justifyContent: 'center' }}
-          onClick={onClose}
-        >
+        <div className="flex justify-center" onClick={onClose}>
           <img
+            className={classNames(
+              !isMobile
+                ? 'max-h-[60vh] max-w-[600px]'
+                : 'max-h-[50vh] max-w-[90vw]',
+            )}
             alt={rewardTier.name}
             src={imageUrl}
-            style={{
-              maxWidth: containerWidth,
-              maxHeight: !isMobile ? '60vh' : '50vh',
-            }}
             onClick={e => e.stopPropagation()}
             crossOrigin="anonymous"
           />
         </div>
-        <h3 style={{ ...headerStyle, marginTop: '20px' }}>{rewardTier.name}</h3>
-        <p style={{ marginTop: '10px', color: darkColors.light0 }}>
-          {rewardTier.description}
-        </p>
+        <h3 className='"mb-0 text-slate-100" mt-5'>{rewardTier.name}</h3>
+        <p className="mt-2 text-slate-100">{rewardTier.description}</p>
         {hasLimitedSupply || rewardTier.externalLink ? (
-          <div style={bodyTextStyle}>
+          <div className="mt-5 flex text-xs text-slate-100">
             {hasLimitedSupply ? (
               <div>
                 <Trans>
@@ -123,15 +75,13 @@ export function NftPreview({
             {rewardTier.externalLink ? (
               <ExternalLink
                 href={rewardTier.externalLink}
-                style={{
-                  ...linkStyle,
-                  marginLeft: hasLimitedSupply ? '25px' : 0,
-                }}
+                className={classNames(
+                  'flex cursor-pointer items-center text-slate-100',
+                  hasLimitedSupply ? 'ml-6' : undefined,
+                )}
               >
-                <LinkOutlined style={{ fontSize: '1.1rem' }} />
-                <span
-                  style={{ textDecoration: 'underline', marginLeft: '5px' }}
-                >
+                <LinkOutlined className="text-lg" />
+                <span className="ml-1 underline">
                   <Trans>LINK TO NFT</Trans>
                 </span>
               </ExternalLink>

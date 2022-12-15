@@ -1,19 +1,17 @@
 import { RightCircleOutlined } from '@ant-design/icons'
 import { Button, ButtonProps, Space } from 'antd'
+import { classNames } from 'utils/classNames'
 
-export function TextButton({ style, ...props }: ButtonProps) {
+export function TextButton({ className, ...props }: ButtonProps) {
   return (
     <Button
       {...props}
-      style={{
-        fontSize: '0.8rem',
-        textTransform: 'uppercase',
-        padding: 0,
-        ...style,
-      }}
+      className={classNames(
+        'p-0 text-sm uppercase text-grey-400 hover:text-haze-400',
+        className,
+      )}
       type="text"
       size="small"
-      className="text-tertiary! hover-text-action-primary!"
     >
       <Space size="small">
         {props.children}

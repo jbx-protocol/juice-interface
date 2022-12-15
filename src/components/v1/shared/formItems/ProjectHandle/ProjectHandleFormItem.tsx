@@ -4,10 +4,9 @@ import { formatBytes32String } from '@ethersproject/strings'
 import { t } from '@lingui/macro'
 import { Form } from 'antd'
 import { FormItemExt } from 'components/formItems/formItemExt'
-import { ThemeContext } from 'contexts/themeContext'
 import useContractReader from 'hooks/v1/contractReader/ContractReader'
 import { V1ContractName } from 'models/v1/contracts'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { normalizeHandle } from 'utils/format/formatHandle'
 
 import {
@@ -34,9 +33,6 @@ export default function ProjectHandleFormItem({
   returnValue?: 'id' | 'handle'
   initialValue?: ProjectHandleInitialValue
 } & FormItemExt) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const [inputContents, setInputContents] = useState<string>()
   const [handleLoading, setHandleLoading] = useState<boolean>(false)
 
@@ -88,7 +84,7 @@ export default function ProjectHandleFormItem({
 
   const suffix: string | JSX.Element = useMemo(() => {
     const InputCheckIcon = (
-      <CheckCircleOutlined style={{ color: colors.icon.success }} />
+      <CheckCircleOutlined className="text-success-700 dark:text-success-200" />
     )
 
     if (handleLoading) {
@@ -117,14 +113,7 @@ export default function ProjectHandleFormItem({
     }
 
     return ''
-  }, [
-    inputContents,
-    handleLoading,
-    handleExists,
-    requireState,
-    initialValue,
-    colors.icon.success,
-  ])
+  }, [inputContents, handleLoading, handleExists, requireState, initialValue])
 
   const onChange = (val: string | undefined) => {
     setInputContents(val)

@@ -25,3 +25,9 @@
 .ant-modal-mask {
   z-index: 1;
 }
+
+.ant-modal-footer {
+  .ant-btn {
+    max-width: 100%;
+  }
+}

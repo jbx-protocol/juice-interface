@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro'
-import { JuiceModal } from 'components/JuiceModal'
+import Modal from 'antd/lib/modal/Modal'
 import { NftPostPayModalConfig } from 'models/nftRewardTier'
 import { withHttps } from 'utils/externalLink'
 
@@ -20,7 +20,7 @@ export function NftPostPayModal({
     }
   }
   return (
-    <JuiceModal
+    <Modal
       open={open}
       onCancel={onClose}
       onOk={onOk}
@@ -33,10 +33,12 @@ export function NftPostPayModal({
       cancelButtonProps={{
         hidden: true,
       }}
-      okText={config.ctaText}
+      okText={
+        <div className="overflow-hidden text-ellipsis">{config.ctaText}</div>
+      }
       destroyOnClose
     >
       {config.content}
-    </JuiceModal>
+    </Modal>
   )
 }

@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import Callout from 'components/Callout'
+import { Callout } from 'components/Callout'
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { useV1SetOperatorTx } from 'hooks/v1/transactor/V1SetOperatorTx'
 import { V1OperatorPermission } from 'models/v1/permissions'
@@ -44,7 +44,7 @@ export function GrantTransferPermissionCallout({
   }
 
   return (
-    <Callout>
+    <Callout.Info>
       <p>
         <Trans>You must grant permission to swap your tokens.</Trans>
       </p>
@@ -57,6 +57,6 @@ export function GrantTransferPermissionCallout({
           <Trans>Grant permission</Trans>
         </span>
       </Button>
-    </Callout>
+    </Callout.Info>
   )
 }

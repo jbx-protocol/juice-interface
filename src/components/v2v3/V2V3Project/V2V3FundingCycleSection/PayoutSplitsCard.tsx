@@ -7,7 +7,6 @@ import SpendingStats from 'components/Project/SpendingStats'
 import TooltipLabel from 'components/TooltipLabel'
 import SplitList from 'components/v2v3/shared/SplitList'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/ETHPaymentTerminalFee'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
@@ -36,9 +35,6 @@ export default function PayoutSplitsCard({
   distributionLimit: BigNumber | undefined
   fundingCycleDuration: BigNumber | undefined
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const {
     usedDistributionLimit,
     projectOwnerAddress,
@@ -101,16 +97,9 @@ export default function PayoutSplitsCard({
 
   return (
     <CardSection>
-      <Space direction="vertical" size="large" style={{ width: '100%' }}>
+      <Space direction="vertical" size="large" className="w-full">
         {hideDistributeButton ? null : (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              gap: 10,
-              flexWrap: 'wrap',
-            }}
-          >
+          <div className="flex flex-wrap justify-between gap-2">
             <Skeleton
               loading={isLoadingStats}
               active
@@ -141,17 +130,10 @@ export default function PayoutSplitsCard({
         )}
 
         <div>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              gap: 10,
-              flexWrap: 'wrap',
-            }}
-          >
+          <div className="flex flex-wrap justify-between gap-2">
             <TooltipLabel
               label={
-                <h3 style={{ display: 'inline-block', fontSize: '0.875rem' }}>
+                <h3 className="inline-block text-sm uppercase text-black dark:text-slate-100">
                   <Trans>Funding distribution</Trans>
                 </h3>
               }
@@ -166,9 +148,9 @@ export default function PayoutSplitsCard({
             {canEditPayouts && (
               <Link href={settingsPagePath('payouts', { projectId, handle })}>
                 <Button
+                  className="mb-4"
                   size="small"
                   icon={<SettingOutlined />}
-                  style={{ marginBottom: '1rem' }}
                 >
                   <span>
                     <Trans>Edit payouts</Trans>
@@ -187,7 +169,7 @@ export default function PayoutSplitsCard({
               valueFormatProps={{ precision: 4 }}
             />
           ) : (
-            <span style={{ color: colors.text.tertiary }}>
+            <span className="text-grey-500 dark:text-slate-100">
               <Trans>This project has no distributions.</Trans>
             </span>
           )}

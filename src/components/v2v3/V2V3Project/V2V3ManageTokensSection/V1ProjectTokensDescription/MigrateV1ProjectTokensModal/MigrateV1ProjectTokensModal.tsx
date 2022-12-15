@@ -110,7 +110,7 @@ export function MigrateProjectTokensModal({
       {...modalOkProps()}
       {...props}
     >
-      <Space size="large" direction="vertical" style={{ width: '100%' }}>
+      <Space size="large" direction="vertical" className="w-full">
         {!hasV1TokenTransferPermission && (
           <GrantTransferPermissionCallout
             onFinish={() => setPermissionGranted(true)}

@@ -1,9 +1,7 @@
 import { WarningOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, Space } from 'antd'
-import { ThemeContext } from 'contexts/themeContext'
 import { useWallet } from 'hooks/Wallet'
-import { useContext } from 'react'
 
 import Wallet from './Wallet'
 
@@ -15,9 +13,6 @@ export default function Account() {
     chainUnsupported,
     changeNetworks,
   } = useWallet()
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
 
   if (!isConnected) {
     return (
@@ -33,13 +28,9 @@ export default function Account() {
     return (
       <Space>
         <Button
+          className="border border-solid border-warning-200 bg-warning-50 text-warning-800 dark:border-warning-500 dark:bg-warning-900 dark:text-warning-100"
           size="small"
-          icon={<WarningOutlined style={{ color: colors.icon.warn }} />}
-          style={{
-            backgroundColor: colors.background.warn,
-            borderColor: colors.stroke.warn,
-            color: colors.text.warn,
-          }}
+          icon={<WarningOutlined className="text-warning-500" />}
           onClick={changeNetworks}
         >
           Wrong network

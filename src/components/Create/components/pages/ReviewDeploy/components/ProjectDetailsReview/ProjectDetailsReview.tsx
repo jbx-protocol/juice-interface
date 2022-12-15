@@ -34,13 +34,21 @@ export const ProjectDetailsReview = () => {
             <DescriptionCol
               span={6}
               title={t`Project name`}
-              desc={<div className="text-base font-medium">{name}</div>}
+              desc={
+                <div className="overflow-hidden text-ellipsis text-base font-medium">
+                  {name}
+                </div>
+              }
             />
             <DescriptionCol
               span={18}
               title={t`Project description`}
               placeholder={t`No description`}
-              desc={description}
+              desc={
+                <div className="overflow-hidden text-ellipsis">
+                  {description}
+                </div>
+              }
             />
           </Row>
           {/* Bottom */}
@@ -50,7 +58,7 @@ export const ProjectDetailsReview = () => {
               title={t`Project logo`}
               desc={
                 <ProjectLogo
-                  size={140}
+                  className="h-36 w-36"
                   uri={
                     logoUri
                       ? restrictedIpfsUrl(cidFromUrl(logoUri)!)
@@ -68,7 +76,9 @@ export const ProjectDetailsReview = () => {
                     title={t`Twitter`}
                     desc={
                       twitter ? (
-                        <div className="text-sm font-medium">{twitter}</div>
+                        <div className="overflow-hidden text-ellipsis text-sm font-medium">
+                          {twitter}
+                        </div>
                       ) : null
                     }
                   />
@@ -77,7 +87,9 @@ export const ProjectDetailsReview = () => {
                     title={t`Discord`}
                     desc={
                       discord ? (
-                        <div className="text-sm font-medium">{discord}</div>
+                        <div className="overflow-hidden text-ellipsis text-sm font-medium">
+                          {discord}
+                        </div>
                       ) : null
                     }
                   />
@@ -86,7 +98,9 @@ export const ProjectDetailsReview = () => {
                     title={t`Website`}
                     desc={
                       infoUri ? (
-                        <div className="text-sm font-medium">{infoUri}</div>
+                        <div className="overflow-hidden text-ellipsis text-sm font-medium">
+                          {infoUri}
+                        </div>
                       ) : null
                     }
                   />
@@ -98,7 +112,7 @@ export const ProjectDetailsReview = () => {
                       title={t`Pay button text`}
                       desc={
                         payButton ? (
-                          <div className="text-base font-medium">
+                          <div className="overflow-hidden text-ellipsis text-base font-medium">
                             {payButton}
                           </div>
                         ) : null
@@ -111,7 +125,7 @@ export const ProjectDetailsReview = () => {
                       title={t`Pay disclaimer`}
                       desc={
                         payDisclosure ? (
-                          <div className="text-base font-medium">
+                          <div className="overflow-hidden text-ellipsis text-base font-medium">
                             {payDisclosure}
                           </div>
                         ) : null

@@ -2,8 +2,7 @@ import { Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
 
 import FormItemLabel from 'components/FormItemLabel'
-import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, useContext, useState } from 'react'
+import { useState } from 'react'
 
 import ExternalLink from 'components/ExternalLink'
 import { MinimalCollapse } from 'components/MinimalCollapse'
@@ -13,6 +12,7 @@ import FormItemWarningText from '../FormItemWarningText'
 import NumberSlider from '../inputs/NumberSlider'
 import SwitchHeading from '../SwitchHeading'
 import { FormItemExt } from './formItemExt'
+import { Callout } from 'components/Callout'
 
 export const DEFAULT_BONDING_CURVE_RATE_PERCENTAGE = 100
 
@@ -23,13 +23,9 @@ function BondingCurveRateExtra({
   disabled?: boolean
   value: string | undefined
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   return (
-    <Space style={{ fontSize: '0.875rem' }} direction="vertical" size="large">
-      <p style={{ margin: 0 }}>
+    <Space className="text-sm" direction="vertical" size="large">
+      <p className="m-0">
         <Trans>
           The redemption rate determines the amount of overflow each token can
           be redeemed for.
@@ -37,12 +33,12 @@ function BondingCurveRateExtra({
       </p>
 
       {value === '0' ? (
-        <span style={{ color: colors.text.warn }}>
+        <Callout.Warning>
           <Trans>
             Token holders <strong>cannot redeem their tokens</strong> for any
             ETH when the redemption rate is 0.
           </Trans>
-        </span>
+        </Callout.Warning>
       ) : null}
 
       <MinimalCollapse
@@ -79,10 +75,10 @@ function BondingCurveRateExtra({
 }
 
 export function ProjectRedemptionRate({
+  className,
   name,
   hideLabel,
   value,
-  style = {},
   label,
   formItemProps,
   onChange,
@@ -90,8 +86,8 @@ export function ProjectRedemptionRate({
   onToggled,
   disabled,
 }: {
+  className?: string
   value: string | undefined
-  style?: CSSProperties
   label?: string | JSX.Element
   onChange: (val?: number) => void
   checked?: boolean
@@ -101,12 +97,12 @@ export function ProjectRedemptionRate({
   const [graphValue, setGraphValue] = useState<number>()
 
   return (
-    <div style={style}>
+    <div className={className}>
       <Form.Item
         name={name}
         label={
           hideLabel ? undefined : (
-            <div style={{ display: 'flex' }}>
+            <div className="flex">
               {onToggled ? (
                 <SwitchHeading
                   checked={Boolean(checked)}
@@ -132,6 +128,7 @@ export function ProjectRedemptionRate({
       >
         {!disabled && !(onToggled && !checked) && (
           <NumberSlider
+            className="flex-grow"
             min={0}
             max={100}
             step={0.5}
@@ -144,7 +141,6 @@ export function ProjectRedemptionRate({
               onChange(val)
             }}
             suffix="%"
-            style={{ flexGrow: 1 }}
           />
         )}
       </Form.Item>

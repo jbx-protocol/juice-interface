@@ -1,12 +1,10 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
-import { Form, InputNumber, Radio } from 'antd'
+import { DatePicker, Form, Modal, Radio } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ModalMode, validateEthAddress } from 'components/formItems/formHelpers'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
-import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'
-import { JuiceModal } from 'components/JuiceModal'
 import { CurrencyName } from 'constants/currency'
 import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/ETHPaymentTerminalFee'
 import findIndex from 'lodash/findIndex'
@@ -14,7 +12,6 @@ import { Split } from 'models/splits'
 import moment, * as Moment from 'moment'
 import { useEffect, useMemo, useState } from 'react'
 import { parseWad, stripCommas } from 'utils/format/formatNumber'
-import { stringIsDigit } from 'utils/math'
 import {
   adjustedSplitPercents,
   amountFromPercent,
@@ -28,6 +25,7 @@ import {
 } from 'utils/v2v3/math'
 import { AmountFormItem } from './AmountFormItem'
 import { PercentageFormItem } from './PercentageFormItem'
+import { V2V3ProjectPayoutFormItem } from './V2V3ProjectPayoutFormItem'
 import { AddOrEditSplitFormFields, SplitType } from './types'
 
 type DistributionType = 'amount' | 'percent' | 'both'
@@ -38,7 +36,7 @@ type DistributionType = 'amount' | 'percent' | 'both'
 export function DistributionSplitModal({
   open,
   mode,
-  overrideDistTypeWithPercentage = false,
+  isEditPayoutPage = false,
   splits, // Locked and editable splits
   editingSplit, // Split that is currently being edited (only in the case mode ==='Edit')
   onSplitsChanged,
@@ -51,6 +49,7 @@ export function DistributionSplitModal({
   open: boolean
   mode: ModalMode // 'Add' or 'Edit' or 'Undefined'
   overrideDistTypeWithPercentage?: boolean
+  isEditPayoutPage?: boolean
   splits: Split[]
   editingSplit?: Split
   onSplitsChanged?: (splits: Split[]) => void
@@ -104,12 +103,15 @@ export function DistributionSplitModal({
   }, [editingSplitType, form])
 
   useEffect(() => {
-    if (overrideDistTypeWithPercentage) {
+    if (isEditPayoutPage && parseWad(distributionLimit).gt(0)) {
+      setDistributionType('both')
+      return
+    } else if (isEditPayoutPage && parseWad(distributionLimit).eq(0)) {
       setDistributionType('percent')
       return
     }
     setDistributionType(distributionLimitIsInfinite ? 'percent' : 'amount')
-  }, [distributionLimitIsInfinite, overrideDistTypeWithPercentage, open])
+  }, [distributionLimit, distributionLimitIsInfinite, open, isEditPayoutPage])
 
   // Set the initial info for form from split
   // If editing, format the lockedUntil and projectId
@@ -130,10 +132,10 @@ export function DistributionSplitModal({
         ? Moment.default(editingSplit.lockedUntil * 1000)
         : undefined,
     )
-
     form.setFieldsValue({
       beneficiary: editingSplit.beneficiary,
       percent: preciseFormatSplitPercent(editingSplit.percent),
+      allocator: editingSplit.allocator,
     })
 
     if (distributionLimitIsInfinite) {
@@ -162,7 +164,6 @@ export function DistributionSplitModal({
   // Validates new or newly edited split, then adds it to or edits the splits list
   const confirmSplit = async () => {
     await form.validateFields()
-
     const roundedLockedUntil = lockedUntil
       ? Math.round(lockedUntil.valueOf() / 1000)
       : undefined
@@ -173,7 +174,7 @@ export function DistributionSplitModal({
       lockedUntil: roundedLockedUntil,
       preferClaimed: true,
       projectId: projectId,
-      allocator: undefined, // TODO: new v2 feature
+      allocator: form.getFieldValue('allocator'),
     } as Split
 
     let adjustedSplits: Split[] = splits
@@ -200,7 +201,6 @@ export function DistributionSplitModal({
               : m,
           )
         : [...adjustedSplits, newSplit]
-
     onSplitsChanged?.(newSplits)
 
     resetStates()
@@ -225,7 +225,9 @@ export function DistributionSplitModal({
 
     const newPercent = getDistributionPercentFromAmount({
       amount: newAmount,
-      distributionLimit: newDistributionLimit,
+      distributionLimit: isEditPayoutPage
+        ? parseFloat(distributionLimit ?? '0')
+        : newDistributionLimit,
     })
 
     setNewDistributionLimit(newDistributionLimit.toString())
@@ -233,6 +235,7 @@ export function DistributionSplitModal({
       percent: preciseFormatSplitPercent(newPercent),
     })
   }, [
+    isEditPayoutPage,
     amount,
     distributionLimit,
     distributionLimitIsInfinite,
@@ -263,20 +266,12 @@ export function DistributionSplitModal({
     )
   }
 
-  const validateProjectId = () => {
-    if (!stringIsDigit(form.getFieldValue('projectId'))) {
-      return Promise.reject(t`Project ID must be a number.`)
-    }
-    // TODO: check if projectId exists
-    return Promise.resolve()
-  }
-
   // Cannot select days before today or today with lockedUntil
   const disabledDate = (current: moment.Moment) =>
     current && current < moment().endOf('day')
 
   return (
-    <JuiceModal
+    <Modal
       title={mode === 'Edit' ? t`Edit payout` : t`Add new payout`}
       open={open}
       onOk={confirmSplit}
@@ -301,15 +296,14 @@ export function DistributionSplitModal({
             value={editingSplitType}
             onChange={e => setEditingSplitType(e.target.value)}
           >
-            <Radio value="address" style={{ fontWeight: 400 }}>
+            <Radio value="address" className="font-normal">
               <Trans>Wallet address</Trans>
             </Radio>
-            <Radio value="project" style={{ fontWeight: 400 }}>
+            <Radio value="project" className="font-normal">
               <Trans>Juicebox project</Trans>
             </Radio>
           </Radio.Group>
         </Form.Item>
-
         {editingSplitType === 'address' ? (
           <Form.Item
             name="beneficiary"
@@ -325,26 +319,16 @@ export function DistributionSplitModal({
             <EthAddressInput />
           </Form.Item>
         ) : (
-          <Form.Item
-            name={'projectId'}
-            rules={[{ validator: validateProjectId }]}
-            label={t`Juicebox Project ID`}
-            required
-          >
-            <InputNumber
-              value={parseInt(projectId ?? '')}
-              style={{ width: '100%' }}
-              onChange={(projectId: number | null) => {
-                setProjectId(projectId?.toString())
-              }}
-            />
-          </Form.Item>
+          <V2V3ProjectPayoutFormItem
+            value={projectId}
+            onChange={setProjectId}
+          />
         )}
         {editingSplitType === 'project' ? (
           <Form.Item
             name="beneficiary"
-            label={t`Token beneficiary address`}
-            extra={t`The address that should receive the tokens minted from paying this project.`}
+            label={t`Project token beneficiary address`}
+            extra={t`A payout to this project may mint some of the project's tokens. Set the address that will receive the tokens.`}
             rules={[
               {
                 validator: validatePayoutAddress,
@@ -356,21 +340,28 @@ export function DistributionSplitModal({
             <EthAddressInput />
           </Form.Item>
         ) : null}
-
         {/* Only show amount input if project distribution limit is not infinite */}
-        {distributionLimit && distributionType === 'amount' ? (
+        {!distributionLimitIsInfinite &&
+        (distributionType === 'amount' || distributionType === 'both') ? (
           <AmountFormItem
             form={form}
             currencyName={currencyName}
+            distributionType={distributionType}
             editingSplitType={editingSplitType}
             fee={ETHPaymentTerminalFee}
             isFirstSplit={isFirstSplit}
             distributionLimit={distributionLimit}
             onCurrencyChange={onCurrencyChange}
           />
-        ) : (
-          <PercentageFormItem form={form} />
-        )}
+        ) : null}
+        {distributionType === 'percent' || distributionType === 'both' ? (
+          <PercentageFormItem
+            form={form}
+            distributionType={distributionType}
+            distributionLimit={distributionLimit}
+            currencyName={currencyName}
+          />
+        ) : null}
         <Form.Item
           name="lockedUntil"
           label={t`Lock until`}
@@ -381,12 +372,12 @@ export function DistributionSplitModal({
             </Trans>
           }
         >
-          <JuiceDatePicker
+          <DatePicker
             disabledDate={disabledDate}
             onChange={lockedUntil => setLockedUntil(lockedUntil)}
           />
         </Form.Item>
       </Form>
-    </JuiceModal>
+    </Modal>
   )
 }

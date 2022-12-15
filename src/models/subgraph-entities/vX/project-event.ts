@@ -22,6 +22,16 @@ import {
   parseDistributeToTicketModEvent,
 } from '../v1/distribute-to-ticket-mod-event'
 import {
+  parseV1ConfigureEventJson,
+  V1ConfigureEvent,
+  V1ConfigureEventJson,
+} from '../v1/v1-configure'
+import {
+  ConfigureEvent,
+  ConfigureEventJson,
+  parseConfigureEventJson,
+} from '../v2/configure'
+import {
   DeployETHERC20ProjectPayerEvent,
   DeployETHERC20ProjectPayerEventJson,
   parseDeployETHERC20ProjectPayerEventJson,
@@ -98,6 +108,7 @@ export interface ProjectEvent extends TerminalEventEntity {
   printReservesEvent: Partial<PrintReservesEvent> | null
   distributeToPayoutModEvent: Partial<DistributeToPayoutModEvent> | null
   distributeToTicketModEvent: Partial<DistributeToTicketModEvent> | null
+  v1ConfigureEvent: Partial<V1ConfigureEvent> | null
 
   // Only V2
   distributePayoutsEvent: Partial<DistributePayoutsEvent> | null
@@ -106,6 +117,7 @@ export interface ProjectEvent extends TerminalEventEntity {
   distributeToReservedTokenSplitEvent: Partial<DistributeToReservedTokenSplitEvent> | null
   useAllowanceEvent: Partial<UseAllowanceEvent> | null
   deployETHERC20ProjectPayerEvent: Partial<DeployETHERC20ProjectPayerEvent> | null
+  configureEvent: Partial<ConfigureEvent> | null
 }
 
 export type ProjectEventJson = Pick<
@@ -125,6 +137,7 @@ export type ProjectEventJson = Pick<
   printReservesEvent: PrintReservesEventJson | null
   distributeToPayoutModEvent: DistributeToPayoutModEventJson | null
   distributeToTicketModEvent: DistributeToTicketModEventJson | null
+  v1ConfigureEvent: V1ConfigureEventJson | null
 
   distributePayoutsEvent: DistributePayoutsEventJson | null
   distributeReservedTokensEvent: DistributeReservedTokensEventJson | null
@@ -132,6 +145,7 @@ export type ProjectEventJson = Pick<
   distributeToPayoutSplitEvent: DistributeToPayoutSplitEventJson | null
   useAllowanceEvent: UseAllowanceEventJson | null
   deployETHERC20ProjectPayerEvent: DeployETHERC20ProjectPayerEventJson | null
+  configureEvent: ConfigureEventJson | null
 }
 
 export const parseProjectEventJson = (j: ProjectEventJson): ProjectEvent => ({
@@ -181,5 +195,11 @@ export const parseProjectEventJson = (j: ProjectEventJson): ProjectEvent => ({
     ? parseDeployETHERC20ProjectPayerEventJson(
         j.deployETHERC20ProjectPayerEvent,
       )
+    : null,
+  configureEvent: j.configureEvent
+    ? parseConfigureEventJson(j.configureEvent)
+    : null,
+  v1ConfigureEvent: j.v1ConfigureEvent
+    ? parseV1ConfigureEventJson(j.v1ConfigureEvent)
     : null,
 })

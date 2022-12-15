@@ -1,6 +1,7 @@
 import { Tooltip } from 'antd'
 import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, useContext } from 'react'
+import { useContext } from 'react'
+import { classNames } from 'utils/classNames'
 
 // whether this value the old value or a new (updated) value
 type DiffStatus = 'new' | 'old'
@@ -58,15 +59,6 @@ export function FundingCycleListItem({
   helperText?: string | JSX.Element
   subItem?: boolean
 }) {
-  const containerStyle: CSSProperties = {
-    paddingTop: '3px',
-    paddingBottom: '4px',
-    fontSize: subItem ? '0.75rem' : '0.875rem',
-    display: 'flex',
-    flexWrap: 'wrap',
-    marginLeft: subItem ? '20px' : 'unset',
-  }
-
   const hasDiff = oldValue && value !== oldValue
 
   const _value = (
@@ -78,12 +70,19 @@ export function FundingCycleListItem({
 
   if (helperText) {
     return (
-      <div style={{ ...containerStyle, cursor: 'default' }}>
+      <div
+        className={classNames(
+          'mb-2 flex cursor-default flex-wrap',
+          subItem ? 'ml-5 text-xs' : 'text-sm',
+        )}
+      >
         <Tooltip title={helperText} overlayInnerStyle={{ width: '400px' }}>
-          <div style={{ fontWeight: 500, display: 'flex' }}>
+          <div className="flex font-medium">
             <div
-              className="text-decoration-underline text-decoration-dashed text-decoration-secondary"
-              style={{ height: subItem ? '1rem' : '1.2rem' }}
+              className={classNames(
+                'text-decoration-underline text-decoration-dashed text-decoration-secondary',
+                subItem ? 'h-4' : '',
+              )}
             >
               {name}
             </div>
@@ -96,8 +95,13 @@ export function FundingCycleListItem({
   }
 
   return (
-    <div style={containerStyle}>
-      <div style={{ fontWeight: 500 }}>{name}:</div> {_value}
+    <div
+      className={classNames(
+        'mb-2 flex flex-wrap',
+        subItem ? 'ml-5 text-xs' : 'text-sm',
+      )}
+    >
+      <div className="font-medium">{name}:</div> {_value}
     </div>
   )
 }

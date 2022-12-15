@@ -1,7 +1,5 @@
 import { t, Trans } from '@lingui/macro'
 import { Form, FormInstance, Space, Switch } from 'antd'
-import { ThemeContext } from 'contexts/themeContext'
-import { useContext } from 'react'
 
 interface AllowPublicExtensionInputProps {
   form: FormInstance
@@ -10,9 +8,6 @@ interface AllowPublicExtensionInputProps {
 const AllowPublicExtensionInput = ({
   form,
 }: AllowPublicExtensionInputProps) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   return (
     <Form.Item
       name="allowPublicExtension"
@@ -22,7 +17,7 @@ const AllowPublicExtensionInput = ({
         <Switch
           onChange={val => form.setFieldsValue({ allowPublicExtension: val })}
         />
-        <span style={{ color: colors.text.primary, fontWeight: 500 }}>
+        <span className="font-medium text-black dark:text-slate-100">
           <Trans>Allow public lock extension</Trans>
         </span>
       </Space>

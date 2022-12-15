@@ -3,7 +3,6 @@ import Loading from 'components/Loading'
 import Project404 from 'components/Project404'
 import ScrollToTopButton from 'components/ScrollToTopButton'
 import { V1Project } from 'components/v1/V1Project'
-import { layouts } from 'constants/styles/layouts'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ProjectMetadataV5 } from 'models/project-metadata'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
@@ -79,9 +78,9 @@ function V1Dashboard() {
   }
 
   return (
-    <div style={layouts.maxWidth}>
+    <div className="my-0 mx-auto max-w-[1080px] p-5">
       <V1Project />
-      <div style={{ textAlign: 'center', padding: 20 }}>
+      <div className="p-5 text-center">
         <ScrollToTopButton />
       </div>
     </div>

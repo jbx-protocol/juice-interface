@@ -1,7 +1,6 @@
 import Loading from 'components/Loading'
 import ScrollToTopButton from 'components/ScrollToTopButton'
 import { V2V3Project } from 'components/v2v3/V2V3Project'
-import { layouts } from 'constants/styles/layouts'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/V2V3ProjectContractsContext'
 import { TransactionProvider } from 'providers/TransactionProvider'
@@ -17,14 +16,14 @@ export function V2V3Dashboard() {
   if (cvsLoading || !projectMetadata) return <Loading />
 
   return (
-    <div style={layouts.maxWidth}>
+    <div className="my-0 mx-auto max-w-[1080px] p-5">
       <TransactionProvider>
         <VeNftProvider projectId={projectId}>
           <V2V3Project />
         </VeNftProvider>
       </TransactionProvider>
 
-      <div style={{ textAlign: 'center', marginTop: '3rem' }}>
+      <div className="mt-12 text-center">
         <ScrollToTopButton />
       </div>
     </div>

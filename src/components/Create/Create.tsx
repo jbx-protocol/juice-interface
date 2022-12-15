@@ -1,6 +1,8 @@
 import { t, Trans } from '@lingui/macro'
+import { Callout } from 'components/Callout'
 import { DeployButtonText } from 'components/DeployProjectButtonText'
 import ExternalLink from 'components/ExternalLink'
+import Loading from 'components/Loading'
 import { CV_V3 } from 'constants/cv'
 import { useRouter } from 'next/router'
 import { TransactionProvider } from 'providers/TransactionProvider'
@@ -19,8 +21,10 @@ import {
 } from './components'
 import { CreateBadge } from './components/CreateBadge'
 import { DeploySuccess } from './components/pages/ReviewDeploy/components/DeploySuccess'
+import { PayoutsMigrationModal } from './components/PayoutsMigrationModal'
 import { RecallCard } from './components/RecallCard'
 import { Wizard } from './components/Wizard'
+import { useLoadingInitialStateFromQuery } from './hooks/LoadInitialStateFromQuery'
 
 export function Create() {
   const router = useRouter()
@@ -30,17 +34,43 @@ export function Create() {
     return <DeploySuccess projectId={projectId} />
   }
 
+  const isMigration = router.query.migration === 'true'
+
+  const initialStateLoading = useLoadingInitialStateFromQuery()
+
+  if (initialStateLoading) return <Loading />
+
   return (
-    // New projects will be launched using V3 contracts.
+    //  New projects will be launched using V3 contracts.
     <V2V3ContractsProvider initialCv={CV_V3}>
       <TransactionProvider>
         <V2V3CurrencyProvider>
           <h1 className="text-center text-base font-medium uppercase text-black dark:text-slate-100">
-            <Trans>Create a project</Trans>
+            {!isMigration ? (
+              <Trans>Create a project</Trans>
+            ) : (
+              <Trans>Re-launch a project</Trans>
+            )}
           </h1>
           {/* TODO: Remove wizard-create once form item css override is replaced */}
           <div className="wizard-create">
             <Wizard className="pb-28" doneText={<DeployButtonText />}>
+              {isMigration && (
+                <Callout.Info className="w-full md:w-[800px]">
+                  <strong>
+                    <Trans>Re-launch on V3</Trans>
+                  </strong>
+                  <p className="font-medium">
+                    <Trans>
+                      It's strongly recommended that you visit the{' '}
+                      <ExternalLink href="https://discord.gg/6jXrJSyDFf">
+                        Juicebox Discord
+                      </ExternalLink>{' '}
+                      for help and advice on this process.
+                    </Trans>
+                  </p>
+                </Callout.Info>
+              )}
               <Wizard.Page
                 name="projectDetails"
                 title={t`Project Details`}
@@ -136,13 +166,18 @@ export function Create() {
                 name="reconfigurationRules"
                 title={<Trans>Reconfiguration Rules</Trans>}
                 description={
-                  <Trans>Configure restrictions for your funding cycle.</Trans>
+                  <Trans>
+                    Setting a reconfiguration delay means changes to your
+                    funding cycle settings only take effect after the delay
+                    period has passed. This helps build trust with your
+                    contributors.
+                  </Trans>
                 }
               >
                 <ReconfigurationRulesPage />
               </Wizard.Page>
               <Wizard.Page
-                className="max-w-[800px]"
+                className="max-w-full md:max-w-[800px]"
                 name="reviewDeploy"
                 title={t`Review & Deploy`}
                 description={
@@ -158,6 +193,7 @@ export function Create() {
               </Wizard.Page>
             </Wizard>
           </div>
+          <PayoutsMigrationModal />
         </V2V3CurrencyProvider>
       </TransactionProvider>
     </V2V3ContractsProvider>

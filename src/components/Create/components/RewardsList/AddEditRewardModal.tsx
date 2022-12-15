@@ -4,12 +4,11 @@ import {
   UploadOutlined,
 } from '@ant-design/icons'
 import { t } from '@lingui/macro'
-import { Form, Space } from 'antd'
+import { Form, Modal, Space } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
-import { JuiceModal } from 'components/JuiceModal'
 import { JuiceSwitch } from 'components/JuiceSwitch'
 import PrefixedInput from 'components/PrefixedInput'
 import { UploadNoStyle } from 'components/UploadNoStyle'
@@ -97,7 +96,7 @@ export const AddEditRewardModal = ({
 
   const isEditing = !!editingData
   return (
-    <JuiceModal
+    <Modal
       className={className}
       title={
         <h2 className="text-xl font-medium text-black dark:text-grey-200">
@@ -119,7 +118,7 @@ export const AddEditRewardModal = ({
           rules={[inputMustExistRule({ label: t`Image file` })]}
         >
           <UploadNoStyle
-            sizeLimit={5 * 1024 * 1024}
+            sizeLimit={100 * 1024 * 1024} // 100 MB
             supportedFileTypes={
               new Set(['image/jpeg', 'image/png', 'image/gif'])
             }
@@ -207,7 +206,7 @@ export const AddEditRewardModal = ({
           <PrefixedInput prefix="https://" />
         </Form.Item>
       </Form>
-    </JuiceModal>
+    </Modal>
   )
 }
 

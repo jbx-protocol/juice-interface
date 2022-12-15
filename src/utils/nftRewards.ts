@@ -6,8 +6,10 @@ import { juiceboxEmojiImageUri } from 'constants/images'
 import { IPFS_TAGS } from 'constants/ipfs'
 import { readNetwork } from 'constants/networks'
 import { WAD_DECIMALS } from 'constants/numbers'
+import { V2V3_PROJECT_IDS } from 'constants/v2v3/projectIds'
 import { defaultAbiCoder, parseEther } from 'ethers/lib/utils'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/NftRewards'
+import { round } from 'lodash'
 import {
   IpfsNftCollectionMetadata,
   IPFSNftRewardTier,
@@ -216,27 +218,36 @@ export function buildJB721TierParams({
   rewardTiers: NftRewardTier[]
 }): JB721TierParams[] {
   // `cids` are ordered the same as `rewardTiers` so can get corresponding values from same index
-  return cids.map((cid, index) => {
-    const contributionFloorWei = parseEther(
-      rewardTiers[index].contributionFloor.toString(),
-    )
-    const maxSupply = rewardTiers[index].maxSupply
-    const initialQuantity = BigNumber.from(maxSupply ?? DEFAULT_NFT_MAX_SUPPLY)
-    const encodedIPFSUri = encodeIPFSUri(cid)
+  return cids
+    .map((cid, index) => {
+      const contributionFloorWei = parseEther(
+        rewardTiers[index].contributionFloor.toString(),
+      )
+      const maxSupply = rewardTiers[index].maxSupply
+      const initialQuantity = BigNumber.from(
+        maxSupply ?? DEFAULT_NFT_MAX_SUPPLY,
+      )
+      const encodedIPFSUri = encodeIPFSUri(cid)
 
-    return {
-      contributionFloor: contributionFloorWei,
-      lockedUntil: BigNumber.from(0),
-      initialQuantity,
-      votingUnits: 0,
-      reservedRate: 0,
-      reservedTokenBeneficiary: constants.AddressZero,
-      encodedIPFSUri,
-      allowManualMint: false,
-      shouldUseBeneficiaryAsDefault: false,
-      transfersPausable: false,
-    } as JB721TierParams
-  })
+      return {
+        contributionFloor: contributionFloorWei,
+        lockedUntil: BigNumber.from(0),
+        initialQuantity,
+        votingUnits: 0,
+        reservedRate: 0,
+        reservedTokenBeneficiary: constants.AddressZero,
+        encodedIPFSUri,
+        allowManualMint: false,
+        shouldUseBeneficiaryAsDefault: false,
+        transfersPausable: false,
+      } as JB721TierParams
+    })
+    .sort((a, b) => {
+      // Tiers MUST BE in ascending order when sent to contract.
+      if (a.contributionFloor.gt(b.contributionFloor)) return 1
+      if (a.contributionFloor.lt(b.contributionFloor)) return -1
+      return 0
+    })
 }
 
 /**
@@ -279,15 +290,30 @@ export function encodeJB721DelegatePayMetadata(
   return encoded
 }
 
+export function encodeJB721DelegateRedeemMetadata(tokenIdsToRedeem: string[]) {
+  const args = [
+    constants.HashZero,
+    IJB721Delegate_INTERFACE_ID,
+    tokenIdsToRedeem,
+  ]
+
+  const encoded = defaultAbiCoder.encode(
+    ['bytes32', 'bytes4', 'uint256[]'],
+    args,
+  )
+
+  return encoded
+}
+
 // sums the contribution floors of a given list of nftRewardTiers
 //    - optional select only an array of ids
 export function sumTierFloors(rewardTiers: NftRewardTier[], ids?: number[]) {
   if (ids) {
     rewardTiers = rewardTiers.filter(tier => ids.includes(tier.id ?? -1))
   }
-  return rewardTiers.reduce(
-    (subSum, tier) => subSum + tier.contributionFloor,
-    0,
+  return round(
+    rewardTiers.reduce((subSum, tier) => subSum + tier.contributionFloor, 0),
+    6,
   )
 }
 
@@ -342,4 +368,19 @@ export function buildJBDeployTiered721DelegateData({
     },
     governanceType: JB721GovernanceType.TIERED,
   }
+}
+
+/**
+ * Return some hard-coded metadata overrides for specific projects.
+ */
+export function payMetadataOverrides(
+  projectId: number,
+): Omit<JB721DelegatePayMetadata, 'tierIdsToMint'> {
+  // ConstitutionDAO2 wanted to _not_ overspend. That is, to not allow any payment amount that
+  // doesn't equal one of the NFT tier amounts.
+  if (projectId === V2V3_PROJECT_IDS.CDAO2) {
+    return { dontOverspend: true }
+  }
+
+  return {}
 }

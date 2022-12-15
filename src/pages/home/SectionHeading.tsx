@@ -1,22 +1,11 @@
-import useMobile from 'hooks/Mobile'
-import { CSSProperties } from 'react'
+import { twMerge } from 'tailwind-merge'
 
-export const SectionHeading: React.FC<{ style?: CSSProperties }> = ({
+export const SectionHeading: React.FC<{ className?: string }> = ({
   children,
-  style,
+  className,
 }) => {
-  const isMobile = useMobile()
-
   return (
-    <h2
-      style={{
-        fontSize: isMobile ? '1.8rem' : '2.5rem',
-        textAlign: 'center',
-        fontWeight: 600,
-        marginBottom: '0.8rem',
-        ...style,
-      }}
-    >
+    <h2 className={twMerge('text-center text-4xl font-semibold', className)}>
       {children}
     </h2>
   )

@@ -1,7 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { invertPermyriad } from 'utils/bigNumbers'
-import { fromWad, percentToPermyriad } from 'utils/format/formatNumber'
+import {
+  formattedNum,
+  fromWad,
+  percentToPermyriad,
+} from 'utils/format/formatNumber'
 import { WeightFunction } from 'utils/math'
 
 import {
@@ -11,6 +15,12 @@ import {
   ONE_MILLION,
   TEN_THOUSAND,
 } from 'constants/numbers'
+import { JBFee } from 'models/v2v3/fee'
+import {
+  V2V3FundingCycleData,
+  V2V3FundingCycleMetadata,
+} from 'models/v2v3/fundingCycle'
+import { parseEther } from 'ethers/lib/utils'
 
 export const MAX_RESERVED_RATE = TEN_THOUSAND
 export const MAX_REDEMPTION_RATE = TEN_THOUSAND
@@ -22,6 +32,8 @@ export const DEFAULT_MINT_RATE = ONE_MILLION
 export const MAX_MINT_RATE = Math.floor(MaxUint88 / 10 ** 18)
 
 const MAX_FEE = ONE_BILLION
+
+type IsseeType = 'reserved' | 'payer'
 
 /**
  * Express a given discount rate (parts-per-billion) as a percentage.
@@ -204,7 +216,7 @@ export const weightAmountPermyriad: WeightFunction = (
   weight: BigNumber | undefined,
   reservedRatePermyriad: number | undefined,
   amountWad: BigNumber | undefined,
-  outputType: 'payer' | 'reserved',
+  outputType: IsseeType,
 ): string => {
   if (!weight || !amountWad) return '0'
 
@@ -239,4 +251,32 @@ export const amountSubFee = (
   if (!feePerBillion || !amountWad) return
   const feeAmount = feeForAmount(amountWad, feePerBillion) ?? 0
   return amountWad.sub(feeAmount)
+}
+
+// `heldFeesOf` returns list of JBFee
+// We derive each fee amount by multiplying the distributed amount by the fee,
+// and return the sum of them all
+export function sumHeldFees(fees: JBFee[]) {
+  return fees.reduce((sum, heldFee) => {
+    const amountWad = feeForAmount(heldFee.amount, BigNumber.from(heldFee.fee))
+    const amountNum = parseFloat(fromWad(amountWad))
+    return sum + (amountNum ?? 0)
+  }, 0)
+}
+
+export function computeIssuanceRate(
+  fundingCycle: V2V3FundingCycleData,
+  fundingCycleMetadata: V2V3FundingCycleMetadata,
+  issuee: IsseeType,
+) {
+  return formattedNum(
+    formatIssuanceRate(
+      weightAmountPermyriad(
+        fundingCycle?.weight,
+        fundingCycleMetadata?.reservedRate.toNumber(),
+        parseEther('1'),
+        issuee,
+      ) ?? '',
+    ),
+  )
 }

@@ -12,10 +12,11 @@ import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import useWeiConverter from 'hooks/WeiConverter'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useContext, useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 import { V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { V2V3ConfirmPayModal } from './V2V3ConfirmPayModal/V2V3ConfirmPayModal'
 
-export function V2V3PayButton({ disabled, wrapperStyle }: PayButtonProps) {
+export function V2V3PayButton({ disabled, wrapperClassName }: PayButtonProps) {
   const {
     fundingCycleMetadata,
     loading: { fundingCycleLoading },
@@ -49,7 +50,7 @@ export function V2V3PayButton({ disabled, wrapperStyle }: PayButtonProps) {
     Boolean(disabledMessage) || disabled || fundingCycleLoading
 
   return (
-    <div style={{ textAlign: 'center', ...wrapperStyle }}>
+    <div className={twMerge('text-center', wrapperClassName)}>
       <Tooltip
         open={isPayDisabled ? undefined : false}
         title={disabledMessage}
@@ -67,7 +68,7 @@ export function V2V3PayButton({ disabled, wrapperStyle }: PayButtonProps) {
         </Button>
       </Tooltip>
       {payInCurrency === V2V3_CURRENCY_USD && (
-        <div style={{ fontSize: '0.75rem' }}>
+        <div className="text-xs">
           <Trans>
             Paid as <ETHAmount amount={weiPayAmt} />
           </Trans>

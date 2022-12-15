@@ -8,7 +8,6 @@ import ManageTokensModal from 'components/ManageTokensModal'
 import ParticipantsModal from 'components/modals/ParticipantsModal'
 import SectionHeader from 'components/SectionHeader'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useERC20BalanceOf from 'hooks/ERC20BalanceOf'
 import useCanPrintPreminedTokens from 'hooks/v1/contractReader/CanPrintPreminedTokens'
@@ -33,9 +32,6 @@ const labelStyle: CSSProperties = {
 }
 
 export function TokensSection() {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const {
     tokenAddress,
     tokenSymbol,
@@ -106,7 +102,8 @@ export function TokensSection() {
         <Statistic
           title={
             <SectionHeader
-              text={tokensLabel}
+              className="normal-case"
+              text={t`Tokens`}
               tip={t`${tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet.`}
             />
           }
@@ -114,7 +111,7 @@ export function TokensSection() {
             <Descriptions layout="horizontal" column={1}>
               {ticketsIssued && (
                 <Descriptions.Item label={t`Address`} labelStyle={labelStyle}>
-                  <div style={{ width: '100%' }}>
+                  <div className="w-full">
                     <FormattedAddress address={tokenAddress} />
                   </div>
                 </Descriptions.Item>
@@ -123,16 +120,7 @@ export function TokensSection() {
                 label={t`Total supply`}
                 labelStyle={labelStyle}
               >
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'baseline',
-                    width: '100%',
-                    gap: 5,
-                    flexWrap: 'wrap',
-                  }}
-                >
+                <div className="flex w-full flex-wrap items-baseline justify-between gap-1">
                   {formatWad(totalSupplyWithReservedTicketBalance, {
                     precision: 0,
                   })}
@@ -150,15 +138,7 @@ export function TokensSection() {
                   label={t`Your balance`}
                   labelStyle={labelStyle}
                 >
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexWrap: 'wrap',
-                      gap: 5,
-                      justifyContent: 'space-between',
-                      width: '100%',
-                    }}
-                  >
+                  <div className="flex w-full flex-wrap justify-between gap-1">
                     <div>
                       {ticketsIssued && (
                         <div>
@@ -174,14 +154,7 @@ export function TokensSection() {
                         </Trans>
                       </div>
 
-                      <div
-                        style={{
-                          cursor: 'default',
-                          fontSize: '0.8rem',
-                          fontWeight: 500,
-                          color: colors.text.tertiary,
-                        }}
-                      >
+                      <div className="cursor-default text-sm font-medium text-grey-400 dark:text-slate-200">
                         <Trans>{share || 0}% of supply</Trans>
                       </div>
                     </div>

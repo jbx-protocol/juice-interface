@@ -1,4 +1,6 @@
 import { Trans } from '@lingui/macro'
+import ExternalLink from 'components/ExternalLink'
+import { helpPagePath } from 'utils/routes'
 
 export const DISTRIBUTION_LIMIT_EXPLANATION = (
   <Trans>
@@ -71,4 +73,20 @@ export const TERMINAL_CONFIG_EXPLAINATION = (
 
 export const RECONFIG_RULES_EXPLAINATION = (
   <Trans>Rules for determining how funding cycles can be reconfigured.</Trans>
+)
+
+export const HOLD_FEES_EXPLAINATION = (
+  <Trans>
+    When enabled, the project will hold the fee amount in ETH instead of the
+    fees being processed automatically.{' '}
+    <ExternalLink href={helpPagePath('/dev/learn/glossary/hold-fees')}>
+      Learn more.
+    </ExternalLink>
+  </Trans>
+)
+
+export const USE_DATASOURCE_FOR_REDEEM_EXPLAINATION = (
+  <Trans>
+    When enabled, the data source will be used for redeem transactions.
+  </Trans>
 )

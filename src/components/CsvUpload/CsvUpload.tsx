@@ -1,8 +1,7 @@
 import { UploadOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import TooltipIcon from 'components/TooltipIcon'
-import { ThemeContext } from 'contexts/themeContext'
-import { ChangeEventHandler, useContext } from 'react'
+import { ChangeEventHandler } from 'react'
 import { readFile } from 'utils/file'
 import { emitErrorNotification } from 'utils/notifications'
 
@@ -15,9 +14,6 @@ export function CsvUpload<T>({
   parser: (csv: string) => T[]
   onChange: (parsed: T[]) => void
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const onUploadChange: ChangeEventHandler<HTMLInputElement> = async e => {
     e.preventDefault()
     e.stopPropagation()
@@ -43,11 +39,7 @@ export function CsvUpload<T>({
   return (
     <div>
       <label
-        style={{
-          cursor: 'pointer',
-          fontWeight: 400,
-          color: colors.text.primary,
-        }}
+        className="cursor-pointer font-normal text-black dark:text-slate-100"
         role="button"
         htmlFor="csv-upload"
       >

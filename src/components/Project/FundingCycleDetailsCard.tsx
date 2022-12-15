@@ -3,9 +3,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import { Collapse, Tooltip } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
-import { ThemeContext } from 'contexts/themeContext'
 import { BallotState } from 'models/v2v3/fundingCycle'
-import { useContext } from 'react'
 import { formatDateToUTC } from 'utils/format/formatDate'
 import { detailedTimeUntil } from 'utils/format/formatTime'
 
@@ -34,10 +32,6 @@ export default function FundingCycleDetailsCard({
   ballotState?: BallotState
   ballotStrategyAddress?: string
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const HeaderText = () => {
     if (ballotState !== undefined) {
       return (
@@ -61,7 +55,7 @@ export default function FundingCycleDetailsCard({
 
     return (
       <Tooltip title={`${formatDateToUTC(fundingCycleDurationMilliseconds)}`}>
-        <span style={{ color: colors.text.secondary, marginLeft: 10 }}>
+        <span className="ml-2 text-grey-500 dark:text-grey-300">
           {isFundingCycleRecurring ? (
             <Trans>
               {formattedTimeLeft} until #{fundingCycleNumber.add(1).toString()}
@@ -76,26 +70,16 @@ export default function FundingCycleDetailsCard({
 
   return (
     <Collapse
-      style={{
-        background: 'transparent',
-        border: 'none',
-      }}
-      className="minimal"
+      // minimal is needed for antd overrides
+      className="minimal border-none bg-transparent"
       // expand by default in preview mode
       defaultActiveKey={isPreviewMode ? COLLAPSE_PANEL_KEY : undefined}
     >
       <CollapsePanel
         key={COLLAPSE_PANEL_KEY}
-        style={{ border: 'none' }}
+        className="border-none"
         header={
-          <div
-            style={{
-              display: 'flex',
-              width: '100%',
-              justifyContent: 'space-between',
-              cursor: 'pointer',
-            }}
-          >
+          <div className="flex w-full cursor-pointer justify-between">
             <div>
               {fundingCycleDurationSeconds.gt(0) ||
               (fundingCycleDurationSeconds.eq(0) &&
@@ -106,7 +90,7 @@ export default function FundingCycleDetailsCard({
               )}
 
               {fundingCycleRiskCount > 0 && (
-                <span style={{ marginLeft: 10, color: colors.text.secondary }}>
+                <span className="ml-2 text-warning-600 dark:text-warning-300">
                   <Tooltip
                     title={
                       <Trans>

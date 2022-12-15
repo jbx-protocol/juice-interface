@@ -13,7 +13,7 @@
 
 .ant-menu-submenu-title {
   color: var(--text-primary) !important;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .ant-menu-sub {
@@ -31,10 +31,6 @@
 .ant-menu-submenu-arrow {
   position: static;
   margin-left: 15px;
-}
-
-.nav-dropdown-item:hover {
-  background: unset !important;
 }
 
 .ant-menu-item:hover {

@@ -1,6 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Divider, Form, Input, Space } from 'antd'
 import { useIsNftProject } from 'components/Create/hooks/DeployProject/hooks'
+import { JuiceSwitch } from 'components/JuiceSwitch'
 import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
 import RichButton from 'components/RichButton'
 import { FundingDrawer } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/FundingDrawer'
@@ -13,13 +14,14 @@ import { useNftDeployerCanReconfigure } from 'hooks/JB721Delegate/contractReader
 import { useContext, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import { formatDate } from 'utils/format/formatDate'
 import { useEditingFundingCycleConfig } from '../../../../ReconfigureFundingCycleSettingsPage/hooks/editingFundingCycleConfig'
 import ReconfigurePreview from '../../../../ReconfigureFundingCycleSettingsPage/ReconfigurePreview'
 import { SetNftOperatorPermissionsButton } from '../../../../ReconfigureFundingCycleSettingsPage/SetNftOperatorPermissionsButton'
 import { useLaunchFundingCycles } from './hooks/LaunchFundingCycles'
 
 export function LaunchFundingCycleForm() {
-  const { projectOwnerAddress } = useContext(V2V3ProjectContext)
+  const { projectOwnerAddress, fundingCycle } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
   const [fundingDrawerVisible, setFundingDrawerVisible] =
@@ -30,6 +32,8 @@ export function LaunchFundingCycleForm() {
   const [unsavedChangesModalVisibile, setUnsavedChangesModalVisible] =
     useState<boolean>(false)
   const [nftOperatorConfirmed, setNftOperatorConfirmed] = useState<boolean>()
+
+  const [syncStartTime, setSyncStartTime] = useState<boolean>(true)
 
   const dispatch = useDispatch()
   const editingFundingCycleConfig = useEditingFundingCycleConfig()
@@ -53,23 +57,48 @@ export function LaunchFundingCycleForm() {
     closeUnsavedChangesModal()
   }
 
+  const defaultV3StartTime = fundingCycle?.start.add(fundingCycle.duration)
+
   return (
     <>
-      <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+      <Space direction="vertical" size="middle" className="w-full">
         <Form layout="vertical">
           <Form.Item
-            label={<Trans>Start time (seconds, Unix time)</Trans>}
-            extra={<Trans>Leave blank to start immediately.</Trans>}
+            extra={
+              <Trans>
+                Start the V3 cycle as soon as the current V2 cycle ends{' '}
+                <strong>
+                  (
+                  {defaultV3StartTime
+                    ? formatDate(defaultV3StartTime?.mul(1000))
+                    : '--'}
+                  )
+                </strong>
+                .
+              </Trans>
+            }
           >
-            <Input
-              type="number"
-              min={0}
-              onChange={e => {
-                const time = e.target.value
-                dispatch(editingV2ProjectActions.setMustStartAtOrAfter(time))
-              }}
+            <JuiceSwitch
+              label={t`Sync start time with current V2 funding cycle.`}
+              value={syncStartTime}
+              onChange={setSyncStartTime}
             />
           </Form.Item>
+          {syncStartTime ? null : (
+            <Form.Item
+              label={<Trans>Start time (seconds, Unix time)</Trans>}
+              className={'mt-5'}
+            >
+              <Input
+                type="number"
+                min={0}
+                onChange={e => {
+                  const time = e.target.value
+                  dispatch(editingV2ProjectActions.setMustStartAtOrAfter(time))
+                }}
+              />
+            </Form.Item>
+          )}
         </Form>
         <RichButton
           heading={t`Funding`}
@@ -94,10 +123,10 @@ export function LaunchFundingCycleForm() {
 
         <Divider />
 
-        <h3 className="text-primary" style={{ fontSize: '1.2rem' }}>
+        <h3 className="text-xl text-black dark:text-grey-100">
           <Trans>Review and deploy</Trans>
         </h3>
-        <div style={{ marginBottom: '1rem' }}>
+        <div className="mb-4">
           <ReconfigurePreview
             payoutSplits={
               editingFundingCycleConfig.editingPayoutGroupedSplits.splits
@@ -121,19 +150,15 @@ export function LaunchFundingCycleForm() {
 
         {isNftFundingCycle && !nftDeployerCanReconfigure ? (
           <Space size="large" direction="vertical">
-            <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-              <span style={{ marginRight: '0.75rem', fontSize: '1.1rem' }}>
-                1.
-              </span>
+            <div className="flex items-start">
+              <span className="mr-3 text-lg">1.</span>
               <SetNftOperatorPermissionsButton
                 onConfirmed={() => setNftOperatorConfirmed(true)}
                 size="large"
               />
             </div>
-            <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-              <span style={{ marginRight: '0.75rem', fontSize: '1.1rem' }}>
-                2.
-              </span>
+            <div className="flex items-start">
+              <span className="mr-3 text-lg">2.</span>
               <Button
                 loading={launchFundingCycleLoading}
                 onClick={launchFundingCycle}

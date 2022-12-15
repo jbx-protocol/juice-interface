@@ -6,11 +6,10 @@ import {
 import { Trans } from '@lingui/macro'
 import { Button, Col, Image, Row, Tooltip } from 'antd'
 import Paragraph from 'components/Paragraph'
-import { ThemeContext } from 'contexts/themeContext'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/NftRewards'
 import { NftRewardTier } from 'models/nftRewardTier'
-import { useContext, useState } from 'react'
-
+import { useState } from 'react'
+import { classNames } from 'utils/classNames'
 import NftRewardTierModal from './NftRewardTierModal'
 import { NFT_IMAGE_SIDE_LENGTH } from './NftUpload'
 
@@ -23,67 +22,31 @@ export default function NftRewardTierCard({
   onChange: (rewardTier: NftRewardTier) => void
   onDelete: VoidFunction
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const [editTierModalVisible, setEditTierModalVisible] =
     useState<boolean>(false)
-  const [linkHover, setLinkHover] = useState<boolean>(false)
   const [imageLoading, setImageLoading] = useState<boolean>(true)
 
   if (!rewardTier) return null
+
   return (
     <>
       <Row
-        style={{
-          background: colors.background.l0,
-          border: `1px solid ${colors.stroke.tertiary}`,
-          display: 'flex',
-          width: '100%',
-          cursor: 'pointer',
-          padding: '15px 8px 15px 20px',
-        }}
+        className="flex w-full cursor-pointer border border-solid border-smoke-200 bg-smoke-25 py-4 pr-2 pl-5 dark:border-grey-600 dark:bg-slate-800"
         onClick={() => setEditTierModalVisible(true)}
         gutter={8}
       >
-        <Col
-          md={16}
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            flexDirection: 'column',
-          }}
-        >
-          <Row
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              fontSize: 17,
-              width: '100%',
-            }}
-          >
-            <Col style={{ color: colors.text.action.primary }} md={7}>
+        <Col className="flex flex-col justify-center" md={16}>
+          <Row className="flex w-full items-center text-base">
+            <Col className="text-haze-400 dark:text-haze-300" md={7}>
               {rewardTier.contributionFloor} ETH
             </Col>
-            <Col style={{ display: 'flex', fontWeight: 500 }} md={15}>
+            <Col className="flex font-medium" md={15}>
               <span>{rewardTier.name}</span>
               {rewardTier.externalLink ? (
                 <a
+                  className="dark:hovertext-haze-300 ml-2 text-black hover:text-haze-400 dark:text-slate-100"
                   href={rewardTier.externalLink}
                   onClick={e => e.stopPropagation()}
-                  onMouseEnter={() => {
-                    setLinkHover(true)
-                  }}
-                  onMouseLeave={() => {
-                    setLinkHover(false)
-                  }}
-                  style={{
-                    marginLeft: 10,
-                    color: linkHover
-                      ? colors.text.action.primary
-                      : colors.text.primary,
-                  }}
                 >
                   <LinkOutlined />
                 </a>
@@ -91,7 +54,7 @@ export default function NftRewardTierCard({
             </Col>
           </Row>
           {rewardTier.description && (
-            <div style={{ fontSize: 13, marginTop: 15 }}>
+            <div className="mt-4 text-xs">
               <Trans>
                 <strong>Description:</strong>
                 <Paragraph
@@ -103,7 +66,7 @@ export default function NftRewardTierCard({
           )}
           {rewardTier.maxSupply &&
           rewardTier.maxSupply !== DEFAULT_NFT_MAX_SUPPLY ? (
-            <div style={{ fontSize: 13, marginTop: 15 }}>
+            <div className="mt-4 text-xs">
               <Trans>
                 <strong>Max. supply:</strong>{' '}
                 <span>{rewardTier.maxSupply}</span>
@@ -112,27 +75,19 @@ export default function NftRewardTierCard({
           ) : null}
         </Col>
         <Col
+          className={classNames(
+            'flex items-center justify-center',
+            imageLoading ? 'h-24 w-24' : '',
+          )}
           md={5}
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: imageLoading ? NFT_IMAGE_SIDE_LENGTH : 'unset',
-            width: imageLoading ? NFT_IMAGE_SIDE_LENGTH : 'unset',
-          }}
         >
-          {imageLoading ? (
-            <LoadingOutlined style={{ fontSize: '30px' }} />
-          ) : null}
+          {imageLoading ? <LoadingOutlined className="text-3xl" /> : null}
           <Image
+            className={classNames('object-cover', imageLoading ? 'hidden' : '')}
             src={rewardTier.imageUrl}
             alt={rewardTier.name}
             height={imageLoading ? 0 : NFT_IMAGE_SIDE_LENGTH}
             width={imageLoading ? 0 : NFT_IMAGE_SIDE_LENGTH}
-            style={{
-              display: imageLoading ? 'none' : 'unset',
-              objectFit: 'cover',
-            }}
             onLoad={() => setImageLoading(false)}
             onClick={e => e.stopPropagation()}
           />
@@ -140,6 +95,7 @@ export default function NftRewardTierCard({
         <Col md={3}>
           <Tooltip title={<Trans>Delete NFT</Trans>}>
             <Button
+              className="float-right h-4"
               type="text"
               onClick={e => {
                 onDelete()
@@ -147,7 +103,6 @@ export default function NftRewardTierCard({
                 e.stopPropagation()
               }}
               icon={<DeleteOutlined />}
-              style={{ height: 16, float: 'right' }}
             />
           </Tooltip>
         </Col>

@@ -6,14 +6,13 @@ import { CardSection } from 'components/CardSection'
 import TooltipLabel from 'components/TooltipLabel'
 import SplitList from 'components/v2v3/shared/SplitList'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import useProjectReservedTokens from 'hooks/v2v3/contractReader/ProjectReservedTokens'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
 import { Split } from 'models/splits'
 import { V2OperatorPermission } from 'models/v2v3/permissions'
 import Link from 'next/link'
-import { CSSProperties, useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import { formatWad } from 'utils/format/formatNumber'
 import { settingsPagePath } from 'utils/routes'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -30,9 +29,6 @@ export default function ReservedTokensSplitsCard({
   reservedTokensSplits: Split[] | undefined
   reservedRate: BigNumber | undefined
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { tokenSymbol, projectOwnerAddress, isPreviewMode, handle } =
     useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
@@ -51,13 +47,6 @@ export default function ReservedTokensSplitsCard({
   const canEditTokens = useV2ConnectedWalletHasPermission(
     V2OperatorPermission.SET_SPLITS,
   )
-
-  const smallHeaderStyle: CSSProperties = {
-    fontSize: '0.75rem',
-    fontWeight: 500,
-    cursor: 'default',
-    color: colors.text.secondary,
-  }
 
   const tokensText = tokenSymbolText({
     tokenSymbol,
@@ -82,40 +71,25 @@ export default function ReservedTokensSplitsCard({
 
   return (
     <CardSection>
-      <Space direction="vertical" size="large" style={{ width: '100%' }}>
+      <Space direction="vertical" size="large" className="w-full">
         {hideDistributeButton ? null : (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              flexWrap: 'wrap',
-              gap: '10px',
-            }}
-          >
-            <div style={{ marginRight: '3rem' }}>
+          <div className="flex flex-wrap justify-between gap-2">
+            <div className="mr-12">
               <Skeleton
+                className="inline"
                 active
                 loading={!isPreviewMode && loadingReservedTokens}
                 paragraph={{ rows: 1, width: 20 }}
                 title={false}
-                style={{ display: 'inline' }}
               >
-                <span
-                  style={{
-                    fontSize: '1rem',
-                    fontWeight: 500,
-                  }}
-                >
+                <span className="text-base font-medium">
                   {formatWad(reservedTokens, { precision: 0 })}
                 </span>
               </Skeleton>{' '}
               <TooltipLabel
-                style={{
-                  ...smallHeaderStyle,
-                  whiteSpace: 'nowrap',
-                }}
+                className="cursor-default whitespace-nowrap text-xs font-medium text-grey-900 dark:text-slate-100"
                 label={
-                  <span style={{ textTransform: 'uppercase' }}>
+                  <span className="uppercase text-grey-500 dark:text-slate-100">
                     <Trans>{tokensText} reserved</Trans>
                   </span>
                 }
@@ -140,17 +114,10 @@ export default function ReservedTokensSplitsCard({
         )}
 
         <div>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              gap: 10,
-              flexWrap: 'wrap',
-            }}
-          >
+          <div className="flex flex-wrap justify-between gap-2">
             <TooltipLabel
               label={
-                <h3 style={{ display: 'inline-block', fontSize: '0.875rem' }}>
+                <h3 className="inline-block text-sm uppercase text-black dark:text-slate-100">
                   <Trans>Reserved tokens</Trans> (
                   {formatReservedRate(reservedRate)}%)
                 </h3>
@@ -171,9 +138,9 @@ export default function ReservedTokensSplitsCard({
                 })}
               >
                 <Button
+                  className="mb-4"
                   size="small"
                   icon={<SettingOutlined />}
-                  style={{ marginBottom: '1rem' }}
                 >
                   <span>
                     <Trans>Edit allocation</Trans>
@@ -192,7 +159,7 @@ export default function ReservedTokensSplitsCard({
               />
             ) : null
           ) : (
-            <span style={{ color: colors.text.tertiary }}>
+            <span className="text-grey-500 dark:text-slate-100">
               <Trans>This project has no reserved tokens.</Trans>
             </span>
           )}

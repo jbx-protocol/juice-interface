@@ -4,7 +4,6 @@ import { MinimalCollapse } from 'components/MinimalCollapse'
 import SplitList from 'components/v2v3/shared/SplitList'
 import FundingCycleDetails from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails'
 import { CV_V2, CV_V3 } from 'constants/cv'
-import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useLoadV2V3Contract } from 'hooks/v2v3/LoadV2V3Contract'
 import { OutgoingProjectData } from 'models/outgoingProject'
@@ -41,9 +40,6 @@ export function ReconfigureRichPreview({
 }: {
   transaction: SafeTransactionType
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { projectOwnerAddress, fundingCycle: currentFC } =
     useContext(V2V3ProjectContext)
 
@@ -63,7 +59,7 @@ export function ReconfigureRichPreview({
   } catch (e) {
     console.error(e)
     return (
-      <div style={{ margin: '1rem 3rem 0' }}>
+      <div className="mx-12 mt-4 mb-0">
         <Trans>Error reading transaction data</Trans>
       </div>
     )
@@ -85,10 +81,8 @@ export function ReconfigureRichPreview({
   })
 
   return (
-    <div
-      style={{ display: 'flex', flexDirection: 'column', cursor: 'default' }}
-    >
-      <div style={{ margin: '0.5rem 1.5rem 0' }}>
+    <div className="flex cursor-default flex-col">
+      <div className="mx-6 mt-2 mb-0">
         {decodedData._memo.length ? (
           <i>{decodedData._memo}</i>
         ) : (
@@ -100,8 +94,8 @@ export function ReconfigureRichPreview({
         )}
       </div>
       <Space
+        className="my-4 mx-6"
         size={'middle'}
-        style={{ margin: '1rem 1.5rem' }}
         direction={'vertical'}
         onClick={e => e.stopPropagation()}
       >
@@ -128,7 +122,7 @@ export function ReconfigureRichPreview({
               valueFormatProps={{ precision: 4 }}
             />
           ) : (
-            <span style={{ color: colors.text.tertiary }}>
+            <span className="text-grey-400 dark:text-slate-200">
               <Trans>No distributions configured.</Trans>
             </span>
           )}
@@ -142,7 +136,7 @@ export function ReconfigureRichPreview({
               reservedRate={parseFloat(formatReservedRate(reservedRate))}
             />
           ) : (
-            <span style={{ color: colors.text.tertiary }}>
+            <span className="text-grey-400 dark:text-slate-200">
               <Trans>No reserved tokens configured.</Trans>
             </span>
           )}

@@ -1,10 +1,8 @@
 import { Trans } from '@lingui/macro'
 import { Button, Form, FormInstance, Space } from 'antd'
 import { FormItems } from 'components/formItems'
-import { ThemeContext } from 'contexts/themeContext'
 import { TicketMod } from 'models/mods'
-import { useContext, useLayoutEffect, useState } from 'react'
-
+import { useLayoutEffect, useState } from 'react'
 import { RESERVED_RATE_WARNING_THRESHOLD_PERCENT as reservedRateRiskyMin } from 'constants/fundingWarningText'
 import FormItemWarningText from '../FormItemWarningText'
 
@@ -31,17 +29,13 @@ export default function TicketingForm({
     form.getFieldValue('reserved'),
   )
 
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   useLayoutEffect(() => {
     setMods(initialMods)
   }, [initialMods])
 
   return (
     <Space direction="vertical" size="large">
-      <div style={{ color: colors.text.secondary }}>
+      <div className="text-grey-500 dark:text-grey-300">
         <h1>
           <Trans>Reserved tokens</Trans>
         </h1>

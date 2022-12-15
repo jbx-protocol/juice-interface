@@ -43,11 +43,8 @@ export function BallotStateBadge({
   if (!variant) return null
 
   return (
-    <Badge
-      variant={variant}
-      style={{ marginLeft: '0.5rem', textTransform: 'capitalize' }}
-    >
-      <Tooltip title={ballotStateTooltips[ballotState]}>
+    <Badge variant={variant} className="ml-2 capitalize">
+      <Tooltip title={ballotStateTooltips[ballotState]} className="truncate">
         {ballotStateIcons[ballotState]} {ballotStateLabelMap[ballotState]}
       </Tooltip>
     </Badge>

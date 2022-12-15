@@ -1,9 +1,13 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
+import { Space } from 'antd'
 import {
   V2V3FundingCycle,
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
+import * as constants from '@ethersproject/constants'
+
+import { DataSourceListItems } from './DataSourceListItems'
 import { FundingCycleDetailsRow } from './FundingCycleDetailsRow'
 import { FundingCycleListItems } from './FundingCycleListItems'
 import { RulesListItems } from './RulesListItems'
@@ -23,7 +27,7 @@ export default function FundingCycleDetails({
   showDiffs?: boolean
 }) {
   return (
-    <>
+    <Space className="w-full" direction="vertical" size="middle">
       <FundingCycleDetailsRow
         header={t`Funding cycle`}
         items={
@@ -47,7 +51,6 @@ export default function FundingCycleDetails({
       />
       <FundingCycleDetailsRow
         header={t`Rules`}
-        style={{ paddingBottom: 0 }}
         items={
           <RulesListItems
             fundingCycle={fundingCycle}
@@ -56,6 +59,14 @@ export default function FundingCycleDetails({
           />
         }
       />
-    </>
+      {fundingCycleMetadata.dataSource !== constants.AddressZero ? (
+        <FundingCycleDetailsRow
+          header={t`Data source`}
+          items={
+            <DataSourceListItems fundingCycleMetadata={fundingCycleMetadata} />
+          }
+        />
+      ) : null}
+    </Space>
   )
 }

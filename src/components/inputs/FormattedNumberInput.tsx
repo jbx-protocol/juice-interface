@@ -1,10 +1,10 @@
-import { CSSProperties } from 'react'
+import { twMerge } from 'tailwind-merge'
+import { classNames } from 'utils/classNames'
 import { formattedNum } from 'utils/format/formatNumber'
 import { JuiceInputNumber } from './JuiceInputNumber'
 
 export default function FormattedNumberInput({
   className,
-  style,
   min,
   max,
   step,
@@ -19,7 +19,6 @@ export default function FormattedNumberInput({
   isInteger,
 }: {
   className?: string
-  style?: CSSProperties
   min?: number
   max?: number
   step?: number
@@ -55,20 +54,14 @@ export default function FormattedNumberInput({
   }
 
   return (
-    <div
-      className={className}
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        position: 'relative',
-        ...style,
-      }}
-    >
+    <div className={twMerge('relative flex items-center', className)}>
       <JuiceInputNumber
-        className={accessory ? 'antd-no-number-handler' : ''}
+        className={classNames(
+          'w-full',
+          accessory ? 'antd-no-number-handler' : '',
+        )}
         min={min}
         max={max}
-        style={{ width: '100%' }}
         value={value !== undefined ? parseFloat(value) : undefined}
         step={step ?? 1}
         stringMode={true}
@@ -102,14 +95,7 @@ export default function FormattedNumberInput({
           onChange?.(_value?.toString())
         }}
       />
-      <div
-        style={{
-          zIndex: 1,
-          fontSize: '.8rem',
-          position: 'absolute',
-          right: 5,
-        }}
-      >
+      <div className="absolute right-[5px] z-auto text-xs">
         {accessory && <div>{accessory}</div>}
       </div>
     </div>

@@ -9,15 +9,8 @@ export const AttachableSticker = ({
 }) => {
   return (
     <div
+      className="flex cursor-pointer content-center items-center justify-center py-4 hover:bg-smoke-75  dark:hover:bg-slate-400"
       role="button"
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: '1rem 0',
-        cursor: 'pointer',
-      }}
-      className="hover-bg-l2"
       onClick={onClick}
     >
       <img src={sticker.filepath} alt={sticker.alt} height="75px" />

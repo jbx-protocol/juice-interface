@@ -1,9 +1,8 @@
 import { t, Trans } from '@lingui/macro'
-import { Form } from 'antd'
+import { Form, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { JuiceModal } from 'components/JuiceModal'
 import TooltipLabel from 'components/TooltipLabel'
 
 import { CurrencyName } from 'constants/currency'
@@ -40,7 +39,7 @@ export default function SpecificLimitModal({
   }
 
   return (
-    <JuiceModal
+    <Modal
       open={open}
       onCancel={onClose}
       title={
@@ -91,6 +90,6 @@ export default function SpecificLimitModal({
           />
         </Form.Item>
       </Form>
-    </JuiceModal>
+    </Modal>
   )
 }

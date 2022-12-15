@@ -14,19 +14,17 @@ import {
 import { FundingCycleListItem } from './FundingCycleListItem'
 
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
-import { parseEther } from 'ethers/lib/utils'
 import { useContext } from 'react'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { getUnsafeV2V3FundingCycleProperties } from 'utils/v2v3/fundingCycle'
 import {
+  computeIssuanceRate,
   formatDiscountRate,
-  formatIssuanceRate,
   formatRedemptionRate,
-  weightAmountPermyriad,
 } from 'utils/v2v3/math'
 import { MintRateValue } from './values/MintRateValue'
 import { ReservedRateValue } from './values/ReservedRateValue'
-import { ContributorOrReservedTokensValue } from './values/ContributorOrReservedTokensValue'
+import { PayerOrReservedTokensValue } from './values/PayerOrReservedTokensValue'
 
 export function TokenListItems({
   fundingCycle,
@@ -54,41 +52,26 @@ export function TokenListItems({
     plural: true,
   })
 
-  const contributorTokens = formatIssuanceRate(
-    weightAmountPermyriad(
-      fundingCycle?.weight,
-      fundingCycleMetadata?.reservedRate.toNumber(),
-      parseEther('1'),
-      'payer',
-    ) ?? '',
-  )
+  // tokens received by user who pays the project
+  const payerTokens =
+    computeIssuanceRate(fundingCycle, fundingCycleMetadata, 'payer') ?? ''
 
-  const oldContributorTokens = formatIssuanceRate(
-    weightAmountPermyriad(
-      oldFundingCycle?.weight,
-      oldFundingCycleMetadata?.reservedRate.toNumber(),
-      parseEther('1'),
-      'payer',
-    ) ?? '',
-  )
+  const oldPayerTokens =
+    oldFundingCycle && oldFundingCycleMetadata
+      ? computeIssuanceRate(oldFundingCycle, oldFundingCycleMetadata, 'payer')
+      : undefined
 
-  const reservedTokens = formatIssuanceRate(
-    weightAmountPermyriad(
-      fundingCycle?.weight,
-      fundingCycleMetadata?.reservedRate.toNumber(),
-      parseEther('1'),
-      'reserved',
-    ) ?? '',
-  )
+  const reservedTokens =
+    computeIssuanceRate(fundingCycle, fundingCycleMetadata, 'reserved') ?? ''
 
-  const oldReservedTokens = formatIssuanceRate(
-    weightAmountPermyriad(
-      oldFundingCycle?.weight,
-      oldFundingCycleMetadata?.reservedRate.toNumber(),
-      parseEther('1'),
-      'reserved',
-    ) ?? '',
-  )
+  const oldReservedTokens =
+    oldFundingCycle && oldFundingCycleMetadata
+      ? computeIssuanceRate(
+          oldFundingCycle,
+          oldFundingCycleMetadata,
+          'reserved',
+        )
+      : undefined
 
   const mintRateHasDiff =
     oldFundingCycle && !fundingCycle.weight.eq(oldFundingCycle.weight)
@@ -96,8 +79,7 @@ export function TokenListItems({
     oldFundingCycleMetadata &&
     !fundingCycleMetadata.reservedRate.eq(oldFundingCycleMetadata.reservedRate)
 
-  const contributorTokensHasDiff =
-    oldContributorTokens && !(contributorTokens === oldContributorTokens)
+  const payerTokensHasDiff = oldPayerTokens && !(payerTokens === oldPayerTokens)
   const reservedTokensHasDiff =
     oldReservedTokens && !(reservedTokens === oldReservedTokens)
 
@@ -140,14 +122,14 @@ export function TokenListItems({
       <FundingCycleListItem
         name={t`Reserved tokens`}
         value={
-          <ContributorOrReservedTokensValue
+          <PayerOrReservedTokensValue
             value={reservedTokens}
             tokenSymbol={tokenSymbolPlural}
           />
         }
         oldValue={
           showDiffs && reservedTokensHasDiff ? (
-            <ContributorOrReservedTokensValue
+            <PayerOrReservedTokensValue
               value={oldReservedTokens}
               tokenSymbol={tokenSymbolPlural}
             />
@@ -159,15 +141,15 @@ export function TokenListItems({
       <FundingCycleListItem
         name={t`Payment issuance rate`}
         value={
-          <ContributorOrReservedTokensValue
-            value={contributorTokens}
+          <PayerOrReservedTokensValue
+            value={payerTokens}
             tokenSymbol={tokenSymbolPlural}
           />
         }
         oldValue={
-          showDiffs && contributorTokensHasDiff ? (
-            <ContributorOrReservedTokensValue
-              value={oldContributorTokens}
+          showDiffs && payerTokensHasDiff ? (
+            <PayerOrReservedTokensValue
+              value={oldPayerTokens}
               tokenSymbol={tokenSymbolPlural}
             />
           ) : undefined

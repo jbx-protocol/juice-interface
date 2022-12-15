@@ -1,4 +1,4 @@
-import { JuiceDrawer } from 'components/JuiceDrawer'
+import { Drawer } from 'antd'
 import { drawerStyle } from 'constants/styles/drawerStyle'
 import { PropsWithChildren } from 'react'
 
@@ -16,9 +16,9 @@ export default function FundingCycleDrawer({
   onClose: VoidFunction
 }>) {
   return (
-    <JuiceDrawer {...drawerStyle} open={open} onClose={onClose} destroyOnClose>
+    <Drawer {...drawerStyle} open={open} onClose={onClose} destroyOnClose>
       <h1>{title}</h1>
       {children}
-    </JuiceDrawer>
+    </Drawer>
   )
 }

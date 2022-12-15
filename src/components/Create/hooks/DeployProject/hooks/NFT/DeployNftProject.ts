@@ -73,6 +73,7 @@ export const useDeployNftProject = () => {
         cids: rewardTierCids,
         rewardTiers: nftRewards.rewardTiers,
       })
+
       return await launchProjectWithNftsTx(
         {
           tiered721DelegateData: {

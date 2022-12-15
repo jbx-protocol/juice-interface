@@ -2,9 +2,8 @@ import { CheckCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, ButtonProps } from 'antd'
 import ExternalLink from 'components/ExternalLink'
-import { ThemeContext } from 'contexts/themeContext'
 import { useSetNftOperatorPermissionsTx } from 'hooks/v2v3/transactor/SetNftOperatorPermissionsTx'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 
 export function SetNftOperatorPermissionsButton({
   onConfirmed,
@@ -12,10 +11,6 @@ export function SetNftOperatorPermissionsButton({
 }: {
   onConfirmed: VoidFunction
 } & ButtonProps) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const [loading, setLoading] = useState<boolean>(false)
   const [txExecuted, setTxExecuted] = useState<boolean>(false)
 
@@ -46,13 +41,7 @@ export function SetNftOperatorPermissionsButton({
         </span>
         {txExecuted ? <CheckCircleOutlined /> : null}
       </Button>
-      <div
-        style={{
-          color: colors.text.secondary,
-          marginTop: 5,
-          fontSize: '0.75rem',
-        }}
-      >
+      <div className="mt-1 text-xs text-grey-500 dark:text-grey-300">
         <Trans>
           Allow the{' '}
           <ExternalLink

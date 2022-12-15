@@ -9,6 +9,9 @@ const FEATURE_FLAG_DEFAULTS: {
     goerli: true,
     mainnet: true,
   },
+  [FEATURE_FLAGS.SPLIT_ALLOCATORS]: {
+    mainnet: true,
+  },
 }
 
 const featureFlagKey = (baseKey: string) => {

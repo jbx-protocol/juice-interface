@@ -40,14 +40,8 @@ export default function Spending({
 
   return (
     <div>
-      <Space direction="vertical" size="large" style={{ width: '100%' }}>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'baseline',
-          }}
-        >
+      <Space direction="vertical" size="large" className="w-full">
+        <div className="flex items-baseline justify-between">
           <SpendingStats
             hasFundingTarget={hasFundingTarget(currentFC)}
             currency={V1CurrencyName(
@@ -74,7 +68,7 @@ export default function Spending({
           <div>
             <TooltipLabel
               label={
-                <h4 style={{ display: 'inline-block' }}>
+                <h4 className="inline-block">
                   <Trans>Funding distribution</Trans>
                 </h4>
               }

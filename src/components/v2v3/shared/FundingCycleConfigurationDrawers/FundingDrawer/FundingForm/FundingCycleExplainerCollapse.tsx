@@ -10,7 +10,7 @@ export function FundingCycleExplainerCollapse() {
             Automated funding cycles enable the following characteristics:
           </Trans>
         </p>
-        <ol style={{ marginBottom: 0 }}>
+        <ol className="mb-0">
           <li>
             <Trans>
               <strong>Recurring funding cycles</strong>. For example, distribute

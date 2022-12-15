@@ -1,37 +1,20 @@
 import { Divider } from 'antd'
-import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, useContext } from 'react'
 
 // e.g. 'Funding cycle', 'Token', 'Rules' sections
 export function FundingCycleDetailsRow({
   header,
   items,
-  style,
 }: {
   header: string
   items: JSX.Element
-  style?: CSSProperties
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   return (
-    <div style={{ paddingBottom: '1.1rem', ...style }}>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <h5
-          style={{
-            color: colors.text.secondary,
-            fontSize: '0.875rem',
-            fontWeight: 500,
-            whiteSpace: 'nowrap',
-            paddingRight: '10px',
-            textTransform: 'uppercase',
-          }}
-        >
+    <div>
+      <div className="flex items-center">
+        <h5 className="mr-2 whitespace-nowrap text-sm font-medium uppercase text-grey-500 dark:text-grey-300">
           {header}
         </h5>
-        <Divider style={{ margin: '2px 0 10px', minWidth: 'unset' }} />
+        <Divider className="mt-0.5 mb-2 min-w-[unset]" />
       </div>
       <div>{items}</div>
     </div>

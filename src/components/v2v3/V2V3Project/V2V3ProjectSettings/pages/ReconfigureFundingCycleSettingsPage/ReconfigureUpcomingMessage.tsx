@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
-import Callout from 'components/Callout'
+import { Callout } from 'components/Callout'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useContext } from 'react'
 
@@ -86,5 +86,5 @@ export default function V2V3ReconfigureUpcomingMessage() {
     )
   }
 
-  return !message ? null : <Callout>{message}</Callout>
+  return !message ? null : <Callout.Info>{message}</Callout.Info>
 }

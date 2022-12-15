@@ -1,38 +1,28 @@
 import { Switch } from 'antd'
-import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, PropsWithChildren, useContext } from 'react'
+import { PropsWithChildren } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 export default function SwitchHeading({
+  className,
   children,
   checked,
   onChange,
   disabled,
-  style,
 }: PropsWithChildren<{
+  className?: string
   checked: boolean
   disabled?: boolean
   onChange?: (checked: boolean) => void
-  style?: CSSProperties
 }>) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   return (
-    <div style={{ display: 'flex', alignItems: 'center', ...style }}>
+    <div className={twMerge('flex items-center', className)}>
       <Switch
+        className="mr-2"
         checked={checked}
         onChange={onChange}
-        style={{ marginRight: 10 }}
         disabled={disabled}
       />
-      <label
-        style={{
-          margin: 0,
-          lineHeight: 1,
-          fontSize: '1rem',
-          color: colors.text.primary,
-        }}
-      >
+      <label className="m-0 text-base text-black dark:text-slate-100">
         {children}
       </label>
     </div>

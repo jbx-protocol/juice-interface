@@ -1,5 +1,4 @@
 .ant-collapse {
-  background: var(--background-l0);
   border-color: var(--stroke-secondary);
 
   .ant-collapse-item {
@@ -129,7 +128,7 @@
   background: none;
   .ant-collapse-header {
     font-size: 22px;
-    font-weight: 600 !important;
+    font-weight: 500 !important;
     color: var(--text-header) !important;
     min-width: 80px;
     text-decoration: underline;

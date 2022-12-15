@@ -1,11 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { createContext, CSSProperties } from 'react'
+import { createContext } from 'react'
 import { WeightFunction } from 'utils/math'
 import { PayProjectForm } from './usePayProjectForm'
 
 export interface PayButtonProps {
   disabled?: boolean
-  wrapperStyle?: CSSProperties
+  wrapperClassName?: string
 }
 
 interface PayProjectFormContextType {

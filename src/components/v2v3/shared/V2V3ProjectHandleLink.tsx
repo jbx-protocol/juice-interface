@@ -1,16 +1,16 @@
 import { useProjectHandleText } from 'hooks/ProjectHandleText'
 import Link from 'next/link'
-import { CSSProperties } from 'react'
+import { twMerge } from 'tailwind-merge'
 import { v2v3ProjectRoute } from 'utils/routes'
 
 export default function V2V3ProjectHandleLink({
+  className,
   projectId,
   handle,
-  style,
 }: {
+  className?: string
   projectId: number
   handle?: string | null
-  style?: CSSProperties
 }) {
   const { handle: resolvedHandle, handleText } = useProjectHandleText({
     projectId,
@@ -23,8 +23,10 @@ export default function V2V3ProjectHandleLink({
       as={v2v3ProjectRoute({ projectId, handle: resolvedHandle })}
     >
       <a
-        style={{ fontWeight: 500, ...style }}
-        className="text-primary hover-text-action-primary hover-text-decoration-underline"
+        className={twMerge(
+          'select-all leading-[22px] text-grey-700 hover:text-haze-400 hover:underline dark:text-slate-100',
+          className,
+        )}
       >
         {handleText}
       </a>

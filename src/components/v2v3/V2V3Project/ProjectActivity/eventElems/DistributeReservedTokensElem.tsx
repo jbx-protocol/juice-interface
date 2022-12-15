@@ -1,17 +1,11 @@
 import { Trans } from '@lingui/macro'
-import {
-  contentLineHeight,
-  primaryContentFontSize,
-  smallHeaderStyle,
-} from 'components/activityEventElems/styles'
-import EtherscanLink from 'components/EtherscanLink'
+import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import FormattedAddress from 'components/FormattedAddress'
 import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { DistributeReservedTokensEvent } from 'models/subgraph-entities/v2/distribute-reserved-tokens-event'
 import { useContext } from 'react'
-import { formatHistoricalDate } from 'utils/format/formatDate'
 import { formatWad, fromWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
@@ -31,11 +25,12 @@ export default function DistributeReservedTokensEventElem({
       >
     | undefined
 }) {
+  const { tokenSymbol } = useContext(V1ProjectContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
-  const { tokenSymbol } = useContext(V1ProjectContext)
 
+  // Load individual DistributeToReservedTokenSplit events, emitted by internal transactions of the DistributeReservedTokens transaction
   const { data: distributeEvents } = useSubgraphQuery(
     {
       entity: 'distributeToReservedTokenSplitEvent',
@@ -62,102 +57,75 @@ export default function DistributeReservedTokensEventElem({
   if (!event) return null
 
   return (
-    <div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignContent: 'space-between',
-        }}
-      >
+    <ActivityEvent
+      event={event}
+      header={
+        <Trans>
+          Distributed reserved{' '}
+          {tokenSymbolText({
+            tokenSymbol,
+            capitalize: false,
+            plural: true,
+          })}
+        </Trans>
+      }
+      subject={
+        <div className="text-base">
+          {formatWad(event.tokenCount, { precision: 0 })}{' '}
+          {tokenSymbolText({
+            tokenSymbol,
+            capitalize: false,
+            plural: parseInt(fromWad(event.tokenCount) || '0') !== 1,
+          })}
+        </div>
+      }
+      extra={
         <div>
-          <div style={smallHeaderStyle(colors)}>
-            <Trans>
-              Distributed reserved{' '}
-              {tokenSymbolText({
-                tokenSymbol,
-                capitalize: false,
-                plural: true,
-              })}
-            </Trans>
-          </div>
-          {distributeEvents?.length ? (
+          {distributeEvents?.map(e => (
             <div
+              key={e.id}
               style={{
-                lineHeight: contentLineHeight,
-                fontSize: primaryContentFontSize,
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'baseline',
               }}
             >
-              {formatWad(event.tokenCount, { precision: 0 })}{' '}
-              {tokenSymbolText({
-                tokenSymbol,
-                capitalize: false,
-                plural: parseInt(fromWad(event.tokenCount) || '0') !== 1,
-              })}
+              <div style={{ fontWeight: 500 }} className="text-sm">
+                <FormattedAddress address={e.beneficiary} />:
+              </div>
+
+              <div
+                className={
+                  distributeEvents.length > 1
+                    ? 'text-gray-500 text-sm'
+                    : 'font-medium'
+                }
+              >
+                {formatWad(e.tokenCount, { precision: 0 })}
+              </div>
             </div>
-          ) : null}
-        </div>
+          ))}
 
-        <div>
-          <div style={{ ...smallHeaderStyle(colors), textAlign: 'right' }}>
-            {event.timestamp && (
-              <span>{formatHistoricalDate(event.timestamp * 1000)}</span>
-            )}{' '}
-            <EtherscanLink value={event.txHash} type="tx" />
-          </div>
-          <div style={smallHeaderStyle(colors)}>
-            <Trans>
-              called by <FormattedAddress address={event.caller} />
-            </Trans>
-          </div>
-        </div>
-      </div>
-
-      <div style={{ marginTop: 5 }}>
-        {distributeEvents?.map(e => (
-          <div
-            key={e.id}
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'baseline',
-            }}
-          >
-            <div style={{ fontWeight: 500, fontSize: '0.8rem' }}>
-              <FormattedAddress address={e.beneficiary} />:
-            </div>
-
+          {event.beneficiaryTokenCount?.gt(0) && (
             <div
-              style={
-                distributeEvents.length > 1
-                  ? { color: colors.text.secondary, fontSize: '0.8rem' }
-                  : { fontWeight: 500 }
-              }
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'baseline',
+              }}
             >
-              {formatWad(e.tokenCount, { precision: 0 })}
+              <div style={{ fontWeight: 500 }}>
+                <FormattedAddress address={event.beneficiary} />:
+              </div>
+              <div style={{ color: colors.text.secondary }}>
+                {formatWad(event.beneficiaryTokenCount, {
+                  precision: 0,
+                })}
+              </div>
             </div>
-          </div>
-        ))}
-
-        {event.beneficiaryTokenCount?.gt(0) && (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'baseline',
-            }}
-          >
-            <div style={{ fontWeight: 500 }}>
-              <FormattedAddress address={event.beneficiary} />:
-            </div>
-            <div style={{ color: colors.text.secondary }}>
-              {formatWad(event.beneficiaryTokenCount, {
-                precision: 0,
-              })}
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
+          )}
+        </div>
+      }
+    />
   )
 }

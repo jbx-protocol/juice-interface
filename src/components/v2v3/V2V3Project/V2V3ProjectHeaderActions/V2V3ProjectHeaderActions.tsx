@@ -26,20 +26,10 @@ export function V2V3ProjectHeaderActions() {
 
   return (
     <>
-      <Space
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-        }}
-      >
+      <Space className="flex items-center">
         <ContractVersionSelect />
 
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
+        <div className="flex items-center">
           <Tooltip title={t`Tools`} placement="bottom">
             <Button
               onClick={() => setToolDrawerVisible(true)}

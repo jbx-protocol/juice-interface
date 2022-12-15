@@ -2,11 +2,11 @@ import { InfoCircleOutlined, RedoOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
+import { Callout } from 'components/Callout'
 import { useLockPageRulesWrapper } from 'components/Create/hooks/useLockPageRulesWrapper'
 import { useContext, useEffect } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { CreateBadge } from '../../CreateBadge'
-import { CreateCallout } from '../../CreateCallout'
 import { DurationInput } from '../../DurationInput'
 import { Icons } from '../../Icons'
 import { Selection } from '../../Selection/Selection'
@@ -24,7 +24,7 @@ const FundingCycleCallout: React.FC = () => {
   switch (selection) {
     case 'automated':
       return (
-        <CreateCallout.Warning>
+        <Callout.Warning>
           <Space direction="vertical" size="middle">
             <Trans>
               Funding Cycle #1 will start immediately after you launch your
@@ -35,17 +35,17 @@ const FundingCycleCallout: React.FC = () => {
               Cycle #2) at any time within the bounds of the rules you set.
             </Trans>
           </Space>
-        </CreateCallout.Warning>
+        </Callout.Warning>
       )
     case 'manual':
       return (
-        <CreateCallout.Warning>
+        <Callout.Warning>
           <Trans>
             With manual funding cycles selected, the project's owner can start a
             new funding cycle on-demand. This may pose a risk to some
             contributors.
           </Trans>
-        </CreateCallout.Warning>
+        </Callout.Warning>
       )
   }
 }

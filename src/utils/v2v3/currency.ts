@@ -40,6 +40,3 @@ export const V2CurrencySymbol = (
   currency?: V2V3CurrencyOption,
 ): CurrencySymbol | undefined =>
   currency !== undefined ? V2V3_CURRENCY_METADATA[currency]?.symbol : undefined
-
-export const V2CurrencyStyle = (currency?: V2V3CurrencyOption) =>
-  currency !== undefined ? V2V3_CURRENCY_METADATA[currency]?.style : undefined

@@ -1,6 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { perbicentToPercent } from 'utils/format/formatNumber'
 
 import { Trans } from '@lingui/macro'
@@ -32,18 +31,6 @@ export default function BudgetTargetInput({
   feePerbicent: BigNumber | undefined
   showTargetSubFeeInput?: boolean
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
-  const targetSubFeeStyles: CSSProperties = {
-    color: colors.text.primary,
-    marginBottom: 10,
-    marginTop: 10,
-    display: 'flex',
-    alignItems: 'center',
-  }
-
   const [_currency, setCurrency] = useState<CurrencyName>()
 
   useEffect(() => setCurrency(currency), [currency])
@@ -70,8 +57,8 @@ export default function BudgetTargetInput({
         onChange={target => onTargetChange(target?.toString())}
       />
       {feePerbicent?.gt(0) && showTargetSubFeeInput && (
-        <div style={targetSubFeeStyles}>
-          <div style={{ fontWeight: 500, flexGrow: 1, marginRight: 8 }}>
+        <div className="mb-2 mt-2 flex items-center text-black dark:text-slate-100">
+          <div className="mr-0 flex-grow font-medium">
             <FormattedNumberInput
               value={targetSubFee}
               placeholder={placeholder}

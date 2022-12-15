@@ -1,16 +1,10 @@
-import { CrownFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Space, Tooltip } from 'antd'
+import { Tooltip } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
-import Balance from 'components/Navbar/Balance'
 import TooltipLabel from 'components/TooltipLabel'
-import { ThemeContext } from 'contexts/themeContext'
-import { CSSProperties, useContext } from 'react'
 import { formatWad } from 'utils/format/formatNumber'
-
 import { BigNumber } from '@ethersproject/bignumber'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
-
 import ETHToUSD from 'components/currency/ETHToUSD'
 import { CurrencyName } from 'constants/currency'
 
@@ -19,7 +13,6 @@ export default function SpendingStats({
   targetAmount,
   distributedAmount,
   distributableAmount,
-  ownerAddress,
   feePercentage,
   hasFundingTarget,
 }: {
@@ -31,24 +24,13 @@ export default function SpendingStats({
   feePercentage: string | undefined
   hasFundingTarget: boolean | undefined
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
-  const smallHeaderStyle: CSSProperties = {
-    fontSize: '0.75rem',
-    fontWeight: 500,
-    cursor: 'default',
-    color: colors.text.secondary,
-  }
-
   const formattedDistributionLimit = !targetAmount.eq(MAX_DISTRIBUTION_LIMIT)
     ? formatWad(targetAmount, { precision: 4 })
     : t`NO LIMIT`
 
   return (
     <div>
-      <div>
+      <div className="mb-1">
         <Tooltip
           title={
             currency === 'ETH' && distributableAmount?.gt(0) ? (
@@ -56,18 +38,13 @@ export default function SpendingStats({
             ) : undefined
           }
         >
-          <span
-            style={{
-              fontSize: '1rem',
-              fontWeight: 500,
-            }}
-          >
+          <span className="text-base font-medium">
             <CurrencySymbol currency={currency} />
             {formatWad(distributableAmount, { precision: 4 }) || '0'}{' '}
           </span>
         </Tooltip>
         <TooltipLabel
-          style={smallHeaderStyle}
+          className="cursor-default text-xs font-medium text-grey-500 dark:text-slate-100"
           label={<Trans>AVAILABLE</Trans>}
           tip={
             <Trans>
@@ -80,32 +57,15 @@ export default function SpendingStats({
         />
       </div>
 
-      <div style={{ ...smallHeaderStyle, color: colors.text.tertiary }}>
-        <div>
-          <Trans>
-            <CurrencySymbol currency={currency} />
-            {formatWad(distributedAmount, { precision: 4 }) || '0'}
-            {hasFundingTarget ? (
-              <span>/{formattedDistributionLimit} </span>
-            ) : null}{' '}
-            distributed
-          </Trans>
-        </div>
-
-        <div>
-          <Space>
-            <Balance address={ownerAddress} />
-            <Tooltip
-              title={<Trans>Balance of the project owner's wallet.</Trans>}
-            >
-              <span>
-                <Trans>
-                  <CrownFilled /> owner balance
-                </Trans>
-              </span>
-            </Tooltip>
-          </Space>
-        </div>
+      <div className="cursor-default text-xs font-medium text-grey-500 dark:text-slate-100">
+        <Trans>
+          <CurrencySymbol currency={currency} />
+          {formatWad(distributedAmount, { precision: 4 }) || '0'}
+          {hasFundingTarget ? (
+            <span>/{formattedDistributionLimit} </span>
+          ) : null}{' '}
+          distributed
+        </Trans>
       </div>
     </div>
   )

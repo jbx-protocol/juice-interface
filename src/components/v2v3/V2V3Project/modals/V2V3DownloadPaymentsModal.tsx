@@ -1,8 +1,7 @@
 import { t, Trans } from '@lingui/macro'
-import { ModalProps } from 'antd'
+import { Modal, ModalProps } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { JuiceModal } from 'components/JuiceModal'
 import { readProvider } from 'constants/readProvider'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useCallback, useContext, useEffect, useState } from 'react'
@@ -85,7 +84,7 @@ export default function V2V3DownloadPaymentsModal(props: ModalProps) {
   }, [projectId, setLoading, blockNumber, pv])
 
   return (
-    <JuiceModal
+    <Modal
       onOk={download}
       okText={t`Download CSV`}
       okButtonProps={{ type: 'primary' }}
@@ -99,7 +98,7 @@ export default function V2V3DownloadPaymentsModal(props: ModalProps) {
           <Trans>Download CSV of payments</Trans>
         </h4>
 
-        <label style={{ display: 'block', marginTop: 20, marginBottom: 5 }}>
+        <label className="mt-5 mb-1 block">
           <Trans>Block number</Trans>
         </label>
         <FormattedNumberInput
@@ -114,6 +113,6 @@ export default function V2V3DownloadPaymentsModal(props: ModalProps) {
           }
         />
       </div>
-    </JuiceModal>
+    </Modal>
   )
 }

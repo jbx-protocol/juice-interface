@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import Callout from 'components/Callout'
+import { Callout } from 'components/Callout'
 import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
 import { TokenForm } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/TokenDrawer/TokenForm'
 import FundingCycleDrawer from '../FundingCycleDrawer'
@@ -32,13 +32,13 @@ export function TokenDrawer({
         <p>
           <Trans>Design how your tokens should work.</Trans>
         </p>
-        <Callout style={{ marginBottom: '2rem' }}>
+        <Callout.Info className="mb-8">
           <Trans>
             Project tokens <strong>aren't ERC-20 tokens</strong> by default.
             Once you deploy your project, you can issue an ERC-20 for your
             holders to claim. This is <strong>optional</strong>.
           </Trans>
-        </Callout>
+        </Callout.Info>
 
         <TokenForm
           onFinish={emitDrawerClose}

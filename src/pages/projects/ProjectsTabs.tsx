@@ -42,11 +42,7 @@ export default function ProjectsTabs({
   selectedTab: ProjectCategory
 }) {
   return (
-    <Space
-      direction="horizontal"
-      size="large"
-      style={{ flexWrap: 'wrap', rowGap: '1rem' }}
-    >
+    <Space className="flex-wrap gap-y-4" direction="horizontal" size="large">
       {TABS.map(type => (
         <ProjectTab type={type} key={type} isSelected={type === selectedTab} />
       ))}

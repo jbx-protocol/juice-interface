@@ -1,10 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Form } from 'antd'
-import { ThemeContext } from 'contexts/themeContext'
 import { useExtendLockTx } from 'hooks/veNft/transactor/VeNftExtendLockTx'
 import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'
-import { useContext, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { emitSuccessNotification } from 'utils/notifications'
 
 import TransactionModal from 'components/TransactionModal'
@@ -51,10 +50,6 @@ const VeNftExtendLockModal = ({
   const initialValues = {
     lockDuration: 0,
   }
-
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
 
   const extendLockTx = useExtendLockTx()
 
@@ -107,14 +102,14 @@ const VeNftExtendLockModal = ({
       confirmLoading={loading}
       transactionPending={transactionPending}
     >
-      <div style={{ color: colors.text.secondary }}>
+      <div className="text-grey-500 dark:text-grey-300">
         <p>
           <Trans>Update your veNFT's lock duration.</Trans>
         </p>
       </div>
       <Form
         layout="vertical"
-        style={{ width: '100%' }}
+        className="w-full"
         form={form}
         initialValues={initialValues}
       >

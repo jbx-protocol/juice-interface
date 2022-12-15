@@ -13,17 +13,11 @@ import {
 } from 'components/formItems/formHelpers'
 import { FormItemExt } from 'components/formItems/formItemExt'
 import ReservedTokenReceiverModal from 'components/modals/ReservedTokenReceiverModal'
-import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { TicketMod } from 'models/mods'
 import * as moment from 'moment'
-import {
-  CSSProperties,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from 'react'
+import { useCallback, useContext, useMemo, useState } from 'react'
+import { classNames } from 'utils/classNames'
 import { formatDate } from 'utils/format/formatDate'
 import {
   percentToPermyriad,
@@ -38,20 +32,15 @@ export default function ProjectTicketMods({
   lockedMods,
   mods,
   reservedRate,
-  style = {},
   onModsChanged,
   formItemProps,
 }: {
   lockedMods?: TicketMod[]
   mods: TicketMod[] | undefined
   reservedRate: number
-  style?: CSSProperties
   onModsChanged: (mods: TicketMod[]) => void
 } & FormItemExt) {
   const { owner } = useContext(V1ProjectContext)
-  const {
-    theme: { colors, radii },
-  } = useContext(ThemeContext)
 
   const [form] = useForm<{
     beneficiary: string
@@ -67,22 +56,20 @@ export default function ProjectTicketMods({
 
       return (
         <div
-          style={{
-            display: 'flex',
-            padding: 10,
-            border: locked ? '1px solid ' + colors.stroke.disabled : undefined,
-            borderRadius: radii.md,
-          }}
+          className={classNames(
+            'flex rounded-sm border border-solid p-2 transition-colors hover:border-smoke-500 dark:hover:border-slate-100',
+            !locked
+              ? 'border-smoke-300  dark:border-slate-300'
+              : 'border-grey-200 dark:border-grey-700',
+          )}
           key={mod.beneficiary ?? '' + index}
-          className="clickable-border"
         >
           <Space
             direction="vertical"
-            style={{
-              width: '100%',
-              color: colors.text.primary,
-              cursor: locked ? 'default' : 'pointer',
-            }}
+            className={classNames(
+              'w-full text-black dark:text-slate-100',
+              locked ? 'cursor-default' : 'cursor-pointer',
+            )}
             onClick={() => {
               if (locked) return
 
@@ -99,45 +86,26 @@ export default function ProjectTicketMods({
               setModalMode('Edit')
             }}
           >
-            <Row gutter={gutter} style={{ width: '100%' }} align="middle">
+            <Row gutter={gutter} className="w-full" align="middle">
               <Col span={7}>
                 <label>Address</label>{' '}
               </Col>
               <Col span={17}>
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                  }}
-                >
-                  <span style={{ cursor: 'pointer' }}>
+                <div className="flex items-center justify-between">
+                  <span className="cursor-pointer">
                     <FormattedAddress address={mod.beneficiary} />
                   </span>
                 </div>
               </Col>
             </Row>
 
-            <Row gutter={gutter} style={{ width: '100%' }} align="middle">
+            <Row gutter={gutter} className="w-full" align="middle">
               <Col span={7}>
                 <label>Percentage</label>
               </Col>
               <Col span={17}>
-                <div
-                  style={{
-                    display: 'flex',
-                    width: '100%',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}
-                >
-                  <span
-                    style={{
-                      marginRight: 10,
-                      width: 100,
-                      maxWidth: 100,
-                    }}
-                  >
+                <div className="flex w-full items-center justify-between">
+                  <span className="mr-2 w-24 max-w-[100px]">
                     {permyriadToPercent(mod.percent)}%
                   </span>
                 </div>
@@ -145,7 +113,7 @@ export default function ProjectTicketMods({
             </Row>
 
             {mod.lockedUntil ? (
-              <Row gutter={gutter} style={{ width: '100%' }} align="middle">
+              <Row gutter={gutter} className="w-full" align="middle">
                 <Col span={7}>
                   <label>Locked</label>
                 </Col>
@@ -157,7 +125,7 @@ export default function ProjectTicketMods({
           </Space>
 
           {locked ? (
-            <LockOutlined style={{ color: colors.icon.disabled }} />
+            <LockOutlined className="text-grey-400 dark:text-grey-400" />
           ) : (
             <Tooltip title={t`Delete token allocation`}>
               <Button
@@ -176,15 +144,7 @@ export default function ProjectTicketMods({
         </div>
       )
     },
-    [
-      mods,
-      colors.stroke.disabled,
-      colors.text.primary,
-      colors.icon.disabled,
-      radii.md,
-      form,
-      onModsChanged,
-    ],
+    [mods, form, onModsChanged],
   )
 
   if (!mods) return null
@@ -260,34 +220,24 @@ export default function ProjectTicketMods({
           },
         },
       ]}
-      style={style}
     >
-      <Space
-        direction="vertical"
-        style={{ width: '100%', marginBottom: 10 }}
-        size="large"
-      >
+      <Space className="mb-2 w-full" direction="vertical" size="large">
         {lockedMods ? (
-          <Space style={{ width: '100%' }} direction="vertical" size="small">
+          <Space className="w-full" direction="vertical" size="small">
             {lockedMods.map((v, i) => modInput(v, i, true))}
           </Space>
         ) : null}
-        <Space style={{ width: '100%' }} direction="vertical" size="small">
+        <Space className="w-full" direction="vertical" size="small">
           {mods.map((v, i) => modInput(v, i))}
         </Space>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            color: colors.text.secondary,
-          }}
-        >
-          <div style={{ textAlign: 'right' }}>
+        <div className="flex justify-between text-grey-500 dark:text-grey-300">
+          <div className="text-right">
             <span
-              style={{
-                color:
-                  total > 100 ? colors.text.failure : colors.text.secondary,
-              }}
+              className={
+                total > 100
+                  ? 'text-error-500 dark:text-error-400'
+                  : 'text-grey-500 dark:text-grey-300'
+              }
             >
               <Trans>Total: {total.toFixed(2)}%</Trans>
             </span>
@@ -306,7 +256,7 @@ export default function ProjectTicketMods({
           ) : null}
         </div>
         {totalSplitsPercentageInvalid ? (
-          <span style={{ color: colors.text.failure, fontWeight: 600 }}>
+          <span className="font-medium text-error-500 dark:text-error-400">
             <Trans>Sum of percentages cannot exceed 100%.</Trans>
           </span>
         ) : null}

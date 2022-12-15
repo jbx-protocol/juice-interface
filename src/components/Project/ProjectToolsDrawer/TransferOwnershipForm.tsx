@@ -48,7 +48,7 @@ export function TransferOwnershipForm({
         <Statistic
           title={<Trans>Current owner</Trans>}
           valueRender={() => (
-            <span style={{}}>
+            <span>
               <FormattedAddress address={ownerAddress} />
             </span>
           )}

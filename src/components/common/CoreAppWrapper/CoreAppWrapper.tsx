@@ -12,6 +12,7 @@ import TxHistoryProvider from 'providers/TxHistoryProvider'
 import React from 'react'
 import { Provider } from 'react-redux'
 import store from 'redux/store'
+import { classNames } from 'utils/classNames'
 import { redirectTo } from 'utils/windowUtils'
 
 /**
@@ -52,18 +53,11 @@ const _Wrapper: React.FC = ({ children }) => {
   const isMobile = useMobile()
 
   return (
-    <>
-      <Layout
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          height: '100%',
-          background: 'transparent',
-        }}
-      >
-        <SiteNavigation />
-        <Content style={isMobile ? { paddingTop: 64 } : {}}>{children}</Content>
-      </Layout>
-    </>
+    <Layout className="flex h-screen flex-col bg-transparent">
+      <SiteNavigation />
+      <Content className={classNames(isMobile ? 'pt-16' : '')}>
+        {children}
+      </Content>
+    </Layout>
   )
 }

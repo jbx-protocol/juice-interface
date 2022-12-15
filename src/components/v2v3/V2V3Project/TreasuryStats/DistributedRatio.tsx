@@ -1,20 +1,12 @@
 import { Trans } from '@lingui/macro'
 import StatLine from 'components/Project/StatLine'
 import TooltipLabel from 'components/TooltipLabel'
-
-import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
-import { CSSProperties, useContext } from 'react'
-
+import { useContext } from 'react'
 import V2V3CurrencyAmount from 'components/v2v3/shared/V2V3CurrencyAmount'
-
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 
-import { textSecondary } from 'constants/styles/text'
-
-export default function DistributedRatio({ style }: { style?: CSSProperties }) {
-  const { theme } = useContext(ThemeContext)
-  const { colors } = theme
+export default function DistributedRatio() {
   const {
     distributionLimit,
     usedDistributionLimit,
@@ -22,11 +14,8 @@ export default function DistributedRatio({ style }: { style?: CSSProperties }) {
     loading: { distributionLimitLoading },
   } = useContext(V2V3ProjectContext)
 
-  const secondaryTextStyle = textSecondary(theme)
-
   return (
     <StatLine
-      style={style}
       loading={distributionLimitLoading}
       statLabel={<Trans>Distributed</Trans>}
       statLabelTip={
@@ -39,12 +28,7 @@ export default function DistributedRatio({ style }: { style?: CSSProperties }) {
       }
       statValue={
         distributionLimit?.gt(0) ? (
-          <div
-            style={{
-              ...secondaryTextStyle,
-              color: colors.text.primary,
-            }}
-          >
+          <div className="text-sm font-medium uppercase text-black dark:text-slate-100">
             <V2V3CurrencyAmount
               amount={usedDistributionLimit}
               currency={distributionLimitCurrency}
@@ -62,12 +46,7 @@ export default function DistributedRatio({ style }: { style?: CSSProperties }) {
             </>
           </div>
         ) : (
-          <div
-            style={{
-              ...secondaryTextStyle,
-              textAlign: 'right',
-            }}
-          >
+          <div className="text-right text-sm font-medium uppercase text-grey-400 dark:text-slate-200">
             <TooltipLabel
               tip={
                 <Trans>

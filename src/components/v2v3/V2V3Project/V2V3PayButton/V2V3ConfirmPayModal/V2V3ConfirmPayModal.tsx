@@ -2,16 +2,16 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Descriptions, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import Callout from 'components/Callout'
+import { Callout } from 'components/Callout'
 import FormattedAddress from 'components/FormattedAddress'
 import { NFT_PAYMENT_CONFIRMED_QUERY_PARAM } from 'components/NftRewards/NftPostPayModal'
 import Paragraph from 'components/Paragraph'
 import { PayProjectFormContext } from 'components/Project/PayProjectForm/payProjectFormContext'
+import { JB721DelegatePayMetadata } from 'components/Project/PayProjectForm/usePayProjectForm'
 import TooltipLabel from 'components/TooltipLabel'
 import TransactionModal from 'components/TransactionModal'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useMobile from 'hooks/Mobile'
@@ -21,7 +21,11 @@ import { useRouter } from 'next/router'
 import { useContext, useState } from 'react'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
 import { formattedNum, formatWad } from 'utils/format/formatNumber'
-import { encodeJB721DelegatePayMetadata, sumTierFloors } from 'utils/nftRewards'
+import {
+  encodeJB721DelegatePayMetadata,
+  payMetadataOverrides,
+  sumTierFloors,
+} from 'utils/nftRewards'
 import { emitErrorNotification } from 'utils/notifications'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -43,9 +47,6 @@ export function V2V3ConfirmPayModal({
   weiAmount: BigNumber | undefined
   onCancel?: VoidFunction
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { fundingCycle, fundingCycleMetadata, tokenSymbol, handle } =
     useContext(V2V3ProjectContext)
   const { projectMetadata, projectId } = useContext(ProjectMetadataContext)
@@ -116,7 +117,7 @@ export function V2V3ConfirmPayModal({
   }
 
   async function pay() {
-    if (!weiAmount) return
+    if (!weiAmount || !projectId) return
 
     const {
       beneficiary,
@@ -125,10 +126,12 @@ export function V2V3ConfirmPayModal({
       stickerUrls,
       uploadedImage,
     } = form.getFieldsValue()
+
     const txBeneficiary = beneficiary ?? userAddress
-    const delegateMetadata = encodeJB721DelegatePayMetadata(
-      payProjectForm?.payMetadata,
-    )
+    const delegateMetadata = encodeJB721DelegatePayMetadata({
+      ...(payProjectForm?.payMetadata as JB721DelegatePayMetadata),
+      ...payMetadataOverrides(projectId),
+    })
 
     // Prompt wallet connect if no wallet connected
     if (chainUnsupported) {
@@ -199,22 +202,17 @@ export function V2V3ConfirmPayModal({
       centered
       destroyOnClose
     >
-      <Space direction="vertical" size="large" style={{ width: '100%' }}>
+      <Space direction="vertical" size="large" className="w-full">
         {projectMetadata.payDisclosure && (
-          <Callout
-            style={{
-              background: 'none',
-              border: '1px solid' + colors.stroke.secondary,
-            }}
-          >
-            <strong>
+          <Callout.Info className="border border-solid border-grey-200 dark:border-grey-400">
+            <strong className="block">
               <Trans>Notice from {projectMetadata.name}</Trans>
             </strong>
             <Paragraph
+              className="text-sm"
               description={projectMetadata.payDisclosure}
-              style={{ fontSize: '0.8rem' }}
             />
-          </Callout>
+          </Callout.Info>
         )}
 
         <Descriptions column={1} bordered size={isMobile ? 'small' : 'default'}>
@@ -229,7 +227,7 @@ export function V2V3ConfirmPayModal({
             <div>
               {formatWad(receivedTickets, { precision: 0 })} {tokenText}
             </div>
-            <div style={{ fontSize: '0.75rem' }}>
+            <div className="text-xs">
               {userAddress ? (
                 <Trans>
                   To: <FormattedAddress address={userAddress} />
@@ -255,6 +253,7 @@ export function V2V3ConfirmPayModal({
           </Descriptions.Item>
           {nftRewardTiers?.length ? (
             <Descriptions.Item
+              className="py-2 px-6"
               label={
                 <TooltipLabel
                   label={t`NFTs for you`}
@@ -269,7 +268,6 @@ export function V2V3ConfirmPayModal({
                   }
                 />
               }
-              style={{ padding: '0.625rem 1.5rem' }}
             >
               <NftRewardCell nftRewards={nftRewardTiers} />
             </Descriptions.Item>

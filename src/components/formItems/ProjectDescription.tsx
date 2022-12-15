@@ -21,6 +21,7 @@ export default function ProjectDescription({
       extra={t`Maximum ${MAX_DESCRIPTION_LENGTH} characters`}
     >
       <TextArea
+        autoSize={{ minRows: 4, maxRows: 10 }}
         autoComplete="off"
         maxLength={MAX_DESCRIPTION_LENGTH}
         onChange={onChange ? e => onChange(e.target.value) : undefined}

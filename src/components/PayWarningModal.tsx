@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
+import { Modal } from 'antd'
 import ExternalLink from 'components/ExternalLink'
-import { JuiceModal } from './JuiceModal'
 
 export default function PayWarningModal({
   open,
@@ -12,7 +12,7 @@ export default function PayWarningModal({
   onCancel: VoidFunction
 }) {
   return (
-    <JuiceModal
+    <Modal
       open={open}
       onOk={onOk}
       onCancel={onCancel}
@@ -23,7 +23,7 @@ export default function PayWarningModal({
       <h2>
         <Trans>Heads up</Trans>
       </h2>
-      <p style={{ fontWeight: 500 }}>
+      <p className="font-medium">
         <Trans>
           The{' '}
           <ExternalLink href="https://github.com/jbx-protocol/juice-contracts">
@@ -34,6 +34,6 @@ export default function PayWarningModal({
           losses by projects or their supporters.
         </Trans>
       </p>
-    </JuiceModal>
+    </Modal>
   )
 }

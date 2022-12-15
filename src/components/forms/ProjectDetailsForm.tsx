@@ -2,7 +2,6 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Form, FormInstance, Space } from 'antd'
 import { FormItems } from 'components/formItems'
 import { MinimalCollapse } from 'components/MinimalCollapse'
-import { CSSProperties } from 'react'
 import { normalizeHandle } from 'utils/format/formatHandle'
 
 export type ProjectDetailsFormFields = {
@@ -22,7 +21,6 @@ export default function ProjectDetailsForm({
   onFinish,
   hideProjectHandle = false,
   saveButton,
-  style,
   loading,
   onValuesChange,
 }: {
@@ -30,7 +28,6 @@ export default function ProjectDetailsForm({
   onFinish: (values: ProjectDetailsFormFields) => void
   hideProjectHandle?: boolean
   saveButton?: JSX.Element
-  style?: CSSProperties
   loading?: boolean
   onValuesChange?: VoidFunction
 }) {
@@ -40,10 +37,9 @@ export default function ProjectDetailsForm({
       form={form}
       layout="vertical"
       onFinish={onFinish}
-      style={style}
       onValuesChange={() => onValuesChange?.()}
     >
-      <Space direction="vertical" size="large" style={{ width: '100%' }}>
+      <Space direction="vertical" size="large" className="w-full">
         <div>
           <FormItems.ProjectName
             name="name"

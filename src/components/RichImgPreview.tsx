@@ -2,28 +2,18 @@ import { t } from '@lingui/macro'
 import { Image } from 'antd'
 import { useContentType } from 'hooks/ContentType'
 import { CSSProperties } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 export default function RichImgPreview({
+  className,
   src,
-  width,
-  height,
-  maxWidth,
-  maxHeight,
-  style,
 }: {
+  className?: string
   src: string | undefined
-  width?: CSSProperties['width']
-  height?: CSSProperties['height']
   maxWidth?: CSSProperties['maxWidth']
   maxHeight?: CSSProperties['maxHeight']
-  style?: CSSProperties
 }) {
   const contentType = useContentType(src)
-
-  const w = width ?? 100
-  const h = height ?? 100
-  const maxW = maxWidth ?? 'auto'
-  const maxH = maxHeight ?? 'auto'
 
   if (
     contentType === 'image/jpeg' ||
@@ -33,20 +23,13 @@ export default function RichImgPreview({
     contentType === 'image/svg'
   ) {
     return (
-      <div style={style}>
-        <Image
-          src={src}
-          style={{
-            maxWidth: maxW,
-            maxHeight: maxH,
-            width: w,
-            height: h,
-          }}
-          alt={t`Payment memo image`}
-          loading="lazy"
-          crossOrigin="anonymous"
-        />
-      </div>
+      <Image
+        className={twMerge('h-24 w-24', className)}
+        src={src}
+        alt={t`Payment memo image`}
+        loading="lazy"
+        crossOrigin="anonymous"
+      />
     )
   }
 

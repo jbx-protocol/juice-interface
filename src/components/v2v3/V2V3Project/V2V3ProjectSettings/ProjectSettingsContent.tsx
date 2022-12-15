@@ -1,9 +1,8 @@
 import { Divider, Layout } from 'antd'
 import { V2V3SettingsPageKeyTitleMap } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/V2V3ProjectSettings'
-import { ThemeContext } from 'contexts/themeContext'
 import { V2V3SettingsPageKey } from 'models/menu-keys'
 import { useRouter } from 'next/router'
-import { useContext, useMemo } from 'react'
+import { useMemo } from 'react'
 import { ArchiveProjectSettingsPage } from './pages/ArchiveProjectSettingsPage'
 import { GovernanceSettingsPage } from './pages/GovernanceSettingsPage'
 import { PayoutsSettingsPage } from './pages/PayoutsSettingsPage'
@@ -33,10 +32,6 @@ const SettingsPageComponents: {
 const DEFAULT_SETTINGS_PAGE = 'general'
 
 export function ProjectSettingsContent() {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const router = useRouter()
 
   const activeSettingsPage =
@@ -47,14 +42,14 @@ export function ProjectSettingsContent() {
   )
 
   return (
-    <Layout style={{ background: 'transparent' }}>
-      <h2 style={{ color: colors.text.primary, marginBottom: 0 }}>
+    <Layout className="bg-transparent pl-4">
+      <h2 className="mb-0 text-black dark:text-slate-100">
         {V2V3SettingsPageKeyTitleMap[activeSettingsPage]}
       </h2>
 
-      <Divider />
+      <Divider className="mt-3" />
 
-      <Layout.Content style={{ margin: '0 16px' }}>
+      <Layout.Content className="my-0">
         <ActiveSettingsPage />
       </Layout.Content>
     </Layout>

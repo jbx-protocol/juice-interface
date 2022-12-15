@@ -1,7 +1,6 @@
 import Icon from '@ant-design/icons'
 import { plural, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
-import { darkColors, lightColors } from 'constants/styles/colors'
 import { ThemeContext } from 'contexts/themeContext'
 import { useQueuedSafeTransactions } from 'hooks/safe/QueuedSafeTransactions'
 import { useWallet } from 'hooks/Wallet'
@@ -41,7 +40,7 @@ function DefaultBadge({ href }: { href: string }) {
         </Trans>
       }
     >
-      <span>
+      <span className="flex">
         <SafeIcon href={href} />
       </span>
     </Tooltip>
@@ -79,8 +78,8 @@ function BadgeMightHaveNotice({
   }
   return (
     <Tooltip
+      overlayClassName="w-[700px]"
       placement="bottom"
-      overlayStyle={{ width: 700 }}
       title={
         <>
           <div>
@@ -100,7 +99,7 @@ function BadgeMightHaveNotice({
         </>
       }
     >
-      <div style={{ display: 'flex', position: 'relative' }}>
+      <div className="relative flex">
         <Icon component={() => <SafeIcon href={href} />} />
         <Notice />
       </div>
@@ -110,19 +109,8 @@ function BadgeMightHaveNotice({
 
 // Red dot that appears conditionally next to Safe badge when connected user is on multisig and has unsiged tranctions
 function Notice() {
-  const { isDarkMode } = useContext(ThemeContext)
   return (
-    <div
-      style={{
-        position: 'absolute',
-        backgroundColor: isDarkMode ? darkColors.red : lightColors.red,
-        borderRadius: '100%',
-        width: '6px',
-        height: '6px',
-        top: '0px',
-        left: '13px',
-      }}
-    />
+    <div className="absolute top-0 left-3 h-2 w-2 rounded-full bg-error-500 dark:bg-error-400" />
   )
 }
 

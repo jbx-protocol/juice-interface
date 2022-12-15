@@ -1,57 +1,35 @@
 import { CaretRightFilled } from '@ant-design/icons'
-import { ThemeContext } from 'contexts/themeContext'
-import { ComponentPropsWithoutRef, CSSProperties, useContext } from 'react'
+import { ComponentPropsWithoutRef } from 'react'
+import { twMerge } from 'tailwind-merge'
+import { classNames } from 'utils/classNames'
 
 export type RichButtonProps = {
+  className?: string
   heading: JSX.Element | string
   description: JSX.Element | string
   disabled?: boolean
   prefix?: JSX.Element | string
   icon?: JSX.Element
-  primaryColor?: string
-  buttonStyle?: CSSProperties
+  primaryColorClassName?: string
 } & ComponentPropsWithoutRef<'div'>
 
 export default function RichButton({
+  className,
   heading,
   prefix,
   description,
   disabled,
   icon,
-  primaryColor,
-  buttonStyle,
+  primaryColorClassName,
   ...props
 }: RichButtonProps) {
-  const {
-    theme: { colors, radii },
-  } = useContext(ThemeContext)
-
-  const headingColor = disabled
-    ? colors.text.disabled
-    : primaryColor ?? colors.text.action.primary
-
-  const subheadingColor = disabled
-    ? colors.text.disabled
-    : primaryColor ?? colors.text.primary
-
-  const baseButtonStyle: CSSProperties = {
-    ...props?.style,
-    display: 'flex',
-    justifyContent: 'space-between',
-    borderRadius: radii.md,
-    cursor: disabled ? 'not-allowed' : 'pointer',
-    background: colors.background.l0,
-    padding: '1rem 0 1rem 1rem',
-  }
-
   return (
     <div
-      className="clickable-border"
+      className={twMerge(
+        'flex cursor-pointer justify-between rounded-sm border border-solid border-smoke-300 bg-smoke-25 py-4 pl-4 transition-colors hover:border-smoke-500 dark:border-slate-300 dark:bg-slate-700 dark:hover:border-slate-100',
+        className,
+      )}
       {...props}
-      style={{
-        ...baseButtonStyle,
-        ...buttonStyle,
-      }}
       role="button"
       onClick={e => {
         if (disabled) return
@@ -59,32 +37,33 @@ export default function RichButton({
         props?.onClick?.(e)
       }}
     >
-      <div style={{ display: 'flex' }}>
-        {prefix ? (
-          <h4
-            style={{
-              color: headingColor,
-              marginRight: '1rem',
-            }}
-          >
-            {prefix}
-          </h4>
-        ) : null}
+      <div
+        className={classNames(
+          'flex',
+          disabled
+            ? 'text-grey-400 dark:text-slate-200'
+            : 'text-haze-400 dark:text-haze-300',
+        )}
+      >
+        {prefix ? <h4 className="mr-4">{prefix}</h4> : null}
 
         <div>
           <h4
-            style={{
-              color: headingColor,
-            }}
+            className={classNames(
+              disabled
+                ? 'text-grey-400 dark:text-slate-200'
+                : 'text-haze-400 dark:text-haze-300',
+            )}
           >
             {heading}
           </h4>
           <p
-            style={{
-              color: subheadingColor,
-              margin: 0,
-              fontSize: 12,
-            }}
+            className={classNames(
+              'm-0 text-xs',
+              disabled
+                ? 'text-grey-400 dark:text-slate-200'
+                : primaryColorClassName ?? 'text-black dark:text-slate-100',
+            )}
           >
             {description}
           </p>
@@ -92,21 +71,14 @@ export default function RichButton({
       </div>
 
       <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: 5,
-          marginRight: '0.5rem',
-        }}
-      >
-        {icon ?? (
-          <CaretRightFilled
-            style={{
-              color: headingColor,
-            }}
-          />
+        className={classNames(
+          'mr-2 flex items-center justify-center p-1',
+          disabled
+            ? 'text-grey-400 dark:text-slate-200'
+            : 'text-haze-400 dark:text-haze-300',
         )}
+      >
+        {icon ?? <CaretRightFilled />}
       </div>
     </div>
   )

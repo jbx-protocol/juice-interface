@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Form, FormInstance } from 'antd'
+import ETHAmount from 'components/currency/ETHAmount'
 import CurrencySwitch from 'components/CurrencySwitch'
 import CurrencySymbol from 'components/CurrencySymbol'
 import InputAccessoryButton from 'components/InputAccessoryButton'
@@ -8,8 +9,6 @@ import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TooltipIcon from 'components/TooltipIcon'
 import TooltipLabel from 'components/TooltipLabel'
 import { CurrencyName } from 'constants/currency'
-import { ThemeContext } from 'contexts/themeContext'
-import { useContext } from 'react'
 import { formatWad, parseWad, stripCommas } from 'utils/format/formatNumber'
 import { amountSubFee, formatFee } from 'utils/v2v3/math'
 import { AddOrEditSplitFormFields, SplitType } from './types'
@@ -18,6 +17,7 @@ import { percentageValidator } from './utils'
 export function AmountFormItem({
   form,
   distributionLimit,
+  distributionType,
   fee,
   editingSplitType,
   currencyName,
@@ -25,6 +25,8 @@ export function AmountFormItem({
   onCurrencyChange,
 }: {
   form: FormInstance<AddOrEditSplitFormFields>
+  distributionType: 'amount' | 'percent' | 'both'
+  isEditPayoutPage?: boolean
   distributionLimit?: string
   fee: BigNumber | undefined
   editingSplitType: SplitType
@@ -32,10 +34,6 @@ export function AmountFormItem({
   isFirstSplit: boolean
   onCurrencyChange?: (currencyName: CurrencyName) => void
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const amount = Form.useWatch('amount', form)
 
   function AfterFeeMessage() {
@@ -49,9 +47,15 @@ export function AmountFormItem({
         <TooltipLabel
           label={
             <Trans>
-              <CurrencySymbol currency={currencyName} />
-              {formatWad(amountSubFeeValue, { precision: 4 })} after{' '}
-              {feePercentage}% JBX membership fee
+              {currencyName === 'ETH' ? (
+                <ETHAmount amount={amountSubFeeValue} />
+              ) : (
+                <>
+                  <CurrencySymbol currency={currencyName} />
+                  {formatWad(amountSubFeeValue, { precision: 4 })}
+                </>
+              )}{' '}
+              after {feePercentage}% JBX membership fee
             </Trans>
           }
           tip={
@@ -89,16 +93,10 @@ export function AmountFormItem({
         ) : null
       }
     >
-      <div
-        style={{
-          display: 'flex',
-          color: colors.text.primary,
-          alignItems: 'center',
-        }}
-      >
+      <div className="flex items-center text-black dark:text-slate-100">
         <Form.Item
-          noStyle
           name="amount"
+          noStyle
           required
           rules={[
             {
@@ -108,43 +106,38 @@ export function AmountFormItem({
             },
           ]}
         >
-          <div style={{ flex: 1 }}>
-            <FormattedNumberInput
-              placeholder={'0'}
-              accessory={
-                isFirstSplit && onCurrencyChange ? (
-                  <CurrencySwitch
-                    onCurrencyChange={onCurrencyChange}
-                    currency={currencyName}
-                  />
-                ) : (
-                  <InputAccessoryButton content={currencyName} />
-                )
+          <FormattedNumberInput
+            className="flex-1"
+            placeholder={'0'}
+            accessory={
+              isFirstSplit && onCurrencyChange ? (
+                <CurrencySwitch
+                  onCurrencyChange={onCurrencyChange}
+                  currency={currencyName}
+                />
+              ) : (
+                <InputAccessoryButton content={currencyName} />
+              )
+            }
+          />
+        </Form.Item>
+        {distributionType === 'amount' ? (
+          <div className="ml-2 flex items-center">
+            <Trans>{form.getFieldValue('percent') ?? '0'}%</Trans>
+            <TooltipIcon
+              tip={
+                <Trans>
+                  If you don't raise the sum of all your payouts (
+                  <CurrencySymbol currency={currencyName} />
+                  {distributionLimit}), this address will receive{' '}
+                  {form.getFieldValue('percent')}% of all the funds you raise.
+                </Trans>
               }
+              placement={'topLeft'}
+              iconClassName={'ml-1'}
             />
           </div>
-        </Form.Item>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            marginLeft: 10,
-          }}
-        >
-          <Trans>{form.getFieldValue('percent') ?? '0'}%</Trans>
-          <TooltipIcon
-            tip={
-              <Trans>
-                If you don't raise the sum of all your payouts (
-                <CurrencySymbol currency={currencyName} />
-                {distributionLimit}), this address will receive{' '}
-                {form.getFieldValue('percent')}% of all the funds you raise.
-              </Trans>
-            }
-            placement={'topLeft'}
-            iconStyle={{ marginLeft: 5 }}
-          />
-        </div>
+        ) : null}
       </div>
     </Form.Item>
   )

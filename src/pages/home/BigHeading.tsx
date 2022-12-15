@@ -1,23 +1,13 @@
-import { CSSProperties } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 export function BigHeading({
+  className,
   text,
-  style,
 }: {
+  className?: string
   text: string | JSX.Element
-  style?: CSSProperties
 }) {
   return (
-    <h1
-      style={{
-        fontSize: '2.4rem',
-        fontWeight: 600,
-        lineHeight: 1.2,
-        margin: 0,
-        ...style,
-      }}
-    >
-      {text}
-    </h1>
+    <h1 className={twMerge('m-0 text-4xl font-semibold', className)}>{text}</h1>
   )
 }

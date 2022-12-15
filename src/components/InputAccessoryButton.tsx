@@ -1,6 +1,5 @@
 import { CaretDownOutlined } from '@ant-design/icons'
-import { ThemeContext } from 'contexts/themeContext'
-import { useContext } from 'react'
+import { classNames } from 'utils/classNames'
 
 export default function InputAccessoryButton({
   content,
@@ -15,35 +14,21 @@ export default function InputAccessoryButton({
   placement?: 'prefix' | 'suffix'
   disabled?: boolean
 }) {
-  const { colors, radii } = useContext(ThemeContext).theme
-
   return content ? (
     <div
       role="button"
-      style={{
-        userSelect: 'none',
-        cursor: onClick && !disabled ? 'pointer' : 'default',
-        color:
-          onClick && !disabled
-            ? colors.text.action.primary
-            : colors.text.primary,
-        background:
-          onClick && !disabled
-            ? colors.background.action.secondary
-            : colors.background.l1,
-        fontWeight: 500,
-        whiteSpace: 'nowrap',
-        padding: '1px 6px',
-        marginLeft: placement === 'suffix' ? 8 : 0,
-        marginRight: placement === 'prefix' ? 8 : 0,
-        borderRadius: radii.sm,
-      }}
+      className={classNames(
+        'select-none whitespace-nowrap px-1.5 py-[1px] font-medium',
+        onClick && !disabled
+          ? 'cursor-pointer bg-haze-200 text-haze-500 hover:text-haze-600 dark:bg-haze-700 dark:text-haze-300 dark:hover:text-haze-200'
+          : 'cursor-default',
+        placement === 'suffix' ? 'ml-2' : undefined,
+        placement === 'prefix' ? 'mr-2' : undefined,
+      )}
       onClick={onClick}
     >
       {content}
-      {withArrow && (
-        <CaretDownOutlined style={{ fontSize: 10, marginLeft: 4 }} />
-      )}
+      {withArrow && <CaretDownOutlined className="ml-1" />}
     </div>
   ) : null
 }

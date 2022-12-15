@@ -1,7 +1,6 @@
 import { Trans } from '@lingui/macro'
-import { Space } from 'antd'
+import { Modal, Space } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
-import { JuiceModal } from 'components/JuiceModal'
 import TicketModsList from 'components/v1/shared/TicketModsList'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
@@ -47,7 +46,7 @@ export default function DistributeTokensModal({
   const reservedTokensFormatted = formatWad(reservedTokens, { precision: 0 })
 
   return (
-    <JuiceModal
+    <Modal
       title={`Distribute reserved ${tokenSymbolText({
         tokenSymbol,
         capitalize: false,
@@ -66,8 +65,8 @@ export default function DistributeTokensModal({
       width={640}
       centered={true}
     >
-      <Space direction="vertical" style={{ width: '100%' }} size="large">
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <Space direction="vertical" className="w-full" size="large">
+        <div className="flex justify-between">
           <Trans>Available:</Trans>{' '}
           <div>
             {tokenSymbol
@@ -103,6 +102,6 @@ export default function DistributeTokensModal({
           </p>
         )}
       </Space>
-    </JuiceModal>
+    </Modal>
   )
 }

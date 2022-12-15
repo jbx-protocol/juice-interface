@@ -16,16 +16,11 @@ export const IconedImage = ({
   onClick: VoidFunction
 }) => {
   return (
-    <div style={{ position: 'relative', padding: '1rem 0' }}>
+    <div className="relative py-4">
       <Image key={url} width={width} src={url} crossOrigin="anonymous" />
       <div
+        className="absolute top-0 right-0 cursor-pointer"
         role="button"
-        style={{
-          cursor: 'pointer',
-          position: 'absolute',
-          top: 0,
-          right: 0,
-        }}
         onClick={onClick}
       >
         {icon}

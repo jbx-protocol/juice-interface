@@ -98,7 +98,7 @@ export default function V2MintModal({
       onCancel={onCancel}
       okText={t`Mint ${tokensTokenLower}`}
     >
-      <div style={{ marginBottom: 20 }}>
+      <div className="mb-5">
         <Trans>
           Note: Tokens can be minted manually when allowed in the current
           funding cycle. This can be changed by the project owner for upcoming

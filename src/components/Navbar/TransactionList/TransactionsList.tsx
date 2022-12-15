@@ -2,16 +2,15 @@ import { CaretDownOutlined, ThunderboltOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { timestampForTxLog, TxHistoryContext } from 'contexts/txHistoryContext'
 import { TxStatus } from 'models/transaction'
-import { CSSProperties, useContext, useEffect, useMemo, useState } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
+import { classNames } from 'utils/classNames'
 import Loading from '../../Loading'
 import { TransactionItem } from './TransactionItem'
 
 export function TransactionsList({
-  style,
-  listStyle,
+  listClassName,
 }: {
-  style?: CSSProperties
-  listStyle?: CSSProperties
+  listClassName?: string
 }) {
   const { transactions, removeTransaction } = useContext(TxHistoryContext)
   const [isExpanded, setIsExpanded] = useState<boolean>()
@@ -32,37 +31,32 @@ export function TransactionsList({
   if (!hasTransactions) return null
 
   return (
-    <div style={{ ...style }}>
+    <div>
       <div
-        className="clickable-border"
+        className={classNames(
+          'flex h-8 cursor-pointer select-none items-center justify-evenly rounded-full border border-solid border-smoke-300 pl-3 pr-1 transition-colors hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100',
+        )}
         role="button"
-        style={{
-          cursor: 'pointer',
-          display: 'flex',
-          alignItems: 'center',
-          paddingLeft: 10,
-          paddingRight: 5,
-          borderRadius: 15,
-          height: 30,
-          userSelect: 'none',
-        }}
         onClick={() => setIsExpanded(!isExpanded)}
       >
-        {hasPendingTxs ? <Loading size="small" /> : <ThunderboltOutlined />}
-        <span style={{ minWidth: 20, textAlign: 'center', fontWeight: 600 }}>
+        <span className="mt-0.5 flex items-center justify-center">
+          {hasPendingTxs ? (
+            <Loading size="small" />
+          ) : (
+            <ThunderboltOutlined className="text-lg leading-none text-grey-400 dark:text-slate-200" />
+          )}
+        </span>
+        <span
+          className={classNames(
+            'text-grey-black min-w-[20px] text-center font-medium dark:text-slate-100',
+          )}
+        >
           {isExpanded ? <CaretDownOutlined /> : transactions.length}
         </span>
       </div>
 
       {isExpanded && (
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 10,
-            ...listStyle,
-          }}
-        >
+        <div className={classNames('z-10 flex flex-col gap-2', listClassName)}>
           {transactions?.length ? (
             transactions
               .sort((a, b) =>
@@ -89,7 +83,7 @@ export function TransactionsList({
                 ) : null,
               )
           ) : (
-            <div style={{ fontWeight: 600 }}>
+            <div className="font-medium">
               <Trans>No transaction history</Trans>
             </div>
           )}

@@ -20,7 +20,7 @@ export function NftPostPayModalPreviewButton({
         type={'ghost'}
       >
         <Trans>Preview</Trans>
-        <EyeOutlined style={{ marginLeft: 10 }} />
+        <EyeOutlined className="ml-2" />
       </Button>
       <NftPostPayModal
         open={modalVisible}

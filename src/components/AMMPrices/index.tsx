@@ -2,7 +2,6 @@ import { Trans } from '@lingui/macro'
 import { useSushiswapPriceQuery } from 'hooks/ERC20SushiswapPrice'
 import { useUniswapPriceQuery } from 'hooks/ERC20UniswapPrice'
 import { generateAMMLink } from 'lib/amm'
-import { CSSProperties } from 'react'
 
 import TokenAMMPriceRow from './TokenAMMPriceRow'
 
@@ -10,18 +9,12 @@ type Props = {
   mode: 'buy' | 'redeem'
   tokenSymbol: string
   tokenAddress: string
-  style?: CSSProperties
 }
 
 /**
  * Component for rendering a set of AMM Prices.
  */
-export default function AMMPrices({
-  mode,
-  tokenSymbol,
-  tokenAddress,
-  style = {},
-}: Props) {
+export default function AMMPrices({ mode, tokenSymbol, tokenAddress }: Props) {
   const { data: uniswapPriceData, isLoading: uniswapLoading } =
     useUniswapPriceQuery({
       tokenSymbol,
@@ -35,11 +28,12 @@ export default function AMMPrices({
     })
 
   return (
-    <div style={{ ...style }}>
-      <p style={{ fontSize: '0.75rem' }}>
+    <>
+      <p className="text-xs">
         <Trans>Current 3rd Party Exchange Rates</Trans>
       </p>
       <TokenAMMPriceRow
+        className="mb-2"
         exchangeName="Uniswap"
         tokenSymbol={tokenSymbol}
         exchangeLink={generateAMMLink({
@@ -49,7 +43,6 @@ export default function AMMPrices({
         })}
         WETHPrice={uniswapPriceData?.WETHPrice.toFixed(0)}
         loading={uniswapLoading}
-        style={{ marginBottom: '0.5rem' }}
       />
       <TokenAMMPriceRow
         exchangeName="Sushiswap"
@@ -62,6 +55,6 @@ export default function AMMPrices({
         WETHPrice={sushiswapPriceData?.midPrice.toFixed(0)}
         loading={sushiswapLoading}
       />
-    </div>
+    </>
   )
 }

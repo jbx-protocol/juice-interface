@@ -7,41 +7,28 @@ import { ThemeOption } from 'constants/theme/theme-option'
 import { ThemeContext } from 'contexts/themeContext'
 import Image from 'next/image'
 import Link from 'next/link'
-import { CSSProperties, useContext } from 'react'
+import { useContext } from 'react'
 import { reloadWindow, scrollToTop } from 'utils/windowUtils'
 import orangeLadyOd from '/public/assets/orange_lady-od.png'
 import orangeLadyOl from '/public/assets/orange_lady-ol.png'
 
 export default function Footer() {
-  const {
-    theme: { colors },
-    forThemeOption,
-  } = useContext(ThemeContext)
-
-  const footerLinksStyles: CSSProperties = {
-    display: 'flex',
-    flexWrap: 'wrap',
-    rowGap: 10,
-    justifyContent: 'center',
-    marginBottom: 30,
-  }
+  const { forThemeOption } = useContext(ThemeContext)
 
   const link = (text: string, link: string) => {
-    const style = {
-      color: colors.text.action.primary,
-      marginLeft: 10,
-      marginRight: 10,
-    }
     if (link.startsWith('http')) {
       return (
-        <ExternalLink style={style} href={link}>
+        <ExternalLink
+          className="mx-2 text-haze-400 dark:text-haze-300"
+          href={link}
+        >
           {text}
         </ExternalLink>
       )
     }
     return (
       <Link href={link}>
-        <a style={style}>{text}</a>
+        <a className="mx-2 text-haze-400 dark:text-haze-300">{text}</a>
       </Link>
     )
   }
@@ -65,13 +52,7 @@ export default function Footer() {
 
   return (
     <div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          marginBottom: -12,
-        }}
-      >
+      <div className="-mb-3 flex justify-center">
         <Image
           src={forThemeOption?.({
             [ThemeOption.dark]: orangeLadyOd,
@@ -82,34 +63,20 @@ export default function Footer() {
         />
       </div>
 
-      <div
-        style={{
-          background: 'black',
-          padding: 40,
-          textAlign: 'center',
-        }}
-      >
-        <div style={{ fontSize: 20, marginBottom: 20 }}>🧃⚡️</div>
-        <p style={{ color: 'white', margin: 0 }}>
+      <div className="bg-black p-10 text-center">
+        <div className="mb-5 text-xl">🧃⚡️</div>
+        <p className="m-0 text-white">
           <Trans>
             Big ups to the Ethereum community for crafting the infrastructure
             and economy to make Juicebox possible.
           </Trans>
         </p>
       </div>
-      <div
-        style={{
-          display: 'grid',
-          rowGap: 20,
-          padding: 30,
-          background: 'black',
-          textAlign: 'center',
-        }}
-      >
-        <div style={{ ...footerLinksStyles }}>
+      <div className="grid gap-y-5 bg-black p-7 text-center">
+        <div className="mb-7 flex flex-wrap justify-center gap-y-2">
           {Object.keys(Languages).map(languageLink)}
         </div>
-        <div style={{ ...footerLinksStyles }}>
+        <div className="mb-7 flex flex-wrap justify-center gap-y-2">
           {link('Discord', 'https://discord.gg/6jXrJSyDFf')}
           {link('GitHub', 'https://github.com/jbx-protocol/juice-interface')}
           {link('Twitter', 'https://twitter.com/juiceboxETH')}
@@ -118,9 +85,9 @@ export default function Footer() {
         </div>
 
         {gitCommit ? (
-          <span style={{ color: 'white' }}>
+          <span className="text-white">
             Version:{' '}
-            <ExternalLink href={gitCommitLink} style={{ fontSize: '0.8rem' }}>
+            <ExternalLink href={gitCommitLink} className="text-sm">
               #{gitCommit}
             </ExternalLink>
           </span>

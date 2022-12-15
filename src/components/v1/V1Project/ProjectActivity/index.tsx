@@ -10,10 +10,10 @@ import Loading from 'components/Loading'
 import SectionHeader from 'components/SectionHeader'
 import { PV_V1, PV_V1_1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { ThemeContext } from 'contexts/themeContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
 import { PrintReservesEvent } from 'models/subgraph-entities/v1/print-reserves-event'
 import { TapEvent } from 'models/subgraph-entities/v1/tap-event'
+import { V1ConfigureEvent } from 'models/subgraph-entities/v1/v1-configure'
 import { AddToBalanceEvent } from 'models/subgraph-entities/vX/add-to-balance-event'
 import { DeployedERC20Event } from 'models/subgraph-entities/vX/deployed-erc20-event'
 import { PayEvent } from 'models/subgraph-entities/vX/pay-event'
@@ -22,8 +22,10 @@ import { ProjectEvent } from 'models/subgraph-entities/vX/project-event'
 import { RedeemEvent } from 'models/subgraph-entities/vX/redeem-event'
 import { useContext, useMemo, useState } from 'react'
 import { WhereConfig } from 'utils/graph'
+
 import ReservesEventElem from './eventElems/ReservesEventElem'
 import TapEventElem from './eventElems/TapEventElem'
+import V1ConfigureEventElem from './eventElems/V1ConfigureEventElem'
 import { V1DownloadActivityModal } from './V1DownloadActivityModal'
 
 type EventFilter =
@@ -35,14 +37,12 @@ type EventFilter =
   | 'printReserves'
   | 'deployERC20'
   | 'projectCreate'
+  | 'configure'
 // | 'mintTokens' TODO
 
 const pageSize = 50
 
 export default function ProjectActivity() {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
@@ -95,6 +95,9 @@ export default function ProjectActivity() {
         break
       case 'withdraw':
         key = 'tapEvent'
+        break
+      case 'configure':
+        key = 'v1ConfigureEvent'
         break
       // TODO
       // case 'mintTokens':
@@ -175,6 +178,24 @@ export default function ProjectActivity() {
         entity: 'projectCreateEvent',
         keys: ['id', 'txHash', 'timestamp', 'caller'],
       },
+      {
+        entity: 'v1ConfigureEvent',
+        keys: [
+          'id',
+          'timestamp',
+          'txHash',
+          'caller',
+          'ballot',
+          'discountRate',
+          'duration',
+          'target',
+          'bondingCurveRate',
+          'reservedRate',
+          'currency',
+          'ticketPrintingIsAllowed',
+          'payIsPaused',
+        ],
+      },
     ],
     orderDirection: 'desc',
     orderBy: 'timestamp',
@@ -227,24 +248,27 @@ export default function ProjectActivity() {
               />
             )
           }
+          if (e.v1ConfigureEvent) {
+            elem = (
+              <V1ConfigureEventElem
+                event={e.v1ConfigureEvent as V1ConfigureEvent}
+              />
+            )
+          }
 
           if (!elem) return null
 
           return (
             <div
+              className="mb-5 border-x-0 border-t-0 border-b border-solid border-smoke-200 pb-5 dark:border-grey-600"
               key={e.id}
-              style={{
-                marginBottom: 20,
-                paddingBottom: 20,
-                borderBottom: '1px solid ' + colors.stroke.tertiary,
-              }}
             >
               {elem}
             </div>
           )
         }),
       ),
-    [colors, projectEvents],
+    [projectEvents],
   )
 
   const listStatus = useMemo(() => {
@@ -258,13 +282,7 @@ export default function ProjectActivity() {
 
     if (count === 0 && !isLoading) {
       return (
-        <div
-          style={{
-            color: colors.text.secondary,
-            paddingTop: 20,
-            borderTop: '1px solid ' + colors.stroke.tertiary,
-          }}
-        >
+        <div className="border-x-0 border-b-0 border-t border-solid border-smoke-200 pt-5 text-grey-500 dark:border-grey-600 dark:text-grey-300">
           <Trans>No activity yet</Trans>
         </div>
       )
@@ -273,11 +291,7 @@ export default function ProjectActivity() {
     if (hasNextPage) {
       return (
         <div
-          style={{
-            textAlign: 'center',
-            color: colors.text.secondary,
-            cursor: 'pointer',
-          }}
+          className="cursor-pointer text-center text-grey-500 dark:text-grey-300"
           onClick={() => fetchNextPage()}
         >
           <Trans>Load more</Trans>
@@ -286,29 +300,16 @@ export default function ProjectActivity() {
     }
 
     return (
-      <div
-        style={{
-          textAlign: 'center',
-          padding: 10,
-          color: colors.text.secondary,
-        }}
-      >
+      <div className="p-2 text-center text-grey-500 dark:text-grey-300">
         <Trans>{count} total</Trans>
       </div>
     )
-  }, [isLoading, isFetchingNextPage, hasNextPage, fetchNextPage, colors, count])
+  }, [isLoading, isFetchingNextPage, hasNextPage, fetchNextPage, count])
 
   return (
     <div>
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'baseline',
-          justifyContent: 'space-between',
-          marginBottom: 20,
-        }}
-      >
-        <SectionHeader text={t`Activity`} style={{ margin: 0 }} />
+      <div className="mb-5 flex items-baseline justify-between">
+        <SectionHeader className="m-0" text={t`Activity`} />
 
         <Space direction="horizontal" align="center" size="small">
           {count > 0 && (
@@ -320,10 +321,7 @@ export default function ProjectActivity() {
           )}
 
           <Select
-            className="small"
-            style={{
-              width: 200,
-            }}
+            className="small w-48"
             value={eventFilter}
             onChange={val => setEventFilter(val)}
           >
@@ -332,9 +330,6 @@ export default function ProjectActivity() {
             </Select.Option>
             <Select.Option value="pay">
               <Trans>Paid</Trans>
-            </Select.Option>
-            <Select.Option value="addToBalance">
-              <Trans>Added to balance</Trans>
             </Select.Option>
             {/* TODO */}
             {/* <Select.Option value="mintTokens">
@@ -349,11 +344,17 @@ export default function ProjectActivity() {
             <Select.Option value="printReserves">
               <Trans>Distributed reserves</Trans>
             </Select.Option>
+            <Select.Option value="configure">
+              <Trans>Configured FC</Trans>
+            </Select.Option>
             <Select.Option value="deployERC20">
               <Trans>ERC20 Deployed</Trans>
             </Select.Option>
             <Select.Option value="projectCreate">
               <Trans>Project created</Trans>
+            </Select.Option>
+            <Select.Option value="addToBalance">
+              <Trans>Added to balance</Trans>
             </Select.Option>
           </Select>
         </Space>

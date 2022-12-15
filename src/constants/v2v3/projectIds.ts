@@ -1,5 +1,3 @@
-import { NetworkName } from 'models/network-name'
-
 export const V2V3_PROJECT_IDS = {
   JUICEBOX_DAO: 1,
   MOON_MARS: 4,
@@ -12,15 +10,5 @@ export const V2V3_PROJECT_IDS = {
   FALLEN_DAO: 103,
   WEB3_COOL_KIDS: 112,
   SCHIZO_DAO: 209,
-}
-
-export const V2V3_PROJECT_IDS_NETWORK: {
-  [k in NetworkName]?: { [k: string]: number }
-} = {
-  [NetworkName.goerli]: {
-    DEFIFA: 117,
-  },
-  [NetworkName.mainnet]: {
-    DEFIFA: 305,
-  },
+  CDAO2: 350,
 }

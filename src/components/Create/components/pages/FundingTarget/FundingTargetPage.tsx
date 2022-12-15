@@ -2,6 +2,7 @@ import { QuestionCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
+import { Callout } from 'components/Callout'
 import { useLockPageRulesWrapper } from 'components/Create/hooks/useLockPageRulesWrapper'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
@@ -9,7 +10,6 @@ import { FormItemInput } from 'models/formItemInput'
 import { FundingTargetType } from 'models/fundingTargetType'
 import { useContext, useEffect } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
-import { CreateCallout } from '../../CreateCallout'
 import { Icons } from '../../Icons'
 import { Selection } from '../../Selection'
 import { Wizard } from '../../Wizard'
@@ -147,7 +147,5 @@ const TargetCallout = ({ selection }: { selection: FundingTargetType }) => {
       calloutText = t`Your Funding Target can be changed in future funding cycles. Payouts denominated in USD are paid out in ETH at the current exchange rate.`
       break
   }
-  return calloutText ? (
-    <CreateCallout.Info>{calloutText}</CreateCallout.Info>
-  ) : null
+  return calloutText ? <Callout.Info>{calloutText}</Callout.Info> : null
 }

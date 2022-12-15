@@ -1,18 +1,18 @@
 import { LinkOutlined } from '@ant-design/icons'
-import { CSSProperties, MouseEventHandler } from 'react'
-import { truncateEthAddress } from 'utils/format/formatAddress'
-
+import { MouseEventHandler } from 'react'
+import { twMerge } from 'tailwind-merge'
 import { etherscanLink } from 'utils/etherscan'
+import { truncateEthAddress } from 'utils/format/formatAddress'
 import ExternalLink from './ExternalLink'
 
 const EtherscanLink: React.FC<{
+  className?: string
   value: string | undefined
   type: 'tx' | 'address'
   truncated?: boolean
   truncateTo?: number
-  style?: CSSProperties
   onClick?: MouseEventHandler
-}> = ({ value, type, truncated, truncateTo, style, children, onClick }) => {
+}> = ({ className, value, type, truncated, truncateTo, children, onClick }) => {
   if (!value) return null
   let truncatedValue: string | undefined
   // Return first and last 4 chars of ETH address only
@@ -20,23 +20,30 @@ const EtherscanLink: React.FC<{
     truncatedValue = truncateEthAddress({ address: value, truncateTo })
   }
 
-  const linkProps = {
-    className:
-      'hover-text-action-primary hover-text-decoration-underline color-unset',
-    style: { ...style },
-    href: etherscanLink(type, value),
-  }
-
   if (type === 'tx') {
     return (
-      <ExternalLink onClick={onClick} {...linkProps}>
+      <ExternalLink
+        className={twMerge(
+          'text-grey-900 hover:text-haze-400 hover:underline dark:text-slate-100',
+          className,
+        )}
+        href={etherscanLink(type, value)}
+        onClick={onClick}
+      >
         {children} <LinkOutlined />
       </ExternalLink>
     )
   }
 
   return (
-    <ExternalLink onClick={onClick} {...linkProps}>
+    <ExternalLink
+      className={twMerge(
+        'text-grey-900 hover:text-haze-400 hover:underline dark:text-slate-100',
+        className,
+      )}
+      href={etherscanLink(type, value)}
+      onClick={onClick}
+    >
       {children ?? truncatedValue ?? value}
     </ExternalLink>
   )

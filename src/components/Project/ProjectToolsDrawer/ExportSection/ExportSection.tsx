@@ -1,9 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Space } from 'antd'
 
-import { ThemeContext } from 'contexts/themeContext'
-import { useContext } from 'react'
-
 export function ExportSection({
   exportPayoutsButton,
   exportReservedTokensButton,
@@ -11,10 +8,6 @@ export function ExportSection({
   exportPayoutsButton: JSX.Element | undefined
   exportReservedTokensButton: JSX.Element | undefined
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   return (
     <section>
       <h3>
@@ -23,7 +16,7 @@ export function ExportSection({
       <Space direction="vertical" size="large">
         {exportPayoutsButton && (
           <div>
-            <h4 style={{ color: colors.text.primary }}>
+            <h4 className="text-black dark:text-slate-100">
               <Trans>Payouts</Trans>
             </h4>
             <p>
@@ -35,7 +28,7 @@ export function ExportSection({
 
         {exportReservedTokensButton && (
           <div>
-            <h4 style={{ color: colors.text.primary }}>
+            <h4 className="text-black dark:text-slate-100">
               <Trans>Reserved token allocation</Trans>
             </h4>
             <p>

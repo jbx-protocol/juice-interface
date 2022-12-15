@@ -33,11 +33,9 @@ export default function AdvancedOptionsCollapse({
   const [customBeneficiaryEnabled, setCustomBeneficiaryEnabled] =
     useState<boolean>(Boolean(form.getFieldValue('customBeneficiaryAddress')))
 
-  const switchMargin = '1rem'
-
   return (
     <MinimalCollapse header={<Trans>Advanced (optional)</Trans>}>
-      <Space size="middle" direction="vertical" style={{ width: '100%' }}>
+      <Space size="middle" direction="vertical" className="w-full">
         <Form form={form} initialValues={defaultAdvancedOptions}>
           <div>
             <TooltipLabel
@@ -51,17 +49,13 @@ export default function AdvancedOptionsCollapse({
               }
             />
             <Form.Item name={'memo'}>
-              <Input
-                type="string"
-                autoComplete="off"
-                style={{ marginTop: 5 }}
-              />
+              <Input type="string" autoComplete="off" className="mt-1" />
             </Form.Item>
             <Form.Item name={'memoImageUrl'}>
               <FormImageUploader text={t`Add image`} />
             </Form.Item>
           </div>
-          <div style={{ display: 'flex' }}>
+          <div className="flex">
             <TooltipLabel
               label={t`Token minting enabled`}
               tip={t`Determines whether tokens will be minted from payments to this address.`}
@@ -71,16 +65,16 @@ export default function AdvancedOptionsCollapse({
               initialValue={tokenMintingEnabled}
             >
               <Switch
+                className="ml-4"
                 onChange={setTokenMintingEnabled}
                 checked={tokenMintingEnabled}
-                style={{ marginLeft: switchMargin }}
               />
             </Form.Item>
           </div>
           {tokenMintingEnabled &&
           tokenAddress &&
           tokenAddress !== constants.AddressZero ? (
-            <div style={{ display: 'flex' }}>
+            <div className="flex">
               <TooltipLabel
                 label={t`Mint tokens as ERC-20`}
                 tip={
@@ -94,18 +88,13 @@ export default function AdvancedOptionsCollapse({
                 }
               />
               <Form.Item name={'preferClaimed'} valuePropName="checked">
-                <Switch style={{ marginLeft: switchMargin }} />
+                <Switch className="ml-4" />
               </Form.Item>
             </div>
           ) : null}
 
           {tokenMintingEnabled ? (
-            <div
-              style={{
-                display: 'flex',
-                marginBottom: '10px',
-              }}
-            >
+            <div className="mb-2 flex">
               <TooltipLabel
                 label={t`Custom token beneficiary`}
                 tip={
@@ -117,6 +106,7 @@ export default function AdvancedOptionsCollapse({
                 }
               />
               <Switch
+                className="ml-4"
                 onChange={checked => {
                   setCustomBeneficiaryEnabled(checked)
                   if (!checked) {
@@ -124,7 +114,6 @@ export default function AdvancedOptionsCollapse({
                   }
                 }}
                 checked={customBeneficiaryEnabled}
-                style={{ marginLeft: switchMargin }}
               />
             </div>
           ) : null}

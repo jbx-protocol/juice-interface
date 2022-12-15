@@ -8,7 +8,6 @@ import FundingProgressBar from 'components/Project/FundingProgressBar'
 import StatLine from 'components/Project/StatLine'
 import TooltipLabel from 'components/TooltipLabel'
 import V1ProjectTokenBalance from 'components/v1/shared/V1ProjectTokenBalance'
-import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useEthBalanceQuery } from 'hooks/EthBalance'
@@ -16,22 +15,17 @@ import { NetworkName } from 'models/network-name'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useState } from 'react'
 import { hasFundingTarget } from 'utils/v1/fundingCycle'
-
 import { V1CurrencyName } from 'utils/v1/currency'
-
 import { VolumeStatLine } from 'components/Project/VolumeStatLine'
-
 import { readNetwork } from 'constants/networks'
-import { textPrimary, textSecondary } from 'constants/styles/text'
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V1BalancesModal } from './modals/V1BalancesModal'
+import { classNames } from 'utils/classNames'
 
 export function TreasuryStatsSection() {
   const [balancesModalVisible, setBalancesModalVisible] = useState<boolean>()
-  const { theme } = useContext(ThemeContext)
-  const { colors } = theme
 
   const { currentFC, balanceInCurrency, balance, owner, earned, overflow } =
     useContext(V1ProjectContext)
@@ -46,12 +40,7 @@ export function TreasuryStatsSection() {
     'ETH',
   )
 
-  const secondaryTextStyle = textSecondary(theme)
-
   if (!currentFC) return null
-
-  const spacing =
-    hasFundingTarget(currentFC) && currentFC.target.gt(0) ? 15 : 10
 
   const formatCurrencyAmount = (amt: BigNumber | undefined) => {
     if (!amt) return null
@@ -75,12 +64,15 @@ export function TreasuryStatsSection() {
     <>
       <VolumeStatLine
         totalVolume={earned}
-        color={
-          isConstitutionDAO ? colors.text.brand.primary : colors.text.primary
-        }
         convertToCurrency={isConstitutionDAO ? 'USD' : undefined}
       />
-      <div style={{ marginTop: spacing, marginBottom: spacing }}>
+      <div
+        className={classNames(
+          hasFundingTarget(currentFC) && currentFC.target.gt(0)
+            ? 'my-4'
+            : 'my-2',
+        )}
+      >
         <StatLine
           statLabel={<Trans>In Juicebox</Trans>}
           statLabelTip={
@@ -88,16 +80,16 @@ export function TreasuryStatsSection() {
           }
           statValue={
             <div
-              style={{
-                ...textPrimary,
-                color: isConstitutionDAO
-                  ? colors.text.primary
-                  : colors.text.brand.primary,
-                marginLeft: 10,
-              }}
+              className={classNames(
+                'ml-2 text-lg font-medium',
+                // TODO: Bespoke styles for the constitution DAO - should we remove?
+                isConstitutionDAO
+                  ? 'text-black dark:text-slate-100'
+                  : 'text-juice-400 dark:text-juice-300',
+              )}
             >
               {currentFC.currency.eq(V1_CURRENCY_USD) ? (
-                <span style={secondaryTextStyle}>
+                <span className="text-sm font-medium uppercase text-grey-400 dark:text-grey-300">
                   <ETHAmount amount={balance} precision={2} padEnd={true} />{' '}
                 </span>
               ) : (
@@ -122,24 +114,14 @@ export function TreasuryStatsSection() {
                 </Trans>
               }
               statValue={
-                <div
-                  style={{
-                    ...secondaryTextStyle,
-                    color: colors.text.primary,
-                  }}
-                >
+                <div className="text-sm font-medium uppercase text-black dark:text-slate-100">
                   {formatCurrencyAmount(currentFC.tapped)} /{' '}
                   {formatCurrencyAmount(currentFC.target)}
                 </div>
               }
             />
           ) : (
-            <div
-              style={{
-                ...secondaryTextStyle,
-                textAlign: 'right',
-              }}
-            >
+            <div className="text-right text-sm font-medium uppercase text-grey-400 dark:text-slate-200">
               <TooltipLabel
                 tip={
                   <Trans>
@@ -174,29 +156,25 @@ export function TreasuryStatsSection() {
         }
         statValue={
           <span>
-            <span style={secondaryTextStyle}>
+            <span className="text-sm font-medium uppercase text-grey-400 dark:text-grey-300">
               <V1ProjectTokenBalance
-                style={{ display: 'inline-block' }}
+                className="inline-block"
                 wallet={owner}
                 projectId={V1_PROJECT_IDS.JUICEBOX_DAO}
                 hideHandle
               />{' '}
               +{' '}
             </span>
-            <span style={textPrimary}>
+            <span className="text-lg font-medium">
               <ETHAmount amount={ownerBalance} precision={2} padEnd={true} />
             </span>
           </span>
         }
       />
 
-      <div
-        style={{
-          textAlign: 'right',
-        }}
-      >
+      <div className="text-right">
         <span
-          style={{ ...secondaryTextStyle, cursor: 'pointer' }}
+          className="cursor-pointer text-sm font-medium uppercase text-grey-400 dark:text-grey-300"
           onClick={() => setBalancesModalVisible(true)}
           role="button"
         >

@@ -4,10 +4,8 @@ import ExternalLink from 'components/ExternalLink'
 import { ItemNoInput } from 'components/formItems/ItemNoInput'
 import FormItemWarningText from 'components/FormItemWarningText'
 import SwitchHeading from 'components/SwitchHeading'
-import { shadowCard } from 'constants/styles/shadowCard'
 import { DurationUnitsOption } from 'constants/time'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
-import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
@@ -59,10 +57,6 @@ export function FundingForm({
   onFinish: VoidFunction
   isCreate?: boolean // Instance of FundingForm in create flow
 }) {
-  const {
-    theme,
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { contracts } = useContext(V2V3ContractsContext)
   const { payoutSplits } = useContext(V2V3ProjectContext)
 
@@ -291,14 +285,11 @@ export function FundingForm({
       onFinish={onFundingFormSave}
     >
       <div
-        style={{
-          padding: '2rem',
-          marginBottom: 10,
-          ...shadowCard(theme),
-          color: colors.text.primary,
-        }}
+        className="mb-2 rounded-sm bg-smoke-75 stroke-none
+        p-8 text-black shadow-[10px_10px_0px_0px_#E7E3DC] dark:bg-slate-400 dark:text-slate-100 dark:shadow-[10px_10px_0px_0px_#2D293A]"
       >
         <SwitchHeading
+          className="mb-4"
           checked={durationEnabled}
           onChange={checked => {
             setDurationEnabled(checked)
@@ -312,7 +303,6 @@ export function FundingForm({
               })
             }
           }}
-          style={{ marginBottom: '1rem' }}
         >
           <Trans>Automate funding cycles</Trans>
         </SwitchHeading>
@@ -340,15 +330,8 @@ export function FundingForm({
         </div>
       </div>
 
-      <div
-        style={{
-          padding: '2rem',
-          marginBottom: 10,
-          ...shadowCard(theme),
-          color: colors.text.primary,
-        }}
-      >
-        <h3 style={{ color: colors.text.primary }}>
+      <div className="mb-2 rounded-sm bg-smoke-75 stroke-none p-8 text-black shadow-[10px_10px_0px_0px_#E7E3DC] dark:bg-slate-400 dark:text-slate-100 dark:shadow-[10px_10px_0px_0px_#2D293A]">
+        <h3 className="text-black dark:text-slate-100">
           <Trans>Payouts</Trans>
         </h3>
 
@@ -378,7 +361,7 @@ export function FundingForm({
         />
       </div>
 
-      <Form.Item style={{ marginTop: '2rem' }}>
+      <Form.Item className="mt-8">
         <Button htmlType="submit" type="primary">
           <Trans>Save funding configuration</Trans>
         </Button>

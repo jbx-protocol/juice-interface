@@ -1,10 +1,15 @@
 import { CrownFilled, LockOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Tooltip } from 'antd'
+import { Space, Tooltip } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
 import TooltipLabel from 'components/TooltipLabel'
-import { ThemeContext } from 'contexts/themeContext'
+import { AllocatorBadge } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/AllocatorBadge'
+import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
+import {
+  NULL_ALLOCATOR_ADDRESS,
+  V1_V3_ALLOCATOR_ADDRESS,
+} from 'constants/contracts/mainnet/Allocators'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { useContext } from 'react'
@@ -19,44 +24,37 @@ export default function Mod({
   mod: PayoutMod | TicketMod | undefined
   value: string | JSX.Element
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { owner } = useContext(V1ProjectContext)
 
   if (!mod) return null
 
+  const _mod = mod as PayoutMod
+  const projectId = _mod.projectId as BigNumber
+  const allocator = _mod.allocator
+
+  const isV1Project = projectId && allocator === NULL_ALLOCATOR_ADDRESS
+  const isV3Project = projectId && allocator === V1_V3_ALLOCATOR_ADDRESS
+
   return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'baseline',
-        justifyContent: 'space-between',
-        marginBottom: 5,
-      }}
-    >
-      <div style={{ lineHeight: 1.4 }}>
-        <div style={{ display: 'flex', alignItems: 'baseline' }}>
-          {(mod as PayoutMod).projectId &&
-          BigNumber.from((mod as PayoutMod).projectId).gt(0) ? (
+    <div className="mb-1 flex items-baseline justify-between">
+      <div className="leading-6">
+        <div className="flex items-baseline">
+          {projectId?.gt(0) ? (
             <div>
-              <div style={{ fontWeight: 500 }}>
-                {(mod as PayoutMod).projectId ? (
-                  <V1ProjectHandle
-                    projectId={(mod as PayoutMod).projectId as BigNumber}
-                  />
+              <div className="font-medium">
+                {isV1Project ? (
+                  <V1ProjectHandle projectId={projectId} />
+                ) : isV3Project ? (
+                  <Space size="middle">
+                    <V2V3ProjectHandleLink projectId={projectId.toNumber()} />
+                    <AllocatorBadge allocator={allocator} />
+                  </Space>
                 ) : (
                   '--'
                 )}
                 :
               </div>
-              <div
-                style={{
-                  fontSize: '.8rem',
-                  color: colors.text.secondary,
-                  marginLeft: 10,
-                }}
-              >
+              <div className="ml-2 text-sm text-grey-500 dark:text-grey-300">
                 <TooltipLabel
                   label={t`Tokens` + ':'}
                   tip={t`This address will receive any tokens minted when the recipient project gets paid.`}
@@ -70,16 +68,10 @@ export default function Mod({
               </div>
             </div>
           ) : (
-            <div
-              style={{
-                fontWeight: 500,
-                display: 'flex',
-                alignItems: 'baseline',
-              }}
-            >
+            <div className="flex items-baseline font-medium">
               <FormattedAddress address={mod.beneficiary} />
               {owner === mod.beneficiary && (
-                <span style={{ marginLeft: 5 }}>
+                <span className="ml-1">
                   <Tooltip title={t`Project owner`}>
                     <CrownFilled />
                   </Tooltip>
@@ -90,7 +82,7 @@ export default function Mod({
           )}
         </div>
         {mod.lockedUntil ? (
-          <div style={{ fontSize: '.8rem', color: colors.text.secondary }}>
+          <div className="text-sm text-grey-500 dark:text-grey-300">
             <LockOutlined /> <Trans>until</Trans>{' '}
             {mod.lockedUntil
               ? formatDate(mod.lockedUntil * 1000, 'yyyy-MM-DD')

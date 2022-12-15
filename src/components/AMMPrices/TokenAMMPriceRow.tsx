@@ -4,7 +4,7 @@ import { Tooltip } from 'antd'
 import SushiswapLogo from 'components/icons/Sushiswap'
 import UniswapLogo from 'components/icons/Uniswap'
 import { ONE_TRILLION } from 'constants/numbers'
-import { CSSProperties } from 'react'
+import { classNames } from 'utils/classNames'
 import { formatOrTruncate } from 'utils/format/formatNumber'
 
 import ExternalLink from '../ExternalLink'
@@ -19,12 +19,12 @@ const LOGOS = {
 }
 
 type Props = {
+  className?: string
   exchangeName: ExchangeName
   tokenSymbol: string
   exchangeLink?: string
   WETHPrice?: string
   loading?: boolean
-  style?: CSSProperties
 }
 
 const fontStyle = {
@@ -33,12 +33,12 @@ const fontStyle = {
 }
 
 export default function TokenAMMPriceRow({
+  className,
   exchangeName,
   tokenSymbol,
   exchangeLink,
   WETHPrice,
   loading,
-  style,
 }: Props) {
   const LogoComponent = LOGOS[exchangeName]
 
@@ -49,9 +49,9 @@ export default function TokenAMMPriceRow({
 
     return (
       <Tooltip title={tooltip} overlayInnerStyle={{ ...fontStyle }}>
-        <span style={{ cursor: 'default' }}>
+        <span className="cursor-default">
           {!WETHPrice ? <Trans>Unavailable</Trans> : null}
-          <TooltipIcon iconStyle={{ marginLeft: '0.2rem' }} />
+          <TooltipIcon iconClassName="ml-1" />
         </span>
       </Tooltip>
     )
@@ -67,16 +67,13 @@ export default function TokenAMMPriceRow({
 
   return (
     <div
-      style={{
-        ...fontStyle,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        ...style,
-      }}
+      className={classNames(
+        'flex items-center justify-between text-xs font-normal',
+        className,
+      )}
     >
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <span style={{ marginRight: '0.5rem', width: '1rem' }}>
+      <div className="flex items-center">
+        <span className="mr-2 w-4">
           <LogoComponent size={15} />
         </span>
         {exchangeName}
@@ -89,7 +86,7 @@ export default function TokenAMMPriceRow({
             title={t`${tokenSymbol}/ETH exchange rate on ${exchangeName}.`}
             overlayInnerStyle={{ ...fontStyle }}
           >
-            <ExternalLink href={exchangeLink} style={{ fontWeight: 400 }}>
+            <ExternalLink className="font-normal" href={exchangeLink}>
               {`${formatPrice(WETHPrice)} ${tokenSymbol}/1 ETH`}
             </ExternalLink>
           </Tooltip>

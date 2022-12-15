@@ -1,21 +1,14 @@
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
 import { CV_V2, CV_V3 } from 'constants/cv'
-import { ThemeContext } from 'contexts/themeContext'
 import { SafeTransactionType } from 'models/safe'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { CV2V3 } from 'models/v2v3/cv'
 import Link from 'next/link'
-import { CSSProperties, useContext, useState } from 'react'
+import { useState } from 'react'
+import { classNames } from 'utils/classNames'
 import { formatHistoricalDate } from 'utils/format/formatDate'
 import { TransactionSigStatus } from './TransactionSigStatus'
-
-const headerRowStyle: CSSProperties = {
-  display: 'flex',
-  width: '100%',
-  alignItems: 'center',
-  padding: '1rem',
-}
 
 export function TransactionCollapse({
   transaction,
@@ -32,9 +25,6 @@ export function TransactionCollapse({
   cv?: CV2V3 | V1TerminalVersion
   expandedContent?: JSX.Element
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const transactionTitle =
     title ?? transaction?.dataDecoded?.method ?? 'Send funds' // transactions with no data are 'Send' txs
 
@@ -54,52 +44,38 @@ export function TransactionCollapse({
       break
   }
 
-  const collapseStyle: CSSProperties = {
-    color: colors.text.primary,
-    borderTop: 'unset',
-    borderRight: 'unset',
-    borderLeft: 'unset',
-    cursor: 'pointer',
-  }
-
   return (
-    <div style={collapseStyle} id={`${transaction.safeTxHash}`}>
+    <div
+      className="cursor-pointer border-t-0 border-r-0 border-l-0 text-black dark:text-slate-100"
+      id={`${transaction.safeTxHash}`}
+    >
       <div
-        style={headerRowStyle}
-        className="hover-bg-l2"
+        className="flex w-full items-center p-4 hover:bg-smoke-75 dark:hover:bg-slate-400"
         onClick={() => {
           setExpanded(!expanded)
         }}
       >
         <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            width: '100%',
-            minHeight: '1.8rem', // account for possibility of version badge
-          }}
+          className={classNames(
+            'flex w-full justify-between',
+            'min-h-[1.8rem]', // account for possibility of version badge
+          )}
         >
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div className="flex items-center">
             <Link href={`#${transaction.safeTxHash}`}>
-              <a className="text-primary hover-text-decoration-underline">
+              <a className="text-black hover:text-haze-400 hover:underline dark:text-grey-100 dark:hover:text-haze-400">
                 {transactionTitle}
               </a>
             </Link>
             {versionText ? (
-              <ProjectVersionBadge
-                versionText={versionText}
-                style={{ marginLeft: '00.75rem' }}
-              />
+              <ProjectVersionBadge className="ml-3" versionText={versionText} />
             ) : null}
           </div>
           <div
-            style={{
-              width: '200px',
-              color: colors.text.tertiary,
-              display: 'flex',
-              justifyContent: isPastTransaction ? 'flex-end' : 'space-between',
-              alignItems: 'center',
-            }}
+            className={classNames(
+              'flex w-52 items-center text-grey-400 dark:text-slate-200',
+              isPastTransaction ? 'justify-end' : 'justify-between',
+            )}
           >
             {isPastTransaction ? null : (
               <TransactionSigStatus transaction={transaction} />
@@ -109,13 +85,11 @@ export function TransactionCollapse({
             )}
           </div>
         </div>
-        <div style={{ marginLeft: 10, color: colors.text.tertiary }}>
+        <div className="ml-2 text-grey-400 dark:text-slate-200">
           {expanded ? <UpOutlined /> : <DownOutlined />}
         </div>
       </div>
-      {expanded ? (
-        <div style={{ paddingBottom: '1rem' }}>{expandedContent}</div>
-      ) : null}
+      {expanded ? <div className="pb-4">{expandedContent}</div> : null}
     </div>
   )
 }

@@ -9,6 +9,7 @@ import { WAD_DECIMALS } from 'constants/numbers'
 import { V2V3_PROJECT_IDS } from 'constants/v2v3/projectIds'
 import { defaultAbiCoder, parseEther } from 'ethers/lib/utils'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/NftRewards'
+import { round } from 'lodash'
 import {
   IpfsNftCollectionMetadata,
   IPFSNftRewardTier,
@@ -310,9 +311,9 @@ export function sumTierFloors(rewardTiers: NftRewardTier[], ids?: number[]) {
   if (ids) {
     rewardTiers = rewardTiers.filter(tier => ids.includes(tier.id ?? -1))
   }
-  return rewardTiers.reduce(
-    (subSum, tier) => subSum + tier.contributionFloor,
-    0,
+  return round(
+    rewardTiers.reduce((subSum, tier) => subSum + tier.contributionFloor, 0),
+    6,
   )
 }
 

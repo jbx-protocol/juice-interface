@@ -1,5 +1,5 @@
 import { CheckOutlined, LoadingOutlined } from '@ant-design/icons'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Skeleton, Tooltip } from 'antd'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { NftRewardTier } from 'models/nftRewardTier'
@@ -10,6 +10,8 @@ import { ipfsToHttps } from 'utils/ipfs'
 import { payMetadataOverrides } from 'utils/nftRewards'
 import { NftPreview } from './NftPreview'
 
+const MAX_REMAINING_SUPPLY = 10000
+
 // The clickable cards on the project page
 export function NftTierCard({
   loading,
@@ -19,7 +21,7 @@ export function NftTierCard({
   onClick,
   onRemove,
   previewDisabled,
-  hidePrice,
+  hideAttributes,
 }: {
   rewardTier?: NftRewardTier
   rewardTierUpperLimit?: number
@@ -28,7 +30,7 @@ export function NftTierCard({
   onClick?: MouseEventHandler<HTMLDivElement>
   onRemove?: () => void
   previewDisabled?: boolean
-  hidePrice?: boolean
+  hideAttributes?: boolean
 }) {
   const [previewVisible, setPreviewVisible] = useState<boolean>(false)
 
@@ -44,7 +46,7 @@ export function NftTierCard({
     return (
       <Tooltip
         title={
-          !hidePrice ? (
+          !hideAttributes ? (
             <span className="text-xs">
               {payMetadataOverrides(projectId ?? 0).dontOverspend ? (
                 <Trans>
@@ -85,6 +87,12 @@ export function NftTierCard({
       </Tooltip>
     )
   }
+
+  const remainingSupply =
+    rewardTier?.remainingSupply &&
+    rewardTier.remainingSupply < MAX_REMAINING_SUPPLY
+      ? rewardTier?.remainingSupply
+      : t`Unlimited`
 
   return (
     <>
@@ -165,18 +173,34 @@ export function NftTierCard({
               {rewardTier?.name}
             </span>
           </Skeleton>
-          {!hidePrice ? (
-            <Skeleton
-              className="mt-1"
-              loading={loading}
-              active
-              title={false}
-              paragraph={{ rows: 1, width: ['50%'] }}
-            >
-              <span className="text-xs text-grey-900 dark:text-slate-50">
-                {rewardTier?.contributionFloor} ETH
-              </span>
-            </Skeleton>
+          {!hideAttributes ? (
+            <>
+              <Skeleton
+                className="mt-1"
+                loading={loading}
+                active
+                title={false}
+                paragraph={{ rows: 1, width: ['50%'] }}
+              >
+                <span className="text-xs text-grey-900 dark:text-slate-50">
+                  {rewardTier?.contributionFloor} ETH
+                </span>
+              </Skeleton>
+              <Skeleton
+                className="pt-5"
+                loading={loading}
+                active
+                title={false}
+                paragraph={{ rows: 1, width: ['50%'] }}
+              >
+                <span
+                  className="mt-2 text-grey-500"
+                  style={{ fontSize: '0.6rem' }}
+                >
+                  <Trans>REMAINING: {remainingSupply}</Trans>
+                </span>
+              </Skeleton>
+            </>
           ) : null}
         </div>
       </div>

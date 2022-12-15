@@ -63,7 +63,7 @@ export function RedeemNftCard({
       isSelected={isSelected}
       loading={loading}
       previewDisabled
-      hidePrice
+      hideAttributes
     />
   )
 }

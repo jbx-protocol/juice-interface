@@ -13,7 +13,7 @@ import { FundingCycleRiskFlags } from 'constants/fundingWarningText'
 import { MaxUint54 } from 'constants/numbers'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 import {
-  computePaymentIssuanceRate,
+  computeIssuanceRate,
   formatDiscountRate,
   formatIssuanceRate,
   issuanceRateFrom,
@@ -85,9 +85,10 @@ export const getUnsafeV2V3FundingCycleProperties = (
     fromWad(fundingCycleMetadata.reservedRate),
   )
   const allowMinting = Boolean(fundingCycleMetadata.allowMinting)
-  const paymentIssuanceRate = computePaymentIssuanceRate(
+  const paymentIssuanceRate = computeIssuanceRate(
     fundingCycle,
     fundingCycleMetadata,
+    'payer',
   )
 
   return unsafeFundingCycleProperties({

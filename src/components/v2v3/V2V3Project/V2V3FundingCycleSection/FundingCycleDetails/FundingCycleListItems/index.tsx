@@ -7,10 +7,10 @@ import { V2V3FundingCycle } from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
 import { formatDate, formatDateToUTC } from 'utils/format/formatDate'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
-import { DISTRIBUTION_LIMIT_EXPLANATION } from '../settingExplanations'
-import { FundingCycleListItem } from './FundingCycleListItem'
-import { DistributionLimitValue } from './values/DistributionLimitValue'
-import { DurationValue } from './values/DurationValue'
+import { DISTRIBUTION_LIMIT_EXPLANATION } from '../../settingExplanations'
+import { FundingCycleListItem } from '../FundingCycleListItem'
+import { DistributionLimitValue } from './DistributionLimitValue'
+import { DurationValue } from './DurationValue'
 
 export function FundingCycleListItems({
   fundingCycle,

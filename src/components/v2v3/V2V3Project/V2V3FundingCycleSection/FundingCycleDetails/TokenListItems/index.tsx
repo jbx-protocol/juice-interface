@@ -10,8 +10,8 @@ import {
   REDEMPTION_RATE_EXPLANATION,
   RESERVED_RATE_EXPLAINATION,
   RESERVED_TOKENS_EXPLAINATION,
-} from '../settingExplanations'
-import { FundingCycleListItem } from './FundingCycleListItem'
+} from '../../settingExplanations'
+import { FundingCycleListItem } from '../FundingCycleListItem'
 
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useContext } from 'react'
@@ -22,9 +22,9 @@ import {
   formatDiscountRate,
   formatRedemptionRate,
 } from 'utils/v2v3/math'
-import { MintRateValue } from './values/MintRateValue'
-import { ReservedRateValue } from './values/ReservedRateValue'
-import { PayerOrReservedTokensValue } from './values/PayerOrReservedTokensValue'
+import { MintRateValue } from './MintRateValue'
+import { ReservedRateValue } from './ReservedRateValue'
+import { PayerOrReservedTokensValue } from './PayerOrReservedTokensValue'
 
 export function TokenListItems({
   fundingCycle,

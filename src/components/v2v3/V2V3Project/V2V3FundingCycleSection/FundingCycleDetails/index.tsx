@@ -45,6 +45,7 @@ export default function FundingCycleDetails({
           <TokenListItems
             fundingCycle={fundingCycle}
             fundingCycleMetadata={fundingCycleMetadata}
+            showDiffs={showDiffs}
           />
         }
       />
@@ -54,6 +55,7 @@ export default function FundingCycleDetails({
           <RulesListItems
             fundingCycle={fundingCycle}
             fundingCycleMetadata={fundingCycleMetadata}
+            showDiffs={showDiffs}
           />
         }
       />

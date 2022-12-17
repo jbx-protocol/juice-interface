@@ -1,6 +1,5 @@
 import { Tooltip } from 'antd'
-import { ThemeContext } from 'contexts/themeContext'
-import { useContext } from 'react'
+import { twJoin } from 'tailwind-merge'
 import { classNames } from 'utils/classNames'
 
 // whether this value the old value or a new (updated) value
@@ -13,9 +12,6 @@ function ListItemValue({
   value: string | JSX.Element
   diffStatus?: DiffStatus
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const highlight =
     diffStatus === 'old'
       ? 'bg-error-100 dark:bg-error-900'
@@ -25,22 +21,22 @@ function ListItemValue({
 
   return (
     <div
-      style={{
-        whiteSpace: 'nowrap',
-        paddingRight: diffStatus ? '0.3rem' : 'unset',
-      }}
-      className={`text-secondary flex ${highlight} ml-2`}
+      className={twJoin(
+        'text-secondary ml-2 flex whitespace-nowrap',
+        highlight,
+        diffStatus ? 'pr-1' : undefined,
+      )}
     >
       {diffStatus ? (
-        <span style={{ marginRight: '0.5rem' }}>
+        <span className="mr-2">
           {diffStatus === 'new' ? (
-            <span style={{ color: colors.text.success }}>+</span>
+            <span className="text-success-500 dark:text-success-200">+</span>
           ) : diffStatus === 'old' ? (
-            <span style={{ color: colors.text.failure }}>–</span>
+            <span className="text-error-500 dark:text-error-200">–</span>
           ) : null}
         </span>
       ) : null}
-      <div style={{ fontWeight: diffStatus ? 500 : 'unset' }}>{value}</div>
+      <div className={diffStatus ? 'font-medium' : undefined}>{value}</div>
     </div>
   )
 }

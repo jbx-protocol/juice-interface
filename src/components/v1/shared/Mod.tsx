@@ -54,18 +54,20 @@ export default function Mod({
                 )}
                 :
               </div>
-              <div className="ml-2 text-sm text-grey-500 dark:text-grey-300">
-                <TooltipLabel
-                  label={t`Tokens` + ':'}
-                  tip={t`This address will receive any tokens minted when the recipient project gets paid.`}
-                />{' '}
-                <FormattedAddress address={mod.beneficiary} />{' '}
-                {owner === mod.beneficiary && (
-                  <Tooltip title={t`Project owner`}>
-                    <CrownFilled />
-                  </Tooltip>
-                )}
-              </div>
+              {isV1Project ? (
+                <div className="ml-2 text-sm text-grey-500 dark:text-grey-300">
+                  <TooltipLabel
+                    label={t`Tokens` + ':'}
+                    tip={t`This address will receive any tokens minted when the recipient project gets paid.`}
+                  />{' '}
+                  <FormattedAddress address={mod.beneficiary} />{' '}
+                  {owner === mod.beneficiary && (
+                    <Tooltip title={t`Project owner`}>
+                      <CrownFilled />
+                    </Tooltip>
+                  )}
+                </div>
+              ) : null}
             </div>
           ) : (
             <div className="flex items-baseline font-medium">

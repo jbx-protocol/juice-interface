@@ -1,4 +1,4 @@
-import { Menu, Space } from 'antd'
+import { Menu } from 'antd'
 import QuickProjectSearch from 'components/QuickProjectSearch'
 import useMobile from 'hooks/Mobile'
 import { CSSProperties, useEffect, useState } from 'react'
@@ -49,7 +49,7 @@ export default function SiteNavigation() {
         mode="inline"
       />
 
-      <Space size="large">
+      <div className="flex items-center gap-6">
         <NavLanguageSelector />
 
         <ThemePicker />
@@ -59,7 +59,7 @@ export default function SiteNavigation() {
         <Account />
 
         <QuickProjectSearch />
-      </Space>
+      </div>
     </nav>
   )
 }

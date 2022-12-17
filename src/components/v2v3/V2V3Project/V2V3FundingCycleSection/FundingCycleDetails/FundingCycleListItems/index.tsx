@@ -1,42 +1,60 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { t, Trans } from '@lingui/macro'
+import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
-import ETHToUSD from 'components/currency/ETHToUSD'
-import FundingCycleDetailWarning from 'components/Project/FundingCycleDetailWarning'
-import DistributionLimit from 'components/v2v3/shared/DistributionLimit'
-import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
+import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { V2V3FundingCycle } from 'models/v2v3/fundingCycle'
+import { useContext } from 'react'
 import { formatDate, formatDateToUTC } from 'utils/format/formatDate'
-import { detailedTimeString } from 'utils/format/formatTime'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
-import { DISTRIBUTION_LIMIT_EXPLANATION } from '../settingExplanations'
-import { FundingCycleListItem } from './FundingCycleListItem'
+import { DISTRIBUTION_LIMIT_EXPLANATION } from '../../settingExplanations'
+import { FundingCycleListItem } from '../FundingCycleListItem'
+import { DistributionLimitValue } from './DistributionLimitValue'
+import { DurationValue } from './DurationValue'
 
 export function FundingCycleListItems({
   fundingCycle,
   distributionLimit,
   distributionLimitCurrency,
+  showDiffs,
 }: {
   fundingCycle: V2V3FundingCycle
   distributionLimit: BigNumber | undefined
   distributionLimitCurrency: BigNumber | undefined
+  showDiffs?: boolean
 }) {
+  const {
+    fundingCycle: oldFundingCycle,
+    distributionLimit: oldDistributionLimit,
+    distributionLimitCurrency: oldDistributionLimitCurrency,
+  } = useContext(V2V3ProjectContext)
+
   const formattedStartTime = fundingCycle.start
     ? formatDate(fundingCycle.start.mul(1000))
     : undefined
   const formattedEndTime = fundingCycle.start
     ? formatDate(fundingCycle.start?.add(fundingCycle.duration).mul(1000))
     : undefined
-  const formattedDuration = detailedTimeString({
-    timeSeconds: fundingCycle.duration.toNumber(),
-    fullWords: true,
-  })
+
   const currency = V2V3CurrencyName(
     distributionLimitCurrency?.toNumber() as V2V3CurrencyOption | undefined,
   )
+  const oldCurrency = showDiffs
+    ? V2V3CurrencyName(
+        oldDistributionLimitCurrency?.toNumber() as
+          | V2V3CurrencyOption
+          | undefined,
+      )
+    : undefined
 
-  const riskWarningText = FUNDING_CYCLE_WARNING_TEXT()
+  const durationHasDiff =
+    oldFundingCycle && !fundingCycle.duration.eq(oldFundingCycle.duration)
+  const distributionLimitHasDiff =
+    oldDistributionLimit &&
+    !distributionLimit?.eq(oldDistributionLimit) &&
+    oldDistributionLimitCurrency &&
+    !distributionLimitCurrency?.eq(oldDistributionLimitCurrency)
+
   return (
     <>
       {formattedStartTime ? (
@@ -65,40 +83,28 @@ export function FundingCycleListItems({
       ) : null}
       <FundingCycleListItem
         name={t`Duration`}
-        value={
-          <>
-            {fundingCycle.duration.gt(0) ? (
-              formattedDuration
-            ) : (
-              <FundingCycleDetailWarning
-                showWarning={true}
-                tooltipTitle={riskWarningText.duration}
-              >
-                <Trans>Not set</Trans>
-              </FundingCycleDetailWarning>
-            )}
-          </>
+        value={<DurationValue duration={fundingCycle.duration} />}
+        oldValue={
+          showDiffs && durationHasDiff ? (
+            <DurationValue duration={oldFundingCycle?.duration} />
+          ) : undefined
         }
       />
       <FundingCycleListItem
         name={t`Distribution limit`}
         value={
-          <span className="whitespace-nowrap">
-            <Tooltip
-              title={
-                currency === 'ETH' && distributionLimit?.gt(0) ? (
-                  <ETHToUSD ethAmount={distributionLimit} />
-                ) : undefined
-              }
-            >
-              {''}
-              <DistributionLimit
-                className="text-grey-900 dark:text-slate-100"
-                distributionLimit={distributionLimit}
-                currencyName={currency}
-              />
-            </Tooltip>
-          </span>
+          <DistributionLimitValue
+            distributionLimit={distributionLimit}
+            currency={currency}
+          />
+        }
+        oldValue={
+          showDiffs && distributionLimitHasDiff ? (
+            <DistributionLimitValue
+              distributionLimit={oldDistributionLimit}
+              currency={oldCurrency}
+            />
+          ) : undefined
         }
         helperText={DISTRIBUTION_LIMIT_EXPLANATION}
       />

@@ -106,7 +106,9 @@ export type ProjectJson = Partial<
     | 'trendingScore'
     | 'trendingVolume'
     | 'totalPaid'
+    | 'totalPaidUSD'
     | 'totalRedeemed'
+    | 'totalRedeemedUSD'
     | 'currentBalance'
     | 'veNftContract'
   > & {
@@ -125,7 +127,9 @@ export type ProjectJson = Partial<
     trendingScore: string
     trendingVolume: string
     totalPaid: string
+    totalPaidUSD: string
     totalRedeemed: string
+    totalRedeemedUSD: string
     currentBalance: string
   }
 >
@@ -139,8 +143,14 @@ export const parseProjectJson = (project: ProjectJson): Partial<Project> =>
     totalPaid: project.totalPaid
       ? BigNumber.from(project.totalPaid)
       : undefined,
+    totalPaidUSD: project.totalPaidUSD
+      ? BigNumber.from(project.totalPaidUSD)
+      : undefined,
     totalRedeemed: project.totalRedeemed
       ? BigNumber.from(project.totalRedeemed)
+      : undefined,
+    totalRedeemedUSD: project.totalRedeemedUSD
+      ? BigNumber.from(project.totalRedeemedUSD)
       : undefined,
     participants: project.participants?.map(parseParticipantJson) ?? undefined,
     printPremineEvents:

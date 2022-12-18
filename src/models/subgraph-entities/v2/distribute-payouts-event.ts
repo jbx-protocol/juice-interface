@@ -28,9 +28,13 @@ export interface DistributePayoutsEvent
   fundingCycleNumber: number
   beneficiary: string
   amount: BigNumber
+  amountUSD: BigNumber
   distributedAmount: BigNumber
+  distributedAmountUSD: BigNumber
   fee: BigNumber
+  feeUSD: BigNumber
   beneficiaryDistributionAmount: BigNumber
+  beneficiaryDistributionAmountUSD: BigNumber
   memo: string
   splitDistributions: Partial<DistributeToPayoutSplitEvent>[]
 }
@@ -57,13 +61,21 @@ export const parseDistributePayoutsEventJson = (
     : undefined,
   beneficiary: j.beneficiary,
   amount: j.amount ? BigNumber.from(j.amount) : undefined,
+  amountUSD: j.amountUSD ? BigNumber.from(j.amountUSD) : undefined,
   distributedAmount: j.distributedAmount
     ? BigNumber.from(j.distributedAmount)
+    : undefined,
+  distributedAmountUSD: j.distributedAmountUSD
+    ? BigNumber.from(j.distributedAmountUSD)
     : undefined,
   beneficiaryDistributionAmount: j.beneficiaryDistributionAmount
     ? BigNumber.from(j.beneficiaryDistributionAmount)
     : undefined,
+  beneficiaryDistributionAmountUSD: j.beneficiaryDistributionAmountUSD
+    ? BigNumber.from(j.beneficiaryDistributionAmountUSD)
+    : undefined,
   fee: j.fee ? BigNumber.from(j.fee) : undefined,
+  feeUSD: j.feeUSD ? BigNumber.from(j.feeUSD) : undefined,
   memo: j.memo,
   splitDistributions: j.splitDistributions
     ? j.splitDistributions.map(parseDistributeToPayoutSplitEventJson)

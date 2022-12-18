@@ -16,7 +16,7 @@ export default function ERC20TokenBalance({
 }) {
   const { data: balance } = useERC20BalanceOf(tokenAddress, wallet)
   const decimals = useERC20DecimalsOf(tokenAddress)
-  const symbol = useSymbolOfERC20(tokenAddress)
+  const { data: symbol } = useSymbolOfERC20(tokenAddress)
 
   if (balance === undefined) return null
 

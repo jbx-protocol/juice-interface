@@ -19,7 +19,7 @@ export const V2V3ProjectTokenBalance = ({
   const { projectOwnerAddress } = useContext(V2V3ProjectContext)
   const { data: handle } = useProjectHandle({ projectId })
   const { data: tokenAddress } = useProjectToken({ projectId })
-  const tokenSymbol = useSymbolOfERC20(tokenAddress)
+  const { data: tokenSymbol } = useSymbolOfERC20(tokenAddress)
   const { data: balance } = useTotalBalanceOf(projectOwnerAddress, projectId)
   const formattedBalance = formatWad(balance, { precision: precision ?? 0 })
 

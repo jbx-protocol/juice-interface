@@ -1,7 +1,7 @@
 import { CSSProperties } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-export function ProjectVersionBadge({
+const ProjectVersionBadge = ({
   className,
   transparent = false,
   versionText,
@@ -13,7 +13,7 @@ export function ProjectVersionBadge({
   versionText: string
   size?: 'small'
   style?: CSSProperties // sorry wraeth :(
-}) {
+}) => {
   return (
     <span
       className={
@@ -32,3 +32,13 @@ export function ProjectVersionBadge({
     </span>
   )
 }
+
+const V1Badge = () => <ProjectVersionBadge versionText="V1" />
+const V2Badge = () => <ProjectVersionBadge versionText="V2" />
+const V3Badge = () => <ProjectVersionBadge versionText="V3" />
+
+ProjectVersionBadge.V1 = V1Badge
+ProjectVersionBadge.V2 = V2Badge
+ProjectVersionBadge.V3 = V3Badge
+
+export { ProjectVersionBadge }

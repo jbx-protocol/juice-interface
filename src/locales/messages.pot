@@ -3098,6 +3098,9 @@ msgstr ""
 msgid "Token holders of your V1 project tokens will swap their V1 tokens for V2 tokens at a 1-to-1 exchange rate."
 msgstr ""
 
+msgid "Token migration"
+msgstr ""
+
 msgid "Token minting"
 msgstr ""
 
@@ -3357,9 +3360,6 @@ msgid "V1 Project handle"
 msgstr ""
 
 msgid "V1 token holders can swap their tokens for your V2 tokens on your V2 project's <0>Tokens</0> section."
-msgstr ""
-
-msgid "V1 token migration"
 msgstr ""
 
 msgid "V1 tokens to swap"

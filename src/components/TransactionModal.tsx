@@ -26,12 +26,8 @@ const PendingTransactionModalBody = () => {
   return (
     <div className="my-8 mx-0 flex h-full w-full items-center justify-center">
       <div className="text-center font-normal">
-        <Image
-          className="mb-4"
-          src={quint}
-          alt={t`Juicebox loading animation`}
-        />
-        <h2 className="text-black dark:text-slate-100">
+        <Image src={quint} alt={t`Juicebox loading animation`} />
+        <h2 className="mt-4 text-black dark:text-slate-100">
           <Trans>Transaction pending...</Trans>
         </h2>
         <p>

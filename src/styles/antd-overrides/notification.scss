@@ -11,4 +11,9 @@
   .ant-notification-notice-close-icon {
     color: var(--icon-secondary);
   }
+
+  .ant-notification-notice-description {
+    max-height: 120px;
+    overflow-y: auto;
+  }
 }

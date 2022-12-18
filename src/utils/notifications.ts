@@ -1,47 +1,38 @@
 import { notification } from 'antd'
 
-const DEFAULT_ERROR_NOTIFICATION_DURATION_SECONDS = 3
-
+/**
+ * @param message Title of notification
+ * @param description Message to include in notification
+ * @param duration in seconds for how long the notification should persist. Pass `null` to persist indefinitely
+ */
 export const emitErrorNotification = (
   message: string,
-  {
-    description,
-    duration,
-  }: {
+  opts?: {
     description?: string
-    duration?: number
-  } = { duration: DEFAULT_ERROR_NOTIFICATION_DURATION_SECONDS },
+    duration?: number | null
+  },
 ) => {
   const key = new Date().valueOf().toString()
   return notification.error({
     key,
     message,
-    description,
-    duration,
-    onClick() {
-      notification.close(key)
-    },
+    ...opts,
+    duration: opts?.duration ?? null,
   })
 }
 
 export const emitSuccessNotification = (
   message: string,
-  {
-    description,
-    duration,
-  }: {
+  opts?: {
     description?: string
-    duration?: number
-  } = { duration: DEFAULT_ERROR_NOTIFICATION_DURATION_SECONDS },
+    duration?: number | null
+  },
 ) => {
   const key = new Date().valueOf().toString()
   return notification.success({
     key,
     message,
-    description,
-    duration,
-    onClick() {
-      notification.close(key)
-    },
+    ...opts,
+    duration: opts?.duration ?? 5,
   })
 }

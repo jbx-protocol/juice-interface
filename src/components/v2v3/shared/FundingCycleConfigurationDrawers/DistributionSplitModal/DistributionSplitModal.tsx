@@ -1,8 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
-import { DatePicker, Form, InputNumber, Modal, Radio } from 'antd'
-import { useForm } from 'antd/lib/form/Form'
+import { DatePicker, Form, Modal, Radio } from 'antd'
+import { useForm, useWatch } from 'antd/lib/form/Form'
 import { ModalMode, validateEthAddress } from 'components/formItems/formHelpers'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { CurrencyName } from 'constants/currency'
@@ -12,7 +12,6 @@ import { Split } from 'models/splits'
 import moment, * as Moment from 'moment'
 import { useEffect, useMemo, useState } from 'react'
 import { parseWad, stripCommas } from 'utils/format/formatNumber'
-import { stringIsDigit } from 'utils/math'
 import {
   adjustedSplitPercents,
   amountFromPercent,
@@ -26,7 +25,9 @@ import {
 } from 'utils/v2v3/math'
 import { AmountFormItem } from './AmountFormItem'
 import { PercentageFormItem } from './PercentageFormItem'
+import { V2V3ProjectPayoutFormItem } from './V2V3ProjectPayoutFormItem'
 import { AddOrEditSplitFormFields, SplitType } from './types'
+import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 
 type DistributionType = 'amount' | 'percent' | 'both'
 
@@ -132,10 +133,10 @@ export function DistributionSplitModal({
         ? Moment.default(editingSplit.lockedUntil * 1000)
         : undefined,
     )
-
     form.setFieldsValue({
       beneficiary: editingSplit.beneficiary,
       percent: preciseFormatSplitPercent(editingSplit.percent),
+      allocator: editingSplit.allocator,
     })
 
     if (distributionLimitIsInfinite) {
@@ -164,18 +165,25 @@ export function DistributionSplitModal({
   // Validates new or newly edited split, then adds it to or edits the splits list
   const confirmSplit = async () => {
     await form.validateFields()
-
     const roundedLockedUntil = lockedUntil
       ? Math.round(lockedUntil.valueOf() / 1000)
       : undefined
 
+    const allocator = form.getFieldValue('allocator')
+
+    // alloctor uses `addToBalance`, therefore no beneficiary required
+    const beneficiary =
+      allocator === NULL_ALLOCATOR_ADDRESS
+        ? form.getFieldValue('beneficiary')
+        : constants.AddressZero
+
     const newSplit = {
-      beneficiary: form.getFieldValue('beneficiary'),
+      beneficiary,
       percent: splitPercentFrom(form.getFieldValue('percent')).toNumber(),
       lockedUntil: roundedLockedUntil,
       preferClaimed: true,
       projectId: projectId,
-      allocator: undefined, // TODO: new v2 feature
+      allocator,
     } as Split
 
     let adjustedSplits: Split[] = splits
@@ -202,7 +210,6 @@ export function DistributionSplitModal({
               : m,
           )
         : [...adjustedSplits, newSplit]
-
     onSplitsChanged?.(newSplits)
 
     resetStates()
@@ -268,17 +275,11 @@ export function DistributionSplitModal({
     )
   }
 
-  const validateProjectId = () => {
-    if (!stringIsDigit(form.getFieldValue('projectId'))) {
-      return Promise.reject(t`Project ID must be a number.`)
-    }
-    // TODO: check if projectId exists
-    return Promise.resolve()
-  }
-
   // Cannot select days before today or today with lockedUntil
   const disabledDate = (current: moment.Moment) =>
     current && current < moment().endOf('day')
+
+  const allocator = useWatch('allocator', form)
 
   return (
     <Modal
@@ -329,22 +330,13 @@ export function DistributionSplitModal({
             <EthAddressInput />
           </Form.Item>
         ) : (
-          <Form.Item
-            name={'projectId'}
-            rules={[{ validator: validateProjectId }]}
-            label={t`Juicebox Project ID`}
-            required
-          >
-            <InputNumber
-              value={parseInt(projectId ?? '')}
-              className="w-full"
-              onChange={(projectId: number | null) => {
-                setProjectId(projectId?.toString())
-              }}
-            />
-          </Form.Item>
+          <V2V3ProjectPayoutFormItem
+            value={projectId}
+            onChange={setProjectId}
+          />
         )}
-        {editingSplitType === 'project' ? (
+        {editingSplitType === 'project' &&
+        allocator === NULL_ALLOCATOR_ADDRESS ? (
           <Form.Item
             name="beneficiary"
             label={t`Project token beneficiary address`}

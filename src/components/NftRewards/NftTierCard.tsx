@@ -1,5 +1,5 @@
 import { CheckOutlined, LoadingOutlined } from '@ant-design/icons'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Skeleton, Tooltip } from 'antd'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { NftRewardTier } from 'models/nftRewardTier'
@@ -10,21 +10,27 @@ import { ipfsToHttps } from 'utils/ipfs'
 import { payMetadataOverrides } from 'utils/nftRewards'
 import { NftPreview } from './NftPreview'
 
+const MAX_REMAINING_SUPPLY = 10000
+
 // The clickable cards on the project page
-export function RewardTier({
+export function NftTierCard({
   loading,
   rewardTier,
   rewardTierUpperLimit,
   isSelected,
   onClick,
   onRemove,
+  previewDisabled,
+  hideAttributes,
 }: {
-  loading?: boolean
   rewardTier?: NftRewardTier
-  rewardTierUpperLimit?: number | undefined
+  rewardTierUpperLimit?: number
+  loading?: boolean
   isSelected?: boolean
   onClick?: MouseEventHandler<HTMLDivElement>
   onRemove?: () => void
+  previewDisabled?: boolean
+  hideAttributes?: boolean
 }) {
   const [previewVisible, setPreviewVisible] = useState<boolean>(false)
 
@@ -34,29 +40,33 @@ export function RewardTier({
     ? ipfsToHttps(rewardTier.imageUrl)
     : rewardTier?.imageUrl
 
+  const _onRemove = onRemove ?? onClick
+
   function RewardIcon() {
     return (
       <Tooltip
         title={
-          <span className="text-xs">
-            {payMetadataOverrides(projectId ?? 0).dontOverspend ? (
-              <Trans>
-                Receive this NFT when you contribute{' '}
-                <strong>{rewardTier?.contributionFloor} ETH</strong>.
-              </Trans>
-            ) : rewardTierUpperLimit ? (
-              <Trans>
-                Receive this NFT when you contribute{' '}
-                <strong>{rewardTier?.contributionFloor}</strong> - {'<'}
-                <strong>{rewardTierUpperLimit} ETH</strong>.
-              </Trans>
-            ) : (
-              <Trans>
-                Receive this NFT when you contribute at least{' '}
-                <strong>{rewardTier?.contributionFloor} ETH</strong>.
-              </Trans>
-            )}
-          </span>
+          !hideAttributes ? (
+            <span className="text-xs">
+              {payMetadataOverrides(projectId ?? 0).dontOverspend ? (
+                <Trans>
+                  Receive this NFT when you contribute{' '}
+                  <strong>{rewardTier?.contributionFloor} ETH</strong>.
+                </Trans>
+              ) : rewardTierUpperLimit ? (
+                <Trans>
+                  Receive this NFT when you contribute{' '}
+                  <strong>{rewardTier?.contributionFloor}</strong> - {'<'}
+                  <strong>{rewardTierUpperLimit} ETH</strong>.
+                </Trans>
+              ) : (
+                <Trans>
+                  Receive this NFT when you contribute at least{' '}
+                  <strong>{rewardTier?.contributionFloor} ETH</strong>.
+                </Trans>
+              )}
+            </span>
+          ) : undefined
         }
         overlayInnerStyle={{
           padding: '7px 10px',
@@ -70,13 +80,19 @@ export function RewardTier({
             'absolute right-2 top-2 h-6 w-6 items-center justify-center rounded-full text-base',
             isSelected ? 'flex bg-haze-400 text-smoke-25' : 'hidden',
           )}
-          onClick={onRemove ? stopPropagation(onRemove) : undefined}
+          onClick={_onRemove ? stopPropagation(_onRemove) : undefined}
         >
           <CheckOutlined />
         </div>
       </Tooltip>
     )
   }
+
+  const remainingSupply =
+    rewardTier?.remainingSupply &&
+    rewardTier.remainingSupply < MAX_REMAINING_SUPPLY
+      ? rewardTier?.remainingSupply
+      : t`Unlimited`
 
   return (
     <>
@@ -88,7 +104,7 @@ export function RewardTier({
             : '',
         )}
         onClick={
-          !isSelected
+          !isSelected || previewDisabled
             ? onClick
             : () => {
                 setPreviewVisible(true)
@@ -135,7 +151,7 @@ export function RewardTier({
             !loading ? 'pt-2' : 'pt-1',
           )}
           onClick={
-            isSelected && onRemove ? stopPropagation(onRemove) : undefined
+            isSelected && _onRemove ? stopPropagation(_onRemove) : undefined
           }
         >
           <Skeleton
@@ -157,20 +173,38 @@ export function RewardTier({
               {rewardTier?.name}
             </span>
           </Skeleton>
-          <Skeleton
-            className="mt-1"
-            loading={loading}
-            active
-            title={false}
-            paragraph={{ rows: 1, width: ['50%'] }}
-          >
-            <span className="text-xs text-grey-900 dark:text-slate-50">
-              {rewardTier?.contributionFloor} ETH
-            </span>
-          </Skeleton>
+          {!hideAttributes ? (
+            <>
+              <Skeleton
+                className="mt-1"
+                loading={loading}
+                active
+                title={false}
+                paragraph={{ rows: 1, width: ['50%'] }}
+              >
+                <span className="text-xs text-grey-900 dark:text-slate-50">
+                  {rewardTier?.contributionFloor} ETH
+                </span>
+              </Skeleton>
+              <Skeleton
+                className="pt-5"
+                loading={loading}
+                active
+                title={false}
+                paragraph={{ rows: 1, width: ['50%'] }}
+              >
+                <span
+                  className="mt-2 text-grey-500"
+                  style={{ fontSize: '0.6rem' }}
+                >
+                  <Trans>REMAINING: {remainingSupply}</Trans>
+                </span>
+              </Skeleton>
+            </>
+          ) : null}
         </div>
       </div>
-      {rewardTier ? (
+      {rewardTier && !previewDisabled ? (
         <NftPreview
           open={previewVisible}
           rewardTier={rewardTier}

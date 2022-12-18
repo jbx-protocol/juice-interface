@@ -7,12 +7,15 @@ import CurrencySymbol from 'components/CurrencySymbol'
 import FormattedAddress from 'components/FormattedAddress'
 import TooltipIcon from 'components/TooltipIcon'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
+import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { CurrencyName } from 'constants/currency'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import round from 'lodash/round'
 import { Split } from 'models/splits'
 import { PropsWithChildren, useContext, useState } from 'react'
 import { classNames } from 'utils/classNames'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { formatDate } from 'utils/format/formatDate'
 import { parseWad } from 'utils/format/formatNumber'
 import { amountFromPercent } from 'utils/v2v3/distributions'
@@ -22,6 +25,7 @@ import {
   preciseFormatSplitPercent,
   SPLITS_TOTAL_PERCENT,
 } from 'utils/v2v3/math'
+import { AllocatorBadge } from './FundingCycleConfigurationDrawers/AllocatorBadge'
 import { DistributionSplitModal } from './FundingCycleConfigurationDrawers/DistributionSplitModal/DistributionSplitModal'
 
 const Parens = ({
@@ -88,6 +92,8 @@ export function DistributionSplitCard({
     currencyName === 'USD' ? 4 : 2,
   )
 
+  const allocatorsEnabled = featureFlagEnabled(FEATURE_FLAGS.SPLIT_ALLOCATORS)
+
   return (
     <div
       className={classNames(
@@ -118,9 +124,12 @@ export function DistributionSplitCard({
               </label>{' '}
             </Col>
             <Col span={dataColSpan}>
-              <div className="flex items-center justify-between">
+              <Space size="middle">
                 <V2V3ProjectHandleLink projectId={parseInt(split.projectId)} />
-              </div>
+                {allocatorsEnabled ? (
+                  <AllocatorBadge allocator={split.allocator} />
+                ) : null}
+              </Space>
             </Col>
           </Row>
         ) : (
@@ -159,7 +168,8 @@ export function DistributionSplitCard({
           </Row>
         )}
 
-        {parseInt(split.projectId ?? '0') > 0 ? (
+        {parseInt(split.projectId ?? '0') > 0 &&
+        split.allocator === NULL_ALLOCATOR_ADDRESS ? (
           <Row>
             <Col span={labelColSpan}>
               <label

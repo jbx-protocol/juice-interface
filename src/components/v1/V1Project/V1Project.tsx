@@ -1,12 +1,19 @@
-import { LoadingOutlined } from '@ant-design/icons'
-import { Col, Row } from 'antd'
+import { CloseOutlined, LoadingOutlined } from '@ant-design/icons'
+import { Trans } from '@lingui/macro'
+import { Button, Col, Row, Skeleton } from 'antd'
+import { Callout } from 'components/Callout'
+import ExternalLink from 'components/ExternalLink'
 import { PayProjectForm } from 'components/Project/PayProjectForm'
 import { ProjectHeader } from 'components/Project/ProjectHeader'
 import { PV_V1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
+import { useRelaunchV1ViaV3Create } from 'hooks/v1/RelaunchV1ViaV3Create'
+import { V1OperatorPermission } from 'models/v1/permissions'
+import Link from 'next/link'
 import { V1PayProjectFormProvider } from 'providers/v1/V1PayProjectFormProvider'
-import { lazy, Suspense, useContext } from 'react'
+import { lazy, Suspense, useContext, useState } from 'react'
 import FundingCycles from './FundingCycles'
 import ProjectActivity from './ProjectActivity'
 import { TokensSection } from './TokensSection'
@@ -17,6 +24,59 @@ const VolumeChart = lazy(() => import('components/VolumeChart'))
 
 const gutter = 40
 
+const RelaunchV1ProjectCallout = ({ className }: { className?: string }) => {
+  const [isHidden, setIsHidden] = useState<boolean>(false)
+  const { isReady, relaunch } = useRelaunchV1ViaV3Create()
+  const isLoading = !isReady
+
+  const hasUpgradePermission = useV1ConnectedWalletHasPermission(
+    V1OperatorPermission.Configure,
+  )
+
+  if (isHidden || !hasUpgradePermission) {
+    return null
+  }
+
+  return (
+    <Callout.Info className={className} collapsible={false}>
+      <div className="flex justify-between">
+        <div className="flex flex-col gap-2">
+          <strong>
+            <Trans>Re-launch on V3</Trans>
+          </strong>
+          <p>
+            <Trans>
+              Re-launch your Juicebox project using the v3 contracts.{' '}
+              {/* TODO: Add link */}
+              <Link href="#TODO">What's new in V3.</Link>
+            </Trans>
+          </p>
+          <p className="font-medium">
+            <Trans>
+              It's strongly recommended that you visit the{' '}
+              <ExternalLink href="https://discord.gg/6jXrJSyDFf">
+                Juicebox Discord
+              </ExternalLink>{' '}
+              for help and advice on this process.
+            </Trans>
+          </p>
+          {isLoading ? (
+            <Skeleton.Button active className="w-40" />
+          ) : (
+            <Button className="max-w-min" type="primary" onClick={relaunch}>
+              <Trans>Re-launch project</Trans>
+            </Button>
+          )}
+        </div>
+        <CloseOutlined
+          className="h-11 w-11"
+          onClick={() => setIsHidden(true)}
+        />
+      </div>
+    </Callout.Info>
+  )
+}
+
 export function V1Project({ column }: { column?: boolean }) {
   const { createdAt, handle, isPreviewMode, owner } =
     useContext(V1ProjectContext)
@@ -24,6 +84,7 @@ export function V1Project({ column }: { column?: boolean }) {
 
   return (
     <>
+      <RelaunchV1ProjectCallout className="mb-8 pb-6" />
       <ProjectHeader
         handle={handle}
         projectOwnerAddress={owner}

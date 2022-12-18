@@ -21,7 +21,7 @@ export const AllocationItem = ({
 
   // TOOD: Remove border-solid once tailwind preflight is enabled
   const containerClasses = classNames(
-    'select-none border border-solid border-smoke-200  dark:border-slate-300 bg-smoke-75 dark:bg-slate-400',
+    'select-none border border-solid border-smoke-200 dark:border-slate-300 bg-smoke-75 dark:bg-slate-400',
     isClickable
       ? 'cursor-pointer transition-colors hover:border-smoke-400 dark:hover:border-slate-100'
       : '',

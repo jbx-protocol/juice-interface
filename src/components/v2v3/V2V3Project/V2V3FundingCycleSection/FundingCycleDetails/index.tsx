@@ -1,9 +1,13 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
+import { Space } from 'antd'
 import {
   V2V3FundingCycle,
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
+import * as constants from '@ethersproject/constants'
+
+import { DataSourceListItems } from './DataSourceListItems'
 import { FundingCycleDetailsRow } from './FundingCycleDetailsRow'
 import { FundingCycleListItems } from './FundingCycleListItems'
 import { RulesListItems } from './RulesListItems'
@@ -14,14 +18,16 @@ export default function FundingCycleDetails({
   fundingCycleMetadata,
   distributionLimit,
   distributionLimitCurrency,
+  showDiffs,
 }: {
   fundingCycle: V2V3FundingCycle
   fundingCycleMetadata: V2V3FundingCycleMetadata
   distributionLimit: BigNumber | undefined
   distributionLimitCurrency: BigNumber | undefined
+  showDiffs?: boolean
 }) {
   return (
-    <div className="flex flex-col gap-8">
+    <Space className="w-full" direction="vertical" size="middle">
       <FundingCycleDetailsRow
         header={t`Funding cycle`}
         items={
@@ -29,6 +35,7 @@ export default function FundingCycleDetails({
             fundingCycle={fundingCycle}
             distributionLimit={distributionLimit}
             distributionLimitCurrency={distributionLimitCurrency}
+            showDiffs={showDiffs}
           />
         }
       />
@@ -38,6 +45,7 @@ export default function FundingCycleDetails({
           <TokenListItems
             fundingCycle={fundingCycle}
             fundingCycleMetadata={fundingCycleMetadata}
+            showDiffs={showDiffs}
           />
         }
       />
@@ -47,9 +55,18 @@ export default function FundingCycleDetails({
           <RulesListItems
             fundingCycle={fundingCycle}
             fundingCycleMetadata={fundingCycleMetadata}
+            showDiffs={showDiffs}
           />
         }
       />
-    </div>
+      {fundingCycleMetadata.dataSource !== constants.AddressZero ? (
+        <FundingCycleDetailsRow
+          header={t`Data source`}
+          items={
+            <DataSourceListItems fundingCycleMetadata={fundingCycleMetadata} />
+          }
+        />
+      ) : null}
+    </Space>
   )
 }

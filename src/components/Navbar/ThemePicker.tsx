@@ -14,7 +14,7 @@ export default function ThemePicker() {
 
   return (
     <div
-      className="flex h-8 w-16 cursor-pointer items-center justify-evenly rounded-full border border-solid border-smoke-300 transition-colors hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100"
+      className="flex h-8 w-16 min-w-[64px] cursor-pointer items-center justify-evenly rounded-full border border-solid border-smoke-300 transition-colors hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100"
       role="switch"
       aria-checked={themeOption === ThemeOption.dark}
       onClick={() =>

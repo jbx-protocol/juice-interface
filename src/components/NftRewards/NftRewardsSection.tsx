@@ -15,9 +15,8 @@ import useMobile from 'hooks/Mobile'
 import { useContext } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { hasNftRewards, sumTierFloors } from 'utils/nftRewards'
-
 import { useModalFromUrlQuery } from '../modals/hooks/useModalFromUrlQuery'
-import { RewardTier } from './RewardTier'
+import { NftTierCard } from './NftTierCard'
 
 function RewardTiersLoadingSkeleton() {
   const isMobile = useMobile()
@@ -26,7 +25,7 @@ function RewardTiersLoadingSkeleton() {
     <Row className="mt-4" gutter={isMobile ? 8 : 24}>
       {[...Array(3)]?.map((_, index) => (
         <Col md={8} xs={8} key={`rewardTierLoading-${index}`}>
-          <RewardTier loading />
+          <NftTierCard loading />
         </Col>
       ))}
     </Row>
@@ -140,7 +139,7 @@ export function NftRewardsSection() {
                 xs={8}
                 key={`${rewardTier.contributionFloor}-${rewardTier.name}`}
               >
-                <RewardTier
+                <NftTierCard
                   rewardTier={rewardTier}
                   rewardTierUpperLimit={
                     rewardTiers?.[idx + 1]?.contributionFloor

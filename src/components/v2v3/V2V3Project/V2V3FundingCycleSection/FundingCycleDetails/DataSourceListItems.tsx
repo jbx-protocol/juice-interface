@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import FormattedAddress from 'components/FormattedAddress'
 import { V2V3FundingCycleMetadata } from 'models/v2v3/fundingCycle'
-import { FundingCycleListItem } from '../FundingCycleListItem'
+import { FundingCycleListItem } from './FundingCycleListItem'
 
 export function DataSourceListItems({
   fundingCycleMetadata,

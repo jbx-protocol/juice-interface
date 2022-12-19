@@ -108,7 +108,6 @@ export function ReconfigureRichPreview({
             }}
             distributionLimit={distributionLimit}
             distributionLimitCurrency={distributionLimitCurrency}
-            showDiffs
           />
         </MinimalCollapse>
         <MinimalCollapse header={t`Funding distribution`} light>

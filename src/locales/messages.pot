@@ -3842,9 +3842,6 @@ msgstr ""
 msgid "{0} withdrawn"
 msgstr ""
 
-msgid "{0} {tokenSymbol}/ETH"
-msgstr ""
-
 msgid "{0} {tokenTextPlural} reserved"
 msgstr ""
 
@@ -3921,6 +3918,9 @@ msgid "{payerRate} {tokenSymbolPlural}/ETH"
 msgstr ""
 
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
+msgstr ""
+
+msgid "{paymentIssuanceRate} {tokenSymbolPlural}/ETH"
 msgstr ""
 
 msgid "{tokenSymbolDisplayText} range"

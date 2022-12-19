@@ -22,7 +22,7 @@ export function SafeNonceRow({
   return (
     <div
       className={classNames(
-        'flex w-full justify-between border border-b border-l-0 border-r-0 border-t-0 border-solid font-normal text-black transition-colors duration-100 ease-in-out dark:text-slate-100',
+        'w-full justify-between border border-b border-l-0 border-r-0 border-t-0 border-solid font-normal text-black transition-colors duration-100 ease-in-out dark:text-slate-100',
         containsSelectedTx
           ? 'border-b-haze-400 dark:border-b-haze-400'
           : 'border-b-grey-300 dark:border-b-slate-200',

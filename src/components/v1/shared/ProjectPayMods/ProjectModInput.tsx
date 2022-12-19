@@ -17,7 +17,10 @@ import { CurrencyName } from 'constants/currency'
 import { classNames } from 'utils/classNames'
 import V1ProjectHandle from '../V1ProjectHandle'
 import { EditingPayoutMod } from './types'
-import { V1_V3_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
+import {
+  NULL_ALLOCATOR_ADDRESS,
+  V1_V3_ALLOCATOR_ADDRESS,
+} from 'constants/contracts/mainnet/Allocators'
 import { AllocatorBadge } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/AllocatorBadge'
 
 const FormattedRow = ({
@@ -131,7 +134,7 @@ export function ProjectModInput({
             <FormattedAddress address={mod.beneficiary} />
           </FormattedRow>
         )}
-        {mod.projectId?.gt(0) && (
+        {mod.projectId?.gt(0) && mod.allocator === NULL_ALLOCATOR_ADDRESS && (
           <FormattedRow label="Beneficiary">
             <FormattedAddress address={mod.beneficiary} />
           </FormattedRow>

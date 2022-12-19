@@ -18,13 +18,11 @@ export default function FundingCycleDetails({
   fundingCycleMetadata,
   distributionLimit,
   distributionLimitCurrency,
-  showDiffs,
 }: {
   fundingCycle: V2V3FundingCycle
   fundingCycleMetadata: V2V3FundingCycleMetadata
   distributionLimit: BigNumber | undefined
   distributionLimitCurrency: BigNumber | undefined
-  showDiffs?: boolean
 }) {
   return (
     <Space className="w-full" direction="vertical" size="middle">
@@ -35,7 +33,6 @@ export default function FundingCycleDetails({
             fundingCycle={fundingCycle}
             distributionLimit={distributionLimit}
             distributionLimitCurrency={distributionLimitCurrency}
-            showDiffs={showDiffs}
           />
         }
       />
@@ -45,7 +42,6 @@ export default function FundingCycleDetails({
           <TokenListItems
             fundingCycle={fundingCycle}
             fundingCycleMetadata={fundingCycleMetadata}
-            showDiffs={showDiffs}
           />
         }
       />
@@ -55,7 +51,6 @@ export default function FundingCycleDetails({
           <RulesListItems
             fundingCycle={fundingCycle}
             fundingCycleMetadata={fundingCycleMetadata}
-            showDiffs={showDiffs}
           />
         }
       />

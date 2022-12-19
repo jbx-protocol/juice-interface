@@ -33,6 +33,8 @@ export const MAX_MINT_RATE = Math.floor(MaxUint88 / 10 ** 18)
 
 const MAX_FEE = ONE_BILLION
 
+type IssueeType = 'reserved' | 'payer'
+
 /**
  * Express a given discount rate (parts-per-billion) as a percentage.
  * @param discountRate - discount rate as parts-per-billion.
@@ -214,7 +216,7 @@ export const weightAmountPermyriad: WeightFunction = (
   weight: BigNumber | undefined,
   reservedRatePermyriad: number | undefined,
   amountWad: BigNumber | undefined,
-  outputType: 'payer' | 'reserved',
+  outputType: IssueeType,
 ): string => {
   if (!weight || !amountWad) return '0'
 
@@ -262,9 +264,10 @@ export function sumHeldFees(fees: JBFee[]) {
   }, 0)
 }
 
-export function computePaymentIssuanceRate(
+export function computeIssuanceRate(
   fundingCycle: V2V3FundingCycleData,
   fundingCycleMetadata: V2V3FundingCycleMetadata,
+  issuee: IssueeType,
 ) {
   return formattedNum(
     formatIssuanceRate(
@@ -272,7 +275,7 @@ export function computePaymentIssuanceRate(
         fundingCycle?.weight,
         fundingCycleMetadata?.reservedRate.toNumber(),
         parseEther('1'),
-        'payer',
+        issuee,
       ) ?? '',
     ),
   )

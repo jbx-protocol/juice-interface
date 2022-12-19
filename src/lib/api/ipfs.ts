@@ -81,7 +81,7 @@ export const editMetadataForCid = async (
 }
 
 // TODO after the move to Infura for IPFS, we can probably look at removing this.
-export const ipfsGetWithFallback = async (
+export const ipfsGetWithFallback = async <T>(
   hash: string,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   { fallbackHostname }: { fallbackHostname?: string } = {},

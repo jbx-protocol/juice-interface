@@ -1,11 +1,17 @@
-import axios from 'axios'
+import { BigNumber } from '@ethersproject/bignumber'
 import { readProvider } from 'constants/readProvider'
+import { ipfsGetWithFallback } from 'lib/api/ipfs'
 import { ProjectMetadataV5 } from 'models/project-metadata'
+import { SepanaBigNumber, SepanaProject } from 'models/sepana'
 import { Project } from 'models/subgraph-entities/vX/project'
+import { NextApiHandler } from 'next'
 import { querySubgraphExhaustive } from 'utils/graph'
-import { openIpfsUrl } from 'utils/ipfs'
-import { SepanaProject } from './models'
-import { deleteSepanaIds, querySepanaProjects, writeSepanaDocs } from './utils'
+
+import {
+  isSepanaBigNumber,
+  querySepanaProjects,
+  writeSepanaDocs,
+} from './utils'
 
 const projectKeys: (keyof Project)[] = [
   'id',
@@ -21,63 +27,77 @@ const projectKeys: (keyof Project)[] = [
 ]
 
 // Synchronizes the Sepana engine with the latest Juicebox Subgraph/IPFS data
-const handler = async () => {
-  const sepanaProjects = (await querySepanaProjects()).data.hits.hits.map(
-    p => p._source,
-  )
+const handler: NextApiHandler = async (_, res) => {
+  const sepanaProjects = (await querySepanaProjects()).data.hits.hits
 
   const changedSubgraphProjects = (
     await querySubgraphExhaustive({
       entity: 'project',
       keys: projectKeys,
     })
-  ).filter(subgraphProject => {
-    const sepanaProject = sepanaProjects.find(p => subgraphProject.id === p.id)
+  )
+    // Upserting data in Sepana requires the `_id` param to be included, so we include it here
+    // https://docs.sepana.io/sepana-search-api/web3-search-cloud/search-api#request-example-2
+    .map(p => ({ ...p, _id: p.id }))
+    .filter(subgraphProject => {
+      const sepanaProject = sepanaProjects.find(
+        p => subgraphProject.id === p._source.id,
+      )
 
-    // Deep compare subgraph project with sepana project to find which projects have changed or not yet been stored on sepana
-    return (
-      !sepanaProject ||
-      projectKeys.some(k => subgraphProject[k] !== sepanaProject[k])
-    )
-  })
+      // Deep compare subgraph project with sepana project to find which projects have changed or not yet been stored on sepana
+      return (
+        !sepanaProject ||
+        projectKeys.some(k => {
+          const a = subgraphProject[k]
+          const b = sepanaProject._source[k]
+
+          // Subgraph bignumber type is different from sepana bignumber
+          if (BigNumber.isBigNumber(a) && isSepanaBigNumber(b)) {
+            return a._hex !== (b as SepanaBigNumber).hex
+          }
+
+          return a !== b
+        })
+      )
+    })
 
   const latestBlock = await readProvider.getBlockNumber()
+  const updatedSepanaProjects: Promise<SepanaProject>[] = []
 
-  const updatedSepanaProjects = await changedSubgraphProjects.reduce(
-    async (acc, curr, i) => {
-      if (i && i % 100 === 0) {
-        // Arbitrary delay to avoid rate limiting
-        await new Promise(r => setTimeout(r, 750))
-      }
+  for (let i = 0; i < changedSubgraphProjects.length; i++) {
+    // Update metadata & `lastUpdated` for each sepana project
 
-      try {
-        // update metadata & `lastUpdated` for each sepana project
-        const {
-          data: { name, description, logoUri },
-        } = await axios.get<ProjectMetadataV5>(openIpfsUrl(curr.metadataUri))
+    const p = changedSubgraphProjects[i]
 
-        return [
-          ...(await acc),
-          {
-            ...curr,
+    if (i && i % 100 === 0) {
+      // Arbitrary delay to avoid rate limiting
+      await new Promise(r => setTimeout(r, 750))
+    }
+
+    try {
+      updatedSepanaProjects.push(
+        ipfsGetWithFallback<ProjectMetadataV5>(p.metadataUri).then(
+          ({ data: { logoUri, name, description } }) => ({
+            ...p,
             name,
             description,
             logoUri,
             lastUpdated: latestBlock,
-          },
-        ]
-      } catch (e) {
-        throw new Error(`Error with CID ${curr.metadataUri}: ${e}`)
-      }
-    },
-    Promise.resolve([] as SepanaProject[]),
-  )
-
-  // Delete projects that need updating
-  await deleteSepanaIds(changedSubgraphProjects.map(e => e.id))
+          }),
+        ),
+      )
+    } catch (error) {
+      res.status(500).send({
+        message: `Error fetching ${p.metadataUri} from IPFS`,
+        error,
+      })
+    }
+  }
 
   // Write updated projects
-  await writeSepanaDocs(updatedSepanaProjects)
+  await writeSepanaDocs(await Promise.all(updatedSepanaProjects))
+
+  res.status(200).send(`Updated ${updatedSepanaProjects.length} projects`)
 }
 
 export default handler

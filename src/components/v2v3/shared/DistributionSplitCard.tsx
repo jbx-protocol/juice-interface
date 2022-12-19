@@ -7,7 +7,6 @@ import CurrencySymbol from 'components/CurrencySymbol'
 import FormattedAddress from 'components/FormattedAddress'
 import TooltipIcon from 'components/TooltipIcon'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
-import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { CurrencyName } from 'constants/currency'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
@@ -168,8 +167,7 @@ export function DistributionSplitCard({
           </Row>
         )}
 
-        {parseInt(split.projectId ?? '0') > 0 &&
-        split.allocator === NULL_ALLOCATOR_ADDRESS ? (
+        {parseInt(split.projectId ?? '0') > 0 ? (
           <Row>
             <Col span={labelColSpan}>
               <label

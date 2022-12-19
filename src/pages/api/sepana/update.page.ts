@@ -4,16 +4,10 @@ import { ProjectMetadataV5 } from 'models/project-metadata'
 import { Project } from 'models/subgraph-entities/vX/project'
 import { querySubgraphExhaustive } from 'utils/graph'
 import { openIpfsUrl } from 'utils/ipfs'
+import { SepanaProject } from './models'
 import { deleteSepanaIds, querySepanaProjects, writeSepanaDocs } from './utils'
 
-export type SepanaProject = Project & {
-  name?: string
-  description?: string
-  logoUri?: string
-  lastUpdated?: number
-}
-
-const compareKeys: (keyof Project)[] = [
+const projectKeys: (keyof Project)[] = [
   'id',
   'projectId',
   'pv',
@@ -28,58 +22,55 @@ const compareKeys: (keyof Project)[] = [
 
 // Synchronizes the Sepana engine with the latest Juicebox Subgraph/IPFS data
 const handler = async () => {
-  const sepanaProjects = await querySepanaProjects()
+  const sepanaProjects = (await querySepanaProjects()).data.hits.hits
 
-  const subgraphProjects = (
-    await querySubgraphExhaustive({
-      entity: 'project',
-      keys: compareKeys,
-    })
-  ).filter(el => {
-    const sepanaProject = sepanaProjects.data.hits.hits.find(
-      p => el.id === p._source.id,
+  const subgraphProjects = await querySubgraphExhaustive({
+    entity: 'project',
+    keys: projectKeys,
+  })
+
+  const changedSubgraphProjects = subgraphProjects.filter(p => {
+    const sepanaProject = sepanaProjects.find(
+      _p => p.id === _p._source.id,
     )?._source
 
-    // Deep compare subgraph project with sepana project to find which projects have changed
-    return !sepanaProject || compareKeys.some(k => el[k] !== sepanaProject[k])
+    // Deep compare subgraph project with sepana project to find which projects have changed or not yet been stored on sepana
+    return !sepanaProject || projectKeys.some(k => p[k] !== sepanaProject[k])
   })
 
-  const updatedProjects: SepanaProject[] = []
-
-  const ipfsPromises: Promise<void>[] = []
+  const updatedSepanaProjects: SepanaProject[] = []
   const latestBlock = await readProvider.getBlockNumber()
 
-  subgraphProjects.forEach(async (subgraphProject, i) => {
-    const updatedProject: SepanaProject = {
-      ...subgraphProject,
-      lastUpdated: latestBlock,
-    }
+  await Promise.all(
+    changedSubgraphProjects.map(async (p, i) => {
+      if (i && i % 100 === 0) {
+        // Arbitrary delay to avoid rate limiting
+        await new Promise(r => setTimeout(r, 750))
+      }
 
-    ipfsPromises.push(
-      axios
-        .get<ProjectMetadataV5>(openIpfsUrl(subgraphProject.metadataUri))
-        .then(res => {
-          updatedProject.name = res.data.name
-          updatedProject.description = res.data.description
-          updatedProject.logoUri = res.data.logoUri
+      try {
+        const {
+          data: { name, description, logoUri },
+        } = await axios.get<ProjectMetadataV5>(openIpfsUrl(p.metadataUri))
 
-          updatedProjects.push(updatedProject)
+        updatedSepanaProjects.push({
+          ...p,
+          name,
+          description,
+          logoUri,
+          lastUpdated: latestBlock,
         })
-        .catch(e => {
-          throw new Error(`Error with CID ${subgraphProject.metadataUri}: ${e}`)
-        }),
-    )
+      } catch (e) {
+        throw new Error(`Error with CID ${p.metadataUri}: ${e}`)
+      }
+    }),
+  )
 
-    if (i % 100 === 0) {
-      // Arbitrary delay to avoid rate limiting
-      await new Promise(r => setTimeout(r, 750))
-    }
-  })
+  // Delete projects that need updating
+  await deleteSepanaIds(changedSubgraphProjects.map(e => e.id))
 
-  await Promise.all(ipfsPromises)
-  // Delete original subgraph entities
-  await deleteSepanaIds(subgraphProjects.map(e => e.id))
-  await writeSepanaDocs(updatedProjects)
+  // Write updated projects
+  await writeSepanaDocs(updatedSepanaProjects)
 }
 
 export default handler

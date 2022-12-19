@@ -20,6 +20,10 @@ import {
 //  - undefined if exists in old and new and there is no diff in the splits
 export type OldSplit = Split | boolean | undefined
 
+export type SplitWithDiff = Split & {
+  oldSplit?: OldSplit
+}
+
 export const toSplit = (mod: PayoutMod): Split => {
   return {
     // mod.percent is a parts-per-ten thousand (permyriad),
@@ -98,19 +102,23 @@ export const formatOutgoingSplits = (splits: OutgoingSplit[]): Split[] => {
   )
 }
 
-const splitIsProject = (split: Split) =>
+const isProjectSplit = (split: Split) =>
   Boolean(split.projectId && parseInt(split.projectId) > 0)
 
 // determines if two splits are the same 'entity' (either projectId or address)
-const splitsAreSameEntity = (a: Split, b: Split) => {
-  const isProject = splitIsProject(a)
+const hasEqualRecipient = (a: Split, b: Split) => {
+  const isProject = isProjectSplit(a)
+  const idsEqual =
+    a.projectId === b.projectId ||
+    BigNumber.from(a.projectId).eq(b.projectId ?? 0) ||
+    BigNumber.from(b.projectId).eq(a.projectId ?? 0)
+
   return (
-    (isProject && a.projectId === b.projectId) ||
-    (!isProject && a.beneficiary === b.beneficiary)
+    (isProject && idsEqual) || (!isProject && a.beneficiary === b.beneficiary)
   )
 }
 
-// returns a sorted list of a give list of splits (by percent allocation)
+// returns a given list of splits sorted by percent allocation
 const sortSplits = (splits: Split[]) => {
   return splits.sort((a, b) => (a.percent < b.percent ? 1 : -1))
 }
@@ -118,7 +126,7 @@ const sortSplits = (splits: Split[]) => {
 // return list of splits that exist in oldSplits but not newSplits
 export const getRemovedSplits = (oldSplits: Split[], newSplits: Split[]) => {
   return oldSplits.filter(oldSplit => {
-    return !newSplits.some(newSplit => splitsAreSameEntity(oldSplit, newSplit))
+    return !newSplits.some(newSplit => hasEqualRecipient(oldSplit, newSplit))
   })
 }
 
@@ -130,15 +138,13 @@ export const processUniqueSplits = ({
 }: {
   oldSplits: Split[] | undefined
   newSplits: Split[]
-}) => {
-  const uniqueSplitsByProjectIdOrAddress: Array<
-    Split & { oldSplit: OldSplit }
-  > = []
+}): SplitWithDiff[] => {
+  const uniqueSplitsByProjectIdOrAddress: Array<SplitWithDiff> = []
   if (!oldSplits) return sortSplits(newSplits)
 
   newSplits.map(split => {
     const oldSplit = oldSplits.find(oldSplit =>
-      splitsAreSameEntity(oldSplit, split),
+      hasEqualRecipient(oldSplit, split),
     )
 
     const splitsEqual = isEqual(split, oldSplit)

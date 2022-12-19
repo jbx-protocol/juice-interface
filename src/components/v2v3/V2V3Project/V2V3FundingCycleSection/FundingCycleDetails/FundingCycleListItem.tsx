@@ -1,6 +1,6 @@
 import { Tooltip } from 'antd'
 import { classNames } from 'utils/classNames'
-import { DiffedItem } from './DiffedItem'
+import { DiffedItem } from '../../../shared/DiffedItem'
 
 // e.g. 'Distribution limit', 'Start', 'End', etc.
 export function FundingCycleListItem({

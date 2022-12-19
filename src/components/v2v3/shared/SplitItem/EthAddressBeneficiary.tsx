@@ -1,24 +1,23 @@
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
-import { Split } from 'models/splits'
 import { CrownFilled } from '@ant-design/icons'
 
 export function ETHAddressBeneficiary({
+  beneficaryAddress,
   projectOwnerAddress,
-  split,
 }: {
-  split: Split
+  beneficaryAddress: string | undefined
   projectOwnerAddress: string | undefined
 }) {
-  const isProjectOwner = projectOwnerAddress === split.beneficiary
+  const isProjectOwner = projectOwnerAddress === beneficaryAddress
 
   return (
     <div className="flex items-baseline font-medium">
-      {split.beneficiary ? (
-        <FormattedAddress address={split.beneficiary} />
+      {beneficaryAddress ? (
+        <FormattedAddress address={beneficaryAddress} />
       ) : null}
-      {!split.beneficiary && isProjectOwner ? (
+      {!beneficaryAddress && isProjectOwner ? (
         <Trans>Project owner (you)</Trans>
       ) : null}
       {isProjectOwner && (

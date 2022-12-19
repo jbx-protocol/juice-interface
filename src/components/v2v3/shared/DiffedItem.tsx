@@ -1,8 +1,7 @@
-import {
-  DIFF_NEW_BACKGROUND,
-  DIFF_OLD_BACKGROUND,
-} from 'constants/styles/colors'
 import { twJoin } from 'tailwind-merge'
+
+export const DIFF_OLD_BACKGROUND = 'bg-error-200 dark:bg-error-800'
+export const DIFF_NEW_BACKGROUND = 'bg-success-200 dark:bg-success-800'
 
 // whether this value the old value or a new (updated) value
 type DiffStatus = 'new' | 'old'
@@ -42,7 +41,7 @@ export function DiffedItem({
   return (
     <div
       className={twJoin(
-        'text-secondary ml-2 flex whitespace-nowrap pr-1',
+        'text-primary ml-2 flex whitespace-nowrap pr-1',
         highlight,
       )}
     >

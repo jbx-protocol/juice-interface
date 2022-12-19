@@ -1,52 +1,26 @@
 import { SplitPercentValue } from './SplitPercentValue'
 import { SplitAmountValue } from './SplitAmountValue'
-import { BigNumber } from '@ethersproject/bignumber'
 import { Split } from 'models/splits'
-import { DiffedItem } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/DiffedItem'
+import { SplitProps } from './SplitItem'
 
 export function SplitValue({
-  split,
-  oldSplit,
-  totalValue,
-  valueSuffix,
-  valueFormatProps,
-  currency,
-  showFees = false,
+  splitProps,
+  diffSplit,
 }: {
-  split: Split
-  oldSplit?: Split
-  totalValue: BigNumber | undefined
-  valueSuffix?: string | JSX.Element
-  valueFormatProps?: { precision?: number }
-  currency?: BigNumber
-  showFees?: boolean
+  splitProps: SplitProps
+  diffSplit: Split | undefined
 }) {
-  function Values({ split }: { split: Split }) {
-    return (
-      <>
-        <SplitPercentValue percent={split.percent} />
-        {totalValue?.gt(0) ? (
-          <div className="ml-1">
-            {' '}
-            <SplitAmountValue
-              split={split}
-              totalValue={totalValue}
-              valueSuffix={valueSuffix}
-              valueFormatProps={valueFormatProps}
-              currency={currency}
-              showFees={showFees}
-            />
-          </div>
-        ) : null}
-      </>
-    )
-  }
-  const hasDiff = oldSplit && oldSplit.percent !== split.percent
-  if (!hasDiff) return <Values split={split} />
   return (
     <div className="flex">
-      <DiffedItem value={<Values split={oldSplit} />} diffStatus="old" />
-      <DiffedItem value={<Values split={split} />} diffStatus="new" />
+      <SplitPercentValue
+        percent={splitProps.split.percent}
+        oldPercent={diffSplit?.percent}
+      />
+      {splitProps.showAmount && splitProps.totalValue?.gt(0) ? (
+        <div className="ml-1">
+          <SplitAmountValue props={splitProps} />
+        </div>
+      ) : null}
     </div>
   )
 }

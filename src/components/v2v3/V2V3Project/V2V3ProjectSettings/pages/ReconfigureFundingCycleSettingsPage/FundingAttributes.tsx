@@ -352,14 +352,14 @@ export function DistributionSplitsStatistic({
   currency,
   totalValue,
   projectOwnerAddress,
-  showSplitValues,
+  showAmounts,
   fundingCycleDuration,
 }: {
   splits: Split[]
   currency: BigNumber | undefined
   totalValue: BigNumber | undefined
   projectOwnerAddress: string | undefined
-  showSplitValues: boolean
+  showAmounts: boolean
   fundingCycleDuration: BigNumber | undefined
 }) {
   const formattedDuration = detailedTimeString({
@@ -388,7 +388,7 @@ export function DistributionSplitsStatistic({
             currency={currency}
             totalValue={totalValue}
             projectOwnerAddress={projectOwnerAddress}
-            showSplitValues={showSplitValues}
+            showAmounts={showAmounts}
             valueFormatProps={{ precision: 2 }}
           />
         </div>

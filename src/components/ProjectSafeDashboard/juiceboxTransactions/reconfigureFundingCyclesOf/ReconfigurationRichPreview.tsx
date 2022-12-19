@@ -14,7 +14,6 @@ import { formatOutgoingSplits } from 'utils/splits'
 import { deriveNextIssuanceRate } from 'utils/v2v3/fundingCycle'
 import { formatReservedRate, MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { LinkToSafeButton } from '../../LinkToSafeButton'
-import { DUMMY_NEW_SPLITS, DUMMY_OLD_SPLITS } from './DUMMY_DATA'
 
 const useTransactionJBController = (transaction: SafeTransactionType) => {
   const V2JBController = useLoadV2V3Contract({
@@ -44,7 +43,8 @@ export function ReconfigureRichPreview({
   const {
     projectOwnerAddress,
     fundingCycle: currentFC,
-    // payoutSplits: oldPayoutSplits
+    payoutSplits: diffPayoutSplits,
+    reservedTokensSplits: diffReservedSplits,
   } = useContext(V2V3ProjectContext)
 
   const JBController = useTransactionJBController(transaction)
@@ -76,7 +76,7 @@ export function ReconfigureRichPreview({
   const distributionLimit =
     decodedData._fundAccessConstraints?.[0]?.distributionLimit
   const reservedRate = decodedData._metadata?.reservedRate
-  // const payoutSplits = decodedData._groupedSplits?.[0]?.splits
+  const payoutSplits = decodedData._groupedSplits?.[0]?.splits
   const reservedTokensSplits = decodedData._groupedSplits?.[1]?.splits
 
   const weight = deriveNextIssuanceRate({
@@ -115,38 +115,42 @@ export function ReconfigureRichPreview({
             showDiffs
           />
         </MinimalCollapse>
-        <MinimalCollapse header={t`Funding distribution`} light>
-          {distributionLimit?.gt(0) ? (
-            <SplitList
-              splits={DUMMY_NEW_SPLITS} //formatOutgoingSplits(payoutSplits)}
-              oldSplits={DUMMY_OLD_SPLITS} //oldPayoutSplits}
-              currency={distributionLimitCurrency}
-              totalValue={distributionLimit}
-              projectOwnerAddress={projectOwnerAddress}
-              showSplitValues={!distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)}
-              valueFormatProps={{ precision: 4 }}
-              showDiffs
-            />
-          ) : (
-            <span className="text-grey-400 dark:text-slate-200">
-              <Trans>No distributions configured.</Trans>
-            </span>
-          )}
-        </MinimalCollapse>
-        <MinimalCollapse header={t`Reserved token allocation`} light>
-          {reservedRate?.gt(0) ? (
-            <SplitList
-              splits={formatOutgoingSplits(reservedTokensSplits)}
-              projectOwnerAddress={projectOwnerAddress}
-              totalValue={undefined}
-              reservedRate={parseFloat(formatReservedRate(reservedRate))}
-            />
-          ) : (
-            <span className="text-grey-400 dark:text-slate-200">
-              <Trans>No reserved tokens configured.</Trans>
-            </span>
-          )}
-        </MinimalCollapse>
+        <Space size={'middle'} direction={'vertical'} className="w-2/3">
+          <MinimalCollapse header={t`Funding distribution`} light>
+            {distributionLimit?.gt(0) ? (
+              <SplitList
+                splits={formatOutgoingSplits(payoutSplits)}
+                diffSplits={diffPayoutSplits}
+                currency={distributionLimitCurrency}
+                totalValue={distributionLimit}
+                projectOwnerAddress={projectOwnerAddress}
+                showAmounts={!distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)}
+                valueFormatProps={{ precision: 4 }}
+                showDiffs
+              />
+            ) : (
+              <span className="text-grey-400 dark:text-slate-200">
+                <Trans>No distributions configured.</Trans>
+              </span>
+            )}
+          </MinimalCollapse>
+          <MinimalCollapse header={t`Reserved token allocation`} light>
+            {reservedRate?.gt(0) ? (
+              <SplitList
+                splits={formatOutgoingSplits(reservedTokensSplits)}
+                diffSplits={diffReservedSplits}
+                projectOwnerAddress={projectOwnerAddress}
+                totalValue={undefined}
+                reservedRate={parseFloat(formatReservedRate(reservedRate))}
+                showDiffs
+              />
+            ) : (
+              <span className="text-grey-400 dark:text-slate-200">
+                <Trans>No reserved tokens configured.</Trans>
+              </span>
+            )}
+          </MinimalCollapse>
+        </Space>
       </Space>
       <LinkToSafeButton transaction={transaction} />
     </div>

@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { DiffedItem } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/DiffedItem'
+import { DiffedItem } from 'components/v2v3/shared/DiffedItem'
 import { formatSplitPercent } from 'utils/v2v3/math'
 
 export function SplitPercentValue({
@@ -10,11 +10,13 @@ export function SplitPercentValue({
   oldPercent?: number
 }) {
   const formattedPercent = formatSplitPercent(BigNumber.from(percent))
-  const _percent = <>{formattedPercent}%</>
-  if (!oldPercent || oldPercent === percent) return _percent
+  const formattedOldPercent = oldPercent
+    ? formatSplitPercent(BigNumber.from(oldPercent))
+    : '0'
+  const _percent = <span>{formattedPercent}%</span>
+  if (!oldPercent || formattedPercent === formattedOldPercent) return _percent
 
-  const formattedOldPercent = formatSplitPercent(BigNumber.from(oldPercent))
-  const _oldPercent = <>{formattedOldPercent}%</>
+  const _oldPercent = <span>{formattedOldPercent}%</span>
 
   return (
     <div className="flex">

@@ -10,21 +10,23 @@ import { SplitItem, SplitProps } from './SplitItem'
 
 export default function SplitList({
   splits,
-  oldSplits,
+  diffSplits,
+  showAmounts = false,
   showFees = false,
   currency,
   totalValue,
-  projectOwnerAddress, //X
+  projectOwnerAddress,
   valueSuffix,
   valueFormatProps,
   reservedRate,
   showDiffs,
 }: {
   splits: Split[]
-  oldSplits?: Split[]
+  diffSplits?: Split[]
   currency?: BigNumber
   totalValue: BigNumber | undefined
   projectOwnerAddress: string | undefined
+  showAmounts?: boolean
   showFees?: boolean
   valueSuffix?: string | JSX.Element
   valueFormatProps?: { precision?: number }
@@ -36,13 +38,13 @@ export default function SplitList({
     return getProjectOwnerRemainderSplit(projectOwnerAddress, splits)
   }, [projectOwnerAddress, splits])
 
-  const oldOwnerSplit = useMemo(() => {
-    if (!oldSplits || !projectOwnerAddress) return
-    return getProjectOwnerRemainderSplit(projectOwnerAddress, oldSplits)
-  }, [projectOwnerAddress, oldSplits])
+  const diffOwnerSplit = useMemo(() => {
+    if (!diffSplits || !projectOwnerAddress || !showDiffs) return
+    return getProjectOwnerRemainderSplit(projectOwnerAddress, diffSplits)
+  }, [projectOwnerAddress, diffSplits, showDiffs])
 
   const uniqueSplits = processUniqueSplits({
-    oldSplits: showDiffs ? oldSplits : undefined,
+    oldSplits: showDiffs ? diffSplits : undefined,
     newSplits: splits,
   })
 
@@ -54,6 +56,7 @@ export default function SplitList({
     valueFormatProps,
     reservedRate,
     showFees,
+    showAmount: showAmounts,
   }
 
   return (
@@ -61,25 +64,23 @@ export default function SplitList({
       {[...uniqueSplits].map(split => {
         return (
           <SplitItem
-            split={split}
-            {...splitProps}
+            props={{
+              split,
+              ...splitProps,
+            }}
             key={`${split.beneficiary}-${split.projectId}-${split.percent}`}
           />
         )
       })}
       {ownerSplit?.percent ? (
         <SplitItem
-          split={{
-            ...ownerSplit,
-            oldSplit: oldOwnerSplit,
+          props={{
+            split: {
+              ...ownerSplit,
+              oldSplit: diffOwnerSplit,
+            },
+            ...splitProps,
           }}
-          currency={currency}
-          totalValue={totalValue}
-          projectOwnerAddress={projectOwnerAddress}
-          valueSuffix={valueSuffix}
-          valueFormatProps={valueFormatProps}
-          reservedRate={reservedRate}
-          showFees={showFees}
         />
       ) : null}
     </Space>

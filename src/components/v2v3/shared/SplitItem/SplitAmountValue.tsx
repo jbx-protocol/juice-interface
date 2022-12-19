@@ -5,46 +5,34 @@ import ETHToUSD from 'components/currency/ETHToUSD'
 import CurrencySymbol from 'components/CurrencySymbol'
 import { Parenthesis } from 'components/Parenthesis'
 import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/ETHPaymentTerminalFee'
-import { Split } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { formatWad } from 'utils/format/formatNumber'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
 import { isJuiceboxProjectSplit } from 'utils/v2v3/distributions'
 import { feeForAmount, SPLITS_TOTAL_PERCENT } from 'utils/v2v3/math'
+import { SplitProps } from './SplitItem'
 
-export function SplitAmountValue({
-  split,
-  totalValue,
-  valueSuffix,
-  valueFormatProps,
-  currency,
-  showFees = false,
-}: {
-  split: Split
-  totalValue: BigNumber | undefined
-  valueSuffix?: string | JSX.Element
-  valueFormatProps?: { precision?: number }
-  currency?: BigNumber
-  showFees?: boolean
-}) {
+export function SplitAmountValue({ props }: { props: SplitProps }) {
   const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
-  const splitValue = totalValue?.mul(split.percent).div(SPLITS_TOTAL_PERCENT)
-  const isJuiceboxProject = isJuiceboxProjectSplit(split)
-  const feeAmount = !isJuiceboxProject
+  const splitValue = props.totalValue
+    ?.mul(props.split.percent)
+    .div(SPLITS_TOTAL_PERCENT)
+  const isJuiceboxProject = isJuiceboxProjectSplit(props.split)
+  const feeAmount = isJuiceboxProject
     ? feeForAmount(splitValue, ETHPaymentTerminalFee)
     : BigNumber.from(0)
   const splitValueFormatted =
     splitValue &&
     feeAmount &&
     formatWad(splitValue.sub(feeAmount), {
-      ...valueFormatProps,
+      ...props.valueFormatProps,
     })
   const feeAmountFormatted = formatWad(feeAmount, {
-    ...valueFormatProps,
+    ...props.valueFormatProps,
   })
 
   const curr = V2V3CurrencyName(
-    currency?.toNumber() as V2V3CurrencyOption | undefined,
+    props.currency?.toNumber() as V2V3CurrencyOption | undefined,
   )
   const tooltipTitle =
     curr === 'ETH' && splitValue?.gt(0) ? (
@@ -57,10 +45,10 @@ export function SplitAmountValue({
         (
         <CurrencySymbol currency={curr} />
         {splitValueFormatted}
-        {valueSuffix ? <span> {valueSuffix}</span> : null})
+        {props.valueSuffix ? <span> {props.valueSuffix}</span> : null})
       </span>
       <div className="ml-2 text-sm text-grey-500 dark:text-grey-300">
-        {showFees && !isJuiceboxProject && (
+        {props.showFees && !isJuiceboxProject && (
           <Parenthesis>
             <Trans>
               <CurrencySymbol currency={curr} />

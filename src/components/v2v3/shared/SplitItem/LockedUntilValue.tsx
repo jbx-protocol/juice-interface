@@ -1,6 +1,6 @@
 import { formatDate } from 'utils/format/formatDate'
 import { LockOutlined } from '@ant-design/icons'
-import { DiffedItem } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/DiffedItem'
+import { DiffedItem } from 'components/v2v3/shared/DiffedItem'
 import { Tooltip } from 'antd'
 import { Trans } from '@lingui/macro'
 
@@ -44,6 +44,8 @@ export function LockedUntilValue({
     oldLockedUntilFormatted && oldLockedUntil && oldLockedUntil > 0
   const hasNewLockedUntil = lockedUntil && lockedUntil > 0
   const hasDiff = showDiff && lockedUntil !== oldLockedUntil
+
+  if (!hasNewLockedUntil && !hasOldLockedUntil) return null
 
   if (hasDiff && !hasOldLockedUntil) {
     // whole lockedUntil section green

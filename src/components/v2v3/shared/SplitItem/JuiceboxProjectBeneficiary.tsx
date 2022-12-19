@@ -9,7 +9,7 @@ import { featureFlagEnabled } from 'utils/featureFlags'
 import { AllocatorBadge } from '../FundingCycleConfigurationDrawers/AllocatorBadge'
 import V2V3ProjectHandleLink from '../V2V3ProjectHandleLink'
 import { CrownFilled } from '@ant-design/icons'
-import { DiffedItem } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/DiffedItem'
+import { DiffedItem } from 'components/v2v3/shared/DiffedItem'
 
 export function JuiceboxProjectBeneficiary({
   projectOwnerAddress,
@@ -36,7 +36,7 @@ export function JuiceboxProjectBeneficiary({
         ) : null}
       </Space>
       {split.allocator === NULL_ALLOCATOR_ADDRESS ? (
-        <div className="ml-2 flex text-sm text-grey-500 dark:text-grey-300">
+        <div className="ml-2 flex items-center text-sm text-grey-500 dark:text-grey-300">
           <TooltipLabel
             label={<Trans>Tokens:</Trans>}
             tip={
@@ -59,11 +59,16 @@ export function JuiceboxProjectBeneficiary({
             </div>
           ) : (
             <div className="ml-2">
-              <FormattedAddress address={split.beneficiary} />
+              <FormattedAddress
+                address={split.beneficiary}
+                className={
+                  'text-sm font-light text-grey-500 dark:text-grey-300'
+                }
+              />
             </div>
           )}{' '}
           {isProjectOwner && (
-            <Tooltip title={<Trans>Project owner</Trans>}>
+            <Tooltip title={<Trans>Project owner</Trans>} className="ml-1">
               <CrownFilled />
             </Tooltip>
           )}

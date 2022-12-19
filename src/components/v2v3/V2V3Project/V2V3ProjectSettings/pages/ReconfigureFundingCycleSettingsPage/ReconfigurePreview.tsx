@@ -186,7 +186,7 @@ export default function ReconfigurePreview({
           currency={fundAccessConstraint?.distributionLimitCurrency}
           totalValue={distributionLimit}
           projectOwnerAddress={userAddress}
-          showSplitValues={hasDistributionLimit}
+          showAmounts={hasDistributionLimit}
           fundingCycleDuration={duration}
         />
       )}

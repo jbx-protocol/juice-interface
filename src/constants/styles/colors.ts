@@ -71,6 +71,3 @@ export const darkColors = {
   darkGray200: '#E1E0E8',
   darkGray100: '#F0EFF4',
 }
-
-export const DIFF_OLD_BACKGROUND = 'bg-error-200 dark:bg-error-800'
-export const DIFF_NEW_BACKGROUND = 'bg-success-200 dark:bg-success-800'

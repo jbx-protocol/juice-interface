@@ -27,11 +27,10 @@ import { getAmountFromPercent, getPercentFromAmount } from 'utils/v1/payouts'
 import * as constants from '@ethersproject/constants'
 import * as moment from 'moment'
 import { BigNumber } from '@ethersproject/bignumber'
-import { useForm, useWatch } from 'antd/lib/form/Form'
+import { useForm } from 'antd/lib/form/Form'
 import { CurrencyName } from 'constants/currency'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { EditingPayoutMod } from './types'
-import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 
 type ModType = 'project' | 'address'
 
@@ -67,7 +66,6 @@ export const ProjectPayoutModsModal = ({
   onCancel: VoidFunction
 }) => {
   const [modalMode, setModalMode] = useState<ModalMode>('Add') //either 'Add', or 'Edit'
-  // states are all initial values only
   const [editingModType, setEditingModType] = useState<ModType>('address')
   const [editingModHandle, setEditingModHandle] = useState<string | BigNumber>()
   const [editingModAllocator, setEditingModAllocator] = useState<string>()
@@ -155,14 +153,8 @@ export const ProjectPayoutModsModal = ({
     await form.validateFields()
 
     const handle = form.getFieldValue('handle')
+    const beneficiary = form.getFieldValue('beneficiary')
     const allocator = form.getFieldValue('allocator')
-
-    // alloctor uses `addToBalance`, therefore no beneficiary required
-    const beneficiary =
-      allocator === NULL_ALLOCATOR_ADDRESS
-        ? form.getFieldValue('beneficiary')
-        : constants.AddressZero
-
     const percent = percentToPermyriad(form.getFieldValue('percent')).toNumber()
     const _projectId = form.getFieldValue('projectId')
     const projectId = _projectId ? BigNumber.from(_projectId) : undefined
@@ -199,8 +191,6 @@ export const ProjectPayoutModsModal = ({
     onCancel()
     return true
   }
-
-  const allocator = useWatch('allocator', form)
 
   return (
     <Modal
@@ -257,8 +247,7 @@ export const ProjectPayoutModsModal = ({
             onChange={id => form.setFieldsValue({ projectId: id })}
           />
         )}
-        {editingModType === 'project' &&
-        allocator === NULL_ALLOCATOR_ADDRESS ? (
+        {editingModType === 'project' ? (
           <Form.Item
             name="beneficiary"
             label={t`Address`}

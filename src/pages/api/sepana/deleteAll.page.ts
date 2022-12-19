@@ -1,12 +1,11 @@
 import { NextApiHandler } from 'next'
 import { deleteAllSepanaDocs } from './utils'
 
-// Synchronizes the Sepana engine with the latest Juicebox Subgraph/IPFS data
+/**
+ * Synchronizes the Sepana engine with the latest Juicebox Subgraph/IPFS data
+ * TODO: REMOVE. Currently only needed for testing
+ */
 const handler: NextApiHandler = async (_, res) => {
-  if (process.env.NODE_ENV !== 'development') {
-    res.status(403).send('Refused to delete all Sepana docs')
-  }
-
   try {
     await deleteAllSepanaDocs()
   } catch (error) {

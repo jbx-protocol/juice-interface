@@ -1,7 +1,7 @@
 import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
-import SiteNavigation from 'components/Navbar/SiteNavigation'
 import useMobile from 'hooks/Mobile'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { ArcxProvider } from 'providers/ArcxProvider'
 import { EtherPriceProvider } from 'providers/EtherPriceProvider'
@@ -15,6 +15,12 @@ import store from 'redux/store'
 import { classNames } from 'utils/classNames'
 import { redirectTo } from 'utils/windowUtils'
 
+const SiteNavigation = dynamic(
+  () => import('components/Navbar/SiteNavigation'),
+  {
+    ssr: false,
+  },
+)
 /**
  * Contains all the core app providers used by each page.
  *

@@ -3,14 +3,42 @@ import { Col, Row } from 'antd'
 import { AppWrapper } from 'components/common'
 import Image from 'next/image'
 import { BigHeading } from './home/BigHeading'
-import Faq from './home/Faq'
-import Footer from './home/Footer'
-import { HeroSection } from './home/HeroSection'
-import { HowItWorksSection } from './home/HowItWorksSection'
-import { StatsSection } from './home/StatsSection'
 import { TopProjectsSection } from './home/TopProjectsSection'
-import TrendingSection from './home/TrendingSection'
 import blueBerry from '/public/assets/blueberry-ol.png'
+import dynamic from 'next/dynamic'
+
+const HeroSection = dynamic(
+  () => import('./home/HeroSection').then(module => module.HeroSection),
+  { ssr: true },
+)
+
+const StatsSection = dynamic(
+  () => import('./home/StatsSection').then(module => module.StatsSection),
+  { ssr: false },
+)
+
+const TrendingSection = dynamic(() => import('./home/TrendingSection'), {
+  loading: () => <div>Loading...</div>,
+  ssr: false,
+})
+const Footer = dynamic(() => import('./home/Footer'), {
+  loading: () => <div>Loading...</div>,
+  ssr: false,
+})
+
+const HowItWorksSection = dynamic(
+  () =>
+    import('./home/HowItWorksSection').then(module => module.HowItWorksSection),
+  {
+    loading: () => <div>Loading...</div>,
+    ssr: false,
+  },
+)
+
+const Faq = dynamic(() => import('./home/Faq'), {
+  loading: () => <div>Loading...</div>,
+  ssr: false,
+})
 
 function Landing() {
   return (

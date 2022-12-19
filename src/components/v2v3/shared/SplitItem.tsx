@@ -8,7 +8,6 @@ import FormattedAddress from 'components/FormattedAddress'
 import { Parenthesis } from 'components/Parenthesis'
 import TooltipIcon from 'components/TooltipIcon'
 import TooltipLabel from 'components/TooltipLabel'
-import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/ETHPaymentTerminalFee'
 import { Split } from 'models/splits'
@@ -55,25 +54,24 @@ const JuiceboxProjectBeneficiary = ({
           <AllocatorBadge allocator={split.allocator} />
         ) : null}
       </Space>
-      {split.allocator === NULL_ALLOCATOR_ADDRESS ? (
-        <div className="ml-2 text-sm text-grey-500 dark:text-grey-300">
-          <TooltipLabel
-            label={<Trans>Tokens:</Trans>}
-            tip={
-              <Trans>
-                This address will receive any tokens minted when the recipient
-                project gets paid.
-              </Trans>
-            }
-          />{' '}
-          <FormattedAddress address={split.beneficiary} />{' '}
-          {isProjectOwner && (
-            <Tooltip title={<Trans>Project owner</Trans>}>
-              <CrownFilled />
-            </Tooltip>
-          )}
-        </div>
-      ) : null}
+
+      <div className="ml-2 text-sm text-grey-500 dark:text-grey-300">
+        <TooltipLabel
+          label={<Trans>Tokens:</Trans>}
+          tip={
+            <Trans>
+              This address will receive any tokens minted when the recipient
+              project gets paid.
+            </Trans>
+          }
+        />{' '}
+        <FormattedAddress address={split.beneficiary} />{' '}
+        {isProjectOwner && (
+          <Tooltip title={<Trans>Project owner</Trans>}>
+            <CrownFilled />
+          </Tooltip>
+        )}
+      </div>
     </div>
   )
 }

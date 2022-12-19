@@ -7,10 +7,10 @@ import { V2V3FundingCycle } from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
 import { formatDate, formatDateToUTC } from 'utils/format/formatDate'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
-import { DISTRIBUTION_LIMIT_EXPLANATION } from '../../settingExplanations'
-import { FundingCycleListItem } from '../FundingCycleListItem'
-import { DistributionLimitValue } from './DistributionLimitValue'
-import { DurationValue } from './DurationValue'
+import { DISTRIBUTION_LIMIT_EXPLANATION } from '../settingExplanations'
+import { FundingCycleListItem } from './FundingCycleListItem'
+import { DistributionLimitValue } from './values/DistributionLimitValue'
+import { DurationValue } from './values/DurationValue'
 
 export function FundingCycleListItems({
   fundingCycle,
@@ -47,14 +47,6 @@ export function FundingCycleListItems({
       )
     : undefined
 
-  const durationHasDiff =
-    oldFundingCycle && !fundingCycle.duration.eq(oldFundingCycle.duration)
-  const distributionLimitHasDiff =
-    oldDistributionLimit &&
-    !distributionLimit?.eq(oldDistributionLimit) &&
-    oldDistributionLimitCurrency &&
-    !distributionLimitCurrency?.eq(oldDistributionLimitCurrency)
-
   return (
     <>
       {formattedStartTime ? (
@@ -85,7 +77,7 @@ export function FundingCycleListItems({
         name={t`Duration`}
         value={<DurationValue duration={fundingCycle.duration} />}
         oldValue={
-          showDiffs && durationHasDiff ? (
+          showDiffs ? (
             <DurationValue duration={oldFundingCycle?.duration} />
           ) : undefined
         }
@@ -99,12 +91,10 @@ export function FundingCycleListItems({
           />
         }
         oldValue={
-          showDiffs && distributionLimitHasDiff ? (
-            <DistributionLimitValue
-              distributionLimit={oldDistributionLimit}
-              currency={oldCurrency}
-            />
-          ) : undefined
+          <DistributionLimitValue
+            distributionLimit={oldDistributionLimit}
+            currency={oldCurrency}
+          />
         }
         helperText={DISTRIBUTION_LIMIT_EXPLANATION}
       />

@@ -1,8 +1,8 @@
+import { ProjectMetadataV5 } from 'models/project-metadata'
 import { Project } from 'models/subgraph-entities/vX/project'
 
-export type SepanaProject = Project & {
-  name?: string
-  description?: string
-  logoUri?: string
-  lastUpdated?: number
-}
+// Project type stored in Sepana db
+export type SepanaProject = Project &
+  Pick<ProjectMetadataV5, 'description' | 'logoUri' | 'name'> & {
+    lastUpdated: number
+  }

@@ -14,6 +14,7 @@ import { formatOutgoingSplits } from 'utils/splits'
 import { deriveNextIssuanceRate } from 'utils/v2v3/fundingCycle'
 import { formatReservedRate, MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { LinkToSafeButton } from '../../LinkToSafeButton'
+import { DUMMY_NEW_SPLITS, DUMMY_OLD_SPLITS } from './DUMMY_DATA'
 
 const useTransactionJBController = (transaction: SafeTransactionType) => {
   const V2JBController = useLoadV2V3Contract({
@@ -40,8 +41,11 @@ export function ReconfigureRichPreview({
 }: {
   transaction: SafeTransactionType
 }) {
-  const { projectOwnerAddress, fundingCycle: currentFC } =
-    useContext(V2V3ProjectContext)
+  const {
+    projectOwnerAddress,
+    fundingCycle: currentFC,
+    // payoutSplits: oldPayoutSplits
+  } = useContext(V2V3ProjectContext)
 
   const JBController = useTransactionJBController(transaction)
   if (!JBController) return null
@@ -72,7 +76,7 @@ export function ReconfigureRichPreview({
   const distributionLimit =
     decodedData._fundAccessConstraints?.[0]?.distributionLimit
   const reservedRate = decodedData._metadata?.reservedRate
-  const payoutSplits = decodedData._groupedSplits?.[0]?.splits
+  // const payoutSplits = decodedData._groupedSplits?.[0]?.splits
   const reservedTokensSplits = decodedData._groupedSplits?.[1]?.splits
 
   const weight = deriveNextIssuanceRate({
@@ -114,12 +118,14 @@ export function ReconfigureRichPreview({
         <MinimalCollapse header={t`Funding distribution`} light>
           {distributionLimit?.gt(0) ? (
             <SplitList
-              splits={formatOutgoingSplits(payoutSplits)}
+              splits={DUMMY_NEW_SPLITS} //formatOutgoingSplits(payoutSplits)}
+              oldSplits={DUMMY_OLD_SPLITS} //oldPayoutSplits}
               currency={distributionLimitCurrency}
               totalValue={distributionLimit}
               projectOwnerAddress={projectOwnerAddress}
               showSplitValues={!distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)}
               valueFormatProps={{ precision: 4 }}
+              showDiffs
             />
           ) : (
             <span className="text-grey-400 dark:text-slate-200">

@@ -1,45 +1,6 @@
 import { Tooltip } from 'antd'
-import { twJoin } from 'tailwind-merge'
 import { classNames } from 'utils/classNames'
-
-// whether this value the old value or a new (updated) value
-type DiffStatus = 'new' | 'old'
-
-function ListItemValue({
-  value,
-  diffStatus,
-}: {
-  value: string | JSX.Element
-  diffStatus?: DiffStatus
-}) {
-  const highlight =
-    diffStatus === 'old'
-      ? 'bg-error-100 dark:bg-error-900'
-      : diffStatus === 'new'
-      ? 'bg-success-100 dark:bg-success-900'
-      : undefined
-
-  return (
-    <div
-      className={twJoin(
-        'text-secondary ml-2 flex whitespace-nowrap',
-        highlight,
-        diffStatus ? 'pr-1' : undefined,
-      )}
-    >
-      {diffStatus ? (
-        <span className="mr-2">
-          {diffStatus === 'new' ? (
-            <span className="text-success-500 dark:text-success-200">+</span>
-          ) : diffStatus === 'old' ? (
-            <span className="text-error-500 dark:text-error-200">–</span>
-          ) : null}
-        </span>
-      ) : null}
-      <div className={diffStatus ? 'font-medium' : undefined}>{value}</div>
-    </div>
-  )
-}
+import { DiffedItem } from './DiffedItem'
 
 // e.g. 'Distribution limit', 'Start', 'End', etc.
 export function FundingCycleListItem({
@@ -59,8 +20,8 @@ export function FundingCycleListItem({
 
   const _value = (
     <>
-      {hasDiff ? <ListItemValue value={oldValue} diffStatus={'old'} /> : null}
-      <ListItemValue value={value} diffStatus={hasDiff ? 'new' : undefined} />
+      {hasDiff ? <DiffedItem value={oldValue} diffStatus={'old'} /> : null}
+      <DiffedItem value={value} diffStatus={hasDiff ? 'new' : undefined} />
     </>
   )
 

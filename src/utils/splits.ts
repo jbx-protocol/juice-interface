@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
+import { isEqual } from 'lodash'
 import { PayoutMod } from 'models/mods'
 import { OutgoingSplit, Split } from 'models/splits'
 import {
@@ -12,6 +13,12 @@ import {
   splitPercentFrom,
   SPLITS_TOTAL_PERCENT,
 } from './v2v3/math'
+
+//  - true if the split has been removed (exists in old but not new),
+//  - false if new (exists in new but not old)
+//  - Split if exists in old and new and there is a diff in the splits
+//  - undefined if exists in old and new and there is no diff in the splits
+export type OldSplit = Split | boolean | undefined
 
 export const toSplit = (mod: PayoutMod): Split => {
   return {
@@ -89,4 +96,79 @@ export const formatOutgoingSplits = (splits: OutgoingSplit[]): Split[] => {
         ({ ...split, percent: split.percent.toNumber() } as Split),
     ) ?? []
   )
+}
+
+const splitIsProject = (split: Split) =>
+  Boolean(split.projectId && parseInt(split.projectId) > 0)
+
+// determines if two splits are the same 'entity' (either projectId or address)
+const splitsAreSameEntity = (a: Split, b: Split) => {
+  const isProject = splitIsProject(a)
+  return (
+    (isProject && a.projectId === b.projectId) ||
+    (!isProject && a.beneficiary === b.beneficiary)
+  )
+}
+
+// returns a sorted list of a give list of splits (by percent allocation)
+const sortSplits = (splits: Split[]) => {
+  return splits.sort((a, b) => (a.percent < b.percent ? 1 : -1))
+}
+
+// return list of splits that exist in oldSplits but not newSplits
+export const getRemovedSplits = (oldSplits: Split[], newSplits: Split[]) => {
+  return oldSplits.filter(oldSplit => {
+    return !newSplits.some(newSplit => splitsAreSameEntity(oldSplit, newSplit))
+  })
+}
+
+// returns all unique splits (projectIds or addresses), sorted by their new `percent`
+// and assigns each split an additional property `oldSplit` (OldSplit)
+export const processUniqueSplits = ({
+  oldSplits,
+  newSplits,
+}: {
+  oldSplits: Split[] | undefined
+  newSplits: Split[]
+}) => {
+  const uniqueSplitsByProjectIdOrAddress: Array<
+    Split & { oldSplit: OldSplit }
+  > = []
+  if (!oldSplits) return sortSplits(newSplits)
+
+  newSplits.map(split => {
+    const oldSplit = oldSplits.find(oldSplit =>
+      splitsAreSameEntity(oldSplit, split),
+    )
+
+    const splitsEqual = isEqual(split, oldSplit)
+
+    if (oldSplit && !splitsEqual) {
+      // adds diffed splits (exists in new and old and there is no diff)
+      uniqueSplitsByProjectIdOrAddress.push({
+        ...split,
+        oldSplit,
+      })
+    } else if (oldSplit && splitsEqual) {
+      // adds undiffed splits (exists in new and old and there is no diff)
+      uniqueSplitsByProjectIdOrAddress.push({
+        ...split,
+        oldSplit: undefined,
+      })
+    } else {
+      // add the new splits (exists in new but not old)
+      uniqueSplitsByProjectIdOrAddress.push({
+        ...split,
+        oldSplit: false,
+      })
+    }
+  })
+  const removedSplits = getRemovedSplits(oldSplits, newSplits)
+  removedSplits.map(split => {
+    uniqueSplitsByProjectIdOrAddress.push({
+      ...split,
+      oldSplit: true,
+    })
+  })
+  return sortSplits(uniqueSplitsByProjectIdOrAddress)
 }

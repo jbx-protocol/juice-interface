@@ -224,7 +224,11 @@ export const ProjectPayoutModsModal = ({
             onChange={type => {
               setEditingModType(type)
               if (type === 'address')
-                form.setFieldsValue({ handle: undefined, projectId: undefined })
+                form.setFieldsValue({
+                  handle: undefined,
+                  projectId: undefined,
+                  allocator: NULL_ALLOCATOR_ADDRESS,
+                })
             }}
           >
             <Select.Option value="address">

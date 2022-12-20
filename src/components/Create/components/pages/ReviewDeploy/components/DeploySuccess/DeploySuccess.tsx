@@ -3,6 +3,7 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Space } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { NEW_DEPLOY_QUERY_PARAM } from 'components/v2v3/V2V3Project/modals/NewDeployModal'
+import { MAINNET_CHAIN_ID, NETWORKS } from 'constants/networks'
 import useMobile from 'hooks/Mobile'
 import { useWallet } from 'hooks/Wallet'
 import Image from 'next/image'
@@ -27,9 +28,9 @@ export const DeploySuccess = ({ projectId }: { projectId: number }) => {
    */
   const twitterShareUrl = useMemo(() => {
     let juiceboxUrl = `https://juicebox.money/v2/p/${projectId}`
-    const chainId = chain?.name.toLowerCase() ?? 'mainnet'
-    if (chainId !== 'mainnet') {
-      juiceboxUrl = `https://${chainId}.juicebox.money/v2/p/${projectId}`
+    const chainId = parseInt(chain?.id ?? MAINNET_CHAIN_ID.toString())
+    if (chainId !== MAINNET_CHAIN_ID) {
+      juiceboxUrl = `https://${NETWORKS[chainId].name}.juicebox.money/v2/p/${projectId}`
     }
     const message = `Check out my project on ${
       chain?.name ? `${chain.name} ` : ''

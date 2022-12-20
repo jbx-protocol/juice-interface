@@ -2,16 +2,12 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { readProvider } from 'constants/readProvider'
 import { ipfsGetWithFallback } from 'lib/api/ipfs'
 import { ProjectMetadataV5 } from 'models/project-metadata'
-import { SepanaBigNumber, SepanaProject } from 'models/sepana'
+import { SepanaProject } from 'models/sepana'
 import { Project } from 'models/subgraph-entities/vX/project'
 import { NextApiHandler } from 'next'
 import { querySubgraphExhaustive } from 'utils/graph'
 
-import {
-  isSepanaBigNumber,
-  querySepanaProjects,
-  writeSepanaDocs,
-} from './utils'
+import { queryAllSepanaProjects, writeSepanaDocs } from './utils'
 
 const projectKeys: (keyof Project)[] = [
   'id',
@@ -28,7 +24,7 @@ const projectKeys: (keyof Project)[] = [
 
 // Synchronizes the Sepana engine with the latest Juicebox Subgraph/IPFS data
 const handler: NextApiHandler = async (_, res) => {
-  const sepanaProjects = (await querySepanaProjects()).data.hits.hits
+  const sepanaProjects = (await queryAllSepanaProjects()).data.hits.hits
 
   const changedSubgraphProjects = (
     await querySubgraphExhaustive({
@@ -39,6 +35,15 @@ const handler: NextApiHandler = async (_, res) => {
     // Upserting data in Sepana requires the `_id` param to be included, so we include it here
     // https://docs.sepana.io/sepana-search-api/web3-search-cloud/search-api#request-example-2
     .map(p => ({ ...p, _id: p.id }))
+    .map(p =>
+      Object.entries(p).reduce(
+        (acc, [k, v]) => ({
+          ...acc,
+          [k]: BigNumber.isBigNumber(v) ? v.toString() : v, // Store BigNumbers as strings
+        }),
+        {} as SepanaProject,
+      ),
+    )
     .filter(subgraphProject => {
       const sepanaProject = sepanaProjects.find(
         p => subgraphProject.id === p._source.id,
@@ -47,17 +52,7 @@ const handler: NextApiHandler = async (_, res) => {
       // Deep compare subgraph project with sepana project to find which projects have changed or not yet been stored on sepana
       return (
         !sepanaProject ||
-        projectKeys.some(k => {
-          const a = subgraphProject[k]
-          const b = sepanaProject._source[k]
-
-          // Subgraph bignumber type is different from sepana bignumber
-          if (BigNumber.isBigNumber(a) && isSepanaBigNumber(b)) {
-            return a._hex !== (b as SepanaBigNumber).hex
-          }
-
-          return a !== b
-        })
+        projectKeys.some(k => subgraphProject[k] !== sepanaProject._source[k])
       )
     })
 

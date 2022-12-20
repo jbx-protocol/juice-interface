@@ -7,10 +7,21 @@ export type SepanaProject = Project &
     lastUpdated: number
   }
 
-export type SepanaDoc<T> = { _source: T; _id: string }
-
 export type SepanaSearchResponse<T> = {
-  hits: { hits: SepanaDoc<T>[] }
+  hits: {
+    total: {
+      value: number
+      relation: string
+    }
+    max_score: number
+    hits: {
+      _index: string
+      _type: string
+      _id: string
+      _score: number
+      _source: T
+    }[]
+  }
 }
 
 export type SepanaBigNumber = { type: 'BigNumber'; hex: string }

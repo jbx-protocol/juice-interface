@@ -1,9 +1,5 @@
 import axios from 'axios'
-import {
-  SepanaBigNumber,
-  SepanaProject,
-  SepanaSearchResponse,
-} from 'models/sepana'
+import { SepanaProject, SepanaSearchResponse } from 'models/sepana'
 
 if (!process.env.SEPANA_ENGINE_ID) {
   throw new Error('Missing SEPANA_ENGINE_ID')
@@ -25,7 +21,7 @@ const headers = {
  *
  * TODO: Update this before we hit 10k projects (size: 10000).
  */
-export async function querySepanaProjects() {
+export async function queryAllSepanaProjects() {
   return axios.post<SepanaSearchResponse<SepanaProject>>(
     process.env.SEPANA_API_URL + 'search',
     {
@@ -34,6 +30,45 @@ export async function querySepanaProjects() {
         match_all: {},
       },
       size: 10000,
+      page: 0,
+    },
+    {
+      headers,
+    },
+  )
+}
+
+/**
+ * Search all Sepana project records
+ *
+ * @returns Promise containing project docs from Sepana database matching search params. If no query text is supplied, returns all projects
+ */
+export async function searchSepanaProjects(query = '', pageSize = 20) {
+  return axios.post<SepanaSearchResponse<SepanaProject>>(
+    process.env.SEPANA_API_URL + 'search',
+    {
+      engine_ids: [process.env.SEPANA_ENGINE_ID],
+      query: {
+        function_score: {
+          query: {
+            query_string: {
+              query: `*${query}*`,
+              // Match against name, handle, description
+              // Weight matches to name and handle higher than description
+              fields: ['name^2', 'handle^2', 'description'],
+            },
+          },
+          script_score: {
+            script: {
+              source:
+                // Prioritize matches with higher totalPaid and trendingScore
+                "3 * Math.max(0, doc['totalPaid.keyword'].value.length() - 17) + 3 * Math.max(0, doc['trendingScore.keyword'].value.length() - 18)",
+            },
+          },
+          boost_mode: 'sum',
+        },
+      },
+      size: pageSize,
       page: 0,
     },
     {
@@ -82,15 +117,4 @@ export async function writeSepanaDocs(docs: SepanaProject[]) {
       await new Promise(r => setTimeout(r, 3000))
     }
   }
-}
-
-/**
- * Checks if a value matches the BigNumber type used in Sepana db
- *
- * @param val Value to check
- *
- * @returns True if value is Sepana BigNumber
- */
-export function isSepanaBigNumber(val: unknown) {
-  return (val as SepanaBigNumber).type === 'BigNumber'
 }

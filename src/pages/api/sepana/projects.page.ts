@@ -1,3 +1,4 @@
+import { parseProjectJson } from 'models/subgraph-entities/vX/project'
 import { NextApiHandler } from 'next'
 
 import { searchSepanaProjects } from './utils'
@@ -17,7 +18,10 @@ const handler: NextApiHandler = async (req, res) => {
       typeof pageSize === 'number' ? pageSize : undefined,
     )
 
-    res.status(200).json(results.data.hits)
+    res.status(200).json({
+      ...results.data.hits,
+      hits: results.data.hits.hits.map(h => parseProjectJson(h._source)),
+    })
   } catch (e) {
     res.status(500).send(e)
   }

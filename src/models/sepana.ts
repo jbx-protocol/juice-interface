@@ -1,8 +1,8 @@
 import { ProjectMetadataV5 } from 'models/project-metadata'
-import { Project } from 'models/subgraph-entities/vX/project'
+import { ProjectJson } from 'models/subgraph-entities/vX/project'
 
 // Project type stored in Sepana db
-export type SepanaProject = Project &
+export type SepanaProject = ProjectJson &
   Pick<ProjectMetadataV5, 'description' | 'logoUri' | 'name'> & {
     lastUpdated: number
   }

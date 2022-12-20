@@ -70,6 +70,10 @@ const handler: NextApiHandler = async (_, res) => {
     }
 
     try {
+      if (!p.metadataUri) {
+        throw new Error(`Missing metadataUri for project with id: ${p.id}`)
+      }
+
       updatedSepanaProjects.push(
         ipfsGetWithFallback<ProjectMetadataV5>(p.metadataUri).then(
           ({ data: { logoUri, name, description } }) => ({

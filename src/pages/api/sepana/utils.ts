@@ -45,8 +45,10 @@ export async function queryAllSepanaProjects() {
 }
 
 /**
- * Search all Sepana project records
+ * Search all Sepana project records, using preconfigured elastic search field weights and script source.
  *
+ * @param query text to search
+ * @param pageSize max number of results to return
  * @returns Promise containing project docs from Sepana database matching search params. If no query text is supplied, returns all projects
  */
 export async function searchSepanaProjects(query = '', pageSize?: number) {

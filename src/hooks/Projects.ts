@@ -1,9 +1,15 @@
+import axios from 'axios'
 import { PV_V1, PV_V2 } from 'constants/pv'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
 import { ProjectState } from 'models/project-visibility'
 import { PV } from 'models/pv'
-import { Project } from 'models/subgraph-entities/vX/project'
+import {
+  SepanaProject,
+  SepanaProjectJson,
+  SepanaSearchResponse,
+} from 'models/sepana'
+import { parseProjectJson, Project } from 'models/subgraph-entities/vX/project'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
@@ -15,7 +21,6 @@ import {
   querySubgraphExhaustive,
   WhereConfig,
 } from 'utils/graph'
-import { searchSepanaProjectsList } from 'utils/sepana'
 import { getTerminalAddress } from 'utils/v1/terminals'
 
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
@@ -143,13 +148,29 @@ export function useProjectsSearch(handle: string | undefined) {
   )
 }
 
+/**
+ * Search sepana projects for query and return only a list of projects
+ * @param text text to search
+ * @param pageSize number of projects to return
+ * @returns list of projects
+ */
 export function useSepanaProjectsSearch(
   text: string | undefined,
   pageSize?: number,
 ) {
   return useQuery(
     ['sepana-query', text, pageSize],
-    () => searchSepanaProjectsList(text, pageSize),
+    () =>
+      axios
+        .get<SepanaSearchResponse<SepanaProjectJson>>(
+          `/api/sepana/projects?text=${text}` +
+            (pageSize !== undefined ? `&pageSize=${pageSize}` : ''),
+        )
+        .then(res =>
+          res.data.hits.hits.map(
+            h => parseProjectJson(h._source) as SepanaProject,
+          ),
+        ),
     {
       staleTime: DEFAULT_STALE_TIME,
     },

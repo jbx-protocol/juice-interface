@@ -19,10 +19,7 @@ const handler: NextApiHandler = async (req, res) => {
         : undefined,
     )
 
-    res.status(200).json({
-      ...results.hits,
-      hits: results.hits.hits.map(h => h._source),
-    })
+    res.status(200).json(results)
   } catch (e) {
     res.status(500).send(e)
   }

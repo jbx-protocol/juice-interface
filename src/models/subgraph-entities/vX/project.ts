@@ -54,7 +54,7 @@ type BaseProject = {
   projectId: number
   pv: PV
   owner: string
-  deployer: string
+  deployer: string | null
   createdAt: number
   trendingPaymentsCount: number
   trendingScore: BigNumber

@@ -3,7 +3,10 @@ import Grid from 'components/Grid'
 import Loading from 'components/Loading'
 import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
 import { useLoadMoreContent } from 'hooks/LoadMore'
-import { useInfiniteProjectsQuery, useProjectsSearch } from 'hooks/Projects'
+import {
+  useInfiniteProjectsQuery,
+  useSepanaProjectsSearch,
+} from 'hooks/Projects'
 import { PV } from 'models/pv'
 import { useEffect, useRef } from 'react'
 import { classNames } from 'utils/classNames'
@@ -36,8 +39,8 @@ export default function AllProjects({
     pv,
   })
 
-  const { data: searchPages, isLoading: isLoadingSearch } =
-    useProjectsSearch(searchText)
+  const { data: searchResults, isLoading: isLoadingSearch } =
+    useSepanaProjectsSearch(searchText)
 
   const [scrolledToBottom] = useLoadMoreContent({
     loadMoreContainerRef,
@@ -47,7 +50,7 @@ export default function AllProjects({
   const isLoading = isLoadingProjects || isLoadingSearch
 
   const concatenatedPages = searchText?.length
-    ? searchPages
+    ? searchResults
     : pages?.pages?.reduce((prev, group) => [...prev, ...group], [])
 
   useEffect(() => {

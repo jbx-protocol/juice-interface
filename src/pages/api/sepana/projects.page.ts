@@ -19,8 +19,8 @@ const handler: NextApiHandler = async (req, res) => {
     )
 
     res.status(200).json({
-      ...results.data.hits,
-      hits: results.data.hits.hits.map(h => parseProjectJson(h._source)),
+      ...results.hits,
+      hits: results.hits.hits.map(h => parseProjectJson(h._source)),
     })
   } catch (e) {
     res.status(500).send(e)

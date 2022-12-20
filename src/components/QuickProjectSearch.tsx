@@ -10,7 +10,7 @@ import Input from 'antd/lib/input/Input'
 import Modal from 'antd/lib/modal/Modal'
 import { PV_V2 } from 'constants/pv'
 import { useModal } from 'hooks/Modal'
-import { useProjectsSearch } from 'hooks/Projects'
+import { useSepanaProjectsSearch } from 'hooks/Projects'
 import { useRouter } from 'next/router'
 import React, { useCallback, useEffect, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -44,20 +44,20 @@ export default function QuickProjectSearch() {
     }
   }, [inputText])
 
-  const { data: searchPages, isLoading: isLoadingSearch } =
-    useProjectsSearch(searchText)
+  const { data: searchResults, isLoading: isLoadingSearch } =
+    useSepanaProjectsSearch(searchText, { list: true })
 
   const goToProject = useCallback(() => {
     if (highlightIndex === undefined) return
 
-    const project = searchPages?.[highlightIndex]
+    const project = searchResults?.[highlightIndex]
 
     if (!project) return
 
     router.push(
       project.pv === PV_V2 ? `/@${project.handle}` : `/p/${project.handle}`,
     )
-  }, [router, searchPages, highlightIndex])
+  }, [router, searchResults, highlightIndex])
 
   const reset = useCallback(() => {
     modal.close()
@@ -111,7 +111,7 @@ export default function QuickProjectSearch() {
   // Arrow key up/down & tab listener
   useEffect(() => {
     const listener = (e: KeyboardEvent) => {
-      if (!searchPages || isLoadingSearch) return
+      if (!searchResults || isLoadingSearch) return
 
       switch (e.key) {
         case 'ArrowUp':
@@ -120,7 +120,7 @@ export default function QuickProjectSearch() {
         case 'ArrowDown':
         case 'Tab':
           setHighlightIndex(i =>
-            i === undefined ? 0 : Math.min(i + 1, searchPages.length - 1),
+            i === undefined ? 0 : Math.min(i + 1, searchResults.length - 1),
           )
           break
       }
@@ -136,7 +136,7 @@ export default function QuickProjectSearch() {
     searchText,
     router,
     goToProject,
-    searchPages,
+    searchResults,
     isLoadingSearch,
   ])
 
@@ -175,9 +175,9 @@ export default function QuickProjectSearch() {
           <div hidden={!searchText}>
             {isLoadingSearch && <Loading />}
 
-            {!!searchPages?.length && (
+            {!!searchResults?.length && (
               <div className="flex flex-col">
-                {searchPages.slice(0, MAX_RESULTS).map((p, i) => (
+                {searchResults.slice(0, MAX_RESULTS).map((p, i) => (
                   <div
                     key={p.id}
                     className={twMerge(
@@ -215,7 +215,7 @@ export default function QuickProjectSearch() {
               </div>
             )}
 
-            {searchText && !isLoadingSearch && searchPages?.length === 0 && (
+            {searchText && !isLoadingSearch && searchResults?.length === 0 && (
               <div className="text-center text-grey-400">
                 <Trans>No results</Trans>
               </div>

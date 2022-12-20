@@ -3,9 +3,12 @@ import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
 import { ProjectState } from 'models/project-visibility'
 import { PV } from 'models/pv'
+import { SepanaSearchOpts } from 'models/sepana'
 import { Project } from 'models/subgraph-entities/vX/project'
 import { V1TerminalVersion } from 'models/v1/terminals'
+import { searchSepanaProjectsList } from 'pages/api/sepana/utils'
 import { useEffect, useState } from 'react'
+import { useQuery } from 'react-query'
 import {
   EntityKeys,
   getSubgraphIdForProject,
@@ -135,6 +138,19 @@ export function useProjectsSearch(handle: string | undefined) {
           keys: DEFAULT_ENTITY_KEYS,
         }
       : null,
+    {
+      staleTime: DEFAULT_STALE_TIME,
+    },
+  )
+}
+
+export function useSepanaProjectsSearch(
+  text: string | undefined,
+  opts?: SepanaSearchOpts,
+) {
+  return useQuery(
+    ['sepana-query', text, opts],
+    () => searchSepanaProjectsList(text, opts),
     {
       staleTime: DEFAULT_STALE_TIME,
     },

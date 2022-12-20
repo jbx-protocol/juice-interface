@@ -2,14 +2,14 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { readProvider } from 'constants/readProvider'
 import { ipfsGetWithFallback } from 'lib/api/ipfs'
 import { ProjectMetadataV5 } from 'models/project-metadata'
-import { SepanaProject } from 'models/sepana'
-import { Project } from 'models/subgraph-entities/vX/project'
+import { SepanaProject, SepanaProjectJson } from 'models/sepana'
+import { Project, ProjectJson } from 'models/subgraph-entities/vX/project'
 import { NextApiHandler } from 'next'
 import { querySubgraphExhaustive } from 'utils/graph'
 
 import { queryAllSepanaProjects, writeSepanaDocs } from './utils'
 
-const projectKeys: (keyof Project)[] = [
+const projectKeys: (keyof SepanaProject)[] = [
   'id',
   'projectId',
   'pv',
@@ -29,7 +29,7 @@ const handler: NextApiHandler = async (_, res) => {
   const changedSubgraphProjects = (
     await querySubgraphExhaustive({
       entity: 'project',
-      keys: projectKeys,
+      keys: projectKeys as (keyof Project)[],
     })
   )
     // Upserting data in Sepana requires the `_id` param to be included, so we include it here
@@ -41,7 +41,7 @@ const handler: NextApiHandler = async (_, res) => {
           ...acc,
           [k]: BigNumber.isBigNumber(v) ? v.toString() : v, // Store BigNumbers as strings
         }),
-        {} as SepanaProject,
+        {} as ProjectJson,
       ),
     )
     .filter(subgraphProject => {
@@ -52,12 +52,14 @@ const handler: NextApiHandler = async (_, res) => {
       // Deep compare subgraph project with sepana project to find which projects have changed or not yet been stored on sepana
       return (
         !sepanaProject ||
-        projectKeys.some(k => subgraphProject[k] !== sepanaProject._source[k])
+        projectKeys.some(
+          k => subgraphProject[k as keyof Project] !== sepanaProject._source[k],
+        )
       )
     })
 
   const latestBlock = await readProvider.getBlockNumber()
-  const updatedSepanaProjects: Promise<SepanaProject>[] = []
+  const updatedSepanaProjects: Promise<SepanaProjectJson>[] = []
 
   for (let i = 0; i < changedSubgraphProjects.length; i++) {
     // Update metadata & `lastUpdated` for each sepana project
@@ -76,13 +78,14 @@ const handler: NextApiHandler = async (_, res) => {
 
       updatedSepanaProjects.push(
         ipfsGetWithFallback<ProjectMetadataV5>(p.metadataUri).then(
-          ({ data: { logoUri, name, description } }) => ({
-            ...p,
-            name,
-            description,
-            logoUri,
-            lastUpdated: latestBlock,
-          }),
+          ({ data: { logoUri, name, description } }) =>
+            ({
+              ...p,
+              name,
+              description,
+              logoUri,
+              lastUpdated: latestBlock,
+            } as SepanaProjectJson),
         ),
       )
     } catch (error) {

@@ -8,14 +8,16 @@ import useProjectHandle from './v2v3/contractReader/ProjectHandle'
  * - Note: V1 projects *always* have handles. This hook assumes that, if no handle arg is given, it's a v2v3 project.
  * - @TODO probably not the safest assumption. We should probably add cv or pv to this hook.
  *
- * If a project doesn't have a handle, return some formatted text that includes the project ID.
+ * If a project doesn't have a handle, use the project's name if available. Otherwise use some formatted text that includes the project ID.
  */
 export function useProjectHandleText({
   projectId,
   handle,
+  name,
 }: {
   projectId: number | undefined
   handle?: string | null
+  name?: string
 }) {
   if (!projectId) return {}
 
@@ -28,7 +30,7 @@ export function useProjectHandleText({
 
   const handleText = resolvedHandle
     ? `@${resolvedHandle}`
-    : t`Project #${projectId}`
+    : name ?? t`Project #${projectId}`
 
   return {
     handleText,

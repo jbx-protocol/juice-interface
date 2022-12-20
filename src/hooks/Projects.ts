@@ -3,10 +3,8 @@ import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
 import { ProjectState } from 'models/project-visibility'
 import { PV } from 'models/pv'
-import { SepanaSearchOpts } from 'models/sepana'
 import { Project } from 'models/subgraph-entities/vX/project'
 import { V1TerminalVersion } from 'models/v1/terminals'
-import { searchSepanaProjectsList } from 'pages/api/sepana/utils'
 import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import {
@@ -17,6 +15,7 @@ import {
   querySubgraphExhaustive,
   WhereConfig,
 } from 'utils/graph'
+import { searchSepanaProjectsList } from 'utils/sepana'
 import { getTerminalAddress } from 'utils/v1/terminals'
 
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
@@ -146,11 +145,11 @@ export function useProjectsSearch(handle: string | undefined) {
 
 export function useSepanaProjectsSearch(
   text: string | undefined,
-  opts?: SepanaSearchOpts,
+  pageSize?: number,
 ) {
   return useQuery(
-    ['sepana-query', text, opts],
-    () => searchSepanaProjectsList(text, opts),
+    ['sepana-query', text, pageSize],
+    () => searchSepanaProjectsList(text, pageSize),
     {
       staleTime: DEFAULT_STALE_TIME,
     },

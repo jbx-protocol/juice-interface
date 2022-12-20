@@ -14,6 +14,8 @@ import { useSepanaProjectsSearch } from 'hooks/Projects'
 import { useRouter } from 'next/router'
 import React, { useCallback, useEffect, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { formatWad } from 'utils/format/formatNumber'
+import CurrencySymbol from './CurrencySymbol'
 
 import Loading from './Loading'
 import { ProjectVersionBadge } from './ProjectVersionBadge'
@@ -45,7 +47,7 @@ export default function QuickProjectSearch() {
   }, [inputText])
 
   const { data: searchResults, isLoading: isLoadingSearch } =
-    useSepanaProjectsSearch(searchText, { list: true })
+    useSepanaProjectsSearch(searchText, MAX_RESULTS)
 
   const goToProject = useCallback(() => {
     if (highlightIndex === undefined) return
@@ -181,7 +183,7 @@ export default function QuickProjectSearch() {
                   <div
                     key={p.id}
                     className={twMerge(
-                      'flex cursor-pointer items-baseline gap-2 py-2 px-5',
+                      'flex cursor-pointer items-baseline gap-3 py-2 px-5',
                       highlightIndex === i
                         ? 'bg-smoke-75 dark:bg-slate-600'
                         : '',
@@ -193,6 +195,7 @@ export default function QuickProjectSearch() {
                       <V2V3ProjectHandleLink
                         projectId={p.projectId}
                         handle={p.handle}
+                        name={p.name}
                       />
                     ) : (
                       <V1ProjectHandle
@@ -201,15 +204,21 @@ export default function QuickProjectSearch() {
                       />
                     )}
 
-                    <div style={{ flex: 1 }}>
-                      <ProjectVersionBadge
-                        transparent
-                        size="small"
-                        versionText={`V${p.pv}`}
-                      />
+                    <div className="text-xs font-bold text-slate-200 dark:text-slate-200">
+                      <CurrencySymbol currency="ETH" />
+                      {formatWad(p.totalPaid, { precision: 0 })}
                     </div>
 
-                    {highlightIndex === i && <ArrowRightOutlined />}
+                    <ProjectVersionBadge
+                      className="text-slate-200 dark:text-slate-300"
+                      transparent
+                      size="small"
+                      versionText={`V${p.pv}`}
+                    />
+
+                    <div className="flex-1 text-right">
+                      {highlightIndex === i && <ArrowRightOutlined />}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -222,7 +231,7 @@ export default function QuickProjectSearch() {
             )}
           </div>
 
-          <div className="mt-5 flex gap-6 border-t border-r-0 border-b-0 border-l-0 border-solid border-t-smoke-200 bg-smoke-75 py-4 px-5 text-xs dark:border-t-slate-300 dark:bg-slate-600">
+          <div className="mt-5 flex gap-6 bg-smoke-75 py-3 px-5 text-xs dark:border-t-slate-300 dark:bg-slate-600">
             <span>
               <KeyboardButton>
                 <EnterOutlined />

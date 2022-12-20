@@ -2,10 +2,8 @@ import axios from 'axios'
 import {
   SepanaProject,
   SepanaProjectJson,
-  SepanaSearchOpts,
   SepanaSearchResponse,
 } from 'models/sepana'
-import { parseProjectJson } from 'models/subgraph-entities/vX/project'
 
 // if (!process.env.NEXT_PUBLIC_SEPANA_ENGINE_ID) {
 //   console.log('asdf', process.env)
@@ -51,10 +49,7 @@ export async function queryAllSepanaProjects() {
  *
  * @returns Promise containing project docs from Sepana database matching search params. If no query text is supplied, returns all projects
  */
-export async function searchSepanaProjects(
-  query = '',
-  opts?: SepanaSearchOpts,
-) {
+export async function searchSepanaProjects(query = '', pageSize?: number) {
   return axios
     .post<SepanaSearchResponse<SepanaProjectJson>>(
       process.env.NEXT_PUBLIC_SEPANA_API_URL + 'search',
@@ -80,7 +75,7 @@ export async function searchSepanaProjects(
             boost_mode: 'sum',
           },
         },
-        size: opts?.pageSize, // default 20
+        size: pageSize, // default 20
         page: 0,
       },
       {
@@ -88,21 +83,6 @@ export async function searchSepanaProjects(
       },
     )
     .then(res => res.data)
-}
-
-/**
- * Search sepana projects for query and return only a list of projects
- * @param query text to search
- * @param opts
- * @returns list of projects
- */
-export async function searchSepanaProjectsList(
-  query = '',
-  opts?: SepanaSearchOpts,
-) {
-  return searchSepanaProjects(query, opts).then(res =>
-    res.hits.hits.map(h => parseProjectJson(h._source) as SepanaProject),
-  )
 }
 
 /**

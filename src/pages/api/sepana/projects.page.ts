@@ -15,7 +15,9 @@ const handler: NextApiHandler = async (req, res) => {
   try {
     const results = await searchSepanaProjects(
       text,
-      typeof pageSize === 'number' ? pageSize : undefined,
+      typeof pageSize === 'string' && typeof parseInt(pageSize) === 'number'
+        ? parseInt(pageSize)
+        : undefined,
     )
 
     res.status(200).json({

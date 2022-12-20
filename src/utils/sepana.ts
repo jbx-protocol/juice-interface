@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { SepanaProject } from 'models/sepana'
+import { SepanaProject, SepanaProjectJson } from 'models/sepana'
+import { parseProjectJson } from 'models/subgraph-entities/vX/project'
 
 /**
  * Search sepana projects for query and return only a list of projects
@@ -9,9 +10,9 @@ import { SepanaProject } from 'models/sepana'
  */
 export async function searchSepanaProjectsList(query = '', pageSize?: number) {
   return axios
-    .get<{ hits: SepanaProject[] }>(
+    .get<{ hits: SepanaProjectJson[] }>(
       `/api/sepana/projects?text=${query}` +
         (pageSize !== undefined ? `&pageSize=${pageSize}` : ''),
     )
-    .then(res => res.data.hits)
+    .then(res => res.data.hits.map(h => parseProjectJson(h) as SepanaProject))
 }

@@ -57,4 +57,4 @@ export type SepanaSearchResponse<T> = {
 
 export type SepanaBigNumber = { type: 'BigNumber'; hex: string }
 
-export type SepanaSearchOpts = { pageSize?: number; list?: boolean }
+export type SepanaSearchOpts = { pageSize?: number }

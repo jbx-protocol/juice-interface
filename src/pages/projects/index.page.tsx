@@ -117,8 +117,7 @@ function Projects() {
           <Search
             className="mb-4 flex-1"
             autoFocus
-            prefix="@"
-            placeholder={t`Search projects by handle`}
+            placeholder={t`Search projects`}
             onSearch={val => {
               setSearchText(val)
               router.push(`/projects?tab=all${val ? `&search=${val}` : ''}`)

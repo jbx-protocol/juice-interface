@@ -2639,7 +2639,7 @@ msgstr ""
 msgid "Scheduled launch time"
 msgstr ""
 
-msgid "Search projects by handle"
+msgid "Search projects"
 msgstr ""
 
 msgid "Second"

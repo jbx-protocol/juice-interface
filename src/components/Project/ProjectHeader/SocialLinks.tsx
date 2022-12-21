@@ -1,8 +1,22 @@
-import { TwitterOutlined } from '@ant-design/icons'
+import { TwitterOutlined, GlobalOutlined } from '@ant-design/icons'
 import { Space } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import Discord from 'components/icons/Discord'
-import { linkUrl, prettyUrl } from 'utils/url'
+import Telegram from 'components/icons/Telegram'
+
+type SocialProps = {
+  children: React.ReactNode
+}
+
+function SocialButton(props: SocialProps) {
+  const { children } = props
+
+  return (
+    <ExternalLink className="p-30 border-1 flex h-[32px] w-[32px] items-center justify-center rounded-full border-solid border-[#E0DBD2] bg-[#EEEBE3]">
+      {children}
+    </ExternalLink>
+  )
+}
 
 export default function SocialLinks({
   infoUri,
@@ -14,39 +28,44 @@ export default function SocialLinks({
   discord?: string
 }) {
   return (
-    <Space className="flex-wrap gap-x-6 gap-y-2" size="middle">
+    <Space className="flex-wrap gap-x-[6px] gap-y-2" size="middle">
       {infoUri && (
-        <span>
-          <ExternalLink
-            className="block max-w-xs overflow-hidden text-ellipsis whitespace-pre font-medium"
-            href={linkUrl(infoUri)}
-          >
-            {prettyUrl(infoUri)}
-          </ExternalLink>
-        </span>
+        <SocialButton>
+          <GlobalOutlined
+            style={{
+              color: '#8F8B83',
+              fontSize: '1rem',
+            }}
+          />
+        </SocialButton>
       )}
       {twitter && (
-        <ExternalLink
-          className="block max-w-xs overflow-hidden text-ellipsis whitespace-pre font-medium"
-          href={'https://twitter.com/' + twitter}
-        >
-          <span className="mr-1">
-            <TwitterOutlined />
-          </span>
-          @{prettyUrl(twitter)}
-        </ExternalLink>
+        <SocialButton>
+          <TwitterOutlined
+            style={{
+              color: '#8F8B83',
+              fontSize: '1rem',
+            }}
+          />
+        </SocialButton>
       )}
       {discord && (
-        <ExternalLink
-          className="block max-w-xs overflow-hidden text-ellipsis whitespace-pre font-medium"
-          href={linkUrl(discord)}
-        >
-          <span className="mr-1">
-            <Discord size={11} />
-          </span>
-          Discord
-        </ExternalLink>
+        <SocialButton>
+          <Discord
+            style={{ color: '#8F8B83', marginTop: 2, width: 16, height: 16 }}
+          />
+        </SocialButton>
       )}
+      <SocialButton>
+        <Telegram
+          color="#8F8B83"
+          style={{
+            color: '#8F8B83',
+            width: 16,
+            height: 16,
+          }}
+        />
+      </SocialButton>
     </Space>
   )
 }

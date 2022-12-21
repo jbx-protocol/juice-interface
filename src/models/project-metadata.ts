@@ -35,6 +35,7 @@ type ProjectMetadataV3 = Partial<
     discord: string
     payButton: string
     payDisclosure: string
+    telegram: string
   }
 >
 

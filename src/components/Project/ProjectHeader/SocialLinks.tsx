@@ -22,10 +22,12 @@ export default function SocialLinks({
   infoUri,
   twitter,
   discord,
+  telegram,
 }: {
   infoUri?: string
   twitter?: string
   discord?: string
+  telegram?: string
 }) {
   return (
     <Space className="flex-wrap gap-x-[6px] gap-y-2" size="middle">
@@ -56,16 +58,18 @@ export default function SocialLinks({
           />
         </SocialButton>
       )}
-      <SocialButton>
-        <Telegram
-          color="#8F8B83"
-          style={{
-            color: '#8F8B83',
-            width: 16,
-            height: 16,
-          }}
-        />
-      </SocialButton>
+      {telegram && (
+        <SocialButton>
+          <Telegram
+            color="#8F8B83"
+            style={{
+              color: '#8F8B83',
+              width: 16,
+              height: 16,
+            }}
+          />
+        </SocialButton>
+      )}
     </Space>
   )
 }

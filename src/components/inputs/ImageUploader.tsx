@@ -2,7 +2,7 @@ import { CloseCircleFilled, FileImageOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { PinataMetadata } from '@pinata/sdk'
 import { Button, Col, message, Row, Space, Upload } from 'antd'
-import { pinFileToIpfs } from 'lib/api/ipfs'
+import { usePinFileToIpfs } from 'hooks/PinFileToIpfs'
 import { useLayoutEffect, useState } from 'react'
 import { restrictedIpfsUrl } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
@@ -29,6 +29,8 @@ export default function ImageUploader({
 }) {
   const [url, setUrl] = useState<string | undefined>(initialUrl)
   const [loadingUpload, setLoadingUpload] = useState<boolean>()
+
+  const pinFileToIpfs = usePinFileToIpfs()
 
   const setValue = (cid?: string) => {
     const newUrl = cid ? restrictedIpfsUrl(cid) : undefined
@@ -75,10 +77,19 @@ export default function ImageUploader({
               customRequest={async req => {
                 setLoadingUpload(true)
                 try {
-                  const res = await pinFileToIpfs(req.file, metadata)
+                  const res = await pinFileToIpfs({
+                    ...req,
+                    metadata,
+                    onProgress: percent => {
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      req.onProgress?.({ percent } as any)
+                    },
+                  })
                   setValue(res.IpfsHash)
                 } catch (err) {
                   emitErrorNotification(t`Error uploading file`)
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  req.onError?.(null as any)
                 }
                 setLoadingUpload(false)
               }}

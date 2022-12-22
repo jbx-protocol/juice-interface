@@ -25,9 +25,11 @@ export function TotalSupplyDescription() {
         <div>
           {formatWad(totalTokenSupply, { precision: 0 })} {tokenText}
         </div>
-        <TextButton onClick={() => setParticipantsModalVisible(true)}>
-          <Trans>Holders</Trans>
-        </TextButton>
+        {totalTokenSupply?.gt(0) ? (
+          <TextButton onClick={() => setParticipantsModalVisible(true)}>
+            <Trans>Holders</Trans>
+          </TextButton>
+        ) : null}
       </div>
       <ParticipantsModal
         tokenSymbol={tokenSymbol}

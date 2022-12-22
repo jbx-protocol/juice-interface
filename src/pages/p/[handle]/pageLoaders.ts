@@ -23,7 +23,7 @@ export const getV1StaticPaths: GetStaticPaths = async () => {
     return { paths, fallback: true }
   }
 
-  return { paths: [{ params: { handle: 'juicebox' } }], fallback: true }
+  return { paths: [], fallback: true }
 }
 
 export const getV1StaticProps: GetStaticProps<{

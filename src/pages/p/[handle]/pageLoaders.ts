@@ -23,7 +23,9 @@ export const getV1StaticPaths: GetStaticPaths = async () => {
     return { paths, fallback: true }
   }
 
-  return { paths: [], fallback: true }
+  // TODO: We are switching to blocking as blocking fallback as its just not
+  // working. Need to investigate further
+  return { paths: [], fallback: 'blocking' }
 }
 
 export const getV1StaticProps: GetStaticProps<{

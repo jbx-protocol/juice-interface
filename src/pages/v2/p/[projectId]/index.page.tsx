@@ -1,6 +1,5 @@
 import { AppWrapper, SEO } from 'components/common'
 import { PV_V2 } from 'constants/pv'
-import { V2V3_PROJECT_IDS } from 'constants/v2v3/projectIds'
 import { paginateDepleteProjectsQueryCall } from 'lib/apollo'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { V2V3ProjectPageProvider } from 'providers/v2v3/V2V3ProjectPageProvider'
@@ -21,9 +20,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
     return { paths, fallback: true }
   }
 
+  // TODO: We are switching to blocking as blocking fallback as its just not
+  // working. Need to investigate further
   return {
-    paths: [{ params: { projectId: String(V2V3_PROJECT_IDS.JUICEBOX_DAO) } }],
-    fallback: true,
+    paths: [],
+    fallback: 'blocking',
   }
 }
 

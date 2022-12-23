@@ -1,5 +1,6 @@
 import { t, Trans } from '@lingui/macro'
-import { Tooltip } from 'antd'
+import { SettingOutlined, SmileOutlined, ToolOutlined } from '@ant-design/icons'
+import { Button, Tooltip } from 'antd'
 import { Badge } from 'components/Badge'
 import FormattedAddress from 'components/FormattedAddress'
 import Paragraph from 'components/Paragraph'
@@ -8,11 +9,17 @@ import ProjectLogo from 'components/ProjectLogo'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import useMobile from 'hooks/Mobile'
 import { useGnosisSafe } from 'hooks/safe/GnosisSafe'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { classNames } from 'utils/classNames'
 import { EditProjectHandleButton } from './EditProjectHandleButton'
 import SocialLinks from './SocialLinks'
-
+import { ContractVersionSelect } from 'components/v2v3/V2V3Project/V2V3ProjectHeaderActions/ContractVersionSelect'
+import { VeNftContext } from 'contexts/veNftContext'
+import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
+import { V2OperatorPermission } from 'models/v2v3/permissions'
+import { settingsPagePath, veNftPagePath } from 'utils/routes'
+import Link from 'next/link'
+import { V2V3ProjectToolsDrawer } from 'components/v2v3/V2V3Project/V2V3ProjectToolsDrawer'
 export function ProjectHeader({
   handle,
   actions,
@@ -30,6 +37,13 @@ export function ProjectHeader({
     ProjectMetadataContext,
   )
 
+  const { contractAddress: veNftContractAddress } = useContext(VeNftContext)
+  const [toolDrawerVisible, setToolDrawerVisible] = useState<boolean>(false)
+
+  const canReconfigure = useV2ConnectedWalletHasPermission(
+    V2OperatorPermission.RECONFIGURE,
+  )
+  const veNftEnabled = Boolean(veNftContractAddress)
   const isMobile = useMobile()
   const { data: gnosisSafe, isLoading: gnosisSafeLoading } =
     useGnosisSafe(projectOwnerAddress)
@@ -75,28 +89,60 @@ export function ProjectHeader({
 
           {actions ?? null}
         </div>
-
-        <div className="flex flex-wrap items-baseline gap-x-5 pt-2 pb-1 font-medium">
+        <div className="t flex flex-wrap items-center gap-x-[12px] pt-2 pb-1 font-medium">
           <span className="font-medium text-grey-500 dark:text-grey-300">
-            {handle ? (
-              <Tooltip title={t`Project ID: ${projectId}`}>
-                <span>@{handle}</span>
-              </Tooltip>
-            ) : (
-              <Trans>Project #{projectId}</Trans>
-            )}
+            <Tooltip title={t`Project ID: ${projectId}`}>
+              <span className="font-medium text-grey-700">
+                {handle ? `@${handle}` : ''}
+              </span>{' '}
+              <Trans>ID: #{projectId}</Trans>
+            </Tooltip>
           </span>
 
           {!handle && canEditProjectHandle && projectId ? (
             <EditProjectHandleButton />
           ) : null}
+          <div className="flex flex-grow">
+            <SocialLinks
+              discord={projectMetadata?.discord}
+              twitter={projectMetadata?.twitter}
+              infoUri={projectMetadata?.infoUri}
+              telegram={projectMetadata?.telegram}
+            />
+          </div>
+          <ContractVersionSelect />
+          <Tooltip title={t`Tools`} placement="bottom">
+            <Button
+              onClick={() => setToolDrawerVisible(true)}
+              icon={<ToolOutlined />}
+              type="text"
+            />
+          </Tooltip>
 
-          <SocialLinks
-            discord={projectMetadata?.discord}
-            twitter={projectMetadata?.twitter}
-            infoUri={projectMetadata?.infoUri}
-            telegram={projectMetadata?.telegram}
+          <V2V3ProjectToolsDrawer
+            open={toolDrawerVisible}
+            onClose={() => setToolDrawerVisible(false)}
           />
+
+          {canReconfigure && (
+            <Tooltip title={t`Project Settings`} placement="bottom">
+              <div>
+                <Link href={settingsPagePath('general', { handle, projectId })}>
+                  <Button type="text" icon={<SettingOutlined />} />
+                </Link>
+              </div>
+            </Tooltip>
+          )}
+
+          {veNftEnabled && (
+            <Tooltip title={t`veNFT`} placement="bottom">
+              <div>
+                <Link href={veNftPagePath('mint', { handle, projectId })}>
+                  <Button type="text" icon={<SmileOutlined />} />
+                </Link>
+              </div>
+            </Tooltip>
+          )}
         </div>
 
         {projectMetadata?.description && !hideDescription && (

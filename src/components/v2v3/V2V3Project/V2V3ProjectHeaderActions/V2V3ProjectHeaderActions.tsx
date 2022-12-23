@@ -1,6 +1,6 @@
 import { SettingOutlined, SmileOutlined, ToolOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
-import { Button, Space, Tooltip } from 'antd'
+import { Button, Divider, Space, Tooltip } from 'antd'
 import { V2V3ProjectToolsDrawer } from 'components/v2v3/V2V3Project/V2V3ProjectToolsDrawer/V2V3ProjectToolsDrawer'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
@@ -11,25 +11,34 @@ import Link from 'next/link'
 import { useContext, useState } from 'react'
 import { settingsPagePath, veNftPagePath } from 'utils/routes'
 import { ContractVersionSelect } from './ContractVersionSelect'
+import SocialLinks from 'components/Project/ProjectHeader/SocialLinks'
+import useMobile from 'hooks/Mobile'
 
 export function V2V3ProjectHeaderActions() {
   const { handle } = useContext(V2V3ProjectContext)
-  const { projectId } = useContext(ProjectMetadataContext)
   const { contractAddress: veNftContractAddress } = useContext(VeNftContext)
 
   const [toolDrawerVisible, setToolDrawerVisible] = useState<boolean>(false)
-
   const canReconfigure = useV2ConnectedWalletHasPermission(
     V2OperatorPermission.RECONFIGURE,
   )
   const veNftEnabled = Boolean(veNftContractAddress)
 
+  const isMobile = useMobile()
+  const { projectMetadata, projectId } = useContext(ProjectMetadataContext)
+  if (isMobile) return null
   return (
     <>
       <Space className="flex items-center">
-        <ContractVersionSelect />
-
         <div className="flex items-center">
+          <SocialLinks
+            discord={projectMetadata?.discord}
+            twitter={projectMetadata?.twitter}
+            infoUri={projectMetadata?.infoUri}
+            telegram={projectMetadata?.telegram}
+          />
+          <Divider type="vertical" className="ph-2" />
+          <ContractVersionSelect />
           <Tooltip title={t`Tools`} placement="bottom">
             <Button
               onClick={() => setToolDrawerVisible(true)}

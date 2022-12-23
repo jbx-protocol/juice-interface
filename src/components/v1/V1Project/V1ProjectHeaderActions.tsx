@@ -1,6 +1,6 @@
 import { SettingOutlined, ToolOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
-import { Button, Tooltip } from 'antd'
+import { Button, Divider, Tooltip } from 'antd'
 import { NotificationDot } from 'components/NotificationDot'
 import { V1ProjectToolsDrawer } from 'components/v1/V1Project/V1ProjectToolsDrawer/V1ProjectToolsDrawer'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
@@ -11,15 +11,17 @@ import { V1OperatorPermission } from 'models/v1/permissions'
 import { useContext, useState } from 'react'
 import { classNames } from 'utils/classNames'
 import EditProjectModal from './modals/EditProjectModal'
+import SocialLinks from 'components/Project/ProjectHeader/SocialLinks'
+import useMobile from 'hooks/Mobile'
 
 export default function V1ProjectHeaderActions() {
   const { handle, isPreviewMode, terminal } = useContext(V1ProjectContext)
-  const { projectId } = useContext(ProjectMetadataContext)
-
+  const isMobile = useMobile()
   const [toolDrawerVisible, setToolDrawerVisible] = useState<boolean>(false)
   const [editProjectModalVisible, setEditProjectModalVisible] =
     useState<boolean>(false)
 
+  const { projectMetadata, projectId } = useContext(ProjectMetadataContext)
   const { relaunch, isReady } = useRelaunchV1ViaV3Create()
 
   const hasEditPermission = useV1ConnectedWalletHasPermission([
@@ -32,11 +34,18 @@ export default function V1ProjectHeaderActions() {
 
   const allowMigrate = isOwner
 
-  if (isPreviewMode || !projectId) return null
+  if (isPreviewMode || !projectId || isMobile) return null
 
   return (
     <div className="flex items-center">
       <span className="pr-2 text-grey-400 dark:text-slate-200">
+        <SocialLinks
+          discord={projectMetadata?.discord}
+          twitter={projectMetadata?.twitter}
+          infoUri={projectMetadata?.infoUri}
+          telegram={projectMetadata?.telegram}
+        />
+        <Divider type="vertical" className="ph-2" />
         {terminal?.version && (
           <div className="relative">
             <Tooltip

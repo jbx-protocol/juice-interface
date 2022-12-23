@@ -29,7 +29,7 @@ export const ipfsGetWithFallback = async (
     url: restrictedIpfsUrl(hash),
     responseType: 'json',
     headers: {
-      Accept: 'application/json, text/plain',
+      Accept: 'application/json',
       'Content-Type': 'application/json',
     },
   })

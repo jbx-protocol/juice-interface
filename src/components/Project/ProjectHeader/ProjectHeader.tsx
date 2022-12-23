@@ -103,28 +103,32 @@ export function ProjectHeader({
             <EditProjectHandleButton />
           ) : null}
           <div className="flex flex-grow">
-            <SocialLinks
-              discord={projectMetadata?.discord}
-              twitter={projectMetadata?.twitter}
-              infoUri={projectMetadata?.infoUri}
-              telegram={projectMetadata?.telegram}
-            />
+            {isMobile && (
+              <SocialLinks
+                discord={projectMetadata?.discord}
+                twitter={projectMetadata?.twitter}
+                infoUri={projectMetadata?.infoUri}
+                telegram={projectMetadata?.telegram}
+              />
+            )}
           </div>
-          <ContractVersionSelect />
-          <Tooltip title={t`Tools`} placement="bottom">
-            <Button
-              onClick={() => setToolDrawerVisible(true)}
-              icon={<ToolOutlined />}
-              type="text"
-            />
-          </Tooltip>
-
-          <V2V3ProjectToolsDrawer
-            open={toolDrawerVisible}
-            onClose={() => setToolDrawerVisible(false)}
-          />
-
-          {canReconfigure && (
+          {isMobile && (
+            <>
+              <ContractVersionSelect />
+              <Tooltip title={t`Tools`} placement="bottom">
+                <Button
+                  onClick={() => setToolDrawerVisible(true)}
+                  icon={<ToolOutlined />}
+                  type="text"
+                />
+              </Tooltip>
+              <V2V3ProjectToolsDrawer
+                open={toolDrawerVisible}
+                onClose={() => setToolDrawerVisible(false)}
+              />
+            </>
+          )}
+          {canReconfigure && isMobile && (
             <Tooltip title={t`Project Settings`} placement="bottom">
               <div>
                 <Link href={settingsPagePath('general', { handle, projectId })}>
@@ -134,7 +138,7 @@ export function ProjectHeader({
             </Tooltip>
           )}
 
-          {veNftEnabled && (
+          {veNftEnabled && isMobile && (
             <Tooltip title={t`veNFT`} placement="bottom">
               <div>
                 <Link href={veNftPagePath('mint', { handle, projectId })}>

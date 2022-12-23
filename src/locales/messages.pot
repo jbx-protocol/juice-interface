@@ -1481,6 +1481,9 @@ msgstr ""
 msgid "I understand"
 msgstr ""
 
+msgid "ID: #{projectId}"
+msgstr ""
+
 msgid "If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 msgstr ""
 

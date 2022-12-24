@@ -15,9 +15,12 @@ type SocialProps = {
 function SocialButton(props: SocialProps) {
   const { children, link } = props
   const isMobile = useMobile()
+  const btnCls =
+    'p-30 flex border-1 flex dark:bg-[#4f4e54] dark:border-[#8F8B83] items-center justify-center rounded-full border-solid border-[#e0dbd2] bg-[#eeebe3]'
+
   const cls = isMobile
-    ? 'p-30 border-1 flex h-[40px] w-[40px] dark:bg-[#4f4e54] items-center justify-center rounded-full border-solid border-[#e0dbd2] bg-[#eeebe3]'
-    : 'p-30 border-1 flex h-[36px] w-[36px] dark:bg-[#4f4e54] dark:border-[#8F8B83] items-center justify-center rounded-full border-solid border-[#e0dbd2] bg-[#eeebe3]'
+    ? `${btnCls} h-[40px] w-[40px]`
+    : `${btnCls} h-[36px] w-[36px]`
 
   return (
     <ExternalLink className={cls} href={link}>

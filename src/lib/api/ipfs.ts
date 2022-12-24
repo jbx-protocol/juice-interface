@@ -4,6 +4,21 @@ import { IPFS_TAGS } from 'constants/ipfs'
 import { consolidateMetadata, ProjectMetadataV5 } from 'models/project-metadata'
 import { metadataNameForHandle, restrictedIpfsUrl } from 'utils/ipfs'
 
+// Workaround function for a bug in pinata where the data is sometimes returned in bytes
+const extractJsonFromBase64Data = (base64: string) => {
+  // Decode base64 in web
+  let decoded
+  if (typeof window === 'undefined') {
+    decoded = Buffer.from(base64, 'base64').toString()
+  } else {
+    decoded = atob(base64)
+  }
+
+  const jsonStart = decoded.indexOf('{')
+  const jsonEnd = decoded.lastIndexOf('}')
+  return JSON.parse(decoded.substring(jsonStart, jsonEnd + 1))
+}
+
 // keyvalues will be upserted to existing metadata. A null value will remove an existing keyvalue
 export const editMetadataForCid = async (
   cid: string | undefined,
@@ -33,6 +48,9 @@ export const ipfsGetWithFallback = async (
       'Content-Type': 'application/json',
     },
   })
+  if (response.data.Data?.['/'].bytes) {
+    response.data = extractJsonFromBase64Data(response.data.Data['/'].bytes)
+  }
   return response
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   // } catch (error: any) {

@@ -27,12 +27,14 @@ export const DeploySuccess = ({ projectId }: { projectId: number }) => {
    */
   const twitterShareUrl = useMemo(() => {
     let juiceboxUrl = `https://juicebox.money/v2/p/${projectId}`
-    const chainId = chain?.name.toLowerCase() ?? 'mainnet'
-    if (chainId !== 'mainnet') {
-      juiceboxUrl = `https://${chainId}.juicebox.money/v2/p/${projectId}`
+    const chainName = chain?.name.toLowerCase() ?? 'ethereum mainnet'
+    if (chainName !== 'ethereum mainnet') {
+      juiceboxUrl = `https://${chainName}.juicebox.money/v2/p/${projectId}`
     }
     const message = `Check out my project on ${
-      chain?.name ? `${chain.name} ` : ''
+      chain?.name && chain.name.toLowerCase() !== 'ethereum mainnet'
+        ? `${chain.name} `
+        : ''
     }Juicebox!\n${juiceboxUrl}`
     return `https://twitter.com/intent/tweet?text=${encodeURIComponent(
       message,

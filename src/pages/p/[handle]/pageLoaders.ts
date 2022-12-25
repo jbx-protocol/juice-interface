@@ -23,7 +23,9 @@ export const getV1StaticPaths: GetStaticPaths = async () => {
     return { paths, fallback: true }
   }
 
-  return { paths: [{ params: { handle: 'juicebox' } }], fallback: true }
+  // TODO: We are switching to blocking as blocking fallback as its just not
+  // working. Need to investigate further
+  return { paths: [], fallback: 'blocking' }
 }
 
 export const getV1StaticProps: GetStaticProps<{
@@ -56,7 +58,7 @@ export const getV1StaticProps: GetStaticProps<{
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (e: any) {
-    if (e?.response?.status === 404 || e?.response?.status === 400) {
+    if (e?.response?.status === 404) {
       return { notFound: true }
     }
     throw e

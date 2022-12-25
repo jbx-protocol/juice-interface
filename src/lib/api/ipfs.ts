@@ -2,12 +2,22 @@ import { PinataMetadata, PinataPinResponse } from '@pinata/sdk'
 import axios from 'axios'
 import { IPFS_TAGS } from 'constants/ipfs'
 import { consolidateMetadata, ProjectMetadataV5 } from 'models/project-metadata'
-import {
-  ipfsGatewayUrl,
-  metadataNameForHandle,
-  openIpfsUrl,
-  restrictedIpfsUrl,
-} from 'utils/ipfs'
+import { metadataNameForHandle, restrictedIpfsUrl } from 'utils/ipfs'
+
+// Workaround function for a bug in pinata where the data is sometimes returned in bytes
+const extractJsonFromBase64Data = (base64: string) => {
+  // Decode base64 in web
+  let decoded
+  if (typeof window === 'undefined') {
+    decoded = Buffer.from(base64, 'base64').toString()
+  } else {
+    decoded = atob(base64)
+  }
+
+  const jsonStart = decoded.indexOf('{')
+  const jsonEnd = decoded.lastIndexOf('}')
+  return JSON.parse(decoded.substring(jsonStart, jsonEnd + 1))
+}
 
 // keyvalues will be upserted to existing metadata. A null value will remove an existing keyvalue
 export const editMetadataForCid = async (
@@ -24,18 +34,33 @@ export const editMetadataForCid = async (
 // TODO after the move to Infura for IPFS, we can probably look at removing this.
 export const ipfsGetWithFallback = async (
   hash: string,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   { fallbackHostname }: { fallbackHostname?: string } = {},
 ) => {
-  try {
-    const response = await axios.get(restrictedIpfsUrl(hash))
-    return response
-  } catch (error) {
-    console.info(`ipfs::falling back to open gateway for ${hash}`)
-    const response = fallbackHostname
-      ? await axios.get(ipfsGatewayUrl(hash, fallbackHostname))
-      : await axios.get(openIpfsUrl(hash))
-    return response
+  // try {
+  // Build config for axios get request
+  const response = await axios({
+    method: 'get',
+    url: restrictedIpfsUrl(hash),
+    responseType: 'json',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  })
+  if (response.data.Data?.['/'].bytes) {
+    response.data = extractJsonFromBase64Data(response.data.Data['/'].bytes)
   }
+  return response
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // } catch (error: any) {
+  //   if (error?.response?.status === 400) throw error
+  //   console.info(`ipfs::falling back to open gateway for ${hash}`)
+  //   const response = fallbackHostname
+  //     ? await axios.get(ipfsGatewayUrl(hash, fallbackHostname))
+  //     : await axios.get(openIpfsUrl(hash))
+  //   return response
+  // }
 }
 
 export const pinFileToIpfs = async (

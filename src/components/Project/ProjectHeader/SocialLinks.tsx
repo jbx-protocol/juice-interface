@@ -16,7 +16,7 @@ function SocialButton(props: SocialProps) {
   const { children, link } = props
   const isMobile = useMobile()
   const btnCls =
-    'p-30 flex border-1 flex dark:bg-[#4f4e54] dark:border-[#8F8B83] items-center justify-center rounded-full border-solid border-[#e0dbd2] bg-[#eeebe3]'
+    'p-30 flex border-1 flex dark:bg-[#4f4e54] items-center justify-center rounded-full bg-[#eeebe3]'
 
   const cls = isMobile
     ? `${btnCls} h-[40px] w-[40px]`
@@ -45,7 +45,7 @@ export default function SocialLinks({
 
   const styleObj = {
     fontSize: isMobile ? 22 : 16,
-    color: themeOption === 'light' ? '#8F8B83' : colors['gray'][300],
+    color: themeOption === 'light' ? '#787263' : colors['slate'][100],
   }
 
   return (
@@ -64,7 +64,7 @@ export default function SocialLinks({
         <SocialButton link={discord}>
           <Discord
             style={{
-              color: '#8F8B83',
+              color: styleObj.color,
               marginTop: 2,
               width: styleObj.fontSize,
               height: styleObj.fontSize,
@@ -75,7 +75,7 @@ export default function SocialLinks({
       {telegram && (
         <SocialButton link={telegram}>
           <Telegram
-            color="#8F8B83"
+            color={styleObj.color}
             style={{
               width: styleObj.fontSize,
               height: styleObj.fontSize,

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-12-11 00:32\n"
+"PO-Revision-Date: 2022-12-25 00:30\n"
 "Last-Translator: \n"
 "Language: tr_TR\n"
 "Language-Team: Turkish\n"
@@ -190,7 +190,13 @@ msgstr ""
 msgid "<0>There are unit tests written for every condition of every function in the contracts, and integration tests for every workflow that the protocol supports.</0><1>There was also a script written to iteratively run the integration tests using a random input generator, prioritizing edge cases. The code has successfully passed over 1 million test cases through this stress-testing script.</1> <2>The code could always use more eyes and more critique to further the community's confidence. Join our <3>Discord</3> and check out the code on <4>GitHub</4> to work with us.</2>"
 msgstr "<0>Sözleşmelerdeki her işlevin her koşulu için yazılmış birim testleri ve protokolün desteklediği her iş akışı için entegrasyon testleri vardır.</0><1>Ayrıca entegrasyon testlerini bir rastgele giriş üreteci kullanarak yinelemeli olarak çalıştırmak için yazılmış, uç durumlara öncelik veren bir komut dosyası da vardı. Kod, bu stres testi komut dosyası aracılığıyla 1 milyondan fazla test senaryosunu başarıyla geçti.</1> <2>Kod, topluluğun güvenini artırmak için her zaman daha fazla göz ve daha fazla eleştiriden faydalanabilir. <3>Discord</3>'umuza katılın ve bizimle çalışmak için <4>GitHub</4>'daki kodu inceleyin.</2>"
 
+msgid "<0>This project has a 0% redemption rate</0>. You won't receive any ETH for burning your NFTs."
+msgstr ""
+
 msgid "<0>This project has a 0% redemption rate</0>. You won't receive any ETH for burning your tokens."
+msgstr ""
+
+msgid "<0>This project has no overflow</0>. You won't receive any ETH for burning your NFTs."
 msgstr ""
 
 msgid "<0>This project has no overflow</0>. You won't receive any ETH for burning your tokens."
@@ -385,6 +391,9 @@ msgstr "Tüm fonlar proje tarafından dağıtılabilir ve projede taşma olmaz. 
 msgid "All funds received by the treasury will be distributed. Token holders will receive <0>no ETH</0> when burning their tokens."
 msgstr "Hazine tarafından alınan tüm fonlar dağıtılacaktır. Token sahipleri, token'larını yakarken <0>hiç ETH</0> almayacaktır."
 
+msgid "All payouts have been deleted for this beneficiary. Save to continue..."
+msgstr ""
+
 msgid "All {0} will go to the project owner:"
 msgstr "Tüm {0} proje sahibine gidecek:"
 
@@ -555,6 +564,9 @@ msgstr ""
 
 msgid "Built for:"
 msgstr "Şunlar için üretildi:"
+
+msgid "Burn NFTs"
+msgstr ""
 
 msgid "Burn project tokens"
 msgstr "Proje token'larını yakın"
@@ -1147,6 +1159,9 @@ msgstr ""
 msgid "Download payments CSV"
 msgstr ""
 
+msgid "Due to incompatibilities between v1 projects, new project ids of payouts need to be assigned."
+msgstr ""
+
 msgid "Duration"
 msgstr "Süre"
 
@@ -1576,6 +1591,9 @@ msgstr "Bir projenin verilerini blok zincirinden tümüyle kaldırmak mümkün o
 msgid "It'd be a lot cooler if you did"
 msgstr "Yapsan çok kıyak olur"
 
+msgid "It's strongly recommended that you visit the <0>Juicebox Discord</0> for help and advice on this process."
+msgstr ""
+
 msgid "JBX Fee ({0}%):"
 msgstr "JBX Ücreti (%{0}):"
 
@@ -1777,6 +1795,9 @@ msgstr "Talep üzerine proje token'larının basılması"
 msgid "Mint rate"
 msgstr "Basım oranı"
 
+msgid "Mint rate unchanged"
+msgstr ""
+
 msgid "Mint this project's ERC-20 tokens to your wallet."
 msgstr ""
 
@@ -1840,6 +1861,9 @@ msgstr ""
 msgid "NFTs (optional)"
 msgstr ""
 
+msgid "NFTs are burned when they are redeemed."
+msgstr ""
+
 msgid "NFTs for you"
 msgstr ""
 
@@ -1851,6 +1875,9 @@ msgstr "İsim"
 
 msgid "New"
 msgstr "Yeni"
+
+msgid "New V3 Project ID"
+msgstr ""
 
 msgid "New project tokens are minted as ERC-20 tokens by default. Payments to this Payment Address will incur a higher gas fee than regular Juicebox payments."
 msgstr ""
@@ -1913,6 +1940,9 @@ msgid "No reserved tokens available to distribute."
 msgstr ""
 
 msgid "No reserved tokens configured."
+msgstr ""
+
+msgid "No results"
 msgstr ""
 
 msgid "No strategy"
@@ -2092,6 +2122,9 @@ msgstr ""
 msgid "Payout addresses"
 msgstr ""
 
+msgid "Payout allocated to this project's {versionName} payment terminal. <0>Learn more</0>."
+msgstr ""
+
 msgid "Payout is locked"
 msgstr "Ödeme kilitlendi"
 
@@ -2132,6 +2165,9 @@ msgid "Potential risks"
 msgstr "Potansiyel riskler"
 
 msgid "Preview"
+msgstr ""
+
+msgid "Previous V1 Project ID:"
 msgstr ""
 
 msgid "Process held fees"
@@ -2248,6 +2284,9 @@ msgstr ""
 msgid "Project tokens are not ERC-20 tokens by default. Once you deploy your project, you can issue an ERC-20 for your holders to claim. This is optional."
 msgstr ""
 
+msgid "Project treasury version"
+msgstr ""
+
 msgid "Project upgrades"
 msgstr ""
 
@@ -2284,6 +2323,9 @@ msgstr ""
 msgid "REMAINING SUPPLY: {0}/{1}"
 msgstr ""
 
+msgid "REMAINING: {remainingSupply}"
+msgstr ""
+
 msgid "Raised on Juicebox"
 msgstr ""
 
@@ -2291,6 +2333,18 @@ msgid "Range"
 msgstr ""
 
 msgid "Rankings based on number of contributions and volume gained in the last {trendingWindowDays} days. <0>See code</0>"
+msgstr ""
+
+msgid "Re-launch a project"
+msgstr ""
+
+msgid "Re-launch on V3"
+msgstr ""
+
+msgid "Re-launch project"
+msgstr ""
+
+msgid "Re-launch your Juicebox project using the v3 contracts. <0>What's new in V3.</0>"
 msgstr ""
 
 msgid "Read less"
@@ -2374,10 +2428,19 @@ msgstr ""
 msgid "Redeem"
 msgstr ""
 
+msgid "Redeem NFTs for ETH"
+msgstr ""
+
+msgid "Redeem for ETH"
+msgstr ""
+
 msgid "Redeem successful. Results will be indexed in a few moments."
 msgstr ""
 
 msgid "Redeem veNFT"
+msgstr ""
+
+msgid "Redeem your NFTs for a portion of this project's overflow. The current funding cycle's <0>redemption rate</0> determines your redemption value."
 msgstr ""
 
 msgid "Redeem your tokens for a portion of this project's overflow. The current funding cycle's <0>redemption rate</0> determines your redemption value."
@@ -2411,6 +2474,9 @@ msgid "Redemption rate"
 msgstr "Kullanım oranı"
 
 msgid "Redemption rate:"
+msgstr ""
+
+msgid "Redemption value"
 msgstr ""
 
 msgid "Redemptions"
@@ -2555,6 +2621,9 @@ msgid "See Tx on Safe"
 msgstr ""
 
 msgid "See example"
+msgstr ""
+
+msgid "Select NFTs to redeem"
 msgstr ""
 
 msgid "Select the option that best suits your project’s funding requirements."
@@ -2722,6 +2791,9 @@ msgstr "Başlangıç"
 msgid "Start over"
 msgstr ""
 
+msgid "Start the V3 cycle as soon as the current V2 cycle ends <0>({0})</0>."
+msgstr ""
+
 msgid "Start time (seconds, Unix time)"
 msgstr "Başlangıç zamanı (saniye, Unix zamanı)"
 
@@ -2762,6 +2834,9 @@ msgid "Swap v1 project tokens {projectTitle}"
 msgstr ""
 
 msgid "Switch network to {0}"
+msgstr ""
+
+msgid "Sync start time with current V2 funding cycle."
 msgstr ""
 
 msgid "Tap {projectTitle}"
@@ -3208,6 +3283,9 @@ msgstr ""
 msgid "Unless payments are paused in your funding cycle settings, your project can still receive payments directly through the Juicebox protocol contracts."
 msgstr ""
 
+msgid "Unlimited"
+msgstr ""
+
 msgid "Unlock"
 msgstr ""
 
@@ -3283,6 +3361,9 @@ msgstr "Yeniden yapılandırma stratejisi kullanılması önerilir. Stratejisi o
 msgid "V1"
 msgstr ""
 
+msgid "V1 Project handle"
+msgstr ""
+
 msgid "V1 token holders can swap their tokens for your V2 tokens on your V2 project's <0>Tokens</0> section."
 msgstr ""
 
@@ -3296,6 +3377,12 @@ msgid "V1.1"
 msgstr ""
 
 msgid "V2"
+msgstr ""
+
+msgid "V3"
+msgstr ""
+
+msgid "V3 Project ID"
 msgstr ""
 
 msgid "Value has already been submitted"
@@ -3760,6 +3847,9 @@ msgstr ""
 msgid "{0} withdrawn"
 msgstr "{0} çekildi"
 
+msgid "{0} {tokenSymbol}/ETH"
+msgstr ""
+
 msgid "{0} {tokenTextPlural} reserved"
 msgstr "{0} adet {tokenTextPlural} rezerve edildi"
 
@@ -3837,9 +3927,6 @@ msgstr ""
 
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
 msgstr "{paymentCount, plural, one {# ödeme} other {# ödeme}}"
-
-msgid "{paymentIssuanceRate} {tokenSymbolPlural}/ETH"
-msgstr ""
 
 msgid "{tokenSymbolDisplayText} range"
 msgstr ""

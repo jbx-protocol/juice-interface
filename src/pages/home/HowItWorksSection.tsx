@@ -41,7 +41,7 @@ export function HowItWorksSection() {
                 width={486}
                 height={486}
                 src="/assets/pina.png"
-                alt="Pinepple geek artist holding a paintbrush"
+                alt="Juicebox pinepple geek artist holding a paintbrush"
                 loading="lazy"
               />
             </Col>

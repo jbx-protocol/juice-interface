@@ -58,7 +58,7 @@ export default function Footer() {
             [ThemeOption.dark]: orangeLadyOd,
             [ThemeOption.light]: orangeLadyOl,
           })}
-          alt="Powerlifting orange hitting an olympic deadlift"
+          alt="Powerlifting Juicebox orange hitting an olympic lift"
           loading="lazy"
         />
       </div>

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-12-11 00:32\n"
+"PO-Revision-Date: 2022-12-25 00:30\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: Chinese Simplified\n"
@@ -32,7 +32,7 @@ msgid "1 year"
 msgstr "1 年"
 
 msgid "1. Get funded"
-msgstr ""
+msgstr "1. 获得资助"
 
 msgid "1. Set ENS name"
 msgstr "1. 设置 ENS 名称"
@@ -59,7 +59,7 @@ msgid "30 days"
 msgstr "30 天"
 
 msgid "4. Build trust"
-msgstr ""
+msgstr "4. 建立信任"
 
 msgid "7 days"
 msgstr "7 天"
@@ -107,13 +107,13 @@ msgid "<0>A project can choose to reserve a percentage of tokens for itself. Ins
 msgstr "<0>项目可以选择保留某个百分比的代币。这个百分比的代币会铸造给项目，而不是分发给付费的用户。</0><1>持有这些代币能让项目拥有一部分自己的溢出。</1>"
 
 msgid "<0>A redemption rate rewards people who wait longer to redeem your tokens for overflow.</0><1>For example, with a redemption rate of 70%, redeeming 10% of the token supply at any given time will claim around 7% of the total overflow.</1><2>The rest is left to share between token holders.</2><3>For more info, check out this <4>short video</4> on redemption rate.</3>"
-msgstr ""
+msgstr "<0>赎回比率奖励较晚赎回项目代币获取溢出的人。</0><1>打个比方，赎回比率在 70% 的情况下，任何时候赎回总供应量 10% 的代币都将获得总溢出的 7%。</1><2>剩余的溢出由其他代币持有人分享。</2><3>请观看这个<4>短片</4> 了解更多关于赎回比率的信息。</3>"
 
 msgid "<0>Contribution floor:</0> {0} ETH"
 msgstr "<0>最低捐款额</0> {0} ETH"
 
 msgid "<0>Contributor rate:</0> <1>{0} / 1 ETH</1>"
-msgstr ""
+msgstr "<0>捐款获币比率：</0> <1>{0} / 1 ETH</1>"
 
 msgid "<0>Description: </0><1/>"
 msgstr "<0>描述： </0><1/>"
@@ -170,7 +170,7 @@ msgid "<0>Recurring funding cycles</0>. For example, distribute funds from your 
 msgstr "<0>经常性筹款周期</0>。例如，每周从你的项目金库分配资金出去。"
 
 msgid "<0>Reserved rate:</0> <1>{0} / 1 ETH</1>"
-msgstr ""
+msgstr "<0>保留代币比率：</0> <1>{0} / 1 ETH</1>"
 
 msgid "<0>Snapshot</0> is an off-chain voting system. You can use your Juicebox project tokens in a Snapshot voting strategy. <1>Learn more about Snapshot</1>."
 msgstr "<0>Snapshot</0> 是一个链下投票系统。 你可以将你的 Juicebox 项目代币用于 Snapshot 的投票策略。 <1>了解更多 Snapshot</1>。"
@@ -190,8 +190,14 @@ msgstr "<0>赎回比率决定了任何时候每赎回一个代币可以获得的
 msgid "<0>There are unit tests written for every condition of every function in the contracts, and integration tests for every workflow that the protocol supports.</0><1>There was also a script written to iteratively run the integration tests using a random input generator, prioritizing edge cases. The code has successfully passed over 1 million test cases through this stress-testing script.</1> <2>The code could always use more eyes and more critique to further the community's confidence. Join our <3>Discord</3> and check out the code on <4>GitHub</4> to work with us.</2>"
 msgstr "<0>合约里每个函数的每个条件都有编写单元测试, 同时协议支持的每个工作流都有集成测试。</0><1>之前还编写了一个脚本用于使用随机生成的输入条件来进行迭代集成测试，优先考虑边缘案例。代码通过这个压力测试脚本成功经受了超过一百万次的测试案例。</1> <2>欢迎大家对代码进行进一步的审核和批评，这样可以增强社区的信心。 加入我们的<3>Discord</3> 及查阅 <4>GitHub</4>上的代码，跟我们一起工作。</2>"
 
+msgid "<0>This project has a 0% redemption rate</0>. You won't receive any ETH for burning your NFTs."
+msgstr "<0>本项目的赎回比率为 0%</0>。 销毁你的 NFT 将不会获得任何 ETH。"
+
 msgid "<0>This project has a 0% redemption rate</0>. You won't receive any ETH for burning your tokens."
 msgstr "<0>本项目的赎回比率为 0%</0>。 销毁你的代币将不会获得任何 ETH。"
+
+msgid "<0>This project has no overflow</0>. You won't receive any ETH for burning your NFTs."
+msgstr "<0>本项目没有溢出</0>。 销毁你的 NFT 将不会获得任何 ETH。"
 
 msgid "<0>This project has no overflow</0>. You won't receive any ETH for burning your tokens."
 msgstr "<0>本项目没有溢出</0>。 销毁你的代币将不会获得任何 ETH。"
@@ -212,7 +218,7 @@ msgid "<0>Website:</0> <1>{0}</1>"
 msgstr "<0>网址：</0> <1>{0}</1>"
 
 msgid "<0>With Automated Funding Cycles, your funding configuration is locked for a set time period.</0><1><2>This helps build trust with your contributors.</2></1>"
-msgstr ""
+msgstr "<0>选择自动筹款周期，项目筹款配置将会锁定一段固定的时间。</0><1><2>这样有助于与你的捐款人建立信任关系。</2></1>"
 
 msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
 msgstr "<0>你当前未领取的 {tokenSymbol} 代币数量：</0> {0}"
@@ -221,7 +227,7 @@ msgid "<0>Zero</0> Distribution Limit"
 msgstr "<0>零</0> 分配限额"
 
 msgid "<0>{0}</0> Distribution Limit"
-msgstr ""
+msgstr "<0>{0}</0> 分配限额"
 
 msgid "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
 msgstr "<0>{tokenSymbol} ERC-20 地址：</0><1/>"
@@ -230,7 +236,7 @@ msgid "@{handle} not found"
 msgstr "@{handle} 未找到"
 
 msgid "A payout to this project may mint some of the project's tokens. Set the address that will receive the tokens."
-msgstr ""
+msgstr "向这个项目付款可能会铸造一些这个项目的代币。设定接收这些代币的地址。"
 
 msgid "A project can reserve a percentage of tokens minted from every payment it receives. Reserved tokens can be distributed according to the allocation below at any time."
 msgstr "项目每收到一笔付款都会铸造代币，其中某个百分比的代币会保留在项目内。保留代币可随时按以下分配方案进行分发。"
@@ -272,19 +278,19 @@ msgid "Activity"
 msgstr "最近动态"
 
 msgid "Add"
-msgstr ""
+msgstr "添加"
 
 msgid "Add Lock Duration Option"
 msgstr "添加锁定时长选项"
 
 msgid "Add NFT"
-msgstr ""
+msgstr "添加 NFT"
 
 msgid "Add NFT tier"
-msgstr ""
+msgstr "添加 NFT 等级"
 
 msgid "Add a note about this reconfiguration on-chain."
-msgstr ""
+msgstr "添加一个关于这个重新配置的链上说明。"
 
 msgid "Add a payout"
 msgstr "添加支出对象"
@@ -308,7 +314,7 @@ msgid "Add new payout"
 msgstr "添加新的支出"
 
 msgid "Add new {allocationName}"
-msgstr ""
+msgstr "添加新的 {allocationName}"
 
 msgid "Add payout"
 msgstr "添加支出"
@@ -341,10 +347,10 @@ msgid "Add wallet addresses or Juicebox projects to receive payouts."
 msgstr "添加钱包地址或 Juicebox 项目作为支出对象。"
 
 msgid "Add {0}"
-msgstr ""
+msgstr "添加 {0}"
 
 msgid "Add {allocationName}"
-msgstr ""
+msgstr "添加 {allocationName}"
 
 msgid "Added to balance"
 msgstr "已添加至余额"
@@ -385,6 +391,9 @@ msgstr "所有资金都可以分配给项目，项目将不再会产生溢出（
 msgid "All funds received by the treasury will be distributed. Token holders will receive <0>no ETH</0> when burning their tokens."
 msgstr "金库收到的所有资金都将进行分配。代币持有者燃烧他们的代币时将 <0>不会收到 ETH</0> 。"
 
+msgid "All payouts have been deleted for this beneficiary. Save to continue..."
+msgstr "对这个受益人的所有支出已经删除。保存以进入下一步......"
+
 msgid "All {0} will go to the project owner:"
 msgstr "所有 {0} 会给到项目拥有者："
 
@@ -410,7 +419,7 @@ msgid "Allow terminal configuration"
 msgstr "允许终端配置"
 
 msgid "Allow the <0>Juicebox NFT deployer contract</0> to reconfigure this project's funding cycle."
-msgstr ""
+msgstr "允许 <0>Juicebox NFT 部署合约</0> 重新配置本项目的筹款周期。"
 
 msgid "Allow token minting"
 msgstr "允许铸造代币"
@@ -455,13 +464,13 @@ msgid "Amounts"
 msgstr "金额"
 
 msgid "An Infinite Funding Target means contributors cannot redeem their tokens for a portion of the treasury funds. Payouts can only be nominated in percentages."
-msgstr ""
+msgstr "无限的筹款目标意味着捐款人将无法赎回他们的代币来获取部分金库资金。支出分配只能按百分比来设置。"
 
 msgid "Any changes you make will take effect in <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
 msgstr "你做出的任何变更将会在 <0>筹款周期 #{0}</0>生效。目前的 (#{currentFCNumber}) 筹款周期将不会受到影响。"
 
 msgid "Any funds raised over this amount are considered <0>overflow</0> and are redeemable by your contributors."
-msgstr ""
+msgstr "超过这个金额的所有筹款都被视为 <0>溢出</0> 并可由捐款人通过赎回来获取。"
 
 msgid "Any reconfiguration to an upcoming funding cycle will take effect once the current cycle ends. A project with no strategy may be vulnerable to being rug-pulled by its owner."
 msgstr "对之后的筹款周期进行重新配置，更改将在当前周期结束后生效。 没有策略的项目会有项目方跑路的风险。"
@@ -503,7 +512,7 @@ msgid "Automated"
 msgstr "自动的"
 
 msgid "Automated Funding Cycles"
-msgstr ""
+msgstr "自动筹款周期"
 
 msgid "Automated funding cycles enable the following characteristics:"
 msgstr "自动筹款周期具有以下特点："
@@ -551,10 +560,13 @@ msgid "Blog"
 msgstr "博客"
 
 msgid "Bonding curve"
-msgstr ""
+msgstr "联合曲线比率"
 
 msgid "Built for:"
 msgstr "服务的对象:"
+
+msgid "Burn NFTs"
+msgstr "销毁 NFT"
 
 msgid "Burn project tokens"
 msgstr "燃烧项目代币"
@@ -578,10 +590,10 @@ msgid "Button Text"
 msgstr "按钮文本"
 
 msgid "Button link"
-msgstr ""
+msgstr "按钮链接"
 
 msgid "Button text"
-msgstr ""
+msgstr "按钮文本"
 
 msgid "Button will close the modal if no link is given."
 msgstr "如未填写链接，按键将关闭弹窗。"
@@ -620,7 +632,7 @@ msgid "Changes to payouts will take effect immediately."
 msgstr "对支出的更改将立即生效"
 
 msgid "Changes to your collection details may not be reflected in some marketplaces (for example, Opensea). Contact the marketplace for support."
-msgstr ""
+msgstr "系列详情的变更可能不会在某些交易市场（例如 OpenSea) 上反映出来。请联系交易市场获取帮助。"
 
 msgid "Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
 msgstr "对项目资金的变动需要经过社区的批准阶段才能生效，这可以作为预防项目方跑路的措施。项目支持者不需要依赖于对你的信任 —— 尽管他们已经这样做了。"
@@ -650,7 +662,7 @@ msgid "Choose how you would like to configure your payouts."
 msgstr "选择你想怎样配置你的支出。"
 
 msgid "Choose which addresses to pay and how to split the total payout amount each funding cycle."
-msgstr ""
+msgstr "选择每个筹款周期要支付的地址以及总支出的分配明细。"
 
 msgid "Claim {0}"
 msgstr "领取 {0}"
@@ -713,7 +725,7 @@ msgid "Configure which Juicebox V1 project you'd like to accept tokens for. Toke
 msgstr "配置你要接受代币的 Juicebox V1 项目。此 V1 项目的代币持有人将可以把他们的 V1 代币转换成 V2 代币。"
 
 msgid "Configure your project's NFTs."
-msgstr ""
+msgstr "配置项目的 NFT。"
 
 msgid "Configure your project's token."
 msgstr "配置你项目的代币。"
@@ -722,10 +734,10 @@ msgid "Configure {projectTitle}"
 msgstr "配置 {projectTitle}"
 
 msgid "Configured FC"
-msgstr ""
+msgstr "已配置的筹款周期"
 
 msgid "Configured funding cycles"
-msgstr ""
+msgstr "已配置的筹款周期"
 
 msgid "Confirm Stake"
 msgstr "确认质押"
@@ -767,7 +779,7 @@ msgid "Connected wallet not authorized"
 msgstr "已链接钱包未授权"
 
 msgid "Contract"
-msgstr ""
+msgstr "合约"
 
 msgid "Contract address:"
 msgstr "合约地址："
@@ -776,7 +788,7 @@ msgid "Contract address: {0}"
 msgstr "合约地址：{0}"
 
 msgid "Contribute funds to receive NFTs."
-msgstr ""
+msgstr "捐赠资金来获得 NFT。"
 
 msgid "Contribution threshold"
 msgstr "捐款门槛"
@@ -785,10 +797,10 @@ msgid "Contributor rate"
 msgstr "捐款铸造比率"
 
 msgid "Contributors don't receive any tokens from paying this project. Funds cannot be redeemed."
-msgstr ""
+msgstr "捐款人向这个项目付款将不会获得任何代币。资金不能赎回。"
 
 msgid "Contributors receive a relatively small amount of tokens from paying this project."
-msgstr ""
+msgstr "捐款人向这个项目付款获得的代币数量较少。"
 
 msgid "Contributors receive the NFT when they contribute at least this amount."
 msgstr "捐款人至少捐赠这个金额才会获得 NFT。"
@@ -800,7 +812,7 @@ msgid "Contributors will be rewarded this amount of your project's tokens per ET
 msgstr "捐款人每捐一个 ETH 就可以获得这个数量的项目代币。"
 
 msgid "Contributors will not receive any extra tokens for paying the project early."
-msgstr ""
+msgstr "捐赠人先向项目付款并不会获得任何额外的代币。"
 
 msgid "Contributors will receive <0>no extra tokens</0> this funding cycle."
 msgstr "捐款人当前筹款周期将不会获得 <0>任何额外的代币</0> 。"
@@ -809,13 +821,13 @@ msgid "Contributors will receive <0>{discountRatePercent}%</0> more tokens for c
 msgstr "捐款人本筹款周期付款会比下一周期付款获得多 <0>{discountRatePercent}%</0> 的代币。"
 
 msgid "Contributors will receive the total amount of tokens available through issuance. All subsequent funding cycles will have a mint rate of 0."
-msgstr ""
+msgstr "捐款人将会收到代币的全部可发行量。所有后续筹款周期的铸造率都将为 0。"
 
 msgid "Contributors will receive this NFT when they contribute at least this amount."
 msgstr "捐款人捐赠达到这个金额就会获得这个 NFT。"
 
 msgid "Contributors will receive {discountRate}% more tokens for contributions they make this funding cycle compared to the next funding cycle."
-msgstr ""
+msgstr "捐款人当前筹款周期捐款获得的代币数量会比下一周期多 {discountRate}%。"
 
 msgid "Contributors won't receive any tokens when they pay this project."
 msgstr "捐献者向此项目付款将不会获得任何代币。"
@@ -851,7 +863,7 @@ msgid "Create your own ERC-20 token to represent stake in your project. Contribu
 msgstr "创建项目自己的 ERC-20 代币来代表对项目的份额。捐款人向项目付款将会获得这些代币。"
 
 msgid "Created"
-msgstr ""
+msgstr "已创建"
 
 msgid "Created Payment Address"
 msgstr "已创建支付地址"
@@ -905,7 +917,7 @@ msgid "Dark theme"
 msgstr "深色主题"
 
 msgid "Data source"
-msgstr ""
+msgstr "数据源"
 
 msgid "Date"
 msgstr "日期"
@@ -944,7 +956,7 @@ msgid "Deploy"
 msgstr "部署"
 
 msgid "Deploy NFTs"
-msgstr ""
+msgstr "部署 NFT"
 
 msgid "Deploy Payment Address contract"
 msgstr "部署支付地址合约"
@@ -1031,7 +1043,7 @@ msgid "Display ERC-20 tokens and other Juicebox project tokens that are in this 
 msgstr "展示项目方钱包中的 ERC-20 代币及其他 Juicebox 项目代币。"
 
 msgid "Display a message or warning to contributors before they approve a payment to your project"
-msgstr ""
+msgstr "捐款人确认向项目付款的交易之前，向他们展示一条信息或警示。"
 
 msgid "Distribute a percentage of all funds received between the entities nominated in the next step."
 msgstr "下一步在提名的实体之间按百分比分配收到的所有款项。"
@@ -1091,7 +1103,7 @@ msgid "Distribution Limit <0/>:"
 msgstr "分配限额 <0/>："
 
 msgid "Distribution Percentage"
-msgstr ""
+msgstr "分配百分比"
 
 msgid "Distribution amount"
 msgstr "分配金额"
@@ -1103,7 +1115,7 @@ msgid "Distribution limit is 0: All funds will be considered overflow and can be
 msgstr "分配限额为0：所有资金将被视为溢出，持币人可以赎回这些资金。"
 
 msgid "Distribution limit is infinite. <0>The project will control how all funds are distributed. Token holders cannot redeem any funds raised.</0>"
-msgstr ""
+msgstr "分配限额为无限。 <0>项目将决定所有资金会如何分配。代币持有人不能赎回任何的筹集资金。</0>"
 
 msgid "Distributions to Ethereum addresses incur a 2.5% JBX membership fee."
 msgstr "分配给以太坊地址会产生 2.5% 的 JBX 成员费用。"
@@ -1147,6 +1159,9 @@ msgstr "下载模板"
 msgid "Download payments CSV"
 msgstr "下载付款记录的 CSV 文件"
 
+msgid "Due to incompatibilities between v1 projects, new project ids of payouts need to be assigned."
+msgstr "因为兼容问题此处不能指定支出对象为 V1 项目，需要重新指定支出对象的项目 ID。"
+
 msgid "Duration"
 msgstr "持续时间"
 
@@ -1175,10 +1190,10 @@ msgid "Each project has its own <0>tokens</0>. Anyone who contributes funds to a
 msgstr "每个项目都有自己的 <0>代币</0>。 任何向某一个项目捐款的人都会相应获得该项目的代币。 项目方签发 ERC-20 标准代币（可选项）之前，代币的余额会由协议进行记录。"
 
 msgid "Edit NFT"
-msgstr ""
+msgstr "编辑 NFT"
 
 msgid "Edit NFT tier"
-msgstr ""
+msgstr "编辑 NFT 等级"
 
 msgid "Edit allocation"
 msgstr "编辑分配方案"
@@ -1208,7 +1223,7 @@ msgid "Edit tracked assets"
 msgstr "编辑监测的资产"
 
 msgid "Edit {allocationName}"
-msgstr ""
+msgstr "编辑 {allocationName}"
 
 msgid "Enable unclaimed token spending"
 msgstr "允许使用未申领代币"
@@ -1322,7 +1337,7 @@ msgid "File upload failed. Try again."
 msgstr "文件上传失败。请重试。"
 
 msgid "Find a project"
-msgstr ""
+msgstr "查找项目"
 
 msgid "Fund and operate your thing, your way."
 msgstr "运筹梦想、自辟蹊径"
@@ -1349,7 +1364,7 @@ msgid "Funding Target"
 msgstr "筹款目标"
 
 msgid "Funding Target Exceeded"
-msgstr ""
+msgstr "超出筹款目标"
 
 msgid "Funding cycle"
 msgstr "筹款周期"
@@ -1457,7 +1472,7 @@ msgid "How the {reservedPercentage}% of your project's reserved tokens will be s
 msgstr "项目的 {reservedPercentage}% 保留代币怎样进行分配。"
 
 msgid "How to Juice"
-msgstr ""
+msgstr "使用 Juicebox 的优点"
 
 msgid "How would you like to distribute payments?"
 msgstr "你打算怎样分配付款？"
@@ -1576,6 +1591,9 @@ msgstr "想在区块链上删除项目数据是不可能的，但如果你不想
 msgid "It'd be a lot cooler if you did"
 msgstr "如果你这么做了会更好"
 
+msgid "It's strongly recommended that you visit the <0>Juicebox Discord</0> for help and advice on this process."
+msgstr ""
+
 msgid "JBX Fee ({0}%):"
 msgstr "JBX 费率（{0}%）："
 
@@ -1628,7 +1646,7 @@ msgid "Launch @{handle}"
 msgstr "启动 @{handle}"
 
 msgid "Launch V3 funding cycle"
-msgstr ""
+msgstr "启动 V3 筹款周期"
 
 msgid "Launch funding cycle"
 msgstr "启动筹款周期"
@@ -1661,7 +1679,7 @@ msgid "Link Juicebox V1 project"
 msgstr "链接 Juicebox V1 项目"
 
 msgid "Link contributors to another page after they successfully mint one of your project's NFTs."
-msgstr ""
+msgstr "捐款人成功铸造项目的 NFT 之后，点击弹窗的确认按钮将跳转到你指定的页面。"
 
 msgid "Load more"
 msgstr "加载更多"
@@ -1777,6 +1795,9 @@ msgstr "按需铸造项目代币"
 msgid "Mint rate"
 msgstr "铸造比率"
 
+msgid "Mint rate unchanged"
+msgstr ""
+
 msgid "Mint this project's ERC-20 tokens to your wallet."
 msgstr "将此项目的 ERC-20 标准代币铸造至你的钱包。"
 
@@ -1826,7 +1847,7 @@ msgid "My projects"
 msgstr "我的项目"
 
 msgid "NFT adjust tiers"
-msgstr ""
+msgstr "NFT 调整等级"
 
 msgid "NFT mint confirmed"
 msgstr "NFT 铸造已确认"
@@ -1835,13 +1856,16 @@ msgid "NFT projects"
 msgstr "NFT 项目"
 
 msgid "NFTs"
-msgstr ""
+msgstr "NFT"
 
 msgid "NFTs (optional)"
+msgstr "NFT （可选项）"
+
+msgid "NFTs are burned when they are redeemed."
 msgstr ""
 
 msgid "NFTs for you"
-msgstr ""
+msgstr "你将获得的 NFT"
 
 msgid "NO LIMIT"
 msgstr "无限额"
@@ -1851,6 +1875,9 @@ msgstr "名称"
 
 msgid "New"
 msgstr "新"
+
+msgid "New V3 Project ID"
+msgstr "新的 V3 项目 ID"
 
 msgid "New project tokens are minted as ERC-20 tokens by default. Payments to this Payment Address will incur a higher gas fee than regular Juicebox payments."
 msgstr "新的项目代币默认为 ERC-20 标准。向直接支付地址付款会产生比正常 Juicebox 付款更高的 gas 费用。"
@@ -1871,7 +1898,7 @@ msgid "No"
 msgstr "取消"
 
 msgid "No NFTs"
-msgstr ""
+msgstr "没有 NFT"
 
 msgid "No active funding cycle."
 msgstr "没有活跃的筹款周期。"
@@ -1883,7 +1910,7 @@ msgid "No beneficiary selected. Is your wallet connected?"
 msgstr "未选择受益人。是否已连接钱包？"
 
 msgid "No delay"
-msgstr ""
+msgstr "没有延迟"
 
 msgid "No description"
 msgstr "无描述"
@@ -1915,6 +1942,9 @@ msgstr "无可分配保留代币。"
 msgid "No reserved tokens configured."
 msgstr "未配置保留代币。"
 
+msgid "No results"
+msgstr ""
+
 msgid "No strategy"
 msgstr "暂无策略"
 
@@ -1931,7 +1961,7 @@ msgid "No upcoming funding cycle."
 msgstr "没有后续筹款周期。"
 
 msgid "No, keep"
-msgstr ""
+msgstr "否，保留"
 
 msgid "No, keep editing"
 msgstr "否，继续编辑"
@@ -2092,6 +2122,9 @@ msgstr "向这个项目付款不会铸造新的项目代币。"
 msgid "Payout addresses"
 msgstr "支付地址"
 
+msgid "Payout allocated to this project's {versionName} payment terminal. <0>Learn more</0>."
+msgstr ""
+
 msgid "Payout is locked"
 msgstr "支出被锁定"
 
@@ -2134,14 +2167,17 @@ msgstr "潜在风险"
 msgid "Preview"
 msgstr "预览"
 
-msgid "Process held fees"
+msgid "Previous V1 Project ID:"
 msgstr ""
+
+msgid "Process held fees"
+msgstr "处置缓缴的费用"
 
 msgid "Process project #{projectId}'s held fees"
-msgstr ""
+msgstr "处置 #{projectId} 项目缓缴的费用"
 
 msgid "Processing held fees will pay <0>JuiceboxDAO</0> and mint JBX to the project owner's address."
-msgstr ""
+msgstr "处理缓缴的费用将向 <0>JuiceboxDAO</0> 付款并铸造 JBX 代币到项目方地址。"
 
 msgid "Project #{projectId}"
 msgstr "项目 #{projectId}"
@@ -2180,7 +2216,7 @@ msgid "Project created"
 msgstr "项目已创建"
 
 msgid "Project created by <0/>"
-msgstr ""
+msgstr "项目创建人是 <0/>"
 
 msgid "Project description"
 msgstr "项目说明"
@@ -2240,13 +2276,16 @@ msgid "Project token"
 msgstr "项目代币"
 
 msgid "Project token beneficiary address"
-msgstr ""
+msgstr "项目代币受益人地址"
 
 msgid "Project tokens <0>aren't ERC-20 tokens</0> by default. Once you deploy your project, you can issue an ERC-20 for your holders to claim. This is <1>optional</1>."
 msgstr "项目代币默认情况下 <0>不是 ERC-20 标准代币</0> 。 部署项目后，你可以签发 ERC-20 标准代币合约让代币持有人来领取代币。 这是 <1>可选的</1>。"
 
 msgid "Project tokens are not ERC-20 tokens by default. Once you deploy your project, you can issue an ERC-20 for your holders to claim. This is optional."
 msgstr "项目代币默认情况下不是 ERC-20 标准代币。 部署项目后，你可以签发 ERC-20 标准代币合约让代币持有人来领取。 这是可选的。"
+
+msgid "Project treasury version"
+msgstr "项目金库版本"
 
 msgid "Project upgrades"
 msgstr "项目升级"
@@ -2284,6 +2323,9 @@ msgstr "已提交交易"
 msgid "REMAINING SUPPLY: {0}/{1}"
 msgstr "剩余供应量： {0}/{1}"
 
+msgid "REMAINING: {remainingSupply}"
+msgstr ""
+
 msgid "Raised on Juicebox"
 msgstr "Juicebox 协议总筹款金额"
 
@@ -2292,6 +2334,18 @@ msgstr "范围"
 
 msgid "Rankings based on number of contributions and volume gained in the last {trendingWindowDays} days. <0>See code</0>"
 msgstr "按照最近 {trendingWindowDays} 天的捐款次数和接收金额来排序。 <0>查看代码</0>"
+
+msgid "Re-launch a project"
+msgstr ""
+
+msgid "Re-launch on V3"
+msgstr ""
+
+msgid "Re-launch project"
+msgstr ""
+
+msgid "Re-launch your Juicebox project using the v3 contracts. <0>What's new in V3.</0>"
+msgstr ""
 
 msgid "Read less"
 msgstr "阅读更少"
@@ -2369,16 +2423,25 @@ msgid "Reconfigure {projectTitle}"
 msgstr "重新配置 {projectTitle}"
 
 msgid "Reconfigure {projectTitle} with new NFTs"
-msgstr ""
+msgstr "用新的 NFT 重新配置 {projectTitle}"
 
 msgid "Redeem"
 msgstr "赎回"
+
+msgid "Redeem NFTs for ETH"
+msgstr ""
+
+msgid "Redeem for ETH"
+msgstr ""
 
 msgid "Redeem successful. Results will be indexed in a few moments."
 msgstr "赎回成功。结果可在稍后查询。"
 
 msgid "Redeem veNFT"
 msgstr "赎回 veNFT"
+
+msgid "Redeem your NFTs for a portion of this project's overflow. The current funding cycle's <0>redemption rate</0> determines your redemption value."
+msgstr ""
 
 msgid "Redeem your tokens for a portion of this project's overflow. The current funding cycle's <0>redemption rate</0> determines your redemption value."
 msgstr "赎回你的代币来获取此项目的部分溢出。 当前筹款周期的 <0>赎回比率</0> 决定了你的赎回价值。"
@@ -2412,6 +2475,9 @@ msgstr "赎回率"
 
 msgid "Redemption rate:"
 msgstr "赎回比率："
+
+msgid "Redemption value"
+msgstr ""
 
 msgid "Redemptions"
 msgstr ""
@@ -2498,13 +2564,13 @@ msgid "Save"
 msgstr "保存"
 
 msgid "Save NFT"
-msgstr ""
+msgstr "保存 NFT"
 
 msgid "Save NFT tier"
-msgstr ""
+msgstr "保存 NFT 等级"
 
 msgid "Save NFTs"
-msgstr ""
+msgstr "保存 NFT"
 
 msgid "Save Option"
 msgstr "保存选项"
@@ -2557,6 +2623,9 @@ msgstr "在 Safe 页面查看交易记录"
 msgid "See example"
 msgstr "例如"
 
+msgid "Select NFTs to redeem"
+msgstr ""
+
 msgid "Select the option that best suits your project’s funding requirements."
 msgstr "选择最适合项目筹款需求的选项。"
 
@@ -2573,7 +2642,7 @@ msgid "Set ENS text record for {ensName}"
 msgstr "为 {ensName} 设置 ENS 文本记录"
 
 msgid "Set NFT operator permissions"
-msgstr ""
+msgstr "设置 NFT 操作员权限"
 
 msgid "Set URI for {projectTitle}"
 msgstr "为 {projectTitle} 设置 URI"
@@ -2624,7 +2693,7 @@ msgid "Set operator for {projectTitle}"
 msgstr "为 {projectTitle} 设置操作员"
 
 msgid "Set operator permissions for projectId={projectId} to allow NFTs"
-msgstr ""
+msgstr "为 projectId={projectId} 设置操作员权限以支持 NFT 功能"
 
 msgid "Set payouts of {projectTitle}"
 msgstr "设置 {projectTitle} 的支出"
@@ -2687,10 +2756,10 @@ msgid "Should you Juicebox?"
 msgstr "你应该使用Juicebox吗?"
 
 msgid "Show contributors a popup when they receive an NFT."
-msgstr ""
+msgstr "捐款人收到 NFT 时，向他们弹窗提示。"
 
 msgid "Skipped"
-msgstr ""
+msgstr "跳过"
 
 msgid "Snapshot voting"
 msgstr "Snapshot 投票"
@@ -2722,6 +2791,9 @@ msgstr "开始时间"
 msgid "Start over"
 msgstr "重新配置"
 
+msgid "Start the V3 cycle as soon as the current V2 cycle ends <0>({0})</0>."
+msgstr "当前 V2 周期 <0>({0})</0> 终止的同时开始 V3 周期。"
+
 msgid "Start time (seconds, Unix time)"
 msgstr "开始时间（秒，Unix时间）"
 
@@ -2747,7 +2819,7 @@ msgid "Sum of percentages cannot exceed 100%."
 msgstr "百分比合计不能超过 100%."
 
 msgid "Supply: {maximumSupply}"
-msgstr ""
+msgstr "供应量： {maximumSupply}"
 
 msgid "Swap V1 {tokenSymbolFormattedPlural} for V2 {tokenSymbolFormattedPlural}"
 msgstr "把 V1 {tokenSymbolFormattedPlural} 代币转换 V2 {tokenSymbolFormattedPlural} 代币"
@@ -2763,6 +2835,9 @@ msgstr "转换 V1 项目代币 {projectTitle}"
 
 msgid "Switch network to {0}"
 msgstr "切换网络至 {0}"
+
+msgid "Sync start time with current V2 funding cycle."
+msgstr "与当前 V2 筹款周期同步开始时间。"
 
 msgid "Tap {projectTitle}"
 msgstr "从 {projectTitle} 提取资金"
@@ -2816,7 +2891,7 @@ msgid "The balance of this project in the Juicebox contract."
 msgstr "该项目在Juicebox合约中的余额。"
 
 msgid "The discount rate cannot be set when the funding cycle duration is not set."
-msgstr ""
+msgstr "当前没有设置筹款周期时长，将无法设置折扣率。"
 
 msgid "The distribution limit for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
 msgstr "当前筹款周期的分配限额为 0, 也就是说 Juicebox 里的所有资金都被视为溢出。溢出可供持币人赎回代币来换取，但不能用于分配。"
@@ -2891,7 +2966,7 @@ msgid "The project token's issuance rate decreases by the <0>discount rate</0> e
 msgstr "项目代币的发行比率每个筹款周期都会按 <0>折扣率</0> 逐步递减。 较高的折扣率会鼓励捐款人尽早向项目捐款。"
 
 msgid "The project token's issuance rate will decrease by this percentage every funding cycle ({0}). A higher discount rate will incentivize contributors to pay the project earlier."
-msgstr ""
+msgstr "项目代币的发行比率每个筹款周期都会按这个百分比逐步递减 ({0})。 较高的折扣率会鼓励捐款人尽早向项目付款。"
 
 msgid "The project’s owner can change the project's settings and start a new funding cycle at any time."
 msgstr "项目方可以随时更改项目设置及开始新的筹款周期。"
@@ -2900,7 +2975,7 @@ msgid "The ratio of tokens rewarded per payment amount will decrease by this per
 msgstr "按付款金额奖励项目代币的比例，会随着进入新的筹款周期不断按这个比率递进减少。较高的折扣率会鼓励您的支持者更早一点给您的项目捐款。"
 
 msgid "The redemption rate cannot be set when the funding target is infinite."
-msgstr ""
+msgstr "筹款目标设置为无限的时候，不能设置赎回比率。"
 
 msgid "The redemption rate determines the amount of overflow each token can be redeemed for."
 msgstr "赎回比率决定了每赎回一个代币能获得的溢出金额。"
@@ -2909,7 +2984,7 @@ msgid "The redemption rate determines the amount of overflow each token can be r
 msgstr "赎回比率决定了每赎回一个代币能获得的溢出金额。 <0>了解更多。</0>"
 
 msgid "The sum of your expenses is currently different to your funding target. Do you want to sync your funding target to match expenses?<0/><1/>If not, please edit one or more of your payouts."
-msgstr ""
+msgstr "你的支出总额目前与筹款目标不一致。 你需要把筹款目标调整为与支出相等吗？<0/><1/>如果不需要，请编辑你的一个或多个支出对象。"
 
 msgid "The target for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
 msgstr "当前筹款周期的目标为零，意味着目前所有资金都视作溢出。代币持有者可以从溢出池中赎回 ETH，但是项目方不能从溢出池中提取资金。"
@@ -2954,7 +3029,7 @@ msgid "This funding cycle's distribution limit."
 msgstr "当前筹款周期的分配限额。"
 
 msgid "This is the button that contributors will click to pay your project"
-msgstr ""
+msgstr "这是捐款人向项目付款时点击的按钮"
 
 msgid "This is the maximum amount of funds that can leave the treasury each funding cycle."
 msgstr "这是每个筹款周期可以从金库分配出去的最大资金数量。"
@@ -2984,7 +3059,7 @@ msgid "This project's balance in the Juicebox contract."
 msgstr "这个项目在 Juicebox 合约内的余额。"
 
 msgid "This project's current funding cycle configuration may pose risks for contributors:"
-msgstr ""
+msgstr "该项目当前的筹款周期配置可能会给捐款人带来风险。"
 
 msgid "This proposed reconfiguration hasn't passed the {0} period. It's not guaranteed to take effect in the upcoming funding cycle."
 msgstr "提交重新配置的时间没有满足 {0} 的期限。 这个配置不一定会在下一筹款周期生效。"
@@ -2996,7 +3071,7 @@ msgid "This transaction reconfigures the project's funding cycle."
 msgstr "这个交易会重新配置项目的筹款周期。"
 
 msgid "This will delete the payout for <0/>."
-msgstr ""
+msgstr "此操作将删除向 <0/> 的支出分配。"
 
 msgid "This will enable your project's veNFT contract to spend unclaimed tokens in addition to project ERC-20 tokens."
 msgstr "除了项目的 ERC-20 标准代币之外，这还将允许项目的 veNFT 合约使用未领取的代币。"
@@ -3137,7 +3212,7 @@ msgid "Total raised"
 msgstr "总筹款"
 
 msgid "Total redemption value"
-msgstr ""
+msgstr "总赎回价值"
 
 msgid "Total supply"
 msgstr "总供应量"
@@ -3208,6 +3283,9 @@ msgstr "未知项目"
 msgid "Unless payments are paused in your funding cycle settings, your project can still receive payments directly through the Juicebox protocol contracts."
 msgstr "除非在项目筹款周期设置中将付款暂停，否则项目仍能通过 Juicebox 协议的合约直接收到付款。"
 
+msgid "Unlimited"
+msgstr ""
+
 msgid "Unlock"
 msgstr "解除锁定"
 
@@ -3218,7 +3296,7 @@ msgid "Unlock veNFT"
 msgstr "解除锁定 veNFT"
 
 msgid "Unlockable NFTs"
-msgstr ""
+msgstr "可解锁的 NFT"
 
 msgid "Unlocking this staking position will burn your NFT and return ${tokenSymbolDisplayText}."
 msgstr "解除锁定这个质押持仓将会销毁你的 NFT 并退回 ${tokenSymbolDisplayText} 代币。"
@@ -3242,7 +3320,7 @@ msgid "Update your veNFT's lock duration."
 msgstr "更新 veNFT 的锁定时长。"
 
 msgid "Update {projectTitle}'s NFT collection details."
-msgstr ""
+msgstr "更新 {projectTitle} 的 NFT 系列详情。"
 
 msgid "Upload"
 msgstr "上传"
@@ -3283,6 +3361,9 @@ msgstr "推荐设置一个修改配置的策略（延迟生效）。对于贡献
 msgid "V1"
 msgstr "V1"
 
+msgid "V1 Project handle"
+msgstr ""
+
 msgid "V1 token holders can swap their tokens for your V2 tokens on your V2 project's <0>Tokens</0> section."
 msgstr "V1 代币持有人可以在 V2 项目的 <0>代币</0> 分区把他们的代币转换成 V2 代币。"
 
@@ -3297,6 +3378,12 @@ msgstr "V1.1"
 
 msgid "V2"
 msgstr "V2"
+
+msgid "V3"
+msgstr ""
+
+msgid "V3 Project ID"
+msgstr ""
 
 msgid "Value has already been submitted"
 msgstr "输入的值已提交过"
@@ -3380,7 +3467,7 @@ msgid "When enabled, the project owner can set the project's payment terminals."
 msgstr "勾选此项，项目方就能够设置项目的支付终端。"
 
 msgid "When enabled, the project will hold the fee amount in ETH instead of the fees being processed automatically. <0>Learn more.</0>"
-msgstr ""
+msgstr "启用此项，项目会以 ETH 形式暂时保留平台费用的金额，平台费用将不会自动进行处理。 <0>了解更多。</0>"
 
 msgid "When enabled, your project cannot receive direct payments."
 msgstr "启用此选项，你的项目将无法收到直接付款。"
@@ -3431,7 +3518,7 @@ msgid "Yes"
 msgstr "确定"
 
 msgid "Yes, delete"
-msgstr ""
+msgstr "是，删除"
 
 msgid "Yes, start over"
 msgstr "是的，重新开始"
@@ -3491,7 +3578,7 @@ msgid "You must review and accept the risks."
 msgstr "你必须查看并接受这些风险。"
 
 msgid "You receive these NFTs for contributing <0>{0} ETH or more</0>."
-msgstr ""
+msgstr "捐款 <0>大于或等于 {0} ETH </0> 就可以获得这些 NFT。"
 
 msgid "You will receive <0/>"
 msgstr "你将收到 <0/>"
@@ -3527,7 +3614,7 @@ msgid "Your Juicebox project has no active funding cycle. Launch a funding cycle
 msgstr "你的 Juicevox 项目没有活跃的筹款周期。启动筹款周期以便重新允许向项目付款。"
 
 msgid "Your NFTs"
-msgstr ""
+msgstr "你的 NFT"
 
 msgid "Your V1 balance"
 msgstr "你的 V1 余额"
@@ -3539,10 +3626,10 @@ msgid "Your balance"
 msgstr "你的余额"
 
 msgid "Your collection's name is used on NFT marketplaces (for example, OpenSea)."
-msgstr ""
+msgstr "系列名称用于各个 NFT 交易市场（例如 OpenSea）。"
 
 msgid "Your collection's symbol is used on NFT marketplaces (for example, OpenSea)."
-msgstr ""
+msgstr "系列符号用于各个 NFT 交易市场（例如 OpenSea）。"
 
 msgid "Your funding cycle configuration has been pre-populated using the configuration you originally launched with. If you need to customize it, contact us."
 msgstr "你的筹款周期配置已按你原来启动项目时的配置进行预填。如果你需要自己定制，请联系我们。"
@@ -3611,7 +3698,7 @@ msgid "after {0}% JBX fee"
 msgstr "计算 {0}% JBX 费用之后"
 
 msgid "allocation"
-msgstr ""
+msgstr "分配"
 
 msgid "called by <0/>"
 msgstr "由 <0/> 调用"
@@ -3629,7 +3716,7 @@ msgid "hours"
 msgstr "小时"
 
 msgid "infinite"
-msgstr ""
+msgstr "无限"
 
 msgid "last {trendingWindowDays} days"
 msgstr "最近 {trendingWindowDays} 天"
@@ -3653,7 +3740,7 @@ msgid "or <0><1>sell {tokenSymbol} on exchange.</1></0>"
 msgstr "或者 <0><1>去交易所卖出 {tokenSymbol} 代币。</1></0>"
 
 msgid "payout"
-msgstr ""
+msgstr "支出"
 
 msgid "project"
 msgstr "项目"
@@ -3671,7 +3758,7 @@ msgid "token"
 msgstr "代币"
 
 msgid "token allocation"
-msgstr ""
+msgstr "代币分配"
 
 msgid "tokens"
 msgstr "代币"
@@ -3695,7 +3782,7 @@ msgid "veNFT Tiers ({0} variants)"
 msgstr "veNFT 等级 ({0} variants)"
 
 msgid "zero"
-msgstr ""
+msgstr "零"
 
 msgid "{0, plural, one {# Payment Address} other {# Payment Addresses}}"
 msgstr "{0, plural, one {# 支付地址} other {# 支付地址}}"
@@ -3707,13 +3794,13 @@ msgid "{0, plural, one {View deployed Payment Address} other {View deployed Paym
 msgstr "{0, plural, one {查看已部署的支付地址} other {查看已部署的支付地址}}"
 
 msgid "{0}"
-msgstr ""
+msgstr "{0}"
 
 msgid "{0} after JBX fee"
 msgstr "收取 JBX 费用之后 {0}"
 
 msgid "{0} after {feePercentage}% JBX membership fee"
-msgstr ""
+msgstr "{0} 扣除 {feePercentage}% JBX 成员费用之后"
 
 msgid "{0} ago"
 msgstr "{0} 之前"
@@ -3731,7 +3818,7 @@ msgid "{0} holders"
 msgstr "{0} 持有者"
 
 msgid "{0} is disabled when <0>Funding Target</0> is {1}."
-msgstr ""
+msgstr " <0>筹款目标</0> 为 {1} 时，{0} 选项禁用。"
 
 msgid "{0} is not a valid integer"
 msgstr "{0} 不是有效整数"
@@ -3759,6 +3846,9 @@ msgstr "{0} 未领取"
 
 msgid "{0} withdrawn"
 msgstr "已提取 {0}"
+
+msgid "{0} {tokenSymbol}/ETH"
+msgstr ""
 
 msgid "{0} {tokenTextPlural} reserved"
 msgstr "{0} {tokenTextPlural} 已保留"
@@ -3794,7 +3884,7 @@ msgid "{exchangeName} has no market for {tokenSymbol}."
 msgstr "{exchangeName} 不存在 {tokenSymbol} 的兑换市场"
 
 msgid "{formattedBalance} tokens for <0/>"
-msgstr ""
+msgstr " <0/> 的代币余额为 {formattedBalance}"
 
 msgid "{formattedTimeLeft} left"
 msgstr "剩余 {formattedTimeLeft}"
@@ -3837,9 +3927,6 @@ msgstr "{payerRate} {tokenSymbolPlural}/ETH"
 
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
 msgstr "{paymentCount, plural, one {# 笔付款} other {# 笔付款}}"
-
-msgid "{paymentIssuanceRate} {tokenSymbolPlural}/ETH"
-msgstr ""
 
 msgid "{tokenSymbolDisplayText} range"
 msgstr "{tokenSymbolDisplayText} 区间"

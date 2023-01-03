@@ -126,9 +126,11 @@ export function AccountBalanceDescription() {
         </div>
       </div>
 
-      <Button size="small" onClick={() => setManageTokensModalVisible(true)}>
-        <Trans>Manage {tokenText}</Trans>
-      </Button>
+      {totalBalance?.gt(0) ? (
+        <Button size="small" onClick={() => setManageTokensModalVisible(true)}>
+          <Trans>Manage {tokenText}</Trans>
+        </Button>
+      ) : null}
 
       <ManageTokensModal
         open={manageTokensModalVisible}

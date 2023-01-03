@@ -27,7 +27,7 @@ function BuiltForList() {
         t`Indie creators and builders`,
       ].map((data, i) => (
         <Space className="pl-2" key={i} size="middle">
-          <Image src={bolt} alt="⚡️" />
+          <Image src={bolt} alt="Lightning bolt symbol" />
           {data}
         </Space>
       ))}
@@ -108,7 +108,7 @@ export function HeroSection() {
                   [ThemeOption.dark]: bananaOd,
                   [ThemeOption.light]: bananaOl,
                 })}
-                alt="Chill banana drinking juice"
+                alt="Banny the chill Juicebox banana drinking juice"
               />
             </Col>
           )}

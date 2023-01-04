@@ -52,7 +52,10 @@ export default function RedeemEventElem({
       event={event}
       header={t`Redeemed`}
       subject={
-        <div style={{ fontSize: primaryContentFontSize }}>
+        <div
+          style={{ fontSize: primaryContentFontSize }}
+          className="font-medium"
+        >
           {redeemedTokenIds.length > 0 ? (
             <div>
               <div>
@@ -61,7 +64,7 @@ export default function RedeemEventElem({
                   other: '# NFTs',
                 })}
               </div>
-              <div className="text-xs text-grey-500 dark:text-grey-300">
+              <div className="text-xs font-normal text-grey-500 dark:text-grey-300">
                 {redeemedTokens}
               </div>
             </div>

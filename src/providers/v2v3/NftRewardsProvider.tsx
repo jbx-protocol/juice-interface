@@ -2,6 +2,7 @@ import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useNftCollectionMetadataUri } from 'hooks/JB721Delegate/contractReader/NftCollectionMetadataUri'
+import { useNftCollectionTokens } from 'hooks/JB721Delegate/contractReader/NftCollectionTokens'
 import { useNftRewardTiersOf } from 'hooks/JB721Delegate/contractReader/NftRewardTiersOf'
 import useNftRewards from 'hooks/NftRewards'
 import { useContext } from 'react'
@@ -32,6 +33,7 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
     projectId,
     dataSourceAddress,
   )
+  const { data: tokens } = useNftCollectionTokens({ dataSourceAddress })
 
   const { data: collectionMetadataUri, loading: collectionUriLoading } =
     useNftCollectionMetadataUri(dataSourceAddress)
@@ -58,6 +60,7 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
             uri: collectionMetadataUri,
           },
           postPayModal: projectMetadata?.nftPaymentSuccessModal,
+          tokens,
         },
         loading,
       }}

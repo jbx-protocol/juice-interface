@@ -26,6 +26,7 @@ import {
   ReservedTokensGroupedSplits,
   Split,
 } from 'models/splits'
+import { JB721DelegateToken } from 'models/subgraph-entities/v2/jb-721-delegate-tokens'
 import {
   DEFAULT_MINT_RATE,
   issuanceRateFrom,
@@ -44,6 +45,7 @@ export type NftRewardsData = {
   CIDs: string[] | undefined // points to locations of the NFTs' json on IPFS
   collectionMetadata: NftCollectionMetadata
   postPayModal: NftPostPayModalConfig | undefined
+  tokens: JB721DelegateToken[] | undefined
 }
 
 export interface CreateState {

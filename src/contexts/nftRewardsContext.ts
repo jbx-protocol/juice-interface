@@ -15,6 +15,7 @@ export const NftRewardsContext = createContext<NftRewardsContextType>({
     rewardTiers: undefined,
     postPayModal: undefined,
     collectionMetadata: EMPTY_NFT_COLLECTION_METADATA,
+    tokens: undefined,
   },
   loading: false,
 })

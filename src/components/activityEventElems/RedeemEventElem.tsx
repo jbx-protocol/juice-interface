@@ -1,5 +1,6 @@
 import { plural, t, Trans } from '@lingui/macro'
 import ETHAmount from 'components/currency/ETHAmount'
+// import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { RedeemEvent } from 'models/subgraph-entities/vX/redeem-event'
@@ -29,6 +30,9 @@ export default function RedeemEventElem({
     | undefined
 }) {
   const { tokenSymbol } = useContext(V1ProjectContext)
+  // const {
+  //   nftRewards: { tokens },
+  // } = useContext(NftRewardsContext)
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -46,6 +50,10 @@ export default function RedeemEventElem({
     capitalize: false,
     plural: true,
   })}`
+
+  // const redeemedTokenIds = JB721DelegateTokenIds.map(tokenId =>
+  //   tokenId.toString(),
+  // )
 
   return (
     <ActivityEvent

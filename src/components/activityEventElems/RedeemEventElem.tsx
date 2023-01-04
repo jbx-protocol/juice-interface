@@ -35,9 +35,9 @@ export default function RedeemEventElem({
 
   if (!event) return null
 
-  const [, , redeemedTokenIds] = decodeJB721DelegateRedeemMetadata(
-    event.metadata,
-  )
+  const [, , redeemedTokenIds] = event.metadata
+    ? decodeJB721DelegateRedeemMetadata(event.metadata) ?? []
+    : []
 
   const redeemedTokens = `${formatWad(event.amount, {
     precision: 0,
@@ -56,7 +56,7 @@ export default function RedeemEventElem({
           style={{ fontSize: primaryContentFontSize }}
           className="font-medium"
         >
-          {redeemedTokenIds.length > 0 ? (
+          {redeemedTokenIds && redeemedTokenIds.length > 0 ? (
             <div>
               <div>
                 {plural(redeemedTokenIds.length, {

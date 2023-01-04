@@ -25,7 +25,7 @@ export interface RedeemEvent
   amount: BigNumber
   returnAmount: BigNumber
   caller: string
-  metadata: string
+  metadata: string | undefined
 }
 
 export type RedeemEventJson = Partial<

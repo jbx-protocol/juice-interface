@@ -173,6 +173,7 @@ export default function ProjectActivity() {
           'timestamp',
           'returnAmount',
           'terminal',
+          'metadata',
         ],
       },
       {

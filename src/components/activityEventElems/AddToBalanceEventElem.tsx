@@ -21,7 +21,11 @@ export default function AddToBalanceEventElem({
     <ActivityEvent
       event={event}
       header={t`Added to balance`}
-      subject={<ETHAmount amount={event.amount} />}
+      subject={
+        <span className="text-base font-medium">
+          <ETHAmount amount={event.amount} />
+        </span>
+      }
       extra={
         <RichNote
           note={event.note ?? ''}

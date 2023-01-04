@@ -262,15 +262,14 @@ export default function VolumeChart({
               contentStyle={{
                 background: colors.background.l0,
                 border: '1px solid ' + colors.stroke.secondary,
-                fontSize: '0.8rem',
               }}
               cursor={{ stroke: colors.stroke.secondary }}
               content={({ active, payload }) => {
                 if (!active || !payload?.length) return null
 
                 return (
-                  <div className="border border-solid border-smoke-200 bg-smoke-25 p-2 dark:border-grey-600 dark:bg-slate-800">
-                    <div className="text-xs text-grey-400 dark:text-slate-200">
+                  <div className="border border-solid border-smoke-200 bg-smoke-25 p-2 text-xs dark:border-grey-600 dark:bg-slate-800">
+                    <div className="text-grey-400 dark:text-slate-200">
                       {dateStringForBlockTime(payload[0].payload.timestamp)}
                     </div>
                     {payload[0].payload.tapped ? (

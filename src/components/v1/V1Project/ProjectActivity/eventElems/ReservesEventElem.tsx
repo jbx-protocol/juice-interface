@@ -1,7 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import FormattedAddress from 'components/FormattedAddress'
-import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { PrintReservesEvent } from 'models/subgraph-entities/v1/print-reserves-event'
@@ -26,9 +25,6 @@ export default function ReservesEventElem({
     | undefined
 }) {
   const { tokenSymbol } = useContext(V1ProjectContext)
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
 
   // Load individual DistributeToTicketMod events, emitted by internal transactions of the PrintReserves transaction
   const { data: distributeEvents } = useSubgraphQuery(
@@ -62,7 +58,7 @@ export default function ReservesEventElem({
         </Trans>
       }
       subject={
-        <div className="font-medium text-black dark:text-slate-100">
+        <div className="text-base font-medium text-grey-900 dark:text-slate-100">
           {formatWad(event.count, { precision: 0 })}{' '}
           {tokenSymbolText({
             tokenSymbol,
@@ -81,18 +77,16 @@ export default function ReservesEventElem({
                 justifyContent: 'space-between',
                 alignItems: 'baseline',
               }}
+              className="text-sm"
             >
-              <div style={{ fontWeight: 500, fontSize: '0.8rem' }}>
-                <FormattedAddress address={e.modBeneficiary} />:
+              <div>
+                <FormattedAddress
+                  className="text-grey-900 dark:text-slate-100"
+                  address={e.modBeneficiary}
+                />
+                :
               </div>
-
-              <div
-                style={
-                  distributeEvents.length > 1
-                    ? { color: colors.text.secondary, fontSize: '0.8rem' }
-                    : { fontWeight: 500 }
-                }
-              >
+              <div className="text-grey-500 dark:text-grey-300">
                 {formatWad(e.modCut, { precision: 0 })}
               </div>
             </div>
@@ -105,9 +99,14 @@ export default function ReservesEventElem({
                 justifyContent: 'space-between',
                 alignItems: 'baseline',
               }}
+              className="text-sm"
             >
-              <div className="font-medium">
-                <FormattedAddress address={event.beneficiary} />:
+              <div>
+                <FormattedAddress
+                  className="text-grey-900 dark:text-slate-100"
+                  address={event.beneficiary}
+                />
+                :
               </div>
               <div className="text-grey-500 dark:text-grey-300">
                 {formatWad(event.beneficiaryTicketAmount, {

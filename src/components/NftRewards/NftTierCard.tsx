@@ -182,7 +182,7 @@ export function NftTierCard({
                 title={false}
                 paragraph={{ rows: 1, width: ['50%'] }}
               >
-                <span className="text-xs text-grey-900 dark:text-slate-50">
+                <span className="text-sm text-grey-900 dark:text-slate-50">
                   {rewardTier?.contributionFloor} ETH
                 </span>
               </Skeleton>
@@ -193,11 +193,8 @@ export function NftTierCard({
                 title={false}
                 paragraph={{ rows: 1, width: ['50%'] }}
               >
-                <span
-                  className="mt-2 text-grey-500"
-                  style={{ fontSize: '0.6rem' }}
-                >
-                  <Trans>REMAINING: {remainingSupply}</Trans>
+                <span className="mt-2 text-xs text-grey-500 dark:text-slate-200">
+                  <Trans>{remainingSupply} remaining</Trans>
                 </span>
               </Skeleton>
             </>

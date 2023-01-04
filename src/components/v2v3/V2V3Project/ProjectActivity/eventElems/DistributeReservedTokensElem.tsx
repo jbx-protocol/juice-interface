@@ -1,7 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import FormattedAddress from 'components/FormattedAddress'
-import { ThemeContext } from 'contexts/themeContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { DistributeReservedTokensEvent } from 'models/subgraph-entities/v2/distribute-reserved-tokens-event'
@@ -26,9 +25,6 @@ export default function DistributeReservedTokensEventElem({
     | undefined
 }) {
   const { tokenSymbol } = useContext(V1ProjectContext)
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
 
   // Load individual DistributeToReservedTokenSplit events, emitted by internal transactions of the DistributeReservedTokens transaction
   const { data: distributeEvents } = useSubgraphQuery(
@@ -70,7 +66,7 @@ export default function DistributeReservedTokensEventElem({
         </Trans>
       }
       subject={
-        <div className="text-base">
+        <div className="text-base font-medium">
           {formatWad(event.tokenCount, { precision: 0 })}{' '}
           {tokenSymbolText({
             tokenSymbol,
@@ -90,17 +86,15 @@ export default function DistributeReservedTokensEventElem({
                 alignItems: 'baseline',
               }}
             >
-              <div style={{ fontWeight: 500 }} className="text-sm">
-                <FormattedAddress address={e.beneficiary} />:
+              <div>
+                <FormattedAddress
+                  className="text-grey-900 dark:text-slate-100"
+                  address={e.beneficiary}
+                />
+                :
               </div>
 
-              <div
-                className={
-                  distributeEvents.length > 1
-                    ? 'text-gray-500 text-sm'
-                    : 'font-medium'
-                }
-              >
+              <div className="text-sm text-grey-500 dark:text-grey-300">
                 {formatWad(e.tokenCount, { precision: 0 })}
               </div>
             </div>
@@ -114,10 +108,14 @@ export default function DistributeReservedTokensEventElem({
                 alignItems: 'baseline',
               }}
             >
-              <div style={{ fontWeight: 500 }}>
-                <FormattedAddress address={event.beneficiary} />:
+              <div>
+                <FormattedAddress
+                  className="text-grey-900 dark:text-slate-100"
+                  address={event.beneficiary}
+                />
+                :
               </div>
-              <div style={{ color: colors.text.secondary }}>
+              <div className="text-sm text-grey-500 dark:text-grey-300">
                 {formatWad(event.beneficiaryTokenCount, {
                   precision: 0,
                 })}

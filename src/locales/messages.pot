@@ -2318,9 +2318,6 @@ msgstr ""
 msgid "REMAINING SUPPLY: {0}/{1}"
 msgstr ""
 
-msgid "REMAINING: {remainingSupply}"
-msgstr ""
-
 msgid "Raised on Juicebox"
 msgstr ""
 
@@ -3410,6 +3407,9 @@ msgstr ""
 msgid "Wallet address"
 msgstr ""
 
+msgid "We recommend visiting the <0>Juicebox Discord</0> for help and advice on this process."
+msgstr ""
+
 msgid "We've disabled payments because the project has opted to reserve 100% of new tokens. You would receive no tokens from your payment."
 msgstr ""
 
@@ -3921,6 +3921,9 @@ msgid "{payerRate} {tokenSymbolPlural}/ETH"
 msgstr ""
 
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
+msgstr ""
+
+msgid "{remainingSupply} remaining"
 msgstr ""
 
 msgid "{tokenSymbolDisplayText} range"

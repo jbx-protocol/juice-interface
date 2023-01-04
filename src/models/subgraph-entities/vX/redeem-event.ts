@@ -25,6 +25,7 @@ export interface RedeemEvent
   amount: BigNumber
   returnAmount: BigNumber
   caller: string
+  metadata: string | undefined
 }
 
 export type RedeemEventJson = Partial<
@@ -45,4 +46,5 @@ export const parseRedeemEventJson = (
   amount: j.amount ? BigNumber.from(j.amount) : undefined,
   returnAmount: j.returnAmount ? BigNumber.from(j.returnAmount) : undefined,
   caller: j.caller,
+  metadata: j.metadata,
 })

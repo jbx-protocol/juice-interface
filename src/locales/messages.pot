@@ -3779,6 +3779,9 @@ msgstr ""
 msgid "zero"
 msgstr ""
 
+msgid "{0, plural, one {# NFT} other {# NFTs}}"
+msgstr ""
+
 msgid "{0, plural, one {# Payment Address} other {# Payment Addresses}}"
 msgstr ""
 

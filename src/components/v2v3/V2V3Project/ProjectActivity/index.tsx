@@ -145,7 +145,15 @@ export default function ProjectActivity() {
       },
       {
         entity: 'addToBalanceEvent',
-        keys: ['amount', 'timestamp', 'caller', 'note', 'id', 'txHash'],
+        keys: [
+          'amount',
+          'timestamp',
+          'caller',
+          'note',
+          'id',
+          'txHash',
+          'terminal',
+        ],
       },
       {
         entity: 'deployedERC20Event',

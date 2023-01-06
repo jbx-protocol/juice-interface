@@ -2,6 +2,7 @@ import { DeleteOutlined, LockFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Space, Tooltip } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
+import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 import useMobile from 'hooks/Mobile'
 import { useModal } from 'hooks/Modal'
 import { PayoutsSelection } from 'models/payoutsSelection'
@@ -12,6 +13,7 @@ import { formatDate } from 'utils/format/formatDate'
 import { Allocation, AllocationSplit } from '../Allocation'
 import { DeleteConfirmationModal } from '../DeleteConfirmationModal'
 import { Amount } from './Amount'
+import { isProjectSplit } from 'utils/splits'
 
 export const PayoutCard = ({
   allocation,
@@ -31,13 +33,19 @@ export const PayoutCard = ({
     onDeleteClick?.()
     deleteConfirmationModal.close()
   }, [deleteConfirmationModal, onDeleteClick])
-
   return (
     <>
       <Allocation.Item
         title={
           <Space>
-            <FormattedAddress address={allocation.beneficiary} />
+            {isProjectSplit(allocation) && allocation.projectId ? (
+              <V2V3ProjectHandleLink
+                projectId={parseInt(allocation.projectId)}
+              />
+            ) : (
+              <FormattedAddress address={allocation.beneficiary} />
+            )}
+
             {!!allocation.lockedUntil && (
               <Tooltip
                 title={t`Locked until ${formatDate(

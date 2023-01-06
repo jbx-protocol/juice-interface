@@ -90,3 +90,7 @@ export const formatOutgoingSplits = (splits: OutgoingSplit[]): Split[] => {
     ) ?? []
   )
 }
+
+export const isProjectSplit = (split: Split): boolean => {
+  return Boolean(split.projectId) && BigNumber.from(split.projectId).gt(0)
+}

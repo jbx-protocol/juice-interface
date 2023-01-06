@@ -1,10 +1,12 @@
 import { ballotStrategies as BallotStrategies } from 'constants/v2v3/ballotStrategies'
+import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
+import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { isEqual } from 'lodash'
 import { CreatePage } from 'models/create-page'
 import { FundingTargetType } from 'models/fundingTargetType'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import {
   CreateState,
@@ -121,13 +123,15 @@ const parseCreateFlowStateFromInitialState = (
  * Load redux state from a URL query parameter.
  */
 export function useLoadingInitialStateFromQuery() {
+  const { contracts } = useContext(V2V3ContractsContext)
   const dispatch = useDispatch()
   const router = useRouter()
 
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (!router.isReady) return
+    if (!router.isReady || !contracts) return
+
     const { initialState } = router.query
     if (!initialState) {
       setLoading(false)
@@ -165,6 +169,8 @@ export function useLoadingInitialStateFromQuery() {
               {
                 ...defaultReduxState.fundAccessConstraints[0],
                 ...parsedInitialState.fundAccessConstraints[0],
+                terminal: contracts.JBETHPaymentTerminal.address,
+                token: ETH_TOKEN_ADDRESS,
               },
             ],
           },
@@ -174,7 +180,7 @@ export function useLoadingInitialStateFromQuery() {
       console.warn('Error parsing initialState:', e)
     }
     setLoading(false)
-  }, [router, dispatch])
+  }, [router, dispatch, contracts])
 
   return loading
 }

@@ -210,8 +210,8 @@ export const PayoutsMigrationModal = ({
         <div className="flex flex-col gap-8">
           <Callout.Warning>
             <Trans>
-              Due to incompatibilities between v1 projects, new project ids of
-              payouts need to be assigned.
+              Your V3 project cannot have payouts to V1 projects. Remove any
+              payouts to V1 projects, or re-assign them to V3 projects.
             </Trans>
           </Callout.Warning>
 

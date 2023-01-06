@@ -60,9 +60,9 @@ export function Create() {
                   <strong>
                     <Trans>Re-launch on V3</Trans>
                   </strong>
-                  <p className="font-medium">
+                  <p>
                     <Trans>
-                      It's strongly recommended that you visit the{' '}
+                      We recommend you visit the{' '}
                       <ExternalLink href="https://discord.gg/6jXrJSyDFf">
                         Juicebox Discord
                       </ExternalLink>{' '}

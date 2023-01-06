@@ -317,6 +317,9 @@ msgstr ""
 msgid "Add payout recipient"
 msgstr ""
 
+msgid "Add payouts to wallet addresses or Juicebox projects."
+msgstr ""
+
 msgid "Add terminal"
 msgstr ""
 
@@ -336,9 +339,6 @@ msgid "Add token"
 msgstr ""
 
 msgid "Add token allocation"
-msgstr ""
-
-msgid "Add wallet addresses or Juicebox projects to receive payouts."
 msgstr ""
 
 msgid "Add {0}"
@@ -1091,6 +1091,9 @@ msgstr ""
 msgid "Distributing funds to Juicebox projects won't incur fees."
 msgstr ""
 
+msgid "Distributing funds to another Juicebox project may mint its tokens. Set the address that should receive these project's tokens."
+msgstr ""
+
 msgid "Distribution Amount"
 msgstr ""
 
@@ -1152,9 +1155,6 @@ msgid "Download Template"
 msgstr ""
 
 msgid "Download payments CSV"
-msgstr ""
-
-msgid "Due to incompatibilities between v1 projects, new project ids of payouts need to be assigned."
 msgstr ""
 
 msgid "Duration"
@@ -1584,9 +1584,6 @@ msgid "It isn't possible to remove a project's data from the blockchain, but we 
 msgstr ""
 
 msgid "It'd be a lot cooler if you did"
-msgstr ""
-
-msgid "It's strongly recommended that you visit the <0>Juicebox Discord</0> for help and advice on this process."
 msgstr ""
 
 msgid "JBX Fee ({0}%):"
@@ -2600,6 +2597,9 @@ msgstr ""
 msgid "Save tracked assets"
 msgstr ""
 
+msgid "Save {allocationName}"
+msgstr ""
+
 msgid "Search projects by handle"
 msgstr ""
 
@@ -3410,6 +3410,9 @@ msgstr ""
 msgid "We recommend visiting the <0>Juicebox Discord</0> for help and advice on this process."
 msgstr ""
 
+msgid "We recommend you visit the <0>Juicebox Discord</0> for help and advice on this process."
+msgstr ""
+
 msgid "We've disabled payments because the project has opted to reserve 100% of new tokens. You would receive no tokens from your payment."
 msgstr ""
 
@@ -3615,6 +3618,9 @@ msgid "Your V1 balance"
 msgstr ""
 
 msgid "Your V1 {tokenSymbolFormatted} balance"
+msgstr ""
+
+msgid "Your V3 project cannot have payouts to V1 projects. Remove any payouts to V1 projects, or re-assign them to V3 projects."
 msgstr ""
 
 msgid "Your balance"

@@ -91,7 +91,7 @@ export function EthAddressInput({
         onChange={onInputChange}
       />
       {extraText ? (
-        <div className="text-sm text-grey-500 dark:text-grey-300">
+        <div className="mt-1 text-xs text-grey-500 dark:text-grey-300">
           <CheckCircleFilled /> {extraText}
         </div>
       ) : null}

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-12-25 00:30\n"
+"PO-Revision-Date: 2023-01-08 00:31\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: Chinese Simplified\n"
@@ -322,6 +322,9 @@ msgstr "添加支出"
 msgid "Add payout recipient"
 msgstr "添加支出收款人"
 
+msgid "Add payouts to wallet addresses or Juicebox projects."
+msgstr ""
+
 msgid "Add terminal"
 msgstr "添加终端"
 
@@ -342,9 +345,6 @@ msgstr "添加代币"
 
 msgid "Add token allocation"
 msgstr "添加代币的分配方案"
-
-msgid "Add wallet addresses or Juicebox projects to receive payouts."
-msgstr "添加钱包地址或 Juicebox 项目作为支出对象。"
 
 msgid "Add {0}"
 msgstr "添加 {0}"
@@ -1096,6 +1096,9 @@ msgstr "已分配代币"
 msgid "Distributing funds to Juicebox projects won't incur fees."
 msgstr "分配资金给 Juicebox 项目不会产生费用。"
 
+msgid "Distributing funds to another Juicebox project may mint its tokens. Set the address that should receive these project's tokens."
+msgstr ""
+
 msgid "Distribution Amount"
 msgstr "分配金额"
 
@@ -1158,9 +1161,6 @@ msgstr "下载模板"
 
 msgid "Download payments CSV"
 msgstr "下载付款记录的 CSV 文件"
-
-msgid "Due to incompatibilities between v1 projects, new project ids of payouts need to be assigned."
-msgstr "因为兼容问题此处不能指定支出对象为 V1 项目，需要重新指定支出对象的项目 ID。"
 
 msgid "Duration"
 msgstr "持续时间"
@@ -1590,9 +1590,6 @@ msgstr "想在区块链上删除项目数据是不可能的，但如果你不想
 
 msgid "It'd be a lot cooler if you did"
 msgstr "如果你这么做了会更好"
-
-msgid "It's strongly recommended that you visit the <0>Juicebox Discord</0> for help and advice on this process."
-msgstr ""
 
 msgid "JBX Fee ({0}%):"
 msgstr "JBX 费率（{0}%）："
@@ -2323,9 +2320,6 @@ msgstr "已提交交易"
 msgid "REMAINING SUPPLY: {0}/{1}"
 msgstr "剩余供应量： {0}/{1}"
 
-msgid "REMAINING: {remainingSupply}"
-msgstr ""
-
 msgid "Raised on Juicebox"
 msgstr "Juicebox 协议总筹款金额"
 
@@ -2607,6 +2601,9 @@ msgstr "保存代币配置"
 
 msgid "Save tracked assets"
 msgstr "保存监测资产项"
+
+msgid "Save {allocationName}"
+msgstr ""
 
 msgid "Search projects by handle"
 msgstr "通过标识搜索项目"
@@ -3415,6 +3412,12 @@ msgstr "钱包地址"
 msgid "Wallet address"
 msgstr "钱包地址"
 
+msgid "We recommend visiting the <0>Juicebox Discord</0> for help and advice on this process."
+msgstr ""
+
+msgid "We recommend you visit the <0>Juicebox Discord</0> for help and advice on this process."
+msgstr ""
+
 msgid "We've disabled payments because the project has opted to reserve 100% of new tokens. You would receive no tokens from your payment."
 msgstr "因为项目选择保留 100% 的新代币，我们已经禁用付款功能。你如果付款将不会收到任何代币。"
 
@@ -3622,6 +3625,9 @@ msgstr "你的 V1 余额"
 msgid "Your V1 {tokenSymbolFormatted} balance"
 msgstr "你的 V1 {tokenSymbolFormatted} 代币余额"
 
+msgid "Your V3 project cannot have payouts to V1 projects. Remove any payouts to V1 projects, or re-assign them to V3 projects."
+msgstr ""
+
 msgid "Your balance"
 msgstr "你的余额"
 
@@ -3784,6 +3790,9 @@ msgstr "veNFT 等级 ({0} variants)"
 msgid "zero"
 msgstr "零"
 
+msgid "{0, plural, one {# NFT} other {# NFTs}}"
+msgstr ""
+
 msgid "{0, plural, one {# Payment Address} other {# Payment Addresses}}"
 msgstr "{0, plural, one {# 支付地址} other {# 支付地址}}"
 
@@ -3927,6 +3936,9 @@ msgstr "{payerRate} {tokenSymbolPlural}/ETH"
 
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
 msgstr "{paymentCount, plural, one {# 笔付款} other {# 笔付款}}"
+
+msgid "{remainingSupply} remaining"
+msgstr ""
 
 msgid "{tokenSymbolDisplayText} range"
 msgstr "{tokenSymbolDisplayText} 区间"

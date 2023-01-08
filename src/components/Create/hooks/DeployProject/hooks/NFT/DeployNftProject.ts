@@ -7,6 +7,7 @@ import {
 import { useLaunchProjectWithNftsTx } from 'hooks/JB721Delegate/transactor/LaunchProjectWithNftsTx'
 import { TransactionCallbacks } from 'models/transaction'
 import { useCallback, useMemo } from 'react'
+import { DEFAULT_NFT_FLAGS } from 'redux/slices/editingV2Project'
 import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'utils/nftFundingCycleMetadataOverrides'
 import { buildJB721TierParams } from 'utils/nftRewards'
 
@@ -39,6 +40,10 @@ export const useDeployNftProject = () => {
   const collectionSymbol = useMemo(
     () => nftRewards.collectionMetadata.symbol ?? '',
     [nftRewards.collectionMetadata.symbol],
+  )
+  const nftFlags = useMemo(
+    () => nftRewards.flags ?? DEFAULT_NFT_FLAGS,
+    [nftRewards.flags],
   )
 
   /**
@@ -81,6 +86,7 @@ export const useDeployNftProject = () => {
             collectionName,
             collectionSymbol,
             tiers,
+            flags: nftFlags,
           },
           projectData: {
             projectMetadataCID: metadataCid,
@@ -110,6 +116,7 @@ export const useDeployNftProject = () => {
       fundingCycleMetadata,
       fundAccessConstraints,
       nftRewards.rewardTiers,
+      nftFlags,
     ],
   )
 

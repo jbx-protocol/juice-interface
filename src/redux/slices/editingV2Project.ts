@@ -10,6 +10,7 @@ import {
 import { CreatePage } from 'models/create-page'
 import { FundingTargetType } from 'models/fundingTargetType'
 import {
+  JBTiered721Flags,
   NftCollectionMetadata,
   NftPostPayModalConfig,
   NftRewardTier,
@@ -44,6 +45,7 @@ export type NftRewardsData = {
   CIDs: string[] | undefined // points to locations of the NFTs' json on IPFS
   collectionMetadata: NftCollectionMetadata
   postPayModal: NftPostPayModalConfig | undefined
+  flags: JBTiered721Flags
 }
 
 export interface CreateState {
@@ -129,6 +131,13 @@ export const EMPTY_NFT_COLLECTION_METADATA = {
   description: undefined,
 }
 
+export const DEFAULT_NFT_FLAGS: JBTiered721Flags = {
+  lockReservedTokenChanges: false,
+  lockVotingUnitChanges: false,
+  lockManualMintingChanges: false,
+  preventOverspending: false,
+}
+
 const defaultCreateState: CreateState = {
   reconfigurationRuleSelection: undefined,
   fundingCyclesPageSelection: undefined,
@@ -163,6 +172,7 @@ export const defaultProjectState: ProjectState = {
     CIDs: undefined,
     collectionMetadata: EMPTY_NFT_COLLECTION_METADATA,
     postPayModal: undefined,
+    flags: DEFAULT_NFT_FLAGS,
   },
   mustStartAtOrAfter: DEFAULT_MUST_START_AT_OR_AFTER,
 }
@@ -332,6 +342,9 @@ const editingV2ProjectSlice = createSlice({
     },
     setNftRewardsName: (state, action: PayloadAction<string>) => {
       state.nftRewards.collectionMetadata.name = action.payload
+    },
+    setNftPreventOverspending: (state, action: PayloadAction<boolean>) => {
+      state.nftRewards.flags.preventOverspending = action.payload
     },
     setAllowSetTerminals: (state, action: PayloadAction<boolean>) => {
       state.fundingCycleMetadata.global.allowSetTerminals = action.payload

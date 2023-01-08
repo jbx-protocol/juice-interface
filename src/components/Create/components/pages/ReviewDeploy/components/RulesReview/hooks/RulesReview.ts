@@ -11,6 +11,7 @@ export const useRulesReview = () => {
   const {
     fundingCycleData: { ballot: customAddress },
     reconfigurationRuleSelection,
+    nftRewards: { flags: nftRewardsFlags },
     fundingCycleMetadata,
   } = useAppSelector(state => state.editingV2Project)
 
@@ -52,6 +53,14 @@ export const useRulesReview = () => {
     }
   }, [fundingCycleMetadata.useDataSourceForRedeem])
 
+  const preventOverspending = useMemo(() => {
+    if (nftRewardsFlags.preventOverspending) {
+      return t`Yes`
+    } else {
+      return t`No`
+    }
+  }, [nftRewardsFlags.preventOverspending])
+
   return {
     customAddress,
     pausePayments,
@@ -59,5 +68,6 @@ export const useRulesReview = () => {
     strategy,
     holdFees,
     useDataSourceForRedeem,
+    preventOverspending,
   }
 }

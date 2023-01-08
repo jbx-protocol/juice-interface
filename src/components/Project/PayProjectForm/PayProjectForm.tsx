@@ -2,6 +2,7 @@ import InputAccessoryButton from 'components/InputAccessoryButton'
 import { CurrencyContext } from 'contexts/currencyContext'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { useContext } from 'react'
+import { getHighestAffordableNft, getNftRewardOfFloor } from 'utils/nftRewards'
 
 import FormattedNumberInput from '../../inputs/FormattedNumberInput'
 import PayInputSubText from './PayInputSubText'
@@ -13,7 +14,7 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
     currencies: { USD, ETH },
   } = useContext(CurrencyContext)
   const {
-    nftRewards: { rewardTiers },
+    nftRewards: { rewardTiers, flags },
   } = useContext(NftRewardsContext)
   const { PayButton, form: payProjectForm } = useContext(PayProjectFormContext)
   const {
@@ -33,21 +34,26 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
 
   const onPayAmountChange = (value?: string): void => {
     const newPayAmount = value ?? '0'
+    const payAmountNum = parseFloat(newPayAmount)
     setPayAmount?.(newPayAmount)
     validatePayAmount?.(newPayAmount)
 
     // TODO block pay input / notify user if NFTs still loading?
     if (!rewardTiers) return
 
-    // Get ID of the most expensive reward tier that can be afforded by the current pay amount
-    const highestAffordableTierId = rewardTiers
-      .filter(tier => tier.contributionFloor <= parseFloat(newPayAmount))
-      .sort((a, b) =>
-        a.contributionFloor > b.contributionFloor ? -1 : 1,
-      )[0]?.id
+    // If preventOverspending is enabled, selects nft with same contribution floor as pay amount
+    // If preventOverspending is false, selects highest eligible reward tier
+    const selectedNftId = flags.preventOverspending
+      ? getNftRewardOfFloor({
+          floor: payAmountNum,
+          rewardTiers,
+        })?.id
+      : getHighestAffordableNft({
+          nftRewardTiers: rewardTiers,
+          payAmountETH: payAmountNum,
+        })?.id
 
-    const tierIdsToMint =
-      highestAffordableTierId !== undefined ? [highestAffordableTierId] : []
+    const tierIdsToMint = selectedNftId !== undefined ? [selectedNftId] : []
 
     setPayMetadata?.({
       tierIdsToMint,

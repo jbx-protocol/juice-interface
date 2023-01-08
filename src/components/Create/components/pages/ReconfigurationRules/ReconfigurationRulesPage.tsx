@@ -6,9 +6,11 @@ import { Selection } from 'components/Create/components/Selection'
 import { JuiceSwitch } from 'components/JuiceSwitch'
 import {
   HOLD_FEES_EXPLAINATION,
+  PREVENT_OVERSPENDING_EXPLAINATION,
   USE_DATASOURCE_FOR_REDEEM_EXPLAINATION,
 } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { readNetwork } from 'constants/networks'
+import { useAppSelector } from 'hooks/AppSelector'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { CreateCollapse } from '../../CreateCollapse'
@@ -23,6 +25,10 @@ import {
 export const ReconfigurationRulesPage = () => {
   useSetCreateFurthestPageReached('reconfigurationRules')
   const { form, initialValues } = useReconfigurationRulesForm()
+  const {
+    nftRewards: { rewardTiers },
+  } = useAppSelector(state => state.editingV2Project)
+
   const { goToNextPage } = useContext(PageContext)
 
   const selection = useWatch('selection', form)
@@ -31,6 +37,8 @@ export const ReconfigurationRulesPage = () => {
   const reconfigurationStrategies = useAvailableReconfigurationStrategies(
     readNetwork.name,
   )
+
+  const hasNFTs = rewardTiers?.length
 
   return (
     <Form
@@ -87,6 +95,14 @@ export const ReconfigurationRulesPage = () => {
             >
               <JuiceSwitch label={t`Use data source for redeem`} />
             </Form.Item>
+            {hasNFTs ? (
+              <Form.Item
+                name="preventOverspending"
+                extra={PREVENT_OVERSPENDING_EXPLAINATION}
+              >
+                <JuiceSwitch label={t`Prevent NFT overspending`} />
+              </Form.Item>
+            ) : null}
           </CreateCollapse.Panel>
         </CreateCollapse>
       </Space>

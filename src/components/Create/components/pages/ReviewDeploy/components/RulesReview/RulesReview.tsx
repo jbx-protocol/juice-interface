@@ -15,13 +15,14 @@ export const RulesReview = () => {
     terminalConfiguration,
     holdFees,
     useDataSourceForRedeem,
+    preventOverspending,
   } = useRulesReview()
   return (
     <div className="flex flex-col gap-10 pt-5 pb-8">
       {isMobile ? (
         <MobileRulesReview />
       ) : (
-        <Row gutter={20}>
+        <Row gutter={[20, 20]}>
           <DescriptionCol
             span={5}
             title={t`Reconfiguration`}
@@ -63,6 +64,13 @@ export const RulesReview = () => {
               <div className="text-base font-medium">
                 {useDataSourceForRedeem}
               </div>
+            }
+          />
+          <DescriptionCol
+            span={4}
+            title={t`Prevent NFT overspending`}
+            desc={
+              <div className="text-base font-medium">{preventOverspending}</div>
             }
           />
         </Row>

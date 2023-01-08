@@ -4,7 +4,7 @@ import { V2V3PayButton } from 'components/v2v3/V2V3Project/V2V3PayButton/V2V3Pay
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useContext } from 'react'
-import { getNftRewardTier } from 'utils/nftRewards'
+import { getHighestAffordableNft } from 'utils/nftRewards'
 import { weightAmountPermyriad } from 'utils/v2v3/math'
 
 export const V2V3PayProjectFormProvider: React.FC = ({ children }) => {
@@ -19,7 +19,7 @@ export const V2V3PayProjectFormProvider: React.FC = ({ children }) => {
   const isEligibleForNft =
     nftRewardTiers && payProjectForm.payAmount
       ? Boolean(
-          getNftRewardTier({
+          getHighestAffordableNft({
             nftRewardTiers: nftRewardTiers,
             payAmountETH: parseFloat(payProjectForm.payAmount),
           }),

@@ -17,6 +17,7 @@ import {
   JB721PricingParams,
   JB721TierParams,
   JBDeployTiered721DelegateData,
+  JBTiered721Flags,
   NftRewardTier,
 } from 'models/nftRewardTier'
 import { V2V3ContractName } from 'models/v2v3/contracts'
@@ -54,7 +55,7 @@ export async function findJBTiered721DelegateStoreAddress() {
 }
 
 // Returns the highest NFT reward tier that a payer is eligible given their pay amount
-export function getNftRewardTier({
+export function getHighestAffordableNft({
   payAmountETH,
   nftRewardTiers,
 }: {
@@ -73,6 +74,16 @@ export function getNftRewardTier({
     })
   }
   return nftReward
+}
+
+export function getNftRewardOfFloor({
+  floor,
+  rewardTiers,
+}: {
+  floor: number
+  rewardTiers: NftRewardTier[]
+}) {
+  return rewardTiers.find(tier => tier.contributionFloor === floor)
 }
 
 // returns an array of CIDs from a given array of RewardTier obj's
@@ -276,9 +287,7 @@ export function encodeJB721DelegatePayMetadata(
     constants.HashZero,
     constants.HashZero,
     IJB721Delegate_INTERFACE_ID,
-    metadata.dontMint ?? false,
-    metadata.expectMintFromExtraFunds ?? false,
-    metadata.dontOverspend ?? false,
+    metadata.allowOverspending ?? true,
     metadata.tierIdsToMint,
   ]
 
@@ -344,6 +353,7 @@ export function buildJBDeployTiered721DelegateData({
     JBPricesAddress,
     JBTiered721DelegateStoreAddress,
   },
+  flags,
 }: {
   collectionUri: string
   collectionName: string
@@ -356,6 +366,7 @@ export function buildJBDeployTiered721DelegateData({
     JBPricesAddress: string
     JBTiered721DelegateStoreAddress: string
   }
+  flags: JBTiered721Flags
 }): JBDeployTiered721DelegateData {
   const pricing: JB721PricingParams = {
     tiers,
@@ -376,11 +387,7 @@ export function buildJBDeployTiered721DelegateData({
     pricing,
     reservedTokenBeneficiary: constants.AddressZero,
     store: JBTiered721DelegateStoreAddress,
-    flags: {
-      lockReservedTokenChanges: false,
-      lockVotingUnitChanges: false,
-      lockManualMintingChanges: false,
-    },
+    flags,
     governanceType: JB721GovernanceType.TIERED,
   }
 }
@@ -394,7 +401,7 @@ export function payMetadataOverrides(
   // ConstitutionDAO2 wanted to _not_ overspend. That is, to not allow any payment amount that
   // doesn't equal one of the NFT tier amounts.
   if (projectId === V2V3_PROJECT_IDS.CDAO2) {
-    return { dontOverspend: true }
+    return { allowOverspending: false }
   }
 
   return {}

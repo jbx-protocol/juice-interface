@@ -48,7 +48,7 @@ export function NftTierCard({
         title={
           !hideAttributes ? (
             <span className="text-xs">
-              {payMetadataOverrides(projectId ?? 0).dontOverspend ? (
+              {payMetadataOverrides(projectId ?? 0).allowOverspending ? (
                 <Trans>
                   Receive this NFT when you contribute{' '}
                   <strong>{rewardTier?.contributionFloor} ETH</strong>.

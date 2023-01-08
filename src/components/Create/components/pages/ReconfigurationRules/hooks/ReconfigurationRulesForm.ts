@@ -17,6 +17,7 @@ export type ReconfigurationRulesFormProps = Partial<{
   allowTerminalConfiguration: boolean
   holdFees: boolean
   useDataSourceForRedeem: boolean
+  preventOverspending: boolean
 }>
 
 export const useReconfigurationRulesForm = () => {
@@ -42,6 +43,7 @@ export const useReconfigurationRulesForm = () => {
   const {
     fundingCycleData: { ballot },
     reconfigurationRuleSelection,
+    nftRewards: { flags: nftRewardsFlags },
     fundingCycleMetadata,
   } = useAppSelector(state => state.editingV2Project)
   const initialValues: ReconfigurationRulesFormProps | undefined =
@@ -50,6 +52,8 @@ export const useReconfigurationRulesForm = () => {
       const allowTerminalConfiguration =
         fundingCycleMetadata.global.allowSetTerminals
       const holdFees = fundingCycleMetadata.holdFees
+      const useDataSourceForRedeem = fundingCycleMetadata.useDataSourceForRedeem
+      const preventOverspending = nftRewardsFlags.preventOverspending
       // By default, ballot is addressZero
       if (!reconfigurationRuleSelection && ballot === constants.AddressZero)
         return {
@@ -66,6 +70,8 @@ export const useReconfigurationRulesForm = () => {
           pausePayments,
           allowTerminalConfiguration,
           holdFees,
+          useDataSourceForRedeem,
+          preventOverspending,
         }
       }
 
@@ -74,6 +80,8 @@ export const useReconfigurationRulesForm = () => {
         pausePayments,
         allowTerminalConfiguration,
         holdFees,
+        useDataSourceForRedeem,
+        preventOverspending,
       }
     }, [
       ballot,
@@ -81,8 +89,10 @@ export const useReconfigurationRulesForm = () => {
       fundingCycleMetadata.global.allowSetTerminals,
       fundingCycleMetadata.pausePay,
       fundingCycleMetadata.holdFees,
+      fundingCycleMetadata.useDataSourceForRedeem,
       reconfigurationRuleSelection,
       strategies,
+      nftRewardsFlags.preventOverspending,
     ])
 
   const selection = Form.useWatch('selection', form)
@@ -134,6 +144,13 @@ export const useReconfigurationRulesForm = () => {
     fieldName: 'useDataSourceForRedeem',
     ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setUseDataSourceForRedeem,
+    formatter: v => !!v,
+  })
+  useFormDispatchWatch({
+    form,
+    fieldName: 'preventOverspending',
+    ignoreUndefined: true,
+    dispatchFunction: editingV2ProjectActions.setNftPreventOverspending,
     formatter: v => !!v,
   })
 

@@ -12,6 +12,7 @@ export const MobileRulesReview = () => {
     terminalConfiguration,
     holdFees,
     useDataSourceForRedeem,
+    preventOverspending,
   } = useRulesReview()
   return (
     <Row gutter={[20, 20]}>
@@ -52,6 +53,13 @@ export const MobileRulesReview = () => {
         title={t`Use data source for redeem`}
         desc={
           <div className="text-base font-medium">{useDataSourceForRedeem}</div>
+        }
+      />
+      <DescriptionCol
+        span={12}
+        title={t`Prevent NFT overspending`}
+        desc={
+          <div className="text-base font-medium">{preventOverspending}</div>
         }
       />
     </Row>

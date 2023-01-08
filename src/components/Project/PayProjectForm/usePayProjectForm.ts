@@ -9,15 +9,16 @@ import { parseWad } from 'utils/format/formatNumber'
 
 export interface JB721DelegatePayMetadata {
   tierIdsToMint: number[]
-  dontMint?: boolean
-  expectMintFromExtraFunds?: boolean
-  dontOverspend?: boolean
+  allowOverspending?: boolean
 }
 
 export type PayMetadata = JB721DelegatePayMetadata // in future, maybe more
 
+export const DEFAULT_ALLOW_OVERSPENDING = true
+
 const DEFAULT_PAY_METADATA: PayMetadata = {
   tierIdsToMint: [],
+  allowOverspending: DEFAULT_ALLOW_OVERSPENDING,
 }
 
 export interface PayProjectForm {

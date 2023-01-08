@@ -90,3 +90,11 @@ export const USE_DATASOURCE_FOR_REDEEM_EXPLAINATION = (
     When enabled, the data source will be used for redeem transactions.
   </Trans>
 )
+
+export const PREVENT_OVERSPENDING_EXPLAINATION = (
+  <Trans>
+    When enabled, users can only receive NFTs by paying the exact price of the
+    NFT. This ensures that when users redeem their NFTs, they will receive the
+    amount they paid for them.
+  </Trans>
+)

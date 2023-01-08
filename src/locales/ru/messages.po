@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-12-25 00:30\n"
+"PO-Revision-Date: 2023-01-08 00:31\n"
 "Last-Translator: \n"
 "Language: ru_RU\n"
 "Language-Team: Russian\n"
@@ -322,6 +322,9 @@ msgstr "Добавить выплату"
 msgid "Add payout recipient"
 msgstr ""
 
+msgid "Add payouts to wallet addresses or Juicebox projects."
+msgstr ""
+
 msgid "Add terminal"
 msgstr ""
 
@@ -341,9 +344,6 @@ msgid "Add token"
 msgstr ""
 
 msgid "Add token allocation"
-msgstr ""
-
-msgid "Add wallet addresses or Juicebox projects to receive payouts."
 msgstr ""
 
 msgid "Add {0}"
@@ -1096,6 +1096,9 @@ msgstr ""
 msgid "Distributing funds to Juicebox projects won't incur fees."
 msgstr ""
 
+msgid "Distributing funds to another Juicebox project may mint its tokens. Set the address that should receive these project's tokens."
+msgstr ""
+
 msgid "Distribution Amount"
 msgstr ""
 
@@ -1157,9 +1160,6 @@ msgid "Download Template"
 msgstr ""
 
 msgid "Download payments CSV"
-msgstr ""
-
-msgid "Due to incompatibilities between v1 projects, new project ids of payouts need to be assigned."
 msgstr ""
 
 msgid "Duration"
@@ -1590,9 +1590,6 @@ msgstr "Удалить данные проекта из блокчейна не�
 
 msgid "It'd be a lot cooler if you did"
 msgstr "Было бы намного круче, если бы вы это сделали"
-
-msgid "It's strongly recommended that you visit the <0>Juicebox Discord</0> for help and advice on this process."
-msgstr ""
 
 msgid "JBX Fee ({0}%):"
 msgstr "Комиссия JBX ({0}%):"
@@ -2323,9 +2320,6 @@ msgstr ""
 msgid "REMAINING SUPPLY: {0}/{1}"
 msgstr ""
 
-msgid "REMAINING: {remainingSupply}"
-msgstr ""
-
 msgid "Raised on Juicebox"
 msgstr ""
 
@@ -2607,6 +2601,9 @@ msgstr "Сохранить конфигурацию токена"
 
 msgid "Save tracked assets"
 msgstr "Сохранить отслеживаемые активы"
+
+msgid "Save {allocationName}"
+msgstr ""
 
 msgid "Search projects by handle"
 msgstr "Поиск проектов по имени"
@@ -3415,6 +3412,12 @@ msgstr ""
 msgid "Wallet address"
 msgstr "Адрес кошелька"
 
+msgid "We recommend visiting the <0>Juicebox Discord</0> for help and advice on this process."
+msgstr ""
+
+msgid "We recommend you visit the <0>Juicebox Discord</0> for help and advice on this process."
+msgstr ""
+
 msgid "We've disabled payments because the project has opted to reserve 100% of new tokens. You would receive no tokens from your payment."
 msgstr ""
 
@@ -3622,6 +3625,9 @@ msgstr ""
 msgid "Your V1 {tokenSymbolFormatted} balance"
 msgstr ""
 
+msgid "Your V3 project cannot have payouts to V1 projects. Remove any payouts to V1 projects, or re-assign them to V3 projects."
+msgstr ""
+
 msgid "Your balance"
 msgstr "Ваш баланс"
 
@@ -3784,6 +3790,9 @@ msgstr ""
 msgid "zero"
 msgstr ""
 
+msgid "{0, plural, one {# NFT} other {# NFTs}}"
+msgstr ""
+
 msgid "{0, plural, one {# Payment Address} other {# Payment Addresses}}"
 msgstr ""
 
@@ -3927,6 +3936,9 @@ msgstr ""
 
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
 msgstr "{paymentCount, plural, one {# платеж} other {# платежи}}"
+
+msgid "{remainingSupply} remaining"
+msgstr ""
 
 msgid "{tokenSymbolDisplayText} range"
 msgstr ""

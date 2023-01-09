@@ -320,14 +320,36 @@ export function decodeJB721DelegateRedeemMetadata(
   }
 }
 
+// returns an array of NftRewardTiers corresponding to a given list of tier IDs
+//    Note: If ids contains multiple of the same ID, the return value
+//          will contain corresponding rewardTier multiple times.
+export function rewardTiersFromIds({
+  tierIds,
+  rewardTiers,
+}: {
+  tierIds: number[]
+  rewardTiers: NftRewardTier[]
+}) {
+  return tierIds
+    .map(id => rewardTiers.find(tier => tier.id === id))
+    .filter(tier => Boolean(tier)) as NftRewardTier[]
+}
+
 // sums the contribution floors of a given list of nftRewardTiers
 //    - optional select only an array of ids
-export function sumTierFloors(rewardTiers: NftRewardTier[], ids?: number[]) {
-  if (ids) {
-    rewardTiers = rewardTiers.filter(tier => ids.includes(tier.id ?? -1))
-  }
+export function sumTierFloors(
+  rewardTiers: NftRewardTier[],
+  tierIds?: number[],
+) {
+  if (!tierIds) return 0
+
+  const selectedTiers = rewardTiersFromIds({
+    tierIds,
+    rewardTiers,
+  })
+
   return round(
-    rewardTiers.reduce((subSum, tier) => subSum + tier.contributionFloor, 0),
+    selectedTiers.reduce((subSum, tier) => subSum + tier.contributionFloor, 0),
     6,
   )
 }

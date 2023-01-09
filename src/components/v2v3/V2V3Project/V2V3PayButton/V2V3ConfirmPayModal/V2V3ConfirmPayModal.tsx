@@ -24,6 +24,7 @@ import { formattedNum, formatWad } from 'utils/format/formatNumber'
 import {
   encodeJB721DelegatePayMetadata,
   payMetadataOverrides,
+  rewardTiersFromIds,
   sumTierFloors,
 } from 'utils/nftRewards'
 import { emitErrorNotification } from 'utils/notifications'
@@ -95,9 +96,15 @@ export function V2V3ConfirmPayModal({
     plural: true,
   })
 
-  const nftRewardTiers = rewardTiers?.filter(r =>
-    payProjectForm?.payMetadata?.tierIdsToMint.includes(r.id ?? -1),
-  )
+  const nftTierIdsToMint = payProjectForm?.payMetadata?.tierIdsToMint.sort()
+
+  const nftRewardTiers =
+    rewardTiers && nftTierIdsToMint
+      ? rewardTiersFromIds({
+          tierIds: payProjectForm?.payMetadata?.tierIdsToMint || [],
+          rewardTiers,
+        })
+      : undefined
 
   const handlePaySuccess = () => {
     onCancel?.()
@@ -253,7 +260,7 @@ export function V2V3ConfirmPayModal({
           </Descriptions.Item>
           {nftRewardTiers?.length ? (
             <Descriptions.Item
-              className="py-2 px-6"
+              className="py-3 px-6"
               label={
                 <TooltipLabel
                   label={t`NFTs for you`}

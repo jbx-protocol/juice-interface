@@ -13,6 +13,7 @@ import { NETWORKS } from 'constants/networks'
 import {
   useLoadWalletFromLocalStorage,
   useStoreWalletsInLocalStorage,
+  useLoadSafeWallet,
 } from 'hooks/Network'
 import type { AppProps } from 'next/app'
 import React, { useEffect } from 'react'
@@ -61,7 +62,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   const updateAccountCenter = useAccountCenter()
   const loadWalletFromLocalStorage = useLoadWalletFromLocalStorage()
   const storeWalletsInLocalStorage = useStoreWalletsInLocalStorage()
+  const loadSafeWallet = useLoadSafeWallet()
   const connectedWallets = useWallets()
+
+  // If possible, load Safe wallets
+  useEffect(() => {
+    loadSafeWallet()
+  }, [loadSafeWallet])
 
   // Load any previously connected wallets
   useEffect(() => {

@@ -98,7 +98,9 @@ export const ipfsGetWithFallback = async <T>(
     },
   })
   if (response.data.Data?.['/'].bytes) {
-    response.data = extractJsonFromBase64Data(response.data.Data['/'].bytes)
+    response.data = extractJsonFromBase64Data(
+      response.data.Data['/'].bytes,
+    ) as T
   }
   return response
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

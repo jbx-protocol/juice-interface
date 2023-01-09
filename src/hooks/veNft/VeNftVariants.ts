@@ -26,6 +26,7 @@ export function useVeNftVariants() {
       >(file)
       const variants: VeNftVariant[] = Object.entries(data).map(
         ([id, variant]) => {
+          // @ts-ignore
           const { name, jbx_range } = variant.metadata
           const split = jbx_range.split('-')
           const tokensStakedMin = parseInt(split[0].replaceAll(',', ''))

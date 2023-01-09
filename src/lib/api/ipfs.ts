@@ -86,21 +86,20 @@ export const ipfsGetWithFallback = async <T>(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   { fallbackHostname }: { fallbackHostname?: string } = {},
 ) => {
-  // try {
   // Build config for axios get request
-  const response = await axios({
-    method: 'get',
-    url: restrictedIpfsUrl(hash),
+  const response = await axios.get<T>(restrictedIpfsUrl(hash), {
     responseType: 'json',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
   })
-  if (response.data.Data?.['/'].bytes) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  if ((response.data as any).Data?.['/'].bytes) {
     response.data = extractJsonFromBase64Data(
-      response.data.Data['/'].bytes,
-    ) as T
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (response.data as any).Data['/'].bytes,
+    )
   }
   return response
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

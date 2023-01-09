@@ -24,6 +24,10 @@ const handler: NextApiHandler = async (_, res) => {
 
   const sepanaResponse = await queryAllSepanaProjects()
 
+  report += `\nSepana last updated at block ${Math.max(
+    ...sepanaResponse.data.hits.hits.map(r => r._source.lastUpdated),
+  )}.`
+
   const subgraphProjects = (
     await querySubgraphExhaustive({
       entity: 'project',
@@ -41,10 +45,6 @@ const handler: NextApiHandler = async (_, res) => {
         {} as ProjectJson,
       ),
     )
-
-  report += `\nSepana last updated at block ${Math.max(
-    ...sepanaResponse.data.hits.hits.map(r => r._source.lastUpdated),
-  )}.`
 
   if (subgraphProjects.length + 1 !== sepanaResponse.data.hits.total.value)
     report += `\nMismatched lengths: ${

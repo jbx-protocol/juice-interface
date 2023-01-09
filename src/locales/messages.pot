@@ -323,9 +323,6 @@ msgstr ""
 msgid "Add terminal"
 msgstr ""
 
-msgid "Add the V1 Token Payment Terminal to your project."
-msgstr ""
-
 msgid "Add to Metamask"
 msgstr ""
 
@@ -422,7 +419,7 @@ msgstr ""
 msgid "Allow token minting"
 msgstr ""
 
-msgid "Allow your V1 project token holders to swap their tokens for your V2 project tokens."
+msgid "Allow your legacy project (<0/> or <1/>) token holders to swap their tokens for your <2/> project tokens."
 msgstr ""
 
 msgid "Allowed"
@@ -971,6 +968,9 @@ msgstr ""
 msgid "Deploy Snapshot space"
 msgstr ""
 
+msgid "Deploy a <0/> migration token from legacy tokens."
+msgstr ""
+
 msgid "Deploy funding cycle configuration"
 msgstr ""
 
@@ -981,6 +981,9 @@ msgid "Deploy project to {0}"
 msgstr ""
 
 msgid "Deployed ERC20 token"
+msgstr ""
+
+msgid "Deployed Migration Token Address"
 msgstr ""
 
 msgid "Deployed payment addresses can be found in the Tools drawer (<0/>) on the project page."
@@ -1526,7 +1529,7 @@ msgstr ""
 msgid "If you don't raise this amount, your splits will receive their percentage of whatever you raise."
 msgstr ""
 
-msgid "If you have Juicebox project on Juicebox V1 and V2, we recommend you migrate to V2 exclusively."
+msgid "If you have <0/> or <1/> legacy Juicebox projects, we recommend you migrate to <2/> exclusively."
 msgstr ""
 
 msgid "If you're interested in creating a project but still confused on how to get started, consider watching this <0>instructional video</0>. Also feel free to reach out in the <1>Juicebox Discord</1> where our team will be happy to help bring your project idea to life!"
@@ -1797,6 +1800,9 @@ msgid "Migrate to Juicebox V1.1"
 msgstr ""
 
 msgid "Migrate {projectTitle}"
+msgstr ""
+
+msgid "Migration token was successfully deployed to <0/>"
 msgstr ""
 
 msgid "Minimum Contribution"
@@ -2250,6 +2256,9 @@ msgid "Project handle"
 msgstr ""
 
 msgid "Project handle must be unique."
+msgstr ""
+
+msgid "Project handle not found"
 msgstr ""
 
 msgid "Project handle required. <0>Set project handle.</0>"
@@ -2732,10 +2741,10 @@ msgstr ""
 msgid "Set the length of your funding cycles."
 msgstr ""
 
-msgid "Set this to the sum of all your payouts"
+msgid "Set the newly migrated <0/> token from Step 1 as the project token."
 msgstr ""
 
-msgid "Set up V1 token migration"
+msgid "Set this to the sum of all your payouts"
 msgstr ""
 
 msgid "Set up and launch veNFT governance for your project using custom assets and parameters. (Experimental, does not currently launch)"
@@ -2747,10 +2756,10 @@ msgstr ""
 msgid "Set up and launch veNFT governance for your project."
 msgstr ""
 
-msgid "Set up token migration"
+msgid "Set up the option for user token migration from <0/> or <1/> projects to <2/>."
 msgstr ""
 
-msgid "Set up your Juicebox V2 project for migration from your Juicebox V1 project."
+msgid "Set up token migration"
 msgstr ""
 
 msgid "Set veNFT operator for {projectTitle}"
@@ -2822,10 +2831,13 @@ msgstr ""
 msgid "Starting over will erase all currently saved progress."
 msgstr ""
 
-msgid "Step 1. Add V1 token payment terminal"
+msgid "Step 1. Deploy migration token"
 msgstr ""
 
 msgid "Step 2. Link your Juicebox V1 project"
+msgstr ""
+
+msgid "Step 2. Set the deployed migration token"
 msgstr ""
 
 msgid "Successfully approved ERC-20 spending."
@@ -2870,6 +2882,9 @@ msgstr ""
 msgid "Text record is set"
 msgstr ""
 
+msgid "The <0/> has already been set for this project."
+msgstr ""
+
 msgid "The <0>Juicebox contracts</0> may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
 msgstr ""
 
@@ -2877,6 +2892,9 @@ msgid "The <0>issuance rate</0> of your second funding cycle will be <1>{0} toke
 msgstr ""
 
 msgid "The address of any smart contract deployed on {0} that implements <0>this interface</0>."
+msgstr ""
+
+msgid "The address of the token that was deployed in Step 1."
 msgstr ""
 
 msgid "The address that should receive the tokens minted from paying this project."
@@ -2916,6 +2934,9 @@ msgid "The distribution limit for this funding cycle is 0, meaning all funds in 
 msgstr ""
 
 msgid "The future will be led by creators, and owned by communities."
+msgstr ""
+
+msgid "The handle of your V1 project. This is the handle that is shown in the URL of your project page."
 msgstr ""
 
 msgid "The held fees will reset as new funds are added to the project's balance with the <0>Add to balance</0> transaction above."
@@ -3101,7 +3122,7 @@ msgstr ""
 msgid "Time remaining for changes made to affect the next funding cycle:"
 msgstr ""
 
-msgid "To do so, you need to give your V1 token holders the ability to exchange their V1 tokens for V2 tokens. Select <0>Set up token migration</0> below to get started."
+msgid "To do so, you need to give your legacy token holders the ability to exchange their tokens for V3 tokens. Select <0>Set up token migration</0> below to get started."
 msgstr ""
 
 msgid "To: <0/>"
@@ -3122,10 +3143,13 @@ msgstr ""
 msgid "Token holders <0>cannot redeem their tokens</0> for any ETH when the redemption rate is 0."
 msgstr ""
 
-msgid "Token holders of your V1 project tokens will swap their V1 tokens for V2 tokens at a 1-to-1 exchange rate."
+msgid "Token holders of your legacy project tokens (<0/> or <1/>) will have the ability to swap their tokens for <2/> tokens at a 1-to-1 exchange rate."
 msgstr ""
 
 msgid "Token migration"
+msgstr ""
+
+msgid "Token migration is currently not available for {0}"
 msgstr ""
 
 msgid "Token minting"
@@ -3404,6 +3428,9 @@ msgstr ""
 msgid "V1"
 msgstr ""
 
+msgid "V1 Project Handle"
+msgstr ""
+
 msgid "V1 Project handle"
 msgstr ""
 
@@ -3485,7 +3512,7 @@ msgstr ""
 msgid "What is overflow?"
 msgstr ""
 
-msgid "What is the V1 Token Payment Terminal?"
+msgid "What is the legacy token migration?"
 msgstr ""
 
 msgid "What's a discount rate?"

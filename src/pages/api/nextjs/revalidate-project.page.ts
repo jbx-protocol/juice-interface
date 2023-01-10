@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { PV_V1, PV_V1_1, PV_V2 } from 'constants/pv'
 import { PV } from 'models/pv'
 import { NextApiRequest, NextApiResponse } from 'next'
@@ -40,6 +41,10 @@ export default async function handler(
 
   console.info(`[Next.js] Revalidating ${path}`)
   await res.revalidate(path)
+
+  // Update sepana database whenever a project needs revalidating
+  // Note: This won't work if it takes too long for project data to become available in the subgraph
+  await axios.get('/api/sepana/update')
 
   return res.status(200).send('Success!')
 }

@@ -1,10 +1,8 @@
 export default function Discord({
   size,
-  style,
   className,
 }: {
   size?: number
-  style?: React.CSSProperties
   className?: string
 }) {
   const widthToHeight = 71 / 55
@@ -12,14 +10,13 @@ export default function Discord({
 
   return (
     <svg
-      style={{ height, width: widthToHeight * height, ...style }}
+      style={{ height, width: widthToHeight * height }}
       className={className}
       width="71"
       height="55"
       viewBox="0 0 71 55"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      preserveAspectRatio="xMinYMin meet"
     >
       <g clipPath="url(#clip0)">
         <path

@@ -49,7 +49,7 @@ export default function SocialLinks({
   }
 
   return (
-    <Space className="flex-wrap gap-x-[6px] gap-y-2" size="middle">
+    <Space className="flex-wrap" size={12}>
       {infoUri && (
         <SocialButton link={infoUri}>
           <GlobalOutlined style={styleObj} />

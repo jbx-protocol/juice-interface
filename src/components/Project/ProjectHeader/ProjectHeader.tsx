@@ -91,17 +91,19 @@ export function ProjectHeader({
         </div>
         <div className="t flex flex-wrap items-center gap-x-[12px] pt-2 pb-1 font-medium">
           <span className="font-medium text-grey-500 dark:text-grey-300">
-            <Tooltip title={t`Project ID: ${projectId}`}>
-              <span className="font-medium text-grey-700">
-                {handle ? `@${handle}` : ''}
-              </span>{' '}
-              <Trans>ID: #{projectId}</Trans>
-            </Tooltip>
+            {handle ? (
+              <Tooltip title={t`Project ID: ${projectId}`}>
+                <span>@{handle}</span>
+              </Tooltip>
+            ) : (
+              <Trans>Project #{projectId}</Trans>
+            )}
           </span>
 
           {!handle && canEditProjectHandle && projectId ? (
             <EditProjectHandleButton />
           ) : null}
+
           <div className="flex flex-grow">
             {isMobile && (
               <SocialLinks
@@ -112,6 +114,7 @@ export function ProjectHeader({
               />
             )}
           </div>
+
           {isMobile && (
             <>
               <ContractVersionSelect />
@@ -128,6 +131,7 @@ export function ProjectHeader({
               />
             </>
           )}
+
           {canReconfigure && isMobile && (
             <Tooltip title={t`Project Settings`} placement="bottom">
               <div>

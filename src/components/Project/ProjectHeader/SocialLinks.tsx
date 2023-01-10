@@ -14,7 +14,7 @@ function SocialButton(props: SocialProps) {
 
   return (
     <ExternalLink
-      className="border-1 p-30 flex h-10 w-10 items-center justify-center rounded-full bg-smoke-100 dark:bg-slate-400 md:h-9 md:w-9 "
+      className="border-1 p-30 flex h-10 w-10 items-center justify-center rounded-full bg-smoke-100 hover:bg-smoke-200  dark:bg-slate-400 dark:hover:bg-slate-500 md:h-9 md:w-9"
       href={link}
     >
       {children}

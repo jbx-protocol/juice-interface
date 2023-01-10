@@ -14,7 +14,7 @@ function SocialButton(props: SocialProps) {
 
   return (
     <ExternalLink
-      className="p-30 border-1 flex h-10 w-10 items-center justify-center rounded-full bg-[#eeebe3] dark:bg-[#4f4e54] md:h-9 md:w-9"
+      className="border-1 p-30 flex h-10 w-10 items-center justify-center rounded-full bg-smoke-100 dark:bg-slate-400 md:h-9 md:w-9 "
       href={link}
     >
       {children}
@@ -32,15 +32,11 @@ export default function SocialLinks({
   discord?: string
 }) {
   const isMobile = useMobile()
-
-  const styleObj = {
-    fontSize: isMobile ? 22 : 16,
-  }
-
-  const iconClasses = 'text-grey-500 dark:text-slate-100'
+  const iconClasses =
+    'flex text-grey-500 dark:text-slate-100 text-xl md:text-base'
 
   return (
-    <Space className="flex-wrap" size={12}>
+    <Space size={12}>
       {infoUri && (
         <SocialButton link={infoUri}>
           <GlobalOutlined className={iconClasses} />
@@ -53,14 +49,7 @@ export default function SocialLinks({
       )}
       {discord && (
         <SocialButton link={discord}>
-          <Discord
-            style={{
-              marginTop: 2,
-              width: styleObj.fontSize,
-              height: styleObj.fontSize,
-            }}
-            className="text-grey-500 dark:text-slate-100"
-          />
+          <Discord className={iconClasses} size={isMobile ? 16 : 14} />
         </SocialButton>
       )}
     </Space>

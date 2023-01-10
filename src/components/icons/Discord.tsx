@@ -4,7 +4,7 @@ export default function Discord({
   className,
 }: {
   size?: number
-  style: React.CSSProperties
+  style?: React.CSSProperties
   className?: string
 }) {
   const widthToHeight = 71 / 55

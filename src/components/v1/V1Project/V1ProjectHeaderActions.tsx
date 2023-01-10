@@ -14,11 +14,12 @@ import EditProjectModal from './modals/EditProjectModal'
 
 export default function V1ProjectHeaderActions() {
   const { handle, isPreviewMode, terminal } = useContext(V1ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
+
   const [toolDrawerVisible, setToolDrawerVisible] = useState<boolean>(false)
   const [editProjectModalVisible, setEditProjectModalVisible] =
     useState<boolean>(false)
 
-  const { projectId } = useContext(ProjectMetadataContext)
   const { relaunch, isReady } = useRelaunchV1ViaV3Create()
 
   const hasEditPermission = useV1ConnectedWalletHasPermission([

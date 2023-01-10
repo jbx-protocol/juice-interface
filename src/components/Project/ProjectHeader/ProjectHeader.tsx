@@ -99,6 +99,7 @@ export function ProjectHeader({
               <Trans>Project #{projectId}</Trans>
             )}
           </span>
+
           {!handle && canEditProjectHandle && projectId ? (
             <EditProjectHandleButton />
           ) : null}

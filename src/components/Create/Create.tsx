@@ -183,7 +183,7 @@ export function Create() {
           </Wizard.Page>
         </Wizard>
       </div>
-      <PayoutsMigrationModal />Í
+      <PayoutsMigrationModal />
     </>
   )
 }

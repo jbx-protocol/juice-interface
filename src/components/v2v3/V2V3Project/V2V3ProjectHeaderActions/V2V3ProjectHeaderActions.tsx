@@ -12,7 +12,6 @@ import { useContext, useState } from 'react'
 import { settingsPagePath, veNftPagePath } from 'utils/routes'
 import { ContractVersionSelect } from './ContractVersionSelect'
 import SocialLinks from 'components/Project/ProjectHeader/SocialLinks'
-import useMobile from 'hooks/Mobile'
 
 export function V2V3ProjectHeaderActions() {
   const { handle } = useContext(V2V3ProjectContext)
@@ -24,9 +23,8 @@ export function V2V3ProjectHeaderActions() {
   )
   const veNftEnabled = Boolean(veNftContractAddress)
 
-  const isMobile = useMobile()
   const { projectMetadata, projectId } = useContext(ProjectMetadataContext)
-  if (isMobile) return null
+
   return (
     <>
       <div className="flex items-center">

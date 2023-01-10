@@ -78,7 +78,6 @@ export function ProjectHeader({
               discord={projectMetadata?.discord}
               twitter={projectMetadata?.twitter}
               infoUri={projectMetadata?.infoUri}
-              telegram={projectMetadata?.telegram}
             />
 
             {actions ? (

@@ -43,7 +43,7 @@ export default function SocialLinks({
         </SocialButton>
       )}
       {twitter && (
-        <SocialButton link={twitter}>
+        <SocialButton link={'https://twitter.com/' + twitter}>
           <TwitterOutlined className={iconClasses} />
         </SocialButton>
       )}

@@ -57,6 +57,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
         fundAccessConstraints,
         groupedSplits = [],
         mustStartAtOrAfter = DEFAULT_MUST_START_AT_OR_AFTER,
+        owner,
       },
     },
     txOpts,
@@ -91,13 +92,14 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
 
       return Promise.resolve(false)
     }
+    const _owner = owner?.length ? owner : userAddress
 
     const delegateData = buildJBDeployTiered721DelegateData({
       collectionUri,
       collectionName,
       collectionSymbol,
       tiers,
-      ownerAddress: userAddress,
+      ownerAddress: _owner,
       contractAddresses: {
         JBDirectoryAddress: getAddress(contracts.JBDirectory.address),
         JBFundingCycleStoreAddress: getAddress(
@@ -115,7 +117,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
     )
 
     const args = [
-      userAddress, // _owner
+      _owner, // _owner
       delegateData, // _deployTiered721DelegateData
       {
         projectMetadata: {

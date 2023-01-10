@@ -13,12 +13,13 @@ type ProjectDetailsFormProps = Partial<{
   projectDiscord: string
   payButtonText: string
   payDisclosure: string
+  inputProjectOwner: string
 }>
 
 export const useProjectDetailsForm = () => {
   const [form] = useForm<ProjectDetailsFormProps>()
-  const projectMetadata = useAppSelector(
-    state => state.editingV2Project.projectMetadata,
+  const { projectMetadata, inputProjectOwner } = useAppSelector(
+    state => state.editingV2Project,
   )
 
   const initialValues: ProjectDetailsFormProps = useMemo(
@@ -31,8 +32,10 @@ export const useProjectDetailsForm = () => {
       projectDiscord: projectMetadata.discord,
       payButtonText: projectMetadata.payButton,
       payDisclosure: projectMetadata.payDisclosure,
+      inputProjectOwner,
     }),
     [
+      inputProjectOwner,
       projectMetadata.description,
       projectMetadata.discord,
       projectMetadata.infoUri,
@@ -85,6 +88,13 @@ export const useProjectDetailsForm = () => {
     ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setDiscord,
     formatter: v => v ?? '',
+  })
+  useFormDispatchWatch({
+    form,
+    fieldName: 'inputProjectOwner',
+    ignoreUndefined: false,
+    dispatchFunction: editingV2ProjectActions.setInputProjectOwner,
+    formatter: v => v,
   })
   useFormDispatchWatch({
     form,

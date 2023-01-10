@@ -1,18 +1,22 @@
 import { t, Trans } from '@lingui/macro'
+import { ADDRESS_ZERO } from '@uniswap/v3-sdk'
 import { Col, Form, Row, Space } from 'antd'
+import { Callout } from 'components/Callout'
 import { useLockPageRulesWrapper } from 'components/Create/hooks/useLockPageRulesWrapper'
+import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import PrefixedInput from 'components/PrefixedInput'
 import TooltipIcon from 'components/TooltipIcon'
+import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { CreateCollapse } from '../../CreateCollapse'
 import { OptionalHeader } from '../../OptionalHeader'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
-import { inputMustExistRule } from '../utils'
+import { inputMustBeEthAddressRule, inputMustExistRule } from '../utils'
 import { useProjectDetailsForm } from './hooks/ProjectDetailsForm'
 
 export const ProjectDetailsPage: React.FC = () => {
@@ -21,6 +25,12 @@ export const ProjectDetailsPage: React.FC = () => {
   const { goToNextPage } = useContext(PageContext)
   const formProps = useProjectDetailsForm()
   const lockPageRulesWrapper = useLockPageRulesWrapper()
+  const wallet = useWallet()
+
+  const inputWalletAddress = Form.useWatch('inputProjectOwner', formProps.form)
+
+  const projectOwnerDifferentThanWalletAddress =
+    inputWalletAddress && wallet.userAddress !== inputWalletAddress
 
   return (
     <Form
@@ -78,6 +88,32 @@ export const ProjectDetailsPage: React.FC = () => {
           </CreateCollapse.Panel>
           <CreateCollapse.Panel
             key={1}
+            header={<OptionalHeader header={t`Project Owner`} />}
+          >
+            <Form.Item
+              name="inputProjectOwner"
+              label={t`Input project owner address`}
+              extra={t`Nominate an Ethereum wallet address to become the ‘owner’ of this project. If you intend to manage this project from the address that deployed it, leave this blank.`}
+              rules={lockPageRulesWrapper([
+                inputMustBeEthAddressRule({
+                  label: t`Input project owner address`,
+                }),
+              ])}
+            >
+              <EthAddressInput placeholder={ADDRESS_ZERO} />
+            </Form.Item>
+            {projectOwnerDifferentThanWalletAddress && (
+              <Callout.Warning collapsible={false}>
+                <Trans>
+                  Warning: once deployed, the nominated address will become the
+                  owner of this project and you will not be able to make changes
+                  unless you have access to the wallet address nominated.
+                </Trans>
+              </Callout.Warning>
+            )}
+          </CreateCollapse.Panel>
+          <CreateCollapse.Panel
+            key={2}
             header={<OptionalHeader header={t`Customize Pay Button`} />}
             hideDivider
           >

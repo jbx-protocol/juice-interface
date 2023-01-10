@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Tooltip } from 'antd'
+import { Divider, Tooltip } from 'antd'
 import { Badge } from 'components/Badge'
 import FormattedAddress from 'components/FormattedAddress'
 import Paragraph from 'components/Paragraph'
@@ -11,6 +11,7 @@ import { useGnosisSafe } from 'hooks/safe/GnosisSafe'
 import { useContext } from 'react'
 import { classNames } from 'utils/classNames'
 import { EditProjectHandleButton } from './EditProjectHandleButton'
+import SocialLinks from './SocialLinks'
 
 export function ProjectHeader({
   handle,
@@ -72,9 +73,23 @@ export function ProjectHeader({
             )}
           </div>
 
-          {actions ?? null}
+          <div className="flex items-center">
+            <SocialLinks
+              discord={projectMetadata?.discord}
+              twitter={projectMetadata?.twitter}
+              infoUri={projectMetadata?.infoUri}
+              telegram={projectMetadata?.telegram}
+            />
+
+            {actions ? (
+              <>
+                <Divider type="vertical" className="mx-5" />
+                {actions}
+              </>
+            ) : null}
+          </div>
         </div>
-        <div className="t flex flex-wrap items-center gap-x-[12px] pt-2 pb-1 font-medium">
+        <div className="flex flex-wrap items-baseline gap-x-5 pt-2 pb-1 font-medium">
           <span className="font-medium text-grey-500 dark:text-grey-300">
             {handle ? (
               <Tooltip title={t`Project ID: ${projectId}`}>

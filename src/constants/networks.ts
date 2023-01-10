@@ -23,8 +23,6 @@ if (typeof window !== 'undefined') {
   hostname = window.location.hostname
 }
 
-export const MAINNET_CHAIN_ID = 1
-
 export const NETWORKS: Record<number, NetworkInfo> = {
   31337: {
     name: NetworkName.localhost,

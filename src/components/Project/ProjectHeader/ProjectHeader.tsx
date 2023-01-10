@@ -32,6 +32,10 @@ export function ProjectHeader({
     useGnosisSafe(projectOwnerAddress)
 
   const projectTitle = projectMetadata?.name || t`Untitled project`
+  const hasSocialLinks =
+    projectMetadata?.discord ||
+    projectMetadata?.twitter ||
+    projectMetadata?.infoUri
 
   return (
     <header className="flex flex-wrap items-start justify-between">
@@ -45,7 +49,7 @@ export function ProjectHeader({
       </div>
 
       <div className="min-w-[70%] flex-1">
-        <Space direction="vertical">
+        <Space direction="vertical" className="w-full">
           <div className="flex flex-wrap items-start justify-between gap-y-2">
             <div className="max-w-md md:max-w-xl">
               <div className="flex items-center">
@@ -88,12 +92,11 @@ export function ProjectHeader({
                 infoUri={projectMetadata?.infoUri}
               />
 
-              {actions ? (
-                <>
-                  <Divider type="vertical" className="mx-5 h-9 md:h-8" />
-                  {actions}
-                </>
+              {hasSocialLinks && actions ? (
+                <Divider type="vertical" className="mx-5 h-9 md:h-8" />
               ) : null}
+
+              {actions ?? null}
             </div>
           </div>
 

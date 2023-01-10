@@ -89,8 +89,10 @@ export const ProjectDetailsPage: React.FC = () => {
           <CreateCollapse.Panel
             key={1}
             header={<OptionalHeader header={t`Project Owner`} />}
+            hideDivider
           >
             <Form.Item
+              className="pb-8 pt-5"
               name="inputProjectOwner"
               label={t`Input project owner address`}
               extra={t`Nominate an Ethereum wallet address to become the ‘owner’ of this project. If you intend to manage this project from the address that deployed it, leave this blank.`}

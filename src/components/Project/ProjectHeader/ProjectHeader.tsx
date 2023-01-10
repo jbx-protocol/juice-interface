@@ -65,7 +65,7 @@ export function ProjectHeader({
               </div>
 
               <div className="flex items-baseline gap-x-5">
-                <span className="font-medium text-grey-500 dark:text-grey-300">
+                <span className="font-medium text-grey-600 dark:text-grey-300">
                   {handle ? (
                     <Tooltip title={t`Project ID: ${projectId}`}>
                       <span>@{handle}</span>

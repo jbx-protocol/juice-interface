@@ -3917,6 +3917,9 @@ msgstr ""
 msgid "{nftBalanceFormatted, plural, one {NFT} other {NFTs}}"
 msgstr ""
 
+msgid "{nftCount, plural, one {+ # NFT} other {+ # NFTs}}"
+msgstr ""
+
 msgid "{payerRate} (+ {reservedRate} reserved) {tokenSymbolPlural}/ETH"
 msgstr ""
 

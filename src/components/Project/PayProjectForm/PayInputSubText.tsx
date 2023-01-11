@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { parseEther } from '@ethersproject/units'
-import { Trans } from '@lingui/macro'
+import { plural, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import AMMPrices from 'components/AMMPrices'
 import { CurrencyContext } from 'contexts/currencyContext'
@@ -32,14 +32,8 @@ export default function PayInputSubText({
     currencyMetadata,
     currencies: { ETH },
   } = useContext(CurrencyContext)
-  const {
-    reservedRate,
-    weight,
-    tokenSymbol,
-    tokenAddress,
-    weightingFn,
-    isEligibleForNft,
-  } = useContext(PayProjectFormContext)
+  const { reservedRate, weight, tokenSymbol, tokenAddress, weightingFn, form } =
+    useContext(PayProjectFormContext)
 
   const converter = useCurrencyConverter()
   const weiPayAmt = useWeiConverter<CurrencyOption>({
@@ -68,10 +62,15 @@ export default function PayInputSubText({
         capitalize: false,
         plural: receivedTickets !== '1',
       })
+      const nftCount = form?.payMetadata?.tierIdsToMint.length
+      const nftText = nftCount
+        ? plural(nftCount, {
+            one: '+ # NFT',
+            other: '+ # NFTs',
+          })
+        : ''
 
-      return `${receivedTickets} ${tokenReceiveText} ${
-        isEligibleForNft ? '+ NFT' : ''
-      }`
+      return `${receivedTickets} ${tokenReceiveText} ${nftText}`
     }
 
     const receivedTickets = formatReceivedTickets(
@@ -95,7 +94,7 @@ export default function PayInputSubText({
     ETH,
     reservedRate,
     tokenSymbol,
-    isEligibleForNft,
+    form?.payMetadata?.tierIdsToMint.length,
     weightingFn,
   ])
 

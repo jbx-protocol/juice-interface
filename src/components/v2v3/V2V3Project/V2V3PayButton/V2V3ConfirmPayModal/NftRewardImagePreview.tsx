@@ -14,7 +14,7 @@ export function NftRewardImagePreview({
   const [imageLoading, setImageLoading] = useState<boolean>(true)
 
   return (
-    <div className="ml-4 flex items-center">
+    <div className="flex items-center">
       {imageLoading ? <LoadingOutlined className="text-xl" /> : null}
       <Image
         className={classNames(

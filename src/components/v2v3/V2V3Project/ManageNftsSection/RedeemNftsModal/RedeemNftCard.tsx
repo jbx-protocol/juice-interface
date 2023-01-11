@@ -5,7 +5,6 @@ import {
   NFT_METADATA_CONTRIBUTION_FLOOR_ATTRIBUTES_INDEX,
 } from 'models/nftRewardTier'
 import { JB721DelegateToken } from 'models/subgraph-entities/v2/jb-721-delegate-tokens'
-import { MouseEventHandler } from 'react'
 import { useQuery, UseQueryResult } from 'react-query'
 import { cidFromIpfsUri, openIpfsUrl } from 'utils/ipfs'
 import { NftTierCard } from 'components/NftRewards/NftTierCard'
@@ -29,13 +28,15 @@ function useJB721DelegateTokenMetadata(
 
 export function RedeemNftCard({
   nft,
-  onClick,
   isSelected,
+  onClick,
+  onRemove,
   loading,
 }: {
   nft: JB721DelegateToken
-  onClick?: MouseEventHandler<HTMLDivElement>
-  isSelected?: boolean
+  isSelected: boolean
+  onClick?: VoidFunction
+  onRemove?: VoidFunction
   loading?: boolean
 }) {
   const { data: tierData } = useJB721DelegateTokenMetadata(nft.tokenUri)
@@ -60,6 +61,7 @@ export function RedeemNftCard({
     <NftTierCard
       rewardTier={rewardTier}
       onClick={onClick}
+      onRemove={onRemove}
       isSelected={isSelected}
       loading={loading}
       previewDisabled

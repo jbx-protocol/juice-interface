@@ -14,7 +14,7 @@ export function StepSection({
       <h3
         className={classNames(
           completed
-            ? 'text-grey-500 dark:text-grey-300'
+            ? 'text-success-400 dark:text-success-300'
             : 'text-juice-400 dark:text-juice-300',
         )}
       >

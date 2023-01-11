@@ -26,7 +26,7 @@ export function V1ProjectTokensDescription() {
 
   const { data: v1ProjectId } = useV1ProjectIdOfV2Project(projectId)
   const v1TokenAddress = useTokenAddressOfProject(projectId)
-  const v1TokenSymbol = useSymbolOfERC20(v1TokenAddress)
+  const { data: v1TokenSymbol } = useSymbolOfERC20(v1TokenAddress)
   const terminalAddress = useTerminalOfProject(v1ProjectId)
   const terminalName = getTerminalName({
     address: terminalAddress,

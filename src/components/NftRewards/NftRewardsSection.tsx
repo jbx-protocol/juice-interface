@@ -13,7 +13,6 @@ import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useMobile from 'hooks/Mobile'
 import { useContext } from 'react'
-import { twJoin } from 'tailwind-merge'
 import { fromWad } from 'utils/format/formatNumber'
 import { hasNftRewards, sumTierFloors } from 'utils/nftRewards'
 import { useModalFromUrlQuery } from '../modals/hooks/useModalFromUrlQuery'
@@ -128,11 +127,10 @@ export function NftRewardsSection() {
         <RewardTiersLoadingSkeleton />
       ) : (
         <div
-          className={twJoin(
+          className={
             // hax to make scrollbars look nice
-            '-mt-3 -ml-3 -mr-5 overflow-auto pb-3 pt-3 pl-3 pr-5',
-            isMobile ? 'max-h-[950px]' : 'max-h-[620px]',
-          )}
+            '-mt-3 -ml-3 -mr-5 max-h-[950px] overflow-auto pb-3 pt-3 pl-3 pr-5 md:max-h-[620px]'
+          }
         >
           <Row gutter={isMobile ? 12 : 24}>
             {renderRewardTiers?.map(rewardTier => (
@@ -149,6 +147,7 @@ export function NftRewardsSection() {
                       id => id === rewardTier.id ?? -1,
                     ).length
                   }
+                  maxQuantity={rewardTier.remainingSupply}
                   onClick={() => handleTierSelect(rewardTier.id)}
                   onRemove={() => handleTierDeselect(rewardTier.id)}
                 />

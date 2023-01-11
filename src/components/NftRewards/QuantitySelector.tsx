@@ -1,6 +1,8 @@
 import useMobile from 'hooks/Mobile'
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons'
 import { twJoin } from 'tailwind-merge'
+import { Tooltip } from 'antd'
+import { t } from '@lingui/macro'
 
 // + / - buttons that appear in top-right of selected NFT cards on project page
 export function QuantitySelector({
@@ -15,10 +17,8 @@ export function QuantitySelector({
   onDecrement: VoidFunction
 }) {
   const isMobile = useMobile()
-  const iconClasses = twJoin(
-    'h-full flex items-center justify-center hover:bg-haze-600',
-    isMobile ? 'w-5/12' : 'w-[27px]',
-  )
+  const iconClasses =
+    'h-full flex items-center justify-center md:hover:bg-haze-600 active:bg-haze-600 xs:w-5/12 md:w-[27px]'
   const valueIsMax = value === maxValue
 
   return (
@@ -36,17 +36,23 @@ export function QuantitySelector({
       >
         <MinusOutlined />
       </div>
-      <div className="flex items-center font-medium">{value}</div>
-      <div
-        onClick={valueIsMax ? undefined : onIncrement}
-        className={twJoin(
-          iconClasses,
-          'rounded-r-full pr-0.5',
-          valueIsMax ? 'bg-haze-700' : '',
-        )}
-      >
-        <PlusOutlined />
+      <div className="flex cursor-default items-center font-medium">
+        {value}
       </div>
+      <Tooltip title={valueIsMax ? t`Max. supply reached` : undefined}>
+        <div
+          onClick={valueIsMax ? undefined : onIncrement}
+          className={twJoin(
+            iconClasses,
+            'rounded-r-full pr-0.5',
+            valueIsMax
+              ? 'text-tertiary cursor-default active:bg-haze-400 md:hover:bg-haze-400'
+              : '',
+          )}
+        >
+          <PlusOutlined />
+        </div>
+      </Tooltip>
     </div>
   )
 }

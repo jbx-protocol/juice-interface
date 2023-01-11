@@ -1742,6 +1742,9 @@ msgstr ""
 msgid "Max Supply"
 msgstr ""
 
+msgid "Max. supply reached"
+msgstr ""
+
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
 msgstr ""
 

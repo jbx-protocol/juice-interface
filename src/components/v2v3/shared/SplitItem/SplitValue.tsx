@@ -8,7 +8,7 @@ export function SplitValue({
   diffSplit,
 }: {
   splitProps: SplitProps
-  diffSplit: Split | undefined
+  diffSplit?: Split
 }) {
   return (
     <div className="flex">

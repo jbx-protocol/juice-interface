@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Space } from 'antd'
 import { MinimalCollapse } from 'components/MinimalCollapse'
-import SplitList from 'components/v2v3/shared/SplitList'
+import DiffedSplitList from 'components/v2v3/shared/DiffedSplits/DiffedSplitList'
 import FundingCycleDetails from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails'
 import { CV_V2, CV_V3 } from 'constants/cv'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
@@ -118,7 +118,7 @@ export function ReconfigureRichPreview({
         <Space size={'middle'} direction={'vertical'} className="w-2/3">
           <MinimalCollapse header={t`Funding distribution`} light>
             {distributionLimit?.gt(0) ? (
-              <SplitList
+              <DiffedSplitList
                 splits={formatOutgoingSplits(payoutSplits)}
                 diffSplits={diffPayoutSplits}
                 currency={distributionLimitCurrency}
@@ -136,7 +136,7 @@ export function ReconfigureRichPreview({
           </MinimalCollapse>
           <MinimalCollapse header={t`Reserved token allocation`} light>
             {reservedRate?.gt(0) ? (
-              <SplitList
+              <DiffedSplitList
                 splits={formatOutgoingSplits(reservedTokensSplits)}
                 diffSplits={diffReservedSplits}
                 projectOwnerAddress={projectOwnerAddress}

@@ -2,11 +2,16 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Space } from 'antd'
 import { Split } from 'models/splits'
 import { useMemo } from 'react'
-import { getProjectOwnerRemainderSplit } from 'utils/splits'
-import { SplitItem, SplitProps } from './SplitItem'
+import {
+  getProjectOwnerRemainderSplit,
+  processUniqueSplits,
+} from 'utils/splits'
+import { SplitProps } from '../SplitItem'
+import { DiffedSplitItem } from './DiffedSplitItem'
 
-export default function SplitList({
+export default function DiffedSplitList({
   splits,
+  diffSplits,
   showAmounts = false,
   showFees = false,
   currency,
@@ -15,8 +20,10 @@ export default function SplitList({
   valueSuffix,
   valueFormatProps,
   reservedRate,
+  showDiffs,
 }: {
   splits: Split[]
+  diffSplits?: Split[]
   currency?: BigNumber
   totalValue: BigNumber | undefined
   projectOwnerAddress: string | undefined
@@ -25,11 +32,22 @@ export default function SplitList({
   valueSuffix?: string | JSX.Element
   valueFormatProps?: { precision?: number }
   reservedRate?: number
+  showDiffs?: boolean
 }) {
   const ownerSplit = useMemo(() => {
     if (!projectOwnerAddress) return
     return getProjectOwnerRemainderSplit(projectOwnerAddress, splits)
   }, [projectOwnerAddress, splits])
+
+  const diffOwnerSplit = useMemo(() => {
+    if (!diffSplits || !projectOwnerAddress || !showDiffs) return
+    return getProjectOwnerRemainderSplit(projectOwnerAddress, diffSplits)
+  }, [projectOwnerAddress, diffSplits, showDiffs])
+
+  const uniqueSplits = processUniqueSplits({
+    oldSplits: showDiffs ? diffSplits : undefined,
+    newSplits: splits,
+  })
 
   const splitProps: Omit<SplitProps, 'split'> = {
     currency,
@@ -44,9 +62,9 @@ export default function SplitList({
 
   return (
     <Space direction="vertical" size={5} className="w-full">
-      {splits.map(split => {
+      {[...uniqueSplits].map(split => {
         return (
-          <SplitItem
+          <DiffedSplitItem
             props={{
               split,
               ...splitProps,
@@ -56,9 +74,12 @@ export default function SplitList({
         )
       })}
       {ownerSplit?.percent ? (
-        <SplitItem
+        <DiffedSplitItem
           props={{
-            split: { ...ownerSplit },
+            split: {
+              ...ownerSplit,
+              oldSplit: diffOwnerSplit,
+            },
             ...splitProps,
           }}
         />

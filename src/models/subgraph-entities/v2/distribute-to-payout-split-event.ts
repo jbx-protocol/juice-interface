@@ -22,6 +22,7 @@ export interface DistributeToPayoutSplitEvent
   domain: BigNumber
   group: BigNumber
   amount: BigNumber
+  amountUSD: BigNumber
   preferClaimed: boolean
   preferAddToBalance: boolean
   percent: number
@@ -47,6 +48,7 @@ export const parseDistributeToPayoutSplitEventJson = (
   domain: j.domain ? BigNumber.from(j.domain) : undefined,
   group: j.group ? BigNumber.from(j.group) : undefined,
   amount: j.amount ? BigNumber.from(j.amount) : undefined,
+  amountUSD: j.amountUSD ? BigNumber.from(j.amountUSD) : undefined,
   preferClaimed: !!j.preferClaimed,
   preferAddToBalance: !!j.preferAddToBalance,
   percent: j.percent ? parseInt(j.percent) : undefined,

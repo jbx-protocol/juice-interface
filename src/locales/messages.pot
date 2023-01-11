@@ -350,6 +350,9 @@ msgstr ""
 msgid "Added to balance"
 msgstr ""
 
+msgid "Additions to balance"
+msgstr ""
+
 msgid "Address"
 msgstr ""
 
@@ -533,6 +536,9 @@ msgstr ""
 msgid "Back to top"
 msgstr ""
 
+msgid "Balance"
+msgstr ""
+
 msgid "Balance exceeded"
 msgstr ""
 
@@ -606,6 +612,9 @@ msgid "CSV data wasn't ready for export. Wait a few seconds and try again."
 msgstr ""
 
 msgid "CSV download failed."
+msgstr ""
+
+msgid "Caller"
 msgstr ""
 
 msgid "Can I change my project's contract after it's been created?"
@@ -1142,9 +1151,6 @@ msgstr ""
 msgid "Download CSV"
 msgstr ""
 
-msgid "Download CSV of payments"
-msgstr ""
-
 msgid "Download CSV of project activity"
 msgstr ""
 
@@ -1152,9 +1158,6 @@ msgid "Download CSV of {0} holders"
 msgstr ""
 
 msgid "Download Template"
-msgstr ""
-
-msgid "Download payments CSV"
 msgstr ""
 
 msgid "Duration"
@@ -1176,6 +1179,15 @@ msgid "ERC20 deployed"
 msgstr ""
 
 msgid "ERC20 transaction not ready. Try again."
+msgstr ""
+
+msgid "ETH added"
+msgstr ""
+
+msgid "ETH paid"
+msgstr ""
+
+msgid "ETH received"
 msgstr ""
 
 msgid "Each payout will receive their percent of this total each funding cycle if there is enough in the treasury. Otherwise, they will receive their percent of whatever is in the treasury."
@@ -1253,13 +1265,37 @@ msgstr ""
 msgid "Enter your project's details. You can edit your project's details at any time after you deploy your project, but the transaction will cost gas."
 msgstr ""
 
+msgid "Error downloading additions to balance, try again."
+msgstr ""
+
+msgid "Error downloading participants, try again."
+msgstr ""
+
 msgid "Error downloading payments, try again."
+msgstr ""
+
+msgid "Error downloading payouts, try again."
+msgstr ""
+
+msgid "Error downloading redemptions, try again."
+msgstr ""
+
+msgid "Error loading additions to balance"
 msgstr ""
 
 msgid "Error loading holders"
 msgstr ""
 
+msgid "Error loading participants"
+msgstr ""
+
 msgid "Error loading payments"
+msgstr ""
+
+msgid "Error loading payouts"
+msgstr ""
+
+msgid "Error loading redemptions"
 msgstr ""
 
 msgid "Error reading transaction data"
@@ -1275,9 +1311,6 @@ msgid "Export data"
 msgstr ""
 
 msgid "Export payouts CSV"
-msgstr ""
-
-msgid "Export project activity"
 msgstr ""
 
 msgid "Export the current funding cycle's payouts to CSV."
@@ -1967,9 +2000,6 @@ msgstr ""
 msgid "Not set"
 msgstr ""
 
-msgid "Note"
-msgstr ""
-
 msgid "Note: Tokens can be minted manually when allowed in the current funding cycle. This can be changed by the project owner for upcoming cycles."
 msgstr ""
 
@@ -2016,6 +2046,9 @@ msgid "Paid"
 msgstr ""
 
 msgid "Paid as <0/>"
+msgstr ""
+
+msgid "Participants"
 msgstr ""
 
 msgid "Pause payments"
@@ -2765,6 +2798,9 @@ msgstr ""
 msgid "Spending"
 msgstr ""
 
+msgid "Staked balance"
+msgstr ""
+
 msgid "Staked {tokenSymbolDisplayText}"
 msgstr ""
 
@@ -3164,6 +3200,9 @@ msgstr ""
 msgid "Tokens receiver"
 msgstr ""
 
+msgid "Tokens redeemed"
+msgstr ""
+
 msgid "Tokens reserved"
 msgstr ""
 
@@ -3177,6 +3216,9 @@ msgid "Tokens:"
 msgstr ""
 
 msgid "Tools"
+msgstr ""
+
+msgid "Total ETH paid"
 msgstr ""
 
 msgid "Total funds:"
@@ -3204,6 +3246,9 @@ msgid "Total: {0}%"
 msgstr ""
 
 msgid "Transaction failed"
+msgstr ""
+
+msgid "Transaction hash"
 msgstr ""
 
 msgid "Transaction pending..."
@@ -3248,6 +3293,15 @@ msgstr ""
 msgid "Twitter handle"
 msgstr ""
 
+msgid "USD value of ETH added"
+msgstr ""
+
+msgid "USD value of ETH paid"
+msgstr ""
+
+msgid "USD value of ETH received"
+msgstr ""
+
 msgid "Unarchive project"
 msgstr ""
 
@@ -3288,6 +3342,9 @@ msgid "Unsaved changes"
 msgstr ""
 
 msgid "Unstake {0}"
+msgstr ""
+
+msgid "Unstaked balance"
 msgstr ""
 
 msgid "Untitled project"
@@ -3390,6 +3447,9 @@ msgid "VotePWR"
 msgstr ""
 
 msgid "WAGMI!"
+msgstr ""
+
+msgid "Wallet"
 msgstr ""
 
 msgid "Wallet Address"

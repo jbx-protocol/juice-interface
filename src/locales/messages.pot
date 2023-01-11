@@ -3887,6 +3887,9 @@ msgstr ""
 msgid "{0} must be numeric"
 msgstr ""
 
+msgid "{0} remaining"
+msgstr ""
+
 msgid "{0} reserved"
 msgstr ""
 
@@ -3983,7 +3986,7 @@ msgstr ""
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
 msgstr ""
 
-msgid "{remainingSupply} remaining"
+msgid "{remainingSupply}"
 msgstr ""
 
 msgid "{tokenSymbolDisplayText} range"

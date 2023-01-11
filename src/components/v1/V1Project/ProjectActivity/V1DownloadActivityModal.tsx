@@ -11,7 +11,7 @@ import {
   downloadPayments,
   downloadRedemptions,
   downloadAdditionsToBalance,
-} from 'utils/buildActivityCsvs'
+} from 'utils/csvDownloadHelpers'
 import { DownloadOutlined } from '@ant-design/icons'
 
 export function V1DownloadActivityModal({

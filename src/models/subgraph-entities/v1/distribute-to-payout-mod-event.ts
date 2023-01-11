@@ -15,7 +15,7 @@ export interface DistributeToPayoutModEvent extends BaseEventEntity {
   projectId: BigNumber
   modBeneficiary: string
   modPreferUnstaked: boolean
-  modProjectId: BigNumber
+  modProjectId: number
   modAllocator: string
   modCut: BigNumber
   modCutUSD: BigNumber
@@ -39,7 +39,8 @@ export const parseDistributeToPayoutModEvent = (
   projectId: j.projectId ? BigNumber.from(j.projectId) : undefined,
   modBeneficiary: j.modBeneficiary,
   modPreferUnstaked: !!j.modPreferUnstaked,
-  modProjectId: j.modProjectId ? BigNumber.from(j.modProjectId) : undefined,
+  modProjectId:
+    j.modProjectId !== undefined ? parseInt(j.modProjectId) : undefined,
   modAllocator: j.modAllocator,
   modCut: j.modCut ? BigNumber.from(j.modCut) : undefined,
   modCutUSD: j.modCutUSD ? BigNumber.from(j.modCutUSD) : undefined,

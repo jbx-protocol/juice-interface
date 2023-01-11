@@ -50,14 +50,15 @@ export function RedeemNftsModal({
 
   if (!fundingCycle || !fundingCycleMetadata || isLoading) return null
 
-  const onNftClick = (nft: JB721DelegateToken) => {
-    if (tokenIdsToRedeem.includes(nft.tokenId)) {
-      setTokenIdsToRedeem([
-        ...tokenIdsToRedeem.filter(id => id !== nft.tokenId),
-      ])
-    } else {
-      setTokenIdsToRedeem([...tokenIdsToRedeem, nft.tokenId])
-    }
+  const handleTierSelect = (nft: JB721DelegateToken) => {
+    setTokenIdsToRedeem([...(tokenIdsToRedeem ?? []), nft.tokenId])
+  }
+
+  const handleTierDeselect = (nft: JB721DelegateToken) => {
+    const idxToRemove = tokenIdsToRedeem.indexOf(nft.tokenId)
+    const newSelectedTierIds = tokenIdsToRedeem
+    newSelectedTierIds.splice(idxToRemove, 1)
+    setTokenIdsToRedeem([...newSelectedTierIds])
   }
 
   const executeRedeemTransaction = async () => {
@@ -187,15 +188,19 @@ export function RedeemNftsModal({
           <Form form={form} layout="vertical">
             <Form.Item label={t`Select NFTs to redeem`}>
               <Row gutter={[20, 20]}>
-                {nfts?.map(nft => (
-                  <Col span={8} key={nft.tokenId}>
-                    <RedeemNftCard
-                      nft={nft}
-                      onClick={() => onNftClick(nft)}
-                      isSelected={tokenIdsToRedeem.includes(nft.tokenId)}
-                    />
-                  </Col>
-                ))}
+                {nfts?.map(nft => {
+                  const isSelected = tokenIdsToRedeem.includes(nft.tokenId)
+                  return (
+                    <Col span={8} key={nft.tokenId}>
+                      <RedeemNftCard
+                        nft={nft}
+                        onClick={() => handleTierSelect(nft)}
+                        onRemove={() => handleTierDeselect(nft)}
+                        isSelected={isSelected}
+                      />
+                    </Col>
+                  )
+                })}
               </Row>
             </Form.Item>
 

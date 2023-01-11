@@ -1151,13 +1151,13 @@ msgstr ""
 msgid "Download CSV"
 msgstr ""
 
-msgid "Download CSV of project activity"
-msgstr ""
-
 msgid "Download CSV of {0} holders"
 msgstr ""
 
 msgid "Download Template"
+msgstr ""
+
+msgid "Download project activity CSV"
 msgstr ""
 
 msgid "Duration"

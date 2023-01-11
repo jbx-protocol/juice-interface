@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Modal, ModalProps } from 'antd'
+import { Button, Modal, ModalProps, Space } from 'antd'
 import { readProvider } from 'constants/readProvider'
 import { useEffect, useState, useContext } from 'react'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
@@ -12,6 +12,7 @@ import {
   downloadRedemptions,
   downloadAdditionsToBalance,
 } from 'utils/buildActivityCsvs'
+import { DownloadOutlined } from '@ant-design/icons'
 
 export default function V2V3DownloadActivityModal(props: ModalProps) {
   const [latestBlockNumber, setLatestBlockNumber] = useState<number>()
@@ -31,75 +32,76 @@ export default function V2V3DownloadActivityModal(props: ModalProps) {
       cancelText={t`Close`}
       okButtonProps={{ hidden: true }}
       centered
+      title={<Trans>Download project activity CSV</Trans>}
       {...props}
     >
-      <div>
-        <h4>
-          <Trans>Download CSV of project activity</Trans>
-        </h4>
+      <label className="mb-1 block">
+        <Trans>Block number</Trans>
+      </label>
+      <FormattedNumberInput
+        value={blockNumber?.toString()}
+        onChange={val => setBlockNumber(val ? parseInt(val) : undefined)}
+        accessory={
+          <InputAccessoryButton
+            content={t`Latest`}
+            onClick={() => setBlockNumber(latestBlockNumber)}
+            disabled={blockNumber === latestBlockNumber}
+          />
+        }
+        className="mb-4"
+      />
 
-        <label className="mt-5 mb-1 block">
-          <Trans>Block number</Trans>
-        </label>
-        <FormattedNumberInput
-          value={blockNumber?.toString()}
-          onChange={val => setBlockNumber(val ? parseInt(val) : undefined)}
-          accessory={
-            <InputAccessoryButton
-              content={t`Latest`}
-              onClick={() => setBlockNumber(latestBlockNumber)}
-              disabled={blockNumber === latestBlockNumber}
-            />
-          }
-        />
-
-        <div className="mt-5">
-          <Button
-            block
-            onClick={() => downloadParticipants(blockNumber, projectId, pv)}
-          >
+      <Space direction="vertical" className="w-full">
+        <Button
+          block
+          icon={<DownloadOutlined />}
+          onClick={() => downloadParticipants(blockNumber, projectId, pv)}
+        >
+          <span>
             <Trans>Participants</Trans>
-          </Button>
-        </div>
+          </span>
+        </Button>
 
-        <div className="mt-5">
-          <Button
-            block
-            onClick={() => downloadV2V3Payouts(blockNumber, projectId)}
-          >
+        <Button
+          block
+          icon={<DownloadOutlined />}
+          onClick={() => downloadV2V3Payouts(blockNumber, projectId)}
+        >
+          <span>
             <Trans>Payouts</Trans>
-          </Button>
-        </div>
+          </span>
+        </Button>
 
-        <div className="mt-5">
-          <Button
-            block
-            onClick={() => downloadPayments(blockNumber, projectId, pv)}
-          >
+        <Button
+          block
+          icon={<DownloadOutlined />}
+          onClick={() => downloadPayments(blockNumber, projectId, pv)}
+        >
+          <span>
             <Trans>Payments</Trans>
-          </Button>
-        </div>
+          </span>
+        </Button>
 
-        <div className="mt-5">
-          <Button
-            block
-            onClick={() => downloadRedemptions(blockNumber, projectId, pv)}
-          >
+        <Button
+          block
+          icon={<DownloadOutlined />}
+          onClick={() => downloadRedemptions(blockNumber, projectId, pv)}
+        >
+          <span>
             <Trans>Redemptions</Trans>
-          </Button>
-        </div>
+          </span>
+        </Button>
 
-        <div className="mt-5">
-          <Button
-            block
-            onClick={() =>
-              downloadAdditionsToBalance(blockNumber, projectId, pv)
-            }
-          >
+        <Button
+          block
+          icon={<DownloadOutlined />}
+          onClick={() => downloadAdditionsToBalance(blockNumber, projectId, pv)}
+        >
+          <span>
             <Trans>Additions to balance</Trans>
-          </Button>
-        </div>
-      </div>
+          </span>
+        </Button>
+      </Space>
     </Modal>
   )
 }

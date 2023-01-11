@@ -9,6 +9,7 @@ import {
 export interface Participant extends BaseProjectEntity {
   wallet: string
   totalPaid: BigNumber
+  totalPaidUSD: BigNumber
   balance: BigNumber
   stakedBalance: BigNumber
   unstakedBalance: BigNumber
@@ -25,6 +26,7 @@ export const parseParticipantJson = (
   ...parseBaseProjectEntityJson(j),
   wallet: j.wallet,
   totalPaid: j.totalPaid ? BigNumber.from(j.totalPaid) : undefined,
+  totalPaidUSD: j.totalPaidUSD ? BigNumber.from(j.totalPaidUSD) : undefined,
   balance: j.balance ? BigNumber.from(j.balance) : undefined,
   stakedBalance: j.stakedBalance ? BigNumber.from(j.stakedBalance) : undefined,
   unstakedBalance: j.unstakedBalance

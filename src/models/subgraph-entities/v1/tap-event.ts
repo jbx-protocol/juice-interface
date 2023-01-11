@@ -12,10 +12,14 @@ export interface TapEvent extends BaseEventEntity {
   fundingCycleId: BigNumber
   beneficiary: string
   amount: BigNumber
+  amountUSD: BigNumber
   currency: BigNumber
   netTransferAmount: BigNumber
+  netTransferAmountUSD: BigNumber
   beneficiaryTransferAmount: BigNumber
+  beneficiaryTransferAmountUSD: BigNumber
   govFeeAmount: BigNumber
+  govFeeAmountUSD: BigNumber
 }
 
 export type TapEventJson = Partial<
@@ -32,12 +36,22 @@ export const parseTapEventJson = (j: TapEventJson): Partial<TapEvent> => ({
     : undefined,
   beneficiary: j.beneficiary,
   amount: j.amount ? BigNumber.from(j.amount) : undefined,
+  amountUSD: j.amountUSD ? BigNumber.from(j.amountUSD) : undefined,
   currency: j.currency ? BigNumber.from(j.currency) : undefined,
   netTransferAmount: j.netTransferAmount
     ? BigNumber.from(j.netTransferAmount)
     : undefined,
+  netTransferAmountUSD: j.netTransferAmountUSD
+    ? BigNumber.from(j.netTransferAmountUSD)
+    : undefined,
   beneficiaryTransferAmount: j.beneficiaryTransferAmount
     ? BigNumber.from(j.beneficiaryTransferAmount)
     : undefined,
+  beneficiaryTransferAmountUSD: j.beneficiaryTransferAmountUSD
+    ? BigNumber.from(j.beneficiaryTransferAmountUSD)
+    : undefined,
   govFeeAmount: j.govFeeAmount ? BigNumber.from(j.govFeeAmount) : undefined,
+  govFeeAmountUSD: j.govFeeAmountUSD
+    ? BigNumber.from(j.govFeeAmountUSD)
+    : undefined,
 })

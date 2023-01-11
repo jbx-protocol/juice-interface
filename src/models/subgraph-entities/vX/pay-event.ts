@@ -22,6 +22,7 @@ export interface PayEvent
   fundingCycleId: BigNumber
   beneficiary: string
   amount: BigNumber
+  amountUSD: BigNumber
   note: string
   feeFromV2Project?: number
 }
@@ -39,6 +40,7 @@ export const parsePayEventJson = (j: PayEventJson): Partial<PayEvent> => ({
     : undefined,
   beneficiary: j.beneficiary,
   amount: j.amount ? BigNumber.from(j.amount) : undefined,
+  amountUSD: j.amountUSD ? BigNumber.from(j.amountUSD) : undefined,
   note: j.note,
   feeFromV2Project: j.feeFromV2Project
     ? parseInt(j.feeFromV2Project)

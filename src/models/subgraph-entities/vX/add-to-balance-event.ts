@@ -22,6 +22,7 @@ export interface AddToBalanceEvent
   fundingCycleId: BigNumber
   caller: string
   amount: BigNumber
+  amountUSD: BigNumber
   note?: string
 }
 
@@ -42,5 +43,6 @@ export const parseAddToBalanceEventJson = (
     : undefined,
   caller: j.caller,
   amount: j.amount ? BigNumber.from(j.amount) : undefined,
+  amountUSD: j.amountUSD ? BigNumber.from(j.amountUSD) : undefined,
   note: j.note ? j.note : undefined,
 })

@@ -17,8 +17,11 @@ export interface UseAllowanceEvent extends BaseEventEntity, BaseProjectEntity {
   fundingCycleNumber: number
   beneficiary: string
   amount: BigNumber
+  amountUSD: BigNumber
   distributedAmount: BigNumber
+  distributedAmountUSD: BigNumber
   netDistributedamount: BigNumber
+  netDistributedamountUSD: BigNumber
   memo: string
 }
 
@@ -41,11 +44,18 @@ export const parseUseAllowanceEventJson = (
     : undefined,
   beneficiary: j.beneficiary,
   amount: j.amount ? BigNumber.from(j.amount) : undefined,
+  amountUSD: j.amountUSD ? BigNumber.from(j.amountUSD) : undefined,
   distributedAmount: j.distributedAmount
     ? BigNumber.from(j.distributedAmount)
     : undefined,
+  distributedAmountUSD: j.distributedAmountUSD
+    ? BigNumber.from(j.distributedAmountUSD)
+    : undefined,
   netDistributedamount: j.netDistributedamount
     ? BigNumber.from(j.netDistributedamount)
+    : undefined,
+  netDistributedamountUSD: j.netDistributedamountUSD
+    ? BigNumber.from(j.netDistributedamountUSD)
     : undefined,
   memo: j.memo,
 })

@@ -52,7 +52,7 @@ export function NftTierCard({
   const remainingSupply =
     rewardTier?.remainingSupply &&
     rewardTier.remainingSupply < MAX_REMAINING_SUPPLY
-      ? rewardTier?.remainingSupply
+      ? t`${rewardTier?.remainingSupply} remaining`
       : t`Unlimited`
 
   return (
@@ -122,7 +122,7 @@ export function NftTierCard({
           >
             <span
               className={classNames(
-                'text-xs',
+                'text-xs font-medium',
                 'text-ellipsis',
                 'overflow-hidden',
                 _isSelected
@@ -154,7 +154,7 @@ export function NftTierCard({
                 paragraph={{ rows: 1, width: ['50%'] }}
               >
                 <span className="mt-2 text-xs text-grey-500 dark:text-slate-200">
-                  <Trans>{remainingSupply} remaining</Trans>
+                  <Trans>{remainingSupply}</Trans>
                 </span>
               </Skeleton>
             </>

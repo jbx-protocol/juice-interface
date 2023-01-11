@@ -29,7 +29,7 @@ export function NftPreview({
   const hasLimitedSupply = Boolean(
     rewardTier.remainingSupply &&
       rewardTier.maxSupply &&
-      rewardTier.remainingSupply !== DEFAULT_NFT_MAX_SUPPLY,
+      rewardTier.maxSupply !== DEFAULT_NFT_MAX_SUPPLY,
   )
 
   return (

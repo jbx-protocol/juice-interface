@@ -1,70 +1,82 @@
-import { LoadingOutlined } from '@ant-design/icons'
+import { LeftOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
+import { Callout } from 'components/Callout'
 import { MinimalCollapse } from 'components/MinimalCollapse'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { useV1ProjectIdOfV2Project } from 'hooks/v2v3/contractReader/V1ProjectIdOfV2Project'
-import { useContext, useState } from 'react'
-
+import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
+import { readNetwork } from 'constants/networks'
+import { TokenAddresses } from 'constants/tokenAddresses'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
 import { V1TokenMigrationSetupModal } from './V1TokenMigrationSetupModal'
 
 export function V1TokenMigrationSetupSection() {
+  const router = useRouter()
   const [migrationModalVisible, setMigrationModalVisible] =
     useState<boolean>(false)
-  const { projectId } = useContext(ProjectMetadataContext)
 
-  const { data: v1Project, loading: v1ProjectLoading } =
-    useV1ProjectIdOfV2Project(
-      !migrationModalVisible ? projectId : undefined, // reload project ID when the user closes the modal.
+  const isMigrationAvailable =
+    TokenAddresses.V1TicketBooth[readNetwork.name] &&
+    TokenAddresses.V2TokenStore[readNetwork.name] &&
+    TokenAddresses.V3TokenStore[readNetwork.name]
+
+  if (!isMigrationAvailable) {
+    return (
+      <div className="flex flex-col gap-4">
+        <Callout.Info>
+          <Trans>
+            Token migration is currently not available for {readNetwork.name}
+          </Trans>
+        </Callout.Info>
+        <Button
+          icon={<LeftOutlined />}
+          className="max-w-fit"
+          onClick={router.back}
+        >
+          Go Back
+        </Button>
+      </div>
     )
-  const hasV1ProjectId = Boolean(v1Project?.toNumber() ?? 0 > 0)
+  }
 
   return (
-    <>
-      <p>
+    <div className="flex flex-col gap-4">
+      <div>
         <Trans>
-          Allow your V1 project token holders to swap their tokens for your V2
-          project tokens.
+          Allow your legacy project (<ProjectVersionBadge.V1 /> or{' '}
+          <ProjectVersionBadge.V2 />) token holders to swap their tokens for
+          your <ProjectVersionBadge.V3 /> project tokens.
         </Trans>
-      </p>
-
-      <MinimalCollapse className="mb-4" header={<Trans>Do I need this?</Trans>}>
+      </div>
+      <MinimalCollapse header={<Trans>Do I need this?</Trans>}>
         <p>
           <Trans>
-            If you have Juicebox project on Juicebox V1 and V2, we recommend you
-            migrate to V2 exclusively.
+            If you have <ProjectVersionBadge.V1 /> or <ProjectVersionBadge.V2 />{' '}
+            legacy Juicebox projects, we recommend you migrate to{' '}
+            <ProjectVersionBadge.V3 /> exclusively.
           </Trans>
         </p>
         <p>
           <Trans>
-            To do so, you need to give your V1 token holders the ability to
-            exchange their V1 tokens for V2 tokens. Select{' '}
+            To do so, you need to give your legacy token holders the ability to
+            exchange their tokens for V3 tokens. Select{' '}
             <strong>Set up token migration</strong> below to get started.
           </Trans>
         </p>
       </MinimalCollapse>
 
-      {v1ProjectLoading ? (
-        <p>
-          <LoadingOutlined spin />
-        </p>
-      ) : hasV1ProjectId ? (
-        <p>V1 Project ID: {v1Project?.toString()}</p>
-      ) : null}
-
       <Button
+        className="mt-4"
         onClick={() => setMigrationModalVisible(true)}
         type="primary"
-        disabled={hasV1ProjectId}
       >
         <Trans>Set up token migration</Trans>
       </Button>
-
       <V1TokenMigrationSetupModal
         open={migrationModalVisible}
         onOk={() => setMigrationModalVisible(false)}
         onCancel={() => setMigrationModalVisible(false)}
       />
-    </>
+    </div>
   )
 }

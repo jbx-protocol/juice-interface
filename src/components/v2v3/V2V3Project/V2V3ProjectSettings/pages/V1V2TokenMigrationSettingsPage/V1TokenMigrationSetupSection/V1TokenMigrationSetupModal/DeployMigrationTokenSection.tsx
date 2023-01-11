@@ -213,7 +213,7 @@ export function AddTerminalSection({
                 v1ProjectIdLoading
               }
             >
-              <Trans>Add terminal</Trans>
+              <Trans>Deploy migration token</Trans>
             </Button>
           </Form>
         </>

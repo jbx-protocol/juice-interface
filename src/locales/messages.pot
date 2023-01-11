@@ -320,9 +320,6 @@ msgstr ""
 msgid "Add payouts to wallet addresses or Juicebox projects."
 msgstr ""
 
-msgid "Add terminal"
-msgstr ""
-
 msgid "Add to Metamask"
 msgstr ""
 
@@ -972,6 +969,9 @@ msgid "Deploy a <0/> migration token from legacy tokens."
 msgstr ""
 
 msgid "Deploy funding cycle configuration"
+msgstr ""
+
+msgid "Deploy migration token"
 msgstr ""
 
 msgid "Deploy project"
@@ -3434,7 +3434,7 @@ msgstr ""
 msgid "V1 Project handle"
 msgstr ""
 
-msgid "V1 token holders can swap their tokens for your V2 tokens on your V2 project's <0>Tokens</0> section."
+msgid "V1 token holders can migrate their tokens to your V3 tokens using your V3 project's <0>Tokens</0> section."
 msgstr ""
 
 msgid "V1 tokens to swap"

@@ -22,7 +22,7 @@ const SettingsPageComponents: {
   reconfigurefc: ReconfigureFundingCycleSettingsPage,
   payouts: PayoutsSettingsPage,
   reservedtokens: ReservedTokensSettingsPage,
-  v1tokenmigration: V1V2TokenMigrationSettingsPage,
+  tokenmigration: V1V2TokenMigrationSettingsPage,
   transferownership: TransferOwnershipSettingsPage,
   archiveproject: ArchiveProjectSettingsPage,
   governance: GovernanceSettingsPage,

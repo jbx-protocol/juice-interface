@@ -27,7 +27,7 @@ export const V2V3SettingsPageKeyTitleMap: {
   reconfigurefc: t`Reconfigure Funding Cycle`,
   payouts: t`Payouts`,
   reservedtokens: t`Reserved token allocation`,
-  v1tokenmigration: t`V1 token migration`,
+  tokenmigration: t`Token migration`,
   transferownership: t`Transfer ownership`,
   archiveproject: t`Archive project`,
   governance: t`Governance`,
@@ -124,8 +124,8 @@ const items: MenuItem[] = [
       ),
       featureFlagEnabled(FEATURE_FLAGS.V1_TOKEN_SWAP)
         ? menuItem(
-            'V1 token migration',
-            'v1tokenmigration',
+            'Token migration',
+            'tokenmigration',
             undefined,
             undefined,
             'menu-item-sider',
@@ -149,7 +149,9 @@ export function V2V3ProjectSettings() {
   const isMobile = useMobile()
 
   const canEditProjectHandle = isOwner && !isPreviewMode && !handle
-  const activeSettingsPage = router.query.page as V2V3SettingsPageKey
+  const activeSettingsPage = router.query.page as
+    | V2V3SettingsPageKey
+    | undefined
 
   const handleMenuItemClick = (item: MenuItem) => {
     const key = item?.key as V2V3SettingsPageKey | undefined
@@ -191,7 +193,12 @@ export function V2V3ProjectSettings() {
               />
               <Menu
                 defaultOpenKeys={['project', 'funding', 'manage']}
-                defaultSelectedKeys={[activeSettingsPage]}
+                selectedKeys={
+                  activeSettingsPage ? [activeSettingsPage] : ['general']
+                }
+                defaultSelectedKeys={
+                  activeSettingsPage ? [activeSettingsPage] : ['general']
+                }
                 mode="inline"
                 theme={isDarkMode ? 'dark' : 'light'}
                 items={items}

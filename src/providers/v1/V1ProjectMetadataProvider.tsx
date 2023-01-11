@@ -14,7 +14,7 @@ export function V1ProjectMetadataProvider({
   handle: string
   metadata: ProjectMetadataV5 | undefined
 }>) {
-  const projectId = useProjectIdForHandle(handle)
+  const { data: projectId } = useProjectIdForHandle(handle)
 
   const terminalAddress = useTerminalOfProject(projectId)
   const terminalVersion = getTerminalVersion(terminalAddress)

@@ -52,7 +52,7 @@ export function useV1ProjectState({
     queuedFC?.configured,
   )
   const tokenAddress = useTokenAddressOfProject(projectId)
-  const tokenSymbol = useSymbolOfERC20(tokenAddress)
+  const { data: tokenSymbol } = useSymbolOfERC20(tokenAddress)
   const balance = useBalanceOfProject(projectId, terminalName)
   const converter = useCurrencyConverter()
   const balanceInCurrency = useMemo(

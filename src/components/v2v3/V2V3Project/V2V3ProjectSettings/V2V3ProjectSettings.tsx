@@ -4,6 +4,7 @@ import Loading from 'components/Loading'
 import { ProjectHeader } from 'components/Project/ProjectHeader'
 import { V2V3ProjectHeaderActions } from 'components/v2v3/V2V3Project/V2V3ProjectHeaderActions'
 import { ProjectSettingsContent } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/ProjectSettingsContent'
+import { CV_V3 } from 'constants/cv'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -82,7 +83,7 @@ export function V2V3ProjectSettings() {
 
   const items = useMemo(() => {
     const includeTokenMigration =
-      featureFlagEnabled(FEATURE_FLAGS.V1_TOKEN_SWAP) && cv !== '3'
+      featureFlagEnabled(FEATURE_FLAGS.V1_TOKEN_SWAP) && cv !== CV_V3
     const _items: MenuItem[] = [
       menuItem(
         'Project',

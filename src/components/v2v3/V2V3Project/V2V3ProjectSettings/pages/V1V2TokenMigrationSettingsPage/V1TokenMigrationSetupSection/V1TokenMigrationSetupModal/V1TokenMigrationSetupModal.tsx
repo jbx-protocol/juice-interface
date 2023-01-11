@@ -126,8 +126,8 @@ export function V1TokenMigrationSetupModal({ ...props }: ModalProps) {
                 </p>
                 <p className="m-0">
                   <Trans>
-                    V1 token holders can swap their tokens for your V2 tokens on
-                    your V2 project's <strong>Tokens</strong> section.
+                    V1 token holders can migrate their tokens to your V3 tokens
+                    using your V3 project's <strong>Tokens</strong> section.
                   </Trans>
                 </p>
               </Callout>

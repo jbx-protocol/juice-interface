@@ -45,6 +45,28 @@ export const FundingConfigurationReview = () => {
             />
             <DescriptionCol
               span={6}
+              title={t`Scheduled launch time`}
+              desc={
+                <div className="text-base font-medium">
+                  {launchDate ? (
+                    <Tooltip
+                      title={launchDate
+                        .clone()
+                        .utc()
+                        .format('MMMM Do YYYY, h:mma z')}
+                    >
+                      {launchDate.clone().format('MMMM Do YYYY, h:mma z')}
+                    </Tooltip>
+                  ) : (
+                    'Immediately'
+                  )}
+                </div>
+              }
+            />
+          </Row>
+          <Row>
+            <DescriptionCol
+              span={6}
               title={t`Funding target`}
               desc={
                 <div className="text-base font-medium">{fundingTarget}</div>
@@ -58,26 +80,6 @@ export const FundingConfigurationReview = () => {
                 title={t`Payouts`}
                 desc={
                   <div className="text-base font-medium">{payoutsText}</div>
-                }
-              />
-              <DescriptionCol
-                flex={1}
-                title={t`Scheduled launch time`}
-                desc={
-                  <div className="text-base font-medium">
-                    {launchDate ? (
-                      <Tooltip
-                        title={launchDate
-                          .clone()
-                          .utc()
-                          .format('MMMM Do YYYY, h:mma z')}
-                      >
-                        {launchDate.clone().format('MMMM Do YYYY, h:mma z')}
-                      </Tooltip>
-                    ) : (
-                      'Immediately'
-                    )}
-                  </div>
                 }
               />
             </Col>

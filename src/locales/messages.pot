@@ -1691,9 +1691,6 @@ msgstr ""
 msgid "Launch {projectTitle}"
 msgstr ""
 
-msgid "Leave blank to start immediately."
-msgstr ""
-
 msgid "Leave unchecked to have Juicebox track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
 msgstr ""
 
@@ -2822,7 +2819,7 @@ msgstr ""
 msgid "Start the V3 cycle as soon as the current V2 cycle ends <0>({0})</0>."
 msgstr ""
 
-msgid "Start time (seconds, Unix time)"
+msgid "Start time"
 msgstr ""
 
 msgid "Start upgrade"
@@ -3339,6 +3336,12 @@ msgid "Unavailable"
 msgstr ""
 
 msgid "Unclaimed token spending enabled"
+msgstr ""
+
+msgid "Unix timestamp in seconds (for example, {0}). Leave blank to start as soon as possible."
+msgstr ""
+
+msgid "Unix timestamp in seconds. Leave blank to start immediately."
 msgstr ""
 
 msgid "Unknown Project"

@@ -202,9 +202,15 @@ export function RelaunchFundingCycleModal(props: ModalProps) {
               </Form.Item>
 
               <Form.Item
-                label={<Trans>Start time (seconds, Unix time)</Trans>}
+                label={<Trans>Start time</Trans>}
+                required={false}
+                requiredMark="optional"
+                extra={
+                  <Trans>
+                    Unix timestamp in seconds. Leave blank to start immediately.
+                  </Trans>
+                }
                 className="w-full"
-                extra={<Trans>Leave blank to start immediately.</Trans>}
               >
                 <Input
                   type="number"

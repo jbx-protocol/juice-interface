@@ -11,6 +11,8 @@ import {
   V2V3FundingCycleData,
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
+import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
+import { formatDate } from 'utils/format/formatDate'
 
 import { formattedNum } from 'utils/format/formatNumber'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
@@ -47,6 +49,8 @@ export default function ReconfigurePreview({
   fundingCycleData,
   fundAccessConstraints,
   nftRewards,
+  projectOwnerAddress,
+  mustStartAtOrAfter,
 }: {
   payoutSplits: Split[]
   reserveSplits: Split[]
@@ -54,6 +58,8 @@ export default function ReconfigurePreview({
   fundingCycleData: V2V3FundingCycleData
   fundAccessConstraints: V2V3FundAccessConstraint[]
   nftRewards?: NftRewardTier[]
+  projectOwnerAddress?: string
+  mustStartAtOrAfter?: string
 }) {
   const { userAddress } = useWallet()
 
@@ -62,7 +68,9 @@ export default function ReconfigurePreview({
     number: BigNumber.from(1),
     configuration: BigNumber.from(0),
     basedOn: BigNumber.from(0),
-    start: BigNumber.from(Date.now()).div(1000),
+    start: mustStartAtOrAfter
+      ? BigNumber.from(mustStartAtOrAfter)
+      : BigNumber.from(Date.now()).div(1000),
     metadata: BigNumber.from(0),
   }
 
@@ -117,6 +125,11 @@ export default function ReconfigurePreview({
       <Row gutter={gutter}>
         <Col md={12} sm={12}>
           <DurationStatistic duration={fundingCycle.duration} />
+          {!fundingCycle.start.eq(
+            BigNumber.from(DEFAULT_MUST_START_AT_OR_AFTER),
+          ) ? (
+            <span>Starting at {formatDate(fundingCycle.start.mul(1000))}</span>
+          ) : null}
         </Col>
         <Col md={12} sm={12}>
           <DistributionLimitStatistic

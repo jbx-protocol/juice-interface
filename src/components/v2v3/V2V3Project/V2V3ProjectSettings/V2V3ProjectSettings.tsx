@@ -4,15 +4,17 @@ import Loading from 'components/Loading'
 import { ProjectHeader } from 'components/Project/ProjectHeader'
 import { V2V3ProjectHeaderActions } from 'components/v2v3/V2V3Project/V2V3ProjectHeaderActions'
 import { ProjectSettingsContent } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/ProjectSettingsContent'
+import { CV_V3 } from 'constants/cv'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
+import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 import useMobile from 'hooks/Mobile'
 import { V2V3SettingsPageKey } from 'models/menu-keys'
 import { useRouter } from 'next/router'
-import { useContext, useState } from 'react'
+import { useContext, useMemo, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { pushMenuContent, v2v3ProjectRoute } from 'utils/routes'
 import { BackToProjectButton } from '../../../BackToProjectButton'
@@ -27,7 +29,7 @@ export const V2V3SettingsPageKeyTitleMap: {
   reconfigurefc: t`Reconfigure Funding Cycle`,
   payouts: t`Payouts`,
   reservedtokens: t`Reserved token allocation`,
-  v1tokenmigration: t`V1 token migration`,
+  tokenmigration: t`Token migration`,
   transferownership: t`Transfer ownership`,
   archiveproject: t`Archive project`,
   governance: t`Governance`,
@@ -50,93 +52,8 @@ function menuItem(
   }
 }
 
-const items: MenuItem[] = [
-  menuItem(
-    'Project',
-    'project',
-    [
-      menuItem('General', 'general', undefined, undefined, 'menu-item-sider'),
-      menuItem(
-        'Project handle',
-        'projecthandle',
-        undefined,
-        undefined,
-        'menu-item-sider',
-      ),
-    ],
-    'group',
-  ),
-  menuItem('', 'div1', undefined, 'divider'),
-  menuItem(
-    'Funding',
-    'funding',
-    [
-      menuItem(
-        'Funding cycle',
-        'reconfigurefc',
-        undefined,
-        undefined,
-        'menu-item-sider',
-      ),
-      menuItem('Payouts', 'payouts', undefined, undefined, 'menu-item-sider'),
-      menuItem(
-        'Reserved tokens',
-        'reservedtokens',
-        undefined,
-        undefined,
-        'menu-item-sider',
-      ),
-    ],
-    'group',
-  ),
-  menuItem('', 'div2', undefined, 'divider'),
-  menuItem(
-    'Manage',
-    'manage',
-    [
-      menuItem(
-        'Transfer ownership',
-        'transferownership',
-        undefined,
-        undefined,
-        'menu-item-sider',
-      ),
-      menuItem(
-        'Archive project',
-        'archiveproject',
-        undefined,
-        undefined,
-        'menu-item-sider',
-      ),
-      menuItem(
-        'Governance',
-        'governance',
-        undefined,
-        undefined,
-        'menu-item-sider',
-      ),
-      menuItem(
-        'Project upgrades',
-        'upgrades',
-        undefined,
-        undefined,
-        'menu-item-sider',
-      ),
-      featureFlagEnabled(FEATURE_FLAGS.V1_TOKEN_SWAP)
-        ? menuItem(
-            'V1 token migration',
-            'v1tokenmigration',
-            undefined,
-            undefined,
-            'menu-item-sider',
-          )
-        : null,
-    ],
-    'group',
-  ),
-]
-
 export function V2V3ProjectSettings() {
+  const { cv } = useContext(V2V3ContractsContext)
   const { isPreviewMode, projectOwnerAddress, handle } =
     useContext(V2V3ProjectContext)
   const { projectId, projectMetadata } = useContext(ProjectMetadataContext)
@@ -149,7 +66,9 @@ export function V2V3ProjectSettings() {
   const isMobile = useMobile()
 
   const canEditProjectHandle = isOwner && !isPreviewMode && !handle
-  const activeSettingsPage = router.query.page as V2V3SettingsPageKey
+  const activeSettingsPage = router.query.page as
+    | V2V3SettingsPageKey
+    | undefined
 
   const handleMenuItemClick = (item: MenuItem) => {
     const key = item?.key as V2V3SettingsPageKey | undefined
@@ -161,6 +80,109 @@ export function V2V3ProjectSettings() {
       setCollapsed(true)
     }
   }
+
+  const items = useMemo(() => {
+    const includeTokenMigration =
+      featureFlagEnabled(FEATURE_FLAGS.V1_TOKEN_SWAP) && cv !== CV_V3
+    const _items: MenuItem[] = [
+      menuItem(
+        'Project',
+        'project',
+        [
+          menuItem(
+            'General',
+            'general',
+            undefined,
+            undefined,
+            'menu-item-sider',
+          ),
+          menuItem(
+            'Project handle',
+            'projecthandle',
+            undefined,
+            undefined,
+            'menu-item-sider',
+          ),
+        ],
+        'group',
+      ),
+      menuItem('', 'div1', undefined, 'divider'),
+      menuItem(
+        'Funding',
+        'funding',
+        [
+          menuItem(
+            'Funding cycle',
+            'reconfigurefc',
+            undefined,
+            undefined,
+            'menu-item-sider',
+          ),
+          menuItem(
+            'Payouts',
+            'payouts',
+            undefined,
+            undefined,
+            'menu-item-sider',
+          ),
+          menuItem(
+            'Reserved tokens',
+            'reservedtokens',
+            undefined,
+            undefined,
+            'menu-item-sider',
+          ),
+        ],
+        'group',
+      ),
+      menuItem('', 'div2', undefined, 'divider'),
+      menuItem(
+        'Manage',
+        'manage',
+        [
+          menuItem(
+            'Transfer ownership',
+            'transferownership',
+            undefined,
+            undefined,
+            'menu-item-sider',
+          ),
+          menuItem(
+            'Archive project',
+            'archiveproject',
+            undefined,
+            undefined,
+            'menu-item-sider',
+          ),
+          menuItem(
+            'Governance',
+            'governance',
+            undefined,
+            undefined,
+            'menu-item-sider',
+          ),
+          menuItem(
+            'Project upgrades',
+            'upgrades',
+            undefined,
+            undefined,
+            'menu-item-sider',
+          ),
+          includeTokenMigration
+            ? menuItem(
+                'Token migration',
+                'tokenmigration',
+                undefined,
+                undefined,
+                'menu-item-sider',
+              )
+            : null,
+        ],
+        'group',
+      ),
+    ]
+    return _items
+  }, [cv])
 
   if (!projectMetadata) {
     return <Loading />
@@ -191,7 +213,12 @@ export function V2V3ProjectSettings() {
               />
               <Menu
                 defaultOpenKeys={['project', 'funding', 'manage']}
-                defaultSelectedKeys={[activeSettingsPage]}
+                selectedKeys={
+                  activeSettingsPage ? [activeSettingsPage] : ['general']
+                }
+                defaultSelectedKeys={
+                  activeSettingsPage ? [activeSettingsPage] : ['general']
+                }
                 mode="inline"
                 theme={isDarkMode ? 'dark' : 'light'}
                 items={items}

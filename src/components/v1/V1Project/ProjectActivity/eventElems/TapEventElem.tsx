@@ -3,8 +3,10 @@ import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import ETHAmount from 'components/currency/ETHAmount'
 import FormattedAddress from 'components/FormattedAddress'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
+import { ThemeContext } from 'contexts/themeContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { TapEvent } from 'models/subgraph-entities/v1/tap-event'
+import { useContext } from 'react'
 
 export default function TapEventElem({
   event,
@@ -22,6 +24,10 @@ export default function TapEventElem({
       >
     | undefined
 }) {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+
   // Load individual DistributeToPayoutMod events, emitted by internal transactions of the Tap transaction
   const { data: payoutEvents } = useSubgraphQuery(
     event?.id
@@ -56,7 +62,12 @@ export default function TapEventElem({
       event={event}
       header={t`Distributed funds`}
       subject={
-        <div className="text-base font-medium text-grey-900 dark:text-slate-100">
+        <div
+          style={{
+            color: colors.text.primary,
+            fontWeight: 500,
+          }}
+        >
           <ETHAmount amount={event.netTransferAmount} />
         </div>
       }
@@ -69,16 +80,13 @@ export default function TapEventElem({
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'baseline',
+                fontSize: '0.8rem',
               }}
-              className="text-sm"
             >
               <div style={{ fontWeight: 500 }}>
-                {e.modProjectId?.gt(0) ? (
+                {e.modProjectId > 0 ? (
                   <span>
-                    <V1ProjectHandle
-                      className="text-grey-900 dark:text-slate-100"
-                      projectId={e.modProjectId}
-                    />
+                    <V1ProjectHandle projectId={e.modProjectId} />
                   </span>
                 ) : (
                   <FormattedAddress address={e.modBeneficiary} />
@@ -86,7 +94,7 @@ export default function TapEventElem({
                 :
               </div>
 
-              <div className="text-grey-500 dark:text-grey-300">
+              <div style={{ color: colors.text.secondary }}>
                 <ETHAmount amount={e.modCut} />
               </div>
             </div>
@@ -98,13 +106,22 @@ export default function TapEventElem({
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'baseline',
+                fontSize:
+                  payoutEvents?.length && payoutEvents.length > 1
+                    ? '0.8rem'
+                    : undefined,
               }}
-              className="text-sm"
             >
-              <div>
+              <div style={{ fontWeight: 500 }}>
                 <FormattedAddress address={event.beneficiary} />:
               </div>
-              <div className="text-grey-500 dark:text-grey-300">
+              <div
+                style={
+                  payoutEvents?.length && payoutEvents.length > 1
+                    ? { color: colors.text.secondary }
+                    : { fontWeight: 500 }
+                }
+              >
                 <ETHAmount amount={event.beneficiaryTransferAmount} />
               </div>
             </div>

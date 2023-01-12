@@ -11,5 +11,5 @@ export type V2V3SettingsPageKey =
   | 'transferownership'
   | 'archiveproject'
   | 'governance'
-  | 'v1tokenmigration'
+  | 'tokenmigration'
   | 'upgrades'

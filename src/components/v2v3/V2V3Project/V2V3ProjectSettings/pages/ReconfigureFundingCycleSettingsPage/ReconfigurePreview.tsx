@@ -1,7 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Col, Row, Space } from 'antd'
 import { parseEther } from 'ethers/lib/utils'
-import { useWallet } from 'hooks/Wallet'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { Split } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
@@ -61,8 +60,6 @@ export default function ReconfigurePreview({
   projectOwnerAddress?: string
   mustStartAtOrAfter?: string
 }) {
-  const { userAddress } = useWallet()
-
   const fundingCycle: V2V3FundingCycle = {
     ...fundingCycleData,
     number: BigNumber.from(1),
@@ -198,7 +195,7 @@ export default function ReconfigurePreview({
           splits={payoutSplits}
           currency={fundAccessConstraint?.distributionLimitCurrency}
           totalValue={distributionLimit}
-          projectOwnerAddress={userAddress}
+          projectOwnerAddress={projectOwnerAddress}
           showSplitValues={hasDistributionLimit}
           fundingCycleDuration={duration}
         />
@@ -207,7 +204,7 @@ export default function ReconfigurePreview({
         <ReservedSplitsStatistic
           splits={reserveSplits}
           reservedPercentage={reservedPercentage}
-          projectOwnerAddress={userAddress}
+          projectOwnerAddress={projectOwnerAddress}
         />
       )}
       {nftRewards ? <NftSummarySection /> : null}

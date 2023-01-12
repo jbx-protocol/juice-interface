@@ -101,9 +101,13 @@ export const defaultNftCollectionDescription = (
     projectName?.length ? projectName : 'your project'
   }'s Juicebox contributors.`
 
-async function uploadNftRewardToIPFS(
-  rewardTier: NftRewardTier,
-): Promise<string> {
+async function uploadNftRewardToIPFS({
+  rewardTier,
+  rank,
+}: {
+  rewardTier: NftRewardTier
+  rank: number
+}): Promise<string> {
   const ipfsNftRewardTier: IPFSNftRewardTier = {
     description: rewardTier.description,
     name: rewardTier.name,
@@ -124,6 +128,10 @@ async function uploadNftRewardToIPFS(
       {
         trait_type: 'Max. Supply',
         value: rewardTier.maxSupply,
+      },
+      {
+        trait_type: 'tier',
+        value: rank,
       },
     ],
   }
@@ -149,7 +157,12 @@ export async function uploadNftRewardsToIPFS(
   nftRewards: NftRewardTier[],
 ): Promise<string[]> {
   return await Promise.all(
-    nftRewards.map(rewardTier => uploadNftRewardToIPFS(rewardTier)),
+    sortNftsByContributionFloor(nftRewards).map((rewardTier, idx) =>
+      uploadNftRewardToIPFS({
+        rewardTier,
+        rank: idx + 1, // relies on rewardTiers being sorted by contributionFloor
+      }),
+    ),
   )
 }
 
@@ -420,4 +433,10 @@ export function payMetadataOverrides(
   }
 
   return {}
+}
+
+export function sortNftsByContributionFloor(
+  rewardTiers: NftRewardTier[],
+): NftRewardTier[] {
+  return rewardTiers.sort((a, b) => a.contributionFloor - b.contributionFloor)
 }

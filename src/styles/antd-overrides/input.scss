@@ -123,16 +123,31 @@ input.ant-input[type='number'] {
 }
 
 .ant-picker-suffix,
-.ant-picker-header,
-.ant-picker-header button,
-.ant-picker-cell,
+.ant-picker-header-view,
 .ant-picker-content th,
-.ant-picker-input-placeholder {
-  color: var(--text-secondary);
+.ant-picker-cell-in-view:not(.ant-picker-cell-disabled) {
+  color: var(--text-primary);
+}
+
+.ant-picker-cell-disabled,
+.ant-picker-cell:not(.ant-picker-cell-in-view) {
+  color: var(--text-tertiary);
+}
+
+.ant-picker-time-panel-cell-inner {
+  color: var(--text-secondary) !important;
 }
 
 .ant-picker-cell:hover .ant-picker-cell-inner {
   background: var(--background-l2) !important;
+}
+
+.ant-picker-time-panel-cell:hover .ant-picker-time-panel-cell-inner {
+  background: var(--background-l2) !important;
+}
+
+.ant-picker-cell-today .ant-picker-cell-inner::before {
+  border-color: var(--stroke-tertiary) !important;
 }
 
 input:-internal-autofill,

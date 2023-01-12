@@ -8,14 +8,15 @@ import {
   splitToAllocation,
 } from 'components/Create/utils/splitToAllocation'
 import { useAppSelector } from 'hooks/AppSelector'
+import moment from 'moment'
 import { useCallback, useMemo } from 'react'
 import { useEditingDistributionLimit } from 'redux/hooks/EditingDistributionLimit'
 import { useEditingPayoutSplits } from 'redux/hooks/EditingPayoutSplits'
+import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
 
 export const useFundingConfigurationReview = () => {
-  const { fundingCycleData, payoutsSelection } = useAppSelector(
-    state => state.editingV2Project,
-  )
+  const { fundingCycleData, payoutsSelection, mustStartAtOrAfter } =
+    useAppSelector(state => state.editingV2Project)
   const [distributionLimit] = useEditingDistributionLimit()
   const [payoutSplits, setPayoutSplits] = useEditingPayoutSplits()
 
@@ -49,6 +50,16 @@ export const useFundingConfigurationReview = () => {
     return selection === 'amounts' ? t`Amounts` : t`Percentages`
   }, [selection])
 
+  const launchDate = useMemo(
+    () =>
+      mustStartAtOrAfter &&
+      mustStartAtOrAfter !== DEFAULT_MUST_START_AT_OR_AFTER &&
+      !isNaN(parseFloat(mustStartAtOrAfter))
+        ? moment.unix(parseFloat(mustStartAtOrAfter))
+        : undefined,
+    [mustStartAtOrAfter],
+  )
+
   const allocationSplits = useMemo(
     () => payoutSplits.map(splitToAllocation),
     [payoutSplits],
@@ -67,5 +78,6 @@ export const useFundingConfigurationReview = () => {
     payoutsText,
     allocationSplits,
     setAllocationSplits,
+    launchDate,
   }
 }

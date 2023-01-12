@@ -4,7 +4,7 @@ import {
   CheckCircleFilled,
 } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Form, Space } from 'antd'
+import { Form, Space, Tooltip } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
 import { useLockPageRulesWrapper } from 'components/Create/hooks/useLockPageRulesWrapper'
@@ -177,11 +177,19 @@ export const FundingCyclesPage = () => {
                     launchDate ? (
                       <Trans>
                         Your project’s first Funding Cycle will launch on{' '}
-                        {launchDate.clone().utc().format('YYYY-MM-DD')} at{' '}
-                        {launchDate.clone().utc().format('HH:mm:ss z')}. Once
-                        deployed, your project will be visible but unable to
-                        receive funding or issue tokens until the date and time
-                        specified.
+                        <Tooltip
+                          title={
+                            launchDate.clone().format('YYYY-MM-DD') +
+                            ' at ' +
+                            launchDate.clone().utc().format('HH:mm:ss z')
+                          }
+                        >
+                          {launchDate.clone().format('YYYY-MM-DD')} at{' '}
+                          {launchDate.clone().format('HH:mm:ss z')}
+                        </Tooltip>
+                        . Once deployed, your project will be visible but unable
+                        to receive funding or issue tokens until the date and
+                        time specified.
                       </Trans>
                     ) : (
                       <Trans>

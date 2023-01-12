@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro'
-import { Col, Row } from 'antd'
+import { Col, Row, Tooltip } from 'antd'
 import useMobile from 'hooks/Mobile'
 import { PayoutsList } from '../../../Payouts/components/PayoutsList'
 import { DescriptionCol } from '../DescriptionCol'
@@ -65,9 +65,18 @@ export const FundingConfigurationReview = () => {
                 title={t`Scheduled launch time`}
                 desc={
                   <div className="text-base font-medium">
-                    {launchDate
-                      ? launchDate.utc().format('MMMM Do YYYY, h:mma z')
-                      : 'Immediately'}
+                    {launchDate ? (
+                      <Tooltip
+                        title={launchDate
+                          .clone()
+                          .utc()
+                          .format('MMMM Do YYYY, h:mma z')}
+                      >
+                        {launchDate.clone().format('MMMM Do YYYY, h:mma z')}
+                      </Tooltip>
+                    ) : (
+                      'Immediately'
+                    )}
                   </div>
                 }
               />

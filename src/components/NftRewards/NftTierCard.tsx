@@ -16,6 +16,7 @@ export function NftTierCard({
   rewardTier,
   isSelected,
   quantitySelected,
+  maxQuantity,
   onClick,
   onRemove,
   previewDisabled,
@@ -25,6 +26,7 @@ export function NftTierCard({
   loading?: boolean
   isSelected?: boolean
   quantitySelected?: number
+  maxQuantity?: number
   onClick?: VoidFunction
   onRemove?: VoidFunction
   previewDisabled?: boolean
@@ -99,6 +101,7 @@ export function NftTierCard({
           {canSelect && hasQuantitySelected ? (
             <QuantitySelector
               value={quantitySelected}
+              maxValue={maxQuantity}
               onIncrement={onClick}
               onDecrement={onRemove}
             />

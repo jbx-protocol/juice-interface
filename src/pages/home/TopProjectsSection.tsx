@@ -155,7 +155,7 @@ export function TopProjectsSection() {
               <Link href="/create">
                 <a>
                   <Button size="large" type="primary" block={isMobile}>
-                    <Trans>Create a project</Trans>
+                    <Trans>Build your project</Trans>
                   </Button>
                 </a>
               </Link>

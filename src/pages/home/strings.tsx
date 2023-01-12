@@ -4,24 +4,26 @@ export const HeroHeading = () => <Trans>Fund anything.</Trans>
 
 export const HeroSubheading = () => (
   <Trans>
-    The programmable funding protocol for builders and creators. Light enough
-    for a group of friends, powerful enough for a global network of anons.{' '}
+    Hundreds of projects of all sizes—from indie NFT projects to multi-million
+    dollar fundraisers—use Juicebox to raise funds, manage their treasuries, and
+    grow their communities on Ethereum.{' '}
     <a
-      href="/p/juicebox"
-      className="text-black underline hover:text-haze-400 hover:underline dark:text-grey-100 dark:hover:text-haze-400"
-      style={{
-        // TODO: not supported in tailwind
-        fontWeight: 'inherit',
+      // todo get rid of hover-text
+      className="hover-text-decoration-underline cursor-pointer text-sm text-grey-500 dark:text-grey-300"
+      role="button"
+      onClick={() => {
+        document
+          .getElementById('how-it-works')
+          ?.scrollIntoView({ behavior: 'smooth' })
       }}
     >
-      Community-owned
+      <em>Learn how it works 🡒</em>
     </a>
-    , on Ethereum.
   </Trans>
 )
 
 export const TopProjectsHeading = () => (
-  <Trans>Fund and operate your thing, your way.</Trans>
+  <Trans>Bring your project to life.</Trans>
 )
 
 export const TopProjectsSubheadingOne = () => (

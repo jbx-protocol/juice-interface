@@ -69,6 +69,7 @@ export const useReconfigureFundingCycle = ({
     editingFundingCycleData,
     editingFundAccessConstraints,
     editingNftRewards,
+    editingMustStartAtOrAfter,
   } = editingFundingCycleConfig
 
   const reconfigureFundingCycle = useCallback(async () => {
@@ -110,6 +111,7 @@ export const useReconfigureFundingCycle = ({
         editingReservedTokensGroupedSplits,
       ],
       memo,
+      mustStartAtOrAfter: editingMustStartAtOrAfter,
     }
 
     const txOpts = {
@@ -158,6 +160,7 @@ export const useReconfigureFundingCycle = ({
     editingNftRewards,
     editingPayoutGroupedSplits,
     editingReservedTokensGroupedSplits,
+    editingMustStartAtOrAfter,
     nftRewardsCids,
     fundingCycle,
     memo,

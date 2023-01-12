@@ -59,6 +59,7 @@ export function FundingForm({
 }) {
   const { contracts } = useContext(V2V3ContractsContext)
   const { payoutSplits } = useContext(V2V3ProjectContext)
+  const { projectOwnerAddress } = useContext(V2V3ProjectContext)
 
   const [splits, setSplits] = useState<Split[]>([])
   // Must differentiate between splits loaded from redux and
@@ -344,6 +345,7 @@ export function FundingForm({
           }
           editableSplits={editingSplits}
           lockedSplits={lockedSplits}
+          projectOwnerAddress={projectOwnerAddress}
           onSplitsChanged={newSplits => {
             setEditingSplits(newSplits)
             fundingForm.setFieldsValue({

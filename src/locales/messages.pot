@@ -1778,6 +1778,9 @@ msgstr ""
 msgid "Max Supply"
 msgstr ""
 
+msgid "Max. supply reached"
+msgstr ""
+
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
 msgstr ""
 
@@ -4002,6 +4005,9 @@ msgid "{minTokensAllowedToStake, plural, one {You must stake at least # token.} 
 msgstr ""
 
 msgid "{nftBalanceFormatted, plural, one {NFT} other {NFTs}}"
+msgstr ""
+
+msgid "{nftCount, plural, one {+ # NFT} other {+ # NFTs}}"
 msgstr ""
 
 msgid "{payerRate} (+ {reservedRate} reserved) {tokenSymbolPlural}/ETH"

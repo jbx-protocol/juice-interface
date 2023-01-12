@@ -127,8 +127,10 @@ export function NftRewardsSection() {
         <RewardTiersLoadingSkeleton />
       ) : (
         <div
-          // hax to make scrollbars look nice
-          className="-mt-3 -ml-3 -mr-5 max-h-[500px] overflow-auto pb-3 pt-3 pl-3 pr-5"
+          className={
+            // hax to make scrollbars look nice
+            '-mt-3 -ml-3 -mr-5 max-h-[950px] overflow-auto pb-3 pt-3 pl-3 pr-5 md:max-h-[620px]'
+          }
         >
           <Row gutter={isMobile ? 12 : 24}>
             {renderRewardTiers?.map(rewardTier => (
@@ -145,6 +147,7 @@ export function NftRewardsSection() {
                       id => id === rewardTier.id ?? -1,
                     ).length
                   }
+                  maxQuantity={rewardTier.remainingSupply}
                   onClick={() => handleTierSelect(rewardTier.id)}
                   onRemove={() => handleTierDeselect(rewardTier.id)}
                 />

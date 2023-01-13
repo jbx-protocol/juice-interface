@@ -33,6 +33,10 @@ export const usePinFileToIpfs = () => {
       metadata?: PinataMetadata
       onProgress: (percent: number) => void
     }) => {
+      if (wallet.chainUnsupported) {
+        await wallet.changeNetworks()
+        return
+      }
       if (!wallet.isConnected) {
         await wallet.connect()
         return

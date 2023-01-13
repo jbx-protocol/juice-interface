@@ -19,6 +19,39 @@ const extractJsonFromBase64Data = (base64: string) => {
   return JSON.parse(decoded.substring(jsonStart, jsonEnd + 1))
 }
 
+export const isWalletRegistered = async (
+  walletAddress: string,
+): Promise<boolean> => {
+  try {
+    const result = await axios.post('/api/ipfs/isWalletRegistered', {
+      walletAddress,
+    })
+    return result.data.registered
+  } catch (e) {
+    console.error('error occurred', e)
+    throw e
+  }
+}
+
+export const registerWallet = async (
+  walletAddress: string,
+  signature: string,
+  nonce: string,
+): Promise<{ apiKey: string; apiSecret: string }> => {
+  try {
+    const result = await axios.post('/api/ipfs/registerWallet', {
+      walletAddress,
+      signature,
+      nonce,
+    })
+    return result.data
+  } catch (e) {
+    console.error('error occurred', e)
+    throw e
+  }
+}
+
+// TODO: Move to wallet key
 // keyvalues will be upserted to existing metadata. A null value will remove an existing keyvalue
 export const editMetadataForCid = async (
   cid: string | undefined,
@@ -61,31 +94,6 @@ export const ipfsGetWithFallback = async (
   //     : await axios.get(openIpfsUrl(hash))
   //   return response
   // }
-}
-
-export const pinFileToIpfs = async (
-  file: File | Blob | string,
-  metadata?: PinataMetadata,
-) => {
-  const data = new FormData()
-  data.append('file', file)
-  if (metadata) {
-    data.append(
-      'pinataMetadata',
-      JSON.stringify({
-        keyvalues: metadata,
-      }),
-    )
-  }
-
-  const res = await axios.post('/api/ipfs/logo', data, {
-    maxContentLength: Infinity, //this is needed to prevent axios from erroring out with large files
-    headers: {
-      'Content-Type': `multipart/form-data;`,
-    },
-  })
-
-  return res.data as PinataPinResponse
 }
 
 export const uploadProjectMetadata = async (

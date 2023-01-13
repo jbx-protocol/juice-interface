@@ -1,10 +1,6 @@
-import {
-  CloseCircleFilled,
-  LoadingOutlined,
-  UploadOutlined,
-} from '@ant-design/icons'
+import { CloseCircleFilled, UploadOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
-import { Form, Modal, Space } from 'antd'
+import { Form, Modal, Progress, Space } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
@@ -12,8 +8,11 @@ import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import { JuiceSwitch } from 'components/JuiceSwitch'
 import PrefixedInput from 'components/PrefixedInput'
 import { UploadNoStyle } from 'components/UploadNoStyle'
-import { pinFileToIpfs } from 'lib/api/ipfs'
-import { useCallback, useEffect, useState } from 'react'
+import { ThemeContext } from 'contexts/themeContext'
+import { usePinFileToIpfs } from 'hooks/PinFileToIpfs'
+import { useWallet } from 'hooks/Wallet'
+import { UploadRequestOption } from 'rc-upload/lib/interface'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
 import { restrictedIpfsUrl } from 'utils/ipfs'
 import { v4 } from 'uuid'
@@ -46,8 +45,14 @@ export const AddEditRewardModal = ({
   onOk: (reward: Reward) => void
   onCancel: VoidFunction
 }) => {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
   const [form] = Form.useForm<AddEditRewardModalFormProps>()
   const [limitedSupply, setLimitedSupply] = useState<boolean>(false)
+
+  const pinFileToIpfs = usePinFileToIpfs()
+  const wallet = useWallet()
 
   useEffect(() => {
     if (!open) return
@@ -88,11 +93,32 @@ export const AddEditRewardModal = ({
     form.resetFields()
   }, [form, onCancel])
 
-  const onCustomRequest = useCallback(async (file: File | string | Blob) => {
-    const res = await pinFileToIpfs(file)
-    const url = restrictedIpfsUrl(res.IpfsHash)
-    return url
-  }, [])
+  const onCustomRequest = useCallback(
+    async (options: UploadRequestOption) => {
+      const { file, onProgress } = options
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const res = await pinFileToIpfs({ file, onProgress: onProgress as any })
+        if (!res) throw new Error('Failed to pin file to IPFS')
+        const url = restrictedIpfsUrl(res.IpfsHash)
+        return url
+      } catch (err) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        options.onError?.(null as any)
+        throw err
+      }
+    },
+    [pinFileToIpfs],
+  )
+
+  const onBeforeUpload = useCallback(async () => {
+    let walletConnected = wallet.isConnected
+    if (!wallet.isConnected) {
+      const connectStates = await wallet.connect()
+      walletConnected = connectStates.length > 0
+    }
+    return walletConnected
+  }, [wallet])
 
   const isEditing = !!editingData
   return (
@@ -122,12 +148,28 @@ export const AddEditRewardModal = ({
             supportedFileTypes={
               new Set(['image/jpeg', 'image/png', 'image/gif'])
             }
+            beforeUpload={onBeforeUpload}
             customRequest={onCustomRequest}
             listType="picture-card" // Tried to do away with styling, but need this -.-
           >
-            {({ uploadUrl, isUploading, undo }) => {
+            {({ uploadUrl, isUploading, undo, percent }) => {
               if (isUploading) {
-                return <LoadingOutlined />
+                return (
+                  <div>
+                    <Progress
+                      width={48}
+                      className="h-8 w-8"
+                      strokeColor={colors.background.action.primary}
+                      type="circle"
+                      percent={percent}
+                      format={percent => (
+                        <div className="text-black dark:text-grey-200">
+                          {percent ?? 0}%
+                        </div>
+                      )}
+                    />
+                  </div>
+                )
               }
               if (uploadUrl === undefined) {
                 return <UploadButton />

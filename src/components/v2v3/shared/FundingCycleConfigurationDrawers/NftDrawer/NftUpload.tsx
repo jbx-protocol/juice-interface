@@ -1,10 +1,12 @@
 import { LoadingOutlined, UploadOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Form, FormInstance, Image, Upload } from 'antd'
+import { Form, FormInstance, Image, Progress, Upload } from 'antd'
 import { RcFile } from 'antd/lib/upload'
 import TooltipLabel from 'components/TooltipLabel'
-import { pinFileToIpfs } from 'lib/api/ipfs'
-import { useState } from 'react'
+import { ThemeContext } from 'contexts/themeContext'
+import { usePinFileToIpfs } from 'hooks/PinFileToIpfs'
+import { useWallet } from 'hooks/Wallet'
+import { useContext, useState } from 'react'
 import { classNames } from 'utils/classNames'
 import { restrictedIpfsUrl } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
@@ -15,8 +17,14 @@ const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif']
 export const NFT_IMAGE_SIDE_LENGTH = '90px'
 
 export default function NftUpload({ form }: { form: FormInstance }) {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
   const [uploading, setUploading] = useState<boolean>()
   const [imageRenderLoading, setImageRenderLoading] = useState<boolean>()
+  const [percent, setPercent] = useState<number | undefined>(undefined)
+  const pinFileToIpfs = usePinFileToIpfs()
+  const wallet = useWallet()
 
   const setValue = (cid?: string) => {
     const newUrl = cid ? restrictedIpfsUrl(cid) : undefined
@@ -26,7 +34,7 @@ export default function NftUpload({ form }: { form: FormInstance }) {
   }
 
   // check file type and size
-  const beforeUpload = (file: RcFile) => {
+  const beforeUpload = async (file: RcFile) => {
     const fileIsAllowed = ALLOWED_FILE_TYPES.includes(file.type)
     const isLt50000M = file.size / 1024 / 1024 < 50000
 
@@ -37,7 +45,13 @@ export default function NftUpload({ form }: { form: FormInstance }) {
       emitErrorNotification('File must be a JPG, PNG or GIF')
     }
 
-    return fileIsAllowed && isLt50000M
+    let walletConnected = wallet.isConnected
+    if (!wallet.isConnected) {
+      const connectStates = await wallet.connect()
+      walletConnected = connectStates.length > 0
+    }
+
+    return fileIsAllowed && isLt50000M && walletConnected
   }
 
   const imageUrl = form.getFieldValue('imageUrl')
@@ -50,26 +64,6 @@ export default function NftUpload({ form }: { form: FormInstance }) {
     }
     return Promise.resolve()
   }
-
-  const uploadButton = (
-    <div>
-      {uploading ? (
-        <LoadingOutlined className="text-xl text-haze-400 dark:text-haze-300" />
-      ) : (
-        <UploadOutlined className="text-xl text-haze-400 dark:text-haze-300" />
-      )}
-      <div className="mt-2 w-full">
-        <div className="text-sm">
-          <strong>
-            <Trans>Upload an image</Trans>
-          </strong>
-        </div>
-        <div className="text-xs text-grey-500 dark:text-grey-300">
-          JPG, PNG, GIF
-        </div>
-      </div>
-    </div>
-  )
 
   return (
     <Form.Item
@@ -91,8 +85,24 @@ export default function NftUpload({ form }: { form: FormInstance }) {
         beforeUpload={beforeUpload}
         customRequest={async req => {
           setUploading(true)
-          const res = await pinFileToIpfs(req.file)
-          setValue(res.IpfsHash)
+          setPercent(0)
+          try {
+            const val = await pinFileToIpfs({
+              ...req,
+              onProgress: percent => {
+                if (percent) {
+                  setPercent(percent)
+                }
+              },
+            })
+            setValue(val.IpfsHash)
+          } catch (e) {
+            console.error('Error occurred while uploading', e)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            req.onError?.(null as any)
+          } finally {
+            setUploading(false)
+          }
         }}
       >
         {imageUrl ? (
@@ -112,7 +122,34 @@ export default function NftUpload({ form }: { form: FormInstance }) {
             />
           </>
         ) : (
-          uploadButton
+          <div>
+            {uploading ? (
+              <Progress
+                width={48}
+                className="mb-2 h-8 w-8"
+                strokeColor={colors.background.action.primary}
+                type="circle"
+                percent={percent}
+                format={percent => (
+                  <div className="text-black dark:text-grey-200">
+                    {percent ?? 0}%
+                  </div>
+                )}
+              />
+            ) : (
+              <UploadOutlined className="text-xl text-haze-400 dark:text-haze-300" />
+            )}
+            <div className="mt-2 w-full">
+              <div className="text-sm">
+                <strong>
+                  <Trans>Upload an image</Trans>
+                </strong>
+              </div>
+              <div className="text-xs text-grey-500 dark:text-grey-300">
+                JPG, PNG, GIF
+              </div>
+            </div>
+          </div>
         )}
       </Upload>
     </Form.Item>

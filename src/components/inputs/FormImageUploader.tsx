@@ -2,9 +2,11 @@ import { CloseCircleFilled, FileImageOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { PinataMetadata } from '@pinata/sdk'
 import { Button, Col, message, Row, Space, Upload } from 'antd'
-import { pinFileToIpfs } from 'lib/api/ipfs'
+import { usePinFileToIpfs } from 'hooks/PinFileToIpfs'
+import { useWallet } from 'hooks/Wallet'
 import { useState } from 'react'
 import { cidFromIpfsUri, ipfsUrl, restrictedIpfsUrl } from 'utils/ipfs'
+import { emitErrorNotification } from 'utils/notifications'
 
 import ExternalLink from '../ExternalLink'
 
@@ -32,6 +34,9 @@ export const FormImageUploader = ({
   const [imageCid, setImageCid] = useState<string | undefined>(
     value ? cidFromIpfsUri(value) : undefined,
   )
+
+  const wallet = useWallet()
+  const pinFileToIpfs = usePinFileToIpfs()
 
   const setValue = (cid?: string) => {
     setImageCid(cid)
@@ -64,7 +69,7 @@ export const FormImageUploader = ({
           ) : (
             <Upload
               accept="image/png, image/jpeg, image/jpg, image/gif"
-              beforeUpload={file => {
+              beforeUpload={async file => {
                 if (maxSize !== undefined && file.size > maxSize * 1000) {
                   const unit = maxSize > 999 ? ByteUnit.MB : ByteUnit.KB
                   const formattedSize =
@@ -76,12 +81,32 @@ export const FormImageUploader = ({
                   )
                   return Upload.LIST_IGNORE
                 }
+                let walletConnected = wallet.isConnected
+                if (!walletConnected) {
+                  const connectStates = await wallet.connect()
+                  walletConnected = connectStates.length > 0
+                }
+                if (!walletConnected) return Upload.LIST_IGNORE
               }}
               customRequest={async req => {
                 setLoadingUpload(true)
-                const res = await pinFileToIpfs(req.file, metadata)
-                setValue(res.IpfsHash)
-                setLoadingUpload(false)
+                try {
+                  const res = await pinFileToIpfs({
+                    ...req,
+                    metadata,
+                    onProgress: percent => {
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      req.onProgress?.({ percent } as any)
+                    },
+                  })
+                  setValue(res.IpfsHash)
+                } catch (e) {
+                  emitErrorNotification(t`Error uploading file`)
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  req.onError?.(null as any)
+                } finally {
+                  setLoadingUpload(false)
+                }
               }}
             >
               <Button loading={loadingUpload} type="dashed">

@@ -172,11 +172,7 @@ export const AddEditRewardModal = ({
                 )
               }
               if (uploadUrl === undefined) {
-                return (
-                  <>
-                    <UploadButton />
-                  </>
-                )
+                return <UploadButton />
               }
               return (
                 <UploadedImage

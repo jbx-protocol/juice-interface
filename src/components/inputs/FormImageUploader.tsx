@@ -82,7 +82,7 @@ export const FormImageUploader = ({
                   return Upload.LIST_IGNORE
                 }
                 let walletConnected = wallet.isConnected
-                if (!wallet.isConnected) {
+                if (!walletConnected) {
                   const connectStates = await wallet.connect()
                   walletConnected = connectStates.length > 0
                 }

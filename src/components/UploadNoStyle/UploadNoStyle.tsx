@@ -62,37 +62,39 @@ export const UploadNoStyle = (props: UploadNoStyleProps) => {
     [props],
   )
 
+  const onCustomRequest = useCallback(
+    async (req: UploadRequestOption) => {
+      if (!props.customRequest) return
+      setIsUploading(true)
+      setPercent(0)
+      try {
+        const val = await props.customRequest({
+          ...req,
+          onProgress: e => {
+            req.onProgress?.(e)
+            if (e) {
+              // Bit of a hack
+              setPercent(e as unknown as number)
+            }
+          },
+        })
+        setUploadUrl(val)
+      } catch (e) {
+        console.error('Error occurred while uploading', e)
+      } finally {
+        setIsUploading(false)
+      }
+    },
+    [props, setUploadUrl],
+  )
+
   return (
     <Upload
       {...props}
       className="w-full"
       onChange={undefined}
       beforeUpload={handleBeforeUpload}
-      customRequest={
-        props.customRequest
-          ? async req => {
-              setIsUploading(true)
-              setPercent(0)
-              try {
-                const val = await props.customRequest?.({
-                  ...req,
-                  onProgress: e => {
-                    req.onProgress?.(e)
-                    if (e) {
-                      // Bit of a hack
-                      setPercent(e as unknown as number)
-                    }
-                  },
-                })
-                setUploadUrl(val)
-              } catch (e) {
-                console.error('Error occurred while uploading', e)
-              } finally {
-                setIsUploading(false)
-              }
-            }
-          : undefined
-      }
+      customRequest={onCustomRequest}
       showUploadList={false}
     >
       {props.children

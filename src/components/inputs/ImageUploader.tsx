@@ -49,6 +49,7 @@ export default function ImageUploader({
               className="max-h-[80px] max-w-[120px] rounded-sm object-cover object-center"
               src={url}
               alt="Uploaded user content"
+              crossOrigin="anonymous"
             />
           )}
 

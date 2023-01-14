@@ -65,7 +65,15 @@ export const usePinFileToIpfs = () => {
       const formData = new FormData()
       formData.append('file', file)
       if (metadata) {
-        formData.append('pinataMetadata', JSON.stringify(metadata))
+        // TODO: we should make sure we only access strings, numbers, and dates
+        if (metadata.name || metadata.keyvalues) {
+          // metadata is configured correctly
+          formData.append('pinataMetadata', JSON.stringify(metadata))
+        }
+        const metadataWrapper = {
+          keyvalues: metadata,
+        }
+        formData.append('pinataMetadata', JSON.stringify(metadataWrapper))
       }
 
       const config = {

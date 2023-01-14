@@ -46,7 +46,7 @@ export const ProjectDetailsPage: React.FC = () => {
           <JuiceTextArea autoSize={{ minRows: 4, maxRows: 6 }} />
         </Form.Item>
         <Form.Item name="logo" label={t`Logo`}>
-          <FormImageUploader text={t`Upload`} />
+          <FormImageUploader text={t`Upload`} maxSizeKBs={10000} />
         </Form.Item>
         <CreateCollapse>
           <CreateCollapse.Panel

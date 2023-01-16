@@ -121,15 +121,14 @@ const handler: NextApiHandler = async (_, res) => {
         sepanaAlert({
           type: 'alert',
           alert: 'IPFS_RESOLUTION_ERROR',
-          subject: `Failed to resolve IPFS data for some projects`,
-          body: {
-            projects: sepanaProjectsWithIPFSErrors
-              .map(
-                p =>
-                  `ID: \`${p.id}\`, metadataURI: \`${p.metadataURI}\`, Error: \`${p.error}\``,
-              )
-              .join('\n'),
-          },
+          subject: `Failed to resolve IPFS data for ${
+            sepanaProjectsWithIPFSErrors.length
+          } projects:\n${sepanaProjectsWithIPFSErrors
+            .map(
+              p =>
+                `ID: \`${p.id}\`, metadataURI: \`${p.metadataURI}\`, Error: \`${p.error}\``,
+            )
+            .join('\n')}`,
         })
 
         throw new Error('Failed to resolve IPFS data for some Sepana projects')
@@ -143,8 +142,8 @@ const handler: NextApiHandler = async (_, res) => {
         subject: `Updated ${
           _updatedSepanaProjects.length
         } projects: \n${_updatedSepanaProjects
-          .map(p => `\n\`[${p.id}]\` ${p.name}`)
-          .join('')}`,
+          .map(p => `\`[${p.id}]\` ${p.name}`)
+          .join('\n')}`,
       })
     }
 

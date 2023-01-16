@@ -180,15 +180,17 @@ export async function sepanaAlert(
   }
 
   return await axios.post(url, {
-    content: `${opts.type === 'alert' ? '🚨 ' : ''}**${
-      network !== 'mainnet' ? `(${network}) ` : ''
-    }${opts.type.toUpperCase()}:** ${
+    content: `${opts.type === 'alert' ? '🚨' : '⚡️'} **${
       opts.type === 'alert'
         ? SEPANA_ALERTS[opts.alert]
         : SEPANA_NOTIFS[opts.notif]
-    }${opts.subject ? `\n${opts.subject}` : ''}${Object.entries(opts.body ?? {})
-      .map(([k, v]) => `\n**${k}:** ${v}`)
-      .join('')}${
+    }** (${network})${opts.subject ? `\n${opts.subject}` : ''}${
+      opts.body
+        ? `\n${Object.entries(opts.body)
+            .map(([k, v]) => `**${k}:** ${v}`)
+            .join('\n')}`
+        : ''
+    }${
       opts.type === 'alert' ? '\n\n<@&1064689520848674888>' : '' // @dev discord role id
     }`,
   })

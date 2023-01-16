@@ -21,7 +21,7 @@ const handler: NextApiHandler = async (_, res) => {
     })
   }
 
-  sepanaAlert({ type: 'alert', alert: 'DELETED_RECORDS' })
+  sepanaAlert({ type: 'alert', alert: 'DELETED_ALL_RECORDS' })
 
   res
     .status(200)

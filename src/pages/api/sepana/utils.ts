@@ -148,9 +148,9 @@ export async function writeSepanaDocs(docs: SepanaProjectJson[]) {
 const SEPANA_ALERTS = {
   DB_UPDATE_ERROR: 'Error updating database',
   IPFS_RESOLUTION_ERROR: 'Error resolving IPFS data',
-  DELETED_RECORDS: 'Record(s) deleted from database',
+  DELETED_ALL_RECORDS: 'All records deleted from database',
   DELETE_ERROR: 'Error deleting record(s) from database',
-  BAD_DB_HEALTH: 'Error(s) detected in Sepana database',
+  BAD_DB_HEALTH: 'Error(s) detected in database',
 }
 
 const SEPANA_NOTIFS = {
@@ -188,7 +188,7 @@ export async function sepanaAlert(
     }${Object.entries(opts.body ?? {})
       .map(([k, v]) => `\n**${k}:** ${v}`)
       .join('')}${
-      opts.type === 'alert' ? '\n\n<@&1064679263388844184>' : '' // @dev discord role id
+      opts.type === 'alert' ? '\n\n<@&939995661963784202>' : '' // @dev discord role id
     }`,
   })
 }

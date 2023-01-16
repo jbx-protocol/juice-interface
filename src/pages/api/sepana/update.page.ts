@@ -62,6 +62,10 @@ const handler: NextApiHandler = async (_, res) => {
 
     const latestBlock = await readProvider.getBlockNumber()
     const updatedSepanaProjects: Promise<SepanaProjectJson>[] = []
+    const sepanaProjectsWithIPFSErrors: {
+      id?: string
+      metadataURI?: string
+    }[] = []
 
     for (let i = 0; i < changedSubgraphProjects.length; i++) {
       // Update metadata & `lastUpdated` for each sepana project
@@ -90,17 +94,10 @@ const handler: NextApiHandler = async (_, res) => {
                   lastUpdated: latestBlock,
                 } as SepanaProjectJson),
             )
-            .catch(error => {
-              sepanaAlert({
-                type: 'alert',
-                alert: 'IPFS_RESOLUTION_ERROR',
-                body: {
-                  error: `Failed to resolve IPFS data for project ${p.id}. Error: ${error}`,
-                  projectId: p.projectId,
-                  pv: p.pv,
-                  handle: p.handle,
-                  metadataUri: p.metadataUri,
-                },
+            .catch(() => {
+              sepanaProjectsWithIPFSErrors.push({
+                id: p.id,
+                metadataURI: p.metadataUri,
               })
 
               return p as SepanaProjectJson
@@ -129,6 +126,21 @@ const handler: NextApiHandler = async (_, res) => {
     if (updatedSepanaProjects.length) {
       // Write updated projects
       const _updatedSepanaProjects = await Promise.all(updatedSepanaProjects)
+
+      if (sepanaProjectsWithIPFSErrors.length) {
+        sepanaAlert({
+          type: 'alert',
+          alert: 'IPFS_RESOLUTION_ERROR',
+          body: {
+            error: `Failed to resolve IPFS data for some Sepana projects`,
+            projects: sepanaProjectsWithIPFSErrors
+              .map(p => `ID: ${p.id}, metadataURI: ${p.metadataURI}`)
+              .join('\n'),
+          },
+        })
+
+        throw new Error('Failed to resolve IPFS data for some Sepana projects')
+      }
 
       await writeSepanaDocs(_updatedSepanaProjects)
 

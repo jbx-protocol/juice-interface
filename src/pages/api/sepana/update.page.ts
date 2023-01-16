@@ -111,23 +111,25 @@ const handler: NextApiHandler = async (_, res) => {
       }
     }
 
-    // Write updated projects
-    const _updatedSepanaProjects = await Promise.all(updatedSepanaProjects)
+    if (updatedSepanaProjects.length) {
+      // Write updated projects
+      const _updatedSepanaProjects = await Promise.all(updatedSepanaProjects)
 
-    await writeSepanaDocs(_updatedSepanaProjects)
+      await writeSepanaDocs(_updatedSepanaProjects)
 
-    sepanaAlert({
-      type: 'notification',
-      notif: 'DB_UPDATED',
-      body: {
-        Message: `Updated ${_updatedSepanaProjects.length} projects`,
-        Projects: `${_updatedSepanaProjects.map(
-          p => `\n\n${p.id}: ${p.name}`,
-        )}`,
-      },
-    })
+      sepanaAlert({
+        type: 'notification',
+        notif: 'DB_UPDATED',
+        body: {
+          Message: `Updated ${_updatedSepanaProjects.length} projects`,
+          Projects: `${_updatedSepanaProjects.map(
+            p => `\n\n${p.id}: ${p.name}`,
+          )}`,
+        },
+      })
+    }
 
-    res.status(200).send(`Updated ${_updatedSepanaProjects.length} projects`)
+    res.status(200).send(`Updated ${updatedSepanaProjects.length} projects`)
   } catch (error) {
     sepanaAlert({
       type: 'alert',

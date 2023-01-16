@@ -179,7 +179,6 @@ export async function sepanaAlert(
   }
 
   return await axios.post(url, {
-    username: 'Sepana Monitor',
     content: `${opts.type === 'alert' ? '🚨' : ''}**${
       network !== 'mainnet' ? `(${network})` : ''
     }${opts.type.toUpperCase()}:** ${

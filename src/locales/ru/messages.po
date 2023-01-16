@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-01-08 00:31\n"
+"PO-Revision-Date: 2023-01-15 00:32\n"
 "Last-Translator: \n"
 "Language: ru_RU\n"
 "Language-Team: Russian\n"
@@ -325,12 +325,6 @@ msgstr ""
 msgid "Add payouts to wallet addresses or Juicebox projects."
 msgstr ""
 
-msgid "Add terminal"
-msgstr ""
-
-msgid "Add the V1 Token Payment Terminal to your project."
-msgstr ""
-
 msgid "Add to Metamask"
 msgstr ""
 
@@ -353,6 +347,9 @@ msgid "Add {allocationName}"
 msgstr ""
 
 msgid "Added to balance"
+msgstr ""
+
+msgid "Additions to balance"
 msgstr ""
 
 msgid "Address"
@@ -424,7 +421,7 @@ msgstr ""
 msgid "Allow token minting"
 msgstr "Разрешить минтить токены"
 
-msgid "Allow your V1 project token holders to swap their tokens for your V2 project tokens."
+msgid "Allow your legacy project (<0/> or <1/>) token holders to swap their tokens for your <2/> project tokens."
 msgstr ""
 
 msgid "Allowed"
@@ -538,6 +535,9 @@ msgstr ""
 msgid "Back to top"
 msgstr "Вернуться наверх"
 
+msgid "Balance"
+msgstr ""
+
 msgid "Balance exceeded"
 msgstr "Баланс превышен"
 
@@ -611,6 +611,9 @@ msgid "CSV data wasn't ready for export. Wait a few seconds and try again."
 msgstr ""
 
 msgid "CSV download failed."
+msgstr ""
+
+msgid "Caller"
 msgstr ""
 
 msgid "Can I change my project's contract after it's been created?"
@@ -967,7 +970,13 @@ msgstr ""
 msgid "Deploy Snapshot space"
 msgstr ""
 
+msgid "Deploy a <0/> migration token from legacy tokens."
+msgstr ""
+
 msgid "Deploy funding cycle configuration"
+msgstr ""
+
+msgid "Deploy migration token"
 msgstr ""
 
 msgid "Deploy project"
@@ -978,6 +987,9 @@ msgstr "Развернуть проект на {0}"
 
 msgid "Deployed ERC20 token"
 msgstr "Развернутый токен ERC20"
+
+msgid "Deployed Migration Token Address"
+msgstr ""
 
 msgid "Deployed payment addresses can be found in the Tools drawer (<0/>) on the project page."
 msgstr ""
@@ -1147,19 +1159,13 @@ msgstr "Готово"
 msgid "Download CSV"
 msgstr "Скачать CSV"
 
-msgid "Download CSV of payments"
-msgstr "Скачать CSV данных о платежах"
-
-msgid "Download CSV of project activity"
-msgstr "Скачать CSV о активности проекта"
-
 msgid "Download CSV of {0} holders"
 msgstr "Загрузить CSV из {0} держателей"
 
 msgid "Download Template"
 msgstr ""
 
-msgid "Download payments CSV"
+msgid "Download project activity CSV"
 msgstr ""
 
 msgid "Duration"
@@ -1181,6 +1187,15 @@ msgid "ERC20 deployed"
 msgstr ""
 
 msgid "ERC20 transaction not ready. Try again."
+msgstr ""
+
+msgid "ETH added"
+msgstr ""
+
+msgid "ETH paid"
+msgstr ""
+
+msgid "ETH received"
 msgstr ""
 
 msgid "Each payout will receive their percent of this total each funding cycle if there is enough in the treasury. Otherwise, they will receive their percent of whatever is in the treasury."
@@ -1258,14 +1273,38 @@ msgstr "Конец"
 msgid "Enter your project's details. You can edit your project's details at any time after you deploy your project, but the transaction will cost gas."
 msgstr ""
 
+msgid "Error downloading additions to balance, try again."
+msgstr ""
+
+msgid "Error downloading participants, try again."
+msgstr ""
+
 msgid "Error downloading payments, try again."
+msgstr ""
+
+msgid "Error downloading payouts, try again."
+msgstr ""
+
+msgid "Error downloading redemptions, try again."
+msgstr ""
+
+msgid "Error loading additions to balance"
 msgstr ""
 
 msgid "Error loading holders"
 msgstr "Ошибка загрузки владельцев"
 
+msgid "Error loading participants"
+msgstr ""
+
 msgid "Error loading payments"
 msgstr "Ошибка загрузки платежей"
+
+msgid "Error loading payouts"
+msgstr ""
+
+msgid "Error loading redemptions"
+msgstr ""
 
 msgid "Error reading transaction data"
 msgstr ""
@@ -1280,9 +1319,6 @@ msgid "Export data"
 msgstr ""
 
 msgid "Export payouts CSV"
-msgstr ""
-
-msgid "Export project activity"
 msgstr ""
 
 msgid "Export the current funding cycle's payouts to CSV."
@@ -1498,7 +1534,7 @@ msgstr ""
 msgid "If you don't raise this amount, your splits will receive their percentage of whatever you raise."
 msgstr ""
 
-msgid "If you have Juicebox project on Juicebox V1 and V2, we recommend you migrate to V2 exclusively."
+msgid "If you have <0/> or <1/> legacy Juicebox projects, we recommend you migrate to <2/> exclusively."
 msgstr ""
 
 msgid "If you're interested in creating a project but still confused on how to get started, consider watching this <0>instructional video</0>. Also feel free to reach out in the <1>Juicebox Discord</1> where our team will be happy to help bring your project idea to life!"
@@ -1660,9 +1696,6 @@ msgstr ""
 msgid "Launch {projectTitle}"
 msgstr ""
 
-msgid "Leave blank to start immediately."
-msgstr ""
-
 msgid "Leave unchecked to have Juicebox track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
 msgstr ""
 
@@ -1747,6 +1780,9 @@ msgstr ""
 msgid "Max Supply"
 msgstr ""
 
+msgid "Max. supply reached"
+msgstr ""
+
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
 msgstr ""
 
@@ -1769,6 +1805,9 @@ msgid "Migrate to Juicebox V1.1"
 msgstr "Перейти на Juicebox V1.1"
 
 msgid "Migrate {projectTitle}"
+msgstr ""
+
+msgid "Migration token was successfully deployed to <0/>"
 msgstr ""
 
 msgid "Minimum Contribution"
@@ -1972,9 +2011,6 @@ msgstr ""
 msgid "Not set"
 msgstr "Не установлено"
 
-msgid "Note"
-msgstr "Примечание"
-
 msgid "Note: Tokens can be minted manually when allowed in the current funding cycle. This can be changed by the project owner for upcoming cycles."
 msgstr "Примечание: Токены могут быть отчеканены вручную, если это разрешено в текущем цикле финансирования. Это может быть изменено владельцем проекта для последующих циклов."
 
@@ -2022,6 +2058,9 @@ msgstr ""
 
 msgid "Paid as <0/>"
 msgstr "Оплачено как <0/>"
+
+msgid "Participants"
+msgstr ""
 
 msgid "Pause payments"
 msgstr "Приостановить платежи"
@@ -2224,6 +2263,9 @@ msgstr "Никнейм проекта"
 msgid "Project handle must be unique."
 msgstr "Никнейм проекта должен быть уникальным."
 
+msgid "Project handle not found"
+msgstr ""
+
 msgid "Project handle required. <0>Set project handle.</0>"
 msgstr ""
 
@@ -2351,15 +2393,6 @@ msgid "Receive ERC-20"
 msgstr "Получить ERC-20"
 
 msgid "Receive ERC-20 tokens"
-msgstr ""
-
-msgid "Receive this NFT when you contribute <0>{0} ETH</0>."
-msgstr ""
-
-msgid "Receive this NFT when you contribute <0>{0}</0> - <<1>{rewardTierUpperLimit} ETH</1>."
-msgstr ""
-
-msgid "Receive this NFT when you contribute at least <0>{0} ETH</0>."
 msgstr ""
 
 msgid "Receive {receiveText}"
@@ -2713,10 +2746,10 @@ msgstr "Установите количество средств для кажд
 msgid "Set the length of your funding cycles."
 msgstr "Установите длину циклов финансирования."
 
-msgid "Set this to the sum of all your payouts"
+msgid "Set the newly migrated <0/> token from Step 1 as the project token."
 msgstr ""
 
-msgid "Set up V1 token migration"
+msgid "Set this to the sum of all your payouts"
 msgstr ""
 
 msgid "Set up and launch veNFT governance for your project using custom assets and parameters. (Experimental, does not currently launch)"
@@ -2728,10 +2761,10 @@ msgstr ""
 msgid "Set up and launch veNFT governance for your project."
 msgstr ""
 
-msgid "Set up token migration"
+msgid "Set up the option for user token migration from <0/> or <1/> projects to <2/>."
 msgstr ""
 
-msgid "Set up your Juicebox V2 project for migration from your Juicebox V1 project."
+msgid "Set up token migration"
 msgstr ""
 
 msgid "Set veNFT operator for {projectTitle}"
@@ -2779,6 +2812,9 @@ msgstr ""
 msgid "Spending"
 msgstr "Расходы"
 
+msgid "Staked balance"
+msgstr ""
+
 msgid "Staked {tokenSymbolDisplayText}"
 msgstr ""
 
@@ -2791,7 +2827,7 @@ msgstr ""
 msgid "Start the V3 cycle as soon as the current V2 cycle ends <0>({0})</0>."
 msgstr ""
 
-msgid "Start time (seconds, Unix time)"
+msgid "Start time"
 msgstr ""
 
 msgid "Start upgrade"
@@ -2800,10 +2836,13 @@ msgstr ""
 msgid "Starting over will erase all currently saved progress."
 msgstr ""
 
-msgid "Step 1. Add V1 token payment terminal"
+msgid "Step 1. Deploy migration token"
 msgstr ""
 
 msgid "Step 2. Link your Juicebox V1 project"
+msgstr ""
+
+msgid "Step 2. Set the deployed migration token"
 msgstr ""
 
 msgid "Successfully approved ERC-20 spending."
@@ -2848,6 +2887,9 @@ msgstr ""
 msgid "Text record is set"
 msgstr ""
 
+msgid "The <0/> has already been set for this project."
+msgstr ""
+
 msgid "The <0>Juicebox contracts</0> may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
 msgstr ""
 
@@ -2856,6 +2898,9 @@ msgstr ""
 
 msgid "The address of any smart contract deployed on {0} that implements <0>this interface</0>."
 msgstr "Адрес любого смарт-контракта, развернутого на {0}, который реализует <0>этот интерфейс</0>."
+
+msgid "The address of the token that was deployed in Step 1."
+msgstr ""
 
 msgid "The address that should receive the tokens minted from paying this project."
 msgstr "Адрес, который должен получить токены, которые не были обменены для оплаты этого проекта."
@@ -2895,6 +2940,9 @@ msgstr "Лимит распределения для этого цикла фи�
 
 msgid "The future will be led by creators, and owned by communities."
 msgstr "Будущее будет возглавляться создателями и принадлежать сообществам."
+
+msgid "The handle of your V1 project. This is the handle that is shown in the URL of your project page."
+msgstr ""
 
 msgid "The held fees will reset as new funds are added to the project's balance with the <0>Add to balance</0> transaction above."
 msgstr ""
@@ -3034,10 +3082,10 @@ msgstr ""
 msgid "This list is using an experimental data index and may be inaccurate for some projects."
 msgstr "Этот список использует экспериментальный индекс данных и может быть неточным для некоторых проектов."
 
-msgid "This project has no distributions."
+msgid "This project doesn't reserve any tokens."
 msgstr ""
 
-msgid "This project has no reserved tokens."
+msgid "This project has no distributions."
 msgstr ""
 
 msgid "This project is archived and can't be paid."
@@ -3079,7 +3127,7 @@ msgstr ""
 msgid "Time remaining for changes made to affect the next funding cycle:"
 msgstr ""
 
-msgid "To do so, you need to give your V1 token holders the ability to exchange their V1 tokens for V2 tokens. Select <0>Set up token migration</0> below to get started."
+msgid "To do so, you need to give your legacy token holders the ability to exchange their tokens for V3 tokens. Select <0>Set up token migration</0> below to get started."
 msgstr ""
 
 msgid "To: <0/>"
@@ -3100,7 +3148,13 @@ msgstr ""
 msgid "Token holders <0>cannot redeem their tokens</0> for any ETH when the redemption rate is 0."
 msgstr ""
 
-msgid "Token holders of your V1 project tokens will swap their V1 tokens for V2 tokens at a 1-to-1 exchange rate."
+msgid "Token holders of your legacy project tokens (<0/> or <1/>) will have the ability to swap their tokens for <2/> tokens at a 1-to-1 exchange rate."
+msgstr ""
+
+msgid "Token migration"
+msgstr ""
+
+msgid "Token migration is currently not available for {0}"
 msgstr ""
 
 msgid "Token minting"
@@ -3178,6 +3232,9 @@ msgstr ""
 msgid "Tokens receiver"
 msgstr "Получатель токенов"
 
+msgid "Tokens redeemed"
+msgstr ""
+
 msgid "Tokens reserved"
 msgstr ""
 
@@ -3192,6 +3249,9 @@ msgstr "Токены:"
 
 msgid "Tools"
 msgstr "Инструменты"
+
+msgid "Total ETH paid"
+msgstr ""
 
 msgid "Total funds:"
 msgstr "Всего средств:"
@@ -3218,6 +3278,9 @@ msgid "Total: {0}%"
 msgstr "Итого: {0}%"
 
 msgid "Transaction failed"
+msgstr ""
+
+msgid "Transaction hash"
 msgstr ""
 
 msgid "Transaction pending..."
@@ -3262,6 +3325,15 @@ msgstr "Твиттер"
 msgid "Twitter handle"
 msgstr ""
 
+msgid "USD value of ETH added"
+msgstr ""
+
+msgid "USD value of ETH paid"
+msgstr ""
+
+msgid "USD value of ETH received"
+msgstr ""
+
 msgid "Unarchive project"
 msgstr "Разархивировать проект"
 
@@ -3272,6 +3344,12 @@ msgid "Unavailable"
 msgstr "Недоступно"
 
 msgid "Unclaimed token spending enabled"
+msgstr ""
+
+msgid "Unix timestamp in seconds (for example, {0}). Leave blank to start as soon as possible."
+msgstr ""
+
+msgid "Unix timestamp in seconds. Leave blank to start immediately."
 msgstr ""
 
 msgid "Unknown Project"
@@ -3302,6 +3380,9 @@ msgid "Unsaved changes"
 msgstr "Несохраненные изменения"
 
 msgid "Unstake {0}"
+msgstr ""
+
+msgid "Unstaked balance"
 msgstr ""
 
 msgid "Untitled project"
@@ -3358,13 +3439,13 @@ msgstr "Рекомендуется использовать стратегию �
 msgid "V1"
 msgstr ""
 
+msgid "V1 Project Handle"
+msgstr ""
+
 msgid "V1 Project handle"
 msgstr ""
 
-msgid "V1 token holders can swap their tokens for your V2 tokens on your V2 project's <0>Tokens</0> section."
-msgstr ""
-
-msgid "V1 token migration"
+msgid "V1 token holders can migrate their tokens to your V3 tokens using your V3 project's <0>Tokens</0> section."
 msgstr ""
 
 msgid "V1 tokens to swap"
@@ -3406,6 +3487,9 @@ msgstr ""
 msgid "WAGMI!"
 msgstr ""
 
+msgid "Wallet"
+msgstr ""
+
 msgid "Wallet Address"
 msgstr ""
 
@@ -3439,7 +3523,7 @@ msgstr "Сколько стоит Juicebox?"
 msgid "What is overflow?"
 msgstr "Что такое переполнение или излишек финансов?"
 
-msgid "What is the V1 Token Payment Terminal?"
+msgid "What is the legacy token migration?"
 msgstr ""
 
 msgid "What's a discount rate?"
@@ -3841,6 +3925,9 @@ msgstr ""
 msgid "{0} must be numeric"
 msgstr ""
 
+msgid "{0} remaining"
+msgstr ""
+
 msgid "{0} reserved"
 msgstr "{0} зарезервировано"
 
@@ -3928,6 +4015,9 @@ msgstr ""
 msgid "{nftBalanceFormatted, plural, one {NFT} other {NFTs}}"
 msgstr ""
 
+msgid "{nftCount, plural, one {+ # NFT} other {+ # NFTs}}"
+msgstr ""
+
 msgid "{payerRate} (+ {reservedRate} reserved) {tokenSymbolPlural}/ETH"
 msgstr "{payerRate} (+ {reservedRate} зарезервировано) {tokenSymbolPlural}/ETH"
 
@@ -3937,7 +4027,7 @@ msgstr ""
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
 msgstr "{paymentCount, plural, one {# платеж} other {# платежи}}"
 
-msgid "{remainingSupply} remaining"
+msgid "{remainingSupply}"
 msgstr ""
 
 msgid "{tokenSymbolDisplayText} range"

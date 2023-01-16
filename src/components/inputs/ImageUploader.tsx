@@ -4,7 +4,7 @@ import { PinataMetadata } from '@pinata/sdk'
 import { Button, Col, message, Row, Space, Upload } from 'antd'
 import { usePinFileToIpfs } from 'hooks/PinFileToIpfs'
 import { useLayoutEffect, useState } from 'react'
-import { restrictedIpfsUrl } from 'utils/ipfs'
+import { ipfsToHttps, isIpfsUrl, restrictedIpfsUrl } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
 
 import ExternalLink from '../ExternalLink'
@@ -40,6 +40,8 @@ export default function ImageUploader({
 
   useLayoutEffect(() => setUrl(initialUrl), [initialUrl])
 
+  const _url = url && isIpfsUrl(url) ? ipfsToHttps(url) : url
+
   return (
     <Row className="text-grey-500 dark:text-grey-300" gutter={30}>
       <Col xs={24} md={7}>
@@ -47,7 +49,7 @@ export default function ImageUploader({
           {url && (
             <img
               className="max-h-[80px] max-w-[120px] rounded-sm object-cover object-center"
-              src={url}
+              src={_url}
               alt="Uploaded user content"
               crossOrigin="anonymous"
             />

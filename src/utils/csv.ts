@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { getAddress } from 'ethers/lib/utils'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { Split } from 'models/splits'
 import { splitPercentFrom } from 'utils/v2v3/math'
@@ -49,12 +50,12 @@ export const parseV2SplitsCsv = (csvContent: string): Split[] => {
     ] = row.split(',')
 
     return {
-      beneficiary,
+      beneficiary: beneficiary ? getAddress(beneficiary) : undefined,
       percent: splitPercentFrom(parseFloat(percent) * 100).toNumber(),
       preferClaimed: Boolean(preferClaimed),
       lockedUntil: lockedUntil ? parseInt(lockedUntil) : undefined,
-      projectId: projectId || undefined,
-      allocator: allocator || undefined,
+      projectId: projectId?.trim() || undefined,
+      allocator: allocator ? getAddress(allocator.trim()) : undefined,
     }
   })
 

@@ -33,6 +33,7 @@ export function CsvUpload<T>({
       onChange(parsed)
     } catch (e) {
       emitErrorNotification(t`File upload failed. Try again.`)
+      console.error(e)
     }
   }
 

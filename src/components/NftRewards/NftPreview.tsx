@@ -8,6 +8,7 @@ import { useContext } from 'react'
 
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { classNames } from 'utils/classNames'
+import { JUICE_IMG_PREVIEW_CONTAINER_CLASS } from 'components/Create/components/JuiceImgPreview'
 
 export function NftPreview({
   open,
@@ -33,10 +34,7 @@ export function NftPreview({
   )
 
   return (
-    <div
-      className="fixed top-0 left-0 z-[10000] flex h-full w-full items-center justify-center overflow-auto bg-[rgba(0,0,0,0.8)]"
-      onClick={onClose}
-    >
+    <div className={JUICE_IMG_PREVIEW_CONTAINER_CLASS} onClick={onClose}>
       <div
         className={classNames(!isMobile ? 'w-[600px]' : 'w-[90vw]')}
         onClick={e => e.stopPropagation()}

@@ -5,33 +5,34 @@ import {
   SepanaSearchResponse,
 } from 'models/sepana'
 
-function verifyKeysExist(type: 'read' | 'read/write' | 'admin') {
-  if (!process.env.SEPANA_ENGINE_ID) {
-    throw new Error('Missing SEPANA_ENGINE_ID')
-  }
+const headers = (type: 'read' | 'read/write' | 'admin') => {
+  let key: string
 
   switch (type) {
     case 'read':
       if (!process.env.SEPANA_READ_API_KEY) {
         throw new Error('Missing SEPANA_READ_API_KEY')
       }
+      key = process.env.SEPANA_READ_API_KEY
       break
     case 'read/write':
       if (!process.env.SEPANA_READ_WRITE_API_KEY) {
         throw new Error('Missing SEPANA_READ_WRITE_API_KEY')
       }
+      key = process.env.SEPANA_READ_WRITE_API_KEY
       break
     case 'admin':
       if (!process.env.SEPANA_ADMIN_API_KEY) {
         throw new Error('Missing SEPANA_ADMIN_API_KEY')
       }
+      key = process.env.SEPANA_ADMIN_API_KEY
       break
   }
-}
 
-const headers = {
-  'x-api-key': process.env.SEPANA_API_KEY!,
-  'Content-Type': 'application/json',
+  return {
+    'x-api-key': key,
+    'Content-Type': 'application/json',
+  }
 }
 
 /**
@@ -40,8 +41,6 @@ const headers = {
  * @returns Promise containing all project docs from Sepana database
  */
 export async function queryAllSepanaProjects() {
-  verifyKeysExist('read')
-
   return axios.post<SepanaSearchResponse<SepanaProject>>(
     process.env.NEXT_PUBLIC_SEPANA_API_URL + 'search',
     {
@@ -53,7 +52,7 @@ export async function queryAllSepanaProjects() {
       page: 0,
     },
     {
-      headers,
+      headers: headers('read'),
     },
   )
 }
@@ -66,8 +65,6 @@ export async function queryAllSepanaProjects() {
  * @returns Promise containing project docs from Sepana database matching search params. If no query text is supplied, returns all projects
  */
 export async function searchSepanaProjects(query = '', pageSize?: number) {
-  verifyKeysExist('read')
-
   return axios
     .post<SepanaSearchResponse<SepanaProjectJson>>(
       process.env.NEXT_PUBLIC_SEPANA_API_URL + 'search',
@@ -97,7 +94,7 @@ export async function searchSepanaProjects(query = '', pageSize?: number) {
         page: 0,
       },
       {
-        headers,
+        headers: headers('read'),
       },
     )
     .then(res => res.data)
@@ -107,12 +104,10 @@ export async function searchSepanaProjects(query = '', pageSize?: number) {
  * Deletes all Sepana records
  */
 export async function deleteAllSepanaDocs() {
-  verifyKeysExist('admin')
-
   return axios.delete(
     process.env.NEXT_PUBLIC_SEPANA_API_URL + 'engine/data/delete',
     {
-      headers,
+      headers: headers('admin'),
       data: {
         engine_id: process.env.SEPANA_API_KEY,
         delete_query: {
@@ -131,8 +126,6 @@ export async function deleteAllSepanaDocs() {
  * @param docs Projects to write to Sepana database
  */
 export async function writeSepanaDocs(docs: SepanaProjectJson[]) {
-  verifyKeysExist('read/write')
-
   while (docs[0]) {
     await axios.post(
       process.env.NEXT_PUBLIC_SEPANA_API_URL + 'engine/insert_data',
@@ -141,7 +134,7 @@ export async function writeSepanaDocs(docs: SepanaProjectJson[]) {
         docs: docs.splice(0, 500), // upsert max of 500 docs at a time
       },
       {
-        headers,
+        headers: headers('read/write'),
       },
     )
 

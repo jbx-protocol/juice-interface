@@ -44,7 +44,7 @@ export async function queryAllSepanaProjects() {
   return axios.post<SepanaSearchResponse<SepanaProject>>(
     process.env.NEXT_PUBLIC_SEPANA_API_URL + 'search',
     {
-      engine_ids: [process.env.SEPANA_API_KEY],
+      engine_ids: [process.env.SEPANA_ENGINE_ID],
       query: {
         match_all: {},
       },
@@ -69,7 +69,7 @@ export async function searchSepanaProjects(query = '', pageSize?: number) {
     .post<SepanaSearchResponse<SepanaProjectJson>>(
       process.env.NEXT_PUBLIC_SEPANA_API_URL + 'search',
       {
-        engine_ids: [process.env.SEPANA_API_KEY],
+        engine_ids: [process.env.SEPANA_ENGINE_ID],
         query: {
           function_score: {
             query: {
@@ -109,7 +109,7 @@ export async function deleteAllSepanaDocs() {
     {
       headers: headers('admin'),
       data: {
-        engine_id: process.env.SEPANA_API_KEY,
+        engine_id: process.env.SEPANA_ENGINE_ID,
         delete_query: {
           query: {
             match_all: {},
@@ -130,7 +130,7 @@ export async function writeSepanaDocs(docs: SepanaProjectJson[]) {
     await axios.post(
       process.env.NEXT_PUBLIC_SEPANA_API_URL + 'engine/insert_data',
       {
-        engine_id: process.env.SEPANA_API_KEY,
+        engine_id: process.env.SEPANA_ENGINE_ID,
         docs: docs.splice(0, 500), // upsert max of 500 docs at a time
       },
       {

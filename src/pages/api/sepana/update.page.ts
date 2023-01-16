@@ -96,7 +96,6 @@ const handler: NextApiHandler = async (_, res) => {
                 alert: 'IPFS_RESOLUTION_ERROR',
                 body: {
                   error: `Failed to resolve IPFS data for project ${p.id}. Error: ${error}`,
-                  project: p.id,
                   projectId: p.projectId,
                   pv: p.pv,
                   handle: p.handle,
@@ -112,7 +111,6 @@ const handler: NextApiHandler = async (_, res) => {
           type: 'alert',
           alert: 'IPFS_RESOLUTION_ERROR',
           body: {
-            project: p.id,
             projectId: p.projectId,
             pv: p.pv,
             handle: p.handle,

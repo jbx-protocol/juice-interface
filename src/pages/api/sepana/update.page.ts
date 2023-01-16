@@ -79,16 +79,33 @@ const handler: NextApiHandler = async (_, res) => {
         }
 
         updatedSepanaProjects.push(
-          ipfsGetWithFallback<ProjectMetadataV5>(p.metadataUri).then(
-            ({ data: { logoUri, name, description } }) =>
-              ({
-                ...p,
-                name,
-                description,
-                logoUri,
-                lastUpdated: latestBlock,
-              } as SepanaProjectJson),
-          ),
+          ipfsGetWithFallback<ProjectMetadataV5>(p.metadataUri)
+            .then(
+              ({ data: { logoUri, name, description } }) =>
+                ({
+                  ...p,
+                  name,
+                  description,
+                  logoUri,
+                  lastUpdated: latestBlock,
+                } as SepanaProjectJson),
+            )
+            .catch(error => {
+              sepanaAlert({
+                type: 'alert',
+                alert: 'IPFS_RESOLUTION_ERROR',
+                body: {
+                  error: `Failed to resolve IPFS data for project ${p.id}. Error: ${error}`,
+                  project: p.id,
+                  projectId: p.projectId,
+                  pv: p.pv,
+                  handle: p.handle,
+                  metadataUri: p.metadataUri,
+                },
+              })
+
+              return p as SepanaProjectJson
+            }),
         )
       } catch (error) {
         sepanaAlert({

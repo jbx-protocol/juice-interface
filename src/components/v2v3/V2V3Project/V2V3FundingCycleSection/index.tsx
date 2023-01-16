@@ -66,6 +66,10 @@ export function V2V3FundingCycleSection() {
   } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
+  const currentCycleHasDuration =
+    fundingCycle &&
+    hasFundingDuration(serializeV2V3FundingCycleData(fundingCycle))
+
   const canReconfigure = useV2ConnectedWalletHasPermission(
     V2OperatorPermission.RECONFIGURE,
   )
@@ -74,13 +78,11 @@ export function V2V3FundingCycleSection() {
     return <Loading />
   }
 
-  const reconfigureButtonText =
-    fundingCycle &&
-    hasFundingDuration(serializeV2V3FundingCycleData(fundingCycle)) ? (
-      <Trans>Reconfigure upcoming</Trans>
-    ) : (
-      <Trans>Reconfigure</Trans>
-    )
+  const reconfigureButtonText = currentCycleHasDuration ? (
+    <Trans>Reconfigure upcoming</Trans>
+  ) : (
+    <Trans>Reconfigure</Trans>
+  )
 
   const tabs = [
     {
@@ -88,11 +90,12 @@ export function V2V3FundingCycleSection() {
       label: <TabText text={t`Current`} />,
       content: <CurrentFundingCycle />,
     },
-    !isPreviewMode && {
-      key: 'upcoming',
-      label: <TabText text={t`Upcoming`} />,
-      content: <UpcomingFundingCycle />,
-    },
+    !isPreviewMode &&
+      currentCycleHasDuration && {
+        key: 'upcoming',
+        label: <TabText text={t`Upcoming`} />,
+        content: <UpcomingFundingCycle />,
+      },
     !isPreviewMode && {
       key: 'history',
       label: <TabText text={t`History`} hideRiskFlag />,

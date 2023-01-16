@@ -180,16 +180,14 @@ export async function sepanaAlert(
 
   return await axios.post(url, {
     username: 'Sepana Monitor',
-    avatar_url:
-      'https://www.gitbook.com/cdn-cgi/image/width=48,height=48,fit=contain,dpr=2,format=auto/https%3A%2F%2F430861720-files.gitbook.io%2F~%2Ffiles%2Fv0%2Fb%2Fgitbook-x-prod.appspot.com%2Fo%2Fspaces%252FLqoVYS5uYnEW9xSAi3O8%252Ficon%252FuDc3PmXcBSnNdWNycs77%252FFill%253DDefault.png%3Falt%3Dmedia%26token%3D3a931d84-7ce7-4d63-bc20-a6e3f2fcade9', // Sepana logo
-    content: `${opts.type === 'alert' ? '🚨' : ''}<b>${
+    content: `${opts.type === 'alert' ? '🚨' : ''}**${
       network !== 'mainnet' ? `(${network})` : ''
-    }${opts.type.toUpperCase()}:</b> ${
+    }${opts.type.toUpperCase()}:** ${
       opts.type === 'alert'
         ? SEPANA_ALERTS[opts.alert]
         : SEPANA_NOTIFS[opts.notif]
-    }${Object.entries(opts.body ?? {}).map(
-      ([k, v]) => `\n\n<b>${k}:</b> ${v}`,
-    )}`,
+    }${Object.entries(opts.body ?? {}).map(([k, v]) => `\n\n**${k}:** ${v}`)}${
+      opts.type === 'alert' ? '\n\n@dev' : ''
+    }`,
   })
 }

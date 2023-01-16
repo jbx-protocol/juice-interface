@@ -126,7 +126,7 @@ const handler: NextApiHandler = async (_, res) => {
   }
 
   if (shouldError) {
-    sepanaAlert({ type: 'alert', alert: 'BAD_DB_HEALTH', body: { report } })
+    sepanaAlert({ type: 'alert', alert: 'BAD_DB_HEALTH', subject: report })
   }
 
   res

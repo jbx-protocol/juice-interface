@@ -65,6 +65,7 @@ const handler: NextApiHandler = async (_, res) => {
     const sepanaProjectsWithIPFSErrors: {
       id?: string
       metadataURI?: string
+      error?: string
     }[] = []
 
     for (let i = 0; i < changedSubgraphProjects.length; i++) {
@@ -94,28 +95,17 @@ const handler: NextApiHandler = async (_, res) => {
                   lastUpdated: latestBlock,
                 } as SepanaProjectJson),
             )
-            .catch(() => {
+            .catch(error => {
               sepanaProjectsWithIPFSErrors.push({
                 id: p.id,
                 metadataURI: p.metadataUri,
+                error,
               })
 
               return p as SepanaProjectJson
             }),
         )
       } catch (error) {
-        sepanaAlert({
-          type: 'alert',
-          alert: 'IPFS_RESOLUTION_ERROR',
-          body: {
-            projectId: p.projectId,
-            pv: p.pv,
-            handle: p.handle,
-            metadataUri: p.metadataUri,
-            ...(typeof error === 'string' ? { error } : {}),
-          },
-        })
-
         res.status(500).send({
           message: `Error fetching ${p.metadataUri} from IPFS`,
           error,
@@ -131,10 +121,13 @@ const handler: NextApiHandler = async (_, res) => {
         sepanaAlert({
           type: 'alert',
           alert: 'IPFS_RESOLUTION_ERROR',
+          subject: `Failed to resolve IPFS data for some projects`,
           body: {
-            error: `Failed to resolve IPFS data for some Sepana projects`,
             projects: sepanaProjectsWithIPFSErrors
-              .map(p => `ID: ${p.id}, metadataURI: ${p.metadataURI}`)
+              .map(
+                p =>
+                  `ID: \`${p.id}\`, metadataURI: \`${p.metadataURI}\`, Error: \`${p.error}\``,
+              )
               .join('\n'),
           },
         })
@@ -147,12 +140,11 @@ const handler: NextApiHandler = async (_, res) => {
       sepanaAlert({
         type: 'notification',
         notif: 'DB_UPDATED',
-        body: {
-          Message: `Updated ${_updatedSepanaProjects.length} projects`,
-          Projects: `${_updatedSepanaProjects.map(
-            p => `\n\n${p.id}: ${p.name}`,
-          )}`,
-        },
+        subject: `Updated ${
+          _updatedSepanaProjects.length
+        } projects: \n${_updatedSepanaProjects
+          .map(p => `\n\`[${p.id}]\` ${p.name}`)
+          .join('')}`,
       })
     }
 
@@ -165,7 +157,7 @@ const handler: NextApiHandler = async (_, res) => {
     sepanaAlert({
       type: 'alert',
       alert: 'DB_UPDATE_ERROR',
-      body: typeof error === 'string' ? { error } : undefined,
+      subject: typeof error === 'string' ? error : undefined,
     })
 
     res.status(500).send({

@@ -168,6 +168,7 @@ export async function sepanaAlert(
         notif: keyof typeof SEPANA_NOTIFS
       }
   ) & {
+    subject?: string
     body?: Record<string, string | number | undefined | null>
   },
 ) {
@@ -185,7 +186,7 @@ export async function sepanaAlert(
       opts.type === 'alert'
         ? SEPANA_ALERTS[opts.alert]
         : SEPANA_NOTIFS[opts.notif]
-    }${Object.entries(opts.body ?? {})
+    }${opts.subject ? `\n${opts.subject}` : ''}${Object.entries(opts.body ?? {})
       .map(([k, v]) => `\n**${k}:** ${v}`)
       .join('')}${
       opts.type === 'alert' ? '\n\n<@&939995661963784202>' : '' // @dev discord role id

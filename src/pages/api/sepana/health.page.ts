@@ -1,5 +1,5 @@
 import { NextApiHandler } from 'next'
-import { queryAllSepanaProjects } from './utils'
+import { queryAllSepanaProjects, sepanaAlert } from './utils'
 import { querySubgraphExhaustive } from 'utils/graph'
 import { SepanaProject } from 'models/sepana'
 import { Project, ProjectJson } from 'models/subgraph-entities/vX/project'
@@ -20,13 +20,13 @@ const projectKeys: (keyof SepanaProject)[] = [
 
 // Returns search database health report
 const handler: NextApiHandler = async (_, res) => {
-  let report = ''
-
   const sepanaResponse = await queryAllSepanaProjects()
 
-  report += `\nSepana last updated at block ${Math.max(
+  let report = `\n⏰ Sepana last updated at block ${Math.max(
     ...sepanaResponse.data.hits.hits.map(r => r._source.lastUpdated),
   )}.`
+
+  let shouldError = false
 
   const subgraphProjects = (
     await querySubgraphExhaustive({
@@ -46,25 +46,41 @@ const handler: NextApiHandler = async (_, res) => {
       ),
     )
 
-  if (subgraphProjects.length + 1 !== sepanaResponse.data.hits.total.value)
-    report += `\nMismatched lengths: ${
+  // Check total project counts
+  if (subgraphProjects.length + 1 !== sepanaResponse.data.hits.total.value) {
+    report += `\n🛑 Mismatched lengths: ${
       subgraphProjects.length + 1
     } Subgraph projects, ${
       sepanaResponse.data.hits.total.value
-    } Sepana projects.`
+    } Sepana projects`
 
-  for (const r of sepanaResponse.data.hits.hits) {
+    shouldError = true
+  }
+
+  const sepanaIdErrors: string[] = []
+  const sepanaExtraProjects: string[] = []
+  const sepanaMissingProjects: string[] = []
+  const mismatchedProjects: string[] = []
+
+  // Check for specific mismatched projects
+  for (const sepanaProject of sepanaResponse.data.hits.hits) {
     // Ensure that Sepana record IDs are internally consistent
-    if (r._id !== r._source.id)
-      report += `\n_id !== id in Sepana record: ` + JSON.stringify(r)
+    if (sepanaProject._id !== sepanaProject._source.id) {
+      sepanaIdErrors.push(
+        `ID: ${sepanaProject._id}, _source.id: ${sepanaProject._source.id}`,
+      )
+    }
+
     const subgraphProject = subgraphProjects.splice(
-      subgraphProjects.findIndex(el => el.id === r._source.id),
+      subgraphProjects.findIndex(el => el.id === sepanaProject._source.id),
       1,
     )[0]
 
-    // Ensure that all Sepana records can be found in the Subgraph
+    // Ensure that no extra projects exist in Sepana
     if (!subgraphProject) {
-      report += `\nSepana record not found on Subgraph: ` + JSON.stringify(r)
+      sepanaExtraProjects.push(
+        `ID: ${sepanaProject._source.id}, Name: ${sepanaProject._source.name}`,
+      )
     }
 
     // Ensure that Sepana records accurately reflect Subgraph data
@@ -72,16 +88,50 @@ const handler: NextApiHandler = async (_, res) => {
       // TODO bad types here
       const property = subgraphProject[k as keyof typeof subgraphProject]
 
-      report +=
-        property !== r._source[k]
-          ? `\n${k} mismatched for project ${r._id}. Sepana: ${r._source[k]}, Subgraph: ${property}`
-          : ''
+      mismatchedProjects.push(
+        `ID: ${subgraphProject.id}, Property: ${k} || Subgraph: ${property}, Sepana: ${sepanaProject._source[k]}`,
+      )
     })
   }
-  subgraphProjects.forEach(
-    p =>
-      (report += `\nSubgraph record not found on Sepana: ` + JSON.stringify(p)),
+
+  // Iterate over any subgraphProjects left in array
+  subgraphProjects.forEach(p =>
+    sepanaMissingProjects.push(
+      `PV: ${p.pv}, ProjectId: ${p.id}, Handle: ${p.handle}`,
+    ),
   )
+
+  if (sepanaIdErrors.length) {
+    report += `\n\n🛑 ${sepanaExtraProjects.length} Sepana project records with bad IDs`
+    sepanaIdErrors.forEach(e => (report += `\n${e}`))
+
+    shouldError = true
+  }
+
+  if (sepanaExtraProjects.length) {
+    report += `\n\n🛑 ${sepanaExtraProjects.length} Sepana projects missing from Subgraph`
+    sepanaExtraProjects.forEach(e => (report += `\n${e}`))
+
+    shouldError = true
+  }
+
+  if (mismatchedProjects.length) {
+    report += `\n\n🛑 ${mismatchedProjects.length} Sepana projects not matching Subgraph`
+    mismatchedProjects.forEach(e => (report += `\n${e}`))
+
+    shouldError = true
+  }
+
+  if (sepanaMissingProjects.length) {
+    report += `\n\n🛑 ${sepanaMissingProjects.length} Subgraph projects missing from Sepana`
+    sepanaMissingProjects.forEach(e => (report += `\n${e}`))
+
+    shouldError = true
+  }
+
+  if (shouldError) {
+    sepanaAlert({ type: 'alert', alert: 'BAD_DB_HEALTH', body: { report } })
+  }
 
   res.status(200).send(`ENGINE HEALTH REPORT:` + report)
 }

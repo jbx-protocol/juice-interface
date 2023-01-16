@@ -5,18 +5,32 @@ import {
   SepanaSearchResponse,
 } from 'models/sepana'
 
-// if (!process.env.NEXT_PUBLIC_SEPANA_ENGINE_ID) {
-//   console.log('asdf', process.env)
-//   throw new Error('Missing NEXT_PUBLIC_SEPANA_ENGINE_ID')
-// }
+function verifyKeysExist(type: 'read' | 'read/write' | 'admin') {
+  if (!process.env.SEPANA_ENGINE_ID) {
+    throw new Error('Missing SEPANA_ENGINE_ID')
+  }
 
-// if (!process.env.NEXT_PUBLIC_SEPANA_API_KEY) {
-//   console.log('asdf', process.env)
-//   throw new Error('Missing NEXT_PUBLIC_SEPANA_API_KEY')
-// }
+  switch (type) {
+    case 'read':
+      if (!process.env.SEPANA_READ_API_KEY) {
+        throw new Error('Missing SEPANA_READ_API_KEY')
+      }
+      break
+    case 'read/write':
+      if (!process.env.SEPANA_READ_WRITE_API_KEY) {
+        throw new Error('Missing SEPANA_READ_WRITE_API_KEY')
+      }
+      break
+    case 'admin':
+      if (!process.env.SEPANA_ADMIN_API_KEY) {
+        throw new Error('Missing SEPANA_ADMIN_API_KEY')
+      }
+      break
+  }
+}
 
 const headers = {
-  'x-api-key': process.env.NEXT_PUBLIC_SEPANA_API_KEY!,
+  'x-api-key': process.env.SEPANA_API_KEY!,
   'Content-Type': 'application/json',
 }
 
@@ -24,18 +38,18 @@ const headers = {
  * Exhaustively queries all Sepana records.
  *
  * @returns Promise containing all project docs from Sepana database
- *
- * TODO: Update this before we hit 10k projects (size: 10000).
  */
 export async function queryAllSepanaProjects() {
+  verifyKeysExist('read')
+
   return axios.post<SepanaSearchResponse<SepanaProject>>(
     process.env.NEXT_PUBLIC_SEPANA_API_URL + 'search',
     {
-      engine_ids: [process.env.NEXT_PUBLIC_SEPANA_ENGINE_ID],
+      engine_ids: [process.env.SEPANA_API_KEY],
       query: {
         match_all: {},
       },
-      size: 10000,
+      size: 10000, // TODO: Update this before we hit 10k projects
       page: 0,
     },
     {
@@ -52,11 +66,13 @@ export async function queryAllSepanaProjects() {
  * @returns Promise containing project docs from Sepana database matching search params. If no query text is supplied, returns all projects
  */
 export async function searchSepanaProjects(query = '', pageSize?: number) {
+  verifyKeysExist('read')
+
   return axios
     .post<SepanaSearchResponse<SepanaProjectJson>>(
       process.env.NEXT_PUBLIC_SEPANA_API_URL + 'search',
       {
-        engine_ids: [process.env.NEXT_PUBLIC_SEPANA_ENGINE_ID],
+        engine_ids: [process.env.SEPANA_API_KEY],
         query: {
           function_score: {
             query: {
@@ -91,12 +107,14 @@ export async function searchSepanaProjects(query = '', pageSize?: number) {
  * Deletes all Sepana records
  */
 export async function deleteAllSepanaDocs() {
+  verifyKeysExist('admin')
+
   return axios.delete(
     process.env.NEXT_PUBLIC_SEPANA_API_URL + 'engine/data/delete',
     {
       headers,
       data: {
-        engine_id: process.env.NEXT_PUBLIC_SEPANA_ENGINE_ID,
+        engine_id: process.env.SEPANA_API_KEY,
         delete_query: {
           query: {
             match_all: {},
@@ -113,11 +131,13 @@ export async function deleteAllSepanaDocs() {
  * @param docs Projects to write to Sepana database
  */
 export async function writeSepanaDocs(docs: SepanaProjectJson[]) {
+  verifyKeysExist('read/write')
+
   while (docs[0]) {
     await axios.post(
       process.env.NEXT_PUBLIC_SEPANA_API_URL + 'engine/insert_data',
       {
-        engine_id: process.env.NEXT_PUBLIC_SEPANA_ENGINE_ID,
+        engine_id: process.env.SEPANA_API_KEY,
         docs: docs.splice(0, 500), // upsert max of 500 docs at a time
       },
       {
@@ -130,4 +150,53 @@ export async function writeSepanaDocs(docs: SepanaProjectJson[]) {
       await new Promise(r => setTimeout(r, 3000))
     }
   }
+}
+
+const SEPANA_ALERTS = {
+  DB_UPDATE_ERROR: 'Error updating database',
+  IPFS_RESOLUTION_ERROR: 'Error resolving IPFS data',
+  DELETED_RECORDS: 'Record(s) deleted from database',
+  DELETE_ERROR: 'Error deleting record(s) from database',
+  BAD_DB_HEALTH: 'Error(s) detected in Sepana database',
+}
+
+const SEPANA_NOTIFS = {
+  DB_UPDATED: 'Database records updated',
+}
+
+export async function sepanaAlert(
+  opts: (
+    | {
+        type: 'alert'
+        alert: keyof typeof SEPANA_ALERTS
+      }
+    | {
+        type: 'notification'
+        notif: keyof typeof SEPANA_NOTIFS
+      }
+  ) & {
+    body?: Record<string, string | number | undefined | null>
+  },
+) {
+  const network = process.env.NEXT_PUBLIC_INFURA_NETWORK
+  const url = process.env.SEPANA_WEBHOOK_URL
+
+  if (!url || !network) {
+    throw new Error('Missing var to post to Discord webhook')
+  }
+
+  return await axios.post(url, {
+    username: 'Sepana Monitor',
+    avatar_url:
+      'https://www.gitbook.com/cdn-cgi/image/width=48,height=48,fit=contain,dpr=2,format=auto/https%3A%2F%2F430861720-files.gitbook.io%2F~%2Ffiles%2Fv0%2Fb%2Fgitbook-x-prod.appspot.com%2Fo%2Fspaces%252FLqoVYS5uYnEW9xSAi3O8%252Ficon%252FuDc3PmXcBSnNdWNycs77%252FFill%253DDefault.png%3Falt%3Dmedia%26token%3D3a931d84-7ce7-4d63-bc20-a6e3f2fcade9', // Sepana logo
+    content: `${opts.type === 'alert' ? '🚨' : ''}<b>${
+      network !== 'mainnet' ? `(${network})` : ''
+    }${opts.type.toUpperCase()}:</b> ${
+      opts.type === 'alert'
+        ? SEPANA_ALERTS[opts.alert]
+        : SEPANA_NOTIFS[opts.notif]
+    }${Object.entries(opts.body ?? {}).map(
+      ([k, v]) => `\n\n<b>${k}:</b> ${v}`,
+    )}`,
+  })
 }

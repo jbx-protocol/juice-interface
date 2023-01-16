@@ -156,7 +156,11 @@ const handler: NextApiHandler = async (_, res) => {
       })
     }
 
-    res.status(200).send(`Updated ${updatedSepanaProjects.length} projects`)
+    res
+      .status(200)
+      .send(
+        `Updated ${updatedSepanaProjects.length} projects on ${process.env.NEXT_PUBLIC_INFURA_NETWORK}`,
+      )
   } catch (error) {
     sepanaAlert({
       type: 'alert',
@@ -165,7 +169,7 @@ const handler: NextApiHandler = async (_, res) => {
     })
 
     res.status(500).send({
-      message: `Error updating Sepana projects`,
+      message: `Error updating Sepana projects on ${process.env.NEXT_PUBLIC_INFURA_NETWORK}`,
       error,
     })
   }

@@ -22,7 +22,7 @@ const projectKeys: (keyof SepanaProject)[] = [
 const handler: NextApiHandler = async (_, res) => {
   const sepanaResponse = await queryAllSepanaProjects()
 
-  let report = `\n⏰ Sepana last updated at block ${Math.max(
+  let report = `⏰ Sepana last updated at block ${Math.max(
     ...sepanaResponse.data.hits.hits.map(r => r._source.lastUpdated),
   )}.`
 
@@ -129,7 +129,11 @@ const handler: NextApiHandler = async (_, res) => {
     sepanaAlert({ type: 'alert', alert: 'BAD_DB_HEALTH', body: { report } })
   }
 
-  res.status(200).send(`ENGINE HEALTH REPORT:` + report)
+  res
+    .status(200)
+    .send(
+      `Sepana DB status (${process.env.NEXT_PUBLIC_INFURA_NETWORK}):\n${report}`,
+    )
 }
 
 export default handler

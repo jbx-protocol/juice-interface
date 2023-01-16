@@ -16,14 +16,18 @@ const handler: NextApiHandler = async (_, res) => {
     })
 
     res.status(500).send({
-      message: 'Failed to delete Sepana docs',
+      message: 'Failed to delete Sepana records',
       error,
     })
   }
 
   sepanaAlert({ type: 'alert', alert: 'DELETED_RECORDS' })
 
-  res.status(200).send('Deleted all Sepana docs')
+  res
+    .status(200)
+    .send(
+      `Deleted all Sepana records for ${process.env.NEXT_PUBLIC_INFURA_NETWORK}`,
+    )
 }
 
 export default handler

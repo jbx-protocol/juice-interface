@@ -47,12 +47,8 @@ const handler: NextApiHandler = async (_, res) => {
     )
 
   // Check total project counts
-  if (subgraphProjects.length + 1 !== sepanaResponse.data.hits.total.value) {
-    report += `\n🛑 Mismatched lengths: ${
-      subgraphProjects.length + 1
-    } Subgraph projects, ${
-      sepanaResponse.data.hits.total.value
-    } Sepana projects`
+  if (subgraphProjects.length !== sepanaResponse.data.hits.total.value) {
+    report += `\n🛑 Mismatched lengths: ${subgraphProjects.length} Subgraph projects, ${sepanaResponse.data.hits.total.value} Sepana projects`
 
     shouldError = true
   }

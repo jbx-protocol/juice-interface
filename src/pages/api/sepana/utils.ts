@@ -187,7 +187,7 @@ export async function sepanaAlert(
         ? SEPANA_ALERTS[opts.alert]
         : SEPANA_NOTIFS[opts.notif]
     }${Object.entries(opts.body ?? {}).map(([k, v]) => `\n\n**${k}:** ${v}`)}${
-      opts.type === 'alert' ? '\n\n@dev' : ''
+      opts.type === 'alert' ? '\n\n\\@dev' : ''
     }`,
   })
 }

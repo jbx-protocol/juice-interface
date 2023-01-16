@@ -189,7 +189,7 @@ export async function sepanaAlert(
     }${opts.subject ? `\n${opts.subject}` : ''}${Object.entries(opts.body ?? {})
       .map(([k, v]) => `\n**${k}:** ${v}`)
       .join('')}${
-      opts.type === 'alert' ? '\n\n<@&939995661963784202>' : '' // @dev discord role id
+      opts.type === 'alert' ? '\n\n<@&1064689520848674888>' : '' // @dev discord role id
     }`,
   })
 }

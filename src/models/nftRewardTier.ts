@@ -25,8 +25,8 @@ export type JB721TierParams = {
   contributionFloor: BigNumber //uint128
   lockedUntil: BigNumber
   initialQuantity: BigNumber //uint64
-  votingUnits: number
-  reservedRate: number
+  votingUnits: BigNumber
+  reservedRate: BigNumber
   reservedTokenBeneficiary: string
   encodedIPFSUri: string // encoded link to the rewardTier on IPFS
   allowManualMint: boolean

@@ -154,12 +154,13 @@ export async function writeSepanaDocs(docs: SepanaProjectJson[]) {
 const SEPANA_ALERTS = {
   DB_UPDATE_ERROR: 'Error updating database',
   DELETED_ALL_RECORDS: 'Deleted all records from database',
-  DELETE_ERROR: 'Error deleting record(s) from database',
-  BAD_DB_HEALTH: 'Error(s) detected in database',
+  DELETE_ERROR: 'Error deleting records from database',
+  BAD_DB_HEALTH: 'Errors detected in database',
 }
 
 const SEPANA_NOTIFS = {
   DB_UPDATED: 'Database records updated',
+  DB_OK: 'Database is OK',
 }
 
 export async function sepanaAlert(
@@ -173,8 +174,7 @@ export async function sepanaAlert(
         notif: keyof typeof SEPANA_NOTIFS
       }
   ) & {
-    subject?: string
-    body?: Record<string, string | number | undefined | null>
+    body?: string
   },
 ) {
   const network = process.env.NEXT_PUBLIC_INFURA_NETWORK
@@ -189,14 +189,8 @@ export async function sepanaAlert(
       opts.type === 'alert'
         ? SEPANA_ALERTS[opts.alert]
         : SEPANA_NOTIFS[opts.notif]
-    }** (${network})${opts.subject ? `\n${opts.subject}` : ''}${
+    }** (${network})${
       opts.type === 'alert' ? ' <@&1064689520848674888>' : '' // @dev discord role id
-    }${
-      opts.body
-        ? `\n${Object.entries(opts.body)
-            .map(([k, v]) => `**${k}:** ${v}`)
-            .join('\n')}`
-        : ''
-    }`,
+    }${opts.body ? `\n${opts.body}` : ''}`,
   })
 }

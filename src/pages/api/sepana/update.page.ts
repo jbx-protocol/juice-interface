@@ -123,7 +123,7 @@ const handler: NextApiHandler = async (_, res) => {
       await sepanaAlert({
         type: 'notification',
         notif: 'DB_UPDATED',
-        subject: `Updated ${
+        body: `Updated ${
           updatedSepanaProjects.length
         } projects: \n${updatedSepanaProjects
           .slice(0, numToAlert)
@@ -148,7 +148,7 @@ const handler: NextApiHandler = async (_, res) => {
       await sepanaAlert({
         type: 'alert',
         alert: 'DB_UPDATE_ERROR',
-        subject: `Failed to resolve IPFS data for ${
+        body: `Failed to resolve IPFS data for ${
           ipfsErrors.length
         } projects:\n${ipfsErrors
           .map(
@@ -167,7 +167,7 @@ const handler: NextApiHandler = async (_, res) => {
     await sepanaAlert({
       type: 'alert',
       alert: 'DB_UPDATE_ERROR',
-      subject: JSON.stringify(error),
+      body: JSON.stringify(error),
     })
 
     res.status(500).send({

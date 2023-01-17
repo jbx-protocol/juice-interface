@@ -12,7 +12,7 @@ const handler: NextApiHandler = async (_, res) => {
     await sepanaAlert({
       type: 'alert',
       alert: 'DB_UPDATE_ERROR',
-      subject: typeof error === 'string' ? error : undefined,
+      body: JSON.stringify(error),
     })
 
     res.status(500).send({

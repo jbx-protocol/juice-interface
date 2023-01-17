@@ -22,9 +22,9 @@ const projectKeys: (keyof SepanaProject)[] = [
 const handler: NextApiHandler = async (_, res) => {
   const sepanaResponse = await queryAllSepanaProjects()
 
-  let report = `⏰ Sepana last updated at block ${Math.max(
+  let report = `Last updated at block: ${Math.max(
     ...sepanaResponse.data.hits.hits.map(r => r._source.lastUpdated),
-  )}.`
+  )}`
 
   let shouldError = false
 
@@ -48,7 +48,7 @@ const handler: NextApiHandler = async (_, res) => {
 
   // Check total project counts
   if (subgraphProjects.length !== sepanaResponse.data.hits.total.value) {
-    report += `\n🛑 Mismatched lengths: ${subgraphProjects.length} Subgraph projects, ${sepanaResponse.data.hits.total.value} Sepana projects`
+    report += `\n\nMismatched project counts. Subgraph: ${subgraphProjects.length}, Sepana: ${sepanaResponse.data.hits.total.value}`
 
     shouldError = true
   }
@@ -82,61 +82,69 @@ const handler: NextApiHandler = async (_, res) => {
     // Ensure that Sepana records accurately reflect Subgraph data
     projectKeys.forEach(k => {
       // TODO bad types here
-      const property = subgraphProject[k as keyof typeof subgraphProject]
-
-      mismatchedProjects.push(
-        `ID: ${subgraphProject.id}, Property: ${k} || Subgraph: ${property}, Sepana: ${sepanaProject._source[k]}`,
-      )
+      if (
+        subgraphProject[k as keyof typeof subgraphProject] !==
+        sepanaProject._source[k]
+      ) {
+        mismatchedProjects.push(
+          `ID: ${subgraphProject.id}, Property: ${k}, VALUES=> Subgraph: ${
+            subgraphProject[k as keyof typeof subgraphProject]
+          }, Sepana: ${sepanaProject._source[k]}`,
+        )
+      }
     })
   }
 
   // Iterate over any subgraphProjects left in array
   subgraphProjects.forEach(p =>
-    sepanaMissingProjects.push(
-      `PV: ${p.pv}, ProjectId: ${p.id}, Handle: ${p.handle}`,
-    ),
+    sepanaMissingProjects.push(`ID: ${p.id}, Handle: ${p.handle}`),
   )
 
   if (sepanaIdErrors.length) {
-    report += `\n\n🛑 ${sepanaExtraProjects.length} Sepana project records with bad IDs`
+    report += `\n\n${sepanaExtraProjects.length} Sepana project records with bad IDs:`
     sepanaIdErrors.forEach(e => (report += `\n${e}`))
 
     shouldError = true
   }
 
   if (sepanaExtraProjects.length) {
-    report += `\n\n🛑 ${sepanaExtraProjects.length} Sepana projects missing from Subgraph`
+    report += `\n\n${sepanaExtraProjects.length} Sepana projects missing from Subgraph:`
     sepanaExtraProjects.forEach(e => (report += `\n${e}`))
 
     shouldError = true
   }
 
   if (mismatchedProjects.length) {
-    report += `\n\n🛑 ${mismatchedProjects.length} Sepana projects not matching Subgraph`
+    report += `\n\n${mismatchedProjects.length} Sepana projects not matching Subgraph:`
     mismatchedProjects.forEach(e => (report += `\n${e}`))
 
     shouldError = true
   }
 
   if (sepanaMissingProjects.length) {
-    report += `\n\n🛑 ${sepanaMissingProjects.length} Subgraph projects missing from Sepana`
+    report += `\n\n${sepanaMissingProjects.length} Subgraph projects missing from Sepana:`
     sepanaMissingProjects.forEach(e => (report += `\n${e}`))
 
     shouldError = true
   }
 
-  if (shouldError) {
-    await sepanaAlert({
-      type: 'alert',
-      alert: 'BAD_DB_HEALTH',
-      subject: report,
-    })
-  }
+  await sepanaAlert(
+    shouldError
+      ? {
+          type: 'alert',
+          alert: 'BAD_DB_HEALTH',
+          body: report,
+        }
+      : {
+          type: 'notification',
+          notif: 'DB_OK',
+        },
+  )
 
   res
     .status(200)
     .send(
-      `Sepana DB status (${process.env.NEXT_PUBLIC_INFURA_NETWORK}):\n${report}`,
+      `Sepana DB status (${process.env.NEXT_PUBLIC_INFURA_NETWORK}):\n\n${report}`,
     )
 }
 

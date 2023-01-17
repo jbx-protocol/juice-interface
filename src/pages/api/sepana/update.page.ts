@@ -24,6 +24,8 @@ const projectKeys: (keyof SepanaProject)[] = [
 
 // Synchronizes the Sepana engine with the latest Juicebox Subgraph/IPFS data
 const handler: NextApiHandler = async (req, res) => {
+  console.log('body', req.method, JSON.parse(req.body))
+
   // This flag will let us know we should retry resolving IPFS data for projects that are missing it
   const retryIPFS =
     req.method === 'POST' && JSON.parse(req.body)['retryIPFS'] === true

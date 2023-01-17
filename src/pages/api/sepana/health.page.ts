@@ -46,6 +46,8 @@ const handler: NextApiHandler = async (_, res) => {
       ),
     )
 
+  report += `\n\n${sepanaResponse.data.hits.total.value} projects in database`
+
   // Check total project counts
   if (subgraphProjects.length !== sepanaResponse.data.hits.total.value) {
     report += `\n\nMismatched project counts. Subgraph: ${subgraphProjects.length}, Sepana: ${sepanaResponse.data.hits.total.value}`
@@ -57,6 +59,7 @@ const handler: NextApiHandler = async (_, res) => {
   const sepanaExtraProjects: string[] = []
   const sepanaMissingProjects: string[] = []
   const mismatchedProjects: string[] = []
+  const projectsMissingMetadata: string[] = []
 
   // Check for specific mismatched projects
   for (const sepanaProject of sepanaResponse.data.hits.hits) {
@@ -64,6 +67,12 @@ const handler: NextApiHandler = async (_, res) => {
     if (sepanaProject._id !== sepanaProject._source.id) {
       sepanaIdErrors.push(
         `ID: ${sepanaProject._id}, _source.id: ${sepanaProject._source.id}`,
+      )
+    }
+
+    if (sepanaProject._source.metadataResolved === false) {
+      projectsMissingMetadata.push(
+        `ID: ${sepanaProject._source.id}, metadataUri: ${sepanaProject._source.metadataUri}`,
       )
     }
 
@@ -117,6 +126,13 @@ const handler: NextApiHandler = async (_, res) => {
   if (mismatchedProjects.length) {
     report += `\n\n${mismatchedProjects.length} Sepana projects not matching Subgraph:`
     mismatchedProjects.forEach(e => (report += `\n${e}`))
+
+    shouldError = true
+  }
+
+  if (projectsMissingMetadata.length) {
+    report += `\n\n${projectsMissingMetadata.length} Sepana projects missing metadata:`
+    projectsMissingMetadata.forEach(e => (report += `\n${e}`))
 
     shouldError = true
   }

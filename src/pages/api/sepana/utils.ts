@@ -191,6 +191,6 @@ export async function sepanaAlert(
         : SEPANA_NOTIFS[opts.notif]
     }** (${network})${
       opts.type === 'alert' ? ' <@&1064689520848674888>' : '' // @dev discord role id
-    }${opts.body ? `\n${opts.body}` : ''}`,
+    }${opts.body ? `\n${opts.body}` : ''}`.substring(0, 2000), // Max size of Discord message
   })
 }

@@ -57,9 +57,18 @@ export default function MetaMaskOnboardingModal({
       </p>
       <p>
         <Trans>
-          Once your wallet is funded with ETH, click the <b>Reload</b> button
-          below to refresh the page. Then, connect your wallet to Juicebox by
-          clicking "Connect".
+          Once your wallet is funded with ETH, click "Reload Page" below to
+          refresh the page. Then, connect your wallet to Juicebox by clicking
+          "Connect".
+        </Trans>
+      </p>
+      <p>
+        <Trans>
+          If you have issues or questions, ask for help in the{' '}
+          <ExternalLink href="https://discord.gg/juicebox">
+            Juicebox Discord
+          </ExternalLink>
+          .
         </Trans>
       </p>
       <Button onClick={() => window.location.reload()} type="primary">

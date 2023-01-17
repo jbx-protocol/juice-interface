@@ -2,6 +2,8 @@ import { WarningOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, Space } from 'antd'
 import { useWallet } from 'hooks/Wallet'
+import MetaMaskOnboardingModal from 'components/modals/MetaMaskOnboardingModal'
+import { useState } from 'react'
 
 import Wallet from './Wallet'
 
@@ -13,6 +15,26 @@ export default function Account() {
     chainUnsupported,
     changeNetworks,
   } = useWallet()
+
+  if (!window.ethereum) {
+    const [metaMaskOnboardingModalVisible, setMetaMaskOnboardingModalVisible] =
+      useState<boolean>(false)
+
+    return (
+      <div className="flex items-center gap-6">
+        <Button onClick={() => setMetaMaskOnboardingModalVisible(true)} block>
+          <Trans>Create a Wallet</Trans>
+        </Button>
+        <Button onClick={() => connect()} block>
+          <Trans>Connect</Trans>
+        </Button>
+        <MetaMaskOnboardingModal
+          open={metaMaskOnboardingModalVisible}
+          onCancel={() => setMetaMaskOnboardingModalVisible(false)}
+        />
+      </div>
+    )
+  }
 
   if (!isConnected) {
     return (

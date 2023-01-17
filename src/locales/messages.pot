@@ -1547,6 +1547,9 @@ msgstr ""
 msgid "If you have <0/> or <1/> legacy Juicebox projects, we recommend you migrate to <2/> exclusively."
 msgstr ""
 
+msgid "If you have issues or questions, ask for help in the <0>Juicebox Discord</0>."
+msgstr ""
+
 msgid "If you're interested in creating a project but still confused on how to get started, consider watching this <0>instructional video</0>. Also feel free to reach out in the <1>Juicebox Discord</1> where our team will be happy to help bring your project idea to life!"
 msgstr ""
 
@@ -2030,7 +2033,7 @@ msgstr ""
 msgid "Notice from {0}"
 msgstr ""
 
-msgid "Once your wallet is funded with ETH, click the <0>Reload</0> button below to refresh the page. Then, connect your wallet to Juicebox by clicking \"Connect\"."
+msgid "Once your wallet is funded with ETH, click \"Reload Page\" below to refresh the page. Then, connect your wallet to Juicebox by clicking \"Connect\"."
 msgstr ""
 
 msgid "Only lowercase letters"

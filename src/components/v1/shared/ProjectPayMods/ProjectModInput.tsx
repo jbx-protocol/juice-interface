@@ -124,7 +124,7 @@ export function ProjectModInput({
           </FormattedRow>
         ) : isV3Project ? (
           <FormattedRow label={'Project ID'}>
-            <Space size="middle">
+            <Space size="small">
               <span>{mod.projectId?.toNumber()}</span>
               <AllocatorBadge allocator={mod.allocator} />
             </Space>

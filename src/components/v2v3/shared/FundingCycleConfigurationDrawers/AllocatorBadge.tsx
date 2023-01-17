@@ -32,7 +32,10 @@ export function AllocatorBadge({
       }
     >
       <div>
-        <ProjectVersionBadge versionText={versionName} />
+        <ProjectVersionBadge
+          className="bg-smoke-200 text-xs text-smoke-700 dark:bg-slate-300 dark:text-slate-100"
+          versionText={versionName}
+        />
       </div>
     </Tooltip>
   )

@@ -126,19 +126,22 @@ export async function deleteAllSepanaDocs() {
  * @param docs Projects to write to Sepana database
  */
 export async function writeSepanaDocs(docs: SepanaProjectJson[]) {
-  while (docs[0]) {
+  // Clone array because we mutate it
+  const _docs = [...docs]
+
+  while (_docs[0]) {
     await axios.post(
       process.env.NEXT_PUBLIC_SEPANA_API_URL + 'engine/insert_data',
       {
         engine_id: process.env.SEPANA_ENGINE_ID,
-        docs: docs.splice(0, 500), // upsert max of 500 docs at a time
+        docs: _docs.splice(0, 500), // upsert max of 500 docs at a time
       },
       {
         headers: headers('read/write'),
       },
     )
 
-    if (docs[0]) {
+    if (_docs[0]) {
       // Arbitrary delay to avoid rate limits
       await new Promise(r => setTimeout(r, 3000))
     }
@@ -147,8 +150,7 @@ export async function writeSepanaDocs(docs: SepanaProjectJson[]) {
 
 const SEPANA_ALERTS = {
   DB_UPDATE_ERROR: 'Error updating database',
-  IPFS_RESOLUTION_ERROR: 'Error resolving IPFS data',
-  DELETED_ALL_RECORDS: 'All records deleted from database',
+  DELETED_ALL_RECORDS: 'Deleted all records from database',
   DELETE_ERROR: 'Error deleting record(s) from database',
   BAD_DB_HEALTH: 'Error(s) detected in database',
 }
@@ -185,13 +187,13 @@ export async function sepanaAlert(
         ? SEPANA_ALERTS[opts.alert]
         : SEPANA_NOTIFS[opts.notif]
     }** (${network})${opts.subject ? `\n${opts.subject}` : ''}${
+      opts.type === 'alert' ? ' <@&1064689520848674888>' : '' // @dev discord role id
+    }${
       opts.body
         ? `\n${Object.entries(opts.body)
             .map(([k, v]) => `**${k}:** ${v}`)
             .join('\n')}`
         : ''
-    }${
-      opts.type === 'alert' ? '\n\n<@&1064689520848674888>' : '' // @dev discord role id
     }`,
   })
 }

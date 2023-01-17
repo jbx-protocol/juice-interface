@@ -21,9 +21,9 @@ type BaseSepanaProject = {
   createdAt: number
   trendingScore: string
   deployer: string | null | undefined
-  name: string
-  description: string
-  logoUri: string
+  name?: string
+  description?: string
+  logoUri?: string
 }
 
 // Project type stored in Sepana db

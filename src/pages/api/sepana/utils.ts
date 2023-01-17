@@ -127,21 +127,24 @@ export async function deleteAllSepanaDocs() {
  */
 export async function writeSepanaDocs(docs: SepanaProjectJson[]) {
   // Clone array because we mutate it
-  const _docs = [...docs]
+  const pageSize = 500
+  let page = 0
 
-  while (_docs[0]) {
+  while (docs.length > pageSize * page) {
     await axios.post(
       process.env.NEXT_PUBLIC_SEPANA_API_URL + 'engine/insert_data',
       {
         engine_id: process.env.SEPANA_ENGINE_ID,
-        docs: _docs.splice(0, 500), // upsert max of 500 docs at a time
+        docs: docs.slice(pageSize * page, pageSize * (page + 1)),
       },
       {
         headers: headers('read/write'),
       },
     )
 
-    if (_docs[0]) {
+    page++
+
+    if (docs.length > pageSize * page) {
       // Arbitrary delay to avoid rate limits
       await new Promise(r => setTimeout(r, 3000))
     }

@@ -68,9 +68,9 @@
     zen-observable-ts "^1.2.5"
 
 "@arcxmoney/analytics@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@arcxmoney/analytics/-/analytics-1.0.1.tgz#1ae5bd88c15c2b6d69ae8a4a959f6ccbe967f28f"
-  integrity sha512-LKSCJXOCwMSrTlaU16AeNhky1ijXB3U4zAjTP0jj26VPDmvH/1bcgqZAkrg8xxjC3sXays9nHe4J4ipTx8UT1A==
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/@arcxmoney/analytics/-/analytics-1.6.1.tgz#1d90b7379b3bb672255b1cb1d3df310ab6b0c9be"
+  integrity sha512-GWct4Jkrxi1uRBxQWsbJYFQCgauCgHQxIne5Qc/M5whnlyiap9iL5O9VNKbIfSjONXYFe4zhh+EPFEKgjs4YtA==
   dependencies:
     "@restless/sanitizers" "^0.2.5"
 

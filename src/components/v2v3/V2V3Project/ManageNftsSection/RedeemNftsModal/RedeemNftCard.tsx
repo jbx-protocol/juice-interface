@@ -55,6 +55,9 @@ export function RedeemNftCard({
     imageUrl: image,
     externalLink: undefined,
     description: undefined,
+    beneficiary: undefined,
+    reservedRate: undefined,
+    votingWeight: undefined,
   }
 
   return (

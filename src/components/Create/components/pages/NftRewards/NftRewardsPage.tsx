@@ -1,21 +1,46 @@
 import { EyeOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Form, Space } from 'antd'
+import { Form, Radio, Space } from 'antd'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import { NftPostPayModal } from 'components/NftRewards/NftPostPayModal'
 import TooltipLabel from 'components/TooltipLabel'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useModal } from 'hooks/Modal'
-import { useContext } from 'react'
+import { JB721GovernanceType } from 'models/nftRewardTier'
+import { ReactNode, useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { CreateButton } from 'components/CreateButton'
+import { CreateBadge } from '../../CreateBadge'
 import { CreateCollapse } from '../../CreateCollapse'
 import { OptionalHeader } from '../../OptionalHeader'
 import { RewardsList } from '../../RewardsList'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { useNftRewardsForm } from './hooks'
+
+const RadioItem = ({
+  value,
+  title,
+  description,
+}: {
+  value: JB721GovernanceType
+  title?: ReactNode
+  description?: ReactNode
+}) => {
+  return (
+    <Radio value={value}>
+      <span className="text-sm">
+        {title && <div className="font-medium">{title}</div>}
+        {description && (
+          <div className="mt-1 font-normal text-grey-500 dark:text-grey-300">
+            {description}
+          </div>
+        )}
+      </span>
+    </Radio>
+  )
+}
 
 export const NftRewardsPage = () => {
   useSetCreateFurthestPageReached('nftRewards')
@@ -94,6 +119,36 @@ export const NftRewardsPage = () => {
             <CreateCollapse>
               <CreateCollapse.Panel
                 key={1}
+                header={<OptionalHeader header={t`On-chain Governance`} />}
+                hideDivider
+              >
+                <Form.Item name="onChainGovernance">
+                  <Radio.Group className="flex flex-col gap-5">
+                    <RadioItem
+                      value={JB721GovernanceType.NONE}
+                      title={
+                        <>
+                          <Trans>No on-chain governance capabilities</Trans>{' '}
+                          <CreateBadge.Default />
+                        </>
+                      }
+                      description={t`Your project's NFTs will not have any governance capabilities.`}
+                    />
+                    <RadioItem
+                      value={JB721GovernanceType.GLOBAL}
+                      title={t`Standard on-chain governance`}
+                      description={t`All NFTs will carry the same voting weight when used for governance.`}
+                    />
+                    <RadioItem
+                      value={JB721GovernanceType.TIERED}
+                      title={t`Tier-based on-chain governance`}
+                      description={t`Set a specific voting weight for each of your project's NFTs.`}
+                    />
+                  </Radio.Group>
+                </Form.Item>
+              </CreateCollapse.Panel>
+              <CreateCollapse.Panel
+                key={2}
                 header={<OptionalHeader header={t`Payment Success Popup`} />}
                 hideDivider
               >

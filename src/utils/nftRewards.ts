@@ -219,13 +219,21 @@ export function buildJB721TierParams({
       )
       const encodedIPFSUri = encodeIPFSUri(cid)
 
+      const reservedRate = rewardTiers[index].reservedRate
+        ? BigNumber.from(rewardTiers[index].reservedRate! - 1)
+        : undefined
+      const reservedTokenBeneficiary = rewardTiers[index].beneficiary
+      const votingUnits = rewardTiers[index].votingWeight
+        ? BigNumber.from(rewardTiers[index].votingWeight)
+        : undefined
+
       return {
         contributionFloor: contributionFloorWei,
         lockedUntil: BigNumber.from(0),
         initialQuantity,
-        votingUnits: BigNumber.from(0),
-        reservedRate: BigNumber.from(0),
-        reservedTokenBeneficiary: constants.AddressZero,
+        votingUnits,
+        reservedRate,
+        reservedTokenBeneficiary,
         encodedIPFSUri,
         allowManualMint: false,
         shouldUseBeneficiaryAsDefault: false,
@@ -333,6 +341,7 @@ export function buildJBDeployTiered721DelegateData({
   collectionSymbol,
   tiers,
   ownerAddress,
+  governanceType,
   contractAddresses: {
     JBDirectoryAddress,
     JBFundingCycleStoreAddress,
@@ -345,6 +354,7 @@ export function buildJBDeployTiered721DelegateData({
   collectionSymbol: string
   tiers: JB721TierParams[]
   ownerAddress: string
+  governanceType: JB721GovernanceType
   contractAddresses: {
     JBDirectoryAddress: string
     JBFundingCycleStoreAddress: string
@@ -376,7 +386,7 @@ export function buildJBDeployTiered721DelegateData({
       lockVotingUnitChanges: false,
       lockManualMintingChanges: false,
     },
-    governanceType: JB721GovernanceType.NONE,
+    governanceType: governanceType,
   }
 }
 

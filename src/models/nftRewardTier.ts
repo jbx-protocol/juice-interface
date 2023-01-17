@@ -11,6 +11,9 @@ export type NftRewardTier = {
   imageUrl: string // link to ipfs
   name: string
   id?: number
+  reservedRate: number | undefined
+  beneficiary: string | undefined
+  votingWeight: number | undefined
   externalLink: string | undefined
   description: string | undefined
 }

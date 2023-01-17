@@ -3,6 +3,7 @@ import { t, Trans } from '@lingui/macro'
 import { Skeleton } from 'antd'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useState } from 'react'
+import { stopPropagation } from 'react-stop-propagation'
 import { classNames } from 'utils/classNames'
 import { ipfsToHttps } from 'utils/ipfs'
 import { NftPreview } from './NftPreview'
@@ -15,10 +16,10 @@ export function NftTierCard({
   loading,
   rewardTier,
   isSelected,
-  quantitySelected,
+  quantitySelected = 0,
   maxQuantity,
-  onClick,
-  onRemove,
+  onSelect,
+  onDeselect,
   previewDisabled,
   hideAttributes,
 }: {
@@ -27,25 +28,29 @@ export function NftTierCard({
   isSelected?: boolean
   quantitySelected?: number
   maxQuantity?: number
-  onClick?: VoidFunction
-  onRemove?: VoidFunction
+  onSelect: (quantity?: number) => void
+  onDeselect: (quantity?: number) => void
   previewDisabled?: boolean
   hideAttributes?: boolean
 }) {
   const [previewVisible, setPreviewVisible] = useState<boolean>(false)
 
+  // used to return to previous state on second click if user accidentally unselected the NFT
+  const [previousQuantity, setPreviousQuantity] = useState<number>(1)
+
   const imageUrl = rewardTier?.imageUrl
     ? ipfsToHttps(rewardTier.imageUrl)
     : rewardTier?.imageUrl
 
-  const canSelect = onRemove && onClick
-
-  const hasQuantitySelected =
-    quantitySelected !== undefined && quantitySelected > 0
+  const hasQuantitySelected = quantitySelected > 0
   const _isSelected = isSelected || hasQuantitySelected
 
+  const showQuantitySelector = Boolean(
+    maxQuantity && maxQuantity > 1 && hasQuantitySelected,
+  )
+
   // When previewDisabled, we want card to deselect when clicked while it is selected.
-  const onClickNoPreview = _isSelected ? onRemove : onClick
+  const onClickNoPreview = _isSelected ? onDeselect : onSelect
 
   const openPreview = () => {
     setPreviewVisible(true)
@@ -57,17 +62,29 @@ export function NftTierCard({
       ? t`${rewardTier?.remainingSupply} remaining`
       : t`Unlimited`
 
+  const handleBottomSectionClick = () => {
+    if (_isSelected) {
+      // return to previous state on second click if user accidentally unselected the NFT
+      setPreviousQuantity(quantitySelected)
+      onDeselect()
+    } else {
+      onSelect(previousQuantity)
+    }
+  }
+
   return (
     <>
       <div
         className={classNames(
-          'flex h-full w-full cursor-pointer flex-col rounded-sm transition-shadow duration-100',
+          'flex h-full w-full cursor-pointer select-none flex-col rounded-sm transition-shadow duration-100',
           _isSelected
             ? 'shadow-[2px_0px_10px_0px_var(--boxShadow-primary)] outline outline-2 outline-haze-400'
             : '',
         )}
         onClick={
-          _isSelected && !previewDisabled ? openPreview : onClickNoPreview
+          _isSelected && !previewDisabled
+            ? openPreview
+            : () => onClickNoPreview()
         }
         role="button"
       >
@@ -98,12 +115,19 @@ export function NftTierCard({
               crossOrigin="anonymous"
             />
           )}
-          {canSelect && hasQuantitySelected ? (
+          {showQuantitySelector ? (
             <QuantitySelector
               value={quantitySelected}
               maxValue={maxQuantity}
-              onIncrement={onClick}
-              onDecrement={onRemove}
+              onIncrement={onSelect}
+              onDecrement={() => {
+                // Nitpick edge case:
+                //   - previousQuantity is set but user removes selection with quantitySelector
+                if (quantitySelected === 1) {
+                  setPreviousQuantity(1)
+                }
+                onDeselect(1)
+              }}
             />
           ) : null}
         </div>
@@ -116,6 +140,7 @@ export function NftTierCard({
               : 'bg-smoke-100 dark:bg-slate-600',
             !loading ? 'pt-2' : 'pt-1',
           )}
+          onClick={stopPropagation(handleBottomSectionClick)}
         >
           <Skeleton
             loading={loading}

@@ -26,6 +26,9 @@ msgstr ""
 msgid "1 year"
 msgstr ""
 
+msgid "1-day delay"
+msgstr ""
+
 msgid "1. Get funded"
 msgstr ""
 
@@ -248,7 +251,7 @@ msgstr ""
 msgid "A reconfiguration to an upcoming funding cycle must be submitted at least 7 days before it starts."
 msgstr ""
 
-msgid "A reconfiguration to an upcoming funding cycle must be submitted at least {days} days before it starts."
+msgid "A reconfiguration to an upcoming funding cycle must be submitted at least {days} {0} before it starts."
 msgstr ""
 
 msgid "A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."

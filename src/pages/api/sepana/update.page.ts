@@ -24,16 +24,12 @@ const projectKeys: (keyof SepanaProject)[] = [
 
 // Synchronizes the Sepana engine with the latest Juicebox Subgraph/IPFS data
 const handler: NextApiHandler = async (req, res) => {
-  // eslint-disable-next-line no-console
-  console.log('body', req.method, JSON.parse(req.body))
-
-  // This flag will let us know we should retry resolving IPFS data for projects that are missing it
-  const retryIPFS =
-    req.method === 'POST' && JSON.parse(req.body)['retryIPFS'] === true
-
-  let missingMetadataCount = 0
-
   try {
+    // This flag will let us know we should retry resolving IPFS data for projects that are missing it
+    const retryIPFS = req.method === 'POST' && req.body['retryIPFS'] === true
+
+    let missingMetadataCount = 0
+
     const sepanaProjects = (await queryAllSepanaProjects()).data.hits.hits
 
     const subgraphProjects = await querySubgraphExhaustive({
@@ -75,7 +71,7 @@ const handler: NextApiHandler = async (req, res) => {
         )
       })
 
-    const latestBlock = await readProvider.getBlockNumber()
+    const lastUpdated = await readProvider.getBlockNumber()
 
     const promises: Promise<{ error?: string; project: SepanaProjectJson }>[] =
       []
@@ -95,20 +91,22 @@ const handler: NextApiHandler = async (req, res) => {
           .then(({ data: { logoUri, name, description } }) => ({
             project: {
               ...p,
-              // If any values resolved from metadata are empty or undefined, we put null in their place
               name,
               description,
               logoUri,
-              lastUpdated: latestBlock,
               metadataResolved: true,
+              lastUpdated,
             } as SepanaProjectJson,
           }))
           .catch(error => ({
             error,
             project: {
               ...p,
-              lastUpdated: latestBlock,
+              name: undefined,
+              description: undefined,
+              logoUri: undefined,
               metadataResolved: false, // If there is an error resolving metadata from IPFS, we'll flag it as `metadataResolved: false`. We'll try getting it again whenever `retryIPFS == true`.
+              lastUpdated,
             } as SepanaProjectJson,
           })),
       )
@@ -118,65 +116,46 @@ const handler: NextApiHandler = async (req, res) => {
 
     const ipfsErrors = promiseResults.filter(x => x.error)
 
-    if (promiseResults.length) {
-      // Write all projects, even those without metadata resolved from IPFS.
-      await writeSepanaDocs(promiseResults.map(r => r.project))
+    // Write all projects, even those with metadata errors.
+    const updatedProjects = await writeSepanaDocs(
+      promiseResults.map(r => r.project),
+    )
 
-      const sepanaAlertRowCount = 30 // sepanaAlert will get error response from Discord if message is too big
+    const updatedMessage = `Successfully updated ${
+      updatedProjects.length - ipfsErrors.length
+    }/${subgraphProjects.length} projects${
+      retryIPFS ? ` (retried IPFS for ${missingMetadataCount})` : ''
+    }:\n${promiseResults
+      .filter(r => !r.error)
+      .map(r => `\`[${r.project.id}]\` ${r.project.name}`)
+      .join('\n')}`
 
-      await sepanaAlert(
-        ipfsErrors.length
-          ? {
-              type: 'alert',
-              alert: 'DB_UPDATE_ERROR',
-              body: `Updated ${
-                promiseResults.length - ipfsErrors.length
-              } projects.${
-                retryIPFS ? ` Retried IPFS for ${missingMetadataCount}.` : ''
-              } Failed to resolve IPFS data for ${
-                ipfsErrors.length
-              }:\n${ipfsErrors
-                .slice(0, sepanaAlertRowCount)
-                .map(
-                  e =>
-                    `\`[${e.project.id}]\` metadataURI: \`${e.project.metadataUri}\` _${e.error}_`,
-                )
-                .join('\n')}${
-                ipfsErrors.length > sepanaAlertRowCount
-                  ? `\n...and ${ipfsErrors.length - sepanaAlertRowCount} more`
-                  : ''
-              }`,
-            }
-          : {
-              type: 'notification',
-              notif: 'DB_UPDATED',
-              body: `Updated ${promiseResults.length} projects${
-                retryIPFS ? ` (retried IPFS for ${missingMetadataCount})` : ''
-              }: \n${promiseResults
-                .slice(0, sepanaAlertRowCount)
-                .map(r => `\`[${r.project.id}]\` ${r.project.name}`)
-                .join('\n')}${
-                promiseResults.length > sepanaAlertRowCount
-                  ? `\n...and ${
-                      promiseResults.length - sepanaAlertRowCount
-                    } more`
-                  : ''
-              }`,
-            },
-      )
-    }
+    await sepanaAlert(
+      ipfsErrors.length
+        ? {
+            type: 'alert',
+            alert: 'DB_UPDATE_ERROR',
+            body: `Failed to resolve IPFS data for ${
+              ipfsErrors.length
+            } projects:\n${ipfsErrors
+              .map(
+                e =>
+                  `\`[${e.project.id}]\` metadataURI: \`${e.project.metadataUri}\` _${e.error}_`,
+              )
+              .join('\n')}\n\n${updatedMessage}`,
+          }
+        : {
+            type: 'notification',
+            notif: 'DB_UPDATED',
+            body: updatedMessage,
+          },
+    )
 
-    res
-      .status(200)
-      .send(
-        `${process.env.NEXT_PUBLIC_INFURA_NETWORK}\n${promiseResults.length}/${
-          subgraphProjects.length
-        } projects updated\n${ipfsErrors.length} projects with IPFS errors${
-          retryIPFS
-            ? `\n${missingMetadataCount} retries to resolve metadata`
-            : `\n${missingMetadataCount} projects missing metadata`
-        }`,
-      )
+    res.status(200).json({
+      network: process.env.NEXT_PUBLIC_INFURA_NETWORK,
+      updated: { projects: updatedProjects, count: updatedProjects.length },
+      errors: { ipfsErrors, count: ipfsErrors.length },
+    })
   } catch (error) {
     await sepanaAlert({
       type: 'alert',
@@ -184,8 +163,9 @@ const handler: NextApiHandler = async (req, res) => {
       body: JSON.stringify(error),
     })
 
-    res.status(500).send({
-      message: `Error updating Sepana projects on ${process.env.NEXT_PUBLIC_INFURA_NETWORK}`,
+    res.status(500).json({
+      network: process.env.NEXT_PUBLIC_INFURA_NETWORK,
+      message: 'Error updating Sepana projects',
       error,
     })
   }

@@ -62,14 +62,9 @@ export default function TapEventElem({
       event={event}
       header={t`Distributed funds`}
       subject={
-        <div
-          style={{
-            color: colors.text.primary,
-            fontWeight: 500,
-          }}
-        >
+        <span className="text-base font-medium">
           <ETHAmount amount={event.netTransferAmount} />
-        </div>
+        </span>
       }
       extra={
         <div>
@@ -80,8 +75,8 @@ export default function TapEventElem({
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'baseline',
-                fontSize: '0.8rem',
               }}
+              className="text-sm"
             >
               <div style={{ fontWeight: 500 }}>
                 {e.modProjectId > 0 ? (
@@ -106,11 +101,8 @@ export default function TapEventElem({
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'baseline',
-                fontSize:
-                  payoutEvents?.length && payoutEvents.length > 1
-                    ? '0.8rem'
-                    : undefined,
               }}
+              className="text-sm"
             >
               <div style={{ fontWeight: 500 }}>
                 <FormattedAddress address={event.beneficiary} />:

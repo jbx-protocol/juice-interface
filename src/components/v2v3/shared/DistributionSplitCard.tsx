@@ -125,7 +125,7 @@ export function DistributionSplitCard({
               </label>{' '}
             </Col>
             <Col span={dataColSpan}>
-              <Space size="middle">
+              <Space size="small">
                 <V2V3ProjectHandleLink projectId={parseInt(split.projectId)} />
                 {allocatorsEnabled ? (
                   <AllocatorBadge allocator={split.allocator} />

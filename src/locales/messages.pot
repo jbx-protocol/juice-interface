@@ -32,7 +32,13 @@ msgstr ""
 msgid "1. Set ENS name"
 msgstr ""
 
+msgid "1. Set up your wallet"
+msgstr ""
+
 msgid "100% overflow"
+msgstr ""
+
+msgid "2. Connect to Juicebox"
 msgstr ""
 
 msgid "2. Give ownership"
@@ -117,6 +123,12 @@ msgid "<0>Description:</0><1/>"
 msgstr ""
 
 msgid "<0>Discount rate</0>, to reduce your project token's issuance rate (tokens per ETH) each funding cycle."
+msgstr ""
+
+msgid "<0>ETH</0> is the main currency for Ethereum applications. You can buy ETH in MetaMask by opening the extension, signing in, and clicking \"Buy\"."
+msgstr ""
+
+msgid "<0>Ethereum wallets</0> let you interact with the Ethereum blockchain — you can use them to view your balance, send transactions, and connect to applications."
 msgstr ""
 
 msgid "<0>If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens.</0><1>For more info, check out this <2>short video</2>.</1>"
@@ -840,6 +852,9 @@ msgid "Create Payment Address"
 msgstr ""
 
 msgid "Create a Payment Address (optional)"
+msgstr ""
+
+msgid "Create a Wallet"
 msgstr ""
 
 msgid "Create a project"
@@ -1796,6 +1811,9 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
+msgid "MetaMask is a free wallet which works with almost all Ethereum applications. The button below will help you set up a MetaMask wallet."
+msgstr ""
+
 msgid "Migrate to Juicebox V1.1"
 msgstr ""
 
@@ -2010,6 +2028,9 @@ msgid "Note: Tokens can be minted manually when allowed in the current funding c
 msgstr ""
 
 msgid "Notice from {0}"
+msgstr ""
+
+msgid "Once your wallet is funded with ETH, click the <0>Reload</0> button below to refresh the page. Then, connect your wallet to Juicebox by clicking \"Connect\"."
 msgstr ""
 
 msgid "Only lowercase letters"
@@ -2505,6 +2526,9 @@ msgid "Redemptions"
 msgstr ""
 
 msgid "Relaunch your funding cycle on the new Juicebox V2 contracts."
+msgstr ""
+
+msgid "Reload"
 msgstr ""
 
 msgid "Required"

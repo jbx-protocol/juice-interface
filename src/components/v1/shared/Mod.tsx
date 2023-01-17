@@ -45,7 +45,7 @@ export default function Mod({
                 {isV1Project ? (
                   <V1ProjectHandle projectId={projectId} />
                 ) : isV3Project ? (
-                  <Space size="middle">
+                  <Space size="small">
                     <V2V3ProjectHandleLink projectId={projectId.toNumber()} />
                     <AllocatorBadge allocator={allocator} />
                   </Space>

@@ -49,14 +49,14 @@ const JuiceboxProjectBeneficiary = ({
   const allocatorsEnabled = featureFlagEnabled(FEATURE_FLAGS.SPLIT_ALLOCATORS)
   return (
     <div>
-      <Space size="middle">
+      <Space size="small">
         <V2V3ProjectHandleLink projectId={parseInt(split.projectId)} />
         {allocatorsEnabled ? (
           <AllocatorBadge allocator={split.allocator} />
         ) : null}
       </Space>
       {split.allocator === NULL_ALLOCATOR_ADDRESS ? (
-        <div className="ml-2 text-sm text-grey-500 dark:text-grey-300">
+        <div className="ml-2 text-xs text-grey-500 dark:text-grey-300">
           <TooltipLabel
             label={<Trans>Tokens:</Trans>}
             tip={

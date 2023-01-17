@@ -120,7 +120,7 @@ const handler: NextApiHandler = async (_, res) => {
 
       const numToAlert = 20 // Discord will error if message is too big
 
-      sepanaAlert({
+      await sepanaAlert({
         type: 'notification',
         notif: 'DB_UPDATED',
         subject: `Updated ${
@@ -145,7 +145,7 @@ const handler: NextApiHandler = async (_, res) => {
     }[]
 
     if (ipfsErrors.length) {
-      sepanaAlert({
+      await sepanaAlert({
         type: 'alert',
         alert: 'DB_UPDATE_ERROR',
         subject: `Failed to resolve IPFS data for ${
@@ -164,7 +164,7 @@ const handler: NextApiHandler = async (_, res) => {
         `${process.env.NEXT_PUBLIC_INFURA_NETWORK}\n${updatedSepanaProjects.length}/${subgraphProjects.length} projects updated\n${ipfsErrors.length} projects with IPFS errors`,
       )
   } catch (error) {
-    sepanaAlert({
+    await sepanaAlert({
       type: 'alert',
       alert: 'DB_UPDATE_ERROR',
       subject: JSON.stringify(error),

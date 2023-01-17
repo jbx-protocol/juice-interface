@@ -9,7 +9,7 @@ const handler: NextApiHandler = async (_, res) => {
   try {
     await deleteAllSepanaDocs()
   } catch (error) {
-    sepanaAlert({
+    await sepanaAlert({
       type: 'alert',
       alert: 'DB_UPDATE_ERROR',
       subject: typeof error === 'string' ? error : undefined,
@@ -21,7 +21,7 @@ const handler: NextApiHandler = async (_, res) => {
     })
   }
 
-  sepanaAlert({ type: 'alert', alert: 'DELETED_ALL_RECORDS' })
+  await sepanaAlert({ type: 'alert', alert: 'DELETED_ALL_RECORDS' })
 
   res
     .status(200)

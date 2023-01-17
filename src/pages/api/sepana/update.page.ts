@@ -130,26 +130,28 @@ const handler: NextApiHandler = async (req, res) => {
       .map(r => `\`[${r.project.id}]\` ${r.project.name}`)
       .join('\n')}`
 
-    await sepanaAlert(
-      ipfsErrors.length
-        ? {
-            type: 'alert',
-            alert: 'DB_UPDATE_ERROR',
-            body: `Failed to resolve IPFS data for ${
-              ipfsErrors.length
-            } projects:\n${ipfsErrors
-              .map(
-                e =>
-                  `\`[${e.project.id}]\` metadataURI: \`${e.project.metadataUri}\` _${e.error}_`,
-              )
-              .join('\n')}\n\n${updatedMessage}`,
-          }
-        : {
-            type: 'notification',
-            notif: 'DB_UPDATED',
-            body: updatedMessage,
-          },
-    )
+    if (promises.length) {
+      await sepanaAlert(
+        ipfsErrors.length
+          ? {
+              type: 'alert',
+              alert: 'DB_UPDATE_ERROR',
+              body: `Failed to resolve IPFS data for ${
+                ipfsErrors.length
+              } projects:\n${ipfsErrors
+                .map(
+                  e =>
+                    `\`[${e.project.id}]\` metadataURI: \`${e.project.metadataUri}\` _${e.error}_`,
+                )
+                .join('\n')}\n\n${updatedMessage}`,
+            }
+          : {
+              type: 'notification',
+              notif: 'DB_UPDATED',
+              body: updatedMessage,
+            },
+      )
+    }
 
     res.status(200).json({
       network: process.env.NEXT_PUBLIC_INFURA_NETWORK,

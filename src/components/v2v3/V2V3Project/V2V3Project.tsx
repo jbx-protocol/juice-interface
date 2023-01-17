@@ -8,13 +8,13 @@ import VolumeChart from 'components/VolumeChart'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
+import { useHasNftRewards } from 'hooks/JB721Delegate/HasNftRewards'
 import useMobile from 'hooks/Mobile'
 import { useValidatePrimaryEthTerminal } from 'hooks/v2v3/ValidatePrimaryEthTerminal'
 import { useWallet } from 'hooks/Wallet'
 import { V2V3PayProjectFormProvider } from 'providers/v2v3/V2V3PayProjectFormProvider'
 import { useContext, useState } from 'react'
 import { classNames } from 'utils/classNames'
-import { hasNftRewards } from 'utils/nftRewards'
 import { NftRewardsSection } from '../../NftRewards/NftRewardsSection'
 import { ProjectBanners } from './banners/ProjectBanners'
 import { ManageNftsSection } from './ManageNftsSection/ManageNftsSection'
@@ -52,7 +52,6 @@ export function V2V3Project() {
     isPreviewMode,
     projectOwnerAddress,
     handle,
-    fundingCycleMetadata,
   } = useContext(V2V3ProjectContext)
   const { projectId, pv } = useContext(ProjectMetadataContext)
 
@@ -71,7 +70,7 @@ export function V2V3Project() {
   const payProjectFormDisabled =
     isPreviewMode || !hasCurrentFundingCycle || !isPrimaryETHTerminalValid
 
-  const showNftSection = hasNftRewards(fundingCycleMetadata)
+  const hasNftRewards = useHasNftRewards()
 
   const colSizeMd = isPreviewMode ? 24 : 12
 
@@ -130,7 +129,7 @@ export function V2V3Project() {
                   <V2V3ManageTokensSection />
                 </section>
 
-                {hasNftRewards(fundingCycleMetadata) && isConnected ? (
+                {hasNftRewards && isConnected ? (
                   <section>
                     <ManageNftsSection />
                   </section>
@@ -148,7 +147,7 @@ export function V2V3Project() {
                 xs={24}
               >
                 <div className="flex flex-col gap-12">
-                  {!isMobile && showNftSection ? <NftRewardsSection /> : null}
+                  {!isMobile && hasNftRewards ? <NftRewardsSection /> : null}
                   <section>
                     <ProjectActivity />
                   </section>

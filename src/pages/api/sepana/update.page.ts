@@ -23,7 +23,13 @@ const projectKeys: (keyof SepanaProject)[] = [
 ]
 
 // Synchronizes the Sepana engine with the latest Juicebox Subgraph/IPFS data
-const handler: NextApiHandler = async (_, res) => {
+const handler: NextApiHandler = async (req, res) => {
+  // This flag will let us know we should retry resolving IPFS data for projects that are missing it
+  const retryIPFS =
+    req.method === 'POST' && JSON.parse(req.body)['retryIPFS'] === true
+
+  let IPFSRetryCount = 0
+
   try {
     const sepanaProjects = (await queryAllSepanaProjects()).data.hits.hits
 
@@ -32,6 +38,7 @@ const handler: NextApiHandler = async (_, res) => {
       keys: projectKeys as (keyof Project)[],
     })
 
+    // Get list of projects that have changed in Subgraph and no longer match Sepana
     const changedSubgraphProjects = subgraphProjects
       // Upserting data in Sepana requires the `_id` param to be included, so we always include it here and use the subgraph ID
       // https://docs.sepana.io/sepana-search-api/web3-search-cloud/search-api#request-example-2
@@ -50,13 +57,14 @@ const handler: NextApiHandler = async (_, res) => {
           p => subgraphProject.id === p._source.id,
         )
 
+        if (sepanaProject?._source.metadataResolved === false) {
+          IPFSRetryCount++
+        }
+
         // Deep compare subgraph project with sepana project to find which projects have changed or not yet been stored on sepana
         return (
           !sepanaProject ||
-          // If any values resolved from metadataURI are undefined it may be due to a previous IPFS error, so we want to mark the project as changed and try again
-          sepanaProject._source.name === undefined ||
-          sepanaProject._source.description === undefined ||
-          sepanaProject._source.logoUri === undefined ||
+          (!sepanaProject._source.metadataResolved && retryIPFS) ||
           projectKeys.some(
             k =>
               subgraphProject[k as keyof Project] !== sepanaProject._source[k],
@@ -66,13 +74,8 @@ const handler: NextApiHandler = async (_, res) => {
 
     const latestBlock = await readProvider.getBlockNumber()
 
-    const promises: Promise<
-      | { type: 'project'; data: SepanaProjectJson }
-      | {
-          type: 'error'
-          data: { id?: string; metadataURI?: string; error?: string }
-        }
-    >[] = []
+    const promises: Promise<{ error?: string; project: SepanaProjectJson }>[] =
+      []
 
     for (let i = 0; i < changedSubgraphProjects.length; i++) {
       // Update metadata & `lastUpdated` for each sepana project
@@ -87,81 +90,83 @@ const handler: NextApiHandler = async (_, res) => {
       promises.push(
         ipfsGetWithFallback<ProjectMetadataV5>(p.metadataUri as string)
           .then(({ data: { logoUri, name, description } }) => ({
-            type: 'project' as const,
-            data: {
+            project: {
               ...p,
               // If any values resolved from metadata are empty or undefined, we put null in their place
-              name: name || null,
-              description: description || null,
-              logoUri: logoUri || null,
+              name,
+              description,
+              logoUri,
               lastUpdated: latestBlock,
+              metadataResolved: true,
             } as SepanaProjectJson,
           }))
           .catch(error => ({
-            type: 'error' as const,
-            data: {
-              id: p.id,
-              metadataURI: p.metadataUri,
-              error,
-            },
+            error,
+            project: {
+              ...p,
+              lastUpdated: latestBlock,
+              metadataResolved: false, // If there is an error resolving metadata from IPFS, we'll flag it as `metadataResolved: false`. We'll try getting it again whenever `retryIPFS == true`.
+            } as SepanaProjectJson,
           })),
       )
     }
 
-    // Write updated projects
+    // Write all projects, even those without metadata resolved from IPFS.
     const promiseResults = await Promise.all(promises)
 
-    const updatedSepanaProjects = promiseResults
-      .filter(x => x.type === 'project')
-      .map(x => x.data) as SepanaProjectJson[]
+    const ipfsErrors = promiseResults.filter(x => x.error)
 
-    if (updatedSepanaProjects.length) {
-      await writeSepanaDocs(updatedSepanaProjects)
+    if (promiseResults.length) {
+      await writeSepanaDocs(promiseResults.map(r => r.project))
 
-      const numToAlert = 20 // Discord will error if message is too big
+      const sepanaAlertRowCount = 30 // sepanaAlert will get error response from Discord if message is too big
 
-      await sepanaAlert({
-        type: 'notification',
-        notif: 'DB_UPDATED',
-        body: `Updated ${
-          updatedSepanaProjects.length
-        } projects: \n${updatedSepanaProjects
-          .slice(0, numToAlert)
-          .map(p => `\`[${p.id}]\` ${p.name}`)
-          .join('\n')}${
-          updatedSepanaProjects.length > numToAlert
-            ? `\n...and ${updatedSepanaProjects.length - numToAlert} more`
-            : ''
-        }`,
-      })
-    }
-
-    const ipfsErrors = promiseResults
-      .filter(x => x.type === 'error')
-      .map(x => x.data) as {
-      id?: string
-      metadataURI?: string
-      error?: string
-    }[]
-
-    if (ipfsErrors.length) {
-      await sepanaAlert({
-        type: 'alert',
-        alert: 'DB_UPDATE_ERROR',
-        body: `Failed to resolve IPFS data for ${
-          ipfsErrors.length
-        } projects:\n${ipfsErrors
-          .map(
-            p => `\`[${p.id}]\` metadataURI: \`${p.metadataURI}\` _${p.error}_`,
-          )
-          .join('\n')}`,
-      })
+      await sepanaAlert(
+        ipfsErrors.length
+          ? {
+              type: 'alert',
+              alert: 'DB_UPDATE_ERROR',
+              body: `Updated ${
+                promiseResults.length - ipfsErrors.length
+              } projects.${
+                retryIPFS ? ` Retried IPFS for ${IPFSRetryCount}.` : ''
+              } Failed to resolve IPFS data for ${
+                ipfsErrors.length
+              }:\n${ipfsErrors
+                .slice(0, sepanaAlertRowCount)
+                .map(
+                  e =>
+                    `\`[${e.project.id}]\` metadataURI: \`${e.project.metadataUri}\` _${e.error}_`,
+                )
+                .join('\n')}${
+                ipfsErrors.length > sepanaAlertRowCount
+                  ? `\n...and ${ipfsErrors.length - sepanaAlertRowCount} more`
+                  : ''
+              }`,
+            }
+          : {
+              type: 'notification',
+              notif: 'DB_UPDATED',
+              body: `Updated ${promiseResults.length} projects${
+                retryIPFS ? ` (retried IPFS for ${IPFSRetryCount})` : ''
+              }: \n${promiseResults
+                .slice(0, sepanaAlertRowCount)
+                .map(r => `\`[${r.project.id}]\` ${r.project.name}`)
+                .join('\n')}${
+                promiseResults.length > sepanaAlertRowCount
+                  ? `\n...and ${
+                      promiseResults.length - sepanaAlertRowCount
+                    } more`
+                  : ''
+              }`,
+            },
+      )
     }
 
     res
       .status(200)
       .send(
-        `${process.env.NEXT_PUBLIC_INFURA_NETWORK}\n${updatedSepanaProjects.length}/${subgraphProjects.length} projects updated\n${ipfsErrors.length} projects with IPFS errors`,
+        `${process.env.NEXT_PUBLIC_INFURA_NETWORK}\n${promiseResults.length}/${subgraphProjects.length} projects updated\n${ipfsErrors.length} projects with IPFS errors`,
       )
   } catch (error) {
     await sepanaAlert({

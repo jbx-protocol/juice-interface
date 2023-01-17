@@ -24,6 +24,7 @@ type BaseSepanaProject = {
   name?: string
   description?: string
   logoUri?: string
+  metadataResolved: boolean // Helper method to signify if metadata has been successfully resolved from IPFS
 }
 
 // Project type stored in Sepana db

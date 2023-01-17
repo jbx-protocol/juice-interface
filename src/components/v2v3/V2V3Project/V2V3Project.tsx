@@ -103,7 +103,7 @@ export function V2V3Project() {
               <section>
                 <PayProjectForm disabled={payProjectFormDisabled} />
               </section>
-              {(isMobile && showNftSection) || isPreviewMode ? (
+              {(isMobile && hasNftRewards) || isPreviewMode ? (
                 <section className="mt-7">
                   <NftRewardsSection />
                 </section>

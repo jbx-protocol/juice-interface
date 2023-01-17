@@ -93,6 +93,9 @@ export const useReconfigurationRulesForm = () => {
     let address: string | undefined
     switch (selection) {
       case 'threeDay':
+      case 'oneDay':
+        address = strategies.find(s => s.name === selection)?.address
+        break
       case 'none':
       case 'sevenDay':
         address = strategies.find(s => s.name === selection)?.address

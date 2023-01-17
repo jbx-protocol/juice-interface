@@ -74,8 +74,6 @@ const handler: NextApiHandler = async (_, res) => {
         }
     >[] = []
 
-    let updatedCount = 0
-
     for (let i = 0; i < changedSubgraphProjects.length; i++) {
       // Update metadata & `lastUpdated` for each sepana project
 
@@ -110,65 +108,60 @@ const handler: NextApiHandler = async (_, res) => {
       )
     }
 
-    if (promises.length) {
-      // Write updated projects
-      const promiseResults = await Promise.all(promises)
+    // Write updated projects
+    const promiseResults = await Promise.all(promises)
 
-      const updatedSepanaProjects = promiseResults
-        .filter(x => x.type === 'project')
-        .map(x => x.data) as SepanaProjectJson[]
+    const updatedSepanaProjects = promiseResults
+      .filter(x => x.type === 'project')
+      .map(x => x.data) as SepanaProjectJson[]
 
-      if (updatedSepanaProjects.length) {
-        await writeSepanaDocs(updatedSepanaProjects)
+    if (updatedSepanaProjects.length) {
+      await writeSepanaDocs(updatedSepanaProjects)
 
-        const numToAlert = 20 // Discord will error if message is too big
+      const numToAlert = 20 // Discord will error if message is too big
 
-        sepanaAlert({
-          type: 'notification',
-          notif: 'DB_UPDATED',
-          subject: `Updated ${
-            updatedSepanaProjects.length
-          } projects: \n${updatedSepanaProjects
-            .slice(0, numToAlert)
-            .map(p => `\`[${p.id}]\` ${p.name}`)
-            .join('\n')}${
-            updatedSepanaProjects.length > numToAlert
-              ? `\n...and ${updatedSepanaProjects.length - numToAlert} more`
-              : ''
-          }`,
-        })
+      sepanaAlert({
+        type: 'notification',
+        notif: 'DB_UPDATED',
+        subject: `Updated ${
+          updatedSepanaProjects.length
+        } projects: \n${updatedSepanaProjects
+          .slice(0, numToAlert)
+          .map(p => `\`[${p.id}]\` ${p.name}`)
+          .join('\n')}${
+          updatedSepanaProjects.length > numToAlert
+            ? `\n...and ${updatedSepanaProjects.length - numToAlert} more`
+            : ''
+        }`,
+      })
+    }
 
-        updatedCount = updatedSepanaProjects.length
-      }
+    const ipfsErrors = promiseResults
+      .filter(x => x.type === 'error')
+      .map(x => x.data) as {
+      id?: string
+      metadataURI?: string
+      error?: string
+    }[]
 
-      const ipfsErrors = promiseResults
-        .filter(x => x.type === 'error')
-        .map(x => x.data) as {
-        id?: string
-        metadataURI?: string
-        error?: string
-      }[]
-
-      if (ipfsErrors.length) {
-        sepanaAlert({
-          type: 'alert',
-          alert: 'DB_UPDATE_ERROR',
-          subject: `Failed to resolve IPFS data for ${
-            ipfsErrors.length
-          } projects:\n${ipfsErrors
-            .map(
-              p =>
-                `\`[${p.id}]\` metadataURI: \`${p.metadataURI}\` _${p.error}_`,
-            )
-            .join('\n')}`,
-        })
-      }
+    if (ipfsErrors.length) {
+      sepanaAlert({
+        type: 'alert',
+        alert: 'DB_UPDATE_ERROR',
+        subject: `Failed to resolve IPFS data for ${
+          ipfsErrors.length
+        } projects:\n${ipfsErrors
+          .map(
+            p => `\`[${p.id}]\` metadataURI: \`${p.metadataURI}\` _${p.error}_`,
+          )
+          .join('\n')}`,
+      })
     }
 
     res
       .status(200)
       .send(
-        `Updated ${updatedCount} projects on ${process.env.NEXT_PUBLIC_INFURA_NETWORK}`,
+        `${process.env.NEXT_PUBLIC_INFURA_NETWORK}\n${updatedSepanaProjects.length}/${subgraphProjects.length} projects updated\n${ipfsErrors.length} projects with IPFS errors`,
       )
   } catch (error) {
     sepanaAlert({

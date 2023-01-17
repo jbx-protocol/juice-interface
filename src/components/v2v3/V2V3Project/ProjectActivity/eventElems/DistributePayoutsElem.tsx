@@ -59,7 +59,7 @@ export default function DistributePayoutsElem({
       header={t`Distributed funds`}
       subject={
         distributePayoutsEvents?.length ? (
-          <span className="text-base">
+          <span className="text-base font-medium">
             <ETHAmount amount={event.distributedAmount} />
           </span>
         ) : null
@@ -78,9 +78,15 @@ export default function DistributePayoutsElem({
             >
               <div style={{ fontWeight: 500 }}>
                 {e.splitProjectId ? (
-                  <V2V3ProjectHandleLink projectId={e.splitProjectId} />
+                  <V2V3ProjectHandleLink
+                    className="text-grey-900 dark:text-slate-100"
+                    projectId={e.splitProjectId}
+                  />
                 ) : (
-                  <FormattedAddress address={e.beneficiary} />
+                  <FormattedAddress
+                    className="text-grey-900 dark:text-slate-100"
+                    address={e.beneficiary}
+                  />
                 )}
                 :
               </div>
@@ -97,21 +103,16 @@ export default function DistributePayoutsElem({
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'baseline',
-                fontSize: distributePayoutsEvents?.length
-                  ? '0.8rem'
-                  : undefined,
               }}
             >
-              <div style={{ fontWeight: 500 }}>
-                <FormattedAddress address={event.beneficiary} />:
+              <div>
+                <FormattedAddress
+                  className="text-grey-900 dark:text-slate-100"
+                  address={event.beneficiary}
+                />
+                :
               </div>
-              <div
-                style={
-                  distributePayoutsEvents?.length
-                    ? { color: colors.text.secondary }
-                    : { fontWeight: 500 }
-                }
-              >
+              <div className="text-sm text-grey-500 dark:text-grey-300">
                 <ETHAmount amount={event.beneficiaryDistributionAmount} />
               </div>
             </div>

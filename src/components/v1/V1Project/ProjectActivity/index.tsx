@@ -172,6 +172,7 @@ export default function ProjectActivity() {
           'txHash',
           'timestamp',
           'returnAmount',
+          'metadata',
         ],
       },
       {

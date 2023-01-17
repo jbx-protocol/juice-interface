@@ -64,7 +64,11 @@ function SideDetails({ event }: { event: ActivityElementEvent }) {
               }}
             />
           )}{' '}
-          <EtherscanLink value={event.txHash} type="tx" />
+          <EtherscanLink
+            value={event.txHash}
+            type="tx"
+            className="text-grey-500 dark:text-grey-300"
+          />
         </div>
       )}
       {event.beneficiary ? (

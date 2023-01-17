@@ -85,6 +85,7 @@ export const PayoutsList = (
       )
       return
     }
+
     if (distributionLimit?.currency === undefined) {
       console.warn(
         'Allocation.syncExpenses called with no currency set in editing',
@@ -92,6 +93,7 @@ export const PayoutsList = (
       )
       return
     }
+
     const newAllocationsWithUpdatedPercents =
       props.value?.map(allocation => {
         const individualExpense = calculateExpenseFromPercentageOfWad({
@@ -104,12 +106,13 @@ export const PayoutsList = (
           percent: newPercent,
         }
       }) ?? []
+    props.onChange?.(newAllocationsWithUpdatedPercents)
+
     const newAmount = parseWad(expenses)
     setDistributionLimit({
       amount: newAmount,
       currency: distributionLimit.currency,
     })
-    props.onChange?.(newAllocationsWithUpdatedPercents)
   }, [distributionLimit, expenses, props, setDistributionLimit])
 
   return (

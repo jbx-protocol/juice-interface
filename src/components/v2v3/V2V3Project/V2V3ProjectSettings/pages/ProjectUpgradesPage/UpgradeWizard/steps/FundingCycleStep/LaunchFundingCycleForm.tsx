@@ -86,7 +86,12 @@ export function LaunchFundingCycleForm() {
           </Form.Item>
           {syncStartTime ? null : (
             <Form.Item
-              label={<Trans>Start time (seconds, Unix time)</Trans>}
+              label={<Trans>Start time</Trans>}
+              extra={
+                <Trans>
+                  Unix timestamp in seconds. Leave blank to start immediately.
+                </Trans>
+              }
               className={'mt-5'}
             >
               <Input
@@ -145,6 +150,7 @@ export function LaunchFundingCycleForm() {
             nftRewards={
               editingFundingCycleConfig.editingNftRewards?.rewardTiers
             }
+            projectOwnerAddress={projectOwnerAddress}
           />
         </div>
 

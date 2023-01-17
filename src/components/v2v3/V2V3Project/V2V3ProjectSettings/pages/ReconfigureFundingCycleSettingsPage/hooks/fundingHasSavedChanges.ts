@@ -1,6 +1,7 @@
 import isEqual from 'lodash/isEqual'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useMemo } from 'react'
+import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
 import { tiersEqual } from 'utils/nftRewards'
 import {
   serializeFundAccessConstraint,
@@ -25,6 +26,7 @@ export const useFundingHasSavedChanges = ({
     editingFundingCycleData,
     editingFundAccessConstraints,
     editingNftRewards,
+    editingMustStartAtOrAfter,
   } = editingFundingCycleConfig
 
   const fundingHasSavedChanges = useMemo(() => {
@@ -45,7 +47,10 @@ export const useFundingHasSavedChanges = ({
         reservedTokensGroupedSplits: editingReservedTokensGroupedSplits.splits,
       },
       nftRewards: editingNftRewards,
+      mustStartAtOrAfter:
+        editingMustStartAtOrAfter || DEFAULT_MUST_START_AT_OR_AFTER,
     }
+
     return !isEqual(initialEditingData, editedChanges)
   }, [
     editingFundAccessConstraints,
@@ -55,6 +60,7 @@ export const useFundingHasSavedChanges = ({
     editingReservedTokensGroupedSplits,
     editingNftRewards,
     initialEditingData,
+    editingMustStartAtOrAfter,
   ])
 
   const fundingDrawerHasSavedChanges = useMemo(() => {

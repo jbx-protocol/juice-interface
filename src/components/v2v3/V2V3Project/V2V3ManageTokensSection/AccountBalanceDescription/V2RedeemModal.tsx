@@ -5,7 +5,6 @@ import { Callout } from 'components/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { MemoFormInput } from 'components/Project/PayProjectForm/MemoFormInput'
 import { RedeemAMMPrices } from 'components/Project/RedeemAMMPrices'
 import TransactionModal from 'components/TransactionModal'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
@@ -46,7 +45,7 @@ export default function V2RedeemModal({
 
   const [redeemAmount, setRedeemAmount] = useState<string>()
   const [loading, setLoading] = useState<boolean>()
-  const [memo, setMemo] = useState<string>('')
+  const [memo] = useState<string>('')
   const [transactionPending, setTransactionPending] = useState<boolean>()
 
   const [form] = useForm<{
@@ -267,9 +266,10 @@ export default function V2RedeemModal({
               ) : null}
             </Form.Item>
 
-            <Form.Item label={t`Memo`}>
+            {/* Will comment memo form due to [note] missing in subgraph - see discussion in https://discord.com/channels/939317843059679252/1035458515709464586/1053400936971771974 */}
+            {/* <Form.Item label={t`Memo`}>
               <MemoFormInput value={memo} onChange={setMemo} />
-            </Form.Item>
+            </Form.Item> */}
           </Form>
 
           {canRedeem && !totalSupplyExceeded && minReturnedTokens?.gt(0) ? (

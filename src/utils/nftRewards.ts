@@ -233,8 +233,8 @@ export function buildJB721TierParams({
         contributionFloor: contributionFloorWei,
         lockedUntil: BigNumber.from(0),
         initialQuantity,
-        votingUnits: 0,
-        reservedRate: 0,
+        votingUnits: BigNumber.from(0),
+        reservedRate: BigNumber.from(0),
         reservedTokenBeneficiary: constants.AddressZero,
         encodedIPFSUri,
         allowManualMint: false,
@@ -305,14 +305,51 @@ export function encodeJB721DelegateRedeemMetadata(tokenIdsToRedeem: string[]) {
   return encoded
 }
 
+export function decodeJB721DelegateRedeemMetadata(
+  metadata: string,
+): [string, string, BigNumber[]] | undefined {
+  try {
+    const decoded = defaultAbiCoder.decode(
+      ['bytes32', 'bytes4', 'uint256[]'],
+      metadata,
+    ) as [string, string, BigNumber[]]
+
+    return decoded
+  } catch (e) {
+    return undefined
+  }
+}
+
+// returns an array of NftRewardTiers corresponding to a given list of tier IDs
+//    Note: If ids contains multiple of the same ID, the return value
+//          will contain corresponding rewardTier multiple times.
+export function rewardTiersFromIds({
+  tierIds,
+  rewardTiers,
+}: {
+  tierIds: number[]
+  rewardTiers: NftRewardTier[]
+}) {
+  return tierIds
+    .map(id => rewardTiers.find(tier => tier.id === id))
+    .filter(tier => Boolean(tier)) as NftRewardTier[]
+}
+
 // sums the contribution floors of a given list of nftRewardTiers
 //    - optional select only an array of ids
-export function sumTierFloors(rewardTiers: NftRewardTier[], ids?: number[]) {
-  if (ids) {
-    rewardTiers = rewardTiers.filter(tier => ids.includes(tier.id ?? -1))
-  }
+export function sumTierFloors(
+  rewardTiers: NftRewardTier[],
+  tierIds?: number[],
+) {
+  if (!tierIds) return 0
+
+  const selectedTiers = rewardTiersFromIds({
+    tierIds,
+    rewardTiers,
+  })
+
   return round(
-    rewardTiers.reduce((subSum, tier) => subSum + tier.contributionFloor, 0),
+    selectedTiers.reduce((subSum, tier) => subSum + tier.contributionFloor, 0),
     6,
   )
 }

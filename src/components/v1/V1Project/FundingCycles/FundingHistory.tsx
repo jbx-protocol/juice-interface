@@ -108,7 +108,7 @@ export default function FundingHistory({
 
             <Space className="text-sm" align="baseline">
               {formatHistoricalDate(
-                cycle.start.add(cycle.duration).mul(1000).toNumber(),
+                cycle.start.add(cycle.duration.mul(86400)).mul(1000).toNumber(),
               )}
               <CaretRightOutlined />
             </Space>

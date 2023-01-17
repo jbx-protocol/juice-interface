@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 /** Returns name for ERC20 token with `address`. */
 export default function useNameOfERC20(tokenAddress: string | undefined) {
   const [data, setData] = useState<string>()
+  const [loading, setLoading] = useState<boolean>(false)
 
   const contract = useErc20Contract(tokenAddress)
 
@@ -19,12 +20,18 @@ export default function useNameOfERC20(tokenAddress: string | undefined) {
         return
       }
 
-      const name = await contract.name()
-      setData(name)
+      setLoading(true)
+      try {
+        const name = await contract.name()
+        setData(name)
+      } catch (e) {
+        console.error(e)
+      }
+      setLoading(false)
     }
 
     fetchName()
   }, [tokenAddress, contract])
 
-  return data
+  return { data, loading }
 }

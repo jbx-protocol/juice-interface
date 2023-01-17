@@ -72,12 +72,11 @@ export function NftRewardsSection() {
   const payAmountETH =
     payInCurrency === ETH ? payAmount : fromWad(converter.usdToWei(payAmount))
 
-  const onTierDeselect = (tierId: number | undefined) => {
+  const handleTierDeselect = (tierId: number | undefined) => {
     if (tierId === undefined || !rewardTiers || !payMetadata) return
-
-    const newSelectedTierIds = [...payMetadata.tierIdsToMint].filter(
-      selectedTierId => selectedTierId !== tierId,
-    )
+    const idxToRemove = payMetadata.tierIdsToMint.indexOf(tierId)
+    const newSelectedTierIds = payMetadata.tierIdsToMint
+    newSelectedTierIds.splice(idxToRemove, 1)
 
     setPayMetadata?.({
       tierIdsToMint: newSelectedTierIds,
@@ -92,7 +91,7 @@ export function NftRewardsSection() {
     validatePayAmount?.(newPayAmount)
   }
 
-  const onTierSelect = (tierId: number | undefined) => {
+  const handleTierSelect = (tierId: number | undefined) => {
     if (!tierId || !rewardTiers) return
 
     const newSelectedTierIds = [...(payMetadata?.tierIdsToMint ?? []), tierId]
@@ -128,27 +127,29 @@ export function NftRewardsSection() {
         <RewardTiersLoadingSkeleton />
       ) : (
         <div
-          // hax to make scrollbars look nice
-          className="-mt-3 -ml-3 -mr-5 max-h-[500px] overflow-auto pb-3 pt-3 pl-3 pr-5"
+          className={
+            // hax to make scrollbars look nice
+            '-mt-3 -ml-3 -mr-5 max-h-[950px] overflow-auto pb-3 pt-3 pl-3 pr-5 md:max-h-[620px]'
+          }
         >
           <Row gutter={isMobile ? 12 : 24}>
-            {renderRewardTiers?.map((rewardTier, idx) => (
+            {renderRewardTiers?.map(rewardTier => (
               <Col
                 className="mb-4"
                 md={8}
-                xs={8}
+                xs={12}
                 key={`${rewardTier.contributionFloor}-${rewardTier.name}`}
               >
                 <NftTierCard
                   rewardTier={rewardTier}
-                  rewardTierUpperLimit={
-                    rewardTiers?.[idx + 1]?.contributionFloor
+                  quantitySelected={
+                    payMetadata?.tierIdsToMint.filter(
+                      id => id === rewardTier.id ?? -1,
+                    ).length
                   }
-                  isSelected={payMetadata?.tierIdsToMint.includes(
-                    rewardTier.id ?? -1,
-                  )}
-                  onClick={() => onTierSelect(rewardTier.id)}
-                  onRemove={() => onTierDeselect(rewardTier.id)}
+                  maxQuantity={rewardTier.remainingSupply}
+                  onClick={() => handleTierSelect(rewardTier.id)}
+                  onRemove={() => handleTierDeselect(rewardTier.id)}
                 />
               </Col>
             ))}

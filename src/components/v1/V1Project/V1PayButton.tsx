@@ -84,7 +84,6 @@ export function V1PayButton({ wrapperClassName, disabled }: PayButtonProps) {
     setPayWarningModalVisible(true)
   }
 
-  // Pay enabled
   return (
     <div className={twMerge('text-center', wrapperClassName)}>
       <Tooltip
@@ -93,10 +92,10 @@ export function V1PayButton({ wrapperClassName, disabled }: PayButtonProps) {
         open={disabledMessage ? undefined : false}
       >
         <Button
-          className="w-full"
           type="primary"
           onClick={onPayButtonClick}
           disabled={shouldDisableButton}
+          style={{ width: '100%' }}
         >
           {payButtonText}
         </Button>

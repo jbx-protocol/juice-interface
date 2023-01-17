@@ -102,9 +102,6 @@ export const formatOutgoingSplits = (splits: OutgoingSplit[]): Split[] => {
   )
 }
 
-const isProjectSplit = (split: Split) =>
-  Boolean(split.projectId && parseInt(split.projectId) > 0)
-
 // determines if two splits are the same 'entity' (either projectId or address)
 const hasEqualRecipient = (a: Split, b: Split) => {
   const isProject = isProjectSplit(a)
@@ -177,4 +174,8 @@ export const processUniqueSplits = ({
     })
   })
   return sortSplits(uniqueSplitsByProjectIdOrAddress)
+}
+
+export const isProjectSplit = (split: Split): boolean => {
+  return Boolean(split.projectId) && BigNumber.from(split.projectId).gt(0)
 }

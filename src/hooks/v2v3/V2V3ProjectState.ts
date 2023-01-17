@@ -163,8 +163,8 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
   const { data: tokenAddress } = useProjectToken({
     projectId,
   })
-  const tokenSymbol = useSymbolOfERC20(tokenAddress)
-  const tokenName = useNameOfERC20(tokenAddress)
+  const { data: tokenSymbol } = useSymbolOfERC20(tokenAddress)
+  const { data: tokenName } = useNameOfERC20(tokenAddress)
   const { data: totalTokenSupply } = useProjectTokenTotalSupply(projectId)
 
   const project: V2V3ProjectContextType = {

@@ -4,6 +4,7 @@ import { RcFile } from 'antd/lib/upload'
 import { FormItemInput } from 'models/formItemInput'
 import { ReactNode, useCallback, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
+import { UploadRequestOption } from 'rc-upload/lib/interface'
 
 interface UploadNoStyleProps
   extends FormItemInput<string | undefined>,
@@ -13,8 +14,9 @@ interface UploadNoStyleProps
     > {
   sizeLimit?: number
   supportedFileTypes?: Set<'image/jpeg' | 'image/png' | 'image/gif'>
-  customRequest?: (req: File | Blob | string) => Promise<string> | string
+  customRequest?: (options: UploadRequestOption) => Promise<string> | string
   children?: (props: {
+    percent: number | undefined
     isUploading: boolean
     uploadUrl: string | undefined
     undo: VoidFunction
@@ -24,6 +26,7 @@ interface UploadNoStyleProps
 export const UploadNoStyle = (props: UploadNoStyleProps) => {
   const [_uploadUrl, _setUploadUrl] = useState<string>()
   const [isUploading, setIsUploading] = useState<boolean>(false)
+  const [percent, setPercent] = useState<number | undefined>(undefined)
 
   const uploadUrl = props.value ?? _uploadUrl
   const setUploadUrl = props.onChange ?? _setUploadUrl
@@ -31,7 +34,7 @@ export const UploadNoStyle = (props: UploadNoStyleProps) => {
   const undo = useCallback(() => setUploadUrl(undefined), [setUploadUrl])
 
   const handleBeforeUpload = useCallback(
-    (file: RcFile) => {
+    async (file: RcFile) => {
       const fileIsAllowed = props.supportedFileTypes?.size
         ? ([...props.supportedFileTypes] as string[]).includes(file.type)
         : true
@@ -52,9 +55,37 @@ export const UploadNoStyle = (props: UploadNoStyleProps) => {
         )
       }
 
-      return isInSizeLimit && fileIsAllowed
+      const childCheck = await props.beforeUpload?.(file, [])
+
+      return isInSizeLimit && fileIsAllowed && childCheck
     },
-    [props.sizeLimit, props.supportedFileTypes],
+    [props],
+  )
+
+  const onCustomRequest = useCallback(
+    async (req: UploadRequestOption) => {
+      if (!props.customRequest) return
+      setIsUploading(true)
+      setPercent(0)
+      try {
+        const val = await props.customRequest({
+          ...req,
+          onProgress: e => {
+            req.onProgress?.(e)
+            if (e) {
+              // Bit of a hack
+              setPercent(e as unknown as number)
+            }
+          },
+        })
+        setUploadUrl(val)
+      } catch (e) {
+        console.error('Error occurred while uploading', e)
+      } finally {
+        setIsUploading(false)
+      }
+    },
+    [props, setUploadUrl],
   )
 
   return (
@@ -63,24 +94,12 @@ export const UploadNoStyle = (props: UploadNoStyleProps) => {
       className="w-full"
       onChange={undefined}
       beforeUpload={handleBeforeUpload}
-      customRequest={
-        props.customRequest
-          ? async req => {
-              setIsUploading(true)
-              try {
-                const val = await props.customRequest?.(req.file)
-                setUploadUrl(val)
-              } catch (e) {
-                console.error('Error occurred while uploading', e)
-              } finally {
-                setIsUploading(false)
-              }
-            }
-          : undefined
-      }
+      customRequest={onCustomRequest}
       showUploadList={false}
     >
-      {props.children ? props.children({ uploadUrl, isUploading, undo }) : null}
+      {props.children
+        ? props.children({ uploadUrl, isUploading, undo, percent })
+        : null}
     </Upload>
   )
 }

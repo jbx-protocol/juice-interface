@@ -58,7 +58,11 @@ export async function getProjectStaticProps(
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (e: any) {
-    if (e?.response?.status === 404 || e?.response?.status === 400) {
+    if (
+      e?.response?.status === 404 ||
+      e?.response?.status === 400 ||
+      e?.response?.status === 403
+    ) {
       return { notFound: true }
     }
 

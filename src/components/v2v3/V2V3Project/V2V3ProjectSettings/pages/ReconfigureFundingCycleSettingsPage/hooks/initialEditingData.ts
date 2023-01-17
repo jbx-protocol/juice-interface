@@ -14,6 +14,7 @@ import useProjectSplits from 'hooks/v2v3/contractReader/ProjectSplits'
 import { Split } from 'models/splits'
 import { useContext, useState } from 'react'
 import {
+  DEFAULT_MUST_START_AT_OR_AFTER,
   editingV2ProjectActions,
   NftRewardsData,
 } from 'redux/slices/editingV2Project'
@@ -37,6 +38,7 @@ export interface InitialEditingData {
     reservedTokensGroupedSplits: Split[]
   }
   nftRewards: NftRewardsData | undefined
+  mustStartAtOrAfter: string | undefined
 }
 
 /**
@@ -200,6 +202,7 @@ export const useInitialEditingData = ({
         reservedTokensGroupedSplits: effectiveReservedTokensSplits ?? [],
       },
       nftRewards,
+      mustStartAtOrAfter: DEFAULT_MUST_START_AT_OR_AFTER,
     })
   }, [
     contracts,

@@ -59,7 +59,7 @@ function Landing() {
             <Col xs={24} md={10}>
               <Image
                 src={blueBerry}
-                alt="Sexy blueberry with bright pink lipstick spraying a can of spraypaint"
+                alt="Sexy Juicebox blueberry with bright pink lipstick spraying a can of spraypaint"
                 loading="lazy"
               />
             </Col>

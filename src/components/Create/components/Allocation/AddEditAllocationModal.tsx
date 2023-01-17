@@ -132,19 +132,22 @@ export const AddEditAllocationModal = ({
       ? t`Project token beneficiary address`
       : t`Address`
   const addressExtra =
-    recipient === 'juiceboxProject'
-      ? t`A payout to this project may mint some of the project's tokens. Set the address that will receive the tokens.`
-      : undefined
+    recipient === 'juiceboxProject' ? (
+      <Trans>
+        Distributing funds to another Juicebox project may mint its tokens. Set
+        the address that should receive these project's tokens.
+      </Trans>
+    ) : undefined
 
   return (
     <Modal
       className={className}
       title={
-        <h2 className="text-lg font-medium text-black dark:text-grey-200">
+        <h2 className="mb-0 text-lg font-medium text-black dark:text-grey-200">
           {isEditing ? t`Edit ${allocationName}` : t`Add new ${allocationName}`}
         </h2>
       }
-      okText={isEditing ? t`Edit ${allocationName}` : t`Add ${allocationName}`}
+      okText={isEditing ? t`Save ${allocationName}` : t`Add ${allocationName}`}
       open={open}
       onOk={onModalOk}
       onCancel={onModalCancel}
@@ -196,7 +199,7 @@ export const AddEditAllocationModal = ({
         <Form.Item
           name="address"
           label={addressLabel}
-          extra={addressExtra}
+          tooltip={addressExtra}
           required
           rules={[
             inputMustExistRule({ label: addressLabel }),

@@ -8,7 +8,6 @@ import PrefixedInput from 'components/PrefixedInput'
 import TooltipIcon from 'components/TooltipIcon'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
-import { getBaseUrlOrigin } from 'utils/baseUrl'
 import { CreateCollapse } from '../../CreateCollapse'
 import { OptionalHeader } from '../../OptionalHeader'
 import { Wizard } from '../../Wizard'
@@ -47,7 +46,7 @@ export const ProjectDetailsPage: React.FC = () => {
           <JuiceTextArea autoSize={{ minRows: 4, maxRows: 6 }} />
         </Form.Item>
         <Form.Item name="logo" label={t`Logo`}>
-          <FormImageUploader text={t`Upload`} />
+          <FormImageUploader text={t`Upload`} maxSizeKBs={10000} />
         </Form.Item>
         <CreateCollapse>
           <CreateCollapse.Panel
@@ -60,7 +59,7 @@ export const ProjectDetailsPage: React.FC = () => {
               <Col span={12}>
                 <Form.Item name="projectWebsite" label={t`Website`}>
                   {/* Set placeholder as url string origin without port */}
-                  <JuiceInput placeholder={getBaseUrlOrigin()} />
+                  <JuiceInput prefix="https://" />
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -72,7 +71,7 @@ export const ProjectDetailsPage: React.FC = () => {
             <Row className="mb-6" gutter={32}>
               <Col span={12}>
                 <Form.Item name="projectDiscord" label={t`Discord`}>
-                  <JuiceInput placeholder="https://discord.gg" />
+                  <JuiceInput prefix="https://" />
                 </Form.Item>
               </Col>
             </Row>

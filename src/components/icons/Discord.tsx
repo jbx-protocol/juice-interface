@@ -1,10 +1,17 @@
-export default function Discord({ size }: { size?: number }) {
+export default function Discord({
+  size,
+  className,
+}: {
+  size?: number
+  className?: string
+}) {
   const widthToHeight = 71 / 55
   const height = size ?? 55
 
   return (
     <svg
       style={{ height, width: widthToHeight * height }}
+      className={className}
       width="71"
       height="55"
       viewBox="0 0 71 55"

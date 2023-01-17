@@ -37,7 +37,7 @@ export default function QueuedFundingCycle() {
           </CardSection>
         </div>
       ) : (
-        <div className="text-gray-500 dark:text-slate-100">
+        <div className="text-grey-500 dark:text-slate-100">
           No upcoming funding cycle
         </div>
       )}

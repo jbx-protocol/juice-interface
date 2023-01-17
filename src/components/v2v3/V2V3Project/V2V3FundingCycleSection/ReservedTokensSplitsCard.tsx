@@ -160,7 +160,7 @@ export default function ReservedTokensSplitsCard({
             ) : null
           ) : (
             <span className="text-grey-500 dark:text-slate-100">
-              <Trans>This project has no reserved tokens.</Trans>
+              <Trans>This project doesn't reserve any tokens.</Trans>
             </span>
           )}
         </div>

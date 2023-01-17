@@ -6,7 +6,6 @@ import TooltipIcon from 'components/TooltipIcon'
 import DistributionLimit from 'components/v2v3/shared/DistributionLimit'
 import { DistributionSplitCard } from 'components/v2v3/shared/DistributionSplitCard'
 import { CurrencyName } from 'constants/currency'
-import { useWallet } from 'hooks/Wallet'
 import filter from 'lodash/filter'
 import isEqual from 'lodash/isEqual'
 import { Split } from 'models/splits'
@@ -34,6 +33,7 @@ export function DistributionSplitsSection({
   onCurrencyChange,
   editableSplits,
   lockedSplits,
+  projectOwnerAddress,
   onSplitsChanged,
   formItemProps,
 }: {
@@ -43,10 +43,9 @@ export function DistributionSplitsSection({
   onCurrencyChange: (currencyName: CurrencyName) => void
   editableSplits: Split[]
   lockedSplits: Split[]
+  projectOwnerAddress: string | undefined
   onSplitsChanged: (splits: Split[]) => void
 } & FormItemExt) {
-  const { userAddress } = useWallet()
-
   const distributionLimitIsInfinite =
     !distributionLimit || parseWad(distributionLimit).eq(MAX_DISTRIBUTION_LIMIT)
 
@@ -130,30 +129,27 @@ export function DistributionSplitsSection({
   const totalSplitsPercentage = getTotalSplitsPercentage(allSplits)
   const totalSplitsPercentageInvalid = totalSplitsPercentage > 100
   const remainingSplitsPercentage = 100 - getTotalSplitsPercentage(allSplits) // this amount goes to the project owner
-  let ownerSplit: Split
-
+  let ownerSplit: Split | undefined
   if (remainingSplitsPercentage) {
     ownerSplit = {
-      beneficiary: userAddress,
+      beneficiary: projectOwnerAddress,
       percent: splitPercentFrom(remainingSplitsPercentage).toNumber(),
     } as Split
   }
 
-  function OwnerSplitCard() {
-    return (
-      <DistributionSplitCard
-        split={ownerSplit}
-        splits={allSplits}
-        distributionLimit={distributionLimit}
-        setDistributionLimit={setDistributionLimit}
-        onSplitsChanged={onSplitsChanged}
-        onCurrencyChange={onCurrencyChange}
-        currencyName={currencyName}
-        isLocked
-        isProjectOwner
-      />
-    )
-  }
+  const OwnerSplitCard = ownerSplit ? (
+    <DistributionSplitCard
+      split={ownerSplit}
+      splits={allSplits}
+      distributionLimit={distributionLimit}
+      setDistributionLimit={setDistributionLimit}
+      onSplitsChanged={onSplitsChanged}
+      onCurrencyChange={onCurrencyChange}
+      currencyName={currencyName}
+      isLocked
+      isProjectOwner
+    />
+  ) : null
 
   return (
     <Form.Item
@@ -181,7 +177,8 @@ export function DistributionSplitsSection({
                 }
                 if (
                   remainingSplitsPercentage &&
-                  remainingSplitsPercentage !== 100
+                  remainingSplitsPercentage !== 100 &&
+                  ownerSplit
                 ) {
                   editableSplits.push(ownerSplit)
                 }
@@ -228,7 +225,7 @@ export function DistributionSplitsSection({
             <Trans>Sum of percentages cannot exceed 100%.</Trans>
           </span>
         ) : remainingSplitsPercentage > 0 && distributionLimit !== '0' ? (
-          <OwnerSplitCard />
+          OwnerSplitCard
         ) : null}
         <Form.Item
           extra={

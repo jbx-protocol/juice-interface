@@ -44,16 +44,16 @@ const RelaunchV1ProjectCallout = ({ className }: { className?: string }) => {
           <strong>
             <Trans>Re-launch on V3</Trans>
           </strong>
-          <p>
+          <p className="mb-0">
             <Trans>
               Re-launch your Juicebox project using the v3 contracts.{' '}
               {/* TODO: Add link */}
               <Link href="#TODO">What's new in V3.</Link>
             </Trans>
           </p>
-          <p className="font-medium">
+          <p className="mb-1">
             <Trans>
-              It's strongly recommended that you visit the{' '}
+              We recommend visiting the{' '}
               <ExternalLink href="https://discord.gg/6jXrJSyDFf">
                 Juicebox Discord
               </ExternalLink>{' '}

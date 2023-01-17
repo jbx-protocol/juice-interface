@@ -18,6 +18,7 @@ import { classNames } from 'utils/classNames'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { formatDate } from 'utils/format/formatDate'
 import { parseWad } from 'utils/format/formatNumber'
+import { isProjectSplit } from 'utils/splits'
 import { amountFromPercent } from 'utils/v2v3/distributions'
 import {
   formatSplitPercent,
@@ -69,7 +70,7 @@ export function DistributionSplitCard({
 
   const [editSplitModalOpen, setEditSplitModalOpen] = useState<boolean>(false)
 
-  const isProject = parseInt(split.projectId ?? '0') > 0
+  const isProject = isProjectSplit(split)
 
   // !isProject added here because we don't want to show the crown next to
   // a project recipient whose token benefiary is the owner of this project
@@ -124,7 +125,7 @@ export function DistributionSplitCard({
               </label>{' '}
             </Col>
             <Col span={dataColSpan}>
-              <Space size="middle">
+              <Space size="small">
                 <V2V3ProjectHandleLink projectId={parseInt(split.projectId)} />
                 {allocatorsEnabled ? (
                   <AllocatorBadge allocator={split.allocator} />

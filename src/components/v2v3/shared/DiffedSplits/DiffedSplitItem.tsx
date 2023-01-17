@@ -11,10 +11,10 @@ import { SplitWithDiff } from 'utils/splits'
 import { isJuiceboxProjectSplit } from 'utils/v2v3/distributions'
 import { SplitProps } from '../SplitItem'
 import { ETHAddressBeneficiary } from '../SplitItem/EthAddressBeneficiary'
-import { JuiceboxProjectBeneficiary } from '../SplitItem/JuiceboxProjectBeneficiary'
 import { LockedUntilValue } from '../SplitItem/LockedUntilValue'
 import { ReservedTokensValue } from '../SplitItem/ReservedTokensValue'
 import { SplitValue } from '../SplitItem/SplitValue'
+import { DiffedJBProjectBeneficiary } from './DiffedSplitFields/DiffedJBProjectBeneficiary'
 
 type DiffedSplitProps = Omit<SplitProps, 'split'> & { split: SplitWithDiff }
 
@@ -41,7 +41,7 @@ export function DiffedSplitItem({ props }: { props: DiffedSplitProps }) {
           {splitIsRemoved ? <DiffMinus /> : null}
           {splitIsNew ? <DiffPlus /> : null}
           {isJuiceboxProject ? (
-            <JuiceboxProjectBeneficiary
+            <DiffedJBProjectBeneficiary
               projectOwnerAddress={props.projectOwnerAddress}
               split={props.split}
               oldSplit={hasDiff ? oldSplit : undefined}

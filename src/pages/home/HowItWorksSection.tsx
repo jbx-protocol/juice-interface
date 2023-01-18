@@ -5,7 +5,6 @@ import ExternalLink from 'components/ExternalLink'
 import useMobile from 'hooks/Mobile'
 import Image from 'next/image'
 import { helpPagePath } from 'utils/routes'
-import { OverflowVideoLink } from './QAs'
 import { SectionHeading } from './SectionHeading'
 
 const SmallHeader = ({ text }: { text: string }) => {
@@ -53,8 +52,11 @@ export function HowItWorksSection() {
                 <Trans>
                   Crowdfund your project with ETH. Set a funding target to cover
                   predictable expenses, and any extra funds (
-                  <OverflowVideoLink>overflow</OverflowVideoLink>) can be
-                  claimed by anyone holding your project's tokens alongside you.
+                  <ExternalLink href="https://youtu.be/9Mq5oDh0aBY">
+                    overflow
+                  </ExternalLink>
+                  ) can be claimed by anyone holding your project's tokens
+                  alongside you.
                 </Trans>
               </FourthCol>
               <FourthCol header={t`2. Give ownership`}>

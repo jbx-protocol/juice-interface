@@ -95,16 +95,10 @@ msgstr ""
 msgid "<0><1/>{grossAvailableAmount}</0> available to distribute"
 msgstr ""
 
+msgid "<0><1>Peel</1> manages the juicebox.money frontend interface. You can reach out to Peel through the <2>Peel Discord</2>.</0><3><4>JuiceboxDAO</4> builds and governs the Juicebox protocol and other community resources. You can reach out to JuiceboxDAO through the <5>Juicebox Discord</5>.</3>"
+msgstr ""
+
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
-msgstr ""
-
-msgid "<0>A mechanism like Juicebox where upfront financial commitments should be honored over time is only guaranteed within an ecosystem like Ethereum.</0><1>Ethereum provides a public environment where internet apps like Juicebox can run in a permission-less, trustless, and unstoppable fashion.</1><2>This means that anyone can see the code that they're using, anyone can use the code without asking for permission, and no one can mess with the code or take it down.</2><3>People using Juicebox are interacting with each other through public infrastructure—not a private, profit-seeking corporate service that brokers the exchange.</3><4>Juicebox was built to allow people and projects to get paid for creating public art and infrastructure, as much as or more than they would working towards corporate ends. No more shady business.</4>"
-msgstr ""
-
-msgid "<0>A project can choose to reserve a percentage of tokens for itself. Instead of being distributed to paying users, this percentage of tokens is instead minted for the project.</0><1>Holding these tokens entitles a project to a portion of its own overflow.</1>"
-msgstr ""
-
-msgid "<0>A redemption rate rewards people who wait longer to redeem your tokens for overflow.</0><1>For example, with a redemption rate of 70%, redeeming 10% of the token supply at any given time will claim around 7% of the total overflow.</1><2>The rest is left to share between token holders.</2><3>For more info, check out this <4>short video</4> on redemption rate.</3>"
 msgstr ""
 
 msgid "<0>Contribution floor:</0> {0} ETH"
@@ -122,16 +116,19 @@ msgstr ""
 msgid "<0>Discount rate</0>, to reduce your project token's issuance rate (tokens per ETH) each funding cycle."
 msgstr ""
 
-msgid "<0>If you know how much your project needs to earn over some period of time to be sustainable, you can set a funding target with that amount. If your project earns more than that, the surplus funds are locked in an overflow pool. Anyone holding your project's tokens can claim a portion of the overflow pool in exchange for redeeming their tokens.</0><1>For more info, check out this <2>short video</2>.</1>"
+msgid "<0>For more information, or help with anything else, join our <1>Discord server</1>.</0>"
 msgstr ""
 
-msgid "<0>Juicebox has handled tens of thousands of ETH through its protocol, and has so far had 0 security mishaps.</0> <1>However, Juicebox is still experimental software. Although the Juicebox contract team have done their part to shape the smart contracts for public use and have tested the code thoroughly, the risk of exploits is never 0%.</1><2>Due to their public nature, any exploits to the contracts may have irreversible consequences, including loss of funds. Please use Juicebox with caution.</2><3><4>Learn more</4> about the risks.</3>"
+msgid "<0>For project configuration tips and more, take a look at our <1>Project Creator Hub</1>. You should also join our <2>Discord server</2>, where JuiceboxDAO contributors can guide you through the project creation process.</0>"
 msgstr ""
 
-msgid "<0>Juicebox is a governance-minimal protocol. There are only a few levers that can be tuned, none of which impose changes for users without their consent. The Juicebox governance smart contract can adjust these levers.</0><1>The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly.</1>"
+msgid "<0>Juicebox has had <1>multiple security audits</1>, and has handled tens of thousands of ETH through its protocol. So far, Juicebox has had 0 security mishaps.</0><2>However, Juicebox is still experimental software. Although the Juicebox contract team have done their part to shape the smart contracts for public use and have tested the code thoroughly, the risk of exploits is never 0%.</2><3>Due to their public nature, any exploits to the contracts may have irreversible consequences, including loss of funds. Please use Juicebox with caution.</3><4><5>Learn more about the risks.</5></4>"
 msgstr ""
 
-msgid "<0>Juicebox is an open protocol on Ethereum that is funded using Juicebox itself. You can check out the contractualized budget specs <1>here</1>.</0><2>Projects building on Juicebox pay a {JB_FEE}% JBX membership fee from withdrawn funds into the JuiceboxDAO treasury. Projects can then use their JBX to participate in the governance of JuiceboxDAO and its collective treasury, as well as redeem from its growing <3>overflow</3>. The fee is also subject to change via JBX member votes.</2>"
+msgid "<0>Juicebox is a governance-minimal protocol. There are only a few levers that can be tuned, none of which impose changes for users without their consent. The Juicebox governance smart contract can adjust these levers.</0><1>The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly.</1><2>Juicebox is on-chain and non-custodial. Project creators actually own their projects, and JuiceboxDAO has no access to their funds or their project's settings.</2>"
+msgstr ""
+
+msgid "<0>Juicebox is a programmable funding platform for crypto and web3. It helps people fund, operate, and scale their projects transparently using Ethereum, which is a type of programmable cryptocurrency.</0><1>Juicebox is funded and owned by its community.</1>"
 msgstr ""
 
 msgid "<0>Learn more</0> about funding cycle duration."
@@ -161,9 +158,6 @@ msgstr ""
 msgid "<0>On a lower redemption rate, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than other holders.</0> <1>A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed.</1>Learn more in this <2>short video</2>."
 msgstr ""
 
-msgid "<0>Peel</0> is the DAO that manages the juicebox.money frontend interface. You can reach out to Peel either through the <1>Peel Discord</1> or the <2>Juicebox Discord</2>."
-msgstr ""
-
 msgid "<0>Recurring funding cycles</0>. For example, distribute funds from your project's treasury every week."
 msgstr ""
 
@@ -176,16 +170,7 @@ msgstr ""
 msgid "<0>Target is 0.</0> The project's entire balance will be considered overflow. <1>Learn more</1> about overflow."
 msgstr ""
 
-msgid "<0>That's the plan, but the core Juicebox contracts will first be deployed to Ethereum Mainnet.</0><1>The contract team will soon start working on L2 payment terminals for Juicebox projects.</1>"
-msgstr ""
-
-msgid "<0>The Juicebox V2 smart contracts have had multiple security audits. <1>Read the audit reports.</1></0><2>While Juicebox has been audited, it is still experimental software, and there are risks. Please use Juicebox with caution.</2><3><4>Learn more</4> about the risks.</3>"
-msgstr ""
-
 msgid "<0>The redemption rate determines the amount of overflow each token can be redeemed for at any given time.</0><1>A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed.</1><2>On a lower redemption rate, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than other holders.</2>"
-msgstr ""
-
-msgid "<0>There are unit tests written for every condition of every function in the contracts, and integration tests for every workflow that the protocol supports.</0><1>There was also a script written to iteratively run the integration tests using a random input generator, prioritizing edge cases. The code has successfully passed over 1 million test cases through this stress-testing script.</1> <2>The code could always use more eyes and more critique to further the community's confidence. Join our <3>Discord</3> and check out the code on <4>GitHub</4> to work with us.</2>"
 msgstr ""
 
 msgid "<0>This project has a 0% redemption rate</0>. You won't receive any ETH for burning your NFTs."
@@ -200,19 +185,25 @@ msgstr ""
 msgid "<0>This project has no overflow</0>. You won't receive any ETH for burning your tokens."
 msgstr ""
 
-msgid "<0>This website (juicebox.money) connects to the Juicebox protocol's smart contracts, deployed on the Ethereum network. (note: anyone else can make a website that also connects to these same smart contracts. For now, don't trust any site other than this one to access the Juicebox protocol).</0><1>Creating a Juicebox project mints you an NFT (ERC-721) representing ownership over it. Whoever owns this NFT can configure the rules of the game and how payouts are distributed.</1><2>The project's tokens that are minted and distributed as a result of a received payment are ERC-20's. The amount of tokens minted and distributed are proportional to the volume of payments received, weighted by the project's discount rate over time.</2>"
+msgid "<0>This website interacts with the Ethereum blockchain — to use it, you'll need to have a wallet and some ETH (ETH is the main currency on Ethereum). You can get a free wallet from <1>MetaMask.io</1>, and buy ETH from within the wallet by using a credit card.</0>"
+msgstr ""
+
+msgid "<0>To summarize:</0><1><2>When people pay a project, they receive the project's tokens. Like other tokens, these can be used for governance, for token-gated websites, and other purposes.</2><3>Projects can distribute funds to the wallets or Juicebox projects of their choosing. These distributions can be pre-defined, and they can also be changed over time.</3><4>If people are unhappy with the direction a project is headed, they can redeem their tokens to claim a share of the ETH held in the project.</4></1><5>Project creators have powerful controls over each one of these mechanics. They can change token issuance rates, redemption rates, distributions, and other project settings over time, leading to powerful and elegant tokenomics. They can also lock the project's settings in place for pre-determined amounts of time, guaranteeing that they can't rugpull the community. Juicebox lets projects take control if they need to, but it also lets them give up control to build trust.</5><6>Importantly, Juicebox is on-chain and non-custodial. Project creators actually own their projects, and JuiceboxDAO has no access to their funds or their project's settings.</6><7>To learn more, visit <8>the Docs</8>.</7>"
 msgstr ""
 
 msgid "<0>Total project tokens minted</0> when 1 ETH is contributed. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
-msgstr ""
-
-msgid "<0>Users fund your project by paying to use your app or service, or as a patron or investor by making a payment directly to your project's smart contract (like on this app).</0><1>For users paying through your app, you should route those funds through the Juicebox smart contracts so they receive tokens in return.</1>"
 msgstr ""
 
 msgid "<0>View transactions.</0>"
 msgstr ""
 
 msgid "<0>Website:</0> <1>{0}</1>"
+msgstr ""
+
+msgid "<0>When Juicebox projects make payouts to external wallets (like \"vitalik.eth\"), they incur a {JB_FEE}% fee, which is paid to <1>JuiceboxDAO</1>. In exchange, they receive JuiceboxDAO's project token, allowing them to govern the protocol. They can also redeem these tokens to reclaim some of the fees.</0><2><3>Payouts to other Juicebox projects don't incur any fees.</3></2>"
+msgstr ""
+
+msgid "<0>When you pay a project, you <1>may</1> receive that project's tokens or NFTs (depending on how the project is set up).</0><2>By default, these tokens represent a partial claim on funds in the treasury, and they are often used for governance rights, community access, or other membership perks.</2><3>All of this can change from project to project. Read everything carefully, and make sure you understand the project's configurations before you support it. If you need help, stop by the <4>Juicebox Discord server</4>.</3>"
 msgstr ""
 
 msgid "<0>With Automated Funding Cycles, your funding configuration is locked for a set time period.</0><1><2>This helps build trust with your contributors.</2></1>"
@@ -609,12 +600,6 @@ msgid "CSV download failed."
 msgstr ""
 
 msgid "Caller"
-msgstr ""
-
-msgid "Can I change my project's contract after it's been created?"
-msgstr ""
-
-msgid "Can I delete a project?"
 msgstr ""
 
 msgid "Cancel"
@@ -1130,9 +1115,6 @@ msgstr ""
 msgid "Distributions to Ethereum addresses incur a 2.5% JBX membership fee."
 msgstr ""
 
-msgid "Do I have to make my project open source to use Juicebox as its business model?"
-msgstr ""
-
 msgid "Do I need this?"
 msgstr ""
 
@@ -1143,9 +1125,6 @@ msgid "Docs"
 msgstr ""
 
 msgid "Documentation on v1.1 contracts"
-msgstr ""
-
-msgid "Does a project benefit from its own overflow?"
 msgstr ""
 
 msgid "Done"
@@ -1194,9 +1173,6 @@ msgid "ETH received"
 msgstr ""
 
 msgid "Each payout will receive their percent of this total each funding cycle if there is enough in the treasury. Otherwise, they will receive their percent of whatever is in the treasury."
-msgstr ""
-
-msgid "Each project has its own <0>tokens</0>. Anyone who contributes funds to a project receives that project's tokens in return. Token balances will be tracked by the protocol until ERC-20 tokens are optionally issued by the project owner."
 msgstr ""
 
 msgid "Edit NFT"
@@ -1451,7 +1427,7 @@ msgstr ""
 msgid "Grant permission"
 msgstr ""
 
-msgid "Has Juicebox been audited?"
+msgid "Has Juicebox been audited? What are the risks?"
 msgstr ""
 
 msgid "Heads up"
@@ -1478,25 +1454,25 @@ msgstr ""
 msgid "How do I archive a project?"
 msgstr ""
 
-msgid "How do I create a project?"
-msgstr ""
-
 msgid "How do I decide?"
 msgstr ""
 
 msgid "How do I set the redemption rate?"
 msgstr ""
 
-msgid "How does it work?"
+msgid "How do I use this website?"
 msgstr ""
 
-msgid "How have the contracts been tested?"
+msgid "How does it work?"
 msgstr ""
 
 msgid "How long before your next funding cycle must you reconfigure in order for changes to take effect."
 msgstr ""
 
 msgid "How long one funding cycle will last. Funding cycle <0>reconfigurations</0> will only take effect for <1>upcoming</1> funding cycles, i.e. once a current funding cycle has ended."
+msgstr ""
+
+msgid "How should I set up my project?"
 msgstr ""
 
 msgid "How the {reservedPercentage}% of your project's reserved tokens will be split."
@@ -1509,6 +1485,9 @@ msgid "How would you like to distribute payments?"
 msgstr ""
 
 msgid "I accept this project's <0>unique risks</0>."
+msgstr ""
+
+msgid "I have another question!"
 msgstr ""
 
 msgid "I have read and accept the <0>Terms of Service</0>, and understand that any changes I make to my project's funding cycle will not be applied until AFTER Funding Cycle #1 has finished."
@@ -1530,9 +1509,6 @@ msgid "If you don't raise this amount, your splits will receive their percentage
 msgstr ""
 
 msgid "If you have <0/> or <1/> legacy Juicebox projects, we recommend you migrate to <2/> exclusively."
-msgstr ""
-
-msgid "If you're interested in creating a project but still confused on how to get started, consider watching this <0>instructional video</0>. Also feel free to reach out in the <1>Juicebox Discord</1> where our team will be happy to help bring your project idea to life!"
 msgstr ""
 
 msgid "If you're unsure if you need to claim, you probably don't."
@@ -1614,12 +1590,6 @@ msgid "Issue an ERC-20 token (optional)"
 msgstr ""
 
 msgid "Issue token"
-msgstr ""
-
-msgid "It isn't possible to remove a project's data from the blockchain, but we can hide it in the app if you'd like to prevent people from seeing or interacting with it — just let us know in <0>Discord</0>. Keep in mind people will still be able to use your project by interacting directly with the contract."
-msgstr ""
-
-msgid "It'd be a lot cooler if you did"
 msgstr ""
 
 msgid "JBX Fee ({0}%):"
@@ -2297,9 +2267,6 @@ msgstr ""
 msgid "Project owners can archive their Juicebox projects in their project's settings page."
 msgstr ""
 
-msgid "Project owners can configure a delay period, meaning reconfigurations to an upcoming funding cycle must be submitted a certain number of days before it starts. For example, a 3-day delay period means reconfigurations must be submitted at least 3 days before the next funding cycle starts. This gives token holders time to react to the decision and reduces the chance of rug-pulls."
-msgstr ""
-
 msgid "Project page customizations"
 msgstr ""
 
@@ -2331,9 +2298,6 @@ msgid "Project:"
 msgstr ""
 
 msgid "Projects"
-msgstr ""
-
-msgid "Projects can be created with an optional discount rate designed to incentivize supporters to contribute earlier rather than later. The amount of tokens rewarded per amount paid to your project will decrease by the discount rate with each new funding cycle. A higher discount rate will incentivize supporters to pay your project earlier rather than later."
 msgstr ""
 
 msgid "Projects on Juicebox"
@@ -3209,9 +3173,6 @@ msgstr ""
 msgid "Tokens can be minted manually when allowed in the current funding cycle. The project owner can enable or disable minting for upcoming cycles."
 msgstr ""
 
-msgid "Tokens can be redeemed for a portion of a project's <0>overflow</0>, letting you benefit from its success. After all, you helped it get there. The token may also give you exclusive member-only privledges, and allow you to contribute to the governance of the community."
-msgstr ""
-
 msgid "Tokens can be redeemed for a portion of this project's overflow, according to the redemption rate of the current funding cycle. <0>Tokens are burned when they are redeemed.</0>"
 msgstr ""
 
@@ -3506,28 +3467,19 @@ msgstr ""
 msgid "What are automated funding cycles?"
 msgstr ""
 
-msgid "What are community tokens?"
-msgstr ""
-
-msgid "What are the risks?"
+msgid "What does Juicebox actually do?"
 msgstr ""
 
 msgid "What does Juicebox cost?"
 msgstr ""
 
-msgid "What is overflow?"
+msgid "What happens when I pay a project?"
 msgstr ""
 
 msgid "What is the legacy token migration?"
 msgstr ""
 
-msgid "What's a discount rate?"
-msgstr ""
-
-msgid "What's a redemption rate?"
-msgstr ""
-
-msgid "What's going on under the hood?"
+msgid "What's Juicebox?"
 msgstr ""
 
 msgid "When checked, payments to this address will mint this project's ERC-20 tokens to the beneficiary's wallet. Payments will cost more gas. When unchecked, Juicebox will track the beneficiary's new tokens when they pay. The beneficiary can claim their ERC-20 tokens at any time."
@@ -3566,25 +3518,13 @@ msgstr ""
 msgid "Whenever someone pays your project, this percentage of the newly minted tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can \"mint\" them, which distributes them to their intended receivers."
 msgstr ""
 
-msgid "Who funds Juicebox projects?"
-msgstr ""
-
-msgid "Who is Peel?"
+msgid "Who is Peel? Who is JuiceboxDAO?"
 msgstr ""
 
 msgid "Who's getting paid?"
 msgstr ""
 
-msgid "Why Ethereum?"
-msgstr ""
-
-msgid "Why should I want to own a project's tokens?"
-msgstr ""
-
 msgid "Will be rounded to <0/>{0}"
-msgstr ""
-
-msgid "Will it work on L2s?"
 msgstr ""
 
 msgid "With Juicebox, projects are built and maintained by motivated punks getting paid transparently, and funded by a community of users and patrons who are rewarded as the projects they support succeed."

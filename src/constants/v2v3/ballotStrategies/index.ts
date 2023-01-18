@@ -1,5 +1,5 @@
 import * as constants from '@ethersproject/constants'
-import { t } from '@lingui/macro'
+import { plural, t } from '@lingui/macro'
 
 import { NetworkName } from 'models/network-name'
 
@@ -51,9 +51,11 @@ interface BallotStrategy {
 }
 
 const durationBallotStrategyDescription = (days: number) =>
-  t`A reconfiguration to an upcoming funding cycle must be submitted at least ${days} ${
-    days === 1 ? 'day' : 'days'
-  } before it starts.`
+  plural(days, {
+    one: 'A reconfiguration to an upcoming funding cycle must be submitted at least # day before it starts.',
+    other:
+      'A reconfiguration to an upcoming funding cycle must be submitted at least # days before it starts.',
+  })
 
 export function ballotStrategiesFn(network?: NetworkName): BallotStrategy[] {
   return [

@@ -8,7 +8,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { classNames } from 'utils/classNames'
-import { BigHeading } from './BigHeading'
 import { HeroHeading, HeroSubheading } from './strings'
 import bananaOd from '/public/assets/banana-od.webp'
 import bananaOl from '/public/assets/banana-ol.webp'
@@ -81,13 +80,15 @@ export function HeroSection() {
   const isMobile = useMobile()
 
   return (
-    <section className="mt-10 mb-24 px-10">
-      <div className="my-0 mx-auto max-w-[1080px]">
+    <section className="mt-20 mb-24 px-10">
+      <div className="my-0 mx-auto max-w-6xl">
         <Row gutter={30} align="middle">
-          <Col className="flex items-center pb-6" xs={24} md={13}>
+          <Col className="flex items-center pb-6" xs={24} md={14}>
             <div>
               <Space direction="vertical" size="large">
-                <BigHeading className="md:text-6xl" text={<HeroHeading />} />
+                <h1 className="m-0 text-5xl font-semibold md:text-7xl">
+                  <HeroHeading />
+                </h1>
                 <div className="mb-4">
                   <div className="mb-4 text-base font-medium">
                     <HeroSubheading />
@@ -101,7 +102,7 @@ export function HeroSection() {
             </div>
           </Col>
           {!isMobile && (
-            <Col xs={24} md={11}>
+            <Col xs={24} md={10}>
               <Image
                 className="hide-mobile"
                 src={forThemeOption?.({

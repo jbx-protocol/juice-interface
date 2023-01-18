@@ -119,10 +119,10 @@ export function TopProjectsSection() {
 
   return (
     <section className="bg-smoke-50 p-8 dark:bg-slate-600">
-      <div className="my-10 mx-auto max-w-[1080px]">
+      <div className="my-10 mx-auto max-w-5xl">
         <Space direction="vertical" className="w-full" size="large">
           <div>
-            <SectionHeading>
+            <SectionHeading className="mx-auto max-w-[900px] leading-tight">
               <TopProjectsHeading />
             </SectionHeading>
 

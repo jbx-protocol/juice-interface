@@ -64,7 +64,7 @@ export function VeNft() {
   }
 
   return (
-    <div className="my-0 mx-auto max-w-[1080px] p-5">
+    <div className="my-0 mx-auto max-w-5xl p-5">
       <Space direction="vertical" size={40} className="w-full">
         <ProjectHeader
           actions={!isPreviewMode ? <V2V3ProjectHeaderActions /> : undefined}

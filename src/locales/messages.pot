@@ -416,9 +416,6 @@ msgstr ""
 msgid "Allows anyone to extend your lock position."
 msgstr ""
 
-msgid "Almost definitely."
-msgstr ""
-
 msgid "Amount"
 msgstr ""
 
@@ -1310,7 +1307,7 @@ msgstr ""
 msgid "External link"
 msgstr ""
 
-msgid "FAQs"
+msgid "FAQ"
 msgstr ""
 
 msgid "Failed to issue ERC20 token. Check transaction and try again."
@@ -1445,6 +1442,9 @@ msgstr ""
 msgid "Hours"
 msgstr ""
 
+msgid "How Juicebox Works"
+msgstr ""
+
 msgid "How decentralized is Juicebox?"
 msgstr ""
 
@@ -1473,9 +1473,6 @@ msgid "How should I set up my project?"
 msgstr ""
 
 msgid "How the {reservedPercentage}% of your project's reserved tokens will be split."
-msgstr ""
-
-msgid "How to Juice"
 msgstr ""
 
 msgid "How would you like to distribute payments?"
@@ -2738,9 +2735,6 @@ msgstr ""
 msgid "Share project"
 msgstr ""
 
-msgid "Should you Juicebox?"
-msgstr ""
-
 msgid "Show contributors a popup when they receive an NFT."
 msgstr ""
 
@@ -2790,6 +2784,9 @@ msgid "Start upgrade"
 msgstr ""
 
 msgid "Starting over will erase all currently saved progress."
+msgstr ""
+
+msgid "Stay up to date."
 msgstr ""
 
 msgid "Step 1. Deploy migration token"
@@ -2892,9 +2889,6 @@ msgid "The discount rate cannot be set when the funding cycle duration is not se
 msgstr ""
 
 msgid "The distribution limit for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
-msgstr ""
-
-msgid "The future will be led by creators, and owned by communities."
 msgstr ""
 
 msgid "The handle of your V1 project. This is the handle that is shown in the URL of your project page."
@@ -3522,9 +3516,6 @@ msgid "Who's getting paid?"
 msgstr ""
 
 msgid "Will be rounded to <0/>{0}"
-msgstr ""
-
-msgid "With Juicebox, projects are built and maintained by motivated punks getting paid transparently, and funded by a community of users and patrons who are rewarded as the projects they support succeed."
 msgstr ""
 
 msgid "With manual funding cycles selected, the project's owner can start a new funding cycle on-demand. This may pose a risk to some contributors."

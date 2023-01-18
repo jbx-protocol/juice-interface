@@ -9,20 +9,21 @@ export const useAvailableReconfigurationStrategies = (network: NetworkName) => {
       : { ...s, isDefault: false },
   )
   const threeDay = strategies.find(s => s.id === 'threeDay')
+  const oneDay = strategies.find(s => s.id === 'oneDay')
   const sevenDay = strategies.find(s => s.id === 'sevenDay')
   const none = strategies.find(s => s.id === 'none')
 
-  if (!threeDay || !sevenDay || !none) {
+  if (!threeDay || !oneDay || !sevenDay || !none) {
     console.error(
       'Unexpected error occurred - missing field in reconfiguration strategies',
-      { threeDay, sevenDay, none },
+      { threeDay, oneDay, sevenDay, none },
     )
     throw new Error(
       'Unexpected error occurred - missing field in reconfiguration strategies',
     )
   }
 
-  return [threeDay, sevenDay, none]
+  return [threeDay, oneDay, sevenDay, none]
 }
 
 export type AvailableReconfigurationStrategy = ArrayElement<

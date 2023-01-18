@@ -10,25 +10,23 @@ export function NewsletterSection() {
       <div className="my-0 mx-auto max-w-5xl">
         <Row align="middle" gutter={40}>
           <Col xs={24} md={14}>
-            <div className="grid gap-y-5">
-              <SectionHeading className="text-left text-black">
-                <Trans>Stay up to date.</Trans>
-              </SectionHeading>
-              <div className="text-black">
-                <p className="text-gray-600 mb-6 text-base">
-                  Subscribe to our newsletter to get the latest updates from the
-                  Juicebox ecosystem.
-                </p>
-                <Button
-                  size="large"
-                  type="primary"
-                  href="https://newsletter.juicebox.money"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Subscribe Now
-                </Button>
-              </div>
+            <SectionHeading className="mb-6 text-left text-black dark:text-slate-100">
+              <Trans>Stay up to date.</Trans>
+            </SectionHeading>
+            <div className="text-black">
+              <p className="mb-6 text-base text-black dark:text-slate-100">
+                Subscribe to our newsletter to get the latest updates from the
+                Juicebox ecosystem.
+              </p>
+              <Button
+                size="large"
+                type="primary"
+                href="https://newsletter.juicebox.money"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Subscribe Now
+              </Button>
             </div>
           </Col>
 

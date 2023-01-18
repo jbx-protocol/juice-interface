@@ -73,13 +73,13 @@ const handler: NextApiHandler = async (_, res) => {
       // Ensure that Sepana record IDs are internally consistent
       if (sepanaProject._id !== sepanaProject._source.id) {
         sepanaIdErrors.push(
-          `ID: ${sepanaProject._id}, _source.id: ${sepanaProject._source.id}`,
+          `\`[${sepanaProject._id}]\` _source.id: ${sepanaProject._source.id}`,
         )
       }
 
       if (sepanaProject._source.metadataResolved === false) {
         projectsMissingMetadata.push(
-          `ID: ${sepanaProject._source.id}, metadataUri: ${sepanaProject._source.metadataUri}`,
+          `\`[${sepanaProject._source.id}]\` metadataUri: ${sepanaProject._source.metadataUri}`,
         )
       }
 
@@ -91,7 +91,7 @@ const handler: NextApiHandler = async (_, res) => {
       // Ensure that no extra projects exist in Sepana
       if (!subgraphProject) {
         sepanaExtraProjects.push(
-          `ID: ${sepanaProject._source.id}, Name: ${sepanaProject._source.name}`,
+          `\`[${sepanaProject._source.id}]\` Name: ${sepanaProject._source.name}`,
         )
       }
 
@@ -103,7 +103,9 @@ const handler: NextApiHandler = async (_, res) => {
           sepanaProject._source[k]
         ) {
           mismatchedProjects.push(
-            `ID: ${subgraphProject.id}, Property: ${k}, VALUES=> Subgraph: ${
+            `\`[${
+              sepanaProject._source.id
+            }]\` Property: ${k}, VALUES=> Subgraph: ${
               subgraphProject[k as keyof typeof subgraphProject]
             }, Sepana: ${sepanaProject._source[k]}`,
           )

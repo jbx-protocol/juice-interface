@@ -82,6 +82,14 @@ export const resourcesMenuItems = (mobile?: boolean): ResourceItem[] => {
         </a>
       ),
     },
+    {
+      key: 'newsletter',
+      label: (
+        <a href="https://newsletter.juicebox.money" {...linkStyle}>
+          <Trans>Newsletter</Trans>
+        </a>
+      ),
+    },
   ]
 }
 
@@ -115,16 +123,8 @@ export const desktopMenuItems = ({
   {
     key: 'discord',
     label: (
-      <Link href="https://discord.gg/juicebox">
+      <Link href="https://discord.gg/wFTh4QnDzk">
         <a className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100">{t`Discord`}</a>
-      </Link>
-    ),
-  },
-  {
-    key: 'newsletter',
-    label: (
-      <Link href="https://newsletter.juicebox.money">
-        <a className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100">{t`Newsletter`}</a>
       </Link>
     ),
   },
@@ -166,22 +166,11 @@ export const mobileNavItems = ({
   {
     key: 'discord',
     label: (
-      <Link href="https://discord.gg/juicebox">
+      <Link href="https://discord.gg/wFTh4QnDzk">
         <a
           className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100"
           {...{ ...externalMenuLinkProps, ...collapseNav }}
         >{t`Discord`}</a>
-      </Link>
-    ),
-  },
-  {
-    key: 'newsletter',
-    label: (
-      <Link href="https://newsletter.juicebox.money">
-        <a
-          className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100"
-          {...{ ...externalMenuLinkProps, ...collapseNav }}
-        >{t`Newsletter`}</a>
       </Link>
     ),
   },

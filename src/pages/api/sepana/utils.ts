@@ -182,13 +182,13 @@ export async function getJob(jobId: string) {
 
 const SEPANA_ALERTS = {
   DB_UPDATE_ERROR: 'Error updating database',
-  DELETED_ALL_RECORDS: 'Deleted all records from database',
-  DELETE_ERROR: 'Error deleting records from database',
-  BAD_DB_HEALTH: 'Errors detected in database',
+  DELETED_ALL_RECORDS: 'Deleted all records',
+  DELETE_ERROR: 'Error deleting records',
+  BAD_DB_HEALTH: 'Errors in database',
 }
 
 const SEPANA_NOTIFS = {
-  DB_UPDATED: 'Database records updated',
+  DB_UPDATED: 'Records updated',
   DB_OK: 'Database is OK',
 }
 
@@ -214,7 +214,7 @@ export async function sepanaAlert(
   }
 
   return await axios.post(url, {
-    content: `${opts.type === 'alert' ? '🚨' : '⚡️'} **${
+    content: `${opts.type === 'alert' ? '🚨' : ''} **${
       opts.type === 'alert'
         ? SEPANA_ALERTS[opts.alert]
         : SEPANA_NOTIFS[opts.notif]

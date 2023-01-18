@@ -81,7 +81,7 @@ function Projects() {
   }, [includeV1, includeV1_1, includeV2])
 
   return (
-    <div className="my-0 mx-auto max-w-[1080px] p-5">
+    <div className="my-0 mx-auto max-w-5xl p-5">
       <Space direction="vertical" className="w-full" size="large">
         <div>
           <header className="flex flex-wrap items-center justify-between gap-y-4 pb-3">

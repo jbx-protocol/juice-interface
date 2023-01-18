@@ -16,7 +16,7 @@ export function V2V3Dashboard() {
   if (cvsLoading || !projectMetadata) return <Loading />
 
   return (
-    <div className="my-0 mx-auto max-w-[1080px] p-5">
+    <div className="my-0 mx-auto max-w-5xl p-5">
       <TransactionProvider>
         <VeNftProvider projectId={projectId}>
           <V2V3Project />

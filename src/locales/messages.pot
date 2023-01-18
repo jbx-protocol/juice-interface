@@ -116,10 +116,10 @@ msgstr ""
 msgid "<0>Discount rate</0>, to reduce your project token's issuance rate (tokens per ETH) each funding cycle."
 msgstr ""
 
-msgid "<0>For more information, or help with anything else, join our <1>Discord server</1>.</0>"
+msgid "<0>For more information, or help with anything else, join the <1>JuiceboxDAO Discord server</1>.</0>"
 msgstr ""
 
-msgid "<0>For project configuration tips and more, take a look at our <1>Project Creator Hub</1>. You should also join our <2>Discord server</2>, where JuiceboxDAO contributors can guide you through the project creation process.</0>"
+msgid "<0>For project configuration tips and more, take a look at the <1>Project Creator Hub</1>. You should also join JuiceboxDAO's <2>Discord server</2>, where DAO contributors can guide you through the project creation process.</0>"
 msgstr ""
 
 msgid "<0>Juicebox has had <1>multiple security audits</1>, and has handled tens of thousands of ETH through its protocol. So far, Juicebox has had 0 security mishaps.</0><2>However, Juicebox is still experimental software. Although the Juicebox contract team have done their part to shape the smart contracts for public use and have tested the code thoroughly, the risk of exploits is never 0%.</2><3>Due to their public nature, any exploits to the contracts may have irreversible consequences, including loss of funds. Please use Juicebox with caution.</3><4><5>Learn more about the risks.</5></4>"

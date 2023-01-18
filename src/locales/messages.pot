@@ -1517,6 +1517,9 @@ msgstr ""
 msgid "If you have a V1 project, add the project's handle here. Otherwise, leave this blank."
 msgstr ""
 
+msgid "If you use the default governance option (no governance), the voting weight will still be accessible on the blockchain for use in snapshot strategies or any other desired purpose."
+msgstr ""
+
 msgid "If you're unsure if you need to claim, you probably don't."
 msgstr ""
 
@@ -3441,9 +3444,6 @@ msgid "VotePWR"
 msgstr ""
 
 msgid "Voting weight"
-msgstr ""
-
-msgid "Voting weight is only applicable if this NFT will be used for on-chain governance, and can also be read on-chain for other purposes if needed."
 msgstr ""
 
 msgid "WAGMI!"

@@ -65,6 +65,7 @@ export const AddEditRewardModal = ({
   const [form] = Form.useForm<AddEditRewardModalFormProps>()
   const [limitedSupply, setLimitedSupply] = useState<boolean>(false)
   const [isReservingNfts, setIsReservingNfts] = useState<boolean>(false)
+  const [advancedOptionsOpen, setAdvancedOptionsOpen] = useState<boolean>(false)
 
   const pinFileToIpfs = usePinFileToIpfs()
   const wallet = useWallet()
@@ -91,6 +92,29 @@ export const AddEditRewardModal = ({
       votingWeight: editingData.votingWeight,
     })
   }, [editingData, form, open])
+
+  // Due to the way antd works, if advanced options are set, we need to open it on load
+  useEffect(() => {
+    const openAdvancedOptions =
+      !!editingData?.reservedRate ||
+      !!editingData?.beneficiary ||
+      !!editingData?.votingWeight ||
+      !!editingData?.url
+
+    setAdvancedOptionsOpen(openAdvancedOptions)
+  }, [
+    open,
+    editingData?.beneficiary,
+    editingData?.reservedRate,
+    editingData?.url,
+    editingData?.votingWeight,
+  ])
+
+  const onCollapseChanged = useCallback((key: string | string[]) => {
+    const isAdvancedOptionsOpen =
+      typeof key === 'string' ? key === '0' : key.includes('0')
+    setAdvancedOptionsOpen(isAdvancedOptionsOpen)
+  }, [])
 
   const onModalOk = useCallback(async () => {
     const fields = await form.validateFields()
@@ -258,7 +282,10 @@ export const AddEditRewardModal = ({
             )}
           </Space>
         </Form.Item>
-        <CreateCollapse>
+        <CreateCollapse
+          activeKey={advancedOptionsOpen ? ['0'] : []}
+          onChange={onCollapseChanged}
+        >
           <CreateCollapse.Panel
             header={<OptionalHeader header={t`Advanced options`} />}
             key={0}
@@ -327,9 +354,9 @@ export const AddEditRewardModal = ({
               tooltip={t`Give this NFT a voting weight to be used for on-chain governance. The number you set is only used in relation to other NFTs in this collection.`}
               extra={
                 <Trans>
-                  Voting weight is only applicable if this NFT will be used for
-                  on-chain governance, and can also be read on-chain for other
-                  purposes if needed.
+                  If you use the default governance option (no governance), the
+                  voting weight will still be accessible on the blockchain for
+                  use in snapshot strategies or any other desired purpose.
                 </Trans>
               }
               rules={[

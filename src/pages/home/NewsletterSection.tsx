@@ -18,7 +18,7 @@ export function NewsletterSection() {
             </SectionHeading>
             <div className="text-black">
               <p className="mb-6 text-base text-black dark:text-slate-100">
-                Subscribe to our newsletter to get the latest updates from the
+                Subscribe to Juicenews to get the latest updates from the
                 Juicebox ecosystem.
               </p>
               <Button

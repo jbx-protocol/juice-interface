@@ -32,7 +32,7 @@ export function HowItWorksSection() {
         <Trans>How Juicebox Works</Trans>
       </SectionHeading>
 
-      <div className="my-0 mx-auto max-w-[1080px] p-5">
+      <div className="my-0 mx-auto max-w-5xl p-5">
         <Row align="middle">
           {!isMobile && (
             <Col className="mb-10" xs={24} sm={11}>

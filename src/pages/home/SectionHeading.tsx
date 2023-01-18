@@ -5,7 +5,12 @@ export const SectionHeading: React.FC<{ className?: string }> = ({
   className,
 }) => {
   return (
-    <h2 className={twMerge('text-center text-5xl font-semibold', className)}>
+    <h2
+      className={twMerge(
+        'text-center text-3xl font-semibold leading-tight md:text-5xl',
+        className,
+      )}
+    >
       {children}
     </h2>
   )

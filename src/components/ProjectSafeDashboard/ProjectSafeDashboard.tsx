@@ -47,7 +47,7 @@ export function ProjectSafeDashboard({
 
   if (!gnosisSafeLoading && !gnosisSafe) {
     return (
-      <div className="my-8 mx-auto max-w-[1080px] p-5">
+      <div className="my-8 mx-auto max-w-5xl p-5">
         <Trans>Project is not owned by a Safe.</Trans>
       </div>
     )
@@ -71,7 +71,7 @@ export function ProjectSafeDashboard({
   const safeUrl = generateSafeUrl(projectOwnerAddress)
 
   return (
-    <div className="my-8 mx-auto max-w-[1080px] p-5">
+    <div className="my-8 mx-auto max-w-5xl p-5">
       <h1 className="mb-1 text-black dark:text-slate-100">
         <Trans>Safe transactions</Trans>
       </h1>

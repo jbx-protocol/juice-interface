@@ -11,7 +11,7 @@ export default function PrivacyPolicyPage() {
 
 function PrivacyPolicy() {
   return (
-    <div className="my-0 mx-auto max-w-[1080px] p-10">
+    <div className="my-0 mx-auto max-w-5xl p-10">
       <h1>Privacy Policy</h1>
       <p>
         We want to process as little personal information as possible when you

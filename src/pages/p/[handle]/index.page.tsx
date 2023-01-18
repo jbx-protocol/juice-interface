@@ -78,7 +78,7 @@ function V1Dashboard() {
   }
 
   return (
-    <div className="my-0 mx-auto max-w-[1080px] p-5">
+    <div className="my-0 mx-auto max-w-5xl p-5">
       <V1Project />
       <div className="p-5 text-center">
         <ScrollToTopButton />

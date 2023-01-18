@@ -126,7 +126,8 @@ export async function deleteAllSepanaDocs() {
  * @param docs Projects to write to Sepana database
  */
 export async function writeSepanaDocs(docs: SepanaProjectJson[]) {
-  const success: SepanaProjectJson[] = []
+  const jobs: string[] = []
+  const projects: SepanaProjectJson[] = []
 
   // Clone array because we mutate it
   const pageSize = 500
@@ -136,7 +137,7 @@ export async function writeSepanaDocs(docs: SepanaProjectJson[]) {
     const docsToWrite = docs.slice(pageSize * page, pageSize * (page + 1))
 
     await axios
-      .post(
+      .post<{ job_id: string }>(
         process.env.NEXT_PUBLIC_SEPANA_API_URL + 'engine/insert_data',
         {
           engine_id: process.env.SEPANA_ENGINE_ID,
@@ -146,17 +147,20 @@ export async function writeSepanaDocs(docs: SepanaProjectJson[]) {
           headers: headers('read/write'),
         },
       )
-      .then(() => success.push(...docsToWrite))
+      .then(res => {
+        jobs.push(res.data.job_id)
+        projects.push(...docsToWrite)
+      })
 
     if (docs.length > pageSize * (page + 1)) {
       // Arbitrary delay to avoid rate limits
-      await new Promise(r => setTimeout(r, 5000))
+      await new Promise(r => setTimeout(r, 3000))
     }
 
     page++
   }
 
-  return success
+  return { jobs, projects }
 }
 
 const SEPANA_ALERTS = {

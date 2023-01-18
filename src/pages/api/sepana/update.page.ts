@@ -28,14 +28,15 @@ const handler: NextApiHandler = async (req, res) => {
     // This flag will let us know we should retry resolving IPFS data for projects that are missing it
     const retryIPFS = req.method === 'POST' && req.body['retryIPFS'] === true
 
-    let missingMetadataCount = 0
-
     const sepanaProjects = (await queryAllSepanaProjects()).data.hits.hits
 
     const subgraphProjects = await querySubgraphExhaustive({
       entity: 'project',
       keys: projectKeys as (keyof Project)[],
     })
+
+    const keysForChangedProjects: { [k: string]: string } = {}
+    const idsOfAddedProjects: Set<string> = new Set()
 
     // Get list of projects that have changed in Subgraph and no longer match Sepana
     const changedSubgraphProjects = subgraphProjects
@@ -52,22 +53,29 @@ const handler: NextApiHandler = async (req, res) => {
         ),
       )
       .filter(subgraphProject => {
+        const id = subgraphProject.id
+
+        if (!id) return false
+
         const sepanaProject = sepanaProjects.find(
           p => subgraphProject.id === p._source.id,
         )
 
-        if (sepanaProject?._source.metadataResolved === false) {
-          missingMetadataCount++
-        }
+        if (!sepanaProject) idsOfAddedProjects.add(id)
 
         // Deep compare subgraph project with sepana project to find which projects have changed or not yet been stored on sepana
         return (
           !sepanaProject ||
           (!sepanaProject._source.metadataResolved && retryIPFS) ||
-          projectKeys.some(
-            k =>
-              subgraphProject[k as keyof Project] !== sepanaProject._source[k],
-          )
+          projectKeys.some(k => {
+            if (
+              subgraphProject[k as keyof Project] !== sepanaProject._source[k]
+            ) {
+              keysForChangedProjects[id] = k
+              return true
+            }
+            return false
+          })
         )
       })
 
@@ -117,17 +125,18 @@ const handler: NextApiHandler = async (req, res) => {
     const ipfsErrors = promiseResults.filter(x => x.error)
 
     // Write all projects, even those with metadata errors.
-    const updatedProjects = await writeSepanaDocs(
+    const { jobs, projects: updatedProjects } = await writeSepanaDocs(
       promiseResults.map(r => r.project),
     )
 
-    const updatedMessage = `Successfully updated ${
-      updatedProjects.length - ipfsErrors.length
-    }/${subgraphProjects.length} projects${
-      retryIPFS ? ` (retried IPFS for ${missingMetadataCount})` : ''
-    }:\n${promiseResults
+    const updatedMessage = `Jobs: ${jobs.join(',')}\n\n${promiseResults
       .filter(r => !r.error)
-      .map(r => `\`[${r.project.id}]\` ${r.project.name}`)
+      .map(
+        r =>
+          `\`[${r.project.id}]\` ${r.project.name} _(${
+            keysForChangedProjects[r.project.id]
+          })_`,
+      )
       .join('\n')}`
 
     if (promises.length) {
@@ -155,7 +164,11 @@ const handler: NextApiHandler = async (req, res) => {
 
     res.status(200).json({
       network: process.env.NEXT_PUBLIC_INFURA_NETWORK,
-      updated: { projects: updatedProjects, count: updatedProjects.length },
+      updates: {
+        projects: updatedProjects,
+        count: updatedProjects.length,
+        jobs,
+      },
       errors: { ipfsErrors, count: ipfsErrors.length },
     })
   } catch (error) {

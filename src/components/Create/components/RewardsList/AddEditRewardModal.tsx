@@ -14,8 +14,9 @@ import { useWallet } from 'hooks/Wallet'
 import { UploadRequestOption } from 'rc-upload/lib/interface'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
-import { restrictedIpfsUrl } from 'utils/ipfs'
+import { openIpfsUrl } from 'utils/ipfs'
 import { v4 } from 'uuid'
+
 import { CreateButton } from '../CreateButton'
 import { inputMustExistRule } from '../pages'
 import { inputIsValidUrlRule } from '../pages/utils/rules/inputIsValidUrlRule'
@@ -100,7 +101,7 @@ export const AddEditRewardModal = ({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const res = await pinFileToIpfs({ file, onProgress: onProgress as any })
         if (!res) throw new Error('Failed to pin file to IPFS')
-        const url = restrictedIpfsUrl(res.IpfsHash)
+        const url = openIpfsUrl(res.IpfsHash)
         return url
       } catch (err) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

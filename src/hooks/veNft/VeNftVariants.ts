@@ -1,6 +1,6 @@
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { VARIANTS_HASH } from 'constants/veNft/veNftProject'
-import { ipfsGetWithFallback } from 'lib/api/ipfs'
+import { getIpfsData } from 'lib/api/ipfs'
 import { VeNftVariant } from 'models/veNft'
 import { useQuery } from 'react-query'
 import { featureFlagEnabled } from 'utils/featureFlags'
@@ -21,8 +21,9 @@ export function useVeNftVariants() {
         throw new Error('Variants hash not specified.')
       }
       const file = hash + '/characters.json'
-      const response = await ipfsGetWithFallback(file)
-      const data: Record<string, VeNftMetadataResponse> = response.data
+      const { data } = await getIpfsData<Record<string, VeNftMetadataResponse>>(
+        file,
+      )
       const variants: VeNftVariant[] = Object.entries(data).map(
         ([id, variant]) => {
           const { name, jbx_range } = variant.metadata

@@ -2,7 +2,7 @@ import { PinataMetadata, PinataPinResponse } from '@pinata/sdk'
 import axios from 'axios'
 import { IPFS_TAGS } from 'constants/ipfs'
 import { consolidateMetadata, ProjectMetadataV5 } from 'models/project-metadata'
-import { metadataNameForHandle, restrictedIpfsUrl } from 'utils/ipfs'
+import { metadataNameForHandle, openIpfsUrl } from 'utils/ipfs'
 
 // Workaround function for a bug in pinata where the data is sometimes returned in bytes
 const extractJsonFromBase64Data = (base64: string) => {
@@ -64,17 +64,22 @@ export const editMetadataForCid = async (
   return pinRes.data
 }
 
+export const getIpfsData = async <T>(cid: string) =>
+  axios.get<T>(openIpfsUrl(cid), {
+    responseType: 'json',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  })
+
 // TODO after the move to Infura for IPFS, we can probably look at removing this.
-export const ipfsGetWithFallback = async (
-  hash: string,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  { fallbackHostname }: { fallbackHostname?: string } = {},
-) => {
+export const ipfsGetWithFallback = async (hash: string) => {
   // try {
   // Build config for axios get request
   const response = await axios({
     method: 'get',
-    url: restrictedIpfsUrl(hash),
+    url: openIpfsUrl(hash),
     responseType: 'json',
     headers: {
       Accept: 'application/json',

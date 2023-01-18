@@ -8,7 +8,7 @@ import { usePinFileToIpfs } from 'hooks/PinFileToIpfs'
 import { useWallet } from 'hooks/Wallet'
 import { useContext, useState } from 'react'
 import { classNames } from 'utils/classNames'
-import { restrictedIpfsUrl } from 'utils/ipfs'
+import { openIpfsUrl } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
 
 const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif']
@@ -27,7 +27,7 @@ export default function NftUpload({ form }: { form: FormInstance }) {
   const wallet = useWallet()
 
   const setValue = (cid?: string) => {
-    const newUrl = cid ? restrictedIpfsUrl(cid) : undefined
+    const newUrl = cid ? openIpfsUrl(cid) : undefined
     form.setFieldsValue({ imageUrl: newUrl })
     setImageRenderLoading(true)
     setUploading(false)

@@ -1,7 +1,7 @@
 import Bottleneck from 'bottleneck'
-import { PUBLIC_PINATA_GATEWAY_HOSTNAME } from 'constants/ipfs'
-import { ipfsGetWithFallback } from 'lib/api/ipfs'
-import { consolidateMetadata } from 'models/project-metadata'
+import { getIpfsData } from 'lib/api/ipfs'
+import { consolidateMetadata, ProjectMetadataV5 } from 'models/project-metadata'
+
 import { GlobalPinataScheduler } from '../bottleneck'
 
 export const findProjectMetadata = async ({
@@ -19,10 +19,7 @@ export const findProjectMetadata = async ({
   while (true) {
     try {
       const response = await limiter.schedule(
-        async () =>
-          await ipfsGetWithFallback(metadataCid, {
-            fallbackHostname: PUBLIC_PINATA_GATEWAY_HOSTNAME,
-          }),
+        async () => await getIpfsData<ProjectMetadataV5>(metadataCid),
       )
       const metadata = consolidateMetadata(response.data)
       Object.keys(metadata).forEach(key =>

@@ -1,11 +1,10 @@
 import { CloseCircleFilled, FileImageOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { PinataMetadata } from '@pinata/sdk'
 import { Button, Col, message, Row, Space, Upload } from 'antd'
 import { usePinFileToIpfs } from 'hooks/PinFileToIpfs'
 import { useWallet } from 'hooks/Wallet'
 import { useState } from 'react'
-import { cidFromIpfsUri, ipfsUrl, restrictedIpfsUrl } from 'utils/ipfs'
+import { cidFromIpfsUri, ipfsUrl, openIpfsUrl } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
 
 import ExternalLink from '../ExternalLink'
@@ -21,12 +20,10 @@ export const FormImageUploader = ({
   value,
   onChange,
   maxSizeKBs: maxSize,
-  metadata,
   text,
 }: {
   value?: string // IPFS link: `ipfs://${cid}`
   onChange?: (value?: string) => void
-  metadata?: PinataMetadata
   maxSizeKBs?: number
   text?: string
 }) => {
@@ -45,7 +42,7 @@ export const FormImageUploader = ({
     onChange?.(url)
   }
 
-  const imageUrl = imageCid ? restrictedIpfsUrl(imageCid) : undefined
+  const imageUrl = imageCid ? openIpfsUrl(imageCid) : undefined
 
   return (
     <Row className="text-grey-500 dark:text-grey-300" gutter={30}>
@@ -93,7 +90,6 @@ export const FormImageUploader = ({
                 try {
                   const res = await pinFileToIpfs({
                     ...req,
-                    metadata,
                     onProgress: percent => {
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       req.onProgress?.({ percent } as any)

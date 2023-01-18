@@ -23,8 +23,14 @@ const infuraApi = axios.create({
 })
 
 /**
- * https://docs.infura.io/infura/networks/ipfs/http-api-methods/pin_add
+ * Adds a file to ipfs and pins with Infura
+ * https://docs.infura.io/infura/networks/ipfs/http-api-methods/add
  */
-export function pin(hash: string) {
-  return infuraApi.post(`/api/v0/pin/add?arg=${hash}`)
+export function pin<D>(data: D) {
+  return infuraApi.post<D, { Name: string; Hash: string; Size: string }>(
+    '/api/ipfs/add',
+    {
+      data,
+    },
+  )
 }

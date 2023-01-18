@@ -57,7 +57,6 @@ export function ipfsUrl(cid: string, path?: string) {
  */
 export const cidFromUrl = (url: string) => url.split('/').pop()
 
-export const cidFromPinataUrl = (url: string) => url.split('/ipfs/').pop()
 export const cidFromIpfsUri = (ipfsUri: string) =>
   ipfsUri.match(IPFS_URL_REGEX)?.[1]
 

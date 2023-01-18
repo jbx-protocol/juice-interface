@@ -72,7 +72,7 @@ export function HowItWorksSection() {
                   time to meet your community's evolving needs. Run your
                   community how you want to, with our pre-built integrations for{' '}
                   <ExternalLink href="https://safe.global/">
-                    Gnosis Safe
+                    Safe
                   </ExternalLink>
                   ,{' '}
                   <ExternalLink href="https://snapshot.org">

@@ -473,7 +473,7 @@ msgstr ""
 msgid "Are you sure?"
 msgstr ""
 
-msgid "As your community grows, scale your project with it: Juicebox lets you update your payouts, tokenomics, and other rules over time to meet your community's evolving needs. Run your community how you want to, with our pre-built integrations for <0>Gnosis Safe</0>, <1>Snapshot</1>, and the other tools you already use."
+msgid "As your community grows, scale your project with it: Juicebox lets you update your payouts, token issuance & redemption, and other rules over time to meet your community's evolving needs. Run your community how you want to, with our pre-built integrations for <0>Safe</0>, <1>Snapshot</1>, and the other tools you already use."
 msgstr ""
 
 msgid "Assets"
@@ -3257,7 +3257,7 @@ msgstr ""
 msgid "Transfer {tokenTextShort}"
 msgstr ""
 
-msgid "Transparently set your terms ahead of time, or take control when you need to. Juicebox lets you define elegant tokenomics, payouts, and other rules in advance, acting as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
+msgid "Transparently set your terms ahead of time, or take control when you need to. Juicebox lets you define elegant token issuance & redemption, payouts, and other rules in advance, acting as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
 msgstr ""
 
 msgid "Trending"

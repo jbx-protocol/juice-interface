@@ -59,22 +59,20 @@ export function HowItWorksSection() {
               <FourthCol header={t`2. Build trust`}>
                 <Trans>
                   Transparently set your terms ahead of time, or take control
-                  when you need to. Juicebox lets you define elegant tokenomics,
-                  payouts, and other rules in advance, acting as a safeguard
-                  against rug pulls. Your supporters don't have to trust you —
-                  even though they already do.
+                  when you need to. Juicebox lets you define elegant token
+                  issuance & redemption, payouts, and other rules in advance,
+                  acting as a safeguard against rug pulls. Your supporters don't
+                  have to trust you — even though they already do.
                 </Trans>
               </FourthCol>
               <FourthCol header={t`3. Stay flexible`}>
                 <Trans>
                   As your community grows, scale your project with it: Juicebox
-                  lets you update your payouts, tokenomics, and other rules over
-                  time to meet your community's evolving needs. Run your
-                  community how you want to, with our pre-built integrations for{' '}
-                  <ExternalLink href="https://safe.global/">
-                    Safe
-                  </ExternalLink>
-                  ,{' '}
+                  lets you update your payouts, token issuance & redemption, and
+                  other rules over time to meet your community's evolving needs.
+                  Run your community how you want to, with our pre-built
+                  integrations for{' '}
+                  <ExternalLink href="https://safe.global/">Safe</ExternalLink>,{' '}
                   <ExternalLink href="https://snapshot.org">
                     Snapshot
                   </ExternalLink>

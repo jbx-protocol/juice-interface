@@ -26,6 +26,9 @@ msgstr ""
 msgid "1 year"
 msgstr ""
 
+msgid "1-day delay"
+msgstr ""
+
 msgid "1. Get funded"
 msgstr ""
 
@@ -246,9 +249,6 @@ msgid "A reconfiguration to an upcoming funding cycle must be submitted at least
 msgstr ""
 
 msgid "A reconfiguration to an upcoming funding cycle must be submitted at least 7 days before it starts."
-msgstr ""
-
-msgid "A reconfiguration to an upcoming funding cycle must be submitted at least {days} days before it starts."
 msgstr ""
 
 msgid "A reserved rate of more than 90% is risky for contributors. Contributors won't receive many tokens for their contribution."
@@ -3969,6 +3969,9 @@ msgid "{0}{1}"
 msgstr ""
 
 msgid "{count} total"
+msgstr ""
+
+msgid "{days, plural, one {A reconfiguration to an upcoming funding cycle must be submitted at least # day before it starts.} other {A reconfiguration to an upcoming funding cycle must be submitted at least # days before it starts.}}"
 msgstr ""
 
 msgid "{exchangeName} has no market for {tokenSymbol}."

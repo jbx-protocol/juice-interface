@@ -542,9 +542,6 @@ msgstr ""
 msgid "Block number"
 msgstr ""
 
-msgid "Blog"
-msgstr ""
-
 msgid "Bonding curve"
 msgstr ""
 

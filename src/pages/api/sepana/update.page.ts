@@ -36,7 +36,8 @@ const handler: NextApiHandler = async (req, res) => {
     })
 
     const keysForChangedProjects: { [k: string]: string } = {}
-    const idsOfAddedProjects: Set<string> = new Set()
+    const idsOfNewProjects: Set<string> = new Set()
+    let missingMetadataCount = 0
 
     // Get list of projects that have changed in Subgraph and no longer match Sepana
     const changedSubgraphProjects = subgraphProjects
@@ -61,7 +62,11 @@ const handler: NextApiHandler = async (req, res) => {
           p => subgraphProject.id === p._source.id,
         )
 
-        if (!sepanaProject) idsOfAddedProjects.add(id)
+        if (!sepanaProject) {
+          idsOfNewProjects.add(id)
+        } else if (sepanaProject._source.metadataResolved === false) {
+          missingMetadataCount++
+        }
 
         // Deep compare subgraph project with sepana project to find which projects have changed or not yet been stored on sepana
         return (
@@ -129,14 +134,21 @@ const handler: NextApiHandler = async (req, res) => {
       promiseResults.map(r => r.project),
     )
 
-    const updatedMessage = `Jobs: ${jobs.join(',')}\n\n${promiseResults
+    const updatedMessage = `Jobs: ${jobs.join(',')}${
+      retryIPFS
+        ? `\nRetried resolving metadata for ${missingMetadataCount}`
+        : ''
+    }\n\n${promiseResults
       .filter(r => !r.error)
-      .map(
-        r =>
-          `\`[${r.project.id}]\` ${r.project.name} _(${
-            keysForChangedProjects[r.project.id]
-          })_`,
-      )
+      .map(r => {
+        const {
+          project: { id, name },
+        } = r
+
+        return `\`[${id}]\` ${name} _(${
+          idsOfNewProjects.has(id) ? 'New' : keysForChangedProjects[id]
+        })_`
+      })
       .join('\n')}`
 
     if (promises.length) {

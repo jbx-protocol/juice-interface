@@ -42,7 +42,7 @@ const headers = (type: 'read' | 'read/write' | 'admin') => {
  */
 export async function queryAllSepanaProjects() {
   return axios.post<SepanaSearchResponse<SepanaProject>>(
-    process.env.NEXT_PUBLIC_SEPANA_API_URL + 'search',
+    `${process.env.NEXT_PUBLIC_SEPANA_API_URL}/search`,
     {
       engine_ids: [process.env.SEPANA_ENGINE_ID],
       query: {
@@ -67,7 +67,7 @@ export async function queryAllSepanaProjects() {
 export async function searchSepanaProjects(query = '', pageSize?: number) {
   return axios
     .post<SepanaSearchResponse<SepanaProjectJson>>(
-      process.env.NEXT_PUBLIC_SEPANA_API_URL + 'search',
+      `${process.env.NEXT_PUBLIC_SEPANA_API_URL}/search`,
       {
         engine_ids: [process.env.SEPANA_ENGINE_ID],
         query: {
@@ -105,7 +105,7 @@ export async function searchSepanaProjects(query = '', pageSize?: number) {
  */
 export async function deleteAllSepanaDocs() {
   return axios.delete(
-    process.env.NEXT_PUBLIC_SEPANA_API_URL + 'engine/data/delete',
+    `${process.env.NEXT_PUBLIC_SEPANA_API_URL}/engine/data/delete`,
     {
       headers: headers('admin'),
       data: {
@@ -138,7 +138,7 @@ export async function writeSepanaDocs(docs: SepanaProjectJson[]) {
 
     await axios
       .post<{ job_id: string }>(
-        process.env.NEXT_PUBLIC_SEPANA_API_URL + 'engine/insert_data',
+        `${process.env.NEXT_PUBLIC_SEPANA_API_URL}/engine/insert_data`,
         {
           engine_id: process.env.SEPANA_ENGINE_ID,
           docs: docsToWrite,
@@ -161,6 +161,23 @@ export async function writeSepanaDocs(docs: SepanaProjectJson[]) {
   }
 
   return { jobs, projects }
+}
+
+export async function getJobs(jobIds: string[]) {
+  return Promise.all(jobIds.map(getJob))
+}
+
+export async function getJob(jobId: string) {
+  return axios.get<{
+    job_id: string
+    engine_id: string
+    status: string
+    message: string
+    request_timestamp: string
+    completion_timestamp: string
+  }>(`${process.env.NEXT_PUBLIC_SEPANA_API_URL}/job/status/${jobId}`, {
+    headers: headers('read'),
+  })
 }
 
 const SEPANA_ALERTS = {

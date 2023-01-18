@@ -10,11 +10,11 @@ export function useVeNftTokenMetadata(tokenUri: string | undefined) {
       if (!hash) {
         throw new Error('NFT hash not specified.')
       }
-      const { data } = await getIpfsData<{ thumbnailUri: string }>(hash)
+      const {
+        data: { thumbnailUri },
+      } = await getIpfsData<{ thumbnailUri: string }>(hash)
 
-      return {
-        thumbnailUri: data.thumbnailUri,
-      }
+      return { thumbnailUri }
     },
     {
       enabled: !!tokenUri,

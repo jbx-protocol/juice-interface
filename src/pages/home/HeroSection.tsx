@@ -81,13 +81,13 @@ export function HeroSection() {
   const isMobile = useMobile()
 
   return (
-    <section className="mt-10 mb-24 px-10">
+    <section className="mt-20 mb-24 px-10">
       <div className="my-0 mx-auto max-w-[1080px]">
         <Row gutter={30} align="middle">
-          <Col className="flex items-center pb-6" xs={24} md={13}>
+          <Col className="flex items-center pb-6" xs={24} md={14}>
             <div>
               <Space direction="vertical" size="large">
-                <BigHeading className="md:text-6xl" text={<HeroHeading />} />
+                <BigHeading className="md:text-7xl" text={<HeroHeading />} />
                 <div className="mb-4">
                   <div className="mb-4 text-base font-medium">
                     <HeroSubheading />
@@ -101,7 +101,7 @@ export function HeroSection() {
             </div>
           </Col>
           {!isMobile && (
-            <Col xs={24} md={11}>
+            <Col xs={24} md={10}>
               <Image
                 className="hide-mobile"
                 src={forThemeOption?.({

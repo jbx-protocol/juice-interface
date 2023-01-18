@@ -7,6 +7,8 @@ import Faq from './home/Faq'
 import Footer from './home/Footer'
 import { HeroSection } from './home/HeroSection'
 import { HowItWorksSection } from './home/HowItWorksSection'
+import { NewsletterSection } from './home/NewsletterSection'
+import { SectionHeading } from './home/SectionHeading'
 import { StatsSection } from './home/StatsSection'
 import { TopProjectsSection } from './home/TopProjectsSection'
 import TrendingSection from './home/TrendingSection'
@@ -25,7 +27,7 @@ function Landing() {
 
       <HowItWorksSection />
 
-      <section className="bg-juice-100 py-20 px-7 text-black dark:bg-juice-100 dark:text-black">
+      <section className="bg-smoke-50 p-8 py-20 px-7 text-black dark:bg-slate-600">
         <div className="my-0 mx-auto max-w-[1080px]">
           <Row align="middle" gutter={40}>
             <Col xs={24} md={14}>
@@ -34,7 +36,7 @@ function Landing() {
                   className="text-black"
                   text={t`Should you Juicebox?`}
                 />
-                <div className="text-black dark:text-black">
+                <div className="text-black">
                   <p className="ol">
                     <Trans>Almost definitely.</Trans>
                   </p>
@@ -67,10 +69,14 @@ function Landing() {
         </div>
       </section>
 
+      <NewsletterSection />
+
       <section>
-        <div id="faq" className="my-0 mx-auto max-w-[800px] py-20 ">
-          <div className="grid gap-y-14 px-6">
-            <BigHeading text={t`FAQs`} />
+        <div id="faq" className="my-0 mx-auto max-w-[800px] py-20">
+          <div className="grid gap-y-5 px-6">
+            <SectionHeading className="text-left">
+              <Trans>FAQ</Trans>
+            </SectionHeading>
             <Faq />
           </div>
         </div>

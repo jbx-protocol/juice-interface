@@ -27,9 +27,9 @@ export function HowItWorksSection() {
   const isMobile = useMobile()
 
   return (
-    <section className="my-24 p-1" id="how-it-works">
-      <SectionHeading className="mb-16">
-        <Trans>How to Juice</Trans>
+    <section className="my-20 p-1" id="how-it-works">
+      <SectionHeading className="mb-8">
+        <Trans>How Juicebox Works</Trans>
       </SectionHeading>
 
       <div className="my-0 mx-auto max-w-[1080px] p-5">

@@ -17,8 +17,9 @@ import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useMobile from 'hooks/Mobile'
 import { usePayETHPaymentTerminalTx } from 'hooks/v2v3/transactor/PayETHPaymentTerminal'
 import { useWallet } from 'hooks/Wallet'
+import { NftRewardTier } from 'models/nftRewardTier'
 import { useRouter } from 'next/router'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
 import { formattedNum, formatWad } from 'utils/format/formatNumber'
 import {
@@ -55,9 +56,13 @@ export function V2V3ConfirmPayModal({
     nftRewards: { rewardTiers },
   } = useContext(NftRewardsContext)
   const { form: payProjectForm } = useContext(PayProjectFormContext)
+  const [nftRewardTiers, setNftRewardTiers] = useState<
+    NftRewardTier[] | undefined
+  >()
 
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
+  const [transactionCanceled, setTransactionCanceled] = useState<boolean>(false)
   const [form] = useForm<V2V3PayFormType>()
 
   const converter = useCurrencyConverter()
@@ -73,6 +78,22 @@ export function V2V3ConfirmPayModal({
   } = useWallet()
 
   const usdAmount = converter.weiToUsd(weiAmount)
+
+  useEffect(() => {
+    const nftTierIdsToMint = payProjectForm?.payMetadata?.tierIdsToMint.sort()
+    if (!rewardTiers || !nftTierIdsToMint) return
+
+    setNftRewardTiers(
+      rewardTiersFromIds({
+        tierIds: nftTierIdsToMint || [],
+        rewardTiers,
+      }),
+    )
+
+    return () => {
+      setNftRewardTiers(undefined)
+    }
+  }, [rewardTiers, payProjectForm?.payMetadata])
 
   if (!fundingCycle || !projectId || !projectMetadata) return null
 
@@ -95,16 +116,6 @@ export function V2V3ConfirmPayModal({
     tokenSymbol,
     plural: true,
   })
-
-  const nftTierIdsToMint = payProjectForm?.payMetadata?.tierIdsToMint.sort()
-
-  const nftRewardTiers =
-    rewardTiers && nftTierIdsToMint
-      ? rewardTiersFromIds({
-          tierIds: payProjectForm?.payMetadata?.tierIdsToMint || [],
-          rewardTiers,
-        })
-      : undefined
 
   const handlePaySuccess = () => {
     onCancel?.()
@@ -181,6 +192,7 @@ export function V2V3ConfirmPayModal({
 
       if (!txSuccess) {
         setLoading(false)
+        setTransactionCanceled(true)
         setTransactionPending(false)
       }
     } catch (error) {
@@ -283,6 +295,7 @@ export function V2V3ConfirmPayModal({
 
         <V2V3PayForm
           form={form}
+          transactionCanceled={transactionCanceled}
           onFinish={() => pay()}
           nftRewardTiers={nftRewardTiers}
         />

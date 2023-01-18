@@ -34,10 +34,12 @@ export interface V2V3PayFormType {
 export const V2V3PayForm = ({
   form,
   nftRewardTiers,
+  transactionCanceled,
   ...props
 }: {
   form: FormInstance<V2V3PayFormType>
   nftRewardTiers: NftRewardTier[] | undefined
+  transactionCanceled: boolean
 } & FormProps) => {
   const { tokenAddress, fundingCycle, fundingCycleMetadata } =
     useContext(V2V3ProjectContext)
@@ -61,13 +63,26 @@ export const V2V3PayForm = ({
     (stickerUrls ?? []).length < ProjectPreferences.MAX_IMAGES_PAYMENT_MEMO
 
   useEffect(() => {
+    if (
+      form.getFieldValue('stickerUrls') &&
+      form.getFieldValue('stickerUrls').length > 0
+    )
+      return
+
     const initialStickerUrls = nftRewardTiers?.map(
       (tier: NftRewardTier) => tier.imageUrl,
     )
 
-    form.setFieldsValue({ stickerUrls: initialStickerUrls })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nftRewardTiers])
+    form.setFieldsValue({
+      stickerUrls: initialStickerUrls,
+    })
+  }, [form, nftRewardTiers])
+
+  useEffect(() => {
+    if (!form.getFieldValue('beneficiary')) return
+
+    setCustomBeneficiaryEnabled(transactionCanceled)
+  }, [form, transactionCanceled])
 
   return (
     <>

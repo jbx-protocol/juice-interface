@@ -9,12 +9,12 @@ import SectionHeader from 'components/SectionHeader'
 import { CurrencyContext } from 'contexts/currencyContext'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-import { useHasNftRewards } from 'hooks/JB721Delegate/HasNftRewards'
 import useMobile from 'hooks/Mobile'
 import { useContext } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
-import { sumTierFloors } from 'utils/nftRewards'
+import { hasNftRewards, sumTierFloors } from 'utils/nftRewards'
 import { useModalFromUrlQuery } from '../modals/hooks/useModalFromUrlQuery'
 import { NftTierCard } from './NftTierCard'
 
@@ -53,6 +53,7 @@ export function NftRewardsSection() {
   } = useContext(CurrencyContext)
   const { form: payProjectForm } = useContext(PayProjectFormContext)
   const { projectMetadata } = useContext(ProjectMetadataContext)
+  const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
   const isMobile = useMobile()
 
   const { visible: nftPostPayModalVisible, hide: hideNftPostPayModal } =
@@ -70,8 +71,6 @@ export function NftRewardsSection() {
   const converter = useCurrencyConverter()
   const payAmountETH =
     payInCurrency === ETH ? payAmount : fromWad(converter.usdToWei(payAmount))
-
-  const hasNftRewards = useHasNftRewards()
 
   const handleTierDeselect = (tierId: number | undefined) => {
     if (tierId === undefined || !rewardTiers || !payMetadata) return
@@ -112,7 +111,7 @@ export function NftRewardsSection() {
     }
   }
 
-  if (!hasNftRewards) {
+  if (!hasNftRewards(fundingCycleMetadata)) {
     return null
   }
 

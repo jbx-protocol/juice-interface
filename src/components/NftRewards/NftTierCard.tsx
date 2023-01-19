@@ -1,5 +1,5 @@
 import { LoadingOutlined } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
+import { t } from '@lingui/macro'
 import { Skeleton } from 'antd'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useState } from 'react'
@@ -34,7 +34,6 @@ export function NftTierCard({
   hideAttributes?: boolean
 }) {
   const [previewVisible, setPreviewVisible] = useState<boolean>(false)
-
   // used to return to previous state on second click if user accidentally unselected the NFT
   const [previousQuantity, setPreviousQuantity] = useState<number>(1)
 
@@ -56,8 +55,8 @@ export function NftTierCard({
     setPreviewVisible(true)
   }
 
-  const remainingSupply =
-    rewardTier?.remainingSupply &&
+  const remainingSupplyText =
+    rewardTier?.remainingSupply !== undefined &&
     rewardTier.remainingSupply < MAX_REMAINING_SUPPLY
       ? t`${rewardTier?.remainingSupply} remaining`
       : t`Unlimited`
@@ -182,7 +181,7 @@ export function NftTierCard({
                 paragraph={{ rows: 1, width: ['50%'] }}
               >
                 <span className="mt-2 text-xs text-grey-500 dark:text-slate-200">
-                  <Trans>{remainingSupply}</Trans>
+                  {remainingSupplyText}
                 </span>
               </Skeleton>
             </>

@@ -3,6 +3,7 @@ import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useNftCollectionMetadataUri } from 'hooks/JB721Delegate/contractReader/NftCollectionMetadataUri'
 import { useNftRewardTiersOf } from 'hooks/JB721Delegate/contractReader/NftRewardTiersOf'
+import { useJB721DelegateVersion } from 'hooks/JB721Delegate/DelegateVersion'
 import { useHasNftRewards } from 'hooks/JB721Delegate/HasNftRewards'
 import useNftRewards from 'hooks/NftRewards'
 import { useContext } from 'react'
@@ -34,6 +35,10 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
     dataSourceAddress,
   )
 
+  const contractVersion = useJB721DelegateVersion({
+    dataSourceAddress,
+  })
+
   const { data: collectionMetadataUri, loading: collectionUriLoading } =
     useNftCollectionMetadataUri(dataSourceAddress)
 
@@ -54,6 +59,7 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
         nftRewards: {
           rewardTiers,
           CIDs,
+          contractVersion,
           collectionMetadata: {
             ...EMPTY_NFT_COLLECTION_METADATA, // only load the metadata CID in the context - other data not necessary
             uri: collectionMetadataUri,

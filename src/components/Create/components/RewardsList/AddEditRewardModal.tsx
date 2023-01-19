@@ -293,7 +293,7 @@ export const AddEditRewardModal = ({
           >
             <Form.Item
               extra={
-                <span className="text-sm">
+                <span className="text-xs">
                   <Trans>Set aside a percentage of freshly minted NFTs.</Trans>
                 </span>
               }
@@ -303,7 +303,7 @@ export const AddEditRewardModal = ({
                 onChange={setIsReservingNfts}
                 label={
                   <span className="flex items-center gap-2">
-                    <Trans>Reserve NFTs</Trans>
+                    <Trans>Reserved NFTs</Trans>
                     <Tooltip
                       className="cursor-help text-grey-500 dark:text-grey-300"
                       title={t`If Reserved NFTs are set, the first reserved NFT from the tier will be distributable once the tier receives its first mint.`}
@@ -323,7 +323,7 @@ export const AddEditRewardModal = ({
                       className="mb-0"
                       name="nftReservedRate"
                       rules={[
-                        inputMustExistRule({ label: t`Reserved rate` }),
+                        inputMustExistRule(),
                         inputIsIntegerRule({
                           stringOkay: true,
                         }),
@@ -351,12 +351,12 @@ export const AddEditRewardModal = ({
             <Form.Item
               name="votingWeight"
               label={t`Voting weight`}
-              tooltip={t`Give this NFT a voting weight to be used for on-chain governance. The number you set is only used in relation to other NFTs in this collection.`}
-              extra={
+              extra={t`Give this NFT a voting weight to be used for on-chain governance. The number you set is only used in relation to other NFTs in this collection.`}
+              tooltip={
                 <Trans>
                   If you use the default governance option (no governance), the
                   voting weight will still be accessible on the blockchain for
-                  use in snapshot strategies or any other desired purpose.
+                  use in Snapshot strategies or any other desired purpose.
                 </Trans>
               }
               rules={[
@@ -371,7 +371,7 @@ export const AddEditRewardModal = ({
             <Form.Item
               name="externalUrl"
               label={t`External link`}
-              tooltip={t`Link minters of this NFT to your project's website, discord etc.`}
+              tooltip={t`Link minters of this NFT to your project's website, Discord, etc.`}
               rules={[
                 inputIsValidUrlRule({
                   label: t`External link`,

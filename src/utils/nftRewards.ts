@@ -221,11 +221,12 @@ export function buildJB721TierParams({
 
       const reservedRate = rewardTiers[index].reservedRate
         ? BigNumber.from(rewardTiers[index].reservedRate! - 1)
-        : undefined
-      const reservedTokenBeneficiary = rewardTiers[index].beneficiary
+        : BigNumber.from(0)
+      const reservedTokenBeneficiary =
+        rewardTiers[index].beneficiary ?? constants.AddressZero
       const votingUnits = rewardTiers[index].votingWeight
         ? BigNumber.from(rewardTiers[index].votingWeight)
-        : undefined
+        : BigNumber.from(0)
 
       return {
         contributionFloor: contributionFloorWei,

@@ -1517,7 +1517,7 @@ msgstr ""
 msgid "If you have a V1 project, add the project's handle here. Otherwise, leave this blank."
 msgstr ""
 
-msgid "If you use the default governance option (no governance), the voting weight will still be accessible on the blockchain for use in snapshot strategies or any other desired purpose."
+msgid "If you use the default governance option (no governance), the voting weight will still be accessible on the blockchain for use in Snapshot strategies or any other desired purpose."
 msgstr ""
 
 msgid "If you're unsure if you need to claim, you probably don't."
@@ -1682,7 +1682,7 @@ msgstr ""
 msgid "Link contributors to another page after they successfully mint one of your project's NFTs."
 msgstr ""
 
-msgid "Link minters of this NFT to your project's website, discord etc."
+msgid "Link minters of this NFT to your project's website, Discord, etc."
 msgstr ""
 
 msgid "Load more"
@@ -1943,7 +1943,7 @@ msgstr ""
 msgid "No more than the funding cycle target can be distributed by the project in a single funding cycle."
 msgstr ""
 
-msgid "No on-chain governance capabilities"
+msgid "No on-chain governance"
 msgstr ""
 
 msgid "No past funding cycles"
@@ -2504,13 +2504,13 @@ msgstr ""
 msgid "Reserve 1 NFT of every"
 msgstr ""
 
-msgid "Reserve NFTs"
-msgstr ""
-
 msgid "Reserve a percentage of freshly minted tokens for your project to use."
 msgstr ""
 
 msgid "Reserved NFTS"
+msgstr ""
+
+msgid "Reserved NFTs"
 msgstr ""
 
 msgid "Reserved NFTs will be sent to this address once minted."
@@ -3698,7 +3698,7 @@ msgstr ""
 msgid "Your project will withhold all funds raised. Funds can be distributed to payout addresses you set, and the project owner will receive any unallocated funds. Your project will have no overflow, so token holders can't redeem their tokens for ETH."
 msgstr ""
 
-msgid "Your project's NFTs will not have any governance capabilities."
+msgid "Your project's NFTs will not have any on-chain governance capabilities."
 msgstr ""
 
 msgid "Your project's current funding cycle has no duration. Changes you make below will take effect immediately."

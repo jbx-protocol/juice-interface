@@ -128,11 +128,11 @@ export const NftRewardsPage = () => {
                       value={JB721GovernanceType.NONE}
                       title={
                         <>
-                          <Trans>No on-chain governance capabilities</Trans>{' '}
+                          <Trans>No on-chain governance</Trans>{' '}
                           <CreateBadge.Default />
                         </>
                       }
-                      description={t`Your project's NFTs will not have any governance capabilities.`}
+                      description={t`Your project's NFTs will not have any on-chain governance capabilities.`}
                     />
                     <RadioItem
                       value={JB721GovernanceType.GLOBAL}

@@ -3,11 +3,10 @@ import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useNftCollectionMetadataUri } from 'hooks/JB721Delegate/contractReader/NftCollectionMetadataUri'
 import { useNftRewardTiersOf } from 'hooks/JB721Delegate/contractReader/NftRewardTiersOf'
-import { useHasNftRewards } from 'hooks/JB721Delegate/HasNftRewards'
 import useNftRewards from 'hooks/NftRewards'
 import { useContext } from 'react'
 import { EMPTY_NFT_COLLECTION_METADATA } from 'redux/slices/editingV2Project'
-import { CIDsOfNftRewardTiersResponse } from 'utils/nftRewards'
+import { CIDsOfNftRewardTiersResponse, hasNftRewards } from 'utils/nftRewards'
 
 export const NftRewardsProvider: React.FC = ({ children }) => {
   const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
@@ -15,7 +14,7 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
 
   const dataSourceAddress = fundingCycleMetadata?.dataSource
   // don't fetch stuff if there's no datasource in the first place.
-  const shouldFetch = useHasNftRewards()
+  const shouldFetch = hasNftRewards(fundingCycleMetadata)
 
   /**
    * Load NFT Rewards data

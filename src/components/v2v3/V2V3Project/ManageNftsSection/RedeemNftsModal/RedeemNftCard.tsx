@@ -35,8 +35,8 @@ export function RedeemNftCard({
 }: {
   nft: JB721DelegateToken
   isSelected: boolean
-  onClick?: VoidFunction
-  onRemove?: VoidFunction
+  onClick: VoidFunction
+  onRemove: VoidFunction
   loading?: boolean
 }) {
   const { data: tierData } = useJB721DelegateTokenMetadata(nft.tokenUri)
@@ -60,8 +60,9 @@ export function RedeemNftCard({
   return (
     <NftTierCard
       rewardTier={rewardTier}
-      onClick={onClick}
-      onRemove={onRemove}
+      onSelect={onClick}
+      onDeselect={onRemove}
+      maxQuantity={1}
       isSelected={isSelected}
       loading={loading}
       previewDisabled

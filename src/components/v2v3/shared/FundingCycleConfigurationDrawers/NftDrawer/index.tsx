@@ -6,7 +6,6 @@ import NftRewardTierModal from 'components/v2v3/shared/FundingCycleConfiguration
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
-import { useHasNftRewards } from 'hooks/JB721Delegate/HasNftRewards'
 import { useNftRewardsAdjustTiersTx } from 'hooks/JB721Delegate/transactor/NftRewardsAdjustTiersTx'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useCallback, useContext, useEffect, useState } from 'react'
@@ -14,6 +13,7 @@ import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { withHttps } from 'utils/externalLink'
 import {
   buildJB721TierParams,
+  hasNftRewards,
   MAX_NFT_REWARD_TIERS,
   tiersEqual,
   uploadNftCollectionMetadataToIPFS,
@@ -51,7 +51,7 @@ export default function NftDrawer({
   const [marketplaceForm] = useForm<MarketplaceFormFields>()
   const [postPayModalForm] = useForm<NftPostPayModalFormFields>()
 
-  const hasExistingNfts = useHasNftRewards()
+  const hasExistingNfts = hasNftRewards(fundingCycleMetadata)
 
   const dispatch = useAppDispatch()
   const {

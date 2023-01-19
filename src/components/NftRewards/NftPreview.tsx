@@ -31,14 +31,16 @@ export function NftPreview({
 
   return (
     <div className={JUICE_IMG_PREVIEW_CONTAINER_CLASS} onClick={onClose}>
-      <div className="md:w-xl w-[90vw]" onClick={e => e.stopPropagation()}>
-        <div className="mb-4 flex w-full items-center justify-between">
-          <h3 className="mb-0 uppercase text-slate-100">
-            <Trans>{projectMetadata?.name}</Trans>
-          </h3>
-          <CloseOutlined className="pl-4 text-slate-100" onClick={onClose} />
-        </div>
-        <div className="flex justify-center" onClick={onClose}>
+      <CloseOutlined
+        className="absolute top-10 right-10 text-2xl text-slate-100"
+        onClick={onClose}
+      />
+
+      <div
+        className="max-w-prose pt-24 md:pt-0"
+        onClick={e => e.stopPropagation()}
+      >
+        <div className="mb-5 flex justify-center" onClick={onClose}>
           <img
             className={'max-h-[50vh] max-w-[90vw] md:max-h-[60vh] md:max-w-xl'}
             alt={rewardTier.name}
@@ -47,8 +49,15 @@ export function NftPreview({
             crossOrigin="anonymous"
           />
         </div>
-        <h3 className="mb-0 mt-5 text-slate-100">{rewardTier.name}</h3>
-        <p className="mt-2 text-slate-100">{rewardTier.description}</p>
+
+        <h1 className="text-slate-100">{rewardTier.name}</h1>
+        <span className="uppercase text-slate-100">
+          <Trans>{projectMetadata?.name}</Trans>
+        </span>
+
+        <p className="mt-2 max-w-prose text-slate-100">
+          {rewardTier.description}
+        </p>
         {hasLimitedSupply || rewardTier.externalLink ? (
           <div className="mt-5 flex text-xs text-slate-100">
             {hasLimitedSupply ? (

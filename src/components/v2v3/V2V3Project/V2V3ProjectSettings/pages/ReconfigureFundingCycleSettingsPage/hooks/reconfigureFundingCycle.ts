@@ -18,7 +18,7 @@ import { EditingFundingCycleConfig } from './editingFundingCycleConfig'
 /**
  * Return the value of the `weight` argument to send in the transaction.
  */
-export const getWeightArgument = ({
+const getWeightArgument = ({
   currentFundingCycleWeight,
   newFundingCycleWeight,
 }: {

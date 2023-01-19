@@ -2,7 +2,7 @@ import Head from 'next/head'
 
 import { metaTagsFormatted } from './metaTagsFormatted'
 
-export interface OpenGraphMetaTagsProps {
+interface OpenGraphMetaTagsProps {
   url?: string
   title?: string
   type?: string

@@ -5,7 +5,7 @@ import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 
 import { SECONDS_IN_DAY } from 'constants/numbers'
 
-export type FormFields = {
+type FormFields = {
   lockDuration: string
 }
 

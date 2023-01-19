@@ -3,7 +3,7 @@ type MinimalTableRow = {
   value: string | number | boolean | JSX.Element
 }
 
-export type MinimalTableProps = {
+type MinimalTableProps = {
   sections: MinimalTableRow[][]
 }
 

@@ -67,7 +67,7 @@ export interface ProjectState {
   mustStartAtOrAfter: string
 }
 
-export interface ReduxState extends CreateState, ProjectState {
+interface ReduxState extends CreateState, ProjectState {
   version: number
 }
 
@@ -151,7 +151,7 @@ const defaultProjectMetadataState: ProjectMetadataV5 = {
   version: LATEST_METADATA_VERSION,
 }
 
-export const defaultProjectState: ProjectState = {
+const defaultProjectState: ProjectState = {
   projectMetadata: { ...defaultProjectMetadataState },
   fundingCycleData: { ...defaultFundingCycleData },
   fundingCycleMetadata: { ...defaultFundingCycleMetadata },

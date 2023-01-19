@@ -13,7 +13,7 @@ import { decodeEncodedIPFSUri, openIpfsUrl } from 'utils/ipfs'
 
 export const DEFAULT_NFT_MAX_SUPPLY = ONE_BILLION - 1
 
-export async function fetchRewardTierFromIPFS({
+async function fetchRewardTierFromIPFS({
   tier,
   index,
 }: {

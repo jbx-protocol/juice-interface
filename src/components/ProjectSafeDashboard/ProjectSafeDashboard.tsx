@@ -15,7 +15,7 @@ import { BackToProjectButton } from '../BackToProjectButton'
 import { ExecutedSafeTransactionsListing } from './ExecutedSafeTransactionsListing'
 import { SafeNonceRow } from './SafeNonceRow'
 
-export type SafeTxCategory = 'queued' | 'history'
+type SafeTxCategory = 'queued' | 'history'
 
 const SAFE_TX_QUEUED_KEY: SafeTxCategory = 'queued'
 const SAFE_TX_HISTORY_KEY: SafeTxCategory = 'history'

@@ -87,7 +87,7 @@ export function HowItWorksSection() {
                   href="/create"
                   block={isMobile}
                 >
-                  <Trans>Build your project 🡒</Trans>
+                  <Trans>Build your project</Trans>
                 </Button>
               </div>
 

@@ -27,6 +27,7 @@ export interface LaunchProjectData {
   fundAccessConstraints: V2V3FundAccessConstraint[]
   groupedSplits?: GroupedSplits<SplitGroup>[]
   mustStartAtOrAfter?: string // epoch seconds. anything less than "now" will start immediately.
+  owner?: string // If not provided, the current user's address will be used.
 }
 
 export function useLaunchProjectTx(): TransactorInstance<LaunchProjectData> {
@@ -38,6 +39,7 @@ export function useLaunchProjectTx(): TransactorInstance<LaunchProjectData> {
 
   return (
     {
+      owner,
       projectMetadataCID,
       fundingCycleData,
       fundingCycleMetadata,
@@ -72,8 +74,10 @@ export function useLaunchProjectTx(): TransactorInstance<LaunchProjectData> {
       return Promise.resolve(false)
     }
 
+    const _owner = owner && owner.length ? owner : userAddress
+
     const args = [
-      userAddress, // _owner
+      _owner, // _owner
       [projectMetadataCID, JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN], // _projectMetadata (JBProjectMetadata)
       fundingCycleData, // _data (JBFundingCycleData)
       fundingCycleMetadata, // _metadata (JBFundingCycleMetadata)

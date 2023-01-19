@@ -1,4 +1,4 @@
-import { createSubscription } from 'lib/api/juicenews'
+import { createSubscription } from 'lib/beehiiv'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -6,13 +6,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(404)
   }
 
-  if (req.body.email === undefined) {
+  const { email } = req.body ?? {}
+  if (email === undefined) {
     return res.status(400).json({ error: 'email is required' })
   }
 
   try {
-    await createSubscription(req.body.email)
-    return res.status(200)
+    await createSubscription(email)
+    return res.status(201).json({ email })
   } catch (e) {
     console.error('api::juicenews::subscription::error', e)
     return res.status(500).json({ error: 'failed to create subscription' })

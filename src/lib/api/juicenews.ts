@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export function createSubscription(emailAddress: string) {
+export function createJuicenewsSubscription(emailAddress: string) {
   return axios.post(`/api/juicenews/subscription`, {
     email: emailAddress,
   })

@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Button, Col, Form, Input, Row } from 'antd'
 import useMobile from 'hooks/Mobile'
-import { createSubscription } from 'lib/api/juicenews'
+import { createJuicenewsSubscription } from 'lib/api/juicenews'
 import Image from 'next/image'
 import { useState } from 'react'
 import { SectionHeading } from './SectionHeading'
@@ -21,7 +21,7 @@ export function NewsletterSection() {
 
     try {
       setLoading(true)
-      await createSubscription(form.getFieldValue('email'))
+      await createJuicenewsSubscription(form.getFieldValue('email'))
       setSuccess(true)
     } catch (e) {
       setError(true)
@@ -67,7 +67,9 @@ export function NewsletterSection() {
 
               <p>
                 {success && (
-                  <span className="text-haze-500">You're subscribed!</span>
+                  <span className="text-haze-500">
+                    You successfully subscribed!
+                  </span>
                 )}
                 {error && (
                   <span className="text-error-500">Failed to subscribe.</span>

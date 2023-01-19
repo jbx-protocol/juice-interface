@@ -9,6 +9,7 @@ import { Parenthesis } from 'components/Parenthesis'
 import TooltipIcon from 'components/TooltipIcon'
 import TooltipLabel from 'components/TooltipLabel'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
+import { CurrencyName } from 'constants/currency'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/ETHPaymentTerminalFee'
 import { Split } from 'models/splits'
@@ -133,38 +134,57 @@ const SplitValue = ({
     feeAmount &&
     formatWad(splitValue.sub(feeAmount), {
       ...valueFormatProps,
+      precision: 4,
     })
   const feeAmountFormatted = formatWad(feeAmount, {
     ...valueFormatProps,
+    precision: 4,
   })
 
   const curr = V2V3CurrencyName(
     currency?.toNumber() as V2V3CurrencyOption | undefined,
   )
-  const tooltipTitle =
-    curr === 'ETH' && splitValue?.gt(0) ? (
-      <ETHToUSD ethAmount={splitValue} />
-    ) : undefined
+
+  const createTooltipTitle = (
+    curr: CurrencyName | undefined,
+    amount: BigNumber | undefined,
+  ) => {
+    if (curr === 'ETH' && amount?.gt(0)) {
+      return <ETHToUSD ethAmount={amount} />
+    }
+    return undefined
+  }
 
   return (
-    <Tooltip title={tooltipTitle}>
-      <span>
-        (
-        <CurrencySymbol currency={curr} />
-        {splitValueFormatted}
-        {valueSuffix ? <span> {valueSuffix}</span> : null})
-      </span>
-      <div className="ml-2 text-sm text-grey-500 dark:text-grey-300">
-        {showFees && !isJuiceboxProject && (
-          <Parenthesis>
-            <Trans>
-              <CurrencySymbol currency={curr} />
-              {feeAmountFormatted} fee
-            </Trans>
-          </Parenthesis>
-        )}
-      </div>
-    </Tooltip>
+    <>
+      <Tooltip
+        title={
+          splitValue &&
+          feeAmount &&
+          createTooltipTitle(curr, splitValue.sub(feeAmount))
+        }
+      >
+        <span>
+          (
+          <CurrencySymbol currency={curr} />
+          {splitValueFormatted}
+          {valueSuffix ? <span> {valueSuffix}</span> : null})
+        </span>
+      </Tooltip>
+
+      <Tooltip title={createTooltipTitle(curr, feeAmount)}>
+        <div className="ml-2 text-sm text-grey-500 dark:text-grey-300">
+          {showFees && !isJuiceboxProject && (
+            <Parenthesis>
+              <Trans>
+                <CurrencySymbol currency={curr} />
+                {feeAmountFormatted} fee
+              </Trans>
+            </Parenthesis>
+          )}
+        </div>
+      </Tooltip>
+    </>
   )
 }
 

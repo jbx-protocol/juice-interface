@@ -35,7 +35,13 @@ const handler: NextApiHandler = async (req, res) => {
       keys: projectKeys as (keyof Project)[],
     })
 
-    const keysForChangedProjects: { [k: string]: string } = {}
+    const updatedProperties: {
+      [id: string]: {
+        key: string
+        old: string | undefined | null
+        new: string | undefined | null
+      }
+    } = {}
     const idsOfNewProjects: Set<string> = new Set()
     let missingMetadataCount = 0
 
@@ -73,10 +79,15 @@ const handler: NextApiHandler = async (req, res) => {
           !sepanaProject ||
           (!sepanaProject._source.metadataResolved && retryIPFS) ||
           projectKeys.some(k => {
-            if (
-              subgraphProject[k as keyof Project] !== sepanaProject._source[k]
-            ) {
-              keysForChangedProjects[id] = k
+            const oldVal = subgraphProject[k as keyof Project]
+            const newVal = sepanaProject?._source[k]
+
+            if (oldVal !== newVal) {
+              updatedProperties[id] = {
+                key: k,
+                old: oldVal?.toString(),
+                new: newVal?.toString(),
+              }
               return true
             }
             return false
@@ -146,7 +157,9 @@ const handler: NextApiHandler = async (req, res) => {
         } = r
 
         return `\`[${id}]\` ${name} _(${
-          idsOfNewProjects.has(id) ? 'New' : keysForChangedProjects[id]
+          idsOfNewProjects.has(id)
+            ? 'New'
+            : `${updatedProperties[id].key}: ${updatedProperties[id].old} -> ${updatedProperties[id].new}`
         })_`
       })
       .join('\n')}`

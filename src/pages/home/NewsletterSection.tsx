@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Button, Col, Form, Input, Row } from 'antd'
 import useMobile from 'hooks/Mobile'
-import { createSubscription } from 'lib/beehiv'
+import { createSubscription } from 'lib/api/juicenews'
 import Image from 'next/image'
 import { useState } from 'react'
 import { SectionHeading } from './SectionHeading'

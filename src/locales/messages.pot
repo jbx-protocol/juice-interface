@@ -3896,9 +3896,6 @@ msgstr ""
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
 msgstr ""
 
-msgid "{remainingSupply}"
-msgstr ""
-
 msgid "{tokenSymbolDisplayText} range"
 msgstr ""
 

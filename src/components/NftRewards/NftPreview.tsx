@@ -40,7 +40,7 @@ export function NftPreview({
         className="max-w-prose pt-24 md:pt-0"
         onClick={e => e.stopPropagation()}
       >
-        <div className="mb-5 flex justify-center" onClick={onClose}>
+        <div className="mb-5 text-center">
           <img
             className={'max-h-[50vh] max-w-[90vw] md:max-h-[60vh] md:max-w-xl'}
             alt={rewardTier.name}

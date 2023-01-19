@@ -22,7 +22,7 @@ export function JuiceImgPreview({
         className="absolute top-10 right-10 pl-4 text-2xl text-slate-100"
         onClick={onClose}
       />
-      <div className="flex max-w-prose justify-center">
+      <div className="text-center">
         <Image
           className="max-h-[50vh] md:max-h-[60vh]"
           alt={alt}

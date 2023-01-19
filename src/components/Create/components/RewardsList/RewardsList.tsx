@@ -27,11 +27,11 @@ const useRewardsInstance = () => {
   return useContext(RewardsListContext)
 }
 
-export type RewardsListProps = FormItemInput<Reward[]> & {
+type RewardsListProps = FormItemInput<Reward[]> & {
   allowCreate?: boolean
 }
 
-export interface RewardsListChildrenExports {
+interface RewardsListChildrenExports {
   Item: typeof RewardItem
   useRewardsInstance: typeof useRewardsInstance
 }

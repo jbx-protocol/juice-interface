@@ -9,10 +9,7 @@ const IPFS_URL_REGEX = /ipfs:\/\/(.+)/
 /**
  * Return a HTTP URL to the IPFS gateway at the given [hostname] for the given [cid].
  */
-export const ipfsGatewayUrl = (
-  cid: string | undefined = '',
-  hostname: string,
-) => {
+const ipfsGatewayUrl = (cid: string | undefined = '', hostname: string) => {
   return `https://${hostname}/ipfs/${cid}`
 }
 
@@ -57,7 +54,6 @@ export function ipfsUrl(cid: string, path?: string) {
  */
 export const cidFromUrl = (url: string) => url.split('/').pop()
 
-export const cidFromPinataUrl = (url: string) => url.split('/ipfs/').pop()
 export const cidFromIpfsUri = (ipfsUri: string) =>
   ipfsUri.match(IPFS_URL_REGEX)?.[1]
 

@@ -9,7 +9,7 @@ import { TransactorInstance } from 'hooks/Transactor'
 
 import { useContext } from 'react'
 
-export type ERC20ApproveArgs = {
+type ERC20ApproveArgs = {
   spender: string
   amount: BigNumber
 }

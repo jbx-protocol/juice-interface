@@ -140,9 +140,6 @@ msgstr ""
 msgid "<0>Max. supply:</0> <1>{0}</1>"
 msgstr ""
 
-msgid "<0>NOTE:</0> This project has a balance of 0. Projects cannot be migrated without a balance. To migrate this project, first pay it or use the button below to deposit 1 wei (0.000000000000000001 or 10<1>-18</1> ETH)."
-msgstr ""
-
 msgid "<0>No duration set.</0>Funding can be reconfigured at any time. Reconfigurations will start a new funding cycle."
 msgstr ""
 
@@ -551,9 +548,6 @@ msgstr ""
 msgid "Burn NFTs"
 msgstr ""
 
-msgid "Burn project tokens"
-msgstr ""
-
 msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project has no overflow."
 msgstr ""
 
@@ -573,9 +567,6 @@ msgid "Button Text"
 msgstr ""
 
 msgid "Button link"
-msgstr ""
-
-msgid "Button text"
 msgstr ""
 
 msgid "Button will close the modal if no link is given."
@@ -695,9 +686,6 @@ msgstr ""
 msgid "Configure restrictions for your funding cycles."
 msgstr ""
 
-msgid "Configure which Juicebox V1 project you'd like to accept tokens for. Token holders of this V1 project will be able to swap their V1 tokens for V2 tokens."
-msgstr ""
-
 msgid "Configure your project's NFTs."
 msgstr ""
 
@@ -738,9 +726,6 @@ msgid "Connect wallet to issue"
 msgstr ""
 
 msgid "Connect wallet to pay"
-msgstr ""
-
-msgid "Connect wallet to transfer"
 msgstr ""
 
 msgid "Connect your wallet to see your holdings."
@@ -965,9 +950,6 @@ msgstr ""
 msgid "Deployed payment addresses can be found in the Tools drawer (<0/>) on the project page."
 msgstr ""
 
-msgid "Deposit 1 wei to @{handle}"
-msgstr ""
-
 msgid "Description"
 msgstr ""
 
@@ -1113,9 +1095,6 @@ msgid "Do not include .eth"
 msgstr ""
 
 msgid "Docs"
-msgstr ""
-
-msgid "Documentation on v1.1 contracts"
 msgstr ""
 
 msgid "Done"
@@ -1595,9 +1574,6 @@ msgstr ""
 msgid "Juicebox Project ID"
 msgstr ""
 
-msgid "Juicebox V1 project ID"
-msgstr ""
-
 msgid "Juicebox gives you the tools to automate your funding so you can focus on building."
 msgstr ""
 
@@ -1631,9 +1607,6 @@ msgstr ""
 msgid "Latest payments"
 msgstr ""
 
-msgid "Launch @{handle}"
-msgstr ""
-
 msgid "Launch V3 funding cycle"
 msgstr ""
 
@@ -1659,9 +1632,6 @@ msgid "Light theme"
 msgstr ""
 
 msgid "Limited supply"
-msgstr ""
-
-msgid "Link Juicebox V1 project"
 msgstr ""
 
 msgid "Link contributors to another page after they successfully mint one of your project's NFTs."
@@ -1757,12 +1727,6 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
-msgid "Migrate to Juicebox V1.1"
-msgstr ""
-
-msgid "Migrate {projectTitle}"
-msgstr ""
-
 msgid "Migration token was successfully deployed to <0/>"
 msgstr ""
 
@@ -1779,9 +1743,6 @@ msgid "Mint as ERC-20"
 msgstr ""
 
 msgid "Mint new {tokensLabel} into an account. Only a project's owner, a designated operator, or one of its terminal's delegates can mint its tokens."
-msgstr ""
-
-msgid "Mint project tokens on demand"
 msgstr ""
 
 msgid "Mint rate"
@@ -2021,9 +1982,6 @@ msgstr ""
 msgid "Pause payments"
 msgstr ""
 
-msgid "Pause received payments"
-msgstr ""
-
 msgid "Paused"
 msgstr ""
 
@@ -2154,9 +2112,6 @@ msgid "Podcast"
 msgstr ""
 
 msgid "Potential risks"
-msgstr ""
-
-msgid "Preview"
 msgstr ""
 
 msgid "Previous V1 Project ID:"
@@ -2630,9 +2585,6 @@ msgstr ""
 msgid "Set Up veNFT Governance"
 msgstr ""
 
-msgid "Set V1 project of {projectTitle}"
-msgstr ""
-
 msgid "Set a distribution limit"
 msgstr ""
 
@@ -2682,9 +2634,6 @@ msgid "Set reserved tokens of {projectTitle}"
 msgstr ""
 
 msgid "Set splits for {projectTitle}"
-msgstr ""
-
-msgid "Set terminals for {projectTitle}"
 msgstr ""
 
 msgid "Set text record for {0}"
@@ -2787,9 +2736,6 @@ msgid "Stay up to date."
 msgstr ""
 
 msgid "Step 1. Deploy migration token"
-msgstr ""
-
-msgid "Step 2. Link your Juicebox V1 project"
 msgstr ""
 
 msgid "Step 2. Set the deployed migration token"
@@ -3038,9 +2984,6 @@ msgstr ""
 msgid "This project is archived and can't be paid."
 msgstr ""
 
-msgid "This project is currently using the Juicebox V1 terminal contract. New features introduced in V1.1 allow the project owner to:"
-msgstr ""
-
 msgid "This project is owned by a Safe. <0>View transactions</0>."
 msgstr ""
 
@@ -3242,16 +3185,10 @@ msgstr ""
 msgid "Transfer unclaimed {0}"
 msgstr ""
 
-msgid "Transfer unclaimed {tokenSymbolShort}"
-msgstr ""
-
 msgid "Transfer unclaimed {tokenTextShort}"
 msgstr ""
 
 msgid "Transfer unclaimed {tokensLabel}"
-msgstr ""
-
-msgid "Transfer {tokenSymbolShort}"
 msgstr ""
 
 msgid "Transfer {tokenTextShort}"
@@ -3576,9 +3513,6 @@ msgid "You haven't created any projects yet."
 msgstr ""
 
 msgid "You must grant permission to swap your tokens."
-msgstr ""
-
-msgid "You must own this V1 project."
 msgstr ""
 
 msgid "You must review and accept the risks."

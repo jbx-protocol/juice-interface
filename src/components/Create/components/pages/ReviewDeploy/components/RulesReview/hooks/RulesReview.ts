@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro'
-import { useAvailableReconfigurationStrategies } from 'components/Create/components/pages/ReconfigurationRules'
+import { useAvailableReconfigurationStrategies } from 'components/Create/hooks/AvailableReconfigurationStrategies'
 import { readNetwork } from 'constants/networks'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useMemo } from 'react'

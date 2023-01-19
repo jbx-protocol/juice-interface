@@ -4,7 +4,7 @@ import { getAddress } from 'ethers/lib/utils'
 import { resolveAddress } from 'lib/api/ens'
 import { useEffect, useState } from 'react'
 
-export type EnsCacheRecord = {
+type EnsCacheRecord = {
   name: string | null
   expires: number
 }
@@ -14,7 +14,7 @@ const ensLocalstorageKey = () =>
     ? `jb_ensDict_${readProvider.network.chainId}`
     : undefined
 
-export const getEnsCache = () => {
+const getEnsCache = () => {
   if (typeof window === 'undefined') return {}
 
   try {
@@ -27,7 +27,7 @@ export const getEnsCache = () => {
   }
 }
 
-export const cacheEnsRecord = (address: string, record: EnsCacheRecord) => {
+const cacheEnsRecord = (address: string, record: EnsCacheRecord) => {
   const key = ensLocalstorageKey()
   if (!key) return
 

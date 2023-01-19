@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { useFormDispatchWatch } from '../../hooks'
 
-export type ProjectDetailsFormProps = Partial<{
+type ProjectDetailsFormProps = Partial<{
   projectName: string
   projectDescription: string
   logo: string

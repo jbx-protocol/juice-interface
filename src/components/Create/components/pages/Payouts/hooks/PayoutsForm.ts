@@ -13,7 +13,7 @@ import { useEditingPayoutSplits } from 'redux/hooks/EditingPayoutSplits'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { useAvailablePayoutsSelections } from './AvailablePayoutsSelections'
 
-export type PayoutsFormProps = Partial<{
+type PayoutsFormProps = Partial<{
   selection: PayoutsSelection
   payoutsList: AllocationSplit[]
 }>

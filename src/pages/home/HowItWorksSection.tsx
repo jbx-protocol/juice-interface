@@ -50,39 +50,46 @@ export function HowItWorksSection() {
             <div className="grid gap-y-5">
               <FourthCol header={t`1. Get funded`}>
                 <Trans>
-                  Crowdfund your project with ETH. Set a funding target to cover
-                  predictable expenses, and any extra funds (
-                  <ExternalLink href="https://youtu.be/9Mq5oDh0aBY">
-                    overflow
+                  Crowdfund your project with ETH. When someone pays your
+                  project, they'll receive your project's tokens (or NFTs) — use
+                  tokens to grant governance rights, community access, or other
+                  membership perks.
+                </Trans>
+              </FourthCol>
+              <FourthCol header={t`2. Build trust`}>
+                <Trans>
+                  Transparently set your terms ahead of time, or take control
+                  when you need to. Juicebox lets you define elegant token
+                  issuance & redemption, payouts, and other rules in advance,
+                  acting as a safeguard against rug pulls. Your supporters don't
+                  have to trust you — even though they already do.
+                </Trans>
+              </FourthCol>
+              <FourthCol header={t`3. Stay flexible`}>
+                <Trans>
+                  As your community grows, scale your project with it: Juicebox
+                  lets you update your payouts, token issuance & redemption, and
+                  other rules over time to meet your community's evolving needs.
+                  Run your community how you want to, with our pre-built
+                  integrations for{' '}
+                  <ExternalLink href="https://safe.global/">Safe</ExternalLink>,{' '}
+                  <ExternalLink href="https://snapshot.org">
+                    Snapshot
                   </ExternalLink>
-                  ) can be claimed by anyone holding your project's tokens
-                  alongside you.
+                  , and the other tools you already use.
                 </Trans>
               </FourthCol>
-              <FourthCol header={t`2. Give ownership`}>
-                <Trans>
-                  When someone pays your project, they'll receive your project's
-                  tokens in return. Tokens can be redeemed for a portion of your
-                  project's overflow funds; when you win, your community wins
-                  with you. Leverage your project's token to grant governance
-                  rights, community access, or other membership perks.
-                </Trans>
-              </FourthCol>
-              <FourthCol header={t`3. Manage your funds`}>
-                <Trans>
-                  Commit portions of your funds to the people or projects you
-                  want to support, or the contributors you want to pay. When you
-                  get paid, so do they.
-                </Trans>
-              </FourthCol>
-              <FourthCol header={t`4. Build trust`}>
-                <Trans>
-                  Changes to your project's funding configuration require a
-                  community-approved period to take effect, which acts as a
-                  safeguard against rug pulls. Your supporters don't have to
-                  trust you — even though they already do.
-                </Trans>
-              </FourthCol>
+
+              <div>
+                <Button
+                  size="large"
+                  type="primary"
+                  href="/create"
+                  block={isMobile}
+                >
+                  <Trans>Build your project</Trans>
+                </Button>
+              </div>
 
               <Divider className="mx-0 my-auto w-12 min-w-[unset]" />
 
@@ -105,17 +112,6 @@ export function HowItWorksSection() {
                   !
                 </Trans>
               </p>
-
-              <div>
-                <Button
-                  size="large"
-                  type="primary"
-                  href="/create"
-                  block={isMobile}
-                >
-                  <Trans>Create a project</Trans>
-                </Button>
-              </div>
             </div>
           </Col>
         </Row>

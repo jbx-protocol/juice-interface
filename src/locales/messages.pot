@@ -542,7 +542,7 @@ msgstr ""
 msgid "Bonding curve"
 msgstr ""
 
-msgid "Build your project 🡒"
+msgid "Build your project"
 msgstr ""
 
 msgid "Built for:"

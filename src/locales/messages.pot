@@ -38,7 +38,7 @@ msgstr ""
 msgid "100% overflow"
 msgstr ""
 
-msgid "2. Give ownership"
+msgid "2. Build trust"
 msgstr ""
 
 msgid "2. Set text record"
@@ -50,13 +50,10 @@ msgstr ""
 msgid "3-day delay"
 msgstr ""
 
-msgid "3. Manage your funds"
+msgid "3. Stay flexible"
 msgstr ""
 
 msgid "30 days"
-msgstr ""
-
-msgid "4. Build trust"
 msgstr ""
 
 msgid "7 days"
@@ -476,6 +473,9 @@ msgstr ""
 msgid "Are you sure?"
 msgstr ""
 
+msgid "As your community grows, scale your project with it: Juicebox lets you update your payouts, token issuance & redemption, and other rules over time to meet your community's evolving needs. Run your community how you want to, with our pre-built integrations for <0>Safe</0>, <1>Snapshot</1>, and the other tools you already use."
+msgstr ""
+
 msgid "Assets"
 msgstr ""
 
@@ -540,6 +540,9 @@ msgid "Block number"
 msgstr ""
 
 msgid "Bonding curve"
+msgstr ""
+
+msgid "Build your project"
 msgstr ""
 
 msgid "Built for:"
@@ -609,9 +612,6 @@ msgid "Changes to payouts will take effect immediately."
 msgstr ""
 
 msgid "Changes to your collection details may not be reflected in some marketplaces (for example, Opensea). Contact the marketplace for support."
-msgstr ""
-
-msgid "Changes to your project's funding configuration require a community-approved period to take effect, which acts as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
 msgstr ""
 
 msgid "Changes to your reserved token allocation will take effect immediately."
@@ -687,9 +687,6 @@ msgid "Collection name"
 msgstr ""
 
 msgid "Collection symbol"
-msgstr ""
-
-msgid "Commit portions of your funds to the people or projects you want to support, or the contributors you want to pay. When you get paid, so do they."
 msgstr ""
 
 msgid "Configure how your project will collect and spend funds."
@@ -845,7 +842,7 @@ msgstr ""
 msgid "Created Payment Address"
 msgstr ""
 
-msgid "Crowdfund your project with ETH. Set a funding target to cover predictable expenses, and any extra funds (<0>overflow</0>) can be claimed by anyone holding your project's tokens alongside you."
+msgid "Crowdfund your project with ETH. When someone pays your project, they'll receive your project's tokens (or NFTs) — use tokens to grant governance rights, community access, or other membership perks."
 msgstr ""
 
 msgid "Crowdfunding"
@@ -3260,6 +3257,9 @@ msgstr ""
 msgid "Transfer {tokenTextShort}"
 msgstr ""
 
+msgid "Transparently set your terms ahead of time, or take control when you need to. Juicebox lets you define elegant token issuance & redemption, payouts, and other rules in advance, acting as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
+msgstr ""
+
 msgid "Trending"
 msgstr ""
 
@@ -3495,9 +3495,6 @@ msgid "When enabled, the project will hold the fee amount in ETH instead of the 
 msgstr ""
 
 msgid "When enabled, your project cannot receive direct payments."
-msgstr ""
-
-msgid "When someone pays your project, they'll receive your project's tokens in return. Tokens can be redeemed for a portion of your project's overflow funds; when you win, your community wins with you. Leverage your project's token to grant governance rights, community access, or other membership perks."
 msgstr ""
 
 msgid "When the Payment Address receives a payment, project tokens will be minted to this token beneficiary address. The address that made the payment <0>won't receive any project tokens.</0>"

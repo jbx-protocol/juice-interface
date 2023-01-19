@@ -65,6 +65,7 @@ export interface ProjectState {
   reservedTokensGroupedSplits: ReservedTokensGroupedSplits
   nftRewards: NftRewardsData
   mustStartAtOrAfter: string
+  inputProjectOwner: string | undefined
 }
 
 interface ReduxState extends CreateState, ProjectState {
@@ -165,6 +166,7 @@ const defaultProjectState: ProjectState = {
     postPayModal: undefined,
   },
   mustStartAtOrAfter: DEFAULT_MUST_START_AT_OR_AFTER,
+  inputProjectOwner: undefined,
 }
 
 export const defaultReduxState: ReduxState = {
@@ -353,6 +355,12 @@ const editingV2ProjectSlice = createSlice({
       action: PayloadAction<CreatePage>,
     ) => {
       state.createFurthestPageReached = action.payload
+    },
+    setInputProjectOwner: (
+      state,
+      action: PayloadAction<string | undefined>,
+    ) => {
+      state.inputProjectOwner = action.payload
     },
     setMustStartAtOrAfter: (state, action: PayloadAction<string>) => {
       state.mustStartAtOrAfter = action.payload

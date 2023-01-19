@@ -19,6 +19,8 @@ export const inputMustBeEthAddressRule = (props?: {
     if (typeof value !== 'string')
       return Promise.reject(t`Invalid type - contact Juicebox Support`)
 
+    if (value === '') return Promise.resolve()
+
     if (!isAddress(value)) {
       return Promise.reject(t`${label} is not a valid ETH Address`)
     }

@@ -1526,6 +1526,9 @@ msgstr ""
 msgid "Initial mint rate"
 msgstr ""
 
+msgid "Input project owner address"
+msgstr ""
+
 msgid "Insufficient token balance"
 msgstr ""
 
@@ -1919,6 +1922,9 @@ msgstr ""
 msgid "No, keep editing"
 msgstr ""
 
+msgid "Nominate an Ethereum wallet address to become the ‘owner’ of this project. If you intend to manage this project from the address that deployed it, leave this blank."
+msgstr ""
+
 msgid "Not a valid ETH address"
 msgstr ""
 
@@ -2148,6 +2154,9 @@ msgid "Project Links"
 msgstr ""
 
 msgid "Project Name"
+msgstr ""
+
+msgid "Project Owner"
 msgstr ""
 
 msgid "Project Settings"
@@ -3378,6 +3387,9 @@ msgid "Wallet Address"
 msgstr ""
 
 msgid "Wallet address"
+msgstr ""
+
+msgid "Warning: once deployed, the nominated address will become the owner of this project and you will not be able to make changes unless you have access to the wallet address nominated."
 msgstr ""
 
 msgid "We recommend visiting the <0>Juicebox Discord</0> for help and advice on this process."

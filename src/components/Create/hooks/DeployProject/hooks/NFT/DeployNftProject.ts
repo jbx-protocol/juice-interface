@@ -24,6 +24,7 @@ export const useDeployNftProject = () => {
     nftRewards,
     payoutGroupedSplits,
     reservedTokensGroupedSplits,
+    inputProjectOwner,
   } = useAppSelector(state => state.editingV2Project)
   const fundingCycleMetadata = useEditingV2V3FundingCycleMetadataSelector()
   const fundingCycleData = useEditingV2V3FundingCycleDataSelector()
@@ -83,6 +84,7 @@ export const useDeployNftProject = () => {
             tiers,
           },
           projectData: {
+            owner: inputProjectOwner?.length ? inputProjectOwner : undefined,
             projectMetadataCID: metadataCid,
             fundingCycleData,
             fundingCycleMetadata: {
@@ -102,14 +104,15 @@ export const useDeployNftProject = () => {
     },
     [
       collectionName,
+      nftRewards.rewardTiers,
       payoutGroupedSplits,
       reservedTokensGroupedSplits,
       launchProjectWithNftsTx,
       collectionSymbol,
+      inputProjectOwner,
       fundingCycleData,
       fundingCycleMetadata,
       fundAccessConstraints,
-      nftRewards.rewardTiers,
     ],
   )
 

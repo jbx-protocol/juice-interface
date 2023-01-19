@@ -103,9 +103,9 @@ const handler: NextApiHandler = async (_, res) => {
           sepanaProject._source[k]
         ) {
           mismatchedProjects.push(
-            `\`[${
-              sepanaProject._source.id
-            }]\` Property: ${k}, VALUES=> Subgraph: ${
+            `\`[${sepanaProject._source.id}]\` ${
+              sepanaProject._source.name ?? '<no name>'
+            } **${k}** Subgraph: ${
               subgraphProject[k as keyof typeof subgraphProject]
             }, Sepana: ${sepanaProject._source[k]}`,
           )

@@ -7,7 +7,7 @@ import { SignerOrProvider } from 'models/signerOrProvider'
 import { V1ContractName, V1Contracts } from 'models/v1/contracts'
 import { useEffect, useState } from 'react'
 
-export const loadV1Contract = async (
+const loadV1Contract = async (
   contractName: string,
   network: NetworkName,
   signerOrProvider: SignerOrProvider,

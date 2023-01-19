@@ -1,10 +1,10 @@
 export * from './FundingCycles'
 export * from './FundingTarget'
-export * from './hooks'
 export * from './NftRewards'
 export * from './Payouts'
 export * from './ProjectDetails'
 export * from './ProjectToken'
 export * from './ReconfigurationRules'
 export * from './ReviewDeploy'
+// TODO: We should move these somewhere higher up so all can use
 export * from './utils'

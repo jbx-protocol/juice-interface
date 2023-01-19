@@ -14,7 +14,7 @@ export interface JB721DelegatePayMetadata {
   dontOverspend?: boolean
 }
 
-export type PayMetadata = JB721DelegatePayMetadata // in future, maybe more
+type PayMetadata = JB721DelegatePayMetadata // in future, maybe more
 
 const DEFAULT_PAY_METADATA: PayMetadata = {
   tierIdsToMint: [],

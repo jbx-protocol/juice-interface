@@ -1,7 +1,7 @@
 import { CreateBadge } from 'components/Create/components/CreateBadge'
 import { Selection } from 'components/Create/components/Selection'
+import { AvailableReconfigurationStrategy } from 'components/Create/hooks/AvailableReconfigurationStrategies'
 import FormattedAddress from 'components/FormattedAddress'
-import { AvailableReconfigurationStrategy } from '../hooks'
 
 export const RuleCard = ({
   strategy,

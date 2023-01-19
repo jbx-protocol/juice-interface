@@ -10,7 +10,7 @@ import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 
-export type FundingTargetFormProps = Partial<{
+type FundingTargetFormProps = Partial<{
   targetSelection: FundingTargetType
   amount: {
     amount: string

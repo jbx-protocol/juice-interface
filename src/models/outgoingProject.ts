@@ -3,7 +3,7 @@ import { OutgoingSplit } from './splits'
 import { V2FundingCycleMetadata } from './v2/fundingCycle'
 import { V2V3FundAccessConstraint, V2V3FundingCycle } from './v2v3/fundingCycle'
 
-export type OutgoingGroupedSplit = {
+type OutgoingGroupedSplit = {
   splits: OutgoingSplit[]
 }
 // Data pertaining to a project object that is sent in a reconfig tx

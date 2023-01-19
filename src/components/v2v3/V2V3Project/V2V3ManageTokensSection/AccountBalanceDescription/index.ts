@@ -1,1 +1,1 @@
-export { AccountBalanceDescription } from './AccountBalanceDescription'
+export * from './AccountBalanceDescription'

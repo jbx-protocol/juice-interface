@@ -5,7 +5,7 @@ export type GnosisSafe = {
   threshold: number
 }
 
-export type GnosisSignature = {
+type GnosisSignature = {
   owner: string
   submissionDate: string
   transactionHash: string

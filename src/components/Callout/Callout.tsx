@@ -5,7 +5,7 @@ import { classNames } from 'utils/classNames'
 import { InfoCallout } from './InfoCallout'
 import { WarningCallout } from './WarningCallout'
 
-export type CalloutProps = PropsWithChildren<{
+type CalloutProps = PropsWithChildren<{
   className?: string
   iconComponent?: JSX.Element | null
   collapsible?: boolean

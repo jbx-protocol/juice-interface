@@ -52,28 +52,6 @@ export async function findJBTiered721DelegateStoreAddress() {
   )?.contractAddress
 }
 
-// Returns the highest NFT reward tier that a payer is eligible given their pay amount
-export function getNftRewardTier({
-  payAmountETH,
-  nftRewardTiers,
-}: {
-  payAmountETH: number
-  nftRewardTiers: NftRewardTier[]
-}) {
-  let nftReward: NftRewardTier | null = null
-  // all nft's who's thresholds are below the pay amount
-  const eligibleNftRewards = nftRewardTiers.filter(rewardTier => {
-    return rewardTier.contributionFloor <= payAmountETH
-  })
-  if (eligibleNftRewards.length) {
-    // take the maximum which is the only one received by payer
-    nftReward = eligibleNftRewards.reduce((prev, curr) => {
-      return prev.contributionFloor > curr.contributionFloor ? prev : curr
-    })
-  }
-  return nftReward
-}
-
 // returns an array of CIDs from a given array of RewardTier obj's
 export function CIDsOfNftRewardTiersResponse(
   nftRewardTiersResponse: JB721TierParams[] | undefined,

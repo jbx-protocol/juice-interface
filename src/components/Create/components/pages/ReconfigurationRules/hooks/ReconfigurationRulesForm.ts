@@ -1,6 +1,7 @@
 import * as constants from '@ethersproject/constants'
 import { Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
+import { useAvailableReconfigurationStrategies } from 'components/Create/hooks/AvailableReconfigurationStrategies'
 import { readNetwork } from 'constants/networks'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
@@ -8,9 +9,8 @@ import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
 import { useEffect, useMemo } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { useFormDispatchWatch } from '../../hooks'
-import { useAvailableReconfigurationStrategies } from './AvailableReconfigurationStrategies'
 
-export type ReconfigurationRulesFormProps = Partial<{
+type ReconfigurationRulesFormProps = Partial<{
   selection: ReconfigurationStrategy
   customAddress?: string
   pausePayments: boolean

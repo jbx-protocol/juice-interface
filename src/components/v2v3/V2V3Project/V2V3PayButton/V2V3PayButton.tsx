@@ -14,7 +14,7 @@ import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useContext, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
-import { V2V3ConfirmPayModal } from './V2V3ConfirmPayModal/V2V3ConfirmPayModal'
+import { V2V3ConfirmPayModal } from './V2V3ConfirmPayModal'
 
 export function V2V3PayButton({ disabled, wrapperClassName }: PayButtonProps) {
   const {

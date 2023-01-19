@@ -23,7 +23,7 @@ import { useV2ProjectTitle } from '../../v2v3/ProjectTitle'
 
 const DEFAULT_MEMO = ''
 
-export interface DeployTiered721DelegateData {
+interface DeployTiered721DelegateData {
   collectionUri: string
   collectionName: string
   collectionSymbol: string

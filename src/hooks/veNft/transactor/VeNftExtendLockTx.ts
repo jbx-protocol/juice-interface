@@ -5,7 +5,7 @@ import { TransactionContext } from 'contexts/transactionContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useVeNftContract } from 'hooks/veNft/VeNftContract'
 
-export type ExtendLockTx = TransactorInstance<{
+type ExtendLockTx = TransactorInstance<{
   tokenId: number
   updatedDuration: number
 }>

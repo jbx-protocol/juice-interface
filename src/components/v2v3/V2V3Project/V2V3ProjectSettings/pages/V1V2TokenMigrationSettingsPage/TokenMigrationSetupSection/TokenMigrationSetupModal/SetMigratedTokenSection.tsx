@@ -33,14 +33,11 @@ export const SetMigratedTokenSection = ({
   }, [deployedMigrationToken, form])
 
   return (
-    <StepSection
-      title={t`Step 2. Set the deployed migration token`}
-      completed={completed}
-    >
+    <StepSection title={t`2. Update V3 project token`} completed={completed}>
       <p>
         <Trans>
-          Set the newly migrated <ProjectVersionBadge.V3 /> token from Step 1 as
-          the project token.
+          Set the newly deployed <ProjectVersionBadge.V3 /> token from Step 1 as
+          your project's token.
         </Trans>
       </p>
       <Form form={form} layout="vertical" onFinish={onFinish}>

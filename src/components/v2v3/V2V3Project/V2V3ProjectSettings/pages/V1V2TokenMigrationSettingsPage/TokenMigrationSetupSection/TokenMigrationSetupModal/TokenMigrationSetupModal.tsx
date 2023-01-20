@@ -13,6 +13,7 @@ import { SetMigratedTokenSection } from './SetMigratedTokenSection'
 import * as constants from '@ethersproject/constants'
 import FormattedAddress from 'components/FormattedAddress'
 import CopyTextButton from 'components/CopyTextButton'
+import { MinimalCollapse } from 'components/MinimalCollapse'
 
 export function TokenMigrationSetupModal({ ...props }: ModalProps) {
   const { projectId } = useContext(ProjectMetadataContext)
@@ -60,13 +61,26 @@ export function TokenMigrationSetupModal({ ...props }: ModalProps) {
         </>
       ) : (
         <>
-          <p className="mb-8">
+          <p className="mb-4">
             <Trans>
-              Set up the option for user token migration from{' '}
-              <ProjectVersionBadge.V1 /> or <ProjectVersionBadge.V2 /> projects
-              to <ProjectVersionBadge.V3 />.
+              Give your <ProjectVersionBadge.V1 /> or <ProjectVersionBadge.V2 />{' '}
+              project's token holders the ability to migrate their tokens to{' '}
+              <ProjectVersionBadge.V3 />.
             </Trans>
           </p>
+
+          <div className="mb-8">
+            <MinimalCollapse header={<Trans>How does it work?</Trans>}>
+              <Trans>
+                Token holders of your legacy project tokens (
+                <ProjectVersionBadge versionText="V1" /> or{' '}
+                <ProjectVersionBadge versionText="V2" />) will have the ability
+                to swap their tokens for{' '}
+                <ProjectVersionBadge versionText="V3" /> tokens at a 1-to-1
+                exchange rate.
+              </Trans>
+            </MinimalCollapse>
+          </div>
 
           <div className="flex flex-col gap-6">
             {/* Required to read v1 project ids from handles */}

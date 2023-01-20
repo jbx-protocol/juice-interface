@@ -19,8 +19,6 @@ export enum V2V3ContractName {
   JBVeNftDeployer = 'JBVeNftDeployer',
   JBVeTokenUriResolver = 'JBVeTokenUriResolver',
 
-  JBV1TokenPaymentTerminal = 'JBV1TokenPaymentTerminal',
-
   DeprecatedJBSplitsStore = 'DeprecatedJBSplitsStore',
   DeprecatedJBDirectory = 'DeprecatedJBDirectory',
 

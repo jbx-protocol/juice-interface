@@ -58,6 +58,7 @@
     "@jbx-protocol/juice-721-delegate": "3.0.0",
     "@jbx-protocol/juice-contracts-v3": "2.0.2",
     "@jbx-protocol/juice-v1-token-terminal": "1.0.1",
+    "@jbx-protocol/juice-v3-migration": "^1.0.0",
     "@jbx-protocol/project-handles": "2.0.2",
     "@jbx-protocol/ve-nft": "0.0.6",
     "@lingui/cli": "^3.13.0",

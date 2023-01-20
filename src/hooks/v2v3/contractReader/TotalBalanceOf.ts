@@ -1,4 +1,5 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
+import { Contract } from '@ethersproject/contracts'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import { bigNumbersDiff } from 'utils/bigNumbers'
 
@@ -8,9 +9,10 @@ import useContractReader from './V2ContractReader'
 export default function useTotalBalanceOf(
   userAddress: string | undefined,
   projectId: BigNumberish | undefined,
+  contract?: Contract,
 ) {
   return useContractReader<BigNumber>({
-    contract: V2V3ContractName.JBTokenStore,
+    contract: contract ?? V2V3ContractName.JBTokenStore,
     functionName: 'balanceOf',
     args:
       userAddress && projectId

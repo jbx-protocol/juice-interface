@@ -3,32 +3,25 @@ import { Form, FormInstance, FormProps, Space, Statistic } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { formattedNum } from 'utils/format/formatNumber'
-import { tokenSymbolText } from 'utils/tokenSymbolText'
 
-interface MigrateV1ProjectTokensFormType {
+interface MigrateLegacyProjectTokensFormType {
   tokenAmount: string
 }
 
-export function MigrateV1ProjectTokensForm({
-  v1TokenSymbol,
-  v1TokenBalance,
+export function MigrateLegacyProjectTokensForm({
+  legacyTokenBalance,
   form,
   ...props
 }: {
-  v1TokenSymbol?: string
-  v1TokenBalance: number
-  form: FormInstance<MigrateV1ProjectTokensFormType>
+  legacyTokenBalance: number | undefined
+  form: FormInstance<MigrateLegacyProjectTokensFormType>
 } & FormProps) {
-  const tokenSymbolFormatted = tokenSymbolText({
-    tokenSymbol: v1TokenSymbol,
-  })
-
   return (
     <Form form={form} layout="vertical" {...props}>
       <Space direction="vertical" size="large" className="w-full">
         <Statistic
-          title={<Trans>Your V1 {tokenSymbolFormatted} balance</Trans>}
-          value={formattedNum(v1TokenBalance)}
+          title={<Trans>Your total legacy balance</Trans>}
+          value={formattedNum(legacyTokenBalance)}
         />
 
         <Form.Item
@@ -45,12 +38,12 @@ export function MigrateV1ProjectTokensForm({
           ]}
         >
           <FormattedNumberInput
-            max={v1TokenBalance}
+            max={legacyTokenBalance}
             accessory={
               <InputAccessoryButton
                 content={<Trans>MAX</Trans>}
                 onClick={() =>
-                  form.setFieldsValue({ tokenAmount: v1TokenBalance })
+                  form.setFieldsValue({ tokenAmount: legacyTokenBalance })
                 }
               />
             }

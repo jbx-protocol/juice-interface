@@ -5,6 +5,7 @@ import { Callout } from 'components/Callout'
 import ExternalLink from 'components/ExternalLink'
 import { PayProjectForm } from 'components/Project/PayProjectForm'
 import { ProjectHeader } from 'components/Project/ProjectHeader'
+import { V1_V3_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { PV_V1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
@@ -29,11 +30,22 @@ const RelaunchV1ProjectCallout = ({ className }: { className?: string }) => {
   const { isReady, relaunch } = useRelaunchV1ViaV3Create()
   const isLoading = !isReady
 
+  const { currentPayoutMods } = useContext(V1ProjectContext)
+
   const hasUpgradePermission = useV1ConnectedWalletHasPermission(
     V1OperatorPermission.Configure,
   )
 
-  if (isHidden || !hasUpgradePermission) {
+  const projectMigratedToV3 = currentPayoutMods?.some(
+    payout => payout.allocator === V1_V3_ALLOCATOR_ADDRESS,
+  )
+
+  if (
+    projectMigratedToV3 === undefined ||
+    projectMigratedToV3 ||
+    isHidden ||
+    !hasUpgradePermission
+  ) {
     return null
   }
 

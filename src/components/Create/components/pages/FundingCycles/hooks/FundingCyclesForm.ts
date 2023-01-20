@@ -29,7 +29,6 @@ export const useFundingCyclesForm = () => {
   const initialValues: FundingCyclesFormProps | undefined = useMemo(() => {
     const selection = fundingCyclesPageSelection
     const launchDate =
-      mustStartAtOrAfter &&
       mustStartAtOrAfter !== DEFAULT_MUST_START_AT_OR_AFTER &&
       !isNaN(parseFloat(mustStartAtOrAfter))
         ? moment.unix(parseFloat(mustStartAtOrAfter))
@@ -89,7 +88,7 @@ export const useFundingCyclesForm = () => {
 
   useEffect(() => {
     if (launchDate === undefined) return
-    if (launchDate === null) {
+    if (launchDate === null || !launchDate.unix().toString()) {
       dispatch(
         editingV2ProjectActions.setMustStartAtOrAfter(
           DEFAULT_MUST_START_AT_OR_AFTER,
@@ -99,7 +98,7 @@ export const useFundingCyclesForm = () => {
     }
     dispatch(
       editingV2ProjectActions.setMustStartAtOrAfter(
-        launchDate?.unix().toString() ?? null,
+        launchDate?.unix().toString(),
       ),
     )
   }, [dispatch, launchDate])

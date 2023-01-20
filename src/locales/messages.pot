@@ -1730,6 +1730,9 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
+msgid "Migrate tokens"
+msgstr ""
+
 msgid "Migration token was successfully deployed to <0/>"
 msgstr ""
 
@@ -2762,13 +2765,10 @@ msgstr ""
 msgid "Supply: {maximumSupply}"
 msgstr ""
 
-msgid "Swap V1 {tokenSymbolFormattedPlural} for V2 {tokenSymbolFormattedPlural}"
+msgid "Swap for V3 tokens"
 msgstr ""
 
-msgid "Swap for V2 {tokenSymbolFormattedPlural}"
-msgstr ""
-
-msgid "Swap for V2 {tokenText}"
+msgid "Swap legacy tokens for V3 tokens"
 msgstr ""
 
 msgid "Swap v1 project tokens {projectTitle}"
@@ -2951,7 +2951,7 @@ msgstr ""
 msgid "There are no reserved token recipients defined for this funding cycle. The project owner will receive all available tokens."
 msgstr ""
 
-msgid "This Juicebox V2 project also has a project on Juicebox V1. The project owner is allowing you to swap your V1 tokens for V2 tokens."
+msgid "This Juicebox V3 project also has a project on Juicebox V1 and/or V2. The project owner is allowing you to swap your legacy tokens (V1 or V2)ƒ for V3 tokens."
 msgstr ""
 
 msgid "This Safe has no past transactions."
@@ -3509,7 +3509,7 @@ msgstr ""
 msgid "You don't own any veNFTs!"
 msgstr ""
 
-msgid "You have <0>{0}</0> tokens on <1>Juicebox V1</1>. You can swap your <2>{1}</2> V1 tokens for V2 tokens"
+msgid "You have <0>{0}</0> tokens in one or more of their legacy projects. You can swap your legacy <1>{1}</1> tokens for their current V3 tokens."
 msgstr ""
 
 msgid "You have configured for all funds to be distributed from the treasury. Your current payouts do not sum to 100%, so the remainder will go to the project owner."
@@ -3557,9 +3557,6 @@ msgstr ""
 msgid "You've completed this step."
 msgstr ""
 
-msgid "Your <0>@{v1ProjectHandle}</0> V1 token balance."
-msgstr ""
-
 msgid "Your Funding Target can be changed in future funding cycles. Payouts denominated in USD are paid out in ETH at the current exchange rate."
 msgstr ""
 
@@ -3567,12 +3564,6 @@ msgid "Your Juicebox project has no active funding cycle. Launch a funding cycle
 msgstr ""
 
 msgid "Your NFTs"
-msgstr ""
-
-msgid "Your V1 balance"
-msgstr ""
-
-msgid "Your V1 {tokenSymbolFormatted} balance"
 msgstr ""
 
 msgid "Your V3 project cannot have payouts to V1 projects. Remove any payouts to V1 projects, or re-assign them to V3 projects."
@@ -3588,6 +3579,9 @@ msgid "Your collection's symbol is used on NFT marketplaces (for example, OpenSe
 msgstr ""
 
 msgid "Your funding cycle configuration has been pre-populated using the configuration you originally launched with. If you need to customize it, contact us."
+msgstr ""
+
+msgid "Your legacy token balance"
 msgstr ""
 
 msgid "Your new payment address:"
@@ -3627,6 +3621,12 @@ msgid "Your project will withhold all funds raised. Funds can be distributed to 
 msgstr ""
 
 msgid "Your project's current funding cycle has no duration. Changes you make below will take effect immediately."
+msgstr ""
+
+msgid "Your total legacy balance"
+msgstr ""
+
+msgid "Your total token balance for this project's legacy tokens."
 msgstr ""
 
 msgid "Your transaction has been submitted and is awaiting confirmation."
@@ -3894,9 +3894,6 @@ msgid "{payerRate} {tokenSymbolPlural}/ETH"
 msgstr ""
 
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
-msgstr ""
-
-msgid "{remainingSupply}"
 msgstr ""
 
 msgid "{tokenSymbolDisplayText} range"

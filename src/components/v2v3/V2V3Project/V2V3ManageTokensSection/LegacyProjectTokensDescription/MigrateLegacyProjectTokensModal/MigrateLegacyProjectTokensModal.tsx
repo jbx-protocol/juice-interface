@@ -5,25 +5,18 @@ import { usePayV1TokenPaymentTerminal } from 'hooks/v2v3/transactor/PayV1TokenPa
 import { useWallet } from 'hooks/Wallet'
 import { useContext, useState } from 'react'
 import { parseWad } from 'utils/format/formatNumber'
-import { tokenSymbolText } from 'utils/tokenSymbolText'
-
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { useV1HasPermissions } from 'hooks/v1/contractReader/V1HasPermissions'
 import { V1OperatorPermission } from 'models/v1/permissions'
-
 import { GrantTransferPermissionCallout } from './GrantTransferPermissionCallout'
-import { MigrateV1ProjectTokensForm } from './MigrateV1ProjectTokensForm'
+import { MigrateLegacyProjectTokensForm } from './MigrateLegacyProjectTokensForm'
 import { TokenSwapDescription } from './TokenSwapDescription'
 
 export function MigrateProjectTokensModal({
-  v1TokenSymbol,
-  v1TokenBalance,
-  v1ProjectHandle,
+  legacyTokenBalance,
   ...props
 }: {
-  v1TokenSymbol?: string
-  v1TokenBalance: number
-  v1ProjectHandle: string
+  legacyTokenBalance: number | undefined
 } & ModalProps) {
   const { userAddress } = useWallet()
   const { contracts } = useContext(V2V3ContractsContext)
@@ -76,11 +69,6 @@ export function MigrateProjectTokensModal({
     }
   }
 
-  const tokenSymbolFormattedPlural = tokenSymbolText({
-    tokenSymbol: v1TokenSymbol,
-    plural: v1TokenBalance !== 1,
-  })
-
   const modalOkProps = () => {
     return !hasV1TokenTransferPermission
       ? {
@@ -90,7 +78,7 @@ export function MigrateProjectTokensModal({
           onOk: () => form.submit(),
           okText: (
             <span>
-              <Trans>Swap for V2 {tokenSymbolFormattedPlural}</Trans>
+              <Trans>Swap for V3 tokens</Trans>
             </span>
           ),
         }
@@ -98,12 +86,7 @@ export function MigrateProjectTokensModal({
 
   return (
     <TransactionModal
-      title={
-        <Trans>
-          Swap V1 {tokenSymbolFormattedPlural} for V2{' '}
-          {tokenSymbolFormattedPlural}
-        </Trans>
-      }
+      title={<Trans>Swap legacy tokens for V3 tokens</Trans>}
       transactionPending={transactionPending}
       confirmLoading={loading}
       destroyOnClose
@@ -116,14 +99,13 @@ export function MigrateProjectTokensModal({
             onFinish={() => setPermissionGranted(true)}
           />
         )}
-        <TokenSwapDescription v1ProjectHandle={v1ProjectHandle} />
+        <TokenSwapDescription />
 
         {hasV1TokenTransferPermission && (
-          <MigrateV1ProjectTokensForm
+          <MigrateLegacyProjectTokensForm
             form={form}
             onFinish={() => swapTokens()}
-            v1TokenSymbol={v1TokenSymbol}
-            v1TokenBalance={v1TokenBalance}
+            legacyTokenBalance={legacyTokenBalance}
           />
         )}
       </Space>

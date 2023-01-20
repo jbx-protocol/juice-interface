@@ -9,11 +9,9 @@ import { Parenthesis } from 'components/Parenthesis'
 import TooltipIcon from 'components/TooltipIcon'
 import TooltipLabel from 'components/TooltipLabel'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/ETHPaymentTerminalFee'
 import { Split } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { formatDate } from 'utils/format/formatDate'
 import { formatWad } from 'utils/format/formatNumber'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
@@ -46,14 +44,11 @@ const JuiceboxProjectBeneficiary = ({
   if (!split.projectId) return null
 
   const isProjectOwner = projectOwnerAddress === split.beneficiary
-  const allocatorsEnabled = featureFlagEnabled(FEATURE_FLAGS.SPLIT_ALLOCATORS)
   return (
     <div>
       <Space size="small">
         <V2V3ProjectHandleLink projectId={parseInt(split.projectId)} />
-        {allocatorsEnabled ? (
-          <AllocatorBadge allocator={split.allocator} />
-        ) : null}
+        <AllocatorBadge allocator={split.allocator} />
       </Space>
       {split.allocator === NULL_ALLOCATOR_ADDRESS ? (
         <div className="ml-2 text-xs text-grey-500 dark:text-grey-300">

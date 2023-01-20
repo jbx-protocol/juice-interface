@@ -1,21 +1,11 @@
 import { SplitPercentValue } from './SplitPercentValue'
 import { SplitAmountValue } from './SplitAmountValue'
-import { Split } from 'models/splits'
 import { SplitProps } from './SplitItem'
 
-export function SplitValue({
-  splitProps,
-  diffSplit,
-}: {
-  splitProps: SplitProps
-  diffSplit?: Split
-}) {
+export function SplitValue({ splitProps }: { splitProps: SplitProps }) {
   return (
     <div className="flex">
-      <SplitPercentValue
-        percent={splitProps.split.percent}
-        oldPercent={diffSplit?.percent}
-      />
+      <SplitPercentValue percent={splitProps.split.percent} />
       {splitProps.showAmount && splitProps.totalValue?.gt(0) ? (
         <div className="ml-1">
           <SplitAmountValue props={splitProps} />

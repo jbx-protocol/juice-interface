@@ -13,3 +13,10 @@ export const prettyUrl = (url: string) => {
     return url.split('http://')[1]
   } else return url
 }
+
+export const linkUrl = (url: string) => {
+  if (url.startsWith('http://') || url.startsWith('https://')) {
+    return url
+  }
+  return 'https://' + url
+}

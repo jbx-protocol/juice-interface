@@ -3,6 +3,7 @@ import { Space } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import Discord from 'components/icons/Discord'
 import useMobile from 'hooks/Mobile'
+import { linkUrl } from 'utils/url'
 
 type SocialProps = {
   children: React.ReactNode
@@ -15,7 +16,7 @@ function SocialButton(props: SocialProps) {
   return (
     <ExternalLink
       className="border-1 p-30 flex h-10 w-10 items-center justify-center rounded-full bg-smoke-100 hover:bg-smoke-200  dark:bg-slate-400 dark:hover:bg-slate-500 md:h-9 md:w-9"
-      href={link}
+      href={linkUrl(link)}
     >
       {children}
     </ExternalLink>

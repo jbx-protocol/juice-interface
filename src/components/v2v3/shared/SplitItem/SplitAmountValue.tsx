@@ -14,26 +14,31 @@ import { SplitProps } from './SplitItem'
 
 export function SplitAmountValue({ props }: { props: SplitProps }) {
   const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
+
   const splitValue = props.totalValue
     ?.mul(props.split.percent)
     .div(SPLITS_TOTAL_PERCENT)
+  const curr = V2V3CurrencyName(
+    props.currency?.toNumber() as V2V3CurrencyOption | undefined,
+  )
+
   const isJuiceboxProject = isJuiceboxProjectSplit(props.split)
   const feeAmount = isJuiceboxProject
     ? feeForAmount(splitValue, ETHPaymentTerminalFee)
     : BigNumber.from(0)
+
   const splitValueFormatted =
     splitValue &&
     feeAmount &&
     formatWad(splitValue.sub(feeAmount), {
       ...props.valueFormatProps,
+      precision: curr === 'ETH' ? 4 : 2,
+      padEnd: true,
     })
   const feeAmountFormatted = formatWad(feeAmount, {
     ...props.valueFormatProps,
   })
 
-  const curr = V2V3CurrencyName(
-    props.currency?.toNumber() as V2V3CurrencyOption | undefined,
-  )
   const tooltipTitle =
     curr === 'ETH' && splitValue?.gt(0) ? (
       <ETHToUSD ethAmount={splitValue} />

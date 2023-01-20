@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import { Space } from 'antd'
 import TooltipIcon from 'components/TooltipIcon'
 
-export function V1ProjectTokensDescriptionHeading() {
+export function LegacyProjectTokensDescriptionHeading() {
   return (
     <Space size="small">
       <Trans>Your legacy token balance</Trans>

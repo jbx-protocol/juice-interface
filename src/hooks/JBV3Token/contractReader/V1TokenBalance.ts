@@ -21,15 +21,17 @@ export function useV1TokenBalance() {
     args: null,
   })
 
-  const v1TicketBookAddress = useLoadContractFromAddress({
+  const v1TicketBookContract = useLoadContractFromAddress({
     address: v1TicketBoothAddress,
     abi: '',
   }) // TODO
 
-  return useTotalBalanceOf(
-    userAddress,
-    v1ProjectId,
-    undefined,
-    v1TicketBookAddress,
+  return (
+    useTotalBalanceOf(
+      userAddress,
+      v1ProjectId,
+      undefined,
+      v1TicketBookContract,
+    ) ?? BigNumber.from(0)
   )
 }

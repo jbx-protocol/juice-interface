@@ -18,8 +18,8 @@ import { reloadWindow } from 'utils/windowUtils'
 import { AccountBalanceDescription } from './AccountBalanceDescription'
 import { ProjectTokenDescription } from './ProjectTokenDescription'
 import { TotalSupplyDescription } from './TotalSupplyDescription'
-import { V1ProjectTokensDescription } from './V1ProjectTokensDescription'
-import { V1ProjectTokensDescriptionHeading } from './V1ProjectTokensDescription/V1ProjectTokensDescriptionHeading'
+import { LegacyProjectTokensDescription } from './LegacyProjectTokensDescription'
+import { LegacyProjectTokensDescriptionHeading } from './LegacyProjectTokensDescription'
 
 const labelStyle: CSSProperties = {
   width: '10.5rem',
@@ -98,11 +98,11 @@ export function V2V3ManageTokensSection() {
 
             {showV1ProjectTokensSection && (
               <Descriptions.Item
-                label={<V1ProjectTokensDescriptionHeading />}
+                label={<LegacyProjectTokensDescriptionHeading />}
                 labelStyle={labelStyle}
                 contentStyle={contentStyle}
               >
-                <V1ProjectTokensDescription />
+                <LegacyProjectTokensDescription />
               </Descriptions.Item>
             )}
           </>

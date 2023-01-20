@@ -1,5 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Form, FormInstance, Space } from 'antd'
+import { useWatch } from 'antd/lib/form/Form'
 import { FormItems } from 'components/formItems'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import { normalizeHandle } from 'utils/format/formatHandle'
@@ -31,6 +32,8 @@ export default function ProjectDetailsForm({
   loading?: boolean
   onValuesChange?: VoidFunction
 }) {
+  const initialLogoUrl = useWatch('logoUri', form)
+
   return (
     <Form
       scrollToFirstError={{ behavior: 'smooth' }}
@@ -67,7 +70,7 @@ export default function ProjectDetailsForm({
           <FormItems.ProjectDescription name="description" />
           <FormItems.ProjectLogoUri
             name="logoUri"
-            initialUrl={form.getFieldValue('logoUri')}
+            initialUrl={initialLogoUrl}
             onSuccess={logoUri => {
               form.setFieldsValue({ logoUri })
               onValuesChange?.()

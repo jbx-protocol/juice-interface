@@ -1,8 +1,9 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Form, Space } from 'antd'
+import { Form, Space, Tooltip } from 'antd'
 import { Callout } from 'components/Callout'
+import ETHToUSD from 'components/currency/ETHToUSD'
 import CurrencySymbol from 'components/CurrencySymbol'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
@@ -14,7 +15,7 @@ import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/ETHPaymentTe
 import { useDistributePayoutsTx } from 'hooks/v2v3/transactor/DistributePayouts'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useContext, useEffect, useState } from 'react'
-import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
+import { formatWad, parseWad } from 'utils/format/formatNumber'
 import { V2V3CurrencyName, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 
 export default function DistributePayoutsModal({
@@ -51,7 +52,7 @@ export default function DistributePayoutsModal({
       ? unusedFunds
       : balanceInDistributionLimitCurrency
 
-    setDistributionAmount(fromWad(distributable))
+    setDistributionAmount(formatWad(distributable, { precision: 4 }))
   }, [
     balanceInDistributionLimitCurrency,
     distributionLimit,
@@ -108,6 +109,11 @@ export default function DistributePayoutsModal({
 
   const grossAvailableAmount = formatWad(distributable, { precision: 4 })
 
+  const tooltipTitle =
+    distributionCurrencyName === 'ETH' && distributable?.gt(0) ? (
+      <ETHToUSD ethAmount={distributable} />
+    ) : undefined
+
   return (
     <TransactionModal
       title={<Trans>Distribute funds</Trans>}
@@ -141,8 +147,10 @@ export default function DistributePayoutsModal({
               <div className="mb-2 text-black dark:text-slate-100">
                 <Trans>
                   <span className="font-medium">
-                    <CurrencySymbol currency={distributionCurrencyName} />
-                    {grossAvailableAmount}
+                    <Tooltip title={tooltipTitle}>
+                      <CurrencySymbol currency={distributionCurrencyName} />
+                      {grossAvailableAmount}
+                    </Tooltip>
                   </span>{' '}
                   available to distribute
                 </Trans>
@@ -164,7 +172,9 @@ export default function DistributePayoutsModal({
                   <InputAccessoryButton
                     content={<Trans>MAX</Trans>}
                     onClick={() =>
-                      setDistributionAmount(fromWad(distributable))
+                      setDistributionAmount(
+                        formatWad(distributable, { precision: 4 }),
+                      )
                     }
                   />
                 </div>

@@ -98,11 +98,7 @@ export function V2V3ManageTokensSection() {
 
             {showV1ProjectTokensSection && (
               <Descriptions.Item
-                label={
-                  <V1ProjectTokensDescriptionHeading
-                    v1ProjectId={v1ProjectId}
-                  />
-                }
+                label={<V1ProjectTokensDescriptionHeading />}
                 labelStyle={labelStyle}
                 contentStyle={contentStyle}
               >

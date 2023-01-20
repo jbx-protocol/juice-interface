@@ -1,18 +1,9 @@
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { readNetwork } from 'constants/networks'
 import { NetworkName } from 'models/network-name'
 
 const FEATURE_FLAG_DEFAULTS: {
   [featureFlag: string]: { [networkName in NetworkName]?: boolean }
-} = {
-  [FEATURE_FLAGS.NFT_REDEEM]: {
-    goerli: true,
-    mainnet: true,
-  },
-  [FEATURE_FLAGS.SPLIT_ALLOCATORS]: {
-    mainnet: true,
-  },
-}
+} = {}
 
 const featureFlagKey = (baseKey: string) => {
   return `${baseKey}_${readNetwork.name}`

@@ -1,11 +1,12 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { readProvider } from 'constants/readProvider'
-import { ipfsGetWithFallback } from 'lib/api/ipfs'
+import { infuraApi } from 'lib/infura/ipfs'
 import { ProjectMetadataV5 } from 'models/project-metadata'
 import { SepanaProject, SepanaProjectJson } from 'models/sepana'
 import { Project, ProjectJson } from 'models/subgraph-entities/vX/project'
 import { NextApiHandler } from 'next'
 import { querySubgraphExhaustive } from 'utils/graph'
+import { openIpfsUrl } from 'utils/ipfs'
 
 import { queryAllSepanaProjects, sepanaAlert, writeSepanaDocs } from './utils'
 
@@ -111,7 +112,14 @@ const handler: NextApiHandler = async (req, res) => {
       }
 
       promises.push(
-        ipfsGetWithFallback<ProjectMetadataV5>(p.metadataUri as string)
+        infuraApi
+          .get<ProjectMetadataV5>(openIpfsUrl(p.metadataUri), {
+            responseType: 'json',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+          })
           .then(({ data: { logoUri, name, description } }) => ({
             project: {
               ...p,

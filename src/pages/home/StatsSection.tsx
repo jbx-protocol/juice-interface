@@ -41,7 +41,7 @@ export function StatsSection() {
 
   return (
     <section className="bg-smoke-50 dark:bg-slate-600">
-      <div className="m-auto flex max-w-[1080px] flex-wrap justify-between gap-4 py-16 px-8">
+      <div className="m-auto flex max-w-5xl flex-wrap justify-between gap-4 py-16 px-8">
         <Stat
           value={stats?.projectsCount}
           label={<Trans>Projects on Juicebox</Trans>}

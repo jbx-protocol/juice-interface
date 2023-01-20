@@ -28,7 +28,7 @@ export default function TrendingSection() {
 
   return (
     <section className="my-0 mx-auto p-12">
-      <Row className="my-0 mx-auto max-w-[1080px] gap-y-10" gutter={40}>
+      <Row className="my-0 mx-auto max-w-5xl gap-y-10" gutter={40}>
         <Col xs={24} md={12} className="px-0 md:px-5">
           <div className="flex flex-col gap-9">
             <SmallHeader

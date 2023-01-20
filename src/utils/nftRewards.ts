@@ -20,7 +20,6 @@ import {
   NftRewardTier,
 } from 'models/nftRewardTier'
 import { V2V3ContractName } from 'models/v2v3/contracts'
-import { V2V3FundingCycleMetadata } from 'models/v2v3/fundingCycle'
 import { decodeEncodedIPFSUri, encodeIPFSUri, ipfsUrl } from 'utils/ipfs'
 import { V2V3_CURRENCY_ETH } from './v2v3/currency'
 
@@ -53,28 +52,6 @@ export async function findJBTiered721DelegateStoreAddress() {
   )?.contractAddress
 }
 
-// Returns the highest NFT reward tier that a payer is eligible given their pay amount
-export function getNftRewardTier({
-  payAmountETH,
-  nftRewardTiers,
-}: {
-  payAmountETH: number
-  nftRewardTiers: NftRewardTier[]
-}) {
-  let nftReward: NftRewardTier | null = null
-  // all nft's who's thresholds are below the pay amount
-  const eligibleNftRewards = nftRewardTiers.filter(rewardTier => {
-    return rewardTier.contributionFloor <= payAmountETH
-  })
-  if (eligibleNftRewards.length) {
-    // take the maximum which is the only one received by payer
-    nftReward = eligibleNftRewards.reduce((prev, curr) => {
-      return prev.contributionFloor > curr.contributionFloor ? prev : curr
-    })
-  }
-  return nftReward
-}
-
 // returns an array of CIDs from a given array of RewardTier obj's
 export function CIDsOfNftRewardTiersResponse(
   nftRewardTiersResponse: JB721TierParams[] | undefined,
@@ -101,9 +78,13 @@ export const defaultNftCollectionDescription = (
     projectName?.length ? projectName : 'your project'
   }'s Juicebox contributors.`
 
-async function uploadNftRewardToIPFS(
-  rewardTier: NftRewardTier,
-): Promise<string> {
+async function uploadNftRewardToIPFS({
+  rewardTier,
+  rank,
+}: {
+  rewardTier: NftRewardTier
+  rank: number
+}): Promise<string> {
   const ipfsNftRewardTier: IPFSNftRewardTier = {
     description: rewardTier.description,
     name: rewardTier.name,
@@ -124,6 +105,10 @@ async function uploadNftRewardToIPFS(
       {
         trait_type: 'Max. Supply',
         value: rewardTier.maxSupply,
+      },
+      {
+        trait_type: 'tier',
+        value: rank,
       },
     ],
   }
@@ -149,7 +134,12 @@ export async function uploadNftRewardsToIPFS(
   nftRewards: NftRewardTier[],
 ): Promise<string[]> {
   return await Promise.all(
-    nftRewards.map(rewardTier => uploadNftRewardToIPFS(rewardTier)),
+    sortNftsByContributionFloor(nftRewards).map((rewardTier, idx) =>
+      uploadNftRewardToIPFS({
+        rewardTier,
+        rank: idx + 1, // relies on rewardTiers being sorted by contributionFloor
+      }),
+    ),
   )
 }
 
@@ -248,23 +238,6 @@ export function buildJB721TierParams({
       if (a.contributionFloor.lt(b.contributionFloor)) return -1
       return 0
     })
-}
-
-/**
- * Assume that any project with a data source has "NFT Rewards"
- * In other words, uses the JB721Delegate.
- *
- * @TODO this is a TERRIBLE assumption. If someone starts using a different datasource,
- * the UI will break badly. We should probably be validating that the datasource address adheres to a particular interface.ƒ
- */
-export function hasNftRewards(
-  fundingCycleMetadata: V2V3FundingCycleMetadata | undefined,
-) {
-  return Boolean(
-    fundingCycleMetadata?.dataSource &&
-      fundingCycleMetadata.dataSource !== constants.AddressZero &&
-      fundingCycleMetadata?.useDataSourceForPay,
-  )
 }
 
 export function encodeJB721DelegatePayMetadata(
@@ -420,4 +393,10 @@ export function payMetadataOverrides(
   }
 
   return {}
+}
+
+export function sortNftsByContributionFloor(
+  rewardTiers: NftRewardTier[],
+): NftRewardTier[] {
+  return rewardTiers.sort((a, b) => a.contributionFloor - b.contributionFloor)
 }

@@ -7,7 +7,7 @@ import { TransactionContext } from 'contexts/transactionContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useWallet } from 'hooks/Wallet'
 
-export type ExtendLockTx = TransactorInstance<{
+type ExtendLockTx = TransactorInstance<{
   name: string
   symbol: string
   uriResolver: string

@@ -43,7 +43,7 @@ const useAllocationInstance = () => {
   return useContext(AllocationContext)
 }
 
-export interface AllocationProps {
+interface AllocationProps {
   totalAllocationAmount?: BigNumber
   allocationCurrency?: V2V3CurrencyOption
   setAllocationCurrency?: (currency: V2V3CurrencyOption) => void

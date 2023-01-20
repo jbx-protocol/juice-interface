@@ -2,7 +2,7 @@ import axios from 'axios'
 import { readNetwork } from 'constants/networks'
 import { SafeTransactionType } from 'models/safe'
 
-export type SafeApiParams = {
+type SafeApiParams = {
   limit?: number
   executed?: boolean
   nonce__gt?: number

@@ -36,7 +36,7 @@ export function QuantitySelector({
       >
         <MinusOutlined />
       </div>
-      <div className="flex cursor-default items-center font-medium">
+      <div className="flex cursor-default select-none items-center font-medium">
         {value}
       </div>
       <Tooltip title={valueIsMax ? t`Max. supply reached` : undefined}>

@@ -9,7 +9,7 @@ export enum TxStatus {
   failed = 'FAILED',
 }
 
-export type TransactionCallback = (e?: Transaction, signer?: Signer) => void
+type TransactionCallback = (e?: Transaction, signer?: Signer) => void
 
 export interface TransactionCallbacks {
   onDone?: VoidFunction

@@ -13,12 +13,12 @@ import { TransactionCallbacks } from 'models/transaction'
 import { useCallback, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { emitErrorNotification } from 'utils/notifications'
-import { useDeployStandardProject } from './hooks'
 import {
+  useDeployStandardProject,
   useDeployNftProject,
   useIsNftProject,
   useUploadNftRewards,
-} from './hooks/NFT'
+} from './hooks'
 
 // TODO: This is copy pasted from ReviewDeployTab
 const NFT_CREATE_EVENT_IDX = 2

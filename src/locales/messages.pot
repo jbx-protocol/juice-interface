@@ -1730,6 +1730,9 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
+msgid "Migrate tokens"
+msgstr ""
+
 msgid "Migration token was successfully deployed to <0/>"
 msgstr ""
 
@@ -2768,9 +2771,6 @@ msgstr ""
 msgid "Swap for V2 {tokenSymbolFormattedPlural}"
 msgstr ""
 
-msgid "Swap for V2 {tokenText}"
-msgstr ""
-
 msgid "Swap v1 project tokens {projectTitle}"
 msgstr ""
 
@@ -3557,9 +3557,6 @@ msgstr ""
 msgid "You've completed this step."
 msgstr ""
 
-msgid "Your <0>@{v1ProjectHandle}</0> V1 token balance."
-msgstr ""
-
 msgid "Your Funding Target can be changed in future funding cycles. Payouts denominated in USD are paid out in ETH at the current exchange rate."
 msgstr ""
 
@@ -3567,9 +3564,6 @@ msgid "Your Juicebox project has no active funding cycle. Launch a funding cycle
 msgstr ""
 
 msgid "Your NFTs"
-msgstr ""
-
-msgid "Your V1 balance"
 msgstr ""
 
 msgid "Your V1 {tokenSymbolFormatted} balance"
@@ -3588,6 +3582,9 @@ msgid "Your collection's symbol is used on NFT marketplaces (for example, OpenSe
 msgstr ""
 
 msgid "Your funding cycle configuration has been pre-populated using the configuration you originally launched with. If you need to customize it, contact us."
+msgstr ""
+
+msgid "Your legacy token balance"
 msgstr ""
 
 msgid "Your new payment address:"
@@ -3627,6 +3624,9 @@ msgid "Your project will withhold all funds raised. Funds can be distributed to 
 msgstr ""
 
 msgid "Your project's current funding cycle has no duration. Changes you make below will take effect immediately."
+msgstr ""
+
+msgid "Your total token balance for this project's legacy tokens."
 msgstr ""
 
 msgid "Your transaction has been submitted and is awaiting confirmation."

@@ -12,9 +12,9 @@ import { isJuiceboxProjectSplit } from 'utils/v2v3/distributions'
 import { SplitProps } from '../SplitItem'
 import { ETHAddressBeneficiary } from '../SplitItem/EthAddressBeneficiary'
 import { ReservedTokensValue } from '../SplitItem/ReservedTokensValue'
-import { SplitValue } from '../SplitItem/SplitValue'
 import { DiffedJBProjectBeneficiary } from './DiffedSplitFields/DiffedJBProjectBeneficiary'
 import { DiffedLockedUntil } from './DiffedSplitFields/DiffedLockedUntil'
+import { DiffedSplitValue } from './DiffedSplitFields/DiffedSplitValue'
 
 type DiffedSplitProps = Omit<SplitProps, 'split'> & { split: SplitWithDiff }
 
@@ -62,7 +62,7 @@ export function DiffedSplitItem({ props }: { props: DiffedSplitProps }) {
         ) : null}
       </div>
       <div className="flex items-center whitespace-nowrap">
-        <SplitValue
+        <DiffedSplitValue
           diffSplit={hasDiff ? oldSplit : undefined}
           splitProps={props}
         />

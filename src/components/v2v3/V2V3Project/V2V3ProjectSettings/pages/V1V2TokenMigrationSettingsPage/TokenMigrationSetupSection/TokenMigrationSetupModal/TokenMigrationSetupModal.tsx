@@ -14,7 +14,7 @@ import * as constants from '@ethersproject/constants'
 import FormattedAddress from 'components/FormattedAddress'
 import CopyTextButton from 'components/CopyTextButton'
 
-export function V1TokenMigrationSetupModal({ ...props }: ModalProps) {
+export function TokenMigrationSetupModal({ ...props }: ModalProps) {
   const { projectId } = useContext(ProjectMetadataContext)
   const [deployedMigrationToken, setDeployedMigrationToken] = useState<string>()
   const [migrationTokenSet, setMigrationTokenSet] = useState<boolean>(false)

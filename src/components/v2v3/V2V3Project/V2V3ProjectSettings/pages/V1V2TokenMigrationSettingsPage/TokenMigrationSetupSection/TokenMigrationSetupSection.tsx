@@ -8,7 +8,7 @@ import { readNetwork } from 'constants/networks'
 import { TokenAddresses } from 'constants/tokenAddresses'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { V1TokenMigrationSetupModal } from './V1TokenMigrationSetupModal'
+import { TokenMigrationSetupModal } from './TokenMigrationSetupModal'
 
 export function V1TokenMigrationSetupSection() {
   const router = useRouter()
@@ -72,7 +72,7 @@ export function V1TokenMigrationSetupSection() {
       >
         <Trans>Set up token migration</Trans>
       </Button>
-      <V1TokenMigrationSetupModal
+      <TokenMigrationSetupModal
         open={migrationModalVisible}
         onOk={() => setMigrationModalVisible(false)}
         onCancel={() => setMigrationModalVisible(false)}

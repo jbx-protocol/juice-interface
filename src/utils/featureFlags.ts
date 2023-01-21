@@ -1,9 +1,15 @@
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { readNetwork } from 'constants/networks'
 import { NetworkName } from 'models/network-name'
 
 const FEATURE_FLAG_DEFAULTS: {
   [featureFlag: string]: { [networkName in NetworkName]?: boolean }
-} = {}
+} = {
+  [FEATURE_FLAGS.IPFS_REQUIRES_KEY_REGISTRATION]: {
+    mainnet: false,
+    goerli: false,
+  },
+}
 
 const featureFlagKey = (baseKey: string) => {
   return `${baseKey}_${readNetwork.name}`

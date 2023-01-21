@@ -9,7 +9,7 @@ import {
 } from 'utils/server/ipfs/pinata'
 
 const validateRequest = (req: NextApiRequest) => {
-  const reqIsGet = req.method === 'POST'
+  const reqIsPost = req.method === 'POST'
   const reqBodyContainsWalletAddress = !!req.body.walletAddress
   const walletAddressIsString = typeof req.body.walletAddress === 'string'
   const reqBodyContainsSignature = !!req.body.signature
@@ -17,7 +17,7 @@ const validateRequest = (req: NextApiRequest) => {
   const reqBodyContainsNonce = !!req.body.nonce
   const nonceIsString = typeof req.body.nonce === 'string'
   if (
-    !reqIsGet ||
+    !reqIsPost ||
     !reqBodyContainsWalletAddress ||
     !walletAddressIsString ||
     !reqBodyContainsSignature ||

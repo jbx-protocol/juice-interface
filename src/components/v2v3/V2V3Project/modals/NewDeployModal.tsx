@@ -10,6 +10,7 @@ import Link from 'next/link'
 import { useContext, useState } from 'react'
 import { settingsPagePath } from 'utils/routes'
 import { LaunchProjectPayerModal } from './LaunchProjectPayerModal'
+import ExternalLink from 'components/ExternalLink'
 
 export const NEW_DEPLOY_QUERY_PARAM = 'np'
 
@@ -48,8 +49,12 @@ export default function NewDeployModal({
       </h2>
       <p>
         <Trans>
-          Congratulations on launching your project! The next steps are optional
-          and can be completed at any time.
+          Congratulations on launching your project! For help planning your next
+          steps, share your project in the{' '}
+          <ExternalLink href="https://discord.gg/juicebox">
+            JuiceboxDAO Discord
+          </ExternalLink>
+          . Optionally, you can:
         </Trans>
       </p>
       <div>
@@ -60,7 +65,7 @@ export default function NewDeployModal({
             heading={<Trans>Set a project handle (optional)</Trans>}
             description={
               <Trans>
-                Set a unique name that will be visible in your project's URL,
+                Set a unique handle that will be visible in your project's URL,
                 and that will allow your project to appear in search results.
               </Trans>
             }
@@ -81,8 +86,9 @@ export default function NewDeployModal({
           heading={<Trans>Issue an ERC-20 token (optional)</Trans>}
           description={
             <Trans>
-              Create your own ERC-20 token to represent stake in your project.
-              Contributors will receive these tokens when they pay your project.
+              Allow contributors to claim your project's tokens as an ERC-20.
+              This makes your project's tokens compatible with tools like
+              Uniswap.
             </Trans>
           }
           onClick={() => setIssueTokenModalVisible(true)}
@@ -102,8 +108,8 @@ export default function NewDeployModal({
           heading={<Trans>Create a Payment Address (optional)</Trans>}
           description={
             <Trans>
-              Create an Ethereum address for your project. Enables direct
-              payments without going through your project's Juicebox page.
+              Deploy an address which forwards funds to your project. This makes
+              it easier to pay your project outside of juicebox.money.
             </Trans>
           }
           onClick={() => setLaunchProjectPayerModalVisible(true)}

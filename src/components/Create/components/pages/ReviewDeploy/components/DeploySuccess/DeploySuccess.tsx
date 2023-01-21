@@ -1,4 +1,4 @@
-import { ShareAltOutlined } from '@ant-design/icons'
+import { RocketOutlined, TwitterOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Space } from 'antd'
 import ExternalLink from 'components/ExternalLink'
@@ -60,12 +60,20 @@ export const DeploySuccess = ({ projectId }: { projectId: number }) => {
       <div className="pt-8 text-4xl font-medium">Congratulations!</div>
       <div className="mt-6 text-xl font-normal">{deployGreeting}</div>
       <div className="flex gap-2 pt-16">
+        <ExternalLink href="https://discord.gg/juicebox">
+          <Button>
+            <Space>
+              <RocketOutlined />
+              <Trans> Share in JuiceboxDAO's Discord</Trans>
+            </Space>
+          </Button>
+        </ExternalLink>
         <ExternalLink href={twitterShareUrl}>
           <Button>
             {/* Spacing is weird when you use button icon - do this instead */}
             <Space>
-              <ShareAltOutlined />
-              <Trans> Share project</Trans>
+              <TwitterOutlined />
+              <Trans> Share on Twitter</Trans>
             </Space>
           </Button>
         </ExternalLink>

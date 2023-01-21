@@ -386,6 +386,9 @@ msgstr ""
 msgid "Allow a few days for your project to appear in the \"archived\" projects list on the Projects page."
 msgstr ""
 
+msgid "Allow contributors to claim your project's tokens as an ERC-20. This makes your project's tokens compatible with tools like Uniswap."
+msgstr ""
+
 msgid "Allow minting tokens"
 msgstr ""
 
@@ -704,7 +707,7 @@ msgstr ""
 msgid "Confirm Stake"
 msgstr ""
 
-msgid "Congratulations on launching your project! The next steps are optional and can be completed at any time."
+msgid "Congratulations on launching your project! For help planning your next steps, share your project in the <0>JuiceboxDAO Discord</0>. Optionally, you can:"
 msgstr ""
 
 msgid "Connect"
@@ -809,16 +812,10 @@ msgstr ""
 msgid "Create a project on Juicebox"
 msgstr ""
 
-msgid "Create an Ethereum address for your project. Enables direct payments without going through your project's Juicebox page."
-msgstr ""
-
 msgid "Create an Ethereum address that can be used to pay your project directly."
 msgstr ""
 
 msgid "Create project"
-msgstr ""
-
-msgid "Create your own ERC-20 token to represent stake in your project. Contributors will receive these tokens when they pay your project."
 msgstr ""
 
 msgid "Created"
@@ -927,6 +924,9 @@ msgid "Deploy Snapshot space"
 msgstr ""
 
 msgid "Deploy a <0/> migration token from legacy tokens."
+msgstr ""
+
+msgid "Deploy an address which forwards funds to your project. This makes it easier to pay your project outside of juicebox.money."
 msgstr ""
 
 msgid "Deploy funding cycle configuration"
@@ -2633,7 +2633,7 @@ msgstr ""
 msgid "Set a text record for {0} with the key <0>\"{projectHandleENSTextRecordKey}\"</0> and the value <1>\"{projectId}\"</1> (this project's ID). You can do this on the <2>ENS app</2>, or use the button below (as long as your connected wallet owns or controls that ENS name)."
 msgstr ""
 
-msgid "Set a unique name that will be visible in your project's URL, and that will allow your project to appear in search results."
+msgid "Set a unique handle that will be visible in your project's URL, and that will allow your project to appear in search results."
 msgstr ""
 
 msgid "Set aside a percentage of freshly minted tokens, which you can allocate below."
@@ -2702,7 +2702,10 @@ msgstr ""
 msgid "Setting a reconfiguration delay means changes to your funding cycle settings only take effect after the delay period has passed. This helps build trust with your contributors."
 msgstr ""
 
-msgid "Share project"
+msgid "Share in JuiceboxDAO's Discord"
+msgstr ""
+
+msgid "Share on Twitter"
 msgstr ""
 
 msgid "Show contributors a popup when they receive an NFT."

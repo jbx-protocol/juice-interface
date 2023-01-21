@@ -1472,6 +1472,9 @@ msgstr ""
 msgid "If locked, this split can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 msgstr ""
 
+msgid "If no date is selected Funding Cycle #1 will start immediately after your project is deployed."
+msgstr ""
+
 msgid "If you don't raise the sum of all your payouts (<0/>{distributionLimit}), this address will receive {0}% of all the funds you raise."
 msgstr ""
 
@@ -2555,6 +2558,12 @@ msgstr ""
 msgid "Save {allocationName}"
 msgstr ""
 
+msgid "Schedule launch"
+msgstr ""
+
+msgid "Scheduled launch time"
+msgstr ""
+
 msgid "Search projects by handle"
 msgstr ""
 
@@ -2607,6 +2616,9 @@ msgid "Set a funding cycle duration"
 msgstr ""
 
 msgid "Set a funding cycle target"
+msgstr ""
+
+msgid "Set a future date & time to launch your project's first Funding Cycle."
 msgstr ""
 
 msgid "Set a limit on how many of these NFTs can be minted."
@@ -3621,6 +3633,9 @@ msgid "Your project will withhold all funds raised. Funds can be distributed to 
 msgstr ""
 
 msgid "Your project's current funding cycle has no duration. Changes you make below will take effect immediately."
+msgstr ""
+
+msgid "Your project’s first Funding Cycle will launch on <0>{0} at {1}</0>. Once deployed, your project will be visible but unable to receive funding or issue tokens until the date and time specified."
 msgstr ""
 
 msgid "Your total legacy balance"

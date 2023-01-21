@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro'
-import { Row } from 'antd'
+import { Col, Row, Tooltip } from 'antd'
 import useMobile from 'hooks/Mobile'
 import { PayoutsList } from '../../../Payouts/components/PayoutsList'
 import { DescriptionCol } from '../DescriptionCol'
@@ -16,6 +16,7 @@ export const FundingConfigurationReview = () => {
     fundingTarget,
     payoutsText,
     setAllocationSplits,
+    launchDate,
   } = useFundingConfigurationReview()
 
   return (
@@ -44,6 +45,28 @@ export const FundingConfigurationReview = () => {
             />
             <DescriptionCol
               span={6}
+              title={t`Scheduled launch time`}
+              desc={
+                <div className="text-base font-medium">
+                  {launchDate ? (
+                    <Tooltip
+                      title={launchDate
+                        .clone()
+                        .utc()
+                        .format('MMMM Do YYYY, h:mma z')}
+                    >
+                      {launchDate.clone().format('MMMM Do YYYY, h:mma z')}
+                    </Tooltip>
+                  ) : (
+                    'Immediately'
+                  )}
+                </div>
+              }
+            />
+          </Row>
+          <Row>
+            <DescriptionCol
+              span={6}
               title={t`Funding target`}
               desc={
                 <div className="text-base font-medium">{fundingTarget}</div>
@@ -51,11 +74,15 @@ export const FundingConfigurationReview = () => {
             />
           </Row>
           <Row>
-            <DescriptionCol
-              span={6}
-              title={t`Payouts`}
-              desc={<div className="text-base font-medium">{payoutsText}</div>}
-            />
+            <Col className="flex flex-col gap-8" span={6}>
+              <DescriptionCol
+                flex={1}
+                title={t`Payouts`}
+                desc={
+                  <div className="text-base font-medium">{payoutsText}</div>
+                }
+              />
+            </Col>
             <DescriptionCol
               span={18}
               title={t`Payout addresses`}

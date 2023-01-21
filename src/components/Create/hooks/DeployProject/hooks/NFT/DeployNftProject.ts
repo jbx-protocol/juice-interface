@@ -25,6 +25,7 @@ export const useDeployNftProject = () => {
     payoutGroupedSplits,
     reservedTokensGroupedSplits,
     inputProjectOwner,
+    mustStartAtOrAfter,
   } = useAppSelector(state => state.editingV2Project)
   const fundingCycleMetadata = useEditingV2V3FundingCycleMetadataSelector()
   const fundingCycleData = useEditingV2V3FundingCycleDataSelector()
@@ -87,6 +88,7 @@ export const useDeployNftProject = () => {
             owner: inputProjectOwner?.length ? inputProjectOwner : undefined,
             projectMetadataCID: metadataCid,
             fundingCycleData,
+            mustStartAtOrAfter,
             fundingCycleMetadata: {
               ...fundingCycleMetadata,
               ...NFT_FUNDING_CYCLE_METADATA_OVERRIDES,
@@ -111,6 +113,7 @@ export const useDeployNftProject = () => {
       collectionSymbol,
       inputProjectOwner,
       fundingCycleData,
+      mustStartAtOrAfter,
       fundingCycleMetadata,
       fundAccessConstraints,
     ],

@@ -21,6 +21,7 @@ export const useDeployStandardProject = () => {
     payoutGroupedSplits,
     reservedTokensGroupedSplits,
     inputProjectOwner,
+    mustStartAtOrAfter,
   } = useAppSelector(state => state.editingV2Project)
   const fundingCycleMetadata = useEditingV2V3FundingCycleMetadataSelector()
   const fundingCycleData = useEditingV2V3FundingCycleDataSelector()
@@ -46,6 +47,7 @@ export const useDeployStandardProject = () => {
           projectMetadataCID: metadataCid,
           fundingCycleData,
           fundingCycleMetadata,
+          mustStartAtOrAfter,
           fundAccessConstraints,
           groupedSplits,
         },
@@ -63,6 +65,7 @@ export const useDeployStandardProject = () => {
       inputProjectOwner,
       fundingCycleData,
       fundingCycleMetadata,
+      mustStartAtOrAfter,
       fundAccessConstraints,
     ],
   )

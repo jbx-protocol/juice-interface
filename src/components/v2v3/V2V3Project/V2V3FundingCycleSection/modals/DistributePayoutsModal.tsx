@@ -15,7 +15,7 @@ import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/ETHPaymentTe
 import { useDistributePayoutsTx } from 'hooks/v2v3/transactor/DistributePayouts'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useContext, useEffect, useState } from 'react'
-import { formatWad, parseWad } from 'utils/format/formatNumber'
+import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
 import { V2V3CurrencyName, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 
 export default function DistributePayoutsModal({
@@ -52,7 +52,7 @@ export default function DistributePayoutsModal({
       ? unusedFunds
       : balanceInDistributionLimitCurrency
 
-    setDistributionAmount(formatWad(distributable, { precision: 4 }))
+    setDistributionAmount(fromWad(distributable))
   }, [
     balanceInDistributionLimitCurrency,
     distributionLimit,

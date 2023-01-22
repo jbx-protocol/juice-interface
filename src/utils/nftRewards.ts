@@ -376,7 +376,7 @@ export function buildJBDeployTiered721DelegateData({
       lockVotingUnitChanges: false,
       lockManualMintingChanges: false,
     },
-    governanceType: JB721GovernanceType.TIERED,
+    governanceType: JB721GovernanceType.NONE,
   }
 }
 

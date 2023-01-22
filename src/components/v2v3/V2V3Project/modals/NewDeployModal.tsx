@@ -54,7 +54,7 @@ export default function NewDeployModal({
           <ExternalLink href="https://discord.gg/juicebox">
             JuiceboxDAO Discord
           </ExternalLink>
-          . Optionally, you can:
+          . Optionally, you can also:
         </Trans>
       </p>
       <div>
@@ -109,7 +109,7 @@ export default function NewDeployModal({
           description={
             <Trans>
               Deploy an address which forwards funds to your project. This makes
-              it easier to pay your project outside of juicebox.money.
+              it easier to pay your project with third-party tools.
             </Trans>
           }
           onClick={() => setLaunchProjectPayerModalVisible(true)}

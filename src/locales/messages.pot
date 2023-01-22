@@ -707,7 +707,7 @@ msgstr ""
 msgid "Confirm Stake"
 msgstr ""
 
-msgid "Congratulations on launching your project! For help planning your next steps, share your project in the <0>JuiceboxDAO Discord</0>. Optionally, you can:"
+msgid "Congratulations on launching your project! For help planning your next steps, share your project in the <0>JuiceboxDAO Discord</0>. Optionally, you can also:"
 msgstr ""
 
 msgid "Connect"
@@ -926,7 +926,7 @@ msgstr ""
 msgid "Deploy a <0/> migration token from legacy tokens."
 msgstr ""
 
-msgid "Deploy an address which forwards funds to your project. This makes it easier to pay your project outside of juicebox.money."
+msgid "Deploy an address which forwards funds to your project. This makes it easier to pay your project with third-party tools."
 msgstr ""
 
 msgid "Deploy funding cycle configuration"
@@ -2702,7 +2702,7 @@ msgstr ""
 msgid "Setting a reconfiguration delay means changes to your funding cycle settings only take effect after the delay period has passed. This helps build trust with your contributors."
 msgstr ""
 
-msgid "Share in JuiceboxDAO's Discord"
+msgid "Share on Discord"
 msgstr ""
 
 msgid "Share on Twitter"

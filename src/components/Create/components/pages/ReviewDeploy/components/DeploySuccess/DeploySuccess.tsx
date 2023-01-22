@@ -64,7 +64,7 @@ export const DeploySuccess = ({ projectId }: { projectId: number }) => {
           <Button>
             <Space>
               <RocketOutlined />
-              <Trans> Share in JuiceboxDAO's Discord</Trans>
+              <Trans> Share on Discord</Trans>
             </Space>
           </Button>
         </ExternalLink>

@@ -47,11 +47,12 @@ export const revokeApiKey = async (apiKey: string): Promise<void> => {
 }
 
 export const registerApiKey = async (
-  walletAddress: string,
+  keyName: string,
+  maxUses = 100,
 ): Promise<PinataApiKey> => {
   const data = {
-    keyName: walletAddress,
-    maxUses: 100,
+    keyName,
+    maxUses,
     permissions: {
       endpoints: {
         data: {
@@ -80,7 +81,7 @@ export const registerApiKey = async (
 
   const result = (await axios(config)).data
   return {
-    name: walletAddress,
+    name: keyName,
     key: result.pinata_api_key,
     secret: result.pinata_api_secret,
   }

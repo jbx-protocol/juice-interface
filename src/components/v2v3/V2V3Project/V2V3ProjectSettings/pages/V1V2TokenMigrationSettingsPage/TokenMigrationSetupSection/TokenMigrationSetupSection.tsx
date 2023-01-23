@@ -1,43 +1,13 @@
-import { LeftOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-import { Button } from 'antd'
-import { Callout } from 'components/Callout'
+// import { Button } from 'antd'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
-import { readNetwork } from 'constants/networks'
-import { TokenAddresses } from 'constants/tokenAddresses'
-import { useRouter } from 'next/router'
-import { useState } from 'react'
-import { TokenMigrationSetupModal } from './TokenMigrationSetupModal'
+// import { useState } from 'react'
+// import { TokenMigrationSetupModal } from './TokenMigrationSetupModal'
 
 export function V1TokenMigrationSetupSection() {
-  const router = useRouter()
-  const [migrationModalVisible, setMigrationModalVisible] =
-    useState<boolean>(false)
-
-  const isMigrationAvailable =
-    TokenAddresses.V1TicketBooth[readNetwork.name] &&
-    TokenAddresses.V2TokenStore[readNetwork.name] &&
-    TokenAddresses.V3TokenStore[readNetwork.name]
-
-  if (!isMigrationAvailable) {
-    return (
-      <div className="flex flex-col gap-4">
-        <Callout.Info>
-          <Trans>
-            Token migration is currently not available for {readNetwork.name}
-          </Trans>
-        </Callout.Info>
-        <Button
-          icon={<LeftOutlined />}
-          className="max-w-fit"
-          onClick={router.back}
-        >
-          Go Back
-        </Button>
-      </div>
-    )
-  }
+  // const [migrationModalVisible, setMigrationModalVisible] =
+  //   useState<boolean>(false)
 
   return (
     <div className="flex flex-col gap-4">
@@ -64,19 +34,20 @@ export function V1TokenMigrationSetupSection() {
           </Trans>
         </p>
       </MinimalCollapse>
-
-      <Button
-        className="mt-4"
-        onClick={() => setMigrationModalVisible(true)}
-        type="primary"
-      >
-        <Trans>Set up token migration</Trans>
-      </Button>
-      <TokenMigrationSetupModal
+      {/* <div>
+        <Button
+          className="mt-4"
+          onClick={() => setMigrationModalVisible(true)}
+          type="primary"
+        >
+          <Trans>Set up token migration</Trans>
+        </Button>
+      </div> */}
+      {/* <TokenMigrationSetupModal
         open={migrationModalVisible}
         onOk={() => setMigrationModalVisible(false)}
         onCancel={() => setMigrationModalVisible(false)}
-      />
+      /> */}
     </div>
   )
 }

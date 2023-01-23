@@ -8,12 +8,15 @@ import {
 import { t, Trans } from '@lingui/macro'
 import Input from 'antd/lib/input/Input'
 import Modal from 'antd/lib/modal/Modal'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { PV_V2 } from 'constants/pv'
 import { useModal } from 'hooks/Modal'
-import { useSepanaProjectsSearch } from 'hooks/Projects'
+import { useProjectsSearch, useSepanaProjectsSearch } from 'hooks/Projects'
+import { SepanaProject } from 'models/sepana'
 import { useRouter } from 'next/router'
 import React, { useCallback, useEffect, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { formatWad } from 'utils/format/formatNumber'
 import CurrencySymbol from './CurrencySymbol'
 
@@ -46,8 +49,18 @@ export default function QuickProjectSearch() {
     }
   }, [inputText])
 
-  const { data: searchResults, isLoading: isLoadingSearch } =
+  const sepanaEnabled = featureFlagEnabled(FEATURE_FLAGS.SEPANA)
+
+  const { data: sepanaSearchResults, isLoading: isLoadingSepanaSearch } =
     useSepanaProjectsSearch(searchText, MAX_RESULTS)
+
+  const { data: graphSearchResults, isLoading: isLoadingGraphSearch } =
+    useProjectsSearch(searchText)
+
+  const searchResults = sepanaEnabled ? sepanaSearchResults : graphSearchResults
+  const isLoadingSearch = sepanaEnabled
+    ? isLoadingSepanaSearch
+    : isLoadingGraphSearch
 
   const goToProject = useCallback(() => {
     if (highlightIndex === undefined) return
@@ -195,7 +208,9 @@ export default function QuickProjectSearch() {
                       <V2V3ProjectHandleLink
                         projectId={p.projectId}
                         handle={p.handle}
-                        name={p.name}
+                        name={
+                          sepanaEnabled ? (p as SepanaProject).name : undefined
+                        }
                       />
                     ) : (
                       <V1ProjectHandle

@@ -104,7 +104,7 @@ export function DeployMigrationTokenSection({
 
   return (
     <StepSection
-      title={<Trans>2. Deploy V3 migration token</Trans>}
+      title={<Trans>2. Deploy V3 Migration Token</Trans>}
       completed={completed}
     >
       <Form form={form} layout="vertical" onFinish={onFinish}>
@@ -152,7 +152,7 @@ export function DeployMigrationTokenSection({
             v1ProjectIdLoading
           }
         >
-          <Trans>Deploy migration token</Trans>
+          <Trans>Deploy Migration Token</Trans>
         </Button>
       </Form>
     </StepSection>

@@ -44,7 +44,7 @@ msgstr ""
 msgid "2. Build trust"
 msgstr ""
 
-msgid "2. Deploy V3 migration token"
+msgid "2. Deploy V3 Migration Token"
 msgstr ""
 
 msgid "2. Set text record"
@@ -920,6 +920,9 @@ msgstr ""
 msgid "Deploy"
 msgstr ""
 
+msgid "Deploy Migration Token"
+msgstr ""
+
 msgid "Deploy NFTs"
 msgstr ""
 
@@ -936,9 +939,6 @@ msgid "Deploy a V3 Migration Token for your project."
 msgstr ""
 
 msgid "Deploy funding cycle configuration"
-msgstr ""
-
-msgid "Deploy migration token"
 msgstr ""
 
 msgid "Deploy project"
@@ -1287,6 +1287,9 @@ msgid "External link"
 msgstr ""
 
 msgid "FAQ"
+msgstr ""
+
+msgid "Failed to grant permission."
 msgstr ""
 
 msgid "Failed to issue ERC20 token. Check transaction and try again."

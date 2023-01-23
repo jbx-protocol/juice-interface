@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
 import { MinimalCollapse } from 'components/MinimalCollapse'
@@ -8,7 +8,8 @@ import { useJBV3TokenDeployer } from 'hooks/JBV3Token/contracts/JBV3TokenDeploye
 import { useSetChangeTokenPermissionTx } from 'hooks/JBV3Token/transactor/SetChangeTokenPermissionTx'
 import { useV2HasPermissions } from 'hooks/v2v3/contractReader/V2HasPermissions'
 import { V2OperatorPermission } from 'models/v2v3/permissions'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
+import { emitErrorNotification } from 'utils/notifications'
 import { StepSection } from './StepSection'
 
 export function GrantChangeTokenPermissionSection({
@@ -20,17 +21,11 @@ export function GrantChangeTokenPermissionSection({
 }) {
   const { projectId } = useContext(ProjectMetadataContext)
   const { projectOwnerAddress } = useContext(V2V3ProjectContext)
+
+  const [loading, setLoading] = useState<boolean>(false)
+
   const deployer = useJBV3TokenDeployer()
   const tx = useSetChangeTokenPermissionTx()
-
-  const onClick = async function () {
-    await tx(undefined, {
-      onConfirmed() {
-        return onCompleted()
-      },
-    })
-  }
-
   const { data: hasPermission } = useV2HasPermissions({
     operator: deployer?.address,
     account: projectOwnerAddress,
@@ -38,10 +33,33 @@ export function GrantChangeTokenPermissionSection({
     permissions: [V2OperatorPermission.CHANGE_TOKEN],
   })
 
+  const _completed = Boolean(completed || hasPermission)
+
+  const onClick = async function () {
+    setLoading(true)
+    try {
+      await tx(undefined, {
+        onConfirmed() {
+          setLoading(false)
+
+          return onCompleted()
+        },
+        onError(e) {
+          console.error(e)
+          emitErrorNotification(t`Failed to grant permission.`)
+        },
+      })
+    } catch (e) {
+      console.error(e)
+      emitErrorNotification(t`Failed to grant permission.`)
+      setLoading(false)
+    }
+  }
+
   return (
     <StepSection
       title={<Trans>1. Grant permission</Trans>}
-      completed={Boolean(completed || hasPermission)}
+      completed={_completed}
     >
       <p>
         Grant the Token Deployer contract (
@@ -57,7 +75,12 @@ export function GrantChangeTokenPermissionSection({
           Migration Token in the next step.
         </Trans>
       </MinimalCollapse>
-      <Button onClick={onClick} type="primary">
+      <Button
+        onClick={onClick}
+        loading={loading}
+        disabled={_completed}
+        type="primary"
+      >
         Grant permission
       </Button>
     </StepSection>

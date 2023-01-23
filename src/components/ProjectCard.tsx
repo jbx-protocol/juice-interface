@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { Trans } from '@lingui/macro'
-import { Skeleton, Tooltip } from 'antd'
+import { Skeleton } from 'antd'
 import { PV_V1, PV_V1_1, PV_V2 } from 'constants/pv'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
@@ -173,11 +173,9 @@ export default function ProjectCard({
             </div>
 
             {metadata?.description && (
-              <Tooltip title={metadata.description} placement="bottom">
-                <div className="max-h-5 overflow-hidden overflow-ellipsis text-grey-400 dark:text-slate-200">
-                  {metadata.description}
-                </div>
-              </Tooltip>
+              <div className="max-h-5 overflow-hidden overflow-ellipsis text-grey-400 dark:text-slate-200">
+                {metadata.description}
+              </div>
             )}
           </div>
 

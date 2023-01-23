@@ -6,7 +6,6 @@ import Loading from 'components/Loading'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useDeployV3TokenTx } from 'hooks/JBV3Token/transactor/DeployV3Token'
 import useProjectIdForHandle from 'hooks/v1/contractReader/ProjectIdForHandle'
-
 import { debounce } from 'lodash'
 import {
   ChangeEventHandler,

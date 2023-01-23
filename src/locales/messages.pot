@@ -407,7 +407,7 @@ msgstr ""
 msgid "Allow token minting"
 msgstr ""
 
-msgid "Allow your legacy project (<0/> or <1/>) token holders to swap their tokens for your <2/> project tokens."
+msgid "Allow your legacy project token holders (<0/> or <1/>) to swap their tokens for your <2/> project tokens."
 msgstr ""
 
 msgid "Allowed"

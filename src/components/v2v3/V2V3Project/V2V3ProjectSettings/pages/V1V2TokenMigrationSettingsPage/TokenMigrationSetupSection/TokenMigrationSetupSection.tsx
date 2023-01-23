@@ -13,9 +13,9 @@ export function V1TokenMigrationSetupSection() {
     <div className="flex flex-col gap-4">
       <div>
         <Trans>
-          Allow your legacy project (<ProjectVersionBadge.V1 /> or{' '}
-          <ProjectVersionBadge.V2 />) token holders to swap their tokens for
-          your <ProjectVersionBadge.V3 /> project tokens.
+          Allow your legacy project token holders (<ProjectVersionBadge.V1 /> or{' '}
+          <ProjectVersionBadge.V2 />) to swap their tokens for your{' '}
+          <ProjectVersionBadge.V3 /> project tokens.
         </Trans>
       </div>
       <MinimalCollapse header={<Trans>Do I need this?</Trans>}>

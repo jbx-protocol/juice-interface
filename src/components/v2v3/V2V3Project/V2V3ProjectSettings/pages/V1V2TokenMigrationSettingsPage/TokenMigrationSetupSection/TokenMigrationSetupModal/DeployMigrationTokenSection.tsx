@@ -1,6 +1,6 @@
 import { CheckCircleOutlined, QuestionCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Button, Form, Input, Tooltip } from 'antd'
+import { Button, Form, Tooltip } from 'antd'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import Loading from 'components/Loading'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
@@ -15,6 +15,7 @@ import {
   useMemo,
   useState,
 } from 'react'
+import { emitErrorNotification } from 'utils/notifications'
 import { StepSection } from './StepSection'
 
 interface AddTerminalSectionForm {
@@ -33,7 +34,7 @@ export function DeployMigrationTokenSection({
   const { projectId } = useContext(ProjectMetadataContext)
 
   const [form] = Form.useForm<AddTerminalSectionForm>()
-  const [addTerminalLoading, setAddTerminalLoading] = useState<boolean>(false)
+  const [deployTokenLoading, setDeployTokenLoading] = useState<boolean>(false)
   const [v1ProjectHandle, setV1ProjectHandle] = useState<string>()
   const [userInputOccurring, setUserInputOccurring] = useState<boolean>(false)
 
@@ -56,16 +57,35 @@ export function DeployMigrationTokenSection({
   const onFinish = async (values: AddTerminalSectionForm) => {
     if (!projectId) return
 
-    setAddTerminalLoading(true)
+    setDeployTokenLoading(true)
 
-    await deployMigrationTokenTx({
-      tokenName: values.tokenName,
-      tokenSymbol: values.tokenSymbol,
-      v3ProjectId: projectId,
-      v1ProjectId: v1ProjectId?.toNumber(),
-    })
-
-    onCompleted()
+    try {
+      await deployMigrationTokenTx(
+        {
+          tokenName: values.tokenName,
+          tokenSymbol: values.tokenSymbol,
+          v3ProjectId: projectId,
+          v1ProjectId: v1ProjectId?.toNumber(),
+        },
+        {
+          onConfirmed() {
+            onCompleted()
+            setDeployTokenLoading(false)
+          },
+          onError() {
+            emitErrorNotification(
+              t`Failed to deploy migration token. Check the development console and contact our team in the JuiceboxDAO Discord.`,
+            )
+          },
+        },
+      )
+    } catch (e) {
+      emitErrorNotification(
+        t`Failed to deploy migration token. Check the development console and contact our team in the JuiceboxDAO Discord.`,
+      )
+      console.error(e)
+      setDeployTokenLoading(false)
+    }
   }
 
   const onV1ProjectHandleInputChanged: ChangeEventHandler<HTMLInputElement> =
@@ -113,20 +133,21 @@ export function DeployMigrationTokenSection({
           name="tokenName"
           rules={[{ required: true }]}
         >
-          <Input />
+          <JuiceInput />
         </Form.Item>
         <Form.Item
           label={t`Token symbol`}
           name="tokenSymbol"
           rules={[{ required: true }]}
         >
-          <Input />
+          <JuiceInput />
         </Form.Item>
         <Form.Item
           label={t`V1 project handle`}
           extra={t`If you have a V1 project, add the project's handle here. Otherwise, leave this blank.`}
           requiredMark="optional"
           className="mb-2"
+          tooltip={t`Holders of this V1 project's token will be able to migrate their tokens to the V3 token you're deploying.`}
         >
           <div className="flex items-center gap-2">
             <Form.Item noStyle name="v1ProjectHandle">
@@ -143,12 +164,12 @@ export function DeployMigrationTokenSection({
           className="mt-2"
           htmlType="submit"
           type="primary"
-          loading={addTerminalLoading}
+          loading={deployTokenLoading}
           disabled={
             completed ||
             userInputOccurring ||
             (v1ProjectId !== undefined && !isValidV1ProjectId) ||
-            addTerminalLoading ||
+            deployTokenLoading ||
             v1ProjectIdLoading
           }
         >

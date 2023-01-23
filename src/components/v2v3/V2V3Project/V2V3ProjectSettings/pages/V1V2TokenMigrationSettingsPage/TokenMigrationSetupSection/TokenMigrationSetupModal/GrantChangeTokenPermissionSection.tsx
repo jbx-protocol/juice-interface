@@ -80,6 +80,7 @@ export function GrantChangeTokenPermissionSection({
         loading={loading}
         disabled={_completed}
         type="primary"
+        className="mb-8"
       >
         Grant permission
       </Button>

@@ -1289,6 +1289,9 @@ msgstr ""
 msgid "FAQ"
 msgstr ""
 
+msgid "Failed to deploy migration token. Check the development console and contact our team in the JuiceboxDAO Discord."
+msgstr ""
+
 msgid "Failed to grant permission."
 msgstr ""
 
@@ -1422,6 +1425,9 @@ msgid "Hold fees"
 msgstr ""
 
 msgid "Holders"
+msgstr ""
+
+msgid "Holders of this V1 project's token will be able to migrate their tokens to the V3 token you're deploying."
 msgstr ""
 
 msgid "Hours"
@@ -1752,9 +1758,6 @@ msgid "Message"
 msgstr ""
 
 msgid "Migrate tokens"
-msgstr ""
-
-msgid "Migration token successfully deployed."
 msgstr ""
 
 msgid "Minimum Contribution"
@@ -3332,9 +3335,6 @@ msgstr ""
 msgid "V1 project handle"
 msgstr ""
 
-msgid "V1 token holders can migrate their tokens to your V3 tokens using your V3 project's <0>Tokens</0> section."
-msgstr ""
-
 msgid "V1 tokens to swap"
 msgstr ""
 
@@ -3573,6 +3573,9 @@ msgid "Your collection's symbol is used on NFT marketplaces (for example, OpenSe
 msgstr ""
 
 msgid "Your funding cycle configuration has been pre-populated using the configuration you originally launched with. If you need to customize it, contact us."
+msgstr ""
+
+msgid "Your legacy project token holders can now migrate their tokens in the <0>Tokens</0> section on your V3 project page."
 msgstr ""
 
 msgid "Your legacy token balance"

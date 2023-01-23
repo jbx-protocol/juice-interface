@@ -39,12 +39,10 @@ export function TokenMigrationSetupModal({ ...props }: ModalProps) {
       </p>
 
       <div>
-        <div className="mb-10">
-          <GrantChangeTokenPermissionSection
-            completed={grantChangeTokenPermissionComplete}
-            onCompleted={() => setGrantChangeTokenPermissionComplete(true)}
-          />
-        </div>
+        <GrantChangeTokenPermissionSection
+          completed={grantChangeTokenPermissionComplete}
+          onCompleted={() => setGrantChangeTokenPermissionComplete(true)}
+        />
 
         <div>
           {/* Required to read v1 project ids from handles */}
@@ -54,28 +52,6 @@ export function TokenMigrationSetupModal({ ...props }: ModalProps) {
               onCompleted={() => setTokenDeployed(true)}
             />
           </V1UserProvider>
-
-          {tokenDeployed && (
-            <>
-              <Callout.Info collapsible={false} className="mb-2">
-                <p className="mb-1">
-                  <Trans>Migration token successfully deployed.</Trans>
-                </p>
-              </Callout.Info>
-              <Callout.Warning collapsible={false}>
-                <p>
-                  Make sure you copy and save this address if you aren't ready
-                  to complete Step 2.{' '}
-                </p>
-                <p>
-                  <strong>
-                    Once you leave this page, this token will be lost and hard
-                    to recover.
-                  </strong>
-                </p>
-              </Callout.Warning>
-            </>
-          )}
         </div>
 
         {tokenDeployed && (
@@ -88,8 +64,8 @@ export function TokenMigrationSetupModal({ ...props }: ModalProps) {
             </p>
             <p className="m-0">
               <Trans>
-                V1 token holders can migrate their tokens to your V3 tokens
-                using your V3 project's <strong>Tokens</strong> section.
+                Your legacy project token holders can now migrate their tokens
+                in the <strong>Tokens</strong> section on your V3 project page.
               </Trans>
             </p>
           </Callout>

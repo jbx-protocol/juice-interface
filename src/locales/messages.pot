@@ -212,12 +212,6 @@ msgstr ""
 msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
 msgstr ""
 
-msgid "<0>Zero</0> Distribution Limit"
-msgstr ""
-
-msgid "<0>{0}</0> Distribution Limit"
-msgstr ""
-
 msgid "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
 msgstr ""
 
@@ -1259,6 +1253,9 @@ msgstr ""
 msgid "Error uploading file"
 msgstr ""
 
+msgid "Expenses cannot exceed the current funding target"
+msgstr ""
+
 msgid "Explore projects"
 msgstr ""
 
@@ -2123,6 +2120,9 @@ msgstr ""
 msgid "Payouts (optional)"
 msgstr ""
 
+msgid "Payouts cannot exceed 100%. Total: {0}"
+msgstr ""
+
 msgid "Payouts to Ethereum addresses incur a 2.5% JBX membership fee"
 msgstr ""
 
@@ -2976,9 +2976,6 @@ msgid "This address will receive the tokens minted from paying this project."
 msgstr ""
 
 msgid "This funding cycle may pose risks to contributors. Check the funding cycle details before paying this project."
-msgstr ""
-
-msgid "This funding cycle's distribution limit."
 msgstr ""
 
 msgid "This is the button that contributors will click to pay your project"

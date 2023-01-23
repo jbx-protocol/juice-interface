@@ -29,7 +29,13 @@ msgstr ""
 msgid "1-day delay"
 msgstr ""
 
+msgid "1. Deploy V3 migration token"
+msgstr ""
+
 msgid "1. Get funded"
+msgstr ""
+
+msgid "1. Grant permission"
 msgstr ""
 
 msgid "1. Set ENS name"
@@ -42,6 +48,9 @@ msgid "2. Build trust"
 msgstr ""
 
 msgid "2. Set text record"
+msgstr ""
+
+msgid "2. Update your project token"
 msgstr ""
 
 msgid "24 hours"
@@ -926,9 +935,6 @@ msgstr ""
 msgid "Deploy Snapshot space"
 msgstr ""
 
-msgid "Deploy a <0/> migration token from legacy tokens."
-msgstr ""
-
 msgid "Deploy funding cycle configuration"
 msgstr ""
 
@@ -1379,6 +1385,12 @@ msgstr ""
 msgid "General"
 msgstr ""
 
+msgid "Give NFT deployer permissions for project #{projectId}"
+msgstr ""
+
+msgid "Give V3 migration token deployer permissions on project #{projectId}"
+msgstr ""
+
 msgid "Give this NFT a name."
 msgstr ""
 
@@ -1392,9 +1404,6 @@ msgid "Go to your Safe"
 msgstr ""
 
 msgid "Governance"
-msgstr ""
-
-msgid "Grant permission"
 msgstr ""
 
 msgid "Has Juicebox been audited? What are the risks?"
@@ -1482,6 +1491,9 @@ msgid "If you don't raise this amount, your splits will receive their percentage
 msgstr ""
 
 msgid "If you have <0/> or <1/> legacy Juicebox projects, we recommend you migrate to <2/> exclusively."
+msgstr ""
+
+msgid "If you have a V1 project, add the project's handle here. Otherwise, leave this blank."
 msgstr ""
 
 msgid "If you're unsure if you need to claim, you probably don't."
@@ -1616,6 +1628,9 @@ msgstr ""
 msgid "Launch V3 funding cycle"
 msgstr ""
 
+msgid "Launch V3 migration token"
+msgstr ""
+
 msgid "Launch funding cycle"
 msgstr ""
 
@@ -1737,9 +1752,6 @@ msgid "Message"
 msgstr ""
 
 msgid "Migrate tokens"
-msgstr ""
-
-msgid "Migration token was successfully deployed to <0/>"
 msgstr ""
 
 msgid "Minimum Contribution"
@@ -2651,9 +2663,6 @@ msgstr ""
 msgid "Set operator for {projectTitle}"
 msgstr ""
 
-msgid "Set operator permissions for projectId={projectId} to allow NFTs"
-msgstr ""
-
 msgid "Set payouts of {projectTitle}"
 msgstr ""
 
@@ -2672,7 +2681,7 @@ msgstr ""
 msgid "Set the length of your funding cycles."
 msgstr ""
 
-msgid "Set the newly migrated <0/> token from Step 1 as the project token."
+msgid "Set the newly deployed <0/> token from Step 1 as your project's token."
 msgstr ""
 
 msgid "Set this to the sum of all your payouts"
@@ -2685,12 +2694,6 @@ msgid "Set up and launch veNFT governance for your project using default veBanny
 msgstr ""
 
 msgid "Set up and launch veNFT governance for your project."
-msgstr ""
-
-msgid "Set up the option for user token migration from <0/> or <1/> projects to <2/>."
-msgstr ""
-
-msgid "Set up token migration"
 msgstr ""
 
 msgid "Set veNFT operator for {projectTitle}"
@@ -2762,12 +2765,6 @@ msgstr ""
 msgid "Stay up to date."
 msgstr ""
 
-msgid "Step 1. Deploy migration token"
-msgstr ""
-
-msgid "Step 2. Set the deployed migration token"
-msgstr ""
-
 msgid "Successfully approved ERC-20 spending."
 msgstr ""
 
@@ -2778,15 +2775,6 @@ msgid "Sum of percentages cannot exceed 100%."
 msgstr ""
 
 msgid "Supply: {maximumSupply}"
-msgstr ""
-
-msgid "Swap for V3 tokens"
-msgstr ""
-
-msgid "Swap legacy tokens for V3 tokens"
-msgstr ""
-
-msgid "Swap v1 project tokens {projectTitle}"
 msgstr ""
 
 msgid "Switch network to {0}"
@@ -2805,9 +2793,6 @@ msgid "Terminal configuration"
 msgstr ""
 
 msgid "Text record is set"
-msgstr ""
-
-msgid "The <0/> has already been set for this project."
 msgstr ""
 
 msgid "The <0>Juicebox contracts</0> may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
@@ -2856,9 +2841,6 @@ msgid "The discount rate cannot be set when the funding cycle duration is not se
 msgstr ""
 
 msgid "The distribution limit for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
-msgstr ""
-
-msgid "The handle of your V1 project. This is the handle that is shown in the URL of your project page."
 msgstr ""
 
 msgid "The held fees will reset as new funds are added to the project's balance with the <0>Add to balance</0> transaction above."
@@ -2966,7 +2948,7 @@ msgstr ""
 msgid "There are no reserved token recipients defined for this funding cycle. The project owner will receive all available tokens."
 msgstr ""
 
-msgid "This Juicebox V3 project also has a project on Juicebox V1 and/or V2. The project owner is allowing you to swap your legacy tokens (V1 or V2)ƒ for V3 tokens."
+msgid "This Juicebox V3 project also has a project on Juicebox V1 and/or V2. The project owner is allowing you to swap your legacy tokens (V1 or V2) for V3 tokens."
 msgstr ""
 
 msgid "This Safe has no past transactions."
@@ -3062,13 +3044,7 @@ msgstr ""
 msgid "Token holders <0>cannot redeem their tokens</0> for any ETH when the redemption rate is 0."
 msgstr ""
 
-msgid "Token holders of your legacy project tokens (<0/> or <1/>) will have the ability to swap their tokens for <2/> tokens at a 1-to-1 exchange rate."
-msgstr ""
-
 msgid "Token migration"
-msgstr ""
-
-msgid "Token migration is currently not available for {0}"
 msgstr ""
 
 msgid "Token minting"
@@ -3347,13 +3323,10 @@ msgstr ""
 msgid "V1"
 msgstr ""
 
-msgid "V1 Project Handle"
-msgstr ""
-
 msgid "V1 Project handle"
 msgstr ""
 
-msgid "V1 token holders can migrate their tokens to your V3 tokens using your V3 project's <0>Tokens</0> section."
+msgid "V1 project handle"
 msgstr ""
 
 msgid "V1 tokens to swap"
@@ -3429,9 +3402,6 @@ msgid "What does Juicebox cost?"
 msgstr ""
 
 msgid "What happens when I pay a project?"
-msgstr ""
-
-msgid "What is the legacy token migration?"
 msgstr ""
 
 msgid "What's Juicebox?"
@@ -3539,9 +3509,6 @@ msgstr ""
 msgid "You haven't created any projects yet."
 msgstr ""
 
-msgid "You must grant permission to swap your tokens."
-msgstr ""
-
 msgid "You must review and accept the risks."
 msgstr ""
 
@@ -3564,9 +3531,6 @@ msgid "You would receive at least <0/>"
 msgstr ""
 
 msgid "You'll be able to issue ERC-20 tokens once your project contract has been deployed. Until then, the protocol will track token balances, allowing your supporters to earn tokens and redeem for overflow in the meantime."
-msgstr ""
-
-msgid "You're all set!"
 msgstr ""
 
 msgid "You've completed this step."

@@ -1,12 +1,16 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Contract } from '@ethersproject/contracts'
+import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useContractReadValue } from 'hooks/ContractReader'
 import { useLoadContractFromAddress } from 'hooks/LoadContractFromAddress'
 import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
 import { useWallet } from 'hooks/Wallet'
+import { useContext } from 'react'
+import { useJBV3Token } from '../contracts/JBV3Token'
 
 export function useV1TokenBalance() {
-  const JBV3TokenContract = new Contract('', '') // TODO
+  const { tokenAddress } = useContext(V2V3ProjectContext)
+
+  const JBV3TokenContract = useJBV3Token({ tokenAddress })
   const { userAddress } = useWallet()
 
   const { value: v1ProjectId } = useContractReadValue<string, BigNumber>({

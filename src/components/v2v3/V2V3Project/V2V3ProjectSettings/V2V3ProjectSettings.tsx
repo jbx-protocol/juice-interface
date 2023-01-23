@@ -83,7 +83,7 @@ export function V2V3ProjectSettings() {
 
   const items = useMemo(() => {
     const includeTokenMigration =
-      featureFlagEnabled(FEATURE_FLAGS.V1_TOKEN_SWAP) && cv !== CV_V3
+      featureFlagEnabled(FEATURE_FLAGS.V1_TOKEN_SWAP) && cv === CV_V3
     const _items: MenuItem[] = [
       menuItem(
         'Project',

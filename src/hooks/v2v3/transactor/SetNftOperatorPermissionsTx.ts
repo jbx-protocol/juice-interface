@@ -22,9 +22,7 @@ export function useSetNftOperatorPermissionsTx(): TransactorInstance {
 
   return (_, txOpts) => {
     try {
-      invariant(
-        transactor && userAddress && projectId && contracts?.JBTokenStore,
-      )
+      invariant(transactor && userAddress && projectId && contracts)
       return transactor(
         contracts.JBOperatorStore,
         'setOperator',
@@ -39,7 +37,7 @@ export function useSetNftOperatorPermissionsTx(): TransactorInstance {
         ],
         {
           ...txOpts,
-          title: t`Set operator permissions for projectId=${projectId} to allow NFTs`,
+          title: t`Give NFT deployer permissions for project #${projectId}`,
         },
       )
     } catch {

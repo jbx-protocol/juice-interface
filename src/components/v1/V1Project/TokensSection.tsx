@@ -92,7 +92,7 @@ export function TokensSection() {
 
   const tokensLabel = tokenSymbolText({
     tokenSymbol,
-    capitalize: true,
+    capitalize: false,
     plural: true,
   })
 

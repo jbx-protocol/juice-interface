@@ -1,4 +1,4 @@
-import { useStoreOfJB721TieredDelegate } from 'hooks/contracts/JB721Delegate/useStoreofJB721TieredDelegate'
+import { useStoreOfJB721TieredDelegate } from 'hooks/JB721Delegate/contracts/useStoreofJB721TieredDelegate'
 import { JB721TierParams } from 'models/nftRewardTier'
 import { MAX_NFT_REWARD_TIERS } from 'utils/nftRewards'
 import useV2ContractReader from '../../v2v3/contractReader/V2ContractReader'

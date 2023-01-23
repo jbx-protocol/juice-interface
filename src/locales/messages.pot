@@ -47,7 +47,7 @@ msgstr ""
 msgid "2. Set text record"
 msgstr ""
 
-msgid "2. Update V3 project token"
+msgid "2. Update your project token"
 msgstr ""
 
 msgid "24 hours"
@@ -1490,7 +1490,7 @@ msgstr ""
 msgid "If you have <0/> or <1/> legacy Juicebox projects, we recommend you migrate to <2/> exclusively."
 msgstr ""
 
-msgid "If you have a V1 project, input the V1 project's handle. Otherwise, leave this blank."
+msgid "If you have a V1 project, add the project's handle here. Otherwise, leave this blank."
 msgstr ""
 
 msgid "If you're unsure if you need to claim, you probably don't."
@@ -1751,7 +1751,7 @@ msgstr ""
 msgid "Migrate tokens"
 msgstr ""
 
-msgid "Migration token was successfully deployed to <0/>"
+msgid "Migration token successfully deployed."
 msgstr ""
 
 msgid "Minimum Contribution"
@@ -3335,10 +3335,10 @@ msgstr ""
 msgid "V1"
 msgstr ""
 
-msgid "V1 Project Handle"
+msgid "V1 Project handle"
 msgstr ""
 
-msgid "V1 Project handle"
+msgid "V1 project handle"
 msgstr ""
 
 msgid "V1 token holders can migrate their tokens to your V3 tokens using your V3 project's <0>Tokens</0> section."

@@ -51,6 +51,22 @@ export const registerWallet = async (
   }
 }
 
+/**
+ * Alternative call to `registerWallet` to be used when `IPFS_REQUIRES_KEY_REGISTRATION` is false.
+ */
+export const clientRegister = async (): Promise<{
+  apiKey: string
+  apiSecret: string
+}> => {
+  try {
+    const result = await axios.post('/api/ipfs/clientRegister')
+    return result.data
+  } catch (e) {
+    console.error('error occurred', e)
+    throw e
+  }
+}
+
 // TODO: Move to wallet key
 // keyvalues will be upserted to existing metadata. A null value will remove an existing keyvalue
 export const editMetadataForCid = async (

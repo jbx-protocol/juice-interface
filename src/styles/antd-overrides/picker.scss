@@ -1,7 +1,12 @@
-.ant-picker-cell-selected {
-  .ant-picker-cell-inner {
+.ant-picker-cell-selected,
+.ant-picker-time-panel-cell-selected {
+  .ant-picker-cell-inner,
+  .ant-picker-time-panel-cell-inner {
     background: var(--background-action-primary) !important;
   }
+}
+.ant-picker-time-panel-cell-selected .ant-picker-time-panel-cell-inner {
+  color: #fff !important;
 }
 
 .ant-picker-today-btn {
@@ -10,6 +15,10 @@
 
 .ant-picker-today-btn-disabled {
   color: var(--text-disabled);
+}
+
+.ant-picker-cell-disabled {
+  background-color: var(--background-lightDisabled);
 }
 
 .ant-picker-focused {

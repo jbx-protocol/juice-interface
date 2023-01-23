@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Space } from 'antd'
 import { Split } from 'models/splits'
 import { useMemo } from 'react'
-import { getProjectOwnerRemainderSplit } from 'utils/splits'
+import { getProjectOwnerRemainderSplit, sortSplits } from 'utils/splits'
 import { SplitItem, SplitProps } from './SplitItem'
 
 export default function SplitList({
@@ -44,7 +44,7 @@ export default function SplitList({
 
   return (
     <Space direction="vertical" size={5} className="w-full">
-      {splits.map(split => {
+      {sortSplits(splits).map(split => {
         return (
           <SplitItem
             props={{

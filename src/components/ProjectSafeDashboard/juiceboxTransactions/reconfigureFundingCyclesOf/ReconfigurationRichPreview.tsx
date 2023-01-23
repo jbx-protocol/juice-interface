@@ -37,8 +37,10 @@ const useTransactionJBController = (transaction: SafeTransactionType) => {
 // Currently only supports V2V3 reconfig transactions
 export function ReconfigureRichPreview({
   transaction,
+  isPastTransaction,
 }: {
   transaction: SafeTransactionType
+  isPastTransaction?: boolean
 }) {
   const {
     projectOwnerAddress,
@@ -84,6 +86,8 @@ export function ReconfigureRichPreview({
     previousFC: currentFC,
   })
 
+  const showDiffs = !isPastTransaction
+
   return (
     <div className="flex cursor-default flex-col">
       <div className="mx-6 mt-2 mb-0">
@@ -112,7 +116,7 @@ export function ReconfigureRichPreview({
             }}
             distributionLimit={distributionLimit}
             distributionLimitCurrency={distributionLimitCurrency}
-            showDiffs
+            showDiffs={showDiffs}
           />
         </MinimalCollapse>
         <Space size={'middle'} direction={'vertical'} className="w-2/3">
@@ -126,7 +130,7 @@ export function ReconfigureRichPreview({
                 projectOwnerAddress={projectOwnerAddress}
                 showAmounts={!distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)}
                 valueFormatProps={{ precision: 4 }}
-                showDiffs
+                showDiffs={showDiffs}
               />
             ) : (
               <span className="text-grey-400 dark:text-slate-200">
@@ -142,7 +146,7 @@ export function ReconfigureRichPreview({
                 projectOwnerAddress={projectOwnerAddress}
                 totalValue={undefined}
                 reservedRate={parseFloat(formatReservedRate(reservedRate))}
-                showDiffs
+                showDiffs={showDiffs}
               />
             ) : (
               <span className="text-grey-400 dark:text-slate-200">

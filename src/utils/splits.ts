@@ -116,7 +116,7 @@ const hasEqualRecipient = (a: Split, b: Split) => {
 }
 
 // returns a given list of splits sorted by percent allocation
-const sortSplits = (splits: Split[]) => {
+export const sortSplits = (splits: Split[]) => {
   return splits.sort((a, b) => (a.percent < b.percent ? 1 : -1))
 }
 

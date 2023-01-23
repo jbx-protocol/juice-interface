@@ -23,37 +23,28 @@ export function JuiceboxProjectBeneficiary({
 
   return (
     <div>
-      <Space size="middle">
+      <Space size="small">
         <V2V3ProjectHandleLink projectId={parseInt(split.projectId)} />
         <AllocatorBadge allocator={split.allocator} />
       </Space>
       {split.allocator === NULL_ALLOCATOR_ADDRESS ? (
-        <Space>
-          <div className="ml-2 flex items-center text-sm text-grey-500 dark:text-grey-300">
-            <TooltipLabel
-              label={<Trans>Tokens:</Trans>}
-              tip={
-                <Trans>
-                  This address will receive any tokens minted when the recipient
-                  project gets paid.
-                </Trans>
-              }
-            />
-            {value ?? (
-              <FormattedAddress
-                address={split.beneficiary}
-                className={
-                  'text-sm font-light text-grey-500 dark:text-grey-300'
-                }
-              />
-            )}
-            {isProjectOwner && (
-              <Tooltip title={<Trans>Project owner</Trans>} className="ml-1">
-                <CrownFilled />
-              </Tooltip>
-            )}
-          </div>
-        </Space>
+        <div className="ml-2 text-xs text-grey-500 dark:text-grey-300">
+          <TooltipLabel
+            label={<Trans>Tokens:</Trans>}
+            tip={
+              <Trans>
+                This address will receive any tokens minted when the recipient
+                project gets paid.
+              </Trans>
+            }
+          />{' '}
+          {value ?? <FormattedAddress address={split.beneficiary} />}{' '}
+          {isProjectOwner && (
+            <Tooltip title={<Trans>Project owner</Trans>}>
+              <CrownFilled />
+            </Tooltip>
+          )}
+        </div>
       ) : null}
     </div>
   )

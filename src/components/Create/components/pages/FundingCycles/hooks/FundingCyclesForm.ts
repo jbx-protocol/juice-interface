@@ -3,31 +3,40 @@ import { DurationInputValue } from 'components/Create/components/DurationInput'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useDebugValue, useEffect, useMemo } from 'react'
-import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import {
+  DEFAULT_MUST_START_AT_OR_AFTER,
+  editingV2ProjectActions,
+} from 'redux/slices/editingV2Project'
 import {
   deriveDurationUnit,
   otherUnitToSeconds,
   secondsToOtherUnit,
 } from 'utils/format/formatTime'
+import moment from 'moment'
 
 export type FundingCyclesFormProps = Partial<{
   selection: 'automated' | 'manual'
   duration: DurationInputValue
+  launchDate: moment.Moment
 }>
 
 export const useFundingCyclesForm = () => {
   const [form] = useForm<FundingCyclesFormProps>()
-  const { fundingCycleData, fundingCyclesPageSelection } = useAppSelector(
-    state => state.editingV2Project,
-  )
+  const { fundingCycleData, fundingCyclesPageSelection, mustStartAtOrAfter } =
+    useAppSelector(state => state.editingV2Project)
   useDebugValue(form.getFieldsValue())
 
   const initialValues: FundingCyclesFormProps | undefined = useMemo(() => {
     const selection = fundingCyclesPageSelection
+    const launchDate =
+      mustStartAtOrAfter !== DEFAULT_MUST_START_AT_OR_AFTER &&
+      !isNaN(parseFloat(mustStartAtOrAfter))
+        ? moment.unix(parseFloat(mustStartAtOrAfter))
+        : undefined
 
     if (!fundingCycleData.duration?.length || selection !== 'automated') {
       // Return default values if the user hasn't selected a funding cycle type yet.
-      return { duration: { duration: 14, unit: 'days' }, selection }
+      return { duration: { duration: 14, unit: 'days' }, selection, launchDate }
     }
 
     const durationInSeconds = parseInt(fundingCycleData.duration)
@@ -40,12 +49,18 @@ export const useFundingCyclesForm = () => {
     return {
       selection,
       duration: { duration, unit: durationUnit },
+      launchDate,
     }
-  }, [fundingCycleData.duration, fundingCyclesPageSelection])
+  }, [
+    fundingCycleData.duration,
+    fundingCyclesPageSelection,
+    mustStartAtOrAfter,
+  ])
 
   const dispatch = useAppDispatch()
   const selection = useWatch('selection', form)
   const duration = useWatch('duration', form)
+  const launchDate = useWatch('launchDate', form)
 
   useEffect(() => {
     dispatch(editingV2ProjectActions.setFundingCyclesPageSelection(selection))
@@ -70,6 +85,23 @@ export const useFundingCyclesForm = () => {
       return
     }
   }, [selection, duration, dispatch])
+
+  useEffect(() => {
+    if (launchDate === undefined) return
+    if (launchDate === null || !launchDate.unix().toString()) {
+      dispatch(
+        editingV2ProjectActions.setMustStartAtOrAfter(
+          DEFAULT_MUST_START_AT_OR_AFTER,
+        ),
+      )
+      return
+    }
+    dispatch(
+      editingV2ProjectActions.setMustStartAtOrAfter(
+        launchDate?.unix().toString(),
+      ),
+    )
+  }, [dispatch, launchDate])
 
   return { form, initialValues }
 }

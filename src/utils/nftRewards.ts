@@ -376,7 +376,7 @@ export function buildJBDeployTiered721DelegateData({
       lockVotingUnitChanges: false,
       lockManualMintingChanges: false,
     },
-    governanceType: JB721GovernanceType.TIERED,
+    governanceType: JB721GovernanceType.NONE,
   }
 }
 
@@ -398,5 +398,7 @@ export function payMetadataOverrides(
 export function sortNftsByContributionFloor(
   rewardTiers: NftRewardTier[],
 ): NftRewardTier[] {
-  return rewardTiers.sort((a, b) => a.contributionFloor - b.contributionFloor)
+  return rewardTiers
+    .slice()
+    .sort((a, b) => a.contributionFloor - b.contributionFloor)
 }

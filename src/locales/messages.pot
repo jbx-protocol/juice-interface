@@ -1394,9 +1394,6 @@ msgstr ""
 msgid "Give this NFT a name."
 msgstr ""
 
-msgid "Give your <0/> or <1/> project's token holders the ability to migrate their tokens to <2/>."
-msgstr ""
-
 msgid "Go to <0>{snapshotUrl}</0>"
 msgstr ""
 
@@ -1407,9 +1404,6 @@ msgid "Go to your Safe"
 msgstr ""
 
 msgid "Governance"
-msgstr ""
-
-msgid "Grant permission"
 msgstr ""
 
 msgid "Has Juicebox been audited? What are the risks?"
@@ -1758,9 +1752,6 @@ msgid "Message"
 msgstr ""
 
 msgid "Migrate tokens"
-msgstr ""
-
-msgid "Migration token successfully deployed."
 msgstr ""
 
 msgid "Minimum Contribution"
@@ -2705,9 +2696,6 @@ msgstr ""
 msgid "Set up and launch veNFT governance for your project."
 msgstr ""
 
-msgid "Set up token migration"
-msgstr ""
-
 msgid "Set veNFT operator for {projectTitle}"
 msgstr ""
 
@@ -2805,9 +2793,6 @@ msgid "Terminal configuration"
 msgstr ""
 
 msgid "Text record is set"
-msgstr ""
-
-msgid "The <0/> has already been set for this project."
 msgstr ""
 
 msgid "The <0>Juicebox contracts</0> may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
@@ -3057,9 +3042,6 @@ msgid "Token beneficiary:"
 msgstr ""
 
 msgid "Token holders <0>cannot redeem their tokens</0> for any ETH when the redemption rate is 0."
-msgstr ""
-
-msgid "Token holders of your legacy project tokens (<0/> or <1/>) will have the ability to swap their tokens for <2/> tokens at a 1-to-1 exchange rate."
 msgstr ""
 
 msgid "Token migration"
@@ -3347,9 +3329,6 @@ msgstr ""
 msgid "V1 project handle"
 msgstr ""
 
-msgid "V1 token holders can migrate their tokens to your V3 tokens using your V3 project's <0>Tokens</0> section."
-msgstr ""
-
 msgid "V1 tokens to swap"
 msgstr ""
 
@@ -3530,9 +3509,6 @@ msgstr ""
 msgid "You haven't created any projects yet."
 msgstr ""
 
-msgid "You must grant permission to swap your tokens."
-msgstr ""
-
 msgid "You must review and accept the risks."
 msgstr ""
 
@@ -3555,9 +3531,6 @@ msgid "You would receive at least <0/>"
 msgstr ""
 
 msgid "You'll be able to issue ERC-20 tokens once your project contract has been deployed. Until then, the protocol will track token balances, allowing your supporters to earn tokens and redeem for overflow in the meantime."
-msgstr ""
-
-msgid "You're all set!"
 msgstr ""
 
 msgid "You've completed this step."

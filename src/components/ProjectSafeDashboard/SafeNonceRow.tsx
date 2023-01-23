@@ -41,7 +41,7 @@ export function SafeNonceRow({
         {transactions.map((tx: SafeTransactionType, idx: number) => (
           <div
             className={classNames(
-              idx === 0
+              idx !== 0
                 ? 'border border-x-0 border-t border-b-0 border-solid border-smoke-200 dark:border-grey-600'
                 : '',
             )}

@@ -201,7 +201,7 @@ export default function DistributePayoutsModal({
             currency={distributionLimitCurrency}
             splits={payoutSplits ?? []}
             projectOwnerAddress={projectOwnerAddress}
-            showSplitValues
+            showAmounts
             showFees
           />
         </div>

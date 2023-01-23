@@ -26,22 +26,24 @@ const VolumeChart = lazy(() => import('components/VolumeChart'))
 const gutter = 40
 
 const RelaunchV1ProjectCallout = ({ className }: { className?: string }) => {
+  const { currentPayoutMods } = useContext(V1ProjectContext)
+
   const [isHidden, setIsHidden] = useState<boolean>(false)
   const { isReady, relaunch } = useRelaunchV1ViaV3Create()
   const isLoading = !isReady
 
-  const { currentPayoutMods } = useContext(V1ProjectContext)
-
   const hasUpgradePermission = useV1ConnectedWalletHasPermission(
     V1OperatorPermission.Configure,
   )
-
-  const projectMigratedToV3 = currentPayoutMods?.some(
-    payout => payout.allocator === V1_V3_ALLOCATOR_ADDRESS,
+  const payoutModsLoading = currentPayoutMods === undefined
+  const projectMigratedToV3 = Boolean(
+    currentPayoutMods?.some(
+      payout => payout.allocator === V1_V3_ALLOCATOR_ADDRESS,
+    ),
   )
 
   if (
-    projectMigratedToV3 === undefined ||
+    payoutModsLoading ||
     projectMigratedToV3 ||
     isHidden ||
     !hasUpgradePermission

@@ -8,7 +8,7 @@ import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import useProjectToken from 'hooks/v2v3/contractReader/ProjectToken'
 import { V1UserProvider } from 'providers/v1/UserProvider'
 import { useCallback, useContext, useState } from 'react'
-import { AddTerminalSection as DeployMigrationTokenSection } from './DeployMigrationTokenSection'
+import { DeployMigrationTokenSection } from './DeployMigrationTokenSection'
 import { SetMigratedTokenSection } from './SetMigratedTokenSection'
 import * as constants from '@ethersproject/constants'
 import FormattedAddress from 'components/FormattedAddress'
@@ -82,47 +82,52 @@ export function TokenMigrationSetupModal({ ...props }: ModalProps) {
             </MinimalCollapse>
           </div>
 
-          <div className="flex flex-col gap-6">
-            {/* Required to read v1 project ids from handles */}
-            <V1UserProvider>
-              <DeployMigrationTokenSection
-                completed={!!deployedMigrationToken}
-                onCompleted={onDeployMigrationTokenCompleted}
-              />
-            </V1UserProvider>
+          <div>
+            <div className="mb-10">
+              {/* Required to read v1 project ids from handles */}
+              <V1UserProvider>
+                <DeployMigrationTokenSection
+                  completed={!!deployedMigrationToken}
+                  onCompleted={onDeployMigrationTokenCompleted}
+                />
+              </V1UserProvider>
 
-            {!!deployedMigrationToken && (
-              <>
-                <Callout.Info collapsible={false}>
-                  <p>
-                    <Trans>
-                      Migration token was successfully deployed to{' '}
-                      <FormattedAddress
-                        truncateTo={16}
-                        tooltipDisabled
-                        address={deployedMigrationToken}
+              {!!deployedMigrationToken && (
+                <>
+                  <Callout.Info collapsible={false} className="mb-2">
+                    <p className="mb-1">
+                      <Trans>Migration token successfully deployed.</Trans>
+                    </p>
+                    <p className="mb-0">
+                      Token address:{' '}
+                      <strong>
+                        <FormattedAddress
+                          truncateTo={16}
+                          tooltipDisabled
+                          address={deployedMigrationToken}
+                        />
+                      </strong>
+                      <CopyTextButton
+                        className="ml-1"
+                        value={deployedMigrationToken}
                       />
-                    </Trans>
-                    <CopyTextButton
-                      className="ml-1"
-                      value={deployedMigrationToken}
-                    />
-                  </p>
-                </Callout.Info>
-                <Callout.Warning collapsible={false}>
-                  <p>
-                    Please make sure you make a copy of this address if you are
-                    not ready to complete step 2.{' '}
-                  </p>
-                  <p>
-                    <strong>
-                      Once you navigate away from this page, this token will be
-                      lost and very hard to recover.
-                    </strong>
-                  </p>
-                </Callout.Warning>
-              </>
-            )}
+                    </p>
+                  </Callout.Info>
+                  <Callout.Warning collapsible={false}>
+                    <p>
+                      Make sure you copy and save this address if you aren't
+                      ready to complete Step 2.{' '}
+                    </p>
+                    <p>
+                      <strong>
+                        Once you leave this page, this token will be lost and
+                        hard to recover.
+                      </strong>
+                    </p>
+                  </Callout.Warning>
+                </>
+              )}
+            </div>
 
             <SetMigratedTokenSection
               deployedMigrationToken={deployedMigrationToken}

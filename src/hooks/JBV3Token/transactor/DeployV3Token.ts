@@ -2,11 +2,13 @@ import { t } from '@lingui/macro'
 import { CV_V2 } from 'constants/cv'
 import { TransactionContext } from 'contexts/transactionContext'
 import { V1UserContext } from 'contexts/v1/userContext'
+import * as constants from '@ethersproject/constants'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useLoadV2V3Contract } from 'hooks/v2v3/LoadV2V3Contract'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import { useContext } from 'react'
 import { useJBV3TokenDeployer } from '../contracts/JBV3TokenDeployer'
+import { BigNumber } from '@ethersproject/bignumber'
 
 export function useDeployV3TokenTx(): TransactorInstance<{
   tokenName: string
@@ -34,10 +36,10 @@ export function useDeployV3TokenTx(): TransactorInstance<{
       [
         tokenName,
         tokenSymbol,
-        v1ProjectId ? v1Contracts?.TicketBooth.address : undefined, // assumes all V1 projects use the same ticketbooth (accurate i think?)
-        V2JBTokenStore.address,
         v3ProjectId,
-        v1ProjectId,
+        v1ProjectId ? v1Contracts?.TicketBooth.address : constants.AddressZero, // assumes all V1 projects use the same ticketbooth (accurate i think?)
+        V2JBTokenStore.address,
+        v1ProjectId ?? BigNumber.from(0),
       ],
       {
         ...txOpts,

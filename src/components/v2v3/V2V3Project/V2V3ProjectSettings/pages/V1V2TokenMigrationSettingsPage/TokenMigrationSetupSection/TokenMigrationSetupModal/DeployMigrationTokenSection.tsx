@@ -1,14 +1,12 @@
 import { CheckCircleOutlined, QuestionCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Button, Form, Tooltip } from 'antd'
+import { Button, Form, Input, Tooltip } from 'antd'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import Loading from 'components/Loading'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import useNameOfERC20 from 'hooks/NameOfERC20'
-import useSymbolOfERC20 from 'hooks/SymbolOfERC20'
+import { useDeployV3TokenTx } from 'hooks/JBV3Token/transactor/DeployV3Token'
 import useProjectIdForHandle from 'hooks/v1/contractReader/ProjectIdForHandle'
-import useTokenAddressOfProject from 'hooks/v1/contractReader/TokenAddressOfProject'
-import useProjectToken from 'hooks/v2v3/contractReader/ProjectToken'
+
 import { debounce } from 'lodash'
 import {
   ChangeEventHandler,
@@ -17,39 +15,33 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { inputMustExistRule } from 'utils/antd-rules'
-import { emitErrorNotification } from 'utils/notifications'
 import { StepSection } from './StepSection'
-
-const useToken = (tokenAddress: string | undefined) => {
-  const { data: symbol, loading: symbolLoading } =
-    useSymbolOfERC20(tokenAddress)
-  const { data: name, loading: nameLoading } = useNameOfERC20(tokenAddress)
-
-  return {
-    symbol,
-    name,
-    loading: symbolLoading || nameLoading,
-  }
-}
 
 interface AddTerminalSectionForm {
   v1ProjectId: string | undefined
+  tokenName: string
+  tokenSymbol: string
 }
 
-export function AddTerminalSection({
+export function DeployMigrationTokenSection({
   completed,
   onCompleted,
 }: {
   completed: boolean
   onCompleted: (deployedMigrationToken: string) => void
 }) {
-  const [form] = Form.useForm<AddTerminalSectionForm>()
   const { projectId } = useContext(ProjectMetadataContext)
 
+  const [form] = Form.useForm<AddTerminalSectionForm>()
   const [addTerminalLoading, setAddTerminalLoading] = useState<boolean>(false)
   const [v1ProjectHandle, setV1ProjectHandle] = useState<string>()
   const [userInputOccurring, setUserInputOccurring] = useState<boolean>(false)
+
+  const { loading: v1ProjectIdLoading, data: v1ProjectId } =
+    useProjectIdForHandle(v1ProjectHandle)
+
+  const isValidV1ProjectId = Boolean(v1ProjectId?.gt(0))
+
   const debouncedSetV1ProjectHandle = useMemo(
     () =>
       debounce((v1ProjectHandle: string) => {
@@ -58,44 +50,30 @@ export function AddTerminalSection({
       }, 500),
     [],
   )
-  const { loading: v1ProjectIdLoading, data: v1ProjectId } =
-    useProjectIdForHandle(v1ProjectHandle)
-  const v1TokenAddress = useTokenAddressOfProject(v1ProjectId)
-  const { data: v2TokenAddress, loading: v2TokenAddressLoading } =
-    useProjectToken({
-      projectId,
+
+  const deployMigrationTokenTx = useDeployV3TokenTx()
+
+  const onFinish = async (values: AddTerminalSectionForm) => {
+    if (!projectId) return
+
+    setAddTerminalLoading(true)
+
+    await deployMigrationTokenTx({
+      tokenName: values.tokenName,
+      tokenSymbol: values.tokenSymbol,
+      v3ProjectId: projectId,
+      v1ProjectId: v1ProjectId?.toNumber(),
     })
 
-  const v1Token = useToken(v1TokenAddress)
-  const v2Token = useToken(v2TokenAddress)
+    // console.log(res)
 
-  const isValidV1ProjectId = !v1ProjectId || v1ProjectId.gt(0)
+    // // TODO:::::: add deploy call
+    // // eslint-disable-next-line no-console
+    // console.log({ ticketBooth, values })
 
-  const onFinish = useCallback(
-    async (values: AddTerminalSectionForm) => {
-      if (v1Token.loading || v2Token.loading) return
-
-      setAddTerminalLoading(true)
-      const tokenName = v1Token.name || v2Token.name
-      const tokenSymbol = v1Token.symbol || v2Token.symbol
-
-      if (!tokenName || !tokenSymbol) {
-        emitErrorNotification('Missing token name or symbol', { duration: 5 })
-        setAddTerminalLoading(false)
-        return
-      }
-
-      let ticketBooth: string | undefined | null
-
-      // TODO:::::: add deploy call
-      // eslint-disable-next-line no-console
-      console.log({ ticketBooth, values })
-
-      // call on completed with a random wallet address
-      onCompleted('0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266')
-    },
-    [onCompleted, v1Token, v2Token],
-  )
+    // call on completed with a random wallet address
+    onCompleted('0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266')
+  }
 
   const onV1ProjectHandleInputChanged: ChangeEventHandler<HTMLInputElement> =
     useCallback(
@@ -136,47 +114,54 @@ export function AddTerminalSection({
       title={<Trans>1. Deploy V3 migration token</Trans>}
       completed={completed}
     >
-      {v2TokenAddressLoading ? (
-        <Loading />
-      ) : (
-        <Form form={form} layout="vertical" onFinish={onFinish}>
-          <Form.Item
-            label={t`V1 Project Handle`}
-            extra={t`If you have a V1 project, input the V1 project's handle. Otherwise, leave this blank.`}
-            requiredMark="optional"
-          >
-            <div className="flex items-center gap-2">
-              <Form.Item noStyle name="v1ProjectHandle">
-                <JuiceInput
-                  allowClear
-                  className="flex-grow"
-                  onChange={onV1ProjectHandleInputChanged}
-                />
-              </Form.Item>
-              {v1ProjectIdSuffix && (
-                <span className="flex-shrink whitespace-nowrap">
-                  {v1ProjectIdSuffix}
-                </span>
-              )}
-            </div>
-          </Form.Item>
-          <Button
-            className="mt-2"
-            htmlType="submit"
-            type="primary"
-            loading={addTerminalLoading}
-            disabled={
-              completed ||
-              userInputOccurring ||
-              !isValidV1ProjectId ||
-              addTerminalLoading ||
-              v1ProjectIdLoading
-            }
-          >
-            <Trans>Deploy migration token</Trans>
-          </Button>
-        </Form>
-      )}
+      <Form form={form} layout="vertical" onFinish={onFinish}>
+        <Form.Item
+          label={t`Token name`}
+          name="tokenName"
+          rules={[{ required: true }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label={t`Token symbol`}
+          name="tokenSymbol"
+          rules={[{ required: true }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label={t`V1 project handle`}
+          extra={t`If you have a V1 project, add the project's handle here. Otherwise, leave this blank.`}
+          requiredMark="optional"
+          className="mb-2"
+        >
+          <div className="flex items-center gap-2">
+            <Form.Item noStyle name="v1ProjectHandle">
+              <JuiceInput
+                allowClear
+                className="flex-grow"
+                onChange={onV1ProjectHandleInputChanged}
+                suffix={v1ProjectIdSuffix ?? null}
+              />
+            </Form.Item>
+          </div>
+        </Form.Item>
+        <Button
+          className="mt-2"
+          htmlType="submit"
+          type="primary"
+          loading={addTerminalLoading}
+          disabled={
+            completed ||
+            userInputOccurring ||
+            (v1ProjectId !== undefined && !isValidV1ProjectId) ||
+            addTerminalLoading ||
+            v1ProjectIdLoading
+          }
+        >
+          <Trans>Deploy migration token</Trans>
+        </Button>
+      </Form>
     </StepSection>
   )
 }

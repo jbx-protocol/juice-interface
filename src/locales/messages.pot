@@ -1676,6 +1676,9 @@ msgstr ""
 msgid "Lock {tokenText} for Governance NFTs"
 msgstr ""
 
+msgid "Locked until <0>{value}</0>"
+msgstr ""
+
 msgid "Locked until {0}"
 msgstr ""
 
@@ -3693,9 +3696,6 @@ msgid "last {trendingWindowDays} days"
 msgstr ""
 
 msgid "loading"
-msgstr ""
-
-msgid "locked until {lockedUntilFormatted}"
 msgstr ""
 
 msgid "matching \"{searchText}\""

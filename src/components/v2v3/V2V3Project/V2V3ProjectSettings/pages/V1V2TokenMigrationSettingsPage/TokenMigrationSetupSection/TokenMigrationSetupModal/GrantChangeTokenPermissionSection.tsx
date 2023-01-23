@@ -1,5 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
+import FormattedAddress from 'components/FormattedAddress'
+import { MinimalCollapse } from 'components/MinimalCollapse'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useJBV3TokenDeployer } from 'hooks/JBV3Token/contracts/JBV3TokenDeployer'
@@ -9,7 +11,13 @@ import { V2OperatorPermission } from 'models/v2v3/permissions'
 import { useContext } from 'react'
 import { StepSection } from './StepSection'
 
-export function GrantSetTokenPermissionSection() {
+export function GrantChangeTokenPermissionSection({
+  completed,
+  onCompleted,
+}: {
+  completed: boolean
+  onCompleted: () => void
+}) {
   const { projectId } = useContext(ProjectMetadataContext)
   const { projectOwnerAddress } = useContext(V2V3ProjectContext)
   const deployer = useJBV3TokenDeployer()
@@ -18,12 +26,12 @@ export function GrantSetTokenPermissionSection() {
   const onClick = async function () {
     await tx(undefined, {
       onConfirmed() {
-        return
+        return onCompleted()
       },
     })
   }
 
-  const { data: completed } = useV2HasPermissions({
+  const { data: hasPermission } = useV2HasPermissions({
     operator: deployer?.address,
     account: projectOwnerAddress,
     domain: projectId,
@@ -33,13 +41,25 @@ export function GrantSetTokenPermissionSection() {
   return (
     <StepSection
       title={<Trans>1. Grant permission</Trans>}
-      completed={Boolean(completed)}
+      completed={Boolean(completed || hasPermission)}
     >
       <p>
-        Grant the Token Deployer contract permission to update your project's
-        token.
+        Grant the Token Deployer contract (
+        <FormattedAddress address={deployer?.address} />) permission to change
+        your project's token.
       </p>
-      <Button onClick={onClick}>Grant permission</Button>
+      <MinimalCollapse
+        header={<Trans>Why do you need this permission?</Trans>}
+        className="mb-5"
+      >
+        <Trans>
+          We'll need this permission to change your project's token to your V3
+          Migration Token in the next step.
+        </Trans>
+      </MinimalCollapse>
+      <Button onClick={onClick} type="primary">
+        Grant permission
+      </Button>
     </StepSection>
   )
 }

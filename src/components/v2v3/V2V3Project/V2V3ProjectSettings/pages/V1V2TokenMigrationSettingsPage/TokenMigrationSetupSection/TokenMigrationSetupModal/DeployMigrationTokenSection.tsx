@@ -28,7 +28,7 @@ export function DeployMigrationTokenSection({
   onCompleted,
 }: {
   completed: boolean
-  onCompleted: (deployedMigrationToken: string) => void
+  onCompleted: () => void
 }) {
   const { projectId } = useContext(ProjectMetadataContext)
 
@@ -65,14 +65,7 @@ export function DeployMigrationTokenSection({
       v1ProjectId: v1ProjectId?.toNumber(),
     })
 
-    // console.log(res)
-
-    // // TODO:::::: add deploy call
-    // // eslint-disable-next-line no-console
-    // console.log({ ticketBooth, values })
-
-    // call on completed with a random wallet address
-    onCompleted('0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266')
+    onCompleted()
   }
 
   const onV1ProjectHandleInputChanged: ChangeEventHandler<HTMLInputElement> =
@@ -111,7 +104,7 @@ export function DeployMigrationTokenSection({
 
   return (
     <StepSection
-      title={<Trans>1. Deploy V3 migration token</Trans>}
+      title={<Trans>2. Deploy V3 migration token</Trans>}
       completed={completed}
     >
       <Form form={form} layout="vertical" onFinish={onFinish}>

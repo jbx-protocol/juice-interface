@@ -1,13 +1,13 @@
 import { Trans } from '@lingui/macro'
-// import { Button } from 'antd'
+import { Button } from 'antd'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
-// import { useState } from 'react'
-// import { TokenMigrationSetupModal } from './TokenMigrationSetupModal'
+import { useState } from 'react'
+import { TokenMigrationSetupModal } from './TokenMigrationSetupModal'
 
 export function V1TokenMigrationSetupSection() {
-  // const [migrationModalVisible, setMigrationModalVisible] =
-  //   useState<boolean>(false)
+  const [migrationModalVisible, setMigrationModalVisible] =
+    useState<boolean>(false)
 
   return (
     <div className="flex flex-col gap-4">
@@ -34,7 +34,7 @@ export function V1TokenMigrationSetupSection() {
           </Trans>
         </p>
       </MinimalCollapse>
-      {/* <div>
+      <div>
         <Button
           className="mt-4"
           onClick={() => setMigrationModalVisible(true)}
@@ -42,12 +42,12 @@ export function V1TokenMigrationSetupSection() {
         >
           <Trans>Set up token migration</Trans>
         </Button>
-      </div> */}
-      {/* <TokenMigrationSetupModal
+      </div>
+      <TokenMigrationSetupModal
         open={migrationModalVisible}
         onOk={() => setMigrationModalVisible(false)}
         onCancel={() => setMigrationModalVisible(false)}
-      /> */}
+      />
     </div>
   )
 }

@@ -4,7 +4,11 @@ import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
 import { ProjectState } from 'models/project-visibility'
 import { PV } from 'models/pv'
-import { SepanaProject, SepanaSearchResponse } from 'models/sepana'
+import {
+  SepanaProject,
+  SepanaProjectJson,
+  SepanaSearchResponse,
+} from 'models/sepana'
 import { parseProjectJson, Project } from 'models/subgraph-entities/vX/project'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { useEffect, useState } from 'react'
@@ -158,7 +162,7 @@ export function useSepanaProjectsSearch(
     ['sepana-query', text, pageSize],
     () =>
       axios
-        .get<SepanaSearchResponse<Json<SepanaProject>>>(
+        .get<SepanaSearchResponse<SepanaProjectJson>>(
           `/api/sepana/projects?text=${text}${
             pageSize !== undefined ? `&pageSize=${pageSize}` : ''
           }`,

@@ -49,7 +49,7 @@ export default function QuickProjectSearch() {
     }
   }, [inputText])
 
-  const sepanaEnabled = featureFlagEnabled(FEATURE_FLAGS.SEPANA)
+  const sepanaEnabled = featureFlagEnabled(FEATURE_FLAGS.SEPANA_SEARCH)
 
   const { data: sepanaSearchResults, isLoading: isLoadingSepanaSearch } =
     useSepanaProjectsSearch(searchText, MAX_RESULTS)

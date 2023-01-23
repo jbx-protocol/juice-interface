@@ -48,7 +48,7 @@ export default function AllProjects({
   const { data: graphSearchResults, isLoading: isLoadingGraphSearch } =
     useProjectsSearch(searchText)
 
-  const sepanaEnabled = featureFlagEnabled(FEATURE_FLAGS.SEPANA)
+  const sepanaEnabled = featureFlagEnabled(FEATURE_FLAGS.SEPANA_SEARCH)
 
   const searchResults = sepanaEnabled ? sepanaSearchResults : graphSearchResults
 

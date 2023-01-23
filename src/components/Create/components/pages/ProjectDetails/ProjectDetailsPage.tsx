@@ -12,11 +12,11 @@ import TooltipIcon from 'components/TooltipIcon'
 import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
+import { inputMustBeEthAddressRule, inputMustExistRule } from 'utils/antd-rules'
 import { CreateCollapse } from '../../CreateCollapse'
 import { OptionalHeader } from '../../OptionalHeader'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
-import { inputMustBeEthAddressRule, inputMustExistRule } from '../utils'
 import { useProjectDetailsForm } from './hooks/ProjectDetailsForm'
 
 export const ProjectDetailsPage: React.FC = () => {

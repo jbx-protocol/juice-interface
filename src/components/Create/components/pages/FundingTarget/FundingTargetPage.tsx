@@ -14,7 +14,7 @@ import { Icons } from '../../Icons'
 import { Selection } from '../../Selection'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
-import { currencyAmountMustExistRuleionMustExistRule } from '../utils/rules/currencyAmountMustExistRule'
+import { currencyAmountMustExistRule } from 'utils/antd-rules'
 import { useFundingTargetForm } from './hooks'
 
 export const FundingTargetPage: React.FC = () => {
@@ -71,7 +71,7 @@ export const FundingTargetPage: React.FC = () => {
                 name="amount"
                 label={t`Set your funding target`}
                 rules={lockPageRulesWrapper([
-                  currencyAmountMustExistRuleionMustExistRule({
+                  currencyAmountMustExistRule({
                     label: t`Funding Target`,
                   }),
                 ])}

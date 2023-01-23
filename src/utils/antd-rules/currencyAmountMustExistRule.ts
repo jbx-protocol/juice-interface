@@ -7,9 +7,7 @@ import { RuleObject } from 'antd/lib/form'
  * This rule checks if the Currency Amount exists, otherwise rejects with an
  * invalid message.
  */
-export const currencyAmountMustExistRuleionMustExistRule = (props?: {
-  label?: string
-}) => ({
+export const currencyAmountMustExistRule = (props?: { label?: string }) => ({
   validator: (
     rule: RuleObject,
     value:

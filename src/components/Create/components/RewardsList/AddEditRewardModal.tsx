@@ -16,10 +16,12 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
 import { restrictedIpfsUrl } from 'utils/ipfs'
 import { v4 } from 'uuid'
-import { CreateButton } from '../CreateButton'
-import { inputMustExistRule } from '../pages/utils'
-import { inputIsValidUrlRule } from '../pages/utils/rules/inputIsValidUrlRule'
-import { inputNonZeroRule } from '../pages/utils/rules/inputNonZeroRule'
+import { CreateButton } from 'components/CreateButton'
+import {
+  inputIsValidUrlRule,
+  inputNonZeroRule,
+  inputMustExistRule,
+} from 'utils/antd-rules'
 import { RewardImage } from '../RewardImage'
 import { Reward } from './types'
 

@@ -5,6 +5,7 @@ import { Callout } from 'components/Callout'
 import ExternalLink from 'components/ExternalLink'
 import { PayProjectForm } from 'components/Project/PayProjectForm'
 import { ProjectHeader } from 'components/Project/ProjectHeader'
+import { V1_V3_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { PV_V1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
@@ -25,6 +26,8 @@ const VolumeChart = lazy(() => import('components/VolumeChart'))
 const gutter = 40
 
 const RelaunchV1ProjectCallout = ({ className }: { className?: string }) => {
+  const { currentPayoutMods } = useContext(V1ProjectContext)
+
   const [isHidden, setIsHidden] = useState<boolean>(false)
   const { isReady, relaunch } = useRelaunchV1ViaV3Create()
   const isLoading = !isReady
@@ -32,8 +35,19 @@ const RelaunchV1ProjectCallout = ({ className }: { className?: string }) => {
   const hasUpgradePermission = useV1ConnectedWalletHasPermission(
     V1OperatorPermission.Configure,
   )
+  const payoutModsLoading = currentPayoutMods === undefined
+  const projectMigratedToV3 = Boolean(
+    currentPayoutMods?.some(
+      payout => payout.allocator === V1_V3_ALLOCATOR_ADDRESS,
+    ),
+  )
 
-  if (isHidden || !hasUpgradePermission) {
+  if (
+    payoutModsLoading ||
+    projectMigratedToV3 ||
+    isHidden ||
+    !hasUpgradePermission
+  ) {
     return null
   }
 

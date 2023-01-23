@@ -36,7 +36,7 @@ export function V2V3ManageTokensSection() {
     V2OperatorPermission.ISSUE,
   )
 
-  const hasIssuedERC20 = tokenAddress !== constants.AddressZero
+  const hasIssuedERC20 = tokenAddress && tokenAddress !== constants.AddressZero
   const showIssueErc20TokenButton = !hasIssuedERC20 && hasIssueTicketsPermission
 
   const v1TokenSwapEnabled = featureFlagEnabled(FEATURE_FLAGS.V1_TOKEN_SWAP)
@@ -67,7 +67,11 @@ export function V2V3ManageTokensSection() {
         )}
       </div>
       <Descriptions layout="horizontal" column={1}>
-        {hasIssuedERC20 && tokenSymbol && <ProjectTokenDescription />}
+        {hasIssuedERC20 && tokenSymbol && (
+          <Descriptions.Item label={t`Project token`} labelStyle={labelStyle}>
+            <ProjectTokenDescription />
+          </Descriptions.Item>
+        )}
         <Descriptions.Item
           label={t`Total supply`}
           labelStyle={labelStyle}

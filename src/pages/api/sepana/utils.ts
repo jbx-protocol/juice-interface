@@ -121,6 +121,29 @@ export async function deleteAllSepanaDocs() {
 }
 
 /**
+ * Deletes a Sepana record with ID
+ * @param id ID of Sepana record to delete
+ */
+export async function deleteSepanaDoc(id: string) {
+  return axios.delete<{ detail: string }>(
+    `${process.env.NEXT_PUBLIC_SEPANA_API_URL}/engine/data/delete`,
+    {
+      headers: headers('admin'),
+      data: {
+        engine_id: process.env.SEPANA_ENGINE_ID,
+        delete_query: {
+          query: {
+            match: {
+              id,
+            },
+          },
+        },
+      },
+    },
+  )
+}
+
+/**
  * Writes docs to Sepana engine in groups of 500.
  *
  * @param docs Projects to write to Sepana database
@@ -183,6 +206,7 @@ export async function getJob(jobId: string) {
 const SEPANA_ALERTS = {
   DB_UPDATE_ERROR: 'Error updating database',
   DELETED_ALL_RECORDS: 'Deleted all records',
+  DELETED_RECORD: 'Deleted record',
   DELETE_ERROR: 'Error deleting records',
   BAD_DB_HEALTH: 'Errors in database',
 }

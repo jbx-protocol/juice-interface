@@ -3,7 +3,7 @@ import { ProjectMetadataV5 } from 'models/project-metadata'
 
 import { PV } from './pv'
 
-type SepanaProject = {
+export type SepanaProject = {
   id: string
   projectId: number
   createdAt: number

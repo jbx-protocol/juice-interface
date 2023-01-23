@@ -1,9 +1,25 @@
 import { NextApiHandler } from 'next'
-import { deleteAllSepanaDocs, sepanaAlert } from './utils'
 
-const handler: NextApiHandler = async (_, res) => {
+import { deleteSepanaDoc, sepanaAlert } from './utils'
+
+const handler: NextApiHandler = async (req, res) => {
+  const { id } = req.query
+
+  if (typeof id !== 'string' || !id.length) {
+    res.status(400).end()
+    return
+  }
+
   try {
-    await deleteAllSepanaDocs()
+    await deleteSepanaDoc(id).then(async _res => {
+      await sepanaAlert({
+        type: 'alert',
+        alert: 'DELETED_RECORD',
+        body: `ID: ${id}`,
+      })
+
+      res.status(200).json(_res.data)
+    })
   } catch (error) {
     await sepanaAlert({
       type: 'alert',

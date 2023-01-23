@@ -6,7 +6,7 @@ import {
   reservedRateFrom,
 } from 'utils/v2v3/math'
 import { ProjectTokensFormProps } from '../components/pages/ProjectToken/hooks/ProjectTokenForm'
-import { allocationToSplit } from './splitToAllocation'
+import { allocationToSplit } from 'utils/splitToAllocation'
 
 export const projectTokenSettingsToReduxFormat = (
   projectTokenSettings: Required<Omit<ProjectTokensFormProps, 'selection'>>,

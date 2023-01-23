@@ -1,12 +1,9 @@
 import { DeleteOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
 import { Space, Tooltip } from 'antd'
-import {
-  Allocation,
-  AllocationSplit,
-} from 'components/Create/components/Allocation'
-import { OwnerPayoutCard } from 'components/Create/components/PayoutCard'
-import { formatPercent } from 'components/Create/utils/formatPercent'
+import { Allocation, AllocationSplit } from 'components/Allocation'
+import { OwnerPayoutCard } from 'components/PayoutCard'
+import { formatPercent } from 'utils/format/formatPercent'
 import FormattedAddress from 'components/FormattedAddress'
 import { FormItemInput } from 'models/formItemInput'
 import { formatDate } from 'utils/format/formatDate'

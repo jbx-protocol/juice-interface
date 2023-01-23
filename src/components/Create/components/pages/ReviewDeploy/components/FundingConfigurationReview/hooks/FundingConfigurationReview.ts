@@ -1,12 +1,9 @@
 import { t } from '@lingui/macro'
-import { AllocationSplit } from 'components/Create/components/Allocation'
+import { AllocationSplit } from 'components/Allocation'
 import { useAvailablePayoutsSelections } from 'components/Create/components/pages/Payouts/hooks'
 import { formatFundingCycleDuration } from 'components/Create/utils/formatFundingCycleDuration'
-import { formatFundingTarget } from 'components/Create/utils/formatFundingTarget'
-import {
-  allocationToSplit,
-  splitToAllocation,
-} from 'components/Create/utils/splitToAllocation'
+import { formatFundingTarget } from 'utils/format/formatFundingTarget'
+import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 import { useAppSelector } from 'hooks/AppSelector'
 import moment from 'moment'
 import { useCallback, useMemo } from 'react'

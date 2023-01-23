@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
 import { RuleObject } from 'antd/lib/form'
-import { DurationInputValue } from 'components/Create/components/DurationInput'
+import { DurationInputValue } from 'components/DurationInput'
 
 /**
  * Rule to be used in an Ant Design Form.Item object.

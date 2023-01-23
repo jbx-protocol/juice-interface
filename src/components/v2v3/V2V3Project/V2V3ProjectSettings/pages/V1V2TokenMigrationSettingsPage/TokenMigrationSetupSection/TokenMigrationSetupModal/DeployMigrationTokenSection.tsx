@@ -2,7 +2,6 @@ import { CheckCircleOutlined, QuestionCircleOutlined } from '@ant-design/icons'
 import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Button, Form, Tooltip } from 'antd'
-import { inputMustExistRule } from 'components/Create/components'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import Loading from 'components/Loading'
 import { MinimalCollapse } from 'components/MinimalCollapse'
@@ -23,6 +22,7 @@ import {
   useMemo,
   useState,
 } from 'react'
+import { inputMustExistRule } from 'utils/antd-rules'
 import { emitErrorNotification } from 'utils/notifications'
 import { StepSection } from './StepSection'
 

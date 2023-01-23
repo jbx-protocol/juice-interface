@@ -76,9 +76,10 @@ const handler: NextApiHandler = async (req, res) => {
         }
 
         // Deep compare subgraph project with sepana project to find which projects have changed or not yet been stored on sepana
+        // Return true to indicate new data should be fetched for this project in sepana db
         return (
           !sepanaProject ||
-          (!sepanaProject._source.metadataResolved && retryIPFS) ||
+          (retryIPFS && !sepanaProject._source.metadataResolved) ||
           projectKeys.some(k => {
             const oldVal = subgraphProject[k as keyof Project]
             const newVal = sepanaProject?._source[k]
@@ -126,19 +127,16 @@ const handler: NextApiHandler = async (req, res) => {
               name,
               description,
               logoUri,
-              metadataResolved: true,
               lastUpdated,
+              metadataResolved: true,
             } as SepanaProjectJson,
           }))
           .catch(error => ({
             error,
             project: {
               ...p,
-              name: undefined,
-              description: undefined,
-              logoUri: undefined,
-              metadataResolved: false, // If there is an error resolving metadata from IPFS, we'll flag it as `metadataResolved: false`. We'll try getting it again whenever `retryIPFS == true`.
               lastUpdated,
+              metadataResolved: false, // If there is an error resolving metadata from IPFS, we'll flag it as `metadataResolved: false`. We'll try getting it again whenever `retryIPFS == true`.
             } as SepanaProjectJson,
           })),
       )
@@ -148,12 +146,13 @@ const handler: NextApiHandler = async (req, res) => {
 
     const ipfsErrors = promiseResults.filter(x => x.error)
 
-    // Write all projects, even those with metadata errors.
+    // Write all updated projects (even those with missing metadata)
     const { jobs, projects: updatedProjects } = await writeSepanaDocs(
       promiseResults.map(r => r.project),
     )
 
-    const updatedMessage = `Jobs: ${jobs.join(',')}${
+    // Formatted message used for log reporting
+    const reportString = `Jobs: ${jobs.join(',')}${
       retryIPFS
         ? `\nRetried resolving metadata for ${missingMetadataCount}`
         : ''
@@ -185,12 +184,12 @@ const handler: NextApiHandler = async (req, res) => {
                   e =>
                     `\`[${e.project.id}]\` metadataURI: \`${e.project.metadataUri}\` _${e.error}_`,
                 )
-                .join('\n')}\n\n${updatedMessage}`,
+                .join('\n')}\n\n${reportString}`,
             }
           : {
               type: 'notification',
               notif: 'DB_UPDATED',
-              body: updatedMessage,
+              body: reportString,
             },
       )
     }

@@ -18,7 +18,7 @@ const projectKeys: (keyof SepanaProject)[] = [
   'deployer',
 ]
 
-// Returns search database health report
+// Checks integrity of data in Sepana db against the current subgraph data
 const handler: NextApiHandler = async (_, res) => {
   const sepanaResponse = await queryAllSepanaProjects()
 

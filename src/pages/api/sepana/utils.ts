@@ -234,7 +234,8 @@ export async function sepanaAlert(
   const url = process.env.SEPANA_WEBHOOK_URL
 
   if (!url || !network) {
-    throw new Error('Missing var to post to Discord webhook')
+    console.error('Missing .env var required to log Sepana Alert')
+    return
   }
 
   return await axios.post(url, {

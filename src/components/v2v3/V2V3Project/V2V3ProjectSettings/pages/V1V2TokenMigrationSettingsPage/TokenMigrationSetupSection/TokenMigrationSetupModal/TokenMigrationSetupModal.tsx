@@ -9,17 +9,15 @@ import useProjectToken from 'hooks/v2v3/contractReader/ProjectToken'
 import { V1UserProvider } from 'providers/v1/UserProvider'
 import { useCallback, useContext, useState } from 'react'
 import { DeployMigrationTokenSection } from './DeployMigrationTokenSection'
-import { SetMigratedTokenSection } from './SetMigratedTokenSection'
 import * as constants from '@ethersproject/constants'
 import FormattedAddress from 'components/FormattedAddress'
 import CopyTextButton from 'components/CopyTextButton'
 import { MinimalCollapse } from 'components/MinimalCollapse'
+import { GrantSetTokenPermissionSection } from './GrantSetTokenPermissionSection'
 
 export function TokenMigrationSetupModal({ ...props }: ModalProps) {
   const { projectId } = useContext(ProjectMetadataContext)
   const [deployedMigrationToken, setDeployedMigrationToken] = useState<string>()
-  const [migrationTokenSet, setMigrationTokenSet] = useState<boolean>(false)
-  useState<boolean>(false)
 
   // Check if token already set
   const { data: tokenAddress, loading: tokenAddressLoading } = useProjectToken({
@@ -84,6 +82,10 @@ export function TokenMigrationSetupModal({ ...props }: ModalProps) {
 
           <div>
             <div className="mb-10">
+              <GrantSetTokenPermissionSection />
+            </div>
+
+            <div>
               {/* Required to read v1 project ids from handles */}
               <V1UserProvider>
                 <DeployMigrationTokenSection
@@ -128,12 +130,6 @@ export function TokenMigrationSetupModal({ ...props }: ModalProps) {
                 </>
               )}
             </div>
-
-            <SetMigratedTokenSection
-              deployedMigrationToken={deployedMigrationToken}
-              completed={completed}
-              onCompleted={() => setMigrationTokenSet(true)}
-            />
 
             {completed && (
               <Callout

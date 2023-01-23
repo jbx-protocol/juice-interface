@@ -1,5 +1,5 @@
 import { RuleObject } from 'antd/lib/form'
-import { AllocationSplit } from 'components/Create/components/Allocation'
+import { AllocationSplit } from 'components/Allocation'
 
 export const allocationTotalPercentDoNotExceedTotalRule = () => ({
   validator: (rule: RuleObject, value: unknown) => {

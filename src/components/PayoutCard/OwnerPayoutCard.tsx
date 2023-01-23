@@ -4,7 +4,7 @@ import { Tooltip } from 'antd'
 import useMobile from 'hooks/Mobile'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { classNames } from 'utils/classNames'
-import { Allocation } from '../Allocation'
+import { Allocation } from 'components/Allocation'
 import { Amount } from './Amount'
 
 export const OwnerPayoutCard = ({

@@ -1,5 +1,5 @@
 import { useForm, useWatch } from 'antd/lib/form/Form'
-import { DurationInputValue } from 'components/Create/components/DurationInput'
+import { DurationInputValue } from 'components/DurationInput'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useDebugValue, useEffect, useMemo } from 'react'

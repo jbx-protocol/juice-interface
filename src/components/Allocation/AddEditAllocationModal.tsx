@@ -16,9 +16,12 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { amountFromPercent } from 'utils/v2v3/distributions'
-import { inputMustBeEthAddressRule, inputMustExistRule } from '../pages/utils'
-import { allocationInputAlreadyExistsRule } from '../pages/utils/rules/allocationInputAlreadyExistsRule'
-import { inputIsIntegerRule } from '../pages/utils/rules/inputIsIntegerRule'
+import {
+  inputMustBeEthAddressRule,
+  inputIsIntegerRule,
+  inputMustExistRule,
+  allocationInputAlreadyExistsRule,
+} from 'utils/antd-rules'
 import { Allocation, AllocationSplit } from './Allocation'
 
 interface AddEditAllocationModalFormProps {

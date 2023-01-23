@@ -3,8 +3,8 @@ import { Button, Form } from 'antd'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import { StepSection } from './StepSection'
 import { useCallback, useEffect } from 'react'
-import { inputMustExistRule } from 'components/Create/components'
 import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
+import { inputMustExistRule } from 'utils/antd-rules'
 
 export const SetMigratedTokenSection = ({
   deployedMigrationToken,

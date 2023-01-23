@@ -1,29 +1,19 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Button, Divider, Space } from 'antd'
 import { Callout } from 'components/Callout'
-import { OwnerPayoutCard } from 'components/Create/components/PayoutCard'
-import { PayoutCard } from 'components/Create/components/PayoutCard/PayoutCard'
+import { OwnerPayoutCard } from 'components/PayoutCard'
+import { PayoutCard } from 'components/PayoutCard/PayoutCard'
 import { useFundingTarget } from 'components/Create/components/RecallCard/hooks'
 import { FormItemInput } from 'models/formItemInput'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useCallback, useMemo } from 'react'
 import { useEditingDistributionLimit } from 'redux/hooks/EditingDistributionLimit'
-import { fromWad, parseWad } from 'utils/format/formatNumber'
+import { calculateExpenseFromPercentageOfWad } from 'utils/calculateExpenseFromPercentageOfWad'
+import { parseWad } from 'utils/format/formatNumber'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
-import { Allocation, AllocationSplit } from '../../../../Allocation'
-
-const calculateExpenseFromPercentageOfWad = ({
-  percentage,
-  wad,
-}: {
-  percentage: number
-  wad: BigNumber
-}) => {
-  return parseFloat(fromWad(wad)) * (percentage / 100)
-}
+import { Allocation, AllocationSplit } from 'components/Allocation'
 
 export const PayoutsList = (
   props: FormItemInput<AllocationSplit[]> & {

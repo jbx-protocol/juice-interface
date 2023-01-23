@@ -1,11 +1,11 @@
 import { Space } from 'antd'
 import { usePayoutSplitAmountPercentage } from 'components/Create/hooks/PayoutSplitAmountPercentage'
-import { formatPercent } from 'components/Create/utils/formatPercent'
+import { formatPercent } from 'utils/format/formatPercent'
 import { Parenthesis } from 'components/Parenthesis'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { useMemo } from 'react'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
-import { Allocation } from '../Allocation'
+import { Allocation } from 'components/Allocation'
 
 export const Amount = ({
   allocationId, // if undefined, assume owner

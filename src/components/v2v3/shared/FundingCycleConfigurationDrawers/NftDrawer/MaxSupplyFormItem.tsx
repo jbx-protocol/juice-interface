@@ -1,20 +1,15 @@
 import { t } from '@lingui/macro'
 import { Form, Switch } from 'antd'
+import { useWatch } from 'antd/lib/form/Form'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TooltipLabel from 'components/TooltipLabel'
 
-import { useState } from 'react'
+import { NftFormFields } from './NftRewardTierModal'
 
-export default function MaxSupplyFormItem({
-  value,
-  onChange,
-}: {
-  value: number | undefined
-  onChange: (value: number | undefined) => void
-}) {
-  const [limitedSupplyEnabled, setLimitedSupplyEnabled] = useState<boolean>(
-    Boolean(value),
-  )
+export default function MaxSupplyFormItem() {
+  const form = Form.useFormInstance<NftFormFields>()
+  const value = useWatch('maxSupply', form)
+  const hasLimitedSupply = value !== undefined
 
   return (
     <>
@@ -23,10 +18,9 @@ export default function MaxSupplyFormItem({
           <div className="flex">
             <Switch
               className="mr-2"
-              checked={limitedSupplyEnabled}
+              checked={hasLimitedSupply}
               onChange={() => {
-                setLimitedSupplyEnabled(!limitedSupplyEnabled)
-                onChange(undefined)
+                form.setFieldsValue({ maxSupply: value ? undefined : 1 })
               }}
             />
             <TooltipLabel
@@ -35,14 +29,15 @@ export default function MaxSupplyFormItem({
             />
           </div>
         }
+        name="maxSupply"
         className="w-full"
       >
         <div className="flex">
-          {limitedSupplyEnabled ? (
+          {hasLimitedSupply ? (
             <Form.Item
               className="mb-0 w-full"
               extra={
-                limitedSupplyEnabled
+                hasLimitedSupply
                   ? t`The maximum supply of this NFT in circulation.`
                   : null
               }

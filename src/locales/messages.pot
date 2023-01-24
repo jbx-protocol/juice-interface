@@ -29,9 +29,6 @@ msgstr ""
 msgid "1-day delay"
 msgstr ""
 
-msgid "1. Deploy V3 migration token"
-msgstr ""
-
 msgid "1. Get funded"
 msgstr ""
 
@@ -47,10 +44,10 @@ msgstr ""
 msgid "2. Build trust"
 msgstr ""
 
-msgid "2. Set text record"
+msgid "2. Deploy V3 Migration Token"
 msgstr ""
 
-msgid "2. Update your project token"
+msgid "2. Set text record"
 msgstr ""
 
 msgid "24 hours"
@@ -410,7 +407,7 @@ msgstr ""
 msgid "Allow token minting"
 msgstr ""
 
-msgid "Allow your legacy project (<0/> or <1/>) token holders to swap their tokens for your <2/> project tokens."
+msgid "Allow your legacy project token holders (<0/> or <1/>) to swap their tokens for your <2/> project tokens."
 msgstr ""
 
 msgid "Allowed"
@@ -923,6 +920,9 @@ msgstr ""
 msgid "Deploy"
 msgstr ""
 
+msgid "Deploy Migration Token"
+msgstr ""
+
 msgid "Deploy NFTs"
 msgstr ""
 
@@ -935,10 +935,10 @@ msgstr ""
 msgid "Deploy Snapshot space"
 msgstr ""
 
-msgid "Deploy funding cycle configuration"
+msgid "Deploy a V3 Migration Token for your project."
 msgstr ""
 
-msgid "Deploy migration token"
+msgid "Deploy funding cycle configuration"
 msgstr ""
 
 msgid "Deploy project"
@@ -948,9 +948,6 @@ msgid "Deploy project to {0}"
 msgstr ""
 
 msgid "Deployed ERC20 token"
-msgstr ""
-
-msgid "Deployed Migration Token Address"
 msgstr ""
 
 msgid "Deployed payment addresses can be found in the Tools drawer (<0/>) on the project page."
@@ -1292,6 +1289,12 @@ msgstr ""
 msgid "FAQ"
 msgstr ""
 
+msgid "Failed to deploy migration token. Check the development console and contact our team in the JuiceboxDAO Discord."
+msgstr ""
+
+msgid "Failed to grant permission."
+msgstr ""
+
 msgid "Failed to issue ERC20 token. Check transaction and try again."
 msgstr ""
 
@@ -1422,6 +1425,9 @@ msgid "Hold fees"
 msgstr ""
 
 msgid "Holders"
+msgstr ""
+
+msgid "Holders of this V1 project's token will be able to migrate their tokens to the V3 token you're deploying."
 msgstr ""
 
 msgid "Hours"
@@ -2681,9 +2687,6 @@ msgstr ""
 msgid "Set the length of your funding cycles."
 msgstr ""
 
-msgid "Set the newly deployed <0/> token from Step 1 as your project's token."
-msgstr ""
-
 msgid "Set this to the sum of all your payouts"
 msgstr ""
 
@@ -2694,6 +2697,9 @@ msgid "Set up and launch veNFT governance for your project using default veBanny
 msgstr ""
 
 msgid "Set up and launch veNFT governance for your project."
+msgstr ""
+
+msgid "Set up token migration"
 msgstr ""
 
 msgid "Set veNFT operator for {projectTitle}"
@@ -2802,9 +2808,6 @@ msgid "The <0>issuance rate</0> of your second funding cycle will be <1>{0} toke
 msgstr ""
 
 msgid "The address of any smart contract deployed on {0} that implements <0>this interface</0>."
-msgstr ""
-
-msgid "The address of the token that was deployed in Step 1."
 msgstr ""
 
 msgid "The address that should receive the tokens minted from paying this project."
@@ -3015,6 +3018,9 @@ msgid "This will delete the payout for <0/>."
 msgstr ""
 
 msgid "This will enable your project's veNFT contract to spend unclaimed tokens in addition to project ERC-20 tokens."
+msgstr ""
+
+msgid "This will give your <0/> or <1/> project's token holders the ability to migrate their tokens to <2/>."
 msgstr ""
 
 msgid "Time Remaining"
@@ -3386,6 +3392,9 @@ msgstr ""
 msgid "We recommend you visit the <0>Juicebox Discord</0> for help and advice on this process."
 msgstr ""
 
+msgid "We'll need this permission to change your project's token to your V3 Migration Token in the next step."
+msgstr ""
+
 msgid "We've disabled payments because the project has opted to reserve 100% of new tokens. You would receive no tokens from your payment."
 msgstr ""
 
@@ -3444,6 +3453,9 @@ msgid "Who is Peel? Who is JuiceboxDAO?"
 msgstr ""
 
 msgid "Who's getting paid?"
+msgstr ""
+
+msgid "Why do you need this permission?"
 msgstr ""
 
 msgid "Will be rounded to <0/>{0}"
@@ -3533,6 +3545,9 @@ msgstr ""
 msgid "You'll be able to issue ERC-20 tokens once your project contract has been deployed. Until then, the protocol will track token balances, allowing your supporters to earn tokens and redeem for overflow in the meantime."
 msgstr ""
 
+msgid "You're all set!"
+msgstr ""
+
 msgid "You've completed this step."
 msgstr ""
 
@@ -3558,6 +3573,9 @@ msgid "Your collection's symbol is used on NFT marketplaces (for example, OpenSe
 msgstr ""
 
 msgid "Your funding cycle configuration has been pre-populated using the configuration you originally launched with. If you need to customize it, contact us."
+msgstr ""
+
+msgid "Your legacy project token holders can now migrate their tokens in the <0>Tokens</0> section on your V3 project page."
 msgstr ""
 
 msgid "Your legacy token balance"

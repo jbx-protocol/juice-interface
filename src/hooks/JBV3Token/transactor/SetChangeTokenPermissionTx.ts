@@ -14,9 +14,8 @@ import { useJBV3TokenDeployer } from '../contracts/JBV3TokenDeployer'
 
 export function useSetChangeTokenPermissionTx(): TransactorInstance {
   const { transactor } = useContext(TransactionContext)
-  const { contracts } = useContext(V2V3ContractsContext)
+  const { contracts, cv } = useContext(V2V3ContractsContext)
   const { projectId } = useContext(ProjectMetadataContext)
-  const { cv } = useContext(V2V3ContractsContext)
 
   const { userAddress } = useWallet()
   const deployer = useJBV3TokenDeployer()

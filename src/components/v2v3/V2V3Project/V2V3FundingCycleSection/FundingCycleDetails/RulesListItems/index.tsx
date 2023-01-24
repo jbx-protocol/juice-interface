@@ -19,6 +19,7 @@ import { AllowMintingValue } from './AllowMintingValue'
 import { AllowSetTerminalsValue } from './AllowSetTerminalsValue'
 import { HoldFeesValue } from './HoldFeesValue'
 import { PausePayValue } from './PausePayValue'
+import { PauseTransfersValue } from './PauseTransfersValue'
 import { ReconfigStratValue } from './ReconfigStratValue'
 
 export function RulesListItems({
@@ -62,6 +63,10 @@ export function RulesListItems({
     oldFundingCycleMetadata &&
     oldFundingCycleMetadata.global.allowSetTerminals !==
       fundingCycleMetadata.global.allowSetTerminals
+  const pauseTransfersHasDiff =
+    oldFundingCycleMetadata &&
+    oldFundingCycleMetadata.global.pauseTransfers !==
+      fundingCycleMetadata.global.pauseTransfers
   const ballotHasDiff =
     oldFundingCycle && oldFundingCycle.ballot !== fundingCycle.ballot
   const holdFeesHasDiff =
@@ -105,6 +110,24 @@ export function RulesListItems({
             <AllowSetTerminalsValue
               allowSetTerminals={
                 oldFundingCycleMetadata?.global.allowSetTerminals
+              }
+            />
+          ) : undefined
+        }
+        helperText={TERMINAL_CONFIG_EXPLAINATION}
+      />
+      <FundingCycleListItem
+        name={t`Pause transfers`}
+        value={
+          <PauseTransfersValue
+            pauseTransfers={fundingCycleMetadata.global.pauseTransfers ?? false}
+          />
+        }
+        oldValue={
+          showDiffs && pauseTransfersHasDiff ? (
+            <PauseTransfersValue
+              pauseTransfers={
+                oldFundingCycleMetadata?.global.pauseTransfers ?? false
               }
             />
           ) : undefined

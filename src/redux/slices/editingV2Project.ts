@@ -338,6 +338,9 @@ const editingV2ProjectSlice = createSlice({
     setAllowSetTerminals: (state, action: PayloadAction<boolean>) => {
       state.fundingCycleMetadata.global.allowSetTerminals = action.payload
     },
+    setPauseTransfers: (state, action: PayloadAction<boolean>) => {
+      state.fundingCycleMetadata.global.pauseTransfers = action.payload
+    },
     setFundingCyclesPageSelection: (
       state,
       action: PayloadAction<'manual' | 'automated' | undefined>,

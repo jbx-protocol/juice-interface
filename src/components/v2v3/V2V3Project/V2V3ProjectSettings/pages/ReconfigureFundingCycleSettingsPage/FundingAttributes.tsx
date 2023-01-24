@@ -308,6 +308,28 @@ export function AllowSetTerminalsStatistic({
   )
 }
 
+export function PauseTransfersStatistic({
+  pauseTransfers,
+}: {
+  pauseTransfers: boolean
+}) {
+  return (
+    <Statistic
+      title={
+        <TooltipLabel
+          label={t`Pause transfers`}
+          tip={
+            pauseTransfers
+              ? t`Transfers are paused`
+              : `Transfers are not paused`
+          }
+        />
+      }
+      valueRender={() => (pauseTransfers ? t`Allowed` : t`Disabled`)}
+    />
+  )
+}
+
 export function ReconfigurationStatistic({
   ballotAddress,
 }: {

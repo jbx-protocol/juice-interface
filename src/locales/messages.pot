@@ -2015,6 +2015,9 @@ msgstr ""
 msgid "Pause payments"
 msgstr ""
 
+msgid "Pause transfers"
+msgstr ""
+
 msgid "Paused"
 msgstr ""
 
@@ -3203,6 +3206,9 @@ msgstr ""
 msgid "Transfer {tokenTextShort}"
 msgstr ""
 
+msgid "Transfers are paused"
+msgstr ""
+
 msgid "Transparently set your terms ahead of time, or take control when you need to. Juicebox lets you define elegant token issuance & redemption, payouts, and other rules in advance, acting as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
 msgstr ""
 
@@ -3425,6 +3431,9 @@ msgstr ""
 msgid "When distributing, payouts to Ethereum addresses incur a 2.5% JBX membership fee. Payouts to other Juicebox projects don't incur fees. Your project will receive (the <0>JuiceboxDAO</0> token) in return at the current issuance rate."
 msgstr ""
 
+msgid "When enabled, all transfers will be paused."
+msgstr ""
+
 msgid "When enabled, the data source will be used for redeem transactions."
 msgstr ""
 
@@ -3438,6 +3447,9 @@ msgid "When enabled, the project owner can set the project's payment terminals."
 msgstr ""
 
 msgid "When enabled, the project will hold the fee amount in ETH instead of the fees being processed automatically. <0>Learn more.</0>"
+msgstr ""
+
+msgid "When enabled, transfers will be paused."
 msgstr ""
 
 msgid "When enabled, your project cannot receive direct payments."

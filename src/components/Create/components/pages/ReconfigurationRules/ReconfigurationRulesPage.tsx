@@ -76,6 +76,12 @@ export const ReconfigurationRulesPage = () => {
             >
               <JuiceSwitch label={t`Allow terminal configuration`} />
             </Form.Item>
+            <Form.Item
+              name="pauseTransfers"
+              extra={t`When enabled, transfers will be paused.`}
+            >
+              <JuiceSwitch label={t`Pause transfers`} />
+            </Form.Item>
             <Form.Item name="holdFees" extra={HOLD_FEES_EXPLAINATION}>
               <JuiceSwitch label={t`Hold fees`} />
             </Form.Item>

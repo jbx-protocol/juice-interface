@@ -1,10 +1,12 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber'
 import { readProvider } from 'constants/readProvider'
 import { infuraApi } from 'lib/infura/ipfs'
 import { ProjectMetadataV5 } from 'models/project-metadata'
 import { SepanaProject, SepanaProjectJson } from 'models/sepana'
 import { Project, ProjectJson } from 'models/subgraph-entities/vX/project'
 import { NextApiHandler } from 'next'
+import { formatWad } from 'utils/format/formatNumber'
 import { querySubgraphExhaustive } from 'utils/graph'
 import { openIpfsUrl } from 'utils/ipfs'
 
@@ -39,8 +41,8 @@ const handler: NextApiHandler = async (req, res) => {
     const updatedProperties: {
       [id: string]: {
         key: string
-        old: string | undefined | null
-        new: string | undefined | null
+        oldVal: string | undefined | null
+        newVal: string | undefined | null
       }
     } = {}
     const idsOfNewProjects: Set<string> = new Set()
@@ -87,8 +89,8 @@ const handler: NextApiHandler = async (req, res) => {
             if (oldVal !== newVal) {
               updatedProperties[id] = {
                 key: k,
-                old: oldVal?.toString(),
-                new: newVal?.toString(),
+                oldVal: oldVal?.toString(),
+                newVal: newVal?.toString(),
               }
               return true
             }
@@ -163,10 +165,17 @@ const handler: NextApiHandler = async (req, res) => {
           project: { id, name },
         } = r
 
+        const { key, oldVal, newVal } = updatedProperties[id]
+
+        const formatBigNumberish = (b: unknown) =>
+          isBigNumberish(b) ? formatWad(b, { precision: 6 }) : b
+
         return `\`[${id}]\` ${name} _(${
           idsOfNewProjects.has(id)
             ? 'New'
-            : `${updatedProperties[id].key}: ${updatedProperties[id].old} -> ${updatedProperties[id].new}`
+            : `${key}: ${formatBigNumberish(oldVal)} -> ${formatBigNumberish(
+                newVal,
+              )}`
         })_`
       })
       .join('\n')}`

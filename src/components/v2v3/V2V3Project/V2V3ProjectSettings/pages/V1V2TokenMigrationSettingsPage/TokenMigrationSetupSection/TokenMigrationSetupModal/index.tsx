@@ -1,3 +1,1 @@
-export {} // TODO
-
-// export * from './TokenMigrationSetupModal'
+export * from './TokenMigrationSetupModal'

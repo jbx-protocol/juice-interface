@@ -467,6 +467,9 @@ msgstr ""
 msgid "Approve token for transaction"
 msgstr ""
 
+msgid "Approve tokens for migration to V3"
+msgstr ""
+
 msgid "Archive project"
 msgstr ""
 
@@ -1691,6 +1694,9 @@ msgstr ""
 msgid "Leave unchecked to have Juicebox track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
 msgstr ""
 
+msgid "Legacy tokens to migrate"
+msgstr ""
+
 msgid "Light theme"
 msgstr ""
 
@@ -1796,7 +1802,13 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
+msgid "Migrate legacy tokens"
+msgstr ""
+
 msgid "Migrate tokens"
+msgstr ""
+
+msgid "Migrate tokens to V3 for project #{projectId}"
 msgstr ""
 
 msgid "Migration rules"
@@ -2897,6 +2909,9 @@ msgstr ""
 msgid "Supply"
 msgstr ""
 
+msgid "Swap for V3 tokens"
+msgstr ""
+
 msgid "Switch network to {0}"
 msgstr ""
 
@@ -3474,9 +3489,6 @@ msgid "V1 Project handle"
 msgstr ""
 
 msgid "V1 project handle"
-msgstr ""
-
-msgid "V1 tokens to swap"
 msgstr ""
 
 msgid "V1.1"

@@ -81,8 +81,8 @@ const handler: NextApiHandler = async (req, res) => {
           !sepanaProject ||
           (retryIPFS && !sepanaProject._source.metadataResolved) ||
           projectKeys.some(k => {
-            const oldVal = subgraphProject[k as keyof Project]
-            const newVal = sepanaProject?._source[k]
+            const oldVal = sepanaProject?._source[k]
+            const newVal = subgraphProject[k as keyof Project]
 
             if (oldVal !== newVal) {
               updatedProperties[id] = {

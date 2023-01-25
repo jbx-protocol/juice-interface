@@ -3,9 +3,10 @@ import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import ETHAmount from 'components/currency/ETHAmount'
 import FormattedAddress from 'components/FormattedAddress'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
-import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
+import V2V3ProjectLink from 'components/v2v3/shared/V2V3ProjectLink'
 import { V1_V3_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { ThemeContext } from 'contexts/themeContext'
+import { getAddress } from 'ethers/lib/utils'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { TapEvent } from 'models/subgraph-entities/v1/tap-event'
 import { useContext } from 'react'
@@ -60,13 +61,6 @@ export default function TapEventElem({
 
   if (!event) return null
 
-  const handleProject = (projectId: number, allocator: string) => {
-    if (allocator.toLowerCase() === V1_V3_ALLOCATOR_ADDRESS.toLowerCase()) {
-      return <V2V3ProjectHandleLink projectId={projectId} />
-    }
-    return <V1ProjectHandle projectId={projectId} />
-  }
-
   return (
     <ActivityEvent
       event={event}
@@ -90,7 +84,17 @@ export default function TapEventElem({
             >
               <div style={{ fontWeight: 500 }}>
                 {e.modProjectId > 0 ? (
-                  <span>{handleProject(e.modProjectId, e.modAllocator)}</span>
+                  <span>
+                    {getAddress(e.modAllocator) ===
+                    getAddress(V1_V3_ALLOCATOR_ADDRESS) ? (
+                      <V2V3ProjectLink
+                        projectId={e.modProjectId}
+                        allocator={getAddress(e.modAllocator)}
+                      />
+                    ) : (
+                      <V1ProjectHandle projectId={e.modProjectId} />
+                    )}
+                  </span>
                 ) : (
                   <FormattedAddress address={e.modBeneficiary} />
                 )}

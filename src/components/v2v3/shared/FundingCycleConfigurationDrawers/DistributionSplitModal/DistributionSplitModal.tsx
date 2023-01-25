@@ -170,7 +170,9 @@ export function DistributionSplitModal({
       ? Math.round(lockedUntil.valueOf() / 1000)
       : undefined
 
-    const allocator = getAddress(form.getFieldValue('allocator'))
+    const allocator = form.getFieldValue('allocator')
+      ? getAddress(form.getFieldValue('allocator'))
+      : undefined
 
     // if allocator specified, set beneficiary to zero address. Otherwise, set beneficiary to specified address.
     const beneficiary =
@@ -184,7 +186,7 @@ export function DistributionSplitModal({
       lockedUntil: roundedLockedUntil,
       preferClaimed: true,
       projectId: projectId,
-      allocator: getAddress(allocator),
+      allocator: allocator,
     } as Split
 
     let adjustedSplits: Split[] = splits

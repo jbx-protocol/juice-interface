@@ -8,7 +8,7 @@ import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useEditProjectDetailsTx } from 'hooks/v2v3/transactor/EditProjectDetailsTx'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { revalidateProject } from 'lib/api/nextjs'
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 
 export function ProjectDetailsSettingsPage() {
   const { projectId } = useContext(ProjectMetadataContext)
@@ -17,7 +17,7 @@ export function ProjectDetailsSettingsPage() {
   const [loadingSaveChanges, setLoadingSaveChanges] = useState<boolean>()
   const [projectForm] = useForm<ProjectDetailsFormFields>()
 
-  const EditV2ProjectDetailsTx = useEditProjectDetailsTx()
+  const editV2ProjectDetailsTx = useEditProjectDetailsTx()
 
   async function onProjectFormSaved() {
     setLoadingSaveChanges(true)
@@ -40,21 +40,29 @@ export function ProjectDetailsSettingsPage() {
       return
     }
 
-    EditV2ProjectDetailsTx(
-      { cid: uploadedMetadata.IpfsHash },
+    const txSuccess = await editV2ProjectDetailsTx(
       {
-        onDone: () => setLoadingSaveChanges(false),
+        cid: uploadedMetadata.IpfsHash,
+      },
+      {
         onConfirmed: async () => {
+          setLoadingSaveChanges(false)
           if (projectId) {
             await revalidateProject({
               pv: PV_V2,
               projectId: String(projectId),
             })
           }
-          projectForm.resetFields()
+        },
+        onError: () => {
+          setLoadingSaveChanges(false)
         },
       },
     )
+
+    if (!txSuccess) {
+      setLoadingSaveChanges(false)
+    }
   }
 
   const resetProjectForm = useCallback(() => {

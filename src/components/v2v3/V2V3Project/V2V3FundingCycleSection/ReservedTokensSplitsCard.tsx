@@ -54,7 +54,9 @@ export default function ReservedTokensSplitsCard({
     plural: true,
   })
 
-  const distributeButtonDisabled = isPreviewMode || reservedTokens?.eq(0)
+  // Temporary disable JBX dist
+  const distributeButtonDisabled =
+    isPreviewMode || reservedTokens?.eq(0) || projectId === 1
 
   function DistributeButton(): JSX.Element {
     return (

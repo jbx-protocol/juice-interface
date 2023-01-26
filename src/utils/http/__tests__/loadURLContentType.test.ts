@@ -3,7 +3,7 @@ import { v4 } from 'uuid'
 
 import { loadURLContentType } from '../loadURLContentType'
 
-const axiosSpy = jest.spyOn(axios, 'get')
+const axiosSpy = jest.spyOn(axios, 'head')
 
 describe('loadURLContentType', () => {
   it('returns undefined if input is undefined', async () => {

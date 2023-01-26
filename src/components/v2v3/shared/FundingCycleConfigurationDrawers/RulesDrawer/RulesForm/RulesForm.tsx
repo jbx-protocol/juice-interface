@@ -170,7 +170,12 @@ export default function RulesForm({
             </div>
           </Form.Item>
           <Form.Item
-            extra={<Trans>When enabled, all transfers will be paused.</Trans>}
+            extra={
+              <Trans>
+                When enabled, all project token transfers will be paused. Does
+                not apply to ERC-20 tokens if issued.
+              </Trans>
+            }
           >
             <div className="flex font-medium text-black dark:text-slate-100">
               <Switch
@@ -180,7 +185,7 @@ export default function RulesForm({
                 }}
                 checked={pauseTransfers}
               />
-              <Trans>Pause transfers</Trans>
+              <Trans>Pause project token transfers</Trans>
             </div>
           </Form.Item>
           <Form.Item name="holdfees" extra={HOLD_FEES_EXPLAINATION}>

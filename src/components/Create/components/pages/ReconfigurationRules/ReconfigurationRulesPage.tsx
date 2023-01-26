@@ -78,9 +78,9 @@ export const ReconfigurationRulesPage = () => {
             </Form.Item>
             <Form.Item
               name="pauseTransfers"
-              extra={t`When enabled, transfers will be paused.`}
+              extra={t`When enabled, project token transfers will be paused. This does not apply to ERC-20 tokens if issued.`}
             >
-              <JuiceSwitch label={t`Pause transfers`} />
+              <JuiceSwitch label={t`Pause project token transfers`} />
             </Form.Item>
             <Form.Item name="holdFees" extra={HOLD_FEES_EXPLAINATION}>
               <JuiceSwitch label={t`Hold fees`} />

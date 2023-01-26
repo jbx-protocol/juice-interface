@@ -317,12 +317,10 @@ export function PauseTransfersStatistic({
     <Statistic
       title={
         <TooltipLabel
-          label={t`Pause transfers`}
-          tip={
-            pauseTransfers
-              ? t`Transfers are paused`
-              : `Transfers are not paused`
-          }
+          label={t`Pause project token transfers`}
+          tip={t`Project token transfers are ${
+            pauseTransfers ? 'paused' : 'unpaused'
+          }. This does not apply to ERC-20 tokens if issued.`}
         />
       }
       valueRender={() => (pauseTransfers ? t`Allowed` : t`Disabled`)}

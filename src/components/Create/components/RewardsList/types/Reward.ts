@@ -5,5 +5,5 @@ export interface Reward {
   description: string | undefined
   maximumSupply?: number
   url: string | undefined
-  imgUrl: string
+  fileUrl: string
 }

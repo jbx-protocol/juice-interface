@@ -6,9 +6,13 @@ import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactionContext } from 'contexts/transactionContext'
-import { TransactorInstance } from 'hooks/Transactor'
+import {
+  handleTransactionException,
+  TransactorInstance,
+} from 'hooks/Transactor'
 
 import { useV2ProjectTitle } from '../ProjectTitle'
+import invariant from 'tiny-invariant'
 
 export function useEditProjectDetailsTx(): TransactorInstance<{
   cid: string
@@ -16,23 +20,37 @@ export function useEditProjectDetailsTx(): TransactorInstance<{
   const { transactor } = useContext(TransactionContext)
   const { contracts } = useContext(V2V3ContractsContext)
   const { projectId } = useContext(ProjectMetadataContext)
+  const { cv } = useContext(V2V3ContractsContext)
 
   const projectTitle = useV2ProjectTitle()
 
   return ({ cid }, txOpts) => {
-    if (!transactor || !projectId || !contracts?.JBProjects) {
-      txOpts?.onDone?.()
-      return Promise.resolve(false)
-    }
+    try {
+      invariant(transactor && contracts && projectId)
+      return transactor(
+        contracts.JBProjects,
+        'setMetadataOf',
+        [projectId, [cid, JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN]],
+        {
+          ...txOpts,
+          title: t`Edit details of ${projectTitle}`,
+        },
+      )
+    } catch {
+      const missingParam = !transactor
+        ? 'transactor'
+        : !contracts?.JBProjects
+        ? 'JBProjects'
+        : !projectId
+        ? 'projectId'
+        : undefined
 
-    return transactor(
-      contracts.JBProjects,
-      'setMetadataOf',
-      [projectId, [cid, JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN]],
-      {
-        ...txOpts,
-        title: t`Edit details of ${projectTitle}`,
-      },
-    )
+      return handleTransactionException({
+        txOpts,
+        missingParam,
+        functionName: 'setMetadataOf',
+        cv,
+      })
+    }
   }
 }

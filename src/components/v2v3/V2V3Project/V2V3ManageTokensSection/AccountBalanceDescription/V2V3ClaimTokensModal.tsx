@@ -14,7 +14,7 @@ import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
-export default function V2ClaimTokensModal({
+export function V2V3ClaimTokensModal({
   open,
   onCancel,
   onConfirmed,

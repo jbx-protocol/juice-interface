@@ -21,7 +21,7 @@ import { V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { formatRedemptionRate } from 'utils/v2v3/math'
 
 // This doubles as the 'Redeem' and 'Burn' modal depending on if project has overflow
-export default function V2RedeemModal({
+export function V2V3BurnOrRedeemModal({
   open,
   onCancel,
   onConfirmed,

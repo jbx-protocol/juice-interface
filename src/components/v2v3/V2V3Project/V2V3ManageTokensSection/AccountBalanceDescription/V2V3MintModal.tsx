@@ -12,7 +12,7 @@ import { parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
-export default function V2MintModal({
+export function V2V3MintModal({
   open,
   onCancel,
   onConfirmed,

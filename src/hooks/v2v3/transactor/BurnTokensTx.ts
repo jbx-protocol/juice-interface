@@ -34,7 +34,7 @@ export function useBurnTokensTx(): TransactorInstance<{
       )
       return transactor(
         contracts?.JBController,
-        'burnTokens',
+        'burnTokensOf',
         [
           userAddress, // _holder
           projectId, // _projectId

@@ -560,6 +560,9 @@ msgstr ""
 msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project's redemption rate is zero."
 msgstr ""
 
+msgid "Burn {0}"
+msgstr ""
+
 msgid "Burn {0} {tokensTextShort}"
 msgstr ""
 

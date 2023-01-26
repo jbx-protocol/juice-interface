@@ -11,6 +11,7 @@ import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useETHReceivedFromTokens } from 'hooks/v2v3/contractReader/ETHReceivedFromTokens'
 import useTotalBalanceOf from 'hooks/v2v3/contractReader/TotalBalanceOf'
+import { useBurnTokensTx } from 'hooks/v2v3/transactor/BurnTokensTx'
 import { useRedeemTokensTx } from 'hooks/v2v3/transactor/RedeemTokensTx'
 import { useWallet } from 'hooks/Wallet'
 import { useContext, useState } from 'react'
@@ -21,7 +22,7 @@ import { V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { formatRedemptionRate } from 'utils/v2v3/math'
 
 // This doubles as the 'Redeem' and 'Burn' modal depending on if project has overflow
-export default function V2RedeemModal({
+export function V2V3BurnOrRedeemModal({
   open,
   onCancel,
   onConfirmed,
@@ -41,8 +42,6 @@ export default function V2RedeemModal({
   } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
-  const { userAddress } = useWallet()
-
   const [redeemAmount, setRedeemAmount] = useState<string>()
   const [loading, setLoading] = useState<boolean>()
   const [memo] = useState<string>('')
@@ -52,12 +51,14 @@ export default function V2RedeemModal({
     redeemAmount: string
   }>()
 
+  const { userAddress } = useWallet()
   const { data: totalBalance } = useTotalBalanceOf(userAddress, projectId)
   const maxClaimable = useETHReceivedFromTokens({
     tokenAmount: fromWad(totalBalance),
   })
   const rewardAmount = useETHReceivedFromTokens({ tokenAmount: redeemAmount })
   const redeemTokensTx = useRedeemTokensTx()
+  const burnTokensTx = useBurnTokensTx()
 
   if (!fundingCycle || !fundingCycleMetadata) return null
 
@@ -84,6 +85,8 @@ export default function V2RedeemModal({
   const hasOverflow = primaryTerminalCurrentOverflow?.gt(0)
   const hasRedemptionRate = fundingCycleMetadata.redemptionRate.gt(0)
 
+  // Single source of truth for determining if a user can redeem.
+  // If this is false, the user is burning their tokens.
   const canRedeem = hasOverflow && hasRedemptionRate
 
   if (canRedeem) {
@@ -144,6 +147,42 @@ export default function V2RedeemModal({
     }
   }
 
+  const executeBurnTransaction = async () => {
+    await form.validateFields()
+
+    setLoading(true)
+
+    const txSuccess = await burnTokensTx(
+      {
+        burnAmount: parseWad(redeemAmount),
+        memo,
+      },
+      {
+        // step 1
+        onDone: () => {
+          setTransactionPending(true)
+          setRedeemAmount(undefined)
+        },
+        // step 2
+        onConfirmed: () => {
+          setTransactionPending(false)
+          setLoading(false)
+          onConfirmed?.()
+        },
+        onError: (e: Error) => {
+          setTransactionPending(false)
+          setLoading(false)
+          emitErrorNotification(e.message)
+        },
+      },
+    )
+
+    if (!txSuccess) {
+      setTransactionPending(false)
+      setLoading(false)
+    }
+  }
+
   const totalSupplyExceeded =
     redeemAmount &&
     parseFloat(redeemAmount) > parseFloat(fromWad(totalTokenSupply))
@@ -158,7 +197,7 @@ export default function V2RedeemModal({
       open={open}
       confirmLoading={loading}
       onOk={() => {
-        executeRedeemTransaction()
+        canRedeem ? executeRedeemTransaction() : executeBurnTransaction()
       }}
       onCancel={() => {
         setRedeemAmount(undefined)

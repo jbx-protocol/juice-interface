@@ -1,6 +1,6 @@
-import { RocketOutlined, TwitterOutlined } from '@ant-design/icons'
+import { TwitterOutlined, ShareAltOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Button, Space } from 'antd'
+import { Button } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { NEW_DEPLOY_QUERY_PARAM } from 'components/v2v3/V2V3Project/modals/NewDeployModal'
 import { readNetwork } from 'constants/networks'
@@ -59,31 +59,31 @@ export const DeploySuccess = ({ projectId }: { projectId: number }) => {
       <Image src="/assets/dancing.gif" width={218} height={218} />
       <div className="pt-8 text-4xl font-medium">Congratulations!</div>
       <div className="mt-6 text-xl font-normal">{deployGreeting}</div>
-      <div className="flex gap-2 pt-16">
-        <ExternalLink href="https://discord.gg/juicebox">
-          <Button>
-            <Space>
-              <RocketOutlined />
-              <Trans> Share on Discord</Trans>
-            </Space>
-          </Button>
-        </ExternalLink>
-        <ExternalLink href={twitterShareUrl}>
-          <Button>
-            {/* Spacing is weird when you use button icon - do this instead */}
-            <Space>
-              <TwitterOutlined />
-              <Trans> Share on Twitter</Trans>
-            </Space>
-          </Button>
-        </ExternalLink>
+      <div className="flex flex-col gap-2 pt-16">
         <Button
           type="primary"
           onClick={handleGoToProject}
           loading={gotoProjectClicked}
+          className="gap-3"
         >
-          <Trans>Go to project</Trans>
+          <span>
+            <Trans>Go to project</Trans>
+          </span>
         </Button>
+        <ExternalLink href={twitterShareUrl}>
+          <Button icon={<TwitterOutlined />}>
+            <span>
+              <Trans> Share on Twitter</Trans>
+            </span>
+          </Button>
+        </ExternalLink>
+        <ExternalLink href="https://discord.gg/juicebox">
+          <Button icon={<ShareAltOutlined />}>
+            <span>
+              <Trans> Share on Discord</Trans>
+            </span>
+          </Button>
+        </ExternalLink>
       </div>
     </div>
   )

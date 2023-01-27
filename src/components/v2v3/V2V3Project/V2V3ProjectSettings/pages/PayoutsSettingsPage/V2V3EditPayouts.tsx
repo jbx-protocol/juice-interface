@@ -44,12 +44,20 @@ export const V2V3EditPayouts = ({
       // Checks if the given split exists in the projectContext splits.
       // If it doesn't, then it means it was just added or edited is which case
       // we want to still be able to edit it
-      const confirmedAllocIncludesAlloc =
-        contextPayoutSplits
-          ?.map(splitToAllocation)
-          .find(confirmed => confirmed.id === allocation.id) !== undefined
+      const contextMatch = contextPayoutSplits
+        ?.map(splitToAllocation)
+        .find(confirmed => confirmed.id === allocation.id)
+      if (contextMatch && contextMatch.lockedUntil) {
+        // Check to make sure that the original allocation is actually still locked
+        return contextMatch.lockedUntil > now
+      }
+      return false
+      // const confirmedAllocIncludesAlloc =
+      //   contextPayoutSplits
+      //     ?.map(splitToAllocation)
+      //     .find(confirmed => confirmed.id === allocation.id) !== undefined
 
-      return confirmedAllocIncludesAlloc
+      // return confirmedAllocIncludesAlloc
     },
     [contextPayoutSplits],
   )

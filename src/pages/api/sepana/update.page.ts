@@ -165,17 +165,15 @@ const handler: NextApiHandler = async (req, res) => {
           project: { id, name },
         } = r
 
-        const { key, oldVal, newVal } = updatedProperties[id]
-
         const formatBigNumberish = (b: unknown) =>
           isBigNumberish(b) ? formatWad(b, { precision: 6 }) : b
 
         return `\`[${id}]\` ${name} _(${
           idsOfNewProjects.has(id)
             ? 'New'
-            : `${key}: ${formatBigNumberish(oldVal)} -> ${formatBigNumberish(
-                newVal,
-              )}`
+            : `${updatedProperties[id].key}: ${formatBigNumberish(
+                updatedProperties[id].oldVal,
+              )} -> ${formatBigNumberish(updatedProperties[id].newVal)}`
         })_`
       })
       .join('\n')}`

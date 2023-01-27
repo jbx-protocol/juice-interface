@@ -2,6 +2,8 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber'
 import { readProvider } from 'constants/readProvider'
 import { infuraApi } from 'lib/infura/ipfs'
+import { queryAll, writeSepanaRecords } from 'lib/sepana'
+import { sepanaAlert } from 'lib/sepana/log'
 import { ProjectMetadataV5 } from 'models/project-metadata'
 import { SepanaProject, SepanaProjectJson } from 'models/sepana'
 import { Project, ProjectJson } from 'models/subgraph-entities/vX/project'
@@ -9,8 +11,6 @@ import { NextApiHandler } from 'next'
 import { formatWad } from 'utils/format/formatNumber'
 import { querySubgraphExhaustive } from 'utils/graph'
 import { openIpfsUrl } from 'utils/ipfs'
-
-import { queryAllSepanaProjects, sepanaAlert, writeSepanaDocs } from './utils'
 
 const projectKeys: (keyof SepanaProject)[] = [
   'id',
@@ -31,7 +31,7 @@ const handler: NextApiHandler = async (req, res) => {
     // This flag will let us know we should retry resolving IPFS data for projects that are missing it
     const retryIPFS = req.method === 'POST' && req.body['retryIPFS'] === true
 
-    const sepanaProjects = (await queryAllSepanaProjects()).data.hits.hits
+    const sepanaProjects = (await queryAll<SepanaProjectJson>()).data.hits.hits
 
     const subgraphProjects = await querySubgraphExhaustive({
       entity: 'project',
@@ -149,7 +149,7 @@ const handler: NextApiHandler = async (req, res) => {
     const ipfsErrors = promiseResults.filter(x => x.error)
 
     // Write all updated projects (even those with missing metadata)
-    const { jobs, projects: updatedProjects } = await writeSepanaDocs(
+    const { jobs, written: updatedProjects } = await writeSepanaRecords(
       promiseResults.map(r => r.project),
     )
 

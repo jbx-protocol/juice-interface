@@ -1,9 +1,10 @@
-import { NextApiHandler } from 'next'
-import { queryAllSepanaProjects, sepanaAlert } from './utils'
-import { querySubgraphExhaustive } from 'utils/graph'
-import { SepanaProject } from 'models/sepana'
-import { Project, ProjectJson } from 'models/subgraph-entities/vX/project'
 import { BigNumber } from '@ethersproject/bignumber'
+import { queryAll } from 'lib/sepana'
+import { sepanaAlert } from 'lib/sepana/log'
+import { SepanaProject, SepanaProjectJson } from 'models/sepana'
+import { Project, ProjectJson } from 'models/subgraph-entities/vX/project'
+import { NextApiHandler } from 'next'
+import { querySubgraphExhaustive } from 'utils/graph'
 
 const projectKeys: (keyof SepanaProject)[] = [
   'id',
@@ -20,7 +21,7 @@ const projectKeys: (keyof SepanaProject)[] = [
 
 // Checks integrity of data in Sepana db against the current subgraph data
 const handler: NextApiHandler = async (_, res) => {
-  const sepanaResponse = await queryAllSepanaProjects()
+  const sepanaResponse = await queryAll<SepanaProjectJson>()
 
   const projectsCount = sepanaResponse.data.hits.hits.length
 

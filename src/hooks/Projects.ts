@@ -7,7 +7,7 @@ import { PV } from 'models/pv'
 import {
   SepanaProject,
   SepanaProjectJson,
-  SepanaSearchResponse,
+  SepanaQueryResponse,
 } from 'models/sepana'
 import { parseProjectJson, Project } from 'models/subgraph-entities/vX/project'
 import { V1TerminalVersion } from 'models/v1/terminals'
@@ -162,7 +162,7 @@ export function useSepanaProjectsSearch(
     ['sepana-query', text, pageSize],
     () =>
       axios
-        .get<SepanaSearchResponse<SepanaProjectJson>>(
+        .get<SepanaQueryResponse<SepanaProjectJson>>(
           `/api/sepana/projects?text=${text}${
             pageSize !== undefined ? `&pageSize=${pageSize}` : ''
           }`,

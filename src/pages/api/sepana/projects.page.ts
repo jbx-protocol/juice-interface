@@ -1,6 +1,5 @@
+import { searchSepanaProjects } from 'lib/sepana/projects'
 import { NextApiHandler } from 'next'
-
-import { searchSepanaProjects } from './utils'
 
 // Searches Juicebox projects matching text query param
 const handler: NextApiHandler = async (req, res) => {

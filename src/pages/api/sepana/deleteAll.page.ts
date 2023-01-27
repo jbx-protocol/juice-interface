@@ -1,9 +1,10 @@
+import { deleteAllRecords } from 'lib/sepana'
+import { sepanaAlert } from 'lib/sepana/log'
 import { NextApiHandler } from 'next'
-import { deleteAllSepanaDocs, sepanaAlert } from './utils'
 
 const handler: NextApiHandler = async (_, res) => {
   try {
-    await deleteAllSepanaDocs()
+    await deleteAllRecords()
   } catch (error) {
     await sepanaAlert({
       type: 'alert',

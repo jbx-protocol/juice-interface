@@ -1,6 +1,5 @@
+import { getJobs } from 'lib/sepana/jobs'
 import { NextApiHandler } from 'next'
-
-import { getJobs } from './utils'
 
 // Returns search database health report
 const handler: NextApiHandler = async (req, res) => {

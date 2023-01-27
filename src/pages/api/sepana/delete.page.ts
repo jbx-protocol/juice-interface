@@ -1,6 +1,6 @@
+import { deleteRecord } from 'lib/sepana'
+import { sepanaAlert } from 'lib/sepana/log'
 import { NextApiHandler } from 'next'
-
-import { deleteSepanaDoc, sepanaAlert } from './utils'
 
 const handler: NextApiHandler = async (req, res) => {
   const { id } = req.query
@@ -11,7 +11,7 @@ const handler: NextApiHandler = async (req, res) => {
   }
 
   try {
-    await deleteSepanaDoc(id).then(async _res => {
+    await deleteRecord(id).then(async _res => {
       await sepanaAlert({
         type: 'alert',
         alert: 'DELETED_RECORD',

@@ -32,7 +32,7 @@ export type SepanaProjectJson = Omit<
   totalPaid: string
 }
 
-export type SepanaSearchResponse<T> = {
+export type SepanaQueryResponse<T> = {
   hits: {
     total: {
       value: number

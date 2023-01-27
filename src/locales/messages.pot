@@ -212,12 +212,6 @@ msgstr ""
 msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
 msgstr ""
 
-msgid "<0>Zero</0> Distribution Limit"
-msgstr ""
-
-msgid "<0>{0}</0> Distribution Limit"
-msgstr ""
-
 msgid "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
 msgstr ""
 
@@ -390,6 +384,9 @@ msgid "Allow a few days for your project to appear in the \"active\" projects li
 msgstr ""
 
 msgid "Allow a few days for your project to appear in the \"archived\" projects list on the Projects page."
+msgstr ""
+
+msgid "Allow contributors to claim your project's tokens as an ERC-20. This makes your project's tokens compatible with tools like Uniswap."
 msgstr ""
 
 msgid "Allow minting tokens"
@@ -713,7 +710,7 @@ msgstr ""
 msgid "Confirm Stake"
 msgstr ""
 
-msgid "Congratulations on launching your project! The next steps are optional and can be completed at any time."
+msgid "Congratulations on launching your project! For help planning your next steps, share your project in the <0>JuiceboxDAO Discord</0>. Optionally, you can also:"
 msgstr ""
 
 msgid "Connect"
@@ -818,16 +815,10 @@ msgstr ""
 msgid "Create a project on Juicebox"
 msgstr ""
 
-msgid "Create an Ethereum address for your project. Enables direct payments without going through your project's Juicebox page."
-msgstr ""
-
 msgid "Create an Ethereum address that can be used to pay your project directly."
 msgstr ""
 
 msgid "Create project"
-msgstr ""
-
-msgid "Create your own ERC-20 token to represent stake in your project. Contributors will receive these tokens when they pay your project."
 msgstr ""
 
 msgid "Created"
@@ -939,6 +930,9 @@ msgid "Deploy Snapshot space"
 msgstr ""
 
 msgid "Deploy a V3 Migration Token for your project."
+msgstr ""
+
+msgid "Deploy an address which forwards funds to your project. This makes it easier to pay your project with third-party tools."
 msgstr ""
 
 msgid "Deploy funding cycle configuration"
@@ -1257,6 +1251,9 @@ msgid "Error reading transaction data"
 msgstr ""
 
 msgid "Error uploading file"
+msgstr ""
+
+msgid "Expenses cannot exceed the current funding target"
 msgstr ""
 
 msgid "Explore projects"
@@ -2123,6 +2120,9 @@ msgstr ""
 msgid "Payouts (optional)"
 msgstr ""
 
+msgid "Payouts cannot exceed 100%. Total: {0}"
+msgstr ""
+
 msgid "Payouts to Ethereum addresses incur a 2.5% JBX membership fee"
 msgstr ""
 
@@ -2657,7 +2657,7 @@ msgstr ""
 msgid "Set a text record for {0} with the key <0>\"{projectHandleENSTextRecordKey}\"</0> and the value <1>\"{projectId}\"</1> (this project's ID). You can do this on the <2>ENS app</2>, or use the button below (as long as your connected wallet owns or controls that ENS name)."
 msgstr ""
 
-msgid "Set a unique name that will be visible in your project's URL, and that will allow your project to appear in search results."
+msgid "Set a unique handle that will be visible in your project's URL, and that will allow your project to appear in search results."
 msgstr ""
 
 msgid "Set aside a percentage of freshly minted tokens, which you can allocate below."
@@ -2717,7 +2717,10 @@ msgstr ""
 msgid "Setting a reconfiguration delay means changes to your funding cycle settings only take effect after the delay period has passed. This helps build trust with your contributors."
 msgstr ""
 
-msgid "Share project"
+msgid "Share on Discord"
+msgstr ""
+
+msgid "Share on Twitter"
 msgstr ""
 
 msgid "Show contributors a popup when they receive an NFT."
@@ -2973,9 +2976,6 @@ msgid "This address will receive the tokens minted from paying this project."
 msgstr ""
 
 msgid "This funding cycle may pose risks to contributors. Check the funding cycle details before paying this project."
-msgstr ""
-
-msgid "This funding cycle's distribution limit."
 msgstr ""
 
 msgid "This is the button that contributors will click to pay your project"

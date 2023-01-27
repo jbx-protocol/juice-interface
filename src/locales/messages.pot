@@ -359,9 +359,6 @@ msgstr ""
 msgid "All"
 msgstr ""
 
-msgid "All NFTs will carry the same voting weight when used for governance."
-msgstr ""
-
 msgid "All assets"
 msgstr ""
 
@@ -2708,9 +2705,6 @@ msgstr ""
 msgid "Set a specific amount to distribute to nominated addresses each funding cycle."
 msgstr ""
 
-msgid "Set a specific voting weight for each of your project's NFTs."
-msgstr ""
-
 msgid "Set a text record for {0} with the key <0>\"{projectHandleENSTextRecordKey}\"</0> and the value <1>\"{projectId}\"</1> (this project's ID). You can do this on the <2>ENS app</2>, or use the button below (as long as your connected wallet owns or controls that ENS name)."
 msgstr ""
 
@@ -3242,6 +3236,12 @@ msgstr ""
 msgid "Total: {0}%"
 msgstr ""
 
+msgid "Track the historical voting weight of each token holder across all tiers of NFTs."
+msgstr ""
+
+msgid "Track the historical voting weight of each token holder within each tier of NFTs."
+msgstr ""
+
 msgid "Transaction failed"
 msgstr ""
 
@@ -3698,7 +3698,7 @@ msgstr ""
 msgid "Your project will withhold all funds raised. Funds can be distributed to payout addresses you set, and the project owner will receive any unallocated funds. Your project will have no overflow, so token holders can't redeem their tokens for ETH."
 msgstr ""
 
-msgid "Your project's NFTs will not have any on-chain governance capabilities."
+msgid "Your project's NFTs will not have on-chain governance capabilities."
 msgstr ""
 
 msgid "Your project's current funding cycle has no duration. Changes you make below will take effect immediately."

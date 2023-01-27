@@ -132,17 +132,17 @@ export const NftRewardsPage = () => {
                           <CreateBadge.Default />
                         </>
                       }
-                      description={t`Your project's NFTs will not have any on-chain governance capabilities.`}
+                      description={t`Your project's NFTs will not have on-chain governance capabilities.`}
                     />
                     <RadioItem
                       value={JB721GovernanceType.GLOBAL}
                       title={t`Standard on-chain governance`}
-                      description={t`All NFTs will carry the same voting weight when used for governance.`}
+                      description={t`Track the historical voting weight of each token holder across all tiers of NFTs.`}
                     />
                     <RadioItem
                       value={JB721GovernanceType.TIERED}
                       title={t`Tier-based on-chain governance`}
-                      description={t`Set a specific voting weight for each of your project's NFTs.`}
+                      description={t`Track the historical voting weight of each token holder within each tier of NFTs.`}
                     />
                   </Radio.Group>
                 </Form.Item>

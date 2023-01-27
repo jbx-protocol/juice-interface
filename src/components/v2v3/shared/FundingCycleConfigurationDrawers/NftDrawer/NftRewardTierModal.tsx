@@ -95,10 +95,7 @@ export default function NftRewardTierModal({
         </Form.Item>
         <ContributionFloorFormItem form={nftForm} />
         <NftUpload form={nftForm} />
-        <MaxSupplyFormItem
-          value={nftForm.getFieldValue('maxSupply')}
-          onChange={value => nftForm.setFieldsValue({ maxSupply: value })}
-        />
+        <MaxSupplyFormItem />
         <Form.Item
           name={'externalLink'}
           label={

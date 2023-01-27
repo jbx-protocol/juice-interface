@@ -26,6 +26,11 @@ export function V1ProjectMetadataProvider({
   return (
     <ProjectMetadataContext.Provider
       value={{
+        refetchProjectMetadata: () => {
+          throw new Error(
+            'V1ProjectMetadataProvider.refetchProjectMetadata called but is not implemented',
+          )
+        },
         projectMetadata: metadata,
         isArchived,
         projectId: projectId?.toNumber(),

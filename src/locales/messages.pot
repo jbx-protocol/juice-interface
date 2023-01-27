@@ -2642,6 +2642,9 @@ msgstr ""
 msgid "Search projects"
 msgstr ""
 
+msgid "Search projects by handle"
+msgstr ""
+
 msgid "Second"
 msgstr ""
 

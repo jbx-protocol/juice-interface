@@ -11,15 +11,15 @@ const handler: NextApiHandler = async (req, res) => {
   }
 
   try {
-    await deleteRecord(id).then(async _res => {
-      await sepanaAlert({
-        type: 'alert',
-        alert: 'DELETED_RECORD',
-        body: `ID: ${id}`,
-      })
+    const _res = await deleteRecord(id)
 
-      res.status(200).json(_res.data)
+    await sepanaAlert({
+      type: 'alert',
+      alert: 'DELETED_RECORD',
+      body: `ID: ${id}`,
     })
+
+    res.status(200).json(_res.data)
   } catch (error) {
     await sepanaAlert({
       type: 'alert',
@@ -29,17 +29,10 @@ const handler: NextApiHandler = async (req, res) => {
 
     res.status(500).json({
       network: process.env.NEXT_PUBLIC_INFURA_NETWORK,
-      message: 'Failed to delete Sepana records',
+      message: 'Failed to delete Sepana record',
       error,
     })
   }
-
-  await sepanaAlert({ type: 'alert', alert: 'DELETED_ALL_RECORDS' })
-
-  res.status(200).json({
-    network: process.env.NEXT_PUBLIC_INFURA_NETWORK,
-    message: 'Deleted all Sepana records',
-  })
 }
 
 export default handler

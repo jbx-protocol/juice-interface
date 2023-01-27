@@ -133,7 +133,16 @@ export function useProjectsQuery(opts: ProjectsOptions) {
   )
 }
 
-export function useProjectsSearch(handle: string | undefined) {
+/**
+ * Search Subgraph projects by handle and return only a list of projects
+ * @param handle handle tosearch
+ * @param enabled query will only run if enabled
+ * @returns list of projects
+ */
+export function useProjectsSearch(
+  handle: string | undefined,
+  opts?: { enabled?: boolean },
+) {
   return useSubgraphQuery(
     handle
       ? {
@@ -144,27 +153,32 @@ export function useProjectsSearch(handle: string | undefined) {
       : null,
     {
       staleTime: DEFAULT_STALE_TIME,
+      enabled: opts?.enabled,
     },
   )
 }
 
 /**
- * Search sepana projects for query and return only a list of projects
+ * Search Sepana projects for query and return only a list of projects
  * @param text text to search
  * @param pageSize number of projects to return
+ * @param enabled query will only run if enabled
  * @returns list of projects
  */
 export function useSepanaProjectsSearch(
   text: string | undefined,
-  pageSize?: number,
+  opts?: {
+    pageSize?: number
+    enabled?: boolean
+  },
 ) {
   return useQuery(
-    ['sepana-query', text, pageSize],
+    ['sepana-query', text, opts?.pageSize],
     () =>
       axios
         .get<SepanaQueryResponse<SepanaProjectJson>>(
           `/api/sepana/projects?text=${text}${
-            pageSize !== undefined ? `&pageSize=${pageSize}` : ''
+            opts?.pageSize !== undefined ? `&pageSize=${opts?.pageSize}` : ''
           }`,
         )
         .then(res =>
@@ -174,6 +188,7 @@ export function useSepanaProjectsSearch(
         ),
     {
       staleTime: DEFAULT_STALE_TIME,
+      enabled: opts?.enabled,
     },
   )
 }

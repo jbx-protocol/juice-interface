@@ -4,6 +4,7 @@ import { Button, Space } from 'antd'
 import Search from 'antd/lib/input/Search'
 import { AppWrapper } from 'components/common'
 import ExternalLink from 'components/ExternalLink'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { PV_V1, PV_V1_1, PV_V2 } from 'constants/pv'
 import { useWallet } from 'hooks/Wallet'
 import { ProjectCategory } from 'models/project-visibility'
@@ -11,6 +12,7 @@ import { PV } from 'models/pv'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useMemo, useState } from 'react'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { helpPagePath } from 'utils/routes'
 
 import AllProjects from './AllProjects'
@@ -45,6 +47,8 @@ function Projects() {
 
   const { userAddress } = useWallet()
   const [searchText, setSearchText] = useState<typeof search>(search)
+
+  const sepanaEnabled = featureFlagEnabled(FEATURE_FLAGS.SEPANA_SEARCH)
 
   useEffect(() => {
     setSelectedTab(() => {
@@ -117,7 +121,9 @@ function Projects() {
           <Search
             className="mb-4 flex-1"
             autoFocus
-            placeholder={t`Search projects`}
+            placeholder={
+              sepanaEnabled ? t`Search projects` : t`Search projects by handle`
+            }
             onSearch={val => {
               setSearchText(val)
               router.push(`/projects?tab=all${val ? `&search=${val}` : ''}`)

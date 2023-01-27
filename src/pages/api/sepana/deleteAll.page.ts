@@ -5,6 +5,13 @@ import { NextApiHandler } from 'next'
 const handler: NextApiHandler = async (_, res) => {
   try {
     await deleteAllRecords()
+
+    await sepanaAlert({ type: 'alert', alert: 'DELETED_ALL_RECORDS' })
+
+    res.status(200).json({
+      network: process.env.NEXT_PUBLIC_INFURA_NETWORK,
+      message: 'Deleted all Sepana records',
+    })
   } catch (error) {
     await sepanaAlert({
       type: 'alert',
@@ -18,13 +25,6 @@ const handler: NextApiHandler = async (_, res) => {
       error,
     })
   }
-
-  await sepanaAlert({ type: 'alert', alert: 'DELETED_ALL_RECORDS' })
-
-  res.status(200).json({
-    network: process.env.NEXT_PUBLIC_INFURA_NETWORK,
-    message: 'Deleted all Sepana records',
-  })
 }
 
 export default handler

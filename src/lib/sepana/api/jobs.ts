@@ -1,5 +1,5 @@
 import { SEPANA_ENDPOINTS } from './endpoints'
-import { sepanaAxios } from './network'
+import { sepanaAxios } from './http'
 
 export async function getJobs(jobIds: string[]) {
   return Promise.all(jobIds.map(getJob))

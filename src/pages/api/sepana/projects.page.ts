@@ -1,4 +1,4 @@
-import { searchSepanaProjects } from 'lib/sepana/projects'
+import { searchSepanaProjects } from 'lib/sepana/api'
 import { NextApiHandler } from 'next'
 
 // Searches Juicebox projects matching text query param

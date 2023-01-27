@@ -2,8 +2,8 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber'
 import { readProvider } from 'constants/readProvider'
 import { infuraApi } from 'lib/infura/ipfs'
-import { queryAll, writeSepanaRecords } from 'lib/sepana'
-import { sepanaAlert } from 'lib/sepana/log'
+import { queryAll, writeSepanaRecords } from 'lib/sepana/api'
+import { sepanaLog } from 'lib/sepana/log'
 import { ProjectMetadataV5 } from 'models/project-metadata'
 import { SepanaProject, SepanaProjectJson } from 'models/sepana'
 import { Project, ProjectJson } from 'models/subgraph-entities/vX/project'
@@ -181,7 +181,7 @@ const handler: NextApiHandler = async (req, res) => {
       .join('\n')}`
 
     if (promises.length) {
-      await sepanaAlert(
+      await sepanaLog(
         ipfsErrors.length
           ? {
               type: 'alert',
@@ -213,7 +213,7 @@ const handler: NextApiHandler = async (req, res) => {
       errors: { ipfsErrors, count: ipfsErrors.length },
     })
   } catch (error) {
-    await sepanaAlert({
+    await sepanaLog({
       type: 'alert',
       alert: 'DB_UPDATE_ERROR',
       body: JSON.stringify(error),

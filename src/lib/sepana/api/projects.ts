@@ -1,7 +1,7 @@
 import { SepanaProjectJson, SepanaQueryResponse } from 'models/sepana'
 
 import { SEPANA_ENDPOINTS } from './endpoints'
-import { sepanaAxios } from './network'
+import { sepanaAxios } from './http'
 
 /**
  * Search all Sepana project records, using preconfigured elastic search field weights and script source.

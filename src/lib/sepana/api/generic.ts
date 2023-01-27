@@ -1,7 +1,7 @@
 import { SepanaProjectJson, SepanaQueryResponse } from 'models/sepana'
 
 import { SEPANA_ENDPOINTS } from './endpoints'
-import { sepanaAxios } from './network'
+import { sepanaAxios } from './http'
 
 /**
  * Exhaustively queries all Sepana records.

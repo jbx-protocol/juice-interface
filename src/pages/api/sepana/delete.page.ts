@@ -1,5 +1,5 @@
-import { deleteRecord } from 'lib/sepana'
-import { sepanaAlert } from 'lib/sepana/log'
+import { deleteRecord } from 'lib/sepana/api'
+import { sepanaLog } from 'lib/sepana/log'
 import { NextApiHandler } from 'next'
 
 const handler: NextApiHandler = async (req, res) => {
@@ -13,7 +13,7 @@ const handler: NextApiHandler = async (req, res) => {
   try {
     const _res = await deleteRecord(id)
 
-    await sepanaAlert({
+    await sepanaLog({
       type: 'alert',
       alert: 'DELETED_RECORD',
       body: `ID: ${id}`,
@@ -21,7 +21,7 @@ const handler: NextApiHandler = async (req, res) => {
 
     res.status(200).json(_res.data)
   } catch (error) {
-    await sepanaAlert({
+    await sepanaLog({
       type: 'alert',
       alert: 'DB_UPDATE_ERROR',
       body: JSON.stringify(error),

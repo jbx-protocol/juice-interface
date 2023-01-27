@@ -1,4 +1,4 @@
-import { getJobs } from 'lib/sepana/jobs'
+import { getJobs } from 'lib/sepana/api'
 import { NextApiHandler } from 'next'
 
 // Returns search database health report

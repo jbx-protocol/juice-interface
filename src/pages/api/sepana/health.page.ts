@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { queryAll } from 'lib/sepana'
-import { sepanaAlert } from 'lib/sepana/log'
+import { queryAll } from 'lib/sepana/api'
+import { sepanaLog } from 'lib/sepana/log'
 import { SepanaProject, SepanaProjectJson } from 'models/sepana'
 import { Project, ProjectJson } from 'models/subgraph-entities/vX/project'
 import { NextApiHandler } from 'next'
@@ -155,7 +155,7 @@ const handler: NextApiHandler = async (_, res) => {
     }
   }
 
-  await sepanaAlert(
+  await sepanaLog(
     shouldAlert
       ? {
           type: 'alert',

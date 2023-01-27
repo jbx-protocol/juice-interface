@@ -13,7 +13,7 @@ const SEPANA_NOTIFS = {
   DB_OK: 'Database is OK',
 }
 
-export async function sepanaAlert(
+export async function sepanaLog(
   opts: (
     | {
         type: 'alert'

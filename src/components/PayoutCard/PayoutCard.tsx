@@ -65,13 +65,18 @@ export const PayoutCard = ({
           />
         }
         extra={
-          <DeleteOutlined
-            className={classNames(isMobile ? 'text-lg' : 'text-sm')}
-            onClick={stopPropagation(deleteConfirmationModal.open)}
-          />
+          onDeleteClick ? (
+            <DeleteOutlined
+              className={classNames(isMobile ? 'text-lg' : 'text-sm')}
+              onClick={stopPropagation(deleteConfirmationModal.open)}
+            />
+          ) : (
+            <div className="w-[18px] md:w-[14px]" />
+          )
         }
         onClick={onClick}
       />
+
       <DeleteConfirmationModal
         open={deleteConfirmationModal.visible}
         onOk={handleDeleteConfirmationModalOk}

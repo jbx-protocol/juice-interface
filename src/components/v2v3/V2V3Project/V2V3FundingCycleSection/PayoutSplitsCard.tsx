@@ -22,19 +22,23 @@ import { formatFee, MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { reloadWindow } from 'utils/windowUtils'
 import DistributePayoutsModal from './modals/DistributePayoutsModal'
 
+export type PayoutSplitsCardProps = {
+  hideDistributeButton?: boolean
+  payoutSplits: Split[] | undefined
+  distributionLimitCurrency: BigNumber | undefined
+  distributionLimit: BigNumber | undefined
+  fundingCycleDuration: BigNumber | undefined
+  value?: JSX.Element
+}
+
 export default function PayoutSplitsCard({
   hideDistributeButton,
   payoutSplits,
   distributionLimitCurrency,
   distributionLimit,
   fundingCycleDuration,
-}: {
-  hideDistributeButton?: boolean
-  payoutSplits: Split[] | undefined
-  distributionLimitCurrency: BigNumber | undefined
-  distributionLimit: BigNumber | undefined
-  fundingCycleDuration: BigNumber | undefined
-}) {
+  value,
+}: PayoutSplitsCardProps) {
   const {
     usedDistributionLimit,
     projectOwnerAddress,
@@ -160,14 +164,18 @@ export default function PayoutSplitsCard({
             )}
           </div>
           {payoutSplits ? (
-            <SplitList
-              splits={payoutSplits}
-              currency={distributionLimitCurrency}
-              totalValue={distributionLimit}
-              projectOwnerAddress={projectOwnerAddress}
-              showAmounts={!distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)}
-              valueFormatProps={{ precision: 4 }}
-            />
+            <>
+              {value ?? (
+                <SplitList
+                  splits={payoutSplits}
+                  currency={distributionLimitCurrency}
+                  totalValue={distributionLimit}
+                  projectOwnerAddress={projectOwnerAddress}
+                  showAmounts={!distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)}
+                  valueFormatProps={{ precision: 4 }}
+                />
+              )}
+            </>
           ) : (
             <span className="text-grey-500 dark:text-slate-100">
               <Trans>This project has no distributions.</Trans>

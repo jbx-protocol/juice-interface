@@ -28,7 +28,7 @@ export function JuiceboxProjectBeneficiary({
         <AllocatorBadge allocator={split.allocator} />
       </Space>
       {split.allocator === NULL_ALLOCATOR_ADDRESS ? (
-        <div className="ml-2 text-xs text-grey-500 dark:text-grey-300">
+        <div className="ml-2 whitespace-nowrap text-xs text-grey-500 dark:text-grey-300">
           <TooltipLabel
             label={<Trans>Tokens:</Trans>}
             tip={

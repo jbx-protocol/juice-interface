@@ -28,7 +28,7 @@ export function DiffedSplitItem({ props }: { props: DiffedSplitProps }) {
   const hasDiff = oldSplit !== undefined && !(splitIsRemoved || splitIsNew)
 
   const className = twJoin(
-    'flex flex-wrap items-baseline justify-between',
+    'flex items-baseline justify-between',
     splitIsRemoved ? DIFF_OLD_BACKGROUND : undefined,
     splitIsNew ? DIFF_NEW_BACKGROUND : undefined,
     splitIsRemoved || splitIsNew ? '-ml-5 pr-1' : undefined,

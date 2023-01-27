@@ -13,9 +13,9 @@ import useProjectSplits from 'hooks/v2v3/contractReader/ProjectSplits'
 import { useProjectUpcomingFundingCycle } from 'hooks/v2v3/contractReader/ProjectUpcomingFundingCycle'
 import { useContext } from 'react'
 import { getV2V3FundingCycleRiskCount } from 'utils/v2v3/fundingCycle'
-import FundingCycleDetails from './FundingCycleDetails'
-import PayoutSplitsCard from './PayoutSplitsCard'
-import ReservedTokensSplitsCard from './ReservedTokensSplitsCard'
+import FundingCycleDetails from '../FundingCycleDetails'
+import ReservedTokensSplitsCard from '../ReservedTokensSplitsCard'
+import { DiffedPayoutSplitsCard } from './DiffedPayoutSplitsCard'
 
 export function UpcomingFundingCycle() {
   const { primaryETHTerminal } = useContext(V2V3ProjectContext)
@@ -67,6 +67,7 @@ export function UpcomingFundingCycle() {
               fundingCycleMetadata={upcomingFundingCycleMetadata}
               distributionLimit={queuedDistributionLimit}
               distributionLimitCurrency={queuedDistributionLimitCurrency}
+              showDiffs
             />
           }
           fundingCycleDurationSeconds={upcomingFundingCycle.duration}
@@ -81,7 +82,7 @@ export function UpcomingFundingCycle() {
         />
       </CardSection>
 
-      <PayoutSplitsCard
+      <DiffedPayoutSplitsCard
         payoutSplits={queuedPayoutSplits}
         distributionLimitCurrency={queuedDistributionLimitCurrency}
         distributionLimit={queuedDistributionLimit}

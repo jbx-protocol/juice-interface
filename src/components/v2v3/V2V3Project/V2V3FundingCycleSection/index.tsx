@@ -20,7 +20,7 @@ import {
 import { serializeV2V3FundingCycleData } from 'utils/v2v3/serializers'
 import { CurrentFundingCycle } from './CurrentFundingCycle'
 import { FundingCycleHistory } from './FundingCycleHistory'
-import { UpcomingFundingCycle } from './UpcomingFundingCycle'
+import { UpcomingFundingCycle } from './UpcomingFundingCycle/UpcomingFundingCycle'
 
 const TabText = ({
   text,

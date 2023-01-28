@@ -52,7 +52,7 @@ export default function QuickProjectSearch() {
   const sepanaEnabled = featureFlagEnabled(FEATURE_FLAGS.SEPANA_SEARCH)
 
   const { data: sepanaSearchResults, isLoading: isLoadingSepanaSearch } =
-    useSepanaProjectsSearch(searchText, MAX_RESULTS)
+    useSepanaProjectsSearch(searchText, { pageSize: MAX_RESULTS })
 
   const { data: graphSearchResults, isLoading: isLoadingGraphSearch } =
     useProjectsSearch(searchText)

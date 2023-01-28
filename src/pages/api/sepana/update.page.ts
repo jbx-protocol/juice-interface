@@ -211,16 +211,18 @@ const handler: NextApiHandler = async (req, res) => {
       errors: { ipfsErrors, count: ipfsErrors.length },
     })
   } catch (error) {
+    const _error = (error as { message: string }).message ?? error
+
     await sepanaLog({
       type: 'alert',
       alert: 'DB_UPDATE_ERROR',
-      body: JSON.stringify(error),
+      body: _error,
     })
 
     res.status(500).json({
       network: process.env.NEXT_PUBLIC_INFURA_NETWORK,
       message: 'Error updating Sepana projects',
-      error,
+      error: _error,
     })
   }
 }

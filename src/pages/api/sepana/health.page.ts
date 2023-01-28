@@ -78,7 +78,7 @@ const handler: NextApiHandler = async (_, res) => {
         )
       }
 
-      if (sepanaProject._source.metadataResolved === false) {
+      if (sepanaProject._source.hasUnresolvedMetadata) {
         projectsMissingMetadata.push(
           `\`[${sepanaProject._source.id}]\` metadataUri: ${sepanaProject._source.metadataUri}`,
         )

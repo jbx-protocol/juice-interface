@@ -17,7 +17,7 @@ export type SepanaProject = {
   name?: string
   description?: string
   logoUri?: string
-  metadataResolved: boolean // Helper method to signify if metadata has been successfully resolved from IPFS
+  hasUnresolvedMetadata?: boolean // Helper method to signify if metadata has been successfully resolved from IPFS
 } & Pick<ProjectMetadataV5, 'description' | 'logoUri' | 'name'> & {
     lastUpdated: number
   }

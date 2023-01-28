@@ -8,6 +8,7 @@ import { ProjectMetadataV5 } from 'models/project-metadata'
 import { SepanaProject, SepanaProjectJson } from 'models/sepana'
 import { Project, ProjectJson } from 'models/subgraph-entities/vX/project'
 import { NextApiHandler } from 'next'
+import { formatError } from 'utils/format/formatError'
 import { formatWad } from 'utils/format/formatNumber'
 import { querySubgraphExhaustive } from 'utils/graph'
 import { openIpfsUrl } from 'utils/ipfs'
@@ -31,28 +32,28 @@ const handler: NextApiHandler = async (req, res) => {
     // This flag will let us know we should retry resolving IPFS data for projects that are missing it
     const retryIPFS = req.method === 'POST' && req.body['retryIPFS'] === true
 
+    // Load all projects from Sepana
     const sepanaProjects = (await queryAll<SepanaProjectJson>()).data.hits.hits
 
+    // Load all projects from Subgraph
     const subgraphProjects = await querySubgraphExhaustive({
       entity: 'project',
       keys: projectKeys as (keyof Project)[],
     })
 
+    // Store record of Sepana project properties that need updating
     const updatedProperties: {
       [id: string]: {
         key: string
         oldVal: string | undefined | null
         newVal: string | undefined | null
-      }
+      }[]
     } = {}
     const idsOfNewProjects: Set<string> = new Set()
     let missingMetadataCount = 0
 
-    // Get list of projects that have changed in Subgraph and no longer match Sepana
+    // Get a list of Subgraph projects that aren't found in Sepana or don't match Sepana record
     const changedSubgraphProjects = subgraphProjects
-      // Upserting data in Sepana requires the `_id` param to be included, so we always include it here and use the subgraph ID
-      // https://docs.sepana.io/sepana-search-api/web3-search-cloud/search-api#request-example-2
-      .map(p => ({ ...p, _id: p.id }))
       .map(p =>
         Object.entries(p).reduce(
           (acc, [k, v]) => ({
@@ -65,6 +66,7 @@ const handler: NextApiHandler = async (req, res) => {
       .filter(subgraphProject => {
         const id = subgraphProject.id
 
+        // TODO this case shouldn't be needed, will be improved in coming subgraph updates
         if (!id) return false
 
         const sepanaProject = sepanaProjects.find(
@@ -73,35 +75,43 @@ const handler: NextApiHandler = async (req, res) => {
 
         if (!sepanaProject) {
           idsOfNewProjects.add(id)
-        } else if (sepanaProject._source.metadataResolved === false) {
+          return true
+        } else if (sepanaProject._source.hasUnresolvedMetadata) {
           missingMetadataCount++
         }
 
-        // Deep compare subgraph project with sepana project to find which projects have changed or not yet been stored on sepana
-        // Return true to indicate new data should be fetched for this project in sepana db
-        return (
-          !sepanaProject ||
-          (retryIPFS && !sepanaProject._source.metadataResolved) ||
-          projectKeys.some(k => {
-            const oldVal = sepanaProject?._source[k]
-            const newVal = subgraphProject[k as keyof Project]
+        if (retryIPFS && sepanaProject._source.hasUnresolvedMetadata) {
+          return true
+        }
 
-            if (oldVal !== newVal) {
-              updatedProperties[id] = {
+        // Deep compare Subgraph project vs. Sepana project and find any discrepancies
+        const propertiesToUpdate = projectKeys.filter(k => {
+          const oldVal = sepanaProject?._source[k]
+          const newVal = subgraphProject[k as keyof Project]
+
+          // Store a record of properties that need updating
+          if (oldVal !== newVal) {
+            updatedProperties[id] = [
+              ...(updatedProperties[id] ?? []),
+              {
                 key: k,
                 oldVal: oldVal?.toString(),
                 newVal: newVal?.toString(),
-              }
-              return true
-            }
-            return false
-          })
-        )
+              },
+            ]
+            return true
+          }
+
+          return false
+        })
+
+        // Return true if any properties are out of date
+        return propertiesToUpdate.length
       })
 
     const lastUpdated = await readProvider.getBlockNumber()
 
-    const promises: Promise<{ error?: string; project: SepanaProjectJson }>[] =
+    const metadataResolutionPromises: ReturnType<typeof tryResolveMetadata>[] =
       []
 
     for (let i = 0; i < changedSubgraphProjects.length; i++) {
@@ -114,43 +124,16 @@ const handler: NextApiHandler = async (req, res) => {
         await new Promise(r => setTimeout(r, 750))
       }
 
-      promises.push(
-        infuraApi
-          .get<ProjectMetadataV5>(openIpfsUrl(p.metadataUri), {
-            responseType: 'json',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-            },
-          })
-          .then(({ data: { logoUri, name, description } }) => ({
-            project: {
-              ...p,
-              name,
-              description,
-              logoUri,
-              lastUpdated,
-              metadataResolved: true,
-            } as SepanaProjectJson,
-          }))
-          .catch(error => ({
-            error,
-            project: {
-              ...p,
-              lastUpdated,
-              metadataResolved: false, // If there is an error resolving metadata from IPFS, we'll flag it as `metadataResolved: false`. We'll try getting it again whenever `retryIPFS == true`.
-            } as SepanaProjectJson,
-          })),
-      )
+      metadataResolutionPromises.push(tryResolveMetadata(p, lastUpdated))
     }
 
-    const promiseResults = await Promise.all(promises)
+    const metadataResults = await Promise.all(metadataResolutionPromises)
 
-    const ipfsErrors = promiseResults.filter(x => x.error)
+    const ipfsErrors = metadataResults.filter(x => x.error)
 
     // Write all updated projects (even those with missing metadata)
     const { jobs, written: updatedProjects } = await writeSepanaRecords(
-      promiseResults.map(r => r.project),
+      metadataResults.map(r => r.project),
     )
 
     // Formatted message used for log reporting
@@ -158,7 +141,7 @@ const handler: NextApiHandler = async (req, res) => {
       retryIPFS
         ? `\nRetried resolving metadata for ${missingMetadataCount}`
         : ''
-    }\n\n${promiseResults
+    }\n\n${metadataResults
       .filter(r => !r.error)
       .map(r => {
         const {
@@ -171,14 +154,20 @@ const handler: NextApiHandler = async (req, res) => {
         return `\`[${id}]\` ${name} _(${
           idsOfNewProjects.has(id)
             ? 'New'
-            : `${updatedProperties[id].key}: ${formatBigNumberish(
-                updatedProperties[id].oldVal,
-              )} -> ${formatBigNumberish(updatedProperties[id].newVal)}`
+            : updatedProperties[id]
+                .map(
+                  prop =>
+                    `${prop.key}: ${formatBigNumberish(
+                      prop.oldVal,
+                    )} -> ${formatBigNumberish(prop.newVal)}`,
+                )
+                .join(', ')
         })_`
       })
       .join('\n')}`
 
-    if (promises.length) {
+    // Log if any projects were updated
+    if (updatedProjects.length) {
       await sepanaLog(
         ipfsErrors.length
           ? {
@@ -211,7 +200,7 @@ const handler: NextApiHandler = async (req, res) => {
       errors: { ipfsErrors, count: ipfsErrors.length },
     })
   } catch (error) {
-    const _error = (error as { message: string }).message ?? error
+    const _error = formatError(error)
 
     await sepanaLog({
       type: 'alert',
@@ -224,6 +213,63 @@ const handler: NextApiHandler = async (req, res) => {
       message: 'Error updating Sepana projects',
       error: _error,
     })
+  }
+}
+
+async function tryResolveMetadata(
+  project: ProjectJson,
+  lastUpdated: number,
+): Promise<{ project: SepanaProjectJson; error?: string }> {
+  // Upserting data in Sepana requires the `_id` param to be included, so we always include it here and use the subgraph ID
+  // https://docs.sepana.io/sepana-search-api/web3-search-cloud/search-api#request-example-2
+  const { id: _id } = project
+
+  if (project.metadataUri) {
+    try {
+      const {
+        data: { logoUri, name, description },
+      } = await infuraApi.get<ProjectMetadataV5>(
+        openIpfsUrl(project.metadataUri),
+        {
+          responseType: 'json',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+
+      return {
+        project: {
+          ...project,
+          _id,
+          name,
+          description,
+          logoUri,
+          lastUpdated,
+          hasUnresolvedMetadata: false,
+        } as SepanaProjectJson,
+      }
+    } catch (error) {
+      return {
+        error: formatError(error),
+        project: {
+          ...project,
+          _id,
+          lastUpdated,
+          hasUnresolvedMetadata: true, // If there is an error resolving metadata from IPFS, we'll flag it as `hasUnresolvedMetadata: true`. We'll try getting it again whenever `retryIPFS == true`.
+        } as SepanaProjectJson,
+      }
+    }
+  }
+
+  return {
+    project: {
+      ...project,
+      _id,
+      lastUpdated,
+      hasUnresolvedMetadata: false,
+    } as SepanaProjectJson,
   }
 }
 

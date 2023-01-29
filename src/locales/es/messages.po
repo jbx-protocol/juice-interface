@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-01-22 00:32\n"
+"PO-Revision-Date: 2023-01-29 00:33\n"
 "Last-Translator: \n"
 "Language: es_ES\n"
 "Language-Team: Spanish\n"
@@ -37,6 +37,9 @@ msgstr ""
 msgid "1. Get funded"
 msgstr ""
 
+msgid "1. Grant permission"
+msgstr ""
+
 msgid "1. Set ENS name"
 msgstr ""
 
@@ -44,6 +47,9 @@ msgid "100% overflow"
 msgstr "100% de excedente"
 
 msgid "2. Build trust"
+msgstr ""
+
+msgid "2. Deploy V3 Migration Token"
 msgstr ""
 
 msgid "2. Set text record"
@@ -210,12 +216,6 @@ msgstr ""
 
 msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
 msgstr "<0>Tus tokens {tokenSymbol} sin reclamar:</0>{0}"
-
-msgid "<0>Zero</0> Distribution Limit"
-msgstr ""
-
-msgid "<0>{0}</0> Distribution Limit"
-msgstr ""
 
 msgid "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
 msgstr "<0>{tokenSymbol} dirección de ERC-20:</0><1/>"
@@ -391,6 +391,9 @@ msgstr ""
 msgid "Allow a few days for your project to appear in the \"archived\" projects list on the Projects page."
 msgstr ""
 
+msgid "Allow contributors to claim your project's tokens as an ERC-20. This makes your project's tokens compatible with tools like Uniswap."
+msgstr ""
+
 msgid "Allow minting tokens"
 msgstr "Permitir tokens creados"
 
@@ -406,7 +409,7 @@ msgstr ""
 msgid "Allow token minting"
 msgstr "Permitir acuñación de tokens"
 
-msgid "Allow your legacy project (<0/> or <1/>) token holders to swap their tokens for your <2/> project tokens."
+msgid "Allow your legacy project token holders (<0/> or <1/>) to swap their tokens for your <2/> project tokens."
 msgstr ""
 
 msgid "Allowed"
@@ -559,6 +562,9 @@ msgstr "Quema tus {tokensLabel}. No recibirás ETH de regreso porque este proyec
 msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project's redemption rate is zero."
 msgstr ""
 
+msgid "Burn {0}"
+msgstr ""
+
 msgid "Burn {0} {tokensTextShort}"
 msgstr "Quemar {0} {tokensTextShort}"
 
@@ -709,8 +715,8 @@ msgstr ""
 msgid "Confirm Stake"
 msgstr ""
 
-msgid "Congratulations on launching your project! The next steps are optional and can be completed at any time."
-msgstr "¡Felicitaciones por lanzar tu proyecto! Los siguientes pasos son opcionales y se pueden completar en cualquier momento."
+msgid "Congratulations on launching your project! For help planning your next steps, share your project in the <0>JuiceboxDAO Discord</0>. Optionally, you can also:"
+msgstr ""
 
 msgid "Connect"
 msgstr "Conectar"
@@ -814,17 +820,11 @@ msgstr ""
 msgid "Create a project on Juicebox"
 msgstr ""
 
-msgid "Create an Ethereum address for your project. Enables direct payments without going through your project's Juicebox page."
-msgstr "Crea una dirección Ethereum para tu proyecto. Permite los pagos directos sin pasar por la página Juicebox de tu proyecto."
-
 msgid "Create an Ethereum address that can be used to pay your project directly."
 msgstr "Crea una dirección Ethereum que pueda ser usada para pagar tu proyecto directamente."
 
 msgid "Create project"
 msgstr "Crear proyecto"
-
-msgid "Create your own ERC-20 token to represent stake in your project. Contributors will receive these tokens when they pay your project."
-msgstr "Crea tu propio token #ERC-20 para representar la participación en tu proyecto. Los contribuyentes recibirán estos tokens cuando paguen tu proyecto."
 
 msgid "Created"
 msgstr ""
@@ -919,6 +919,9 @@ msgstr "Borrar asignación de tokens"
 msgid "Deploy"
 msgstr ""
 
+msgid "Deploy Migration Token"
+msgstr ""
+
 msgid "Deploy NFTs"
 msgstr ""
 
@@ -931,14 +934,14 @@ msgstr ""
 msgid "Deploy Snapshot space"
 msgstr ""
 
-msgid "Deploy a <0/> migration token from legacy tokens."
+msgid "Deploy a V3 Migration Token for your project."
+msgstr ""
+
+msgid "Deploy an address which forwards funds to your project. This makes it easier to pay your project with third-party tools."
 msgstr ""
 
 msgid "Deploy funding cycle configuration"
 msgstr "Desplegar configuración de ciclo de financiamiento"
-
-msgid "Deploy migration token"
-msgstr ""
 
 msgid "Deploy project"
 msgstr ""
@@ -948,9 +951,6 @@ msgstr "Desplegar proyecto a {0}"
 
 msgid "Deployed ERC20 token"
 msgstr "Desplegar token ERC20"
-
-msgid "Deployed Migration Token Address"
-msgstr ""
 
 msgid "Deployed payment addresses can be found in the Tools drawer (<0/>) on the project page."
 msgstr ""
@@ -1258,6 +1258,9 @@ msgstr ""
 msgid "Error uploading file"
 msgstr ""
 
+msgid "Expenses cannot exceed the current funding target"
+msgstr ""
+
 msgid "Explore projects"
 msgstr "Explorar proyectos"
 
@@ -1289,6 +1292,12 @@ msgid "External link"
 msgstr ""
 
 msgid "FAQ"
+msgstr ""
+
+msgid "Failed to deploy migration token. Check the development console and contact our team in the JuiceboxDAO Discord."
+msgstr ""
+
+msgid "Failed to grant permission."
 msgstr ""
 
 msgid "Failed to issue ERC20 token. Check transaction and try again."
@@ -1384,6 +1393,12 @@ msgstr "Los fondos serán distribuidos a:"
 msgid "General"
 msgstr ""
 
+msgid "Give NFT deployer permissions for project #{projectId}"
+msgstr ""
+
+msgid "Give V3 migration token deployer permissions on project #{projectId}"
+msgstr ""
+
 msgid "Give this NFT a name."
 msgstr ""
 
@@ -1397,9 +1412,6 @@ msgid "Go to your Safe"
 msgstr ""
 
 msgid "Governance"
-msgstr ""
-
-msgid "Grant permission"
 msgstr ""
 
 msgid "Has Juicebox been audited? What are the risks?"
@@ -1418,6 +1430,9 @@ msgid "Hold fees"
 msgstr ""
 
 msgid "Holders"
+msgstr ""
+
+msgid "Holders of this V1 project's token will be able to migrate their tokens to the V3 token you're deploying."
 msgstr ""
 
 msgid "Hours"
@@ -1487,6 +1502,9 @@ msgid "If you don't raise this amount, your splits will receive their percentage
 msgstr "Si no recaudas este monto, tus divisiones recibirán el porcentaje de lo que recaudes."
 
 msgid "If you have <0/> or <1/> legacy Juicebox projects, we recommend you migrate to <2/> exclusively."
+msgstr ""
+
+msgid "If you have a V1 project, add the project's handle here. Otherwise, leave this blank."
 msgstr ""
 
 msgid "If you're unsure if you need to claim, you probably don't."
@@ -1621,6 +1639,9 @@ msgstr "Últimos pagos"
 msgid "Launch V3 funding cycle"
 msgstr ""
 
+msgid "Launch V3 migration token"
+msgstr ""
+
 msgid "Launch funding cycle"
 msgstr "Lanzar ciclo de financiamiento"
 
@@ -1681,6 +1702,9 @@ msgstr ""
 msgid "Lock {tokenText} for Governance NFTs"
 msgstr ""
 
+msgid "Locked until <0>{value}</0>"
+msgstr ""
+
 msgid "Locked until {0}"
 msgstr ""
 
@@ -1739,9 +1763,6 @@ msgid "Message"
 msgstr ""
 
 msgid "Migrate tokens"
-msgstr ""
-
-msgid "Migration token was successfully deployed to <0/>"
 msgstr ""
 
 msgid "Minimum Contribution"
@@ -2103,6 +2124,9 @@ msgstr "Pagos"
 
 msgid "Payouts (optional)"
 msgstr "Pagos (opcional)"
+
+msgid "Payouts cannot exceed 100%. Total: {0}"
+msgstr ""
 
 msgid "Payouts to Ethereum addresses incur a 2.5% JBX membership fee"
 msgstr ""
@@ -2638,7 +2662,7 @@ msgstr ""
 msgid "Set a text record for {0} with the key <0>\"{projectHandleENSTextRecordKey}\"</0> and the value <1>\"{projectId}\"</1> (this project's ID). You can do this on the <2>ENS app</2>, or use the button below (as long as your connected wallet owns or controls that ENS name)."
 msgstr ""
 
-msgid "Set a unique name that will be visible in your project's URL, and that will allow your project to appear in search results."
+msgid "Set a unique handle that will be visible in your project's URL, and that will allow your project to appear in search results."
 msgstr ""
 
 msgid "Set aside a percentage of freshly minted tokens, which you can allocate below."
@@ -2651,9 +2675,6 @@ msgid "Set handle @{handle}"
 msgstr ""
 
 msgid "Set operator for {projectTitle}"
-msgstr ""
-
-msgid "Set operator permissions for projectId={projectId} to allow NFTs"
 msgstr ""
 
 msgid "Set payouts of {projectTitle}"
@@ -2674,9 +2695,6 @@ msgstr "Establece la cantidad de fondos que te gustaría recaudar cada ciclo de 
 msgid "Set the length of your funding cycles."
 msgstr "Establece la duración de tus ciclos de financiamiento."
 
-msgid "Set the newly migrated <0/> token from Step 1 as the project token."
-msgstr ""
-
 msgid "Set this to the sum of all your payouts"
 msgstr "Establécelo en la suma de todos tus pagos"
 
@@ -2687,9 +2705,6 @@ msgid "Set up and launch veNFT governance for your project using default veBanny
 msgstr ""
 
 msgid "Set up and launch veNFT governance for your project."
-msgstr ""
-
-msgid "Set up the option for user token migration from <0/> or <1/> projects to <2/>."
 msgstr ""
 
 msgid "Set up token migration"
@@ -2707,7 +2722,10 @@ msgstr ""
 msgid "Setting a reconfiguration delay means changes to your funding cycle settings only take effect after the delay period has passed. This helps build trust with your contributors."
 msgstr ""
 
-msgid "Share project"
+msgid "Share on Discord"
+msgstr ""
+
+msgid "Share on Twitter"
 msgstr ""
 
 msgid "Show contributors a popup when they receive an NFT."
@@ -2764,12 +2782,6 @@ msgstr ""
 msgid "Stay up to date."
 msgstr ""
 
-msgid "Step 1. Deploy migration token"
-msgstr ""
-
-msgid "Step 2. Set the deployed migration token"
-msgstr ""
-
 msgid "Successfully approved ERC-20 spending."
 msgstr ""
 
@@ -2780,15 +2792,6 @@ msgid "Sum of percentages cannot exceed 100%."
 msgstr "La suma de los porcentajes no puede exceder 100%."
 
 msgid "Supply: {maximumSupply}"
-msgstr ""
-
-msgid "Swap for V3 tokens"
-msgstr ""
-
-msgid "Swap legacy tokens for V3 tokens"
-msgstr ""
-
-msgid "Swap v1 project tokens {projectTitle}"
 msgstr ""
 
 msgid "Switch network to {0}"
@@ -2809,9 +2812,6 @@ msgstr ""
 msgid "Text record is set"
 msgstr ""
 
-msgid "The <0/> has already been set for this project."
-msgstr ""
-
 msgid "The <0>Juicebox contracts</0> may be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses by projects or their supporters."
 msgstr ""
 
@@ -2820,9 +2820,6 @@ msgstr "La <0>tasa de emisión</0> de tu segundo ciclo de financiamiento será <
 
 msgid "The address of any smart contract deployed on {0} that implements <0>this interface</0>."
 msgstr "La dirección de cualquier contrato inteligente desplegado en {0} que implemente <0>esta interfaz</0>."
-
-msgid "The address of the token that was deployed in Step 1."
-msgstr ""
 
 msgid "The address that should receive the tokens minted from paying this project."
 msgstr "La dirección que debería recibir los tokens acuñados por pagar este proyecto."
@@ -2859,9 +2856,6 @@ msgstr ""
 
 msgid "The distribution limit for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
 msgstr "El límite de distribución para el ciclo es 0, lo que significa que todos los fondos en Juicebox actualmente son considerados excedente. El excedente puede ser redimido por los poseedores de tokens, pero no distribuidos."
-
-msgid "The handle of your V1 project. This is the handle that is shown in the URL of your project page."
-msgstr ""
 
 msgid "The held fees will reset as new funds are added to the project's balance with the <0>Add to balance</0> transaction above."
 msgstr ""
@@ -2968,7 +2962,7 @@ msgstr "No hay pagos definidos para este ciclo de financiamiento. El dueño del 
 msgid "There are no reserved token recipients defined for this funding cycle. The project owner will receive all available tokens."
 msgstr "No hay beneficiarios de tokens reservados definidos para este ciclo de financiamiento. El dueño del proyecto recibirá todos los tokens disponibles."
 
-msgid "This Juicebox V3 project also has a project on Juicebox V1 and/or V2. The project owner is allowing you to swap your legacy tokens (V1 or V2)ƒ for V3 tokens."
+msgid "This Juicebox V3 project also has a project on Juicebox V1 and/or V2. The project owner is allowing you to swap your legacy tokens (V1 or V2) for V3 tokens."
 msgstr ""
 
 msgid "This Safe has no past transactions."
@@ -2988,9 +2982,6 @@ msgstr "Esta dirección recibirá los tokens acuñados por pagar este proyecto."
 
 msgid "This funding cycle may pose risks to contributors. Check the funding cycle details before paying this project."
 msgstr "Este ciclo de financiación puede representar riesgos a los contribuidores. Revisa los detalles del ciclo de financiación antes de pagar este proyecto."
-
-msgid "This funding cycle's distribution limit."
-msgstr ""
 
 msgid "This is the button that contributors will click to pay your project"
 msgstr ""
@@ -3037,6 +3028,9 @@ msgstr ""
 msgid "This will enable your project's veNFT contract to spend unclaimed tokens in addition to project ERC-20 tokens."
 msgstr ""
 
+msgid "This will give your <0/> or <1/> project's token holders the ability to migrate their tokens to <2/>."
+msgstr ""
+
 msgid "Time Remaining"
 msgstr ""
 
@@ -3064,13 +3058,7 @@ msgstr "Beneficiario del token:"
 msgid "Token holders <0>cannot redeem their tokens</0> for any ETH when the redemption rate is 0."
 msgstr "Los poseedores <0>no pueden canjear sus tokens</0> por nada de ETH cuando la tasa de emisión es 0."
 
-msgid "Token holders of your legacy project tokens (<0/> or <1/>) will have the ability to swap their tokens for <2/> tokens at a 1-to-1 exchange rate."
-msgstr ""
-
 msgid "Token migration"
-msgstr ""
-
-msgid "Token migration is currently not available for {0}"
 msgstr ""
 
 msgid "Token minting"
@@ -3349,13 +3337,10 @@ msgstr "Se recomienda usar una estrategia de reconfiguración. Los proyectos sin
 msgid "V1"
 msgstr ""
 
-msgid "V1 Project Handle"
-msgstr ""
-
 msgid "V1 Project handle"
 msgstr ""
 
-msgid "V1 token holders can migrate their tokens to your V3 tokens using your V3 project's <0>Tokens</0> section."
+msgid "V1 project handle"
 msgstr ""
 
 msgid "V1 tokens to swap"
@@ -3415,6 +3400,9 @@ msgstr ""
 msgid "We recommend you visit the <0>Juicebox Discord</0> for help and advice on this process."
 msgstr ""
 
+msgid "We'll need this permission to change your project's token to your V3 Migration Token in the next step."
+msgstr ""
+
 msgid "We've disabled payments because the project has opted to reserve 100% of new tokens. You would receive no tokens from your payment."
 msgstr ""
 
@@ -3431,9 +3419,6 @@ msgid "What does Juicebox cost?"
 msgstr "¿Cuánto cuesta Juicebox?"
 
 msgid "What happens when I pay a project?"
-msgstr ""
-
-msgid "What is the legacy token migration?"
 msgstr ""
 
 msgid "What's Juicebox?"
@@ -3476,6 +3461,9 @@ msgid "Who is Peel? Who is JuiceboxDAO?"
 msgstr ""
 
 msgid "Who's getting paid?"
+msgstr ""
+
+msgid "Why do you need this permission?"
 msgstr ""
 
 msgid "Will be rounded to <0/>{0}"
@@ -3541,9 +3529,6 @@ msgstr "Tienes cambios sin guardar. ¿Estás seguro que deseas descartarlos?"
 msgid "You haven't created any projects yet."
 msgstr "No has creado ningún proyecto todavía."
 
-msgid "You must grant permission to swap your tokens."
-msgstr ""
-
 msgid "You must review and accept the risks."
 msgstr ""
 
@@ -3597,6 +3582,9 @@ msgstr ""
 
 msgid "Your funding cycle configuration has been pre-populated using the configuration you originally launched with. If you need to customize it, contact us."
 msgstr "Tu configuración de ciclo de financiamiento se ha pre-llenado con la configuración con la que se lanzó originalmente. Si necesitas personalizarlo, contáctanos."
+
+msgid "Your legacy project token holders can now migrate their tokens in the <0>Tokens</0> section on your V3 project page."
+msgstr ""
 
 msgid "Your legacy token balance"
 msgstr ""
@@ -3699,9 +3687,6 @@ msgstr "últimos {trendingWindowDays} días"
 
 msgid "loading"
 msgstr "cargando"
-
-msgid "locked until {lockedUntilFormatted}"
-msgstr "bloqueado hasta {lockedUntilFormatted}"
 
 msgid "matching \"{searchText}\""
 msgstr "coincidencia \"{searchText}\""

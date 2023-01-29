@@ -1256,10 +1256,10 @@ msgstr ""
 msgid "Error uploading file"
 msgstr ""
 
-msgid "Expenses cannot exceed the current funding target"
+msgid "Ethereum wallet address"
 msgstr ""
 
-msgid "Ethereum wallet address"
+msgid "Expenses cannot exceed the current funding target"
 msgstr ""
 
 msgid "Explore projects"

@@ -111,25 +111,11 @@ const handler: NextApiHandler = async (req, res) => {
 
     const lastUpdated = await readProvider.getBlockNumber()
 
-    const metadataResolutionPromises: ReturnType<typeof tryResolveMetadata>[] =
-      []
+    const metadataResults = await Promise.all(
+      changedSubgraphProjects.map(p => tryResolveMetadata(p, lastUpdated)),
+    )
 
-    for (let i = 0; i < changedSubgraphProjects.length; i++) {
-      // Update metadata & `lastUpdated` for each sepana project
-
-      const p = changedSubgraphProjects[i]
-
-      if (i && i % 100 === 0) {
-        // Arbitrary delay to avoid rate limiting
-        await new Promise(r => setTimeout(r, 750))
-      }
-
-      metadataResolutionPromises.push(tryResolveMetadata(p, lastUpdated))
-    }
-
-    const metadataResults = await Promise.all(metadataResolutionPromises)
-
-    const ipfsErrors = metadataResults.filter(x => x.error)
+    const ipfsErrors = metadataResults.filter(r => r.error)
 
     // Write all updated projects (even those with missing metadata)
     const { jobs, written: updatedProjects } = await writeSepanaRecords(

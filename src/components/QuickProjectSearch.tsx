@@ -246,7 +246,7 @@ export default function QuickProjectSearch() {
             )}
           </div>
 
-          <div className="mt-5 flex gap-6 bg-smoke-75 py-3 px-5 text-xs dark:border-t-slate-300 dark:bg-slate-600">
+          <div className="mt-5 flex gap-6 border-t border-r-0 border-b-0 border-l-0 border-solid border-t-smoke-200 bg-smoke-75 py-4 px-5 text-xs dark:border-t-slate-300 dark:bg-slate-600">
             <span>
               <KeyboardButton>
                 <EnterOutlined />

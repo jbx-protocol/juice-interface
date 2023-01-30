@@ -366,7 +366,7 @@ export const AddEditRewardModal = ({
                 }),
               ]}
             >
-              <FormattedNumberInput placeholder="300" />
+              <FormattedNumberInput />
             </Form.Item>
             <Form.Item
               name="externalUrl"

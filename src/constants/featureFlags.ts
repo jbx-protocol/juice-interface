@@ -4,4 +4,5 @@ export const FEATURE_FLAGS = {
   VENFT_CREATOR: 'veNftCreator',
   SIMULATE_TXS: 'simulateTxs',
   IPFS_REQUIRES_KEY_REGISTRATION: 'ipfsRequiresKeyRegistration',
+  SEPANA_SEARCH: 'sepanaSearch',
 }

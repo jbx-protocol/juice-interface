@@ -108,7 +108,9 @@ export const desktopMenuItems = ({
     key: 'index',
     label: (
       <Link href="/">
-        <a className="inline-block">{<Logo />}</a>
+        <a>
+          <Logo />
+        </a>
       </Link>
     ),
   },

@@ -63,11 +63,7 @@ export const V2V3PayForm = ({
     (stickerUrls ?? []).length < ProjectPreferences.MAX_IMAGES_PAYMENT_MEMO
 
   useEffect(() => {
-    if (
-      form.getFieldValue('stickerUrls') &&
-      form.getFieldValue('stickerUrls').length > 0
-    )
-      return
+    if (transactionCanceled) return
 
     const initialStickerUrls = nftRewardTiers?.map(
       (tier: NftRewardTier) => tier.imageUrl,
@@ -76,7 +72,7 @@ export const V2V3PayForm = ({
     form.setFieldsValue({
       stickerUrls: initialStickerUrls,
     })
-  }, [form, nftRewardTiers])
+  }, [form, nftRewardTiers, transactionCanceled])
 
   useEffect(() => {
     if (!form.getFieldValue('beneficiary')) return

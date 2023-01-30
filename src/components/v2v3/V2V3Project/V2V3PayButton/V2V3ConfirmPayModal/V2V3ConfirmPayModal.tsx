@@ -191,8 +191,8 @@ export function V2V3ConfirmPayModal({
       )
 
       if (!txSuccess) {
-        setLoading(false)
         setTransactionCanceled(true)
+        setLoading(false)
         setTransactionPending(false)
       }
     } catch (error) {
@@ -214,6 +214,7 @@ export function V2V3ConfirmPayModal({
         form.resetFields()
         // resetFields sets to initialValues, which includes NFTs, so have to remove them manually
         form.setFieldValue('stickerUrls', [])
+        setTransactionCanceled(false)
         onCancel?.()
       }}
       confirmLoading={loading}

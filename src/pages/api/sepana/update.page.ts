@@ -76,12 +76,11 @@ const handler: NextApiHandler = async (req, res) => {
         if (!sepanaProject) {
           idsOfNewProjects.add(id)
           return true
-        } else if (sepanaProject._source.hasUnresolvedMetadata) {
-          missingMetadataCount++
         }
 
-        if (retryIPFS && sepanaProject._source.hasUnresolvedMetadata) {
-          return true
+        if (sepanaProject._source.hasUnresolvedMetadata) {
+          missingMetadataCount++
+          if (retryIPFS) return true
         }
 
         // Deep compare Subgraph project vs. Sepana project and find any discrepancies

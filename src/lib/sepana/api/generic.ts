@@ -48,44 +48,6 @@ export async function getRecord<T extends object>(id: string) {
 }
 
 /**
- * Deletes all Sepana records
- */
-export async function deleteAllRecords() {
-  return sepanaAxios('admin').delete(SEPANA_ENDPOINTS.delete, {
-    data: {
-      engine_id: process.env.SEPANA_ENGINE_ID,
-      delete_query: {
-        query: {
-          match_all: {},
-        },
-      },
-    },
-  })
-}
-
-/**
- * Deletes a Sepana record with ID
- * @param id ID of Sepana record to delete
- */
-export async function deleteRecord(id: string) {
-  return sepanaAxios('admin').delete<{ detail: string }>(
-    '/engine/data/delete',
-    {
-      data: {
-        engine_id: process.env.SEPANA_ENGINE_ID,
-        delete_query: {
-          query: {
-            match: {
-              id,
-            },
-          },
-        },
-      },
-    },
-  )
-}
-
-/**
  * Writes records to Sepana engine in groups of 500.
  *
  * @param records Projects to write to Sepana database

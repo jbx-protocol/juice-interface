@@ -2,9 +2,6 @@ import axios from 'axios'
 
 const SEPANA_ALERTS = {
   DB_UPDATE_ERROR: 'Error updating database',
-  DELETED_ALL_RECORDS: 'Deleted all records',
-  DELETED_RECORD: 'Deleted record',
-  DELETE_ERROR: 'Error deleting records',
   BAD_DB_HEALTH: 'Errors in database',
 }
 

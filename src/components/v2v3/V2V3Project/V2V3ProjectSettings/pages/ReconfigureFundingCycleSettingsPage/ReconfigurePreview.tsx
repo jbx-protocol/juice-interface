@@ -32,6 +32,7 @@ import {
   InflationRateStatistic,
   IssuanceRateStatistic,
   PausePayStatistic,
+  PauseTransfersStatistic,
   ReconfigurationStatistic,
   RedemptionRateStatistic,
   ReservedSplitsStatistic,
@@ -170,17 +171,22 @@ export default function ReconfigurePreview({
         ) : null}
       </Row>
       <Row gutter={gutter}>
-        <Col md={8}>
+        <Col md={6}>
           <PausePayStatistic pausePay={fundingCycleMetadata.pausePay} />
         </Col>
-        <Col md={8}>
+        <Col md={6}>
           <AllowMintingStatistic
             allowMinting={fundingCycleMetadata.allowMinting}
           />
         </Col>
-        <Col md={8}>
+        <Col md={6}>
           <AllowSetTerminalsStatistic
             allowSetTerminals={fundingCycleMetadata.global.allowSetTerminals}
+          />
+        </Col>
+        <Col md={6}>
+          <PauseTransfersStatistic
+            pauseTransfers={fundingCycleMetadata.global.pauseTransfers ?? false}
           />
         </Col>
       </Row>

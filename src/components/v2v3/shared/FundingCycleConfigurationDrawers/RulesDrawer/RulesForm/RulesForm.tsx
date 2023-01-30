@@ -41,6 +41,7 @@ export default function RulesForm({
         fundingCycleData.ballot ?? DEFAULT_BALLOT_STRATEGY.address,
       ),
       allowSetTerminals: fundingCycleMetadata.global.allowSetTerminals,
+      pauseTransfers: fundingCycleMetadata.global.pauseTransfers,
       holdFees: fundingCycleMetadata.holdFees,
       useDataSourceForRedeem: fundingCycleMetadata.useDataSourceForRedeem,
     }),
@@ -55,6 +56,9 @@ export default function RulesForm({
   const [allowSetTerminals, setAllowSetTerminals] = useState<boolean>(
     initialValues.allowSetTerminals,
   )
+  const [pauseTransfers, setPauseTransfers] = useState<boolean | undefined>(
+    initialValues.pauseTransfers,
+  )
   const [allowMinting, setAllowMinting] = useState<boolean>(
     initialValues.allowMinting,
   )
@@ -68,6 +72,7 @@ export default function RulesForm({
       initialValues.allowMinting !== allowMinting ||
       initialValues.pausePay !== pausePay ||
       initialValues.allowSetTerminals !== allowSetTerminals ||
+      initialValues.pauseTransfers !== pauseTransfers ||
       !isEqual(initialValues.ballotStrategy, ballotStrategy)
 
     onFormUpdated?.(hasFormUpdated)
@@ -78,12 +83,14 @@ export default function RulesForm({
     allowMinting,
     ballotStrategy,
     allowSetTerminals,
+    pauseTransfers,
   ])
 
   const onFormSaved = useCallback(() => {
     dispatch(editingV2ProjectActions.setPausePay(pausePay))
     dispatch(editingV2ProjectActions.setAllowMinting(allowMinting))
     dispatch(editingV2ProjectActions.setAllowSetTerminals(allowSetTerminals))
+    dispatch(editingV2ProjectActions.setPauseTransfers(pauseTransfers ?? false))
     dispatch(editingV2ProjectActions.setBallot(ballotStrategy.address))
     dispatch(editingV2ProjectActions.setHoldFees(holdFees))
     dispatch(
@@ -92,13 +99,14 @@ export default function RulesForm({
     onFinish?.()
   }, [
     dispatch,
-    onFinish,
-    ballotStrategy,
     pausePay,
     allowMinting,
     allowSetTerminals,
+    pauseTransfers,
+    ballotStrategy.address,
     holdFees,
     useDataSourceForRedeem,
+    onFinish,
   ])
 
   const disableSaveButton =
@@ -159,6 +167,25 @@ export default function RulesForm({
                 checked={allowSetTerminals}
               />
               <Trans>Allow terminal configuration</Trans>
+            </div>
+          </Form.Item>
+          <Form.Item
+            extra={
+              <Trans>
+                When enabled, all project token transfers will be paused. Does
+                not apply to ERC-20 tokens if issued.
+              </Trans>
+            }
+          >
+            <div className="flex font-medium text-black dark:text-slate-100">
+              <Switch
+                className="mr-2"
+                onChange={checked => {
+                  setPauseTransfers(checked)
+                }}
+                checked={pauseTransfers}
+              />
+              <Trans>Pause project token transfers</Trans>
             </div>
           </Form.Item>
           <Form.Item name="holdfees" extra={HOLD_FEES_EXPLAINATION}>

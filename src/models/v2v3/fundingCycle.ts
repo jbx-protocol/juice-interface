@@ -1,6 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { V2FundingCycleMetadata } from 'models/v2/fundingCycle'
-import { V3FundingCycleMetadata } from 'models/v3/fundingCycle'
+import {
+  BaseV3FundingCycleMetadataGlobal,
+  V3FundingCycleMetadata,
+} from 'models/v3/fundingCycle'
 
 export type BaseV2V3FundingCycleMetadataGlobal = {
   allowSetController: boolean
@@ -9,7 +12,7 @@ export type BaseV2V3FundingCycleMetadataGlobal = {
 
 export type BaseV2V3FundingCycleMetadata = {
   version?: number
-  global: BaseV2V3FundingCycleMetadataGlobal
+  global: BaseV3FundingCycleMetadataGlobal
   reservedRate: BigNumber
   redemptionRate: BigNumber
   ballotRedemptionRate: BigNumber

@@ -308,6 +308,26 @@ export function AllowSetTerminalsStatistic({
   )
 }
 
+export function PauseTransfersStatistic({
+  pauseTransfers,
+}: {
+  pauseTransfers: boolean
+}) {
+  return (
+    <Statistic
+      title={
+        <TooltipLabel
+          label={t`Pause project token transfers`}
+          tip={t`Project token transfers are ${
+            pauseTransfers ? 'paused' : 'unpaused'
+          }. This does not apply to ERC-20 tokens if issued.`}
+        />
+      }
+      valueRender={() => (pauseTransfers ? t`Allowed` : t`Disabled`)}
+    />
+  )
+}
+
 export function ReconfigurationStatistic({
   ballotAddress,
 }: {

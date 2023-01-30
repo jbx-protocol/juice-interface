@@ -16,6 +16,7 @@ type ReconfigurationRulesFormProps = Partial<{
   pausePayments: boolean
   allowTerminalConfiguration: boolean
   holdFees: boolean
+  pauseTransfers: boolean
   useDataSourceForRedeem: boolean
 }>
 
@@ -49,6 +50,7 @@ export const useReconfigurationRulesForm = () => {
       const pausePayments = fundingCycleMetadata.pausePay
       const allowTerminalConfiguration =
         fundingCycleMetadata.global.allowSetTerminals
+      const pauseTransfers = fundingCycleMetadata.global.pauseTransfers
       const holdFees = fundingCycleMetadata.holdFees
       // By default, ballot is addressZero
       if (!reconfigurationRuleSelection && ballot === constants.AddressZero)
@@ -56,6 +58,7 @@ export const useReconfigurationRulesForm = () => {
           selection: defaultStrategy.name,
           pausePayments,
           allowTerminalConfiguration,
+          pauseTransfers,
         }
 
       const found = strategies.find(({ address }) => address === ballot)
@@ -65,6 +68,7 @@ export const useReconfigurationRulesForm = () => {
           customAddress: ballot,
           pausePayments,
           allowTerminalConfiguration,
+          pauseTransfers,
           holdFees,
         }
       }
@@ -73,15 +77,17 @@ export const useReconfigurationRulesForm = () => {
         selection: found.name,
         pausePayments,
         allowTerminalConfiguration,
+        pauseTransfers,
         holdFees,
       }
     }, [
-      ballot,
-      defaultStrategy.name,
-      fundingCycleMetadata.global.allowSetTerminals,
       fundingCycleMetadata.pausePay,
+      fundingCycleMetadata.global.allowSetTerminals,
+      fundingCycleMetadata.global.pauseTransfers,
       fundingCycleMetadata.holdFees,
       reconfigurationRuleSelection,
+      ballot,
+      defaultStrategy.name,
       strategies,
     ])
 
@@ -121,6 +127,14 @@ export const useReconfigurationRulesForm = () => {
     fieldName: 'allowTerminalConfiguration',
     ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setAllowSetTerminals,
+    formatter: v => !!v,
+  })
+
+  useFormDispatchWatch({
+    form,
+    fieldName: 'pauseTransfers',
+    ignoreUndefined: true,
+    dispatchFunction: editingV2ProjectActions.setPauseTransfers,
     formatter: v => !!v,
   })
 

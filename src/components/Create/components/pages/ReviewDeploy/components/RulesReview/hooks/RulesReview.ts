@@ -30,6 +30,14 @@ export const useRulesReview = () => {
     }
   }, [fundingCycleMetadata.global.allowSetTerminals])
 
+  const pauseTransfers = useMemo(() => {
+    if (fundingCycleMetadata.global.pauseTransfers) {
+      return t`Yes`
+    } else {
+      return t`No`
+    }
+  }, [fundingCycleMetadata.global.pauseTransfers])
+
   const strategy = useMemo(() => {
     return availableBallotStrategies.find(
       strategy => strategy.id === reconfigurationRuleSelection,
@@ -56,6 +64,7 @@ export const useRulesReview = () => {
     customAddress,
     pausePayments,
     terminalConfiguration,
+    pauseTransfers,
     strategy,
     holdFees,
     useDataSourceForRedeem,

@@ -2015,6 +2015,12 @@ msgstr ""
 msgid "Pause payments"
 msgstr ""
 
+msgid "Pause project token transfers"
+msgstr ""
+
+msgid "Pause transfers"
+msgstr ""
+
 msgid "Paused"
 msgstr ""
 
@@ -2262,6 +2268,9 @@ msgid "Project token"
 msgstr ""
 
 msgid "Project token beneficiary address"
+msgstr ""
+
+msgid "Project token transfers are {0}. This does not apply to ERC-20 tokens if issued."
 msgstr ""
 
 msgid "Project tokens <0>aren't ERC-20 tokens</0> by default. Once you deploy your project, you can issue an ERC-20 for your holders to claim. This is <1>optional</1>."
@@ -3423,6 +3432,12 @@ msgid "When checked, payments to this address will mint this project's ERC-20 to
 msgstr ""
 
 msgid "When distributing, payouts to Ethereum addresses incur a 2.5% JBX membership fee. Payouts to other Juicebox projects don't incur fees. Your project will receive (the <0>JuiceboxDAO</0> token) in return at the current issuance rate."
+msgstr ""
+
+msgid "When enabled, all project token transfers will be paused. Does not apply to ERC-20 tokens if issued."
+msgstr ""
+
+msgid "When enabled, project token transfers will be paused. This does not apply to ERC-20 tokens if issued."
 msgstr ""
 
 msgid "When enabled, the data source will be used for redeem transactions."

@@ -3,6 +3,11 @@ const yargs = require('yargs/yargs')
 const { hideBin } = require('yargs/helpers')
 const argv = yargs(hideBin(process.argv)).argv
 
+/**
+ * Deletes all records from a Sepana engine
+ *
+ * `node scripts/sepana/delete.js --id=<record-id> --engineId=<engine-id> --apiKey=<api-key>`
+ */
 async function main() {
   const { apiKey, engineId } = argv
 

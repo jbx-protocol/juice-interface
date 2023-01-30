@@ -10,6 +10,7 @@ import {
 import { CreatePage } from 'models/create-page'
 import { FundingTargetType } from 'models/fundingTargetType'
 import {
+  JB721GovernanceType,
   NftCollectionMetadata,
   NftPostPayModalConfig,
   NftRewardTier,
@@ -44,6 +45,7 @@ export type NftRewardsData = {
   CIDs: string[] | undefined // points to locations of the NFTs' json on IPFS
   collectionMetadata: NftCollectionMetadata
   postPayModal: NftPostPayModalConfig | undefined
+  governanceType: JB721GovernanceType
 }
 
 export interface CreateState {
@@ -72,10 +74,10 @@ interface ReduxState extends CreateState, ProjectState {
   version: number
 }
 
-// Increment this version by 1 when making breaking changes.
+// Increment this version by 1 when making breaking or major changes.
 // When users return to the site and their local version is less than
 // this number, their state will be reset.
-export const REDUX_STORE_V2_PROJECT_VERSION = 10
+export const REDUX_STORE_V2_PROJECT_VERSION = 11
 
 export const DEFAULT_MUST_START_AT_OR_AFTER = '1'
 
@@ -164,6 +166,7 @@ const defaultProjectState: ProjectState = {
     CIDs: undefined,
     collectionMetadata: EMPTY_NFT_COLLECTION_METADATA,
     postPayModal: undefined,
+    governanceType: JB721GovernanceType.NONE,
   },
   mustStartAtOrAfter: DEFAULT_MUST_START_AT_OR_AFTER,
   inputProjectOwner: undefined,
@@ -325,6 +328,12 @@ const editingV2ProjectSlice = createSlice({
       action: PayloadAction<string | undefined>,
     ) => {
       state.nftRewards.collectionMetadata.description = action.payload
+    },
+    setNftRewardsGovernance: (
+      state,
+      action: PayloadAction<JB721GovernanceType>,
+    ) => {
+      state.nftRewards.governanceType = action.payload
     },
     setNftPostPayModalConfig: (
       state,

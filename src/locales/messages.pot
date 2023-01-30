@@ -353,6 +353,9 @@ msgstr ""
 msgid "Advanced Rules"
 msgstr ""
 
+msgid "Advanced options"
+msgstr ""
+
 msgid "All"
 msgstr ""
 
@@ -1253,6 +1256,9 @@ msgstr ""
 msgid "Error uploading file"
 msgstr ""
 
+msgid "Ethereum wallet address"
+msgstr ""
+
 msgid "Expenses cannot exceed the current funding target"
 msgstr ""
 
@@ -1397,6 +1403,9 @@ msgstr ""
 msgid "Give this NFT a name."
 msgstr ""
 
+msgid "Give this NFT a voting weight to be used for on-chain governance. The number you set is only used in relation to other NFTs in this collection."
+msgstr ""
+
 msgid "Go to <0>{snapshotUrl}</0>"
 msgstr ""
 
@@ -1481,6 +1490,9 @@ msgstr ""
 msgid "I understand"
 msgstr ""
 
+msgid "If Reserved NFTs are set, the first reserved NFT from the tier will be distributable once the tier receives its first mint."
+msgstr ""
+
 msgid "If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured."
 msgstr ""
 
@@ -1500,6 +1512,9 @@ msgid "If you have <0/> or <1/> legacy Juicebox projects, we recommend you migra
 msgstr ""
 
 msgid "If you have a V1 project, add the project's handle here. Otherwise, leave this blank."
+msgstr ""
+
+msgid "If you use the default governance option (no governance), the voting weight will still be accessible on the blockchain for use in Snapshot strategies or any other desired purpose."
 msgstr ""
 
 msgid "If you're unsure if you need to claim, you probably don't."
@@ -1664,6 +1679,9 @@ msgstr ""
 msgid "Link contributors to another page after they successfully mint one of your project's NFTs."
 msgstr ""
 
+msgid "Link minters of this NFT to your project's website, Discord, etc."
+msgstr ""
+
 msgid "Load more"
 msgstr ""
 
@@ -1763,6 +1781,9 @@ msgstr ""
 msgid "Minimum Contribution"
 msgstr ""
 
+msgid "Minimum contribution"
+msgstr ""
+
 msgid "Mint NFT to a custom address"
 msgstr ""
 
@@ -1850,6 +1871,9 @@ msgstr ""
 msgid "NFTs for you"
 msgstr ""
 
+msgid "NFTs minted for:"
+msgstr ""
+
 msgid "NO LIMIT"
 msgstr ""
 
@@ -1916,6 +1940,9 @@ msgstr ""
 msgid "No more than the funding cycle target can be distributed by the project in a single funding cycle."
 msgstr ""
 
+msgid "No on-chain governance"
+msgstr ""
+
 msgid "No past funding cycles"
 msgstr ""
 
@@ -1965,6 +1992,9 @@ msgid "Note: Tokens can be minted manually when allowed in the current funding c
 msgstr ""
 
 msgid "Notice from {0}"
+msgstr ""
+
+msgid "On-chain Governance"
 msgstr ""
 
 msgid "Only lowercase letters"
@@ -2468,7 +2498,19 @@ msgstr ""
 msgid "Required"
 msgstr ""
 
+msgid "Reserve 1 NFT of every"
+msgstr ""
+
 msgid "Reserve a percentage of freshly minted tokens for your project to use."
+msgstr ""
+
+msgid "Reserved NFTS"
+msgstr ""
+
+msgid "Reserved NFTs"
+msgstr ""
+
+msgid "Reserved NFTs will be sent to this address once minted."
 msgstr ""
 
 msgid "Reserved rate"
@@ -2669,6 +2711,9 @@ msgstr ""
 msgid "Set a unique handle that will be visible in your project's URL, and that will allow your project to appear in search results."
 msgstr ""
 
+msgid "Set aside a percentage of freshly minted NFTs."
+msgstr ""
+
 msgid "Set aside a percentage of freshly minted tokens, which you can allocate below."
 msgstr ""
 
@@ -2765,6 +2810,9 @@ msgstr ""
 msgid "Staked {tokenSymbolDisplayText}"
 msgstr ""
 
+msgid "Standard on-chain governance"
+msgstr ""
+
 msgid "Start"
 msgstr ""
 
@@ -2795,7 +2843,7 @@ msgstr ""
 msgid "Sum of percentages cannot exceed 100%."
 msgstr ""
 
-msgid "Supply: {maximumSupply}"
+msgid "Supply"
 msgstr ""
 
 msgid "Switch network to {0}"
@@ -2960,6 +3008,9 @@ msgstr ""
 msgid "The veNFT contract is currently unable to lock project token. Contact the project owner regarding adding this permission."
 msgstr ""
 
+msgid "The wallet address that reserved NFTs will be sent to"
+msgstr ""
+
 msgid "There are no payouts defined for this funding cycle. The project owner will receive all available funds."
 msgstr ""
 
@@ -3033,6 +3084,9 @@ msgid "This will enable your project's veNFT contract to spend unclaimed tokens 
 msgstr ""
 
 msgid "This will give your <0/> or <1/> project's token holders the ability to migrate their tokens to <2/>."
+msgstr ""
+
+msgid "Tier-based on-chain governance"
 msgstr ""
 
 msgid "Time Remaining"
@@ -3180,6 +3234,12 @@ msgid "Total supply"
 msgstr ""
 
 msgid "Total: {0}%"
+msgstr ""
+
+msgid "Track the historical voting weight of each token holder across all tiers of NFTs."
+msgstr ""
+
+msgid "Track the historical voting weight of each token holder within each tier of NFTs."
 msgstr ""
 
 msgid "Transaction failed"
@@ -3381,6 +3441,9 @@ msgid "Volume"
 msgstr ""
 
 msgid "VotePWR"
+msgstr ""
+
+msgid "Voting weight"
 msgstr ""
 
 msgid "WAGMI!"
@@ -3633,6 +3696,9 @@ msgid "Your project will appear as 'archived'."
 msgstr ""
 
 msgid "Your project will withhold all funds raised. Funds can be distributed to payout addresses you set, and the project owner will receive any unallocated funds. Your project will have no overflow, so token holders can't redeem their tokens for ETH."
+msgstr ""
+
+msgid "Your project's NFTs will not have on-chain governance capabilities."
 msgstr ""
 
 msgid "Your project's current funding cycle has no duration. Changes you make below will take effect immediately."

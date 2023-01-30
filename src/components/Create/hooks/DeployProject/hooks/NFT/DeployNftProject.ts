@@ -42,6 +42,10 @@ export const useDeployNftProject = () => {
     () => nftRewards.collectionMetadata.symbol ?? '',
     [nftRewards.collectionMetadata.symbol],
   )
+  const governanceType = useMemo(
+    () => nftRewards.governanceType,
+    [nftRewards.governanceType],
+  )
 
   /**
    * Deploy a project with NFT rewards.
@@ -82,6 +86,7 @@ export const useDeployNftProject = () => {
             collectionUri: nftCollectionMetadataUri,
             collectionName,
             collectionSymbol,
+            governanceType,
             tiers,
           },
           projectData: {
@@ -111,6 +116,7 @@ export const useDeployNftProject = () => {
       reservedTokensGroupedSplits,
       launchProjectWithNftsTx,
       collectionSymbol,
+      governanceType,
       inputProjectOwner,
       fundingCycleData,
       mustStartAtOrAfter,

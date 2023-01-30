@@ -69,7 +69,7 @@ export const RewardsList: React.FC<RewardsListProps> &
 
   return (
     <RewardsListContext.Provider value={rewardsHook}>
-      <div className="flex flex-col gap-16">
+      <div className="flex flex-col gap-12">
         {!!rewards.length && (
           <>
             {rewards
@@ -87,7 +87,7 @@ export const RewardsList: React.FC<RewardsListProps> &
                     }}
                   />
                   {shouldRenderNftDivider(i) ? (
-                    <Divider className="m-0 mt-16" />
+                    <Divider className="m-0 mt-12" />
                   ) : null}
                 </div>
               ))}

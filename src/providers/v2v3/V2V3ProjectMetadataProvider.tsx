@@ -17,7 +17,7 @@ export default function V2V3ProjectMetadataProvider({
   const hasMetadata = Boolean(metadata)
 
   // only load metadata if it hasn't been previously loaded into the prop.
-  const { data: metadataCid } = useProjectMetadataContent(
+  const { data: metadataCid, refetchValue } = useProjectMetadataContent(
     !hasMetadata ? projectId : undefined,
   )
   const { data: _metadata } = useProjectMetadata(metadataCid)
@@ -35,6 +35,7 @@ export default function V2V3ProjectMetadataProvider({
         isArchived,
         projectId,
         pv: PV_V2,
+        refetchProjectMetadata: refetchValue,
       }}
     >
       {children}

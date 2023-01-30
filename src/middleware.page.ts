@@ -12,18 +12,20 @@ export async function middleware(request: NextRequest) {
   const handle = request.nextUrl.pathname.match(HANDLE_REGEX)?.[1]
   if (!handle) return
 
+  const handleDecoded = decodeURI(handle)
+
   const trailingPath = request.nextUrl.pathname.split('/').slice(2).join('/')
 
   console.info('Project middleware request', {
     pathname: request.nextUrl.pathname,
-    handle,
+    handle: handleDecoded,
   })
 
   let projects
   try {
     projects = await paginateDepleteProjectsQueryCall({
       variables: {
-        where: { pv: PV_V2, handle },
+        where: { pv: PV_V2, handle: handleDecoded },
       },
     })
   } catch (e) {
@@ -37,7 +39,7 @@ export async function middleware(request: NextRequest) {
     console.info('Page not found', {
       originalPathname: request.nextUrl.pathname,
       newPathname: '/404',
-      handle,
+      handle: handleDecoded,
     })
     url.pathname = '/404'
     return NextResponse.rewrite(url)
@@ -49,7 +51,7 @@ export async function middleware(request: NextRequest) {
   console.info('Rewriting to project route', {
     originalPathname: request.nextUrl.pathname,
     newPathname: url.pathname,
-    handle,
+    handle: handleDecoded,
   })
   return NextResponse.rewrite(url)
 }

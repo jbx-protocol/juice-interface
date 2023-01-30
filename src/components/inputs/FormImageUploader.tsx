@@ -52,6 +52,8 @@ export const FormImageUploader = ({
       <Col xs={24} md={7}>
         <Space align="start">
           {imageUrl ? (
+            //  TODO: This one is non-trivial to change
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               className="max-h-[80px] max-w-[120px] rounded-sm object-cover object-center"
               src={imageUrl}

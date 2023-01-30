@@ -8,6 +8,7 @@ import { classNames } from 'utils/classNames'
 import { ipfsToHttps } from 'utils/ipfs'
 import { NftPreview } from './NftPreview'
 import { QuantitySelector } from './QuantitySelector'
+import Image from 'next/image'
 
 const MAX_REMAINING_SUPPLY = 10000
 
@@ -97,22 +98,25 @@ export function NftTierCard({
               : 'bg-smoke-100 dark:bg-slate-600',
           )}
         >
-          {loading ? (
+          {loading || !imageUrl ? (
             <div className="flex h-[151px] w-full items-center justify-center border border-solid border-smoke-200 dark:border-grey-600">
               <LoadingOutlined />
             </div>
           ) : (
-            <img
-              className={classNames(
-                'absolute top-0 h-full w-full object-cover',
-              )}
-              alt={rewardTier?.name}
-              src={imageUrl}
-              style={{
-                filter: _isSelected ? 'unset' : 'brightness(50%)',
-              }}
-              crossOrigin="anonymous"
-            />
+            <div>
+              <Image
+                className={classNames(
+                  'absolute top-0 h-full w-full object-cover',
+                )}
+                layout="fill"
+                alt={rewardTier?.name}
+                src={imageUrl}
+                style={{
+                  filter: _isSelected ? 'unset' : 'brightness(50%)',
+                }}
+                crossOrigin="anonymous"
+              />
+            </div>
           )}
           {showQuantitySelector ? (
             <QuantitySelector
@@ -188,7 +192,7 @@ export function NftTierCard({
           ) : null}
         </div>
       </div>
-      {rewardTier && !previewDisabled ? (
+      {rewardTier && imageUrl && !previewDisabled ? (
         <NftPreview
           open={previewVisible}
           rewardTier={rewardTier}

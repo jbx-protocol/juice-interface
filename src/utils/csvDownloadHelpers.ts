@@ -157,7 +157,8 @@ export async function downloadV2V3Payouts(
       if (payouts) while (d.timestamp < payouts[x].timestamp) x++
       else x++
 
-      // Any better ways to do this?
+      // TODO: Any better ways to do this?
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       payouts.splice(x, 0, {
         timestamp: d.timestamp,
@@ -266,6 +267,7 @@ export async function downloadV1Payouts(
       else x++
 
       // Any better ways to do this?
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       payouts.splice(x, 0, {
         timestamp: t.timestamp,

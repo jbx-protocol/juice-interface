@@ -69,4 +69,18 @@ module.exports = {
     ]
   },
   pageExtensions: ['page.tsx', 'page.ts', 'page.jsx', 'page.js'],
+  images: {
+    domains: ['jbx.mypinata.cloud', 'jbm.infura-ipfs.io'],
+  },
+  // Use this version post 12.3
+  // images: {
+  //   remotePatterns: [
+  //     {
+  //       protocol: 'https',
+  //       hostname: 'jbx.mypinata.cloud',
+  //       port: '',
+  //       pathname: '/ipfs/**',
+  //     },
+  //   ],
+  // },
 }

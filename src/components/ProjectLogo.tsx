@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { ipfsToHttps, isIpfsUrl } from 'utils/ipfs'
+import Image from 'next/image'
 
 // Override select project logos.
 const IMAGE_URI_OVERRIDES: { [k: number]: string } = {
@@ -35,14 +36,16 @@ export default function ProjectLogo({
   return (
     <div
       className={twMerge(
-        'flex h-20 w-20 items-center justify-center overflow-hidden rounded-sm',
+        'relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-sm',
         !validImg ? 'bg-smoke-100 dark:bg-slate-600' : 'undefined',
         className,
       )}
     >
-      {validImg ? (
-        <img
-          className="max-h-full max-w-full object-cover object-center"
+      {validImg && _uri ? (
+        <Image
+          layout="fill"
+          objectFit="cover"
+          objectPosition="center"
           src={_uri}
           alt={name + ' logo'}
           onError={() => setSrcLoadError(true)}

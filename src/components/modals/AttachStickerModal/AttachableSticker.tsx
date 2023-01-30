@@ -13,6 +13,8 @@ export const AttachableSticker = ({
       role="button"
       onClick={onClick}
     >
+      {/* TODO: This one is non-trivial to change */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={sticker.filepath} alt={sticker.alt} height="75px" />
     </div>
   )

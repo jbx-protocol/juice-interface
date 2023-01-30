@@ -12,6 +12,7 @@ import {
   getUnsignedTxsForAddress,
   isSafeSigner,
 } from 'utils/safe'
+import Image from 'next/image'
 
 function SafeIcon({ href }: { href: string }) {
   const { isDarkMode } = useContext(ThemeContext)
@@ -21,8 +22,8 @@ function SafeIcon({ href }: { href: string }) {
 
   return (
     <Link href={href}>
-      <a>
-        <img src={src} alt="Safe" width={15} height={15} />
+      <a className="flex items-center">
+        <Image src={src} alt="Safe" width={15} height={15} />
       </a>
     </Link>
   )

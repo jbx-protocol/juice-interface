@@ -41,6 +41,8 @@ export function NftPreview({
         onClick={e => e.stopPropagation()}
       >
         <div className="mb-5 text-center">
+          {/* TODO: This one is non-trivial to change */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className={'max-h-[50vh] max-w-[90vw] md:max-h-[60vh] md:max-w-xl'}
             alt={rewardTier.name}

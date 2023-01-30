@@ -58,5 +58,5 @@ export function useContractReader<ContractName extends string, V>({
     }
   }, [contract, contracts, functionName, updateOn, args])
 
-  return { data: value, loading }
+  return { data: value, loading, refetchValue }
 }

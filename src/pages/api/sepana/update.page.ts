@@ -207,54 +207,50 @@ async function tryResolveMetadata(
 ): Promise<{ project: SepanaProjectJson; error?: string }> {
   // Upserting data in Sepana requires the `_id` param to be included, so we always include it here and use the subgraph ID
   // https://docs.sepana.io/sepana-search-api/web3-search-cloud/search-api#request-example-2
-  const { id: _id } = project
+  const { id: _id, metadataUri } = project
 
-  if (project.metadataUri) {
-    try {
-      const {
-        data: { logoUri, name, description },
-      } = await infuraApi.get<ProjectMetadataV5>(
-        openIpfsUrl(project.metadataUri),
-        {
-          responseType: 'json',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-        },
-      )
-
-      return {
-        project: {
-          ...project,
-          _id,
-          name,
-          description,
-          logoUri,
-          lastUpdated,
-          hasUnresolvedMetadata: false,
-        } as SepanaProjectJson,
-      }
-    } catch (error) {
-      return {
-        error: formatError(error),
-        project: {
-          ...project,
-          _id,
-          lastUpdated,
-          hasUnresolvedMetadata: true, // If there is an error resolving metadata from IPFS, we'll flag it as `hasUnresolvedMetadata: true`. We'll try getting it again whenever `retryIPFS == true`.
-        } as SepanaProjectJson,
-      }
+  if (!metadataUri)
+    return {
+      project: {
+        ...project,
+        _id,
+        lastUpdated,
+        hasUnresolvedMetadata: false,
+      } as SepanaProjectJson,
     }
-  }
 
-  return {
-    project: {
-      ...project,
-      _id,
-      lastUpdated,
-      hasUnresolvedMetadata: false,
-    } as SepanaProjectJson,
+  try {
+    const {
+      data: { logoUri, name, description },
+    } = await infuraApi.get<ProjectMetadataV5>(openIpfsUrl(metadataUri), {
+      responseType: 'json',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+
+    return {
+      project: {
+        ...project,
+        _id,
+        name,
+        description,
+        logoUri,
+        lastUpdated,
+        hasUnresolvedMetadata: false,
+      } as SepanaProjectJson,
+    }
+  } catch (error) {
+    return {
+      error: formatError(error),
+      project: {
+        ...project,
+        _id,
+        lastUpdated,
+        hasUnresolvedMetadata: true, // If there is an error resolving metadata from IPFS, we'll flag it as `hasUnresolvedMetadata: true`. We'll try getting it again whenever `retryIPFS == true`.
+      } as SepanaProjectJson,
+    }
   }
 }
 

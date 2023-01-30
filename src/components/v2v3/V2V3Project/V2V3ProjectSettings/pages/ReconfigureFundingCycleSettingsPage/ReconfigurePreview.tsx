@@ -157,18 +157,14 @@ export default function ReconfigurePreview({
             reservedPercentage={reservedPercentage}
           />
         </Col>
-        {hasDuration ? (
-          <Col md={secondRowColWidth} sm={12}>
-            <DiscountRateStatistic discountRate={fundingCycle.discountRate} />
-          </Col>
-        ) : null}
-        {hasDistributionLimit ? (
-          <Col md={secondRowColWidth} sm={12}>
-            <RedemptionRateStatistic
-              redemptionRate={fundingCycleMetadata.redemptionRate}
-            />
-          </Col>
-        ) : null}
+        <Col md={secondRowColWidth} sm={12}>
+          <DiscountRateStatistic discountRate={fundingCycle.discountRate} />
+        </Col>
+        <Col md={secondRowColWidth} sm={12}>
+          <RedemptionRateStatistic
+            redemptionRate={fundingCycleMetadata.redemptionRate}
+          />
+        </Col>
       </Row>
       <Row gutter={gutter}>
         <Col md={6}>

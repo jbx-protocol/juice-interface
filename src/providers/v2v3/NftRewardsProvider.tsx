@@ -5,6 +5,7 @@ import { useNftCollectionMetadataUri } from 'hooks/JB721Delegate/contractReader/
 import { useNftRewardTiersOf } from 'hooks/JB721Delegate/contractReader/NftRewardTiersOf'
 import { useHasNftRewards } from 'hooks/JB721Delegate/HasNftRewards'
 import useNftRewards from 'hooks/NftRewards'
+import { JB721GovernanceType } from 'models/nftRewardTier'
 import { useContext } from 'react'
 import { EMPTY_NFT_COLLECTION_METADATA } from 'redux/slices/editingV2Project'
 import { CIDsOfNftRewardTiersResponse } from 'utils/nftRewards'
@@ -53,6 +54,7 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
       value={{
         nftRewards: {
           rewardTiers,
+          governanceType: JB721GovernanceType.NONE,
           CIDs,
           collectionMetadata: {
             ...EMPTY_NFT_COLLECTION_METADATA, // only load the metadata CID in the context - other data not necessary

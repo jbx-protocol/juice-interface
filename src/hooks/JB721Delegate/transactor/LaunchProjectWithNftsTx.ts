@@ -7,7 +7,7 @@ import { TransactorInstance } from 'hooks/Transactor'
 import { LaunchProjectData } from 'hooks/v2v3/transactor/LaunchProjectTx'
 import { useWallet } from 'hooks/Wallet'
 import omit from 'lodash/omit'
-import { JB721TierParams } from 'models/nftRewardTier'
+import { JB721GovernanceType, JB721TierParams } from 'models/nftRewardTier'
 import { JBPayDataSourceFundingCycleMetadata } from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
@@ -27,6 +27,7 @@ interface DeployTiered721DelegateData {
   collectionUri: string
   collectionName: string
   collectionSymbol: string
+  governanceType: JB721GovernanceType
   tiers: JB721TierParams[]
 }
 
@@ -49,6 +50,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
         collectionName,
         collectionSymbol,
         tiers,
+        governanceType,
       },
       projectData: {
         projectMetadataCID,
@@ -100,6 +102,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
       collectionSymbol,
       tiers,
       ownerAddress: _owner,
+      governanceType,
       contractAddresses: {
         JBDirectoryAddress: getAddress(contracts.JBDirectory.address),
         JBFundingCycleStoreAddress: getAddress(

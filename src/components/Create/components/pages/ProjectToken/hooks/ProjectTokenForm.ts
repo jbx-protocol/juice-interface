@@ -51,6 +51,7 @@ export const useProjectTokensForm = () => {
     useAppSelector(state => state.editingV2Project)
   const [tokenSplits] = useEditingReservedTokensSplits()
   useDebugValue(form.getFieldsValue())
+  const discountRateDisabled = !parseInt(fundingCycleData.duration)
 
   const initialValues: ProjectTokensFormProps | undefined = useMemo(() => {
     const selection = projectTokensSelection
@@ -62,12 +63,13 @@ export const useProjectTokensForm = () => {
       : DefaultSettings.reservedTokensPercentage
     const reservedTokenAllocation: AllocationSplit[] =
       tokenSplits.map(splitToAllocation)
-    const discountRate = fundingCycleData.discountRate
-      ? parseFloat(formatDiscountRate(fundingCycleData.discountRate))
-      : DefaultSettings.discountRate
     const redemptionRate = fundingCycleMetadata.redemptionRate
       ? parseFloat(formatRedemptionRate(fundingCycleMetadata.redemptionRate))
       : DefaultSettings.redemptionRate
+    const discountRate =
+      !discountRateDisabled && fundingCycleData.discountRate
+        ? parseFloat(formatDiscountRate(fundingCycleData.discountRate))
+        : DefaultSettings.discountRate
     const tokenMinting =
       fundingCycleMetadata.allowMinting !== undefined
         ? fundingCycleMetadata.allowMinting
@@ -83,6 +85,7 @@ export const useProjectTokensForm = () => {
       tokenMinting,
     }
   }, [
+    discountRateDisabled,
     fundingCycleData.discountRate,
     fundingCycleData.weight,
     fundingCycleMetadata.allowMinting,

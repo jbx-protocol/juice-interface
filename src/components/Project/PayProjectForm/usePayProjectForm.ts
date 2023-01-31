@@ -7,14 +7,21 @@ import { CurrencyOption } from 'models/currencyOption'
 import { Dispatch, SetStateAction, useContext, useState } from 'react'
 import { parseWad } from 'utils/format/formatNumber'
 
-export interface JB721DelegatePayMetadata {
+export interface JB721DelegateV1PayMetadata {
   tierIdsToMint: number[]
   dontMint?: boolean
   expectMintFromExtraFunds?: boolean
   dontOverspend?: boolean
 }
 
-type PayMetadata = JB721DelegatePayMetadata // in future, maybe more
+export interface JB721DelegateV11PayMetadata {
+  tierIdsToMint: number[]
+  allowOverspending?: boolean
+}
+
+type PayMetadata = JB721DelegateV1PayMetadata | JB721DelegateV11PayMetadata // in future, maybe more
+
+export const DEFAULT_ALLOW_OVERSPENDING = true
 
 const DEFAULT_PAY_METADATA: PayMetadata = {
   tierIdsToMint: [],

@@ -7,7 +7,11 @@ import FormattedAddress from 'components/FormattedAddress'
 import { NFT_PAYMENT_CONFIRMED_QUERY_PARAM } from 'components/NftRewards/NftPostPayModal'
 import Paragraph from 'components/Paragraph'
 import { PayProjectFormContext } from 'components/Project/PayProjectForm/payProjectFormContext'
-import { JB721DelegatePayMetadata } from 'components/Project/PayProjectForm/usePayProjectForm'
+import {
+  DEFAULT_ALLOW_OVERSPENDING,
+  JB721DelegateV11PayMetadata,
+  JB721DelegateV1PayMetadata,
+} from 'components/Project/PayProjectForm/usePayProjectForm'
 import TooltipLabel from 'components/TooltipLabel'
 import TransactionModal from 'components/TransactionModal'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
@@ -22,7 +26,8 @@ import { useContext, useState } from 'react'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
 import { formattedNum, formatWad } from 'utils/format/formatNumber'
 import {
-  encodeJB721DelegatePayMetadata,
+  encodeJB721DelegateV1PayMetadata,
+  encodeJB721DelegateV1_1PayMetadata,
   payMetadataOverrides,
   rewardTiersFromIds,
   sumTierFloors,
@@ -52,7 +57,7 @@ export function V2V3ConfirmPayModal({
     useContext(V2V3ProjectContext)
   const { projectMetadata, projectId } = useContext(ProjectMetadataContext)
   const {
-    nftRewards: { rewardTiers },
+    nftRewards: { rewardTiers, contractVersion: nftContractVersion },
   } = useContext(NftRewardsContext)
   const { form: payProjectForm } = useContext(PayProjectFormContext)
 
@@ -135,10 +140,18 @@ export function V2V3ConfirmPayModal({
     } = form.getFieldsValue()
 
     const txBeneficiary = beneficiary ?? userAddress
-    const delegateMetadata = encodeJB721DelegatePayMetadata({
-      ...(payProjectForm?.payMetadata as JB721DelegatePayMetadata),
-      ...payMetadataOverrides(projectId),
-    })
+
+    const delegateMetadata =
+      nftContractVersion === '1' // old delegate v1
+        ? encodeJB721DelegateV1PayMetadata({
+            ...(payProjectForm?.payMetadata as JB721DelegateV1PayMetadata),
+            ...payMetadataOverrides(projectId),
+          })
+        : // new delegate v1.1
+          encodeJB721DelegateV1_1PayMetadata({
+            ...(payProjectForm?.payMetadata as JB721DelegateV11PayMetadata),
+            allowOverspending: DEFAULT_ALLOW_OVERSPENDING,
+          })
 
     // Prompt wallet connect if no wallet connected
     if (chainUnsupported) {

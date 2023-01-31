@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { SPEngine } from './api/engines'
 
 const SEPANA_ALERTS = {
   DB_UPDATE_ERROR: 'Error updating database',
@@ -21,17 +22,18 @@ export async function sepanaLog(
         notif: keyof typeof SEPANA_NOTIFS
       }
   ) & {
+    engine?: SPEngine
     body?: string
   },
 ) {
   const network = process.env.NEXT_PUBLIC_INFURA_NETWORK
   const url = process.env.SEPANA_WEBHOOK_URL
 
-  const { type, body } = opts
+  const { type, engine, body } = opts
 
   const content = `${opts.type === 'alert' ? '🚨' : ''} **${
     type === 'alert' ? SEPANA_ALERTS[opts.alert] : SEPANA_NOTIFS[opts.notif]
-  }** (${network})${
+  }** (${network}${engine ? `- ${engine}` : ''})${
     type === 'alert' ? ' <@&1064689520848674888>' : '' // @dev discord role id
   }${body ? `\n${body}` : ''}`
 

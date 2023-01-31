@@ -17,7 +17,7 @@ export interface VeNftToken {
   lockDuration: number
   lockUseJbToken: boolean
   lockAllowPublicExtension: boolean
-  variant?: VeNftVariant
+  variant?: Partial<VeNftVariant>
 }
 
 export const parseVeNftTokenJson = (

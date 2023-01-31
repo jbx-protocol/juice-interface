@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { PV } from 'models/pv'
+import { PV } from 'models/project'
 import { parseBigNumberKeyVal } from 'utils/graph'
 
 import { Json, primitives } from '../../json'

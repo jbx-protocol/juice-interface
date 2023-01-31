@@ -1,19 +1,24 @@
 import { Json } from 'models/json'
-import { SepanaProject, SepanaQueryResponse } from 'models/sepana'
+import {
+  SepanaProject,
+  SepanaProjectTimeline,
+  SepanaQueryResponse,
+} from 'models/sepana'
 
 import { SEPANA_ENDPOINTS } from './endpoints'
 import { sepanaAxios } from './http'
+import { idForEngine, SPEngine } from './engines'
 
 /**
  * Exhaustively queries all Sepana records.
  *
  * @returns Promise containing all records from Sepana database
  */
-export async function queryAll<T extends object>() {
+export async function queryAll<T extends object>(e: SPEngine) {
   return sepanaAxios('read').post<SepanaQueryResponse<T>>(
     SEPANA_ENDPOINTS.search,
     {
-      engine_ids: [process.env.SEPANA_ENGINE_ID],
+      engine_ids: [idForEngine(e)],
       query: {
         match_all: {},
       },
@@ -27,18 +32,18 @@ export async function queryAll<T extends object>() {
  * Gets a single Sepana record with matching `_id`
  *
  * @param id ID to match
- * @returns Promise containing single record from Sepana database matching params
+ * @returns Promise containing records from Sepana database matching params
  */
-export async function getRecord<T extends object>(id: string) {
+export async function getRecord<T extends object>(id: string, e: SPEngine) {
   return sepanaAxios('read')
-    .post<SepanaQueryResponse<T>>(SEPANA_ENDPOINTS.search, {
-      engine_ids: [process.env.SEPANA_ENGINE_ID],
+    .post<SepanaQueryResponse<Json<T>>>(SEPANA_ENDPOINTS.search, {
+      engine_ids: [idForEngine(e)],
       query: {
         function_score: {
           query: {
             query_string: {
               query: `${id}`,
-              fields: ['_id'],
+              fields: ['id'],
             },
           },
         },
@@ -53,10 +58,17 @@ export async function getRecord<T extends object>(id: string) {
  *
  * @param records Projects to write to Sepana database
  */
-export async function writeSepanaRecords(records: Json<SepanaProject>[]) {
+export async function writeSepanaRecords<
+  E extends SPEngine,
+  T = E extends 'projects'
+    ? SepanaProject
+    : E extends 'timelines'
+    ? SepanaProjectTimeline
+    : object,
+>(e: SPEngine, records: Json<T>[]) {
   const jobs: string[] = []
   const errors: (string | object)[] = []
-  const written: Json<SepanaProject>[] = []
+  const written: Json<T>[] = []
 
   // Clone array because we mutate it
   const pageSize = 500
@@ -67,7 +79,7 @@ export async function writeSepanaRecords(records: Json<SepanaProject>[]) {
 
     await sepanaAxios('read/write')
       .post<{ job_id: string }>(SEPANA_ENDPOINTS.insert, {
-        engine_id: process.env.SEPANA_ENGINE_ID,
+        engine_id: idForEngine(e),
         docs: queue,
       })
       .then(res => {

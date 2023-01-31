@@ -89,7 +89,7 @@
     "axios": "0.27.2",
     "bottleneck": "^2.19.5",
     "erc-20-abi": "^1.0.0",
-    "ethereum-block-by-date": "1.4.5",
+    "ethereum-block-by-date": "^1.4.6",
     "ethers": "^5.7.0",
     "formidable": "^2.0.1",
     "graphql": "^16.5.0",

@@ -1,8 +1,7 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { formatUnits, parseUnits } from '@ethersproject/units'
-import round from 'lodash/round'
-
 import { WAD_DECIMALS } from 'constants/numbers'
+import round from 'lodash/round'
 
 type FormatConfig = {
   empty?: string
@@ -48,6 +47,18 @@ export const fromWad = (wadValue?: BigNumberish) => {
   return result.substring(result.length - 2) === '.0'
     ? result.substring(0, result.length - 2)
     : result
+}
+
+/**
+ * Returns a float representation of a given [wadValue]
+ *
+ * @example
+ * // returns 1.23
+ * fromWad(1230000000000000000);
+ *
+ */
+export const floatFromWad = (wadValue?: BigNumberish) => {
+  return parseFloat(fromWad(wadValue))
 }
 
 /**

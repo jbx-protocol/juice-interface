@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { PID, PV } from 'models/project'
 import {
   parseBigNumberKeyVals,
   subgraphEntityJsonArrayToKeyVal,
@@ -6,7 +7,6 @@ import {
 } from 'utils/graph'
 
 import { Json, primitives } from '../../json'
-import { PV } from '../../pv'
 import { DistributeToPayoutModEvent } from '../v1/distribute-to-payout-mod-event'
 import { DistributeToTicketModEvent } from '../v1/distribute-to-ticket-mod-event'
 import { PrintReservesEvent } from '../v1/print-reserves-event'
@@ -21,7 +21,7 @@ import { PayEvent } from './pay-event'
 import { RedeemEvent } from './redeem-event'
 
 export type Project = {
-  id: string
+  id: PID
   projectId: number
   pv: PV
   owner: string

@@ -11,7 +11,6 @@ import {
   SGWhereArg,
 } from 'models/graph'
 import { Json } from 'models/json'
-import { PV } from 'models/pv'
 import { parseDistributeToPayoutModEvent } from 'models/subgraph-entities/v1/distribute-to-payout-mod-event'
 import { parseDistributeToTicketModEvent } from 'models/subgraph-entities/v1/distribute-to-ticket-mod-event'
 import { parsePrintReservesEventJson } from 'models/subgraph-entities/v1/print-reserves-event'
@@ -107,8 +106,6 @@ export const formatGraphQuery = <
   )} } }`
   return res
 }
-
-const subgraphUrl = process.env.NEXT_PUBLIC_SUBGRAPH_URL
 
 /**
  * Parse a list of entities from a subgraph query JSON response object
@@ -258,35 +255,57 @@ export async function querySubgraph<
 export async function querySubgraphRaw<
   E extends SGEntityName,
   K extends SGEntityKey<E>,
->(opts: SGQueryOpts<E, K> | null) {
-  if (!subgraphUrl) {
-    // This should _only_ happen in development
-    throw new Error('env.NEXT_PUBLIC_SUBGRAPH_URL is missing')
-  }
+>(opts: SGQueryOpts<E, K> | null, { retry } = { retry: false }) {
+  const subgraphUrl =
+    process.env.NEXT_SUBGRAPH_URL ?? process.env.NEXT_PUBLIC_SUBGRAPH_URL
+
+  if (!subgraphUrl) throw new Error('Subgraph URL is missing from .env')
 
   if (!opts) return
 
-  const response = await axios.post<{
-    errors?: SGError | SGError[]
-    data: SGResponseData<E, K>
-  }>(
-    opts.url ?? subgraphUrl,
-    {
-      query: formatGraphQuery(opts),
-    },
-    { headers: { 'Content-Type': 'application/json' } },
-  )
+  const maxRetries = retry ? 3 : 0
 
-  if ('errors' in response.data) {
-    throw new Error(
-      (Array.isArray(response.data.errors)
-        ? response.data.errors?.[0]?.message
-        : response.data.errors?.message) ||
-        'Something is wrong with this Graph request',
+  const axiosWithRetry = async (
+    retryCount: number,
+  ): Promise<SGResponseData<E, K>> => {
+    const response = await axios.post<{
+      errors?: SGError | SGError[]
+      data: SGResponseData<E, K>
+    }>(
+      opts.url ?? subgraphUrl,
+      { query: formatGraphQuery(opts) },
+      { headers: { 'Content-Type': 'application/json' } },
     )
+
+    try {
+      if ('errors' in response.data) {
+        const { errors } = response.data
+
+        throw new Error(
+          (Array.isArray(errors) ? errors?.[0]?.message : errors?.message) ||
+            'Something is wrong with this Graph request',
+        )
+      }
+
+      return response.data.data
+    } catch (e) {
+      console.info(
+        'Retrying subgraph query',
+        response.config.data,
+        `${retryCount}/${maxRetries}`,
+      )
+
+      if (retryCount < maxRetries) {
+        // Retry request
+        await new Promise(r => setTimeout(r, retryCount * 1500))
+        return axiosWithRetry(retryCount + 1)
+      }
+
+      return Promise.reject(e)
+    }
   }
 
-  return response.data.data
+  return axiosWithRetry(1)
 }
 
 /** Repeats a max page size query until all entities have been returned. */
@@ -367,18 +386,6 @@ const isPluralQuery = (name: SGEntityName): boolean => {
   if (name === 'projectSearch') return false
 
   return true
-}
-
-/**
- * Get the subgraph representation of a project ID, based on given [pv] and [projectId]
- *
- * Reference implementation: https://github.com/jbx-protocol/juice-subgraph/blob/main/src/utils.ts#L84
- *
- * @param pv Contracts version
- * @param projectId the on-chain project ID
- */
-export const getSubgraphIdForProject = (pv: PV, projectId: number) => {
-  return `${pv}-${projectId}`
 }
 
 export const parseBigNumberKeyVals = <T extends object, K extends keyof T>(

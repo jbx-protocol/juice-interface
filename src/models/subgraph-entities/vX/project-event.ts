@@ -1,4 +1,4 @@
-import { PV } from 'models/pv'
+import { PV } from 'models/project'
 import { PrintReservesEvent } from 'models/subgraph-entities/v1/print-reserves-event'
 import { TapEvent } from 'models/subgraph-entities/v1/tap-event'
 import { parseSubgraphEntitiesFromJson } from 'utils/graph'

@@ -2,6 +2,7 @@ import { Json } from 'models/json'
 import { SepanaProject, SepanaQueryResponse } from 'models/sepana'
 
 import { SEPANA_ENDPOINTS } from './endpoints'
+import { idForEngine } from './engines'
 import { sepanaAxios } from './http'
 
 /**
@@ -14,7 +15,7 @@ import { sepanaAxios } from './http'
 export async function searchSepanaProjects(query = '', pageSize?: number) {
   return sepanaAxios('read')
     .post<SepanaQueryResponse<Json<SepanaProject>>>(SEPANA_ENDPOINTS.search, {
-      engine_ids: [process.env.SEPANA_ENGINE_ID],
+      engine_ids: [idForEngine('projects')],
       query: {
         function_score: {
           query: {

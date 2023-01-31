@@ -1,5 +1,5 @@
 import { ProjectMetadataV5 } from 'models/project-metadata'
-import { PV } from 'models/pv'
+import { PV } from 'models/project'
 import { createContext } from 'react'
 
 interface ProjectMetadataContextType {

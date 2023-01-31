@@ -1,4 +1,4 @@
-import { PV2 } from 'models/pv'
+import { PV2 } from 'models/project'
 import { V1TerminalVersion } from 'models/v1/terminals'
 
 export const PV_V2: PV2 = '2'

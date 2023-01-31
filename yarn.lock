@@ -9487,12 +9487,12 @@ eth-sig-util@^1.4.2:
     ethereumjs-abi "git+https://github.com/ethereumjs/ethereumjs-abi.git"
     ethereumjs-util "^5.1.1"
 
-ethereum-block-by-date@1.4.5:
-  version "1.4.5"
-  resolved "https://registry.yarnpkg.com/ethereum-block-by-date/-/ethereum-block-by-date-1.4.5.tgz#ae954a4499942d03837e702033d75acf6a0f96dd"
-  integrity sha512-mxDUx+yxIGPgKz82HjijFDCoZLT+in+p3tHJ82JDQTLDUl92uNDCNF85PPvchgzrhRlwDM4F0q7/qed5MeJKNw==
+ethereum-block-by-date@^1.4.6:
+  version "1.4.6"
+  resolved "https://registry.yarnpkg.com/ethereum-block-by-date/-/ethereum-block-by-date-1.4.6.tgz#80227834ab8a5ebd3318ba58b985b07d47731ba8"
+  integrity sha512-MV7QAjeTl3zuVSeRfNdXeJQCfiwc4wCIXiLMnWqarmhyXzzUqq36+aDsqBFbV/D07WiW5JiuQ7KVtLLaqt6WQw==
   dependencies:
-    moment "^2.29.2"
+    moment "^2.29.4"
 
 ethereum-bloom-filters@^1.0.6:
   version "1.0.10"
@@ -13620,7 +13620,7 @@ mock-fs@^4.1.0:
   resolved "https://registry.yarnpkg.com/mock-fs/-/mock-fs-4.14.0.tgz#ce5124d2c601421255985e6e94da80a7357b1b18"
   integrity sha512-qYvlv/exQ4+svI3UOvPUpLDF0OMX5euvUH0Ny4N5QyRyhNdgAgUrVH3iUINSzEPLvx0kbo/Bp28GJKIqvE7URw==
 
-moment@^2.24.0, moment@^2.29.1, moment@^2.29.2:
+moment@^2.24.0, moment@^2.29.1, moment@^2.29.2, moment@^2.29.4:
   version "2.29.4"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
   integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==

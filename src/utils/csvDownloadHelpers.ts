@@ -1,6 +1,6 @@
 import { querySubgraphExhaustive } from 'utils/graph'
 import { t } from '@lingui/macro'
-import { PV } from 'models/pv'
+import { PV } from 'models/project'
 import { emitErrorNotification } from 'utils/notifications'
 import { downloadCsvFile } from 'utils/csv'
 import { fromWad } from 'utils/format/formatNumber'

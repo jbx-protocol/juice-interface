@@ -9,14 +9,15 @@ import {
   SGWhereArg,
 } from 'models/graph'
 import { Json } from 'models/json'
+import { PV } from 'models/project'
 import { ProjectState } from 'models/project-visibility'
-import { PV } from 'models/pv'
 import { SepanaProject, SepanaQueryResponse } from 'models/sepana'
 import { Project } from 'models/subgraph-entities/vX/project'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
-import { getSubgraphIdForProject, querySubgraphExhaustive } from 'utils/graph'
+import { querySubgraphExhaustive } from 'utils/graph'
+import { idForProject } from 'utils/project'
 import { parseSepanaProjectJson } from 'utils/sepana'
 import { getTerminalAddress } from 'utils/v1/terminals'
 
@@ -49,11 +50,12 @@ const DEFAULT_ENTITY_KEYS: (keyof Project)[] = [
   'terminal',
   'pv',
 ]
-const V1_ARCHIVED_SUBGRAPH_IDS = V1ArchivedProjectIds.map(projectId =>
-  getSubgraphIdForProject(PV_V1, projectId),
+// TODO store IDs for projects vs. projectIds
+const V1_ARCHIVED_SUBGRAPH_IDS = V1ArchivedProjectIds.map(
+  projectId => idForProject({ pv: PV_V1, projectId })!,
 )
-const V2_ARCHIVED_SUBGRAPH_IDS = V2ArchivedProjectIds.map(projectId =>
-  getSubgraphIdForProject(PV_V2, projectId),
+const V2_ARCHIVED_SUBGRAPH_IDS = V2ArchivedProjectIds.map(
+  projectId => idForProject({ pv: PV_V2, projectId })!,
 )
 const ARCHIVED_SUBGRAPH_IDS = [
   ...V1_ARCHIVED_SUBGRAPH_IDS,

@@ -9,7 +9,7 @@ import {
   useProjectsSearch,
   useSepanaProjectsSearch,
 } from 'hooks/Projects'
-import { PV } from 'models/pv'
+import { PV } from 'models/project'
 import { useEffect, useRef } from 'react'
 import { classNames } from 'utils/classNames'
 import { featureFlagEnabled } from 'utils/featureFlags'

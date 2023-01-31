@@ -4,7 +4,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 import { readNetwork } from 'constants/networks'
 import { PV_V2 } from 'constants/pv'
-import { PV } from 'models/pv'
+import { PV } from 'models/project'
 
 interface ArchiveProjectNextApiRequest extends NextApiRequest {
   body: {

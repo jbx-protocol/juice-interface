@@ -1,4 +1,4 @@
-import { PV } from 'models/pv'
+import { PV } from 'models/project'
 
 import { Json, primitives } from '../../json'
 import { BaseEventEntity } from '../base/base-event-entity'

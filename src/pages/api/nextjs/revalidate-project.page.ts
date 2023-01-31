@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { PV_V1, PV_V1_1, PV_V2 } from 'constants/pv'
-import { PV } from 'models/pv'
+import { PV } from 'models/project'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 const VALID_PVS = [PV_V1, PV_V1_1, PV_V2]

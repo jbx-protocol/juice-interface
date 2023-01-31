@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { PV2 } from 'models/pv'
+import { PV2 } from 'models/project'
 import { V1TerminalVersion } from 'models/v1/terminals'
 
 /**

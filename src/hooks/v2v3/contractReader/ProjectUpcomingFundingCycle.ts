@@ -28,6 +28,7 @@ export function useProjectUpcomingFundingCycle({
   const {
     data: latestConfiguredFundingCycleResponse,
     loading: latestConfiguredFundingCycleLoading,
+    refetchValue,
   } = useProjectLatestConfiguredFundingCycle({
     projectId,
   })
@@ -63,11 +64,13 @@ export function useProjectUpcomingFundingCycle({
         latestConfiguredFundingCycleBallotState,
       ],
       loading,
+      refetchValue,
     }
   }
 
   return {
     data: [queuedFundingCycle, queuedFundingCycleMetadata],
     loading,
+    refetchValue,
   }
 }

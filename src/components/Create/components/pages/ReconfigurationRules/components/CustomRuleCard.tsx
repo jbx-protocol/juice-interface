@@ -2,7 +2,7 @@ import { t } from '@lingui/macro'
 import { Form } from 'antd'
 import { Selection } from 'components/Create/components/Selection'
 import { CustomStrategyInput } from 'components/ReconfigurationStrategy/CustomStrategyInput'
-import { inputMustBeEthAddressRule, inputMustExistRule } from '../../utils'
+import { inputMustExistRule, inputMustBeEthAddressRule } from 'utils/antd-rules'
 
 export const CustomRuleCard = () => {
   return (

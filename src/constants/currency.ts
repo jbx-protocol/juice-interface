@@ -1,5 +1,5 @@
 export type CurrencyName = 'ETH' | 'USD'
-export type CurrencySymbol = 'Ξ' | 'US$'
+type CurrencySymbol = 'Ξ' | 'US$'
 export type CurrencyMetadata = {
   name: CurrencyName
   symbol: CurrencySymbol

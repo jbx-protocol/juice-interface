@@ -218,12 +218,12 @@ export default function QAs(): {
       a: (
         <Trans>
           <p>
-            For project configuration tips and more, take a look at our{' '}
+            For project configuration tips and more, take a look at the{' '}
             <ExternalLink href={helpPagePath('/user/')}>
               Project Creator Hub
             </ExternalLink>
-            . You should also join our{' '}
-            <JBDiscordLink>Discord server</JBDiscordLink>, where JuiceboxDAO
+            . You should also join JuiceboxDAO's{' '}
+            <JBDiscordLink>Discord server</JBDiscordLink>, where DAO
             contributors can guide you through the project creation process.
           </p>
         </Trans>
@@ -234,8 +234,8 @@ export default function QAs(): {
       a: (
         <Trans>
           <p>
-            For more information, or help with anything else, join our{' '}
-            <JBDiscordLink>Discord server</JBDiscordLink>.
+            For more information, or help with anything else, join the{' '}
+            <JBDiscordLink>JuiceboxDAO Discord server</JBDiscordLink>.
           </p>
         </Trans>
       ),

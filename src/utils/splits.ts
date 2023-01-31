@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
+import { isEqual } from 'lodash'
 import { PayoutMod } from 'models/mods'
 import { OutgoingSplit, Split } from 'models/splits'
 import {
@@ -12,6 +13,16 @@ import {
   splitPercentFrom,
   SPLITS_TOTAL_PERCENT,
 } from './v2v3/math'
+
+//  - true if the split has been removed (exists in old but not new),
+//  - false if new (exists in new but not old)
+//  - Split if exists in old and new and there is a diff in the splits
+//  - undefined if exists in old and new and there is no diff in the splits
+export type OldSplit = Split | boolean | undefined
+
+export type SplitWithDiff = Split & {
+  oldSplit?: OldSplit
+}
 
 export const toSplit = (mod: PayoutMod): Split => {
   return {
@@ -89,6 +100,80 @@ export const formatOutgoingSplits = (splits: OutgoingSplit[]): Split[] => {
         ({ ...split, percent: split.percent.toNumber() } as Split),
     ) ?? []
   )
+}
+
+// determines if two splits are the same 'entity' (either projectId or address)
+const hasEqualRecipient = (a: Split, b: Split) => {
+  const isProject = isProjectSplit(a)
+  const idsEqual =
+    a.projectId === b.projectId ||
+    BigNumber.from(a.projectId).eq(b.projectId ?? 0) ||
+    BigNumber.from(b.projectId).eq(a.projectId ?? 0)
+
+  return (
+    (isProject && idsEqual) || (!isProject && a.beneficiary === b.beneficiary)
+  )
+}
+
+// returns a given list of splits sorted by percent allocation
+export const sortSplits = (splits: Split[]) => {
+  return [...splits].sort((a, b) => (a.percent < b.percent ? 1 : -1))
+}
+
+// return list of splits that exist in oldSplits but not newSplits
+export const getRemovedSplits = (oldSplits: Split[], newSplits: Split[]) => {
+  return oldSplits.filter(oldSplit => {
+    return !newSplits.some(newSplit => hasEqualRecipient(oldSplit, newSplit))
+  })
+}
+
+// returns all unique splits (projectIds or addresses), sorted by their new `percent`
+// and assigns each split an additional property `oldSplit` (OldSplit)
+export const processUniqueSplits = ({
+  oldSplits,
+  newSplits,
+}: {
+  oldSplits: Split[] | undefined
+  newSplits: Split[]
+}): SplitWithDiff[] => {
+  const uniqueSplitsByProjectIdOrAddress: Array<SplitWithDiff> = []
+  if (!oldSplits) return sortSplits(newSplits)
+
+  newSplits.map(split => {
+    const oldSplit = oldSplits.find(oldSplit =>
+      hasEqualRecipient(oldSplit, split),
+    )
+
+    const splitsEqual = isEqual(split, oldSplit)
+
+    if (oldSplit && !splitsEqual) {
+      // adds diffed splits (exists in new and old and there is no diff)
+      uniqueSplitsByProjectIdOrAddress.push({
+        ...split,
+        oldSplit,
+      })
+    } else if (oldSplit && splitsEqual) {
+      // adds undiffed splits (exists in new and old and there is no diff)
+      uniqueSplitsByProjectIdOrAddress.push({
+        ...split,
+        oldSplit: undefined,
+      })
+    } else {
+      // add the new splits (exists in new but not old)
+      uniqueSplitsByProjectIdOrAddress.push({
+        ...split,
+        oldSplit: false,
+      })
+    }
+  })
+  const removedSplits = getRemovedSplits(oldSplits, newSplits)
+  removedSplits.map(split => {
+    uniqueSplitsByProjectIdOrAddress.push({
+      ...split,
+      oldSplit: true,
+    })
+  })
+  return sortSplits(uniqueSplitsByProjectIdOrAddress)
 }
 
 export const isProjectSplit = (split: Split): boolean => {

@@ -1,12 +1,10 @@
 import { plural, t, Trans } from '@lingui/macro'
 import { Button, Descriptions, Space } from 'antd'
 import SectionHeader from 'components/SectionHeader'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useNftAccountBalance } from 'hooks/JB721Delegate/contractReader/NftAccountBalance'
 import { useWallet } from 'hooks/Wallet'
 import { CSSProperties, useContext, useState } from 'react'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { RedeemNftsModal } from './RedeemNftsModal'
 
 const labelStyle: CSSProperties = {
@@ -31,11 +29,8 @@ export function ManageNftsSection() {
   })
 
   const nftBalanceFormatted = nfts?.length ?? 0
-  const nftRedeemEnabled = featureFlagEnabled(FEATURE_FLAGS.NFT_REDEEM)
   const nftRedeemAllowed =
-    nftRedeemEnabled &&
-    fundingCycleMetadata?.useDataSourceForRedeem &&
-    nftBalanceFormatted > 0
+    fundingCycleMetadata?.useDataSourceForRedeem && nftBalanceFormatted > 0
 
   if (isLoading) return null
 

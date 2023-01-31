@@ -1,1 +1,1 @@
-export { V2V3ConfirmPayModal } from './V2V3ConfirmPayModal'
+export * from './V2V3ConfirmPayModal'

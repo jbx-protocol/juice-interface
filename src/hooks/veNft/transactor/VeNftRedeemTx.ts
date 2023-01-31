@@ -6,7 +6,7 @@ import { TransactionContext } from 'contexts/transactionContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useVeNftContract } from 'hooks/veNft/VeNftContract'
 
-export type RedeemVeNftTx = TransactorInstance<{
+type RedeemVeNftTx = TransactorInstance<{
   tokenId: number
   token: string
   beneficiary: string

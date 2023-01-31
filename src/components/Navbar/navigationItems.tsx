@@ -18,7 +18,7 @@ const externalMenuLinkProps = {
   rel: 'noopener noreferrer',
 }
 
-export const DesktopDropDown = ({
+const DesktopDropDown = ({
   resourcesMenu,
   resourcesOpen,
   setResourcesOpen,

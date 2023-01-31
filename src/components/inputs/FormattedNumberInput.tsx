@@ -77,7 +77,7 @@ export default function FormattedNumberInput({
           _suffix
         }
         parser={(val?: string) => {
-          if (!val) return '0'
+          if (val === undefined || !val.length) return ''
           // Stops user from entering hex values
           if (/^0?0x[0-9a-fA-F]+$/.test(val)) return '0'
           return parseFloat(

@@ -3,6 +3,7 @@ import { Form, Space } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
 import { Selection } from 'components/Create/components/Selection'
+import { useAvailableReconfigurationStrategies } from 'components/Create/hooks/AvailableReconfigurationStrategies'
 import { JuiceSwitch } from 'components/JuiceSwitch'
 import {
   HOLD_FEES_EXPLAINATION,
@@ -15,10 +16,7 @@ import { CreateCollapse } from '../../CreateCollapse'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { CustomRuleCard, RuleCard } from './components'
-import {
-  useAvailableReconfigurationStrategies,
-  useReconfigurationRulesForm,
-} from './hooks'
+import { useReconfigurationRulesForm } from './hooks'
 
 export const ReconfigurationRulesPage = () => {
   useSetCreateFurthestPageReached('reconfigurationRules')
@@ -77,6 +75,12 @@ export const ReconfigurationRulesPage = () => {
               extra={t`When enabled, the project owner can set the project's payment terminals.`}
             >
               <JuiceSwitch label={t`Allow terminal configuration`} />
+            </Form.Item>
+            <Form.Item
+              name="pauseTransfers"
+              extra={t`When enabled, project token transfers will be paused. This does not apply to ERC-20 tokens if issued.`}
+            >
+              <JuiceSwitch label={t`Pause project token transfers`} />
             </Form.Item>
             <Form.Item name="holdFees" extra={HOLD_FEES_EXPLAINATION}>
               <JuiceSwitch label={t`Hold fees`} />

@@ -7,7 +7,6 @@ import {
 import {
   CurrencyMetadata,
   CurrencyName,
-  CurrencySymbol,
   CURRENCY_METADATA,
 } from 'constants/currency'
 
@@ -35,8 +34,3 @@ export const getV2V3CurrencyOption = (
   currencyName: CurrencyName,
 ): V2V3CurrencyOption =>
   currencyName === 'ETH' ? V2V3_CURRENCY_ETH : V2V3_CURRENCY_USD
-
-export const V2CurrencySymbol = (
-  currency?: V2V3CurrencyOption,
-): CurrencySymbol | undefined =>
-  currency !== undefined ? V2V3_CURRENCY_METADATA[currency]?.symbol : undefined

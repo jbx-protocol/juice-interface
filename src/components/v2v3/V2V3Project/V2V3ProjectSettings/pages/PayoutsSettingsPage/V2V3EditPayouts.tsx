@@ -1,119 +1,25 @@
-import { PlusCircleOutlined } from '@ant-design/icons'
-import { Trans } from '@lingui/macro'
-import { Button, Skeleton, Space } from 'antd'
+import { t, Trans } from '@lingui/macro'
+import { Divider, Space } from 'antd'
 import { CsvUpload } from 'components/CsvUpload/CsvUpload'
-import TooltipLabel from 'components/TooltipLabel'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
-import filter from 'lodash/filter'
-import isEqual from 'lodash/isEqual'
-import { defaultSplit, Split } from 'models/splits'
-import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { formatWad } from 'utils/format/formatNumber'
-import { V2V3CurrencyName } from 'utils/v2v3/currency'
+import { Split } from 'models/splits'
+import { useCallback, useContext, useEffect, useMemo } from 'react'
 import { getTotalSplitsPercentage } from 'utils/v2v3/distributions'
-import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2v3/math'
 
 import { Callout } from 'components/Callout'
-import ETHAmount from 'components/currency/ETHAmount'
-import CurrencySymbol from 'components/CurrencySymbol'
-import { DistributionSplitCard } from 'components/v2v3/shared/DistributionSplitCard'
-import { DistributionSplitModal } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/DistributionSplitModal'
-import { useUserAddress } from 'hooks/Wallet/hooks'
-import { classNames } from 'utils/classNames'
+import { Allocation, AllocationSplit } from 'components/Allocation'
+import { OwnerPayoutCard } from 'components/PayoutCard'
+import { PayoutCard } from 'components/PayoutCard/PayoutCard'
+import { formatFundingTarget } from 'utils/format/formatFundingTarget'
+import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
+import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { parseV2SplitsCsv } from 'utils/csv'
-
-const OwnerSplitCard = ({ splits }: { splits: Split[] }) => {
-  const userAddress = useUserAddress()
-  const { distributionLimit, distributionLimitCurrency } =
-    useContext(V2V3ProjectContext)
-  const remainingSplitsPercentage = 100 - getTotalSplitsPercentage(splits)
-  const ownerSplit = useMemo<Split>(
-    () => ({
-      ...defaultSplit,
-      beneficiary: userAddress,
-      percent: splitPercentFrom(remainingSplitsPercentage).toNumber(),
-    }),
-    [remainingSplitsPercentage, userAddress],
-  )
-  const currencyName =
-    V2V3CurrencyName(
-      distributionLimitCurrency?.toNumber() as V2V3CurrencyOption | undefined,
-    ) ?? 'ETH'
-  const distributionLimitIsInfinite = distributionLimit?.eq(
-    MAX_DISTRIBUTION_LIMIT,
-  ) // hack to work around rounding error in parseWad in `DistributionSplitCard
-  return (
-    <DistributionSplitCard
-      split={ownerSplit}
-      splits={splits}
-      distributionLimit={
-        distributionLimitIsInfinite
-          ? undefined
-          : formatWad(distributionLimit, { thousandsSeparator: '' })
-      }
-      currencyName={currencyName}
-      isLocked
-      isProjectOwner
-    />
-  )
-}
-
-const DistributionLimitHeader = () => {
-  const {
-    distributionLimit,
-    distributionLimitCurrency,
-    loading: { distributionLimitLoading, fundingCycleLoading },
-  } = useContext(V2V3ProjectContext)
-
-  const currency = V2V3CurrencyName(
-    distributionLimitCurrency?.toNumber() as V2V3CurrencyOption,
-  )
-  const distributionLimitIsInfinite = distributionLimit?.eq(
-    MAX_DISTRIBUTION_LIMIT,
-  )
-  const projectLoading = distributionLimitLoading && fundingCycleLoading
-
-  return (
-    <div className="flex justify-between">
-      <Skeleton
-        loading={projectLoading}
-        paragraph={{ rows: 1, width: ['80%'] }}
-        title={false}
-        active
-      >
-        <TooltipLabel
-          tip={<Trans>This funding cycle's distribution limit.</Trans>}
-          label={
-            <>
-              {distributionLimitIsInfinite ? (
-                <Trans>No limit (infinite)</Trans>
-              ) : distributionLimit?.eq(0) ? (
-                <Trans>
-                  <strong>Zero</strong> Distribution Limit
-                </Trans>
-              ) : (
-                <Trans>
-                  <strong>
-                    {currency === 'ETH' ? (
-                      <ETHAmount amount={distributionLimit} />
-                    ) : (
-                      <>
-                        <CurrencySymbol currency={currency} />
-                        {formatWad(distributionLimit)}
-                      </>
-                    )}
-                  </strong>{' '}
-                  Distribution Limit
-                </Trans>
-              )}
-            </>
-          }
-        />
-      </Skeleton>
-    </div>
-  )
-}
+import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
+import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
+import { twMerge } from 'tailwind-merge'
+import { PayoutsSelection } from 'models/payoutsSelection'
+import { calculateExpenseFromPercentageOfWad } from 'utils/calculateExpenseFromPercentageOfWad'
+import { formatPercent } from 'utils/format/formatPercent'
 
 export const V2V3EditPayouts = ({
   editingSplits,
@@ -126,110 +32,89 @@ export const V2V3EditPayouts = ({
 }) => {
   const {
     payoutSplits: contextPayoutSplits,
-    distributionLimitCurrency,
     distributionLimit,
+    distributionLimitCurrency: distributionLimitCurrencyBigNumber,
   } = useContext(V2V3ProjectContext)
 
-  const currencyName =
-    V2V3CurrencyName(
-      distributionLimitCurrency?.toNumber() as V2V3CurrencyOption | undefined,
-    ) ?? 'ETH'
-
-  // Must differentiate between splits loaded from redux and
-  // ones just added to be able to still edit splits you've
-  // added with a lockedUntil
-
-  const isLockedSplit = useCallback(
-    ({ split }: { split: Split }) => {
+  const isLockedAllocation = useCallback(
+    (allocation: AllocationSplit) => {
       const now = new Date().valueOf() / 1000
+      if (!allocation.lockedUntil || allocation.lockedUntil < now) return false
+
       // Checks if the given split exists in the projectContext splits.
       // If it doesn't, then it means it was just added or edited is which case
       // we want to still be able to edit it
-      const confirmedSplitsIncludesSplit =
-        contextPayoutSplits?.find(confirmedSplit =>
-          isEqual(confirmedSplit, split),
-        ) !== undefined
-      return (
-        split.lockedUntil &&
-        split.lockedUntil > now &&
-        confirmedSplitsIncludesSplit
-      )
+      const contextMatch = contextPayoutSplits
+        ?.map(splitToAllocation)
+        .find(confirmed => confirmed.id === allocation.id)
+      if (contextMatch && contextMatch.lockedUntil) {
+        // Check to make sure that the original allocation is actually still locked
+        return contextMatch.lockedUntil > now
+      }
+      return false
+      // const confirmedAllocIncludesAlloc =
+      //   contextPayoutSplits
+      //     ?.map(splitToAllocation)
+      //     .find(confirmed => confirmed.id === allocation.id) !== undefined
+
+      // return confirmedAllocIncludesAlloc
     },
     [contextPayoutSplits],
   )
-
-  // Load original splits from context into editing splits.
-  useEffect(() => {
-    setEditingSplits(contextPayoutSplits ?? [])
-  }, [contextPayoutSplits, setEditingSplits, open])
-
-  const lockedSplits = useMemo(
-    () => editingSplits.filter(split => isLockedSplit({ split })),
-    [editingSplits, isLockedSplit],
-  )
-
-  const editableSplits = useMemo(
-    () => editingSplits.filter(split => !isLockedSplit({ split })),
-    [editingSplits, isLockedSplit],
-  )
-
-  const [addSplitModalVisible, setAddSplitModalVisible] =
-    useState<boolean>(false)
 
   const totalSplitsPercentage = useMemo(
     () => getTotalSplitsPercentage(editingSplits),
     [editingSplits],
   )
   const totalSplitsPercentageInvalid = totalSplitsPercentage > 100
-  const remainingSplitsPercentage = 100 - totalSplitsPercentage
-  const ownerSplitCardVisible =
-    remainingSplitsPercentage > 0 && distributionLimit?.gt(0)
-  const distributionLimitIsInfinite = distributionLimit?.eq(
-    MAX_DISTRIBUTION_LIMIT,
+
+  const payoutsSelection: PayoutsSelection = useMemo(() => {
+    // As we dont have control of amounts/percentage out of create, always use
+    // amounts, and fall back to percentages when amounts is unavailable.
+    if (
+      !distributionLimit ||
+      distributionLimit.eq(0) ||
+      distributionLimit.eq(MAX_DISTRIBUTION_LIMIT)
+    ) {
+      return 'percentages'
+    }
+    return 'amounts'
+  }, [distributionLimit])
+
+  const availablePayoutModesInModal = useMemo(() => {
+    // TODO: This is a discrepency between `AllocationList::availableModes` and `PayoutsSelection`.
+    const set = new Set<'percentage' | 'amount'>(['percentage'])
+    if (payoutsSelection === 'amounts') set.add('amount')
+    return set
+  }, [payoutsSelection])
+
+  const distributionLimitCurrency = useMemo(
+    () => distributionLimitCurrencyBigNumber?.toNumber() as V2V3CurrencyOption,
+    [distributionLimitCurrencyBigNumber],
   )
 
-  const onSplitsChanged = useCallback(
-    (newSplits: Split[]) => {
-      setEditingSplits(newSplits)
-    },
+  const expenses = useMemo(() => {
+    if (!distributionLimit) return 0
+    return calculateExpenseFromPercentageOfWad({
+      percentage: totalSplitsPercentage,
+      wad: distributionLimit,
+    })
+  }, [distributionLimit, totalSplitsPercentage])
+
+  // Load original splits from context into editing splits.
+  useEffect(() => {
+    setEditingSplits(contextPayoutSplits ?? [])
+  }, [contextPayoutSplits, setEditingSplits, open])
+
+  const onCsvUpload = useCallback(
+    (newSplits: Split[]) => setEditingSplits(newSplits),
     [setEditingSplits],
   )
 
-  const renderSplitCard = useCallback(
-    (split: Split, index: number, isLocked?: boolean) => {
-      return (
-        <DistributionSplitCard
-          key={split.beneficiary ?? index}
-          split={split}
-          isEditPayoutPage
-          splits={editingSplits}
-          distributionLimit={
-            distributionLimitIsInfinite
-              ? undefined
-              : formatWad(distributionLimit, { thousandsSeparator: '' })
-          }
-          currencyName={currencyName}
-          isLocked={isLocked}
-          onSplitsChanged={onSplitsChanged}
-          onSplitDelete={deletedSplit => {
-            const newEdited = filter(
-              editableSplits,
-              s => s.beneficiary !== deletedSplit.beneficiary,
-            )
-            onSplitsChanged(newEdited.concat(lockedSplits))
-          }}
-        />
-      )
-    },
-    [
-      editingSplits,
-      distributionLimitIsInfinite,
-      distributionLimit,
-      currencyName,
-      onSplitsChanged,
-      editableSplits,
-      lockedSplits,
-    ],
+  const onAllocationsChanged = useCallback(
+    (newAllocations: AllocationSplit[]) =>
+      setEditingSplits(newAllocations.map(allocationToSplit)),
+    [setEditingSplits],
   )
 
   return (
@@ -245,73 +130,96 @@ export const V2V3EditPayouts = ({
         </Callout.Info>
       </Space>
 
-      <Space className="min-h-0 w-full" direction="vertical" size="middle">
-        <div className="flex justify-between">
-          <DistributionLimitHeader />
+      <CsvUpload
+        onChange={onCsvUpload}
+        templateUrl={'/assets/csv/v2-splits-template.csv'}
+        parser={parseV2SplitsCsv}
+      />
 
-          <CsvUpload
-            onChange={onSplitsChanged}
-            templateUrl={'/assets/csv/v2-splits-template.csv'}
-            parser={parseV2SplitsCsv}
-          />
-        </div>
-        <Space className="w-full" direction="vertical" size="small">
-          {editableSplits.map((split, index) => renderSplitCard(split, index))}
-        </Space>
-        {lockedSplits ? (
-          <Space className="w-full" direction="vertical" size="small">
-            {lockedSplits.map((split, index) =>
-              renderSplitCard(split, index, true),
-            )}
-          </Space>
-        ) : null}
-        {ownerSplitCardVisible ? (
-          <OwnerSplitCard splits={editingSplits} />
-        ) : null}
-        {totalSplitsPercentageInvalid && (
-          <span className="text-error-500 dark:text-error-400">
-            <Trans>Sum of percentages cannot exceed 100%.</Trans>
-          </span>
-        )}
-
-        <div className="flex justify-between text-grey-500 dark:text-grey-300">
-          <div
-            className={classNames(
-              totalSplitsPercentage > 100
-                ? 'text-warning-800 dark:text-warning-100'
-                : 'text-grey-900 dark:text-slate-100',
-            )}
+      <Allocation
+        value={editingSplits.map(splitToAllocation)}
+        onChange={onAllocationsChanged}
+        allocationCurrency={distributionLimitCurrency}
+        totalAllocationAmount={distributionLimit}
+      >
+        <Space className="w-full" direction="vertical" size="middle">
+          <OwnerPayoutCard payoutsSelection={payoutsSelection} />
+          <Allocation.List
+            allocationName={t`payout`}
+            availableModes={availablePayoutModesInModal}
           >
-            <Trans>Total: {totalSplitsPercentage.toFixed(2)}%</Trans>
-          </div>
-        </div>
-        <Button
-          type="dashed"
-          onClick={() => {
-            setAddSplitModalVisible(true)
-          }}
-          block
-          icon={<PlusCircleOutlined />}
+            {(
+              modal,
+              { allocations, removeAllocation, setSelectedAllocation },
+            ) => (
+              <>
+                {allocations
+                  .filter(alloc => !isLockedAllocation(alloc))
+                  .map(allocation => (
+                    <PayoutCard
+                      payoutsSelection={payoutsSelection}
+                      key={allocation.id}
+                      allocation={allocation}
+                      onDeleteClick={() => removeAllocation(allocation.id)}
+                      onClick={() => {
+                        setSelectedAllocation(allocation)
+                        modal.open()
+                      }}
+                    />
+                  ))}
+
+                {allocations.filter(isLockedAllocation).map(allocation => (
+                  <PayoutCard
+                    payoutsSelection={payoutsSelection}
+                    key={allocation.id}
+                    allocation={allocation}
+                  />
+                ))}
+              </>
+            )}
+          </Allocation.List>
+        </Space>
+      </Allocation>
+
+      {payoutsSelection === 'amounts' && (
+        <div
+          className={twMerge(
+            'flex items-center pt-4',
+            totalSplitsPercentageInvalid
+              ? 'text-warning-600 dark:text-warning-100'
+              : undefined,
+          )}
         >
           <span>
-            <Trans>Add payout recipient</Trans>
+            Current Funding Target:{' '}
+            {formatFundingTarget({
+              distributionLimitWad: distributionLimit,
+              distributionLimitCurrency,
+            })}
           </span>
-        </Button>
-      </Space>
-      <DistributionSplitModal
-        isEditPayoutPage
-        open={addSplitModalVisible}
-        distributionLimit={
-          distributionLimitIsInfinite
-            ? undefined
-            : formatWad(distributionLimit, { thousandsSeparator: '' })
-        }
-        onSplitsChanged={onSplitsChanged}
-        mode={'Add'}
-        splits={editingSplits}
-        currencyName={currencyName}
-        onClose={() => setAddSplitModalVisible(false)}
-      />
+          <Divider type="vertical" className="mx-4 h-6" />
+          <span>
+            Expenses:{' '}
+            {formatCurrencyAmount({
+              amount: expenses,
+              currency: distributionLimitCurrency,
+            })}
+          </span>
+        </div>
+      )}
+
+      {totalSplitsPercentageInvalid && (
+        <span className="text-error-500 dark:text-error-400">
+          {payoutsSelection === 'amounts' ? (
+            <Trans>Expenses cannot exceed the current funding target</Trans>
+          ) : (
+            <Trans>
+              Payouts cannot exceed 100%. Total:{' '}
+              {formatPercent(totalSplitsPercentage)}
+            </Trans>
+          )}
+        </span>
+      )}
     </>
   )
 }

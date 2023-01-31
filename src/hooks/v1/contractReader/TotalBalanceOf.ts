@@ -1,4 +1,5 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
+import { Contract } from '@ethersproject/contracts'
 import { V1ContractName } from 'models/v1/contracts'
 import { V1TerminalName } from 'models/v1/terminals'
 import { bigNumbersDiff } from 'utils/bigNumbers'
@@ -10,10 +11,11 @@ import useShouldUpdateTokens from './ShouldUpdateTokens'
 export default function useTotalBalanceOf(
   userAddress: string | undefined,
   projectId: BigNumberish | undefined,
-  terminalName: V1TerminalName | undefined,
+  terminalName?: V1TerminalName,
+  contract?: Contract,
 ) {
   return useContractReader<BigNumber>({
-    contract: V1ContractName.TicketBooth,
+    contract: contract ?? V1ContractName.TicketBooth,
     functionName: 'balanceOf',
     args:
       userAddress && projectId

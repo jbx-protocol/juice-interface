@@ -19,7 +19,6 @@ import {
   SubgraphQueryReturnTypes,
 } from '../utils/graph'
 
-const subgraphUrl = process.env.NEXT_PUBLIC_SUBGRAPH_URL
 const staleTime = 60 * 1000 // 60 seconds
 
 // This looks up the entity type and constructs an object
@@ -65,10 +64,11 @@ export function useInfiniteSubgraphQuery<
     readonly [string, InfiniteGraphQueryOpts<E, K>]
   >,
 ) {
-  if (!subgraphUrl) {
-    // This should _only_ happen in development
-    throw new Error('env.NEXT_PUBLIC_SUBGRAPH_URL is missing')
-  }
+  const subgraphUrl =
+    process.env.NEXT_SUBGRAPH_URL ?? process.env.NEXT_PUBLIC_SUBGRAPH_URL
+
+  if (!subgraphUrl) throw new Error('Subgraph URL is missing from .env')
+
   return useInfiniteQuery<
     GraphResult<E, K[]>,
     Error,

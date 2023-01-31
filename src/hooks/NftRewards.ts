@@ -13,12 +13,10 @@ import { decodeEncodedIPFSUri, openIpfsUrl } from 'utils/ipfs'
 
 export const DEFAULT_NFT_MAX_SUPPLY = ONE_BILLION - 1
 
-export async function fetchRewardTierFromIPFS({
+async function fetchRewardTierFromIPFS({
   tier,
-  index,
 }: {
   tier: JB721TierParams
-  index: number
 }): Promise<NftRewardTier> {
   const tierCid = decodeEncodedIPFSUri(tier.encodedIPFSUri)
   const url = openIpfsUrl(tierCid)
@@ -38,10 +36,12 @@ export async function fetchRewardTierFromIPFS({
     description: tierMetadata.description,
     externalLink: withHttps(tierMetadata.externalLink),
     contributionFloor: parseFloat(formatWad(tier.contributionFloor) ?? '0'),
-    tierRank: index + 1,
     maxSupply,
     remainingSupply: tier.remainingQuantity?.toNumber() ?? maxSupply,
     imageUrl: tierMetadata.image,
+    beneficiary: tier.reservedTokenBeneficiary,
+    reservedRate: tier.reservedRate.toNumber(),
+    votingWeight: tier.votingUnits.toNumber(),
   }
 }
 
@@ -62,10 +62,9 @@ export default function useNftRewards(
       }
 
       return await Promise.all(
-        tiers.map((tier, index) =>
+        tiers.map(tier =>
           fetchRewardTierFromIPFS({
             tier,
-            index,
           }),
         ),
       )

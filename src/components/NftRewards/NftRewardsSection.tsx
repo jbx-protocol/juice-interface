@@ -9,12 +9,12 @@ import SectionHeader from 'components/SectionHeader'
 import { CurrencyContext } from 'contexts/currencyContext'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { useHasNftRewards } from 'hooks/JB721Delegate/HasNftRewards'
 import useMobile from 'hooks/Mobile'
 import { useContext } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
-import { hasNftRewards, sumTierFloors } from 'utils/nftRewards'
+import { sumTierFloors } from 'utils/nftRewards'
 import { useModalFromUrlQuery } from '../modals/hooks/useModalFromUrlQuery'
 import { NftTierCard } from './NftTierCard'
 
@@ -25,7 +25,7 @@ function RewardTiersLoadingSkeleton() {
     <Row className="mt-4" gutter={isMobile ? 8 : 24}>
       {[...Array(3)]?.map((_, index) => (
         <Col md={8} xs={8} key={`rewardTierLoading-${index}`}>
-          <NftTierCard loading />
+          <NftTierCard loading onSelect={() => null} onDeselect={() => null} />
         </Col>
       ))}
     </Row>
@@ -53,7 +53,6 @@ export function NftRewardsSection() {
   } = useContext(CurrencyContext)
   const { form: payProjectForm } = useContext(PayProjectFormContext)
   const { projectMetadata } = useContext(ProjectMetadataContext)
-  const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
   const isMobile = useMobile()
 
   const { visible: nftPostPayModalVisible, hide: hideNftPostPayModal } =
@@ -72,11 +71,27 @@ export function NftRewardsSection() {
   const payAmountETH =
     payInCurrency === ETH ? payAmount : fromWad(converter.usdToWei(payAmount))
 
-  const handleTierDeselect = (tierId: number | undefined) => {
+  const hasNftRewards = useHasNftRewards()
+
+  const handleTierDeselect = (
+    tierId: number | undefined,
+    quantity: number, // quantity to deselect. Remove all instances of tierId if quantity=0
+  ) => {
     if (tierId === undefined || !rewardTiers || !payMetadata) return
-    const idxToRemove = payMetadata.tierIdsToMint.indexOf(tierId)
-    const newSelectedTierIds = payMetadata.tierIdsToMint
-    newSelectedTierIds.splice(idxToRemove, 1)
+
+    let count = 0
+    const newSelectedTierIds = (payMetadata?.tierIdsToMint ?? []).filter(id => {
+      // remove all instances
+      if (!quantity) {
+        return id !== tierId
+      }
+      // remove the specified number of instances of tierId
+      if (count < quantity && id === tierId) {
+        count++
+        return false
+      }
+      return true
+    })
 
     setPayMetadata?.({
       tierIdsToMint: newSelectedTierIds,
@@ -91,10 +106,16 @@ export function NftRewardsSection() {
     validatePayAmount?.(newPayAmount)
   }
 
-  const handleTierSelect = (tierId: number | undefined) => {
+  const handleTierSelect = (
+    tierId: number | undefined,
+    quantity: number, // quantity to select
+  ) => {
     if (!tierId || !rewardTiers) return
 
-    const newSelectedTierIds = [...(payMetadata?.tierIdsToMint ?? []), tierId]
+    const newSelectedTierIds = (payMetadata?.tierIdsToMint ?? []).concat(
+      Array(quantity).fill(tierId),
+    )
+
     setPayMetadata?.({
       tierIdsToMint: newSelectedTierIds,
       dontMint: false,
@@ -111,7 +132,7 @@ export function NftRewardsSection() {
     }
   }
 
-  if (!hasNftRewards(fundingCycleMetadata)) {
+  if (!hasNftRewards) {
     return null
   }
 
@@ -148,8 +169,12 @@ export function NftRewardsSection() {
                     ).length
                   }
                   maxQuantity={rewardTier.remainingSupply}
-                  onClick={() => handleTierSelect(rewardTier.id)}
-                  onRemove={() => handleTierDeselect(rewardTier.id)}
+                  onSelect={(quantity = 1) =>
+                    handleTierSelect(rewardTier.id, quantity)
+                  }
+                  onDeselect={(quantity = 0) =>
+                    handleTierDeselect(rewardTier.id, quantity)
+                  }
                 />
               </Col>
             ))}

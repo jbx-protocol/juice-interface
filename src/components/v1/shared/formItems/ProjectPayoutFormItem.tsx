@@ -6,9 +6,7 @@ import {
   NULL_ALLOCATOR_ADDRESS,
   V1_V3_ALLOCATOR_ADDRESS,
 } from 'constants/contracts/mainnet/Allocators'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { useState } from 'react'
-import { featureFlagEnabled } from 'utils/featureFlags'
 
 export function ProjectPayoutFormItem({
   initialHandle,
@@ -25,8 +23,6 @@ export function ProjectPayoutFormItem({
     initialAllocator,
   )
 
-  const allocatorsEnabled = featureFlagEnabled(FEATURE_FLAGS.SPLIT_ALLOCATORS)
-
   const V1ProjectHandleFormItem = (
     <FormItems.ProjectHandleFormItem
       name="handle"
@@ -41,9 +37,6 @@ export function ProjectPayoutFormItem({
     />
   )
 
-  if (!allocatorsEnabled) {
-    return V1ProjectHandleFormItem
-  }
   return (
     <>
       <Form.Item label={t`Project treasury version`} name={'allocator'}>

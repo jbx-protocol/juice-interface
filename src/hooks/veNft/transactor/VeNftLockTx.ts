@@ -6,7 +6,7 @@ import { TransactionContext } from 'contexts/transactionContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useVeNftContract } from 'hooks/veNft/VeNftContract'
 
-export type LockTx = TransactorInstance<{
+type LockTx = TransactorInstance<{
   account: string
   value: BigNumber
   lockDuration: BigNumberish

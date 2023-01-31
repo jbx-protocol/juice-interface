@@ -7,7 +7,7 @@ import { TransactorInstance } from 'hooks/Transactor'
 import { LaunchProjectData } from 'hooks/v2v3/transactor/LaunchProjectTx'
 import { useWallet } from 'hooks/Wallet'
 import omit from 'lodash/omit'
-import { JB721TierParams } from 'models/nftRewardTier'
+import { JB721GovernanceType, JB721TierParams } from 'models/nftRewardTier'
 import { JBPayDataSourceFundingCycleMetadata } from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
@@ -23,10 +23,11 @@ import { useV2ProjectTitle } from '../../v2v3/ProjectTitle'
 
 const DEFAULT_MEMO = ''
 
-export interface DeployTiered721DelegateData {
+interface DeployTiered721DelegateData {
   collectionUri: string
   collectionName: string
   collectionSymbol: string
+  governanceType: JB721GovernanceType
   tiers: JB721TierParams[]
 }
 
@@ -49,6 +50,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
         collectionName,
         collectionSymbol,
         tiers,
+        governanceType,
       },
       projectData: {
         projectMetadataCID,
@@ -57,6 +59,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
         fundAccessConstraints,
         groupedSplits = [],
         mustStartAtOrAfter = DEFAULT_MUST_START_AT_OR_AFTER,
+        owner,
       },
     },
     txOpts,
@@ -91,13 +94,15 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
 
       return Promise.resolve(false)
     }
+    const _owner = owner?.length ? owner : userAddress
 
     const delegateData = buildJBDeployTiered721DelegateData({
       collectionUri,
       collectionName,
       collectionSymbol,
       tiers,
-      ownerAddress: userAddress,
+      ownerAddress: _owner,
+      governanceType,
       contractAddresses: {
         JBDirectoryAddress: getAddress(contracts.JBDirectory.address),
         JBFundingCycleStoreAddress: getAddress(
@@ -115,7 +120,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
     )
 
     const args = [
-      userAddress, // _owner
+      _owner, // _owner
       delegateData, // _deployTiered721DelegateData
       {
         projectMetadata: {

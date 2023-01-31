@@ -308,6 +308,26 @@ export function AllowSetTerminalsStatistic({
   )
 }
 
+export function PauseTransfersStatistic({
+  pauseTransfers,
+}: {
+  pauseTransfers: boolean
+}) {
+  return (
+    <Statistic
+      title={
+        <TooltipLabel
+          label={t`Pause project token transfers`}
+          tip={t`Project token transfers are ${
+            pauseTransfers ? 'paused' : 'unpaused'
+          }. This does not apply to ERC-20 tokens if issued.`}
+        />
+      }
+      valueRender={() => (pauseTransfers ? t`Allowed` : t`Disabled`)}
+    />
+  )
+}
+
 export function ReconfigurationStatistic({
   ballotAddress,
 }: {
@@ -352,14 +372,14 @@ export function DistributionSplitsStatistic({
   currency,
   totalValue,
   projectOwnerAddress,
-  showSplitValues,
+  showAmounts,
   fundingCycleDuration,
 }: {
   splits: Split[]
   currency: BigNumber | undefined
   totalValue: BigNumber | undefined
   projectOwnerAddress: string | undefined
-  showSplitValues: boolean
+  showAmounts: boolean
   fundingCycleDuration: BigNumber | undefined
 }) {
   const formattedDuration = detailedTimeString({
@@ -388,7 +408,7 @@ export function DistributionSplitsStatistic({
             currency={currency}
             totalValue={totalValue}
             projectOwnerAddress={projectOwnerAddress}
-            showSplitValues={showSplitValues}
+            showAmounts={showAmounts}
             valueFormatProps={{ precision: 2 }}
           />
         </div>

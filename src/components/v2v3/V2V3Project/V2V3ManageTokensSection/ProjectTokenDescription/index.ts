@@ -1,1 +1,1 @@
-export { ProjectTokenDescription } from './ProjectTokenDescription'
+export * from './ProjectTokenDescription'

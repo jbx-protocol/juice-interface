@@ -21,6 +21,9 @@ export const RewardsReview = () => {
         maximumSupply: t.maxSupply,
         url: t.externalLink,
         imgUrl: t.imageUrl,
+        beneficiary: t.beneficiary,
+        reservedRate: t.reservedRate,
+        votingWeight: t.votingWeight,
       })) ?? []
     )
   }, [rewardTiers])
@@ -37,6 +40,9 @@ export const RewardsReview = () => {
             name: reward.title,
             externalLink: reward.url,
             description: reward.description,
+            beneficiary: reward.beneficiary,
+            reservedRate: reward.reservedRate,
+            votingWeight: reward.votingWeight,
           })),
         ),
       )

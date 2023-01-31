@@ -40,7 +40,7 @@ function ArchivedBadge() {
 
 function useProjectCardData(project?: ProjectCardProject | BigNumber) {
   // Get ProjectCardProject object if this component was passed a projectId (bigNumber)
-  const projectResponse: ProjectCardProject[] | undefined = useSubgraphQuery(
+  const projectResponse = useSubgraphQuery(
     BigNumber.isBigNumber(project)
       ? {
           entity: 'project',

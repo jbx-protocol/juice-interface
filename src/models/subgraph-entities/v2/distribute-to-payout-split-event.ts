@@ -1,19 +1,13 @@
 import { BigNumber } from '@ethersproject/bignumber'
 
-import {
-  BaseEventEntity,
-  BaseEventEntityJson,
-  parseBaseEventEntityJson,
-} from '../base/base-event-entity'
+import { BaseEventEntity } from '../base/base-event-entity'
 import {
   BaseProjectEntity,
-  BaseProjectEntityJson,
   parseBaseProjectEntityJson,
 } from '../base/base-project-entity'
-import {
-  parseTerminalEventEntity,
-  TerminalEventEntity,
-} from '../base/terminal-event'
+import { Json, primitives } from '../../json'
+import { TerminalEventEntity } from '../base/terminal-event'
+import { parseBigNumberKeyVals } from 'utils/graph'
 
 export interface DistributeToPayoutSplitEvent
   extends BaseEventEntity,
@@ -33,28 +27,10 @@ export interface DistributeToPayoutSplitEvent
   distributePayoutsEvent: string
 }
 
-export type DistributeToPayoutSplitEventJson = Partial<
-  Record<keyof DistributeToPayoutSplitEvent, string> &
-    BaseEventEntityJson &
-    BaseProjectEntityJson
->
-
 export const parseDistributeToPayoutSplitEventJson = (
-  j: DistributeToPayoutSplitEventJson,
-): Partial<DistributeToPayoutSplitEvent> => ({
-  ...parseTerminalEventEntity(j),
-  ...parseBaseEventEntityJson(j),
+  j: Json<DistributeToPayoutSplitEvent>,
+): DistributeToPayoutSplitEvent => ({
+  ...primitives(j),
   ...parseBaseProjectEntityJson(j),
-  domain: j.domain ? BigNumber.from(j.domain) : undefined,
-  group: j.group ? BigNumber.from(j.group) : undefined,
-  amount: j.amount ? BigNumber.from(j.amount) : undefined,
-  amountUSD: j.amountUSD ? BigNumber.from(j.amountUSD) : undefined,
-  preferClaimed: !!j.preferClaimed,
-  preferAddToBalance: !!j.preferAddToBalance,
-  percent: j.percent ? parseInt(j.percent) : undefined,
-  splitProjectId: j.splitProjectId ? parseInt(j.splitProjectId) : undefined,
-  beneficiary: j.beneficiary,
-  lockedUntil: j.lockedUntil ? parseInt(j.lockedUntil) : undefined,
-  allocator: j.allocator,
-  distributePayoutsEvent: j.distributePayoutsEvent,
+  ...parseBigNumberKeyVals(j, ['domain', 'group', 'amount', 'amountUSD']),
 })

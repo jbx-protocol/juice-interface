@@ -18,6 +18,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { formatWad } from 'utils/format/formatNumber'
+import { v2v3ProjectRoute } from 'utils/routes'
 import CurrencySymbol from './CurrencySymbol'
 
 import Loading from './Loading'
@@ -63,14 +64,12 @@ export default function QuickProjectSearch() {
     : isLoadingGraphSearch
 
   const goToProject = useCallback(() => {
-    if (highlightIndex === undefined) return
+    if (highlightIndex === undefined || !searchResults?.length) return
 
-    const project = searchResults?.[highlightIndex]
-
-    if (!project) return
+    const { projectId, handle, pv } = searchResults[highlightIndex]
 
     router.push(
-      project.pv === PV_V2 ? `/@${project.handle}` : `/p/${project.handle}`,
+      pv === '2' ? v2v3ProjectRoute({ projectId, handle }) : `/p/${handle}`,
     )
   }, [router, searchResults, highlightIndex])
 

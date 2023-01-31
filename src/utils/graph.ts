@@ -1,298 +1,63 @@
-// TODO: Should we fix these ts-ignore. At very least, we should consider documenting why it is done
-/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { BigNumber } from '@ethersproject/bignumber'
+import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber'
 import axios from 'axios'
+import {
+  SGEntity,
+  SGEntityKey,
+  SGEntityName,
+  SGError,
+  SGQueryOpts,
+  SGResponseData,
+  SGWhereArg,
+} from 'models/graph'
+import { Json } from 'models/json'
 import { PV } from 'models/pv'
-import {
-  DistributeToPayoutModEvent,
-  DistributeToPayoutModEventJson,
-  parseDistributeToPayoutModEvent,
-} from 'models/subgraph-entities/v1/distribute-to-payout-mod-event'
-import {
-  DistributeToTicketModEvent,
-  DistributeToTicketModEventJson,
-  parseDistributeToTicketModEvent,
-} from 'models/subgraph-entities/v1/distribute-to-ticket-mod-event'
-import {
-  parsePrintReservesEventJson,
-  PrintReservesEvent,
-  PrintReservesEventJson,
-} from 'models/subgraph-entities/v1/print-reserves-event'
-import {
-  parseTapEventJson,
-  TapEvent,
-  TapEventJson,
-} from 'models/subgraph-entities/v1/tap-event'
-import {
-  V1ConfigureEvent,
-  V1ConfigureEventJson,
-} from 'models/subgraph-entities/v1/v1-configure'
-import {
-  ConfigureEvent,
-  ConfigureEventJson,
-} from 'models/subgraph-entities/v2/configure'
-import {
-  DeployETHERC20ProjectPayerEvent,
-  DeployETHERC20ProjectPayerEventJson,
-  parseDeployETHERC20ProjectPayerEventJson,
-} from 'models/subgraph-entities/v2/deploy-eth-erc20-project-payer-event'
-import {
-  DistributePayoutsEvent,
-  DistributePayoutsEventJson,
-  parseDistributePayoutsEventJson,
-} from 'models/subgraph-entities/v2/distribute-payouts-event'
-import {
-  DistributeReservedTokensEvent,
-  DistributeReservedTokensEventJson,
-  parseDistributeReservedTokensEventJson,
-} from 'models/subgraph-entities/v2/distribute-reserved-tokens-event'
-import {
-  DistributeToPayoutSplitEvent,
-  DistributeToPayoutSplitEventJson,
-  parseDistributeToPayoutSplitEventJson,
-} from 'models/subgraph-entities/v2/distribute-to-payout-split-event'
-import {
-  DistributeToReservedTokenSplitEvent,
-  DistributeToReservedTokenSplitEventJson,
-  parseDistributeToReservedTokenSplitEventJson,
-} from 'models/subgraph-entities/v2/distribute-to-reserved-token-split-event'
-import {
-  parseUseAllowanceEventJson,
-  UseAllowanceEvent,
-  UseAllowanceEventJson,
-} from 'models/subgraph-entities/v2/use-allowance-event'
-import {
-  parseVeNftContractJson,
-  VeNftContract,
-  VeNftContractJson,
-} from 'models/subgraph-entities/v2/venft-contract'
-import {
-  parseVeNftTokenJson,
-  VeNftToken,
-  VeNftTokenJson,
-} from 'models/subgraph-entities/v2/venft-token'
-import {
-  AddToBalanceEvent,
-  AddToBalanceEventJson,
-  parseAddToBalanceEventJson,
-} from 'models/subgraph-entities/vX/add-to-balance-event'
-import {
-  DeployedERC20Event,
-  DeployedERC20EventJson,
-  parseDeployedERC20EventJson,
-} from 'models/subgraph-entities/vX/deployed-erc20-event'
-import {
-  MintTokensEvent,
-  MintTokensEventJson,
-  parseMintTokensEventJson,
-} from 'models/subgraph-entities/vX/mint-tokens-event'
-import {
-  parseParticipantJson,
-  Participant,
-  ParticipantJson,
-} from 'models/subgraph-entities/vX/participant'
-import {
-  parsePayEventJson,
-  PayEvent,
-  PayEventJson,
-} from 'models/subgraph-entities/vX/pay-event'
-import {
-  parseProjectJson,
-  Project,
-  ProjectJson,
-} from 'models/subgraph-entities/vX/project'
-import {
-  parseProjectCreateEventJson,
-  ProjectCreateEvent,
-  ProjectCreateEventJson,
-} from 'models/subgraph-entities/vX/project-create-event'
-import {
-  parseProjectEventJson,
-  ProjectEvent,
-  ProjectEventJson,
-} from 'models/subgraph-entities/vX/project-event'
-import {
-  parseProtocolLogJson,
-  ProtocolLog,
-  ProtocolLogJson,
-} from 'models/subgraph-entities/vX/protocol-log'
-import {
-  parseRedeemEventJson,
-  RedeemEvent,
-  RedeemEventJson,
-} from 'models/subgraph-entities/vX/redeem-event'
+import { parseDistributeToPayoutModEvent } from 'models/subgraph-entities/v1/distribute-to-payout-mod-event'
+import { parseDistributeToTicketModEvent } from 'models/subgraph-entities/v1/distribute-to-ticket-mod-event'
+import { parsePrintReservesEventJson } from 'models/subgraph-entities/v1/print-reserves-event'
+import { parseTapEventJson } from 'models/subgraph-entities/v1/tap-event'
+import { parseV1ConfigureEventJson } from 'models/subgraph-entities/v1/v1-configure'
+import { parseConfigureEventJson } from 'models/subgraph-entities/v2/configure'
+import { parseDeployETHERC20ProjectPayerEventJson } from 'models/subgraph-entities/v2/deploy-eth-erc20-project-payer-event'
+import { parseDistributePayoutsEventJson } from 'models/subgraph-entities/v2/distribute-payouts-event'
+import { parseDistributeReservedTokensEventJson } from 'models/subgraph-entities/v2/distribute-reserved-tokens-event'
+import { parseDistributeToPayoutSplitEventJson } from 'models/subgraph-entities/v2/distribute-to-payout-split-event'
+import { parseDistributeToReservedTokenSplitEventJson } from 'models/subgraph-entities/v2/distribute-to-reserved-token-split-event'
+import { parseETHERC20ProjectPayer } from 'models/subgraph-entities/v2/eth-erc20-project-payer'
+import { parseJB721DelegateTokenJson } from 'models/subgraph-entities/v2/jb-721-delegate-tokens'
+import { parseUseAllowanceEventJson } from 'models/subgraph-entities/v2/use-allowance-event'
+import { parseVeNftContractJson } from 'models/subgraph-entities/v2/venft-contract'
+import { parseVeNftTokenJson } from 'models/subgraph-entities/v2/venft-token'
+import { parseAddToBalanceEventJson } from 'models/subgraph-entities/vX/add-to-balance-event'
+import { parseDeployedERC20EventJson } from 'models/subgraph-entities/vX/deployed-erc20-event'
+import { parseMintTokensEventJson } from 'models/subgraph-entities/vX/mint-tokens-event'
+import { parseParticipantJson } from 'models/subgraph-entities/vX/participant'
+import { parsePayEventJson } from 'models/subgraph-entities/vX/pay-event'
+import { parseProjectJson } from 'models/subgraph-entities/vX/project'
+import { parseProjectCreateEventJson } from 'models/subgraph-entities/vX/project-create-event'
+import { parseProjectEventJson } from 'models/subgraph-entities/vX/project-event'
+import { parseProtocolLogJson } from 'models/subgraph-entities/vX/protocol-log'
+import { parseRedeemEventJson } from 'models/subgraph-entities/vX/redeem-event'
 
-import {
-  ETHERC20ProjectPayer,
-  ETHERC20ProjectPayerJson,
-  parseETHERC20ProjectPayer,
-} from '../models/subgraph-entities/v2/eth-erc20-project-payer'
-import {
-  JB721DelegateToken,
-  JB721DelegateTokenJson,
-  parseJB721DelegateTokens,
-} from '../models/subgraph-entities/v2/jb-721-delegate-tokens'
-
-export interface SubgraphEntities {
-  protocolLog: ProtocolLog
-  projectEvent: ProjectEvent
-  projectCreateEvent: ProjectCreateEvent
-  deployedERC20Event: DeployedERC20Event
-  project: Project
-  projectSearch: Project
-  payEvent: PayEvent
-  addToBalanceEvent: AddToBalanceEvent
-  redeemEvent: RedeemEvent
-  participant: Participant
-  tapEvent: TapEvent
-  distributeToPayoutModEvent: DistributeToPayoutModEvent
-  distributeToTicketModEvent: DistributeToTicketModEvent
-  printReservesEvent: PrintReservesEvent
-  mintTokensEvent: MintTokensEvent
-  distributePayoutsEvent: DistributePayoutsEvent
-  distributeReservedTokensEvent: DistributeReservedTokensEvent
-  distributeToReservedTokenSplitEvent: DistributeToReservedTokenSplitEvent
-  distributeToPayoutSplitEvent: DistributeToPayoutSplitEvent
-  useAllowanceEvent: UseAllowanceEvent
-  etherc20ProjectPayer: ETHERC20ProjectPayer
-  deployETHERC20ProjectPayerEvent: DeployETHERC20ProjectPayerEvent
-  veNftToken: VeNftToken
-  veNftContract: VeNftContract
-  configureEvent: ConfigureEvent
-  v1ConfigureEvent: V1ConfigureEvent
-  jb721DelegateToken: JB721DelegateToken
-}
-
-export interface SubgraphQueryReturnTypes {
-  protocolLog: { protocolLogs: ProtocolLogJson[] }
-  projectEvent: { projectEvents: ProjectEventJson[] }
-  projectCreateEvent: { projectCreateEvents: ProjectCreateEventJson[] }
-  deployedERC20Event: { deployedERC20Events: DeployedERC20EventJson[] }
-  project: { projects: ProjectJson[] }
-  projectSearch: { projectSearch: ProjectJson[] }
-  payEvent: { payEvents: PayEventJson[] }
-  addToBalanceEvent: { addToBalanceEvents: AddToBalanceEventJson[] }
-  redeemEvent: { redeemEvents: RedeemEventJson[] }
-  participant: { participants: ParticipantJson[] }
-  tapEvent: { tapEvents: TapEventJson[] }
-  distributeToTicketModEvent: {
-    distributeToTicketModEvents: DistributeToTicketModEventJson[]
-  }
-  distributeToPayoutModEvent: {
-    distributeToPayoutModEvents: DistributeToPayoutModEventJson[]
-  }
-  printReservesEvent: {
-    printReservesEvents: PrintReservesEventJson[]
-  }
-  distributePayoutsEvent: {
-    distributePayoutsEvent: DistributePayoutsEventJson[]
-  }
-  distributeReservedTokensEvent: {
-    distributeReservedTokensEvents: DistributeReservedTokensEventJson[]
-  }
-  distributeToReservedTokenSplitEvent: {
-    distributeToReservedTokenSplitEvents: DistributeToReservedTokenSplitEventJson[]
-  }
-  distributeToPayoutSplitEvent: {
-    distributeToPayoutSplitEvents: DistributeToPayoutSplitEventJson[]
-  }
-  useAllowanceEvent: { useAllowanceEvents: UseAllowanceEventJson[] }
-  mintTokensEvent: { mintTokensEvent: MintTokensEventJson[] }
-  etherc20ProjectPayer: { etherc20ProjectPayers: ETHERC20ProjectPayerJson[] }
-  deployETHERC20ProjectPayerEvent: {
-    deployETHERC20ProjectPayerEvents: DeployETHERC20ProjectPayerEventJson[]
-  }
-  veNftToken: { veNftTokens: VeNftTokenJson[] }
-  veNftContract: { veNftContracts: VeNftContractJson[] }
-  configureEvent: { configureEvents: ConfigureEventJson[] }
-  v1ConfigureEvent: { v1ConfigureEvents: V1ConfigureEventJson[] }
-  jb721DelegateToken: { jb721DelegateTokens: JB721DelegateTokenJson[] }
-}
-
-export type EntityKey = keyof SubgraphEntities
-
-export interface SubgraphError {
-  locations: { column: number; line: number }[]
-  message: string
-}
-
-export type OrderDirection = 'asc' | 'desc'
-
-export type WhereConfig<E extends EntityKey> = {
-  key: EntityKeys<E>
-  value: string | number | boolean | null | (string | number | boolean | null)[]
-  operator?:
-    | 'not'
-    | 'gt'
-    | 'lt'
-    | 'gte'
-    | 'lte'
-    | 'in'
-    | 'not_in'
-    | 'contains'
-    | 'not_contains'
-    | 'starts_with'
-    | 'ends_with'
-    | 'not_starts_with'
-    | 'not_ends_with'
-  nested?: boolean
-}
-
-type BlockConfig = {
-  number?: number
-  number_gte?: number
-  hash?: string
-}
-
-export type EntityKeys<E extends EntityKey> = keyof SubgraphEntities[E]
-
-export interface GraphQueryOpts<E extends EntityKey, K extends EntityKeys<E>> {
-  entity: E
-  text?: string
-  first?: number
-  skip?: number
-  orderBy?: keyof SubgraphEntities[E]
-  block?: BlockConfig
-  url?: string
-
-  // `keys` can be a mix of the entity's keys or an entity specifier with its own keys
-  keys: (
-    | K
-    | {
-        entity: EntityKey
-        keys: string[] // hard to type accurate nested keys. All bets are off when this is used.
-      }
-  )[]
-  orderDirection?: OrderDirection
-  where?: WhereConfig<E> | WhereConfig<E>[]
-}
-
-// Re-type GraphQueryOpts to remove skip and add pageSize.
-// This is so we can calculate our own `skip` value based on
-// the react-query managed page number multiplied by the provided
-// page size.
-export type InfiniteGraphQueryOpts<
-  E extends EntityKey,
-  K extends EntityKeys<E>,
-> = Omit<GraphQueryOpts<E, K>, 'skip'> & {
-  pageSize: number
-}
-
-// https://thegraph.com/docs/graphql-api#filtering
-export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
-  opts: GraphQueryOpts<E, K>,
+/**
+ * Format a string used to define a subgraph query
+ */
+export const formatGraphQuery = <
+  E extends SGEntityName,
+  K extends SGEntityKey<E>,
+>(
+  opts: SGQueryOpts<E, K>,
 ) => {
+  // Reference: https://thegraph.com/docs/graphql-api#filtering
   if (!opts) return
 
   let args = ''
 
-  const addArg = (
-    name: string,
-    value?: string | number | keyof SubgraphEntities[E],
-  ) => {
+  const addArg = (name: string, value?: string | number | SGEntityKey<E>) => {
     if (value === undefined) return
     args += (args.length ? ', ' : '') + `${name}: ` + String(value)
   }
-  const formatWhere = (where: WhereConfig<E>) =>
+  const formatWhere = (where: SGWhereArg<E>) =>
     `${String(where.key)}${where.nested ? '_' : ''}${
       where.operator ? '_' + where.operator : ''
     }:` +
@@ -337,217 +102,173 @@ export const formatGraphQuery = <E extends EntityKey, K extends EntityKeys<E>>(
       typeof key === 'number' ||
       typeof key === 'symbol'
         ? acc + ' ' + key.toString()
-        : acc + ` ${key.entity} { ${key.keys.join(' ')} }`,
+        : acc + ` ${key.entity.toString()} { ${key.keys.join(' ')} }`,
     '',
   )} } }`
   return res
 }
 
-export function formatGraphResponse<E extends EntityKey>(
-  entity: E,
-  response: SubgraphQueryReturnTypes[E],
-): SubgraphEntities[E][] {
-  if (!response || typeof response !== 'object') {
-    return []
+const subgraphUrl = process.env.NEXT_PUBLIC_SUBGRAPH_URL
+
+/**
+ * Parse a list of entities from a subgraph query JSON response object
+ * @param entityName Name of entities to retrieve
+ * @param response Response data from subgraph query
+ * @returns List of raw JSON subgraph entities
+ */
+export function entitiesFromSGResponse<
+  E extends SGEntityName,
+  K extends SGEntityKey<E>,
+>(entityName: E, response: SGResponseData<E, K>) {
+  let json: Json<SGEntity<E, K>>[] = []
+
+  const key = (entityName + 's') as `${E}s`
+
+  if (response && typeof response === 'object' && key in response) {
+    json = response[key]
   }
 
-  // This code works perfectly, but there's an unusual TypeScript issue that
-  // makes it appear type unsafe...
-  //
-  // For example, `response.projects` is a ProjectJson[], as dictated by
-  // SubgraphQueryReturnTypes['projects']
-  // We then map over that array to return a Project[], but for some reason,
-  // TypeScript isn't equating `Project` with `SubgraphEntities['project']`,
-  // even though they're the same type.
-  //
-  // If you think you can solve it and remove the @ts-ignore, be my guest.
-  // My best guess is a conditional resolver type, ie:
-  // type EntityResolver<E extends EntityKey> = E extends 'project' ? Project : ...
-  // in favor of the main SubgraphEntities type. I tried it, though, to no avail.
-
-  switch (entity) {
-    case 'protocolLog':
-      if ('protocolLogs' in response) {
-        // @ts-ignore
-        return response.protocolLogs.map(parseProtocolLogJson)
-      }
-      break
-    case 'project':
-      if ('projects' in response) {
-        // @ts-ignore
-        return response.projects.map(parseProjectJson)
-      }
-      break
-    case 'projectEvent':
-      if ('projectEvents' in response) {
-        // @ts-ignore
-        return response.projectEvents.map(parseProjectEventJson)
-      }
-      break
-    case 'projectCreateEvent':
-      if ('projectCreateEvents' in response) {
-        // @ts-ignore
-        return response.projectCreateEvents.map(parseProjectCreateEventJson)
-      }
-      break
-    case 'projectSearch':
-      if ('projectSearch' in response) {
-        // @ts-ignore
-        return response.projectSearch.map(parseProjectJson)
-      }
-      break
-    case 'payEvent':
-      if ('payEvents' in response) {
-        // @ts-ignore
-        return response.payEvents.map(parsePayEventJson)
-      }
-      break
-    case 'addToBalanceEvent':
-      if ('addToBalanceEvents' in response) {
-        // @ts-ignore
-        return response.addToBalanceEvents.map(parseAddToBalanceEventJson)
-      }
-      break
-    case 'redeemEvent':
-      if ('redeemEvents' in response) {
-        // @ts-ignore
-        return response.redeemEvents.map(parseRedeemEventJson)
-      }
-      break
-    case 'participant':
-      if ('participants' in response) {
-        // @ts-ignore
-        return response.participants.map(parseParticipantJson)
-      }
-      break
-    case 'tapEvent':
-      if ('tapEvents' in response) {
-        // @ts-ignore
-        return response.tapEvents.map(parseTapEventJson)
-      }
-      break
-    case 'distributeToPayoutModEvent':
-      if ('distributeToPayoutModEvents' in response) {
-        // @ts-ignore
-        return response.distributeToPayoutModEvents.map(
-          parseDistributeToPayoutModEvent,
-        )
-      }
-      break
-    case 'distributeToTicketModEvent':
-      if ('distributeToTicketModEvents' in response) {
-        // @ts-ignore
-        return response.distributeToTicketModEvents.map(
-          parseDistributeToTicketModEvent,
-        )
-      }
-      break
-    case 'printReservesEvent':
-      if ('printReservesEvents' in response) {
-        // @ts-ignore
-        return response.printReservesEvents.map(parsePrintReservesEventJson)
-      }
-      break
-    case 'mintTokensEvent':
-      if ('mintTokensEvents' in response) {
-        // @ts-ignore
-        return response.mintTokensEvents.map(parseMintTokensEventJson)
-      }
-      break
-    case 'deployedERC20Event':
-      if ('deployedERC20Events' in response) {
-        // @ts-ignore
-        return response.deployedERC20Events.map(parseDeployedERC20EventJson)
-      }
-      break
-    case 'distributePayoutsEvent':
-      if ('distributePayoutsEvents' in response) {
-        // @ts-ignore
-        return response.distributePayoutsEvents.map(
-          parseDistributePayoutsEventJson,
-        )
-      }
-      break
-    case 'distributeReservedTokensEvent':
-      if ('distributeReservedTokensEvents' in response) {
-        // @ts-ignore
-        return response.distributeReservedTokensEvents.map(
-          parseDistributeReservedTokensEventJson,
-        )
-      }
-      break
-    case 'distributeToReservedTokenSplitEvent':
-      if ('distributeToReservedTokenSplitEvents' in response) {
-        // @ts-ignore
-        return response.distributeToReservedTokenSplitEvents.map(
-          parseDistributeToReservedTokenSplitEventJson,
-        )
-      }
-      break
-    case 'distributeToPayoutSplitEvent':
-      if ('distributeToPayoutSplitEvents' in response) {
-        // @ts-ignore
-        return response.distributeToPayoutSplitEvents.map(
-          parseDistributeToPayoutSplitEventJson,
-        )
-      }
-      break
-    case 'useAllowanceEvent':
-      if ('useAllowanceEvents' in response) {
-        // @ts-ignore
-        return response.useAllowanceEvents.map(parseUseAllowanceEventJson)
-      }
-      break
-    case 'etherc20ProjectPayer':
-      if ('etherc20ProjectPayers' in response) {
-        // @ts-ignore
-        return response.etherc20ProjectPayers.map(parseETHERC20ProjectPayer)
-      }
-      break
-    case 'deployETHERC20ProjectPayerEvent':
-      if ('deployETHERC20ProjectPayerEvents' in response) {
-        // @ts-ignore
-        return response.deployETHERC20ProjectPayerEvents.map(
-          parseDeployETHERC20ProjectPayerEventJson,
-        )
-      }
-      break
-    case 'veNftToken':
-      if ('veNftTokens' in response) {
-        // @ts-ignore
-        return response.veNftTokens.map(parseVeNftTokenJson)
-      }
-      break
-    case 'veNftContract':
-      if ('veNftContracts' in response) {
-        // @ts-ignore
-        return response.veNftContracts.map(parseVeNftContractJson)
-      }
-      break
-    case 'jb721DelegateToken':
-      if ('jb721DelegateTokens' in response) {
-        // @ts-ignore
-        return response.jb721DelegateTokens.map(parseJB721DelegateTokens)
-      }
-  }
-
-  return []
+  return json
 }
 
+/**
+ * Format a subgraph entity from raw Json
+ * @param entityName Name of entity
+ * @param entity Raw JSON subgraph entities
+ * @returns Formatted subgraph entity
+ */
+export function parseSubgraphEntity<
+  E extends SGEntityName,
+  K extends SGEntityKey<E>,
+>(entityName: E, entity: Json<SGEntity<E, K>>) {
+  let fn
+
+  switch (entityName) {
+    case 'addToBalanceEvent':
+      fn = parseAddToBalanceEventJson
+      break
+    case 'configureEvent':
+      fn = parseConfigureEventJson
+      break
+    case 'deployedERC20Event':
+      fn = parseDeployedERC20EventJson
+      break
+    case 'deployETHERC20ProjectPayerEvent':
+      fn = parseDeployETHERC20ProjectPayerEventJson
+      break
+    case 'distributePayoutsEvent':
+      fn = parseDistributePayoutsEventJson
+      break
+    case 'distributeReservedTokensEvent':
+      fn = parseDistributeReservedTokensEventJson
+      break
+    case 'distributeToPayoutModEvent':
+      fn = parseDistributeToPayoutModEvent
+      break
+    case 'distributeToPayoutSplitEvent':
+      fn = parseDistributeToPayoutSplitEventJson
+      break
+    case 'distributeToReservedTokenSplitEvent':
+      fn = parseDistributeToReservedTokenSplitEventJson
+      break
+    case 'distributeToTicketModEvent':
+      fn = parseDistributeToTicketModEvent
+      break
+    case 'etherc20ProjectPayer':
+      fn = parseETHERC20ProjectPayer
+      break
+    case 'jb721DelegateToken':
+      fn = parseJB721DelegateTokenJson
+      break
+    case 'mintTokensEvent':
+      fn = parseMintTokensEventJson
+      break
+    case 'printReservesEvent':
+      fn = parsePrintReservesEventJson
+      break
+    case 'payEvent':
+      fn = parsePayEventJson
+      break
+    case 'project':
+      fn = parseProjectJson
+      break
+    case 'projectCreateEvent':
+      fn = parseProjectCreateEventJson
+      break
+    case 'projectEvent':
+      fn = parseProjectEventJson
+      break
+    case 'protocolLog':
+      fn = parseProtocolLogJson
+      break
+    case 'projectSearch':
+      fn = parseProjectJson
+      break
+    case 'redeemEvent':
+      fn = parseRedeemEventJson
+      break
+    case 'participant':
+      fn = parseParticipantJson
+      break
+    case 'tapEvent':
+      fn = parseTapEventJson
+      break
+    case 'useAllowanceEvent':
+      fn = parseUseAllowanceEventJson
+      break
+    case 'v1ConfigureEvent':
+      fn = parseV1ConfigureEventJson
+      break
+    case 'veNftContract':
+      fn = parseVeNftContractJson
+      break
+    case 'veNftToken':
+      fn = parseVeNftTokenJson
+      break
+    default:
+      throw Error(`parseSubgraphEntity(): Unhandled "${entityName}"`)
+  }
+
+  return (fn as <T = SGEntity<E, K>>(j: Json<T>) => T)(entity)
+}
+
+/**
+ * Query subgraph and return list of formatted entities
+ */
 export async function querySubgraph<
-  E extends EntityKey,
-  K extends EntityKeys<E>,
->(opts: GraphQueryOpts<E, K> | null) {
-  const subgraphUrl =
-    process.env.NEXT_SUBGRAPH_URL ?? process.env.NEXT_PUBLIC_SUBGRAPH_URL
-
-  if (!subgraphUrl) throw new Error('Subgraph URL is missing from .env')
-
+  E extends SGEntityName,
+  K extends SGEntityKey<E>,
+>(opts: SGQueryOpts<E, K> | null) {
   if (!opts) return []
 
+  const { entity: entityName } = opts
+
+  const subgraphResponse = await querySubgraphRaw(opts)
+
+  if (!subgraphResponse) return []
+
+  const jsonEntities = entitiesFromSGResponse(entityName, subgraphResponse)
+
+  return jsonEntities.map(j => parseSubgraphEntity(entityName, j))
+}
+
+/**
+ * Query subgraph and return list of raw entity json
+ */
+export async function querySubgraphRaw<
+  E extends SGEntityName,
+  K extends SGEntityKey<E>,
+>(opts: SGQueryOpts<E, K> | null) {
+  if (!subgraphUrl) {
+    // This should _only_ happen in development
+    throw new Error('env.NEXT_PUBLIC_SUBGRAPH_URL is missing')
+  }
+
+  if (!opts) return
+
   const response = await axios.post<{
-    errors?: SubgraphError | SubgraphError[]
-    data: SubgraphQueryReturnTypes[E]
+    errors?: SGError | SGError[]
+    data: SGResponseData<E, K>
   }>(
     opts.url ?? subgraphUrl,
     {
@@ -565,16 +286,16 @@ export async function querySubgraph<
     )
   }
 
-  return formatGraphResponse(opts.entity, response.data?.data)
+  return response.data.data
 }
 
 /** Repeats a max page size query until all entities have been returned. */
 export async function querySubgraphExhaustive<
-  E extends EntityKey,
-  K extends EntityKeys<E>,
->(opts: Omit<GraphQueryOpts<E, K>, 'first' | 'skip'> | null) {
+  E extends SGEntityName,
+  K extends SGEntityKey<E>,
+>(opts: Omit<SGQueryOpts<E, K>, 'first' | 'skip'> | null) {
   const pageSize = 1000
-  const entities: SubgraphEntities[E][] = []
+  const entities: Pick<SGEntity<E>, K>[] = []
 
   const query = async (page: number) => {
     if (!opts) return
@@ -601,8 +322,49 @@ export async function querySubgraphExhaustive<
   return entities
 }
 
-const isPluralQuery = (key: EntityKey): boolean => {
-  if (key === 'projectSearch') return false
+/** Repeats a max page size query until all entities have been returned, without formatting the response data. */
+export async function querySubgraphExhaustiveRaw<
+  E extends SGEntityName,
+  K extends SGEntityKey<E>,
+>(opts: Omit<SGQueryOpts<E, K>, 'first' | 'skip'> | null) {
+  const pageSize = 1000
+  const entities: Json<SGEntity<E, K>>[] = []
+
+  const query = async (page: number) => {
+    if (!opts) return
+
+    const response = await querySubgraphRaw({
+      ...opts,
+      first: pageSize,
+      ...(page > 0
+        ? {
+            skip: pageSize * page,
+          }
+        : {}),
+    })
+
+    if (!response) {
+      throw new Error('Missing subgraph response')
+    }
+
+    const _entities = entitiesFromSGResponse(opts.entity, response)
+
+    if (!_entities) {
+      throw new Error("Couldn't parse entities from subgraph response")
+    }
+
+    entities.push(..._entities)
+
+    if (entities.length === pageSize) await query(page + 1)
+  }
+
+  await query(0)
+
+  return entities
+}
+
+const isPluralQuery = (name: SGEntityName): boolean => {
+  if (name === 'projectSearch') return false
 
   return true
 }
@@ -618,3 +380,100 @@ const isPluralQuery = (key: EntityKey): boolean => {
 export const getSubgraphIdForProject = (pv: PV, projectId: number) => {
   return `${pv}-${projectId}`
 }
+
+export const parseBigNumberKeyVals = <T extends object, K extends keyof T>(
+  json: T,
+  keys: K[],
+) => {
+  return keys.reduce(
+    (acc, k) => ({
+      ...acc,
+      ...parseBigNumberKeyVal(k, json[k]),
+    }),
+    {} as { [k in K]: BigNumber },
+  )
+}
+
+/**
+ * Parse a key value pair from an object
+ * @param key Name of key
+ * @param val Value to convert to BigNumber
+ * @returns Key value pair, where value is a BigNumber
+ */
+export const parseBigNumberKeyVal = <K extends string | number | symbol>(
+  key: K,
+  val: unknown,
+) => {
+  let output
+
+  try {
+    if (isBigNumberish(val)) output = { [key]: BigNumber.from(val) }
+  } catch (e) {
+    output = {}
+  }
+
+  return output as { [k in K]: BigNumber }
+}
+
+/**
+ * Format subgraph entities from key value pairs in a JSON object. Requires that entity key in object matches entity name.
+ * @param json JSON object containing key value pairs of raw JSON subgraph entities.
+ * @param entities Name of entities to parse.
+ * @returns Object containing key values of formatted subgraph entities.
+ */
+export const parseSubgraphEntitiesFromJson = <E extends SGEntityName>(
+  json: Record<E, Json<SGEntity<E>> | null | undefined>,
+  entities: E[],
+) =>
+  entities.reduce(
+    (acc, e) => ({
+      ...acc,
+      ...subgraphEntityJsonToKeyVal(json[e], e, e),
+    }),
+    {} as {
+      [e in E]: SGEntity<e>
+    },
+  )
+
+/**
+ *  Format the value of a key value pair, where the value is a raw JSON subgraph entity.
+ * @param entityName Name of entity to parse
+ * @param json Raw JSON subgraph entity
+ * @param key Key of returned key value pair
+ * @returns Key value pair
+ */
+export const subgraphEntityJsonToKeyVal = <
+  E extends SGEntityName,
+  K extends string,
+>(
+  json: Json<SGEntity<E>> | null | undefined,
+  entityName: E,
+  key: K,
+) =>
+  (json
+    ? { [key ?? entityName]: parseSubgraphEntity(entityName, json) }
+    : {}) as Record<K, SGEntity<E>>
+
+/**
+ * Parse an array of raw JSON subgraph entities and return a key value pair.
+ * @param jsonArra Array of raw JSON subgraph entities of a single type.
+ * @param entityName Name of entity being parsed.
+ * @param key Key to return as key value pair.
+ * @returns Key value pair, where key is `key` and value is an array of formatted subgraph entities.
+ */
+export const subgraphEntityJsonArrayToKeyVal = <
+  E extends SGEntityName,
+  K extends string,
+>(
+  jsonArray: Json<SGEntity<E>>[] | undefined,
+  entityName: E,
+  key: K,
+) =>
+  (jsonArray
+    ? {
+        [key]: jsonArray.reduce(
+          (acc, curr) => [...acc, parseSubgraphEntity(entityName, curr)],
+          [] as SGEntity<E>[],
+        ),
+      }
+    : {}) as Record<K, SGEntity<E>[]>

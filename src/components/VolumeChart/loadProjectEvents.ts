@@ -1,7 +1,8 @@
+import { SGWhereArg } from 'models/graph'
 import { PV } from 'models/pv'
 import { Project } from 'models/subgraph-entities/vX/project'
 import { fromWad } from 'utils/format/formatNumber'
-import { querySubgraph, WhereConfig } from 'utils/graph'
+import { querySubgraph } from 'utils/graph'
 
 import { BlockRef, EventRef, ShowGraph } from './types'
 
@@ -34,7 +35,7 @@ export const loadProjectEvents = async ({
 
   // Query balance of project for interval blocks
   blockRefs.forEach(blockRef => {
-    const whereOpts: WhereConfig<'project'>[] = []
+    const whereOpts: SGWhereArg<'project'>[] = []
     if (projectId) {
       whereOpts.push({ key: 'projectId', value: projectId })
     }

@@ -1,16 +1,15 @@
 import { BigNumber } from '@ethersproject/bignumber'
-
-import { parseProjectJson } from 'models/subgraph-entities/vX/project'
-
 import {
-  BaseEventEntity,
-  BaseEventEntityJson,
-  parseBaseEventEntityJson,
-} from '../base/base-event-entity'
-import { Project, ProjectJson } from '../vX/project'
+  parseBigNumberKeyVals,
+  parseSubgraphEntitiesFromJson,
+} from 'utils/graph'
+
+import { Json } from '../../json'
+import { BaseEventEntity } from '../base/base-event-entity'
+import { Project } from '../vX/project'
 
 export interface DistributeToPayoutModEvent extends BaseEventEntity {
-  project: Partial<Project>
+  project: Project
   fundingCycleId: BigNumber
   projectId: BigNumber
   modBeneficiary: string
@@ -22,27 +21,15 @@ export interface DistributeToPayoutModEvent extends BaseEventEntity {
   tapEvent: string
 }
 
-export type DistributeToPayoutModEventJson = Partial<
-  Record<Exclude<keyof DistributeToPayoutModEvent, 'project'>, string> & {
-    project: ProjectJson
-  } & BaseEventEntityJson
->
-
 export const parseDistributeToPayoutModEvent = (
-  j: DistributeToPayoutModEventJson,
-): Partial<DistributeToPayoutModEvent> => ({
-  ...parseBaseEventEntityJson(j),
-  fundingCycleId: j.fundingCycleId
-    ? BigNumber.from(j.fundingCycleId)
-    : undefined,
-  project: j.project ? parseProjectJson(j.project) : undefined,
-  projectId: j.projectId ? BigNumber.from(j.projectId) : undefined,
-  modBeneficiary: j.modBeneficiary,
-  modPreferUnstaked: !!j.modPreferUnstaked,
-  modProjectId:
-    j.modProjectId !== undefined ? parseInt(j.modProjectId) : undefined,
-  modAllocator: j.modAllocator,
-  modCut: j.modCut ? BigNumber.from(j.modCut) : undefined,
-  modCutUSD: j.modCutUSD ? BigNumber.from(j.modCutUSD) : undefined,
-  tapEvent: j.tapEvent,
+  j: Json<DistributeToPayoutModEvent>,
+): DistributeToPayoutModEvent => ({
+  ...j,
+  ...parseSubgraphEntitiesFromJson(j, ['project']),
+  ...parseBigNumberKeyVals(j, [
+    'fundingCycleId',
+    'projectId',
+    'modCut',
+    'modCutUSD',
+  ]),
 })

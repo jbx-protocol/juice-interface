@@ -1,24 +1,20 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { PV } from 'models/pv'
+import { parseBigNumberKeyVals } from 'utils/graph'
 
-import {
-  BaseEventEntity,
-  BaseEventEntityJson,
-  parseBaseEventEntityJson,
-} from '../base/base-event-entity'
+import { Json, primitives } from '../../json'
+import { BaseEventEntity } from '../base/base-event-entity'
 import {
   BaseProjectEntity,
-  BaseProjectEntityJson,
   parseBaseProjectEntityJson,
 } from '../base/base-project-entity'
-import {
-  parseTerminalEventEntity,
-  TerminalEventEntity,
-} from '../base/terminal-event'
+import { TerminalEventEntity } from '../base/terminal-event'
 
 export interface PayEvent
   extends BaseProjectEntity,
     BaseEventEntity,
     TerminalEventEntity {
+  pv: PV
   fundingCycleId: BigNumber
   beneficiary: string
   amount: BigNumber
@@ -27,22 +23,8 @@ export interface PayEvent
   feeFromV2Project?: number
 }
 
-export type PayEventJson = Partial<
-  Record<keyof PayEvent, string> & BaseProjectEntityJson & BaseEventEntityJson
->
-
-export const parsePayEventJson = (j: PayEventJson): Partial<PayEvent> => ({
-  ...parseTerminalEventEntity(j),
+export const parsePayEventJson = (j: Json<PayEvent>): PayEvent => ({
+  ...primitives(j),
   ...parseBaseProjectEntityJson(j),
-  ...parseBaseEventEntityJson(j),
-  fundingCycleId: j.fundingCycleId
-    ? BigNumber.from(j.fundingCycleId)
-    : undefined,
-  beneficiary: j.beneficiary,
-  amount: j.amount ? BigNumber.from(j.amount) : undefined,
-  amountUSD: j.amountUSD ? BigNumber.from(j.amountUSD) : undefined,
-  note: j.note,
-  feeFromV2Project: j.feeFromV2Project
-    ? parseInt(j.feeFromV2Project)
-    : undefined,
+  ...parseBigNumberKeyVals(j, ['fundingCycleId', 'amount', 'amountUSD']),
 })

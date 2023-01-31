@@ -1,19 +1,18 @@
 import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
-import { emitErrorNotification } from 'utils/notifications'
-
-import { useCallback, useContext, useEffect, useState } from 'react'
-import { fromWad } from 'utils/format/formatNumber'
-import { GraphQueryOpts, querySubgraphExhaustive } from 'utils/graph'
-import { tokenSymbolText } from 'utils/tokenSymbolText'
-
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { PV_V1, PV_V1_1 } from 'constants/pv'
 import { readProvider } from 'constants/readProvider'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { SGQueryOpts } from 'models/graph'
 import { Participant } from 'models/subgraph-entities/vX/participant'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { downloadCsvFile } from 'utils/csv'
+import { fromWad } from 'utils/format/formatNumber'
+import { querySubgraphExhaustive } from 'utils/graph'
+import { emitErrorNotification } from 'utils/notifications'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export function DownloadParticipantsModal({
   tokenSymbol,
@@ -41,7 +40,7 @@ export function DownloadParticipantsModal({
     if (blockNumber === undefined || !projectId || !pv) return
 
     // Projects that migrate between 1 & 1.1 may change their PV without the PV of their participants being updated. This should be fixed by better subgraph infrastructure, but this fix will make sure the UI works for now.
-    const pvOpt: GraphQueryOpts<'participant', keyof Participant>['where'] =
+    const pvOpt: SGQueryOpts<'participant', keyof Participant>['where'] =
       pv === PV_V1 || pv === PV_V1_1
         ? {
             key: 'pv',

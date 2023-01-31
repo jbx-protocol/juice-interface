@@ -1,4 +1,5 @@
-import { SepanaProjectJson, SepanaQueryResponse } from 'models/sepana'
+import { Json } from 'models/json'
+import { SepanaProject, SepanaQueryResponse } from 'models/sepana'
 
 import { SEPANA_ENDPOINTS } from './endpoints'
 import { sepanaAxios } from './http'
@@ -52,10 +53,10 @@ export async function getRecord<T extends object>(id: string) {
  *
  * @param records Projects to write to Sepana database
  */
-export async function writeSepanaRecords(records: SepanaProjectJson[]) {
+export async function writeSepanaRecords(records: Json<SepanaProject>[]) {
   const jobs: string[] = []
   const errors: (string | object)[] = []
-  const written: SepanaProjectJson[] = []
+  const written: Json<SepanaProject>[] = []
 
   // Clone array because we mutate it
   const pageSize = 500

@@ -1,25 +1,20 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { PV } from 'models/pv'
+import { parseBigNumberKeyVals } from 'utils/graph'
 
-import {
-  BaseEventEntity,
-  BaseEventEntityJson,
-  parseBaseEventEntityJson,
-} from '../base/base-event-entity'
+import { Json, primitives } from '../../json'
+import { BaseEventEntity } from '../base/base-event-entity'
 import {
   BaseProjectEntity,
-  BaseProjectEntityJson,
   parseBaseProjectEntityJson,
 } from '../base/base-project-entity'
-import {
-  parseTerminalEventEntity,
-  TerminalEventEntity,
-} from '../base/terminal-event'
+import { TerminalEventEntity } from '../base/terminal-event'
 
 export interface RedeemEvent
   extends BaseProjectEntity,
     BaseEventEntity,
     TerminalEventEntity {
-  id: string
+  pv: PV
   holder: string
   beneficiary: string
   amount: BigNumber
@@ -29,26 +24,8 @@ export interface RedeemEvent
   metadata: string | undefined
 }
 
-export type RedeemEventJson = Partial<
-  Record<keyof RedeemEvent, string> &
-    BaseProjectEntityJson &
-    BaseEventEntityJson
->
-
-export const parseRedeemEventJson = (
-  j: RedeemEventJson,
-): Partial<RedeemEvent> => ({
-  ...parseTerminalEventEntity(j),
-  ...parseBaseEventEntityJson(j),
+export const parseRedeemEventJson = (j: Json<RedeemEvent>): RedeemEvent => ({
+  ...primitives(j),
   ...parseBaseProjectEntityJson(j),
-  id: j.id,
-  holder: j.holder,
-  beneficiary: j.beneficiary,
-  amount: j.amount ? BigNumber.from(j.amount) : undefined,
-  returnAmount: j.returnAmount ? BigNumber.from(j.returnAmount) : undefined,
-  returnAmountUSD: j.returnAmountUSD
-    ? BigNumber.from(j.returnAmountUSD)
-    : undefined,
-  caller: j.caller,
-  metadata: j.metadata,
+  ...parseBigNumberKeyVals(j, ['amount', 'returnAmount', 'returnAmountUSD']),
 })

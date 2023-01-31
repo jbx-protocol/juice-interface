@@ -22,16 +22,6 @@ export type SepanaProject = {
     lastUpdated: number
   }
 
-// Project type stored in Sepana db
-export type SepanaProjectJson = Omit<
-  SepanaProject,
-  'currentBalance' | 'trendingScore' | 'totalPaid'
-> & {
-  currentBalance: string
-  trendingScore: string
-  totalPaid: string
-}
-
 export type SepanaQueryResponse<T> = {
   hits: {
     total: {

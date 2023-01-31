@@ -15,6 +15,7 @@ export const NftRewardsContext = createContext<NftRewardsContextType>({
     CIDs: undefined,
     rewardTiers: undefined,
     postPayModal: undefined,
+    contractVersion: undefined,
     collectionMetadata: EMPTY_NFT_COLLECTION_METADATA,
     governanceType: JB721GovernanceType.NONE,
   },

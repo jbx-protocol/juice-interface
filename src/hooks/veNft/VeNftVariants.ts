@@ -21,8 +21,9 @@ export function useVeNftVariants() {
         throw new Error('Variants hash not specified.')
       }
       const file = hash + '/characters.json'
-      const response = await ipfsGetWithFallback(file)
-      const data: Record<string, VeNftMetadataResponse> = response.data
+      const { data } = await ipfsGetWithFallback<
+        Record<string, VeNftMetadataResponse>
+      >(file)
       const variants: VeNftVariant[] = Object.entries(data).map(
         ([id, variant]) => {
           const { name, jbx_range } = variant.metadata

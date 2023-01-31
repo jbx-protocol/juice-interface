@@ -12,14 +12,16 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 
 export function ProjectDetailsSettingsPage() {
   const { projectId } = useContext(ProjectMetadataContext)
-  const { projectMetadata } = useContext(ProjectMetadataContext)
+  const { projectMetadata, refetchProjectMetadata } = useContext(
+    ProjectMetadataContext,
+  )
 
   const [loadingSaveChanges, setLoadingSaveChanges] = useState<boolean>()
   const [projectForm] = useForm<ProjectDetailsFormFields>()
 
   const editV2ProjectDetailsTx = useEditProjectDetailsTx()
 
-  async function onProjectFormSaved() {
+  const onProjectFormSaved = useCallback(async () => {
     setLoadingSaveChanges(true)
 
     const fields = projectForm.getFieldsValue(true)
@@ -53,8 +55,12 @@ export function ProjectDetailsSettingsPage() {
               projectId: String(projectId),
             })
           }
+          refetchProjectMetadata()
         },
         onError: () => {
+          setLoadingSaveChanges(false)
+        },
+        onCancelled: () => {
           setLoadingSaveChanges(false)
         },
       },
@@ -63,7 +69,7 @@ export function ProjectDetailsSettingsPage() {
     if (!txSuccess) {
       setLoadingSaveChanges(false)
     }
-  }
+  }, [editV2ProjectDetailsTx, projectForm, projectId, refetchProjectMetadata])
 
   const resetProjectForm = useCallback(() => {
     projectForm.setFieldsValue({

@@ -3,10 +3,8 @@ import { CurrencyOption } from './currencyOption'
 
 export const NFT_METADATA_CONTRIBUTION_FLOOR_ATTRIBUTES_INDEX = 0
 
-// eslint-disable-next-line
-export type JB721DelegateVersion_1 = '1'
-// eslint-disable-next-line
-export type JB721DelegateVersion_1_1 = '1.1'
+export type JB721DELEGATE_V1 = '1'
+export type JB721DELEGATE_V1_1 = '1.1'
 
 // How we store reward tiers for use around the app
 export type NftRewardTier = {
@@ -23,7 +21,7 @@ export type NftRewardTier = {
   description: string | undefined
 }
 
-export type DelegateVersion = JB721DelegateVersion_1 | JB721DelegateVersion_1_1
+export type DelegateVersion = JB721DELEGATE_V1 | JB721DELEGATE_V1_1
 
 // How the reward tiers are stored in the contracts
 export type JB721TierParams = {

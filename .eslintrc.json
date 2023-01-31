@@ -50,7 +50,7 @@
       "error",
       {
         "selector": "typeLike",
-        "format": ["PascalCase"]
+        "format": ["PascalCase", "UPPER_CASE"]
       }
     ],
     "no-console": ["error", { "allow": ["warn", "error", "info"] }],

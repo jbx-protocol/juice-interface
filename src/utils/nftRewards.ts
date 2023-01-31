@@ -3,8 +3,8 @@ import * as constants from '@ethersproject/constants'
 import axios from 'axios'
 import {
   DEFAULT_ALLOW_OVERSPENDING,
-  JB721DelegateV11PayMetadata,
-  JB721DelegateV1PayMetadata,
+  JB721DELAGATE_V1_1_PAY_METADATA,
+  JB721DELAGATE_V1_PAY_METADATA,
 } from 'components/Project/PayProjectForm/usePayProjectForm'
 import { juiceboxEmojiImageUri } from 'constants/images'
 import { IPFS_TAGS } from 'constants/ipfs'
@@ -254,7 +254,7 @@ export function buildJB721TierParams({
 }
 
 export function encodeJB721DelegateV1PayMetadata(
-  metadata: JB721DelegateV1PayMetadata | undefined,
+  metadata: JB721DELAGATE_V1_PAY_METADATA | undefined,
 ) {
   if (!metadata) return undefined
 
@@ -277,7 +277,7 @@ export function encodeJB721DelegateV1PayMetadata(
 }
 
 export function encodeJB721DelegateV1_1PayMetadata(
-  metadata: JB721DelegateV11PayMetadata | undefined,
+  metadata: JB721DELAGATE_V1_1_PAY_METADATA | undefined,
 ) {
   if (!metadata) return undefined
 
@@ -421,7 +421,7 @@ export function buildJBDeployTiered721DelegateData({
  */
 export function payMetadataOverrides(
   projectId: number,
-): Omit<JB721DelegateV1PayMetadata, 'tierIdsToMint'> {
+): Omit<JB721DELAGATE_V1_PAY_METADATA, 'tierIdsToMint'> {
   // ConstitutionDAO2 wanted to _not_ overspend. That is, to not allow any payment amount that
   // doesn't equal one of the NFT tier amounts.
   if (projectId === V2V3_PROJECT_IDS.CDAO2) {

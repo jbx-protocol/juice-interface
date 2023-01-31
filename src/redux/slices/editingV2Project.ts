@@ -10,6 +10,7 @@ import {
 import { CreatePage } from 'models/create-page'
 import { FundingTargetType } from 'models/fundingTargetType'
 import {
+  DelegateVersion,
   JB721GovernanceType,
   NftCollectionMetadata,
   NftPostPayModalConfig,
@@ -45,6 +46,7 @@ export type NftRewardsData = {
   CIDs: string[] | undefined // points to locations of the NFTs' json on IPFS
   collectionMetadata: NftCollectionMetadata
   postPayModal: NftPostPayModalConfig | undefined
+  contractVersion: DelegateVersion | undefined
   governanceType: JB721GovernanceType
 }
 
@@ -166,6 +168,7 @@ const defaultProjectState: ProjectState = {
     CIDs: undefined,
     collectionMetadata: EMPTY_NFT_COLLECTION_METADATA,
     postPayModal: undefined,
+    contractVersion: undefined,
     governanceType: JB721GovernanceType.NONE,
   },
   mustStartAtOrAfter: DEFAULT_MUST_START_AT_OR_AFTER,

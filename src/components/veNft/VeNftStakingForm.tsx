@@ -32,7 +32,7 @@ import { useVeNftVariants } from 'hooks/veNft/VeNftVariants'
 import AllowPublicExtensionInput from './formControls/AllowPublicExtensionInput'
 import VeNftTokenSelectInput from './formControls/VeNftTokenSelectInput'
 
-export interface StakingFormProps {
+interface StakingFormProps {
   tokensStaked: number
   lockDuration: number
   beneficiary: string

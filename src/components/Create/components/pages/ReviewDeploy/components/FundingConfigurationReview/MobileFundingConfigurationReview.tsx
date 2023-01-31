@@ -11,6 +11,7 @@ export const MobileFundingConfigurationReview = () => {
     fundingCycles,
     fundingTarget,
     payoutsText,
+    launchDate,
     setAllocationSplits,
   } = useFundingConfigurationReview()
 
@@ -26,6 +27,16 @@ export const MobileFundingConfigurationReview = () => {
           duration ? (
             <div className="text-base font-medium">{duration}</div>
           ) : null
+        }
+      />
+      <DescriptionCol
+        title={t`Scheduled launch time`}
+        desc={
+          <div className="text-base font-medium">
+            {launchDate
+              ? launchDate.utc().format('MMMM Do YYYY, h:mma z')
+              : 'Immediately'}
+          </div>
         }
       />
       <DescriptionCol

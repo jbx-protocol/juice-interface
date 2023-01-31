@@ -1,10 +1,7 @@
 import { Form } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
-import { AllocationSplit } from 'components/Create/components/Allocation'
-import {
-  allocationToSplit,
-  splitToAllocation,
-} from 'components/Create/utils/splitToAllocation'
+import { AllocationSplit } from 'components/Allocation'
+import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import { PayoutsSelection } from 'models/payoutsSelection'
@@ -13,7 +10,7 @@ import { useEditingPayoutSplits } from 'redux/hooks/EditingPayoutSplits'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { useAvailablePayoutsSelections } from './AvailablePayoutsSelections'
 
-export type PayoutsFormProps = Partial<{
+type PayoutsFormProps = Partial<{
   selection: PayoutsSelection
   payoutsList: AllocationSplit[]
 }>

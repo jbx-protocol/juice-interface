@@ -1,5 +1,6 @@
 import { t } from '@lingui/macro'
 import { Col, Row } from 'antd'
+import FormattedAddress from 'components/FormattedAddress'
 import ProjectLogo from 'components/ProjectLogo'
 import { useAppSelector } from 'hooks/AppSelector'
 import useMobile from 'hooks/Mobile'
@@ -12,15 +13,18 @@ import { MobileProjectDetailsReview } from './MobileProjectDetailsReview'
 export const ProjectDetailsReview = () => {
   const isMobile = useMobile()
   const {
-    description,
-    discord,
-    logoUri,
-    infoUri,
-    name,
-    payButton,
-    payDisclosure,
-    twitter,
-  } = useAppSelector(state => state.editingV2Project.projectMetadata)
+    projectMetadata: {
+      description,
+      discord,
+      logoUri,
+      infoUri,
+      name,
+      payButton,
+      payDisclosure,
+      twitter,
+    },
+    inputProjectOwner,
+  } = useAppSelector(state => state.editingV2Project)
 
   return (
     <div className="flex flex-col gap-10 pt-5 pb-12">
@@ -135,6 +139,15 @@ export const ProjectDetailsReview = () => {
                 </Row>
               </div>
             </Col>
+            {inputProjectOwner && (
+              <Col className="mt-4" span={8}>
+                <DescriptionCol
+                  flex={1}
+                  title={t`Project owner`}
+                  desc={<FormattedAddress address={inputProjectOwner} />}
+                />
+              </Col>
+            )}
           </Row>
         </>
       )}

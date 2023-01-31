@@ -2,6 +2,7 @@ import { Form } from 'antd'
 import { Reward } from 'components/Create/components/RewardsList'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
+import { JB721GovernanceType } from 'models/nftRewardTier'
 import { useEffect, useMemo } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { withHttps, withoutHttp } from 'utils/externalLink'
@@ -20,13 +21,13 @@ type NftRewardsFormProps = Partial<{
   postPayMessage?: string
   postPayButtonText?: string
   postPayButtonLink?: string
+  onChainGovernance: JB721GovernanceType
 }>
 
 export const useNftRewardsForm = () => {
   const [form] = Form.useForm<NftRewardsFormProps>()
-  const { collectionMetadata, rewardTiers, postPayModal } = useAppSelector(
-    state => state.editingV2Project.nftRewards,
-  )
+  const { collectionMetadata, rewardTiers, postPayModal, governanceType } =
+    useAppSelector(state => state.editingV2Project.nftRewards)
   const { projectMetadata } = useAppSelector(state => state.editingV2Project)
   const initialValues: NftRewardsFormProps = useMemo(() => {
     const collectionName =
@@ -46,10 +47,14 @@ export const useNftRewardsForm = () => {
         maximumSupply: t.maxSupply,
         url: t.externalLink,
         imgUrl: t.imageUrl,
+        beneficiary: t.beneficiary,
+        reservedRate: t.reservedRate,
+        votingWeight: t.votingWeight,
       })) ?? []
 
     return {
       rewards,
+      onChainGovernance: governanceType,
       collectionName,
       collectionSymbol,
       collectionDescription,
@@ -58,14 +63,15 @@ export const useNftRewardsForm = () => {
       postPayButtonLink: withoutHttp(postPayModal?.ctaLink),
     }
   }, [
-    collectionMetadata.description,
-    collectionMetadata.name,
-    collectionMetadata.symbol,
-    postPayModal?.content,
-    postPayModal?.ctaLink,
-    postPayModal?.ctaText,
-    rewardTiers,
+    collectionMetadata?.name,
+    collectionMetadata?.description,
+    collectionMetadata?.symbol,
     projectMetadata.name,
+    rewardTiers,
+    governanceType,
+    postPayModal?.content,
+    postPayModal?.ctaText,
+    postPayModal?.ctaLink,
   ])
 
   useFormDispatchWatch({
@@ -88,6 +94,9 @@ export const useNftRewardsForm = () => {
         name: reward.title,
         externalLink: reward.url,
         description: reward.description,
+        beneficiary: reward.beneficiary,
+        reservedRate: reward.reservedRate,
+        votingWeight: reward.votingWeight,
       }))
     },
   })
@@ -122,6 +131,18 @@ export const useNftRewardsForm = () => {
       editingV2ProjectActions.setNftRewardsCollectionDescription,
     formatter: v => {
       if (!v || typeof v !== 'string') return ''
+      return v
+    },
+  })
+
+  useFormDispatchWatch({
+    form,
+    fieldName: 'onChainGovernance',
+    ignoreUndefined: true,
+    dispatchFunction: editingV2ProjectActions.setNftRewardsGovernance,
+    formatter: v => {
+      if (!v || typeof v === 'string' || typeof v === 'object')
+        return JB721GovernanceType.NONE
       return v
     },
   })

@@ -51,6 +51,22 @@ export const registerWallet = async (
   }
 }
 
+/**
+ * Alternative call to `registerWallet` to be used when `IPFS_REQUIRES_KEY_REGISTRATION` is false.
+ */
+export const clientRegister = async (): Promise<{
+  apiKey: string
+  apiSecret: string
+}> => {
+  try {
+    const result = await axios.post('/api/ipfs/clientRegister')
+    return result.data
+  } catch (e) {
+    console.error('error occurred', e)
+    throw e
+  }
+}
+
 // TODO: Move to wallet key
 // keyvalues will be upserted to existing metadata. A null value will remove an existing keyvalue
 export const editMetadataForCid = async (
@@ -65,24 +81,25 @@ export const editMetadataForCid = async (
 }
 
 // TODO after the move to Infura for IPFS, we can probably look at removing this.
-export const ipfsGetWithFallback = async (
+export const ipfsGetWithFallback = async <T>(
   hash: string,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   { fallbackHostname }: { fallbackHostname?: string } = {},
 ) => {
-  // try {
   // Build config for axios get request
-  const response = await axios({
-    method: 'get',
-    url: restrictedIpfsUrl(hash),
+  const response = await axios.get<T>(restrictedIpfsUrl(hash), {
     responseType: 'json',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
   })
-  if (response.data.Data?.['/'].bytes) {
-    response.data = extractJsonFromBase64Data(response.data.Data['/'].bytes)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  if ((response.data as any).Data?.['/'].bytes) {
+    response.data = extractJsonFromBase64Data(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (response.data as any).Data['/'].bytes,
+    )
   }
   return response
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

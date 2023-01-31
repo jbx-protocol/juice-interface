@@ -1,6 +1,6 @@
 import { createContext } from 'react'
 
-export type VeNftContextType = {
+type VeNftContextType = {
   contractAddress: string | undefined
 }
 

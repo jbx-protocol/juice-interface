@@ -1,10 +1,7 @@
 import { Form } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
-import { AllocationSplit } from 'components/Create/components/Allocation'
-import {
-  allocationToSplit,
-  splitToAllocation,
-} from 'components/Create/utils/splitToAllocation'
+import { AllocationSplit } from 'components/Allocation'
+import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 import { ONE_MILLION } from 'constants/numbers'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
@@ -54,6 +51,7 @@ export const useProjectTokensForm = () => {
     useAppSelector(state => state.editingV2Project)
   const [tokenSplits] = useEditingReservedTokensSplits()
   useDebugValue(form.getFieldsValue())
+  const discountRateDisabled = !parseInt(fundingCycleData.duration)
 
   const initialValues: ProjectTokensFormProps | undefined = useMemo(() => {
     const selection = projectTokensSelection
@@ -65,12 +63,13 @@ export const useProjectTokensForm = () => {
       : DefaultSettings.reservedTokensPercentage
     const reservedTokenAllocation: AllocationSplit[] =
       tokenSplits.map(splitToAllocation)
-    const discountRate = fundingCycleData.discountRate
-      ? parseFloat(formatDiscountRate(fundingCycleData.discountRate))
-      : DefaultSettings.discountRate
     const redemptionRate = fundingCycleMetadata.redemptionRate
       ? parseFloat(formatRedemptionRate(fundingCycleMetadata.redemptionRate))
       : DefaultSettings.redemptionRate
+    const discountRate =
+      !discountRateDisabled && fundingCycleData.discountRate
+        ? parseFloat(formatDiscountRate(fundingCycleData.discountRate))
+        : DefaultSettings.discountRate
     const tokenMinting =
       fundingCycleMetadata.allowMinting !== undefined
         ? fundingCycleMetadata.allowMinting
@@ -86,6 +85,7 @@ export const useProjectTokensForm = () => {
       tokenMinting,
     }
   }, [
+    discountRateDisabled,
     fundingCycleData.discountRate,
     fundingCycleData.weight,
     fundingCycleMetadata.allowMinting,

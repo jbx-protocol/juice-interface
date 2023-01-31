@@ -3,10 +3,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import { Button, Form, Modal } from 'antd'
 import { Callout } from 'components/Callout'
-import {
-  allocationToSplit,
-  splitToAllocation,
-} from 'components/Create/utils/splitToAllocation'
+import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 import FormattedAddress from 'components/FormattedAddress'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
@@ -15,8 +12,8 @@ import { useRouter } from 'next/router'
 import { V1UserProvider } from 'providers/v1/UserProvider'
 import { useCallback, useMemo, useState } from 'react'
 import { useEditingPayoutSplits } from 'redux/hooks/EditingPayoutSplits'
-import { AllocationSplit } from '../Allocation'
-import { inputMustExistRule } from '../pages'
+import { AllocationSplit } from 'components/Allocation'
+import { inputMustExistRule } from 'utils/antd-rules'
 
 interface V1MigrationCardForm {
   projectIds: { projectId: string; newProjectId: string }[]

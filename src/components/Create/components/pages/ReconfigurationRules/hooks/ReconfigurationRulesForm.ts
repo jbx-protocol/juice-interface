@@ -1,6 +1,7 @@
 import * as constants from '@ethersproject/constants'
 import { Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
+import { useAvailableReconfigurationStrategies } from 'components/Create/hooks/AvailableReconfigurationStrategies'
 import { readNetwork } from 'constants/networks'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
@@ -8,14 +9,14 @@ import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
 import { useEffect, useMemo } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { useFormDispatchWatch } from '../../hooks'
-import { useAvailableReconfigurationStrategies } from './AvailableReconfigurationStrategies'
 
-export type ReconfigurationRulesFormProps = Partial<{
+type ReconfigurationRulesFormProps = Partial<{
   selection: ReconfigurationStrategy
   customAddress?: string
   pausePayments: boolean
   allowTerminalConfiguration: boolean
   holdFees: boolean
+  pauseTransfers: boolean
   useDataSourceForRedeem: boolean
 }>
 
@@ -49,6 +50,7 @@ export const useReconfigurationRulesForm = () => {
       const pausePayments = fundingCycleMetadata.pausePay
       const allowTerminalConfiguration =
         fundingCycleMetadata.global.allowSetTerminals
+      const pauseTransfers = fundingCycleMetadata.global.pauseTransfers
       const holdFees = fundingCycleMetadata.holdFees
       // By default, ballot is addressZero
       if (!reconfigurationRuleSelection && ballot === constants.AddressZero)
@@ -56,6 +58,7 @@ export const useReconfigurationRulesForm = () => {
           selection: defaultStrategy.name,
           pausePayments,
           allowTerminalConfiguration,
+          pauseTransfers,
         }
 
       const found = strategies.find(({ address }) => address === ballot)
@@ -65,6 +68,7 @@ export const useReconfigurationRulesForm = () => {
           customAddress: ballot,
           pausePayments,
           allowTerminalConfiguration,
+          pauseTransfers,
           holdFees,
         }
       }
@@ -73,15 +77,17 @@ export const useReconfigurationRulesForm = () => {
         selection: found.name,
         pausePayments,
         allowTerminalConfiguration,
+        pauseTransfers,
         holdFees,
       }
     }, [
-      ballot,
-      defaultStrategy.name,
-      fundingCycleMetadata.global.allowSetTerminals,
       fundingCycleMetadata.pausePay,
+      fundingCycleMetadata.global.allowSetTerminals,
+      fundingCycleMetadata.global.pauseTransfers,
       fundingCycleMetadata.holdFees,
       reconfigurationRuleSelection,
+      ballot,
+      defaultStrategy.name,
       strategies,
     ])
 
@@ -121,6 +127,14 @@ export const useReconfigurationRulesForm = () => {
     fieldName: 'allowTerminalConfiguration',
     ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setAllowSetTerminals,
+    formatter: v => !!v,
+  })
+
+  useFormDispatchWatch({
+    form,
+    fieldName: 'pauseTransfers',
+    ignoreUndefined: true,
+    dispatchFunction: editingV2ProjectActions.setPauseTransfers,
     formatter: v => !!v,
   })
 

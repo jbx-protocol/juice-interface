@@ -1,7 +1,12 @@
-import { CloseCircleFilled, UploadOutlined } from '@ant-design/icons'
-import { t } from '@lingui/macro'
-import { Form, Modal, Progress, Space } from 'antd'
+import {
+  CloseCircleFilled,
+  QuestionCircleOutlined,
+  UploadOutlined,
+} from '@ant-design/icons'
+import { t, Trans } from '@lingui/macro'
+import { Form, Modal, Progress, Space, Tooltip } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
+import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
@@ -16,10 +21,16 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
 import { restrictedIpfsUrl } from 'utils/ipfs'
 import { v4 } from 'uuid'
-import { CreateButton } from '../CreateButton'
-import { inputMustExistRule } from '../pages'
-import { inputIsValidUrlRule } from '../pages/utils/rules/inputIsValidUrlRule'
-import { inputNonZeroRule } from '../pages/utils/rules/inputNonZeroRule'
+import { CreateButton } from 'components/CreateButton'
+import {
+  inputIsValidUrlRule,
+  inputNonZeroRule,
+  inputMustExistRule,
+  inputMustBeEthAddressRule,
+  inputIsIntegerRule,
+} from 'utils/antd-rules'
+import { CreateCollapse } from '../CreateCollapse'
+import { OptionalHeader } from '../OptionalHeader'
 import { RewardImage } from '../RewardImage'
 import { Reward } from './types'
 
@@ -28,7 +39,10 @@ interface AddEditRewardModalFormProps {
   rewardName: string
   description?: string | undefined
   minimumContribution?: string | undefined
-  maxSupply?: number | undefined
+  maxSupply?: string | undefined
+  nftReservedRate?: number | undefined
+  beneficiary?: string | undefined
+  votingWeight?: number | undefined
   externalUrl?: string | undefined
 }
 
@@ -50,6 +64,8 @@ export const AddEditRewardModal = ({
   } = useContext(ThemeContext)
   const [form] = Form.useForm<AddEditRewardModalFormProps>()
   const [limitedSupply, setLimitedSupply] = useState<boolean>(false)
+  const [isReservingNfts, setIsReservingNfts] = useState<boolean>(false)
+  const [advancedOptionsOpen, setAdvancedOptionsOpen] = useState<boolean>(false)
 
   const pinFileToIpfs = usePinFileToIpfs()
   const wallet = useWallet()
@@ -63,15 +79,42 @@ export const AddEditRewardModal = ({
     }
 
     setLimitedSupply(!!editingData.maximumSupply)
+    setIsReservingNfts(!!editingData.beneficiary && !!editingData.reservedRate)
     form.setFieldsValue({
       imgUrl: editingData.imgUrl.toString(),
       rewardName: editingData.title,
       description: editingData.description,
       minimumContribution: editingData.minimumContribution.toString(),
-      maxSupply: editingData.maximumSupply,
+      maxSupply: editingData.maximumSupply?.toString(),
       externalUrl: editingData.url,
+      beneficiary: editingData.beneficiary,
+      nftReservedRate: editingData.reservedRate,
+      votingWeight: editingData.votingWeight,
     })
   }, [editingData, form, open])
+
+  // Due to the way antd works, if advanced options are set, we need to open it on load
+  useEffect(() => {
+    const openAdvancedOptions =
+      !!editingData?.reservedRate ||
+      !!editingData?.beneficiary ||
+      !!editingData?.votingWeight ||
+      !!editingData?.url
+
+    setAdvancedOptionsOpen(openAdvancedOptions)
+  }, [
+    open,
+    editingData?.beneficiary,
+    editingData?.reservedRate,
+    editingData?.url,
+    editingData?.votingWeight,
+  ])
+
+  const onCollapseChanged = useCallback((key: string | string[]) => {
+    const isAdvancedOptionsOpen =
+      typeof key === 'string' ? key === '0' : key.includes('0')
+    setAdvancedOptionsOpen(isAdvancedOptionsOpen)
+  }, [])
 
   const onModalOk = useCallback(async () => {
     const fields = await form.validateFields()
@@ -80,9 +123,14 @@ export const AddEditRewardModal = ({
       title: fields.rewardName,
       minimumContribution: parseFloat(fields.minimumContribution ?? '0'),
       description: fields.description,
-      maximumSupply: fields.maxSupply,
+      maximumSupply: fields.maxSupply ? parseInt(fields.maxSupply) : undefined,
       url: fields.externalUrl ? `https://${fields.externalUrl}` : undefined,
       imgUrl: fields.imgUrl,
+      beneficiary: fields.beneficiary,
+      reservedRate: fields.nftReservedRate,
+      votingWeight: fields.votingWeight
+        ? parseInt(fields.votingWeight.toString())
+        : undefined,
     }
     onOk(result)
     form.resetFields()
@@ -234,19 +282,108 @@ export const AddEditRewardModal = ({
             )}
           </Space>
         </Form.Item>
-        <Form.Item
-          name="externalUrl"
-          label={t`External link`}
-          rules={[
-            inputIsValidUrlRule({
-              label: t`External link`,
-              prefix: 'https://',
-              validateTrigger: 'onCreate',
-            }),
-          ]}
+        <CreateCollapse
+          activeKey={advancedOptionsOpen ? ['0'] : []}
+          onChange={onCollapseChanged}
         >
-          <PrefixedInput prefix="https://" />
-        </Form.Item>
+          <CreateCollapse.Panel
+            header={<OptionalHeader header={t`Advanced options`} />}
+            key={0}
+            hideDivider
+          >
+            <Form.Item
+              extra={
+                <span className="text-xs">
+                  <Trans>Set aside a percentage of freshly minted NFTs.</Trans>
+                </span>
+              }
+            >
+              <JuiceSwitch
+                value={isReservingNfts}
+                onChange={setIsReservingNfts}
+                label={
+                  <span className="flex items-center gap-2">
+                    <Trans>Reserved NFTs</Trans>
+                    <Tooltip
+                      className="cursor-help text-grey-500 dark:text-grey-300"
+                      title={t`If Reserved NFTs are set, the first reserved NFT from the tier will be distributable once the tier receives its first mint.`}
+                    >
+                      <QuestionCircleOutlined />
+                    </Tooltip>
+                  </span>
+                }
+              />
+            </Form.Item>
+            {isReservingNfts && (
+              <>
+                <span className="mb-4 flex flex-col gap-2 whitespace-nowrap md:flex-row md:items-center">
+                  <Trans>Reserve 1 NFT of every</Trans>
+                  <div className="max-w-[78px]">
+                    <Form.Item
+                      className="mb-0"
+                      name="nftReservedRate"
+                      rules={[
+                        inputMustExistRule(),
+                        inputIsIntegerRule({
+                          stringOkay: true,
+                        }),
+                      ]}
+                    >
+                      <FormattedNumberInput min={2} placeholder="0" />
+                    </Form.Item>
+                  </div>{' '}
+                  <Trans>NFTs minted for:</Trans>
+                </span>
+                <Form.Item
+                  className="mb-8"
+                  name="beneficiary"
+                  label={t`Ethereum wallet address`}
+                  extra={t`Reserved NFTs will be sent to this address once minted.`}
+                  rules={[
+                    inputMustExistRule({ label: t`Wallet address` }),
+                    inputMustBeEthAddressRule({ label: t`Wallet address` }),
+                  ]}
+                >
+                  <EthAddressInput />
+                </Form.Item>
+              </>
+            )}
+            <Form.Item
+              name="votingWeight"
+              label={t`Voting weight`}
+              extra={t`Give this NFT a voting weight to be used for on-chain governance. The number you set is only used in relation to other NFTs in this collection.`}
+              tooltip={
+                <Trans>
+                  If you use the default governance option (no governance), the
+                  voting weight will still be accessible on the blockchain for
+                  use in Snapshot strategies or any other desired purpose.
+                </Trans>
+              }
+              rules={[
+                inputIsIntegerRule({
+                  label: t`Voting weight`,
+                  stringOkay: true,
+                }),
+              ]}
+            >
+              <FormattedNumberInput />
+            </Form.Item>
+            <Form.Item
+              name="externalUrl"
+              label={t`External link`}
+              tooltip={t`Link minters of this NFT to your project's website, Discord, etc.`}
+              rules={[
+                inputIsValidUrlRule({
+                  label: t`External link`,
+                  prefix: 'https://',
+                  validateTrigger: 'onCreate',
+                }),
+              ]}
+            >
+              <PrefixedInput prefix="https://" />
+            </Form.Item>
+          </CreateCollapse.Panel>
+        </CreateCollapse>
       </Form>
     </Modal>
   )

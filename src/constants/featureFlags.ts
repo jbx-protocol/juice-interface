@@ -3,6 +3,6 @@ export const FEATURE_FLAGS = {
   VENFT: 'veNft',
   VENFT_CREATOR: 'veNftCreator',
   SIMULATE_TXS: 'simulateTxs',
-  SPLIT_ALLOCATORS: 'splitAllocators',
-  NFT_REDEEM: 'nftRedeem',
+  IPFS_REQUIRES_KEY_REGISTRATION: 'ipfsRequiresKeyRegistration',
+  SEPANA_SEARCH: 'sepanaSearch',
 }

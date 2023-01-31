@@ -1,7 +1,7 @@
 import { SettingOutlined, SmileOutlined, ToolOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
-import { V2V3ProjectToolsDrawer } from 'components/v2v3/V2V3Project/V2V3ProjectToolsDrawer/V2V3ProjectToolsDrawer'
+import { V2V3ProjectToolsDrawer } from 'components/v2v3/V2V3Project/V2V3ProjectToolsDrawer'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { VeNftContext } from 'contexts/veNftContext'

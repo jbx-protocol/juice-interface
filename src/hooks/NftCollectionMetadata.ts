@@ -17,8 +17,8 @@ export function useNftCollectionMetadata(uri: string | undefined) {
         throw new Error('NFT Contract URI invalid.')
       }
 
-      const response = await ipfsGetWithFallback(cid)
-      return response.data as NftCollectionMetadata
+      const response = await ipfsGetWithFallback<NftCollectionMetadata>(cid)
+      return response.data
     },
     {
       enabled: !!uri,

@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { Button, Space } from 'antd'
+import { Button } from 'antd'
 
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useSetProjectSplits } from 'hooks/v2v3/transactor/SetProjectSplits'
@@ -50,7 +50,7 @@ export function PayoutsSettingsPage() {
   )
 
   return (
-    <Space direction="vertical" size="middle">
+    <div className="flex flex-col gap-4">
       <V2V3EditPayouts
         editingSplits={editingSplits}
         setEditingSplits={setEditingSplits}
@@ -65,6 +65,6 @@ export function PayoutsSettingsPage() {
           <Trans>Save payouts</Trans>
         </span>
       </Button>
-    </Space>
+    </div>
   )
 }

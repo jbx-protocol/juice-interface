@@ -23,6 +23,8 @@ export function ContractVersionSelect() {
       value: cv,
     })) ?? []
 
+  if (!cv) return null
+
   if (SELECT_OPTIONS.length < 2) {
     return <ProjectVersionBadge versionText={`V${cv}`} />
   }

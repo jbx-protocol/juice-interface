@@ -1,5 +1,3 @@
-import { Contract } from '@ethersproject/contracts'
-
 export type VeNftVariant = {
   id: number
   name: string
@@ -11,11 +9,3 @@ export type VeNftVariant = {
 export type VeNftTokenMetadata = {
   thumbnailUri: string
 }
-
-export enum VeNftContractName {
-  JBVeNft = 'JBVeNft',
-  JBVeNftDeployer = 'JBVeNftDeployer',
-  JBVeTokenUriResolver = 'JBVeTokenUriResolver',
-}
-
-export type VeNftContracts = Record<VeNftContractName, Contract>

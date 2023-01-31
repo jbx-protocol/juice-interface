@@ -3,18 +3,24 @@ import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 import { v2v3ProjectRoute } from 'utils/routes'
 
+/**
+ * Renders a link to a v2v3 project that displays its handle, or fallback text if handle is missing.
+ */
 export default function V2V3ProjectHandleLink({
   className,
+  name,
   projectId,
   handle,
 }: {
   className?: string
+  name?: string
   projectId: number
   handle?: string | null
 }) {
   const { handle: resolvedHandle, handleText } = useProjectHandleText({
     projectId,
     handle,
+    name,
   })
 
   return (

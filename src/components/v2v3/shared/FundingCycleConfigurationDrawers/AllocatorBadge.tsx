@@ -7,12 +7,13 @@ import {
   V2_V3_ALLOCATOR_ADDRESS,
 } from 'constants/contracts/mainnet/Allocators'
 
+const allocatorAddresses = [V2_V3_ALLOCATOR_ADDRESS, V1_V3_ALLOCATOR_ADDRESS]
+
 export function AllocatorBadge({
   allocator,
 }: {
   allocator: string | undefined
 }) {
-  const allocatorAddresses = [V2_V3_ALLOCATOR_ADDRESS, V1_V3_ALLOCATOR_ADDRESS]
   const versionName =
     allocator && allocatorAddresses.includes(allocator) ? 'V3' : undefined
 

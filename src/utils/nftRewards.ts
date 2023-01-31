@@ -52,28 +52,6 @@ export async function findJBTiered721DelegateStoreAddress() {
   )?.contractAddress
 }
 
-// Returns the highest NFT reward tier that a payer is eligible given their pay amount
-export function getNftRewardTier({
-  payAmountETH,
-  nftRewardTiers,
-}: {
-  payAmountETH: number
-  nftRewardTiers: NftRewardTier[]
-}) {
-  let nftReward: NftRewardTier | null = null
-  // all nft's who's thresholds are below the pay amount
-  const eligibleNftRewards = nftRewardTiers.filter(rewardTier => {
-    return rewardTier.contributionFloor <= payAmountETH
-  })
-  if (eligibleNftRewards.length) {
-    // take the maximum which is the only one received by payer
-    nftReward = eligibleNftRewards.reduce((prev, curr) => {
-      return prev.contributionFloor > curr.contributionFloor ? prev : curr
-    })
-  }
-  return nftReward
-}
-
 // returns an array of CIDs from a given array of RewardTier obj's
 export function CIDsOfNftRewardTiersResponse(
   nftRewardTiersResponse: JB721TierParams[] | undefined,
@@ -100,9 +78,13 @@ export const defaultNftCollectionDescription = (
     projectName?.length ? projectName : 'your project'
   }'s Juicebox contributors.`
 
-async function uploadNftRewardToIPFS(
-  rewardTier: NftRewardTier,
-): Promise<string> {
+async function uploadNftRewardToIPFS({
+  rewardTier,
+  rank,
+}: {
+  rewardTier: NftRewardTier
+  rank: number
+}): Promise<string> {
   const ipfsNftRewardTier: IPFSNftRewardTier = {
     description: rewardTier.description,
     name: rewardTier.name,
@@ -123,6 +105,10 @@ async function uploadNftRewardToIPFS(
       {
         trait_type: 'Max. Supply',
         value: rewardTier.maxSupply,
+      },
+      {
+        trait_type: 'tier',
+        value: rank,
       },
     ],
   }
@@ -148,7 +134,12 @@ export async function uploadNftRewardsToIPFS(
   nftRewards: NftRewardTier[],
 ): Promise<string[]> {
   return await Promise.all(
-    nftRewards.map(rewardTier => uploadNftRewardToIPFS(rewardTier)),
+    sortNftsByContributionFloor(nftRewards).map((rewardTier, idx) =>
+      uploadNftRewardToIPFS({
+        rewardTier,
+        rank: idx + 1, // relies on rewardTiers being sorted by contributionFloor
+      }),
+    ),
   )
 }
 
@@ -228,13 +219,22 @@ export function buildJB721TierParams({
       )
       const encodedIPFSUri = encodeIPFSUri(cid)
 
+      const reservedRate = rewardTiers[index].reservedRate
+        ? BigNumber.from(rewardTiers[index].reservedRate! - 1)
+        : BigNumber.from(0)
+      const reservedTokenBeneficiary =
+        rewardTiers[index].beneficiary ?? constants.AddressZero
+      const votingUnits = rewardTiers[index].votingWeight
+        ? BigNumber.from(rewardTiers[index].votingWeight)
+        : BigNumber.from(0)
+
       return {
         contributionFloor: contributionFloorWei,
         lockedUntil: BigNumber.from(0),
         initialQuantity,
-        votingUnits: BigNumber.from(0),
-        reservedRate: BigNumber.from(0),
-        reservedTokenBeneficiary: constants.AddressZero,
+        votingUnits,
+        reservedRate,
+        reservedTokenBeneficiary,
         encodedIPFSUri,
         allowManualMint: false,
         shouldUseBeneficiaryAsDefault: false,
@@ -342,6 +342,7 @@ export function buildJBDeployTiered721DelegateData({
   collectionSymbol,
   tiers,
   ownerAddress,
+  governanceType,
   contractAddresses: {
     JBDirectoryAddress,
     JBFundingCycleStoreAddress,
@@ -354,6 +355,7 @@ export function buildJBDeployTiered721DelegateData({
   collectionSymbol: string
   tiers: JB721TierParams[]
   ownerAddress: string
+  governanceType: JB721GovernanceType
   contractAddresses: {
     JBDirectoryAddress: string
     JBFundingCycleStoreAddress: string
@@ -385,7 +387,7 @@ export function buildJBDeployTiered721DelegateData({
       lockVotingUnitChanges: false,
       lockManualMintingChanges: false,
     },
-    governanceType: JB721GovernanceType.TIERED,
+    governanceType: governanceType,
   }
 }
 
@@ -402,4 +404,12 @@ export function payMetadataOverrides(
   }
 
   return {}
+}
+
+export function sortNftsByContributionFloor(
+  rewardTiers: NftRewardTier[],
+): NftRewardTier[] {
+  return rewardTiers
+    .slice()
+    .sort((a, b) => a.contributionFloor - b.contributionFloor)
 }

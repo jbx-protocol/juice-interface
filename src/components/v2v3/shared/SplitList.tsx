@@ -2,12 +2,12 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Space } from 'antd'
 import { Split } from 'models/splits'
 import { useMemo } from 'react'
-import { getProjectOwnerRemainderSplit } from 'utils/splits'
-import { SplitItem } from './SplitItem'
+import { getProjectOwnerRemainderSplit, sortSplits } from 'utils/splits'
+import { SplitItem, SplitProps } from './SplitItem'
 
 export default function SplitList({
   splits,
-  showSplitValues = false,
+  showAmounts = false,
   showFees = false,
   currency,
   totalValue,
@@ -20,7 +20,7 @@ export default function SplitList({
   currency?: BigNumber
   totalValue: BigNumber | undefined
   projectOwnerAddress: string | undefined
-  showSplitValues?: boolean
+  showAmounts?: boolean
   showFees?: boolean
   valueSuffix?: string | JSX.Element
   valueFormatProps?: { precision?: number }
@@ -31,35 +31,36 @@ export default function SplitList({
     return getProjectOwnerRemainderSplit(projectOwnerAddress, splits)
   }, [projectOwnerAddress, splits])
 
+  const splitProps: Omit<SplitProps, 'split'> = {
+    currency,
+    totalValue,
+    projectOwnerAddress,
+    valueSuffix,
+    valueFormatProps,
+    reservedRate,
+    showFees,
+    showAmount: showAmounts,
+  }
+
   return (
     <Space direction="vertical" size={5} className="w-full">
-      {[...splits]
-        .sort((a, b) => (a.percent < b.percent ? 1 : -1))
-        .map(split => (
+      {sortSplits(splits).map(split => {
+        return (
           <SplitItem
-            split={split}
-            showSplitValue={showSplitValues}
-            currency={currency}
-            totalValue={totalValue}
-            projectOwnerAddress={projectOwnerAddress}
-            valueSuffix={valueSuffix}
-            valueFormatProps={valueFormatProps}
-            reservedRate={reservedRate}
-            showFees={showFees}
+            props={{
+              split,
+              ...splitProps,
+            }}
             key={`${split.beneficiary}-${split.projectId}-${split.percent}`}
           />
-        ))}
+        )
+      })}
       {ownerSplit?.percent ? (
         <SplitItem
-          split={ownerSplit}
-          showSplitValue={showSplitValues}
-          currency={currency}
-          totalValue={totalValue}
-          projectOwnerAddress={projectOwnerAddress}
-          valueSuffix={valueSuffix}
-          valueFormatProps={valueFormatProps}
-          reservedRate={reservedRate}
-          showFees={showFees}
+          props={{
+            split: { ...ownerSplit },
+            ...splitProps,
+          }}
         />
       ) : null}
     </Space>

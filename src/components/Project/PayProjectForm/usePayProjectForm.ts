@@ -20,7 +20,7 @@ export interface JB721DELAGATE_V1_1_PAY_METADATA {
 }
 
 type PayMetadata =
-  | JB721DELAGATE_V1_1_PAY_METADATA
+  | JB721DELAGATE_V1_PAY_METADATA
   | JB721DELAGATE_V1_1_PAY_METADATA // in future, maybe more
 
 export const DEFAULT_ALLOW_OVERSPENDING = true

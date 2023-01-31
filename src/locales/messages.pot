@@ -50,9 +50,6 @@ msgstr ""
 msgid "2. Set text record"
 msgstr ""
 
-msgid "24 hours"
-msgstr ""
-
 msgid "3-day delay"
 msgstr ""
 
@@ -66,9 +63,6 @@ msgid "7 days"
 msgstr ""
 
 msgid "7-day delay"
-msgstr ""
-
-msgid "90 days"
 msgstr ""
 
 msgid "<0/> Archived projects haven't been modified or deleted on-chain. They can still be interacted with directly through the Juicebox contracts."

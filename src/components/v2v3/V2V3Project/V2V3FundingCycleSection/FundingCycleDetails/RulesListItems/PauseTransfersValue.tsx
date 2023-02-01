@@ -1,9 +1,9 @@
-import { Trans } from '@lingui/macro'
+import { formatPaused } from 'utils/format/formatBoolean'
 
 export function PauseTransfersValue({
   pauseTransfers,
 }: {
   pauseTransfers: boolean
 }) {
-  return pauseTransfers ? <Trans>Allowed</Trans> : <Trans>Disabled</Trans>
+  return <>{formatPaused(pauseTransfers)}</>
 }

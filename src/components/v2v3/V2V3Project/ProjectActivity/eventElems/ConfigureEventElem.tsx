@@ -5,7 +5,7 @@ import MinimalTable from 'components/tables/MinimalTable'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { ConfigureEvent } from 'models/subgraph-entities/v2/configure'
 import { useContext } from 'react'
-import { formatEnabled } from 'utils/format/formatBoolean'
+import { formatEnabled, formatPaused } from 'utils/format/formatBoolean'
 import { formatWad } from 'utils/format/formatNumber'
 import { detailedTimeString } from 'utils/format/formatTime'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -32,6 +32,9 @@ export default function ConfigureEventElem({
         | 'reservedRate'
         | 'weight'
         | 'shouldHoldFees'
+        | 'setTerminalsAllowed'
+        | 'setControllerAllowed'
+        | 'transfersPaused'
       >
     | undefined
 }) {
@@ -70,7 +73,7 @@ export default function ConfigureEventElem({
                       tokenSymbol,
                       plural: true,
                     })}/ETH`
-                  : t`Mint rate unchanged`,
+                  : t`Unchanged`,
               },
               { key: t`Reserved rate`, value: event.reservedRate / 100 + '%' },
               {
@@ -91,19 +94,27 @@ export default function ConfigureEventElem({
             [
               {
                 key: t`Payments`,
-                value: formatEnabled(!event.payPaused),
+                value: formatPaused(event.payPaused),
               },
               {
                 key: t`Redemptions`,
-                value: formatEnabled(!event.redeemPaused),
+                value: formatPaused(event.redeemPaused),
               },
               {
                 key: t`Owner token minting`,
                 value: formatEnabled(event.mintingAllowed),
               },
               {
-                key: t`Hold fees`,
-                value: formatEnabled(event.shouldHoldFees),
+                key: t`Token transfers`,
+                value: formatPaused(event.transfersPaused),
+              },
+              {
+                key: t`Payment Terminal configuration`,
+                value: formatEnabled(event.setTerminalsAllowed),
+              },
+              {
+                key: t`Controller configuration`,
+                value: formatEnabled(event.setControllerAllowed),
               },
             ],
           ]}

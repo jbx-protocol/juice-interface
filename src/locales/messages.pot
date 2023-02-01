@@ -800,6 +800,9 @@ msgstr ""
 msgid "Contributors won't receive any tokens when they pay this project."
 msgstr ""
 
+msgid "Controller configuration"
+msgstr ""
+
 msgid "Copied!"
 msgstr ""
 
@@ -2046,6 +2049,9 @@ msgid "Pause payments"
 msgstr ""
 
 msgid "Pause project token transfers"
+msgstr ""
+
+msgid "Pause transfers"
 msgstr ""
 
 msgid "Paused"

@@ -32,7 +32,7 @@ export const MobileRulesReview = () => {
       />
       <DescriptionCol
         span={12}
-        title={t`Pause payments`}
+        title={t`Payments`}
         desc={<div className="text-base font-medium">{pausePayments}</div>}
       />
       <DescriptionCol

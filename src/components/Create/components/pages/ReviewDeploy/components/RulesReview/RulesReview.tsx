@@ -40,7 +40,7 @@ export const RulesReview = () => {
           />
           <DescriptionCol
             span={5}
-            title={t`Pause payments`}
+            title={t`Payments`}
             desc={<div className="text-base font-medium">{pausePayments}</div>}
           />
           <DescriptionCol
@@ -54,7 +54,7 @@ export const RulesReview = () => {
           />
           <DescriptionCol
             span={5}
-            title={t`Pause transfers`}
+            title={t`Token transfers`}
             desc={<div className="text-base font-medium">{pauseTransfers}</div>}
           />
           <DescriptionCol

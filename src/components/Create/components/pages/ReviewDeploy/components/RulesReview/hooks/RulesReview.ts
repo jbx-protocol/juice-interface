@@ -2,7 +2,7 @@ import { useAvailableReconfigurationStrategies } from 'components/Create/hooks/A
 import { readNetwork } from 'constants/networks'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useMemo } from 'react'
-import { formatBoolean } from 'utils/format/formatBoolean'
+import { formatBoolean, formatPaused } from 'utils/format/formatBoolean'
 
 export const useRulesReview = () => {
   const availableBallotStrategies = useAvailableReconfigurationStrategies(
@@ -15,7 +15,7 @@ export const useRulesReview = () => {
   } = useAppSelector(state => state.editingV2Project)
 
   const pausePayments = useMemo(() => {
-    return formatBoolean(fundingCycleMetadata.pausePay)
+    return formatPaused(fundingCycleMetadata.pausePay)
   }, [fundingCycleMetadata.pausePay])
 
   const terminalConfiguration = useMemo(() => {
@@ -23,7 +23,7 @@ export const useRulesReview = () => {
   }, [fundingCycleMetadata.global.allowSetTerminals])
 
   const pauseTransfers = useMemo(() => {
-    return formatBoolean(fundingCycleMetadata.global.pauseTransfers)
+    return formatPaused(fundingCycleMetadata.global.pauseTransfers)
   }, [fundingCycleMetadata.global.pauseTransfers])
 
   const strategy = useMemo(() => {

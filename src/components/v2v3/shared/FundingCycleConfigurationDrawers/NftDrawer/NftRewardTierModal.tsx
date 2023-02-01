@@ -2,6 +2,7 @@ import { t } from '@lingui/macro'
 import { Form, Input, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ModalMode } from 'components/formItems/formHelpers'
+import PrefixedInput from 'components/PrefixedInput'
 import TooltipLabel from 'components/TooltipLabel'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useMemo } from 'react'
@@ -94,10 +95,7 @@ export default function NftRewardTierModal({
         </Form.Item>
         <ContributionFloorFormItem form={nftForm} />
         <NftUpload form={nftForm} />
-        <MaxSupplyFormItem
-          value={nftForm.getFieldValue('maxSupply')}
-          onChange={value => nftForm.setFieldsValue({ maxSupply: value })}
-        />
+        <MaxSupplyFormItem />
         <Form.Item
           name={'externalLink'}
           label={
@@ -107,7 +105,7 @@ export default function NftRewardTierModal({
             />
           }
         >
-          <Input type="string" autoComplete="off" prefix="https://" />
+          <PrefixedInput prefix="https://" />
         </Form.Item>
         <Form.Item
           label={t`Description`}

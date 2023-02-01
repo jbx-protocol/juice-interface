@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro'
-import { useAvailableReconfigurationStrategies } from 'components/Create/components/pages/ReconfigurationRules'
+import { useAvailableReconfigurationStrategies } from 'components/Create/hooks/AvailableReconfigurationStrategies'
 import { readNetwork } from 'constants/networks'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useMemo } from 'react'
@@ -30,6 +30,14 @@ export const useRulesReview = () => {
       return t`No`
     }
   }, [fundingCycleMetadata.global.allowSetTerminals])
+
+  const pauseTransfers = useMemo(() => {
+    if (fundingCycleMetadata.global.pauseTransfers) {
+      return t`Yes`
+    } else {
+      return t`No`
+    }
+  }, [fundingCycleMetadata.global.pauseTransfers])
 
   const strategy = useMemo(() => {
     return availableBallotStrategies.find(
@@ -65,6 +73,7 @@ export const useRulesReview = () => {
     customAddress,
     pausePayments,
     terminalConfiguration,
+    pauseTransfers,
     strategy,
     holdFees,
     useDataSourceForRedeem,

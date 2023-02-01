@@ -13,6 +13,7 @@ export const RulesReview = () => {
     pausePayments,
     strategy,
     terminalConfiguration,
+    pauseTransfers,
     holdFees,
     useDataSourceForRedeem,
     preventOverspending,
@@ -51,6 +52,11 @@ export const RulesReview = () => {
                 {terminalConfiguration}
               </div>
             }
+          />
+          <DescriptionCol
+            span={5}
+            title={t`Pause transfers`}
+            desc={<div className="text-base font-medium">{pauseTransfers}</div>}
           />
           <DescriptionCol
             span={5}

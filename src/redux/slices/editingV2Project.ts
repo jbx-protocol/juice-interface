@@ -1,8 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { AllocationSplit } from 'components/Create/components/Allocation'
+import { AllocationSplit } from 'components/Allocation'
 import { projectTokenSettingsToReduxFormat } from 'components/Create/utils/projectTokenSettingsToReduxFormat'
+import { DV_V1_1 } from 'constants/delegateVersions'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
@@ -11,6 +12,8 @@ import { CreatePage } from 'models/create-page'
 import { FundingTargetType } from 'models/fundingTargetType'
 import {
   JBTiered721Flags,
+  DelegateVersion,
+  JB721GovernanceType,
   NftCollectionMetadata,
   NftPostPayModalConfig,
   NftRewardTier,
@@ -46,6 +49,8 @@ export type NftRewardsData = {
   collectionMetadata: NftCollectionMetadata
   postPayModal: NftPostPayModalConfig | undefined
   flags: JBTiered721Flags
+  contractVersion: DelegateVersion | undefined
+  governanceType: JB721GovernanceType
 }
 
 export interface CreateState {
@@ -67,16 +72,17 @@ export interface ProjectState {
   reservedTokensGroupedSplits: ReservedTokensGroupedSplits
   nftRewards: NftRewardsData
   mustStartAtOrAfter: string
+  inputProjectOwner: string | undefined
 }
 
-export interface ReduxState extends CreateState, ProjectState {
+interface ReduxState extends CreateState, ProjectState {
   version: number
 }
 
-// Increment this version by 1 when making breaking changes.
+// Increment this version by 1 when making breaking or major changes.
 // When users return to the site and their local version is less than
 // this number, their state will be reset.
-export const REDUX_STORE_V2_PROJECT_VERSION = 10
+export const REDUX_STORE_V2_PROJECT_VERSION = 11
 
 export const DEFAULT_MUST_START_AT_OR_AFTER = '1'
 
@@ -160,7 +166,7 @@ const defaultProjectMetadataState: ProjectMetadataV5 = {
   version: LATEST_METADATA_VERSION,
 }
 
-export const defaultProjectState: ProjectState = {
+const defaultProjectState: ProjectState = {
   projectMetadata: { ...defaultProjectMetadataState },
   fundingCycleData: { ...defaultFundingCycleData },
   fundingCycleMetadata: { ...defaultFundingCycleMetadata },
@@ -173,8 +179,11 @@ export const defaultProjectState: ProjectState = {
     collectionMetadata: EMPTY_NFT_COLLECTION_METADATA,
     postPayModal: undefined,
     flags: DEFAULT_NFT_FLAGS,
+    contractVersion: DV_V1_1,
+    governanceType: JB721GovernanceType.NONE,
   },
   mustStartAtOrAfter: DEFAULT_MUST_START_AT_OR_AFTER,
+  inputProjectOwner: undefined,
 }
 
 export const defaultReduxState: ReduxState = {
@@ -334,6 +343,12 @@ const editingV2ProjectSlice = createSlice({
     ) => {
       state.nftRewards.collectionMetadata.description = action.payload
     },
+    setNftRewardsGovernance: (
+      state,
+      action: PayloadAction<JB721GovernanceType>,
+    ) => {
+      state.nftRewards.governanceType = action.payload
+    },
     setNftPostPayModalConfig: (
       state,
       action: PayloadAction<NftPostPayModalConfig | undefined>,
@@ -348,6 +363,9 @@ const editingV2ProjectSlice = createSlice({
     },
     setAllowSetTerminals: (state, action: PayloadAction<boolean>) => {
       state.fundingCycleMetadata.global.allowSetTerminals = action.payload
+    },
+    setPauseTransfers: (state, action: PayloadAction<boolean>) => {
+      state.fundingCycleMetadata.global.pauseTransfers = action.payload
     },
     setFundingCyclesPageSelection: (
       state,
@@ -366,6 +384,12 @@ const editingV2ProjectSlice = createSlice({
       action: PayloadAction<CreatePage>,
     ) => {
       state.createFurthestPageReached = action.payload
+    },
+    setInputProjectOwner: (
+      state,
+      action: PayloadAction<string | undefined>,
+    ) => {
+      state.inputProjectOwner = action.payload
     },
     setMustStartAtOrAfter: (state, action: PayloadAction<string>) => {
       state.mustStartAtOrAfter = action.payload

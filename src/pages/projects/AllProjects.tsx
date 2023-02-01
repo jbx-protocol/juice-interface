@@ -2,11 +2,17 @@ import { t, Trans } from '@lingui/macro'
 import Grid from 'components/Grid'
 import Loading from 'components/Loading'
 import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { useLoadMoreContent } from 'hooks/LoadMore'
-import { useInfiniteProjectsQuery, useProjectsSearch } from 'hooks/Projects'
+import {
+  useInfiniteProjectsQuery,
+  useProjectsSearch,
+  useSepanaProjectsSearch,
+} from 'hooks/Projects'
 import { PV } from 'models/pv'
 import { useEffect, useRef } from 'react'
 import { classNames } from 'utils/classNames'
+import { featureFlagEnabled } from 'utils/featureFlags'
 
 export default function AllProjects({
   pv,
@@ -36,8 +42,19 @@ export default function AllProjects({
     pv,
   })
 
-  const { data: searchPages, isLoading: isLoadingSearch } =
-    useProjectsSearch(searchText)
+  const sepanaEnabled = featureFlagEnabled(FEATURE_FLAGS.SEPANA_SEARCH)
+
+  const { data: sepanaSearchResults, isLoading: isLoadingSepanaSearch } =
+    useSepanaProjectsSearch(searchText, { enabled: sepanaEnabled })
+
+  const { data: graphSearchResults, isLoading: isLoadingGraphSearch } =
+    useProjectsSearch(searchText, { enabled: !sepanaEnabled })
+
+  const searchResults = sepanaEnabled ? sepanaSearchResults : graphSearchResults
+
+  const isLoadingSearch = sepanaEnabled
+    ? isLoadingSepanaSearch
+    : isLoadingGraphSearch
 
   const [scrolledToBottom] = useLoadMoreContent({
     loadMoreContainerRef,
@@ -47,7 +64,7 @@ export default function AllProjects({
   const isLoading = isLoadingProjects || isLoadingSearch
 
   const concatenatedPages = searchText?.length
-    ? searchPages
+    ? searchResults
     : pages?.pages?.reduce((prev, group) => [...prev, ...group], [])
 
   useEffect(() => {

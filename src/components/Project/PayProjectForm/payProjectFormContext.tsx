@@ -16,7 +16,6 @@ interface PayProjectFormContextType {
   tokenAddress: string | undefined
   weightingFn: WeightFunction | undefined
   form: PayProjectForm | undefined
-  isEligibleForNft?: boolean
 }
 
 export const PayProjectFormContext = createContext<PayProjectFormContextType>({

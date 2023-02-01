@@ -19,6 +19,6 @@
     "incremental": true,
     "typeRoots": ["node_modules/@types", "src/@types"]
   },
-  "include": ["src"],
+  "include": ["src", "scripts"],
   "exclude": ["node_modules"]
 }

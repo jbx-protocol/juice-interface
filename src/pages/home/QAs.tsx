@@ -1,12 +1,8 @@
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
 import Link from 'next/link'
-import { FC, ReactNode } from 'react'
+import { ReactNode } from 'react'
 import { helpPagePath } from 'utils/routes'
-
-export const OverflowVideoLink: FC = ({ children }) => (
-  <ExternalLink href="https://youtu.be/9Mq5oDh0aBY">{children}</ExternalLink>
-)
 
 const JB_FEE = 2.5
 
@@ -33,222 +29,94 @@ export default function QAs(): {
 }[] {
   return [
     {
-      q: <Trans>Who funds Juicebox projects?</Trans>,
+      q: <Trans>How do I use this website?</Trans>,
       a: (
         <Trans>
           <p>
-            Users fund your project by paying to use your app or service, or as
-            a patron or investor by making a payment directly to your project's
-            smart contract (like on this app).
-          </p>
-          <p>
-            For users paying through your app, you should route those funds
-            through the Juicebox smart contracts so they receive tokens in
-            return.
+            This website interacts with the Ethereum blockchain — to use it,
+            you'll need to have a wallet and some ETH (ETH is the main currency
+            on Ethereum). You can get a free wallet from{' '}
+            <ExternalLink href="https://metamask.io">MetaMask.io</ExternalLink>,
+            and buy ETH from within the wallet by using a credit card.
           </p>
         </Trans>
       ),
     },
     {
-      q: <Trans>What does Juicebox cost?</Trans>,
+      q: <Trans>What's Juicebox?</Trans>,
       a: (
         <Trans>
           <p>
-            Juicebox is an open protocol on Ethereum that is funded using
-            Juicebox itself. You can check out the contractualized budget specs{' '}
-            <Link href="/p/juicebox">here</Link>.
+            Juicebox is a programmable funding platform for crypto and web3. It
+            helps people fund, operate, and scale their projects transparently
+            using Ethereum, which is a type of programmable cryptocurrency.
+          </p>
+          <p>Juicebox is funded and owned by its community.</p>
+        </Trans>
+      ),
+    },
+    {
+      q: <Trans>What happens when I pay a project?</Trans>,
+      a: (
+        <Trans>
+          <p>
+            When you pay a project, you <i>may</i> receive that project's tokens
+            or NFTs (depending on how the project is set up).
           </p>
           <p>
-            Projects building on Juicebox pay a {JB_FEE}% JBX membership fee
-            from withdrawn funds into the JuiceboxDAO treasury. Projects can
-            then use their JBX to participate in the governance of JuiceboxDAO
-            and its collective treasury, as well as redeem from its growing{' '}
-            <OverflowVideoLink>overflow</OverflowVideoLink>. The fee is also
-            subject to change via JBX member votes.
+            By default, these tokens represent a partial claim on funds in the
+            treasury, and they are often used for governance rights, community
+            access, or other membership perks.
+          </p>
+          <p>
+            All of this can change from project to project. Read everything
+            carefully, and make sure you understand the project's configurations
+            before you support it. If you need help, stop by the{' '}
+            <JBDiscordLink>Juicebox Discord server</JBDiscordLink>.
           </p>
         </Trans>
       ),
     },
     {
-      q: <Trans>What is overflow?</Trans>,
+      q: <Trans>What does Juicebox actually do?</Trans>,
       a: (
         <Trans>
+          <p>To summarize:</p>
+          <ol>
+            <li>
+              When people pay a project, they receive the project's tokens. Like
+              other tokens, these can be used for governance, for token-gated
+              websites, and other purposes.
+            </li>
+            <li>
+              Projects can distribute funds to the wallets or Juicebox projects
+              of their choosing. These distributions can be pre-defined, and
+              they can also be changed over time.
+            </li>
+            <li>
+              If people are unhappy with the direction a project is headed, they
+              can redeem their tokens to claim a share of the ETH held in the
+              project.
+            </li>
+          </ol>
           <p>
-            If you know how much your project needs to earn over some period of
-            time to be sustainable, you can set a funding target with that
-            amount. If your project earns more than that, the surplus funds are
-            locked in an overflow pool. Anyone holding your project's tokens can
-            claim a portion of the overflow pool in exchange for redeeming their
-            tokens.
+            Project creators have powerful controls over each one of these
+            mechanics. They can change token issuance rates, redemption rates,
+            distributions, and other project settings over time, leading to
+            powerful and elegant tokenomics. They can also lock the project's
+            settings in place for pre-determined amounts of time, guaranteeing
+            that they can't rugpull the community. Juicebox lets projects take
+            control if they need to, but it also lets them give up control to
+            build trust.
           </p>
           <p>
-            For more info, check out this{' '}
-            <OverflowVideoLink>short video</OverflowVideoLink>.
-          </p>
-        </Trans>
-      ),
-    },
-    {
-      q: <Trans>What are community tokens?</Trans>,
-      a: (
-        <Trans>
-          Each project has its own{' '}
-          <ExternalLink href="https://youtu.be/cqZhNzZoMh8">
-            tokens
-          </ExternalLink>
-          . Anyone who contributes funds to a project receives that project's
-          tokens in return. Token balances will be tracked by the protocol until
-          ERC-20 tokens are optionally issued by the project owner.
-        </Trans>
-      ),
-    },
-    {
-      q: <Trans>Why should I want to own a project's tokens?</Trans>,
-      a: (
-        <Trans>
-          Tokens can be redeemed for a portion of a project's{' '}
-          <OverflowVideoLink>overflow</OverflowVideoLink>, letting you benefit
-          from its success. After all, you helped it get there. The token may
-          also give you exclusive member-only privledges, and allow you to
-          contribute to the governance of the community.
-        </Trans>
-      ),
-    },
-    {
-      q: <Trans>What's a discount rate?</Trans>,
-      a: (
-        <Trans>
-          Projects can be created with an optional discount rate designed to
-          incentivize supporters to contribute earlier rather than later. The
-          amount of tokens rewarded per amount paid to your project will
-          decrease by the discount rate with each new funding cycle. A higher
-          discount rate will incentivize supporters to pay your project earlier
-          rather than later.
-        </Trans>
-      ),
-    },
-    {
-      q: <Trans>What's a redemption rate?</Trans>,
-      a: (
-        <Trans>
-          <p>
-            A redemption rate rewards people who wait longer to redeem your
-            tokens for overflow.
+            Importantly, Juicebox is on-chain and non-custodial. Project
+            creators actually own their projects, and JuiceboxDAO has no access
+            to their funds or their project's settings.
           </p>
           <p>
-            For example, with a redemption rate of 70%, redeeming 10% of the
-            token supply at any given time will claim around 7% of the total
-            overflow.
-          </p>
-          <p>The rest is left to share between token holders.</p>
-          <p>
-            For more info, check out this{' '}
-            <ExternalLink href="https://youtu.be/dxqc3yMqi5M">
-              short video
-            </ExternalLink>{' '}
-            on redemption rate.
-          </p>
-        </Trans>
-      ),
-    },
-    {
-      q: <Trans>Does a project benefit from its own overflow?</Trans>,
-      a: (
-        <Trans>
-          <p>
-            A project can choose to reserve a percentage of tokens for itself.
-            Instead of being distributed to paying users, this percentage of
-            tokens is instead minted for the project.
-          </p>
-          <p>
-            Holding these tokens entitles a project to a portion of its own
-            overflow.
-          </p>
-        </Trans>
-      ),
-    },
-    {
-      q: (
-        <Trans>
-          Can I change my project's contract after it's been created?
-        </Trans>
-      ),
-      a: (
-        <Trans>
-          Project owners can configure a delay period, meaning reconfigurations
-          to an upcoming funding cycle must be submitted a certain number of
-          days before it starts. For example, a 3-day delay period means
-          reconfigurations must be submitted at least 3 days before the next
-          funding cycle starts. This gives token holders time to react to the
-          decision and reduces the chance of rug-pulls.
-        </Trans>
-      ),
-    },
-    {
-      q: <Trans>Can I delete a project?</Trans>,
-      a: (
-        <Trans>
-          It isn't possible to remove a project's data from the blockchain, but
-          we can hide it in the app if you'd like to prevent people from seeing
-          or interacting with it — just let us know in{' '}
-          <JBDiscordLink>Discord</JBDiscordLink>. Keep in mind people will still
-          be able to use your project by interacting directly with the contract.
-        </Trans>
-      ),
-    },
-    {
-      q: <Trans>Why Ethereum?</Trans>,
-      a: (
-        <Trans>
-          <p>
-            A mechanism like Juicebox where upfront financial commitments should
-            be honored over time is only guaranteed within an ecosystem like
-            Ethereum.
-          </p>
-          <p>
-            Ethereum provides a public environment where internet apps like
-            Juicebox can run in a permission-less, trustless, and unstoppable
-            fashion.
-          </p>
-          <p>
-            This means that anyone can see the code that they're using, anyone
-            can use the code without asking for permission, and no one can mess
-            with the code or take it down.
-          </p>
-          <p>
-            People using Juicebox are interacting with each other through public
-            infrastructure—not a private, profit-seeking corporate service that
-            brokers the exchange.
-          </p>
-          <p>
-            Juicebox was built to allow people and projects to get paid for
-            creating public art and infrastructure, as much as or more than they
-            would working towards corporate ends. No more shady business.
-          </p>
-        </Trans>
-      ),
-    },
-    {
-      q: <Trans>What's going on under the hood?</Trans>,
-      a: (
-        <Trans>
-          <p>
-            This website (juicebox.money) connects to the Juicebox protocol's
-            smart contracts, deployed on the Ethereum network. (note: anyone
-            else can make a website that also connects to these same smart
-            contracts. For now, don't trust any site other than this one to
-            access the Juicebox protocol).
-          </p>
-          <p>
-            Creating a Juicebox project mints you an NFT (ERC-721) representing
-            ownership over it. Whoever owns this NFT can configure the rules of
-            the game and how payouts are distributed.
-          </p>
-          <p>
-            The project's tokens that are minted and distributed as a result of
-            a received payment are ERC-20's. The amount of tokens minted and
-            distributed are proportional to the volume of payments received,
-            weighted by the project's discount rate over time.
+            To learn more, visit{' '}
+            <ExternalLink href={helpPagePath('/')}>the Docs</ExternalLink>.
           </p>
         </Trans>
       ),
@@ -267,17 +135,26 @@ export default function QAs(): {
             The Juicebox protocol is governed by a community of JBX token
             holders who vote on proposals fortnightly.
           </p>
+          <p>
+            Juicebox is on-chain and non-custodial. Project creators actually
+            own their projects, and JuiceboxDAO has no access to their funds or
+            their project's settings.
+          </p>
         </Trans>
       ),
     },
     {
-      q: <Trans>What are the risks?</Trans>,
+      q: <Trans>Has Juicebox been audited? What are the risks?</Trans>,
       a: (
         <Trans>
           <p>
-            Juicebox has handled tens of thousands of ETH through its protocol,
-            and has so far had 0 security mishaps.
-          </p>{' '}
+            Juicebox has had{' '}
+            <ExternalLink href={helpPagePath('/dev/resources/security/')}>
+              multiple security audits
+            </ExternalLink>
+            , and has handled tens of thousands of ETH through its protocol. So
+            far, Juicebox has had 0 security mishaps.
+          </p>
           <p>
             However, Juicebox is still experimental software. Although the
             Juicebox contract team have done their part to shape the smart
@@ -290,121 +167,76 @@ export default function QAs(): {
             Juicebox with caution.
           </p>
           <p>
-            <ExternalLink href={helpPagePath('/dev/learn/risks')}>
-              Learn more
-            </ExternalLink>{' '}
-            about the risks.
-          </p>
-        </Trans>
-      ),
-    },
-    {
-      q: <Trans>How have the contracts been tested?</Trans>,
-      a: (
-        <Trans>
-          <p>
-            There are unit tests written for every condition of every function
-            in the contracts, and integration tests for every workflow that the
-            protocol supports.
-          </p>
-          <p>
-            There was also a script written to iteratively run the integration
-            tests using a random input generator, prioritizing edge cases. The
-            code has successfully passed over 1 million test cases through this
-            stress-testing script.
-          </p>{' '}
-          <p>
-            The code could always use more eyes and more critique to further the
-            community's confidence. Join our{' '}
-            <JBDiscordLink>Discord</JBDiscordLink> and check out the code on{' '}
-            <ExternalLink href="https://github.com/jbx-protocol">
-              GitHub
-            </ExternalLink>{' '}
-            to work with us.
-          </p>
-        </Trans>
-      ),
-    },
-    {
-      q: <Trans>Has Juicebox been audited?</Trans>,
-      a: (
-        <Trans>
-          <p>
-            The Juicebox V2 smart contracts have had multiple security audits.{' '}
-            <ExternalLink href={helpPagePath('dev/resources/security')}>
-              Read the audit reports.
+            <ExternalLink href={helpPagePath('/dev/learn/risks/')}>
+              Learn more about the risks.
             </ExternalLink>
           </p>
-          <p>
-            While Juicebox has been audited, it is still experimental software,
-            and there are risks. Please use Juicebox with caution.
-          </p>
-          <p>
-            <ExternalLink href={helpPagePath('/dev/learn/risks')}>
-              Learn more
-            </ExternalLink>{' '}
-            about the risks.
-          </p>
         </Trans>
       ),
     },
     {
-      q: <Trans>Will it work on L2s?</Trans>,
+      q: <Trans>What does Juicebox cost?</Trans>,
       a: (
         <Trans>
           <p>
-            That's the plan, but the core Juicebox contracts will first be
-            deployed to Ethereum Mainnet.
+            When Juicebox projects make payouts to external wallets (like
+            "vitalik.eth"), they incur a {JB_FEE}% fee, which is paid to{' '}
+            <Link href="/@juicebox">JuiceboxDAO</Link>. In exchange, they
+            receive JuiceboxDAO's project token, allowing them to govern the
+            protocol. They can also redeem these tokens to reclaim some of the
+            fees.
           </p>
           <p>
-            The contract team will soon start working on L2 payment terminals
-            for Juicebox projects.
+            <b>Payouts to other Juicebox projects don't incur any fees.</b>
           </p>
         </Trans>
       ),
     },
     {
-      q: (
-        <Trans>
-          Do I have to make my project open source to use Juicebox as its
-          business model?
-        </Trans>
-      ),
-      img: {
-        src: '/assets/cooler_if_you_did.png',
-        alt: t`It'd be a lot cooler if you did`,
-        width: 500,
-        height: 274,
-      },
-    },
-    {
-      q: <Trans>Who is Peel?</Trans>,
+      q: <Trans>Who is Peel? Who is JuiceboxDAO?</Trans>,
       a: (
         <Trans>
-          <Link href="/p/peel" target="_blank">
-            Peel
-          </Link>{' '}
-          is the DAO that manages the juicebox.money frontend interface. You can
-          reach out to Peel either through the{' '}
-          <ExternalLink href="https://discord.gg/XvmfY4Hkcz">
-            Peel Discord
-          </ExternalLink>{' '}
-          or the <JBDiscordLink>Juicebox Discord</JBDiscordLink>.
+          <p>
+            <Link href="/@peel">Peel</Link> manages the juicebox.money frontend
+            interface. You can reach out to Peel through the{' '}
+            <ExternalLink href="https://discord.gg/XvmfY4Hkcz">
+              Peel Discord
+            </ExternalLink>
+            .
+          </p>
+          <p>
+            <Link href="/@juicebox">JuiceboxDAO</Link> builds and governs the
+            Juicebox protocol and other community resources. You can reach out
+            to JuiceboxDAO through the{' '}
+            <JBDiscordLink>Juicebox Discord</JBDiscordLink>.
+          </p>
         </Trans>
       ),
     },
     {
-      q: <Trans>How do I create a project?</Trans>,
+      q: <Trans>How should I set up my project?</Trans>,
       a: (
         <Trans>
-          If you're interested in creating a project but still confused on how
-          to get started, consider watching this{' '}
-          <ExternalLink href="https://youtu.be/R43XqPriS5M">
-            instructional video
-          </ExternalLink>
-          . Also feel free to reach out in the{' '}
-          <JBDiscordLink>Juicebox Discord</JBDiscordLink> where our team will be
-          happy to help bring your project idea to life!
+          <p>
+            For project configuration tips and more, take a look at the{' '}
+            <ExternalLink href={helpPagePath('/user/')}>
+              Project Creator Hub
+            </ExternalLink>
+            . You should also join JuiceboxDAO's{' '}
+            <JBDiscordLink>Discord server</JBDiscordLink>, where DAO
+            contributors can guide you through the project creation process.
+          </p>
+        </Trans>
+      ),
+    },
+    {
+      q: <Trans>I have another question!</Trans>,
+      a: (
+        <Trans>
+          <p>
+            For more information, or help with anything else, join the{' '}
+            <JBDiscordLink>JuiceboxDAO Discord server</JBDiscordLink>.
+          </p>
         </Trans>
       ),
     },

@@ -25,6 +25,8 @@ export const useDeployNftProject = () => {
     nftRewards,
     payoutGroupedSplits,
     reservedTokensGroupedSplits,
+    inputProjectOwner,
+    mustStartAtOrAfter,
   } = useAppSelector(state => state.editingV2Project)
   const fundingCycleMetadata = useEditingV2V3FundingCycleMetadataSelector()
   const fundingCycleData = useEditingV2V3FundingCycleDataSelector()
@@ -44,6 +46,10 @@ export const useDeployNftProject = () => {
   const nftFlags = useMemo(
     () => nftRewards.flags ?? DEFAULT_NFT_FLAGS,
     [nftRewards.flags],
+  )
+  const governanceType = useMemo(
+    () => nftRewards.governanceType,
+    [nftRewards.governanceType],
   )
 
   /**
@@ -85,12 +91,15 @@ export const useDeployNftProject = () => {
             collectionUri: nftCollectionMetadataUri,
             collectionName,
             collectionSymbol,
+            governanceType,
             tiers,
             flags: nftFlags,
           },
           projectData: {
+            owner: inputProjectOwner?.length ? inputProjectOwner : undefined,
             projectMetadataCID: metadataCid,
             fundingCycleData,
+            mustStartAtOrAfter,
             fundingCycleMetadata: {
               ...fundingCycleMetadata,
               ...NFT_FUNDING_CYCLE_METADATA_OVERRIDES,
@@ -108,14 +117,17 @@ export const useDeployNftProject = () => {
     },
     [
       collectionName,
+      nftRewards.rewardTiers,
       payoutGroupedSplits,
       reservedTokensGroupedSplits,
       launchProjectWithNftsTx,
       collectionSymbol,
+      governanceType,
+      inputProjectOwner,
       fundingCycleData,
+      mustStartAtOrAfter,
       fundingCycleMetadata,
       fundAccessConstraints,
-      nftRewards.rewardTiers,
       nftFlags,
     ],
   )

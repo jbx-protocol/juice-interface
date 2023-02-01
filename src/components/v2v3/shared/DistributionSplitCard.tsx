@@ -9,13 +9,11 @@ import TooltipIcon from 'components/TooltipIcon'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { CurrencyName } from 'constants/currency'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import round from 'lodash/round'
 import { Split } from 'models/splits'
 import { PropsWithChildren, useContext, useState } from 'react'
 import { classNames } from 'utils/classNames'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { formatDate } from 'utils/format/formatDate'
 import { parseWad } from 'utils/format/formatNumber'
 import { isProjectSplit } from 'utils/splits'
@@ -93,8 +91,6 @@ export function DistributionSplitCard({
     currencyName === 'USD' ? 4 : 2,
   )
 
-  const allocatorsEnabled = featureFlagEnabled(FEATURE_FLAGS.SPLIT_ALLOCATORS)
-
   return (
     <div
       className={classNames(
@@ -125,11 +121,9 @@ export function DistributionSplitCard({
               </label>{' '}
             </Col>
             <Col span={dataColSpan}>
-              <Space size="middle">
+              <Space size="small">
                 <V2V3ProjectHandleLink projectId={parseInt(split.projectId)} />
-                {allocatorsEnabled ? (
-                  <AllocatorBadge allocator={split.allocator} />
-                ) : null}
+                <AllocatorBadge allocator={split.allocator} />
               </Space>
             </Col>
           </Row>

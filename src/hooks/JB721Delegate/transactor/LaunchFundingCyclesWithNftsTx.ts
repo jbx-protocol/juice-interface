@@ -55,7 +55,13 @@ export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFun
   return async (
     {
       projectId,
-      tiered721DelegateData: { rewardTiers, CIDs, collectionMetadata, flags },
+      tiered721DelegateData: {
+        governanceType,
+        rewardTiers,
+        CIDs,
+        collectionMetadata,
+        flags,
+      },
       launchFundingCyclesData: {
         fundingCycleData,
         fundingCycleMetadata,
@@ -113,6 +119,7 @@ export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFun
       collectionUri: collectionMetadata.uri ?? '',
       collectionName,
       collectionSymbol: collectionMetadata.symbol ?? '',
+      governanceType,
       tiers,
       ownerAddress: projectOwnerAddress,
       contractAddresses: {

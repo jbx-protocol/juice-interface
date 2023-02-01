@@ -1,4 +1,5 @@
 import { t } from '@lingui/macro'
+import FormattedAddress from 'components/FormattedAddress'
 import ProjectLogo from 'components/ProjectLogo'
 import { useAppSelector } from 'hooks/AppSelector'
 import { cidFromUrl, restrictedIpfsUrl } from 'utils/ipfs'
@@ -6,15 +7,18 @@ import { DescriptionCol } from '../DescriptionCol'
 
 export const MobileProjectDetailsReview = () => {
   const {
-    description,
-    discord,
-    logoUri,
-    infoUri,
-    name,
-    payButton,
-    payDisclosure,
-    twitter,
-  } = useAppSelector(state => state.editingV2Project.projectMetadata)
+    projectMetadata: {
+      description,
+      discord,
+      logoUri,
+      infoUri,
+      name,
+      payButton,
+      payDisclosure,
+      twitter,
+    },
+    inputProjectOwner,
+  } = useAppSelector(state => state.editingV2Project)
   return (
     <>
       <DescriptionCol
@@ -92,6 +96,12 @@ export const MobileProjectDetailsReview = () => {
           ) : null
         }
       />
+      {inputProjectOwner && (
+        <DescriptionCol
+          title={t`Project owner`}
+          desc={<FormattedAddress address={inputProjectOwner} />}
+        />
+      )}
     </>
   )
 }

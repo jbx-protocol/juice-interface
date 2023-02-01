@@ -114,7 +114,7 @@ export default function DistributeReservedTokensModal({
             projectOwnerAddress={projectOwnerAddress}
             totalValue={reservedTokens}
             valueSuffix={tokenTextPlural}
-            showSplitValues
+            showAmounts
             valueFormatProps={{ precision: 0 }}
           />
         </div>

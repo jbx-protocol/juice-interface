@@ -76,9 +76,12 @@ export default function FormattedNumberInput({
             : '') +
           _suffix
         }
-        parser={(val?: string) =>
-          parseFloat(
-            (val !== undefined ? val : '0')
+        parser={(val?: string) => {
+          if (val === undefined || !val.length) return ''
+          // Stops user from entering hex values
+          if (/^0?0x[0-9a-fA-F]+$/.test(val)) return '0'
+          return parseFloat(
+            val
               .replace(new RegExp(thousandsSeparator, 'g'), '')
               .replace(_prefix, '')
               .replace(_suffix, '')
@@ -86,7 +89,7 @@ export default function FormattedNumberInput({
               .filter(char => allowedValueChars.includes(char))
               .join('') || '0',
           )
-        }
+        }}
         disabled={disabled}
         onBlur={_value => {
           onBlur?.(_value?.toString())

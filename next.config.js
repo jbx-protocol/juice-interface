@@ -12,7 +12,7 @@ const ContentSecurityPolicy = `
   style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
   font-src 'self' https://fonts.gstatic.com data:;
   img-src 'self' https://*.juicebox.money https://juicebox.money https://*.infura-ipfs.io https://jbx.mypinata.cloud data:;
-  connect-src 'self' https://*.juicebox.money https://juicebox.money https://*.infura.io https://*.infura-ipfs.io https://jbx.mypinata.cloud https://api.studio.thegraph.com https://gateway.thegraph.com https://api.arcx.money https://api.tenderly.co https://*.hotjar.com https://*.hotjar.io wss://*.hotjar.com https://*.gnosis.io https://*.safe.global https://*.snapshot.org https://*.wallet.coinbase.com ${WALLET_CONNECT_URLS};
+  connect-src 'self' https://*.juicebox.money https://juicebox.money https://*.infura.io https://*.infura-ipfs.io https://api.pinata.cloud https://jbx.mypinata.cloud https://api.studio.thegraph.com https://gateway.thegraph.com https://api.arcx.money https://api.tenderly.co https://*.hotjar.com https://*.hotjar.io wss://*.hotjar.com https://*.gnosis.io https://*.safe.global https://*.snapshot.org https://*.wallet.coinbase.com ${WALLET_CONNECT_URLS} https://juicenews.beehiiv.com;
   manifest-src 'self';
   prefetch-src 'self';
   frame-src 'self' https://vars.hotjar.com/ https://gnosis-safe.io https://app.safe.global;

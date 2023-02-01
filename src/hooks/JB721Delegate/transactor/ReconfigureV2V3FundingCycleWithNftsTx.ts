@@ -44,7 +44,13 @@ export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<R
         mustStartAtOrAfter = DEFAULT_MUST_START_AT_OR_AFTER,
         memo,
       },
-      tiered721DelegateData: { rewardTiers, CIDs, collectionMetadata, flags },
+      tiered721DelegateData: {
+        governanceType,
+        rewardTiers,
+        CIDs,
+        collectionMetadata,
+        flags,
+      },
     },
     txOpts,
   ) => {
@@ -78,6 +84,7 @@ export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<R
       collectionUri: collectionMetadata.uri ?? '',
       collectionName,
       collectionSymbol: collectionMetadata.symbol ?? '',
+      governanceType,
       tiers,
       ownerAddress: projectOwnerAddress,
       contractAddresses: {

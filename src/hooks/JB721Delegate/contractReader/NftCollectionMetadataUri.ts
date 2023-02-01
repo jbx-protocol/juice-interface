@@ -1,4 +1,4 @@
-import { useStoreOfJB721TieredDelegate } from 'hooks/contracts/JB721Delegate/useStoreofJB721TieredDelegate'
+import { useStoreOfJB721TieredDelegate } from 'hooks/JB721Delegate/contracts/useStoreofJB721TieredDelegate'
 import useV2ContractReader from '../../v2v3/contractReader/V2ContractReader'
 
 export function useNftCollectionMetadataUri(

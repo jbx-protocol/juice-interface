@@ -23,7 +23,7 @@ export default function V1ProjectTokenBalance({
   hideHandle?: boolean
 }) {
   const tokenAddress = useTokenAddressOfProject(projectId)
-  const tokenSymbol = useSymbolOfERC20(tokenAddress)
+  const { data: tokenSymbol } = useSymbolOfERC20(tokenAddress)
   const terminalAddress = useTerminalOfProject(projectId)
   const terminalName = getTerminalName({
     address: terminalAddress,

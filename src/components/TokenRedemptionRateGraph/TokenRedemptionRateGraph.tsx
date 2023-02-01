@@ -83,12 +83,14 @@ export const TokenRedemptionRateGraph = ({
           dataKey="y"
           stroke={colors.stroke.secondary}
           strokeWidth={2}
+          dot={false}
         />
         <Line
           type="monotone"
           dataKey="y"
           stroke={colors.text.brand.primary}
           strokeWidth={3}
+          dot={false}
         />
       </LineChart>
     </>

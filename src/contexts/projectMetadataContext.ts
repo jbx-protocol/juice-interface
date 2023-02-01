@@ -7,6 +7,7 @@ interface ProjectMetadataContextType {
   isArchived: boolean | undefined
   projectId: number | undefined
   pv: PV | undefined
+  refetchProjectMetadata: VoidFunction
 }
 
 export const ProjectMetadataContext = createContext<ProjectMetadataContextType>(
@@ -15,5 +16,9 @@ export const ProjectMetadataContext = createContext<ProjectMetadataContextType>(
     isArchived: undefined,
     projectId: undefined,
     pv: undefined,
+    refetchProjectMetadata: () =>
+      console.error(
+        'ProjectMetadataContext.refetchProjectMetadata called but no provider set',
+      ),
   },
 )

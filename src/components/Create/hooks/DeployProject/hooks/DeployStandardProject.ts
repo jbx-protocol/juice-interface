@@ -17,9 +17,12 @@ import { useCallback } from 'react'
  */
 export const useDeployStandardProject = () => {
   const launchProject = useLaunchProjectTx()
-  const { payoutGroupedSplits, reservedTokensGroupedSplits } = useAppSelector(
-    state => state.editingV2Project,
-  )
+  const {
+    payoutGroupedSplits,
+    reservedTokensGroupedSplits,
+    inputProjectOwner,
+    mustStartAtOrAfter,
+  } = useAppSelector(state => state.editingV2Project)
   const fundingCycleMetadata = useEditingV2V3FundingCycleMetadataSelector()
   const fundingCycleData = useEditingV2V3FundingCycleDataSelector()
   const fundAccessConstraints = useEditingV2V3FundAccessConstraintsSelector()
@@ -40,9 +43,11 @@ export const useDeployStandardProject = () => {
       const groupedSplits = [payoutGroupedSplits, reservedTokensGroupedSplits]
       return await launchProject(
         {
+          owner: inputProjectOwner?.length ? inputProjectOwner : undefined,
           projectMetadataCID: metadataCid,
           fundingCycleData,
           fundingCycleMetadata,
+          mustStartAtOrAfter,
           fundAccessConstraints,
           groupedSplits,
         },
@@ -57,8 +62,10 @@ export const useDeployStandardProject = () => {
       payoutGroupedSplits,
       reservedTokensGroupedSplits,
       launchProject,
+      inputProjectOwner,
       fundingCycleData,
       fundingCycleMetadata,
+      mustStartAtOrAfter,
       fundAccessConstraints,
     ],
   )

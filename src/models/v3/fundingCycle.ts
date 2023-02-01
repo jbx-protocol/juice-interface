@@ -4,13 +4,13 @@ import {
   BaseV2V3FundingCycleMetadataGlobal,
 } from 'models/v2v3/fundingCycle'
 
-export type V3FundingCycleMetadataGlobal =
+export type BaseV3FundingCycleMetadataGlobal =
   BaseV2V3FundingCycleMetadataGlobal & {
     pauseTransfers?: boolean
   }
 
 export type V3FundingCycleMetadata = BaseV2V3FundingCycleMetadata & {
-  global: V3FundingCycleMetadataGlobal
+  global: BaseV3FundingCycleMetadataGlobal
   preferClaimedTokenOverride?: boolean
   metadata?: BigNumber
 }

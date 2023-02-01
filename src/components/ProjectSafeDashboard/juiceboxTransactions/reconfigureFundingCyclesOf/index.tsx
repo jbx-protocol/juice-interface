@@ -18,7 +18,12 @@ export function ReconfigureFundingCyclesOfTransaction({
       isPastTransaction={isPastTransaction}
       cv={txVersion}
       selected={selected}
-      expandedContent={<ReconfigureRichPreview transaction={transaction} />}
+      expandedContent={
+        <ReconfigureRichPreview
+          transaction={transaction}
+          isPastTransaction={isPastTransaction}
+        />
+      }
     />
   )
 }

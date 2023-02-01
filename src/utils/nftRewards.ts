@@ -1,7 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import axios from 'axios'
-import { JB721DelegatePayMetadata } from 'components/Project/PayProjectForm/usePayProjectForm'
+import {
+  DEFAULT_ALLOW_OVERSPENDING,
+  JB721DELAGATE_V1_1_PAY_METADATA,
+  JB721DELAGATE_V1_PAY_METADATA,
+} from 'components/Project/PayProjectForm/usePayProjectForm'
 import { juiceboxEmojiImageUri } from 'constants/images'
 import { IPFS_TAGS } from 'constants/ipfs'
 import { readNetwork } from 'constants/networks'
@@ -21,7 +25,6 @@ import {
   NftRewardTier,
 } from 'models/nftRewardTier'
 import { V2V3ContractName } from 'models/v2v3/contracts'
-import { V2V3FundingCycleMetadata } from 'models/v2v3/fundingCycle'
 import { decodeEncodedIPFSUri, encodeIPFSUri, ipfsUrl } from 'utils/ipfs'
 import { V2V3_CURRENCY_ETH } from './v2v3/currency'
 
@@ -112,9 +115,13 @@ export const defaultNftCollectionDescription = (
     projectName?.length ? projectName : 'your project'
   }'s Juicebox contributors.`
 
-async function uploadNftRewardToIPFS(
-  rewardTier: NftRewardTier,
-): Promise<string> {
+async function uploadNftRewardToIPFS({
+  rewardTier,
+  rank,
+}: {
+  rewardTier: NftRewardTier
+  rank: number
+}): Promise<string> {
   const ipfsNftRewardTier: IPFSNftRewardTier = {
     description: rewardTier.description,
     name: rewardTier.name,
@@ -135,6 +142,10 @@ async function uploadNftRewardToIPFS(
       {
         trait_type: 'Max. Supply',
         value: rewardTier.maxSupply,
+      },
+      {
+        trait_type: 'tier',
+        value: rank,
       },
     ],
   }
@@ -160,7 +171,12 @@ export async function uploadNftRewardsToIPFS(
   nftRewards: NftRewardTier[],
 ): Promise<string[]> {
   return await Promise.all(
-    nftRewards.map(rewardTier => uploadNftRewardToIPFS(rewardTier)),
+    sortNftsByContributionFloor(nftRewards).map((rewardTier, idx) =>
+      uploadNftRewardToIPFS({
+        rewardTier,
+        rank: idx + 1, // relies on rewardTiers being sorted by contributionFloor
+      }),
+    ),
   )
 }
 
@@ -240,13 +256,22 @@ export function buildJB721TierParams({
       )
       const encodedIPFSUri = encodeIPFSUri(cid)
 
+      const reservedRate = rewardTiers[index].reservedRate
+        ? BigNumber.from(rewardTiers[index].reservedRate! - 1)
+        : BigNumber.from(0)
+      const reservedTokenBeneficiary =
+        rewardTiers[index].beneficiary ?? constants.AddressZero
+      const votingUnits = rewardTiers[index].votingWeight
+        ? BigNumber.from(rewardTiers[index].votingWeight)
+        : BigNumber.from(0)
+
       return {
         contributionFloor: contributionFloorWei,
         lockedUntil: BigNumber.from(0),
         initialQuantity,
-        votingUnits: 0,
-        reservedRate: 0,
-        reservedTokenBeneficiary: constants.AddressZero,
+        votingUnits,
+        reservedRate,
+        reservedTokenBeneficiary,
         encodedIPFSUri,
         allowManualMint: false,
         shouldUseBeneficiaryAsDefault: false,
@@ -261,25 +286,8 @@ export function buildJB721TierParams({
     })
 }
 
-/**
- * Assume that any project with a data source has "NFT Rewards"
- * In other words, uses the JB721Delegate.
- *
- * @TODO this is a TERRIBLE assumption. If someone starts using a different datasource,
- * the UI will break badly. We should probably be validating that the datasource address adheres to a particular interface.ƒ
- */
-export function hasNftRewards(
-  fundingCycleMetadata: V2V3FundingCycleMetadata | undefined,
-) {
-  return Boolean(
-    fundingCycleMetadata?.dataSource &&
-      fundingCycleMetadata.dataSource !== constants.AddressZero &&
-      fundingCycleMetadata?.useDataSourceForPay,
-  )
-}
-
-export function encodeJB721DelegatePayMetadata(
-  metadata: JB721DelegatePayMetadata | undefined,
+export function encodeJB721DelegateV1PayMetadata(
+  metadata: JB721DELAGATE_V1_PAY_METADATA | undefined,
 ) {
   if (!metadata) return undefined
 
@@ -287,12 +295,35 @@ export function encodeJB721DelegatePayMetadata(
     constants.HashZero,
     constants.HashZero,
     IJB721Delegate_INTERFACE_ID,
-    metadata.allowOverspending ?? true,
+    metadata.dontMint ?? false,
+    metadata.expectMintFromExtraFunds ?? false,
+    metadata.dontOverspend ?? false,
     metadata.tierIdsToMint,
   ]
 
   const encoded = defaultAbiCoder.encode(
     ['bytes32', 'bytes32', 'bytes4', 'bool', 'bool', 'bool', 'uint16[]'],
+    args,
+  )
+
+  return encoded
+}
+
+export function encodeJB721DelegateV1_1PayMetadata(
+  metadata: JB721DELAGATE_V1_1_PAY_METADATA | undefined,
+) {
+  if (!metadata) return undefined
+
+  const args = [
+    constants.HashZero,
+    constants.HashZero,
+    IJB721Delegate_INTERFACE_ID,
+    metadata.allowOverspending ?? DEFAULT_ALLOW_OVERSPENDING,
+    metadata.tierIdsToMint,
+  ]
+
+  const encoded = defaultAbiCoder.encode(
+    ['bytes32', 'bytes32', 'bytes4', 'bool', 'uint16[]'],
     args,
   )
 
@@ -329,14 +360,36 @@ export function decodeJB721DelegateRedeemMetadata(
   }
 }
 
+// returns an array of NftRewardTiers corresponding to a given list of tier IDs
+//    Note: If ids contains multiple of the same ID, the return value
+//          will contain corresponding rewardTier multiple times.
+export function rewardTiersFromIds({
+  tierIds,
+  rewardTiers,
+}: {
+  tierIds: number[]
+  rewardTiers: NftRewardTier[]
+}) {
+  return tierIds
+    .map(id => rewardTiers.find(tier => tier.id === id))
+    .filter(tier => Boolean(tier)) as NftRewardTier[]
+}
+
 // sums the contribution floors of a given list of nftRewardTiers
 //    - optional select only an array of ids
-export function sumTierFloors(rewardTiers: NftRewardTier[], ids?: number[]) {
-  if (ids) {
-    rewardTiers = rewardTiers.filter(tier => ids.includes(tier.id ?? -1))
-  }
+export function sumTierFloors(
+  rewardTiers: NftRewardTier[],
+  tierIds?: number[],
+) {
+  if (!tierIds) return 0
+
+  const selectedTiers = rewardTiersFromIds({
+    tierIds,
+    rewardTiers,
+  })
+
   return round(
-    rewardTiers.reduce((subSum, tier) => subSum + tier.contributionFloor, 0),
+    selectedTiers.reduce((subSum, tier) => subSum + tier.contributionFloor, 0),
     6,
   )
 }
@@ -347,6 +400,7 @@ export function buildJBDeployTiered721DelegateData({
   collectionSymbol,
   tiers,
   ownerAddress,
+  governanceType,
   contractAddresses: {
     JBDirectoryAddress,
     JBFundingCycleStoreAddress,
@@ -360,6 +414,7 @@ export function buildJBDeployTiered721DelegateData({
   collectionSymbol: string
   tiers: JB721TierParams[]
   ownerAddress: string
+  governanceType: JB721GovernanceType
   contractAddresses: {
     JBDirectoryAddress: string
     JBFundingCycleStoreAddress: string
@@ -388,7 +443,7 @@ export function buildJBDeployTiered721DelegateData({
     reservedTokenBeneficiary: constants.AddressZero,
     store: JBTiered721DelegateStoreAddress,
     flags,
-    governanceType: JB721GovernanceType.TIERED,
+    governanceType,
   }
 }
 
@@ -397,12 +452,20 @@ export function buildJBDeployTiered721DelegateData({
  */
 export function payMetadataOverrides(
   projectId: number,
-): Omit<JB721DelegatePayMetadata, 'tierIdsToMint'> {
+): Omit<JB721DELAGATE_V1_PAY_METADATA, 'tierIdsToMint'> {
   // ConstitutionDAO2 wanted to _not_ overspend. That is, to not allow any payment amount that
   // doesn't equal one of the NFT tier amounts.
   if (projectId === V2V3_PROJECT_IDS.CDAO2) {
-    return { allowOverspending: false }
+    return { dontOverspend: true }
   }
 
   return {}
+}
+
+export function sortNftsByContributionFloor(
+  rewardTiers: NftRewardTier[],
+): NftRewardTier[] {
+  return rewardTiers
+    .slice()
+    .sort((a, b) => a.contributionFloor - b.contributionFloor)
 }

@@ -1,8 +1,9 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Form, Space } from 'antd'
+import { Form, Space, Tooltip } from 'antd'
 import { Callout } from 'components/Callout'
+import ETHToUSD from 'components/currency/ETHToUSD'
 import CurrencySymbol from 'components/CurrencySymbol'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
@@ -108,6 +109,11 @@ export default function DistributePayoutsModal({
 
   const grossAvailableAmount = formatWad(distributable, { precision: 4 })
 
+  const tooltipTitle =
+    distributionCurrencyName === 'ETH' && distributable?.gt(0) ? (
+      <ETHToUSD ethAmount={distributable} />
+    ) : undefined
+
   return (
     <TransactionModal
       title={<Trans>Distribute funds</Trans>}
@@ -141,8 +147,10 @@ export default function DistributePayoutsModal({
               <div className="mb-2 text-black dark:text-slate-100">
                 <Trans>
                   <span className="font-medium">
-                    <CurrencySymbol currency={distributionCurrencyName} />
-                    {grossAvailableAmount}
+                    <Tooltip title={tooltipTitle}>
+                      <CurrencySymbol currency={distributionCurrencyName} />
+                      {grossAvailableAmount}
+                    </Tooltip>
                   </span>{' '}
                   available to distribute
                 </Trans>
@@ -191,7 +199,7 @@ export default function DistributePayoutsModal({
             currency={distributionLimitCurrency}
             splits={payoutSplits ?? []}
             projectOwnerAddress={projectOwnerAddress}
-            showSplitValues
+            showAmounts
             showFees
           />
         </div>

@@ -1,11 +1,18 @@
+import axios from 'axios'
 import { PV_V1, PV_V2 } from 'constants/pv'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
 import { ProjectState } from 'models/project-visibility'
 import { PV } from 'models/pv'
-import { Project } from 'models/subgraph-entities/vX/project'
+import {
+  SepanaProject,
+  SepanaProjectJson,
+  SepanaQueryResponse,
+} from 'models/sepana'
+import { parseProjectJson, Project } from 'models/subgraph-entities/vX/project'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { useEffect, useState } from 'react'
+import { useQuery } from 'react-query'
 import {
   EntityKeys,
   getSubgraphIdForProject,
@@ -126,7 +133,16 @@ export function useProjectsQuery(opts: ProjectsOptions) {
   )
 }
 
-export function useProjectsSearch(handle: string | undefined) {
+/**
+ * Search Subgraph projects by handle and return only a list of projects
+ * @param handle handle tosearch
+ * @param enabled query will only run if enabled
+ * @returns list of projects
+ */
+export function useProjectsSearch(
+  handle: string | undefined,
+  opts?: { enabled?: boolean },
+) {
   return useSubgraphQuery(
     handle
       ? {
@@ -137,6 +153,42 @@ export function useProjectsSearch(handle: string | undefined) {
       : null,
     {
       staleTime: DEFAULT_STALE_TIME,
+      enabled: opts?.enabled,
+    },
+  )
+}
+
+/**
+ * Search Sepana projects for query and return only a list of projects
+ * @param text text to search
+ * @param pageSize number of projects to return
+ * @param enabled query will only run if enabled
+ * @returns list of projects
+ */
+export function useSepanaProjectsSearch(
+  text: string | undefined,
+  opts?: {
+    pageSize?: number
+    enabled?: boolean
+  },
+) {
+  return useQuery(
+    ['sepana-query', text, opts?.pageSize],
+    () =>
+      axios
+        .get<SepanaQueryResponse<SepanaProjectJson>>(
+          `/api/sepana/projects?text=${text}${
+            opts?.pageSize !== undefined ? `&pageSize=${opts?.pageSize}` : ''
+          }`,
+        )
+        .then(res =>
+          res.data.hits.hits.map(
+            h => parseProjectJson(h._source) as SepanaProject,
+          ),
+        ),
+    {
+      staleTime: DEFAULT_STALE_TIME,
+      enabled: opts?.enabled,
     },
   )
 }

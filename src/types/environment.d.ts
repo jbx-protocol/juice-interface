@@ -2,9 +2,9 @@ export {}
 import { NetworkName } from 'models/network-name'
 type Networks = keyof typeof NetworkName
 
-export type PinataGatewayHostnameURL = 'jbx.mypinata.cloud'
+type PinataGatewayHostnameURL = 'jbx.mypinata.cloud'
 
-export type PublicBaseURLS =
+type PublicBaseURLS =
   | 'http://localhost:3000'
   | 'https://juicebox.money'
   | 'https://goerli.juicebox.money'

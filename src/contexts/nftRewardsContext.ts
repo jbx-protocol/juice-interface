@@ -1,3 +1,4 @@
+import { JB721GovernanceType } from 'models/nftRewardTier'
 import { createContext } from 'react'
 import {
   DEFAULT_NFT_FLAGS,
@@ -15,8 +16,10 @@ export const NftRewardsContext = createContext<NftRewardsContextType>({
     CIDs: undefined,
     rewardTiers: undefined,
     postPayModal: undefined,
+    contractVersion: undefined,
     collectionMetadata: EMPTY_NFT_COLLECTION_METADATA,
     flags: DEFAULT_NFT_FLAGS,
+    governanceType: JB721GovernanceType.NONE,
   },
   loading: false,
 })

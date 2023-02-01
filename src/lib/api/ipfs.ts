@@ -19,6 +19,55 @@ const extractJsonFromBase64Data = (base64: string) => {
   return JSON.parse(decoded.substring(jsonStart, jsonEnd + 1))
 }
 
+export const isWalletRegistered = async (
+  walletAddress: string,
+): Promise<boolean> => {
+  try {
+    const result = await axios.post('/api/ipfs/isWalletRegistered', {
+      walletAddress,
+    })
+    return result.data.registered
+  } catch (e) {
+    console.error('error occurred', e)
+    throw e
+  }
+}
+
+export const registerWallet = async (
+  walletAddress: string,
+  signature: string,
+  nonce: string,
+): Promise<{ apiKey: string; apiSecret: string }> => {
+  try {
+    const result = await axios.post('/api/ipfs/registerWallet', {
+      walletAddress,
+      signature,
+      nonce,
+    })
+    return result.data
+  } catch (e) {
+    console.error('error occurred', e)
+    throw e
+  }
+}
+
+/**
+ * Alternative call to `registerWallet` to be used when `IPFS_REQUIRES_KEY_REGISTRATION` is false.
+ */
+export const clientRegister = async (): Promise<{
+  apiKey: string
+  apiSecret: string
+}> => {
+  try {
+    const result = await axios.post('/api/ipfs/clientRegister')
+    return result.data
+  } catch (e) {
+    console.error('error occurred', e)
+    throw e
+  }
+}
+
+// TODO: Move to wallet key
 // keyvalues will be upserted to existing metadata. A null value will remove an existing keyvalue
 export const editMetadataForCid = async (
   cid: string | undefined,
@@ -32,24 +81,25 @@ export const editMetadataForCid = async (
 }
 
 // TODO after the move to Infura for IPFS, we can probably look at removing this.
-export const ipfsGetWithFallback = async (
+export const ipfsGetWithFallback = async <T>(
   hash: string,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   { fallbackHostname }: { fallbackHostname?: string } = {},
 ) => {
-  // try {
   // Build config for axios get request
-  const response = await axios({
-    method: 'get',
-    url: restrictedIpfsUrl(hash),
+  const response = await axios.get<T>(restrictedIpfsUrl(hash), {
     responseType: 'json',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
   })
-  if (response.data.Data?.['/'].bytes) {
-    response.data = extractJsonFromBase64Data(response.data.Data['/'].bytes)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  if ((response.data as any).Data?.['/'].bytes) {
+    response.data = extractJsonFromBase64Data(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (response.data as any).Data['/'].bytes,
+    )
   }
   return response
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -61,31 +111,6 @@ export const ipfsGetWithFallback = async (
   //     : await axios.get(openIpfsUrl(hash))
   //   return response
   // }
-}
-
-export const pinFileToIpfs = async (
-  file: File | Blob | string,
-  metadata?: PinataMetadata,
-) => {
-  const data = new FormData()
-  data.append('file', file)
-  if (metadata) {
-    data.append(
-      'pinataMetadata',
-      JSON.stringify({
-        keyvalues: metadata,
-      }),
-    )
-  }
-
-  const res = await axios.post('/api/ipfs/logo', data, {
-    maxContentLength: Infinity, //this is needed to prevent axios from erroring out with large files
-    headers: {
-      'Content-Type': `multipart/form-data;`,
-    },
-  })
-
-  return res.data as PinataPinResponse
 }
 
 export const uploadProjectMetadata = async (

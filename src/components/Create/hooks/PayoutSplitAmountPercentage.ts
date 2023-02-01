@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { useMemo } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { useFundingTargetType } from '../../../hooks/FundingTargetType'
-import { AllocationSplit } from '../components/Allocation'
+import { AllocationSplit } from 'components/Allocation'
 
 /**
  * Hook to calculate the payout split amount percentage.

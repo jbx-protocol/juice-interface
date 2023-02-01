@@ -4,13 +4,16 @@ import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useNftCollectionMetadataUri } from 'hooks/JB721Delegate/contractReader/NftCollectionMetadataUri'
 import { useNftFlagsOf } from 'hooks/JB721Delegate/contractReader/NftFlagsOf'
 import { useNftRewardTiersOf } from 'hooks/JB721Delegate/contractReader/NftRewardTiersOf'
+import { useJB721DelegateVersion } from 'hooks/JB721Delegate/DelegateVersion'
+import { useHasNftRewards } from 'hooks/JB721Delegate/HasNftRewards'
 import useNftRewards from 'hooks/NftRewards'
+import { JB721GovernanceType } from 'models/nftRewardTier'
 import { useContext } from 'react'
 import {
   DEFAULT_NFT_FLAGS,
   EMPTY_NFT_COLLECTION_METADATA,
 } from 'redux/slices/editingV2Project'
-import { CIDsOfNftRewardTiersResponse, hasNftRewards } from 'utils/nftRewards'
+import { CIDsOfNftRewardTiersResponse } from 'utils/nftRewards'
 
 export const NftRewardsProvider: React.FC = ({ children }) => {
   const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
@@ -18,7 +21,7 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
 
   const dataSourceAddress = fundingCycleMetadata?.dataSource
   // don't fetch stuff if there's no datasource in the first place.
-  const shouldFetch = hasNftRewards(fundingCycleMetadata)
+  const shouldFetch = useHasNftRewards()
 
   /**
    * Load NFT Rewards data
@@ -36,6 +39,10 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
     projectId,
     dataSourceAddress,
   )
+
+  const contractVersion = useJB721DelegateVersion({
+    dataSourceAddress,
+  })
 
   const { data: collectionMetadataUri, loading: collectionUriLoading } =
     useNftCollectionMetadataUri(dataSourceAddress)
@@ -62,7 +69,9 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
       value={{
         nftRewards: {
           rewardTiers,
+          governanceType: JB721GovernanceType.NONE,
           CIDs,
+          contractVersion,
           collectionMetadata: {
             ...EMPTY_NFT_COLLECTION_METADATA, // only load the metadata CID in the context - other data not necessary
             uri: collectionMetadataUri,

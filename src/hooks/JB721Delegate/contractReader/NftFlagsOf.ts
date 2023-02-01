@@ -1,6 +1,6 @@
-import { useStoreOfJB721TieredDelegate } from 'hooks/contracts/JB721Delegate/useStoreofJB721TieredDelegate'
 import { JBTiered721Flags } from 'models/nftRewardTier'
 import useV2ContractReader from '../../v2v3/contractReader/V2ContractReader'
+import { useStoreOfJB721TieredDelegate } from '../contracts/useStoreofJB721TieredDelegate'
 
 export function useNftFlagsOf(dataSourceAddress: string | undefined) {
   const JBTiered721DelegateStore = useStoreOfJB721TieredDelegate({

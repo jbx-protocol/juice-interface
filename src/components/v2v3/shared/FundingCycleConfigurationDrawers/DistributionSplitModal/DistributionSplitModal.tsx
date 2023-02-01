@@ -28,6 +28,7 @@ import { PercentageFormItem } from './PercentageFormItem'
 import { V2V3ProjectPayoutFormItem } from './V2V3ProjectPayoutFormItem'
 import { AddOrEditSplitFormFields, SplitType } from './types'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
+import { getAddress } from '@ethersproject/address'
 
 type DistributionType = 'amount' | 'percent' | 'both'
 
@@ -170,20 +171,22 @@ export function DistributionSplitModal({
       : undefined
 
     const allocator = form.getFieldValue('allocator')
+      ? getAddress(form.getFieldValue('allocator'))
+      : undefined
 
-    // alloctor uses `addToBalance`, therefore no beneficiary required
+    // if allocator specified, set beneficiary to zero address. Otherwise, set beneficiary to specified address.
     const beneficiary =
-      !allocator || allocator === NULL_ALLOCATOR_ADDRESS
-        ? form.getFieldValue('beneficiary')
-        : constants.AddressZero
+      allocator && allocator !== NULL_ALLOCATOR_ADDRESS
+        ? constants.AddressZero
+        : form.getFieldValue('beneficiary')
 
     const newSplit = {
-      beneficiary,
+      beneficiary: getAddress(beneficiary),
       percent: splitPercentFrom(form.getFieldValue('percent')).toNumber(),
       lockedUntil: roundedLockedUntil,
       preferClaimed: true,
       projectId: projectId,
-      allocator,
+      allocator: allocator,
     } as Split
 
     let adjustedSplits: Split[] = splits

@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Divider, Form, Space } from 'antd'
+import { Divider, Form, Input, Space } from 'antd'
 import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
 import { MemoFormInput } from 'components/Project/PayProjectForm/MemoFormInput'
 import RichButton, { RichButtonProps } from 'components/RichButton'
@@ -14,6 +14,10 @@ import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useNftDeployerCanReconfigure } from 'hooks/JB721Delegate/contractReader/NftDeployerCanReconfigure'
 import { useContext, useState } from 'react'
+import {
+  DEFAULT_MUST_START_AT_OR_AFTER,
+  editingV2ProjectActions,
+} from 'redux/slices/editingV2Project'
 import { DeployConfigurationButton } from './DeployConfigurationButton'
 import { useEditingFundingCycleConfig } from './hooks/editingFundingCycleConfig'
 import { useFundingHasSavedChanges } from './hooks/fundingHasSavedChanges'
@@ -22,6 +26,8 @@ import { useReconfigureFundingCycle } from './hooks/reconfigureFundingCycle'
 import ReconfigurePreview from './ReconfigurePreview'
 import V2V3ReconfigureUpcomingMessage from './ReconfigureUpcomingMessage'
 import { SetNftOperatorPermissionsButton } from './SetNftOperatorPermissionsButton'
+import { formatDate } from 'utils/format/formatDate'
+import { useAppDispatch } from 'hooks/AppDispatch'
 
 function ReconfigureButton({
   reconfigureHasChanges,
@@ -72,6 +78,7 @@ export function V2V3ReconfigureFundingCycleForm() {
     editingFundingCycleConfig,
     initialEditingData,
   })
+  const dispatch = useAppDispatch()
 
   const { reconfigureLoading, reconfigureFundingCycle } =
     useReconfigureFundingCycle({
@@ -87,17 +94,11 @@ export function V2V3ReconfigureFundingCycleForm() {
     setNftDrawerVisible(false)
   }
 
-  // const openUnsavedChangesModal = () => setUnsavedChangesModalVisible(true)
   const closeUnsavedChangesModal = () => setUnsavedChangesModalVisible(false)
 
   const closeUnsavedChangesModalAndExit = () => {
     closeUnsavedChangesModal()
   }
-
-  // TODO: unsaved changes
-  // const handleGlobalModalClose = useCallback(() => {
-  //   openUnsavedChangesModal()
-  // }, [])
 
   const nftsWithFalseDataSourceForPay = Boolean(
     nftRewardsCids?.length && !fundingCycleMetadata?.useDataSourceForPay,
@@ -127,6 +128,12 @@ export function V2V3ReconfigureFundingCycleForm() {
           reconfigureHasChanges={tokenDrawerHasSavedChanges}
           onClick={() => setTokenDrawerVisible(true)}
         />
+        <ReconfigureButton
+          heading={t`Rules`}
+          description={t`Configure restrictions for your funding cycles.`}
+          reconfigureHasChanges={rulesDrawerHasSavedChanges}
+          onClick={() => setRulesDrawerVisible(true)}
+        />
         {isV3 ? (
           <ReconfigureButton
             heading={t`NFTs (optional)`}
@@ -135,21 +142,48 @@ export function V2V3ReconfigureFundingCycleForm() {
             onClick={() => setNftDrawerVisible(true)}
           />
         ) : null}
-        <ReconfigureButton
-          heading={t`Rules`}
-          description={t`Configure restrictions for your funding cycles.`}
-          reconfigureHasChanges={rulesDrawerHasSavedChanges}
-          onClick={() => setRulesDrawerVisible(true)}
-        />
 
         <Form layout="vertical">
           <Form.Item
-            name="memo"
-            label={t`Memo (optional)`}
+            label={t`Memo`}
             className={'antd-no-number-handler'}
             extra={t`Add a note about this reconfiguration on-chain.`}
+            requiredMark="optional"
           >
             <MemoFormInput value={memo} onChange={setMemo} />
+          </Form.Item>
+          <Form.Item
+            label={<Trans>Start time</Trans>}
+            extra={
+              <Trans>
+                Unix timestamp in seconds (for example,{' '}
+                {Math.floor(Date.now() / 1000)}). Leave blank to start as soon
+                as possible.
+              </Trans>
+            }
+            required={false}
+            requiredMark="optional"
+          >
+            <Input
+              type="number"
+              min={0}
+              onChange={e => {
+                const time = `${e.target.value}`
+                dispatch(editingV2ProjectActions.setMustStartAtOrAfter(time))
+              }}
+              addonAfter={
+                <span className="text-grey-500 dark:text-slate-100">
+                  {editingFundingCycleConfig?.editingMustStartAtOrAfter !==
+                  DEFAULT_MUST_START_AT_OR_AFTER
+                    ? formatDate(
+                        parseInt(
+                          editingFundingCycleConfig.editingMustStartAtOrAfter,
+                        ) * 1000,
+                      )
+                    : null}
+                </span>
+              }
+            />
           </Form.Item>
         </Form>
 
@@ -173,6 +207,10 @@ export function V2V3ReconfigureFundingCycleForm() {
             editingFundingCycleConfig.editingFundAccessConstraints
           }
           nftRewards={editingFundingCycleConfig.editingNftRewards?.rewardTiers}
+          projectOwnerAddress={projectOwnerAddress}
+          mustStartAtOrAfter={
+            editingFundingCycleConfig.editingMustStartAtOrAfter
+          }
         />
 
         {nftDrawerHasSavedChanges && !nftDeployerCanReconfigure ? (

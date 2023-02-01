@@ -1,4 +1,4 @@
-import { formatFundingTarget } from 'components/Create/utils/formatFundingTarget'
+import { formatFundingTarget } from 'utils/format/formatFundingTarget'
 import { useEditingDistributionLimit } from 'redux/hooks/EditingDistributionLimit'
 
 export const useFundingTarget = () => {

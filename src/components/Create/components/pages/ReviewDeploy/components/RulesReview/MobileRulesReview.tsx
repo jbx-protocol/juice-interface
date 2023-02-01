@@ -1,6 +1,7 @@
 import { t } from '@lingui/macro'
 import { Row } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
+import { PREVENT_OVERSPENDING_DISABLED } from '../../../ReconfigurationRules'
 import { DescriptionCol } from '../DescriptionCol'
 import { useRulesReview } from './hooks/RulesReview'
 
@@ -55,13 +56,15 @@ export const MobileRulesReview = () => {
           <div className="text-base font-medium">{useDataSourceForRedeem}</div>
         }
       />
-      <DescriptionCol
-        span={12}
-        title={t`Prevent NFT overspending`}
-        desc={
-          <div className="text-base font-medium">{preventOverspending}</div>
-        }
-      />
+      {PREVENT_OVERSPENDING_DISABLED ? null : (
+        <DescriptionCol
+          span={12}
+          title={t`Prevent NFT overspending`}
+          desc={
+            <div className="text-base font-medium">{preventOverspending}</div>
+          }
+        />
+      )}
     </Row>
   )
 }

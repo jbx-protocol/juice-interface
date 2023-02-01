@@ -1,8 +1,27 @@
-import { TwitterOutlined } from '@ant-design/icons'
+import { TwitterOutlined, GlobalOutlined } from '@ant-design/icons'
 import { Space } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import Discord from 'components/icons/Discord'
-import { linkUrl, prettyUrl } from 'utils/url'
+import useMobile from 'hooks/Mobile'
+import { linkUrl } from 'utils/url'
+
+type SocialProps = {
+  children: React.ReactNode
+  link: string
+}
+
+function SocialButton(props: SocialProps) {
+  const { children, link } = props
+
+  return (
+    <ExternalLink
+      className="border-1 p-30 flex h-10 w-10 items-center justify-center rounded-full bg-smoke-100 hover:bg-smoke-200  dark:bg-slate-400 dark:hover:bg-slate-500 md:h-9 md:w-9"
+      href={linkUrl(link)}
+    >
+      {children}
+    </ExternalLink>
+  )
+}
 
 export default function SocialLinks({
   infoUri,
@@ -13,39 +32,26 @@ export default function SocialLinks({
   twitter?: string
   discord?: string
 }) {
+  const isMobile = useMobile()
+  const iconClasses =
+    'flex text-grey-500 dark:text-slate-100 text-xl md:text-base'
+
   return (
-    <Space className="flex-wrap gap-x-6 gap-y-2" size="middle">
+    <Space size={12}>
       {infoUri && (
-        <span>
-          <ExternalLink
-            className="block max-w-xs overflow-hidden text-ellipsis whitespace-pre font-medium"
-            href={linkUrl(infoUri)}
-          >
-            {prettyUrl(infoUri)}
-          </ExternalLink>
-        </span>
+        <SocialButton link={infoUri}>
+          <GlobalOutlined className={iconClasses} />
+        </SocialButton>
       )}
       {twitter && (
-        <ExternalLink
-          className="block max-w-xs overflow-hidden text-ellipsis whitespace-pre font-medium"
-          href={'https://twitter.com/' + twitter}
-        >
-          <span className="mr-1">
-            <TwitterOutlined />
-          </span>
-          @{prettyUrl(twitter)}
-        </ExternalLink>
+        <SocialButton link={'https://twitter.com/' + twitter}>
+          <TwitterOutlined className={iconClasses} />
+        </SocialButton>
       )}
       {discord && (
-        <ExternalLink
-          className="block max-w-xs overflow-hidden text-ellipsis whitespace-pre font-medium"
-          href={linkUrl(discord)}
-        >
-          <span className="mr-1">
-            <Discord size={11} />
-          </span>
-          Discord
-        </ExternalLink>
+        <SocialButton link={discord}>
+          <Discord className={iconClasses} size={isMobile ? 16 : 14} />
+        </SocialButton>
       )}
     </Space>
   )

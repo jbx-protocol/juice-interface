@@ -14,7 +14,7 @@ export function V1ProjectMetadataProvider({
   handle: string
   metadata: ProjectMetadataV5 | undefined
 }>) {
-  const projectId = useProjectIdForHandle(handle)
+  const { data: projectId } = useProjectIdForHandle(handle)
 
   const terminalAddress = useTerminalOfProject(projectId)
   const terminalVersion = getTerminalVersion(terminalAddress)
@@ -26,6 +26,11 @@ export function V1ProjectMetadataProvider({
   return (
     <ProjectMetadataContext.Provider
       value={{
+        refetchProjectMetadata: () => {
+          throw new Error(
+            'V1ProjectMetadataProvider.refetchProjectMetadata called but is not implemented',
+          )
+        },
         projectMetadata: metadata,
         isArchived,
         projectId: projectId?.toNumber(),

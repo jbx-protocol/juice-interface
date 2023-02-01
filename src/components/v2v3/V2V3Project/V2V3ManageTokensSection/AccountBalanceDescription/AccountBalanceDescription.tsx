@@ -26,9 +26,9 @@ import {
 } from 'utils/format/formatNumber'
 import { veNftPagePath } from 'utils/routes'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-import V2ClaimTokensModal from './V2ClaimTokensModal'
-import V2MintModal from './V2MintModal'
-import V2RedeemModal from './V2RedeemModal'
+import { V2V3ClaimTokensModal } from './V2V3ClaimTokensModal'
+import { V2V3MintModal } from './V2V3MintModal'
+import { V2V3BurnOrRedeemModal } from './V2V3BurnOrRedeemModal'
 
 export function AccountBalanceDescription() {
   const { contractAddress: veNftAddress } = useContext(VeNftContext)
@@ -143,9 +143,9 @@ export function AccountBalanceDescription() {
         tokenAddress={tokenAddress}
         tokenUnclaimedBalance={unclaimedBalance}
         transferUnclaimedTokensTx={useTransferUnclaimedTokensTx}
-        RedeemModal={V2RedeemModal}
-        ClaimTokensModal={V2ClaimTokensModal}
-        MintModal={V2MintModal}
+        RedeemModal={V2V3BurnOrRedeemModal}
+        ClaimTokensModal={V2V3ClaimTokensModal}
+        MintModal={V2V3MintModal}
       >
         {veNftEnabled && (
           <Link href={veNftPagePath('mint', { projectId, handle })}>

@@ -7,7 +7,6 @@ import { loadJBProjectHandlesContract } from './contractLoaders/JBProjectHandles
 import { loadJBTiered721DelegateProjectDeployerContract } from './contractLoaders/JBTiered721DelegateProjectDeployer'
 import { loadJuiceboxV2OrV3Contract } from './contractLoaders/JuiceboxV2OrV3'
 import { loadPublicResolverContract } from './contractLoaders/PublicResolver'
-import { loadJBV1TokenPaymentTerminalContract } from './contractLoaders/V1TokenPaymentTerminal'
 import { loadVeNftDeployer } from './contractLoaders/VeNftDeployer'
 import { loadVeTokenUriResolver } from './contractLoaders/VeTokenUriResolver'
 
@@ -33,8 +32,6 @@ export const loadV2V3Contract = async (
     contractJson = await loadJBProjectHandlesContract(network)
   } else if (contractName === V2V3ContractName.PublicResolver) {
     contractJson = loadPublicResolverContract(network)
-  } else if (contractName === V2V3ContractName.JBV1TokenPaymentTerminal) {
-    contractJson = await loadJBV1TokenPaymentTerminalContract(network)
   } else if (
     contractName === V2V3ContractName.JBTiered721DelegateProjectDeployer
   ) {

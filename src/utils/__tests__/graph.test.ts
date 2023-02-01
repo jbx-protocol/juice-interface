@@ -60,11 +60,11 @@ test('format nested entitites', () => {
     keys: [
       'id',
       {
-        entity: 'participant',
+        entity: 'participants',
         keys: ['id'],
       },
     ],
   })
 
-  expect(query).toBe('{ projects { id participant { id } } }')
+  expect(query).toBe('{ projects { id participants { id } } }')
 })

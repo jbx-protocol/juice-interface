@@ -3,7 +3,7 @@ import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useCallback, useMemo } from 'react'
 import { useEditingReservedTokensSplits } from 'redux/hooks/EditingReservedTokensSplits'
-import { formatBoolean } from 'utils/formatBoolean'
+import { formatBoolean } from 'utils/format/formatBoolean'
 
 export const useProjectTokenReview = () => {
   const {

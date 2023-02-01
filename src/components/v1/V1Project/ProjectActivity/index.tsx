@@ -11,6 +11,7 @@ import SectionHeader from 'components/SectionHeader'
 import { PV_V1, PV_V1_1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
+import { SGWhereArg } from 'models/graph'
 import { PrintReservesEvent } from 'models/subgraph-entities/v1/print-reserves-event'
 import { TapEvent } from 'models/subgraph-entities/v1/tap-event'
 import { V1ConfigureEvent } from 'models/subgraph-entities/v1/v1-configure'
@@ -21,7 +22,6 @@ import { ProjectCreateEvent } from 'models/subgraph-entities/vX/project-create-e
 import { ProjectEvent } from 'models/subgraph-entities/vX/project-event'
 import { RedeemEvent } from 'models/subgraph-entities/vX/redeem-event'
 import { useContext, useMemo, useState } from 'react'
-import { WhereConfig } from 'utils/graph'
 
 import ReservesEventElem from './eventElems/ReservesEventElem'
 import TapEventElem from './eventElems/TapEventElem'
@@ -48,8 +48,8 @@ export default function ProjectActivity() {
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
   const [eventFilter, setEventFilter] = useState<EventFilter>('all')
 
-  const where: WhereConfig<'projectEvent'>[] = useMemo(() => {
-    const _where: WhereConfig<'projectEvent'>[] = [
+  const where: SGWhereArg<'projectEvent'>[] = useMemo(() => {
+    const _where: SGWhereArg<'projectEvent'>[] = [
       {
         key: 'pv',
         operator: 'in',
@@ -209,7 +209,7 @@ export default function ProjectActivity() {
   const list = useMemo(
     () =>
       projectEvents?.pages.map(group =>
-        group.map((e: ProjectEvent) => {
+        group.map(e => {
           let elem: JSX.Element | undefined = undefined
 
           if (e.payEvent) {

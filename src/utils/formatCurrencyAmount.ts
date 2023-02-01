@@ -1,5 +1,5 @@
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
-import { formatAmount } from './formatAmount'
+import { formatAmount } from './format/formatAmount'
 import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from './v2v3/currency'
 
 /**

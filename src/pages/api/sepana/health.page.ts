@@ -1,12 +1,23 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { queryAll } from 'lib/sepana/api'
 import { sepanaLog } from 'lib/sepana/log'
-import { SepanaProject, SepanaProjectJson } from 'models/sepana'
-import { Project, ProjectJson } from 'models/subgraph-entities/vX/project'
+import { Json } from 'models/json'
+import { SepanaProject } from 'models/sepana'
 import { NextApiHandler } from 'next'
-import { querySubgraphExhaustive } from 'utils/graph'
+import { querySubgraphExhaustiveRaw } from 'utils/graph'
 
-const projectKeys: (keyof SepanaProject)[] = [
+type ProjectKey =
+  | 'id'
+  | 'projectId'
+  | 'pv'
+  | 'handle'
+  | 'metadataUri'
+  | 'currentBalance'
+  | 'totalPaid'
+  | 'createdAt'
+  | 'trendingScore'
+  | 'deployer'
+
+const projectKeys: ProjectKey[] = [
   'id',
   'projectId',
   'pv',
@@ -21,7 +32,7 @@ const projectKeys: (keyof SepanaProject)[] = [
 
 // Checks integrity of data in Sepana db against the current subgraph data
 const handler: NextApiHandler = async (_, res) => {
-  const sepanaResponse = await queryAll<SepanaProjectJson>()
+  const sepanaResponse = await queryAll<Json<SepanaProject>>()
 
   const projectsCount = sepanaResponse.data.hits.hits.length
 
@@ -30,7 +41,9 @@ const handler: NextApiHandler = async (_, res) => {
   let report = isEmpty
     ? `Database empty`
     : `Last updated at block: ${Math.max(
-        ...sepanaResponse.data.hits.hits.map(r => r._source.lastUpdated),
+        ...sepanaResponse.data.hits.hits.map(
+          r => r._source.lastUpdated as number,
+        ),
       )}`
 
   let shouldAlert = isEmpty
@@ -43,22 +56,11 @@ const handler: NextApiHandler = async (_, res) => {
 
   if (!isEmpty) {
     const subgraphProjects = (
-      await querySubgraphExhaustive({
+      await querySubgraphExhaustiveRaw({
         entity: 'project',
-        keys: projectKeys as (keyof Project)[],
+        keys: projectKeys,
       })
-    )
-      .map(p => ({ ...p, _id: p.id }))
-      .map(p =>
-        Object.entries(p).reduce(
-          (acc, [k, v]) => ({
-            ...acc,
-            // TODO avoid formatting the response in querySubgraphExhaustive? we only need the json
-            [k]: BigNumber.isBigNumber(v) ? v.toString() : v, // Convert BigNumbers to strings
-          }),
-          {} as ProjectJson,
-        ),
-      )
+    ).map(p => ({ ...p, _id: p.id }))
 
     report += `\n\n${sepanaResponse.data.hits.total.value} projects in database`
 

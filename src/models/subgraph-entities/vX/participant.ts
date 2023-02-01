@@ -1,12 +1,15 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { PV } from 'models/pv'
+import { parseBigNumberKeyVals } from 'utils/graph'
 
+import { Json, primitives } from '../../json'
 import {
   BaseProjectEntity,
-  BaseProjectEntityJson,
   parseBaseProjectEntityJson,
 } from '../base/base-project-entity'
 
 export interface Participant extends BaseProjectEntity {
+  pv: PV
   wallet: string
   totalPaid: BigNumber
   totalPaidUSD: BigNumber
@@ -16,23 +19,14 @@ export interface Participant extends BaseProjectEntity {
   lastPaidTimestamp: number
 }
 
-export type ParticipantJson = Partial<
-  Record<keyof Participant, string> & BaseProjectEntityJson
->
-
-export const parseParticipantJson = (
-  j: ParticipantJson,
-): Partial<Participant> => ({
+export const parseParticipantJson = (j: Json<Participant>): Participant => ({
+  ...primitives(j),
   ...parseBaseProjectEntityJson(j),
-  wallet: j.wallet,
-  totalPaid: j.totalPaid ? BigNumber.from(j.totalPaid) : undefined,
-  totalPaidUSD: j.totalPaidUSD ? BigNumber.from(j.totalPaidUSD) : undefined,
-  balance: j.balance ? BigNumber.from(j.balance) : undefined,
-  stakedBalance: j.stakedBalance ? BigNumber.from(j.stakedBalance) : undefined,
-  unstakedBalance: j.unstakedBalance
-    ? BigNumber.from(j.unstakedBalance)
-    : undefined,
-  lastPaidTimestamp: j.lastPaidTimestamp
-    ? parseInt(j.lastPaidTimestamp)
-    : undefined,
+  ...parseBigNumberKeyVals(j, [
+    'totalPaid',
+    'totalPaidUSD',
+    'balance',
+    'stakedBalance',
+    'unstakedBalance',
+  ]),
 })

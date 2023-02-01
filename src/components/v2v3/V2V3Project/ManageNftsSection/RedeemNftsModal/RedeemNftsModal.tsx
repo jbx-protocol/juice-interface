@@ -50,11 +50,15 @@ export function RedeemNftsModal({
 
   if (!fundingCycle || !fundingCycleMetadata || isLoading) return null
 
-  const handleTierSelect = (nft: JB721DelegateToken) => {
+  const handleTierSelect = (
+    nft: Pick<JB721DelegateToken, 'address' | 'tokenId' | 'tokenUri'>,
+  ) => {
     setTokenIdsToRedeem([...(tokenIdsToRedeem ?? []), nft.tokenId])
   }
 
-  const handleTierDeselect = (nft: JB721DelegateToken) => {
+  const handleTierDeselect = (
+    nft: Pick<JB721DelegateToken, 'address' | 'tokenId' | 'tokenUri'>,
+  ) => {
     const idxToRemove = tokenIdsToRedeem.indexOf(nft.tokenId)
     const newSelectedTierIds = tokenIdsToRedeem
     newSelectedTierIds.splice(idxToRemove, 1)

@@ -1,48 +1,31 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { PV } from 'models/pv'
+import { parseBigNumberKeyVals } from 'utils/graph'
 
-import {
-  BaseEventEntity,
-  BaseEventEntityJson,
-  parseBaseEventEntityJson,
-} from '../base/base-event-entity'
+import { Json, primitives } from '../../json'
+import { BaseEventEntity } from '../base/base-event-entity'
 import {
   BaseProjectEntity,
-  BaseProjectEntityJson,
   parseBaseProjectEntityJson,
 } from '../base/base-project-entity'
-import {
-  parseTerminalEventEntity,
-  TerminalEventEntity,
-} from '../base/terminal-event'
+import { TerminalEventEntity } from '../base/terminal-event'
 
 export interface AddToBalanceEvent
   extends BaseProjectEntity,
     BaseEventEntity,
     TerminalEventEntity {
+  pv: PV
   fundingCycleId: BigNumber
   caller: string
   amount: BigNumber
   amountUSD: BigNumber
-  note?: string
+  note: string
 }
 
-export type AddToBalanceEventJson = Partial<
-  Record<keyof AddToBalanceEvent, string> &
-    BaseProjectEntityJson &
-    BaseEventEntityJson
->
-
 export const parseAddToBalanceEventJson = (
-  j: AddToBalanceEventJson,
-): Partial<AddToBalanceEvent> => ({
-  ...parseTerminalEventEntity(j),
+  j: Json<AddToBalanceEvent>,
+): AddToBalanceEvent => ({
+  ...primitives(j),
   ...parseBaseProjectEntityJson(j),
-  ...parseBaseEventEntityJson(j),
-  fundingCycleId: j.fundingCycleId
-    ? BigNumber.from(j.fundingCycleId)
-    : undefined,
-  caller: j.caller,
-  amount: j.amount ? BigNumber.from(j.amount) : undefined,
-  amountUSD: j.amountUSD ? BigNumber.from(j.amountUSD) : undefined,
-  note: j.note ? j.note : undefined,
+  ...parseBigNumberKeyVals(j, ['fundingCycleId', 'amount', 'amountUSD']),
 })

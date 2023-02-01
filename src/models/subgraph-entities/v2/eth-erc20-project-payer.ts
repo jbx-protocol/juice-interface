@@ -1,6 +1,6 @@
+import { Json, primitives } from '../../json'
 import {
   BaseProjectEntity,
-  BaseProjectEntityJson,
   parseBaseProjectEntityJson,
 } from '../base/base-project-entity'
 
@@ -15,20 +15,9 @@ export interface ETHERC20ProjectPayer extends BaseProjectEntity {
   metadata: string
 }
 
-export type ETHERC20ProjectPayerJson = Partial<
-  Record<keyof ETHERC20ProjectPayer, string> & BaseProjectEntityJson
->
-
 export const parseETHERC20ProjectPayer = (
-  j: ETHERC20ProjectPayerJson,
-): Partial<ETHERC20ProjectPayer> => ({
+  j: Json<ETHERC20ProjectPayer>,
+): ETHERC20ProjectPayer => ({
+  ...primitives(j),
   ...parseBaseProjectEntityJson(j),
-  address: j.address,
-  beneficiary: j.beneficiary,
-  preferClaimedTokens: !!j.preferClaimedTokens,
-  preferAddToBalance: !!j.preferAddToBalance,
-  directory: j.directory,
-  owner: j.owner,
-  memo: j.memo,
-  metadata: j.metadata,
 })

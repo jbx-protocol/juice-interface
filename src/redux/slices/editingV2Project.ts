@@ -3,7 +3,7 @@ import * as constants from '@ethersproject/constants'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AllocationSplit } from 'components/Allocation'
 import { projectTokenSettingsToReduxFormat } from 'components/Create/utils/projectTokenSettingsToReduxFormat'
-import { DV_V1_1 } from 'constants/delegateVersions'
+import { JB721DELEGATE_V1 } from 'constants/delegateVersions'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
@@ -179,7 +179,7 @@ const defaultProjectState: ProjectState = {
     collectionMetadata: EMPTY_NFT_COLLECTION_METADATA,
     postPayModal: undefined,
     flags: DEFAULT_NFT_FLAGS,
-    contractVersion: DV_V1_1,
+    contractVersion: JB721DELEGATE_V1,
     governanceType: JB721GovernanceType.NONE,
   },
   mustStartAtOrAfter: DEFAULT_MUST_START_AT_OR_AFTER,

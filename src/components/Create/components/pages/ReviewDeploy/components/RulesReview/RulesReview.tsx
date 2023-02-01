@@ -13,6 +13,7 @@ export const RulesReview = () => {
     pausePayments,
     strategy,
     terminalConfiguration,
+    controllerConfiguration,
     holdFees,
   } = useRulesReview()
 
@@ -21,7 +22,7 @@ export const RulesReview = () => {
       {isMobile ? (
         <MobileRulesReview />
       ) : (
-        <Row gutter={20}>
+        <Row gutter={20} className="gap-y-5">
           <DescriptionCol
             span={5}
             title={t`Reconfiguration`}
@@ -43,6 +44,11 @@ export const RulesReview = () => {
             desc={<div className="text-base font-medium">{pausePayments}</div>}
           />
           <DescriptionCol
+            span={14}
+            title={t`Hold fees`}
+            desc={<div className="text-base font-medium">{holdFees}</div>}
+          />
+          <DescriptionCol
             span={5}
             title={t`Terminal configuration`}
             desc={
@@ -53,8 +59,12 @@ export const RulesReview = () => {
           />
           <DescriptionCol
             span={5}
-            title={t`Hold fees`}
-            desc={<div className="text-base font-medium">{holdFees}</div>}
+            title={t`Controller configuration`}
+            desc={
+              <div className="text-base font-medium">
+                {controllerConfiguration}
+              </div>
+            }
           />
         </Row>
       )}

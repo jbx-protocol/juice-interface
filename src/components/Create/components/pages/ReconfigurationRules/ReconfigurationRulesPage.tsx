@@ -4,11 +4,13 @@ import { useWatch } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
 import { Selection } from 'components/Create/components/Selection'
 import { useAvailableReconfigurationStrategies } from 'components/Create/hooks/AvailableReconfigurationStrategies'
+import ExternalLink from 'components/ExternalLink'
 import { JuiceSwitch } from 'components/JuiceSwitch'
 import { HOLD_FEES_EXPLAINATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { readNetwork } from 'constants/networks'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
+import { helpPagePath } from 'utils/routes'
 import { CreateCollapse } from '../../CreateCollapse'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
@@ -73,9 +75,37 @@ export const ReconfigurationRulesPage = () => {
             </Form.Item>
             <Form.Item
               name="allowTerminalConfiguration"
-              extra={t`When enabled, the project owner can set the project's payment terminals.`}
+              extra={
+                <Trans>
+                  When enabled, the project owner can change the project's
+                  Payment Terminals.{' '}
+                  <ExternalLink
+                    href={helpPagePath('dev/learn/glossary/payment-terminal')}
+                  >
+                    Learn more
+                  </ExternalLink>
+                </Trans>
+              }
             >
-              <JuiceSwitch label={t`Allow terminal configuration`} />
+              <JuiceSwitch label={t`Allow Payment Terminal configuration`} />
+            </Form.Item>
+            <Form.Item
+              name="allowControllerConfiguration"
+              extra={
+                <Trans>
+                  When enabled, the project owner can change the project's
+                  Controller.{' '}
+                  <ExternalLink
+                    href={helpPagePath(
+                      'dev/api/contracts/or-controllers/jbcontroller',
+                    )}
+                  >
+                    Learn more
+                  </ExternalLink>
+                </Trans>
+              }
+            >
+              <JuiceSwitch label={t`Allow Controller configuration`} />
             </Form.Item>
           </CreateCollapse.Panel>
         </CreateCollapse>

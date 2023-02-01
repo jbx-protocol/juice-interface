@@ -2,7 +2,11 @@ import { useAvailableReconfigurationStrategies } from 'components/Create/hooks/A
 import { readNetwork } from 'constants/networks'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useMemo } from 'react'
-import { formatBoolean, formatPaused } from 'utils/format/formatBoolean'
+import {
+  formatBoolean,
+  formatEnabled,
+  formatPaused,
+} from 'utils/format/formatBoolean'
 
 export const useRulesReview = () => {
   const availableBallotStrategies = useAvailableReconfigurationStrategies(
@@ -19,8 +23,12 @@ export const useRulesReview = () => {
   }, [fundingCycleMetadata.pausePay])
 
   const terminalConfiguration = useMemo(() => {
-    return formatBoolean(fundingCycleMetadata.global.allowSetTerminals)
+    return formatEnabled(fundingCycleMetadata.global.allowSetTerminals)
   }, [fundingCycleMetadata.global.allowSetTerminals])
+
+  const controllerConfiguration = useMemo(() => {
+    return formatEnabled(fundingCycleMetadata.global.allowSetController)
+  }, [fundingCycleMetadata.global.allowSetController])
 
   const strategy = useMemo(() => {
     return availableBallotStrategies.find(
@@ -36,6 +44,7 @@ export const useRulesReview = () => {
     customAddress,
     pausePayments,
     terminalConfiguration,
+    controllerConfiguration,
     strategy,
     holdFees,
   }

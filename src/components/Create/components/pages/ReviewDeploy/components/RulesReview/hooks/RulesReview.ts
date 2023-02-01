@@ -22,6 +22,10 @@ export const useRulesReview = () => {
     return formatBoolean(fundingCycleMetadata.global.allowSetTerminals)
   }, [fundingCycleMetadata.global.allowSetTerminals])
 
+  const pauseTransfers = useMemo(() => {
+    return formatBoolean(fundingCycleMetadata.global.pauseTransfers)
+  }, [fundingCycleMetadata.global.pauseTransfers])
+
   const strategy = useMemo(() => {
     return availableBallotStrategies.find(
       strategy => strategy.id === reconfigurationRuleSelection,
@@ -43,5 +47,6 @@ export const useRulesReview = () => {
     strategy,
     holdFees,
     useDataSourceForRedeem,
+    pauseTransfers,
   }
 }

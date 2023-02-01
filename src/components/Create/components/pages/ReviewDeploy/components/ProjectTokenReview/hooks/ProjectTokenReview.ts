@@ -3,7 +3,7 @@ import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useCallback, useMemo } from 'react'
 import { useEditingReservedTokensSplits } from 'redux/hooks/EditingReservedTokensSplits'
-import { formatBoolean } from 'utils/format/formatBoolean'
+import { formatEnabled } from 'utils/format/formatBoolean'
 
 export const useProjectTokenReview = () => {
   const {
@@ -23,7 +23,7 @@ export const useProjectTokenReview = () => {
   )
 
   const allowTokenMinting = useMemo(
-    () => formatBoolean(allowMinting),
+    () => formatEnabled(allowMinting),
     [allowMinting],
   )
 

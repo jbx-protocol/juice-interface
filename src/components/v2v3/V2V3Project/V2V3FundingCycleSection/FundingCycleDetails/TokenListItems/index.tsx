@@ -7,6 +7,8 @@ import {
   CONTRIBUTOR_RATE_EXPLAINATION,
   DISCOUNT_RATE_EXPLANATION,
   MINT_RATE_EXPLANATION,
+  OWNER_MINTING_EXPLAINATION,
+  PAUSE_TRANSFERS_EXPLANATION,
   REDEMPTION_RATE_EXPLANATION,
   RESERVED_RATE_EXPLAINATION,
   RESERVED_TOKENS_EXPLAINATION,
@@ -22,9 +24,11 @@ import {
   formatDiscountRate,
   formatRedemptionRate,
 } from 'utils/v2v3/math'
+import { AllowMintingValue } from '../RulesListItems/AllowMintingValue'
+import { PauseTransfersValue } from '../RulesListItems/PauseTransfersValue'
 import { MintRateValue } from './MintRateValue'
-import { ReservedRateValue } from './ReservedRateValue'
 import { PayerOrReservedTokensValue } from './PayerOrReservedTokensValue'
+import { ReservedRateValue } from './ReservedRateValue'
 
 export function TokenListItems({
   fundingCycle,
@@ -91,6 +95,14 @@ export function TokenListItems({
     !fundingCycleMetadata.redemptionRate.eq(
       oldFundingCycleMetadata.redemptionRate,
     )
+
+  const allowMintingHasDiff =
+    oldFundingCycleMetadata &&
+    oldFundingCycleMetadata.allowMinting !== fundingCycleMetadata.allowMinting
+  const pauseTransfersHasDiff =
+    oldFundingCycleMetadata &&
+    oldFundingCycleMetadata.global.pauseTransfers !==
+      fundingCycleMetadata.global.pauseTransfers
 
   return (
     <>
@@ -177,6 +189,38 @@ export function TokenListItems({
             : undefined
         }
         helperText={REDEMPTION_RATE_EXPLANATION}
+      />
+      <FundingCycleListItem
+        name={t`Owner token minting`}
+        value={
+          <AllowMintingValue allowMinting={fundingCycleMetadata.allowMinting} />
+        }
+        oldValue={
+          showDiffs && allowMintingHasDiff ? (
+            <AllowMintingValue
+              allowMinting={oldFundingCycleMetadata.allowMinting}
+            />
+          ) : undefined
+        }
+        helperText={OWNER_MINTING_EXPLAINATION}
+      />
+      <FundingCycleListItem
+        name={t`Token transfers`}
+        value={
+          <PauseTransfersValue
+            pauseTransfers={fundingCycleMetadata.global.pauseTransfers ?? false}
+          />
+        }
+        oldValue={
+          showDiffs && pauseTransfersHasDiff ? (
+            <PauseTransfersValue
+              pauseTransfers={
+                oldFundingCycleMetadata?.global.pauseTransfers ?? false
+              }
+            />
+          ) : undefined
+        }
+        helperText={PAUSE_TRANSFERS_EXPLANATION}
       />
     </>
   )

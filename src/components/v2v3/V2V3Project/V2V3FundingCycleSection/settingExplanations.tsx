@@ -68,7 +68,18 @@ export const OWNER_MINTING_EXPLAINATION = (
 )
 
 export const TERMINAL_CONFIG_EXPLAINATION = (
-  <Trans>The project owner can add and remove payment terminals.</Trans>
+  <Trans>The project owner can change the project's payment terminals.</Trans>
+)
+
+export const CONTROLLER_CONFIG_EXPLAINATION = (
+  <Trans>The project owner can change the project's controller.</Trans>
+)
+
+export const PAUSE_TRANSFERS_EXPLANATION = (
+  <Trans>
+    If transfers are paused, token holders can't transfer their project tokens
+    to other addresses. The project's ERC-20 tokens are always transferrable.
+  </Trans>
 )
 
 export const RECONFIG_RULES_EXPLAINATION = (

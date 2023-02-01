@@ -47,7 +47,9 @@ export default function MobileNavigation() {
           header={
             <div className="flex w-full justify-between">
               <Link href="/">
-                <a className="inline-block">{<Logo className="h-8" />}</a>
+                <a>
+                  <Logo />
+                </a>
               </Link>
               <div className="flex items-center gap-7">
                 <TransactionsList listClassName="absolute top-12 left-0 right-0 p-3" />

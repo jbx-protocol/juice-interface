@@ -1,16 +1,15 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Form, FormInstance } from 'antd'
-import ETHAmount from 'components/currency/ETHAmount'
 import CurrencySwitch from 'components/CurrencySwitch'
 import CurrencySymbol from 'components/CurrencySymbol'
+import { FeeTooltipLabel } from 'components/FeeTooltipLabel'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TooltipIcon from 'components/TooltipIcon'
-import TooltipLabel from 'components/TooltipLabel'
 import { CurrencyName } from 'constants/currency'
-import { formatWad, parseWad, stripCommas } from 'utils/format/formatNumber'
-import { amountSubFee, formatFee } from 'utils/v2v3/math'
+import { parseWad, stripCommas } from 'utils/format/formatNumber'
+import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { AddOrEditSplitFormFields, SplitType } from './types'
 import { percentageValidator } from './utils'
 
@@ -39,31 +38,14 @@ export function AmountFormItem({
   function AfterFeeMessage() {
     if (!fee || !amount || amount === '0') return null
 
-    const feePercentage = formatFee(fee)
     try {
-      const amountSubFeeValue = amountSubFee(parseWad(stripCommas(amount)), fee)
-
       return (
-        <TooltipLabel
-          label={
-            <Trans>
-              {currencyName === 'ETH' ? (
-                <ETHAmount amount={amountSubFeeValue} />
-              ) : (
-                <>
-                  <CurrencySymbol currency={currencyName} />
-                  {formatWad(amountSubFeeValue, { precision: 4 })}
-                </>
-              )}{' '}
-              after {feePercentage}% JBX membership fee
-            </Trans>
+        <FeeTooltipLabel
+          amountWad={parseWad(stripCommas(amount))}
+          currency={
+            currencyName === 'ETH' ? V2V3_CURRENCY_ETH : V2V3_CURRENCY_USD
           }
-          tip={
-            <Trans>
-              Payouts to Ethereum addresses incur a {feePercentage}% fee. Your
-              project will receive JBX in return at the current issuance rate.
-            </Trans>
-          }
+          feePerBillion={fee}
         />
       )
     } catch (e) {

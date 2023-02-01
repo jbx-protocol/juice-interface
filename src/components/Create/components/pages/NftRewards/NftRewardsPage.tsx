@@ -113,7 +113,7 @@ export const NftRewardsPage = () => {
               name="collectionDescription"
               label={<Trans>Collection Description</Trans>}
             >
-              <JuiceTextArea autoSize={{ minRows: 4, maxRows: 6 }} />
+              <JuiceInput />
             </Form.Item>
 
             <CreateCollapse>

@@ -44,9 +44,9 @@ export const useRulesReview = () => {
     customAddress,
     pausePayments,
     terminalConfiguration,
+    pauseTransfers,
     strategy,
     holdFees,
     useDataSourceForRedeem,
-    pauseTransfers,
   }
 }

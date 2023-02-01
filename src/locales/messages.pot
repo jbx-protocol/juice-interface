@@ -2051,9 +2051,6 @@ msgstr ""
 msgid "Pause project token transfers"
 msgstr ""
 
-msgid "Pause transfers"
-msgstr ""
-
 msgid "Paused"
 msgstr ""
 

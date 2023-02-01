@@ -4,8 +4,7 @@ import { t, Trans } from '@lingui/macro'
 import { Space, Tooltip } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
 import TooltipLabel from 'components/TooltipLabel'
-import { AllocatorBadge } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/AllocatorBadge'
-import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
+import V2V3ProjectLink from 'components/v2v3/shared/V2V3ProjectLink'
 import {
   NULL_ALLOCATOR_ADDRESS,
   V1_V3_ALLOCATOR_ADDRESS,
@@ -46,8 +45,10 @@ export default function Mod({
                   <V1ProjectHandle projectId={projectId} />
                 ) : isV3Project ? (
                   <Space size="small">
-                    <V2V3ProjectHandleLink projectId={projectId.toNumber()} />
-                    <AllocatorBadge allocator={allocator} />
+                    <V2V3ProjectLink
+                      projectId={projectId.toNumber()}
+                      allocator={allocator}
+                    />
                   </Space>
                 ) : (
                   '--'

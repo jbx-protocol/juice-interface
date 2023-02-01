@@ -68,10 +68,10 @@ export const resourcesMenuItems = (mobile?: boolean): ResourceItem[] => {
       ),
     },
     {
-      key: 'governance',
+      key: 'newsletter',
       label: (
-        <a href="https://juicetool.xyz/nance/juicebox" {...linkStyle}>
-          <Trans>Governance</Trans>
+        <a href="https://newsletter.juicebox.money" {...linkStyle}>
+          <Trans>Newsletter</Trans>
         </a>
       ),
     },
@@ -84,10 +84,10 @@ export const resourcesMenuItems = (mobile?: boolean): ResourceItem[] => {
       ),
     },
     {
-      key: 'newsletter',
+      key: 'contact',
       label: (
-        <a href="https://newsletter.juicebox.money" {...linkStyle}>
-          <Trans>Newsletter</Trans>
+        <a href="/contact" {...linkStyle}>
+          <Trans>Contact</Trans>
         </a>
       ),
     },

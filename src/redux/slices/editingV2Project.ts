@@ -406,6 +406,7 @@ const editingV2ProjectSlice = createSlice({
         discountRate: number
         redemptionRate: number
         tokenMinting: boolean
+        pauseTransfers: boolean
       }>,
     ) => {
       const converted = projectTokenSettingsToReduxFormat(action.payload)

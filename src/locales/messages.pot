@@ -3137,10 +3137,10 @@ msgstr ""
 msgid "Token minting enabled"
 msgstr ""
 
-msgid "Token minting is not recommended as it allows the project owner to create unlimited tokens. This is a risk factor for contributors."
+msgid "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
 msgstr ""
 
-msgid "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
+msgid "Token minting isn't recommended as it allows the project owner to create unlimited tokens. This is a risk factor for contributors."
 msgstr ""
 
 msgid "Token name"
@@ -3515,13 +3515,10 @@ msgstr ""
 msgid "When enabled, all project token transfers will be paused. Does not apply to ERC-20 tokens if issued."
 msgstr ""
 
-msgid "When enabled, project token transfers will be paused. This does not apply to ERC-20 tokens if issued."
+msgid "When enabled, project's token holders can't transfer their tokens to other addresses. This doesn't apply to your project's ERC-20 tokens (if you've issued them)."
 msgstr ""
 
 msgid "When enabled, the data source will be used for redeem transactions."
-msgstr ""
-
-msgid "When enabled, the payments to the project are paused, and no new tokens will be issued."
 msgstr ""
 
 msgid "When enabled, the project owner can manually mint any amount of tokens to any address."
@@ -3531,6 +3528,9 @@ msgid "When enabled, the project owner can set the project's payment terminals."
 msgstr ""
 
 msgid "When enabled, the project will hold the fee amount in ETH instead of the fees being processed automatically. <0>Learn more.</0>"
+msgstr ""
+
+msgid "When enabled, your project can't accept payments."
 msgstr ""
 
 msgid "When enabled, your project cannot receive direct payments."

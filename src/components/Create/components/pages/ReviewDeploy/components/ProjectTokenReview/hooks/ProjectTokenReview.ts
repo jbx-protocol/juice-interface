@@ -3,12 +3,17 @@ import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useCallback, useMemo } from 'react'
 import { useEditingReservedTokensSplits } from 'redux/hooks/EditingReservedTokensSplits'
-import { formatEnabled } from 'utils/format/formatBoolean'
+import { formatEnabled, formatPaused } from 'utils/format/formatBoolean'
 
 export const useProjectTokenReview = () => {
   const {
     fundingCycleData: { weight, discountRate },
-    fundingCycleMetadata: { allowMinting, reservedRate, redemptionRate },
+    fundingCycleMetadata: {
+      allowMinting,
+      reservedRate,
+      redemptionRate,
+      global,
+    },
   } = useAppSelector(state => state.editingV2Project)
   const [tokenSplits, setTokenSplits] = useEditingReservedTokensSplits()
 
@@ -27,10 +32,16 @@ export const useProjectTokenReview = () => {
     [allowMinting],
   )
 
+  const pauseTransfers = useMemo(
+    () => formatPaused(global.pauseTransfers),
+    [global.pauseTransfers],
+  )
+
   return {
     weight,
     discountRate,
     allowTokenMinting,
+    pauseTransfers,
     reservedRate,
     redemptionRate,
     allocationSplits,

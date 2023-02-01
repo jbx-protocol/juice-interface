@@ -66,24 +66,19 @@ export const ReconfigurationRulesPage = () => {
             <Form.Item
               className="pt-8"
               name="pausePayments"
-              extra={t`When enabled, the payments to the project are paused, and no new tokens will be issued.`}
+              extra={t`When enabled, your project can't accept payments.`}
             >
               <JuiceSwitch label={t`Pause payments`} />
+            </Form.Item>
+
+            <Form.Item name="holdFees" extra={HOLD_FEES_EXPLAINATION}>
+              <JuiceSwitch label={t`Hold fees`} />
             </Form.Item>
             <Form.Item
               name="allowTerminalConfiguration"
               extra={t`When enabled, the project owner can set the project's payment terminals.`}
             >
               <JuiceSwitch label={t`Allow terminal configuration`} />
-            </Form.Item>
-            <Form.Item
-              name="pauseTransfers"
-              extra={t`When enabled, project token transfers will be paused. This does not apply to ERC-20 tokens if issued.`}
-            >
-              <JuiceSwitch label={t`Pause project token transfers`} />
-            </Form.Item>
-            <Form.Item name="holdFees" extra={HOLD_FEES_EXPLAINATION}>
-              <JuiceSwitch label={t`Hold fees`} />
             </Form.Item>
             <Form.Item
               name="useDataSourceForRedeem"

@@ -146,7 +146,12 @@ export const useNftRewardsForm = () => {
     ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setNftRewardsGovernance,
     formatter: v => {
-      if (!v || typeof v === 'string' || typeof v === 'object')
+      if (
+        !v ||
+        typeof v === 'string' ||
+        typeof v === 'object' ||
+        typeof v === 'boolean'
+      )
         return JB721GovernanceType.NONE
       return v
     },

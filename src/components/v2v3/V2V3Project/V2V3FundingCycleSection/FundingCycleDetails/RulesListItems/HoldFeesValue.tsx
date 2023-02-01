@@ -1,5 +1,5 @@
-import { Trans } from '@lingui/macro'
+import { formatEnabled } from 'utils/format/formatBoolean'
 
 export function HoldFeesValue({ holdFees }: { holdFees: boolean }) {
-  return holdFees ? <Trans>Enabled</Trans> : <Trans>Disabled</Trans>
+  return <>{formatEnabled(holdFees)}</>
 }

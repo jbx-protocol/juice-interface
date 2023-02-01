@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import { Row } from 'antd'
 import useMobile from 'hooks/Mobile'
-import { formatAmount } from 'utils/formatAmount'
+import { formatAmount } from 'utils/format/formatAmount'
 import {
   formatDiscountRate,
   formatIssuanceRate,

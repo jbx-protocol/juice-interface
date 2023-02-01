@@ -5,14 +5,11 @@ import MinimalTable from 'components/tables/MinimalTable'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { ConfigureEvent } from 'models/subgraph-entities/v2/configure'
 import { useContext } from 'react'
+import { formatEnabled } from 'utils/format/formatBoolean'
 import { formatWad } from 'utils/format/formatNumber'
 import { detailedTimeString } from 'utils/format/formatTime'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
-
-function booleanStatusText(status: boolean) {
-  return status ? t`Enabled` : t`Disabled`
-}
 
 export default function ConfigureEventElem({
   event,
@@ -94,19 +91,19 @@ export default function ConfigureEventElem({
             [
               {
                 key: t`Payments`,
-                value: booleanStatusText(!event.payPaused),
+                value: formatEnabled(!event.payPaused),
               },
               {
                 key: t`Redemptions`,
-                value: booleanStatusText(!event.redeemPaused),
+                value: formatEnabled(!event.redeemPaused),
               },
               {
                 key: t`Owner token minting`,
-                value: booleanStatusText(event.mintingAllowed),
+                value: formatEnabled(event.mintingAllowed),
               },
               {
                 key: t`Hold fees`,
-                value: booleanStatusText(event.shouldHoldFees),
+                value: formatEnabled(event.shouldHoldFees),
               },
             ],
           ]}

@@ -1,8 +1,8 @@
-import { t } from '@lingui/macro'
 import { useAvailableReconfigurationStrategies } from 'components/Create/hooks/AvailableReconfigurationStrategies'
 import { readNetwork } from 'constants/networks'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useMemo } from 'react'
+import { formatBoolean } from 'utils/format/formatBoolean'
 
 export const useRulesReview = () => {
   const availableBallotStrategies = useAvailableReconfigurationStrategies(
@@ -15,27 +15,15 @@ export const useRulesReview = () => {
   } = useAppSelector(state => state.editingV2Project)
 
   const pausePayments = useMemo(() => {
-    if (fundingCycleMetadata.pausePay) {
-      return t`Yes`
-    } else {
-      return t`No`
-    }
+    return formatBoolean(fundingCycleMetadata.pausePay)
   }, [fundingCycleMetadata.pausePay])
 
   const terminalConfiguration = useMemo(() => {
-    if (fundingCycleMetadata.global.allowSetTerminals) {
-      return t`Yes`
-    } else {
-      return t`No`
-    }
+    return formatBoolean(fundingCycleMetadata.global.allowSetTerminals)
   }, [fundingCycleMetadata.global.allowSetTerminals])
 
   const pauseTransfers = useMemo(() => {
-    if (fundingCycleMetadata.global.pauseTransfers) {
-      return t`Yes`
-    } else {
-      return t`No`
-    }
+    return formatBoolean(fundingCycleMetadata.global.pauseTransfers)
   }, [fundingCycleMetadata.global.pauseTransfers])
 
   const strategy = useMemo(() => {
@@ -45,19 +33,11 @@ export const useRulesReview = () => {
   }, [availableBallotStrategies, reconfigurationRuleSelection])
 
   const holdFees = useMemo(() => {
-    if (fundingCycleMetadata.holdFees) {
-      return t`Yes`
-    } else {
-      return t`No`
-    }
+    return formatBoolean(fundingCycleMetadata.holdFees)
   }, [fundingCycleMetadata.holdFees])
 
   const useDataSourceForRedeem = useMemo(() => {
-    if (fundingCycleMetadata.useDataSourceForRedeem) {
-      return t`Yes`
-    } else {
-      return t`No`
-    }
+    return formatBoolean(fundingCycleMetadata.useDataSourceForRedeem)
   }, [fundingCycleMetadata.useDataSourceForRedeem])
 
   return {

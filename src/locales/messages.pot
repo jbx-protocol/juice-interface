@@ -497,6 +497,9 @@ msgstr ""
 msgid "As your community grows, scale your project with it: Juicebox lets you update your payouts, token issuance & redemption, and other rules over time to meet your community's evolving needs. Run your community how you want to, with our pre-built integrations for <0>Safe</0>, <1>Snapshot</1>, and the other tools you already use."
 msgstr ""
 
+msgid "Ask a question."
+msgstr ""
+
 msgid "Assets"
 msgstr ""
 
@@ -765,6 +768,15 @@ msgid "Connect your wallet to see your projects."
 msgstr ""
 
 msgid "Connected wallet not authorized"
+msgstr ""
+
+msgid "Contact"
+msgstr ""
+
+msgid "Contact JuiceboxDAO for feature requests, support, or project advice."
+msgstr ""
+
+msgid "Contact a contributor."
 msgstr ""
 
 msgid "Contract"
@@ -1214,6 +1226,9 @@ msgstr ""
 msgid "Edit {allocationName}"
 msgstr ""
 
+msgid "Email"
+msgstr ""
+
 msgid "Enable unclaimed token spending"
 msgstr ""
 
@@ -1337,6 +1352,9 @@ msgstr ""
 msgid "Failed to issue ERC20 token. Check transaction and try again."
 msgstr ""
 
+msgid "Failed to send message."
+msgstr ""
+
 msgid "Failed to update project metadata"
 msgstr ""
 
@@ -1436,6 +1454,9 @@ msgstr ""
 msgid "General"
 msgstr ""
 
+msgid "Get help planning or configuring my project."
+msgstr ""
+
 msgid "Give permissions to {0} on project #{projectId}"
 msgstr ""
 
@@ -1521,6 +1542,9 @@ msgid "How would you like to distribute payments?"
 msgstr ""
 
 msgid "I accept this project's <0>unique risks</0>."
+msgstr ""
+
+msgid "I have a media inquiry."
 msgstr ""
 
 msgid "I have another question!"
@@ -1817,6 +1841,12 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
+msgid "Message a DAO contributor for feature requests, help planning your project, or to have your questions and inquiries answered."
+msgstr ""
+
+msgid "Message sent!"
+msgstr ""
+
 msgid "Migrate all approved tokens"
 msgstr ""
 
@@ -1938,6 +1968,9 @@ msgid "NO LIMIT"
 msgstr ""
 
 msgid "Name"
+msgstr ""
+
+msgid "Need help?"
 msgstr ""
 
 msgid "New"
@@ -2067,6 +2100,9 @@ msgid "Optional"
 msgstr ""
 
 msgid "Other assets in this project's owner's wallet."
+msgstr ""
+
+msgid "Other."
 msgstr ""
 
 msgid "Overflow"
@@ -2579,6 +2615,9 @@ msgstr ""
 msgid "Relaunch your funding cycle on the new Juicebox V2 contracts."
 msgstr ""
 
+msgid "Request a feature."
+msgstr ""
+
 msgid "Required"
 msgstr ""
 
@@ -2745,6 +2784,9 @@ msgid "Select NFTs to redeem"
 msgstr ""
 
 msgid "Select the option that best suits your project’s funding requirements."
+msgstr ""
+
+msgid "Send Message"
 msgstr ""
 
 msgid "Send redeemed token to a custom address"
@@ -2919,6 +2961,9 @@ msgid "Starting over will erase all currently saved progress."
 msgstr ""
 
 msgid "Stay up to date."
+msgstr ""
+
+msgid "Subject"
 msgstr ""
 
 msgid "Successfully approved ERC-20 spending."
@@ -3656,6 +3701,9 @@ msgstr ""
 msgid "Whenever someone pays your project, this percentage of the newly minted tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can \"mint\" them, which distributes them to their intended receivers."
 msgstr ""
 
+msgid "Where to Contact You"
+msgstr ""
+
 msgid "Who is Peel? Who is JuiceboxDAO?"
 msgstr ""
 
@@ -3770,7 +3818,13 @@ msgstr ""
 msgid "Your Juicebox project has no active funding cycle. Launch a funding cycle to re-enable payments on your project."
 msgstr ""
 
+msgid "Your Message"
+msgstr ""
+
 msgid "Your NFTs"
+msgstr ""
+
+msgid "Your Name"
 msgstr ""
 
 msgid "Your V3 project cannot have payouts to V1 projects. Remove any payouts to V1 projects, or re-assign them to V3 projects."

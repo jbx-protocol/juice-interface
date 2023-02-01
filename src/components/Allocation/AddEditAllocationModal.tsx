@@ -3,6 +3,7 @@ import { t, Trans } from '@lingui/macro'
 import { Form, Modal, Radio } from 'antd'
 import { RuleObject } from 'antd/lib/form'
 import CurrencySwitch from 'components/CurrencySwitch'
+import { FeeTooltipLabel } from 'components/FeeTooltipLabel'
 import { validatePercentage } from 'components/formItems/formHelpers'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
@@ -10,23 +11,20 @@ import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'
 import { JuiceInputNumber } from 'components/inputs/JuiceInputNumber'
 import NumberSlider from 'components/inputs/NumberSlider'
 import { useFundingTargetType } from 'hooks/FundingTargetType'
+import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/ETHPaymentTerminalFee'
 import { Split } from 'models/splits'
 import moment, * as Moment from 'moment'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { fromWad } from 'utils/format/formatNumber'
+import {
+  allocationInputAlreadyExistsRule,
+  inputIsIntegerRule,
+  inputMustBeEthAddressRule,
+  inputMustExistRule,
+} from 'utils/antd-rules'
+import { fromWad, parseWad, stripCommas } from 'utils/format/formatNumber'
 import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { amountFromPercent } from 'utils/v2v3/distributions'
-import {
-  inputMustBeEthAddressRule,
-  inputIsIntegerRule,
-  inputMustExistRule,
-  allocationInputAlreadyExistsRule,
-} from 'utils/antd-rules'
 import { Allocation, AllocationSplit } from './Allocation'
-import TooltipIcon from 'components/TooltipIcon'
-import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/ETHPaymentTerminalFee'
-import { formatFee } from 'utils/v2v3/math'
-import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 
 interface AddEditAllocationModalFormProps {
   juiceboxProjectId?: string | undefined
@@ -71,23 +69,7 @@ export const AddEditAllocationModal = ({
   const ethPaymentTerminalFee = useETHPaymentTerminalFee()
   const amount = Form.useWatch('amount', form)
 
-  const amountAfterFee = useMemo(() => {
-    if (!ethPaymentTerminalFee || !amount?.amount) return
-    const percentageIncludedAfterFee =
-      Math.abs(100 - parseFloat(formatFee(ethPaymentTerminalFee))) / 100
-    const amountLeftover =
-      parseFloat(amount.amount) * percentageIncludedAfterFee
-    return formatCurrencyAmount({
-      amount: amountLeftover,
-      currency: allocationCurrency,
-    })
-  }, [allocationCurrency, amount?.amount, ethPaymentTerminalFee])
-
-  const showFee =
-    amountType === 'amount' &&
-    recipient === 'walletAddress' &&
-    ethPaymentTerminalFee &&
-    !!amount?.amount
+  const showFee = amountType === 'amount' && recipient === 'walletAddress'
 
   const isValidJuiceboxProject = useMemo(
     () =>
@@ -255,18 +237,15 @@ export const AddEditAllocationModal = ({
           }
           required
           extra={
+            !!amount?.amount &&
+            !!allocationCurrency &&
             showFee &&
-            amountAfterFee &&
             ethPaymentTerminalFee && (
-              <Trans>
-                {amountAfterFee} after fee{' '}
-                <TooltipIcon
-                  tip={t`
-                      There is a ${formatFee(
-                        ethPaymentTerminalFee,
-                      )}% fee applied to all transactions leaving Juicebox`}
-                />
-              </Trans>
+              <FeeTooltipLabel
+                amountWad={parseWad(stripCommas(amount.amount))}
+                currency={allocationCurrency}
+                feePerBillion={ethPaymentTerminalFee}
+              />
             )
           }
           rules={[

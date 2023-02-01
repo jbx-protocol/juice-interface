@@ -36,6 +36,7 @@ export default function Contact() {
       setError(true)
     } finally {
       setLoading(false)
+      setSubmitDisabled(true)
     }
   }
 
@@ -162,19 +163,3 @@ export default function Contact() {
     </>
   )
 }
-/*        Alternatively, you can:
-        <ul>
-          <li>
-            <Trans>Visit the <ExternalLink href="https://info.juicebox.money">Juice Docs</ExternalLink> for technical documentation, project creator resources, and more.</Trans>
-          </li>
-          <li>
-            <Trans>If you haven't already, read the <Link href='/#faq'>FAQs</Link>.</Trans>
-          </li>
-          <li>
-            <Trans>Join the <ExternalLink href='https://discord.gg/XvmfY4Hkcz'>Peel Discord</ExternalLink>. <Link href='/@peel'>Peel</Link> manages the juicebox.money frontend interface.</Trans>
-          </li>
-          <li>
-            <Trans>Join the <ExternalLink href='https://discord.gg/juicebox'>JuiceboxDAO Discord server</ExternalLink>. <Link href='/@juicebox'>JuiceboxDAO</Link> builds and governs the Juicebox protocol and other community resources.</Trans>
-          </li>
-        </ul>
-        */

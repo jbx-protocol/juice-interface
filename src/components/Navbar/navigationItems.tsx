@@ -86,7 +86,7 @@ export const resourcesMenuItems = (mobile?: boolean): ResourceItem[] => {
     {
       key: 'contact',
       label: (
-        <a href="/contact" {...linkStyle}>
+        <a href="/contact" {...linkStyle} target="_self">
           <Trans>Contact</Trans>
         </a>
       ),

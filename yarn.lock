@@ -3653,10 +3653,10 @@
   resolved "https://registry.yarnpkg.com/@jbx-protocol/contracts-v2/-/contracts-v2-8.0.4.tgz#ceb72c01f56d528691d048d488fef2566961bb88"
   integrity sha512-AXEMkQzBOlllI0QNUadH1O+vkNnXCxfVXxff1OYWkx3qEqWNyPKifAv9ISECvEiFeN025dutivk3jNWjvbs+tQ==
 
-"@jbx-protocol/juice-721-delegate@4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-721-delegate/-/juice-721-delegate-4.0.0.tgz#a77783b9439e11cfbed27a49829c19acfdbfdd04"
-  integrity sha512-121j0L3VzGKGD6wIVNT7oJ2rLDc1ydbM95lpktto4/VecF+I4l8nNc2KuM/F9elZdCdmRIhLicqq+rvFijKl9Q==
+"@jbx-protocol/juice-721-delegate@3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-721-delegate/-/juice-721-delegate-3.0.0.tgz#9a53e8fb6cbffba7889de7cc766791b124c0d2b4"
+  integrity sha512-vr18ip7ueGixg6DPFo3cxnTpnUSya6Z5tkigUJ3/6QK/H8efLYlKU634OOyv0n3Bf2+gX+VXBiDJo4bRJJiL3A==
   dependencies:
     "@jbx-protocol/juice-contracts-v3" "^2.0.0"
     "@openzeppelin/contracts" "^4.6.0"

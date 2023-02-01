@@ -5,4 +5,5 @@ export const FEATURE_FLAGS = {
   SIMULATE_TXS: 'simulateTxs',
   IPFS_REQUIRES_KEY_REGISTRATION: 'ipfsRequiresKeyRegistration',
   SEPANA_SEARCH: 'sepanaSearch',
+  DELEGATE_V1_1: 'delegateV1_1',
 }

@@ -10,17 +10,17 @@ import {
   PREVENT_OVERSPENDING_EXPLAINATION,
   USE_DATASOURCE_FOR_REDEEM_EXPLAINATION,
 } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { readNetwork } from 'constants/networks'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { CreateCollapse } from '../../CreateCollapse'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { CustomRuleCard, RuleCard } from './components'
 import { useReconfigurationRulesForm } from './hooks'
-
-export const PREVENT_OVERSPENDING_DISABLED = true
 
 export const ReconfigurationRulesPage = () => {
   useSetCreateFurthestPageReached('reconfigurationRules')
@@ -39,6 +39,8 @@ export const ReconfigurationRulesPage = () => {
   )
 
   const hasNFTs = rewardTiers?.length
+
+  const delegateV1_1Enabled = featureFlagEnabled(FEATURE_FLAGS.DELEGATE_V1_1)
 
   return (
     <Form
@@ -101,7 +103,7 @@ export const ReconfigurationRulesPage = () => {
             >
               <JuiceSwitch label={t`Use data source for redeem`} />
             </Form.Item>
-            {hasNFTs && !PREVENT_OVERSPENDING_DISABLED ? (
+            {hasNFTs && delegateV1_1Enabled ? (
               <Form.Item
                 name="preventOverspending"
                 extra={PREVENT_OVERSPENDING_EXPLAINATION}

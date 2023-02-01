@@ -16,10 +16,12 @@ import {
   formatRedemptionRate,
   formatReservedRate,
   issuanceRateFrom,
+  MAX_DISTRIBUTION_LIMIT,
   redemptionRateFrom,
   reservedRateFrom,
 } from 'utils/v2v3/math'
 import { useFormDispatchWatch } from '../../hooks'
+import { useEditingDistributionLimit } from 'redux/hooks/EditingDistributionLimit'
 
 export type ProjectTokensFormProps = Partial<{
   selection: ProjectTokensSelection
@@ -51,6 +53,10 @@ export const useProjectTokensForm = () => {
     useAppSelector(state => state.editingV2Project)
   const [tokenSplits] = useEditingReservedTokensSplits()
   useDebugValue(form.getFieldsValue())
+  const [distributionLimit] = useEditingDistributionLimit()
+
+  const redemptionRateDisabled =
+    !distributionLimit || distributionLimit.amount.eq(MAX_DISTRIBUTION_LIMIT)
   const discountRateDisabled = !parseInt(fundingCycleData.duration)
 
   const initialValues: ProjectTokensFormProps | undefined = useMemo(() => {
@@ -63,13 +69,14 @@ export const useProjectTokensForm = () => {
       : DefaultSettings.reservedTokensPercentage
     const reservedTokenAllocation: AllocationSplit[] =
       tokenSplits.map(splitToAllocation)
-    const redemptionRate = fundingCycleMetadata.redemptionRate
-      ? parseFloat(formatRedemptionRate(fundingCycleMetadata.redemptionRate))
-      : DefaultSettings.redemptionRate
     const discountRate =
       !discountRateDisabled && fundingCycleData.discountRate
         ? parseFloat(formatDiscountRate(fundingCycleData.discountRate))
         : DefaultSettings.discountRate
+    const redemptionRate =
+      !redemptionRateDisabled && fundingCycleMetadata.redemptionRate
+        ? parseFloat(formatRedemptionRate(fundingCycleMetadata.redemptionRate))
+        : DefaultSettings.redemptionRate
     const tokenMinting =
       fundingCycleMetadata.allowMinting !== undefined
         ? fundingCycleMetadata.allowMinting
@@ -92,6 +99,7 @@ export const useProjectTokensForm = () => {
     fundingCycleMetadata.redemptionRate,
     fundingCycleMetadata.reservedRate,
     projectTokensSelection,
+    redemptionRateDisabled,
     tokenSplits,
   ])
 

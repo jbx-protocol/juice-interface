@@ -1,7 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import axios from 'axios'
-import { JB721DelegatePayMetadata } from 'components/Project/PayProjectForm/usePayProjectForm'
+import {
+  DEFAULT_ALLOW_OVERSPENDING,
+  JB721DELAGATE_V1_1_PAY_METADATA,
+  JB721DELAGATE_V1_PAY_METADATA,
+} from 'components/Project/PayProjectForm/usePayProjectForm'
 import { juiceboxEmojiImageUri } from 'constants/images'
 import { IPFS_TAGS } from 'constants/ipfs'
 import { readNetwork } from 'constants/networks'
@@ -249,8 +253,8 @@ export function buildJB721TierParams({
     })
 }
 
-export function encodeJB721DelegatePayMetadata(
-  metadata: JB721DelegatePayMetadata | undefined,
+export function encodeJB721DelegateV1PayMetadata(
+  metadata: JB721DELAGATE_V1_PAY_METADATA | undefined,
 ) {
   if (!metadata) return undefined
 
@@ -266,6 +270,27 @@ export function encodeJB721DelegatePayMetadata(
 
   const encoded = defaultAbiCoder.encode(
     ['bytes32', 'bytes32', 'bytes4', 'bool', 'bool', 'bool', 'uint16[]'],
+    args,
+  )
+
+  return encoded
+}
+
+export function encodeJB721DelegateV1_1PayMetadata(
+  metadata: JB721DELAGATE_V1_1_PAY_METADATA | undefined,
+) {
+  if (!metadata) return undefined
+
+  const args = [
+    constants.HashZero,
+    constants.HashZero,
+    IJB721Delegate_INTERFACE_ID,
+    metadata.allowOverspending ?? DEFAULT_ALLOW_OVERSPENDING,
+    metadata.tierIdsToMint,
+  ]
+
+  const encoded = defaultAbiCoder.encode(
+    ['bytes32', 'bytes32', 'bytes4', 'bool', 'uint16[]'],
     args,
   )
 
@@ -396,7 +421,7 @@ export function buildJBDeployTiered721DelegateData({
  */
 export function payMetadataOverrides(
   projectId: number,
-): Omit<JB721DelegatePayMetadata, 'tierIdsToMint'> {
+): Omit<JB721DELAGATE_V1_PAY_METADATA, 'tierIdsToMint'> {
   // ConstitutionDAO2 wanted to _not_ overspend. That is, to not allow any payment amount that
   // doesn't equal one of the NFT tier amounts.
   if (projectId === V2V3_PROJECT_IDS.CDAO2) {

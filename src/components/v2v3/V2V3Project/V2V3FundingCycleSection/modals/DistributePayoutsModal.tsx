@@ -172,9 +172,7 @@ export default function DistributePayoutsModal({
                   <InputAccessoryButton
                     content={<Trans>MAX</Trans>}
                     onClick={() =>
-                      setDistributionAmount(
-                        formatWad(distributable, { precision: 4 }),
-                      )
+                      setDistributionAmount(fromWad(distributable))
                     }
                   />
                 </div>

@@ -1,8 +1,7 @@
-import {
-  parseVeNftTokenJson,
-  VeNftToken,
-  VeNftTokenJson,
-} from 'models/subgraph-entities/v2/venft-token'
+import { VeNftToken } from 'models/subgraph-entities/v2/venft-token'
+import { subgraphEntityJsonArrayToKeyVal } from 'utils/graph'
+
+import { Json, primitives } from '../../json'
 
 export interface VeNftContract {
   address: string
@@ -10,22 +9,12 @@ export interface VeNftContract {
   uriResolver: string
   project: string
   projectId: number
-  tokens: Partial<VeNftToken>[]
+  tokens: VeNftToken[]
 }
 
-export type VeNftContractJson = Partial<
-  Record<Exclude<keyof VeNftContract, 'tokens'>, string> & {
-    tokens: VeNftTokenJson[]
-  }
->
-
 export const parseVeNftContractJson = (
-  j: VeNftContractJson,
-): Partial<VeNftContract> => ({
-  address: j.address,
-  symbol: j.symbol,
-  uriResolver: j.uriResolver,
-  project: j.project ? j.project : '',
-  projectId: j.projectId ? parseInt(j.projectId) : undefined,
-  tokens: j.tokens?.map(parseVeNftTokenJson) ?? undefined,
+  j: Json<VeNftContract>,
+): VeNftContract => ({
+  ...primitives(j),
+  ...subgraphEntityJsonArrayToKeyVal(j.tokens, 'veNftToken', 'tokens'),
 })

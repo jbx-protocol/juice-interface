@@ -1,25 +1,20 @@
-import { PV } from 'models/pv'
+import { parseSubgraphEntitiesFromJson } from 'utils/graph'
 
-import { parseProjectJson, Project, ProjectJson } from '../vX/project'
+import { Json } from '../../json'
+import { Project } from '../vX/project'
 
+/**
+ * Base type for entities that correspond to a project entity
+ */
 export interface BaseProjectEntity {
   id: string
-  pv: PV
-  project: Partial<Project>
+  project: Project
   projectId: number
 }
 
-export type BaseProjectEntityJson = Partial<
-  Record<Exclude<keyof BaseProjectEntity, 'project'>, string> & {
-    project: ProjectJson
-  }
->
-
 export const parseBaseProjectEntityJson = (
-  j: BaseProjectEntityJson,
-): Partial<BaseProjectEntity> => ({
-  id: j.id,
-  pv: j.pv ? (j.pv as PV) : undefined,
-  project: j.project ? parseProjectJson(j.project) : undefined,
-  projectId: j.projectId ? parseInt(j.projectId) : undefined,
+  j: Json<BaseProjectEntity>,
+): BaseProjectEntity => ({
+  ...j,
+  ...parseSubgraphEntitiesFromJson(j, ['project']),
 })

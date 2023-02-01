@@ -1,4 +1,5 @@
-import { SepanaProjectJson, SepanaQueryResponse } from 'models/sepana'
+import { Json } from 'models/json'
+import { SepanaProject, SepanaQueryResponse } from 'models/sepana'
 
 import { SEPANA_ENDPOINTS } from './endpoints'
 import { sepanaAxios } from './http'
@@ -12,7 +13,7 @@ import { sepanaAxios } from './http'
  */
 export async function searchSepanaProjects(query = '', pageSize?: number) {
   return sepanaAxios('read')
-    .post<SepanaQueryResponse<SepanaProjectJson>>(SEPANA_ENDPOINTS.search, {
+    .post<SepanaQueryResponse<Json<SepanaProject>>>(SEPANA_ENDPOINTS.search, {
       engine_ids: [process.env.SEPANA_ENGINE_ID],
       query: {
         function_score: {

@@ -13,11 +13,13 @@ import FormattedAddress from 'components/FormattedAddress'
 import Loading from 'components/Loading'
 import { PV_V1, PV_V1_1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { SGQueryOpts, SGOrderDir } from 'models/graph'
 import { Participant } from 'models/subgraph-entities/vX/participant'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { formatPercent, formatWad } from 'utils/format/formatNumber'
-import { GraphQueryOpts, OrderDirection, querySubgraph } from 'utils/graph'
+import { querySubgraph } from 'utils/graph'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
+
 import { DownloadParticipantsModal } from './DownloadParticipantsModal'
 
 const pageSize = 100
@@ -38,13 +40,23 @@ export default function ParticipantsModal({
   const { projectId, pv } = useContext(ProjectMetadataContext)
 
   const [loading, setLoading] = useState<boolean>()
-  const [participants, setParticipants] = useState<Participant[]>([])
+  const [participants, setParticipants] = useState<
+    Pick<
+      Participant,
+      | 'wallet'
+      | 'totalPaid'
+      | 'lastPaidTimestamp'
+      | 'balance'
+      | 'stakedBalance'
+      | 'id'
+    >[]
+  >([])
   const [sortPayerReports, setSortPayerReports] =
     useState<keyof Participant>('balance')
   const [pageNumber, setPageNumber] = useState<number>(0)
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
   const [sortPayerReportsDirection, setSortPayerReportsDirection] =
-    useState<OrderDirection>('desc')
+    useState<SGOrderDir>('desc')
 
   useEffect(() => {
     setLoading(true)
@@ -55,7 +67,7 @@ export default function ParticipantsModal({
     }
 
     // Projects that migrate between 1 & 1.1 may change their PV without the PV of their participants being updated. This should be fixed by better subgraph infrastructure, but this fix will make sure the UI works for now.
-    const pvOpt: GraphQueryOpts<'participant', keyof Participant>['where'] =
+    const pvOpt: SGQueryOpts<'participant', keyof Participant>['where'] =
       pv === PV_V1 || pv === PV_V1_1
         ? {
             key: 'pv',

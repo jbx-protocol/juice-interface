@@ -1,15 +1,12 @@
 import { BigNumber } from '@ethersproject/bignumber'
 
-import {
-  BaseEventEntity,
-  BaseEventEntityJson,
-  parseBaseEventEntityJson,
-} from '../base/base-event-entity'
+import { BaseEventEntity } from '../base/base-event-entity'
 import {
   BaseProjectEntity,
-  BaseProjectEntityJson,
   parseBaseProjectEntityJson,
 } from '../base/base-project-entity'
+import { Json, primitives } from '../../json'
+import { parseBigNumberKeyVal } from 'utils/graph'
 
 export interface DistributeToReservedTokenSplitEvent
   extends BaseEventEntity,
@@ -24,23 +21,10 @@ export interface DistributeToReservedTokenSplitEvent
   distributeReservedTokensEvent: string
 }
 
-export type DistributeToReservedTokenSplitEventJson = Partial<
-  Record<keyof DistributeToReservedTokenSplitEvent, string> &
-    BaseEventEntityJson &
-    BaseProjectEntityJson
->
-
 export const parseDistributeToReservedTokenSplitEventJson = (
-  j: DistributeToReservedTokenSplitEventJson,
-): Partial<DistributeToReservedTokenSplitEvent> => ({
-  ...parseBaseEventEntityJson(j),
+  j: Json<DistributeToReservedTokenSplitEvent>,
+): DistributeToReservedTokenSplitEvent => ({
+  ...primitives(j),
   ...parseBaseProjectEntityJson(j),
-  tokenCount: j.tokenCount ? BigNumber.from(j.tokenCount) : undefined,
-  preferClaimed: !!j.preferClaimed,
-  percent: j.percent ? parseInt(j.percent) : undefined,
-  splitProjectId: j.splitProjectId ? parseInt(j.splitProjectId) : undefined,
-  beneficiary: j.beneficiary,
-  lockedUntil: j.lockedUntil ? parseInt(j.lockedUntil) : undefined,
-  allocator: j.allocator,
-  distributeReservedTokensEvent: j.distributeReservedTokensEvent,
+  ...parseBigNumberKeyVal('tokenCount', j.tokenCount),
 })

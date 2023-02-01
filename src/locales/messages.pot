@@ -3524,7 +3524,7 @@ msgstr ""
 msgid "When enabled, the project will hold the fee amount in ETH instead of the fees being processed automatically. <0>Learn more.</0>"
 msgstr ""
 
-msgid "When enabled, users can only receive NFTs by paying the exact price of the NFT. This ensures that when users redeem their NFTs, they will receive the amount they paid for them."
+msgid "When enabled, users can only receive NFTs by paying the exact price of the NFT. This ensures contributors are eligible to receive their full payment amount if they choose to redeem their NFT."
 msgstr ""
 
 msgid "When enabled, your project cannot receive direct payments."

@@ -42,11 +42,7 @@ export const useRulesReview = () => {
   }, [fundingCycleMetadata.useDataSourceForRedeem])
 
   const preventOverspending = useMemo(() => {
-    if (nftRewardsFlags.preventOverspending) {
-      return t`Yes`
-    } else {
-      return t`No`
-    }
+    return formatBoolean(nftRewardsFlags.preventOverspending)
   }, [nftRewardsFlags.preventOverspending])
 
   return {

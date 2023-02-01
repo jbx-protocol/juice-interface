@@ -1,8 +1,7 @@
 import { t } from '@lingui/macro'
 import { Row } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { featureFlagEnabled } from 'utils/featureFlags'
+import { PREVENT_OVERSPENDING_FIELD_VISIBLE } from '../../../ReconfigurationRules'
 import { DescriptionCol } from '../DescriptionCol'
 import { useRulesReview } from './hooks/RulesReview'
 
@@ -16,8 +15,6 @@ export const MobileRulesReview = () => {
     useDataSourceForRedeem,
     preventOverspending,
   } = useRulesReview()
-
-  const delegateV1_1Enabled = featureFlagEnabled(FEATURE_FLAGS.DELEGATE_V1_1)
 
   return (
     <Row gutter={[20, 20]}>
@@ -60,7 +57,7 @@ export const MobileRulesReview = () => {
           <div className="text-base font-medium">{useDataSourceForRedeem}</div>
         }
       />
-      {delegateV1_1Enabled ? (
+      {PREVENT_OVERSPENDING_FIELD_VISIBLE ? (
         <DescriptionCol
           span={12}
           title={t`Prevent NFT overspending`}

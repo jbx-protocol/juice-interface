@@ -98,6 +98,11 @@ export const HOLD_FEES_EXPLAINATION = (
 
 export const USE_DATASOURCE_FOR_REDEEM_EXPLAINATION = (
   <Trans>
-    When enabled, the data source will be used for redeem transactions.
+    When enabled, NFT holders can redeem their NFTs for a portion of your
+    project's overflow.{' '}
+    <ExternalLink href={helpPagePath('dev/learn/glossary/overflow')}>
+      Learn more about overflow
+    </ExternalLink>
+    .
   </Trans>
 )

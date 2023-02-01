@@ -30,7 +30,7 @@ export default function V2V3ProjectHandleLink({
     >
       <a
         className={twMerge(
-          'select-all leading-[22px] text-grey-700 hover:text-haze-400 hover:underline dark:text-slate-100',
+          'select-all leading-[22px] text-grey-900 hover:text-haze-400 hover:underline dark:text-slate-100',
           className,
         )}
       >

@@ -9,17 +9,16 @@ import { useContext } from 'react'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 import { getUnsafeV2V3FundingCycleProperties } from 'utils/v2v3/fundingCycle'
 import {
+  CONTROLLER_CONFIG_EXPLAINATION,
   HOLD_FEES_EXPLAINATION,
-  OWNER_MINTING_EXPLAINATION,
   RECONFIG_RULES_EXPLAINATION,
   TERMINAL_CONFIG_EXPLAINATION,
 } from '../../settingExplanations'
 import { FundingCycleListItem } from '../FundingCycleListItem'
-import { AllowMintingValue } from './AllowMintingValue'
+import { AllowSetControllerValue } from './AllowSetControllerValue'
 import { AllowSetTerminalsValue } from './AllowSetTerminalsValue'
 import { HoldFeesValue } from './HoldFeesValue'
 import { PausePayValue } from './PausePayValue'
-import { PauseTransfersValue } from './PauseTransfersValue'
 import { ReconfigStratValue } from './ReconfigStratValue'
 
 export function RulesListItems({
@@ -56,17 +55,15 @@ export function RulesListItems({
   const pausePayHasDiff =
     oldFundingCycleMetadata &&
     oldFundingCycleMetadata.pausePay !== fundingCycleMetadata.pausePay
-  const allowMintingHasDiff =
-    oldFundingCycleMetadata &&
-    oldFundingCycleMetadata.allowMinting !== fundingCycleMetadata.allowMinting
   const allowSetTerminalsHasDiff =
     oldFundingCycleMetadata &&
     oldFundingCycleMetadata.global.allowSetTerminals !==
       fundingCycleMetadata.global.allowSetTerminals
-  const pauseTransfersHasDiff =
+  const allowSetControllerHasDiff =
     oldFundingCycleMetadata &&
-    oldFundingCycleMetadata.global.pauseTransfers !==
-      fundingCycleMetadata.global.pauseTransfers
+    oldFundingCycleMetadata.global.allowSetController !==
+      fundingCycleMetadata.global.allowSetController
+
   const ballotHasDiff =
     oldFundingCycle && oldFundingCycle.ballot !== fundingCycle.ballot
   const holdFeesHasDiff =
@@ -75,65 +72,6 @@ export function RulesListItems({
 
   return (
     <>
-      <FundingCycleListItem
-        name={t`Payments`}
-        value={<PausePayValue pausePay={fundingCycleMetadata.pausePay} />}
-        oldValue={
-          showDiffs && pausePayHasDiff ? (
-            <PausePayValue pausePay={oldFundingCycleMetadata.pausePay} />
-          ) : undefined
-        }
-      />
-      <FundingCycleListItem
-        name={t`Owner token minting`}
-        value={
-          <AllowMintingValue allowMinting={fundingCycleMetadata.allowMinting} />
-        }
-        oldValue={
-          showDiffs && allowMintingHasDiff ? (
-            <AllowMintingValue
-              allowMinting={oldFundingCycleMetadata.allowMinting}
-            />
-          ) : undefined
-        }
-        helperText={OWNER_MINTING_EXPLAINATION}
-      />
-      <FundingCycleListItem
-        name={t`Terminal configuration`}
-        value={
-          <AllowSetTerminalsValue
-            allowSetTerminals={fundingCycleMetadata?.global.allowSetTerminals}
-          />
-        }
-        oldValue={
-          showDiffs && allowSetTerminalsHasDiff ? (
-            <AllowSetTerminalsValue
-              allowSetTerminals={
-                oldFundingCycleMetadata?.global.allowSetTerminals
-              }
-            />
-          ) : undefined
-        }
-        helperText={TERMINAL_CONFIG_EXPLAINATION}
-      />
-      <FundingCycleListItem
-        name={t`Pause transfers`}
-        value={
-          <PauseTransfersValue
-            pauseTransfers={fundingCycleMetadata.global.pauseTransfers ?? false}
-          />
-        }
-        oldValue={
-          showDiffs && pauseTransfersHasDiff ? (
-            <PauseTransfersValue
-              pauseTransfers={
-                oldFundingCycleMetadata?.global.pauseTransfers ?? false
-              }
-            />
-          ) : undefined
-        }
-        helperText={TERMINAL_CONFIG_EXPLAINATION}
-      />
       <FundingCycleListItem
         name={t`Reconfiguration strategy`}
         value={
@@ -153,6 +91,15 @@ export function RulesListItems({
         helperText={RECONFIG_RULES_EXPLAINATION}
       />
       <FundingCycleListItem
+        name={t`Payments`}
+        value={<PausePayValue pausePay={fundingCycleMetadata.pausePay} />}
+        oldValue={
+          showDiffs && pausePayHasDiff ? (
+            <PausePayValue pausePay={oldFundingCycleMetadata.pausePay} />
+          ) : undefined
+        }
+      />
+      <FundingCycleListItem
         name={t`Hold fees`}
         value={<HoldFeesValue holdFees={fundingCycleMetadata.holdFees} />}
         oldValue={
@@ -161,6 +108,42 @@ export function RulesListItems({
           ) : undefined
         }
         helperText={HOLD_FEES_EXPLAINATION}
+      />
+      <FundingCycleListItem
+        name={t`Payment Terminal configuration`}
+        value={
+          <AllowSetTerminalsValue
+            allowSetTerminals={fundingCycleMetadata?.global.allowSetTerminals}
+          />
+        }
+        oldValue={
+          showDiffs && allowSetTerminalsHasDiff ? (
+            <AllowSetTerminalsValue
+              allowSetTerminals={
+                oldFundingCycleMetadata?.global.allowSetTerminals
+              }
+            />
+          ) : undefined
+        }
+        helperText={TERMINAL_CONFIG_EXPLAINATION}
+      />
+      <FundingCycleListItem
+        name={t`Controller configuration`}
+        value={
+          <AllowSetControllerValue
+            allowSetController={fundingCycleMetadata?.global.allowSetController}
+          />
+        }
+        oldValue={
+          showDiffs && allowSetControllerHasDiff ? (
+            <AllowSetControllerValue
+              allowSetController={
+                oldFundingCycleMetadata?.global.allowSetController
+              }
+            />
+          ) : undefined
+        }
+        helperText={CONTROLLER_CONFIG_EXPLAINATION}
       />
     </>
   )

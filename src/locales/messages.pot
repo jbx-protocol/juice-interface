@@ -1502,6 +1502,9 @@ msgstr ""
 msgid "If no date is selected Funding Cycle #1 will start immediately after your project is deployed."
 msgstr ""
 
+msgid "If transfers are paused, token holders can't transfer their project tokens to other addresses. The project's ERC-20 tokens are always transferrable."
+msgstr ""
+
 msgid "If you don't raise the sum of all your payouts (<0/>{distributionLimit}), this address will receive {0}% of all the funds you raise."
 msgstr ""
 
@@ -1799,9 +1802,6 @@ msgstr ""
 msgid "Mint rate"
 msgstr ""
 
-msgid "Mint rate unchanged"
-msgstr ""
-
 msgid "Mint this project's ERC-20 tokens to your wallet."
 msgstr ""
 
@@ -2048,9 +2048,6 @@ msgstr ""
 msgid "Pause project token transfers"
 msgstr ""
 
-msgid "Pause transfers"
-msgstr ""
-
 msgid "Paused"
 msgstr ""
 
@@ -2100,6 +2097,9 @@ msgid "Payment Addresses"
 msgstr ""
 
 msgid "Payment Success Popup"
+msgstr ""
+
+msgid "Payment Terminal configuration"
 msgstr ""
 
 msgid "Payment amount can't exceed your wallet balance."
@@ -2963,10 +2963,13 @@ msgstr ""
 msgid "The project owner <0>cannot manually mint</0> any amount of tokens to any address."
 msgstr ""
 
-msgid "The project owner can add and remove payment terminals."
+msgid "The project owner can change the next funding cycle’s configuration at any time."
 msgstr ""
 
-msgid "The project owner can change the next funding cycle’s configuration at any time."
+msgid "The project owner can change the project's controller."
+msgstr ""
+
+msgid "The project owner can change the project's payment terminals."
 msgstr ""
 
 msgid "The project owner may mint new tokens at any time, diluting existing contributors share of tokens."
@@ -3158,6 +3161,9 @@ msgstr ""
 msgid "Token to Lock:"
 msgstr ""
 
+msgid "Token transfers"
+msgstr ""
+
 msgid "Tokens"
 msgstr ""
 
@@ -3306,6 +3312,9 @@ msgid "Unarchiving your project will mean the following:"
 msgstr ""
 
 msgid "Unavailable"
+msgstr ""
+
+msgid "Unchanged"
 msgstr ""
 
 msgid "Unclaimed token spending enabled"

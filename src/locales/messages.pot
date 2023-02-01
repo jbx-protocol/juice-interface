@@ -3290,9 +3290,6 @@ msgstr ""
 msgid "Transfer {tokenTextShort}"
 msgstr ""
 
-msgid "Transfers"
-msgstr ""
-
 msgid "Transparently set your terms ahead of time, or take control when you need to. Juicebox lets you define elegant token issuance & redemption, payouts, and other rules in advance, acting as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
 msgstr ""
 

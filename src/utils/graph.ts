@@ -108,8 +108,6 @@ export const formatGraphQuery = <
   return res
 }
 
-const subgraphUrl = process.env.NEXT_PUBLIC_SUBGRAPH_URL
-
 /**
  * Parse a list of entities from a subgraph query JSON response object
  * @param entityName Name of entities to retrieve
@@ -259,10 +257,10 @@ export async function querySubgraphRaw<
   E extends SGEntityName,
   K extends SGEntityKey<E>,
 >(opts: SGQueryOpts<E, K> | null) {
-  if (!subgraphUrl) {
-    // This should _only_ happen in development
-    throw new Error('env.NEXT_PUBLIC_SUBGRAPH_URL is missing')
-  }
+  const subgraphUrl =
+    process.env.NEXT_SUBGRAPH_URL ?? process.env.NEXT_PUBLIC_SUBGRAPH_URL
+
+  if (!subgraphUrl) throw new Error('Subgraph URL is missing from .env')
 
   if (!opts) return
 

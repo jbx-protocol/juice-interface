@@ -23,6 +23,10 @@ import {
   allocationInputAlreadyExistsRule,
 } from 'utils/antd-rules'
 import { Allocation, AllocationSplit } from './Allocation'
+import TooltipIcon from 'components/TooltipIcon'
+import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/ETHPaymentTerminalFee'
+import { formatFee } from 'utils/v2v3/math'
+import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 
 interface AddEditAllocationModalFormProps {
   juiceboxProjectId?: string | undefined
@@ -54,7 +58,7 @@ export const AddEditAllocationModal = ({
     console.error('AddEditAllocationModal: no available modes')
     return null
   }
-  const { totalAllocationAmount, allocations } =
+  const { totalAllocationAmount, allocations, allocationCurrency } =
     Allocation.useAllocationInstance()
   const [form] = Form.useForm<AddEditAllocationModalFormProps>()
   const [amountType, setAmountType] = useState<'amount' | 'percentage'>(
@@ -63,6 +67,27 @@ export const AddEditAllocationModal = ({
   const [recipient, setRecipient] = useState<
     'walletAddress' | 'juiceboxProject'
   >('walletAddress')
+
+  const ethPaymentTerminalFee = useETHPaymentTerminalFee()
+  const amount = Form.useWatch('amount', form)
+
+  const amountAfterFee = useMemo(() => {
+    if (!ethPaymentTerminalFee || !amount?.amount) return
+    const percentageIncludedAfterFee =
+      Math.abs(100 - parseFloat(formatFee(ethPaymentTerminalFee))) / 100
+    const amountLeftover =
+      parseFloat(amount.amount) * percentageIncludedAfterFee
+    return formatCurrencyAmount({
+      amount: amountLeftover,
+      currency: allocationCurrency,
+    })
+  }, [allocationCurrency, amount?.amount, ethPaymentTerminalFee])
+
+  const showFee =
+    amountType === 'amount' &&
+    recipient === 'walletAddress' &&
+    ethPaymentTerminalFee &&
+    !!amount?.amount
 
   const isValidJuiceboxProject = useMemo(
     () =>
@@ -229,6 +254,21 @@ export const AddEditAllocationModal = ({
               : t`Distribution Percentage`
           }
           required
+          extra={
+            showFee &&
+            amountAfterFee &&
+            ethPaymentTerminalFee && (
+              <Trans>
+                {amountAfterFee} after fee{' '}
+                <TooltipIcon
+                  tip={t`
+                      There is a ${formatFee(
+                        ethPaymentTerminalFee,
+                      )}% fee applied to all transactions leaving Juicebox`}
+                />
+              </Trans>
+            )
+          }
           rules={[
             inputMustExistRule({
               label:

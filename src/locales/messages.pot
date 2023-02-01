@@ -3026,6 +3026,9 @@ msgstr ""
 msgid "There are no reserved token recipients defined for this funding cycle. The project owner will receive all available tokens."
 msgstr ""
 
+msgid "There is a {0}% fee applied to all transactions leaving Juicebox"
+msgstr ""
+
 msgid "This Juicebox V3 project also has a project on Juicebox V1 and/or V2. The project owner is allowing you to swap your legacy tokens (V1 or V2) for V3 tokens."
 msgstr ""
 
@@ -3933,6 +3936,9 @@ msgid "{0}/{1} withdrawn"
 msgstr ""
 
 msgid "{0}{1}"
+msgstr ""
+
+msgid "{amountAfterFee} after fee <0/>"
 msgstr ""
 
 msgid "{count} total"

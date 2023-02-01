@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/macro'
 import { Space } from 'antd'
 import Link from 'next/link'
 import React from 'react'
@@ -10,8 +11,8 @@ export default function V2V3ProjectLink({
   projectId,
   allocator,
 }: {
-  className?: string
   projectId: number
+  className?: string
   allocator?: string
 }) {
   return (
@@ -19,14 +20,14 @@ export default function V2V3ProjectLink({
       <Link href={v2v3ProjectRoute({ projectId })}>
         <a
           className={twMerge(
-            'select-all leading-[22px] text-grey-700 hover:text-haze-400 hover:underline dark:text-slate-100',
+            'select-all leading-[22px] text-grey-900 hover:text-haze-400 hover:underline dark:text-slate-100',
             className,
           )}
         >
-          Project {projectId}
+          <Trans>Project #{projectId}</Trans>
         </a>
       </Link>
-      <AllocatorBadge allocator={allocator} />
+      {allocator && <AllocatorBadge allocator={allocator} />}
     </Space>
   )
 }

@@ -1,6 +1,7 @@
 import { t } from '@lingui/macro'
 import FormattedAddress from 'components/FormattedAddress'
 import { V2V3FundingCycleMetadata } from 'models/v2v3/fundingCycle'
+import { formatBoolean } from 'utils/format/formatBoolean'
 import { FundingCycleListItem } from '../FundingCycleListItem'
 
 export function DataSourceListItems({
@@ -16,11 +17,11 @@ export function DataSourceListItems({
       />
       <FundingCycleListItem
         name={t`Use for payments`}
-        value={fundingCycleMetadata.useDataSourceForPay ? t`Yes` : t`No`}
+        value={formatBoolean(fundingCycleMetadata.useDataSourceForPay)}
       />
       <FundingCycleListItem
         name={t`Use for redemptions`}
-        value={fundingCycleMetadata.useDataSourceForRedeem ? t`Yes` : t`No`}
+        value={formatBoolean(fundingCycleMetadata.useDataSourceForRedeem)}
       />
     </>
   )

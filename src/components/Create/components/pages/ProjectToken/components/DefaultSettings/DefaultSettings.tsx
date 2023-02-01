@@ -2,8 +2,8 @@ import { t, Trans } from '@lingui/macro'
 import { Divider, Space } from 'antd'
 import TooltipLabel from 'components/TooltipLabel'
 import { ReactNode, useMemo } from 'react'
-import { formatAmount } from 'utils/formatAmount'
-import { formatBoolean } from 'utils/formatBoolean'
+import { formatAmount } from 'utils/format/formatAmount'
+import { formatBoolean } from 'utils/format/formatBoolean'
 import * as ProjectTokenForm from '../../hooks/ProjectTokenForm'
 
 export const DefaultSettings: React.FC = () => {

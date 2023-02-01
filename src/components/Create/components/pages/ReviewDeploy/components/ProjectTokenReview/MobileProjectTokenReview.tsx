@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro'
-import { formatAmount } from 'utils/formatAmount'
+import { formatAmount } from 'utils/format/formatAmount'
 import {
   formatDiscountRate,
   formatIssuanceRate,

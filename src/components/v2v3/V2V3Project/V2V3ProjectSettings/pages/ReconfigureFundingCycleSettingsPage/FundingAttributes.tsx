@@ -16,6 +16,7 @@ import {
   RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
 } from 'constants/fundingWarningText'
 import { Split } from 'models/splits'
+import { formatBoolean } from 'utils/format/formatBoolean'
 import { formatWad } from 'utils/format/formatNumber'
 import { detailedTimeString } from 'utils/format/formatTime'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
@@ -251,7 +252,7 @@ export function PausePayStatistic({ pausePay }: { pausePay: boolean }) {
           }
         />
       }
-      value={pausePay ? t`Yes` : t`No`}
+      value={formatBoolean(pausePay)}
     />
   )
 }

@@ -47,7 +47,7 @@ export default function QAs(): {
       a: (
         <Trans>
           <p>
-            Juicebox is a programmable funding platform for crypto and web3. It
+            Juicebox is a programmable crypto fundraising platform for web3. It
             helps people fund, operate, and scale their projects transparently
             using Ethereum, which is a type of programmable cryptocurrency.
           </p>
@@ -110,9 +110,10 @@ export default function QAs(): {
             build trust.
           </p>
           <p>
-            Importantly, Juicebox is on-chain and non-custodial. Project
-            creators actually own their projects, and JuiceboxDAO has no access
-            to their funds or their project's settings.
+            Importantly, Juicebox's crypto fundraising platform is on-chain and
+            non-custodial. Project creators actually own their projects, and
+            JuiceboxDAO has no access to their funds or their project's
+            settings.
           </p>
           <p>
             To learn more, visit{' '}
@@ -206,8 +207,8 @@ export default function QAs(): {
           </p>
           <p>
             <Link href="/@juicebox">JuiceboxDAO</Link> builds and governs the
-            Juicebox protocol and other community resources. You can reach out
-            to JuiceboxDAO through the{' '}
+            Juicebox fundraising protocol and other community resources. You can
+            reach out to JuiceboxDAO through the{' '}
             <JBDiscordLink>Juicebox Discord</JBDiscordLink>.
           </p>
         </Trans>

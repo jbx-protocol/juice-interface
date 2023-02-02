@@ -19,8 +19,8 @@ import { twMerge } from 'tailwind-merge'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { formatWad } from 'utils/format/formatNumber'
 import { v2v3ProjectRoute } from 'utils/routes'
-import CurrencySymbol from './CurrencySymbol'
 
+import CurrencySymbol from './CurrencySymbol'
 import Loading from './Loading'
 import { ProjectVersionBadge } from './ProjectVersionBadge'
 import V1ProjectHandle from './v1/shared/V1ProjectHandle'
@@ -53,10 +53,13 @@ export default function QuickProjectSearch() {
   const sepanaEnabled = featureFlagEnabled(FEATURE_FLAGS.SEPANA_SEARCH)
 
   const { data: sepanaSearchResults, isLoading: isLoadingSepanaSearch } =
-    useSepanaProjectsSearch(searchText, { pageSize: MAX_RESULTS })
+    useSepanaProjectsSearch(searchText, {
+      pageSize: MAX_RESULTS,
+      enabled: sepanaEnabled,
+    })
 
   const { data: graphSearchResults, isLoading: isLoadingGraphSearch } =
-    useProjectsSearch(searchText)
+    useProjectsSearch(searchText, { enabled: !sepanaEnabled })
 
   const searchResults = sepanaEnabled ? sepanaSearchResults : graphSearchResults
   const isLoadingSearch = sepanaEnabled

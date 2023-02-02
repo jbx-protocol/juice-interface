@@ -10,12 +10,10 @@ import { v4 } from 'uuid'
 import { DescriptionCol } from '../DescriptionCol'
 
 export const RewardsReview = () => {
-  const { rewardTiers } = useAppSelector(
-    state => state.editingV2Project.nftRewards,
-  )
-  const fundingCycleMetadata = useAppSelector(
-    state => state.editingV2Project.fundingCycleMetadata,
-  )
+  const {
+    nftRewards: { rewardTiers },
+    fundingCycleMetadata,
+  } = useAppSelector(state => state.editingV2Project)
 
   const dispatch = useAppDispatch()
 
@@ -58,7 +56,7 @@ export const RewardsReview = () => {
     [dispatch],
   )
 
-  const useDataSourceForRedeem = useMemo(() => {
+  const shouldUseDataSourceForRedeem = useMemo(() => {
     return formatEnabled(fundingCycleMetadata.useDataSourceForRedeem)
   }, [fundingCycleMetadata.useDataSourceForRedeem])
 
@@ -71,7 +69,7 @@ export const RewardsReview = () => {
           title={t`Redeemable NFTs`}
           desc={
             <div className="text-base font-medium">
-              {useDataSourceForRedeem}
+              {shouldUseDataSourceForRedeem}
             </div>
           }
         />

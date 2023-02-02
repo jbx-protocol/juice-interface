@@ -88,6 +88,7 @@ const DEFAULT_PROJECT_METADATA_STATE: ProjectMetadataV5 = {
   description: '',
   twitter: '',
   discord: '',
+  telegram: '',
   tokens: [],
   nftPaymentSuccessModal: undefined,
   version: LATEST_METADATA_VERSION,

@@ -1,7 +1,7 @@
 import { NftPostPayModalConfig } from './nftRewardTier'
 import { TokenRef } from './token-ref'
 
-export const LATEST_METADATA_VERSION = 5
+export const LATEST_METADATA_VERSION = 6
 
 type ProjectMetadata =
   | ProjectMetadataV1
@@ -33,6 +33,7 @@ type ProjectMetadataV3 = Partial<
     version: 3
     twitter: string
     discord: string
+    telegram: string
     payButton: string
     payDisclosure: string
   }

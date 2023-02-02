@@ -53,6 +53,9 @@ const editingV2ProjectSlice = createSlice({
     setDiscord: (state, action: PayloadAction<string>) => {
       state.projectMetadata.discord = action.payload
     },
+    setTelegram: (state, action: PayloadAction<string>) => {
+      state.projectMetadata.telegram = action.payload
+    },
     setPayButton: (state, action: PayloadAction<string>) => {
       state.projectMetadata.payButton = action.payload
     },

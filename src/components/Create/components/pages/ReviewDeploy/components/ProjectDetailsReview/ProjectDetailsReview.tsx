@@ -16,6 +16,7 @@ export const ProjectDetailsReview = () => {
     projectMetadata: {
       description,
       discord,
+      telegram,
       logoUri,
       infoUri,
       name,
@@ -93,6 +94,17 @@ export const ProjectDetailsReview = () => {
                       discord ? (
                         <div className="overflow-hidden text-ellipsis text-sm font-medium">
                           {discord}
+                        </div>
+                      ) : null
+                    }
+                  />
+                  <DescriptionCol
+                    span={8}
+                    title={t`Telegram`}
+                    desc={
+                      telegram ? (
+                        <div className="overflow-hidden text-ellipsis text-sm font-medium">
+                          {telegram}
                         </div>
                       ) : null
                     }

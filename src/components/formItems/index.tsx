@@ -18,6 +18,7 @@ import { ProjectRedemptionRate } from './ProjectRedemptionRate'
 import ProjectReserved from './ProjectReserved'
 import ProjectTarget from './ProjectTarget'
 import ProjectTwitter from './ProjectTwitter'
+import ProjectTelegram from './ProjectTelegram'
 
 export const FormItems = {
   ENSName,
@@ -38,5 +39,6 @@ export const FormItems = {
   ProjectTarget,
   ProjectTicketMods,
   ProjectTwitter,
+  ProjectTelegram,
   TokenRefs,
 }

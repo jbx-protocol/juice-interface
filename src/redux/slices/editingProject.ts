@@ -52,6 +52,7 @@ export const defaultProjectState: EditingProjectState = {
       description: '',
       twitter: '',
       discord: '',
+      telegram: '',
       tokens: [],
       version: LATEST_METADATA_VERSION,
       archived: false,
@@ -106,6 +107,9 @@ const editingProjectSlice = createSlice({
     },
     setDiscord: (state, action: PayloadAction<string>) => {
       state.info.metadata.discord = action.payload
+    },
+    setTelegram: (state, action: PayloadAction<string>) => {
+      state.info.metadata.telegram = action.payload
     },
     setPayButton: (state, action: PayloadAction<string>) => {
       state.info.metadata.payButton = action.payload

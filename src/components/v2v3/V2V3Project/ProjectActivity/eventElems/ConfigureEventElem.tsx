@@ -5,7 +5,11 @@ import MinimalTable from 'components/tables/MinimalTable'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { ConfigureEvent } from 'models/subgraph-entities/v2/configure'
 import { useContext } from 'react'
-import { formatEnabled, formatPaused } from 'utils/format/formatBoolean'
+import {
+  formatAllowed,
+  formatEnabled,
+  formatPaused,
+} from 'utils/format/formatBoolean'
 import { formatWad } from 'utils/format/formatNumber'
 import { detailedTimeString } from 'utils/format/formatTime'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -34,6 +38,8 @@ export default function ConfigureEventElem({
         | 'shouldHoldFees'
         | 'setTerminalsAllowed'
         | 'setControllerAllowed'
+        | 'controllerMigrationAllowed'
+        | 'terminalMigrationAllowed'
         | 'transfersPaused'
       >
     | undefined
@@ -110,11 +116,19 @@ export default function ConfigureEventElem({
               },
               {
                 key: t`Payment Terminal configuration`,
-                value: formatEnabled(event.setTerminalsAllowed),
+                value: formatAllowed(event.setTerminalsAllowed),
               },
               {
                 key: t`Controller configuration`,
-                value: formatEnabled(event.setControllerAllowed),
+                value: formatAllowed(event.setControllerAllowed),
+              },
+              {
+                key: t`Payment Terminal migration`,
+                value: formatAllowed(event.terminalMigrationAllowed),
+              },
+              {
+                key: t`Controller migration`,
+                value: formatAllowed(event.controllerMigrationAllowed),
               },
             ],
           ]}

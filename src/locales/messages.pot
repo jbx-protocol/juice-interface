@@ -3305,10 +3305,10 @@ msgstr ""
 msgid "Total: {0}%"
 msgstr ""
 
-msgid "Track the historical voting weight of each token holder across all tiers of NFTs."
+msgid "Track the historical voting weight of each token holder across all tiers of NFTs. <0>Learn more.</0>"
 msgstr ""
 
-msgid "Track the historical voting weight of each token holder within each tier of NFTs."
+msgid "Track the historical voting weight of each token holder within each tier of NFTs. <0>Learn more.</0>"
 msgstr ""
 
 msgid "Transaction failed"

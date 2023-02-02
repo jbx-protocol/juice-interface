@@ -23,8 +23,8 @@ import {
   USE_DATASOURCE_FOR_REDEEM_EXPLAINATION,
 } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { JuiceSwitch } from 'components/JuiceSwitch'
-
-export const PREVENT_OVERSPENDING_FIELD_VISIBLE = true
+import { featureFlagEnabled } from 'utils/featureFlags'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 
 const RadioItem = ({
   value,
@@ -58,6 +58,8 @@ export const NftRewardsPage = () => {
   const postPayModalData = useAppSelector(
     state => state.editingV2Project.nftRewards.postPayModal,
   )
+
+  const delegateV1_1Enabled = featureFlagEnabled(FEATURE_FLAGS.DELEGATE_V1_1)
 
   return (
     <>
@@ -244,7 +246,7 @@ export const NftRewardsPage = () => {
                 >
                   <JuiceSwitch label={t`Redeemable NFTs`} />
                 </Form.Item>
-                {PREVENT_OVERSPENDING_FIELD_VISIBLE ? (
+                {delegateV1_1Enabled ? (
                   <Form.Item
                     name="preventOverspending"
                     extra={PREVENT_OVERSPENDING_EXPLAINATION}

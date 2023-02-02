@@ -162,7 +162,7 @@ export function V2V3ConfirmPayModal({
             ...(payProjectForm?.payMetadata as JB721DELAGATE_V1_PAY_METADATA),
             ...payMetadataOverrides(projectId),
           })
-        : JB721_DELEGATE_V1_1
+        : nftContractVersion === JB721_DELEGATE_V1_1
         ? encodeJB721DelegateV1_1PayMetadata({
             ...(payProjectForm?.payMetadata as JB721DELAGATE_V1_1_PAY_METADATA),
             allowOverspending: DEFAULT_ALLOW_OVERSPENDING,

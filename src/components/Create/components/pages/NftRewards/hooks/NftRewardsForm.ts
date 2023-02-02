@@ -65,7 +65,7 @@ export const useNftRewardsForm = () => {
       rewards,
       onChainGovernance: governanceType,
       useDataSourceForRedeem: fundingCycleMetadata.useDataSourceForRedeem,
-      preventOverspending: flags.preventOverspending,
+      preventOverspending: flags?.preventOverspending,
       collectionName,
       collectionSymbol,
       collectionDescription,
@@ -84,7 +84,7 @@ export const useNftRewardsForm = () => {
     postPayModal?.ctaText,
     postPayModal?.ctaLink,
     fundingCycleMetadata.useDataSourceForRedeem,
-    flags.preventOverspending,
+    flags?.preventOverspending,
   ])
 
   useFormDispatchWatch({

@@ -123,7 +123,7 @@ export const FundingCyclesPage = () => {
                     />
                   </>
                 }
-                description={t`Set a duration for automatically recurring funding cycles. Funds may only be distributed once per cycle.`}
+                description={t`Set a duration for automatically recurring funding cycles.`}
                 icon={<RedoOutlined />}
               >
                 <Form.Item

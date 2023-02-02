@@ -18,6 +18,8 @@ import { RewardsList } from '../../RewardsList'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { useNftRewardsForm } from './hooks'
+import { USE_DATASOURCE_FOR_REDEEM_EXPLAINATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+import { JuiceSwitch } from 'components/JuiceSwitch'
 
 const RadioItem = ({
   value,
@@ -224,6 +226,19 @@ export const NftRewardsPage = () => {
                     Preview
                   </CreateButton>
                 </Space>
+              </CreateCollapse.Panel>
+
+              <CreateCollapse.Panel
+                key={3}
+                header={<OptionalHeader header={t`Advanced options`} />}
+                hideDivider
+              >
+                <Form.Item
+                  name="useDataSourceForRedeem"
+                  extra={USE_DATASOURCE_FOR_REDEEM_EXPLAINATION}
+                >
+                  <JuiceSwitch label={t`Redeemable NFTs`} />
+                </Form.Item>
               </CreateCollapse.Panel>
             </CreateCollapse>
           </Space>

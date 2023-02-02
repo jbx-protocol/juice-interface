@@ -235,7 +235,7 @@ const VeNftStakingForm = ({
                 <MinimalCollapse
                   header={
                     <h3 className="m-0">
-                      <Trans>Advanced Options</Trans>
+                      <Trans>Advanced options</Trans>
                     </h3>
                   }
                 >

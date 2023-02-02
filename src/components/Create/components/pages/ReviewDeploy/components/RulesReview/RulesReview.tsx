@@ -14,7 +14,6 @@ export const RulesReview = () => {
     strategy,
     terminalConfiguration,
     holdFees,
-    useDataSourceForRedeem,
   } = useRulesReview()
 
   return (
@@ -56,15 +55,6 @@ export const RulesReview = () => {
             span={5}
             title={t`Hold fees`}
             desc={<div className="text-base font-medium">{holdFees}</div>}
-          />
-          <DescriptionCol
-            span={4}
-            title={t`Use data source for redeem`}
-            desc={
-              <div className="text-base font-medium">
-                {useDataSourceForRedeem}
-              </div>
-            }
           />
         </Row>
       )}

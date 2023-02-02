@@ -22,13 +22,16 @@ type NftRewardsFormProps = Partial<{
   postPayButtonText?: string
   postPayButtonLink?: string
   onChainGovernance: JB721GovernanceType
+  useDataSourceForRedeem: boolean
 }>
 
 export const useNftRewardsForm = () => {
   const [form] = Form.useForm<NftRewardsFormProps>()
   const { collectionMetadata, rewardTiers, postPayModal, governanceType } =
     useAppSelector(state => state.editingV2Project.nftRewards)
-  const { projectMetadata } = useAppSelector(state => state.editingV2Project)
+  const { projectMetadata, fundingCycleMetadata } = useAppSelector(
+    state => state.editingV2Project,
+  )
   const initialValues: NftRewardsFormProps = useMemo(() => {
     const collectionName =
       collectionMetadata?.name ??
@@ -55,6 +58,7 @@ export const useNftRewardsForm = () => {
     return {
       rewards,
       onChainGovernance: governanceType,
+      useDataSourceForRedeem: fundingCycleMetadata.useDataSourceForRedeem,
       collectionName,
       collectionSymbol,
       collectionDescription,
@@ -72,6 +76,7 @@ export const useNftRewardsForm = () => {
     postPayModal?.content,
     postPayModal?.ctaText,
     postPayModal?.ctaLink,
+    fundingCycleMetadata.useDataSourceForRedeem,
   ])
 
   useFormDispatchWatch({
@@ -141,10 +146,23 @@ export const useNftRewardsForm = () => {
     ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setNftRewardsGovernance,
     formatter: v => {
-      if (!v || typeof v === 'string' || typeof v === 'object')
+      if (
+        !v ||
+        typeof v === 'string' ||
+        typeof v === 'object' ||
+        typeof v === 'boolean'
+      )
         return JB721GovernanceType.NONE
       return v
     },
+  })
+
+  useFormDispatchWatch({
+    form,
+    fieldName: 'useDataSourceForRedeem',
+    ignoreUndefined: true,
+    dispatchFunction: editingV2ProjectActions.setUseDataSourceForRedeem,
+    formatter: v => !!v,
   })
 
   const dispatch = useAppDispatch()

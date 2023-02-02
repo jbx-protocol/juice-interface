@@ -347,9 +347,6 @@ msgstr ""
 msgid "Advanced (optional)"
 msgstr ""
 
-msgid "Advanced Options"
-msgstr ""
-
 msgid "Advanced Rules"
 msgstr ""
 
@@ -2474,6 +2471,9 @@ msgstr ""
 msgid "Redeem {tokensTextLong} for ETH"
 msgstr ""
 
+msgid "Redeemable NFTs"
+msgstr ""
+
 msgid "Redeemed"
 msgstr ""
 
@@ -3512,13 +3512,13 @@ msgstr ""
 msgid "When distributing, payouts to Ethereum addresses incur a 2.5% JBX membership fee. Payouts to other Juicebox projects don't incur fees. Your project will receive (the <0>JuiceboxDAO</0> token) in return at the current issuance rate."
 msgstr ""
 
+msgid "When enabled, NFT holders can redeem their NFTs for a portion of your project's overflow. <0>Learn more about overflow</0>."
+msgstr ""
+
 msgid "When enabled, all project token transfers will be paused. Does not apply to ERC-20 tokens if issued."
 msgstr ""
 
 msgid "When enabled, project's token holders can't transfer their tokens to other addresses. This doesn't apply to your project's ERC-20 tokens (if you've issued them)."
-msgstr ""
-
-msgid "When enabled, the data source will be used for redeem transactions."
 msgstr ""
 
 msgid "When enabled, the project owner can manually mint any amount of tokens to any address."

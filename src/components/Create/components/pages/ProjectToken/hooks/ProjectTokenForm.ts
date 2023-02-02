@@ -214,6 +214,7 @@ export const useProjectTokensForm = () => {
     form,
     fieldName: 'pauseTransfers',
     dispatchFunction: editingV2ProjectActions.setPauseTransfers,
+    ignoreUndefined: true,
     formatter: v => {
       if (typeof v !== 'boolean') return false
       return v

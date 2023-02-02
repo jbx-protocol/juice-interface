@@ -227,7 +227,7 @@ export const CustomTokenSettings = () => {
 
       <Divider className="my-8" />
 
-      <Space direction="vertical">
+      <div className="flex flex-col gap-y-5">
         <div>
           <Form.Item
             extra={t`When enabled, the project owner can manually mint any amount of tokens to any address.`}
@@ -252,7 +252,7 @@ export const CustomTokenSettings = () => {
         >
           <JuiceSwitch label={t`Pause project token transfers`} />
         </Form.Item>
-      </Space>
+      </div>
     </>
   )
 }

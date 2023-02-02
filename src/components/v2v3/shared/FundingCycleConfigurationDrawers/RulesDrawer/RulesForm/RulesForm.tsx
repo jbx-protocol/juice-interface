@@ -145,14 +145,16 @@ export default function RulesForm({
               </div>
             </Form.Item>
             <Form.Item name="holdfees" extra={HOLD_FEES_EXPLAINATION}>
-              <Switch
-                className="mr-2"
-                onChange={checked => {
-                  setHoldFees(checked)
-                }}
-                checked={holdFees}
-              />
-              <Trans>Hold fees</Trans>
+              <div className="flex font-medium text-black dark:text-slate-100">
+                <Switch
+                  className="mr-2"
+                  onChange={checked => {
+                    setHoldFees(checked)
+                  }}
+                  checked={holdFees}
+                />
+                <Trans>Hold fees</Trans>
+              </div>
             </Form.Item>
           </div>
 
@@ -165,7 +167,7 @@ export default function RulesForm({
                 <TokenMintingExtra showMintingWarning={showMintingWarning} />
               }
             >
-              <div className="flex text-black dark:text-slate-100">
+              <div className="flex font-medium text-black dark:text-slate-100">
                 <Switch
                   className="mr-2"
                   onChange={checked => {
@@ -262,14 +264,16 @@ export default function RulesForm({
               name="useDataSourceForRedeem"
               extra={USE_DATASOURCE_FOR_REDEEM_EXPLAINATION}
             >
-              <Switch
-                className="mr-2"
-                onChange={checked => {
-                  setUseDataSourceForRedeem(checked)
-                }}
-                checked={useDataSourceForRedeem}
-              />
-              <Trans>Redeemable NFTs</Trans>
+              <div className="flex font-medium text-black dark:text-slate-100">
+                <Switch
+                  className="mr-2"
+                  onChange={checked => {
+                    setUseDataSourceForRedeem(checked)
+                  }}
+                  checked={useDataSourceForRedeem}
+                />
+                <Trans>Redeemable NFTs</Trans>
+              </div>
             </Form.Item>
           </div>
         </div>

@@ -127,7 +127,7 @@ export const ReconfigurationRulesPage = () => {
                 extra={
                   <Trans>
                     When enabled, the project owner can migrate the project's
-                    existing Payment Terminals to a newer versions of the
+                    existing Payment Terminals to a newer version of the
                     contract.{' '}
                     <ExternalLink
                       href={helpPagePath('dev/learn/glossary/payment-terminal')}

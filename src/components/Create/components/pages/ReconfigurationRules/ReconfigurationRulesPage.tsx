@@ -5,10 +5,7 @@ import { Callout } from 'components/Callout'
 import { Selection } from 'components/Create/components/Selection'
 import { useAvailableReconfigurationStrategies } from 'components/Create/hooks/AvailableReconfigurationStrategies'
 import { JuiceSwitch } from 'components/JuiceSwitch'
-import {
-  HOLD_FEES_EXPLAINATION,
-  USE_DATASOURCE_FOR_REDEEM_EXPLAINATION,
-} from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+import { HOLD_FEES_EXPLAINATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { readNetwork } from 'constants/networks'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
@@ -79,12 +76,6 @@ export const ReconfigurationRulesPage = () => {
               extra={t`When enabled, the project owner can set the project's payment terminals.`}
             >
               <JuiceSwitch label={t`Allow terminal configuration`} />
-            </Form.Item>
-            <Form.Item
-              name="useDataSourceForRedeem"
-              extra={USE_DATASOURCE_FOR_REDEEM_EXPLAINATION}
-            >
-              <JuiceSwitch label={t`Use data source for redeem`} />
             </Form.Item>
           </CreateCollapse.Panel>
         </CreateCollapse>

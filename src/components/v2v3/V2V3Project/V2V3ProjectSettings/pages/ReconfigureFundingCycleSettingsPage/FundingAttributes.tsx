@@ -16,9 +16,9 @@ import {
   RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
 } from 'constants/fundingWarningText'
 import { Split } from 'models/splits'
-import { formatBoolean } from 'utils/format/formatBoolean'
 import { formatWad } from 'utils/format/formatNumber'
 import { detailedTimeString } from 'utils/format/formatTime'
+import { formatBoolean } from 'utils/format/formatBoolean'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 import {
   formatDiscountRate,

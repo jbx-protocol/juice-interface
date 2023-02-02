@@ -32,16 +32,11 @@ export const useRulesReview = () => {
     return formatBoolean(fundingCycleMetadata.holdFees)
   }, [fundingCycleMetadata.holdFees])
 
-  const useDataSourceForRedeem = useMemo(() => {
-    return formatBoolean(fundingCycleMetadata.useDataSourceForRedeem)
-  }, [fundingCycleMetadata.useDataSourceForRedeem])
-
   return {
     customAddress,
     pausePayments,
     terminalConfiguration,
     strategy,
     holdFees,
-    useDataSourceForRedeem,
   }
 }

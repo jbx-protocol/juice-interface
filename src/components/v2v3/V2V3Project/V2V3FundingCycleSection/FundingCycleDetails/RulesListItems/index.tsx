@@ -15,8 +15,7 @@ import {
   TERMINAL_CONFIG_EXPLAINATION,
 } from '../../settingExplanations'
 import { FundingCycleListItem } from '../FundingCycleListItem'
-import { AllowSetControllerValue } from './AllowSetControllerValue'
-import { AllowSetTerminalsValue } from './AllowSetTerminalsValue'
+import { AllowedValue } from './AllowedValue'
 import { HoldFeesValue } from './HoldFeesValue'
 import { PausePayValue } from './PausePayValue'
 import { ReconfigStratValue } from './ReconfigStratValue'
@@ -112,16 +111,14 @@ export function RulesListItems({
       <FundingCycleListItem
         name={t`Payment Terminal configuration`}
         value={
-          <AllowSetTerminalsValue
-            allowSetTerminals={fundingCycleMetadata?.global.allowSetTerminals}
+          <AllowedValue
+            value={fundingCycleMetadata?.global.allowSetTerminals}
           />
         }
         oldValue={
           showDiffs && allowSetTerminalsHasDiff ? (
-            <AllowSetTerminalsValue
-              allowSetTerminals={
-                oldFundingCycleMetadata?.global.allowSetTerminals
-              }
+            <AllowedValue
+              value={oldFundingCycleMetadata?.global.allowSetTerminals}
             />
           ) : undefined
         }
@@ -130,16 +127,14 @@ export function RulesListItems({
       <FundingCycleListItem
         name={t`Controller configuration`}
         value={
-          <AllowSetControllerValue
-            allowSetController={fundingCycleMetadata?.global.allowSetController}
+          <AllowedValue
+            value={fundingCycleMetadata?.global.allowSetController}
           />
         }
         oldValue={
           showDiffs && allowSetControllerHasDiff ? (
-            <AllowSetControllerValue
-              allowSetController={
-                oldFundingCycleMetadata?.global.allowSetController
-              }
+            <AllowedValue
+              value={oldFundingCycleMetadata?.global.allowSetController}
             />
           ) : undefined
         }

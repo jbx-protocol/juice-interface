@@ -347,9 +347,6 @@ msgstr ""
 msgid "Advanced (optional)"
 msgstr ""
 
-msgid "Advanced Rules"
-msgstr ""
-
 msgid "Advanced options"
 msgstr ""
 
@@ -383,7 +380,13 @@ msgstr ""
 msgid "Allow Controller configuration"
 msgstr ""
 
+msgid "Allow Controller migration"
+msgstr ""
+
 msgid "Allow Payment Terminal configuration"
+msgstr ""
+
+msgid "Allow Payment Terminal migration"
 msgstr ""
 
 msgid "Allow a few days for your project to appear in the \"active\" projects list on the Projects page."
@@ -804,6 +807,9 @@ msgid "Contributors won't receive any tokens when they pay this project."
 msgstr ""
 
 msgid "Controller configuration"
+msgstr ""
+
+msgid "Controller migration"
 msgstr ""
 
 msgid "Copied!"
@@ -1356,6 +1362,9 @@ msgid "Funding Cycle #1 will start immediately after you launch your project. Yo
 msgstr ""
 
 msgid "Funding Cycles"
+msgstr ""
+
+msgid "Funding Rules"
 msgstr ""
 
 msgid "Funding Target"
@@ -1988,6 +1997,9 @@ msgstr ""
 msgid "Not a valid ETH address"
 msgstr ""
 
+msgid "Not allowed"
+msgstr ""
+
 msgid "Not quite ready to launch? Your project details will be saved as a 'draft' as long as you don't clear your browser's data."
 msgstr ""
 
@@ -2019,6 +2031,9 @@ msgid "Overflow is created if your project's balance exceeds your funding cycle 
 msgstr ""
 
 msgid "Owned by <0/>"
+msgstr ""
+
+msgid "Owner Permissions"
 msgstr ""
 
 msgid "Owner can mint tokens at any time."
@@ -2873,6 +2888,9 @@ msgstr ""
 msgid "Terminal configuration"
 msgstr ""
 
+msgid "Terminal migration"
+msgstr ""
+
 msgid "Text record is set"
 msgstr ""
 
@@ -3534,6 +3552,12 @@ msgid "When enabled, the project owner can change the project's Payment Terminal
 msgstr ""
 
 msgid "When enabled, the project owner can manually mint any amount of tokens to any address."
+msgstr ""
+
+msgid "When enabled, the project owner can migrate the project's Controller to a newer version of the contract. <0>Learn more</0>"
+msgstr ""
+
+msgid "When enabled, the project owner can migrate the project's existing Payment Terminals to a newer versions of the contract. <0>Learn more</0>"
 msgstr ""
 
 msgid "When enabled, the project owner can set the project's payment terminals."

@@ -3,8 +3,8 @@ import { readNetwork } from 'constants/networks'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useMemo } from 'react'
 import {
+  formatAllowed,
   formatBoolean,
-  formatEnabled,
   formatPaused,
 } from 'utils/format/formatBoolean'
 
@@ -23,12 +23,20 @@ export const useRulesReview = () => {
   }, [fundingCycleMetadata.pausePay])
 
   const terminalConfiguration = useMemo(() => {
-    return formatEnabled(fundingCycleMetadata.global.allowSetTerminals)
+    return formatAllowed(fundingCycleMetadata.global.allowSetTerminals)
   }, [fundingCycleMetadata.global.allowSetTerminals])
 
   const controllerConfiguration = useMemo(() => {
-    return formatEnabled(fundingCycleMetadata.global.allowSetController)
+    return formatAllowed(fundingCycleMetadata.global.allowSetController)
   }, [fundingCycleMetadata.global.allowSetController])
+
+  const terminalMigration = useMemo(() => {
+    return formatAllowed(fundingCycleMetadata.allowTerminalMigration)
+  }, [fundingCycleMetadata.allowTerminalMigration])
+
+  const controllerMigration = useMemo(() => {
+    return formatAllowed(fundingCycleMetadata.allowControllerMigration)
+  }, [fundingCycleMetadata.allowControllerMigration])
 
   const strategy = useMemo(() => {
     return availableBallotStrategies.find(
@@ -45,6 +53,8 @@ export const useRulesReview = () => {
     pausePayments,
     terminalConfiguration,
     controllerConfiguration,
+    terminalMigration,
+    controllerMigration,
     strategy,
     holdFees,
   }

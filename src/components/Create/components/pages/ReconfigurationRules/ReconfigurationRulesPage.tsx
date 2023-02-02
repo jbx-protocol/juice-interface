@@ -61,7 +61,7 @@ export const ReconfigurationRulesPage = () => {
         )}
 
         <CreateCollapse>
-          <CreateCollapse.Panel key={0} header={t`Advanced Rules`} hideDivider>
+          <CreateCollapse.Panel key={0} header={t`Funding Rules`} hideDivider>
             <Form.Item
               className="pt-8"
               name="pausePayments"
@@ -73,40 +73,91 @@ export const ReconfigurationRulesPage = () => {
             <Form.Item name="holdFees" extra={HOLD_FEES_EXPLAINATION}>
               <JuiceSwitch label={t`Hold fees`} />
             </Form.Item>
-            <Form.Item
-              name="allowTerminalConfiguration"
-              extra={
-                <Trans>
-                  When enabled, the project owner can change the project's
-                  Payment Terminals.{' '}
-                  <ExternalLink
-                    href={helpPagePath('dev/learn/glossary/payment-terminal')}
-                  >
-                    Learn more
-                  </ExternalLink>
-                </Trans>
-              }
-            >
-              <JuiceSwitch label={t`Allow Payment Terminal configuration`} />
-            </Form.Item>
-            <Form.Item
-              name="allowControllerConfiguration"
-              extra={
-                <Trans>
-                  When enabled, the project owner can change the project's
-                  Controller.{' '}
-                  <ExternalLink
-                    href={helpPagePath(
-                      'dev/api/contracts/or-controllers/jbcontroller',
-                    )}
-                  >
-                    Learn more
-                  </ExternalLink>
-                </Trans>
-              }
-            >
-              <JuiceSwitch label={t`Allow Controller configuration`} />
-            </Form.Item>
+          </CreateCollapse.Panel>
+          <CreateCollapse.Panel
+            key={1}
+            header={t`Owner Permissions`}
+            hideDivider
+          >
+            <h3 className="mt-3 mb-5 text-sm font-normal uppercase text-black dark:text-slate-100">
+              Configuration rules
+            </h3>
+            <div className="mb-8">
+              <Form.Item
+                name="allowTerminalConfiguration"
+                extra={
+                  <Trans>
+                    When enabled, the project owner can change the project's
+                    Payment Terminals.{' '}
+                    <ExternalLink
+                      href={helpPagePath('dev/learn/glossary/payment-terminal')}
+                    >
+                      Learn more
+                    </ExternalLink>
+                  </Trans>
+                }
+              >
+                <JuiceSwitch label={t`Allow Payment Terminal configuration`} />
+              </Form.Item>
+              <Form.Item
+                name="allowControllerConfiguration"
+                extra={
+                  <Trans>
+                    When enabled, the project owner can change the project's
+                    Controller.{' '}
+                    <ExternalLink
+                      href={helpPagePath(
+                        'dev/api/contracts/or-controllers/jbcontroller',
+                      )}
+                    >
+                      Learn more
+                    </ExternalLink>
+                  </Trans>
+                }
+              >
+                <JuiceSwitch label={t`Allow Controller configuration`} />
+              </Form.Item>
+            </div>
+            <h3 className="mt-3 mb-5 text-sm font-normal uppercase text-black dark:text-slate-100">
+              Migration rules
+            </h3>
+            <div className="mb-8">
+              <Form.Item
+                name="allowTerminalMigration"
+                extra={
+                  <Trans>
+                    When enabled, the project owner can migrate the project's
+                    existing Payment Terminals to a newer versions of the
+                    contract.{' '}
+                    <ExternalLink
+                      href={helpPagePath('dev/learn/glossary/payment-terminal')}
+                    >
+                      Learn more
+                    </ExternalLink>
+                  </Trans>
+                }
+              >
+                <JuiceSwitch label={t`Allow Payment Terminal migration`} />
+              </Form.Item>
+              <Form.Item
+                name="allowControllerMigration"
+                extra={
+                  <Trans>
+                    When enabled, the project owner can migrate the project's
+                    Controller to a newer version of the contract.{' '}
+                    <ExternalLink
+                      href={helpPagePath(
+                        'dev/api/contracts/or-controllers/jbcontroller',
+                      )}
+                    >
+                      Learn more
+                    </ExternalLink>
+                  </Trans>
+                }
+              >
+                <JuiceSwitch label={t`Allow Controller migration`} />
+              </Form.Item>
+            </div>
           </CreateCollapse.Panel>
         </CreateCollapse>
       </Space>

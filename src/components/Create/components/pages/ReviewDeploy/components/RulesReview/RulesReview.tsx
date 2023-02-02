@@ -13,10 +13,10 @@ export const RulesReview = () => {
     pausePayments,
     strategy,
     terminalConfiguration,
-    pauseTransfers,
     holdFees,
     useDataSourceForRedeem,
   } = useRulesReview()
+
   return (
     <div className="flex flex-col gap-10 pt-5 pb-8">
       {isMobile ? (
@@ -51,11 +51,6 @@ export const RulesReview = () => {
                 {terminalConfiguration}
               </div>
             }
-          />
-          <DescriptionCol
-            span={5}
-            title={t`Token transfers`}
-            desc={<div className="text-base font-medium">{pauseTransfers}</div>}
           />
           <DescriptionCol
             span={5}

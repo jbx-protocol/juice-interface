@@ -26,6 +26,7 @@ export const projectTokenSettingsToReduxFormat = (
     projectTokenSettings.redemptionRate,
   ).toHexString()
   const allowMinting = projectTokenSettings.tokenMinting
+  const pauseTransfers = projectTokenSettings.pauseTransfers
 
   return {
     weight,
@@ -34,5 +35,6 @@ export const projectTokenSettingsToReduxFormat = (
     discountRate,
     redemptionRate,
     allowMinting,
+    pauseTransfers,
   }
 }

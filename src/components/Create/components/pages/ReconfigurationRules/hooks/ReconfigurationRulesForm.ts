@@ -16,7 +16,6 @@ type ReconfigurationRulesFormProps = Partial<{
   pausePayments: boolean
   allowTerminalConfiguration: boolean
   holdFees: boolean
-  pauseTransfers: boolean
   useDataSourceForRedeem: boolean
 }>
 
@@ -127,14 +126,6 @@ export const useReconfigurationRulesForm = () => {
     fieldName: 'allowTerminalConfiguration',
     ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setAllowSetTerminals,
-    formatter: v => !!v,
-  })
-
-  useFormDispatchWatch({
-    form,
-    fieldName: 'pauseTransfers',
-    ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setPauseTransfers,
     formatter: v => !!v,
   })
 

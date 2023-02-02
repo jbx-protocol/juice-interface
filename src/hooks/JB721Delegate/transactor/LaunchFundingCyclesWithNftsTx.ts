@@ -60,7 +60,6 @@ export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFun
         rewardTiers,
         CIDs,
         collectionMetadata,
-        flags,
       },
       launchFundingCyclesData: {
         fundingCycleData,
@@ -128,7 +127,6 @@ export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFun
         JBPricesAddress: V3JBPrices.address,
         JBTiered721DelegateStoreAddress,
       },
-      flags,
     })
 
     // NFT launch tx does not accept `useDataSourceForPay` and `dataSource` (see contracts:`JBPayDataSourceFundingCycleMetadata`)

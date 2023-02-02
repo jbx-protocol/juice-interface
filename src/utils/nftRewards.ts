@@ -21,7 +21,6 @@ import {
   JB721PricingParams,
   JB721TierParams,
   JBDeployTiered721DelegateData,
-  JBTiered721Flags,
   NftRewardTier,
 } from 'models/nftRewardTier'
 import { V2V3ContractName } from 'models/v2v3/contracts'
@@ -55,38 +54,6 @@ export async function findJBTiered721DelegateStoreAddress() {
   return latestNftContractDeployments.transactions.find(
     tx => tx.contractName === 'JBTiered721DelegateStore',
   )?.contractAddress
-}
-
-// Returns the highest NFT reward tier that a payer is eligible given their pay amount
-export function getHighestAffordableNft({
-  payAmountETH,
-  nftRewardTiers,
-}: {
-  payAmountETH: number
-  nftRewardTiers: NftRewardTier[]
-}) {
-  let nftReward: NftRewardTier | null = null
-  // all nft's who's thresholds are below the pay amount
-  const eligibleNftRewards = nftRewardTiers.filter(rewardTier => {
-    return rewardTier.contributionFloor <= payAmountETH
-  })
-  if (eligibleNftRewards.length) {
-    // take the maximum which is the only one received by payer
-    nftReward = eligibleNftRewards.reduce((prev, curr) => {
-      return prev.contributionFloor > curr.contributionFloor ? prev : curr
-    })
-  }
-  return nftReward
-}
-
-export function getNftRewardOfFloor({
-  floor,
-  rewardTiers,
-}: {
-  floor: number
-  rewardTiers: NftRewardTier[]
-}) {
-  return rewardTiers.find(tier => tier.contributionFloor === floor)
 }
 
 // returns an array of CIDs from a given array of RewardTier obj's
@@ -407,7 +374,6 @@ export function buildJBDeployTiered721DelegateData({
     JBPricesAddress,
     JBTiered721DelegateStoreAddress,
   },
-  flags,
 }: {
   collectionUri: string
   collectionName: string
@@ -421,7 +387,6 @@ export function buildJBDeployTiered721DelegateData({
     JBPricesAddress: string
     JBTiered721DelegateStoreAddress: string
   }
-  flags: JBTiered721Flags
 }): JBDeployTiered721DelegateData {
   const pricing: JB721PricingParams = {
     tiers,
@@ -442,8 +407,12 @@ export function buildJBDeployTiered721DelegateData({
     pricing,
     reservedTokenBeneficiary: constants.AddressZero,
     store: JBTiered721DelegateStoreAddress,
-    flags,
-    governanceType,
+    flags: {
+      lockReservedTokenChanges: false,
+      lockVotingUnitChanges: false,
+      lockManualMintingChanges: false,
+    },
+    governanceType: governanceType,
   }
 }
 

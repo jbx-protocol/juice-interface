@@ -49,7 +49,6 @@ export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<R
         rewardTiers,
         CIDs,
         collectionMetadata,
-        flags,
       },
     },
     txOpts,
@@ -95,7 +94,6 @@ export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<R
         JBPricesAddress: getAddress(contracts.JBPrices.address),
         JBTiered721DelegateStoreAddress,
       },
-      flags,
     })
 
     // NFT launch tx does not accept `useDataSourceForPay` and `dataSource` (see contracts:`JBPayDataSourceFundingCycleMetadata`)

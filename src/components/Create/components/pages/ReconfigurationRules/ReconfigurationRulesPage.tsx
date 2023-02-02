@@ -20,7 +20,6 @@ import { useReconfigurationRulesForm } from './hooks'
 export const ReconfigurationRulesPage = () => {
   useSetCreateFurthestPageReached('reconfigurationRules')
   const { form, initialValues } = useReconfigurationRulesForm()
-
   const { goToNextPage } = useContext(PageContext)
 
   const selection = useWatch('selection', form)

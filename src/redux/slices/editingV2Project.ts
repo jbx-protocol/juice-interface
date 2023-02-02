@@ -3,7 +3,6 @@ import * as constants from '@ethersproject/constants'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AllocationSplit } from 'components/Allocation'
 import { projectTokenSettingsToReduxFormat } from 'components/Create/utils/projectTokenSettingsToReduxFormat'
-import { JB721_DELEGATE_V1 } from 'constants/delegateVersions'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
@@ -11,7 +10,6 @@ import {
 import { CreatePage } from 'models/create-page'
 import { FundingTargetType } from 'models/fundingTargetType'
 import {
-  JBTiered721Flags,
   DelegateVersion,
   JB721GovernanceType,
   NftCollectionMetadata,
@@ -48,7 +46,6 @@ export type NftRewardsData = {
   CIDs: string[] | undefined // points to locations of the NFTs' json on IPFS
   collectionMetadata: NftCollectionMetadata
   postPayModal: NftPostPayModalConfig | undefined
-  flags: JBTiered721Flags
   contractVersion: DelegateVersion | undefined
   governanceType: JB721GovernanceType
 }
@@ -137,13 +134,6 @@ export const EMPTY_NFT_COLLECTION_METADATA = {
   description: undefined,
 }
 
-export const DEFAULT_NFT_FLAGS: JBTiered721Flags = {
-  lockReservedTokenChanges: false,
-  lockVotingUnitChanges: false,
-  lockManualMintingChanges: false,
-  preventOverspending: false,
-}
-
 const defaultCreateState: CreateState = {
   reconfigurationRuleSelection: undefined,
   fundingCyclesPageSelection: undefined,
@@ -178,8 +168,7 @@ const defaultProjectState: ProjectState = {
     CIDs: undefined,
     collectionMetadata: EMPTY_NFT_COLLECTION_METADATA,
     postPayModal: undefined,
-    flags: DEFAULT_NFT_FLAGS,
-    contractVersion: JB721_DELEGATE_V1,
+    contractVersion: undefined,
     governanceType: JB721GovernanceType.NONE,
   },
   mustStartAtOrAfter: DEFAULT_MUST_START_AT_OR_AFTER,
@@ -357,9 +346,6 @@ const editingV2ProjectSlice = createSlice({
     },
     setNftRewardsName: (state, action: PayloadAction<string>) => {
       state.nftRewards.collectionMetadata.name = action.payload
-    },
-    setNftPreventOverspending: (state, action: PayloadAction<boolean>) => {
-      state.nftRewards.flags.preventOverspending = action.payload
     },
     setAllowSetTerminals: (state, action: PayloadAction<boolean>) => {
       state.fundingCycleMetadata.global.allowSetTerminals = action.payload

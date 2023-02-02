@@ -1,7 +1,6 @@
 import { JB721GovernanceType } from 'models/nftRewardTier'
 import { createContext } from 'react'
 import {
-  DEFAULT_NFT_FLAGS,
   EMPTY_NFT_COLLECTION_METADATA,
   NftRewardsData,
 } from 'redux/slices/editingV2Project'
@@ -18,7 +17,6 @@ export const NftRewardsContext = createContext<NftRewardsContextType>({
     postPayModal: undefined,
     contractVersion: undefined,
     collectionMetadata: EMPTY_NFT_COLLECTION_METADATA,
-    flags: DEFAULT_NFT_FLAGS,
     governanceType: JB721GovernanceType.NONE,
   },
   loading: false,

@@ -14,9 +14,11 @@ type ReconfigurationRulesFormProps = Partial<{
   selection: ReconfigurationStrategy
   customAddress?: string
   pausePayments: boolean
+  holdFees: boolean
   allowTerminalConfiguration: boolean
   allowControllerConfiguration: boolean
-  holdFees: boolean
+  allowTerminalMigration: boolean
+  allowControllerMigration: boolean
 }>
 
 export const useReconfigurationRulesForm = () => {
@@ -51,6 +53,9 @@ export const useReconfigurationRulesForm = () => {
         fundingCycleMetadata.global.allowSetTerminals
       const allowControllerConfiguration =
         fundingCycleMetadata.global.allowSetController
+      const allowTerminalMigration = fundingCycleMetadata.allowTerminalMigration
+      const allowControllerMigration =
+        fundingCycleMetadata.allowControllerMigration
       const pauseTransfers = fundingCycleMetadata.global.pauseTransfers
       const holdFees = fundingCycleMetadata.holdFees
       // By default, ballot is addressZero
@@ -58,9 +63,11 @@ export const useReconfigurationRulesForm = () => {
         return {
           selection: defaultStrategy.name,
           pausePayments,
+          pauseTransfers,
           allowTerminalConfiguration,
           allowControllerConfiguration,
-          pauseTransfers,
+          allowTerminalMigration,
+          allowControllerMigration,
         }
 
       const found = strategies.find(({ address }) => address === ballot)
@@ -79,15 +86,19 @@ export const useReconfigurationRulesForm = () => {
       return {
         selection: found.name,
         pausePayments,
-        allowTerminalConfiguration,
-        allowControllerConfiguration,
         pauseTransfers,
         holdFees,
+        allowTerminalConfiguration,
+        allowControllerConfiguration,
+        allowTerminalMigration,
+        allowControllerMigration,
       }
     }, [
       fundingCycleMetadata.pausePay,
       fundingCycleMetadata.global,
       fundingCycleMetadata.holdFees,
+      fundingCycleMetadata.allowTerminalMigration,
+      fundingCycleMetadata.allowControllerMigration,
       reconfigurationRuleSelection,
       ballot,
       defaultStrategy.name,
@@ -127,6 +138,14 @@ export const useReconfigurationRulesForm = () => {
 
   useFormDispatchWatch({
     form,
+    fieldName: 'holdFees',
+    ignoreUndefined: true,
+    dispatchFunction: editingV2ProjectActions.setHoldFees,
+    formatter: v => !!v,
+  })
+
+  useFormDispatchWatch({
+    form,
     fieldName: 'allowTerminalConfiguration',
     ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setAllowSetTerminals,
@@ -143,9 +162,17 @@ export const useReconfigurationRulesForm = () => {
 
   useFormDispatchWatch({
     form,
-    fieldName: 'holdFees',
+    fieldName: 'allowTerminalMigration',
     ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setHoldFees,
+    dispatchFunction: editingV2ProjectActions.setAllowTerminalMigration,
+    formatter: v => !!v,
+  })
+
+  useFormDispatchWatch({
+    form,
+    fieldName: 'allowControllerMigration',
+    ignoreUndefined: true,
+    dispatchFunction: editingV2ProjectActions.setAllowControllerMigration,
     formatter: v => !!v,
   })
 

@@ -1,5 +1,4 @@
 import { t } from '@lingui/macro'
-import { Row } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
 import useMobile from 'hooks/Mobile'
 import { DescriptionCol } from '../DescriptionCol'
@@ -22,7 +21,7 @@ export const RulesReview = () => {
       {isMobile ? (
         <MobileRulesReview />
       ) : (
-        <Row gutter={20} className="gap-y-5">
+        <div className="flex flex-wrap gap-5">
           <DescriptionCol
             span={5}
             title={t`Reconfiguration`}
@@ -44,10 +43,11 @@ export const RulesReview = () => {
             desc={<div className="text-base font-medium">{pausePayments}</div>}
           />
           <DescriptionCol
-            span={14}
+            span={5}
             title={t`Hold fees`}
             desc={<div className="text-base font-medium">{holdFees}</div>}
           />
+
           <DescriptionCol
             span={5}
             title={t`Terminal configuration`}
@@ -66,7 +66,7 @@ export const RulesReview = () => {
               </div>
             }
           />
-        </Row>
+        </div>
       )}
     </div>
   )

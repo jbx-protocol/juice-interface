@@ -75,6 +75,20 @@ export const CONTROLLER_CONFIG_EXPLAINATION = (
   <Trans>The project owner can change the project's controller.</Trans>
 )
 
+export const TERMINAL_MIGRATION_EXPLAINATION = (
+  <Trans>
+    The project owner can migrate the project's existing Payment Terminals to a
+    newer version of the contract.
+  </Trans>
+)
+
+export const CONTROLLER_MIGRATION_EXPLAINATION = (
+  <Trans>
+    The project owner can migrate the project's Controller to a newer version of
+    the contract.
+  </Trans>
+)
+
 export const PAUSE_TRANSFERS_EXPLANATION = (
   <Trans>
     If transfers are paused, token holders can't transfer their project tokens

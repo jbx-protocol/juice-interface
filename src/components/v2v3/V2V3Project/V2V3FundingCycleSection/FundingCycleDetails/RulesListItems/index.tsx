@@ -9,10 +9,12 @@ import { useContext } from 'react'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 import { getUnsafeV2V3FundingCycleProperties } from 'utils/v2v3/fundingCycle'
 import {
-  CONTROLLER_CONFIG_EXPLAINATION,
   HOLD_FEES_EXPLAINATION,
   RECONFIG_RULES_EXPLAINATION,
   TERMINAL_CONFIG_EXPLAINATION,
+  CONTROLLER_CONFIG_EXPLAINATION,
+  TERMINAL_MIGRATION_EXPLAINATION,
+  CONTROLLER_MIGRATION_EXPLAINATION,
 } from '../../settingExplanations'
 import { FundingCycleListItem } from '../FundingCycleListItem'
 import { AllowedValue } from './AllowedValue'
@@ -54,6 +56,7 @@ export function RulesListItems({
   const pausePayHasDiff =
     oldFundingCycleMetadata &&
     oldFundingCycleMetadata.pausePay !== fundingCycleMetadata.pausePay
+
   const allowSetTerminalsHasDiff =
     oldFundingCycleMetadata &&
     oldFundingCycleMetadata.global.allowSetTerminals !==
@@ -62,6 +65,14 @@ export function RulesListItems({
     oldFundingCycleMetadata &&
     oldFundingCycleMetadata.global.allowSetController !==
       fundingCycleMetadata.global.allowSetController
+  const allowTerminalMigrationHasDiff =
+    oldFundingCycleMetadata &&
+    oldFundingCycleMetadata.allowTerminalMigration !==
+      fundingCycleMetadata.allowTerminalMigration
+  const allowControllerMigrationHasDiff =
+    oldFundingCycleMetadata &&
+    oldFundingCycleMetadata.allowControllerMigration !==
+      fundingCycleMetadata.allowControllerMigration
 
   const ballotHasDiff =
     oldFundingCycle && oldFundingCycle.ballot !== fundingCycle.ballot
@@ -139,6 +150,36 @@ export function RulesListItems({
           ) : undefined
         }
         helperText={CONTROLLER_CONFIG_EXPLAINATION}
+      />
+      <FundingCycleListItem
+        name={t`Payment Terminal migration`}
+        value={
+          <AllowedValue value={fundingCycleMetadata?.allowTerminalMigration} />
+        }
+        oldValue={
+          showDiffs && allowTerminalMigrationHasDiff ? (
+            <AllowedValue
+              value={oldFundingCycleMetadata?.allowTerminalMigration}
+            />
+          ) : undefined
+        }
+        helperText={TERMINAL_MIGRATION_EXPLAINATION}
+      />
+      <FundingCycleListItem
+        name={t`Controller migration`}
+        value={
+          <AllowedValue
+            value={fundingCycleMetadata?.allowControllerMigration}
+          />
+        }
+        oldValue={
+          showDiffs && allowControllerMigrationHasDiff ? (
+            <AllowedValue
+              value={oldFundingCycleMetadata?.allowControllerMigration}
+            />
+          ) : undefined
+        }
+        helperText={CONTROLLER_MIGRATION_EXPLAINATION}
       />
     </>
   )

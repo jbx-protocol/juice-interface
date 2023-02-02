@@ -2123,6 +2123,9 @@ msgstr ""
 msgid "Payment Terminal configuration"
 msgstr ""
 
+msgid "Payment Terminal migration"
+msgstr ""
+
 msgid "Payment amount can't exceed your wallet balance."
 msgstr ""
 
@@ -2999,6 +3002,12 @@ msgstr ""
 msgid "The project owner can change the project's payment terminals."
 msgstr ""
 
+msgid "The project owner can migrate the project's Controller to a newer version of the contract."
+msgstr ""
+
+msgid "The project owner can migrate the project's existing Payment Terminals to a newer version of the contract."
+msgstr ""
+
 msgid "The project owner may mint new tokens at any time, diluting existing contributors share of tokens."
 msgstr ""
 
@@ -3557,7 +3566,7 @@ msgstr ""
 msgid "When enabled, the project owner can migrate the project's Controller to a newer version of the contract. <0>Learn more</0>"
 msgstr ""
 
-msgid "When enabled, the project owner can migrate the project's existing Payment Terminals to a newer versions of the contract. <0>Learn more</0>"
+msgid "When enabled, the project owner can migrate the project's existing Payment Terminals to a newer version of the contract. <0>Learn more</0>"
 msgstr ""
 
 msgid "When enabled, the project owner can set the project's payment terminals."

@@ -24,6 +24,7 @@ import {
 } from 'utils/v2v3/math'
 import {
   AllowMintingStatistic,
+  AllowSetControllerStatistic,
   AllowSetTerminalsStatistic,
   DiscountRateStatistic,
   DistributionLimitStatistic,
@@ -178,6 +179,11 @@ export default function ReconfigurePreview({
         <Col md={6}>
           <AllowSetTerminalsStatistic
             allowSetTerminals={fundingCycleMetadata.global.allowSetTerminals}
+          />
+        </Col>
+        <Col md={6}>
+          <AllowSetControllerStatistic
+            allowSetController={fundingCycleMetadata.global.allowSetController}
           />
         </Col>
         <Col md={6}>

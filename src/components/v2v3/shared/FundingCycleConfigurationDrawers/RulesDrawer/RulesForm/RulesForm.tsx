@@ -96,6 +96,7 @@ export default function RulesForm({
     dispatch(editingV2ProjectActions.setPausePay(pausePay))
     dispatch(editingV2ProjectActions.setAllowMinting(allowMinting))
     dispatch(editingV2ProjectActions.setAllowSetTerminals(allowSetTerminals))
+    dispatch(editingV2ProjectActions.setAllowSetController(allowSetController))
     dispatch(editingV2ProjectActions.setPauseTransfers(pauseTransfers ?? false))
     dispatch(editingV2ProjectActions.setBallot(ballotStrategy.address))
     dispatch(editingV2ProjectActions.setHoldFees(holdFees))
@@ -108,6 +109,7 @@ export default function RulesForm({
     pausePay,
     allowMinting,
     allowSetTerminals,
+    allowSetController,
     pauseTransfers,
     ballotStrategy.address,
     holdFees,

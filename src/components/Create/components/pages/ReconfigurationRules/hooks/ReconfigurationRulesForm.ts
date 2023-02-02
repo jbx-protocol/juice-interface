@@ -15,6 +15,9 @@ type ReconfigurationRulesFormProps = Partial<{
   customAddress?: string
   pausePayments: boolean
   holdFees: boolean
+  pauseTransfers: boolean
+  useDataSourceForRedeem: boolean
+  preventOverspending: boolean
   allowTerminalConfiguration: boolean
   allowControllerConfiguration: boolean
   allowTerminalMigration: boolean
@@ -44,6 +47,7 @@ export const useReconfigurationRulesForm = () => {
   const {
     fundingCycleData: { ballot },
     reconfigurationRuleSelection,
+    nftRewards: { flags: nftRewardsFlags },
     fundingCycleMetadata,
   } = useAppSelector(state => state.editingV2Project)
   const initialValues: ReconfigurationRulesFormProps | undefined =
@@ -58,6 +62,8 @@ export const useReconfigurationRulesForm = () => {
         fundingCycleMetadata.allowControllerMigration
       const pauseTransfers = fundingCycleMetadata.global.pauseTransfers
       const holdFees = fundingCycleMetadata.holdFees
+      const useDataSourceForRedeem = fundingCycleMetadata.useDataSourceForRedeem
+      const preventOverspending = nftRewardsFlags.preventOverspending
       // By default, ballot is addressZero
       if (!reconfigurationRuleSelection && ballot === constants.AddressZero)
         return {
@@ -80,6 +86,8 @@ export const useReconfigurationRulesForm = () => {
           allowControllerConfiguration,
           pauseTransfers,
           holdFees,
+          useDataSourceForRedeem,
+          preventOverspending,
         }
       }
 
@@ -88,6 +96,8 @@ export const useReconfigurationRulesForm = () => {
         pausePayments,
         pauseTransfers,
         holdFees,
+        useDataSourceForRedeem,
+        preventOverspending,
         allowTerminalConfiguration,
         allowControllerConfiguration,
         allowTerminalMigration,
@@ -97,12 +107,14 @@ export const useReconfigurationRulesForm = () => {
       fundingCycleMetadata.pausePay,
       fundingCycleMetadata.global,
       fundingCycleMetadata.holdFees,
+      fundingCycleMetadata.useDataSourceForRedeem,
       fundingCycleMetadata.allowTerminalMigration,
       fundingCycleMetadata.allowControllerMigration,
       reconfigurationRuleSelection,
       ballot,
       defaultStrategy.name,
       strategies,
+      nftRewardsFlags,
     ])
 
   const selection = Form.useWatch('selection', form)
@@ -173,6 +185,13 @@ export const useReconfigurationRulesForm = () => {
     fieldName: 'allowControllerMigration',
     ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setAllowControllerMigration,
+    formatter: v => !!v,
+  })
+  useFormDispatchWatch({
+    form,
+    fieldName: 'preventOverspending',
+    ignoreUndefined: true,
+    dispatchFunction: editingV2ProjectActions.setNftPreventOverspending,
     formatter: v => !!v,
   })
 

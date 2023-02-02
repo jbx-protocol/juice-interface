@@ -120,11 +120,3 @@ export const USE_DATASOURCE_FOR_REDEEM_EXPLAINATION = (
     .
   </Trans>
 )
-
-export const PREVENT_OVERSPENDING_EXPLAINATION = (
-  <Trans>
-    When enabled, users can only receive NFTs by paying the exact price of the
-    NFT. This ensures contributors are eligible to receive their full payment
-    amount if they choose to redeem their NFT.
-  </Trans>
-)

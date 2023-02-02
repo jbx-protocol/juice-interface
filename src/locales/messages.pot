@@ -380,6 +380,12 @@ msgstr ""
 msgid "Allocate reserved tokens to Ethereum addresses or Juicebox projects. Unallocated reserved tokens are sent to the project owner."
 msgstr ""
 
+msgid "Allow Controller configuration"
+msgstr ""
+
+msgid "Allow Payment Terminal configuration"
+msgstr ""
+
 msgid "Allow a few days for your project to appear in the \"active\" projects list on the Projects page."
 msgstr ""
 
@@ -3519,6 +3525,12 @@ msgid "When enabled, all project token transfers will be paused. Does not apply 
 msgstr ""
 
 msgid "When enabled, project's token holders can't transfer their tokens to other addresses. This doesn't apply to your project's ERC-20 tokens (if you've issued them)."
+msgstr ""
+
+msgid "When enabled, the project owner can change the project's Controller. <0>Learn more</0>"
+msgstr ""
+
+msgid "When enabled, the project owner can change the project's Payment Terminals. <0>Learn more</0>"
 msgstr ""
 
 msgid "When enabled, the project owner can manually mint any amount of tokens to any address."

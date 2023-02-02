@@ -15,6 +15,7 @@ type ReconfigurationRulesFormProps = Partial<{
   customAddress?: string
   pausePayments: boolean
   allowTerminalConfiguration: boolean
+  allowControllerConfiguration: boolean
   holdFees: boolean
 }>
 
@@ -48,6 +49,8 @@ export const useReconfigurationRulesForm = () => {
       const pausePayments = fundingCycleMetadata.pausePay
       const allowTerminalConfiguration =
         fundingCycleMetadata.global.allowSetTerminals
+      const allowControllerConfiguration =
+        fundingCycleMetadata.global.allowSetController
       const pauseTransfers = fundingCycleMetadata.global.pauseTransfers
       const holdFees = fundingCycleMetadata.holdFees
       // By default, ballot is addressZero
@@ -56,6 +59,7 @@ export const useReconfigurationRulesForm = () => {
           selection: defaultStrategy.name,
           pausePayments,
           allowTerminalConfiguration,
+          allowControllerConfiguration,
           pauseTransfers,
         }
 
@@ -66,6 +70,7 @@ export const useReconfigurationRulesForm = () => {
           customAddress: ballot,
           pausePayments,
           allowTerminalConfiguration,
+          allowControllerConfiguration,
           pauseTransfers,
           holdFees,
         }
@@ -75,13 +80,13 @@ export const useReconfigurationRulesForm = () => {
         selection: found.name,
         pausePayments,
         allowTerminalConfiguration,
+        allowControllerConfiguration,
         pauseTransfers,
         holdFees,
       }
     }, [
       fundingCycleMetadata.pausePay,
-      fundingCycleMetadata.global.allowSetTerminals,
-      fundingCycleMetadata.global.pauseTransfers,
+      fundingCycleMetadata.global,
       fundingCycleMetadata.holdFees,
       reconfigurationRuleSelection,
       ballot,
@@ -125,6 +130,14 @@ export const useReconfigurationRulesForm = () => {
     fieldName: 'allowTerminalConfiguration',
     ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setAllowSetTerminals,
+    formatter: v => !!v,
+  })
+
+  useFormDispatchWatch({
+    form,
+    fieldName: 'allowControllerConfiguration',
+    ignoreUndefined: true,
+    dispatchFunction: editingV2ProjectActions.setAllowSetController,
     formatter: v => !!v,
   })
 

@@ -2228,6 +2228,9 @@ msgstr ""
 msgid "Potential risks"
 msgstr ""
 
+msgid "Prevent NFT overspending"
+msgstr ""
+
 msgid "Previous V1 Project ID:"
 msgstr ""
 
@@ -3597,6 +3600,9 @@ msgid "When enabled, the project owner can migration the project's Controller to
 msgstr ""
 
 msgid "When enabled, the project will hold the fee amount in ETH instead of the fees being processed automatically. <0>Learn more.</0>"
+msgstr ""
+
+msgid "When enabled, users can only receive NFTs by paying the exact price of the NFT. This ensures contributors are eligible to receive their full payment amount if they choose to redeem their NFT."
 msgstr ""
 
 msgid "When enabled, your project can't accept payments."

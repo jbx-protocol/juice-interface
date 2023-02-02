@@ -21,6 +21,12 @@ export type NftRewardTier = {
   description: string | undefined
 }
 
+export type JBTiered721Flags = {
+  lockReservedTokenChanges: boolean
+  lockVotingUnitChanges: boolean
+  lockManualMintingChanges: boolean
+  preventOverspending: boolean
+}
 export type DelegateVersion = JB721DELEGATE_V1 | JB721DELEGATE_V1_1
 
 // How the reward tiers are stored in the contracts
@@ -111,10 +117,6 @@ export interface JBDeployTiered721DelegateData {
   pricing: JB721PricingParams
   reservedTokenBeneficiary: string
   store: string
-  flags: {
-    lockReservedTokenChanges: boolean
-    lockVotingUnitChanges: boolean
-    lockManualMintingChanges: boolean
-  }
+  flags: JBTiered721Flags
   governanceType: JB721GovernanceType
 }

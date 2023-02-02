@@ -305,7 +305,7 @@ export default function RulesForm({
             <Form.Item
               extra={
                 <Trans>
-                  When enabled, the project owner can migration the project's
+                  When enabled, the project owner can migrate the project's
                   Controller to a newer version of the contract.{' '}
                   <ExternalLink
                     href={helpPagePath(

@@ -1,6 +1,7 @@
 import { isAddress } from '@ethersproject/address'
 import { Trans } from '@lingui/macro'
 import { Button, Form, Space, Switch } from 'antd'
+import ExternalLink from 'components/ExternalLink'
 import FormItemLabel from 'components/FormItemLabel'
 import ReconfigurationStrategySelector from 'components/ReconfigurationStrategy/ReconfigurationStrategySelector'
 import {
@@ -17,6 +18,7 @@ import isEqual from 'lodash/isEqual'
 import { BallotStrategy } from 'models/ballot'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import { helpPagePath } from 'utils/routes'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 import TokenMintingExtra from './TokenMintingExtra'
 
@@ -41,6 +43,7 @@ export default function RulesForm({
         fundingCycleData.ballot ?? DEFAULT_BALLOT_STRATEGY.address,
       ),
       allowSetTerminals: fundingCycleMetadata.global.allowSetTerminals,
+      allowSetController: fundingCycleMetadata.global.allowSetController,
       pauseTransfers: fundingCycleMetadata.global.pauseTransfers,
       holdFees: fundingCycleMetadata.holdFees,
       useDataSourceForRedeem: fundingCycleMetadata.useDataSourceForRedeem,
@@ -55,6 +58,9 @@ export default function RulesForm({
   const [pausePay, setPausePay] = useState<boolean>(initialValues.pausePay)
   const [allowSetTerminals, setAllowSetTerminals] = useState<boolean>(
     initialValues.allowSetTerminals,
+  )
+  const [allowSetController, setAllowSetController] = useState<boolean>(
+    initialValues.allowSetController,
   )
   const [pauseTransfers, setPauseTransfers] = useState<boolean | undefined>(
     initialValues.pauseTransfers,
@@ -197,8 +203,13 @@ export default function RulesForm({
             <Form.Item
               extra={
                 <Trans>
-                  When enabled, the project owner can set the project's payment
-                  terminals.
+                  When enabled, the project owner can change the project's
+                  Payment Terminals.{' '}
+                  <ExternalLink
+                    href={helpPagePath('dev/learn/glossary/payment-terminal')}
+                  >
+                    Learn more
+                  </ExternalLink>
                 </Trans>
               }
             >
@@ -210,7 +221,33 @@ export default function RulesForm({
                   }}
                   checked={allowSetTerminals}
                 />
-                <Trans>Allow terminal configuration</Trans>
+                <Trans>Allow Payment Terminal configuration</Trans>
+              </div>
+            </Form.Item>
+            <Form.Item
+              extra={
+                <Trans>
+                  When enabled, the project owner can change the project's
+                  Controller.{' '}
+                  <ExternalLink
+                    href={helpPagePath(
+                      'dev/api/contracts/or-controllers/jbcontroller',
+                    )}
+                  >
+                    Learn more
+                  </ExternalLink>
+                </Trans>
+              }
+            >
+              <div className="flex font-medium text-black dark:text-slate-100">
+                <Switch
+                  className="mr-2"
+                  onChange={checked => {
+                    setAllowSetController(checked)
+                  }}
+                  checked={allowSetController}
+                />
+                <Trans>Allow Controller configuration</Trans>
               </div>
             </Form.Item>
           </div>

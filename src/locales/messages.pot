@@ -695,6 +695,9 @@ msgstr ""
 msgid "Collection symbol"
 msgstr ""
 
+msgid "Configuration rules"
+msgstr ""
+
 msgid "Configure how your project will collect and spend funds."
 msgstr ""
 
@@ -1397,6 +1400,9 @@ msgstr ""
 msgid "Funding distribution"
 msgstr ""
 
+msgid "Funding rules"
+msgstr ""
+
 msgid "Funding target"
 msgstr ""
 
@@ -1796,6 +1802,9 @@ msgstr ""
 msgid "Migrate tokens"
 msgstr ""
 
+msgid "Migration rules"
+msgstr ""
+
 msgid "Minimum Contribution"
 msgstr ""
 
@@ -1872,6 +1881,9 @@ msgid "NFT mint confirmed"
 msgstr ""
 
 msgid "NFT projects"
+msgstr ""
+
+msgid "NFT rules"
 msgstr ""
 
 msgid "NFTs"
@@ -2046,6 +2058,9 @@ msgid "Owner is not allowed to mint tokens."
 msgstr ""
 
 msgid "Owner isn't allowed to set the project's payment terminals."
+msgstr ""
+
+msgid "Owner permissions"
 msgstr ""
 
 msgid "Owner token minting"
@@ -2714,7 +2729,7 @@ msgstr ""
 msgid "Set a distribution limit"
 msgstr ""
 
-msgid "Set a duration for automatically recurring funding cycles. Funds may only be distributed once per cycle."
+msgid "Set a duration for automatically recurring funding cycles."
 msgstr ""
 
 msgid "Set a funding cycle duration"
@@ -3188,6 +3203,9 @@ msgstr ""
 msgid "Token redeem value"
 msgstr ""
 
+msgid "Token rules"
+msgstr ""
+
 msgid "Token symbol"
 msgstr ""
 
@@ -3431,9 +3449,6 @@ msgstr ""
 msgid "Use <0>Percentages</0> when you want to configure an <1>infinite distribution limit.</1> With an infinite distribution limit, your project reserves all funds for itself. Your project won't have overflow, so tokens can never be redeemed for ETH. <2>Learn more</2>."
 msgstr ""
 
-msgid "Use data source for redeem"
-msgstr ""
-
 msgid "Use for payments"
 msgstr ""
 
@@ -3567,9 +3582,6 @@ msgid "When enabled, the project owner can migrate the project's Controller to a
 msgstr ""
 
 msgid "When enabled, the project owner can migrate the project's existing Payment Terminals to a newer version of the contract. <0>Learn more</0>"
-msgstr ""
-
-msgid "When enabled, the project owner can set the project's payment terminals."
 msgstr ""
 
 msgid "When enabled, the project will hold the fee amount in ETH instead of the fees being processed automatically. <0>Learn more.</0>"

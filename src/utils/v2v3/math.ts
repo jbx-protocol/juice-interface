@@ -15,12 +15,12 @@ import {
   ONE_MILLION,
   TEN_THOUSAND,
 } from 'constants/numbers'
+import { parseEther } from 'ethers/lib/utils'
 import { JBFee } from 'models/v2v3/fee'
 import {
   V2V3FundingCycleData,
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
-import { parseEther } from 'ethers/lib/utils'
 
 export const MAX_RESERVED_RATE = TEN_THOUSAND
 export const MAX_REDEMPTION_RATE = TEN_THOUSAND
@@ -245,8 +245,8 @@ export const feeForAmount = (
 }
 
 export const amountSubFee = (
-  amountWad?: BigNumber,
-  feePerBillion?: BigNumber,
+  amountWad: BigNumber | undefined,
+  feePerBillion: BigNumber | undefined,
 ): BigNumber | undefined => {
   if (!feePerBillion || !amountWad) return
   const feeAmount = feeForAmount(amountWad, feePerBillion) ?? 0

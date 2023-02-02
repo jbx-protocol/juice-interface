@@ -347,12 +347,6 @@ msgstr ""
 msgid "Advanced (optional)"
 msgstr ""
 
-msgid "Advanced Options"
-msgstr ""
-
-msgid "Advanced Rules"
-msgstr ""
-
 msgid "Advanced options"
 msgstr ""
 
@@ -381,6 +375,18 @@ msgid "Allocate a portion of your project's reserved tokens to other Ethereum wa
 msgstr ""
 
 msgid "Allocate reserved tokens to Ethereum addresses or Juicebox projects. Unallocated reserved tokens are sent to the project owner."
+msgstr ""
+
+msgid "Allow Controller configuration"
+msgstr ""
+
+msgid "Allow Controller migration"
+msgstr ""
+
+msgid "Allow Payment Terminal configuration"
+msgstr ""
+
+msgid "Allow Payment Terminal migration"
 msgstr ""
 
 msgid "Allow a few days for your project to appear in the \"active\" projects list on the Projects page."
@@ -798,6 +804,12 @@ msgid "Contributors will receive {discountRate}% more tokens for contributions t
 msgstr ""
 
 msgid "Contributors won't receive any tokens when they pay this project."
+msgstr ""
+
+msgid "Controller configuration"
+msgstr ""
+
+msgid "Controller migration"
 msgstr ""
 
 msgid "Copied!"
@@ -1352,6 +1364,9 @@ msgstr ""
 msgid "Funding Cycles"
 msgstr ""
 
+msgid "Funding Rules"
+msgstr ""
+
 msgid "Funding Target"
 msgstr ""
 
@@ -1500,6 +1515,9 @@ msgid "If locked, this split can't be edited or removed until the lock expires o
 msgstr ""
 
 msgid "If no date is selected Funding Cycle #1 will start immediately after your project is deployed."
+msgstr ""
+
+msgid "If transfers are paused, token holders can't transfer their project tokens to other addresses. The project's ERC-20 tokens are always transferrable."
 msgstr ""
 
 msgid "If you don't raise the sum of all your payouts (<0/>{distributionLimit}), this address will receive {0}% of all the funds you raise."
@@ -1799,9 +1817,6 @@ msgstr ""
 msgid "Mint rate"
 msgstr ""
 
-msgid "Mint rate unchanged"
-msgstr ""
-
 msgid "Mint this project's ERC-20 tokens to your wallet."
 msgstr ""
 
@@ -1982,6 +1997,9 @@ msgstr ""
 msgid "Not a valid ETH address"
 msgstr ""
 
+msgid "Not allowed"
+msgstr ""
+
 msgid "Not quite ready to launch? Your project details will be saved as a 'draft' as long as you don't clear your browser's data."
 msgstr ""
 
@@ -2015,6 +2033,9 @@ msgstr ""
 msgid "Owned by <0/>"
 msgstr ""
 
+msgid "Owner Permissions"
+msgstr ""
+
 msgid "Owner can mint tokens at any time."
 msgstr ""
 
@@ -2046,9 +2067,6 @@ msgid "Pause payments"
 msgstr ""
 
 msgid "Pause project token transfers"
-msgstr ""
-
-msgid "Pause transfers"
 msgstr ""
 
 msgid "Paused"
@@ -2100,6 +2118,12 @@ msgid "Payment Addresses"
 msgstr ""
 
 msgid "Payment Success Popup"
+msgstr ""
+
+msgid "Payment Terminal configuration"
+msgstr ""
+
+msgid "Payment Terminal migration"
 msgstr ""
 
 msgid "Payment amount can't exceed your wallet balance."
@@ -2472,6 +2496,9 @@ msgid "Redeem {tokensLabel} for ETH"
 msgstr ""
 
 msgid "Redeem {tokensTextLong} for ETH"
+msgstr ""
+
+msgid "Redeemable NFTs"
 msgstr ""
 
 msgid "Redeemed"
@@ -2867,6 +2894,9 @@ msgstr ""
 msgid "Terminal configuration"
 msgstr ""
 
+msgid "Terminal migration"
+msgstr ""
+
 msgid "Text record is set"
 msgstr ""
 
@@ -2966,10 +2996,19 @@ msgstr ""
 msgid "The project owner <0>cannot manually mint</0> any amount of tokens to any address."
 msgstr ""
 
-msgid "The project owner can add and remove payment terminals."
+msgid "The project owner can change the next funding cycle’s configuration at any time."
 msgstr ""
 
-msgid "The project owner can change the next funding cycle’s configuration at any time."
+msgid "The project owner can change the project's controller."
+msgstr ""
+
+msgid "The project owner can change the project's payment terminals."
+msgstr ""
+
+msgid "The project owner can migrate the project's Controller to a newer version of the contract."
+msgstr ""
+
+msgid "The project owner can migrate the project's existing Payment Terminals to a newer version of the contract."
 msgstr ""
 
 msgid "The project owner may mint new tokens at any time, diluting existing contributors share of tokens."
@@ -3134,10 +3173,10 @@ msgstr ""
 msgid "Token minting enabled"
 msgstr ""
 
-msgid "Token minting is not recommended as it allows the project owner to create unlimited tokens. This is a risk factor for contributors."
+msgid "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
 msgstr ""
 
-msgid "Token minting is only available for V1.1 projects. Token minting can be enabled or disabled by reconfiguring the project's funding cycle."
+msgid "Token minting isn't recommended as it allows the project owner to create unlimited tokens. This is a risk factor for contributors."
 msgstr ""
 
 msgid "Token name"
@@ -3159,6 +3198,9 @@ msgid "Token symbol is required"
 msgstr ""
 
 msgid "Token to Lock:"
+msgstr ""
+
+msgid "Token transfers"
 msgstr ""
 
 msgid "Tokens"
@@ -3309,6 +3351,9 @@ msgid "Unarchiving your project will mean the following:"
 msgstr ""
 
 msgid "Unavailable"
+msgstr ""
+
+msgid "Unchanged"
 msgstr ""
 
 msgid "Unclaimed token spending enabled"
@@ -3503,19 +3548,28 @@ msgstr ""
 msgid "When distributing, payouts to Ethereum addresses incur a 2.5% JBX membership fee. Payouts to other Juicebox projects don't incur fees. Your project will receive (the <0>JuiceboxDAO</0> token) in return at the current issuance rate."
 msgstr ""
 
+msgid "When enabled, NFT holders can redeem their NFTs for a portion of your project's overflow. <0>Learn more about overflow</0>."
+msgstr ""
+
 msgid "When enabled, all project token transfers will be paused. Does not apply to ERC-20 tokens if issued."
 msgstr ""
 
-msgid "When enabled, project token transfers will be paused. This does not apply to ERC-20 tokens if issued."
+msgid "When enabled, project's token holders can't transfer their tokens to other addresses. This doesn't apply to your project's ERC-20 tokens (if you've issued them)."
 msgstr ""
 
-msgid "When enabled, the data source will be used for redeem transactions."
+msgid "When enabled, the project owner can change the project's Controller. <0>Learn more</0>"
 msgstr ""
 
-msgid "When enabled, the payments to the project are paused, and no new tokens will be issued."
+msgid "When enabled, the project owner can change the project's Payment Terminals. <0>Learn more</0>"
 msgstr ""
 
 msgid "When enabled, the project owner can manually mint any amount of tokens to any address."
+msgstr ""
+
+msgid "When enabled, the project owner can migrate the project's Controller to a newer version of the contract. <0>Learn more</0>"
+msgstr ""
+
+msgid "When enabled, the project owner can migrate the project's existing Payment Terminals to a newer version of the contract. <0>Learn more</0>"
 msgstr ""
 
 msgid "When enabled, the project owner can set the project's payment terminals."
@@ -3525,6 +3579,9 @@ msgid "When enabled, the project will hold the fee amount in ETH instead of the 
 msgstr ""
 
 msgid "When enabled, users can only receive NFTs by paying the exact price of the NFT. This ensures contributors are eligible to receive their full payment amount if they choose to redeem their NFT."
+msgstr ""
+
+msgid "When enabled, your project can't accept payments."
 msgstr ""
 
 msgid "When enabled, your project cannot receive direct payments."

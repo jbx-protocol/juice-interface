@@ -18,6 +18,13 @@ import { RewardsList } from '../../RewardsList'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { useNftRewardsForm } from './hooks'
+import {
+  PREVENT_OVERSPENDING_EXPLAINATION,
+  USE_DATASOURCE_FOR_REDEEM_EXPLAINATION,
+} from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+import { JuiceSwitch } from 'components/JuiceSwitch'
+
+export const PREVENT_OVERSPENDING_FIELD_VISIBLE = true
 
 const RadioItem = ({
   value,
@@ -113,7 +120,7 @@ export const NftRewardsPage = () => {
               name="collectionDescription"
               label={<Trans>Collection Description</Trans>}
             >
-              <JuiceTextArea autoSize={{ minRows: 4, maxRows: 6 }} />
+              <JuiceInput />
             </Form.Item>
 
             <CreateCollapse>
@@ -224,6 +231,27 @@ export const NftRewardsPage = () => {
                     Preview
                   </CreateButton>
                 </Space>
+              </CreateCollapse.Panel>
+
+              <CreateCollapse.Panel
+                key={3}
+                header={<OptionalHeader header={t`Advanced options`} />}
+                hideDivider
+              >
+                <Form.Item
+                  name="useDataSourceForRedeem"
+                  extra={USE_DATASOURCE_FOR_REDEEM_EXPLAINATION}
+                >
+                  <JuiceSwitch label={t`Redeemable NFTs`} />
+                </Form.Item>
+                {PREVENT_OVERSPENDING_FIELD_VISIBLE ? (
+                  <Form.Item
+                    name="preventOverspending"
+                    extra={PREVENT_OVERSPENDING_EXPLAINATION}
+                  >
+                    <JuiceSwitch label={t`Prevent NFT overspending`} />
+                  </Form.Item>
+                ) : null}
               </CreateCollapse.Panel>
             </CreateCollapse>
           </Space>

@@ -68,7 +68,32 @@ export const OWNER_MINTING_EXPLAINATION = (
 )
 
 export const TERMINAL_CONFIG_EXPLAINATION = (
-  <Trans>The project owner can add and remove payment terminals.</Trans>
+  <Trans>The project owner can change the project's payment terminals.</Trans>
+)
+
+export const CONTROLLER_CONFIG_EXPLAINATION = (
+  <Trans>The project owner can change the project's controller.</Trans>
+)
+
+export const TERMINAL_MIGRATION_EXPLAINATION = (
+  <Trans>
+    The project owner can migrate the project's existing Payment Terminals to a
+    newer version of the contract.
+  </Trans>
+)
+
+export const CONTROLLER_MIGRATION_EXPLAINATION = (
+  <Trans>
+    The project owner can migrate the project's Controller to a newer version of
+    the contract.
+  </Trans>
+)
+
+export const PAUSE_TRANSFERS_EXPLANATION = (
+  <Trans>
+    If transfers are paused, token holders can't transfer their project tokens
+    to other addresses. The project's ERC-20 tokens are always transferrable.
+  </Trans>
 )
 
 export const RECONFIG_RULES_EXPLAINATION = (
@@ -87,7 +112,12 @@ export const HOLD_FEES_EXPLAINATION = (
 
 export const USE_DATASOURCE_FOR_REDEEM_EXPLAINATION = (
   <Trans>
-    When enabled, the data source will be used for redeem transactions.
+    When enabled, NFT holders can redeem their NFTs for a portion of your
+    project's overflow.{' '}
+    <ExternalLink href={helpPagePath('dev/learn/glossary/overflow')}>
+      Learn more about overflow
+    </ExternalLink>
+    .
   </Trans>
 )
 

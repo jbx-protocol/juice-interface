@@ -364,6 +364,15 @@ const editingV2ProjectSlice = createSlice({
     setAllowSetTerminals: (state, action: PayloadAction<boolean>) => {
       state.fundingCycleMetadata.global.allowSetTerminals = action.payload
     },
+    setAllowSetController: (state, action: PayloadAction<boolean>) => {
+      state.fundingCycleMetadata.global.allowSetController = action.payload
+    },
+    setAllowControllerMigration: (state, action: PayloadAction<boolean>) => {
+      state.fundingCycleMetadata.allowControllerMigration = action.payload
+    },
+    setAllowTerminalMigration: (state, action: PayloadAction<boolean>) => {
+      state.fundingCycleMetadata.allowTerminalMigration = action.payload
+    },
     setPauseTransfers: (state, action: PayloadAction<boolean>) => {
       state.fundingCycleMetadata.global.pauseTransfers = action.payload
     },
@@ -420,6 +429,7 @@ const editingV2ProjectSlice = createSlice({
         discountRate: number
         redemptionRate: number
         tokenMinting: boolean
+        pauseTransfers: boolean
       }>,
     ) => {
       const converted = projectTokenSettingsToReduxFormat(action.payload)

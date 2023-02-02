@@ -14,11 +14,14 @@ type ReconfigurationRulesFormProps = Partial<{
   selection: ReconfigurationStrategy
   customAddress?: string
   pausePayments: boolean
-  allowTerminalConfiguration: boolean
   holdFees: boolean
   pauseTransfers: boolean
   useDataSourceForRedeem: boolean
   preventOverspending: boolean
+  allowTerminalConfiguration: boolean
+  allowControllerConfiguration: boolean
+  allowTerminalMigration: boolean
+  allowControllerMigration: boolean
 }>
 
 export const useReconfigurationRulesForm = () => {
@@ -52,6 +55,11 @@ export const useReconfigurationRulesForm = () => {
       const pausePayments = fundingCycleMetadata.pausePay
       const allowTerminalConfiguration =
         fundingCycleMetadata.global.allowSetTerminals
+      const allowControllerConfiguration =
+        fundingCycleMetadata.global.allowSetController
+      const allowTerminalMigration = fundingCycleMetadata.allowTerminalMigration
+      const allowControllerMigration =
+        fundingCycleMetadata.allowControllerMigration
       const pauseTransfers = fundingCycleMetadata.global.pauseTransfers
       const holdFees = fundingCycleMetadata.holdFees
       const useDataSourceForRedeem = fundingCycleMetadata.useDataSourceForRedeem
@@ -61,8 +69,11 @@ export const useReconfigurationRulesForm = () => {
         return {
           selection: defaultStrategy.name,
           pausePayments,
-          allowTerminalConfiguration,
           pauseTransfers,
+          allowTerminalConfiguration,
+          allowControllerConfiguration,
+          allowTerminalMigration,
+          allowControllerMigration,
         }
 
       const found = strategies.find(({ address }) => address === ballot)
@@ -72,6 +83,7 @@ export const useReconfigurationRulesForm = () => {
           customAddress: ballot,
           pausePayments,
           allowTerminalConfiguration,
+          allowControllerConfiguration,
           pauseTransfers,
           holdFees,
           useDataSourceForRedeem,
@@ -82,18 +94,22 @@ export const useReconfigurationRulesForm = () => {
       return {
         selection: found.name,
         pausePayments,
-        allowTerminalConfiguration,
         pauseTransfers,
         holdFees,
         useDataSourceForRedeem,
         preventOverspending,
+        allowTerminalConfiguration,
+        allowControllerConfiguration,
+        allowTerminalMigration,
+        allowControllerMigration,
       }
     }, [
       fundingCycleMetadata.pausePay,
-      fundingCycleMetadata.global.allowSetTerminals,
-      fundingCycleMetadata.global.pauseTransfers,
+      fundingCycleMetadata.global,
       fundingCycleMetadata.holdFees,
       fundingCycleMetadata.useDataSourceForRedeem,
+      fundingCycleMetadata.allowTerminalMigration,
+      fundingCycleMetadata.allowControllerMigration,
       reconfigurationRuleSelection,
       ballot,
       defaultStrategy.name,
@@ -134,22 +150,6 @@ export const useReconfigurationRulesForm = () => {
 
   useFormDispatchWatch({
     form,
-    fieldName: 'allowTerminalConfiguration',
-    ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setAllowSetTerminals,
-    formatter: v => !!v,
-  })
-
-  useFormDispatchWatch({
-    form,
-    fieldName: 'pauseTransfers',
-    ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setPauseTransfers,
-    formatter: v => !!v,
-  })
-
-  useFormDispatchWatch({
-    form,
     fieldName: 'holdFees',
     ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setHoldFees,
@@ -158,9 +158,33 @@ export const useReconfigurationRulesForm = () => {
 
   useFormDispatchWatch({
     form,
-    fieldName: 'useDataSourceForRedeem',
+    fieldName: 'allowTerminalConfiguration',
     ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setUseDataSourceForRedeem,
+    dispatchFunction: editingV2ProjectActions.setAllowSetTerminals,
+    formatter: v => !!v,
+  })
+
+  useFormDispatchWatch({
+    form,
+    fieldName: 'allowControllerConfiguration',
+    ignoreUndefined: true,
+    dispatchFunction: editingV2ProjectActions.setAllowSetController,
+    formatter: v => !!v,
+  })
+
+  useFormDispatchWatch({
+    form,
+    fieldName: 'allowTerminalMigration',
+    ignoreUndefined: true,
+    dispatchFunction: editingV2ProjectActions.setAllowTerminalMigration,
+    formatter: v => !!v,
+  })
+
+  useFormDispatchWatch({
+    form,
+    fieldName: 'allowControllerMigration',
+    ignoreUndefined: true,
+    dispatchFunction: editingV2ProjectActions.setAllowControllerMigration,
     formatter: v => !!v,
   })
   useFormDispatchWatch({

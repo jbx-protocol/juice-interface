@@ -1,14 +1,21 @@
+import { t } from '@lingui/macro'
+import { Row } from 'antd'
 import { Reward, RewardsList } from 'components/Create/components/RewardsList'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useCallback, useMemo } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import { formatEnabled } from 'utils/format/formatBoolean'
 import { v4 } from 'uuid'
+import { PREVENT_OVERSPENDING_FIELD_VISIBLE } from '../../../NftRewards'
+import { DescriptionCol } from '../DescriptionCol'
 
 export const RewardsReview = () => {
-  const { rewardTiers } = useAppSelector(
-    state => state.editingV2Project.nftRewards,
-  )
+  const {
+    nftRewards: { rewardTiers, flags },
+    fundingCycleMetadata,
+  } = useAppSelector(state => state.editingV2Project)
+
   const dispatch = useAppDispatch()
 
   const rewards = useMemo(() => {
@@ -50,5 +57,37 @@ export const RewardsReview = () => {
     [dispatch],
   )
 
-  return <RewardsList value={rewards} onChange={setRewards} />
+  const shouldUseDataSourceForRedeem = useMemo(() => {
+    return formatEnabled(fundingCycleMetadata.useDataSourceForRedeem)
+  }, [fundingCycleMetadata.useDataSourceForRedeem])
+
+  const preventOverspending = useMemo(() => {
+    return formatEnabled(flags.preventOverspending)
+  }, [flags.preventOverspending])
+
+  return (
+    <>
+      <RewardsList value={rewards} onChange={setRewards} />
+      <Row gutter={20} className="mt-4">
+        <DescriptionCol
+          span={6}
+          title={t`Redeemable NFTs`}
+          desc={
+            <div className="text-base font-medium">
+              {shouldUseDataSourceForRedeem}
+            </div>
+          }
+        />
+        {PREVENT_OVERSPENDING_FIELD_VISIBLE ? (
+          <DescriptionCol
+            span={6}
+            title={t`Prevent NFT overspending`}
+            desc={
+              <div className="text-base font-medium">{preventOverspending}</div>
+            }
+          />
+        ) : null}
+      </Row>
+    </>
+  )
 }

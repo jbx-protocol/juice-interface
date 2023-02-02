@@ -2,7 +2,11 @@ import { useAvailableReconfigurationStrategies } from 'components/Create/hooks/A
 import { readNetwork } from 'constants/networks'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useMemo } from 'react'
-import { formatBoolean } from 'utils/format/formatBoolean'
+import {
+  formatAllowed,
+  formatBoolean,
+  formatPaused,
+} from 'utils/format/formatBoolean'
 
 export const useRulesReview = () => {
   const availableBallotStrategies = useAvailableReconfigurationStrategies(
@@ -11,21 +15,28 @@ export const useRulesReview = () => {
   const {
     fundingCycleData: { ballot: customAddress },
     reconfigurationRuleSelection,
-    nftRewards: { flags: nftRewardsFlags },
     fundingCycleMetadata,
   } = useAppSelector(state => state.editingV2Project)
 
   const pausePayments = useMemo(() => {
-    return formatBoolean(fundingCycleMetadata.pausePay)
+    return formatPaused(fundingCycleMetadata.pausePay)
   }, [fundingCycleMetadata.pausePay])
 
   const terminalConfiguration = useMemo(() => {
-    return formatBoolean(fundingCycleMetadata.global.allowSetTerminals)
+    return formatAllowed(fundingCycleMetadata.global.allowSetTerminals)
   }, [fundingCycleMetadata.global.allowSetTerminals])
 
-  const pauseTransfers = useMemo(() => {
-    return formatBoolean(fundingCycleMetadata.global.pauseTransfers)
-  }, [fundingCycleMetadata.global.pauseTransfers])
+  const controllerConfiguration = useMemo(() => {
+    return formatAllowed(fundingCycleMetadata.global.allowSetController)
+  }, [fundingCycleMetadata.global.allowSetController])
+
+  const terminalMigration = useMemo(() => {
+    return formatAllowed(fundingCycleMetadata.allowTerminalMigration)
+  }, [fundingCycleMetadata.allowTerminalMigration])
+
+  const controllerMigration = useMemo(() => {
+    return formatAllowed(fundingCycleMetadata.allowControllerMigration)
+  }, [fundingCycleMetadata.allowControllerMigration])
 
   const strategy = useMemo(() => {
     return availableBallotStrategies.find(
@@ -37,22 +48,14 @@ export const useRulesReview = () => {
     return formatBoolean(fundingCycleMetadata.holdFees)
   }, [fundingCycleMetadata.holdFees])
 
-  const useDataSourceForRedeem = useMemo(() => {
-    return formatBoolean(fundingCycleMetadata.useDataSourceForRedeem)
-  }, [fundingCycleMetadata.useDataSourceForRedeem])
-
-  const preventOverspending = useMemo(() => {
-    return formatBoolean(nftRewardsFlags.preventOverspending)
-  }, [nftRewardsFlags.preventOverspending])
-
   return {
     customAddress,
     pausePayments,
     terminalConfiguration,
-    pauseTransfers,
+    controllerConfiguration,
+    terminalMigration,
+    controllerMigration,
     strategy,
     holdFees,
-    useDataSourceForRedeem,
-    preventOverspending,
   }
 }

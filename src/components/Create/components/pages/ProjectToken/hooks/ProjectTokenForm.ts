@@ -31,6 +31,7 @@ export type ProjectTokensFormProps = Partial<{
   discountRate: number | undefined
   redemptionRate: number | undefined
   tokenMinting: boolean | undefined
+  pauseTransfers: boolean | undefined
 }>
 
 export const DefaultSettings: Required<
@@ -42,6 +43,7 @@ export const DefaultSettings: Required<
   discountRate: 0,
   redemptionRate: 100,
   tokenMinting: false,
+  pauseTransfers: false,
 }
 
 /**
@@ -81,6 +83,10 @@ export const useProjectTokensForm = () => {
       fundingCycleMetadata.allowMinting !== undefined
         ? fundingCycleMetadata.allowMinting
         : DefaultSettings.tokenMinting
+    const pauseTransfers =
+      fundingCycleMetadata.global.pauseTransfers !== undefined
+        ? fundingCycleMetadata.global.pauseTransfers
+        : DefaultSettings.pauseTransfers
 
     return {
       selection,
@@ -90,6 +96,7 @@ export const useProjectTokensForm = () => {
       discountRate,
       redemptionRate,
       tokenMinting,
+      pauseTransfers,
     }
   }, [
     discountRateDisabled,
@@ -98,6 +105,7 @@ export const useProjectTokensForm = () => {
     fundingCycleMetadata.allowMinting,
     fundingCycleMetadata.redemptionRate,
     fundingCycleMetadata.reservedRate,
+    fundingCycleMetadata.global.pauseTransfers,
     projectTokensSelection,
     redemptionRateDisabled,
     tokenSplits,
@@ -196,6 +204,17 @@ export const useProjectTokensForm = () => {
     form,
     fieldName: 'tokenMinting',
     dispatchFunction: editingV2ProjectActions.setAllowMinting,
+    formatter: v => {
+      if (typeof v !== 'boolean') return false
+      return v
+    },
+  })
+
+  useFormDispatchWatch({
+    form,
+    fieldName: 'pauseTransfers',
+    dispatchFunction: editingV2ProjectActions.setPauseTransfers,
+    ignoreUndefined: true,
     formatter: v => {
       if (typeof v !== 'boolean') return false
       return v

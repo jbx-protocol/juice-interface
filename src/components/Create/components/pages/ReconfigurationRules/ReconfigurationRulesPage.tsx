@@ -4,30 +4,22 @@ import { useWatch } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
 import { Selection } from 'components/Create/components/Selection'
 import { useAvailableReconfigurationStrategies } from 'components/Create/hooks/AvailableReconfigurationStrategies'
+import ExternalLink from 'components/ExternalLink'
 import { JuiceSwitch } from 'components/JuiceSwitch'
-import {
-  HOLD_FEES_EXPLAINATION,
-  PREVENT_OVERSPENDING_EXPLAINATION,
-  USE_DATASOURCE_FOR_REDEEM_EXPLAINATION,
-} from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+import { HOLD_FEES_EXPLAINATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { readNetwork } from 'constants/networks'
-import { useAppSelector } from 'hooks/AppSelector'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
+import { helpPagePath } from 'utils/routes'
 import { CreateCollapse } from '../../CreateCollapse'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { CustomRuleCard, RuleCard } from './components'
 import { useReconfigurationRulesForm } from './hooks'
 
-export const PREVENT_OVERSPENDING_FIELD_VISIBLE = false
-
 export const ReconfigurationRulesPage = () => {
   useSetCreateFurthestPageReached('reconfigurationRules')
   const { form, initialValues } = useReconfigurationRulesForm()
-  const {
-    nftRewards: { rewardTiers },
-  } = useAppSelector(state => state.editingV2Project)
 
   const { goToNextPage } = useContext(PageContext)
 
@@ -37,8 +29,6 @@ export const ReconfigurationRulesPage = () => {
   const reconfigurationStrategies = useAvailableReconfigurationStrategies(
     readNetwork.name,
   )
-
-  const hasNFTs = rewardTiers?.length
 
   return (
     <Form
@@ -72,43 +62,103 @@ export const ReconfigurationRulesPage = () => {
         )}
 
         <CreateCollapse>
-          <CreateCollapse.Panel key={0} header={t`Advanced Rules`} hideDivider>
+          <CreateCollapse.Panel key={0} header={t`Funding Rules`} hideDivider>
             <Form.Item
               className="pt-8"
               name="pausePayments"
-              extra={t`When enabled, the payments to the project are paused, and no new tokens will be issued.`}
+              extra={t`When enabled, your project can't accept payments.`}
             >
               <JuiceSwitch label={t`Pause payments`} />
             </Form.Item>
-            <Form.Item
-              name="allowTerminalConfiguration"
-              extra={t`When enabled, the project owner can set the project's payment terminals.`}
-            >
-              <JuiceSwitch label={t`Allow terminal configuration`} />
-            </Form.Item>
-            <Form.Item
-              name="pauseTransfers"
-              extra={t`When enabled, project token transfers will be paused. This does not apply to ERC-20 tokens if issued.`}
-            >
-              <JuiceSwitch label={t`Pause project token transfers`} />
-            </Form.Item>
+
             <Form.Item name="holdFees" extra={HOLD_FEES_EXPLAINATION}>
               <JuiceSwitch label={t`Hold fees`} />
             </Form.Item>
-            <Form.Item
-              name="useDataSourceForRedeem"
-              extra={USE_DATASOURCE_FOR_REDEEM_EXPLAINATION}
-            >
-              <JuiceSwitch label={t`Use data source for redeem`} />
-            </Form.Item>
-            {hasNFTs && PREVENT_OVERSPENDING_FIELD_VISIBLE ? (
+          </CreateCollapse.Panel>
+          <CreateCollapse.Panel
+            key={1}
+            header={t`Owner Permissions`}
+            hideDivider
+          >
+            <h3 className="mt-3 mb-5 text-sm font-normal uppercase text-black dark:text-slate-100">
+              Configuration rules
+            </h3>
+            <div className="mb-8">
               <Form.Item
-                name="preventOverspending"
-                extra={PREVENT_OVERSPENDING_EXPLAINATION}
+                name="allowTerminalConfiguration"
+                extra={
+                  <Trans>
+                    When enabled, the project owner can change the project's
+                    Payment Terminals.{' '}
+                    <ExternalLink
+                      href={helpPagePath('dev/learn/glossary/payment-terminal')}
+                    >
+                      Learn more
+                    </ExternalLink>
+                  </Trans>
+                }
               >
-                <JuiceSwitch label={t`Prevent NFT overspending`} />
+                <JuiceSwitch label={t`Allow Payment Terminal configuration`} />
               </Form.Item>
-            ) : null}
+              <Form.Item
+                name="allowControllerConfiguration"
+                extra={
+                  <Trans>
+                    When enabled, the project owner can change the project's
+                    Controller.{' '}
+                    <ExternalLink
+                      href={helpPagePath(
+                        'dev/api/contracts/or-controllers/jbcontroller',
+                      )}
+                    >
+                      Learn more
+                    </ExternalLink>
+                  </Trans>
+                }
+              >
+                <JuiceSwitch label={t`Allow Controller configuration`} />
+              </Form.Item>
+            </div>
+            <h3 className="mt-3 mb-5 text-sm font-normal uppercase text-black dark:text-slate-100">
+              Migration rules
+            </h3>
+            <div className="mb-8">
+              <Form.Item
+                name="allowTerminalMigration"
+                extra={
+                  <Trans>
+                    When enabled, the project owner can migrate the project's
+                    existing Payment Terminals to a newer version of the
+                    contract.{' '}
+                    <ExternalLink
+                      href={helpPagePath('dev/learn/glossary/payment-terminal')}
+                    >
+                      Learn more
+                    </ExternalLink>
+                  </Trans>
+                }
+              >
+                <JuiceSwitch label={t`Allow Payment Terminal migration`} />
+              </Form.Item>
+              <Form.Item
+                name="allowControllerMigration"
+                extra={
+                  <Trans>
+                    When enabled, the project owner can migrate the project's
+                    Controller to a newer version of the contract.{' '}
+                    <ExternalLink
+                      href={helpPagePath(
+                        'dev/api/contracts/or-controllers/jbcontroller',
+                      )}
+                    >
+                      Learn more
+                    </ExternalLink>
+                  </Trans>
+                }
+              >
+                <JuiceSwitch label={t`Allow Controller migration`} />
+              </Form.Item>
+            </div>
           </CreateCollapse.Panel>
         </CreateCollapse>
       </Space>

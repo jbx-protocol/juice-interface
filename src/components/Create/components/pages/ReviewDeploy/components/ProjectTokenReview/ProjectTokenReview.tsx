@@ -19,12 +19,14 @@ export const ProjectTokenReview = () => {
   const {
     allocationSplits,
     allowTokenMinting,
+    pauseTransfers,
     discountRate,
     redemptionRate,
     reservedRate,
     setAllocationSplits,
     weight,
   } = useProjectTokenReview()
+
   return (
     <>
       <div className="flex flex-col gap-10 pt-5 pb-12">
@@ -100,12 +102,20 @@ export const ProjectTokenReview = () => {
                 }
               />
               <DescriptionCol
-                span={12}
+                span={6}
                 title={t`Allow token minting`}
                 desc={
                   <div className="text-base font-medium">
                     {allowTokenMinting}
                   </div>
+                }
+              />
+
+              <DescriptionCol
+                span={6}
+                title={t`Token transfers`}
+                desc={
+                  <div className="text-base font-medium">{pauseTransfers}</div>
                 }
               />
             </Row>

@@ -44,6 +44,8 @@ export default function RulesForm({
       ),
       allowSetTerminals: fundingCycleMetadata.global.allowSetTerminals,
       allowSetController: fundingCycleMetadata.global.allowSetController,
+      allowTerminalMigration: fundingCycleMetadata.allowTerminalMigration,
+      allowControllerMigration: fundingCycleMetadata.allowControllerMigration,
       pauseTransfers: fundingCycleMetadata.global.pauseTransfers,
       holdFees: fundingCycleMetadata.holdFees,
       useDataSourceForRedeem: fundingCycleMetadata.useDataSourceForRedeem,
@@ -62,6 +64,11 @@ export default function RulesForm({
   const [allowSetController, setAllowSetController] = useState<boolean>(
     initialValues.allowSetController,
   )
+  const [allowTerminalMigration, setAllowTerminalMigration] = useState<boolean>(
+    initialValues.allowTerminalMigration,
+  )
+  const [allowControllerMigration, setAllowControllerMigration] =
+    useState<boolean>(initialValues.allowControllerMigration)
   const [pauseTransfers, setPauseTransfers] = useState<boolean | undefined>(
     initialValues.pauseTransfers,
   )
@@ -97,6 +104,14 @@ export default function RulesForm({
     dispatch(editingV2ProjectActions.setAllowMinting(allowMinting))
     dispatch(editingV2ProjectActions.setAllowSetTerminals(allowSetTerminals))
     dispatch(editingV2ProjectActions.setAllowSetController(allowSetController))
+    dispatch(
+      editingV2ProjectActions.setAllowTerminalMigration(allowTerminalMigration),
+    )
+    dispatch(
+      editingV2ProjectActions.setAllowControllerMigration(
+        allowControllerMigration,
+      ),
+    )
     dispatch(editingV2ProjectActions.setPauseTransfers(pauseTransfers ?? false))
     dispatch(editingV2ProjectActions.setBallot(ballotStrategy.address))
     dispatch(editingV2ProjectActions.setHoldFees(holdFees))
@@ -110,6 +125,8 @@ export default function RulesForm({
     allowMinting,
     allowSetTerminals,
     allowSetController,
+    allowTerminalMigration,
+    allowControllerMigration,
     pauseTransfers,
     ballotStrategy.address,
     holdFees,
@@ -125,7 +142,7 @@ export default function RulesForm({
       <Space direction="vertical" size="large">
         <div className="flex flex-col gap-5 rounded-sm bg-smoke-75 stroke-none p-8 shadow-[10px_10px_0px_0px_#E7E3DC] dark:bg-slate-400 dark:shadow-[10px_10px_0px_0px_#2D293A]">
           <div>
-            <h3>
+            <h3 className="text-black dark:text-slate-100">
               <Trans>Funding rules</Trans>
             </h3>
             <Form.Item
@@ -159,7 +176,7 @@ export default function RulesForm({
           </div>
 
           <div>
-            <h3>
+            <h3 className="text-black dark:text-slate-100">
               <Trans>Token rules</Trans>
             </h3>{' '}
             <Form.Item
@@ -201,9 +218,12 @@ export default function RulesForm({
           </div>
 
           <div>
-            <h3>
+            <h3 className="mb-5 text-black dark:text-slate-100">
               <Trans>Owner permissions</Trans>
             </h3>
+            <h4 className="mb-3 font-normal uppercase text-black dark:text-slate-100">
+              <Trans>Configuration rules</Trans>
+            </h4>
             <Form.Item
               extra={
                 <Trans>
@@ -254,10 +274,64 @@ export default function RulesForm({
                 <Trans>Allow Controller configuration</Trans>
               </div>
             </Form.Item>
+
+            <h4 className="mb-3 font-normal uppercase text-black dark:text-slate-100">
+              <Trans>Migration rules</Trans>
+            </h4>
+            <Form.Item
+              extra={
+                <Trans>
+                  When enabled, the project owner can migrate project's existing
+                  Payment Terminals to a newer version of the contract.{' '}
+                  <ExternalLink
+                    href={helpPagePath('dev/learn/glossary/payment-terminal')}
+                  >
+                    Learn more
+                  </ExternalLink>
+                </Trans>
+              }
+            >
+              <div className="flex font-medium text-black dark:text-slate-100">
+                <Switch
+                  className="mr-2"
+                  onChange={checked => {
+                    setAllowTerminalMigration(checked)
+                  }}
+                  checked={allowTerminalMigration}
+                />
+                <Trans>Allow Payment Terminal migration</Trans>
+              </div>
+            </Form.Item>
+            <Form.Item
+              extra={
+                <Trans>
+                  When enabled, the project owner can migration the project's
+                  Controller to a newer version of the contract.{' '}
+                  <ExternalLink
+                    href={helpPagePath(
+                      'dev/api/contracts/or-controllers/jbcontroller',
+                    )}
+                  >
+                    Learn more
+                  </ExternalLink>
+                </Trans>
+              }
+            >
+              <div className="flex font-medium text-black dark:text-slate-100">
+                <Switch
+                  className="mr-2"
+                  onChange={checked => {
+                    setAllowControllerMigration(checked)
+                  }}
+                  checked={allowControllerMigration}
+                />
+                <Trans>Allow Controller migration</Trans>
+              </div>
+            </Form.Item>
           </div>
 
           <div>
-            <h3>
+            <h3 className="text-black dark:text-slate-100">
               <Trans>NFT rules</Trans>
             </h3>
             <Form.Item

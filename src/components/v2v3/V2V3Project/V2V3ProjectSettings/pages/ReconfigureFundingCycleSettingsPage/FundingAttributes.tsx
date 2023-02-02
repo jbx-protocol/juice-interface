@@ -334,6 +334,32 @@ export function AllowSetControllerStatistic({
   )
 }
 
+export function AllowTerminalMigrationStatistic({
+  allowTerminalMigration,
+}: {
+  allowTerminalMigration: boolean
+}) {
+  return (
+    <Statistic
+      title={t`Payment Terminal migration`}
+      valueRender={() => formatAllowed(allowTerminalMigration)}
+    />
+  )
+}
+
+export function AllowControllerMigrationStatistic({
+  allowControllerMigration,
+}: {
+  allowControllerMigration: boolean
+}) {
+  return (
+    <Statistic
+      title={t`Controller migration`}
+      valueRender={() => formatAllowed(allowControllerMigration)}
+    />
+  )
+}
+
 export function PauseTransfersStatistic({
   pauseTransfers,
 }: {

@@ -23,9 +23,11 @@ import {
   weightAmountPermyriad,
 } from 'utils/v2v3/math'
 import {
+  AllowControllerMigrationStatistic,
   AllowMintingStatistic,
   AllowSetControllerStatistic,
   AllowSetTerminalsStatistic,
+  AllowTerminalMigrationStatistic,
   DiscountRateStatistic,
   DistributionLimitStatistic,
   DistributionSplitsStatistic,
@@ -167,13 +169,18 @@ export default function ReconfigurePreview({
           />
         </Col>
       </Row>
-      <Row gutter={gutter}>
+      <Row gutter={gutter} className="gap-y-5">
         <Col md={6}>
           <PausePayStatistic pausePay={fundingCycleMetadata.pausePay} />
         </Col>
         <Col md={6}>
           <AllowMintingStatistic
             allowMinting={fundingCycleMetadata.allowMinting}
+          />
+        </Col>
+        <Col md={6}>
+          <PauseTransfersStatistic
+            pauseTransfers={fundingCycleMetadata.global.pauseTransfers ?? false}
           />
         </Col>
         <Col md={6}>
@@ -187,8 +194,15 @@ export default function ReconfigurePreview({
           />
         </Col>
         <Col md={6}>
-          <PauseTransfersStatistic
-            pauseTransfers={fundingCycleMetadata.global.pauseTransfers ?? false}
+          <AllowTerminalMigrationStatistic
+            allowTerminalMigration={fundingCycleMetadata.allowTerminalMigration}
+          />
+        </Col>
+        <Col md={6}>
+          <AllowControllerMigrationStatistic
+            allowControllerMigration={
+              fundingCycleMetadata.allowControllerMigration
+            }
           />
         </Col>
       </Row>

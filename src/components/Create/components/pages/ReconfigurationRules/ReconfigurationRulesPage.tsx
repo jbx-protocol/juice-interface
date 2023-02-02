@@ -80,7 +80,7 @@ export const ReconfigurationRulesPage = () => {
             hideDivider
           >
             <h3 className="mt-3 mb-5 text-sm font-normal uppercase text-black dark:text-slate-100">
-              Configuration rules
+              <Trans>Configuration rules</Trans>
             </h3>
             <div className="mb-8">
               <Form.Item
@@ -119,7 +119,7 @@ export const ReconfigurationRulesPage = () => {
               </Form.Item>
             </div>
             <h3 className="mt-3 mb-5 text-sm font-normal uppercase text-black dark:text-slate-100">
-              Migration rules
+              <Trans>Migration rules</Trans>
             </h3>
             <div className="mb-8">
               <Form.Item

@@ -115,102 +115,124 @@ export default function RulesForm({
   return (
     <Form layout="vertical" onFinish={onFormSaved}>
       <Space direction="vertical" size="large">
-        <div className="rounded-sm bg-smoke-75 stroke-none p-8 shadow-[10px_10px_0px_0px_#E7E3DC] dark:bg-slate-400 dark:shadow-[10px_10px_0px_0px_#2D293A]">
-          <Form.Item
-            extra={
-              <Trans>
-                When enabled, your project cannot receive direct payments.
-              </Trans>
-            }
-          >
-            <div className="flex font-medium text-black dark:text-slate-100">
-              <Switch
-                className="mr-2"
-                onChange={setPausePay}
-                checked={pausePay}
-              />
-              <Trans>Pause payments</Trans>
-            </div>
-          </Form.Item>
-          <Form.Item
-            extra={
-              <TokenMintingExtra showMintingWarning={showMintingWarning} />
-            }
-          >
-            <div className="flex text-black dark:text-slate-100">
+        <div className="flex flex-col gap-5 rounded-sm bg-smoke-75 stroke-none p-8 shadow-[10px_10px_0px_0px_#E7E3DC] dark:bg-slate-400 dark:shadow-[10px_10px_0px_0px_#2D293A]">
+          <div>
+            <h3>
+              <Trans>Funding rules</Trans>
+            </h3>
+            <Form.Item
+              extra={
+                <Trans>
+                  When enabled, your project cannot receive direct payments.
+                </Trans>
+              }
+            >
+              <div className="flex font-medium text-black dark:text-slate-100">
+                <Switch
+                  className="mr-2"
+                  onChange={setPausePay}
+                  checked={pausePay}
+                />
+                <Trans>Pause payments</Trans>
+              </div>
+            </Form.Item>
+            <Form.Item name="holdfees" extra={HOLD_FEES_EXPLAINATION}>
               <Switch
                 className="mr-2"
                 onChange={checked => {
-                  setShowMintingWarning(checked)
-                  setAllowMinting(checked)
+                  setHoldFees(checked)
                 }}
-                checked={allowMinting}
+                checked={holdFees}
               />
-              <Trans>Allow token minting</Trans>
-            </div>
-          </Form.Item>
+              <Trans>Hold fees</Trans>
+            </Form.Item>
+          </div>
 
-          <Form.Item
-            extra={
-              <Trans>
-                When enabled, the project owner can set the project's payment
-                terminals.
-              </Trans>
-            }
-          >
-            <div className="flex font-medium text-black dark:text-slate-100">
+          <div>
+            <h3>
+              <Trans>Token rules</Trans>
+            </h3>{' '}
+            <Form.Item
+              extra={
+                <TokenMintingExtra showMintingWarning={showMintingWarning} />
+              }
+            >
+              <div className="flex text-black dark:text-slate-100">
+                <Switch
+                  className="mr-2"
+                  onChange={checked => {
+                    setShowMintingWarning(checked)
+                    setAllowMinting(checked)
+                  }}
+                  checked={allowMinting}
+                />
+                <Trans>Allow token minting</Trans>
+              </div>
+            </Form.Item>
+            <Form.Item
+              extra={
+                <Trans>
+                  When enabled, all project token transfers will be paused. Does
+                  not apply to ERC-20 tokens if issued.
+                </Trans>
+              }
+            >
+              <div className="flex font-medium text-black dark:text-slate-100">
+                <Switch
+                  className="mr-2"
+                  onChange={checked => {
+                    setPauseTransfers(checked)
+                  }}
+                  checked={pauseTransfers}
+                />
+                <Trans>Pause project token transfers</Trans>
+              </div>
+            </Form.Item>
+          </div>
+
+          <div>
+            <h3>
+              <Trans>Owner permissions</Trans>
+            </h3>
+            <Form.Item
+              extra={
+                <Trans>
+                  When enabled, the project owner can set the project's payment
+                  terminals.
+                </Trans>
+              }
+            >
+              <div className="flex font-medium text-black dark:text-slate-100">
+                <Switch
+                  className="mr-2"
+                  onChange={checked => {
+                    setAllowSetTerminals(checked)
+                  }}
+                  checked={allowSetTerminals}
+                />
+                <Trans>Allow terminal configuration</Trans>
+              </div>
+            </Form.Item>
+          </div>
+
+          <div>
+            <h3>
+              <Trans>NFT rules</Trans>
+            </h3>
+            <Form.Item
+              name="useDataSourceForRedeem"
+              extra={USE_DATASOURCE_FOR_REDEEM_EXPLAINATION}
+            >
               <Switch
                 className="mr-2"
                 onChange={checked => {
-                  setAllowSetTerminals(checked)
+                  setUseDataSourceForRedeem(checked)
                 }}
-                checked={allowSetTerminals}
+                checked={useDataSourceForRedeem}
               />
-              <Trans>Allow terminal configuration</Trans>
-            </div>
-          </Form.Item>
-          <Form.Item
-            extra={
-              <Trans>
-                When enabled, all project token transfers will be paused. Does
-                not apply to ERC-20 tokens if issued.
-              </Trans>
-            }
-          >
-            <div className="flex font-medium text-black dark:text-slate-100">
-              <Switch
-                className="mr-2"
-                onChange={checked => {
-                  setPauseTransfers(checked)
-                }}
-                checked={pauseTransfers}
-              />
-              <Trans>Pause project token transfers</Trans>
-            </div>
-          </Form.Item>
-          <Form.Item name="holdfees" extra={HOLD_FEES_EXPLAINATION}>
-            <Switch
-              className="mr-2"
-              onChange={checked => {
-                setHoldFees(checked)
-              }}
-              checked={holdFees}
-            />
-            <Trans>Hold fees</Trans>
-          </Form.Item>
-          <Form.Item
-            name="useDataSourceForRedeem"
-            extra={USE_DATASOURCE_FOR_REDEEM_EXPLAINATION}
-          >
-            <Switch
-              className="mr-2"
-              onChange={checked => {
-                setUseDataSourceForRedeem(checked)
-              }}
-              checked={useDataSourceForRedeem}
-            />
-            <Trans>Use data source for redeem</Trans>
-          </Form.Item>
+              <Trans>Redeemable NFTs</Trans>
+            </Form.Item>
+          </div>
         </div>
 
         <Form.Item

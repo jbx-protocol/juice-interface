@@ -20,6 +20,8 @@ import { PageContext } from '../../Wizard/contexts/PageContext'
 import { useNftRewardsForm } from './hooks'
 import { USE_DATASOURCE_FOR_REDEEM_EXPLAINATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { JuiceSwitch } from 'components/JuiceSwitch'
+import ExternalLink from 'components/ExternalLink'
+import { helpPagePath } from 'utils/routes'
 
 const RadioItem = ({
   value,
@@ -139,12 +141,36 @@ export const NftRewardsPage = () => {
                     <RadioItem
                       value={JB721GovernanceType.GLOBAL}
                       title={t`Standard on-chain governance`}
-                      description={t`Track the historical voting weight of each token holder across all tiers of NFTs.`}
+                      description={
+                        <Trans>
+                          Track the historical voting weight of each token
+                          holder across all tiers of NFTs.{' '}
+                          <ExternalLink
+                            href={helpPagePath(
+                              '/user/configuration/#on-chain-governance',
+                            )}
+                          >
+                            Learn more.
+                          </ExternalLink>
+                        </Trans>
+                      }
                     />
                     <RadioItem
                       value={JB721GovernanceType.TIERED}
                       title={t`Tier-based on-chain governance`}
-                      description={t`Track the historical voting weight of each token holder within each tier of NFTs.`}
+                      description={
+                        <Trans>
+                          Track the historical voting weight of each token
+                          holder within each tier of NFTs.{' '}
+                          <ExternalLink
+                            href={helpPagePath(
+                              '/user/configuration/#on-chain-governance',
+                            )}
+                          >
+                            Learn more.
+                          </ExternalLink>
+                        </Trans>
+                      }
                     />
                   </Radio.Group>
                 </Form.Item>

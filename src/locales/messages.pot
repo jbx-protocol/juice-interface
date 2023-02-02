@@ -3584,10 +3584,16 @@ msgstr ""
 msgid "When enabled, the project owner can manually mint any amount of tokens to any address."
 msgstr ""
 
+msgid "When enabled, the project owner can migrate project's existing Payment Terminals to a newer version of the contract. <0>Learn more</0>"
+msgstr ""
+
 msgid "When enabled, the project owner can migrate the project's Controller to a newer version of the contract. <0>Learn more</0>"
 msgstr ""
 
 msgid "When enabled, the project owner can migrate the project's existing Payment Terminals to a newer version of the contract. <0>Learn more</0>"
+msgstr ""
+
+msgid "When enabled, the project owner can migration the project's Controller to a newer version of the contract. <0>Learn more</0>"
 msgstr ""
 
 msgid "When enabled, the project will hold the fee amount in ETH instead of the fees being processed automatically. <0>Learn more.</0>"

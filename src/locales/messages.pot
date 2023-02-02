@@ -404,9 +404,6 @@ msgstr ""
 msgid "Allow public lock extension"
 msgstr ""
 
-msgid "Allow terminal configuration"
-msgstr ""
-
 msgid "Allow the <0>Juicebox NFT deployer contract</0> to reconfigure this project's funding cycle."
 msgstr ""
 
@@ -2048,16 +2045,22 @@ msgstr ""
 msgid "Owner Permissions"
 msgstr ""
 
+msgid "Owner can change the project's Controller."
+msgstr ""
+
 msgid "Owner can mint tokens at any time."
 msgstr ""
 
-msgid "Owner can set the project's payment terminals."
+msgid "Owner can set the project's Payment Terminals."
 msgstr ""
 
 msgid "Owner is not allowed to mint tokens."
 msgstr ""
 
-msgid "Owner isn't allowed to set the project's payment terminals."
+msgid "Owner isn't allowed to change the project's Controller."
+msgstr ""
+
+msgid "Owner isn't allowed to set the project's Payment Terminals."
 msgstr ""
 
 msgid "Owner permissions"
@@ -2337,6 +2340,9 @@ msgid "Project token"
 msgstr ""
 
 msgid "Project token beneficiary address"
+msgstr ""
+
+msgid "Project token transfers"
 msgstr ""
 
 msgid "Project token transfers are {0}. This does not apply to ERC-20 tokens if issued."

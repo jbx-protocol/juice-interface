@@ -10,6 +10,7 @@ export const MobileRulesReview = () => {
     pausePayments,
     strategy,
     terminalConfiguration,
+    controllerConfiguration,
     holdFees,
   } = useRulesReview()
 
@@ -37,6 +38,11 @@ export const MobileRulesReview = () => {
       />
       <DescriptionCol
         span={12}
+        title={t`Hold fees`}
+        desc={<div className="text-base font-medium">{holdFees}</div>}
+      />
+      <DescriptionCol
+        span={12}
         title={t`Terminal configuration`}
         desc={
           <div className="text-base font-medium">{terminalConfiguration}</div>
@@ -44,8 +50,10 @@ export const MobileRulesReview = () => {
       />
       <DescriptionCol
         span={12}
-        title={t`Hold fees`}
-        desc={<div className="text-base font-medium">{holdFees}</div>}
+        title={t`Controller configuration`}
+        desc={
+          <div className="text-base font-medium">{controllerConfiguration}</div>
+        }
       />
     </Row>
   )

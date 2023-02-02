@@ -350,6 +350,9 @@ const editingV2ProjectSlice = createSlice({
     setAllowSetTerminals: (state, action: PayloadAction<boolean>) => {
       state.fundingCycleMetadata.global.allowSetTerminals = action.payload
     },
+    setAllowSetController: (state, action: PayloadAction<boolean>) => {
+      state.fundingCycleMetadata.global.allowSetController = action.payload
+    },
     setPauseTransfers: (state, action: PayloadAction<boolean>) => {
       state.fundingCycleMetadata.global.pauseTransfers = action.payload
     },

@@ -23,3 +23,11 @@ export const formatEnabled = (bool: boolean | null | undefined) =>
  */
 export const formatPaused = (bool: boolean | null | undefined) =>
   bool ? t`Paused` : t`Enabled`
+
+/**
+ * Format a pause-related boolean value to a string.
+ * @param value - The boolean value to format.
+ * @returns The formatted string.
+ */
+export const formatAllowed = (bool: boolean | null | undefined) =>
+  bool ? t`Allowed` : t`Not allowed`

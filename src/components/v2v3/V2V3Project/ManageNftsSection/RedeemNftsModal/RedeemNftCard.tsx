@@ -52,7 +52,7 @@ export function RedeemNftCard({
     contributionFloor,
     remainingSupply: undefined,
     maxSupply: undefined,
-    imageUrl: image,
+    fileUrl: image,
     externalLink: undefined,
     description: undefined,
   }

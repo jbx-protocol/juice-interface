@@ -20,7 +20,7 @@ export const RewardsReview = () => {
         description: t.description,
         maximumSupply: t.maxSupply,
         url: t.externalLink,
-        imgUrl: t.imageUrl,
+        fileUrl: t.fileUrl,
       })) ?? []
     )
   }, [rewardTiers])
@@ -33,7 +33,7 @@ export const RewardsReview = () => {
             contributionFloor: reward.minimumContribution,
             maxSupply: reward.maximumSupply,
             remainingSupply: reward.maximumSupply,
-            imageUrl: reward.imgUrl,
+            fileUrl: reward.fileUrl,
             name: reward.title,
             externalLink: reward.url,
             description: reward.description,

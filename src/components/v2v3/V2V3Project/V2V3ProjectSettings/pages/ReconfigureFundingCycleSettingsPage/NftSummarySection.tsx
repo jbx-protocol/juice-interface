@@ -31,7 +31,7 @@ export default function NftSummarySection() {
           <Col md={4} className="flex items-center justify-center">
             <Image
               className="object-cover"
-              src={rewardTier.imageUrl ?? '/assets/banana-od.webp'}
+              src={rewardTier.fileUrl ?? '/assets/banana-od.webp'}
               alt={rewardTier.name}
               height={NFT_IMAGE_SIDE_LENGTH}
               width={NFT_IMAGE_SIDE_LENGTH}

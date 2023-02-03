@@ -41,7 +41,7 @@ async function fetchRewardTierFromIPFS({
     tierRank: index + 1,
     maxSupply,
     remainingSupply: tier.remainingQuantity?.toNumber() ?? maxSupply,
-    imageUrl: tierMetadata.image,
+    fileUrl: tierMetadata.image,
   }
 }
 

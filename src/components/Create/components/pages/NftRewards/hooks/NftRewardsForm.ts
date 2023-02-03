@@ -45,7 +45,7 @@ export const useNftRewardsForm = () => {
         description: t.description,
         maximumSupply: t.maxSupply,
         url: t.externalLink,
-        imgUrl: t.imageUrl,
+        fileUrl: t.fileUrl,
       })) ?? []
 
     return {
@@ -84,7 +84,7 @@ export const useNftRewardsForm = () => {
         contributionFloor: reward.minimumContribution,
         maxSupply: reward.maximumSupply,
         remainingSupply: reward.maximumSupply,
-        imageUrl: reward.imgUrl,
+        fileUrl: reward.fileUrl,
         name: reward.title,
         externalLink: reward.url,
         description: reward.description,

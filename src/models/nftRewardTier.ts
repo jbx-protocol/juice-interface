@@ -8,7 +8,7 @@ export type NftRewardTier = {
   contributionFloor: number // ETH amount
   maxSupply: number | undefined
   remainingSupply: number | undefined
-  imageUrl: string // link to ipfs
+  fileUrl: string // link to ipfs
   name: string
   id?: number
   /* @deprecated - now derived from comparing contributionFloor between each */

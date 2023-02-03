@@ -13,6 +13,11 @@ import { ThemeContext } from 'contexts/themeContext'
 import { JuiceVideoPreview } from 'components/v2v3/JuiceVideoPreview'
 import { useContentType } from 'hooks/ContentType'
 
+export type SupportedNftFileTypes =
+  | 'image/jpeg'
+  | 'image/png'
+  | 'image/gif'
+  | 'video/mp4'
 interface UploadNoStyleProps
   extends FormItemInput<string | undefined>,
     Omit<
@@ -20,9 +25,7 @@ interface UploadNoStyleProps
       'onChange' | 'showUploadList' | 'children' | 'customRequest'
     > {
   sizeLimit?: number
-  supportedFileTypes?: Set<
-    'image/jpeg' | 'image/png' | 'image/gif' | 'video/mp4'
-  >
+  supportedFileTypes?: Set<SupportedNftFileTypes>
   customRequest?: (options: UploadRequestOption) => Promise<string> | string
   children?: (props: {
     percent: number | undefined
@@ -104,33 +107,26 @@ export const UploadNoStyle = (props: UploadNoStyleProps) => {
     [props, setUploadUrl],
   )
 
-  const _body = () => {
-    if (isUploading) {
-      return (
-        <div>
-          <Progress
-            width={48}
-            className="h-8 w-8"
-            strokeColor={colors.background.action.primary}
-            type="circle"
-            percent={percent}
-            format={percent => (
-              <div className="text-black dark:text-grey-200">
-                {percent ?? 0}%
-              </div>
-            )}
-          />
-        </div>
-      )
-    }
-    if (uploadUrl === undefined) {
-      return <UploadButton />
-    }
-    if (isVideo) {
-      return <JuiceVideoPreview src={uploadUrl} />
-    }
-    return <UploadedImage imageUrl={uploadUrl} onRemoveImageClicked={undo} />
-  }
+  const _body = isUploading ? (
+    <div>
+      <Progress
+        width={48}
+        className="h-8 w-8"
+        strokeColor={colors.background.action.primary}
+        type="circle"
+        percent={percent}
+        format={percent => (
+          <div className="text-black dark:text-grey-200">{percent ?? 0}%</div>
+        )}
+      />
+    </div>
+  ) : uploadUrl === undefined ? (
+    <UploadButton />
+  ) : isVideo ? (
+    <JuiceVideoPreview src={uploadUrl} />
+  ) : (
+    <UploadedImage imageUrl={uploadUrl} onRemoveImageClicked={undo} />
+  )
 
   return (
     <Upload
@@ -141,7 +137,7 @@ export const UploadNoStyle = (props: UploadNoStyleProps) => {
       customRequest={onCustomRequest}
       showUploadList={false}
     >
-      {_body()}
+      {_body}
     </Upload>
   )
 }

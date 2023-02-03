@@ -21,7 +21,7 @@ export function NftRewardImagePreview({
           'w-12 object-cover',
           imageLoading ? 'hidden' : '',
         )}
-        src={ipfsToHttps(rewardTier.imageUrl)}
+        src={ipfsToHttps(rewardTier.fileUrl)}
         alt={rewardTier.name}
         height={'50px'}
         onLoad={() => setImageLoading(false)}

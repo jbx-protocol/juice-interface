@@ -62,7 +62,7 @@ export const V2V3PayForm = ({
 
   useEffect(() => {
     const initialStickerUrls = nftRewardTiers?.map(
-      (tier: NftRewardTier) => tier.imageUrl,
+      (tier: NftRewardTier) => tier.fileUrl,
     )
 
     form.setFieldsValue({ stickerUrls: initialStickerUrls })

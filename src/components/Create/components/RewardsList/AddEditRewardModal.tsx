@@ -6,7 +6,7 @@ import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import { JuiceSwitch } from 'components/JuiceSwitch'
 import PrefixedInput from 'components/PrefixedInput'
-import { UploadNoStyle } from 'components/UploadNoStyle'
+import { SupportedNftFileTypes, UploadNoStyle } from 'components/UploadNoStyle'
 import { usePinFileToIpfs } from 'hooks/PinFileToIpfs'
 import { useWallet } from 'hooks/Wallet'
 import { UploadRequestOption } from 'rc-upload/lib/interface'
@@ -19,6 +19,8 @@ import {
   inputMustExistRule,
 } from 'utils/antd-rules'
 import { Reward } from './types'
+import { featureFlagEnabled } from 'utils/featureFlags'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 
 interface AddEditRewardModalFormProps {
   fileUrl: string
@@ -117,6 +119,15 @@ export const AddEditRewardModal = ({
   }, [wallet])
 
   const isEditing = !!editingData
+
+  const nftMp4Enabled = featureFlagEnabled(FEATURE_FLAGS.NFT_MP4)
+  const supportedNftFileType: SupportedNftFileTypes[] = [
+    ...(nftMp4Enabled ? (['video/mp4'] as SupportedNftFileTypes[]) : []),
+    'image/jpeg',
+    'image/png',
+    'image/gif',
+  ]
+
   return (
     <Modal
       className={className}
@@ -141,9 +152,7 @@ export const AddEditRewardModal = ({
         >
           <UploadNoStyle
             sizeLimit={100 * 1024 * 1024} // 100 MB
-            supportedFileTypes={
-              new Set(['image/jpeg', 'image/png', 'image/gif', 'video/mp4'])
-            }
+            supportedFileTypes={new Set(supportedNftFileType)}
             beforeUpload={onBeforeUpload}
             customRequest={onCustomRequest}
             listType="picture-card" // Tried to do away with styling, but need this -.-

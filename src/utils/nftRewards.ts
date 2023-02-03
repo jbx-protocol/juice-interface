@@ -90,7 +90,7 @@ async function uploadNftRewardToIPFS({
     name: rewardTier.name,
     externalLink: rewardTier.externalLink,
     symbol: undefined,
-    image: rewardTier.imageUrl,
+    image: rewardTier.fileUrl,
     imageDataUrl: undefined,
     artifactUri: undefined,
     animationUri: undefined,
@@ -193,7 +193,7 @@ export function tiersEqual({
     tier1.contributionFloor === tier2.contributionFloor &&
     tier1.description === tier2.description &&
     tier1.externalLink === tier2.externalLink &&
-    tier1.imageUrl === tier2.imageUrl &&
+    tier1.fileUrl === tier2.fileUrl &&
     tier1.maxSupply === tier2.maxSupply &&
     tier1.name === tier2.name
   )

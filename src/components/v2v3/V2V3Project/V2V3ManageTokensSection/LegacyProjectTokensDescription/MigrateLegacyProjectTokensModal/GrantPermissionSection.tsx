@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { useSetTransferPermissionTx } from 'hooks/JBV3Token/transactor/SetTransferPermissionTx'
 import { useState } from 'react'
@@ -13,6 +14,10 @@ export function GrantPermissionSection() {
       onConfirmed() {
         setLoading(false)
       },
+      onError(e) {
+        setLoading(false)
+        console.error(e)
+      },
     })
 
     if (!txSuccess) {
@@ -23,7 +28,7 @@ export function GrantPermissionSection() {
   return (
     <div>
       <Button onClick={() => grantPermission()} loading={loading}>
-        Grant transfer permission
+        <Trans>Grant transfer permission</Trans>
       </Button>
     </div>
   )

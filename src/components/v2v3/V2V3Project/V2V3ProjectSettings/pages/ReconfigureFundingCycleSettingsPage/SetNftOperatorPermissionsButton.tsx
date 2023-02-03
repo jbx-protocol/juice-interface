@@ -2,7 +2,7 @@ import { CheckCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, ButtonProps } from 'antd'
 import ExternalLink from 'components/ExternalLink'
-import { useSetNftOperatorPermissionsTx } from 'hooks/v2v3/transactor/SetNftOperatorPermissionsTx'
+import { useSetNftOperatorPermissionsTx } from 'hooks/JB721Delegate/transactor/SetNftOperatorPermissionsTx'
 import { useState } from 'react'
 
 export function SetNftOperatorPermissionsButton({

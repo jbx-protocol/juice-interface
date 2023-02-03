@@ -6,6 +6,7 @@ import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
 import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 import { useJBV3Token } from '../contracts/JBV3Token'
+import tokenStoreJson from '@jbx-protocol/juice-v3-migration/out/JBTokenStore.sol/JBTokenStore.json'
 
 export function useV2TokenBalance({
   projectId,
@@ -20,13 +21,13 @@ export function useV2TokenBalance({
   const { value: v2TokenStoreAddress } = useContractReadValue<string, string>({
     contract: JBV3TokenContract,
     functionName: 'v2TokenStore',
-    args: null,
+    args: [],
   })
 
   const v2TokenStoreContract = useLoadContractFromAddress({
     address: v2TokenStoreAddress,
-    abi: '',
-  }) // TODO
+    abi: tokenStoreJson.abi,
+  })
 
   return (
     useTotalBalanceOf(

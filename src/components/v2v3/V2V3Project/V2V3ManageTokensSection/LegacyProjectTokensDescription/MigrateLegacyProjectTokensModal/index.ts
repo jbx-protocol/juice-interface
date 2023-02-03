@@ -1,2 +1,1 @@
-// export * from './MigrateLegacyProjectTokensModal'
-export {} // TODO
+export * from './MigrateLegacyProjectTokensModal'

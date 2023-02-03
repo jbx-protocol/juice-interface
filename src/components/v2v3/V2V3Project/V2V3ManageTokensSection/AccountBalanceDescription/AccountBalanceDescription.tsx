@@ -14,7 +14,7 @@ import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2C
 import { useTransferUnclaimedTokensTx } from 'hooks/v2v3/transactor/TransferUnclaimedTokensTx'
 import { useVeNftSummaryStats } from 'hooks/veNft/VeNftSummaryStats'
 import { useWallet } from 'hooks/Wallet'
-import { V2OperatorPermission } from 'models/v2v3/permissions'
+import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import Link from 'next/link'
 import { useContext, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
@@ -51,7 +51,7 @@ export function AccountBalanceDescription() {
   const { data: unclaimedBalance } = useUserUnclaimedTokenBalance()
   const { data: totalBalance } = useTotalBalanceOf(userAddress, projectId)
   const userHasMintPermission = useV2ConnectedWalletHasPermission(
-    V2OperatorPermission.MINT,
+    V2V3OperatorPermission.MINT,
   )
 
   const claimedBalanceFormatted = formatWad(claimedBalance ?? 0, {

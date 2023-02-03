@@ -7,7 +7,7 @@ import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useJBV3TokenDeployer } from 'hooks/JBV3Token/contracts/JBV3TokenDeployer'
 import { useSetChangeTokenPermissionTx } from 'hooks/JBV3Token/transactor/SetChangeTokenPermissionTx'
 import { useV2HasPermissions } from 'hooks/v2v3/contractReader/V2HasPermissions'
-import { V2OperatorPermission } from 'models/v2v3/permissions'
+import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import { useContext, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 import { StepSection } from './StepSection'
@@ -30,7 +30,7 @@ export function GrantChangeTokenPermissionSection({
     operator: deployer?.address,
     account: projectOwnerAddress,
     domain: projectId,
-    permissions: [V2OperatorPermission.CHANGE_TOKEN],
+    permissions: [V2V3OperatorPermission.CHANGE_TOKEN],
   })
 
   const _completed = Boolean(completed || hasPermission)

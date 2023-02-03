@@ -8,7 +8,7 @@ import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactionContext } from 'contexts/transactionContext'
 import { VeNftContext } from 'contexts/veNftContext'
 import { useV2ProjectTitle } from 'hooks/v2v3/ProjectTitle'
-import { V2OperatorPermission } from 'models/v2v3/permissions'
+import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 
 export function useUnclaimedTokensPermissionTx(): TransactorInstance {
   const { transactor } = useContext(TransactionContext)
@@ -18,7 +18,7 @@ export function useUnclaimedTokensPermissionTx(): TransactorInstance {
 
   const projectTitle = useV2ProjectTitle()
 
-  const permissionIndexes = [V2OperatorPermission.TRANSFER] // TRANSFER permission, https://github.com/jbx-protocol/juice-contracts-v2/blob/main/contracts/libraries/JBOperations.sol
+  const permissionIndexes = [V2V3OperatorPermission.TRANSFER] // TRANSFER permission, https://github.com/jbx-protocol/juice-contracts-v2/blob/main/contracts/libraries/JBOperations.sol
 
   return (_, txOpts) => {
     if (!transactor || !contracts || !projectId || !contractAddress) {

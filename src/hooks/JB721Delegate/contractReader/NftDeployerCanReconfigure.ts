@@ -1,6 +1,6 @@
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { getAddress } from 'ethers/lib/utils'
-import { useV2HasPermissions } from 'hooks/v2v3/contractReader/V2HasPermissions'
+import { useV2V3HasPermissions } from 'hooks/v2v3/contractReader/V2V3HasPermissions'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import { useContext } from 'react'
 
@@ -26,7 +26,7 @@ export function useNftDeployerCanReconfigure({
     : undefined
 
   const { data: JBTiered721DelegateProjectDeployerCanReconfigure } =
-    useV2HasPermissions({
+    useV2V3HasPermissions({
       operator: JBTiered721DelegateProjectDeployerAddress,
       account: projectOwnerAddress,
       domain: projectId,

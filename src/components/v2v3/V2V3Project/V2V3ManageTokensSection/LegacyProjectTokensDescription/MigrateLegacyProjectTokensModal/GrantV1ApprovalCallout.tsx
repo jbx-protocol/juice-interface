@@ -5,7 +5,7 @@ import { useSetTransferPermissionTx } from 'hooks/JBV3Token/transactor/SetTransf
 import { useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 
-export function GrantApprovalCallout() {
+export function GrantV1ApprovalCallout() {
   const grantPermissionTx = useSetTransferPermissionTx()
   const [loading, setLoading] = useState<boolean>(false)
 
@@ -35,7 +35,7 @@ export function GrantApprovalCallout() {
   return (
     <Callout.Info>
       <p>
-        <Trans>You must grant permission to swap your tokens.</Trans>
+        <Trans>You must grant permission to migrate your V1 tokens.</Trans>
       </p>
       <Button
         loading={loading}
@@ -43,7 +43,7 @@ export function GrantApprovalCallout() {
         type="primary"
       >
         <span>
-          <Trans>Grant transfer permission</Trans>
+          <Trans>Grant permission</Trans>
         </span>
       </Button>
     </Callout.Info>

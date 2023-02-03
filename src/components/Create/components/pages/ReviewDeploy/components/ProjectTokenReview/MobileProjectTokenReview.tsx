@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro'
-import { formatAmount } from 'utils/formatAmount'
+import { formatAmount } from 'utils/format/formatAmount'
 import {
   formatDiscountRate,
   formatIssuanceRate,
@@ -20,6 +20,7 @@ export const MobileProjectTokenReview = () => {
     reservedRate,
     setAllocationSplits,
     weight,
+    pauseTransfers,
   } = useProjectTokenReview()
   return (
     <>
@@ -84,6 +85,10 @@ export const MobileProjectTokenReview = () => {
       <DescriptionCol
         title={t`Allow token minting`}
         desc={<div className="text-base font-medium">{allowTokenMinting}</div>}
+      />
+      <DescriptionCol
+        title={t`Token transfers`}
+        desc={<div className="text-base font-medium">{pauseTransfers}</div>}
       />
     </>
   )

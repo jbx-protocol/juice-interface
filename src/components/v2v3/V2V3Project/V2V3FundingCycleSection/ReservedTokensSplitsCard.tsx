@@ -10,7 +10,7 @@ import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import useProjectReservedTokens from 'hooks/v2v3/contractReader/ProjectReservedTokens'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
 import { Split } from 'models/splits'
-import { V2OperatorPermission } from 'models/v2v3/permissions'
+import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import Link from 'next/link'
 import { useContext, useState } from 'react'
 import { formatWad } from 'utils/format/formatNumber'
@@ -45,7 +45,7 @@ export default function ReservedTokensSplitsCard({
       reservedRate: reservedRate,
     })
   const canEditTokens = useV2ConnectedWalletHasPermission(
-    V2OperatorPermission.SET_SPLITS,
+    V2V3OperatorPermission.SET_SPLITS,
   )
 
   const tokensText = tokenSymbolText({

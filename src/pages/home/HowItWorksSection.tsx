@@ -107,9 +107,9 @@ export function HowItWorksSection() {
                   </ExternalLink>
                   , and understand the{' '}
                   <ExternalLink href={helpPagePath('/dev/learn/risks')}>
-                    risks
+                    risks{' '}
                   </ExternalLink>
-                  !
+                  of crypto fundraising!
                 </Trans>
               </p>
             </div>

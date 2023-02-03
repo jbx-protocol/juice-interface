@@ -1,5 +1,5 @@
-import { Trans } from '@lingui/macro'
+import { formatPaused } from 'utils/format/formatBoolean'
 
 export function PausePayValue({ pausePay }: { pausePay: boolean }) {
-  return pausePay ? <Trans>Paused</Trans> : <Trans>Enabled</Trans>
+  return <>{formatPaused(pausePay)}</>
 }

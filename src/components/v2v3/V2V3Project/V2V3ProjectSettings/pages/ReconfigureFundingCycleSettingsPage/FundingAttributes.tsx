@@ -18,6 +18,11 @@ import {
 import { Split } from 'models/splits'
 import { formatWad } from 'utils/format/formatNumber'
 import { detailedTimeString } from 'utils/format/formatTime'
+import {
+  formatAllowed,
+  formatBoolean,
+  formatPaused,
+} from 'utils/format/formatBoolean'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 import {
   formatDiscountRate,
@@ -251,7 +256,7 @@ export function PausePayStatistic({ pausePay }: { pausePay: boolean }) {
           }
         />
       }
-      value={pausePay ? t`Yes` : t`No`}
+      value={formatBoolean(pausePay)}
     />
   )
 }
@@ -265,7 +270,7 @@ export function AllowMintingStatistic({
     <Statistic
       title={
         <TooltipLabel
-          label={t`Allow token minting`}
+          label={t`Token minting`}
           tip={
             allowMinting
               ? t`Owner can mint tokens at any time.`
@@ -278,8 +283,7 @@ export function AllowMintingStatistic({
           showWarning={allowMinting}
           tooltipTitle={FUNDING_CYCLE_WARNING_TEXT().allowMinting}
         >
-          {allowMinting ? t`Allowed` : t`Disabled`}
-          {` `}
+          {formatAllowed(allowMinting)}
         </FundingCycleDetailWarning>
       )}
     />
@@ -295,15 +299,83 @@ export function AllowSetTerminalsStatistic({
     <Statistic
       title={
         <TooltipLabel
-          label={t`Allow terminal configuration`}
+          label={t`Payment Terminal configuration`}
           tip={
             allowSetTerminals
-              ? t`Owner can set the project's payment terminals.`
-              : t`Owner isn't allowed to set the project's payment terminals.`
+              ? t`Owner can set the project's Payment Terminals.`
+              : t`Owner isn't allowed to set the project's Payment Terminals.`
           }
         />
       }
-      valueRender={() => (allowSetTerminals ? t`Allowed` : t`Disabled`)}
+      valueRender={() => formatAllowed(allowSetTerminals)}
+    />
+  )
+}
+
+export function AllowSetControllerStatistic({
+  allowSetController,
+}: {
+  allowSetController: boolean
+}) {
+  return (
+    <Statistic
+      title={
+        <TooltipLabel
+          label={t`Controller configuration`}
+          tip={
+            allowSetController
+              ? t`Owner can change the project's Controller.`
+              : t`Owner isn't allowed to change the project's Controller.`
+          }
+        />
+      }
+      valueRender={() => formatAllowed(allowSetController)}
+    />
+  )
+}
+
+export function AllowTerminalMigrationStatistic({
+  allowTerminalMigration,
+}: {
+  allowTerminalMigration: boolean
+}) {
+  return (
+    <Statistic
+      title={t`Payment Terminal migration`}
+      valueRender={() => formatAllowed(allowTerminalMigration)}
+    />
+  )
+}
+
+export function AllowControllerMigrationStatistic({
+  allowControllerMigration,
+}: {
+  allowControllerMigration: boolean
+}) {
+  return (
+    <Statistic
+      title={t`Controller migration`}
+      valueRender={() => formatAllowed(allowControllerMigration)}
+    />
+  )
+}
+
+export function PauseTransfersStatistic({
+  pauseTransfers,
+}: {
+  pauseTransfers: boolean
+}) {
+  return (
+    <Statistic
+      title={
+        <TooltipLabel
+          label={t`Project token transfers`}
+          tip={t`Project token transfers are ${
+            pauseTransfers ? 'paused' : 'unpaused'
+          }. This does not apply to ERC-20 tokens if issued.`}
+        />
+      }
+      valueRender={() => formatPaused(pauseTransfers)}
     />
   )
 }

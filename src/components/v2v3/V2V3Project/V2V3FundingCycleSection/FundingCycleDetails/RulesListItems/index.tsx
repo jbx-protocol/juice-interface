@@ -10,13 +10,14 @@ import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 import { getUnsafeV2V3FundingCycleProperties } from 'utils/v2v3/fundingCycle'
 import {
   HOLD_FEES_EXPLAINATION,
-  OWNER_MINTING_EXPLAINATION,
   RECONFIG_RULES_EXPLAINATION,
   TERMINAL_CONFIG_EXPLAINATION,
+  CONTROLLER_CONFIG_EXPLAINATION,
+  TERMINAL_MIGRATION_EXPLAINATION,
+  CONTROLLER_MIGRATION_EXPLAINATION,
 } from '../../settingExplanations'
 import { FundingCycleListItem } from '../FundingCycleListItem'
-import { AllowMintingValue } from './AllowMintingValue'
-import { AllowSetTerminalsValue } from './AllowSetTerminalsValue'
+import { AllowedValue } from './AllowedValue'
 import { HoldFeesValue } from './HoldFeesValue'
 import { PausePayValue } from './PausePayValue'
 import { ReconfigStratValue } from './ReconfigStratValue'
@@ -55,13 +56,24 @@ export function RulesListItems({
   const pausePayHasDiff =
     oldFundingCycleMetadata &&
     oldFundingCycleMetadata.pausePay !== fundingCycleMetadata.pausePay
-  const allowMintingHasDiff =
-    oldFundingCycleMetadata &&
-    oldFundingCycleMetadata.allowMinting !== fundingCycleMetadata.allowMinting
+
   const allowSetTerminalsHasDiff =
     oldFundingCycleMetadata &&
     oldFundingCycleMetadata.global.allowSetTerminals !==
       fundingCycleMetadata.global.allowSetTerminals
+  const allowSetControllerHasDiff =
+    oldFundingCycleMetadata &&
+    oldFundingCycleMetadata.global.allowSetController !==
+      fundingCycleMetadata.global.allowSetController
+  const allowTerminalMigrationHasDiff =
+    oldFundingCycleMetadata &&
+    oldFundingCycleMetadata.allowTerminalMigration !==
+      fundingCycleMetadata.allowTerminalMigration
+  const allowControllerMigrationHasDiff =
+    oldFundingCycleMetadata &&
+    oldFundingCycleMetadata.allowControllerMigration !==
+      fundingCycleMetadata.allowControllerMigration
+
   const ballotHasDiff =
     oldFundingCycle && oldFundingCycle.ballot !== fundingCycle.ballot
   const holdFeesHasDiff =
@@ -70,47 +82,6 @@ export function RulesListItems({
 
   return (
     <>
-      <FundingCycleListItem
-        name={t`Payments`}
-        value={<PausePayValue pausePay={fundingCycleMetadata.pausePay} />}
-        oldValue={
-          showDiffs && pausePayHasDiff ? (
-            <PausePayValue pausePay={oldFundingCycleMetadata.pausePay} />
-          ) : undefined
-        }
-      />
-      <FundingCycleListItem
-        name={t`Owner token minting`}
-        value={
-          <AllowMintingValue allowMinting={fundingCycleMetadata.allowMinting} />
-        }
-        oldValue={
-          showDiffs && allowMintingHasDiff ? (
-            <AllowMintingValue
-              allowMinting={oldFundingCycleMetadata.allowMinting}
-            />
-          ) : undefined
-        }
-        helperText={OWNER_MINTING_EXPLAINATION}
-      />
-      <FundingCycleListItem
-        name={t`Terminal configuration`}
-        value={
-          <AllowSetTerminalsValue
-            allowSetTerminals={fundingCycleMetadata?.global.allowSetTerminals}
-          />
-        }
-        oldValue={
-          showDiffs && allowSetTerminalsHasDiff ? (
-            <AllowSetTerminalsValue
-              allowSetTerminals={
-                oldFundingCycleMetadata?.global.allowSetTerminals
-              }
-            />
-          ) : undefined
-        }
-        helperText={TERMINAL_CONFIG_EXPLAINATION}
-      />
       <FundingCycleListItem
         name={t`Reconfiguration strategy`}
         value={
@@ -130,6 +101,15 @@ export function RulesListItems({
         helperText={RECONFIG_RULES_EXPLAINATION}
       />
       <FundingCycleListItem
+        name={t`Payments`}
+        value={<PausePayValue pausePay={fundingCycleMetadata.pausePay} />}
+        oldValue={
+          showDiffs && pausePayHasDiff ? (
+            <PausePayValue pausePay={oldFundingCycleMetadata.pausePay} />
+          ) : undefined
+        }
+      />
+      <FundingCycleListItem
         name={t`Hold fees`}
         value={<HoldFeesValue holdFees={fundingCycleMetadata.holdFees} />}
         oldValue={
@@ -138,6 +118,68 @@ export function RulesListItems({
           ) : undefined
         }
         helperText={HOLD_FEES_EXPLAINATION}
+      />
+      <FundingCycleListItem
+        name={t`Payment Terminal configuration`}
+        value={
+          <AllowedValue
+            value={fundingCycleMetadata?.global.allowSetTerminals}
+          />
+        }
+        oldValue={
+          showDiffs && allowSetTerminalsHasDiff ? (
+            <AllowedValue
+              value={oldFundingCycleMetadata?.global.allowSetTerminals}
+            />
+          ) : undefined
+        }
+        helperText={TERMINAL_CONFIG_EXPLAINATION}
+      />
+      <FundingCycleListItem
+        name={t`Controller configuration`}
+        value={
+          <AllowedValue
+            value={fundingCycleMetadata?.global.allowSetController}
+          />
+        }
+        oldValue={
+          showDiffs && allowSetControllerHasDiff ? (
+            <AllowedValue
+              value={oldFundingCycleMetadata?.global.allowSetController}
+            />
+          ) : undefined
+        }
+        helperText={CONTROLLER_CONFIG_EXPLAINATION}
+      />
+      <FundingCycleListItem
+        name={t`Payment Terminal migration`}
+        value={
+          <AllowedValue value={fundingCycleMetadata?.allowTerminalMigration} />
+        }
+        oldValue={
+          showDiffs && allowTerminalMigrationHasDiff ? (
+            <AllowedValue
+              value={oldFundingCycleMetadata?.allowTerminalMigration}
+            />
+          ) : undefined
+        }
+        helperText={TERMINAL_MIGRATION_EXPLAINATION}
+      />
+      <FundingCycleListItem
+        name={t`Controller migration`}
+        value={
+          <AllowedValue
+            value={fundingCycleMetadata?.allowControllerMigration}
+          />
+        }
+        oldValue={
+          showDiffs && allowControllerMigrationHasDiff ? (
+            <AllowedValue
+              value={oldFundingCycleMetadata?.allowControllerMigration}
+            />
+          ) : undefined
+        }
+        helperText={CONTROLLER_MIGRATION_EXPLAINATION}
       />
     </>
   )

@@ -6,7 +6,7 @@ import { ThemeContext } from 'contexts/themeContext'
 import { useHeldFeesOf } from 'hooks/v2v3/contractReader/HeldFeesOf'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
 import { useProcessHeldFeesTx } from 'hooks/v2v3/transactor/ProcessHeldFeesTx'
-import { V2OperatorPermission } from 'models/v2v3/permissions'
+import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import Link from 'next/link'
 import { useContext, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
@@ -23,7 +23,7 @@ export function HeldFeesSection() {
   const processHeldFeesTx = useProcessHeldFeesTx()
 
   const canProcessHeldFees = useV2ConnectedWalletHasPermission(
-    V2OperatorPermission.PROCESS_FEES,
+    V2V3OperatorPermission.PROCESS_FEES,
   )
 
   async function processHeldFees() {

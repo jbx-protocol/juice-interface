@@ -33,7 +33,7 @@ export function RedeemNftCard({
   onRemove,
   loading,
 }: {
-  nft: JB721DelegateToken
+  nft: Pick<JB721DelegateToken, 'address' | 'tokenId' | 'tokenUri'>
   isSelected: boolean
   onClick: VoidFunction
   onRemove: VoidFunction
@@ -55,6 +55,9 @@ export function RedeemNftCard({
     fileUrl: image,
     externalLink: undefined,
     description: undefined,
+    beneficiary: undefined,
+    reservedRate: undefined,
+    votingWeight: undefined,
   }
 
   return (

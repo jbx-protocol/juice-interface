@@ -3,6 +3,9 @@ import { CurrencyOption } from './currencyOption'
 
 export const NFT_METADATA_CONTRIBUTION_FLOOR_ATTRIBUTES_INDEX = 0
 
+export type JB721DELEGATE_V1 = '1'
+export type JB721DELEGATE_V1_1 = '1.1'
+
 // How we store reward tiers for use around the app
 export type NftRewardTier = {
   contributionFloor: number // ETH amount
@@ -11,11 +14,14 @@ export type NftRewardTier = {
   fileUrl: string // link to ipfs
   name: string
   id?: number
-  /* @deprecated - now derived from comparing contributionFloor between each */
-  tierRank?: number // cheapest tier is 1
+  reservedRate: number | undefined
+  beneficiary: string | undefined
+  votingWeight: number | undefined
   externalLink: string | undefined
   description: string | undefined
 }
+
+export type DelegateVersion = JB721DELEGATE_V1 | JB721DELEGATE_V1_1
 
 // How the reward tiers are stored in the contracts
 export type JB721TierParams = {

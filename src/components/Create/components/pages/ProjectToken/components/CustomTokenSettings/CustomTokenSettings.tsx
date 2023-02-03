@@ -11,7 +11,7 @@ import { useAppSelector } from 'hooks/AppSelector'
 import useMobile from 'hooks/Mobile'
 import { useEditingDistributionLimit } from 'redux/hooks/EditingDistributionLimit'
 import { inputMustExistRule } from 'utils/antd-rules'
-import { formatAmount } from 'utils/formatAmount'
+import { formatAmount } from 'utils/format/formatAmount'
 import { MAX_DISTRIBUTION_LIMIT, MAX_MINT_RATE } from 'utils/v2v3/math'
 import * as ProjectTokenForm from '../../hooks/ProjectTokenForm'
 import { ProjectTokensFormProps } from '../../hooks/ProjectTokenForm'
@@ -227,22 +227,32 @@ export const CustomTokenSettings = () => {
 
       <Divider className="my-8" />
 
-      <>
+      <div className="flex flex-col gap-y-5">
+        <div>
+          <Form.Item
+            extra={t`When enabled, the project owner can manually mint any amount of tokens to any address.`}
+            name="tokenMinting"
+          >
+            <JuiceSwitch label={t`Allow token minting`} />
+          </Form.Item>
+          {tokenMinting && (
+            <Callout.Warning className="mb-5">
+              <Trans>
+                Token minting isn't recommended as it allows the project owner
+                to create unlimited tokens. This is a risk factor for
+                contributors.
+              </Trans>
+            </Callout.Warning>
+          )}
+        </div>
+
         <Form.Item
-          extra={t`When enabled, the project owner can manually mint any amount of tokens to any address.`}
-          name="tokenMinting"
+          name="pauseTransfers"
+          extra={t`When enabled, project's token holders can't transfer their tokens to other addresses. This doesn't apply to your project's ERC-20 tokens (if you've issued them).`}
         >
-          <JuiceSwitch label={t`Allow token minting`} />
+          <JuiceSwitch label={t`Pause project token transfers`} />
         </Form.Item>
-        {tokenMinting && (
-          <Callout.Warning>
-            <Trans>
-              Token minting is not recommended as it allows the project owner to
-              create unlimited tokens. This is a risk factor for contributors.
-            </Trans>
-          </Callout.Warning>
-        )}
-      </>
+      </div>
     </>
   )
 }

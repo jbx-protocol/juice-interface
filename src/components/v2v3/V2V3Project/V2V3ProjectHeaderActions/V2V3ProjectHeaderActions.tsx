@@ -6,7 +6,7 @@ import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { VeNftContext } from 'contexts/veNftContext'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
-import { V2OperatorPermission } from 'models/v2v3/permissions'
+import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import Link from 'next/link'
 import { useContext, useState } from 'react'
 import { settingsPagePath, veNftPagePath } from 'utils/routes'
@@ -18,7 +18,7 @@ export function V2V3ProjectHeaderActions() {
 
   const [toolDrawerVisible, setToolDrawerVisible] = useState<boolean>(false)
   const canReconfigure = useV2ConnectedWalletHasPermission(
-    V2OperatorPermission.RECONFIGURE,
+    V2V3OperatorPermission.RECONFIGURE,
   )
   const veNftEnabled = Boolean(veNftContractAddress)
 

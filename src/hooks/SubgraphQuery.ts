@@ -1,5 +1,14 @@
 import axios from 'axios'
 import {
+  SGQueryOpts,
+  InfiniteSGQueryOpts,
+  SGEntity,
+  SGEntityKey,
+  SGEntityName,
+  SGError,
+  SGResponseData,
+} from 'models/graph'
+import {
   useInfiniteQuery,
   UseInfiniteQueryOptions,
   useQuery,
@@ -7,85 +16,82 @@ import {
 } from 'react-query'
 
 import {
-  EntityKey,
-  EntityKeys,
   formatGraphQuery,
-  formatGraphResponse,
-  GraphQueryOpts,
-  InfiniteGraphQueryOpts,
   querySubgraph,
-  SubgraphEntities,
-  SubgraphError,
-  SubgraphQueryReturnTypes,
+  entitiesFromSGResponse,
+  parseSubgraphEntity,
 } from '../utils/graph'
 
-const subgraphUrl = process.env.NEXT_PUBLIC_SUBGRAPH_URL
 const staleTime = 60 * 1000 // 60 seconds
 
 // This looks up the entity type and constructs an object
 // only with the keys you specified in K.
-type GraphResult<E extends EntityKey, K extends EntityKeys<E>[]> = {
-  [PropertyKey in K[number]]: SubgraphEntities[E][PropertyKey]
+type GraphResult<E extends SGEntityName, K extends SGEntityKey<E>> = {
+  [PropertyKey in K]: SGEntity<E>[PropertyKey]
 }[]
 
 // Pass `opts = null` to prevent http request
 export default function useSubgraphQuery<
-  E extends EntityKey,
-  K extends EntityKeys<E>,
+  E extends SGEntityName,
+  K extends SGEntityKey<E>,
 >(
-  opts: GraphQueryOpts<E, K> | null,
+  opts: SGQueryOpts<E, K> | null,
   reactQueryOptions?: UseQueryOptions<
-    GraphResult<E, K[]>,
+    GraphResult<E, K>,
     Error,
-    GraphResult<E, K[]>,
-    readonly [string, GraphQueryOpts<E, K> | null]
+    GraphResult<E, K>,
+    readonly [string, SGQueryOpts<E, K> | null]
   >,
 ) {
   return useQuery<
-    GraphResult<E, K[]>,
+    GraphResult<E, K>,
     Error,
-    GraphResult<E, K[]>,
-    readonly [string, GraphQueryOpts<E, K> | null]
+    GraphResult<E, K>,
+    readonly [string, SGQueryOpts<E, K> | null]
   >(['subgraph-query', opts], () => querySubgraph(opts), {
     staleTime,
     ...reactQueryOptions,
   })
 }
 
+/**
+ * Queries a list of subgraph entities, with support for appending data from subsequent pages to the returned array of entities.
+ */
 export function useInfiniteSubgraphQuery<
-  E extends EntityKey,
-  K extends EntityKeys<E>,
+  E extends SGEntityName,
+  K extends SGEntityKey<E>,
 >(
-  opts: InfiniteGraphQueryOpts<E, K>,
+  opts: InfiniteSGQueryOpts<E, K>,
   reactQueryOptions?: UseInfiniteQueryOptions<
-    GraphResult<E, K[]>,
+    GraphResult<E, K>,
     Error,
-    GraphResult<E, K[]>,
-    GraphResult<E, K[]>,
-    readonly [string, InfiniteGraphQueryOpts<E, K>]
+    GraphResult<E, K>,
+    GraphResult<E, K>,
+    readonly [string, InfiniteSGQueryOpts<E, K>]
   >,
 ) {
-  if (!subgraphUrl) {
-    // This should _only_ happen in development
-    throw new Error('env.NEXT_PUBLIC_SUBGRAPH_URL is missing')
-  }
+  const subgraphUrl =
+    process.env.NEXT_SUBGRAPH_URL ?? process.env.NEXT_PUBLIC_SUBGRAPH_URL
+
+  if (!subgraphUrl) throw new Error('Subgraph URL is missing from .env')
+
   return useInfiniteQuery<
-    GraphResult<E, K[]>,
+    GraphResult<E, K>,
     Error,
-    GraphResult<E, K[]>,
-    readonly [string, InfiniteGraphQueryOpts<E, K>]
+    GraphResult<E, K>,
+    readonly [string, InfiniteSGQueryOpts<E, K>]
   >(
     ['infinite-subgraph-query', opts] as const,
     async ({ queryKey, pageParam = 0 }) => {
       const { pageSize, ...evaluatedOpts } = queryKey[1]
 
       const response = await axios.post<{
-        errors?: SubgraphError[]
-        data: SubgraphQueryReturnTypes[E]
+        errors?: SGError[]
+        data: SGResponseData<E, K>
       }>(
         subgraphUrl,
         {
-          query: formatGraphQuery({
+          query: formatGraphQuery<E, K>({
             ...evaluatedOpts,
             skip: pageSize * pageParam,
             first: pageSize,
@@ -101,7 +107,9 @@ export function useInfiniteSubgraphQuery<
         )
       }
 
-      return formatGraphResponse(opts.entity, response.data?.data)
+      return entitiesFromSGResponse(opts.entity, response.data?.data).map(e =>
+        parseSubgraphEntity(opts.entity, e),
+      )
     },
     {
       staleTime,

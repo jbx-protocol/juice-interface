@@ -5,14 +5,15 @@ import MinimalTable from 'components/tables/MinimalTable'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { ConfigureEvent } from 'models/subgraph-entities/v2/configure'
 import { useContext } from 'react'
+import {
+  formatAllowed,
+  formatEnabled,
+  formatPaused,
+} from 'utils/format/formatBoolean'
 import { formatWad } from 'utils/format/formatNumber'
 import { detailedTimeString } from 'utils/format/formatTime'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
-
-function booleanStatusText(status: boolean) {
-  return status ? t`Enabled` : t`Disabled`
-}
 
 export default function ConfigureEventElem({
   event,
@@ -35,6 +36,11 @@ export default function ConfigureEventElem({
         | 'reservedRate'
         | 'weight'
         | 'shouldHoldFees'
+        | 'setTerminalsAllowed'
+        | 'setControllerAllowed'
+        | 'controllerMigrationAllowed'
+        | 'terminalMigrationAllowed'
+        | 'transfersPaused'
       >
     | undefined
 }) {
@@ -73,7 +79,7 @@ export default function ConfigureEventElem({
                       tokenSymbol,
                       plural: true,
                     })}/ETH`
-                  : t`Mint rate unchanged`,
+                  : t`Unchanged`,
               },
               { key: t`Reserved rate`, value: event.reservedRate / 100 + '%' },
               {
@@ -94,19 +100,35 @@ export default function ConfigureEventElem({
             [
               {
                 key: t`Payments`,
-                value: booleanStatusText(!event.payPaused),
+                value: formatPaused(event.payPaused),
               },
               {
                 key: t`Redemptions`,
-                value: booleanStatusText(!event.redeemPaused),
+                value: formatPaused(event.redeemPaused),
               },
               {
                 key: t`Owner token minting`,
-                value: booleanStatusText(event.mintingAllowed),
+                value: formatEnabled(event.mintingAllowed),
               },
               {
-                key: t`Hold fees`,
-                value: booleanStatusText(event.shouldHoldFees),
+                key: t`Token transfers`,
+                value: formatPaused(event.transfersPaused),
+              },
+              {
+                key: t`Payment Terminal configuration`,
+                value: formatAllowed(event.setTerminalsAllowed),
+              },
+              {
+                key: t`Controller configuration`,
+                value: formatAllowed(event.setControllerAllowed),
+              },
+              {
+                key: t`Payment Terminal migration`,
+                value: formatAllowed(event.terminalMigrationAllowed),
+              },
+              {
+                key: t`Controller migration`,
+                value: formatAllowed(event.controllerMigrationAllowed),
               },
             ],
           ]}

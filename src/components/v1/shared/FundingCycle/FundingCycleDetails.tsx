@@ -2,7 +2,6 @@ import { parseEther } from '@ethersproject/units'
 import { Trans } from '@lingui/macro'
 import { Descriptions, Tooltip } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
-
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
@@ -21,17 +20,14 @@ import {
   isRecurring,
 } from 'utils/v1/fundingCycle'
 import { weightAmountPerbicent } from 'utils/v1/math'
-
 import { V1CurrencyName } from 'utils/v1/currency'
-
 import TooltipLabel from 'components/TooltipLabel'
-
 import EtherscanLink from 'components/EtherscanLink'
 import FundingCycleDetailWarning from 'components/Project/FundingCycleDetailWarning'
-
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
+import { formatPaused } from 'utils/format/formatBoolean'
 
 export default function FundingCycleDetails({
   fundingCycle,
@@ -293,11 +289,7 @@ export default function FundingCycleDetails({
           span={2}
           label={<TooltipLabel label={<Trans>Payments</Trans>} />}
         >
-          {metadata?.payIsPaused ? (
-            <Trans>Paused</Trans>
-          ) : (
-            <Trans>Enabled</Trans>
-          )}
+          {formatPaused(metadata?.payIsPaused)}
         </Descriptions.Item>
       </Descriptions>
 

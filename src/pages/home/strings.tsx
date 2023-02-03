@@ -4,8 +4,9 @@ export const HeroHeading = () => <Trans>Fund anything.</Trans>
 
 export const HeroSubheading = () => (
   <Trans>
-    The programmable funding protocol for builders and creators. Light enough
-    for a group of friends, powerful enough for a global network of anons.{' '}
+    The programmable crypto fundraising protocol for builders and creators.
+    Light enough for a group of friends, powerful enough for a global network of
+    anons.{' '}
     <a
       href="/p/juicebox"
       className="text-black underline hover:text-haze-400 hover:underline dark:text-grey-100 dark:hover:text-haze-400"
@@ -26,8 +27,8 @@ export const TopProjectsHeading = () => (
 
 export const TopProjectsSubheadingOne = () => (
   <Trans>
-    Juicebox gives you the tools to automate your funding so you can focus on
-    building.
+    Juicebox gives you the tools to automate web3 fundraising so you can focus
+    on building.
   </Trans>
 )
 

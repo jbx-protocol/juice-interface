@@ -23,8 +23,11 @@ import {
   weightAmountPermyriad,
 } from 'utils/v2v3/math'
 import {
+  AllowControllerMigrationStatistic,
   AllowMintingStatistic,
+  AllowSetControllerStatistic,
   AllowSetTerminalsStatistic,
+  AllowTerminalMigrationStatistic,
   DiscountRateStatistic,
   DistributionLimitStatistic,
   DistributionSplitsStatistic,
@@ -32,6 +35,7 @@ import {
   InflationRateStatistic,
   IssuanceRateStatistic,
   PausePayStatistic,
+  PauseTransfersStatistic,
   ReconfigurationStatistic,
   RedemptionRateStatistic,
   ReservedSplitsStatistic,
@@ -156,31 +160,49 @@ export default function ReconfigurePreview({
             reservedPercentage={reservedPercentage}
           />
         </Col>
-        {hasDuration ? (
-          <Col md={secondRowColWidth} sm={12}>
-            <DiscountRateStatistic discountRate={fundingCycle.discountRate} />
-          </Col>
-        ) : null}
-        {hasDistributionLimit ? (
-          <Col md={secondRowColWidth} sm={12}>
-            <RedemptionRateStatistic
-              redemptionRate={fundingCycleMetadata.redemptionRate}
-            />
-          </Col>
-        ) : null}
+        <Col md={secondRowColWidth} sm={12}>
+          <DiscountRateStatistic discountRate={fundingCycle.discountRate} />
+        </Col>
+        <Col md={secondRowColWidth} sm={12}>
+          <RedemptionRateStatistic
+            redemptionRate={fundingCycleMetadata.redemptionRate}
+          />
+        </Col>
       </Row>
-      <Row gutter={gutter}>
-        <Col md={8}>
+      <Row gutter={gutter} className="gap-y-5">
+        <Col md={6}>
           <PausePayStatistic pausePay={fundingCycleMetadata.pausePay} />
         </Col>
-        <Col md={8}>
+        <Col md={6}>
           <AllowMintingStatistic
             allowMinting={fundingCycleMetadata.allowMinting}
           />
         </Col>
-        <Col md={8}>
+        <Col md={6}>
+          <PauseTransfersStatistic
+            pauseTransfers={fundingCycleMetadata.global.pauseTransfers ?? false}
+          />
+        </Col>
+        <Col md={6}>
           <AllowSetTerminalsStatistic
             allowSetTerminals={fundingCycleMetadata.global.allowSetTerminals}
+          />
+        </Col>
+        <Col md={6}>
+          <AllowSetControllerStatistic
+            allowSetController={fundingCycleMetadata.global.allowSetController}
+          />
+        </Col>
+        <Col md={6}>
+          <AllowTerminalMigrationStatistic
+            allowTerminalMigration={fundingCycleMetadata.allowTerminalMigration}
+          />
+        </Col>
+        <Col md={6}>
+          <AllowControllerMigrationStatistic
+            allowControllerMigration={
+              fundingCycleMetadata.allowControllerMigration
+            }
           />
         </Col>
       </Row>

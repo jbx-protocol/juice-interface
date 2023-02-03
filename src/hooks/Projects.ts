@@ -1,19 +1,23 @@
+import axios from 'axios'
 import { PV_V1, PV_V2 } from 'constants/pv'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
+import {
+  InfiniteSGQueryOpts,
+  SGEntityKey,
+  SGQueryOpts,
+  SGWhereArg,
+} from 'models/graph'
+import { Json } from 'models/json'
 import { ProjectState } from 'models/project-visibility'
 import { PV } from 'models/pv'
+import { SepanaProject, SepanaQueryResponse } from 'models/sepana'
 import { Project } from 'models/subgraph-entities/vX/project'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { useEffect, useState } from 'react'
-import {
-  EntityKeys,
-  getSubgraphIdForProject,
-  GraphQueryOpts,
-  InfiniteGraphQueryOpts,
-  querySubgraphExhaustive,
-  WhereConfig,
-} from 'utils/graph'
+import { useQuery } from 'react-query'
+import { getSubgraphIdForProject, querySubgraphExhaustive } from 'utils/graph'
+import { parseSepanaProjectJson } from 'utils/sepana'
 import { getTerminalAddress } from 'utils/v1/terminals'
 
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
@@ -59,10 +63,10 @@ const ARCHIVED_SUBGRAPH_IDS = [
 const queryOpts = (
   opts: ProjectsOptions,
 ): Partial<
-  | GraphQueryOpts<'project', EntityKeys<'project'>>
-  | InfiniteGraphQueryOpts<'project', EntityKeys<'project'>>
+  | SGQueryOpts<'project', SGEntityKey<'project'>>
+  | InfiniteSGQueryOpts<'project', SGEntityKey<'project'>>
 > => {
-  const where: WhereConfig<'project'>[] = []
+  const where: SGWhereArg<'project'>[] = []
 
   const terminalAddress = getTerminalAddress(opts.terminalVersion)
 
@@ -113,7 +117,7 @@ const queryOpts = (
 export function useProjectsQuery(opts: ProjectsOptions) {
   return useSubgraphQuery(
     {
-      ...(queryOpts(opts) as GraphQueryOpts<'project', EntityKeys<'project'>>),
+      ...(queryOpts(opts) as SGQueryOpts<'project', SGEntityKey<'project'>>),
       first: opts.pageSize,
       skip:
         opts.pageNumber && opts.pageSize
@@ -126,7 +130,16 @@ export function useProjectsQuery(opts: ProjectsOptions) {
   )
 }
 
-export function useProjectsSearch(handle: string | undefined) {
+/**
+ * Search Subgraph projects by handle and return only a list of projects
+ * @param handle handle tosearch
+ * @param enabled query will only run if enabled
+ * @returns list of projects
+ */
+export function useProjectsSearch(
+  handle: string | undefined,
+  opts?: { enabled?: boolean },
+) {
   return useSubgraphQuery(
     handle
       ? {
@@ -137,12 +150,46 @@ export function useProjectsSearch(handle: string | undefined) {
       : null,
     {
       staleTime: DEFAULT_STALE_TIME,
+      enabled: opts?.enabled,
+    },
+  )
+}
+
+/**
+ * Search Sepana projects for query and return only a list of projects
+ * @param text text to search
+ * @param pageSize number of projects to return
+ * @param enabled query will only run if enabled
+ * @returns list of projects
+ */
+export function useSepanaProjectsSearch(
+  text: string | undefined,
+  opts?: {
+    pageSize?: number
+    enabled?: boolean
+  },
+) {
+  return useQuery(
+    ['sepana-query', text, opts?.pageSize],
+    () =>
+      axios
+        .get<SepanaQueryResponse<Json<SepanaProject>>>(
+          `/api/sepana/projects?text=${text}${
+            opts?.pageSize !== undefined ? `&pageSize=${opts?.pageSize}` : ''
+          }`,
+        )
+        .then(res =>
+          res.data.hits.hits.map(h => parseSepanaProjectJson(h._source)),
+        ),
+    {
+      staleTime: DEFAULT_STALE_TIME,
+      enabled: opts?.enabled,
     },
   )
 }
 
 export function useTrendingProjects(count: number) {
-  const whereQuery: WhereConfig<'project'>[] = []
+  const whereQuery: SGWhereArg<'project'>[] = []
 
   if (ARCHIVED_SUBGRAPH_IDS.length) {
     whereQuery.push({
@@ -267,7 +314,7 @@ export function useMyProjectsQuery(wallet: string | undefined) {
 
 export function useInfiniteProjectsQuery(opts: ProjectsOptions) {
   return useInfiniteSubgraphQuery(
-    queryOpts(opts) as InfiniteGraphQueryOpts<'project', EntityKeys<'project'>>,
+    queryOpts(opts) as InfiniteSGQueryOpts<'project', SGEntityKey<'project'>>,
     { staleTime: DEFAULT_STALE_TIME },
   )
 }

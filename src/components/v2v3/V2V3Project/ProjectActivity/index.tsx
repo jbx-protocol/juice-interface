@@ -11,18 +11,9 @@ import SectionHeader from 'components/SectionHeader'
 import { PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
-import { ConfigureEvent } from 'models/subgraph-entities/v2/configure'
-import { DeployETHERC20ProjectPayerEvent } from 'models/subgraph-entities/v2/deploy-eth-erc20-project-payer-event'
-import { DistributePayoutsEvent } from 'models/subgraph-entities/v2/distribute-payouts-event'
-import { DistributeReservedTokensEvent } from 'models/subgraph-entities/v2/distribute-reserved-tokens-event'
-import { AddToBalanceEvent } from 'models/subgraph-entities/vX/add-to-balance-event'
-import { DeployedERC20Event } from 'models/subgraph-entities/vX/deployed-erc20-event'
-import { PayEvent } from 'models/subgraph-entities/vX/pay-event'
-import { ProjectCreateEvent } from 'models/subgraph-entities/vX/project-create-event'
+import { SGWhereArg } from 'models/graph'
 import { ProjectEvent } from 'models/subgraph-entities/vX/project-event'
-import { RedeemEvent } from 'models/subgraph-entities/vX/redeem-event'
 import { useContext, useMemo, useState } from 'react'
-import { WhereConfig } from 'utils/graph'
 
 import V2V3DownloadActivityModal from '../modals/V2V3DownloadActivityModal'
 import ConfigureEventElem from './eventElems/ConfigureEventElem'
@@ -53,8 +44,8 @@ export default function ProjectActivity() {
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
   const [eventFilter, setEventFilter] = useState<EventFilter>('all')
 
-  const where: WhereConfig<'projectEvent'>[] = useMemo(() => {
-    const _where: WhereConfig<'projectEvent'>[] = [
+  const where: SGWhereArg<'projectEvent'>[] = useMemo(() => {
+    const _where: SGWhereArg<'projectEvent'>[] = [
       {
         key: 'mintTokensEvent',
         value: null, // Exclude all mintTokensEvents. One of these events is created for every Pay event, and showing both event types may lead to confusion
@@ -236,6 +227,10 @@ export default function ProjectActivity() {
           'reservedRate',
           'weight',
           'shouldHoldFees',
+          'terminalMigrationAllowed',
+          'controllerMigrationAllowed',
+          'setTerminalsAllowed',
+          'setControllerAllowed',
         ],
       },
     ],
@@ -250,74 +245,52 @@ export default function ProjectActivity() {
   const list = useMemo(
     () =>
       projectEvents?.pages.map(group =>
-        group.map((e: ProjectEvent) => {
+        group.map(e => {
           let elem: JSX.Element | undefined = undefined
 
           if (e.payEvent) {
-            elem = <PayEventElem event={e.payEvent as PayEvent} />
+            elem = <PayEventElem event={e.payEvent} />
           }
           if (e.addToBalanceEvent) {
-            elem = (
-              <AddToBalanceEventElem
-                event={e.addToBalanceEvent as AddToBalanceEvent}
-              />
-            )
+            elem = <AddToBalanceEventElem event={e.addToBalanceEvent} />
           }
           if (e.redeemEvent) {
-            elem = <RedeemEventElem event={e.redeemEvent as RedeemEvent} />
+            elem = <RedeemEventElem event={e.redeemEvent} />
           }
           if (e.projectCreateEvent) {
-            elem = (
-              <ProjectCreateEventElem
-                event={e.projectCreateEvent as ProjectCreateEvent}
-              />
-            )
+            elem = <ProjectCreateEventElem event={e.projectCreateEvent} />
           }
           if (e.deployedERC20Event) {
-            elem = (
-              <DeployedERC20EventElem
-                event={e.deployedERC20Event as DeployedERC20Event}
-              />
-            )
+            elem = <DeployedERC20EventElem event={e.deployedERC20Event} />
           }
           if (e.distributePayoutsEvent) {
-            elem = (
-              <DistributePayoutsElem
-                event={e.distributePayoutsEvent as DistributePayoutsEvent}
-              />
-            )
+            elem = <DistributePayoutsElem event={e.distributePayoutsEvent} />
           }
           if (e.distributeReservedTokensEvent) {
             elem = (
               <DistributeReservedTokensEventElem
-                event={
-                  e.distributeReservedTokensEvent as DistributeReservedTokensEvent
-                }
+                event={e.distributeReservedTokensEvent}
               />
             )
           }
           if (e.deployETHERC20ProjectPayerEvent) {
             elem = (
               <DeployETHERC20ProjectPayerEventElem
-                event={
-                  e.deployETHERC20ProjectPayerEvent as DeployETHERC20ProjectPayerEvent
-                }
+                event={e.deployETHERC20ProjectPayerEvent}
               />
             )
           }
           if (e.configureEvent) {
-            elem = (
-              <ConfigureEventElem event={e.configureEvent as ConfigureEvent} />
-            )
+            elem = <ConfigureEventElem event={e.configureEvent} />
           }
-          if (e.useAllowanceEvent) {
-            // TODO
-            // elem = (
-            //   <DeployedERC20EventElem
-            //     event={e.deployedERC20Event as DeployedERC20Event}
-            //   />
-            // )
-          }
+          // TODO
+          // if (e.useAllowanceEvent) {
+          //   elem = (
+          //     <DeployedERC20EventElem
+          //       event={e.deployedERC20Event as DeployedERC20Event}
+          //     />
+          //   )
+          // }
 
           if (!elem) return null
 

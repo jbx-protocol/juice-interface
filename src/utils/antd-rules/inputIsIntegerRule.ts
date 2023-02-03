@@ -5,15 +5,22 @@ import { isInteger } from 'lodash'
 /**
  * Rule to determine that the input is an integer.
  */
-export const inputIsIntegerRule = (props: { label?: string }) => ({
+export const inputIsIntegerRule = (props: {
+  label?: string
+  stringOkay?: boolean
+}) => ({
   validator: (rule: RuleObject, value: unknown) => {
     if (value === undefined) return Promise.resolve()
-    if (typeof value !== 'number')
+    if (props.stringOkay && typeof value === 'string') {
+      value = parseFloat(value)
+    }
+    if (typeof value !== 'number' || isNaN(value)) {
       return Promise.reject(
         props.label
           ? t`${props.label} must be numeric`
           : t`Is not a valid integer`,
       )
+    }
     if (!isInteger(value)) {
       return Promise.reject(
         props.label

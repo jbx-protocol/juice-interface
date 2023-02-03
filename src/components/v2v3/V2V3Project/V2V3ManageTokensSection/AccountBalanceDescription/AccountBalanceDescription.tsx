@@ -14,7 +14,7 @@ import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2C
 import { useTransferUnclaimedTokensTx } from 'hooks/v2v3/transactor/TransferUnclaimedTokensTx'
 import { useVeNftSummaryStats } from 'hooks/veNft/VeNftSummaryStats'
 import { useWallet } from 'hooks/Wallet'
-import { V2OperatorPermission } from 'models/v2v3/permissions'
+import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import Link from 'next/link'
 import { useContext, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
@@ -26,9 +26,9 @@ import {
 } from 'utils/format/formatNumber'
 import { veNftPagePath } from 'utils/routes'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-import V2ClaimTokensModal from './V2ClaimTokensModal'
-import V2MintModal from './V2MintModal'
-import V2RedeemModal from './V2RedeemModal'
+import { V2V3ClaimTokensModal } from './V2V3ClaimTokensModal'
+import { V2V3MintModal } from './V2V3MintModal'
+import { V2V3BurnOrRedeemModal } from './V2V3BurnOrRedeemModal'
 
 export function AccountBalanceDescription() {
   const { contractAddress: veNftAddress } = useContext(VeNftContext)
@@ -51,7 +51,7 @@ export function AccountBalanceDescription() {
   const { data: unclaimedBalance } = useUserUnclaimedTokenBalance()
   const { data: totalBalance } = useTotalBalanceOf(userAddress, projectId)
   const userHasMintPermission = useV2ConnectedWalletHasPermission(
-    V2OperatorPermission.MINT,
+    V2V3OperatorPermission.MINT,
   )
 
   const claimedBalanceFormatted = formatWad(claimedBalance ?? 0, {
@@ -143,9 +143,9 @@ export function AccountBalanceDescription() {
         tokenAddress={tokenAddress}
         tokenUnclaimedBalance={unclaimedBalance}
         transferUnclaimedTokensTx={useTransferUnclaimedTokensTx}
-        RedeemModal={V2RedeemModal}
-        ClaimTokensModal={V2ClaimTokensModal}
-        MintModal={V2MintModal}
+        RedeemModal={V2V3BurnOrRedeemModal}
+        ClaimTokensModal={V2V3ClaimTokensModal}
+        MintModal={V2V3MintModal}
       >
         {veNftEnabled && (
           <Link href={veNftPagePath('mint', { projectId, handle })}>

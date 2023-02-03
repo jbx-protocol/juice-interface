@@ -11,8 +11,8 @@ export function useVeNftTokenMetadata(tokenUri: string | undefined) {
       if (!hash) {
         throw new Error('NFT hash not specified.')
       }
-      const response = await ipfsGetWithFallback(hash)
-      const metadata: VeNftTokenMetadata = {
+      const response = await ipfsGetWithFallback<VeNftTokenMetadata>(hash)
+      const metadata = {
         thumbnailUri: response.data.thumbnailUri,
       }
       return metadata

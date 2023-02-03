@@ -3,6 +3,7 @@ import { t, Trans } from '@lingui/macro'
 import { Form, Modal, Radio } from 'antd'
 import { RuleObject } from 'antd/lib/form'
 import CurrencySwitch from 'components/CurrencySwitch'
+import { FeeTooltipLabel } from 'components/FeeTooltipLabel'
 import { validatePercentage } from 'components/formItems/formHelpers'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
@@ -10,18 +11,19 @@ import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'
 import { JuiceInputNumber } from 'components/inputs/JuiceInputNumber'
 import NumberSlider from 'components/inputs/NumberSlider'
 import { useFundingTargetType } from 'hooks/FundingTargetType'
+import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/ETHPaymentTerminalFee'
 import { Split } from 'models/splits'
 import moment, * as Moment from 'moment'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { fromWad } from 'utils/format/formatNumber'
+import {
+  allocationInputAlreadyExistsRule,
+  inputIsIntegerRule,
+  inputMustBeEthAddressRule,
+  inputMustExistRule,
+} from 'utils/antd-rules'
+import { fromWad, parseWad, stripCommas } from 'utils/format/formatNumber'
 import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { amountFromPercent } from 'utils/v2v3/distributions'
-import {
-  inputMustBeEthAddressRule,
-  inputIsIntegerRule,
-  inputMustExistRule,
-  allocationInputAlreadyExistsRule,
-} from 'utils/antd-rules'
 import { Allocation, AllocationSplit } from './Allocation'
 
 interface AddEditAllocationModalFormProps {
@@ -54,7 +56,7 @@ export const AddEditAllocationModal = ({
     console.error('AddEditAllocationModal: no available modes')
     return null
   }
-  const { totalAllocationAmount, allocations } =
+  const { totalAllocationAmount, allocations, allocationCurrency } =
     Allocation.useAllocationInstance()
   const [form] = Form.useForm<AddEditAllocationModalFormProps>()
   const [amountType, setAmountType] = useState<'amount' | 'percentage'>(
@@ -63,6 +65,11 @@ export const AddEditAllocationModal = ({
   const [recipient, setRecipient] = useState<
     'walletAddress' | 'juiceboxProject'
   >('walletAddress')
+
+  const ethPaymentTerminalFee = useETHPaymentTerminalFee()
+  const amount = Form.useWatch('amount', form)
+
+  const showFee = amountType === 'amount' && recipient === 'walletAddress'
 
   const isValidJuiceboxProject = useMemo(
     () =>
@@ -229,6 +236,18 @@ export const AddEditAllocationModal = ({
               : t`Distribution Percentage`
           }
           required
+          extra={
+            !!amount?.amount &&
+            !!allocationCurrency &&
+            showFee &&
+            ethPaymentTerminalFee && (
+              <FeeTooltipLabel
+                amountWad={parseWad(stripCommas(amount.amount))}
+                currency={allocationCurrency}
+                feePerBillion={ethPaymentTerminalFee}
+              />
+            )
+          }
           rules={[
             inputMustExistRule({
               label:

@@ -25,7 +25,7 @@
   },
   "overrides": [
     {
-      "files": ["*.config.js", "*.setup.ts"],
+      "files": ["*.config.js", "*.setup.ts", "scripts/sepana/*.js"],
       "rules": {
         "@typescript-eslint/no-var-requires": "off"
       }
@@ -50,7 +50,7 @@
       "error",
       {
         "selector": "typeLike",
-        "format": ["PascalCase"]
+        "format": ["PascalCase", "UPPER_CASE"]
       }
     ],
     "no-console": ["error", { "allow": ["warn", "error", "info"] }],

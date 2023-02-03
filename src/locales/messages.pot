@@ -1415,10 +1415,7 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-msgid "Give NFT deployer permissions for project #{projectId}"
-msgstr ""
-
-msgid "Give V3 migration token deployer permissions on project #{projectId}"
+msgid "Give permissions to {0} on project #{projectId}"
 msgstr ""
 
 msgid "Give this NFT a name."
@@ -3680,7 +3677,7 @@ msgstr ""
 msgid "You don't own any veNFTs!"
 msgstr ""
 
-msgid "You have <0>{0}</0> tokens in one or more of their legacy projects. You can swap your legacy <1>{1}</1> tokens for their current V3 tokens."
+msgid "You have <0>{0}</0> tokens in one or more of their legacy projects. You can swap your legacy <1>{1}</1> tokens for their current V3 tokens <2/>."
 msgstr ""
 
 msgid "You have configured for all funds to be distributed from the treasury. Your current payouts do not sum to 100%, so the remainder will go to the project owner."
@@ -3798,9 +3795,6 @@ msgid "Your project's current funding cycle has no duration. Changes you make be
 msgstr ""
 
 msgid "Your project’s first Funding Cycle will launch on <0>{0} at {1}</0>. Once deployed, your project will be visible but unable to receive funding or issue tokens until the date and time specified."
-msgstr ""
-
-msgid "Your total legacy balance"
 msgstr ""
 
 msgid "Your total token balance for this project's legacy tokens."

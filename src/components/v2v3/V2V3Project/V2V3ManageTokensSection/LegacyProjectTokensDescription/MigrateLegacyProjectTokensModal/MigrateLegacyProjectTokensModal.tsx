@@ -38,6 +38,8 @@ export function MigrateLegacyProjectTokensModal({
     JBOperatorStore: V2JBOperatorStore,
   })
 
+  const hasAllPermissions = hasV2TransferPermission
+
   const migrateTokensTx = useMigrateTokensTx()
 
   const migrateTokens = async () => {
@@ -61,15 +63,13 @@ export function MigrateLegacyProjectTokensModal({
     }
   }
 
-  const modalOkProps = () => {
-    return {
-      onOk: () => migrateTokens(),
-      okText: (
-        <span>
-          <Trans>Swap for V3 tokens</Trans>
-        </span>
-      ),
-    }
+  const modalOkProps = {
+    onOk: () => migrateTokens(),
+    okText: (
+      <span>
+        <Trans>Migrate all approved tokens</Trans>
+      </span>
+    ),
   }
 
   return (
@@ -78,7 +78,8 @@ export function MigrateLegacyProjectTokensModal({
       transactionPending={transactionPending}
       confirmLoading={loading}
       destroyOnClose
-      {...modalOkProps()}
+      okButtonProps={!hasAllPermissions ? { hidden: true } : undefined}
+      {...modalOkProps}
       {...props}
     >
       <Space size="large" direction="vertical" className="w-full">
@@ -90,6 +91,7 @@ export function MigrateLegacyProjectTokensModal({
         <MigrateLegacyProjectTokensForm
           form={form}
           legacyTokenBalance={legacyTokenBalance}
+          disabled={!hasAllPermissions}
         />
       </Space>
     </TransactionModal>

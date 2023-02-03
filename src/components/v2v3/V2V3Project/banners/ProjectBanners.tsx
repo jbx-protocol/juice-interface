@@ -6,7 +6,7 @@ import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/V2V3ProjectContractsContext'
 import useProjectController from 'hooks/v2v3/contractReader/ProjectController'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
-import { V2OperatorPermission } from 'models/v2v3/permissions'
+import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import { useContext } from 'react'
 import { RelaunchFundingCycleBanner } from './RelaunchFundingCycleBanner'
 import { V2BugNoticeBanner } from './V2BugNoticeBanner'
@@ -20,7 +20,7 @@ export function ProjectBanners() {
   } = useContext(V2V3ProjectContractsContext)
 
   const canReconfigureFundingCycles = useV2ConnectedWalletHasPermission(
-    V2OperatorPermission.RECONFIGURE,
+    V2V3OperatorPermission.RECONFIGURE,
   )
 
   // get the projects controller address on the deprecated JBDirectory (the bugged version)

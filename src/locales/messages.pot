@@ -467,6 +467,9 @@ msgstr ""
 msgid "Approve token for transaction"
 msgstr ""
 
+msgid "Approve tokens for migration to V3"
+msgstr ""
+
 msgid "Archive project"
 msgstr ""
 
@@ -1412,10 +1415,7 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-msgid "Give NFT deployer permissions for project #{projectId}"
-msgstr ""
-
-msgid "Give V3 migration token deployer permissions on project #{projectId}"
+msgid "Give permissions to {0} on project #{projectId}"
 msgstr ""
 
 msgid "Give this NFT a name."
@@ -1434,6 +1434,9 @@ msgid "Go to your Safe"
 msgstr ""
 
 msgid "Governance"
+msgstr ""
+
+msgid "Grant transfer permission"
 msgstr ""
 
 msgid "Has Juicebox been audited? What are the risks?"
@@ -1691,6 +1694,9 @@ msgstr ""
 msgid "Leave unchecked to have Juicebox track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
 msgstr ""
 
+msgid "Legacy tokens to migrate"
+msgstr ""
+
 msgid "Light theme"
 msgstr ""
 
@@ -1796,7 +1802,13 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
+msgid "Migrate legacy tokens"
+msgstr ""
+
 msgid "Migrate tokens"
+msgstr ""
+
+msgid "Migrate tokens to V3 for project #{projectId}"
 msgstr ""
 
 msgid "Migration rules"
@@ -2897,6 +2909,9 @@ msgstr ""
 msgid "Supply"
 msgstr ""
 
+msgid "Swap for V3 tokens"
+msgstr ""
+
 msgid "Switch network to {0}"
 msgstr ""
 
@@ -3476,9 +3491,6 @@ msgstr ""
 msgid "V1 project handle"
 msgstr ""
 
-msgid "V1 tokens to swap"
-msgstr ""
-
 msgid "V1.1"
 msgstr ""
 
@@ -3668,7 +3680,7 @@ msgstr ""
 msgid "You don't own any veNFTs!"
 msgstr ""
 
-msgid "You have <0>{0}</0> tokens in one or more of their legacy projects. You can swap your legacy <1>{1}</1> tokens for their current V3 tokens."
+msgid "You have <0>{0}</0> tokens in one or more of their legacy projects. You can swap your legacy <1>{1}</1> tokens for their current V3 tokens <2/>."
 msgstr ""
 
 msgid "You have configured for all funds to be distributed from the treasury. Your current payouts do not sum to 100%, so the remainder will go to the project owner."
@@ -3681,6 +3693,9 @@ msgid "You have unsaved changes. Are you sure you want to discard them?"
 msgstr ""
 
 msgid "You haven't created any projects yet."
+msgstr ""
+
+msgid "You must grant permission to swap your tokens."
 msgstr ""
 
 msgid "You must review and accept the risks."
@@ -3786,9 +3801,6 @@ msgid "Your project's current funding cycle has no duration. Changes you make be
 msgstr ""
 
 msgid "Your project’s first Funding Cycle will launch on <0>{0} at {1}</0>. Once deployed, your project will be visible but unable to receive funding or issue tokens until the date and time specified."
-msgstr ""
-
-msgid "Your total legacy balance"
 msgstr ""
 
 msgid "Your total token balance for this project's legacy tokens."

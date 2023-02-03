@@ -6,7 +6,7 @@ import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useJBV3TokenDeployer } from 'hooks/JBV3Token/contracts/JBV3TokenDeployer'
 import { useSetChangeTokenPermissionTx } from 'hooks/JBV3Token/transactor/SetChangeTokenPermissionTx'
-import { useV2HasPermissions } from 'hooks/v2v3/contractReader/V2HasPermissions'
+import { useV2V3HasPermissions } from 'hooks/v2v3/contractReader/V2V3HasPermissions'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import { useContext, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
@@ -26,7 +26,7 @@ export function GrantChangeTokenPermissionSection({
 
   const deployer = useJBV3TokenDeployer()
   const tx = useSetChangeTokenPermissionTx()
-  const { data: hasPermission } = useV2HasPermissions({
+  const { data: hasPermission } = useV2V3HasPermissions({
     operator: deployer?.address,
     account: projectOwnerAddress,
     domain: projectId,

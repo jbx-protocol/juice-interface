@@ -17,6 +17,7 @@ import { ProjectTokenDescription } from './ProjectTokenDescription'
 import { TotalSupplyDescription } from './TotalSupplyDescription'
 import { LegacyProjectTokensDescription } from './LegacyProjectTokensDescription'
 import { LegacyProjectTokensDescriptionHeading } from './LegacyProjectTokensDescription'
+import { V1UserProvider } from 'providers/v1/UserProvider'
 
 const labelStyle: CSSProperties = {
   width: '10.5rem',
@@ -40,7 +41,7 @@ export function V2V3ManageTokensSection() {
   const showIssueErc20TokenButton = !hasIssuedERC20 && hasIssueTicketsPermission
 
   const v1TokenSwapEnabled = featureFlagEnabled(FEATURE_FLAGS.V1_TOKEN_SWAP)
-  const showV1ProjectTokensSection = v1TokenSwapEnabled
+  const showLegacyProjectTokensSection = v1TokenSwapEnabled
 
   const tokenText = tokenSymbolText({
     tokenSymbol,
@@ -91,13 +92,16 @@ export function V2V3ManageTokensSection() {
               <AccountBalanceDescription />
             </Descriptions.Item>
 
-            {showV1ProjectTokensSection && (
+            {showLegacyProjectTokensSection && (
               <Descriptions.Item
                 label={<LegacyProjectTokensDescriptionHeading />}
                 labelStyle={labelStyle}
                 contentStyle={contentStyle}
+                className="pt-5"
               >
-                <LegacyProjectTokensDescription />
+                <V1UserProvider>
+                  <LegacyProjectTokensDescription />
+                </V1UserProvider>
               </Descriptions.Item>
             )}
           </>

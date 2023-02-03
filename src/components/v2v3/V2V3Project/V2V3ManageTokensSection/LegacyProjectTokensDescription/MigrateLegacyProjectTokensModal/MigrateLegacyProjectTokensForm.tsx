@@ -41,7 +41,13 @@ export function MigrateLegacyProjectTokensForm({
   }
 
   return (
-    <Form form={form} layout="vertical" {...props} onFinish={approveTokens}>
+    <Form
+      form={form}
+      layout="vertical"
+      {...props}
+      onFinish={approveTokens}
+      className={props.disabled ? 'pointer-events-none opacity-50' : undefined}
+    >
       <Space direction="vertical" size="large" className="w-full">
         <Statistic
           title={<Trans>Your legacy token balance</Trans>}
@@ -76,8 +82,8 @@ export function MigrateLegacyProjectTokensForm({
           />
         </Form.Item>
       </Space>
-      <Button type="primary" htmlType="submit" loading={loading}>
-        Approve migration
+      <Button type="primary" size="small" htmlType="submit" loading={loading}>
+        <Trans>Approve migration</Trans>
       </Button>
     </Form>
   )

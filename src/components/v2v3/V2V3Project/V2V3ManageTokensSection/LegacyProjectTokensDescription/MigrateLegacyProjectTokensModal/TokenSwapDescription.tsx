@@ -7,8 +7,8 @@ const TooltipDescription = () => {
   return (
     <Trans>
       This Juicebox V3 project also has a project on Juicebox V1 and/or V2. The
-      project owner is allowing you to swap your legacy tokens (V1 or V2) for V3
-      tokens.
+      project owner is allowing you to migrate your legacy tokens (V1 or V2) for
+      V3 tokens.
     </Trans>
   )
 }

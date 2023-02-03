@@ -3695,6 +3695,9 @@ msgstr ""
 msgid "You haven't created any projects yet."
 msgstr ""
 
+msgid "You must grant permission to swap your tokens."
+msgstr ""
+
 msgid "You must review and accept the risks."
 msgstr ""
 

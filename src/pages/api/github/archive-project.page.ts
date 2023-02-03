@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ProjectMetadataV5 } from 'models/project-metadata'
+import { ProjectMetadataV6 } from 'models/project-metadata'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import { readNetwork } from 'constants/networks'
@@ -10,7 +10,7 @@ interface ArchiveProjectNextApiRequest extends NextApiRequest {
   body: {
     archived: boolean
     projectId: number | undefined
-    metadata: ProjectMetadataV5 | undefined
+    metadata: ProjectMetadataV6 | undefined
     handle: string | undefined
     pv: PV
   }

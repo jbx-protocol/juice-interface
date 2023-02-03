@@ -4,7 +4,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { PayoutMod, TicketMod } from 'models/mods'
 import {
   LATEST_METADATA_VERSION,
-  ProjectMetadataV5,
+  ProjectMetadataV6,
 } from 'models/project-metadata'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { toDateSeconds } from 'utils/format/formatDate'
@@ -22,7 +22,7 @@ import {
 import { V1_CURRENCY_USD } from 'constants/v1/currency'
 
 interface EditingProjectInfo {
-  metadata: ProjectMetadataV5
+  metadata: ProjectMetadataV6
   handle: string
 }
 

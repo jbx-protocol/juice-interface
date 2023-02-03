@@ -1,7 +1,7 @@
 import { PinataMetadata, PinataPinResponse } from '@pinata/sdk'
 import axios from 'axios'
 import { IPFS_TAGS } from 'constants/ipfs'
-import { consolidateMetadata, ProjectMetadataV5 } from 'models/project-metadata'
+import { consolidateMetadata, ProjectMetadataV6 } from 'models/project-metadata'
 import { metadataNameForHandle, restrictedIpfsUrl } from 'utils/ipfs'
 
 // Workaround function for a bug in pinata where the data is sometimes returned in bytes
@@ -114,7 +114,7 @@ export const ipfsGetWithFallback = async <T>(
 }
 
 export const uploadProjectMetadata = async (
-  metadata: Omit<ProjectMetadataV5, 'version'>,
+  metadata: Omit<ProjectMetadataV6, 'version'>,
   handle?: string,
 ) => {
   const res = await axios.post('/api/ipfs/pin', {

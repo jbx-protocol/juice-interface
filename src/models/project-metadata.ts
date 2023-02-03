@@ -9,6 +9,7 @@ type ProjectMetadata =
   | ProjectMetadataV3
   | ProjectMetadataV4
   | ProjectMetadataV5
+  | ProjectMetadataV6
 
 type ProjectMetadataV1 = Partial<{
   name: string
@@ -33,7 +34,6 @@ type ProjectMetadataV3 = Partial<
     version: 3
     twitter: string
     discord: string
-    telegram: string
     payButton: string
     payDisclosure: string
   }
@@ -55,10 +55,18 @@ export type ProjectMetadataV5 = Partial<
   }
 >
 
+// add `telegram`
+export type ProjectMetadataV6 = Partial<
+  Omit<ProjectMetadataV5, 'version'> & {
+    version: typeof LATEST_METADATA_VERSION
+    telegram: string
+  }
+>
+
 // Converts metadata of any version to latest version
 export const consolidateMetadata = (
   metadata: ProjectMetadata,
-): ProjectMetadataV5 => {
+): ProjectMetadataV6 => {
   return {
     ...metadata,
     payButton:

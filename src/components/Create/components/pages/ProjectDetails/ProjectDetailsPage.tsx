@@ -69,7 +69,7 @@ export const ProjectDetailsPage: React.FC = () => {
               <Col span={12}>
                 <Form.Item name="projectWebsite" label={t`Website`}>
                   {/* Set placeholder as url string origin without port */}
-                  <PrefixedInput prefix="https://" />
+                  <JuiceInput prefix="https://" />
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -81,12 +81,12 @@ export const ProjectDetailsPage: React.FC = () => {
             <Row className="mb-6" gutter={32}>
               <Col span={12}>
                 <Form.Item name="projectDiscord" label={t`Discord`}>
-                  <PrefixedInput prefix="https://" />
+                  <JuiceInput prefix="https://" />
                 </Form.Item>
               </Col>
               <Col span={12}>
                 <Form.Item name="projectTelegram" label={t`Telegram`}>
-                  <PrefixedInput prefix="https://" />
+                  <JuiceInput prefix="https://" />
                 </Form.Item>
               </Col>
             </Row>

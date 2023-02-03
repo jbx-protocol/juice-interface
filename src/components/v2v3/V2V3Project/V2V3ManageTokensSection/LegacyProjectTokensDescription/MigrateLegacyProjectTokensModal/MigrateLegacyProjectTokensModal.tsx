@@ -13,7 +13,11 @@ import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useWallet } from 'hooks/Wallet'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
-// import { GrantV1ApprovalCallout } from './GrantV1ApprovalCallout'
+import { useV1TicketBoothForV3Token } from 'hooks/JBV3Token/contracts/V1TicketBoothForV3Token'
+import { useV1HasPermissions } from 'hooks/v1/contractReader/V1HasPermissions'
+import { V1OperatorPermission } from 'models/v1/permissions'
+import { GrantV1ApprovalCallout } from './GrantV1ApprovalCallout'
+import { useV1ProjectId } from 'hooks/JBV3Token/contractReader/V1ProjectId'
 
 export function MigrateLegacyProjectTokensModal({
   legacyTokenBalance,
@@ -21,7 +25,7 @@ export function MigrateLegacyProjectTokensModal({
 }: { legacyTokenBalance: BigNumber | undefined } & ModalProps) {
   const { tokenAddress } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
-
+  const { value: v1ProjectId } = useV1ProjectId()
   const { userAddress } = useWallet()
 
   const [loading, setLoading] = useState<boolean>(false)
@@ -29,6 +33,18 @@ export function MigrateLegacyProjectTokensModal({
   const [form] = Form.useForm()
 
   const V2JBOperatorStore = useJBOperatorStoreForV3Token()
+  const V1TicketBooth = useV1TicketBoothForV3Token()
+
+  const hasV1Permission =
+    !V1TicketBooth ||
+    !v1ProjectId ||
+    !v1ProjectId.eq(0) ||
+    useV1HasPermissions({
+      operator: tokenAddress,
+      account: userAddress,
+      domain: v1ProjectId?.toNumber(),
+      permissionIndexes: [V1OperatorPermission.Transfer],
+    })
 
   const hasV2TransferPermission = useV2V3HasPermissions({
     operator: tokenAddress,
@@ -38,7 +54,7 @@ export function MigrateLegacyProjectTokensModal({
     JBOperatorStore: V2JBOperatorStore,
   })
 
-  const hasAllPermissions = hasV2TransferPermission
+  const hasAllPermissions = Boolean(hasV2TransferPermission && hasV1Permission)
 
   const migrateTokensTx = useMigrateTokensTx()
 
@@ -85,8 +101,10 @@ export function MigrateLegacyProjectTokensModal({
       <Space size="large" direction="vertical" className="w-full">
         <TokenSwapDescription />
 
-        {/* <GrantV1ApprovalCallout /> */}
-        {!hasV2TransferPermission && <GrantV2ApprovalCallout />}
+        {!hasV1Permission && <GrantV1ApprovalCallout />}
+        {hasV1Permission && !hasV2TransferPermission && (
+          <GrantV2ApprovalCallout />
+        )}
 
         <MigrateLegacyProjectTokensForm
           form={form}

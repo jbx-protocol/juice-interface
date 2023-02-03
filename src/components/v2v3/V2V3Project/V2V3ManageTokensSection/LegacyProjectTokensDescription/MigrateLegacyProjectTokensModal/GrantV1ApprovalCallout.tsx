@@ -1,27 +1,33 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { Callout } from 'components/Callout'
-import { useSetTransferPermissionTx } from 'hooks/JBV3Token/transactor/SetTransferPermissionTx'
+import { useV1ProjectId } from 'hooks/JBV3Token/contractReader/V1ProjectId'
+import { useV1SetTransferPermissionTx } from 'hooks/JBV3Token/transactor/V1SetTransferPermissionTx'
 import { useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 
 export function GrantV1ApprovalCallout() {
-  const grantPermissionTx = useSetTransferPermissionTx()
   const [loading, setLoading] = useState<boolean>(false)
+
+  const grantPermissionTx = useV1SetTransferPermissionTx()
+  const { value: v1ProjectId } = useV1ProjectId()
 
   async function grantPermission() {
     setLoading(true)
 
     try {
-      const txSuccess = await grantPermissionTx(undefined, {
-        onConfirmed() {
-          setLoading(false)
+      const txSuccess = await grantPermissionTx(
+        { v1ProjectId },
+        {
+          onConfirmed() {
+            setLoading(false)
+          },
+          onError(e) {
+            setLoading(false)
+            console.error(e)
+          },
         },
-        onError(e) {
-          setLoading(false)
-          console.error(e)
-        },
-      })
+      )
       if (!txSuccess) {
         throw new Error()
       }

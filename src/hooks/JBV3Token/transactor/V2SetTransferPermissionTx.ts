@@ -6,7 +6,7 @@ import { useContext } from 'react'
 import { useJBV3Token } from '../contracts/JBV3Token'
 import { useJBOperatorStoreForV3Token } from '../contracts/JBOperatorStoreForV3Token'
 
-export function useSetTransferPermissionTx(): TransactorInstance {
+export function useV2SetTransferPermissionTx(): TransactorInstance {
   const { tokenAddress } = useContext(V2V3ProjectContext)
 
   const JBV3TokenContract = useJBV3Token({ tokenAddress })

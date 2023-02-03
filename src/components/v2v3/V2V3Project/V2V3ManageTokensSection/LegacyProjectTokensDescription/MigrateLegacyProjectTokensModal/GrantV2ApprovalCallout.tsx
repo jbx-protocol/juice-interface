@@ -1,12 +1,12 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { Callout } from 'components/Callout'
-import { useSetTransferPermissionTx } from 'hooks/JBV3Token/transactor/SetTransferPermissionTx'
+import { useV2SetTransferPermissionTx } from 'hooks/JBV3Token/transactor/V2SetTransferPermissionTx'
 import { useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 
 export function GrantV2ApprovalCallout() {
-  const grantPermissionTx = useSetTransferPermissionTx()
+  const grantPermissionTx = useV2SetTransferPermissionTx()
   const [loading, setLoading] = useState<boolean>(false)
 
   async function grantPermission() {

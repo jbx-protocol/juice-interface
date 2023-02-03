@@ -17,6 +17,7 @@ import { ProjectTokenDescription } from './ProjectTokenDescription'
 import { TotalSupplyDescription } from './TotalSupplyDescription'
 import { LegacyProjectTokensDescription } from './LegacyProjectTokensDescription'
 import { LegacyProjectTokensDescriptionHeading } from './LegacyProjectTokensDescription'
+import { V1UserProvider } from 'providers/v1/UserProvider'
 
 const labelStyle: CSSProperties = {
   width: '10.5rem',
@@ -98,7 +99,9 @@ export function V2V3ManageTokensSection() {
                 contentStyle={contentStyle}
                 className="pt-5"
               >
-                <LegacyProjectTokensDescription />
+                <V1UserProvider>
+                  <LegacyProjectTokensDescription />
+                </V1UserProvider>
               </Descriptions.Item>
             )}
           </>

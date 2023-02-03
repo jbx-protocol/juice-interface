@@ -464,6 +464,9 @@ msgstr ""
 msgid "Approve ERC20"
 msgstr ""
 
+msgid "Approve migration"
+msgstr ""
+
 msgid "Approve token for transaction"
 msgstr ""
 
@@ -1436,7 +1439,7 @@ msgstr ""
 msgid "Governance"
 msgstr ""
 
-msgid "Grant transfer permission"
+msgid "Grant permission"
 msgstr ""
 
 msgid "Has Juicebox been audited? What are the risks?"
@@ -1694,6 +1697,9 @@ msgstr ""
 msgid "Leave unchecked to have Juicebox track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
 msgstr ""
 
+msgid "Legacy balance"
+msgstr ""
+
 msgid "Legacy tokens to migrate"
 msgstr ""
 
@@ -1800,6 +1806,9 @@ msgid "Memos appear on the project's activity feed when the Payment Address rece
 msgstr ""
 
 msgid "Message"
+msgstr ""
+
+msgid "Migrate all approved tokens"
 msgstr ""
 
 msgid "Migrate legacy tokens"
@@ -2909,9 +2918,6 @@ msgstr ""
 msgid "Supply"
 msgstr ""
 
-msgid "Swap for V3 tokens"
-msgstr ""
-
 msgid "Switch network to {0}"
 msgstr ""
 
@@ -3095,7 +3101,7 @@ msgstr ""
 msgid "There are no reserved token recipients defined for this funding cycle. The project owner will receive all available tokens."
 msgstr ""
 
-msgid "This Juicebox V3 project also has a project on Juicebox V1 and/or V2. The project owner is allowing you to swap your legacy tokens (V1 or V2) for V3 tokens."
+msgid "This Juicebox V3 project also has a project on Juicebox V1 and/or V2. The project owner is allowing you to migrate your legacy tokens (V1 or V2) for V3 tokens."
 msgstr ""
 
 msgid "This Safe has no past transactions."
@@ -3695,7 +3701,10 @@ msgstr ""
 msgid "You haven't created any projects yet."
 msgstr ""
 
-msgid "You must grant permission to swap your tokens."
+msgid "You must grant permission to migrate your V1 tokens."
+msgstr ""
+
+msgid "You must grant permission to migrate your V2 tokens."
 msgstr ""
 
 msgid "You must review and accept the risks."
@@ -3803,7 +3812,7 @@ msgstr ""
 msgid "Your project’s first Funding Cycle will launch on <0>{0} at {1}</0>. Once deployed, your project will be visible but unable to receive funding or issue tokens until the date and time specified."
 msgstr ""
 
-msgid "Your total token balance for this project's legacy tokens."
+msgid "Your total token balance for this project's legacy tokens (V1 or V2 tokens)."
 msgstr ""
 
 msgid "Your transaction has been submitted and is awaiting confirmation."

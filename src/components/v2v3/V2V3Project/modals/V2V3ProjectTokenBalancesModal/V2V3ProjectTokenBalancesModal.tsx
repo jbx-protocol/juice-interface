@@ -13,7 +13,7 @@ import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { revalidateProject } from 'lib/api/nextjs'
 import { ProjectMetadataV5 } from 'models/project-metadata'
 import { TokenRef } from 'models/token-ref'
-import { V2OperatorPermission } from 'models/v2v3/permissions'
+import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import { useContext, useState } from 'react'
 
 import { AssetInputType, TokenRefs } from './TokenRefs'
@@ -109,7 +109,7 @@ export function V2V3ProjectTokenBalancesModal(props: ModalProps) {
   const [editModalVisible, setEditModalVisible] = useState<boolean>()
 
   const hasEditPermission = useV2ConnectedWalletHasPermission(
-    V2OperatorPermission.RECONFIGURE,
+    V2V3OperatorPermission.RECONFIGURE,
   )
 
   // Filter out JBDAO tokens, because we always display that balance.

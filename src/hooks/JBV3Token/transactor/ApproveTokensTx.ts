@@ -29,7 +29,7 @@ export function useApproveTokensTx(): TransactorInstance<{
       invariant(transactor && userAddress && projectId && tokenContract)
       return transactor(
         tokenContract,
-        'approve',
+        'approve(uint256,address,uint256)',
         [projectId, userAddress, amountWad],
         {
           ...txOpts,

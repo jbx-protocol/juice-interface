@@ -6,6 +6,7 @@ import { MigrateLegacyProjectTokensForm } from './MigrateLegacyProjectTokensForm
 import { TokenSwapDescription } from './TokenSwapDescription'
 import { useMigrateTokensTx } from 'hooks/JBV3Token/transactor/MigrateTokensTx'
 import { BigNumber } from '@ethersproject/bignumber'
+import { GrantPermissionSection } from './GrantPermissionSection'
 
 export function MigrateLegacyProjectTokensModal({
   legacyTokenBalance,
@@ -61,6 +62,7 @@ export function MigrateLegacyProjectTokensModal({
     >
       <Space size="large" direction="vertical" className="w-full">
         <TokenSwapDescription />
+        <GrantPermissionSection />
 
         <MigrateLegacyProjectTokensForm
           form={form}

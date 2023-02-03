@@ -1,4 +1,4 @@
-export enum V2OperatorPermission {
+export enum V2V3OperatorPermission {
   'RECONFIGURE' = 1,
   'REDEEM' = 2,
   'MIGRATE_CONTROLLER' = 3,

@@ -44,7 +44,7 @@ export function MigrateLegacyProjectTokensForm({
     <Form form={form} layout="vertical" {...props} onFinish={approveTokens}>
       <Space direction="vertical" size="large" className="w-full">
         <Statistic
-          title={<Trans>Your total legacy balance</Trans>}
+          title={<Trans>Your legacy token balance</Trans>}
           value={formatWad(legacyTokenBalance)}
         />
 

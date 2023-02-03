@@ -30,12 +30,7 @@ export function LegacyProjectTokensDescription() {
 
       {legacyTokenBalance?.gt(0) && (
         <>
-          <Button
-            size="small"
-            onClick={
-              () => setModalOpen(true) // TODO
-            }
-          >
+          <Button size="small" onClick={() => setModalOpen(true)}>
             <Trans>Migrate tokens</Trans>
           </Button>
           <MigrateLegacyProjectTokensModal

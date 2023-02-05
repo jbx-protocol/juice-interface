@@ -25,6 +25,8 @@ import {
 import { JuiceSwitch } from 'components/JuiceSwitch'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import ExternalLink from 'components/ExternalLink'
+import { helpPagePath } from 'utils/routes'
 
 const RadioItem = ({
   value,
@@ -146,12 +148,36 @@ export const NftRewardsPage = () => {
                     <RadioItem
                       value={JB721GovernanceType.GLOBAL}
                       title={t`Standard on-chain governance`}
-                      description={t`Track the historical voting weight of each token holder across all tiers of NFTs.`}
+                      description={
+                        <Trans>
+                          Track the historical voting weight of each token
+                          holder across all tiers of NFTs.{' '}
+                          <ExternalLink
+                            href={helpPagePath(
+                              '/user/configuration/#on-chain-governance',
+                            )}
+                          >
+                            Learn more.
+                          </ExternalLink>
+                        </Trans>
+                      }
                     />
                     <RadioItem
                       value={JB721GovernanceType.TIERED}
                       title={t`Tier-based on-chain governance`}
-                      description={t`Track the historical voting weight of each token holder within each tier of NFTs.`}
+                      description={
+                        <Trans>
+                          Track the historical voting weight of each token
+                          holder within each tier of NFTs.{' '}
+                          <ExternalLink
+                            href={helpPagePath(
+                              '/user/configuration/#on-chain-governance',
+                            )}
+                          >
+                            Learn more.
+                          </ExternalLink>
+                        </Trans>
+                      }
                     />
                   </Radio.Group>
                 </Form.Item>

@@ -12,7 +12,7 @@ import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/ETHPaymentTe
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
 import { Split } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
-import { V2OperatorPermission } from 'models/v2v3/permissions'
+import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import Link from 'next/link'
 import { useContext, useState } from 'react'
 import { detailedTimeString } from 'utils/format/formatTime'
@@ -61,7 +61,7 @@ export default function PayoutSplitsCard({
   })
   const hasDuration = fundingCycleDuration?.gt(0)
   const canEditPayouts = useV2ConnectedWalletHasPermission(
-    V2OperatorPermission.SET_SPLITS,
+    V2V3OperatorPermission.SET_SPLITS,
   )
 
   const effectiveDistributionLimit = distributionLimit ?? BigNumber.from(0)

@@ -98,7 +98,7 @@ msgstr ""
 msgid "<0><1><2/>{grossAvailableAmount}</1></0> available to distribute"
 msgstr ""
 
-msgid "<0><1>Peel</1> manages the juicebox.money frontend interface. You can reach out to Peel through the <2>Peel Discord</2>.</0><3><4>JuiceboxDAO</4> builds and governs the Juicebox protocol and other community resources. You can reach out to JuiceboxDAO through the <5>Juicebox Discord</5>.</3>"
+msgid "<0><1>Peel</1> manages the juicebox.money frontend interface. You can reach out to Peel through the <2>Peel Discord</2>.</0><3><4>JuiceboxDAO</4> builds and governs the Juicebox fundraising protocol and other community resources. You can reach out to JuiceboxDAO through the <5>Juicebox Discord</5>.</3>"
 msgstr ""
 
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
@@ -131,7 +131,7 @@ msgstr ""
 msgid "<0>Juicebox is a governance-minimal protocol. There are only a few levers that can be tuned, none of which impose changes for users without their consent. The Juicebox governance smart contract can adjust these levers.</0><1>The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly.</1><2>Juicebox is on-chain and non-custodial. Project creators actually own their projects, and JuiceboxDAO has no access to their funds or their project's settings.</2>"
 msgstr ""
 
-msgid "<0>Juicebox is a programmable funding platform for crypto and web3. It helps people fund, operate, and scale their projects transparently using Ethereum, which is a type of programmable cryptocurrency.</0><1>Juicebox is funded and owned by its community.</1>"
+msgid "<0>Juicebox is a programmable crypto fundraising platform for web3. It helps people fund, operate, and scale their projects transparently using Ethereum, which is a type of programmable cryptocurrency.</0><1>Juicebox is funded and owned by its community.</1>"
 msgstr ""
 
 msgid "<0>Learn more</0> about funding cycle duration."
@@ -188,7 +188,7 @@ msgstr ""
 msgid "<0>This website interacts with the Ethereum blockchain — to use it, you'll need to have a wallet and some ETH (ETH is the main currency on Ethereum). You can get a free wallet from <1>MetaMask.io</1>, and buy ETH from within the wallet by using a credit card.</0>"
 msgstr ""
 
-msgid "<0>To summarize:</0><1><2>When people pay a project, they receive the project's tokens. Like other tokens, these can be used for governance, for token-gated websites, and other purposes.</2><3>Projects can distribute funds to the wallets or Juicebox projects of their choosing. These distributions can be pre-defined, and they can also be changed over time.</3><4>If people are unhappy with the direction a project is headed, they can redeem their tokens to claim a share of the ETH held in the project.</4></1><5>Project creators have powerful controls over each one of these mechanics. They can change token issuance rates, redemption rates, distributions, and other project settings over time, leading to powerful and elegant tokenomics. They can also lock the project's settings in place for pre-determined amounts of time, guaranteeing that they can't rugpull the community. Juicebox lets projects take control if they need to, but it also lets them give up control to build trust.</5><6>Importantly, Juicebox is on-chain and non-custodial. Project creators actually own their projects, and JuiceboxDAO has no access to their funds or their project's settings.</6><7>To learn more, visit <8>the Docs</8>.</7>"
+msgid "<0>To summarize:</0><1><2>When people pay a project, they receive the project's tokens. Like other tokens, these can be used for governance, for token-gated websites, and other purposes.</2><3>Projects can distribute funds to the wallets or Juicebox projects of their choosing. These distributions can be pre-defined, and they can also be changed over time.</3><4>If people are unhappy with the direction a project is headed, they can redeem their tokens to claim a share of the ETH held in the project.</4></1><5>Project creators have powerful controls over each one of these mechanics. They can change token issuance rates, redemption rates, distributions, and other project settings over time, leading to powerful and elegant tokenomics. They can also lock the project's settings in place for pre-determined amounts of time, guaranteeing that they can't rugpull the community. Juicebox lets projects take control if they need to, but it also lets them give up control to build trust.</5><6>Importantly, Juicebox's crypto fundraising platform is on-chain and non-custodial. Project creators actually own their projects, and JuiceboxDAO has no access to their funds or their project's settings.</6><7>To learn more, visit <8>the Docs</8>.</7>"
 msgstr ""
 
 msgid "<0>Total project tokens minted</0> when 1 ETH is contributed. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
@@ -404,9 +404,6 @@ msgstr ""
 msgid "Allow public lock extension"
 msgstr ""
 
-msgid "Allow terminal configuration"
-msgstr ""
-
 msgid "Allow the <0>Juicebox NFT deployer contract</0> to reconfigure this project's funding cycle."
 msgstr ""
 
@@ -467,7 +464,13 @@ msgstr ""
 msgid "Approve ERC20"
 msgstr ""
 
+msgid "Approve migration"
+msgstr ""
+
 msgid "Approve token for transaction"
+msgstr ""
+
+msgid "Approve tokens for migration to V3"
 msgstr ""
 
 msgid "Archive project"
@@ -693,6 +696,9 @@ msgid "Collection name"
 msgstr ""
 
 msgid "Collection symbol"
+msgstr ""
+
+msgid "Configuration rules"
 msgstr ""
 
 msgid "Configure how your project will collect and spend funds."
@@ -1397,6 +1403,9 @@ msgstr ""
 msgid "Funding distribution"
 msgstr ""
 
+msgid "Funding rules"
+msgstr ""
+
 msgid "Funding target"
 msgstr ""
 
@@ -1409,10 +1418,7 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-msgid "Give NFT deployer permissions for project #{projectId}"
-msgstr ""
-
-msgid "Give V3 migration token deployer permissions on project #{projectId}"
+msgid "Give permissions to {0} on project #{projectId}"
 msgstr ""
 
 msgid "Give this NFT a name."
@@ -1431,6 +1437,9 @@ msgid "Go to your Safe"
 msgstr ""
 
 msgid "Governance"
+msgstr ""
+
+msgid "Grant permission"
 msgstr ""
 
 msgid "Has Juicebox been audited? What are the risks?"
@@ -1631,10 +1640,10 @@ msgstr ""
 msgid "Juicebox Project ID"
 msgstr ""
 
-msgid "Juicebox gives you the tools to automate your funding so you can focus on building."
+msgid "Juicebox gives you the tools to automate web3 fundraising so you can focus on building."
 msgstr ""
 
-msgid "Juicebox isn't guaranteed to be free of bugs or exploits. Before spending money, do your own research. <0>Ask questions</0>, check out the <1>code</1>, and understand the <2>risks</2>!"
+msgid "Juicebox isn't guaranteed to be free of bugs or exploits. Before spending money, do your own research. <0>Ask questions</0>, check out the <1>code</1>, and understand the <2>risks </2>of crypto fundraising!"
 msgstr ""
 
 msgid "Juicebox loading animation"
@@ -1686,6 +1695,12 @@ msgid "Launch {projectTitle}"
 msgstr ""
 
 msgid "Leave unchecked to have Juicebox track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
+msgstr ""
+
+msgid "Legacy balance"
+msgstr ""
+
+msgid "Legacy tokens to migrate"
 msgstr ""
 
 msgid "Light theme"
@@ -1793,7 +1808,19 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
+msgid "Migrate all approved tokens"
+msgstr ""
+
+msgid "Migrate legacy tokens"
+msgstr ""
+
 msgid "Migrate tokens"
+msgstr ""
+
+msgid "Migrate tokens to V3 for project #{projectId}"
+msgstr ""
+
+msgid "Migration rules"
 msgstr ""
 
 msgid "Minimum Contribution"
@@ -1872,6 +1899,9 @@ msgid "NFT mint confirmed"
 msgstr ""
 
 msgid "NFT projects"
+msgstr ""
+
+msgid "NFT rules"
 msgstr ""
 
 msgid "NFTs"
@@ -2036,16 +2066,25 @@ msgstr ""
 msgid "Owner Permissions"
 msgstr ""
 
+msgid "Owner can change the project's Controller."
+msgstr ""
+
 msgid "Owner can mint tokens at any time."
 msgstr ""
 
-msgid "Owner can set the project's payment terminals."
+msgid "Owner can set the project's Payment Terminals."
 msgstr ""
 
 msgid "Owner is not allowed to mint tokens."
 msgstr ""
 
-msgid "Owner isn't allowed to set the project's payment terminals."
+msgid "Owner isn't allowed to change the project's Controller."
+msgstr ""
+
+msgid "Owner isn't allowed to set the project's Payment Terminals."
+msgstr ""
+
+msgid "Owner permissions"
 msgstr ""
 
 msgid "Owner token minting"
@@ -2325,6 +2364,9 @@ msgid "Project token"
 msgstr ""
 
 msgid "Project token beneficiary address"
+msgstr ""
+
+msgid "Project token transfers"
 msgstr ""
 
 msgid "Project token transfers are {0}. This does not apply to ERC-20 tokens if issued."
@@ -2717,7 +2759,7 @@ msgstr ""
 msgid "Set a distribution limit"
 msgstr ""
 
-msgid "Set a duration for automatically recurring funding cycles. Funds may only be distributed once per cycle."
+msgid "Set a duration for automatically recurring funding cycles."
 msgstr ""
 
 msgid "Set a funding cycle duration"
@@ -2987,7 +3029,7 @@ msgstr ""
 msgid "The percentage this individual receives of the overall {reservedRate}% reserved token allocation"
 msgstr ""
 
-msgid "The programmable funding protocol for builders and creators. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
+msgid "The programmable crypto fundraising protocol for builders and creators. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
 msgstr ""
 
 msgid "The project is using an unknown contract for its reconfiguration strategy."
@@ -3062,7 +3104,7 @@ msgstr ""
 msgid "There are no reserved token recipients defined for this funding cycle. The project owner will receive all available tokens."
 msgstr ""
 
-msgid "This Juicebox V3 project also has a project on Juicebox V1 and/or V2. The project owner is allowing you to swap your legacy tokens (V1 or V2) for V3 tokens."
+msgid "This Juicebox V3 project also has a project on Juicebox V1 and/or V2. The project owner is allowing you to migrate your legacy tokens (V1 or V2) for V3 tokens."
 msgstr ""
 
 msgid "This Safe has no past transactions."
@@ -3191,6 +3233,9 @@ msgstr ""
 msgid "Token redeem value"
 msgstr ""
 
+msgid "Token rules"
+msgstr ""
+
 msgid "Token symbol"
 msgstr ""
 
@@ -3284,10 +3329,10 @@ msgstr ""
 msgid "Total: {0}%"
 msgstr ""
 
-msgid "Track the historical voting weight of each token holder across all tiers of NFTs."
+msgid "Track the historical voting weight of each token holder across all tiers of NFTs. <0>Learn more.</0>"
 msgstr ""
 
-msgid "Track the historical voting weight of each token holder within each tier of NFTs."
+msgid "Track the historical voting weight of each token holder within each tier of NFTs. <0>Learn more.</0>"
 msgstr ""
 
 msgid "Transaction failed"
@@ -3434,9 +3479,6 @@ msgstr ""
 msgid "Use <0>Percentages</0> when you want to configure an <1>infinite distribution limit.</1> With an infinite distribution limit, your project reserves all funds for itself. Your project won't have overflow, so tokens can never be redeemed for ETH. <2>Learn more</2>."
 msgstr ""
 
-msgid "Use data source for redeem"
-msgstr ""
-
 msgid "Use for payments"
 msgstr ""
 
@@ -3456,9 +3498,6 @@ msgid "V1 Project handle"
 msgstr ""
 
 msgid "V1 project handle"
-msgstr ""
-
-msgid "V1 tokens to swap"
 msgstr ""
 
 msgid "V1.1"
@@ -3566,13 +3605,13 @@ msgstr ""
 msgid "When enabled, the project owner can manually mint any amount of tokens to any address."
 msgstr ""
 
+msgid "When enabled, the project owner can migrate project's existing Payment Terminals to a newer version of the contract. <0>Learn more</0>"
+msgstr ""
+
 msgid "When enabled, the project owner can migrate the project's Controller to a newer version of the contract. <0>Learn more</0>"
 msgstr ""
 
 msgid "When enabled, the project owner can migrate the project's existing Payment Terminals to a newer version of the contract. <0>Learn more</0>"
-msgstr ""
-
-msgid "When enabled, the project owner can set the project's payment terminals."
 msgstr ""
 
 msgid "When enabled, the project will hold the fee amount in ETH instead of the fees being processed automatically. <0>Learn more.</0>"
@@ -3653,7 +3692,7 @@ msgstr ""
 msgid "You don't own any veNFTs!"
 msgstr ""
 
-msgid "You have <0>{0}</0> tokens in one or more of their legacy projects. You can swap your legacy <1>{1}</1> tokens for their current V3 tokens."
+msgid "You have <0>{0}</0> tokens in one or more of their legacy projects. You can swap your legacy <1>{1}</1> tokens for their current V3 tokens <2/>."
 msgstr ""
 
 msgid "You have configured for all funds to be distributed from the treasury. Your current payouts do not sum to 100%, so the remainder will go to the project owner."
@@ -3666,6 +3705,12 @@ msgid "You have unsaved changes. Are you sure you want to discard them?"
 msgstr ""
 
 msgid "You haven't created any projects yet."
+msgstr ""
+
+msgid "You must grant permission to migrate your V1 tokens."
+msgstr ""
+
+msgid "You must grant permission to migrate your V2 tokens."
 msgstr ""
 
 msgid "You must review and accept the risks."
@@ -3773,10 +3818,7 @@ msgstr ""
 msgid "Your project’s first Funding Cycle will launch on <0>{0} at {1}</0>. Once deployed, your project will be visible but unable to receive funding or issue tokens until the date and time specified."
 msgstr ""
 
-msgid "Your total legacy balance"
-msgstr ""
-
-msgid "Your total token balance for this project's legacy tokens."
+msgid "Your total token balance for this project's legacy tokens (V1 or V2 tokens)."
 msgstr ""
 
 msgid "Your transaction has been submitted and is awaiting confirmation."

@@ -7,8 +7,8 @@ const TooltipDescription = () => {
   return (
     <Trans>
       This Juicebox V3 project also has a project on Juicebox V1 and/or V2. The
-      project owner is allowing you to swap your legacy tokens (V1 or V2) for V3
-      tokens.
+      project owner is allowing you to migrate your legacy tokens (V1 or V2) for
+      V3 tokens.
     </Trans>
   )
 }
@@ -23,9 +23,9 @@ export function TokenSwapDescription() {
           You have <span className="font-medium">{projectMetadata?.name}</span>{' '}
           tokens in one or more of their legacy projects. You can swap your
           legacy <span className="font-medium">{projectMetadata?.name}</span>{' '}
-          tokens for their current V3 tokens.
-        </Trans>{' '}
-        <TooltipIcon tip={<TooltipDescription />} />
+          tokens for their current V3 tokens{' '}
+          <TooltipIcon tip={<TooltipDescription />} />.
+        </Trans>
       </p>
     </div>
   )

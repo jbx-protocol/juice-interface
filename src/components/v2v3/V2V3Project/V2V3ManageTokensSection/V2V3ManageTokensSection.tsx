@@ -7,7 +7,7 @@ import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
 import { useWallet } from 'hooks/Wallet'
-import { V2OperatorPermission } from 'models/v2v3/permissions'
+import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import { CSSProperties, useContext } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -17,6 +17,7 @@ import { ProjectTokenDescription } from './ProjectTokenDescription'
 import { TotalSupplyDescription } from './TotalSupplyDescription'
 import { LegacyProjectTokensDescription } from './LegacyProjectTokensDescription'
 import { LegacyProjectTokensDescriptionHeading } from './LegacyProjectTokensDescription'
+import { V1UserProvider } from 'providers/v1/UserProvider'
 
 const labelStyle: CSSProperties = {
   width: '10.5rem',
@@ -33,14 +34,14 @@ export function V2V3ManageTokensSection() {
   const { tokenAddress, tokenSymbol } = useContext(V2V3ProjectContext)
   const { userAddress } = useWallet()
   const hasIssueTicketsPermission = useV2ConnectedWalletHasPermission(
-    V2OperatorPermission.ISSUE,
+    V2V3OperatorPermission.ISSUE,
   )
 
   const hasIssuedERC20 = tokenAddress && tokenAddress !== constants.AddressZero
   const showIssueErc20TokenButton = !hasIssuedERC20 && hasIssueTicketsPermission
 
   const v1TokenSwapEnabled = featureFlagEnabled(FEATURE_FLAGS.V1_TOKEN_SWAP)
-  const showV1ProjectTokensSection = v1TokenSwapEnabled
+  const showLegacyProjectTokensSection = v1TokenSwapEnabled
 
   const tokenText = tokenSymbolText({
     tokenSymbol,
@@ -91,13 +92,16 @@ export function V2V3ManageTokensSection() {
               <AccountBalanceDescription />
             </Descriptions.Item>
 
-            {showV1ProjectTokensSection && (
+            {showLegacyProjectTokensSection && (
               <Descriptions.Item
                 label={<LegacyProjectTokensDescriptionHeading />}
                 labelStyle={labelStyle}
                 contentStyle={contentStyle}
+                className="pt-5"
               >
-                <LegacyProjectTokensDescription />
+                <V1UserProvider>
+                  <LegacyProjectTokensDescription />
+                </V1UserProvider>
               </Descriptions.Item>
             )}
           </>

@@ -9,7 +9,7 @@ import FundingCycleSection, {
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
-import { V2OperatorPermission } from 'models/v2v3/permissions'
+import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { settingsPagePath } from 'utils/routes'
@@ -71,7 +71,7 @@ export function V2V3FundingCycleSection() {
     hasFundingDuration(serializeV2V3FundingCycleData(fundingCycle))
 
   const canReconfigure = useV2ConnectedWalletHasPermission(
-    V2OperatorPermission.RECONFIGURE,
+    V2V3OperatorPermission.RECONFIGURE,
   )
 
   if (fundingCycleLoading) {

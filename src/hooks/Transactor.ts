@@ -61,7 +61,6 @@ function prepareTransaction({
     options?.value !== undefined
       ? contract[functionName](...args, { value: options.value })
       : contract[functionName](...args)
-
   return tx
 }
 

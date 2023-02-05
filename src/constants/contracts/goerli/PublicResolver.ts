@@ -1,5 +1,5 @@
 export const goerliPublicResolver = {
-  address: '0x4976fb03c32e5b8cfe2b6ccb31c09ba78ebaba41',
+  address: '0x19c2d5D0f035563344dBB7bE5fD09c8dad62b001',
   abi: [
     {
       constant: true,

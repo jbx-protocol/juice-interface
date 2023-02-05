@@ -3678,10 +3678,10 @@
   resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-v3-migration/-/juice-v3-migration-1.0.0.tgz#008663d8e09005d19a4837d98b519a1058c9060a"
   integrity sha512-+jmoiGcvVlbYrs510UDGWcUy7r2+pkhP+BI2ZqAjH4numZ7FWMvyRFjyaWLhzVHnKNZCSTUvvTIwU4wH5n6LSg==
 
-"@jbx-protocol/project-handles@2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@jbx-protocol/project-handles/-/project-handles-2.0.2.tgz#276f2530092455136d00d0a78d18a17cb1450111"
-  integrity sha512-8ebDxeT+2G2+e+54/Jn82TBg+qT5a5Vwa7fu9ihjkmHe3SWt1GwzzKA/cVeN6xu2N/tM4Mbjz1xqbUS0hdn8oQ==
+"@jbx-protocol/project-handles@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@jbx-protocol/project-handles/-/project-handles-2.0.4.tgz#08db2fc1f6fd51419566f0a217c47f5374e839fd"
+  integrity sha512-NT8G0yt0cnpm1N+IqpKnej6xTC2D42/j9zv/DdLXhvyU+rCXqQ//oUg3cezZdL8AGi2l74rC5odE1j6FFrUrxA==
   dependencies:
     "@jbx-protocol/juice-contracts-v3" "^2.0.0"
 

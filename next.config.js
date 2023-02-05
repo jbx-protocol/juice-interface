@@ -16,6 +16,7 @@ const ContentSecurityPolicy = `
   manifest-src 'self';
   prefetch-src 'self';
   frame-src 'self' https://vars.hotjar.com/ https://gnosis-safe.io https://app.safe.global;
+  media-src 'self' https://jbx.mypinata.cloud;
 `
 
 module.exports = {

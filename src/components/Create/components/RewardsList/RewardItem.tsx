@@ -45,7 +45,7 @@ export const RewardItem = ({
     description,
     maximumSupply,
     url,
-    imgUrl,
+    fileUrl,
   } = reward
   return (
     <div className="flex flex-col gap-4">
@@ -66,7 +66,7 @@ export const RewardItem = ({
 
       <div className="flex flex-col gap-8 md:flex-row">
         <div className="flex flex-col gap-3">
-          <RewardImage className="h-44 w-44" src={imgUrl.toString()} />
+          <RewardImage className="h-44 w-44" src={fileUrl.toString()} />
           {url && (
             <div className="flex max-w-[11rem] items-center gap-2 overflow-hidden overflow-ellipsis whitespace-nowrap text-xs font-normal">
               <LinkOutlined />

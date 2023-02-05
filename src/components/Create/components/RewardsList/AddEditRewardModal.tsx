@@ -1,10 +1,6 @@
-import {
-  CloseCircleFilled,
-  QuestionCircleOutlined,
-  UploadOutlined,
-} from '@ant-design/icons'
+import { QuestionCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Form, Modal, Progress, Space, Tooltip } from 'antd'
+import { Form, Modal, Space, Tooltip } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
@@ -12,16 +8,13 @@ import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import { JuiceSwitch } from 'components/JuiceSwitch'
 import PrefixedInput from 'components/PrefixedInput'
-import { UploadNoStyle } from 'components/UploadNoStyle'
-import { ThemeContext } from 'contexts/themeContext'
+import { SupportedNftFileTypes, UploadNoStyle } from 'components/UploadNoStyle'
 import { usePinFileToIpfs } from 'hooks/PinFileToIpfs'
 import { useWallet } from 'hooks/Wallet'
 import { UploadRequestOption } from 'rc-upload/lib/interface'
-import { useCallback, useContext, useEffect, useState } from 'react'
-import { stopPropagation } from 'react-stop-propagation'
+import { useCallback, useEffect, useState } from 'react'
 import { restrictedIpfsUrl } from 'utils/ipfs'
 import { v4 } from 'uuid'
-import { CreateButton } from 'components/CreateButton'
 import {
   inputIsValidUrlRule,
   inputNonZeroRule,
@@ -31,11 +24,12 @@ import {
 } from 'utils/antd-rules'
 import { CreateCollapse } from '../CreateCollapse'
 import { OptionalHeader } from '../OptionalHeader'
-import { RewardImage } from '../RewardImage'
 import { Reward } from './types'
+import { featureFlagEnabled } from 'utils/featureFlags'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 
 interface AddEditRewardModalFormProps {
-  imgUrl: string
+  fileUrl: string
   rewardName: string
   description?: string | undefined
   minimumContribution?: string | undefined
@@ -45,6 +39,8 @@ interface AddEditRewardModalFormProps {
   votingWeight?: number | undefined
   externalUrl?: string | undefined
 }
+
+export const NFT_FILE_UPLOAD_EXTRA = t`NFT will be cropped to a 1:1 square in thumbnail previews on the Juicebox app.`
 
 export const AddEditRewardModal = ({
   className,
@@ -59,9 +55,6 @@ export const AddEditRewardModal = ({
   onOk: (reward: Reward) => void
   onCancel: VoidFunction
 }) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const [form] = Form.useForm<AddEditRewardModalFormProps>()
   const [limitedSupply, setLimitedSupply] = useState<boolean>(false)
   const [isReservingNfts, setIsReservingNfts] = useState<boolean>(false)
@@ -81,7 +74,7 @@ export const AddEditRewardModal = ({
     setLimitedSupply(!!editingData.maximumSupply)
     setIsReservingNfts(!!editingData.beneficiary && !!editingData.reservedRate)
     form.setFieldsValue({
-      imgUrl: editingData.imgUrl.toString(),
+      fileUrl: editingData.fileUrl.toString(),
       rewardName: editingData.title,
       description: editingData.description,
       minimumContribution: editingData.minimumContribution.toString(),
@@ -125,7 +118,7 @@ export const AddEditRewardModal = ({
       description: fields.description,
       maximumSupply: fields.maxSupply ? parseInt(fields.maxSupply) : undefined,
       url: fields.externalUrl ? `https://${fields.externalUrl}` : undefined,
-      imgUrl: fields.imgUrl,
+      fileUrl: fields.fileUrl,
       beneficiary: fields.beneficiary,
       reservedRate: fields.nftReservedRate,
       votingWeight: fields.votingWeight
@@ -169,6 +162,15 @@ export const AddEditRewardModal = ({
   }, [wallet])
 
   const isEditing = !!editingData
+
+  const nftMp4Enabled = featureFlagEnabled(FEATURE_FLAGS.NFT_MP4)
+  const supportedNftFileType: SupportedNftFileTypes[] = [
+    ...(nftMp4Enabled ? (['video/mp4'] as SupportedNftFileTypes[]) : []),
+    'image/jpeg',
+    'image/png',
+    'image/gif',
+  ]
+
   return (
     <Modal
       className={className}
@@ -185,51 +187,19 @@ export const AddEditRewardModal = ({
     >
       <Form form={form} preserve={false} colon={false} layout="vertical">
         <Form.Item
-          name="imgUrl"
-          label={t`Image file`}
-          extra={t`Image will be cropped to a 1:1 square in thumbnail previews on the Juicebox app.`}
+          name="fileUrl"
+          label={t`File`}
+          extra={NFT_FILE_UPLOAD_EXTRA}
           required
           rules={[inputMustExistRule({ label: t`Image file` })]}
         >
           <UploadNoStyle
             sizeLimit={100 * 1024 * 1024} // 100 MB
-            supportedFileTypes={
-              new Set(['image/jpeg', 'image/png', 'image/gif'])
-            }
+            supportedFileTypes={new Set(supportedNftFileType)}
             beforeUpload={onBeforeUpload}
             customRequest={onCustomRequest}
             listType="picture-card" // Tried to do away with styling, but need this -.-
-          >
-            {({ uploadUrl, isUploading, undo, percent }) => {
-              if (isUploading) {
-                return (
-                  <div>
-                    <Progress
-                      width={48}
-                      className="h-8 w-8"
-                      strokeColor={colors.background.action.primary}
-                      type="circle"
-                      percent={percent}
-                      format={percent => (
-                        <div className="text-black dark:text-grey-200">
-                          {percent ?? 0}%
-                        </div>
-                      )}
-                    />
-                  </div>
-                )
-              }
-              if (uploadUrl === undefined) {
-                return <UploadButton />
-              }
-              return (
-                <UploadedImage
-                  imageUrl={uploadUrl}
-                  onRemoveImageClicked={undo}
-                />
-              )
-            }}
-          </UploadNoStyle>
+          />
         </Form.Item>
         <Form.Item
           name="rewardName"
@@ -386,35 +356,5 @@ export const AddEditRewardModal = ({
         </CreateCollapse>
       </Form>
     </Modal>
-  )
-}
-
-const UploadButton = () => {
-  return (
-    <CreateButton icon={<UploadOutlined />} className="h-24 w-full">
-      Upload image
-    </CreateButton>
-  )
-}
-
-const UploadedImage = ({
-  imageUrl,
-  onRemoveImageClicked,
-}: {
-  imageUrl: string
-  onRemoveImageClicked?: VoidFunction
-}) => {
-  return (
-    <div className="flex justify-center bg-smoke-200 py-2 dark:bg-slate-600">
-      <div className="relative">
-        <RewardImage className="h-[11.5rem] w-[11.5rem]" src={imageUrl} />
-        <CloseCircleFilled
-          className="absolute top-0 right-0 cursor-pointer text-2xl text-haze-400"
-          // TODO: We require @tailwind base to do this in className, so use style for now
-          style={{ transform: 'translate(50%, -50%)' }}
-          onClick={stopPropagation(onRemoveImageClicked)}
-        />
-      </div>
-    </div>
   )
 }

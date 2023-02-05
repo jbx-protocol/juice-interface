@@ -5,8 +5,8 @@ export interface Reward {
   description: string | undefined
   maximumSupply?: number
   url: string | undefined
+  fileUrl: string
   reservedRate: number | undefined
   beneficiary: string | undefined
   votingWeight: number | undefined
-  imgUrl: string
 }

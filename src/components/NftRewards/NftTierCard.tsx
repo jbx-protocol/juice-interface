@@ -37,9 +37,9 @@ export function NftTierCard({
   // used to return to previous state on second click if user accidentally unselected the NFT
   const [previousQuantity, setPreviousQuantity] = useState<number>(1)
 
-  const imageUrl = rewardTier?.imageUrl
-    ? ipfsToHttps(rewardTier.imageUrl)
-    : rewardTier?.imageUrl
+  const imageUrl = rewardTier?.fileUrl
+    ? ipfsToHttps(rewardTier.fileUrl)
+    : rewardTier?.fileUrl
 
   const hasQuantitySelected = quantitySelected > 0
   const _isSelected = isSelected || hasQuantitySelected

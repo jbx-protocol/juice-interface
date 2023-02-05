@@ -38,7 +38,7 @@ async function fetchRewardTierFromIPFS({
     contributionFloor: parseFloat(formatWad(tier.contributionFloor) ?? '0'),
     maxSupply,
     remainingSupply: tier.remainingQuantity?.toNumber() ?? maxSupply,
-    imageUrl: tierMetadata.image,
+    fileUrl: tierMetadata.image,
     beneficiary: tier.reservedTokenBeneficiary,
     reservedRate: tier.reservedRate.toNumber(),
     votingWeight: tier.votingUnits.toNumber(),

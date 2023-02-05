@@ -84,7 +84,7 @@ export default function NftRewardTierCard({
           {imageLoading ? <LoadingOutlined className="text-3xl" /> : null}
           <Image
             className={classNames('object-cover', imageLoading ? 'hidden' : '')}
-            src={rewardTier.imageUrl}
+            src={rewardTier.fileUrl}
             alt={rewardTier.name}
             height={imageLoading ? 0 : NFT_IMAGE_SIDE_LENGTH}
             width={imageLoading ? 0 : NFT_IMAGE_SIDE_LENGTH}

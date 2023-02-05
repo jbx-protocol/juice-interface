@@ -66,7 +66,7 @@ export const V2V3PayForm = ({
     if (transactionCanceled) return
 
     const initialStickerUrls = nftRewardTiers?.map(
-      (tier: NftRewardTier) => tier.imageUrl,
+      (tier: NftRewardTier) => tier.fileUrl,
     )
 
     form.setFieldsValue({

@@ -46,7 +46,7 @@ export default function NftRewardTierModal({
       contributionFloor: parseFloat(nftForm.getFieldValue('contributionFloor')),
       maxSupply,
       remainingSupply: maxSupply,
-      imageUrl: nftForm.getFieldValue('imageUrl'),
+      fileUrl: nftForm.getFieldValue('imageUrl'),
       name: nftForm.getFieldValue('name'),
       externalLink: withHttps(nftForm.getFieldValue('externalLink')),
       description: nftForm.getFieldValue('description'),
@@ -64,7 +64,7 @@ export default function NftRewardTierModal({
     () =>
       rewardTier
         ? {
-            imageUrl: rewardTier.imageUrl,
+            imageUrl: rewardTier.fileUrl,
             maxSupply: rewardTier.maxSupply,
             name: rewardTier.name,
             externalLink: rewardTier.externalLink?.slice(8), // removes 'https://'

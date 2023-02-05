@@ -1,17 +1,19 @@
 import { t } from '@lingui/macro'
 import { Row } from 'antd'
 import { Reward, RewardsList } from 'components/Create/components/RewardsList'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import { useCallback, useMemo } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { formatEnabled } from 'utils/format/formatBoolean'
 import { v4 } from 'uuid'
 import { DescriptionCol } from '../DescriptionCol'
 
 export const RewardsReview = () => {
   const {
-    nftRewards: { rewardTiers },
+    nftRewards: { rewardTiers, flags },
     fundingCycleMetadata,
   } = useAppSelector(state => state.editingV2Project)
 
@@ -60,12 +62,18 @@ export const RewardsReview = () => {
     return formatEnabled(fundingCycleMetadata.useDataSourceForRedeem)
   }, [fundingCycleMetadata.useDataSourceForRedeem])
 
+  const preventOverspending = useMemo(() => {
+    return formatEnabled(flags.preventOverspending)
+  }, [flags.preventOverspending])
+
+  const delegateV1_1Enabled = featureFlagEnabled(FEATURE_FLAGS.DELEGATE_V1_1)
+
   return (
     <>
       <RewardsList value={rewards} onChange={setRewards} />
-      <Row gutter={20}>
+      <Row gutter={20} className="mt-4">
         <DescriptionCol
-          span={24}
+          span={6}
           title={t`Redeemable NFTs`}
           desc={
             <div className="text-base font-medium">
@@ -73,6 +81,15 @@ export const RewardsReview = () => {
             </div>
           }
         />
+        {delegateV1_1Enabled ? (
+          <DescriptionCol
+            span={6}
+            title={t`Prevent NFT overspending`}
+            desc={
+              <div className="text-base font-medium">{preventOverspending}</div>
+            }
+          />
+        ) : null}
       </Row>
     </>
   )

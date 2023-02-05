@@ -3,6 +3,7 @@ import * as constants from '@ethersproject/constants'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AllocationSplit } from 'components/Allocation'
 import { projectTokenSettingsToReduxFormat } from 'components/Create/utils/projectTokenSettingsToReduxFormat'
+import { JB721_DELEGATE_V1 } from 'constants/delegateVersions'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
@@ -10,6 +11,7 @@ import {
 import { CreatePage } from 'models/create-page'
 import { FundingTargetType } from 'models/fundingTargetType'
 import {
+  JBTiered721Flags,
   DelegateVersion,
   JB721GovernanceType,
   NftCollectionMetadata,
@@ -46,6 +48,7 @@ export type NftRewardsData = {
   CIDs: string[] | undefined // points to locations of the NFTs' json on IPFS
   collectionMetadata: NftCollectionMetadata
   postPayModal: NftPostPayModalConfig | undefined
+  flags: JBTiered721Flags
   contractVersion: DelegateVersion | undefined
   governanceType: JB721GovernanceType
 }
@@ -79,10 +82,11 @@ interface ReduxState extends CreateState, ProjectState {
 // Increment this version by 1 when making breaking or major changes.
 // When users return to the site and their local version is less than
 // this number, their state will be reset.
-export const REDUX_STORE_V2_PROJECT_VERSION = 11
+export const REDUX_STORE_V2_PROJECT_VERSION = 12
 
 export const DEFAULT_MUST_START_AT_OR_AFTER = '1'
 
+// IF CHANGING ANY DEFAULT STATE, MUST INCREMENT REDUX VERSION ABOVE (`REDUX_STORE_V2_PROJECT_VERSION`)
 export const defaultFundingCycleData: SerializedV2V3FundingCycleData =
   serializeV2V3FundingCycleData({
     duration: BigNumber.from(0),
@@ -91,6 +95,7 @@ export const defaultFundingCycleData: SerializedV2V3FundingCycleData =
     ballot: constants.AddressZero,
   })
 
+// IF CHANGING ANY DEFAULT STATE, MUST INCREMENT REDUX VERSION ABOVE (`REDUX_STORE_V2_PROJECT_VERSION`)
 export const defaultFundingCycleMetadata: SerializedV2V3FundingCycleMetadata =
   serializeV2V3FundingCycleMetadata({
     global: {
@@ -117,16 +122,19 @@ export const defaultFundingCycleMetadata: SerializedV2V3FundingCycleMetadata =
     metadata: BigNumber.from(0),
   }) ?? {}
 
+// IF CHANGING ANY DEFAULT STATE, MUST INCREMENT REDUX VERSION ABOVE (`REDUX_STORE_V2_PROJECT_VERSION`)
 const EMPTY_PAYOUT_GROUPED_SPLITS = {
   group: ETH_PAYOUT_SPLIT_GROUP,
   splits: [],
 }
 
+// IF CHANGING ANY DEFAULT STATE, MUST INCREMENT REDUX VERSION ABOVE (`REDUX_STORE_V2_PROJECT_VERSION`)
 export const EMPTY_RESERVED_TOKENS_GROUPED_SPLITS = {
   group: RESERVED_TOKEN_SPLIT_GROUP,
   splits: [],
 }
 
+// IF CHANGING ANY DEFAULT STATE, MUST INCREMENT REDUX VERSION ABOVE (`REDUX_STORE_V2_PROJECT_VERSION`)
 export const EMPTY_NFT_COLLECTION_METADATA = {
   symbol: undefined,
   name: undefined,
@@ -134,6 +142,15 @@ export const EMPTY_NFT_COLLECTION_METADATA = {
   description: undefined,
 }
 
+// IF CHANGING ANY DEFAULT STATE, MUST INCREMENT REDUX VERSION ABOVE (`REDUX_STORE_V2_PROJECT_VERSION`)
+export const DEFAULT_NFT_FLAGS: JBTiered721Flags = {
+  lockReservedTokenChanges: false,
+  lockVotingUnitChanges: false,
+  lockManualMintingChanges: false,
+  preventOverspending: false,
+}
+
+// IF CHANGING ANY DEFAULT STATE, MUST INCREMENT REDUX VERSION ABOVE (`REDUX_STORE_V2_PROJECT_VERSION`)
 const defaultCreateState: CreateState = {
   reconfigurationRuleSelection: undefined,
   fundingCyclesPageSelection: undefined,
@@ -144,6 +161,7 @@ const defaultCreateState: CreateState = {
   projectTokensSelection: undefined,
 }
 
+// IF CHANGING ANY DEFAULT STATE, MUST INCREMENT REDUX VERSION ABOVE (`REDUX_STORE_V2_PROJECT_VERSION`)
 const defaultProjectMetadataState: ProjectMetadataV5 = {
   name: '',
   infoUri: '',
@@ -156,6 +174,7 @@ const defaultProjectMetadataState: ProjectMetadataV5 = {
   version: LATEST_METADATA_VERSION,
 }
 
+// IF CHANGING ANY DEFAULT STATE, MUST INCREMENT REDUX VERSION ABOVE (`REDUX_STORE_V2_PROJECT_VERSION`)
 const defaultProjectState: ProjectState = {
   projectMetadata: { ...defaultProjectMetadataState },
   fundingCycleData: { ...defaultFundingCycleData },
@@ -168,7 +187,8 @@ const defaultProjectState: ProjectState = {
     CIDs: undefined,
     collectionMetadata: EMPTY_NFT_COLLECTION_METADATA,
     postPayModal: undefined,
-    contractVersion: undefined,
+    flags: DEFAULT_NFT_FLAGS,
+    contractVersion: JB721_DELEGATE_V1,
     governanceType: JB721GovernanceType.NONE,
   },
   mustStartAtOrAfter: DEFAULT_MUST_START_AT_OR_AFTER,
@@ -346,6 +366,9 @@ const editingV2ProjectSlice = createSlice({
     },
     setNftRewardsName: (state, action: PayloadAction<string>) => {
       state.nftRewards.collectionMetadata.name = action.payload
+    },
+    setNftPreventOverspending: (state, action: PayloadAction<boolean>) => {
+      state.nftRewards.flags.preventOverspending = action.payload
     },
     setAllowSetTerminals: (state, action: PayloadAction<boolean>) => {
       state.fundingCycleMetadata.global.allowSetTerminals = action.payload

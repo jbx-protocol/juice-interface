@@ -14,7 +14,10 @@ import {
 } from 'components/Project/PayProjectForm/usePayProjectForm'
 import TooltipLabel from 'components/TooltipLabel'
 import TransactionModal from 'components/TransactionModal'
-import { DV_V1, DV_V1_1 } from 'constants/delegateVersions'
+import {
+  JB721_DELEGATE_V1,
+  JB721_DELEGATE_V1_1,
+} from 'constants/delegateVersions'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
@@ -154,12 +157,12 @@ export function V2V3ConfirmPayModal({
     const txBeneficiary = beneficiary ?? userAddress
 
     const delegateMetadata =
-      nftContractVersion === DV_V1 // old delegate v1
+      nftContractVersion === JB721_DELEGATE_V1 // old delegate v1
         ? encodeJB721DelegateV1PayMetadata({
             ...(payProjectForm?.payMetadata as JB721DELAGATE_V1_PAY_METADATA),
             ...payMetadataOverrides(projectId),
           })
-        : DV_V1_1
+        : nftContractVersion === JB721_DELEGATE_V1_1
         ? encodeJB721DelegateV1_1PayMetadata({
             ...(payProjectForm?.payMetadata as JB721DELAGATE_V1_1_PAY_METADATA),
             allowOverspending: DEFAULT_ALLOW_OVERSPENDING,

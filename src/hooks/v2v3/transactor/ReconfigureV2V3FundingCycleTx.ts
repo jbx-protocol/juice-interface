@@ -1,9 +1,8 @@
 import { useContext } from 'react'
-
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { TransactionContext } from 'contexts/transactionContext'
-import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
+import { V2V3ProjectContractsContext } from 'contexts/v2v3/V2V3ProjectContractsContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
 import { isValidMustStartAtOrAfter } from 'utils/v2v3/fundingCycle'
@@ -21,7 +20,7 @@ export type ReconfigureTxArgs = Omit<
 
 export function useReconfigureV2V3FundingCycleTx(): TransactorInstance<ReconfigureTxArgs> {
   const { transactor } = useContext(TransactionContext)
-  const { contracts } = useContext(V2V3ContractsContext)
+  const { contracts } = useContext(V2V3ProjectContractsContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
   const projectTitle = useV2ProjectTitle()

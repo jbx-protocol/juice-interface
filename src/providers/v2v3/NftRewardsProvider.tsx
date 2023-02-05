@@ -2,13 +2,17 @@ import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useNftCollectionMetadataUri } from 'hooks/JB721Delegate/contractReader/NftCollectionMetadataUri'
+import { useNftFlagsOf } from 'hooks/JB721Delegate/contractReader/NftFlagsOf'
 import { useNftRewardTiersOf } from 'hooks/JB721Delegate/contractReader/NftRewardTiersOf'
 import { useJB721DelegateVersion } from 'hooks/JB721Delegate/DelegateVersion'
 import { useHasNftRewards } from 'hooks/JB721Delegate/HasNftRewards'
 import useNftRewards from 'hooks/NftRewards'
 import { JB721GovernanceType } from 'models/nftRewardTier'
 import { useContext } from 'react'
-import { EMPTY_NFT_COLLECTION_METADATA } from 'redux/slices/editingV2Project'
+import {
+  DEFAULT_NFT_FLAGS,
+  EMPTY_NFT_COLLECTION_METADATA,
+} from 'redux/slices/editingV2Project'
 import { CIDsOfNftRewardTiersResponse } from 'utils/nftRewards'
 
 export const NftRewardsProvider: React.FC = ({ children }) => {
@@ -43,6 +47,9 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
   const { data: collectionMetadataUri, loading: collectionUriLoading } =
     useNftCollectionMetadataUri(dataSourceAddress)
 
+  const { data: flags, loading: flagsLoading } =
+    useNftFlagsOf(dataSourceAddress)
+
   const CIDs = CIDsOfNftRewardTiersResponse(tierData)
 
   // Assumes having `dataSource` means there are NFTs initially
@@ -51,7 +58,10 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
   //    - will resolve false when `useNftRewardTiersOf` fails
 
   const loading = Boolean(
-    nftRewardTiersLoading || nftRewardsCIDsLoading || collectionUriLoading,
+    nftRewardTiersLoading ||
+      nftRewardsCIDsLoading ||
+      collectionUriLoading ||
+      flagsLoading,
   )
 
   return (
@@ -67,6 +77,7 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
             uri: collectionMetadataUri,
           },
           postPayModal: projectMetadata?.nftPaymentSuccessModal,
+          flags: flags ?? DEFAULT_NFT_FLAGS,
         },
         loading,
       }}

@@ -23,12 +23,18 @@ type NftRewardsFormProps = Partial<{
   postPayButtonLink?: string
   onChainGovernance: JB721GovernanceType
   useDataSourceForRedeem: boolean
+  preventOverspending: boolean
 }>
 
 export const useNftRewardsForm = () => {
   const [form] = Form.useForm<NftRewardsFormProps>()
-  const { collectionMetadata, rewardTiers, postPayModal, governanceType } =
-    useAppSelector(state => state.editingV2Project.nftRewards)
+  const {
+    collectionMetadata,
+    rewardTiers,
+    postPayModal,
+    governanceType,
+    flags,
+  } = useAppSelector(state => state.editingV2Project.nftRewards)
   const { projectMetadata, fundingCycleMetadata } = useAppSelector(
     state => state.editingV2Project,
   )
@@ -59,6 +65,7 @@ export const useNftRewardsForm = () => {
       rewards,
       onChainGovernance: governanceType,
       useDataSourceForRedeem: fundingCycleMetadata.useDataSourceForRedeem,
+      preventOverspending: flags?.preventOverspending,
       collectionName,
       collectionSymbol,
       collectionDescription,
@@ -77,6 +84,7 @@ export const useNftRewardsForm = () => {
     postPayModal?.ctaText,
     postPayModal?.ctaLink,
     fundingCycleMetadata.useDataSourceForRedeem,
+    flags.preventOverspending,
   ])
 
   useFormDispatchWatch({
@@ -162,6 +170,14 @@ export const useNftRewardsForm = () => {
     fieldName: 'useDataSourceForRedeem',
     ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setUseDataSourceForRedeem,
+    formatter: v => !!v,
+  })
+
+  useFormDispatchWatch({
+    form,
+    fieldName: 'preventOverspending',
+    ignoreUndefined: true,
+    dispatchFunction: editingV2ProjectActions.setNftPreventOverspending,
     formatter: v => !!v,
   })
 

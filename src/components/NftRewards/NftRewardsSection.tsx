@@ -5,6 +5,7 @@ import {
   NFT_PAYMENT_CONFIRMED_QUERY_PARAM,
 } from 'components/NftRewards/NftPostPayModal'
 import { PayProjectFormContext } from 'components/Project/PayProjectForm/payProjectFormContext'
+import { DEFAULT_ALLOW_OVERSPENDING } from 'components/Project/PayProjectForm/usePayProjectForm'
 import SectionHeader from 'components/SectionHeader'
 import { CurrencyContext } from 'contexts/currencyContext'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
@@ -118,7 +119,7 @@ export function NftRewardsSection() {
 
     setPayMetadata?.({
       tierIdsToMint: newSelectedTierIds,
-      dontMint: false,
+      allowOverspending: DEFAULT_ALLOW_OVERSPENDING,
     })
 
     setPayInCurrency?.(ETH)

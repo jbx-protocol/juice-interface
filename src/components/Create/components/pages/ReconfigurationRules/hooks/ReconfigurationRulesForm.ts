@@ -15,6 +15,7 @@ type ReconfigurationRulesFormProps = Partial<{
   customAddress?: string
   pausePayments: boolean
   holdFees: boolean
+  pauseTransfers: boolean
   allowTerminalConfiguration: boolean
   allowControllerConfiguration: boolean
   allowTerminalMigration: boolean

@@ -23,15 +23,21 @@ import {
   EMPTY_RESERVED_TOKENS_GROUPED_SPLITS,
 } from './defaultState'
 import { NftRewardsData, ReduxState } from './types'
+import { REDUX_STORE_V2_PROJECT_VERSION } from './version'
+
+export const INITIAL_REDUX_STATE = {
+  version: REDUX_STORE_V2_PROJECT_VERSION,
+  ...DEFAULT_REDUX_STATE,
+}
 
 const editingV2ProjectSlice = createSlice({
   name: 'editingV2Project',
-  initialState: DEFAULT_REDUX_STATE,
+  initialState: INITIAL_REDUX_STATE,
   reducers: {
     setState: (_, action: PayloadAction<ReduxState>) => {
       return action.payload
     },
-    resetState: () => DEFAULT_REDUX_STATE,
+    resetState: () => INITIAL_REDUX_STATE,
     setName: (state, action: PayloadAction<string>) => {
       state.projectMetadata.name = action.payload
     },

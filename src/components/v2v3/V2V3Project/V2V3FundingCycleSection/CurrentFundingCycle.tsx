@@ -11,7 +11,6 @@ import ReservedTokensSplitsCard from './ReservedTokensSplitsCard'
 
 export function CurrentFundingCycle() {
   const {
-    isPreviewMode,
     fundingCycle,
     payoutSplits,
     distributionLimitCurrency,
@@ -53,7 +52,6 @@ export function CurrentFundingCycle() {
             fundingCycle,
             fundingCycleMetadata,
           )}
-          isPreviewMode={isPreviewMode}
         />
       </CardSection>
 

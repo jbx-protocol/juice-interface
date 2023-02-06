@@ -39,7 +39,6 @@ export default function PayoutSplitsCard({
     usedDistributionLimit,
     projectOwnerAddress,
     balanceInDistributionLimitCurrency,
-    isPreviewMode,
     loading,
     handle,
   } = useContext(V2V3ProjectContext)
@@ -75,7 +74,7 @@ export default function PayoutSplitsCard({
     ? distributable
     : balanceInDistributionLimitCurrency
 
-  const distributeButtonDisabled = isPreviewMode || distributableAmount?.eq(0)
+  const distributeButtonDisabled = distributableAmount?.eq(0)
 
   function DistributeButton(): JSX.Element {
     return (

@@ -139,7 +139,6 @@ export default function ReconfigureFCModal({
     queuedFC,
     currentFC,
     terminal,
-    isPreviewMode,
     queuedPayoutMods,
     currentPayoutMods,
     queuedTicketMods,
@@ -245,8 +244,7 @@ export default function ReconfigureFCModal({
       ? queuedTicketMods
       : currentTicketMods
 
-    if (!open || isPreviewMode || !fundingCycle || !ticketMods || !payoutMods)
-      return
+    if (!open || !fundingCycle || !ticketMods || !payoutMods) return
 
     const metadata = decodeFundingCycleMetadata(fundingCycle.metadata)
     if (!metadata) return
@@ -288,7 +286,6 @@ export default function ReconfigureFCModal({
     ticketingForm,
     incentivesForm,
     restrictedActionsForm,
-    isPreviewMode,
     open,
   ])
 
@@ -302,7 +299,7 @@ export default function ReconfigureFCModal({
           currency: editingFC.currency,
           duration: editingFC.duration,
           discountRate: editingFC.discountRate,
-          cycleLimit: BigNumber.from(0), // TODO support in UI
+          cycleLimit: BigNumber.from(0),
           ballot: editingFC.ballot,
         },
         fcMetadata: {

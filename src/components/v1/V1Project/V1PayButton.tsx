@@ -9,7 +9,6 @@ import {
 import { readNetwork } from 'constants/networks'
 import { V1_CURRENCY_USD } from 'constants/v1/currency'
 import { disablePayOverrides } from 'constants/v1/overrides'
-import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useWeiConverter from 'hooks/WeiConverter'
@@ -51,10 +50,6 @@ export function V1PayButton({ wrapperClassName, disabled }: PayButtonProps) {
   const isV1AndMaxRR =
     terminal?.version === '1' && fcMetadata.reservedRate === 200
 
-  // Edge case for MoonDAO, upgraded to v1.1 but can't use payIsPaused for now
-  const isMoonAndMaxRR =
-    projectId === V1_PROJECT_IDS.MOON_DAO && fcMetadata.reservedRate === 200
-
   const overridePayDisabled =
     projectId && disablePayOverrides[readNetwork.name]?.has(projectId)
 
@@ -63,7 +58,6 @@ export function V1PayButton({ wrapperClassName, disabled }: PayButtonProps) {
       overridePayDisabled ||
       isV1AndMaxRR || // v1 projects who still use 100% RR to disable pay
       currentFC.configured.eq(0) || // Edge case, see sequoiacapitaldao
-      isMoonAndMaxRR || // Edge case for MoonDAO
       isArchived ||
       disabled) ??
     false
@@ -74,7 +68,7 @@ export function V1PayButton({ wrapperClassName, disabled }: PayButtonProps) {
 
   if (isArchived) {
     disabledMessage = t`This project is archived and can't be paid.`
-  } else if (isV1AndMaxRR || isMoonAndMaxRR) {
+  } else if (isV1AndMaxRR) {
     disabledMessage = t`We've disabled payments because the project has opted to reserve 100% of new tokens. You would receive no tokens from your payment.`
   } else if (fcMetadata.payIsPaused) {
     disabledMessage = t`Payments are paused in this funding cycle.`

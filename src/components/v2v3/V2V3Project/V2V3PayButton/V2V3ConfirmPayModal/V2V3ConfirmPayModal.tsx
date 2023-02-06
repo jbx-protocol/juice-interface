@@ -33,7 +33,6 @@ import { formattedNum, formatWad } from 'utils/format/formatNumber'
 import {
   encodeJB721DelegateV1PayMetadata,
   encodeJB721DelegateV1_1PayMetadata,
-  payMetadataOverrides,
   rewardTiersFromIds,
   sumTierFloors,
 } from 'utils/nftRewards'
@@ -160,7 +159,6 @@ export function V2V3ConfirmPayModal({
       nftContractVersion === JB721_DELEGATE_V1 // old delegate v1
         ? encodeJB721DelegateV1PayMetadata({
             ...(payProjectForm?.payMetadata as JB721DELAGATE_V1_PAY_METADATA),
-            ...payMetadataOverrides(projectId),
           })
         : nftContractVersion === JB721_DELEGATE_V1_1
         ? encodeJB721DelegateV1_1PayMetadata({

@@ -69,7 +69,7 @@ export default function RedeemModal({
       {
         redeemAmount: parseWad(redeemAmount),
         minAmount,
-        preferConverted: false, // TODO support in UI
+        preferConverted: false,
       },
       {
         onConfirmed: () => setRedeemAmount(undefined),

@@ -13,7 +13,7 @@ import { classNames } from 'utils/classNames'
 import EditProjectModal from './modals/EditProjectModal'
 
 export default function V1ProjectHeaderActions() {
-  const { handle, isPreviewMode, terminal } = useContext(V1ProjectContext)
+  const { handle, terminal } = useContext(V1ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
   const [toolDrawerVisible, setToolDrawerVisible] = useState<boolean>(false)
@@ -32,7 +32,7 @@ export default function V1ProjectHeaderActions() {
 
   const allowMigrate = isOwner
 
-  if (isPreviewMode || !projectId) return null
+  if (!projectId) return null
 
   return (
     <div className="flex items-center">

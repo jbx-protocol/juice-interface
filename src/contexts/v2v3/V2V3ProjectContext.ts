@@ -16,8 +16,6 @@ interface V2V3ProjectLoadingStates {
 }
 
 export type V2V3ProjectContextType = {
-  isPreviewMode?: boolean
-
   handle: string | undefined
   createdAt: number | undefined
   tokenAddress: string | undefined
@@ -48,8 +46,6 @@ export type V2V3ProjectContextType = {
 }
 
 export const V2V3ProjectContext = createContext<V2V3ProjectContextType>({
-  isPreviewMode: false,
-
   handle: undefined,
   createdAt: undefined,
   tokenAddress: undefined,

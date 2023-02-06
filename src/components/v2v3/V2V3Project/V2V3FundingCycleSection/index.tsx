@@ -60,7 +60,6 @@ const TabText = ({
 export function V2V3FundingCycleSection() {
   const {
     fundingCycle,
-    isPreviewMode,
     handle,
     loading: { fundingCycleLoading },
   } = useContext(V2V3ProjectContext)
@@ -90,13 +89,12 @@ export function V2V3FundingCycleSection() {
       label: <TabText text={t`Current`} />,
       content: <CurrentFundingCycle />,
     },
-    !isPreviewMode &&
-      currentCycleHasDuration && {
-        key: 'upcoming',
-        label: <TabText text={t`Upcoming`} />,
-        content: <UpcomingFundingCycle />,
-      },
-    !isPreviewMode && {
+    currentCycleHasDuration && {
+      key: 'upcoming',
+      label: <TabText text={t`Upcoming`} />,
+      content: <UpcomingFundingCycle />,
+    },
+    {
       key: 'history',
       label: <TabText text={t`History`} hideRiskFlag />,
       content: (

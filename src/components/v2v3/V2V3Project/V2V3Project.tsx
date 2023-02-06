@@ -46,13 +46,8 @@ const AllAssetsButton = () => {
 }
 
 export function V2V3Project() {
-  const {
-    createdAt,
-    fundingCycle,
-    isPreviewMode,
-    projectOwnerAddress,
-    handle,
-  } = useContext(V2V3ProjectContext)
+  const { createdAt, fundingCycle, projectOwnerAddress, handle } =
+    useContext(V2V3ProjectContext)
   const { projectId, pv } = useContext(ProjectMetadataContext)
 
   const { visible: newDeployModalVisible, hide: hideNewDeployModal } =
@@ -63,16 +58,16 @@ export function V2V3Project() {
   const isOwner = useIsUserAddress(projectOwnerAddress)
   const isPrimaryETHTerminalValid = useValidatePrimaryEthTerminal()
 
-  const canEditProjectHandle = isOwner && !isPreviewMode && !handle
+  const canEditProjectHandle = isOwner && !handle
 
   const hasCurrentFundingCycle = fundingCycle?.number.gt(0)
 
   const payProjectFormDisabled =
-    isPreviewMode || !hasCurrentFundingCycle || !isPrimaryETHTerminalValid
+    !hasCurrentFundingCycle || !isPrimaryETHTerminalValid
 
   const hasNftRewards = useHasNftRewards()
 
-  const colSizeMd = isPreviewMode ? 24 : 12
+  const colSizeMd = 12
 
   if (projectId === undefined) return null
 
@@ -81,7 +76,7 @@ export function V2V3Project() {
       <ProjectBanners />
 
       <ProjectHeader
-        actions={!isPreviewMode ? <V2V3ProjectHeaderActions /> : undefined}
+        actions={<V2V3ProjectHeaderActions />}
         handle={handle}
         projectOwnerAddress={projectOwnerAddress}
         canEditProjectHandle={canEditProjectHandle}
@@ -103,7 +98,7 @@ export function V2V3Project() {
               <section>
                 <PayProjectForm disabled={payProjectFormDisabled} />
               </section>
-              {(isMobile && hasNftRewards) || isPreviewMode ? (
+              {isMobile && hasNftRewards ? (
                 <section className="mt-7">
                   <NftRewardsSection />
                 </section>
@@ -114,7 +109,7 @@ export function V2V3Project() {
           <Row gutter={GUTTER_PX}>
             <Col md={colSizeMd} xs={24}>
               <Space direction="vertical" size={GUTTER_PX} className="w-full">
-                {!isPreviewMode && pv ? (
+                {pv ? (
                   <section>
                     <VolumeChart
                       // TODO: Change this
@@ -140,20 +135,18 @@ export function V2V3Project() {
               </Space>
             </Col>
 
-            {!isPreviewMode ? (
-              <Col
-                className={classNames(isMobile ? 'mt-10' : '')}
-                md={colSizeMd}
-                xs={24}
-              >
-                <div className="flex flex-col gap-12">
-                  {!isMobile && hasNftRewards ? <NftRewardsSection /> : null}
-                  <section>
-                    <ProjectActivity />
-                  </section>
-                </div>
-              </Col>
-            ) : null}
+            <Col
+              className={classNames(isMobile ? 'mt-10' : '')}
+              md={colSizeMd}
+              xs={24}
+            >
+              <div className="flex flex-col gap-12">
+                {!isMobile && hasNftRewards ? <NftRewardsSection /> : null}
+                <section>
+                  <ProjectActivity />
+                </section>
+              </div>
+            </Col>
           </Row>
         </Space>
       </V2V3PayProjectFormProvider>

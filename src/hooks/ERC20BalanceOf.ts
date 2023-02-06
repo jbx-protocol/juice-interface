@@ -14,6 +14,5 @@ export default function useERC20BalanceOf(
     functionName: 'balanceOf',
     args: walletAddress ? [walletAddress] : null,
     valueDidChange: bigNumbersDiff,
-    // TODO: implement updateOn arg (useShouldUpdateTokens -> update on pay, redeem, mint or convert)
   })
 }

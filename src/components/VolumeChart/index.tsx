@@ -106,7 +106,6 @@ export default function VolumeChart({
 
     if (!min) return []
 
-    // TODO why are only roughly half of ticks rendered?
     for (let i = 0; i < 20; i++) {
       ticks.push(Math.round(((max - min) / 20) * i + min))
     }

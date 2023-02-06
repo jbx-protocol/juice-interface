@@ -12,11 +12,9 @@ import { Project } from 'models/subgraph-entities/vX/project'
 import Link from 'next/link'
 import { formatDate } from 'utils/format/formatDate'
 import { v2v3ProjectRoute } from 'utils/routes'
-import { getTerminalVersion } from 'utils/v1/terminals'
 import ETHAmount from './currency/ETHAmount'
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'
-import { ProjectVersionBadge } from './ProjectVersionBadge'
 
 export type ProjectCardProject = Pick<
   Project,
@@ -83,7 +81,6 @@ export default function ProjectCard({
     handle: projectCardData?.handle,
     projectId: projectCardData?.projectId,
   })
-  const terminalVersion = getTerminalVersion(projectCardData?.terminal)
 
   if (!projectCardData) return null
 
@@ -150,11 +147,7 @@ export default function ProjectCard({
             <div>
               <span className="font-medium text-black dark:text-slate-100">
                 {handleText}
-              </span>{' '}
-              <ProjectVersionBadge
-                size="small"
-                versionText={`V${terminalVersion ?? projectCardData.pv}`}
-              />
+              </span>
             </div>
 
             <div>

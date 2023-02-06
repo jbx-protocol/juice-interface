@@ -4,7 +4,6 @@ import { Skeleton } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
 import Loading from 'components/Loading'
 import ProjectLogo from 'components/ProjectLogo'
-import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
 import { PV_V2 } from 'constants/pv'
 import { trendingWindowDays } from 'constants/trendingWindowDays'
 import { useProjectHandleText } from 'hooks/ProjectHandleText'
@@ -14,7 +13,6 @@ import Link from 'next/link'
 import { useMemo } from 'react'
 import { classNames } from 'utils/classNames'
 import { v2v3ProjectRoute } from 'utils/routes'
-import { getTerminalVersion } from 'utils/v1/terminals'
 
 export default function TrendingProjectCard({
   project,
@@ -41,7 +39,6 @@ export default function TrendingProjectCard({
     handle: project.handle,
     projectId: project.projectId,
   })
-  const terminalVersion = getTerminalVersion(project.terminal)
 
   // If the total paid is greater than 0, but less than 10 ETH, show two decimal places.
   const precision =
@@ -124,11 +121,7 @@ export default function TrendingProjectCard({
                 <div>
                   <span className="font-medium text-black dark:text-slate-100">
                     {handleText}
-                  </span>{' '}
-                  <ProjectVersionBadge
-                    size="small"
-                    versionText={`V${terminalVersion ?? project.pv}`}
-                  />
+                  </span>
                 </div>
               )}
 

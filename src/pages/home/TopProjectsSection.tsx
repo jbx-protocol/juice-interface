@@ -161,7 +161,6 @@ export function TopProjectsSection() {
               </Link>
               <Link href="#how-it-works">
                 <a
-                  // todo get rid of hover-text
                   className="hover-text-decoration-underline cursor-pointer text-sm text-grey-500 dark:text-grey-300"
                   role="button"
                   onClick={() => {

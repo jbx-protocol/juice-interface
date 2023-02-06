@@ -191,7 +191,6 @@ export async function uploadNftCollectionMetadataToIPFS({
   collectionLogoUri: string | undefined
   collectionInfoUri: string | undefined
 }) {
-  // TODO: add inputs for the rest of these fields
   const ipfsNftCollectionMetadata: IpfsNftCollectionMetadata = {
     name: collectionName,
     description: collectionDescription,

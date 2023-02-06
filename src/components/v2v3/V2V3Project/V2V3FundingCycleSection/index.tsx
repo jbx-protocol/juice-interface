@@ -3,9 +3,7 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import { CardSection } from 'components/CardSection'
 import Loading from 'components/Loading'
-import FundingCycleSection, {
-  TabType,
-} from 'components/Project/FundingCycleSection'
+import FundingCycleSection from 'components/Project/FundingCycleSection'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
@@ -60,7 +58,6 @@ const TabText = ({
 export function V2V3FundingCycleSection() {
   const {
     fundingCycle,
-    isPreviewMode,
     handle,
     loading: { fundingCycleLoading },
   } = useContext(V2V3ProjectContext)
@@ -90,13 +87,12 @@ export function V2V3FundingCycleSection() {
       label: <TabText text={t`Current`} />,
       content: <CurrentFundingCycle />,
     },
-    !isPreviewMode &&
-      currentCycleHasDuration && {
-        key: 'upcoming',
-        label: <TabText text={t`Upcoming`} />,
-        content: <UpcomingFundingCycle />,
-      },
-    !isPreviewMode && {
+    currentCycleHasDuration && {
+      key: 'upcoming',
+      label: <TabText text={t`Upcoming`} />,
+      content: <UpcomingFundingCycle />,
+    },
+    {
       key: 'history',
       label: <TabText text={t`History`} hideRiskFlag />,
       content: (
@@ -105,7 +101,7 @@ export function V2V3FundingCycleSection() {
         </CardSection>
       ),
     },
-  ].filter(Boolean) as TabType[]
+  ]
 
   return (
     <FundingCycleSection

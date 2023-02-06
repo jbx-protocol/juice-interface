@@ -13,6 +13,8 @@ import { useContext } from 'react'
 import invariant from 'tiny-invariant'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
+const DEFAULT_USE_RESERVED_RATE = true
+
 export function useMintTokensTx(): TransactorInstance<{
   value: BigNumber
   beneficiary: string
@@ -27,10 +29,6 @@ export function useMintTokensTx(): TransactorInstance<{
   const { cv } = useContext(V2V3ContractsContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
-  // TODO new V2 feature:
-  // Whether to use the current funding cycle's reserved rate in the mint calculation.
-  const reservedRate = true
-
   return ({ value, beneficiary, preferClaimed, memo }, txOpts) => {
     try {
       invariant(transactor && projectId && JBController)
@@ -43,7 +41,7 @@ export function useMintTokensTx(): TransactorInstance<{
           beneficiary,
           memo ?? '',
           preferClaimed,
-          reservedRate,
+          DEFAULT_USE_RESERVED_RATE, // _useReservedRate
         ],
         {
           ...txOpts,

@@ -1,5 +1,4 @@
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useWallet } from 'hooks/Wallet'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import { useContext } from 'react'
@@ -10,7 +9,6 @@ export function useV1ConnectedWalletHasPermission(
   permission: V1OperatorPermission | V1OperatorPermission[],
 ) {
   const { userAddress } = useWallet()
-  const { isPreviewMode } = useContext(V1ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
   const { owner } = useProjectOwner()
@@ -21,8 +19,6 @@ export function useV1ConnectedWalletHasPermission(
     domain: projectId,
     permissionIndexes: Array.isArray(permission) ? permission : [permission],
   })
-
-  if (isPreviewMode) return false
 
   const isOwner =
     userAddress && owner && userAddress.toLowerCase() === owner.toLowerCase()

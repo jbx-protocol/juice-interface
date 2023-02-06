@@ -6,7 +6,6 @@ import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { BallotState } from 'models/v2v3/fundingCycle'
 import { formatDateToUTC } from 'utils/format/formatDate'
 import { detailedTimeUntil } from 'utils/format/formatTime'
-
 import { BallotStateBadge } from './BallotStateBadge'
 
 const COLLAPSE_PANEL_KEY = 'funding-cycle-details'
@@ -18,7 +17,6 @@ export default function FundingCycleDetailsCard({
   fundingCycleRiskCount,
   isFundingCycleRecurring,
   fundingCycleDetails,
-  isPreviewMode,
   ballotState,
   ballotStrategyAddress,
 }: {
@@ -28,7 +26,6 @@ export default function FundingCycleDetailsCard({
   fundingCycleRiskCount: number
   fundingCycleDetails: JSX.Element
   isFundingCycleRecurring: boolean
-  isPreviewMode?: boolean
   ballotState?: BallotState
   ballotStrategyAddress?: string
 }) {
@@ -47,10 +44,7 @@ export default function FundingCycleDetailsCard({
     const endTimeSeconds = fundingCycleStartTime.add(
       fundingCycleDurationSeconds,
     )
-    const formattedTimeLeft = !isPreviewMode
-      ? detailedTimeUntil(endTimeSeconds)
-      : detailedTimeUntil(fundingCycleDurationSeconds)
-
+    const formattedTimeLeft = detailedTimeUntil(endTimeSeconds)
     const fundingCycleDurationMilliseconds = endTimeSeconds.mul(1000).toNumber()
 
     return (
@@ -72,8 +66,6 @@ export default function FundingCycleDetailsCard({
     <Collapse
       // minimal is needed for antd overrides
       className="minimal border-none bg-transparent"
-      // expand by default in preview mode
-      defaultActiveKey={isPreviewMode ? COLLAPSE_PANEL_KEY : undefined}
     >
       <CollapsePanel
         key={COLLAPSE_PANEL_KEY}

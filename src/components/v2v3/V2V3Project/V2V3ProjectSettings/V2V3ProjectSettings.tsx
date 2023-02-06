@@ -54,8 +54,7 @@ function menuItem(
 
 export function V2V3ProjectSettings() {
   const { cv } = useContext(V2V3ContractsContext)
-  const { isPreviewMode, projectOwnerAddress, handle } =
-    useContext(V2V3ProjectContext)
+  const { projectOwnerAddress, handle } = useContext(V2V3ProjectContext)
   const { projectId, projectMetadata } = useContext(ProjectMetadataContext)
   const { isDarkMode } = useContext(ThemeContext)
 
@@ -65,7 +64,7 @@ export function V2V3ProjectSettings() {
   const isOwner = useIsUserAddress(projectOwnerAddress)
   const isMobile = useMobile()
 
-  const canEditProjectHandle = isOwner && !isPreviewMode && !handle
+  const canEditProjectHandle = isOwner && !handle
   const activeSettingsPage = router.query.page as
     | V2V3SettingsPageKey
     | undefined
@@ -192,7 +191,7 @@ export function V2V3ProjectSettings() {
     <div className="my-0 mx-auto max-w-5xl p-5">
       <Space direction="vertical" size={40} className="w-full">
         <ProjectHeader
-          actions={!isPreviewMode ? <V2V3ProjectHeaderActions /> : undefined}
+          actions={<V2V3ProjectHeaderActions />}
           handle={handle}
           projectOwnerAddress={projectOwnerAddress}
           canEditProjectHandle={canEditProjectHandle}

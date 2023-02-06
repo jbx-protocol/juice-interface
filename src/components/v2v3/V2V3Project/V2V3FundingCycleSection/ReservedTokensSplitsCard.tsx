@@ -29,7 +29,7 @@ export default function ReservedTokensSplitsCard({
   reservedTokensSplits: Split[] | undefined
   reservedRate: BigNumber | undefined
 }) {
-  const { tokenSymbol, projectOwnerAddress, isPreviewMode, handle } =
+  const { tokenSymbol, projectOwnerAddress, handle } =
     useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
@@ -54,7 +54,7 @@ export default function ReservedTokensSplitsCard({
     plural: true,
   })
 
-  const distributeButtonDisabled = isPreviewMode || reservedTokens?.eq(0)
+  const distributeButtonDisabled = reservedTokens?.eq(0)
 
   function DistributeButton(): JSX.Element {
     return (
@@ -78,7 +78,7 @@ export default function ReservedTokensSplitsCard({
               <Skeleton
                 className="inline"
                 active
-                loading={!isPreviewMode && loadingReservedTokens}
+                loading={loadingReservedTokens}
                 paragraph={{ rows: 1, width: 20 }}
                 title={false}
               >

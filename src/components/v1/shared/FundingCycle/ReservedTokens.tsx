@@ -1,7 +1,9 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import TooltipLabel from 'components/TooltipLabel'
-
+import { readNetwork } from 'constants/networks'
+import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
+import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useReservedTokensOfProject from 'hooks/v1/contractReader/ReservedTokensOfProject'
 import { TicketMod } from 'models/mods'
@@ -11,11 +13,6 @@ import { useContext, useState } from 'react'
 import { formatWad, perbicentToPercent } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
-
-import { readNetwork } from 'constants/networks'
-
-import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import TicketModsList from '../TicketModsList'
 import DistributeTokensModal from './modals/DistributeTokensModal'
 
@@ -28,7 +25,7 @@ export default function ReservedTokens({
   ticketMods: TicketMod[] | undefined
   hideActions?: boolean
 }) {
-  const { tokenSymbol, isPreviewMode } = useContext(V1ProjectContext)
+  const { tokenSymbol } = useContext(V1ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
   const [modalIsVisible, setModalIsVisible] = useState<boolean>()
@@ -95,7 +92,6 @@ export default function ReservedTokens({
             className="ml-2"
             size="small"
             onClick={() => setModalIsVisible(true)}
-            disabled={isPreviewMode}
           >
             <Trans>Distribute {tokenTextPlural}</Trans>
           </Button>

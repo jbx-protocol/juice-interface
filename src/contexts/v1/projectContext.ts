@@ -22,7 +22,6 @@ export type V1ProjectContextType = {
   balance: BigNumber | undefined
   balanceInCurrency: BigNumber | undefined
   overflow: BigNumber | undefined
-  isPreviewMode: boolean | undefined
   terminal:
     | {
         version: V1TerminalVersion | undefined
@@ -49,6 +48,5 @@ export const V1ProjectContext = createContext<V1ProjectContextType>({
   balance: undefined,
   balanceInCurrency: undefined,
   overflow: undefined,
-  isPreviewMode: false,
   terminal: undefined,
 })

@@ -32,14 +32,8 @@ const labelStyle: CSSProperties = {
 }
 
 export function TokensSection() {
-  const {
-    tokenAddress,
-    tokenSymbol,
-    isPreviewMode,
-    currentFC,
-    terminal,
-    overflow,
-  } = useContext(V1ProjectContext)
+  const { tokenAddress, tokenSymbol, currentFC, terminal, overflow } =
+    useContext(V1ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
   const [manageTokensModalVisible, setManageTokensModalVisible] =
@@ -127,7 +121,6 @@ export function TokensSection() {
                   <Button
                     size="small"
                     onClick={() => setParticipantsModalVisible(true)}
-                    disabled={isPreviewMode}
                   >
                     <Trans>Holders</Trans>
                   </Button>
@@ -172,7 +165,7 @@ export function TokensSection() {
           )}
         />
 
-        {!ticketsIssued && hasIssueTicketsPermission && !isPreviewMode && (
+        {!ticketsIssued && hasIssueTicketsPermission && (
           <IssueErc20TokenButton />
         )}
       </Space>

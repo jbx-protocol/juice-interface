@@ -45,15 +45,14 @@ const items: MenuItem[] = [
 ]
 
 export function VeNft() {
-  const { isPreviewMode, projectOwnerAddress, handle } =
-    useContext(V2V3ProjectContext)
+  const { projectOwnerAddress, handle } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
   const { isDarkMode } = useContext(ThemeContext)
 
   const router = useRouter()
   const isOwner = useIsUserAddress(projectOwnerAddress)
 
-  const canEditProjectHandle = isOwner && !isPreviewMode && !handle
+  const canEditProjectHandle = isOwner && !handle
   const activeSettingsPage = router.query.page as V2VeNftPageKey
 
   const handleMenuItemClick = (item: MenuItem) => {
@@ -67,7 +66,7 @@ export function VeNft() {
     <div className="my-0 mx-auto max-w-5xl p-5">
       <Space direction="vertical" size={40} className="w-full">
         <ProjectHeader
-          actions={!isPreviewMode ? <V2V3ProjectHeaderActions /> : undefined}
+          actions={<V2V3ProjectHeaderActions />}
           handle={handle}
           projectOwnerAddress={projectOwnerAddress}
           canEditProjectHandle={canEditProjectHandle}

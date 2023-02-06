@@ -77,7 +77,6 @@ export function useV1ProjectState({
 
   const project = useMemo<V1ProjectContextType>((): V1ProjectContextType => {
     const projectType = projectId ? PROJECT_TYPES[projectId] : 'standard'
-    const isPreviewMode = false
 
     return {
       createdAt,
@@ -96,7 +95,6 @@ export function useV1ProjectState({
       balance,
       balanceInCurrency,
       overflow,
-      isPreviewMode,
       terminal: {
         address: terminalAddress,
         name: terminalName,

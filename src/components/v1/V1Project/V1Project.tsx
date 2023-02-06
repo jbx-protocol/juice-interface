@@ -12,7 +12,6 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
 import { useRelaunchV1ViaV3Create } from 'hooks/v1/RelaunchV1ViaV3Create'
 import { V1OperatorPermission } from 'models/v1/permissions'
-import Link from 'next/link'
 import { V1PayProjectFormProvider } from 'providers/v1/V1PayProjectFormProvider'
 import { lazy, Suspense, useContext, useState } from 'react'
 import FundingCycles from './FundingCycles'
@@ -61,8 +60,6 @@ const RelaunchV1ProjectCallout = ({ className }: { className?: string }) => {
           <p className="mb-0">
             <Trans>
               Re-launch your Juicebox project using the v3 contracts.{' '}
-              {/* TODO: Add link */}
-              <Link href="#TODO">What's new in V3.</Link>
             </Trans>
           </p>
           <p className="mb-1">
@@ -92,8 +89,7 @@ const RelaunchV1ProjectCallout = ({ className }: { className?: string }) => {
 }
 
 export function V1Project({ column }: { column?: boolean }) {
-  const { createdAt, handle, isPreviewMode, owner } =
-    useContext(V1ProjectContext)
+  const { createdAt, handle, owner } = useContext(V1ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
   return (
@@ -139,11 +135,9 @@ export function V1Project({ column }: { column?: boolean }) {
 
           <FundingCycles />
         </Col>
-        {!isPreviewMode ? (
-          <Col className="mt-10" xs={24} md={column ? 24 : 12}>
-            <ProjectActivity />
-          </Col>
-        ) : null}
+        <Col className="mt-10" xs={24} md={column ? 24 : 12}>
+          <ProjectActivity />
+        </Col>
       </Row>
     </>
   )

@@ -19,8 +19,7 @@ export default function Spending({
 }: {
   payoutMods: PayoutMod[] | undefined
 }) {
-  const { currentFC, isPreviewMode, balanceInCurrency, owner } =
-    useContext(V1ProjectContext)
+  const { currentFC, balanceInCurrency, owner } = useContext(V1ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
   const [withdrawModalVisible, setWithdrawModalVisible] = useState<boolean>()
@@ -58,7 +57,6 @@ export default function Spending({
             type="ghost"
             size="small"
             onClick={() => setWithdrawModalVisible(true)}
-            disabled={isPreviewMode}
           >
             <Trans>Distribute funds</Trans>
           </Button>

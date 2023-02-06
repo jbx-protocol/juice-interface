@@ -6,30 +6,26 @@ import USDAmount from 'components/currency/USDAmount'
 import EtherscanLink from 'components/EtherscanLink'
 import FundingProgressBar from 'components/Project/FundingProgressBar'
 import StatLine from 'components/Project/StatLine'
+import { VolumeStatLine } from 'components/Project/VolumeStatLine'
 import TooltipLabel from 'components/TooltipLabel'
 import V1ProjectTokenBalance from 'components/v1/shared/V1ProjectTokenBalance'
+import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
+import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useEthBalanceQuery } from 'hooks/EthBalance'
-import { NetworkName } from 'models/network-name'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useState } from 'react'
-import { hasFundingTarget } from 'utils/v1/fundingCycle'
-import { V1CurrencyName } from 'utils/v1/currency'
-import { VolumeStatLine } from 'components/Project/VolumeStatLine'
-import { readNetwork } from 'constants/networks'
-import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
-import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { V1BalancesModal } from './modals/V1BalancesModal'
 import { classNames } from 'utils/classNames'
+import { V1CurrencyName } from 'utils/v1/currency'
+import { hasFundingTarget } from 'utils/v1/fundingCycle'
+import { V1BalancesModal } from './modals/V1BalancesModal'
 
 export function TreasuryStatsSection() {
-  const [balancesModalVisible, setBalancesModalVisible] = useState<boolean>()
-
   const { currentFC, balanceInCurrency, balance, owner, earned, overflow } =
     useContext(V1ProjectContext)
-  const { projectId } = useContext(ProjectMetadataContext)
+
+  const [balancesModalVisible, setBalancesModalVisible] = useState<boolean>()
 
   const converter = useCurrencyConverter()
   const { data: ownerBalance } = useEthBalanceQuery(owner)
@@ -56,16 +52,9 @@ export function TreasuryStatsSection() {
     return null
   }
 
-  const isConstitutionDAO =
-    readNetwork.name === NetworkName.mainnet &&
-    projectId === V1_PROJECT_IDS.CONSTITUTION_DAO
-
   return (
     <>
-      <VolumeStatLine
-        totalVolume={earned}
-        convertToCurrency={isConstitutionDAO ? 'USD' : undefined}
-      />
+      <VolumeStatLine totalVolume={earned} />
       <div
         className={classNames(
           hasFundingTarget(currentFC) && currentFC.target.gt(0)
@@ -79,15 +68,7 @@ export function TreasuryStatsSection() {
             <Trans>The balance of this project in the Juicebox contract.</Trans>
           }
           statValue={
-            <div
-              className={classNames(
-                'ml-2 text-lg font-medium',
-                // TODO: Bespoke styles for the constitution DAO - should we remove?
-                isConstitutionDAO
-                  ? 'text-black dark:text-slate-100'
-                  : 'text-juice-400 dark:text-juice-300',
-              )}
-            >
+            <div className="ml-2 text-lg font-medium text-juice-400 dark:text-juice-300">
               {currentFC.currency.eq(V1_CURRENCY_USD) ? (
                 <span className="text-sm font-medium uppercase text-grey-400 dark:text-grey-300">
                   <ETHAmount amount={balance} precision={2} padEnd={true} />{' '}

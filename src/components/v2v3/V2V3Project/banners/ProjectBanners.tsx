@@ -2,7 +2,6 @@ import { AddressZero } from '@ethersproject/constants'
 import { Space } from 'antd'
 import { PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/V2V3ProjectContractsContext'
 import useProjectController from 'hooks/v2v3/contractReader/ProjectController'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
@@ -13,7 +12,6 @@ import { V2BugNoticeBanner } from './V2BugNoticeBanner'
 
 export function ProjectBanners() {
   const { projectId, pv } = useContext(ProjectMetadataContext)
-  const { isPreviewMode } = useContext(V2V3ProjectContext)
   const {
     contracts,
     loading: { projectContractsLoading },
@@ -29,7 +27,7 @@ export function ProjectBanners() {
     useDeprecatedContract: true,
   })
 
-  const isV2Project = !isPreviewMode && pv === PV_V2
+  const isV2Project = pv === PV_V2
 
   // if the project was created on the bugged version of the JBDirectory, it will have a non-zero controller address.
   const hasProjectOnDeprecatedContracts =

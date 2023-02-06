@@ -12,6 +12,7 @@ import { restrictedIpfsUrl } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
 
 const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif']
+export const MP4_FILE_TYPE = 'video/mp4'
 
 // Always showing images as squares
 export const NFT_IMAGE_SIDE_LENGTH = '90px'

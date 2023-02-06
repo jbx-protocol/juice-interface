@@ -27,6 +27,7 @@ import { OptionalHeader } from '../OptionalHeader'
 import { Reward } from './types'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { MP4_FILE_TYPE } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload'
 
 interface AddEditRewardModalFormProps {
   fileUrl: string
@@ -165,7 +166,7 @@ export const AddEditRewardModal = ({
 
   const nftMp4Enabled = featureFlagEnabled(FEATURE_FLAGS.NFT_MP4)
   const supportedNftFileType: SupportedNftFileTypes[] = [
-    ...(nftMp4Enabled ? (['video/mp4'] as SupportedNftFileTypes[]) : []),
+    ...(nftMp4Enabled ? ([MP4_FILE_TYPE] as SupportedNftFileTypes[]) : []),
     'image/jpeg',
     'image/png',
     'image/gif',

@@ -1,4 +1,4 @@
-import { CloseOutlined, LinkOutlined } from '@ant-design/icons'
+import { CloseOutlined, LinkOutlined, LoadingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/NftRewards'
@@ -9,6 +9,7 @@ import { classNames } from 'utils/classNames'
 import { JUICE_IMG_PREVIEW_CONTAINER_CLASS } from 'components/Create/components/JuiceImgPreview'
 import { useContentType } from 'hooks/ContentType'
 import { JuiceVideoPreview } from 'components/v2v3/shared/NftVideo/JuiceVideoPreview'
+import { MP4_FILE_TYPE } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload'
 
 export const IMAGE_OR_VIDEO_PREVIEW_CLASSES =
   'max-h-[50vh] max-w-[90vw] md:max-h-[60vh] md:max-w-xl'
@@ -34,21 +35,25 @@ export function NftPreview({
       rewardTier.maxSupply !== DEFAULT_NFT_MAX_SUPPLY,
   )
 
-  const contentType = useContentType(fileUrl)
-  const isVideo = contentType === 'video/mp4'
+  const { data: contentType, isLoading: contentTypeLoading } =
+    useContentType(fileUrl)
+  const isVideo = contentType === MP4_FILE_TYPE
 
-  const nftRender =
-    isVideo && fileUrl ? (
-      <JuiceVideoPreview src={fileUrl} />
-    ) : (
-      <img
-        className={IMAGE_OR_VIDEO_PREVIEW_CLASSES}
-        alt={rewardTier.name}
-        src={fileUrl}
-        onClick={e => e.stopPropagation()}
-        crossOrigin="anonymous"
-      />
-    )
+  const nftRender = contentTypeLoading ? (
+    <div className="flex h-[50vh] w-96 items-center justify-center">
+      <LoadingOutlined className="text-5xl" />
+    </div>
+  ) : isVideo && fileUrl ? (
+    <JuiceVideoPreview src={fileUrl} />
+  ) : (
+    <img
+      className={IMAGE_OR_VIDEO_PREVIEW_CLASSES}
+      alt={rewardTier.name}
+      src={fileUrl}
+      onClick={e => e.stopPropagation()}
+      crossOrigin="anonymous"
+    />
+  )
 
   return (
     <div className={JUICE_IMG_PREVIEW_CONTAINER_CLASS} onClick={onClose}>

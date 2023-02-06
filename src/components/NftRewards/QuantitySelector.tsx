@@ -18,7 +18,7 @@ export function QuantitySelector({
 }) {
   const isMobile = useMobile()
   const iconClasses =
-    'h-full flex items-center justify-center md:hover:bg-haze-600 active:bg-haze-600 xs:w-5/12 md:w-[27px]'
+    'h-full flex items-center justify-center md:hover:bg-haze-600 active:bg-haze-600 w-5/12 md:w-[27px]'
   const valueIsMax = value === maxValue
 
   return (

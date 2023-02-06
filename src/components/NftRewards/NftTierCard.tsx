@@ -1,6 +1,7 @@
 import { LoadingOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
 import { Skeleton } from 'antd'
+import { MP4_FILE_TYPE } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload'
 import { JuiceVideoThumbnail } from 'components/v2v3/shared/NftVideo/JuiceVideoThumbnail'
 import { useContentType } from 'hooks/ContentType'
 import { NftRewardTier } from 'models/nftRewardTier'
@@ -74,8 +75,8 @@ export function NftTierCard({
     }
   }
 
-  const contentType = useContentType(fileUrl)
-  const isVideo = contentType === 'video/mp4'
+  const { data: contentType } = useContentType(fileUrl)
+  const isVideo = contentType === MP4_FILE_TYPE
 
   const nftThumbnail =
     isVideo && fileUrl ? (

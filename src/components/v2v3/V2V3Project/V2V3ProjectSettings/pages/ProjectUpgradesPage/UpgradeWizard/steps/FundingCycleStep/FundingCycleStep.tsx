@@ -16,14 +16,6 @@ function RelaunchV2FundingCycleForm() {
   return <LaunchFundingCycleForm />
 }
 
-/**
- * Form to relaunch a V1 funding cycle on V3.
- */
-// function RelaunchV1FundingCycleForm() {
-//   // TODO(@aeolian)
-//   return null
-// }
-
 export function FundingCycleStep() {
   const localStoreRef = useRef<typeof store>()
   if (!localStoreRef.current) {

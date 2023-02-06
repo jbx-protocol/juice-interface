@@ -38,7 +38,6 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
     setPayAmount?.(newPayAmount)
     validatePayAmount?.(newPayAmount)
 
-    // TODO block pay input / notify user if NFTs still loading?
     if (!rewardTiers) return
 
     // If preventOverspending is enabled, selects nft with same contribution floor as pay amount

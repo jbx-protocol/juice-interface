@@ -19,6 +19,5 @@ export default function useTotalBalanceOf(
         ? [userAddress, BigNumber.from(projectId).toHexString()]
         : null,
     valueDidChange: bigNumbersDiff,
-    // TODO: updateOn: useShouldUpdateTokens(projectId, terminalName, userAddress),
   })
 }

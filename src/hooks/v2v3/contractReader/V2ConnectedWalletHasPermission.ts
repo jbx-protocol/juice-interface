@@ -9,7 +9,7 @@ export function useV2ConnectedWalletHasPermission(
   permission: V2V3OperatorPermission | V2V3OperatorPermission[],
 ): boolean {
   const { userAddress } = useWallet()
-  const { isPreviewMode, projectOwnerAddress } = useContext(V2V3ProjectContext)
+  const { projectOwnerAddress } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
   const hasOperatorPermission = useV2V3HasPermissions({
@@ -18,8 +18,6 @@ export function useV2ConnectedWalletHasPermission(
     domain: projectId,
     permissions: Array.isArray(permission) ? permission : [permission],
   })
-
-  if (isPreviewMode) return false
 
   const isOwner =
     userAddress &&

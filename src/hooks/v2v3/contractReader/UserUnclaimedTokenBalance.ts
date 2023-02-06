@@ -21,6 +21,5 @@ export default function useUserUnclaimedTokenBalance() {
         ? [userAddress, BigNumber.from(projectId).toHexString()]
         : null,
     valueDidChange: bigNumbersDiff,
-    // updateOn: TODO: useShouldUpdateTokens(projectId, terminal?.name, userAddress),
   })
 }

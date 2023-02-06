@@ -22,15 +22,6 @@ export function convertUpdateOnArrayToSubscriptions<C extends string>({
       const _contract = getContract(u.contract, contracts)
 
       if (!u.eventName || !_contract) return
-
-      // TODO temporarily removed to allevaite Infura pressure.
-      // https://github.com/jbx-protocol/juice-interface/issues/2572
-      // const filter = _contract.filters[u.eventName](...(u.topics ?? []))
-      // _contract?.on(filter, listener)
-      // subscriptions.push({
-      //   contract: _contract,
-      //   filter,
-      // })
     })
   }
   return subscriptions

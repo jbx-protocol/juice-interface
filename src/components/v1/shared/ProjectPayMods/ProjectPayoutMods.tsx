@@ -26,7 +26,6 @@ export default function ProjectPayoutMods({
   target: string
   currencyName: CurrencyName | undefined
   feePercentage: string | undefined
-  // TODO: Do we need a separate locked mods
   lockedMods?: EditingPayoutMod[]
   mods: EditingPayoutMod[] | undefined
   onModsChanged: (mods: EditingPayoutMod[]) => void

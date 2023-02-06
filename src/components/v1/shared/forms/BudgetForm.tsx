@@ -41,7 +41,7 @@ export default function BudgetForm({
   const [targetSubFee, setTargetSubFee] = useState<string>('0')
   const [duration, setDuration] = useState<string>('0')
   const [showFundingFields, setShowFundingFields] = useState<boolean>()
-  // TODO budgetForm should not depend on dispatch
+
   const dispatch = useAppDispatch()
   const { terminal } = useContext(V1ProjectContext)
   const editingFC = useEditingV1FundingCycleSelector()

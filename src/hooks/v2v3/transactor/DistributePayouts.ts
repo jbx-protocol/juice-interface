@@ -15,7 +15,7 @@ type DistributePayoutsTx = TransactorInstance<{
   currency: V2V3CurrencyOption | undefined
 }>
 
-const minReturnedTokens = 0 // TODO will need a field for this in WithdrawModal for v2
+const DEFAULT_MIN_RETURNED_TOKENS = 0
 
 export function useDistributePayoutsTx(): DistributePayoutsTx {
   const { transactor } = useContext(TransactionContext)
@@ -39,7 +39,14 @@ export function useDistributePayoutsTx(): DistributePayoutsTx {
     return transactor(
       contracts.JBETHPaymentTerminal,
       'distributePayoutsOf',
-      [projectId, amount, currency, ETH_TOKEN_ADDRESS, minReturnedTokens, memo],
+      [
+        projectId,
+        amount,
+        currency,
+        ETH_TOKEN_ADDRESS, // _token
+        DEFAULT_MIN_RETURNED_TOKENS, // _minReturnedTokens
+        memo,
+      ],
       {
         ...txOpts,
         title: t`Distribute payouts of ${projectTitle}`,

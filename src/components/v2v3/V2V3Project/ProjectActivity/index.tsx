@@ -34,7 +34,6 @@ type EventFilter =
   | 'distributeReservedTokens'
   | 'deployETHERC20ProjectPayer'
   | 'configure'
-// TODO | 'useAllowanceEvent'
 
 const pageSize = 50
 
@@ -283,14 +282,6 @@ export default function ProjectActivity() {
           if (e.configureEvent) {
             elem = <ConfigureEventElem event={e.configureEvent} />
           }
-          // TODO
-          // if (e.useAllowanceEvent) {
-          //   elem = (
-          //     <DeployedERC20EventElem
-          //       event={e.deployedERC20Event as DeployedERC20Event}
-          //     />
-          //   )
-          // }
 
           if (!elem) return null
 
@@ -382,10 +373,6 @@ export default function ProjectActivity() {
             <Select.Option value="addToBalance">
               <Trans>Added to balance</Trans>
             </Select.Option>
-            {/* TODO */}
-            {/* <Select.Option value="useAllowance">
-              <Trans>Used Allowance</Trans>
-            </Select.Option> */}
             <Select.Option value="deployERC20">
               <Trans>ERC20 deployed</Trans>
             </Select.Option>

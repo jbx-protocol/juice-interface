@@ -38,7 +38,6 @@ type EventFilter =
   | 'deployERC20'
   | 'projectCreate'
   | 'configure'
-// | 'mintTokens' TODO
 
 const pageSize = 50
 
@@ -99,10 +98,6 @@ export default function ProjectActivity() {
       case 'configure':
         key = 'v1ConfigureEvent'
         break
-      // TODO
-      // case 'mintTokens':
-      //   key = 'mintTokensEvent'
-      //   break
     }
 
     if (key) {
@@ -332,10 +327,6 @@ export default function ProjectActivity() {
             <Select.Option value="pay">
               <Trans>Paid</Trans>
             </Select.Option>
-            {/* TODO */}
-            {/* <Select.Option value="mintTokens">
-              <Trans>Minted Tokens</Trans>
-            </Select.Option> */}
             <Select.Option value="redeem">
               <Trans>Redeemed</Trans>
             </Select.Option>

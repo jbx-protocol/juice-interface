@@ -73,7 +73,7 @@ export default function DistributePayoutsModal({
 
     const txSuccessful = await distributePayoutsTx(
       {
-        amount: parseWad(distributionAmount), // TODO use terminal.decimals() to parse amount
+        amount: parseWad(distributionAmount),
         currency: distributionLimitCurrency.toNumber() as V2V3CurrencyOption,
       },
       {

@@ -39,6 +39,8 @@ import { parseProjectEventJson } from 'models/subgraph-entities/vX/project-event
 import { parseProtocolLogJson } from 'models/subgraph-entities/vX/protocol-log'
 import { parseRedeemEventJson } from 'models/subgraph-entities/vX/redeem-event'
 
+const PLURAL_ENTITY_EXCLUSIONS: SGEntityName[] = ['projectSearch']
+
 /**
  * Format a string used to define a subgraph query
  */
@@ -120,10 +122,12 @@ export function entitiesFromSGResponse<
 >(entityName: E, response: SGResponseData<E, K>) {
   let json: Json<SGEntity<E, K>>[] = []
 
-  const key = (entityName + 's') as `${E}s`
+  const key = PLURAL_ENTITY_EXCLUSIONS.includes(entityName)
+    ? entityName
+    : `${entityName}s`
 
   if (response && typeof response === 'object' && key in response) {
-    json = response[key]
+    json = response[key as `${E}s`]
   }
 
   return json

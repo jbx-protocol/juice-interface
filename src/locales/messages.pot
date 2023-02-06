@@ -2435,7 +2435,7 @@ msgstr ""
 msgid "Re-launch project"
 msgstr ""
 
-msgid "Re-launch your Juicebox project using the v3 contracts. <0>What's new in V3.</0>"
+msgid "Re-launch your Juicebox project using the v3 contracts."
 msgstr ""
 
 msgid "Read less"

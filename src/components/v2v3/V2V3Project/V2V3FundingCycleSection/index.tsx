@@ -3,7 +3,9 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import { CardSection } from 'components/CardSection'
 import Loading from 'components/Loading'
-import FundingCycleSection from 'components/Project/FundingCycleSection'
+import FundingCycleSection, {
+  TabType,
+} from 'components/Project/FundingCycleSection'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
@@ -101,7 +103,7 @@ export function V2V3FundingCycleSection() {
         </CardSection>
       ),
     },
-  ]
+  ].filter(Boolean) as TabType[]
 
   return (
     <FundingCycleSection

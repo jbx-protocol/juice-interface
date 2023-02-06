@@ -52,7 +52,7 @@ export default function Contact() {
   }
 
   const contactTypes = (
-    <Form.Item name="contactPlatform" initialValue="email">
+    <Form.Item name="contactPlatform" initialValue="email" className="mb-0">
       <Select
         className="min-w-[9em]"
         onSelect={handleSelect}
@@ -112,7 +112,7 @@ export default function Contact() {
                       value: 'media inquiry',
                       label: t`I have a media inquiry.`,
                     },
-                    { value: 'general question', label: t`Ask a question.` },
+                    { value: 'general question', label: t`I have a question.` },
                     { value: 'other', label: t`Other.` },
                   ]}
                 />

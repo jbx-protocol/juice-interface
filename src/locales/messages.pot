@@ -497,9 +497,6 @@ msgstr ""
 msgid "As your community grows, scale your project with it: Juicebox lets you update your payouts, token issuance & redemption, and other rules over time to meet your community's evolving needs. Run your community how you want to, with our pre-built integrations for <0>Safe</0>, <1>Snapshot</1>, and the other tools you already use."
 msgstr ""
 
-msgid "Ask a question."
-msgstr ""
-
 msgid "Assets"
 msgstr ""
 
@@ -1545,6 +1542,9 @@ msgid "I accept this project's <0>unique risks</0>."
 msgstr ""
 
 msgid "I have a media inquiry."
+msgstr ""
+
+msgid "I have a question."
 msgstr ""
 
 msgid "I have another question!"

@@ -65,7 +65,7 @@ export function TransactionsList({
               .map(tx =>
                 tx ? (
                   <TransactionItem
-                    key={tx.tx?.hash}
+                    key={`txitem-${tx.id}`}
                     tx={tx}
                     onRemoveTransaction={
                       removeTransaction

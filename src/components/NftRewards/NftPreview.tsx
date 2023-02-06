@@ -7,17 +7,22 @@ import { useContext } from 'react'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { classNames } from 'utils/classNames'
 import { JUICE_IMG_PREVIEW_CONTAINER_CLASS } from 'components/Create/components/JuiceImgPreview'
+import { useContentType } from 'hooks/ContentType'
+import { JuiceVideoPreview } from 'components/v2v3/shared/NftVideo/JuiceVideoPreview'
+
+export const IMAGE_OR_VIDEO_PREVIEW_CLASSES =
+  'max-h-[50vh] max-w-[90vw] md:max-h-[60vh] md:max-w-xl'
 
 export function NftPreview({
   open,
   rewardTier,
   onClose,
-  imageUrl,
+  fileUrl,
 }: {
   open: boolean
   rewardTier: NftRewardTier
   onClose: VoidFunction
-  imageUrl: string | undefined
+  fileUrl: string | undefined
 }) {
   const { projectMetadata } = useContext(ProjectMetadataContext)
 
@@ -28,6 +33,22 @@ export function NftPreview({
       rewardTier.maxSupply &&
       rewardTier.maxSupply !== DEFAULT_NFT_MAX_SUPPLY,
   )
+
+  const contentType = useContentType(fileUrl)
+  const isVideo = contentType === 'video/mp4'
+
+  const nftRender =
+    isVideo && fileUrl ? (
+      <JuiceVideoPreview src={fileUrl} />
+    ) : (
+      <img
+        className={IMAGE_OR_VIDEO_PREVIEW_CLASSES}
+        alt={rewardTier.name}
+        src={fileUrl}
+        onClick={e => e.stopPropagation()}
+        crossOrigin="anonymous"
+      />
+    )
 
   return (
     <div className={JUICE_IMG_PREVIEW_CONTAINER_CLASS} onClick={onClose}>
@@ -40,15 +61,7 @@ export function NftPreview({
         className="max-w-prose pt-24 md:pt-0"
         onClick={e => e.stopPropagation()}
       >
-        <div className="mb-5 text-center">
-          <img
-            className={'max-h-[50vh] max-w-[90vw] md:max-h-[60vh] md:max-w-xl'}
-            alt={rewardTier.name}
-            src={imageUrl}
-            onClick={e => e.stopPropagation()}
-            crossOrigin="anonymous"
-          />
-        </div>
+        <div className="mb-5 text-center">{nftRender}</div>
 
         <h1 className="text-slate-100">{rewardTier.name}</h1>
         <span className="uppercase text-slate-100">

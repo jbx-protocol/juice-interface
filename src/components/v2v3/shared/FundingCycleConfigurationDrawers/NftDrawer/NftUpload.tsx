@@ -60,7 +60,7 @@ export default function NftUpload({ form }: { form: FormInstance }) {
     if (uploading) {
       return Promise.reject('File uploading.')
     } else if (imageUrl === undefined) {
-      return Promise.reject('Image file required.')
+      return Promise.reject('File required.')
     }
     return Promise.resolve()
   }

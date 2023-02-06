@@ -10,7 +10,7 @@ import { UploadOutlined, CloseCircleFilled } from '@ant-design/icons'
 import { RewardImage } from 'components/Create/components/RewardImage'
 import { stopPropagation } from 'react-stop-propagation'
 import { ThemeContext } from 'contexts/themeContext'
-import { JuiceVideoPreview } from 'components/v2v3/JuiceVideoPreview'
+import { JuiceVideoPreview } from 'components/v2v3/shared/NftVideo/JuiceVideoPreview'
 import { useContentType } from 'hooks/ContentType'
 
 export type SupportedNftFileTypes =

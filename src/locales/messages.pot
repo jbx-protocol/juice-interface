@@ -2936,6 +2936,12 @@ msgstr ""
 msgid "Target"
 msgstr ""
 
+msgid "Telegram"
+msgstr ""
+
+msgid "Telegram link"
+msgstr ""
+
 msgid "Terminal configuration"
 msgstr ""
 

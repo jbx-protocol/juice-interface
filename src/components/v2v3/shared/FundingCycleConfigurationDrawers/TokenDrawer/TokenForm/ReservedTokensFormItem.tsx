@@ -5,7 +5,7 @@ import { FormItems } from 'components/formItems'
 import { FormItemExt } from 'components/formItems/formItemExt'
 import FormItemWarningText from 'components/FormItemWarningText'
 import { Split } from 'models/splits'
-import { defaultFundingCycleMetadata } from 'redux/slices/editingV2Project'
+import { DEFAULT_FUNDING_CYCLE_METADATA } from 'redux/slices/editingV2Project'
 import { toMod, toSplit } from 'utils/splits'
 
 export default function ReservedTokensFormItem({
@@ -32,14 +32,14 @@ export default function ReservedTokensFormItem({
 
   const hasReservedRate = !(
     reservedRate === undefined ||
-    reservedRate.toString() === defaultFundingCycleMetadata.reservedRate
+    reservedRate.toString() === DEFAULT_FUNDING_CYCLE_METADATA.reservedRate
   )
 
   const [reservedRateChecked, setReservedRateChecked] =
     useState<boolean>(hasReservedRate)
 
   const defaultReservedRateNum = parseInt(
-    defaultFundingCycleMetadata.reservedRate,
+    DEFAULT_FUNDING_CYCLE_METADATA.reservedRate,
   )
 
   return (

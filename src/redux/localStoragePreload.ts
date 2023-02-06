@@ -3,10 +3,9 @@ import {
   REDUX_STORE_V1_PROJECT_VERSION,
 } from './slices/editingProject'
 import {
-  defaultReduxState as defaultV2ProjectState,
+  DEFAULT_REDUX_STATE as defaultV2ProjectState,
   REDUX_STORE_V2_PROJECT_VERSION,
 } from './slices/editingV2Project'
-
 import { REDUX_STATE_LOCALSTORAGE_KEY, RootState } from './store'
 
 interface PreloadedState {

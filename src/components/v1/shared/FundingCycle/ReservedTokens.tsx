@@ -1,13 +1,10 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import TooltipLabel from 'components/TooltipLabel'
-import { readNetwork } from 'constants/networks'
-import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import useReservedTokensOfProject from 'hooks/v1/contractReader/ReservedTokensOfProject'
 import { TicketMod } from 'models/mods'
-import { NetworkName } from 'models/network-name'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { useContext, useState } from 'react'
 import { formatWad, perbicentToPercent } from 'utils/format/formatNumber'
@@ -35,14 +32,6 @@ export default function ReservedTokens({
   const reservedTokens = useReservedTokensOfProject(metadata?.reservedRate)
 
   const tokenTextPlural = tokenSymbolText({ tokenSymbol, plural: true })
-
-  const isConstitutionDAO =
-    readNetwork.name === NetworkName.mainnet &&
-    projectId === V1_PROJECT_IDS.CONSTITUTION_DAO
-
-  const isSharkDAO =
-    readNetwork.name === NetworkName.mainnet &&
-    projectId === V1_PROJECT_IDS.SHARK_DAO
 
   return (
     <div>
@@ -80,7 +69,7 @@ export default function ReservedTokens({
         />
       ) : null}
 
-      {!hideActions && !isConstitutionDAO && !isSharkDAO && (
+      {!hideActions && (
         <div className="mb-5 flex items-baseline justify-between">
           <span>
             <Trans>

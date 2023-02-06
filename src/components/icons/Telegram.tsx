@@ -15,7 +15,7 @@ export default function Telegram({
       width="71"
       height="55"
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
+      viewBox="0 0 26 24"
     >
       <path
         fill="currentColor"

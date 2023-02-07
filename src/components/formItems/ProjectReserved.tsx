@@ -1,16 +1,17 @@
 import { t, Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import FormItemLabel from 'components/FormItemLabel'
-import round from 'lodash/round'
-import { useState } from 'react'
-import { defaultFundingCycleMetadata } from 'redux/slices/editingV2Project'
-import { formattedNum } from 'utils/format/formatNumber'
-import { DEFAULT_MINT_RATE } from 'utils/v2v3/math'
-
 import {
   FUNDING_CYCLE_WARNING_TEXT,
   RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
 } from 'constants/fundingWarningText'
+import round from 'lodash/round'
+import { useState } from 'react'
+import {
+  DEFAULT_FUNDING_CYCLE_METADATA,
+  DEFAULT_MINT_RATE,
+} from 'redux/slices/editingV2Project'
+import { formattedNum } from 'utils/format/formatNumber'
 import FormItemWarningText from '../FormItemWarningText'
 import NumberSlider from '../inputs/NumberSlider'
 import FundingCycleDetailWarning from '../Project/FundingCycleDetailWarning'
@@ -113,7 +114,7 @@ export default function ProjectReserved({
                 {!checked && (
                   <span className="text-grey-400 dark:text-slate-200">
                     {' '}
-                    ({defaultFundingCycleMetadata.reservedRate}%)
+                    ({DEFAULT_FUNDING_CYCLE_METADATA.reservedRate}%)
                   </span>
                 )}
               </SwitchHeading>

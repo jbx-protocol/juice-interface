@@ -15,7 +15,7 @@ import { Split } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import {
-  defaultFundingCycleMetadata,
+  DEFAULT_FUNDING_CYCLE_METADATA,
   editingV2ProjectActions,
 } from 'redux/slices/editingV2Project'
 import { fromWad } from 'utils/format/formatNumber'
@@ -207,12 +207,12 @@ export function FundingForm({
       if (!distributionLimit || distributionLimit === '0') {
         dispatch(
           editingV2ProjectActions.setRedemptionRate(
-            defaultFundingCycleMetadata.redemptionRate,
+            DEFAULT_FUNDING_CYCLE_METADATA.redemptionRate,
           ),
         )
         dispatch(
           editingV2ProjectActions.setBallotRedemptionRate(
-            defaultFundingCycleMetadata.ballotRedemptionRate,
+            DEFAULT_FUNDING_CYCLE_METADATA.ballotRedemptionRate,
           ),
         )
       }

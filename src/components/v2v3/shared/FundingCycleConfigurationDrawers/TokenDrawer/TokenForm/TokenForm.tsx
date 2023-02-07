@@ -5,17 +5,32 @@ import ReservedTokensFormItem from 'components/v2v3/shared/FundingCycleConfigura
 import { useAppDispatch } from 'hooks/AppDispatch'
 import { useAppSelector } from 'hooks/AppSelector'
 import round from 'lodash/round'
-
+import { BigNumber } from '@ethersproject/bignumber'
+import { useForm } from 'antd/lib/form/Form'
+import { Callout } from 'components/Callout'
+import { FormItems } from 'components/formItems'
+import { DEFAULT_BONDING_CURVE_RATE_PERCENTAGE } from 'components/formItems/ProjectRedemptionRate'
+import FormItemWarningText from 'components/FormItemWarningText'
+import NumberSlider from 'components/inputs/NumberSlider'
+import SwitchHeading from 'components/SwitchHeading'
+import { DISCOUNT_RATE_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+import { Split } from 'models/splits'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
-  defaultFundingCycleData,
-  defaultFundingCycleMetadata,
+  DEFAULT_FUNDING_CYCLE_DATA,
+  DEFAULT_FUNDING_CYCLE_METADATA,
+  DEFAULT_MINT_RATE,
   editingV2ProjectActions,
 } from 'redux/slices/editingV2Project'
+import { formattedNum } from 'utils/format/formatNumber'
 import { sanitizeSplit } from 'utils/splits'
-import { Split } from 'models/splits'
+import { getTotalSplitsPercentage } from 'utils/v2v3/distributions'
 import {
-  DEFAULT_MINT_RATE,
+  getDefaultFundAccessConstraint,
+  hasDistributionLimit,
+  hasFundingDuration,
+} from 'utils/v2v3/fundingCycle'
+import {
   discountRateFrom,
   formatDiscountRate,
   formatIssuanceRate,
@@ -25,24 +40,8 @@ import {
   redemptionRateFrom,
   reservedRateFrom,
 } from 'utils/v2v3/math'
-import { BigNumber } from '@ethersproject/bignumber'
-import { FormItems } from 'components/formItems'
-import {
-  getDefaultFundAccessConstraint,
-  hasDistributionLimit,
-  hasFundingDuration,
-} from 'utils/v2v3/fundingCycle'
 import { SerializedV2V3FundAccessConstraint } from 'utils/v2v3/serializers'
-import SwitchHeading from 'components/SwitchHeading'
-import NumberSlider from 'components/inputs/NumberSlider'
-import { DEFAULT_BONDING_CURVE_RATE_PERCENTAGE } from 'components/formItems/ProjectRedemptionRate'
-import FormItemWarningText from 'components/FormItemWarningText'
-import { formattedNum } from 'utils/format/formatNumber'
-import { useForm } from 'antd/lib/form/Form'
-import { DISCOUNT_RATE_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
-import { getTotalSplitsPercentage } from 'utils/v2v3/distributions'
 import MintRateFormItem from './MintRateFormItem'
-import { Callout } from 'components/Callout'
 
 const MAX_DISCOUNT_RATE = 20 // this is an opinionated limit
 
@@ -142,13 +141,13 @@ export function TokenForm({
     () => ({
       reservedRate:
         fundingCycleMetadata.reservedRate ??
-        defaultFundingCycleMetadata.reservedRate,
+        DEFAULT_FUNDING_CYCLE_METADATA.reservedRate,
       discountRate:
         (canSetDiscountRate && fundingCycleData?.discountRate) ||
-        defaultFundingCycleData.discountRate,
+        DEFAULT_FUNDING_CYCLE_DATA.discountRate,
       redemptionRate:
         (canSetRedemptionRate && fundingCycleMetadata?.redemptionRate) ||
-        defaultFundingCycleMetadata.redemptionRate,
+        DEFAULT_FUNDING_CYCLE_METADATA.redemptionRate,
       weight: fundingCycleData?.weight
         ? formatIssuanceRate(fundingCycleData?.weight)
         : DEFAULT_MINT_RATE.toString(),
@@ -182,12 +181,12 @@ export function TokenForm({
   const [weight, setWeight] = useState<string>(initialValues.weight)
 
   const [discountRateChecked, setDiscountRateChecked] = useState<boolean>(
-    fundingCycleData?.discountRate !== defaultFundingCycleData.discountRate,
+    fundingCycleData?.discountRate !== DEFAULT_FUNDING_CYCLE_DATA.discountRate,
   )
 
   const [redemptionRateChecked, setRedemptionRateChecked] = useState<boolean>(
     fundingCycleMetadata?.redemptionRate !==
-      defaultFundingCycleMetadata.redemptionRate,
+      DEFAULT_FUNDING_CYCLE_METADATA.redemptionRate,
   )
 
   const [reservedTokensSplits, setReservedTokensSplits] = useState<Split[]>(
@@ -305,7 +304,7 @@ export function TokenForm({
                 onChange={checked => {
                   setDiscountRateChecked(checked)
                   if (!checked)
-                    setDiscountRate(defaultFundingCycleData.discountRate)
+                    setDiscountRate(DEFAULT_FUNDING_CYCLE_DATA.discountRate)
                 }}
                 checked={discountRateChecked}
                 disabled={!canSetDiscountRate}
@@ -314,7 +313,7 @@ export function TokenForm({
                 {!discountRateChecked && canSetDiscountRate && (
                   <span className="text-grey-400 dark:text-slate-200">
                     {' '}
-                    ({defaultFundingCycleData.discountRate}%)
+                    ({DEFAULT_FUNDING_CYCLE_DATA.discountRate}%)
                   </span>
                 )}
               </SwitchHeading>

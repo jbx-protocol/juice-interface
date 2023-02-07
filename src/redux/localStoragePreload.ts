@@ -2,17 +2,15 @@ import {
   defaultProjectState as defaultV1ProjectState,
   REDUX_STORE_V1_PROJECT_VERSION,
 } from './slices/editingProject'
-import {
-  DEFAULT_REDUX_STATE as defaultV2ProjectState,
-  REDUX_STORE_V2_PROJECT_VERSION,
-} from './slices/editingV2Project'
+import { INITIAL_REDUX_STATE as defaultV2ProjectState } from './slices/editingV2Project'
+import { REDUX_STORE_V2_PROJECT_VERSION } from './slices/editingV2Project/version'
 import { REDUX_STATE_LOCALSTORAGE_KEY, RootState } from './store'
 
 interface PreloadedState {
   reduxState: RootState
 }
 
-export default function getLocalStoragePreloadedState(): RootState | undefined {
+export function getLocalStoragePreloadedState(): RootState | undefined {
   try {
     const stateString =
       localStorage && localStorage.getItem(REDUX_STATE_LOCALSTORAGE_KEY)
@@ -41,6 +39,9 @@ export default function getLocalStoragePreloadedState(): RootState | undefined {
       parsedState?.reduxState?.editingV2Project?.version !==
       REDUX_STORE_V2_PROJECT_VERSION
     ) {
+      console.info(
+        'redux::editingV2Project::default redux state changed, resetting editingV2Project state.',
+      )
       parsedState = {
         ...parsedState,
         reduxState: {

@@ -18,17 +18,11 @@ import {
   serializeV2V3FundingCycleData,
   serializeV2V3FundingCycleMetadata,
 } from 'utils/v2v3/serializers'
-import { CreateState, ProjectState, ReduxState } from './types'
+import { CreateState, ProjectState } from './types'
 
 export const DEFAULT_MUST_START_AT_OR_AFTER = '1'
 export const DEFAULT_MINT_RATE = ONE_MILLION
 
-// Increment this version by 1 when making breaking or major changes.
-// When users return to the site and their local version is less than
-// this number, their state will be reset.
-export const REDUX_STORE_V2_PROJECT_VERSION = 12
-
-// IF CHANGING ANY DEFAULT STATE, MUST INCREMENT REDUX VERSION ABOVE (`REDUX_STORE_V2_PROJECT_VERSION`)
 export const DEFAULT_FUNDING_CYCLE_DATA: SerializedV2V3FundingCycleData =
   serializeV2V3FundingCycleData({
     duration: BigNumber.from(0),
@@ -37,7 +31,6 @@ export const DEFAULT_FUNDING_CYCLE_DATA: SerializedV2V3FundingCycleData =
     ballot: constants.AddressZero,
   })
 
-// IF CHANGING ANY DEFAULT STATE, MUST INCREMENT REDUX VERSION ABOVE (`REDUX_STORE_V2_PROJECT_VERSION`)
 export const DEFAULT_FUNDING_CYCLE_METADATA: SerializedV2V3FundingCycleMetadata =
   serializeV2V3FundingCycleMetadata({
     global: {
@@ -64,19 +57,16 @@ export const DEFAULT_FUNDING_CYCLE_METADATA: SerializedV2V3FundingCycleMetadata 
     metadata: BigNumber.from(0),
   }) ?? {}
 
-// IF CHANGING ANY DEFAULT STATE, MUST INCREMENT REDUX VERSION ABOVE (`REDUX_STORE_V2_PROJECT_VERSION`)
 export const EMPTY_PAYOUT_GROUPED_SPLITS = {
   group: ETH_PAYOUT_SPLIT_GROUP,
   splits: [],
 }
 
-// IF CHANGING ANY DEFAULT STATE, MUST INCREMENT REDUX VERSION ABOVE (`REDUX_STORE_V2_PROJECT_VERSION`)
 export const EMPTY_RESERVED_TOKENS_GROUPED_SPLITS = {
   group: RESERVED_TOKEN_SPLIT_GROUP,
   splits: [],
 }
 
-// IF CHANGING ANY DEFAULT STATE, MUST INCREMENT REDUX VERSION ABOVE (`REDUX_STORE_V2_PROJECT_VERSION`)
 export const EMPTY_NFT_COLLECTION_METADATA = {
   symbol: undefined,
   name: undefined,
@@ -84,7 +74,6 @@ export const EMPTY_NFT_COLLECTION_METADATA = {
   description: undefined,
 }
 
-// IF CHANGING ANY DEFAULT STATE, MUST INCREMENT REDUX VERSION ABOVE (`REDUX_STORE_V2_PROJECT_VERSION`)
 export const DEFAULT_NFT_FLAGS: JBTiered721Flags = {
   lockReservedTokenChanges: false,
   lockVotingUnitChanges: false,
@@ -92,7 +81,6 @@ export const DEFAULT_NFT_FLAGS: JBTiered721Flags = {
   preventOverspending: false,
 }
 
-// IF CHANGING ANY DEFAULT STATE, MUST INCREMENT REDUX VERSION ABOVE (`REDUX_STORE_V2_PROJECT_VERSION`)
 const DEFAULT_PROJECT_METADATA_STATE: ProjectMetadataV5 = {
   name: '',
   infoUri: '',
@@ -105,7 +93,6 @@ const DEFAULT_PROJECT_METADATA_STATE: ProjectMetadataV5 = {
   version: LATEST_METADATA_VERSION,
 }
 
-// IF CHANGING ANY DEFAULT STATE, MUST INCREMENT REDUX VERSION ABOVE (`REDUX_STORE_V2_PROJECT_VERSION`)
 const DEFAULT_CREATE_STATE: CreateState = {
   reconfigurationRuleSelection: undefined,
   fundingCyclesPageSelection: undefined,
@@ -116,7 +103,6 @@ const DEFAULT_CREATE_STATE: CreateState = {
   projectTokensSelection: undefined,
 }
 
-// IF CHANGING ANY DEFAULT STATE, MUST INCREMENT REDUX VERSION ABOVE (`REDUX_STORE_V2_PROJECT_VERSION`)
 const DEFAULT_PROJECT_STATE: ProjectState = {
   projectMetadata: { ...DEFAULT_PROJECT_METADATA_STATE },
   fundingCycleData: { ...DEFAULT_FUNDING_CYCLE_DATA },
@@ -137,8 +123,7 @@ const DEFAULT_PROJECT_STATE: ProjectState = {
   inputProjectOwner: undefined,
 }
 
-export const DEFAULT_REDUX_STATE: ReduxState = {
-  version: REDUX_STORE_V2_PROJECT_VERSION,
+export const DEFAULT_REDUX_STATE = {
   ...DEFAULT_PROJECT_STATE,
   ...DEFAULT_CREATE_STATE,
 }

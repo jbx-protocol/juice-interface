@@ -12,6 +12,7 @@ import {
   CreateState,
   DEFAULT_REDUX_STATE,
   editingV2ProjectActions,
+  INITIAL_REDUX_STATE,
   ProjectState,
 } from 'redux/slices/editingV2Project'
 import { parseWad } from 'utils/format/formatNumber'
@@ -149,7 +150,7 @@ export function useLoadingInitialStateFromQuery() {
 
       dispatch(
         editingV2ProjectActions.setState({
-          ...DEFAULT_REDUX_STATE,
+          ...INITIAL_REDUX_STATE,
           ...createFlowState,
           ...parsedInitialState,
           ...{

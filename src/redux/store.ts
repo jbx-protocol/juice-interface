@@ -1,6 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-
-import getLocalStoragePreloadedState from './localStoragePreload'
+import { getLocalStoragePreloadedState } from './localStoragePreload'
 import editingProjectReducer from './slices/editingProject'
 import editingV2ProjectReducer from './slices/editingV2Project'
 

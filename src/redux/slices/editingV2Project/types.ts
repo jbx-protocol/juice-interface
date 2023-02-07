@@ -55,5 +55,5 @@ export interface ProjectState {
 }
 
 export interface ReduxState extends CreateState, ProjectState {
-  version: number
+  version: string
 }

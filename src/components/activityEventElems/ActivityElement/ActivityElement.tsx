@@ -51,10 +51,15 @@ function SideDetails({ event }: { event: ActivityElementEvent }) {
   const terminalVersion = useV2V3TerminalVersion(event.terminal)
 
   return (
-    <div style={{ textAlign: 'right' }}>
+    <div style={{ textAlign: 'right' }} id={`activity_${event.timestamp}`}>
       {event.timestamp && (
         <div className="text-xs text-grey-500 dark:text-grey-300">
-          {formatHistoricalDate(event.timestamp * 1000)}{' '}
+          <a
+            href={`#activity_${event.timestamp}`}
+            className="text-grey-500 hover:underline dark:text-grey-300"
+          >
+            {formatHistoricalDate(event.timestamp * 1000)}{' '}
+          </a>{' '}
           {terminalVersion && (
             <ProjectVersionBadge
               versionText={'V' + terminalVersion}

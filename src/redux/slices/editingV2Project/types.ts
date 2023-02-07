@@ -9,7 +9,7 @@ import {
   NftRewardTier,
 } from 'models/nftRewardTier'
 import { PayoutsSelection } from 'models/payoutsSelection'
-import { ProjectMetadataV5 } from 'models/project-metadata'
+import { ProjectMetadataV6 } from 'models/project-metadata'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
 import {
@@ -43,7 +43,7 @@ export interface CreateState {
 }
 
 export interface ProjectState {
-  projectMetadata: ProjectMetadataV5
+  projectMetadata: ProjectMetadataV6
   fundingCycleData: SerializedV2V3FundingCycleData
   fundingCycleMetadata: SerializedV2V3FundingCycleMetadata
   fundAccessConstraints: SerializedV2V3FundAccessConstraint[]

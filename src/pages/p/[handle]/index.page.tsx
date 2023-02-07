@@ -4,7 +4,7 @@ import Project404 from 'components/Project404'
 import ScrollToTopButton from 'components/ScrollToTopButton'
 import { V1Project } from 'components/v1/V1Project'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { ProjectMetadataV5 } from 'models/project-metadata'
+import { ProjectMetadataV6 } from 'models/project-metadata'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
 import { V1UserProvider } from 'providers/v1/UserProvider'
@@ -19,7 +19,7 @@ export const getStaticPaths: GetStaticPaths = async context => {
 }
 
 export const getStaticProps: GetStaticProps<{
-  metadata: ProjectMetadataV5
+  metadata: ProjectMetadataV6
   handle: string
 }> = async context => {
   return getV1StaticProps(context)

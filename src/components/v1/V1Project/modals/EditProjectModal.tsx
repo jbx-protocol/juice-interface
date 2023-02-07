@@ -23,6 +23,7 @@ type ProjectInfoFormFields = {
   logoUri: string
   twitter: string
   discord: string
+  telegram: string
   payButton: string
   payDisclosure: string
   version: number
@@ -61,6 +62,7 @@ export default function EditProjectModal({
         logoUri: projectMetadata?.logoUri,
         twitter: projectMetadata?.twitter,
         discord: projectMetadata?.discord,
+        telegram: projectMetadata?.telegram,
         description: projectMetadata?.description,
         payButton: projectMetadata?.payButton,
         payDisclosure: projectMetadata?.payDisclosure,
@@ -87,6 +89,7 @@ export default function EditProjectModal({
         infoUri: fields.infoUri,
         twitter: fields.twitter,
         discord: fields.discord,
+        telegram: fields.telegram,
         payButton: fields.payButton.substring(0, PROJECT_PAY_CHARACTER_LIMIT), // Enforce limit
         payDisclosure: fields.payDisclosure,
         tokens: projectMetadata?.tokens ?? [],
@@ -175,6 +178,7 @@ export default function EditProjectModal({
         <FormItems.ProjectLink name="infoUri" />
         <FormItems.ProjectTwitter name="twitter" />
         <FormItems.ProjectDiscord name="discord" />
+        <FormItems.ProjectTelegram name="telegram" />
         <FormItems.ProjectPayButton name="payButton" />
         <FormItems.ProjectPayDisclosure name="payDisclosure" />
         <FormItems.ProjectLogoUri

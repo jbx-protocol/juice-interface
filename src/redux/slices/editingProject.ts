@@ -4,7 +4,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { PayoutMod, TicketMod } from 'models/mods'
 import {
   LATEST_METADATA_VERSION,
-  ProjectMetadataV5,
+  ProjectMetadataV6,
 } from 'models/project-metadata'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { toDateSeconds } from 'utils/format/formatDate'
@@ -22,7 +22,7 @@ import {
 import { V1_CURRENCY_USD } from 'constants/v1/currency'
 
 interface EditingProjectInfo {
-  metadata: ProjectMetadataV5
+  metadata: ProjectMetadataV6
   handle: string
 }
 
@@ -52,6 +52,7 @@ export const defaultProjectState: EditingProjectState = {
       description: '',
       twitter: '',
       discord: '',
+      telegram: '',
       tokens: [],
       version: LATEST_METADATA_VERSION,
       archived: false,
@@ -106,6 +107,9 @@ const editingProjectSlice = createSlice({
     },
     setDiscord: (state, action: PayloadAction<string>) => {
       state.info.metadata.discord = action.payload
+    },
+    setTelegram: (state, action: PayloadAction<string>) => {
+      state.info.metadata.telegram = action.payload
     },
     setPayButton: (state, action: PayloadAction<string>) => {
       state.info.metadata.payButton = action.payload

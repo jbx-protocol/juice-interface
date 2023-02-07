@@ -84,6 +84,11 @@ export const ProjectDetailsPage: React.FC = () => {
                   <JuiceInput prefix="https://" />
                 </Form.Item>
               </Col>
+              <Col span={12}>
+                <Form.Item name="projectTelegram" label={t`Telegram`}>
+                  <JuiceInput prefix="https://" />
+                </Form.Item>
+              </Col>
             </Row>
           </CreateCollapse.Panel>
           <CreateCollapse.Panel

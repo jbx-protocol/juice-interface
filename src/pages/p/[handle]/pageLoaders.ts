@@ -1,6 +1,6 @@
 import { PV_V1, PV_V1_1 } from 'constants/pv'
 import { paginateDepleteProjectsQueryCall } from 'lib/apollo'
-import { ProjectMetadataV5 } from 'models/project-metadata'
+import { ProjectMetadataV6 } from 'models/project-metadata'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { findProjectMetadata } from 'utils/server'
 
@@ -29,7 +29,7 @@ export const getV1StaticPaths: GetStaticPaths = async () => {
 }
 
 export const getV1StaticProps: GetStaticProps<{
-  metadata: ProjectMetadataV5
+  metadata: ProjectMetadataV6
   handle: string
 }> = async context => {
   if (!context.params) throw new Error('params not supplied')

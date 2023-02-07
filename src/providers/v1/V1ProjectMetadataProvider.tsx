@@ -2,7 +2,7 @@ import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import useProjectIdForHandle from 'hooks/v1/contractReader/ProjectIdForHandle'
 import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
-import { ProjectMetadataV5 } from 'models/project-metadata'
+import { ProjectMetadataV6 } from 'models/project-metadata'
 import { PropsWithChildren } from 'react'
 import { getTerminalVersion } from 'utils/v1/terminals'
 
@@ -12,7 +12,7 @@ export function V1ProjectMetadataProvider({
   children,
 }: PropsWithChildren<{
   handle: string
-  metadata: ProjectMetadataV5 | undefined
+  metadata: ProjectMetadataV6 | undefined
 }>) {
   const { data: projectId } = useProjectIdForHandle(handle)
 

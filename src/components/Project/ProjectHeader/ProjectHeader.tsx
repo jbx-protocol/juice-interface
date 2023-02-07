@@ -34,6 +34,7 @@ export function ProjectHeader({
   const projectTitle = projectMetadata?.name || t`Untitled project`
   const hasSocialLinks =
     projectMetadata?.discord ||
+    projectMetadata?.telegram ||
     projectMetadata?.twitter ||
     projectMetadata?.infoUri
 
@@ -90,6 +91,7 @@ export function ProjectHeader({
                 discord={projectMetadata?.discord}
                 twitter={projectMetadata?.twitter}
                 infoUri={projectMetadata?.infoUri}
+                telegram={projectMetadata?.telegram}
               />
 
               {hasSocialLinks && actions ? (

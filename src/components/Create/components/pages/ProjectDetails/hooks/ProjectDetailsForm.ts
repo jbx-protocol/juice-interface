@@ -10,6 +10,7 @@ type ProjectDetailsFormProps = Partial<{
   logo: string
   projectWebsite: string
   projectTwitter: string
+  projectTelegram: string
   projectDiscord: string
   payButtonText: string
   payDisclosure: string
@@ -29,6 +30,7 @@ export const useProjectDetailsForm = () => {
       logo: projectMetadata.logoUri,
       projectWebsite: projectMetadata.infoUri,
       projectTwitter: projectMetadata.twitter,
+      projectTelegram: projectMetadata.telegram,
       projectDiscord: projectMetadata.discord,
       payButtonText: projectMetadata.payButton,
       payDisclosure: projectMetadata.payDisclosure,
@@ -44,6 +46,7 @@ export const useProjectDetailsForm = () => {
       projectMetadata.payButton,
       projectMetadata.payDisclosure,
       projectMetadata.twitter,
+      projectMetadata.telegram,
     ],
   )
 
@@ -87,6 +90,13 @@ export const useProjectDetailsForm = () => {
     fieldName: 'projectDiscord',
     ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setDiscord,
+    formatter: v => v ?? '',
+  })
+  useFormDispatchWatch({
+    form,
+    fieldName: 'projectTelegram',
+    ignoreUndefined: true,
+    dispatchFunction: editingV2ProjectActions.setTelegram,
     formatter: v => v ?? '',
   })
   useFormDispatchWatch({

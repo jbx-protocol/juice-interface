@@ -3,11 +3,11 @@ import { Button, Col, Row, Space } from 'antd'
 import { ThemeOption } from 'constants/theme/theme-option'
 import { ThemeContext } from 'contexts/themeContext'
 import useMobile from 'hooks/Mobile'
-import { fathom } from 'lib/fathom'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { classNames } from 'utils/classNames'
+import { trackFathomGoal } from 'utils/fathom'
 import { HeroHeading, HeroSubheading } from './strings'
 import bananaOd from '/public/assets/banana-od.webp'
 import bananaOl from '/public/assets/banana-ol.webp'
@@ -63,8 +63,7 @@ const CallToAction = () => {
             size="large"
             block={isMobile}
             onClick={() => {
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              ;(fathom as any)?.trackGoal('IIYVJKNC', 0)
+              trackFathomGoal('IIYVJKNC')
             }}
           >
             <Trans>Create a project</Trans>

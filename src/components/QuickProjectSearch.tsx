@@ -16,6 +16,7 @@ import { SepanaProject } from 'models/sepana'
 import { useRouter } from 'next/router'
 import React, { useCallback, useEffect, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { trackFathomGoal } from 'utils/fathom'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { formatWad } from 'utils/format/formatNumber'
 import { v2v3ProjectRoute } from 'utils/routes'
@@ -161,7 +162,10 @@ export default function QuickProjectSearch() {
     <>
       <SearchOutlined
         className="mt-1 text-2xl leading-none transition-colors hover:text-haze-400"
-        onClick={modal.open}
+        onClick={() => {
+          modal.open()
+          trackFathomGoal('OJRCY4EI')
+        }}
       />
       <Modal
         closable={false}

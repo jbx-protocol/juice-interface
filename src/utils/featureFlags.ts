@@ -15,9 +15,10 @@ const featureFlagKey = (baseKey: string) => {
   return `${baseKey}_${readNetwork.name}`
 }
 
-const setFeatureFlag = (featureFlag: string, enabled: boolean) => {
+export const setFeatureFlag = (featureFlag: string, enabled: boolean) => {
   localStorage &&
     localStorage.setItem(featureFlagKey(featureFlag), JSON.stringify(enabled))
+  console.info('featureflags::setFeatureFlag', featureFlag, enabled)
 }
 
 export const enableFeatureFlag = (featureFlag: string) => {

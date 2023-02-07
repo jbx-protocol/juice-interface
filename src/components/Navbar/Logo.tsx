@@ -19,6 +19,7 @@ export default function Logo({ className }: { className?: string }) {
           [ThemeOption.dark]: '/assets/juice_logo-od.png',
         })}
         alt="Juicebox logo"
+        priority
       />
     </div>
   )

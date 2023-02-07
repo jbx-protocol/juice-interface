@@ -6,16 +6,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(404)
   }
 
-  const { name, contact, contactPlatform, subject, message } = req.body ?? {}
+  const { message, metadata } = req.body ?? {}
   if (message === undefined) {
     return res.status(400).json({ error: 'a message is required' })
   }
 
   try {
-    await createContactMessage(name, contact, contactPlatform, subject, message)
-    return res
-      .status(201)
-      .json({ name, contact, contactPlatform, subject, message })
+    await createContactMessage(message, metadata)
+    return res.status(201).json({ message, metadata })
   } catch (e) {
     console.error('api::discord::contact::error', e)
     return res.status(500).json({ error: 'failed to send contact message' })

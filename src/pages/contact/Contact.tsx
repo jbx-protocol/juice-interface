@@ -1,10 +1,13 @@
 import { Trans, t } from '@lingui/macro'
-import { Divider, Button, Form, Input, Select, Row, Col } from 'antd'
+import { Button, Form, Row, Col } from 'antd'
 import Image from 'next/image'
 import { useState } from 'react'
 import apple from '/public/assets/apple-ol.webp'
 import useMobile from 'hooks/Mobile'
 import { createContactMessage } from 'lib/api/discord'
+import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
+import { JuiceInput } from 'components/inputs/JuiceTextInput'
+import { JuiceSelect } from 'components/inputs/JuiceSelect'
 
 export default function Contact() {
   const [contactPlaceholder, setContactPlaceholder] = useState<string>(
@@ -13,7 +16,6 @@ export default function Contact() {
   const [loading, setLoading] = useState<boolean>(false)
   const [success, setSuccess] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
-  const [submitDisabled, setSubmitDisabled] = useState<boolean>(true)
   const isMobile = useMobile()
 
   const [form] = Form.useForm()
@@ -23,20 +25,22 @@ export default function Contact() {
     setSuccess(false)
 
     try {
+      const metadata = {
+        name: form.getFieldValue('name'),
+        contact: form.getFieldValue('contact'),
+        contactPlatform: form.getFieldValue('contactPlatform'),
+        subject: form.getFieldValue('subject'),
+      }
+
       setLoading(true)
-      await createContactMessage(
-        form.getFieldValue('name'),
-        form.getFieldValue('contact'),
-        form.getFieldValue('contactPlatform'),
-        form.getFieldValue('subject'),
-        form.getFieldValue('message'),
-      )
+      await createContactMessage(form.getFieldValue('message'), metadata)
+
       setSuccess(true)
     } catch (e) {
       setError(true)
+      console.error(e)
     } finally {
       setLoading(false)
-      setSubmitDisabled(true)
     }
   }
 
@@ -53,7 +57,7 @@ export default function Contact() {
 
   const contactTypes = (
     <Form.Item name="contactPlatform" initialValue="email" className="mb-0">
-      <Select
+      <JuiceSelect
         className="min-w-[9em]"
         onSelect={handleSelect}
         options={[
@@ -80,7 +84,6 @@ export default function Contact() {
                 your project, or to have your questions and inquiries answered.
               </Trans>
             </p>
-            <Divider />
             <Form
               onFinish={onFormSubmit}
               form={form}
@@ -88,10 +91,10 @@ export default function Contact() {
               className="max-w-4xl"
             >
               <Form.Item name="name" label={t`Your Name`}>
-                <Input placeholder="Banny the Banana" />
+                <JuiceInput placeholder="Banny the Banana" />
               </Form.Item>
               <Form.Item name="contact" label={t`Where to Contact You`}>
-                <Input
+                <JuiceInput
                   addonAfter={contactTypes}
                   placeholder={contactPlaceholder}
                 />
@@ -101,7 +104,7 @@ export default function Contact() {
                 label={t`Subject`}
                 initialValue="project help"
               >
-                <Select
+                <JuiceSelect
                   options={[
                     {
                       value: 'project help',
@@ -117,18 +120,17 @@ export default function Contact() {
                   ]}
                 />
               </Form.Item>
-              <Form.Item name="message" label={t`Your Message`}>
-                <Input.TextArea
-                  maxLength={500}
-                  showCount={true}
-                  onChange={() => setSubmitDisabled(false)}
-                />
+              <Form.Item
+                name="message"
+                label={t`Your Message`}
+                rules={[{ required: true, message: 'Enter a message.' }]}
+              >
+                <JuiceTextArea maxLength={500} showCount={true} />
               </Form.Item>
               <Button
                 size="large"
                 type="primary"
                 htmlType="submit"
-                disabled={submitDisabled}
                 loading={loading}
               >
                 <Trans>Send Message</Trans>

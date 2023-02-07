@@ -41,6 +41,14 @@ async function loadNftRewardsDeployment() {
   return latestNftContractDeployments
 }
 
+function sortNftsByContributionFloor(
+  rewardTiers: NftRewardTier[],
+): NftRewardTier[] {
+  return rewardTiers
+    .slice()
+    .sort((a, b) => a.contributionFloor - b.contributionFloor)
+}
+
 export async function findJBTiered721DelegateProjectDeployerAddress() {
   const latestNftContractDeployments = await loadNftRewardsDeployment()
   return latestNftContractDeployments.transactions.find(
@@ -443,12 +451,4 @@ export function buildJBDeployTiered721DelegateData({
     flags,
     governanceType,
   }
-}
-
-export function sortNftsByContributionFloor(
-  rewardTiers: NftRewardTier[],
-): NftRewardTier[] {
-  return rewardTiers
-    .slice()
-    .sort((a, b) => a.contributionFloor - b.contributionFloor)
 }

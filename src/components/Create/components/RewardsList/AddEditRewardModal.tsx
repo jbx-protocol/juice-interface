@@ -40,7 +40,7 @@ interface AddEditRewardModalFormProps {
   externalUrl?: string | undefined
 }
 
-export const NFT_FILE_UPLOAD_EXTRA = t`NFT will be cropped to a 1:1 square in thumbnail previews on the Juicebox app.`
+const NFT_FILE_UPLOAD_EXTRA = t`NFT will be cropped to a 1:1 square in thumbnail previews on the Juicebox app.`
 
 export const AddEditRewardModal = ({
   className,

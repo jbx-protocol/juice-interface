@@ -4,7 +4,7 @@ import { juiceboxEmojiImageUri } from 'constants/images'
 import { IPFS_TAGS } from 'constants/ipfs'
 import { readNetwork } from 'constants/networks'
 import { WAD_DECIMALS } from 'constants/numbers'
-import { ProjectMetadataV6 } from 'models/project-metadata'
+import { AnyProjectMetadata, ProjectMetadataV6 } from 'models/project-metadata'
 
 /**
  * JB Docs:
@@ -24,7 +24,7 @@ const generateSnapshotSpaceSettings = ({
   handle: string
   tokenSymbol: string
   projectId: number
-  projectMetadata: ProjectMetadataV6
+  projectMetadata: AnyProjectMetadata
   projectOwnerAddress: string
   JBTokenStoreAddress: string
 }) => {
@@ -87,7 +87,7 @@ const generateSnapshotSpaceSettings = ({
     name: projectMetadata?.name,
     about: '',
     website: `https://juicebox.money/@${handle}`,
-    twitter: projectMetadata?.twitter,
+    twitter: (projectMetadata as ProjectMetadataV6)?.twitter,
     symbol: tokenSymbol,
     avatar,
   }

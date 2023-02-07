@@ -7,7 +7,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { classNames } from 'utils/classNames'
-import { recordClickInFathom } from 'utils/fathom'
+import { trackFathomGoal } from 'utils/fathom'
 import { HeroHeading, HeroSubheading } from './strings'
 import bananaOd from '/public/assets/banana-od.webp'
 import bananaOl from '/public/assets/banana-ol.webp'
@@ -63,7 +63,7 @@ const CallToAction = () => {
             size="large"
             block={isMobile}
             onClick={() => {
-              recordClickInFathom('IIYVJKNC')
+              trackFathomGoal('IIYVJKNC')
             }}
           >
             <Trans>Create a project</Trans>

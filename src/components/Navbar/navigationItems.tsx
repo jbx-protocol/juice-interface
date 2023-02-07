@@ -3,7 +3,7 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Dropdown } from 'antd'
 import Link from 'next/link'
 import { CSSProperties } from 'react'
-import { recordClickInFathom } from 'utils/fathom'
+import { trackFathomGoal } from 'utils/fathom'
 import Account from './Account'
 import Logo from './Logo'
 import ThemePickerMobile from './Mobile/ThemePickerMobile'
@@ -121,7 +121,7 @@ export const desktopMenuItems = ({
       <Link href="/projects">
         <a
           className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100"
-          onClick={() => recordClickInFathom('YTTX60ZQ')}
+          onClick={() => trackFathomGoal('YTTX60ZQ')}
         >{t`Explore`}</a>
       </Link>
     ),
@@ -152,8 +152,8 @@ export const desktopMenuItems = ({
     label: (
       <Link href="/create">
         <a
-          className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100"
-          onClick={() => recordClickInFathom('LHWCLH9E')}
+          className="flex hidden cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100 lg:block"
+          onClick={() => trackFathomGoal('LHWCLH9E')}
         >{t`Create a project`}</a>
       </Link>
     ),
@@ -175,7 +175,7 @@ export const mobileNavItems = ({
       <Link href="/projects">
         <a
           className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100"
-          onClick={() => recordClickInFathom('YTTX60ZQ')}
+          onClick={() => trackFathomGoal('YTTX60ZQ')}
           {...{ ...collapseNav }}
         >{t`Explore`}</a>
       </Link>
@@ -203,17 +203,7 @@ export const mobileNavItems = ({
     ),
     children: [...resourcesMenuItems(true)],
   },
-  {
-    key: 'create',
-    label: (
-      <Link href="/create">
-        <a
-          className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100"
-          onClick={() => recordClickInFathom('LHWCLH9E')}
-        >{t`Create a project`}</a>
-      </Link>
-    ),
-  },
+
   { key: 'language-picker', label: <NavLanguageSelector /> },
   { key: 'theme-picker', label: <ThemePickerMobile /> },
   {

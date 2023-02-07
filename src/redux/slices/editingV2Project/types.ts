@@ -9,7 +9,7 @@ import {
   NftRewardTier,
 } from 'models/nftRewardTier'
 import { PayoutsSelection } from 'models/payoutsSelection'
-import { ProjectMetadataV5, ProjectMetadataV6 } from 'models/project-metadata'
+import { ProjectMetadataV6 } from 'models/project-metadata'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
 import {

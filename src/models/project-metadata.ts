@@ -48,9 +48,9 @@ type ProjectMetadataV4 = Partial<
 >
 
 // add `nftPaymentSuccessModal`
-export type ProjectMetadataV5 = Partial<
+type ProjectMetadataV5 = Partial<
   Omit<ProjectMetadataV4, 'version'> & {
-    version: typeof LATEST_METADATA_VERSION
+    version: 5
     nftPaymentSuccessModal: NftPostPayModalConfig
   }
 >

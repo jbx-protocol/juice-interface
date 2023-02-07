@@ -8,7 +8,6 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
 import { useSetProjectUriTx } from 'hooks/v1/transactor/SetProjectUriTx'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
-import { ProjectMetadataV6 } from 'models/project-metadata'
 import { TokenRef } from 'models/token-ref'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import { useContext, useEffect, useState } from 'react'
@@ -117,7 +116,7 @@ export function V1BalancesModal({
             wallet={owner}
             projectId={V1_PROJECT_IDS.JUICEBOX_DAO}
           />
-          {(projectMetadata as ProjectMetadataV6)?.tokens?.map(t =>
+          {projectMetadata?.tokens?.map(t =>
             t.type === 'erc20' ? (
               <ERC20TokenBalance
                 key={t.value}

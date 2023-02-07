@@ -11,7 +11,6 @@ import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2C
 import { useEditProjectDetailsTx } from 'hooks/v2v3/transactor/EditProjectDetailsTx'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { revalidateProject } from 'lib/api/nextjs'
-import { ProjectMetadataV6 } from 'models/project-metadata'
 import { TokenRef } from 'models/token-ref'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import { useContext, useState } from 'react'
@@ -113,7 +112,7 @@ export function V2V3ProjectTokenBalancesModal(props: ModalProps) {
   )
 
   // Filter out JBDAO tokens, because we always display that balance.
-  const trackedTokens = (projectMetadata as ProjectMetadataV6)?.tokens?.filter(
+  const trackedTokens = projectMetadata?.tokens?.filter(
     t =>
       !(
         t.type === 'project' &&

@@ -9,7 +9,7 @@ import {
 import { JB721GovernanceType, JBTiered721Flags } from 'models/nftRewardTier'
 import {
   LATEST_METADATA_VERSION,
-  ProjectMetadataV5,
+  ProjectMetadataV6,
 } from 'models/project-metadata'
 import { issuanceRateFrom, redemptionRateFrom } from 'utils/v2v3/math'
 import {
@@ -81,7 +81,7 @@ export const DEFAULT_NFT_FLAGS: JBTiered721Flags = {
   preventOverspending: false,
 }
 
-const DEFAULT_PROJECT_METADATA_STATE: ProjectMetadataV5 = {
+const DEFAULT_PROJECT_METADATA_STATE: ProjectMetadataV6 = {
   name: '',
   infoUri: '',
   logoUri: '',

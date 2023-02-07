@@ -1,4 +1,4 @@
-export const FEATURE_FLAGS = {
+export const FEATURE_FLAGS: { [k: string]: string } = {
   V1_TOKEN_SWAP: 'v1TokenSwap',
   VENFT: 'veNft',
   VENFT_CREATOR: 'veNftCreator',

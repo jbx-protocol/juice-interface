@@ -1280,6 +1280,9 @@ msgstr ""
 msgid "Expenses cannot exceed the current funding target"
 msgstr ""
 
+msgid "Explore"
+msgstr ""
+
 msgid "Explore projects"
 msgstr ""
 
@@ -2391,9 +2394,6 @@ msgid "Project {projectId} not found"
 msgstr ""
 
 msgid "Project:"
-msgstr ""
-
-msgid "Projects"
 msgstr ""
 
 msgid "Projects on Juicebox"

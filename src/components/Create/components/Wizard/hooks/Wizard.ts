@@ -1,5 +1,5 @@
 import { useAppSelector } from 'hooks/AppSelector'
-import { CreatePage } from 'models/create-page'
+import { CreatePage } from 'models/createPage'
 import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import { useEditingCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { PageProps } from '../Page'

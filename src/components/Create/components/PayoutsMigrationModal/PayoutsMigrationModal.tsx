@@ -13,7 +13,7 @@ import { V1UserProvider } from 'providers/v1/UserProvider'
 import { useCallback, useMemo, useState } from 'react'
 import { useEditingPayoutSplits } from 'redux/hooks/EditingPayoutSplits'
 import { AllocationSplit } from 'components/Allocation'
-import { inputMustExistRule } from 'utils/antd-rules'
+import { inputMustExistRule } from 'utils/antdRules'
 
 interface V1MigrationCardForm {
   projectIds: { projectId: string; newProjectId: string }[]

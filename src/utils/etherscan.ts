@@ -1,5 +1,5 @@
 import { readNetwork } from 'constants/networks'
-import { NetworkName } from 'models/network-name'
+import { NetworkName } from 'models/networkName'
 
 export const etherscanLink = (type: 'tx' | 'address', hash: string) => {
   let subdomain = ''

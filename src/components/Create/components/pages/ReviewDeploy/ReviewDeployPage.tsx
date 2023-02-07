@@ -5,6 +5,7 @@ import { Callout } from 'components/Callout'
 import { useDeployProject } from 'components/Create/hooks/DeployProject'
 import ExternalLink from 'components/ExternalLink'
 import TransactionModal from 'components/TransactionModal'
+import { TERMS_OF_SERVICE_URL } from 'constants/links'
 import { useAppSelector } from 'hooks/AppSelector'
 import useMobile from 'hooks/Mobile'
 import { useModal } from 'hooks/Modal'
@@ -197,7 +198,7 @@ export const ReviewDeployPage = () => {
             <div>
               <Trans>
                 I have read and accept the{' '}
-                <ExternalLink href="https://info.juicebox.money/tos/">
+                <ExternalLink href={TERMS_OF_SERVICE_URL}>
                   Terms of Service
                 </ExternalLink>
                 , and understand that any changes I make to my project's funding

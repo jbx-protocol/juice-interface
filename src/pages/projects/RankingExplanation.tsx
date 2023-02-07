@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
 
-import { trendingWindowDays } from 'constants/trendingWindowDays'
+export const TRENDING_WINDOW_DAYS = 7
 
 // Explains how trending projects rankings are calculated
 export default function RankingExplanation() {
@@ -10,7 +10,7 @@ export default function RankingExplanation() {
   return (
     <Trans>
       Rankings based on number of contributions and volume gained in the last{' '}
-      {trendingWindowDays} days.{' '}
+      {TRENDING_WINDOW_DAYS} days.{' '}
       <ExternalLink href={trendingRankingExplanationCodeURL}>
         See code
       </ExternalLink>

@@ -1,6 +1,6 @@
 import { useContractReadValue } from 'hooks/ContractReader'
-import { useJB721TieredDelegate } from './useJB721TieredDelegate'
-import { useJB721TieredDelegateStore } from './useJB721TieredDelegateStore'
+import { useJB721TieredDelegate } from './JB721TieredDelegate'
+import { useJB721TieredDelegateStore } from './JB721TieredDelegateStore'
 
 export function useStoreOfJB721TieredDelegate({
   JB721TieredDelegateAddress,

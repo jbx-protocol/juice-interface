@@ -10,7 +10,7 @@ import { JB721GovernanceType, JBTiered721Flags } from 'models/nftRewardTier'
 import {
   LATEST_METADATA_VERSION,
   ProjectMetadataV6,
-} from 'models/project-metadata'
+} from 'models/projectMetadata'
 import { issuanceRateFrom, redemptionRateFrom } from 'utils/v2v3/math'
 import {
   SerializedV2V3FundingCycleData,

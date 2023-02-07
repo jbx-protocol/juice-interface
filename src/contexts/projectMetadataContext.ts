@@ -1,4 +1,4 @@
-import { ProjectMetadataV6 } from 'models/project-metadata'
+import { ProjectMetadataV6 } from 'models/projectMetadata'
 import { PV } from 'models/pv'
 import { createContext } from 'react'
 

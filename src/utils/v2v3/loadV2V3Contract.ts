@@ -1,5 +1,5 @@
 import { Contract, ContractInterface } from '@ethersproject/contracts'
-import { NetworkName } from 'models/network-name'
+import { NetworkName } from 'models/networkName'
 import { SignerOrProvider } from 'models/signerOrProvider'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import { CV2V3 } from 'models/v2v3/cv'

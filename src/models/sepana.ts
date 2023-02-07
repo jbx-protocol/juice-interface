@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { AnyProjectMetadata } from 'models/project-metadata'
+import { AnyProjectMetadata } from 'models/projectMetadata'
 
 import { PV } from './pv'
 

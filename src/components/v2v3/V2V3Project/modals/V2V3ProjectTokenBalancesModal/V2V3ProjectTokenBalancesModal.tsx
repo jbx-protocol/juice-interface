@@ -11,7 +11,7 @@ import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2C
 import { useEditProjectDetailsTx } from 'hooks/v2v3/transactor/EditProjectDetailsTx'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { revalidateProject } from 'lib/api/nextjs'
-import { TokenRef } from 'models/token-ref'
+import { TokenRef } from 'models/tokenRef'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import { useContext, useState } from 'react'
 

@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { useStoreOfJB721TieredDelegate } from 'hooks/JB721Delegate/contracts/useStoreofJB721TieredDelegate'
+import { useStoreOfJB721TieredDelegate } from 'hooks/JB721Delegate/contracts/StoreofJB721TieredDelegate'
 import useV2ContractReader from './V2ContractReader'
 
 export function useRedemptionWeightOfNfts({

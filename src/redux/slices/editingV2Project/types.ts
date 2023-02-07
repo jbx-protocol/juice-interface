@@ -1,4 +1,4 @@
-import { CreatePage } from 'models/create-page'
+import { CreatePage } from 'models/createPage'
 import { FundingTargetType } from 'models/fundingTargetType'
 import {
   DelegateVersion,
@@ -9,7 +9,7 @@ import {
   NftRewardTier,
 } from 'models/nftRewardTier'
 import { PayoutsSelection } from 'models/payoutsSelection'
-import { ProjectMetadataV6 } from 'models/project-metadata'
+import { ProjectMetadataV6 } from 'models/projectMetadata'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
 import {

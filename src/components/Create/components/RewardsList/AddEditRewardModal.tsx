@@ -21,7 +21,7 @@ import {
   inputMustExistRule,
   inputMustBeEthAddressRule,
   inputIsIntegerRule,
-} from 'utils/antd-rules'
+} from 'utils/antdRules'
 import { CreateCollapse } from '../CreateCollapse'
 import { OptionalHeader } from '../OptionalHeader'
 import { Reward } from './types'

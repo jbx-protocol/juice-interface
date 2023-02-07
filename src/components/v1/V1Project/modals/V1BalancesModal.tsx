@@ -8,7 +8,7 @@ import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
 import { useSetProjectUriTx } from 'hooks/v1/transactor/SetProjectUriTx'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
-import { TokenRef } from 'models/token-ref'
+import { TokenRef } from 'models/tokenRef'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import { useContext, useEffect, useState } from 'react'
 

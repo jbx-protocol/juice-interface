@@ -1,7 +1,7 @@
 import { PinataMetadata, PinataPinResponse } from '@pinata/sdk'
 import axios from 'axios'
 import { IPFS_TAGS } from 'constants/ipfs'
-import { consolidateMetadata, ProjectMetadataV6 } from 'models/project-metadata'
+import { consolidateMetadata, ProjectMetadataV6 } from 'models/projectMetadata'
 import { metadataNameForHandle, restrictedIpfsUrl } from 'utils/ipfs'
 
 // Workaround function for a bug in pinata where the data is sometimes returned in bytes

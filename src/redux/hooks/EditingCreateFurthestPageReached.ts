@@ -1,5 +1,5 @@
 import { useAppSelector } from 'hooks/AppSelector'
-import { CreatePage } from 'models/create-page'
+import { CreatePage } from 'models/createPage'
 import { useCallback, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'

@@ -5,7 +5,7 @@ import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
 import { TransactorInstance } from 'hooks/Transactor'
-import { PayoutMod, TicketMod } from 'models/mods'
+import { PayoutMod, TicketMod } from 'models/v1/mods'
 import {
   V1FundingCycleMetadata,
   V1FundingCycleProperties,

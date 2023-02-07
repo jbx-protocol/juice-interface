@@ -4,7 +4,7 @@ import { t } from '@lingui/macro'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { V1UserContext } from 'contexts/v1/userContext'
 import { useWallet } from 'hooks/Wallet'
-import { TicketMod } from 'models/mods'
+import { TicketMod } from 'models/v1/mods'
 import { useContext } from 'react'
 
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'

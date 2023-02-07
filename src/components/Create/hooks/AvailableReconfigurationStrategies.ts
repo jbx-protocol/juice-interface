@@ -1,5 +1,5 @@
 import { ballotStrategiesFn } from 'constants/v2v3/ballotStrategies'
-import { NetworkName } from 'models/network-name'
+import { NetworkName } from 'models/networkName'
 import { ArrayElement } from 'utils/arrayElement'
 
 export const useAvailableReconfigurationStrategies = (network: NetworkName) => {

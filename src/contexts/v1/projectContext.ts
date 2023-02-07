@@ -1,12 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { PayoutMod, TicketMod } from 'models/mods'
-import { ProjectType } from 'models/project-type'
+import { PayoutMod, TicketMod } from 'models/v1/mods'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { V1TerminalName, V1TerminalVersion } from 'models/v1/terminals'
 import { createContext } from 'react'
 
 export type V1ProjectContextType = {
-  projectType: ProjectType | undefined
+  projectType: 'standard' | undefined
   createdAt: number | undefined
   handle: string | undefined
   owner: string | undefined // owner address

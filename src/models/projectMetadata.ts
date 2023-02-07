@@ -1,5 +1,5 @@
 import { NftPostPayModalConfig } from './nftRewardTier'
-import { TokenRef } from './token-ref'
+import { TokenRef } from './tokenRef'
 
 export const LATEST_METADATA_VERSION = 6
 

@@ -1,4 +1,3 @@
-import { PROJECT_TYPES } from 'constants/v1/projectTypes'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V1ProjectContextType } from 'contexts/v1/projectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
@@ -76,7 +75,7 @@ export function useV1ProjectState({
   const earned = projects?.[0]?.totalPaid
 
   const project = useMemo<V1ProjectContextType>((): V1ProjectContextType => {
-    const projectType = projectId ? PROJECT_TYPES[projectId] : 'standard'
+    const projectType = 'standard'
 
     return {
       createdAt,
@@ -112,7 +111,6 @@ export function useV1ProjectState({
     earned,
     handle,
     owner,
-    projectId,
     queuedFC,
     queuedPayoutMods,
     queuedTicketMods,

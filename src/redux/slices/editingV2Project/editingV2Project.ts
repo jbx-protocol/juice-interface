@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AllocationSplit } from 'components/Allocation'
 import { projectTokenSettingsToReduxFormat } from 'components/Create/utils/projectTokenSettingsToReduxFormat'
-import { CreatePage } from 'models/create-page'
+import { CreatePage } from 'models/createPage'
 import {
   JB721GovernanceType,
   NftCollectionMetadata,

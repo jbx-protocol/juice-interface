@@ -12,7 +12,7 @@ import { featureFlagEnabled } from 'utils/featureFlags'
 import {
   DEFAULT_LOCK_DURATIONS,
   VENFT_RESOLVER_ADDRESS,
-} from 'constants/veNft/veNftProject'
+} from 'constants/contracts/goerli/veNftProject'
 
 import FormattedAddress from 'components/FormattedAddress'
 import { FEATURE_FLAGS } from 'constants/featureFlags'

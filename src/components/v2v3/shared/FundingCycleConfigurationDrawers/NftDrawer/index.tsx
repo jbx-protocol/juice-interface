@@ -21,7 +21,7 @@ import {
 } from 'utils/nftRewards'
 import { reloadWindow } from 'utils/windowUtils'
 import FundingCycleDrawer from '../FundingCycleDrawer'
-import { useFundingCycleDrawer } from '../useFundingCycleDrawer'
+import { useFundingCycleDrawer } from '../hooks/FundingCycleDrawer'
 import { AddRewardTierButton } from './AddRewardTierButton'
 import { EditCollectionDetailsSection } from './EditCollectionDetailsSection'
 import { MarketplaceFormFields, NftPostPayModalFormFields } from './formFields'

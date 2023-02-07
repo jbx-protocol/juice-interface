@@ -7,7 +7,7 @@ import ProjectTicketMods from 'components/v1/shared/ProjectTicketMods'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
 import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
 import { useSetTicketModsTx } from 'hooks/v1/transactor/SetTicketModsTx'
-import { TicketMod } from 'models/mods'
+import { TicketMod } from 'models/v1/mods'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import {

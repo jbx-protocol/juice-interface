@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Col, Image, Modal, Row } from 'antd'
-import { VARIANTS_HASH } from 'constants/veNft/veNftProject'
+import { VARIANTS_HASH } from 'constants/contracts/goerli/veNftProject'
 import { useVeNftVariants } from 'hooks/veNft/VeNftVariants'
 import { getVeNftBaseImage } from 'utils/veNft'
 

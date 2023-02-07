@@ -2,7 +2,7 @@ import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import useProjectIdForHandle from 'hooks/v1/contractReader/ProjectIdForHandle'
 import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
-import { ProjectMetadataV6 } from 'models/project-metadata'
+import { ProjectMetadataV6 } from 'models/projectMetadata'
 import { PropsWithChildren } from 'react'
 import { getTerminalVersion } from 'utils/v1/terminals'
 

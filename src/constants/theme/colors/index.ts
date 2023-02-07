@@ -1,6 +1,6 @@
 import { SemanticColors } from 'models/semantic-theme/colors'
 
-import { ThemeOption } from 'constants/theme/theme-option'
+import { ThemeOption } from 'constants/theme/themeOption'
 
 import { backgroundColors } from './background'
 import { boxShadow } from './boxShadow'

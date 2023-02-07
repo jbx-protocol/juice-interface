@@ -1,5 +1,5 @@
 import { juiceTheme } from 'constants/theme'
-import { ThemeOption } from 'constants/theme/theme-option'
+import { ThemeOption } from 'constants/theme/themeOption'
 import type { ThemeContextType } from 'contexts/themeContext'
 import { useEffect, useLayoutEffect, useState } from 'react'
 

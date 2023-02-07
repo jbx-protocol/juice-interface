@@ -1,8 +1,7 @@
 import { Divider, Layout } from 'antd'
 import MintVeNftContent from 'components/veNft/MintVeNftContent'
 import MyVeNftsContent from 'components/veNft/MyVeNftsContent'
-import { V2VeNftPageKeyTitleMap } from 'components/veNft/VeNft'
-import { V2VeNftPageKey } from 'models/menu-keys'
+import { V2VeNftPageKey, V2VeNftPageKeyTitleMap } from 'components/veNft/VeNft'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 

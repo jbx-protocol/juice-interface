@@ -1,9 +1,9 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import ExternalLink from 'components/ExternalLink'
-import { Languages } from 'constants/languages/language-options'
+import { SUPPORTED_LANGUAGES } from 'constants/locale'
 import { TERMS_OF_SERVICE_URL } from 'constants/links'
-import { ThemeOption } from 'constants/theme/theme-option'
+import { ThemeOption } from 'constants/theme/themeOption'
 import { ThemeContext } from 'contexts/themeContext'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -36,7 +36,7 @@ export default function Footer() {
   // Renders language links
   const languageLink = (lang: string) => (
     <Button key={lang} onClick={() => setLanguage(lang)} type="link">
-      {Languages[lang].long}
+      {SUPPORTED_LANGUAGES[lang].long}
     </Button>
   )
 
@@ -74,7 +74,7 @@ export default function Footer() {
       </div>
       <div className="grid gap-y-5 bg-black p-7 text-center">
         <div className="mb-7 flex flex-wrap justify-center gap-y-2">
-          {Object.keys(Languages).map(languageLink)}
+          {Object.keys(SUPPORTED_LANGUAGES).map(languageLink)}
         </div>
         <div className="mb-7 flex flex-wrap justify-center gap-y-2">
           {link('Discord', 'https://discord.gg/6jXrJSyDFf')}

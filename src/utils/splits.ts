@@ -18,10 +18,30 @@ import {
 //  - false if new (exists in new but not old)
 //  - Split if exists in old and new and there is a diff in the splits
 //  - undefined if exists in old and new and there is no diff in the splits
-export type OldSplit = Split | boolean | undefined
+type OldSplit = Split | boolean | undefined
 
 export type SplitWithDiff = Split & {
   oldSplit?: OldSplit
+}
+
+// determines if two splits are the same 'entity' (either projectId or address)
+const hasEqualRecipient = (a: Split, b: Split) => {
+  const isProject = isProjectSplit(a)
+  const idsEqual =
+    a.projectId === b.projectId ||
+    BigNumber.from(a.projectId).eq(b.projectId ?? 0) ||
+    BigNumber.from(b.projectId).eq(a.projectId ?? 0)
+
+  return (
+    (isProject && idsEqual) || (!isProject && a.beneficiary === b.beneficiary)
+  )
+}
+
+// return list of splits that exist in oldSplits but not newSplits
+const getRemovedSplits = (oldSplits: Split[], newSplits: Split[]) => {
+  return oldSplits.filter(oldSplit => {
+    return !newSplits.some(newSplit => hasEqualRecipient(oldSplit, newSplit))
+  })
 }
 
 export const toSplit = (mod: PayoutMod): Split => {
@@ -102,29 +122,9 @@ export const formatOutgoingSplits = (splits: OutgoingSplit[]): Split[] => {
   )
 }
 
-// determines if two splits are the same 'entity' (either projectId or address)
-const hasEqualRecipient = (a: Split, b: Split) => {
-  const isProject = isProjectSplit(a)
-  const idsEqual =
-    a.projectId === b.projectId ||
-    BigNumber.from(a.projectId).eq(b.projectId ?? 0) ||
-    BigNumber.from(b.projectId).eq(a.projectId ?? 0)
-
-  return (
-    (isProject && idsEqual) || (!isProject && a.beneficiary === b.beneficiary)
-  )
-}
-
 // returns a given list of splits sorted by percent allocation
 export const sortSplits = (splits: Split[]) => {
   return [...splits].sort((a, b) => (a.percent < b.percent ? 1 : -1))
-}
-
-// return list of splits that exist in oldSplits but not newSplits
-export const getRemovedSplits = (oldSplits: Split[], newSplits: Split[]) => {
-  return oldSplits.filter(oldSplit => {
-    return !newSplits.some(newSplit => hasEqualRecipient(oldSplit, newSplit))
-  })
 }
 
 // returns all unique splits (projectIds or addresses), sorted by their new `percent`

@@ -257,7 +257,7 @@ export async function querySubgraph<
 /**
  * Query subgraph and return list of raw entity json
  */
-export async function querySubgraphRaw<
+async function querySubgraphRaw<
   E extends SGEntityName,
   K extends SGEntityKey<E>,
 >(opts: SGQueryOpts<E, K> | null) {

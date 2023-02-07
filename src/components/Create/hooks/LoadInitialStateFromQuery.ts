@@ -10,7 +10,7 @@ import { useContext, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import {
   CreateState,
-  defaultReduxState,
+  DEFAULT_REDUX_STATE,
   editingV2ProjectActions,
   ProjectState,
 } from 'redux/slices/editingV2Project'
@@ -149,25 +149,25 @@ export function useLoadingInitialStateFromQuery() {
 
       dispatch(
         editingV2ProjectActions.setState({
-          ...defaultReduxState,
+          ...DEFAULT_REDUX_STATE,
           ...createFlowState,
           ...parsedInitialState,
           ...{
             projectMetadata: {
-              ...defaultReduxState.projectMetadata,
+              ...DEFAULT_REDUX_STATE.projectMetadata,
               ...parsedInitialState.projectMetadata,
             },
             fundingCycleMetadata: {
-              ...defaultReduxState.fundingCycleMetadata,
+              ...DEFAULT_REDUX_STATE.fundingCycleMetadata,
               ...parsedInitialState.fundingCycleMetadata,
             },
             fundingCycleData: {
-              ...defaultReduxState.fundingCycleData,
+              ...DEFAULT_REDUX_STATE.fundingCycleData,
               ...parsedInitialState.fundingCycleData,
             },
             fundAccessConstraints: [
               {
-                ...defaultReduxState.fundAccessConstraints[0],
+                ...DEFAULT_REDUX_STATE.fundAccessConstraints[0],
                 ...parsedInitialState.fundAccessConstraints[0],
                 terminal: contracts.JBETHPaymentTerminal.address,
                 token: ETH_TOKEN_ADDRESS,

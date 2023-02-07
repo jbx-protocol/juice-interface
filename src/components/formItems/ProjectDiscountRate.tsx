@@ -1,11 +1,8 @@
 import { Trans } from '@lingui/macro'
 import { Form, Switch } from 'antd'
-
 import FormItemLabel from 'components/FormItemLabel'
-import { defaultFundingCycleData } from 'redux/slices/editingV2Project'
-
 import { DISCOUNT_RATE_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
-
+import { DEFAULT_FUNDING_CYCLE_DATA } from 'redux/slices/editingV2Project'
 import FormItemWarningText from '../FormItemWarningText'
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
@@ -56,7 +53,7 @@ export default function ProjectDiscountRate({
                 <Switch checked={checked} onChange={onToggle} />{' '}
                 {!checked ? (
                   <span className="ml-2 text-grey-400 dark:text-slate-200">
-                    ({defaultFundingCycleData.discountRate}%)
+                    ({DEFAULT_FUNDING_CYCLE_DATA.discountRate}%)
                   </span>
                 ) : null}
               </>

@@ -1,9 +1,9 @@
-import { ProjectMetadataV5 } from 'models/project-metadata'
+import { ProjectMetadataV6 } from 'models/project-metadata'
 import { PV } from 'models/pv'
 import { createContext } from 'react'
 
 interface ProjectMetadataContextType {
-  projectMetadata: ProjectMetadataV5 | undefined
+  projectMetadata: ProjectMetadataV6 | undefined
   isArchived: boolean | undefined
   projectId: number | undefined
   pv: PV | undefined

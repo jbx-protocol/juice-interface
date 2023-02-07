@@ -33,6 +33,7 @@ export function ProjectDetailsSettingsPage() {
       infoUri: fields.infoUri,
       twitter: fields.twitter,
       discord: fields.discord,
+      telegram: fields.telegram,
       payButton: fields.payButton.substring(0, PROJECT_PAY_CHARACTER_LIMIT), // Enforce limit
       payDisclosure: fields.payDisclosure,
     })
@@ -79,6 +80,7 @@ export function ProjectDetailsSettingsPage() {
       description: projectMetadata?.description ?? '',
       twitter: projectMetadata?.twitter ?? '',
       discord: projectMetadata?.discord ?? '',
+      telegram: projectMetadata?.telegram ?? '',
       payButton: projectMetadata?.payButton ?? '',
       payDisclosure: projectMetadata?.payDisclosure ?? '',
     })
@@ -89,6 +91,7 @@ export function ProjectDetailsSettingsPage() {
     projectMetadata?.description,
     projectMetadata?.twitter,
     projectMetadata?.discord,
+    projectMetadata?.telegram,
     projectMetadata?.payDisclosure,
     projectMetadata?.payButton,
     projectForm,

@@ -12,6 +12,7 @@ export type ProjectDetailsFormFields = {
   handle: string
   logoUri: string
   twitter: string
+  telegram: string
   discord: string
   payButton: string
   payDisclosure: string
@@ -83,6 +84,7 @@ export default function ProjectDetailsForm({
             <FormItems.ProjectLink name="infoUri" />
             <FormItems.ProjectTwitter name="twitter" />
             <FormItems.ProjectDiscord name="discord" />
+            <FormItems.ProjectTelegram name="telegram" />
           </MinimalCollapse>
         </div>
 

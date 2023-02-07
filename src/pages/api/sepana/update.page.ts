@@ -4,7 +4,7 @@ import { infuraApi } from 'lib/infura/ipfs'
 import { queryAll, writeSepanaRecords } from 'lib/sepana/api'
 import { sepanaLog } from 'lib/sepana/log'
 import { Json } from 'models/json'
-import { ProjectMetadataV5 } from 'models/project-metadata'
+import { ProjectMetadataV6 } from 'models/project-metadata'
 import { SepanaProject } from 'models/sepana'
 import { Project } from 'models/subgraph-entities/vX/project'
 import { NextApiHandler } from 'next'
@@ -226,7 +226,7 @@ async function tryResolveMetadata(
   try {
     const {
       data: { logoUri, name, description },
-    } = await infuraApi.get<ProjectMetadataV5>(
+    } = await infuraApi.get<ProjectMetadataV6>(
       openIpfsUrl(project.metadataUri),
       {
         responseType: 'json',

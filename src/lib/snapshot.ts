@@ -4,7 +4,7 @@ import { juiceboxEmojiImageUri } from 'constants/images'
 import { IPFS_TAGS } from 'constants/ipfs'
 import { readNetwork } from 'constants/networks'
 import { WAD_DECIMALS } from 'constants/numbers'
-import { ProjectMetadataV5 } from 'models/project-metadata'
+import { ProjectMetadataV6 } from 'models/project-metadata'
 
 /**
  * JB Docs:
@@ -24,7 +24,7 @@ const generateSnapshotSpaceSettings = ({
   handle: string
   tokenSymbol: string
   projectId: number
-  projectMetadata: ProjectMetadataV5
+  projectMetadata: ProjectMetadataV6
   projectOwnerAddress: string
   JBTokenStoreAddress: string
 }) => {
@@ -108,7 +108,7 @@ export async function uploadSnapshotSettingsToIPFS({
   handle: string
   tokenSymbol: string
   projectId: number
-  projectMetadata: ProjectMetadataV5
+  projectMetadata: ProjectMetadataV6
   projectOwnerAddress: string
   JBTokenStoreAddress: string
 }): Promise<string> {

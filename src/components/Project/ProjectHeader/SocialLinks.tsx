@@ -2,6 +2,7 @@ import { TwitterOutlined, GlobalOutlined } from '@ant-design/icons'
 import { Space } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import Discord from 'components/icons/Discord'
+import Telegram from 'components/icons/Telegram'
 import useMobile from 'hooks/Mobile'
 import { linkUrl } from 'utils/url'
 
@@ -27,10 +28,12 @@ export default function SocialLinks({
   infoUri,
   twitter,
   discord,
+  telegram,
 }: {
   infoUri?: string
   twitter?: string
   discord?: string
+  telegram?: string
 }) {
   const isMobile = useMobile()
   const iconClasses =
@@ -51,6 +54,11 @@ export default function SocialLinks({
       {discord && (
         <SocialButton link={discord}>
           <Discord className={iconClasses} size={isMobile ? 16 : 14} />
+        </SocialButton>
+      )}
+      {telegram && (
+        <SocialButton link={telegram}>
+          <Telegram className={iconClasses} size={isMobile ? 16 : 14} />
         </SocialButton>
       )}
     </Space>

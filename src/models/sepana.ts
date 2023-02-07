@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { ProjectMetadataV6 } from 'models/project-metadata'
+import { AnyProjectMetadata } from 'models/project-metadata'
 
 import { PV } from './pv'
 
@@ -18,7 +18,7 @@ export type SepanaProject = {
   description?: string
   logoUri?: string
   hasUnresolvedMetadata?: boolean // Helper method to signify if metadata has been successfully resolved from IPFS
-} & Pick<ProjectMetadataV6, 'description' | 'logoUri' | 'name'> & {
+} & Pick<AnyProjectMetadata, 'description' | 'logoUri' | 'name'> & {
     lastUpdated: number
   }
 

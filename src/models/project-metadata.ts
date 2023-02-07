@@ -3,14 +3,6 @@ import { TokenRef } from './token-ref'
 
 export const LATEST_METADATA_VERSION = 6
 
-type ProjectMetadata =
-  | ProjectMetadataV1
-  | ProjectMetadataV2
-  | ProjectMetadataV3
-  | ProjectMetadataV4
-  | ProjectMetadataV5
-  | ProjectMetadataV6
-
 type ProjectMetadataV1 = Partial<{
   name: string
   description: string
@@ -63,9 +55,17 @@ export type ProjectMetadataV6 = Partial<
   }
 >
 
+export type AnyProjectMetadata =
+  | ProjectMetadataV1
+  | ProjectMetadataV2
+  | ProjectMetadataV3
+  | ProjectMetadataV4
+  | ProjectMetadataV5
+  | ProjectMetadataV6
+
 // Converts metadata of any version to latest version
 export const consolidateMetadata = (
-  metadata: ProjectMetadata,
+  metadata: AnyProjectMetadata,
 ): ProjectMetadataV6 => {
   return {
     ...metadata,
@@ -73,7 +73,5 @@ export const consolidateMetadata = (
       (metadata as ProjectMetadataV3).payButton ??
       (metadata as ProjectMetadataV2).payText,
     version: LATEST_METADATA_VERSION,
-    nftPaymentSuccessModal:
-      (metadata as ProjectMetadataV5)?.nftPaymentSuccessModal ?? undefined,
   }
 }

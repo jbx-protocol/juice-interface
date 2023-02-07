@@ -1,5 +1,8 @@
 import { ipfsGetWithFallback } from 'lib/api/ipfs'
-import { consolidateMetadata, ProjectMetadataV6 } from 'models/project-metadata'
+import {
+  AnyProjectMetadata,
+  consolidateMetadata,
+} from 'models/project-metadata'
 import { useQuery } from 'react-query'
 
 export function useProjectMetadata(uri: string | undefined) {
@@ -10,7 +13,7 @@ export function useProjectMetadata(uri: string | undefined) {
         throw new Error('Project URI not specified.')
       }
 
-      const response = await ipfsGetWithFallback<ProjectMetadataV6>(uri)
+      const response = await ipfsGetWithFallback<AnyProjectMetadata>(uri)
       return consolidateMetadata(response.data)
     },
     {

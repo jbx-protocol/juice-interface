@@ -13,7 +13,7 @@ import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
 import { SGWhereArg } from 'models/graph'
 import { ProjectEvent } from 'models/subgraph-entities/vX/project-event'
-import { useContext, useMemo, useState } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 
 import V2V3DownloadActivityModal from '../modals/V2V3DownloadActivityModal'
 import ConfigureEventElem from './eventElems/ConfigureEventElem'
@@ -297,6 +297,30 @@ export default function ProjectActivity() {
       ),
     [projectEvents],
   )
+
+  useEffect(() => {
+    const selectedTs = window.location.hash.split('activity_')[1]
+    if (!selectedTs) return
+
+    const timestamps = projectEvents?.pages[0]
+      .map(e => {
+        let ts: string | undefined
+        Object.values(e).forEach(v => {
+          if (v && typeof v === 'object' && v.timestamp) {
+            ts = `${v.timestamp}`
+          }
+        })
+
+        return ts
+      })
+      .filter(t => !!t)
+
+    const includesTs = timestamps?.includes(selectedTs)
+
+    if (!isLoading && !isFetchingNextPage && !includesTs && hasNextPage) {
+      fetchNextPage()
+    }
+  }, [projectEvents, fetchNextPage, isFetchingNextPage, isLoading, hasNextPage])
 
   const listStatus = useMemo(() => {
     if (isLoading || isFetchingNextPage) {

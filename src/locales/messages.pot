@@ -2666,6 +2666,9 @@ msgstr ""
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr ""
 
+msgid "SOLD OUT"
+msgstr ""
+
 msgid "Safe transactions"
 msgstr ""
 

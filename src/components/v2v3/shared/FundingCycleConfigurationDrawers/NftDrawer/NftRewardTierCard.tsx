@@ -1,8 +1,4 @@
-import {
-  DeleteOutlined,
-  LinkOutlined,
-  LoadingOutlined,
-} from '@ant-design/icons'
+import { CloseOutlined, LinkOutlined, LoadingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, Col, Image, Row, Tooltip } from 'antd'
 import Paragraph from 'components/Paragraph'
@@ -93,7 +89,7 @@ export default function NftRewardTierCard({
           />
         </Col>
         <Col md={3}>
-          <Tooltip title={<Trans>Delete NFT</Trans>}>
+          <Tooltip title={<Trans>Discontinue mints</Trans>}>
             <Button
               className="float-right h-4"
               type="text"
@@ -102,7 +98,7 @@ export default function NftRewardTierCard({
                 // prevent opening modal
                 e.stopPropagation()
               }}
-              icon={<DeleteOutlined />}
+              icon={<CloseOutlined />}
             />
           </Tooltip>
         </Col>

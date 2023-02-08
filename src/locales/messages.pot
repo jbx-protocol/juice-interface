@@ -1010,6 +1010,9 @@ msgstr ""
 msgid "Disconnect"
 msgstr ""
 
+msgid "Discontinue mints"
+msgstr ""
+
 msgid "Discord"
 msgstr ""
 

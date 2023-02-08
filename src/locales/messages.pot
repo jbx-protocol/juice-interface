@@ -104,6 +104,9 @@ msgstr ""
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
 msgstr ""
 
+msgid "<0>Back to home</0>"
+msgstr ""
+
 msgid "<0>Contribution floor:</0> {0} ETH"
 msgstr ""
 
@@ -173,10 +176,10 @@ msgstr ""
 msgid "<0>The redemption rate determines the amount of overflow each token can be redeemed for at any given time.</0><1>A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed.</1><2>On a lower redemption rate, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than other holders.</2>"
 msgstr ""
 
-msgid "<0>The servers are having an issue, please try again later!</0><1>Back to home</1>"
+msgid "<0>The servers are having an issue, please try again later!</0>"
 msgstr ""
 
-msgid "<0>This page could not be found.</0><1>Back to home</1>"
+msgid "<0>This page could not be found.</0>"
 msgstr ""
 
 msgid "<0>This project has a 0% redemption rate</0>. You won't receive any ETH for burning your NFTs."

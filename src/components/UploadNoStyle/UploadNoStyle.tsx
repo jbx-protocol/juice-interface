@@ -10,8 +10,9 @@ import { UploadOutlined, CloseCircleFilled } from '@ant-design/icons'
 import { RewardImage } from 'components/Create/components/RewardImage'
 import { stopPropagation } from 'react-stop-propagation'
 import { ThemeContext } from 'contexts/themeContext'
-import { JuiceVideoPreview } from 'components/v2v3/JuiceVideoPreview'
+import { JuiceVideoPreview } from 'components/v2v3/shared/NftVideo/JuiceVideoPreview'
 import { useContentType } from 'hooks/ContentType'
+import { MP4_FILE_TYPE } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload'
 
 export type SupportedNftFileTypes =
   | 'image/jpeg'
@@ -49,8 +50,8 @@ export const UploadNoStyle = (props: UploadNoStyleProps) => {
 
   const undo = useCallback(() => setUploadUrl(undefined), [setUploadUrl])
 
-  const contentType = useContentType(uploadUrl)
-  const isVideo = contentType === 'video/mp4'
+  const { data: contentType } = useContentType(uploadUrl)
+  const isVideo = contentType === MP4_FILE_TYPE
 
   const handleBeforeUpload = useCallback(
     async (file: RcFile) => {

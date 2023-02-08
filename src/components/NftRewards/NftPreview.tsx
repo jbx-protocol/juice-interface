@@ -1,4 +1,4 @@
-import { CloseOutlined, LinkOutlined } from '@ant-design/icons'
+import { CloseOutlined, LinkOutlined, LoadingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/JB721Delegate/NftRewards'
@@ -7,17 +7,23 @@ import { useContext } from 'react'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { classNames } from 'utils/classNames'
 import { JUICE_IMG_PREVIEW_CONTAINER_CLASS } from 'components/Create/components/JuiceImgPreview'
+import { useContentType } from 'hooks/ContentType'
+import { JuiceVideoPreview } from 'components/v2v3/shared/NftVideo/JuiceVideoPreview'
+import { MP4_FILE_TYPE } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload'
+
+export const IMAGE_OR_VIDEO_PREVIEW_CLASSES =
+  'max-h-[50vh] max-w-[90vw] md:max-h-[60vh] md:max-w-xl'
 
 export function NftPreview({
   open,
   rewardTier,
   onClose,
-  imageUrl,
+  fileUrl,
 }: {
   open: boolean
   rewardTier: NftRewardTier
   onClose: VoidFunction
-  imageUrl: string | undefined
+  fileUrl: string | undefined
 }) {
   const { projectMetadata } = useContext(ProjectMetadataContext)
 
@@ -27,6 +33,26 @@ export function NftPreview({
     rewardTier.remainingSupply &&
       rewardTier.maxSupply &&
       rewardTier.maxSupply !== DEFAULT_NFT_MAX_SUPPLY,
+  )
+
+  const { data: contentType, isLoading: contentTypeLoading } =
+    useContentType(fileUrl)
+  const isVideo = contentType === MP4_FILE_TYPE
+
+  const nftRender = contentTypeLoading ? (
+    <div className="flex h-[50vh] w-96 items-center justify-center">
+      <LoadingOutlined className="text-5xl" />
+    </div>
+  ) : isVideo && fileUrl ? (
+    <JuiceVideoPreview src={fileUrl} />
+  ) : (
+    <img
+      className={IMAGE_OR_VIDEO_PREVIEW_CLASSES}
+      alt={rewardTier.name}
+      src={fileUrl}
+      onClick={e => e.stopPropagation()}
+      crossOrigin="anonymous"
+    />
   )
 
   return (
@@ -40,15 +66,7 @@ export function NftPreview({
         className="max-w-prose pt-24 md:pt-0"
         onClick={e => e.stopPropagation()}
       >
-        <div className="mb-5 text-center">
-          <img
-            className={'max-h-[50vh] max-w-[90vw] md:max-h-[60vh] md:max-w-xl'}
-            alt={rewardTier.name}
-            src={imageUrl}
-            onClick={e => e.stopPropagation()}
-            crossOrigin="anonymous"
-          />
-        </div>
+        <div className="mb-5 text-center">{nftRender}</div>
 
         <h1 className="text-slate-100">{rewardTier.name}</h1>
         <span className="uppercase text-slate-100">

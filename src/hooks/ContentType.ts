@@ -1,12 +1,17 @@
-import { useEffect, useState } from 'react'
+// import { useEf/fect, useState } from 'react'
+import { useQuery } from 'react-query'
 import { loadURLContentType } from 'utils/http/loadURLContentType'
 
-export function useContentType(link?: string) {
-  const [contentType, setContentType] = useState<string>()
+export function useContentType(uri?: string) {
+  return useQuery(
+    ['content-type', uri],
+    async () => {
+      if (!uri) {
+        throw new Error('Project URI not specified.')
+      }
 
-  useEffect(() => {
-    loadURLContentType(link).then(type => setContentType(type))
-  }, [link])
-
-  return contentType
+      const response = await loadURLContentType(uri)
+      return response
+    },
+  )
 }

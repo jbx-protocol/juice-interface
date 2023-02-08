@@ -1,6 +1,6 @@
 import { isAddress } from '@ethersproject/address'
 import * as constants from '@ethersproject/constants'
-import { PayoutMod } from 'models/mods'
+import { PayoutMod } from 'models/v1/mods'
 import { permyriadToPercent } from 'utils/format/formatNumber'
 
 import { Split } from 'models/splits'

@@ -1,4 +1,4 @@
-import { ThemeOption } from 'constants/theme/theme-option'
+import { ThemeOption } from 'constants/theme/themeOption'
 import { ThemeContext } from 'contexts/themeContext'
 import Image from 'next/image'
 import { useContext } from 'react'

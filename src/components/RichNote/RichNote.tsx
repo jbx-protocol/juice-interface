@@ -1,7 +1,7 @@
 import { Space } from 'antd'
 import Autolinker from 'autolinker'
 import RichImgPreview from 'components/RichImgPreview'
-import { useProcessedRichNote } from 'hooks/ProcessedRichNote'
+import { useProcessedRichNote } from './hooks'
 import { twMerge } from 'tailwind-merge'
 
 type RichNoteProps = {

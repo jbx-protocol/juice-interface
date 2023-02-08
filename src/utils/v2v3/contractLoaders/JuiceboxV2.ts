@@ -1,4 +1,4 @@
-import { NetworkName } from 'models/network-name'
+import { NetworkName } from 'models/networkName'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import { ContractJson } from '../loadV2V3Contract'
 

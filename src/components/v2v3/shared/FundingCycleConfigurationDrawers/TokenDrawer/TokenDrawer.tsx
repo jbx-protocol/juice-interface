@@ -3,7 +3,7 @@ import { Callout } from 'components/Callout'
 import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
 import { TokenForm } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/TokenDrawer/TokenForm'
 import FundingCycleDrawer from '../FundingCycleDrawer'
-import { useFundingCycleDrawer } from '../useFundingCycleDrawer'
+import { useFundingCycleDrawer } from '../hooks/FundingCycleDrawer'
 
 export function TokenDrawer({
   open,

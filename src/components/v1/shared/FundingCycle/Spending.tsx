@@ -6,7 +6,7 @@ import WithdrawModal from 'components/v1/shared/FundingCycle/modals/WithdrawModa
 import PayoutModsList from 'components/v1/shared/PayoutModsList'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { PayoutMod } from 'models/mods'
+import { PayoutMod } from 'models/v1/mods'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useRouter } from 'next/router'
 import { useContext, useState } from 'react'

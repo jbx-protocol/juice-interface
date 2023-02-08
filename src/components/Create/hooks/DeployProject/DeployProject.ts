@@ -1,13 +1,13 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { TransactionReceipt } from '@ethersproject/providers'
 import { readProvider } from 'constants/readProvider'
-import { useAppDispatch } from 'hooks/AppDispatch'
+import { useAppDispatch } from 'redux/hooks/AppDispatch'
 import {
   useAppSelector,
   useEditingV2V3FundAccessConstraintsSelector,
   useEditingV2V3FundingCycleDataSelector,
   useEditingV2V3FundingCycleMetadataSelector,
-} from 'hooks/AppSelector'
+} from 'redux/hooks/AppSelector'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { TransactionCallbacks } from 'models/transaction'
 import { useCallback, useState } from 'react'

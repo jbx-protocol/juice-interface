@@ -1,4 +1,4 @@
-import { NetworkName } from 'models/network-name'
+import { NetworkName } from 'models/networkName'
 import { V1ContractName } from 'models/v1/contracts'
 import { V1TerminalVersion } from 'models/v1/terminals'
 

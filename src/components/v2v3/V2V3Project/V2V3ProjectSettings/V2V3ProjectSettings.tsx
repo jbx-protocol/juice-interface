@@ -4,6 +4,7 @@ import Loading from 'components/Loading'
 import { ProjectHeader } from 'components/Project/ProjectHeader'
 import { V2V3ProjectHeaderActions } from 'components/v2v3/V2V3Project/V2V3ProjectHeaderActions'
 import { ProjectSettingsContent } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/ProjectSettingsContent'
+import { V2VeNftPageKey } from 'components/veNft/VeNft'
 import { CV_V3 } from 'constants/cv'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
@@ -12,12 +13,25 @@ import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 import useMobile from 'hooks/Mobile'
-import { V2V3SettingsPageKey } from 'models/menu-keys'
 import { useRouter } from 'next/router'
 import { useContext, useMemo, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { pushMenuContent, v2v3ProjectRoute } from 'utils/routes'
 import { BackToProjectButton } from '../../../BackToProjectButton'
+
+export type MenuKey = V2V3SettingsPageKey | V2VeNftPageKey
+
+export type V2V3SettingsPageKey =
+  | 'general'
+  | 'projecthandle'
+  | 'reconfigurefc'
+  | 'payouts'
+  | 'reservedtokens'
+  | 'transferownership'
+  | 'archiveproject'
+  | 'governance'
+  | 'tokenmigration'
+  | 'upgrades'
 
 type MenuItem = Required<MenuProps>['items'][number]
 

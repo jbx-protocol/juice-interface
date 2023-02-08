@@ -13,7 +13,7 @@ import { useQuery } from 'react-query'
 import { readNetwork } from 'constants/networks'
 import { WAD_DECIMALS } from 'constants/numbers'
 import { readProvider } from 'constants/readProvider'
-import { WETH } from 'constants/tokens'
+import { WETH } from 'constants/contracts/tokens'
 
 interface Immutables {
   factory: string

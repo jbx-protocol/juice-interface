@@ -1,5 +1,5 @@
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { VARIANTS_HASH } from 'constants/veNft/veNftProject'
+import { VARIANTS_HASH } from 'constants/contracts/goerli/veNftProject'
 import { ipfsGetWithFallback } from 'lib/api/ipfs'
 import { VeNftVariant } from 'models/veNft'
 import { useQuery } from 'react-query'

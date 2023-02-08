@@ -1,5 +1,9 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
-import { MenuKey, V2V3SettingsPageKey, V2VeNftPageKey } from 'models/menu-keys'
+import {
+  MenuKey,
+  V2V3SettingsPageKey,
+} from 'components/v2v3/V2V3Project/V2V3ProjectSettings/V2V3ProjectSettings'
+import { V2VeNftPageKey } from 'components/veNft/VeNft'
 import { NextRouter } from 'next/router'
 
 const HELP_PAGE_HOSTNAME = 'https://info.juicebox.money'

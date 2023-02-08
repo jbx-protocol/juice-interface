@@ -1,6 +1,6 @@
-import useERC20BalanceOf from 'hooks/ERC20BalanceOf'
-import useERC20DecimalsOf from 'hooks/ERC20DecimalsOf'
-import useSymbolOfERC20 from 'hooks/SymbolOfERC20'
+import useERC20BalanceOf from 'hooks/ERC20/ERC20BalanceOf'
+import useERC20DecimalsOf from 'hooks/ERC20/ERC20DecimalsOf'
+import useSymbolOfERC20 from 'hooks/ERC20/SymbolOfERC20'
 import { formatWad } from 'utils/format/formatNumber'
 
 import FormattedAddress from 'components/FormattedAddress'

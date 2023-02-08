@@ -18,7 +18,7 @@ import {
 import { classNames } from 'utils/classNames'
 
 import { daysToMillis } from './daysToMillis'
-import { useDuration } from './hooks/useDuration'
+import { useDuration } from './hooks/Duration'
 import { loadBlockRefs } from './loadBlockRefs'
 import { loadDomain } from './loadDomain'
 import { loadProjectEvents } from './loadProjectEvents'

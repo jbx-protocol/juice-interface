@@ -4,7 +4,7 @@ import { useAvailablePayoutsSelections } from 'components/Create/components/page
 import { formatFundingCycleDuration } from 'components/Create/utils/formatFundingCycleDuration'
 import { formatFundingTarget } from 'utils/format/formatFundingTarget'
 import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
-import { useAppSelector } from 'hooks/AppSelector'
+import { useAppSelector } from 'redux/hooks/AppSelector'
 import moment from 'moment'
 import { useCallback, useMemo } from 'react'
 import { useEditingDistributionLimit } from 'redux/hooks/EditingDistributionLimit'

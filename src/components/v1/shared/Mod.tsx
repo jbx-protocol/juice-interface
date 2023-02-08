@@ -10,7 +10,7 @@ import {
   V1_V3_ALLOCATOR_ADDRESS,
 } from 'constants/contracts/mainnet/Allocators'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { PayoutMod, TicketMod } from 'models/mods'
+import { PayoutMod, TicketMod } from 'models/v1/mods'
 import { useContext } from 'react'
 import { formatDate } from 'utils/format/formatDate'
 

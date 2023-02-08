@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { AnyProjectMetadata } from 'models/project-metadata'
+import { AnyProjectMetadata } from 'models/projectMetadata'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import { readNetwork } from 'constants/networks'

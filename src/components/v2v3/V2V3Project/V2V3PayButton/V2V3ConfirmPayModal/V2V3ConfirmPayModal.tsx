@@ -11,7 +11,7 @@ import {
   DEFAULT_ALLOW_OVERSPENDING,
   JB721DELAGATE_V1_1_PAY_METADATA,
   JB721DELAGATE_V1_PAY_METADATA,
-} from 'components/Project/PayProjectForm/usePayProjectForm'
+} from 'components/Project/PayProjectForm/hooks/PayProjectForm'
 import TooltipLabel from 'components/TooltipLabel'
 import TransactionModal from 'components/TransactionModal'
 import {

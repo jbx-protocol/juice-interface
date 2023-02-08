@@ -1,5 +1,5 @@
 export {}
-import { NetworkName } from 'models/network-name'
+import { NetworkName } from 'models/networkName'
 type Networks = keyof typeof NetworkName
 
 type PinataGatewayHostnameURL = 'jbx.mypinata.cloud'

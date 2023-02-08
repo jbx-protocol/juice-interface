@@ -1,8 +1,8 @@
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { PayoutMod, TicketMod } from 'models/mods'
-import { consolidateMetadata } from 'models/project-metadata'
+import { PayoutMod, TicketMod } from 'models/v1/mods'
+import { consolidateMetadata } from 'models/projectMetadata'
 import { useRouter } from 'next/router'
 import { useCallback, useContext, useMemo } from 'react'
 import {

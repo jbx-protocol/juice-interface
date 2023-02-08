@@ -1,6 +1,6 @@
 import { PV_V1, PV_V1_1 } from 'constants/pv'
 import { paginateDepleteProjectsQueryCall } from 'lib/apollo'
-import { ProjectMetadataV6 } from 'models/project-metadata'
+import { ProjectMetadataV6 } from 'models/projectMetadata'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { findProjectMetadata } from 'utils/server'
 

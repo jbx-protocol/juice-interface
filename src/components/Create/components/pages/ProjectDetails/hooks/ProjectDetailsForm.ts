@@ -1,5 +1,5 @@
 import { useForm } from 'antd/lib/form/Form'
-import { useAppSelector } from 'hooks/AppSelector'
+import { useAppSelector } from 'redux/hooks/AppSelector'
 import { useMemo } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { useFormDispatchWatch } from '../../hooks'

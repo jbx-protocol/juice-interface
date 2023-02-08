@@ -13,7 +13,7 @@ import InputAccessoryButton from 'components/InputAccessoryButton'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import NumberSlider from 'components/inputs/NumberSlider'
 import { isAddress } from 'ethers/lib/utils'
-import { PayoutMod } from 'models/mods'
+import { PayoutMod } from 'models/v1/mods'
 import { useCallback, useEffect, useState } from 'react'
 import {
   fromWad,

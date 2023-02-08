@@ -1,6 +1,6 @@
 import { SemanticColors } from 'models/semantic-theme/colors'
 
-import { ThemeOption } from 'constants/theme/theme-option'
+import { ThemeOption } from 'constants/theme/themeOption'
 
 export const boxShadow: Record<ThemeOption, SemanticColors['boxShadow']> = {
   [ThemeOption.light]: { primary: 'rgba(0, 0, 0, 0.2)' },

@@ -4,7 +4,7 @@ import Sun from 'components/icons/Sun'
 import { ThemeContext } from 'contexts/themeContext'
 import { useContext } from 'react'
 
-import { ThemeOption } from 'constants/theme/theme-option'
+import { ThemeOption } from 'constants/theme/themeOption'
 import { classNames } from 'utils/classNames'
 
 export default function ThemePicker() {

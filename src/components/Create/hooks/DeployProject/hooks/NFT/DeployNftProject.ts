@@ -3,7 +3,7 @@ import {
   useEditingV2V3FundAccessConstraintsSelector,
   useEditingV2V3FundingCycleDataSelector,
   useEditingV2V3FundingCycleMetadataSelector,
-} from 'hooks/AppSelector'
+} from 'redux/hooks/AppSelector'
 import { useLaunchProjectWithNftsTx } from 'hooks/JB721Delegate/transactor/LaunchProjectWithNftsTx'
 import { TransactionCallbacks } from 'models/transaction'
 import { useCallback, useMemo } from 'react'

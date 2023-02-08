@@ -1,6 +1,6 @@
 import { GlobalOutlined } from '@ant-design/icons'
 import { Select } from 'antd'
-import { Languages } from 'constants/languages/language-options'
+import { SUPPORTED_LANGUAGES } from 'constants/locale'
 import { useEffect, useState } from 'react'
 import { reloadWindow } from 'utils/windowUtils'
 
@@ -21,7 +21,11 @@ export default function NavLanguageSelector({
     }
     return (
       <Select.Option key={lang} value={lang}>
-        <div>{mobile ? Languages[lang].long : Languages[lang].short}</div>
+        <div>
+          {mobile
+            ? SUPPORTED_LANGUAGES[lang].long
+            : SUPPORTED_LANGUAGES[lang].short}
+        </div>
       </Select.Option>
     )
   }
@@ -39,8 +43,8 @@ export default function NavLanguageSelector({
   }
 
   const selectHeader = mobile
-    ? Languages[currentSelectedLanguage].long
-    : Languages[currentSelectedLanguage].short
+    ? SUPPORTED_LANGUAGES[currentSelectedLanguage].long
+    : SUPPORTED_LANGUAGES[currentSelectedLanguage].short
 
   // Close dropdown when clicking anywhere in the window except the collapse items
   useEffect(() => {
@@ -71,7 +75,7 @@ export default function NavLanguageSelector({
         }}
         dropdownMatchSelectWidth={false}
       >
-        {Object.keys(Languages).map(renderLanguageOption)}
+        {Object.keys(SUPPORTED_LANGUAGES).map(renderLanguageOption)}
       </Select>
     </div>
   )

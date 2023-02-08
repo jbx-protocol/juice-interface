@@ -1,10 +1,7 @@
 import Bottleneck from 'bottleneck'
 import { PUBLIC_PINATA_GATEWAY_HOSTNAME } from 'constants/ipfs'
 import { ipfsGetWithFallback } from 'lib/api/ipfs'
-import {
-  AnyProjectMetadata,
-  consolidateMetadata,
-} from 'models/project-metadata'
+import { AnyProjectMetadata, consolidateMetadata } from 'models/projectMetadata'
 
 import { GlobalPinataScheduler } from '../bottleneck'
 

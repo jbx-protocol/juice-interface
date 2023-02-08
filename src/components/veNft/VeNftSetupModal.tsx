@@ -8,7 +8,7 @@ import { MinimalCollapse } from 'components/MinimalCollapse'
 import VeNftRewardTierModal from 'components/veNft/VeNftRewardTierModal'
 import VeNftvariantCard from 'components/veNft/VeNftVariantCard'
 
-import { DEFAULT_LOCK_DURATIONS } from 'constants/veNft/veNftProject'
+import { DEFAULT_LOCK_DURATIONS } from 'constants/contracts/goerli/veNftProject'
 import VeNftAddLockDurationModal from './VeNftAddLockDurationModal'
 import VeNftLockDurationOptionCard from './VeNftLockDurationOptionCard'
 

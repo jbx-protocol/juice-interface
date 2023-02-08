@@ -5,7 +5,7 @@ import {
   NFT_PAYMENT_CONFIRMED_QUERY_PARAM,
 } from 'components/NftRewards/NftPostPayModal'
 import { PayProjectFormContext } from 'components/Project/PayProjectForm/payProjectFormContext'
-import { DEFAULT_ALLOW_OVERSPENDING } from 'components/Project/PayProjectForm/usePayProjectForm'
+import { DEFAULT_ALLOW_OVERSPENDING } from 'components/Project/PayProjectForm/hooks/PayProjectForm'
 import SectionHeader from 'components/SectionHeader'
 import { CurrencyContext } from 'contexts/currencyContext'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
@@ -16,7 +16,7 @@ import useMobile from 'hooks/Mobile'
 import { useContext } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { sumTierFloors } from 'utils/nftRewards'
-import { useModalFromUrlQuery } from '../modals/hooks/useModalFromUrlQuery'
+import { useModalFromUrlQuery } from '../modals/hooks/ModalFromUrlQuery'
 import { NftTierCard } from './NftTierCard'
 
 function RewardTiersLoadingSkeleton() {

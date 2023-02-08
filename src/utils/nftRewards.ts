@@ -5,13 +5,13 @@ import {
   DEFAULT_ALLOW_OVERSPENDING,
   JB721DELAGATE_V1_1_PAY_METADATA,
   JB721DELAGATE_V1_PAY_METADATA,
-} from 'components/Project/PayProjectForm/usePayProjectForm'
+} from 'components/Project/PayProjectForm/hooks/PayProjectForm'
 import { juiceboxEmojiImageUri } from 'constants/images'
 import { IPFS_TAGS } from 'constants/ipfs'
 import { readNetwork } from 'constants/networks'
 import { WAD_DECIMALS } from 'constants/numbers'
 import { defaultAbiCoder, parseEther } from 'ethers/lib/utils'
-import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/NftRewards'
+import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/JB721Delegate/NftRewards'
 import { round } from 'lodash'
 import {
   IpfsNftCollectionMetadata,

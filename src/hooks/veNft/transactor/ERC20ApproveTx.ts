@@ -4,7 +4,7 @@ import { TransactionContext } from 'contexts/transactionContext'
 
 import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
 import { useContractReader } from 'hooks/ContractReader'
-import { useErc20Contract } from 'hooks/Erc20Contract'
+import { useErc20Contract } from 'hooks/ERC20/Erc20Contract'
 import { TransactorInstance } from 'hooks/Transactor'
 
 import { useContext } from 'react'

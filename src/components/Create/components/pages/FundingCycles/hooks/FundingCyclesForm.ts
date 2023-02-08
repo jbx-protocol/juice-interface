@@ -1,7 +1,7 @@
 import { useForm, useWatch } from 'antd/lib/form/Form'
 import { DurationInputValue } from 'components/DurationInput'
-import { useAppDispatch } from 'hooks/AppDispatch'
-import { useAppSelector } from 'hooks/AppSelector'
+import { useAppDispatch } from 'redux/hooks/AppDispatch'
+import { useAppSelector } from 'redux/hooks/AppSelector'
 import { useDebugValue, useEffect, useMemo } from 'react'
 import {
   DEFAULT_MUST_START_AT_OR_AFTER,

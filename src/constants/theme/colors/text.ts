@@ -1,7 +1,7 @@
 import { SemanticColors } from 'models/semantic-theme/colors'
 
-import { darkColors, lightColors } from 'constants/styles/colors'
-import { ThemeOption } from 'constants/theme/theme-option'
+import { darkColors, lightColors } from 'constants/theme/colors/colors'
+import { ThemeOption } from 'constants/theme/themeOption'
 
 export const textColors: Record<ThemeOption, SemanticColors['text']> = {
   [ThemeOption.light]: {

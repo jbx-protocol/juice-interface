@@ -8,11 +8,12 @@ import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { ThemeContext } from 'contexts/themeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
-import { V2VeNftPageKey } from 'models/menu-keys'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
 import { pushMenuContent, v2v3ProjectRoute } from 'utils/routes'
+
+export type V2VeNftPageKey = 'mint' | 'myvenfts'
 
 type MenuItem = Required<MenuProps>['items'][number]
 

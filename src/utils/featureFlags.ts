@@ -1,6 +1,6 @@
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { readNetwork } from 'constants/networks'
-import { NetworkName } from 'models/network-name'
+import { NetworkName } from 'models/networkName'
 
 const FEATURE_FLAG_DEFAULTS: {
   [featureFlag: string]: { [networkName in NetworkName]?: boolean }

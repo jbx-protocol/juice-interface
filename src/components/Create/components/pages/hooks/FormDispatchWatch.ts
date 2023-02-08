@@ -1,7 +1,7 @@
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit'
 import { FormInstance } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
-import { useAppDispatch } from 'hooks/AppDispatch'
+import { useAppDispatch } from 'redux/hooks/AppDispatch'
 import isEqual from 'lodash/isEqual'
 import { useEffect } from 'react'
 

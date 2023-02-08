@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { isEqual } from 'lodash'
-import { PayoutMod } from 'models/mods'
+import { PayoutMod } from 'models/v1/mods'
 import { OutgoingSplit, Split } from 'models/splits'
 import {
   percentToPermyriad,

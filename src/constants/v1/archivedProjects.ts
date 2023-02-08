@@ -1,4 +1,4 @@
-import { NetworkName } from 'models/network-name'
+import { NetworkName } from 'models/networkName'
 
 import { readNetwork } from 'constants/networks'
 import { V1_PROJECT_IDS } from './projectIds'

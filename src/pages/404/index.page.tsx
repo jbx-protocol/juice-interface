@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
-import LanguageProvider from 'providers/LanguageProvider'
 import Link from 'antd/lib/typography/Link'
+import LanguageProvider from 'providers/LanguageProvider'
 import { useContext } from 'react'
 import { ThemeContext } from '../../contexts/themeContext'
 import error404 from '/public/assets/error404.png'

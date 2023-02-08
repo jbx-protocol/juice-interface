@@ -7,7 +7,6 @@ import { useContentType } from 'hooks/ContentType'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
-import { twJoin } from 'tailwind-merge'
 import { classNames } from 'utils/classNames'
 import { ipfsToHttps } from 'utils/ipfs'
 import { NftPreview } from './NftPreview'
@@ -83,7 +82,7 @@ export function NftTierCard({
       <JuiceVideoThumbnail src={fileUrl} isSelected={_isSelected} />
     ) : (
       <img
-        className={twJoin('absolute top-0 h-full w-full object-cover')}
+        className="absolute top-0 h-full w-full object-cover"
         alt={rewardTier?.name}
         src={fileUrl}
         style={{

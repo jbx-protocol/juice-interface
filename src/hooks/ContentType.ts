@@ -13,9 +13,5 @@ export function useContentType(uri?: string) {
       const response = await loadURLContentType(uri)
       return response
     },
-    {
-      enabled: !!uri,
-      staleTime: 60000,
-    },
   )
 }

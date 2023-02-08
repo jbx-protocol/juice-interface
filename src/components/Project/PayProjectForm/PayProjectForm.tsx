@@ -1,7 +1,9 @@
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import { CurrencyContext } from 'contexts/currencyContext'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useContext } from 'react'
+import { fromWad } from 'utils/format/formatNumber'
 import { getHighestAffordableNft, getNftRewardOfFloor } from 'utils/nftRewards'
 
 import FormattedNumberInput from '../../inputs/FormattedNumberInput'
@@ -16,7 +18,11 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
   const {
     nftRewards: { rewardTiers, flags },
   } = useContext(NftRewardsContext)
+
   const { PayButton, form: payProjectForm } = useContext(PayProjectFormContext)
+
+  const converter = useCurrencyConverter()
+
   const {
     payAmount,
     setPayAmount,
@@ -34,7 +40,11 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
 
   const onPayAmountChange = (value?: string): void => {
     const newPayAmount = value ?? '0'
-    const payAmountNum = parseFloat(newPayAmount)
+    const payAmountETH =
+      payInCurrency === USD
+        ? parseFloat(fromWad(converter.usdToWei(newPayAmount)))
+        : parseFloat(newPayAmount)
+
     setPayAmount?.(newPayAmount)
     validatePayAmount?.(newPayAmount)
 
@@ -44,12 +54,12 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
     // If preventOverspending is false, selects highest eligible reward tier
     const selectedNftId = flags.preventOverspending
       ? getNftRewardOfFloor({
-          floor: payAmountNum,
+          floor: payAmountETH,
           rewardTiers,
         })?.id
       : getHighestAffordableNft({
           nftRewardTiers: rewardTiers,
-          payAmountETH: payAmountNum,
+          payAmountETH,
         })?.id
 
     const tierIdsToMint = selectedNftId !== undefined ? [selectedNftId] : []

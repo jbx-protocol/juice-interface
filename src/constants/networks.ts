@@ -1,4 +1,4 @@
-import { NetworkName } from 'models/network-name'
+import { NetworkName } from 'models/networkName'
 import { isBrowser } from 'utils/isBrowser'
 
 const infuraId = isBrowser()
@@ -40,24 +40,6 @@ export const NETWORKS: Record<number, NetworkInfo> = {
     rpcUrl: `https://mainnet.infura.io/v3/${infuraId}`,
     blockExplorer: 'https://etherscan.io/',
   },
-  42: {
-    name: NetworkName.kovan,
-    label: 'Kovan',
-    color: '#7003DD',
-    chainId: 42,
-    rpcUrl: `https://kovan.infura.io/v3/${infuraId}`,
-    blockExplorer: 'https://kovan.etherscan.io/',
-    faucet: 'https://gitter.im/kovan-testnet/faucet', //https://faucet.kovan.network/
-  },
-  3: {
-    name: NetworkName.ropsten,
-    label: 'Ropsten',
-    color: '#F60D09',
-    chainId: 3,
-    faucet: 'https://faucet.ropsten.be/',
-    blockExplorer: 'https://ropsten.etherscan.io/',
-    rpcUrl: `https://ropsten.infura.io/v3/${infuraId}`,
-  },
   5: {
     name: NetworkName.goerli,
     label: 'Goerli',
@@ -66,48 +48,6 @@ export const NETWORKS: Record<number, NetworkInfo> = {
     faucet: 'https://goerli-faucet.slock.it/',
     blockExplorer: 'https://goerli.etherscan.io/',
     rpcUrl: `https://goerli.infura.io/v3/${infuraId}`,
-  },
-  4: {
-    name: NetworkName.rinkeby,
-    label: 'Rinkeby',
-    color: '#e0d068',
-    chainId: 4,
-    rpcUrl: `https://rinkeby.infura.io/v3/${infuraId}`,
-    faucet: 'https://faucet.rinkeby.io/',
-    blockExplorer: 'https://rinkeby.etherscan.io/',
-  },
-  100: {
-    name: NetworkName.xdai,
-    label: 'XDAI',
-    color: '#48a9a6',
-    chainId: 100,
-    price: 1,
-    gasPrice: 1000000000,
-    rpcUrl: 'https://dai.poa.network',
-    faucet: 'https://xdai-faucet.top/',
-    blockExplorer: 'https://blockscout.com/poa/xdai/',
-  },
-  137: {
-    name: NetworkName.matic,
-    label: 'MATIC',
-    color: '#2bbdf7',
-    chainId: 137,
-    price: 1,
-    gasPrice: 1000000000,
-    rpcUrl: 'https://rpc-mainnet.maticvigil.com',
-    faucet: 'https://faucet.matic.network/',
-    blockExplorer: 'https://explorer-mainnet.maticvigil.com//',
-  },
-  80001: {
-    name: NetworkName.mumbai,
-    label: 'Mumbai',
-    color: '#92D9FA',
-    chainId: 80001,
-    price: 1,
-    gasPrice: 1000000000,
-    rpcUrl: 'https://rpc-mumbai.maticvigil.com',
-    faucet: 'https://faucet.matic.network/',
-    blockExplorer: 'https://mumbai-explorer.matic.today/',
   },
 }
 

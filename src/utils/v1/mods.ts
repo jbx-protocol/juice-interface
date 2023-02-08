@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { TEN_THOUSAND } from 'constants/numbers'
-import { PayoutMod, TicketMod } from 'models/mods'
+import { PayoutMod, TicketMod } from 'models/v1/mods'
 
 export const MODS_TOTAL_PERCENT = TEN_THOUSAND // = 100%
 

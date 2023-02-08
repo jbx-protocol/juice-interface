@@ -14,7 +14,7 @@ import { Icons } from '../../Icons'
 import { Selection } from '../../Selection'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
-import { currencyAmountMustExistRule } from 'utils/antd-rules'
+import { currencyAmountMustExistRule } from 'utils/antdRules'
 import { useFundingTargetForm } from './hooks'
 
 export const FundingTargetPage: React.FC = () => {

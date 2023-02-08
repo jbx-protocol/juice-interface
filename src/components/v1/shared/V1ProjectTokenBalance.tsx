@@ -1,4 +1,4 @@
-import useSymbolOfERC20 from 'hooks/SymbolOfERC20'
+import useSymbolOfERC20 from 'hooks/ERC20/SymbolOfERC20'
 import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
 import useTokenAddressOfProject from 'hooks/v1/contractReader/TokenAddressOfProject'
 import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'

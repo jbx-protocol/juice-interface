@@ -1,5 +1,5 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
-import { PayoutMod } from 'models/mods'
+import { PayoutMod } from 'models/v1/mods'
 import { V1ContractName } from 'models/v1/contracts'
 import { useMemo } from 'react'
 

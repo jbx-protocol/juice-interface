@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { createContext } from 'react'
 import { WeightFunction } from 'utils/math'
-import { PayProjectForm } from './usePayProjectForm'
+import { PayProjectForm } from './hooks/PayProjectForm'
 
 export interface PayButtonProps {
   disabled?: boolean

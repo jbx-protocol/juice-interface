@@ -5,7 +5,6 @@ import ETHAmount from 'components/currency/ETHAmount'
 import Loading from 'components/Loading'
 import ProjectLogo from 'components/ProjectLogo'
 import { PV_V2 } from 'constants/pv'
-import { trendingWindowDays } from 'constants/trendingWindowDays'
 import { useProjectHandleText } from 'hooks/ProjectHandleText'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { Project } from 'models/subgraph-entities/vX/project'
@@ -13,6 +12,7 @@ import Link from 'next/link'
 import { useMemo } from 'react'
 import { classNames } from 'utils/classNames'
 import { v2v3ProjectRoute } from 'utils/routes'
+import { TRENDING_WINDOW_DAYS } from './RankingExplanation'
 
 export default function TrendingProjectCard({
   project,
@@ -134,7 +134,7 @@ export default function TrendingProjectCard({
                     />{' '}
                   </span>
                   <span className="font-medium text-grey-500 dark:text-grey-300">
-                    <Trans>last {trendingWindowDays} days</Trans>{' '}
+                    <Trans>last {TRENDING_WINDOW_DAYS} days</Trans>{' '}
                   </span>
                   <span className="font-medium text-juice-400 dark:text-juice-300">
                     {percentGainText && <>{percentGainText}</>}

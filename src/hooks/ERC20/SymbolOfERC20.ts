@@ -1,16 +1,16 @@
 import * as constants from '@ethersproject/constants'
-import { useErc20Contract } from 'hooks/Erc20Contract'
+import { useErc20Contract } from 'hooks/ERC20/Erc20Contract'
 import { useEffect, useState } from 'react'
 
-/** Returns name for ERC20 token with `address`. */
-export default function useNameOfERC20(tokenAddress: string | undefined) {
+/** Returns symbol for ERC20 token with `address`. */
+export default function useSymbolOfERC20(tokenAddress: string | undefined) {
   const [data, setData] = useState<string>()
   const [loading, setLoading] = useState<boolean>(false)
 
   const contract = useErc20Contract(tokenAddress)
 
   useEffect(() => {
-    async function fetchName() {
+    async function fetchSymbol() {
       if (
         !contract ||
         !tokenAddress ||
@@ -22,15 +22,15 @@ export default function useNameOfERC20(tokenAddress: string | undefined) {
 
       setLoading(true)
       try {
-        const name = await contract.name()
-        setData(name)
+        const symbol = await contract.symbol()
+        setData(symbol)
       } catch (e) {
         console.error(e)
       }
       setLoading(false)
     }
 
-    fetchName()
+    fetchSymbol()
   }, [tokenAddress, contract])
 
   return { data, loading }

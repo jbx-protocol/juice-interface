@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
-import { useSushiswapPriceQuery } from 'hooks/ERC20SushiswapPrice'
-import { useUniswapPriceQuery } from 'hooks/ERC20UniswapPrice'
+import { useSushiswapPriceQuery } from './hooks/ERC20SushiswapPrice'
+import { useUniswapPriceQuery } from './hooks/ERC20UniswapPrice'
 import { generateAMMLink } from 'lib/amm'
 
 import TokenAMMPriceRow from './TokenAMMPriceRow'

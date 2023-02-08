@@ -1,6 +1,6 @@
 import { AllocationSplit } from 'components/Allocation'
 import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
-import { useAppSelector } from 'hooks/AppSelector'
+import { useAppSelector } from 'redux/hooks/AppSelector'
 import { useCallback, useMemo } from 'react'
 import { useEditingReservedTokensSplits } from 'redux/hooks/EditingReservedTokensSplits'
 import { formatEnabled, formatPaused } from 'utils/format/formatBoolean'

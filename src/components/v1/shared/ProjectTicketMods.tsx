@@ -14,7 +14,7 @@ import {
 import { FormItemExt } from 'components/formItems/formItemExt'
 import ReservedTokenReceiverModal from 'components/modals/ReservedTokenReceiverModal'
 import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { TicketMod } from 'models/mods'
+import { TicketMod } from 'models/v1/mods'
 import * as moment from 'moment'
 import { useCallback, useContext, useMemo, useState } from 'react'
 import { classNames } from 'utils/classNames'

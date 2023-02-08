@@ -1,4 +1,4 @@
-import { useAppSelector } from 'hooks/AppSelector'
+import { useAppSelector } from 'redux/hooks/AppSelector'
 import { useMemo } from 'react'
 
 /**

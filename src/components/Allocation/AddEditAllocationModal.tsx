@@ -20,7 +20,7 @@ import {
   inputIsIntegerRule,
   inputMustBeEthAddressRule,
   inputMustExistRule,
-} from 'utils/antd-rules'
+} from 'utils/antdRules'
 import { fromWad, parseWad, stripCommas } from 'utils/format/formatNumber'
 import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { amountFromPercent } from 'utils/v2v3/distributions'

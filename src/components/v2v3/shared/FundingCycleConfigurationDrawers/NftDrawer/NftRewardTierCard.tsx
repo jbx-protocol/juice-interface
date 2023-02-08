@@ -6,7 +6,7 @@ import {
 import { Trans } from '@lingui/macro'
 import { Button, Col, Image, Row, Tooltip } from 'antd'
 import Paragraph from 'components/Paragraph'
-import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/NftRewards'
+import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/JB721Delegate/NftRewards'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useState } from 'react'
 import { classNames } from 'utils/classNames'

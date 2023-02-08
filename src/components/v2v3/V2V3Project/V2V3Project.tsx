@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Col, Row, Space } from 'antd'
-import { useModalFromUrlQuery } from 'components/modals/hooks/useModalFromUrlQuery'
+import { useModalFromUrlQuery } from 'components/modals/hooks/ModalFromUrlQuery'
 import { PayProjectForm } from 'components/Project/PayProjectForm'
 import { ProjectHeader } from 'components/Project/ProjectHeader'
 import { TextButton } from 'components/TextButton'

@@ -9,7 +9,7 @@ import {
   SGWhereArg,
 } from 'models/graph'
 import { Json } from 'models/json'
-import { ProjectState } from 'models/project-visibility'
+import { ProjectState } from 'models/projectVisibility'
 import { PV } from 'models/pv'
 import { SepanaProject, SepanaQueryResponse } from 'models/sepana'
 import { Project } from 'models/subgraph-entities/vX/project'

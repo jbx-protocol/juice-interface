@@ -27,7 +27,7 @@ import ReconfigurePreview from './ReconfigurePreview'
 import V2V3ReconfigureUpcomingMessage from './ReconfigureUpcomingMessage'
 import { SetNftOperatorPermissionsButton } from './SetNftOperatorPermissionsButton'
 import { formatDate } from 'utils/format/formatDate'
-import { useAppDispatch } from 'hooks/AppDispatch'
+import { useAppDispatch } from 'redux/hooks/AppDispatch'
 
 function ReconfigureButton({
   reconfigureHasChanges,

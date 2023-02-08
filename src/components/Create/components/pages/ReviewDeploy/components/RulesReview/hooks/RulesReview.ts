@@ -1,6 +1,6 @@
 import { useAvailableReconfigurationStrategies } from 'components/Create/hooks/AvailableReconfigurationStrategies'
 import { readNetwork } from 'constants/networks'
-import { useAppSelector } from 'hooks/AppSelector'
+import { useAppSelector } from 'redux/hooks/AppSelector'
 import { useMemo } from 'react'
 import {
   formatAllowed,

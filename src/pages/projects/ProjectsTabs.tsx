@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import { Space } from 'antd'
 import { Tab } from 'components/Tab'
-import { ProjectCategory } from 'models/project-visibility'
+import { ProjectCategory } from 'models/projectVisibility'
 import Link from 'next/link'
 
 const TAB_TYPE_NAMES: { [k in ProjectCategory]: string } = {

@@ -3,7 +3,7 @@ import {
   useEditingV2V3FundAccessConstraintsSelector,
   useEditingV2V3FundingCycleDataSelector,
   useEditingV2V3FundingCycleMetadataSelector,
-} from 'hooks/AppSelector'
+} from 'redux/hooks/AppSelector'
 import { useLaunchProjectTx } from 'hooks/v2v3/transactor/LaunchProjectTx'
 import { TransactionCallbacks } from 'models/transaction'
 import { useCallback } from 'react'

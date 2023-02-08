@@ -1,5 +1,5 @@
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { VENFT_DEPLOYER_ADDRESS } from 'constants/veNft/veNftProject'
+import { VENFT_DEPLOYER_ADDRESS } from 'constants/contracts/goerli/veNftProject'
 import { featureFlagEnabled } from 'utils/featureFlags'
 
 export const loadVeNftDeployer = async () => {

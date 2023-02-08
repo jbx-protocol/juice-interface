@@ -1,7 +1,7 @@
 import { CloseOutlined, LinkOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
-import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/NftRewards'
+import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/JB721Delegate/NftRewards'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useContext } from 'react'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'

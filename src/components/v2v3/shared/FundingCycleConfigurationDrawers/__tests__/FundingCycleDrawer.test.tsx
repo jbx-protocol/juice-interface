@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react-hooks'
 
-import { useFundingCycleDrawer } from '../useFundingCycleDrawer'
+import { useFundingCycleDrawer } from '../hooks/FundingCycleDrawer'
 
 describe('FundingCycleDrawer', () => {
   describe('useFundingCycleDrawer', () => {

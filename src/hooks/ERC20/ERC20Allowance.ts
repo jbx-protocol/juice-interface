@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { useErc20Contract } from 'hooks/Erc20Contract'
+import { useErc20Contract } from 'hooks/ERC20/Erc20Contract'
 
 import useContractReader from 'hooks/v2v3/contractReader/V2ContractReader'
 

@@ -4,7 +4,7 @@ import { juiceboxEmojiImageUri } from 'constants/images'
 import { IPFS_TAGS } from 'constants/ipfs'
 import { readNetwork } from 'constants/networks'
 import { WAD_DECIMALS } from 'constants/numbers'
-import { AnyProjectMetadata, ProjectMetadataV6 } from 'models/project-metadata'
+import { AnyProjectMetadata, ProjectMetadataV6 } from 'models/projectMetadata'
 
 /**
  * JB Docs:

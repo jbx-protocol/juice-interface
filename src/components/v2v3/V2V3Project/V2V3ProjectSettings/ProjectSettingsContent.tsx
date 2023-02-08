@@ -1,6 +1,8 @@
 import { Divider, Layout } from 'antd'
-import { V2V3SettingsPageKeyTitleMap } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/V2V3ProjectSettings'
-import { V2V3SettingsPageKey } from 'models/menu-keys'
+import {
+  V2V3SettingsPageKey,
+  V2V3SettingsPageKeyTitleMap,
+} from 'components/v2v3/V2V3Project/V2V3ProjectSettings/V2V3ProjectSettings'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import { ArchiveProjectSettingsPage } from './pages/ArchiveProjectSettingsPage'

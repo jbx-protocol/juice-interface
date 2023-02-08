@@ -1,8 +1,5 @@
 import { ipfsGetWithFallback } from 'lib/api/ipfs'
-import {
-  AnyProjectMetadata,
-  consolidateMetadata,
-} from 'models/project-metadata'
+import { AnyProjectMetadata, consolidateMetadata } from 'models/projectMetadata'
 import { useQuery } from 'react-query'
 
 export function useProjectMetadata(uri: string | undefined) {

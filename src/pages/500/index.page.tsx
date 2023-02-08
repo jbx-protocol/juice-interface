@@ -21,6 +21,8 @@ const Custom500 = () => {
           <p className="mb-6 text-sm text-grey-600 md:text-base">
             The servers are having an issue, please try again later!
           </p>
+        </Trans>
+        <Trans>
           <Link
             href="/"
             style={{ color: colors.text.action.primary }}

@@ -21,6 +21,8 @@ const Custom404 = () => {
           <p className="mb-6 text-sm text-grey-600 md:text-base">
             This page could not be found.
           </p>
+        </Trans>
+        <Trans>
           <Link
             href="/"
             style={{ color: colors.text.action.primary }}

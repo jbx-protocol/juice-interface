@@ -12,6 +12,7 @@ import { restrictedIpfsUrl } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
 
 const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif']
+export const MP4_FILE_TYPE = 'video/mp4'
 
 // Always showing images as squares
 export const NFT_IMAGE_SIDE_LENGTH = '90px'
@@ -60,7 +61,7 @@ export default function NftUpload({ form }: { form: FormInstance }) {
     if (uploading) {
       return Promise.reject('File uploading.')
     } else if (imageUrl === undefined) {
-      return Promise.reject('Image file required.')
+      return Promise.reject('File required.')
     }
     return Promise.resolve()
   }

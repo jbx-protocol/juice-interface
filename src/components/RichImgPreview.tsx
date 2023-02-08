@@ -14,7 +14,7 @@ export default function RichImgPreview({
   maxWidth?: CSSProperties['maxWidth']
   maxHeight?: CSSProperties['maxHeight']
 }) {
-  const contentType = useContentType(src)
+  const { data: contentType } = useContentType(src)
   const [previewVisible, setPreviewVisible] = useState<boolean>(false)
 
   if (

@@ -1,6 +1,9 @@
 import { LoadingOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
 import { Skeleton } from 'antd'
+import { MP4_FILE_TYPE } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload'
+import { JuiceVideoThumbnail } from 'components/v2v3/shared/NftVideo/JuiceVideoThumbnail'
+import { useContentType } from 'hooks/ContentType'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
@@ -37,7 +40,7 @@ export function NftTierCard({
   // used to return to previous state on second click if user accidentally unselected the NFT
   const [previousQuantity, setPreviousQuantity] = useState<number>(1)
 
-  const imageUrl = rewardTier?.fileUrl
+  const fileUrl = rewardTier?.fileUrl
     ? ipfsToHttps(rewardTier.fileUrl)
     : rewardTier?.fileUrl
 
@@ -71,6 +74,24 @@ export function NftTierCard({
     }
   }
 
+  const { data: contentType } = useContentType(fileUrl)
+  const isVideo = contentType === MP4_FILE_TYPE
+
+  const nftThumbnail =
+    isVideo && fileUrl ? (
+      <JuiceVideoThumbnail src={fileUrl} isSelected={_isSelected} />
+    ) : (
+      <img
+        className="absolute top-0 h-full w-full object-cover"
+        alt={rewardTier?.name}
+        src={fileUrl}
+        style={{
+          filter: _isSelected ? 'unset' : 'brightness(50%)',
+        }}
+        crossOrigin="anonymous"
+      />
+    )
+
   return (
     <>
       <div
@@ -87,7 +108,7 @@ export function NftTierCard({
         }
         role="button"
       >
-        {/* Image container */}
+        {/* Image/video container */}
         <div
           className={classNames(
             'relative flex w-full items-center justify-center',
@@ -102,17 +123,7 @@ export function NftTierCard({
               <LoadingOutlined />
             </div>
           ) : (
-            <img
-              className={classNames(
-                'absolute top-0 h-full w-full object-cover',
-              )}
-              alt={rewardTier?.name}
-              src={imageUrl}
-              style={{
-                filter: _isSelected ? 'unset' : 'brightness(50%)',
-              }}
-              crossOrigin="anonymous"
-            />
+            nftThumbnail
           )}
           {showQuantitySelector ? (
             <QuantitySelector
@@ -193,7 +204,7 @@ export function NftTierCard({
           open={previewVisible}
           rewardTier={rewardTier}
           onClose={() => setPreviewVisible(false)}
-          imageUrl={imageUrl}
+          fileUrl={fileUrl}
         />
       ) : null}
     </>

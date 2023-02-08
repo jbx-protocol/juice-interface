@@ -14,6 +14,7 @@ export default function PayEventElem({
         PayEvent,
         | 'amount'
         | 'timestamp'
+        | 'caller'
         | 'beneficiary'
         | 'note'
         | 'id'

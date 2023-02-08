@@ -125,6 +125,7 @@ export default function ProjectActivity() {
         keys: [
           'amount',
           'timestamp',
+          'caller',
           'beneficiary',
           'note',
           'id',

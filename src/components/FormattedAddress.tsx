@@ -9,6 +9,7 @@ import { twMerge } from 'tailwind-merge'
 export default function FormattedAddress({
   className,
   address,
+  title,
   label,
   tooltipDisabled,
   truncateTo,
@@ -16,6 +17,7 @@ export default function FormattedAddress({
 }: {
   className?: string
   address: string | undefined
+  title?: string
   label?: string
   tooltipDisabled?: boolean
   truncateTo?: number
@@ -43,6 +45,7 @@ export default function FormattedAddress({
     <Tooltip
       title={
         <span className="text-sm">
+          {title ? <div className="text-xs font-bold">{title}</div> : null}
           {address} <CopyTextButton value={address} />
         </span>
       }

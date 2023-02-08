@@ -1,4 +1,4 @@
-import { useAppDispatch } from 'hooks/AppDispatch'
+import { useAppDispatch } from 'redux/hooks/AppDispatch'
 import { CreatePage } from 'models/createPage'
 import { useCallback, useContext, useMemo } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'

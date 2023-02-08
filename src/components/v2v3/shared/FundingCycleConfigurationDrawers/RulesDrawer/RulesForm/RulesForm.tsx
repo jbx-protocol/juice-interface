@@ -12,8 +12,8 @@ import {
   ballotStrategiesFn,
   DEFAULT_BALLOT_STRATEGY,
 } from 'constants/v2v3/ballotStrategies'
-import { useAppDispatch } from 'hooks/AppDispatch'
-import { useAppSelector } from 'hooks/AppSelector'
+import { useAppDispatch } from 'redux/hooks/AppDispatch'
+import { useAppSelector } from 'redux/hooks/AppSelector'
 import isEqual from 'lodash/isEqual'
 import { BallotStrategy } from 'models/ballot'
 import { useCallback, useEffect, useMemo, useState } from 'react'

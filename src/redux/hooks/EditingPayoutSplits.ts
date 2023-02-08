@@ -1,5 +1,5 @@
-import { useAppDispatch } from 'hooks/AppDispatch'
-import { useAppSelector } from 'hooks/AppSelector'
+import { useAppDispatch } from 'redux/hooks/AppDispatch'
+import { useAppSelector } from 'redux/hooks/AppSelector'
 import { Split } from 'models/splits'
 import { useCallback } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'

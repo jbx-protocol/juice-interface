@@ -1,9 +1,8 @@
 import { t } from '@lingui/macro'
 import { Button } from 'antd'
+import RichNote from 'components/RichNote'
 import { useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-
-import RichNote from './RichNote'
 
 export default function Paragraph({
   className,

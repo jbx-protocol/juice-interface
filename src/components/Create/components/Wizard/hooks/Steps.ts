@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro'
-import { useAppSelector } from 'hooks/AppSelector'
+import { useAppSelector } from 'redux/hooks/AppSelector'
 import { CreatePage } from 'models/createPage'
 import { useCallback, useContext, useMemo } from 'react'
 import { useEditingCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'

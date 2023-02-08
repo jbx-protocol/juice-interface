@@ -2,7 +2,7 @@ import { t } from '@lingui/macro'
 import { Form, FormInstance, FormProps, Input } from 'antd'
 import Loading from 'components/Loading'
 import { NftRewardsContext } from 'contexts/nftRewardsContext'
-import { useAppSelector } from 'hooks/AppSelector'
+import { useAppSelector } from 'redux/hooks/AppSelector'
 import { useNftCollectionMetadata } from 'hooks/NftCollectionMetadata'
 import { useCallback, useContext, useEffect, useMemo } from 'react'
 import {

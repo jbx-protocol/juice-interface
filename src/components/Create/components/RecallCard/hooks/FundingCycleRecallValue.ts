@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
 import { formatFundingCycleDuration } from 'components/Create/utils/formatFundingCycleDuration'
-import { useAppSelector } from 'hooks/AppSelector'
+import { useAppSelector } from 'redux/hooks/AppSelector'
 
 export const useFundingCycleRecallValue = () => {
   const {

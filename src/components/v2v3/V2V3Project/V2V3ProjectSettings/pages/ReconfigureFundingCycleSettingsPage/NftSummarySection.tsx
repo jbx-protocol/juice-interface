@@ -3,7 +3,7 @@ import { Col, Image, Row } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import Paragraph from 'components/Paragraph'
 import { NFT_IMAGE_SIDE_LENGTH } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload'
-import { useAppSelector } from 'hooks/AppSelector'
+import { useAppSelector } from 'redux/hooks/AppSelector'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/NftRewards'
 import { classNames } from 'utils/classNames'
 

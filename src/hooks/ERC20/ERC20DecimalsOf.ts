@@ -1,6 +1,6 @@
-import { useErc20Contract } from 'hooks/Erc20Contract'
+import { useErc20Contract } from 'hooks/ERC20/Erc20Contract'
 
-import useContractReader from './v1/contractReader/ContractReader'
+import useContractReader from '../v1/contractReader/ContractReader'
 
 /** Returns decimals used by ERC20 with `address`. */
 export default function useERC20DecimalsOf(address: string | undefined) {

@@ -6,7 +6,7 @@ import { useNftFlagsOf } from 'hooks/JB721Delegate/contractReader/NftFlagsOf'
 import { useNftRewardTiersOf } from 'hooks/JB721Delegate/contractReader/NftRewardTiersOf'
 import { useJB721DelegateVersion } from 'hooks/JB721Delegate/DelegateVersion'
 import { useHasNftRewards } from 'hooks/JB721Delegate/HasNftRewards'
-import useNftRewards from 'hooks/NftRewards'
+import useNftRewards from 'hooks/JB721Delegate/NftRewards'
 import { JB721GovernanceType } from 'models/nftRewardTier'
 import { useContext } from 'react'
 import {

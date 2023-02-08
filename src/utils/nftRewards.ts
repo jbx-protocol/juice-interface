@@ -11,7 +11,7 @@ import { IPFS_TAGS } from 'constants/ipfs'
 import { readNetwork } from 'constants/networks'
 import { WAD_DECIMALS } from 'constants/numbers'
 import { defaultAbiCoder, parseEther } from 'ethers/lib/utils'
-import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/NftRewards'
+import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/JB721Delegate/NftRewards'
 import { round } from 'lodash'
 import {
   IpfsNftCollectionMetadata,

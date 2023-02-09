@@ -20,8 +20,9 @@ export default function V2V3DownloadActivityModal(props: ModalProps) {
 
   useEffect(() => {
     readProvider.getBlockNumber().then(val => {
-      setLatestBlockNumber(val)
-      setBlockNumber(val)
+      const adjustedBlockNumber = val - 5 // sometimes the subgraph is a few blocks behind the chain head, so we dial this back a bit to avoid querying a block that doesn't exist yet
+      setLatestBlockNumber(adjustedBlockNumber)
+      setBlockNumber(adjustedBlockNumber)
     })
   }, [])
 

@@ -3,7 +3,7 @@ import { Callout } from 'components/Callout'
 import { useRef } from 'react'
 import { Provider } from 'react-redux'
 import store, { createStore } from 'redux/store'
-import { useInitialEditingData } from '../../../../ReconfigureFundingCycleSettingsPage/hooks/initialEditingData'
+import { useInitialEditingData } from '../../../../../ReconfigureFundingCycleSettingsPage/hooks/initialEditingData'
 import { LaunchFundingCycleForm } from './LaunchFundingCycleForm'
 
 /**
@@ -16,7 +16,7 @@ function RelaunchV2FundingCycleForm() {
   return <LaunchFundingCycleForm />
 }
 
-export function FundingCycleStep() {
+export function UpgradeFundingCycle() {
   const localStoreRef = useRef<typeof store>()
   if (!localStoreRef.current) {
     localStoreRef.current = createStore()

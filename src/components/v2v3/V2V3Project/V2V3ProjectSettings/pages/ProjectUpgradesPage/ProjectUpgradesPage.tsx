@@ -2,18 +2,24 @@ import { Trans } from '@lingui/macro'
 import { Button, Space, Statistic } from 'antd'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { useContext, useState } from 'react'
-
-import { useIsUpgradeAvailable } from './hooks/IsUpgradeAvailable'
-import { UpgradeWizard } from './UpgradeWizard/UpgradeWizard'
+import { useAvailableUpgrades } from './versions/useAvailableUpgrades'
+import { JBVersion, VERSIONS } from './versions/versions'
 
 export function ProjectUpgradesPage() {
   const { cv } = useContext(V2V3ContractsContext)
 
-  const [upgradeWizardOpen, setUpgradeWizardOpen] = useState(false)
+  const [upgradeWizardOpen, setUpgradeWizardOpen] = useState<false | JBVersion>(
+    false,
+  )
 
-  const isUpgradeAvailable = useIsUpgradeAvailable()
+  const availableUpgrades = useAvailableUpgrades()
+  const isUpgradeAvailable = Boolean((availableUpgrades ?? []).length > 0)
 
-  if (upgradeWizardOpen) return <UpgradeWizard />
+  // lightweight 'routing' to the upgrade wizard for each upgrade
+  if (upgradeWizardOpen) {
+    const Component = VERSIONS[upgradeWizardOpen].component
+    return <Component />
+  }
 
   return (
     <div>
@@ -22,6 +28,7 @@ export function ProjectUpgradesPage() {
         Good enuf for now.
          */}
         <Statistic title="Current version" value={`V${cv}`} />
+
         {!isUpgradeAvailable && (
           <p>
             <Trans>Your project is up to date!</Trans>
@@ -29,9 +36,27 @@ export function ProjectUpgradesPage() {
         )}
 
         {isUpgradeAvailable && (
-          <Button type="primary" onClick={() => setUpgradeWizardOpen(true)}>
-            <Trans>Start upgrade</Trans>
-          </Button>
+          <>
+            <h3>
+              <Trans>Available upgrades</Trans>
+            </h3>
+            {availableUpgrades?.map(v => {
+              const upgrade = VERSIONS[v]
+              return (
+                <div key={v}>
+                  <h4>{upgrade.name}</h4>
+                  {upgrade.description && <p>{upgrade.description()}</p>}
+                  <Button
+                    size="small"
+                    type="primary"
+                    onClick={() => setUpgradeWizardOpen(v)}
+                  >
+                    <Trans>Upgrade to {upgrade.name}</Trans>
+                  </Button>
+                </div>
+              )
+            })}
+          </>
         )}
       </Space>
     </div>

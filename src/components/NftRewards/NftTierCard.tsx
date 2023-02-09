@@ -4,6 +4,7 @@ import { Skeleton } from 'antd'
 import { MP4_FILE_TYPE } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload'
 import { JuiceVideoThumbnail } from 'components/v2v3/shared/NftVideo/JuiceVideoThumbnail'
 import { useContentType } from 'hooks/ContentType'
+import { DEFAULT_NFT_MAX_SUPPLY } from 'hooks/JB721Delegate/NftRewards'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
@@ -11,8 +12,6 @@ import { classNames } from 'utils/classNames'
 import { ipfsToHttps } from 'utils/ipfs'
 import { NftPreview } from './NftPreview'
 import { QuantitySelector } from './QuantitySelector'
-
-const MAX_REMAINING_SUPPLY = 10000
 
 // The clickable cards on the project page
 export function NftTierCard({
@@ -58,11 +57,13 @@ export function NftTierCard({
     setPreviewVisible(true)
   }
 
-  const remainingSupplyText =
-    rewardTier?.remainingSupply !== undefined &&
-    rewardTier.remainingSupply < MAX_REMAINING_SUPPLY
-      ? t`${rewardTier?.remainingSupply} remaining`
-      : t`Unlimited`
+  const remainingSupply = rewardTier?.remainingSupply
+  const hasRemainingSupply = remainingSupply && remainingSupply > 0
+  const remainingSupplyText = !hasRemainingSupply
+    ? t`SOLD OUT`
+    : rewardTier.maxSupply === DEFAULT_NFT_MAX_SUPPLY
+    ? t`Unlimited`
+    : t`${rewardTier?.remainingSupply} remaining`
 
   const handleBottomSectionClick = () => {
     if (_isSelected) {
@@ -102,7 +103,7 @@ export function NftTierCard({
             : '',
         )}
         onClick={
-          _isSelected && !previewDisabled
+          (_isSelected && !previewDisabled) || !hasRemainingSupply
             ? openPreview
             : () => onClickNoPreview()
         }

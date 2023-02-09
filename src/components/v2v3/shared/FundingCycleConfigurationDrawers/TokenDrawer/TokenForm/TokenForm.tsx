@@ -9,7 +9,6 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { useForm } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
 import { FormItems } from 'components/formItems'
-import { DEFAULT_BONDING_CURVE_RATE_PERCENTAGE } from 'components/formItems/ProjectRedemptionRate'
 import FormItemWarningText from 'components/FormItemWarningText'
 import NumberSlider from 'components/inputs/NumberSlider'
 import SwitchHeading from 'components/SwitchHeading'
@@ -184,11 +183,6 @@ export function TokenForm({
     fundingCycleData?.discountRate !== DEFAULT_FUNDING_CYCLE_DATA.discountRate,
   )
 
-  const [redemptionRateChecked, setRedemptionRateChecked] = useState<boolean>(
-    fundingCycleMetadata?.redemptionRate !==
-      DEFAULT_FUNDING_CYCLE_METADATA.redemptionRate,
-  )
-
   const [reservedTokensSplits, setReservedTokensSplits] = useState<Split[]>(
     reservedTokensGroupedSplits?.splits,
   )
@@ -339,12 +333,6 @@ export function TokenForm({
             label={
               <>
                 <Trans>Redemption rate</Trans>
-                {!redemptionRateChecked && canSetRedemptionRate && (
-                  <span className="text-grey-400 dark:text-slate-200">
-                    {' '}
-                    ({DEFAULT_BONDING_CURVE_RATE_PERCENTAGE}%)
-                  </span>
-                )}
               </>
             }
             value={formatRedemptionRate(BigNumber.from(redemptionRate))}
@@ -355,8 +343,7 @@ export function TokenForm({
                 ).toString(),
               )
             }}
-            onToggled={setRedemptionRateChecked}
-            checked={redemptionRateChecked}
+            checked={canSetRedemptionRate}
             disabled={!canSetRedemptionRate}
           />
         </div>

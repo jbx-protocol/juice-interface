@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Empty, Space } from 'antd'
+import { Button, Empty, Form, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
 import NftRewardTierModal from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal'
@@ -8,7 +8,7 @@ import { useAppDispatch } from 'redux/hooks/AppDispatch'
 import { useAppSelector } from 'redux/hooks/AppSelector'
 import { useHasNftRewards } from 'hooks/JB721Delegate/HasNftRewards'
 import { useNftRewardsAdjustTiersTx } from 'hooks/JB721Delegate/transactor/NftRewardsAdjustTiersTx'
-import { NftRewardTier } from 'models/nftRewardTier'
+import { JB721GovernanceType, NftRewardTier } from 'models/nftRewardTier'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { withHttps } from 'utils/externalLink'
@@ -25,7 +25,7 @@ import { useFundingCycleDrawer } from '../hooks/FundingCycleDrawer'
 import { AddRewardTierButton } from './AddRewardTierButton'
 import { EditCollectionDetailsSection } from './EditCollectionDetailsSection'
 import { MarketplaceFormFields, NftPostPayModalFormFields } from './formFields'
-import { NftCollectionDetailsForm } from './NftCollectionDetailsForm'
+import { NftCollectionDetailsFormItems } from './NftCollectionDetailsFormItems'
 import NftRewardTierCard from './NftRewardTierCard'
 
 const NFT_REWARDS_EXPLAINATION: JSX.Element = (
@@ -92,6 +92,8 @@ export default function NftDrawer({
 
     const marketplaceFormValues = marketplaceForm.getFieldsValue(true)
     const collectionName = marketplaceFormValues.collectionName
+    const governance =
+      marketplaceFormValues.onChainGovernance ?? JB721GovernanceType.NONE
     const postPayModalContent = postPayModalForm.getFieldValue('content')
 
     const [rewardTiersCIDs, nftCollectionMetadataUri] = await Promise.all([
@@ -132,6 +134,7 @@ export default function NftDrawer({
           : undefined,
       ),
     )
+    dispatch(editingV2ProjectActions.setNftRewardsGovernance(governance))
     // Store cid (link to nfts on IPFS) to be used later in the deploy tx
     dispatch(editingV2ProjectActions.setNftRewardsCIDs(rewardTiersCIDs))
   }, [
@@ -291,7 +294,10 @@ export default function NftDrawer({
           />
 
           {!hasExistingNfts && (
-            <NftCollectionDetailsForm form={marketplaceForm} />
+            // Hack - this whole thing should be a form
+            <Form layout="vertical" colon={false} form={marketplaceForm}>
+              <NftCollectionDetailsFormItems />
+            </Form>
           )}
 
           <Button

@@ -238,7 +238,8 @@ export function tiersEqual({
     tier1.externalLink === tier2.externalLink &&
     tier1.fileUrl === tier2.fileUrl &&
     tier1.maxSupply === tier2.maxSupply &&
-    tier1.name === tier2.name
+    tier1.name === tier2.name &&
+    tier1.votingWeight === tier2.votingWeight
   )
 }
 

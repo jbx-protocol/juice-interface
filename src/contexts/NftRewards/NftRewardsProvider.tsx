@@ -31,6 +31,7 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
       dataSourceAddress,
       shouldFetch,
     })
+
   // catchall to ensure nfts are never loaded if hasNftRewards is false (there's no datasource).
   const tierData = shouldFetch ? nftRewardTiersResponse ?? [] : []
 
@@ -69,6 +70,7 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
       value={{
         nftRewards: {
           rewardTiers,
+          // TODO: Load governance type
           governanceType: JB721GovernanceType.NONE,
           CIDs,
           contractVersion,

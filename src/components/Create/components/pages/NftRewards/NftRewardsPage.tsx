@@ -8,7 +8,7 @@ import TooltipLabel from 'components/TooltipLabel'
 import { useAppSelector } from 'redux/hooks/AppSelector'
 import { useModal } from 'hooks/Modal'
 import { JB721GovernanceType } from 'models/nftRewardTier'
-import { ReactNode, useContext } from 'react'
+import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { CreateButton } from 'components/buttons/CreateButton'
 import { CreateBadge } from '../../CreateBadge'
@@ -27,29 +27,7 @@ import { featureFlagEnabled } from 'utils/featureFlags'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import ExternalLink from 'components/ExternalLink'
 import { helpPagePath } from 'utils/routes'
-
-const RadioItem = ({
-  value,
-  title,
-  description,
-}: {
-  value: JB721GovernanceType
-  title?: ReactNode
-  description?: ReactNode
-}) => {
-  return (
-    <Radio value={value}>
-      <span className="text-sm">
-        {title && <div className="font-medium">{title}</div>}
-        {description && (
-          <div className="mt-1 font-normal text-grey-500 dark:text-grey-300">
-            {description}
-          </div>
-        )}
-      </span>
-    </Radio>
-  )
-}
+import { RadioItem } from 'components/RadioItem'
 
 export const NftRewardsPage = () => {
   useSetCreateFurthestPageReached('nftRewards')

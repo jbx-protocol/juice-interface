@@ -6,12 +6,16 @@
   background-color: var(--background-action-primary);
 }
 
-.ant-radio-wrapper, 
+.ant-radio-wrapper,
 .ant-radio-button-wrapper {
   color: var(--text-primary);
   &:hover {
     color: var(--text-primary);
   }
+}
+
+.ant-radio-wrapper-disabled span {
+  color: var(--text-disabled);
 }
 
 .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled),
@@ -25,4 +29,3 @@
     background-color: var(--stroke-action-primary);
   }
 }
-

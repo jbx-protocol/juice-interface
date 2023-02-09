@@ -16,7 +16,7 @@ export const useLoadV2V3Contract = ({
   contractName,
   address,
 }: {
-  contractName: V2V3ContractName
+  contractName: V2V3ContractName | undefined
   cv: CV2V3 | undefined
   address?: string // optional address, to override the default address
 }) => {
@@ -24,7 +24,7 @@ export const useLoadV2V3Contract = ({
 
   useEffect(() => {
     async function loadAbi() {
-      if (!cv) return
+      if (!cv || !contractName) return
 
       const contractJson = await loadJuiceboxV2OrV3Contract(
         cv,

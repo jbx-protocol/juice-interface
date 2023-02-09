@@ -2,7 +2,7 @@ import { LoadingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { useExecutedSafeTransactions } from 'hooks/safe/ExecutedSafeTransaction'
 import { GnosisSafe, SafeTransactionType } from 'models/safe'
-import { getUniqueNonces } from 'utils/safe'
+import { getUniqueNonces } from '../../utils/safe'
 import { SafeNonceRow } from './SafeNonceRow'
 
 export function ExecutedSafeTransactionsListing({

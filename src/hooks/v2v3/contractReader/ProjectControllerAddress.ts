@@ -2,7 +2,7 @@ import { ContractConfig } from 'hooks/ContractReader/types'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import useV2ContractReader from './V2ContractReader'
 
-export default function useProjectController({
+export default function useProjectControllerAddress({
   projectId,
   contract,
   useDeprecatedContract,

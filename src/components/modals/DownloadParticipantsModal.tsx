@@ -4,7 +4,7 @@ import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { PV_V1, PV_V1_1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { useLatestBlockNumber } from 'hooks/LatestBlockNumber'
+import { useBlockNumber } from 'hooks/BlockNumber'
 import { SGQueryOpts } from 'models/graph'
 import { Participant } from 'models/subgraph-entities/vX/participant'
 import { useCallback, useContext, useEffect, useState } from 'react'
@@ -28,7 +28,8 @@ export function DownloadParticipantsModal({
   const [blockNumber, setBlockNumber] = useState<number>()
   const [loading, setLoading] = useState<boolean>()
 
-  const latestBlockNumber = useLatestBlockNumber({ behind: 5 })
+  // Use block number 5 blocks behind chain head to allow for subgraph being a bit behind on indexing.
+  const latestBlockNumber = useBlockNumber({ behindChainHeight: 5 })
 
   useEffect(() => {
     setBlockNumber(latestBlockNumber)

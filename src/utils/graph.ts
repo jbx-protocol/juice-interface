@@ -2,6 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber'
 import axios from 'axios'
 import {
+  PluralSGEntityName,
   SGEntity,
   SGEntityKey,
   SGEntityName,
@@ -9,6 +10,8 @@ import {
   SGQueryOpts,
   SGResponseData,
   SGWhereArg,
+  singularSGResponseEntities,
+  SingularSGEntityName,
 } from 'models/graph'
 import { Json } from 'models/json'
 import { PV } from 'models/pv'
@@ -38,8 +41,6 @@ import { parseProjectCreateEventJson } from 'models/subgraph-entities/vX/project
 import { parseProjectEventJson } from 'models/subgraph-entities/vX/project-event'
 import { parseProtocolLogJson } from 'models/subgraph-entities/vX/protocol-log'
 import { parseRedeemEventJson } from 'models/subgraph-entities/vX/redeem-event'
-
-const PLURAL_ENTITY_EXCLUSIONS: SGEntityName[] = ['projectSearch']
 
 /**
  * Format a string used to define a subgraph query
@@ -94,17 +95,15 @@ export const formatGraphQuery = <
       : undefined,
   )
 
-  const overrideEntity: string = opts.entity
-
-  const res = `{ ${overrideEntity}${isPluralQuery(opts.entity) ? 's' : ''}${
+  const res = `{ ${tryPluralizeSGEntityName(opts.entity)}${
     args ? `(${args})` : ''
   } {${opts.keys.reduce(
     (acc, key) =>
       typeof key === 'string' ||
       typeof key === 'number' ||
       typeof key === 'symbol'
-        ? acc + ' ' + key.toString()
-        : acc + ` ${key.entity.toString()} { ${key.keys.join(' ')} }`,
+        ? acc + ` ${key.toString()}`
+        : acc + ` ${key.entity} { ${key.keys.join(' ')} }`,
     '',
   )} } }`
   return res
@@ -122,12 +121,10 @@ export function entitiesFromSGResponse<
 >(entityName: E, response: SGResponseData<E, K>) {
   let json: Json<SGEntity<E, K>>[] = []
 
-  const key = PLURAL_ENTITY_EXCLUSIONS.includes(entityName)
-    ? entityName
-    : `${entityName}s`
+  const key = tryPluralizeSGEntityName(entityName)
 
   if (response && typeof response === 'object' && key in response) {
-    json = response[key as `${E}s`]
+    json = response[key]
   }
 
   return json
@@ -365,11 +362,13 @@ export async function querySubgraphExhaustiveRaw<
   return entities
 }
 
-const isPluralQuery = (name: SGEntityName): boolean => {
-  if (name === 'projectSearch') return false
+const isSingularQuery = (name: SGEntityName): name is SingularSGEntityName =>
+  singularSGResponseEntities.has(name as SingularSGEntityName)
 
-  return true
-}
+const tryPluralizeSGEntityName = <E extends SGEntityName>(name: E) =>
+  (isSingularQuery(name) ? name : `${name}s`) as E extends SingularSGEntityName
+    ? E
+    : PluralSGEntityName<E>
 
 /**
  * Get the subgraph representation of a project ID, based on given [pv] and [projectId]

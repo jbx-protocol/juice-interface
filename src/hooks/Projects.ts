@@ -12,7 +12,6 @@ import { Json } from 'models/json'
 import { ProjectState } from 'models/projectVisibility'
 import { PV } from 'models/pv'
 import { SepanaProject, SepanaQueryResponse } from 'models/sepana'
-import { Project } from 'models/subgraph-entities/vX/project'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
@@ -22,20 +21,22 @@ import { getTerminalAddress } from 'utils/v1/terminals'
 
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
 
-interface ProjectsOptions {
+type ProjectsOptions = Partial<
+  Pick<
+    SGQueryOpts<'project', SGEntityKey<'project'>>,
+    'orderBy' | 'orderDirection' | 'keys'
+  >
+> & {
   pageNumber?: number
   projectId?: number
-  orderBy?: 'createdAt' | 'currentBalance' | 'totalPaid'
-  orderDirection?: 'asc' | 'desc'
   pageSize?: number
   state?: ProjectState
-  keys?: (keyof Project)[]
   terminalVersion?: V1TerminalVersion
   pv?: PV[]
 }
 
 const DEFAULT_STALE_TIME = 60 * 1000 // 60 seconds
-const DEFAULT_ENTITY_KEYS: (keyof Project)[] = [
+const DEFAULT_ENTITY_KEYS: Required<ProjectsOptions>['keys'] = [
   'id',
   'projectId',
   'handle',
@@ -62,10 +63,9 @@ const ARCHIVED_SUBGRAPH_IDS = [
 
 const queryOpts = (
   opts: ProjectsOptions,
-): Partial<
+):
   | SGQueryOpts<'project', SGEntityKey<'project'>>
-  | InfiniteSGQueryOpts<'project', SGEntityKey<'project'>>
-> => {
+  | InfiniteSGQueryOpts<'project', SGEntityKey<'project'>> => {
   const where: SGWhereArg<'project'>[] = []
 
   const terminalAddress = getTerminalAddress(opts.terminalVersion)

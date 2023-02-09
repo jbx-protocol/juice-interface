@@ -65,8 +65,18 @@ export type SGEntity<
 
 export type SGEntityKey<E extends SGEntityName> = keyof SGEntity<E>
 
+export const singularSGResponseEntities = new Set(['projectSearch'] as const)
+
+// These entity names are singular in subgraph queries and query responses, while all others are pluralized
+export type SingularSGEntityName =
+  typeof singularSGResponseEntities extends Set<infer T> ? T : never
+
+export type PluralSGEntityName<E extends SGEntityName> = `${E}s`
+
 export type SGResponseData<E extends SGEntityName, K extends SGEntityKey<E>> = {
-  [k in `${E}s`]: Json<SGEntity<E, K>>[]
+  [k in E extends SingularSGEntityName ? E : PluralSGEntityName<E>]: Json<
+    SGEntity<E, K>
+  >[]
 }
 
 export interface SGError {
@@ -111,17 +121,22 @@ export interface SGQueryOpts<E extends SGEntityName, K extends SGEntityKey<E>> {
   block?: SGBlockConfig
   url?: string
 
-  // `keys` can be a mix of the entity's keys or an entity specifier with its own keys
-  keys: (
-    | K
-    | {
-        entity: K
-        keys: string[] // hard to type accurate nested keys. All bets are off when this is used.
-      }
-  )[]
+  // `keys` can be a mix of the entity's keys or `SGQueryOptEntityKey` objects
+  keys: (SGQueryOptEntityKey<E, K> | K)[]
   orderDirection?: SGOrderDir
   where?: SGWhereArg<E> | SGWhereArg<E>[]
 }
+
+type SGQueryOptEntityKey<
+  E extends SGEntityName,
+  T extends SGEntityKey<E>,
+> = T extends SGEntityName
+  ? {
+      // If T is a key of E and also the name of an SGEntityName (e.g. `payEvent.project`, where E = 'payEvent' and T = 'project')
+      entity: T
+      keys: SGEntityKey<T>[]
+    }
+  : never
 
 // Re-type SGQueryOpts to remove skip and add pageSize.
 // This is so we can calculate our own `skip` value based on

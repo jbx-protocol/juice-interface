@@ -56,7 +56,7 @@ export default function VeNftVariantCard({
               'max-w-[90px] object-cover',
               imageLoading ? 'hidden' : '',
             )}
-            src={variant.imageUrl}
+            src={variant.fileUrl}
             alt={variant.name}
             height={'60px'}
             onLoad={() => setImageLoading(false)}

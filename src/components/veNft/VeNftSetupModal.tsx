@@ -22,25 +22,25 @@ const DEFAULT_VARIANTS: VeNftVariant[] = [
     id: 1,
     name: 'Cool guy',
     tokensStakedMin: 1,
-    imageUrl: `https://${process.env.NEXT_PUBLIC_PINATA_GATEWAY_HOSTNAME}/ipfs/QmTqHj8L5S2B7w1pqUn9hHyzddB27pgKEwFTwPRRQoqj96`,
+    fileUrl: `https://${process.env.NEXT_PUBLIC_PINATA_GATEWAY_HOSTNAME}/ipfs/QmTqHj8L5S2B7w1pqUn9hHyzddB27pgKEwFTwPRRQoqj96`,
   },
   {
     id: 2,
     name: 'Rich guy',
     tokensStakedMin: 1000,
-    imageUrl: `https://${process.env.NEXT_PUBLIC_PINATA_GATEWAY_HOSTNAME}/ipfs/QmTqHj8L5S2B7w1pqUn9hHyzddB27pgKEwFTwPRRQoqj96`,
+    fileUrl: `https://${process.env.NEXT_PUBLIC_PINATA_GATEWAY_HOSTNAME}/ipfs/QmTqHj8L5S2B7w1pqUn9hHyzddB27pgKEwFTwPRRQoqj96`,
   },
   {
     id: 3,
     name: 'Extra rich guy',
     tokensStakedMin: 1000000,
-    imageUrl: `https://${process.env.NEXT_PUBLIC_PINATA_GATEWAY_HOSTNAME}/ipfs/QmTqHj8L5S2B7w1pqUn9hHyzddB27pgKEwFTwPRRQoqj96`,
+    fileUrl: `https://${process.env.NEXT_PUBLIC_PINATA_GATEWAY_HOSTNAME}/ipfs/QmTqHj8L5S2B7w1pqUn9hHyzddB27pgKEwFTwPRRQoqj96`,
   },
   {
     id: 3,
     name: 'Top Baller',
     tokensStakedMin: 1000000000,
-    imageUrl: `https://${process.env.NEXT_PUBLIC_PINATA_GATEWAY_HOSTNAME}/ipfs/QmTqHj8L5S2B7w1pqUn9hHyzddB27pgKEwFTwPRRQoqj96`,
+    fileUrl: `https://${process.env.NEXT_PUBLIC_PINATA_GATEWAY_HOSTNAME}/ipfs/QmTqHj8L5S2B7w1pqUn9hHyzddB27pgKEwFTwPRRQoqj96`,
   },
 ]
 

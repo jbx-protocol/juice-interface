@@ -192,7 +192,7 @@ export const AddEditRewardModal = ({
           label={t`File`}
           extra={NFT_FILE_UPLOAD_EXTRA}
           required
-          rules={[inputMustExistRule({ label: t`Image file` })]}
+          rules={[inputMustExistRule({ label: t`File` })]}
         >
           <UploadNoStyle
             sizeLimit={100 * 1024 * 1024} // 100 MB

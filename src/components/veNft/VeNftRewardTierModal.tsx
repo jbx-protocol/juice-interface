@@ -13,7 +13,7 @@ import TokensStakedMinInput from 'components/veNft/formControls/TokensStakedMinI
 export type VeNftFormFields = {
   name: string
   tokensStakedMin: number
-  imageUrl: string
+  fileUrl: string
 }
 
 export default function VeNftRewardTierModal({
@@ -40,7 +40,7 @@ export default function VeNftRewardTierModal({
       id,
       name: nftForm.getFieldValue('name'),
       tokensStakedMin: nftForm.getFieldValue('tokensStakedMin'),
-      imageUrl: nftForm.getFieldValue('imageUrl'),
+      fileUrl: nftForm.getFieldValue('fileUrl'),
     } as VeNftVariant
 
     onChange(variant)
@@ -56,7 +56,7 @@ export default function VeNftRewardTierModal({
       nftForm.setFieldsValue({
         name: variant.name,
         tokensStakedMin: variant.tokensStakedMin,
-        imageUrl: variant.imageUrl,
+        fileUrl: variant.fileUrl,
       })
     }
   })

@@ -3,7 +3,7 @@ import { Space } from 'antd'
 import { PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/V2V3ProjectContractsContext'
-import useProjectController from 'hooks/v2v3/contractReader/ProjectController'
+import useProjectControllerAddress from 'hooks/v2v3/contractReader/ProjectControllerAddress'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import { useContext } from 'react'
@@ -22,7 +22,7 @@ export function ProjectBanners() {
   )
 
   // get the projects controller address on the deprecated JBDirectory (the bugged version)
-  const { data: controllerAddress } = useProjectController({
+  const { data: controllerAddress } = useProjectControllerAddress({
     projectId,
     useDeprecatedContract: true,
   })

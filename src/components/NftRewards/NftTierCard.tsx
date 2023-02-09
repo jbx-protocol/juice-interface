@@ -59,8 +59,8 @@ export function NftTierCard({
   }
 
   const remainingSupply = rewardTier?.remainingSupply
-  const isSoldOut = remainingSupply && remainingSupply > 0
-  const remainingSupplyText = !isSoldOut
+  const hasRemainingSupply = remainingSupply && remainingSupply > 0
+  const remainingSupplyText = !hasRemainingSupply
     ? t`SOLD OUT`
     : rewardTier.maxSupply === MAX_REMAINING_SUPPLY
     ? t`Unlimited`
@@ -104,7 +104,7 @@ export function NftTierCard({
             : '',
         )}
         onClick={
-          (_isSelected && !previewDisabled) || !isSoldOut
+          (_isSelected && !previewDisabled) || !hasRemainingSupply
             ? openPreview
             : () => onClickNoPreview()
         }

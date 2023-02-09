@@ -3,21 +3,29 @@ import { t, Trans } from '@lingui/macro'
 import { Form, FormInstance, Image, Progress, Upload } from 'antd'
 import { RcFile } from 'antd/lib/upload'
 import TooltipLabel from 'components/TooltipLabel'
+import { VeNftFormFields } from 'components/veNft/VeNftRewardTierModal'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ThemeContext } from 'contexts/themeContext'
 import { usePinFileToIpfs } from 'hooks/PinFileToIpfs'
 import { useWallet } from 'hooks/Wallet'
 import { useContext, useState } from 'react'
 import { classNames } from 'utils/classNames'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { restrictedIpfsUrl } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
+import { NftFormFields } from './NftRewardTierModal'
 
-const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif']
 export const MP4_FILE_TYPE = 'video/mp4'
+const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif']
 
 // Always showing images as squares
 export const NFT_IMAGE_SIDE_LENGTH = '90px'
 
-export default function NftUpload({ form }: { form: FormInstance }) {
+export default function NftUpload({
+  form,
+}: {
+  form: FormInstance<NftFormFields | VeNftFormFields>
+}) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -29,21 +37,27 @@ export default function NftUpload({ form }: { form: FormInstance }) {
 
   const setValue = (cid?: string) => {
     const newUrl = cid ? restrictedIpfsUrl(cid) : undefined
-    form.setFieldsValue({ imageUrl: newUrl })
+    form.setFieldsValue({ fileUrl: newUrl })
     setImageRenderLoading(true)
     setUploading(false)
   }
 
+  const nftMp4Enabled = featureFlagEnabled(FEATURE_FLAGS.NFT_MP4)
+
   // check file type and size
   const beforeUpload = async (file: RcFile) => {
-    const fileIsAllowed = ALLOWED_FILE_TYPES.includes(file.type)
+    const fileIsAllowed = [
+      ...ALLOWED_FILE_TYPES,
+      nftMp4Enabled ? MP4_FILE_TYPE : '',
+    ].includes(file.type)
+
     const isLt50000M = file.size / 1024 / 1024 < 50000
 
     if (!isLt50000M) {
       emitErrorNotification('File must be less than 50000MB')
     }
     if (!fileIsAllowed) {
-      emitErrorNotification('File must be a JPG, PNG or GIF')
+      emitErrorNotification('File must be a JPG, PNG, GIF or MP4')
     }
 
     let walletConnected = wallet.isConnected
@@ -55,12 +69,12 @@ export default function NftUpload({ form }: { form: FormInstance }) {
     return fileIsAllowed && isLt50000M && walletConnected
   }
 
-  const imageUrl = form.getFieldValue('imageUrl')
+  const fileUrl = form.getFieldValue('fileUrl')
 
-  const validateImageUrl = () => {
+  const validateFileUrl = () => {
     if (uploading) {
       return Promise.reject('File uploading.')
-    } else if (imageUrl === undefined) {
+    } else if (fileUrl === undefined) {
       return Promise.reject('File required.')
     }
     return Promise.resolve()
@@ -71,12 +85,12 @@ export default function NftUpload({ form }: { form: FormInstance }) {
       name={'NFT'}
       label={
         <TooltipLabel
-          label={t`Image file`}
-          tip={t`Attach the image to be associated with this NFT.`}
+          label={t`File`}
+          tip={t`Attach the image/video to be associated with this NFT.`}
         />
       }
-      rules={[{ required: true, validator: validateImageUrl }]}
-      extra={t`Image will be cropped to a square in thumbnail previews on the Juicebox app.`}
+      rules={[{ required: true, validator: validateFileUrl }]}
+      extra={t`NFT will be cropped to a square in thumbnail previews on the Juicebox app.`}
       validateTrigger={'onSubmit'}
     >
       <Upload
@@ -106,7 +120,7 @@ export default function NftUpload({ form }: { form: FormInstance }) {
           }
         }}
       >
-        {imageUrl ? (
+        {fileUrl ? (
           <>
             {imageRenderLoading ? (
               <LoadingOutlined className="text-3xl text-haze-400 dark:text-haze-300" />
@@ -116,7 +130,7 @@ export default function NftUpload({ form }: { form: FormInstance }) {
                 'h-24 w-24 object-cover object-center',
                 imageRenderLoading ? 'hidden' : '',
               )}
-              src={imageUrl}
+              src={fileUrl}
               alt={form.getFieldValue('name') ?? 'New NFT reward'}
               onLoad={() => setImageRenderLoading(false)}
               onClick={e => e.stopPropagation()}
@@ -143,11 +157,11 @@ export default function NftUpload({ form }: { form: FormInstance }) {
             <div className="mt-2 w-full">
               <div className="text-sm">
                 <strong>
-                  <Trans>Upload an image</Trans>
+                  <Trans>Upload a file</Trans>
                 </strong>
               </div>
               <div className="text-xs text-grey-500 dark:text-grey-300">
-                JPG, PNG, GIF
+                JPG, PNG, GIF{nftMp4Enabled ? ', MP4' : ''}
               </div>
             </div>
           </div>

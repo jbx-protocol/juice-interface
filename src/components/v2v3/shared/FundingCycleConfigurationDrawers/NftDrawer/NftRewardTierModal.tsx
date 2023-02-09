@@ -17,7 +17,7 @@ export type NftFormFields = {
   name: string
   externalLink: string
   description: string
-  imageUrl: string // IPFS link
+  fileUrl: string // IPFS link
 }
 
 const MAX_DESCRIPTION_CHARS = 256
@@ -46,7 +46,7 @@ export default function NftRewardTierModal({
       contributionFloor: parseFloat(nftForm.getFieldValue('contributionFloor')),
       maxSupply,
       remainingSupply: maxSupply,
-      fileUrl: nftForm.getFieldValue('imageUrl'),
+      fileUrl: nftForm.getFieldValue('fileUrl'),
       name: nftForm.getFieldValue('name'),
       externalLink: withHttps(nftForm.getFieldValue('externalLink')),
       description: nftForm.getFieldValue('description'),
@@ -64,7 +64,7 @@ export default function NftRewardTierModal({
     () =>
       rewardTier
         ? {
-            imageUrl: rewardTier.fileUrl,
+            fileUrl: rewardTier.fileUrl,
             maxSupply: rewardTier.maxSupply,
             name: rewardTier.name,
             externalLink: rewardTier.externalLink?.slice(8), // removes 'https://'

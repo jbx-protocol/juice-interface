@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro'
-import { getTransactionVersion } from 'utils/safe'
+import { useTransactionVersion } from './hooks/TransactionVersion'
 import { SafeTransactionComponentProps } from '../../SafeTransaction'
 import { TransactionCollapse } from '../../TransactionCollapse'
 import { ReconfigureRichPreview } from './ReconfigurationRichPreview'
@@ -9,7 +9,7 @@ export function ReconfigureFundingCyclesOfTransaction({
   selected,
   isPastTransaction,
 }: SafeTransactionComponentProps) {
-  const txVersion = getTransactionVersion(transaction)
+  const txVersion = useTransactionVersion(transaction)
 
   return (
     <TransactionCollapse

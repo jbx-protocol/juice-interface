@@ -3,36 +3,15 @@ import { Space } from 'antd'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import DiffedSplitList from 'components/v2v3/shared/DiffedSplits/DiffedSplitList'
 import FundingCycleDetails from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails'
-import { CV_V2, CV_V3 } from 'constants/cv'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
-import { useLoadV2V3Contract } from 'hooks/v2v3/LoadV2V3Contract'
 import { OutgoingProjectData } from 'models/outgoingProject'
 import { SafeTransactionType } from 'models/safe'
-import { V2V3ContractName } from 'models/v2v3/contracts'
 import { useContext } from 'react'
 import { formatOutgoingSplits } from 'utils/splits'
 import { deriveNextIssuanceRate } from 'utils/v2v3/fundingCycle'
 import { formatReservedRate, MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { LinkToSafeButton } from '../../LinkToSafeButton'
-
-const useTransactionJBController = (transaction: SafeTransactionType) => {
-  const V2JBController = useLoadV2V3Contract({
-    cv: CV_V2,
-    contractName: V2V3ContractName.JBController,
-  })
-  const V3JBController = useLoadV2V3Contract({
-    cv: CV_V3,
-    contractName: V2V3ContractName.JBController,
-  })
-
-  if (transaction.to === V2JBController?.address) {
-    return V2JBController
-  }
-
-  if (transaction.to === V3JBController?.address) {
-    return V3JBController
-  }
-}
+import { useTransactionJBController } from './hooks/TransactionJBController'
 
 // Currently only supports V2V3 reconfig transactions
 export function ReconfigureRichPreview({

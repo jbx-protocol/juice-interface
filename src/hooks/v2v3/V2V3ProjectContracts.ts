@@ -16,7 +16,7 @@ export function useV2V3ProjectContracts({ projectId }: { projectId: number }): {
     JBETHPaymentTerminalLoading: boolean
   }
 } {
-  const { cv } = useContext(V2V3ContractsContext)
+  const { cv, contracts } = useContext(V2V3ContractsContext)
 
   const { data: controllerAddress, loading: JBControllerLoading } =
     useProjectController({
@@ -30,7 +30,12 @@ export function useV2V3ProjectContracts({ projectId }: { projectId: number }): {
 
   const JBController = useLoadV2V3Contract({
     cv,
-    contractName: V2V3ContractName.JBController,
+    contractName:
+      controllerAddress === contracts?.JBController
+        ? V2V3ContractName.JBController
+        : controllerAddress === contracts?.JBController3_0_1
+        ? V2V3ContractName.JBController3_0_1
+        : undefined,
     address: controllerAddress,
   })
 

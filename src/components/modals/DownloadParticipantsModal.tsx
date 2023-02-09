@@ -3,8 +3,8 @@ import { Modal } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { PV_V1, PV_V1_1 } from 'constants/pv'
-import { readProvider } from 'constants/readProvider'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { useBlockNumber } from 'hooks/BlockNumber'
 import { SGQueryOpts } from 'models/graph'
 import { Participant } from 'models/subgraph-entities/vX/participant'
 import { useCallback, useContext, useEffect, useState } from 'react'
@@ -25,16 +25,15 @@ export function DownloadParticipantsModal({
 }) {
   const { projectId, projectMetadata, pv } = useContext(ProjectMetadataContext)
 
-  const [latestBlockNumber, setLatestBlockNumber] = useState<number>()
   const [blockNumber, setBlockNumber] = useState<number>()
   const [loading, setLoading] = useState<boolean>()
 
+  // Use block number 5 blocks behind chain head to allow for subgraph being a bit behind on indexing.
+  const latestBlockNumber = useBlockNumber({ behindChainHeight: 5 })
+
   useEffect(() => {
-    readProvider.getBlockNumber().then(val => {
-      setLatestBlockNumber(val)
-      setBlockNumber(val)
-    })
-  }, [])
+    setBlockNumber(latestBlockNumber)
+  }, [latestBlockNumber])
 
   const download = useCallback(async () => {
     if (blockNumber === undefined || !projectId || !pv) return

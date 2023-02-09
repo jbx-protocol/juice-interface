@@ -1,18 +1,18 @@
+import { DownloadOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Modal, Space } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { useEffect, useState, useContext } from 'react'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { readProvider } from 'constants/readProvider'
+import { useLatestBlockNumber } from 'hooks/LatestBlockNumber'
+import { useContext, useEffect, useState } from 'react'
 import {
+  downloadAdditionsToBalance,
   downloadParticipants,
-  downloadV1Payouts,
   downloadPayments,
   downloadRedemptions,
-  downloadAdditionsToBalance,
+  downloadV1Payouts,
 } from 'utils/csvDownloadHelpers'
-import { DownloadOutlined } from '@ant-design/icons'
 
 export function V1DownloadActivityModal({
   open,
@@ -23,16 +23,13 @@ export function V1DownloadActivityModal({
 }) {
   const { projectId, pv } = useContext(ProjectMetadataContext)
 
-  const [latestBlockNumber, setLatestBlockNumber] = useState<number>()
   const [blockNumber, setBlockNumber] = useState<number>()
 
+  const latestBlockNumber = useLatestBlockNumber({ behind: 5 })
+
   useEffect(() => {
-    readProvider.getBlockNumber().then(val => {
-      const adjustedBlockNumber = val - 5 // sometimes the subgraph is a few blocks behind the chain head, so we dial this back a bit to avoid querying a block that doesn't exist yet
-      setLatestBlockNumber(adjustedBlockNumber)
-      setBlockNumber(adjustedBlockNumber)
-    })
-  }, [])
+    setBlockNumber(latestBlockNumber)
+  }, [latestBlockNumber])
 
   return (
     <Modal

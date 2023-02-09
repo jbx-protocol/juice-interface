@@ -3,8 +3,8 @@ import { Modal } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { PV_V1, PV_V1_1 } from 'constants/pv'
-import { readProvider } from 'constants/readProvider'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { useLatestBlockNumber } from 'hooks/LatestBlockNumber'
 import { SGQueryOpts } from 'models/graph'
 import { Participant } from 'models/subgraph-entities/vX/participant'
 import { useCallback, useContext, useEffect, useState } from 'react'
@@ -25,17 +25,14 @@ export function DownloadParticipantsModal({
 }) {
   const { projectId, projectMetadata, pv } = useContext(ProjectMetadataContext)
 
-  const [latestBlockNumber, setLatestBlockNumber] = useState<number>()
   const [blockNumber, setBlockNumber] = useState<number>()
   const [loading, setLoading] = useState<boolean>()
 
+  const latestBlockNumber = useLatestBlockNumber({ behind: 5 })
+
   useEffect(() => {
-    readProvider.getBlockNumber().then(val => {
-      const adjustedBlockNumber = val - 5 // sometimes the subgraph is a few blocks behind the chain head, so we dial this back a bit to avoid querying a block that doesn't exist yet
-      setLatestBlockNumber(adjustedBlockNumber)
-      setBlockNumber(adjustedBlockNumber)
-    })
-  }, [])
+    setBlockNumber(latestBlockNumber)
+  }, [latestBlockNumber])
 
   const download = useCallback(async () => {
     if (blockNumber === undefined || !projectId || !pv) return

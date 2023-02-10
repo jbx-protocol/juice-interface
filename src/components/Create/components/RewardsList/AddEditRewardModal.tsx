@@ -176,7 +176,7 @@ export const AddEditRewardModal = ({
     <Modal
       className={className}
       title={
-        <h2 className="text-xl font-medium text-black dark:text-grey-200">
+        <h2 className="z-20 text-xl font-medium text-black dark:text-grey-200">
           {isEditing ? t`Edit NFT` : t`Add NFT`}
         </h2>
       }

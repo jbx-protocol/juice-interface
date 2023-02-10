@@ -2588,9 +2588,6 @@ msgstr ""
 msgid "Reserve a percentage of freshly minted tokens for your project to use."
 msgstr ""
 
-msgid "Reserved NFTS"
-msgstr ""
-
 msgid "Reserved NFTs"
 msgstr ""
 

@@ -1,5 +1,5 @@
 import { Trans, t } from '@lingui/macro'
-import { Button, Form, Row, Col } from 'antd'
+import { Button, Form, Row, Col, Select } from 'antd'
 import Image from 'next/image'
 import { useState } from 'react'
 import apple from '/public/assets/apple-ol.webp'
@@ -57,8 +57,8 @@ export default function Contact() {
 
   const contactTypes = (
     <Form.Item name="contactPlatform" initialValue="email" className="mb-0">
-      <JuiceSelect
-        className="min-w-[9em]"
+      <Select
+        className="min-w-[9em] border-smoke-300 dark:border-slate-300"
         onSelect={handleSelect}
         options={[
           { value: 'email', label: t`Email` },

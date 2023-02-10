@@ -51,7 +51,7 @@ export function usePayETHPaymentTerminalTx(): PayV2ProjectTx {
         DEFAULT_MIN_RETURNED_TOKENS, // minReturnedTokens
         preferClaimedTokens, // _preferClaimedTokens
         memo || '',
-        delegateMetadata ?? DEFAULT_DELEGATE_METADATA, //delegateMetadata
+        delegateMetadata ?? DEFAULT_DELEGATE_METADATA, // _metadata
       ],
       {
         ...txOpts,

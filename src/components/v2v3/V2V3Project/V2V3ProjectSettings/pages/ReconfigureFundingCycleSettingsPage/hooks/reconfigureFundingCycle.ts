@@ -1,8 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { PV_V2 } from 'constants/pv'
-import { NftRewardsContext } from 'contexts/nftRewardsContext'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useReconfigureV2V3FundingCycleWithNftsTx } from 'hooks/JB721Delegate/transactor/ReconfigureV2V3FundingCycleWithNftsTx'
 import {
   ReconfigureTxArgs,

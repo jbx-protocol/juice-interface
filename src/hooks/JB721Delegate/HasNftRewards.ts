@@ -1,5 +1,5 @@
 import * as constants from '@ethersproject/constants'
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { V2V3FundingCycleMetadata } from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
 import { useIsJB721DelegateV1 } from './IsJB721DelegateV1'

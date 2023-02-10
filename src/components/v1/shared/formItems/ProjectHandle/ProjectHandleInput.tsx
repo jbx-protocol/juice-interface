@@ -4,7 +4,7 @@ import { Input } from 'antd'
 import { BigNumber } from '@ethersproject/bignumber'
 import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber'
 import { parseBytes32String } from '@ethersproject/strings'
-import { V1UserContext } from 'contexts/v1/userContext'
+import { V1UserContext } from 'contexts/v1/User/V1UserContext'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { normalizeHandle } from 'utils/format/formatHandle'
 

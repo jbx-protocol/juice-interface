@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import ETHAmount from 'components/currency/ETHAmount'
 import StatLine from 'components/Project/StatLine'
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useContext } from 'react'
 import { NO_CURRENCY, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 

@@ -2,7 +2,7 @@ import { AppWrapper, SEO } from 'components/common'
 import { PV_V2 } from 'constants/pv'
 import { paginateDepleteProjectsQueryCall } from 'lib/apollo'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
-import { V2V3ProjectPageProvider } from 'providers/v2v3/V2V3ProjectPageProvider'
+import { V2V3ProjectPageProvider } from 'contexts/v2v3/V2V3ProjectPageProvider'
 import {
   getProjectStaticProps,
   ProjectPageProps,

@@ -15,7 +15,7 @@ import {
 } from '../../settingExplanations'
 import { FundingCycleListItem } from '../FundingCycleListItem'
 
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useContext } from 'react'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { getUnsafeV2V3FundingCycleProperties } from 'utils/v2v3/fundingCycle'

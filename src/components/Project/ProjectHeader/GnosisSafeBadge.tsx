@@ -1,7 +1,7 @@
 import Icon from '@ant-design/icons'
 import { plural, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
-import { ThemeContext } from 'contexts/themeContext'
+import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { useQueuedSafeTransactions } from 'hooks/safe/QueuedSafeTransactions'
 import { useWallet } from 'hooks/Wallet'
 import { GnosisSafe } from 'models/safe'

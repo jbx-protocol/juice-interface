@@ -1,7 +1,7 @@
 import { DownloadOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { TicketMod } from 'models/v1/mods'
 import { useContext, useState } from 'react'
 import { downloadCsvFile } from 'utils/csv'

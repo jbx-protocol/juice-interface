@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Progress, Tooltip } from 'antd'
 
 import { t } from '@lingui/macro'
-import { ThemeContext } from 'contexts/themeContext'
+import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { useContext, useMemo, useState } from 'react'
 import { fracDiv } from 'utils/format/formatNumber'
 

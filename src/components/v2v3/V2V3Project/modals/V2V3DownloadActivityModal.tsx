@@ -3,7 +3,7 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Modal, ModalProps, Space } from 'antd'
 import InputAccessoryButton from 'components/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useBlockNumber } from 'hooks/BlockNumber'
 import { useContext, useEffect, useState } from 'react'
 import {

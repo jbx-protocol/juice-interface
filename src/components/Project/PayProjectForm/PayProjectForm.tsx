@@ -1,6 +1,6 @@
 import InputAccessoryButton from 'components/InputAccessoryButton'
-import { CurrencyContext } from 'contexts/currencyContext'
-import { NftRewardsContext } from 'contexts/nftRewardsContext'
+import { CurrencyContext } from 'contexts/shared/CurrencyContext'
+import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useContext } from 'react'
 import { fromWad } from 'utils/format/formatNumber'

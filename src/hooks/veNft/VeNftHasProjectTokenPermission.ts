@@ -1,5 +1,5 @@
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { VeNftContext } from 'contexts/veNftContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { VeNftContext } from 'contexts/VeNft/VeNftContext'
 import useProjectOwner from 'hooks/v2v3/contractReader/ProjectOwner'
 import { useV2V3HasPermissions } from 'hooks/v2v3/contractReader/V2V3HasPermissions'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'

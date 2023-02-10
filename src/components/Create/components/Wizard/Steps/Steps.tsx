@@ -1,5 +1,5 @@
 import { Progress, Steps as AntSteps } from 'antd'
-import { ThemeContext } from 'contexts/themeContext'
+import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import useMobile from 'hooks/Mobile'
 import { useModal } from 'hooks/Modal'
 import { useCallback, useContext } from 'react'

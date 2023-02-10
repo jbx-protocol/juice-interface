@@ -1,5 +1,5 @@
 import { veNftAbi } from 'constants/contracts/goerli/veNftAbi'
-import { VeNftContext } from 'contexts/veNftContext'
+import { VeNftContext } from 'contexts/VeNft/VeNftContext'
 import { useLoadContractFromAddress } from 'hooks/LoadContractFromAddress'
 import { useContext } from 'react'
 

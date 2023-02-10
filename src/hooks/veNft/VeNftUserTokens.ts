@@ -4,7 +4,7 @@ import { useContext } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { VeNftContext } from 'contexts/veNftContext'
+import { VeNftContext } from 'contexts/VeNft/VeNftContext'
 
 export const useVeNftUserTokens = () => {
   const { contractAddress } = useContext(VeNftContext)

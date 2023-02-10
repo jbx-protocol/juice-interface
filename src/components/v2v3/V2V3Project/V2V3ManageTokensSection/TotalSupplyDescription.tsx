@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import ParticipantsModal from 'components/modals/ParticipantsModal'
 import { TextButton } from 'components/TextButton'
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useContext, useState } from 'react'
 import { formatWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'

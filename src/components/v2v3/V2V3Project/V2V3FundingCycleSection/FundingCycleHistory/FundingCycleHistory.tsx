@@ -1,9 +1,9 @@
 import { Trans } from '@lingui/macro'
 import { Space } from 'antd'
 import Loading from 'components/Loading'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
-import { V2V3ProjectContractsContext } from 'contexts/v2v3/V2V3ProjectContractsContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
 import {
   V2V3FundingCycle,
   V2V3FundingCycleMetadata,

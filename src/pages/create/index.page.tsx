@@ -2,9 +2,9 @@ import { t } from '@lingui/macro'
 import { AppWrapper, Head } from 'components/common'
 import { Create } from 'components/Create'
 import { CV_V3 } from 'constants/cv'
-import { TransactionProvider } from 'providers/TransactionProvider'
-import { V2V3ContractsProvider } from 'providers/v2v3/V2V3ContractsProvider'
-import { V2V3CurrencyProvider } from 'providers/v2v3/V2V3CurrencyProvider'
+import { TransactionProvider } from 'contexts/Transaction/TransactionProvider'
+import { V2V3ContractsProvider } from 'contexts/v2v3/Contracts/V2V3ContractsProvider'
+import { V2V3CurrencyProvider } from 'contexts/v2v3/V2V3CurrencyProvider'
 
 export default function V2CreatePage() {
   return (

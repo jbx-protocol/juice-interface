@@ -1,11 +1,11 @@
 import { formatBytes32String } from '@ethersproject/strings'
-import { V1UserContext } from 'contexts/v1/userContext'
+import { V1UserContext } from 'contexts/v1/User/V1UserContext'
 import { useContext } from 'react'
 
 import { BigNumber } from '@ethersproject/bignumber'
 
 import { t } from '@lingui/macro'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactorInstance } from 'hooks/Transactor'
 
 export function useSetProjectHandleTx(): TransactorInstance<{

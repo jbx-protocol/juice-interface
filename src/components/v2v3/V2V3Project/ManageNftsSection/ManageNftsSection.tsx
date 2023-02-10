@@ -1,7 +1,7 @@
 import { plural, t, Trans } from '@lingui/macro'
 import { Button, Descriptions, Space } from 'antd'
 import SectionHeader from 'components/SectionHeader'
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useNftAccountBalance } from 'hooks/JB721Delegate/contractReader/NftAccountBalance'
 import { useWallet } from 'hooks/Wallet'
 import { CSSProperties, useContext, useState } from 'react'

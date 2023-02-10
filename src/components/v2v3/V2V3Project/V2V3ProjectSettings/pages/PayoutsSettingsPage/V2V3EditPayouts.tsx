@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Divider, Space } from 'antd'
 import { CsvUpload } from 'components/CsvUpload/CsvUpload'
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { Split } from 'models/splits'
 import { useCallback, useContext, useEffect, useMemo } from 'react'
 import { getTotalSplitsPercentage } from 'utils/v2v3/distributions'

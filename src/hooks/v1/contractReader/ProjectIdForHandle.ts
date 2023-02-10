@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { formatBytes32String } from '@ethersproject/strings'
-import { V1UserContext } from 'contexts/v1/userContext'
+import { V1UserContext } from 'contexts/v1/User/V1UserContext'
 import { useContractReader } from 'hooks/ContractReader'
 import { V1ContractName } from 'models/v1/contracts'
 import { useContext } from 'react'

@@ -1,4 +1,4 @@
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useContext } from 'react'
 import { useJBV3Token } from '../contracts/JBV3Token'

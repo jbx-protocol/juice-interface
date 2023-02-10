@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
+import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { useContext, useEffect, useState } from 'react'
 
 export function useETHPaymentTerminalFee() {

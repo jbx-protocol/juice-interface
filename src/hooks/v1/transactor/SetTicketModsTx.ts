@@ -1,13 +1,13 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { t } from '@lingui/macro'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { V1UserContext } from 'contexts/v1/userContext'
+import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
+import { V1UserContext } from 'contexts/v1/User/V1UserContext'
 import { useWallet } from 'hooks/Wallet'
 import { TicketMod } from 'models/v1/mods'
 import { useContext } from 'react'
 
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useV1ProjectTitle } from '../ProjectTitle'
 

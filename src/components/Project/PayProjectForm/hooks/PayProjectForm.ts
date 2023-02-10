@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro'
-import { CurrencyContext } from 'contexts/currencyContext'
+import { CurrencyContext } from 'contexts/shared/CurrencyContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useEthBalanceQuery } from 'hooks/EthBalance'
 import { useWallet } from 'hooks/Wallet'

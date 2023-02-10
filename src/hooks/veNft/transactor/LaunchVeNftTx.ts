@@ -1,9 +1,9 @@
-import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
+import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { useContext } from 'react'
 
 import { t } from '@lingui/macro'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { TransactionContext } from 'contexts/transactionContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useWallet } from 'hooks/Wallet'
 

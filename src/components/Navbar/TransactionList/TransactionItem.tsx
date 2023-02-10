@@ -1,7 +1,7 @@
 import { CloseCircleOutlined } from '@ant-design/icons'
 import ExternalLink from 'components/ExternalLink'
 import TxStatusElem from 'components/TxStatusElem'
-import { timestampForTxLog } from 'contexts/txHistoryContext'
+import { timestampForTxLog } from 'contexts/Transaction/TxHistoryContext'
 import { TransactionLog } from 'models/transaction'
 import { etherscanLink } from 'utils/etherscan'
 import { formatHistoricalDate } from 'utils/format/formatDate'

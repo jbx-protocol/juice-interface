@@ -1,12 +1,12 @@
-import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
+import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { useContext } from 'react'
 
 import { TransactorInstance } from 'hooks/Transactor'
 
 import { t } from '@lingui/macro'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { TransactionContext } from 'contexts/transactionContext'
-import { VeNftContext } from 'contexts/veNftContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { TransactionContext } from 'contexts/Transaction/TransactionContext'
+import { VeNftContext } from 'contexts/VeNft/VeNftContext'
 import { useV2ProjectTitle } from 'hooks/v2v3/ProjectTitle'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 

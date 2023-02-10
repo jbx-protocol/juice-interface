@@ -1,11 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { V1UserContext } from 'contexts/v1/userContext'
+import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
+import { V1UserContext } from 'contexts/v1/User/V1UserContext'
 import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import {
   handleTransactionException,
   TransactorInstance,

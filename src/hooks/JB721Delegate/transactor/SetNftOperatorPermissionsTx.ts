@@ -1,5 +1,5 @@
 import { getAddress } from '@ethersproject/address'
-import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
+import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useSetOperatorTx } from 'hooks/v2v3/transactor/SetOperatorTx'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'

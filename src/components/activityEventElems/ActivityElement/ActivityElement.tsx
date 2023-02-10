@@ -1,7 +1,7 @@
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
 import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
-import { ThemeContext } from 'contexts/themeContext'
+import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { useV2V3TerminalVersion } from 'hooks/V2V3TerminalVersion'
 import { useContext } from 'react'
 import { formatHistoricalDate } from 'utils/format/formatDate'

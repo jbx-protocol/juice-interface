@@ -1,9 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { t } from '@lingui/macro'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
-import { V1UserContext } from 'contexts/v1/userContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
+import { V1UserContext } from 'contexts/v1/User/V1UserContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { PayoutMod, TicketMod } from 'models/v1/mods'
 import {

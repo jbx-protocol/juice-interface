@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 
 import { t } from '@lingui/macro'
-import { TransactionContext } from 'contexts/transactionContext'
+import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useVeNftContract } from 'hooks/veNft/VeNftContract'
 

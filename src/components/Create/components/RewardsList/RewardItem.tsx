@@ -3,6 +3,9 @@ import { t, Trans } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
 import FormattedAddress from 'components/FormattedAddress'
 import TooltipLabel from 'components/TooltipLabel'
+import { MP4_FILE_TYPE } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload'
+import { JuiceVideoThumbnail } from 'components/v2v3/shared/NftVideo/JuiceVideoThumbnail'
+import { useContentType } from 'hooks/ContentType'
 import { ReactNode } from 'react'
 import { prettyUrl } from 'utils/url'
 import { RewardImage } from '../RewardImage'
@@ -47,6 +50,10 @@ export const RewardItem = ({
     url,
     fileUrl,
   } = reward
+
+  const { data: contentType } = useContentType(fileUrl)
+  const isVideo = contentType === MP4_FILE_TYPE
+
   return (
     <div className="flex flex-col gap-4">
       {/* Title line */}
@@ -66,7 +73,14 @@ export const RewardItem = ({
 
       <div className="flex flex-col gap-8 md:flex-row">
         <div className="flex flex-col gap-3">
-          <RewardImage className="h-44 w-44" src={fileUrl.toString()} />
+          {isVideo ? (
+            <div className="relative h-44 w-44">
+              <JuiceVideoThumbnail src={fileUrl.toString()} />
+            </div>
+          ) : (
+            <RewardImage className="h-44 w-44" src={fileUrl.toString()} />
+          )}
+
           {url && (
             <div className="flex max-w-[11rem] items-center gap-2 overflow-hidden overflow-ellipsis whitespace-nowrap text-xs font-normal">
               <LinkOutlined />
@@ -93,7 +107,7 @@ export const RewardItem = ({
             )}
             {!!reservedRate && (
               <RewardStatLine
-                title={t`Reserved NFTS`}
+                title={t`Reserved NFTs`}
                 stat={`1/${reservedRate}`}
               />
             )}

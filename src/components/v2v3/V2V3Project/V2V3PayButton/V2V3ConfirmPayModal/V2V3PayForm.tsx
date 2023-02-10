@@ -22,6 +22,7 @@ import {
   getUnsafeV2V3FundingCycleProperties,
   getV2V3FundingCycleRiskCount,
 } from 'utils/v2v3/fundingCycle'
+import { useNftRewardTiersToMint } from './hooks/NftRewardTiersToMint'
 
 export interface V2V3PayFormType {
   memo?: string
@@ -33,12 +34,10 @@ export interface V2V3PayFormType {
 
 export const V2V3PayForm = ({
   form,
-  nftRewardTiers,
   transactionCanceled,
   ...props
 }: {
   form: FormInstance<V2V3PayFormType>
-  nftRewardTiers: NftRewardTier[] | undefined
   transactionCanceled: boolean
 } & FormProps) => {
   const { tokenAddress, fundingCycle, fundingCycleMetadata } =
@@ -52,6 +51,7 @@ export const V2V3PayForm = ({
   const [riskModalVisible, setRiskModalVisible] = useState<boolean>()
 
   const stickerUrls = useWatch('stickerUrls', form)
+  const nftRewardTiers = useNftRewardTiersToMint()
 
   const riskCount =
     fundingCycle && fundingCycleMetadata

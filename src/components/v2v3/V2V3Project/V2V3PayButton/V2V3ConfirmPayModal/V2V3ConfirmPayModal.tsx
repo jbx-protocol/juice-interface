@@ -1,51 +1,23 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Descriptions, Space } from 'antd'
+import { Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
-import FormattedAddress from 'components/FormattedAddress'
 import { NFT_PAYMENT_CONFIRMED_QUERY_PARAM } from 'components/NftRewards/NftPostPayModal'
 import Paragraph from 'components/Paragraph'
-import { PayProjectFormContext } from 'components/Project/PayProjectForm/payProjectFormContext'
-import {
-  DEFAULT_ALLOW_OVERSPENDING,
-  JB721DELAGATE_V1_1_PAY_METADATA,
-  JB721DELAGATE_V1_PAY_METADATA,
-} from 'components/Project/PayProjectForm/hooks/PayProjectForm'
-import TooltipLabel from 'components/TooltipLabel'
 import TransactionModal from 'components/TransactionModal'
-import {
-  JB721_DELEGATE_V1,
-  JB721_DELEGATE_V1_1,
-} from 'constants/delegateVersions'
-import { NftRewardsContext } from 'contexts/nftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
-import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-import useMobile from 'hooks/Mobile'
 import { usePayETHPaymentTerminalTx } from 'hooks/v2v3/transactor/PayETHPaymentTerminal'
 import { useWallet } from 'hooks/Wallet'
-import { NftRewardTier } from 'models/nftRewardTier'
 import { useRouter } from 'next/router'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
-import { formattedNum, formatWad } from 'utils/format/formatNumber'
-import {
-  encodeJB721DelegateV1PayMetadata,
-  encodeJB721DelegateV1_1PayMetadata,
-  rewardTiersFromIds,
-  sumTierFloors,
-} from 'utils/nftRewards'
 import { emitErrorNotification } from 'utils/notifications'
 import { v2v3ProjectRoute } from 'utils/routes'
-import { tokenSymbolText } from 'utils/tokenSymbolText'
-import {
-  V2V3CurrencyName,
-  V2V3_CURRENCY_ETH,
-  V2V3_CURRENCY_USD,
-} from 'utils/v2v3/currency'
-import { weightAmountPermyriad } from 'utils/v2v3/math'
-import { NftRewardCell } from './NftRewardCell'
+import { useDelegateMetadata } from './hooks/DelegateMetadata'
+import { useNftRewardTiersToMint } from './hooks/NftRewardTiersToMint'
+import { SummaryTable } from './SummaryTable'
 import { V2V3PayForm, V2V3PayFormType } from './V2V3PayForm'
 
 export function V2V3ConfirmPayModal({
@@ -57,25 +29,16 @@ export function V2V3ConfirmPayModal({
   weiAmount: BigNumber | undefined
   onCancel?: VoidFunction
 }) {
-  const { fundingCycle, fundingCycleMetadata, tokenSymbol, handle } =
-    useContext(V2V3ProjectContext)
+  const { fundingCycle, handle } = useContext(V2V3ProjectContext)
   const { projectMetadata, projectId } = useContext(ProjectMetadataContext)
-  const {
-    nftRewards: { rewardTiers, contractVersion: nftContractVersion },
-  } = useContext(NftRewardsContext)
-  const { form: payProjectForm } = useContext(PayProjectFormContext)
-  const [nftRewardTiers, setNftRewardTiers] = useState<
-    NftRewardTier[] | undefined
-  >()
 
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
   const [transactionCanceled, setTransactionCanceled] = useState<boolean>(false)
   const [form] = useForm<V2V3PayFormType>()
 
-  const converter = useCurrencyConverter()
   const payProjectTx = usePayETHPaymentTerminalTx()
-  const isMobile = useMobile()
+
   const router = useRouter()
   const {
     userAddress,
@@ -84,46 +47,10 @@ export function V2V3ConfirmPayModal({
     changeNetworks,
     connect,
   } = useWallet()
-
-  const usdAmount = converter.weiToUsd(weiAmount)
-
-  useEffect(() => {
-    const nftTierIdsToMint = payProjectForm?.payMetadata?.tierIdsToMint.sort()
-    if (!rewardTiers || !nftTierIdsToMint) return
-
-    setNftRewardTiers(
-      rewardTiersFromIds({
-        tierIds: nftTierIdsToMint || [],
-        rewardTiers,
-      }),
-    )
-
-    return () => {
-      setNftRewardTiers(undefined)
-    }
-  }, [rewardTiers, payProjectForm?.payMetadata])
+  const delegateMetadata = useDelegateMetadata()
+  const nftRewardTiers = useNftRewardTiersToMint()
 
   if (!fundingCycle || !projectId || !projectMetadata) return null
-
-  const reservedRate = fundingCycleMetadata?.reservedRate?.toNumber()
-
-  const receivedTickets = weightAmountPermyriad(
-    fundingCycle?.weight,
-    reservedRate,
-    weiAmount,
-    'payer',
-  )
-  const ownerTickets = weightAmountPermyriad(
-    fundingCycle?.weight,
-    reservedRate,
-    weiAmount,
-    'reserved',
-  )
-
-  const tokenText = tokenSymbolText({
-    tokenSymbol,
-    plural: true,
-  })
 
   const handlePaySuccess = () => {
     onCancel?.()
@@ -154,18 +81,6 @@ export function V2V3ConfirmPayModal({
     } = form.getFieldsValue()
 
     const txBeneficiary = beneficiary ?? userAddress
-
-    const delegateMetadata =
-      nftContractVersion === JB721_DELEGATE_V1 // old delegate v1
-        ? encodeJB721DelegateV1PayMetadata({
-            ...(payProjectForm?.payMetadata as JB721DELAGATE_V1_PAY_METADATA),
-          })
-        : nftContractVersion === JB721_DELEGATE_V1_1
-        ? encodeJB721DelegateV1_1PayMetadata({
-            ...(payProjectForm?.payMetadata as JB721DELAGATE_V1_1_PAY_METADATA),
-            allowOverspending: DEFAULT_ALLOW_OVERSPENDING,
-          })
-        : ''
 
     // Prompt wallet connect if no wallet connected
     if (chainUnsupported) {
@@ -251,70 +166,12 @@ export function V2V3ConfirmPayModal({
           </Callout.Info>
         )}
 
-        <Descriptions column={1} bordered size={isMobile ? 'small' : 'default'}>
-          <Descriptions.Item label={t`Pay amount`} className="content-right">
-            {formattedNum(usdAmount)} {V2V3CurrencyName(V2V3_CURRENCY_USD)} (
-            {formatWad(weiAmount)} {V2V3CurrencyName(V2V3_CURRENCY_ETH)})
-          </Descriptions.Item>
-          <Descriptions.Item
-            label={<Trans>Tokens for you</Trans>}
-            className="content-right"
-          >
-            <div>
-              {formatWad(receivedTickets, { precision: 0 })} {tokenText}
-            </div>
-            <div className="text-xs">
-              {userAddress ? (
-                <Trans>
-                  To: <FormattedAddress address={userAddress} />
-                </Trans>
-              ) : null}
-            </div>
-          </Descriptions.Item>
-          <Descriptions.Item
-            label={
-              <TooltipLabel
-                label={t`Tokens reserved`}
-                tip={
-                  <Trans>
-                    This project reserves some of the newly minted tokens for
-                    itself.
-                  </Trans>
-                }
-              />
-            }
-            className="content-right"
-          >
-            {formatWad(ownerTickets, { precision: 0 })} {tokenText}
-          </Descriptions.Item>
-          {nftRewardTiers?.length ? (
-            <Descriptions.Item
-              className="py-3 px-6"
-              label={
-                <TooltipLabel
-                  label={t`NFTs for you`}
-                  tip={
-                    <Trans>
-                      You receive these NFTs for contributing{' '}
-                      <strong>
-                        {sumTierFloors(nftRewardTiers)} ETH or more
-                      </strong>
-                      .
-                    </Trans>
-                  }
-                />
-              }
-            >
-              <NftRewardCell nftRewards={nftRewardTiers} />
-            </Descriptions.Item>
-          ) : null}
-        </Descriptions>
+        <SummaryTable weiAmount={weiAmount} />
 
         <V2V3PayForm
           form={form}
           transactionCanceled={transactionCanceled}
           onFinish={() => pay()}
-          nftRewardTiers={nftRewardTiers}
         />
       </Space>
     </TransactionModal>

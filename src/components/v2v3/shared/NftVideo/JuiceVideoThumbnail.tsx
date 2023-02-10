@@ -23,7 +23,7 @@ export function JuiceVideoThumbnail({
         </div>
         {loading ? (
           <div
-            className={`flex h-[144px] w-full items-center justify-center border border-solid border-smoke-200 dark:border-grey-600`}
+            className={`flex h-full w-full items-center justify-center border border-solid border-smoke-200 dark:border-grey-600`}
           >
             <LoadingOutlined />
           </div>
@@ -35,7 +35,6 @@ export function JuiceVideoThumbnail({
             filter: isSelected ? 'unset' : 'brightness(50%)',
           }}
           onLoadedData={() => setLoading(false)}
-          preload="none"
         >
           <source src={src} type="video/mp4" />
           Your browser does not support the video tag.

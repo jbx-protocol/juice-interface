@@ -4,9 +4,11 @@ import { Button, Space } from 'antd'
 import Search from 'antd/lib/input/Search'
 import { AppWrapper } from 'components/common'
 import ExternalLink from 'components/ExternalLink'
+import { PROJECTS_PAGE } from 'constants/fathomEvents'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { PV_V1, PV_V1_1, PV_V2 } from 'constants/pv'
 import { useWallet } from 'hooks/Wallet'
+import { trackFathomGoal } from 'lib/fathom'
 import { ProjectCategory } from 'models/projectVisibility'
 import { PV } from 'models/pv'
 import Link from 'next/link'
@@ -95,7 +97,13 @@ function Projects() {
 
             <Link href="/create">
               <a>
-                <Button type="primary" size="large">
+                <Button
+                  type="primary"
+                  size="large"
+                  onClick={() => {
+                    trackFathomGoal(PROJECTS_PAGE.CREATE_A_PROJECT_CTA)
+                  }}
+                >
                   <Trans>Create project</Trans>
                 </Button>
               </a>

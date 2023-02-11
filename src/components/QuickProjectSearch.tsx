@@ -12,15 +12,16 @@ import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { PV_V2 } from 'constants/pv'
 import { useModal } from 'hooks/Modal'
 import { useProjectsSearch, useSepanaProjectsSearch } from 'hooks/Projects'
+import { trackFathomGoal } from 'lib/fathom'
 import { SepanaProject } from 'models/sepana'
 import { useRouter } from 'next/router'
 import React, { useCallback, useEffect, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { trackFathomGoal } from 'lib/fathom'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { formatWad } from 'utils/format/formatNumber'
 import { v2v3ProjectRoute } from 'utils/routes'
 
+import { TOP_NAV } from 'constants/fathomEvents'
 import CurrencySymbol from './CurrencySymbol'
 import Loading from './Loading'
 import { ProjectVersionBadge } from './ProjectVersionBadge'
@@ -164,7 +165,7 @@ export default function QuickProjectSearch() {
         className="mt-1 text-2xl leading-none transition-colors hover:text-haze-400"
         onClick={() => {
           modal.open()
-          trackFathomGoal('OJRCY4EI')
+          trackFathomGoal(TOP_NAV.SEARCH_CTA)
         }}
       />
       <Modal

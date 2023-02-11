@@ -1,16 +1,28 @@
 import { EyeOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Form, Radio, Space } from 'antd'
+import { CreateButton } from 'components/buttons/CreateButton'
+import ExternalLink from 'components/ExternalLink'
+import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import { NftPostPayModal } from 'components/NftRewards/NftPostPayModal'
+import { RadioItem } from 'components/RadioItem'
 import TooltipLabel from 'components/TooltipLabel'
-import { useAppSelector } from 'redux/hooks/AppSelector'
+import {
+  PREVENT_OVERSPENDING_EXPLAINATION,
+  USE_DATASOURCE_FOR_REDEEM_EXPLAINATION
+} from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+import { CREATE_FLOW } from 'constants/fathomEvents'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { useModal } from 'hooks/Modal'
+import { trackFathomGoal } from 'lib/fathom'
 import { JB721GovernanceType } from 'models/nftRewardTier'
 import { useContext } from 'react'
+import { useAppSelector } from 'redux/hooks/AppSelector'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
-import { CreateButton } from 'components/buttons/CreateButton'
+import { featureFlagEnabled } from 'utils/featureFlags'
+import { helpPagePath } from 'utils/routes'
 import { CreateBadge } from '../../CreateBadge'
 import { CreateCollapse } from '../../CreateCollapse'
 import { OptionalHeader } from '../../OptionalHeader'
@@ -18,16 +30,6 @@ import { RewardsList } from '../../RewardsList'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { useNftRewardsForm } from './hooks'
-import {
-  PREVENT_OVERSPENDING_EXPLAINATION,
-  USE_DATASOURCE_FOR_REDEEM_EXPLAINATION,
-} from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
-import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
-import { featureFlagEnabled } from 'utils/featureFlags'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
-import ExternalLink from 'components/ExternalLink'
-import { helpPagePath } from 'utils/routes'
-import { RadioItem } from 'components/RadioItem'
 
 export const NftRewardsPage = () => {
   useSetCreateFurthestPageReached('nftRewards')
@@ -49,7 +51,10 @@ export const NftRewardsPage = () => {
         name="fundingCycles"
         colon={false}
         layout="vertical"
-        onFinish={goToNextPage}
+        onFinish={() => {
+          goToNextPage?.()
+          trackFathomGoal(CREATE_FLOW.NFT_NEXT_CTA)
+        }}
         scrollToFirstError
       >
         <Space className="w-full" direction="vertical" size="large">

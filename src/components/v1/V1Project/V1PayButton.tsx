@@ -6,12 +6,14 @@ import {
   PayButtonProps,
   PayProjectFormContext,
 } from 'components/Project/PayProjectForm/payProjectFormContext'
+import { PROJECT_PAGE } from 'constants/fathomEvents'
 import { readNetwork } from 'constants/networks'
 import { V1_CURRENCY_USD } from 'constants/v1/currency'
 import { disablePayOverrides } from 'constants/v1/overrides'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import useWeiConverter from 'hooks/WeiConverter'
+import { trackFathomGoal } from 'lib/fathom'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -76,6 +78,7 @@ export function V1PayButton({ wrapperClassName, disabled }: PayButtonProps) {
 
   const onPayButtonClick = () => {
     setPayWarningModalVisible(true)
+    trackFathomGoal(PROJECT_PAGE.PAY_CTA)
   }
 
   return (

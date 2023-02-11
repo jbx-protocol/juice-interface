@@ -1,13 +1,14 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, Row, Space } from 'antd'
+import { HOMEPAGE } from 'constants/fathomEvents'
 import { ThemeOption } from 'constants/theme/themeOption'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import useMobile from 'hooks/Mobile'
+import { trackFathomGoal } from 'lib/fathom'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { classNames } from 'utils/classNames'
-import { trackFathomGoal } from 'lib/fathom'
 import { HeroHeading, HeroSubheading } from './strings'
 import bananaOd from '/public/assets/banana-od.webp'
 import bananaOl from '/public/assets/banana-ol.webp'
@@ -51,6 +52,9 @@ const CallToAction = () => {
             type="primary"
             size="large"
             block={isMobile}
+            onClick={() => {
+              trackFathomGoal(HOMEPAGE.EXPLORE_PROJECTS_CTA)
+            }}
           >
             <Trans>Explore projects</Trans>
           </Button>
@@ -63,7 +67,7 @@ const CallToAction = () => {
             size="large"
             block={isMobile}
             onClick={() => {
-              trackFathomGoal('IIYVJKNC')
+              trackFathomGoal(HOMEPAGE.CREATE_A_PROJECT_CTA)
             }}
           >
             <Trans>Create a project</Trans>

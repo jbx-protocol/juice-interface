@@ -7,7 +7,9 @@ import { useAvailableReconfigurationStrategies } from 'components/Create/hooks/A
 import ExternalLink from 'components/ExternalLink'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import { HOLD_FEES_EXPLAINATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+import { CREATE_FLOW } from 'constants/fathomEvents'
 import { readNetwork } from 'constants/networks'
+import { trackFathomGoal } from 'lib/fathom'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { helpPagePath } from 'utils/routes'
@@ -37,7 +39,10 @@ export const ReconfigurationRulesPage = () => {
       name="reconfigurationRules"
       colon={false}
       layout="vertical"
-      onFinish={goToNextPage}
+      onFinish={() => {
+        goToNextPage?.()
+        trackFathomGoal(CREATE_FLOW.RULES_NEXT_CTA)
+      }}
       scrollToFirstError
     >
       <Space className="w-full" direction="vertical" size="large">

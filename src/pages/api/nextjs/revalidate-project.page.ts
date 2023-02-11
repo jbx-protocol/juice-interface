@@ -43,7 +43,10 @@ export default async function handler(
   await res.revalidate(path)
 
   // Update Sepana database whenever a project needs revalidating. However, Sepana will only get updated if the new project data is already available in the subgraph, which can sometimes take a couple minutes
-  await axios.get('/api/sepana/update')
+  await axios
+    .get('/api/sepana/update')
+    // can throw error when env isnt set correctly
+    .catch(err => console.error('Sepana update failed', err))
 
   return res.status(200).send('Success!')
 }

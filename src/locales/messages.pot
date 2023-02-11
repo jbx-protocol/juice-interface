@@ -3551,6 +3551,9 @@ msgstr ""
 msgid "VotePWR"
 msgstr ""
 
+msgid "Voting Weight"
+msgstr ""
+
 msgid "Voting weight"
 msgstr ""
 

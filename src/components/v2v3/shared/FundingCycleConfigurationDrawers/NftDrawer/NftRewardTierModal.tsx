@@ -1,11 +1,13 @@
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Form, Input, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ModalMode } from 'components/formItems/formHelpers'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import PrefixedInput from 'components/PrefixedInput'
 import TooltipLabel from 'components/TooltipLabel'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useMemo } from 'react'
+import { inputIsIntegerRule } from 'utils/antdRules'
 import { withHttps } from 'utils/externalLink'
 import ContributionFloorFormItem from './ContributionFloorFormItem'
 import MaxSupplyFormItem from './MaxSupplyFormItem'
@@ -18,6 +20,7 @@ export type NftFormFields = {
   externalLink: string
   description: string
   fileUrl: string // IPFS link
+  votingWeight: number | undefined
 }
 
 const MAX_DESCRIPTION_CHARS = 256
@@ -41,6 +44,7 @@ export default function NftRewardTierModal({
   const onFormSaved = async () => {
     await nftForm.validateFields()
     const maxSupply = nftForm.getFieldValue('maxSupply')
+    const votingWeight = nftForm.getFieldValue('votingWeight')
 
     const newTier = {
       contributionFloor: parseFloat(nftForm.getFieldValue('contributionFloor')),
@@ -50,6 +54,9 @@ export default function NftRewardTierModal({
       name: nftForm.getFieldValue('name'),
       externalLink: withHttps(nftForm.getFieldValue('externalLink')),
       description: nftForm.getFieldValue('description'),
+      votingWeight: votingWeight
+        ? parseInt(votingWeight.toString())
+        : undefined,
     } as NftRewardTier
 
     onChange(newTier)
@@ -70,6 +77,7 @@ export default function NftRewardTierModal({
             externalLink: rewardTier.externalLink?.slice(8), // removes 'https://'
             description: rewardTier.description,
             contributionFloor: rewardTier.contributionFloor,
+            votingWeight: rewardTier.votingWeight,
           }
         : undefined,
     [rewardTier],
@@ -96,6 +104,26 @@ export default function NftRewardTierModal({
         <ContributionFloorFormItem form={nftForm} />
         <NftUpload form={nftForm} />
         <MaxSupplyFormItem />
+        <Form.Item
+          name="votingWeight"
+          label={t`Voting Weight`}
+          extra={t`Give this NFT a voting weight to be used for on-chain governance. The number you set is only used in relation to other NFTs in this collection.`}
+          tooltip={
+            <Trans>
+              If you use the default governance option (no governance), the
+              voting weight will still be accessible on the blockchain for use
+              in Snapshot strategies or any other desired purpose.
+            </Trans>
+          }
+          rules={[
+            inputIsIntegerRule({
+              label: t`Voting weight`,
+              stringOkay: true,
+            }),
+          ]}
+        >
+          <FormattedNumberInput />
+        </Form.Item>
         <Form.Item
           name={'externalLink'}
           label={

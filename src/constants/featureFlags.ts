@@ -7,4 +7,5 @@ export const FEATURE_FLAGS: { [k: string]: string } = {
   NFT_MP4: 'nftMp4',
   SEPANA_SEARCH: 'sepanaSearch',
   DELEGATE_V1_1: 'delegate_v1_1',
+  RECONFIGURE_SHOW_NFT_GOVERNANCE_TYPE: 'reconfigureShowNftGovernanceType',
 }

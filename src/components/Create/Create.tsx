@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
-import { Callout } from 'components/Callout'
 import { DeployButtonText } from 'components/buttons/DeployProjectButtonText'
+import { Callout } from 'components/Callout'
 import ExternalLink from 'components/ExternalLink'
 import Loading from 'components/Loading'
 import { useRouter } from 'next/router'

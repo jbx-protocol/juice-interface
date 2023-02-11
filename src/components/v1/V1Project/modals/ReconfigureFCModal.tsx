@@ -22,7 +22,7 @@ import ReconfigurationStrategyDrawer from 'components/v1/shared/ReconfigurationS
 import TicketModsList from 'components/v1/shared/TicketModsList'
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { useAppDispatch } from 'redux/hooks/AppDispatch'
 import { useEditingV1FundingCycleSelector } from 'redux/hooks/AppSelector'
 import { useTerminalFee } from 'hooks/v1/TerminalFee'

@@ -1,9 +1,9 @@
 import { AppWrapper } from 'components/common'
 import { VeNft } from 'components/veNft/VeNft'
 import { useRouter } from 'next/router'
-import { TransactionProvider } from 'providers/TransactionProvider'
-import { V2V3ProjectPageProvider } from 'providers/v2v3/V2V3ProjectPageProvider'
-import { VeNftProvider } from 'providers/v2v3/VeNftProvider'
+import { TransactionProvider } from 'contexts/Transaction/TransactionProvider'
+import { V2V3ProjectPageProvider } from 'contexts/v2v3/V2V3ProjectPageProvider'
+import { VeNftProvider } from 'contexts/VeNft/VeNftProvider'
 
 export default function VeNftPage() {
   const router = useRouter()

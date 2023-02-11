@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import useSymbolOfERC20 from 'hooks/ERC20/SymbolOfERC20'
 import useProjectHandle from 'hooks/v2v3/contractReader/ProjectHandle'
 import useProjectToken from 'hooks/v2v3/contractReader/ProjectToken'

@@ -1,4 +1,4 @@
-import { V1UserContext } from 'contexts/v1/userContext'
+import { V1UserContext } from 'contexts/v1/User/V1UserContext'
 import {
   ContractReaderProps,
   useContractReader as useNewContractReader,

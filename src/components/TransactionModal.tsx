@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Modal, ModalProps } from 'antd'
 import { readNetwork } from 'constants/networks'
-import { TxHistoryContext } from 'contexts/txHistoryContext'
+import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useWallet } from 'hooks/Wallet'
 import { TxStatus } from 'models/transaction'
 import Image from 'next/image'

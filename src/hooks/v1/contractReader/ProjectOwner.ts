@@ -1,4 +1,4 @@
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useContext } from 'react'
 import useOwnerOfProject from './OwnerOfProject'
 

@@ -5,7 +5,7 @@ import {
   NULL_ALLOCATOR_ADDRESS,
 } from 'constants/contracts/mainnet/Allocators'
 import { CV_V2 } from 'constants/cv'
-import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
+import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { useContext } from 'react'
 
 export function AllocatorFormItem() {

@@ -1,10 +1,10 @@
 import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Descriptions, Space } from 'antd'
-import { IssueErc20TokenButton } from 'components/IssueErc20TokenButton'
+import { IssueErc20TokenButton } from 'components/buttons/IssueErc20TokenButton'
 import SectionHeader from 'components/SectionHeader'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
 import { useWallet } from 'hooks/Wallet'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
@@ -17,7 +17,7 @@ import { ProjectTokenDescription } from './ProjectTokenDescription'
 import { TotalSupplyDescription } from './TotalSupplyDescription'
 import { LegacyProjectTokensDescription } from './LegacyProjectTokensDescription'
 import { LegacyProjectTokensDescriptionHeading } from './LegacyProjectTokensDescription'
-import { V1UserProvider } from 'providers/v1/UserProvider'
+import { V1UserProvider } from 'contexts/v1/User/V1UserProvider'
 
 const labelStyle: CSSProperties = {
   width: '10.5rem',

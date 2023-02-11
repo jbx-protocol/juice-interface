@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import TooltipIcon from 'components/TooltipIcon'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useContext } from 'react'
 
 const TooltipDescription = () => {

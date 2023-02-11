@@ -1,4 +1,4 @@
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useSetOperatorTx } from 'hooks/v2v3/transactor/SetOperatorTx'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'

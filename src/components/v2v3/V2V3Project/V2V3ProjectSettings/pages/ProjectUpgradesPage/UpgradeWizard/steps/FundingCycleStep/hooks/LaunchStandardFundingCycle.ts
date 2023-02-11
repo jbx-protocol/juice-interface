@@ -1,6 +1,6 @@
 import { EditingFundingCycleConfig } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/ReconfigureFundingCycleSettingsPage/hooks/editingFundingCycleConfig'
 import { CV_V3 } from 'constants/cv'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useLoadV2V3Contract } from 'hooks/v2v3/LoadV2V3Contract'
 import { useLaunchFundingCyclesTx } from 'hooks/v2v3/transactor/LaunchFundingCyclesTx'
 import { TransactionCallbacks } from 'models/transaction'

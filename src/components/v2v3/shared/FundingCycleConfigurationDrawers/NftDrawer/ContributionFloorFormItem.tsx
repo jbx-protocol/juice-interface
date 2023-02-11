@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Form, FormInstance } from 'antd'
-import InputAccessoryButton from 'components/InputAccessoryButton'
+import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 
 import { NftFormFields } from './NftRewardTierModal'

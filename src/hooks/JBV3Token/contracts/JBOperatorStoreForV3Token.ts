@@ -1,4 +1,4 @@
-import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
+import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { useContractReadValue } from 'hooks/ContractReader'
 import { useContext } from 'react'
 import { useLoadContractFromAddress } from 'hooks/LoadContractFromAddress'

@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import { Button, Form, Space } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
 import { FormItemExt } from 'components/formItems/formItemExt'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { useContext, useState } from 'react'
 import { permyriadToPercent } from 'utils/format/formatNumber'
 

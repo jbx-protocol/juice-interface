@@ -3,7 +3,7 @@ import { t } from '@lingui/macro'
 import useMobile from 'hooks/Mobile'
 import { useModal } from 'hooks/Modal'
 import { ReactNode, useCallback, useState } from 'react'
-import { CreateButton } from '../CreateButton'
+import { CreateButton } from '../buttons/CreateButton'
 import { AddEditAllocationModal } from './AddEditAllocationModal'
 import { Allocation, AllocationSplit } from './Allocation'
 

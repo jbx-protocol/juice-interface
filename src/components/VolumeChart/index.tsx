@@ -2,7 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import { Select, Space } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
 
-import { ThemeContext } from 'contexts/themeContext'
+import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { PV } from 'models/pv'
 import moment from 'moment'
 import { SVGProps, useContext, useEffect, useMemo, useState } from 'react'

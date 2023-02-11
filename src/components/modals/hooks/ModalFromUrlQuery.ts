@@ -1,4 +1,4 @@
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useRouter } from 'next/router'
 import { useCallback, useContext, useMemo } from 'react'
 import { v2v3ProjectRoute } from 'utils/routes'

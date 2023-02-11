@@ -1,5 +1,5 @@
 import { EditingFundingCycleConfig } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/ReconfigureFundingCycleSettingsPage/hooks/editingFundingCycleConfig'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useLaunchFundingCyclesWithNftsTx } from 'hooks/JB721Delegate/transactor/LaunchFundingCyclesWithNftsTx'
 import { LaunchFundingCyclesData } from 'hooks/v2v3/transactor/LaunchFundingCyclesTx'
 import { TransactionCallbacks } from 'models/transaction'

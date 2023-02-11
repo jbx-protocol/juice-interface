@@ -13,7 +13,7 @@ import {
 } from 'components/formItems/formHelpers'
 import { FormItemExt } from 'components/formItems/formItemExt'
 import ReservedTokenReceiverModal from 'components/modals/ReservedTokenReceiverModal'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { TicketMod } from 'models/v1/mods'
 import * as moment from 'moment'
 import { useCallback, useContext, useMemo, useState } from 'react'

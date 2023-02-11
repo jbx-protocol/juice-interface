@@ -7,8 +7,8 @@ import {
   PayButtonProps,
   PayProjectFormContext,
 } from 'components/Project/PayProjectForm/payProjectFormContext'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import useWeiConverter from 'hooks/WeiConverter'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useContext, useState } from 'react'

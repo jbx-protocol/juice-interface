@@ -6,8 +6,8 @@ import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import useProjectDistributionLimit from 'hooks/v2v3/contractReader/ProjectDistributionLimit'
 import useProjectSplits from 'hooks/v2v3/contractReader/ProjectSplits'
 import { useProjectUpcomingFundingCycle } from 'hooks/v2v3/contractReader/ProjectUpcomingFundingCycle'

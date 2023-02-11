@@ -1,8 +1,8 @@
 import { Trans } from '@lingui/macro'
 import Link from 'antd/lib/typography/Link'
-import LanguageProvider from 'providers/LanguageProvider'
+import LanguageProvider from 'contexts/Language/LanguageProvider'
 import { useContext } from 'react'
-import { ThemeContext } from '../../contexts/themeContext'
+import { ThemeContext } from '../../contexts/Theme/ThemeContext'
 import error500 from '/public/assets/error500.png'
 
 const Custom500 = () => {

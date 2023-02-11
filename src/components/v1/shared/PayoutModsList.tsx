@@ -7,7 +7,7 @@ import Mod from 'components/v1/shared/Mod'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
 import { useSetPayoutModsTx } from 'hooks/v1/transactor/SetPayoutModsTx'
 import { PayoutMod } from 'models/v1/mods'
@@ -31,7 +31,7 @@ import { amountSubFee } from 'utils/v1/math'
 
 import { V1CurrencyName } from 'utils/v1/currency'
 
-import { CsvUpload } from 'components/CsvUpload/CsvUpload'
+import { CsvUpload } from 'components/inputs/CsvUpload'
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 import { parseV1PayoutModsCsv } from 'utils/csv'
 import { MODS_TOTAL_PERCENT } from 'utils/v1/mods'

@@ -1,4 +1,4 @@
-import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
+import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { getAddress } from 'ethers/lib/utils'
 import { useV2V3HasPermissions } from 'hooks/v2v3/contractReader/V2V3HasPermissions'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'

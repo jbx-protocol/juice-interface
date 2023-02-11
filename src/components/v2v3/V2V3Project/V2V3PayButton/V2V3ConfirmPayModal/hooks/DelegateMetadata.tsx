@@ -1,18 +1,18 @@
 import {
   DEFAULT_ALLOW_OVERSPENDING,
   JB721DELAGATE_V1_1_PAY_METADATA,
-  JB721DELAGATE_V1_PAY_METADATA,
+  JB721DELAGATE_V1_PAY_METADATA
 } from 'components/Project/PayProjectForm/hooks/PayProjectForm'
 import { PayProjectFormContext } from 'components/Project/PayProjectForm/payProjectFormContext'
 import {
   JB721_DELEGATE_V1,
-  JB721_DELEGATE_V1_1,
+  JB721_DELEGATE_V1_1
 } from 'constants/delegateVersions'
-import { NftRewardsContext } from 'contexts/nftRewardsContext'
+import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { useContext } from 'react'
 import {
   encodeJB721DelegateV1PayMetadata,
-  encodeJB721DelegateV1_1PayMetadata,
+  encodeJB721DelegateV1_1PayMetadata
 } from 'utils/nftRewards'
 
 export function useDelegateMetadata() {

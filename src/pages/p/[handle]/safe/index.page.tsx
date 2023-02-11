@@ -1,10 +1,10 @@
 import { AppWrapper } from 'components/common'
 import { ProjectSafeDashboard } from 'components/ProjectSafeDashboard'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { useRouter } from 'next/router'
-import { V1UserProvider } from 'providers/v1/UserProvider'
-import { V1ProjectMetadataProvider } from 'providers/v1/V1ProjectMetadataProvider'
-import { V1ProjectProvider } from 'providers/v1/V1ProjectProvider'
+import { V1UserProvider } from 'contexts/v1/User/V1UserProvider'
+import { V1ProjectMetadataProvider } from 'contexts/v1/V1ProjectMetadataProvider'
+import { V1ProjectProvider } from 'contexts/v1/Project/V1ProjectProvider'
 import { useContext } from 'react'
 
 function V1ProjectSafeDashboard({ handle }: { handle: string }) {

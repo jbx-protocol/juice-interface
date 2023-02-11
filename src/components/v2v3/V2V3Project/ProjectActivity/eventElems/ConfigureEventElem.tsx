@@ -1,8 +1,8 @@
 import { t } from '@lingui/macro'
 import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import FormattedAddress from 'components/FormattedAddress'
-import MinimalTable from 'components/tables/MinimalTable'
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import MinimalTable from 'components/MinimalTable'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { ConfigureEvent } from 'models/subgraph-entities/v2/configure'
 import { useContext } from 'react'
 import {

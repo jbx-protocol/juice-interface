@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import FormattedAddress from 'components/FormattedAddress'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { DistributeReservedTokensEvent } from 'models/subgraph-entities/v2/distribute-reserved-tokens-event'
 import { useContext } from 'react'

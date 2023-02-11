@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import StatLine from 'components/Project/StatLine'
 import TooltipLabel from 'components/TooltipLabel'
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useContext } from 'react'
 import V2V3CurrencyAmount from 'components/v2v3/shared/V2V3CurrencyAmount'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'

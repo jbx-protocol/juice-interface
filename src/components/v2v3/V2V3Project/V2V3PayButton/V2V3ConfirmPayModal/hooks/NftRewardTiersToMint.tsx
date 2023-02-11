@@ -1,5 +1,5 @@
 import { PayProjectFormContext } from 'components/Project/PayProjectForm/payProjectFormContext'
-import { NftRewardsContext } from 'contexts/nftRewardsContext'
+import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { useContext } from 'react'
 import { rewardTiersFromIds } from 'utils/nftRewards'
 

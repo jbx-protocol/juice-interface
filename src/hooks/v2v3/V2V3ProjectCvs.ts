@@ -1,5 +1,5 @@
 import { CV_V2, CV_V3 } from 'constants/cv'
-import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
+import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { CV2V3 } from 'models/v2v3/cv'
 import { useContext, useEffect, useState } from 'react'
 import { hasFundingCycle } from 'utils/v2v3/cv'

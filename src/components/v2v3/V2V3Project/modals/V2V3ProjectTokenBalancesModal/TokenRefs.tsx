@@ -7,7 +7,7 @@ import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, Form, Input, Row, Tooltip } from 'antd'
 import { FormInstance } from 'antd/lib/form/Form'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useContext, useState } from 'react'
 import { EditTrackedAssetsForm } from './V2V3ProjectTokenBalancesModal'
 

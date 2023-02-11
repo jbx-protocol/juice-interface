@@ -9,7 +9,7 @@ import {
   validateEthAddress,
   validatePercentage,
 } from 'components/formItems/formHelpers'
-import InputAccessoryButton from 'components/InputAccessoryButton'
+import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import NumberSlider from 'components/inputs/NumberSlider'
 import { isAddress } from 'ethers/lib/utils'

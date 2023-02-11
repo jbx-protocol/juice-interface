@@ -10,7 +10,7 @@ import { useModal } from 'hooks/Modal'
 import { JB721GovernanceType } from 'models/nftRewardTier'
 import { ReactNode, useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
-import { CreateButton } from 'components/CreateButton'
+import { CreateButton } from 'components/buttons/CreateButton'
 import { CreateBadge } from '../../CreateBadge'
 import { CreateCollapse } from '../../CreateCollapse'
 import { OptionalHeader } from '../../OptionalHeader'
@@ -22,7 +22,7 @@ import {
   PREVENT_OVERSPENDING_EXPLAINATION,
   USE_DATASOURCE_FOR_REDEEM_EXPLAINATION,
 } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
-import { JuiceSwitch } from 'components/JuiceSwitch'
+import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import ExternalLink from 'components/ExternalLink'

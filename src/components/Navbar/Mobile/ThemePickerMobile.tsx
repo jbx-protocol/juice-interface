@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import Moon from 'components/icons/Moon'
 import Sun from 'components/icons/Sun'
 
-import { ThemeContext } from 'contexts/themeContext'
+import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { useContext } from 'react'
 
 import { ThemeOption } from 'constants/theme/themeOption'

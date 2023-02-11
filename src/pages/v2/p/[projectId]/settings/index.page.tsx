@@ -1,8 +1,8 @@
 import { AppWrapper } from 'components/common'
 import { V2V3ProjectSettings } from 'components/v2v3/V2V3Project/V2V3ProjectSettings'
 import { useRouter } from 'next/router'
-import { TransactionProvider } from 'providers/TransactionProvider'
-import { V2V3ProjectPageProvider } from 'providers/v2v3/V2V3ProjectPageProvider'
+import { TransactionProvider } from 'contexts/Transaction/TransactionProvider'
+import { V2V3ProjectPageProvider } from 'contexts/v2v3/V2V3ProjectPageProvider'
 
 export default function V2V3ProjectSettingsPage() {
   const router = useRouter()

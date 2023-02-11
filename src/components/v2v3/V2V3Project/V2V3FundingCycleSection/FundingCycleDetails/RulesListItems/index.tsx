@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import {
   V2V3FundingCycle,
   V2V3FundingCycleMetadata,

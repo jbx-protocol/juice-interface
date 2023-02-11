@@ -1,5 +1,5 @@
 import { CurrencyName } from 'constants/currency'
-import InputAccessoryButton from './InputAccessoryButton'
+import InputAccessoryButton from './buttons/InputAccessoryButton'
 
 export default function CurrencySwitch({
   currency,

@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, Row, Space } from 'antd'
 import { ThemeOption } from 'constants/theme/themeOption'
-import { ThemeContext } from 'contexts/themeContext'
+import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import useMobile from 'hooks/Mobile'
 import Image from 'next/image'
 import Link from 'next/link'

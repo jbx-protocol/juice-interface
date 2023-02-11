@@ -1,5 +1,5 @@
 import { ThemeOption } from 'constants/theme/themeOption'
-import { ThemeContext } from 'contexts/themeContext'
+import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import Image from 'next/image'
 import { useContext } from 'react'
 import { twMerge } from 'tailwind-merge'

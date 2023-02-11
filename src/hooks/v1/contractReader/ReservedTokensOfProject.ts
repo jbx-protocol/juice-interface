@@ -1,6 +1,6 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { V1ContractName } from 'models/v1/contracts'
 import { useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbers'

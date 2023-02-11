@@ -1,6 +1,6 @@
 import { useIsNftProject } from 'components/Create/hooks/DeployProject/hooks'
 import { EditingFundingCycleConfig } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/ReconfigureFundingCycleSettingsPage/hooks/editingFundingCycleConfig'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { revalidateProject } from 'lib/api/nextjs'
 import { PV2 } from 'models/pv'
 import { useCallback, useContext, useState } from 'react'

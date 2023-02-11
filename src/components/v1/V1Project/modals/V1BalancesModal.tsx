@@ -4,7 +4,7 @@ import { Button, Modal, Space } from 'antd'
 import ERC20TokenBalance from 'components/ERC20TokenBalance'
 import { FormItems } from 'components/formItems'
 import V1ProjectTokenBalance from 'components/v1/shared/V1ProjectTokenBalance'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
 import { useSetProjectUriTx } from 'hooks/v1/transactor/SetProjectUriTx'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
@@ -18,7 +18,7 @@ import { revalidateProject } from 'lib/api/nextjs'
 import { V1TerminalVersion } from 'models/v1/terminals'
 
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 
 export function V1BalancesModal({
   open,

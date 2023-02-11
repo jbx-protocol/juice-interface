@@ -1,5 +1,5 @@
 import { Badge } from 'components/Badge'
-import { JuiceSwitch } from 'components/JuiceSwitch'
+import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { readNetwork } from 'constants/networks'
 import { useCallback, useState } from 'react'

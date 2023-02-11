@@ -1,4 +1,4 @@
-import { V2V3ProjectContractsContext } from 'contexts/v2v3/V2V3ProjectContractsContext'
+import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
 import {
   BallotState,
   V2V3FundingCycle,

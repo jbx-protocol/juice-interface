@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { V1ProjectContext } from 'contexts/v1/projectContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { V1BallotState } from 'models/ballot'
 import { V1ContractName } from 'models/v1/contracts'
 import { V1FundingCycle } from 'models/v1/fundingCycle'

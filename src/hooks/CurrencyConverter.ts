@@ -1,4 +1,4 @@
-import { EtherPriceContext } from 'contexts/EtherPriceContext'
+import { EtherPriceContext } from 'contexts/EtherPrice/EtherPriceContext'
 import { useContext, useMemo } from 'react'
 import { CurrencyUtils } from 'utils/format/formatCurrency'
 

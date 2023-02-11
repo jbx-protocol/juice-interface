@@ -5,7 +5,7 @@ import { bigNumbersDiff } from 'utils/bigNumbers'
 
 import { V2V3ContractName } from 'models/v2v3/contracts'
 
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import useContractReader from './V2ContractReader'
 
 /** Returns unclaimed balance of user with `userAddress`. */

@@ -11,7 +11,7 @@ import { stopPropagation } from 'react-stop-propagation'
 import { classNames } from 'utils/classNames'
 import { formatDate } from 'utils/format/formatDate'
 import { Allocation, AllocationSplit } from 'components/Allocation'
-import { DeleteConfirmationModal } from 'components/DeleteConfirmationModal'
+import { DeleteConfirmationModal } from 'components/modals/DeleteConfirmationModal'
 import { Amount } from './Amount'
 import { isProjectSplit } from 'utils/splits'
 

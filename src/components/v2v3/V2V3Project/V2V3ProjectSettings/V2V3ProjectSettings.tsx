@@ -7,17 +7,17 @@ import { ProjectSettingsContent } from 'components/v2v3/V2V3Project/V2V3ProjectS
 import { V2VeNftPageKey } from 'components/veNft/VeNft'
 import { CV_V3 } from 'constants/cv'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { ThemeContext } from 'contexts/themeContext'
-import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { ThemeContext } from 'contexts/Theme/ThemeContext'
+import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 import useMobile from 'hooks/Mobile'
 import { useRouter } from 'next/router'
 import { useContext, useMemo, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { pushMenuContent, v2v3ProjectRoute } from 'utils/routes'
-import { BackToProjectButton } from '../../../BackToProjectButton'
+import { BackToProjectButton } from '../../../buttons/BackToProjectButton'
 
 export type MenuKey = V2V3SettingsPageKey | V2VeNftPageKey
 

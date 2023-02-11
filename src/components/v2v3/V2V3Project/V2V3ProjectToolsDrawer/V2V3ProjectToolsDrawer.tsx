@@ -7,7 +7,7 @@ import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import useMobile from 'hooks/Mobile'
 import { useAddToBalanceTx } from 'hooks/v2v3/transactor/AddToBalanceTx'
 import { useDeployProjectPayerTx } from 'hooks/v2v3/transactor/DeployProjectPayerTx'

@@ -1,8 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
-import { TransactionContext } from 'contexts/transactionContext'
+import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 
-import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
+import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { useContractReader } from 'hooks/ContractReader'
 import { useErc20Contract } from 'hooks/ERC20/Erc20Contract'
 import { TransactorInstance } from 'hooks/Transactor'

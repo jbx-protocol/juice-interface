@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Button, Form, FormInstance, FormProps, Space, Statistic } from 'antd'
-import InputAccessoryButton from 'components/InputAccessoryButton'
+import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { BigNumber } from '@ethersproject/bignumber'
 import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'

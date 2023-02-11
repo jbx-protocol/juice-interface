@@ -4,7 +4,7 @@ import { useWallet } from 'hooks/Wallet'
 import { useContext, useState } from 'react'
 
 import VeNftSetupModal from 'components/veNft/VeNftSetupModal'
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useLaunchVeNftTx } from 'hooks/veNft/transactor/LaunchVeNftTx'
 
 import { featureFlagEnabled } from 'utils/featureFlags'
@@ -16,7 +16,7 @@ import {
 
 import FormattedAddress from 'components/FormattedAddress'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { VeNftContext } from 'contexts/veNftContext'
+import { VeNftContext } from 'contexts/VeNft/VeNftContext'
 import { emitSuccessNotification } from 'utils/notifications'
 
 const VeNftEnableSection = () => {

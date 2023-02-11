@@ -5,7 +5,7 @@ import { formatFundingCycleDuration } from 'components/Create/utils/formatFundin
 import ExternalLink from 'components/ExternalLink'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import NumberSlider from 'components/inputs/NumberSlider'
-import { JuiceSwitch } from 'components/JuiceSwitch'
+import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph'
 import { useAppSelector } from 'redux/hooks/AppSelector'
 import useMobile from 'hooks/Mobile'

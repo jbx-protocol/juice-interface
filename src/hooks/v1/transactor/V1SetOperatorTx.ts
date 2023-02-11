@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro'
-import { V1UserContext } from 'contexts/v1/userContext'
+import { V1UserContext } from 'contexts/v1/User/V1UserContext'
 import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 

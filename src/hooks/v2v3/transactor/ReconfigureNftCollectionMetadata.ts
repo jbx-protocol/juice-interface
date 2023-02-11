@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
-import { ProjectMetadataContext } from 'contexts/projectMetadataContext'
-import { TransactionContext } from 'contexts/transactionContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { useJB721TieredDelegate } from 'hooks/JB721Delegate/contracts/JB721TieredDelegate'
 import { TransactorInstance } from 'hooks/Transactor'
 import { NftCollectionMetadata } from 'models/nftRewardTier'

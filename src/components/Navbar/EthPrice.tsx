@@ -1,6 +1,6 @@
 import CurrencySymbol from 'components/CurrencySymbol'
 import { CURRENCY_METADATA } from 'constants/currency'
-import { EtherPriceContext } from 'contexts/EtherPriceContext'
+import { EtherPriceContext } from 'contexts/EtherPrice/EtherPriceContext'
 import { useContext } from 'react'
 
 export default function EthPrice() {

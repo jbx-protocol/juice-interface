@@ -2,7 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import { Form, Input } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { CV_V2, CV_V3 } from 'constants/cv'
-import { V2V3ContractsContext } from 'contexts/v2v3/V2V3ContractsContext'
+import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useV1IssueErc20TokenTx } from 'hooks/v1/transactor/IssueErc20TokenTx'
 import { useV2IssueErc20TokenTx } from 'hooks/v2/transactor/V2IssueErc20TokenTx'
@@ -10,7 +10,7 @@ import { useV3IssueErc20TokenTx } from 'hooks/v3/transactor/V3IssueErc20TokenTx'
 import { useContext, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 
-import { IssueErc20TokenTxArgs } from '../IssueErc20TokenButton'
+import { IssueErc20TokenTxArgs } from '../buttons/IssueErc20TokenButton'
 import TransactionModal from '../TransactionModal'
 
 /**

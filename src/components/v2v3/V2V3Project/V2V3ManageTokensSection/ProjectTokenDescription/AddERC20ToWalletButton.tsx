@@ -2,7 +2,7 @@ import { PlusCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, Space } from 'antd'
 import { WAD_DECIMALS } from 'constants/numbers'
-import { V2V3ProjectContext } from 'contexts/v2v3/V2V3ProjectContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useMetamask, useProviderIsMetamask } from 'hooks/Wallet/Metamask'
 import React, { useContext } from 'react'
 

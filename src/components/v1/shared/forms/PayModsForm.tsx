@@ -10,10 +10,10 @@ import { fromWad, perbicentToPercent } from 'utils/format/formatNumber'
 
 import { getTotalPercentage } from 'components/formItems/formHelpers'
 import ProjectPayoutMods from 'components/v1/shared/ProjectPayMods/ProjectPayoutMods'
-import { CurrencyContext } from 'contexts/currencyContext'
+import { CurrencyContext } from 'contexts/shared/CurrencyContext'
 
 import * as constants from '@ethersproject/constants'
-import { CsvUpload } from 'components/CsvUpload/CsvUpload'
+import { CsvUpload } from 'components/inputs/CsvUpload'
 import { parseV1PayoutModsCsv } from 'utils/csv'
 
 export default function PayModsForm({

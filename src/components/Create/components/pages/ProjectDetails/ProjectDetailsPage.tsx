@@ -18,6 +18,8 @@ import { OptionalHeader } from '../../OptionalHeader'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { useProjectDetailsForm } from './hooks/ProjectDetailsForm'
+import Link from 'next/link'
+import { RightCircleOutlined } from '@ant-design/icons'
 
 export const ProjectDetailsPage: React.FC = () => {
   useSetCreateFurthestPageReached('projectDetails')
@@ -157,7 +159,22 @@ export const ProjectDetailsPage: React.FC = () => {
           </CreateCollapse.Panel>
         </CreateCollapse>
       </Space>
+
       <Wizard.Page.ButtonControl />
+
+      <div className="mt-12 text-center">
+        <Link href="/contact">
+          <a className="hover-text-decoration-underline cursor-pointer text-sm text-grey-500 dark:text-grey-300">
+            <Trans>Need help?</Trans>
+            <div>
+              <Space size="small" className="text-haze-500 dark:text-haze-300">
+                <Trans>Contact a contributor.</Trans>
+                <RightCircleOutlined />
+              </Space>
+            </div>
+          </a>
+        </Link>
+      </div>
     </Form>
   )
 }

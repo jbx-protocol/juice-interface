@@ -43,7 +43,7 @@ const activateDefaultLocale = () => {
 
 const dynamicActivate = async (locale: string) => {
   try {
-    const { messages } = await import(`../locales/${locale}/messages`)
+    const { messages } = await import(`../../locales/${locale}/messages`)
 
     i18n.load(locale, messages)
     i18n.activate(locale)

@@ -157,7 +157,7 @@ const Description = ({ description }: { description: ReactNode }) => {
       <div className="text-xs font-normal uppercase text-grey-600 dark:text-slate-200">
         <Trans>Description</Trans>
       </div>
-      <div className="overflow-hidden text-ellipsis text-sm font-normal">
+      <div className="max-h-20 overflow-y-scroll text-ellipsis text-sm font-normal">
         {description}
       </div>
     </div>

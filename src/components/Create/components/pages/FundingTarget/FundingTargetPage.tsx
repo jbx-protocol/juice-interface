@@ -16,6 +16,8 @@ import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { currencyAmountMustExistRule } from 'utils/antdRules'
 import { useFundingTargetForm } from './hooks'
+import { trackFathomGoal } from 'lib/fathom'
+import { CREATE_FLOW } from 'constants/fathomEvents'
 
 export const FundingTargetPage: React.FC = () => {
   useSetCreateFurthestPageReached('fundingTarget')
@@ -50,7 +52,10 @@ export const FundingTargetPage: React.FC = () => {
       name="fundingTarget"
       colon={false}
       layout="vertical"
-      onFinish={goToNextPage}
+      onFinish={() => {
+        goToNextPage?.()
+        trackFathomGoal(CREATE_FLOW.TARGET_NEXT_CTA)
+      }}
       scrollToFirstError
     >
       <Space className="w-full" direction="vertical" size="large">

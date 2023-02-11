@@ -7,6 +7,7 @@ import ExternalLink from 'components/ExternalLink'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { PV_V1, PV_V1_1, PV_V2 } from 'constants/pv'
 import { useWallet } from 'hooks/Wallet'
+import { trackFathomGoal } from 'lib/fathom'
 import { ProjectCategory } from 'models/projectVisibility'
 import { PV } from 'models/pv'
 import Link from 'next/link'
@@ -95,7 +96,13 @@ function Projects() {
 
             <Link href="/create">
               <a>
-                <Button type="primary" size="large">
+                <Button
+                  type="primary"
+                  size="large"
+                  onClick={() => {
+                    trackFathomGoal('M3YATRAA')
+                  }}
+                >
                   <Trans>Create project</Trans>
                 </Button>
               </a>

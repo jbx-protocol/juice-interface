@@ -2,6 +2,8 @@ import { FieldBinaryOutlined, PercentageOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Form, Space, Tooltip } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
+import { CREATE_FLOW } from 'constants/fathomEvents'
+import { trackFathomGoal } from 'lib/fathom'
 import { useContext, useEffect, useMemo } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { allocationTotalPercentDoNotExceedTotalRule } from 'utils/antdRules'
@@ -51,7 +53,10 @@ export const PayoutsPage: React.FC = () => {
       name="fundingTarget"
       colon={false}
       layout="vertical"
-      onFinish={goToNextPage}
+      onFinish={() => {
+        goToNextPage?.()
+        trackFathomGoal(CREATE_FLOW.PAYOUTS_NEXT_CTA)
+      }}
       scrollToFirstError
     >
       <Space className="w-full" direction="vertical" size="large">

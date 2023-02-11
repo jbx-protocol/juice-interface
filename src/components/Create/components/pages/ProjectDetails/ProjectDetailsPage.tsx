@@ -9,7 +9,9 @@ import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import PrefixedInput from 'components/PrefixedInput'
 import TooltipIcon from 'components/TooltipIcon'
+import { CREATE_FLOW } from 'constants/fathomEvents'
 import { useWallet } from 'hooks/Wallet'
+import { trackFathomGoal } from 'lib/fathom'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { inputMustBeEthAddressRule, inputMustExistRule } from 'utils/antdRules'
@@ -40,7 +42,10 @@ export const ProjectDetailsPage: React.FC = () => {
       name="projectDetails"
       colon={false}
       layout="vertical"
-      onFinish={goToNextPage}
+      onFinish={() => {
+        goToNextPage?.()
+        trackFathomGoal(CREATE_FLOW.DETAILS_NEXT_CTA)
+      }}
       scrollToFirstError
     >
       <Space className="w-full" direction="vertical" size="large">

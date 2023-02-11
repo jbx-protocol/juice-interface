@@ -51,6 +51,9 @@ const CallToAction = () => {
             type="primary"
             size="large"
             block={isMobile}
+            onClick={() => {
+              trackFathomGoal('W3ZVWUTC')
+            }}
           >
             <Trans>Explore projects</Trans>
           </Button>
@@ -63,7 +66,7 @@ const CallToAction = () => {
             size="large"
             block={isMobile}
             onClick={() => {
-              trackFathomGoal('IIYVJKNC')
+              trackFathomGoal('DD4599PZ')
             }}
           >
             <Trans>Create a project</Trans>

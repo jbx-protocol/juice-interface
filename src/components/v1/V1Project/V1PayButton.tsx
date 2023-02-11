@@ -12,6 +12,7 @@ import { disablePayOverrides } from 'constants/v1/overrides'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import useWeiConverter from 'hooks/WeiConverter'
+import { trackFathomGoal } from 'lib/fathom'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -76,6 +77,7 @@ export function V1PayButton({ wrapperClassName, disabled }: PayButtonProps) {
 
   const onPayButtonClick = () => {
     setPayWarningModalVisible(true)
+    trackFathomGoal('PFJQKF7D')
   }
 
   return (

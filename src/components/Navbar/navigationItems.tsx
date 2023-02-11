@@ -130,7 +130,10 @@ export const desktopMenuItems = ({
     key: 'discord',
     label: (
       <Link href="https://discord.gg/wFTh4QnDzk">
-        <a className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100">{t`Discord`}</a>
+        <a
+          className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100"
+          onClick={() => trackFathomGoal('PKIBZYTS')}
+        >{t`Discord`}</a>
       </Link>
     ),
   },
@@ -187,6 +190,7 @@ export const mobileNavItems = ({
       <Link href="https://discord.gg/wFTh4QnDzk">
         <a
           className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100"
+          onClick={() => trackFathomGoal('PKIBZYTS')}
           {...{ ...externalMenuLinkProps, ...collapseNav }}
         >{t`Discord`}</a>
       </Link>

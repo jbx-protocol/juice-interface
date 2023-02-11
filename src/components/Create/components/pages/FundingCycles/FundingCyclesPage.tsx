@@ -22,6 +22,8 @@ import { Selection } from '../../Selection/Selection'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { FundingCyclesFormProps, useFundingCyclesForm } from './hooks'
+import { trackFathomGoal } from 'lib/fathom'
+import { CREATE_FLOW } from 'constants/fathomEvents'
 
 const FundingCycleCallout: React.FC = () => {
   const form = Form.useFormInstance<FundingCyclesFormProps>()
@@ -92,7 +94,10 @@ export const FundingCyclesPage = () => {
       name="fundingCycles"
       colon={false}
       layout="vertical"
-      onFinish={goToNextPage}
+      onFinish={() => {
+        goToNextPage?.()
+        trackFathomGoal(CREATE_FLOW.CYCLES_NEXT_CTA)
+      }}
       scrollToFirstError
     >
       <Space className="w-full" direction="vertical" size="large">

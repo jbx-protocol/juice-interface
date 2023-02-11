@@ -4,33 +4,33 @@ import { Form, Modal, Space, Tooltip } from 'antd'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
-import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
-import PrefixedInput from 'components/PrefixedInput'
 import {
   SupportedNftFileTypes,
   UploadNoStyle,
 } from 'components/inputs/UploadNoStyle'
+import PrefixedInput from 'components/PrefixedInput'
+import { MP4_FILE_TYPE } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { usePinFileToIpfs } from 'hooks/PinFileToIpfs'
 import { useWallet } from 'hooks/Wallet'
 import { UploadRequestOption } from 'rc-upload/lib/interface'
 import { useCallback, useEffect, useState } from 'react'
+import {
+  inputIsIntegerRule,
+  inputIsValidUrlRule,
+  inputMustBeEthAddressRule,
+  inputMustExistRule,
+  inputNonZeroRule,
+} from 'utils/antdRules'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { restrictedIpfsUrl } from 'utils/ipfs'
 import { v4 } from 'uuid'
-import {
-  inputIsValidUrlRule,
-  inputNonZeroRule,
-  inputMustExistRule,
-  inputMustBeEthAddressRule,
-  inputIsIntegerRule,
-} from 'utils/antdRules'
 import { CreateCollapse } from '../CreateCollapse'
 import { OptionalHeader } from '../OptionalHeader'
 import { Reward } from './types'
-import { featureFlagEnabled } from 'utils/featureFlags'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { MP4_FILE_TYPE } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload'
 
 interface AddEditRewardModalFormProps {
   fileUrl: string
@@ -214,11 +214,7 @@ export const AddEditRewardModal = ({
           <JuiceInput />
         </Form.Item>
         <Form.Item name="description" label={t`Description`}>
-          <JuiceTextArea
-            maxLength={256}
-            showCount
-            autoSize={{ minRows: 4, maxRows: 6 }}
-          />
+          <JuiceTextArea maxLength={10000} showCount />
         </Form.Item>
         <Form.Item
           name="minimumContribution"

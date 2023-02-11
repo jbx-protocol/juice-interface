@@ -2,9 +2,10 @@ import { t } from '@lingui/macro'
 import { Row } from 'antd'
 import { Reward, RewardsList } from 'components/Create/components/RewardsList'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { JB721GovernanceType } from 'models/nftRewardTier'
+import { useCallback, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/AppDispatch'
 import { useAppSelector } from 'redux/hooks/AppSelector'
-import { useCallback, useMemo } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { formatEnabled } from 'utils/format/formatBoolean'
@@ -13,7 +14,7 @@ import { DescriptionCol } from '../DescriptionCol'
 
 export const RewardsReview = () => {
   const {
-    nftRewards: { rewardTiers, flags },
+    nftRewards: { rewardTiers, flags, governanceType },
     fundingCycleMetadata,
   } = useAppSelector(state => state.editingV2Project)
 
@@ -68,6 +69,18 @@ export const RewardsReview = () => {
 
   const delegateV1_1Enabled = featureFlagEnabled(FEATURE_FLAGS.DELEGATE_V1_1)
 
+  const onChainGovernance = useMemo(() => {
+    switch (governanceType) {
+      case JB721GovernanceType.GLOBAL:
+        return t`Standard`
+      case JB721GovernanceType.TIERED:
+        return `Tiered`
+      case JB721GovernanceType.NONE:
+      default:
+        return t`None`
+    }
+  }, [governanceType])
+
   return (
     <>
       <RewardsList value={rewards} onChange={setRewards} />
@@ -79,6 +92,13 @@ export const RewardsReview = () => {
             <div className="text-base font-medium">
               {shouldUseDataSourceForRedeem}
             </div>
+          }
+        />
+        <DescriptionCol
+          span={6}
+          title={t`Governance type`}
+          desc={
+            <div className="text-base font-medium">{onChainGovernance}</div>
           }
         />
         {delegateV1_1Enabled ? (

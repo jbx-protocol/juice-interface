@@ -1475,6 +1475,9 @@ msgstr ""
 msgid "Governance"
 msgstr ""
 
+msgid "Governance type"
+msgstr ""
+
 msgid "Grant permission"
 msgstr ""
 
@@ -2070,6 +2073,9 @@ msgid "No, keep editing"
 msgstr ""
 
 msgid "Nominate an Ethereum wallet address to become the ‘owner’ of this project. If you intend to manage this project from the address that deployed it, leave this blank."
+msgstr ""
+
+msgid "None"
 msgstr ""
 
 msgid "Not a valid ETH address"
@@ -2937,6 +2943,9 @@ msgid "Staked balance"
 msgstr ""
 
 msgid "Staked {tokenSymbolDisplayText}"
+msgstr ""
+
+msgid "Standard"
 msgstr ""
 
 msgid "Standard on-chain governance"

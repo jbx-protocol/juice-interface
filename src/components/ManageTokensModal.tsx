@@ -3,7 +3,7 @@ import * as constants from '@ethersproject/constants'
 
 import { t, Trans } from '@lingui/macro'
 import { Modal, Space, Tooltip } from 'antd'
-import RichButton from 'components/RichButton'
+import RichButton from 'components/buttons/RichButton'
 import { TransactorInstance } from 'hooks/Transactor'
 import { PropsWithChildren, useState } from 'react'
 import { tokenSymbolText } from 'utils/tokenSymbolText'

@@ -1,6 +1,6 @@
 import { Form, Input, Modal, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import InputAccessoryButton from 'components/InputAccessoryButton'
+import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 
 import { isAddress } from '@ethersproject/address'
 import * as constants from '@ethersproject/constants'

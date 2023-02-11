@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { useMemo } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
-import { useFundingTargetType } from '../../../hooks/FundingTargetType'
+import { useFundingTargetType } from './FundingTargetType'
 import { AllocationSplit } from 'components/Allocation'
 
 /**

@@ -2,7 +2,7 @@ import { getAddress } from '@ethersproject/address'
 import { CV_V2, CV_V3 } from 'constants/cv'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import { CV2V3 } from 'models/v2v3/cv'
-import { useLoadV2V3Contract } from './v2v3/LoadV2V3Contract'
+import { useLoadV2V3Contract } from './LoadV2V3Contract'
 
 export function useV2V3TerminalVersion(
   address: string | undefined,

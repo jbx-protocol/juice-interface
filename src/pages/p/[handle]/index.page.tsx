@@ -1,7 +1,7 @@
 import { AppWrapper, SEO } from 'components/common'
 import Loading from 'components/Loading'
 import Project404 from 'components/Project404'
-import ScrollToTopButton from 'components/ScrollToTopButton'
+import ScrollToTopButton from 'components/buttons/ScrollToTopButton'
 import { V1Project } from 'components/v1/V1Project'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { ProjectMetadataV6 } from 'models/projectMetadata'

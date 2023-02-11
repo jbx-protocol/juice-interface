@@ -1,7 +1,7 @@
 import { DownloadOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Modal, Space } from 'antd'
-import InputAccessoryButton from 'components/InputAccessoryButton'
+import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useBlockNumber } from 'hooks/BlockNumber'

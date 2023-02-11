@@ -13,7 +13,7 @@ import ProjectPayoutMods from 'components/v1/shared/ProjectPayMods/ProjectPayout
 import { CurrencyContext } from 'contexts/shared/CurrencyContext'
 
 import * as constants from '@ethersproject/constants'
-import { CsvUpload } from 'components/CsvUpload/CsvUpload'
+import { CsvUpload } from 'components/inputs/CsvUpload'
 import { parseV1PayoutModsCsv } from 'utils/csv'
 
 export default function PayModsForm({

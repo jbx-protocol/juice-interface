@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
 import { Callout } from 'components/Callout'
-import { CsvUpload } from 'components/CsvUpload/CsvUpload'
+import { CsvUpload } from 'components/inputs/CsvUpload'
 import { FormItems } from 'components/formItems'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { Split } from 'models/splits'

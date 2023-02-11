@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Divider, Space } from 'antd'
-import { CsvUpload } from 'components/CsvUpload/CsvUpload'
+import { CsvUpload } from 'components/inputs/CsvUpload'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { Split } from 'models/splits'
 import { useCallback, useContext, useEffect, useMemo } from 'react'

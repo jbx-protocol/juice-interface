@@ -17,7 +17,7 @@ import { useRouter } from 'next/router'
 import { useContext, useMemo, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { pushMenuContent, v2v3ProjectRoute } from 'utils/routes'
-import { BackToProjectButton } from '../../../BackToProjectButton'
+import { BackToProjectButton } from '../../../buttons/BackToProjectButton'
 
 export type MenuKey = V2V3SettingsPageKey | V2VeNftPageKey
 

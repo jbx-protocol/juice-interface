@@ -1,5 +1,5 @@
 import Loading from 'components/Loading'
-import ScrollToTopButton from 'components/ScrollToTopButton'
+import ScrollToTopButton from 'components/buttons/ScrollToTopButton'
 import { V2V3Project } from 'components/v2v3/V2V3Project'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactionProvider } from 'contexts/Transaction/TransactionProvider'

@@ -10,7 +10,7 @@ import { useV3IssueErc20TokenTx } from 'hooks/v3/transactor/V3IssueErc20TokenTx'
 import { useContext, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 
-import { IssueErc20TokenTxArgs } from '../IssueErc20TokenButton'
+import { IssueErc20TokenTxArgs } from '../buttons/IssueErc20TokenButton'
 import TransactionModal from '../TransactionModal'
 
 /**

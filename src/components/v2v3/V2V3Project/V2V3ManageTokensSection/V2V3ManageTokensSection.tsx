@@ -1,7 +1,7 @@
 import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Descriptions, Space } from 'antd'
-import { IssueErc20TokenButton } from 'components/IssueErc20TokenButton'
+import { IssueErc20TokenButton } from 'components/buttons/IssueErc20TokenButton'
 import SectionHeader from 'components/SectionHeader'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'

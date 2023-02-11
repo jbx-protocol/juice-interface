@@ -5,7 +5,7 @@ import { Button, Tooltip } from 'antd'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
-import { IssueErc20TokenModal } from './modals/IssueErc20TokenModal'
+import { IssueErc20TokenModal } from '../modals/IssueErc20TokenModal'
 
 export type IssueErc20TokenTxArgs = {
   name: string

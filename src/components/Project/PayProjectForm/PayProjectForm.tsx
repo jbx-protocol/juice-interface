@@ -1,4 +1,4 @@
-import InputAccessoryButton from 'components/InputAccessoryButton'
+import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import { CurrencyContext } from 'contexts/shared/CurrencyContext'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'

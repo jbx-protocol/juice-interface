@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
-import InputAccessoryButton from 'components/InputAccessoryButton'
+import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { PV_V1, PV_V1_1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'

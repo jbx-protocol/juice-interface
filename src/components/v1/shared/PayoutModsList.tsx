@@ -31,7 +31,7 @@ import { amountSubFee } from 'utils/v1/math'
 
 import { V1CurrencyName } from 'utils/v1/currency'
 
-import { CsvUpload } from 'components/CsvUpload/CsvUpload'
+import { CsvUpload } from 'components/inputs/CsvUpload'
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 import { parseV1PayoutModsCsv } from 'utils/csv'
 import { MODS_TOTAL_PERCENT } from 'utils/v1/mods'

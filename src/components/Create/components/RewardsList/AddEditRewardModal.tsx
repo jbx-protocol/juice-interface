@@ -1,14 +1,17 @@
 import { QuestionCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Form, Modal, Space, Tooltip } from 'antd'
-import InputAccessoryButton from 'components/InputAccessoryButton'
+import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
-import { JuiceSwitch } from 'components/JuiceSwitch'
+import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import PrefixedInput from 'components/PrefixedInput'
-import { SupportedNftFileTypes, UploadNoStyle } from 'components/UploadNoStyle'
+import {
+  SupportedNftFileTypes,
+  UploadNoStyle,
+} from 'components/inputs/UploadNoStyle'
 import { usePinFileToIpfs } from 'hooks/PinFileToIpfs'
 import { useWallet } from 'hooks/Wallet'
 import { UploadRequestOption } from 'rc-upload/lib/interface'

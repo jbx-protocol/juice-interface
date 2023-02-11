@@ -1,6 +1,6 @@
 import { Tooltip } from 'antd'
 import { MouseEventHandler } from 'react'
-import CopyTextButton from 'components/CopyTextButton'
+import CopyTextButton from 'components/buttons/CopyTextButton'
 import EtherscanLink from 'components/EtherscanLink'
 import { truncateEthAddress } from 'utils/format/formatAddress'
 import { useEnsName } from 'hooks/ensName'

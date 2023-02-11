@@ -11,7 +11,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { classNames } from 'utils/classNames'
 import { getUniqueNonces } from 'utils/safe'
-import { BackToProjectButton } from '../BackToProjectButton'
+import { BackToProjectButton } from '../buttons/BackToProjectButton'
 import { ExecutedSafeTransactionsListing } from './ExecutedSafeTransactionsListing'
 import { SafeNonceRow } from './SafeNonceRow'
 

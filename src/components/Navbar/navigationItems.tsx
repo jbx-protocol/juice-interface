@@ -1,9 +1,10 @@
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Dropdown } from 'antd'
+import { TOP_NAV } from 'constants/fathomEvents'
+import { trackFathomGoal } from 'lib/fathom'
 import Link from 'next/link'
 import { CSSProperties } from 'react'
-import { trackFathomGoal } from 'lib/fathom'
 import Account from './Account'
 import Logo from './Logo'
 import ThemePickerMobile from './Mobile/ThemePickerMobile'
@@ -121,7 +122,7 @@ export const desktopMenuItems = ({
       <Link href="/projects">
         <a
           className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100"
-          onClick={() => trackFathomGoal('YTTX60ZQ')}
+          onClick={() => trackFathomGoal(TOP_NAV.EXPLORE_CTA)}
         >{t`Explore`}</a>
       </Link>
     ),
@@ -132,7 +133,7 @@ export const desktopMenuItems = ({
       <Link href="https://discord.gg/wFTh4QnDzk">
         <a
           className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100"
-          onClick={() => trackFathomGoal('PKIBZYTS')}
+          onClick={() => trackFathomGoal(TOP_NAV.DISCORD_CTA)}
         >{t`Discord`}</a>
       </Link>
     ),
@@ -156,7 +157,7 @@ export const desktopMenuItems = ({
       <Link href="/create">
         <a
           className="flex hidden cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100 lg:block"
-          onClick={() => trackFathomGoal('LHWCLH9E')}
+          onClick={() => trackFathomGoal(TOP_NAV.CREATE_A_PROJECT_CTA)}
         >{t`Create a project`}</a>
       </Link>
     ),
@@ -178,7 +179,7 @@ export const mobileNavItems = ({
       <Link href="/projects">
         <a
           className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100"
-          onClick={() => trackFathomGoal('YTTX60ZQ')}
+          onClick={() => trackFathomGoal(TOP_NAV.EXPLORE_CTA)}
           {...{ ...collapseNav }}
         >{t`Explore`}</a>
       </Link>
@@ -190,7 +191,7 @@ export const mobileNavItems = ({
       <Link href="https://discord.gg/wFTh4QnDzk">
         <a
           className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100"
-          onClick={() => trackFathomGoal('PKIBZYTS')}
+          onClick={() => trackFathomGoal(TOP_NAV.DISCORD_CTA)}
           {...{ ...externalMenuLinkProps, ...collapseNav }}
         >{t`Discord`}</a>
       </Link>

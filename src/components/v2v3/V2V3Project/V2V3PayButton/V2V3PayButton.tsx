@@ -7,6 +7,7 @@ import {
   PayButtonProps,
   PayProjectFormContext,
 } from 'components/Project/PayProjectForm/payProjectFormContext'
+import { PROJECT_PAGE } from 'constants/fathomEvents'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import useWeiConverter from 'hooks/WeiConverter'
@@ -62,7 +63,7 @@ export function V2V3PayButton({ disabled, wrapperClassName }: PayButtonProps) {
           type="primary"
           onClick={() => {
             setPayWarningModalVisible(true)
-            trackFathomGoal('PFJQKF7D')
+            trackFathomGoal(PROJECT_PAGE.PAY_CTA)
           }}
           disabled={isPayDisabled}
         >

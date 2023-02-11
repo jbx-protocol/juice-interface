@@ -6,6 +6,7 @@ import {
   PayButtonProps,
   PayProjectFormContext,
 } from 'components/Project/PayProjectForm/payProjectFormContext'
+import { PROJECT_PAGE } from 'constants/fathomEvents'
 import { readNetwork } from 'constants/networks'
 import { V1_CURRENCY_USD } from 'constants/v1/currency'
 import { disablePayOverrides } from 'constants/v1/overrides'
@@ -77,7 +78,7 @@ export function V1PayButton({ wrapperClassName, disabled }: PayButtonProps) {
 
   const onPayButtonClick = () => {
     setPayWarningModalVisible(true)
-    trackFathomGoal('PFJQKF7D')
+    trackFathomGoal(PROJECT_PAGE.PAY_CTA)
   }
 
   return (

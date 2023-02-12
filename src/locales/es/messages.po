@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-02-05 00:33\n"
+"PO-Revision-Date: 2023-02-12 00:33\n"
 "Last-Translator: \n"
 "Language: es_ES\n"
 "Language-Team: Spanish\n"
@@ -109,6 +109,9 @@ msgstr ""
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
 msgstr "<0><1>Este proyecto no tiene excedente</1>, así que no recibirás ETH por quemar tokens.</0>"
 
+msgid "<0>Back to home</0>"
+msgstr ""
+
 msgid "<0>Contribution floor:</0> {0} ETH"
 msgstr ""
 
@@ -176,6 +179,12 @@ msgid "<0>Target is 0.</0> The project's entire balance will be considered overf
 msgstr "<0>El objetivo es 0.</0> El balance completo del proyecto será considerado excedente. <1>Aprende más</1> acerca de excedentes."
 
 msgid "<0>The redemption rate determines the amount of overflow each token can be redeemed for at any given time.</0><1>A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed.</1><2>On a lower redemption rate, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than other holders.</2>"
+msgstr ""
+
+msgid "<0>The servers are having an issue, please try again later!</0>"
+msgstr ""
+
+msgid "<0>This page could not be found.</0>"
 msgstr ""
 
 msgid "<0>This project has a 0% redemption rate</0>. You won't receive any ETH for burning your NFTs."
@@ -499,7 +508,7 @@ msgstr "Activos"
 msgid "Attach a sticker"
 msgstr "Adjuntar un sticker"
 
-msgid "Attach the image to be associated with this NFT."
+msgid "Attach the image/video to be associated with this NFT."
 msgstr ""
 
 msgid "Automate funding cycles"
@@ -763,6 +772,15 @@ msgstr "Conecta tu billetera para ver tus proyectos."
 msgid "Connected wallet not authorized"
 msgstr "Billetera conectada no autorizada"
 
+msgid "Contact"
+msgstr ""
+
+msgid "Contact JuiceboxDAO for feature requests, support, or project advice."
+msgstr ""
+
+msgid "Contact a contributor."
+msgstr ""
+
 msgid "Contract"
 msgstr ""
 
@@ -1015,6 +1033,9 @@ msgstr "Expón todo detalle a tus colaboradores antes de que paguen tu proyecto.
 msgid "Disconnect"
 msgstr "Desconectar"
 
+msgid "Discontinue mints"
+msgstr ""
+
 msgid "Discord"
 msgstr ""
 
@@ -1207,6 +1228,9 @@ msgstr "Editar activos en seguimiento"
 msgid "Edit {allocationName}"
 msgstr ""
 
+msgid "Email"
+msgstr ""
+
 msgid "Enable unclaimed token spending"
 msgstr ""
 
@@ -1285,6 +1309,9 @@ msgstr ""
 msgid "Expenses cannot exceed the current funding target"
 msgstr ""
 
+msgid "Explore"
+msgstr ""
+
 msgid "Explore projects"
 msgstr "Explorar proyectos"
 
@@ -1327,6 +1354,9 @@ msgstr ""
 msgid "Failed to issue ERC20 token. Check transaction and try again."
 msgstr ""
 
+msgid "Failed to send message."
+msgstr ""
+
 msgid "Failed to update project metadata"
 msgstr "No se ha podido actualizar la metadata del proyecto"
 
@@ -1334,6 +1364,9 @@ msgid "Fee from <0><1/></0>"
 msgstr ""
 
 msgid "Fees held"
+msgstr ""
+
+msgid "File"
 msgstr ""
 
 msgid "File empty or corrupt. Try again."
@@ -1423,6 +1456,9 @@ msgstr "Los fondos serán distribuidos a:"
 msgid "General"
 msgstr ""
 
+msgid "Get help planning or configuring my project."
+msgstr ""
+
 msgid "Give permissions to {0} on project #{projectId}"
 msgstr ""
 
@@ -1442,6 +1478,9 @@ msgid "Go to your Safe"
 msgstr ""
 
 msgid "Governance"
+msgstr ""
+
+msgid "Governance type"
 msgstr ""
 
 msgid "Grant permission"
@@ -1510,6 +1549,12 @@ msgstr ""
 msgid "I accept this project's <0>unique risks</0>."
 msgstr ""
 
+msgid "I have a media inquiry."
+msgstr ""
+
+msgid "I have a question."
+msgstr ""
+
 msgid "I have another question!"
 msgstr ""
 
@@ -1551,15 +1596,6 @@ msgstr ""
 
 msgid "If you're unsure if you need to claim, you probably don't."
 msgstr "Si dudas de si necesitas reclamar tus tokens, probablemente no deberías hacerlo."
-
-msgid "Image file"
-msgstr ""
-
-msgid "Image will be cropped to a 1:1 square in thumbnail previews on the Juicebox app."
-msgstr ""
-
-msgid "Image will be cropped to a square in thumbnail previews on the Juicebox app."
-msgstr ""
 
 msgid "In Juicebox"
 msgstr "En Juicebox"
@@ -1813,6 +1849,12 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
+msgid "Message a DAO contributor for feature requests, help planning your project, or to have your questions and inquiries answered."
+msgstr ""
+
+msgid "Message sent!"
+msgstr ""
+
 msgid "Migrate all approved tokens"
 msgstr ""
 
@@ -1909,6 +1951,12 @@ msgstr ""
 msgid "NFT rules"
 msgstr ""
 
+msgid "NFT will be cropped to a 1:1 square in thumbnail previews on the Juicebox app."
+msgstr ""
+
+msgid "NFT will be cropped to a square in thumbnail previews on the Juicebox app."
+msgstr ""
+
 msgid "NFTs"
 msgstr ""
 
@@ -1929,6 +1977,9 @@ msgstr "SIN LÍMITE"
 
 msgid "Name"
 msgstr "Nombre"
+
+msgid "Need help?"
+msgstr ""
 
 msgid "New"
 msgstr "Nuevo"
@@ -2029,6 +2080,9 @@ msgstr ""
 msgid "Nominate an Ethereum wallet address to become the ‘owner’ of this project. If you intend to manage this project from the address that deployed it, leave this blank."
 msgstr ""
 
+msgid "None"
+msgstr ""
+
 msgid "Not a valid ETH address"
 msgstr "No es una dirección de ETH"
 
@@ -2058,6 +2112,9 @@ msgstr ""
 
 msgid "Other assets in this project's owner's wallet."
 msgstr "Otros activos en la billetera del dueño de este proyecto."
+
+msgid "Other."
+msgstr ""
 
 msgid "Overflow"
 msgstr "Excedente"
@@ -2254,6 +2311,9 @@ msgstr ""
 msgid "Potential risks"
 msgstr "Riesgos potenciales"
 
+msgid "Prevent NFT overspending"
+msgstr ""
+
 msgid "Previous V1 Project ID:"
 msgstr ""
 
@@ -2392,9 +2452,6 @@ msgstr "Proyecto {projectId} no encontrado"
 msgid "Project:"
 msgstr ""
 
-msgid "Projects"
-msgstr "Proyectos"
-
 msgid "Projects on Juicebox"
 msgstr "Proyectos en Juicebox"
 
@@ -2422,7 +2479,7 @@ msgstr ""
 msgid "Range"
 msgstr ""
 
-msgid "Rankings based on number of contributions and volume gained in the last {trendingWindowDays} days. <0>See code</0>"
+msgid "Rankings based on number of contributions and volume gained in the last {TRENDING_WINDOW_DAYS} days. <0>See code</0>"
 msgstr ""
 
 msgid "Re-launch a project"
@@ -2434,7 +2491,7 @@ msgstr ""
 msgid "Re-launch project"
 msgstr ""
 
-msgid "Re-launch your Juicebox project using the v3 contracts. <0>What's new in V3.</0>"
+msgid "Re-launch your Juicebox project using the v3 contracts."
 msgstr ""
 
 msgid "Read less"
@@ -2569,6 +2626,9 @@ msgstr ""
 msgid "Relaunch your funding cycle on the new Juicebox V2 contracts."
 msgstr "Relanza tu ciclo de financiamiento con los nuevos contratos de Juicebox V2."
 
+msgid "Request a feature."
+msgstr ""
+
 msgid "Required"
 msgstr "Requerido"
 
@@ -2577,9 +2637,6 @@ msgstr ""
 
 msgid "Reserve a percentage of freshly minted tokens for your project to use."
 msgstr "Reserva un porcentaje de los tokens recién acuñados para que tu proyecto los use."
-
-msgid "Reserved NFTS"
-msgstr ""
 
 msgid "Reserved NFTs"
 msgstr ""
@@ -2652,6 +2709,9 @@ msgstr ""
 
 msgid "Rules for how this project's funding cycles can be reconfigured."
 msgstr "Reglas para cómo pueden ser reconfigurados los ciclos de financiamiento de este proyecto."
+
+msgid "SOLD OUT"
+msgstr ""
 
 msgid "Safe transactions"
 msgstr ""
@@ -2735,6 +2795,9 @@ msgid "Select NFTs to redeem"
 msgstr ""
 
 msgid "Select the option that best suits your project’s funding requirements."
+msgstr ""
+
+msgid "Send Message"
 msgstr ""
 
 msgid "Send redeemed token to a custom address"
@@ -2887,6 +2950,9 @@ msgstr ""
 msgid "Staked {tokenSymbolDisplayText}"
 msgstr ""
 
+msgid "Standard"
+msgstr ""
+
 msgid "Standard on-chain governance"
 msgstr ""
 
@@ -2909,6 +2975,9 @@ msgid "Starting over will erase all currently saved progress."
 msgstr ""
 
 msgid "Stay up to date."
+msgstr ""
+
+msgid "Subject"
 msgstr ""
 
 msgid "Successfully approved ERC-20 spending."
@@ -2934,6 +3003,12 @@ msgstr ""
 
 msgid "Target"
 msgstr "Objetivo"
+
+msgid "Telegram"
+msgstr ""
+
+msgid "Telegram link"
+msgstr ""
 
 msgid "Terminal configuration"
 msgstr ""
@@ -3466,7 +3541,7 @@ msgstr "Subir"
 msgid "Upload CSV"
 msgstr ""
 
-msgid "Upload an image"
+msgid "Upload a file"
 msgstr ""
 
 msgid "Uploaded to: <0>{imageUrl}</0>"
@@ -3533,6 +3608,9 @@ msgid "Volume"
 msgstr "Volumen"
 
 msgid "VotePWR"
+msgstr ""
+
+msgid "Voting Weight"
 msgstr ""
 
 msgid "Voting weight"
@@ -3619,6 +3697,9 @@ msgstr ""
 msgid "When enabled, the project will hold the fee amount in ETH instead of the fees being processed automatically. <0>Learn more.</0>"
 msgstr ""
 
+msgid "When enabled, users can only receive NFTs by paying the exact price of the NFT. This ensures contributors are eligible to receive their full payment amount if they choose to redeem their NFT."
+msgstr ""
+
 msgid "When enabled, your project can't accept payments."
 msgstr ""
 
@@ -3633,6 +3714,9 @@ msgstr "Cuando acuñar tokens es permitido, el dueño de este proyecto tiene per
 
 msgid "Whenever someone pays your project, this percentage of the newly minted tokens will be reserved and the rest will go to the payer. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner. Once tokens are reserved, anyone can \"mint\" them, which distributes them to their intended receivers."
 msgstr "Cuando sea que alguien pague tu proyecto, este porcentaje de tokens recién acuñados será reservado y el resto irá al pagador. Los tokens de reserva son reservados para el dueño del proyecto por defecto, pero también pueden ser asignados a otras direcciones de billeteras por el dueño. Una vez que los tokens son reservados, cualquiera puede \"acuñarlos\", lo que los distribuye a sus receptores previstos."
+
+msgid "Where to Contact You"
+msgstr ""
 
 msgid "Who is Peel? Who is JuiceboxDAO?"
 msgstr ""
@@ -3748,7 +3832,13 @@ msgstr ""
 msgid "Your Juicebox project has no active funding cycle. Launch a funding cycle to re-enable payments on your project."
 msgstr "Tu proyecto Juicebox no tiene ciclo de financiamiento activo. Lanza un ciclo de financiamiento para volver a habilitar los pagos en tu proyecto."
 
+msgid "Your Message"
+msgstr ""
+
 msgid "Your NFTs"
+msgstr ""
+
+msgid "Your Name"
 msgstr ""
 
 msgid "Your V3 project cannot have payouts to V1 projects. Remove any payouts to V1 projects, or re-assign them to V3 projects."
@@ -3865,8 +3955,8 @@ msgstr "horas"
 msgid "infinite"
 msgstr ""
 
-msgid "last {trendingWindowDays} days"
-msgstr "últimos {trendingWindowDays} días"
+msgid "last {TRENDING_WINDOW_DAYS} days"
+msgstr ""
 
 msgid "loading"
 msgstr "cargando"

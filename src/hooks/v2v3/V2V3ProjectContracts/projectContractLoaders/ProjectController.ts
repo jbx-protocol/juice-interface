@@ -17,10 +17,10 @@ export function useProjectController({ projectId }: { projectId: number }) {
     cv,
     contractName: isEqualAddress(
       controllerAddress,
-      contracts?.JBController.address,
+      contracts?.JBController?.address,
     )
       ? V2V3ContractName.JBController
-      : isEqualAddress(controllerAddress, contracts?.JBController3_0_1.address)
+      : isEqualAddress(controllerAddress, contracts?.JBController3_0_1?.address)
       ? V2V3ContractName.JBController3_0_1
       : undefined,
     address: controllerAddress,

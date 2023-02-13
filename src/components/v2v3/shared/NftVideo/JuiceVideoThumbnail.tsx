@@ -1,6 +1,6 @@
-import { PlayCircleFilled, LoadingOutlined } from '@ant-design/icons'
+import { LoadingOutlined } from '@ant-design/icons'
 import { useState } from 'react'
-import { twJoin } from 'tailwind-merge'
+import { JuicePlayIcon } from './JuicePlayIcon'
 
 export function JuiceVideoThumbnail({
   src,
@@ -13,13 +13,8 @@ export function JuiceVideoThumbnail({
   return (
     <>
       <div className="absolute top-0 h-full w-full">
-        <div className="absolute bottom-0 right-2 z-10">
-          <PlayCircleFilled
-            className={twJoin(
-              isSelected ? 'text-primary' : 'text-tertiary',
-              'margin-auto w-full text-6xl sm:text-4xl ',
-            )}
-          />
+        <div className="absolute bottom-[8px] right-2 z-[1]">
+          <JuicePlayIcon />
         </div>
         {loading ? (
           <div

@@ -14,7 +14,7 @@ export default function useProjectReservedTokens({
 
   return useContractReader<BigNumber>({
     contract: contracts.JBController,
-    functionName: 'reservedTokenBalanceOf',
+    functionName: 'reservedTokenBalanceOf(uint256,uint256)',
     args: projectId && reservedRate ? [projectId, reservedRate] : null,
   })
 }

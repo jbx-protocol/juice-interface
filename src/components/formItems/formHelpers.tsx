@@ -4,6 +4,7 @@ import { PayoutMod } from 'models/v1/mods'
 import { permyriadToPercent } from 'utils/format/formatNumber'
 
 import { Split } from 'models/splits'
+import { isEqualAddress } from 'utils/address'
 import { percentToPermyriad } from 'utils/format/formatNumber'
 
 export type ModalMode = 'Add' | 'Edit' | undefined
@@ -39,7 +40,7 @@ export function validateEthAddress(
   // If user edits an (already approved) address and doesn't change it, we accept
   if (
     modalMode === 'Edit' &&
-    address === mods[editingModIndex ?? 0]?.beneficiary
+    isEqualAddress(address, mods[editingModIndex ?? 0]?.beneficiary)
   )
     return Promise.resolve()
   else if (!address || !isAddress(address))

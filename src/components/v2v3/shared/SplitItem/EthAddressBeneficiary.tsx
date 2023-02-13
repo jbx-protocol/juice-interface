@@ -1,7 +1,8 @@
+import { CrownFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
-import { CrownFilled } from '@ant-design/icons'
+import { isEqualAddress } from 'utils/address'
 
 export function ETHAddressBeneficiary({
   beneficaryAddress,
@@ -10,7 +11,7 @@ export function ETHAddressBeneficiary({
   beneficaryAddress: string | undefined
   projectOwnerAddress: string | undefined
 }) {
-  const isProjectOwner = projectOwnerAddress === beneficaryAddress
+  const isProjectOwner = isEqualAddress(projectOwnerAddress, beneficaryAddress)
 
   return (
     <div className="flex items-baseline font-medium">

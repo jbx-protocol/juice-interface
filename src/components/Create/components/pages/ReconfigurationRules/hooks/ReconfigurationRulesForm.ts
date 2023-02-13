@@ -3,11 +3,12 @@ import { Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { useAvailableReconfigurationStrategies } from 'components/Create/hooks/AvailableReconfigurationStrategies'
 import { readNetwork } from 'constants/networks'
-import { useAppDispatch } from 'redux/hooks/AppDispatch'
-import { useAppSelector } from 'redux/hooks/AppSelector'
 import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
 import { useEffect, useMemo } from 'react'
+import { useAppDispatch } from 'redux/hooks/AppDispatch'
+import { useAppSelector } from 'redux/hooks/AppSelector'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import { isEqualAddress } from 'utils/address'
 import { useFormDispatchWatch } from '../../hooks'
 
 type ReconfigurationRulesFormProps = Partial<{
@@ -71,7 +72,9 @@ export const useReconfigurationRulesForm = () => {
           allowControllerMigration,
         }
 
-      const found = strategies.find(({ address }) => address === ballot)
+      const found = strategies.find(({ address }) =>
+        isEqualAddress(address, ballot),
+      )
       if (!found) {
         return {
           selection: 'custom',

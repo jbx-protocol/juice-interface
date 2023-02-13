@@ -5,6 +5,7 @@ import { V1TerminalVersion } from 'models/v1/terminals'
 import { V1TerminalName } from 'models/v1/terminals'
 
 import { readNetwork } from 'constants/networks'
+import { isEqualAddress } from 'utils/address'
 
 const loadTerminalAddress = (
   network: NetworkName,
@@ -30,21 +31,19 @@ export const getTerminalVersion = (
   if (!address) return
 
   if (
-    address.toLowerCase() ===
-    loadTerminalAddress(
-      readNetwork.name,
-      V1ContractName.TerminalV1,
-    ).toLowerCase()
+    isEqualAddress(
+      address,
+      loadTerminalAddress(readNetwork.name, V1ContractName.TerminalV1),
+    )
   ) {
     return '1'
   }
 
   if (
-    address.toLowerCase() ===
-    loadTerminalAddress(
-      readNetwork.name,
-      V1ContractName.TerminalV1_1,
-    ).toLowerCase()
+    isEqualAddress(
+      address,
+      loadTerminalAddress(readNetwork.name, V1ContractName.TerminalV1_1),
+    )
   ) {
     return '1.1'
   }

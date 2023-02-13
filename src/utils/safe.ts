@@ -1,4 +1,5 @@
 import { GnosisSafe, SafeTransactionType } from 'models/safe'
+import { isEqualAddress } from './address'
 
 // e.g. [ {nonce: 69}, {nonce: 45}, {nonce: 69}] returns [69, 45]
 export function getUniqueNonces(
@@ -21,8 +22,8 @@ export function getUnsignedTxsForAddress({
 }) {
   return transactions?.filter(
     (tx: SafeTransactionType) =>
-      !tx?.confirmations?.some(
-        confirmation => confirmation.owner.toLowerCase() === address,
+      !tx?.confirmations?.some(confirmation =>
+        isEqualAddress(confirmation.owner, address),
       ),
   )
 }
@@ -36,7 +37,5 @@ export function isSafeSigner({
   safe: GnosisSafe
 }) {
   if (!address) return false
-  return safe.owners.some(
-    owner => owner.toLowerCase() === address.toLowerCase(),
-  )
+  return safe.owners.some(owner => isEqualAddress(owner, address))
 }

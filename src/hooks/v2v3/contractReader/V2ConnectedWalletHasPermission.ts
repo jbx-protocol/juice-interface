@@ -3,6 +3,7 @@ import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useWallet } from 'hooks/Wallet'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import { useContext } from 'react'
+import { isEqualAddress } from 'utils/address'
 import { useV2V3HasPermissions } from './V2V3HasPermissions'
 
 export function useV2ConnectedWalletHasPermission(
@@ -19,10 +20,7 @@ export function useV2ConnectedWalletHasPermission(
     permissions: Array.isArray(permission) ? permission : [permission],
   })
 
-  const isOwner =
-    userAddress &&
-    projectOwnerAddress &&
-    userAddress.toLowerCase() === projectOwnerAddress.toLowerCase()
+  const isOwner = isEqualAddress(userAddress, projectOwnerAddress)
 
   return (
     isOwner ||

@@ -1,8 +1,9 @@
 import { t, Trans } from '@lingui/macro'
 import { Space } from 'antd'
-import { useState } from 'react'
 import ReconfigurationStrategyOption from 'components/ReconfigurationStrategy/ReconfigurationStrategyOption'
 import { BallotStrategy } from 'models/ballot'
+import { useState } from 'react'
+import { isEqualAddress } from 'utils/address'
 import { createCustomStrategy } from 'utils/ballot'
 import FormItemWarningText from '../FormItemWarningText'
 import { CustomStrategyInput } from './CustomStrategyInput'
@@ -19,7 +20,7 @@ export default function ReconfigurationStrategySelector({
   onChange: (strategy: BallotStrategy) => void
 }) {
   const selectedStrategyIndex = ballotStrategies.findIndex(s => {
-    return s.address?.toLowerCase() === selectedStrategy.address?.toLowerCase()
+    return isEqualAddress(s.address, selectedStrategy.address)
   })
   const selectedIsCustom = selectedStrategyIndex === CUSTOM_STRATEGY_INDEX // selected strategy is the custom strategy
 
@@ -31,8 +32,10 @@ export default function ReconfigurationStrategySelector({
 
   return (
     <Space direction="vertical">
-      {ballotStrategies[selectedStrategyIndex]?.address ===
-        ballotStrategies[0].address && (
+      {isEqualAddress(
+        ballotStrategies[selectedStrategyIndex]?.address,
+        ballotStrategies[0].address,
+      ) && (
         <FormItemWarningText>
           <Trans>
             Using a reconfiguration strategy is recommended. Projects with no

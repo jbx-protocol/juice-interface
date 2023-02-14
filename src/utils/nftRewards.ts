@@ -10,8 +10,8 @@ import { juiceboxEmojiImageUri } from 'constants/images'
 import { IPFS_TAGS } from 'constants/ipfs'
 import { readNetwork } from 'constants/networks'
 import { WAD_DECIMALS } from 'constants/numbers'
-import { defaultAbiCoder, parseEther } from 'ethers/lib/utils'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
+import { defaultAbiCoder, parseEther } from 'ethers/lib/utils'
 import { round } from 'lodash'
 import {
   IpfsNftCollectionMetadata,
@@ -388,12 +388,14 @@ export function sumTierFloors(
   rewardTiers: NftRewardTier[],
   tierIds?: number[],
 ) {
-  if (!tierIds) return 0
+  if (tierIds !== undefined && tierIds.length === 0) return 0
 
-  const selectedTiers = rewardTiersFromIds({
-    tierIds,
-    rewardTiers,
-  })
+  const selectedTiers = tierIds
+    ? rewardTiersFromIds({
+        tierIds,
+        rewardTiers,
+      })
+    : rewardTiers
 
   return round(
     selectedTiers.reduce((subSum, tier) => subSum + tier.contributionFloor, 0),

@@ -1,8 +1,9 @@
 import { Space, Tooltip } from 'antd'
 import ExternalLink from 'components/ExternalLink'
+import { JuiceVideoThumbnailOrImage } from 'components/v2v3/shared/NftVideo/JuiceVideoThumbnailOrImage'
 import { NftRewardTier } from 'models/nftRewardTier'
-import { NftRewardImagePreview } from './NftRewardImagePreview'
 import { classNames } from 'utils/classNames'
+import { ipfsToHttps } from 'utils/ipfs'
 
 export function NftRewardCell({
   nftRewards,
@@ -19,19 +20,28 @@ export function NftRewardCell({
   return (
     <Space size={'middle'} direction={'vertical'} className="w-full">
       {Object.keys(uniqueTiersIdsAndCounts).map((tierId, idx) => {
-        const tier = nftRewards.find(tier => tier.id === parseInt(tierId))
+        const tier = nftRewards.find(_tier => _tier.id === parseInt(tierId))
         if (!tier?.id) return
         const tierCount = uniqueTiersIdsAndCounts[tier.id]
         const isLink = tier.externalLink
 
         return (
           <div className="flex items-center justify-between" key={idx}>
-            <div className="flex items-center justify-start">
+            <div className="flex h-[50px] items-center justify-start">
               <Tooltip
                 title={tier.description}
                 open={tier.description ? undefined : false}
+                className={'pt-0'}
               >
-                <NftRewardImagePreview rewardTier={tier} />
+                <JuiceVideoThumbnailOrImage
+                  src={ipfsToHttps(tier.fileUrl)}
+                  alt={tier.name}
+                  crossOrigin="anonymous"
+                  height="50px"
+                  width="50px"
+                  playIconPosition="hidden"
+                  isSelected
+                />
               </Tooltip>
               <ExternalLink
                 className={classNames(

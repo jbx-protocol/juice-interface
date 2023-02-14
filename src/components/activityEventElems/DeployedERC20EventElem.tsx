@@ -18,7 +18,7 @@ export default function DeployedERC20EventElem({
       subject={
         <div style={{ fontSize: primaryContentFontSize }}>{event.symbol}</div>
       }
-      event={{ ...event, beneficiary: undefined }}
+      event={{ ...event, beneficiary: undefined, caller: undefined }}
     />
   )
 }

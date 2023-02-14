@@ -2,6 +2,7 @@ import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useWallet } from 'hooks/Wallet'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import { useContext } from 'react'
+import { isEqualAddress } from 'utils/address'
 import { useProjectOwner } from './ProjectOwner'
 import { useV1HasPermissions } from './V1HasPermissions'
 
@@ -20,8 +21,7 @@ export function useV1ConnectedWalletHasPermission(
     permissionIndexes: Array.isArray(permission) ? permission : [permission],
   })
 
-  const isOwner =
-    userAddress && owner && userAddress.toLowerCase() === owner.toLowerCase()
+  const isOwner = isEqualAddress(userAddress, owner)
 
   return (
     isOwner || hasOperatorPermission || process.env.NODE_ENV === 'development'

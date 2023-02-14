@@ -15,6 +15,7 @@ import {
   INITIAL_REDUX_STATE,
   ProjectState,
 } from 'redux/slices/editingV2Project'
+import { isEqualAddress } from 'utils/address'
 import { parseWad } from 'utils/format/formatNumber'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { DefaultSettings as DefaultTokenSettings } from '../components/pages/ProjectToken/hooks/ProjectTokenForm'
@@ -79,8 +80,8 @@ const parseCreateFlowStateFromInitialState = (
   }
 
   const reconfigurationRuleSelection =
-    BallotStrategies.find(
-      s => s.address === initialState.fundingCycleData.ballot,
+    BallotStrategies.find(s =>
+      isEqualAddress(s.address, initialState.fundingCycleData.ballot),
     )?.id ?? 'threeDay'
 
   let createFurthestPageReached: CreatePage = 'projectDetails'

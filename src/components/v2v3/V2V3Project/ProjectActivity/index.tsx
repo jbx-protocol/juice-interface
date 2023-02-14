@@ -125,6 +125,7 @@ export default function ProjectActivity() {
         keys: [
           'amount',
           'timestamp',
+          'caller',
           'beneficiary',
           'note',
           'id',
@@ -165,6 +166,7 @@ export default function ProjectActivity() {
         entity: 'redeemEvent',
         keys: [
           'id',
+          'caller',
           'amount',
           'beneficiary',
           'txHash',

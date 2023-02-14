@@ -9,6 +9,7 @@ import { useWallet } from 'hooks/Wallet'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { revalidateProject } from 'lib/api/nextjs'
 import { useContext, useState } from 'react'
+import { isEqualAddress } from 'utils/address'
 import { emitErrorNotification } from 'utils/notifications'
 import { reloadWindow } from 'utils/windowUtils'
 
@@ -52,7 +53,7 @@ export function ArchiveProject({
   }
 
   const setArchived = (archived: boolean) => async () => {
-    if (!userAddress || userAddress.toLowerCase() !== owner?.toLowerCase()) {
+    if (!isEqualAddress(userAddress, owner)) {
       return emitErrorNotification(t`Connected wallet not authorized`)
     }
     setIsLoadingArchive(true)

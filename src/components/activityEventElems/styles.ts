@@ -6,6 +6,4 @@ export const smallHeaderStyle = (colors: SemanticColors) => ({
   color: colors.text.tertiary,
 })
 
-export const contentLineHeight: CSSProperties['lineHeight'] = '1.4rem'
-
 export const primaryContentFontSize: CSSProperties['fontSize'] = '1rem'

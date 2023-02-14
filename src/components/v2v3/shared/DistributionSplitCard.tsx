@@ -13,6 +13,7 @@ import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import round from 'lodash/round'
 import { Split } from 'models/splits'
 import { PropsWithChildren, useContext, useState } from 'react'
+import { isEqualAddress } from 'utils/address'
 import { classNames } from 'utils/classNames'
 import { formatDate } from 'utils/format/formatDate'
 import { parseWad } from 'utils/format/formatNumber'
@@ -73,7 +74,8 @@ export function DistributionSplitCard({
   // !isProject added here because we don't want to show the crown next to
   // a project recipient whose token benefiary is the owner of this project
   const isOwner =
-    (projectOwnerAddress === split.beneficiary && !isProject) || isProjectOwner
+    (isEqualAddress(projectOwnerAddress, split.beneficiary) && !isProject) ||
+    isProjectOwner
 
   const distributionLimitIsInfinite =
     !distributionLimit || parseWad(distributionLimit).eq(MAX_DISTRIBUTION_LIMIT)

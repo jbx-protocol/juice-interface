@@ -1,12 +1,13 @@
+import { CrownFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Space, Tooltip } from 'antd'
+import FormattedAddress from 'components/FormattedAddress'
 import TooltipLabel from 'components/TooltipLabel'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { Split } from 'models/splits'
+import { isEqualAddress } from 'utils/address'
 import { AllocatorBadge } from '../FundingCycleConfigurationDrawers/AllocatorBadge'
 import V2V3ProjectHandleLink from '../V2V3ProjectHandleLink'
-import { CrownFilled } from '@ant-design/icons'
-import FormattedAddress from 'components/FormattedAddress'
 
 export function JuiceboxProjectBeneficiary({
   projectOwnerAddress,
@@ -19,7 +20,7 @@ export function JuiceboxProjectBeneficiary({
 }) {
   if (!split.projectId) return null
 
-  const isProjectOwner = projectOwnerAddress === split.beneficiary
+  const isProjectOwner = isEqualAddress(projectOwnerAddress, split.beneficiary)
 
   return (
     <div>

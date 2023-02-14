@@ -148,7 +148,7 @@ export default function ProjectActivity() {
       },
       {
         entity: 'deployedERC20Event',
-        keys: ['symbol', 'txHash', 'timestamp', 'id', 'caller'],
+        keys: ['symbol', 'txHash', 'timestamp', 'id'],
       },
       {
         entity: 'tapEvent',

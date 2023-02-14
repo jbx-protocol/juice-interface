@@ -8,10 +8,7 @@ export default function DeployedERC20EventElem({
   event,
 }: {
   event:
-    | Pick<
-        DeployedERC20Event,
-        'symbol' | 'id' | 'timestamp' | 'txHash' | 'caller'
-      >
+    | Pick<DeployedERC20Event, 'symbol' | 'id' | 'timestamp' | 'txHash'>
     | undefined
 }) {
   if (!event) return null
@@ -21,7 +18,7 @@ export default function DeployedERC20EventElem({
       subject={
         <div style={{ fontSize: primaryContentFontSize }}>{event.symbol}</div>
       }
-      event={{ ...event, beneficiary: undefined }}
+      event={{ ...event, beneficiary: undefined, caller: undefined }}
     />
   )
 }

@@ -100,3 +100,9 @@ export function decodeEncodedIPFSUri(hex: string) {
 export function isIpfsUrl(url: string) {
   return url.startsWith('ipfs://')
 }
+
+export function isIpfsCID(cid: string) {
+  return (
+    cid.startsWith('Qm') || cid.startsWith('bafy') || cid.startsWith('bafk')
+  )
+}

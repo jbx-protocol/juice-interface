@@ -11,6 +11,10 @@ export function MigrateProjectController({
 }: {
   controllerAddress: string
 }) {
+  function executeSetControllerTx() {
+    // TODO set controller
+  }
+
   return (
     <div>
       <InfoCallout className="mb-5">
@@ -21,7 +25,9 @@ export function MigrateProjectController({
           </EtherscanLink>
         </Trans>
       </InfoCallout>
-      <Button type="primary">Upgrade Controller</Button>
+      <Button onClick={() => executeSetControllerTx()} type="primary">
+        Upgrade Controller
+      </Button>
     </div>
   )
 }

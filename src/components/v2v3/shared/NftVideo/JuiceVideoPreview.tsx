@@ -13,6 +13,7 @@ export function JuiceVideoPreview({ src }: { src: string }) {
           IMAGE_OR_VIDEO_PREVIEW_CLASSES,
           loading ? 'h-[50vh] w-96' : '',
         )}
+        autoPlay
         preload="none"
         onLoadedData={() => setLoading(false)}
       >

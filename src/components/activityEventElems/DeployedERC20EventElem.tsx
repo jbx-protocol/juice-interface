@@ -8,7 +8,10 @@ export default function DeployedERC20EventElem({
   event,
 }: {
   event:
-    | Pick<DeployedERC20Event, 'symbol' | 'id' | 'timestamp' | 'txHash'>
+    | Pick<
+        DeployedERC20Event,
+        'symbol' | 'id' | 'timestamp' | 'txHash' | 'caller'
+      >
     | undefined
 }) {
   if (!event) return null

@@ -125,6 +125,7 @@ export default function ProjectActivity() {
         keys: [
           'amount',
           'timestamp',
+          'caller',
           'beneficiary',
           'note',
           'id',
@@ -147,7 +148,7 @@ export default function ProjectActivity() {
       },
       {
         entity: 'deployedERC20Event',
-        keys: ['symbol', 'txHash', 'timestamp', 'id'],
+        keys: ['symbol', 'txHash', 'timestamp', 'id', 'caller'],
       },
       {
         entity: 'tapEvent',
@@ -165,6 +166,7 @@ export default function ProjectActivity() {
         entity: 'redeemEvent',
         keys: [
           'id',
+          'caller',
           'amount',
           'beneficiary',
           'txHash',

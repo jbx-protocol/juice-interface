@@ -1,4 +1,5 @@
 import { notification } from 'antd'
+import ErrorNotificationButtons from 'components/ErrorNotificationButtons'
 
 /**
  * @param message Title of notification
@@ -15,6 +16,7 @@ export const emitErrorNotification = (
   const key = new Date().valueOf().toString()
   return notification.error({
     key,
+    btn: ErrorNotificationButtons(),
     message,
     ...opts,
     duration: opts?.duration ?? null,

@@ -2666,6 +2666,9 @@ msgstr ""
 msgid "Reserved {tokenTextPlural}: <0>{reservedTokensFormatted} {tokenTextPlural}</0>"
 msgstr ""
 
+msgid "Reset Website"
+msgstr ""
+
 msgid "Resources"
 msgstr ""
 
@@ -3444,6 +3447,9 @@ msgid "Trending"
 msgstr ""
 
 msgid "Trending projects"
+msgstr ""
+
+msgid "Troubleshoot"
 msgstr ""
 
 msgid "Twitter"

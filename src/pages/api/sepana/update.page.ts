@@ -17,7 +17,7 @@ import {
 const handler: NextApiHandler = async (req, res) => {
   try {
     // This flag will let us know we should retry resolving IPFS data for projects that are missing it
-    const retryIpfs = req.body['retryIPFS'] === true
+    const retryIpfs = req.body.retryIPFS === true
 
     // Load all projects from Sepana, store in dict
     const sepanaProjects = (

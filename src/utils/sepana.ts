@@ -61,7 +61,7 @@ export function getChangedSubgraphProjects({
       return true
     }
 
-    if (sepanaProject._version !== CURRENT_VERSION) {
+    if (sepanaProject._v !== CURRENT_VERSION) {
       return true
     }
 

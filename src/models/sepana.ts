@@ -23,7 +23,7 @@ export type SepanaProject = {
   logoUri?: string
   _hasUnresolvedMetadata?: boolean // Helper property to signify if metadata has been successfully resolved from IPFS
   _metadataRetriesLeft?: number // Helper property allowing us to only retry resolving metadata a finite number of times. Useful for invalid metadataUris or uris pointing to unpinned content
-  _version?: string
+  _v?: string
 } & Pick<AnyProjectMetadata, 'description' | 'logoUri' | 'name'> & {
     _lastUpdated: number // Millis timestamp of last updated
   }

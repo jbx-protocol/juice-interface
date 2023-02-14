@@ -81,7 +81,7 @@ export async function writeSepanaRecords(records: Json<SepanaProject>[]) {
         // Upserting data in Sepana requires the `_id` param to be included, so we always include it here using `_source.id`
         // https://docs.sepana.io/sepana-search-api/web3-search-cloud/search-api#request-example-2
         _id: r.id,
-        _version: CURRENT_VERSION,
+        _v: CURRENT_VERSION,
       }))
 
     await sepanaAxios('read/write')

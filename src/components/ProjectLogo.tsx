@@ -1,10 +1,15 @@
 import { useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { ipfsUriToGatewayUrl, isIpfsUri } from 'utils/ipfs'
+import {
+  cidFromUrl,
+  ipfsOpenGatewayUrl,
+  ipfsUriToGatewayUrl,
+  isIpfsUri,
+} from 'utils/ipfs'
 
-// Override select project logos.
+// Override some project logos.
 const IMAGE_URI_OVERRIDES: { [k: number]: string } = {
-  1: '/assets/juiceboxdao_logo.webp',
+  1: '/assets/juiceboxdao_logo.webp', // the on-chain logo's filesize is too large. This is a smaller version.
 }
 
 export default function ProjectLogo({
@@ -21,11 +26,20 @@ export default function ProjectLogo({
   const [srcLoadError, setSrcLoadError] = useState(false)
   const validImg = uri && !srcLoadError
 
-  const _uri = useMemo(() => {
+  const imageSrc = useMemo(() => {
     if (projectId && IMAGE_URI_OVERRIDES[projectId]) {
       return IMAGE_URI_OVERRIDES[projectId]
     }
     if (!uri) return undefined
+
+    // Some older JB projects have a logo URI hardcoded to use Pinata.
+    // JBM no longer uses Pinata.
+    // This rewrites those URLs to use the Infura gateway.
+    if (uri.startsWith('https://jbx.mypinata.cloud')) {
+      const cid = cidFromUrl(uri)
+      return ipfsOpenGatewayUrl(cid)
+    }
+
     if (!isIpfsUri(uri)) {
       return uri
     }
@@ -43,7 +57,7 @@ export default function ProjectLogo({
       {validImg ? (
         <img
           className="max-h-full max-w-full object-cover object-center"
-          src={_uri}
+          src={imageSrc}
           alt={name + ' logo'}
           onError={() => setSrcLoadError(true)}
           loading="lazy"

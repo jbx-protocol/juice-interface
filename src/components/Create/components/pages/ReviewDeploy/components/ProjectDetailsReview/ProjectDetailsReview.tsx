@@ -4,11 +4,8 @@ import FormattedAddress from 'components/FormattedAddress'
 import ProjectLogo from 'components/ProjectLogo'
 import useMobile from 'hooks/Mobile'
 import { useAppSelector } from 'redux/hooks/AppSelector'
-import { cidFromUrl, ipfsRestrictedGatewayUrl } from 'utils/ipfs'
 import { DescriptionCol } from '../DescriptionCol'
 import { MobileProjectDetailsReview } from './MobileProjectDetailsReview'
-
-// END: CSS
 
 export const ProjectDetailsReview = () => {
   const isMobile = useMobile()
@@ -62,15 +59,7 @@ export const ProjectDetailsReview = () => {
               span={6}
               title={t`Project logo`}
               desc={
-                <ProjectLogo
-                  className="h-36 w-36"
-                  uri={
-                    logoUri
-                      ? ipfsRestrictedGatewayUrl(cidFromUrl(logoUri)!)
-                      : undefined
-                  }
-                  name={name}
-                />
+                <ProjectLogo className="h-36 w-36" uri={logoUri} name={name} />
               }
             />
             <Col span={18}>

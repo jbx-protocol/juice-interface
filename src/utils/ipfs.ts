@@ -16,11 +16,6 @@ export const ipfsGatewayUrl = (
   return `https://${hostname}/ipfs/${cid}`
 }
 
-export const logoNameForHandle = (handle: string) => `juicebox-@${handle}-logo`
-
-export const metadataNameForHandle = (handle: string) =>
-  `juicebox-@${handle}-metadata`
-
 /**
  * Return a URL to our open IPFS gateway for the given cid USING INFURA.
  *

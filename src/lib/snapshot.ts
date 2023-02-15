@@ -1,10 +1,10 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import axios from 'axios'
 import { juiceboxEmojiImageUri } from 'constants/images'
-import { IPFS_TAGS } from 'constants/ipfs'
 import { readNetwork } from 'constants/networks'
 import { WAD_DECIMALS } from 'constants/numbers'
 import { AnyProjectMetadata, ProjectMetadataV6 } from 'models/projectMetadata'
+import { pinData } from './api/ipfs'
 
 /**
  * JB Docs:
@@ -121,20 +121,10 @@ export async function uploadSnapshotSettingsToIPFS({
     JBTokenStoreAddress,
   })
 
-  const res = await axios.post('/api/ipfs/pin', {
-    data: snapshotSettings,
-    options: {
-      pinataMetadata: {
-        keyvalues: {
-          tag: IPFS_TAGS.SNAPSHOT_SETTINGS,
-        },
-        name: projectMetadata?.name,
-      },
-    },
-  })
-  console.info('Uploaded snapshot settings to IPFS: ', res.data.IpfsHash)
+  const res = await pinData(snapshotSettings)
+  console.info('Uploaded snapshot settings to IPFS: ', res.IpfsHash)
 
-  return res.data.IpfsHash as string
+  return res.IpfsHash as string
 }
 
 export const pokeSnapshot = async (projectHandle: string) => {

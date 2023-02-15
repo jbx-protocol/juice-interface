@@ -23,17 +23,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const file = files.file as formidable.File
         const stream = fs.createReadStream(file.filepath)
 
-        let options = undefined
-        if (fields.pinataMetadata) {
-          const pinataMetadata = JSON.parse(fields.pinataMetadata as string)
-          options = {
-            pinataMetadata,
-          }
-        }
-
         const pinata = getPinata()
 
-        const pinResult = await pinata.pinFileToIPFS(stream, options) // pin to pinata
+        const pinResult = await pinata.pinFileToIPFS(stream) // pin to pinata
 
         resolve(pinResult)
       })

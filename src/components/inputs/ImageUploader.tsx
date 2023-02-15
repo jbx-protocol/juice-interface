@@ -1,6 +1,5 @@
 import { CloseCircleFilled, FileImageOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { PinataMetadata } from '@pinata/sdk'
 import { Button, Col, message, Row, Space, Upload } from 'antd'
 import { usePinFileToIpfs } from 'hooks/PinFileToIpfs'
 import { useLayoutEffect, useState } from 'react'
@@ -18,11 +17,9 @@ export default function ImageUploader({
   initialUrl,
   onSuccess,
   maxSizeKBs: maxSize,
-  metadata,
   text,
 }: {
   initialUrl?: string
-  metadata?: PinataMetadata
   onSuccess?: (url?: string) => void
   maxSizeKBs?: number // KB
   text?: string
@@ -82,7 +79,6 @@ export default function ImageUploader({
                 try {
                   const res = await pinFileToIpfs({
                     ...req,
-                    metadata,
                     onProgress: percent => {
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       req.onProgress?.({ percent } as any)

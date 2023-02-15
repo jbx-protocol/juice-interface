@@ -1,13 +1,7 @@
-import { PinataMetadata, PinataPinResponse } from '@pinata/sdk'
+import { PinataPinResponse } from '@pinata/sdk'
 import axios from 'axios'
-import { IPFS_TAGS } from 'constants/ipfs'
 import { consolidateMetadata, ProjectMetadataV6 } from 'models/projectMetadata'
-import {
-  ipfsGatewayUrl,
-  metadataNameForHandle,
-  openIpfsUrl,
-  restrictedIpfsUrl,
-} from 'utils/ipfs'
+import { ipfsGatewayUrl, openIpfsUrl, restrictedIpfsUrl } from 'utils/ipfs'
 
 // Workaround function for a bug in pinata where the data is sometimes returned in bytes
 const extractJsonFromBase64Data = (base64: string) => {
@@ -72,19 +66,6 @@ export const clientRegister = async (): Promise<{
   }
 }
 
-// TODO: Move to wallet key
-// keyvalues will be upserted to existing metadata. A null value will remove an existing keyvalue
-export const editMetadataForCid = async (
-  cid: string | undefined,
-  options?: PinataMetadata,
-) => {
-  if (!cid) return undefined
-
-  const pinRes = await axios.put(`/api/ipfs/pin/${cid}`, { ...options })
-
-  return pinRes.data
-}
-
 // TODO after the move to Infura for IPFS, we can probably look at removing this.
 export const ipfsGetWithFallback = async <T>(
   hash: string,
@@ -119,23 +100,16 @@ export const ipfsGetWithFallback = async <T>(
   }
 }
 
-export const uploadProjectMetadata = async (
-  metadata: Omit<ProjectMetadataV6, 'version'>,
-  handle?: string,
-) => {
+export const pinData = async (data: unknown) => {
   const res = await axios.post('/api/ipfs/pin', {
-    data: consolidateMetadata(metadata),
-    options: {
-      pinataMetadata: {
-        keyvalues: {
-          tag: IPFS_TAGS.METADATA,
-        },
-        name: handle
-          ? metadataNameForHandle(handle)
-          : 'juicebox-project-metadata.json',
-      },
-    },
+    data,
   })
 
   return res.data as PinataPinResponse
+}
+
+export const uploadProjectMetadata = async (
+  metadata: Omit<ProjectMetadataV6, 'version'>,
+) => {
+  return await pinData(consolidateMetadata(metadata))
 }

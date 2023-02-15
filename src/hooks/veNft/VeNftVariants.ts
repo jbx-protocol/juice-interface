@@ -1,5 +1,5 @@
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { VARIANTS_HASH } from 'constants/contracts/goerli/veNftProject'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ipfsGetWithFallback } from 'lib/api/ipfs'
 import { VeNftVariant } from 'models/veNft'
 import { useQuery } from 'react-query'
@@ -26,7 +26,8 @@ export function useVeNftVariants() {
       >(file)
       const variants: VeNftVariant[] = Object.entries(data).map(
         ([id, variant]) => {
-          const { name, jbx_range } = variant.metadata
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const { name, jbx_range } = (variant as any).metadata
           const split = jbx_range.split('-')
           const tokensStakedMin = parseInt(split[0].replaceAll(',', ''))
           const tokensStakedMax =

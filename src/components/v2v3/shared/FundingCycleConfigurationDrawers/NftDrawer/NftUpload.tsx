@@ -6,12 +6,12 @@ import TooltipLabel from 'components/TooltipLabel'
 import { VeNftFormFields } from 'components/veNft/VeNftRewardTierModal'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
-import { usePinFileToIpfs } from 'hooks/PinFileToIpfs'
 import { useWallet } from 'hooks/Wallet'
+import { pinImage } from 'lib/api/ipfs'
 import { useContext, useState } from 'react'
 import { classNames } from 'utils/classNames'
 import { featureFlagEnabled } from 'utils/featureFlags'
-import { ipfsRestrictedGatewayUrl } from 'utils/ipfs'
+import { ipfsOpenGatewayUrl } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
 import { NftFormFields } from './NftRewardTierModal'
 
@@ -32,11 +32,10 @@ export default function NftUpload({
   const [uploading, setUploading] = useState<boolean>()
   const [imageRenderLoading, setImageRenderLoading] = useState<boolean>()
   const [percent, setPercent] = useState<number | undefined>(undefined)
-  const pinFileToIpfs = usePinFileToIpfs()
   const wallet = useWallet()
 
   const setValue = (cid?: string) => {
-    const newUrl = cid ? ipfsRestrictedGatewayUrl(cid) : undefined
+    const newUrl = cid ? ipfsOpenGatewayUrl(cid) : undefined
     form.setFieldsValue({ fileUrl: newUrl })
     setImageRenderLoading(true)
     setUploading(false)
@@ -102,14 +101,7 @@ export default function NftUpload({
           setUploading(true)
           setPercent(0)
           try {
-            const val = await pinFileToIpfs({
-              ...req,
-              onProgress: percent => {
-                if (percent) {
-                  setPercent(percent)
-                }
-              },
-            })
+            const val = await pinImage(req.file)
             setValue(val.IpfsHash)
           } catch (e) {
             console.error('Error occurred while uploading', e)

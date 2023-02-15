@@ -368,12 +368,14 @@ export function sumTierFloors(
   rewardTiers: NftRewardTier[],
   tierIds?: number[],
 ) {
-  if (!tierIds) return 0
+  if (tierIds !== undefined && tierIds.length === 0) return 0
 
-  const selectedTiers = rewardTiersFromIds({
-    tierIds,
-    rewardTiers,
-  })
+  const selectedTiers = tierIds
+    ? rewardTiersFromIds({
+        tierIds,
+        rewardTiers,
+      })
+    : rewardTiers
 
   return round(
     selectedTiers.reduce((subSum, tier) => subSum + tier.contributionFloor, 0),

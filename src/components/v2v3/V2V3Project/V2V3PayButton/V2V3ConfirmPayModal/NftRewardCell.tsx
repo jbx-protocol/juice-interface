@@ -5,6 +5,9 @@ import { NftRewardTier } from 'models/nftRewardTier'
 import { classNames } from 'utils/classNames'
 import { ipfsToHttps } from 'utils/ipfs'
 
+const NFT_DISPLAY_HEIGHT_CLASS = 'h-12' //rem height
+const NFT_DISPLAY_WIDTH_CLASS = 'w-12'
+
 export function NftRewardCell({
   nftRewards,
 }: {
@@ -27,7 +30,9 @@ export function NftRewardCell({
 
         return (
           <div className="flex items-center justify-between" key={idx}>
-            <div className="flex h-[50px] items-center justify-start">
+            <div
+              className={`flex ${NFT_DISPLAY_HEIGHT_CLASS} items-center justify-start`}
+            >
               <Tooltip
                 title={tier.description}
                 open={tier.description ? undefined : false}
@@ -37,8 +42,8 @@ export function NftRewardCell({
                   src={ipfsToHttps(tier.fileUrl)}
                   alt={tier.name}
                   crossOrigin="anonymous"
-                  height="50px"
-                  width="50px"
+                  heightClass={NFT_DISPLAY_HEIGHT_CLASS}
+                  widthClass={NFT_DISPLAY_WIDTH_CLASS}
                   playIconPosition="hidden"
                   isSelected
                 />

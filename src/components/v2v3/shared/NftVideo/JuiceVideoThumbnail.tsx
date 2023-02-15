@@ -5,27 +5,26 @@ export type PlayIconPosition = 'hidden' | 'default' | 'center'
 export function JuiceVideoThumbnail({
   src,
   isSelected,
-  width,
-  height,
+  widthClass,
+  heightClass,
   playIconPosition = 'default',
   className = '',
   onLoaded,
 }: {
   src: string
   isSelected?: boolean
-  width?: string | number
-  height?: string | number
+  widthClass?: string | number // rem width
+  heightClass?: string | number // rem height
   playIconPosition?: PlayIconPosition
   className?: string
   onLoaded?: VoidFunction
 }) {
-  const _width = width ? `w-[${width}]` : 'w-full'
-  const _height = height ? `h-[${height}]` : 'h-full'
+  const _width = widthClass ?? 'w-full'
+  const _height = heightClass ?? 'h-full'
 
-  const playIconContainerClassName = 'bottom-[8px] right-2'
-
+  const playIconContainerClassName = 'bottom-3 right-2'
   return (
-    <div className={`${className} top-0 ${_width} ${_height}`}>
+    <div className={`${className} relative top-0 ${_width} ${_height}`}>
       {playIconPosition !== 'hidden' ? (
         <div className={`absolute z-[1] ${playIconContainerClassName}`}>
           <JuicePlayIcon />
@@ -33,7 +32,7 @@ export function JuiceVideoThumbnail({
       ) : null}
       <video
         muted
-        className={`inset-0 ${_width} ${_height}`}
+        className={`h-full w-full`}
         style={{
           filter: isSelected ? 'unset' : 'brightness(50%)',
         }}

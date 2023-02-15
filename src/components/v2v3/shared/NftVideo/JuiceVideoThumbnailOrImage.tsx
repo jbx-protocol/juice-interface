@@ -9,23 +9,23 @@ import { JuiceVideoThumbnail, PlayIconPosition } from './JuiceVideoThumbnail'
 export function JuiceVideoThumbnailOrImage({
   isSelected,
   playIconPosition,
+  heightClass,
+  widthClass,
   ...props
 }: ImageProps & {
   isSelected?: boolean
   playIconPosition?: PlayIconPosition
+  heightClass?: string
+  widthClass?: string
   src: string
 }) {
   const [loading, setLoading] = useState<boolean>(true)
 
   const { data: contentType } = useContentType(props.src)
   const isVideo = contentType === MP4_FILE_TYPE
-  const className = classNames(
-    props.width ? `w-[${props.width}]` : 'w-full',
-    props.height ? `h-[${props.height}]` : 'h-full',
-  )
-
+  const _className = classNames(widthClass ?? 'w-full', heightClass ?? 'h-full')
   return (
-    <div className={className}>
+    <div className={_className}>
       {loading ? (
         <div className="flex h-full w-full items-center justify-center border border-solid border-smoke-200 dark:border-grey-600">
           <LoadingOutlined />
@@ -36,6 +36,8 @@ export function JuiceVideoThumbnailOrImage({
           src={props.src}
           isSelected={isSelected}
           className={props.className}
+          widthClass={widthClass}
+          heightClass={heightClass}
           onLoaded={() => setLoading(false)}
           playIconPosition={playIconPosition}
         />

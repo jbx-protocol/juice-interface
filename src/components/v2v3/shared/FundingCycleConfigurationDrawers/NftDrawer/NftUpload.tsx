@@ -11,7 +11,7 @@ import { pinFile } from 'lib/api/ipfs'
 import { useContext, useState } from 'react'
 import { classNames } from 'utils/classNames'
 import { featureFlagEnabled } from 'utils/featureFlags'
-import { ipfsOpenGatewayUrl } from 'utils/ipfs'
+import { ipfsGatewayUrl } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
 import { NftFormFields } from './NftRewardTierModal'
 
@@ -35,7 +35,7 @@ export default function NftUpload({
   const wallet = useWallet()
 
   const setValue = (cid?: string) => {
-    const newUrl = cid ? ipfsOpenGatewayUrl(cid) : undefined
+    const newUrl = cid ? ipfsGatewayUrl(cid) : undefined
     form.setFieldsValue({ fileUrl: newUrl })
     setImageRenderLoading(true)
     setUploading(false)

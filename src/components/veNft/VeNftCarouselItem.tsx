@@ -38,21 +38,18 @@ const VeNftCarouselItem = ({
     )
   }
 
-  const getCarouselImage = useCallback(
-    ({ useFallback }: { useFallback: boolean }) => {
-      if (!variant) {
-        return undefined
-      }
+  const getCarouselImage = useCallback(() => {
+    if (!variant) {
+      return undefined
+    }
 
-      if (isActive) {
-        return tokenMetadata
-          ? tokenMetadata.thumbnailUri
-          : getVeNftBaseImage(baseImagesHash, variant, { useFallback })
-      }
-      return getVeNftBaseImage(baseImagesHash, variant, { useFallback })
-    },
-    [baseImagesHash, variant, isActive, tokenMetadata],
-  )
+    if (isActive) {
+      return tokenMetadata
+        ? tokenMetadata.thumbnailUri
+        : getVeNftBaseImage(baseImagesHash, variant)
+    }
+    return getVeNftBaseImage(baseImagesHash, variant)
+  }, [baseImagesHash, variant, isActive, tokenMetadata])
 
   return (
     <Col span={8}>
@@ -60,8 +57,8 @@ const VeNftCarouselItem = ({
         <>
           <Image
             className={classNames(isActive ? 'opacity-100' : 'opacity-30')}
-            src={getCarouselImage({ useFallback: false })}
-            fallback={getCarouselImage({ useFallback: true })}
+            src={getCarouselImage()}
+            fallback={getCarouselImage()}
             preview={false}
             width={imgDims}
             height={imgDims}

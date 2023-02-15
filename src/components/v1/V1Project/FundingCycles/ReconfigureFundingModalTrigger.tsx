@@ -1,10 +1,10 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { useRef, useState } from 'react'
 import { Provider } from 'react-redux'
 import store, { createStore } from 'redux/store'
-import { BigNumber } from '@ethersproject/bignumber'
-import ReconfigureFCModal from '../modals/ReconfigureFCModal'
+import ReconfigureFCModal from '../modals/ReconfigureFCModal/ReconfigureFCModal'
 
 // This component uses a local version of the entire Redux store
 // so editing within the Reconfigure Funding modal does not

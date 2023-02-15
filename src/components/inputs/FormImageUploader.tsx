@@ -1,32 +1,26 @@
 import { CloseCircleFilled, FileImageOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { PinataMetadata } from '@pinata/sdk'
 import { Button, Col, message, Row, Space, Upload } from 'antd'
-import { usePinFileToIpfs } from 'hooks/PinFileToIpfs'
+import ExternalLink from 'components/ExternalLink'
 import { useWallet } from 'hooks/Wallet'
+import { pinImage } from 'lib/api/ipfs'
 import { useState } from 'react'
-import { cidFromIpfsUri, ipfsUrl, restrictedIpfsUrl } from 'utils/ipfs'
+import { cidFromIpfsUri, ipfsOpenGatewayUrl, ipfsUri } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
-
-import ExternalLink from '../ExternalLink'
 
 enum ByteUnit {
   KB = 'KB',
   MB = 'MB',
 }
 
-// TODO: This is a double up of `ImageUploader`. We should combine the two.
-
 export const FormImageUploader = ({
   value,
   onChange,
   maxSizeKBs: maxSize,
-  metadata,
   text,
 }: {
   value?: string // IPFS link: `ipfs://${cid}`
   onChange?: (value?: string) => void
-  metadata?: PinataMetadata
   maxSizeKBs?: number
   text?: string
 }) => {
@@ -36,16 +30,15 @@ export const FormImageUploader = ({
   )
 
   const wallet = useWallet()
-  const pinFileToIpfs = usePinFileToIpfs()
 
   const setValue = (cid?: string) => {
     setImageCid(cid)
     // storing images in `ipfs://` format where possible (see issue #1726)
-    const url = cid ? ipfsUrl(cid) : undefined
+    const url = cid ? ipfsUri(cid) : undefined
     onChange?.(url)
   }
 
-  const imageUrl = imageCid ? restrictedIpfsUrl(imageCid) : undefined
+  const imageUrl = imageCid ? ipfsOpenGatewayUrl(imageCid) : undefined
 
   return (
     <Row className="text-grey-500 dark:text-grey-300" gutter={30}>
@@ -91,14 +84,7 @@ export const FormImageUploader = ({
               customRequest={async req => {
                 setLoadingUpload(true)
                 try {
-                  const res = await pinFileToIpfs({
-                    ...req,
-                    metadata,
-                    onProgress: percent => {
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      req.onProgress?.({ percent } as any)
-                    },
-                  })
+                  const res = await pinImage(req.file)
                   setValue(res.IpfsHash)
                 } catch (e) {
                   emitErrorNotification(t`Error uploading file`)

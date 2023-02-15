@@ -52,7 +52,7 @@ export function ProjectHeader({
       <div className="min-w-[70%] flex-1">
         <Space direction="vertical" className="w-full">
           <div className="flex flex-wrap items-start justify-between gap-y-2">
-            <div className="max-w-md md:max-w-xl">
+            <div className="max-w-md">
               <div className="flex items-center">
                 <h1
                   className="mb-2 overflow-hidden text-ellipsis text-4xl text-black dark:text-slate-100"

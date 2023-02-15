@@ -1,4 +1,3 @@
-import { PinataMetadata } from '@pinata/sdk'
 import axios from 'axios'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import {
@@ -92,11 +91,9 @@ export const usePinFileToIpfs = () => {
   const pinFileToIpfs = useCallback(
     async ({
       file,
-      metadata,
       onProgress,
     }: {
       file: File | Blob | string
-      metadata?: PinataMetadata
       onProgress: (percent: number) => void
     }) => {
       let creds = await getCreds()
@@ -104,17 +101,6 @@ export const usePinFileToIpfs = () => {
 
       const formData = new FormData()
       formData.append('file', file)
-      if (metadata) {
-        // TODO: we should make sure we only access strings, numbers, and dates
-        if (metadata.name || metadata.keyvalues) {
-          // metadata is configured correctly
-          formData.append('pinataMetadata', JSON.stringify(metadata))
-        }
-        const metadataWrapper = {
-          keyvalues: metadata,
-        }
-        formData.append('pinataMetadata', JSON.stringify(metadataWrapper))
-      }
 
       let retries = 0
       while (retries < 2) {

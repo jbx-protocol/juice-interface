@@ -1,8 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Form, FormInstance, Space, Switch } from 'antd'
+import FormItemWarningText from 'components/FormItemWarningText'
 import { useEffect, useState } from 'react'
-
-import FormItemWarningText from '../FormItemWarningText'
 
 export type RestrictedActionsFormFields = {
   payIsPaused: boolean

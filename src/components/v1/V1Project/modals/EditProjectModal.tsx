@@ -6,15 +6,10 @@ import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useSetProjectHandleTx } from 'hooks/v1/transactor/SetProjectHandleTx'
 import { useSetProjectUriTx } from 'hooks/v1/transactor/SetProjectUriTx'
-import { editMetadataForCid, uploadProjectMetadata } from 'lib/api/ipfs'
+import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { revalidateProject } from 'lib/api/nextjs'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { useContext, useEffect, useState } from 'react'
-import {
-  cidFromUrl,
-  logoNameForHandle,
-  metadataNameForHandle,
-} from 'utils/ipfs'
 
 type ProjectInfoFormFields = {
   name: string
@@ -81,21 +76,18 @@ export default function EditProjectModal({
 
     const fields = projectInfoForm.getFieldsValue(true)
 
-    const uploadedMetadata = await uploadProjectMetadata(
-      {
-        name: fields.name,
-        description: fields.description,
-        logoUri: fields.logoUri,
-        infoUri: fields.infoUri,
-        twitter: fields.twitter,
-        discord: fields.discord,
-        telegram: fields.telegram,
-        payButton: fields.payButton.substring(0, PROJECT_PAY_CHARACTER_LIMIT), // Enforce limit
-        payDisclosure: fields.payDisclosure,
-        tokens: projectMetadata?.tokens ?? [],
-      },
-      handle,
-    )
+    const uploadedMetadata = await uploadProjectMetadata({
+      name: fields.name,
+      description: fields.description,
+      logoUri: fields.logoUri,
+      infoUri: fields.infoUri,
+      twitter: fields.twitter,
+      discord: fields.discord,
+      telegram: fields.telegram,
+      payButton: fields.payButton.substring(0, PROJECT_PAY_CHARACTER_LIMIT), // Enforce limit
+      payDisclosure: fields.payDisclosure,
+      tokens: projectMetadata?.tokens ?? [],
+    })
 
     if (!uploadedMetadata.IpfsHash) {
       setLoadingSetURI(false)
@@ -111,19 +103,6 @@ export default function EditProjectModal({
 
           if (pv) {
             await revalidateProject({ pv: pv as V1TerminalVersion, handle })
-          }
-
-          // Set name for new metadata file
-          editMetadataForCid(uploadedMetadata.IpfsHash, {
-            name: metadataNameForHandle(handle),
-          })
-
-          // If logo changed
-          if (projectMetadata?.logoUri !== fields.logoUri) {
-            // Set name for new logo file
-            editMetadataForCid(cidFromUrl(fields.logoUri), {
-              name: logoNameForHandle(handle),
-            })
           }
 
           projectInfoForm.resetFields()

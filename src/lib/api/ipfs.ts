@@ -1,8 +1,12 @@
-import { PinataMetadata, PinataPinResponse } from '@pinata/sdk'
+import { PinataPinResponse } from '@pinata/sdk'
 import axios from 'axios'
-import { IPFS_TAGS } from 'constants/ipfs'
 import { consolidateMetadata, ProjectMetadataV6 } from 'models/projectMetadata'
-import { metadataNameForHandle, restrictedIpfsUrl } from 'utils/ipfs'
+import { IpfsLogoResponse } from 'pages/api/ipfs/pinImage.page'
+import {
+  ipfsGatewayUrl,
+  ipfsOpenGatewayUrl,
+  ipfsRestrictedGatewayUrl,
+} from 'utils/ipfs'
 
 // Workaround function for a bug in pinata where the data is sometimes returned in bytes
 const extractJsonFromBase64Data = (base64: string) => {
@@ -67,69 +71,63 @@ export const clientRegister = async (): Promise<{
   }
 }
 
-// TODO: Move to wallet key
-// keyvalues will be upserted to existing metadata. A null value will remove an existing keyvalue
-export const editMetadataForCid = async (
-  cid: string | undefined,
-  options?: PinataMetadata,
-) => {
-  if (!cid) return undefined
-
-  const pinRes = await axios.put(`/api/ipfs/pin/${cid}`, { ...options })
-
-  return pinRes.data
-}
-
 // TODO after the move to Infura for IPFS, we can probably look at removing this.
 export const ipfsGetWithFallback = async <T>(
   hash: string,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   { fallbackHostname }: { fallbackHostname?: string } = {},
 ) => {
-  // Build config for axios get request
-  const response = await axios.get<T>(restrictedIpfsUrl(hash), {
-    responseType: 'json',
+  try {
+    // Build config for axios get request
+    const response = await axios.get<T>(ipfsRestrictedGatewayUrl(hash), {
+      responseType: 'json',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if ((response.data as any).Data?.['/'].bytes) {
+      response.data = extractJsonFromBase64Data(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (response.data as any).Data['/'].bytes,
+      )
+    }
+    return response
+  } catch (error) {
+    const fallbackUrl = fallbackHostname
+      ? ipfsGatewayUrl(hash, fallbackHostname)
+      : ipfsOpenGatewayUrl(hash)
+    console.info(`ipfs::falling back to open gateway for ${hash}`, fallbackUrl)
+
+    const response = await axios.get(fallbackUrl)
+    return response
+  }
+}
+
+export const pinImage = async (image: File | Blob | string) => {
+  const formData = new FormData()
+  formData.append('file', image)
+
+  const res = await axios.post('/api/ipfs/pinImage', formData, {
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
+      'Content-Type': 'multipart/form-data',
     },
   })
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  if ((response.data as any).Data?.['/'].bytes) {
-    response.data = extractJsonFromBase64Data(
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (response.data as any).Data['/'].bytes,
-    )
-  }
-  return response
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  // } catch (error: any) {
-  //   if (error?.response?.status === 400) throw error
-  //   console.info(`ipfs::falling back to open gateway for ${hash}`)
-  //   const response = fallbackHostname
-  //     ? await axios.get(ipfsGatewayUrl(hash, fallbackHostname))
-  //     : await axios.get(openIpfsUrl(hash))
-  //   return response
-  // }
+
+  return res.data as IpfsLogoResponse
+}
+
+export const pinData = async (data: unknown) => {
+  const res = await axios.post('/api/ipfs/pin', {
+    data,
+  })
+
+  return res.data as PinataPinResponse
 }
 
 export const uploadProjectMetadata = async (
   metadata: Omit<ProjectMetadataV6, 'version'>,
-  handle?: string,
 ) => {
-  const res = await axios.post('/api/ipfs/pin', {
-    data: consolidateMetadata(metadata),
-    options: {
-      pinataMetadata: {
-        keyvalues: {
-          tag: IPFS_TAGS.METADATA,
-        },
-        name: handle
-          ? metadataNameForHandle(handle)
-          : 'juicebox-project-metadata.json',
-      },
-    },
-  })
-
-  return res.data as PinataPinResponse
+  return await pinData(consolidateMetadata(metadata))
 }

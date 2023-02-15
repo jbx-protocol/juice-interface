@@ -1,7 +1,6 @@
 import { t } from '@lingui/macro'
 import { Form } from 'antd'
-import { IPFS_TAGS } from 'constants/ipfs'
-import ImageUploader from '../inputs/ImageUploader'
+import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { FormItemExt } from './formItemExt'
 
 export default function ProjectLogoUri({
@@ -17,10 +16,9 @@ export default function ProjectLogoUri({
       label={hideLabel ? undefined : t`Logo`}
       {...formItemProps}
     >
-      <ImageUploader
-        initialUrl={initialUrl}
-        onSuccess={onSuccess}
-        metadata={{ tag: IPFS_TAGS.LOGO }}
+      <FormImageUploader
+        value={initialUrl}
+        onChange={onSuccess}
         maxSizeKBs={10000}
         text={t`Upload`}
       />

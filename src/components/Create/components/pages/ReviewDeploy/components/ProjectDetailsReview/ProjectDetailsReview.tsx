@@ -2,13 +2,10 @@ import { t } from '@lingui/macro'
 import { Col, Row } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
 import ProjectLogo from 'components/ProjectLogo'
-import { useAppSelector } from 'redux/hooks/AppSelector'
 import useMobile from 'hooks/Mobile'
-import { cidFromUrl, restrictedIpfsUrl } from 'utils/ipfs'
+import { useAppSelector } from 'redux/hooks/AppSelector'
 import { DescriptionCol } from '../DescriptionCol'
 import { MobileProjectDetailsReview } from './MobileProjectDetailsReview'
-
-// END: CSS
 
 export const ProjectDetailsReview = () => {
   const isMobile = useMobile()
@@ -62,15 +59,7 @@ export const ProjectDetailsReview = () => {
               span={6}
               title={t`Project logo`}
               desc={
-                <ProjectLogo
-                  className="h-36 w-36"
-                  uri={
-                    logoUri
-                      ? restrictedIpfsUrl(cidFromUrl(logoUri)!)
-                      : undefined
-                  }
-                  name={name}
-                />
+                <ProjectLogo className="h-36 w-36" uri={logoUri} name={name} />
               }
             />
             <Col span={18}>

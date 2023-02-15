@@ -1,8 +1,9 @@
 import { useForm, useWatch } from 'antd/lib/form/Form'
-import { DurationInputValue } from 'components/DurationInput'
+import { DurationInputValue } from 'components/inputs/DurationInput'
+import moment from 'moment'
+import { useDebugValue, useEffect, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/AppDispatch'
 import { useAppSelector } from 'redux/hooks/AppSelector'
-import { useDebugValue, useEffect, useMemo } from 'react'
 import {
   DEFAULT_MUST_START_AT_OR_AFTER,
   editingV2ProjectActions,
@@ -12,7 +13,6 @@ import {
   otherUnitToSeconds,
   secondsToOtherUnit,
 } from 'utils/format/formatTime'
-import moment from 'moment'
 
 export type FundingCyclesFormProps = Partial<{
   selection: 'automated' | 'manual'

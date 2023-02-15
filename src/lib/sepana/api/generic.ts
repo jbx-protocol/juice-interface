@@ -1,5 +1,6 @@
 import { Json } from 'models/json'
 import { SepanaProject, SepanaQueryResponse } from 'models/sepana'
+import { CURRENT_VERSION } from '../constants'
 
 import { SEPANA_ENDPOINTS } from './endpoints'
 import { sepanaAxios } from './http'
@@ -54,6 +55,16 @@ export async function getRecord<T extends object>(id: string) {
  * @param records Projects to write to Sepana database
  */
 export async function writeSepanaRecords(records: Json<SepanaProject>[]) {
+  const missingIds = records.filter(r => r.id === undefined || r.id === null)
+
+  if (missingIds.length) {
+    throw new Error(
+      `${missingIds.length} records are missing an id: ${missingIds
+        .map(p => JSON.stringify(p))
+        .join(', ')}`,
+    )
+  }
+
   const jobs: string[] = []
   const errors: (string | object)[] = []
   const written: Json<SepanaProject>[] = []
@@ -63,7 +74,15 @@ export async function writeSepanaRecords(records: Json<SepanaProject>[]) {
   let page = 0
 
   while (records.length > pageSize * page) {
-    const queue = records.slice(pageSize * page, pageSize * (page + 1))
+    const queue = records
+      .slice(pageSize * page, pageSize * (page + 1))
+      .map(r => ({
+        ...r,
+        // Upserting data in Sepana requires the `_id` param to be included, so we always include it here using `_source.id`
+        // https://docs.sepana.io/sepana-search-api/web3-search-cloud/search-api#request-example-2
+        _id: r.id,
+        _v: CURRENT_VERSION,
+      }))
 
     await sepanaAxios('read/write')
       .post<{ job_id: string }>(SEPANA_ENDPOINTS.insert, {

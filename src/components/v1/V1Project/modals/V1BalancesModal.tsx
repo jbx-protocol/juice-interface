@@ -52,13 +52,10 @@ export function V1BalancesModal({
 
     setLoading(true)
 
-    const uploadedMetadata = await uploadProjectMetadata(
-      {
-        ...projectMetadata,
-        tokens: editingTokenRefs.filter(t => t.type),
-      },
-      handle,
-    )
+    const uploadedMetadata = await uploadProjectMetadata({
+      ...projectMetadata,
+      tokens: editingTokenRefs.filter(t => t.type),
+    })
 
     if (!uploadedMetadata.IpfsHash) {
       setLoading(false)

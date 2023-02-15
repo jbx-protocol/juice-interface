@@ -1,6 +1,5 @@
-import { PinataMetadata } from '@pinata/sdk'
-import { pin } from 'lib/infura/ipfs'
-import { getPinata, getPinnedListByTag } from 'lib/pinata'
+import { pinHash } from 'lib/infura/ipfs'
+import { getPinata } from 'lib/pinata'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 interface ApiRequest extends NextApiRequest {
@@ -9,47 +8,32 @@ interface ApiRequest extends NextApiRequest {
   }
   body: {
     data: string
-    options: {
-      pinataMetadata: PinataMetadata
-    }
   }
 }
 
 const handler = async (req: ApiRequest, res: NextApiResponse) => {
-  if (req.method === 'GET') {
-    const { tag } = req.query
-    if (!tag) return res.status(400)
+  if (req.method !== 'POST') res.status(405).end()
 
+  try {
+    const { data } = req.body
+
+    const pinata = getPinata()
+    // pin on Pinata
+    const pinData = await pinata.pinJSONToIPFS(data)
+
+    // pin on Infura too.
+    // TODO eventually we should only pin on Infura.
     try {
-      const data = await getPinnedListByTag(tag)
-      return res.json(data)
+      pinHash(pinData.IpfsHash)
     } catch (e) {
-      return res.status(500)
+      console.error(e)
     }
-  }
 
-  if (req.method === 'POST') {
-    try {
-      const { data, options } = req.body
-
-      const pinata = getPinata()
-      // pin on Pinata
-      const pinData = await pinata.pinJSONToIPFS(data, options)
-
-      // pin on Infura too.
-      // TODO eventually we should only pin on Infura.
-      try {
-        pin(pinData.IpfsHash)
-      } catch (e) {
-        console.error(e)
-      }
-
-      return res.status(200).json({
-        ...pinData,
-      })
-    } catch (error) {
-      return res.status(500)
-    }
+    return res.status(200).json({
+      ...pinData,
+    })
+  } catch (error) {
+    return res.status(500)
   }
 }
 

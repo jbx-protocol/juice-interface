@@ -4,31 +4,7 @@ import { Json } from 'models/json'
 import { SepanaProject } from 'models/sepana'
 import { NextApiHandler } from 'next'
 import { querySubgraphExhaustiveRaw } from 'utils/graph'
-
-type ProjectKey =
-  | 'id'
-  | 'projectId'
-  | 'pv'
-  | 'handle'
-  | 'metadataUri'
-  | 'currentBalance'
-  | 'totalPaid'
-  | 'createdAt'
-  | 'trendingScore'
-  | 'deployer'
-
-const projectKeys: ProjectKey[] = [
-  'id',
-  'projectId',
-  'pv',
-  'handle',
-  'metadataUri',
-  'currentBalance',
-  'totalPaid',
-  'createdAt',
-  'trendingScore',
-  'deployer',
-]
+import { sgSepanaCompareKeys } from 'utils/sepana'
 
 // Checks integrity of data in Sepana db against the current subgraph data
 const handler: NextApiHandler = async (_, res) => {
@@ -41,9 +17,7 @@ const handler: NextApiHandler = async (_, res) => {
   let report = isEmpty
     ? `Database empty`
     : `Last updated at block: ${Math.max(
-        ...sepanaResponse.data.hits.hits.map(
-          r => r._source.lastUpdated as number,
-        ),
+        ...sepanaResponse.data.hits.hits.map(r => r._source._lastUpdated),
       )}`
 
   let shouldAlert = isEmpty
@@ -58,7 +32,7 @@ const handler: NextApiHandler = async (_, res) => {
     const subgraphProjects = (
       await querySubgraphExhaustiveRaw({
         entity: 'project',
-        keys: projectKeys,
+        keys: sgSepanaCompareKeys,
       })
     ).map(p => ({ ...p, _id: p.id }))
 
@@ -73,44 +47,42 @@ const handler: NextApiHandler = async (_, res) => {
 
     // Check for specific mismatched projects
     for (const sepanaProject of sepanaResponse.data.hits.hits) {
+      const { _source } = sepanaProject
+      const {
+        id,
+        name,
+        metadataUri,
+        _hasUnresolvedMetadata,
+        _metadataRetriesLeft,
+      } = _source
+
       // Ensure that Sepana record IDs are internally consistent
-      if (sepanaProject._id !== sepanaProject._source.id) {
-        sepanaIdErrors.push(
-          `\`[${sepanaProject._id}]\` _source.id: ${sepanaProject._source.id}`,
-        )
+      if (sepanaProject._id !== id) {
+        sepanaIdErrors.push(`\`[${sepanaProject._id}]\` _source.id: ${id}`)
       }
 
-      if (sepanaProject._source.hasUnresolvedMetadata) {
-        projectsMissingMetadata.push(
-          `\`[${sepanaProject._source.id}]\` metadataUri: ${sepanaProject._source.metadataUri}`,
-        )
+      if (_hasUnresolvedMetadata && _metadataRetriesLeft) {
+        projectsMissingMetadata.push(`\`[${id}]\` metadataUri: ${metadataUri}`)
       }
 
       const subgraphProject = subgraphProjects.splice(
-        subgraphProjects.findIndex(el => el.id === sepanaProject._source.id),
+        subgraphProjects.findIndex(el => el.id === id),
         1,
       )[0]
 
       // Ensure that no extra projects exist in Sepana
       if (!subgraphProject) {
-        sepanaExtraProjects.push(
-          `\`[${sepanaProject._source.id}]\` Name: ${sepanaProject._source.name}`,
-        )
+        sepanaExtraProjects.push(`\`[${id}]\` Name: ${name}`)
       }
 
       // Ensure that Sepana records accurately reflect Subgraph data
-      projectKeys.forEach(k => {
+      sgSepanaCompareKeys.forEach(k => {
         // TODO bad types here
-        if (
-          subgraphProject[k as keyof typeof subgraphProject] !==
-          sepanaProject._source[k]
-        ) {
+        if (subgraphProject[k as keyof typeof subgraphProject] !== _source[k]) {
           mismatchedProjects.push(
-            `\`[${sepanaProject._source.id}]\` ${
-              sepanaProject._source.name ?? '<no name>'
-            } **${k}** Subgraph: ${
+            `\`[${id}]\` ${name ?? '<no name>'} **${k}** Subgraph: ${
               subgraphProject[k as keyof typeof subgraphProject]
-            }, Sepana: ${sepanaProject._source[k]}`,
+            }, Sepana: ${_source[k]}`,
           )
         }
       })

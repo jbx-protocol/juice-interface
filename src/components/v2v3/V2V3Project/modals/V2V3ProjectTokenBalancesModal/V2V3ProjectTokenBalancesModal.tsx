@@ -47,13 +47,10 @@ function EditTrackedAssetsModal({
       .tokenRefs.map(t => t.assetInput)
       .map(a => ({ value: a.input, type: a.type }))
 
-    const uploadedMetadata = await uploadProjectMetadata(
-      {
-        ...projectMetadata,
-        tokens: editingTokenRefs.filter(t => t.type),
-      },
-      projectName,
-    )
+    const uploadedMetadata = await uploadProjectMetadata({
+      ...projectMetadata,
+      tokens: editingTokenRefs.filter(t => t.type),
+    })
 
     if (!uploadedMetadata.IpfsHash) {
       setLoading(false)

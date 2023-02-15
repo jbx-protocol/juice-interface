@@ -1,6 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import FormItemLabel from 'components/FormItemLabel'
+import FormItemWarningText from 'components/FormItemWarningText'
 import {
   FUNDING_CYCLE_WARNING_TEXT,
   RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
@@ -12,7 +13,6 @@ import {
   DEFAULT_MINT_RATE,
 } from 'redux/slices/editingV2Project'
 import { formattedNum } from 'utils/format/formatNumber'
-import FormItemWarningText from '../FormItemWarningText'
 import NumberSlider from '../inputs/NumberSlider'
 import FundingCycleDetailWarning from '../Project/FundingCycleDetailWarning'
 import SwitchHeading from '../SwitchHeading'

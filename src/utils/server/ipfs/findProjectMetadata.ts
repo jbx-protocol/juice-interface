@@ -1,5 +1,4 @@
 import Bottleneck from 'bottleneck'
-import { PUBLIC_PINATA_GATEWAY_HOSTNAME } from 'constants/ipfs'
 import { ipfsGetWithFallback } from 'lib/api/ipfs'
 import { AnyProjectMetadata, consolidateMetadata } from 'models/projectMetadata'
 
@@ -20,10 +19,7 @@ export const findProjectMetadata = async ({
   while (true) {
     try {
       const response = await limiter.schedule(
-        async () =>
-          await ipfsGetWithFallback<AnyProjectMetadata>(metadataCid, {
-            fallbackHostname: PUBLIC_PINATA_GATEWAY_HOSTNAME,
-          }),
+        async () => await ipfsGetWithFallback<AnyProjectMetadata>(metadataCid),
       )
       const metadata = consolidateMetadata(response.data)
       Object.keys(metadata).forEach(key =>

@@ -1,7 +1,7 @@
 import { useForm } from 'antd/lib/form/Form'
 import ProjectDetailsForm, {
   ProjectDetailsFormFields,
-} from 'components/forms/ProjectDetailsForm'
+} from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/ProjectDetailsSettingsPage/ProjectDetailsForm'
 import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
 import { PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'

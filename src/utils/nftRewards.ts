@@ -23,7 +23,7 @@ import {
   NftRewardTier,
 } from 'models/nftRewardTier'
 import { V2V3ContractName } from 'models/v2v3/contracts'
-import { decodeEncodedIPFSUri, encodeIPFSUri, ipfsUrl } from 'utils/ipfs'
+import { decodeEncodedIPFSUri, encodeIPFSUri, ipfsUri } from 'utils/ipfs'
 import { V2V3_CURRENCY_ETH } from './v2v3/currency'
 
 import { ForgeDeploy } from './v2v3/loadV2V3Contract'
@@ -422,9 +422,9 @@ export function buildJBDeployTiered721DelegateData({
     name: collectionName,
     symbol: collectionSymbol,
     fundingCycleStore: JBFundingCycleStoreAddress,
-    baseUri: ipfsUrl(''),
+    baseUri: ipfsUri(''),
     tokenUriResolver: constants.AddressZero,
-    contractUri: ipfsUrl(collectionUri),
+    contractUri: ipfsUri(collectionUri),
     owner: ownerAddress,
     pricing,
     reservedTokenBeneficiary: constants.AddressZero,

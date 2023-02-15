@@ -2,9 +2,9 @@ import { t } from '@lingui/macro'
 import { Col, Row } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
 import ProjectLogo from 'components/ProjectLogo'
-import { useAppSelector } from 'redux/hooks/AppSelector'
 import useMobile from 'hooks/Mobile'
-import { cidFromUrl, restrictedIpfsUrl } from 'utils/ipfs'
+import { useAppSelector } from 'redux/hooks/AppSelector'
+import { cidFromUrl, ipfsRestrictedGatewayUrl } from 'utils/ipfs'
 import { DescriptionCol } from '../DescriptionCol'
 import { MobileProjectDetailsReview } from './MobileProjectDetailsReview'
 
@@ -66,7 +66,7 @@ export const ProjectDetailsReview = () => {
                   className="h-36 w-36"
                   uri={
                     logoUri
-                      ? restrictedIpfsUrl(cidFromUrl(logoUri)!)
+                      ? ipfsRestrictedGatewayUrl(cidFromUrl(logoUri)!)
                       : undefined
                   }
                   name={name}

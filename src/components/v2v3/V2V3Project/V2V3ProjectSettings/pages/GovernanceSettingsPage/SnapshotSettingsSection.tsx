@@ -8,7 +8,7 @@ import { useSetENSTextRecordForHandleTx } from 'hooks/v2v3/transactor/SetENSText
 import { pokeSnapshot, uploadSnapshotSettingsToIPFS } from 'lib/snapshot'
 import Link from 'next/link'
 import { useContext, useState } from 'react'
-import { ipfsUrl } from 'utils/ipfs'
+import { ipfsUri } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
 import { helpPagePath } from 'utils/routes'
 
@@ -58,7 +58,7 @@ export function SnapshotSettingsSection() {
         {
           ensName: handle,
           key: 'snapshot',
-          value: ipfsUrl(snapshotSettingsCID),
+          value: ipfsUri(snapshotSettingsCID),
         },
         {
           onConfirmed: async () => {

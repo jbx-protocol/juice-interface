@@ -4,7 +4,7 @@ import { Button, Col, message, Row, Space, Upload } from 'antd'
 import { usePinFileToIpfs } from 'hooks/PinFileToIpfs'
 import { useWallet } from 'hooks/Wallet'
 import { useState } from 'react'
-import { cidFromIpfsUri, ipfsUrl, restrictedIpfsUrl } from 'utils/ipfs'
+import { cidFromIpfsUri, ipfsRestrictedGatewayUrl, ipfsUri } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
 
 import ExternalLink from '../ExternalLink'
@@ -38,11 +38,11 @@ export const FormImageUploader = ({
   const setValue = (cid?: string) => {
     setImageCid(cid)
     // storing images in `ipfs://` format where possible (see issue #1726)
-    const url = cid ? ipfsUrl(cid) : undefined
+    const url = cid ? ipfsUri(cid) : undefined
     onChange?.(url)
   }
 
-  const imageUrl = imageCid ? restrictedIpfsUrl(imageCid) : undefined
+  const imageUrl = imageCid ? ipfsRestrictedGatewayUrl(imageCid) : undefined
 
   return (
     <Row className="text-grey-500 dark:text-grey-300" gutter={30}>

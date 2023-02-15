@@ -29,7 +29,7 @@ export const metadataNameForHandle = (handle: string) =>
  *
  * Its use is origin-restriced.
  */
-export const openIpfsUrl = (cid: string | undefined): string => {
+export const ipfsOpenGatewayUrl = (cid: string | undefined): string => {
   return ipfsGatewayUrl(cid, OPEN_IPFS_GATEWAY_HOSTNAME)
 }
 
@@ -37,15 +37,17 @@ export const openIpfsUrl = (cid: string | undefined): string => {
  * Return a URL to the restricted IPFS gateway for the given cid ON PINATA.
  *
  * The 'restricted' gateway only returns content that we have pinned.
+ *
+ * @deprecated use ipfsOpenGatewayUrl instead
  */
-export const restrictedIpfsUrl = (cid: string | undefined): string => {
+export const ipfsRestrictedGatewayUrl = (cid: string | undefined): string => {
   return ipfsGatewayUrl(cid, RESTRICTED_IPFS_GATEWAY_HOSTNAME)
 }
 
 /**
  * Return an IPFS URI using the IPFS URI scheme.
  */
-export function ipfsUrl(cid: string, path?: string) {
+export function ipfsUri(cid: string, path?: string) {
   return `ipfs://${cid}${path ?? ''}`
 }
 
@@ -72,7 +74,7 @@ export function ipfsToHttps(
   const suffix = cidFromIpfsUri(ipfsUri)
   return gatewayHostname
     ? ipfsGatewayUrl(suffix, gatewayHostname)
-    : openIpfsUrl(suffix)
+    : ipfsOpenGatewayUrl(suffix)
 }
 
 /**

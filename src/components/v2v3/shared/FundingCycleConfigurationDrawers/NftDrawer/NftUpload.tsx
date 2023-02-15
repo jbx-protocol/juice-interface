@@ -11,7 +11,7 @@ import { useWallet } from 'hooks/Wallet'
 import { useContext, useState } from 'react'
 import { classNames } from 'utils/classNames'
 import { featureFlagEnabled } from 'utils/featureFlags'
-import { restrictedIpfsUrl } from 'utils/ipfs'
+import { ipfsRestrictedGatewayUrl } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
 import { NftFormFields } from './NftRewardTierModal'
 
@@ -36,7 +36,7 @@ export default function NftUpload({
   const wallet = useWallet()
 
   const setValue = (cid?: string) => {
-    const newUrl = cid ? restrictedIpfsUrl(cid) : undefined
+    const newUrl = cid ? ipfsRestrictedGatewayUrl(cid) : undefined
     form.setFieldsValue({ fileUrl: newUrl })
     setImageRenderLoading(true)
     setUploading(false)

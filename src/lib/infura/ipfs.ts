@@ -39,7 +39,7 @@ export function pinHash(hash: string) {
  * https://docs.infura.io/infura/networks/ipfs/http-api-methods/pin
  */
 export async function pinFile(
-  file: fs.ReadStream,
+  file: fs.ReadStream | string,
 ): Promise<InfuraPinFileResponse> {
   const formData = new FormData()
   formData.append('file', file)

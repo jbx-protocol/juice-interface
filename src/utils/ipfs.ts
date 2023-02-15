@@ -1,7 +1,4 @@
-import {
-  OPEN_IPFS_GATEWAY_HOSTNAME,
-  RESTRICTED_IPFS_GATEWAY_HOSTNAME,
-} from 'constants/ipfs'
+import { OPEN_IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 import { base58 } from 'ethers/lib/utils'
 
 const IPFS_URL_REGEX = /ipfs:\/\/(.+)/
@@ -21,22 +18,9 @@ export const ipfsGatewayUrl = (
  *
  * The 'open' gateway returns any content that is available on IPFS,
  * not just the content we have pinned.
- *
- * Its use is origin-restriced.
  */
 export const ipfsOpenGatewayUrl = (cid: string | undefined): string => {
   return ipfsGatewayUrl(cid, OPEN_IPFS_GATEWAY_HOSTNAME)
-}
-
-/**
- * Return a URL to the restricted IPFS gateway for the given cid ON PINATA.
- *
- * The 'restricted' gateway only returns content that we have pinned.
- *
- * @deprecated use ipfsOpenGatewayUrl instead
- */
-export const ipfsRestrictedGatewayUrl = (cid: string | undefined): string => {
-  return ipfsGatewayUrl(cid, RESTRICTED_IPFS_GATEWAY_HOSTNAME)
 }
 
 /**

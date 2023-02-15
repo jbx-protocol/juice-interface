@@ -10,13 +10,13 @@ export const config = {
   },
 }
 
-export interface IpfsLogoResponse {
+export interface IpfsPinFileResponse {
   IpfsHash: string
 }
 
 const handler = async (
   req: NextApiRequest,
-  res: NextApiResponse<IpfsLogoResponse | { error: string }>,
+  res: NextApiResponse<IpfsPinFileResponse | { error: string }>,
 ) => {
   if (req.method !== 'POST') res.status(405).end()
 

@@ -1,4 +1,4 @@
-import { ipfsGetWithFallback } from 'lib/api/ipfs'
+import { ipfsGet } from 'lib/api/ipfs'
 import { NftCollectionMetadata } from 'models/nftRewardTier'
 import { useQuery } from 'react-query'
 import { cidFromUrl } from 'utils/ipfs'
@@ -17,7 +17,7 @@ export function useNftCollectionMetadata(uri: string | undefined) {
         throw new Error('NFT Contract URI invalid.')
       }
 
-      const response = await ipfsGetWithFallback<NftCollectionMetadata>(cid)
+      const response = await ipfsGet<NftCollectionMetadata>(cid)
       return response.data
     },
     {

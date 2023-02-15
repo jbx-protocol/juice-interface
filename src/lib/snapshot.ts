@@ -4,7 +4,7 @@ import { juiceboxEmojiImageUri } from 'constants/images'
 import { readNetwork } from 'constants/networks'
 import { WAD_DECIMALS } from 'constants/numbers'
 import { AnyProjectMetadata, ProjectMetadataV6 } from 'models/projectMetadata'
-import { pinData } from './api/ipfs'
+import { pinJson } from './api/ipfs'
 
 /**
  * JB Docs:
@@ -121,7 +121,7 @@ export async function uploadSnapshotSettingsToIPFS({
     JBTokenStoreAddress,
   })
 
-  const res = await pinData(snapshotSettings)
+  const res = await pinJson(snapshotSettings)
   console.info('Uploaded snapshot settings to IPFS: ', res.IpfsHash)
 
   return res.IpfsHash as string

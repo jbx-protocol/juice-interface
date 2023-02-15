@@ -10,7 +10,7 @@ import { readNetwork } from 'constants/networks'
 import { WAD_DECIMALS } from 'constants/numbers'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
 import { defaultAbiCoder, parseEther } from 'ethers/lib/utils'
-import { pinData } from 'lib/api/ipfs'
+import { pinJson } from 'lib/api/ipfs'
 import { round } from 'lodash'
 import {
   IpfsNftCollectionMetadata,
@@ -156,7 +156,7 @@ async function uploadNftRewardToIPFS({
     ],
   }
 
-  const res = await pinData(ipfsNftRewardTier)
+  const res = await pinJson(ipfsNftRewardTier)
 
   return res.IpfsHash
 }
@@ -200,7 +200,7 @@ export async function uploadNftCollectionMetadataToIPFS({
     fee_recipient: undefined,
   }
 
-  const res = await pinData(ipfsNftCollectionMetadata)
+  const res = await pinJson(ipfsNftCollectionMetadata)
   return res.IpfsHash
 }
 

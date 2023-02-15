@@ -1,12 +1,8 @@
-import { PinataPinResponse } from '@pinata/sdk'
 import axios from 'axios'
 import { consolidateMetadata, ProjectMetadataV6 } from 'models/projectMetadata'
-import { IpfsLogoResponse } from 'pages/api/ipfs/pinFile.page'
-import {
-  ipfsGatewayUrl,
-  ipfsOpenGatewayUrl,
-  ipfsRestrictedGatewayUrl,
-} from 'utils/ipfs'
+import { IpfsPinFileResponse } from 'pages/api/ipfs/pinFile.page'
+import { IpfsPinJSONResponse } from 'pages/api/ipfs/pinJSON.page'
+import { ipfsOpenGatewayUrl } from 'utils/ipfs'
 
 // Workaround function for a bug in pinata where the data is sometimes returned in bytes
 const extractJsonFromBase64Data = (base64: string) => {
@@ -71,63 +67,52 @@ export const clientRegister = async (): Promise<{
   }
 }
 
-// TODO after the move to Infura for IPFS, we can probably look at removing this.
-export const ipfsGetWithFallback = async <T>(
-  hash: string,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  { fallbackHostname }: { fallbackHostname?: string } = {},
-) => {
-  try {
-    // Build config for axios get request
-    const response = await axios.get<T>(ipfsRestrictedGatewayUrl(hash), {
-      responseType: 'json',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    })
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    if ((response.data as any).Data?.['/'].bytes) {
-      response.data = extractJsonFromBase64Data(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (response.data as any).Data['/'].bytes,
-      )
-    }
-    return response
-  } catch (error) {
-    const fallbackUrl = fallbackHostname
-      ? ipfsGatewayUrl(hash, fallbackHostname)
-      : ipfsOpenGatewayUrl(hash)
-    console.info(`ipfs::falling back to open gateway for ${hash}`, fallbackUrl)
-
-    const response = await axios.get(fallbackUrl)
-    return response
+export const ipfsGet = async <T>(hash: string) => {
+  // Build config for axios get request
+  const response = await axios.get<T>(ipfsOpenGatewayUrl(hash), {
+    responseType: 'json',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  })
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  if ((response.data as any).Data?.['/'].bytes) {
+    response.data = extractJsonFromBase64Data(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (response.data as any).Data['/'].bytes,
+    )
   }
+  return response
 }
 
 export const pinFile = async (image: File | Blob | string) => {
   const formData = new FormData()
   formData.append('file', image)
 
-  const res = await axios.post('/api/ipfs/pinFile', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
+  const res = await axios.post<IpfsPinFileResponse>(
+    '/api/ipfs/pinFile',
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     },
-  })
+  )
 
-  return res.data as IpfsLogoResponse
+  return res.data
 }
 
-export const pinData = async (data: unknown) => {
-  const res = await axios.post('/api/ipfs/pin', {
+export const pinJson = async (data: unknown) => {
+  const res = await axios.post<IpfsPinJSONResponse>('/api/ipfs/pinJSON', {
     data,
   })
 
-  return res.data as PinataPinResponse
+  return res.data
 }
 
 export const uploadProjectMetadata = async (
   metadata: Omit<ProjectMetadataV6, 'version'>,
 ) => {
-  return await pinData(consolidateMetadata(metadata))
+  return await pinJson(consolidateMetadata(metadata))
 }

@@ -7,7 +7,7 @@ import { Project } from 'models/subgraph-entities/vX/project'
 
 import { formatError } from './format/formatError'
 import { parseBigNumberKeyVals } from './graph'
-import { isIpfsCID, openIpfsUrl } from './ipfs'
+import { ipfsOpenGatewayUrl, isIpfsCID } from './ipfs'
 
 export const sgSepanaCompareKeys: SGSepanaCompareKey[] = [
   'id',
@@ -138,13 +138,16 @@ export async function tryResolveMetadata({
   try {
     const {
       data: { name, description, logoUri },
-    } = await infuraApi.get<AnyProjectMetadata>(openIpfsUrl(metadataUri), {
-      responseType: 'json',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+    } = await infuraApi.get<AnyProjectMetadata>(
+      ipfsOpenGatewayUrl(metadataUri),
+      {
+        responseType: 'json',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
       },
-    })
+    )
 
     return {
       project: {

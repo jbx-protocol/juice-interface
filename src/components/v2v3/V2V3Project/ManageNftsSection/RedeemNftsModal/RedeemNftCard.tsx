@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { NftTierCard } from 'components/NftRewards/NftTierCard'
 import {
   IPFSNftRewardTier,
   NftRewardTier,
@@ -6,8 +7,7 @@ import {
 } from 'models/nftRewardTier'
 import { JB721DelegateToken } from 'models/subgraph-entities/v2/jb-721-delegate-tokens'
 import { useQuery, UseQueryResult } from 'react-query'
-import { cidFromIpfsUri, openIpfsUrl } from 'utils/ipfs'
-import { NftTierCard } from 'components/NftRewards/NftTierCard'
+import { cidFromIpfsUri, ipfsOpenGatewayUrl } from 'utils/ipfs'
 
 function useJB721DelegateTokenMetadata(
   tokenUri: string | undefined,
@@ -17,7 +17,7 @@ function useJB721DelegateTokenMetadata(
     async (): Promise<IPFSNftRewardTier | undefined> => {
       if (!tokenUri) return
 
-      const url = openIpfsUrl(cidFromIpfsUri(tokenUri))
+      const url = ipfsOpenGatewayUrl(cidFromIpfsUri(tokenUri))
       const response = await axios.get(url)
       const tierMetadata: IPFSNftRewardTier = response.data
 

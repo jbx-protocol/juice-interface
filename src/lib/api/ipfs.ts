@@ -1,7 +1,12 @@
 import { PinataPinResponse } from '@pinata/sdk'
 import axios from 'axios'
 import { consolidateMetadata, ProjectMetadataV6 } from 'models/projectMetadata'
-import { ipfsGatewayUrl, openIpfsUrl, restrictedIpfsUrl } from 'utils/ipfs'
+import { IpfsLogoResponse } from 'pages/api/ipfs/pinImage.page'
+import {
+  ipfsGatewayUrl,
+  ipfsOpenGatewayUrl,
+  ipfsRestrictedGatewayUrl,
+} from 'utils/ipfs'
 
 // Workaround function for a bug in pinata where the data is sometimes returned in bytes
 const extractJsonFromBase64Data = (base64: string) => {
@@ -74,7 +79,7 @@ export const ipfsGetWithFallback = async <T>(
 ) => {
   try {
     // Build config for axios get request
-    const response = await axios.get<T>(restrictedIpfsUrl(hash), {
+    const response = await axios.get<T>(ipfsRestrictedGatewayUrl(hash), {
       responseType: 'json',
       headers: {
         Accept: 'application/json',
@@ -92,12 +97,25 @@ export const ipfsGetWithFallback = async <T>(
   } catch (error) {
     const fallbackUrl = fallbackHostname
       ? ipfsGatewayUrl(hash, fallbackHostname)
-      : openIpfsUrl(hash)
+      : ipfsOpenGatewayUrl(hash)
     console.info(`ipfs::falling back to open gateway for ${hash}`, fallbackUrl)
 
     const response = await axios.get(fallbackUrl)
     return response
   }
+}
+
+export const pinImage = async (image: File | Blob | string) => {
+  const formData = new FormData()
+  formData.append('file', image)
+
+  const res = await axios.post('/api/ipfs/pinImage', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+
+  return res.data as IpfsLogoResponse
 }
 
 export const pinData = async (data: unknown) => {

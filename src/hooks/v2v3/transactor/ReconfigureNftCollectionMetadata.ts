@@ -5,7 +5,7 @@ import { useJB721TieredDelegate } from 'hooks/JB721Delegate/contracts/JB721Tiere
 import { TransactorInstance } from 'hooks/Transactor'
 import { NftCollectionMetadata } from 'models/nftRewardTier'
 import { useContext } from 'react'
-import { ipfsUrl } from 'utils/ipfs'
+import { ipfsUri } from 'utils/ipfs'
 import { uploadNftCollectionMetadataToIPFS } from 'utils/nftRewards'
 import { useV2ProjectTitle } from '../ProjectTitle'
 
@@ -36,7 +36,7 @@ export function useReconfigureNftCollectionMetadata({
       collectionInfoUri: projectMetadata?.infoUri,
     })
 
-    return transactor(JB721TieredDelegate, 'setContractUri', [ipfsUrl(uri)], {
+    return transactor(JB721TieredDelegate, 'setContractUri', [ipfsUri(uri)], {
       ...txOpts,
       title: t`Update ${projectTitle}'s NFT collection details.`,
     })

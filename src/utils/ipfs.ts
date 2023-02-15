@@ -16,11 +16,6 @@ export const ipfsGatewayUrl = (
   return `https://${hostname}/ipfs/${cid}`
 }
 
-export const logoNameForHandle = (handle: string) => `juicebox-@${handle}-logo`
-
-export const metadataNameForHandle = (handle: string) =>
-  `juicebox-@${handle}-metadata`
-
 /**
  * Return a URL to our open IPFS gateway for the given cid USING INFURA.
  *
@@ -29,7 +24,7 @@ export const metadataNameForHandle = (handle: string) =>
  *
  * Its use is origin-restriced.
  */
-export const openIpfsUrl = (cid: string | undefined): string => {
+export const ipfsOpenGatewayUrl = (cid: string | undefined): string => {
   return ipfsGatewayUrl(cid, OPEN_IPFS_GATEWAY_HOSTNAME)
 }
 
@@ -37,15 +32,17 @@ export const openIpfsUrl = (cid: string | undefined): string => {
  * Return a URL to the restricted IPFS gateway for the given cid ON PINATA.
  *
  * The 'restricted' gateway only returns content that we have pinned.
+ *
+ * @deprecated use ipfsOpenGatewayUrl instead
  */
-export const restrictedIpfsUrl = (cid: string | undefined): string => {
+export const ipfsRestrictedGatewayUrl = (cid: string | undefined): string => {
   return ipfsGatewayUrl(cid, RESTRICTED_IPFS_GATEWAY_HOSTNAME)
 }
 
 /**
  * Return an IPFS URI using the IPFS URI scheme.
  */
-export function ipfsUrl(cid: string, path?: string) {
+export function ipfsUri(cid: string, path?: string) {
   return `ipfs://${cid}${path ?? ''}`
 }
 
@@ -63,16 +60,16 @@ export const cidFromIpfsUri = (ipfsUri: string) =>
 /**
  * Returns a native IPFS link (`ipfs://`) as a https link.
  */
-export function ipfsToHttps(
+export function ipfsUriToGatewayUrl(
   ipfsUri: string,
   { gatewayHostname }: { gatewayHostname?: string } = {},
 ): string {
-  if (!isIpfsUrl(ipfsUri)) return ipfsUri
+  if (!isIpfsUri(ipfsUri)) return ipfsUri
 
   const suffix = cidFromIpfsUri(ipfsUri)
   return gatewayHostname
     ? ipfsGatewayUrl(suffix, gatewayHostname)
-    : openIpfsUrl(suffix)
+    : ipfsOpenGatewayUrl(suffix)
 }
 
 /**
@@ -80,7 +77,7 @@ export function ipfsToHttps(
  *
  * Hex-encoded CIDs are used to store some CIDs on-chain because they are more gas-efficient.
  */
-export function encodeIPFSUri(cid: string) {
+export function encodeIpfsUri(cid: string) {
   return '0x' + Buffer.from(base58.decode(cid).slice(2)).toString('hex')
 }
 
@@ -89,7 +86,7 @@ export function encodeIPFSUri(cid: string) {
  *
  * Hex-encoded CIDs are used to store some CIDs on-chain because they are more gas-efficient.
  */
-export function decodeEncodedIPFSUri(hex: string) {
+export function decodeEncodedIpfsUri(hex: string) {
   // Add default ipfs values for first 2 bytes:
   // - function:0x12=sha2, size:0x20=256 bits
   // - also cut off leading "0x"
@@ -100,7 +97,7 @@ export function decodeEncodedIPFSUri(hex: string) {
 }
 
 // Determines if a string is a valid IPFS url.
-export function isIpfsUrl(url: string) {
+export function isIpfsUri(url: string) {
   return url.startsWith('ipfs://')
 }
 

@@ -1,6 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { TransactionReceipt } from '@ethersproject/providers'
 import { readProvider } from 'constants/readProvider'
+import { uploadProjectMetadata } from 'lib/api/ipfs'
+import { TransactionCallbacks } from 'models/transaction'
+import { useCallback, useState } from 'react'
 import { useAppDispatch } from 'redux/hooks/AppDispatch'
 import {
   useAppSelector,
@@ -8,14 +11,11 @@ import {
   useEditingV2V3FundingCycleDataSelector,
   useEditingV2V3FundingCycleMetadataSelector,
 } from 'redux/hooks/AppSelector'
-import { uploadProjectMetadata } from 'lib/api/ipfs'
-import { TransactionCallbacks } from 'models/transaction'
-import { useCallback, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { emitErrorNotification } from 'utils/notifications'
 import {
-  useDeployStandardProject,
   useDeployNftProject,
+  useDeployStandardProject,
   useIsNftProject,
   useUploadNftRewards,
 } from './hooks'
@@ -87,6 +87,7 @@ export const useDeployProject = () => {
   const dispatch = useAppDispatch()
 
   const handleDeployFailure = useCallback((error: unknown) => {
+    console.error(error)
     emitErrorNotification(`Error deploying project: ${error}`)
     setIsDeploying(false)
     setTransactionPending(false)

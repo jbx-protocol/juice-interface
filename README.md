@@ -39,8 +39,8 @@ Join the [JuiceboxDAO Discord](https://discord.gg/6jXrJSyDFf) and reach out to t
 
 ## Team
 
-[JuiceboxDAO](https://juicebox.money/p/juicebox) funds [Peel](https://juicebox.money/p/peel) to build and maintain the application. [Learn more](https://www.notion.so/juicebox/Frontend-26b80fcb50b34f3b9356fc7fc5286e05) about Peel.
+[JuiceboxDAO](https://juicebox.money/@juicebox) funds [Peel](https://juicebox.money/@peel) to build and maintain the application. [Learn more](https://www.notion.so/juicebox/Frontend-26b80fcb50b34f3b9356fc7fc5286e05) about Peel.
 
-<a href="https://juicebox.money/p/juicebox">
+<a href="https://juicebox.money/@juicebox">
    <img width="150px" src="https://tools.juicebox.money/public/juicebox-button-yellow.png" />
 </a>

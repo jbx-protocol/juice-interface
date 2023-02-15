@@ -1,10 +1,10 @@
 import { Trans } from '@lingui/macro'
 import { Button, Form, FormInstance, Space } from 'antd'
 import { FormItems } from 'components/formItems'
+import FormItemWarningText from 'components/FormItemWarningText'
+import { RESERVED_RATE_WARNING_THRESHOLD_PERCENT as reservedRateRiskyMin } from 'constants/fundingWarningText'
 import { TicketMod } from 'models/v1/mods'
 import { useLayoutEffect, useState } from 'react'
-import { RESERVED_RATE_WARNING_THRESHOLD_PERCENT as reservedRateRiskyMin } from 'constants/fundingWarningText'
-import FormItemWarningText from '../FormItemWarningText'
 
 export type TicketingFormFields = {
   reserved: number

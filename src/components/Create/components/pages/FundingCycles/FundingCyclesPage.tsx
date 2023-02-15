@@ -1,29 +1,29 @@
 import {
+  CheckCircleFilled,
   InfoCircleOutlined,
   RedoOutlined,
-  CheckCircleFilled,
 } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Form, Space, Tooltip } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
 import { useLockPageRulesWrapper } from 'components/Create/hooks/useLockPageRulesWrapper'
+import { DurationInput } from 'components/inputs/DurationInput'
 import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'
+import { CREATE_FLOW } from 'constants/fathomEvents'
+import { trackFathomGoal } from 'lib/fathom'
 import moment from 'moment'
 import { useContext, useEffect } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { durationMustExistRule } from 'utils/antdRules'
 import { CreateBadge } from '../../CreateBadge'
 import { CreateCollapse } from '../../CreateCollapse'
-import { DurationInput } from 'components/DurationInput'
 import { Icons } from '../../Icons'
 import { OptionalHeader } from '../../OptionalHeader'
 import { Selection } from '../../Selection/Selection'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { FundingCyclesFormProps, useFundingCyclesForm } from './hooks'
-import { trackFathomGoal } from 'lib/fathom'
-import { CREATE_FLOW } from 'constants/fathomEvents'
 
 const FundingCycleCallout: React.FC = () => {
   const form = Form.useFormInstance<FundingCyclesFormProps>()

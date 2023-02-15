@@ -8,12 +8,12 @@ import { DurationUnitsOption } from 'constants/time'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { useAppDispatch } from 'redux/hooks/AppDispatch'
-import { useAppSelector } from 'redux/hooks/AppSelector'
 import isEqual from 'lodash/isEqual'
 import { Split } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { useAppDispatch } from 'redux/hooks/AppDispatch'
+import { useAppSelector } from 'redux/hooks/AppSelector'
 import {
   DEFAULT_FUNDING_CYCLE_METADATA,
   editingV2ProjectActions,

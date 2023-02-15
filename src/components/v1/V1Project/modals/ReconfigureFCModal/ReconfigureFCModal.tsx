@@ -6,32 +6,32 @@ import { Drawer, DrawerProps, Modal, Space, Statistic } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
 import CurrencySymbol from 'components/CurrencySymbol'
-import IncentivesForm, {
-  IncentivesFormFields,
-} from 'components/forms/IncentivesForm'
-import RestrictedActionsForm, {
-  RestrictedActionsFormFields,
-} from 'components/forms/RestrictedActionsForm'
-import TicketingForm, {
-  TicketingFormFields,
-} from 'components/forms/TicketingForm'
 import BudgetForm from 'components/v1/shared/forms/BudgetForm'
 import PayModsForm from 'components/v1/shared/forms/PayModsForm'
 import PayoutModsList from 'components/v1/shared/PayoutModsList'
 import ReconfigurationStrategyDrawer from 'components/v1/shared/ReconfigurationStrategyDrawer'
 import TicketModsList from 'components/v1/shared/TicketModsList'
+import IncentivesForm, {
+  IncentivesFormFields,
+} from 'components/v1/V1Project/modals/ReconfigureFCModal/IncentivesForm'
+import RestrictedActionsForm, {
+  RestrictedActionsFormFields,
+} from 'components/v1/V1Project/modals/ReconfigureFCModal/RestrictedActionsForm'
+import TicketingForm, {
+  TicketingFormFields,
+} from 'components/v1/V1Project/modals/ReconfigureFCModal/TicketingForm'
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { useAppDispatch } from 'redux/hooks/AppDispatch'
-import { useEditingV1FundingCycleSelector } from 'redux/hooks/AppSelector'
 import { useTerminalFee } from 'hooks/v1/TerminalFee'
 import { useConfigureProjectTx } from 'hooks/v1/transactor/ConfigureProjectTx'
 import { BallotStrategy } from 'models/ballot'
-import { PayoutMod, TicketMod } from 'models/v1/mods'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { V1FundingCycle, V1FundingCycleMetadata } from 'models/v1/fundingCycle'
+import { PayoutMod, TicketMod } from 'models/v1/mods'
 import { useCallback, useContext, useLayoutEffect, useState } from 'react'
+import { useAppDispatch } from 'redux/hooks/AppDispatch'
+import { useEditingV1FundingCycleSelector } from 'redux/hooks/AppSelector'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { classNames } from 'utils/classNames'
 import { drawerWidth } from 'utils/drawerWidth'

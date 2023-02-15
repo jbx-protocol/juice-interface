@@ -14,19 +14,3 @@ export const getPinata = () => {
 
   return pinataClient(PINATA_PINNER_KEY, PINATA_PINNER_SECRET)
 }
-
-export const getPinnedListByTag = (tag: string) => {
-  const pinata = getPinata()
-  return pinata.pinList({
-    pageLimit: 1000,
-    status: 'pinned',
-    metadata: {
-      keyvalues: {
-        tag: {
-          value: tag,
-          op: 'eq',
-        },
-      },
-    },
-  })
-}

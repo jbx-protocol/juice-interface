@@ -25,6 +25,6 @@ export const infuraApi = axios.create({
 /**
  * https://docs.infura.io/infura/networks/ipfs/http-api-methods/pin_add
  */
-export function pin(hash: string) {
+export function pinHash(hash: string) {
   return infuraApi.post(`/api/v0/pin/add?arg=${hash}`)
 }

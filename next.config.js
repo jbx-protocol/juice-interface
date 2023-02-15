@@ -6,17 +6,22 @@ const WALLET_CONNECT_URLS = [
   'wss://*.walletconnect.org',
 ].join(' ')
 
+const INFURA_IPFS_URLS = [
+  'https://*.infura-ipfs.io',
+  'https://ipfs.infura.io:5001',
+].join(' ')
+
 const ContentSecurityPolicy = `
   default-src 'none';
   script-src 'self' https://static.hotjar.com https://script.hotjar.com https://*.juicebox.money 'unsafe-inline' 'unsafe-eval';
   style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
   font-src 'self' https://fonts.gstatic.com data:;
-  img-src 'self' https://*.juicebox.money https://juicebox.money https://*.infura-ipfs.io https://jbx.mypinata.cloud data:;
-  connect-src 'self' https://*.juicebox.money https://juicebox.money https://*.infura.io https://*.infura-ipfs.io https://api.pinata.cloud https://jbx.mypinata.cloud https://api.studio.thegraph.com https://gateway.thegraph.com https://api.arcx.money https://api.tenderly.co https://*.hotjar.com https://*.hotjar.io wss://*.hotjar.com https://*.gnosis.io https://*.safe.global https://*.snapshot.org https://*.wallet.coinbase.com ${WALLET_CONNECT_URLS} https://juicenews.beehiiv.com;
+  img-src 'self' https://*.juicebox.money https://juicebox.money ${INFURA_IPFS_URLS} https://jbx.mypinata.cloud data:;
+  connect-src 'self' https://*.juicebox.money https://juicebox.money https://*.infura.io ${INFURA_IPFS_URLS} https://api.pinata.cloud https://jbx.mypinata.cloud https://api.studio.thegraph.com https://gateway.thegraph.com https://api.arcx.money https://api.tenderly.co https://*.hotjar.com https://*.hotjar.io wss://*.hotjar.com https://*.gnosis.io https://*.safe.global https://*.snapshot.org https://*.wallet.coinbase.com ${WALLET_CONNECT_URLS} https://juicenews.beehiiv.com;
   manifest-src 'self';
   prefetch-src 'self';
   frame-src 'self' https://vars.hotjar.com/ https://gnosis-safe.io https://app.safe.global;
-  media-src 'self' https://jbx.mypinata.cloud;
+  media-src 'self' https://jbx.mypinata.cloud ${INFURA_IPFS_URLS};
 `
 
 module.exports = {

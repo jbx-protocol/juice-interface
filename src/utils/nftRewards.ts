@@ -1,17 +1,16 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
-import axios from 'axios'
 import {
   DEFAULT_ALLOW_OVERSPENDING,
   JB721DELAGATE_V1_1_PAY_METADATA,
   JB721DELAGATE_V1_PAY_METADATA,
 } from 'components/Project/PayProjectForm/hooks/PayProjectForm'
 import { juiceboxEmojiImageUri } from 'constants/images'
-import { IPFS_TAGS } from 'constants/ipfs'
 import { readNetwork } from 'constants/networks'
 import { WAD_DECIMALS } from 'constants/numbers'
-import { defaultAbiCoder, parseEther } from 'ethers/lib/utils'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
+import { defaultAbiCoder, parseEther } from 'ethers/lib/utils'
+import { pinData } from 'lib/api/ipfs'
 import { round } from 'lodash'
 import {
   IpfsNftCollectionMetadata,
@@ -157,19 +156,9 @@ async function uploadNftRewardToIPFS({
     ],
   }
 
-  const res = await axios.post<{ IpfsHash: string }>('/api/ipfs/pin', {
-    data: ipfsNftRewardTier,
-    options: {
-      pinataMetadata: {
-        keyvalues: {
-          tag: IPFS_TAGS.NFT_REWARDS,
-        },
-        name: `nft-rewards_${ipfsNftRewardTier.name}`,
-      },
-    },
-  })
+  const res = await pinData(ipfsNftRewardTier)
 
-  return res.data.IpfsHash
+  return res.IpfsHash
 }
 
 // Uploads each nft reward tier to an individual location on IPFS
@@ -210,18 +199,9 @@ export async function uploadNftCollectionMetadataToIPFS({
       : 'https://juicebox.money',
     fee_recipient: undefined,
   }
-  const res = await axios.post<{ IpfsHash: string }>('/api/ipfs/pin', {
-    data: ipfsNftCollectionMetadata,
-    options: {
-      pinataMetadata: {
-        keyvalues: {
-          tag: IPFS_TAGS.NFT_REWARDS_COLLECTION_METADATA,
-        },
-        name: collectionName,
-      },
-    },
-  })
-  return res.data.IpfsHash
+
+  const res = await pinData(ipfsNftCollectionMetadata)
+  return res.IpfsHash
 }
 
 // Determines if two NFT reward tiers are equal

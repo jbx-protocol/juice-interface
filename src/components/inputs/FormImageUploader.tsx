@@ -1,6 +1,5 @@
 import { CloseCircleFilled, FileImageOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { PinataMetadata } from '@pinata/sdk'
 import { Button, Col, message, Row, Space, Upload } from 'antd'
 import { usePinFileToIpfs } from 'hooks/PinFileToIpfs'
 import { useWallet } from 'hooks/Wallet'
@@ -21,12 +20,10 @@ export const FormImageUploader = ({
   value,
   onChange,
   maxSizeKBs: maxSize,
-  metadata,
   text,
 }: {
   value?: string // IPFS link: `ipfs://${cid}`
   onChange?: (value?: string) => void
-  metadata?: PinataMetadata
   maxSizeKBs?: number
   text?: string
 }) => {
@@ -93,7 +90,6 @@ export const FormImageUploader = ({
                 try {
                   const res = await pinFileToIpfs({
                     ...req,
-                    metadata,
                     onProgress: percent => {
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       req.onProgress?.({ percent } as any)

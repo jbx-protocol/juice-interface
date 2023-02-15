@@ -1,7 +1,7 @@
 import { PinataPinResponse } from '@pinata/sdk'
 import axios from 'axios'
 import { consolidateMetadata, ProjectMetadataV6 } from 'models/projectMetadata'
-import { IpfsLogoResponse } from 'pages/api/ipfs/pinImage.page'
+import { IpfsLogoResponse } from 'pages/api/ipfs/pinFile.page'
 import {
   ipfsGatewayUrl,
   ipfsOpenGatewayUrl,
@@ -105,11 +105,11 @@ export const ipfsGetWithFallback = async <T>(
   }
 }
 
-export const pinImage = async (image: File | Blob | string) => {
+export const pinFile = async (image: File | Blob | string) => {
   const formData = new FormData()
   formData.append('file', image)
 
-  const res = await axios.post('/api/ipfs/pinImage', formData, {
+  const res = await axios.post('/api/ipfs/pinFile', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },

@@ -15,7 +15,7 @@ import PrefixedInput from 'components/PrefixedInput'
 import { MP4_FILE_TYPE } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { useWallet } from 'hooks/Wallet'
-import { pinImage } from 'lib/api/ipfs'
+import { pinFile } from 'lib/api/ipfs'
 import { UploadRequestOption } from 'rc-upload/lib/interface'
 import { useCallback, useEffect, useState } from 'react'
 import {
@@ -140,8 +140,7 @@ export const AddEditRewardModal = ({
   const onCustomRequest = useCallback(async (options: UploadRequestOption) => {
     const { file } = options
     try {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const res = await pinImage(file)
+      const res = await pinFile(file)
       if (!res) throw new Error('Failed to pin file to IPFS')
       const uri = ipfsUri(res.IpfsHash)
       return uri

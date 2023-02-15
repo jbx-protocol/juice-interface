@@ -7,7 +7,7 @@ import { VeNftFormFields } from 'components/veNft/VeNftRewardTierModal'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { useWallet } from 'hooks/Wallet'
-import { pinImage } from 'lib/api/ipfs'
+import { pinFile } from 'lib/api/ipfs'
 import { useContext, useState } from 'react'
 import { classNames } from 'utils/classNames'
 import { featureFlagEnabled } from 'utils/featureFlags'
@@ -101,7 +101,7 @@ export default function NftUpload({
           setUploading(true)
           setPercent(0)
           try {
-            const val = await pinImage(req.file)
+            const val = await pinFile(req.file)
             setValue(val.IpfsHash)
           } catch (e) {
             console.error('Error occurred while uploading', e)

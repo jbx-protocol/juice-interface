@@ -8,7 +8,7 @@ import { pinData } from './api/ipfs'
 
 /**
  * JB Docs:
- * https://info.juicebox.money/user/governance/snapshot
+ * https://docs.juicebox.money/user/governance/snapshot
  *
  * Snapshot docs:
  * https://docs.snapshot.org/spaces/create/alternative-way-to-create-a-space

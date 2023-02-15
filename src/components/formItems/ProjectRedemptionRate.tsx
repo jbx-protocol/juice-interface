@@ -1,18 +1,15 @@
 import { Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
-
-import FormItemLabel from 'components/FormItemLabel'
-import { useState } from 'react'
-
+import { Callout } from 'components/Callout'
 import ExternalLink from 'components/ExternalLink'
+import FormItemLabel from 'components/FormItemLabel'
+import FormItemWarningText from 'components/FormItemWarningText'
 import { MinimalCollapse } from 'components/MinimalCollapse'
-
 import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph/TokenRedemptionRateGraph'
-import FormItemWarningText from '../FormItemWarningText'
+import { useState } from 'react'
 import NumberSlider from '../inputs/NumberSlider'
 import SwitchHeading from '../SwitchHeading'
 import { FormItemExt } from './formItemExt'
-import { Callout } from 'components/Callout'
 
 export const DEFAULT_BONDING_CURVE_RATE_PERCENTAGE = 100
 

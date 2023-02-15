@@ -1,11 +1,11 @@
 import { t, Trans } from '@lingui/macro'
 import { Space } from 'antd'
+import FormItemWarningText from 'components/FormItemWarningText'
 import ReconfigurationStrategyOption from 'components/ReconfigurationStrategy/ReconfigurationStrategyOption'
 import { BallotStrategy } from 'models/ballot'
 import { useState } from 'react'
 import { isEqualAddress } from 'utils/address'
 import { createCustomStrategy } from 'utils/ballot'
-import FormItemWarningText from '../FormItemWarningText'
 import { CustomStrategyInput } from './CustomStrategyInput'
 
 const CUSTOM_STRATEGY_INDEX = -1

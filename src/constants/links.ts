@@ -1,1 +1,1 @@
-export const TERMS_OF_SERVICE_URL = 'https://info.juicebox.money/tos'
+export const TERMS_OF_SERVICE_URL = 'https://docs.juicebox.money/tos'

@@ -63,7 +63,7 @@ export const resourcesMenuItems = (mobile?: boolean): ResourceItem[] => {
     {
       key: 'docs',
       label: (
-        <a href="https://info.juicebox.money/" {...linkStyle}>
+        <a href="https://docs.juicebox.money/" {...linkStyle}>
           <Trans>Docs</Trans>
         </a>
       ),

@@ -189,7 +189,7 @@ export const CustomTokenSettings = () => {
             <Trans>
               The redemption rate determines the amount of overflow each token
               can be redeemed for.{' '}
-              <ExternalLink href="https://info.juicebox.money/dev/learn/glossary/redemption-rate">
+              <ExternalLink href="https://docs.juicebox.money/dev/learn/glossary/redemption-rate">
                 Learn more.
               </ExternalLink>
             </Trans>

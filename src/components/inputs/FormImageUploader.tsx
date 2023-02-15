@@ -3,7 +3,7 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Col, message, Row, Space, Upload } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { useWallet } from 'hooks/Wallet'
-import { pinImage } from 'lib/api/ipfs'
+import { pinFile } from 'lib/api/ipfs'
 import { useState } from 'react'
 import { cidFromIpfsUri, ipfsOpenGatewayUrl, ipfsUri } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
@@ -84,7 +84,7 @@ export const FormImageUploader = ({
               customRequest={async req => {
                 setLoadingUpload(true)
                 try {
-                  const res = await pinImage(req.file)
+                  const res = await pinFile(req.file)
                   setValue(res.IpfsHash)
                 } catch (e) {
                   emitErrorNotification(t`Error uploading file`)

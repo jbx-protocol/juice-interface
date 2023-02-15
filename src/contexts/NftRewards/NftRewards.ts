@@ -13,7 +13,7 @@ import { decodeEncodedIpfsUri, ipfsOpenGatewayUrl } from 'utils/ipfs'
 
 export const DEFAULT_NFT_MAX_SUPPLY = ONE_BILLION - 1
 
-async function fetchRewardTierFromIPFS({
+async function fetchRewardTierMetadata({
   tier,
 }: {
   tier: JB721TierParams
@@ -63,7 +63,7 @@ export default function useNftRewards(
 
       return await Promise.all(
         tiers.map(tier =>
-          fetchRewardTierFromIPFS({
+          fetchRewardTierMetadata({
             tier,
           }),
         ),

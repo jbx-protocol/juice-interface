@@ -14,8 +14,8 @@ import {
 import PrefixedInput from 'components/PrefixedInput'
 import { MP4_FILE_TYPE } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { usePinFileToIpfs } from 'hooks/PinFileToIpfs'
 import { useWallet } from 'hooks/Wallet'
+import { pinFile } from 'lib/api/ipfs'
 import { UploadRequestOption } from 'rc-upload/lib/interface'
 import { useCallback, useEffect, useState } from 'react'
 import {
@@ -26,7 +26,7 @@ import {
   inputNonZeroRule,
 } from 'utils/antdRules'
 import { featureFlagEnabled } from 'utils/featureFlags'
-import { ipfsRestrictedGatewayUrl } from 'utils/ipfs'
+import { ipfsOpenGatewayUrl } from 'utils/ipfs'
 import { v4 } from 'uuid'
 import { CreateCollapse } from '../CreateCollapse'
 import { OptionalHeader } from '../OptionalHeader'
@@ -64,7 +64,6 @@ export const AddEditRewardModal = ({
   const [isReservingNfts, setIsReservingNfts] = useState<boolean>(false)
   const [advancedOptionsOpen, setAdvancedOptionsOpen] = useState<boolean>(false)
 
-  const pinFileToIpfs = usePinFileToIpfs()
   const wallet = useWallet()
 
   useEffect(() => {
@@ -138,23 +137,19 @@ export const AddEditRewardModal = ({
     form.resetFields()
   }, [form, onCancel])
 
-  const onCustomRequest = useCallback(
-    async (options: UploadRequestOption) => {
-      const { file, onProgress } = options
-      try {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const res = await pinFileToIpfs({ file, onProgress: onProgress as any })
-        if (!res) throw new Error('Failed to pin file to IPFS')
-        const url = ipfsRestrictedGatewayUrl(res.IpfsHash)
-        return url
-      } catch (err) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        options.onError?.(null as any)
-        throw err
-      }
-    },
-    [pinFileToIpfs],
-  )
+  const onCustomRequest = useCallback(async (options: UploadRequestOption) => {
+    const { file } = options
+    try {
+      const res = await pinFile(file)
+      if (!res) throw new Error('Failed to pin file to IPFS')
+      const url = ipfsOpenGatewayUrl(res.IpfsHash)
+      return url
+    } catch (err) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      options.onError?.(null as any)
+      throw err
+    }
+  }, [])
 
   const onBeforeUpload = useCallback(async () => {
     let walletConnected = wallet.isConnected

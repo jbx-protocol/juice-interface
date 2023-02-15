@@ -3,7 +3,7 @@ import ExternalLink from 'components/ExternalLink'
 import { JuiceVideoThumbnailOrImage } from 'components/v2v3/shared/NftVideo/JuiceVideoThumbnailOrImage'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { classNames } from 'utils/classNames'
-import { ipfsToHttps } from 'utils/ipfs'
+import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 
 const NFT_DISPLAY_HEIGHT_CLASS = 'h-12' //rem height
 const NFT_DISPLAY_WIDTH_CLASS = 'w-12'
@@ -39,7 +39,7 @@ export function NftRewardCell({
                 className={'pt-0'}
               >
                 <JuiceVideoThumbnailOrImage
-                  src={ipfsToHttps(tier.fileUrl)}
+                  src={ipfsUriToGatewayUrl(tier.fileUrl)}
                   alt={tier.name}
                   crossOrigin="anonymous"
                   heightClass={NFT_DISPLAY_HEIGHT_CLASS}

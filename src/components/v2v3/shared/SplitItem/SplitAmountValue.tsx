@@ -60,7 +60,9 @@ export function SplitAmountValue({ props }: { props: SplitProps }) {
         <span>
           (
           <CurrencySymbol currency={curr} />
-          {splitValueFormatted}
+          {props.showFees
+            ? splitValueFormatted
+            : formatWad(splitValue, { precision: 0 })}
           {props.valueSuffix ? <span> {props.valueSuffix}</span> : null})
         </span>
       </Tooltip>

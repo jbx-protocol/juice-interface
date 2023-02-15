@@ -65,11 +65,11 @@ export const cidFromIpfsUri = (ipfsUri: string) =>
 /**
  * Returns a native IPFS link (`ipfs://`) as a https link.
  */
-export function ipfsToHttps(
+export function ipfsUriToGatewayUrl(
   ipfsUri: string,
   { gatewayHostname }: { gatewayHostname?: string } = {},
 ): string {
-  if (!isIpfsUrl(ipfsUri)) return ipfsUri
+  if (!isIpfsUri(ipfsUri)) return ipfsUri
 
   const suffix = cidFromIpfsUri(ipfsUri)
   return gatewayHostname
@@ -82,7 +82,7 @@ export function ipfsToHttps(
  *
  * Hex-encoded CIDs are used to store some CIDs on-chain because they are more gas-efficient.
  */
-export function encodeIPFSUri(cid: string) {
+export function encodeIpfsUri(cid: string) {
   return '0x' + Buffer.from(base58.decode(cid).slice(2)).toString('hex')
 }
 
@@ -91,7 +91,7 @@ export function encodeIPFSUri(cid: string) {
  *
  * Hex-encoded CIDs are used to store some CIDs on-chain because they are more gas-efficient.
  */
-export function decodeEncodedIPFSUri(hex: string) {
+export function decodeEncodedIpfsUri(hex: string) {
   // Add default ipfs values for first 2 bytes:
   // - function:0x12=sha2, size:0x20=256 bits
   // - also cut off leading "0x"
@@ -102,7 +102,7 @@ export function decodeEncodedIPFSUri(hex: string) {
 }
 
 // Determines if a string is a valid IPFS url.
-export function isIpfsUrl(url: string) {
+export function isIpfsUri(url: string) {
   return url.startsWith('ipfs://')
 }
 

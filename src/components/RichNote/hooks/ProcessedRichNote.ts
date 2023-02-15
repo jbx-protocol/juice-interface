@@ -1,7 +1,7 @@
 import { IPFS_LINK_REGEX } from 'constants/ipfs'
 import { ProjectPreferences } from 'constants/projectPreferences'
 import { useEffect, useMemo, useState } from 'react'
-import { ipfsToHttps } from 'utils/ipfs'
+import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 import { loadAllMediaLinks } from './loadAllMediaLinks'
 
 // Gets strings that start with 'https'
@@ -30,7 +30,7 @@ export const useProcessedRichNote = (note: string | undefined) => {
     noteParts // split with space or newline
       .map(word => {
         if (word.match(IPFS_LINK_REGEX)) {
-          return `\n${ipfsToHttps(word)}`
+          return `\n${ipfsUriToGatewayUrl(word)}`
         } else if (word.match(URLRegex)) {
           return `\n${word}`
         }

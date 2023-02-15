@@ -3,7 +3,7 @@ import { Image } from 'antd'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useState } from 'react'
 import { classNames } from 'utils/classNames'
-import { ipfsToHttps } from 'utils/ipfs'
+import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 
 // Appears in the 'NFTs for you' row of table in the confirm pay modal
 export function NftRewardImagePreview({
@@ -21,7 +21,7 @@ export function NftRewardImagePreview({
           'w-12 object-cover',
           imageLoading ? 'hidden' : '',
         )}
-        src={ipfsToHttps(rewardTier.fileUrl)}
+        src={ipfsUriToGatewayUrl(rewardTier.fileUrl)}
         alt={rewardTier.name}
         height={'50px'}
         onLoad={() => setImageLoading(false)}

@@ -23,7 +23,7 @@ import {
   NftRewardTier,
 } from 'models/nftRewardTier'
 import { V2V3ContractName } from 'models/v2v3/contracts'
-import { decodeEncodedIPFSUri, encodeIPFSUri, ipfsUri } from 'utils/ipfs'
+import { decodeEncodedIpfsUri, encodeIpfsUri, ipfsUri } from 'utils/ipfs'
 import { V2V3_CURRENCY_ETH } from './v2v3/currency'
 
 import { ForgeDeploy } from './v2v3/loadV2V3Contract'
@@ -102,7 +102,7 @@ export function CIDsOfNftRewardTiersResponse(
   const cids =
     nftRewardTiersResponse
       ?.map((contractRewardTier: JB721TierParams) => {
-        return decodeEncodedIPFSUri(contractRewardTier.encodedIPFSUri)
+        return decodeEncodedIpfsUri(contractRewardTier.encodedIPFSUri)
       })
       .filter(cid => cid.length > 0) ?? []
 
@@ -241,7 +241,7 @@ export function buildJB721TierParams({
       const initialQuantity = BigNumber.from(
         maxSupply ?? DEFAULT_NFT_MAX_SUPPLY,
       )
-      const encodedIPFSUri = encodeIPFSUri(cid)
+      const encodedIPFSUri = encodeIpfsUri(cid)
 
       const reservedRate = rewardTiers[index].reservedRate
         ? BigNumber.from(rewardTiers[index].reservedRate! - 1)

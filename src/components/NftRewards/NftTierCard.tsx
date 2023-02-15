@@ -3,13 +3,13 @@ import { t } from '@lingui/macro'
 import { Skeleton } from 'antd'
 import { MP4_FILE_TYPE } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload'
 import { JuiceVideoThumbnail } from 'components/v2v3/shared/NftVideo/JuiceVideoThumbnail'
-import { useContentType } from 'hooks/ContentType'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
+import { useContentType } from 'hooks/ContentType'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
 import { classNames } from 'utils/classNames'
-import { ipfsToHttps } from 'utils/ipfs'
+import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 import { NftPreview } from './NftPreview'
 import { QuantitySelector } from './QuantitySelector'
 
@@ -40,7 +40,7 @@ export function NftTierCard({
   const [previousQuantity, setPreviousQuantity] = useState<number>(1)
 
   const fileUrl = rewardTier?.fileUrl
-    ? ipfsToHttps(rewardTier.fileUrl)
+    ? ipfsUriToGatewayUrl(rewardTier.fileUrl)
     : rewardTier?.fileUrl
 
   const hasQuantitySelected = quantitySelected > 0

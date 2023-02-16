@@ -1253,9 +1253,6 @@ msgstr ""
 msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise unclaimed {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
 msgstr ""
 
-msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise, unclaimed {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
-msgstr ""
-
 msgid "Enabling token minting will appear risky to contributors."
 msgstr ""
 
@@ -2097,9 +2094,6 @@ msgid "Not quite ready to launch? Your project details will be saved as a 'draft
 msgstr ""
 
 msgid "Not set"
-msgstr ""
-
-msgid "Note: Tokens can be minted manually when allowed in the current funding cycle. This can be changed by the project owner for upcoming cycles."
 msgstr ""
 
 msgid "Notice from {0}"
@@ -3314,6 +3308,9 @@ msgstr ""
 msgid "Token printing allowed"
 msgstr ""
 
+msgid "Token receiver"
+msgstr ""
+
 msgid "Token redeem value"
 msgstr ""
 
@@ -3348,6 +3345,9 @@ msgid "Tokens are earned by anyone who pays your project, and can be redeemed fo
 msgstr ""
 
 msgid "Tokens are required."
+msgstr ""
+
+msgid "Tokens can be minted manually when allowed in the current funding cycle. The project owner can change this rule for upcoming cycles."
 msgstr ""
 
 msgid "Tokens can be minted manually when allowed in the current funding cycle. The project owner can enable or disable minting for upcoming cycles."
@@ -3720,6 +3720,9 @@ msgid "When enabled, your project can't accept payments."
 msgstr ""
 
 msgid "When enabled, your project cannot receive direct payments."
+msgstr ""
+
+msgid "When enabled, {tokenSymbol} ERC-20 tokens are minted. When disabled, unclaimed {tokenSymbol} tokens will be minted, which the receiver can claim later as ERC-20."
 msgstr ""
 
 msgid "When the Payment Address receives a payment, project tokens will be minted to this token beneficiary address. The address that made the payment <0>won't receive any project tokens.</0>"

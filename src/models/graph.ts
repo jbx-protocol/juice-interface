@@ -127,6 +127,8 @@ export interface SGQueryOpts<E extends SGEntityName, K extends SGEntityKey<E>> {
   where?: SGWhereArg<E> | SGWhereArg<E>[]
 }
 
+type SingularFromPlural<P> = P extends `${infer S}s` ? S : never
+
 type SGQueryOptEntityKey<
   E extends SGEntityName,
   T extends SGEntityKey<E>,
@@ -136,6 +138,8 @@ type SGQueryOptEntityKey<
       entity: T
       keys: SGEntityKey<T>[]
     }
+  : T extends `${SGEntityName}s`
+  ? { entity: T; keys: SGEntityKey<SingularFromPlural<T>>[] }
   : never
 
 // Re-type SGQueryOpts to remove skip and add pageSize.

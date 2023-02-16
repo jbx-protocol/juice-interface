@@ -1202,6 +1202,9 @@ msgstr ""
 msgid "Edit details of {projectTitle}"
 msgstr ""
 
+msgid "Edit funding cycle"
+msgstr ""
+
 msgid "Edit handle of {projectTitle}"
 msgstr ""
 
@@ -1853,13 +1856,13 @@ msgstr ""
 msgid "Message sent!"
 msgstr ""
 
-msgid "Migrate Controller contract"
-msgstr ""
-
 msgid "Migrate all approved tokens"
 msgstr ""
 
 msgid "Migrate legacy tokens"
+msgstr ""
+
+msgid "Migrate project's Controller"
 msgstr ""
 
 msgid "Migrate tokens"
@@ -3801,6 +3804,9 @@ msgid "You have unsaved changes. Are you sure you want to discard them?"
 msgstr ""
 
 msgid "You haven't created any projects yet."
+msgstr ""
+
+msgid "You must edit your funding cycle rules to allow controller migrations."
 msgstr ""
 
 msgid "You must grant permission to migrate your V1 tokens."

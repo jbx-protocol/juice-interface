@@ -3,7 +3,6 @@ import { Button } from 'antd'
 import { InfoCallout } from 'components/Callout/InfoCallout'
 import EtherscanLink from 'components/EtherscanLink'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
-import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useMigrateControllerTx } from 'hooks/v2v3/transactor/MigrateControllerTx'
@@ -53,13 +52,12 @@ export function MigrateProjectController({
 }) {
   const { execute, loading } = useTransactionExecutor(useMigrateControllerTx())
   const { projectId } = useContext(ProjectMetadataContext)
-  const { contracts } = useContext(V2V3ContractsContext)
   const { fundingCycleMetadata, handle } = useContext(V2V3ProjectContext)
 
   function onClick() {
     execute({
       projectId,
-      newControllerAddress: contracts?.JBController3_0_1.address,
+      newControllerAddress: controllerAddress,
     })
   }
 

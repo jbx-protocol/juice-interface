@@ -3,6 +3,7 @@ import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Form, Input, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
+import { InfoCallout } from 'components/Callout/InfoCallout'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/TransactionModal'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
@@ -98,17 +99,16 @@ export function V2V3MintModal({
       onCancel={onCancel}
       okText={t`Mint ${tokensTokenLower}`}
     >
-      <div className="mb-5">
+      <InfoCallout className="mb-5">
         <Trans>
-          Note: Tokens can be minted manually when allowed in the current
-          funding cycle. This can be changed by the project owner for upcoming
-          cycles.
+          Tokens can be minted manually when allowed in the current funding
+          cycle. The project owner can change this rule for upcoming cycles.
         </Trans>
-      </div>
+      </InfoCallout>
 
       <Form layout="vertical" form={form}>
         <Form.Item
-          label={t`Tokens receiver`}
+          label={t`Token receiver`}
           name="beneficary"
           rules={[
             {
@@ -144,23 +144,20 @@ export function V2V3MintModal({
         >
           <FormattedNumberInput placeholder="0" />
         </Form.Item>
-        <br />
         <Form.Item label="Memo" name="memo">
           <Input placeholder="Memo included on-chain (optional)" />
         </Form.Item>
-        <Form.Item
-          name="preferClaimed"
-          label={t`Mint as ERC-20`}
-          valuePropName="checked"
-          extra={
-            erc20Issued
-              ? t`Enabling this will mint ${tokenSymbol} ERC-20 tokens. Otherwise, unclaimed ${tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver.`
-              : t`ERC-20 tokens can only be minted once an ERC-20 token has been issued for this project.`
-          }
-          initialValue={false}
-        >
-          <Switch disabled={!erc20Issued} />
-        </Form.Item>
+        {erc20Issued && (
+          <Form.Item
+            name="preferClaimed"
+            label={t`Mint as ERC-20`}
+            valuePropName="checked"
+            extra={t`When enabled, ${tokenSymbol} ERC-20 tokens are minted. When disabled, unclaimed ${tokenSymbol} tokens will be minted, which the receiver can claim later as ERC-20.`}
+            initialValue={false}
+          >
+            <Switch />
+          </Form.Item>
+        )}
       </Form>
     </TransactionModal>
   )

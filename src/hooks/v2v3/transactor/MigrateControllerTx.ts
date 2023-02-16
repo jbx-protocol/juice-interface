@@ -11,7 +11,7 @@ import { useContext } from 'react'
 import invariant from 'tiny-invariant'
 
 export function useMigrateControllerTx(): TransactorInstance<{
-  projectId: string | undefined
+  projectId: number | undefined
   newControllerAddress: string | undefined
 }> {
   const { transactor } = useContext(TransactionContext)

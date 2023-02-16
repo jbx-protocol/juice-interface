@@ -3347,9 +3347,6 @@ msgstr ""
 msgid "Tokens are required."
 msgstr ""
 
-msgid "Tokens can be minted manually when allowed in the current funding cycle. The project owner can change this rule for upcoming cycles."
-msgstr ""
-
 msgid "Tokens can be minted manually when allowed in the current funding cycle. The project owner can enable or disable minting for upcoming cycles."
 msgstr ""
 

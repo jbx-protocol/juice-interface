@@ -1,9 +1,8 @@
 import { isAddress } from '@ethersproject/address'
 import * as constants from '@ethersproject/constants'
-import { t, Trans } from '@lingui/macro'
+import { t } from '@lingui/macro'
 import { Form, Input, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { InfoCallout } from 'components/Callout/InfoCallout'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/TransactionModal'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
@@ -99,12 +98,7 @@ export function V2V3MintModal({
       onCancel={onCancel}
       okText={t`Mint ${tokensTokenLower}`}
     >
-      <InfoCallout className="mb-5">
-        <Trans>
-          Tokens can be minted manually when allowed in the current funding
-          cycle. The project owner can change this rule for upcoming cycles.
-        </Trans>
-      </InfoCallout>
+      <p>Mint new tokens to a specified address.</p>
 
       <Form layout="vertical" form={form}>
         <Form.Item

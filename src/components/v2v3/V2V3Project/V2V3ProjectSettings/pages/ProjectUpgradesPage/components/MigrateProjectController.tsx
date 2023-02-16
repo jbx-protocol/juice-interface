@@ -4,9 +4,12 @@ import { InfoCallout } from 'components/Callout/InfoCallout'
 import EtherscanLink from 'components/EtherscanLink'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useMigrateControllerTx } from 'hooks/v2v3/transactor/MigrateControllerTx'
+import Link from 'next/link'
 import { useContext, useState } from 'react'
+import { settingsPagePath } from 'utils/routes'
 
 function useTransactionExecutor<T>(
   tx: TransactorInstance<T>,
@@ -51,12 +54,33 @@ export function MigrateProjectController({
   const { execute, loading } = useTransactionExecutor(useMigrateControllerTx())
   const { projectId } = useContext(ProjectMetadataContext)
   const { contracts } = useContext(V2V3ContractsContext)
+  const { fundingCycleMetadata, handle } = useContext(V2V3ProjectContext)
 
   function onClick() {
     execute({
       projectId,
       newControllerAddress: contracts?.JBController3_0_1.address,
     })
+  }
+
+  if (!fundingCycleMetadata?.allowControllerMigration) {
+    return (
+      <div>
+        <InfoCallout className="mb-5">
+          <p>
+            <Trans>
+              You must edit your funding cycle rules to allow controller
+              migrations.
+            </Trans>
+          </p>
+          <Link href={settingsPagePath('reconfigurefc', { projectId, handle })}>
+            <Button type="primary">
+              <Trans>Edit funding cycle</Trans>
+            </Button>
+          </Link>
+        </InfoCallout>
+      </div>
+    )
   }
 
   return (

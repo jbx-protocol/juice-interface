@@ -38,7 +38,7 @@ export function useMigrateControllerTx(): TransactorInstance<{
         ],
         {
           ...txOpts,
-          title: t`Migrate Controller contract`,
+          title: t`Migrate project's Controller`,
         },
       )
     } catch {

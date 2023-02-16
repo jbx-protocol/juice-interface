@@ -17,7 +17,7 @@ type RedeemVeNftTx = TransactorInstance<{
 export function useRedeemVeNftTx(): RedeemVeNftTx {
   const { transactor } = useContext(TransactionContext)
   const nftContract = useVeNftContract()
-  const minReturnedTokens = BigNumber.from(0) // TODO will need a field for this in V2ConfirmPayOwnerModal
+  const minReturnedTokens = BigNumber.from(0)
   const metadata: string[] = [] //randomBytes(1)
 
   return ({ tokenId, token, beneficiary, memo, terminal }, txOpts) => {

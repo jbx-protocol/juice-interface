@@ -26,6 +26,7 @@ import DistributeReservedTokensEventElem from './eventElems/DistributeReservedTo
 type EventFilter =
   | 'all'
   | 'pay'
+  | 'burn'
   | 'addToBalance'
   | 'mintTokens'
   | 'redeem'
@@ -77,6 +78,9 @@ export default function ProjectActivity() {
         break
       case 'pay':
         key = 'payEvent'
+        break
+      case 'burn':
+        key = 'burnEvent'
         break
       case 'addToBalance':
         key = 'addToBalanceEvent'
@@ -374,6 +378,9 @@ export default function ProjectActivity() {
             </Select.Option>
             <Select.Option value="redeem">
               <Trans>Redeemed</Trans>
+            </Select.Option>
+            <Select.Option value="burn">
+              <Trans>Burned</Trans>
             </Select.Option>
             <Select.Option value="distributePayouts">
               <Trans>Distributed funds</Trans>

@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosRequestConfig } from 'axios'
 import { consolidateMetadata, ProjectMetadataV6 } from 'models/projectMetadata'
 import { IpfsPinFileResponse } from 'pages/api/ipfs/pinFile.page'
 import { IpfsPinJSONResponse } from 'pages/api/ipfs/pinJSON.page'
@@ -67,13 +67,18 @@ export const clientRegister = async (): Promise<{
   }
 }
 
-export const ipfsGet = async <T>(hash: string) => {
+export const ipfsGet = async <T>(
+  hash: string,
+  opts?: AxiosRequestConfig<T>,
+) => {
   // Build config for axios get request
   const response = await axios.get<T>(ipfsOpenGatewayUrl(hash), {
+    ...opts,
     responseType: 'json',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
+      ...(opts?.headers ?? {}),
     },
   })
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

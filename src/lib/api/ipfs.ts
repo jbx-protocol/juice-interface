@@ -75,7 +75,7 @@ export const ipfsGet = async <T>(hash: string) => {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    timeout: 30,
+    timeout: 30000,
   })
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   if ((response.data as any).Data?.['/'].bytes) {

@@ -21,6 +21,7 @@ export interface RedeemEvent
   returnAmount: BigNumber
   returnAmountUSD: BigNumber
   caller: string
+  memo: string
   metadata: string | undefined
 }
 

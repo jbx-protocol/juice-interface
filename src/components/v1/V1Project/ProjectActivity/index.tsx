@@ -2,6 +2,7 @@ import { DownloadOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Select, Space } from 'antd'
 import AddToBalanceEventElem from 'components/activityEventElems/AddToBalanceEventElem'
+import BurnEventElem from 'components/activityEventElems/BurnEventElem'
 import DeployedERC20EventElem from 'components/activityEventElems/DeployedERC20EventElem'
 import PayEventElem from 'components/activityEventElems/PayEventElem'
 import ProjectCreateEventElem from 'components/activityEventElems/ProjectCreateEventElem'
@@ -10,6 +11,7 @@ import Loading from 'components/Loading'
 import SectionHeader from 'components/SectionHeader'
 import { PV_V1, PV_V1_1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
 import { SGWhereArg } from 'models/graph'
 import { PrintReservesEvent } from 'models/subgraph-entities/v1/print-reserves-event'
@@ -43,6 +45,7 @@ const pageSize = 50
 
 export default function ProjectActivity() {
   const { projectId } = useContext(ProjectMetadataContext)
+  const { tokenSymbol } = useContext(V1ProjectContext)
 
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
   const [eventFilter, setEventFilter] = useState<EventFilter>('all')
@@ -125,6 +128,10 @@ export default function ProjectActivity() {
       {
         entity: 'payEvent',
         keys: ['amount', 'timestamp', 'beneficiary', 'note', 'id', 'txHash'],
+      },
+      {
+        entity: 'burnEvent',
+        keys: ['id', 'timestamp', 'txHash', 'caller', 'holder', 'amount'],
       },
       {
         entity: 'addToBalanceEvent',
@@ -210,6 +217,11 @@ export default function ProjectActivity() {
           if (e.payEvent) {
             elem = <PayEventElem event={e.payEvent as PayEvent} />
           }
+          if (e.burnEvent) {
+            elem = (
+              <BurnEventElem event={e.burnEvent} tokenSymbol={tokenSymbol} />
+            )
+          }
           if (e.addToBalanceEvent) {
             elem = (
               <AddToBalanceEventElem
@@ -264,7 +276,7 @@ export default function ProjectActivity() {
           )
         }),
       ),
-    [projectEvents],
+    [projectEvents, tokenSymbol],
   )
 
   const listStatus = useMemo(() => {

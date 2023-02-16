@@ -1,4 +1,4 @@
-import { infuraApi } from 'lib/infura/ipfs'
+import { ipfsGet } from 'lib/api/ipfs'
 import { CURRENT_VERSION, MAX_METADATA_RETRIES } from 'lib/sepana/constants'
 import { Json } from 'models/json'
 import { AnyProjectMetadata } from 'models/projectMetadata'
@@ -138,16 +138,7 @@ export async function tryResolveMetadata({
   try {
     const {
       data: { name, description, logoUri },
-    } = await infuraApi.get<AnyProjectMetadata>(
-      ipfsOpenGatewayUrl(metadataUri),
-      {
-        responseType: 'json',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      },
-    )
+    } = await ipfsGet<AnyProjectMetadata>(ipfsOpenGatewayUrl(metadataUri))
 
     return {
       project: {

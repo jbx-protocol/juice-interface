@@ -1853,6 +1853,9 @@ msgstr ""
 msgid "Message sent!"
 msgstr ""
 
+msgid "Migrate Controller contract"
+msgstr ""
+
 msgid "Migrate all approved tokens"
 msgstr ""
 
@@ -3239,7 +3242,7 @@ msgstr ""
 msgid "This transaction reconfigures the project's funding cycle."
 msgstr ""
 
-msgid "This transaction will set your project's Controller contract to: <0>{controllerAddress}</0>"
+msgid "This transaction will set your project's Controller contract to: <0>{controllerAddress}</0>. Any reserved tokens will be distributed."
 msgstr ""
 
 msgid "This will delete the payout for <0/>."

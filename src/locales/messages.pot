@@ -2234,9 +2234,6 @@ msgstr ""
 msgid "Payment memo"
 msgstr ""
 
-msgid "Payment memo image"
-msgstr ""
-
 msgid "Payment options"
 msgstr ""
 

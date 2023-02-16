@@ -24,13 +24,17 @@ describe('loadAllMediaLinks', () => {
     await expect(loadAllMediaLinks(['foobar'])).resolves.toEqual([undefined])
   })
 
-  it.each(['image/jpeg', 'image/jpg', 'image/gif', 'image/png', 'image/svg'])(
-    'returns link if content type is %p',
-    async contentType => {
-      loadURLContentTypeSpy.mockImplementation(async () => contentType)
-      await expect(loadAllMediaLinks(['foobar'])).resolves.toEqual(['foobar'])
-    },
-  )
+  it.each([
+    'image/jpeg',
+    'image/jpg',
+    'image/gif',
+    'image/png',
+    'image/svg',
+    'video/mp4',
+  ])('returns link if content type is %p', async contentType => {
+    loadURLContentTypeSpy.mockImplementation(async () => contentType)
+    await expect(loadAllMediaLinks(['foobar'])).resolves.toEqual(['foobar'])
+  })
 
   it('converts successfully', async () => {
     loadURLContentTypeSpy.mockImplementation(async () => 'image/jpeg')

@@ -1,8 +1,8 @@
 import { Space } from 'antd'
 import Autolinker from 'autolinker'
-import RichImgPreview from 'components/RichImgPreview'
-import { useProcessedRichNote } from './hooks'
+import { JuiceVideoThumbnailOrImage } from 'components/v2v3/shared/NftVideo/JuiceVideoThumbnailOrImage'
 import { twMerge } from 'tailwind-merge'
+import { useProcessedRichNote } from './hooks'
 
 type RichNoteProps = {
   className?: string
@@ -45,10 +45,14 @@ export default function RichNote({
         <div className="block">
           <Space size="middle">
             {formattedMediaLinks.map((link, i) => (
-              <RichImgPreview
-                className="mt-2 h-auto max-h-24 w-auto p-2"
+              <JuiceVideoThumbnailOrImage
                 key={i}
+                className={twMerge(
+                  'h-24 w-24 cursor-pointer hover:brightness-50',
+                  className,
+                )}
                 src={link}
+                showPreviewOnClick
               />
             ))}
           </Space>

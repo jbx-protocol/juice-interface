@@ -1,6 +1,6 @@
 import { CloseOutlined, LinkOutlined, LoadingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-import { JUICE_IMG_PREVIEW_CONTAINER_CLASS } from 'components/Create/components/JuiceImgPreview'
+import { JUICE_IMG_PREVIEW_CONTAINER_CLASS } from 'components/Create/components/JuiceVideoOrImgPreview'
 import ExternalLink from 'components/ExternalLink'
 import { MP4_FILE_TYPE } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload'
 import { JuiceVideoPreview } from 'components/v2v3/shared/NftVideo/JuiceVideoPreview'

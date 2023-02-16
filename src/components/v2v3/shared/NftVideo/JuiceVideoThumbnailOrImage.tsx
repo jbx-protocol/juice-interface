@@ -1,5 +1,6 @@
 import { LoadingOutlined } from '@ant-design/icons'
 import { ImageProps } from 'antd'
+import { JuiceVideoOrImgPreview } from 'components/Create/components/JuiceVideoOrImgPreview'
 import { useContentType } from 'hooks/ContentType'
 import { useState } from 'react'
 import { classNames } from 'utils/classNames'
@@ -11,6 +12,7 @@ export function JuiceVideoThumbnailOrImage({
   playIconPosition,
   heightClass,
   widthClass,
+  showPreviewOnClick,
   ...props
 }: ImageProps & {
   isSelected?: boolean
@@ -18,12 +20,19 @@ export function JuiceVideoThumbnailOrImage({
   heightClass?: string
   widthClass?: string
   src: string
+  showPreviewOnClick?: boolean
 }) {
   const [loading, setLoading] = useState<boolean>(true)
+  const [previewVisible, setPreviewVisible] = useState<boolean>(false)
 
   const { data: contentType } = useContentType(props.src)
   const isVideo = contentType === MP4_FILE_TYPE
-  const _className = classNames(widthClass ?? 'w-full', heightClass ?? 'h-full')
+  const _className = classNames(
+    widthClass ?? 'w-full',
+    heightClass ?? 'h-full',
+    showPreviewOnClick ? 'cursor-pointer' : '',
+  )
+
   return (
     <div className={_className}>
       {loading ? (
@@ -31,30 +40,39 @@ export function JuiceVideoThumbnailOrImage({
           <LoadingOutlined />
         </div>
       ) : null}
-      {isVideo ? (
-        <JuiceVideoThumbnail
-          src={props.src}
-          isSelected={isSelected}
-          className={props.className}
-          widthClass={widthClass}
-          heightClass={heightClass}
-          onLoaded={() => setLoading(false)}
-          playIconPosition={playIconPosition}
-        />
-      ) : (
-        <img
-          className={`${
-            props.className ?? ''
-          } top-0 h-full w-full object-cover`}
-          style={{
-            filter: isSelected ? 'unset' : 'brightness(50%)',
-          }}
-          src={props.src}
-          onClick={props.onClick}
-          crossOrigin="anonymous"
-          onLoad={() => setLoading(false)}
-        />
-      )}
+      <div
+        onClick={showPreviewOnClick ? () => setPreviewVisible(true) : undefined}
+      >
+        {isVideo ? (
+          <JuiceVideoThumbnail
+            src={props.src}
+            isSelected={isSelected}
+            className={props.className}
+            widthClass={widthClass}
+            heightClass={heightClass}
+            onLoaded={() => setLoading(false)}
+            playIconPosition={playIconPosition}
+          />
+        ) : (
+          <img
+            className={`${
+              props.className ?? ''
+            } top-0 h-full w-full object-cover`}
+            style={{
+              filter: isSelected ? 'unset' : 'brightness(50%)',
+            }}
+            src={props.src}
+            onClick={props.onClick}
+            crossOrigin="anonymous"
+            onLoad={() => setLoading(false)}
+          />
+        )}
+      </div>
+      <JuiceVideoOrImgPreview
+        visible={previewVisible}
+        src={props.src}
+        onClose={() => setPreviewVisible(false)}
+      />
     </div>
   )
 }

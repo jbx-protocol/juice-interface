@@ -1,24 +1,24 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Col, Descriptions, Form, Row, Space, Statistic } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
+import ETHAmount from 'components/currency/ETHAmount'
 import { MemoFormInput } from 'components/Project/PayProjectForm/MemoFormInput'
+import TooltipLabel from 'components/TooltipLabel'
 import TransactionModal from 'components/TransactionModal'
+import { REDEMPTION_RATE_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useNftAccountBalance } from 'hooks/JB721Delegate/contractReader/NftAccountBalance'
+import { useETHReceivedFromNftRedeem } from 'hooks/v2v3/contractReader/ETHReceivedFromNftRedeem'
 import { useRedeemTokensTx } from 'hooks/v2v3/transactor/RedeemTokensTx'
 import { useWallet } from 'hooks/Wallet'
 import { JB721DelegateToken } from 'models/subgraph-entities/v2/jb-721-delegate-tokens'
 import { useContext, useState } from 'react'
+import { encodeJB721DelegateRedeemMetadata } from 'utils/nftRewards'
 import { emitErrorNotification } from 'utils/notifications'
 import { formatRedemptionRate } from 'utils/v2v3/math'
-import { BigNumber } from '@ethersproject/bignumber'
-import { encodeJB721DelegateRedeemMetadata } from 'utils/nftRewards'
 import { RedeemNftCard } from './RedeemNftCard'
-import ETHAmount from 'components/currency/ETHAmount'
-import { useETHReceivedFromNftRedeem } from 'hooks/v2v3/contractReader/ETHReceivedFromNftRedeem'
-import TooltipLabel from 'components/TooltipLabel'
-import { REDEMPTION_RATE_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 
 export function RedeemNftsModal({
   open,
@@ -75,7 +75,7 @@ export function RedeemNftsModal({
         redeemAmount: BigNumber.from(0),
         minReturnedTokens: BigNumber.from(0),
         memo,
-        metadata: encodeJB721DelegateRedeemMetadata(tokenIdsToRedeem), // TODO: add metadata from tokenIdsToRedeem
+        metadata: encodeJB721DelegateRedeemMetadata(tokenIdsToRedeem),
       },
       {
         // step 1

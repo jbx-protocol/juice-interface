@@ -54,7 +54,6 @@ export default function ProjectPayoutMods({
     <Form.Item
       {...formItemProps}
       className={classNames('block', formItemProps?.className)}
-      // TODO: Remove later
       style={{ ...formItemProps?.style, display: 'block' }}
     >
       <Space className="min-h-0 w-full" direction="vertical" size="large">

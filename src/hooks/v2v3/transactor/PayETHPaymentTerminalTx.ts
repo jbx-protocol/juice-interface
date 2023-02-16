@@ -9,7 +9,7 @@ import { useContext } from 'react'
 import { useV2ProjectTitle } from '../ProjectTitle'
 
 const DEFAULT_DELEGATE_METADATA = 0
-const DEFAULT_MIN_RETURNED_TOKENS = 0 // TODO will need a field for this in V2ConfirmPayOwnerModal
+const DEFAULT_MIN_RETURNED_TOKENS = 0
 
 type PayV2ProjectTx = TransactorInstance<{
   memo: string

@@ -30,7 +30,6 @@ export const backgroundColors: Record<
     over: {
       action: {
         primary: lightColors.warmGray150,
-        // TODO: START - all colors
         secondary: lightColors.cta,
         highlight: lightColors.ctaHighlight,
       },
@@ -43,7 +42,6 @@ export const backgroundColors: Record<
       failure: lightColors.white,
       success: lightColors.white,
       warn: lightColors.white,
-      // TODO: END - all colors
     },
   },
   [ThemeOption.dark]: {
@@ -69,7 +67,6 @@ export const backgroundColors: Record<
     over: {
       action: {
         primary: darkColors.darkGray400,
-        // TODO: START - all colors
         secondary: darkColors.cta,
         highlight: darkColors.ctaHighlight,
       },
@@ -82,7 +79,6 @@ export const backgroundColors: Record<
       failure: darkColors.white,
       success: darkColors.white,
       warn: darkColors.white,
-      // TODO: END - all colors
     },
   },
 }

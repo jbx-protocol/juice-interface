@@ -2672,7 +2672,7 @@ msgstr ""
 msgid "Reserved {tokenTextPlural}: <0>{reservedTokensFormatted} {tokenTextPlural}</0>"
 msgstr ""
 
-msgid "Reset Website"
+msgid "Reset website"
 msgstr ""
 
 msgid "Resources"

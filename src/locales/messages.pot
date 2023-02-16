@@ -590,6 +590,9 @@ msgstr ""
 msgid "Burn {tokensTextLong}"
 msgstr ""
 
+msgid "Burned"
+msgstr ""
+
 msgid "Button Text"
 msgstr ""
 

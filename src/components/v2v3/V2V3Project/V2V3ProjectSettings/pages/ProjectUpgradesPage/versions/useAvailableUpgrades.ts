@@ -3,9 +3,9 @@ import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsConte
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
 import { useContext } from 'react'
 import { isEqualAddress } from 'utils/address'
-import { JBVersion } from './versions'
+import { JBUpgrade } from './upgrades'
 
-export function useAvailableUpgrades(): JBVersion[] | undefined {
+export function useAvailableUpgrades(): JBUpgrade[] | undefined {
   const { cvs, contracts } = useContext(V2V3ContractsContext)
   const { contracts: projectContracts } = useContext(
     V2V3ProjectContractsContext,

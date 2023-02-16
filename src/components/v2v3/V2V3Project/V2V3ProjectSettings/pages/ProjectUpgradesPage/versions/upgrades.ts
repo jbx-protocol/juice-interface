@@ -2,12 +2,12 @@ import { t } from '@lingui/macro'
 import { UpgradeController } from './upgradeForms/JBController3_0_1'
 import { UpgradeFundingCycle } from './upgradeForms/V3/UpgradeFundingCycle'
 
-export type JBVersion =
+export type JBUpgrade =
   | '3' // upgrades to layer 2 contracts
   | 'JBController3_0_1' // upgrades to a new JBController
 
-export const VERSIONS: {
-  [k in JBVersion]: {
+export const UPGRADES: {
+  [k in JBUpgrade]: {
     name: string
     description?: () => string | JSX.Element
     component: () => JSX.Element | null

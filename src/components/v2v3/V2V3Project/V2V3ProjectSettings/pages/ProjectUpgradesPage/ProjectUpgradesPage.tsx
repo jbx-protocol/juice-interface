@@ -2,13 +2,13 @@ import { Trans } from '@lingui/macro'
 import { Button, Space, Statistic } from 'antd'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { useContext, useState } from 'react'
+import { JBUpgrade, UPGRADES } from './versions/upgrades'
 import { useAvailableUpgrades } from './versions/useAvailableUpgrades'
-import { JBVersion, VERSIONS } from './versions/versions'
 
 export function ProjectUpgradesPage() {
   const { cv } = useContext(V2V3ContractsContext)
 
-  const [upgradeWizardOpen, setUpgradeWizardOpen] = useState<false | JBVersion>(
+  const [upgradeWizardOpen, setUpgradeWizardOpen] = useState<false | JBUpgrade>(
     false,
   )
 
@@ -17,7 +17,7 @@ export function ProjectUpgradesPage() {
 
   // lightweight 'routing' to the upgrade wizard for each upgrade
   if (upgradeWizardOpen) {
-    const Component = VERSIONS[upgradeWizardOpen].component
+    const Component = UPGRADES[upgradeWizardOpen].component
     return <Component />
   }
 
@@ -41,7 +41,7 @@ export function ProjectUpgradesPage() {
               <Trans>Available upgrades</Trans>
             </h3>
             {availableUpgrades?.map(v => {
-              const upgrade = VERSIONS[v]
+              const upgrade = UPGRADES[v]
               return (
                 <div key={v}>
                   <h4>{upgrade.name}</h4>

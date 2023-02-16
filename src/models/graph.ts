@@ -122,7 +122,7 @@ export interface SGQueryOpts<E extends SGEntityName, K extends SGEntityKey<E>> {
   url?: string
 
   // `keys` can be a mix of the entity's keys or `SGQueryOptEntityKey` objects
-  keys: (SGQueryOptEntityKey<E, K> | K)[]
+  keys: SGQueryOptEntityKey<E, K>[]
   orderDirection?: SGOrderDir
   where?: SGWhereArg<E> | SGWhereArg<E>[]
 }
@@ -139,8 +139,12 @@ type SGQueryOptEntityKey<
       keys: SGEntityKey<T>[]
     }
   : T extends `${SGEntityName}s`
-  ? { entity: T; keys: SGEntityKey<SingularFromPlural<T>>[] }
-  : never
+  ? {
+      // If T is a key of E and also the plural name of an SGEntityName (e.g. `project.participants`, where E = 'project' and T = 'participants')
+      entity: T
+      keys: SGEntityKey<SingularFromPlural<T>>[]
+    }
+  : T
 
 // Re-type SGQueryOpts to remove skip and add pageSize.
 // This is so we can calculate our own `skip` value based on

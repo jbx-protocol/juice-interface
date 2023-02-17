@@ -11,3 +11,6 @@ generates:
   ./graphql.schema.json:
     plugins:
       - 'introspection'
+config:
+  namingConvention:
+    enumValues: keep

@@ -15,7 +15,6 @@ import { ProjectPreferences } from 'constants/projectPreferences'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { isAddress } from 'ethers/lib/utils'
-import { NftRewardTier } from 'models/nftRewardTier'
 import { useContext, useEffect, useState } from 'react'
 import { classNames } from 'utils/classNames'
 import {
@@ -34,11 +33,9 @@ export interface V2V3PayFormType {
 
 export const V2V3PayForm = ({
   form,
-  transactionCanceled,
   ...props
 }: {
   form: FormInstance<V2V3PayFormType>
-  transactionCanceled: boolean
 } & FormProps) => {
   const { tokenAddress, fundingCycle, fundingCycleMetadata } =
     useContext(V2V3ProjectContext)
@@ -62,24 +59,12 @@ export const V2V3PayForm = ({
   const canAddMoreStickers =
     (stickerUrls ?? []).length < ProjectPreferences.MAX_IMAGES_PAYMENT_MEMO
 
-  useEffect(() => {
-    if (transactionCanceled) return
-
-    const initialStickerUrls = nftRewardTiers?.map(
-      (tier: NftRewardTier) => tier.fileUrl,
-    )
-
-    form.setFieldsValue({
-      stickerUrls: initialStickerUrls,
-    })
-  }, [form, nftRewardTiers, transactionCanceled])
-
-  useEffect(() => {
-    if (!form.getFieldValue('beneficiary')) return
-
-    setCustomBeneficiaryEnabled(transactionCanceled)
-  }, [form, transactionCanceled])
-
+  useEffect(
+    () => {
+      setCustomBeneficiaryEnabled(Boolean(form.getFieldValue('beneficiary')))
+    },
+    [], // eslint-disable-line react-hooks/exhaustive-deps
+  )
   return (
     <>
       <Form form={form} layout="vertical" {...props}>
@@ -249,11 +234,13 @@ export const V2V3PayForm = ({
           }
           const url = new URL(`${window.location.origin}${sticker.filepath}`)
           const urlString = url.toString()
+
           const existingStickerUrls = (form.getFieldValue('stickerUrls') ??
             []) as string[]
+          const updatedStickerUrls = [...existingStickerUrls, urlString]
 
           form.setFieldsValue({
-            stickerUrls: existingStickerUrls.concat(urlString),
+            stickerUrls: updatedStickerUrls,
           })
         }}
       />

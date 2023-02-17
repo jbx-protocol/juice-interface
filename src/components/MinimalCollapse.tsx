@@ -27,7 +27,7 @@ export function MinimalCollapse({
         light ? 'light' : '',
         className,
       )}
-      defaultActiveKey={defaultOpen ? ['1'] : []}
+      defaultActiveKey={defaultOpen ? '1' : []}
       {...props}
     >
       <CollapsePanel key="1" header={header}>

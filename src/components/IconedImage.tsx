@@ -7,13 +7,13 @@ import { ReactNode } from 'react'
 export const IconedImage = ({
   url,
   width,
-  onClick,
+  onIconClick,
   icon,
 }: {
   url: string
   width: number
   icon: ReactNode
-  onClick: VoidFunction
+  onIconClick?: VoidFunction
 }) => {
   return (
     <div className="relative py-4">
@@ -21,7 +21,7 @@ export const IconedImage = ({
       <div
         className="absolute top-0 right-0 cursor-pointer"
         role="button"
-        onClick={onClick}
+        onClick={onIconClick}
       >
         {icon}
       </div>

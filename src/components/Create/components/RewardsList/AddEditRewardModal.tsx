@@ -26,7 +26,7 @@ import {
   inputNonZeroRule,
 } from 'utils/antdRules'
 import { featureFlagEnabled } from 'utils/featureFlags'
-import { ipfsOpenGatewayUrl } from 'utils/ipfs'
+import { ipfsGatewayUrl } from 'utils/ipfs'
 import { v4 } from 'uuid'
 import { CreateCollapse } from '../CreateCollapse'
 import { OptionalHeader } from '../OptionalHeader'
@@ -142,7 +142,7 @@ export const AddEditRewardModal = ({
     try {
       const res = await pinFile(file)
       if (!res) throw new Error('Failed to pin file to IPFS')
-      const url = ipfsOpenGatewayUrl(res.IpfsHash)
+      const url = ipfsGatewayUrl(res.IpfsHash)
       return url
     } catch (err) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

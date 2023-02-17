@@ -5,7 +5,7 @@ import ExternalLink from 'components/ExternalLink'
 import { useWallet } from 'hooks/Wallet'
 import { pinFile } from 'lib/api/ipfs'
 import { useState } from 'react'
-import { cidFromIpfsUri, ipfsOpenGatewayUrl, ipfsUri } from 'utils/ipfs'
+import { cidFromIpfsUri, ipfsGatewayUrl, ipfsUri } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
 
 enum ByteUnit {
@@ -38,7 +38,7 @@ export const FormImageUploader = ({
     onChange?.(url)
   }
 
-  const imageUrl = imageCid ? ipfsOpenGatewayUrl(imageCid) : undefined
+  const imageUrl = imageCid ? ipfsGatewayUrl(imageCid) : undefined
 
   return (
     <Row className="text-grey-500 dark:text-grey-300" gutter={30}>

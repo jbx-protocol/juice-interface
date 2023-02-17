@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import {
   cidFromUrl,
-  ipfsOpenGatewayUrl,
+  ipfsGatewayUrl,
   ipfsUriToGatewayUrl,
   isIpfsUri,
 } from 'utils/ipfs'
@@ -37,7 +37,7 @@ export default function ProjectLogo({
     // This rewrites those URLs to use the Infura gateway.
     if (uri.startsWith('https://jbx.mypinata.cloud')) {
       const cid = cidFromUrl(uri)
-      return ipfsOpenGatewayUrl(cid)
+      return ipfsGatewayUrl(cid)
     }
 
     if (!isIpfsUri(uri)) {

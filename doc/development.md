@@ -23,7 +23,6 @@
 `juicebox-interface` relies on a number of services for development. Create an account for each of the following services:
 
 - [Infura](https://infura.io)
-- [Piñata](https://pinata.cloud)
 
 The following sections describe how to set up each service for local development.
 
@@ -54,21 +53,7 @@ Next, copy the following fields into your `.env` file:
 
 - **PROJECT ID**. In the `.env` file, copy the **Project ID** into the `INFURA_IPFS_PROJECT_ID` variable.
 - **API KEY SECRET**. In the `.env` file, copy the **API KEY SECRET** into the `INFURA_IPFS_API_SECRET` variable.
-- **DEDICATED GATEWAY SUBDOMAIN**. In the `.env` file, copy the **DEDICATED GATEWAY SUBDOMAIN** into the `NEXT_PUBLIC_INFURA_IPFS_HOSTNAME` variable *without the `https://` prefix*.
-
-### Piñata
-
-Juicebox uses [Piñata](https://pinata.cloud) to store project metadata. Juicebox projects set a name, description, logo, and other details when creating the project. These details are saved on IPFS as a JSON file using Piñata, and the CID gets stored on-chain with the Juicebox project.
-
-Take the following steps to set up Piñata for local development:
-
-1. Create a Piñata API key ([learn more](https://docs.pinata.cloud/#your-api-keys)).
-   - Enable the **Admin** toggle in the **Admin** field.
-1. Copy the following fields into your `.env` file:
-   - **API Key**. In the `.env` file, copy the **API Key** into the `PINATA_PINNER_KEY` variable.
-   - **API Secret**. In the `.env` file, copy the **API Secret** into the `PINATA_PINNER_SECRET` variable.
-
-Note: Once you pass Piñata's free tier of 1GB of storage, you'll need to get access to the premium `PINATA_PINNER_KEY` and `PINATA_PINNER_SECRET` keys. Contact the Peel team in Discord to get access. Piñata will constantly give a 429 error if the free tier of API requests has been reached.
+- **DEDICATED GATEWAY SUBDOMAIN**. In the `.env` file, copy the **DEDICATED GATEWAY SUBDOMAIN** into the `NEXT_PUBLIC_INFURA_IPFS_HOSTNAME` variable _without the `https://` prefix_.
 
 ### The Graph
 

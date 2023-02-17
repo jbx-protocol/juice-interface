@@ -38,9 +38,7 @@ export default function StakingTokenRangesModal({
       </Row>
       {variants &&
         variants.map(variant => {
-          const image = getVeNftBaseImage(VARIANTS_HASH, variant, {
-            useFallback: true,
-          })
+          const image = getVeNftBaseImage(VARIANTS_HASH, variant)
           const nftRange = `${variant.tokensStakedMin}${
             variant.tokensStakedMax ? `-${variant.tokensStakedMax}` : '+'
           }`

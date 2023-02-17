@@ -2,11 +2,13 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
 import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import { MinimalCollapse } from 'components/MinimalCollapse'
+import RichNote from 'components/RichNote'
 import { ConfigureEvent } from 'models/subgraph-entities/v2/configure'
 import {
   V2V3FundingCycle,
-  V2V3FundingCycleMetadata,
+  V2V3FundingCycleMetadata
 } from 'models/v2v3/fundingCycle'
+
 import FundingCycleDetails from '../../V2V3FundingCycleSection/FundingCycleDetails'
 
 export default function ConfigureEventElem({
@@ -43,6 +45,7 @@ export default function ConfigureEventElem({
         | 'useDataSourceForPay'
         | 'useDataSourceForRedeem'
         | 'useTotalOverflowForRedemptions'
+        | 'memo'
       >
     | undefined
 }) {
@@ -96,6 +99,7 @@ export default function ConfigureEventElem({
             distributionLimitCurrency={undefined}
             mintRateZeroAsUnchanged
           />
+          {event.memo ? <RichNote className="mt-3" note={event.memo} /> : null}
         </MinimalCollapse>
       }
     />

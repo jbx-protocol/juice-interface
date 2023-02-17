@@ -185,6 +185,7 @@ export default function ProjectActivity() {
           'returnAmount',
           'terminal',
           'metadata',
+          'memo',
         ],
       },
       {
@@ -243,6 +244,7 @@ export default function ProjectActivity() {
           'controllerMigrationAllowed',
           'setTerminalsAllowed',
           'setControllerAllowed',
+          'memo',
         ],
       },
     ],

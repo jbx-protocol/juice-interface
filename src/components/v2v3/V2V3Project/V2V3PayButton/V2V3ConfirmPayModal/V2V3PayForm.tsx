@@ -72,7 +72,12 @@ export const V2V3PayForm = ({
     form.setFieldsValue({
       stickerUrls: initialStickerUrls,
     })
-  }, [form, nftRewardTiers, transactionCanceled])
+    // likely another bug will pop up from this change (removed nftRewardTiers)
+    // but required. Without, stickers get purged every time one is added as
+    // this useEffect runs too much.
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form, transactionCanceled])
 
   useEffect(() => {
     if (!form.getFieldValue('beneficiary')) return

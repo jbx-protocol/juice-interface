@@ -50,7 +50,7 @@ export default function ConfirmUnstakeTokensModal({
     )
   }
 
-  const ticketsIssued = Boolean(tokenAddress && isZeroAddress(tokenAddress))
+  const ticketsIssued = Boolean(tokenAddress && !isZeroAddress(tokenAddress))
 
   const tokenTextPlural = tokenSymbolText({ tokenSymbol, plural: true })
 

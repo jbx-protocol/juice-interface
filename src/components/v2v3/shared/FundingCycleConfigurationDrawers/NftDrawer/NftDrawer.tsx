@@ -327,7 +327,11 @@ export function NftDrawer({
             loading={submitLoading}
           >
             <span>
-              <Trans>Save NFTs</Trans>
+              {hasExistingNfts ? (
+                <Trans>Deploy edited NFTs</Trans>
+              ) : (
+                <Trans>Save NFTs</Trans>
+              )}
             </span>
           </Button>
         </div>
@@ -347,6 +351,20 @@ export function NftDrawer({
             <h2>
               <Trans>Danger Zone</Trans>
             </h2>
+            <Callout.Warning className="mb-5">
+              <Trans>
+                Detaching NFTs from your project has the following effects:
+                <ul>
+                  <li>
+                    Contributors won't receive NFTs when they fund your project.
+                  </li>
+                  <li>
+                    Existing NFT holders won't be able to redeem their NFTs.
+                  </li>
+                </ul>
+                <p>This will take effect in your next funding cycle.</p>
+              </Trans>
+            </Callout.Warning>
             <DangerZoneSection close={onClose} />
           </div>
         )}

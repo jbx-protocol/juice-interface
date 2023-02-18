@@ -1,5 +1,6 @@
 import { t } from '@lingui/macro'
 import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
+import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
 import MinimalTable from 'components/MinimalTable'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
@@ -95,6 +96,12 @@ export default function ConfigureEventElem({
               {
                 key: t`Reconfiguration strategy`,
                 value: BallotStrategyElem(event.ballot),
+              },
+              {
+                key: t`Data source`,
+                value: (
+                  <EtherscanLink value={event.dataSource} type="address" />
+                ),
               },
             ],
             [

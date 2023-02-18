@@ -218,6 +218,9 @@ msgstr ""
 msgid "<0>With Automated Funding Cycles, your funding configuration is locked for a set time period.</0><1><2>This helps build trust with your contributors.</2></1>"
 msgstr ""
 
+msgid "<0>You're about to delete all NFTs from your collection. This will take effect immediately, and you can add NFTs back to the collection at any time.</0><1>If you want to COMPLETELY detach NFTs from your project, you can do so in the <2>Danger Zone</2> section below.</1>"
+msgstr ""
+
 msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
 msgstr ""
 
@@ -635,6 +638,9 @@ msgstr ""
 msgid "Changes to your collection details may not be reflected in some marketplaces (for example, Opensea). Contact the marketplace for support."
 msgstr ""
 
+msgid "Changes to your collection will take effect immediately."
+msgstr ""
+
 msgid "Changes to your reserved token allocation will take effect immediately."
 msgstr ""
 
@@ -914,6 +920,9 @@ msgstr ""
 msgid "DAOs"
 msgstr ""
 
+msgid "Danger Zone"
+msgstr ""
+
 msgid "Dark theme"
 msgstr ""
 
@@ -959,9 +968,6 @@ msgstr ""
 msgid "Deploy Migration Token"
 msgstr ""
 
-msgid "Deploy NFTs"
-msgstr ""
-
 msgid "Deploy Payment Address contract"
 msgstr ""
 
@@ -975,6 +981,9 @@ msgid "Deploy a V3 Migration Token for your project."
 msgstr ""
 
 msgid "Deploy an address which forwards funds to your project. This makes it easier to pay your project with third-party tools."
+msgstr ""
+
+msgid "Deploy edited NFTs"
 msgstr ""
 
 msgid "Deploy funding cycle configuration"
@@ -999,6 +1008,12 @@ msgid "Design how your project's tokens should work. You can use your project to
 msgstr ""
 
 msgid "Design how your tokens should work."
+msgstr ""
+
+msgid "Detach NFTs from project"
+msgstr ""
+
+msgid "Detaching NFTs from your project has the following effects:<0><1>Contributors won't receive NFTs when they fund your project.</1><2>Existing NFT holders won't be able to redeem their NFTs.</2></0><3>This will take effect in your next funding cycle.</3>"
 msgstr ""
 
 msgid "Details"
@@ -1197,6 +1212,9 @@ msgid "Edit NFT tier"
 msgstr ""
 
 msgid "Edit allocation"
+msgstr ""
+
+msgid "Edit collection details"
 msgstr ""
 
 msgid "Edit details of {projectTitle}"
@@ -2693,7 +2711,7 @@ msgstr ""
 msgid "Review your project data below. Once launched, your first funding cycle can't be changed. You can reconfigure upcoming funding cycles according to your project's reconfiguration rules."
 msgstr ""
 
-msgid "Reward contributors with NFTs when they meet your configured funding criteria."
+msgid "Reward contributors with NFTs when they fund your project."
 msgstr ""
 
 msgid "Reward contributors with NFTs when they meet your funding criteria."

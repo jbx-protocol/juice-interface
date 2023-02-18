@@ -41,7 +41,8 @@ export function ContractVersionSelect() {
 
   if (!cv) return null
 
-  if (SELECT_OPTIONS.length < 2) {
+  // only show version badge for non-v3
+  if (SELECT_OPTIONS.length < 2 && !cvs?.includes(CV_V3)) {
     return <ProjectVersionBadge versionText={`V${cv}`} />
   }
 

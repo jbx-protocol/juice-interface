@@ -1,6 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Empty, Form, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
+import { Callout } from 'components/Callout'
 import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
 import NftRewardTierModal from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftRewardTierModal'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
@@ -23,16 +24,14 @@ import { reloadWindow } from 'utils/windowUtils'
 import FundingCycleDrawer from '../FundingCycleDrawer'
 import { useFundingCycleDrawer } from '../hooks/FundingCycleDrawer'
 import { AddRewardTierButton } from './AddRewardTierButton'
+import { DangerZoneSection } from './DangerZoneSection'
 import { EditCollectionDetailsSection } from './EditCollectionDetailsSection'
 import { MarketplaceFormFields, NftPostPayModalFormFields } from './formFields'
 import { NftCollectionDetailsFormItems } from './NftCollectionDetailsFormItems'
 import NftRewardTierCard from './NftRewardTierCard'
 
 const NFT_REWARDS_EXPLAINATION: JSX.Element = (
-  <Trans>
-    Reward contributors with NFTs when they meet your configured funding
-    criteria.
-  </Trans>
+  <Trans>Reward contributors with NFTs when they fund your project.</Trans>
 )
 
 export function NftDrawer({
@@ -263,6 +262,11 @@ export function NftDrawer({
         <div className="mb-2 rounded-sm bg-smoke-75 stroke-none p-8 text-black shadow-[10px_10px_0px_0px_#E7E3DC] dark:bg-slate-400 dark:text-slate-100 dark:shadow-[10px_10px_0px_0px_#2D293A]">
           {hasExistingNfts ? <h2>Edit NFTs</h2> : <h2>Add NFTs</h2>}
           <p>{NFT_REWARDS_EXPLAINATION}</p>
+          <Callout.Info className="mb-5 bg-smoke-100 dark:bg-slate-500">
+            <Trans>
+              Changes to your collection will take effect immediately.
+            </Trans>
+          </Callout.Info>
 
           <Space direction="vertical" size="large" className="w-full">
             {rewardTiers?.map((rewardTier, index) => (
@@ -293,6 +297,22 @@ export function NftDrawer({
             disabled={rewardTiers && rewardTiers.length >= MAX_NFT_REWARD_TIERS}
           />
 
+          {hasExistingNfts && rewardTiers?.length === 0 && (
+            <Callout.Warning className="mb-5 bg-smoke-100 dark:bg-slate-500">
+              <Trans>
+                <p>
+                  You're about to delete all NFTs from your collection. This
+                  will take effect immediately, and you can add NFTs back to the
+                  collection at any time.
+                </p>
+                <p>
+                  If you want to COMPLETELY detach NFTs from your project, you
+                  can do so in the <strong>Danger Zone</strong> section below.
+                </p>
+              </Trans>
+            </Callout.Warning>
+          )}
+
           {!hasExistingNfts && (
             // Hack - this whole thing should be a form
             <Form layout="vertical" colon={false} form={marketplaceForm}>
@@ -301,7 +321,6 @@ export function NftDrawer({
           )}
 
           <Button
-            className="mt-7"
             onClick={onNftFormSaved}
             htmlType="submit"
             type="primary"
@@ -309,7 +328,7 @@ export function NftDrawer({
           >
             <span>
               {hasExistingNfts ? (
-                <Trans>Deploy NFTs</Trans>
+                <Trans>Deploy edited NFTs</Trans>
               ) : (
                 <Trans>Save NFTs</Trans>
               )}
@@ -319,9 +338,34 @@ export function NftDrawer({
 
         {hasExistingNfts && (
           <div className="mb-2 rounded-sm bg-smoke-75 stroke-none p-8 text-black shadow-[10px_10px_0px_0px_#E7E3DC] dark:bg-slate-400 dark:text-slate-100 dark:shadow-[10px_10px_0px_0px_#2D293A]">
-            <h2>Edit collection details</h2>
+            <h2>
+              <Trans>Edit collection details</Trans>
+            </h2>
 
             <EditCollectionDetailsSection />
+          </div>
+        )}
+
+        {hasExistingNfts && (
+          <div className="mb-2 rounded-sm bg-smoke-75 stroke-none p-8 text-black shadow-[10px_10px_0px_0px_#E7E3DC] dark:bg-slate-400 dark:text-slate-100 dark:shadow-[10px_10px_0px_0px_#2D293A]">
+            <h2>
+              <Trans>Danger Zone</Trans>
+            </h2>
+            <Callout.Warning className="mb-5">
+              <Trans>
+                Detaching NFTs from your project has the following effects:
+                <ul>
+                  <li>
+                    Contributors won't receive NFTs when they fund your project.
+                  </li>
+                  <li>
+                    Existing NFT holders won't be able to redeem their NFTs.
+                  </li>
+                </ul>
+                <p>This will take effect in your next funding cycle.</p>
+              </Trans>
+            </Callout.Warning>
+            <DangerZoneSection close={onClose} />
           </div>
         )}
 

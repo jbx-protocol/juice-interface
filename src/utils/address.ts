@@ -1,3 +1,4 @@
+import { AddressZero } from '@ethersproject/constants'
 import { getAddress } from 'ethers/lib/utils'
 
 export function safeGetAddress(
@@ -24,4 +25,8 @@ export function isEqualAddress(
   const addressA = safeGetAddress(a)
   const addressB = safeGetAddress(b)
   return Boolean(addressA && addressB && addressA === addressB)
+}
+
+export function isNonZeroAddress(address: string | undefined): boolean {
+  return Boolean(safeGetAddress(address) && address !== AddressZero)
 }

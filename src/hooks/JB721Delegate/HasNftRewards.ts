@@ -1,7 +1,7 @@
-import * as constants from '@ethersproject/constants'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { V2V3FundingCycleMetadata } from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
+import { isNonZeroAddress } from 'utils/address'
 import { useIsJB721DelegateV1 } from './IsJB721DelegateV1'
 import { useIsJB721DelegateV1_1 } from './IsJB721DelegateV1_1'
 
@@ -12,8 +12,7 @@ function hasDataSourceForPay(
   fundingCycleMetadata: V2V3FundingCycleMetadata | undefined,
 ) {
   return Boolean(
-    fundingCycleMetadata?.dataSource &&
-      fundingCycleMetadata.dataSource !== constants.AddressZero &&
+    isNonZeroAddress(fundingCycleMetadata?.dataSource) &&
       fundingCycleMetadata?.useDataSourceForPay,
   )
 }

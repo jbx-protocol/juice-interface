@@ -12,10 +12,12 @@ export function DeployConfigurationButton({
 }) {
   return (
     <Button
+      className="mt-5"
       loading={loading}
       onClick={onClick}
       disabled={disabled}
       type="primary"
+      size="large"
     >
       <span>
         <Trans>Deploy funding cycle configuration</Trans>

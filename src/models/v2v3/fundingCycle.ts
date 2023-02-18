@@ -25,9 +25,9 @@ export type BaseV2V3FundingCycleMetadata = {
   allowControllerMigration: boolean
   holdFees: boolean
   useTotalOverflowForRedemptions: boolean
-  useDataSourceForPay: boolean
+  useDataSourceForPay: boolean // undefined for outgoing NFT args
   useDataSourceForRedeem: boolean
-  dataSource: string // hex, contract address.
+  dataSource: string // hex, contract address. undefined for outgoing NFT args
 }
 
 export type JBPayDataSourceFundingCycleMetadata = Omit<

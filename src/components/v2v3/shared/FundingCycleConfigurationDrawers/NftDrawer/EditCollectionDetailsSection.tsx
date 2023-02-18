@@ -150,7 +150,6 @@ export function EditCollectionDetailsSection() {
         <NftCollectionDetailsFormItems isReconfigure />
 
         <Button
-          className="mt-10"
           loading={txLoading}
           disabled={!formHasUpdated}
           onClick={() => marketplaceForm.submit()}

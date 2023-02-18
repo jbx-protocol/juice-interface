@@ -20,8 +20,8 @@ export const InfoCallout: React.FC<{
   return (
     <Callout
       className={twMerge(
-        className,
         !transparent ? 'bg-smoke-75 dark:bg-slate-400' : undefined,
+        className,
       )}
       iconComponent={
         !noIcon ? <InfoCircleOutlined className="flex text-2xl" /> : null

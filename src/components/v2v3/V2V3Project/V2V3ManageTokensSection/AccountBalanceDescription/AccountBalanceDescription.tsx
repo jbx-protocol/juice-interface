@@ -1,4 +1,3 @@
-import * as constants from '@ethersproject/constants'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import RichButton from 'components/buttons/RichButton'
@@ -12,6 +11,7 @@ import useTotalBalanceOf from 'hooks/v2v3/contractReader/TotalBalanceOf'
 import useUserUnclaimedTokenBalance from 'hooks/v2v3/contractReader/UserUnclaimedTokenBalance'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
 import { useIsOwnerConnected } from 'hooks/v2v3/IsOwnerConnected'
+import { useProjectHasErc20 } from 'hooks/v2v3/ProjectHasErc20'
 import { useTransferUnclaimedTokensTx } from 'hooks/v2v3/transactor/TransferUnclaimedTokensTx'
 import { useVeNftSummaryStats } from 'hooks/veNft/VeNftSummaryStats'
 import { useWallet } from 'hooks/Wallet'
@@ -55,6 +55,7 @@ export function AccountBalanceDescription() {
     V2V3OperatorPermission.MINT,
   )
   const ownerIsConnected = useIsOwnerConnected()
+  const hasIssuedERC20 = useProjectHasErc20()
 
   const claimedBalanceFormatted = formatWad(claimedBalance ?? 0, {
     precision: 0,
@@ -73,7 +74,6 @@ export function AccountBalanceDescription() {
     ) || '0'
 
   const hasOverflow = Boolean(primaryTerminalCurrentOverflow?.gt(0))
-  const hasIssuedERC20 = tokenAddress !== constants.AddressZero
   const redeemDisabled = Boolean(
     !hasOverflow || fundingCycleMetadata?.redemptionRate.eq(0),
   )

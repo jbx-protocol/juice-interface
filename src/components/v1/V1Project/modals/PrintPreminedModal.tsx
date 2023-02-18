@@ -12,9 +12,10 @@ import { parseWad } from 'utils/format/formatNumber'
 
 import { RuleObject } from 'antd/lib/form'
 import { StoreValue } from 'antd/lib/form/interface'
+import { Callout } from 'components/Callout'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'
-import { Callout } from 'components/Callout'
+import { isZeroAddress } from 'utils/address'
 
 export default function PrintPreminedModal({
   open,
@@ -89,8 +90,7 @@ export default function PrintPreminedModal({
       }
     }, [terminal?.version])
 
-  const erc20Issued =
-    tokenSymbol && tokenAddress && tokenAddress !== constants.AddressZero
+  const erc20Issued = Boolean(tokenAddress && !isZeroAddress(tokenAddress))
 
   return (
     <Modal

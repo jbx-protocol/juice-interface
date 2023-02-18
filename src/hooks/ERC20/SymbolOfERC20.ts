@@ -1,6 +1,6 @@
-import * as constants from '@ethersproject/constants'
 import { useErc20Contract } from 'hooks/ERC20/Erc20Contract'
 import { useEffect, useState } from 'react'
+import { isZeroAddress } from 'utils/address'
 
 /** Returns symbol for ERC20 token with `address`. */
 export default function useSymbolOfERC20(tokenAddress: string | undefined) {
@@ -11,11 +11,7 @@ export default function useSymbolOfERC20(tokenAddress: string | undefined) {
 
   useEffect(() => {
     async function fetchSymbol() {
-      if (
-        !contract ||
-        !tokenAddress ||
-        tokenAddress === constants.AddressZero
-      ) {
+      if (!contract || !tokenAddress || isZeroAddress(tokenAddress)) {
         setData(undefined)
         return
       }

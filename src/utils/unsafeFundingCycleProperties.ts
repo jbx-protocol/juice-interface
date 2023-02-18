@@ -1,9 +1,9 @@
-import * as constants from '@ethersproject/constants'
-import { BallotStrategy } from 'models/ballot'
 import {
   FundingCycleRiskFlags,
   RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
 } from 'constants/fundingWarningText'
+import { BallotStrategy } from 'models/ballot'
+import { isZeroAddress } from './address'
 
 export default function unsafeFundingCycleProperties({
   ballot,
@@ -37,7 +37,7 @@ export default function unsafeFundingCycleProperties({
    * Funding cycle reconfigurations can be created moments before a new cycle begins,
    * giving project owners an opportunity to take advantage of contributors, for example by withdrawing overflow.
    */
-  if (ballot.address === constants.AddressZero) {
+  if (isZeroAddress(ballot.address)) {
     configFlags.noBallot = true
   }
 

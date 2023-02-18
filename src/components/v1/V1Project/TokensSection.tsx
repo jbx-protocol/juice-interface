@@ -1,9 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Button, Descriptions, Space, Statistic } from 'antd'
-import FormattedAddress from 'components/FormattedAddress'
 import { IssueErc20TokenButton } from 'components/buttons/IssueErc20TokenButton'
+import FormattedAddress from 'components/FormattedAddress'
 import ManageTokensModal from 'components/ManageTokensModal'
 import ParticipantsModal from 'components/modals/ParticipantsModal'
 import SectionHeader from 'components/SectionHeader'
@@ -20,6 +19,7 @@ import { useTransferTokensTx } from 'hooks/v1/transactor/TransferTokensTx'
 import { useWallet } from 'hooks/Wallet'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import { CSSProperties, useContext, useState } from 'react'
+import { isZeroAddress } from 'utils/address'
 import { formatPercent, formatWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
@@ -68,9 +68,7 @@ export function TokensSection() {
     totalSupplyWithReservedTicketBalance,
   )
 
-  const ticketsIssued = tokenAddress
-    ? tokenAddress !== constants.AddressZero
-    : false
+  const ticketsIssued = Boolean(tokenAddress && !isZeroAddress(tokenAddress))
 
   const projectAllowsMint = Boolean(
     fundingCycleMetadata &&

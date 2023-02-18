@@ -1,13 +1,13 @@
-import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Form, Modal, Space } from 'antd'
-import FormattedAddress from 'components/FormattedAddress'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
+import FormattedAddress from 'components/FormattedAddress'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceOfUser'
 import { useUnstakeTokensTx } from 'hooks/v1/transactor/UnstakeTokensTx'
 import { useContext, useLayoutEffect, useState } from 'react'
+import { isZeroAddress } from 'utils/address'
 import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
@@ -50,9 +50,7 @@ export default function ConfirmUnstakeTokensModal({
     )
   }
 
-  const ticketsIssued = tokenAddress
-    ? tokenAddress !== constants.AddressZero
-    : false
+  const ticketsIssued = Boolean(tokenAddress && isZeroAddress(tokenAddress))
 
   const tokenTextPlural = tokenSymbolText({ tokenSymbol, plural: true })
 

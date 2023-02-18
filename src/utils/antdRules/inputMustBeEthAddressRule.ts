@@ -1,7 +1,7 @@
 import { isAddress } from '@ethersproject/address'
-import * as constants from '@ethersproject/constants'
 import { t } from '@lingui/macro'
 import { RuleObject } from 'antd/lib/form'
+import { isZeroAddress } from 'utils/address'
 
 /**
  * Rule to be used in an Ant Design Form.Item object.
@@ -24,7 +24,7 @@ export const inputMustBeEthAddressRule = (props?: {
     if (!isAddress(value)) {
       return Promise.reject(t`${label} is not a valid ETH Address`)
     }
-    if (value === constants.AddressZero) {
+    if (isZeroAddress(value)) {
       return Promise.reject(t`Zero address cannot be used`)
     }
     return Promise.resolve()

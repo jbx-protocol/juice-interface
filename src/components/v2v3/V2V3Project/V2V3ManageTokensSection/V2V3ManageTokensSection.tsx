@@ -1,11 +1,12 @@
-import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Descriptions, Space } from 'antd'
 import { IssueErc20TokenButton } from 'components/buttons/IssueErc20TokenButton'
 import SectionHeader from 'components/SectionHeader'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { V1UserProvider } from 'contexts/v1/User/V1UserProvider'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
+import { useProjectHasErc20 } from 'hooks/v2v3/ProjectHasErc20'
 import { useWallet } from 'hooks/Wallet'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import { CSSProperties, useContext } from 'react'
@@ -13,11 +14,12 @@ import { featureFlagEnabled } from 'utils/featureFlags'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { reloadWindow } from 'utils/windowUtils'
 import { AccountBalanceDescription } from './AccountBalanceDescription'
+import {
+  LegacyProjectTokensDescription,
+  LegacyProjectTokensDescriptionHeading,
+} from './LegacyProjectTokensDescription'
 import { ProjectTokenDescription } from './ProjectTokenDescription'
 import { TotalSupplyDescription } from './TotalSupplyDescription'
-import { LegacyProjectTokensDescription } from './LegacyProjectTokensDescription'
-import { LegacyProjectTokensDescriptionHeading } from './LegacyProjectTokensDescription'
-import { V1UserProvider } from 'contexts/v1/User/V1UserProvider'
 
 const labelStyle: CSSProperties = {
   width: '10.5rem',
@@ -31,13 +33,13 @@ const contentStyle: CSSProperties = {
 }
 
 export function V2V3ManageTokensSection() {
-  const { tokenAddress, tokenSymbol } = useContext(V2V3ProjectContext)
+  const { tokenSymbol } = useContext(V2V3ProjectContext)
   const { userAddress } = useWallet()
   const hasIssueTicketsPermission = useV2ConnectedWalletHasPermission(
     V2V3OperatorPermission.ISSUE,
   )
 
-  const hasIssuedERC20 = tokenAddress && tokenAddress !== constants.AddressZero
+  const hasIssuedERC20 = useProjectHasErc20()
   const showIssueErc20TokenButton = !hasIssuedERC20 && hasIssueTicketsPermission
 
   const v1TokenSwapEnabled = featureFlagEnabled(FEATURE_FLAGS.V1_TOKEN_SWAP)

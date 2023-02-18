@@ -6,6 +6,7 @@ import { useForm } from 'antd/lib/form/Form'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/TransactionModal'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import { useProjectHasErc20 } from 'hooks/v2v3/ProjectHasErc20'
 import { useMintTokensTx } from 'hooks/v2v3/transactor/MintTokensTx'
 import { useContext, useState } from 'react'
 import { parseWad } from 'utils/format/formatNumber'
@@ -21,7 +22,7 @@ export function V2V3MintModal({
   onCancel?: VoidFunction
   onConfirmed?: VoidFunction
 }) {
-  const { tokenSymbol, tokenAddress } = useContext(V2V3ProjectContext)
+  const { tokenSymbol } = useContext(V2V3ProjectContext)
   const mintTokensTx = useMintTokensTx()
   const [form] = useForm<{
     beneficary: string
@@ -73,8 +74,7 @@ export function V2V3MintModal({
     }
   }
 
-  const erc20Issued =
-    tokenSymbol && tokenAddress && tokenAddress !== constants.AddressZero
+  const erc20Issued = useProjectHasErc20()
 
   const tokensTokenLower = tokenSymbolText({
     tokenSymbol,

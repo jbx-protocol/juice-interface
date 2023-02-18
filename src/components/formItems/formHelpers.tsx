@@ -1,10 +1,9 @@
 import { isAddress } from '@ethersproject/address'
-import * as constants from '@ethersproject/constants'
 import { PayoutMod } from 'models/v1/mods'
 import { permyriadToPercent } from 'utils/format/formatNumber'
 
 import { Split } from 'models/splits'
-import { isEqualAddress } from 'utils/address'
+import { isEqualAddress, isZeroAddress } from 'utils/address'
 import { percentToPermyriad } from 'utils/format/formatNumber'
 
 export type ModalMode = 'Add' | 'Edit' | undefined
@@ -45,7 +44,7 @@ export function validateEthAddress(
     return Promise.resolve()
   else if (!address || !isAddress(address))
     return Promise.reject('Address is required')
-  else if (address === constants.AddressZero)
+  else if (isZeroAddress(address))
     return Promise.reject('Cannot use zero address')
   else if (!canBeDuplicate && mods.some(mod => mod.beneficiary === address))
     return Promise.reject('A payout for this address already exists')

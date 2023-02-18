@@ -1,13 +1,13 @@
 import { WarningOutlined } from '@ant-design/icons'
-import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Descriptions, Form, Space } from 'antd'
-import FormattedAddress from 'components/FormattedAddress'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
+import FormattedAddress from 'components/FormattedAddress'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/TransactionModal'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import useUserUnclaimedTokenBalance from 'hooks/v2v3/contractReader/UserUnclaimedTokenBalance'
+import { useProjectHasErc20 } from 'hooks/v2v3/ProjectHasErc20'
 import { useClaimTokensTx } from 'hooks/v2v3/transactor/ClaimTokensTx'
 import { useContext, useLayoutEffect, useState } from 'react'
 import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
@@ -29,7 +29,7 @@ export function V2V3ClaimTokensModal({
 
   const { tokenSymbol, tokenAddress } = useContext(V2V3ProjectContext)
   const claimTokensTx = useClaimTokensTx()
-
+  const hasIssuedTokens = useProjectHasErc20()
   const { data: unclaimedBalance } = useUserUnclaimedTokenBalance()
 
   useLayoutEffect(() => {
@@ -70,10 +70,6 @@ export function V2V3ClaimTokensModal({
     }
   }
 
-  const ticketsIssued = tokenAddress
-    ? tokenAddress !== constants.AddressZero
-    : false
-
   const tokenTextLong = tokenSymbolText({
     tokenSymbol,
     plural: true,
@@ -100,7 +96,7 @@ export function V2V3ClaimTokensModal({
       centered
     >
       <Space direction="vertical" size="large">
-        {!ticketsIssued && (
+        {!hasIssuedTokens && (
           <div className="bg-smoke-100 p-2 dark:bg-slate-600">
             <WarningOutlined />{' '}
             <Trans>
@@ -140,7 +136,7 @@ export function V2V3ClaimTokensModal({
             {formatWad(unclaimedBalance, { precision: 8 })}
           </Descriptions.Item>
 
-          {ticketsIssued && tokenSymbol && (
+          {hasIssuedTokens && tokenSymbol && (
             <Descriptions.Item
               label={<Trans>{tokenSymbol} ERC-20 address</Trans>}
             >
@@ -154,7 +150,7 @@ export function V2V3ClaimTokensModal({
             <FormattedNumberInput
               min={0}
               max={parseFloat(fromWad(unclaimedBalance))}
-              disabled={!ticketsIssued}
+              disabled={!hasIssuedTokens}
               placeholder="0"
               value={claimAmount}
               accessory={

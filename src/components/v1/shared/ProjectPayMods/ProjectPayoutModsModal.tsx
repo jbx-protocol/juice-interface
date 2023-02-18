@@ -1,5 +1,9 @@
+import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { DatePicker, Form, Modal, Select } from 'antd'
+import { useForm, useWatch } from 'antd/lib/form/Form'
+import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import CurrencySymbol from 'components/CurrencySymbol'
 import { FormItems } from 'components/formItems'
 import {
@@ -9,12 +13,16 @@ import {
   validateEthAddress,
   validatePercentage,
 } from 'components/formItems/formHelpers'
-import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import NumberSlider from 'components/inputs/NumberSlider'
+import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
+import { CurrencyName } from 'constants/currency'
 import { isAddress } from 'ethers/lib/utils'
 import { PayoutMod } from 'models/v1/mods'
+import * as moment from 'moment'
 import { useCallback, useEffect, useState } from 'react'
+import { isZeroAddress } from 'utils/address'
 import {
   fromWad,
   parseWad,
@@ -24,14 +32,7 @@ import {
 } from 'utils/format/formatNumber'
 import { amountSubFee } from 'utils/v1/math'
 import { getAmountFromPercent, getPercentFromAmount } from 'utils/v1/payouts'
-import * as constants from '@ethersproject/constants'
-import * as moment from 'moment'
-import { BigNumber } from '@ethersproject/bignumber'
-import { useForm, useWatch } from 'antd/lib/form/Form'
-import { CurrencyName } from 'constants/currency'
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { EditingPayoutMod } from './types'
-import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 
 type ModType = 'project' | 'address'
 
@@ -273,7 +274,7 @@ export const ProjectPayoutModsModal = ({
                   const address = value
                   if (!address || !isAddress(address))
                     return Promise.reject('Address is required')
-                  else if (address === constants.AddressZero)
+                  else if (isZeroAddress(address))
                     return Promise.reject('Cannot use zero address.')
                   else return Promise.resolve()
                 },

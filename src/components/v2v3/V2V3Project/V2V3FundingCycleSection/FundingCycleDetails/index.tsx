@@ -5,8 +5,8 @@ import {
   V2V3FundingCycle,
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
-import * as constants from '@ethersproject/constants'
 
+import { isZeroAddress } from 'utils/address'
 import { DataSourceListItems } from './DataSourceListItems'
 import { FundingCycleDetailsRow } from './FundingCycleDetailsRow'
 import { FundingCycleListItems } from './FundingCycleListItems'
@@ -59,7 +59,7 @@ export default function FundingCycleDetails({
           />
         }
       />
-      {fundingCycleMetadata.dataSource !== constants.AddressZero ? (
+      {!isZeroAddress(fundingCycleMetadata.dataSource) ? (
         <FundingCycleDetailsRow
           header={t`Data source`}
           items={

@@ -1,4 +1,3 @@
-import * as constants from '@ethersproject/constants'
 import { Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { useAvailableReconfigurationStrategies } from 'components/Create/hooks/AvailableReconfigurationStrategies'
@@ -8,7 +7,7 @@ import { useEffect, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/AppDispatch'
 import { useAppSelector } from 'redux/hooks/AppSelector'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
-import { isEqualAddress } from 'utils/address'
+import { isEqualAddress, isZeroAddress } from 'utils/address'
 import { useFormDispatchWatch } from '../../hooks'
 
 type ReconfigurationRulesFormProps = Partial<{
@@ -61,7 +60,7 @@ export const useReconfigurationRulesForm = () => {
       const pauseTransfers = fundingCycleMetadata.global.pauseTransfers
       const holdFees = fundingCycleMetadata.holdFees
       // By default, ballot is addressZero
-      if (!reconfigurationRuleSelection && ballot === constants.AddressZero)
+      if (!reconfigurationRuleSelection && isZeroAddress(ballot))
         return {
           selection: defaultStrategy.name,
           pausePayments,

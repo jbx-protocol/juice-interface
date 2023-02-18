@@ -1,11 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import * as constants from '@ethersproject/constants'
 
 import { t, Trans } from '@lingui/macro'
 import { Modal, Space, Tooltip } from 'antd'
 import RichButton from 'components/buttons/RichButton'
 import { TransactorInstance } from 'hooks/Transactor'
 import { PropsWithChildren, useState } from 'react'
+import { isZeroAddress } from 'utils/address'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { reloadWindow } from 'utils/windowUtils'
 import { TransferUnclaimedTokensModal } from './modals/TransferUnclaimedTokensModal'
@@ -102,7 +102,7 @@ export default function ManageTokensModal({
   const redeemDisabledReason = !hasOverflow
     ? 'overflowZero'
     : 'redemptionRateZero'
-  const hasIssuedTokens = tokenAddress && tokenAddress !== constants.AddressZero
+  const hasIssuedTokens = tokenAddress && !isZeroAddress(tokenAddress)
 
   return (
     <>

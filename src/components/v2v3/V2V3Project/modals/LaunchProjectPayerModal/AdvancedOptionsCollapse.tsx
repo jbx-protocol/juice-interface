@@ -1,4 +1,3 @@
-import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Form, FormInstance, Input, Space, Switch } from 'antd'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
@@ -7,6 +6,7 @@ import { MinimalCollapse } from 'components/MinimalCollapse'
 import TooltipLabel from 'components/TooltipLabel'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useContext, useState } from 'react'
+import { isZeroAddress } from 'utils/address'
 
 import type { AdvancedOptionsFields } from './LaunchProjectPayerModal'
 
@@ -73,7 +73,7 @@ export default function AdvancedOptionsCollapse({
           </div>
           {tokenMintingEnabled &&
           tokenAddress &&
-          tokenAddress !== constants.AddressZero ? (
+          !isZeroAddress(tokenAddress) ? (
             <div className="flex">
               <TooltipLabel
                 label={t`Mint tokens as ERC-20`}

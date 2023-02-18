@@ -18,7 +18,7 @@ import {
   MAX_NFT_REWARD_TIERS,
   tiersEqual,
   uploadNftCollectionMetadataToIPFS,
-  uploadNftRewardsToIPFS,
+  uploadNftRewardsToIPFS
 } from 'utils/nftRewards'
 import { reloadWindow } from 'utils/windowUtils'
 import FundingCycleDrawer from '../FundingCycleDrawer'

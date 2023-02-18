@@ -1,5 +1,4 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import * as ethersConstants from '@ethersproject/constants'
 import { Contract } from '@ethersproject/contracts'
 import { Token } from '@uniswap/sdk-core'
 import IUniswapV3FactoryABI from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Factory.sol/IUniswapV3Factory.json'
@@ -10,10 +9,11 @@ import {
 } from '@uniswap/v3-sdk'
 import { useQuery } from 'react-query'
 
+import { WETH } from 'constants/contracts/tokens'
 import { readNetwork } from 'constants/networks'
 import { WAD_DECIMALS } from 'constants/numbers'
 import { readProvider } from 'constants/readProvider'
-import { WETH } from 'constants/contracts/tokens'
+import { isZeroAddress } from 'utils/address'
 
 interface Immutables {
   factory: string
@@ -69,7 +69,7 @@ export function useUniswapPriceQuery({ tokenSymbol, tokenAddress }: Props) {
   ): Promise<string | undefined> => {
     const poolAddress = await factoryContract.getPool(tokenAddress, WETH, fee)
 
-    if (poolAddress && poolAddress !== ethersConstants.AddressZero) {
+    if (poolAddress && !isZeroAddress(poolAddress)) {
       return poolAddress
     }
 

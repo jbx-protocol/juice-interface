@@ -27,6 +27,6 @@ export function isEqualAddress(
   return Boolean(addressA && addressB && addressA === addressB)
 }
 
-export function isNonZeroAddress(address: string | undefined): boolean {
-  return Boolean(safeGetAddress(address) && address !== AddressZero)
+export function isZeroAddress(address: string | undefined): boolean {
+  return isEqualAddress(address, AddressZero)
 }

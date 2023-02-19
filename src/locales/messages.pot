@@ -116,9 +116,6 @@ msgstr ""
 msgid "<0>Description: </0><1/>"
 msgstr ""
 
-msgid "<0>Description:</0><1/>"
-msgstr ""
-
 msgid "<0>Discount rate</0>, to reduce your project token's issuance rate (tokens per ETH) each funding cycle."
 msgstr ""
 
@@ -1842,6 +1839,9 @@ msgid "Manual Funding Cycles"
 msgstr ""
 
 msgid "Max Supply"
+msgstr ""
+
+msgid "Max. supply"
 msgstr ""
 
 msgid "Max. supply reached"

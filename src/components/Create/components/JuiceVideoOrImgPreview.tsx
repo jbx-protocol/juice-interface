@@ -1,7 +1,7 @@
 import { CloseOutlined } from '@ant-design/icons'
 import { Image, ImageProps } from 'antd'
-import { MP4_FILE_TYPE } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload'
 import { JuiceVideoPreview } from 'components/v2v3/shared/NftVideo/JuiceVideoPreview'
+import { MP4_FILE_TYPE } from 'constants/fileTypes'
 import { useContentType } from 'hooks/ContentType'
 
 export const JUICE_IMG_PREVIEW_CONTAINER_CLASS =

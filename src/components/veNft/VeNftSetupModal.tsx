@@ -9,7 +9,7 @@ import VeNftRewardTierModal from 'components/veNft/VeNftRewardTierModal'
 import VeNftvariantCard from 'components/veNft/VeNftVariantCard'
 
 import { DEFAULT_LOCK_DURATIONS } from 'constants/contracts/goerli/veNftProject'
-import { ipfsOpenGatewayUrl } from 'utils/ipfs'
+import { ipfsGatewayUrl } from 'utils/ipfs'
 import VeNftAddLockDurationModal from './VeNftAddLockDurationModal'
 import VeNftLockDurationOptionCard from './VeNftLockDurationOptionCard'
 
@@ -23,7 +23,7 @@ const DEFAULT_VARIANTS: VeNftVariant[] = [
     id: 1,
     name: 'Cool guy',
     tokensStakedMin: 1,
-    fileUrl: ipfsOpenGatewayUrl(
+    fileUrl: ipfsGatewayUrl(
       '/ipfs/QmTqHj8L5S2B7w1pqUn9hHyzddB27pgKEwFTwPRRQoqj96',
     ),
   },
@@ -31,7 +31,7 @@ const DEFAULT_VARIANTS: VeNftVariant[] = [
     id: 2,
     name: 'Rich guy',
     tokensStakedMin: 1000,
-    fileUrl: ipfsOpenGatewayUrl(
+    fileUrl: ipfsGatewayUrl(
       '/ipfs/QmTqHj8L5S2B7w1pqUn9hHyzddB27pgKEwFTwPRRQoqj96',
     ),
   },
@@ -39,7 +39,7 @@ const DEFAULT_VARIANTS: VeNftVariant[] = [
     id: 3,
     name: 'Extra rich guy',
     tokensStakedMin: 1000000,
-    fileUrl: ipfsOpenGatewayUrl(
+    fileUrl: ipfsGatewayUrl(
       '/ipfs/QmTqHj8L5S2B7w1pqUn9hHyzddB27pgKEwFTwPRRQoqj96',
     ),
   },
@@ -47,7 +47,7 @@ const DEFAULT_VARIANTS: VeNftVariant[] = [
     id: 3,
     name: 'Top Baller',
     tokensStakedMin: 1000000000,
-    fileUrl: ipfsOpenGatewayUrl(
+    fileUrl: ipfsGatewayUrl(
       '/ipfs/QmTqHj8L5S2B7w1pqUn9hHyzddB27pgKEwFTwPRRQoqj96',
     ),
   },

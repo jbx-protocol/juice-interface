@@ -62,7 +62,9 @@ const handler: NextApiHandler = async (_, res) => {
       }
 
       if (_hasUnresolvedMetadata && _metadataRetriesLeft) {
-        projectsMissingMetadata.push(`\`[${id}]\` metadataUri: ${metadataUri}`)
+        projectsMissingMetadata.push(
+          `\`[${id}]\` metadataUri: ${metadataUri}. ${_metadataRetriesLeft} retries left`,
+        )
       }
 
       const subgraphProject = subgraphProjects.splice(

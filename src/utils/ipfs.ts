@@ -4,23 +4,13 @@ import { base58 } from 'ethers/lib/utils'
 const IPFS_URL_REGEX = /ipfs:\/\/(.+)/
 
 /**
- * Return a HTTP URL to the IPFS gateway at the given [hostname] for the given [cid].
- */
-export const ipfsGatewayUrl = (
-  cid: string | undefined = '',
-  hostname: string,
-) => {
-  return `https://${hostname}/ipfs/${cid}`
-}
-
-/**
  * Return a URL to our open IPFS gateway for the given cid USING INFURA.
  *
  * The 'open' gateway returns any content that is available on IPFS,
  * not just the content we have pinned.
  */
-export const ipfsOpenGatewayUrl = (cid: string | undefined): string => {
-  return ipfsGatewayUrl(cid, OPEN_IPFS_GATEWAY_HOSTNAME)
+export const ipfsGatewayUrl = (cid: string | undefined): string => {
+  return `https://${OPEN_IPFS_GATEWAY_HOSTNAME}/ipfs/${cid}`
 }
 
 /**
@@ -44,16 +34,11 @@ export const cidFromIpfsUri = (ipfsUri: string) =>
 /**
  * Returns a native IPFS link (`ipfs://`) as a https link.
  */
-export function ipfsUriToGatewayUrl(
-  ipfsUri: string,
-  { gatewayHostname }: { gatewayHostname?: string } = {},
-): string {
+export function ipfsUriToGatewayUrl(ipfsUri: string): string {
   if (!isIpfsUri(ipfsUri)) return ipfsUri
 
   const suffix = cidFromIpfsUri(ipfsUri)
-  return gatewayHostname
-    ? ipfsGatewayUrl(suffix, gatewayHostname)
-    : ipfsOpenGatewayUrl(suffix)
+  return ipfsGatewayUrl(suffix)
 }
 
 /**

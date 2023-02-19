@@ -1,4 +1,4 @@
-import { MP4_FILE_TYPE } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload'
+import { MP4_FILE_TYPE } from 'constants/fileTypes'
 import { loadURLContentType } from 'utils/http/loadURLContentType'
 
 const supportedContentTypes = [

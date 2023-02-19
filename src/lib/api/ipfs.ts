@@ -1,8 +1,8 @@
-import axios from 'axios'
+import axios, { AxiosRequestConfig } from 'axios'
 import { consolidateMetadata, ProjectMetadataV6 } from 'models/projectMetadata'
 import { IpfsPinFileResponse } from 'pages/api/ipfs/pinFile.page'
 import { IpfsPinJSONResponse } from 'pages/api/ipfs/pinJSON.page'
-import { ipfsOpenGatewayUrl } from 'utils/ipfs'
+import { ipfsGatewayUrl } from 'utils/ipfs'
 
 // Workaround function for a bug in pinata where the data is sometimes returned in bytes
 const extractJsonFromBase64Data = (base64: string) => {
@@ -19,61 +19,18 @@ const extractJsonFromBase64Data = (base64: string) => {
   return JSON.parse(decoded.substring(jsonStart, jsonEnd + 1))
 }
 
-export const isWalletRegistered = async (
-  walletAddress: string,
-): Promise<boolean> => {
-  try {
-    const result = await axios.post('/api/ipfs/isWalletRegistered', {
-      walletAddress,
-    })
-    return result.data.registered
-  } catch (e) {
-    console.error('error occurred', e)
-    throw e
-  }
-}
-
-export const registerWallet = async (
-  walletAddress: string,
-  signature: string,
-  nonce: string,
-): Promise<{ apiKey: string; apiSecret: string }> => {
-  try {
-    const result = await axios.post('/api/ipfs/registerWallet', {
-      walletAddress,
-      signature,
-      nonce,
-    })
-    return result.data
-  } catch (e) {
-    console.error('error occurred', e)
-    throw e
-  }
-}
-
-/**
- * Alternative call to `registerWallet` to be used when `IPFS_REQUIRES_KEY_REGISTRATION` is false.
- */
-export const clientRegister = async (): Promise<{
-  apiKey: string
-  apiSecret: string
-}> => {
-  try {
-    const result = await axios.post('/api/ipfs/clientRegister')
-    return result.data
-  } catch (e) {
-    console.error('error occurred', e)
-    throw e
-  }
-}
-
-export const ipfsGet = async <T>(hash: string) => {
+export const ipfsGet = async <T>(
+  hash: string,
+  opts?: AxiosRequestConfig<T>,
+) => {
   // Build config for axios get request
-  const response = await axios.get<T>(ipfsOpenGatewayUrl(hash), {
+  const response = await axios.get<T>(ipfsGatewayUrl(hash), {
+    ...opts,
     responseType: 'json',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
+      ...(opts?.headers ?? {}),
     },
   })
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

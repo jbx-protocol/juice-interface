@@ -7,13 +7,13 @@ import { JuiceVideoThumbnailOrImage } from './v2v3/shared/NftVideo/JuiceVideoThu
 export const IconedImage = ({
   url,
   widthClass,
-  onClick,
+  onIconClick,
   icon,
 }: {
   url: string
   widthClass: string
   icon: ReactNode
-  onClick: VoidFunction
+  onIconClick?: VoidFunction
 }) => {
   return (
     <div className="relative py-4">
@@ -26,7 +26,7 @@ export const IconedImage = ({
       <div
         className="absolute top-0 right-0 cursor-pointer"
         role="button"
-        onClick={onClick}
+        onClick={onIconClick}
       >
         {icon}
       </div>

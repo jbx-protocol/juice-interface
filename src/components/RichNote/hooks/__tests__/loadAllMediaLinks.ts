@@ -1,3 +1,4 @@
+import { MP4_FILE_TYPE } from 'constants/fileTypes'
 import * as loadURLContentTypeContainer from 'utils/http/loadURLContentType'
 import { v4 } from 'uuid'
 
@@ -30,7 +31,7 @@ describe('loadAllMediaLinks', () => {
     'image/gif',
     'image/png',
     'image/svg',
-    'video/mp4',
+    MP4_FILE_TYPE,
   ])('returns link if content type is %p', async contentType => {
     loadURLContentTypeSpy.mockImplementation(async () => contentType)
     await expect(loadAllMediaLinks(['foobar'])).resolves.toEqual(['foobar'])

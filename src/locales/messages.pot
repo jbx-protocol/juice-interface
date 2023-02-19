@@ -527,6 +527,9 @@ msgstr ""
 msgid "Available funds can be distributed according to the payouts below{0}."
 msgstr ""
 
+msgid "Available upgrades"
+msgstr ""
+
 msgid "Available:"
 msgstr ""
 
@@ -1199,6 +1202,9 @@ msgstr ""
 msgid "Edit details of {projectTitle}"
 msgstr ""
 
+msgid "Edit funding cycle"
+msgstr ""
+
 msgid "Edit handle of {projectTitle}"
 msgstr ""
 
@@ -1245,9 +1251,6 @@ msgid "Enabling this allows the project owner to manually mint any amount of tok
 msgstr ""
 
 msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise unclaimed {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
-msgstr ""
-
-msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise, unclaimed {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
 msgstr ""
 
 msgid "Enabling token minting will appear risky to contributors."
@@ -1856,6 +1859,9 @@ msgstr ""
 msgid "Migrate legacy tokens"
 msgstr ""
 
+msgid "Migrate project's Controller"
+msgstr ""
+
 msgid "Migrate tokens"
 msgstr ""
 
@@ -2088,9 +2094,6 @@ msgid "Not quite ready to launch? Your project details will be saved as a 'draft
 msgstr ""
 
 msgid "Not set"
-msgstr ""
-
-msgid "Note: Tokens can be minted manually when allowed in the current funding cycle. This can be changed by the project owner for upcoming cycles."
 msgstr ""
 
 msgid "Notice from {0}"
@@ -2663,7 +2666,7 @@ msgstr ""
 msgid "Reserved {tokenTextPlural}: <0>{reservedTokensFormatted} {tokenTextPlural}</0>"
 msgstr ""
 
-msgid "Reset Website"
+msgid "Reset website"
 msgstr ""
 
 msgid "Resources"
@@ -2963,9 +2966,6 @@ msgstr ""
 msgid "Start time"
 msgstr ""
 
-msgid "Start upgrade"
-msgstr ""
-
 msgid "Starting over will erase all currently saved progress."
 msgstr ""
 
@@ -3236,6 +3236,9 @@ msgstr ""
 msgid "This transaction reconfigures the project's funding cycle."
 msgstr ""
 
+msgid "This transaction will set your project's Controller contract to: <0>{controllerAddress}</0>. Any reserved tokens will be distributed."
+msgstr ""
+
 msgid "This will delete the payout for <0/>."
 msgstr ""
 
@@ -3300,6 +3303,9 @@ msgid "Token name is required"
 msgstr ""
 
 msgid "Token printing allowed"
+msgstr ""
+
+msgid "Token receiver"
 msgstr ""
 
 msgid "Token redeem value"
@@ -3533,6 +3539,15 @@ msgstr ""
 msgid "Update {projectTitle}'s NFT collection details."
 msgstr ""
 
+msgid "Upgrade to JBController 3.0.1"
+msgstr ""
+
+msgid "Upgrade to {0}"
+msgstr ""
+
+msgid "Upgrade your project's JBController contract. This upgrade is required to deploy a migration token (JBV3Token)."
+msgstr ""
+
 msgid "Upload"
 msgstr ""
 
@@ -3701,6 +3716,9 @@ msgstr ""
 msgid "When enabled, your project cannot receive direct payments."
 msgstr ""
 
+msgid "When enabled, {tokenSymbol} ERC-20 tokens are minted. When disabled, unclaimed {tokenSymbol} tokens will be minted, which the receiver can claim later as ERC-20."
+msgstr ""
+
 msgid "When the Payment Address receives a payment, project tokens will be minted to this token beneficiary address. The address that made the payment <0>won't receive any project tokens.</0>"
 msgstr ""
 
@@ -3783,6 +3801,9 @@ msgid "You have unsaved changes. Are you sure you want to discard them?"
 msgstr ""
 
 msgid "You haven't created any projects yet."
+msgstr ""
+
+msgid "You must edit your funding cycle rules to allow controller migrations."
 msgstr ""
 
 msgid "You must grant permission to migrate your V1 tokens."

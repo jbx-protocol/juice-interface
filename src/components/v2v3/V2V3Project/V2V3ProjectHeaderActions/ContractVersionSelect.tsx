@@ -41,16 +41,20 @@ export function ContractVersionSelect() {
 
   if (!cv) return null
 
-  // only show version badge for non-v3
-  if (SELECT_OPTIONS.length < 2 && !cvs?.includes(CV_V3)) {
-    return <ProjectVersionBadge versionText={`V${cv}`} />
+  if (SELECT_OPTIONS.length < 2) {
+    // only show version badge for v2 projects
+    if (cvs?.includes(CV_V2)) {
+      return <ProjectVersionBadge versionText={`V${cv}`} className="mr-2" />
+    }
+
+    return null
   }
 
   return (
     <Select
       defaultValue={cv}
       bordered={false}
-      className="ant-select-color-secondary"
+      className="ant-select-color-secondary mr-2"
       onSelect={(value: CV2V3) => {
         setCv?.(value)
         updateRoute(value)

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-02-12 00:33\n"
+"PO-Revision-Date: 2023-02-19 00:30\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: Chinese Simplified\n"
@@ -222,6 +222,9 @@ msgstr "<0>向一个项目付款，你<1>可能会</1> 获得该项目的代币�
 
 msgid "<0>With Automated Funding Cycles, your funding configuration is locked for a set time period.</0><1><2>This helps build trust with your contributors.</2></1>"
 msgstr "<0>选择自动筹款周期，项目筹款配置将会锁定一段固定的时间。</0><1><2>这样有助于与你的捐款人建立信任关系。</2></1>"
+
+msgid "<0>You're about to delete all NFTs from your collection. This will take effect immediately, and you can add NFTs back to the collection at any time.</0><1>If you want to COMPLETELY detach NFTs from your project, you can do so in the <2>Danger Zone</2> section below.</1>"
+msgstr ""
 
 msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
 msgstr "<0>你当前未领取的 {tokenSymbol} 代币数量：</0> {0}"
@@ -532,6 +535,9 @@ msgstr "可用资金会分发给以下支出对象。"
 msgid "Available funds can be distributed according to the payouts below{0}."
 msgstr "可用资金可以按以下的支出对象 {0} 进行分配。"
 
+msgid "Available upgrades"
+msgstr ""
+
 msgid "Available:"
 msgstr "可用:"
 
@@ -636,6 +642,9 @@ msgstr "对支出的更改将立即生效"
 
 msgid "Changes to your collection details may not be reflected in some marketplaces (for example, Opensea). Contact the marketplace for support."
 msgstr "系列详情的变更可能不会在某些交易市场（例如 OpenSea) 上反映出来。请联系交易市场获取帮助。"
+
+msgid "Changes to your collection will take effect immediately."
+msgstr ""
 
 msgid "Changes to your reserved token allocation will take effect immediately."
 msgstr "对你的保留代币分配做的变更将立即生效。"
@@ -916,6 +925,9 @@ msgstr "周期"
 msgid "DAOs"
 msgstr "DAO"
 
+msgid "Danger Zone"
+msgstr ""
+
 msgid "Dark theme"
 msgstr "深色主题"
 
@@ -961,9 +973,6 @@ msgstr "部署"
 msgid "Deploy Migration Token"
 msgstr ""
 
-msgid "Deploy NFTs"
-msgstr "部署 NFT"
-
 msgid "Deploy Payment Address contract"
 msgstr "部署支付地址合约"
 
@@ -977,6 +986,9 @@ msgid "Deploy a V3 Migration Token for your project."
 msgstr ""
 
 msgid "Deploy an address which forwards funds to your project. This makes it easier to pay your project with third-party tools."
+msgstr ""
+
+msgid "Deploy edited NFTs"
 msgstr ""
 
 msgid "Deploy funding cycle configuration"
@@ -1002,6 +1014,12 @@ msgstr "设计项目代币的运作模式。 项目代币可用于治理、所�
 
 msgid "Design how your tokens should work."
 msgstr "设计你的代币的存在形式。"
+
+msgid "Detach NFTs from project"
+msgstr ""
+
+msgid "Detaching NFTs from your project has the following effects:<0><1>Contributors won't receive NFTs when they fund your project.</1><2>Existing NFT holders won't be able to redeem their NFTs.</2></0><3>This will take effect in your next funding cycle.</3>"
+msgstr ""
 
 msgid "Details"
 msgstr "详情"
@@ -1201,8 +1219,14 @@ msgstr "编辑 NFT 等级"
 msgid "Edit allocation"
 msgstr "编辑分配方案"
 
+msgid "Edit collection details"
+msgstr ""
+
 msgid "Edit details of {projectTitle}"
 msgstr "编辑 {projectTitle} 的详细信息"
+
+msgid "Edit funding cycle"
+msgstr ""
 
 msgid "Edit handle of {projectTitle}"
 msgstr "编辑 {projectTitle} 的句柄"
@@ -1250,9 +1274,6 @@ msgid "Enabling this allows the project owner to manually mint any amount of tok
 msgstr "允许项目所有者手动铸造并发送任何数量的代币。"
 
 msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise unclaimed {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
-msgstr "打开此选项将铸造 {tokenSymbol} ERC-20 标准代币。否则将铸造未领取 {tokenSymbol} 代币，受益人可以以后再来把它领取为 ERC-20 标准代币。"
-
-msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise, unclaimed {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
 msgstr "打开此选项将铸造 {tokenSymbol} ERC-20 标准代币。否则将铸造未领取 {tokenSymbol} 代币，受益人可以以后再来把它领取为 ERC-20 标准代币。"
 
 msgid "Enabling token minting will appear risky to contributors."
@@ -1861,6 +1882,9 @@ msgstr ""
 msgid "Migrate legacy tokens"
 msgstr ""
 
+msgid "Migrate project's Controller"
+msgstr ""
+
 msgid "Migrate tokens"
 msgstr ""
 
@@ -2094,9 +2118,6 @@ msgstr "还没做好启动项目的准备？只要不清除浏览器数据， �
 
 msgid "Not set"
 msgstr "未设定"
-
-msgid "Note: Tokens can be minted manually when allowed in the current funding cycle. This can be changed by the project owner for upcoming cycles."
-msgstr "请注意：当前筹款周期允许的情况下，可以手动进行代币铸造。项目方可以在以后的筹款周期变更这一设置。"
 
 msgid "Notice from {0}"
 msgstr "通知自 {0}"
@@ -2671,6 +2692,9 @@ msgstr "保留的 {tokenSymbolPlural}"
 msgid "Reserved {tokenTextPlural}: <0>{reservedTokensFormatted} {tokenTextPlural}</0>"
 msgstr "保留的 {tokenTextPlural}: <0>{reservedTokensFormatted} {tokenTextPlural}</0>"
 
+msgid "Reset website"
+msgstr ""
+
 msgid "Resources"
 msgstr "相关资料"
 
@@ -2692,8 +2716,8 @@ msgstr "复核及启动筹款周期"
 msgid "Review your project data below. Once launched, your first funding cycle can't be changed. You can reconfigure upcoming funding cycles according to your project's reconfiguration rules."
 msgstr "请检查以下项目数据。项目启动后，第一个筹款周期将不能再更改。你可按照项目的重新配置规则来重新配置后续的筹款周期。"
 
-msgid "Reward contributors with NFTs when they meet your configured funding criteria."
-msgstr "当捐款人达到你配置的筹款标准时，用 NFT 来奖励他们。"
+msgid "Reward contributors with NFTs when they fund your project."
+msgstr ""
 
 msgid "Reward contributors with NFTs when they meet your funding criteria."
 msgstr "捐款人达到付款标准时，向他们发放 NFT 奖励。"
@@ -2968,9 +2992,6 @@ msgstr "当前 V2 周期 <0>({0})</0> 终止的同时开始 V3 周期。"
 msgid "Start time"
 msgstr "开始时间"
 
-msgid "Start upgrade"
-msgstr "开始升级"
-
 msgid "Starting over will erase all currently saved progress."
 msgstr "重新开始将清除当前所有的保存进度。"
 
@@ -3241,6 +3262,9 @@ msgstr "这一比率决定了任何特定时间内每赎回一个代币可以获
 msgid "This transaction reconfigures the project's funding cycle."
 msgstr "这个交易会重新配置项目的筹款周期。"
 
+msgid "This transaction will set your project's Controller contract to: <0>{controllerAddress}</0>. Any reserved tokens will be distributed."
+msgstr ""
+
 msgid "This will delete the payout for <0/>."
 msgstr "此操作将删除向 <0/> 的支出分配。"
 
@@ -3306,6 +3330,9 @@ msgstr "请填写代币名称"
 
 msgid "Token printing allowed"
 msgstr "允许发行代币"
+
+msgid "Token receiver"
+msgstr ""
 
 msgid "Token redeem value"
 msgstr "代币赎回价值"
@@ -3451,6 +3478,9 @@ msgstr "热门"
 msgid "Trending projects"
 msgstr "热门项目"
 
+msgid "Troubleshoot"
+msgstr ""
+
 msgid "Twitter"
 msgstr "推特"
 
@@ -3535,6 +3565,15 @@ msgstr "更新 veNFT 的锁定时长。"
 msgid "Update {projectTitle}'s NFT collection details."
 msgstr "更新 {projectTitle} 的 NFT 系列详情。"
 
+msgid "Upgrade to JBController 3.0.1"
+msgstr ""
+
+msgid "Upgrade to {0}"
+msgstr ""
+
+msgid "Upgrade your project's JBController contract. This upgrade is required to deploy a migration token (JBV3Token)."
+msgstr ""
+
 msgid "Upload"
 msgstr "上传"
 
@@ -3546,9 +3585,6 @@ msgstr ""
 
 msgid "Uploaded to: <0>{imageUrl}</0>"
 msgstr "上传至： <0>{imageUrl}</0>"
-
-msgid "Uploaded to: <0>{url}</0>"
-msgstr "已上传至：<0>{url}</0>"
 
 msgid "Use <0>Amounts</0> when you want to configure a <1>distribution limit</1>. Treasury funds that exceed the distribution limit are called <2>overflow</2>. Token holders can redeem (burn) their tokens for a portion of the overflow. <3>Learn more</3>."
 msgstr "使用 <0>金额</0> 来配置 <1>分配限额</1>。金库资金超出分配限额的部分称为<2>溢出</2>。代币持有人可以赎回（燃烧）他们的代币来获取部分溢出。<3>了解更多</3>。"
@@ -3706,6 +3742,9 @@ msgstr ""
 msgid "When enabled, your project cannot receive direct payments."
 msgstr "启用此选项，你的项目将无法收到直接付款。"
 
+msgid "When enabled, {tokenSymbol} ERC-20 tokens are minted. When disabled, unclaimed {tokenSymbol} tokens will be minted, which the receiver can claim later as ERC-20."
+msgstr ""
+
 msgid "When the Payment Address receives a payment, project tokens will be minted to this token beneficiary address. The address that made the payment <0>won't receive any project tokens.</0>"
 msgstr "直接支付地址收到付款时，项目代币会铸造给这个代币接收地址。 进行付款的地址 <0>将不会收到任何项目代币。</0>"
 
@@ -3789,6 +3828,9 @@ msgstr "你有更改未保存。是否放弃更改？"
 
 msgid "You haven't created any projects yet."
 msgstr "你尚未创建项目。"
+
+msgid "You must edit your funding cycle rules to allow controller migrations."
+msgstr ""
 
 msgid "You must grant permission to migrate your V1 tokens."
 msgstr ""

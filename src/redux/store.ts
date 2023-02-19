@@ -1,35 +1,45 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import {
+  combineReducers,
+  configureStore,
+  EnhancedStore,
+} from '@reduxjs/toolkit'
 import { getLocalStoragePreloadedState } from './localStoragePreload'
 import editingProjectReducer from './slices/editingProject'
 import editingV2ProjectReducer from './slices/editingV2Project'
 
-export const REDUX_STATE_LOCALSTORAGE_KEY = 'jb_redux_preloadedState'
+const REDUX_STATE_LOCALSTORAGE_KEY = 'jb_redux_preloadedState'
 
 const rootReducer = combineReducers({
   editingProject: editingProjectReducer,
   editingV2Project: editingV2ProjectReducer,
 })
 
-export function createStore() {
+export function createStore(key?: string) {
   return configureStore({
     reducer: rootReducer,
     devTools: process.env.NODE_ENV !== 'production',
-    preloadedState: getLocalStoragePreloadedState(),
+    preloadedState: key ? getLocalStoragePreloadedState(key) : undefined,
   })
 }
 
-const store = createStore()
-
-store.subscribe(() => {
+export function subscribeStoreToLocalStorage(
+  store: EnhancedStore,
+  key: string,
+) {
   if (typeof window === 'undefined' || !window.localStorage) return
 
-  localStorage.setItem(
-    REDUX_STATE_LOCALSTORAGE_KEY,
-    JSON.stringify({
-      reduxState: store.getState(),
-    }),
-  )
-})
+  store.subscribe(() => {
+    localStorage.setItem(
+      key,
+      JSON.stringify({
+        reduxState: store.getState(),
+      }),
+    )
+  })
+}
+
+const store = createStore(REDUX_STATE_LOCALSTORAGE_KEY)
+subscribeStoreToLocalStorage(store, REDUX_STATE_LOCALSTORAGE_KEY)
 
 export type RootState = ReturnType<typeof rootReducer>
 export type AppDispatch = typeof store.dispatch

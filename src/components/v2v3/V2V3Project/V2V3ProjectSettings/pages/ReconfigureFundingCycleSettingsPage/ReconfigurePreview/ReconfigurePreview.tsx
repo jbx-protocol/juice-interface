@@ -45,7 +45,7 @@ import NftSummarySection from './NftSummarySection'
 
 const gutter = 20
 
-export default function ReconfigurePreview({
+export function ReconfigurePreview({
   payoutSplits,
   reserveSplits,
   fundingCycleMetadata,

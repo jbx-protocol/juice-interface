@@ -16,7 +16,7 @@ import { useDispatch } from 'react-redux'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { formatDate } from 'utils/format/formatDate'
 import { useEditingFundingCycleConfig } from '../../../../../ReconfigureFundingCycleSettingsPage/hooks/editingFundingCycleConfig'
-import ReconfigurePreview from '../../../../../ReconfigureFundingCycleSettingsPage/ReconfigurePreview'
+import ReconfigurePreview from '../../../../../ReconfigureFundingCycleSettingsPage/ReconfigurePreview/ReconfigurePreview'
 import { SetNftOperatorPermissionsButton } from '../../../../../ReconfigureFundingCycleSettingsPage/SetNftOperatorPermissionsButton'
 import { useLaunchFundingCycles } from './hooks/LaunchFundingCycles'
 

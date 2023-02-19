@@ -18,7 +18,7 @@ import {
   MAX_NFT_REWARD_TIERS,
   tiersEqual,
   uploadNftCollectionMetadataToIPFS,
-  uploadNftRewardsToIPFS
+  uploadNftRewardsToIPFS,
 } from 'utils/nftRewards'
 import { reloadWindow } from 'utils/windowUtils'
 import FundingCycleDrawer from '../FundingCycleDrawer'
@@ -315,7 +315,12 @@ export function NftDrawer({
 
           {!hasExistingNfts && (
             // Hack - this whole thing should be a form
-            <Form layout="vertical" colon={false} form={marketplaceForm}>
+            <Form
+              layout="vertical"
+              colon={false}
+              form={marketplaceForm}
+              className="mb-5"
+            >
               <NftCollectionDetailsFormItems />
             </Form>
           )}

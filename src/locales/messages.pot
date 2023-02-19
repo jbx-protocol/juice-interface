@@ -116,9 +116,6 @@ msgstr ""
 msgid "<0>Description: </0><1/>"
 msgstr ""
 
-msgid "<0>Description:</0><1/>"
-msgstr ""
-
 msgid "<0>Discount rate</0>, to reduce your project token's issuance rate (tokens per ETH) each funding cycle."
 msgstr ""
 
@@ -1844,6 +1841,9 @@ msgstr ""
 msgid "Max Supply"
 msgstr ""
 
+msgid "Max. supply"
+msgstr ""
+
 msgid "Max. supply reached"
 msgstr ""
 
@@ -1983,6 +1983,9 @@ msgid "NFTs (optional)"
 msgstr ""
 
 msgid "NFTs are burned when they are redeemed."
+msgstr ""
+
+msgid "NFTs detached from project."
 msgstr ""
 
 msgid "NFTs for you"

@@ -1,8 +1,8 @@
 import { t, Trans } from '@lingui/macro'
 import { Divider, Form, Input, Space } from 'antd'
+import RichButton, { RichButtonProps } from 'components/buttons/RichButton'
 import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
 import { MemoFormInput } from 'components/Project/PayProjectForm/MemoFormInput'
-import RichButton, { RichButtonProps } from 'components/buttons/RichButton'
 import { FundingDrawer } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/FundingDrawer'
 import { NftDrawer } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer'
 import { RulesDrawer } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/RulesDrawer'
@@ -14,20 +14,20 @@ import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsConte
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useNftDeployerCanReconfigure } from 'hooks/JB721Delegate/contractReader/NftDeployerCanReconfigure'
 import { useContext, useState } from 'react'
+import { useAppDispatch } from 'redux/hooks/AppDispatch'
 import {
   DEFAULT_MUST_START_AT_OR_AFTER,
   editingV2ProjectActions,
 } from 'redux/slices/editingV2Project'
+import { formatDate } from 'utils/format/formatDate'
 import { DeployConfigurationButton } from './DeployConfigurationButton'
 import { useEditingFundingCycleConfig } from './hooks/editingFundingCycleConfig'
 import { useFundingHasSavedChanges } from './hooks/fundingHasSavedChanges'
 import { useInitialEditingData } from './hooks/initialEditingData'
 import { useReconfigureFundingCycle } from './hooks/reconfigureFundingCycle'
-import ReconfigurePreview from './ReconfigurePreview'
+import { ReconfigurePreview } from './ReconfigurePreview'
 import V2V3ReconfigureUpcomingMessage from './ReconfigureUpcomingMessage'
 import { SetNftOperatorPermissionsButton } from './SetNftOperatorPermissionsButton'
-import { formatDate } from 'utils/format/formatDate'
-import { useAppDispatch } from 'redux/hooks/AppDispatch'
 
 function ReconfigureButton({
   reconfigureHasChanges,

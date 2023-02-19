@@ -3,8 +3,8 @@ import { Col, Image, Row } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import Paragraph from 'components/Paragraph'
 import { NFT_IMAGE_SIDE_LENGTH } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload'
-import { useAppSelector } from 'redux/hooks/AppSelector'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
+import { useAppSelector } from 'redux/hooks/AppSelector'
 import { classNames } from 'utils/classNames'
 
 export default function NftSummarySection() {

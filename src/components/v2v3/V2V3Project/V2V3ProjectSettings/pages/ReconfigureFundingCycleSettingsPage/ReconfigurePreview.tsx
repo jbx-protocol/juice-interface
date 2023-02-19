@@ -11,7 +11,6 @@ import {
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
-import { isZeroAddress } from 'utils/address'
 import { formatDate } from 'utils/format/formatDate'
 
 import { formattedNum } from 'utils/format/formatNumber'
@@ -231,9 +230,7 @@ export default function ReconfigurePreview({
         />
       )}
 
-      {nftRewards && !isZeroAddress(fundingCycleMetadata.dataSource) ? (
-        <NftSummarySection />
-      ) : null}
+      {nftRewards ? <NftSummarySection /> : null}
     </Space>
   )
 }

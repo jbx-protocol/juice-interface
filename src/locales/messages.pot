@@ -1985,6 +1985,9 @@ msgstr ""
 msgid "NFTs are burned when they are redeemed."
 msgstr ""
 
+msgid "NFTs detached from project."
+msgstr ""
+
 msgid "NFTs for you"
 msgstr ""
 

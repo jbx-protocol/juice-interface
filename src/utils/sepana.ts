@@ -139,7 +139,7 @@ export async function tryResolveMetadata({
     const {
       data: { name, description, logoUri },
     } = await ipfsGet<AnyProjectMetadata>(ipfsGatewayUrl(metadataUri), {
-      timeout: 10000,
+      timeout: 30000,
     })
 
     return {

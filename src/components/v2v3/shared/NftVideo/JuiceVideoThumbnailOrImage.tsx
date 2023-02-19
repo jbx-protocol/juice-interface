@@ -1,10 +1,10 @@
 import { LoadingOutlined } from '@ant-design/icons'
 import { ImageProps } from 'antd'
 import { JuiceVideoOrImgPreview } from 'components/Create/components/JuiceVideoOrImgPreview'
+import { MP4_FILE_TYPE } from 'constants/fileTypes'
 import { useContentType } from 'hooks/ContentType'
 import { useState } from 'react'
 import { classNames } from 'utils/classNames'
-import { MP4_FILE_TYPE } from '../FundingCycleConfigurationDrawers/NftDrawer/NftUpload'
 import { JuiceVideoThumbnail, PlayIconPosition } from './JuiceVideoThumbnail'
 
 export function JuiceVideoThumbnailOrImage({

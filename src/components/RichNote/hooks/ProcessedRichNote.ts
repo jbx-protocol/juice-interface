@@ -12,8 +12,8 @@ const URLRegex = new RegExp(
 /**
  * Processes a RichNote contents, extracting any image data.
  *
- * @returns trimmedNote A note with images removed.
- * @returns formattedMediaLinks Any images extracted as urls.
+ * @returns trimmedNote A note with images/videos removed.
+ * @returns formattedMediaLinks Any images or videos extracted as urls.
  */
 export const useProcessedRichNote = (note: string | undefined) => {
   /*

@@ -24,7 +24,7 @@ export function JuiceVideoThumbnail({
 
   const playIconContainerClassName = 'bottom-3 right-2'
   return (
-    <div className={`${className} relative top-0 ${_width} ${_height}`}>
+    <div className={`relative top-0 ${_width} ${_height}`}>
       {playIconPosition !== 'hidden' ? (
         <div className={`absolute z-[1] ${playIconContainerClassName}`}>
           <JuicePlayIcon />
@@ -32,7 +32,7 @@ export function JuiceVideoThumbnail({
       ) : null}
       <video
         muted
-        className={`h-full w-full`}
+        className={`h-full w-full ${className}`}
         style={{
           filter: isSelected ? 'unset' : 'brightness(50%)',
         }}

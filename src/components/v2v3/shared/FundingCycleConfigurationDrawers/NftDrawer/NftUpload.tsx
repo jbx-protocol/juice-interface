@@ -5,6 +5,7 @@ import { RcFile } from 'antd/lib/upload'
 import TooltipLabel from 'components/TooltipLabel'
 import { VeNftFormFields } from 'components/veNft/VeNftRewardTierModal'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { MP4_FILE_TYPE } from 'constants/fileTypes'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { useWallet } from 'hooks/Wallet'
 import { pinFile } from 'lib/api/ipfs'
@@ -15,7 +16,6 @@ import { ipfsGatewayUrl } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
 import { NftFormFields } from './NftRewardTierModal'
 
-export const MP4_FILE_TYPE = 'video/mp4'
 const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif']
 
 // Always showing images as squares

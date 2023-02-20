@@ -12,8 +12,8 @@ import {
   UploadNoStyle,
 } from 'components/inputs/UploadNoStyle'
 import PrefixedInput from 'components/PrefixedInput'
-import { MP4_FILE_TYPE } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { MP4_FILE_TYPE } from 'constants/fileTypes'
 import { useWallet } from 'hooks/Wallet'
 import { pinFile } from 'lib/api/ipfs'
 import { UploadRequestOption } from 'rc-upload/lib/interface'

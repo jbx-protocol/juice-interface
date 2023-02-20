@@ -9,6 +9,10 @@ const FEATURE_FLAG_DEFAULTS: {
     mainnet: false,
     goerli: false,
   },
+  [FEATURE_FLAGS.NFT_MP4]: {
+    mainnet: true,
+    goerli: true,
+  },
 }
 
 const featureFlagKey = (baseKey: string) => {

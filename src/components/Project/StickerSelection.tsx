@@ -25,7 +25,7 @@ export const StickerSelection = ({
         <IconedImage
           key={`${i}-${url}`}
           url={ipfsUriToGatewayUrl(url)}
-          width={50}
+          widthClass="w-14"
           icon={
             <CloseCircleFilled className="text-base text-black dark:text-slate-100" />
           }

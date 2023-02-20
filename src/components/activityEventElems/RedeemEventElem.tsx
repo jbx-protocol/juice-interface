@@ -77,12 +77,7 @@ export default function RedeemEventElem({
           <Trans>
             <ETHAmount amount={event.returnAmount} /> overflow received
           </Trans>
-          {event.memo && (
-            <>
-              <br />
-              <RichNote note={event.memo} />
-            </>
-          )}
+          {event.memo && <RichNote className="mt-4" note={event.memo} />}
         </div>
       }
     />

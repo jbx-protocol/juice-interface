@@ -14,8 +14,8 @@ import {
   defaultNftCollectionDescription,
   defaultNftCollectionName,
 } from 'utils/nftRewards'
-import { MarketplaceFormFields } from './formFields'
-import { NftCollectionDetailsFormItems } from './NftCollectionDetailsFormItems'
+import { MarketplaceFormFields } from '../shared/formFields'
+import { NftCollectionDetailsFormItems } from '../shared/NftCollectionDetailsFormItems'
 
 export const useCollectionDetailsForm = () => {
   const [form] = useForm<MarketplaceFormFields>()

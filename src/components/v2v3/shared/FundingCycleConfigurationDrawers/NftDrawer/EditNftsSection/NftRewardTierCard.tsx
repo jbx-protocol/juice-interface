@@ -6,8 +6,8 @@ import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useState } from 'react'
 import { classNames } from 'utils/classNames'
-import NftRewardTierModal from './NftRewardTierModal'
-import { NFT_IMAGE_SIDE_LENGTH } from './NftUpload'
+import NftRewardTierModal from './NftRewardTierModal/NftRewardTierModal'
+import { NFT_IMAGE_SIDE_LENGTH } from './NftRewardTierModal/NftUpload'
 
 export default function NftRewardTierCard({
   rewardTier,

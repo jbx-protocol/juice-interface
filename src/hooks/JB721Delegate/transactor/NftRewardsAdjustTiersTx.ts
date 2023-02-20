@@ -47,7 +47,7 @@ export function useNftRewardsAdjustTiersTx({
 
     return transactor(JB721TieredDelegate, 'adjustTiers', args, {
       ...txOpts,
-      title: t`NFT adjust tiers`,
+      title: t`Editing NFTs`,
     })
   }
 }

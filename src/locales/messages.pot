@@ -1235,6 +1235,9 @@ msgstr ""
 msgid "Edit {allocationName}"
 msgstr ""
 
+msgid "Editing NFTs"
+msgstr ""
+
 msgid "Email"
 msgstr ""
 
@@ -1947,9 +1950,6 @@ msgid "My holdings"
 msgstr ""
 
 msgid "My projects"
-msgstr ""
-
-msgid "NFT adjust tiers"
 msgstr ""
 
 msgid "NFT mint confirmed"

@@ -6,7 +6,7 @@ import TooltipLabel from 'components/TooltipLabel'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { Split } from 'models/splits'
 import { isEqualAddress } from 'utils/address'
-import { AllocatorBadge } from '../../V2V3Project/V2V3ProjectSettings/pages/ReconfigureFundingCycleSettingsPage/FundingCycleConfigurationDrawers/AllocatorBadge'
+import { AllocatorBadge } from '../FundingCycleConfigurationDrawers/AllocatorBadge'
 import V2V3ProjectHandleLink from '../V2V3ProjectHandleLink'
 
 export function JuiceboxProjectBeneficiary({

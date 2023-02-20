@@ -1,6 +1,6 @@
 import { CloseOutlined } from '@ant-design/icons'
 import { Image, ImageProps } from 'antd'
-import { JuiceVideoPreview } from 'components/v2v3/shared/NftVideo/JuiceVideoPreview'
+import { JuiceVideoPreview } from 'components/NftVideo/JuiceVideoPreview'
 import { MP4_FILE_TYPE } from 'constants/fileTypes'
 import { useContentType } from 'hooks/ContentType'
 

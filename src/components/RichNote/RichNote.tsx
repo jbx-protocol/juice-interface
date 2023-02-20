@@ -1,6 +1,6 @@
 import { Space } from 'antd'
 import Autolinker from 'autolinker'
-import { JuiceVideoThumbnailOrImage } from 'components/NftVideo/JuiceVideoThumbnailOrImage'
+import { JuiceVideoThumbnailOrImage } from 'components/NftRewards/NftVideo/JuiceVideoThumbnailOrImage'
 import { twMerge } from 'tailwind-merge'
 import { useProcessedRichNote } from './hooks'
 

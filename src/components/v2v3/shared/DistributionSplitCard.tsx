@@ -25,8 +25,8 @@ import {
   preciseFormatSplitPercent,
   SPLITS_TOTAL_PERCENT,
 } from 'utils/v2v3/math'
-import { AllocatorBadge } from './FundingCycleConfigurationDrawers/AllocatorBadge'
-import { DistributionSplitModal } from './FundingCycleConfigurationDrawers/DistributionSplitModal/DistributionSplitModal'
+import { AllocatorBadge } from '../V2V3Project/V2V3ProjectSettings/pages/ReconfigureFundingCycleSettingsPage/FundingCycleConfigurationDrawers/AllocatorBadge'
+import { DistributionSplitModal } from '../V2V3Project/V2V3ProjectSettings/pages/ReconfigureFundingCycleSettingsPage/FundingCycleConfigurationDrawers/DistributionSplitModal/DistributionSplitModal'
 
 const Parens = ({
   withParens = false,

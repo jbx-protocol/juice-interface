@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Callout } from 'components/Callout'
 import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
-import { TokenForm } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/TokenDrawer/TokenForm'
+import { TokenForm } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/ReconfigureFundingCycleSettingsPage/FundingCycleConfigurationDrawers/TokenDrawer/TokenForm'
 import FundingCycleDrawer from '../FundingCycleDrawer'
 import { useFundingCycleDrawer } from '../hooks/FundingCycleDrawer'
 

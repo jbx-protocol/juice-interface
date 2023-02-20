@@ -1,10 +1,9 @@
 import { Trans } from '@lingui/macro'
 import { Space } from 'antd'
 import Link from 'next/link'
-import React from 'react'
 import { twMerge } from 'tailwind-merge'
 import { v2v3ProjectRoute } from 'utils/routes'
-import { AllocatorBadge } from './FundingCycleConfigurationDrawers/AllocatorBadge'
+import { AllocatorBadge } from '../V2V3Project/V2V3ProjectSettings/pages/ReconfigureFundingCycleSettingsPage/FundingCycleConfigurationDrawers/AllocatorBadge'
 
 export default function V2V3ProjectLink({
   className,

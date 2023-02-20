@@ -7,7 +7,7 @@ import { Project } from 'models/subgraph-entities/vX/project'
 
 import { formatError } from './format/formatError'
 import { parseBigNumberKeyVals } from './graph'
-import { ipfsGatewayUrl, isIpfsCID } from './ipfs'
+import { isIpfsCID } from './ipfs'
 
 export const sgSepanaCompareKeys: SGSepanaCompareKey[] = [
   'id',
@@ -138,7 +138,7 @@ export async function tryResolveMetadata({
   try {
     const {
       data: { name, description, logoUri },
-    } = await ipfsGet<AnyProjectMetadata>(ipfsGatewayUrl(metadataUri), {
+    } = await ipfsGet<AnyProjectMetadata>(metadataUri, {
       timeout: 30000,
     })
 

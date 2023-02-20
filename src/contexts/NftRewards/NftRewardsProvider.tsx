@@ -1,3 +1,4 @@
+import useNftRewards from 'contexts/NftRewards/NftRewards'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
@@ -6,7 +7,6 @@ import { useNftFlagsOf } from 'hooks/JB721Delegate/contractReader/NftFlagsOf'
 import { useNftRewardTiersOf } from 'hooks/JB721Delegate/contractReader/NftRewardTiersOf'
 import { useJB721DelegateVersion } from 'hooks/JB721Delegate/DelegateVersion'
 import { useHasNftRewards } from 'hooks/JB721Delegate/HasNftRewards'
-import useNftRewards from 'contexts/NftRewards/NftRewards'
 import { JB721GovernanceType } from 'models/nftRewardTier'
 import { useContext } from 'react'
 import {
@@ -21,7 +21,7 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
 
   const dataSourceAddress = fundingCycleMetadata?.dataSource
   // don't fetch stuff if there's no datasource in the first place.
-  const shouldFetch = useHasNftRewards()
+  const { value: hasNftRewards } = useHasNftRewards()
 
   /**
    * Load NFT Rewards data
@@ -29,11 +29,11 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
   const { data: nftRewardTiersResponse, loading: nftRewardsCIDsLoading } =
     useNftRewardTiersOf({
       dataSourceAddress,
-      shouldFetch,
+      shouldFetch: hasNftRewards,
     })
 
   // catchall to ensure nfts are never loaded if hasNftRewards is false (there's no datasource).
-  const tierData = shouldFetch ? nftRewardTiersResponse ?? [] : []
+  const tierData = hasNftRewards ? nftRewardTiersResponse ?? [] : []
 
   const { data: rewardTiers, isLoading: nftRewardTiersLoading } = useNftRewards(
     tierData,

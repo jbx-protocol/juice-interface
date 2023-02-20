@@ -143,7 +143,7 @@ export function V2V3ReconfigureFundingCycleForm() {
           />
         ) : null}
 
-        <Form layout="vertical">
+        <Form layout="vertical" className="mt-5">
           <Form.Item
             label={t`Memo`}
             className={'antd-no-number-handler'}
@@ -163,6 +163,7 @@ export function V2V3ReconfigureFundingCycleForm() {
             }
             required={false}
             requiredMark="optional"
+            className="mb-0"
           >
             <Input
               type="number"

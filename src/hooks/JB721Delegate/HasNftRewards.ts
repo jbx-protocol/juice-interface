@@ -17,17 +17,24 @@ function hasDataSourceForPay(
   )
 }
 
-export function useHasNftRewards(): boolean {
-  const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
-  const supportsV1Interface = useIsJB721DelegateV1({
-    dataSourceAddress: fundingCycleMetadata?.dataSource,
-  })
-  const supportsV1_1Interface = useIsJB721DelegateV1_1({
-    dataSourceAddress: fundingCycleMetadata?.dataSource,
-  })
+export function useHasNftRewards(): { value: boolean; loading: boolean } {
+  const {
+    fundingCycleMetadata,
+    loading: { fundingCycleLoading },
+  } = useContext(V2V3ProjectContext)
+  const { value: supportsV1Interface, loading: v1Loading } =
+    useIsJB721DelegateV1({
+      dataSourceAddress: fundingCycleMetadata?.dataSource,
+    })
+  const { value: supportsV1_1Interface, loading: v1_1Loading } =
+    useIsJB721DelegateV1_1({
+      dataSourceAddress: fundingCycleMetadata?.dataSource,
+    })
 
-  return (
-    hasDataSourceForPay(fundingCycleMetadata) &&
-    (supportsV1Interface || supportsV1_1Interface)
-  )
+  return {
+    value:
+      hasDataSourceForPay(fundingCycleMetadata) &&
+      (supportsV1Interface || supportsV1_1Interface),
+    loading: fundingCycleLoading || v1Loading || v1_1Loading,
+  }
 }

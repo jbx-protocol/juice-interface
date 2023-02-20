@@ -72,7 +72,7 @@ export function getChangedSubgraphProjects({
       _hasUnresolvedMetadata &&
       (_metadataRetriesLeft || _metadataRetriesLeft === undefined)
     ) {
-      retryMetadataCount++
+      retryMetadataCount += 1
       return true
     }
 

@@ -72,7 +72,7 @@ export function NftRewardsSection() {
   const payAmountETH =
     payInCurrency === ETH ? payAmount : fromWad(converter.usdToWei(payAmount))
 
-  const hasNftRewards = useHasNftRewards()
+  const { value: hasNftRewards } = useHasNftRewards()
 
   const handleTierDeselect = (
     tierId: number | undefined,
@@ -88,7 +88,7 @@ export function NftRewardsSection() {
       }
       // remove the specified number of instances of tierId
       if (count < quantity && id === tierId) {
-        count++
+        count += 1
         return false
       }
       return true

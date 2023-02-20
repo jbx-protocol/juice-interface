@@ -97,7 +97,7 @@ export async function writeSepanaRecords(records: Json<SepanaProject>[]) {
         errors.push(err)
       })
 
-    page++
+    page += 1
   }
 
   return { jobs, written, errors }

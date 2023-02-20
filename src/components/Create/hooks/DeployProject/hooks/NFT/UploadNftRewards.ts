@@ -1,9 +1,9 @@
-import { useAppSelector } from 'redux/hooks/AppSelector'
 import { useCallback } from 'react'
+import { useAppSelector } from 'redux/hooks/AppSelector'
 import {
   defaultNftCollectionDescription,
-  uploadNftCollectionMetadataToIPFS,
-  uploadNftRewardsToIPFS,
+  pinNftCollectionMetadata,
+  pinNftRewards,
 } from 'utils/nftRewards'
 
 /**
@@ -20,8 +20,8 @@ export const useUploadNftRewards = () => {
     if (!nftRewards?.rewardTiers || !nftRewards?.collectionMetadata) return
 
     const [rewardTiersCids, nftCollectionMetadataCid] = await Promise.all([
-      uploadNftRewardsToIPFS(nftRewards.rewardTiers),
-      uploadNftCollectionMetadataToIPFS({
+      pinNftRewards(nftRewards.rewardTiers),
+      pinNftCollectionMetadata({
         collectionName:
           nftRewards.collectionMetadata.name ??
           defaultNftCollectionDescription(projectName),

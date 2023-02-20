@@ -6,7 +6,7 @@ import { TransactorInstance } from 'hooks/Transactor'
 import { NftCollectionMetadata } from 'models/nftRewardTier'
 import { useContext } from 'react'
 import { ipfsUri } from 'utils/ipfs'
-import { uploadNftCollectionMetadataToIPFS } from 'utils/nftRewards'
+import { pinNftCollectionMetadata } from 'utils/nftRewards'
 import { useV2ProjectTitle } from '../ProjectTitle'
 
 export function useReconfigureNftCollectionMetadata({
@@ -29,7 +29,7 @@ export function useReconfigureNftCollectionMetadata({
       return Promise.resolve(false)
     }
 
-    const uri = await uploadNftCollectionMetadataToIPFS({
+    const uri = await pinNftCollectionMetadata({
       collectionName: name,
       collectionDescription: description ?? '',
       collectionLogoUri: projectMetadata?.logoUri,

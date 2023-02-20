@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { JuiceVideoThumbnailOrImage } from './v2v3/shared/NftVideo/JuiceVideoThumbnailOrImage'
+import { JuiceVideoThumbnailOrImage } from './NftRewards/NftVideo/JuiceVideoThumbnailOrImage'
 
 /**
  * Shows an {@link Image} with a small icon in the top left.

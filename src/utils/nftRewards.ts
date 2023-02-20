@@ -163,7 +163,7 @@ async function uploadNftRewardToIPFS({
 
 // Uploads each nft reward tier to an individual location on IPFS
 // returns an array of CIDs which point to each rewardTier on IPFS
-export async function uploadNftRewardsToIPFS(
+export async function pinNftRewards(
   nftRewards: NftRewardTier[],
 ): Promise<string[]> {
   return await Promise.all(
@@ -176,7 +176,7 @@ export async function uploadNftRewardsToIPFS(
   )
 }
 
-export async function uploadNftCollectionMetadataToIPFS({
+export async function pinNftCollectionMetadata({
   collectionName,
   collectionDescription,
   collectionLogoUri,

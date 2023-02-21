@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Checkbox, Form, Input, Modal, Space, Switch } from 'antd'
+import { Checkbox, Form, Input, Space, Switch } from 'antd'
 import { FormInstance, FormProps, useWatch } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
 import Sticker from 'components/icons/Sticker'
@@ -8,7 +8,6 @@ import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import { AttachStickerModal } from 'components/modals/AttachStickerModal'
 import { StickerSelection } from 'components/Project/StickerSelection'
-import ProjectRiskNotice from 'components/ProjectRiskNotice'
 import TooltipIcon from 'components/TooltipIcon'
 import { ProjectPreferences } from 'constants/projectPreferences'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
@@ -18,11 +17,9 @@ import { useProjectHasErc20 } from 'hooks/v2v3/ProjectHasErc20'
 import { useContext, useEffect, useState } from 'react'
 import { isZeroAddress } from 'utils/address'
 import { classNames } from 'utils/classNames'
-import {
-  getUnsafeV2V3FundingCycleProperties,
-  getV2V3FundingCycleRiskCount,
-} from 'utils/v2v3/fundingCycle'
+import { getV2V3FundingCycleRiskCount } from 'utils/v2v3/fundingCycle'
 import { useNftRewardTiersToMint } from './hooks/NftRewardTiersToMint'
+import { ProjectRisksCheckbox } from './ProjectRisksCheckbox'
 
 export interface V2V3PayFormType {
   memo?: string
@@ -45,7 +42,6 @@ export const V2V3PayForm = ({
     useState<boolean>(false)
   const [attachStickerModalVisible, setAttachStickerModalVisible] =
     useState<boolean>(false)
-  const [riskModalVisible, setRiskModalVisible] = useState<boolean>()
 
   const stickerUrls = useWatch('stickerUrls', form)
   const nftRewardTiers = useNftRewardTiersToMint()
@@ -189,40 +185,7 @@ export const V2V3PayForm = ({
             </Callout.Info>
           )}
 
-          {riskCount && fundingCycle ? (
-            <Form.Item
-              className="mb-0 border border-solid border-grey-300 p-4 dark:border-slate-200"
-              name="riskCheckbox"
-              valuePropName="checked"
-              rules={[
-                {
-                  validator: (_, value) =>
-                    value
-                      ? Promise.resolve()
-                      : Promise.reject(
-                          new Error(t`You must review and accept the risks.`),
-                        ),
-                },
-              ]}
-            >
-              <Checkbox>
-                <span className="uppercase">
-                  <Trans>
-                    I accept this project's{' '}
-                    <a
-                      onClick={e => {
-                        setRiskModalVisible(true)
-                        e.preventDefault()
-                      }}
-                    >
-                      unique risks
-                    </a>
-                    .
-                  </Trans>
-                </span>
-              </Checkbox>
-            </Form.Item>
-          ) : null}
+          {riskCount && fundingCycle ? <ProjectRisksCheckbox /> : null}
         </Space>
       </Form>
       <AttachStickerModal
@@ -244,22 +207,6 @@ export const V2V3PayForm = ({
           })
         }}
       />
-      <Modal
-        title={<Trans>Potential risks</Trans>}
-        open={riskModalVisible}
-        okButtonProps={{ hidden: true }}
-        onCancel={() => setRiskModalVisible(false)}
-        cancelText={<Trans>Close</Trans>}
-      >
-        {fundingCycle && fundingCycleMetadata && (
-          <ProjectRiskNotice
-            unsafeProperties={getUnsafeV2V3FundingCycleProperties(
-              fundingCycle,
-              fundingCycleMetadata,
-            )}
-          />
-        )}
-      </Modal>
     </>
   )
 }

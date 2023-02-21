@@ -1,17 +1,19 @@
 import { CloseCircleFilled, UploadOutlined } from '@ant-design/icons'
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Progress, Upload, UploadProps } from 'antd'
 import { RcFile } from 'antd/lib/upload'
 import { CreateButton } from 'components/buttons/CreateButton'
 import { RewardImage } from 'components/Create/components/RewardImage'
+import Loading from 'components/Loading'
 import { JuiceVideoPreview } from 'components/NftRewards/NftVideo/JuiceVideoPreview'
-import { MP4_FILE_TYPE } from 'constants/fileTypes'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { useContentType } from 'hooks/ContentType'
+import { round } from 'lodash'
 import { FormItemInput } from 'models/formItemInput'
 import { UploadRequestOption } from 'rc-upload/lib/interface'
 import { ReactNode, useCallback, useContext, useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
+import { fileTypeIsVideo } from 'utils/nftRewards'
 import { emitErrorNotification } from 'utils/notifications'
 
 export type SupportedNftFileTypes =
@@ -19,6 +21,7 @@ export type SupportedNftFileTypes =
   | 'image/png'
   | 'image/gif'
   | 'video/mp4'
+  | 'video/mov'
 interface UploadNoStyleProps
   extends FormItemInput<string | undefined>,
     Omit<
@@ -51,7 +54,7 @@ export const UploadNoStyle = (props: UploadNoStyleProps) => {
   const undo = useCallback(() => setUploadUrl(undefined), [setUploadUrl])
 
   const { data: contentType } = useContentType(uploadUrl)
-  const isVideo = contentType === MP4_FILE_TYPE
+  const isVideo = fileTypeIsVideo(contentType)
 
   const handleBeforeUpload = useCallback(
     async (file: RcFile) => {
@@ -87,14 +90,15 @@ export const UploadNoStyle = (props: UploadNoStyleProps) => {
       if (!props.customRequest) return
       setIsUploading(true)
       setPercent(0)
+
       try {
         const val = await props.customRequest({
           ...req,
           onProgress: e => {
             req.onProgress?.(e)
             if (e) {
-              // Bit of a hack
-              setPercent(e as unknown as number)
+              const _percent = (e.loaded / e.total) * 100
+              setPercent(round(_percent, 0))
             }
           },
         })
@@ -108,23 +112,34 @@ export const UploadNoStyle = (props: UploadNoStyleProps) => {
     [props, setUploadUrl],
   )
 
+  const _loadState =
+    percent === 100 ? ( // now waiting on IPFS
+      <div>
+        <Loading />
+        <div className="mt-2">
+          <Trans>Awaiting IPFS response. This may take a while.</Trans>
+        </div>
+      </div>
+    ) : (
+      <div className="margin-auto">
+        <Progress
+          width={48}
+          strokeColor={colors.background.action.primary}
+          type="circle"
+          percent={percent}
+          format={percent => (
+            <div className="text-black dark:text-grey-200">{percent ?? 0}%</div>
+          )}
+        />
+      </div>
+    )
+
   const _body = isUploading ? (
-    <div>
-      <Progress
-        width={48}
-        className="h-8 w-8"
-        strokeColor={colors.background.action.primary}
-        type="circle"
-        percent={percent}
-        format={percent => (
-          <div className="text-black dark:text-grey-200">{percent ?? 0}%</div>
-        )}
-      />
-    </div>
+    _loadState
   ) : uploadUrl === undefined ? (
     <UploadButton />
   ) : isVideo ? (
-    <JuiceVideoPreview src={uploadUrl} />
+    <JuiceVideoPreview src={uploadUrl} widthClass="w-full" />
   ) : (
     <UploadedImage imageUrl={uploadUrl} onRemoveImageClicked={undo} />
   )

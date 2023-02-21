@@ -5,7 +5,7 @@ import { RcFile } from 'antd/lib/upload'
 import TooltipLabel from 'components/TooltipLabel'
 import { VeNftFormFields } from 'components/veNft/VeNftRewardTierModal'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { MP4_FILE_TYPE } from 'constants/fileTypes'
+import { MOV_FILE_TYPE, MP4_FILE_TYPE } from 'constants/fileTypes'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { useWallet } from 'hooks/Wallet'
 import { pinFile } from 'lib/api/ipfs'
@@ -48,6 +48,7 @@ export default function NftUpload({
     const fileIsAllowed = [
       ...ALLOWED_FILE_TYPES,
       nftMp4Enabled ? MP4_FILE_TYPE : '',
+      nftMp4Enabled ? MOV_FILE_TYPE : '',
     ].includes(file.type)
 
     const isLt50000M = file.size / 1024 / 1024 < 50000

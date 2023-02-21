@@ -5,6 +5,7 @@ import {
   JB721DELAGATE_V1_1_PAY_METADATA,
   JB721DELAGATE_V1_PAY_METADATA,
 } from 'components/Project/PayProjectForm/hooks/PayProjectForm'
+import { MOV_FILE_TYPE, MP4_FILE_TYPE } from 'constants/fileTypes'
 import { juiceboxEmojiImageUri } from 'constants/images'
 import { readNetwork } from 'constants/networks'
 import { WAD_DECIMALS } from 'constants/numbers'
@@ -434,4 +435,9 @@ export function buildJBDeployTiered721DelegateData({
     flags,
     governanceType,
   }
+}
+
+export const fileTypeIsVideo = (fileType: string | undefined) => {
+  if (!fileType) return false
+  return [MOV_FILE_TYPE, MP4_FILE_TYPE].includes(fileType)
 }

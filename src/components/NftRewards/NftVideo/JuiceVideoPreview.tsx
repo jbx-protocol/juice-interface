@@ -2,7 +2,13 @@ import { IMAGE_OR_VIDEO_PREVIEW_CLASSES } from 'components/NftRewards/NftPreview
 import { useState } from 'react'
 import { twJoin } from 'tailwind-merge'
 
-export function JuiceVideoPreview({ src }: { src: string }) {
+export function JuiceVideoPreview({
+  src,
+  widthClass,
+}: {
+  src: string
+  widthClass?: string
+}) {
   const [loading, setLoading] = useState<boolean>(true)
 
   return (
@@ -12,6 +18,7 @@ export function JuiceVideoPreview({ src }: { src: string }) {
         className={twJoin(
           IMAGE_OR_VIDEO_PREVIEW_CLASSES,
           loading ? 'h-[50vh] w-96' : '',
+          widthClass,
         )}
         autoPlay
         preload="none"

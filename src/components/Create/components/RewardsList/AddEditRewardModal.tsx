@@ -13,7 +13,7 @@ import {
 } from 'components/inputs/UploadNoStyle'
 import PrefixedInput from 'components/PrefixedInput'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { MP4_FILE_TYPE } from 'constants/fileTypes'
+import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
 import { useWallet } from 'hooks/Wallet'
 import { pinFile } from 'lib/api/ipfs'
 import { UploadRequestOption } from 'rc-upload/lib/interface'
@@ -44,7 +44,8 @@ interface AddEditRewardModalFormProps {
   externalUrl?: string | undefined
 }
 
-const NFT_FILE_UPLOAD_EXTRA = t`NFT will be cropped to a 1:1 square in thumbnail previews on the Juicebox app.`
+const NFT_FILE_UPLOAD_EXTRA = t`Images will be cropped to a 1:1 square in thumbnail previews on the Juicebox app.`
+const MAX_NFT_FILE_SIZE_MB = 100
 
 export const AddEditRewardModal = ({
   className,
@@ -138,9 +139,9 @@ export const AddEditRewardModal = ({
   }, [form, onCancel])
 
   const onCustomRequest = useCallback(async (options: UploadRequestOption) => {
-    const { file } = options
+    const { file, onProgress } = options
     try {
-      const res = await pinFile(file)
+      const res = await pinFile(file, onProgress)
       if (!res) throw new Error('Failed to pin file to IPFS')
       const url = ipfsGatewayUrl(res.IpfsHash)
       return url
@@ -164,7 +165,7 @@ export const AddEditRewardModal = ({
 
   const nftMp4Enabled = featureFlagEnabled(FEATURE_FLAGS.NFT_MP4)
   const supportedNftFileType: SupportedNftFileTypes[] = [
-    ...(nftMp4Enabled ? ([MP4_FILE_TYPE] as SupportedNftFileTypes[]) : []),
+    ...(nftMp4Enabled ? (VIDEO_FILE_TYPES as SupportedNftFileTypes[]) : []),
     'image/jpeg',
     'image/png',
     'image/gif',
@@ -193,7 +194,7 @@ export const AddEditRewardModal = ({
           rules={[inputMustExistRule({ label: t`File` })]}
         >
           <UploadNoStyle
-            sizeLimit={100 * 1024 * 1024} // 100 MB
+            sizeLimitMB={MAX_NFT_FILE_SIZE_MB}
             supportedFileTypes={new Set(supportedNftFileType)}
             beforeUpload={onBeforeUpload}
             customRequest={onCustomRequest}

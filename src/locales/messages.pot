@@ -524,6 +524,9 @@ msgstr ""
 msgid "Available:"
 msgstr ""
 
+msgid "Awaiting IPFS response. This may take a while."
+msgstr ""
+
 msgid "Back"
 msgstr ""
 
@@ -1604,6 +1607,9 @@ msgstr ""
 msgid "If you're unsure if you need to claim, you probably don't."
 msgstr ""
 
+msgid "Images will be cropped to a 1:1 square in thumbnail previews on the Juicebox app."
+msgstr ""
+
 msgid "In Juicebox"
 msgstr ""
 
@@ -1959,9 +1965,6 @@ msgid "NFT projects"
 msgstr ""
 
 msgid "NFT rules"
-msgstr ""
-
-msgid "NFT will be cropped to a 1:1 square in thumbnail previews on the Juicebox app."
 msgstr ""
 
 msgid "NFT will be cropped to a square in thumbnail previews on the Juicebox app."

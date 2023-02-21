@@ -1,4 +1,4 @@
-import { MOV_FILE_TYPE, MP4_FILE_TYPE } from 'constants/fileTypes'
+import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
 import { loadURLContentType } from 'utils/http/loadURLContentType'
 
 const supportedContentTypes = [
@@ -7,9 +7,7 @@ const supportedContentTypes = [
   'image/gif',
   'image/png',
   'image/svg',
-  MP4_FILE_TYPE,
-  MOV_FILE_TYPE,
-]
+].concat(VIDEO_FILE_TYPES)
 
 export const loadAllMediaLinks = async (urlsPerLine: string[]) => {
   const mediaLinks = (

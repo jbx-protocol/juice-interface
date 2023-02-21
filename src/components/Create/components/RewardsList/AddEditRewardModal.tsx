@@ -13,7 +13,7 @@ import {
 } from 'components/inputs/UploadNoStyle'
 import PrefixedInput from 'components/PrefixedInput'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { MOV_FILE_TYPE, MP4_FILE_TYPE } from 'constants/fileTypes'
+import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
 import { useWallet } from 'hooks/Wallet'
 import { pinFile } from 'lib/api/ipfs'
 import { UploadRequestOption } from 'rc-upload/lib/interface'
@@ -165,9 +165,7 @@ export const AddEditRewardModal = ({
 
   const nftMp4Enabled = featureFlagEnabled(FEATURE_FLAGS.NFT_MP4)
   const supportedNftFileType: SupportedNftFileTypes[] = [
-    ...(nftMp4Enabled
-      ? ([MP4_FILE_TYPE, MOV_FILE_TYPE] as SupportedNftFileTypes[])
-      : []),
+    ...(nftMp4Enabled ? (VIDEO_FILE_TYPES as SupportedNftFileTypes[]) : []),
     'image/jpeg',
     'image/png',
     'image/gif',
@@ -196,7 +194,7 @@ export const AddEditRewardModal = ({
           rules={[inputMustExistRule({ label: t`File` })]}
         >
           <UploadNoStyle
-            sizeLimit={MAX_NFT_FILE_SIZE_MB}
+            sizeLimitMB={MAX_NFT_FILE_SIZE_MB}
             supportedFileTypes={new Set(supportedNftFileType)}
             beforeUpload={onBeforeUpload}
             customRequest={onCustomRequest}

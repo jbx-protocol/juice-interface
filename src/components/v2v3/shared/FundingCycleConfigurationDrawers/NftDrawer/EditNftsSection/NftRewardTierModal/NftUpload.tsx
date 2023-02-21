@@ -4,19 +4,19 @@ import { Form, FormInstance, Image, Progress, Upload } from 'antd'
 import { RcFile } from 'antd/lib/upload'
 import TooltipLabel from 'components/TooltipLabel'
 import { VeNftFormFields } from 'components/veNft/VeNftRewardTierModal'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { MOV_FILE_TYPE, MP4_FILE_TYPE } from 'constants/fileTypes'
+import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { useWallet } from 'hooks/Wallet'
 import { pinFile } from 'lib/api/ipfs'
 import { useContext, useState } from 'react'
 import { classNames } from 'utils/classNames'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { ipfsGatewayUrl } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
 import { NftFormFields } from './NftRewardTierModal'
 
-const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif']
+const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif'].concat(
+  VIDEO_FILE_TYPES,
+)
 
 // Always showing images as squares
 export const NFT_IMAGE_SIDE_LENGTH = '90px'
@@ -41,15 +41,9 @@ export default function NftUpload({
     setUploading(false)
   }
 
-  const nftMp4Enabled = featureFlagEnabled(FEATURE_FLAGS.NFT_MP4)
-
   // check file type and size
   const beforeUpload = async (file: RcFile) => {
-    const fileIsAllowed = [
-      ...ALLOWED_FILE_TYPES,
-      nftMp4Enabled ? MP4_FILE_TYPE : '',
-      nftMp4Enabled ? MOV_FILE_TYPE : '',
-    ].includes(file.type)
+    const fileIsAllowed = ALLOWED_FILE_TYPES.includes(file.type)
 
     const isLt50000M = file.size / 1024 / 1024 < 50000
 
@@ -57,7 +51,7 @@ export default function NftUpload({
       emitErrorNotification('File must be less than 50000MB')
     }
     if (!fileIsAllowed) {
-      emitErrorNotification('File must be a JPG, PNG, GIF or MP4')
+      emitErrorNotification('File must be a JPG, PNG, GIF, MP4, MOV, WEBM, M4V')
     }
 
     let walletConnected = wallet.isConnected
@@ -154,7 +148,7 @@ export default function NftUpload({
                 </strong>
               </div>
               <div className="text-xs text-grey-500 dark:text-grey-300">
-                JPG, PNG, GIF{nftMp4Enabled ? ', MP4' : ''}
+                JPG, PNG, GIF, MP4, MOV, WEBM, M4V
               </div>
             </div>
           </div>

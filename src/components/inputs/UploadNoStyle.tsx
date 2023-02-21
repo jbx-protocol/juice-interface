@@ -21,14 +21,17 @@ export type SupportedNftFileTypes =
   | 'image/png'
   | 'image/gif'
   | 'video/mp4'
-  | 'video/mov'
+  | 'video/quicktime'
+  | 'video/x-m4v'
+  | 'video/webm'
+
 interface UploadNoStyleProps
   extends FormItemInput<string | undefined>,
     Omit<
       UploadProps,
       'onChange' | 'showUploadList' | 'children' | 'customRequest'
     > {
-  sizeLimit?: number
+  sizeLimitMB?: number
   supportedFileTypes?: Set<SupportedNftFileTypes>
   customRequest?: (options: UploadRequestOption) => Promise<string> | string
   children?: (props: {
@@ -61,13 +64,13 @@ export const UploadNoStyle = (props: UploadNoStyleProps) => {
       const fileIsAllowed = props.supportedFileTypes?.size
         ? ([...props.supportedFileTypes] as string[]).includes(file.type)
         : true
-      const isInSizeLimit = props.sizeLimit
-        ? file.size / 1024 / 1024 < props.sizeLimit
+      const isInSizeLimit = props.sizeLimitMB
+        ? file.size / 1024 / 1024 < props.sizeLimitMB
         : true
 
       if (!isInSizeLimit) {
         emitErrorNotification(
-          t`File must be less than ${props.sizeLimit ?? '??'}MB`,
+          t`File must be less than ${props.sizeLimitMB ?? '??'}MB`,
         )
       }
       if (!fileIsAllowed) {

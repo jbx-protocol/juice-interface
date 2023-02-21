@@ -45,6 +45,7 @@ interface AddEditRewardModalFormProps {
 }
 
 const NFT_FILE_UPLOAD_EXTRA = t`Images will be cropped to a 1:1 square in thumbnail previews on the Juicebox app.`
+const MAX_NFT_FILE_SIZE_MB = 100
 
 export const AddEditRewardModal = ({
   className,
@@ -195,7 +196,7 @@ export const AddEditRewardModal = ({
           rules={[inputMustExistRule({ label: t`File` })]}
         >
           <UploadNoStyle
-            sizeLimit={5} // 5 MB
+            sizeLimit={MAX_NFT_FILE_SIZE_MB}
             supportedFileTypes={new Set(supportedNftFileType)}
             beforeUpload={onBeforeUpload}
             customRequest={onCustomRequest}

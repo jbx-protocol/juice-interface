@@ -45,7 +45,7 @@ interface AddEditRewardModalFormProps {
 }
 
 const NFT_FILE_UPLOAD_EXTRA = t`Images will be cropped to a 1:1 square in thumbnail previews on the Juicebox app.`
-const MAX_NFT_FILE_SIZE_MB = 100
+const MAX_NFT_FILE_SIZE_MB = 5
 
 export const AddEditRewardModal = ({
   className,

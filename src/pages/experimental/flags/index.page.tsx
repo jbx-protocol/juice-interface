@@ -2,15 +2,17 @@ import { Badge } from 'components/Badge'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { readNetwork } from 'constants/networks'
+import Head from 'next/head'
 import { useCallback, useState } from 'react'
 import { featureFlagEnabled, setFeatureFlag } from 'utils/featureFlags'
-import Head from 'next/head'
 
 export default function FlagsPage() {
   const [, updateState] = useState({})
   const forceUpdate = useCallback(() => updateState({}), [])
 
-  const flags = [...Object.keys(FEATURE_FLAGS)].sort()
+  const flags = [
+    ...Object.keys(FEATURE_FLAGS),
+  ].sort() as (keyof typeof FEATURE_FLAGS)[]
 
   const onSwitchChange = (flag: string, v: boolean) => {
     setFeatureFlag(flag, v)

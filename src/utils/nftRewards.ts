@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
+import { NftFileType } from 'components/inputs/UploadNoStyle'
 import {
   DEFAULT_ALLOW_OVERSPENDING,
   JB721DELAGATE_V1_1_PAY_METADATA,
@@ -440,5 +441,6 @@ export function buildJBDeployTiered721DelegateData({
 
 export const fileTypeIsVideo = (fileType: string | undefined) => {
   if (!fileType) return false
-  return VIDEO_FILE_TYPES.includes(fileType)
+
+  return VIDEO_FILE_TYPES.includes(fileType as NftFileType)
 }

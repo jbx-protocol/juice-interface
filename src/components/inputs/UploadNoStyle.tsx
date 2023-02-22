@@ -16,7 +16,7 @@ import { stopPropagation } from 'react-stop-propagation'
 import { fileTypeIsVideo } from 'utils/nftRewards'
 import { emitErrorNotification } from 'utils/notifications'
 
-export type SupportedNftFileTypes =
+export type NftFileType =
   | 'image/jpeg'
   | 'image/png'
   | 'image/gif'
@@ -32,7 +32,7 @@ interface UploadNoStyleProps
       'onChange' | 'showUploadList' | 'children' | 'customRequest'
     > {
   sizeLimitMB?: number
-  supportedFileTypes?: Set<SupportedNftFileTypes>
+  supportedFileTypes?: Set<NftFileType>
   customRequest?: (options: UploadRequestOption) => Promise<string> | string
   children?: (props: {
     percent: number | undefined

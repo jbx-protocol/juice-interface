@@ -1,6 +1,10 @@
 import Bottleneck from 'bottleneck'
 import { ipfsGet } from 'lib/api/ipfs'
-import { AnyProjectMetadata, consolidateMetadata } from 'models/projectMetadata'
+import {
+  AnyProjectMetadata,
+  consolidateMetadata,
+  ProjectMetadataV6,
+} from 'models/projectMetadata'
 
 import { GlobalInfuraScheduler } from './infuraScheduler'
 
@@ -10,7 +14,9 @@ export const findProjectMetadata = async ({
 }: {
   metadataCid: string
   limiter?: Bottleneck
-}) => {
+}): Promise<ProjectMetadataV6 | undefined> => {
+  if (!metadataCid) return
+
   limiter = limiter ?? GlobalInfuraScheduler
   /*
    * Safe to do so, as the static timeout will catch this and retry later.

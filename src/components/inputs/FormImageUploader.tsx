@@ -85,7 +85,7 @@ export const FormImageUploader = ({
                 setLoadingUpload(true)
                 try {
                   const res = await pinFile(req.file)
-                  setValue(res.IpfsHash)
+                  setValue(res.Hash)
                 } catch (e) {
                   emitErrorNotification(t`Error uploading file`)
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any

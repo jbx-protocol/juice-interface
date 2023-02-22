@@ -1,9 +1,7 @@
 import axios from 'axios'
 import { INFURA_IPFS_API_BASE_URL } from 'constants/ipfs'
-import FormData from 'form-data'
-import fs from 'fs'
 
-export type InfuraPinFileResponse = {
+export type InfuraPinResponse = {
   Hash: string
 }
 
@@ -27,33 +25,3 @@ export const infuraApi = axios.create({
     origin,
   },
 })
-
-/**
- * https://docs.infura.io/infura/networks/ipfs/http-api-methods/pin_add
- */
-export function pinHash(hash: string) {
-  return infuraApi.post(`/api/v0/pin/add?arg=${hash}`)
-}
-
-/**
- * https://docs.infura.io/infura/networks/ipfs/http-api-methods/pin
- */
-export async function pinFile(
-  file: fs.ReadStream | string,
-): Promise<InfuraPinFileResponse> {
-  const formData = new FormData()
-  formData.append('file', file)
-
-  const res = await infuraApi.post<InfuraPinFileResponse>(
-    '/api/v0/add',
-    formData,
-    {
-      maxBodyLength: Infinity,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    },
-  )
-
-  return res.data
-}

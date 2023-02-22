@@ -57,13 +57,13 @@ export function V1BalancesModal({
       tokens: editingTokenRefs.filter(t => t.type),
     })
 
-    if (!uploadedMetadata.IpfsHash) {
+    if (!uploadedMetadata.Hash) {
       setLoading(false)
       return
     }
 
     setProjectUriTx(
-      { cid: uploadedMetadata.IpfsHash },
+      { cid: uploadedMetadata.Hash },
       {
         onDone: async () => {
           if (pv) {

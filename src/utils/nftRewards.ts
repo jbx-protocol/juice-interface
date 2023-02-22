@@ -159,7 +159,7 @@ async function uploadNftRewardToIPFS({
 
   const res = await pinJson(ipfsNftRewardTier)
 
-  return res.IpfsHash
+  return res.Hash
 }
 
 // Uploads each nft reward tier to an individual location on IPFS
@@ -202,7 +202,7 @@ export async function pinNftCollectionMetadata({
   }
 
   const res = await pinJson(ipfsNftCollectionMetadata)
-  return res.IpfsHash
+  return res.Hash
 }
 
 // Determines if two NFT reward tiers are equal

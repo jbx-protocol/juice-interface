@@ -1,4 +1,4 @@
-import { pinFile } from 'lib/infura/ipfs'
+import { InfuraPinResponse, pinFile } from 'lib/infura/ipfs'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 interface ApiRequest extends NextApiRequest {
@@ -7,13 +7,9 @@ interface ApiRequest extends NextApiRequest {
   }
 }
 
-export interface IpfsPinJSONResponse {
-  IpfsHash: string
-}
-
 const handler = async (
   req: ApiRequest,
-  res: NextApiResponse<IpfsPinJSONResponse | { error: string }>,
+  res: NextApiResponse<InfuraPinResponse | { error: string }>,
 ) => {
   if (req.method !== 'POST') res.status(405).end()
 
@@ -22,7 +18,7 @@ const handler = async (
 
     const pinJson = await pinFile(JSON.stringify(data))
 
-    return res.status(200).json({ IpfsHash: pinJson.Hash })
+    return res.status(200).json(pinJson)
   } catch (error) {
     console.error(error)
     return res.status(500).json({ error: 'failed to pin data' })

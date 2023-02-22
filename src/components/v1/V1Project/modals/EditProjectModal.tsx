@@ -89,13 +89,13 @@ export default function EditProjectModal({
       tokens: projectMetadata?.tokens ?? [],
     })
 
-    if (!uploadedMetadata.IpfsHash) {
+    if (!uploadedMetadata.Hash) {
       setLoadingSetURI(false)
       return
     }
 
     setProjectUriTx(
-      { cid: uploadedMetadata.IpfsHash },
+      { cid: uploadedMetadata.Hash },
       {
         onDone: () => setLoadingSetURI(false),
         onConfirmed: async () => {

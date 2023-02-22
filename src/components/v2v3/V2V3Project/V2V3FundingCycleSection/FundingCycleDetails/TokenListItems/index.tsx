@@ -34,10 +34,12 @@ export function TokenListItems({
   fundingCycle,
   fundingCycleMetadata,
   showDiffs,
+  mintRateZeroAsUnchanged,
 }: {
   fundingCycle: V2V3FundingCycle
   fundingCycleMetadata: V2V3FundingCycleMetadata
   showDiffs?: boolean
+  mintRateZeroAsUnchanged?: boolean
 }) {
   const {
     tokenSymbol,
@@ -108,7 +110,12 @@ export function TokenListItems({
     <>
       <FundingCycleListItem
         name={t`Mint rate`}
-        value={<MintRateValue value={fundingCycle.weight} />}
+        value={
+          <MintRateValue
+            value={fundingCycle.weight}
+            zeroAsUnchanged={mintRateZeroAsUnchanged}
+          />
+        }
         oldValue={
           showDiffs && mintRateHasDiff ? (
             <MintRateValue value={oldFundingCycle.weight} />

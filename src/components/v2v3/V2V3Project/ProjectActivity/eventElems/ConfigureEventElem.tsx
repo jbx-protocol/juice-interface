@@ -94,6 +94,7 @@ export default function ConfigureEventElem({
             }
             distributionLimit={undefined}
             distributionLimitCurrency={undefined}
+            mintRateZeroAsUnchanged
           />
         </MinimalCollapse>
       }

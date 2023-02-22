@@ -4,9 +4,9 @@ import ExternalLink from 'components/ExternalLink'
 import FormattedAddress from 'components/FormattedAddress'
 import { JuiceVideoThumbnail } from 'components/NftRewards/NftVideo/JuiceVideoThumbnail'
 import TooltipLabel from 'components/TooltipLabel'
-import { MP4_FILE_TYPE } from 'constants/fileTypes'
 import { useContentType } from 'hooks/ContentType'
 import { ReactNode } from 'react'
+import { fileTypeIsVideo } from 'utils/nftRewards'
 import { prettyUrl } from 'utils/url'
 import { RewardImage } from '../RewardImage'
 import { RewardItemButton } from './RewardItemButton'
@@ -52,7 +52,7 @@ export const RewardItem = ({
   } = reward
 
   const { data: contentType } = useContentType(fileUrl)
-  const isVideo = contentType === MP4_FILE_TYPE
+  const isVideo = fileTypeIsVideo(contentType)
 
   return (
     <div className="flex flex-col gap-4">

@@ -1,10 +1,10 @@
 import { LoadingOutlined } from '@ant-design/icons'
 import { ImageProps } from 'antd'
 import { JuiceVideoOrImgPreview } from 'components/Create/components/JuiceVideoOrImgPreview'
-import { MP4_FILE_TYPE } from 'constants/fileTypes'
 import { useContentType } from 'hooks/ContentType'
 import { useState } from 'react'
 import { classNames } from 'utils/classNames'
+import { fileTypeIsVideo } from 'utils/nftRewards'
 import { JuiceVideoThumbnail, PlayIconPosition } from './JuiceVideoThumbnail'
 
 export function JuiceVideoThumbnailOrImage({
@@ -26,7 +26,7 @@ export function JuiceVideoThumbnailOrImage({
   const [previewVisible, setPreviewVisible] = useState<boolean>(false)
 
   const { data: contentType } = useContentType(props.src)
-  const isVideo = contentType === MP4_FILE_TYPE
+  const isVideo = fileTypeIsVideo(contentType)
   const _className = classNames(
     widthClass ?? 'w-full',
     heightClass ?? 'h-full',

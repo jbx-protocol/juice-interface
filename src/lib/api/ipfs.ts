@@ -4,6 +4,8 @@ import { IpfsPinFileResponse } from 'pages/api/ipfs/pinFile.page'
 import { IpfsPinJSONResponse } from 'pages/api/ipfs/pinJSON.page'
 import { ipfsGatewayUrl } from 'utils/ipfs'
 
+import { UploadProgressEvent } from 'rc-upload/lib/interface'
+
 // Workaround function for a bug in pinata where the data is sometimes returned in bytes
 const extractJsonFromBase64Data = (base64: string) => {
   // Decode base64 in web
@@ -43,16 +45,21 @@ export const ipfsGet = async <T>(
   return response
 }
 
-export const pinFile = async (image: File | Blob | string) => {
+export const pinFile = async (
+  image: File | Blob | string,
+  onProgress?: (e: UploadProgressEvent) => void,
+) => {
   const formData = new FormData()
   formData.append('file', image)
-
   const res = await axios.post<IpfsPinFileResponse>(
     '/api/ipfs/pinFile',
     formData,
     {
       headers: {
         'Content-Type': 'multipart/form-data',
+      },
+      onUploadProgress: (progress: UploadProgressEvent) => {
+        onProgress?.(progress)
       },
     },
   )

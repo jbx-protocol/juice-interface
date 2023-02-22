@@ -48,6 +48,7 @@ export async function pinFile(
     '/api/v0/add',
     formData,
     {
+      maxBodyLength: Infinity,
       headers: {
         'Content-Type': 'multipart/form-data',
       },

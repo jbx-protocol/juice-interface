@@ -41,7 +41,7 @@ async function loadNftRewardsDeployment() {
   return latestNftContractDeployments
 }
 
-function sortNftsByContributionFloor(
+export function sortNftsByContributionFloor(
   rewardTiers: NftRewardTier[],
 ): NftRewardTier[] {
   return rewardTiers
@@ -226,31 +226,32 @@ export function tiersEqual({
 
 // Builds JB721TierParams[] (see juice-721-delegate:structs/JB721TierParams.sol)
 export function buildJB721TierParams({
-  cids,
+  cids, // MUST BE SORTED BY CONTRIBUTION FLOOD (not ideal)
   rewardTiers,
 }: {
   cids: string[]
   rewardTiers: NftRewardTier[]
 }): JB721TierParams[] {
+  const _rewardTiers = sortNftsByContributionFloor(rewardTiers)
   // `cids` are ordered the same as `rewardTiers` so can get corresponding values from same index
   return cids
     .map((cid, index) => {
       const contributionFloorWei = parseEther(
-        rewardTiers[index].contributionFloor.toString(),
+        _rewardTiers[index].contributionFloor.toString(),
       )
-      const maxSupply = rewardTiers[index].maxSupply
+      const maxSupply = _rewardTiers[index].maxSupply
       const initialQuantity = BigNumber.from(
         maxSupply ?? DEFAULT_NFT_MAX_SUPPLY,
       )
       const encodedIPFSUri = encodeIpfsUri(cid)
 
-      const reservedRate = rewardTiers[index].reservedRate
-        ? BigNumber.from(rewardTiers[index].reservedRate! - 1)
+      const reservedRate = _rewardTiers[index].reservedRate
+        ? BigNumber.from(_rewardTiers[index].reservedRate! - 1)
         : BigNumber.from(0)
       const reservedTokenBeneficiary =
-        rewardTiers[index].beneficiary ?? constants.AddressZero
-      const votingUnits = rewardTiers[index].votingWeight
-        ? BigNumber.from(rewardTiers[index].votingWeight)
+        _rewardTiers[index].beneficiary ?? constants.AddressZero
+      const votingUnits = _rewardTiers[index].votingWeight
+        ? BigNumber.from(_rewardTiers[index].votingWeight)
         : BigNumber.from(0)
 
       return {

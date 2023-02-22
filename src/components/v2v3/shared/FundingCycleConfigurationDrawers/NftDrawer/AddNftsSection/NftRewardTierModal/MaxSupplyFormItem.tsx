@@ -3,13 +3,15 @@ import { Form, Switch } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TooltipLabel from 'components/TooltipLabel'
+import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
 
 import { NftFormFields } from './NftRewardTierModal'
 
 export default function MaxSupplyFormItem() {
   const form = Form.useFormInstance<NftFormFields>()
   const value = useWatch('maxSupply', form)
-  const hasLimitedSupply = value !== undefined
+  const hasLimitedSupply =
+    value !== undefined && value !== DEFAULT_NFT_MAX_SUPPLY
 
   return (
     <>

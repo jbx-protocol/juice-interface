@@ -1,39 +1,29 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Empty, Form, Space } from 'antd'
+import { Button, Empty, Space } from 'antd'
 import { Callout } from 'components/Callout'
+import Loading from 'components/Loading'
+import { AddRewardTierButton } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/AddNftsSection/AddRewardTierButton'
+import NftRewardTierCard from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/AddNftsSection/NftRewardTierCard'
+import NftRewardTierModal from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/AddNftsSection/NftRewardTierModal/NftRewardTierModal'
+import { useUpdateCurrentCollection } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/EditNftsPage/hooks/UpdateCurrentCollection'
 import { useHasNftRewards } from 'hooks/JB721Delegate/HasNftRewards'
 import { useCallback, useState } from 'react'
 import { MAX_NFT_REWARD_TIERS } from 'utils/nftRewards'
-import { useFundingCycleDrawer } from '../../hooks/FundingCycleDrawer'
-import { NftCollectionDetailsFormItems } from '../shared/NftCollectionDetailsFormItems'
-import { AddRewardTierButton } from './AddRewardTierButton'
 import { useEditingNfts } from './hooks/EditingNfts'
-import { useSaveNewCollection } from './hooks/SaveNewCollection'
-import { useUpdateExistingCollection } from './hooks/UpdateExistingCollection'
-import NftRewardTierCard from './NftRewardTierCard'
-import NftRewardTierModal from './NftRewardTierModal/NftRewardTierModal'
 
-export function EditNftsSection({ onClose }: { onClose: VoidFunction }) {
+export function EditNftsSection() {
   const [addTierModalVisible, setAddTierModalVisible] = useState<boolean>(false)
   const [submitLoading, setSubmitLoading] = useState<boolean>(false)
-  const { setFormUpdated } = useFundingCycleDrawer(onClose)
-
   const {
     rewardTiers,
-    marketplaceForm,
-    postPayModalForm,
     addRewardTier,
     editRewardTier,
     deleteRewardTier,
     editedRewardTierIds,
-  } = useEditingNfts({ setFormUpdated })
-  const hasExistingNfts = useHasNftRewards()
-  const saveNewCollection = useSaveNewCollection({
-    rewardTiers,
-    marketplaceForm,
-    postPayModalForm,
-  })
-  const updateExistingCollection = useUpdateExistingCollection({
+    loading,
+  } = useEditingNfts()
+  const { value: hasExistingNfts } = useHasNftRewards()
+  const updateExistingCollection = useUpdateCurrentCollection({
     editedRewardTierIds,
     rewardTiers,
   })
@@ -42,36 +32,16 @@ export function EditNftsSection({ onClose }: { onClose: VoidFunction }) {
     if (!rewardTiers) return
 
     setSubmitLoading(true)
-
-    if (hasExistingNfts) {
-      await updateExistingCollection()
-    } else {
-      await saveNewCollection()
-    }
-
+    await updateExistingCollection()
     setSubmitLoading(false)
-    setFormUpdated(false)
+  }, [rewardTiers, updateExistingCollection])
 
-    onClose?.()
-  }, [
-    rewardTiers,
-    saveNewCollection,
-    updateExistingCollection,
-    onClose,
-    setFormUpdated,
-    hasExistingNfts,
-  ])
+  if (loading) return <Loading />
 
   return (
     <>
-      {hasExistingNfts ? <h2>Edit NFTs</h2> : <h2>Add NFTs</h2>}
-      <p>
-        <Trans>
-          Reward contributors with NFTs when they fund your project.
-        </Trans>
-      </p>
-      <Callout.Info className="mb-5 bg-smoke-100 dark:bg-slate-500">
-        <Trans>Changes to your collection will take effect immediately.</Trans>
+      <Callout.Info className="text-primary mb-5 bg-smoke-100 dark:bg-slate-500">
+        <Trans>Changes to NFTs will take effect immediately.</Trans>
       </Callout.Info>
 
       {rewardTiers && rewardTiers.length > 0 && (
@@ -121,18 +91,6 @@ export function EditNftsSection({ onClose }: { onClose: VoidFunction }) {
         </Callout.Warning>
       )}
 
-      {!hasExistingNfts && (
-        // Hack - this whole thing should be a form
-        <Form
-          layout="vertical"
-          colon={false}
-          form={marketplaceForm}
-          className="mb-5"
-        >
-          <NftCollectionDetailsFormItems />
-        </Form>
-      )}
-
       <Button
         onClick={onNftFormSaved}
         htmlType="submit"
@@ -140,18 +98,14 @@ export function EditNftsSection({ onClose }: { onClose: VoidFunction }) {
         loading={submitLoading}
       >
         <span>
-          {hasExistingNfts ? (
-            <Trans>Deploy edited NFTs</Trans>
-          ) : (
-            <Trans>Save NFTs</Trans>
-          )}
+          <Trans>Deploy edited NFTs</Trans>
         </span>
       </Button>
 
       <NftRewardTierModal
         open={addTierModalVisible}
         onChange={addRewardTier}
-        mode="Add"
+        mode="Edit"
         onClose={() => setAddTierModalVisible(false)}
         isCreate
       />

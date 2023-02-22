@@ -9,22 +9,11 @@ import { useNftCollectionMetadata } from 'hooks/JB721Delegate/NftCollectionMetad
 import { useReconfigureNftCollectionMetadata } from 'hooks/v2v3/transactor/ReconfigureNftCollectionMetadata'
 import { NftCollectionMetadata } from 'models/nftRewardTier'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { useAppSelector } from 'redux/hooks/AppSelector'
-import {
-  defaultNftCollectionDescription,
-  defaultNftCollectionName,
-} from 'utils/nftRewards'
-import { MarketplaceFormFields } from '../shared/formFields'
-import { NftCollectionDetailsFormItems } from '../shared/NftCollectionDetailsFormItems'
+import { MarketplaceFormFields } from '../../../../shared/FundingCycleConfigurationDrawers/NftDrawer/shared/formFields'
+import { NftCollectionDetailsFormItems } from '../../../../shared/FundingCycleConfigurationDrawers/NftDrawer/shared/NftCollectionDetailsFormItems'
 
-export const useCollectionDetailsForm = () => {
+const useCollectionDetailsForm = () => {
   const [form] = useForm<MarketplaceFormFields>()
-  const {
-    nftRewards: {
-      collectionMetadata: { name, description, symbol },
-    },
-    projectMetadata,
-  } = useAppSelector(state => state.editingV2Project)
   const {
     nftRewards: {
       collectionMetadata: { uri: collectionMetadataUri },
@@ -36,29 +25,17 @@ export const useCollectionDetailsForm = () => {
     collectionMetadataUri,
   )
 
-  // tries from redux first (in case of saving without submitting and going back), if not
-  // reads data based on current nft collection metadata uri
   const initialValues: MarketplaceFormFields = useMemo(() => {
     return {
-      collectionName:
-        name ??
-        collectionMetadata?.name ??
-        defaultNftCollectionName(projectMetadata.name!),
-      collectionDescription:
-        description ??
-        collectionMetadata?.description ??
-        defaultNftCollectionDescription(projectMetadata.name!),
-      collectionSymbol: symbol ?? collectionMetadata?.symbol ?? '',
+      collectionName: collectionMetadata?.name ?? '',
+      collectionDescription: collectionMetadata?.description ?? '',
+      collectionSymbol: collectionMetadata?.symbol ?? '',
       onChainGovernance: governanceType,
     }
   }, [
-    name,
     collectionMetadata?.name,
     collectionMetadata?.description,
     collectionMetadata?.symbol,
-    projectMetadata.name,
-    description,
-    symbol,
     governanceType,
   ])
 
@@ -135,8 +112,7 @@ export function EditCollectionDetailsSection() {
       <Callout.Info className="bg-smoke-100 dark:bg-slate-500" transparent>
         <Trans>
           Changes to your collection details may not be reflected in some
-          marketplaces (for example, Opensea). Contact the marketplace for
-          support.
+          marketplaces (like Opensea). Contact the marketplace for support.
         </Trans>
       </Callout.Info>
       <Form

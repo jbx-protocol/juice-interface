@@ -32,7 +32,9 @@ export default function NftRewardTierCard({
         role="button"
       >
         <div>
-          <div className="mb-2 text-lg font-medium">{rewardTier.name}</div>
+          <div className="text-primary mb-2 text-lg font-medium">
+            {rewardTier.name}
+          </div>
           <div className="mb-2 flex gap-8">
             <Statistic
               title={t`Minimum contribution`}
@@ -56,7 +58,7 @@ export default function NftRewardTierCard({
             <Paragraph
               description={rewardTier.description}
               characterLimit={74}
-              className="mt-4 text-xs"
+              className="text-primary mt-4 text-xs"
             />
           )}
         </div>

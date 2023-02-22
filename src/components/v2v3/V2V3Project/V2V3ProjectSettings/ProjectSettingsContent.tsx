@@ -6,6 +6,7 @@ import {
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import { ArchiveProjectSettingsPage } from './pages/ArchiveProjectSettingsPage'
+import { EditNftsPage } from './pages/EditNftsPage'
 import { GovernanceSettingsPage } from './pages/GovernanceSettingsPage'
 import { PayoutsSettingsPage } from './pages/PayoutsSettingsPage'
 import { ProjectDetailsSettingsPage } from './pages/ProjectDetailsSettingsPage/ProjectDetailsSettingsPage'
@@ -22,6 +23,7 @@ const SettingsPageComponents: {
   general: ProjectDetailsSettingsPage,
   projecthandle: ProjectHandleSettingsPage,
   reconfigurefc: ReconfigureFundingCycleSettingsPage,
+  nfts: EditNftsPage,
   payouts: PayoutsSettingsPage,
   reservedtokens: ReservedTokensSettingsPage,
   tokenmigration: V1V2TokenMigrationSettingsPage,

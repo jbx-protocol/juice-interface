@@ -26,7 +26,7 @@ export default function RichButton({
   return (
     <div
       className={twMerge(
-        'flex cursor-pointer justify-between rounded-sm border border-solid border-smoke-300 bg-smoke-25 py-4 pl-4 transition-colors hover:border-smoke-500 dark:border-slate-300 dark:bg-slate-700 dark:hover:border-slate-100',
+        'flex cursor-pointer justify-between rounded-sm border border-solid border-smoke-300 bg-smoke-25 py-4 pl-4 transition-colors hover:border-haze-500 hover:bg-haze-50 dark:border-slate-300 dark:bg-slate-700 dark:hover:border-haze-500 dark:hover:bg-haze-900',
         className,
       )}
       {...props}
@@ -37,26 +37,22 @@ export default function RichButton({
         props?.onClick?.(e)
       }}
     >
-      <div
-        className={classNames(
-          'flex',
-          disabled
-            ? 'text-grey-400 dark:text-slate-200'
-            : 'text-haze-400 dark:text-haze-300',
-        )}
-      >
-        {prefix ? <h4 className="mr-4">{prefix}</h4> : null}
+      <div className="flex">
+        {prefix ? (
+          <span className="text-md mr-4 mb-2 block font-medium">{prefix}</span>
+        ) : null}
 
         <div>
-          <h4
+          <span
             className={classNames(
               disabled
                 ? 'text-grey-400 dark:text-slate-200'
-                : 'text-haze-400 dark:text-haze-300',
+                : 'text-black dark:text-slate-100',
+              'text-md mb-2 block font-medium',
             )}
           >
             {heading}
-          </h4>
+          </span>
           <p
             className={classNames(
               'm-0 text-xs',
@@ -72,10 +68,10 @@ export default function RichButton({
 
       <div
         className={classNames(
-          'mr-2 flex items-center justify-center p-1',
+          'mr-2 flex items-center justify-center p-1 text-base',
           disabled
             ? 'text-grey-400 dark:text-slate-200'
-            : 'text-haze-400 dark:text-haze-300',
+            : 'text-grey-600 dark:text-slate-100',
         )}
       >
         {icon ?? <CaretRightFilled />}

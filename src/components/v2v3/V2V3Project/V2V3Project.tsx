@@ -65,7 +65,7 @@ export function V2V3Project() {
   const payProjectFormDisabled =
     !hasCurrentFundingCycle || !isPrimaryETHTerminalValid
 
-  const hasNftRewards = useHasNftRewards()
+  const { value: hasNftRewards } = useHasNftRewards()
 
   const colSizeMd = 12
 

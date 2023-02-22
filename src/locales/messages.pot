@@ -269,6 +269,9 @@ msgstr ""
 msgid "Add NFT tier"
 msgstr ""
 
+msgid "Add NFTs to funding cycle"
+msgstr ""
+
 msgid "Add a note about this reconfiguration on-chain."
 msgstr ""
 
@@ -623,13 +626,13 @@ msgstr ""
 msgid "Change networks to deploy"
 msgstr ""
 
+msgid "Changes to NFTs will take effect immediately."
+msgstr ""
+
 msgid "Changes to payouts will take effect immediately."
 msgstr ""
 
-msgid "Changes to your collection details may not be reflected in some marketplaces (for example, Opensea). Contact the marketplace for support."
-msgstr ""
-
-msgid "Changes to your collection will take effect immediately."
+msgid "Changes to your collection details may not be reflected in some marketplaces (like Opensea). Contact the marketplace for support."
 msgstr ""
 
 msgid "Changes to your reserved token allocation will take effect immediately."
@@ -699,6 +702,9 @@ msgid "Collection Symbol"
 msgstr ""
 
 msgid "Collection description"
+msgstr ""
+
+msgid "Collection details"
 msgstr ""
 
 msgid "Collection name"
@@ -1001,10 +1007,10 @@ msgstr ""
 msgid "Design how your tokens should work."
 msgstr ""
 
-msgid "Detach NFTs from project"
+msgid "Detach NFTs from funding cycle"
 msgstr ""
 
-msgid "Detaching NFTs from your project has the following effects:<0><1>Contributors won't receive NFTs when they fund your project.</1><2>Existing NFT holders won't be able to redeem their NFTs.</2></0><3>This will take effect in your next funding cycle.</3>"
+msgid "Detaching NFTs from your funding cycle has the following effects:<0><1>Contributors won't receive NFTs when they fund your project.</1><2>Existing NFT holders won't be able to redeem their NFTs.</2></0><3>This will take effect in your next funding cycle.</3>"
 msgstr ""
 
 msgid "Details"
@@ -1199,13 +1205,16 @@ msgstr ""
 msgid "Edit NFT"
 msgstr ""
 
+msgid "Edit NFT collection"
+msgstr ""
+
 msgid "Edit NFT tier"
 msgstr ""
 
-msgid "Edit allocation"
+msgid "Edit NFTs"
 msgstr ""
 
-msgid "Edit collection details"
+msgid "Edit allocation"
 msgstr ""
 
 msgid "Edit details of {projectTitle}"
@@ -3275,6 +3284,9 @@ msgstr ""
 msgid "To do so, you need to give your legacy token holders the ability to exchange their tokens for V3 tokens. Select <0>Set up token migration</0> below to get started."
 msgstr ""
 
+msgid "To edit you current NFT collection, go to the <0>Edit NFTs</0> page."
+msgstr ""
+
 msgid "To: <0/>"
 msgstr ""
 
@@ -3816,6 +3828,9 @@ msgid "You have unsaved changes. Are you sure you want to discard them?"
 msgstr ""
 
 msgid "You haven't created any projects yet."
+msgstr ""
+
+msgid "You haven't launched an NFT collection yet! Reconfigure your funding cycle to include NFTs."
 msgstr ""
 
 msgid "You must edit your funding cycle rules to allow controller migrations."

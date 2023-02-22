@@ -1,25 +1,17 @@
 import { useForm } from 'antd/lib/form/Form'
+import { MarketplaceFormFields } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/shared/formFields'
+import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { NftRewardTier } from 'models/nftRewardTier'
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import { useAppSelector } from 'redux/hooks/AppSelector'
+import { useContext, useEffect, useState } from 'react'
 import { tiersEqual } from 'utils/nftRewards'
-import {
-  MarketplaceFormFields,
-  NftPostPayModalFormFields,
-} from '../../shared/formFields'
 
-export function useEditingNfts({
-  setFormUpdated,
-}: {
-  setFormUpdated: Dispatch<SetStateAction<boolean>>
-}) {
+export function useEditingNfts() {
   const [rewardTiers, setRewardTiers] = useState<NftRewardTier[]>()
-  const [postPayModalForm] = useForm<NftPostPayModalFormFields>()
   const [marketplaceForm] = useForm<MarketplaceFormFields>()
   // a list of the `tierRanks` (IDs) of tiers that have been edited
   const [editedRewardTierIds, setEditedRewardTierIds] = useState<number[]>([])
 
-  const { nftRewards } = useAppSelector(state => state.editingV2Project)
+  const { nftRewards, loading } = useContext(NftRewardsContext)
 
   const recordEditedTierId = (tierId: number | undefined) => {
     // only need to send tiers that have changed to adjustTiers
@@ -31,7 +23,6 @@ export function useEditingNfts({
   const addRewardTier = (newRewardTier: NftRewardTier) => {
     const newRewardTiers = [...(rewardTiers ?? []), newRewardTier]
     setRewardTiers(newRewardTiers)
-    setFormUpdated(true)
   }
 
   const editRewardTier = ({
@@ -45,7 +36,6 @@ export function useEditingNfts({
       rewardTiers &&
       !tiersEqual({ tier1: newRewardTier, tier2: rewardTiers[index] })
     ) {
-      setFormUpdated(true)
       recordEditedTierId(rewardTiers[index].id)
     }
 
@@ -77,11 +67,11 @@ export function useEditingNfts({
   return {
     rewardTiers,
     setRewardTiers,
-    postPayModalForm,
     marketplaceForm,
     editedRewardTierIds,
     deleteRewardTier,
     editRewardTier,
     addRewardTier,
+    loading,
   }
 }

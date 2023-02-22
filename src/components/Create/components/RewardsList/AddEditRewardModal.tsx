@@ -7,12 +7,8 @@ import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
-import {
-  SupportedNftFileTypes,
-  UploadNoStyle,
-} from 'components/inputs/UploadNoStyle'
+import { NftFileType, UploadNoStyle } from 'components/inputs/UploadNoStyle'
 import PrefixedInput from 'components/PrefixedInput'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
 import { useWallet } from 'hooks/Wallet'
 import { pinFile } from 'lib/api/ipfs'
@@ -25,7 +21,6 @@ import {
   inputMustExistRule,
   inputNonZeroRule,
 } from 'utils/antdRules'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { ipfsGatewayUrl } from 'utils/ipfs'
 import { v4 } from 'uuid'
 import { CreateCollapse } from '../CreateCollapse'
@@ -163,9 +158,8 @@ export const AddEditRewardModal = ({
 
   const isEditing = !!editingData
 
-  const nftMp4Enabled = featureFlagEnabled(FEATURE_FLAGS.NFT_MP4)
-  const supportedNftFileType: SupportedNftFileTypes[] = [
-    ...(nftMp4Enabled ? (VIDEO_FILE_TYPES as SupportedNftFileTypes[]) : []),
+  const supportedNftFileType: NftFileType[] = [
+    ...VIDEO_FILE_TYPES,
     'image/jpeg',
     'image/png',
     'image/gif',

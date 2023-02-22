@@ -14,9 +14,7 @@ export const findProjectMetadata = async ({
 }: {
   metadataCid: string
   limiter?: Bottleneck
-}): Promise<ProjectMetadataV6 | undefined> => {
-  if (!metadataCid) return
-
+}): Promise<ProjectMetadataV6> => {
   limiter = limiter ?? GlobalInfuraScheduler
   /*
    * Safe to do so, as the static timeout will catch this and retry later.

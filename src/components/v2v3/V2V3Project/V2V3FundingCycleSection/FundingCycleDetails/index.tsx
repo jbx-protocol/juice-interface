@@ -19,12 +19,14 @@ export default function FundingCycleDetails({
   distributionLimit,
   distributionLimitCurrency,
   showDiffs,
+  mintRateZeroAsUnchanged,
 }: {
   fundingCycle: V2V3FundingCycle
   fundingCycleMetadata: V2V3FundingCycleMetadata
   distributionLimit: BigNumber | undefined
   distributionLimitCurrency: BigNumber | undefined
   showDiffs?: boolean
+  mintRateZeroAsUnchanged?: boolean
 }) {
   return (
     <Space className="w-full" direction="vertical" size="middle">
@@ -46,6 +48,7 @@ export default function FundingCycleDetails({
             fundingCycle={fundingCycle}
             fundingCycleMetadata={fundingCycleMetadata}
             showDiffs={showDiffs}
+            mintRateZeroAsUnchanged={mintRateZeroAsUnchanged}
           />
         }
       />

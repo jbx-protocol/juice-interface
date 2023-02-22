@@ -14,14 +14,16 @@ import { useRouter } from 'next/router'
 import { useContext } from 'react'
 import { getV1StaticPaths, getV1StaticProps } from './pageLoaders'
 
+export interface V1StaticProps {
+  metadata: ProjectMetadataV6
+  handle: string
+}
+
 export const getStaticPaths: GetStaticPaths = async context => {
   return getV1StaticPaths(context)
 }
 
-export const getStaticProps: GetStaticProps<{
-  metadata: ProjectMetadataV6 | undefined
-  handle: string
-}> = async context => {
+export const getStaticProps: GetStaticProps<V1StaticProps> = async context => {
   return getV1StaticProps(context)
 }
 

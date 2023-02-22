@@ -3506,9 +3506,6 @@ msgstr ""
 msgid "Unavailable"
 msgstr ""
 
-msgid "Unchanged"
-msgstr ""
-
 msgid "Unclaimed token spending enabled"
 msgstr ""
 

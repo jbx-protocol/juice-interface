@@ -29,7 +29,7 @@ export const getV1StaticPaths: GetStaticPaths = async () => {
 }
 
 export const getV1StaticProps: GetStaticProps<{
-  metadata: ProjectMetadataV6
+  metadata: ProjectMetadataV6 | undefined
   handle: string
 }> = async context => {
   if (!context.params) throw new Error('params not supplied')

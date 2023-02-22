@@ -10,7 +10,6 @@ import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import { NftFileType, UploadNoStyle } from 'components/inputs/UploadNoStyle'
 import PrefixedInput from 'components/PrefixedInput'
 import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
-import { useWallet } from 'hooks/Wallet'
 import { pinFile } from 'lib/api/ipfs'
 import { UploadRequestOption } from 'rc-upload/lib/interface'
 import { useCallback, useEffect, useState } from 'react'
@@ -59,8 +58,6 @@ export const AddEditRewardModal = ({
   const [limitedSupply, setLimitedSupply] = useState<boolean>(false)
   const [isReservingNfts, setIsReservingNfts] = useState<boolean>(false)
   const [advancedOptionsOpen, setAdvancedOptionsOpen] = useState<boolean>(false)
-
-  const wallet = useWallet()
 
   useEffect(() => {
     if (!open) return
@@ -147,15 +144,6 @@ export const AddEditRewardModal = ({
     }
   }, [])
 
-  const onBeforeUpload = useCallback(async () => {
-    let walletConnected = wallet.isConnected
-    if (!wallet.isConnected) {
-      const connectStates = await wallet.connect()
-      walletConnected = connectStates.length > 0
-    }
-    return walletConnected
-  }, [wallet])
-
   const isEditing = !!editingData
 
   const supportedNftFileType: NftFileType[] = [
@@ -190,7 +178,6 @@ export const AddEditRewardModal = ({
           <UploadNoStyle
             sizeLimitMB={MAX_NFT_FILE_SIZE_MB}
             supportedFileTypes={new Set(supportedNftFileType)}
-            beforeUpload={onBeforeUpload}
             customRequest={onCustomRequest}
             listType="picture-card" // Tried to do away with styling, but need this -.-
           />

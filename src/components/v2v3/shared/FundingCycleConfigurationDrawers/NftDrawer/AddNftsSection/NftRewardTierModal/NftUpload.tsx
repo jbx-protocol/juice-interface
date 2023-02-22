@@ -6,7 +6,6 @@ import TooltipLabel from 'components/TooltipLabel'
 import { VeNftFormFields } from 'components/veNft/VeNftRewardTierModal'
 import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
-import { useWallet } from 'hooks/Wallet'
 import { pinFile } from 'lib/api/ipfs'
 import { useContext, useState } from 'react'
 import { classNames } from 'utils/classNames'
@@ -32,7 +31,6 @@ export default function NftUpload({
   const [uploading, setUploading] = useState<boolean>()
   const [imageRenderLoading, setImageRenderLoading] = useState<boolean>()
   const [percent, setPercent] = useState<number | undefined>(undefined)
-  const wallet = useWallet()
 
   const setValue = (cid?: string) => {
     const newUrl = cid ? ipfsGatewayUrl(cid) : undefined
@@ -54,13 +52,7 @@ export default function NftUpload({
       emitErrorNotification('File must be a JPG, PNG, GIF, MP4, MOV, WEBM, M4V')
     }
 
-    let walletConnected = wallet.isConnected
-    if (!wallet.isConnected) {
-      const connectStates = await wallet.connect()
-      walletConnected = connectStates.length > 0
-    }
-
-    return fileIsAllowed && isLt50000M && walletConnected
+    return fileIsAllowed && isLt50000M
   }
 
   const fileUrl = form.getFieldValue('fileUrl')

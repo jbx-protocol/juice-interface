@@ -2,7 +2,6 @@ import { CloseCircleFilled, FileImageOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, message, Row, Space, Upload } from 'antd'
 import ExternalLink from 'components/ExternalLink'
-import { useWallet } from 'hooks/Wallet'
 import { pinFile } from 'lib/api/ipfs'
 import { useState } from 'react'
 import { cidFromIpfsUri, ipfsGatewayUrl, ipfsUri } from 'utils/ipfs'
@@ -28,8 +27,6 @@ export const FormImageUploader = ({
   const [imageCid, setImageCid] = useState<string | undefined>(
     value ? cidFromIpfsUri(value) : undefined,
   )
-
-  const wallet = useWallet()
 
   const setValue = (cid?: string) => {
     setImageCid(cid)
@@ -74,12 +71,6 @@ export const FormImageUploader = ({
                   )
                   return Upload.LIST_IGNORE
                 }
-                let walletConnected = wallet.isConnected
-                if (!walletConnected) {
-                  const connectStates = await wallet.connect()
-                  walletConnected = connectStates.length > 0
-                }
-                if (!walletConnected) return Upload.LIST_IGNORE
               }}
               customRequest={async req => {
                 setLoadingUpload(true)

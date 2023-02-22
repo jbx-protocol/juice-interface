@@ -16,10 +16,12 @@ const DEFAULT_SET_CURRENCY_FN = () => {
 const AllocationContext = createContext<{
   allocations: AllocationSplit[]
   totalAllocationAmount?: BigNumber
+  setTotalAllocationAmount?: (total: BigNumber) => void
   allocationCurrency?: V2V3CurrencyOption
   addAllocation: (allocation: AllocationSplit) => void
   removeAllocation: (id: string) => void
   upsertAllocation: (allocation: AllocationSplit) => void
+  setAllocations: (allocations: AllocationSplit[]) => void
   setCurrency: (currency: V2V3CurrencyOption) => void
 }>({
   allocations: [],
@@ -36,6 +38,9 @@ const AllocationContext = createContext<{
       'AllocationContext.upsertAllocation called but no provider set',
     )
   },
+  setAllocations: () => {
+    console.error('AllocationContext.setAllocations called but no provider set')
+  },
   setCurrency: DEFAULT_SET_CURRENCY_FN,
 })
 
@@ -45,6 +50,7 @@ const useAllocationInstance = () => {
 
 interface AllocationProps {
   totalAllocationAmount?: BigNumber
+  setTotalAllocationAmount?: (total: BigNumber) => void
   allocationCurrency?: V2V3CurrencyOption
   setAllocationCurrency?: (currency: V2V3CurrencyOption) => void
 }
@@ -57,6 +63,7 @@ export const Allocation: React.FC<
   useAllocationInstance: typeof useAllocationInstance
 } = ({
   totalAllocationAmount,
+  setTotalAllocationAmount,
   allocationCurrency,
   value,
   onChange,
@@ -70,6 +77,7 @@ export const Allocation: React.FC<
       value={{
         ...allocationHook,
         totalAllocationAmount,
+        setTotalAllocationAmount,
         allocationCurrency,
         setCurrency: setAllocationCurrency ?? DEFAULT_SET_CURRENCY_FN,
       }}

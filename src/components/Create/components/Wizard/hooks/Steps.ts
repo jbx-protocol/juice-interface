@@ -8,6 +8,7 @@ import { WizardContext } from '../contexts'
 const stepNames: Record<string, string> = {
   projectDetails: t`Details`,
   fundingCycles: t`Cycles`,
+  treasurySetup: t`Treasury`,
   fundingTarget: t`Target`,
   payouts: t`Payouts`,
   projectToken: t`Token`,

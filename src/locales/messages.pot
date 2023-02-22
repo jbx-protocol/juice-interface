@@ -326,6 +326,9 @@ msgstr ""
 msgid "Add token allocation"
 msgstr ""
 
+msgid "Add wallet addresses or juicebox projects to receive payouts."
+msgstr ""
+
 msgid "Add {0}"
 msgstr ""
 
@@ -366,6 +369,9 @@ msgid "All events"
 msgstr ""
 
 msgid "All funds can be distributed by the project. The project will have no overflow (the same as setting the target to infinity)."
+msgstr ""
+
+msgid "All funds raised will be redeemable by your project’s token holders. You can turn off redemptions in the Token settings. You will not be able to add payouts while your distribution limit is set to Zero."
 msgstr ""
 
 msgid "All funds received by the treasury will be distributed. Token holders will receive <0>no ETH</0> when burning their tokens."
@@ -1133,7 +1139,13 @@ msgstr ""
 msgid "Distribution Amount"
 msgstr ""
 
+msgid "Distribution Limit"
+msgstr ""
+
 msgid "Distribution Limit <0/>:"
+msgstr ""
+
+msgid "Distribution Limit: {fundingTarget}"
 msgstr ""
 
 msgid "Distribution Percentage"
@@ -2978,6 +2990,9 @@ msgstr ""
 msgid "Start"
 msgstr ""
 
+msgid "Start by selecting a treasury distribution limit and then add payouts to wallet addresses or Juicebox projects to receive funds each cycle."
+msgstr ""
+
 msgid "Start over"
 msgstr ""
 
@@ -3182,6 +3197,12 @@ msgstr ""
 msgid "The total funds this Juicebox project has received since it was created."
 msgstr ""
 
+msgid ""
+"The total sum of your payouts will become your distribution limit.\n"
+"This is the amount of funds your project will be able to distribute or\n"
+"'withdraw' from its treasury each funding cycle."
+msgstr ""
+
 msgid "The veNFT contract is currently unable to lock project token. Contact the project owner regarding adding this permission."
 msgstr ""
 
@@ -3192,6 +3213,9 @@ msgid "There are no payouts defined for this funding cycle. The project owner wi
 msgstr ""
 
 msgid "There are no reserved token recipients defined for this funding cycle. The project owner will receive all available tokens."
+msgstr ""
+
+msgid "These are the addresses or entities that will receive payouts from your treasury each funding cycle."
 msgstr ""
 
 msgid "This Juicebox V3 project also has a project on Juicebox V1 and/or V2. The project owner is allowing you to migrate your legacy tokens (V1 or V2) for V3 tokens."
@@ -3219,6 +3243,9 @@ msgid "This address will receive the tokens minted from paying this project."
 msgstr ""
 
 msgid "This funding cycle may pose risks to contributors. Check the funding cycle details before paying this project."
+msgstr ""
+
+msgid "This is the amount of funds your project will be able to distribute or 'withdraw' from its treasury each funding cycle."
 msgstr ""
 
 msgid "This is the button that contributors will click to pay your project"
@@ -3477,6 +3504,9 @@ msgid "Transfer {tokenTextShort}"
 msgstr ""
 
 msgid "Transparently set your terms ahead of time, or take control when you need to. Juicebox lets you define elegant token issuance & redemption, payouts, and other rules in advance, acting as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
+msgstr ""
+
+msgid "Treasury"
 msgstr ""
 
 msgid "Trending"
@@ -3951,6 +3981,9 @@ msgid "Your project will appear as 'active'."
 msgstr ""
 
 msgid "Your project will appear as 'archived'."
+msgstr ""
+
+msgid "Your project will keep all funds raised. There will be no limit on the amount of funds you can distribute from your treasury each funding cycle."
 msgstr ""
 
 msgid "Your project will withhold all funds raised. Funds can be distributed to payout addresses you set, and the project owner will receive any unallocated funds. Your project will have no overflow, so token holders can't redeem their tokens for ETH."

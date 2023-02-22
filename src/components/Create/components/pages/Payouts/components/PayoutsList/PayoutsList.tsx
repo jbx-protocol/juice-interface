@@ -1,9 +1,11 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Button, Divider, Space } from 'antd'
+import { Button, Space } from 'antd'
+import { Allocation, AllocationSplit } from 'components/Allocation'
 import { Callout } from 'components/Callout'
+import { useFundingTarget } from 'components/Create/components/RecallCard/hooks'
 import { OwnerPayoutCard } from 'components/PayoutCard'
 import { PayoutCard } from 'components/PayoutCard/PayoutCard'
-import { useFundingTarget } from 'components/Create/components/RecallCard/hooks'
 import { FormItemInput } from 'models/formItemInput'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
@@ -11,9 +13,8 @@ import { useCallback, useMemo } from 'react'
 import { useEditingDistributionLimit } from 'redux/hooks/EditingDistributionLimit'
 import { calculateExpenseFromPercentageOfWad } from 'utils/calculateExpenseFromPercentageOfWad'
 import { parseWad } from 'utils/format/formatNumber'
-import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
+import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
-import { Allocation, AllocationSplit } from 'components/Allocation'
 
 export const PayoutsList = (
   props: FormItemInput<AllocationSplit[]> & {
@@ -53,16 +54,22 @@ export const PayoutsList = (
     [props.payoutsSelection],
   )
 
+  const setTotalAllocationAmount = useCallback(
+    (total: BigNumber) => {
+      setDistributionLimit({
+        amount: total,
+        currency: distributionLimit?.currency ?? V2V3_CURRENCY_ETH,
+      })
+    },
+    [distributionLimit, setDistributionLimit],
+  )
+
   const setCurrency = useCallback(
     (currency: V2V3CurrencyOption) => {
-      if (!distributionLimit?.amount) {
-        console.warn(
-          'Allocation.setCurrency called with no distribution limit set in editing',
-          { distributionLimit },
-        )
-        return
-      }
-      setDistributionLimit({ amount: distributionLimit?.amount, currency })
+      setDistributionLimit({
+        amount: distributionLimit?.amount ?? BigNumber.from(0),
+        currency,
+      })
     },
     [distributionLimit, setDistributionLimit],
   )
@@ -105,18 +112,27 @@ export const PayoutsList = (
     })
   }, [distributionLimit, expenses, props, setDistributionLimit])
 
+  const hasAllocations = !!props.value?.length
+
+  const addButtonSize =
+    !hasAllocations && props.payoutsSelection === 'amounts' ? 'large' : 'small'
+
   return (
     <Allocation
       {...props}
       allocationCurrency={distributionLimit?.currency}
       totalAllocationAmount={distributionLimit?.amount}
+      setTotalAllocationAmount={setTotalAllocationAmount}
       setAllocationCurrency={setCurrency}
     >
       <Space className="w-full" direction="vertical" size="middle">
-        <OwnerPayoutCard payoutsSelection={props.payoutsSelection} />
+        {props.payoutsSelection === 'percentages' && (
+          <OwnerPayoutCard payoutsSelection={props.payoutsSelection} />
+        )}
         <Allocation.List
           allocationName={t`payout`}
           isEditable={props.isEditable}
+          addButtonSize={addButtonSize}
           availableModes={availableModes}
         >
           {(
@@ -139,46 +155,40 @@ export const PayoutsList = (
             </>
           )}
         </Allocation.List>
-        {!distributionLimit?.amount.eq(MAX_DISTRIBUTION_LIMIT) && (
+        {hasAllocations && (
           <>
             <div className="flex items-center pt-4">
-              <span>Current Funding Target: {fundingTarget}</span>
-              <Divider type="vertical" className="mx-4 h-6" />
               <span>
-                Expenses:{' '}
-                {formatCurrencyAmount({
-                  amount: expenses,
-                  currency: distributionLimit?.currency,
-                })}
+                <Trans>Distribution Limit: {fundingTarget}</Trans>
               </span>
             </div>
+            {!distributionLimit?.amount.eq(MAX_DISTRIBUTION_LIMIT) &&
+              expensesExceedsFundingTarget && (
+                <Callout.Warning collapsible={false}>
+                  <div className="pb-2 text-base font-medium">
+                    <Trans>Funding Target Exceeded</Trans>
+                  </div>
+                  <p>
+                    <Trans>
+                      The sum of your expenses is currently different to your
+                      funding target. Do you want to sync your funding target to
+                      match expenses?
+                      <br />
+                      <br />
+                      If not, please edit one or more of your payouts.
+                    </Trans>
+                  </p>
+                  <Button
+                    type="text"
+                    className="bg-warning-800 text-white dark:bg-warning-100 dark:text-black"
+                    onClick={syncExpenses}
+                  >
+                    Sync now
+                  </Button>
+                </Callout.Warning>
+              )}
           </>
         )}
-        {!distributionLimit?.amount.eq(MAX_DISTRIBUTION_LIMIT) &&
-          expensesExceedsFundingTarget && (
-            <Callout.Warning collapsible={false}>
-              <div className="pb-2 text-base font-medium">
-                <Trans>Funding Target Exceeded</Trans>
-              </div>
-              <p>
-                <Trans>
-                  The sum of your expenses is currently different to your
-                  funding target. Do you want to sync your funding target to
-                  match expenses?
-                  <br />
-                  <br />
-                  If not, please edit one or more of your payouts.
-                </Trans>
-              </p>
-              <Button
-                type="text"
-                className="bg-warning-800 text-white dark:bg-warning-100 dark:text-black"
-                onClick={syncExpenses}
-              >
-                Sync now
-              </Button>
-            </Callout.Warning>
-          )}
       </Space>
     </Allocation>
   )

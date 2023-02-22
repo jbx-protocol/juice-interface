@@ -11,7 +11,14 @@ export const useAllocation = ({
     add: addAllocation,
     remove: removeAllocation,
     upsert: upsertAllocation,
+    set: setAllocations,
   } = useArray([value, onChange])
 
-  return { allocations, addAllocation, removeAllocation, upsertAllocation }
+  return {
+    allocations,
+    addAllocation,
+    removeAllocation,
+    upsertAllocation,
+    setAllocations,
+  }
 }

@@ -39,5 +39,6 @@ export const useArray = <T extends { id: string | number }>(
     },
     [add, setValues, values],
   )
-  return { values, add, remove, upsert }
+
+  return { values, add, remove, upsert, set: setValues }
 }

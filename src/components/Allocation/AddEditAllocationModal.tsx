@@ -1,18 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Form, Modal, Radio } from 'antd'
-import { RuleObject } from 'antd/lib/form'
-import CurrencySwitch from 'components/CurrencySwitch'
 import { FeeTooltipLabel } from 'components/FeeTooltipLabel'
-import { validatePercentage } from 'components/formItems/formHelpers'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'
 import { JuiceInputNumber } from 'components/inputs/JuiceInputNumber'
-import NumberSlider from 'components/inputs/NumberSlider'
-import { useFundingTargetType } from 'components/Create/hooks/FundingTargetType'
 import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/ETHPaymentTerminalFee'
-import { Split } from 'models/splits'
 import moment, * as Moment from 'moment'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
@@ -21,19 +14,25 @@ import {
   inputMustBeEthAddressRule,
   inputMustExistRule,
 } from 'utils/antdRules'
-import { fromWad, parseWad, stripCommas } from 'utils/format/formatNumber'
-import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
-import { amountFromPercent } from 'utils/v2v3/distributions'
-import { Allocation, AllocationSplit } from './Allocation'
+import { parseWad, stripCommas } from 'utils/format/formatNumber'
+import { Allocation } from './Allocation'
+import { AmountInput } from './components/AmountInput'
+import { PercentageInput } from './components/PercentageInput'
+import { AmountPercentageInput } from './types'
 
 interface AddEditAllocationModalFormProps {
   juiceboxProjectId?: string | undefined
   address?: string | undefined
-  amount?: DistributionAmountInputValue | undefined
+  amount?: AmountPercentageInput | undefined
   lockedUntil?: moment.Moment | null | undefined
 }
 
-type AddEditAllocationModalResult = Split & { id: string }
+export interface AddEditAllocationModalEntity {
+  beneficiary: string | undefined
+  projectId: string | undefined
+  amount: AmountPercentageInput
+  lockedUntil: number | undefined
+}
 
 export const AddEditAllocationModal = ({
   className,
@@ -46,10 +45,10 @@ export const AddEditAllocationModal = ({
 }: {
   className?: string
   allocationName: string
-  editingData?: AllocationSplit | undefined
+  editingData?: AddEditAllocationModalEntity | undefined
   availableModes: Set<'amount' | 'percentage'>
   open?: boolean
-  onOk: (split: AddEditAllocationModalResult) => void
+  onOk: (split: AddEditAllocationModalEntity) => void
   onCancel: VoidFunction
 }) => {
   if (availableModes.size === 0) {
@@ -98,15 +97,7 @@ export const AddEditAllocationModal = ({
         ? editingData.projectId
         : undefined,
       address: editingData.beneficiary,
-      amount: {
-        percentage: editingData.percent.toString(),
-        amount: totalAllocationAmount
-          ? amountFromPercent({
-              percent: editingData.percent,
-              amount: fromWad(totalAllocationAmount),
-            }).toString()
-          : undefined,
-      },
+      amount: editingData.amount,
       lockedUntil: editingData.lockedUntil
         ? Moment.default(editingData.lockedUntil * 1000)
         : undefined,
@@ -115,18 +106,14 @@ export const AddEditAllocationModal = ({
 
   const onModalOk = useCallback(async () => {
     const fields = await form.validateFields()
-    const result: AddEditAllocationModalResult = {
-      id: `${fields.address}${
-        fields.juiceboxProjectId ? `-${fields.juiceboxProjectId}` : ''
-      }`,
+    if (!fields.amount) throw new Error('Missing amount')
+    const result: AddEditAllocationModalEntity = {
       beneficiary: fields.address,
       projectId: fields.juiceboxProjectId,
-      percent: parseFloat(fields.amount!.percentage),
+      amount: fields.amount,
       lockedUntil: fields.lockedUntil
         ? Math.round(fields.lockedUntil.valueOf() / 1000)
         : undefined,
-      preferClaimed: undefined,
-      allocator: undefined,
     }
     onOk(result)
     form.resetFields()
@@ -237,12 +224,12 @@ export const AddEditAllocationModal = ({
           }
           required
           extra={
-            !!amount?.amount &&
+            !!amount?.value &&
             !!allocationCurrency &&
             showFee &&
             ethPaymentTerminalFee && (
               <FeeTooltipLabel
-                amountWad={parseWad(stripCommas(amount.amount))}
+                amountWad={parseWad(stripCommas(amount.value))}
                 currency={allocationCurrency}
                 feePerBillion={ethPaymentTerminalFee}
               />
@@ -255,10 +242,9 @@ export const AddEditAllocationModal = ({
                   ? t`Distribution Amount`
                   : t`Distribution Percentage`,
             }),
-            distributionAmountIsValidRule({ validatorTrigger: 'onSubmit' }),
           ]}
         >
-          <DistributionAmountInput mode={amountType ?? 'amount'} />
+          {amountType === 'percentage' ? <PercentageInput /> : <AmountInput />}
         </Form.Item>
         <Form.Item
           name="lockedUntil"
@@ -279,118 +265,4 @@ export const AddEditAllocationModal = ({
       </Form>
     </Modal>
   )
-}
-
-const distributionAmountIsValidRule = (props: {
-  validatorTrigger?: string
-}) => ({
-  validator: (
-    rule: RuleObject,
-    value: DistributionAmountInputValue | undefined,
-  ) => {
-    if (value === undefined) return Promise.resolve()
-    return validatePercentage(parseFloat(value.percentage))
-  },
-  validatorTrigger: props.validatorTrigger,
-})
-
-type DistributionAmountInputValue = {
-  amount?: string | undefined
-  percentage: string
-}
-const DistributionAmountInput = ({
-  mode,
-  value,
-  onChange,
-}: {
-  mode: 'percentage' | 'amount'
-  value?: DistributionAmountInputValue
-  onChange?: (input: DistributionAmountInputValue) => void
-}) => {
-  const [_amount, _setAmount] = useState<DistributionAmountInputValue>()
-  const amount = value ?? _amount
-  const setAmount = onChange ?? _setAmount
-
-  const { allocationCurrency, setCurrency, totalAllocationAmount } =
-    Allocation.useAllocationInstance()
-  const fundingTargetType = useFundingTargetType(totalAllocationAmount)
-  const hasSpecificFundingTarget = fundingTargetType === 'specific'
-
-  const onAmountInputChange = useCallback(
-    ({ amount, percentage }: Partial<DistributionAmountInputValue>) => {
-      if (
-        totalAllocationAmount &&
-        hasSpecificFundingTarget &&
-        amount &&
-        !isNaN(parseFloat(amount))
-      ) {
-        const percentage = (
-          (parseFloat(amount) / parseFloat(fromWad(totalAllocationAmount))) *
-          100
-        )
-          .toFixed(2)
-          .toString()
-
-        setAmount({ amount, percentage })
-        return
-      }
-      if (percentage) {
-        let amount
-        if (totalAllocationAmount && hasSpecificFundingTarget) {
-          amount = amountFromPercent({
-            percent: parseFloat(percentage),
-            amount: fromWad(totalAllocationAmount),
-          }).toString()
-        }
-        setAmount({ amount, percentage })
-        return
-      }
-    },
-    [totalAllocationAmount, hasSpecificFundingTarget, setAmount],
-  )
-
-  if (mode === 'amount') {
-    return (
-      <div className="flex w-full items-center gap-4">
-        <FormattedNumberInput
-          className="flex-1"
-          value={amount?.amount}
-          onChange={amount => onAmountInputChange({ amount })}
-          accessory={
-            <CurrencySwitch
-              currency={
-                allocationCurrency === V2V3_CURRENCY_ETH ? 'ETH' : 'USD'
-              }
-              onCurrencyChange={c =>
-                setCurrency(c === 'ETH' ? V2V3_CURRENCY_ETH : V2V3_CURRENCY_USD)
-              }
-            />
-          }
-        />
-        {
-          <>
-            {amount?.percentage
-              ? parseFloat(amount.percentage).toPrecision(3)
-              : 0}
-            %
-          </>
-        }
-      </div>
-    )
-  }
-  if (mode === 'percentage') {
-    return (
-      <NumberSlider
-        sliderValue={value?.percentage ? parseFloat(value.percentage) : 0}
-        onChange={percentage =>
-          onAmountInputChange({ percentage: percentage?.toString() })
-        }
-        step={0.01}
-        defaultValue={0}
-        suffix="%"
-      />
-    )
-  }
-
-  return null
 }

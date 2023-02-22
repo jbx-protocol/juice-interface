@@ -2,8 +2,8 @@ import { ballotStrategies as BallotStrategies } from 'constants/v2v3/ballotStrat
 import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 import { isEqual } from 'lodash'
 import { CreatePage } from 'models/createPage'
-import { FundingTargetType } from 'models/fundingTargetType'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
+import { TreasurySelection } from 'models/treasurySelection'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -18,7 +18,6 @@ import { parseWad } from 'utils/format/formatNumber'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { useDefaultJBETHPaymentTerminal } from '../../../hooks/defaultContracts/DefaultJBETHPaymentTerminal'
 import { DefaultSettings as DefaultTokenSettings } from '../components/pages/ProjectToken/hooks/ProjectTokenForm'
-import { determineAvailablePayoutsSelections } from '../utils/determineAvailablePayoutsSelections'
 import { projectTokenSettingsToReduxFormat } from '../utils/projectTokenSettingsToReduxFormat'
 
 const ReduxDefaultTokenSettings =
@@ -46,22 +45,17 @@ const parseCreateFlowStateFromInitialState = (
     ? parseWad(initialState.fundAccessConstraints[0]?.distributionLimit)
     : undefined
 
-  let fundingTargetSelection: FundingTargetType | undefined
+  let treasurySelection: TreasurySelection | undefined
 
   if (distributionLimit === undefined) {
-    fundingTargetSelection = undefined
+    treasurySelection = undefined
   } else if (distributionLimit.eq(MAX_DISTRIBUTION_LIMIT)) {
-    fundingTargetSelection = 'infinite'
+    treasurySelection = 'unlimited'
+  } else if (distributionLimit.eq(0)) {
+    treasurySelection = 'zero'
   } else {
-    fundingTargetSelection = 'specific'
+    treasurySelection = 'amount'
   }
-
-  const availablePayoutsSelections =
-    determineAvailablePayoutsSelections(distributionLimit)
-
-  const payoutsSelection = availablePayoutsSelections.size
-    ? [...availablePayoutsSelections][0]
-    : undefined
 
   let projectTokensSelection: ProjectTokensSelection | undefined
   const initialTokenData = {
@@ -87,11 +81,8 @@ const parseCreateFlowStateFromInitialState = (
   if (fundingCyclesPageSelection) {
     createFurthestPageReached = 'fundingCycles'
   }
-  if (fundingTargetSelection) {
-    createFurthestPageReached = 'fundingTarget'
-  }
-  if (payoutsSelection) {
-    createFurthestPageReached = 'payouts'
+  if (treasurySelection) {
+    createFurthestPageReached = 'treasurySetup'
   }
   if (projectTokensSelection) {
     createFurthestPageReached = 'projectToken'
@@ -101,8 +92,7 @@ const parseCreateFlowStateFromInitialState = (
   }
   if (
     fundingCyclesPageSelection &&
-    fundingTargetSelection &&
-    payoutsSelection &&
+    treasurySelection &&
     projectTokensSelection &&
     reconfigurationRuleSelection
   ) {
@@ -111,8 +101,9 @@ const parseCreateFlowStateFromInitialState = (
 
   return {
     fundingCyclesPageSelection,
-    fundingTargetSelection,
-    payoutsSelection,
+    treasurySelection,
+    fundingTargetSelection: undefined, // TODO: Remove
+    payoutsSelection: undefined, // TODO: Remove
     projectTokensSelection,
     reconfigurationRuleSelection,
     createFurthestPageReached,

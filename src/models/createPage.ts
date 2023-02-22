@@ -1,6 +1,7 @@
 export type CreatePage =
   | 'projectDetails'
   | 'fundingCycles'
+  | 'treasurySetup'
   | 'fundingTarget'
   | 'payouts'
   | 'projectToken'

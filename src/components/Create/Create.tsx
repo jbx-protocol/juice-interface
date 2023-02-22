@@ -17,6 +17,7 @@ import {
 } from './components'
 import { CreateBadge } from './components/CreateBadge'
 import { DeploySuccess } from './components/pages/ReviewDeploy/components/DeploySuccess'
+import { TreasurySetupPage } from './components/pages/TreasurySetup'
 import { PayoutsMigrationModal } from './components/PayoutsMigrationModal'
 import { RecallCard } from './components/RecallCard'
 import { Wizard } from './components/Wizard'
@@ -87,6 +88,19 @@ export function Create() {
             }
           >
             <FundingCyclesPage />
+          </Wizard.Page>
+          <Wizard.Page
+            name="treasurySetup"
+            title={t`Treasury`}
+            description={
+              <Trans>
+                Start by selecting a treasury distribution limit and then add
+                payouts to wallet addresses or Juicebox projects to receive
+                funds each cycle.
+              </Trans>
+            }
+          >
+            <TreasurySetupPage />
           </Wizard.Page>
           <Wizard.Page
             name="fundingTarget"

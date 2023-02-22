@@ -173,7 +173,7 @@ export const useDeployProject = () => {
             ...projectMetadata,
             nftPaymentSuccessModal: postPayModal,
           })
-        ).IpfsHash
+        ).Hash
       } catch (error) {
         handleDeployFailure(error)
         return

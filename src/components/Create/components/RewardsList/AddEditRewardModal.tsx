@@ -143,7 +143,7 @@ export const AddEditRewardModal = ({
     try {
       const res = await pinFile(file, onProgress)
       if (!res) throw new Error('Failed to pin file to IPFS')
-      const url = ipfsGatewayUrl(res.IpfsHash)
+      const url = ipfsGatewayUrl(res.Hash)
       return url
     } catch (err) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -97,7 +97,7 @@ export default function NftUpload({
           setPercent(0)
           try {
             const val = await pinFile(req.file)
-            setValue(val.IpfsHash)
+            setValue(val.Hash)
           } catch (e) {
             console.error('Error occurred while uploading', e)
             // eslint-disable-next-line @typescript-eslint/no-explicit-any

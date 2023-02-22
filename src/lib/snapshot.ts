@@ -122,9 +122,9 @@ export async function uploadSnapshotSettingsToIPFS({
   })
 
   const res = await pinJson(snapshotSettings)
-  console.info('Uploaded snapshot settings to IPFS: ', res.IpfsHash)
+  console.info('Uploaded snapshot settings to IPFS: ', res.Hash)
 
-  return res.IpfsHash as string
+  return res.Hash as string
 }
 
 export const pokeSnapshot = async (projectHandle: string) => {

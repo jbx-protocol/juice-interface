@@ -10,7 +10,7 @@ const IPFS_URL_REGEX = /ipfs:\/\/(.+)/
  * not just the content we have pinned.
  */
 export const ipfsGatewayUrl = (cid: string | undefined): string => {
-  return `https://${OPEN_IPFS_GATEWAY_HOSTNAME}/ipfs/${cid}`
+  return `https://${OPEN_IPFS_GATEWAY_HOSTNAME}/ipfs/${cid}?pinataGatewayToken=L4sAB0Yj5qw00JRpvydkYNsHC0hIv2xzW_4sGFoWureRhBMH4G5vPJZUwvamDlW8`
 }
 
 /**

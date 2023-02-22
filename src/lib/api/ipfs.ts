@@ -1,8 +1,19 @@
 import axios, { AxiosRequestConfig } from 'axios'
 import { consolidateMetadata, ProjectMetadataV6 } from 'models/projectMetadata'
-import { IpfsPinFileResponse } from 'pages/api/ipfs/pinFile.page'
-import { IpfsPinJSONResponse } from 'pages/api/ipfs/pinJSON.page'
 import { ipfsGatewayUrl } from 'utils/ipfs'
+
+interface IpfsPinFileResponse {
+  IpfsHash: string
+}
+
+export const pinataApi = axios.create({
+  baseURL: 'https://api.pinata.cloud',
+  headers: {
+    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiJlZTcwZjUzNC0xOGU3LTQxMjEtYjdhZS1iZjEyYjZlZmFmMjgiLCJlbWFpbCI6InBlcmlwaGVyYWxpc3RAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBpbl9wb2xpY3kiOnsicmVnaW9ucyI6W3siaWQiOiJOWUMxIiwiZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjF9XSwidmVyc2lvbiI6MX0sIm1mYV9lbmFibGVkIjpmYWxzZSwic3RhdHVzIjoiQUNUSVZFIn0sImF1dGhlbnRpY2F0aW9uVHlwZSI6InNjb3BlZEtleSIsInNjb3BlZEtleUtleSI6IjYxZTRkYTNlOGJlODdlNGM4NmNjIiwic2NvcGVkS2V5U2VjcmV0IjoiOGRkMTIyYTkyYzI3NGYwMGVjOTE2N2I0N2U2OTljMTQ2MWUxMGYwYTU0ZWY4MmUwOTI3YThiYWY1NTBkYjhhNyIsImlhdCI6MTY3NzAyNjEyMH0.RsMakKsm6OJUM4xzMpX1eqfgJ8TXTS1Bflsd8XMKfTg`,
+    'x-pinata-gateway-token':
+      'L4sAB0Yj5qw00JRpvydkYNsHC0hIv2xzW_4sGFoWureRhBMH4G5vPJZUwvamDlW8',
+  },
+})
 
 // Workaround function for a bug in pinata where the data is sometimes returned in bytes
 const extractJsonFromBase64Data = (base64: string) => {
@@ -43,16 +54,22 @@ export const ipfsGet = async <T>(
   return response
 }
 
-export const pinFile = async (image: File | Blob | string) => {
+export const pinFile = async (
+  image: File | Blob | string,
+  onProgress?: (e: any) => void, // eslint-disable-line @typescript-eslint/no-explicit-any
+) => {
   const formData = new FormData()
   formData.append('file', image)
-
-  const res = await axios.post<IpfsPinFileResponse>(
-    '/api/ipfs/pinFile',
+  const res = await pinataApi.post<IpfsPinFileResponse>(
+    '/pinning/pinFileToIPFS',
     formData,
     {
+      maxBodyLength: Infinity,
       headers: {
-        'Content-Type': 'multipart/form-data',
+        'Content-Type': `multipart/form-data`,
+      },
+      onUploadProgress(e) {
+        onProgress?.(e)
       },
     },
   )
@@ -61,9 +78,10 @@ export const pinFile = async (image: File | Blob | string) => {
 }
 
 export const pinJson = async (data: unknown) => {
-  const res = await axios.post<IpfsPinJSONResponse>('/api/ipfs/pinJSON', {
+  const res = await pinataApi.post<IpfsPinFileResponse>(
+    'pinning/pinJSONToIPFS',
     data,
-  })
+  )
 
   return res.data
 }

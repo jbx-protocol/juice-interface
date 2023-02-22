@@ -1,8 +1,8 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { Tooltip } from 'antd'
 import ETHToUSD from 'components/currency/ETHToUSD'
 import DistributionLimit from 'components/v2v3/shared/DistributionLimit'
 import { CurrencyName } from 'constants/currency'
-import { BigNumber } from '@ethersproject/bignumber'
 
 export function DistributionLimitValue({
   distributionLimit,
@@ -20,7 +20,6 @@ export function DistributionLimitValue({
           ) : undefined
         }
       >
-        {''}
         <DistributionLimit
           distributionLimit={distributionLimit}
           currencyName={currency}

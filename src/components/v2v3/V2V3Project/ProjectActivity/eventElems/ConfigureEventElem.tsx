@@ -1,20 +1,13 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
 import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
-import EtherscanLink from 'components/EtherscanLink'
-import FormattedAddress from 'components/FormattedAddress'
-import MinimalTable from 'components/MinimalTable'
-import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import { MinimalCollapse } from 'components/MinimalCollapse'
 import { ConfigureEvent } from 'models/subgraph-entities/v2/configure'
-import { useContext } from 'react'
 import {
-  formatAllowed,
-  formatEnabled,
-  formatPaused,
-} from 'utils/format/formatBoolean'
-import { formatWad } from 'utils/format/formatNumber'
-import { detailedTimeString } from 'utils/format/formatTime'
-import { tokenSymbolText } from 'utils/tokenSymbolText'
-import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
+  V2V3FundingCycle,
+  V2V3FundingCycleMetadata,
+} from 'models/v2v3/fundingCycle'
+import FundingCycleDetails from '../../V2V3FundingCycleSection/FundingCycleDetails'
 
 export default function ConfigureEventElem({
   event,
@@ -24,6 +17,7 @@ export default function ConfigureEventElem({
         ConfigureEvent,
         | 'id'
         | 'timestamp'
+        | 'mustStartAtOrAfter'
         | 'txHash'
         | 'caller'
         | 'ballot'
@@ -33,7 +27,11 @@ export default function ConfigureEventElem({
         | 'mintingAllowed'
         | 'payPaused'
         | 'redeemPaused'
+        | 'burnPaused'
+        | 'transfersPaused'
+        | 'distributionsPaused'
         | 'redemptionRate'
+        | 'ballotRedemptionRate'
         | 'reservedRate'
         | 'weight'
         | 'shouldHoldFees'
@@ -42,17 +40,44 @@ export default function ConfigureEventElem({
         | 'controllerMigrationAllowed'
         | 'terminalMigrationAllowed'
         | 'transfersPaused'
+        | 'useDataSourceForPay'
+        | 'useDataSourceForRedeem'
+        | 'useTotalOverflowForRedemptions'
       >
     | undefined
 }) {
-  const { tokenSymbol } = useContext(V2V3ProjectContext)
-
   if (!event) return null
 
-  function BallotStrategyElem(ballot: string) {
-    const strategy = getBallotStrategyByAddress(ballot)
-    if (strategy.unknown) return <FormattedAddress address={ballot} />
-    else return strategy.name
+  const fundingCycle: Partial<V2V3FundingCycle> = {
+    duration: BigNumber.from(event.duration),
+    weight: BigNumber.from(event.weight),
+    discountRate: BigNumber.from(event.discountRate),
+    ballot: event.ballot,
+    start: event.mustStartAtOrAfter
+      ? BigNumber.from(event.mustStartAtOrAfter)
+      : undefined,
+  }
+
+  const fundingCycleMetadata: Partial<V2V3FundingCycleMetadata> = {
+    reservedRate: BigNumber.from(event.reservedRate),
+    redemptionRate: BigNumber.from(event.redemptionRate),
+    global: {
+      pauseTransfers: event.transfersPaused,
+      allowSetController: event.setControllerAllowed,
+      allowSetTerminals: event.setTerminalsAllowed,
+    },
+    allowControllerMigration: event.controllerMigrationAllowed,
+    allowTerminalMigration: event.terminalMigrationAllowed,
+    pausePay: event.payPaused,
+    pauseRedeem: event.redeemPaused,
+    pauseBurn: event.burnPaused,
+    pauseDistributions: event.distributionsPaused,
+    useTotalOverflowForRedemptions: event.useTotalOverflowForRedemptions,
+    holdFees: event.shouldHoldFees,
+    dataSource: event.dataSource,
+    useDataSourceForPay: event.useDataSourceForPay,
+    useDataSourceForRedeem: event.useDataSourceForRedeem,
+    allowMinting: event.mintingAllowed,
   }
 
   return (
@@ -61,85 +86,16 @@ export default function ConfigureEventElem({
       header={t`Configured funding cycles`}
       subject={null}
       extra={
-        <MinimalTable
-          sections={[
-            [
-              {
-                key: t`Duration`,
-                value: detailedTimeString({
-                  timeSeconds: event.duration,
-                  fullWords: true,
-                }),
-              },
-            ],
-            [
-              {
-                key: t`Mint rate`,
-                value: event.weight.gt(0)
-                  ? `${formatWad(event.weight)} ${tokenSymbolText({
-                      tokenSymbol,
-                      plural: true,
-                    })}/ETH`
-                  : t`Unchanged`,
-              },
-              { key: t`Reserved rate`, value: event.reservedRate / 100 + '%' },
-              {
-                key: t`Redemption rate`,
-                value: event.redemptionRate / 100 + '%',
-              },
-              {
-                key: t`Discount rate`,
-                value: event.discountRate / 10_000_000 + '%',
-              },
-            ],
-            [
-              {
-                key: t`Reconfiguration strategy`,
-                value: BallotStrategyElem(event.ballot),
-              },
-              {
-                key: t`Data source`,
-                value: (
-                  <EtherscanLink value={event.dataSource} type="address" />
-                ),
-              },
-            ],
-            [
-              {
-                key: t`Payments`,
-                value: formatPaused(event.payPaused),
-              },
-              {
-                key: t`Redemptions`,
-                value: formatPaused(event.redeemPaused),
-              },
-              {
-                key: t`Owner token minting`,
-                value: formatEnabled(event.mintingAllowed),
-              },
-              {
-                key: t`Token transfers`,
-                value: formatPaused(event.transfersPaused),
-              },
-              {
-                key: t`Payment Terminal configuration`,
-                value: formatAllowed(event.setTerminalsAllowed),
-              },
-              {
-                key: t`Controller configuration`,
-                value: formatAllowed(event.setControllerAllowed),
-              },
-              {
-                key: t`Payment Terminal migration`,
-                value: formatAllowed(event.terminalMigrationAllowed),
-              },
-              {
-                key: t`Controller migration`,
-                value: formatAllowed(event.controllerMigrationAllowed),
-              },
-            ],
-          ]}
-        />
+        <MinimalCollapse header={t`Funding cycle details`}>
+          <FundingCycleDetails
+            fundingCycle={fundingCycle as V2V3FundingCycle}
+            fundingCycleMetadata={
+              fundingCycleMetadata as V2V3FundingCycleMetadata
+            }
+            distributionLimit={undefined}
+            distributionLimitCurrency={undefined}
+          />
+        </MinimalCollapse>
       }
     />
   )

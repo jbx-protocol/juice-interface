@@ -12,7 +12,6 @@ export function DeployConfigurationButton({
 }) {
   return (
     <Button
-      className="mt-5"
       loading={loading}
       onClick={onClick}
       disabled={disabled}

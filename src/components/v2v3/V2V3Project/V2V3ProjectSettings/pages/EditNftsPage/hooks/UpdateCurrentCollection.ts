@@ -2,11 +2,7 @@ import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useNftRewardsAdjustTiersTx } from 'hooks/JB721Delegate/transactor/NftRewardsAdjustTiersTx'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useCallback, useContext } from 'react'
-import {
-  buildJB721TierParams,
-  pinNftRewards,
-  sortNftsByContributionFloor,
-} from 'utils/nftRewards'
+import { buildJB721TierParams, pinNftRewards } from 'utils/nftRewards'
 import { reloadWindow } from 'utils/windowUtils'
 
 export function useUpdateCurrentCollection({
@@ -24,12 +20,10 @@ export function useUpdateCurrentCollection({
   const updateExistingCollection = useCallback(async () => {
     if (!fundingCycleMetadata || !rewardTiers) return // TODO emit error notificaiton
 
-    const newRewardTiers = sortNftsByContributionFloor(
-      rewardTiers.filter(
-        rewardTier =>
-          rewardTier.id === undefined || // rewardTiers with id==undefined are new
-          editedRewardTierIds.includes(rewardTier.id),
-      ),
+    const newRewardTiers = rewardTiers.filter(
+      rewardTier =>
+        rewardTier.id === undefined || // rewardTiers with id==undefined are new
+        editedRewardTierIds.includes(rewardTier.id),
     )
 
     // upload new rewardTiers and get their CIDs

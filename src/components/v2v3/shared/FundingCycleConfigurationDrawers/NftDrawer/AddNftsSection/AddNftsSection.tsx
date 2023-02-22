@@ -30,7 +30,9 @@ export function AddNftsSection({ onClose }: { onClose: VoidFunction }) {
   })
 
   const onNftFormSaved = useCallback(async () => {
-    if (!rewardTiers) return
+    const collectionName = marketplaceForm.getFieldValue('collectionName')
+    const collectionSymbol = marketplaceForm.getFieldValue('collectionSymbol')
+    if (!rewardTiers || !collectionName || !collectionSymbol) return
 
     setSubmitLoading(true)
 
@@ -40,7 +42,7 @@ export function AddNftsSection({ onClose }: { onClose: VoidFunction }) {
     setFormUpdated(false)
 
     onClose?.()
-  }, [rewardTiers, saveNewCollection, onClose, setFormUpdated])
+  }, [rewardTiers, saveNewCollection, onClose, setFormUpdated, marketplaceForm])
 
   return (
     <>

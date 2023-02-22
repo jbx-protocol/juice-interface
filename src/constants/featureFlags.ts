@@ -14,5 +14,5 @@ export const FEATURE_FLAGS: { [k in FeatureFlag]: string } = {
   SIMULATE_TXS: 'simulateTxs',
   SEPANA_SEARCH: 'sepanaSearch',
   DELEGATE_V1_1: 'delegate_v1_1',
-  RECONFIGURE_SHOW_NFT_GOVERNANCE_TYPE: 'RECONFIGURE_SHOW_NFT_GOVERNANCE_TYPE',
+  RECONFIGURE_SHOW_NFT_GOVERNANCE_TYPE: 'reconfigureShowNftGovernanceType',
 }

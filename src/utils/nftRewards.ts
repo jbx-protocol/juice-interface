@@ -40,7 +40,7 @@ async function loadNftRewardsDeployment() {
   return latestNftContractDeployments
 }
 
-function sortNftsByContributionFloor(
+export function sortNftsByContributionFloor(
   rewardTiers: NftRewardTier[],
 ): NftRewardTier[] {
   return rewardTiers
@@ -225,8 +225,8 @@ export function tiersEqual({
 
 // Builds JB721TierParams[] (see juice-721-delegate:structs/JB721TierParams.sol)
 export function buildJB721TierParams({
-  cids,
-  rewardTiers,
+  cids, // MUST BE SORTED BY CONTRIBUTION FLOOD (not ideal)
+  rewardTiers, // MUST BE SORTED BY CONTRIBUTION FLOOD (not ideal)
 }: {
   cids: string[]
   rewardTiers: NftRewardTier[]

@@ -15,6 +15,7 @@ import {
 import {
   buildJB721TierParams,
   buildJBDeployTiered721DelegateData,
+  defaultNftCollectionName,
   findJBTiered721DelegateStoreAddress,
 } from 'utils/nftRewards'
 import { isValidMustStartAtOrAfter } from 'utils/v2v3/fundingCycle'
@@ -57,7 +58,8 @@ export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<R
     const JBTiered721DelegateStoreAddress =
       await findJBTiered721DelegateStoreAddress()
 
-    const collectionName = collectionMetadata.name
+    const collectionName =
+      collectionMetadata.name ?? defaultNftCollectionName(projectTitle)
 
     if (
       !transactor ||
@@ -116,7 +118,6 @@ export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<R
         memo,
       },
     ]
-
     return transactor(
       contracts.JBTiered721DelegateProjectDeployer,
       'reconfigureFundingCyclesOf',

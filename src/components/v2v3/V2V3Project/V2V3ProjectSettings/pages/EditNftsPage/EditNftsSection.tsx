@@ -40,7 +40,7 @@ export function EditNftsSection() {
 
   return (
     <>
-      <Callout.Info className="mb-5 bg-smoke-100 dark:bg-slate-500">
+      <Callout.Info className="text-primary mb-5 bg-smoke-100 dark:bg-slate-500">
         <Trans>Changes to NFTs will take effect immediately.</Trans>
       </Callout.Info>
 

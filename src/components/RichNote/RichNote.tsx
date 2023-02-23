@@ -48,9 +48,11 @@ export default function RichNote({
               <JuiceVideoThumbnailOrImage
                 key={i}
                 className={twMerge(
-                  'h-24 w-24 cursor-pointer hover:brightness-50',
+                  'cursor-pointer hover:brightness-50',
                   className,
                 )}
+                heightClass="h-24"
+                widthClass="w-24"
                 src={link}
                 showPreviewOnClick
               />

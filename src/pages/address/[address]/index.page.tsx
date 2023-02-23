@@ -1,8 +1,8 @@
-import { AccountDashboard } from 'components/AccountDashboard/AccountDashboard'
+import { AddressDashboard } from 'components/AddressDashboard'
 import { AppWrapper } from 'components/common'
 import { useRouter } from 'next/router'
 
-export default function AccountPage() {
+export default function AddressPage() {
   const router = useRouter()
   const { address } = router.query
 
@@ -10,7 +10,7 @@ export default function AccountPage() {
 
   return (
     <AppWrapper>
-      <AccountDashboard address={address as string} />
+      <AddressDashboard address={address as string} />
     </AppWrapper>
   )
 }

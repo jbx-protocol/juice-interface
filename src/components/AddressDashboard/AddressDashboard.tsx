@@ -7,7 +7,7 @@ import { useEnsName } from 'hooks/ensName'
 import { useHoldingsProjectsQuery, useMyProjectsQuery } from 'hooks/Projects'
 import { truncateEthAddress } from 'utils/format/formatAddress'
 
-export function AccountDashboard({ address }: { address: string }) {
+export function AddressDashboard({ address }: { address: string }) {
   const { data: myProjects, isLoading: myProjectsLoading } =
     useMyProjectsQuery(address)
   const { data: holdingProjects, isLoading: holdingsLoading } =

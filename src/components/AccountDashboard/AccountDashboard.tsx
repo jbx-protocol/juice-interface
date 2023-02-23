@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Tabs } from 'antd'
+import { Button, Tabs } from 'antd'
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
 import Grid from 'components/Grid'
@@ -8,6 +8,8 @@ import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
 import ProjectLogo from 'components/ProjectLogo'
 import { useEnsName } from 'hooks/ensName'
 import { useHoldingsProjectsQuery, useMyProjectsQuery } from 'hooks/Projects'
+import { useWallet } from 'hooks/Wallet'
+import Link from 'next/link'
 import { truncateEthAddress } from 'utils/format/formatAddress'
 
 function ProjectsList({ projects }: { projects: ProjectCardProject[] }) {
@@ -24,12 +26,29 @@ function HoldingsList({ address }: { address: string }) {
   const { data: holdings, isLoading: myProjectsLoading } =
     useHoldingsProjectsQuery(address)
 
+  const { userAddress } = useWallet()
+
   if (myProjectsLoading) return <Loading />
 
   if (!holdings || holdings.length === 0)
     return (
       <span>
-        <Trans>None</Trans>
+        {address === userAddress ? (
+          <div>
+            <p className="mb-5">
+              <Trans>You haven't contributed to any projects yet!</Trans>
+            </p>
+            <Link href="/projects">
+              <a>
+                <Button type="primary">
+                  <Trans>Explore projects</Trans>
+                </Button>
+              </a>
+            </Link>
+          </div>
+        ) : (
+          <Trans>This account hasn't contributed to any projects yet.</Trans>
+        )}
       </span>
     )
 
@@ -40,12 +59,30 @@ function MyProjectsList({ address }: { address: string }) {
   const { data: myProjects, isLoading: myProjectsLoading } =
     useMyProjectsQuery(address)
 
+  const { userAddress } = useWallet()
+
   if (myProjectsLoading) return <Loading />
 
   if (!myProjects || myProjects.length === 0)
     return (
       <span>
-        <Trans>None</Trans>
+        {address === userAddress ? (
+          <div>
+            <p className="mb-5">
+              <Trans>You haven't created any projects yet!</Trans>
+            </p>
+
+            <Link href="/create">
+              <a>
+                <Button type="primary">
+                  <Trans>Create project</Trans>
+                </Button>
+              </a>
+            </Link>
+          </div>
+        ) : (
+          <Trans>This account hasn't created any projects yet.</Trans>
+        )}
       </span>
     )
 

@@ -3218,6 +3218,12 @@ msgstr ""
 msgid "This Safe has no queued transactions."
 msgstr ""
 
+msgid "This account hasn't contributed to any projects yet."
+msgstr ""
+
+msgid "This account hasn't created any projects yet."
+msgstr ""
+
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
 msgstr ""
 
@@ -3834,6 +3840,12 @@ msgid "You have set a funding cycle target."
 msgstr ""
 
 msgid "You have unsaved changes. Are you sure you want to discard them?"
+msgstr ""
+
+msgid "You haven't contributed to any projects yet!"
+msgstr ""
+
+msgid "You haven't created any projects yet!"
 msgstr ""
 
 msgid "You haven't created any projects yet."

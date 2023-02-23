@@ -6,7 +6,6 @@ import Grid from 'components/Grid'
 import Loading from 'components/Loading'
 import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
 import ProjectLogo from 'components/ProjectLogo'
-import { useEnsName } from 'hooks/ensName'
 import { useHoldingsProjectsQuery, useMyProjectsQuery } from 'hooks/Projects'
 import { useWallet } from 'hooks/Wallet'
 import Link from 'next/link'
@@ -89,9 +88,13 @@ function MyProjectsList({ address }: { address: string }) {
   return <ProjectsList projects={myProjects} />
 }
 
-export function AccountDashboard({ address }: { address: string }) {
-  const ensName = useEnsName(address)
-
+export function AccountDashboard({
+  address,
+  ensName,
+}: {
+  address: string
+  ensName?: string | null
+}) {
   const items = [
     {
       label: t`Contributions`,

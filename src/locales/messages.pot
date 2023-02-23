@@ -797,6 +797,9 @@ msgstr ""
 msgid "Contribution threshold"
 msgstr ""
 
+msgid "Contributions"
+msgstr ""
+
 msgid "Contributor rate"
 msgstr ""
 
@@ -2469,6 +2472,9 @@ msgid "Project {projectId} not found"
 msgstr ""
 
 msgid "Project:"
+msgstr ""
+
+msgid "Projects created"
 msgstr ""
 
 msgid "Projects on Juicebox"

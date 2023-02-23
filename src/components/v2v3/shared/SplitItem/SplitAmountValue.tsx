@@ -27,11 +27,11 @@ export function SplitAmountValue({ props }: { props: SplitProps }) {
     feeAmount &&
     formatWad(splitValue.sub(feeAmount), {
       ...props,
-      precision: 4,
+      precision: 2,
     })
   const feeAmountFormatted = formatWad(feeAmount, {
     ...props,
-    precision: 4,
+    precision: 2,
   })
 
   const curr = V2V3CurrencyName(

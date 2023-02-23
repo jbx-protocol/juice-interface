@@ -65,10 +65,7 @@ export const AllocationList = ({
   const onModalOk = useCallback(
     (result: AddEditAllocationModalEntity) => {
       const isEditing = !!selectedAllocation
-      if (result.amount.isPercent) {
-        const allocation = entityToAllocation(result, undefined)
-        upsertAllocation(allocation)
-      } else {
+      if (result.projectOwner) {
         if (!setTotalAllocationAmount) {
           throw new Error(
             'Allocation amount passed but AllocationList has no totalAllocationAmount set',
@@ -78,50 +75,79 @@ export const AllocationList = ({
         const originalTotal = parseFloat(
           fromWad(totalAllocationAmount ?? BigNumber.from(0)),
         )
-        const id = allocationId(result.beneficiary!, result.projectId)
-        const existingAllocation = isEditing
-          ? allocations.find(a => a.id === id)
-          : undefined
-
         let totalAmount = originalTotal
 
-        if (existingAllocation) {
-          const existingAmount =
-            (existingAllocation.percent / 100.0) * totalAmount
-          totalAmount = Math.max(0, totalAmount - existingAmount)
+        if (isEditing) {
+          if (!selectedAllocation.projectOwner)
+            throw new Error('selected allocation is not owner')
+          totalAmount = Math.max(
+            0,
+            totalAmount - parseFloat(selectedAllocation.amount),
+          )
         }
-        const allocationAmount = parseWad(result.amount.value)
-        const newTotal = parseWad(totalAmount).add(allocationAmount)
-        const newOrEditedAllocation = entityToAllocation(result, newTotal)
 
-        let newAllocationInserted = false
-        const adjustedAllocations: AllocationSplit[] = allocations.map(
-          allocation => {
-            // skip if existing
-            if (allocation.id === existingAllocation?.id) {
-              newAllocationInserted = true
-              return newOrEditedAllocation
-            }
-            const currentAmount = amountFromPercent({
-              percent: allocation.percent,
-              amount: originalTotal.toString(),
-            })
+        totalAmount += parseFloat(result.amount)
 
-            const newPercent =
-              (currentAmount / parseFloat(fromWad(newTotal))) * 100
-            return {
-              ...allocation,
-              percent: newPercent,
-            }
-          },
-        )
+        setTotalAllocationAmount(parseWad(totalAmount))
+      } else {
+        if (result.amount.isPercent) {
+          const allocation = entityToAllocation(result, undefined)
+          upsertAllocation(allocation)
+        } else {
+          if (!setTotalAllocationAmount) {
+            throw new Error(
+              'Allocation amount passed but AllocationList has no totalAllocationAmount set',
+            )
+          }
 
-        setAllocations([
-          ...adjustedAllocations,
-          // Only insert new if it wasn't added previously
-          ...(newAllocationInserted ? [] : [newOrEditedAllocation]),
-        ])
-        setTotalAllocationAmount(newTotal)
+          const originalTotal = parseFloat(
+            fromWad(totalAllocationAmount ?? BigNumber.from(0)),
+          )
+          const id = allocationId(result.beneficiary!, result.projectId)
+          const existingAllocation = isEditing
+            ? allocations.find(a => a.id === id)
+            : undefined
+
+          let totalAmount = originalTotal
+
+          if (existingAllocation) {
+            const existingAmount =
+              (existingAllocation.percent / 100.0) * totalAmount
+            totalAmount = Math.max(0, totalAmount - existingAmount)
+          }
+          const allocationAmount = parseWad(result.amount.value)
+          const newTotal = parseWad(totalAmount).add(allocationAmount)
+          const newOrEditedAllocation = entityToAllocation(result, newTotal)
+
+          let newAllocationInserted = false
+          const adjustedAllocations: AllocationSplit[] = allocations.map(
+            allocation => {
+              // skip if existing
+              if (allocation.id === existingAllocation?.id) {
+                newAllocationInserted = true
+                return newOrEditedAllocation
+              }
+              const currentAmount = amountFromPercent({
+                percent: allocation.percent,
+                amount: originalTotal.toString(),
+              })
+
+              const newPercent =
+                (currentAmount / parseFloat(fromWad(newTotal))) * 100
+              return {
+                ...allocation,
+                percent: newPercent,
+              }
+            },
+          )
+
+          setAllocations([
+            ...adjustedAllocations,
+            // Only insert new if it wasn't added previously
+            ...(newAllocationInserted ? [] : [newOrEditedAllocation]),
+          ])
+          setTotalAllocationAmount(newTotal)
+        }
       }
 
       modal.close()
@@ -176,7 +202,7 @@ export const AllocationList = ({
 }
 
 const entityToAllocation = (
-  entity: AddEditAllocationModalEntity,
+  entity: AddEditAllocationModalEntity & { projectOwner: false },
   totalAllocationAmount: BigNumber | undefined,
 ): AllocationSplit => {
   const allocationProps = {
@@ -206,7 +232,7 @@ const entityToAllocation = (
 const allocationToEntity = (
   alloc: AllocationSplit,
   totalAllocationAmount: BigNumber | undefined,
-): AddEditAllocationModalEntity => {
+): AddEditAllocationModalEntity & { projectOwner: false } => {
   const isPercent =
     !totalAllocationAmount || totalAllocationAmount.eq(MAX_DISTRIBUTION_LIMIT)
   let amount = { value: alloc.percent.toString(), isPercent }
@@ -217,6 +243,7 @@ const allocationToEntity = (
     amount = { value: a.toString(), isPercent: false }
   }
   return {
+    projectOwner: false,
     projectId: alloc.projectId,
     beneficiary: alloc.beneficiary,
     amount,

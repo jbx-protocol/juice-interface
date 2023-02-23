@@ -27,12 +27,18 @@ interface AddEditAllocationModalFormProps {
   lockedUntil?: moment.Moment | null | undefined
 }
 
-export interface AddEditAllocationModalEntity {
-  beneficiary: string | undefined
-  projectId: string | undefined
-  amount: AmountPercentageInput
-  lockedUntil: number | undefined
-}
+export type AddEditAllocationModalEntity =
+  | {
+      projectOwner: false
+      beneficiary: string | undefined
+      projectId: string | undefined
+      amount: AmountPercentageInput
+      lockedUntil: number | undefined
+    }
+  | {
+      projectOwner: true
+      amount: string
+    }
 
 export const AddEditAllocationModal = ({
   className,
@@ -62,7 +68,7 @@ export const AddEditAllocationModal = ({
     () => [...availableModes][0],
   )
   const [recipient, setRecipient] = useState<
-    'walletAddress' | 'juiceboxProject'
+    'walletAddress' | 'juiceboxProject' | 'projectOwner'
   >('walletAddress')
 
   const ethPaymentTerminalFee = useETHPaymentTerminalFee()
@@ -72,9 +78,10 @@ export const AddEditAllocationModal = ({
 
   const isValidJuiceboxProject = useMemo(
     () =>
+      !editingData?.projectOwner &&
       editingData?.projectId &&
       editingData.projectId !== BigNumber.from(0).toHexString(),
-    [editingData?.projectId],
+    [editingData],
   )
 
   const isEditing = !!editingData
@@ -88,6 +95,11 @@ export const AddEditAllocationModal = ({
 
     if (!editingData) {
       setRecipient('walletAddress')
+      return
+    }
+
+    if (editingData.projectOwner) {
+      setRecipient('projectOwner')
       return
     }
 
@@ -107,17 +119,23 @@ export const AddEditAllocationModal = ({
   const onModalOk = useCallback(async () => {
     const fields = await form.validateFields()
     if (!fields.amount) throw new Error('Missing amount')
-    const result: AddEditAllocationModalEntity = {
-      beneficiary: fields.address,
-      projectId: fields.juiceboxProjectId,
-      amount: fields.amount,
-      lockedUntil: fields.lockedUntil
-        ? Math.round(fields.lockedUntil.valueOf() / 1000)
-        : undefined,
+    let result: AddEditAllocationModalEntity
+    if (recipient === 'projectOwner') {
+      result = { projectOwner: true, amount: fields.amount.value }
+    } else {
+      result = {
+        projectOwner: false,
+        beneficiary: fields.address,
+        projectId: fields.juiceboxProjectId,
+        amount: fields.amount,
+        lockedUntil: fields.lockedUntil
+          ? Math.round(fields.lockedUntil.valueOf() / 1000)
+          : undefined,
+      }
     }
     onOk(result)
     form.resetFields()
-  }, [form, onOk])
+  }, [form, onOk, recipient])
 
   const onModalCancel = useCallback(() => {
     onCancel()
@@ -136,9 +154,13 @@ export const AddEditAllocationModal = ({
       </Trans>
     ) : undefined
 
+  const showProjectOwnerRecipientOption =
+    amountType !== 'percentage' && !allocations.length
+
   return (
     <Modal
       className={className}
+      width={570}
       title={
         <h2 className="mb-0 text-lg font-medium text-black dark:text-grey-200">
           {isEditing ? t`Edit ${allocationName}` : t`Add new ${allocationName}`}
@@ -168,6 +190,7 @@ export const AddEditAllocationModal = ({
         )}
         <Form.Item label={t`Recipient`}>
           <Radio.Group
+            disabled={editingData?.projectOwner}
             value={recipient}
             onChange={e => setRecipient(e.target.value)}
           >
@@ -177,6 +200,11 @@ export const AddEditAllocationModal = ({
             <Radio value="juiceboxProject">
               <Trans>Juicebox Project</Trans>
             </Radio>
+            {showProjectOwnerRecipientOption && (
+              <Radio value="projectOwner">
+                <Trans>Project Owner</Trans>
+              </Radio>
+            )}
           </Radio.Group>
         </Form.Item>
 
@@ -193,27 +221,31 @@ export const AddEditAllocationModal = ({
             <JuiceInputNumber className="w-full" min={1} step={1} />
           </Form.Item>
         )}
-        <Form.Item
-          name="address"
-          label={addressLabel}
-          tooltip={addressExtra}
-          required
-          rules={[
-            inputMustExistRule({ label: addressLabel }),
-            inputMustBeEthAddressRule({
-              label: addressLabel,
-              validateTrigger: 'onSubmit',
-            }),
-            allocationInputAlreadyExistsRule({
-              inputs: allocations
-                .map(a => a.beneficiary)
-                .filter((a): a is string => !!a),
-              editingAddressBeneficiary: editingData?.beneficiary,
-            }),
-          ]}
-        >
-          <EthAddressInput placeholder="" />
-        </Form.Item>
+        {recipient !== 'projectOwner' && (
+          <Form.Item
+            name="address"
+            label={addressLabel}
+            tooltip={addressExtra}
+            required
+            rules={[
+              inputMustExistRule({ label: addressLabel }),
+              inputMustBeEthAddressRule({
+                label: addressLabel,
+                validateTrigger: 'onSubmit',
+              }),
+              allocationInputAlreadyExistsRule({
+                inputs: allocations
+                  .map(a => a.beneficiary)
+                  .filter((a): a is string => !!a),
+                editingAddressBeneficiary: !editingData?.projectOwner
+                  ? editingData?.beneficiary
+                  : undefined,
+              }),
+            ]}
+          >
+            <EthAddressInput placeholder="" />
+          </Form.Item>
+        )}
 
         <Form.Item
           name="amount"
@@ -246,22 +278,24 @@ export const AddEditAllocationModal = ({
         >
           {amountType === 'percentage' ? <PercentageInput /> : <AmountInput />}
         </Form.Item>
-        <Form.Item
-          name="lockedUntil"
-          label={t`Lock until`}
-          requiredMark="optional"
-          extra={
-            <Trans>
-              If locked, this split can't be edited or removed until the lock
-              expires or the funding cycle is reconfigured.
-            </Trans>
-          }
-        >
-          <JuiceDatePicker
-            placeholder=""
-            disabledDate={current => current < moment().endOf('day')}
-          />
-        </Form.Item>
+        {recipient !== 'projectOwner' && (
+          <Form.Item
+            name="lockedUntil"
+            label={t`Lock until`}
+            requiredMark="optional"
+            extra={
+              <Trans>
+                If locked, this split can't be edited or removed until the lock
+                expires or the funding cycle is reconfigured.
+              </Trans>
+            }
+          >
+            <JuiceDatePicker
+              placeholder=""
+              disabledDate={current => current < moment().endOf('day')}
+            />
+          </Form.Item>
+        )}
       </Form>
     </Modal>
   )

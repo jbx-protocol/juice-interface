@@ -112,7 +112,10 @@ export const PayoutsList = (
     })
   }, [distributionLimit, expenses, props, setDistributionLimit])
 
-  const hasAllocations = !!props.value?.length
+  const hasAllocations =
+    !!props.value?.length ||
+    (distributionLimit?.amount.gt(0) &&
+      distributionLimit.amount.lt(MAX_DISTRIBUTION_LIMIT))
 
   const addButtonSize =
     !hasAllocations && props.payoutsSelection === 'amounts' ? 'large' : 'small'
@@ -126,9 +129,10 @@ export const PayoutsList = (
       setAllocationCurrency={setCurrency}
     >
       <Space className="w-full" direction="vertical" size="middle">
-        {props.payoutsSelection === 'percentages' && (
+        {props.payoutsSelection === 'percentages' ||
+        (distributionLimit && !distributionLimit.amount.eq(0)) ? (
           <OwnerPayoutCard payoutsSelection={props.payoutsSelection} />
-        )}
+        ) : null}
         <Allocation.List
           allocationName={t`payout`}
           isEditable={props.isEditable}

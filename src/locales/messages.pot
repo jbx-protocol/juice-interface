@@ -797,6 +797,9 @@ msgstr ""
 msgid "Contribution threshold"
 msgstr ""
 
+msgid "Contributions"
+msgstr ""
+
 msgid "Contributor rate"
 msgstr ""
 
@@ -1961,6 +1964,9 @@ msgstr ""
 msgid "My VeNFTs"
 msgstr ""
 
+msgid "My account"
+msgstr ""
+
 msgid "My holdings"
 msgstr ""
 
@@ -2469,6 +2475,9 @@ msgid "Project {projectId} not found"
 msgstr ""
 
 msgid "Project:"
+msgstr ""
+
+msgid "Projects created"
 msgstr ""
 
 msgid "Projects on Juicebox"
@@ -3209,6 +3218,12 @@ msgstr ""
 msgid "This Safe has no queued transactions."
 msgstr ""
 
+msgid "This account hasn't contributed to any projects yet."
+msgstr ""
+
+msgid "This account hasn't created any projects yet."
+msgstr ""
+
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
 msgstr ""
 
@@ -3825,6 +3840,12 @@ msgid "You have set a funding cycle target."
 msgstr ""
 
 msgid "You have unsaved changes. Are you sure you want to discard them?"
+msgstr ""
+
+msgid "You haven't contributed to any projects yet!"
+msgstr ""
+
+msgid "You haven't created any projects yet!"
 msgstr ""
 
 msgid "You haven't created any projects yet."

@@ -1,24 +1,25 @@
-import { LoadingOutlined, UploadOutlined } from '@ant-design/icons'
+import { UploadOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Form, FormInstance, Image, Progress, Upload } from 'antd'
+import { Form, FormInstance, Progress, Upload } from 'antd'
 import { RcFile } from 'antd/lib/upload'
+import { JuiceVideoThumbnailOrImage } from 'components/NftRewards/NftVideo/JuiceVideoThumbnailOrImage'
 import TooltipLabel from 'components/TooltipLabel'
 import { VeNftFormFields } from 'components/veNft/VeNftRewardTierModal'
 import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { pinFile } from 'lib/api/ipfs'
+import {
+  UploadProgressEvent,
+  UploadRequestOption,
+} from 'rc-upload/lib/interface'
 import { useContext, useState } from 'react'
-import { classNames } from 'utils/classNames'
-import { ipfsGatewayUrl } from 'utils/ipfs'
+import { ipfsGatewayUrl, percentFromUploadProgressEvent } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
 import { NftFormFields } from './NftRewardTierModal'
 
 const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif'].concat(
   VIDEO_FILE_TYPES,
 )
-
-// Always showing images as squares
-export const NFT_IMAGE_SIDE_LENGTH = '90px'
 
 export default function NftUpload({
   form,
@@ -29,13 +30,11 @@ export default function NftUpload({
     theme: { colors },
   } = useContext(ThemeContext)
   const [uploading, setUploading] = useState<boolean>()
-  const [imageRenderLoading, setImageRenderLoading] = useState<boolean>()
   const [percent, setPercent] = useState<number | undefined>(undefined)
 
   const setValue = (cid?: string) => {
     const newUrl = cid ? ipfsGatewayUrl(cid) : undefined
     form.setFieldsValue({ fileUrl: newUrl })
-    setImageRenderLoading(true)
     setUploading(false)
   }
 
@@ -66,6 +65,12 @@ export default function NftUpload({
     return Promise.resolve()
   }
 
+  const onProgress = (e: UploadProgressEvent) => {
+    if (e) {
+      setPercent(percentFromUploadProgressEvent(e))
+    }
+  }
+
   return (
     <Form.Item
       name={'NFT'}
@@ -76,7 +81,7 @@ export default function NftUpload({
         />
       }
       rules={[{ required: true, validator: validateFileUrl }]}
-      extra={t`NFT will be cropped to a square in thumbnail previews on the Juicebox app.`}
+      extra={t`Images will be cropped to a square in thumbnail previews on the Juicebox app.`}
       validateTrigger={'onSubmit'}
     >
       <Upload
@@ -84,11 +89,12 @@ export default function NftUpload({
         listType="picture-card"
         showUploadList={false}
         beforeUpload={beforeUpload}
-        customRequest={async req => {
+        customRequest={async (req: UploadRequestOption) => {
           setUploading(true)
           setPercent(0)
+          const { file } = req
           try {
-            const val = await pinFile(req.file)
+            const val = await pinFile(file, onProgress)
             setValue(val.Hash)
           } catch (e) {
             console.error('Error occurred while uploading', e)
@@ -100,21 +106,13 @@ export default function NftUpload({
         }}
       >
         {fileUrl ? (
-          <>
-            {imageRenderLoading ? (
-              <LoadingOutlined className="text-3xl text-haze-400 dark:text-haze-300" />
-            ) : null}
-            <Image
-              className={classNames(
-                'h-24 w-24 object-cover object-center',
-                imageRenderLoading ? 'hidden' : '',
-              )}
-              src={fileUrl}
-              alt={form.getFieldValue('name') ?? 'New NFT reward'}
-              onLoad={() => setImageRenderLoading(false)}
-              onClick={e => e.stopPropagation()}
-            />
-          </>
+          <JuiceVideoThumbnailOrImage
+            src={fileUrl}
+            alt={form.getFieldValue('name') ?? 'New NFT reward'}
+            heightClass="h-24"
+            widthClass="w-24"
+            showPreviewOnClick
+          />
         ) : (
           <div>
             {uploading ? (

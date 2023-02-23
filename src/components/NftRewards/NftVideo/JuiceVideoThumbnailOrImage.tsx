@@ -3,12 +3,13 @@ import { ImageProps } from 'antd'
 import { JuiceVideoOrImgPreview } from 'components/Create/components/JuiceVideoOrImgPreview'
 import { useContentType } from 'hooks/ContentType'
 import { useState } from 'react'
+import { stopPropagation } from 'react-stop-propagation'
 import { classNames } from 'utils/classNames'
 import { fileTypeIsVideo } from 'utils/nftRewards'
 import { JuiceVideoThumbnail, PlayIconPosition } from './JuiceVideoThumbnail'
 
 export function JuiceVideoThumbnailOrImage({
-  isSelected,
+  isSelected = true,
   playIconPosition,
   heightClass,
   widthClass,
@@ -39,11 +40,16 @@ export function JuiceVideoThumbnailOrImage({
         <div
           className={`flex items-center justify-center border border-solid border-smoke-200 dark:border-grey-600 ${widthClass} ${heightClass}`}
         >
-          <LoadingOutlined />
+          <LoadingOutlined className="text-primary" />
         </div>
       ) : null}
       <div
-        onClick={showPreviewOnClick ? () => setPreviewVisible(true) : undefined}
+        onClick={
+          showPreviewOnClick
+            ? stopPropagation(() => setPreviewVisible(true))
+            : undefined
+        }
+        className="h-full w-full"
       >
         {isVideo ? (
           <JuiceVideoThumbnail

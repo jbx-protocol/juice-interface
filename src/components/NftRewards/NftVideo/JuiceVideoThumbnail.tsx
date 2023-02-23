@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { JuicePlayIcon } from './JuicePlayIcon'
 
 export type PlayIconPosition = 'hidden' | 'default' | 'center'
@@ -19,13 +20,14 @@ export function JuiceVideoThumbnail({
   className?: string
   onLoaded?: VoidFunction
 }) {
+  const [loading, setLoading] = useState<boolean>(true)
   const _width = widthClass ?? 'w-full'
   const _height = heightClass ?? 'h-full'
 
   const playIconContainerClassName = 'bottom-3 right-2'
   return (
     <div className={`relative top-0 ${_width} ${_height}`}>
-      {playIconPosition !== 'hidden' ? (
+      {!loading && playIconPosition !== 'hidden' ? (
         <div className={`absolute z-[1] ${playIconContainerClassName}`}>
           <JuicePlayIcon />
         </div>
@@ -36,7 +38,10 @@ export function JuiceVideoThumbnail({
         style={{
           filter: isSelected ? 'unset' : 'brightness(50%)',
         }}
-        onLoadedData={onLoaded}
+        onLoadedData={() => {
+          setLoading(false)
+          onLoaded?.()
+        }}
       >
         <source src={src} type="video/mp4" />
         Your browser does not support the video tag.

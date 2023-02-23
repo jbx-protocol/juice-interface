@@ -1,5 +1,7 @@
 import { OPEN_IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 import { base58 } from 'ethers/lib/utils'
+import { round } from 'lodash'
+import { UploadProgressEvent } from 'rc-upload/lib/interface'
 
 const IPFS_URL_REGEX = /ipfs:\/\/(.+)/
 
@@ -74,4 +76,9 @@ export function isIpfsCID(cid: string) {
   return (
     cid.startsWith('Qm') || cid.startsWith('bafy') || cid.startsWith('bafk')
   )
+}
+
+export function percentFromUploadProgressEvent(e: UploadProgressEvent) {
+  const _percent = (e.loaded / e.total) * 100
+  return round(_percent, 0)
 }

@@ -62,9 +62,12 @@ export default function ProjectLogo({
           onError={() => setSrcLoadError(true)}
           loading="lazy"
           crossOrigin="anonymous"
+          title={name}
         />
       ) : (
-        <div className="text-4xl">🧃</div>
+        <div className="text-4xl" title={name}>
+          🧃
+        </div>
       )}
     </div>
   )

@@ -8,7 +8,7 @@ import TooltipLabel from 'components/TooltipLabel'
 import { useModal } from 'hooks/Modal'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { TreasurySelection } from 'models/treasurySelection'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useAppDispatch } from 'redux/hooks/AppDispatch'
 import { useAppSelector } from 'redux/hooks/AppSelector'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
@@ -22,6 +22,8 @@ import { allocationTotalPercentDoNotExceedTotalRule } from 'utils/antdRules'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { Icons } from '../../Icons'
+import { Wizard } from '../../Wizard'
+import { PageContext } from '../../Wizard/contexts/PageContext'
 import { PayoutsList } from '../Payouts/components/PayoutsList'
 import { ConvertAmountsModal, RadioCard } from './components'
 import { useTreasurySetupForm } from './hooks'
@@ -34,6 +36,7 @@ const treasuryOptions = [
 
 export const TreasurySetupPage = () => {
   useSetCreateFurthestPageReached('treasurySetup')
+  const { goToNextPage } = useContext(PageContext)
   const { form, initialValues } = useTreasurySetupForm()
   const [, setSplits] = useEditingPayoutSplits()
   const [distributionLimit, setDistributionLimit] =
@@ -49,11 +52,10 @@ export const TreasurySetupPage = () => {
     initialTreasurySelection ?? 'amount',
   )
 
-  const selection: TreasurySelection = Form.useWatch('selection', form)!
   const payoutsList = Form.useWatch('payoutsList', form) ?? []
 
   const calloutText = useMemo(() => {
-    switch (selection) {
+    switch (treasuryOption) {
       case 'amount':
         return t`The total sum of your payouts will become your distribution limit.
       This is the amount of funds your project will be able to distribute or
@@ -63,7 +65,7 @@ export const TreasurySetupPage = () => {
       case 'zero':
         return t`All funds raised will be redeemable by your project’s token holders. You can turn off redemptions in the Token settings. You will not be able to add payouts while your distribution limit is set to Zero.`
     }
-  }, [selection])
+  }, [treasuryOption])
 
   const payoutsSelection: PayoutsSelection | undefined = useMemo(() => {
     switch (treasuryOption) {
@@ -75,6 +77,15 @@ export const TreasurySetupPage = () => {
         return undefined
     }
   }, [treasuryOption])
+
+  const conditionsToProceedMet = useMemo(() => {
+    switch (treasuryOption) {
+      case 'amount':
+        return !!payoutsList.length
+      default:
+        return true
+    }
+  }, [payoutsList.length, treasuryOption])
 
   const switchToAmountsPayoutSelection = useCallback(
     (newDistributionLimit: ReduxDistributionLimit) => {
@@ -156,9 +167,18 @@ export const TreasurySetupPage = () => {
   const showPayouts =
     treasuryOption === 'amount' || treasuryOption === 'unlimited'
 
+  const isNextEnabled = !!treasuryOption && conditionsToProceedMet
+
   return (
     <>
-      <Form form={form} initialValues={initialValues} layout="vertical">
+      <Form
+        form={form}
+        initialValues={initialValues}
+        layout="vertical"
+        onFinish={() => {
+          goToNextPage?.()
+        }}
+      >
         <Form.Item
           label={
             <TooltipLabel
@@ -227,6 +247,7 @@ export const TreasurySetupPage = () => {
             )}
           </Form.Item>
         )}
+        <Wizard.Page.ButtonControl isNextEnabled={isNextEnabled} />
       </Form>
 
       <DeleteConfirmationModal

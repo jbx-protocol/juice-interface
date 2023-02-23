@@ -1,11 +1,6 @@
 import axios from 'axios'
 
-const DISCORD_WEBHOOK_BASE_URL = 'https://discord.com/api/webhooks/'
-const DISCORD_WEBHOOK_ENDPOINT =
-  '1069960445412249710/v653BVTT0hNwqDRuOPDRyNzp8IE1dFx183-xmM2tqp2rxUxjVUmSXGjy57S2XwJL39Pf'
-const axiosInstance = axios.create({
-  baseURL: DISCORD_WEBHOOK_BASE_URL,
-})
+const url = process.env.CONTACT_WEBHOOK_URL
 
 export function createContactMessage(
   message: string,
@@ -51,7 +46,15 @@ export function createContactMessage(
     ],
   }
 
-  return axiosInstance.post(DISCORD_WEBHOOK_ENDPOINT, JSON.stringify(body), {
+  if (!url) {
+    console.error(
+      'Missing CONTACT_WEBHOOK_URL .env var required to send Discord alert: ',
+      JSON.stringify(body),
+    )
+    throw new Error('Could not find CONTACT_WEBHOOK_URL .env var.')
+  }
+
+  return axios.post(url, JSON.stringify(body), {
     headers: {
       'Content-Type': 'application/json',
     },

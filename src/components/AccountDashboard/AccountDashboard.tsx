@@ -34,7 +34,7 @@ function HoldingsList({ address }: { address: string }) {
       <span>
         {address === userAddress ? (
           <div>
-            <p className="mb-5">
+            <p className="mb-5 dark:text-slate-100">
               <Trans>You haven't contributed to any projects yet!</Trans>
             </p>
             <Link href="/projects">
@@ -46,7 +46,9 @@ function HoldingsList({ address }: { address: string }) {
             </Link>
           </div>
         ) : (
-          <Trans>This account hasn't contributed to any projects yet.</Trans>
+          <p className="dark:text-slate-100">
+            <Trans>This account hasn't contributed to any projects yet.</Trans>
+          </p>
         )}
       </span>
     )
@@ -67,7 +69,7 @@ function MyProjectsList({ address }: { address: string }) {
       <span>
         {address === userAddress ? (
           <div>
-            <p className="mb-5">
+            <p className="mb-5 dark:text-slate-100">
               <Trans>You haven't created any projects yet!</Trans>
             </p>
 
@@ -80,7 +82,9 @@ function MyProjectsList({ address }: { address: string }) {
             </Link>
           </div>
         ) : (
-          <Trans>This account hasn't created any projects yet.</Trans>
+          <p className="dark:text-slate-100">
+            <Trans>This account hasn't created any projects yet.</Trans>
+          </p>
         )}
       </span>
     )

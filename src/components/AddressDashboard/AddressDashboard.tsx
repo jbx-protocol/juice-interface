@@ -42,7 +42,9 @@ export function AddressDashboard({ address }: { address: string }) {
             ))}
           </Grid>
         ) : (
-          <span>None</span>
+          <span>
+            <Trans>None</Trans>
+          </span>
         )}
       </section>
 
@@ -57,7 +59,9 @@ export function AddressDashboard({ address }: { address: string }) {
             ))}
           </Grid>
         ) : (
-          <span>None</span>
+          <span>
+            <Trans>None</Trans>
+          </span>
         )}
       </section>
     </div>

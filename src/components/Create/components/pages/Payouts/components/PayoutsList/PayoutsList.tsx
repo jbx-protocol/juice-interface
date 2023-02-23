@@ -129,8 +129,9 @@ export const PayoutsList = (
       setAllocationCurrency={setCurrency}
     >
       <Space className="w-full" direction="vertical" size="middle">
-        {props.payoutsSelection === 'percentages' ||
-        (distributionLimit && !distributionLimit.amount.eq(0)) ? (
+        {(props.payoutsSelection === 'percentages' ||
+          (distributionLimit && !distributionLimit.amount.eq(0))) &&
+        totalPercent < 100 ? (
           <OwnerPayoutCard payoutsSelection={props.payoutsSelection} />
         ) : null}
         <Allocation.List

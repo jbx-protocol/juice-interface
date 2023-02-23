@@ -1,16 +1,29 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { RadioGroup } from '@headlessui/react'
 import { t, Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import { Callout } from 'components/Callout'
+import { DeleteConfirmationModal } from 'components/modals/DeleteConfirmationModal'
 import TooltipLabel from 'components/TooltipLabel'
+import { useModal } from 'hooks/Modal'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { TreasurySelection } from 'models/treasurySelection'
-import { useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useAppDispatch } from 'redux/hooks/AppDispatch'
+import { useAppSelector } from 'redux/hooks/AppSelector'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
+import {
+  ReduxDistributionLimit,
+  useEditingDistributionLimit,
+} from 'redux/hooks/EditingDistributionLimit'
+import { useEditingPayoutSplits } from 'redux/hooks/EditingPayoutSplits'
+import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { allocationTotalPercentDoNotExceedTotalRule } from 'utils/antdRules'
+import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
+import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { Icons } from '../../Icons'
 import { PayoutsList } from '../Payouts/components/PayoutsList'
-import { RadioCard } from './components'
+import { ConvertAmountsModal, RadioCard } from './components'
 import { useTreasurySetupForm } from './hooks'
 
 const treasuryOptions = [
@@ -22,7 +35,22 @@ const treasuryOptions = [
 export const TreasurySetupPage = () => {
   useSetCreateFurthestPageReached('treasurySetup')
   const { form, initialValues } = useTreasurySetupForm()
+  const [, setSplits] = useEditingPayoutSplits()
+  const [distributionLimit, setDistributionLimit] =
+    useEditingDistributionLimit()
+  const switchingToAmountsModal = useModal()
+  const switchingToZeroAmountsModal = useModal()
+  const dispatch = useAppDispatch()
+  const initialTreasurySelection = useAppSelector(
+    state => state.editingV2Project.treasurySelection,
+  )
+
+  const [treasuryOption, setTreasuryOption] = useState<TreasurySelection>(
+    initialTreasurySelection ?? 'amount',
+  )
+
   const selection: TreasurySelection = Form.useWatch('selection', form)!
+  const payoutsList = Form.useWatch('payoutsList', form) ?? []
 
   const calloutText = useMemo(() => {
     switch (selection) {
@@ -38,7 +66,7 @@ export const TreasurySetupPage = () => {
   }, [selection])
 
   const payoutsSelection: PayoutsSelection | undefined = useMemo(() => {
-    switch (selection) {
+    switch (treasuryOption) {
       case 'amount':
         return 'amounts'
       case 'unlimited':
@@ -46,76 +74,172 @@ export const TreasurySetupPage = () => {
       default:
         return undefined
     }
-  }, [selection])
+  }, [treasuryOption])
 
-  const showPayouts = selection === 'amount' || selection === 'unlimited'
+  const switchToAmountsPayoutSelection = useCallback(
+    (newDistributionLimit: ReduxDistributionLimit) => {
+      setDistributionLimit(newDistributionLimit)
+      setTreasuryOption('amount')
+      switchingToAmountsModal.close()
+    },
+    [setDistributionLimit, switchingToAmountsModal],
+  )
+  const switchToZeroPayoutSelection = useCallback(() => {
+    setSplits([])
+    setDistributionLimit({
+      amount: BigNumber.from(0),
+      currency: distributionLimit?.currency ?? V2V3_CURRENCY_ETH,
+    })
+    form.setFieldValue('payoutsList', [])
+    setTreasuryOption('zero')
+    switchingToZeroAmountsModal.close()
+  }, [
+    distributionLimit?.currency,
+    form,
+    setDistributionLimit,
+    setSplits,
+    switchingToZeroAmountsModal,
+  ])
+
+  const onTreasuryOptionChange = useCallback(
+    (option: TreasurySelection) => {
+      const currentOption = treasuryOption
+      const payoutsCreated = payoutsList.length
+      if (option === currentOption) return
+      if (option === 'amount' && payoutsCreated) {
+        switchingToAmountsModal.open()
+        return
+      } else if (option === 'amount' && !payoutsCreated) {
+        setDistributionLimit({
+          amount: BigNumber.from(0),
+          currency: distributionLimit?.currency ?? V2V3_CURRENCY_ETH,
+        })
+      }
+
+      if (option === 'unlimited') {
+        setDistributionLimit({
+          amount: MAX_DISTRIBUTION_LIMIT,
+          currency: distributionLimit?.currency ?? V2V3_CURRENCY_ETH,
+        })
+      }
+      if (option === 'zero' && payoutsCreated) {
+        switchingToZeroAmountsModal.open()
+        return
+      } else if (option === 'zero' && !payoutsCreated) {
+        switchToZeroPayoutSelection()
+      }
+
+      setTreasuryOption(option)
+    },
+    [
+      treasuryOption,
+      payoutsList.length,
+      switchingToAmountsModal,
+      setDistributionLimit,
+      distributionLimit?.currency,
+      switchingToZeroAmountsModal,
+      switchToZeroPayoutSelection,
+    ],
+  )
+
+  // Initial load
+  useEffect(() => {
+    if (initialTreasurySelection === undefined) {
+      dispatch(editingV2ProjectActions.setDistributionLimit('0'))
+    }
+  })
+
+  useEffect(() => {
+    dispatch(editingV2ProjectActions.setTreasurySelection(treasuryOption))
+  }, [dispatch, treasuryOption])
+
+  const showPayouts =
+    treasuryOption === 'amount' || treasuryOption === 'unlimited'
 
   return (
-    <Form form={form} initialValues={initialValues} layout="vertical">
-      <Form.Item
-        label={
-          <TooltipLabel
-            className="text-lg font-medium text-black dark:text-grey-200"
-            label={<Trans>Distribution Limit</Trans>}
-            tip={
-              <Trans>
-                This is the amount of funds your project will be able to
-                distribute or 'withdraw' from its treasury each funding cycle.
-              </Trans>
-            }
-          />
-        }
-        name="selection"
-      >
-        <RadioGroup className="flex flex-col gap-3 md:flex-row">
-          {treasuryOptions.map(option => (
-            <RadioGroup.Option
-              className="flex-1 cursor-pointer"
-              key={option.name}
-              value={option.value}
-            >
-              {({ checked }) => (
-                <RadioCard
-                  icon={option.icon}
-                  title={option.name}
-                  checked={checked}
-                />
-              )}
-            </RadioGroup.Option>
-          ))}
-        </RadioGroup>
-      </Form.Item>
-      {calloutText && (
-        <Callout.Info className="mb-10">{calloutText}</Callout.Info>
-      )}
-      {showPayouts && (
+    <>
+      <Form form={form} initialValues={initialValues} layout="vertical">
         <Form.Item
           label={
             <TooltipLabel
               className="text-lg font-medium text-black dark:text-grey-200"
-              label={<Trans>Payouts</Trans>}
+              label={<Trans>Distribution Limit</Trans>}
               tip={
                 <Trans>
-                  These are the addresses or entities that will receive payouts
-                  from your treasury each funding cycle.
+                  This is the amount of funds your project will be able to
+                  distribute or 'withdraw' from its treasury each funding cycle.
                 </Trans>
               }
             />
           }
         >
-          <Trans>
-            Add wallet addresses or juicebox projects to receive payouts.
-          </Trans>
-          {payoutsSelection && (
-            <Form.Item
-              name="payoutsList"
-              rules={[allocationTotalPercentDoNotExceedTotalRule()]}
-            >
-              <PayoutsList payoutsSelection={payoutsSelection} />
-            </Form.Item>
-          )}
+          <RadioGroup
+            className="flex flex-col gap-3 md:flex-row"
+            value={treasuryOption}
+            onChange={onTreasuryOptionChange}
+          >
+            {treasuryOptions.map(option => (
+              <RadioGroup.Option
+                className="flex-1 cursor-pointer"
+                key={option.name}
+                value={option.value}
+              >
+                {({ checked }) => (
+                  <RadioCard
+                    icon={option.icon}
+                    title={option.name}
+                    checked={checked}
+                  />
+                )}
+              </RadioGroup.Option>
+            ))}
+          </RadioGroup>
         </Form.Item>
-      )}
-    </Form>
+        {calloutText && (
+          <Callout.Info className="mb-10">{calloutText}</Callout.Info>
+        )}
+        {showPayouts && (
+          <Form.Item
+            label={
+              <TooltipLabel
+                className="text-lg font-medium text-black dark:text-grey-200"
+                label={<Trans>Payouts</Trans>}
+                tip={
+                  <Trans>
+                    These are the addresses or entities that will receive
+                    payouts from your treasury each funding cycle.
+                  </Trans>
+                }
+              />
+            }
+          >
+            <Trans>
+              Add wallet addresses or juicebox projects to receive payouts.
+            </Trans>
+            {payoutsSelection && (
+              <Form.Item
+                shouldUpdate
+                name="payoutsList"
+                rules={[allocationTotalPercentDoNotExceedTotalRule()]}
+              >
+                <PayoutsList payoutsSelection={payoutsSelection} />
+              </Form.Item>
+            )}
+          </Form.Item>
+        )}
+      </Form>
+
+      <DeleteConfirmationModal
+        body={t`Choosing zero will delete all payouts and set your distribution limit to 0.`}
+        open={switchingToZeroAmountsModal.visible}
+        onOk={switchToZeroPayoutSelection}
+        onCancel={switchingToZeroAmountsModal.close}
+      />
+      <ConvertAmountsModal
+        open={switchingToAmountsModal.visible}
+        onOk={switchToAmountsPayoutSelection}
+        onCancel={switchingToAmountsModal.close}
+      />
+    </>
   )
 }

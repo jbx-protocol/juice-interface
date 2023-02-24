@@ -12,8 +12,9 @@ import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useCallback, useMemo } from 'react'
 import { useEditingDistributionLimit } from 'redux/hooks/EditingDistributionLimit'
 import { calculateExpenseFromPercentageOfWad } from 'utils/calculateExpenseFromPercentageOfWad'
-import { parseWad } from 'utils/format/formatNumber'
+import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
+import { amountFromPercent } from 'utils/v2v3/distributions'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 
 export const PayoutsList = (
@@ -112,6 +113,24 @@ export const PayoutsList = (
     })
   }, [distributionLimit, expenses, props, setDistributionLimit])
 
+  const onOwnerPayoutDeleted = useCallback(() => {
+    if (!distributionLimit?.amount) return
+    const totalAmount = parseFloat(fromWad(distributionLimit.amount))
+    const ownerPayoutAmount = totalAmount - (totalPercent / 100) * totalAmount
+    const totalAmountAfterRemoval = Math.max(0, totalAmount - ownerPayoutAmount)
+
+    const adjustedAllocations = (props.value ?? []).map(alloc => {
+      const currentAmount = amountFromPercent({
+        percent: alloc.percent,
+        amount: totalAmount.toString(),
+      })
+      const newPercent = (currentAmount / totalAmountAfterRemoval) * 100
+      return { ...alloc, percent: newPercent }
+    })
+    props.onChange?.(adjustedAllocations)
+    setTotalAllocationAmount(parseWad(totalAmountAfterRemoval))
+  }, [distributionLimit?.amount, props, setTotalAllocationAmount, totalPercent])
+
   const hasAllocations =
     !!props.value?.length ||
     (distributionLimit?.amount.gt(0) &&
@@ -132,7 +151,11 @@ export const PayoutsList = (
         {(props.payoutsSelection === 'percentages' ||
           (distributionLimit && !distributionLimit.amount.eq(0))) &&
         totalPercent < 100 ? (
-          <OwnerPayoutCard payoutsSelection={props.payoutsSelection} />
+          <OwnerPayoutCard
+            canBeDeleted={props.payoutsSelection === 'amounts'}
+            payoutsSelection={props.payoutsSelection}
+            onDelete={onOwnerPayoutDeleted}
+          />
         ) : null}
         <Allocation.List
           allocationName={t`payout`}

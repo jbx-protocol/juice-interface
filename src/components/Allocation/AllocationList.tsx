@@ -129,6 +129,16 @@ export const AllocationList = ({
 
         totalAmount += parseFloat(result.amount)
 
+        const adjustedAllocations = allocations.map(alloc => {
+          const currentAmount = amountFromPercent({
+            percent: alloc.percent,
+            amount: originalTotal.toString(),
+          })
+          const newPercent = (currentAmount / totalAmount) * 100
+          return { ...alloc, percent: newPercent }
+        })
+
+        setAllocations(adjustedAllocations)
         setTotalAllocationAmount(parseWad(totalAmount))
       } else {
         if (result.amount.isPercent) {

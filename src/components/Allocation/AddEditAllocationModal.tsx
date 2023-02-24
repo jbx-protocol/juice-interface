@@ -84,6 +84,10 @@ export const AddEditAllocationModal = ({
     [editingData],
   )
 
+  const totalAllocationPercent = allocations
+    .map(a => a.percent)
+    .reduce((acc, curr) => acc + curr, 0)
+
   const isEditing = !!editingData
 
   useEffect(() => {
@@ -155,7 +159,8 @@ export const AddEditAllocationModal = ({
     ) : undefined
 
   const showProjectOwnerRecipientOption =
-    amountType !== 'percentage' && !allocations.length
+    amountType !== 'percentage' &&
+    (!allocations.length || totalAllocationPercent === 100)
 
   return (
     <Modal

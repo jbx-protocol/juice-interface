@@ -74,7 +74,7 @@ export const ConvertAmountsModal = ({
   return (
     <Modal
       title={
-        <h3 className="text-xl font-medium text-black">
+        <h3 className="text-xl font-medium text-black dark:text-slate-100">
           Convert payouts to amounts
         </h3>
       }
@@ -83,7 +83,7 @@ export const ConvertAmountsModal = ({
       onCancel={onCancel}
       okText={t`Convert to amounts`}
     >
-      <section className="mb-8 text-sm text-grey-700">
+      <section className="mb-8 text-sm text-grey-700 dark:text-slate-200">
         <Trans>
           Changing your distribution limit to 'Amount' will require you to
           manually set a distribution limit amount to split between your current
@@ -91,7 +91,7 @@ export const ConvertAmountsModal = ({
         </Trans>
       </section>
 
-      <label className="text-base font-medium text-black">
+      <label className="text-base font-medium text-black dark:text-slate-100">
         <Trans>Set distribution limit</Trans>
       </label>
       <FormattedNumberInput
@@ -109,7 +109,7 @@ export const ConvertAmountsModal = ({
       />
 
       <section>
-        <span className="mb-4 text-base font-medium text-black">
+        <span className="mb-4 text-base font-medium text-black dark:text-slate-100">
           <Trans>Current payouts</Trans>
         </span>
         {hasOwnerPayout ? (

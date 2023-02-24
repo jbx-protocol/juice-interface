@@ -71,6 +71,8 @@ export const ConvertAmountsModal = ({
 
   const hasOwnerPayout = ownerPercent > 0
 
+  const okButtonDisabled = !newDistributionLimit.length
+
   return (
     <Modal
       title={
@@ -79,6 +81,7 @@ export const ConvertAmountsModal = ({
         </h3>
       }
       open={open}
+      okButtonProps={{ disabled: okButtonDisabled }}
       onOk={onModalOk}
       onCancel={onCancel}
       okText={t`Convert to amounts`}

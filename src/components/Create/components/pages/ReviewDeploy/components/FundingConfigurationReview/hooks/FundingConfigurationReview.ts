@@ -1,15 +1,15 @@
 import { t } from '@lingui/macro'
 import { AllocationSplit } from 'components/Allocation'
-import { useAvailablePayoutsSelections } from 'components/Create/components/pages/Payouts/hooks'
+import { useAvailablePayoutsSelections } from 'components/Create/components/pages/TreasurySetup/hooks/AvailablePayoutsSelections'
 import { formatFundingCycleDuration } from 'components/Create/utils/formatFundingCycleDuration'
-import { formatFundingTarget } from 'utils/format/formatFundingTarget'
-import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
-import { useAppSelector } from 'redux/hooks/AppSelector'
 import moment from 'moment'
 import { useCallback, useMemo } from 'react'
+import { useAppSelector } from 'redux/hooks/AppSelector'
 import { useEditingDistributionLimit } from 'redux/hooks/EditingDistributionLimit'
 import { useEditingPayoutSplits } from 'redux/hooks/EditingPayoutSplits'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
+import { formatFundingTarget } from 'utils/format/formatFundingTarget'
+import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 
 export const useFundingConfigurationReview = () => {
   const { fundingCycleData, payoutsSelection, mustStartAtOrAfter } =

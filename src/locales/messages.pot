@@ -308,9 +308,6 @@ msgstr ""
 msgid "Add payout recipient"
 msgstr ""
 
-msgid "Add payouts to wallet addresses or Juicebox projects."
-msgstr ""
-
 msgid "Add to Metamask"
 msgstr ""
 
@@ -455,13 +452,7 @@ msgstr ""
 msgid "Amounts"
 msgstr ""
 
-msgid "An Infinite Funding Target means contributors cannot redeem their tokens for a portion of the treasury funds. Payouts can only be nominated in percentages."
-msgstr ""
-
 msgid "Any changes you make will take effect in <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
-msgstr ""
-
-msgid "Any funds raised over this amount are considered <0>overflow</0> and are redeemable by your contributors."
 msgstr ""
 
 msgid "Any reconfiguration to an upcoming funding cycle will take effect once the current cycle ends. A project with no strategy may be vulnerable to being rug-pulled by its owner."
@@ -653,6 +644,9 @@ msgstr ""
 msgid "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule (the first funding cycle following <1>{1}</1> from now)."
 msgstr ""
 
+msgid "Changing your distribution limit to 'Amount' will require you to manually set a distribution limit amount to split between your current payouts."
+msgstr ""
+
 msgid "Character"
 msgstr ""
 
@@ -668,7 +662,7 @@ msgstr ""
 msgid "Choose how you would like to configure your payouts."
 msgstr ""
 
-msgid "Choose which addresses to pay and how to split the total payout amount each funding cycle."
+msgid "Choosing zero will delete all payouts and set your distribution limit to 0."
 msgstr ""
 
 msgid "Claim {0}"
@@ -851,6 +845,9 @@ msgstr ""
 msgid "Controller migration"
 msgstr ""
 
+msgid "Convert to amounts"
+msgstr ""
+
 msgid "Copied!"
 msgstr ""
 
@@ -903,6 +900,9 @@ msgid "Current handle"
 msgstr ""
 
 msgid "Current owner"
+msgstr ""
+
+msgid "Current payouts"
 msgstr ""
 
 msgid "Currently worth: <0><1/></0>"
@@ -1082,13 +1082,7 @@ msgstr ""
 msgid "Display a message or warning to contributors before they approve a payment to your project"
 msgstr ""
 
-msgid "Distribute a percentage of all funds received between the entities nominated in the next step."
-msgstr ""
-
 msgid "Distribute a percentage of all funds received to entities. Your distribution limit will be <0>infinite</0>."
-msgstr ""
-
-msgid "Distribute a specific amount of funds to each entity nominated in the next step."
 msgstr ""
 
 msgid "Distribute a specific amount of funds to entities each funding cycle. Your distribution limit will equal the <0>sum of all payout amounts.</0>"
@@ -1445,9 +1439,6 @@ msgstr ""
 msgid "Funding Rules"
 msgstr ""
 
-msgid "Funding Target"
-msgstr ""
-
 msgid "Funding Target Exceeded"
 msgstr ""
 
@@ -1574,6 +1565,9 @@ msgstr ""
 msgid "How would you like to distribute payments?"
 msgstr ""
 
+msgid "How the {reservedPercentage}% of your project's reserved tokens will be split."
+msgstr ""
+
 msgid "I accept this project's <0>unique risks</0>."
 msgstr ""
 
@@ -1653,6 +1647,9 @@ msgid "Indie creators and builders"
 msgstr ""
 
 msgid "Infinite Funding Target"
+msgstr ""
+
+msgid "Infinite (no limit)"
 msgstr ""
 
 msgid "Initial Mint Rate"
@@ -2822,9 +2819,6 @@ msgstr ""
 msgid "Select NFTs to redeem"
 msgstr ""
 
-msgid "Select the option that best suits your project’s funding requirements."
-msgstr ""
-
 msgid "Send Message"
 msgstr ""
 
@@ -2867,9 +2861,6 @@ msgstr ""
 msgid "Set a project handle (optional)"
 msgstr ""
 
-msgid "Set a specific amount to distribute to nominated addresses each funding cycle."
-msgstr ""
-
 msgid "Set a text record for {0} with the key <0>\"{projectHandleENSTextRecordKey}\"</0> and the value <1>\"{projectId}\"</1> (this project's ID). You can do this on the <2>ENS app</2>, or use the button below (as long as your connected wallet owns or controls that ENS name)."
 msgstr ""
 
@@ -2883,6 +2874,9 @@ msgid "Set aside a percentage of freshly minted tokens, which you can allocate b
 msgstr ""
 
 msgid "Set custom rules & parameters for your project tokens."
+msgstr ""
+
+msgid "Set distribution limit"
 msgstr ""
 
 msgid "Set handle @{handle}"
@@ -2930,9 +2924,6 @@ msgstr ""
 msgid "Set veNFT operator for {projectTitle}"
 msgstr ""
 
-msgid "Set your funding target"
-msgstr ""
-
 msgid "Setting a handle requires 2 transactions: <0>Set ENS name</0> and <1>Set text record</1>."
 msgstr ""
 
@@ -2964,12 +2955,6 @@ msgid "Something went wrong."
 msgstr ""
 
 msgid "Spaces are not allowed"
-msgstr ""
-
-msgid "Specific Amounts"
-msgstr ""
-
-msgid "Specific Funding Target"
 msgstr ""
 
 msgid "Spending"
@@ -3791,9 +3776,6 @@ msgstr ""
 msgid "Who is Peel? Who is JuiceboxDAO?"
 msgstr ""
 
-msgid "Who's getting paid?"
-msgstr ""
-
 msgid "Why do you need this permission?"
 msgstr ""
 
@@ -3914,9 +3896,6 @@ msgstr ""
 msgid "You've completed this step."
 msgstr ""
 
-msgid "Your Funding Target can be changed in future funding cycles. Payouts denominated in USD are paid out in ETH at the current exchange rate."
-msgstr ""
-
 msgid "Your Juicebox project has no active funding cycle. Launch a funding cycle to re-enable payments on your project."
 msgstr ""
 
@@ -3986,9 +3965,6 @@ msgstr ""
 msgid "Your project will keep all funds raised. There will be no limit on the amount of funds you can distribute from your treasury each funding cycle."
 msgstr ""
 
-msgid "Your project will withhold all funds raised. Funds can be distributed to payout addresses you set, and the project owner will receive any unallocated funds. Your project will have no overflow, so token holders can't redeem their tokens for ETH."
-msgstr ""
-
 msgid "Your project's NFTs will not have on-chain governance capabilities."
 msgstr ""
 
@@ -4041,9 +4017,6 @@ msgid "handle"
 msgstr ""
 
 msgid "hours"
-msgstr ""
-
-msgid "infinite"
 msgstr ""
 
 msgid "last {TRENDING_WINDOW_DAYS} days"
@@ -4106,9 +4079,6 @@ msgstr ""
 msgid "veNFT Tiers ({0} variants)"
 msgstr ""
 
-msgid "zero"
-msgstr ""
-
 msgid "{0, plural, one {# NFT} other {# NFTs}}"
 msgstr ""
 
@@ -4143,9 +4113,6 @@ msgid "{0} for you"
 msgstr ""
 
 msgid "{0} holders"
-msgstr ""
-
-msgid "{0} is disabled when <0>Funding Target</0> is {1}."
 msgstr ""
 
 msgid "{0} is not a valid integer"

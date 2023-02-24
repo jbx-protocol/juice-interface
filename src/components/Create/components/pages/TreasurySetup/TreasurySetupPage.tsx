@@ -24,8 +24,8 @@ import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { Icons } from '../../Icons'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
-import { PayoutsList } from '../Payouts/components/PayoutsList'
 import { ConvertAmountsModal, RadioCard } from './components'
+import { PayoutsList } from './components/PayoutsList'
 import { useTreasurySetupForm } from './hooks'
 
 const treasuryOptions = [

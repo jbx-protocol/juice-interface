@@ -7,9 +7,7 @@ import { useRouter } from 'next/router'
 import { helpPagePath } from 'utils/routes'
 import {
   FundingCyclesPage,
-  FundingTargetPage,
   NftRewardsPage,
-  PayoutsPage,
   ProjectDetailsPage,
   ProjectTokenPage,
   ReconfigurationRulesPage,
@@ -19,7 +17,6 @@ import { CreateBadge } from './components/CreateBadge'
 import { DeploySuccess } from './components/pages/ReviewDeploy/components/DeploySuccess'
 import { TreasurySetupPage } from './components/pages/TreasurySetup'
 import { PayoutsMigrationModal } from './components/PayoutsMigrationModal'
-import { RecallCard } from './components/RecallCard'
 import { Wizard } from './components/Wizard'
 import { useLoadingInitialStateFromQuery } from './hooks/LoadInitialStateFromQuery'
 
@@ -101,36 +98,6 @@ export function Create() {
             }
           >
             <TreasurySetupPage />
-          </Wizard.Page>
-          <Wizard.Page
-            name="fundingTarget"
-            title={t`Funding Target`}
-            description={
-              <div className="flex flex-col gap-4">
-                <Trans>
-                  Select the option that best suits your project’s funding
-                  requirements.
-                </Trans>
-                <RecallCard show={['fundingCycles']} />
-              </div>
-            }
-          >
-            <FundingTargetPage />
-          </Wizard.Page>
-          <Wizard.Page
-            name="payouts"
-            title={t`Payouts`}
-            description={
-              <div className="flex flex-col gap-4">
-                <Trans>
-                  Choose which addresses to pay and how to split the total
-                  payout amount each funding cycle.
-                </Trans>
-                <RecallCard show={['fundingCycles', 'fundingTarget']} />
-              </div>
-            }
-          >
-            <PayoutsPage />
           </Wizard.Page>
           <Wizard.Page
             name="projectToken"

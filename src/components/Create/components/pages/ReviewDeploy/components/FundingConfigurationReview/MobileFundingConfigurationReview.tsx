@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro'
-import { PayoutsList } from '../../../Payouts/components/PayoutsList'
+import { PayoutsList } from '../../../TreasurySetup/components/PayoutsList'
 import { DescriptionCol } from '../DescriptionCol'
 import { useFundingConfigurationReview } from './hooks/FundingConfigurationReview'
 

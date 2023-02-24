@@ -8,8 +8,6 @@ const pageOrder: CreatePage[] = [
   'projectDetails',
   'fundingCycles',
   'treasurySetup',
-  'fundingTarget',
-  'payouts',
   'projectToken',
   'nftRewards',
   'reconfigurationRules',

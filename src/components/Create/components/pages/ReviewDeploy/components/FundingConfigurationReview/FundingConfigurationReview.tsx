@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import { Col, Row, Tooltip } from 'antd'
 import useMobile from 'hooks/Mobile'
-import { PayoutsList } from '../../../Payouts/components/PayoutsList'
+import { PayoutsList } from '../../../TreasurySetup/components/PayoutsList'
 import { DescriptionCol } from '../DescriptionCol'
 import { useFundingConfigurationReview } from './hooks/FundingConfigurationReview'
 import { MobileFundingConfigurationReview } from './MobileFundingConfigurationReview'

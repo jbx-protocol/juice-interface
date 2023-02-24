@@ -17,8 +17,9 @@ export type SplitProps = {
   valueSuffix?: string | JSX.Element
   valueFormatProps?: { precision?: number }
   currency?: BigNumber
-  showFees?: boolean
+  showFee?: boolean
   showAmount?: boolean
+  dontApplyFeeToAmount?: boolean
 }
 
 export function SplitItem({ props }: { props: SplitProps }) {

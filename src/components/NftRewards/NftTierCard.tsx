@@ -103,7 +103,7 @@ export function NftTierCard({
             <JuiceVideoThumbnailOrImage
               src={fileUrl}
               alt={rewardTier?.name ?? 'Juicebox NFT reward'}
-              isSelected={_isSelected}
+              darkened={!_isSelected}
               className="absolute w-full"
               heightClass={NFT_DISPLAY_HEIGHT_CLASS}
             />

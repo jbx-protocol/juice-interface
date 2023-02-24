@@ -45,7 +45,6 @@ export function NftRewardCell({
                   heightClass={NFT_DISPLAY_HEIGHT_CLASS}
                   widthClass={NFT_DISPLAY_WIDTH_CLASS}
                   playIconPosition="hidden"
-                  isSelected
                   showPreviewOnClick
                 />
               </Tooltip>

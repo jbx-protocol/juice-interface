@@ -1,10 +1,10 @@
 import { PlusCircleOutlined } from '@ant-design/icons'
 import { Divider } from 'antd'
+import { CreateButton } from 'components/buttons/CreateButton'
 import { useModal } from 'hooks/Modal'
 import { FormItemInput } from 'models/formItemInput'
 import { createContext, useCallback, useContext, useState } from 'react'
 import { MAX_NFT_REWARD_TIERS } from 'utils/nftRewards'
-import { CreateButton } from 'components/buttons/CreateButton'
 import { AddEditRewardModal } from './AddEditRewardModal'
 import { useRewards } from './hooks'
 import { RewardItem } from './RewardItem'
@@ -46,7 +46,6 @@ export const RewardsList: React.FC<RewardsListProps> &
   const [selectedReward, setSelectedReward] = useState<Reward>()
   const modal = useModal()
   const { rewards, upsertReward, removeReward } = rewardsHook
-
   const onModalOk = useCallback(
     (reward: Reward) => {
       upsertReward(reward)

@@ -1,13 +1,12 @@
-import { CloseOutlined, LoadingOutlined } from '@ant-design/icons'
+import { CloseOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Button, Image, Statistic, Tooltip } from 'antd'
+import { Button, Statistic, Tooltip } from 'antd'
+import { JuiceVideoThumbnailOrImage } from 'components/NftRewards/NftVideo/JuiceVideoThumbnailOrImage'
 import Paragraph from 'components/Paragraph'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useState } from 'react'
-import { classNames } from 'utils/classNames'
 import NftRewardTierModal from './NftRewardTierModal/NftRewardTierModal'
-import { NFT_IMAGE_SIDE_LENGTH } from './NftRewardTierModal/NftUpload'
 
 export default function NftRewardTierCard({
   rewardTier,
@@ -20,7 +19,6 @@ export default function NftRewardTierCard({
 }) {
   const [editTierModalVisible, setEditTierModalVisible] =
     useState<boolean>(false)
-  const [imageLoading, setImageLoading] = useState<boolean>(true)
 
   if (!rewardTier) return null
 
@@ -63,26 +61,12 @@ export default function NftRewardTierCard({
           )}
         </div>
         <div className="flex">
-          <div
-            className={classNames(
-              'flex items-center justify-center',
-              imageLoading ? 'h-24 w-24' : '',
-            )}
-          >
-            {imageLoading ? <LoadingOutlined className="text-3xl" /> : null}
-            <Image
-              className={classNames(
-                'object-cover',
-                imageLoading ? 'hidden' : '',
-              )}
-              src={rewardTier.fileUrl}
-              alt={rewardTier.name}
-              height={imageLoading ? 0 : NFT_IMAGE_SIDE_LENGTH}
-              width={imageLoading ? 0 : NFT_IMAGE_SIDE_LENGTH}
-              onLoad={() => setImageLoading(false)}
-              onClick={e => e.stopPropagation()}
-            />
-          </div>
+          <JuiceVideoThumbnailOrImage
+            src={rewardTier.fileUrl}
+            alt={rewardTier.name}
+            heightClass="h-24"
+            widthClass="w-24"
+          />
           <div>
             <Tooltip title={<Trans>Discontinue mints</Trans>}>
               <Button

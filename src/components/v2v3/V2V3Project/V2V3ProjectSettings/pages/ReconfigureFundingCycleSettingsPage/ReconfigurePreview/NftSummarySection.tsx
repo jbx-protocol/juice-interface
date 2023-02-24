@@ -1,8 +1,8 @@
 import { Trans } from '@lingui/macro'
-import { Col, Image, Row } from 'antd'
+import { Col, Row } from 'antd'
 import ExternalLink from 'components/ExternalLink'
+import { JuiceVideoThumbnailOrImage } from 'components/NftRewards/NftVideo/JuiceVideoThumbnailOrImage'
 import Paragraph from 'components/Paragraph'
-import { NFT_IMAGE_SIDE_LENGTH } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/AddNftsSection/NftRewardTierModal/NftUpload'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useContext } from 'react'
@@ -41,12 +41,11 @@ export default function NftSummarySection() {
             gutter={16}
           >
             <Col md={4} className="flex items-center justify-center">
-              <Image
-                className="object-cover"
+              <JuiceVideoThumbnailOrImage
                 src={rewardTier.fileUrl ?? '/assets/banana-od.webp'}
                 alt={rewardTier.name}
-                height={NFT_IMAGE_SIDE_LENGTH}
-                width={NFT_IMAGE_SIDE_LENGTH}
+                heightClass="h-24"
+                widthClass="w-24"
               />
             </Col>
             <Col className="flex flex-col justify-center" md={8}>

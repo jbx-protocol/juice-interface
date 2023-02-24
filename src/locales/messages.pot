@@ -1622,6 +1622,9 @@ msgstr ""
 msgid "Images will be cropped to a 1:1 square in thumbnail previews on the Juicebox app."
 msgstr ""
 
+msgid "Images will be cropped to a square in thumbnail previews on the Juicebox app."
+msgstr ""
+
 msgid "In Juicebox"
 msgstr ""
 
@@ -1980,9 +1983,6 @@ msgid "NFT projects"
 msgstr ""
 
 msgid "NFT rules"
-msgstr ""
-
-msgid "NFT will be cropped to a square in thumbnail previews on the Juicebox app."
 msgstr ""
 
 msgid "NFTs"

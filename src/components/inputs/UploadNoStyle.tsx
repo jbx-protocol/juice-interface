@@ -8,11 +8,11 @@ import Loading from 'components/Loading'
 import { JuiceVideoPreview } from 'components/NftRewards/NftVideo/JuiceVideoPreview'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { useContentType } from 'hooks/ContentType'
-import { round } from 'lodash'
 import { FormItemInput } from 'models/formItemInput'
 import { UploadRequestOption } from 'rc-upload/lib/interface'
 import { ReactNode, useCallback, useContext, useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
+import { percentFromUploadProgressEvent } from 'utils/ipfs'
 import { fileTypeIsVideo } from 'utils/nftRewards'
 import { emitErrorNotification } from 'utils/notifications'
 
@@ -100,8 +100,7 @@ export const UploadNoStyle = (props: UploadNoStyleProps) => {
           onProgress: e => {
             req.onProgress?.(e)
             if (e) {
-              const _percent = (e.loaded / e.total) * 100
-              setPercent(round(_percent, 0))
+              setPercent(percentFromUploadProgressEvent(e))
             }
           },
         })

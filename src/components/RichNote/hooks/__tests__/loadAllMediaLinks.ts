@@ -1,3 +1,4 @@
+import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
 import * as loadURLContentTypeContainer from 'utils/http/loadURLContentType'
 import { v4 } from 'uuid'
 
@@ -24,13 +25,14 @@ describe('loadAllMediaLinks', () => {
     await expect(loadAllMediaLinks(['foobar'])).resolves.toEqual([undefined])
   })
 
-  it.each(['image/jpeg', 'image/jpg', 'image/gif', 'image/png', 'image/svg'])(
-    'returns link if content type is %p',
-    async contentType => {
-      loadURLContentTypeSpy.mockImplementation(async () => contentType)
-      await expect(loadAllMediaLinks(['foobar'])).resolves.toEqual(['foobar'])
-    },
-  )
+  it.each(
+    ['image/jpeg', 'image/jpg', 'image/gif', 'image/png', 'image/svg'].concat(
+      VIDEO_FILE_TYPES,
+    ),
+  )('returns link if content type is %p', async contentType => {
+    loadURLContentTypeSpy.mockImplementation(async () => contentType)
+    await expect(loadAllMediaLinks(['foobar'])).resolves.toEqual(['foobar'])
+  })
 
   it('converts successfully', async () => {
     loadURLContentTypeSpy.mockImplementation(async () => 'image/jpeg')

@@ -28,9 +28,7 @@ export function V2V3ProjectHeaderActions() {
     <>
       <div className="flex items-center">
         <div className="flex items-center">
-          <div className="mr-2">
-            <ContractVersionSelect />
-          </div>
+          <ContractVersionSelect />
           <Tooltip title={t`Tools`} placement="bottom">
             <Button
               onClick={() => setToolDrawerVisible(true)}

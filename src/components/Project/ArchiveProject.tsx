@@ -62,7 +62,7 @@ export function ArchiveProject({
       ...projectMetadata,
       archived,
     })
-    if (!uploadedMetadata.IpfsHash) {
+    if (!uploadedMetadata.Hash) {
       return emitErrorNotification(t`Failed to update project metadata`)
     }
 
@@ -78,7 +78,7 @@ export function ArchiveProject({
     })
 
     const txSuccessful = await storeCidTx(
-      { cid: uploadedMetadata.IpfsHash },
+      { cid: uploadedMetadata.Hash },
       {
         onConfirmed: async () => {
           setIsLoadingArchive(false)

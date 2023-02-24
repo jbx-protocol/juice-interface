@@ -1,16 +1,18 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
+import { NftFileType } from 'components/inputs/UploadNoStyle'
 import {
   DEFAULT_ALLOW_OVERSPENDING,
   JB721DELAGATE_V1_1_PAY_METADATA,
   JB721DELAGATE_V1_PAY_METADATA,
 } from 'components/Project/PayProjectForm/hooks/PayProjectForm'
+import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
 import { juiceboxEmojiImageUri } from 'constants/images'
 import { readNetwork } from 'constants/networks'
 import { WAD_DECIMALS } from 'constants/numbers'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
 import { defaultAbiCoder, parseEther } from 'ethers/lib/utils'
-import { pinData } from 'lib/api/ipfs'
+import { pinJson } from 'lib/api/ipfs'
 import { round } from 'lodash'
 import {
   IpfsNftCollectionMetadata,
@@ -40,7 +42,7 @@ async function loadNftRewardsDeployment() {
   return latestNftContractDeployments
 }
 
-function sortNftsByContributionFloor(
+export function sortNftsByContributionFloor(
   rewardTiers: NftRewardTier[],
 ): NftRewardTier[] {
   return rewardTiers
@@ -156,14 +158,14 @@ async function uploadNftRewardToIPFS({
     ],
   }
 
-  const res = await pinData(ipfsNftRewardTier)
+  const res = await pinJson(ipfsNftRewardTier)
 
-  return res.IpfsHash
+  return res.Hash
 }
 
 // Uploads each nft reward tier to an individual location on IPFS
 // returns an array of CIDs which point to each rewardTier on IPFS
-export async function uploadNftRewardsToIPFS(
+export async function pinNftRewards(
   nftRewards: NftRewardTier[],
 ): Promise<string[]> {
   return await Promise.all(
@@ -176,7 +178,7 @@ export async function uploadNftRewardsToIPFS(
   )
 }
 
-export async function uploadNftCollectionMetadataToIPFS({
+export async function pinNftCollectionMetadata({
   collectionName,
   collectionDescription,
   collectionLogoUri,
@@ -200,8 +202,8 @@ export async function uploadNftCollectionMetadataToIPFS({
     fee_recipient: undefined,
   }
 
-  const res = await pinData(ipfsNftCollectionMetadata)
-  return res.IpfsHash
+  const res = await pinJson(ipfsNftCollectionMetadata)
+  return res.Hash
 }
 
 // Determines if two NFT reward tiers are equal
@@ -225,31 +227,32 @@ export function tiersEqual({
 
 // Builds JB721TierParams[] (see juice-721-delegate:structs/JB721TierParams.sol)
 export function buildJB721TierParams({
-  cids,
+  cids, // MUST BE SORTED BY CONTRIBUTION FLOOD (not ideal)
   rewardTiers,
 }: {
   cids: string[]
   rewardTiers: NftRewardTier[]
 }): JB721TierParams[] {
+  const _rewardTiers = sortNftsByContributionFloor(rewardTiers)
   // `cids` are ordered the same as `rewardTiers` so can get corresponding values from same index
   return cids
     .map((cid, index) => {
       const contributionFloorWei = parseEther(
-        rewardTiers[index].contributionFloor.toString(),
+        _rewardTiers[index].contributionFloor.toString(),
       )
-      const maxSupply = rewardTiers[index].maxSupply
+      const maxSupply = _rewardTiers[index].maxSupply
       const initialQuantity = BigNumber.from(
         maxSupply ?? DEFAULT_NFT_MAX_SUPPLY,
       )
       const encodedIPFSUri = encodeIpfsUri(cid)
 
-      const reservedRate = rewardTiers[index].reservedRate
-        ? BigNumber.from(rewardTiers[index].reservedRate! - 1)
+      const reservedRate = _rewardTiers[index].reservedRate
+        ? BigNumber.from(_rewardTiers[index].reservedRate! - 1)
         : BigNumber.from(0)
       const reservedTokenBeneficiary =
-        rewardTiers[index].beneficiary ?? constants.AddressZero
-      const votingUnits = rewardTiers[index].votingWeight
-        ? BigNumber.from(rewardTiers[index].votingWeight)
+        _rewardTiers[index].beneficiary ?? constants.AddressZero
+      const votingUnits = _rewardTiers[index].votingWeight
+        ? BigNumber.from(_rewardTiers[index].votingWeight)
         : BigNumber.from(0)
 
       return {
@@ -368,12 +371,14 @@ export function sumTierFloors(
   rewardTiers: NftRewardTier[],
   tierIds?: number[],
 ) {
-  if (!tierIds) return 0
+  if (tierIds !== undefined && tierIds.length === 0) return 0
 
-  const selectedTiers = rewardTiersFromIds({
-    tierIds,
-    rewardTiers,
-  })
+  const selectedTiers = tierIds
+    ? rewardTiersFromIds({
+        tierIds,
+        rewardTiers,
+      })
+    : rewardTiers
 
   return round(
     selectedTiers.reduce((subSum, tier) => subSum + tier.contributionFloor, 0),
@@ -432,4 +437,10 @@ export function buildJBDeployTiered721DelegateData({
     flags,
     governanceType,
   }
+}
+
+export const fileTypeIsVideo = (fileType: string | undefined) => {
+  if (!fileType) return false
+
+  return VIDEO_FILE_TYPES.includes(fileType as NftFileType)
 }

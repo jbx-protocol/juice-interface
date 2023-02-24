@@ -1,7 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Space } from 'antd'
 import Link from 'next/link'
-import React from 'react'
 import { twMerge } from 'tailwind-merge'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { AllocatorBadge } from './FundingCycleConfigurationDrawers/AllocatorBadge'

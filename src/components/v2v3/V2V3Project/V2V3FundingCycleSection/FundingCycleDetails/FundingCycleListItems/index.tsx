@@ -90,24 +90,26 @@ export function FundingCycleListItems({
           ) : undefined
         }
       />
-      <FundingCycleListItem
-        name={t`Distribution limit`}
-        value={
-          <DistributionLimitValue
-            distributionLimit={distributionLimit}
-            currency={currency}
-          />
-        }
-        oldValue={
-          showDiffs && distributionLimitHasDiff ? (
+      {distributionLimit && (
+        <FundingCycleListItem
+          name={t`Distribution limit`}
+          value={
             <DistributionLimitValue
-              distributionLimit={oldDistributionLimit}
-              currency={oldCurrency}
+              distributionLimit={distributionLimit}
+              currency={currency}
             />
-          ) : undefined
-        }
-        helperText={DISTRIBUTION_LIMIT_EXPLANATION}
-      />
+          }
+          oldValue={
+            showDiffs && distributionLimitHasDiff ? (
+              <DistributionLimitValue
+                distributionLimit={oldDistributionLimit}
+                currency={oldCurrency}
+              />
+            ) : undefined
+          }
+          helperText={DISTRIBUTION_LIMIT_EXPLANATION}
+        />
+      )}
     </>
   )
 }

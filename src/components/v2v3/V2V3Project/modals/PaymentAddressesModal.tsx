@@ -1,12 +1,12 @@
 import { plural, t, Trans } from '@lingui/macro'
 import { Modal, Space } from 'antd'
-import FormattedAddress from 'components/FormattedAddress'
-import TooltipLabel from 'components/TooltipLabel'
-import { ETHERC20ProjectPayer } from 'models/subgraph-entities/v2/eth-erc20-project-payer'
-import * as constants from '@ethersproject/constants'
 import CopyTextButton from 'components/buttons/CopyTextButton'
 import EtherscanLink from 'components/EtherscanLink'
+import FormattedAddress from 'components/FormattedAddress'
+import TooltipLabel from 'components/TooltipLabel'
 import useMobile from 'hooks/Mobile'
+import { ETHERC20ProjectPayer } from 'models/subgraph-entities/v2/eth-erc20-project-payer'
+import { isZeroAddress } from 'utils/address'
 import { classNames } from 'utils/classNames'
 
 export function PaymentAddressesModal({
@@ -75,7 +75,7 @@ export function PaymentAddressesModal({
                 </div>
                 <div className="flex justify-between">
                   <Trans>Token beneficiary:</Trans>
-                  {p.beneficiary !== constants.AddressZero ? (
+                  {!isZeroAddress(p.beneficiary) ? (
                     <TooltipLabel
                       tip={
                         <Trans>

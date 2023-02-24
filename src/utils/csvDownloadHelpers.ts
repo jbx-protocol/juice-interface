@@ -1,9 +1,9 @@
-import { querySubgraphExhaustive } from 'utils/graph'
 import { t } from '@lingui/macro'
 import { PV } from 'models/pv'
-import { emitErrorNotification } from 'utils/notifications'
 import { downloadCsvFile } from 'utils/csv'
 import { fromWad } from 'utils/format/formatNumber'
+import { querySubgraphExhaustive } from 'utils/graph'
+import { emitErrorNotification } from 'utils/notifications'
 
 export async function downloadParticipants(
   blockNumber: number | undefined,
@@ -154,11 +154,15 @@ export async function downloadV2V3Payouts(
     // Interpolate distributions into payouts.
     let x = 0
     distributions.forEach(d => {
-      if (payouts) while (d.timestamp < payouts[x].timestamp) x++
-      else x++
+      if (payouts) {
+        while (d.timestamp < payouts[x].timestamp) {
+          x += 1
+        }
+      } else {
+        x += 1
+      }
 
-      // Any better ways to do this?
-      // @ts-ignore
+      // TODO Any better ways to do this?
       payouts.splice(x, 0, {
         timestamp: d.timestamp,
         amount: d.beneficiaryDistributionAmount,
@@ -262,8 +266,13 @@ export async function downloadV1Payouts(
     // Interpolate distributions into payouts.
     let x = 0
     taps.forEach(t => {
-      if (payouts) while (t.timestamp < payouts[x].timestamp) x++
-      else x++
+      if (payouts) {
+        while (t.timestamp < payouts[x].timestamp) {
+          x += 1
+        }
+      } else {
+        x += 1
+      }
 
       // Any better ways to do this?
       // @ts-ignore

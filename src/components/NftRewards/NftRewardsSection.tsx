@@ -4,11 +4,11 @@ import {
   NftPostPayModal,
   NFT_PAYMENT_CONFIRMED_QUERY_PARAM,
 } from 'components/NftRewards/NftPostPayModal'
-import { PayProjectFormContext } from 'components/Project/PayProjectForm/payProjectFormContext'
 import { DEFAULT_ALLOW_OVERSPENDING } from 'components/Project/PayProjectForm/hooks/PayProjectForm'
+import { PayProjectFormContext } from 'components/Project/PayProjectForm/payProjectFormContext'
 import SectionHeader from 'components/SectionHeader'
-import { CurrencyContext } from 'contexts/shared/CurrencyContext'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
+import { CurrencyContext } from 'contexts/shared/CurrencyContext'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useHasNftRewards } from 'hooks/JB721Delegate/HasNftRewards'
@@ -72,7 +72,7 @@ export function NftRewardsSection() {
   const payAmountETH =
     payInCurrency === ETH ? payAmount : fromWad(converter.usdToWei(payAmount))
 
-  const hasNftRewards = useHasNftRewards()
+  const { value: hasNftRewards } = useHasNftRewards()
 
   const handleTierDeselect = (
     tierId: number | undefined,
@@ -88,7 +88,7 @@ export function NftRewardsSection() {
       }
       // remove the specified number of instances of tierId
       if (count < quantity && id === tierId) {
-        count++
+        count += 1
         return false
       }
       return true
@@ -154,7 +154,7 @@ export function NftRewardsSection() {
             '-mt-3 -ml-3 -mr-5 max-h-[950px] overflow-auto pb-3 pt-3 pl-3 pr-5 md:max-h-[620px]'
           }
         >
-          <Row gutter={isMobile ? 12 : 24}>
+          <Row gutter={isMobile ? 12 : 20}>
             {renderRewardTiers?.map(rewardTier => (
               <Col
                 className="mb-4"

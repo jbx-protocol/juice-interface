@@ -4,16 +4,17 @@ import {
 } from './slices/editingProject'
 import { INITIAL_REDUX_STATE as defaultV2ProjectState } from './slices/editingV2Project'
 import { REDUX_STORE_V2_PROJECT_VERSION } from './slices/editingV2Project/version'
-import { REDUX_STATE_LOCALSTORAGE_KEY, RootState } from './store'
+import { RootState } from './store'
 
 interface PreloadedState {
   reduxState: RootState
 }
 
-export function getLocalStoragePreloadedState(): RootState | undefined {
+export function getLocalStoragePreloadedState(
+  key: string,
+): RootState | undefined {
   try {
-    const stateString =
-      localStorage && localStorage.getItem(REDUX_STATE_LOCALSTORAGE_KEY)
+    const stateString = localStorage && localStorage.getItem(key)
     if (!stateString) {
       return undefined
     }
@@ -52,11 +53,7 @@ export function getLocalStoragePreloadedState(): RootState | undefined {
     }
 
     // update local storage with the (maybe) new state
-    localStorage &&
-      localStorage.setItem(
-        REDUX_STATE_LOCALSTORAGE_KEY,
-        JSON.stringify(parsedState),
-      )
+    localStorage && localStorage.setItem(key, JSON.stringify(parsedState))
 
     return parsedState.reduxState
   } catch (e) {

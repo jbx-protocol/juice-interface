@@ -16,6 +16,7 @@ export function DeployConfigurationButton({
       onClick={onClick}
       disabled={disabled}
       type="primary"
+      size="large"
     >
       <span>
         <Trans>Deploy funding cycle configuration</Trans>

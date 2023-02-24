@@ -1,27 +1,32 @@
-import { Image } from 'antd'
 import { ReactNode } from 'react'
+import { JuiceVideoThumbnailOrImage } from './NftRewards/NftVideo/JuiceVideoThumbnailOrImage'
 
 /**
  * Shows an {@link Image} with a small icon in the top left.
  */
 export const IconedImage = ({
   url,
-  width,
-  onClick,
+  widthClass,
+  onIconClick,
   icon,
 }: {
   url: string
-  width: number
+  widthClass: string
   icon: ReactNode
-  onClick: VoidFunction
+  onIconClick?: VoidFunction
 }) => {
   return (
     <div className="relative py-4">
-      <Image key={url} width={width} src={url} crossOrigin="anonymous" />
+      <JuiceVideoThumbnailOrImage
+        src={url}
+        widthClass={widthClass}
+        playIconPosition="hidden"
+        showPreviewOnClick
+      />
       <div
         className="absolute top-0 right-0 cursor-pointer"
         role="button"
-        onClick={onClick}
+        onClick={onIconClick}
       >
         {icon}
       </div>

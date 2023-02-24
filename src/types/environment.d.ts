@@ -2,8 +2,6 @@ export {}
 import { NetworkName } from 'models/networkName'
 type Networks = keyof typeof NetworkName
 
-type PinataGatewayHostnameURL = 'jbx.mypinata.cloud'
-
 type PublicBaseURLS =
   | 'http://localhost:3000'
   | 'https://juicebox.money'
@@ -12,10 +10,6 @@ type PublicBaseURLS =
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      PINATA_PINNER_KEY: string
-      PINATA_PINNER_SECRET: string
-      NEXT_PUBLIC_PINATA_GATEWAY_HOSTNAME: PinataGatewayHostnameURL
-
       GITHUB_ACCESS_TOKEN: string
 
       PRE_RENDER_INFURA_ID: Networks

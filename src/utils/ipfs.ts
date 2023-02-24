@@ -1,42 +1,18 @@
-import {
-  OPEN_IPFS_GATEWAY_HOSTNAME,
-  RESTRICTED_IPFS_GATEWAY_HOSTNAME,
-} from 'constants/ipfs'
+import { OPEN_IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 import { base58 } from 'ethers/lib/utils'
+import { round } from 'lodash'
+import { UploadProgressEvent } from 'rc-upload/lib/interface'
 
 const IPFS_URL_REGEX = /ipfs:\/\/(.+)/
-
-/**
- * Return a HTTP URL to the IPFS gateway at the given [hostname] for the given [cid].
- */
-export const ipfsGatewayUrl = (
-  cid: string | undefined = '',
-  hostname: string,
-) => {
-  return `https://${hostname}/ipfs/${cid}`
-}
 
 /**
  * Return a URL to our open IPFS gateway for the given cid USING INFURA.
  *
  * The 'open' gateway returns any content that is available on IPFS,
  * not just the content we have pinned.
- *
- * Its use is origin-restriced.
  */
-export const ipfsOpenGatewayUrl = (cid: string | undefined): string => {
-  return ipfsGatewayUrl(cid, OPEN_IPFS_GATEWAY_HOSTNAME)
-}
-
-/**
- * Return a URL to the restricted IPFS gateway for the given cid ON PINATA.
- *
- * The 'restricted' gateway only returns content that we have pinned.
- *
- * @deprecated use ipfsOpenGatewayUrl instead
- */
-export const ipfsRestrictedGatewayUrl = (cid: string | undefined): string => {
-  return ipfsGatewayUrl(cid, RESTRICTED_IPFS_GATEWAY_HOSTNAME)
+export const ipfsGatewayUrl = (cid: string | undefined): string => {
+  return `https://${OPEN_IPFS_GATEWAY_HOSTNAME}/ipfs/${cid}`
 }
 
 /**
@@ -60,16 +36,11 @@ export const cidFromIpfsUri = (ipfsUri: string) =>
 /**
  * Returns a native IPFS link (`ipfs://`) as a https link.
  */
-export function ipfsUriToGatewayUrl(
-  ipfsUri: string,
-  { gatewayHostname }: { gatewayHostname?: string } = {},
-): string {
+export function ipfsUriToGatewayUrl(ipfsUri: string): string {
   if (!isIpfsUri(ipfsUri)) return ipfsUri
 
   const suffix = cidFromIpfsUri(ipfsUri)
-  return gatewayHostname
-    ? ipfsGatewayUrl(suffix, gatewayHostname)
-    : ipfsOpenGatewayUrl(suffix)
+  return ipfsGatewayUrl(suffix)
 }
 
 /**
@@ -105,4 +76,9 @@ export function isIpfsCID(cid: string) {
   return (
     cid.startsWith('Qm') || cid.startsWith('bafy') || cid.startsWith('bafk')
   )
+}
+
+export function percentFromUploadProgressEvent(e: UploadProgressEvent) {
+  const percent = (e.loaded / e.total) * 100
+  return round(percent, 0)
 }

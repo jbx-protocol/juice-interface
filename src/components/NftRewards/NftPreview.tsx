@@ -1,15 +1,15 @@
 import { CloseOutlined, LinkOutlined, LoadingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
+import { JuiceVideoPreview } from 'components/NftRewards/NftVideo/JuiceVideoPreview'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { useContentType } from 'hooks/ContentType'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useContext } from 'react'
-import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { classNames } from 'utils/classNames'
-import { JUICE_IMG_PREVIEW_CONTAINER_CLASS } from 'components/Create/components/JuiceImgPreview'
-import { useContentType } from 'hooks/ContentType'
-import { JuiceVideoPreview } from 'components/v2v3/shared/NftVideo/JuiceVideoPreview'
-import { MP4_FILE_TYPE } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload'
+import { fileTypeIsVideo } from 'utils/nftRewards'
+import { JUICE_IMG_PREVIEW_CONTAINER_CLASS } from './NftVideo/JuiceVideoOrImgPreview'
 
 export const IMAGE_OR_VIDEO_PREVIEW_CLASSES =
   'max-h-[50vh] max-w-[90vw] md:max-h-[60vh] md:max-w-xl'
@@ -37,7 +37,7 @@ export function NftPreview({
 
   const { data: contentType, isLoading: contentTypeLoading } =
     useContentType(fileUrl)
-  const isVideo = contentType === MP4_FILE_TYPE
+  const isVideo = fileTypeIsVideo(contentType)
 
   const nftRender = contentTypeLoading ? (
     <div className="flex h-[50vh] w-96 items-center justify-center">

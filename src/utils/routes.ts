@@ -6,7 +6,7 @@ import {
 import { V2VeNftPageKey } from 'components/veNft/VeNft'
 import { NextRouter } from 'next/router'
 
-const HELP_PAGE_HOSTNAME = 'https://info.juicebox.money'
+const HELP_PAGE_HOSTNAME = 'https://docs.juicebox.money'
 
 export const v2v3ProjectRoute = ({
   projectId,

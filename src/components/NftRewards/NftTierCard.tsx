@@ -1,10 +1,7 @@
-import { LoadingOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
 import { Skeleton } from 'antd'
-import { MP4_FILE_TYPE } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload'
-import { JuiceVideoThumbnail } from 'components/v2v3/shared/NftVideo/JuiceVideoThumbnail'
+import { JuiceVideoThumbnailOrImage } from 'components/NftRewards/NftVideo/JuiceVideoThumbnailOrImage'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
-import { useContentType } from 'hooks/ContentType'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
@@ -12,6 +9,8 @@ import { classNames } from 'utils/classNames'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 import { NftPreview } from './NftPreview'
 import { QuantitySelector } from './QuantitySelector'
+
+const NFT_DISPLAY_HEIGHT_CLASS = 'h-36' // rem height
 
 // The clickable cards on the project page
 export function NftTierCard({
@@ -75,24 +74,6 @@ export function NftTierCard({
     }
   }
 
-  const { data: contentType } = useContentType(fileUrl)
-  const isVideo = contentType === MP4_FILE_TYPE
-
-  const nftThumbnail =
-    isVideo && fileUrl ? (
-      <JuiceVideoThumbnail src={fileUrl} isSelected={_isSelected} />
-    ) : (
-      <img
-        className="absolute top-0 h-full w-full object-cover"
-        alt={rewardTier?.name}
-        src={fileUrl}
-        style={{
-          filter: _isSelected ? 'unset' : 'brightness(50%)',
-        }}
-        crossOrigin="anonymous"
-      />
-    )
-
   return (
     <>
       <div
@@ -112,20 +93,21 @@ export function NftTierCard({
         {/* Image/video container */}
         <div
           className={classNames(
-            'relative flex w-full items-center justify-center',
-            !loading ? 'pt-[100%]' : 'pt-[unset]',
+            `relative flex w-full items-center justify-center ${NFT_DISPLAY_HEIGHT_CLASS}`,
             _isSelected
               ? 'bg-smoke-25 dark:bg-slate-800'
               : 'bg-smoke-100 dark:bg-slate-600',
           )}
         >
-          {loading ? (
-            <div className="flex h-[151px] w-full items-center justify-center border border-solid border-smoke-200 dark:border-grey-600">
-              <LoadingOutlined />
-            </div>
-          ) : (
-            nftThumbnail
-          )}
+          {fileUrl ? (
+            <JuiceVideoThumbnailOrImage
+              src={fileUrl}
+              alt={rewardTier?.name ?? 'Juicebox NFT reward'}
+              darkened={!_isSelected}
+              className="absolute w-full"
+              heightClass={NFT_DISPLAY_HEIGHT_CLASS}
+            />
+          ) : null}
           {showQuantitySelector ? (
             <QuantitySelector
               value={quantitySelected}

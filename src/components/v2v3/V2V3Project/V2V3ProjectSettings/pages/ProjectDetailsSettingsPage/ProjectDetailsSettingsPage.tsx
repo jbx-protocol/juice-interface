@@ -38,14 +38,14 @@ export function ProjectDetailsSettingsPage() {
       payDisclosure: fields.payDisclosure,
     })
 
-    if (!uploadedMetadata.IpfsHash) {
+    if (!uploadedMetadata.Hash) {
       setLoadingSaveChanges(false)
       return
     }
 
     const txSuccess = await editV2ProjectDetailsTx(
       {
-        cid: uploadedMetadata.IpfsHash,
+        cid: uploadedMetadata.Hash,
       },
       {
         onConfirmed: async () => {

@@ -1,4 +1,4 @@
-import { infuraApi } from 'lib/infura/ipfs'
+import { ipfsGet } from 'lib/api/ipfs'
 import { CURRENT_VERSION, MAX_METADATA_RETRIES } from 'lib/sepana/constants'
 import { Json } from 'models/json'
 import { AnyProjectMetadata } from 'models/projectMetadata'
@@ -7,7 +7,7 @@ import { Project } from 'models/subgraph-entities/vX/project'
 
 import { formatError } from './format/formatError'
 import { parseBigNumberKeyVals } from './graph'
-import { ipfsOpenGatewayUrl, isIpfsCID } from './ipfs'
+import { isIpfsCID } from './ipfs'
 
 export const sgSepanaCompareKeys: SGSepanaCompareKey[] = [
   'id',
@@ -72,7 +72,7 @@ export function getChangedSubgraphProjects({
       _hasUnresolvedMetadata &&
       (_metadataRetriesLeft || _metadataRetriesLeft === undefined)
     ) {
-      retryMetadataCount++
+      retryMetadataCount += 1
       return true
     }
 
@@ -138,16 +138,9 @@ export async function tryResolveMetadata({
   try {
     const {
       data: { name, description, logoUri },
-    } = await infuraApi.get<AnyProjectMetadata>(
-      ipfsOpenGatewayUrl(metadataUri),
-      {
-        responseType: 'json',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      },
-    )
+    } = await ipfsGet<AnyProjectMetadata>(metadataUri, {
+      timeout: 30000,
+    })
 
     return {
       project: {

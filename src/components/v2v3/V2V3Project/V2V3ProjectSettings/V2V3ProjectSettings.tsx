@@ -25,6 +25,7 @@ export type V2V3SettingsPageKey =
   | 'general'
   | 'projecthandle'
   | 'reconfigurefc'
+  | 'nfts'
   | 'payouts'
   | 'reservedtokens'
   | 'transferownership'
@@ -43,6 +44,7 @@ export const V2V3SettingsPageKeyTitleMap: {
   reconfigurefc: t`Reconfigure Funding Cycle`,
   payouts: t`Payouts`,
   reservedtokens: t`Reserved token allocation`,
+  nfts: t`Edit NFT collection`,
   tokenmigration: t`Token migration`,
   transferownership: t`Transfer ownership`,
   archiveproject: t`Archive project`,
@@ -145,6 +147,7 @@ export function V2V3ProjectSettings() {
             undefined,
             'menu-item-sider',
           ),
+          menuItem('NFTs', 'nfts', undefined, undefined, 'menu-item-sider'),
         ],
         'group',
       ),

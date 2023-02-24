@@ -1,4 +1,3 @@
-import { AddressZero } from '@ethersproject/constants'
 import { Space } from 'antd'
 import { PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
@@ -7,6 +6,7 @@ import useProjectControllerAddress from 'hooks/v2v3/contractReader/ProjectContro
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import { useContext } from 'react'
+import { isZeroAddress } from 'utils/address'
 import { RelaunchFundingCycleBanner } from './RelaunchFundingCycleBanner'
 import { V2BugNoticeBanner } from './V2BugNoticeBanner'
 
@@ -31,7 +31,7 @@ export function ProjectBanners() {
 
   // if the project was created on the bugged version of the JBDirectory, it will have a non-zero controller address.
   const hasProjectOnDeprecatedContracts =
-    controllerAddress && controllerAddress !== AddressZero
+    controllerAddress && !isZeroAddress(controllerAddress)
 
   // if the project has upgraded to the new contracts, have a defined JBController.
   const hasUpgradedJBController = contracts?.JBController !== undefined

@@ -5,8 +5,8 @@ import {
   V2V3FundingCycle,
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
-import * as constants from '@ethersproject/constants'
 
+import { isZeroAddress } from 'utils/address'
 import { DataSourceListItems } from './DataSourceListItems'
 import { FundingCycleDetailsRow } from './FundingCycleDetailsRow'
 import { FundingCycleListItems } from './FundingCycleListItems'
@@ -19,12 +19,14 @@ export default function FundingCycleDetails({
   distributionLimit,
   distributionLimitCurrency,
   showDiffs,
+  mintRateZeroAsUnchanged,
 }: {
   fundingCycle: V2V3FundingCycle
   fundingCycleMetadata: V2V3FundingCycleMetadata
   distributionLimit: BigNumber | undefined
   distributionLimitCurrency: BigNumber | undefined
   showDiffs?: boolean
+  mintRateZeroAsUnchanged?: boolean
 }) {
   return (
     <Space className="w-full" direction="vertical" size="middle">
@@ -46,6 +48,7 @@ export default function FundingCycleDetails({
             fundingCycle={fundingCycle}
             fundingCycleMetadata={fundingCycleMetadata}
             showDiffs={showDiffs}
+            mintRateZeroAsUnchanged={mintRateZeroAsUnchanged}
           />
         }
       />
@@ -59,7 +62,7 @@ export default function FundingCycleDetails({
           />
         }
       />
-      {fundingCycleMetadata.dataSource !== constants.AddressZero ? (
+      {!isZeroAddress(fundingCycleMetadata.dataSource) ? (
         <FundingCycleDetailsRow
           header={t`Data source`}
           items={

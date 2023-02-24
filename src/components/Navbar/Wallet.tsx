@@ -24,9 +24,9 @@ export default function Wallet({ userAddress }: { userAddress: string }) {
 
   const MyProjects = () => (
     <>
-      <Link href="/projects?tab=myprojects">
+      <Link href={`/account/${userAddress}`}>
         <a className="font-base text-black dark:text-slate-100">
-          <Trans>My projects</Trans>
+          <Trans>My account</Trans>
         </a>
       </Link>
       <CrownOutlined className="text-black dark:text-slate-100" />

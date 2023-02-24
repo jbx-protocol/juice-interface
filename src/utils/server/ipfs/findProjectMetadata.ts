@@ -1,8 +1,12 @@
 import Bottleneck from 'bottleneck'
-import { ipfsGetWithFallback } from 'lib/api/ipfs'
-import { AnyProjectMetadata, consolidateMetadata } from 'models/projectMetadata'
+import { ipfsGet } from 'lib/api/ipfs'
+import {
+  AnyProjectMetadata,
+  consolidateMetadata,
+  ProjectMetadataV6,
+} from 'models/projectMetadata'
 
-import { GlobalPinataScheduler } from '../bottleneck'
+import { GlobalInfuraScheduler } from './infuraScheduler'
 
 export const findProjectMetadata = async ({
   metadataCid, // ipfs hash
@@ -10,8 +14,8 @@ export const findProjectMetadata = async ({
 }: {
   metadataCid: string
   limiter?: Bottleneck
-}) => {
-  limiter = limiter ?? GlobalPinataScheduler
+}): Promise<ProjectMetadataV6> => {
+  limiter = limiter ?? GlobalInfuraScheduler
   /*
    * Safe to do so, as the static timeout will catch this and retry later.
    */
@@ -19,7 +23,7 @@ export const findProjectMetadata = async ({
   while (true) {
     try {
       const response = await limiter.schedule(
-        async () => await ipfsGetWithFallback<AnyProjectMetadata>(metadataCid),
+        async () => await ipfsGet<AnyProjectMetadata>(metadataCid),
       )
       const metadata = consolidateMetadata(response.data)
       Object.keys(metadata).forEach(key =>

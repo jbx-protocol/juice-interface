@@ -1,4 +1,4 @@
-import { ipfsGetWithFallback } from 'lib/api/ipfs'
+import { ipfsGet } from 'lib/api/ipfs'
 import { VeNftTokenMetadata } from 'models/veNft'
 import { useQuery } from 'react-query'
 
@@ -11,7 +11,7 @@ export function useVeNftTokenMetadata(tokenUri: string | undefined) {
       if (!hash) {
         throw new Error('NFT hash not specified.')
       }
-      const response = await ipfsGetWithFallback<VeNftTokenMetadata>(hash)
+      const response = await ipfsGet<VeNftTokenMetadata>(hash)
       const metadata = {
         thumbnailUri: response.data.thumbnailUri,
       }

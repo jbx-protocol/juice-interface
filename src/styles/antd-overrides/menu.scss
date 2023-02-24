@@ -59,12 +59,6 @@
   font-weight: 500;
 }
 
-.ant-menu:not(.ant-menu-horizontal) {
-  .ant-menu-item-selected {
-    background-color: var(--background-l4);
-  }
-}
-
 .ant-menu-light .ant-menu-item:hover {
   color: var(--text-primary);
   background-color: var(--background-l2);

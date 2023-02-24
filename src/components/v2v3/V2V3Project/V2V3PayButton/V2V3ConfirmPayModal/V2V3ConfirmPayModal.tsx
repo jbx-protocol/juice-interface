@@ -8,7 +8,7 @@ import Paragraph from 'components/Paragraph'
 import TransactionModal from 'components/TransactionModal'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { usePayETHPaymentTerminalTx } from 'hooks/v2v3/transactor/PayETHPaymentTerminal'
+import { usePayETHPaymentTerminalTx } from 'hooks/v2v3/transactor/PayETHPaymentTerminalTx'
 import { useWallet } from 'hooks/Wallet'
 import { useRouter } from 'next/router'
 import { useContext, useState } from 'react'
@@ -34,7 +34,6 @@ export function V2V3ConfirmPayModal({
 
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
-  const [transactionCanceled, setTransactionCanceled] = useState<boolean>(false)
   const [form] = useForm<V2V3PayFormType>()
 
   const payProjectTx = usePayETHPaymentTerminalTx()
@@ -69,7 +68,7 @@ export function V2V3ConfirmPayModal({
     }
   }
 
-  async function pay() {
+  async function executePayTx() {
     if (!weiAmount || !projectId) return
 
     const {
@@ -101,6 +100,7 @@ export function V2V3ConfirmPayModal({
             text: textMemo,
             imageUrl: uploadedImage,
             stickerUrls,
+            nftUrls: nftRewardTiers?.map(tier => tier.fileUrl),
           }),
           preferClaimedTokens: Boolean(preferClaimedTokens),
           beneficiary: txBeneficiary,
@@ -122,7 +122,6 @@ export function V2V3ConfirmPayModal({
       )
 
       if (!txSuccess) {
-        setTransactionCanceled(true)
         setLoading(false)
         setTransactionPending(false)
       }
@@ -143,9 +142,6 @@ export function V2V3ConfirmPayModal({
       connectWalletText={t`Connect wallet to pay`}
       onCancel={() => {
         form.resetFields()
-        // resetFields sets to initialValues, which includes NFTs, so have to remove them manually
-        form.setFieldValue('stickerUrls', [])
-        setTransactionCanceled(false)
         onCancel?.()
       }}
       confirmLoading={loading}
@@ -168,11 +164,7 @@ export function V2V3ConfirmPayModal({
 
         <SummaryTable weiAmount={weiAmount} />
 
-        <V2V3PayForm
-          form={form}
-          transactionCanceled={transactionCanceled}
-          onFinish={() => pay()}
-        />
+        <V2V3PayForm form={form} onFinish={() => executePayTx()} />
       </Space>
     </TransactionModal>
   )

@@ -52,13 +52,13 @@ function EditTrackedAssetsModal({
       tokens: editingTokenRefs.filter(t => t.type),
     })
 
-    if (!uploadedMetadata.IpfsHash) {
+    if (!uploadedMetadata.Hash) {
       setLoading(false)
       return
     }
 
     editV2ProjectDetailsTx(
-      { cid: uploadedMetadata.IpfsHash },
+      { cid: uploadedMetadata.Hash },
       {
         onDone: async () => {
           if (projectId) {

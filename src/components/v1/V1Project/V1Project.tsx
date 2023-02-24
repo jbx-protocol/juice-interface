@@ -5,6 +5,7 @@ import { Callout } from 'components/Callout'
 import ExternalLink from 'components/ExternalLink'
 import { PayProjectForm } from 'components/Project/PayProjectForm'
 import { ProjectHeader } from 'components/Project/ProjectHeader'
+import { V1PayProjectFormProvider } from 'components/v1/V1Project/V1PayProjectFormProvider'
 import { V1_V3_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { PV_V1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
@@ -12,7 +13,6 @@ import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
 import { useRelaunchV1ViaV3Create } from 'hooks/v1/RelaunchV1ViaV3Create'
 import { V1OperatorPermission } from 'models/v1/permissions'
-import { V1PayProjectFormProvider } from 'components/v1/V1Project/V1PayProjectFormProvider'
 import { lazy, Suspense, useContext, useState } from 'react'
 import FundingCycles from './FundingCycles'
 import ProjectActivity from './ProjectActivity'
@@ -119,7 +119,6 @@ export function V1Project({ column }: { column?: boolean }) {
             <div className="mb-10">
               <Suspense fallback={<LoadingOutlined />}>
                 <VolumeChart
-                  // TODO: Remove later
                   style={{ height: 240 }}
                   projectId={projectId}
                   createdAt={createdAt}

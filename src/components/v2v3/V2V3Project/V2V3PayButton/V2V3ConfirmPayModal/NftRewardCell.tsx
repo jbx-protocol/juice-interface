@@ -1,8 +1,12 @@
 import { Space, Tooltip } from 'antd'
 import ExternalLink from 'components/ExternalLink'
+import { JuiceVideoThumbnailOrImage } from 'components/NftRewards/NftVideo/JuiceVideoThumbnailOrImage'
 import { NftRewardTier } from 'models/nftRewardTier'
-import { NftRewardImagePreview } from './NftRewardImagePreview'
 import { classNames } from 'utils/classNames'
+import { ipfsUriToGatewayUrl } from 'utils/ipfs'
+
+const NFT_DISPLAY_HEIGHT_CLASS = 'h-12' //rem height
+const NFT_DISPLAY_WIDTH_CLASS = 'w-12'
 
 export function NftRewardCell({
   nftRewards,
@@ -19,19 +23,30 @@ export function NftRewardCell({
   return (
     <Space size={'middle'} direction={'vertical'} className="w-full">
       {Object.keys(uniqueTiersIdsAndCounts).map((tierId, idx) => {
-        const tier = nftRewards.find(tier => tier.id === parseInt(tierId))
+        const tier = nftRewards.find(_tier => _tier.id === parseInt(tierId))
         if (!tier?.id) return
         const tierCount = uniqueTiersIdsAndCounts[tier.id]
         const isLink = tier.externalLink
 
         return (
           <div className="flex items-center justify-between" key={idx}>
-            <div className="flex items-center justify-start">
+            <div
+              className={`flex ${NFT_DISPLAY_HEIGHT_CLASS} items-center justify-start`}
+            >
               <Tooltip
                 title={tier.description}
                 open={tier.description ? undefined : false}
+                className={'pt-0'}
               >
-                <NftRewardImagePreview rewardTier={tier} />
+                <JuiceVideoThumbnailOrImage
+                  src={ipfsUriToGatewayUrl(tier.fileUrl)}
+                  alt={tier.name}
+                  crossOrigin="anonymous"
+                  heightClass={NFT_DISPLAY_HEIGHT_CLASS}
+                  widthClass={NFT_DISPLAY_WIDTH_CLASS}
+                  playIconPosition="hidden"
+                  showPreviewOnClick
+                />
               </Tooltip>
               <ExternalLink
                 className={classNames(

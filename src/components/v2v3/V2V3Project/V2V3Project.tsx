@@ -1,9 +1,10 @@
 import { Trans } from '@lingui/macro'
 import { Col, Row, Space } from 'antd'
+import { TextButton } from 'components/buttons/TextButton'
 import { useModalFromUrlQuery } from 'components/modals/hooks/ModalFromUrlQuery'
 import { PayProjectForm } from 'components/Project/PayProjectForm'
 import { ProjectHeader } from 'components/Project/ProjectHeader'
-import { TextButton } from 'components/buttons/TextButton'
+import { V2V3PayProjectFormProvider } from 'components/v2v3/V2V3Project/V2V3PayButton/V2V3ConfirmPayModal/V2V3PayProjectFormProvider'
 import VolumeChart from 'components/VolumeChart'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
@@ -12,7 +13,6 @@ import { useHasNftRewards } from 'hooks/JB721Delegate/HasNftRewards'
 import useMobile from 'hooks/Mobile'
 import { useValidatePrimaryEthTerminal } from 'hooks/v2v3/ValidatePrimaryEthTerminal'
 import { useWallet } from 'hooks/Wallet'
-import { V2V3PayProjectFormProvider } from 'components/v2v3/V2V3Project/V2V3PayButton/V2V3ConfirmPayModal/V2V3PayProjectFormProvider'
 import { useContext, useState } from 'react'
 import { classNames } from 'utils/classNames'
 import { NftRewardsSection } from '../../NftRewards/NftRewardsSection'
@@ -65,7 +65,7 @@ export function V2V3Project() {
   const payProjectFormDisabled =
     !hasCurrentFundingCycle || !isPrimaryETHTerminalValid
 
-  const hasNftRewards = useHasNftRewards()
+  const { value: hasNftRewards } = useHasNftRewards()
 
   const colSizeMd = 12
 
@@ -112,7 +112,6 @@ export function V2V3Project() {
                 {pv ? (
                   <section>
                     <VolumeChart
-                      // TODO: Change this
                       style={{ height: 240 }}
                       createdAt={createdAt}
                       projectId={projectId}

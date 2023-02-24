@@ -7,15 +7,10 @@ import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
-import {
-  SupportedNftFileTypes,
-  UploadNoStyle,
-} from 'components/inputs/UploadNoStyle'
+import { NftFileType, UploadNoStyle } from 'components/inputs/UploadNoStyle'
 import PrefixedInput from 'components/PrefixedInput'
-import { MP4_FILE_TYPE } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/NftUpload'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { usePinFileToIpfs } from 'hooks/PinFileToIpfs'
-import { useWallet } from 'hooks/Wallet'
+import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
+import { pinFile } from 'lib/api/ipfs'
 import { UploadRequestOption } from 'rc-upload/lib/interface'
 import { useCallback, useEffect, useState } from 'react'
 import {
@@ -25,8 +20,7 @@ import {
   inputMustExistRule,
   inputNonZeroRule,
 } from 'utils/antdRules'
-import { featureFlagEnabled } from 'utils/featureFlags'
-import { ipfsRestrictedGatewayUrl } from 'utils/ipfs'
+import { ipfsGatewayUrl } from 'utils/ipfs'
 import { v4 } from 'uuid'
 import { CreateCollapse } from '../CreateCollapse'
 import { OptionalHeader } from '../OptionalHeader'
@@ -44,7 +38,8 @@ interface AddEditRewardModalFormProps {
   externalUrl?: string | undefined
 }
 
-const NFT_FILE_UPLOAD_EXTRA = t`NFT will be cropped to a 1:1 square in thumbnail previews on the Juicebox app.`
+const NFT_FILE_UPLOAD_EXTRA = t`Images will be cropped to a 1:1 square in thumbnail previews on the Juicebox app.`
+const MAX_NFT_FILE_SIZE_MB = 100
 
 export const AddEditRewardModal = ({
   className,
@@ -63,9 +58,6 @@ export const AddEditRewardModal = ({
   const [limitedSupply, setLimitedSupply] = useState<boolean>(false)
   const [isReservingNfts, setIsReservingNfts] = useState<boolean>(false)
   const [advancedOptionsOpen, setAdvancedOptionsOpen] = useState<boolean>(false)
-
-  const pinFileToIpfs = usePinFileToIpfs()
-  const wallet = useWallet()
 
   useEffect(() => {
     if (!open) return
@@ -138,38 +130,24 @@ export const AddEditRewardModal = ({
     form.resetFields()
   }, [form, onCancel])
 
-  const onCustomRequest = useCallback(
-    async (options: UploadRequestOption) => {
-      const { file, onProgress } = options
-      try {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const res = await pinFileToIpfs({ file, onProgress: onProgress as any })
-        if (!res) throw new Error('Failed to pin file to IPFS')
-        const url = ipfsRestrictedGatewayUrl(res.IpfsHash)
-        return url
-      } catch (err) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        options.onError?.(null as any)
-        throw err
-      }
-    },
-    [pinFileToIpfs],
-  )
-
-  const onBeforeUpload = useCallback(async () => {
-    let walletConnected = wallet.isConnected
-    if (!wallet.isConnected) {
-      const connectStates = await wallet.connect()
-      walletConnected = connectStates.length > 0
+  const onCustomRequest = useCallback(async (options: UploadRequestOption) => {
+    const { file, onProgress } = options
+    try {
+      const res = await pinFile(file, onProgress)
+      if (!res) throw new Error('Failed to pin file to IPFS')
+      const url = ipfsGatewayUrl(res.Hash)
+      return url
+    } catch (err) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      options.onError?.(null as any)
+      throw err
     }
-    return walletConnected
-  }, [wallet])
+  }, [])
 
   const isEditing = !!editingData
 
-  const nftMp4Enabled = featureFlagEnabled(FEATURE_FLAGS.NFT_MP4)
-  const supportedNftFileType: SupportedNftFileTypes[] = [
-    ...(nftMp4Enabled ? ([MP4_FILE_TYPE] as SupportedNftFileTypes[]) : []),
+  const supportedNftFileType: NftFileType[] = [
+    ...VIDEO_FILE_TYPES,
     'image/jpeg',
     'image/png',
     'image/gif',
@@ -198,9 +176,8 @@ export const AddEditRewardModal = ({
           rules={[inputMustExistRule({ label: t`File` })]}
         >
           <UploadNoStyle
-            sizeLimit={100 * 1024 * 1024} // 100 MB
+            sizeLimitMB={MAX_NFT_FILE_SIZE_MB}
             supportedFileTypes={new Set(supportedNftFileType)}
-            beforeUpload={onBeforeUpload}
             customRequest={onCustomRequest}
             listType="picture-card" // Tried to do away with styling, but need this -.-
           />

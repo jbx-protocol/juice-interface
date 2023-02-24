@@ -13,9 +13,10 @@ import FormattedAddress from 'components/FormattedAddress'
 import Loading from 'components/Loading'
 import { PV_V1, PV_V1_1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
-import { SGQueryOpts, SGOrderDir } from 'models/graph'
+import { SGOrderDir, SGQueryOpts } from 'models/graph'
 import { Participant } from 'models/subgraph-entities/vX/participant'
 import { useContext, useEffect, useMemo, useState } from 'react'
+import { isZeroAddress } from 'utils/address'
 import { formatPercent, formatWad } from 'utils/format/formatNumber'
 import { querySubgraph } from 'utils/graph'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -249,7 +250,7 @@ export default function ParticipantsModal({
           </Trans>
         </h4>
         <Space direction="vertical">
-          {tokenAddress && tokenAddress !== constants.AddressZero && (
+          {tokenAddress && !isZeroAddress(tokenAddress) && (
             <div className="mb-5">
               <Trans>
                 Token address: <FormattedAddress address={tokenAddress} />

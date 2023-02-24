@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-02-12 00:33\n"
+"PO-Revision-Date: 2023-02-19 00:30\n"
 "Last-Translator: \n"
 "Language: tr_TR\n"
 "Language-Team: Turkish\n"
@@ -221,6 +221,9 @@ msgid "<0>When you pay a project, you <1>may</1> receive that project's tokens o
 msgstr ""
 
 msgid "<0>With Automated Funding Cycles, your funding configuration is locked for a set time period.</0><1><2>This helps build trust with your contributors.</2></1>"
+msgstr ""
+
+msgid "<0>You're about to delete all NFTs from your collection. This will take effect immediately, and you can add NFTs back to the collection at any time.</0><1>If you want to COMPLETELY detach NFTs from your project, you can do so in the <2>Danger Zone</2> section below.</1>"
 msgstr ""
 
 msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
@@ -532,6 +535,9 @@ msgstr "Mevcut fonlar aşağıdaki ödemelere göre dağıtılır."
 msgid "Available funds can be distributed according to the payouts below{0}."
 msgstr "Mevcut fonlar aşağıdaki ödemelere göre dağıtılabilir{0}."
 
+msgid "Available upgrades"
+msgstr ""
+
 msgid "Available:"
 msgstr "Mevcut:"
 
@@ -635,6 +641,9 @@ msgid "Changes to payouts will take effect immediately."
 msgstr ""
 
 msgid "Changes to your collection details may not be reflected in some marketplaces (for example, Opensea). Contact the marketplace for support."
+msgstr ""
+
+msgid "Changes to your collection will take effect immediately."
 msgstr ""
 
 msgid "Changes to your reserved token allocation will take effect immediately."
@@ -916,6 +925,9 @@ msgstr ""
 msgid "DAOs"
 msgstr ""
 
+msgid "Danger Zone"
+msgstr ""
+
 msgid "Dark theme"
 msgstr "Koyu tema"
 
@@ -961,9 +973,6 @@ msgstr ""
 msgid "Deploy Migration Token"
 msgstr ""
 
-msgid "Deploy NFTs"
-msgstr ""
-
 msgid "Deploy Payment Address contract"
 msgstr ""
 
@@ -977,6 +986,9 @@ msgid "Deploy a V3 Migration Token for your project."
 msgstr ""
 
 msgid "Deploy an address which forwards funds to your project. This makes it easier to pay your project with third-party tools."
+msgstr ""
+
+msgid "Deploy edited NFTs"
 msgstr ""
 
 msgid "Deploy funding cycle configuration"
@@ -1001,6 +1013,12 @@ msgid "Design how your project's tokens should work. You can use your project to
 msgstr ""
 
 msgid "Design how your tokens should work."
+msgstr ""
+
+msgid "Detach NFTs from project"
+msgstr ""
+
+msgid "Detaching NFTs from your project has the following effects:<0><1>Contributors won't receive NFTs when they fund your project.</1><2>Existing NFT holders won't be able to redeem their NFTs.</2></0><3>This will take effect in your next funding cycle.</3>"
 msgstr ""
 
 msgid "Details"
@@ -1201,7 +1219,13 @@ msgstr ""
 msgid "Edit allocation"
 msgstr ""
 
+msgid "Edit collection details"
+msgstr ""
+
 msgid "Edit details of {projectTitle}"
+msgstr ""
+
+msgid "Edit funding cycle"
 msgstr ""
 
 msgid "Edit handle of {projectTitle}"
@@ -1251,9 +1275,6 @@ msgstr "Bunun etkinleştirilmesi, proje sahibine, herhangi bir miktarda token'ı
 
 msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise unclaimed {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
 msgstr ""
-
-msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise, unclaimed {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
-msgstr "Bunu etkinleştirmek {tokenSymbol} ERC-20 token'ları basacaktır. Aksi takdirde, talep edilmemiş {tokenSymbol} token'ları basılacak ve bunlar, daha sonra alıcı tarafından ERC-20 olarak talep edilebilecektir."
 
 msgid "Enabling token minting will appear risky to contributors."
 msgstr "Token basımının etkinleştirilmesi, katkıda bulunanlar açısından riskli görünecektir."
@@ -1861,6 +1882,9 @@ msgstr ""
 msgid "Migrate legacy tokens"
 msgstr ""
 
+msgid "Migrate project's Controller"
+msgstr ""
+
 msgid "Migrate tokens"
 msgstr ""
 
@@ -2094,9 +2118,6 @@ msgstr ""
 
 msgid "Not set"
 msgstr "Ayarlanmadı"
-
-msgid "Note: Tokens can be minted manually when allowed in the current funding cycle. This can be changed by the project owner for upcoming cycles."
-msgstr "Not: Token'lar, mevcut finansman döngüsünde izin verildiğinde manuel olarak basılabilir. İzin, sonraki döngüler için proje sahibi tarafından değiştirilebilir."
 
 msgid "Notice from {0}"
 msgstr ""
@@ -2671,6 +2692,9 @@ msgstr "Rezerve {tokenSymbolPlural}"
 msgid "Reserved {tokenTextPlural}: <0>{reservedTokensFormatted} {tokenTextPlural}</0>"
 msgstr "Rezerve {tokenTextPlural}: <0>{reservedTokensFormatted} {tokenTextPlural}</0>"
 
+msgid "Reset website"
+msgstr ""
+
 msgid "Resources"
 msgstr "Kaynaklar"
 
@@ -2692,7 +2716,7 @@ msgstr "Finansman döngüsünü gözden geçirin ve başlatın"
 msgid "Review your project data below. Once launched, your first funding cycle can't be changed. You can reconfigure upcoming funding cycles according to your project's reconfiguration rules."
 msgstr ""
 
-msgid "Reward contributors with NFTs when they meet your configured funding criteria."
+msgid "Reward contributors with NFTs when they fund your project."
 msgstr ""
 
 msgid "Reward contributors with NFTs when they meet your funding criteria."
@@ -2968,9 +2992,6 @@ msgstr ""
 msgid "Start time"
 msgstr ""
 
-msgid "Start upgrade"
-msgstr ""
-
 msgid "Starting over will erase all currently saved progress."
 msgstr ""
 
@@ -3241,6 +3262,9 @@ msgstr "Bu oran, her token'ın herhangi bir zamanda kullanılabilecek taşma mik
 msgid "This transaction reconfigures the project's funding cycle."
 msgstr ""
 
+msgid "This transaction will set your project's Controller contract to: <0>{controllerAddress}</0>. Any reserved tokens will be distributed."
+msgstr ""
+
 msgid "This will delete the payout for <0/>."
 msgstr ""
 
@@ -3305,6 +3329,9 @@ msgid "Token name is required"
 msgstr "Token adı gerekli"
 
 msgid "Token printing allowed"
+msgstr ""
+
+msgid "Token receiver"
 msgstr ""
 
 msgid "Token redeem value"
@@ -3451,6 +3478,9 @@ msgstr "Çok konuşulanlar"
 msgid "Trending projects"
 msgstr ""
 
+msgid "Troubleshoot"
+msgstr ""
+
 msgid "Twitter"
 msgstr ""
 
@@ -3535,6 +3565,15 @@ msgstr ""
 msgid "Update {projectTitle}'s NFT collection details."
 msgstr ""
 
+msgid "Upgrade to JBController 3.0.1"
+msgstr ""
+
+msgid "Upgrade to {0}"
+msgstr ""
+
+msgid "Upgrade your project's JBController contract. This upgrade is required to deploy a migration token (JBV3Token)."
+msgstr ""
+
 msgid "Upload"
 msgstr "Yükle"
 
@@ -3546,9 +3585,6 @@ msgstr ""
 
 msgid "Uploaded to: <0>{imageUrl}</0>"
 msgstr ""
-
-msgid "Uploaded to: <0>{url}</0>"
-msgstr "Şuraya yüklendi: <0>{url}</0>"
 
 msgid "Use <0>Amounts</0> when you want to configure a <1>distribution limit</1>. Treasury funds that exceed the distribution limit are called <2>overflow</2>. Token holders can redeem (burn) their tokens for a portion of the overflow. <3>Learn more</3>."
 msgstr "Bir <0>dağıtım sınırı</0> yapılandırmak istediğinizde <1>Tutarlar</1>'ı kullanın. Dağıtım sınırını aşan hazine fonlarına <2>taşma</2> denir. Token sahipleri, taşmanın bir kısmı için token'larını kullanabilir (yakabilir). <3>Daha fazla bilgi edinin</3>."
@@ -3706,6 +3742,9 @@ msgstr ""
 msgid "When enabled, your project cannot receive direct payments."
 msgstr "Etkinleştirildiğinde, projeniz doğrudan ödeme alamaz."
 
+msgid "When enabled, {tokenSymbol} ERC-20 tokens are minted. When disabled, unclaimed {tokenSymbol} tokens will be minted, which the receiver can claim later as ERC-20."
+msgstr ""
+
 msgid "When the Payment Address receives a payment, project tokens will be minted to this token beneficiary address. The address that made the payment <0>won't receive any project tokens.</0>"
 msgstr ""
 
@@ -3789,6 +3828,9 @@ msgstr "Kaydedilmemiş değişiklikleriniz mevcut. Değişiklikleri iptal etmek 
 
 msgid "You haven't created any projects yet."
 msgstr "Henüz herhangi bir proje oluşturmadınız."
+
+msgid "You must edit your funding cycle rules to allow controller migrations."
+msgstr ""
 
 msgid "You must grant permission to migrate your V1 tokens."
 msgstr ""

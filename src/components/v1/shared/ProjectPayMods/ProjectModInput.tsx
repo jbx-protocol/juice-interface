@@ -1,8 +1,17 @@
 import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
+import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Col, Row, Space } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
 import FormattedAddress from 'components/FormattedAddress'
+import { AllocatorBadge } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/AllocatorBadge'
+import {
+  NULL_ALLOCATOR_ADDRESS,
+  V1_V3_ALLOCATOR_ADDRESS,
+} from 'constants/contracts/mainnet/Allocators'
+import { CurrencyName } from 'constants/currency'
 import { PropsWithChildren } from 'react'
+import { isEqualAddress, isZeroAddress } from 'utils/address'
+import { classNames } from 'utils/classNames'
 import { formatDate } from 'utils/format/formatDate'
 import {
   formatWad,
@@ -11,17 +20,8 @@ import {
   permyriadToPercent,
 } from 'utils/format/formatNumber'
 import { amountSubFee } from 'utils/v1/math'
-import { BigNumber } from '@ethersproject/bignumber'
-import * as constants from '@ethersproject/constants'
-import { CurrencyName } from 'constants/currency'
-import { classNames } from 'utils/classNames'
 import V1ProjectHandle from '../V1ProjectHandle'
 import { EditingPayoutMod } from './types'
-import {
-  NULL_ALLOCATOR_ADDRESS,
-  V1_V3_ALLOCATOR_ADDRESS,
-} from 'constants/contracts/mainnet/Allocators'
-import { AllocatorBadge } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/AllocatorBadge'
 
 const FormattedRow = ({
   label,
@@ -95,10 +95,10 @@ export function ProjectModInput({
 }) {
   const feePerbicent = percentToPerbicent(feePercentage)
 
-  const isV1Project =
-    mod.projectId?.gt(0) && mod.allocator === constants.AddressZero
+  const isV1Project = mod.projectId?.gt(0) && isZeroAddress(mod.allocator)
   const isV3Project =
-    mod.projectId?.gt(0) && mod.allocator === V1_V3_ALLOCATOR_ADDRESS
+    mod.projectId?.gt(0) &&
+    isEqualAddress(mod.allocator, V1_V3_ALLOCATOR_ADDRESS)
 
   return (
     <div

@@ -1,4 +1,3 @@
-import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Checkbox, Form, Input, Modal, Space, Switch } from 'antd'
 import { FormInstance, FormProps, useWatch } from 'antd/lib/form/Form'
@@ -15,8 +14,9 @@ import { ProjectPreferences } from 'constants/projectPreferences'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { isAddress } from 'ethers/lib/utils'
-import { NftRewardTier } from 'models/nftRewardTier'
+import { useProjectHasErc20 } from 'hooks/v2v3/ProjectHasErc20'
 import { useContext, useEffect, useState } from 'react'
+import { isZeroAddress } from 'utils/address'
 import { classNames } from 'utils/classNames'
 import {
   getUnsafeV2V3FundingCycleProperties,
@@ -34,14 +34,11 @@ export interface V2V3PayFormType {
 
 export const V2V3PayForm = ({
   form,
-  transactionCanceled,
   ...props
 }: {
   form: FormInstance<V2V3PayFormType>
-  transactionCanceled: boolean
 } & FormProps) => {
-  const { tokenAddress, fundingCycle, fundingCycleMetadata } =
-    useContext(V2V3ProjectContext)
+  const { fundingCycle, fundingCycleMetadata } = useContext(V2V3ProjectContext)
   const { projectMetadata } = useContext(ProjectMetadataContext)
 
   const [customBeneficiaryEnabled, setCustomBeneficiaryEnabled] =
@@ -58,28 +55,16 @@ export const V2V3PayForm = ({
       ? getV2V3FundingCycleRiskCount(fundingCycle, fundingCycleMetadata)
       : undefined
 
-  const hasIssuedTokens = tokenAddress !== constants.AddressZero
+  const hasIssuedTokens = useProjectHasErc20()
   const canAddMoreStickers =
     (stickerUrls ?? []).length < ProjectPreferences.MAX_IMAGES_PAYMENT_MEMO
 
-  useEffect(() => {
-    if (transactionCanceled) return
-
-    const initialStickerUrls = nftRewardTiers?.map(
-      (tier: NftRewardTier) => tier.fileUrl,
-    )
-
-    form.setFieldsValue({
-      stickerUrls: initialStickerUrls,
-    })
-  }, [form, nftRewardTiers, transactionCanceled])
-
-  useEffect(() => {
-    if (!form.getFieldValue('beneficiary')) return
-
-    setCustomBeneficiaryEnabled(transactionCanceled)
-  }, [form, transactionCanceled])
-
+  useEffect(
+    () => {
+      setCustomBeneficiaryEnabled(Boolean(form.getFieldValue('beneficiary')))
+    },
+    [], // eslint-disable-line react-hooks/exhaustive-deps
+  )
   return (
     <>
       <Form form={form} layout="vertical" {...props}>
@@ -177,7 +162,7 @@ export const V2V3PayForm = ({
                         if (!value || !isAddress(value)) {
                           return Promise.reject('Address is required')
                         }
-                        if (value === constants.AddressZero) {
+                        if (isZeroAddress(value)) {
                           return Promise.reject('Cannot use zero address')
                         }
                         return Promise.resolve()
@@ -249,11 +234,13 @@ export const V2V3PayForm = ({
           }
           const url = new URL(`${window.location.origin}${sticker.filepath}`)
           const urlString = url.toString()
+
           const existingStickerUrls = (form.getFieldValue('stickerUrls') ??
             []) as string[]
+          const updatedStickerUrls = [...existingStickerUrls, urlString]
 
           form.setFieldsValue({
-            stickerUrls: existingStickerUrls.concat(urlString),
+            stickerUrls: updatedStickerUrls,
           })
         }}
       />

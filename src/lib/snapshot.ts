@@ -4,11 +4,11 @@ import { juiceboxEmojiImageUri } from 'constants/images'
 import { readNetwork } from 'constants/networks'
 import { WAD_DECIMALS } from 'constants/numbers'
 import { AnyProjectMetadata, ProjectMetadataV6 } from 'models/projectMetadata'
-import { pinData } from './api/ipfs'
+import { pinJson } from './api/ipfs'
 
 /**
  * JB Docs:
- * https://info.juicebox.money/user/governance/snapshot
+ * https://docs.juicebox.money/user/governance/snapshot
  *
  * Snapshot docs:
  * https://docs.snapshot.org/spaces/create/alternative-way-to-create-a-space
@@ -121,10 +121,10 @@ export async function uploadSnapshotSettingsToIPFS({
     JBTokenStoreAddress,
   })
 
-  const res = await pinData(snapshotSettings)
-  console.info('Uploaded snapshot settings to IPFS: ', res.IpfsHash)
+  const res = await pinJson(snapshotSettings)
+  console.info('Uploaded snapshot settings to IPFS: ', res.Hash)
 
-  return res.IpfsHash as string
+  return res.Hash as string
 }
 
 export const pokeSnapshot = async (projectHandle: string) => {

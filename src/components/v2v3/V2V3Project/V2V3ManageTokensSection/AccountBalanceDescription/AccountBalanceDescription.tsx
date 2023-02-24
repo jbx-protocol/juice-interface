@@ -1,8 +1,7 @@
-import * as constants from '@ethersproject/constants'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import ManageTokensModal from 'components/ManageTokensModal'
 import RichButton from 'components/buttons/RichButton'
+import ManageTokensModal from 'components/ManageTokensModal'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
@@ -11,6 +10,8 @@ import useERC20BalanceOf from 'hooks/ERC20/ERC20BalanceOf'
 import useTotalBalanceOf from 'hooks/v2v3/contractReader/TotalBalanceOf'
 import useUserUnclaimedTokenBalance from 'hooks/v2v3/contractReader/UserUnclaimedTokenBalance'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
+import { useIsOwnerConnected } from 'hooks/v2v3/IsOwnerConnected'
+import { useProjectHasErc20 } from 'hooks/v2v3/ProjectHasErc20'
 import { useTransferUnclaimedTokensTx } from 'hooks/v2v3/transactor/TransferUnclaimedTokensTx'
 import { useVeNftSummaryStats } from 'hooks/veNft/VeNftSummaryStats'
 import { useWallet } from 'hooks/Wallet'
@@ -26,9 +27,9 @@ import {
 } from 'utils/format/formatNumber'
 import { veNftPagePath } from 'utils/routes'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
+import { V2V3BurnOrRedeemModal } from './V2V3BurnOrRedeemModal'
 import { V2V3ClaimTokensModal } from './V2V3ClaimTokensModal'
 import { V2V3MintModal } from './V2V3MintModal'
-import { V2V3BurnOrRedeemModal } from './V2V3BurnOrRedeemModal'
 
 export function AccountBalanceDescription() {
   const { contractAddress: veNftAddress } = useContext(VeNftContext)
@@ -53,6 +54,8 @@ export function AccountBalanceDescription() {
   const userHasMintPermission = useV2ConnectedWalletHasPermission(
     V2V3OperatorPermission.MINT,
   )
+  const ownerIsConnected = useIsOwnerConnected()
+  const hasIssuedERC20 = useProjectHasErc20()
 
   const claimedBalanceFormatted = formatWad(claimedBalance ?? 0, {
     precision: 0,
@@ -71,7 +74,6 @@ export function AccountBalanceDescription() {
     ) || '0'
 
   const hasOverflow = Boolean(primaryTerminalCurrentOverflow?.gt(0))
-  const hasIssuedERC20 = tokenAddress !== constants.AddressZero
   const redeemDisabled = Boolean(
     !hasOverflow || fundingCycleMetadata?.redemptionRate.eq(0),
   )
@@ -86,6 +88,9 @@ export function AccountBalanceDescription() {
   })
 
   const projectAllowsMint = Boolean(fundingCycleMetadata?.allowMinting)
+  const showManageTokensButton = Boolean(
+    totalBalance?.gt(0) || (projectAllowsMint && ownerIsConnected),
+  )
 
   return (
     <>
@@ -126,7 +131,7 @@ export function AccountBalanceDescription() {
         </div>
       </div>
 
-      {totalBalance?.gt(0) ? (
+      {showManageTokensButton ? (
         <Button size="small" onClick={() => setManageTokensModalVisible(true)}>
           <Trans>Manage {tokenText}</Trans>
         </Button>

@@ -2,10 +2,9 @@ import { CloseCircleFilled, FileImageOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, message, Row, Space, Upload } from 'antd'
 import ExternalLink from 'components/ExternalLink'
-import { useWallet } from 'hooks/Wallet'
-import { pinImage } from 'lib/api/ipfs'
+import { pinFile } from 'lib/api/ipfs'
 import { useState } from 'react'
-import { cidFromIpfsUri, ipfsOpenGatewayUrl, ipfsUri } from 'utils/ipfs'
+import { cidFromIpfsUri, ipfsGatewayUrl, ipfsUri } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
 
 enum ByteUnit {
@@ -29,8 +28,6 @@ export const FormImageUploader = ({
     value ? cidFromIpfsUri(value) : undefined,
   )
 
-  const wallet = useWallet()
-
   const setValue = (cid?: string) => {
     setImageCid(cid)
     // storing images in `ipfs://` format where possible (see issue #1726)
@@ -38,7 +35,7 @@ export const FormImageUploader = ({
     onChange?.(url)
   }
 
-  const imageUrl = imageCid ? ipfsOpenGatewayUrl(imageCid) : undefined
+  const imageUrl = imageCid ? ipfsGatewayUrl(imageCid) : undefined
 
   return (
     <Row className="text-grey-500 dark:text-grey-300" gutter={30}>
@@ -74,18 +71,12 @@ export const FormImageUploader = ({
                   )
                   return Upload.LIST_IGNORE
                 }
-                let walletConnected = wallet.isConnected
-                if (!walletConnected) {
-                  const connectStates = await wallet.connect()
-                  walletConnected = connectStates.length > 0
-                }
-                if (!walletConnected) return Upload.LIST_IGNORE
               }}
               customRequest={async req => {
                 setLoadingUpload(true)
                 try {
-                  const res = await pinImage(req.file)
-                  setValue(res.IpfsHash)
+                  const res = await pinFile(req.file)
+                  setValue(res.Hash)
                 } catch (e) {
                   emitErrorNotification(t`Error uploading file`)
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any

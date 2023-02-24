@@ -62,6 +62,47 @@ export const AllocationList = ({
     [totalAllocationAmount],
   )
 
+  const removeAllocation = useCallback(
+    (id: string) => {
+      const allocation = allocations.find(a => a.id === id)
+      if (!allocation) return
+
+      if (
+        !totalAllocationAmount ||
+        totalAllocationAmount.eq(MAX_DISTRIBUTION_LIMIT)
+      ) {
+        allocationInstance.removeAllocation(id)
+        return
+      }
+
+      const totalAmount = parseFloat(fromWad(totalAllocationAmount))
+      const removedAmount = (allocation.percent / 100) * totalAmount
+
+      const totalAmountAfterRemoval = totalAmount - removedAmount
+
+      const adjustedAllocations = allocations
+        .filter(a => a.id !== allocation.id)
+        .map(alloc => {
+          const currentAmount = amountFromPercent({
+            percent: alloc.percent,
+            amount: totalAmount.toString(),
+          })
+          const newPercent = (currentAmount / totalAmountAfterRemoval) * 100
+          return { ...alloc, percent: newPercent }
+        })
+
+      setAllocations(adjustedAllocations)
+      setTotalAllocationAmount?.(parseWad(totalAmountAfterRemoval))
+    },
+    [
+      allocationInstance,
+      allocations,
+      setAllocations,
+      setTotalAllocationAmount,
+      totalAllocationAmount,
+    ],
+  )
+
   const onModalOk = useCallback(
     (result: AddEditAllocationModalEntity) => {
       const isEditing = !!selectedAllocation
@@ -173,7 +214,11 @@ export const AllocationList = ({
   return (
     <>
       <div className="flex w-full flex-col gap-4">
-        {children(modal, { ...allocationInstance, setSelectedAllocation })}
+        {children(modal, {
+          ...allocationInstance,
+          setSelectedAllocation,
+          removeAllocation,
+        })}
         {isEditable && (
           <CreateButton
             size="large"

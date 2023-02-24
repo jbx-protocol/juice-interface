@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { t } from '@lingui/macro'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { fromWad } from 'utils/format/formatNumber'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
@@ -17,10 +18,10 @@ export function formatFundingTarget({
 }) {
   const limit = distributionLimitWad ?? BigNumber.from(0)
   if (limit.eq(0)) {
-    return 'No target'
+    return t`Zero`
   }
   if (limit.eq(MAX_DISTRIBUTION_LIMIT)) {
-    return 'Infinite'
+    return t`Infinite`
   }
 
   return formatCurrencyAmount({

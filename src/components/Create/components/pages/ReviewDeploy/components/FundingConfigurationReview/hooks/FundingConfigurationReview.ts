@@ -43,10 +43,6 @@ export const useFundingConfigurationReview = () => {
     return overrideSelection || payoutsSelection
   }, [availableSelections, payoutsSelection])
 
-  const payoutsText = useMemo(() => {
-    return selection === 'amounts' ? t`Amounts` : t`Percentages`
-  }, [selection])
-
   const launchDate = useMemo(
     () =>
       mustStartAtOrAfter &&
@@ -72,7 +68,6 @@ export const useFundingConfigurationReview = () => {
     fundingCycles,
     duration,
     fundingTarget,
-    payoutsText,
     allocationSplits,
     setAllocationSplits,
     launchDate,

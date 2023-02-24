@@ -1649,6 +1649,9 @@ msgstr ""
 msgid "Infinite Funding Target"
 msgstr ""
 
+msgid "Infinite"
+msgstr ""
+
 msgid "Infinite (no limit)"
 msgstr ""
 

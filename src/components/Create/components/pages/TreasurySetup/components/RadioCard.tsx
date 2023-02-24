@@ -15,7 +15,7 @@ export const RadioCard: React.FC<{
         selectable
           ? 'hover:border-grey-300 dark:hover:border-slate-100'
           : undefined,
-        checked ? 'border-haze-400' : undefined,
+        checked ? 'border-haze-400 dark:border-haze-400' : undefined,
       )}
     >
       <span className="flex gap-x-3">

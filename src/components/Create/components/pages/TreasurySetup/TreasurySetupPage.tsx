@@ -1,3 +1,4 @@
+import { StopOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { RadioGroup } from '@headlessui/react'
 import { t, Trans } from '@lingui/macro'
@@ -30,8 +31,8 @@ import { useTreasurySetupForm } from './hooks'
 
 const treasuryOptions = [
   { name: t`Amount`, value: 'amount', icon: <Icons.Target /> },
-  { name: t`Unlimited`, value: 'unlimited', icon: <Icons.Target /> },
-  { name: t`Zero`, value: 'zero', icon: <Icons.Target /> },
+  { name: t`Unlimited`, value: 'unlimited', icon: <Icons.Infinity /> },
+  { name: t`Zero`, value: 'zero', icon: <StopOutlined /> },
 ]
 
 export const TreasurySetupPage = () => {

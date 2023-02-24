@@ -47,10 +47,7 @@ export default function RichNote({
             {formattedMediaLinks.map((link, i) => (
               <JuiceVideoThumbnailOrImage
                 key={i}
-                className={twMerge(
-                  'cursor-pointer hover:brightness-50',
-                  className,
-                )}
+                className={twMerge('cursor-pointer', className)}
                 heightClass="h-24"
                 widthClass="w-24"
                 src={link}

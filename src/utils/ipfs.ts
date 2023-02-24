@@ -79,6 +79,6 @@ export function isIpfsCID(cid: string) {
 }
 
 export function percentFromUploadProgressEvent(e: UploadProgressEvent) {
-  const _percent = (e.loaded / e.total) * 100
-  return round(_percent, 0)
+  const percent = (e.loaded / e.total) * 100
+  return round(percent, 0)
 }

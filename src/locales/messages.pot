@@ -2129,9 +2129,6 @@ msgstr ""
 msgid "Not set"
 msgstr ""
 
-msgid "Note"
-msgstr ""
-
 msgid "Notice from {0}"
 msgstr ""
 
@@ -3633,9 +3630,6 @@ msgid "V1 Project handle"
 msgstr ""
 
 msgid "V1 project handle"
-msgstr ""
-
-msgid "V1.1"
 msgstr ""
 
 msgid "V2"

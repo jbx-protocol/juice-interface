@@ -13,8 +13,6 @@ export type CheckboxOnChange = (checked: boolean) => void
 export default function ProjectsFilterAndSort({
   includeV1,
   setIncludeV1,
-  includeV1_1,
-  setIncludeV1_1,
   includeV2,
   setIncludeV2,
   showArchived,
@@ -24,8 +22,6 @@ export default function ProjectsFilterAndSort({
 }: {
   includeV1: boolean
   setIncludeV1: CheckboxOnChange
-  includeV1_1: boolean
-  setIncludeV1_1: CheckboxOnChange
   includeV2: boolean
   setIncludeV2: CheckboxOnChange
   showArchived: boolean
@@ -76,11 +72,6 @@ export default function ProjectsFilterAndSort({
               label={t`V1`}
               checked={includeV1}
               onChange={setIncludeV1}
-            />
-            <FilterCheckboxItem
-              label={t`V1.1`}
-              checked={includeV1_1}
-              onChange={setIncludeV1_1}
             />
             <FilterCheckboxItem
               label={t`V2`}

@@ -9,7 +9,7 @@ import ProjectCreateEventElem from 'components/activityEventElems/ProjectCreateE
 import RedeemEventElem from 'components/activityEventElems/RedeemEventElem'
 import Loading from 'components/Loading'
 import SectionHeader from 'components/SectionHeader'
-import { PV_V1, PV_V1_1 } from 'constants/pv'
+import { PV_V1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
@@ -55,8 +55,7 @@ export default function ProjectActivity() {
     const _where: SGWhereArg<'projectEvent'>[] = [
       {
         key: 'pv',
-        operator: 'in',
-        value: [PV_V1, PV_V1_1],
+        value: PV_V1,
       },
       {
         key: 'mintTokensEvent',

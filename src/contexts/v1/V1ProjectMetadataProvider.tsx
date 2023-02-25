@@ -1,10 +1,9 @@
+import { PV_V1 } from 'constants/pv'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import useProjectIdForHandle from 'hooks/v1/contractReader/ProjectIdForHandle'
-import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
 import { ProjectMetadataV6 } from 'models/projectMetadata'
 import { PropsWithChildren } from 'react'
-import { getTerminalVersion } from 'utils/v1/terminals'
 
 export function V1ProjectMetadataProvider({
   handle,
@@ -15,9 +14,6 @@ export function V1ProjectMetadataProvider({
   metadata: ProjectMetadataV6 | undefined
 }>) {
   const { data: projectId } = useProjectIdForHandle(handle)
-
-  const terminalAddress = useTerminalOfProject(projectId)
-  const terminalVersion = getTerminalVersion(terminalAddress)
 
   const isArchived = projectId
     ? V1ArchivedProjectIds.includes(projectId.toNumber()) || metadata?.archived
@@ -34,7 +30,7 @@ export function V1ProjectMetadataProvider({
         projectMetadata: metadata,
         isArchived,
         projectId: projectId?.toNumber(),
-        pv: terminalVersion,
+        pv: PV_V1,
       }}
     >
       {children}

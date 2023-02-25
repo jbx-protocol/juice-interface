@@ -1,9 +1,9 @@
 import axios from 'axios'
-import { PV_V1, PV_V1_1, PV_V2 } from 'constants/pv'
+import { PV_V1, PV_V2 } from 'constants/pv'
 import { PV } from 'models/pv'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-const VALID_PVS = [PV_V1, PV_V1_1, PV_V2]
+const VALID_PVS = [PV_V1, PV_V2]
 
 export default async function handler(
   req: NextApiRequest,
@@ -16,7 +16,6 @@ export default async function handler(
   let handle: string | undefined
   switch (pv) {
     case PV_V1:
-    case PV_V1_1:
       handle = project?.handle
       break
     case PV_V2:
@@ -62,7 +61,6 @@ function calculatePath({
 }) {
   switch (pv) {
     case PV_V1:
-    case PV_V1_1:
       return `/p/${handle}`
     case PV_V2:
       return `/v2/p/${projectId}`

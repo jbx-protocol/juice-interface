@@ -4,7 +4,7 @@ import Loading from 'components/Loading'
 import RichNote from 'components/RichNote'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
-import { PV_V1, PV_V1_1 } from 'constants/pv'
+import { PV_V1 } from 'constants/pv'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { Project } from 'models/subgraph-entities/vX/project'
 import { classNames } from 'utils/classNames'
@@ -31,7 +31,7 @@ export default function Payments() {
 
     return (
       <div className="font-medium text-haze-400 dark:text-haze-300">
-        {project.pv === PV_V1 || project.pv === PV_V1_1 ? (
+        {project.pv === PV_V1 ? (
           <V1ProjectHandle
             projectId={project.projectId}
             handle={project.handle}

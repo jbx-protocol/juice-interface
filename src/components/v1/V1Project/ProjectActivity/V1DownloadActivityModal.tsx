@@ -21,7 +21,8 @@ export function V1DownloadActivityModal({
   open: boolean | undefined
   onCancel: VoidFunction | undefined
 }) {
-  const { projectId, pv } = useContext(ProjectMetadataContext)
+  const { projectId } = useContext(ProjectMetadataContext)
+  const pv = '1'
 
   const [blockNumber, setBlockNumber] = useState<number>()
 

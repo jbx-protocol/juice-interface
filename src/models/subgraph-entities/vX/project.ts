@@ -14,6 +14,7 @@ import { TapEvent } from '../v1/tap-event'
 import { V1ConfigureEvent } from '../v1/v1-configure'
 import { ConfigureEvent } from '../v2/configure'
 import { VeNftContract } from '../v2/venft-contract'
+import { BurnEvent } from './burn-event'
 import { DeployedERC20Event } from './deployed-erc20-event'
 import { MintTokensEvent } from './mint-tokens-event'
 import { Participant } from './participant'
@@ -47,6 +48,7 @@ export type Project = {
   distributeToPayoutModEvents: DistributeToPayoutModEvent[]
   distributeToTicketModEvents: DistributeToTicketModEvent[]
   deployedERC20Events: DeployedERC20Event[]
+  burnEvents: BurnEvent[]
   veNftContract: VeNftContract
   metadataUri: string
   terminal: string | null // null in v2
@@ -77,6 +79,7 @@ export const parseProjectJson = (j: Json<Project>): Project => ({
     'printPremineEvents',
   ),
   ...subgraphEntityJsonArrayToKeyVal(j.payEvents, 'payEvent', 'payEvents'),
+  ...subgraphEntityJsonArrayToKeyVal(j.burnEvents, 'burnEvent', 'burnEvents'),
   ...subgraphEntityJsonArrayToKeyVal(j.tapEvents, 'tapEvent', 'tapEvents'),
   ...subgraphEntityJsonArrayToKeyVal(
     j.redeemEvents,

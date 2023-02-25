@@ -2,6 +2,7 @@ import { DownloadOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Select, Space } from 'antd'
 import AddToBalanceEventElem from 'components/activityEventElems/AddToBalanceEventElem'
+import BurnEventElem from 'components/activityEventElems/BurnEventElem'
 import DeployedERC20EventElem from 'components/activityEventElems/DeployedERC20EventElem'
 import PayEventElem from 'components/activityEventElems/PayEventElem'
 import ProjectCreateEventElem from 'components/activityEventElems/ProjectCreateEventElem'
@@ -10,6 +11,7 @@ import Loading from 'components/Loading'
 import SectionHeader from 'components/SectionHeader'
 import { PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
 import { SGWhereArg } from 'models/graph'
 import { ProjectEvent } from 'models/subgraph-entities/vX/project-event'
@@ -24,6 +26,7 @@ import DistributeReservedTokensEventElem from './eventElems/DistributeReservedTo
 type EventFilter =
   | 'all'
   | 'pay'
+  | 'burn'
   | 'addToBalance'
   | 'mintTokens'
   | 'redeem'
@@ -39,6 +42,7 @@ const pageSize = 50
 
 export default function ProjectActivity() {
   const { projectId } = useContext(ProjectMetadataContext)
+  const { tokenSymbol } = useContext(V2V3ProjectContext)
 
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
   const [eventFilter, setEventFilter] = useState<EventFilter>('all')
@@ -74,6 +78,9 @@ export default function ProjectActivity() {
         break
       case 'pay':
         key = 'payEvent'
+        break
+      case 'burn':
+        key = 'burnEvent'
         break
       case 'addToBalance':
         key = 'addToBalanceEvent'
@@ -135,6 +142,10 @@ export default function ProjectActivity() {
         ],
       },
       {
+        entity: 'burnEvent',
+        keys: ['id', 'timestamp', 'txHash', 'caller', 'holder', 'amount'],
+      },
+      {
         entity: 'addToBalanceEvent',
         keys: [
           'amount',
@@ -148,7 +159,7 @@ export default function ProjectActivity() {
       },
       {
         entity: 'deployedERC20Event',
-        keys: ['symbol', 'txHash', 'timestamp', 'id'],
+        keys: ['symbol', 'txHash', 'timestamp', 'id', 'caller'],
       },
       {
         entity: 'tapEvent',
@@ -174,6 +185,7 @@ export default function ProjectActivity() {
           'returnAmount',
           'terminal',
           'metadata',
+          'memo',
         ],
       },
       {
@@ -232,6 +244,7 @@ export default function ProjectActivity() {
           'controllerMigrationAllowed',
           'setTerminalsAllowed',
           'setControllerAllowed',
+          'memo',
         ],
       },
     ],
@@ -251,6 +264,11 @@ export default function ProjectActivity() {
 
           if (e.payEvent) {
             elem = <PayEventElem event={e.payEvent} />
+          }
+          if (e.burnEvent) {
+            elem = (
+              <BurnEventElem event={e.burnEvent} tokenSymbol={tokenSymbol} />
+            )
           }
           if (e.addToBalanceEvent) {
             elem = <AddToBalanceEventElem event={e.addToBalanceEvent} />
@@ -297,7 +315,7 @@ export default function ProjectActivity() {
           )
         }),
       ),
-    [projectEvents],
+    [projectEvents, tokenSymbol],
   )
 
   const listStatus = useMemo(() => {
@@ -362,6 +380,9 @@ export default function ProjectActivity() {
             </Select.Option>
             <Select.Option value="redeem">
               <Trans>Redeemed</Trans>
+            </Select.Option>
+            <Select.Option value="burn">
+              <Trans>Burned</Trans>
             </Select.Option>
             <Select.Option value="distributePayouts">
               <Trans>Distributed funds</Trans>

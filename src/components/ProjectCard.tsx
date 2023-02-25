@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { Trans } from '@lingui/macro'
 import { Skeleton } from 'antd'
-import { PV_V1, PV_V1_1, PV_V2 } from 'constants/pv'
+import { PV_V1, PV_V2 } from 'constants/pv'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
 import { useProjectHandleText } from 'hooks/ProjectHandleText'
@@ -117,7 +117,7 @@ export default function ProjectCard({
       : projectCardHref
 
   const isArchived =
-    ((projectCardData.pv === PV_V1 || projectCardData.pv === PV_V1_1) &&
+    (projectCardData.pv === PV_V1 &&
       V1ArchivedProjectIds.includes(projectCardData.projectId)) ||
     (projectCardData.pv === PV_V2 &&
       V2ArchivedProjectIds.includes(projectCardData.projectId)) ||

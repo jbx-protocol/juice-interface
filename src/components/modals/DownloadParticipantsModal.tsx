@@ -2,7 +2,6 @@ import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { PV_V1, PV_V1_1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useBlockNumber } from 'hooks/BlockNumber'
 import { SGQueryOpts } from 'models/graph'
@@ -39,17 +38,10 @@ export function DownloadParticipantsModal({
     if (blockNumber === undefined || !projectId || !pv) return
 
     // Projects that migrate between 1 & 1.1 may change their PV without the PV of their participants being updated. This should be fixed by better subgraph infrastructure, but this fix will make sure the UI works for now.
-    const pvOpt: SGQueryOpts<'participant', keyof Participant>['where'] =
-      pv === PV_V1 || pv === PV_V1_1
-        ? {
-            key: 'pv',
-            operator: 'in',
-            value: [PV_V1, PV_V1_1],
-          }
-        : {
-            key: 'pv',
-            value: pv,
-          }
+    const pvOpt: SGQueryOpts<'participant', keyof Participant>['where'] = {
+      key: 'pv',
+      value: pv,
+    }
 
     const rows = [
       [

@@ -1,6 +1,6 @@
 import { plural, t, Trans } from '@lingui/macro'
 import ETHAmount from 'components/currency/ETHAmount'
-import { ThemeContext } from 'contexts/Theme/ThemeContext'
+import RichNote from 'components/RichNote'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { RedeemEvent } from 'models/subgraph-entities/vX/redeem-event'
 import { useContext } from 'react'
@@ -26,13 +26,11 @@ export default function RedeemEventElem({
         | 'returnAmount'
         | 'terminal'
         | 'metadata'
+        | 'memo'
       >
     | undefined
 }) {
   const { tokenSymbol } = useContext(V1ProjectContext)
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
 
   if (!event) return null
 
@@ -75,10 +73,11 @@ export default function RedeemEventElem({
         </div>
       }
       extra={
-        <div style={{ color: colors.text.secondary }}>
+        <div className="text-grey-900 dark:text-slate-100">
           <Trans>
             <ETHAmount amount={event.returnAmount} /> overflow received
           </Trans>
+          {event.memo && <RichNote className="mt-4" note={event.memo} />}
         </div>
       }
     />

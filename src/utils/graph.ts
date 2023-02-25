@@ -29,6 +29,7 @@ import { parseUseAllowanceEventJson } from 'models/subgraph-entities/v2/use-allo
 import { parseVeNftContractJson } from 'models/subgraph-entities/v2/venft-contract'
 import { parseVeNftTokenJson } from 'models/subgraph-entities/v2/venft-token'
 import { parseAddToBalanceEventJson } from 'models/subgraph-entities/vX/add-to-balance-event'
+import { parseBurnEventJson } from 'models/subgraph-entities/vX/burn-event'
 import { parseDeployedERC20EventJson } from 'models/subgraph-entities/vX/deployed-erc20-event'
 import { parseMintTokensEventJson } from 'models/subgraph-entities/vX/mint-tokens-event'
 import { parseParticipantJson } from 'models/subgraph-entities/vX/participant'
@@ -190,6 +191,9 @@ export function parseSubgraphEntity<
       break
     case 'payEvent':
       fn = parsePayEventJson
+      break
+    case 'burnEvent':
+      fn = parseBurnEventJson
       break
     case 'project':
       fn = parseProjectJson

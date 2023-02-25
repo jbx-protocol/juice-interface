@@ -8,7 +8,7 @@ import { useSetProjectHandleTx } from 'hooks/v1/transactor/SetProjectHandleTx'
 import { useSetProjectUriTx } from 'hooks/v1/transactor/SetProjectUriTx'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { revalidateProject } from 'lib/api/nextjs'
-import { V1TerminalVersion } from 'models/v1/terminals'
+import { PV1 } from 'models/pv'
 import { useContext, useEffect, useState } from 'react'
 
 type ProjectInfoFormFields = {
@@ -102,7 +102,7 @@ export default function EditProjectModal({
           if (onSuccess) onSuccess()
 
           if (pv) {
-            await revalidateProject({ pv: pv as V1TerminalVersion, handle })
+            await revalidateProject({ pv: pv as PV1, handle })
           }
 
           projectInfoForm.resetFields()

@@ -20,6 +20,7 @@ import { DistributeToPayoutSplitEvent } from '../v2/distribute-to-payout-split-e
 import { DistributeToReservedTokenSplitEvent } from '../v2/distribute-to-reserved-token-split-event'
 import { UseAllowanceEvent } from '../v2/use-allowance-event'
 import { AddToBalanceEvent } from './add-to-balance-event'
+import { BurnEvent } from './burn-event'
 import { DeployedERC20Event } from './deployed-erc20-event'
 import { MintTokensEvent } from './mint-tokens-event'
 import { PayEvent } from './pay-event'
@@ -33,6 +34,7 @@ export interface ProjectEvent extends TerminalEventEntity, BaseProjectEntity {
 
   // V1 & V2
   payEvent: PayEvent | null
+  burnEvent: BurnEvent | null
   addToBalanceEvent: AddToBalanceEvent | null
   mintTokensEvent: MintTokensEvent | null
   redeemEvent: RedeemEvent | null
@@ -61,6 +63,7 @@ export const parseProjectEventJson = (j: Json<ProjectEvent>): ProjectEvent => ({
   ...parseBaseProjectEntityJson(j),
   ...parseSubgraphEntitiesFromJson(j, [
     'payEvent',
+    'burnEvent',
     'project',
     'addToBalanceEvent',
     'mintTokensEvent',

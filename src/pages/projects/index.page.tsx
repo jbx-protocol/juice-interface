@@ -6,7 +6,7 @@ import { AppWrapper } from 'components/common'
 import ExternalLink from 'components/ExternalLink'
 import { PROJECTS_PAGE } from 'constants/fathomEvents'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { PV_V1, PV_V1_1, PV_V2 } from 'constants/pv'
+import { PV_V1, PV_V2 } from 'constants/pv'
 import { useWallet } from 'hooks/Wallet'
 import { trackFathomGoal } from 'lib/fathom'
 import { ProjectCategory } from 'models/projectVisibility'
@@ -74,17 +74,15 @@ function Projects() {
 
   const [orderBy, setOrderBy] = useState<OrderByOption>('totalPaid')
   const [includeV1, setIncludeV1] = useState<boolean>(true)
-  const [includeV1_1, setIncludeV1_1] = useState<boolean>(true)
   const [includeV2, setIncludeV2] = useState<boolean>(true)
   const [showArchived, setShowArchived] = useState<boolean>(false)
 
   const pv: PV[] | undefined = useMemo(() => {
     const _pv: PV[] = []
     if (includeV1) _pv.push(PV_V1)
-    if (includeV1_1) _pv.push(PV_V1_1)
     if (includeV2) _pv.push(PV_V2)
-    return _pv.length ? _pv : [PV_V1, PV_V1_1, PV_V2]
-  }, [includeV1, includeV1_1, includeV2])
+    return _pv.length ? _pv : [PV_V1, PV_V2]
+  }, [includeV1, includeV2])
 
   return (
     <div className="my-0 mx-auto max-w-5xl p-5">
@@ -150,10 +148,8 @@ function Projects() {
             {selectedTab === 'all' ? (
               <ProjectsFilterAndSort
                 includeV1={includeV1}
-                includeV1_1={includeV1_1}
                 includeV2={includeV2}
                 setIncludeV1={setIncludeV1}
-                setIncludeV1_1={setIncludeV1_1}
                 setIncludeV2={setIncludeV2}
                 showArchived={showArchived}
                 setShowArchived={setShowArchived}

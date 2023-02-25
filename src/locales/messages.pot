@@ -590,6 +590,9 @@ msgstr ""
 msgid "Burn {tokensTextLong}"
 msgstr ""
 
+msgid "Burned"
+msgstr ""
+
 msgid "Button Text"
 msgstr ""
 
@@ -3627,9 +3630,6 @@ msgid "V1 Project handle"
 msgstr ""
 
 msgid "V1 project handle"
-msgstr ""
-
-msgid "V1.1"
 msgstr ""
 
 msgid "V2"

@@ -5,11 +5,13 @@ import FormattedAddress from 'components/FormattedAddress'
 import MinimalTable from 'components/MinimalTable'
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'
+import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { V1ConfigureEvent } from 'models/subgraph-entities/v1/v1-configure'
+import { useContext } from 'react'
 import {
   formatWad,
   perbicentToPercent,
-  permilleToPercent,
+  permilleToPercent
 } from 'utils/format/formatNumber'
 import { detailedTimeString } from 'utils/format/formatTime'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
@@ -36,6 +38,8 @@ export default function V1ConfigureEventElem({
       >
     | undefined
 }) {
+  const { terminal } = useContext(V1ProjectContext)
+
   if (!event) return null
 
   function BallotStrategyElem(ballot: string) {
@@ -97,16 +101,20 @@ export default function V1ConfigureEventElem({
                 value: BallotStrategyElem(event.ballot),
               },
             ],
-            [
-              {
-                key: t`Token printing allowed`,
-                value: event.ticketPrintingIsAllowed,
-              },
-              {
-                key: t`Payments paused`,
-                value: event.payIsPaused,
-              },
-            ],
+            ...(terminal?.version === '1.1'
+              ? [
+                  [
+                    {
+                      key: t`Token printing allowed`,
+                      value: event.ticketPrintingIsAllowed,
+                    },
+                    {
+                      key: t`Payments paused`,
+                      value: event.payIsPaused,
+                    },
+                  ],
+                ]
+              : []),
           ]}
         />
       }

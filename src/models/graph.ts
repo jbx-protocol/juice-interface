@@ -16,6 +16,7 @@ import { UseAllowanceEvent } from './subgraph-entities/v2/use-allowance-event'
 import { VeNftContract } from './subgraph-entities/v2/venft-contract'
 import { VeNftToken } from './subgraph-entities/v2/venft-token'
 import { AddToBalanceEvent } from './subgraph-entities/vX/add-to-balance-event'
+import { BurnEvent } from './subgraph-entities/vX/burn-event'
 import { DeployedERC20Event } from './subgraph-entities/vX/deployed-erc20-event'
 import { MintTokensEvent } from './subgraph-entities/vX/mint-tokens-event'
 import { Participant } from './subgraph-entities/vX/participant'
@@ -34,6 +35,7 @@ interface SGEntities {
   project: Project
   projectSearch: Project
   payEvent: PayEvent
+  burnEvent: BurnEvent
   addToBalanceEvent: AddToBalanceEvent
   redeemEvent: RedeemEvent
   participant: Participant

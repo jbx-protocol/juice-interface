@@ -10,7 +10,6 @@ import { useEditProjectDetailsTx } from 'hooks/v2v3/transactor/EditProjectDetail
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { revalidateProject } from 'lib/api/nextjs'
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { reloadWindow } from 'utils/windowUtils'
 
 export function ProjectDetailsSettingsPage() {
   const { projectId } = useContext(ProjectMetadataContext)
@@ -60,7 +59,6 @@ export function ProjectDetailsSettingsPage() {
             })
           }
           refetchProjectMetadata()
-          reloadWindow()
         },
         onError: () => {
           setLoadingSaveChanges(false)

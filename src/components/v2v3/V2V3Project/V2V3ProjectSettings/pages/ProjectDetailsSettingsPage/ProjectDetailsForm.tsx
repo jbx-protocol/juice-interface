@@ -72,15 +72,14 @@ export function ProjectDetailsForm({
             />
           )}
           <FormItems.ProjectDescription name="description" />
-          <FormItems.ProjectLogoUri
-            name="logoUri"
-            initialUrl={initialLogoUrl}
-            onSuccess={logoUri => {
-              form.setFieldsValue({ logoUri })
-              onValuesChange?.()
-            }}
-            formItemProps={{ style: { marginBottom: 0 } }}
-          />
+
+          <Form.Item name={'logoUri'} label={t`Logo`}>
+            <FormImageUploader
+              value={initialLogoUrl}
+              maxSizeKBs={10000}
+              text={t`Upload`}
+            />
+          </Form.Item>
         </div>
         <div>
           <MinimalCollapse header={<Trans>Project links</Trans>}>
@@ -97,7 +96,7 @@ export function ProjectDetailsForm({
               name={'coverImageUri'}
               label={t`Cover image`}
               tooltip={t`Add a cover image to your project page. This will be displayed at the top of your project page.`}
-              extra={t`1400px x 350px image size recommended.`}
+              extra={t`1400px x 256px image size recommended.`}
             >
               <FormImageUploader
                 value={initialCoverImageUri}

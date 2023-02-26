@@ -1,6 +1,6 @@
 import { useForm } from 'antd/lib/form/Form'
-import { useAppSelector } from 'redux/hooks/AppSelector'
 import { useMemo } from 'react'
+import { useAppSelector } from 'redux/hooks/AppSelector'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { useFormDispatchWatch } from '../../hooks'
 
@@ -8,6 +8,7 @@ type ProjectDetailsFormProps = Partial<{
   projectName: string
   projectDescription: string
   logo: string
+  coverImage: string
   projectWebsite: string
   projectTwitter: string
   projectTelegram: string
@@ -28,6 +29,7 @@ export const useProjectDetailsForm = () => {
       projectName: projectMetadata.name,
       projectDescription: projectMetadata.description,
       logo: projectMetadata.logoUri,
+      coverImage: projectMetadata.coverImageUri,
       projectWebsite: projectMetadata.infoUri,
       projectTwitter: projectMetadata.twitter,
       projectTelegram: projectMetadata.telegram,
@@ -42,6 +44,7 @@ export const useProjectDetailsForm = () => {
       projectMetadata.discord,
       projectMetadata.infoUri,
       projectMetadata.logoUri,
+      projectMetadata.coverImageUri,
       projectMetadata.name,
       projectMetadata.payButton,
       projectMetadata.payDisclosure,
@@ -69,6 +72,13 @@ export const useProjectDetailsForm = () => {
     fieldName: 'logo',
     ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setLogoUri,
+    formatter: v => v ?? '',
+  })
+  useFormDispatchWatch({
+    form,
+    fieldName: 'coverImage',
+    ignoreUndefined: true,
+    dispatchFunction: editingV2ProjectActions.setCoverImageUri,
     formatter: v => v ?? '',
   })
   useFormDispatchWatch({

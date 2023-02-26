@@ -1,5 +1,6 @@
 import { useForm } from 'antd/lib/form/Form'
-import ProjectDetailsForm, {
+import {
+  ProjectDetailsForm,
   ProjectDetailsFormFields,
 } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/ProjectDetailsSettingsPage/ProjectDetailsForm'
 import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
@@ -9,6 +10,7 @@ import { useEditProjectDetailsTx } from 'hooks/v2v3/transactor/EditProjectDetail
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { revalidateProject } from 'lib/api/nextjs'
 import { useCallback, useContext, useEffect, useState } from 'react'
+import { reloadWindow } from 'utils/windowUtils'
 
 export function ProjectDetailsSettingsPage() {
   const { projectId } = useContext(ProjectMetadataContext)
@@ -30,6 +32,7 @@ export function ProjectDetailsSettingsPage() {
       name: fields.name,
       description: fields.description,
       logoUri: fields.logoUri,
+      coverImageUri: fields.coverImageUri,
       infoUri: fields.infoUri,
       twitter: fields.twitter,
       discord: fields.discord,
@@ -57,6 +60,7 @@ export function ProjectDetailsSettingsPage() {
             })
           }
           refetchProjectMetadata()
+          reloadWindow()
         },
         onError: () => {
           setLoadingSaveChanges(false)
@@ -77,6 +81,7 @@ export function ProjectDetailsSettingsPage() {
       name: projectMetadata?.name ?? '',
       infoUri: projectMetadata?.infoUri ?? '',
       logoUri: projectMetadata?.logoUri ?? '',
+      coverImageUri: projectMetadata?.coverImageUri ?? '',
       description: projectMetadata?.description ?? '',
       twitter: projectMetadata?.twitter ?? '',
       discord: projectMetadata?.discord ?? '',
@@ -88,6 +93,7 @@ export function ProjectDetailsSettingsPage() {
     projectMetadata?.name,
     projectMetadata?.infoUri,
     projectMetadata?.logoUri,
+    projectMetadata?.coverImageUri,
     projectMetadata?.description,
     projectMetadata?.twitter,
     projectMetadata?.discord,

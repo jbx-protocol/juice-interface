@@ -131,7 +131,9 @@ export function ProjectHeader({
         <ProjectLogo
           className={classNames(
             'h-32 w-32',
-            hasBanner ? 'mt-[-70px] border-4 border-solid border-smoke-25' : '',
+            hasBanner
+              ? 'mt-[-70px] border-4 border-solid border-smoke-25 dark:border-slate-800'
+              : '',
           )}
           uri={projectMetadata?.logoUri}
           name={projectMetadata?.name}

@@ -28,15 +28,16 @@ export function V2V3ProjectHeaderActions() {
     <>
       <div className="flex items-center">
         <div className="flex items-center gap-x-4">
-          <ContractVersionSelect />
-          <Tooltip title={t`Project tools`} placement="bottom">
-            <Button
-              onClick={() => setToolDrawerVisible(true)}
-              icon={<ToolOutlined />}
-              type="text"
-            />
-          </Tooltip>
-
+          <div>
+            <ContractVersionSelect />
+            <Tooltip title={t`Project tools`} placement="bottom">
+              <Button
+                onClick={() => setToolDrawerVisible(true)}
+                icon={<ToolOutlined />}
+                type="text"
+              />
+            </Tooltip>
+          </div>
           {canReconfigure && (
             <Tooltip title={t`Project Settings`} placement="bottom">
               <div>

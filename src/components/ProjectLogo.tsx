@@ -1,11 +1,6 @@
 import { useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-import {
-  cidFromUrl,
-  ipfsGatewayUrl,
-  ipfsUriToGatewayUrl,
-  isIpfsUri,
-} from 'utils/ipfs'
+import { cidFromUrl, ipfsGatewayUrl, ipfsUriToGatewayUrl } from 'utils/ipfs'
 
 // Override some project logos.
 const IMAGE_URI_OVERRIDES: { [k: number]: string } = {
@@ -40,9 +35,6 @@ export default function ProjectLogo({
       return ipfsGatewayUrl(cid)
     }
 
-    if (!isIpfsUri(uri)) {
-      return uri
-    }
     return ipfsUriToGatewayUrl(uri)
   }, [uri, projectId])
 
@@ -50,7 +42,7 @@ export default function ProjectLogo({
     <div
       className={twMerge(
         'flex h-20 w-20 items-center justify-center overflow-hidden rounded-sm',
-        !validImg ? 'bg-smoke-100 dark:bg-slate-600' : 'undefined',
+        'bg-smoke-100 dark:bg-slate-600',
         className,
       )}
     >

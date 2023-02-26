@@ -84,7 +84,7 @@ export function V2V3Project() {
       />
 
       <V2V3PayProjectFormProvider>
-        <div className="my-0 mx-auto flex max-w-5xl flex-col gap-y-5 p-5">
+        <div className="my-0 mx-auto flex max-w-5xl flex-col gap-y-5 px-5 pb-5">
           <Row className="gap-y-10" gutter={GUTTER_PX} align={'bottom'}>
             <Col md={colSizeMd} xs={24}>
               <section>

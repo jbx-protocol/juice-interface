@@ -8,6 +8,7 @@ import ProjectLogo from 'components/ProjectLogo'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useGnosisSafe } from 'hooks/safe/GnosisSafe'
 import { useContext } from 'react'
+import { classNames } from 'utils/classNames'
 import { EditProjectHandleButton } from './EditProjectHandleButton'
 import SocialLinks from './SocialLinks'
 
@@ -112,11 +113,26 @@ export function ProjectHeader({
     projectMetadata?.twitter ||
     projectMetadata?.infoUri
 
+  const hasBanner = Boolean(projectMetadata?.coverImageUri)
+
   return (
     <header>
+      {hasBanner && (
+        <div className="w-full">
+          <img
+            src={projectMetadata?.coverImageUri}
+            className="h-64 w-full object-cover"
+            crossOrigin="anonymous"
+          />
+        </div>
+      )}
+
       <div className="my-0 mx-auto flex w-full max-w-5xl flex-wrap gap-x-7 gap-y-3 p-5">
         <ProjectLogo
-          className="h-32 w-32"
+          className={classNames(
+            'h-32 w-32',
+            hasBanner ? 'mt-[-70px] border-4 border-solid border-smoke-25' : '',
+          )}
           uri={projectMetadata?.logoUri}
           name={projectMetadata?.name}
           projectId={projectId}

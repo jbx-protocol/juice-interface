@@ -1,7 +1,7 @@
 import { NftPostPayModalConfig } from './nftRewardTier'
 import { TokenRef } from './tokenRef'
 
-export const LATEST_METADATA_VERSION = 6
+export const LATEST_METADATA_VERSION = 7
 
 type ProjectMetadataV1 = Partial<{
   name: string
@@ -50,8 +50,16 @@ type ProjectMetadataV5 = Partial<
 // add `telegram`
 export type ProjectMetadataV6 = Partial<
   Omit<ProjectMetadataV5, 'version'> & {
-    version: typeof LATEST_METADATA_VERSION
+    version: 6
     telegram: string
+  }
+>
+
+// add `coverImageUri`
+export type ProjectMetadataV7 = Partial<
+  Omit<ProjectMetadataV6, 'version'> & {
+    version: typeof LATEST_METADATA_VERSION
+    coverImageUri: string
   }
 >
 
@@ -62,11 +70,12 @@ export type AnyProjectMetadata =
   | ProjectMetadataV4
   | ProjectMetadataV5
   | ProjectMetadataV6
+  | ProjectMetadataV7
 
 // Converts metadata of any version to latest version
 export const consolidateMetadata = (
   metadata: AnyProjectMetadata,
-): ProjectMetadataV6 => {
+): ProjectMetadataV7 => {
   return {
     ...metadata,
     payButton:

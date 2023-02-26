@@ -2,14 +2,14 @@ import { CV_V3 } from 'constants/cv'
 import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
-import { ProjectMetadataV6 } from 'models/projectMetadata'
+import { ProjectMetadataV7 } from 'models/projectMetadata'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import { GetStaticPropsResult } from 'next'
 import { findProjectMetadata } from 'utils/server'
 import { loadV2V3Contract } from 'utils/v2v3/loadV2V3Contract'
 
 export interface ProjectPageProps {
-  metadata?: ProjectMetadataV6
+  metadata?: ProjectMetadataV7
   projectId: number
 }
 

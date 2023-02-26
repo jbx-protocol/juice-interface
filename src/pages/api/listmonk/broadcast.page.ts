@@ -54,17 +54,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         )
 
   if (!verifiedOwner) {
-    return res
-      .status(403)
-      .json({
-        error: `Failed to verify owner signature for ${pv} project ${projectId}`,
-      })
+    return res.status(403).json({
+      error: `Failed to verify owner signature for ${pv} project ${projectId}`,
+    })
   }
 
   try {
     const listId = await getListID(projectId, pv)
     if (!listId) {
-      return res.status(400).json({ error: 'List not found.' })
+      return res
+        .status(400)
+        .json({ error: `No list found for v${pv}p${projectId}.` })
     }
 
     await broadcastMessage([listId], messageData)

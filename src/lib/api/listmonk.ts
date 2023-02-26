@@ -1,5 +1,9 @@
 import axios from 'axios'
-import { ListmonkListData, ListmonkMessageData } from 'lib/listmonk'
+import {
+  ListmonkListData,
+  ListmonkMessageData,
+  ListmonkSubscriptionData,
+} from 'lib/listmonk'
 import { SignatureLike } from '@ethersproject/bytes'
 
 export function broadcastMessage(
@@ -19,5 +23,15 @@ export function createList(
   return axios.post(`/api/listmonk/createList`, {
     listData,
     signature,
+  })
+}
+
+export function createSubscription(
+  subscriptionData: ListmonkSubscriptionData,
+  subscribeToJBUpdates?: boolean,
+) {
+  return axios.post(`/api/listmonk/createSubscription`, {
+    subscriptionData,
+    subscribeToJBUpdates,
   })
 }

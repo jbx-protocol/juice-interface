@@ -75,9 +75,25 @@ export function createList({ name, projectId, pv }: ListmonkListData) {
   })
 }
 
-// export function createSubscription(projectIds: number[], emailAddress: string) {
-// 	return axios.post(url + '/api/subscribers')
-// }
+// Create new subscription
+export function createSubscription(
+  lists: number[],
+  { name, email }: ListmonkSubscriptionData,
+) {
+  const requestBody = {
+    status: 'enabled',
+    name,
+    email,
+    lists,
+  }
+
+  return axios.post(url + '/api/subscribers', JSON.stringify(requestBody), {
+    headers,
+  })
+}
+
+// Add list to existing subscription
+// export function addList() {}
 
 export interface ListmonkMessageData {
   body: string
@@ -89,6 +105,13 @@ export interface ListmonkMessageData {
 
 export interface ListmonkListData {
   name: string
+  projectId: number
+  pv: PV
+}
+
+export interface ListmonkSubscriptionData {
+  name: string
+  email: string
   projectId: number
   pv: PV
 }

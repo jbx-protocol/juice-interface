@@ -10,7 +10,7 @@ export function broadcastMessage(
   messageData: ListmonkMessageData,
   signature: SignatureLike,
 ) {
-  return axios.post(`/api/listmonk/broadcast`, {
+  return axios.post(`/api/listmonk/broadcastMessage`, {
     messageData,
     signature,
   })

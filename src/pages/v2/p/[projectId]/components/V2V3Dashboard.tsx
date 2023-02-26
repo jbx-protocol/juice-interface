@@ -1,5 +1,4 @@
 import Loading from 'components/Loading'
-import ScrollToTopButton from 'components/buttons/ScrollToTopButton'
 import { V2V3Project } from 'components/v2v3/V2V3Project'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactionProvider } from 'contexts/Transaction/TransactionProvider'
@@ -12,16 +11,10 @@ export function V2V3Dashboard() {
   if (!projectMetadata) return <Loading />
 
   return (
-    <div className="my-0 mx-auto max-w-5xl p-5">
-      <TransactionProvider>
-        <VeNftProvider projectId={projectId}>
-          <V2V3Project />
-        </VeNftProvider>
-      </TransactionProvider>
-
-      <div className="mt-12 text-center">
-        <ScrollToTopButton />
-      </div>
-    </div>
+    <TransactionProvider>
+      <VeNftProvider projectId={projectId}>
+        <V2V3Project />
+      </VeNftProvider>
+    </TransactionProvider>
   )
 }

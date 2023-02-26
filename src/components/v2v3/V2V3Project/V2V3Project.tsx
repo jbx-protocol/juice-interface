@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Col, Row, Space } from 'antd'
+import ScrollToTopButton from 'components/buttons/ScrollToTopButton'
 import { TextButton } from 'components/buttons/TextButton'
 import { useModalFromUrlQuery } from 'components/modals/hooks/ModalFromUrlQuery'
 import { PayProjectForm } from 'components/Project/PayProjectForm'
@@ -83,7 +84,7 @@ export function V2V3Project() {
       />
 
       <V2V3PayProjectFormProvider>
-        <Space direction="vertical" size={GUTTER_PX} className="w-full">
+        <div className="my-0 mx-auto flex max-w-5xl flex-col gap-y-5 p-5">
           <Row className="gap-y-10" gutter={GUTTER_PX} align={'bottom'}>
             <Col md={colSizeMd} xs={24}>
               <section>
@@ -147,7 +148,11 @@ export function V2V3Project() {
               </div>
             </Col>
           </Row>
-        </Space>
+
+          <div className="mt-12 text-center">
+            <ScrollToTopButton />
+          </div>
+        </div>
       </V2V3PayProjectFormProvider>
 
       <NewDeployModal

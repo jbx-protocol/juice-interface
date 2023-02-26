@@ -122,7 +122,7 @@ export function ProjectHeader({
           projectId={projectId}
         />
 
-        <div className="flex flex-1 flex-col gap-y-2">
+        <div className="flex min-w-[70%] flex-1 flex-col gap-y-2">
           <div className="flex flex-wrap items-start justify-between gap-y-3">
             <div className="flex flex-col flex-wrap gap-y-2">
               <ProjectHeading />

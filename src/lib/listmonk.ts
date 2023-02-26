@@ -10,13 +10,36 @@ const headers = {
     'base64',
   )}`,
 }
+const network = process.env.NEXT_PUBLIC_INFURA_NETWORK
+
+function checkEnv() {
+  if (!network) {
+    console.error(
+      'Could not find network. Double check NEXT_PUBLIC_INFURA_NETWORK.',
+    )
+    throw new Error(
+      'Could not find network. Double check NEXT_PUBLIC_INFURA_NETWORK.',
+    )
+  }
+
+  if (!url || !user || !pass) {
+    console.error(
+      'Missing a Listmonk .env var. Double check LISTMONK_URL, LISTMONK_USER, and LISTMONK_PASS.',
+    )
+    throw new Error(
+      'Missing a Listmonk .env var. Double check LISTMONK_URL, LISTMONK_USER, and LISTMONK_PASS.',
+    )
+  }
+}
 
 export function broadcastMessage(
   lists: number[],
   { body, subject, send_at, pv, projectId }: ListmonkMessageData,
 ) {
+  checkEnv()
+
   const requestBody = {
-    name: `v${pv}p${projectId}: ${subject}`,
+    name: `${network} v${pv}p${projectId}: ${subject}`,
     type: 'regular',
     content_type: 'markdown',
     lists,
@@ -25,33 +48,25 @@ export function broadcastMessage(
     body,
   }
 
-  if (!url || !user || !pass) {
-    console.error(
-      'Missing a Listmonk .env var. Double check LISTMONK_URL, LISTMONK_USER, and LISTMONK_PASS. Request body: ',
-      JSON.stringify(requestBody),
-    )
-    throw new Error(
-      'Missing a Listmonk .env var. Double check LISTMONK_URL, LISTMONK_USER, and LISTMONK_PASS.',
-    )
-  }
-
   return axios.post(url + '/api/campaigns', JSON.stringify(requestBody), {
     headers,
   })
 }
 
 function getLists() {
+  checkEnv()
   return axios.get(url + '/api/lists?per_page=all', { headers })
 }
 
 export async function getListId(projectId: number, pv: PV) {
   const lists = await getLists()
   return lists.data.results.find((v: { tags: unknown[] }) =>
-    v.tags.find(w => w === `v${pv}p${projectId}`),
+    v.tags.find(w => w === `${network}-v${pv}p${projectId}`),
   ).id
 }
 
 export async function getUserId(email: string) {
+  checkEnv()
   const search = await axios.get(
     url + `/api/subscribers?query=subscribers.email = ${email}"`,
     { headers },
@@ -60,22 +75,13 @@ export async function getUserId(email: string) {
 }
 
 export function createList({ name, projectId, pv }: ListmonkListData) {
+  checkEnv()
   const requestBody = {
     name,
-    description: `Updates from v${pv} project ${projectId}.`,
+    description: `Updates from Juicebox v${pv} project #${projectId} on ${network}.`,
     type: 'public',
     optin: 'double',
-    tags: ['project', `v${pv}p${projectId}`],
-  }
-
-  if (!url || !user || !pass) {
-    console.error(
-      'Missing a Listmonk .env var. Double check LISTMONK_URL, LISTMONK_USER, and LISTMONK_PASS. Request body: ',
-      JSON.stringify(requestBody),
-    )
-    throw new Error(
-      'Missing a Listmonk .env var. Double check LISTMONK_URL, LISTMONK_USER, and LISTMONK_PASS.',
-    )
+    tags: ['project', `${network}-v${pv}p${projectId}`],
   }
 
   return axios.post(url + '/api/lists', JSON.stringify(requestBody), {
@@ -88,6 +94,8 @@ export function createSubscription(
   lists: number[],
   { name, email }: ListmonkSubscriptionData,
 ) {
+  checkEnv()
+
   const requestBody = {
     status: 'enabled',
     name,
@@ -102,6 +110,8 @@ export function createSubscription(
 
 // Add list to existing subscription
 export function addToList(lists: number[], users: number[]) {
+  checkEnv()
+
   const requestBody = {
     ids: users,
     target_list_ids: lists,

@@ -54,7 +54,7 @@ export function ContractVersionSelect() {
     <Select
       defaultValue={cv}
       bordered={false}
-      className="ant-select-color-secondary mr-2"
+      className="ant-select-color-secondary"
       onSelect={(value: CV2V3) => {
         setCv?.(value)
         updateRoute(value)

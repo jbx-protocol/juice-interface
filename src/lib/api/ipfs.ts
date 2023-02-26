@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios'
 import { InfuraPinResponse } from 'lib/infura/ipfs'
-import { consolidateMetadata, ProjectMetadataV6 } from 'models/projectMetadata'
+import { consolidateMetadata, ProjectMetadataV7 } from 'models/projectMetadata'
 import { ipfsGatewayUrl } from 'utils/ipfs'
 
 import { UploadProgressEvent } from 'rc-upload/lib/interface'
@@ -76,7 +76,7 @@ export const pinJson = async (data: unknown) => {
 }
 
 export const uploadProjectMetadata = async (
-  metadata: Omit<ProjectMetadataV6, 'version'>,
+  metadata: Omit<ProjectMetadataV7, 'version'>,
 ) => {
   return await pinJson(consolidateMetadata(metadata))
 }

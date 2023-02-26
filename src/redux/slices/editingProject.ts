@@ -1,12 +1,12 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { PayoutMod, TicketMod } from 'models/v1/mods'
 import {
   LATEST_METADATA_VERSION,
-  ProjectMetadataV6,
+  ProjectMetadataV7,
 } from 'models/projectMetadata'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
+import { PayoutMod, TicketMod } from 'models/v1/mods'
 import { toDateSeconds } from 'utils/format/formatDate'
 import {
   perbicentToPercent,
@@ -22,7 +22,7 @@ import {
 import { V1_CURRENCY_USD } from 'constants/v1/currency'
 
 interface EditingProjectInfo {
-  metadata: ProjectMetadataV6
+  metadata: ProjectMetadataV7
   handle: string
 }
 

@@ -3,7 +3,7 @@ import axios from 'axios'
 import { juiceboxEmojiImageUri } from 'constants/images'
 import { readNetwork } from 'constants/networks'
 import { WAD_DECIMALS } from 'constants/numbers'
-import { AnyProjectMetadata, ProjectMetadataV6 } from 'models/projectMetadata'
+import { AnyProjectMetadata, ProjectMetadataV7 } from 'models/projectMetadata'
 import { pinJson } from './api/ipfs'
 
 /**
@@ -87,7 +87,7 @@ const generateSnapshotSpaceSettings = ({
     name: projectMetadata?.name,
     about: '',
     website: `https://juicebox.money/@${handle}`,
-    twitter: (projectMetadata as ProjectMetadataV6)?.twitter,
+    twitter: (projectMetadata as ProjectMetadataV7)?.twitter,
     symbol: tokenSymbol,
     avatar,
   }
@@ -108,7 +108,7 @@ export async function uploadSnapshotSettingsToIPFS({
   handle: string
   tokenSymbol: string
   projectId: number
-  projectMetadata: ProjectMetadataV6
+  projectMetadata: ProjectMetadataV7
   projectOwnerAddress: string
   JBTokenStoreAddress: string
 }): Promise<string> {

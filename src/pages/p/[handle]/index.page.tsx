@@ -1,4 +1,3 @@
-import ScrollToTopButton from 'components/buttons/ScrollToTopButton'
 import { AppWrapper, SEO } from 'components/common'
 import Loading from 'components/Loading'
 import Project404 from 'components/Project404'
@@ -8,14 +7,14 @@ import { V1ProjectProvider } from 'contexts/v1/Project/V1ProjectProvider'
 import { V1UserProvider } from 'contexts/v1/User/V1UserProvider'
 import { V1CurrencyProvider } from 'contexts/v1/V1CurrencyProvider'
 import { V1ProjectMetadataProvider } from 'contexts/v1/V1ProjectMetadataProvider'
-import { ProjectMetadataV6 } from 'models/projectMetadata'
+import { ProjectMetadataV7 } from 'models/projectMetadata'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
 import { getV1StaticPaths, getV1StaticProps } from './pageLoaders'
 
 export interface V1StaticProps {
-  metadata: ProjectMetadataV6
+  metadata: ProjectMetadataV7
   handle: string
 }
 
@@ -79,12 +78,5 @@ function V1Dashboard() {
     return <Project404 projectId={handle} />
   }
 
-  return (
-    <div className="my-0 mx-auto max-w-5xl p-5">
-      <V1Project />
-      <div className="p-5 text-center">
-        <ScrollToTopButton />
-      </div>
-    </div>
-  )
+  return <V1Project />
 }

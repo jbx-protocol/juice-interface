@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Col, Row, Space } from 'antd'
+import ScrollToTopButton from 'components/buttons/ScrollToTopButton'
 import { TextButton } from 'components/buttons/TextButton'
 import { useModalFromUrlQuery } from 'components/modals/hooks/ModalFromUrlQuery'
 import { PayProjectForm } from 'components/Project/PayProjectForm'
@@ -82,73 +83,79 @@ export function V2V3Project() {
         canEditProjectHandle={canEditProjectHandle}
       />
 
-      <V2V3PayProjectFormProvider>
-        <Space direction="vertical" size={GUTTER_PX} className="w-full">
-          <Row className="gap-y-10" gutter={GUTTER_PX} align={'bottom'}>
-            <Col md={colSizeMd} xs={24}>
-              <section>
-                <TreasuryStats />
-                <div className="text-right">
-                  <AllAssetsButton />
+      <div className="my-0 mx-auto max-w-5xl p-5">
+        <V2V3PayProjectFormProvider>
+          <Space direction="vertical" size={GUTTER_PX} className="w-full">
+            <Row className="gap-y-10" gutter={GUTTER_PX} align={'bottom'}>
+              <Col md={colSizeMd} xs={24}>
+                <section>
+                  <TreasuryStats />
+                  <div className="text-right">
+                    <AllAssetsButton />
+                  </div>
+                </section>
+              </Col>
+
+              <Col md={colSizeMd} xs={24}>
+                <section>
+                  <PayProjectForm disabled={payProjectFormDisabled} />
+                </section>
+                {isMobile && hasNftRewards ? (
+                  <section className="mt-7">
+                    <NftRewardsSection />
+                  </section>
+                ) : null}
+              </Col>
+            </Row>
+
+            <Row gutter={GUTTER_PX}>
+              <Col md={colSizeMd} xs={24}>
+                <Space direction="vertical" size={GUTTER_PX} className="w-full">
+                  {pv ? (
+                    <section>
+                      <VolumeChart
+                        style={{ height: 240 }}
+                        createdAt={createdAt}
+                        projectId={projectId}
+                        pv={pv}
+                      />
+                    </section>
+                  ) : null}
+                  <section>
+                    <V2V3ManageTokensSection />
+                  </section>
+
+                  {hasNftRewards && isConnected ? (
+                    <section>
+                      <ManageNftsSection />
+                    </section>
+                  ) : null}
+                  <section>
+                    <V2V3FundingCycleSection />
+                  </section>
+                </Space>
+              </Col>
+
+              <Col
+                className={classNames(isMobile ? 'mt-10' : '')}
+                md={colSizeMd}
+                xs={24}
+              >
+                <div className="flex flex-col gap-12">
+                  {!isMobile && hasNftRewards ? <NftRewardsSection /> : null}
+                  <section>
+                    <ProjectActivity />
+                  </section>
                 </div>
-              </section>
-            </Col>
+              </Col>
+            </Row>
+          </Space>
+        </V2V3PayProjectFormProvider>
 
-            <Col md={colSizeMd} xs={24}>
-              <section>
-                <PayProjectForm disabled={payProjectFormDisabled} />
-              </section>
-              {isMobile && hasNftRewards ? (
-                <section className="mt-7">
-                  <NftRewardsSection />
-                </section>
-              ) : null}
-            </Col>
-          </Row>
-
-          <Row gutter={GUTTER_PX}>
-            <Col md={colSizeMd} xs={24}>
-              <Space direction="vertical" size={GUTTER_PX} className="w-full">
-                {pv ? (
-                  <section>
-                    <VolumeChart
-                      style={{ height: 240 }}
-                      createdAt={createdAt}
-                      projectId={projectId}
-                      pv={pv}
-                    />
-                  </section>
-                ) : null}
-                <section>
-                  <V2V3ManageTokensSection />
-                </section>
-
-                {hasNftRewards && isConnected ? (
-                  <section>
-                    <ManageNftsSection />
-                  </section>
-                ) : null}
-                <section>
-                  <V2V3FundingCycleSection />
-                </section>
-              </Space>
-            </Col>
-
-            <Col
-              className={classNames(isMobile ? 'mt-10' : '')}
-              md={colSizeMd}
-              xs={24}
-            >
-              <div className="flex flex-col gap-12">
-                {!isMobile && hasNftRewards ? <NftRewardsSection /> : null}
-                <section>
-                  <ProjectActivity />
-                </section>
-              </div>
-            </Col>
-          </Row>
-        </Space>
-      </V2V3PayProjectFormProvider>
+        <div className="mt-12 text-center">
+          <ScrollToTopButton />
+        </div>
+      </div>
 
       <NewDeployModal
         open={newDeployModalVisible}

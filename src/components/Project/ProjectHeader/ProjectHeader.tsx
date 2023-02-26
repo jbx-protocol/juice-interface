@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Divider, Space, Tooltip } from 'antd'
+import { Divider, Tooltip } from 'antd'
 import { Badge } from 'components/Badge'
 import FormattedAddress from 'components/FormattedAddress'
 import Paragraph from 'components/Paragraph'
@@ -10,6 +10,86 @@ import { useGnosisSafe } from 'hooks/safe/GnosisSafe'
 import { useContext } from 'react'
 import { EditProjectHandleButton } from './EditProjectHandleButton'
 import SocialLinks from './SocialLinks'
+
+function ProjectSubheading({
+  handle,
+  canEditProjectHandle,
+  projectOwnerAddress,
+}: {
+  handle: string | undefined
+  projectOwnerAddress: string | undefined
+  canEditProjectHandle?: boolean
+}) {
+  const { projectId } = useContext(ProjectMetadataContext)
+
+  const { data: gnosisSafe, isLoading: gnosisSafeLoading } =
+    useGnosisSafe(projectOwnerAddress)
+
+  return (
+    <div className="flex items-center gap-x-4 text-grey-500 dark:text-grey-300">
+      <span className="font-medium">
+        {handle ? (
+          <Tooltip title={t`Project ID: ${projectId}`}>
+            <span>@{handle}</span>
+          </Tooltip>
+        ) : (
+          <Trans>Project #{projectId}</Trans>
+        )}
+
+        {!handle && canEditProjectHandle && projectId ? (
+          <EditProjectHandleButton />
+        ) : null}
+      </span>
+
+      {projectOwnerAddress && (
+        <>
+          <Divider
+            type="vertical"
+            className="m-0 h-6 bg-grey-100 dark:bg-grey-900"
+          />
+          <div className="flex items-center font-medium">
+            <span className="mr-2">
+              <Trans>
+                Owned by{' '}
+                <FormattedAddress
+                  address={projectOwnerAddress}
+                  className="text-grey-500 dark:text-grey-300"
+                />
+              </Trans>
+            </span>
+            {!gnosisSafeLoading && gnosisSafe && (
+              <GnosisSafeBadge
+                safe={gnosisSafe}
+                href={`${window.location.href}/safe`}
+              />
+            )}
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
+function ProjectHeading() {
+  const { projectMetadata, isArchived } = useContext(ProjectMetadataContext)
+  const projectTitle = projectMetadata?.name || t`Untitled project`
+
+  return (
+    <div className="flex max-w-md items-center overflow-hidden">
+      <h1
+        className="mb-0 overflow-hidden text-ellipsis text-4xl text-black dark:text-slate-100"
+        title={projectTitle}
+      >
+        {projectTitle}
+      </h1>
+      {isArchived && (
+        <Badge className="ml-4 " upperCase variant="warning">
+          <Trans>Archived</Trans>
+        </Badge>
+      )}
+    </div>
+  )
+}
 
 export function ProjectHeader({
   handle,
@@ -24,14 +104,8 @@ export function ProjectHeader({
   canEditProjectHandle?: boolean
   hideDescription?: boolean
 }) {
-  const { projectMetadata, projectId, isArchived } = useContext(
-    ProjectMetadataContext,
-  )
+  const { projectMetadata, projectId } = useContext(ProjectMetadataContext)
 
-  const { data: gnosisSafe, isLoading: gnosisSafeLoading } =
-    useGnosisSafe(projectOwnerAddress)
-
-  const projectTitle = projectMetadata?.name || t`Untitled project`
   const hasSocialLinks =
     projectMetadata?.discord ||
     projectMetadata?.telegram ||
@@ -39,51 +113,24 @@ export function ProjectHeader({
     projectMetadata?.infoUri
 
   return (
-    <header className="flex flex-wrap items-start justify-between">
-      <div className="mr-5 mb-5 h-full">
+    <header>
+      <div className="my-0 mx-auto flex w-full max-w-5xl flex-wrap gap-x-7 gap-y-3 p-5">
         <ProjectLogo
           className="h-32 w-32"
           uri={projectMetadata?.logoUri}
           name={projectMetadata?.name}
           projectId={projectId}
         />
-      </div>
 
-      <div className="min-w-[70%] flex-1">
-        <Space direction="vertical" className="w-full">
-          <div className="flex flex-wrap items-start justify-between gap-y-2">
-            <div className="max-w-md">
-              <div className="flex items-center">
-                <h1
-                  className="mb-2 overflow-hidden text-ellipsis text-4xl text-black dark:text-slate-100"
-                  title={projectTitle}
-                >
-                  {projectTitle}
-                </h1>
-                {isArchived && (
-                  <div>
-                    <Badge className="ml-4" upperCase variant="warning">
-                      <Trans>Archived</Trans>
-                    </Badge>
-                  </div>
-                )}
-              </div>
-
-              <div className="flex items-baseline gap-x-5">
-                <span className="font-medium text-grey-600 dark:text-grey-300">
-                  {handle ? (
-                    <Tooltip title={t`Project ID: ${projectId}`}>
-                      <span>@{handle}</span>
-                    </Tooltip>
-                  ) : (
-                    <Trans>Project #{projectId}</Trans>
-                  )}
-                </span>
-
-                {!handle && canEditProjectHandle && projectId ? (
-                  <EditProjectHandleButton />
-                ) : null}
-              </div>
+        <div className="flex flex-1 flex-col gap-y-2">
+          <div className="flex flex-wrap items-start justify-between gap-y-3">
+            <div className="flex flex-col flex-wrap gap-y-2">
+              <ProjectHeading />
+              <ProjectSubheading
+                handle={handle}
+                canEditProjectHandle={canEditProjectHandle}
+                projectOwnerAddress={projectOwnerAddress}
+              />
             </div>
 
             <div className="flex items-center">
@@ -109,23 +156,7 @@ export function ProjectHeader({
               characterLimit={250}
             />
           )}
-
-          {projectOwnerAddress && (
-            <div className="flex items-center">
-              <span className="mr-2">
-                <Trans>
-                  Owned by <FormattedAddress address={projectOwnerAddress} />
-                </Trans>
-              </span>
-              {!gnosisSafeLoading && gnosisSafe && (
-                <GnosisSafeBadge
-                  safe={gnosisSafe}
-                  href={`${window.location.href}/safe`}
-                />
-              )}
-            </div>
-          )}
-        </Space>
+        </div>
       </div>
     </header>
   )

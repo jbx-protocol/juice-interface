@@ -851,6 +851,9 @@ msgstr ""
 msgid "Copy to clipboard"
 msgstr ""
 
+msgid "Create"
+msgstr ""
+
 msgid "Create Payment Address"
 msgstr ""
 

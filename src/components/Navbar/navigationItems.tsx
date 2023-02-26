@@ -128,6 +128,17 @@ export const desktopMenuItems = ({
     ),
   },
   {
+    key: 'create',
+    label: (
+      <Link href="/create">
+        <a
+          className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100 lg:block"
+          onClick={() => trackFathomGoal(TOP_NAV.CREATE_A_PROJECT_CTA)}
+        >{t`Create`}</a>
+      </Link>
+    ),
+  },
+  {
     key: 'discord',
     label: (
       <Link href="https://discord.gg/wFTh4QnDzk">
@@ -149,17 +160,6 @@ export const desktopMenuItems = ({
           dropdownIconStyle,
         }}
       />
-    ),
-  },
-  {
-    key: 'create',
-    label: (
-      <Link href="/create">
-        <a
-          className="flex hidden cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100 lg:block"
-          onClick={() => trackFathomGoal(TOP_NAV.CREATE_A_PROJECT_CTA)}
-        >{t`Create a project`}</a>
-      </Link>
     ),
   },
 ]

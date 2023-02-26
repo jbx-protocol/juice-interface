@@ -19,4 +19,3 @@ To update settings, go to your admin dashboard and select "Settings".
 `LISTMONK_URL`: Your public listmonk endpoint.
 `LISTMONK_USER`: Listmonk admin username.
 `LISTMONK_PASS`: Listmonk admin password.
-`LISTMONK_LIST_ID`: The list IDs to be used for project subscriptions and messages

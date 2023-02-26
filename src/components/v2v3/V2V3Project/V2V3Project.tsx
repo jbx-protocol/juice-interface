@@ -83,79 +83,77 @@ export function V2V3Project() {
         canEditProjectHandle={canEditProjectHandle}
       />
 
-      <div className="my-0 mx-auto max-w-5xl p-5">
-        <V2V3PayProjectFormProvider>
-          <Space direction="vertical" size={GUTTER_PX} className="w-full">
-            <Row className="gap-y-10" gutter={GUTTER_PX} align={'bottom'}>
-              <Col md={colSizeMd} xs={24}>
-                <section>
-                  <TreasuryStats />
-                  <div className="text-right">
-                    <AllAssetsButton />
-                  </div>
-                </section>
-              </Col>
+      <V2V3PayProjectFormProvider>
+        <div className="my-0 mx-auto flex max-w-5xl flex-col gap-y-5 p-5">
+          <Row className="gap-y-10" gutter={GUTTER_PX} align={'bottom'}>
+            <Col md={colSizeMd} xs={24}>
+              <section>
+                <TreasuryStats />
+                <div className="text-right">
+                  <AllAssetsButton />
+                </div>
+              </section>
+            </Col>
 
-              <Col md={colSizeMd} xs={24}>
-                <section>
-                  <PayProjectForm disabled={payProjectFormDisabled} />
+            <Col md={colSizeMd} xs={24}>
+              <section>
+                <PayProjectForm disabled={payProjectFormDisabled} />
+              </section>
+              {isMobile && hasNftRewards ? (
+                <section className="mt-7">
+                  <NftRewardsSection />
                 </section>
-                {isMobile && hasNftRewards ? (
-                  <section className="mt-7">
-                    <NftRewardsSection />
+              ) : null}
+            </Col>
+          </Row>
+
+          <Row gutter={GUTTER_PX}>
+            <Col md={colSizeMd} xs={24}>
+              <Space direction="vertical" size={GUTTER_PX} className="w-full">
+                {pv ? (
+                  <section>
+                    <VolumeChart
+                      style={{ height: 240 }}
+                      createdAt={createdAt}
+                      projectId={projectId}
+                      pv={pv}
+                    />
                   </section>
                 ) : null}
-              </Col>
-            </Row>
+                <section>
+                  <V2V3ManageTokensSection />
+                </section>
 
-            <Row gutter={GUTTER_PX}>
-              <Col md={colSizeMd} xs={24}>
-                <Space direction="vertical" size={GUTTER_PX} className="w-full">
-                  {pv ? (
-                    <section>
-                      <VolumeChart
-                        style={{ height: 240 }}
-                        createdAt={createdAt}
-                        projectId={projectId}
-                        pv={pv}
-                      />
-                    </section>
-                  ) : null}
+                {hasNftRewards && isConnected ? (
                   <section>
-                    <V2V3ManageTokensSection />
+                    <ManageNftsSection />
                   </section>
+                ) : null}
+                <section>
+                  <V2V3FundingCycleSection />
+                </section>
+              </Space>
+            </Col>
 
-                  {hasNftRewards && isConnected ? (
-                    <section>
-                      <ManageNftsSection />
-                    </section>
-                  ) : null}
-                  <section>
-                    <V2V3FundingCycleSection />
-                  </section>
-                </Space>
-              </Col>
+            <Col
+              className={classNames(isMobile ? 'mt-10' : '')}
+              md={colSizeMd}
+              xs={24}
+            >
+              <div className="flex flex-col gap-12">
+                {!isMobile && hasNftRewards ? <NftRewardsSection /> : null}
+                <section>
+                  <ProjectActivity />
+                </section>
+              </div>
+            </Col>
+          </Row>
 
-              <Col
-                className={classNames(isMobile ? 'mt-10' : '')}
-                md={colSizeMd}
-                xs={24}
-              >
-                <div className="flex flex-col gap-12">
-                  {!isMobile && hasNftRewards ? <NftRewardsSection /> : null}
-                  <section>
-                    <ProjectActivity />
-                  </section>
-                </div>
-              </Col>
-            </Row>
-          </Space>
-        </V2V3PayProjectFormProvider>
-
-        <div className="mt-12 text-center">
-          <ScrollToTopButton />
+          <div className="mt-12 text-center">
+            <ScrollToTopButton />
+          </div>
         </div>
-      </div>
+      </V2V3PayProjectFormProvider>
 
       <NewDeployModal
         open={newDeployModalVisible}

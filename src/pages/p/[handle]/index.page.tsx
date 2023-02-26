@@ -1,4 +1,3 @@
-import ScrollToTopButton from 'components/buttons/ScrollToTopButton'
 import { AppWrapper, SEO } from 'components/common'
 import Loading from 'components/Loading'
 import Project404 from 'components/Project404'
@@ -79,12 +78,5 @@ function V1Dashboard() {
     return <Project404 projectId={handle} />
   }
 
-  return (
-    <div className="my-0 mx-auto max-w-5xl p-5">
-      <V1Project />
-      <div className="p-5 text-center">
-        <ScrollToTopButton />
-      </div>
-    </div>
-  )
+  return <V1Project />
 }

@@ -1,6 +1,7 @@
 import { CloseOutlined, LoadingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, Col, Row, Skeleton } from 'antd'
+import ScrollToTopButton from 'components/buttons/ScrollToTopButton'
 import { Callout } from 'components/Callout'
 import ExternalLink from 'components/ExternalLink'
 import { PayProjectForm } from 'components/Project/PayProjectForm'
@@ -88,56 +89,64 @@ const RelaunchV1ProjectCallout = ({ className }: { className?: string }) => {
   )
 }
 
-export function V1Project({ column }: { column?: boolean }) {
+export function V1Project() {
   const { createdAt, handle, owner } = useContext(V1ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
   return (
-    <>
-      <RelaunchV1ProjectCallout className="mb-8 pb-6" />
+    <div>
+      <div className="mx-auto my-0 max-w-5xl p-5">
+        <RelaunchV1ProjectCallout className="mb-8 pb-6" />
+      </div>
       <ProjectHeader
         handle={handle}
         projectOwnerAddress={owner}
         actions={<V1ProjectHeaderActions />}
       />
 
-      <Row gutter={gutter} align="bottom">
-        <Col className="mt-10" xs={24} md={column ? 24 : 12}>
-          <TreasuryStatsSection />
-        </Col>
+      <div className="my-0 mx-auto flex max-w-5xl flex-col gap-y-5 p-5">
+        <Row gutter={gutter} align="bottom">
+          <Col className="mt-10" xs={24} md={12}>
+            <TreasuryStatsSection />
+          </Col>
 
-        <Col className="mt-10" xs={24} md={column ? 24 : 12}>
-          <V1PayProjectFormProvider>
-            <PayProjectForm />
-          </V1PayProjectFormProvider>
-        </Col>
-      </Row>
+          <Col className="mt-10" xs={24} md={12}>
+            <V1PayProjectFormProvider>
+              <PayProjectForm />
+            </V1PayProjectFormProvider>
+          </Col>
+        </Row>
 
-      <Row className="pb-10" gutter={gutter}>
-        <Col xs={24} md={column ? 24 : 12} className="mt-10">
-          {projectId && (
+        <Row className="pb-10" gutter={gutter}>
+          <Col xs={24} md={12} className="mt-10">
+            {projectId && (
+              <div className="mb-10">
+                <Suspense fallback={<LoadingOutlined />}>
+                  <VolumeChart
+                    style={{ height: 240 }}
+                    projectId={projectId}
+                    createdAt={createdAt}
+                    pv={PV_V1}
+                  />
+                </Suspense>
+              </div>
+            )}
+
             <div className="mb-10">
-              <Suspense fallback={<LoadingOutlined />}>
-                <VolumeChart
-                  style={{ height: 240 }}
-                  projectId={projectId}
-                  createdAt={createdAt}
-                  pv={PV_V1}
-                />
-              </Suspense>
+              <TokensSection />
             </div>
-          )}
 
-          <div className="mb-10">
-            <TokensSection />
-          </div>
+            <FundingCycles />
+          </Col>
+          <Col className="mt-10" xs={24} md={12}>
+            <ProjectActivity />
+          </Col>
+        </Row>
 
-          <FundingCycles />
-        </Col>
-        <Col className="mt-10" xs={24} md={column ? 24 : 12}>
-          <ProjectActivity />
-        </Col>
-      </Row>
-    </>
+        <div className="p-5 text-center">
+          <ScrollToTopButton />
+        </div>
+      </div>
+    </div>
   )
 }

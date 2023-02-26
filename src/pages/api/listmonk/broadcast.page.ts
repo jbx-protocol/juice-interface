@@ -1,73 +1,74 @@
-import { broadcastMessage } from 'lib/listmonk'
+import { broadcastMessage, getListID } from 'lib/listmonk'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { verifyMessage } from 'ethers/lib/utils'
-import useProjectOwner from 'hooks/v2v3/contractReader/ProjectOwner'
-import useOwnerOfProject from 'hooks/v1/contractReader/OwnerOfProject'
+import verifyV1OwnerSignature from 'utils/v1/verifyOwnerSignature'
+import verifyV2V3OwnerSignature from 'utils/v2v3/verifyOwnerSignature'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'POST') {
     return res.status(404)
   }
 
-  const { message, signature } = req.body ?? {}
+  const { messageData, signature } = req.body ?? {}
 
-  // Return error if message or signature is undefined.
-  if (message === undefined) {
-    return res.status(400).json({ error: 'A message is required' })
+  // Return error if messageData or signature is undefined.
+  if (messageData === undefined) {
+    return res.status(400).json({ error: 'messageData is required' })
   }
 
   if (signature === undefined) {
     return res.status(400).json({ error: 'A signature is required' })
   }
 
-  // Return error if message is malformed
-  const { body, subject, send_at, projectId, pv } = message
+  // Return error if messageData is malformed
+  const { body, subject, send_at, projectId, pv } = messageData
 
   if (!body || !subject || !send_at || !projectId || !pv) {
     return res
       .status(400)
-      .json({ error: 'Malformed message: missing field(s).' })
+      .json({ error: 'Malformed messageData: missing field(s).' })
   }
 
   if (send_at < Date.now()) {
     return res
       .status(400)
-      .json({ error: 'Malformed message: send_at must be in the future.' })
+      .json({ error: 'Malformed messageData: send_at must be in the future.' })
   }
 
   if (pv !== '1' && pv !== '2') {
     return res
       .status(400)
-      .json({ error: 'Malformed message: pv must be "1" or "2".' })
+      .json({ error: 'Malformed messageData: pv must be "1" or "2".' })
   }
 
-  // Find project owner, and return an error if the project owner cannot be found.
-  const projectOwner =
+  const verifiedOwner =
     pv === '1'
-      ? useOwnerOfProject(projectId) // v1 hook
-      : useProjectOwner(projectId).data // v2v3 hook
+      ? verifyV1OwnerSignature(
+          projectId,
+          JSON.stringify(messageData),
+          signature,
+        )
+      : verifyV2V3OwnerSignature(
+          projectId,
+          JSON.stringify(messageData),
+          signature,
+        )
 
-  if (!projectOwner) {
+  if (!verifiedOwner) {
     return res
-      .status(400)
-      .json({ error: `Could not find project owner for v${pv}p${projectId}.` })
-  }
-
-  const signatureAddress = verifyMessage(JSON.stringify(message), signature)
-  if (!signatureAddress) {
-    return res.status(400).json({ error: `Failed to verify message.` })
-  }
-
-  // Return an error the verified signature does not match the project creator.
-  if ((projectOwner as unknown as string) !== signatureAddress) {
-    return res.status(403).json({
-      error: `Failed to verify signature.\nProject owner address: ${projectOwner}\nSignature address: ${signatureAddress}`,
-    })
+      .status(403)
+      .json({
+        error: `Failed to verify owner signature for ${pv} project ${projectId}`,
+      })
   }
 
   try {
-    await broadcastMessage(message)
-    return res.status(201).json({ message })
+    const listId = await getListID(projectId, pv)
+    if (!listId) {
+      return res.status(400).json({ error: 'List not found.' })
+    }
+
+    await broadcastMessage([listId], messageData)
+    return res.status(201).json({ messageData })
   } catch (e) {
     console.error('api::listmonk::broadcast::error', e)
     return res.status(500).json({ error: 'failed to broadcast message' })

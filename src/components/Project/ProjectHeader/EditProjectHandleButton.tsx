@@ -23,7 +23,7 @@ export function EditProjectHandleButton() {
             handle,
           })}
         >
-          <Button className="pl-0" type="link" icon={<EditOutlined />}>
+          <Button className="px-0" type="link" icon={<EditOutlined />}>
             <span>
               <Trans>Add handle</Trans>
             </span>

@@ -41,6 +41,9 @@ msgstr ""
 msgid "100% overflow"
 msgstr ""
 
+msgid "1400px x 256px image size recommended."
+msgstr ""
+
 msgid "2. Build trust"
 msgstr ""
 
@@ -270,6 +273,9 @@ msgid "Add NFT tier"
 msgstr ""
 
 msgid "Add NFTs to funding cycle"
+msgstr ""
+
+msgid "Add a cover image to your project page. This will be displayed at the top of your project page."
 msgstr ""
 
 msgid "Add a note about this reconfiguration on-chain."
@@ -854,6 +860,9 @@ msgstr ""
 msgid "Copy to clipboard"
 msgstr ""
 
+msgid "Cover image"
+msgstr ""
+
 msgid "Create Payment Address"
 msgstr ""
 
@@ -906,9 +915,6 @@ msgid "Custom strategy"
 msgstr ""
 
 msgid "Custom token beneficiary"
-msgstr ""
-
-msgid "Customize Pay Button"
 msgstr ""
 
 msgid "Customize your project's \"pay\" button. Leave blank to use the default."

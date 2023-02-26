@@ -47,6 +47,9 @@ const editingV2ProjectSlice = createSlice({
     setLogoUri: (state, action: PayloadAction<string>) => {
       state.projectMetadata.logoUri = action.payload
     },
+    setCoverImageUri: (state, action: PayloadAction<string>) => {
+      state.projectMetadata.coverImageUri = action.payload
+    },
     setTwitter: (state, action: PayloadAction<string>) => {
       state.projectMetadata.twitter = action.payload
     },

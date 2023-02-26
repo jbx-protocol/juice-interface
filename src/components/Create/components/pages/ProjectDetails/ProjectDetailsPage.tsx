@@ -1,3 +1,4 @@
+import { RightCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { ADDRESS_ZERO } from '@uniswap/v3-sdk'
 import { Col, Form, Row, Space } from 'antd'
@@ -8,10 +9,10 @@ import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import PrefixedInput from 'components/PrefixedInput'
-import TooltipIcon from 'components/TooltipIcon'
 import { CREATE_FLOW } from 'constants/fathomEvents'
 import { useWallet } from 'hooks/Wallet'
 import { trackFathomGoal } from 'lib/fathom'
+import Link from 'next/link'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { inputMustBeEthAddressRule, inputMustExistRule } from 'utils/antdRules'
@@ -20,8 +21,6 @@ import { OptionalHeader } from '../../OptionalHeader'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { useProjectDetailsForm } from './hooks/ProjectDetailsForm'
-import Link from 'next/link'
-import { RightCircleOutlined } from '@ant-design/icons'
 
 export const ProjectDetailsPage: React.FC = () => {
   useSetCreateFurthestPageReached('projectDetails')
@@ -128,21 +127,24 @@ export const ProjectDetailsPage: React.FC = () => {
           </CreateCollapse.Panel>
           <CreateCollapse.Panel
             key={2}
-            header={<OptionalHeader header={t`Customize Pay Button`} />}
+            header={<OptionalHeader header={t`Project page customizations`} />}
             hideDivider
           >
+            <Form.Item
+              name="coverImage"
+              label={t`Cover image`}
+              tooltip={t`Add a cover image to your project page. This will be displayed at the top of your project page.`}
+              extra={t`1400px x 256px image size recommended.`}
+            >
+              <FormImageUploader text={t`Upload`} maxSizeKBs={10000} />
+            </Form.Item>
+
             <Row className="pb-8 pt-5" gutter={32}>
               <Col span={12}>
                 <Form.Item
                   name="payButtonText"
-                  label={
-                    <span>
-                      <Trans>Pay Button Text</Trans>{' '}
-                      <TooltipIcon
-                        tip={t`This is the button that contributors will click to pay your project`}
-                      />
-                    </span>
-                  }
+                  label={<Trans>Pay Button Text</Trans>}
+                  tooltip={t`This is the button that contributors will click to pay your project`}
                 >
                   <JuiceInput placeholder={t`Pay`} />
                 </Form.Item>
@@ -150,14 +152,8 @@ export const ProjectDetailsPage: React.FC = () => {
             </Row>
             <Form.Item
               name="payDisclosure"
-              label={
-                <span>
-                  <Trans>Pay Disclosure</Trans>{' '}
-                  <TooltipIcon
-                    tip={t`Display a message or warning to contributors before they approve a payment to your project`}
-                  />
-                </span>
-              }
+              label={<Trans>Pay Disclosure</Trans>}
+              tooltip={t`Display a message or warning to contributors before they approve a payment to your project`}
             >
               <JuiceTextArea autoSize={{ minRows: 4, maxRows: 6 }} />
             </Form.Item>

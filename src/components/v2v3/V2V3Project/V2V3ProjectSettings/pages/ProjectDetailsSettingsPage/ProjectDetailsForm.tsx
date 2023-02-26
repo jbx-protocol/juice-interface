@@ -2,6 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Form, FormInstance, Space } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import { FormItems } from 'components/formItems'
+import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import { normalizeHandle } from 'utils/format/formatHandle'
 
@@ -11,6 +12,7 @@ export type ProjectDetailsFormFields = {
   infoUri: string
   handle: string
   logoUri: string
+  coverImageUri: string
   twitter: string
   telegram: string
   discord: string
@@ -18,7 +20,7 @@ export type ProjectDetailsFormFields = {
   payDisclosure: string
 }
 
-export default function ProjectDetailsForm({
+export function ProjectDetailsForm({
   form,
   onFinish,
   hideProjectHandle = false,
@@ -34,6 +36,7 @@ export default function ProjectDetailsForm({
   onValuesChange?: VoidFunction
 }) {
   const initialLogoUrl = useWatch('logoUri', form)
+  const initialCoverImageUri = useWatch('coverImageUri', form)
 
   return (
     <Form
@@ -69,15 +72,14 @@ export default function ProjectDetailsForm({
             />
           )}
           <FormItems.ProjectDescription name="description" />
-          <FormItems.ProjectLogoUri
-            name="logoUri"
-            initialUrl={initialLogoUrl}
-            onSuccess={logoUri => {
-              form.setFieldsValue({ logoUri })
-              onValuesChange?.()
-            }}
-            formItemProps={{ style: { marginBottom: 0 } }}
-          />
+
+          <Form.Item name={'logoUri'} label={t`Logo`}>
+            <FormImageUploader
+              value={initialLogoUrl}
+              maxSizeKBs={10000}
+              text={t`Upload`}
+            />
+          </Form.Item>
         </div>
         <div>
           <MinimalCollapse header={<Trans>Project links</Trans>}>
@@ -90,6 +92,19 @@ export default function ProjectDetailsForm({
 
         <div>
           <MinimalCollapse header={<Trans>Project page customizations</Trans>}>
+            <Form.Item
+              name={'coverImageUri'}
+              label={t`Cover image`}
+              tooltip={t`Add a cover image to your project page. This will be displayed at the top of your project page.`}
+              extra={t`1400px x 256px image size recommended.`}
+            >
+              <FormImageUploader
+                value={initialCoverImageUri}
+                maxSizeKBs={10000}
+                text={t`Upload`}
+              />
+            </Form.Item>
+
             <FormItems.ProjectPayButton name="payButton" />
             <FormItems.ProjectPayDisclosure name="payDisclosure" />
           </MinimalCollapse>

@@ -9,6 +9,7 @@ import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useGnosisSafe } from 'hooks/safe/GnosisSafe'
 import { useContext } from 'react'
 import { classNames } from 'utils/classNames'
+import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 import { EditProjectHandleButton } from './EditProjectHandleButton'
 import SocialLinks from './SocialLinks'
 
@@ -28,7 +29,7 @@ function ProjectSubheading({
 
   return (
     <div className="flex items-center gap-x-4 text-grey-500 dark:text-grey-300">
-      <span className="font-medium">
+      <span className="flex items-center justify-between gap-3 font-medium">
         {handle ? (
           <Tooltip title={t`Project ID: ${projectId}`}>
             <span>@{handle}</span>
@@ -117,10 +118,10 @@ export function ProjectHeader({
 
   return (
     <header>
-      {hasBanner && (
+      {projectMetadata?.coverImageUri && (
         <div className="w-full">
           <img
-            src={projectMetadata?.coverImageUri}
+            src={ipfsUriToGatewayUrl(projectMetadata.coverImageUri)}
             className="h-64 w-full object-cover"
             crossOrigin="anonymous"
           />

@@ -133,7 +133,6 @@ export const ProjectDetailsPage: React.FC = () => {
             <Form.Item
               name="coverImage"
               label={t`Cover image`}
-              required={false}
               tooltip={t`Add a cover image to your project page. This will be displayed at the top of your project page.`}
               extra={t`1400px x 256px image size recommended.`}
             >

@@ -41,6 +41,9 @@ msgstr ""
 msgid "100% overflow"
 msgstr ""
 
+msgid "1400px x 350px image size recommended."
+msgstr ""
+
 msgid "2. Build trust"
 msgstr ""
 

@@ -44,11 +44,19 @@ function getLists() {
   return axios.get(url + '/api/lists?per_page=all', { headers })
 }
 
-export async function getListID(projectId: number, pv: PV) {
+export async function getListId(projectId: number, pv: PV) {
   const lists = await getLists()
   return lists.data.results.find((v: { tags: unknown[] }) =>
     v.tags.find(w => w === `v${pv}p${projectId}`),
   ).id
+}
+
+export async function getUserId(email: string) {
+  const search = await axios.get(
+    url + `/api/subscribers?query=subscribers.email = ${email}"`,
+    { headers },
+  )
+  return search.data.results[0].id
 }
 
 export function createList({ name, projectId, pv }: ListmonkListData) {
@@ -93,7 +101,20 @@ export function createSubscription(
 }
 
 // Add list to existing subscription
-// export function addList() {}
+export function addToList(lists: number[], users: number[]) {
+  const requestBody = {
+    ids: users,
+    target_list_ids: lists,
+    action: 'add',
+    status: 'unconfirmed',
+  }
+
+  return axios.put(
+    url + '/api/subscribers/lists',
+    JSON.stringify(requestBody),
+    { headers },
+  )
+}
 
 export interface ListmonkMessageData {
   body: string

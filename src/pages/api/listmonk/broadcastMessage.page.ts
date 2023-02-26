@@ -1,4 +1,4 @@
-import { broadcastMessage, getListID } from 'lib/listmonk'
+import { broadcastMessage, getListId } from 'lib/listmonk'
 import { NextApiRequest, NextApiResponse } from 'next'
 import verifyV1OwnerSignature from 'utils/v1/verifyOwnerSignature'
 import verifyV2V3OwnerSignature from 'utils/v2v3/verifyOwnerSignature'
@@ -60,7 +60,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   try {
-    const listId = await getListID(projectId, pv)
+    const listId = await getListId(projectId, pv)
     if (!listId) {
       return res
         .status(400)

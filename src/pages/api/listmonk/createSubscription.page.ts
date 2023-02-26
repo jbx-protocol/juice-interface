@@ -1,4 +1,9 @@
-import { createSubscription, getListID } from 'lib/listmonk'
+import {
+  addToList,
+  createSubscription,
+  getListId,
+  getUserId,
+} from 'lib/listmonk'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { JUICEBOX_LISTMONK_ID } from 'constants/listmonk'
 
@@ -29,17 +34,23 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   try {
-    const listId = await getListID(projectId, pv)
+    const [listId, userId] = await Promise.all([
+      getListId(projectId, pv),
+      getUserId(email),
+    ])
     if (!listId) {
       return res
         .status(400)
         .json({ error: `No list found for v${pv}p${projectId}.` })
     }
 
-    await createSubscription(
-      subscribeToJBUpdates ? [JUICEBOX_LISTMONK_ID, listId] : [listId],
-      subscriptionData,
-    )
+    const lists = subscribeToJBUpdates
+      ? [JUICEBOX_LISTMONK_ID, listId]
+      : [listId]
+
+    if (userId) await addToList(lists, [userId])
+    else await createSubscription(lists, subscriptionData)
+
     return res.status(201).json({ subscriptionData, subscribeToJBUpdates })
   } catch (e) {
     console.error('api::listmonk::createSubscription:error', e)

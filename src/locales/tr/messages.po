@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-02-19 00:30\n"
+"PO-Revision-Date: 2023-02-26 00:36\n"
 "Last-Translator: \n"
 "Language: tr_TR\n"
 "Language-Team: Turkish\n"
@@ -109,9 +109,6 @@ msgstr ""
 msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
 msgstr "<0><1>Bu projede taşma bulunmadığından</1> token'ları yakma karşılığında ETH almayacaksınız.</0>"
 
-msgid "<0>Back to home</0>"
-msgstr ""
-
 msgid "<0>Contribution floor:</0> {0} ETH"
 msgstr ""
 
@@ -119,9 +116,6 @@ msgid "<0>Contributor rate:</0> <1>{0} / 1 ETH</1>"
 msgstr ""
 
 msgid "<0>Description: </0><1/>"
-msgstr ""
-
-msgid "<0>Description:</0><1/>"
 msgstr ""
 
 msgid "<0>Discount rate</0>, to reduce your project token's issuance rate (tokens per ETH) each funding cycle."
@@ -179,12 +173,6 @@ msgid "<0>Target is 0.</0> The project's entire balance will be considered overf
 msgstr "<0>Hedef 0.</0> Projenin tüm bakiyesi taşma olarak kabul edilecektir. Taşma hakkında <1>daha fazla bilgi edinin</1>."
 
 msgid "<0>The redemption rate determines the amount of overflow each token can be redeemed for at any given time.</0><1>A redemption rate of 100% means all tokens will have equal value regardless of when they are redeemed.</1><2>On a lower redemption rate, redeeming a token increases the value of each remaining token, creating an incentive to hold tokens longer than other holders.</2>"
-msgstr ""
-
-msgid "<0>The servers are having an issue, please try again later!</0>"
-msgstr ""
-
-msgid "<0>This page could not be found.</0>"
 msgstr ""
 
 msgid "<0>This project has a 0% redemption rate</0>. You won't receive any ETH for burning your NFTs."
@@ -284,6 +272,9 @@ msgid "Add NFT"
 msgstr ""
 
 msgid "Add NFT tier"
+msgstr ""
+
+msgid "Add NFTs to funding cycle"
 msgstr ""
 
 msgid "Add a note about this reconfiguration on-chain."
@@ -541,6 +532,9 @@ msgstr ""
 msgid "Available:"
 msgstr "Mevcut:"
 
+msgid "Awaiting IPFS response. This may take a while."
+msgstr ""
+
 msgid "Back"
 msgstr ""
 
@@ -601,6 +595,9 @@ msgstr "{tokensLabel} token'larını yak"
 msgid "Burn {tokensTextLong}"
 msgstr "{tokensTextLong} yak"
 
+msgid "Burned"
+msgstr ""
+
 msgid "Button Text"
 msgstr ""
 
@@ -637,13 +634,13 @@ msgstr ""
 msgid "Change networks to deploy"
 msgstr ""
 
+msgid "Changes to NFTs will take effect immediately."
+msgstr ""
+
 msgid "Changes to payouts will take effect immediately."
 msgstr ""
 
-msgid "Changes to your collection details may not be reflected in some marketplaces (for example, Opensea). Contact the marketplace for support."
-msgstr ""
-
-msgid "Changes to your collection will take effect immediately."
+msgid "Changes to your collection details may not be reflected in some marketplaces (like Opensea). Contact the marketplace for support."
 msgstr ""
 
 msgid "Changes to your reserved token allocation will take effect immediately."
@@ -713,6 +710,9 @@ msgid "Collection Symbol"
 msgstr ""
 
 msgid "Collection description"
+msgstr ""
+
+msgid "Collection details"
 msgstr ""
 
 msgid "Collection name"
@@ -803,6 +803,9 @@ msgid "Contribute funds to receive NFTs."
 msgstr ""
 
 msgid "Contribution threshold"
+msgstr ""
+
+msgid "Contributions"
 msgstr ""
 
 msgid "Contributor rate"
@@ -1015,10 +1018,10 @@ msgstr ""
 msgid "Design how your tokens should work."
 msgstr ""
 
-msgid "Detach NFTs from project"
+msgid "Detach NFTs from funding cycle"
 msgstr ""
 
-msgid "Detaching NFTs from your project has the following effects:<0><1>Contributors won't receive NFTs when they fund your project.</1><2>Existing NFT holders won't be able to redeem their NFTs.</2></0><3>This will take effect in your next funding cycle.</3>"
+msgid "Detaching NFTs from your funding cycle has the following effects:<0><1>Contributors won't receive NFTs when they fund your project.</1><2>Existing NFT holders won't be able to redeem their NFTs.</2></0><3>This will take effect in your next funding cycle.</3>"
 msgstr ""
 
 msgid "Details"
@@ -1213,13 +1216,16 @@ msgstr "Her ödeme, finansman döngülerinin her birinde, hazinede yeterli tutar
 msgid "Edit NFT"
 msgstr ""
 
+msgid "Edit NFT collection"
+msgstr ""
+
 msgid "Edit NFT tier"
 msgstr ""
 
-msgid "Edit allocation"
+msgid "Edit NFTs"
 msgstr ""
 
-msgid "Edit collection details"
+msgid "Edit allocation"
 msgstr ""
 
 msgid "Edit details of {projectTitle}"
@@ -1250,6 +1256,9 @@ msgid "Edit tracked assets"
 msgstr "İzlenen varlıkları düzenleyin"
 
 msgid "Edit {allocationName}"
+msgstr ""
+
+msgid "Editing NFTs"
 msgstr ""
 
 msgid "Email"
@@ -1618,6 +1627,12 @@ msgstr ""
 msgid "If you're unsure if you need to claim, you probably don't."
 msgstr "Hak talebinde bulunmanız gerekip gerekmediğinden emin değilseniz muhtemelen gerekli değildir."
 
+msgid "Images will be cropped to a 1:1 square in thumbnail previews on the Juicebox app."
+msgstr ""
+
+msgid "Images will be cropped to a square in thumbnail previews on the Juicebox app."
+msgstr ""
+
 msgid "In Juicebox"
 msgstr "Juicebox'da"
 
@@ -1849,6 +1864,9 @@ msgstr ""
 msgid "Max Supply"
 msgstr ""
 
+msgid "Max. supply"
+msgstr ""
+
 msgid "Max. supply reached"
 msgstr ""
 
@@ -1957,13 +1975,13 @@ msgstr "{tokensLabel} token'larınızı Juicebox sözleşmesinden cüzdanınıza
 msgid "My VeNFTs"
 msgstr ""
 
+msgid "My account"
+msgstr ""
+
 msgid "My holdings"
 msgstr ""
 
 msgid "My projects"
-msgstr ""
-
-msgid "NFT adjust tiers"
 msgstr ""
 
 msgid "NFT mint confirmed"
@@ -1975,12 +1993,6 @@ msgstr ""
 msgid "NFT rules"
 msgstr ""
 
-msgid "NFT will be cropped to a 1:1 square in thumbnail previews on the Juicebox app."
-msgstr ""
-
-msgid "NFT will be cropped to a square in thumbnail previews on the Juicebox app."
-msgstr ""
-
 msgid "NFTs"
 msgstr ""
 
@@ -1988,6 +2000,9 @@ msgid "NFTs (optional)"
 msgstr ""
 
 msgid "NFTs are burned when they are redeemed."
+msgstr ""
+
+msgid "NFTs detached from project."
 msgstr ""
 
 msgid "NFTs for you"
@@ -2260,9 +2275,6 @@ msgstr ""
 msgid "Payment memo"
 msgstr ""
 
-msgid "Payment memo image"
-msgstr "Ödeme notu görüntüsü"
-
 msgid "Payment options"
 msgstr ""
 
@@ -2471,6 +2483,9 @@ msgid "Project {projectId} not found"
 msgstr "Proje {projectId} bulunamadı"
 
 msgid "Project:"
+msgstr ""
+
+msgid "Projects created"
 msgstr ""
 
 msgid "Projects on Juicebox"
@@ -3211,6 +3226,12 @@ msgstr ""
 msgid "This Safe has no queued transactions."
 msgstr ""
 
+msgid "This account hasn't contributed to any projects yet."
+msgstr ""
+
+msgid "This account hasn't created any projects yet."
+msgstr ""
+
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
 msgstr "Bu adres, tanınmayan bir strateji sözleşmesine aittir. Doğru olduğundan emin olun!"
 
@@ -3284,6 +3305,9 @@ msgid "Time remaining for changes made to affect the next funding cycle:"
 msgstr ""
 
 msgid "To do so, you need to give your legacy token holders the ability to exchange their tokens for V3 tokens. Select <0>Set up token migration</0> below to get started."
+msgstr ""
+
+msgid "To edit you current NFT collection, go to the <0>Edit NFTs</0> page."
 msgstr ""
 
 msgid "To: <0/>"
@@ -3613,9 +3637,6 @@ msgstr ""
 msgid "V1 project handle"
 msgstr ""
 
-msgid "V1.1"
-msgstr ""
-
 msgid "V2"
 msgstr ""
 
@@ -3826,8 +3847,17 @@ msgstr "Bir finansman döngüsü hedefi belirlediniz."
 msgid "You have unsaved changes. Are you sure you want to discard them?"
 msgstr "Kaydedilmemiş değişiklikleriniz mevcut. Değişiklikleri iptal etmek istediğinizden emin misiniz?"
 
+msgid "You haven't contributed to any projects yet!"
+msgstr ""
+
+msgid "You haven't created any projects yet!"
+msgstr ""
+
 msgid "You haven't created any projects yet."
 msgstr "Henüz herhangi bir proje oluşturmadınız."
+
+msgid "You haven't launched an NFT collection yet! Reconfigure your funding cycle to include NFTs."
+msgstr ""
 
 msgid "You must edit your funding cycle rules to allow controller migrations."
 msgstr ""

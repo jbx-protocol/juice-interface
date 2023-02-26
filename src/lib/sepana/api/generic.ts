@@ -5,23 +5,59 @@ import { CURRENT_VERSION } from '../constants'
 import { SEPANA_ENDPOINTS } from './endpoints'
 import { sepanaAxios } from './http'
 
+const MAX_SEPANA_PAGE_SIZE = 100
+
 /**
  * Exhaustively queries all Sepana records.
  *
  * @returns Promise containing all records from Sepana database
  */
 export async function queryAll<T extends object>() {
-  return sepanaAxios('read').post<SepanaQueryResponse<T>>(
-    SEPANA_ENDPOINTS.search,
-    {
-      engine_ids: [process.env.SEPANA_ENGINE_ID],
-      query: {
-        match_all: {},
+  const hits: SepanaQueryResponse<T>['hits']['hits'] = []
+
+  let total: number | undefined
+
+  const query = async (page: number, initialQuery?: boolean) => {
+    const { data } = await sepanaAxios('read').post<SepanaQueryResponse<T>>(
+      SEPANA_ENDPOINTS.search,
+      {
+        engine_ids: [process.env.SEPANA_ENGINE_ID],
+        query: {
+          match_all: {},
+        },
+        size: MAX_SEPANA_PAGE_SIZE,
+        page,
       },
-      size: 10000, // TODO: Update this before we hit 10k projects
-      page: 0,
-    },
-  )
+    )
+
+    if (total === undefined) total = data.hits.total.value
+
+    if (total) {
+      const _hits = data.hits.hits
+
+      if ((page + 1) * MAX_SEPANA_PAGE_SIZE > total) {
+        // Sepana gives us a full pageSize of results in every query without a pointer, so we use the total to manually check that we don't adding too many hits
+        _hits.push(..._hits.slice(0, total % MAX_SEPANA_PAGE_SIZE))
+      } else {
+        _hits.push(..._hits)
+
+        if (initialQuery) {
+          // After getting total in initial query, we concurrently await all subsequent queries to speed things up
+          const promises = []
+
+          for (let i = 1; i < total / MAX_SEPANA_PAGE_SIZE; i++) {
+            promises.push(query(i))
+          }
+
+          await Promise.all(promises)
+        }
+      }
+    }
+  }
+
+  await query(0)
+
+  return { total, hits }
 }
 
 /**
@@ -39,7 +75,7 @@ export async function getRecord<T extends object>(id: string) {
           query: {
             query_string: {
               query: `${id}`,
-              fields: ['_id'],
+              fields: ['id'],
             },
           },
         },

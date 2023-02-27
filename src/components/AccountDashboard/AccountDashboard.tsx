@@ -117,7 +117,7 @@ export function AccountDashboard({
       <header className="flex flex-wrap items-start justify-between">
         <div className="mb-10 flex">
           <ProjectLogo
-            uri={undefined}
+            uri={`https://cdn.stamp.fyi/avatar/${address}?s=128`}
             name={ensName ?? undefined}
             className="mr-5 h-32 w-32"
           />

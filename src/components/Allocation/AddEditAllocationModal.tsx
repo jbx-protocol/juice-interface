@@ -15,6 +15,7 @@ import {
   inputMustExistRule,
 } from 'utils/antdRules'
 import { parseWad, stripCommas } from 'utils/format/formatNumber'
+import { ceilIfCloseToNextInteger } from 'utils/math'
 import { Allocation } from './Allocation'
 import { AmountInput } from './components/AmountInput'
 import { PercentageInput } from './components/PercentageInput'
@@ -160,7 +161,8 @@ export const AddEditAllocationModal = ({
 
   const showProjectOwnerRecipientOption =
     amountType !== 'percentage' &&
-    (!allocations.length || totalAllocationPercent === 100)
+    (!allocations.length ||
+      ceilIfCloseToNextInteger(totalAllocationPercent) === 100)
 
   return (
     <Modal

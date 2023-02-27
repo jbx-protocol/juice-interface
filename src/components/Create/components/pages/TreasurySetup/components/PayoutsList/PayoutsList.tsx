@@ -13,6 +13,7 @@ import { useCallback, useMemo } from 'react'
 import { useEditingDistributionLimit } from 'redux/hooks/EditingDistributionLimit'
 import { calculateExpenseFromPercentageOfWad } from 'utils/calculateExpenseFromPercentageOfWad'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
+import { ceilIfCloseToNextInteger } from 'utils/math'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { amountFromPercent } from 'utils/v2v3/distributions'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
@@ -150,7 +151,7 @@ export const PayoutsList = (
       <Space className="w-full" direction="vertical" size="middle">
         {(props.payoutsSelection === 'percentages' ||
           (distributionLimit && !distributionLimit.amount.eq(0))) &&
-        totalPercent < 100 ? (
+        ceilIfCloseToNextInteger(totalPercent) < 100 ? (
           <OwnerPayoutCard
             canBeDeleted={props.payoutsSelection === 'amounts'}
             payoutsSelection={props.payoutsSelection}

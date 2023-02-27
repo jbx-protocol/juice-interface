@@ -187,7 +187,7 @@ export const PayoutsList = (
         {hasAllocations && (
           <>
             <div className="flex items-center pt-4">
-              <span>
+              <span className="font-medium">
                 <Trans>Distribution Limit: {fundingTarget}</Trans>
               </span>
             </div>

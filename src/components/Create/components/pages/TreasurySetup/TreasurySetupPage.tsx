@@ -39,7 +39,7 @@ export const TreasurySetupPage = () => {
   useSetCreateFurthestPageReached('treasurySetup')
   const { goToNextPage } = useContext(PageContext)
   const { form, initialValues } = useTreasurySetupForm()
-  const [, setSplits] = useEditingPayoutSplits()
+  const [splits, setSplits] = useEditingPayoutSplits()
   const [distributionLimit, setDistributionLimit] =
     useEditingDistributionLimit()
   const switchingToAmountsModal = useModal()
@@ -249,6 +249,25 @@ export const TreasurySetupPage = () => {
               </Form.Item>
             )}
           </Form.Item>
+        )}
+        {treasuryOption !== 'zero' && (
+          <span className="text-grey-500 dark:text-slate-300">
+            {splits.length && treasuryOption === 'amount' ? (
+              <Trans>
+                Any funds raised over this amount may be redeemed by your
+                project's token holders. You can turn off redemptions in the
+                Token settings. Payouts to Ethereum wallets will incur a 2.5%
+                fee. Sending funds to other Juicebox projects will not incur any
+                fees. Learn more about fees.
+              </Trans>
+            ) : (
+              <Trans>
+                Payouts to Ethereum wallets will incur a 2.5% fee. Sending funds
+                to other Juicebox projects will not incur any fees. Learn more
+                about fees.
+              </Trans>
+            )}
+          </span>
         )}
         <Wizard.Page.ButtonControl isNextEnabled={isNextEnabled} />
       </Form>

@@ -1,7 +1,7 @@
+import config from 'config/seo_meta.json'
 import Head from 'next/head'
 import { FC, ReactNode } from 'react'
-
-import config from 'config/seo_meta.json'
+import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 import { OpenGraphMetaTags } from './OpenGraphMetaTags'
 import {
   TwitterCardType,
@@ -57,7 +57,7 @@ export const SEO: FC<SEOProps> = ({
           twitter?.creator ?? config.twitter.creator,
         )}
         card={twitter?.card ?? (config.twitter.cardType as TwitterCardType)}
-        image={twitter?.image ?? config.twitter.image}
+        image={ipfsUriToGatewayUrl(twitter?.image ?? config.twitter.image)}
       />
 
       <OpenGraphMetaTags

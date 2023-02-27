@@ -72,25 +72,27 @@ const handler: NextApiHandler = async (_, res) => {
         1,
       )[0]
 
-      // Ensure that no extra projects exist in Sepana
       if (!subgraphProject) {
+        // Record projects that exist in sepana but not in subgraph
         sepanaExtraProjects.push(`\`[${id}]\` Name: ${name}`)
+      } else {
+        // Ensure that Sepana records accurately reflect Subgraph data
+        sgSepanaCompareKeys.forEach(k => {
+          // TODO bad types here
+          if (
+            subgraphProject[k as keyof typeof subgraphProject] !== _source[k]
+          ) {
+            mismatchedProjects.push(
+              `\`[${id}]\` ${name ?? '<no name>'} **${k}** Subgraph: ${
+                subgraphProject[k as keyof typeof subgraphProject]
+              }, Sepana: ${_source[k]}`,
+            )
+          }
+        })
       }
-
-      // Ensure that Sepana records accurately reflect Subgraph data
-      sgSepanaCompareKeys.forEach(k => {
-        // TODO bad types here
-        if (subgraphProject[k as keyof typeof subgraphProject] !== _source[k]) {
-          mismatchedProjects.push(
-            `\`[${id}]\` ${name ?? '<no name>'} **${k}** Subgraph: ${
-              subgraphProject[k as keyof typeof subgraphProject]
-            }, Sepana: ${_source[k]}`,
-          )
-        }
-      })
     }
 
-    // Iterate over any subgraphProjects left in array
+    // Record projects that exist in subgraph but not in sepana
     subgraphProjects.forEach(p =>
       sepanaMissingProjects.push(`ID: ${p.id}, Handle: ${p.handle}`),
     )

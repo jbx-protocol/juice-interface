@@ -36,10 +36,10 @@ export async function queryAll<T extends object>() {
       const _hits = data.hits.hits
 
       if ((page + 1) * MAX_SEPANA_PAGE_SIZE > total) {
-        // Sepana gives us a full pageSize of results in every query without a pointer, so we use the total to manually check that we don't adding too many hits
-        _hits.push(..._hits.slice(0, total % MAX_SEPANA_PAGE_SIZE))
+        // Sepana gives us a full pageSize of results in every query without a pointer, so we use the total to manually check that we aren't adding too many hits
+        hits.push(..._hits.slice(0, total % MAX_SEPANA_PAGE_SIZE))
       } else {
-        _hits.push(..._hits)
+        hits.push(..._hits)
 
         if (initialQuery) {
           // After getting total in initial query, we concurrently await all subsequent queries to speed things up
@@ -55,7 +55,7 @@ export async function queryAll<T extends object>() {
     }
   }
 
-  await query(0)
+  await query(0, true)
 
   return { total, hits }
 }

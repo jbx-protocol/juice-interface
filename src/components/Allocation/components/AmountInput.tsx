@@ -17,6 +17,7 @@ export const AmountInput = ({
   const setAmount = onChange ?? _setAmount
 
   const { allocationCurrency, setCurrency } = Allocation.useAllocationInstance()
+  const currency = allocationCurrency ?? V2V3_CURRENCY_ETH
 
   const onAmountInputChange = useCallback(
     (amount: AmountPercentageInput | undefined) => {
@@ -36,7 +37,7 @@ export const AmountInput = ({
         onChange={val => onAmountInputChange(val ? { value: val } : undefined)}
         accessory={
           <CurrencySwitch
-            currency={allocationCurrency === V2V3_CURRENCY_ETH ? 'ETH' : 'USD'}
+            currency={currency === V2V3_CURRENCY_ETH ? 'ETH' : 'USD'}
             onCurrencyChange={c =>
               setCurrency(c === 'ETH' ? V2V3_CURRENCY_ETH : V2V3_CURRENCY_USD)
             }

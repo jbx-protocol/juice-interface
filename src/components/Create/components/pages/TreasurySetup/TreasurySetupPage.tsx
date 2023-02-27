@@ -81,14 +81,22 @@ export const TreasurySetupPage = () => {
     }
   }, [treasuryOption])
 
+  const hasAllocations = useMemo(
+    () =>
+      !!splits.length ||
+      (distributionLimit?.amount.gt(0) &&
+        distributionLimit.amount.lt(MAX_DISTRIBUTION_LIMIT)),
+    [distributionLimit?.amount, splits.length],
+  )
+
   const conditionsToProceedMet = useMemo(() => {
     switch (treasuryOption) {
       case 'amount':
-        return !!payoutsList.length
+        return hasAllocations
       default:
         return true
     }
-  }, [payoutsList.length, treasuryOption])
+  }, [hasAllocations, treasuryOption])
 
   const switchToAmountsPayoutSelection = useCallback(
     (newDistributionLimit: ReduxDistributionLimit) => {
@@ -169,11 +177,6 @@ export const TreasurySetupPage = () => {
 
   const showPayouts =
     treasuryOption === 'amount' || treasuryOption === 'unlimited'
-
-  const hasAllocations =
-    !!splits.length ||
-    (distributionLimit?.amount.gt(0) &&
-      distributionLimit.amount.lt(MAX_DISTRIBUTION_LIMIT))
 
   const isNextEnabled = !!treasuryOption && conditionsToProceedMet
 

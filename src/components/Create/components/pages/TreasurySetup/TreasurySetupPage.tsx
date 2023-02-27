@@ -2,7 +2,7 @@ import { StopOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { RadioGroup } from '@headlessui/react'
 import { t, Trans } from '@lingui/macro'
-import { Form } from 'antd'
+import { Divider, Form } from 'antd'
 import { Callout } from 'components/Callout'
 import { DeleteConfirmationModal } from 'components/modals/DeleteConfirmationModal'
 import TooltipLabel from 'components/TooltipLabel'
@@ -23,6 +23,7 @@ import { allocationTotalPercentDoNotExceedTotalRule } from 'utils/antdRules'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { Icons } from '../../Icons'
+import { useFundingTarget } from '../../RecallCard/hooks'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { ConvertAmountsModal, RadioCard } from './components'
@@ -39,6 +40,7 @@ export const TreasurySetupPage = () => {
   useSetCreateFurthestPageReached('treasurySetup')
   const { goToNextPage } = useContext(PageContext)
   const { form, initialValues } = useTreasurySetupForm()
+  const fundingTarget = useFundingTarget()
   const [splits, setSplits] = useEditingPayoutSplits()
   const [distributionLimit, setDistributionLimit] =
     useEditingDistributionLimit()
@@ -168,6 +170,11 @@ export const TreasurySetupPage = () => {
   const showPayouts =
     treasuryOption === 'amount' || treasuryOption === 'unlimited'
 
+  const hasAllocations =
+    !!splits.length ||
+    (distributionLimit?.amount.gt(0) &&
+      distributionLimit.amount.lt(MAX_DISTRIBUTION_LIMIT))
+
   const isNextEnabled = !!treasuryOption && conditionsToProceedMet
 
   return (
@@ -251,23 +258,36 @@ export const TreasurySetupPage = () => {
           </Form.Item>
         )}
         {treasuryOption !== 'zero' && (
-          <span className="text-grey-500 dark:text-slate-300">
-            {splits.length && treasuryOption === 'amount' ? (
-              <Trans>
-                Any funds raised over this amount may be redeemed by your
-                project's token holders. You can turn off redemptions in the
-                Token settings. Payouts to Ethereum wallets will incur a 2.5%
-                fee. Sending funds to other Juicebox projects will not incur any
-                fees. Learn more about fees.
-              </Trans>
-            ) : (
-              <Trans>
-                Payouts to Ethereum wallets will incur a 2.5% fee. Sending funds
-                to other Juicebox projects will not incur any fees. Learn more
-                about fees.
-              </Trans>
+          <>
+            {hasAllocations && (
+              <>
+                <Divider className="mt-4 mb-5" />
+                <div className="flex items-center">
+                  <span className="font-medium">
+                    <Trans>Distribution Limit: {fundingTarget}</Trans>
+                  </span>
+                </div>
+                <Divider className="my-5" />
+              </>
             )}
-          </span>
+            <span className="text-grey-500 dark:text-slate-300">
+              {hasAllocations && treasuryOption === 'amount' ? (
+                <Trans>
+                  Any funds raised over this amount may be redeemed by your
+                  project's token holders. You can turn off redemptions in the
+                  Token settings. Payouts to Ethereum wallets will incur a 2.5%
+                  fee. Sending funds to other Juicebox projects will not incur
+                  any fees. Learn more about fees.
+                </Trans>
+              ) : (
+                <Trans>
+                  Payouts to Ethereum wallets will incur a 2.5% fee. Sending
+                  funds to other Juicebox projects will not incur any fees.
+                  Learn more about fees.
+                </Trans>
+              )}
+            </span>
+          </>
         )}
         <Wizard.Page.ButtonControl isNextEnabled={isNextEnabled} />
       </Form>

@@ -21,7 +21,7 @@ export function formatFundingTarget({
     return t`Zero`
   }
   if (limit.eq(MAX_DISTRIBUTION_LIMIT)) {
-    return t`Infinite`
+    return t`Unlimited`
   }
 
   return formatCurrencyAmount({

@@ -1442,9 +1442,6 @@ msgstr ""
 msgid "Funding Rules"
 msgstr ""
 
-msgid "Funding Target Exceeded"
-msgstr ""
-
 msgid "Funding cycle"
 msgstr ""
 
@@ -1647,12 +1644,6 @@ msgid "Included in search results on the <0>Projects</0> page."
 msgstr ""
 
 msgid "Indie creators and builders"
-msgstr ""
-
-msgid "Infinite Funding Target"
-msgstr ""
-
-msgid "Infinite"
 msgstr ""
 
 msgid "Infinite (no limit)"
@@ -3177,9 +3168,6 @@ msgid "The redemption rate determines the amount of overflow each token can be r
 msgstr ""
 
 msgid "The redemption rate determines the amount of overflow each token can be redeemed for. <0>Learn more.</0>"
-msgstr ""
-
-msgid "The sum of your expenses is currently different to your funding target. Do you want to sync your funding target to match expenses?<0/><1/>If not, please edit one or more of your payouts."
 msgstr ""
 
 msgid "The target for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."

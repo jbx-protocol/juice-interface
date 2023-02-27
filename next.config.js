@@ -16,7 +16,7 @@ const ContentSecurityPolicy = `
   script-src 'self' https://static.hotjar.com https://script.hotjar.com https://*.juicebox.money 'unsafe-inline' 'unsafe-eval';
   style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
   font-src 'self' https://fonts.gstatic.com data:;
-  img-src 'self' https://*.juicebox.money https://juicebox.money ${INFURA_IPFS_URLS} https://jbx.mypinata.cloud https://gateway.pinata.cloud data:;
+  img-src 'self' https://*.juicebox.money https://juicebox.money ${INFURA_IPFS_URLS} https://jbx.mypinata.cloud https://gateway.pinata.cloud https://cdn.stamp.fyi data:;
   connect-src 'self' https://*.juicebox.money https://juicebox.money https://*.infura.io ${INFURA_IPFS_URLS} https://api.pinata.cloud https://jbx.mypinata.cloud https://api.studio.thegraph.com https://gateway.thegraph.com https://api.arcx.money https://api.tenderly.co https://*.hotjar.com https://*.hotjar.io wss://*.hotjar.com https://*.gnosis.io https://*.safe.global https://*.snapshot.org https://*.wallet.coinbase.com ${WALLET_CONNECT_URLS} https://juicenews.beehiiv.com;
   manifest-src 'self';
   prefetch-src 'self';

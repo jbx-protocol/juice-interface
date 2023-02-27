@@ -1,5 +1,6 @@
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
+import { twMerge } from 'tailwind-merge'
 import { PayoutsList } from '../../../TreasurySetup/components/PayoutsList'
 import { ReviewDescription } from '../DescriptionCol'
 import { useFundingConfigurationReview } from './hooks/FundingConfigurationReview'
@@ -51,28 +52,29 @@ export const FundingConfigurationReview = () => {
               </div>
             }
           />
+          <ReviewDescription
+            title={t`Distribution limit`}
+            desc={<div className="text-base font-medium">{fundingTarget}</div>}
+          />
 
-          {allocationSplits.length ? (
-            <ReviewDescription
-              className="col-span-4"
-              title={t`Payout addresses`}
-              desc={
+          <ReviewDescription
+            className={twMerge(allocationSplits.length ? 'col-span-4' : '')}
+            title={t`Payout addresses`}
+            desc={
+              allocationSplits.length > 0 ? (
                 <PayoutsList
                   value={allocationSplits}
                   onChange={setAllocationSplits}
                   payoutsSelection={selection ?? 'amounts'}
                   isEditable={false}
                 />
-              }
-            />
-          ) : (
-            <ReviewDescription
-              title={t`Distribution limit`}
-              desc={
-                <div className="text-base font-medium">{fundingTarget}</div>
-              }
-            />
-          )}
+              ) : (
+                <div className="text-base font-medium">
+                  <Trans>None</Trans>
+                </div>
+              )
+            }
+          />
         </div>
       </>
     </div>

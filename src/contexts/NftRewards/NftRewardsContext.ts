@@ -3,8 +3,8 @@ import { createContext } from 'react'
 import {
   DEFAULT_NFT_FLAGS,
   EMPTY_NFT_COLLECTION_METADATA,
-  NftRewardsData,
 } from 'redux/slices/editingV2Project'
+import { NftRewardsData } from 'redux/slices/editingV2Project/types'
 
 type NftRewardsContextType = {
   nftRewards: NftRewardsData

@@ -1,10 +1,10 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Empty, Space } from 'antd'
 import { Callout } from 'components/Callout'
+import { AddEditRewardModal } from 'components/Create/components/RewardsList/AddEditRewardModal'
 import Loading from 'components/Loading'
 import { AddRewardTierButton } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/AddNftsSection/AddRewardTierButton'
 import NftRewardTierCard from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/AddNftsSection/NftRewardTierCard'
-import NftRewardTierModal from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/AddNftsSection/NftRewardTierModal/NftRewardTierModal'
 import { useUpdateCurrentCollection } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/EditNftsPage/hooks/UpdateCurrentCollection'
 import { useHasNftRewards } from 'hooks/JB721Delegate/HasNftRewards'
 import { useCallback, useState } from 'react'
@@ -102,12 +102,10 @@ export function EditNftsSection() {
         </span>
       </Button>
 
-      <NftRewardTierModal
+      <AddEditRewardModal
         open={addTierModalVisible}
-        onChange={addRewardTier}
-        mode="Edit"
-        onClose={() => setAddTierModalVisible(false)}
-        isCreate
+        onOk={addRewardTier}
+        onCancel={() => setAddTierModalVisible(false)}
       />
     </>
   )

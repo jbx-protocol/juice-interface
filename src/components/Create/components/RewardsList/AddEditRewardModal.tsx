@@ -11,6 +11,7 @@ import { NftFileType, UploadNoStyle } from 'components/inputs/UploadNoStyle'
 import PrefixedInput from 'components/PrefixedInput'
 import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
 import { pinFile } from 'lib/api/ipfs'
+import { NftRewardTier } from 'models/nftRewardTier'
 import { UploadRequestOption } from 'rc-upload/lib/interface'
 import { useCallback, useEffect, useState } from 'react'
 import {
@@ -20,17 +21,17 @@ import {
   inputMustExistRule,
   inputNonZeroRule,
 } from 'utils/antdRules'
+import { withHttps } from 'utils/externalLink'
 import { ipfsGatewayUrl } from 'utils/ipfs'
 import { v4 } from 'uuid'
 import { CreateCollapse } from '../CreateCollapse'
 import { OptionalHeader } from '../OptionalHeader'
-import { Reward } from './types'
 
 interface AddEditRewardModalFormProps {
   fileUrl: string
   rewardName: string
   description?: string | undefined
-  minimumContribution?: string | undefined
+  contributionFloor?: string | undefined
   maxSupply?: string | undefined
   nftReservedRate?: number | undefined
   beneficiary?: string | undefined
@@ -49,9 +50,9 @@ export const AddEditRewardModal = ({
   onCancel,
 }: {
   className?: string
-  editingData?: Reward | undefined
+  editingData?: NftRewardTier | undefined
   open?: boolean
-  onOk: (reward: Reward) => void
+  onOk: (reward: NftRewardTier) => void
   onCancel: VoidFunction
 }) => {
   const [form] = Form.useForm<AddEditRewardModalFormProps>()
@@ -67,15 +68,15 @@ export const AddEditRewardModal = ({
       return
     }
 
-    setLimitedSupply(!!editingData.maximumSupply)
+    setLimitedSupply(!!editingData.maxSupply)
     setIsReservingNfts(!!editingData.beneficiary && !!editingData.reservedRate)
     form.setFieldsValue({
       fileUrl: editingData.fileUrl.toString(),
-      rewardName: editingData.title,
+      rewardName: editingData.name,
       description: editingData.description,
-      minimumContribution: editingData.minimumContribution.toString(),
-      maxSupply: editingData.maximumSupply?.toString(),
-      externalUrl: editingData.url,
+      contributionFloor: editingData.contributionFloor.toString(),
+      maxSupply: editingData.maxSupply?.toString(),
+      externalUrl: editingData.externalLink,
       beneficiary: editingData.beneficiary,
       nftReservedRate: editingData.reservedRate,
       votingWeight: editingData.votingWeight,
@@ -88,14 +89,14 @@ export const AddEditRewardModal = ({
       !!editingData?.reservedRate ||
       !!editingData?.beneficiary ||
       !!editingData?.votingWeight ||
-      !!editingData?.url
+      !!editingData?.externalLink
 
     setAdvancedOptionsOpen(openAdvancedOptions)
   }, [
     open,
     editingData?.beneficiary,
     editingData?.reservedRate,
-    editingData?.url,
+    editingData?.externalLink,
     editingData?.votingWeight,
   ])
 
@@ -107,13 +108,17 @@ export const AddEditRewardModal = ({
 
   const onModalOk = useCallback(async () => {
     const fields = await form.validateFields()
-    const result: Reward = {
-      id: editingData?.id ?? v4(),
-      title: fields.rewardName,
-      minimumContribution: parseFloat(fields.minimumContribution ?? '0'),
+    const remainingAndMaxSupply = fields.maxSupply
+      ? parseInt(fields.maxSupply)
+      : undefined
+    const result: NftRewardTier = {
+      id: editingData?.id ?? parseInt(v4()),
+      name: fields.rewardName,
+      contributionFloor: parseFloat(fields.contributionFloor ?? '0'),
       description: fields.description,
-      maximumSupply: fields.maxSupply ? parseInt(fields.maxSupply) : undefined,
-      url: fields.externalUrl ? `https://${fields.externalUrl}` : undefined,
+      maxSupply: remainingAndMaxSupply,
+      remainingSupply: remainingAndMaxSupply,
+      externalLink: withHttps(fields.externalUrl),
       fileUrl: fields.fileUrl,
       beneficiary: fields.beneficiary,
       reservedRate: fields.nftReservedRate,
@@ -194,7 +199,7 @@ export const AddEditRewardModal = ({
           <JuiceTextArea maxLength={10000} showCount />
         </Form.Item>
         <Form.Item
-          name="minimumContribution"
+          name="contributionFloor"
           label={t`Minimum Contribution`}
           extra={t`Contributors will receive this NFT when they contribute at least this amount.`}
           required

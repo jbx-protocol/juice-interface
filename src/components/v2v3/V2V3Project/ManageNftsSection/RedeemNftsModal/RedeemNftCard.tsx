@@ -50,6 +50,7 @@ export function RedeemNftCard({
   const rewardTier: NftRewardTier = {
     name,
     contributionFloor,
+    id: parseInt(nft.tokenId),
     remainingSupply: undefined,
     maxSupply: undefined,
     fileUrl: image,

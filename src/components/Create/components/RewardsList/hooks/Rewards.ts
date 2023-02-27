@@ -1,14 +1,17 @@
 import { useArray } from 'hooks/Array'
 import { FormItemInput } from 'models/formItemInput'
-import { Reward } from '../types'
+import { NftRewardTier } from 'models/nftRewardTier'
 
-export const useRewards = ({ value, onChange }: FormItemInput<Reward[]>) => {
+export const useRewards = ({
+  value,
+  onChange,
+}: FormItemInput<NftRewardTier[]>) => {
   const {
     values: rewards,
     add: addReward,
     remove: removeReward,
     upsert: upsertReward,
-  } = useArray<Reward>([value, onChange])
+  } = useArray<NftRewardTier>([value, onChange])
 
   return {
     rewards,

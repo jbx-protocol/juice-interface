@@ -7,17 +7,17 @@ import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { useAppDispatch } from 'redux/hooks/AppDispatch'
 import useProjectDistributionLimit from 'hooks/v2v3/contractReader/ProjectDistributionLimit'
 import useProjectQueuedFundingCycle from 'hooks/v2v3/contractReader/ProjectQueuedFundingCycle'
 import useProjectSplits from 'hooks/v2v3/contractReader/ProjectSplits'
 import { Split } from 'models/splits'
 import { useContext, useState } from 'react'
+import { useAppDispatch } from 'redux/hooks/AppDispatch'
 import {
   DEFAULT_MUST_START_AT_OR_AFTER,
   editingV2ProjectActions,
-  NftRewardsData,
 } from 'redux/slices/editingV2Project'
+import { NftRewardsData } from 'redux/slices/editingV2Project/types'
 import useDeepCompareEffect from 'use-deep-compare-effect'
 import { fromWad } from 'utils/format/formatNumber'
 import { NO_CURRENCY, V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'

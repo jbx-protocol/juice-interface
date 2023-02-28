@@ -1,8 +1,8 @@
 import { t } from '@lingui/macro'
 import { Row } from 'antd'
-import { Reward, RewardsList } from 'components/Create/components/RewardsList'
+import { RewardsList } from 'components/Create/components/RewardsList'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { JB721GovernanceType } from 'models/nftRewardTier'
+import { JB721GovernanceType, NftRewardTier } from 'models/nftRewardTier'
 import { useCallback, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/AppDispatch'
 import { useAppSelector } from 'redux/hooks/AppSelector'
@@ -20,15 +20,16 @@ export const RewardsReview = () => {
 
   const dispatch = useAppDispatch()
 
-  const rewards = useMemo(() => {
+  const rewards: NftRewardTier[] = useMemo(() => {
     return (
       rewardTiers?.map(t => ({
-        id: v4(),
-        title: t.name,
-        minimumContribution: t.contributionFloor,
+        id: parseInt(v4()),
+        name: t.name,
+        contributionFloor: t.contributionFloor,
         description: t.description,
-        maximumSupply: t.maxSupply,
-        url: t.externalLink,
+        maxSupply: t.maxSupply,
+        remainingSupply: t.maxSupply,
+        externalLink: t.externalLink,
         fileUrl: t.fileUrl,
         beneficiary: t.beneficiary,
         reservedRate: t.reservedRate,
@@ -38,16 +39,17 @@ export const RewardsReview = () => {
   }, [rewardTiers])
 
   const setRewards = useCallback(
-    (rewards: Reward[]) => {
+    (rewards: NftRewardTier[]) => {
       dispatch(
         editingV2ProjectActions.setNftRewardTiers(
           rewards.map(reward => ({
-            contributionFloor: reward.minimumContribution,
-            maxSupply: reward.maximumSupply,
-            remainingSupply: reward.maximumSupply,
+            contributionFloor: reward.contributionFloor,
+            maxSupply: reward.maxSupply,
+            remainingSupply: reward.maxSupply,
+            id: reward.id,
             fileUrl: reward.fileUrl,
-            name: reward.title,
-            externalLink: reward.url,
+            name: reward.name,
+            externalLink: reward.externalLink,
             description: reward.description,
             beneficiary: reward.beneficiary,
             reservedRate: reward.reservedRate,

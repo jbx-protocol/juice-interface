@@ -5,12 +5,12 @@ import FormattedAddress from 'components/FormattedAddress'
 import { JuiceVideoThumbnail } from 'components/NftRewards/NftVideo/JuiceVideoThumbnail'
 import TooltipLabel from 'components/TooltipLabel'
 import { useContentType } from 'hooks/ContentType'
+import { NftRewardTier } from 'models/nftRewardTier'
 import { ReactNode } from 'react'
 import { fileTypeIsVideo } from 'utils/nftRewards'
 import { prettyUrl } from 'utils/url'
 import { RewardImage } from '../RewardImage'
 import { RewardItemButton } from './RewardItemButton'
-import { Reward } from './types'
 
 const SIGNIFICANT_FIGURE_LIMIT = 6
 
@@ -35,19 +35,19 @@ export const RewardItem = ({
   onEditClicked,
   onDeleteClicked,
 }: {
-  reward: Reward
+  reward: NftRewardTier
   onEditClicked?: () => void
   onDeleteClicked?: () => void
 }) => {
   const {
-    title,
-    minimumContribution,
+    name,
+    contributionFloor,
     votingWeight,
     beneficiary,
     reservedRate,
     description,
-    maximumSupply,
-    url,
+    maxSupply,
+    externalLink,
     fileUrl,
   } = reward
 
@@ -59,7 +59,7 @@ export const RewardItem = ({
       {/* Title line */}
       <div className="flex items-center justify-between">
         <div className="w-4/5 overflow-hidden text-ellipsis text-lg font-medium">
-          {title}
+          {name}
         </div>
         <div className="flex gap-4">
           <RewardItemButton onClick={onEditClicked}>
@@ -81,11 +81,13 @@ export const RewardItem = ({
             <RewardImage className="h-44 w-44" src={fileUrl.toString()} />
           )}
 
-          {url && (
+          {externalLink && (
             <div className="flex max-w-[11rem] items-center gap-2 overflow-hidden overflow-ellipsis whitespace-nowrap text-xs font-normal">
               <LinkOutlined />
               <div className="overflow-hidden overflow-ellipsis">
-                <ExternalLink href={url}>{prettyUrl(url)}</ExternalLink>
+                <ExternalLink href={externalLink}>
+                  {prettyUrl(externalLink)}
+                </ExternalLink>
               </div>
             </div>
           )}
@@ -97,12 +99,12 @@ export const RewardItem = ({
           <div className="grid grid-cols-2 gap-y-6 gap-x-16">
             <RewardStatLine
               title={t`Minimum contribution`}
-              stat={`${numberUpToPrecisionFormat(minimumContribution)} ETH`}
+              stat={`${numberUpToPrecisionFormat(contributionFloor)} ETH`}
             />
-            {!!maximumSupply && (
+            {!!maxSupply && (
               <RewardStatLine
                 title={t`Supply`}
-                stat={numberUpToPrecisionFormat(maximumSupply)}
+                stat={numberUpToPrecisionFormat(maxSupply)}
               />
             )}
             {!!reservedRate && (

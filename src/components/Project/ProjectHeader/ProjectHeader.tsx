@@ -124,6 +124,7 @@ export function ProjectHeader({
             src={ipfsUriToGatewayUrl(projectMetadata.coverImageUri)}
             className="h-64 w-full object-cover"
             crossOrigin="anonymous"
+            alt={`Cover image for ${projectMetadata?.name ?? 'project'}`}
           />
         </div>
       )}

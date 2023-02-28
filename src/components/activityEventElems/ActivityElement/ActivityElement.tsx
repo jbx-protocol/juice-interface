@@ -20,7 +20,7 @@ const CallerBeneficiary = ({
 }) => {
   if (!beneficiary && !caller) return null
 
-  return !isEqualAddress(beneficiary, caller) ? (
+  return beneficiary && caller && !isEqualAddress(beneficiary, caller) ? (
     <div className="text-xs text-grey-500 dark:text-grey-300">
       <FormattedAddress withEnsAvatar address={caller} title="Caller" />{' '}
       <ArrowRightOutlined />{' '}
@@ -118,24 +118,12 @@ export function ActivityEvent({
   return (
     <>
       <div>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'baseline',
-          }}
-        >
+        <div className="flex items-center justify-between">
           <Header header={header} />
           <TimestampVersion {...event} />
         </div>
 
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'baseline',
-          }}
-        >
+        <div className="mt-1 flex items-center justify-between">
           <Subject subject={subject} />
           <CallerBeneficiary {...event} />
         </div>

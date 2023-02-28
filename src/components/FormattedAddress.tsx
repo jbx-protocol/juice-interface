@@ -7,6 +7,17 @@ import { twMerge } from 'tailwind-merge'
 import { ensAvatarUrlForAddress } from 'utils/ens'
 import { truncateEthAddress } from 'utils/format/formatAddress'
 
+interface FormattedAddressProps {
+  className?: string
+  address: string | undefined
+  title?: string
+  label?: string
+  tooltipDisabled?: boolean
+  truncateTo?: number
+  onClick?: MouseEventHandler
+  withEnsAvatar?: boolean
+}
+
 export default function FormattedAddress({
   className,
   address,
@@ -16,33 +27,13 @@ export default function FormattedAddress({
   truncateTo,
   onClick,
   withEnsAvatar,
-}: {
-  className?: string
-  address: string | undefined
-  title?: string
-  label?: string
-  tooltipDisabled?: boolean
-  truncateTo?: number
-  onClick?: MouseEventHandler
-  withEnsAvatar?: boolean
-}) {
+}: FormattedAddressProps) {
   const ensName = useEnsName(address)
 
   if (!address) return null
 
   const formatted =
     ensName ?? label ?? truncateEthAddress({ address, truncateTo })
-
-  if (tooltipDisabled) {
-    return (
-      <span
-        className={twMerge('select-all leading-[22px]', className)}
-        onClick={onClick}
-      >
-        {formatted}
-      </span>
-    )
-  }
 
   return (
     <Tooltip
@@ -52,12 +43,14 @@ export default function FormattedAddress({
           {address} <CopyTextButton value={address} />
         </span>
       }
+      popupVisible={tooltipDisabled ? false : undefined}
     >
-      <span className="flex items-center">
-        {withEnsAvatar && (
+      <span className="inline-flex items-center">
+        {withEnsAvatar && ensName && (
           <img
-            src={ensAvatarUrlForAddress(address, { size: 20 })}
-            className="mr-2 h-5 w-5 rounded-full"
+            src={ensAvatarUrlForAddress(address, { size: 40 })}
+            className="mr-1.5 h-5 w-5 rounded-full"
+            alt={`Avatar for ${ensName}`}
           />
         )}
         <EtherscanLink

@@ -4,6 +4,7 @@ import { useWatch } from 'antd/lib/form/Form'
 import { FormItems } from 'components/formItems'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { MinimalCollapse } from 'components/MinimalCollapse'
+import { ProjectTag } from 'models/project-tags'
 import { normalizeHandle } from 'utils/format/formatHandle'
 
 export type ProjectDetailsFormFields = {
@@ -18,6 +19,7 @@ export type ProjectDetailsFormFields = {
   discord: string
   payButton: string
   payDisclosure: string
+  tags: ProjectTag[]
 }
 
 export function ProjectDetailsForm({
@@ -81,6 +83,15 @@ export function ProjectDetailsForm({
             />
           </Form.Item>
         </div>
+
+        <div>
+          <FormItems.ProjectTags
+            name="tags"
+            initialTags={form.getFieldValue('tags')}
+            onChange={tags => form.setFieldsValue({ tags })}
+          />
+        </div>
+
         <div>
           <MinimalCollapse header={<Trans>Project links</Trans>}>
             <FormItems.ProjectLink name="infoUri" />

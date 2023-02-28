@@ -48,7 +48,7 @@ export function FundingCycleHistory() {
   if (!allCyclesLoaded) return <Loading />
   if (!pastFundingCycles.length)
     return (
-      <div>
+      <div className="text-primary">
         <Trans>No past funding cycles</Trans>
       </div>
     )

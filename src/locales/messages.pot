@@ -920,6 +920,9 @@ msgstr ""
 msgid "Customize your project's \"pay\" button. Leave blank to use the default."
 msgstr ""
 
+msgid "Cycle"
+msgstr ""
+
 msgid "Cycle #{0}"
 msgstr ""
 
@@ -2159,6 +2162,9 @@ msgstr ""
 msgid "Overflow is created if your project's balance exceeds your funding cycle target. Overflow can be redeemed by your project's token holders."
 msgstr ""
 
+msgid "Overview"
+msgstr ""
+
 msgid "Owned by <0/>"
 msgstr ""
 
@@ -2379,6 +2385,9 @@ msgid "Project ID: {projectId}"
 msgstr ""
 
 msgid "Project Links"
+msgstr ""
+
+msgid "Project NFTs"
 msgstr ""
 
 msgid "Project Name"
@@ -3564,9 +3573,6 @@ msgid "Unlock successful. Results will be indexed in a few moments."
 msgstr ""
 
 msgid "Unlock veNFT"
-msgstr ""
-
-msgid "Unlockable NFTs"
 msgstr ""
 
 msgid "Unlocking this staking position will burn your NFT and return ${tokenSymbolDisplayText}."

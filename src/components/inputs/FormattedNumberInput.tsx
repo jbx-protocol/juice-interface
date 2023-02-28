@@ -1,3 +1,4 @@
+import { InputNumberProps } from 'antd'
 import { twMerge } from 'tailwind-merge'
 import { classNames } from 'utils/classNames'
 import { formattedNum } from 'utils/format/formatNumber'
@@ -5,11 +6,8 @@ import { JuiceInputNumber } from './JuiceInputNumber'
 
 export default function FormattedNumberInput({
   className,
-  min,
-  max,
   step,
   value,
-  disabled,
   placeholder,
   suffix,
   prefix,
@@ -17,10 +15,9 @@ export default function FormattedNumberInput({
   onChange,
   onBlur,
   isInteger,
-}: {
+  ...props
+}: Omit<InputNumberProps, 'onChange'> & {
   className?: string
-  min?: number
-  max?: number
   step?: number
   value?: string
   placeholder?: string
@@ -60,11 +57,9 @@ export default function FormattedNumberInput({
           'w-full',
           accessory ? 'antd-no-number-handler' : '',
         )}
-        min={min}
-        max={max}
         value={value !== undefined ? parseFloat(value) : undefined}
         step={step ?? 1}
-        stringMode={true}
+        stringMode
         placeholder={placeholder}
         formatter={(val?: string | number | undefined) =>
           _prefix +
@@ -90,13 +85,13 @@ export default function FormattedNumberInput({
               .join('') || '0',
           )
         }}
-        disabled={disabled}
         onBlur={_value => {
           onBlur?.(_value?.toString())
         }}
         onChange={_value => {
           onChange?.(_value?.toString())
         }}
+        {...props}
       />
       <div className="absolute right-[5px] z-auto text-xs">
         {accessory && <div>{accessory}</div>}

@@ -23,17 +23,17 @@ export default function PayWarningModal({
       <h2>
         <Trans>Heads up</Trans>
       </h2>
-      <p className="font-medium">
+      <strong>
         <Trans>
           The{' '}
-          <ExternalLink href="https://github.com/jbx-protocol/juice-contracts">
+          <ExternalLink href="httstrongs://github.com/jbx-protocol/juice-contracts">
             Juicebox contracts
           </ExternalLink>{' '}
           may be vulnerable to bugs or hacks. All funds moved through Juicebox
           could be lost or stolen. JuiceboxDAO and Peel are not liable for any
           losses by projects or their supporters.
         </Trans>
-      </p>
+      </strong>
     </Modal>
   )
 }

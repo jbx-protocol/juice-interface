@@ -61,6 +61,7 @@ export function V2V3PayButton({ disabled, wrapperClassName }: PayButtonProps) {
         <Button
           style={{ width: '100%' }}
           type="primary"
+          size="large"
           onClick={() => {
             setPayWarningModalVisible(true)
             trackFathomGoal(PROJECT_PAGE.PAY_CTA)
@@ -71,7 +72,7 @@ export function V2V3PayButton({ disabled, wrapperClassName }: PayButtonProps) {
         </Button>
       </Tooltip>
       {payInCurrency === V2V3_CURRENCY_USD && (
-        <div className="text-xs">
+        <div className="mt-1 text-xs">
           <Trans>
             Paid as <ETHAmount amount={weiPayAmt} />
           </Trans>

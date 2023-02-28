@@ -323,7 +323,7 @@ msgstr ""
 msgid "Add token allocation"
 msgstr ""
 
-msgid "Add wallet addresses or juicebox projects to receive payouts."
+msgid "Add wallet addresses or Juicebox projects to receive payouts."
 msgstr ""
 
 msgid "Add {0}"
@@ -3639,9 +3639,6 @@ msgid "V3"
 msgstr ""
 
 msgid "V3 Project ID"
-msgstr ""
-
-msgid "Value has already been submitted"
 msgstr ""
 
 msgid "VeNFT contract created successfully. Results will be indexed in a few moments."

@@ -246,7 +246,7 @@ export const TreasurySetupPage = () => {
           >
             <div className="mb-4">
               <Trans>
-                Add wallet addresses or juicebox projects to receive payouts.
+                Add wallet addresses or Juicebox projects to receive payouts.
               </Trans>
             </div>
             {payoutsSelection && (

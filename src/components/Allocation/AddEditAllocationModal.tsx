@@ -164,6 +164,8 @@ export const AddEditAllocationModal = ({
     (!allocations.length ||
       ceilIfCloseToNextInteger(totalAllocationPercent) === 100)
 
+  const projectId = Form.useWatch('juiceboxProjectId', form)
+
   return (
     <Modal
       className={className}
@@ -241,9 +243,20 @@ export const AddEditAllocationModal = ({
                 validateTrigger: 'onSubmit',
               }),
               allocationInputAlreadyExistsRule({
-                inputs: allocations
-                  .map(a => a.beneficiary)
-                  .filter((a): a is string => !!a),
+                existingAllocations: allocations
+                  .map(({ beneficiary, projectId }) => ({
+                    beneficiary,
+                    projectId: projectId?.toString(),
+                  }))
+                  .filter(
+                    (
+                      a,
+                    ): a is {
+                      beneficiary: string
+                      projectId: string | undefined
+                    } => !!a.beneficiary,
+                  ),
+                inputProjectId: projectId,
                 editingAddressBeneficiary: !editingData?.projectOwner
                   ? editingData?.beneficiary
                   : undefined,

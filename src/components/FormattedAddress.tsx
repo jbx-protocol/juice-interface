@@ -1,10 +1,22 @@
 import { Tooltip } from 'antd'
-import { MouseEventHandler } from 'react'
 import CopyTextButton from 'components/buttons/CopyTextButton'
 import EtherscanLink from 'components/EtherscanLink'
-import { truncateEthAddress } from 'utils/format/formatAddress'
 import { useEnsName } from 'hooks/ensName'
+import { MouseEventHandler } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { ensAvatarUrlForAddress } from 'utils/ens'
+import { truncateEthAddress } from 'utils/format/formatAddress'
+
+interface FormattedAddressProps {
+  className?: string
+  address: string | undefined
+  title?: string
+  label?: string
+  tooltipDisabled?: boolean
+  truncateTo?: number
+  onClick?: MouseEventHandler
+  withEnsAvatar?: boolean
+}
 
 export default function FormattedAddress({
   className,
@@ -14,32 +26,14 @@ export default function FormattedAddress({
   tooltipDisabled,
   truncateTo,
   onClick,
-}: {
-  className?: string
-  address: string | undefined
-  title?: string
-  label?: string
-  tooltipDisabled?: boolean
-  truncateTo?: number
-  onClick?: MouseEventHandler
-}) {
+  withEnsAvatar,
+}: FormattedAddressProps) {
   const ensName = useEnsName(address)
 
   if (!address) return null
 
   const formatted =
     ensName ?? label ?? truncateEthAddress({ address, truncateTo })
-
-  if (tooltipDisabled) {
-    return (
-      <span
-        className={twMerge('select-all leading-[22px]', className)}
-        onClick={onClick}
-      >
-        {formatted}
-      </span>
-    )
-  }
 
   return (
     <Tooltip
@@ -49,8 +43,16 @@ export default function FormattedAddress({
           {address} <CopyTextButton value={address} />
         </span>
       }
+      popupVisible={tooltipDisabled ? false : undefined}
     >
-      <span>
+      <span className="inline-flex items-center">
+        {withEnsAvatar && ensName && (
+          <img
+            src={ensAvatarUrlForAddress(address, { size: 40 })}
+            className="mr-1.5 h-5 w-5 rounded-full"
+            alt={`Avatar for ${ensName}`}
+          />
+        )}
         <EtherscanLink
           className={twMerge('select-all leading-[22px]', className)}
           onClick={onClick}

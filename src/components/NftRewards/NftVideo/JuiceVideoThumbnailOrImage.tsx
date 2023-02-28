@@ -73,6 +73,7 @@ export function JuiceVideoThumbnailOrImage({
             onClick={props.onClick}
             crossOrigin="anonymous"
             onLoad={() => setLoading(false)}
+            alt="Enlarged media preview"
           />
         )}
       </div>

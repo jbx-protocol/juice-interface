@@ -1,12 +1,12 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import RichNote from 'components/RichNote'
 import { ConfigureEvent } from 'models/subgraph-entities/v2/configure'
 import {
   V2V3FundingCycle,
-  V2V3FundingCycleMetadata
+  V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
 
 import FundingCycleDetails from '../../V2V3FundingCycleSection/FundingCycleDetails'
@@ -89,7 +89,13 @@ export default function ConfigureEventElem({
       header={t`Configured funding cycles`}
       subject={null}
       extra={
-        <MinimalCollapse header={t`Funding cycle details`}>
+        <MinimalCollapse
+          header={
+            <span className="font-normal">
+              <Trans>Details</Trans>
+            </span>
+          }
+        >
           <FundingCycleDetails
             fundingCycle={fundingCycle as V2V3FundingCycle}
             fundingCycleMetadata={

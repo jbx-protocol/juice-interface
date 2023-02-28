@@ -113,6 +113,7 @@ export function HeroSection() {
                   [ThemeOption.light]: bananaOl,
                 })}
                 alt="Banny the chill Juicebox banana drinking juice"
+                priority
               />
             </Col>
           )}

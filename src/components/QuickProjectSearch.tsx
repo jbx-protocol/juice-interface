@@ -226,7 +226,7 @@ export default function QuickProjectSearch() {
                       />
                     )}
 
-                    <div className="text-xs font-bold text-slate-200 dark:text-slate-200">
+                    <div className="text-xs font-medium text-slate-200 dark:text-slate-200">
                       <CurrencySymbol currency="ETH" />
                       {formatWad(p.totalPaid, { precision: 0 })}
                     </div>

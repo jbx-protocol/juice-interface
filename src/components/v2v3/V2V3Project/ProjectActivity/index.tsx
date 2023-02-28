@@ -1,6 +1,6 @@
 import { DownloadOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Button, Select, Space } from 'antd'
+import { Button, Divider, Select, Space } from 'antd'
 import AddToBalanceEventElem from 'components/activityEventElems/AddToBalanceEventElem'
 import BurnEventElem from 'components/activityEventElems/BurnEventElem'
 import DeployedERC20EventElem from 'components/activityEventElems/DeployedERC20EventElem'
@@ -16,22 +16,7 @@ import ConfigureEventElem from './eventElems/ConfigureEventElem'
 import DeployETHERC20ProjectPayerEventElem from './eventElems/DeployETHERC20ProjectPayerEventElem'
 import DistributePayoutsElem from './eventElems/DistributePayoutsElem'
 import DistributeReservedTokensEventElem from './eventElems/DistributeReservedTokensElem'
-import { useProjectActivity } from './hooks/ProjectActivity'
-
-type EventFilter =
-  | 'all'
-  | 'pay'
-  | 'burn'
-  | 'addToBalance'
-  | 'mintTokens'
-  | 'redeem'
-  | 'deployERC20'
-  | 'projectCreate'
-  | 'distributePayouts'
-  | 'distributeTokens'
-  | 'distributeReservedTokens'
-  | 'deployETHERC20ProjectPayer'
-  | 'configure'
+import { EventFilter, useProjectActivity } from './hooks/ProjectActivity'
 
 export default function ProjectActivity() {
   const { tokenSymbol } = useContext(V2V3ProjectContext)
@@ -123,19 +108,21 @@ export default function ProjectActivity() {
 
     if (count === 0 && !isLoading) {
       return (
-        <div className="border-x-0 border-b-0 border-t border-solid border-smoke-200 pb-5 text-grey-500 dark:border-grey-600 dark:text-grey-300">
-          <Trans>No activity yet</Trans>
-        </div>
+        <>
+          <Divider />
+          <div className="my-5 pb-5 text-grey-500 dark:text-grey-300">
+            <Trans>No activity yet</Trans>
+          </div>
+        </>
       )
     }
 
     if (hasNextPage) {
       return (
-        <div
-          className="cursor-pointer text-center text-grey-500 dark:text-grey-300"
-          onClick={() => fetchNextPage()}
-        >
-          <Trans>Load more</Trans>
+        <div className="text-center">
+          <Button onClick={() => fetchNextPage()} type="text" className="px-0">
+            <Trans>Load more</Trans>
+          </Button>
         </div>
       )
     }

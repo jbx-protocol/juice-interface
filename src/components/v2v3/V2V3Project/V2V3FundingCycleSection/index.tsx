@@ -117,6 +117,7 @@ export function V2V3FundingCycleSection() {
           </Link>
         ) : null
       }
+      hideTitle
     />
   )
 }

@@ -1,7 +1,9 @@
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
-import { CurrencyContext } from 'contexts/shared/CurrencyContext'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
+import { CurrencyContext } from 'contexts/shared/CurrencyContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { useValidatePrimaryEthTerminal } from 'hooks/v2v3/ValidatePrimaryEthTerminal'
 import { useContext } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { getHighestAffordableNft, getNftRewardOfFloor } from 'utils/nftRewards'
@@ -10,7 +12,7 @@ import FormattedNumberInput from '../../inputs/FormattedNumberInput'
 import PayInputSubText from './PayInputSubText'
 import { PayProjectFormContext } from './payProjectFormContext'
 
-export function PayProjectForm({ disabled }: { disabled?: boolean }) {
+export function PayProjectForm() {
   const {
     currencyMetadata,
     currencies: { USD, ETH },
@@ -18,10 +20,12 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
   const {
     nftRewards: { rewardTiers, flags },
   } = useContext(NftRewardsContext)
+  const { fundingCycle } = useContext(V2V3ProjectContext)
 
   const { PayButton, form: payProjectForm } = useContext(PayProjectFormContext)
 
   const converter = useCurrencyConverter()
+  const isPrimaryETHTerminalValid = useValidatePrimaryEthTerminal()
 
   const {
     payAmount,
@@ -37,6 +41,10 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
     const newPayInCurrency = payInCurrency === ETH ? USD : ETH
     setPayInCurrency?.(newPayInCurrency)
   }
+
+  const hasCurrentFundingCycle = fundingCycle?.number.gt(0)
+
+  const disabled = !hasCurrentFundingCycle || !isPrimaryETHTerminalValid
 
   const onPayAmountChange = (value?: string): void => {
     const newPayAmount = value ?? '0'

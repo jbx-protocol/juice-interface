@@ -82,7 +82,7 @@ export default function ReservedTokensSplitsCard({
                 paragraph={{ rows: 1, width: 20 }}
                 title={false}
               >
-                <span className="text-base font-medium">
+                <span className="text-primary text-base font-medium">
                   {formatWad(reservedTokens, { precision: 0 })}
                 </span>
               </Skeleton>{' '}

@@ -15,9 +15,11 @@ export type TabType = {
 export default function FundingCycleSection({
   tabs,
   reconfigureButton,
+  hideTitle,
 }: {
   tabs: TabType[]
   reconfigureButton: JSX.Element | null
+  hideTitle?: boolean
 }) {
   const [selectedTabKey, setSelectedTabKey] = useState<string>(tabs[0]?.key)
 
@@ -33,17 +35,21 @@ export default function FundingCycleSection({
           columnGap: 5,
         }}
       >
-        <SectionHeader
-          className="mb-2"
-          text={<Trans>Funding cycle</Trans>}
-          tip={
-            <Trans>
-              A project's lifetime is defined in funding cycles. If a funding
-              target is set, the project can withdraw no more than the target
-              for the duration of the cycle.
-            </Trans>
-          }
-        />
+        {hideTitle ? (
+          <div />
+        ) : (
+          <SectionHeader
+            className="mb-2"
+            text={<Trans>Funding cycle</Trans>}
+            tip={
+              <Trans>
+                A project's lifetime is defined in funding cycles. If a funding
+                target is set, the project can withdraw no more than the target
+                for the duration of the cycle.
+              </Trans>
+            }
+          />
+        )}
 
         {reconfigureButton}
       </div>

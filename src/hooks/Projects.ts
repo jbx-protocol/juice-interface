@@ -216,7 +216,46 @@ export function useTrendingProjects(count: number) {
 }
 
 // Query all projects that a wallet has previously made payments to
+export function useContributedProjectsQuery(wallet: string | undefined) {
+  return useProjectsOfParticipants(
+    wallet
+      ? [
+          {
+            key: 'wallet',
+            value: wallet,
+          },
+          {
+            key: 'totalPaid',
+            operator: 'gt',
+            value: 0,
+          },
+        ]
+      : null,
+  )
+}
+
+// Query all projects that a wallet holds tokens for
 export function useHoldingsProjectsQuery(wallet: string | undefined) {
+  return useProjectsOfParticipants(
+    wallet
+      ? [
+          {
+            key: 'wallet',
+            value: wallet,
+          },
+          {
+            key: 'balance',
+            operator: 'gt',
+            value: 0,
+          },
+        ]
+      : null,
+  )
+}
+
+function useProjectsOfParticipants(
+  where: SGQueryOpts<'participant', SGEntityKey<'participant'>>['where'] | null,
+) {
   const [loadingParticipants, setLoadingParticipants] = useState<boolean>()
   const [projectIds, setProjectIds] = useState<string[]>()
 
@@ -226,7 +265,7 @@ export function useHoldingsProjectsQuery(wallet: string | undefined) {
       setLoadingParticipants(true)
 
       const participants = await querySubgraphExhaustive(
-        wallet
+        where
           ? {
               entity: 'participant',
               orderBy: 'balance',
@@ -237,12 +276,7 @@ export function useHoldingsProjectsQuery(wallet: string | undefined) {
                   keys: ['id'],
                 },
               ],
-              where: [
-                {
-                  key: 'wallet',
-                  value: wallet,
-                },
-              ],
+              where,
             }
           : null,
       )
@@ -268,7 +302,7 @@ export function useHoldingsProjectsQuery(wallet: string | undefined) {
     }
 
     loadParticipants()
-  }, [wallet])
+  }, [where])
 
   const projectsQuery = useSubgraphQuery(
     projectIds

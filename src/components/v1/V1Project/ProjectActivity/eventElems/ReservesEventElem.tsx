@@ -87,7 +87,12 @@ export default function ReservesEventElem({
                 :
               </div>
               <div className="text-grey-500 dark:text-grey-300">
-                {formatWad(e.modCut, { precision: 0 })}
+                {formatWad(e.modCut, { precision: 0 })}{' '}
+                {tokenSymbolText({
+                  tokenSymbol,
+                  capitalize: false,
+                  plural: true,
+                })}
               </div>
             </div>
           ))}
@@ -111,6 +116,11 @@ export default function ReservesEventElem({
               <div className="text-grey-500 dark:text-grey-300">
                 {formatWad(event.beneficiaryTicketAmount, {
                   precision: 0,
+                })}{' '}
+                {tokenSymbolText({
+                  tokenSymbol,
+                  capitalize: false,
+                  plural: true,
                 })}
               </div>
             </div>

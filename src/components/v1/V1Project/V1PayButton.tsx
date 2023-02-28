@@ -93,6 +93,7 @@ export function V1PayButton({ wrapperClassName, disabled }: PayButtonProps) {
           onClick={onPayButtonClick}
           disabled={shouldDisableButton}
           style={{ width: '100%' }}
+          size="large"
         >
           {payButtonText}
         </Button>

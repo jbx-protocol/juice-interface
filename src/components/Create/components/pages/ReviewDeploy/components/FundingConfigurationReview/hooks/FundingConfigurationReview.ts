@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
 import { AllocationSplit } from 'components/Allocation'
-import { useAvailablePayoutsSelections } from 'components/Create/components/pages/TreasurySetup/hooks/AvailablePayoutsSelections'
+import { useAvailablePayoutsSelections } from 'components/Create/components/pages/PayoutsPage/hooks/AvailablePayoutsSelections'
 import { formatFundingCycleDuration } from 'components/Create/utils/formatFundingCycleDuration'
 import moment from 'moment'
 import { useCallback, useMemo } from 'react'

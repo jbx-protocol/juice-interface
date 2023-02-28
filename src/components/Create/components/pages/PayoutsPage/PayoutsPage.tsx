@@ -28,18 +28,18 @@ import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { ConvertAmountsModal, RadioCard } from './components'
 import { PayoutsList } from './components/PayoutsList'
-import { useTreasurySetupForm } from './hooks'
+import { usePayoutsForm } from './hooks'
 
 const treasuryOptions = [
-  { name: t`Amount`, value: 'amount', icon: <Icons.Target /> },
+  { name: t`Limited`, value: 'amount', icon: <Icons.Target /> },
   { name: t`Unlimited`, value: 'unlimited', icon: <Icons.Infinity /> },
-  { name: t`Zero`, value: 'zero', icon: <StopOutlined /> },
+  { name: t`None`, value: 'zero', icon: <StopOutlined /> },
 ]
 
-export const TreasurySetupPage = () => {
-  useSetCreateFurthestPageReached('treasurySetup')
+export const PayoutsPage = () => {
+  useSetCreateFurthestPageReached('payouts')
   const { goToNextPage } = useContext(PageContext)
-  const { form, initialValues } = useTreasurySetupForm()
+  const { form, initialValues } = usePayoutsForm()
   const fundingTarget = useFundingTarget()
   const [splits, setSplits] = useEditingPayoutSplits()
   const [distributionLimit, setDistributionLimit] =
@@ -60,13 +60,11 @@ export const TreasurySetupPage = () => {
   const calloutText = useMemo(() => {
     switch (treasuryOption) {
       case 'amount':
-        return t`The total sum of your payouts will become your distribution limit.
-      This is the amount of funds your project will be able to distribute or
-      'withdraw' from its treasury each funding cycle.`
+        return t`You will pay out a specific amount of funds from your treasury each cycle. These funds are allocated in 'Payout Addresses' below.`
       case 'unlimited':
-        return t`Your project will keep all funds raised. There will be no limit on the amount of funds you can distribute from your treasury each funding cycle.`
+        return t`There will be no limit on the amount of funds you can pay out or 'withdraw' from your treasury each cycle. Unlimited payouts are allocated in percentages only.`
       case 'zero':
-        return t`All funds raised will be redeemable by your project’s token holders. You can turn off redemptions in the Token settings. You will not be able to add payouts while your distribution limit is set to Zero.`
+        return t`All funds raised will be redeemable by your project's token holders. You can turn off redemptions in the Token settings. You will not be able to add payouts while your Payouts are set to None.`
     }
   }, [treasuryOption])
 
@@ -190,51 +188,38 @@ export const TreasurySetupPage = () => {
           goToNextPage?.()
         }}
       >
-        <Form.Item
-          label={
-            <TooltipLabel
-              className="text-lg font-medium text-black dark:text-grey-200"
-              label={<Trans>Distribution Limit</Trans>}
-              tip={
-                <Trans>
-                  This is the amount of funds your project will be able to
-                  distribute or 'withdraw' from its treasury each funding cycle.
-                </Trans>
-              }
-            />
-          }
+        <RadioGroup
+          className="flex flex-col gap-3 md:flex-row"
+          value={treasuryOption}
+          onChange={onTreasuryOptionChange}
         >
-          <RadioGroup
-            className="flex flex-col gap-3 md:flex-row"
-            value={treasuryOption}
-            onChange={onTreasuryOptionChange}
-          >
-            {treasuryOptions.map(option => (
-              <RadioGroup.Option
-                className="flex-1 cursor-pointer"
-                key={option.name}
-                value={option.value}
-              >
-                {({ checked }) => (
-                  <RadioCard
-                    icon={option.icon}
-                    title={option.name}
-                    checked={checked}
-                  />
-                )}
-              </RadioGroup.Option>
-            ))}
-          </RadioGroup>
-        </Form.Item>
+          {treasuryOptions.map(option => (
+            <RadioGroup.Option
+              className="flex-1 cursor-pointer"
+              key={option.name}
+              value={option.value}
+            >
+              {({ checked }) => (
+                <RadioCard
+                  icon={option.icon}
+                  title={option.name}
+                  checked={checked}
+                />
+              )}
+            </RadioGroup.Option>
+          ))}
+        </RadioGroup>
         {calloutText && (
-          <Callout.Info className="mb-10">{calloutText}</Callout.Info>
+          <Callout.Info className="mb-10 mt-4" noIcon>
+            {calloutText}
+          </Callout.Info>
         )}
         {showPayouts && (
           <Form.Item
             label={
               <TooltipLabel
                 className="text-lg font-medium text-black dark:text-grey-200"
-                label={<Trans>Payouts</Trans>}
+                label={<Trans>Payout Addresses</Trans>}
                 tip={
                   <Trans>
                     These are the addresses or entities that will receive

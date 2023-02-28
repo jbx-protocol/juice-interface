@@ -1,7 +1,7 @@
 export type CreatePage =
   | 'projectDetails'
   | 'fundingCycles'
-  | 'treasurySetup'
+  | 'payouts'
   | 'projectToken'
   | 'nftRewards'
   | 'reconfigurationRules'

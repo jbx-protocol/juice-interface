@@ -7,7 +7,7 @@ import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 const pageOrder: CreatePage[] = [
   'projectDetails',
   'fundingCycles',
-  'treasurySetup',
+  'payouts',
   'projectToken',
   'nftRewards',
   'reconfigurationRules',

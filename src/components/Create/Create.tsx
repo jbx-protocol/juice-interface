@@ -14,8 +14,8 @@ import {
   ReviewDeployPage,
 } from './components'
 import { CreateBadge } from './components/CreateBadge'
+import { PayoutsPage } from './components/pages/PayoutsPage'
 import { DeploySuccess } from './components/pages/ReviewDeploy/components/DeploySuccess'
-import { TreasurySetupPage } from './components/pages/TreasurySetup'
 import { PayoutsMigrationModal } from './components/PayoutsMigrationModal'
 import { Wizard } from './components/Wizard'
 import { useLoadingInitialStateFromQuery } from './hooks/LoadInitialStateFromQuery'
@@ -87,17 +87,18 @@ export function Create() {
             <FundingCyclesPage />
           </Wizard.Page>
           <Wizard.Page
-            name="treasurySetup"
-            title={t`Treasury`}
+            name="payouts"
+            title={t`Payouts`}
             description={
               <Trans>
-                Start by selecting a treasury distribution limit and then add
-                payouts to wallet addresses or Juicebox projects to receive
-                funds each cycle.
+                Add payouts to wallet addresses or Juicebox projects to receive
+                funds from your treasury each cycle. Any unallocated funds will
+                stay in your treasury for use in a future cycle, or to be
+                claimed by token holders.
               </Trans>
             }
           >
-            <TreasurySetupPage />
+            <PayoutsPage />
           </Wizard.Page>
           <Wizard.Page
             name="projectToken"

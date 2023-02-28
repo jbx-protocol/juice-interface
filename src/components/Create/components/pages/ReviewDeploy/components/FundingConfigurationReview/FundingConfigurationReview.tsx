@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { twMerge } from 'tailwind-merge'
-import { PayoutsList } from '../../../TreasurySetup/components/PayoutsList'
+import { PayoutsList } from '../../../PayoutsPage/components/PayoutsList'
 import { ReviewDescription } from '../DescriptionCol'
 import { useFundingConfigurationReview } from './hooks/FundingConfigurationReview'
 

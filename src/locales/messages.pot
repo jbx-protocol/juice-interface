@@ -308,6 +308,9 @@ msgstr ""
 msgid "Add payout recipient"
 msgstr ""
 
+msgid "Add payouts to wallet addresses or Juicebox projects to receive funds from your treasury each cycle. Any unallocated funds will stay in your treasury for use in a future cycle, or to be claimed by token holders."
+msgstr ""
+
 msgid "Add to Metamask"
 msgstr ""
 
@@ -368,7 +371,7 @@ msgstr ""
 msgid "All funds can be distributed by the project. The project will have no overflow (the same as setting the target to infinity)."
 msgstr ""
 
-msgid "All funds raised will be redeemable by your project’s token holders. You can turn off redemptions in the Token settings. You will not be able to add payouts while your distribution limit is set to Zero."
+msgid "All funds raised will be redeemable by your project's token holders. You can turn off redemptions in the Token settings. You will not be able to add payouts while your Payouts are set to None."
 msgstr ""
 
 msgid "All funds received by the treasury will be distributed. Token holders will receive <0>no ETH</0> when burning their tokens."
@@ -1136,9 +1139,6 @@ msgstr ""
 msgid "Distribution Amount"
 msgstr ""
 
-msgid "Distribution Limit"
-msgstr ""
-
 msgid "Distribution Limit <0/>:"
 msgstr ""
 
@@ -1772,6 +1772,9 @@ msgstr ""
 msgid "Light theme"
 msgstr ""
 
+msgid "Limited"
+msgstr ""
+
 msgid "Limited supply"
 msgstr ""
 
@@ -2277,6 +2280,9 @@ msgid "Payments to this project will mint new project tokens."
 msgstr ""
 
 msgid "Payments to this project won't mint new project tokens."
+msgstr ""
+
+msgid "Payout Addresses"
 msgstr ""
 
 msgid "Payout addresses"
@@ -2975,9 +2981,6 @@ msgstr ""
 msgid "Start"
 msgstr ""
 
-msgid "Start by selecting a treasury distribution limit and then add payouts to wallet addresses or Juicebox projects to receive funds each cycle."
-msgstr ""
-
 msgid "Start over"
 msgstr ""
 
@@ -3179,12 +3182,6 @@ msgstr ""
 msgid "The total funds this Juicebox project has received since it was created."
 msgstr ""
 
-msgid ""
-"The total sum of your payouts will become your distribution limit.\n"
-"This is the amount of funds your project will be able to distribute or\n"
-"'withdraw' from its treasury each funding cycle."
-msgstr ""
-
 msgid "The veNFT contract is currently unable to lock project token. Contact the project owner regarding adding this permission."
 msgstr ""
 
@@ -3195,6 +3192,9 @@ msgid "There are no payouts defined for this funding cycle. The project owner wi
 msgstr ""
 
 msgid "There are no reserved token recipients defined for this funding cycle. The project owner will receive all available tokens."
+msgstr ""
+
+msgid "There will be no limit on the amount of funds you can pay out or 'withdraw' from your treasury each cycle. Unlimited payouts are allocated in percentages only."
 msgstr ""
 
 msgid "These are the addresses or entities that will receive payouts from your treasury each funding cycle."
@@ -3225,9 +3225,6 @@ msgid "This address will receive the tokens minted from paying this project."
 msgstr ""
 
 msgid "This funding cycle may pose risks to contributors. Check the funding cycle details before paying this project."
-msgstr ""
-
-msgid "This is the amount of funds your project will be able to distribute or 'withdraw' from its treasury each funding cycle."
 msgstr ""
 
 msgid "This is the button that contributors will click to pay your project"
@@ -3486,9 +3483,6 @@ msgid "Transfer {tokenTextShort}"
 msgstr ""
 
 msgid "Transparently set your terms ahead of time, or take control when you need to. Juicebox lets you define elegant token issuance & redemption, payouts, and other rules in advance, acting as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
-msgstr ""
-
-msgid "Treasury"
 msgstr ""
 
 msgid "Trending"
@@ -3866,6 +3860,9 @@ msgstr ""
 msgid "You receive these NFTs for contributing <0>{0} ETH or more</0>."
 msgstr ""
 
+msgid "You will pay out a specific amount of funds from your treasury each cycle. These funds are allocated in 'Payout Addresses' below."
+msgstr ""
+
 msgid "You will receive <0/>"
 msgstr ""
 
@@ -3954,9 +3951,6 @@ msgid "Your project will appear as 'active'."
 msgstr ""
 
 msgid "Your project will appear as 'archived'."
-msgstr ""
-
-msgid "Your project will keep all funds raised. There will be no limit on the amount of funds you can distribute from your treasury each funding cycle."
 msgstr ""
 
 msgid "Your project's NFTs will not have on-chain governance capabilities."

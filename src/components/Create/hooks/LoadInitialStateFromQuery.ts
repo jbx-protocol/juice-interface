@@ -82,7 +82,7 @@ const parseCreateFlowStateFromInitialState = (
     createFurthestPageReached = 'fundingCycles'
   }
   if (treasurySelection) {
-    createFurthestPageReached = 'treasurySetup'
+    createFurthestPageReached = 'payouts'
   }
   if (projectTokensSelection) {
     createFurthestPageReached = 'projectToken'

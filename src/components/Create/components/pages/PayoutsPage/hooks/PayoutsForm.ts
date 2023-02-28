@@ -7,18 +7,18 @@ import { useAppSelector } from 'redux/hooks/AppSelector'
 import { useEditingPayoutSplits } from 'redux/hooks/EditingPayoutSplits'
 import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 
-type TreasurySetupFormProps = Partial<{
+type PayoutsFormProps = Partial<{
   selection: TreasurySelection
   payoutsList: AllocationSplit[]
 }>
 
-export const useTreasurySetupForm = () => {
-  const [form] = Form.useForm<TreasurySetupFormProps>()
+export const usePayoutsForm = () => {
+  const [form] = Form.useForm<PayoutsFormProps>()
   const { treasurySelection } = useAppSelector(state => state.editingV2Project)
   const [splits, setSplits] = useEditingPayoutSplits()
   useDebugValue(form.getFieldsValue())
 
-  const initialValues: TreasurySetupFormProps | undefined = useMemo(() => {
+  const initialValues: PayoutsFormProps | undefined = useMemo(() => {
     const selection = treasurySelection ?? 'amount'
     if (!splits.length) {
       return { selection }

@@ -1,7 +1,8 @@
 import { NftPostPayModalConfig } from './nftRewards'
+import { ProjectTag } from './project-tags'
 import { TokenRef } from './tokenRef'
 
-export const LATEST_METADATA_VERSION = 7
+export const LATEST_METADATA_VERSION = 8
 
 type ProjectMetadataV1 = Partial<{
   name: string
@@ -48,7 +49,7 @@ type ProjectMetadataV5 = Partial<
 >
 
 // add `telegram`
-export type ProjectMetadataV6 = Partial<
+type ProjectMetadataV6 = Partial<
   Omit<ProjectMetadataV5, 'version'> & {
     version: 6
     telegram: string
@@ -56,10 +57,18 @@ export type ProjectMetadataV6 = Partial<
 >
 
 // add `coverImageUri`
-export type ProjectMetadataV7 = Partial<
+type ProjectMetadataV7 = Partial<
   Omit<ProjectMetadataV6, 'version'> & {
-    version: typeof LATEST_METADATA_VERSION
+    version: 7
     coverImageUri: string
+  }
+>
+
+// add `tags`
+type ProjectMetadataV8 = Partial<
+  Omit<ProjectMetadataV7, 'version'> & {
+    version: typeof LATEST_METADATA_VERSION
+    tags: ProjectTag[]
   }
 >
 
@@ -71,11 +80,15 @@ export type AnyProjectMetadata =
   | ProjectMetadataV5
   | ProjectMetadataV6
   | ProjectMetadataV7
+  | ProjectMetadataV8
+
+// Current version
+export type ProjectMetadata = ProjectMetadataV8
 
 // Converts metadata of any version to latest version
 export const consolidateMetadata = (
   metadata: AnyProjectMetadata,
-): ProjectMetadataV7 => {
+): ProjectMetadataV8 => {
   return {
     ...metadata,
     payButton:

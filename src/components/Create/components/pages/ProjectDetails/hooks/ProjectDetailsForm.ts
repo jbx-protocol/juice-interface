@@ -1,4 +1,6 @@
+import { ActionCreatorWithPayload } from '@reduxjs/toolkit'
 import { useForm } from 'antd/lib/form/Form'
+import { ProjectTag } from 'models/project-tags'
 import { useMemo } from 'react'
 import { useAppSelector } from 'redux/hooks/AppSelector'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
@@ -16,6 +18,7 @@ type ProjectDetailsFormProps = Partial<{
   payButtonText: string
   payDisclosure: string
   inputProjectOwner: string
+  tags: ProjectTag[]
 }>
 
 export const useProjectDetailsForm = () => {
@@ -37,6 +40,7 @@ export const useProjectDetailsForm = () => {
       payButtonText: projectMetadata.payButton,
       payDisclosure: projectMetadata.payDisclosure,
       inputProjectOwner,
+      tags: projectMetadata.tags,
     }),
     [
       inputProjectOwner,
@@ -50,6 +54,7 @@ export const useProjectDetailsForm = () => {
       projectMetadata.payDisclosure,
       projectMetadata.twitter,
       projectMetadata.telegram,
+      projectMetadata.tags,
     ],
   )
 
@@ -127,8 +132,23 @@ export const useProjectDetailsForm = () => {
     form,
     fieldName: 'payDisclosure',
     ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setPayDisclosure,
+    dispatchFunction:
+      editingV2ProjectActions.setPayDisclosure as ActionCreatorWithPayload<
+        string | ProjectTag[],
+        string
+      >,
     formatter: v => v ?? '',
+  })
+  useFormDispatchWatch({
+    form,
+    fieldName: 'tags',
+    ignoreUndefined: false,
+    dispatchFunction:
+      editingV2ProjectActions.setTags as ActionCreatorWithPayload<
+        string | ProjectTag[],
+        string
+      >,
+    formatter: v => v ?? [],
   })
 
   return { form, initialValues }

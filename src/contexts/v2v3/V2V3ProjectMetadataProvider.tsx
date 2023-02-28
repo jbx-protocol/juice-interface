@@ -3,7 +3,7 @@ import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import useProjectMetadataContent from 'hooks/v2v3/contractReader/ProjectMetadataContent'
-import { ProjectMetadataV7 } from 'models/projectMetadata'
+import { ProjectMetadata } from 'models/projectMetadata'
 import { PropsWithChildren } from 'react'
 
 export default function V2V3ProjectMetadataProvider({
@@ -11,7 +11,7 @@ export default function V2V3ProjectMetadataProvider({
   metadata,
   children,
 }: PropsWithChildren<{
-  metadata: ProjectMetadataV7 | undefined
+  metadata: ProjectMetadata | undefined
   projectId: number
 }>) {
   const hasMetadata = Boolean(metadata)

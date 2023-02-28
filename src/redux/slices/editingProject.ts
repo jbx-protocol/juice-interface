@@ -3,7 +3,7 @@ import * as constants from '@ethersproject/constants'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import {
   LATEST_METADATA_VERSION,
-  ProjectMetadataV7,
+  ProjectMetadata
 } from 'models/projectMetadata'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { PayoutMod, TicketMod } from 'models/v1/mods'
@@ -12,17 +12,17 @@ import {
   perbicentToPercent,
   percentToPerbicent,
   percentToPermille,
-  permilleToPercent,
+  permilleToPercent
 } from 'utils/format/formatNumber'
 import {
   SerializedV1FundingCycle,
-  serializeV1FundingCycle,
+  serializeV1FundingCycle
 } from 'utils/v1/serializers'
 
 import { V1_CURRENCY_USD } from 'constants/v1/currency'
 
 interface EditingProjectInfo {
-  metadata: ProjectMetadataV7
+  metadata: ProjectMetadata
   handle: string
 }
 

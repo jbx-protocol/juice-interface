@@ -5,21 +5,21 @@ import {
   JBTiered721Flags,
   NftCollectionMetadata,
   NftPostPayModalConfig,
-  NftRewardTier,
+  NftRewardTier
 } from 'models/nftRewards'
 import { PayoutsSelection } from 'models/payoutsSelection'
-import { ProjectMetadataV7 } from 'models/projectMetadata'
+import { ProjectMetadata } from 'models/projectMetadata'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
 import {
   ETHPayoutGroupedSplits,
-  ReservedTokensGroupedSplits,
+  ReservedTokensGroupedSplits
 } from 'models/splits'
 import { TreasurySelection } from 'models/treasurySelection'
 import {
   SerializedV2V3FundAccessConstraint,
   SerializedV2V3FundingCycleData,
-  SerializedV2V3FundingCycleMetadata,
+  SerializedV2V3FundingCycleMetadata
 } from 'utils/v2v3/serializers'
 
 export type NftRewardsData = {
@@ -43,7 +43,7 @@ export interface CreateState {
 }
 
 export interface ProjectState {
-  projectMetadata: ProjectMetadataV7
+  projectMetadata: ProjectMetadata
   fundingCycleData: SerializedV2V3FundingCycleData
   fundingCycleMetadata: SerializedV2V3FundingCycleMetadata
   fundAccessConstraints: SerializedV2V3FundAccessConstraint[]

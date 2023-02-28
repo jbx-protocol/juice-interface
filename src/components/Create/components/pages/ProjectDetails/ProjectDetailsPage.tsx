@@ -4,6 +4,7 @@ import { ADDRESS_ZERO } from '@uniswap/v3-sdk'
 import { Col, Form, Row, Space } from 'antd'
 import { Callout } from 'components/Callout'
 import { useLockPageRulesWrapper } from 'components/Create/hooks/useLockPageRulesWrapper'
+import { FormItems } from 'components/formItems'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
@@ -127,6 +128,30 @@ export const ProjectDetailsPage: React.FC = () => {
           </CreateCollapse.Panel>
           <CreateCollapse.Panel
             key={2}
+            header={<OptionalHeader header={t`Project Tags`} />}
+            hideDivider
+          >
+            <FormItems.ProjectTags
+              name="tags"
+              initialTags={formProps.form.getFieldValue('tags')}
+              onChange={tags => formProps.form.setFieldsValue({ tags })}
+            />
+            <Form.Item
+              className="pb-8 pt-5"
+              name="inputProjectOwner"
+              label={t`Input project owner address`}
+              extra={t`Nominate an Ethereum wallet address to become the ‘owner’ of this project. If you intend to manage this project from the address that deployed it, leave this blank.`}
+              rules={lockPageRulesWrapper([
+                inputMustBeEthAddressRule({
+                  label: t`Input project owner address`,
+                }),
+              ])}
+            >
+              <EthAddressInput placeholder={ADDRESS_ZERO} />
+            </Form.Item>
+          </CreateCollapse.Panel>
+          <CreateCollapse.Panel
+            key={3}
             header={<OptionalHeader header={t`Project page customizations`} />}
             hideDivider
           >

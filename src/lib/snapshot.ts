@@ -3,7 +3,11 @@ import axios from 'axios'
 import { juiceboxEmojiImageUri } from 'constants/images'
 import { readNetwork } from 'constants/networks'
 import { WAD_DECIMALS } from 'constants/numbers'
-import { AnyProjectMetadata, ProjectMetadataV7 } from 'models/projectMetadata'
+import {
+  AnyProjectMetadata,
+  consolidateMetadata,
+  ProjectMetadata
+} from 'models/projectMetadata'
 import { pinJson } from './api/ipfs'
 
 /**
@@ -24,7 +28,7 @@ const generateSnapshotSpaceSettings = ({
   handle: string
   tokenSymbol: string
   projectId: number
-  projectMetadata: AnyProjectMetadata
+  projectMetadata: ProjectMetadata
   projectOwnerAddress: string
   JBTokenStoreAddress: string
 }) => {
@@ -84,10 +88,10 @@ const generateSnapshotSpaceSettings = ({
     network: `${readNetwork.chainId}`,
     children: [],
     private: false,
-    name: projectMetadata?.name,
+    name: projectMetadata.name,
     about: '',
     website: `https://juicebox.money/@${handle}`,
-    twitter: (projectMetadata as ProjectMetadataV7)?.twitter,
+    twitter: projectMetadata.twitter,
     symbol: tokenSymbol,
     avatar,
   }
@@ -108,7 +112,7 @@ export async function uploadSnapshotSettingsToIPFS({
   handle: string
   tokenSymbol: string
   projectId: number
-  projectMetadata: ProjectMetadataV7
+  projectMetadata: AnyProjectMetadata
   projectOwnerAddress: string
   JBTokenStoreAddress: string
 }): Promise<string> {
@@ -116,7 +120,7 @@ export async function uploadSnapshotSettingsToIPFS({
     handle,
     tokenSymbol,
     projectId,
-    projectMetadata,
+    projectMetadata: consolidateMetadata(projectMetadata),
     projectOwnerAddress,
     JBTokenStoreAddress,
   })

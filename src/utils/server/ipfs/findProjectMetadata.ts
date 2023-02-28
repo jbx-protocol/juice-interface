@@ -3,7 +3,7 @@ import { ipfsGet } from 'lib/api/ipfs'
 import {
   AnyProjectMetadata,
   consolidateMetadata,
-  ProjectMetadataV7,
+  ProjectMetadata
 } from 'models/projectMetadata'
 
 import { GlobalInfuraScheduler } from './infuraScheduler'
@@ -14,7 +14,7 @@ export const findProjectMetadata = async ({
 }: {
   metadataCid: string
   limiter?: Bottleneck
-}): Promise<ProjectMetadataV7> => {
+}): Promise<ProjectMetadata> => {
   limiter = limiter ?? GlobalInfuraScheduler
   /*
    * Safe to do so, as the static timeout will catch this and retry later.

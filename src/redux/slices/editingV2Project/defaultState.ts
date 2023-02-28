@@ -3,19 +3,19 @@ import * as constants from '@ethersproject/constants'
 import { ONE_MILLION } from 'constants/numbers'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
-  RESERVED_TOKEN_SPLIT_GROUP,
+  RESERVED_TOKEN_SPLIT_GROUP
 } from 'constants/splits'
 import { JB721GovernanceType, JBTiered721Flags } from 'models/nftRewards'
 import {
   LATEST_METADATA_VERSION,
-  ProjectMetadataV7,
+  ProjectMetadata
 } from 'models/projectMetadata'
 import { issuanceRateFrom, redemptionRateFrom } from 'utils/v2v3/math'
 import {
   SerializedV2V3FundingCycleData,
   SerializedV2V3FundingCycleMetadata,
   serializeV2V3FundingCycleData,
-  serializeV2V3FundingCycleMetadata,
+  serializeV2V3FundingCycleMetadata
 } from 'utils/v2v3/serializers'
 import { CreateState, ProjectState } from './types'
 
@@ -80,7 +80,7 @@ export const DEFAULT_NFT_FLAGS: JBTiered721Flags = {
   preventOverspending: false,
 }
 
-const DEFAULT_PROJECT_METADATA_STATE: ProjectMetadataV7 = {
+const DEFAULT_PROJECT_METADATA_STATE: ProjectMetadata = {
   name: '',
   infoUri: '',
   logoUri: '',
@@ -90,6 +90,7 @@ const DEFAULT_PROJECT_METADATA_STATE: ProjectMetadataV7 = {
   discord: '',
   telegram: '',
   tokens: [],
+  tags: [],
   nftPaymentSuccessModal: undefined,
   version: LATEST_METADATA_VERSION,
 }

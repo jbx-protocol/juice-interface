@@ -13,7 +13,7 @@ export type NftRewardTier = {
   remainingSupply: number | undefined
   fileUrl: string // link to ipfs
   name: string
-  id?: number
+  id: number
   reservedRate: number | undefined
   beneficiary: string | undefined
   votingWeight: number | undefined
@@ -31,7 +31,7 @@ export type DelegateVersion = JB721DELEGATE_V1 | JB721DELEGATE_V1_1
 
 // How the reward tiers are stored in the contracts
 export type JB721TierParams = {
-  id?: BigNumber //undefined for outgoing tier (in launch or adjustTiers tx)
+  id: BigNumber
   remainingQuantity?: BigNumber //undefined for outgoing tier (in launch or adjustTiers tx)
 
   contributionFloor: BigNumber //uint128

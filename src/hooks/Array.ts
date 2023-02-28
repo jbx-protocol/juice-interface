@@ -6,7 +6,7 @@ import { useCallback, useState } from 'react'
  * Pass in state to anchor the array state, or keep undefined to allow the hook
  * to define and manage the state directly.
  */
-export const useArray = <T extends { id: string }>(
+export const useArray = <T extends { id: string | number }>(
   state?: [Array<T> | undefined, ((state: Array<T>) => void) | undefined],
 ) => {
   const [_values, _setValues] = useState<Array<T>>([])
@@ -21,7 +21,7 @@ export const useArray = <T extends { id: string }>(
   )
 
   const remove = useCallback(
-    (id: string) => {
+    (id: string | number) => {
       setValues(values.filter(v => v.id !== id))
     },
     [setValues, values],

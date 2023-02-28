@@ -9,12 +9,11 @@ import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import {
-  CreateState,
   DEFAULT_REDUX_STATE,
   editingV2ProjectActions,
   INITIAL_REDUX_STATE,
-  ProjectState,
 } from 'redux/slices/editingV2Project'
+import { CreateState, ProjectState } from 'redux/slices/editingV2Project/types'
 import { isEqualAddress } from 'utils/address'
 import { parseWad } from 'utils/format/formatNumber'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'

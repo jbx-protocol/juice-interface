@@ -10,10 +10,8 @@ import omit from 'lodash/omit'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import { JBPayDataSourceFundingCycleMetadata } from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
-import {
-  DEFAULT_MUST_START_AT_OR_AFTER,
-  NftRewardsData,
-} from 'redux/slices/editingV2Project'
+import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
+import { NftRewardsData } from 'redux/slices/editingV2Project/types'
 import {
   buildJB721TierParams,
   buildJBDeployTiered721DelegateData,

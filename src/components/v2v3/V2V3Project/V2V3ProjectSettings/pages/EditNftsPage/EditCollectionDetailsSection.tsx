@@ -109,7 +109,10 @@ export function EditCollectionDetailsSection() {
 
   return (
     <Space size="large" direction="vertical">
-      <Callout.Info className="bg-smoke-100 dark:bg-slate-500" transparent>
+      <Callout.Info
+        className="text-primary bg-smoke-100 dark:bg-slate-500"
+        transparent
+      >
         <Trans>
           Changes to your collection details may not be reflected in some
           marketplaces (like Opensea). Contact the marketplace for support.

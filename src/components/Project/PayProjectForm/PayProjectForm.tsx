@@ -82,7 +82,7 @@ export function PayProjectForm() {
   return (
     <>
       {errorMessage && (
-        <div className="h-5">
+        <div className="mb-1 h-5">
           <span className="text-xs text-error-600 dark:text-error-500">
             {errorMessage}
           </span>
@@ -91,6 +91,7 @@ export function PayProjectForm() {
       <div className="flex w-full flex-wrap gap-2">
         <div className="min-w-[50%] flex-[2]">
           <FormattedNumberInput
+            size="large"
             placeholder="0"
             onChange={onPayAmountChange}
             value={payAmount}
@@ -102,6 +103,7 @@ export function PayProjectForm() {
                 content={currencyMetadata[payInCurrency ?? ETH].name}
                 onClick={togglePayInCurrency}
                 disabled={disabled}
+                size="large"
               />
             }
           />

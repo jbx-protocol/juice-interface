@@ -1,10 +1,4 @@
 import {
-  useAppSelector,
-  useEditingV2V3FundAccessConstraintsSelector,
-  useEditingV2V3FundingCycleDataSelector,
-  useEditingV2V3FundingCycleMetadataSelector,
-} from 'redux/hooks/AppSelector'
-import {
   ETHPayoutGroupedSplits,
   ReservedTokensGroupedSplits,
 } from 'models/splits'
@@ -13,7 +7,13 @@ import {
   V2V3FundingCycleData,
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
-import { NftRewardsData } from 'redux/slices/editingV2Project'
+import {
+  useAppSelector,
+  useEditingV2V3FundAccessConstraintsSelector,
+  useEditingV2V3FundingCycleDataSelector,
+  useEditingV2V3FundingCycleMetadataSelector,
+} from 'redux/hooks/AppSelector'
+import { NftRewardsData } from 'redux/slices/editingV2Project/types'
 
 export interface EditingFundingCycleConfig {
   editingPayoutGroupedSplits: ETHPayoutGroupedSplits

@@ -31,7 +31,7 @@ async function fetchRewardTierMetadata({
     : tier.initialQuantity.toNumber()
 
   return {
-    id: tier.id?.toNumber(),
+    id: tier.id.toNumber(),
     name: tierMetadata.name,
     description: tierMetadata.description,
     externalLink: withHttps(tierMetadata.externalLink),

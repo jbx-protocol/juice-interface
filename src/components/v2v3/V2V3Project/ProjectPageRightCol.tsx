@@ -21,17 +21,17 @@ export function ProjectPageRightCol({
 
   return (
     <Col md={COL_SIZE_MD} xs={24}>
-      <section className="mt-12">
+      <section className="mt-12 mb-6">
         <PayProjectForm disabled={payFormDisabled} />
       </section>
 
       <div className="flex flex-col">
         {hasNftRewards ? (
-          <div className="mt-12">
+          <div className="mt-6">
             <NftRewardsSection />
           </div>
         ) : null}
-        <section className="mt-5">
+        <section className="mt-6">
           <ProjectActivity />
         </section>
       </div>

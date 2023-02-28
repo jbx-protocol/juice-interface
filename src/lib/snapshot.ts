@@ -6,7 +6,7 @@ import { WAD_DECIMALS } from 'constants/numbers'
 import {
   AnyProjectMetadata,
   consolidateMetadata,
-  ProjectMetadata,
+  ProjectMetadata
 } from 'models/projectMetadata'
 import { pinJson } from './api/ipfs'
 

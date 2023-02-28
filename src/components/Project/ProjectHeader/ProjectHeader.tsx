@@ -5,11 +5,13 @@ import FormattedAddress from 'components/FormattedAddress'
 import Paragraph from 'components/Paragraph'
 import { GnosisSafeBadge } from 'components/Project/ProjectHeader/GnosisSafeBadge'
 import ProjectLogo from 'components/ProjectLogo'
+import ProjectTagsRow from 'components/ProjectTagsRow'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useGnosisSafe } from 'hooks/safe/GnosisSafe'
 import { useContext } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
+
 import { EditProjectHandleButton } from './EditProjectHandleButton'
 import SocialLinks from './SocialLinks'
 
@@ -24,7 +26,7 @@ function ProjectSubheading({
   projectOwnerAddress: string | undefined
   canEditProjectHandle?: boolean
 }) {
-  const { projectId } = useContext(ProjectMetadataContext)
+  const { projectId, projectMetadata } = useContext(ProjectMetadataContext)
 
   const { data: gnosisSafe, isLoading: gnosisSafeLoading } =
     useGnosisSafe(projectOwnerAddress)
@@ -78,6 +80,21 @@ function ProjectSubheading({
           </div>
         </>
       )}
+
+      {projectMetadata?.tags?.length ? (
+        <>
+          <Divider
+            type="vertical"
+            className="m-0 h-6 bg-grey-100 dark:bg-grey-900"
+          />
+          <span className="mr-2">
+            <ProjectTagsRow
+              tags={projectMetadata.tags}
+              tagClassName="text-xs"
+            />
+          </span>
+        </>
+      ) : null}
     </div>
   )
 }

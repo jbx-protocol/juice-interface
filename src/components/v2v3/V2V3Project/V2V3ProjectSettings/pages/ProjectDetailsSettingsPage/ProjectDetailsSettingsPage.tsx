@@ -1,7 +1,7 @@
 import { useForm } from 'antd/lib/form/Form'
 import {
   ProjectDetailsForm,
-  ProjectDetailsFormFields,
+  ProjectDetailsFormFields
 } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/ProjectDetailsSettingsPage/ProjectDetailsForm'
 import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
 import { PV_V2 } from 'constants/pv'
@@ -38,6 +38,7 @@ export function ProjectDetailsSettingsPage() {
       telegram: fields.telegram,
       payButton: fields.payButton.substring(0, PROJECT_PAY_CHARACTER_LIMIT), // Enforce limit
       payDisclosure: fields.payDisclosure,
+      tags: fields.tags,
     })
 
     if (!uploadedMetadata.Hash) {
@@ -86,6 +87,7 @@ export function ProjectDetailsSettingsPage() {
       telegram: projectMetadata?.telegram ?? '',
       payButton: projectMetadata?.payButton ?? '',
       payDisclosure: projectMetadata?.payDisclosure ?? '',
+      tags: projectMetadata?.tags ?? [],
     })
   }, [
     projectMetadata?.name,

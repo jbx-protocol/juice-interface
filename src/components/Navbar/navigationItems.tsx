@@ -1,6 +1,6 @@
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Button, Dropdown } from 'antd'
+import { Button, Dropdown, MenuProps } from 'antd'
 import { TOP_NAV } from 'constants/fathomEvents'
 import { trackFathomGoal } from 'lib/fathom'
 import Link from 'next/link'
@@ -21,18 +21,18 @@ const externalMenuLinkProps = {
 }
 
 const DesktopDropDown = ({
-  resourcesMenu,
+  resourcesMenuProps,
   resourcesOpen,
   setResourcesOpen,
 }: {
-  resourcesMenu: JSX.Element
+  resourcesMenuProps: MenuProps
   resourcesOpen: boolean
   setResourcesOpen: (resource: boolean) => void
 }): JSX.Element => {
   return (
     <Dropdown
       overlayClassName="p-0"
-      overlay={resourcesMenu}
+      menu={{ ...resourcesMenuProps }}
       open={resourcesOpen}
     >
       <div
@@ -96,12 +96,12 @@ export const resourcesMenuItems = (mobile?: boolean): ResourceItem[] => {
 }
 
 export const desktopMenuItems = ({
-  resourcesMenu,
+  resourcesMenuProps,
   resourcesOpen,
   setResourcesOpen,
   dropdownIconStyle,
 }: {
-  resourcesMenu: JSX.Element
+  resourcesMenuProps: MenuProps
   resourcesOpen: boolean
   setResourcesOpen: (resource: boolean) => void
   dropdownIconStyle: CSSProperties
@@ -143,7 +143,7 @@ export const desktopMenuItems = ({
     label: (
       <DesktopDropDown
         {...{
-          resourcesMenu,
+          resourcesMenuProps,
           setResourcesOpen,
           resourcesOpen,
           dropdownIconStyle,

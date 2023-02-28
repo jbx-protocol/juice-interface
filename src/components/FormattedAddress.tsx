@@ -39,11 +39,11 @@ export default function FormattedAddress({
     <Tooltip
       title={
         <span className="text-sm">
-          {title ? <div className="text-xs font-bold">{title}</div> : null}
+          {title ? <div className="text-xs font-medium">{title}</div> : null}
           {address} <CopyTextButton value={address} />
         </span>
       }
-      popupVisible={tooltipDisabled ? false : undefined}
+      open={tooltipDisabled ? false : undefined}
     >
       <span className="inline-flex items-center">
         {withEnsAvatar && ensName && (
@@ -51,6 +51,7 @@ export default function FormattedAddress({
             src={ensAvatarUrlForAddress(address, { size: 40 })}
             className="mr-1.5 h-5 w-5 rounded-full"
             alt={`Avatar for ${ensName}`}
+            loading="lazy"
           />
         )}
         <EtherscanLink

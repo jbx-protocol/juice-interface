@@ -5,6 +5,7 @@ import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { useV2V3TerminalVersion } from 'hooks/v2v3/V2V3TerminalVersion'
 import { useContext } from 'react'
+import { isEqualAddress } from 'utils/address'
 import { formatHistoricalDate } from 'utils/format/formatDate'
 import { smallHeaderStyle } from '../styles'
 
@@ -19,17 +20,19 @@ const CallerBeneficiary = ({
 }) => {
   if (!beneficiary && !caller) return null
 
-  return beneficiary &&
-    caller &&
-    beneficiary.toLowerCase() !== caller.toLowerCase() ? (
+  return !isEqualAddress(beneficiary, caller) ? (
     <div className="text-xs text-grey-500 dark:text-grey-300">
-      <FormattedAddress address={caller} title="Caller" />{' '}
+      <FormattedAddress withEnsAvatar address={caller} title="Caller" />{' '}
       <ArrowRightOutlined />{' '}
-      <FormattedAddress address={beneficiary} title="Beneficiary" />
+      <FormattedAddress
+        withEnsAvatar
+        address={beneficiary}
+        title="Beneficiary"
+      />
     </div>
   ) : (
     <div className="text-sm text-grey-500 dark:text-grey-300">
-      <FormattedAddress address={beneficiary} />
+      <FormattedAddress withEnsAvatar address={beneficiary} />
     </div>
   )
 }

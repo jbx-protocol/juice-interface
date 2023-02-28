@@ -9,6 +9,7 @@ import ProjectLogo from 'components/ProjectLogo'
 import { useHoldingsProjectsQuery, useMyProjectsQuery } from 'hooks/Projects'
 import { useWallet } from 'hooks/Wallet'
 import Link from 'next/link'
+import { ensAvatarUrlForAddress } from 'utils/ens'
 import { truncateEthAddress } from 'utils/format/formatAddress'
 
 function ProjectsList({ projects }: { projects: ProjectCardProject[] }) {
@@ -117,7 +118,7 @@ export function AccountDashboard({
       <header className="flex flex-wrap items-start justify-between">
         <div className="mb-10 flex">
           <ProjectLogo
-            uri={`https://cdn.stamp.fyi/avatar/${address}?s=128`}
+            uri={ensAvatarUrlForAddress(address, { size: 128 })}
             name={ensName ?? undefined}
             className="mr-5 h-32 w-32"
           />

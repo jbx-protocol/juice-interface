@@ -73,7 +73,7 @@ export default function Payments() {
                   <ETHAmount amount={e.amount} precision={2} />
                 </span>
                 <span>
-                  <FormattedAddress address={e.beneficiary} />
+                  <FormattedAddress address={e.beneficiary} withEnsAvatar />
                 </span>
               </div>
               <div>

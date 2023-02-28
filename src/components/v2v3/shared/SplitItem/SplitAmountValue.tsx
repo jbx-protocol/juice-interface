@@ -13,25 +13,32 @@ import { isJuiceboxProjectSplit } from 'utils/v2v3/distributions'
 import { feeForAmount, SPLITS_TOTAL_PERCENT } from 'utils/v2v3/math'
 import { SplitProps } from './SplitItem'
 
+const VALUE_PRECISION = 4
+
 export function SplitAmountValue({ props }: { props: SplitProps }) {
   const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
   const splitValue = props.totalValue
     ?.mul(props.split.percent)
     .div(SPLITS_TOTAL_PERCENT)
+
   const isJuiceboxProject = isJuiceboxProjectSplit(props.split)
-  const feeAmount = !isJuiceboxProject
+  const hasFee = !isJuiceboxProject && !props.dontApplyFeeToAmount
+
+  const feeAmount = hasFee
     ? feeForAmount(splitValue, ETHPaymentTerminalFee)
     : BigNumber.from(0)
-  const splitValueFormatted =
+  const valueFormatted = formatWad(splitValue, { precision: VALUE_PRECISION })
+
+  const valueAfterFeeFormatted =
     splitValue &&
     feeAmount &&
     formatWad(splitValue.sub(feeAmount), {
       ...props,
-      precision: 2,
+      precision: VALUE_PRECISION,
     })
   const feeAmountFormatted = formatWad(feeAmount, {
     ...props,
-    precision: 2,
+    precision: VALUE_PRECISION,
   })
 
   const curr = V2V3CurrencyName(
@@ -60,14 +67,14 @@ export function SplitAmountValue({ props }: { props: SplitProps }) {
         <span>
           (
           <CurrencySymbol currency={curr} />
-          {splitValueFormatted}
+          {props.dontApplyFeeToAmount ? valueFormatted : valueAfterFeeFormatted}
           {props.valueSuffix ? <span> {props.valueSuffix}</span> : null})
         </span>
       </Tooltip>
 
       <Tooltip title={createTooltipTitle(curr, feeAmount)}>
         <div className="ml-2 text-sm text-grey-500 dark:text-grey-300">
-          {props.showFees && !isJuiceboxProject && (
+          {props.showFee && !isJuiceboxProject && (
             <Parenthesis>
               <Trans>
                 <CurrencySymbol currency={curr} />

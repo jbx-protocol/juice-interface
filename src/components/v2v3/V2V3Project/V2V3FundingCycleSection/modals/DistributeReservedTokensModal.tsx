@@ -115,6 +115,7 @@ export default function DistributeReservedTokensModal({
             totalValue={reservedTokens}
             valueSuffix={tokenTextPlural}
             showAmounts
+            dontApplyFeeToAmounts
             valueFormatProps={{ precision: 0 }}
           />
         </div>

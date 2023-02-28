@@ -26,7 +26,7 @@ export default function PayWarningModal({
       <strong>
         <Trans>
           The{' '}
-          <ExternalLink href="httstrongs://github.com/jbx-protocol/juice-contracts">
+          <ExternalLink href="https://github.com/jbx-protocol/juice-contracts">
             Juicebox contracts
           </ExternalLink>{' '}
           may be vulnerable to bugs or hacks. All funds moved through Juicebox

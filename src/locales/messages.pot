@@ -2381,6 +2381,12 @@ msgstr ""
 msgid "Project Owner"
 msgstr ""
 
+msgid "Project Settings"
+msgstr ""
+
+msgid "Project Tags"
+msgstr ""
+
 msgid "Project Token"
 msgstr ""
 
@@ -2457,6 +2463,9 @@ msgid "Project rules"
 msgstr ""
 
 msgid "Project state"
+msgstr ""
+
+msgid "Project tags"
 msgstr ""
 
 msgid "Project token"
@@ -2808,6 +2817,12 @@ msgid "See example"
 msgstr ""
 
 msgid "Select NFTs to redeem"
+msgstr ""
+
+msgid "Select the option that best suits your project’s funding requirements."
+msgstr ""
+
+msgid "Select up to 3 tags to help contributors find your project."
 msgstr ""
 
 msgid "Send Message"
@@ -3975,6 +3990,9 @@ msgid "loading"
 msgstr ""
 
 msgid "matching \"{searchText}\""
+msgstr ""
+
+msgid "matching tags {0}"
 msgstr ""
 
 msgid "minutes"

@@ -25,9 +25,9 @@ export async function queryAll<T extends object>() {
         query: {
           match_all: {},
         },
-        sort: ['createdAt'], // This sort is the only way we can make paging reliable. Sorting by "id" returns a 500, by "_doc" seems to have no effect. Sepana api is mysterious.
+        sort: ['_id'], // This sort is the only way we can make paging reliable.
         size: MAX_SEPANA_PAGE_SIZE,
-        page, // Page is a 1-based index (whyyyyyy sepana)
+        page, // Page is a 1-based index
       },
     )
 

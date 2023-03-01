@@ -7,6 +7,11 @@ import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { PV_V1, PV_V2 } from 'constants/pv'
 import { useWallet } from 'hooks/Wallet'
 import { trackFathomGoal } from 'lib/fathom'
+import {
+  MAX_PROJECT_TAGS,
+  ProjectTag,
+  projectTagOptions
+} from 'models/project-tags'
 import { ProjectCategory } from 'models/projectVisibility'
 import { PV } from 'models/pv'
 import Link from 'next/link'
@@ -47,9 +52,15 @@ function Projects() {
   const search = Array.isArray(router.query.search)
     ? router.query.search[0]
     : router.query.search
+  const tags = (
+    Array.isArray(router.query.tags)
+      ? router.query.tags[0].split(',')
+      : router.query.tags.split(',')
+  ) as ProjectTag[]
 
   const { userAddress } = useWallet()
   const [searchText, setSearchText] = useState<typeof search>(search)
+  const [searchTags, setSearchTags] = useState<ProjectTag[]>([])
 
   const sepanaEnabled = featureFlagEnabled(FEATURE_FLAGS.SEPANA_SEARCH)
 
@@ -71,7 +82,8 @@ function Projects() {
       }
     })
     setSearchText(search)
-  }, [userAddress, router.query.tab, search])
+    setSearchTags(tags)
+  }, [userAddress, router.query.tab, search, tags])
 
   const [orderBy, setOrderBy] = useState<OrderByOption>('totalPaid')
   const [includeV1, setIncludeV1] = useState<boolean>(true)
@@ -112,24 +124,61 @@ function Projects() {
         </div>
 
         <div>
-          <Search
-            className="mb-4 flex-1"
-            autoFocus
-            placeholder={
-              sepanaEnabled ? t`Search projects` : t`Search projects by handle`
-            }
-            onSearch={val => {
-              setSearchText(val)
-              router.push(`/projects?tab=all${val ? `&search=${val}` : ''}`)
-            }}
-            defaultValue={searchText}
-            key={searchText}
-            allowClear
-          />
+          {searchTags.length ? null : (
+            <Search
+              className="mb-4 flex-1"
+              autoFocus
+              placeholder={
+                sepanaEnabled
+                  ? t`Search projects`
+                  : t`Search projects by handle`
+              }
+              onSearch={val => {
+                setSearchText(val)
+                router.push(`/projects?tab=all${val ? `&search=${val}` : ''}`)
+              }}
+              defaultValue={searchText}
+              key={searchText}
+              allowClear
+            />
+          )}
+
+          {sepanaEnabled && !searchText && (
+            <div className="mb-3">
+              <ProjectTagsRow
+                tags={[...projectTagOptions].sort(a =>
+                  searchTags.includes(a) ? -1 : 1,
+                )}
+                tagClassName="text-sm"
+                selectedTags={searchTags}
+                onClickTag={t => {
+                  let newTags: ProjectTag[] = []
+
+                  if (searchTags.includes(t)) {
+                    setSearchTags(v => {
+                      newTags = v.filter(_t => _t !== t)
+                      return newTags
+                    })
+                    router.push(
+                      `/projects?tab=all${
+                        newTags.length ? `&tags=${newTags.join(',')}` : ''
+                      }`,
+                    )
+                  } else {
+                    setSearchTags(v => {
+                      newTags = [...v, t].slice(0, MAX_PROJECT_TAGS)
+                      return newTags
+                    })
+                    router.push(`/projects?tab=all&tags=${newTags.join(',')}`)
+                  }
+                }}
+              />
+            </div>
+          )}
 
           <div
             className="flex min-h-[52px] max-w-[100vw] flex-wrap items-center justify-between"
-            hidden={!!searchText}
+            hidden={!!searchText || !!searchTags.length}
           >
             <ProjectsTabs selectedTab={selectedTab} />
 
@@ -158,6 +207,7 @@ function Projects() {
             <AllProjects
               pv={pv}
               searchText={searchText}
+              searchTags={searchTags}
               orderBy={orderBy}
               showArchived={showArchived}
               reversed={reversed}

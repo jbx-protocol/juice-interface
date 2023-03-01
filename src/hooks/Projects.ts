@@ -6,15 +6,16 @@ import {
   InfiniteSGQueryOpts,
   SGEntityKey,
   SGQueryOpts,
-  SGWhereArg,
+  SGWhereArg
 } from 'models/graph'
 import { Json } from 'models/json'
+import { ProjectTag } from 'models/project-tags'
 import { ProjectState } from 'models/projectVisibility'
 import { PV } from 'models/pv'
 import {
   SepanaProject,
   SepanaProjectQueryOpts,
-  SepanaQueryResponse,
+  SepanaQueryResponse
 } from 'models/sepana'
 import { Project } from 'models/subgraph-entities/vX/project'
 import { V1TerminalVersion } from 'models/v1/terminals'
@@ -23,7 +24,7 @@ import {
   useInfiniteQuery,
   UseInfiniteQueryOptions,
   useQuery,
-  UseQueryOptions,
+  UseQueryOptions
 } from 'react-query'
 import { getSubgraphIdForProject, querySubgraphExhaustive } from 'utils/graph'
 import { formatQueryParams } from 'utils/queryParams'
@@ -233,6 +234,39 @@ export function useSepanaProjectsInfiniteQuery(
           return allPages.length
         }
       },
+    },
+  )
+}
+
+/**
+ * Search Sepana projects by tags and return a list of matching projects
+ * @param tags project tags to search
+ * @param pageSize number of projects to return
+ * @param enabled query will only run if enabled
+ * @returns list of projects
+ */
+export function useProjectTagsQuery(
+  tags: ProjectTag[],
+  opts?: {
+    pageSize?: number
+    enabled?: boolean
+  },
+) {
+  return useQuery(
+    ['sepana-tags-query', tags.join(',')],
+    () =>
+      axios
+        .get<SepanaQueryResponse<Json<SepanaProject>>>(
+          `/api/sepana/projects?tags=${tags.join(',')}${
+            opts?.pageSize !== undefined ? `&pageSize=${opts?.pageSize}` : ''
+          }`,
+        )
+        .then(res =>
+          res.data.hits.hits.map(h => parseSepanaProjectJson(h._source)),
+        ),
+    {
+      staleTime: DEFAULT_STALE_TIME,
+      enabled: opts?.enabled,
     },
   )
 }

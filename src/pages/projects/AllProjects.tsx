@@ -7,8 +7,9 @@ import { useLoadMoreContent } from 'hooks/LoadMore'
 import {
   useInfiniteProjectsQuery,
   useProjectsSearch,
-  useSepanaProjectsQuery,
+  useSepanaProjectsQuery
 } from 'hooks/Projects'
+import { ProjectTag } from 'models/project-tags'
 import { PV } from 'models/pv'
 import { useEffect, useRef } from 'react'
 import { classNames } from 'utils/classNames'
@@ -17,13 +18,15 @@ import { featureFlagEnabled } from 'utils/featureFlags'
 export default function AllProjects({
   pv,
   searchText,
+  searchTags,
   orderBy,
   showArchived,
   reversed,
 }: {
   pv: PV[] | undefined
   searchText: string
-  orderBy: 'createdAt' | 'totalPaid' | 'currentBalance' | 'paymentsCount'
+  searchTags: ProjectTag[]
+  orderBy: 'createdAt' | 'totalPaid'
   showArchived: boolean
   reversed: boolean
 }) {
@@ -48,7 +51,7 @@ export default function AllProjects({
 
   const { data: sepanaSearchResults, isLoading: isLoadingSepanaSearch } =
     useSepanaProjectsQuery(
-      { text: searchText, pageSize },
+      { text: searchText, tags: searchTags, pageSize },
       { enabled: sepanaEnabled },
     )
 
@@ -68,7 +71,9 @@ export default function AllProjects({
 
   const isLoading = isLoadingProjects || isLoadingSearch
 
-  const concatenatedPages = searchText?.length
+  const concatenatedPages = sepanaEnabled
+    ? sepanaSearchResults
+    : searchText?.length
     ? searchResults
     : pages?.pages?.reduce((prev, group) => [...prev, ...group], [])
 
@@ -118,6 +123,9 @@ export default function AllProjects({
             {concatenatedPages?.length}{' '}
             {concatenatedPages?.length === 1 ? t`project` : t`projects`}{' '}
             {searchText ? t`matching "${searchText}"` : ''}
+            {searchTags.length
+              ? t`matching tags ${searchTags.map(t => `"${t}"`).join(', ')}`
+              : ''}
           </div>
         )
       )}

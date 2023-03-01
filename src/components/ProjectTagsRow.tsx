@@ -4,10 +4,12 @@ import ProjectTagElem from './ProjectTagElem'
 
 export default function ProjectTagsRow({
   tags,
+  selectedTags,
   onClickTag,
   tagClassName,
 }: {
   tags: ProjectTag[] | undefined
+  selectedTags?: ProjectTag[]
   onClickTag?: (tag: ProjectTag) => void
   tagClassName?: string
 }) {
@@ -21,6 +23,7 @@ export default function ProjectTagsRow({
           tag={t}
           onClick={() => onClickTag?.(t)}
           className={tagClassName}
+          selected={selectedTags?.includes(t)}
         />
       ))}
     </div>

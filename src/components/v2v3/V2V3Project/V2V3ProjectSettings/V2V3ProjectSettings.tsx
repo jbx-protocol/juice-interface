@@ -197,6 +197,7 @@ export function V2V3ProjectSettings() {
         'group',
       ),
     ]
+
     return _items
   }, [cv])
 

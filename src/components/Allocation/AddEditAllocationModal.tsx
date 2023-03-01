@@ -166,6 +166,16 @@ export const AddEditAllocationModal = ({
 
   const projectId = Form.useWatch('juiceboxProjectId', form)
 
+  const titleCasedAllocationName = useMemo(
+    () =>
+      allocationName
+        .toLowerCase()
+        .split(' ')
+        .map(s => s.charAt(0).toUpperCase() + s.slice(1), '')
+        .join(' '),
+    [allocationName],
+  )
+
   return (
     <Modal
       className={className}
@@ -271,8 +281,8 @@ export const AddEditAllocationModal = ({
           name="amount"
           label={
             amountType === 'amount'
-              ? t`Distribution Amount`
-              : t`Distribution Percentage`
+              ? t`${titleCasedAllocationName} Amount`
+              : t`${titleCasedAllocationName} Percentage`
           }
           required
           extra={
@@ -291,8 +301,8 @@ export const AddEditAllocationModal = ({
             inputMustExistRule({
               label:
                 amountType === 'amount'
-                  ? t`Distribution Amount`
-                  : t`Distribution Percentage`,
+                  ? t`${titleCasedAllocationName} Amount`
+                  : t`${titleCasedAllocationName} Percentage`,
             }),
           ]}
         >

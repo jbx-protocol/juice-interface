@@ -650,7 +650,7 @@ msgstr ""
 msgid "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule (the first funding cycle following <1>{1}</1> from now)."
 msgstr ""
 
-msgid "Changing your distribution limit to 'Amount' will require you to manually set a distribution limit amount to split between your current payouts."
+msgid "Changing your payout to 'Limited' will require you to manually set a payout amount to split between your current payouts."
 msgstr ""
 
 msgid "Character"
@@ -668,7 +668,7 @@ msgstr ""
 msgid "Choose how you would like to configure your payouts."
 msgstr ""
 
-msgid "Choosing zero will delete all payouts and set your distribution limit to 0."
+msgid "Choosing zero will delete all payouts and remove any target."
 msgstr ""
 
 msgid "Claim {0}"
@@ -1046,7 +1046,7 @@ msgstr ""
 msgid "Disabled"
 msgstr ""
 
-msgid "Disabled when your funding cycle's distribution limit is <0>No limit</0> (infinite)"
+msgid "Disabled when your funding cycle's payout amount is <0>Unlimited</0>"
 msgstr ""
 
 msgid "Disabled when your project's funding cycle duration is 0."
@@ -1136,16 +1136,7 @@ msgstr ""
 msgid "Distributing funds to another Juicebox project may mint its tokens. Set the address that should receive these project's tokens."
 msgstr ""
 
-msgid "Distribution Amount"
-msgstr ""
-
 msgid "Distribution Limit <0/>:"
-msgstr ""
-
-msgid "Distribution Limit: {fundingTarget}"
-msgstr ""
-
-msgid "Distribution Percentage"
 msgstr ""
 
 msgid "Distribution amount"
@@ -2282,6 +2273,9 @@ msgstr ""
 msgid "Payments to this project won't mint new project tokens."
 msgstr ""
 
+msgid "Payout"
+msgstr ""
+
 msgid "Payout Addresses"
 msgstr ""
 
@@ -2313,6 +2307,9 @@ msgid "Payouts to Ethereum addresses incur a {feePercentage}% fee. Your project 
 msgstr ""
 
 msgid "Payouts to Ethereum wallets will incur a 2.5% fee. Sending funds to other Juicebox projects will not incur any fees. Learn more about fees."
+msgstr ""
+
+msgid "Payouts: {fundingTarget}"
 msgstr ""
 
 msgid "Percent"
@@ -2882,13 +2879,13 @@ msgstr ""
 msgid "Set custom rules & parameters for your project tokens."
 msgstr ""
 
-msgid "Set distribution limit"
-msgstr ""
-
 msgid "Set handle @{handle}"
 msgstr ""
 
 msgid "Set operator for {projectTitle}"
+msgstr ""
+
+msgid "Set payout"
 msgstr ""
 
 msgid "Set payouts of {projectTitle}"
@@ -4212,6 +4209,12 @@ msgid "{payerRate} {tokenSymbolPlural}/ETH"
 msgstr ""
 
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
+msgstr ""
+
+msgid "{titleCasedAllocationName} Amount"
+msgstr ""
+
+msgid "{titleCasedAllocationName} Percentage"
 msgstr ""
 
 msgid "{tokenSymbolDisplayText} range"

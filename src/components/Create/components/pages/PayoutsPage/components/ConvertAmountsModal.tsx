@@ -88,14 +88,13 @@ export const ConvertAmountsModal = ({
     >
       <section className="mb-8 text-sm text-grey-700 dark:text-slate-200">
         <Trans>
-          Changing your distribution limit to 'Amount' will require you to
-          manually set a distribution limit amount to split between your current
-          payouts.
+          Changing your payout to 'Limited' will require you to manually set a
+          payout amount to split between your current payouts.
         </Trans>
       </section>
 
       <label className="text-base font-medium text-black dark:text-slate-100">
-        <Trans>Set distribution limit</Trans>
+        <Trans>Set payout</Trans>
       </label>
       <FormattedNumberInput
         className="mt-2 mb-10"

@@ -53,7 +53,7 @@ export const FundingConfigurationReview = () => {
             }
           />
           <ReviewDescription
-            title={t`Distribution limit`}
+            title={t`Payout`}
             desc={<div className="text-base font-medium">{fundingTarget}</div>}
           />
 

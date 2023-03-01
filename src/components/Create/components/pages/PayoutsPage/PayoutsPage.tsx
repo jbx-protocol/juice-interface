@@ -252,7 +252,7 @@ export const PayoutsPage = () => {
                 <Divider className="mt-4 mb-5" />
                 <div className="flex items-center">
                   <span className="font-medium">
-                    <Trans>Distribution Limit: {fundingTarget}</Trans>
+                    <Trans>Payouts: {fundingTarget}</Trans>
                   </span>
                 </div>
                 <Divider className="my-5" />
@@ -281,7 +281,7 @@ export const PayoutsPage = () => {
       </Form>
 
       <DeleteConfirmationModal
-        body={t`Choosing zero will delete all payouts and set your distribution limit to 0.`}
+        body={t`Choosing zero will delete all payouts and remove any target.`}
         open={switchingToZeroAmountsModal.visible}
         onOk={switchToZeroPayoutSelection}
         onCancel={switchingToZeroAmountsModal.close}

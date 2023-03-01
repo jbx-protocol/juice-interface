@@ -1,3 +1,4 @@
+import { NEW_NFT_ID_LOWER_LIMIT } from 'components/Create/components/RewardsList/AddEditRewardModal'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useNftRewardsAdjustTiersTx } from 'hooks/JB721Delegate/transactor/NftRewardsAdjustTiersTx'
 import { NftRewardTier } from 'models/nftRewardTier'
@@ -22,7 +23,7 @@ export function useUpdateCurrentCollection({
 
     const newRewardTiers = rewardTiers.filter(
       rewardTier =>
-        rewardTier.id === undefined || // rewardTiers with id==undefined are new
+        rewardTier.id > NEW_NFT_ID_LOWER_LIMIT || // rewardTiers with id > NEW_NFT_ID_LOWER_LIMIT are new
         editedRewardTierIds.includes(rewardTier.id),
     )
 

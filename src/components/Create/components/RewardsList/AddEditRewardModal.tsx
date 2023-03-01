@@ -10,7 +10,9 @@ import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import { NftFileType, UploadNoStyle } from 'components/inputs/UploadNoStyle'
 import PrefixedInput from 'components/PrefixedInput'
 import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
+import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
 import { pinFile } from 'lib/api/ipfs'
+import { random } from 'lodash'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { UploadRequestOption } from 'rc-upload/lib/interface'
 import { useCallback, useEffect, useState } from 'react'
@@ -23,7 +25,6 @@ import {
 } from 'utils/antdRules'
 import { withHttps } from 'utils/externalLink'
 import { ipfsGatewayUrl } from 'utils/ipfs'
-import { v4 } from 'uuid'
 import { CreateCollapse } from '../CreateCollapse'
 import { OptionalHeader } from '../OptionalHeader'
 
@@ -41,6 +42,9 @@ interface AddEditRewardModalFormProps {
 
 const NFT_FILE_UPLOAD_EXTRA = t`Images will be cropped to a 1:1 square in thumbnail previews on the Juicebox app.`
 const MAX_NFT_FILE_SIZE_MB = 100
+
+// This assumes an existing NFT ID (from the contracts) will never be >= 1000000
+export const NEW_NFT_ID_LOWER_LIMIT = 1000000
 
 export const AddEditRewardModal = ({
   className,
@@ -68,7 +72,10 @@ export const AddEditRewardModal = ({
       return
     }
 
-    setLimitedSupply(!!editingData.maxSupply)
+    setLimitedSupply(
+      !!editingData.maxSupply &&
+        editingData.maxSupply !== DEFAULT_NFT_MAX_SUPPLY,
+    )
     setIsReservingNfts(!!editingData.beneficiary && !!editingData.reservedRate)
     form.setFieldsValue({
       fileUrl: editingData.fileUrl.toString(),
@@ -106,13 +113,18 @@ export const AddEditRewardModal = ({
     setAdvancedOptionsOpen(isAdvancedOptionsOpen)
   }, [])
 
+  // Used for frontend to distinguish new tiers from old tiers and other new tiers
+  const generateNewTierId = () => {
+    return random(NEW_NFT_ID_LOWER_LIMIT, NEW_NFT_ID_LOWER_LIMIT * 10)
+  }
+
   const onModalOk = useCallback(async () => {
     const fields = await form.validateFields()
     const remainingAndMaxSupply = fields.maxSupply
       ? parseInt(fields.maxSupply)
       : undefined
     const result: NftRewardTier = {
-      id: editingData?.id ?? parseInt(v4()),
+      id: editingData?.id ?? generateNewTierId(),
       name: fields.rewardName,
       contributionFloor: parseFloat(fields.contributionFloor ?? '0'),
       description: fields.description,

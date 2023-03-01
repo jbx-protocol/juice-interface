@@ -1,4 +1,5 @@
 import { PlusCircleOutlined } from '@ant-design/icons'
+import { Trans } from '@lingui/macro'
 import { Divider } from 'antd'
 import { CreateButton } from 'components/buttons/CreateButton'
 import { useModal } from 'hooks/Modal'
@@ -99,7 +100,9 @@ export const RewardsList: React.FC<RewardsListProps> &
             disabled={rewards.length >= MAX_NFT_REWARD_TIERS}
             onClick={modal.open}
           >
-            Add NFT
+            <span>
+              <Trans>Add NFT</Trans>
+            </span>
           </CreateButton>
         )}
       </div>

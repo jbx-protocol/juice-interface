@@ -3,6 +3,7 @@ import { Contract } from '@ethersproject/contracts'
 export enum V2V3ContractName {
   JBController = 'JBController',
   JBController3_0_1 = 'JBController3_0_1',
+  JBController3_1 = 'JBController3_1',
   JBDirectory = 'JBDirectory',
   JBETHPaymentTerminal = 'JBETHPaymentTerminal',
   JBFundingCycleStore = 'JBFundingCycleStore',

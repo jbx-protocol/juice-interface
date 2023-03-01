@@ -17,7 +17,7 @@ export async function queryAll<T extends object>() {
 
   let total: number | undefined
 
-  const query = async (page: number, initialQuery?: boolean) => {
+  const query = async (page: number) => {
     const { data } = await sepanaAxios('read').post<SepanaQueryResponse<T>>(
       SEPANA_ENDPOINTS.search,
       {
@@ -25,8 +25,9 @@ export async function queryAll<T extends object>() {
         query: {
           match_all: {},
         },
+        sort: ['createdAt'], // This sort is the only way we can make paging reliable. Sorting by "id" returns a 500, by "_doc" seems to have no effect. Sepana api is mysterious.
         size: MAX_SEPANA_PAGE_SIZE,
-        page,
+        page, // Page is a 1-based index (whyyyyyy sepana)
       },
     )
 
@@ -35,17 +36,17 @@ export async function queryAll<T extends object>() {
     if (total) {
       const _hits = data.hits.hits
 
-      if ((page + 1) * MAX_SEPANA_PAGE_SIZE > total) {
+      if (page * MAX_SEPANA_PAGE_SIZE > total) {
         // Sepana gives us a full pageSize of results in every query without a pointer, so we use the total to manually check that we aren't adding too many hits
         hits.push(..._hits.slice(0, total % MAX_SEPANA_PAGE_SIZE))
       } else {
         hits.push(..._hits)
 
-        if (initialQuery) {
+        if (page === 1) {
           // After getting total in initial query, we concurrently await all subsequent queries to speed things up
           const promises = []
 
-          for (let i = 1; i < total / MAX_SEPANA_PAGE_SIZE; i++) {
+          for (let i = 2; i - 1 < total / MAX_SEPANA_PAGE_SIZE; i++) {
             promises.push(query(i))
           }
 
@@ -55,7 +56,7 @@ export async function queryAll<T extends object>() {
     }
   }
 
-  await query(0, true)
+  await query(1)
 
   return { total, hits }
 }

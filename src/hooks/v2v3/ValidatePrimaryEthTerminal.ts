@@ -1,7 +1,7 @@
-import { getAddress } from '@ethersproject/address'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useContext } from 'react'
+import { isEqualAddress } from 'utils/address'
 
 /**
  * Check whether a project's primary terminal is one that we support.
@@ -16,7 +16,8 @@ export function useValidatePrimaryEthTerminal() {
   const { primaryETHTerminal } = useContext(V2V3ProjectContext)
   const { contracts } = useContext(V2V3ContractsContext)
 
-  return primaryETHTerminal
-    ? getAddress(primaryETHTerminal) === contracts?.JBETHPaymentTerminal.address
-    : false
+  return isEqualAddress(
+    primaryETHTerminal,
+    contracts?.JBETHPaymentTerminal.address,
+  )
 }

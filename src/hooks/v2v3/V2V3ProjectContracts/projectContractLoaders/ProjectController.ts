@@ -22,6 +22,8 @@ export function useProjectController({ projectId }: { projectId: number }) {
       ? V2V3ContractName.JBController
       : isEqualAddress(controllerAddress, contracts?.JBController3_0_1?.address)
       ? V2V3ContractName.JBController3_0_1
+      : isEqualAddress(controllerAddress, contracts?.JBController3_1?.address)
+      ? V2V3ContractName.JBController3_1
       : undefined,
     address: controllerAddress,
   })

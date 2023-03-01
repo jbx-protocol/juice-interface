@@ -1,30 +1,42 @@
 import { t } from '@lingui/macro'
 import { Col, Tabs } from 'antd'
-import { V2V3FundingCycleSection } from '../V2V3FundingCycleSection'
+import Loading from 'components/Loading'
+import { lazy, Suspense } from 'react'
 import { COL_SIZE_MD } from '../V2V3Project'
-import { OverviewTab } from './OverviewTab'
-import { TokensTab } from './TokensTab'
+const OverviewTab = lazy(() => import('./OverviewTab'))
+const TokensTab = lazy(() => import('./TokensTab'))
+const V2V3FundingCycleSection = lazy(() => import('../V2V3FundingCycleSection'))
 
 export function ProjectPageTabs({ hasNftRewards }: { hasNftRewards: boolean }) {
   const tabItems = [
     {
       label: t`Overview`,
       key: 'overview',
-      children: <OverviewTab />,
+      children: (
+        <Suspense fallback={<Loading />}>
+          <OverviewTab />
+        </Suspense>
+      ),
     },
     {
       label: t`Cycle`,
       key: 'cycle',
       children: (
-        <section>
-          <V2V3FundingCycleSection />
-        </section>
+        <Suspense fallback={<Loading />}>
+          <section>
+            <V2V3FundingCycleSection />
+          </section>{' '}
+        </Suspense>
       ),
     },
     {
       label: t`Tokens`,
       key: 'tokens',
-      children: <TokensTab hasNftRewards={hasNftRewards} />,
+      children: (
+        <Suspense fallback={<Loading />}>
+          <TokensTab hasNftRewards={hasNftRewards} />
+        </Suspense>
+      ),
     },
   ]
 

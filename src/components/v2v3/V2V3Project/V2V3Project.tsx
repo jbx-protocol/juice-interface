@@ -13,7 +13,7 @@ import { ProjectBanners } from './banners/ProjectBanners'
 import NewDeployModal, { NEW_DEPLOY_QUERY_PARAM } from './modals/NewDeployModal'
 import { ProjectPageMobile } from './ProjectPageMobile'
 import { ProjectPageRightCol } from './ProjectPageRightCol'
-import { ProjectPageTabs } from './ProjectPageTabs/ProjectPageTabs'
+import { ProjectPageTabs } from './ProjectPageTabs'
 import { V2V3ProjectHeaderActions } from './V2V3ProjectHeaderActions/V2V3ProjectHeaderActions'
 
 export const GUTTER_PX = 50

@@ -4,7 +4,7 @@ import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useValidatePrimaryEthTerminal } from 'hooks/v2v3/ValidatePrimaryEthTerminal'
 import { useContext } from 'react'
 import ProjectActivity from './ProjectActivity'
-import { ProjectPageTabs } from './ProjectPageTabs/ProjectPageTabs'
+import { ProjectPageTabs } from './ProjectPageTabs'
 
 export function ProjectPageMobile({
   hasNftRewards,

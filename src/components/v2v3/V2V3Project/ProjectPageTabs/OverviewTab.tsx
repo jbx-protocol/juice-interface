@@ -5,7 +5,7 @@ import { useContext } from 'react'
 import TreasuryStats from '../TreasuryStats'
 import { AllAssetsButton } from './AllAssetsButton'
 
-export function OverviewTab() {
+export default function OverviewTab() {
   const { createdAt } = useContext(V2V3ProjectContext)
   const { projectId, pv } = useContext(ProjectMetadataContext)
 

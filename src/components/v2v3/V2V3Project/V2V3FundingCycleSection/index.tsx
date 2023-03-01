@@ -57,7 +57,7 @@ const TabText = ({
   )
 }
 
-export function V2V3FundingCycleSection() {
+export default function V2V3FundingCycleSection() {
   const {
     fundingCycle,
     handle,

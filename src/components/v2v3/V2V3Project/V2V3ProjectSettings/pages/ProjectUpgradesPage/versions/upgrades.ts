@@ -1,10 +1,10 @@
 import { t } from '@lingui/macro'
-import { UpgradeController } from './upgradeForms/JBController3_0_1'
+import { UpgradeController } from './upgradeForms/JBController3_1'
 import { UpgradeFundingCycle } from './upgradeForms/V3/UpgradeFundingCycle'
 
 export type JBUpgrade =
   | '3' // upgrades to layer 2 contracts
-  | 'JBController3_0_1' // upgrades to a new JBController
+  | '3_1' // upgrades to a new JBController
 
 export const UPGRADES: {
   [k in JBUpgrade]: {
@@ -17,10 +17,10 @@ export const UPGRADES: {
     name: 'Juicebox v3',
     component: UpgradeFundingCycle,
   },
-  JBController3_0_1: {
-    name: 'JBController v3.0.1',
+  '3_1': {
+    name: 'Juicebox v3.1',
     description: () =>
-      t`Upgrade your project's JBController contract. This upgrade is required to deploy a migration token (JBV3Token).`,
+      t`Upgrade your project's JBController and JBETHPaymentTerminal contracts. This upgrade is required to deploy a migration token (JBV3Token).`,
     component: UpgradeController,
   },
 }

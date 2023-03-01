@@ -1973,6 +1973,9 @@ msgstr ""
 msgid "More trending projects"
 msgstr ""
 
+msgid "Move funds"
+msgstr ""
+
 msgid "Move your unclaimed {tokensLabel} from your wallet to another wallet."
 msgstr ""
 
@@ -3305,7 +3308,13 @@ msgstr ""
 msgid "This transaction reconfigures the project's funding cycle."
 msgstr ""
 
+msgid "This transaction will move your project's funds to the new Payment Terminal contract: <0>{terminalAddress}</0>."
+msgstr ""
+
 msgid "This transaction will set your project's Controller contract to: <0>{controllerAddress}</0>. Any reserved tokens will be distributed."
+msgstr ""
+
+msgid "This transaction will set your project's Payment Terminal contract to: <0>{terminalAddress}</0>."
 msgstr ""
 
 msgid "This will delete the payout for <0/>."
@@ -3611,13 +3620,13 @@ msgstr ""
 msgid "Upgrade Controller"
 msgstr ""
 
-msgid "Upgrade to JBController 3.0.1"
+msgid "Upgrade JBETHPaymentTerminal"
 msgstr ""
 
 msgid "Upgrade to {0}"
 msgstr ""
 
-msgid "Upgrade your project's JBController contract. This upgrade is required to deploy a migration token (JBV3Token)."
+msgid "Upgrade your project's JBController and JBETHPaymentTerminal contracts. This upgrade is required to deploy a migration token (JBV3Token)."
 msgstr ""
 
 msgid "Upload"
@@ -3882,6 +3891,12 @@ msgid "You haven't launched an NFT collection yet! Reconfigure your funding cycl
 msgstr ""
 
 msgid "You must edit your funding cycle rules to allow controller migrations."
+msgstr ""
+
+msgid "You must edit your funding cycle rules to allow terminal configuration."
+msgstr ""
+
+msgid "You must edit your funding cycle rules to allow terminal migrations."
 msgstr ""
 
 msgid "You must grant permission to migrate your V1 tokens."

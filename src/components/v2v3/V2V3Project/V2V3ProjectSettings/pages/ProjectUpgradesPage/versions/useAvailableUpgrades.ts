@@ -17,12 +17,18 @@ export function useAvailableUpgrades(): JBUpgrade[] | undefined {
 
   if (
     projectContracts?.JBController &&
-    contracts?.JBController3_0_1 &&
-    !isEqualAddress(
+    projectContracts?.JBETHPaymentTerminal &&
+    contracts?.JBController3_1 &&
+    contracts?.JBETHPaymentTerminal3_1 &&
+    (!isEqualAddress(
       projectContracts.JBController.address,
-      contracts.JBController3_0_1?.address,
-    )
+      contracts.JBController3_1?.address,
+    ) ||
+      !isEqualAddress(
+        projectContracts.JBETHPaymentTerminal.address,
+        contracts.JBETHPaymentTerminal3_1?.address,
+      ))
   ) {
-    return ['JBController3_0_1']
+    return ['3_1']
   }
 }

@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { AnyProjectMetadata } from 'models/projectMetadata'
 
+import { ProjectTag } from './project-tags'
 import { PV } from './pv'
 import { Project } from './subgraph-entities/vX/project'
 
@@ -21,6 +22,7 @@ export type SepanaProject = {
   name?: string
   description?: string
   logoUri?: string
+  tags?: ProjectTag[]
   _hasUnresolvedMetadata?: boolean // Helper property to signify if metadata has been successfully resolved from IPFS
   _metadataRetriesLeft?: number // Helper property allowing us to only retry resolving metadata a finite number of times. Useful for invalid metadataUris or uris pointing to unpinned content
   _v?: string

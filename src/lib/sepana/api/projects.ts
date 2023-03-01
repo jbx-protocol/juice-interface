@@ -1,5 +1,7 @@
 import { Json } from 'models/json'
+import { ProjectTag } from 'models/project-tags'
 import { SepanaProject, SepanaQueryResponse } from 'models/sepana'
+import { SEPANA_DEFAULT_SCORE_SCRIPT } from '../constants'
 
 import { SEPANA_ENDPOINTS } from './endpoints'
 import { sepanaAxios } from './http'
@@ -27,16 +29,42 @@ export async function searchSepanaProjects(query = '', pageSize?: number) {
           },
           script_score: {
             script: {
-              source:
-                // Prioritize matches with higher totalPaid and trendingScore
-                "3 * Math.max(0, doc['totalPaid.keyword'].value.length() - 17) + 3 * Math.max(0, doc['trendingScore.keyword'].value.length() - 18)",
+              source: SEPANA_DEFAULT_SCORE_SCRIPT,
             },
           },
           boost_mode: 'sum',
         },
       },
       size: pageSize, // sepana uses default 20
-      page: 1, // 1-based page index
+    })
+    .then(res => res.data)
+}
+
+export async function searchSepanaProjectTags(
+  tags: ProjectTag[],
+  pageSize?: number,
+) {
+  return sepanaAxios('read')
+    .post<SepanaQueryResponse<Json<SepanaProject>>>(SEPANA_ENDPOINTS.search, {
+      engine_ids: [process.env.SEPANA_ENGINE_ID],
+      query: {
+        function_score: {
+          query: {
+            query_string: {
+              query: tags.join(' '),
+              fields: ['tags'],
+              minimum_should_match: '100%',
+            },
+          },
+          script_score: {
+            script: {
+              source: SEPANA_DEFAULT_SCORE_SCRIPT,
+            },
+          },
+          boost_mode: 'sum',
+        },
+      },
+      size: pageSize, // sepana uses default 20
     })
     .then(res => res.data)
 }

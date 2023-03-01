@@ -7,8 +7,10 @@ import { useLoadMoreContent } from 'hooks/LoadMore'
 import {
   useInfiniteProjectsQuery,
   useProjectsSearch,
-  useSepanaProjectsSearch,
+  useProjectTagsQuery,
+  useSepanaProjectsSearch
 } from 'hooks/Projects'
+import { ProjectTag } from 'models/project-tags'
 import { PV } from 'models/pv'
 import { useEffect, useRef } from 'react'
 import { classNames } from 'utils/classNames'
@@ -17,13 +19,15 @@ import { featureFlagEnabled } from 'utils/featureFlags'
 export default function AllProjects({
   pv,
   searchText,
+  searchTags,
   orderBy,
   showArchived,
   reversed,
 }: {
   pv: PV[] | undefined
   searchText: string
-  orderBy: 'createdAt' | 'totalPaid' | 'currentBalance' | 'paymentsCount'
+  searchTags: ProjectTag[]
+  orderBy: 'createdAt' | 'totalPaid'
   showArchived: boolean
   reversed: boolean
 }) {
@@ -49,13 +53,22 @@ export default function AllProjects({
   const { data: sepanaSearchResults, isLoading: isLoadingSepanaSearch } =
     useSepanaProjectsSearch(searchText, { enabled: sepanaEnabled })
 
+  const { data: sepanaTagSearchResults, isLoading: isLoadingSepanaTagsSearch } =
+    useProjectTagsQuery(searchTags, {
+      enabled: sepanaEnabled && !!searchTags.length,
+    })
+
   const { data: graphSearchResults, isLoading: isLoadingGraphSearch } =
     useProjectsSearch(searchText, { enabled: !sepanaEnabled })
 
-  const searchResults = sepanaEnabled ? sepanaSearchResults : graphSearchResults
+  const searchResults = sepanaEnabled
+    ? searchTags.length
+      ? sepanaTagSearchResults
+      : sepanaSearchResults
+    : graphSearchResults
 
   const isLoadingSearch = sepanaEnabled
-    ? isLoadingSepanaSearch
+    ? isLoadingSepanaSearch || isLoadingSepanaTagsSearch
     : isLoadingGraphSearch
 
   const [scrolledToBottom] = useLoadMoreContent({
@@ -65,7 +78,9 @@ export default function AllProjects({
 
   const isLoading = isLoadingProjects || isLoadingSearch
 
-  const concatenatedPages = searchText?.length
+  const concatenatedPages = searchTags.length
+    ? sepanaTagSearchResults
+    : searchText?.length
     ? searchResults
     : pages?.pages?.reduce((prev, group) => [...prev, ...group], [])
 
@@ -115,6 +130,9 @@ export default function AllProjects({
             {concatenatedPages?.length}{' '}
             {concatenatedPages?.length === 1 ? t`project` : t`projects`}{' '}
             {searchText ? t`matching "${searchText}"` : ''}
+            {searchTags.length
+              ? t`matching tags ${searchTags.map(t => `"${t}"`).join(', ')}`
+              : ''}
           </div>
         )
       )}

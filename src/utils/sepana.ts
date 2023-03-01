@@ -1,7 +1,7 @@
 import { ipfsGet } from 'lib/api/ipfs'
 import { CURRENT_VERSION, MAX_METADATA_RETRIES } from 'lib/sepana/constants'
 import { Json } from 'models/json'
-import { AnyProjectMetadata } from 'models/projectMetadata'
+import { ProjectMetadata } from 'models/projectMetadata'
 import { SepanaProject, SGSepanaCompareKey } from 'models/sepana'
 import { Project } from 'models/subgraph-entities/vX/project'
 
@@ -137,8 +137,8 @@ export async function tryResolveMetadata({
 
   try {
     const {
-      data: { name, description, logoUri },
-    } = await ipfsGet<AnyProjectMetadata>(metadataUri, {
+      data: { name, description, logoUri, tags },
+    } = await ipfsGet<ProjectMetadata>(metadataUri, {
       timeout: 30000,
     })
 
@@ -148,6 +148,7 @@ export async function tryResolveMetadata({
         name,
         description,
         logoUri,
+        tags,
       } as Json<SepanaProject>,
     }
   } catch (error) {

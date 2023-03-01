@@ -9,6 +9,7 @@ import {
   SGWhereArg,
 } from 'models/graph'
 import { Json } from 'models/json'
+import { ProjectTag } from 'models/project-tags'
 import { ProjectState } from 'models/projectVisibility'
 import { PV } from 'models/pv'
 import { SepanaProject, SepanaQueryResponse } from 'models/sepana'
@@ -160,7 +161,7 @@ export function useProjectsSearch(
 }
 
 /**
- * Search Sepana projects for query and return only a list of projects
+ * Search Sepana projects by text query and return a list of matching projects
  * @param text text to search
  * @param pageSize number of projects to return
  * @param enabled query will only run if enabled
@@ -179,6 +180,39 @@ export function useSepanaProjectsSearch(
       axios
         .get<SepanaQueryResponse<Json<SepanaProject>>>(
           `/api/sepana/projects?text=${text}${
+            opts?.pageSize !== undefined ? `&pageSize=${opts?.pageSize}` : ''
+          }`,
+        )
+        .then(res =>
+          res.data.hits.hits.map(h => parseSepanaProjectJson(h._source)),
+        ),
+    {
+      staleTime: DEFAULT_STALE_TIME,
+      enabled: opts?.enabled,
+    },
+  )
+}
+
+/**
+ * Search Sepana projects by tags and return a list of matching projects
+ * @param tags project tags to search
+ * @param pageSize number of projects to return
+ * @param enabled query will only run if enabled
+ * @returns list of projects
+ */
+export function useProjectTagsQuery(
+  tags: ProjectTag[],
+  opts?: {
+    pageSize?: number
+    enabled?: boolean
+  },
+) {
+  return useQuery(
+    ['sepana-tags-query', tags.join(',')],
+    () =>
+      axios
+        .get<SepanaQueryResponse<Json<SepanaProject>>>(
+          `/api/sepana/projects?tags=${tags.join(',')}${
             opts?.pageSize !== undefined ? `&pageSize=${opts?.pageSize}` : ''
           }`,
         )

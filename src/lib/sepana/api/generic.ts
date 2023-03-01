@@ -25,7 +25,7 @@ export async function queryAll<T extends object>() {
         query: {
           match_all: {},
         },
-        sort: ['_id'], // This sort is the only way we can make paging reliable.
+        sort: ['_id'], // This sort is the only way we can make paging reliable. THIS WILL FAIL IF DB IS EMPTY
         size: MAX_SEPANA_PAGE_SIZE,
         page, // Page is a 1-based index
       },

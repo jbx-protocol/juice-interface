@@ -15,17 +15,12 @@ import {
 import { useContext, useState } from 'react'
 import { ipfsGatewayUrl, percentFromUploadProgressEvent } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
-import { NftFormFields } from './NftRewardTierModal'
 
 const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif'].concat(
   VIDEO_FILE_TYPES,
 )
 
-export default function NftUpload({
-  form,
-}: {
-  form: FormInstance<NftFormFields | VeNftFormFields>
-}) {
+export function VeNftUpload({ form }: { form: FormInstance<VeNftFormFields> }) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)

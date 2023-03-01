@@ -1,5 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Empty, Form, Space } from 'antd'
+import { AddEditRewardModal } from 'components/Create/components/RewardsList/AddEditRewardModal'
+import { NftRewardTier } from 'models/nftRewardTier'
 import { useCallback, useState } from 'react'
 import { MAX_NFT_REWARD_TIERS } from 'utils/nftRewards'
 import { useFundingCycleDrawer } from '../../hooks/FundingCycleDrawer'
@@ -8,7 +10,6 @@ import { AddRewardTierButton } from './AddRewardTierButton'
 import { useAddNfts } from './hooks/AddNfts'
 import { useSaveNewCollection } from './hooks/SaveNewCollection'
 import NftRewardTierCard from './NftRewardTierCard'
-import NftRewardTierModal from './NftRewardTierModal/NftRewardTierModal'
 
 export function AddNftsSection({ onClose }: { onClose: VoidFunction }) {
   const [addTierModalVisible, setAddTierModalVisible] = useState<boolean>(false)
@@ -104,12 +105,13 @@ export function AddNftsSection({ onClose }: { onClose: VoidFunction }) {
         </span>
       </Button>
 
-      <NftRewardTierModal
+      <AddEditRewardModal
         open={addTierModalVisible}
-        onChange={addRewardTier}
-        mode="Add"
-        onClose={() => setAddTierModalVisible(false)}
-        isCreate
+        onOk={(reward: NftRewardTier) => {
+          setAddTierModalVisible(false)
+          addRewardTier(reward)
+        }}
+        onCancel={() => setAddTierModalVisible(false)}
       />
     </>
   )

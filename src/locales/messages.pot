@@ -2519,9 +2519,6 @@ msgstr ""
 msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will appear risky to contributors, as a relatively small number of tokens will be received in exchange for paying your project."
 msgstr ""
 
-msgid "Provide a link to additional information about this NFT."
-msgstr ""
-
 msgid "Queued"
 msgstr ""
 
@@ -2892,9 +2889,6 @@ msgid "Set a funding cycle target"
 msgstr ""
 
 msgid "Set a future date & time to launch your project's first Funding Cycle."
-msgstr ""
-
-msgid "Set a limit on how many of these NFTs can be minted."
 msgstr ""
 
 msgid "Set a project handle (optional)"
@@ -3696,9 +3690,6 @@ msgid "Volume"
 msgstr ""
 
 msgid "VotePWR"
-msgstr ""
-
-msgid "Voting Weight"
 msgstr ""
 
 msgid "Voting weight"

@@ -4,7 +4,7 @@ import { useForm } from 'antd/lib/form/Form'
 import { ModalMode } from 'components/formItems/formHelpers'
 import TooltipLabel from 'components/TooltipLabel'
 
-import NftUpload from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/AddNftsSection/NftRewardTierModal/NftUpload'
+import { VeNftUpload } from 'components/veNft/VeNftUpload'
 import { VeNftVariant } from 'models/veNft'
 import { useEffect } from 'react'
 
@@ -14,6 +14,11 @@ export type VeNftFormFields = {
   name: string
   tokensStakedMin: number
   fileUrl: string
+  contributionFloor: number
+  maxSupply: number | undefined
+  externalLink: string
+  description: string
+  votingWeight: number | undefined
 }
 
 export default function VeNftRewardTierModal({
@@ -71,7 +76,7 @@ export default function VeNftRewardTierModal({
     >
       <Form layout="vertical" form={nftForm}>
         <TokensStakedMinInput form={nftForm} />
-        <NftUpload form={nftForm} />
+        <VeNftUpload form={nftForm} />
         <Form.Item
           name={'name'}
           label={

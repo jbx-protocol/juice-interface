@@ -2,6 +2,7 @@ import { AppWrapper, SEO } from 'components/common'
 import Loading from 'components/Loading'
 import Project404 from 'components/Project404'
 import { V1Project } from 'components/v1/V1Project'
+import { AnnouncementLauncher } from 'contexts/Announcements/AnnouncementLauncher'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectProvider } from 'contexts/v1/Project/V1ProjectProvider'
 import { V1UserProvider } from 'contexts/v1/User/V1UserProvider'
@@ -53,7 +54,9 @@ export default function V1HandlePage({
             <V1ProjectMetadataProvider handle={handle} metadata={metadata}>
               <V1ProjectProvider handle={handle}>
                 <V1CurrencyProvider>
-                  <V1Dashboard />
+                  <AnnouncementLauncher>
+                    <V1Dashboard />
+                  </AnnouncementLauncher>
                 </V1CurrencyProvider>
               </V1ProjectProvider>
             </V1ProjectMetadataProvider>

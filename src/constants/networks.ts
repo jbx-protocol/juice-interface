@@ -5,7 +5,7 @@ const infuraId = isBrowser()
   ? process.env.NEXT_PUBLIC_INFURA_ID
   : process.env.PRE_RENDER_INFURA_ID
 
-type NetworkInfo = {
+export type NetworkInfo = {
   name: NetworkName
   label: string
   token?: string

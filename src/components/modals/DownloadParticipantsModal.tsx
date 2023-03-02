@@ -63,7 +63,7 @@ export function DownloadParticipantsModal({
           'totalPaid',
           'balance',
           'stakedBalance',
-          'unstakedBalance',
+          'erc20Balance',
           'lastPaidTimestamp',
         ],
         orderBy: 'balance',
@@ -94,7 +94,7 @@ export function DownloadParticipantsModal({
           p.wallet ?? '--',
           fromWad(p.balance),
           fromWad(p.stakedBalance),
-          fromWad(p.unstakedBalance),
+          fromWad(p.erc20Balance),
           fromWad(p.totalPaid),
           date,
         ])

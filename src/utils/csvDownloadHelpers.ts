@@ -34,7 +34,7 @@ export async function downloadParticipants(
         'totalPaidUSD',
         'balance',
         'stakedBalance',
-        'unstakedBalance',
+        'erc20Balance',
       ],
       orderBy: 'balance',
       orderDirection: 'desc',
@@ -70,7 +70,7 @@ export async function downloadParticipants(
         fromWad(p.totalPaidUSD),
         fromWad(p.balance),
         fromWad(p.stakedBalance),
-        fromWad(p.unstakedBalance),
+        fromWad(p.erc20Balance),
       ])
     })
 

@@ -1,15 +1,18 @@
 import { PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
-import { SGWhereArg } from 'models/graph'
+import { SGEntityKey, SGEntityName, SGWhereArg } from 'models/graph'
 import { ProjectEvent } from 'models/subgraph-entities/vX/project-event'
 import { useContext, useMemo } from 'react'
 
 const PAGE_SIZE = 10
 
-type ActivityQueryKey = { entity: keyof ProjectEvent; keys: string[] }
+type ActivityQueryKey<E extends SGEntityName> = {
+  entity: E
+  keys: SGEntityKey<E>[]
+}
 
-const PAY_EVENT_KEY: ActivityQueryKey = {
+const PAY_EVENT_KEY: ActivityQueryKey<'payEvent'> = {
   entity: 'payEvent',
   keys: [
     'amount',
@@ -24,7 +27,7 @@ const PAY_EVENT_KEY: ActivityQueryKey = {
   ],
 }
 
-const CONFIGURE_EVENT_KEY: ActivityQueryKey = {
+const CONFIGURE_EVENT_KEY: ActivityQueryKey<'configureEvent'> = {
   entity: 'configureEvent',
   keys: [
     'id',
@@ -36,7 +39,7 @@ const CONFIGURE_EVENT_KEY: ActivityQueryKey = {
     'discountRate',
     'duration',
     'mintingAllowed',
-    'payPaused',
+    'pausePay',
     'redeemPaused',
     'redemptionRate',
     'reservedRate',
@@ -50,22 +53,22 @@ const CONFIGURE_EVENT_KEY: ActivityQueryKey = {
   ],
 }
 
-const BURN_EVENT_KEY: ActivityQueryKey = {
+const BURN_EVENT_KEY: ActivityQueryKey<'burnEvent'> = {
   entity: 'burnEvent',
   keys: ['id', 'timestamp', 'txHash', 'caller', 'holder', 'amount'],
 }
 
-const ADD_TO_BALANCE_EVENT_KEY: ActivityQueryKey = {
+const ADD_TO_BALANCE_EVENT_KEY: ActivityQueryKey<'addToBalanceEvent'> = {
   entity: 'addToBalanceEvent',
   keys: ['amount', 'timestamp', 'caller', 'note', 'id', 'txHash', 'terminal'],
 }
 
-const DEPLOYED_ERC20_EVENT_KEY: ActivityQueryKey = {
+const DEPLOYED_ERC20_EVENT_KEY: ActivityQueryKey<'deployedERC20Event'> = {
   entity: 'deployedERC20Event',
   keys: ['symbol', 'txHash', 'timestamp', 'id', 'caller'],
 }
 
-const REDEEM_EVENT_KEY: ActivityQueryKey = {
+const REDEEM_EVENT_KEY: ActivityQueryKey<'redeemEvent'> = {
   entity: 'redeemEvent',
   keys: [
     'id',
@@ -81,43 +84,59 @@ const REDEEM_EVENT_KEY: ActivityQueryKey = {
   ],
 }
 
-const PROJECT_CREATE_EVENT_KEY: ActivityQueryKey = {
+const PROJECT_CREATE_EVENT_KEY: ActivityQueryKey<'projectCreateEvent'> = {
   entity: 'projectCreateEvent',
   keys: ['id', 'txHash', 'timestamp', 'caller'],
 }
 
-const DISTRIBUTED_PAYOUTS_EVENT_KEY: ActivityQueryKey = {
-  entity: 'distributePayoutsEvent',
-  keys: [
-    'id',
-    'timestamp',
-    'txHash',
-    'caller',
-    'beneficiary',
-    'beneficiaryDistributionAmount',
-    'distributedAmount',
-    'memo',
-    'terminal',
-  ],
-}
+const DISTRIBUTED_PAYOUTS_EVENT_KEY: ActivityQueryKey<'distributePayoutsEvent'> =
+  {
+    entity: 'distributePayoutsEvent',
+    keys: [
+      'id',
+      'timestamp',
+      'txHash',
+      'caller',
+      'beneficiary',
+      'beneficiaryDistributionAmount',
+      'distributedAmount',
+      'memo',
+      'terminal',
+    ],
+  }
 
-const DISTRIBUTED_RESERVED_TOKENS_EVENT_KEY: ActivityQueryKey = {
-  entity: 'distributeReservedTokensEvent',
-  keys: [
-    'id',
-    'timestamp',
-    'txHash',
-    'caller',
-    'beneficiary',
-    'beneficiaryTokenCount',
-    'tokenCount',
-  ],
-}
+const DISTRIBUTED_RESERVED_TOKENS_EVENT_KEY: ActivityQueryKey<'distributeReservedTokensEvent'> =
+  {
+    entity: 'distributeReservedTokensEvent',
+    keys: [
+      'id',
+      'timestamp',
+      'txHash',
+      'caller',
+      'beneficiary',
+      'beneficiaryTokenCount',
+      'tokenCount',
+    ],
+  }
 
-const DEPLOYED_PROJECT_PAYER_EVENT_KEY: ActivityQueryKey = {
-  entity: 'deployETHERC20ProjectPayerEvent',
-  keys: ['id', 'timestamp', 'txHash', 'caller', 'address', 'memo'],
-}
+const DEPLOYED_PROJECT_PAYER_EVENT_KEY: ActivityQueryKey<'deployETHERC20ProjectPayerEvent'> =
+  {
+    entity: 'deployETHERC20ProjectPayerEvent',
+    keys: ['id', 'timestamp', 'txHash', 'caller', 'address', 'memo'],
+  }
+
+const SET_FUND_ACCESS_CONSTRAINTS_EVENT_KEY: ActivityQueryKey<'setFundAccessConstraintsEvent'> =
+  {
+    entity: 'setFundAccessConstraintsEvent',
+    keys: [
+      'id',
+      'timestamp',
+      'txHash',
+      'caller',
+      'distributionLimit',
+      'distributionLimitCurrency',
+    ],
+  }
 
 export type EventFilter =
   | 'all'
@@ -150,6 +169,14 @@ export function useProjectActivity({
       {
         key: 'useAllowanceEvent',
         value: null, // Exclude all useAllowanceEvents, no UI support yet
+      },
+      {
+        key: 'distributeToPayoutSplitEvent',
+        value: null, // Exclude all distributeToPayoutSplitEvent, no UI support
+      },
+      {
+        key: 'distributeToReservedTokenSplitEvent',
+        value: null, // Exclude all distributeToReservedTokenSplitEvent, no UI support
       },
       {
         key: 'pv',
@@ -210,45 +237,43 @@ export function useProjectActivity({
     return _where
   }, [projectId, eventFilter])
 
-  const keys: ActivityQueryKey[] = useMemo(() => {
-    let key: ActivityQueryKey | undefined = undefined
+  const keys = useMemo(() => {
+    let _keys = undefined
 
     switch (eventFilter) {
       case 'deployERC20':
-        key = DEPLOYED_ERC20_EVENT_KEY
+        _keys = [DEPLOYED_ERC20_EVENT_KEY]
         break
       case 'pay':
-        key = PAY_EVENT_KEY
+        _keys = [PAY_EVENT_KEY]
         break
       case 'burn':
-        key = BURN_EVENT_KEY
+        _keys = [BURN_EVENT_KEY]
         break
       case 'addToBalance':
-        key = ADD_TO_BALANCE_EVENT_KEY
+        _keys = [ADD_TO_BALANCE_EVENT_KEY]
         break
       case 'projectCreate':
-        key = PROJECT_CREATE_EVENT_KEY
+        _keys = [PROJECT_CREATE_EVENT_KEY]
         break
       case 'redeem':
-        key = REDEEM_EVENT_KEY
+        _keys = [REDEEM_EVENT_KEY]
         break
       case 'distributePayouts':
-        key = DISTRIBUTED_PAYOUTS_EVENT_KEY
+        _keys = [DISTRIBUTED_PAYOUTS_EVENT_KEY]
         break
       case 'distributeTokens':
-        key = DISTRIBUTED_RESERVED_TOKENS_EVENT_KEY
+        _keys = [DISTRIBUTED_RESERVED_TOKENS_EVENT_KEY]
         break
       case 'deployETHERC20ProjectPayer':
-        key = DEPLOYED_PROJECT_PAYER_EVENT_KEY
+        _keys = [DEPLOYED_PROJECT_PAYER_EVENT_KEY]
         break
       case 'configure':
-        key = CONFIGURE_EVENT_KEY
+        _keys = [CONFIGURE_EVENT_KEY, SET_FUND_ACCESS_CONSTRAINTS_EVENT_KEY]
         break
     }
 
-    if (key) {
-      return [key]
-    }
+    if (_keys) return _keys
 
     // if no filter, fetch all
     return [
@@ -262,6 +287,7 @@ export function useProjectActivity({
       DISTRIBUTED_RESERVED_TOKENS_EVENT_KEY,
       DEPLOYED_PROJECT_PAYER_EVENT_KEY,
       CONFIGURE_EVENT_KEY,
+      SET_FUND_ACCESS_CONSTRAINTS_EVENT_KEY,
     ]
   }, [eventFilter])
 

@@ -112,7 +112,7 @@ export default function QAs(): {
           <p>
             Importantly, Juicebox's crypto fundraising platform is on-chain and
             non-custodial. Project creators actually own their projects, and
-            JuiceboxDAO has no way access to project's funds or change their
+            JuiceboxDAO has no way to access project's funds or change their
             rules.
           </p>
           <p>

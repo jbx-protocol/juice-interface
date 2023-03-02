@@ -30,8 +30,8 @@ export function BallotStateBadge({
     0: t`These edits were not approved by the ${
       ballotStrategy?.durationSeconds && ballotStrategy?.name
         ? ballotStrategy.name
-        : 'edit deadline'
-    } contract. The edits are not guaranteed to take effect in the next cycle.`,
+        : 'edit'
+    } deadline contract. The edits are not guaranteed to take effect in the next cycle.`,
   }
 
   const ballotStateIcons: { [k in BallotState]?: JSX.Element } = {

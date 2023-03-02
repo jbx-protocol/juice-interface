@@ -27,14 +27,10 @@ const RedeemButtonTooltip = ({
       title={
         redeemDisabledReason === 'overflowZero' ? (
           <Trans>
-            You cannot redeem your tokens for ETH because this project is using
-            all of its ETH for payouts or has no ETH.
+            This project has no ETH, or is using all of its ETH for payouts.
           </Trans>
         ) : (
-          <Trans>
-            You cannot redeem your tokens for ETH because this project has
-            redemptions turned off.
-          </Trans>
+          <Trans>This project has redemptions turned off.</Trans>
         )
       }
       placement="right"
@@ -129,8 +125,8 @@ export default function ManageTokensModal({
                 description={
                   <Trans>
                     Redeem your {tokensLabel} to reclaim a portion of the ETH
-                    not needed for this cycle's payouts. Any {tokensLabel} you
-                    redeem will be burned.
+                    not needed for payouts. Any {tokensLabel} you redeem will be
+                    burned.
                   </Trans>
                 }
                 onClick={() => setRedeemModalVisible(true)}
@@ -147,8 +143,8 @@ export default function ManageTokensModal({
                   {redeemDisabledReason === 'overflowZero' ? (
                     <Trans>
                       Burn your {tokensLabel}. You won't receive ETH in return
-                      because this project is using all of its ETH for payouts
-                      or has no ETH.
+                      because this project has no ETH, or is using all of its
+                      ETH for payouts.
                     </Trans>
                   ) : (
                     <Trans>

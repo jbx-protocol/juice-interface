@@ -6,8 +6,8 @@ import FormItemWarningText from 'components/FormItemWarningText'
 import SwitchHeading from 'components/SwitchHeading'
 import { DurationUnitsOption } from 'constants/time'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
-import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
 import isEqual from 'lodash/isEqual'
 import { Split } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
@@ -57,7 +57,9 @@ export function FundingForm({
   onFinish: VoidFunction
   isCreate?: boolean // Instance of FundingForm in create flow
 }) {
-  const { contracts } = useContext(V2V3ContractsContext)
+  const { contracts: projectContracts } = useContext(
+    V2V3ProjectContractsContext,
+  )
   const { payoutSplits } = useContext(V2V3ProjectContext)
   const { projectOwnerAddress } = useContext(V2V3ProjectContext)
 
@@ -169,12 +171,13 @@ export function FundingForm({
 
   const onFundingFormSave = useCallback(
     async (fields: FundingFormFields) => {
-      if (!contracts) throw new Error('Failed to save funding configuration.')
+      if (!projectContracts?.JBETHPaymentTerminal)
+        throw new Error('Failed to save funding configuration.')
 
       const fundAccessConstraint:
         | SerializedV2V3FundAccessConstraint
         | undefined = {
-        terminal: contracts.JBETHPaymentTerminal.address,
+        terminal: projectContracts.JBETHPaymentTerminal.address,
         token: ETH_TOKEN_ADDRESS,
         distributionLimit: distributionLimit ?? fromWad(MAX_DISTRIBUTION_LIMIT),
         distributionLimitCurrency:
@@ -222,7 +225,7 @@ export function FundingForm({
     [
       editingSplits,
       lockedSplits,
-      contracts,
+      projectContracts,
       dispatch,
       distributionLimit,
       distributionLimitCurrency,

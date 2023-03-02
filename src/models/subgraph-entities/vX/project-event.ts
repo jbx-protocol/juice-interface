@@ -6,7 +6,7 @@ import { parseSubgraphEntitiesFromJson } from 'utils/graph'
 import { Json, primitives } from '../../json'
 import {
   BaseProjectEntity,
-  parseBaseProjectEntityJson,
+  parseBaseProjectEntityJson
 } from '../base/base-project-entity'
 import { TerminalEventEntity } from '../base/terminal-event'
 import { DistributeToPayoutModEvent } from '../v1/distribute-to-payout-mod-event'

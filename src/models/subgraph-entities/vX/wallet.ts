@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import {
   parseBigNumberKeyVals,
-  subgraphEntityJsonArrayToKeyVal,
+  subgraphEntityJsonArrayToKeyVal
 } from 'utils/graph'
 
 import { Json, primitives } from '../../json'

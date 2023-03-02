@@ -16,7 +16,7 @@ import { ProjectPageRightCol } from './ProjectPageRightCol'
 import { ProjectPageTabs } from './ProjectPageTabs'
 import { V2V3ProjectHeaderActions } from './V2V3ProjectHeaderActions/V2V3ProjectHeaderActions'
 
-export const GUTTER_PX = 50
+export const GUTTER_PX = 24
 export const COL_SIZE_MD = 12
 
 export function V2V3Project() {
@@ -27,9 +27,7 @@ export function V2V3Project() {
     useModalFromUrlQuery(NEW_DEPLOY_QUERY_PARAM)
 
   const isMobile = useMobile()
-
   const isOwner = useIsUserAddress(projectOwnerAddress)
-
   const { value: hasNftRewards } = useHasNftRewards()
 
   const canEditProjectHandle = isOwner && !handle
@@ -52,7 +50,7 @@ export function V2V3Project() {
           {isMobile ? (
             <ProjectPageMobile hasNftRewards={hasNftRewards} />
           ) : (
-            <Row gutter={GUTTER_PX} className="gap-y-10">
+            <Row gutter={48} className="gap-y-10">
               <ProjectPageTabs hasNftRewards={hasNftRewards} />
               <ProjectPageRightCol hasNftRewards={hasNftRewards} />
             </Row>

@@ -1,13 +1,10 @@
-import { NetworkInfo } from 'constants/networks'
 import { NextRouter } from 'next/router'
 
 type AnnouncementCondition = ({
   router,
-  network,
   isProjectOwner,
 }: {
   router: NextRouter
-  network: NetworkInfo
   isProjectOwner: boolean
 }) => boolean
 

@@ -1,6 +1,5 @@
 import { announcements } from 'constants/announcements'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { readNetwork } from 'constants/networks'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
@@ -29,9 +28,7 @@ export const AnnouncementLauncher: React.FC = ({ children }) => {
       // Don't activate if expired
       if (a.expire && a.expire > Date.now().valueOf()) return false
 
-      return a.conditions.every(c =>
-        c({ router, isProjectOwner, network: readNetwork }),
-      )
+      return a.conditions.every(c => c({ router, isProjectOwner }))
     },
     [router, isProjectOwner],
   )

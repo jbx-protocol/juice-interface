@@ -899,6 +899,9 @@ msgstr ""
 msgid "Current 3rd Party Exchange Rates"
 msgstr ""
 
+msgid "Current balance"
+msgstr ""
+
 msgid "Current handle"
 msgstr ""
 

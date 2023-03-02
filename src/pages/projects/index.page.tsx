@@ -34,7 +34,7 @@ export default function ProjectsPage() {
   )
 }
 
-type OrderByOption = 'createdAt' | 'totalPaid'
+type OrderByOption = 'createdAt' | 'totalPaid' | 'currentBalance'
 
 const defaultTab: ProjectCategory = 'trending'
 

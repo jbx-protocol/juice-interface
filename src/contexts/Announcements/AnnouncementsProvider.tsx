@@ -53,14 +53,17 @@ export const AnnouncementsProvider: React.FC = ({ children }) => {
         <Modal
           centered
           open={true}
-          okText={activeAnnouncement.action?.text ?? t`Got it`}
+          okText={activeAnnouncement.cta?.text ?? t`Got it`}
           onOk={() => {
             markCompleted()
-            activeAnnouncement.action?.call?.(router)
+            activeAnnouncement.cta?.fn?.(router)
           }}
           cancelText={t`Got it`}
           onCancel={markCompleted}
-          cancelButtonProps={activeAnnouncement.action ? {} : { hidden: true }}
+          cancelButtonProps={{
+            // We only show the cancel button if there is a custom `cta.fn` defined in the announcement. The cancel button will allow closing the announcement without calling the cta function
+            hidden: !activeAnnouncement.cta?.fn,
+          }}
         >
           {activeAnnouncement.content}
         </Modal>

@@ -13,8 +13,8 @@ export type Announcement = {
   conditions: AnnouncementCondition[]
   expire?: number // millis timestamp
   content: JSX.Element
-  action?: {
+  cta?: {
     text?: string
-    call?: (router: NextRouter) => void
+    fn?: (router: NextRouter) => void
   }
 }

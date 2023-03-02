@@ -8,9 +8,9 @@ export const announcements: Announcement[] = [
     id: 'introProjectTags',
     conditions: [({ isProjectOwner }) => isProjectOwner],
     content: <IntroProjectTags />,
-    action: {
+    cta: {
       text: 'Go to settings',
-      call: (router: NextRouter) => {
+      fn: (router: NextRouter) => {
         router.push(router.asPath + '/settings?page=general')
       },
     },

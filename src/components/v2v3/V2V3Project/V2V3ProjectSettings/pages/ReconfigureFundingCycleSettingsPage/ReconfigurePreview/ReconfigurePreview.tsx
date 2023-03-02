@@ -1,49 +1,27 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Col, Row, Space } from 'antd'
-import { parseEther } from 'ethers/lib/utils'
+import { t, Trans } from '@lingui/macro'
+import { Space } from 'antd'
+import { MinimalCollapse } from 'components/MinimalCollapse'
+import DiffedSplitList from 'components/v2v3/shared/DiffedSplits/DiffedSplitList'
+import FundingCycleDetails from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { Split } from 'models/splits'
-import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import {
   V2V3FundAccessConstraint,
   V2V3FundingCycle,
   V2V3FundingCycleData,
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
-import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
-import { formatDate } from 'utils/format/formatDate'
+import { useContext } from 'react'
 
-import { formattedNum } from 'utils/format/formatNumber'
-import { V2V3CurrencyName } from 'utils/v2v3/currency'
-import { getDefaultFundAccessConstraint } from 'utils/v2v3/fundingCycle'
 import {
-  formatIssuanceRate,
-  formatReservedRate,
-  MAX_DISTRIBUTION_LIMIT,
-  weightAmountPermyriad,
-} from 'utils/v2v3/math'
-import {
-  AllowControllerMigrationStatistic,
-  AllowMintingStatistic,
-  AllowSetControllerStatistic,
-  AllowSetTerminalsStatistic,
-  AllowTerminalMigrationStatistic,
-  DiscountRateStatistic,
-  DistributionLimitStatistic,
-  DistributionSplitsStatistic,
-  DurationStatistic,
-  InflationRateStatistic,
-  IssuanceRateStatistic,
-  PausePayStatistic,
-  PauseTransfersStatistic,
-  ReconfigurationStatistic,
-  RedemptionRateStatistic,
-  ReservedSplitsStatistic,
-  ReservedTokensStatistic,
-} from './FundingAttributes'
+  deriveNextIssuanceRate,
+  getDefaultFundAccessConstraint,
+} from 'utils/v2v3/fundingCycle'
+import { formatReservedRate, MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
+
 import NftSummarySection from './NftSummarySection'
-
-const gutter = 20
 
 export function ReconfigurePreview({
   payoutSplits,
@@ -64,6 +42,12 @@ export function ReconfigurePreview({
   projectOwnerAddress?: string
   mustStartAtOrAfter?: string
 }) {
+  const {
+    fundingCycle: currentFC,
+    payoutSplits: currentPayoutSplits,
+    reservedTokensSplits: currentReserveSplits,
+  } = useContext(V2V3ProjectContext)
+
   const fundingCycle: V2V3FundingCycle = {
     ...fundingCycleData,
     number: BigNumber.from(1),
@@ -73,162 +57,76 @@ export function ReconfigurePreview({
       ? BigNumber.from(mustStartAtOrAfter)
       : BigNumber.from(Date.now()).div(1000),
     metadata: BigNumber.from(0),
+    weight: deriveNextIssuanceRate({
+      weight: fundingCycleData.weight,
+      previousFC: currentFC,
+    }),
   }
 
   const fundAccessConstraint = getDefaultFundAccessConstraint(
     fundAccessConstraints,
   )
 
-  const currencyName = V2V3CurrencyName(
-    fundAccessConstraint?.distributionLimitCurrency?.toNumber() as V2V3CurrencyOption,
-  )
-
   const distributionLimit = fundAccessConstraint?.distributionLimit
-  const hasDistributionLimit = Boolean(
-    distributionLimit && !distributionLimit.gte(MAX_DISTRIBUTION_LIMIT),
+  const distributionLimitCurrency =
+    fundAccessConstraint?.distributionLimitCurrency
+
+  const formattedReservedRate = parseFloat(
+    formatReservedRate(fundingCycleMetadata.reservedRate),
   )
-
-  const duration = fundingCycle.duration
-  const hasDuration = duration?.gt(0)
-
-  const issuanceRate =
-    formattedNum(
-      formatIssuanceRate(
-        weightAmountPermyriad(
-          fundingCycle?.weight,
-          fundingCycleMetadata?.reservedRate.toNumber(),
-          parseEther('1'),
-          'payer',
-        ),
-      ),
-    ) ?? '0'
-
-  const reservedPercentage = parseFloat(
-    formatReservedRate(fundingCycleMetadata?.reservedRate),
-  )
-
-  const secondRowColWidth = hasDuration && hasDistributionLimit ? 8 : 12
-
-  const reservedRate =
-    formattedNum(
-      formatIssuanceRate(
-        weightAmountPermyriad(
-          fundingCycle?.weight,
-          fundingCycleMetadata?.reservedRate.toNumber(),
-          parseEther('1'),
-          'reserved',
-        ) ?? '',
-      ),
-    ) ?? '0'
 
   return (
-    <Space direction="vertical" size="middle" className="w-full">
-      <Row gutter={gutter}>
-        <Col md={12} sm={12}>
-          <DurationStatistic duration={fundingCycle.duration} />
-          {!fundingCycle.start.eq(
-            BigNumber.from(DEFAULT_MUST_START_AT_OR_AFTER),
-          ) ? (
-            <span>Starting at {formatDate(fundingCycle.start.mul(1000))}</span>
-          ) : null}
-        </Col>
-        <Col md={12} sm={12}>
-          <DistributionLimitStatistic
-            distributionLimit={distributionLimit}
-            currencyName={currencyName ?? 'ETH'}
-          />
-        </Col>
-      </Row>
-      <Row gutter={gutter}>
-        <Col md={12} sm={12}>
-          <InflationRateStatistic
-            inflationRate={
-              formattedNum(
-                formatIssuanceRate(fundingCycle?.weight.toString()),
-              ) ?? '0'
-            }
-          />
-        </Col>
-        <Col md={12} sm={12}>
-          <IssuanceRateStatistic issuanceRate={issuanceRate} />
-        </Col>
-      </Row>
-      <Row gutter={gutter}>
-        <Col md={secondRowColWidth} sm={12}>
-          <ReservedTokensStatistic
-            reservedRate={reservedRate}
-            reservedPercentage={reservedPercentage}
-          />
-        </Col>
-        <Col md={secondRowColWidth} sm={12}>
-          <DiscountRateStatistic discountRate={fundingCycle.discountRate} />
-        </Col>
-        <Col md={secondRowColWidth} sm={12}>
-          <RedemptionRateStatistic
-            redemptionRate={fundingCycleMetadata.redemptionRate}
-          />
-        </Col>
-      </Row>
-      <Row gutter={gutter} className="gap-y-5">
-        <Col md={6}>
-          <PausePayStatistic pausePay={fundingCycleMetadata.pausePay} />
-        </Col>
-        <Col md={6}>
-          <AllowMintingStatistic
-            allowMinting={fundingCycleMetadata.allowMinting}
-          />
-        </Col>
-        <Col md={6}>
-          <PauseTransfersStatistic
-            pauseTransfers={fundingCycleMetadata.global.pauseTransfers ?? false}
-          />
-        </Col>
-        <Col md={6}>
-          <AllowSetTerminalsStatistic
-            allowSetTerminals={fundingCycleMetadata.global.allowSetTerminals}
-          />
-        </Col>
-        <Col md={6}>
-          <AllowSetControllerStatistic
-            allowSetController={fundingCycleMetadata.global.allowSetController}
-          />
-        </Col>
-        <Col md={6}>
-          <AllowTerminalMigrationStatistic
-            allowTerminalMigration={fundingCycleMetadata.allowTerminalMigration}
-          />
-        </Col>
-        <Col md={6}>
-          <AllowControllerMigrationStatistic
-            allowControllerMigration={
-              fundingCycleMetadata.allowControllerMigration
-            }
-          />
-        </Col>
-      </Row>
-      <Row gutter={gutter}>
-        <Col span={24}>
-          <ReconfigurationStatistic ballotAddress={fundingCycle.ballot} />
-        </Col>
-      </Row>
-
-      {!distributionLimit?.eq(0) && (
-        <DistributionSplitsStatistic
-          splits={payoutSplits}
-          currency={fundAccessConstraint?.distributionLimitCurrency}
-          totalValue={distributionLimit}
-          showAmounts={hasDistributionLimit}
-          projectOwnerAddress={projectOwnerAddress}
-          fundingCycleDuration={duration}
+    <Space
+      className="mx-6 mb-4 w-full"
+      size={'middle'}
+      direction={'vertical'}
+      onClick={e => e.stopPropagation()}
+    >
+      <MinimalCollapse header={t`Funding cycle details`} light>
+        <FundingCycleDetails
+          fundingCycleMetadata={fundingCycleMetadata}
+          fundingCycle={fundingCycle}
+          distributionLimit={distributionLimit}
+          distributionLimitCurrency={distributionLimitCurrency}
+          showDiffs
         />
-      )}
-      {fundingCycleMetadata?.reservedRate.gt(0) && (
-        <ReservedSplitsStatistic
-          splits={reserveSplits}
-          reservedPercentage={reservedPercentage}
-          projectOwnerAddress={projectOwnerAddress}
-        />
-      )}
+      </MinimalCollapse>
+      <Space size={'middle'} direction={'vertical'} className="w-2/3">
+        <MinimalCollapse header={t`Funding distribution`} light>
+          {distributionLimit?.gt(0) ? (
+            <DiffedSplitList
+              splits={payoutSplits}
+              diffSplits={currentPayoutSplits}
+              currency={distributionLimitCurrency}
+              totalValue={distributionLimit}
+              projectOwnerAddress={projectOwnerAddress}
+              showAmounts={!distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)}
+              valueFormatProps={{ precision: 4 }}
+              showDiffs
+            />
+          ) : (
+            <span className="text-grey-400 dark:text-slate-200">
+              <Trans>No distributions configured.</Trans>
+            </span>
+          )}
+        </MinimalCollapse>
+        <MinimalCollapse header={t`Reserved token allocation`} light>
+          {fundingCycleMetadata.reservedRate?.gt(0) ? (
+            <DiffedSplitList
+              splits={reserveSplits}
+              diffSplits={currentReserveSplits}
+              projectOwnerAddress={projectOwnerAddress}
+              totalValue={undefined}
+              reservedRate={formattedReservedRate}
+              showDiffs
+            />
+          ) : (
+            <span className="text-grey-400 dark:text-slate-200">
+              <Trans>No reserved tokens configured.</Trans>
+            </span>
+          )}
+        </MinimalCollapse>
+      </Space>
 
       {nftRewards ? <NftSummarySection /> : null}
     </Space>

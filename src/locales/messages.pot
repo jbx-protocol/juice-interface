@@ -1421,6 +1421,9 @@ msgstr ""
 msgid "Go to your Safe"
 msgstr ""
 
+msgid "Got it"
+msgstr ""
+
 msgid "Governance"
 msgstr ""
 

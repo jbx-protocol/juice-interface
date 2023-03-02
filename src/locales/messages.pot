@@ -11,6 +11,9 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
+msgid "# of payments"
+msgstr ""
+
 msgid "$ve{tokenSymbolDisplayText} Received"
 msgstr ""
 

@@ -44,8 +44,8 @@ export default function SpecificLimitModal({
       onCancel={onClose}
       title={
         <TooltipLabel
-          label={t`Set a distribution limit`}
-          tip={t`This is the maximum amount of funds that can leave the treasury each funding cycle.`}
+          label={t`Set your payout amount`}
+          tip={t`This is the amount of funds that you can pay out from your project each cycle.`}
         />
       }
       onOk={setNewSplitsFromLimit}
@@ -65,13 +65,12 @@ export default function SpecificLimitModal({
           ]}
           extra={
             <TooltipLabel
-              label={t`Set this to the sum of all your payouts`}
+              label={t`Set this to the sum of your payouts`}
               tip={
                 <Trans>
-                  Each payout will receive their percent of this total each
-                  funding cycle if there is enough in the treasury. Otherwise,
-                  they will receive their percent of whatever is in the
-                  treasury.
+                  If there is enough in the treasury, each payout will receive
+                  their percent of this amount each cycle. Otherwise, they will
+                  receive their percent of whatever is in the treasury.
                 </Trans>
               }
             />

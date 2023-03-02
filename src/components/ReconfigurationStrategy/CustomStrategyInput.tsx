@@ -5,6 +5,7 @@ import ExternalLink from 'components/ExternalLink'
 import { useWallet } from 'hooks/Wallet'
 import { FormItemInput } from 'models/formItemInput'
 import { MouseEventHandler } from 'react'
+import { helpPagePath } from 'utils/routes'
 
 export const CustomStrategyInput: React.FC<
   FormItemInput<string> & { onClick?: MouseEventHandler }
@@ -15,15 +16,14 @@ export const CustomStrategyInput: React.FC<
       <Form.Item
         extra={
           <Trans>
-            The address of any smart contract deployed on{' '}
-            {chain?.name ?? 'mainnet'} that implements{' '}
+            The address of a{' '}
             <ExternalLink
               onClick={e => e.stopPropagation()}
-              href="https://github.com/jbx-protocol/juice-contracts-v1/blob/main/contracts/FundingCycles.sol"
+              href={helpPagePath(`/dev/learn/glossary/ballot/`)}
             >
-              this interface
-            </ExternalLink>
-            .
+              ballot smart contract
+            </ExternalLink>{' '}
+            deployed to {chain?.name ?? 'mainnet'}.
           </Trans>
         }
       >

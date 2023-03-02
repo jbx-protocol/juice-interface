@@ -119,7 +119,7 @@ export default function VolumeChart({
     let text: string
     switch (tab) {
       case 'balance':
-        text = t`In Juicebox`
+        text = t`Balance`
         break
       case 'volume':
         text = t`Volume`

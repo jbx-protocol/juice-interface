@@ -7,8 +7,13 @@ import FundingCycleDetailWarning from 'components/Project/FundingCycleDetailWarn
 import TooltipLabel from 'components/TooltipLabel'
 import SplitList from 'components/v2v3/shared/SplitList'
 import {
+  CONTRIBUTOR_RATE_EXPLAINATION,
   DISCOUNT_RATE_EXPLANATION,
+  DISTRIBUTION_LIMIT_EXPLANATION,
+  MINT_RATE_EXPLANATION,
+  RECONFIG_RULES_EXPLAINATION,
   REDEMPTION_RATE_EXPLANATION,
+  RESERVED_TOKENS_EXPLAINATION,
 } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { CurrencyName } from 'constants/currency'
 import {
@@ -44,10 +49,7 @@ export function DistributionLimitStatistic({
   return (
     <Statistic
       title={
-        <TooltipLabel
-          label={t`Distribution limit`}
-          tip={t`The maximum amount of funds allowed to be distributed from the project's treasury each funding cycle.`}
-        />
+        <TooltipLabel label={t`Payouts`} tip={DISTRIBUTION_LIMIT_EXPLANATION} />
       }
       valueRender={() =>
         hasDistributionLimit ? (
@@ -55,8 +57,7 @@ export function DistributionLimitStatistic({
             <span>
               {showDetail ? (
                 <Trans>
-                  Distribution limit is 0: All funds will be considered overflow
-                  and can be redeemed by token holders.
+                  No payouts: All funds will be available for token redeeming.
                 </Trans>
               ) : (
                 <Trans>Zero</Trans>
@@ -78,10 +79,10 @@ export function DistributionLimitStatistic({
           <span>
             {showDetail ? (
               <Trans>
-                Distribution limit is infinite.{' '}
+                Unlimited payouts.{' '}
                 <p className="text-base">
                   The project will control how all funds are distributed. Token
-                  holders cannot redeem any funds raised.
+                  holders cannot redeem their tokens for ETH.
                 </p>
               </Trans>
             ) : (
@@ -133,15 +134,7 @@ export function ReservedTokensStatistic({
       title={
         <TooltipLabel
           label={t`Reserved tokens`}
-          tip={
-            <Trans>
-              Amount of newly minted project tokens{' '}
-              <strong>reserved for the project</strong> when 1 ETH is
-              contributed. Reserve tokens are reserved for the project owner by
-              default, but can also be allocated to other wallet addresses by
-              the owner.
-            </Trans>
-          }
+          tip={RESERVED_TOKENS_EXPLAINATION}
         />
       }
       value={`${reservedRate} (${reservedPercentage}`}
@@ -161,17 +154,15 @@ export function ReservedTokensStatistic({
 
 export function IssuanceRateStatistic({
   issuanceRate,
-  isInitial,
 }: {
   issuanceRate: string
-  isInitial?: boolean
 }) {
   return (
     <Statistic
       title={
         <TooltipLabel
-          label={isInitial ? t`Initial issuance rate` : t`Contributor rate`}
-          tip={t`Contributors will be rewarded this amount of your project's tokens per ETH contributed.`}
+          label={t`Payment issuance rate`}
+          tip={CONTRIBUTOR_RATE_EXPLAINATION}
         />
       }
       value={t`${issuanceRate} tokens / ETH`}
@@ -181,23 +172,15 @@ export function IssuanceRateStatistic({
 
 export function InflationRateStatistic({
   inflationRate,
-  isInitial,
 }: {
   inflationRate: string
-  isInitial?: boolean
 }) {
   return (
     <Statistic
       title={
         <TooltipLabel
-          label={isInitial ? t`Initial mint rate` : t`Mint rate`}
-          tip={
-            <Trans>
-              <strong>Total project tokens minted</strong> when 1 ETH is
-              contributed. This can change over time according to the discount
-              rate and reserved tokens amount of future funding cycles.
-            </Trans>
-          }
+          label={t`Token Issuance Rate`}
+          tip={MINT_RATE_EXPLANATION}
         />
       }
       value={t`${inflationRate} tokens / ETH`}
@@ -214,7 +197,7 @@ export function DiscountRateStatistic({
     <Statistic
       title={
         <TooltipLabel
-          label={t`Discount rate`}
+          label={t`Issuance reduction rate`}
           tip={DISCOUNT_RATE_EXPLANATION}
         />
       }
@@ -251,8 +234,8 @@ export function PausePayStatistic({ pausePay }: { pausePay: boolean }) {
           label={t`Payments paused`}
           tip={
             !pausePay
-              ? t`Project is accepting payments this funding cycle.`
-              : t`Project is not accepting payments this funding cycle.`
+              ? t`Project is accepting payments this cycle.`
+              : t`Project is not accepting payments this cycle.`
           }
         />
       }
@@ -270,7 +253,7 @@ export function AllowMintingStatistic({
     <Statistic
       title={
         <TooltipLabel
-          label={t`Token minting`}
+          label={t`Owner token minting`}
           tip={
             allowMinting
               ? t`Owner can mint tokens at any time.`
@@ -399,8 +382,8 @@ export function ReconfigurationStatistic({
     <Statistic
       title={
         <TooltipLabel
-          label={t`Reconfiguration strategy`}
-          tip={t`How long before your next funding cycle must you reconfigure in order for changes to take effect.`}
+          label={t`Edit deadline`}
+          tip={RECONFIG_RULES_EXPLAINATION}
         />
       }
       valueRender={() => {
@@ -447,7 +430,7 @@ export function DistributionSplitsStatistic({
           label={t`Payouts`}
           tip={
             <Trans>
-              Available funds can be distributed according to the payouts below
+              ETH can be paid out from the project according to the list below
               {hasDuration ? ` every ${formattedDuration}` : null}.
             </Trans>
           }
@@ -482,8 +465,8 @@ export function ReservedSplitsStatistic({
     <Statistic
       title={
         <TooltipLabel
-          label={t`Reserved token allocation`}
-          tip={t`How the ${reservedPercentage}% of your project's reserved tokens will be split.`}
+          label={t`Reserved token recipients`}
+          tip={t`Where the ${reservedPercentage}% of your project's tokens which are being reserved will be sent.`}
         />
       }
       valueRender={() => (

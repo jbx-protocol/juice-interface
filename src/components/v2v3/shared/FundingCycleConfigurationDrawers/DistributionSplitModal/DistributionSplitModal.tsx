@@ -342,8 +342,8 @@ export function DistributionSplitModal({
         allocator === NULL_ALLOCATOR_ADDRESS ? (
           <Form.Item
             name="beneficiary"
-            label={t`Project token beneficiary address`}
-            extra={t`A payout to this project may mint some of the project's tokens. Set the address that will receive the tokens.`}
+            label={t`Project token recipient`}
+            extra={t`Payouts to this project may mint its project tokens. Pick an address to receive those tokens.`}
             rules={[
               {
                 validator: validatePayoutAddress,
@@ -382,8 +382,8 @@ export function DistributionSplitModal({
           label={t`Lock until`}
           extra={
             <Trans>
-              If locked, this split can't be edited or removed until the lock
-              expires or the funding cycle is reconfigured.
+              If locked, this payout can't be edited or removed until the lock
+              expires or the cycle is edited.
             </Trans>
           }
         >

@@ -22,7 +22,7 @@ export default function ENSName({
         {
           validator: (rule, value: string) => {
             if (value !== value.toLowerCase()) {
-              return Promise.reject(t`Only lowercase letters`)
+              return Promise.reject(t`Only use lowercase letters`)
             }
             if (value.includes(' ')) {
               return Promise.reject(t`Spaces are not allowed`)

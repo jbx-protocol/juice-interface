@@ -34,8 +34,7 @@ export function JuiceboxProjectBeneficiary({
             label={<Trans>Tokens:</Trans>}
             tip={
               <Trans>
-                This address will receive any tokens minted when the recipient
-                project gets paid.
+                This address receives the tokens minted by this payout.
               </Trans>
             }
           />{' '}

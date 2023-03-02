@@ -47,9 +47,7 @@ export function AddNftsSection({ onClose }: { onClose: VoidFunction }) {
   return (
     <>
       <p>
-        <Trans>
-          Reward contributors with NFTs when they fund your project.
-        </Trans>
+        <Trans>Reward supporters with NFTs when they fund your project.</Trans>
       </p>
 
       {rewardTiers && rewardTiers.length > 0 && (

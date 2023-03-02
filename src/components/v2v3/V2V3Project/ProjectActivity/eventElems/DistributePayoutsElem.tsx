@@ -56,7 +56,7 @@ export default function DistributePayoutsElem({
   return (
     <ActivityEvent
       event={event}
-      header={t`Distributed funds`}
+      header={t`Sent payouts`}
       subject={
         distributePayoutsEvents?.length ? (
           <span className="text-base font-medium">

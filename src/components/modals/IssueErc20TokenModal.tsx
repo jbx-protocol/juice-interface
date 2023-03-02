@@ -1,6 +1,7 @@
-import { t, Trans } from '@lingui/macro'
+import { t } from '@lingui/macro'
 import { Form, Input } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
+import { ISSUE_ERC20_EXPLANATION } from 'components/Explanations'
 import { CV_V2, CV_V3 } from 'constants/cv'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { TransactorInstance } from 'hooks/Transactor'
@@ -104,12 +105,7 @@ export function IssueErc20TokenModal({
       confirmLoading={loading}
       transactionPending={transactionPending}
     >
-      <p>
-        <Trans>
-          Issue an ERC-20 to be used as this project's token. Once issued,
-          anyone can claim their existing token balance in the new token.
-        </Trans>
-      </p>
+      <p>{ISSUE_ERC20_EXPLANATION}</p>
       <Form form={form} layout="vertical">
         <Form.Item
           name="name"

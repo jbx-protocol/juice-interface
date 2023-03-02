@@ -3,24 +3,27 @@ import { MinimalCollapse } from 'components/MinimalCollapse'
 
 export function FundingCycleExplainerCollapse() {
   return (
-    <MinimalCollapse header={<Trans>What are automated funding cycles?</Trans>}>
+    <MinimalCollapse header={<Trans>What are locked cycles?</Trans>}>
       <div>
         <p>
           <Trans>
-            Automated funding cycles enable the following characteristics:
+            Your project's rules are locked in place for the duration of each
+            locked cycle. You will also gain access to:
           </Trans>
         </p>
         <ol className="mb-0">
           <li>
             <Trans>
-              <strong>Recurring funding cycles</strong>. For example, distribute
-              funds from your project's treasury every week.
+              <strong>Recurring cycles</strong>. Among other things, this allows
+              you to predictably pay out ETH on weekly basis, or some other
+              regular cadence.
             </Trans>
           </li>
           <li>
             <Trans>
-              <strong>Discount rate</strong>, to reduce your project token's
-              issuance rate (tokens per ETH) each funding cycle.
+              <strong>Issuance reduction rate</strong>. This allows you to
+              predictably reduce your project token's issuance rate (tokens per
+              ETH) over time without needing to manually edit your cycle.
             </Trans>
           </li>
         </ol>

@@ -54,7 +54,7 @@ export default function NftSummarySection() {
               </span>
               <p className="mb-0">
                 <Trans>
-                  <span className="font-medium">Contribution floor:</span>{' '}
+                  <span className="font-medium">Minimum contribution:</span>{' '}
                   {rewardTier.contributionFloor} ETH
                 </Trans>
               </p>

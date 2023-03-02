@@ -25,6 +25,7 @@ import {
   V2V3FundingCycleData,
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
+import Link from 'next/link'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { reloadWindow } from 'utils/windowUtils'
 import { ReconfigurePreview } from '../../V2V3ProjectSettings/pages/ReconfigureFundingCycleSettingsPage/ReconfigurePreview'
@@ -161,10 +162,10 @@ export function RelaunchFundingCycleModal(props: ModalProps) {
 
   return (
     <TransactionModal
-      title={<Trans>Launch funding cycle</Trans>}
+      title={<Trans>Launch cycle</Trans>}
       okText={
         <span>
-          <Trans>Launch funding cycle</Trans>
+          <Trans>Launch cycle</Trans>
         </span>
       }
       width={700}
@@ -177,9 +178,7 @@ export function RelaunchFundingCycleModal(props: ModalProps) {
       ) : (
         <>
           <p className="mb-8">
-            <Trans>
-              Relaunch your funding cycle on the new Juicebox V2 contracts.
-            </Trans>
+            <Trans>Relaunch your cycle on the new Juicebox V2 contracts.</Trans>
           </p>
           <Form className="mb-4" layout="vertical">
             <div className="flex gap-5">
@@ -226,13 +225,13 @@ export function RelaunchFundingCycleModal(props: ModalProps) {
           </Form>
 
           <h3>
-            <Trans>Funding cycle preview</Trans>
+            <Trans>Cycle preview</Trans>
           </h3>
           <p>
             <Trans>
-              Your funding cycle configuration has been pre-populated using the
-              configuration you originally launched with. If you need to
-              customize it, contact us.
+              Your cycle rules have been pre-populated using the rules you
+              originally launched with. If you need to customize them,{' '}
+              <Link href="/contact">contact us</Link>.
             </Trans>
           </p>
 

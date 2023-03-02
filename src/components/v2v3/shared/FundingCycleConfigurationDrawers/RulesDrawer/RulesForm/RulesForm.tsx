@@ -1,11 +1,16 @@
 import { isAddress } from '@ethersproject/address'
 import { Trans } from '@lingui/macro'
 import { Button, Form, Space, Switch } from 'antd'
-import ExternalLink from 'components/ExternalLink'
 import FormItemLabel from 'components/FormItemLabel'
 import ReconfigurationStrategySelector from 'components/ReconfigurationStrategy/ReconfigurationStrategySelector'
 import {
+  CONTROLLER_CONFIG_EXPLAINATION,
+  CONTROLLER_MIGRATION_EXPLAINATION,
   HOLD_FEES_EXPLAINATION,
+  PAUSE_PAYMENTS_EXPLANATION,
+  PAUSE_TRANSFERS_EXPLANATION,
+  TERMINAL_CONFIG_EXPLAINATION,
+  TERMINAL_MIGRATION_EXPLAINATION,
   USE_DATASOURCE_FOR_REDEEM_EXPLAINATION,
 } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import {
@@ -18,7 +23,6 @@ import isEqual from 'lodash/isEqual'
 import { BallotStrategy } from 'models/ballot'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
-import { helpPagePath } from 'utils/routes'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 import TokenMintingExtra from './TokenMintingExtra'
 
@@ -145,13 +149,7 @@ export default function RulesForm({
             <h3 className="text-black dark:text-slate-100">
               <Trans>Funding rules</Trans>
             </h3>
-            <Form.Item
-              extra={
-                <Trans>
-                  When enabled, your project cannot receive direct payments.
-                </Trans>
-              }
-            >
+            <Form.Item extra={PAUSE_PAYMENTS_EXPLANATION}>
               <div className="flex font-medium text-black dark:text-slate-100">
                 <Switch
                   className="mr-2"
@@ -196,14 +194,7 @@ export default function RulesForm({
                 <Trans>Allow token minting</Trans>
               </div>
             </Form.Item>
-            <Form.Item
-              extra={
-                <Trans>
-                  When enabled, all project token transfers will be paused. Does
-                  not apply to ERC-20 tokens if issued.
-                </Trans>
-              }
-            >
+            <Form.Item extra={PAUSE_TRANSFERS_EXPLANATION}>
               <div className="flex font-medium text-black dark:text-slate-100">
                 <Switch
                   className="mr-2"
@@ -224,19 +215,7 @@ export default function RulesForm({
             <h4 className="mb-3 font-normal uppercase text-black dark:text-slate-100">
               <Trans>Configuration rules</Trans>
             </h4>
-            <Form.Item
-              extra={
-                <Trans>
-                  When enabled, the project owner can change the project's
-                  Payment Terminals.{' '}
-                  <ExternalLink
-                    href={helpPagePath('dev/learn/glossary/payment-terminal')}
-                  >
-                    Learn more
-                  </ExternalLink>
-                </Trans>
-              }
-            >
+            <Form.Item extra={TERMINAL_CONFIG_EXPLAINATION}>
               <div className="flex font-medium text-black dark:text-slate-100">
                 <Switch
                   className="mr-2"
@@ -248,21 +227,7 @@ export default function RulesForm({
                 <Trans>Allow Payment Terminal configuration</Trans>
               </div>
             </Form.Item>
-            <Form.Item
-              extra={
-                <Trans>
-                  When enabled, the project owner can change the project's
-                  Controller.{' '}
-                  <ExternalLink
-                    href={helpPagePath(
-                      'dev/api/contracts/or-controllers/jbcontroller',
-                    )}
-                  >
-                    Learn more
-                  </ExternalLink>
-                </Trans>
-              }
-            >
+            <Form.Item extra={CONTROLLER_CONFIG_EXPLAINATION}>
               <div className="flex font-medium text-black dark:text-slate-100">
                 <Switch
                   className="mr-2"
@@ -278,19 +243,7 @@ export default function RulesForm({
             <h4 className="mb-3 font-normal uppercase text-black dark:text-slate-100">
               <Trans>Migration rules</Trans>
             </h4>
-            <Form.Item
-              extra={
-                <Trans>
-                  When enabled, the project owner can migrate project's existing
-                  Payment Terminals to a newer version of the contract.{' '}
-                  <ExternalLink
-                    href={helpPagePath('dev/learn/glossary/payment-terminal')}
-                  >
-                    Learn more
-                  </ExternalLink>
-                </Trans>
-              }
-            >
+            <Form.Item extra={TERMINAL_MIGRATION_EXPLAINATION}>
               <div className="flex font-medium text-black dark:text-slate-100">
                 <Switch
                   className="mr-2"
@@ -302,21 +255,7 @@ export default function RulesForm({
                 <Trans>Allow Payment Terminal migration</Trans>
               </div>
             </Form.Item>
-            <Form.Item
-              extra={
-                <Trans>
-                  When enabled, the project owner can migrate the project's
-                  Controller to a newer version of the contract.{' '}
-                  <ExternalLink
-                    href={helpPagePath(
-                      'dev/api/contracts/or-controllers/jbcontroller',
-                    )}
-                  >
-                    Learn more
-                  </ExternalLink>
-                </Trans>
-              }
-            >
+            <Form.Item extra={CONTROLLER_MIGRATION_EXPLAINATION}>
               <div className="flex font-medium text-black dark:text-slate-100">
                 <Switch
                   className="mr-2"
@@ -356,7 +295,7 @@ export default function RulesForm({
           className="rounded-sm bg-smoke-75 stroke-none p-8 shadow-[10px_10px_0px_0px_#E7E3DC] dark:bg-slate-400 dark:shadow-[10px_10px_0px_0px_#2D293A]"
           label={
             <FormItemLabel>
-              <Trans>Reconfiguration rules</Trans>
+              <Trans>Cycle editing rules</Trans>
             </FormItemLabel>
           }
         >

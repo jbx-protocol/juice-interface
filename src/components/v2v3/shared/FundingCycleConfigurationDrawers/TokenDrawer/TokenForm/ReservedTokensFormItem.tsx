@@ -68,9 +68,9 @@ export default function ReservedTokensFormItem({
           {!hasReservedRate && (
             <FormItemWarningText>
               <Trans>
-                Reserved rate is 0% but has reserved token allocation. Consider
-                adding a reserved rate that is greater than zero, or remove the
-                token allocation.
+                You have added reserved token recipients, but your reserved rate
+                is 0%, meaning no tokens will be reserved. Consider adding
+                reserved rate greater than 0% or removing the recipients.
               </Trans>
             </FormItemWarningText>
           )}
@@ -81,11 +81,11 @@ export default function ReservedTokensFormItem({
               onReservedTokensSplitsChange(splits)
             }}
             formItemProps={{
-              label: <Trans>Reserved token allocation (optional)</Trans>,
+              label: <Trans>Reserved token recipients (optional)</Trans>,
               extra: (
                 <Trans>
-                  Allocate a portion of your project's reserved tokens to other
-                  Ethereum wallets or Juicebox projects.
+                  Choose wallets or Juicebox projects to receive reserved
+                  tokens.
                 </Trans>
               ),
             }}

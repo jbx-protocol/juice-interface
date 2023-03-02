@@ -111,10 +111,10 @@ function Projects() {
           <p className="m-0 my-3 max-w-[800px] text-grey-500 dark:text-grey-300">
             <Trans>
               <InfoCircleOutlined /> The Juicebox protocol is open to anyone,
-              and project configurations can vary widely. There are risks
-              associated with interacting with all projects on the protocol.
-              Projects built on the protocol are not endorsed or vetted by
-              JuiceboxDAO or Peel. Do your own research and understand the{' '}
+              and project's rules can vary widely. There are risks associated
+              with interacting with all projects on the protocol. Projects built
+              on the protocol are not endorsed or vetted by JuiceboxDAO or Peel.
+              Do your own research and understand the{' '}
               <ExternalLink href={helpPagePath('/dev/learn/risks')}>
                 risks
               </ExternalLink>{' '}

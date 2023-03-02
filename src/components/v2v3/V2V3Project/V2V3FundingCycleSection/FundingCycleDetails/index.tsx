@@ -31,7 +31,7 @@ export default function FundingCycleDetails({
   return (
     <Space className="w-full" direction="vertical" size="middle">
       <FundingCycleDetailsRow
-        header={t`Funding cycle`}
+        header={t`Cycle`}
         items={
           <FundingCycleListItems
             fundingCycle={fundingCycle}
@@ -42,7 +42,7 @@ export default function FundingCycleDetails({
         }
       />
       <FundingCycleDetailsRow
-        header={t`Token`}
+        header={t`Project token`}
         items={
           <TokenListItems
             fundingCycle={fundingCycle}
@@ -53,7 +53,7 @@ export default function FundingCycleDetails({
         }
       />
       <FundingCycleDetailsRow
-        header={t`Rules`}
+        header={t`Other rules`}
         items={
           <RulesListItems
             fundingCycle={fundingCycle}

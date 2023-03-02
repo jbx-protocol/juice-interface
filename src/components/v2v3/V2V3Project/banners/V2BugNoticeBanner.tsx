@@ -16,7 +16,7 @@ export function V2BugNoticeBanner() {
             be affected.{' '}
             <ExternalLink
               className="text-black underline hover:text-haze-400 dark:text-smoke-200 dark:hover:text-haze-400"
-              href="https://github.com/jbx-protocol/juice-contracts-v2/blob/main/security/postmortem/5.24.2022.md"
+              href="https://docs.juicebox.money/dev/resources/post-mortem/2022-05-24/"
             >
               Read the postmortem.
             </ExternalLink>
@@ -24,8 +24,7 @@ export function V2BugNoticeBanner() {
           <p>
             Payments to V2 projects with a 0 treasury balance have been
             disabled. To re-enable payments, this project's owner must re-launch
-            their funding cycle using the updated version of the V2 Juicebox
-            contracts.
+            their cycle using the updated version of the V2 Juicebox contracts.
           </p>
         </>
       }

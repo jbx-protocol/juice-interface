@@ -1,6 +1,7 @@
 import { PlusCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Form, Radio, Space } from 'antd'
+import ExternalLink from 'components/ExternalLink'
 import { FormItemExt } from 'components/formItems/formItemExt'
 import TooltipIcon from 'components/TooltipIcon'
 import DistributionLimit from 'components/v2v3/shared/DistributionLimit'
@@ -13,7 +14,7 @@ import Link from 'next/link'
 import { useCallback, useEffect, useState } from 'react'
 import { classNames } from 'utils/classNames'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
-import { v2v3ProjectRoute } from 'utils/routes'
+import { helpPagePath, v2v3ProjectRoute } from 'utils/routes'
 import {
   adjustedSplitPercents,
   getNewDistributionLimit,
@@ -159,7 +160,7 @@ export function DistributionSplitsSection({
       <Space className="min-h-0 w-full" direction="vertical" size="large">
         <Form.Item className="mb-0">
           <p className="text-black dark:text-slate-100">
-            <Trans>Choose how you would like to configure your payouts.</Trans>
+            <Trans>Choose how you would like to set payouts.</Trans>
           </p>
           <PayoutConfigurationExplainerCollapse className="mb-4" />
           <Radio.Group
@@ -191,9 +192,9 @@ export function DistributionSplitsSection({
                 <Trans>Amounts</Trans>
                 <p className="text-sm font-normal">
                   <Trans>
-                    Distribute a specific amount of funds to entities each
-                    funding cycle. Your distribution limit will equal the{' '}
-                    <strong>sum of all payout amounts.</strong>
+                    Pay out specific amounts of ETH to addresses and projects
+                    each cycle. Any remaining ETH will stay in the project for
+                    future cycles and/or token redemption.
                   </Trans>
                 </p>
               </Radio>
@@ -201,8 +202,9 @@ export function DistributionSplitsSection({
                 <Trans>Percentages</Trans>
                 <p className="text-sm font-normal">
                   <Trans>
-                    Distribute a percentage of all funds received to entities.
-                    Your distribution limit will be <strong>infinite</strong>.
+                    Pay out percentages of your project's total ETH balance to
+                    addresses or projects. No ETH will stay in the project,
+                    making token redemption impossible.
                   </Trans>
                 </p>
               </Radio>
@@ -236,13 +238,16 @@ export function DistributionSplitsSection({
               <TooltipIcon
                 tip={
                   <Trans>
-                    When distributing, payouts to Ethereum addresses incur a
-                    2.5% JBX membership fee. Payouts to other Juicebox projects
-                    don't incur fees. Your project will receive (the{' '}
+                    Payouts to other Juicebox projects don't incur fees. In
+                    return for fees, your project will receive JBX (the{' '}
                     <Link href={v2v3ProjectRoute({ projectId: 1 })}>
                       JuiceboxDAO
                     </Link>{' '}
-                    token) in return at the current issuance rate.
+                    governance token) at the current issuance rate.{' '}
+                    <ExternalLink href={helpPagePath(`/dao/reference/jbx/`)}>
+                      Learn more
+                    </ExternalLink>
+                    .
                   </Trans>
                 }
               />
@@ -265,9 +270,9 @@ export function DistributionSplitsSection({
         <div className="flex justify-between">
           <span className="text-black dark:text-slate-100">
             <Trans>
-              Distribution Limit{' '}
+              Payouts{' '}
               <TooltipIcon
-                tip={t`The maximum amount of funds that can be distributed from the treasury each funding cycle.`}
+                tip={t`The total amount of payouts each cycle.`}
                 placement={'topLeft'}
                 iconClassName="mr-1"
               />

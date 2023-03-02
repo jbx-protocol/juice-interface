@@ -70,9 +70,7 @@ function DiscountRateExtra({
     <div className="text-sm">
       {!hasDuration && (
         <FormItemWarningText>
-          <Trans>
-            Disabled when your project's funding cycle has no duration.
-          </Trans>
+          <Trans>Disabled when your project's cycle has no duration.</Trans>
         </FormItemWarningText>
       )}
       <p>{DISCOUNT_RATE_EXPLANATION}</p>
@@ -81,24 +79,23 @@ function DiscountRateExtra({
           <Callout.Info className="mt-5 dark:bg-slate-500" transparent>
             <p>
               <Trans>
-                Contributors will receive{' '}
-                <strong>{discountRatePercent}%</strong> more tokens for
-                contributions they make this funding cycle compared to the next
-                funding cycle.
+                Your project tokens will become{' '}
+                <strong>{discountRatePercent}%</strong> more expensive each
+                cycle.
               </Trans>
             </p>
             <p>
               <Trans>
-                The <strong>issuance rate</strong> of your second funding cycle
-                will be{' '}
+                Next cycle, the <strong>token issuance rate</strong> will be{' '}
                 <strong className="whitespace-nowrap">
-                  {formattedNum(secondIssuanceRate)} tokens per 1 ETH
+                  {formattedNum(secondIssuanceRate)} tokens per 1 ETH.
                 </strong>
-                , then{' '}
+                The cycle after that, the token issuance rate will be{' '}
                 <strong className="whitespace-nowrap">
+                  {' '}
                   {formattedNum(thirdIssuanceRate)} tokens per 1 ETH{' '}
                 </strong>
-                for your third funding cycle, and so on.
+                , and so on.
               </Trans>
             </p>
           </Callout.Info>
@@ -251,7 +248,7 @@ export function TokenForm({
 
   const validateTotalReservedPercent = () => {
     if (getTotalSplitsPercentage(reservedTokensSplits) > 100) {
-      return Promise.reject(`Reserved allocations exceed 100%.`)
+      return Promise.reject(`Reserved token recipient percentages exceed 100%.`)
     }
     return Promise.resolve()
   }
@@ -265,8 +262,6 @@ export function TokenForm({
             onChange={newWeight => {
               setWeight(newWeight ?? DEFAULT_MINT_RATE.toString())
             }}
-            hasDuration={hasDuration}
-            isCreate={Boolean(isCreate)}
           />
           <ReservedTokensFormItem
             className="mb-2 rounded-sm bg-smoke-75 p-6 shadow-[10px_10px_0px_0px_#E7E3DC] dark:bg-slate-400 dark:shadow-[10px_10px_0px_0px_#2D293A]"
@@ -303,7 +298,7 @@ export function TokenForm({
                 checked={discountRateChecked}
                 disabled={!canSetDiscountRate}
               >
-                <Trans>Discount rate</Trans>
+                <Trans>Issuance reduction rate</Trans>
                 {!discountRateChecked && canSetDiscountRate && (
                   <span className="text-grey-400 dark:text-slate-200">
                     {' '}
@@ -357,7 +352,7 @@ export function TokenForm({
         />
         <Form.Item>
           <Button htmlType="submit" type="primary">
-            <Trans>Save token configuration</Trans>
+            <Trans>Save token rules</Trans>
           </Button>
         </Form.Item>
       </Space>

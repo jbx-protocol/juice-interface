@@ -1,5 +1,6 @@
-import { plural, Trans } from '@lingui/macro'
+import { plural } from '@lingui/macro'
 import { Button, Space } from 'antd'
+import { PROJECT_PAYER_ADDRESS_EXPLANATION } from 'components/Explanations'
 import { PaymentAddressesModal } from 'components/v2v3/V2V3Project/modals/PaymentAddressesModal'
 import { LaunchProjectPayerButton } from 'components/v2v3/V2V3Project/V2V3ProjectToolsDrawer/PaymentAddressSection/LaunchProjectPayerButton'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
@@ -24,12 +25,7 @@ export function PaymentAddressSection({
 
   return (
     <>
-      <p>
-        <Trans>
-          Create an Ethereum address that can be used to pay your project
-          directly.
-        </Trans>
-      </p>
+      <p>{PROJECT_PAYER_ADDRESS_EXPLANATION}</p>
       <Space>
         <LaunchProjectPayerButton
           useDeployProjectPayerTx={useDeployProjectPayerTx}

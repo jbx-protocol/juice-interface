@@ -41,7 +41,7 @@ export function V2V3ProjectToolsDrawer({
       <Space direction="vertical" size="middle" className="w-full">
         <section>
           <h3>
-            <Trans>Create Payment Address</Trans>
+            <Trans>Create project payer address</Trans>
           </h3>
 
           <PaymentAddressSection

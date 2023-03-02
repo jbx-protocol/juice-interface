@@ -49,7 +49,7 @@ export function FundingCycleHistory() {
   if (!pastFundingCycles.length)
     return (
       <div>
-        <Trans>No past funding cycles</Trans>
+        <Trans>No previous cycles</Trans>
       </div>
     )
 

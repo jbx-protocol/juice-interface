@@ -21,8 +21,8 @@ export default function ContributionFloorFormItem({
   return (
     <Form.Item
       name={'contributionFloor'}
-      label={<Trans>Contribution threshold</Trans>}
-      extra={t`Contributors receive the NFT when they contribute at least this amount.`}
+      label={<Trans>Minimum contribution</Trans>}
+      extra={t`Your supporters will receive this NFT when they contribute this amount or more.`}
       rules={[{ required: true, validator: validateContributionFloorAmount }]}
     >
       <FormattedNumberInput

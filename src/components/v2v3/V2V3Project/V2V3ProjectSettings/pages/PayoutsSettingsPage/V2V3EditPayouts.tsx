@@ -122,7 +122,7 @@ export const V2V3EditPayouts = ({
       <Space className="mb-8 w-full" direction="vertical" size="middle">
         <div>
           <Trans>
-            Reconfigure payouts as percentages of your distribution limit.
+            Set payouts as percentages of the total amount being paid out.
           </Trans>
         </div>
         <Callout.Info>
@@ -211,7 +211,7 @@ export const V2V3EditPayouts = ({
       {totalSplitsPercentageInvalid && (
         <span className="text-error-500 dark:text-error-400">
           {payoutsSelection === 'amounts' ? (
-            <Trans>Expenses cannot exceed the current funding target</Trans>
+            <Trans>Payouts cannot exceed the total amount being paid out</Trans>
           ) : (
             <Trans>
               Payouts cannot exceed 100%. Total:{' '}

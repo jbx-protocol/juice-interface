@@ -118,26 +118,26 @@ export function V2V3ReconfigureFundingCycleForm() {
 
         <ReconfigureButton
           heading={t`Funding`}
-          description={t`Configure how your project will collect and spend funds.`}
+          description={t`How your project will receive and spend ETH.`}
           reconfigureHasChanges={fundingDrawerHasSavedChanges}
           onClick={() => setFundingDrawerVisible(true)}
         />
         <ReconfigureButton
           heading={t`Token`}
-          description={t`Configure your project's token.`}
+          description={t`Your project's token.`}
           reconfigureHasChanges={tokenDrawerHasSavedChanges}
           onClick={() => setTokenDrawerVisible(true)}
         />
         <ReconfigureButton
           heading={t`Rules`}
-          description={t`Configure restrictions for your funding cycles.`}
+          description={t`Restrictions for your cycles.`}
           reconfigureHasChanges={rulesDrawerHasSavedChanges}
           onClick={() => setRulesDrawerVisible(true)}
         />
         {isV3 ? (
           <ReconfigureButton
             heading={t`NFTs (optional)`}
-            description={t`Configure your project's NFTs.`}
+            description={t`Your project's NFTs.`}
             reconfigureHasChanges={nftDrawerHasSavedChanges}
             onClick={() => setNftDrawerVisible(true)}
           />
@@ -147,7 +147,7 @@ export function V2V3ReconfigureFundingCycleForm() {
           <Form.Item
             label={t`Memo`}
             className={'antd-no-number-handler'}
-            extra={t`Add a note about this reconfiguration on-chain.`}
+            extra={t`Add an on-chain note about this cycle.`}
             requiredMark="optional"
           >
             <MemoFormInput value={memo} onChange={setMemo} />

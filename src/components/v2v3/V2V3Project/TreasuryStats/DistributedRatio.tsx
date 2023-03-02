@@ -17,13 +17,11 @@ export default function DistributedRatio() {
   return (
     <StatLine
       loading={distributionLimitLoading}
-      statLabel={<Trans>Distributed</Trans>}
+      statLabel={<Trans>Payouts</Trans>}
       statLabelTip={
         <Trans>
-          The amount distributed from the Juicebox balance in this funding
-          cycle, out of the current distribution limit. No more than the
-          distribution limit can be distributed in a single funding cycle. Any
-          remaining ETH in Juicebox is overflow until the next cycle begins.
+          The ETH which can be paid out from this project during this cycle.
+          Payouts reset each cycle.
         </Trans>
       }
       statValue={
@@ -50,13 +48,11 @@ export default function DistributedRatio() {
             <TooltipLabel
               tip={
                 <Trans>
-                  The distribution limit for this funding cycle is 0, meaning
-                  all funds in Juicebox are currently considered overflow.
-                  Overflow can be redeemed by token holders, but not
-                  distributed.
+                  No payouts are scheduled for this cycle. All funds are
+                  redeemable (subject to the redemption rate).
                 </Trans>
               }
-              label={<Trans>100% overflow</Trans>}
+              label={<Trans>100% redeemable</Trans>}
             />
           </div>
         )

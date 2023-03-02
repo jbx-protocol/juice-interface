@@ -18,7 +18,7 @@ export function ReservedTokensValue({
       iconClassName="ml-2"
       tip={
         <Trans>
-          {(reservedRate * splitPercentNum) / 100}% of all newly minted tokens.
+          {(reservedRate * splitPercentNum) / 100}% of total token issuance.
         </Trans>
       }
     />

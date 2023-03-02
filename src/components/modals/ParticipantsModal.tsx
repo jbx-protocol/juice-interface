@@ -7,7 +7,6 @@ import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Button, Modal, Select, Space } from 'antd'
-import { Callout } from 'components/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
 import FormattedAddress from 'components/FormattedAddress'
 import Loading from 'components/Loading'
@@ -145,7 +144,7 @@ export default function ParticipantsModal({
               </Trans>
             </Select.Option>
             <Select.Option value="totalPaid">
-              <Trans>Amount paid</Trans>
+              <Trans>Total paid</Trans>
             </Select.Option>
             <Select.Option value="lastPaidTimestamp">
               <Trans>Last paid</Trans>
@@ -249,13 +248,6 @@ export default function ParticipantsModal({
               </Trans>
             </div>
           )}
-
-          <Callout.Info>
-            <Trans>
-              This list is using an experimental data index and may be
-              inaccurate for some projects.
-            </Trans>
-          </Callout.Info>
 
           {list}
 

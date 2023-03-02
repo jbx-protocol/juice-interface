@@ -220,9 +220,9 @@ export function V2V3BurnOrRedeemModal({
               </Callout.Info>
               <div>
                 <Trans>
-                  Redeem your tokens for a portion of this project's overflow.
-                  The current funding cycle's <strong>redemption rate</strong>{' '}
-                  determines your redemption value.
+                  Redeem your tokens to reclaim ETH not needed for payouts. This
+                  cycle's <strong>redemption rate</strong> determines the amount
+                  of ETH you'll receive.
                 </Trans>
               </div>
             </Space>
@@ -230,14 +230,16 @@ export function V2V3BurnOrRedeemModal({
             <Callout.Info>
               {!hasOverflow && (
                 <Trans>
-                  <strong>This project has no overflow</strong>. You won't
-                  receive any ETH for burning your tokens.
+                  <strong>
+                    This project has no ETH available for redemptions
+                  </strong>
+                  . You won't receive any ETH for burning your tokens.
                 </Trans>
               )}
               {!hasRedemptionRate && (
                 <Trans>
-                  <strong>This project has a 0% redemption rate</strong>. You
-                  won't receive any ETH for burning your tokens.
+                  <strong>This project has a redemptions turned off</strong>.
+                  You won't receive any ETH for burning your tokens.
                 </Trans>
               )}
             </Callout.Info>

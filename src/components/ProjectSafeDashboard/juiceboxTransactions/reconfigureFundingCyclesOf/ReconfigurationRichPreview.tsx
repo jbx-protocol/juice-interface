@@ -74,9 +74,7 @@ export function ReconfigureRichPreview({
           <i>{decodedData._memo}</i>
         ) : (
           <i>
-            <Trans>
-              This transaction reconfigures the project's funding cycle.
-            </Trans>
+            <Trans>This transaction edits the project's cycle.</Trans>
           </i>
         )}
       </div>
@@ -86,7 +84,7 @@ export function ReconfigureRichPreview({
         direction={'vertical'}
         onClick={e => e.stopPropagation()}
       >
-        <MinimalCollapse header={t`Funding cycle details`} light>
+        <MinimalCollapse header={t`Cycle details`} light>
           <FundingCycleDetails
             fundingCycleMetadata={decodedData._metadata}
             fundingCycle={{
@@ -99,7 +97,7 @@ export function ReconfigureRichPreview({
           />
         </MinimalCollapse>
         <Space size={'middle'} direction={'vertical'} className="w-2/3">
-          <MinimalCollapse header={t`Funding distribution`} light>
+          <MinimalCollapse header={t`Payouts`} light>
             {distributionLimit?.gt(0) ? (
               <DiffedSplitList
                 splits={formatOutgoingSplits(payoutSplits)}
@@ -113,11 +111,11 @@ export function ReconfigureRichPreview({
               />
             ) : (
               <span className="text-grey-400 dark:text-slate-200">
-                <Trans>No distributions configured.</Trans>
+                <Trans>This cycle has no payouts.</Trans>
               </span>
             )}
           </MinimalCollapse>
-          <MinimalCollapse header={t`Reserved token allocation`} light>
+          <MinimalCollapse header={t`Reserved token recipients`} light>
             {reservedRate?.gt(0) ? (
               <DiffedSplitList
                 splits={formatOutgoingSplits(reservedTokensSplits)}
@@ -129,7 +127,7 @@ export function ReconfigureRichPreview({
               />
             ) : (
               <span className="text-grey-400 dark:text-slate-200">
-                <Trans>No reserved tokens configured.</Trans>
+                <Trans>This cycle doesn't reserve any tokens.</Trans>
               </span>
             )}
           </MinimalCollapse>

@@ -6,7 +6,7 @@ import RichNote from 'components/RichNote'
 import { ConfigureEvent } from 'models/subgraph-entities/v2/configure'
 import {
   V2V3FundingCycle,
-  V2V3FundingCycleMetadata
+  V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
 
 import FundingCycleDetails from '../../V2V3FundingCycleSection/FundingCycleDetails'
@@ -86,10 +86,10 @@ export default function ConfigureEventElem({
   return (
     <ActivityEvent
       event={event}
-      header={t`Configured funding cycles`}
+      header={t`Edited cycle rules`}
       subject={null}
       extra={
-        <MinimalCollapse header={t`Funding cycle details`}>
+        <MinimalCollapse header={t`Details`}>
           <FundingCycleDetails
             fundingCycle={fundingCycle as V2V3FundingCycle}
             fundingCycleMetadata={

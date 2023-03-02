@@ -38,8 +38,8 @@ export default function ReconfigurationStrategySelector({
       ) && (
         <FormItemWarningText>
           <Trans>
-            Using a reconfiguration strategy is recommended. Projects with no
-            strategy will appear risky to contributors.
+            Adding an edit deadline is recommended. Projects with no deadline
+            will appear risky to contributors.
           </Trans>
         </FormItemWarningText>
       )}

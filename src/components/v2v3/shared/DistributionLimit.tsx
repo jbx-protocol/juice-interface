@@ -29,19 +29,18 @@ export default function DistributionLimit({
       tip={
         distributionLimitIsInfinite ? (
           <Trans>
-            All funds received by the treasury will be distributed. Token
-            holders will receive <strong>no ETH</strong> when burning their
-            tokens.
+            All of this project's ETH will be paid out. Token holders will
+            receive <strong>no ETH</strong> when redeeming their tokens.
           </Trans>
         ) : distributionLimitIsZero ? (
           <Trans>
-            No funds can be distributed out of the treasury. Funds can only be
-            accessed by token holders redeeming their tokens.
+            No ETH can be paid out from the treasury. The ETH can only be
+            accessed by token holders that redeem their tokens.
           </Trans>
         ) : (
           <Trans>
-            If you don't raise this amount, your splits will receive their
-            percentage of whatever you raise.
+            If you don't raise this amount, your payout recipients will receive
+            their percentage of the available ETH.
           </Trans>
         )
       }
@@ -51,9 +50,9 @@ export default function DistributionLimit({
   ) : null
 
   const _text = distributionLimitIsInfinite ? (
-    <Trans>No limit (infinite)</Trans>
+    <Trans>Infinite (all available ETH)</Trans>
   ) : distributionLimitIsZero ? (
-    <Trans>Zero</Trans>
+    <Trans>Zero (no payouts)</Trans>
   ) : (
     <>
       {currencyName === 'ETH' ? (

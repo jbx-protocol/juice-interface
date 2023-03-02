@@ -56,12 +56,12 @@ export function V2V3ManageTokensSection() {
     <Space direction="vertical" size="small">
       <div className="flex flex-wrap justify-between gap-x-1">
         <SectionHeader
-          text={<Trans>Tokens</Trans>}
+          text={<Trans>Project tokens</Trans>}
           tip={
             <Trans>
-              {tokenText} are distributed to anyone who pays this project. If
-              the project has a distribution limit, tokens can be redeemed for a
-              portion of the project's overflow.
+              Anyone who pays this project receives {tokenText}. Depending on
+              this project's rules, it may be possible to redeem {tokenText} to
+              reclaim ETH.
             </Trans>
           }
         />
@@ -71,7 +71,7 @@ export function V2V3ManageTokensSection() {
       </div>
       <Descriptions layout="horizontal" column={1}>
         {hasIssuedERC20 && tokenSymbol && (
-          <Descriptions.Item label={t`Project token`} labelStyle={labelStyle}>
+          <Descriptions.Item label={t`Token`} labelStyle={labelStyle}>
             <ProjectTokenDescription />
           </Descriptions.Item>
         )}

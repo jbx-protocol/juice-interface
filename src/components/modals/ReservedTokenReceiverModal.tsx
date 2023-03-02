@@ -42,11 +42,10 @@ export default function ReservedTokenReceiverModal({
     const realTokenAllocation = (reservedRate ?? 0) * percentOfReserved
     const realTokenAllocationPercent = (realTokenAllocation / 100).toFixed(2)
     const extra =
-      t`The percentage this individual receives of the overall ${reservedRate}% reserved token allocation` +
+      t`The percentage this recipient receives out of the ${reservedRate}% of token issuance being reserved` +
       `${
         realTokenAllocation
-          ? ' ' +
-            t`(${realTokenAllocationPercent}% of all newly minted tokens).`
+          ? ' ' + t`(${realTokenAllocationPercent}% of total token issuance).`
           : '.'
       }`
     return extra
@@ -54,18 +53,14 @@ export default function ReservedTokenReceiverModal({
 
   return (
     <Modal
-      title={
-        mode === 'Add' ? t`Add token allocation` : t`Edit token allocation`
-      } // Full sentences for translation purposes
+      title={mode === 'Add' ? t`Add token recipient` : t`Edit token recipient`} // Full sentences for translation purposes
       open={open}
       // Must reset the state in case user opens this modal for another receiver straight away
       onOk={() => {
         setPercent(undefined)
         onOk()
       }}
-      okText={
-        mode === 'Add' ? t`Add token allocation` : t`Save token allocation`
-      }
+      okText={mode === 'Add' ? t`Add token recipient` : t`Save token recipient`}
       onCancel={() => {
         setPercent(undefined)
         onCancel()
@@ -82,7 +77,7 @@ export default function ReservedTokenReceiverModal({
         <Form.Item
           name="beneficiary"
           label={t`Beneficiary address`}
-          extra={t`This address will receive the tokens minted from paying this project.`}
+          extra={t`This address will receive any tokens minted when this project is paid.`}
           rules={[
             {
               validator: validateReservedTokenReceiver,
@@ -115,7 +110,7 @@ export default function ReservedTokenReceiverModal({
         <Form.Item
           name="lockedUntil"
           label={t`Lock until`}
-          extra={t`If locked, this can't be edited or removed until the lock expires or the funding cycle is reconfigured.`}
+          extra={t`If locked, allocations can't be edited or removed until the lock expires or the cycle is edited.`}
         >
           <DatePicker />
         </Form.Item>

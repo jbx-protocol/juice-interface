@@ -51,7 +51,7 @@ export function UpcomingFundingCycle() {
   if (!upcomingFundingCycle || !upcomingFundingCycleMetadata) {
     return (
       <CardSection>
-        <Trans>No upcoming funding cycle.</Trans>
+        <Trans>No upcoming cycle.</Trans>
       </CardSection>
     )
   }
@@ -85,7 +85,6 @@ export function UpcomingFundingCycle() {
         payoutSplits={queuedPayoutSplits}
         distributionLimitCurrency={queuedDistributionLimitCurrency}
         distributionLimit={queuedDistributionLimit}
-        fundingCycleDuration={upcomingFundingCycle.duration}
         hideDistributeButton
       />
       <ReservedTokensSplitsCard

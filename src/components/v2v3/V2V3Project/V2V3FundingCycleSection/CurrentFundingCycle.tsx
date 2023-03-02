@@ -27,7 +27,7 @@ export function CurrentFundingCycle() {
   if (!fundingCycle || fundingCycle.number.eq(0) || !fundingCycleMetadata) {
     return (
       <CardSection>
-        <Trans>No active funding cycle.</Trans>
+        <Trans>No active cycle.</Trans>
       </CardSection>
     )
   }
@@ -59,7 +59,6 @@ export function CurrentFundingCycle() {
         payoutSplits={payoutSplits}
         distributionLimitCurrency={distributionLimitCurrency}
         distributionLimit={distributionLimit}
-        fundingCycleDuration={fundingCycle.duration}
       />
       <ReservedTokensSplitsCard
         reservedTokensSplits={reservedTokensSplits}

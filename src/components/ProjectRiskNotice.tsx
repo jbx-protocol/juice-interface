@@ -21,10 +21,7 @@ export default function ProjectRiskNotice({
   return (
     <div>
       <p>
-        <Trans>
-          This project's current funding cycle configuration may pose risks for
-          contributors:
-        </Trans>
+        <Trans>This project's rules may pose risks for contributors:</Trans>
       </p>
       <ul>
         {warnings.map((text, i) => (

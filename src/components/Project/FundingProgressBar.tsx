@@ -27,7 +27,7 @@ const ProgressWithOverflow = ({
       onMouseLeave={() => setShowTooltips(false)}
     >
       <Tooltip
-        title={t`Distributed`}
+        title={t`This cycle's payouts`}
         open={showTooltips}
         placement="bottomLeft"
       >
@@ -44,7 +44,11 @@ const ProgressWithOverflow = ({
 
       <TargetIndicatorLine />
 
-      <Tooltip title={t`Overflow`} open={showTooltips} placement="topRight">
+      <Tooltip
+        title={t`Remaining ETH`}
+        open={showTooltips}
+        placement="topRight"
+      >
         <Progress
           className="min-w-[12px]"
           style={{

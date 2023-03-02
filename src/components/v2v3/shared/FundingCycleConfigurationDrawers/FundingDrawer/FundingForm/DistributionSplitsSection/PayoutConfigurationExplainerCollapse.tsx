@@ -1,7 +1,5 @@
 import { Trans } from '@lingui/macro'
-import ExternalLink from 'components/ExternalLink'
 import { MinimalCollapse } from 'components/MinimalCollapse'
-import { helpPagePath } from 'utils/routes'
 
 export function PayoutConfigurationExplainerCollapse({
   className,
@@ -15,27 +13,19 @@ export function PayoutConfigurationExplainerCollapse({
     >
       <p>
         <Trans>
-          Use <strong>Amounts</strong> when you want to configure a{' '}
-          <strong>distribution limit</strong>. Treasury funds that exceed the
-          distribution limit are called <strong>overflow</strong>. Token holders
-          can redeem (burn) their tokens for a portion of the overflow.{' '}
-          <ExternalLink href={helpPagePath('dev/learn/glossary/overflow')}>
-            Learn more
-          </ExternalLink>
-          .
+          Use <strong>Percentages</strong> if you'd like to pay out all of the
+          ETH in the treasury. Since no funds will be left over, your token
+          holders won't be able to redeem their tokens for ETH. This can make it
+          harder to build trust with your community.
         </Trans>
       </p>
 
       <p>
         <Trans>
-          Use <strong>Percentages</strong> when you want to configure an{' '}
-          <strong>infinite distribution limit.</strong> With an infinite
-          distribution limit, your project reserves all funds for itself. Your
-          project won't have overflow, so tokens can never be redeemed for ETH.{' '}
-          <ExternalLink href={helpPagePath('dev/learn/glossary/overflow')}>
-            Learn more
-          </ExternalLink>
-          .
+          Otherwise, use <strong>Amounts</strong>. Amounts let you pre-define
+          the amount of ETH you can pay out from the project each cycle. The
+          leftover ETH can be used for future cycles, or token redemptions if
+          you enable them.
         </Trans>
       </p>
     </MinimalCollapse>

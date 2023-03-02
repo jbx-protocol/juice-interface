@@ -71,7 +71,7 @@ export function ReservedTokensSettingsPage() {
         type="primary"
       >
         <span>
-          <Trans>Save token allocation</Trans>
+          <Trans>Save token recipients</Trans>
         </span>
       </Button>
     </>

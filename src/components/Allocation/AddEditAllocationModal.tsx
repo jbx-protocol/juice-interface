@@ -144,8 +144,8 @@ export const AddEditAllocationModal = ({
   const addressExtra =
     recipient === 'juiceboxProject' ? (
       <Trans>
-        Distributing funds to another Juicebox project may mint its tokens. Set
-        the address that should receive these project's tokens.
+        Paying another Juicebox project may mint its tokens. Pick an address to
+        receive these tokens.
       </Trans>
     ) : undefined
 
@@ -231,9 +231,7 @@ export const AddEditAllocationModal = ({
         <Form.Item
           name="amount"
           label={
-            amountType === 'amount'
-              ? t`Distribution Amount`
-              : t`Distribution Percentage`
+            amountType === 'amount' ? t`Payout Amount` : t`Payout Percentage`
           }
           required
           extra={
@@ -252,8 +250,8 @@ export const AddEditAllocationModal = ({
             inputMustExistRule({
               label:
                 amountType === 'amount'
-                  ? t`Distribution Amount`
-                  : t`Distribution Percentage`,
+                  ? t`Payout Amount`
+                  : t`Payout Percentage`,
             }),
             distributionAmountIsValidRule({ validatorTrigger: 'onSubmit' }),
           ]}
@@ -266,8 +264,8 @@ export const AddEditAllocationModal = ({
           requiredMark="optional"
           extra={
             <Trans>
-              If locked, this split can't be edited or removed until the lock
-              expires or the funding cycle is reconfigured.
+              If locked, this payout can't be edited or removed until the lock
+              expires or the cycle is edited.
             </Trans>
           }
         >

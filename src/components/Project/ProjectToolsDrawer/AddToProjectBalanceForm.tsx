@@ -57,11 +57,12 @@ export function AddToProjectBalanceForm({
       </h3>
       <p>
         <Trans>
-          Add funds to this project's balance without minting tokens.
+          Add ETH from your wallet to this project's balance without minting
+          tokens.
         </Trans>
       </p>
 
-      <Form.Item name="amount" label={<Trans>Pay amount</Trans>}>
+      <Form.Item name="amount" label={<Trans>Add amount</Trans>}>
         <FormattedNumberInput
           placeholder="0"
           accessory={<InputAccessoryButton content="ETH" />}
@@ -75,7 +76,7 @@ export function AddToProjectBalanceForm({
           type="primary"
           text={<Trans>Add to balance</Trans>}
           disabled={!userAddress}
-          connectWalletText={<Trans>Connect wallet to pay</Trans>}
+          connectWalletText={<Trans>Connect wallet to add to balance</Trans>}
         />
       </Form.Item>
     </Form>

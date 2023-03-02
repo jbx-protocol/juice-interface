@@ -38,7 +38,7 @@ const PendingTransactionModalBody = () => {
         {pendingTxHash ? (
           <p>
             <EtherscanLink value={pendingTxHash} type="tx">
-              <Trans>View in Etherscan</Trans>
+              <Trans>View on Etherscan</Trans>
             </EtherscanLink>
           </p>
         ) : null}

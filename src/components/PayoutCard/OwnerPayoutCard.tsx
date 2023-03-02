@@ -27,9 +27,8 @@ export const OwnerPayoutCard = ({
         <Tooltip
           title={
             <Trans>
-              You have configured for all funds to be distributed from the
-              treasury. Your current payouts do not sum to 100%, so the
-              remainder will go to the project owner.
+              This project is set to pay out all available ETH. Your payouts do
+              not sum to 100%, so the remainder will go to the project owner.
             </Trans>
           }
         >

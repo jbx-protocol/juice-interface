@@ -13,6 +13,7 @@ import { DeployProjectPayerTxArgs } from 'hooks/v2v3/transactor/DeployProjectPay
 import { useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 import AdvancedOptionsCollapse from './AdvancedOptionsCollapse'
+import { PROJECT_PAYER_ADDRESS_EXPLANATION } from 'components/Explanations'
 
 const DEPLOY_EVENT_IDX = 0
 
@@ -110,8 +111,8 @@ export function LaunchProjectPayerModal({
     <>
       <TransactionModal
         open={open}
-        title={t`Create Payment Address`}
-        okText={t`Deploy Payment Address contract`}
+        title={t`Create Project Payer Address`}
+        okText={t`Deploy Project Payer Address`}
         connectWalletText={t`Connect wallet to deploy`}
         onOk={deployProjectPayer}
         onCancel={() => onClose()}
@@ -120,12 +121,7 @@ export function LaunchProjectPayerModal({
         width={600}
       >
         <Space direction="vertical" size="middle">
-          <div>
-            <Trans>
-              Create an Ethereum address that can be used to pay your project
-              directly.
-            </Trans>
-          </div>
+          <div>{PROJECT_PAYER_ADDRESS_EXPLANATION}</div>
           <div>
             <Trans>
               By default, the payer will receive any project tokens minted from
@@ -151,7 +147,7 @@ export function LaunchProjectPayerModal({
         centered
       >
         <h4 className="mb-7">
-          <Trans>Your new payment address:</Trans>
+          <Trans>Your new project payer address:</Trans>
         </h4>
         <EtherscanLink
           className="text-base"
@@ -161,7 +157,7 @@ export function LaunchProjectPayerModal({
         <CopyTextButton className="text-2xl" value={projectPayerAddress} />
         <p className="mt-7">
           <Trans>
-            Deployed payment addresses can be found in the Tools drawer (
+            Deployed project payer addresses can be found in the Tools drawer (
             <ToolOutlined />) on the project page.
           </Trans>
         </p>

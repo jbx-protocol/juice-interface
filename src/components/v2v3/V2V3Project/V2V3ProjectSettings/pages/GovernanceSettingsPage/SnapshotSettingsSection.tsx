@@ -115,8 +115,8 @@ export function SnapshotSettingsSection() {
           <ExternalLink href="https://snapshot.org">Snapshot</ExternalLink> is
           an off-chain voting system. You can use your Juicebox project tokens
           in a Snapshot voting strategy.{' '}
-          <ExternalLink href={helpPagePath('/user/governance/snapshot')}>
-            Learn more about Snapshot
+          <ExternalLink href={helpPagePath('/user/resources/snapshot/')}>
+            Learn more
           </ExternalLink>
           .
         </Trans>

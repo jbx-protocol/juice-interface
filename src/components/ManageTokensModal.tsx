@@ -27,13 +27,13 @@ const RedeemButtonTooltip = ({
       title={
         redeemDisabledReason === 'overflowZero' ? (
           <Trans>
-            You cannot redeem your tokens for ETH because this project has no
-            overflow.
+            You cannot redeem your tokens for ETH because this project is using
+            all of its ETH for payouts or has no ETH.
           </Trans>
         ) : (
           <Trans>
-            You cannot redeem your tokens for ETH because this project's
-            redemption rate is zero.
+            You cannot redeem your tokens for ETH because this project has
+            redemptions turned off.
           </Trans>
         )
       }
@@ -128,8 +128,9 @@ export default function ManageTokensModal({
                 heading={<Trans>Redeem {tokensLabel} for ETH</Trans>}
                 description={
                   <Trans>
-                    Redeem your {tokensLabel} for a portion of the project's
-                    overflow. Any {tokensLabel} you redeem will be burned.
+                    Redeem your {tokensLabel} to reclaim a portion of the ETH
+                    not needed for this cycle's payouts. Any {tokensLabel} you
+                    redeem will be burned.
                   </Trans>
                 }
                 onClick={() => setRedeemModalVisible(true)}
@@ -146,12 +147,13 @@ export default function ManageTokensModal({
                   {redeemDisabledReason === 'overflowZero' ? (
                     <Trans>
                       Burn your {tokensLabel}. You won't receive ETH in return
-                      because this project has no overflow.
+                      because this project is using all of its ETH for payouts
+                      or has no ETH.
                     </Trans>
                   ) : (
                     <Trans>
                       Burn your {tokensLabel}. You won't receive ETH in return
-                      because this project's redemption rate is zero.
+                      because this project has redemptions turned off.
                     </Trans>
                   )}
                 </>
@@ -177,9 +179,8 @@ export default function ManageTokensModal({
             <Tooltip
               title={
                 <Trans>
-                  Token minting is only available for V1.1 projects. Token
-                  minting can be enabled or disabled by reconfiguring the
-                  project's funding cycle.
+                  Owner token minting is not available for V1.0 projects. Owner
+                  token minting can be enabled by editing the project's cycle.
                 </Trans>
               }
               placement="right"
@@ -189,9 +190,9 @@ export default function ManageTokensModal({
                   heading={<Trans>Mint {tokensLabel}</Trans>}
                   description={
                     <Trans>
-                      Mint new {tokensLabel} into an account. Only a project's
-                      owner, a designated operator, or one of its terminal's
-                      delegates can mint its tokens.
+                      Mint new {tokensLabel} into a wallet. Only a project's
+                      owner, a designated operator, or one of the terminal's
+                      delegates can mint project tokens.
                     </Trans>
                   }
                   onClick={() => setMintModalVisible(true)}
@@ -205,7 +206,6 @@ export default function ManageTokensModal({
               heading={<Trans>Transfer unclaimed {tokensLabel}</Trans>}
               description={
                 <Trans>
-                  {' '}
                   Move your unclaimed {tokensLabel} from your wallet to another
                   wallet.
                 </Trans>

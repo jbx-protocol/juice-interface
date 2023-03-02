@@ -38,7 +38,7 @@ function Header() {
     <>
       <SectionHeader className="mb-0" text={t`Unlockable NFTs`} />
       <span className="text-xs text-grey-500 dark:text-grey-300">
-        <Trans>Contribute funds to receive NFTs.</Trans>
+        <Trans>Pay this project to receive NFTs.</Trans>
       </span>
     </>
   )

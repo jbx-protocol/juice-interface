@@ -14,11 +14,13 @@ export default function OwnerBalance() {
   return (
     <StatLine
       loading={isLoading}
-      statLabel={<Trans>In wallet</Trans>}
+      statLabel={<Trans>Owner wallet balance</Trans>}
       statLabelTip={
         <>
           <p>
-            <Trans>The balance of the project owner's wallet.</Trans>
+            <Trans>
+              The amount of ETH in the wallet that owns this project.
+            </Trans>
           </p>{' '}
           <EtherscanLink value={projectOwnerAddress} type="address" />
         </>

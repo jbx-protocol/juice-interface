@@ -34,9 +34,13 @@ export function PaymentAddressesModal({
       open={open}
       onCancel={onCancel}
       cancelText="Done"
-      title={t`Payment Addresses`}
+      title={t`Project Payer Addresses`}
       okButtonProps={{ hidden: true }}
     >
+      <Trans>
+        Any ETH sent to these Project Payer Addresses will be forwarded to the
+        project. This makes it easier to pay the project from third-party tools.
+      </Trans>
       {projectPayers?.length ? (
         <Space direction="vertical" className="w-full">
           {projectPayers.map(p => (
@@ -63,8 +67,8 @@ export function PaymentAddressesModal({
                   <TooltipLabel
                     tip={
                       p.preferAddToBalance
-                        ? t`Payments to this project won't mint new project tokens.`
-                        : t`Payments to this project will mint new project tokens.`
+                        ? t`Payments to this address won't mint this project's tokens.`
+                        : t`Payments to this address will mint this project's tokens.`
                     }
                     label={
                       <span className="capitalize">
@@ -79,8 +83,7 @@ export function PaymentAddressesModal({
                     <TooltipLabel
                       tip={
                         <Trans>
-                          When the Payment Address receives a payment, project
-                          tokens will be minted to this token beneficiary
+                          Project tokens will be minted to this beneficiary
                           address. The address that made the payment{' '}
                           <strong>won't receive any project tokens.</strong>
                         </Trans>
@@ -94,7 +97,7 @@ export function PaymentAddressesModal({
                     />
                   ) : (
                     <TooltipLabel
-                      tip={t`New project tokens will be minted to the address that made the payment.`}
+                      tip={t`Project tokens will be minted to the address that made the payment.`}
                       label={t`Default`}
                     />
                   )}
@@ -105,7 +108,7 @@ export function PaymentAddressesModal({
                       <Trans>Mints tokens as ERC-20:</Trans>
                     </span>
                     <TooltipLabel
-                      tip={t`New project tokens are minted as ERC-20 tokens by default. Payments to this Payment Address will incur a higher gas fee than regular Juicebox payments.`}
+                      tip={t`Project tokens will be minted as ERC-20 tokens by default, incurring slightly higher gas fees.`}
                       label={
                         <span className="capitalize">
                           {p.preferClaimedTokens.toString()}
@@ -118,7 +121,7 @@ export function PaymentAddressesModal({
                   <div className="flex justify-between">
                     <span>
                       <TooltipLabel
-                        tip={t`Memos appear on the project's activity feed when the Payment Address receives a payment.`}
+                        tip={t`Memos appear on the project's activity feed when this address receives a payment.`}
                         label={t`Memo`}
                       />
                       :

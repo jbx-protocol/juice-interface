@@ -1,6 +1,7 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
+import { ISSUE_ERC20_EXPLANATION } from 'components/Explanations'
 
 import { useRouter } from 'next/router'
 import { useState } from 'react'
@@ -30,14 +31,7 @@ export function IssueErc20TokenButton({
 
   return (
     <>
-      <Tooltip
-        title={
-          <Trans>
-            Issue an ERC-20 to be used as this project's token. Once issued,
-            anyone can claim their existing token balance in the new token.
-          </Trans>
-        }
-      >
+      <Tooltip title={ISSUE_ERC20_EXPLANATION}>
         <Button
           size="small"
           icon={<SettingOutlined />}

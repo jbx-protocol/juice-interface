@@ -41,9 +41,9 @@ export const V2V3SettingsPageKeyTitleMap: {
 } = {
   general: t`General`,
   projecthandle: t`Project handle`,
-  reconfigurefc: t`Reconfigure Funding Cycle`,
+  reconfigurefc: t`Edit Cycle`,
   payouts: t`Payouts`,
-  reservedtokens: t`Reserved token allocation`,
+  reservedtokens: t`Reserved token recipients`,
   nfts: t`Edit NFT collection`,
   tokenmigration: t`Token migration`,
   transferownership: t`Transfer ownership`,
@@ -127,7 +127,7 @@ export function V2V3ProjectSettings() {
         'funding',
         [
           menuItem(
-            'Funding cycle',
+            'Cycle',
             'reconfigurefc',
             undefined,
             undefined,

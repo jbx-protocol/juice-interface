@@ -19,7 +19,7 @@ export function DeployConfigurationButton({
       size="large"
     >
       <span>
-        <Trans>Deploy funding cycle configuration</Trans>
+        <Trans>Deploy cycle</Trans>
       </span>
     </Button>
   )

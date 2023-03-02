@@ -256,9 +256,9 @@ export function DistributionSplitCard({
               iconClassName="pt-1"
               tip={
                 <Trans>
-                  You have configured for all funds to be distributed from the
-                  treasury. Your current payouts do not sum to 100%, so the
-                  remainder will go to the project owner.
+                  You have set your project to pay out all of its ETH. Your
+                  other payouts do not sum to 100%, so the remainder will go to
+                  the project owner.
                 </Trans>
               }
             />

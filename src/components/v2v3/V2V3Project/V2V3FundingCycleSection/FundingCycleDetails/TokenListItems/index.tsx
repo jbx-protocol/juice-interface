@@ -109,7 +109,7 @@ export function TokenListItems({
   return (
     <>
       <FundingCycleListItem
-        name={t`Mint rate`}
+        name={t`Total issuance rate`}
         value={
           <MintRateValue
             value={fundingCycle.weight}
@@ -122,6 +122,24 @@ export function TokenListItems({
           ) : undefined
         }
         helperText={MINT_RATE_EXPLANATION}
+      />
+      <FundingCycleListItem
+        name={t`Payer issuance rate`}
+        value={
+          <PayerOrReservedTokensValue
+            value={payerTokens}
+            tokenSymbol={tokenSymbolPlural}
+          />
+        }
+        oldValue={
+          showDiffs && payerTokensHasDiff ? (
+            <PayerOrReservedTokensValue
+              value={oldPayerTokens}
+              tokenSymbol={tokenSymbolPlural}
+            />
+          ) : undefined
+        }
+        helperText={CONTRIBUTOR_RATE_EXPLAINATION}
       />
       <FundingCycleListItem
         name={t`Reserved rate`}
@@ -139,7 +157,7 @@ export function TokenListItems({
         helperText={RESERVED_RATE_EXPLAINATION}
       />
       <FundingCycleListItem
-        name={t`Reserved tokens`}
+        name={t`Reserved issuance rate`}
         value={
           <PayerOrReservedTokensValue
             value={reservedTokens}
@@ -158,25 +176,7 @@ export function TokenListItems({
         subItem
       />
       <FundingCycleListItem
-        name={t`Payment issuance rate`}
-        value={
-          <PayerOrReservedTokensValue
-            value={payerTokens}
-            tokenSymbol={tokenSymbolPlural}
-          />
-        }
-        oldValue={
-          showDiffs && payerTokensHasDiff ? (
-            <PayerOrReservedTokensValue
-              value={oldPayerTokens}
-              tokenSymbol={tokenSymbolPlural}
-            />
-          ) : undefined
-        }
-        helperText={CONTRIBUTOR_RATE_EXPLAINATION}
-      />
-      <FundingCycleListItem
-        name={t`Discount rate`}
+        name={t`Issuance reduction rate`}
         value={`${formatDiscountRate(fundingCycle.discountRate)}%`}
         oldValue={
           showDiffs && discountRateHasDiff

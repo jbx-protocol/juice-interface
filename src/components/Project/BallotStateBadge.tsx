@@ -27,11 +27,11 @@ export function BallotStateBadge({
   }
 
   const ballotStateTooltips: { [k in BallotState]?: string } = {
-    0: t`This proposed reconfiguration hasn't passed the ${
+    0: t`These edits were not approved by the ${
       ballotStrategy?.durationSeconds && ballotStrategy?.name
         ? ballotStrategy.name
-        : 'delay'
-    } period. It's not guaranteed to take effect in the upcoming funding cycle.`,
+        : 'edit deadline'
+    } contract. The edits are not guaranteed to take effect in the next cycle.`,
   }
 
   const ballotStateIcons: { [k in BallotState]?: JSX.Element } = {

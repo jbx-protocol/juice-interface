@@ -67,13 +67,12 @@ export function MigrateProjectController({
         <InfoCallout className="mb-5">
           <p>
             <Trans>
-              You must edit your funding cycle rules to allow controller
-              migrations.
+              You must edit your cycle's rules to allow controller migrations.
             </Trans>
           </p>
           <Link href={settingsPagePath('reconfigurefc', { projectId, handle })}>
             <Button type="primary">
-              <Trans>Edit funding cycle</Trans>
+              <Trans>Edit cycle</Trans>
             </Button>
           </Link>
         </InfoCallout>
@@ -89,7 +88,7 @@ export function MigrateProjectController({
           <EtherscanLink type="address" value={controllerAddress}>
             {controllerAddress}
           </EtherscanLink>
-          . Any reserved tokens will be distributed.
+          . Any reserved tokens will be sent out.
         </Trans>
       </InfoCallout>
       <Button onClick={onClick} type="primary" loading={loading}>

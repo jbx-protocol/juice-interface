@@ -17,6 +17,7 @@ import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useContext, useEffect, useState } from 'react'
 import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
 import { V2V3CurrencyName, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
+import { FEES_EXPLANATION } from '../settingExplanations'
 
 export default function DistributePayoutsModal({
   open,
@@ -133,16 +134,12 @@ export default function DistributePayoutsModal({
       width={640}
     >
       <Space direction="vertical" size="large" className="w-full">
-        <Callout.Info>
-          <Trans>
-            Distributions to Ethereum addresses incur a 2.5% JBX membership fee.
-          </Trans>
-        </Callout.Info>
+        <Callout.Info>{FEES_EXPLANATION}</Callout.Info>
 
         <Form layout="vertical">
           <Form.Item
             className="mb-0"
-            label={<Trans>Amount to distribute</Trans>}
+            label={<Trans>Amount to pay out</Trans>}
             extra={
               <div className="mb-2 text-black dark:text-slate-100">
                 <Trans>
@@ -152,7 +149,7 @@ export default function DistributePayoutsModal({
                       {grossAvailableAmount}
                     </Tooltip>
                   </span>{' '}
-                  available to distribute
+                  available to pay out
                 </Trans>
               </div>
             }
@@ -188,8 +185,8 @@ export default function DistributePayoutsModal({
           {payoutSplits?.length === 0 ? (
             <Callout.Info className="mb-4">
               <Trans>
-                There are no payouts defined for this funding cycle. The project
-                owner will receive all available funds.
+                The project owner is the only payout recipient. Any ETH paid out
+                this cycle will go to them.
               </Trans>
             </Callout.Info>
           ) : null}

@@ -86,8 +86,8 @@ export default function FundingCycleDetailsCard({
                   <Tooltip
                     title={
                       <Trans>
-                        Some funding cycle settings may put project contributors
-                        at risk.
+                        This cycle's rules may contain unexpected behavior or
+                        other risks.
                       </Trans>
                     }
                   >

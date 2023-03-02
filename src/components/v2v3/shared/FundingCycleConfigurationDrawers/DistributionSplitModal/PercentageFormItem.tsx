@@ -47,10 +47,10 @@ export function PercentageFormItem({
           <TooltipIcon
             tip={
               <Trans>
-                If you don't raise the sum of all your payouts (
+                If you don't raise the sum of your payouts (
                 <CurrencySymbol currency={currencyName} />
                 {distributionLimit}), this address will receive{' '}
-                {form.getFieldValue('percent')}% of all the funds you raise.
+                {form.getFieldValue('percent')}% of the ETH you raise.
               </Trans>
             }
             placement={'topLeft'}

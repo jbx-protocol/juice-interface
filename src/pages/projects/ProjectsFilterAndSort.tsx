@@ -102,7 +102,7 @@ export default function ProjectsFilterAndSort({
           <Trans>Current balance</Trans>
         </Select.Option>
         <Select.Option value="paymentsCount">
-          <Trans># of payments</Trans>
+          <Trans>Payments</Trans>
         </Select.Option>
       </Select>
     </div>

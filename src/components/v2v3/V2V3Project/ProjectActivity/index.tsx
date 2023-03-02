@@ -16,6 +16,7 @@ import ConfigureEventElem from './eventElems/ConfigureEventElem'
 import DeployETHERC20ProjectPayerEventElem from './eventElems/DeployETHERC20ProjectPayerEventElem'
 import DistributePayoutsElem from './eventElems/DistributePayoutsElem'
 import DistributeReservedTokensEventElem from './eventElems/DistributeReservedTokensElem'
+import SetFundAccessConstraintsEventElem from './eventElems/SetFundAccessConstraintsEventElem'
 import { EventFilter, useProjectActivity } from './hooks/ProjectActivity'
 
 export default function ProjectActivity() {
@@ -80,6 +81,13 @@ export default function ProjectActivity() {
           }
           if (e.configureEvent) {
             elem = <ConfigureEventElem event={e.configureEvent} />
+          }
+          if (e.setFundAccessConstraintsEvent) {
+            elem = (
+              <SetFundAccessConstraintsEventElem
+                event={e.setFundAccessConstraintsEvent}
+              />
+            )
           }
 
           if (!elem) return null

@@ -2870,6 +2870,9 @@ msgstr ""
 msgid "Set cycle duration"
 msgstr ""
 
+msgid "Set distribution limit"
+msgstr ""
+
 msgid "Set handle @{handle}"
 msgstr ""
 

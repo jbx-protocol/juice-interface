@@ -25,7 +25,7 @@ import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
 interface ProjectsOptions {
   pageNumber?: number
   projectId?: number
-  orderBy?: 'createdAt' | 'currentBalance' | 'totalPaid'
+  orderBy?: 'createdAt' | 'currentBalance' | 'totalPaid' | 'paymentsCount'
   orderDirection?: 'asc' | 'desc'
   pageSize?: number
   state?: ProjectState

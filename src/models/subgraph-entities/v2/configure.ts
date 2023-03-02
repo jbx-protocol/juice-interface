@@ -29,7 +29,7 @@ export interface ConfigureEvent extends BaseEventEntity {
   reservedRate: number
   redemptionRate: number
   ballotRedemptionRate: number
-  payPaused: boolean
+  pausePay: boolean
   distributionsPaused: boolean
   redeemPaused: boolean
   burnPaused: boolean

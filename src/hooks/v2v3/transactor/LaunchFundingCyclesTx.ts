@@ -1,7 +1,8 @@
 import { Contract } from '@ethersproject/contracts'
 import { t } from '@lingui/macro'
+import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
-import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
+import { useDefaultJBController } from 'hooks/defaultContracts/DefaultJBController'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
@@ -12,8 +13,6 @@ import {
 } from 'utils/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../ProjectTitle'
 import { LaunchProjectData } from './LaunchProjectTx'
-
-const DEFAULT_MEMO = ''
 
 export type LaunchFundingCyclesData = Omit<
   LaunchProjectData,
@@ -30,7 +29,7 @@ export function useLaunchFundingCyclesTx({
   } & LaunchFundingCyclesData
 > {
   const { transactor } = useContext(TransactionContext)
-  const { contracts } = useContext(V2V3ContractsContext)
+  const defaultJBController = useDefaultJBController()
 
   const { userAddress } = useWallet()
   const projectTitle = useV2ProjectTitle()
@@ -49,8 +48,7 @@ export function useLaunchFundingCyclesTx({
     if (
       !transactor ||
       !userAddress ||
-      !contracts?.JBController ||
-      !contracts?.JBETHPaymentTerminal ||
+      !defaultJBController ||
       !isValidMustStartAtOrAfter(mustStartAtOrAfter, fundingCycleData.duration)
     ) {
       return Promise.resolve(false)
@@ -68,7 +66,7 @@ export function useLaunchFundingCyclesTx({
     ]
 
     return transactor(
-      JBController ?? contracts.JBController,
+      JBController ?? defaultJBController,
       'launchFundingCyclesFor',
       args,
       {

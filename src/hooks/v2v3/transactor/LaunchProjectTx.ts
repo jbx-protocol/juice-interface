@@ -1,7 +1,9 @@
 import { t } from '@lingui/macro'
 import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
+import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
+import { useDefaultJBController } from 'hooks/defaultContracts/DefaultJBController'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useWallet } from 'hooks/Wallet'
 import { GroupedSplits, SplitGroup } from 'models/splits'
@@ -18,8 +20,6 @@ import {
 } from 'utils/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../ProjectTitle'
 
-const DEFAULT_MEMO = ''
-
 export interface LaunchProjectData {
   projectMetadataCID: string
   fundingCycleData: V2V3FundingCycleData
@@ -33,6 +33,7 @@ export interface LaunchProjectData {
 export function useLaunchProjectTx(): TransactorInstance<LaunchProjectData> {
   const { transactor } = useContext(TransactionContext)
   const { contracts } = useContext(V2V3ContractsContext)
+  const defaultJBController = useDefaultJBController()
   const { userAddress } = useWallet()
 
   const projectTitle = useV2ProjectTitle()
@@ -52,8 +53,7 @@ export function useLaunchProjectTx(): TransactorInstance<LaunchProjectData> {
     if (
       !transactor ||
       !userAddress ||
-      !contracts?.JBController ||
-      !contracts.JBETHPaymentTerminal ||
+      !defaultJBController ||
       !isValidMustStartAtOrAfter(mustStartAtOrAfter, fundingCycleData.duration)
     ) {
       const missingParam = !transactor
@@ -88,7 +88,7 @@ export function useLaunchProjectTx(): TransactorInstance<LaunchProjectData> {
       DEFAULT_MEMO,
     ]
 
-    return transactor(contracts.JBController, 'launchProjectFor', args, {
+    return transactor(defaultJBController, 'launchProjectFor', args, {
       ...txOpts,
       title: t`Launch ${projectTitle}`,
     })

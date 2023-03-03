@@ -1,12 +1,11 @@
 import { ballotStrategies as BallotStrategies } from 'constants/v2v3/ballotStrategies'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
-import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { isEqual } from 'lodash'
 import { CreatePage } from 'models/createPage'
 import { FundingTargetType } from 'models/fundingTargetType'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { useRouter } from 'next/router'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import {
   DEFAULT_REDUX_STATE,
@@ -17,6 +16,7 @@ import { CreateState, ProjectState } from 'redux/slices/editingV2Project/types'
 import { isEqualAddress } from 'utils/address'
 import { parseWad } from 'utils/format/formatNumber'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
+import { useDefaultJBETHPaymentTerminal } from '../../../hooks/defaultContracts/DefaultJBETHPaymentTerminal'
 import { DefaultSettings as DefaultTokenSettings } from '../components/pages/ProjectToken/hooks/ProjectTokenForm'
 import { determineAvailablePayoutsSelections } from '../utils/determineAvailablePayoutsSelections'
 import { projectTokenSettingsToReduxFormat } from '../utils/projectTokenSettingsToReduxFormat'
@@ -124,14 +124,14 @@ const parseCreateFlowStateFromInitialState = (
  * Load redux state from a URL query parameter.
  */
 export function useLoadingInitialStateFromQuery() {
-  const { contracts } = useContext(V2V3ContractsContext)
   const dispatch = useDispatch()
   const router = useRouter()
+  const defaultJBETHPaymentTerminal = useDefaultJBETHPaymentTerminal()
 
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (!router.isReady || !contracts) return
+    if (!router.isReady || !defaultJBETHPaymentTerminal) return
 
     const { initialState } = router.query
     if (!initialState) {
@@ -170,7 +170,7 @@ export function useLoadingInitialStateFromQuery() {
               {
                 ...DEFAULT_REDUX_STATE.fundAccessConstraints[0],
                 ...parsedInitialState.fundAccessConstraints[0],
-                terminal: contracts.JBETHPaymentTerminal.address,
+                terminal: defaultJBETHPaymentTerminal.address,
                 token: ETH_TOKEN_ADDRESS,
               },
             ],
@@ -181,7 +181,7 @@ export function useLoadingInitialStateFromQuery() {
       console.warn('Error parsing initialState:', e)
     }
     setLoading(false)
-  }, [router, dispatch, contracts])
+  }, [router, dispatch, defaultJBETHPaymentTerminal])
 
   return loading
 }

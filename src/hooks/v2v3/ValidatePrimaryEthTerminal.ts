@@ -16,8 +16,14 @@ export function useValidatePrimaryEthTerminal() {
   const { primaryETHTerminal } = useContext(V2V3ProjectContext)
   const { contracts } = useContext(V2V3ContractsContext)
 
-  return isEqualAddress(
-    primaryETHTerminal,
-    contracts?.JBETHPaymentTerminal.address,
+  return (
+    isEqualAddress(
+      primaryETHTerminal,
+      contracts?.JBETHPaymentTerminal.address,
+    ) ||
+    isEqualAddress(
+      primaryETHTerminal,
+      contracts?.JBETHPaymentTerminal3_1.address,
+    )
   )
 }

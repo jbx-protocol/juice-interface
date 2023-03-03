@@ -8,6 +8,7 @@ export enum V2V3ContractName {
   JBETHPaymentTerminal = 'JBETHPaymentTerminal',
   JBETHPaymentTerminal3_1 = 'JBETHPaymentTerminal3_1',
   JBFundingCycleStore = 'JBFundingCycleStore',
+  JBFundAccessConstraintsStore = 'JBFundAccessConstraintsStore',
   JBOperatorStore = 'JBOperatorStore',
   JBProjects = 'JBProjects',
   JBSplitsStore = 'JBSplitsStore',

@@ -14,11 +14,13 @@ export default function useProjectDistributionLimit({
   terminal: string | undefined
 }) {
   const {
-    contracts: { JBController },
+    contracts: { JBController, JBFundAccessConstraintsStore },
   } = useContext(V2V3ProjectContractsContext)
 
   return useV2ContractReader<BigNumber[]>({
-    contract: JBController,
+    // v3_1 introduced JBFundAccessConstraintsStore which should be used instead of JB controller.
+    // If a project doesn't have a JBFundAccessConstraintsStore, use the JBController, then its version is <3_1
+    contract: JBFundAccessConstraintsStore ?? JBController,
     functionName: 'distributionLimitOf',
     args:
       projectId && configuration && terminal

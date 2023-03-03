@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
+import { DEFAULT_MEMO, DEFAULT_METADATA } from 'constants/transactionDefaults'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
@@ -14,8 +15,6 @@ import invariant from 'tiny-invariant'
 
 import { useV2ProjectTitle } from '../ProjectTitle'
 
-const DEFAULT_METADATA = 0
-
 export function useAddToBalanceTx(): TransactorInstance<{
   value: BigNumber
 }> {
@@ -25,8 +24,6 @@ export function useAddToBalanceTx(): TransactorInstance<{
   const { projectId } = useContext(ProjectMetadataContext)
 
   const projectTitle = useV2ProjectTitle()
-
-  const DEFAULT_MEMO = ''
 
   return ({ value }, txOpts) => {
     try {

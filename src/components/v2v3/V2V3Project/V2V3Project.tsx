@@ -6,7 +6,6 @@ import { V2V3PayProjectFormProvider } from 'components/v2v3/V2V3Project/V2V3PayB
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
-import { useHasNftRewards } from 'hooks/JB721Delegate/HasNftRewards'
 import useMobile from 'hooks/Mobile'
 import { useContext } from 'react'
 import { ProjectBanners } from './banners/ProjectBanners'
@@ -28,7 +27,6 @@ export function V2V3Project() {
 
   const isMobile = useMobile()
   const isOwner = useIsUserAddress(projectOwnerAddress)
-  const { value: hasNftRewards } = useHasNftRewards()
 
   const canEditProjectHandle = isOwner && !handle
 
@@ -50,11 +48,11 @@ export function V2V3Project() {
       <V2V3PayProjectFormProvider>
         <div className="my-0 mx-auto flex max-w-5xl flex-col gap-y-5 px-5 pb-5">
           {isMobile ? (
-            <ProjectPageMobile hasNftRewards={hasNftRewards} />
+            <ProjectPageMobile />
           ) : (
             <Row gutter={48} className="gap-y-10">
-              <ProjectPageTabs hasNftRewards={hasNftRewards} />
-              <ProjectPageRightCol hasNftRewards={hasNftRewards} />
+              <ProjectPageTabs />
+              <ProjectPageRightCol />
             </Row>
           )}
 

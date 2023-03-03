@@ -1,13 +1,16 @@
 import { t } from '@lingui/macro'
 import { Col, Tabs } from 'antd'
 import Loading from 'components/Loading'
+import { useHasNftRewards } from 'hooks/JB721Delegate/HasNftRewards'
 import { lazy, Suspense } from 'react'
 import { COL_SIZE_MD } from '../V2V3Project'
 const OverviewTab = lazy(() => import('./OverviewTab'))
 const TokensTab = lazy(() => import('./TokensTab'))
 const V2V3FundingCycleSection = lazy(() => import('../V2V3FundingCycleSection'))
 
-export function ProjectPageTabs({ hasNftRewards }: { hasNftRewards: boolean }) {
+export function ProjectPageTabs() {
+  const { value: hasNftRewards } = useHasNftRewards()
+
   const tabItems = [
     {
       label: t`Overview`,

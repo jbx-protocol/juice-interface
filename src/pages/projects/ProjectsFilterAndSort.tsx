@@ -6,7 +6,11 @@ import { useEffect, useState } from 'react'
 import { classNames } from 'utils/classNames'
 import FilterCheckboxItem from './FilterCheckboxItem'
 
-type OrderByOption = 'createdAt' | 'totalPaid'
+type OrderByOption =
+  | 'createdAt'
+  | 'totalPaid'
+  | 'currentBalance'
+  | 'paymentsCount'
 
 export type CheckboxOnChange = (checked: boolean) => void
 
@@ -93,6 +97,12 @@ export default function ProjectsFilterAndSort({
         </Select.Option>
         <Select.Option value="createdAt">
           <Trans>Date created</Trans>
+        </Select.Option>
+        <Select.Option value="currentBalance">
+          <Trans>Current balance</Trans>
+        </Select.Option>
+        <Select.Option value="paymentsCount">
+          <Trans>Payments</Trans>
         </Select.Option>
       </Select>
     </div>

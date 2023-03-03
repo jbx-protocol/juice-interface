@@ -18,7 +18,7 @@ const CallerBeneficiary = ({
   caller?: string
   beneficiary?: string
 }) => {
-  if (!beneficiary && !caller) return null
+  if (!(beneficiary || caller)) return null
 
   return beneficiary && caller && !isEqualAddress(beneficiary, caller) ? (
     <div className="text-xs text-grey-500 dark:text-grey-300">
@@ -28,7 +28,7 @@ const CallerBeneficiary = ({
     </div>
   ) : (
     <div className="text-sm text-grey-500 dark:text-grey-300">
-      <FormattedAddress withEnsAvatar address={beneficiary} />
+      <FormattedAddress withEnsAvatar address={caller} />
     </div>
   )
 }

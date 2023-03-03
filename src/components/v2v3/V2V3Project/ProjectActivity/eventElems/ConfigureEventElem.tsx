@@ -87,8 +87,7 @@ export default function ConfigureEventElem({
     <ActivityEvent
       event={event}
       header={t`Configured funding cycles`}
-      subject={null}
-      extra={
+      subject={
         <MinimalCollapse
           header={
             <span className="font-normal">

@@ -15,7 +15,7 @@ export function useProjectFundAccessConstraintsStore({
     useContractReadValue<string, string>({
       contract: JBController,
       functionName: 'fundAccessConstraintsStore',
-      args: null,
+      args: [],
     })
 
   const JBFundAccessConstraintsStore = useLoadV2V3Contract({

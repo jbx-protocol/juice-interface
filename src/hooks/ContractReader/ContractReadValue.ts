@@ -23,7 +23,7 @@ export function useContractReadValue<C extends string, V>({
 }: {
   contract: C | Contract | undefined
   functionName: string | undefined
-  args: unknown[] | null | undefined
+  args: unknown[] | null | undefined // if null, don't call. Useful when you don't want the hook to run (for whatever reason).
   contracts?: Record<C, Contract> | undefined
   formatter?: (val?: any) => V | undefined // eslint-disable-line @typescript-eslint/no-explicit-any
   valueDidChange?: (oldVal?: V, newVal?: V) => boolean

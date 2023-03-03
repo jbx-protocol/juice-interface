@@ -14,7 +14,7 @@ export async function callContractRead<T extends string>({
 }: {
   readContract: Contract
   functionName: string
-  args: unknown[] | undefined
+  args: unknown[] | null | undefined
   contracts?: Record<T, Contract> | undefined
 }) {
   try {

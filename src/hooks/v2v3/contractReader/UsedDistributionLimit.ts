@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { V2V3ContractName } from 'models/v2v3/contracts'
+import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
+import { useContext } from 'react'
 
 import useV2ContractReader from './V2ContractReader'
 
@@ -12,8 +13,10 @@ export default function useUsedDistributionLimit({
   terminal: string | undefined
   fundingCycleNumber: BigNumber | undefined
 }) {
+  const { contracts } = useContext(V2V3ProjectContractsContext)
+
   return useV2ContractReader<BigNumber>({
-    contract: V2V3ContractName.JBSingleTokenPaymentTerminalStore,
+    contract: contracts.JBETHPaymentTerminalStore,
     functionName: 'usedDistributionLimitOf',
     args:
       terminal && projectId && fundingCycleNumber

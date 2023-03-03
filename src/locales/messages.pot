@@ -3068,6 +3068,9 @@ msgstr ""
 msgid "Sync start time with current V2 funding cycle."
 msgstr ""
 
+msgid "Tags"
+msgstr ""
+
 msgid "Tap {projectTitle}"
 msgstr ""
 

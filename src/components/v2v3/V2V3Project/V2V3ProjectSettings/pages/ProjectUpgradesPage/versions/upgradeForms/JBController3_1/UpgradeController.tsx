@@ -46,10 +46,10 @@ export function UpgradeController() {
             title: 'Upgrade JBController',
           },
           {
-            title: 'Move funds',
+            title: 'Upgrade JBETHPaymentTerminal',
           },
           {
-            title: 'Upgrade JBETHPaymentTerminal',
+            title: 'Move funds',
           },
         ]}
         className="mb-5"
@@ -61,12 +61,13 @@ export function UpgradeController() {
         />
       )}
       {current === 1 && (
-        <MigrateProjectTerminal
+        <SetProjectTerminal
           terminalAddress={contracts.JBETHPaymentTerminal3_1.address}
+          onDone={() => setCurrent(2)}
         />
       )}
       {current === 2 && (
-        <SetProjectTerminal
+        <MigrateProjectTerminal
           terminalAddress={contracts.JBETHPaymentTerminal3_1.address}
         />
       )}

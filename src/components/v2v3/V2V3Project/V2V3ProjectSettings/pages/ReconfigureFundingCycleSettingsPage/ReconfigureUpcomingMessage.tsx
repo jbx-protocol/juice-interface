@@ -29,30 +29,30 @@ export default function V2V3ReconfigureUpcomingMessage() {
     // If duration is unset/0, changes take effect immediately to current FC
     message = (
       <Trans>
-        Your project's current funding cycle has no duration. Changes you make
-        below will take effect immediately.
+        Your project's current cycle has no duration. Edits you make below will
+        take effect immediately.
       </Trans>
     )
   } else if (ballotStrategyLength === undefined) {
     message = (
       <Trans>
-        Changes will take effect according to the project's custom ballot
-        contract.
+        The edits you make below may take effect, depending on the project's
+        custom edit deadline contract.
       </Trans>
     )
   } else if (ballotStrategyLength > secondsUntilNextFC) {
     message = (
       <Trans>
-        Changes you make will take effect according to your{' '}
-        <strong>{ballotStrategy.name}</strong> reconfiguration rule (the first
-        funding cycle following{' '}
+        Due to your <strong>{ballotStrategy.name}</strong> contract, edits you
+        make will not take effect until the first funding cycle which starts at
+        least{' '}
         <strong>
           {detailedTimeString({
             timeSeconds: BigNumber.from(ballotStrategyLength),
             fullWords: true,
           })}
         </strong>{' '}
-        from now).
+        from now.
       </Trans>
     )
   } else {
@@ -60,16 +60,14 @@ export default function V2V3ReconfigureUpcomingMessage() {
       <>
         <div>
           <Trans>
-            Any changes you make will take effect in{' '}
-            <strong>funding cycle #{currentFCNumber + 1}</strong>. The current
-            funding cycle (#{currentFCNumber}) won't be altered.
+            Your edits will take effect in{' '}
+            <strong>cycle #{currentFCNumber + 1}</strong>. The current cycle (#
+            {currentFCNumber}) won't be altered.
           </Trans>
         </div>
         <br />
         <div>
-          <Trans>
-            Time remaining for changes made to affect the next funding cycle:
-          </Trans>
+          <Trans>Time remaining for edits to affect the next cycle:</Trans>
         </div>
         <div>
           <strong>

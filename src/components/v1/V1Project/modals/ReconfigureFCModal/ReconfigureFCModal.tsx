@@ -70,30 +70,30 @@ const V1ReconfigureUpcomingMessage = ({
     // If duration is unset/0, changes take effect immediately to current FC
     return (
       <Trans>
-        Your project's current funding cycle has no duration. Changes you make
-        below will take effect immediately.
+        Your project's current cycle has no duration. Edits you make below will
+        take effect immediately.
       </Trans>
     )
   } else if (ballotStrategyLength === undefined) {
     return (
       <Trans>
-        Changes will take effect according to the project's custom ballot
-        contract.
+        The edits you make below may take effect, depending on the project's
+        custom edit deadline contract.
       </Trans>
     )
   } else if (ballotStrategyLength > secondsUntilNextFC) {
     return (
       <Trans>
-        Changes you make will take effect according to your{' '}
-        <strong>{ballotStrategy.name}</strong> reconfiguration rule (the first
-        funding cycle following{' '}
+        Due to your <strong>{ballotStrategy.name}</strong> contract, edits you
+        make will not take effect until the first funding cycle which starts at
+        least{' '}
         <strong>
           {detailedTimeString({
             timeSeconds: BigNumber.from(ballotStrategyLength),
             fullWords: true,
           })}
         </strong>{' '}
-        from now).
+        from now.
       </Trans>
     )
   } else {
@@ -101,16 +101,14 @@ const V1ReconfigureUpcomingMessage = ({
       <>
         <div>
           <Trans>
-            Any changes you make will take effect in{' '}
-            <strong>funding cycle #{currentFCNumber + 1}</strong>. The current
-            funding cycle (#{currentFCNumber}) won't be altered.
+            Your edits will take effect in{' '}
+            <strong>cycle #{currentFCNumber + 1}</strong>. The current cycle (#
+            {currentFCNumber}) won't be altered.
           </Trans>
         </div>
         <br />
         <div>
-          <Trans>
-            Time remaining for changes made to affect the next funding cycle:
-          </Trans>
+          <Trans>Time remaining for edits to affect the next cycle:</Trans>
         </div>
         <div>
           <strong>
@@ -378,7 +376,7 @@ export default function ReconfigureFCModal({
 
   return (
     <Modal
-      title={<Trans>Project configuration</Trans>}
+      title={<Trans>Project rules</Trans>}
       open={open}
       onOk={reconfigure}
       confirmLoading={loading}
@@ -388,7 +386,7 @@ export default function ReconfigureFCModal({
     >
       <div>
         <h4 className="mb-0">
-          <Trans>Reconfigure upcoming funding cycles</Trans>
+          <Trans>Edit upcoming cycles</Trans>
         </h4>
         <Callout.Info>
           <V1ReconfigureUpcomingMessage currentFC={currentFC} />
@@ -398,13 +396,13 @@ export default function ReconfigureFCModal({
           <div>
             {buildSteps([
               {
-                title: t`Funding cycle`,
+                title: t`Cycle`,
                 callback: () => setBudgetFormModalVisible(true),
               },
               ...(editingFC.target.gt(0)
                 ? [
                     {
-                      title: t`Funding distribution`,
+                      title: t`Payouts`,
                       callback: () => setPayModsFormModalVisible(true),
                     },
                   ]
@@ -414,7 +412,7 @@ export default function ReconfigureFCModal({
                 callback: () => setTicketingFormModalVisible(true),
               },
               {
-                title: t`Rules`,
+                title: t`Other rules`,
                 callback: () => setRulesFormModalVisible(true),
               },
               ...(terminal.version === '1.1'
@@ -429,7 +427,7 @@ export default function ReconfigureFCModal({
               ...(isRecurring(editingFC) && hasFundingTarget(editingFC)
                 ? [
                     {
-                      title: t`Incentives`,
+                      title: t`Token rules`,
                       callback: () => setIncentivesFormModalVisible(true),
                     },
                   ]
@@ -507,7 +505,7 @@ export default function ReconfigureFCModal({
           </Space>
 
           <Statistic
-            title={t`Reconfiguration strategy`}
+            title={t`Edit deadline`}
             valueRender={() => {
               const ballot = getBallotStrategyByAddress(editingFC.ballot)
               return (
@@ -525,7 +523,7 @@ export default function ReconfigureFCModal({
                 value={editingFC.payIsPaused ? 'Yes' : 'No'}
               />
               <Statistic
-                title={t`Token minting`}
+                title={t`Owner token minting`}
                 value={
                   editingFC.ticketPrintingIsAllowed ? 'Allowed' : 'Disabled'
                 }
@@ -535,7 +533,7 @@ export default function ReconfigureFCModal({
 
           <div>
             <h4>
-              <Trans>Spending</Trans>
+              <Trans>Payouts</Trans>
             </h4>
             <PayoutModsList
               mods={editingPayoutMods}
@@ -547,7 +545,7 @@ export default function ReconfigureFCModal({
 
           <div>
             <h4>
-              <Trans>Reserved token allocations</Trans>
+              <Trans>Reserved token recipients</Trans>
             </h4>
             <TicketModsList
               mods={editingTicketMods}

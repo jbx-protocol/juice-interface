@@ -38,9 +38,6 @@ msgstr ""
 msgid "1. Set ENS name"
 msgstr ""
 
-msgid "100% overflow"
-msgstr ""
-
 msgid "100% redeemable"
 msgstr ""
 
@@ -107,9 +104,6 @@ msgstr ""
 msgid "<0><1>Peel</1> manages the juicebox.money frontend interface. You can reach out to Peel through the <2>Peel Discord</2>.</0><3><4>JuiceboxDAO</4> builds and governs the Juicebox fundraising protocol and other community resources. You can reach out to JuiceboxDAO through the <5>Juicebox Discord</5>.</3>"
 msgstr ""
 
-msgid "<0><1>This project has no overflow</1>, so you will not receive any ETH for burning tokens.</0>"
-msgstr ""
-
 msgid "<0>Contributor rate:</0> <1>{0} / 1 ETH</1>"
 msgstr ""
 
@@ -152,10 +146,7 @@ msgstr ""
 msgid "<0>No payouts.</0> All of the project's ETH will be available for redemptions."
 msgstr ""
 
-msgid "<0>Note:</0> These properties will <1>not</1> be editable immediately within a funding cycle. They can only be changed for <2>upcoming</2> funding cycles."
-msgstr ""
-
-msgid "<0>Note:</0> Tokens cannot be claimed because no ERC-20 token has been issued for this project. ERC-20 tokens must be issued by the project owner."
+msgid "<0>Note:</0> These properties are locked during each cycle. They can only be edited for <1>upcoming</1> cycles."
 msgstr ""
 
 msgid "<0>Recurring cycles</0>. Among other things, this allows you to predictably pay out ETH on weekly basis, or some other regular cadence."
@@ -204,6 +195,9 @@ msgid "<0>With Automated Funding Cycles, your funding configuration is locked fo
 msgstr ""
 
 msgid "<0>With unlocked cycles, you can edit your project's rules at any time.</0><1>With locked cycles, you can lock your project's rules for a period of time (like 3 minutes, 2 years, or 14 days), helping you build trust with your supporters.</1>"
+msgstr ""
+
+msgid "<0>You won't receive ETH because this project has no ETH, or is using all of its ETH for payouts .</0>"
 msgstr ""
 
 msgid "<0>You're about to delete all NFTs from your collection. This will take effect immediately, and you can add NFTs back to the collection at any time.</0><1>If you want to COMPLETELY detach NFTs from your project, you can do so in the <2>Danger Zone</2> section below.</1>"
@@ -380,9 +374,6 @@ msgstr ""
 msgid "All {0} will go to the project owner:"
 msgstr ""
 
-msgid "Allocate a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
-msgstr ""
-
 msgid "Allocate reserved tokens to Ethereum addresses or Juicebox projects. Unallocated reserved tokens are sent to the project owner."
 msgstr ""
 
@@ -458,9 +449,6 @@ msgstr ""
 msgid "Any ETH sent to these Project Payer Addresses will be forwarded to the project. This makes it easier to pay the project from third-party tools."
 msgstr ""
 
-msgid "Any changes you make will take effect in <0>funding cycle #{0}</0>. The current funding cycle (#{currentFCNumber}) won't be altered."
-msgstr ""
-
 msgid "Any funds raised over this amount are considered <0>overflow</0> and are redeemable by your contributors."
 msgstr ""
 
@@ -468,6 +456,9 @@ msgid "Any reconfiguration to an upcoming funding cycle will take effect once th
 msgstr ""
 
 msgid "Anyone who pays this project receives {tokenText}. Depending on this project's rules, it may be possible to redeem {tokenText} to reclaim ETH."
+msgstr ""
+
+msgid "Anyone who pays this project will receive {tokensLabel}. {tokensLabel} can also be burned to reclaim a portion of the ETH not needed for payouts."
 msgstr ""
 
 msgid "Approve ${symbol}"
@@ -557,9 +548,6 @@ msgstr ""
 msgid "Block number"
 msgstr ""
 
-msgid "Bonding curve"
-msgstr ""
-
 msgid "Build your project"
 msgstr ""
 
@@ -638,16 +626,10 @@ msgstr ""
 msgid "Changes to your reserved token recipients will take effect immediately."
 msgstr ""
 
-msgid "Changes will take effect according to the project's custom ballot contract."
-msgstr ""
-
-msgid "Changes you make will take effect according to your <0>{0}</0> reconfiguration rule (the first funding cycle following <1>{1}</1> from now)."
-msgstr ""
-
 msgid "Character"
 msgstr ""
 
-msgid "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked to have your token balance tracked by Juicebox, saving gas on this transaction. You can always claim your ERC-20 tokens later."
+msgid "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked to have the Juicebox protocol internally track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
 msgstr ""
 
 msgid "Choose an ENS name before setting the text record"
@@ -726,12 +708,6 @@ msgid "Configure your project's token."
 msgstr ""
 
 msgid "Configure {projectTitle}"
-msgstr ""
-
-msgid "Configured FC"
-msgstr ""
-
-msgid "Configured funding cycles"
 msgstr ""
 
 msgid "Confirm Stake"
@@ -870,6 +846,9 @@ msgid "Create project payer address"
 msgstr ""
 
 msgid "Created"
+msgstr ""
+
+msgid "Created project"
 msgstr ""
 
 msgid "Crowdfund your project with ETH. When someone pays your project, they'll receive your project's tokens (or NFTs) — use tokens to grant governance rights, community access, or other membership perks."
@@ -1103,18 +1082,6 @@ msgstr ""
 msgid "Distribute {tokensText}"
 msgstr ""
 
-msgid "Distributed"
-msgstr ""
-
-msgid "Distributed funds"
-msgstr ""
-
-msgid "Distributed reserved {0}"
-msgstr ""
-
-msgid "Distributed reserves"
-msgstr ""
-
 msgid "Do I need this?"
 msgstr ""
 
@@ -1142,6 +1109,9 @@ msgstr ""
 msgid "Download project activity CSVs"
 msgstr ""
 
+msgid "Due to your <0>{0}</0> contract, edits you make will not take effect until the first funding cycle which starts at least <1>{1}</1> from now."
+msgstr ""
+
 msgid "Duration"
 msgstr ""
 
@@ -1152,9 +1122,6 @@ msgid "ENS Name"
 msgstr ""
 
 msgid "ERC-20 tokens can only be minted once an ERC-20 token has been issued for this project."
-msgstr ""
-
-msgid "ERC20 Deployed"
 msgstr ""
 
 msgid "ERC20 transaction not ready. Try again."
@@ -1214,6 +1181,9 @@ msgstr ""
 msgid "Edit project"
 msgstr ""
 
+msgid "Edit project and cycle rules"
+msgstr ""
+
 msgid "Edit recipients"
 msgstr ""
 
@@ -1229,6 +1199,9 @@ msgstr ""
 msgid "Edit upcoming"
 msgstr ""
 
+msgid "Edit upcoming cycles"
+msgstr ""
+
 msgid "Edit your cycle's rules."
 msgstr ""
 
@@ -1236,6 +1209,9 @@ msgid "Edit your project's NFTs."
 msgstr ""
 
 msgid "Edit {allocationName}"
+msgstr ""
+
+msgid "Edited cycle"
 msgstr ""
 
 msgid "Edited cycle rules"
@@ -1266,12 +1242,6 @@ msgid "Enabled"
 msgstr ""
 
 msgid "Enabling owner token minting will appear risky to contributors."
-msgstr ""
-
-msgid "Enabling this allows the project owner to manually mint any amount of tokens to any address."
-msgstr ""
-
-msgid "Enabling this will mint {tokenSymbol} ERC-20 tokens. Otherwise unclaimed {tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver."
 msgstr ""
 
 msgid "Enabling token minting will appear risky to contributors."
@@ -1338,6 +1308,9 @@ msgid "Export data"
 msgstr ""
 
 msgid "Export payouts CSV"
+msgstr ""
+
+msgid "Export reserved token recipient CSV"
 msgstr ""
 
 msgid "Export this cycle's payouts to CSV."
@@ -1433,9 +1406,6 @@ msgstr ""
 msgid "Funding Target Exceeded"
 msgstr ""
 
-msgid "Funding cycle"
-msgstr ""
-
 msgid "Funding cycle duration"
 msgstr ""
 
@@ -1443,9 +1413,6 @@ msgid "Funding cycle required."
 msgstr ""
 
 msgid "Funding cycles"
-msgstr ""
-
-msgid "Funding distribution"
 msgstr ""
 
 msgid "Funding rules"
@@ -1610,22 +1577,10 @@ msgstr ""
 msgid "If you're not sure if you need to claim, you probably don't."
 msgstr ""
 
-msgid "If you're unsure if you need to claim, you probably don't."
-msgstr ""
-
 msgid "Images will be cropped to a 1:1 square in thumbnail previews on the Juicebox app."
 msgstr ""
 
 msgid "Images will be cropped to a square in thumbnail previews on the Juicebox app."
-msgstr ""
-
-msgid "In Juicebox"
-msgstr ""
-
-msgid "In wallet"
-msgstr ""
-
-msgid "Incentives"
 msgstr ""
 
 msgid "Included in search results on the <0>Projects</0> page."
@@ -2063,7 +2018,7 @@ msgstr ""
 msgid "No on-chain governance"
 msgstr ""
 
-msgid "No past funding cycles"
+msgid "No past cycles"
 msgstr ""
 
 msgid "No payouts"
@@ -2180,6 +2135,9 @@ msgstr ""
 msgid "Owner token minting"
 msgstr ""
 
+msgid "Owner token minting can be enabled or disabled by editing your cycle."
+msgstr ""
+
 msgid "Owner token minting is not available for V1.0 projects. Owner token minting can be enabled by editing the project's cycle."
 msgstr ""
 
@@ -2193,9 +2151,6 @@ msgid "Paid"
 msgstr ""
 
 msgid "Paid as <0/>"
-msgstr ""
-
-msgid "Participants"
 msgstr ""
 
 msgid "Pause payments"
@@ -2292,9 +2247,6 @@ msgid "Payments"
 msgstr ""
 
 msgid "Payments are paused in this cycle."
-msgstr ""
-
-msgid "Payments are paused in this funding cycle."
 msgstr ""
 
 msgid "Payments made"
@@ -2441,9 +2393,6 @@ msgstr ""
 msgid "Project Token"
 msgstr ""
 
-msgid "Project configuration"
-msgstr ""
-
 msgid "Project created"
 msgstr ""
 
@@ -2501,6 +2450,9 @@ msgstr ""
 msgid "Project page customizations"
 msgstr ""
 
+msgid "Project rules"
+msgstr ""
+
 msgid "Project state"
 msgstr ""
 
@@ -2526,6 +2478,12 @@ msgid "Project tokens <0>aren't ERC-20 tokens</0> by default. Once you deploy yo
 msgstr ""
 
 msgid "Project tokens are not ERC-20 tokens by default. Once you deploy your project, you can issue an ERC-20 for your holders to claim. This is optional."
+msgstr ""
+
+msgid "Project tokens are sent to anyone who pays your project, and they can be redeemed to reclaim ETH not needed for payouts."
+msgstr ""
+
+msgid "Project tokens can be redeemed to reclaim a portion of the ETH not needed for this cycle's payouts. The amount of ETH returned depends on this cycle's redemption rate.<0>Tokens are burned when they are redeemed.</0>"
 msgstr ""
 
 msgid "Project tokens currently reserved for the recipients below. These tokens can be sent out at any time."
@@ -2636,22 +2594,13 @@ msgstr ""
 msgid "Reconfiguration Rules"
 msgstr ""
 
-msgid "Reconfiguration strategy"
-msgstr ""
-
 msgid "Reconfigure"
 msgstr ""
 
 msgid "Reconfigure funding cycle"
 msgstr ""
 
-msgid "Reconfigure project and funding details"
-msgstr ""
-
 msgid "Reconfigure upcoming"
-msgstr ""
-
-msgid "Reconfigure upcoming funding cycles"
 msgstr ""
 
 msgid "Reconfigure {projectTitle}"
@@ -2756,12 +2705,6 @@ msgstr ""
 msgid "Reserved token allocation"
 msgstr ""
 
-msgid "Reserved token allocation (optional)"
-msgstr ""
-
-msgid "Reserved token allocations"
-msgstr ""
-
 msgid "Reserved token recipients"
 msgstr ""
 
@@ -2784,9 +2727,6 @@ msgid "Reset website"
 msgstr ""
 
 msgid "Resources"
-msgstr ""
-
-msgid "Restricted actions"
 msgstr ""
 
 msgid "Restrictions for your cycles."
@@ -2913,6 +2853,9 @@ msgid "Select the option that best suits your project’s funding requirements."
 msgstr ""
 
 msgid "Send Message"
+msgstr ""
+
+msgid "Send a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
 msgstr ""
 
 msgid "Send out reserved {tokenTextPlural}"
@@ -3080,9 +3023,6 @@ msgstr ""
 msgid "Specific Funding Target"
 msgstr ""
 
-msgid "Spending"
-msgstr ""
-
 msgid "Staked balance"
 msgstr ""
 
@@ -3164,9 +3104,6 @@ msgstr ""
 msgid "The address that should receive the tokens minted from paying this project."
 msgstr ""
 
-msgid "The amount distributed from the Juicebox balance in this funding cycle, out of the current funding target. No more than the funding target can be distributed in a single funding cycle. Any remaining ETH in Juicebox is overflow until the next cycle begins."
-msgstr ""
-
 msgid "The amount of ETH in the wallet that owns this project."
 msgstr ""
 
@@ -3179,19 +3116,16 @@ msgstr ""
 msgid "The amount of ETH which can be paid out from this project during the cycle. Payouts reset each cycle."
 msgstr ""
 
-msgid "The amount of tokens minted to the receiver will be calculated based on if they had paid this amount to the project in the current funding cycle."
+msgid "The amount of tokens minted to the receiver will be calculated as if they had paid this amount to the project in the current cycle."
 msgstr ""
 
 msgid "The amount of tokens to mint to the receiver."
 msgstr ""
 
-msgid "The balance of the project owner's wallet."
-msgstr ""
-
-msgid "The balance of this project in the Juicebox contract."
-msgstr ""
-
 msgid "The discount rate cannot be set when the funding cycle duration is not set."
+msgstr ""
+
+msgid "The edits you make below may take effect, depending on the project's custom edit deadline contract."
 msgstr ""
 
 msgid "The held fees will reset as new funds are added to the project's balance with the <0>Add to balance</0> transaction above."
@@ -3269,9 +3203,6 @@ msgstr ""
 msgid "The sum of your expenses is currently different to your funding target. Do you want to sync your funding target to match expenses?<0/><1/>If not, please edit one or more of your payouts."
 msgstr ""
 
-msgid "The target for this funding cycle is 0, meaning all funds in Juicebox are currently considered overflow. Overflow can be redeemed by token holders, but not distributed."
-msgstr ""
-
 msgid "The text that will be shown to the user on the button post pay popup.<0/><1>For more information, see the preview.</1>"
 msgstr ""
 
@@ -3332,13 +3263,10 @@ msgstr ""
 msgid "This cycle's payouts. Payouts reset each cycle."
 msgstr ""
 
-msgid "This cycle's rules may cause unexpected behavior. Before paying this project, know and understand its rules."
-msgstr ""
-
 msgid "This cycle's rules may contain unexpected behavior or other risks."
 msgstr ""
 
-msgid "This funding cycle may pose risks to contributors. Check the funding cycle details before paying this project."
+msgid "This cycle's rules may lead to unexpected behavior. Before paying this project, know and understand its rules."
 msgstr ""
 
 msgid "This is the amount of funds that you can pay out from your project each cycle."
@@ -3392,7 +3320,7 @@ msgstr ""
 msgid "Time Remaining"
 msgstr ""
 
-msgid "Time remaining for changes made to affect the next funding cycle:"
+msgid "Time remaining for edits to affect the next cycle:"
 msgstr ""
 
 msgid "To do so, you need to give your legacy token holders the ability to exchange their tokens for V3 tokens. Select <0>Set up token migration</0> below to get started."
@@ -3446,9 +3374,6 @@ msgstr ""
 msgid "Token name is required"
 msgstr ""
 
-msgid "Token printing allowed"
-msgstr ""
-
 msgid "Token receiver"
 msgstr ""
 
@@ -3482,16 +3407,7 @@ msgstr ""
 msgid "Tokens are burned when they are redeemed."
 msgstr ""
 
-msgid "Tokens are earned by anyone who pays your project, and can be redeemed for overflow if your project has set a funding target."
-msgstr ""
-
 msgid "Tokens are required."
-msgstr ""
-
-msgid "Tokens can be minted manually when allowed in the current funding cycle. The project owner can enable or disable minting for upcoming cycles."
-msgstr ""
-
-msgid "Tokens can be redeemed for a portion of this project's overflow, according to the redemption rate of the current funding cycle. <0>Tokens are burned when they are redeemed.</0>"
 msgstr ""
 
 msgid "Tokens cannot be claimed because the project owner has not issued an ERC-20 for this project."
@@ -3911,10 +3827,10 @@ msgstr ""
 msgid "You can reconfigure your project's next funding cycle (Funding Cycle #2) at any time within the bounds of the rules you set."
 msgstr ""
 
-msgid "You can redeem your {tokenTextLong} for ETH without claiming them. You can transfer your unclaimed {tokenTextLong} to another address from the Tools menu, which can be accessed from the wrench icon in the upper right-hand corner of this project."
+msgid "You can redeem your {tokenSymbol} for ETH without claiming them. You can transfer your unclaimed {tokenSymbol} to another address from the Tools menu, which can be accessed from the wrench icon in the upper right-hand corner of this project."
 msgstr ""
 
-msgid "You can still redeem your {tokenSymbol} tokens for overflow without claiming them, and you can transfer your unclaimed {tokenSymbol} tokens to another address from the Tools menu, which can be accessed from the wrench icon in the upper right hand corner of this project."
+msgid "You can redeem your {tokenTextLong} for ETH without claiming them. You can transfer your unclaimed {tokenTextLong} to another address from the Tools menu, which can be accessed from the wrench icon in the upper right-hand corner of this project."
 msgstr ""
 
 msgid "You can unarchive your project at any time."
@@ -3983,7 +3899,7 @@ msgstr ""
 msgid "You would receive at least <0/>"
 msgstr ""
 
-msgid "You'll be able to issue ERC-20 tokens once your project contract has been deployed. Until then, the protocol will track token balances, allowing your supporters to earn tokens and redeem for overflow in the meantime."
+msgid "You'll be able to issue ERC-20 tokens once your project contract has been deployed. Until then, the protocol will internally track token balances, allowing your supporters to receive tokens and redeem them for ETH in the meantime."
 msgstr ""
 
 msgid "You're all set!"
@@ -4022,6 +3938,9 @@ msgstr ""
 msgid "Your cycle rules have been pre-populated using the rules you originally launched with. If you need to customize them, <0>contact us</0>."
 msgstr ""
 
+msgid "Your edits will take effect in <0>cycle #{0}</0>. The current cycle (#{currentFCNumber}) won't be altered."
+msgstr ""
+
 msgid "Your legacy project token holders can now migrate their tokens in the <0>Tokens</0> section on your V3 project page."
 msgstr ""
 
@@ -4038,9 +3957,6 @@ msgid "Your project can still receive payments directly through the Juicebox pro
 msgstr ""
 
 msgid "Your project can't receive payments through the juicebox.money app."
-msgstr ""
-
-msgid "Your project cannot receive direct payments while paused."
 msgstr ""
 
 msgid "Your project has successfully launched on {0}!"
@@ -4070,7 +3986,7 @@ msgstr ""
 msgid "Your project's NFTs."
 msgstr ""
 
-msgid "Your project's current funding cycle has no duration. Changes you make below will take effect immediately."
+msgid "Your project's current cycle has no duration. Edits you make below will take effect immediately."
 msgstr ""
 
 msgid "Your project's rules are locked in place for the duration of each locked cycle. You will also gain access to:"
@@ -4380,9 +4296,6 @@ msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."
 msgstr ""
 
 msgid "{tokenTextSingular} recipients"
-msgstr ""
-
-msgid "{tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet."
 msgstr ""
 
 msgid "{tokensText} reserved"

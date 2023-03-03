@@ -79,7 +79,7 @@ export function ExportTicketModsButton() {
       loading={loading}
     >
       <span>
-        <Trans>Export token allocation CSV</Trans>
+        <Trans>Export reserved token recipient CSV</Trans>
       </span>
     </Button>
   )

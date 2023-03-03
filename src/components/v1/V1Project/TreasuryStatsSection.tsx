@@ -9,6 +9,7 @@ import StatLine from 'components/Project/StatLine'
 import { VolumeStatLine } from 'components/Project/VolumeStatLine'
 import TooltipLabel from 'components/TooltipLabel'
 import V1ProjectTokenBalance from 'components/v1/shared/V1ProjectTokenBalance'
+import { DISTRIBUTION_LIMIT_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
@@ -63,9 +64,9 @@ export function TreasuryStatsSection() {
         )}
       >
         <StatLine
-          statLabel={<Trans>In Juicebox</Trans>}
+          statLabel={<Trans>Current balance</Trans>}
           statLabelTip={
-            <Trans>The balance of this project in the Juicebox contract.</Trans>
+            <Trans>The amount of ETH that this project has right now.</Trans>
           }
           statValue={
             <div className="ml-2 text-lg font-medium text-juice-400 dark:text-juice-300">
@@ -84,16 +85,8 @@ export function TreasuryStatsSection() {
         {hasFundingTarget(currentFC) &&
           (currentFC.target.gt(0) ? (
             <StatLine
-              statLabel={<Trans>Distributed</Trans>}
-              statLabelTip={
-                <Trans>
-                  The amount distributed from the Juicebox balance in this
-                  funding cycle, out of the current funding target. No more than
-                  the funding target can be distributed in a single funding
-                  cycle. Any remaining ETH in Juicebox is overflow until the
-                  next cycle begins.
-                </Trans>
-              }
+              statLabel={<Trans>Payouts</Trans>}
+              statLabelTip={DISTRIBUTION_LIMIT_EXPLANATION}
               statValue={
                 <div className="text-sm font-medium uppercase text-black dark:text-slate-100">
                   {formatCurrencyAmount(currentFC.tapped)} /{' '}
@@ -106,12 +99,11 @@ export function TreasuryStatsSection() {
               <TooltipLabel
                 tip={
                   <Trans>
-                    The target for this funding cycle is 0, meaning all funds in
-                    Juicebox are currently considered overflow. Overflow can be
-                    redeemed by token holders, but not distributed.
+                    No payouts are scheduled for this cycle. All funds are
+                    redeemable (subject to the redemption rate).
                   </Trans>
                 }
-                label={<Trans>100% overflow</Trans>}
+                label={<Trans>100% redeemable</Trans>}
               />
             </div>
           ))}
@@ -126,11 +118,13 @@ export function TreasuryStatsSection() {
       </div>
 
       <StatLine
-        statLabel={<Trans>In wallet</Trans>}
+        statLabel={<Trans>Owner wallet balance</Trans>}
         statLabelTip={
           <>
             <p>
-              <Trans>The balance of the project owner's wallet.</Trans>
+              <Trans>
+                The amount of ETH in the wallet that owns this project.
+              </Trans>
             </p>{' '}
             <EtherscanLink value={owner} type="address" />
           </>

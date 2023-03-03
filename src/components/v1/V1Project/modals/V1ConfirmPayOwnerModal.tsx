@@ -288,9 +288,9 @@ export default function V1ConfirmPayOwnerModal({
               extra={
                 <Trans>
                   Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave
-                  unchecked to have your token balance tracked by Juicebox,
-                  saving gas on this transaction. You can always claim your
-                  ERC-20 tokens later.
+                  unchecked to have the Juicebox protocol internally track your
+                  token balance, saving gas on this transaction. You can claim
+                  your ERC-20 tokens later.
                 </Trans>
               }
             >

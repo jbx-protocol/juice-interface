@@ -349,19 +349,19 @@ export default function ProjectActivity() {
               <Trans>Burned</Trans>
             </Select.Option>
             <Select.Option value="withdraw">
-              <Trans>Distributed funds</Trans>
+              <Trans>Sent payouts</Trans>
             </Select.Option>
             <Select.Option value="printReserves">
-              <Trans>Distributed reserves</Trans>
+              <Trans>Sent reserved tokens</Trans>
             </Select.Option>
             <Select.Option value="configure">
-              <Trans>Configured FC</Trans>
+              <Trans>Edited cycle</Trans>
             </Select.Option>
             <Select.Option value="deployERC20">
-              <Trans>ERC20 Deployed</Trans>
+              <Trans>Deployed ERC20</Trans>
             </Select.Option>
             <Select.Option value="projectCreate">
-              <Trans>Project created</Trans>
+              <Trans>Created project</Trans>
             </Select.Option>
             <Select.Option value="addToBalance">
               <Trans>Added to balance</Trans>

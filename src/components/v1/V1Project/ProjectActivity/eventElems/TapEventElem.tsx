@@ -64,7 +64,7 @@ export default function TapEventElem({
   return (
     <ActivityEvent
       event={event}
-      header={t`Distributed funds`}
+      header={t`Sent payouts`}
       subject={
         <span className="text-base font-medium">
           <ETHAmount amount={event.netTransferAmount} />

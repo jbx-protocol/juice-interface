@@ -116,7 +116,7 @@ export default function FundingHistory({
         ))
       ) : (
         <div>
-          <Trans>No past funding cycles</Trans>
+          <Trans>No past cycles</Trans>
         </div>
       )}
     </Space>

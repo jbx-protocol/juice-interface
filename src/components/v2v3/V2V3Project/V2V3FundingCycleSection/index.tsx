@@ -44,7 +44,7 @@ const TabText = ({
     <Tooltip
       title={
         <Trans>
-          This cycle's rules may cause unexpected behavior. Before paying this
+          This cycle's rules may lead to unexpected behavior. Before paying this
           project, know and understand its rules.
         </Trans>
       }

@@ -43,7 +43,7 @@ export default function IncentivesForm({
   return (
     <Space direction="vertical" size="large" className="w-full">
       <h1>
-        <Trans>Incentives</Trans>
+        <Trans>Token rules</Trans>
       </h1>
 
       <Form form={form} layout="vertical">

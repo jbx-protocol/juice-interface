@@ -96,7 +96,7 @@ export function TokensSection() {
             <SectionHeader
               className="normal-case"
               text={t`Tokens`}
-              tip={t`${tokensLabel} are distributed to anyone who pays this project. If the project has set a funding target, tokens can be redeemed for a portion of the project's overflow whether or not they have been claimed yet.`}
+              tip={t`Anyone who pays this project will receive ${tokensLabel}. ${tokensLabel} can also be burned to reclaim a portion of the ETH not needed for payouts.`}
             />
           }
           valueRender={() => (

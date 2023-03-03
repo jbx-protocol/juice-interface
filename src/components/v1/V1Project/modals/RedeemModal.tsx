@@ -173,8 +173,9 @@ export default function RedeemModal({
         <p>
           {overflow?.gt(0) ? (
             <Trans>
-              Tokens can be redeemed for a portion of this project's overflow,
-              according to the redemption rate of the current funding cycle.{' '}
+              Project tokens can be redeemed to reclaim a portion of the ETH not
+              needed for this cycle's payouts. The amount of ETH returned
+              depends on this cycle's redemption rate.
               <span className="font-medium text-warning-800 dark:text-warning-100">
                 Tokens are burned when they are redeemed.
               </span>
@@ -182,8 +183,8 @@ export default function RedeemModal({
           ) : (
             <Trans>
               <span className="font-medium text-warning-800 dark:text-warning-100">
-                <strong>This project has no overflow</strong>, so you will not
-                receive any ETH for burning tokens.
+                You won't receive ETH because this project has no ETH, or is
+                using all of its ETH for payouts .
               </span>
             </Trans>
           )}

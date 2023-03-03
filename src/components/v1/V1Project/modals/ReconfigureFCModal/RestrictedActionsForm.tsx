@@ -1,6 +1,10 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Form, FormInstance, Space, Switch } from 'antd'
 import FormItemWarningText from 'components/FormItemWarningText'
+import {
+  OWNER_MINTING_EXPLAINATION,
+  PAUSE_PAYMENTS_EXPLANATION,
+} from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { useEffect, useState } from 'react'
 
 export type RestrictedActionsFormFields = {
@@ -28,14 +32,14 @@ export default function RestrictedActionsForm({
     <Space direction="vertical" size="large">
       <div className="text-grey-500 dark:text-grey-300">
         <h1>
-          <Trans>Restricted actions</Trans>
+          <Trans>Other rules</Trans>
         </h1>
         {hasFundingDuration ? (
           <p>
             <Trans>
-              <strong>Note:</strong> These properties will <strong>not</strong>{' '}
-              be editable immediately within a funding cycle. They can only be
-              changed for <strong>upcoming</strong> funding cycles.
+              <strong>Note:</strong> These properties are locked during each
+              cycle. They can only be edited for <strong>upcoming</strong>{' '}
+              cycles.
             </Trans>
           </p>
         ) : null}
@@ -45,7 +49,7 @@ export default function RestrictedActionsForm({
         <Form.Item
           name="payIsPaused"
           label={t`Pause payments`}
-          extra={t`Your project cannot receive direct payments while paused.`}
+          extra={PAUSE_PAYMENTS_EXPLANATION}
           valuePropName={'checked'}
         >
           <Switch />
@@ -53,7 +57,7 @@ export default function RestrictedActionsForm({
         <Form.Item
           name="ticketPrintingIsAllowed"
           label={t`Allow minting tokens`}
-          extra={t`Enabling this allows the project owner to manually mint any amount of tokens to any address.`}
+          extra={OWNER_MINTING_EXPLAINATION}
           valuePropName="checked"
         >
           <Switch

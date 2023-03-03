@@ -15,10 +15,16 @@ import { settingsPagePath } from 'utils/routes'
  */
 export function SetProjectTerminal({
   terminalAddress,
+  onDone,
 }: {
   terminalAddress: string
+  onDone: VoidFunction
 }) {
-  const { execute, loading } = useTransactionExecutor(useSetTerminalsTx())
+  const { execute, loading } = useTransactionExecutor(useSetTerminalsTx(), {
+    onConfirmed() {
+      onDone?.()
+    },
+  })
   const { projectId } = useContext(ProjectMetadataContext)
   const { fundingCycleMetadata, handle } = useContext(V2V3ProjectContext)
 

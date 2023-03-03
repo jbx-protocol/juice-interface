@@ -133,22 +133,9 @@ export const ProjectDetailsPage: React.FC = () => {
           >
             <FormItems.ProjectTags
               name="tags"
+              hideLabel
               initialTags={formProps.form.getFieldValue('tags')}
-              onChange={tags => formProps.form.setFieldsValue({ tags })}
             />
-            <Form.Item
-              className="pb-8 pt-5"
-              name="inputProjectOwner"
-              label={t`Input project owner address`}
-              extra={t`Nominate an Ethereum wallet address to become the ‘owner’ of this project. If you intend to manage this project from the address that deployed it, leave this blank.`}
-              rules={lockPageRulesWrapper([
-                inputMustBeEthAddressRule({
-                  label: t`Input project owner address`,
-                }),
-              ])}
-            >
-              <EthAddressInput placeholder={ADDRESS_ZERO} />
-            </Form.Item>
           </CreateCollapse.Panel>
           <CreateCollapse.Panel
             key={3}

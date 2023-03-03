@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import Grid from 'components/Grid'
 import Loading from 'components/Loading'
-import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
+import ProjectCard from 'components/ProjectCard'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { useLoadMoreContent } from 'hooks/LoadMore'
 import {
@@ -88,10 +88,7 @@ export default function AllProjects({
       {concatenatedPages && (
         <Grid>
           {concatenatedPages.map(p => (
-            <ProjectCard
-              key={`${p.id}_${p.pv}`}
-              project={p as ProjectCardProject}
-            />
+            <ProjectCard key={p.id} project={p} />
           ))}
         </Grid>
       )}

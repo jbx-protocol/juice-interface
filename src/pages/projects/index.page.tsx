@@ -52,11 +52,15 @@ function Projects() {
   const search = Array.isArray(router.query.search)
     ? router.query.search[0]
     : router.query.search
-  const tags = (
-    Array.isArray(router.query.tags)
-      ? router.query.tags[0].split(',')
-      : router.query.tags.split(',')
-  ) as ProjectTag[]
+  const tags = useMemo(
+    () =>
+      (Array.isArray(router.query.tags)
+        ? router.query.tags[0].split(',')
+        : router.query.tags
+        ? router.query.tags.split(',')
+        : []) as ProjectTag[],
+    [router.query],
+  )
 
   const { userAddress } = useWallet()
   const [searchText, setSearchText] = useState<typeof search>(search)

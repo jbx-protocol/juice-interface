@@ -10,6 +10,7 @@ import { Landing } from './home/Landing'
 import { NewsletterSection } from './home/NewsletterSection'
 import { OldSectionHeading } from './home/OldSectionHeading'
 import { StatsSection } from './home/StatsSection'
+import TagsSpotlightSection from './home/TagsSpotlightSection'
 import { TopProjectsSection } from './home/TopProjectsSection'
 import TrendingSection from './home/TrendingSection'
 
@@ -21,6 +22,8 @@ function OldLanding() {
       <StatsSection />
 
       <TrendingSection />
+
+      <TagsSpotlightSection />
 
       <TopProjectsSection />
 

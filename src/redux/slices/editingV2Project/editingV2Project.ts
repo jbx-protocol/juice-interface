@@ -70,6 +70,9 @@ const editingV2ProjectSlice = createSlice({
     setDescription: (state, action: PayloadAction<string>) => {
       state.projectMetadata.description = action.payload
     },
+    setTags: (state, action: PayloadAction<ProjectTag[]>) => {
+      state.projectMetadata.tags = action.payload
+    },
     setFundingCycleData: (
       state,
       action: PayloadAction<SerializedV2V3FundingCycleData>,
@@ -292,9 +295,6 @@ const editingV2ProjectSlice = createSlice({
       state.fundingCycleData.discountRate = converted.discountRate
       state.fundingCycleMetadata.redemptionRate = converted.redemptionRate
       state.fundingCycleMetadata.allowMinting = converted.allowMinting
-    },
-    setTags: (state, action: PayloadAction<ProjectTag[]>) => {
-      state.projectMetadata.tags = action.payload
     },
   },
 })

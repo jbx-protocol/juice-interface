@@ -39,17 +39,15 @@ export function V2V3ProjectHeaderActions() {
             </Tooltip>
           </div>
           {canReconfigure && (
-            <Tooltip title={t`Project Settings`} placement="bottom">
-              <div>
-                <Link href={settingsPagePath('general', { handle, projectId })}>
-                  <Button icon={<SettingOutlined />}>
-                    <span>
-                      <Trans>Settings</Trans>
-                    </span>
-                  </Button>
-                </Link>
-              </div>
-            </Tooltip>
+            <div>
+              <Link href={settingsPagePath('general', { handle, projectId })}>
+                <Button icon={<SettingOutlined />}>
+                  <span>
+                    <Trans>Settings</Trans>
+                  </span>
+                </Button>
+              </Link>
+            </div>
           )}
 
           {veNftEnabled && (

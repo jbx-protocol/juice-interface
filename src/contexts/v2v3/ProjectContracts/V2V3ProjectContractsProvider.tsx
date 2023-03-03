@@ -5,8 +5,11 @@ import { useLoadV2V3ProjectCvs } from 'hooks/v2v3/V2V3ProjectCvs'
 export const V2V3ProjectContractsProvider: React.FC<{
   projectId: number
 }> = ({ children, projectId }) => {
-  const { data: contracts, loading: projectContractsLoading } =
-    useV2V3ProjectContracts({ projectId })
+  const {
+    data: contracts,
+    loading: projectContractsLoading,
+    versions,
+  } = useV2V3ProjectContracts({ projectId })
   const { loading: cvsLoading } = useLoadV2V3ProjectCvs(projectId)
 
   return (
@@ -17,6 +20,7 @@ export const V2V3ProjectContractsProvider: React.FC<{
           cvsLoading,
           projectContractsLoading,
         },
+        versions,
       }}
     >
       {children}

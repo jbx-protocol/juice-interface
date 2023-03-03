@@ -1,7 +1,13 @@
 import { V2V3ProjectContracts } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
-import { useProjectController } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/ProjectController'
+import {
+  JBControllerVersion,
+  useProjectController,
+} from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/ProjectController'
 import { useProjectFundAccessConstraintsStore } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/ProjectFundAccessContraintsStore'
-import { useProjectPrimaryEthTerminal } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/ProjectPrimaryEthTerminal'
+import {
+  JBETHPaymentTerminalVersion,
+  useProjectPrimaryEthTerminal,
+} from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/ProjectPrimaryEthTerminal'
 import { useProjectPrimaryEthTerminalStore } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/ProjectPrimaryEthTerminalStore'
 
 /**
@@ -15,15 +21,26 @@ export function useV2V3ProjectContracts({ projectId }: { projectId: number }): {
     JBETHPaymentTerminalStoreLoading: boolean
     JBFundAccessConstraintsStoreLoading: boolean
   }
+  versions: {
+    JBETHPaymentTerminal: JBETHPaymentTerminalVersion | undefined
+    JBControllerVersion: JBControllerVersion | undefined
+  }
 } {
-  const { JBController, loading: JBControllerLoading } = useProjectController({
+  const {
+    JBController,
+    loading: JBControllerLoading,
+    version: JBControllerVersion,
+  } = useProjectController({
     projectId,
   })
 
-  const { JBETHPaymentTerminal, loading: JBETHPaymentTerminalLoading } =
-    useProjectPrimaryEthTerminal({
-      projectId,
-    })
+  const {
+    JBETHPaymentTerminal,
+    loading: JBETHPaymentTerminalLoading,
+    version,
+  } = useProjectPrimaryEthTerminal({
+    projectId,
+  })
 
   const {
     JBETHPaymentTerminalStore,
@@ -49,6 +66,10 @@ export function useV2V3ProjectContracts({ projectId }: { projectId: number }): {
       JBETHPaymentTerminalLoading,
       JBETHPaymentTerminalStoreLoading,
       JBFundAccessConstraintsStoreLoading,
+    },
+    versions: {
+      JBETHPaymentTerminal: version,
+      JBControllerVersion,
     },
   }
 }

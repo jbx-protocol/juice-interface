@@ -13,6 +13,7 @@ interface V2V3ProjectLoadingStates {
   distributionLimitLoading: boolean
   fundingCycleLoading: boolean
   usedDistributionLimitLoading: boolean
+  primaryETHTerminalLoading: boolean
 }
 
 export type V2V3ProjectContextType = {

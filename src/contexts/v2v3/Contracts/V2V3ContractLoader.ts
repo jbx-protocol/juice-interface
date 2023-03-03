@@ -17,7 +17,8 @@ export function useV2V3ContractLoader({ cv }: { cv: CV2V3 | undefined }) {
     async function loadContracts() {
       if (!cv) return
 
-      console.info(`Loading v${cv} contracts...`)
+      const timeLabel = `v${cv} contracts loaded`
+      console.time(timeLabel)
       try {
         const network = readNetwork.name
 
@@ -39,6 +40,7 @@ export function useV2V3ContractLoader({ cv }: { cv: CV2V3 | undefined }) {
         )
 
         setContracts(newContractMap)
+        console.timeEnd(timeLabel)
       } catch (e) {
         console.error('CONTRACT LOADER ERROR:', e)
         emitErrorNotification(

@@ -169,7 +169,8 @@ export function V2V3ReconfigureFundingCycleForm() {
               type="number"
               min={0}
               onChange={e => {
-                const time = `${e.target.value}`
+                const val = e.target.value
+                const time = `${val.length ? val : 0}`
                 dispatch(editingV2ProjectActions.setMustStartAtOrAfter(time))
               }}
               addonAfter={

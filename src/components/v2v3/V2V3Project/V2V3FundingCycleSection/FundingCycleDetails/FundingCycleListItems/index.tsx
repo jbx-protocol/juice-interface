@@ -39,9 +39,10 @@ export function FundingCycleListItems({
     ? formatDate(fundingCycle.start.mul(1000))
     : undefined
 
-  const hasAlreadyStarted = fundingCycle.start
-    .mul(1000)
-    .lt(BigNumber.from(Date.now()))
+  // show start if `start` is later than now
+  const showStart = fundingCycle.start
+    ? fundingCycle.start.mul(1000).gt(BigNumber.from(Date.now()))
+    : false
 
   const formattedEndTime = fundingCycle.start
     ? formatDate(fundingCycle.start?.add(fundingCycle.duration).mul(1000))
@@ -68,7 +69,7 @@ export function FundingCycleListItems({
 
   return (
     <>
-      {!hasAlreadyStarted ? (
+      {showStart ? (
         <FundingCycleListItem
           name={t`Start`}
           value={

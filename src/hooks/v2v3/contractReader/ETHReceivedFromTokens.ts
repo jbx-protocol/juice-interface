@@ -4,10 +4,8 @@ import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { V2BallotState } from 'models/ballot'
 import { useContext } from 'react'
 import { parseWad } from 'utils/format/formatNumber'
-
 import { MAX_REDEMPTION_RATE } from 'utils/v2v3/math'
-
-import useProjectReservedTokens from './ProjectReservedTokens'
+import { useProjectReservedTokens } from './ProjectReservedTokens'
 
 /**
  * Returns the value in ETH that an amount of tokens can be redeemed for

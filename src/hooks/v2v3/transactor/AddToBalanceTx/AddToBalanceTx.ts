@@ -1,7 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
-import { DEFAULT_MEMO, DEFAULT_METADATA } from 'constants/transactionDefaults'
-import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
@@ -10,16 +8,39 @@ import {
   handleTransactionException,
   TransactorInstance,
 } from 'hooks/Transactor'
+import {
+  ETH_PAYMENT_TERMINAL_V_3,
+  ETH_PAYMENT_TERMINAL_V_3_1,
+  JBETHPaymentTerminalVersion,
+} from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/ProjectPrimaryEthTerminal'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
+import { useV2ProjectTitle } from '../../ProjectTitle'
+import { getAddToBalanceParamsV3 } from './AddToBalanceParamsV3'
+import { getAddToBalanceParamsV3_1 } from './AddToBalanceParamsV3_1'
 
-import { useV2ProjectTitle } from '../ProjectTitle'
+function getParams({
+  JBETHPaymentTerminalVersion,
+  projectId,
+  value,
+}: {
+  JBETHPaymentTerminalVersion: JBETHPaymentTerminalVersion | undefined
+  projectId: number
+  value: BigNumber
+}) {
+  if (JBETHPaymentTerminalVersion === ETH_PAYMENT_TERMINAL_V_3) {
+    return getAddToBalanceParamsV3({ projectId, value })
+  }
+  if (JBETHPaymentTerminalVersion === ETH_PAYMENT_TERMINAL_V_3_1) {
+    return getAddToBalanceParamsV3_1({ projectId, value })
+  }
+}
 
 export function useAddToBalanceTx(): TransactorInstance<{
   value: BigNumber
 }> {
   const { transactor } = useContext(TransactionContext)
-  const { contracts } = useContext(V2V3ProjectContractsContext)
+  const { contracts, versions } = useContext(V2V3ProjectContractsContext)
   const { cv } = useContext(V2V3ContractsContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
@@ -27,16 +48,20 @@ export function useAddToBalanceTx(): TransactorInstance<{
 
   return ({ value }, txOpts) => {
     try {
-      invariant(
-        transactor &&
-          projectId &&
-          projectTitle &&
-          contracts?.JBETHPaymentTerminal,
-      )
+      invariant(projectId && contracts?.JBETHPaymentTerminal)
+
+      const params = getParams({
+        JBETHPaymentTerminalVersion: versions.JBETHPaymentTerminal,
+        projectId,
+        value,
+      })
+
+      invariant(transactor && projectTitle && params)
+
       return transactor(
         contracts.JBETHPaymentTerminal,
-        'addToBalanceOf',
-        [projectId, value, ETH_TOKEN_ADDRESS, DEFAULT_MEMO, DEFAULT_METADATA],
+        params?.functionName,
+        params?.args,
         {
           ...txOpts,
           value,

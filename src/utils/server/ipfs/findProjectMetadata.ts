@@ -39,7 +39,7 @@ export const findProjectMetadata = async ({
       if (
         isTemporaryServiceError({ status: e?.response?.status, code: e?.code })
       ) {
-        console.info('IPFS request temporarily unavailable, retry shortly', {
+        console.error('IPFS request temporarily unavailable, retry shortly', {
           metadataCid,
           status: e?.response?.status,
           code: e?.code,
@@ -47,7 +47,7 @@ export const findProjectMetadata = async ({
         })
         continue
       }
-      console.info('IPFS request responded with error', {
+      console.error('IPFS request responded with error', {
         metadataCid,
         status: e?.response?.status,
         code: e?.code,

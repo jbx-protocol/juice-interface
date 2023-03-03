@@ -88,7 +88,7 @@ export type ProjectMetadata = ProjectMetadataV8
 // Converts metadata of any version to latest version
 export const consolidateMetadata = (
   metadata: AnyProjectMetadata,
-): ProjectMetadataV8 => {
+): ProjectMetadata => {
   return {
     ...metadata,
     payButton:

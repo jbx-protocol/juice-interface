@@ -2372,7 +2372,7 @@ msgstr ""
 msgid "Project created"
 msgstr ""
 
-msgid "Project created by <0/>"
+msgid "Project created 🎉"
 msgstr ""
 
 msgid "Project description"

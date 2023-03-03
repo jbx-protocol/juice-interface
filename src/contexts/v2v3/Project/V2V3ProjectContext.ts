@@ -79,5 +79,6 @@ export const V2V3ProjectContext = createContext<V2V3ProjectContextType>({
     distributionLimitLoading: false,
     fundingCycleLoading: false,
     usedDistributionLimitLoading: false,
+    primaryETHTerminalLoading: false,
   },
 })

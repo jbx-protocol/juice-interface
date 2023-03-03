@@ -1,14 +1,11 @@
 import { Trans } from '@lingui/macro'
-import { Button } from 'antd'
 import ExternalLink from 'components/ExternalLink'
-import { SUPPORTED_LANGUAGES } from 'constants/locale'
 import { TERMS_OF_SERVICE_URL } from 'constants/links'
 import { ThemeOption } from 'constants/theme/themeOption'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useContext } from 'react'
-import { reloadWindow, scrollToTop } from 'utils/windowUtils'
 import orangeLadyOd from '/public/assets/orange_lady-od.png'
 import orangeLadyOl from '/public/assets/orange_lady-ol.png'
 
@@ -31,20 +28,6 @@ export default function Footer() {
         <a className="mx-2 text-haze-400 dark:text-haze-300">{text}</a>
       </Link>
     )
-  }
-
-  // Renders language links
-  const languageLink = (lang: string) => (
-    <Button key={lang} onClick={() => setLanguage(lang)} type="link">
-      {SUPPORTED_LANGUAGES[lang].long}
-    </Button>
-  )
-
-  // Sets the new language with localStorage and reloads the page
-  const setLanguage = (newLanguage: string) => {
-    localStorage && localStorage.setItem('lang', newLanguage)
-    reloadWindow()
-    scrollToTop()
   }
 
   const gitCommit = process.env.NEXT_PUBLIC_VERSION
@@ -74,9 +57,7 @@ export default function Footer() {
       </div>
       <div className="grid gap-y-5 bg-black p-7 text-center">
         <div className="mb-7 flex flex-wrap justify-center gap-y-2">
-          {Object.keys(SUPPORTED_LANGUAGES).map(languageLink)}
-        </div>
-        <div className="mb-7 flex flex-wrap justify-center gap-y-2">
+          {link('Contact', '/contact')}
           {link('Discord', 'https://discord.gg/6jXrJSyDFf')}
           {link('GitHub', 'https://github.com/jbx-protocol/juice-interface')}
           {link('Twitter', 'https://twitter.com/juiceboxETH')}

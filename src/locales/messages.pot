@@ -191,9 +191,6 @@ msgstr ""
 msgid "<0>To summarize:</0><1><2>When people pay a project, they receive the project's tokens. Like other tokens, these can be used for governance, for token-gated websites, and other purposes.</2><3>Projects can distribute funds to the wallets or Juicebox projects of their choosing. These distributions can be pre-defined, and they can also be changed over time.</3><4>If people are unhappy with the direction a project is headed, they can redeem their tokens to claim a share of the ETH held in the project.</4></1><5>Project creators have powerful controls over each one of these mechanics. They can change token issuance rates, redemption rates, distributions, and other project settings over time, leading to powerful and elegant tokenomics. They can also lock the project's settings in place for pre-determined amounts of time, guaranteeing that they can't rugpull the community. Juicebox lets projects take control if they need to, but it also lets them give up control to build trust.</5><6>Importantly, Juicebox's crypto fundraising platform is on-chain and non-custodial. Project creators actually own their projects, and JuiceboxDAO has no access to their funds or their project's settings.</6><7>To learn more, visit <8>the Docs</8>.</7>"
 msgstr ""
 
-msgid "<0>Total project tokens minted</0> when 1 ETH is contributed. This can change over time according to the discount rate and reserved tokens amount of future funding cycles."
-msgstr ""
-
 msgid "<0>View transactions.</0>"
 msgstr ""
 
@@ -435,9 +432,6 @@ msgid "Amount is required."
 msgstr ""
 
 msgid "Amount of ERC-20 tokens to claim"
-msgstr ""
-
-msgid "Amount of newly minted project tokens <0>reserved for the project</0> when 1 ETH is contributed. Reserve tokens are reserved for the project owner by default, but can also be allocated to other wallet addresses by the owner."
 msgstr ""
 
 msgid "Amount paid"
@@ -824,9 +818,6 @@ msgstr ""
 msgid "Contributors who pay this address from a custodial service platform (like Coinbase) <0>won't receive project tokens</0>."
 msgstr ""
 
-msgid "Contributors will be rewarded this amount of your project's tokens per ETH contributed."
-msgstr ""
-
 msgid "Contributors will not receive any extra tokens for paying the project early."
 msgstr ""
 
@@ -1152,12 +1143,6 @@ msgid "Distribution amount"
 msgstr ""
 
 msgid "Distribution limit"
-msgstr ""
-
-msgid "Distribution limit is 0: All funds will be considered overflow and can be redeemed by token holders."
-msgstr ""
-
-msgid "Distribution limit is infinite. <0>The project will control how all funds are distributed. Token holders cannot redeem any funds raised.</0>"
 msgstr ""
 
 msgid "Distributions to Ethereum addresses incur a 2.5% JBX membership fee."
@@ -1568,16 +1553,10 @@ msgstr ""
 msgid "How does it work?"
 msgstr ""
 
-msgid "How long before your next funding cycle must you reconfigure in order for changes to take effect."
-msgstr ""
-
 msgid "How long one funding cycle will last. Funding cycle <0>reconfigurations</0> will only take effect for <1>upcoming</1> funding cycles, i.e. once a current funding cycle has ended."
 msgstr ""
 
 msgid "How should I set up my project?"
-msgstr ""
-
-msgid "How the {reservedPercentage}% of your project's reserved tokens will be split."
 msgstr ""
 
 msgid "How would you like to distribute payments?"
@@ -1640,6 +1619,9 @@ msgstr ""
 msgid "Images will be cropped to a square in thumbnail previews on the Juicebox app."
 msgstr ""
 
+msgid "Immediately"
+msgstr ""
+
 msgid "In Juicebox"
 msgstr ""
 
@@ -1658,16 +1640,10 @@ msgstr ""
 msgid "Indie creators and builders"
 msgstr ""
 
-msgid "Infinite (no limit)"
-msgstr ""
-
 msgid "Infinite Funding Target"
 msgstr ""
 
 msgid "Initial Mint Rate"
-msgstr ""
-
-msgid "Initial issuance rate"
 msgstr ""
 
 msgid "Initial mint rate"
@@ -2180,24 +2156,6 @@ msgstr ""
 msgid "Owner Permissions"
 msgstr ""
 
-msgid "Owner can change the project's Controller."
-msgstr ""
-
-msgid "Owner can mint tokens at any time."
-msgstr ""
-
-msgid "Owner can set the project's Payment Terminals."
-msgstr ""
-
-msgid "Owner is not allowed to mint tokens."
-msgstr ""
-
-msgid "Owner isn't allowed to change the project's Controller."
-msgstr ""
-
-msgid "Owner isn't allowed to set the project's Payment Terminals."
-msgstr ""
-
 msgid "Owner permissions"
 msgstr ""
 
@@ -2435,12 +2393,6 @@ msgstr ""
 msgid "Project handle required. <0>Set project handle.</0>"
 msgstr ""
 
-msgid "Project is accepting payments this funding cycle."
-msgstr ""
-
-msgid "Project is not accepting payments this funding cycle."
-msgstr ""
-
 msgid "Project is not owned by a Safe."
 msgstr ""
 
@@ -2478,12 +2430,6 @@ msgid "Project token"
 msgstr ""
 
 msgid "Project token beneficiary address"
-msgstr ""
-
-msgid "Project token transfers"
-msgstr ""
-
-msgid "Project token transfers are {0}. This does not apply to ERC-20 tokens if issued."
 msgstr ""
 
 msgid "Project tokens <0>aren't ERC-20 tokens</0> by default. Once you deploy your project, you can issue an ERC-20 for your holders to claim. This is <1>optional</1>."
@@ -2745,6 +2691,9 @@ msgid "Review and deploy"
 msgstr ""
 
 msgid "Review and launch funding cycle"
+msgstr ""
+
+msgid "Review reconfiguration"
 msgstr ""
 
 msgid "Review your project data below. Once launched, your first funding cycle can't be changed. You can reconfigure upcoming funding cycles according to your project's reconfiguration rules."
@@ -3126,9 +3075,6 @@ msgid "The held fees will reset as new funds are added to the project's balance 
 msgstr ""
 
 msgid "The issuance rate of your second funding cycle will be {0} tokens per 1 ETH,{1} tokens per 1 ETH for your third funding cycle, and so on."
-msgstr ""
-
-msgid "The maximum amount of funds allowed to be distributed from the project's treasury each funding cycle."
 msgstr ""
 
 msgid "The maximum amount of funds that can be distributed from the treasury each funding cycle."
@@ -4236,12 +4182,6 @@ msgid "{formattedTimeLeft} left"
 msgstr ""
 
 msgid "{formattedTimeLeft} until #{0}"
-msgstr ""
-
-msgid "{inflationRate} tokens / ETH"
-msgstr ""
-
-msgid "{issuanceRate} tokens / ETH"
 msgstr ""
 
 msgid "{label} is not a valid ETH Address"

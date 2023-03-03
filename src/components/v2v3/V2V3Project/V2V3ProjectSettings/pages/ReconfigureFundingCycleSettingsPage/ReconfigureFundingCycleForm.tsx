@@ -191,7 +191,7 @@ export function V2V3ReconfigureFundingCycleForm() {
         <Divider />
 
         <h3 className="text-xl text-black dark:text-grey-100">
-          <Trans>Review and deploy</Trans>
+          <Trans>Review reconfiguration</Trans>
         </h3>
         <ReconfigurePreview
           payoutSplits={

@@ -8,7 +8,7 @@ export interface ContractReaderProps<ContractName extends string, V> {
   contract: ContractConfig<ContractName> | undefined
   contracts: Record<ContractName, Contract> | undefined
   functionName: string | undefined
-  args?: unknown[] | null
+  args?: unknown[] | null // use null when you don't want the function to run.
   updateOn?: ContractUpdateOn<ContractName>[]
   formatter?: (val?: any) => V | undefined // eslint-disable-line @typescript-eslint/no-explicit-any
   callback?: (val?: V) => void

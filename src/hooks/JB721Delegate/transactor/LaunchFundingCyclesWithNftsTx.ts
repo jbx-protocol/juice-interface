@@ -1,5 +1,6 @@
 import { t } from '@lingui/macro'
 import { CV_V3 } from 'constants/cv'
+import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
@@ -22,8 +23,6 @@ import {
   isValidMustStartAtOrAfter,
 } from 'utils/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../../v2v3/ProjectTitle'
-
-const DEFAULT_MEMO = ''
 
 interface LaunchFundingCyclesWithNftsTxArgs {
   projectId: number

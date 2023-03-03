@@ -1,6 +1,7 @@
 import { getAddress } from '@ethersproject/address'
 import { t } from '@lingui/macro'
 import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
+import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { TransactorInstance } from 'hooks/Transactor'
@@ -24,8 +25,6 @@ import {
   isValidMustStartAtOrAfter,
 } from 'utils/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../../v2v3/ProjectTitle'
-
-const DEFAULT_MEMO = ''
 
 interface DeployTiered721DelegateData {
   collectionUri: string

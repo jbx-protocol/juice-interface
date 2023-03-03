@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { t } from '@lingui/macro'
+import { DEFAULT_METADATA } from 'constants/transactionDefaults'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
@@ -14,8 +15,6 @@ import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-
-const DEFAULT_METADATA = 0
 
 export function useRedeemTokensTx(): TransactorInstance<{
   redeemAmount: BigNumber

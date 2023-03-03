@@ -19,11 +19,13 @@ export default function AllProjects({
   searchText,
   orderBy,
   showArchived,
+  reversed,
 }: {
   pv: PV[] | undefined
   searchText: string
   orderBy: 'createdAt' | 'totalPaid' | 'currentBalance' | 'paymentsCount'
   showArchived: boolean
+  reversed: boolean
 }) {
   const loadMoreContainerRef = useRef<HTMLDivElement>(null)
   const pageSize = 20
@@ -37,7 +39,7 @@ export default function AllProjects({
   } = useInfiniteProjectsQuery({
     orderBy,
     pageSize,
-    orderDirection: 'desc',
+    orderDirection: reversed ? 'asc' : 'desc',
     state: showArchived ? 'archived' : 'active',
     pv,
   })

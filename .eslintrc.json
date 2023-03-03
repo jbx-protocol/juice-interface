@@ -53,7 +53,10 @@
         "format": ["PascalCase", "UPPER_CASE"]
       }
     ],
-    "no-console": ["error", { "allow": ["warn", "error", "info"] }],
+    "no-console": [
+      "error",
+      { "allow": ["warn", "error", "info", "time", "timeEnd"] }
+    ],
     "no-restricted-imports": [
       "error",
       {

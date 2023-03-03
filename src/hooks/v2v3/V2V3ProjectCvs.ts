@@ -8,7 +8,7 @@ import { hasFundingCycle } from 'utils/v2v3/cv'
 export const useLoadV2V3ProjectCvs = (projectId: number | undefined) => {
   const { setCv, setCvs } = useContext(V2V3ContractsContext)
 
-  const [loadingCsv, setLoadingCsv] = useState<boolean>(true)
+  const [loadingCsv, setLoadingCsv] = useState<boolean>(false)
 
   useEffect(() => {
     async function load() {

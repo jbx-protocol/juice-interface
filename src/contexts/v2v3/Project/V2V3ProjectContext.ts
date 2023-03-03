@@ -13,6 +13,7 @@ interface V2V3ProjectLoadingStates {
   distributionLimitLoading: boolean
   fundingCycleLoading: boolean
   usedDistributionLimitLoading: boolean
+  primaryETHTerminalLoading: boolean
 }
 
 export type V2V3ProjectContextType = {
@@ -78,5 +79,6 @@ export const V2V3ProjectContext = createContext<V2V3ProjectContextType>({
     distributionLimitLoading: false,
     fundingCycleLoading: false,
     usedDistributionLimitLoading: false,
+    primaryETHTerminalLoading: false,
   },
 })

@@ -29,7 +29,7 @@ export function useContractReadValue<C extends string, V>({
   valueDidChange?: (oldVal?: V, newVal?: V) => boolean
 }) {
   const [value, setValue] = useState<V | undefined>()
-  const [loading, setLoading] = useState<boolean>(true)
+  const [loading, setLoading] = useState<boolean>(false)
 
   const _formatter = useCallback(
     (val: any) => (formatter ? formatter(val) : val), // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -43,6 +43,8 @@ export function useContractReadValue<C extends string, V>({
   const fetchValue = useCallback(async () => {
     const readContract = getContract(contract, contracts)
     try {
+      if (!readContract || !functionName || args === null) return
+
       setLoading(true)
       const result = await callContractRead({
         readContract,

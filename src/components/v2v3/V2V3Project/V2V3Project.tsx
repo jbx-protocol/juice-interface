@@ -36,7 +36,9 @@ export function V2V3Project() {
 
   return (
     <Space direction="vertical" size={GUTTER_PX} className="w-full">
-      <ProjectBanners />
+      <div className="mx-auto max-w-5xl">
+        <ProjectBanners />
+      </div>
 
       <ProjectHeader
         actions={<V2V3ProjectHeaderActions />}

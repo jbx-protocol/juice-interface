@@ -14,7 +14,7 @@ import {
 import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
+import { useDefaultJBETHPaymentTerminal } from 'hooks/defaultContracts/DefaultJBETHPaymentTerminal'
 import useProjectCurrentFundingCycle from 'hooks/v2v3/contractReader/ProjectCurrentFundingCycle'
 import useProjectDistributionLimit from 'hooks/v2v3/contractReader/ProjectDistributionLimit'
 import useProjectSplits from 'hooks/v2v3/contractReader/ProjectSplits'
@@ -31,13 +31,13 @@ import { ReconfigurePreview } from '../../V2V3ProjectSettings/pages/ReconfigureF
 
 export function RelaunchFundingCycleModal(props: ModalProps) {
   const { projectId } = useContext(ProjectMetadataContext)
-  const { contracts } = useContext(V2V3ProjectContractsContext)
   const { projectOwnerAddress } = useContext(V2V3ProjectContext)
 
   const [newDuration, setNewDuration] = useState<BigNumber>(BigNumber.from(0))
   const [newStart, setNewStart] = useState<string>('1')
   const [transactionPending, setTransactionPending] = useState<boolean>(false)
 
+  const defaultJBETHPaymentTerminal = useDefaultJBETHPaymentTerminal()
   const { data, loading: deprecatedFundingCycleLoading } =
     useProjectCurrentFundingCycle({
       projectId,
@@ -76,7 +76,7 @@ export function RelaunchFundingCycleModal(props: ModalProps) {
     distributionLimitData ?? []
 
   const deprecatedFundAccessConstraint: V2V3FundAccessConstraint = {
-    terminal: contracts?.JBETHPaymentTerminal?.address ?? '',
+    terminal: defaultJBETHPaymentTerminal?.address ?? '',
     token: ETH_TOKEN_ADDRESS,
     distributionLimit: deprecatedDistributionLimit,
     distributionLimitCurrency: deprecatedDistributionLimitCurrency,

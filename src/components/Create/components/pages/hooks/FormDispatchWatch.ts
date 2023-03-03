@@ -1,16 +1,17 @@
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit'
 import { FormInstance } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
-import { useAppDispatch } from 'redux/hooks/AppDispatch'
 import isEqual from 'lodash/isEqual'
 import { useEffect } from 'react'
+import { useAppDispatch } from 'redux/hooks/AppDispatch'
 
 /**
  * Watches a form field and updates a redux state when it changes.
  */
 export const useFormDispatchWatch = <
-  Payload,
   FormValues extends Record<string, unknown>,
+  FieldName extends keyof FormValues,
+  Payload = FormValues[FieldName],
 >({
   form,
   fieldName,
@@ -20,11 +21,11 @@ export const useFormDispatchWatch = <
   formatter,
 }: {
   form: FormInstance<FormValues>
-  fieldName: keyof FormValues
+  fieldName: FieldName
   ignoreUndefined?: boolean
   currentValue?: Payload
   dispatchFunction: ActionCreatorWithPayload<Payload>
-  formatter: (v: FormValues[keyof FormValues]) => Payload
+  formatter: (v: FormValues[FieldName]) => Payload
 }) => {
   const fieldValue = useWatch(fieldName, form)
   const dispatch = useAppDispatch()

@@ -19,11 +19,11 @@ export function useValidatePrimaryEthTerminal() {
   return (
     isEqualAddress(
       primaryETHTerminal,
-      contracts?.JBETHPaymentTerminal.address,
+      contracts?.JBETHPaymentTerminal?.address,
     ) ||
     isEqualAddress(
       primaryETHTerminal,
-      contracts?.JBETHPaymentTerminal3_1.address,
+      contracts?.JBETHPaymentTerminal3_1?.address,
     )
   )
 }

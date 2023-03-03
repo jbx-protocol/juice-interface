@@ -4,8 +4,8 @@ import { helpPagePath } from 'utils/routes'
 
 export const DISTRIBUTION_LIMIT_EXPLANATION = (
   <Trans>
-    The ETH which can be paid out from this project during this cycle. Payouts
-    reset each cycle.
+    The amount of ETH which can be paid out from this project during the cycle.
+    Payouts reset each cycle.
   </Trans>
 )
 
@@ -139,8 +139,14 @@ export const PAUSE_PAYMENTS_EXPLANATION = (
 
 export const RECONFIG_RULES_EXPLAINATION = (
   <Trans>
-    This contract puts restrictions on how the project's rules can be edited —
-    usually an edit deadline.
+    <p>
+      Edits must be made before this deadline. This gives token holders time to
+      verify edits before they take effect.
+    </p>
+    <p>
+      For example: with a 1-day edit deadline, edits must be made at least 1 day
+      before a cycle starts.
+    </p>
   </Trans>
 )
 

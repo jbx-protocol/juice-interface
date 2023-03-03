@@ -5,6 +5,7 @@ import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useContext } from 'react'
 import V2V3CurrencyAmount from 'components/v2v3/shared/V2V3CurrencyAmount'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
+import { DISTRIBUTION_LIMIT_EXPLANATION } from '../V2V3FundingCycleSection/settingExplanations'
 
 export default function DistributedRatio() {
   const {
@@ -18,12 +19,7 @@ export default function DistributedRatio() {
     <StatLine
       loading={distributionLimitLoading}
       statLabel={<Trans>Payouts</Trans>}
-      statLabelTip={
-        <Trans>
-          The ETH which can be paid out from this project during this cycle.
-          Payouts reset each cycle.
-        </Trans>
-      }
+      statLabelTip={DISTRIBUTION_LIMIT_EXPLANATION}
       statValue={
         distributionLimit?.gt(0) ? (
           <div className="text-sm font-medium uppercase text-black dark:text-slate-100">

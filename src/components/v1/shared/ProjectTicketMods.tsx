@@ -271,7 +271,7 @@ export default function ProjectTicketMods({
           icon={<PlusCircleOutlined />}
         >
           <span>
-            <Trans>Add token allocation</Trans>
+            <Trans>Add token recipient</Trans>
           </span>
         </Button>
       </Space>

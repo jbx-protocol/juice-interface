@@ -28,6 +28,14 @@ import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
 import { formatPaused } from 'utils/format/formatBoolean'
+import {
+  CONTRIBUTOR_RATE_EXPLAINATION,
+  DISCOUNT_RATE_EXPLANATION,
+  OWNER_MINTING_EXPLAINATION,
+  RECONFIG_RULES_EXPLAINATION,
+  REDEMPTION_RATE_EXPLANATION,
+  RESERVED_RATE_EXPLAINATION,
+} from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 
 export default function FundingCycleDetails({
   fundingCycle,
@@ -50,12 +58,6 @@ export default function FundingCycleDetails({
   const ballotStrategy = getBallotStrategyByAddress(fundingCycle.ballot)
   const unsafeFundingCycleProperties =
     getUnsafeV1FundingCycleProperties(fundingCycle)
-
-  const tokenSymbolPluralCap = tokenSymbolText({
-    tokenSymbol,
-    capitalize: true,
-    plural: true,
-  })
 
   const tokenSymbolPlural = tokenSymbolText({
     tokenSymbol,
@@ -117,7 +119,7 @@ export default function FundingCycleDetails({
         size="small"
         column={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1, xxl: 2 }}
       >
-        <Descriptions.Item label={<Trans>Target</Trans>}>
+        <Descriptions.Item label={<Trans>Payouts</Trans>}>
           {hasFundingTarget(fundingCycle) ? (
             <>
               <CurrencySymbol
@@ -128,7 +130,7 @@ export default function FundingCycleDetails({
               {formatWad(fundingCycle.target)}
             </>
           ) : (
-            <Trans>No target</Trans>
+            <Trans>No payouts</Trans>
           )}
         </Descriptions.Item>
 
@@ -171,15 +173,8 @@ export default function FundingCycleDetails({
           <Descriptions.Item
             label={
               <TooltipLabel
-                label={<Trans>Discount rate</Trans>}
-                tip={
-                  <Trans>
-                    The ratio of tokens rewarded per payment amount will
-                    decrease by this percentage with each new funding cycle. A
-                    higher discount rate will incentivize supporters to pay your
-                    project earlier than later.
-                  </Trans>
-                }
+                label={<Trans>Issuance reduction rate</Trans>}
+                tip={DISCOUNT_RATE_EXPLANATION}
               />
             }
           >
@@ -193,16 +188,7 @@ export default function FundingCycleDetails({
             label={
               <TooltipLabel
                 label={<Trans>Redemption rate</Trans>}
-                tip={
-                  <Trans>
-                    This rate determines the amount of overflow that each token
-                    can be redeemed for at any given time. On a lower bonding
-                    curve, redeeming a token increases the value of each
-                    remaining token, creating an incentive to hold tokens longer
-                    than others. A bonding curve of 100% means all tokens will
-                    have equal value regardless of when they are redeemed.
-                  </Trans>
-                }
+                tip={REDEMPTION_RATE_EXPLANATION}
               />
             }
           >
@@ -214,17 +200,7 @@ export default function FundingCycleDetails({
           label={
             <TooltipLabel
               label={<Trans>Reserved {tokenSymbolPlural}</Trans>}
-              tip={
-                <Trans>
-                  Whenever someone pays your project, this percentage of the
-                  newly minted tokens will be reserved and the rest will go to
-                  the payer. Reserve tokens are reserved for the project owner
-                  by default, but can also be allocated to other wallet
-                  addresses by the owner. Once tokens are reserved, anyone can
-                  "mint" them, which distributes them to their intended
-                  receivers.
-                </Trans>
-              }
+              tip={RESERVED_RATE_EXPLAINATION}
             />
           }
         >
@@ -239,14 +215,8 @@ export default function FundingCycleDetails({
         <Descriptions.Item
           label={
             <TooltipLabel
-              label={<Trans>Contributor rate</Trans>}
-              tip={
-                <Trans>
-                  {tokenSymbolPluralCap} received per ETH paid to the treasury.
-                  This can change over time according to the discount rate and
-                  reserved tokens amount of future funding cycles.
-                </Trans>
-              }
+              label={<Trans>Payer issuance rate</Trans>}
+              tip={CONTRIBUTOR_RATE_EXPLAINATION}
             />
           }
           span={2}
@@ -259,17 +229,8 @@ export default function FundingCycleDetails({
           span={2}
           label={
             <TooltipLabel
-              label={<Trans>Token minting</Trans>}
-              tip={
-                <Trans>
-                  When token minting is allowed, the owner of this project has
-                  permission to mint any number of tokens to any address at
-                  their discretion. This has the effect of diluting all current
-                  token holders, without increasing the project's treasury
-                  balance. The project owner can reconfigure this along with all
-                  other properties of the funding cycle.
-                </Trans>
-              }
+              label={<Trans>Owner token minting</Trans>}
+              tip={OWNER_MINTING_EXPLAINATION}
             />
           }
         >
@@ -296,12 +257,8 @@ export default function FundingCycleDetails({
       <div>
         <span className="font-medium text-grey-500 dark:text-grey-300">
           <TooltipLabel
-            label={<Trans>Reconfiguration strategy</Trans>}
-            tip={
-              <Trans>
-                Rules for determining how funding cycles can be reconfigured
-              </Trans>
-            }
+            label={<Trans>Edit deadline</Trans>}
+            tip={RECONFIG_RULES_EXPLAINATION}
           />
           :
         </span>{' '}

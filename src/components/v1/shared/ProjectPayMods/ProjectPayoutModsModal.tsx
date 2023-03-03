@@ -5,6 +5,7 @@ import { DatePicker, Form, Modal, Select } from 'antd'
 import { useForm, useWatch } from 'antd/lib/form/Form'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import CurrencySymbol from 'components/CurrencySymbol'
+import { LOCKED_PAYOUT_EXPLANATION } from 'components/Explanations'
 import { FormItems } from 'components/formItems'
 import {
   countDecimalPlaces,
@@ -347,12 +348,7 @@ export const ProjectPayoutModsModal = ({
         <Form.Item
           name="lockedUntil"
           label={t`Lock until`}
-          extra={
-            <Trans>
-              If locked, this split can't be edited or removed until the lock
-              expires or the funding cycle is reconfigured.
-            </Trans>
-          }
+          extra={LOCKED_PAYOUT_EXPLANATION}
         >
           <DatePicker />
         </Form.Item>

@@ -72,21 +72,19 @@ export default function PayModsForm({
     <Space direction="vertical" size="large" className="w-full">
       <div className="text-grey-500 dark:text-grey-300">
         <h1>
-          <Trans>Funding distribution</Trans>
+          <Trans>Payout recipients</Trans>
         </h1>
 
         <p>
           <Trans>
-            Distribute available funds to other Ethereum wallets or Juicebox
-            projects as payouts. Use this to pay contributors, charities,
-            Juicebox projects you depend on, or anyone else. Funds are
-            distributed whenever a withdrawal is made from your project.
+            Pay out ETH to wallets or other Juicebox projects. You can use this
+            to pay your contributors, charities, Juicebox projects you depend
+            on, or anyone else.
           </Trans>
         </p>
         <p>
           <Trans>
-            By default, all unallocated funds can be distributed to the project
-            owner's wallet.
+            By default, all payouts are sent to the project owner's wallet.
           </Trans>
         </p>
       </div>

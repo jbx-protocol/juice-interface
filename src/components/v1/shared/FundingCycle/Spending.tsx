@@ -67,15 +67,10 @@ export default function Spending({
             <TooltipLabel
               label={
                 <h4 className="inline-block">
-                  <Trans>Funding distribution</Trans>
+                  <Trans>Payouts</Trans>
                 </h4>
               }
-              tip={
-                <Trans>
-                  Available funds are distributed according to the payouts
-                  below.
-                </Trans>
-              }
+              tip={<Trans>Payouts are sent to the recipients below.</Trans>}
             />
             <PayoutModsList
               mods={payoutMods}

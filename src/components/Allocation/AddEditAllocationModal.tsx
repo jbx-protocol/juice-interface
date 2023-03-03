@@ -25,6 +25,7 @@ import { fromWad, parseWad, stripCommas } from 'utils/format/formatNumber'
 import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { amountFromPercent } from 'utils/v2v3/distributions'
 import { Allocation, AllocationSplit } from './Allocation'
+import { LOCKED_PAYOUT_EXPLANATION } from 'components/Explanations'
 
 interface AddEditAllocationModalFormProps {
   juiceboxProjectId?: string | undefined
@@ -262,12 +263,7 @@ export const AddEditAllocationModal = ({
           name="lockedUntil"
           label={t`Lock until`}
           requiredMark="optional"
-          extra={
-            <Trans>
-              If locked, this payout can't be edited or removed until the lock
-              expires or the cycle is edited.
-            </Trans>
-          }
+          extra={LOCKED_PAYOUT_EXPLANATION}
         >
           <JuiceDatePicker
             placeholder=""

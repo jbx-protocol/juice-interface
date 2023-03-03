@@ -29,6 +29,7 @@ import { V2V3ProjectPayoutFormItem } from './V2V3ProjectPayoutFormItem'
 import { AddOrEditSplitFormFields, SplitType } from './types'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { getAddress } from '@ethersproject/address'
+import { LOCKED_PAYOUT_EXPLANATION } from 'components/Explanations'
 
 type DistributionType = 'amount' | 'percent' | 'both'
 
@@ -380,12 +381,7 @@ export function DistributionSplitModal({
         <Form.Item
           name="lockedUntil"
           label={t`Lock until`}
-          extra={
-            <Trans>
-              If locked, this payout can't be edited or removed until the lock
-              expires or the cycle is edited.
-            </Trans>
-          }
+          extra={LOCKED_PAYOUT_EXPLANATION}
         >
           <DatePicker
             disabledDate={disabledDate}

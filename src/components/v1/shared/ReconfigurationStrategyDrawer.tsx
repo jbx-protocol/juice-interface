@@ -6,6 +6,7 @@ import { BallotStrategy } from 'models/ballot'
 import { useEffect, useState } from 'react'
 
 import { ballotStrategies } from 'constants/v1/ballotStrategies'
+import { RECONFIG_RULES_EXPLAINATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 
 export default function ReconfigurationStrategyDrawer({
   className,
@@ -41,12 +42,10 @@ export default function ReconfigurationStrategyDrawer({
       onClose={onClose}
     >
       <h1>
-        <Trans>Reconfiguration rules</Trans>
+        <Trans>Edit deadline</Trans>
       </h1>
       <p className="text-grey-500 dark:text-grey-300">
-        <Trans>
-          Rules for how this project's funding cycles can be reconfigured.
-        </Trans>
+        {RECONFIG_RULES_EXPLAINATION}
       </p>
 
       <ReconfigurationStrategySelector
@@ -56,7 +55,7 @@ export default function ReconfigurationStrategyDrawer({
       />
 
       <Button className="mt-4" type="primary" onClick={() => onSave(strategy)}>
-        <Trans>Save rules</Trans>
+        <Trans>Save deadline</Trans>
       </Button>
     </Drawer>
   )

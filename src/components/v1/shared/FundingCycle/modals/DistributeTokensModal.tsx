@@ -77,7 +77,7 @@ export default function DistributeTokensModal({
         {currentTicketMods?.length ? (
           <div>
             <h4>
-              <Trans>Funds will be distributed to:</Trans>
+              <Trans>Payouts will be sent to:</Trans>
             </h4>
             <TicketModsList
               total={reservedTokens}

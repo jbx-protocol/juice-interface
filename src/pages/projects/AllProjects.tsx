@@ -27,7 +27,7 @@ export default function AllProjects({
   pv: PV[] | undefined
   searchText: string
   searchTags: ProjectTag[]
-  orderBy: 'createdAt' | 'totalPaid'
+  orderBy: 'createdAt' | 'totalPaid' | 'currentBalance' | 'paymentsCount'
   showArchived: boolean
   reversed: boolean
 }) {

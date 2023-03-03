@@ -4,13 +4,11 @@ import { ProjectTag } from 'models/project-tags'
 export default function ProjectTagElem({
   tag,
   className,
-  size,
   selected,
   onClick,
 }: {
   tag: ProjectTag
   className?: string
-  size?: 'normal' | 'small'
   selected?: boolean
   onClick?: (tag: ProjectTag) => void
 }) {

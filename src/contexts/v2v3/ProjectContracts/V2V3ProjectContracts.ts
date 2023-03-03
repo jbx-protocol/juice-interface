@@ -2,6 +2,7 @@ import { V2V3ProjectContracts } from 'contexts/v2v3/ProjectContracts/V2V3Project
 import { useProjectController } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/ProjectController'
 import { useProjectFundAccessConstraintsStore } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/ProjectFundAccessContraintsStore'
 import { useProjectPrimaryEthTerminal } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/ProjectPrimaryEthTerminal'
+import { useProjectPrimaryEthTerminalStore } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/ProjectPrimaryEthTerminalStore'
 
 /**
  * Load project-specific JB contracts.
@@ -11,6 +12,7 @@ export function useV2V3ProjectContracts({ projectId }: { projectId: number }): {
   loading: {
     JBControllerLoading: boolean
     JBETHPaymentTerminalLoading: boolean
+    JBETHPaymentTerminalStoreLoading: boolean
     JBFundAccessConstraintsStoreLoading: boolean
   }
 } {
@@ -24,6 +26,13 @@ export function useV2V3ProjectContracts({ projectId }: { projectId: number }): {
     })
 
   const {
+    JBETHPaymentTerminalStore,
+    loading: JBETHPaymentTerminalStoreLoading,
+  } = useProjectPrimaryEthTerminalStore({
+    JBETHPaymentTerminal,
+  })
+
+  const {
     JBFundAccessConstraintsStore,
     loading: JBFundAccessConstraintsStoreLoading,
   } = useProjectFundAccessConstraintsStore({ JBController })
@@ -32,11 +41,13 @@ export function useV2V3ProjectContracts({ projectId }: { projectId: number }): {
     data: {
       JBController,
       JBETHPaymentTerminal,
+      JBETHPaymentTerminalStore,
       JBFundAccessConstraintsStore,
     },
     loading: {
       JBControllerLoading,
       JBETHPaymentTerminalLoading,
+      JBETHPaymentTerminalStoreLoading,
       JBFundAccessConstraintsStoreLoading,
     },
   }

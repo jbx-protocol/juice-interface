@@ -19,9 +19,9 @@ export default function ProjectTagsFormItem({
     <Form.Item
       name={name}
       label={hideLabel ? undefined : t`Project tags`}
+      extra={t`Select up to 3 tags to help contributors find your project.`}
       {...formItemProps}
     >
-      <div className="mb-3">{t`Select up to 3 tags to help contributors find your project.`}</div>
       <ProjectTagsEditor initialValue={initialTags} onChange={onChange} />
     </Form.Item>
   )

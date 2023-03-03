@@ -173,18 +173,16 @@ export default function ProjectCard({
               </span>
             </div>
 
-            {metadata?.description && (
-              <div className="max-h-5 overflow-hidden overflow-ellipsis text-grey-400 dark:text-slate-200">
-                {metadata.description}
-              </div>
-            )}
-
             {tags?.length ? (
               <div className="mt-1">
                 <ProjectTagsRow
                   tagClassName="text-xs text-grey-400 dark:text-slate-200"
                   tags={tags}
                 />
+              </div>
+            ) : metadata?.description ? (
+              <div className="max-h-5 overflow-hidden overflow-ellipsis text-grey-400 dark:text-slate-200">
+                {metadata.description}
               </div>
             ) : null}
           </div>

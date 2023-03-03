@@ -1,4 +1,3 @@
-import { ActionCreatorWithPayload } from '@reduxjs/toolkit'
 import { useForm } from 'antd/lib/form/Form'
 import { ProjectTag } from 'models/project-tags'
 import { useMemo } from 'react'
@@ -74,6 +73,13 @@ export const useProjectDetailsForm = () => {
   })
   useFormDispatchWatch({
     form,
+    fieldName: 'tags',
+    ignoreUndefined: false,
+    dispatchFunction: editingV2ProjectActions.setTags,
+    formatter: v => v ?? [],
+  })
+  useFormDispatchWatch({
+    form,
     fieldName: 'logo',
     ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setLogoUri,
@@ -132,23 +138,8 @@ export const useProjectDetailsForm = () => {
     form,
     fieldName: 'payDisclosure',
     ignoreUndefined: true,
-    dispatchFunction:
-      editingV2ProjectActions.setPayDisclosure as ActionCreatorWithPayload<
-        string | ProjectTag[],
-        string
-      >,
+    dispatchFunction: editingV2ProjectActions.setPayDisclosure,
     formatter: v => v ?? '',
-  })
-  useFormDispatchWatch({
-    form,
-    fieldName: 'tags',
-    ignoreUndefined: false,
-    dispatchFunction:
-      editingV2ProjectActions.setTags as ActionCreatorWithPayload<
-        string | ProjectTag[],
-        string
-      >,
-    formatter: v => v ?? [],
   })
 
   return { form, initialValues }

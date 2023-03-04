@@ -100,7 +100,7 @@ export default function BudgetForm({
               }}
             />
             <label>
-              <Trans>Set payouts</Trans>
+              <Trans>Set up payouts</Trans>
             </label>
           </Space>
         </Form.Item>
@@ -169,7 +169,7 @@ export default function BudgetForm({
               >
                 Learn more
               </ExternalLink>{' '}
-              about cycle duration.
+              about cycles.
             </Trans>
           </p>
         </div>

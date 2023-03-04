@@ -67,8 +67,8 @@ export function PaymentAddressesModal({
                   <TooltipLabel
                     tip={
                       p.preferAddToBalance
-                        ? t`Payments to this address won't mint this project's tokens.`
-                        : t`Payments to this address will mint this project's tokens.`
+                        ? t`Payments made through this address won't mint this project's tokens.`
+                        : t`Payments made through this address will mint this project's tokens.`
                     }
                     label={
                       <span className="capitalize">
@@ -121,7 +121,7 @@ export function PaymentAddressesModal({
                   <div className="flex justify-between">
                     <span>
                       <TooltipLabel
-                        tip={t`Memos appear on the project's activity feed when this address receives a payment.`}
+                        tip={t`Memos appear on the project's activity feed when a payment is made through this address.`}
                         label={t`Memo`}
                       />
                       :

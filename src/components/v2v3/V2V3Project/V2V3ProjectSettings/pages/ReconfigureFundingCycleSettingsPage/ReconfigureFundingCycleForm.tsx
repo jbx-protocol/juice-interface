@@ -118,7 +118,7 @@ export function V2V3ReconfigureFundingCycleForm() {
 
         <ReconfigureButton
           heading={t`Funding`}
-          description={t`How your project will receive and spend ETH.`}
+          description={t`How your project will be paid and pay out ETH.`}
           reconfigureHasChanges={fundingDrawerHasSavedChanges}
           onClick={() => setFundingDrawerVisible(true)}
         />

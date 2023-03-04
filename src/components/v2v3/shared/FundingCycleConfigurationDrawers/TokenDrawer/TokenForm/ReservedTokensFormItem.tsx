@@ -69,7 +69,7 @@ export default function ReservedTokensFormItem({
             <FormItemWarningText>
               <Trans>
                 You have added reserved token recipients, but your reserved rate
-                is 0%, meaning no tokens will be reserved. Consider adding
+                is 0%, meaning no tokens will be reserved. Consider adding a
                 reserved rate greater than 0% or removing the recipients.
               </Trans>
             </FormItemWarningText>

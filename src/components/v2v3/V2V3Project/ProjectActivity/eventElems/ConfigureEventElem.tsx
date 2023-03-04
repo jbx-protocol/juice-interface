@@ -86,7 +86,7 @@ export default function ConfigureEventElem({
   return (
     <ActivityEvent
       event={event}
-      header={t`Edited cycle rules`}
+      header={t`Edited cycle`}
       subject={null}
       extra={
         <MinimalCollapse header={t`Details`}>

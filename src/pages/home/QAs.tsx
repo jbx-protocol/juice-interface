@@ -71,7 +71,8 @@ export default function QAs(): {
           <p>
             All of this can change from project to project. Read everything
             carefully, and make sure you understand the project's rules before
-            you support it. If you need help, stop by the{' '}
+            you support it. If you need help,{' '}
+            <Link href="/contact">contact us</Link>, or stop by the{' '}
             <JBDiscordLink>Juicebox Discord server</JBDiscordLink>.
           </p>
         </Trans>
@@ -89,7 +90,7 @@ export default function QAs(): {
               websites, and other purposes.
             </li>
             <li>
-              Projects can pay out funds to the wallets or Juicebox projects of
+              Projects can pay out ETH to the wallets or Juicebox projects of
               their choosing. These payouts can be pre-defined, and they can
               also be changed over time.
             </li>
@@ -112,7 +113,7 @@ export default function QAs(): {
           <p>
             Importantly, Juicebox's crypto fundraising platform is on-chain and
             non-custodial. Project creators actually own their projects, and
-            JuiceboxDAO has no way to access project's funds or change their
+            JuiceboxDAO has no way to access a project's funds or change its
             rules.
           </p>
           <p>

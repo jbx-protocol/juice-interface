@@ -19,9 +19,8 @@ export const DISCOUNT_RATE_EXPLANATION = (
 export const REDEMPTION_RATE_EXPLANATION = (
   <Trans>
     <p>
-      Supporters can burn their project tokens to reclaim a portion of the ETH
-      not needed for this cycle's payouts. The amount of ETH they receive
-      depends on the redemption rate.
+      Supporters can burn their tokens to reclaim some of the ETH not needed for
+      payouts. The amount of ETH they receive depends on the redemption rate.
     </p>
     <p>
       At 100%, redemptions are 1:1 — somebody redeeming 10% of all project
@@ -30,8 +29,8 @@ export const REDEMPTION_RATE_EXPLANATION = (
     </p>
     <p>
       Anywhere else, redemptions take place along a bonding curve, meaning
-      earlier redeemers will get less ETH per token redeemed, and later
-      redeemers will get more.
+      people who redeem first will get less ETH per token, and people who redeem
+      later will get more ETH per token.
     </p>
     <p>
       Learn more in this{' '}
@@ -46,15 +45,15 @@ export const REDEMPTION_RATE_EXPLANATION = (
 
 export const MINT_RATE_EXPLANATION = (
   <Trans>
-    The total number of project tokens issued when this project is paid 1 ETH.
-    These tokens are split between the payer and any reserved recipients set by
-    the project owner.
+    The total number of tokens issued when this project is paid 1 ETH. By
+    default these tokens are sent to the payer, but some of these tokens may be
+    reserved for recipients chosen by the project owner.
   </Trans>
 )
 
 export const CONTRIBUTOR_RATE_EXPLAINATION = (
   <Trans>
-    The number of project tokens issued to someone who pays this project 1 ETH.
+    The number of tokens sent to someone who pays this project 1 ETH.
   </Trans>
 )
 
@@ -67,8 +66,8 @@ export const RESERVED_RATE_EXPLAINATION = (
 
 export const RESERVED_TOKENS_EXPLAINATION = (
   <Trans>
-    The number of project tokens issued to the recipients chosen by the project
-    owner when 1 ETH is contributed.
+    The number of project tokens reserved for recipients chosen by the project
+    owner when someone pays this project 1 ETH.
   </Trans>
 )
 
@@ -124,9 +123,9 @@ export const CONTROLLER_MIGRATION_EXPLAINATION = (
 
 export const PAUSE_TRANSFERS_EXPLANATION = (
   <Trans>
-    If transfers are paused, token holders can't transfer their project tokens
-    to other addresses. If issued, the project's ERC-20 tokens are always
-    transferable and will not be affected by this rule.
+    While transfers are paused, this project's tokens can't be transferred to
+    other addresses. The project's ERC-20 tokens (if already issued) are always
+    transferable, and will not be affected by this rule.
   </Trans>
 )
 
@@ -141,7 +140,7 @@ export const RECONFIG_RULES_EXPLAINATION = (
   <Trans>
     <p>
       Edits must be made before this deadline. This gives token holders time to
-      verify edits before they take effect.
+      verify the edits before they take effect.
     </p>
     <p>
       For example: with a 1-day edit deadline, edits must be made at least 1 day
@@ -162,20 +161,16 @@ export const HOLD_FEES_EXPLAINATION = (
 
 export const USE_DATASOURCE_FOR_REDEEM_EXPLAINATION = (
   <Trans>
-    When enabled, NFT holders can redeem their NFTs for a portion of your
-    project's overflow.{' '}
-    <ExternalLink href={helpPagePath('dev/learn/glossary/overflow')}>
-      Learn more about overflow
-    </ExternalLink>
-    .
+    While enabled, NFTs can be redeemed to reclaim some of the ETH that isn't
+    needed for payouts. Tokens won't be redeemable.
   </Trans>
 )
 
 export const PREVENT_OVERSPENDING_EXPLAINATION = (
   <Trans>
-    When enabled, users can only receive NFTs by paying the exact price of the
-    NFT. This ensures contributors are eligible to receive their full payment
-    amount if they choose to redeem their NFT.
+    When enabled, supporters can only mint NFTs by paying their exact price.
+    This ensures that they can reclaim their full payment amount if they redeem
+    their NFT.
   </Trans>
 )
 

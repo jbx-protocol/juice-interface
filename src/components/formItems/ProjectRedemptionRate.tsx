@@ -25,8 +25,7 @@ function BondingCurveRateExtra({
       <p className="m-0">
         <Trans>
           The redemption rate determines if and how token holders can burn their
-          tokens to reclaim a portion of the ETH not needed for this cycle's
-          payouts.
+          tokens to reclaim a portion of the ETH not needed for payouts.
         </Trans>
       </p>
 
@@ -48,7 +47,7 @@ function BondingCurveRateExtra({
       {disabled && (
         <FormItemWarningText>
           <Trans>
-            Redemptions aren't possible when all of the available ETH is being
+            Redemptions aren't possible when all of a project's ETH is being
             used for payouts.
           </Trans>
         </FormItemWarningText>

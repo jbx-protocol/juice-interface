@@ -391,7 +391,7 @@ export default function ProjectActivity() {
               <Trans>Sent reserved tokens</Trans>
             </Select.Option>
             <Select.Option value="configure">
-              <Trans>Edited rules</Trans>
+              <Trans>Edited cycle</Trans>
             </Select.Option>
             <Select.Option value="addToBalance">
               <Trans>Added to balance</Trans>
@@ -400,10 +400,10 @@ export default function ProjectActivity() {
               <Trans>Deployed ERC20</Trans>
             </Select.Option>
             <Select.Option value="deployETHERC20ProjectPayer">
-              <Trans>Deployed a project payer address</Trans>
+              <Trans>Deployed project payer address</Trans>
             </Select.Option>
             <Select.Option value="projectCreate">
-              <Trans>Project created</Trans>
+              <Trans>Created project</Trans>
             </Select.Option>
           </Select>
         </Space>

@@ -79,9 +79,9 @@ export function DistributionLimitStatistic({
           <span>
             {showDetail ? (
               <Trans>
-                Unlimited payouts.{' '}
+                All ETH will be paid out.{' '}
                 <p className="text-base">
-                  The project will control how all funds are paid out. Token
+                  The project will control how all ETH is paid out. Token
                   holders cannot redeem their tokens for ETH.
                 </p>
               </Trans>
@@ -466,7 +466,7 @@ export function ReservedSplitsStatistic({
       title={
         <TooltipLabel
           label={t`Reserved token recipients`}
-          tip={t`Where the ${reservedPercentage}% of token issuance which is being reserved will be sent.`}
+          tip={t`Where the reserved ${reservedPercentage}% of token issuance will be sent.`}
         />
       }
       valueRender={() => (

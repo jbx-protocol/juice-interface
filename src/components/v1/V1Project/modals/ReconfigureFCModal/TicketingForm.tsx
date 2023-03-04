@@ -43,15 +43,15 @@ export default function TicketingForm({
         <p>
           <Trans>
             Project tokens are sent to anyone who pays your project, and they
-            can be redeemed to reclaim ETH not needed for payouts.
+            can be redeemed to reclaim ETH that isn't needed for payouts.
           </Trans>
         </p>
         <p>
           <Trans>
-            You'll be able to issue ERC-20 tokens once your project contract has
-            been deployed. Until then, the protocol will internally track token
-            balances, allowing your supporters to receive tokens and redeem them
-            for ETH in the meantime.
+            Optionally, you can issue ERC-20 tokens once your project has been
+            deployed. Until then, the Juicebox protocol will track token
+            balances internally, allowing your supporters to receive tokens and
+            redeem them for ETH.
           </Trans>
         </p>
       </div>

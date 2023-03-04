@@ -160,7 +160,7 @@ export function DistributionSplitsSection({
       <Space className="min-h-0 w-full" direction="vertical" size="large">
         <Form.Item className="mb-0">
           <p className="text-black dark:text-slate-100">
-            <Trans>Choose how you would like to set payouts.</Trans>
+            <Trans>Choose how you would like to set up payouts.</Trans>
           </p>
           <PayoutConfigurationExplainerCollapse className="mb-4" />
           <Radio.Group

@@ -79,7 +79,7 @@ function DiscountRateExtra({
           <Callout.Info className="mt-5 dark:bg-slate-500" transparent>
             <p>
               <Trans>
-                Your project tokens will become{' '}
+                Your project's tokens will become{' '}
                 <strong>{discountRatePercent}%</strong> more expensive each
                 cycle.
               </Trans>

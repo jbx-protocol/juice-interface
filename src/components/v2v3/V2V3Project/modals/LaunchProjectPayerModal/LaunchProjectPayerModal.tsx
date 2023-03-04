@@ -111,8 +111,8 @@ export function LaunchProjectPayerModal({
     <>
       <TransactionModal
         open={open}
-        title={t`Create Project Payer Address`}
-        okText={t`Deploy Project Payer Address`}
+        title={t`Create project payer address`}
+        okText={t`Deploy project payer address`}
         connectWalletText={t`Connect wallet to deploy`}
         onOk={deployProjectPayer}
         onCancel={() => onClose()}

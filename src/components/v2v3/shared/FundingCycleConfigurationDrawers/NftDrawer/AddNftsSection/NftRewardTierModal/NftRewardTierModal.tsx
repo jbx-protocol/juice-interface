@@ -107,7 +107,7 @@ export default function NftRewardTierModal({
         <Form.Item
           name="votingWeight"
           label={t`Voting Weight`}
-          extra={t`Give this NFT a voting weight to be used for on-chain governance. The number you set can be an arbitrary value, only used in relation to other NFTs in this collection.`}
+          extra={t`Give this NFT a voting weight to be used for on-chain governance. The number you set can be an arbitrary value, and is only used in relation to other NFTs in this collection.`}
           tooltip={
             <Trans>
               If you use the default governance option (no governance), voting

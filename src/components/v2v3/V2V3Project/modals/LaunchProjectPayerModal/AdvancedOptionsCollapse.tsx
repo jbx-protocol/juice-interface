@@ -42,8 +42,8 @@ export default function AdvancedOptionsCollapse({
               label={t`Payment memo`}
               tip={
                 <Trans>
-                  The onchain memo for each payment made to this address. The
-                  project's payment feed will include the memo alongside the
+                  The onchain memo for each payment made through this address.
+                  The project's payment feed will include the memo alongside the
                   payment.
                 </Trans>
               }
@@ -58,7 +58,7 @@ export default function AdvancedOptionsCollapse({
           <div className="flex">
             <TooltipLabel
               label={t`Token minting enabled`}
-              tip={t`Determines whether tokens will be minted by payments to this address.`}
+              tip={t`Determines whether tokens will be minted by payments made through this address.`}
             />
             <Form.Item
               name={'tokenMintingEnabled'}
@@ -79,9 +79,9 @@ export default function AdvancedOptionsCollapse({
                 label={t`Mint tokens as ERC-20`}
                 tip={
                   <Trans>
-                    When checked, payments to this address will mint the
-                    project's ERC-20 tokens. Payments will incur slightly higher
-                    gas fees. When unchecked, the Juicebox protocol will
+                    When checked, payments made through this address will mint
+                    the project's ERC-20 tokens. Payments will incur slightly
+                    higher gas fees. When unchecked, the Juicebox protocol will
                     internally track the beneficiary's tokens, and they can
                     claim their ERC-20 tokens at any time.
                   </Trans>

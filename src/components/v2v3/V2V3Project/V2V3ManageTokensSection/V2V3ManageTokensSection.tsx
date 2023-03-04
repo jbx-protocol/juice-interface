@@ -56,7 +56,7 @@ export function V2V3ManageTokensSection() {
     <Space direction="vertical" size="small">
       <div className="flex flex-wrap justify-between gap-x-1">
         <SectionHeader
-          text={<Trans>Project tokens</Trans>}
+          text={<Trans>Tokens</Trans>}
           tip={
             <Trans>
               Anyone who pays this project receives {tokenText}. Depending on

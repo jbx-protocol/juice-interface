@@ -42,7 +42,7 @@ export default function ReservedTokenReceiverModal({
     const realTokenAllocation = (reservedRate ?? 0) * percentOfReserved
     const realTokenAllocationPercent = (realTokenAllocation / 100).toFixed(2)
     const extra =
-      t`The percentage this recipient receives out of the ${reservedRate}% of token issuance being reserved` +
+      t`The portion this receipient will receive out of the ${reservedRate}% of token issuance being reserved.` +
       `${
         realTokenAllocation
           ? ' ' + t`(${realTokenAllocationPercent}% of total token issuance).`
@@ -53,14 +53,14 @@ export default function ReservedTokenReceiverModal({
 
   return (
     <Modal
-      title={mode === 'Add' ? t`Add token recipient` : t`Edit token recipient`} // Full sentences for translation purposes
+      title={mode === 'Add' ? t`Add recipient` : t`Edit recipient`} // Full sentences for translation purposes
       open={open}
       // Must reset the state in case user opens this modal for another receiver straight away
       onOk={() => {
         setPercent(undefined)
         onOk()
       }}
-      okText={mode === 'Add' ? t`Add token recipient` : t`Save token recipient`}
+      okText={mode === 'Add' ? t`Add recipient` : t`Save recipient`}
       onCancel={() => {
         setPercent(undefined)
         onCancel()
@@ -89,7 +89,7 @@ export default function ReservedTokenReceiverModal({
           <EthAddressInput />
         </Form.Item>
 
-        <Form.Item label={t`Percentage allocation`} required={true}>
+        <Form.Item label={t`Percentage to reserve`} required={true}>
           <NumberSlider
             onChange={(percent: number | undefined) => {
               setPercent(percent ?? form.getFieldValue('percent'))
@@ -110,7 +110,7 @@ export default function ReservedTokenReceiverModal({
         <Form.Item
           name="lockedUntil"
           label={t`Lock until`}
-          extra={t`If locked, allocations can't be edited or removed until the lock expires or the cycle is edited.`}
+          extra={t`If locked, this percentage can't be edited or removed until the lock expires or the cycle is edited.`}
         >
           <DatePicker />
         </Form.Item>

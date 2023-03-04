@@ -49,8 +49,8 @@ export default function SpendingStats({
           tip={
             <Trans>
               ETH available for this cycle's payouts (before the {feePercentage}
-              % JBX fee). This amount won't roll over to the next cycle, so
-              payouts should be sent before this cycle ends.
+              % JBX fee). This amount won't roll over to the next cycle — make
+              sure that somebody sends the payouts before the cycle ends!
             </Trans>
           }
         />

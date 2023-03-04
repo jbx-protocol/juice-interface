@@ -42,7 +42,7 @@ export default function FundingCycleDetails({
         }
       />
       <FundingCycleDetailsRow
-        header={t`Project token`}
+        header={t`Token`}
         items={
           <TokenListItems
             fundingCycle={fundingCycle}

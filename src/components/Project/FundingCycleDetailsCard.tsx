@@ -86,7 +86,7 @@ export default function FundingCycleDetailsCard({
                   <Tooltip
                     title={
                       <Trans>
-                        This cycle's rules may contain unexpected behavior or
+                        This cycle's rules may lead to unexpected behavior or
                         other risks.
                       </Trans>
                     }

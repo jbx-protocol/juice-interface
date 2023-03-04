@@ -220,9 +220,9 @@ export function V2V3BurnOrRedeemModal({
               </Callout.Info>
               <div>
                 <Trans>
-                  Redeem your tokens to reclaim ETH not needed for payouts. This
-                  cycle's <strong>redemption rate</strong> determines the amount
-                  of ETH you'll receive.
+                  Redeem your tokens to reclaim some ETH that isn't needed for
+                  payouts. This cycle's <strong>redemption rate</strong>{' '}
+                  determines the amount of ETH you'll receive.
                 </Trans>
               </div>
             </Space>

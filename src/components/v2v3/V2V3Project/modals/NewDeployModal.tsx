@@ -103,7 +103,7 @@ export default function NewDeployModal({
         <RichButton
           className="mb-4"
           prefix="3"
-          heading={<Trans>Create a Project Payer Address (optional)</Trans>}
+          heading={<Trans>Create a project payer address (optional)</Trans>}
           description={PROJECT_PAYER_ADDRESS_EXPLANATION}
           onClick={() => setLaunchProjectPayerModalVisible(true)}
           disabled={hasLaunchedPayableAddress}

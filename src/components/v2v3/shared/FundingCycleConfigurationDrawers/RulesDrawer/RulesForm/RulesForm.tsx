@@ -295,7 +295,7 @@ export default function RulesForm({
           className="rounded-sm bg-smoke-75 stroke-none p-8 shadow-[10px_10px_0px_0px_#E7E3DC] dark:bg-slate-400 dark:shadow-[10px_10px_0px_0px_#2D293A]"
           label={
             <FormItemLabel>
-              <Trans>Cycle editing rules</Trans>
+              <Trans>Edit deadline</Trans>
             </FormItemLabel>
           }
         >

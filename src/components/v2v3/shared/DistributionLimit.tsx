@@ -34,7 +34,7 @@ export default function DistributionLimit({
           </Trans>
         ) : distributionLimitIsZero ? (
           <Trans>
-            No ETH can be paid out from the treasury. The ETH can only be
+            No ETH can be paid out from the project. The ETH can only be
             accessed by token holders that redeem their tokens.
           </Trans>
         ) : (

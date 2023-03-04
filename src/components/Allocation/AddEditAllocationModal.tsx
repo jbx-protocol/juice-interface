@@ -145,8 +145,8 @@ export const AddEditAllocationModal = ({
   const addressExtra =
     recipient === 'juiceboxProject' ? (
       <Trans>
-        Paying another Juicebox project may mint its project tokens. Select an
-        address to receive these tokens.
+        Paying another Juicebox project may mint its tokens. Select an address
+        to receive these tokens.
       </Trans>
     ) : undefined
 

@@ -16,7 +16,7 @@ export const CustomStrategyInput: React.FC<
       <Form.Item
         extra={
           <Trans>
-            The address of a{' '}
+            The address of a custom{' '}
             <ExternalLink
               onClick={e => e.stopPropagation()}
               href={helpPagePath(`/dev/learn/glossary/ballot/`)}

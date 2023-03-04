@@ -100,7 +100,7 @@ export function TreasuryStatsSection() {
                 tip={
                   <Trans>
                     No payouts are scheduled for this cycle. All funds are
-                    redeemable (subject to the redemption rate).
+                    available for redemption (subject to the redemption rate).
                   </Trans>
                 }
                 label={<Trans>100% redeemable</Trans>}

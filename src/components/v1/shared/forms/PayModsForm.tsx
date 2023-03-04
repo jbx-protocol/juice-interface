@@ -77,9 +77,9 @@ export default function PayModsForm({
 
         <p>
           <Trans>
-            Pay out ETH to wallets or other Juicebox projects. You can use this
-            to pay your contributors, charities, Juicebox projects you depend
-            on, or anyone else.
+            Pay out ETH to Ethereum wallets or Juicebox projects. You can use
+            this to pay your contributors, charities, projects you depend on, or
+            anyone else.
           </Trans>
         </p>
         <p>

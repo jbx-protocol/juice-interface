@@ -16,7 +16,7 @@ export const FUNDING_CYCLE_WARNING_TEXT: () => {
   [k in keyof FundingCycleRiskFlags]: string
 } = () => {
   return {
-    duration: t`The project owner can edit this project's rules and start new funding cycles at any time.`,
+    duration: t`The project owner can edit this project's rules and start new cycles at any time.`,
     noBallot: t`The project owner can edit the next cycle’s rules at any time.`,
     customBallot: t`The project is using an unknown contract for its edit deadline.`,
     allowMinting: t`The project owner can mint any amount of project tokens at any time.`,

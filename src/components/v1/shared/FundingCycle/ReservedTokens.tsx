@@ -77,7 +77,7 @@ export default function ReservedTokens({
             size="small"
             onClick={() => setModalIsVisible(true)}
           >
-            <Trans>Send out {tokenTextPlural}</Trans>
+            <Trans>Send reserved {tokenTextPlural}</Trans>
           </Button>
 
           <DistributeTokensModal

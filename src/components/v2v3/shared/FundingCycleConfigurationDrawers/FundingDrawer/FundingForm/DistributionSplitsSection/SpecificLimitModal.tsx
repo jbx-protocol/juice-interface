@@ -44,7 +44,7 @@ export default function SpecificLimitModal({
       onCancel={onClose}
       title={
         <TooltipLabel
-          label={t`Set your payout amount`}
+          label={t`Set up your payouts`}
           tip={t`This is the amount of funds that you can pay out from your project each cycle.`}
         />
       }
@@ -68,9 +68,9 @@ export default function SpecificLimitModal({
               label={t`Set this to the sum of your payouts`}
               tip={
                 <Trans>
-                  If there is enough in the treasury, each payout will receive
+                  If there is enough ETH available, each recipient will receive
                   their percent of this amount each cycle. Otherwise, they will
-                  receive their percent of whatever is in the treasury.
+                  receive their percent of whatever is available.
                 </Trans>
               }
             />

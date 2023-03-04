@@ -25,7 +25,7 @@
 
 .ant-tabs-tab-btn,
 .ant-tabs-tab .ant-tabs-tab-btn {
-  color: var(--text-secondary);
+  @apply text-secondary;
   &:hover {
     @apply text-primary;
   }

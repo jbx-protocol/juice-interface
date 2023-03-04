@@ -34,7 +34,7 @@ a {
 
 label {
   font-weight: 500;
-  color: var(--text-secondary);
+  @apply text-secondary;
 }
 
 a {

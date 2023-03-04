@@ -2,10 +2,10 @@
   @apply text-grey-900 dark:text-slate-100
 }
 .text-secondary {
-  color: var(--text-secondary);
+  @apply text-grey-600 dark:text-slate-300
 }
 .text-tertiary {
-  color: var(--text-tertiary);
+  @apply text-grey-500 dark:text-slate-400
 }
 
 .color-unset {

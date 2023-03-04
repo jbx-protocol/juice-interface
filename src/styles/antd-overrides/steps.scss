@@ -33,7 +33,7 @@
   > .ant-steps-item-container
   > .ant-steps-item-content
   > .ant-steps-item-title {
-  color: var(--text-secondary);
+  @apply text-secondary;
   font-weight: 400;
 }
 
@@ -42,7 +42,7 @@
   > .ant-steps-item-container
   > .ant-steps-item-content
   > .ant-steps-item-title {
-  color: var(--text-secondary);
+  @apply text-secondary;
 }
 
 // Wait steps

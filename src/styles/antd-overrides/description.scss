@@ -3,7 +3,7 @@
 }
 
 .ant-descriptions-item-label {
-  color: var(--text-secondary);
+  @apply text-secondary;
 }
 
 .ant-descriptions-item-content {

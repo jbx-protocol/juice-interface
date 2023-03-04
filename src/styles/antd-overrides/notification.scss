@@ -5,7 +5,7 @@
     @apply text-primary;
   }
   .ant-notification-notice-description {
-    color: var(--text-secondary);
+    @apply text-secondary;
   }
 
   .ant-notification-notice-close-icon {

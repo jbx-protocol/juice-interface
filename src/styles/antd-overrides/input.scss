@@ -69,7 +69,7 @@
 }
 
 .ant-empty-description {
-  color: var(--text-secondary);
+  @apply text-secondary;
 }
 
 .antd-no-number-handler {
@@ -88,7 +88,7 @@
 }
 
 .ant-form-item-extra {
-  color: var(--text-secondary);
+  @apply text-secondary;
   font-size: 0.75rem;
   margin-top: 8px;
   min-height: unset;
@@ -108,13 +108,13 @@ input.ant-input[type='number'] {
 
 .ant-input-prefix,
 .ant-input-show-count-suffix {
-  color: var(--text-secondary);
+  @apply text-secondary;
 }
 
 .ant-picker,
 .ant-picker-dropdown,
 .ant-picker-panel-container {
-  color: var(--text-secondary);
+  @apply text-secondary;
   background-color: var(--background-l0);
 }
 
@@ -135,7 +135,7 @@ input.ant-input[type='number'] {
 }
 
 .ant-picker-time-panel-cell-inner {
-  color: var(--text-secondary) !important;
+  @apply text-secondary;
 }
 
 .ant-picker-cell:hover .ant-picker-cell-inner {
@@ -200,7 +200,7 @@ textarea.ant-input::placeholder {
 
 .ant-upload-list,
 .ant-upload-list-text {
-  color: var(--text-secondary);
+  @apply text-secondary;
 }
 
 .ant-upload-list-item:hover {
@@ -215,7 +215,7 @@ textarea.ant-input::placeholder {
 
 .ant-upload-list-item-card-actions {
   .anticon {
-    color: var(--text-secondary);
+    @apply text-secondary;
   }
 }
 
@@ -261,7 +261,7 @@ textarea.ant-input::placeholder {
 }
 
 .ant-form-item-label > label .ant-form-item-optional {
-  color: var(--text-secondary);
+  @apply text-secondary;
   font-weight: 400;
 }
 
@@ -274,5 +274,5 @@ textarea.ant-input::placeholder {
 }
 
 .ant-form-item-label > label .ant-form-item-tooltip {
-  color: var(--text-secondary);
+  @apply text-secondary;
 }

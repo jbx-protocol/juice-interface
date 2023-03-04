@@ -8,7 +8,7 @@
   .ant-collapse-header-text {
     @apply text-primary;
     span {
-      color: var(--text-secondary);
+      @apply text-secondary;
     }
   }
 

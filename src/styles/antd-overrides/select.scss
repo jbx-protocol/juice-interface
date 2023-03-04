@@ -15,7 +15,7 @@
 .ant-select-color-secondary {
   .ant-select-selector,
   .ant-select-arrow {
-    color: var(--text-secondary);
+    @apply text-secondary;
   }
 }
 
@@ -26,7 +26,7 @@
   }
   .ant-select-selection-item {
     line-height: 22px;
-    color: var(--text-secondary);
+    @apply text-secondary;
     font-weight: 500;
   }
   .ant-select-arrow {

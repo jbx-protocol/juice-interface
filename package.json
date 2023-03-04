@@ -30,7 +30,8 @@
     "ts:prune": "ts-prune",
     "supabase:start": "supabase start",
     "supabase:stop": "supabase stop",
-    "supabase:restart": "yarn supabase:stop && yarn supabase:start"
+    "supabase:restart": "yarn supabase:stop && yarn supabase:start",
+    "supabase:generate:local": "supabase gen types typescript --local > src/generated/database.types.ts"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json,css}": [
@@ -73,6 +74,9 @@
     "@reduxjs/toolkit": "^1.6.2",
     "@sentry/react": "^6.18.2",
     "@sentry/tracing": "^6.18.2",
+    "@supabase/auth-helpers-nextjs": "^0.5.4",
+    "@supabase/auth-helpers-react": "^0.3.1",
+    "@supabase/supabase-js": "^2.10.0",
     "@sushiswap/sdk": "5.0.0-canary.116",
     "@uniswap/sdk": "3.0.3",
     "@uniswap/sdk-core": "3.0.1",
@@ -156,7 +160,7 @@
     "prettier-plugin-tailwindcss": "^0.1.13",
     "react-error-overlay": "6.0.9",
     "react-test-renderer": "^17",
-    "supabase": "^1.41.1",
+    "supabase": "1.38.7",
     "tailwindcss": "3.2.3",
     "ts-prune": "^0.10.3",
     "typescript": "4.7.4",

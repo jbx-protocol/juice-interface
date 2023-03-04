@@ -9,6 +9,7 @@ create table if not exists public.users(
   id text not null primary key,
   wallet text not null unique,
   email text,
+  email_verified boolean not null default false,
   created_at timestamp default timezone('utc'::text, now()) not null,
   updated_at timestamp default timezone('utc'::text, now()) not null
 );

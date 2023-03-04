@@ -2222,6 +2222,9 @@ msgstr ""
 msgid "Paying this project is currently disabled."
 msgstr ""
 
+msgid "Payment Address"
+msgstr ""
+
 msgid "Payment Address created"
 msgstr ""
 
@@ -2367,6 +2370,12 @@ msgid "Project Token"
 msgstr ""
 
 msgid "Project configuration"
+msgstr ""
+
+msgid "Project contracts"
+msgstr ""
+
+msgid "Project contracts directory"
 msgstr ""
 
 msgid "Project created"

@@ -14,11 +14,14 @@ export function useProjectFundAccessConstraintsStore({
     useContractReadValue<string, string>({
       contract: JBController,
       functionName: 'fundAccessConstraintsStore',
-      args: [],
+      args:
+        typeof JBController?.fundAccessConstraintsStore !== 'undefined'
+          ? []
+          : null,
     })
 
   const JBFundAccessConstraintsStore = useLoadContractFromAddress({
-    abi: contracts?.JBFundAccessConstraintsStore.interface,
+    abi: contracts?.JBFundAccessConstraintsStore?.interface,
     address: fundAccessConstraintsStoreAddress,
   })
 

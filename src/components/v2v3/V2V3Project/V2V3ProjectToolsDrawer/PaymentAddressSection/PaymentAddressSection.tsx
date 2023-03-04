@@ -30,7 +30,7 @@ export function PaymentAddressSection({
           directly.
         </Trans>
       </p>
-      <Space>
+      <Space className="flex-wrap">
         <LaunchProjectPayerButton
           useDeployProjectPayerTx={useDeployProjectPayerTx}
         />

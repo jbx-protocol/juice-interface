@@ -60,7 +60,7 @@ export function useReconfigureV2V3FundingCycleTx(): TransactorInstance<Reconfigu
       ],
       {
         ...txOpts,
-        title: t`Reconfigure ${projectTitle}`,
+        title: t`Edit ${projectTitle}'s rules'`,
       },
     )
   }

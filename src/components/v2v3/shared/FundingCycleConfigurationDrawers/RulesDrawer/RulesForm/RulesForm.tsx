@@ -191,7 +191,7 @@ export default function RulesForm({
                   }}
                   checked={allowMinting}
                 />
-                <Trans>Allow token minting</Trans>
+                <Trans>Allow owner token minting</Trans>
               </div>
             </Form.Item>
             <Form.Item extra={PAUSE_TRANSFERS_EXPLANATION}>

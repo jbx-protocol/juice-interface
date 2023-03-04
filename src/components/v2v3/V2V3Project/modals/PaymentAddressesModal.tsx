@@ -34,11 +34,11 @@ export function PaymentAddressesModal({
       open={open}
       onCancel={onCancel}
       cancelText="Done"
-      title={t`Project Payer Addresses`}
+      title={t`Project payer addresses`}
       okButtonProps={{ hidden: true }}
     >
       <Trans>
-        Any ETH sent to these Project Payer Addresses will be forwarded to the
+        Any ETH sent to these project payer addresses will be forwarded to the
         project. This makes it easier to pay the project from third-party tools.
       </Trans>
       {projectPayers?.length ? (
@@ -145,8 +145,8 @@ export function PaymentAddressesModal({
       {projectPayers ? (
         <div className="mt-5 text-center text-grey-400 dark:text-slate-200">
           {plural(projectPayers.length, {
-            one: '# Payment Address',
-            other: '# Payment Addresses',
+            one: '# project payer address',
+            other: '# project payer addresses',
           })}
         </div>
       ) : null}

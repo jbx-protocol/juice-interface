@@ -57,7 +57,7 @@ export function DistributionLimitStatistic({
             <span>
               {showDetail ? (
                 <Trans>
-                  No payouts: All funds will be available for token redeeming.
+                  No payouts: All funds will be available for token redemption.
                 </Trans>
               ) : (
                 <Trans>Zero</Trans>
@@ -81,7 +81,7 @@ export function DistributionLimitStatistic({
               <Trans>
                 Unlimited payouts.{' '}
                 <p className="text-base">
-                  The project will control how all funds are distributed. Token
+                  The project will control how all funds are paid out. Token
                   holders cannot redeem their tokens for ETH.
                 </p>
               </Trans>
@@ -466,7 +466,7 @@ export function ReservedSplitsStatistic({
       title={
         <TooltipLabel
           label={t`Reserved token recipients`}
-          tip={t`Where the ${reservedPercentage}% of your project's tokens which are being reserved will be sent.`}
+          tip={t`Where the ${reservedPercentage}% of token issuance which is being reserved will be sent.`}
         />
       }
       valueRender={() => (

@@ -74,10 +74,10 @@ export default function DistributeReservedTokensModal({
 
   return (
     <TransactionModal
-      title={<Trans>Send out reserved {tokenTextPlural}</Trans>}
+      title={<Trans>Send reserved {tokenTextPlural}</Trans>}
       open={open}
       onOk={() => distributeReservedTokens()}
-      okText={t`Distribute ${tokenTextPlural}`}
+      okText={t`Send ${tokenTextPlural}`}
       connectWalletText={t`Connect wallet to send reserves`}
       confirmLoading={loading}
       transactionPending={transactionPending}

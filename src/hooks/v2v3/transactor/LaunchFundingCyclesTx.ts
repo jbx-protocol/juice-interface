@@ -73,7 +73,7 @@ export function useLaunchFundingCyclesTx({
       args,
       {
         ...txOpts,
-        title: t`Launch funding cycles for ${projectTitle}`,
+        title: t`Launch cycles for ${projectTitle}`,
       },
     )
   }

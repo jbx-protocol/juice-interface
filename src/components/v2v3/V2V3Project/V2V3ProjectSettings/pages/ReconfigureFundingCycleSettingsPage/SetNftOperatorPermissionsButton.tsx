@@ -49,7 +49,7 @@ export function SetNftOperatorPermissionsButton({
           >
             Juicebox NFT deployer contract
           </ExternalLink>{' '}
-          to reconfigure this project's funding cycle.
+          to edit this project's cycle.
         </Trans>
       </div>
     </div>

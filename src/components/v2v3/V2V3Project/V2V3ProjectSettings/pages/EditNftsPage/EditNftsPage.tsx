@@ -48,8 +48,8 @@ export function EditNftsPage() {
             <>
               <p>
                 <Trans>
-                  You haven't launched an NFT collection yet! Reconfigure your
-                  cycle to add NFTs.
+                  You haven't launched an NFT collection yet! Edit your cycle to
+                  add NFTs.
                 </Trans>
               </p>
               <Link

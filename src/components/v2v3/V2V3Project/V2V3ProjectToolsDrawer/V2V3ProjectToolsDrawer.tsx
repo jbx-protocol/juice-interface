@@ -81,7 +81,7 @@ export function V2V3ProjectToolsDrawer({
                   group: RESERVED_TOKEN_SPLIT_GROUP,
                 }}
               >
-                <Trans>Export token allocation CSV</Trans>
+                <Trans>Export reserved token recipient CSV</Trans>
               </ExportSplitsButton>
             ) : undefined
           }

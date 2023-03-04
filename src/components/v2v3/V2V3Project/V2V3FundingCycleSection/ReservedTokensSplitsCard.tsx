@@ -64,7 +64,7 @@ export default function ReservedTokensSplitsCard({
         onClick={() => setDistributeReservedTokensModalVisible(true)}
         disabled={distributeButtonDisabled}
       >
-        <Trans>Distribute {tokensText}</Trans>
+        <Trans>Send {tokensText}</Trans>
       </Button>
     )
   }
@@ -124,8 +124,8 @@ export default function ReservedTokensSplitsCard({
               }
               tip={
                 <Trans>
-                  A project can reserve a percentage of project token issuance
-                  for recipients chosen by the project creator.
+                  Projects can reserve a percentage of token issuance for the
+                  recipients chosen by the project creator.
                 </Trans>
               }
             />

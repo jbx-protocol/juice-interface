@@ -9,11 +9,12 @@ export default function RankingExplanation() {
     'https://github.com/jbx-protocol/juice-interface/blob/main/src/hooks/Projects.ts#L275'
   return (
     <Trans>
-      Rankings based on the ETH paid and the number of payments over the last{' '}
+      Rankings based on the amount paid and the number of payments over the last{' '}
       {TRENDING_WINDOW_DAYS} days.{' '}
       <ExternalLink href={trendingRankingExplanationCodeURL}>
-        See code
+        See the code
       </ExternalLink>
+      .
     </Trans>
   )
 }

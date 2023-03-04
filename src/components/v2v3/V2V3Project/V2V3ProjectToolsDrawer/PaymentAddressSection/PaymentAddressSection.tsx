@@ -37,8 +37,8 @@ export function PaymentAddressSection({
               size="small"
             >
               {plural(projectPayers.length, {
-                one: 'View deployed Payment Address',
-                other: 'View deployed Payment Addresses',
+                one: 'View deployed project payer address',
+                other: 'View deployed project payer addresses',
               })}
             </Button>
             <PaymentAddressesModal

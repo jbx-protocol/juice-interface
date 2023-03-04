@@ -124,7 +124,7 @@ export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<R
       args,
       {
         ...txOpts,
-        title: t`Reconfigure ${projectTitle} with new NFTs`,
+        title: t`Setup new NFTs for ${projectTitle}`,
       },
     )
   }

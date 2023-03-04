@@ -56,7 +56,7 @@ export default function RestrictedActionsForm({
         </Form.Item>
         <Form.Item
           name="ticketPrintingIsAllowed"
-          label={t`Allow minting tokens`}
+          label={t`Allow owner token minting`}
           extra={OWNER_MINTING_EXPLAINATION}
           valuePropName="checked"
         >
@@ -70,7 +70,7 @@ export default function RestrictedActionsForm({
           <Form.Item>
             <FormItemWarningText>
               <Trans>
-                Enabling token minting will appear risky to contributors.
+                Enabling owner token minting will appear risky to contributors.
               </Trans>
             </FormItemWarningText>
           </Form.Item>

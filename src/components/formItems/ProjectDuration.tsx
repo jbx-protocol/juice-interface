@@ -65,14 +65,13 @@ export default function ProjectDuration({
           <p>
             <Trans>
               How long one cycle will last. Your project's rules are locked
-              during each cycle, and edits you make to your project's rules
-              during a cycle will only take effect at the start of the next
-              cycle.
+              during each cycle. Edits you make to your project's rules during a
+              cycle will only take effect at the start of the next cycle.
             </Trans>
           </p>
         }
         name={name}
-        label={hideLabel ? undefined : t`Funding cycle duration`}
+        label={hideLabel ? undefined : t`Cycle duration`}
         {...formItemProps}
       >
         <FormattedNumberInput

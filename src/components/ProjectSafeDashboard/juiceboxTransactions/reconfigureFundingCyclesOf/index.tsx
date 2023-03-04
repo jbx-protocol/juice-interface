@@ -14,7 +14,7 @@ export function ReconfigureFundingCyclesOfTransaction({
   return (
     <TransactionCollapse
       transaction={transaction}
-      title={t`Reconfigure funding cycle`}
+      title={t`Edit cycle`}
       isPastTransaction={isPastTransaction}
       cv={txVersion}
       selected={selected}

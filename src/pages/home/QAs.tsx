@@ -70,8 +70,8 @@ export default function QAs(): {
           </p>
           <p>
             All of this can change from project to project. Read everything
-            carefully, and make sure you understand the project's configurations
-            before you support it. If you need help, stop by the{' '}
+            carefully, and make sure you understand the project's rules before
+            you support it. If you need help, stop by the{' '}
             <JBDiscordLink>Juicebox Discord server</JBDiscordLink>.
           </p>
         </Trans>
@@ -104,7 +104,7 @@ export default function QAs(): {
             mechanics. They can change token issuance rates, redemption rates,
             payouts, and other rules over time, leading to powerful and elegant
             tokenomics. They can also lock their project's rules in place for
-            pre-determined amounts of time (called <i>Cycles</i>), guaranteeing
+            pre-determined amounts of time (called <i>cycles</i>), guaranteeing
             that they can't rugpull the community. Juicebox lets projects take
             control if they need to, but it also lets them give up control to
             build trust.
@@ -117,7 +117,7 @@ export default function QAs(): {
           </p>
           <p>
             To learn more, visit{' '}
-            <ExternalLink href={helpPagePath('/')}>the Docs</ExternalLink>.
+            <ExternalLink href={helpPagePath('/')}>our docs</ExternalLink>.
           </p>
         </Trans>
       ),
@@ -192,6 +192,12 @@ export default function QAs(): {
           <p>
             <b>Payouts to other Juicebox projects don't incur any fees.</b>
           </p>
+          <p>
+            <ExternalLink href={helpPagePath(`/dao/reference/jbx/#about-fees`)}>
+              Learn more about fees
+            </ExternalLink>
+            .
+          </p>
         </Trans>
       ),
     },
@@ -200,8 +206,9 @@ export default function QAs(): {
       a: (
         <Trans>
           <p>
-            <Link href="/@peel">Peel</Link> manages the juicebox.money frontend
-            interface. You can reach out to Peel through the{' '}
+            <Link href="/@peel">Peel</Link> manages this website — the
+            juicebox.money frontend interface. You can reach out to Peel through
+            the{' '}
             <ExternalLink href="https://discord.gg/XvmfY4Hkcz">
               Peel Discord
             </ExternalLink>
@@ -223,7 +230,7 @@ export default function QAs(): {
           <p>
             If you're looking for help planning or deploying your project, you
             can <Link href="/contact">contact onboarding</Link>. For project
-            configuration tips and more resources, take a look at the{' '}
+            setup tips and more resources, take a look at the{' '}
             <ExternalLink href={helpPagePath('/user/')}>
               Project Creator Docs
             </ExternalLink>

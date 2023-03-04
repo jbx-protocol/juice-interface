@@ -73,7 +73,7 @@ export function useConfigureProjectTx(): TransactorInstance<{
       ],
       {
         ...txOpts,
-        title: t`Configure ${projectTitle}`,
+        title: t`Edit ${projectTitle}`,
       },
     )
   }

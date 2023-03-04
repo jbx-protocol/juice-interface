@@ -84,9 +84,8 @@ const V1ReconfigureUpcomingMessage = ({
   } else if (ballotStrategyLength > secondsUntilNextFC) {
     return (
       <Trans>
-        Due to your <strong>{ballotStrategy.name}</strong> contract, edits you
-        make will not take effect until the first funding cycle which starts at
-        least{' '}
+        Due to this project's <strong>{ballotStrategy.name}</strong>, edits you
+        make will not take effect until the first cycle which starts at least{' '}
         <strong>
           {detailedTimeString({
             timeSeconds: BigNumber.from(ballotStrategyLength),
@@ -381,7 +380,7 @@ export default function ReconfigureFCModal({
       onOk={reconfigure}
       confirmLoading={loading}
       onCancel={onDone}
-      okText={t`Save reconfiguration`}
+      okText={t`Save edits`}
       width={600}
     >
       <div>
@@ -488,7 +487,7 @@ export default function ReconfigureFCModal({
               isRecurring(editingFC) &&
               hasFundingTarget(editingFC) && (
                 <Statistic
-                  title={t`Discount rate`}
+                  title={t`Issuance reduction rate`}
                   value={permilleToPercent(editingFC.discountRate)}
                   suffix="%"
                 />

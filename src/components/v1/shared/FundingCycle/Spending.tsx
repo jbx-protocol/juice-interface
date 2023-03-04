@@ -58,7 +58,7 @@ export default function Spending({
             size="small"
             onClick={() => setWithdrawModalVisible(true)}
           >
-            <Trans>Distribute funds</Trans>
+            <Trans>Send payouts</Trans>
           </Button>
         </div>
 

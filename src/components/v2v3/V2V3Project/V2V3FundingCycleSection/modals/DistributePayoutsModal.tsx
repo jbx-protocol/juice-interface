@@ -117,7 +117,7 @@ export default function DistributePayoutsModal({
 
   return (
     <TransactionModal
-      title={<Trans>Distribute funds</Trans>}
+      title={<Trans>Send payouts</Trans>}
       open={open}
       onOk={executeDistributePayoutsTx}
       onCancel={() => {
@@ -129,8 +129,8 @@ export default function DistributePayoutsModal({
       }}
       confirmLoading={loading}
       transactionPending={transactionPending}
-      okText={t`Distribute funds`}
-      connectWalletText={t`Connect wallet to distribute`}
+      okText={t`Send payouts`}
+      connectWalletText={t`Connect wallet to send payouts`}
       width={640}
     >
       <Space direction="vertical" size="large" className="w-full">

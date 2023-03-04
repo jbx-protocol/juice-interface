@@ -4,7 +4,7 @@
       background: var(--background-action-primary) !important;
     }
     .ant-steps-icon {
-      color: var(--text-action-primary) !important;
+      @apply text-action-primary;
     }
 
     border-color: var(--stroke-action-primary);
@@ -52,7 +52,7 @@
   > .ant-steps-item-container
   > .ant-steps-item-content
   > .ant-steps-item-title {
-  color: var(--text-action-primary);
+  @apply text-action-primary;
 }
 
 .ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-icon {

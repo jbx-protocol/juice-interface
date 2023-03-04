@@ -23,7 +23,7 @@
 .ant-radio-button-wrapper-checked:not([class*=' ant-radio-button-wrapper-disabled']).ant-radio-button-wrapper:first-child,
 .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):first-child {
   border-color: var(--stroke-action-primary);
-  color: var(--text-action-primary);
+  @apply text-action-primary;
 
   &::before {
     background-color: var(--stroke-action-primary);

@@ -34,7 +34,7 @@ label {
 }
 
 a {
-  color: var(--text-action-primary);
+  @apply text-action-primary;
   @apply font-medium;
   transition: none;
 

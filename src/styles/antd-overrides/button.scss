@@ -9,7 +9,7 @@
   &:hover {
     background: transparent;
     border-color: var(--stroke-action-primary);
-    color: var(--text-action-primary);
+    @apply text-action-primary;
   }
 
   &:focus,
@@ -80,7 +80,7 @@
 }
 
 .ant-btn-link {
-  color: var(--text-action-primary);
+  @apply text-action-primary;
   border: none;
   @apply font-medium;
 
@@ -89,7 +89,7 @@
   }
   &:focus,
   &:active {
-    color: var(--text-action-primary);
+    @apply text-action-primary;
   }
 }
 

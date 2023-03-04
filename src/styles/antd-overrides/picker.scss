@@ -10,7 +10,7 @@
 }
 
 .ant-picker-today-btn {
-  color: var(--text-action-primary);
+  @apply text-action-primary;
 }
 
 .ant-picker-today-btn-disabled {

@@ -1,11 +1,14 @@
 .text-primary {
-  @apply text-grey-900 dark:text-slate-100
+  @apply text-grey-900 dark:text-slate-100;
 }
 .text-secondary {
-  @apply text-grey-600 dark:text-slate-300
+  @apply text-grey-600 dark:text-slate-300;
 }
 .text-tertiary {
-  @apply text-grey-500 dark:text-slate-400
+  @apply text-grey-500 dark:text-slate-400;
+}
+.text-action-primary {
+  @apply text-haze-400 dark:text-haze-300;
 }
 
 .color-unset {
@@ -14,7 +17,7 @@
 
 .hover-text-action-primary {
   &:hover {
-    color: var(--text-action-primary);
+    @apply text-action-primary;
   }
 }
 

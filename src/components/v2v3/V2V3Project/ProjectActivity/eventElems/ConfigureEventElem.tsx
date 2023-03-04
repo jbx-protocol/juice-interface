@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import RichNote from 'components/RichNote'
@@ -87,9 +87,14 @@ export default function ConfigureEventElem({
     <ActivityEvent
       event={event}
       header={t`Edited cycle`}
-      subject={null}
-      extra={
-        <MinimalCollapse header={t`Details`}>
+      subject={
+        <MinimalCollapse
+          header={
+            <span className="font-normal">
+              <Trans>Details</Trans>
+            </span>
+          }
+        >
           <FundingCycleDetails
             fundingCycle={fundingCycle as V2V3FundingCycle}
             fundingCycleMetadata={

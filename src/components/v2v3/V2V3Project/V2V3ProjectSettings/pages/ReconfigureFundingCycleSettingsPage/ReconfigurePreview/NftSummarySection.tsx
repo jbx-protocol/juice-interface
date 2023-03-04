@@ -1,6 +1,7 @@
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Col, Row } from 'antd'
 import ExternalLink from 'components/ExternalLink'
+import { MinimalCollapse } from 'components/MinimalCollapse'
 import { JuiceVideoThumbnailOrImage } from 'components/NftRewards/NftVideo/JuiceVideoThumbnailOrImage'
 import Paragraph from 'components/Paragraph'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
@@ -24,75 +25,74 @@ export default function NftSummarySection() {
 
   return (
     <div>
-      <h4 className="mb-0 text-black dark:text-slate-100">
-        <Trans>NFTs</Trans>
-      </h4>
-      {removedDataSource && <Trans>NFTs detached from project.</Trans>}
-      {!removedDataSource &&
-        rewardTiers?.map((rewardTier, index) => (
-          <Row
-            className={classNames(
-              'flex w-full py-4',
-              index !== rewardTiers.length - 1
-                ? 'border-x-0 border-t-0 border-b border-solid border-smoke-200 dark:border-grey-600'
-                : '',
-            )}
-            key={index}
-            gutter={16}
-          >
-            <Col md={4} className="flex items-center justify-center">
-              <JuiceVideoThumbnailOrImage
-                src={rewardTier.fileUrl ?? '/assets/banana-od.webp'}
-                alt={rewardTier.name}
-                heightClass="h-24"
-                widthClass="w-24"
-              />
-            </Col>
-            <Col className="flex flex-col justify-center" md={8}>
-              <span className="text-lg font-medium text-black dark:text-slate-100">
-                {rewardTier.name}
-              </span>
-              <p className="mb-0">
-                <Trans>
-                  <span className="font-medium">Minimum contribution:</span>{' '}
-                  {rewardTier.contributionFloor} ETH
-                </Trans>
-              </p>
-              {rewardTier.maxSupply &&
-              rewardTier.maxSupply !== DEFAULT_NFT_MAX_SUPPLY ? (
-                <span>
-                  <Trans>
-                    <span className="font-medium">Max. supply:</span>{' '}
-                    <span>{rewardTier.maxSupply}</span>
-                  </Trans>
-                </span>
-              ) : null}
-              {rewardTier.externalLink && (
-                <span>
-                  <Trans>
-                    <span className="font-medium">Website:</span>{' '}
-                    <ExternalLink href={rewardTier.externalLink}>
-                      {rewardTier.externalLink}
-                    </ExternalLink>
-                  </Trans>
-                </span>
+      <MinimalCollapse header={t`NFTs`} light>
+        {removedDataSource && <Trans>NFTs detached from project.</Trans>}
+        {!removedDataSource &&
+          rewardTiers?.map((rewardTier, index) => (
+            <Row
+              className={classNames(
+                'flex w-full py-4',
+                index !== rewardTiers.length - 1
+                  ? 'border-x-0 border-t-0 border-b border-solid border-smoke-200 dark:border-grey-600'
+                  : '',
               )}
-            </Col>
-            <Col md={12} className="flex flex-col justify-center">
-              {rewardTier.description && (
-                <div className="mt-12">
+              key={index}
+              gutter={16}
+            >
+              <Col md={4} className="flex items-center justify-center">
+                <JuiceVideoThumbnailOrImage
+                  src={rewardTier.fileUrl ?? '/assets/banana-od.webp'}
+                  alt={rewardTier.name}
+                  heightClass="h-24"
+                  widthClass="w-24"
+                />
+              </Col>
+              <Col className="flex flex-col justify-center" md={8}>
+                <span className="text-lg font-medium text-black dark:text-slate-100">
+                  {rewardTier.name}
+                </span>
+                <p className="mb-0">
                   <Trans>
-                    <span className="font-medium">Description: </span>
-                    <Paragraph
-                      description={rewardTier.description}
-                      characterLimit={124}
-                    />
+                    <span className="font-medium">Contribution floor:</span>{' '}
+                    {rewardTier.contributionFloor} ETH
                   </Trans>
-                </div>
-              )}
-            </Col>
-          </Row>
-        ))}
+                </p>
+                {rewardTier.maxSupply &&
+                rewardTier.maxSupply !== DEFAULT_NFT_MAX_SUPPLY ? (
+                  <span>
+                    <Trans>
+                      <span className="font-medium">Max. supply:</span>{' '}
+                      <span>{rewardTier.maxSupply}</span>
+                    </Trans>
+                  </span>
+                ) : null}
+                {rewardTier.externalLink && (
+                  <span>
+                    <Trans>
+                      <span className="font-medium">Website:</span>{' '}
+                      <ExternalLink href={rewardTier.externalLink}>
+                        {rewardTier.externalLink}
+                      </ExternalLink>
+                    </Trans>
+                  </span>
+                )}
+              </Col>
+              <Col md={12} className="flex flex-col justify-center">
+                {rewardTier.description && (
+                  <div className="mt-12">
+                    <Trans>
+                      <span className="font-medium">Description: </span>
+                      <Paragraph
+                        description={rewardTier.description}
+                        characterLimit={124}
+                      />
+                    </Trans>
+                  </div>
+                )}
+              </Col>
+            </Row>
+          ))}
+      </MinimalCollapse>
     </div>
   )
 }

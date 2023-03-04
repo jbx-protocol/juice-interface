@@ -1,12 +1,12 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
+import ETHToUSD from 'components/currency/ETHToUSD'
 import CurrencySymbol from 'components/CurrencySymbol'
 import TooltipLabel from 'components/TooltipLabel'
-import { formatWad } from 'utils/format/formatNumber'
-import { BigNumber } from '@ethersproject/bignumber'
-import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
-import ETHToUSD from 'components/currency/ETHToUSD'
 import { CurrencyName } from 'constants/currency'
+import { formatWad } from 'utils/format/formatNumber'
+import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 
 export default function SpendingStats({
   currency,
@@ -38,7 +38,7 @@ export default function SpendingStats({
             ) : undefined
           }
         >
-          <span className="text-base font-medium">
+          <span className="text-primary font-medium">
             <CurrencySymbol currency={currency} />
             {formatWad(distributableAmount, { precision: 4 }) || '0'}{' '}
           </span>

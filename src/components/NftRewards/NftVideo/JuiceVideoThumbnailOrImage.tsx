@@ -32,6 +32,7 @@ export function JuiceVideoThumbnailOrImage({
     widthClass ?? 'w-full',
     heightClass ?? 'h-full',
     showPreviewOnClick ? 'cursor-pointer' : '',
+    'rounded-sm overflow-hidden',
   )
 
   return (
@@ -73,6 +74,7 @@ export function JuiceVideoThumbnailOrImage({
             onClick={props.onClick}
             crossOrigin="anonymous"
             onLoad={() => setLoading(false)}
+            alt="Enlarged media preview"
           />
         )}
       </div>

@@ -1,4 +1,3 @@
-import { LoadingOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
@@ -21,7 +20,7 @@ import { V2V3ConfirmPayModal } from './V2V3ConfirmPayModal'
 export function V2V3PayButton({ disabled, wrapperClassName }: PayButtonProps) {
   const {
     fundingCycleMetadata,
-    loading: { fundingCycleLoading },
+    loading: { fundingCycleLoading, primaryETHTerminalLoading },
   } = useContext(V2V3ProjectContext)
   const { projectMetadata, isArchived } = useContext(ProjectMetadataContext)
   const { form: payProjectForm } = useContext(PayProjectFormContext)
@@ -48,8 +47,7 @@ export function V2V3PayButton({ disabled, wrapperClassName }: PayButtonProps) {
     disabledMessage = t`Payments are paused in this cycle.`
   }
 
-  const isPayDisabled =
-    Boolean(disabledMessage) || disabled || fundingCycleLoading
+  const isPayDisabled = Boolean(disabledMessage) || disabled
 
   return (
     <div className={twMerge('text-center', wrapperClassName)}>
@@ -61,17 +59,19 @@ export function V2V3PayButton({ disabled, wrapperClassName }: PayButtonProps) {
         <Button
           style={{ width: '100%' }}
           type="primary"
+          size="large"
           onClick={() => {
             setPayWarningModalVisible(true)
             trackFathomGoal(PROJECT_PAGE.PAY_CTA)
           }}
           disabled={isPayDisabled}
+          loading={fundingCycleLoading || primaryETHTerminalLoading}
         >
-          {fundingCycleLoading ? <LoadingOutlined /> : payButtonText}
+          <span>{payButtonText}</span>
         </Button>
       </Tooltip>
       {payInCurrency === V2V3_CURRENCY_USD && (
-        <div className="text-xs">
+        <div className="mt-1 text-xs">
           <Trans>
             Paid as <ETHAmount amount={weiPayAmt} />
           </Trans>

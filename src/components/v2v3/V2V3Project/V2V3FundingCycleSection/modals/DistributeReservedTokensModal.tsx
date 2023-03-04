@@ -4,7 +4,7 @@ import TransactionModal from 'components/TransactionModal'
 import SplitList from 'components/v2v3/shared/SplitList'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import useProjectReservedTokens from 'hooks/v2v3/contractReader/ProjectReservedTokens'
+import { useProjectReservedTokens } from 'hooks/v2v3/contractReader/ProjectReservedTokens'
 import { useDistributeReservedTokens } from 'hooks/v2v3/transactor/DistributeReservedTokensTx'
 import { useContext, useState } from 'react'
 import { formatWad } from 'utils/format/formatNumber'
@@ -115,6 +115,7 @@ export default function DistributeReservedTokensModal({
             totalValue={reservedTokens}
             valueSuffix={tokenTextPlural}
             showAmounts
+            dontApplyFeeToAmounts
             valueFormatProps={{ precision: 0 }}
           />
         </div>

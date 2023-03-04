@@ -26,7 +26,7 @@ export function PaymentAddressSection({
   return (
     <>
       <p>{PROJECT_PAYER_ADDRESS_EXPLANATION}</p>
-      <Space>
+      <Space className="flex-wrap">
         <LaunchProjectPayerButton
           useDeployProjectPayerTx={useDeployProjectPayerTx}
         />

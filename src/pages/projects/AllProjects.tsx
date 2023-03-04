@@ -22,7 +22,7 @@ export default function AllProjects({
 }: {
   pv: PV[] | undefined
   searchText: string
-  orderBy: 'createdAt' | 'totalPaid'
+  orderBy: 'createdAt' | 'totalPaid' | 'currentBalance' | 'paymentsCount'
   showArchived: boolean
 }) {
   const loadMoreContainerRef = useRef<HTMLDivElement>(null)

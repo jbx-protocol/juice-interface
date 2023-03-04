@@ -1,10 +1,10 @@
 import { Trans } from '@lingui/macro'
-import StatLine from 'components/Project/StatLine'
 import ETHAmount from 'components/currency/ETHAmount'
-import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { useContext } from 'react'
 import EtherscanLink from 'components/EtherscanLink'
+import StatLine from 'components/Project/StatLine'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useEthBalanceQuery } from 'hooks/EthBalance'
+import { useContext } from 'react'
 
 export default function OwnerBalance() {
   const { projectOwnerAddress } = useContext(V2V3ProjectContext)
@@ -26,7 +26,7 @@ export default function OwnerBalance() {
         </>
       }
       statValue={
-        <span className="text-lg font-medium">
+        <span className="text-primary text-lg font-medium">
           <ETHAmount amount={projectOwnerWalletBalance} precision={2} padEnd />
         </span>
       }

@@ -4,7 +4,6 @@ import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
-import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useNameOfERC20 from 'hooks/ERC20/NameOfERC20'
 import useSymbolOfERC20 from 'hooks/ERC20/SymbolOfERC20'
@@ -29,6 +28,7 @@ import {
   V2V3CurrencyName,
   V2V3_CURRENCY_ETH,
 } from 'utils/v2v3/currency'
+import { V2V3ProjectContractsContext } from '../ProjectContracts/V2V3ProjectContractsContext'
 import { V2V3ProjectContextType } from './V2V3ProjectContext'
 
 const useBalanceInDistributionLimitCurrency = ({
@@ -69,6 +69,7 @@ const useBalanceInDistributionLimitCurrency = ({
 export function useV2V3ProjectState({ projectId }: { projectId: number }) {
   const {
     contracts: { JBETHPaymentTerminal },
+    loading: { projectContractsLoading },
   } = useContext(V2V3ProjectContractsContext)
 
   /**
@@ -210,6 +211,9 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
       distributionLimitLoading,
       fundingCycleLoading,
       usedDistributionLimitLoading,
+      primaryETHTerminalLoading: Boolean(
+        projectContractsLoading?.JBETHPaymentTerminalLoading,
+      ),
     },
   }
 

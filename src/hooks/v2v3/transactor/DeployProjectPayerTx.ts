@@ -1,5 +1,6 @@
 import * as constants from '@ethersproject/constants'
 import { t } from '@lingui/macro'
+import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
@@ -23,7 +24,6 @@ export function useDeployProjectPayerTx(): TransactorInstance<DeployProjectPayer
 
   const projectTitle = useV2ProjectTitle()
 
-  const DEFAULT_MEMO = ''
   const DEFAULT_METADATA = [0x1]
 
   return (

@@ -95,7 +95,12 @@ export default function DistributeReservedTokensEventElem({
               </div>
 
               <div className="text-sm text-grey-500 dark:text-grey-300">
-                {formatWad(e.tokenCount, { precision: 0 })}
+                {formatWad(e.tokenCount, { precision: 0 })}{' '}
+                {tokenSymbolText({
+                  tokenSymbol,
+                  capitalize: false,
+                  plural: true,
+                })}
               </div>
             </div>
           ))}

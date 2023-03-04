@@ -23,7 +23,7 @@ export default function PayWarningModal({
       <h2>
         <Trans>Heads up</Trans>
       </h2>
-      <p className="font-medium">
+      <strong>
         <Trans>
           The{' '}
           <ExternalLink href="https://github.com/jbx-protocol/juice-contracts-v3">
@@ -33,7 +33,7 @@ export default function PayWarningModal({
           could be lost or stolen. JuiceboxDAO and Peel are not liable for any
           losses.
         </Trans>
-      </p>
+      </strong>
     </Modal>
   )
 }

@@ -36,7 +36,7 @@ export async function searchSepanaProjects(query = '', pageSize?: number) {
         },
       },
       size: pageSize, // sepana uses default 20
-      page: 0,
+      page: 1, // 1-based page index
     })
     .then(res => res.data)
 }

@@ -7,7 +7,7 @@ import TooltipLabel from 'components/TooltipLabel'
 import SplitList from 'components/v2v3/shared/SplitList'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import useProjectReservedTokens from 'hooks/v2v3/contractReader/ProjectReservedTokens'
+import { useProjectReservedTokens } from 'hooks/v2v3/contractReader/ProjectReservedTokens'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
 import { Split } from 'models/splits'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
@@ -82,7 +82,7 @@ export default function ReservedTokensSplitsCard({
                 paragraph={{ rows: 1, width: 20 }}
                 title={false}
               >
-                <span className="text-base font-medium">
+                <span className="text-primary text-base font-medium">
                   {formatWad(reservedTokens, { precision: 0 })}
                 </span>
               </Skeleton>{' '}

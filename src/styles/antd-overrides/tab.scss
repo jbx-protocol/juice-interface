@@ -5,6 +5,10 @@
   border-bottom: 1px solid var(--stroke-tertiary);
 }
 
+.ant-tabs {
+  color: unset
+}
+
 .ant-tabs-nav {
   margin-bottom: 2rem !important;
 }

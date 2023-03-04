@@ -7,19 +7,21 @@ export const V2V3ContractsProvider: React.FC<{
   initialCv?: CV2V3
 }> = ({ initialCv, children }) => {
   const [cv, setCv] = useState<CV2V3 | undefined>(initialCv)
-  const [cvs, setCvs] = useState<CV2V3[]>()
+  const [cvs, setCvs] = useState<CV2V3[]>([])
 
   const contracts = useV2V3ContractLoader({ cv })
 
   const setCvWithLog = useCallback(
     (newCv: CV2V3) => {
+      if (newCv === cv) return
+
       console.info(
         'V2V3ContractsProvider::Switching contracts version to',
         newCv,
       )
       setCv(newCv)
     },
-    [setCv],
+    [setCv, cv],
   )
 
   return (

@@ -28,6 +28,8 @@ export type Project = {
   owner: string
   deployer: string | null
   createdAt: number
+  paymentsCount: number
+  redeemCount: number
   trendingPaymentsCount: number
   trendingScore: BigNumber
   trendingVolume: BigNumber

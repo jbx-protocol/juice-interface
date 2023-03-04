@@ -22,7 +22,7 @@ export function ETHAddressBeneficiary({
         <Trans>Project owner (you)</Trans>
       ) : null}
       {isProjectOwner && (
-        <span className="ml-1">
+        <span className="text-primary ml-1">
           <Tooltip title={<Trans>Project owner</Trans>}>
             <CrownFilled />
           </Tooltip>

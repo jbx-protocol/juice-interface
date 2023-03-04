@@ -14,7 +14,7 @@ import { PV } from 'models/pv'
 import { SepanaProject, SepanaQueryResponse } from 'models/sepana'
 import { Project } from 'models/subgraph-entities/vX/project'
 import { V1TerminalVersion } from 'models/v1/terminals'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
 import { getSubgraphIdForProject, querySubgraphExhaustive } from 'utils/graph'
 import { parseSepanaProjectJson } from 'utils/sepana'
@@ -25,7 +25,7 @@ import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
 interface ProjectsOptions {
   pageNumber?: number
   projectId?: number
-  orderBy?: 'createdAt' | 'currentBalance' | 'totalPaid'
+  orderBy?: 'createdAt' | 'currentBalance' | 'totalPaid' | 'paymentsCount'
   orderDirection?: 'asc' | 'desc'
   pageSize?: number
   state?: ProjectState
@@ -33,6 +33,10 @@ interface ProjectsOptions {
   terminalVersion?: V1TerminalVersion
   pv?: PV[]
 }
+
+type ProjectsOfParticipantsWhereQuery =
+  | SGQueryOpts<'participant', SGEntityKey<'participant'>>['where']
+  | null
 
 const DEFAULT_STALE_TIME = 60 * 1000 // 60 seconds
 const DEFAULT_ENTITY_KEYS: (keyof Project)[] = [
@@ -216,7 +220,48 @@ export function useTrendingProjects(count: number) {
 }
 
 // Query all projects that a wallet has previously made payments to
+export function useContributedProjectsQuery(wallet: string | undefined) {
+  const where = useMemo((): ProjectsOfParticipantsWhereQuery => {
+    if (!wallet) return null
+
+    return [
+      {
+        key: 'wallet',
+        value: wallet,
+      },
+      {
+        key: 'totalPaid',
+        operator: 'gt',
+        value: 0,
+      },
+    ]
+  }, [wallet])
+
+  return useProjectsOfParticipants(where)
+}
+
+// Query all projects that a wallet holds tokens for
 export function useHoldingsProjectsQuery(wallet: string | undefined) {
+  const where = useMemo((): ProjectsOfParticipantsWhereQuery => {
+    if (!wallet) return null
+
+    return [
+      {
+        key: 'wallet',
+        value: wallet,
+      },
+      {
+        key: 'balance',
+        operator: 'gt',
+        value: 0,
+      },
+    ]
+  }, [wallet])
+
+  return useProjectsOfParticipants(where)
+}
+
+function useProjectsOfParticipants(where: ProjectsOfParticipantsWhereQuery) {
   const [loadingParticipants, setLoadingParticipants] = useState<boolean>()
   const [projectIds, setProjectIds] = useState<string[]>()
 
@@ -226,7 +271,7 @@ export function useHoldingsProjectsQuery(wallet: string | undefined) {
       setLoadingParticipants(true)
 
       const participants = await querySubgraphExhaustive(
-        wallet
+        where
           ? {
               entity: 'participant',
               orderBy: 'balance',
@@ -237,12 +282,7 @@ export function useHoldingsProjectsQuery(wallet: string | undefined) {
                   keys: ['id'],
                 },
               ],
-              where: [
-                {
-                  key: 'wallet',
-                  value: wallet,
-                },
-              ],
+              where,
             }
           : null,
       )
@@ -268,7 +308,7 @@ export function useHoldingsProjectsQuery(wallet: string | undefined) {
     }
 
     loadParticipants()
-  }, [wallet])
+  }, [where])
 
   const projectsQuery = useSubgraphQuery(
     projectIds

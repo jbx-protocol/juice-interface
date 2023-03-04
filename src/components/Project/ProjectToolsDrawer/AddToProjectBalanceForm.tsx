@@ -2,8 +2,8 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactorButton from 'components/buttons/TransactorButton'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useWallet } from 'hooks/Wallet'
 import { useState } from 'react'
@@ -52,7 +52,7 @@ export function AddToProjectBalanceForm({
 
   return (
     <Form form={addToBalanceForm} layout="vertical">
-      <h3>
+      <h3 className="text-primary">
         <Trans>Add to balance</Trans>
       </h3>
       <p>

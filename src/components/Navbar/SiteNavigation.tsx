@@ -10,10 +10,6 @@ import NavLanguageSelector from './NavLanguageSelector'
 import ThemePicker from './ThemePicker'
 import { TransactionsList } from './TransactionList'
 
-const resourcesMenu = (
-  <Menu className="mt-[-16px] ml-[-6px]" items={resourcesMenuItems()} />
-)
-
 export default function SiteNavigation() {
   const [resourcesOpen, setResourcesOpen] = useState<boolean>(false)
   const isMobile = useMobile()
@@ -32,7 +28,7 @@ export default function SiteNavigation() {
   }, [])
 
   const menuItems = desktopMenuItems({
-    resourcesMenu,
+    resourcesMenuProps: { items: resourcesMenuItems() },
     resourcesOpen,
     setResourcesOpen,
     dropdownIconStyle,

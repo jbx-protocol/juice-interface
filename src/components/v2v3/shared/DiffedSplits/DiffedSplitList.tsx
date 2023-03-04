@@ -56,7 +56,7 @@ export default function DiffedSplitList({
     valueSuffix,
     valueFormatProps,
     reservedRate,
-    showFees,
+    showFee: showFees,
     showAmount: showAmounts,
   }
 

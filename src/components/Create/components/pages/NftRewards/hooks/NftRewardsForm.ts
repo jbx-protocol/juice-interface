@@ -1,9 +1,8 @@
 import { Form } from 'antd'
-import { Reward } from 'components/Create/components/RewardsList'
+import { JB721GovernanceType, NftRewardTier } from 'models/nftRewardTier'
+import { useEffect, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/AppDispatch'
 import { useAppSelector } from 'redux/hooks/AppSelector'
-import { JB721GovernanceType } from 'models/nftRewardTier'
-import { useEffect, useMemo } from 'react'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { withHttps, withoutHttp } from 'utils/externalLink'
 import {
@@ -14,7 +13,7 @@ import { v4 } from 'uuid'
 import { useFormDispatchWatch } from '../../hooks'
 
 type NftRewardsFormProps = Partial<{
-  rewards: Reward[]
+  rewards: NftRewardTier[]
   collectionName?: string
   collectionSymbol?: string
   collectionDescription?: string
@@ -47,14 +46,15 @@ export const useNftRewardsForm = () => {
       defaultNftCollectionDescription(projectMetadata.name!)
     const collectionSymbol = collectionMetadata?.symbol
 
-    const rewards: Reward[] =
+    const rewards: NftRewardTier[] =
       rewardTiers?.map(t => ({
-        id: v4(),
-        title: t.name,
-        minimumContribution: t.contributionFloor,
+        id: parseInt(v4()),
+        name: t.name,
+        contributionFloor: t.contributionFloor,
         description: t.description,
-        maximumSupply: t.maxSupply,
-        url: t.externalLink,
+        maxSupply: t.maxSupply,
+        remainingSupply: t.maxSupply,
+        externalLink: t.externalLink,
         fileUrl: t.fileUrl,
         beneficiary: t.beneficiary,
         reservedRate: t.reservedRate,
@@ -100,12 +100,13 @@ export const useNftRewardsForm = () => {
         throw new Error('Invalid type passed to setNftRewardTiers dispatch')
       }
       return v.map(reward => ({
-        contributionFloor: reward.minimumContribution,
-        maxSupply: reward.maximumSupply,
-        remainingSupply: reward.maximumSupply,
+        contributionFloor: reward.contributionFloor,
+        maxSupply: reward.maxSupply,
+        remainingSupply: reward.maxSupply,
         fileUrl: reward.fileUrl,
-        name: reward.title,
-        externalLink: reward.url,
+        name: reward.name,
+        id: reward.id,
+        externalLink: reward.externalLink,
         description: reward.description,
         beneficiary: reward.beneficiary,
         reservedRate: reward.reservedRate,

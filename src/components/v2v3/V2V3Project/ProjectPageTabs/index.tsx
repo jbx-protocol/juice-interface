@@ -1,0 +1,1 @@
+export { ProjectPageTabs } from './ProjectPageTabs'

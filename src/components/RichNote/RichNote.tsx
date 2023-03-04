@@ -1,4 +1,3 @@
-import { Space } from 'antd'
 import Autolinker from 'autolinker'
 import { JuiceVideoThumbnailOrImage } from 'components/NftRewards/NftVideo/JuiceVideoThumbnailOrImage'
 import { twMerge } from 'tailwind-merge'
@@ -42,19 +41,17 @@ export default function RichNote({
       {children}
 
       {!ignoreMediaLinks && formattedMediaLinks?.length ? (
-        <div className="block">
-          <Space size="middle">
-            {formattedMediaLinks.map((link, i) => (
-              <JuiceVideoThumbnailOrImage
-                key={i}
-                className={twMerge('cursor-pointer', className)}
-                heightClass="h-24"
-                widthClass="w-24"
-                src={link}
-                showPreviewOnClick
-              />
-            ))}
-          </Space>
+        <div className="mt-2 flex flex-wrap gap-x-4">
+          {formattedMediaLinks.map((link, i) => (
+            <JuiceVideoThumbnailOrImage
+              key={i}
+              className={twMerge('cursor-pointer', className)}
+              heightClass="h-24"
+              widthClass="w-24"
+              src={link}
+              showPreviewOnClick
+            />
+          ))}
         </div>
       ) : null}
     </div>

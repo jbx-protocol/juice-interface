@@ -22,7 +22,7 @@ function SafeIcon({ href }: { href: string }) {
   return (
     <Link href={href}>
       <a>
-        <img src={src} alt="Safe" width={15} height={15} />
+        <img src={src} alt="Safe logo" width={15} height={15} />
       </a>
     </Link>
   )

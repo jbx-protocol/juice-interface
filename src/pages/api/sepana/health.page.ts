@@ -8,16 +8,16 @@ import { sgSepanaCompareKeys } from 'utils/sepana'
 
 // Checks integrity of data in Sepana db against the current subgraph data
 const handler: NextApiHandler = async (_, res) => {
-  const sepanaResponse = await queryAll<Json<SepanaProject>>()
+  const { hits: sepanaProjects, total: sepanaProjectsCount } = await queryAll<
+    Json<SepanaProject>
+  >()
 
-  const projectsCount = sepanaResponse.data.hits.hits.length
-
-  const isEmpty = !projectsCount
+  const isEmpty = !sepanaProjectsCount
 
   let report = isEmpty
     ? `Database empty`
     : `Last updated at block: ${Math.max(
-        ...sepanaResponse.data.hits.hits.map(r => r._source._lastUpdated),
+        ...sepanaProjects.map(p => p._source._lastUpdated),
       )}`
 
   let shouldAlert = isEmpty
@@ -36,17 +36,17 @@ const handler: NextApiHandler = async (_, res) => {
       })
     ).map(p => ({ ...p, _id: p.id }))
 
-    report += `\n\n${sepanaResponse.data.hits.total.value} projects in database`
+    report += `\n\n${sepanaProjectsCount} projects in database`
 
     // Check total project counts
-    if (subgraphProjects.length !== sepanaResponse.data.hits.total.value) {
-      report += `\n\nMismatched project counts. Subgraph: ${subgraphProjects.length}, Sepana: ${sepanaResponse.data.hits.total.value}`
+    if (subgraphProjects.length !== sepanaProjectsCount) {
+      report += `\n\nMismatched project counts. Subgraph: ${subgraphProjects.length}, Sepana: ${sepanaProjectsCount}`
 
       shouldAlert = true
     }
 
     // Check for specific mismatched projects
-    for (const sepanaProject of sepanaResponse.data.hits.hits) {
+    for (const sepanaProject of sepanaProjects) {
       const { _source } = sepanaProject
       const {
         id,
@@ -72,25 +72,27 @@ const handler: NextApiHandler = async (_, res) => {
         1,
       )[0]
 
-      // Ensure that no extra projects exist in Sepana
       if (!subgraphProject) {
+        // Record projects that exist in sepana but not in subgraph
         sepanaExtraProjects.push(`\`[${id}]\` Name: ${name}`)
+      } else {
+        // Ensure that Sepana records accurately reflect Subgraph data
+        sgSepanaCompareKeys.forEach(k => {
+          // TODO bad types here
+          if (
+            subgraphProject[k as keyof typeof subgraphProject] !== _source[k]
+          ) {
+            mismatchedProjects.push(
+              `\`[${id}]\` ${name ?? '<no name>'} **${k}** Subgraph: ${
+                subgraphProject[k as keyof typeof subgraphProject]
+              }, Sepana: ${_source[k]}`,
+            )
+          }
+        })
       }
-
-      // Ensure that Sepana records accurately reflect Subgraph data
-      sgSepanaCompareKeys.forEach(k => {
-        // TODO bad types here
-        if (subgraphProject[k as keyof typeof subgraphProject] !== _source[k]) {
-          mismatchedProjects.push(
-            `\`[${id}]\` ${name ?? '<no name>'} **${k}** Subgraph: ${
-              subgraphProject[k as keyof typeof subgraphProject]
-            }, Sepana: ${_source[k]}`,
-          )
-        }
-      })
     }
 
-    // Iterate over any subgraphProjects left in array
+    // Record projects that exist in subgraph but not in sepana
     subgraphProjects.forEach(p =>
       sepanaMissingProjects.push(`ID: ${p.id}, Handle: ${p.handle}`),
     )
@@ -148,7 +150,7 @@ const handler: NextApiHandler = async (_, res) => {
     network: process.env.NEXT_PUBLIC_INFURA_NETWORK,
     status: shouldAlert ? 'ERROR' : 'OK',
     message: report,
-    projectsCount,
+    sepanaProjectsCount,
     sepanaIdErrors: {
       data: sepanaIdErrors,
       count: sepanaIdErrors.length,

@@ -1,12 +1,12 @@
 import { CloseOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Statistic, Tooltip } from 'antd'
+import { AddEditRewardModal } from 'components/Create/components/RewardsList/AddEditRewardModal'
 import { JuiceVideoThumbnailOrImage } from 'components/NftRewards/NftVideo/JuiceVideoThumbnailOrImage'
 import Paragraph from 'components/Paragraph'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useState } from 'react'
-import NftRewardTierModal from './NftRewardTierModal/NftRewardTierModal'
 
 export default function NftRewardTierCard({
   rewardTier,
@@ -83,13 +83,14 @@ export default function NftRewardTierCard({
           </div>
         </div>
       </div>
-      <NftRewardTierModal
+      <AddEditRewardModal
         open={editTierModalVisible}
-        rewardTier={rewardTier}
-        mode="Edit"
-        onClose={() => setEditTierModalVisible(false)}
-        onChange={onChange}
-        isCreate
+        editingData={rewardTier}
+        onOk={(reward: NftRewardTier) => {
+          setEditTierModalVisible(false)
+          onChange(reward)
+        }}
+        onCancel={() => setEditTierModalVisible(false)}
       />
     </>
   )

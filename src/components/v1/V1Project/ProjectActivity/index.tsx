@@ -42,7 +42,7 @@ type EventFilter =
   | 'projectCreate'
   | 'configure'
 
-const pageSize = 50
+const PAGE_SIZE = 10
 
 export default function ProjectActivity() {
   const { projectId } = useContext(ProjectMetadataContext)
@@ -124,7 +124,7 @@ export default function ProjectActivity() {
     isLoading,
     isFetchingNextPage,
   } = useInfiniteSubgraphQuery({
-    pageSize,
+    pageSize: PAGE_SIZE,
     entity: 'projectEvent',
     keys: [
       'id',

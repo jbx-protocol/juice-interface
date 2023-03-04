@@ -1,15 +1,14 @@
-import { useContext } from 'react'
 import { t } from '@lingui/macro'
+import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
 import { TransactorInstance } from 'hooks/Transactor'
+import { useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
 import { isValidMustStartAtOrAfter } from 'utils/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../ProjectTitle'
 import { LaunchProjectData } from './LaunchProjectTx'
-
-const DEFAULT_MEMO = '1'
 
 export type ReconfigureTxArgs = Omit<
   LaunchProjectData,

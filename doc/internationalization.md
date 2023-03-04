@@ -28,49 +28,50 @@ For details of how to contribute as a translator, see our [How to become a Juice
 
 ### Adding a language (for devs)
 
-1. Add the locale code, english name, and short and long alias's to `constants/locale.ts`.
+1. Add the locale code, english name, and short and long alias's to `src/constants/locale.ts`.
 
-   ```diff
-   export const SUPPORTED_LANGUAGES: Language = {
-      en: { code: 'en', name: 'english', short: 'EN', long: 'English' },
-      zh: { code: 'zh', name: 'chinese', short: '中文', long: '中文' },
-      ru: { code: 'ru', name: 'russian', short: 'RU', long: 'Pусский' },
-   +  es: { code: 'es', name: 'spanish', short: 'ES', long: 'Español' },
-   }
-   ```
+```diff
+export const SUPPORTED_LANGUAGES: Language = {
+   en: { code: 'en', name: 'english', short: 'EN', long: 'English' },
+   zh: { code: 'zh', name: 'chinese', short: '中文', long: '中文' },
++  ru: { code: 'ru', name: 'russian', short: 'RU', long: 'Pусский' },
++  es: { code: 'es', name: 'spanish', short: 'ES', long: 'Español' },
+}
+```
 
-1. Add the locale code to `./linguirc.json`.
+2. Add the locale code to `SUPPORTED_LOCALES` in `./src/constants/locale.ts`
 
-   ```diff
-   - "locales": ["en", "zh"]
-   + "locales": ["en", "zh", "af"]
-   ```
+```diff
+- export const SUPPORTED_LOCALES = ['en', 'zh']
++ export const SUPPORTED_LOCALES = ['en', 'zh', 'ru', 'es']
+```
 
-1. Add the locale code to `SUPPORTED_LOCALES` in `./src/constants/locale.ts`
-
-   ```diff
-   - export const SUPPORTED_LOCALES = ['en', 'zh']
-   + export const SUPPORTED_LOCALES = ['en', 'zh', 'af']
-   ```
-
-1. Import the locale plurals in `./src/providers/LanguageProvider.tsx`.
+3. Import the locale plurals in `src/contexts/Language/LanguageProvider.tsx`.
 
    ```diff
    - import { en, zh } from 'make-plural/plurals'
-   + import { en, zh, af } from 'make-plural/plurals'
+   + import { en, zh, ru, es } from 'make-plural/plurals'
    ```
 
-1. Load the locale plurals in `./src/providers/LanguageProvider.tsx`
+4. Load the locale plurals in `src/contexts/Language/LanguageProvider.tsx`.
 
    ```diff
    i18n.loadLocaleData({
      en: { plurals: en },
      zh: { plurals: zh },
-   + af: { plurals: af },
+   + ru: { plurals: ru },
+   + es: { plurals: es },
    })
    ```
 
-1. Extract and compile the strings marked for translation. This creates a directory for the locale within the `./locale/` directory:
+5. Add the locale code to `.linguirc.json`.
+
+   ```diff
+   - "locales": ["en", "zh"]
+   + "locales": ["en", "zh", "ru", "es"]
+   ```
+
+6. Extract and compile the strings marked for translation. This creates a directory for the locale within the `./locale/` directory:
 
    ```bash
    yarn i18n:extract && yarn i18n:compile

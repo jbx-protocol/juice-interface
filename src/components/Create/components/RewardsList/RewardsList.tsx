@@ -1,14 +1,15 @@
 import { PlusCircleOutlined } from '@ant-design/icons'
+import { Trans } from '@lingui/macro'
 import { Divider } from 'antd'
 import { CreateButton } from 'components/buttons/CreateButton'
 import { useModal } from 'hooks/Modal'
 import { FormItemInput } from 'models/formItemInput'
+import { NftRewardTier } from 'models/nftRewardTier'
 import { createContext, useCallback, useContext, useState } from 'react'
 import { MAX_NFT_REWARD_TIERS } from 'utils/nftRewards'
 import { AddEditRewardModal } from './AddEditRewardModal'
 import { useRewards } from './hooks'
 import { RewardItem } from './RewardItem'
-import { Reward } from './types'
 
 const RewardsListContext = createContext<ReturnType<typeof useRewards>>({
   rewards: [],
@@ -27,7 +28,7 @@ const useRewardsInstance = () => {
   return useContext(RewardsListContext)
 }
 
-type RewardsListProps = FormItemInput<Reward[]> & {
+type RewardsListProps = FormItemInput<NftRewardTier[]> & {
   allowCreate?: boolean
 }
 
@@ -43,11 +44,11 @@ export const RewardsList: React.FC<RewardsListProps> &
   onChange,
 }: RewardsListProps) => {
   const rewardsHook = useRewards({ value, onChange })
-  const [selectedReward, setSelectedReward] = useState<Reward>()
+  const [selectedReward, setSelectedReward] = useState<NftRewardTier>()
   const modal = useModal()
   const { rewards, upsertReward, removeReward } = rewardsHook
   const onModalOk = useCallback(
-    (reward: Reward) => {
+    (reward: NftRewardTier) => {
       upsertReward(reward)
       modal.close()
       setSelectedReward(undefined)
@@ -72,7 +73,7 @@ export const RewardsList: React.FC<RewardsListProps> &
         {!!rewards.length && (
           <>
             {rewards
-              .sort((a, b) => a.minimumContribution - b.minimumContribution)
+              .sort((a, b) => a.contributionFloor - b.contributionFloor)
               .map((reward, i) => (
                 <div key={reward.id}>
                   <RewardItem
@@ -99,7 +100,9 @@ export const RewardsList: React.FC<RewardsListProps> &
             disabled={rewards.length >= MAX_NFT_REWARD_TIERS}
             onClick={modal.open}
           >
-            Add NFT
+            <span>
+              <Trans>Add NFT</Trans>
+            </span>
           </CreateButton>
         )}
       </div>

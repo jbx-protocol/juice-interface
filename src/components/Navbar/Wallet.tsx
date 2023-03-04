@@ -1,6 +1,6 @@
 import { CrownOutlined, LogoutOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-import { Dropdown, Menu } from 'antd'
+import { Dropdown } from 'antd'
 import { ItemType } from 'antd/lib/menu/hooks/useItems'
 import CopyTextButton from 'components/buttons/CopyTextButton'
 import EtherscanLink from 'components/EtherscanLink'
@@ -64,12 +64,16 @@ export default function Wallet({ userAddress }: { userAddress: string }) {
 
   return (
     <Dropdown
-      overlay={<Menu items={items} />}
+      menu={{ items }}
       placement={!isMobile ? 'bottomRight' : 'top'}
       overlayClassName="p-0"
     >
       <div className="flex h-11 w-full cursor-default select-all flex-col items-center rounded-sm bg-smoke-75 px-5 pt-1 pb-2 dark:bg-slate-400">
-        <FormattedAddress address={userAddress} tooltipDisabled={true} />
+        <FormattedAddress
+          address={userAddress}
+          tooltipDisabled
+          className="font-normal"
+        />
         <Balance address={userAddress} hideTooltip />
       </div>
     </Dropdown>

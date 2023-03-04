@@ -29,9 +29,21 @@ export function FundingCycleListItems({
     distributionLimitCurrency: oldDistributionLimitCurrency,
   } = useContext(V2V3ProjectContext)
 
-  const formattedStartTime = fundingCycle.start
+  // Required for reconfigure review
+  const wouldStartImmediately =
+    !oldFundingCycle || oldFundingCycle.duration.eq(0)
+
+  const formattedStartTime = wouldStartImmediately
+    ? t`Immediately`
+    : fundingCycle.start
     ? formatDate(fundingCycle.start.mul(1000))
     : undefined
+
+  // show start if `start` is later than now
+  const showStart = fundingCycle.start
+    ? fundingCycle.start.mul(1000).gt(BigNumber.from(Date.now()))
+    : false
+
   const formattedEndTime = fundingCycle.start
     ? formatDate(fundingCycle.start?.add(fundingCycle.duration).mul(1000))
     : undefined
@@ -57,11 +69,17 @@ export function FundingCycleListItems({
 
   return (
     <>
-      {formattedStartTime ? (
+      {showStart ? (
         <FundingCycleListItem
           name={t`Start`}
           value={
-            <Tooltip title={formatDateToUTC(fundingCycle.start.mul(1000))}>
+            <Tooltip
+              title={
+                wouldStartImmediately
+                  ? undefined
+                  : formatDateToUTC(fundingCycle.start.mul(1000))
+              }
+            >
               {formattedStartTime}
             </Tooltip>
           }

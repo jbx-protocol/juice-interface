@@ -15,6 +15,7 @@ export default function SplitList({
   valueSuffix,
   valueFormatProps,
   reservedRate,
+  dontApplyFeeToAmounts,
 }: {
   splits: Split[]
   currency?: BigNumber
@@ -25,6 +26,7 @@ export default function SplitList({
   valueSuffix?: string | JSX.Element
   valueFormatProps?: { precision?: number }
   reservedRate?: number
+  dontApplyFeeToAmounts?: boolean
 }) {
   const ownerSplit = useMemo(() => {
     if (!projectOwnerAddress) return
@@ -38,8 +40,9 @@ export default function SplitList({
     valueSuffix,
     valueFormatProps,
     reservedRate,
-    showFees,
+    showFee: showFees,
     showAmount: showAmounts,
+    dontApplyFeeToAmount: dontApplyFeeToAmounts,
   }
 
   return (

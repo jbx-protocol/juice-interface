@@ -1,10 +1,22 @@
 import { Tooltip } from 'antd'
-import { MouseEventHandler } from 'react'
 import CopyTextButton from 'components/buttons/CopyTextButton'
 import EtherscanLink from 'components/EtherscanLink'
-import { truncateEthAddress } from 'utils/format/formatAddress'
 import { useEnsName } from 'hooks/ensName'
+import { MouseEventHandler } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { ensAvatarUrlForAddress } from 'utils/ens'
+import { truncateEthAddress } from 'utils/format/formatAddress'
+
+interface FormattedAddressProps {
+  className?: string
+  address: string | undefined
+  title?: string
+  label?: string
+  tooltipDisabled?: boolean
+  truncateTo?: number
+  onClick?: MouseEventHandler
+  withEnsAvatar?: boolean
+}
 
 export default function FormattedAddress({
   className,
@@ -14,15 +26,8 @@ export default function FormattedAddress({
   tooltipDisabled,
   truncateTo,
   onClick,
-}: {
-  className?: string
-  address: string | undefined
-  title?: string
-  label?: string
-  tooltipDisabled?: boolean
-  truncateTo?: number
-  onClick?: MouseEventHandler
-}) {
+  withEnsAvatar,
+}: FormattedAddressProps) {
   const ensName = useEnsName(address)
 
   if (!address) return null
@@ -30,27 +35,25 @@ export default function FormattedAddress({
   const formatted =
     ensName ?? label ?? truncateEthAddress({ address, truncateTo })
 
-  if (tooltipDisabled) {
-    return (
-      <span
-        className={twMerge('select-all leading-[22px]', className)}
-        onClick={onClick}
-      >
-        {formatted}
-      </span>
-    )
-  }
-
   return (
     <Tooltip
       title={
         <span className="text-sm">
-          {title ? <div className="text-xs font-bold">{title}</div> : null}
+          {title ? <div className="text-xs font-medium">{title}</div> : null}
           {address} <CopyTextButton value={address} />
         </span>
       }
+      open={tooltipDisabled ? false : undefined}
     >
-      <span>
+      <span className="inline-flex items-center">
+        {withEnsAvatar && ensName && (
+          <img
+            src={ensAvatarUrlForAddress(address, { size: 40 })}
+            className="mr-1.5 h-5 w-5 rounded-full"
+            alt={`Avatar for ${ensName}`}
+            loading="lazy"
+          />
+        )}
         <EtherscanLink
           className={twMerge('select-all leading-[22px]', className)}
           onClick={onClick}

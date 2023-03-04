@@ -169,7 +169,8 @@ export function V2V3ReconfigureFundingCycleForm() {
               type="number"
               min={0}
               onChange={e => {
-                const time = `${e.target.value}`
+                const val = e.target.value
+                const time = `${val.length ? val : 0}`
                 dispatch(editingV2ProjectActions.setMustStartAtOrAfter(time))
               }}
               addonAfter={
@@ -191,7 +192,7 @@ export function V2V3ReconfigureFundingCycleForm() {
         <Divider />
 
         <h3 className="text-xl text-black dark:text-grey-100">
-          <Trans>Review and deploy</Trans>
+          <Trans>Review reconfiguration</Trans>
         </h3>
         <ReconfigurePreview
           payoutSplits={

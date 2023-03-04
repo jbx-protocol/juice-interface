@@ -58,7 +58,9 @@ export default function PayoutSplitsCard({
   const effectiveDistributionLimit = distributionLimit ?? BigNumber.from(0)
   const distributedAmount = usedDistributionLimit ?? BigNumber.from(0)
 
-  const distributable = effectiveDistributionLimit.sub(distributedAmount)
+  const distributable = effectiveDistributionLimit.eq(0)
+    ? effectiveDistributionLimit
+    : effectiveDistributionLimit.sub(distributedAmount)
 
   const distributableAmount = balanceInDistributionLimitCurrency?.gt(
     distributable,

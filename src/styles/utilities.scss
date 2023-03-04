@@ -1,5 +1,5 @@
 .text-primary {
-  color: var(--text-primary);
+  @apply text-grey-900 dark:text-slate-100
 }
 .text-secondary {
   color: var(--text-secondary);

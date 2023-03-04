@@ -10,7 +10,7 @@ export function ExportSection({
 }) {
   return (
     <section>
-      <h3>
+      <h3 className="text-primary">
         <Trans>Export data</Trans>
       </h3>
       <Space direction="vertical" size="large">

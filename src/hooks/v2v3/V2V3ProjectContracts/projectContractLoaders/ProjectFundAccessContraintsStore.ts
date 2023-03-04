@@ -21,7 +21,7 @@ export function useProjectFundAccessConstraintsStore({
     })
 
   const JBFundAccessConstraintsStore = useLoadContractFromAddress({
-    abi: contracts?.JBFundAccessConstraintsStore.interface,
+    abi: contracts?.JBFundAccessConstraintsStore?.interface,
     address: fundAccessConstraintsStoreAddress,
   })
 

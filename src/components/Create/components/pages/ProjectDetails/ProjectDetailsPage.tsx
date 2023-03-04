@@ -165,7 +165,7 @@ export const ProjectDetailsPage: React.FC = () => {
 
       <div className="mt-12 text-center">
         <Link href="/contact">
-          <a className="hover-text-decoration-underline cursor-pointer text-sm text-grey-500 dark:text-grey-300">
+          <a className="cursor-pointer text-sm text-grey-500 hover:underline dark:text-grey-300">
             <Trans>Need help?</Trans>
             <div>
               <Space size="small" className="text-haze-500 dark:text-haze-300">

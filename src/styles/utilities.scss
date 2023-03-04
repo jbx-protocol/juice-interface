@@ -1,3 +1,4 @@
+// TEXT COLORS
 .text-primary {
   @apply text-grey-900 dark:text-slate-100;
 }
@@ -13,54 +14,29 @@
 .text-over-action-primary {
   @apply text-white dark:text-haze-900
 }
-.bg-action-primary {
-  @apply bg-haze-400 dark:bg-haze-400;
+.hover-text-primary {
+  &:hover {
+    @apply text-primary;
+  }
 }
-
-.color-unset {
-  color: unset;
-}
-
 .hover-text-action-primary {
   &:hover {
     @apply text-action-primary;
   }
 }
-
-.hover-text-decoration-underline {
-  &:hover {
-    text-decoration: underline;
-  }
+.text-decoration-secondary {
+  text-decoration-color: var(--stroke-secondary);
 }
-
+// BACKGROUNDS
+.bg-action-primary {
+  @apply bg-haze-400 dark:bg-haze-400;
+}
 .hover-bg-l2 {
   &:hover {
     background-color: var(--background-l2);
   }
 }
 
-.hover-color-unset {
-  &:hover {
-    color: unset;
-  }
-}
-
 .selected-box-shadow {
   box-shadow: 2px 0px 10px 0px var(--boxShadow-primary);
-}
-
-.text-decoration-underline {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-.text-decoration-dashed {
-  text-decoration-style: dashed;
-}
-.text-decoration-secondary {
-  text-decoration-color: var(--stroke-secondary);
-}
-.hover-text-primary {
-  &:hover {
-    @apply text-primary;
-  }
 }

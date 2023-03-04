@@ -12,7 +12,7 @@
   background: transparent;
   @apply text-primary;
   border-color: var(--stroke-secondary);
-  @apply rounded-sm;
+  border-radius: 1px;
 
   &:hover {
     border-color: var(--stroke-primary) !important;
@@ -65,7 +65,7 @@
 }
 
 .ant-input::placeholder {
-  color: var(--text-placeholder);
+  @apply text-tertiary;
 }
 
 .ant-empty-description {

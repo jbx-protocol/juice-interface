@@ -3,7 +3,7 @@
   border-color: var(--stroke-action-secondary);
   @apply text-over-action-secondary;
   @apply font-medium;
-  @apply rounded-sm;
+  border-radius: 1px;
   transition: all 100ms linear;
 
   &:hover {

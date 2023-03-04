@@ -83,7 +83,7 @@ msgstr ""
 msgid "<0/> contributed"
 msgstr ""
 
-msgid "<0/> received"
+msgid "<0/> returned from project"
 msgstr ""
 
 msgid "<0/> will go to the project owner: <1/>"

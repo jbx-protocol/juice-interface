@@ -1,10 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { SemanticTheme } from 'models/semantic-theme/theme'
-
-import { createContext } from 'react'
-
 import { juiceTheme } from 'constants/theme'
 import { ThemeOption } from 'constants/theme/themeOption'
+import { SemanticTheme } from 'models/semantic-theme/theme'
+import { createContext } from 'react'
 
 const defaultThemeOption: ThemeOption = ThemeOption.dark
 
@@ -19,7 +16,9 @@ export type ThemeContextType = {
 export const ThemeContext = createContext<ThemeContextType>({
   themeOption: defaultThemeOption,
   theme: juiceTheme(defaultThemeOption),
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  setThemeOption: function (themeOption: ThemeOption) {},
+  setThemeOption: function () {
+    console.warn('setThemeOption is not implemented')
+    return null
+  },
   isDarkMode: defaultThemeOption === ThemeOption.dark,
 })

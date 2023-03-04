@@ -258,10 +258,6 @@ export default function VolumeChart({
               interval={2}
             />
             <Tooltip
-              contentStyle={{
-                background: colors.background.l0,
-                border: '1px solid ' + colors.stroke.secondary,
-              }}
               cursor={{ stroke: colors.stroke.secondary }}
               content={({ active, payload }) => {
                 if (!active || !payload?.length) return null

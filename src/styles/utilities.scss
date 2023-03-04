@@ -11,20 +11,30 @@
 .text-disabled {
   @apply text-grey-400 dark:text-slate-200;
 }
+.text-over-disabled {
+  @apply text-grey-500 dark:text-slate-200;
+}
+
 .text-action-primary {
   @apply text-haze-400 dark:text-haze-300;
 }
 .text-action-primary-hover {
   @apply text-haze-300 dark:text-haze-400;
 }
+
 .text-over-action-primary {
   @apply text-white dark:text-haze-900;
 }
 .text-over-action-secondary {
   @apply text-haze-400 dark:text-haze-300;
 }
-.text-over-disabled {
-  @apply text-grey-500 dark:text-slate-200;
+
+.text-warning {
+  @apply text-warning-500 dark:text-warning-300;
+}
+
+.text-error {
+  @apply text-error-500 dark:text-error-300;
 }
 
 // BACKGROUNDS

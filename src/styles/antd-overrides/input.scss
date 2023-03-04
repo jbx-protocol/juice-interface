@@ -30,18 +30,19 @@
 
   &:focus {
     box-shadow: 0 0 0 1px var(--stroke-action-secondary);
-    border-color: var(--stroke-action-secondary);
+    border-color
+    : var(--stroke-action-secondary);
   }
 
   &.err-suffix {
     .ant-input-suffix {
-      color: var(--text-warn);
+      @apply text-text-warning;
     }
   }
 }
 
 .ant-form-item-explain.ant-form-item-explain-error {
-  color: var(--text-failure);
+  @apply text-error;
 }
 
 .ant-form-item-has-error {
@@ -51,7 +52,7 @@
     border-color: var(--stroke-failure);
   }
   .ant-input-prefix {
-    color: var(--text-failure);
+    @apply text-error;
   }
 }
 

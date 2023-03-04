@@ -22,7 +22,7 @@
 
 .ant-btn-primary {
   &:not(.ant-btn[disabled]) {
-    background: var(--background-action-primary);
+    @apply bg-action-primary;
     border-color: transparent;
     @apply text-over-action-primary;
     box-shadow: none;
@@ -35,7 +35,7 @@
 
   &:focus,
   &.ant-btn-loading {
-    background: var(--background-action-primary);
+    @apply bg-action-primary;
     border-color: var(--stroke-action-primary);
     @apply text-over-action-primary;
   }

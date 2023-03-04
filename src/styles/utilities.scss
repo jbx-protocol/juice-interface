@@ -11,7 +11,10 @@
   @apply text-haze-400 dark:text-haze-300;
 }
 .text-over-action-primary {
-  @apply text-white;
+  @apply text-white dark:text-haze-900
+}
+.bg-action-primary {
+  @apply bg-haze-400 dark:bg-haze-400;
 }
 
 .color-unset {

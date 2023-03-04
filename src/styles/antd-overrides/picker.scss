@@ -2,7 +2,7 @@
 .ant-picker-time-panel-cell-selected {
   .ant-picker-cell-inner,
   .ant-picker-time-panel-cell-inner {
-    background: var(--background-action-primary) !important;
+    @apply bg-action-primary;
   }
 }
 .ant-picker-time-panel-cell-selected .ant-picker-time-panel-cell-inner {

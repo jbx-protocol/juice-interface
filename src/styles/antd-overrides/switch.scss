@@ -1,6 +1,6 @@
 .ant-switch {
   background: var(--background-l1);
   &.ant-switch-checked {
-    background: var(--background-action-primary);
+    @apply bg-action-primary;
   }
 }

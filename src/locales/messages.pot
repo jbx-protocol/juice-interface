@@ -2372,6 +2372,9 @@ msgstr ""
 msgid "Project configuration"
 msgstr ""
 
+msgid "Project contracts"
+msgstr ""
+
 msgid "Project contracts directory"
 msgstr ""
 

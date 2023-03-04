@@ -131,7 +131,7 @@ input.ant-input[type='number'] {
 
 .ant-picker-cell-disabled,
 .ant-picker-cell:not(.ant-picker-cell-in-view) {
-  color: var(--text-tertiary);
+  @apply text-tertiary;
 }
 
 .ant-picker-time-panel-cell-inner {
@@ -176,11 +176,11 @@ input:-webkit-autofill-selected {
 }
 
 textarea.ant-input::placeholder {
-  color: var(--text-tertiary);
+  @apply text-tertiary;
 }
 
 .ant-input-textarea-show-count::after {
-  color: var(--text-tertiary);
+  @apply text-tertiary;
 }
 
 .ant-upload {
@@ -270,7 +270,7 @@ textarea.ant-input::placeholder {
 }
 
 .ant-input-number-disabled input {
-  color: var(--text-tertiary) !important;
+  @apply text-tertiary;
 }
 
 .ant-form-item-label > label .ant-form-item-tooltip {

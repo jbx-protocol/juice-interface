@@ -162,7 +162,7 @@ export const HOLD_FEES_EXPLAINATION = (
 export const USE_DATASOURCE_FOR_REDEEM_EXPLAINATION = (
   <Trans>
     While enabled, NFTs can be redeemed to reclaim some of the ETH that isn't
-    needed for payouts. Tokens won't be redeemable.
+    needed for payouts. While enabled, it won't be possible to redeem tokens.
   </Trans>
 )
 

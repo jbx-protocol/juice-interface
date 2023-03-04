@@ -38,9 +38,6 @@ msgstr ""
 msgid "1. Set ENS name"
 msgstr ""
 
-msgid "100% redeemable"
-msgstr ""
-
 msgid "1400px x 256px image size recommended."
 msgstr ""
 
@@ -3716,7 +3713,7 @@ msgstr ""
 msgid "Where to Contact You"
 msgstr ""
 
-msgid "While enabled, NFTs can be redeemed to reclaim some of the ETH that isn't needed for payouts. Tokens won't be redeemable."
+msgid "While enabled, NFTs can be redeemed to reclaim some of the ETH that isn't needed for payouts. While enabled, it won't be possible to redeem tokens."
 msgstr ""
 
 msgid "While enabled, the project owner can change the project's <0>controller</0> at any time."

@@ -103,7 +103,7 @@ export function TreasuryStatsSection() {
                     available for redemption (subject to the redemption rate).
                   </Trans>
                 }
-                label={<Trans>100% redeemable</Trans>}
+                label={<Trans>No payouts</Trans>}
               />
             </div>
           ))}

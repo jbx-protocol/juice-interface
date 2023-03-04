@@ -39,7 +39,7 @@ a {
   transition: none;
 
   &:hover {
-    color: var(--text-action-highlight);
+    @apply text-action-primary-hover;
   }
 }
 

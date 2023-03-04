@@ -85,7 +85,7 @@
   @apply font-medium;
 
   &:hover {
-    color: var(--text-action-highlight);
+    @apply text-action-primary-hover;
   }
   &:focus,
   &:active {

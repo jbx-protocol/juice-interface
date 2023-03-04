@@ -11,6 +11,9 @@
 .text-action-primary {
   @apply text-haze-400 dark:text-haze-300;
 }
+.text-action-primary-hover {
+  @apply text-haze-300 dark:text-haze-400;
+}
 .text-over-action-primary {
   @apply text-white dark:text-haze-900
 }

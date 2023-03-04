@@ -2,7 +2,7 @@
   font-family: 'DM Mono', monospace;
   font-size: 1.2rem;
   @apply text-primary;
-  font-weight: 500;
+  @apply font-medium;
 }
 
 .ant-statistic-title {

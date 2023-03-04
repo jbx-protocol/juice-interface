@@ -2,7 +2,7 @@
   background: transparent;
   border-color: var(--stroke-action-secondary);
   color: var(--text-over-action-secondary);
-  font-weight: 500;
+  @apply font-medium;
   border-radius: var(--radius-sm);
   transition: all 100ms linear;
 
@@ -82,7 +82,7 @@
 .ant-btn-link {
   color: var(--text-action-primary);
   border: none;
-  font-weight: 500;
+  @apply font-medium;
 
   &:hover {
     color: var(--text-action-highlight);

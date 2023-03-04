@@ -5,7 +5,7 @@
     border-color: var(--stroke-secondary);
 
     .ant-collapse-header {
-      font-weight: 500;
+      @apply font-medium;
       @apply text-primary;
     }
   }
@@ -146,7 +146,7 @@
     padding: 0;
   }
   .select-item {
-    font-weight: 500;
+    @apply font-medium;
     font-size: 16px;
     padding: 10px 15px;
     cursor: pointer;

@@ -13,7 +13,7 @@
 
 .ant-menu-submenu-title {
   @apply text-primary;
-  font-weight: 500;
+  @apply font-medium;
 }
 
 .ant-menu-sub {
@@ -56,7 +56,7 @@
 .ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
   background-color: var(--background-l2);
   @apply text-primary;
-  font-weight: 500;
+  @apply font-medium;
 }
 
 .ant-menu-light .ant-menu-item:hover {

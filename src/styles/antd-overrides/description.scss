@@ -11,7 +11,7 @@
 }
 
 th.ant-descriptions-item-label {
-  font-weight: 500;
+  @apply font-medium;
 }
 
 .ant-descriptions-bordered {

@@ -20,7 +20,7 @@
 }
 
 .ant-tabs-tab.ant-tabs-tab-active {
-  font-weight: 500;
+  @apply font-medium;
 }
 
 .ant-tabs-tab-btn,

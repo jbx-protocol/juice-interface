@@ -1,6 +1,6 @@
 .ant-steps-item-title {
   text-transform: uppercase;
-  font-weight: 500;
+  @apply font-medium;
   font-size: 14px;
   line-height: 24px;
 }
@@ -24,7 +24,7 @@
   > .ant-steps-item-content
   > .ant-steps-item-title {
   @apply text-primary;
-  font-weight: 500;
+  @apply font-medium;
 }
 
 // Process steps

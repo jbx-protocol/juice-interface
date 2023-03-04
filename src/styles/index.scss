@@ -2,19 +2,15 @@
 
 body {
   margin: 0;
-  background: #131115;
   font-family: 'DM Mono', monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   @apply text-primary;
-
-  // smoke-25
-  background: #fefdfb;
+  @apply bg-smoke-25;
 }
 
 body.dark {
-  // slate-800
-  background: #1a181f;
+  @apply bg-slate-800;
 }
 
 div#__next {
@@ -33,13 +29,13 @@ a {
 }
 
 label {
-  font-weight: 500;
+  @apply font-medium;
   @apply text-secondary;
 }
 
 a {
   color: var(--text-action-primary);
-  font-weight: 500;
+  @apply font-medium;
   transition: none;
 
   &:hover {
@@ -54,7 +50,7 @@ input {
 
 b,
 strong {
-  font-weight: 500;
+  @apply font-medium;
 }
 
 h1,
@@ -63,7 +59,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: var(--text-header);
+  @apply text-primary;
 }
 
 @media screen and (min-width: 600px) and (max-width: 1000px) {

@@ -8,7 +8,7 @@
   }
 
   .ant-modal-title {
-    color: var(--text-header);
+    @apply text-primary;
   }
 
   .ant-modal-close-x {

@@ -22,9 +22,9 @@ export function V2BugNoticeBanner() {
             </ExternalLink>
           </p>
           <p>
-            Payments to V2 projects with a 0 treasury balance have been
-            disabled. To re-enable payments, this project's owner must re-launch
-            their cycle using the updated version of the V2 Juicebox contracts.
+            Payments to V2 projects with a balance of 0 ETH have been disabled.
+            To re-enable payments, this project's owner must re-launch their
+            cycle using the updated version of the V2 Juicebox contracts.
           </p>
         </>
       }

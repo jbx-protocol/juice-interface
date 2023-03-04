@@ -83,7 +83,7 @@ msgstr ""
 msgid "<0/> contributed"
 msgstr ""
 
-msgid "<0/> overflow received"
+msgid "<0/> received"
 msgstr ""
 
 msgid "<0/> will go to the project owner: <1/>"
@@ -185,7 +185,7 @@ msgstr ""
 msgid "<0>When Juicebox projects make payouts to external wallets (like \"vitalik.eth\"), they incur a {JB_FEE}% fee, which is paid to <1>JuiceboxDAO</1>. In exchange, they receive JuiceboxDAO's project tokens, allowing them to govern the protocol. They can also redeem these tokens to reclaim some of the fees.</0><2><3>Payouts to other Juicebox projects don't incur any fees.</3></2><4><5>Learn more about fees</5>.</4>"
 msgstr ""
 
-msgid "<0>When you pay a project, you <1>may</1> receive that project's tokens or NFTs (depending on how the project is set up).</0><2>By default, these tokens represent a partial claim on funds in the treasury, and they are often used for governance rights, community access, or other membership perks.</2><3>All of this can change from project to project. Read everything carefully, and make sure you understand the project's rules before you support it. If you need help, <4>contact us</4>, or stop by the <5>Juicebox Discord server</5>.</3>"
+msgid "<0>When you pay a project, you <1>may</1> receive that project's tokens or NFTs (depending on how the project is set up).</0><2>By default, these tokens represent a partial claim on the project's funds, and they are often used for governance rights, community access, or other membership perks.</2><3>All of this can change from project to project. Read everything carefully, and make sure you understand the project's rules before you support it. If you need help, <4>contact us</4>, or stop by the <5>Juicebox Discord server</5>.</3>"
 msgstr ""
 
 msgid "<0>With Automated Funding Cycles, your funding configuration is locked for a set time period.</0><1><2>This helps build trust with your contributors.</2></1>"
@@ -207,6 +207,9 @@ msgid "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
 msgstr ""
 
 msgid "@{handle} not found"
+msgstr ""
+
+msgid "A percentage of token issuance which is set aside for addresses and other projects chosen by the project owner."
 msgstr ""
 
 msgid "A project's handle is used in its URL, and allows it to be included in search results on the projects page."
@@ -2336,6 +2339,9 @@ msgstr ""
 msgid "Project Token"
 msgstr ""
 
+msgid "Project balance"
+msgstr ""
+
 msgid "Project contracts"
 msgstr ""
 
@@ -3086,10 +3092,10 @@ msgstr ""
 msgid "The message that will be shown to the user after they pay for an NFT."
 msgstr ""
 
-msgid "The number of project tokens reserved for recipients chosen by the project owner when someone pays this project 1 ETH."
+msgid "The number of tokens sent to someone who pays this project 1 ETH."
 msgstr ""
 
-msgid "The number of tokens sent to someone who pays this project 1 ETH."
+msgid "The number of tokens set aside for reserved token recipients when someone pays this project 1 ETH."
 msgstr ""
 
 msgid "The onchain memo for each payment made through this address. The project's payment feed will include the memo alongside the payment."
@@ -3140,9 +3146,6 @@ msgstr ""
 msgid "The redemption rate determines the amount of overflow each token can be redeemed for. <0>Learn more.</0>"
 msgstr ""
 
-msgid "The reserved rate sets aside a percentage of token issuance for recipients chosen by the project owner."
-msgstr ""
-
 msgid "The sum of your expenses is currently different to your funding target. Do you want to sync your funding target to match expenses?<0/><1/>If not, please edit one or more of your payouts."
 msgstr ""
 
@@ -3152,7 +3155,7 @@ msgstr ""
 msgid "The total amount of payouts each cycle."
 msgstr ""
 
-msgid "The total number of tokens issued when this project is paid 1 ETH. By default these tokens are sent to the payer, but some of these tokens may be reserved for recipients chosen by the project owner."
+msgid "The total number of tokens issued when this project is paid 1 ETH. Some of these tokens may be reserved by the project, and the rest are sent to the payer."
 msgstr ""
 
 msgid "The veNFT contract is currently unable to lock project token. Contact the project owner regarding adding this permission."
@@ -3575,7 +3578,7 @@ msgstr ""
 msgid "Uploaded to: <0>{imageUrl}</0>"
 msgstr ""
 
-msgid "Use <0>Percentages</0> if you'd like to pay out all of the ETH in the treasury. Since no funds will be left over, your token holders won't be able to redeem their tokens for ETH. This can make it harder to build trust with your community."
+msgid "Use <0>Percentages</0> if you'd like to pay out all of the ETH in the project. Since no funds will be left over, your token holders won't be able to redeem their tokens for ETH. This can make it harder to build trust with your community."
 msgstr ""
 
 msgid "Use for payments"

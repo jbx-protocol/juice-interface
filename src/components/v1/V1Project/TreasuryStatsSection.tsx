@@ -64,7 +64,7 @@ export function TreasuryStatsSection() {
         )}
       >
         <StatLine
-          statLabel={<Trans>Current balance</Trans>}
+          statLabel={<Trans>Project balance</Trans>}
           statLabelTip={
             <Trans>The amount of ETH that this project has right now.</Trans>
           }

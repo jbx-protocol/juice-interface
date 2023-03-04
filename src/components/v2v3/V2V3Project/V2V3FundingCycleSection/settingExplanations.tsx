@@ -45,9 +45,9 @@ export const REDEMPTION_RATE_EXPLANATION = (
 
 export const MINT_RATE_EXPLANATION = (
   <Trans>
-    The total number of tokens issued when this project is paid 1 ETH. By
-    default these tokens are sent to the payer, but some of these tokens may be
-    reserved for recipients chosen by the project owner.
+    The total number of tokens issued when this project is paid 1 ETH. Some of
+    these tokens may be reserved by the project, and the rest are sent to the
+    payer.
   </Trans>
 )
 
@@ -59,15 +59,15 @@ export const CONTRIBUTOR_RATE_EXPLAINATION = (
 
 export const RESERVED_RATE_EXPLAINATION = (
   <Trans>
-    The reserved rate sets aside a percentage of token issuance for recipients
-    chosen by the project owner.
+    A percentage of token issuance which is set aside for addresses and other
+    projects chosen by the project owner.
   </Trans>
 )
 
 export const RESERVED_TOKENS_EXPLAINATION = (
   <Trans>
-    The number of project tokens reserved for recipients chosen by the project
-    owner when someone pays this project 1 ETH.
+    The number of tokens set aside for reserved token recipients when someone
+    pays this project 1 ETH.
   </Trans>
 )
 

@@ -14,7 +14,7 @@ export function PayoutConfigurationExplainerCollapse({
       <p>
         <Trans>
           Use <strong>Percentages</strong> if you'd like to pay out all of the
-          ETH in the treasury. Since no funds will be left over, your token
+          ETH in the project. Since no funds will be left over, your token
           holders won't be able to redeem their tokens for ETH. This can make it
           harder to build trust with your community.
         </Trans>

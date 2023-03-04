@@ -64,8 +64,8 @@ export default function QAs(): {
             or NFTs (depending on how the project is set up).
           </p>
           <p>
-            By default, these tokens represent a partial claim on funds in the
-            treasury, and they are often used for governance rights, community
+            By default, these tokens represent a partial claim on the project's
+            funds, and they are often used for governance rights, community
             access, or other membership perks.
           </p>
           <p>

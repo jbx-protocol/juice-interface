@@ -5,26 +5,24 @@ body {
   font-family: 'DM Mono', monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  @apply text-primary;
+  @apply text-grey-900;
   @apply bg-smoke-25;
 }
 
 body.dark {
   @apply bg-slate-800;
+  @apply text-slate-100;
 }
 
 div#__next {
   height: 100%;
 }
 
-code {
-  font-family: 'DM Mono', monospace;
-}
-
 div,
 p,
 button,
-a {
+a,
+code {
   font-family: 'DM Mono', monospace;
 }
 

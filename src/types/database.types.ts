@@ -32,6 +32,48 @@ export interface Database {
       [_ in never]: never
     }
   }
+  juice_auth: {
+    Tables: {
+      signing_requests: {
+        Row: {
+          challenge_message: string
+          created_at: string
+          expires_at: string
+          nonce: string
+          updated_at: string
+          wallet_id: string
+        }
+        Insert: {
+          challenge_message: string
+          created_at?: string
+          expires_at?: string
+          nonce: string
+          updated_at?: string
+          wallet_id: string
+        }
+        Update: {
+          challenge_message?: string
+          created_at?: string
+          expires_at?: string
+          nonce?: string
+          updated_at?: string
+          wallet_id?: string
+        }
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      [_ in never]: never
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
   public: {
     Tables: {
       notifications: {

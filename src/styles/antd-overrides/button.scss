@@ -53,22 +53,22 @@
 }
 
 .ant-btn[disabled] {
-  color: var(--text-over-disabled);
+  @apply text-over-disabled;
   border-color: var(--stroke-disabled);
   background: transparent;
 
   &.ant-btn-primary {
-    background: var(--background-disabled);
+    @apply bg-disabled;
     border-color: transparent;
 
     &:hover {
-      background: var(--background-disabled);
+      @apply bg-disabled;
       border-color: transparent;
     }
   }
 
   &:hover {
-    color: var(--text-over-disabled);
+    @apply text-over-disabled;
     border-color: var(--stroke-disabled);
     background: transparent;
     opacity: 0.7;

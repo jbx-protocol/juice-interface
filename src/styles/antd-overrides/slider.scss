@@ -33,28 +33,28 @@
 
 .ant-slider-disabled {
   .ant-slider-rail {
-    background: var(--background-disabled);
+    @apply bg-disabled;
   }
   .ant-slider-track {
-    background: var(--background-disabled);
+    @apply bg-disabled;
   }
 
   .ant-slider-handle {
-    background: var(--background-disabled);
+    @apply bg-disabled;
     border-color: var(--stroke-disabled);
   }
 
   &:hover {
     .ant-slider-rail {
-      background: var(--background-disabled);
+      @apply bg-disabled;
       opacity: 0.7;
     }
     .ant-slider-track {
-      background: var(--background-disabled);
+      @apply bg-disabled;
     }
 
     .ant-slider-handle {
-      background: var(--background-disabled) !important;
+      @apply bg-disabled;
       border-color: transparent !important;
       box-shadow: 0 0 0 0 transparent;
     }

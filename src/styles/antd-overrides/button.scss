@@ -1,7 +1,7 @@
 .ant-btn {
   background: transparent;
   border-color: var(--stroke-action-secondary);
-  color: var(--text-over-action-secondary);
+  @apply text-over-action-secondary;
   @apply font-medium;
   border-radius: var(--radius-sm);
   transition: all 100ms linear;
@@ -16,7 +16,7 @@
   &.ant-btn-loading {
     background: transparent;
     border-color: var(--stroke-action-secondary);
-    color: var(--text-over-action-secondary);
+    @apply text-over-action-secondary;
   }
 }
 

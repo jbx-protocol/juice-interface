@@ -2363,9 +2363,6 @@ msgstr ""
 msgid "Project Owner"
 msgstr ""
 
-msgid "Project Settings"
-msgstr ""
-
 msgid "Project Tags"
 msgstr ""
 

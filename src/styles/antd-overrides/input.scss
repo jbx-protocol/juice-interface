@@ -12,7 +12,7 @@
   background: transparent;
   @apply text-primary;
   border-color: var(--stroke-secondary);
-  border-radius: var(--radius-sm);
+  @apply rounded-sm;
 
   &:hover {
     border-color: var(--stroke-primary) !important;

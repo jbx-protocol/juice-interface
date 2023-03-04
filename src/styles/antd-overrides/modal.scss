@@ -1,7 +1,10 @@
+.ant-modal {
+  @apply rounded-sm;
+}
+
 .ant-modal-content {
   @apply text-primary;
   background: var(--background-l0);
-  border-radius: var(--radius-md);
 
   .ant-modal-header {
     background: transparent;

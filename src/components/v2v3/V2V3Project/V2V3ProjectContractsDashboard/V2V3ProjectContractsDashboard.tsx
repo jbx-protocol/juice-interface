@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/macro'
 import { Table } from 'antd'
 import { BackToProjectButton } from 'components/buttons/BackToProjectButton'
 import EtherscanLink from 'components/EtherscanLink'
@@ -5,7 +6,10 @@ import { ProjectHeader } from 'components/Project/ProjectHeader'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
+import {
+  V2V3ProjectContracts,
+  V2V3ProjectContractsContext,
+} from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import { useContext } from 'react'
 import { v2v3ProjectRoute } from 'utils/routes'
@@ -25,6 +29,7 @@ const CONTRACT_EXCLUSIONS = [
   V2V3ContractName.JBVeNftDeployer,
   V2V3ContractName.JBVeTokenUriResolver,
   V2V3ContractName.JBTiered721DelegateProjectDeployer,
+  V2V3ContractName.JBSingleTokenPaymentTerminalStore,
 ]
 
 export function V2V3ProjectContractsDashboard() {
@@ -52,24 +57,23 @@ export function V2V3ProjectContractsDashboard() {
       ),
     },
   ]
-
   const dataSource = [
     ...Object.keys(projectContracts)
-      .map((k, idx) => {
+      .map(k => {
         return {
-          key: `${idx}`,
+          key: k,
           name:
             k === V2V3ContractName.JBETHPaymentTerminal
               ? 'Primary Terminal'
               : k,
-          address: contracts[k as V2V3ContractName]?.address,
+          address: projectContracts[k as keyof V2V3ProjectContracts]?.address,
         }
       })
       .filter(c => c.address !== undefined),
     ...Object.keys(contracts)
-      .map((k, idx) => {
+      .map(k => {
         return {
-          key: `${idx}`,
+          key: k,
           name: k,
           address: contracts[k as V2V3ContractName]?.address,
         }
@@ -79,7 +83,7 @@ export function V2V3ProjectContractsDashboard() {
           c.address !== undefined &&
           !CONTRACT_EXCLUSIONS.includes(c.name as V2V3ContractName),
       ),
-  ]
+  ].sort((a, b) => a.name.localeCompare(b.name))
 
   return (
     <div className="my-0 mx-auto flex max-w-5xl flex-col gap-y-5 px-5 pb-5">
@@ -94,7 +98,9 @@ export function V2V3ProjectContractsDashboard() {
           projectPageUrl={v2v3ProjectRoute({ projectId, handle })}
         />
       </div>
-      <h2 className="text-grey-900 dark:text-slate-100">Project contracts</h2>
+      <h2 className="text-grey-900 dark:text-slate-100">
+        <Trans>Project contracts</Trans>
+      </h2>
       <Table dataSource={dataSource} columns={columns} pagination={false} />
     </div>
   )

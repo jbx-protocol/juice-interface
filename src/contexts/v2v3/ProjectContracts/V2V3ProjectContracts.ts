@@ -49,6 +49,7 @@ export function useV2V3ProjectContracts({ projectId }: { projectId: number }): {
     JBETHPaymentTerminal,
   })
 
+  // Introduced in JBController V3.1. Will be undefined for v2v3.0
   const {
     JBFundAccessConstraintsStore,
     loading: JBFundAccessConstraintsStoreLoading,

@@ -11,16 +11,18 @@ import { Head } from 'components/common'
 import config from 'config/seo_meta.json'
 import { NETWORKS } from 'constants/networks'
 import {
+  useLoadSafeWallet,
   useLoadWalletFromLocalStorage,
   useStoreWalletsInLocalStorage,
-  useLoadSafeWallet,
 } from 'hooks/Network'
 import type { AppProps } from 'next/app'
-import React, { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { unpadLeadingZerosString } from 'utils/bigNumbers'
 import { installJuiceboxWindowObject } from '../lib/juicebox'
 import '../styles/globals.css'
 
+import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
+import { SessionContextProvider } from '@supabase/auth-helpers-react'
 import '../styles/antd.css'
 import '../styles/index.scss'
 
@@ -59,6 +61,9 @@ init({
 })
 
 export default function MyApp({ Component, pageProps }: AppProps) {
+  // Create a new supabase browser client on every first render.
+  const [supabaseClient] = useState(() => createBrowserSupabaseClient())
+
   const updateAccountCenter = useAccountCenter()
   const loadWalletFromLocalStorage = useLoadWalletFromLocalStorage()
   const storeWalletsInLocalStorage = useStoreWalletsInLocalStorage()
@@ -94,7 +99,12 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     <>
       {/* Default HEAD - overwritten by specific page SEO */}
       <Head />
-      <Component {...pageProps} />
+      <SessionContextProvider
+        supabaseClient={supabaseClient}
+        initialSession={pageProps.initialSession}
+      >
+        <Component {...pageProps} />
+      </SessionContextProvider>
     </>
   )
 }

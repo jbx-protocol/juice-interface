@@ -15,7 +15,7 @@
 }
 
 .ant-radio-wrapper-disabled span {
-  color: var(--text-disabled);
+  @apply text-disabled;
 }
 
 .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled),

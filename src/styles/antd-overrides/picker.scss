@@ -14,7 +14,7 @@
 }
 
 .ant-picker-today-btn-disabled {
-  color: var(--text-disabled);
+  @apply text-disabled;
 }
 
 .ant-picker-cell-disabled {

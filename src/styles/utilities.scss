@@ -8,6 +8,9 @@
 .text-tertiary {
   @apply text-grey-500 dark:text-slate-400;
 }
+.text-disabled {
+  @apply text-grey-400 dark:text-slate-200;
+}
 .text-action-primary {
   @apply text-haze-400 dark:text-haze-300;
 }

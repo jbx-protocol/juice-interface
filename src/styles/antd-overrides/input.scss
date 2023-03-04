@@ -131,7 +131,7 @@ input.ant-input[type='number'] {
 
 .ant-picker-cell-disabled,
 .ant-picker-cell:not(.ant-picker-cell-in-view) {
-  @apply text-tertiary;
+  @apply text-disabled;
 }
 
 .ant-picker-time-panel-cell-inner {

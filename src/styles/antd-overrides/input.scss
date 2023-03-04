@@ -1,7 +1,7 @@
 // Special case where ant input with prefix/suffix needs to be overriden.
 .ant-input-affix-wrapper .ant-input,
 .ant-input-textarea textarea {
-  color: var(--text-primary);
+  @apply text-primary;
 }
 
 .ant-input-number,
@@ -10,7 +10,7 @@
 .ant-input-affix-wrapper-disabled,
 .ant-input[disabled] {
   background: transparent;
-  color: var(--text-primary);
+  @apply text-primary;
   border-color: var(--stroke-secondary);
   border-radius: var(--radius-sm);
 
@@ -79,12 +79,12 @@
 }
 
 .ant-form {
-  color: var(--text-primary);
+  @apply text-primary;
 }
 
 .ant-form-item {
   margin-bottom: 16px;
-  color: var(--text-primary);
+  @apply text-primary;
 }
 
 .ant-form-item-extra {
@@ -119,14 +119,14 @@ input.ant-input[type='number'] {
 }
 
 .ant-picker input {
-  color: var(--text-primary);
+  @apply text-primary;
 }
 
 .ant-picker-suffix,
 .ant-picker-header-view,
 .ant-picker-content th,
 .ant-picker-cell-in-view:not(.ant-picker-cell-disabled) {
-  color: var(--text-primary);
+  @apply text-primary;
 }
 
 .ant-picker-cell-disabled,
@@ -168,7 +168,7 @@ input:-webkit-autofill-selected {
 }
 
 .ant-form-item-label > label {
-  color: var(--text-primary);
+  @apply text-primary;
 }
 
 .ant-input-textarea {
@@ -184,7 +184,7 @@ textarea.ant-input::placeholder {
 }
 
 .ant-upload {
-  color: var(--text-primary);
+  @apply text-primary;
 }
 
 .ant-upload-select-picture-card .ant-upload {

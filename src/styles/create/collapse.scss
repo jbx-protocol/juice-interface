@@ -6,7 +6,7 @@
   }
 
   .ant-collapse-header-text {
-    color: var(--text-primary);
+    @apply text-primary;
     span {
       color: var(--text-secondary);
     }

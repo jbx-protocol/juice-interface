@@ -8,9 +8,9 @@
 
 .ant-radio-wrapper,
 .ant-radio-button-wrapper {
-  color: var(--text-primary);
+  @apply text-primary;
   &:hover {
-    color: var(--text-primary);
+    @apply text-primary;
   }
 }
 

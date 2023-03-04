@@ -1,5 +1,5 @@
 .ant-modal-content {
-  color: var(--text-primary);
+  @apply text-primary;
   background: var(--background-l0);
   border-radius: var(--radius-md);
 

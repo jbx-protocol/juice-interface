@@ -1,5 +1,5 @@
 .ant-layout-header {
-  color: var(--text-primary);
+  @apply text-primary;
   z-index: 10;
 }
 
@@ -8,7 +8,7 @@
 }
 
 .ant-layout-sider-zero-width-trigger {
-  color: var(--text-primary);
+  @apply text-primary;
   background-color: var(--background-l0);
 }
 

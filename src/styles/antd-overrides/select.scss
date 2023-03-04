@@ -3,12 +3,12 @@
 .ant-select:not(.ant-select-customize-input) {
   .ant-select-selector {
     background-color: transparent;
-    color: var(--text-primary);
+    @apply text-primary;
     border-color: var(--stroke-secondary);
   }
 
   .ant-select-arrow {
-    color: var(--text-primary);
+    @apply text-primary;
   }
 }
 
@@ -42,16 +42,16 @@
   box-shadow: 0px 8px 12px var(--boxShadow-primary);
 
   .ant-select-item-option {
-    color: var(--text-primary);
+    @apply text-primary;
   }
 
   .ant-select-item-option-active {
-    color: var(--text-primary);
+    @apply text-primary;
     background-color: var(--background-l2);
   }
 
   .ant-select-item-option-selected {
-    color: var(--text-primary);
+    @apply text-primary;
     background-color: var(--background-l2);
   }
 }

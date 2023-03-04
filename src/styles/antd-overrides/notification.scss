@@ -2,7 +2,7 @@
   background: var(--background-l0);
 
   .ant-notification-notice-message {
-    color: var(--text-primary);
+    @apply text-primary;
   }
   .ant-notification-notice-description {
     color: var(--text-secondary);

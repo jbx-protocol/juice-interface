@@ -6,7 +6,7 @@
 
     .ant-collapse-header {
       font-weight: 500;
-      color: var(--text-primary);
+      @apply text-primary;
     }
   }
 
@@ -14,7 +14,7 @@
   .ant-collapse-content-box {
     background-color: transparent;
     border: none;
-    color: var(--text-primary);
+    @apply text-primary;
   }
 }
 
@@ -45,7 +45,7 @@
 .top-nav {
   // Resources dropdown and options (dotdotdot) menu
   .ant-collapse-header {
-    color: var(--text-primary) !important;
+    @apply text-primary;
     padding-bottom: 8px !important;
   }
 
@@ -158,7 +158,7 @@
 }
 
 .ant-collapse-header-text-primary .ant-collapse-item .ant-collapse-header {
-  color: var(--text-primary);
+  @apply text-primary;
 }
 
 .ant-collapse-header-p-0 .ant-collapse-item .ant-collapse-header {

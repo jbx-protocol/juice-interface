@@ -10,5 +10,5 @@
 }
 
 .ant-checkbox-wrapper {
-  color: var(--text-primary);
+  @apply text-primary;
 }

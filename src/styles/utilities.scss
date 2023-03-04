@@ -52,6 +52,6 @@
 }
 .hover-text-primary {
   &:hover {
-    color: var(--text-primary);
+    @apply text-primary;
   }
 }

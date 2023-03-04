@@ -16,7 +16,7 @@
 .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn,
 .ant-tabs-tab .ant-tabs-tab-btn {
   font-weight: inherit;
-  color: var(--text-primary);
+  @apply text-primary;
 }
 
 .ant-tabs-tab.ant-tabs-tab-active {
@@ -27,7 +27,7 @@
 .ant-tabs-tab .ant-tabs-tab-btn {
   color: var(--text-secondary);
   &:hover {
-    color: var(--text-primary);
+    @apply text-primary;
   }
 }
 

@@ -1,7 +1,7 @@
 .ant-statistic-content {
   font-family: 'DM Mono', monospace;
   font-size: 1.2rem;
-  color: var(--text-primary);
+  @apply text-primary;
   font-weight: 500;
 }
 

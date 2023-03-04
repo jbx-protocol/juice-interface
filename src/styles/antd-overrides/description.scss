@@ -7,7 +7,7 @@
 }
 
 .ant-descriptions-item-content {
-  color: var(--text-primary);
+  @apply text-primary;
 }
 
 th.ant-descriptions-item-label {

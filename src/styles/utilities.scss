@@ -14,29 +14,8 @@
 .text-over-action-primary {
   @apply text-white dark:text-haze-900
 }
-.hover-text-primary {
-  &:hover {
-    @apply text-primary;
-  }
-}
-.hover-text-action-primary {
-  &:hover {
-    @apply text-action-primary;
-  }
-}
-.text-decoration-secondary {
-  text-decoration-color: var(--stroke-secondary);
-}
+
 // BACKGROUNDS
 .bg-action-primary {
   @apply bg-haze-400 dark:bg-haze-400;
-}
-.hover-bg-l2 {
-  &:hover {
-    background-color: var(--background-l2);
-  }
-}
-
-.selected-box-shadow {
-  box-shadow: 2px 0px 10px 0px var(--boxShadow-primary);
 }

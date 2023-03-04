@@ -10,6 +10,9 @@
 .text-action-primary {
   @apply text-haze-400 dark:text-haze-300;
 }
+.text-over-action-primary {
+  @apply text-white;
+}
 
 .color-unset {
   color: unset;

@@ -24,20 +24,20 @@
   &:not(.ant-btn[disabled]) {
     background: var(--background-action-primary);
     border-color: transparent;
-    color: var(--text-over-action-primary);
+    @apply text-over-action-primary;
     box-shadow: none;
   }
 
   &:hover:not(.ant-btn[disabled]) {
     background: var(--background-action-highlight);
-    color: var(--text-over-action-primary);
+    @apply text-over-action-primary;
   }
 
   &:focus,
   &.ant-btn-loading {
     background: var(--background-action-primary);
     border-color: var(--stroke-action-primary);
-    color: var(--text-over-action-primary);
+    @apply text-over-action-primary;
   }
 }
 

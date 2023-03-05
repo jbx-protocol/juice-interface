@@ -51,7 +51,11 @@ export function ProjectBanners() {
   if (!hasBanners) return null
 
   return (
-    <Space direction="vertical" size="small" className="w-full">
+    <Space
+      direction="vertical"
+      size="small"
+      className="mx-auto w-full max-w-5xl"
+    >
       {showV2BugNoticeBanner && <V2BugNoticeBanner />}
       {showRelaunchFundingCycleBanner && <RelaunchFundingCycleBanner />}
     </Space>

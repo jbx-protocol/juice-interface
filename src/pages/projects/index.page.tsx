@@ -80,6 +80,7 @@ function Projects() {
   const [includeV1, setIncludeV1] = useState<boolean>(true)
   const [includeV2, setIncludeV2] = useState<boolean>(true)
   const [showArchived, setShowArchived] = useState<boolean>(false)
+  const [reversed, setReversed] = useState<boolean>(false)
 
   const pv: PV[] | undefined = useMemo(() => {
     const _pv: PV[] = []
@@ -157,6 +158,8 @@ function Projects() {
                 setIncludeV2={setIncludeV2}
                 showArchived={showArchived}
                 setShowArchived={setShowArchived}
+                reversed={reversed}
+                setReversed={setReversed}
                 orderBy={orderBy}
                 setOrderBy={setOrderBy}
               />
@@ -174,6 +177,7 @@ function Projects() {
               searchText={searchText}
               orderBy={orderBy}
               showArchived={showArchived}
+              reversed={reversed}
             />
           ) : selectedTab === 'holdings' ? (
             <HoldingsProjects />

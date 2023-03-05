@@ -2687,6 +2687,9 @@ msgstr ""
 msgid "Restricted actions"
 msgstr ""
 
+msgid "Reverse"
+msgstr ""
+
 msgid "Review & Deploy"
 msgstr ""
 

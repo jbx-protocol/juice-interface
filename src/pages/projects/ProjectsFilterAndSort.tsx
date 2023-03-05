@@ -21,6 +21,8 @@ export default function ProjectsFilterAndSort({
   setIncludeV2,
   showArchived,
   setShowArchived,
+  reversed,
+  setReversed,
   orderBy,
   setOrderBy,
 }: {
@@ -30,6 +32,8 @@ export default function ProjectsFilterAndSort({
   setIncludeV2: CheckboxOnChange
   showArchived: boolean
   setShowArchived: CheckboxOnChange
+  reversed: boolean
+  setReversed: CheckboxOnChange
   orderBy: OrderByOption
   setOrderBy: (value: OrderByOption) => void
 }) {
@@ -86,6 +90,11 @@ export default function ProjectsFilterAndSort({
               label={t`Archived`}
               checked={showArchived}
               onChange={setShowArchived}
+            />
+            <FilterCheckboxItem
+              label={t`Reverse`}
+              checked={reversed}
+              onChange={setReversed}
             />
           </div>
         </CollapsePanel>

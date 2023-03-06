@@ -31,9 +31,9 @@ import { PayoutsList } from './components/PayoutsList'
 import { usePayoutsForm } from './hooks'
 
 const treasuryOptions = [
+  { name: t`None`, value: 'zero', icon: <StopOutlined /> },
   { name: t`Limited`, value: 'amount', icon: <Icons.Target /> },
   { name: t`Unlimited`, value: 'unlimited', icon: <Icons.Infinity /> },
-  { name: t`None`, value: 'zero', icon: <StopOutlined /> },
 ]
 
 export const PayoutsPage = () => {
@@ -52,7 +52,7 @@ export const PayoutsPage = () => {
   )
 
   const [treasuryOption, setTreasuryOption] = useState<TreasurySelection>(
-    initialTreasurySelection ?? 'amount',
+    initialTreasurySelection ?? 'zero',
   )
 
   const payoutsList = Form.useWatch('payoutsList', form) ?? []

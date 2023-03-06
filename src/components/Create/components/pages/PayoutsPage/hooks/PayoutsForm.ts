@@ -19,7 +19,7 @@ export const usePayoutsForm = () => {
   useDebugValue(form.getFieldsValue())
 
   const initialValues: PayoutsFormProps | undefined = useMemo(() => {
-    const selection = treasurySelection ?? 'amount'
+    const selection = treasurySelection ?? 'zero'
     if (!splits.length) {
       return { selection }
     }

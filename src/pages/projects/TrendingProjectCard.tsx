@@ -5,6 +5,7 @@ import ETHAmount from 'components/currency/ETHAmount'
 import Loading from 'components/Loading'
 import ProjectLogo from 'components/ProjectLogo'
 import { PV_V2 } from 'constants/pv'
+import useMobile from 'hooks/Mobile'
 import { useProjectHandleText } from 'hooks/ProjectHandleText'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { Project } from 'models/subgraph-entities/vX/project'
@@ -16,7 +17,6 @@ import { TRENDING_WINDOW_DAYS } from './RankingExplanation'
 
 export default function TrendingProjectCard({
   project,
-  size,
   rank,
 }: {
   project: Pick<
@@ -31,7 +31,6 @@ export default function TrendingProjectCard({
     | 'pv'
     | 'projectId'
   >
-  size?: 'sm' | 'lg'
   rank: number
 }) {
   const { data: metadata } = useProjectMetadata(project.metadataUri)
@@ -39,6 +38,8 @@ export default function TrendingProjectCard({
     handle: project.handle,
     projectId: project.projectId,
   })
+
+  const isMobile = useMobile()
 
   // If the total paid is greater than 0, but less than 10 ETH, show two decimal places.
   const precision =
@@ -88,27 +89,45 @@ export default function TrendingProjectCard({
     >
       <a>
         <div className="cursor-pointer overflow-hidden rounded-sm">
-          <div className="flex h-full items-center overflow-hidden whitespace-pre border border-solid border-smoke-300 py-6 px-5 transition-colors hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100">
-            <div className="mr-5 flex items-center">
-              <div className="mr-4 w-6 text-center text-xl font-normal text-black dark:text-slate-100">
-                {rank}
+          <div
+            className={`flex h-full items-center overflow-hidden whitespace-pre transition-colors ${
+              isMobile
+                ? 'py-4'
+                : 'border border-solid border-smoke-300 px-5 py-6 hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100'
+            }`}
+          >
+            {isMobile ? (
+              <div className="relative mr-5 h-24 w-24">
+                <div className="absolute left-0 top-0 flex h-8 w-8 items-center justify-center rounded-br bg-white text-xl font-normal font-bold text-black dark:bg-slate-800 dark:text-slate-100">
+                  {rank}
+                </div>
+                <ProjectLogo
+                  className={isMobile ? 'h-24 w-24' : 'h-28 w-28'}
+                  uri={metadata?.logoUri}
+                  name={metadata?.name}
+                  projectId={project.projectId}
+                />
               </div>
-              <ProjectLogo
-                className={classNames(
-                  size === 'sm' ? 'h-16 w-16' : 'h-28 w-28',
-                )}
-                uri={metadata?.logoUri}
-                name={metadata?.name}
-                projectId={project.projectId}
-              />
-            </div>
+            ) : (
+              <div className="mr-5 flex items-center">
+                <div className="mr-4 w-6 text-center text-xl font-normal text-black dark:text-slate-100">
+                  {rank}
+                </div>
+                <ProjectLogo
+                  className="h-28 w-28"
+                  uri={metadata?.logoUri}
+                  name={metadata?.name}
+                  projectId={project.projectId}
+                />
+              </div>
+            )}
 
             <div className="min-w-0 flex-1 font-normal">
               {metadata ? (
                 <h2
                   className={classNames(
                     'm-0 overflow-hidden text-ellipsis text-black dark:text-slate-100',
-                    size === 'sm' ? 'text-base' : 'text-xl',
+                    isMobile ? 'text-base' : 'text-xl',
                   )}
                 >
                   {metadata.name}
@@ -117,11 +136,9 @@ export default function TrendingProjectCard({
                 <Skeleton paragraph={false} title={{ width: 120 }} active />
               )}
 
-              {size === 'sm' ? null : (
-                <div>
-                  <span className="font-medium text-black dark:text-slate-100">
-                    {handleText}
-                  </span>
+              {isMobile ? null : (
+                <div className="font-medium text-black dark:text-slate-100">
+                  {handleText}
                 </div>
               )}
 

@@ -27,7 +27,7 @@ export default function TrendingSection() {
   )
 
   return (
-    <section className="my-0 mx-auto p-12">
+    <section className="my-0 mx-auto py-12 px-5">
       <Row className="my-0 mx-auto max-w-5xl gap-y-10" gutter={40}>
         <Col xs={24} md={12} className="px-0 md:px-5">
           <div className="flex flex-col gap-9">
@@ -46,7 +46,6 @@ export default function TrendingSection() {
               {trendingProjects?.map((p, i) => (
                 <TrendingProjectCard
                   project={p}
-                  size="sm"
                   rank={i + 1}
                   key={`${p.id}_${p.pv}`}
                 />

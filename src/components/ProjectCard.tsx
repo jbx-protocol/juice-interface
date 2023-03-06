@@ -5,6 +5,7 @@ import { Skeleton } from 'antd'
 import { PV_V1, PV_V2 } from 'constants/pv'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
+import useMobile from 'hooks/Mobile'
 import { useProjectHandleText } from 'hooks/ProjectHandleText'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
@@ -82,6 +83,8 @@ export default function ProjectCard({
     projectId: projectCardData?.projectId,
   })
 
+  const isMobile = useMobile()
+
   if (!projectCardData) return null
 
   // If the total paid is greater than 0, but less than 10 ETH, show two decimal places.
@@ -126,10 +129,16 @@ export default function ProjectCard({
   return (
     <Link href={projectCardHref} as={projectCardUrl}>
       <a>
-        <div className="relative flex cursor-pointer items-center overflow-hidden whitespace-pre rounded-sm border border-solid border-smoke-300 py-6 px-5 transition-colors hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100">
+        <div
+          className={`relative flex cursor-pointer items-center overflow-hidden whitespace-pre ${
+            isMobile
+              ? 'py-4'
+              : 'rounded-sm border border-solid border-smoke-300 py-6 px-5 transition-colors hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100'
+          }`}
+        >
           <div className="mr-5">
             <ProjectLogo
-              className="h-28 w-28"
+              className={isMobile ? 'h-24 w-24' : 'h-28 w-28'}
               uri={metadata?.logoUri}
               name={metadata?.name}
               projectId={projectCardData.projectId}

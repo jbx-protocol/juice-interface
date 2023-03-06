@@ -1553,12 +1553,6 @@ msgstr ""
 msgid "How should I set up my project?"
 msgstr ""
 
-msgid "How would you like to distribute payments?"
-msgstr ""
-
-msgid "How the {reservedPercentage}% of your project's reserved tokens will be split."
-msgstr ""
-
 msgid "I accept this project's <0>unique risks</0>."
 msgstr ""
 
@@ -1635,9 +1629,6 @@ msgid "Included in search results on the <0>Projects</0> page."
 msgstr ""
 
 msgid "Indie creators and builders"
-msgstr ""
-
-msgid "Infinite (no limit)"
 msgstr ""
 
 msgid "Initial Mint Rate"

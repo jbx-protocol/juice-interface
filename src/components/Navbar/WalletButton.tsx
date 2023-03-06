@@ -3,9 +3,9 @@ import { Trans } from '@lingui/macro'
 import { Button, Space } from 'antd'
 import { useWallet } from 'hooks/Wallet'
 
-import Wallet from './Wallet'
+import WalletMenu from './WalletMenu'
 
-export default function Account() {
+export default function WalletButton() {
   const {
     userAddress,
     isConnected,
@@ -36,10 +36,10 @@ export default function Account() {
           Wrong network
         </Button>
 
-        <Wallet userAddress={userAddress} />
+        <WalletMenu userAddress={userAddress} />
       </Space>
     )
   }
 
-  return <Wallet userAddress={userAddress} />
+  return <WalletMenu userAddress={userAddress} />
 }

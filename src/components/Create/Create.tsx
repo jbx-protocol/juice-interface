@@ -7,18 +7,16 @@ import { useRouter } from 'next/router'
 import { helpPagePath } from 'utils/routes'
 import {
   FundingCyclesPage,
-  FundingTargetPage,
   NftRewardsPage,
-  PayoutsPage,
   ProjectDetailsPage,
   ProjectTokenPage,
   ReconfigurationRulesPage,
   ReviewDeployPage,
 } from './components'
 import { CreateBadge } from './components/CreateBadge'
+import { PayoutsPage } from './components/pages/PayoutsPage'
 import { DeploySuccess } from './components/pages/ReviewDeploy/components/DeploySuccess'
 import { PayoutsMigrationModal } from './components/PayoutsMigrationModal'
-import { RecallCard } from './components/RecallCard'
 import { Wizard } from './components/Wizard'
 import { useLoadingInitialStateFromQuery } from './hooks/LoadInitialStateFromQuery'
 
@@ -89,31 +87,15 @@ export function Create() {
             <FundingCyclesPage />
           </Wizard.Page>
           <Wizard.Page
-            name="fundingTarget"
-            title={t`Funding Target`}
-            description={
-              <div className="flex flex-col gap-4">
-                <Trans>
-                  Select the option that best suits your project’s funding
-                  requirements.
-                </Trans>
-                <RecallCard show={['fundingCycles']} />
-              </div>
-            }
-          >
-            <FundingTargetPage />
-          </Wizard.Page>
-          <Wizard.Page
             name="payouts"
             title={t`Payouts`}
             description={
-              <div className="flex flex-col gap-4">
-                <Trans>
-                  Choose which addresses to pay and how to split the total
-                  payout amount each funding cycle.
-                </Trans>
-                <RecallCard show={['fundingCycles', 'fundingTarget']} />
-              </div>
+              <Trans>
+                Add payouts to wallet addresses or Juicebox projects to receive
+                funds from your treasury each cycle. Any unallocated funds will
+                stay in your treasury for use in a future cycle, or to be
+                claimed by token holders.
+              </Trans>
             }
           >
             <PayoutsPage />

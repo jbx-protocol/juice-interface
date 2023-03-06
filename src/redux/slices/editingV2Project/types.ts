@@ -16,6 +16,7 @@ import {
   ETHPayoutGroupedSplits,
   ReservedTokensGroupedSplits,
 } from 'models/splits'
+import { TreasurySelection } from 'models/treasurySelection'
 import {
   SerializedV2V3FundAccessConstraint,
   SerializedV2V3FundingCycleData,
@@ -34,6 +35,7 @@ export type NftRewardsData = {
 
 export interface CreateState {
   fundingCyclesPageSelection: 'automated' | 'manual' | undefined
+  treasurySelection: TreasurySelection | undefined
   fundingTargetSelection: FundingTargetType | undefined
   payoutsSelection: PayoutsSelection | undefined
   projectTokensSelection: ProjectTokensSelection | undefined

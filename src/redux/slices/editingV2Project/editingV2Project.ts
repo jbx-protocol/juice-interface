@@ -12,6 +12,7 @@ import { PayoutsSelection } from 'models/payoutsSelection'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
 import { Split } from 'models/splits'
+import { TreasurySelection } from 'models/treasurySelection'
 import {
   SerializedV2V3FundAccessConstraint,
   SerializedV2V3FundingCycleData,
@@ -114,6 +115,12 @@ const editingV2ProjectSlice = createSlice({
         state.fundAccessConstraints[0].distributionLimitCurrency =
           action.payload
       }
+    },
+    setTreasurySelection: (
+      state,
+      action: PayloadAction<TreasurySelection | undefined>,
+    ) => {
+      state.treasurySelection = action.payload
     },
     setFundingTargetSelection: (
       state,

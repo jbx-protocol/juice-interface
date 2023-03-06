@@ -9,7 +9,7 @@ import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 
-interface ReduxDistributionLimit {
+export interface ReduxDistributionLimit {
   amount: BigNumber
   currency: V2V3CurrencyOption
 }

@@ -5,8 +5,6 @@ export const ThemeProvider: React.FC = ({ children }) => {
   const juiceTheme = useJuiceTheme()
 
   return (
-    <ThemeContext.Provider value={juiceTheme}>
-      <>{children}</>
-    </ThemeContext.Provider>
+    <ThemeContext.Provider value={juiceTheme}>{children}</ThemeContext.Provider>
   )
 }

@@ -1,7 +1,7 @@
 .ant-tooltip-inner {
   @apply text-primary;
   border-radius: 1px;
-  background: var(--background-l0);
+  @apply bg-l0;
   border: 1px solid var(--stroke-tertiary);
   padding: 12px 16px;
   box-shadow: 0 4px 12px #00000064;

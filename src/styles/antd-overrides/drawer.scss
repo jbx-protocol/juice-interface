@@ -1,5 +1,5 @@
 .ant-drawer-content {
-  background: var(--background-l0);
+  @apply bg-l0;
 }
 
 .ant-drawer-close {
@@ -7,7 +7,7 @@
 }
 
 .ant-drawer-header {
-  background: var(--background-l0);
+  @apply bg-l0;
 }
 
 .ant-drawer {

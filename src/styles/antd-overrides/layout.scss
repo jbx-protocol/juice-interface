@@ -9,7 +9,7 @@
 
 .ant-layout-sider-zero-width-trigger {
   @apply text-primary;
-  background-color: var(--background-l0);
+  @apply bg-l0;
 }
 
 .settings-layout .ant-layout-sider-zero-width-trigger {

@@ -42,7 +42,7 @@ a {
 }
 
 input {
-  background: var(--background-l0);
+  @apply bg-l0;
   @apply text-primary;
 }
 

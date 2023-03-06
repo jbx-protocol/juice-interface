@@ -4,7 +4,7 @@
 
 .ant-modal-content {
   @apply text-primary;
-  background: var(--background-l0);
+  @apply bg-l0;
 
   .ant-modal-header {
     background: transparent;

@@ -54,14 +54,14 @@
 
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected,
 .ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
-  background-color: var(--background-l2);
+  @apply bg-l2;
   @apply text-primary;
   @apply font-medium;
 }
 
 .ant-menu-light .ant-menu-item:hover {
   @apply text-primary;
-  background-color: var(--background-l2);
+  @apply bg-l2;
 }
 
 .ant-menu,

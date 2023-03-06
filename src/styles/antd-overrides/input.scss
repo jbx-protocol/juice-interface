@@ -116,7 +116,7 @@ input.ant-input[type='number'] {
 .ant-picker-dropdown,
 .ant-picker-panel-container {
   @apply text-secondary;
-  background-color: var(--background-l0);
+  @apply bg-l0;
 }
 
 .ant-picker input {
@@ -193,7 +193,7 @@ textarea.ant-input::placeholder {
 }
 
 .ant-upload.ant-upload-select-picture-card {
-  background: var(--background-l1);
+  @apply bg-l1;
   width: 100%;
   min-height: 104px;
   height: unset;

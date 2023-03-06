@@ -1,5 +1,5 @@
 .ant-notification-notice {
-  background: var(--background-l0);
+  @apply bg-l0;
 
   .ant-notification-notice-message {
     @apply text-primary;

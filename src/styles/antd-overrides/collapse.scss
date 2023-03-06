@@ -57,14 +57,14 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 2px;
-    background-color: var(--background-l0);
+    @apply bg-l0;
     border-radius: 2px;
   }
   .ant-collapse-content-box {
     border: 1px solid var(--stroke-tertiary);
     padding: 0;
     width: 100%;
-    background-color: var(--background-l0);
+    @apply bg-l0;
   }
 
   .ant-select-arrow {
@@ -109,7 +109,7 @@
 .projects-filter-collapse .ant-collapse-content {
   position: absolute;
   z-index: 999;
-  background-color: var(--background-l0);
+  @apply bg-l0;
   width: 180px;
   box-shadow: 0px 8px 12px var(--boxShadow-primary);
 
@@ -117,10 +117,6 @@
     padding-top: 8px;
     padding-bottom: 8px;
   }
-}
-
-.projects-filter-collapse.dark .ant-collapse-content {
-  background-color: var(--background-l1);
 }
 
 

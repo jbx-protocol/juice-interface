@@ -1,6 +1,6 @@
 .ant-slider {
   .ant-slider-rail {
-    background: var(--background-action-secondary);
+    @apply bg-action-secondary;
   }
   .ant-slider-track {
     @apply bg-action-primary;
@@ -13,7 +13,7 @@
 
   &:hover {
     .ant-slider-rail {
-      background: var(--background-action-secondary);
+      @apply bg-action-secondary;
     }
     .ant-slider-track {
       @apply bg-action-primary;

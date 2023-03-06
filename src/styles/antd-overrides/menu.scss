@@ -38,7 +38,7 @@
 }
 
 .menu-item-sider:hover {
-  background: var(--background-l2) !important;
+  @apply bg-l2;
 }
 
 .ant-menu-item-group-title {

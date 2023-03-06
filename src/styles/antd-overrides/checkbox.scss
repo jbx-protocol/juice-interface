@@ -1,5 +1,5 @@
 .ant-checkbox-checked .ant-checkbox-inner {
-  background-color: var(--background-action-primary);
+  @apply bg-action-primary;
   @apply stroke-action-primary;
 }
 

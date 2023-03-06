@@ -3,7 +3,7 @@
 }
 
 .ant-radio-inner::after {
-  background-color: var(--background-action-primary);
+  @apply bg-action-primary;
 }
 
 .ant-radio-wrapper,

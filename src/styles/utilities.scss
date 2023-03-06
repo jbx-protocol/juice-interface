@@ -51,6 +51,10 @@
 .bg-action-primary {
   @apply bg-haze-400 dark:bg-haze-400;
 }
+.bg-action-secondary {
+  @apply bg-haze-300 dark:bg-haze-300;
+}
+
 .bg-disabled {
   @apply bg-grey-300 dark:bg-slate-500;
 }

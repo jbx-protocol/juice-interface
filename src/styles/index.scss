@@ -83,7 +83,7 @@ h6 {
 
 ::selection {
   @apply text-primary;
-  background: var(--background-action-secondary);
+  @apply bg-action-secondary;
 }
 
 html,

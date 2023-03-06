@@ -11,21 +11,21 @@
 .ant-input[disabled] {
   background: transparent;
   @apply text-primary;
-  border-color: var(--stroke-secondary);
+  @apply stroke-secondary;
   border-radius: 1px;
 
   &:hover {
-    border-color: var(--stroke-primary) !important;
+    @apply stroke-primary;
   }
 
   &.ant-input-number-focused {
     box-shadow: 0 0 0 1px var(--stroke-action-secondary);
-    border-color: var(--stroke-action-secondary);
+    @apply stroke-action-secondary;
   }
 
   &.ant-input-affix-wrapper-focused {
     box-shadow: 0 0 0 1px var(--stroke-action-secondary);
-    border-color: var(--stroke-action-secondary);
+    @apply stroke-action-secondary;
   }
 
   &:focus {
@@ -148,7 +148,7 @@ input.ant-input[type='number'] {
 }
 
 .ant-picker-cell-today .ant-picker-cell-inner::before {
-  border-color: var(--stroke-tertiary) !important;
+  @apply stroke-tertiary;
 }
 
 input:-internal-autofill,
@@ -229,7 +229,8 @@ textarea.ant-input::placeholder {
 }
 
 .ant-input-search-button {
-  border: 1px solid var(--stroke-primary);
+  border: 1px solid;
+  @apply stroke-primary;
   color: var(--icon-action-primary) !important;
 }
 

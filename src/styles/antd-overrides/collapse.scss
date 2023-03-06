@@ -1,8 +1,8 @@
 .ant-collapse {
-  border-color: var(--stroke-secondary);
+  @apply stroke-secondary;
 
   .ant-collapse-item {
-    border-color: var(--stroke-secondary);
+    @apply stroke-secondary;
 
     .ant-collapse-header {
       @apply font-medium;

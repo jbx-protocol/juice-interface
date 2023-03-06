@@ -4,7 +4,7 @@
   .ant-select-selector {
     background-color: transparent;
     @apply text-primary;
-    border-color: var(--stroke-secondary);
+    @apply stroke-secondary;
   }
 
   .ant-select-arrow {
@@ -22,7 +22,7 @@
 .ant-select.small {
   .ant-select-selector {
     height: 24px;
-    border-color: var(--stroke-tertiary) !important;
+    @apply stroke-tertiary;
   }
   .ant-select-selection-item {
     line-height: 22px;

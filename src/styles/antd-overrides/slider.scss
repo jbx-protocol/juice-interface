@@ -41,7 +41,7 @@
 
   .ant-slider-handle {
     @apply bg-disabled;
-    border-color: var(--stroke-disabled);
+    @apply stroke-disabled;
   }
 
   &:hover {

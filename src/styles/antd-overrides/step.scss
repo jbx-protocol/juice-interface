@@ -7,7 +7,7 @@
       @apply text-action-primary;
     }
 
-    border-color: var(--stroke-action-primary);
+    @apply stroke-action-primary;
   }
 
   .ant-steps-item-container {
@@ -57,5 +57,5 @@
 
 .ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-icon {
   @apply bg-action-primary;
-  border-color: var(--stroke-action-primary);
+  @apply stroke-action-primary;
 }

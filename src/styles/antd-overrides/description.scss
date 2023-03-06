@@ -18,7 +18,7 @@ th.ant-descriptions-item-label {
   .ant-descriptions-view,
   .ant-descriptions-row,
   .ant-descriptions-item-label {
-    border-color: var(--stroke-secondary);
+    @apply stroke-secondary;
   }
 }
 

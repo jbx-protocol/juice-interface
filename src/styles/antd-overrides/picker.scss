@@ -22,5 +22,5 @@
 }
 
 .ant-picker-focused {
-  border-color: var(--stroke-action-secondary);
+  @apply stroke-action-secondary;
 }

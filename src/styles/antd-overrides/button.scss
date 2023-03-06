@@ -1,6 +1,6 @@
 .ant-btn {
   background: transparent;
-  border-color: var(--stroke-action-secondary);
+  @apply stroke-action-secondary;
   @apply text-over-action-secondary;
   @apply font-medium;
   border-radius: 1px;
@@ -8,14 +8,14 @@
 
   &:hover {
     background: transparent;
-    border-color: var(--stroke-action-primary);
+    @apply stroke-action-primary;
     @apply text-action-primary;
   }
 
   &:focus,
   &.ant-btn-loading {
     background: transparent;
-    border-color: var(--stroke-action-secondary);
+    @apply stroke-action-secondary;
     @apply text-over-action-secondary;
   }
 }
@@ -36,7 +36,7 @@
   &:focus,
   &.ant-btn-loading {
     @apply bg-action-primary;
-    border-color: var(--stroke-action-primary);
+    @apply stroke-action-primary;
     @apply text-over-action-primary;
   }
 }
@@ -54,7 +54,7 @@
 
 .ant-btn[disabled] {
   @apply text-over-disabled;
-  border-color: var(--stroke-disabled);
+  @apply stroke-disabled;
   background: transparent;
 
   &.ant-btn-primary {
@@ -69,7 +69,7 @@
 
   &:hover {
     @apply text-over-disabled;
-    border-color: var(--stroke-disabled);
+    @apply stroke-disabled;
     background: transparent;
     opacity: 0.7;
   }

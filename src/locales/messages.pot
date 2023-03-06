@@ -788,7 +788,7 @@ msgstr ""
 msgid "Contact JuiceboxDAO for feature requests, support, or project advice."
 msgstr ""
 
-msgid "Contact a contributor."
+msgid "Contact a contributor"
 msgstr ""
 
 msgid "Contract"

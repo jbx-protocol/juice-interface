@@ -60,27 +60,6 @@ h6 {
   @apply text-primary;
 }
 
-@media screen and (min-width: 600px) and (max-width: 1000px) {
-  .hide-tablet {
-    display: none;
-  }
-}
-
-@media screen and (min-width: 0px) and (max-width: 600px) {
-  .hide-mobile {
-    display: none;
-  }
-}
-
-.twitter-tweet {
-  display: inline-flex !important;
-}
-
-.dcg-container {
-  background: none !important;
-  background-color: none !important;
-}
-
 ::selection {
   @apply text-primary;
   @apply bg-haze-200 dark:bg-haze-700;
@@ -96,7 +75,7 @@ button {
 
 body,
 div {
-  transition: background-color 250ms linear;
+  transition: background-color, border 250ms linear;
 }
 
 @import 'antd-overrides/index.scss';

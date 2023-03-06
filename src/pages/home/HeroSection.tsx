@@ -3,12 +3,10 @@ import { Button, Col, Row, Space } from 'antd'
 import { HOMEPAGE } from 'constants/fathomEvents'
 import { ThemeOption } from 'constants/theme/themeOption'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
-import useMobile from 'hooks/Mobile'
 import { trackFathomGoal } from 'lib/fathom'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useContext } from 'react'
-import { classNames } from 'utils/classNames'
 import { HeroHeading, HeroSubheading } from './strings'
 import bananaOd from '/public/assets/banana-od.webp'
 import bananaOl from '/public/assets/banana-ol.webp'
@@ -36,22 +34,14 @@ function BuiltForList() {
 }
 
 const CallToAction = () => {
-  const isMobile = useMobile()
-
   return (
-    <div
-      className={classNames(
-        'flex flex-wrap gap-2',
-        isMobile ? 'flex-col' : 'flex-row',
-      )}
-    >
+    <div className="flex flex-col flex-wrap gap-2 md:flex-row">
       <Link href="/projects">
         <a>
           <Button
-            className={classNames(isMobile ? 'mr-0 mb-3' : 'mr-3 mb-0')}
+            className={'mr-0 mb-3 w-full md:mr-3 md:mb-0 md:w-auto'}
             type="primary"
             size="large"
-            block={isMobile}
             onClick={() => {
               trackFathomGoal(HOMEPAGE.EXPLORE_PROJECTS_CTA)
             }}
@@ -64,8 +54,8 @@ const CallToAction = () => {
       <Link href="/create">
         <a>
           <Button
+            className={'w-full md:w-auto'}
             size="large"
-            block={isMobile}
             onClick={() => {
               trackFathomGoal(HOMEPAGE.CREATE_A_PROJECT_CTA)
             }}
@@ -80,7 +70,6 @@ const CallToAction = () => {
 
 export function HeroSection() {
   const { forThemeOption } = useContext(ThemeContext)
-  const isMobile = useMobile()
 
   return (
     <section className="mt-20 mb-24 px-10">
@@ -104,19 +93,16 @@ export function HeroSection() {
               </Space>
             </div>
           </Col>
-          {!isMobile && (
-            <Col xs={24} md={10}>
-              <Image
-                className="hide-mobile"
-                src={forThemeOption?.({
-                  [ThemeOption.dark]: bananaOd,
-                  [ThemeOption.light]: bananaOl,
-                })}
-                alt="Banny the chill Juicebox banana drinking juice"
-                priority
-              />
-            </Col>
-          )}
+          <Col xs={24} md={10} className="hidden md:block">
+            <Image
+              src={forThemeOption?.({
+                [ThemeOption.dark]: bananaOd,
+                [ThemeOption.light]: bananaOl,
+              })}
+              alt="Banny the chill Juicebox banana drinking juice"
+              priority
+            />
+          </Col>
         </Row>
       </div>
     </section>

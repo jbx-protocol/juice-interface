@@ -23,6 +23,7 @@
   &.ant-input-affix-wrapper-focused,
   &:focus {
     @apply input-focus;
+    @apply stroke-secondary;
   }
 
   &.err-suffix {

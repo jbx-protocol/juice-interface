@@ -15,17 +15,14 @@ export default function Footer() {
   const link = (text: string, link: string) => {
     if (link.startsWith('http')) {
       return (
-        <ExternalLink
-          className="mx-2 text-haze-400 dark:text-haze-300"
-          href={link}
-        >
+        <ExternalLink className="text-haze-300 hover:underline" href={link}>
           {text}
         </ExternalLink>
       )
     }
     return (
       <Link href={link}>
-        <a className="mx-2 text-haze-400 dark:text-haze-300">{text}</a>
+        <a className="text-haze-300 hover:underline">{text}</a>
       </Link>
     )
   }
@@ -46,7 +43,7 @@ export default function Footer() {
         />
       </div>
 
-      <div className="bg-black p-10 text-center">
+      <div className="bg-slate-900 p-10 text-center">
         <div className="mb-5 text-xl">🧃⚡️</div>
         <p className="m-0 text-white">
           <Trans>
@@ -55,8 +52,8 @@ export default function Footer() {
           </Trans>
         </p>
       </div>
-      <div className="grid gap-y-5 bg-black p-7 text-center">
-        <div className="mb-7 flex flex-wrap justify-center gap-y-2">
+      <div className="flex justify-center gap-y-5 bg-slate-900 pb-7 text-center">
+        <div className="mb-7 flex flex-wrap justify-center gap-y-2 gap-x-6">
           {link('Contact', '/contact')}
           {link('Discord', 'https://discord.gg/6jXrJSyDFf')}
           {link('GitHub', 'https://github.com/jbx-protocol/juice-interface')}

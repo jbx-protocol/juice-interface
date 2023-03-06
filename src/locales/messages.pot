@@ -2639,9 +2639,6 @@ msgstr ""
 msgid "Select NFTs to redeem"
 msgstr ""
 
-msgid "Select the option that best suits your project’s funding requirements."
-msgstr ""
-
 msgid "Select up to 3 tags to help contributors find your project."
 msgstr ""
 

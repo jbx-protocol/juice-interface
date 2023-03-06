@@ -7,8 +7,8 @@
   }
 
   .ant-slider-handle {
-    background: var(--background-action-highlight);
-    border-color: var(--stroke-action-highlight);
+    @apply bg-action-highlight;
+    @apply stroke-action-highlight;
   }
 
   &:hover {
@@ -20,8 +20,9 @@
     }
 
     .ant-slider-handle {
-      background: var(--background-action-highlight) !important;
-      border-color: var(--stroke-action-highlight) !important;
+      @apply bg-action-highlight;
+      @apply stroke-action-highlight;
+      @apply shadow-sm;
       box-shadow: 0 0 0 5px var(--background-action-secondary);
     }
   }

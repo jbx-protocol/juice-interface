@@ -1,5 +1,5 @@
 .ant-radio-checked .ant-radio-inner {
-  border-color: var(--background-action-primary);
+  @apply stroke-action-primary;
 }
 
 .ant-radio-inner::after {
@@ -26,6 +26,6 @@
   @apply text-action-primary;
 
   &::before {
-    background-color: var(--stroke-action-primary);
+    @apply bg-action-primary
   }
 }

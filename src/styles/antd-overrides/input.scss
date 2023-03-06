@@ -12,26 +12,17 @@
   background: transparent;
   @apply text-primary;
   @apply stroke-secondary;
+  @apply bg-smoke-50 dark:bg-slate-600;
   border-radius: 1px;
 
   &:hover {
     @apply stroke-primary;
   }
 
-  &.ant-input-number-focused {
-    box-shadow: 0 0 0 1px var(--stroke-action-secondary);
-    @apply stroke-action-secondary;
-  }
-
-  &.ant-input-affix-wrapper-focused {
-    box-shadow: 0 0 0 1px var(--stroke-action-secondary);
-    @apply stroke-action-secondary;
-  }
-
+  &.ant-input-number-focused,
+  &.ant-input-affix-wrapper-focused,
   &:focus {
-    box-shadow: 0 0 0 1px var(--stroke-action-secondary);
-    border-color
-    : var(--stroke-action-secondary);
+    @apply input-focus;
   }
 
   &.err-suffix {
@@ -79,6 +70,10 @@
   }
 }
 
+.ant-input-number-handler-up-inner {
+  @apply text-action-primary;
+}
+
 .ant-form {
   @apply text-primary;
 }
@@ -90,7 +85,7 @@
 
 .ant-form-item-extra {
   @apply text-secondary;
-  font-size: 0.75rem;
+  @apply text-xs;
   margin-top: 8px;
   min-height: unset;
 }
@@ -196,7 +191,6 @@ textarea.ant-input::placeholder {
   @apply bg-l1;
   width: 100%;
   min-height: 104px;
-  height: unset;
 }
 
 .ant-upload-list,
@@ -211,7 +205,7 @@ textarea.ant-input::placeholder {
 }
 
 .ant-upload-text-icon > span {
-  color: var(--icon-secondary) !important;
+  @apply text-secondary;
 }
 
 .ant-upload-list-item-card-actions {
@@ -235,18 +229,18 @@ textarea.ant-input::placeholder {
 }
 
 .ant-input-clear-icon {
-  color: var(--icon-secondary);
+  @apply text-secondary;
 
   &:hover {
-    color: var(--icon-primary);
+    @apply text-primary;
   }
 }
 
 .anticon.ant-input-clear-icon {
-  color: var(--icon-secondary);
+  @apply text-secondary;
 
   &:hover {
-    color: var(--icon-primary);
+    @apply text-primary;
   }
 }
 
@@ -268,7 +262,8 @@ textarea.ant-input::placeholder {
 }
 
 .ant-input-number-disabled {
-  border: 1px solid var(--stroke-tertiary);
+  border: 1px solid;
+  @apply stroke-tertiary;
 }
 
 .ant-input-number-disabled input {

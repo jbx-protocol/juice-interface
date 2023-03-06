@@ -58,7 +58,7 @@ export const TokenRedemptionRateGraph = ({
           dataKey="x"
           label={
             <Label
-              className="text-sm font-medium"
+              className="text-sm"
               value={t`% tokens redeemed`}
               fill={colors.text.primary}
             />
@@ -69,7 +69,7 @@ export const TokenRedemptionRateGraph = ({
           dataKey="y"
           label={
             <Label
-              className="text-sm font-medium"
+              className="text-sm"
               transform="rotate(-90)"
               value={t`Token redeem value`}
               angle={-90}

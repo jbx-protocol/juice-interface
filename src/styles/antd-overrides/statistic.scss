@@ -1,6 +1,6 @@
 .ant-statistic-content {
   font-family: 'DM Mono', monospace;
-  font-size: 1.2rem;
+  @apply text-xl;
   @apply text-primary;
   @apply font-medium;
 }
@@ -9,6 +9,6 @@
   @apply text-secondary;
   margin: 0;
   text-transform: uppercase;
-  font-size: 0.75rem;
+  @apply text-xs;
 }
 

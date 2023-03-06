@@ -14,5 +14,5 @@
 
 .settings-layout .ant-layout-sider-zero-width-trigger {
   top: -3px;
-  font-size: 1.5rem;
+  @apply text-2xl;
 }

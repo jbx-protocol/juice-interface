@@ -42,7 +42,7 @@ a {
 }
 
 input {
-  @apply bg-l0;
+  @apply bg-smoke-50 dark:bg-slate-600;
   @apply text-primary;
 }
 
@@ -83,7 +83,7 @@ h6 {
 
 ::selection {
   @apply text-primary;
-  @apply bg-action-secondary;
+  @apply bg-haze-200 dark:bg-haze-700;
 }
 
 html,

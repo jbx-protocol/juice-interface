@@ -89,7 +89,7 @@ export function HeroSection() {
           <Col className="flex items-center pb-6" xs={24} md={14}>
             <div>
               <Space direction="vertical" size="large">
-                <h1 className="m-0 text-5xl font-semibold md:text-7xl">
+                <h1 className="text-brand m-0 text-5xl font-semibold md:text-7xl">
                   <HeroHeading />
                 </h1>
                 <div className="mb-4">

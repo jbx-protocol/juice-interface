@@ -44,7 +44,7 @@
 .ant-menu-item-group-title {
   text-transform: uppercase;
   padding-bottom: 0;
-  font-size: 0.75rem;
+  @apply text-xs;
 }
 
 .ant-menu > .ant-menu-item-divider {

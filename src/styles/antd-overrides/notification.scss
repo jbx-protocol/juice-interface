@@ -9,7 +9,7 @@
   }
 
   .ant-notification-notice-close-icon {
-    color: var(--icon-secondary);
+    @apply text-secondary;
   }
 
   .ant-notification-notice-description {

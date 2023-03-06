@@ -1,7 +1,7 @@
 .ant-steps-item-title {
   text-transform: uppercase;
   @apply font-medium;
-  font-size: 14px;
+  @apply text-sm;
   line-height: 24px;
 }
 

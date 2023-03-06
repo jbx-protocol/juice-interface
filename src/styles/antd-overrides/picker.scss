@@ -6,7 +6,7 @@
   }
 }
 .ant-picker-time-panel-cell-selected .ant-picker-time-panel-cell-inner {
-  color: #fff !important;
+  @apply text-white;
 }
 
 .ant-picker-today-btn {
@@ -18,9 +18,9 @@
 }
 
 .ant-picker-cell-disabled {
-  background-color: var(--background-lightDisabled);
+  @apply bg-disabled;
 }
 
 .ant-picker-focused {
-  @apply stroke-action-secondary;
+  @apply input-focus;
 }

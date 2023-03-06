@@ -6,9 +6,21 @@
   border-radius: 1px;
   transition: all 100ms linear;
 
+  .anticon {
+    transition: margin 100ms linear;
+  }
+
+  &:hover .anticon-arrow-left {
+    margin-right: 2px;
+  }
+
+  &:hover .anticon-arrow-right {
+    margin-left: 10px;
+  }
+
   &:hover {
-    background: transparent;
-    @apply stroke-action-primary;
+    @apply bg-haze-50 dark:bg-haze-900;
+    @apply stroke-action-secondary;
     @apply text-action-primary;
   }
 
@@ -29,7 +41,7 @@
   }
 
   &:hover:not(.ant-btn[disabled]) {
-    background: var(--background-action-highlight);
+    @apply bg-action-highlight;
     @apply text-over-action-primary;
   }
 

@@ -3,7 +3,7 @@
 }
 
 .ant-drawer-close {
-  color: var(--icon-secondary);
+  @apply text-secondary;
 }
 
 .ant-drawer-header {

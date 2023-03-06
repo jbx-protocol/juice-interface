@@ -33,6 +33,10 @@ export function useJuiceTheme(storageKey = 'jb_theme'): ThemeContextType {
     } else {
       document.body.classList.remove('dark')
     }
+    document.documentElement.style.setProperty(
+      'color-scheme',
+      currentThemeOption,
+    )
   }, [currentThemeOption])
 
   return {
@@ -42,10 +46,6 @@ export function useJuiceTheme(storageKey = 'jb_theme'): ThemeContextType {
     setThemeOption: (themeOption: ThemeOption) => {
       setCurrentThemeOption(themeOption)
       localStorage?.setItem(storageKey, themeOption)
-      document.documentElement.style.setProperty(
-        'color-scheme',
-        currentThemeOption,
-      )
     },
   }
 }

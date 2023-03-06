@@ -84,9 +84,7 @@ export const formatSplitPercent = (splitPercent: BigNumber): string => {
 export const preciseFormatSplitPercent = (
   percentPerBillion: number,
 ): number => {
-  return parseFloat(
-    ((percentPerBillion / SPLITS_TOTAL_PERCENT) * 100).toFixed(9),
-  )
+  return (percentPerBillion / SPLITS_TOTAL_PERCENT) * 100
 }
 
 /**

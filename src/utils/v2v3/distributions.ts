@@ -110,7 +110,7 @@ export function getNewDistributionLimit({
   const newDistributionLimit =
     parseFloat(currentDistributionLimit) - previousSplitAmount + newSplitAmount
 
-  return parseFloat(newDistributionLimit.toFixed(4)) // round to 4dp
+  return parseFloat(newDistributionLimit.toString())
 }
 
 export function isJuiceboxProjectSplit(split: Split) {

@@ -47,7 +47,7 @@ export const FundingConfigurationReview = () => {
                     {launchDate.clone().format('MMMM Do YYYY, h:mma z')}
                   </Tooltip>
                 ) : (
-                  'Immediately'
+                  <Trans>Immediately</Trans>
                 )}
               </div>
             }

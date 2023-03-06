@@ -22,7 +22,7 @@ export const generateSafeUrl = (address: string) =>
 
 // Links to specific transaction on Gnosis Safe app
 export const generateSafeTxUrl = (transaction: SafeTransactionType) =>
-  `https://gnosis-safe.io/app/eth:${transaction.safe}/transactions/multisig_${transaction.safe}_${transaction.safeTxHash}`
+  `https://gnosis-safe.io/app/eth:${transaction.safe}/transactions/tx?id=multisig_${transaction.safe}_${transaction.safeTxHash}`
 
 export const fetchExecutedSafeTransactions = async ({
   safeAddress,

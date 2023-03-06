@@ -10,7 +10,7 @@
 }
 
 .ant-tooltip-arrow-content::before {
-  background: var(--stroke-tertiary);
+  @apply bg-l2;
 }
 
 .ant-tooltip-disabled-compatible-wrapper.block {

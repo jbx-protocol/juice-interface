@@ -1,6 +1,7 @@
 .ant-steps-item-finish {
   .ant-steps-item-icon {
-    .ant-steps-icon-dot {
+
+    .ant-steps-icon .ant-steps-icon-dot {
       @apply bg-action-primary;
     }
     .ant-steps-icon {
@@ -23,27 +24,27 @@
 .ant-steps-item-wait {
   .ant-steps-item-icon {
     .ant-steps-icon-dot {
-      background: var(--stroke-secondary) !important;
+      @apply bg-l2;
     }
   }
 
   .ant-steps-item-container {
     .ant-steps-item-tail::after {
-      background: var(--stroke-tertiary);
+      @apply bg-l2;
     }
   }
 }
 
 .ant-steps-item-process {
   .ant-steps-item-icon {
-    .ant-steps-icon-dot {
+    .ant-steps-icon .ant-steps-icon-dot {
       @apply bg-action-primary;
     }
   }
 
   .ant-steps-item-container {
     .ant-steps-item-tail::after {
-      background: var(--stroke-tertiary);
+      @apply bg-l2;
     }
   }
 }

@@ -23,12 +23,7 @@
       @apply bg-action-highlight;
       @apply stroke-action-highlight;
       @apply shadow-sm;
-      box-shadow: 0 0 0 5px var(--background-action-secondary);
     }
-  }
-
-  .ant-slider-handle:focus {
-    box-shadow: 0 0 0 5px var(--background-action-secondary);
   }
 }
 

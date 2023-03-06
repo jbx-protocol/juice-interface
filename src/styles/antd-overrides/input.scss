@@ -41,7 +41,7 @@
   .ant-input-number,
   .ant-input,
   .ant-input-affix-wrapper {
-    border-color: var(--stroke-failure);
+    @apply stroke-error-500;
   }
   .ant-input-prefix {
     @apply text-error;
@@ -226,7 +226,7 @@ textarea.ant-input::placeholder {
 .ant-input-search-button {
   border: 1px solid;
   @apply stroke-primary;
-  color: var(--icon-action-primary) !important;
+  @apply text-action-primary;
 }
 
 .ant-input-clear-icon {

@@ -96,6 +96,7 @@ const DEFAULT_PROJECT_METADATA_STATE: ProjectMetadataV7 = {
 }
 
 const DEFAULT_CREATE_STATE: CreateState = {
+  treasurySelection: undefined,
   reconfigurationRuleSelection: undefined,
   fundingCyclesPageSelection: undefined,
   createFurthestPageReached: 'projectDetails',

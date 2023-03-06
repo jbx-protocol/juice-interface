@@ -293,7 +293,7 @@ msgstr ""
 msgid "Add payout recipient"
 msgstr ""
 
-msgid "Add payouts to wallet addresses or Juicebox projects."
+msgid "Add payouts to wallet addresses or Juicebox projects to receive funds from your treasury each cycle. Any unallocated funds will stay in your treasury for use in a future cycle, or to be claimed by token holders."
 msgstr ""
 
 msgid "Add recipient"
@@ -312,6 +312,9 @@ msgid "Add token"
 msgstr ""
 
 msgid "Add token recipient"
+msgstr ""
+
+msgid "Add wallet addresses or Juicebox projects to receive payouts."
 msgstr ""
 
 msgid "Add {0}"
@@ -357,6 +360,9 @@ msgid "All assets"
 msgstr ""
 
 msgid "All events"
+msgstr ""
+
+msgid "All funds raised will be redeemable by your project's token holders. You can turn off redemptions in the Token settings. You will not be able to add payouts while your Payouts are set to None."
 msgstr ""
 
 msgid "All of this project's ETH will be paid out. Token holders will receive <0>no ETH</0> when redeeming their tokens."
@@ -431,16 +437,13 @@ msgstr ""
 msgid "Amounts"
 msgstr ""
 
-msgid "An Infinite Funding Target means contributors cannot redeem their tokens for a portion of the treasury funds. Payouts can only be nominated in percentages."
-msgstr ""
-
 msgid "An address is required"
 msgstr ""
 
 msgid "Any ETH sent to these project payer addresses will be forwarded to the project. This makes it easier to pay the project from third-party tools."
 msgstr ""
 
-msgid "Any funds raised over this amount are considered <0>overflow</0> and are redeemable by your contributors."
+msgid "Any funds raised over this amount may be redeemed by your project's token holders. You can turn off redemptions in the Token settings. Payouts to Ethereum wallets will incur a 2.5% fee. Sending funds to other Juicebox projects will not incur any fees. Learn more about fees."
 msgstr ""
 
 msgid "Anyone who pays this project receives {tokenText}. Depending on this project's rules, it may be possible to redeem {tokenText} to reclaim ETH."
@@ -614,6 +617,9 @@ msgstr ""
 msgid "Changes to your reserved token recipients will take effect immediately."
 msgstr ""
 
+msgid "Changing your payout to 'Limited' will require you to manually set a payout amount to split between your current payouts."
+msgstr ""
+
 msgid "Character"
 msgstr ""
 
@@ -632,7 +638,7 @@ msgstr ""
 msgid "Choose wallets or Juicebox projects to receive reserved tokens."
 msgstr ""
 
-msgid "Choose which addresses to pay and how to split the total payout amount each funding cycle."
+msgid "Choosing zero will delete all payouts and remove any target."
 msgstr ""
 
 msgid "Claim {0}"
@@ -788,6 +794,9 @@ msgstr ""
 msgid "Controller migration"
 msgstr ""
 
+msgid "Convert to amounts"
+msgstr ""
+
 msgid "Copied!"
 msgstr ""
 
@@ -837,6 +846,9 @@ msgid "Current handle"
 msgstr ""
 
 msgid "Current owner"
+msgstr ""
+
+msgid "Current payouts"
 msgstr ""
 
 msgid "Currently worth: <0><1/></0>"
@@ -1029,12 +1041,6 @@ msgid "Display ERC-20 tokens and other Juicebox project tokens that are in this 
 msgstr ""
 
 msgid "Display a message or warning to contributors before they approve a payment to your project"
-msgstr ""
-
-msgid "Distribute a percentage of all funds received between the entities nominated in the next step."
-msgstr ""
-
-msgid "Distribute a specific amount of funds to each entity nominated in the next step."
 msgstr ""
 
 msgid "Do I need this?"
@@ -1364,12 +1370,6 @@ msgstr ""
 msgid "Funding Rules"
 msgstr ""
 
-msgid "Funding Target"
-msgstr ""
-
-msgid "Funding Target Exceeded"
-msgstr ""
-
 msgid "Funding cycle details"
 msgstr ""
 
@@ -1475,9 +1475,6 @@ msgstr ""
 msgid "How should I set up my project?"
 msgstr ""
 
-msgid "How would you like to distribute payments?"
-msgstr ""
-
 msgid "How your project will be paid and pay out ETH."
 msgstr ""
 
@@ -1554,9 +1551,6 @@ msgid "Indie creators and builders"
 msgstr ""
 
 msgid "Infinite (all available ETH)"
-msgstr ""
-
-msgid "Infinite Funding Target"
 msgstr ""
 
 msgid "Initial Mint Rate"
@@ -1689,6 +1683,9 @@ msgid "Legacy tokens to migrate"
 msgstr ""
 
 msgid "Light theme"
+msgstr ""
+
+msgid "Limited"
 msgstr ""
 
 msgid "Limited supply"
@@ -2210,10 +2207,10 @@ msgstr ""
 msgid "Payments paused"
 msgstr ""
 
-msgid "Payout Amount"
+msgid "Payout"
 msgstr ""
 
-msgid "Payout Percentage"
+msgid "Payout Addresses"
 msgstr ""
 
 msgid "Payout addresses"
@@ -2258,6 +2255,9 @@ msgstr ""
 msgid "Payouts to Ethereum addresses incur a {feePercentage}% fee. Your project will receive JBX in return. <0>Learn more</0>."
 msgstr ""
 
+msgid "Payouts to Ethereum wallets will incur a 2.5% fee. Sending funds to other Juicebox projects will not incur any fees. Learn more about fees."
+msgstr ""
+
 msgid "Payouts to other Juicebox projects don't incur fees. In return for fees, your project will receive JBX (the <0>JuiceboxDAO</0> governance token) at the current issuance rate. <1>Learn more</1>."
 msgstr ""
 
@@ -2268,6 +2268,9 @@ msgid "Payouts to this project may mint its project tokens. Pick an address to r
 msgstr ""
 
 msgid "Payouts will be sent to:"
+msgstr ""
+
+msgid "Payouts: {fundingTarget}"
 msgstr ""
 
 msgid "Percent"
@@ -2657,6 +2660,9 @@ msgstr ""
 msgid "Restrictions for your cycles."
 msgstr ""
 
+msgid "Reverse"
+msgstr ""
+
 msgid "Review & Deploy"
 msgstr ""
 
@@ -2777,9 +2783,6 @@ msgstr ""
 msgid "Select NFTs to redeem"
 msgstr ""
 
-msgid "Select the option that best suits your project’s funding requirements."
-msgstr ""
-
 msgid "Send Message"
 msgstr ""
 
@@ -2846,9 +2849,6 @@ msgstr ""
 msgid "Set a project handle (optional)"
 msgstr ""
 
-msgid "Set a specific amount to distribute to nominated addresses each funding cycle."
-msgstr ""
-
 msgid "Set a text record for {0} with the key <0>\"{projectHandleENSTextRecordKey}\"</0> and the value <1>\"{projectId}\"</1> (this project's ID). You can do this on the <2>ENS app</2>, or use the button below (as long as your connected wallet owns or controls that ENS name)."
 msgstr ""
 
@@ -2880,6 +2880,9 @@ msgid "Set operator for {projectTitle}"
 msgstr ""
 
 msgid "Set payment terminals"
+msgstr ""
+
+msgid "Set payout"
 msgstr ""
 
 msgid "Set payouts as percentages of the total amount being paid out."
@@ -2924,9 +2927,6 @@ msgstr ""
 msgid "Set veNFT operator for {projectTitle}"
 msgstr ""
 
-msgid "Set your funding target"
-msgstr ""
-
 msgid "Setting a handle requires 2 transactions: <0>Set ENS name</0> and <1>Set text record</1>."
 msgstr ""
 
@@ -2958,12 +2958,6 @@ msgid "Something went wrong."
 msgstr ""
 
 msgid "Spaces are not allowed"
-msgstr ""
-
-msgid "Specific Amounts"
-msgstr ""
-
-msgid "Specific Funding Target"
 msgstr ""
 
 msgid "Staked balance"
@@ -3024,9 +3018,6 @@ msgid "Sync start time with current V2 funding cycle."
 msgstr ""
 
 msgid "Tap {projectTitle}"
-msgstr ""
-
-msgid "Target"
 msgstr ""
 
 msgid "Telegram"
@@ -3146,9 +3137,6 @@ msgstr ""
 msgid "The redemption rate determines the amount of overflow each token can be redeemed for. <0>Learn more.</0>"
 msgstr ""
 
-msgid "The sum of your expenses is currently different to your funding target. Do you want to sync your funding target to match expenses?<0/><1/>If not, please edit one or more of your payouts."
-msgstr ""
-
 msgid "The text that will be shown to the user on the button post pay popup.<0/><1>For more information, see the preview.</1>"
 msgstr ""
 
@@ -3165,6 +3153,12 @@ msgid "The wallet address that reserved NFTs will be sent to"
 msgstr ""
 
 msgid "There is already a payout for this address"
+msgstr ""
+
+msgid "There will be no limit on the amount of funds you can pay out or 'withdraw' from your treasury each cycle. Unlimited payouts are allocated in percentages only."
+msgstr ""
+
+msgid "These are the addresses or entities that will receive payouts from your treasury each funding cycle."
 msgstr ""
 
 msgid "These edits were not approved by the {0} contract. The edits are not guaranteed to take effect in the next cycle."
@@ -3611,9 +3605,6 @@ msgstr ""
 msgid "V3 Project ID"
 msgstr ""
 
-msgid "Value has already been submitted"
-msgstr ""
-
 msgid "VeNFT contract created successfully. Results will be indexed in a few moments."
 msgstr ""
 
@@ -3743,9 +3734,6 @@ msgstr ""
 msgid "Who is Peel? Who is JuiceboxDAO?"
 msgstr ""
 
-msgid "Who's getting paid?"
-msgstr ""
-
 msgid "Why do you need this permission?"
 msgstr ""
 
@@ -3836,6 +3824,9 @@ msgstr ""
 msgid "You receive these NFTs for contributing <0>{0} ETH or more</0>."
 msgstr ""
 
+msgid "You will pay out a specific amount of funds from your treasury each cycle. These funds are allocated in 'Payout Addresses' below."
+msgstr ""
+
 msgid "You will receive <0/>"
 msgstr ""
 
@@ -3855,9 +3846,6 @@ msgid "You're all set!"
 msgstr ""
 
 msgid "You've completed this step."
-msgstr ""
-
-msgid "Your Funding Target can be changed in future funding cycles. Payouts denominated in USD are paid out in ETH at the current exchange rate."
 msgstr ""
 
 msgid "Your Juicebox project has no active cycle. Launch a cycle to re-enable payments to your project."
@@ -3923,9 +3911,6 @@ msgstr ""
 msgid "Your project will appear as 'archived'."
 msgstr ""
 
-msgid "Your project will withhold all funds raised. Funds can be distributed to payout addresses you set, and the project owner will receive any unallocated funds. Your project will have no overflow, so token holders can't redeem their tokens for ETH."
-msgstr ""
-
 msgid "Your project's NFTs will not have on-chain governance capabilities."
 msgstr ""
 
@@ -3968,6 +3953,9 @@ msgstr ""
 msgid "Your {0} balance"
 msgstr ""
 
+msgid "Zero"
+msgstr ""
+
 msgid "Zero (no payouts)"
 msgstr ""
 
@@ -3993,9 +3981,6 @@ msgid "handle"
 msgstr ""
 
 msgid "hours"
-msgstr ""
-
-msgid "infinite"
 msgstr ""
 
 msgid "last {TRENDING_WINDOW_DAYS} days"
@@ -4067,9 +4052,6 @@ msgstr ""
 msgid "veNFT Tiers ({0} variants)"
 msgstr ""
 
-msgid "zero"
-msgstr ""
-
 msgid "{0, plural, one {# NFT} other {# NFTs}}"
 msgstr ""
 
@@ -4104,9 +4086,6 @@ msgid "{0} for you"
 msgstr ""
 
 msgid "{0} holders"
-msgstr ""
-
-msgid "{0} is disabled when <0>Funding Target</0> is {1}."
 msgstr ""
 
 msgid "{0} is not a valid integer"
@@ -4218,6 +4197,12 @@ msgid "{payerRate} {tokenSymbolPlural}/ETH"
 msgstr ""
 
 msgid "{paymentCount, plural, one {# payment} other {# payments}}"
+msgstr ""
+
+msgid "{titleCasedAllocationName} Amount"
+msgstr ""
+
+msgid "{titleCasedAllocationName} Percentage"
 msgstr ""
 
 msgid "{tokenSymbolDisplayText} range"

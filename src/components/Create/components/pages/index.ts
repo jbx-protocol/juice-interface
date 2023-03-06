@@ -1,7 +1,5 @@
 export * from './FundingCycles'
-export * from './FundingTarget'
 export * from './NftRewards'
-export * from './Payouts'
 export * from './ProjectDetails'
 export * from './ProjectToken'
 export * from './ReconfigurationRules'

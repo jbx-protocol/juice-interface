@@ -1,17 +1,28 @@
-import { CrownFilled, QuestionCircleOutlined } from '@ant-design/icons'
+import {
+  CrownFilled,
+  DeleteOutlined,
+  QuestionCircleOutlined,
+} from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
+import { Allocation } from 'components/Allocation'
 import useMobile from 'hooks/Mobile'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { classNames } from 'utils/classNames'
-import { Allocation } from 'components/Allocation'
 import { Amount } from './Amount'
 
-export const OwnerPayoutCard = ({
-  payoutsSelection,
-}: {
-  payoutsSelection: PayoutsSelection
-}) => {
+type OwnerPayoutCardType =
+  | {
+      payoutsSelection: PayoutsSelection
+      canBeDeleted?: false
+    }
+  | {
+      payoutsSelection: PayoutsSelection
+      canBeDeleted: true
+      onDelete: VoidFunction
+    }
+
+export const OwnerPayoutCard: React.FC<OwnerPayoutCardType> = props => {
   const isMobile = useMobile()
 
   return (
@@ -22,20 +33,25 @@ export const OwnerPayoutCard = ({
           <CrownFilled className="text-grey-400 dark:text-slate-200" />
         </>
       }
-      amount={<Amount payoutsSelection={payoutsSelection} />}
+      amount={<Amount payoutsSelection={props.payoutsSelection} />}
       extra={
-        <Tooltip
-          title={
-            <Trans>
-              This project is set to pay out all available ETH. Your payouts do
-              not sum to 100%, so the remainder will go to the project owner.
-            </Trans>
-          }
-        >
-          <QuestionCircleOutlined
-            className={classNames(isMobile ? 'text-lg' : 'text-sm')}
-          />
-        </Tooltip>
+        props.canBeDeleted ? (
+          <DeleteOutlined onClick={props.onDelete} />
+        ) : (
+          <Tooltip
+            title={
+              <Trans>
+                This project is set to pay out all available ETH. Your payouts
+                do not sum to 100%, so the remainder will go to the project
+                owner.
+              </Trans>
+            }
+          >
+            <QuestionCircleOutlined
+              className={classNames(isMobile ? 'text-lg' : 'text-sm')}
+            />
+          </Tooltip>
+        )
       }
     />
   )

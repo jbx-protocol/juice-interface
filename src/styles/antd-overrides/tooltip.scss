@@ -2,7 +2,8 @@
   @apply text-primary;
   border-radius: 1px;
   @apply bg-l0;
-  border: 1px solid var(--stroke-tertiary);
+  border: 1px solid;
+  @apply stroke-tertiary;
   padding: 12px 16px;
   box-shadow: 0 4px 12px #00000064;
   font-size: 0.85rem;

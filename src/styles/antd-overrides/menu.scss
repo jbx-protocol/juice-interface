@@ -49,7 +49,7 @@
 
 .ant-menu > .ant-menu-item-divider {
   margin: 1rem 0;
-  border-color: var(--stroke-tertiary);
+  @apply stroke-tertiary;
 }
 
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected,

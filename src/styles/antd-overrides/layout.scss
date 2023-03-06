@@ -4,7 +4,7 @@
 }
 
 .ant-divider {
-  border-color: var(--stroke-tertiary);
+  @apply stroke-tertiary;
 }
 
 .ant-layout-sider-zero-width-trigger {

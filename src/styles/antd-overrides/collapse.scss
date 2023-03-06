@@ -61,7 +61,8 @@
     border-radius: 2px;
   }
   .ant-collapse-content-box {
-    border: 1px solid var(--stroke-tertiary);
+    border: 1px solid;
+    @apply stroke-tertiary;
     padding: 0;
     width: 100%;
     @apply bg-l0;
@@ -95,7 +96,8 @@
     margin-top: -2px;
     padding: 7px 0 15px;
     border: none;
-    border-bottom: 1px solid var(--stroke-secondary);
+    border-bottom: 1px solid;
+    @apply stroke-secondary;
   }
 
   .nav-subsection {

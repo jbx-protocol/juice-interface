@@ -8,7 +8,6 @@ const defaultThemeOption: ThemeOption = ThemeOption.dark
 export type ThemeContextType = {
   themeOption: ThemeOption
   theme: SemanticTheme
-  isDarkMode: boolean
   setThemeOption: (themeOption: ThemeOption) => void
   forThemeOption?: <T>(map: Record<ThemeOption, T>) => T
 }
@@ -20,5 +19,4 @@ export const ThemeContext = createContext<ThemeContextType>({
     console.warn('setThemeOption is not implemented')
     return null
   },
-  isDarkMode: defaultThemeOption === ThemeOption.dark,
 })

@@ -1,7 +1,7 @@
 import { juiceTheme } from 'constants/theme'
 import { ThemeOption } from 'constants/theme/themeOption'
 import type { ThemeContextType } from 'contexts/Theme/ThemeContext'
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 
 const userPrefersDarkMode = (): boolean => {
   if (typeof window === 'undefined') {
@@ -24,9 +24,6 @@ export function useJuiceTheme(storageKey = 'jb_theme'): ThemeContextType {
   const initialThemeOption = getInitialThemeOption(storageKey)
   const [currentThemeOption, setCurrentThemeOption] =
     useState<ThemeOption>(initialThemeOption)
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(
-    initialThemeOption === ThemeOption.dark,
-  )
 
   // Set the theme on the body element
   // This is needed for tailwind css dark theme classes to work
@@ -38,22 +35,17 @@ export function useJuiceTheme(storageKey = 'jb_theme'): ThemeContextType {
     }
   }, [currentThemeOption])
 
-  useEffect(() => {
-    setIsDarkMode(currentThemeOption === ThemeOption.dark)
-    document.documentElement.style.setProperty(
-      'color-scheme',
-      currentThemeOption,
-    )
-  }, [currentThemeOption])
-
   return {
     themeOption: currentThemeOption,
     theme: juiceTheme(currentThemeOption),
-    isDarkMode,
     forThemeOption: map => map[currentThemeOption],
     setThemeOption: (themeOption: ThemeOption) => {
       setCurrentThemeOption(themeOption)
       localStorage?.setItem(storageKey, themeOption)
+      document.documentElement.style.setProperty(
+        'color-scheme',
+        currentThemeOption,
+      )
     },
   }
 }

@@ -146,7 +146,12 @@ export const V2V3PayForm = ({
               <Space>
                 <Switch
                   checked={customBeneficiaryEnabled}
-                  onChange={setCustomBeneficiaryEnabled}
+                  onChange={enabled => {
+                    if (!enabled) {
+                      form.setFieldValue('beneficiary', undefined)
+                    }
+                    setCustomBeneficiaryEnabled(enabled)
+                  }}
                 />
                 <span className="font-medium text-black dark:text-slate-100">
                   <Trans>Custom token beneficiary</Trans>

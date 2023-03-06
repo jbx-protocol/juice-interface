@@ -33,6 +33,6 @@
 }
 
 .ant-tabs-ink-bar {
-  background: var(--text-primary);
+  @apply bg-l0;
   height: 1px !important;
 }

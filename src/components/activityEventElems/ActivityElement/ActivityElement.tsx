@@ -64,7 +64,7 @@ function TimestampVersion({
           {terminalVersion && (
             <ProjectVersionBadge
               versionText={'V' + terminalVersion}
-              className="text-secondary bg-transparent text-xs"
+              className="text-secondary bg-transparent text-xs dark:bg-transparent"
             />
           )}{' '}
           <EtherscanLink

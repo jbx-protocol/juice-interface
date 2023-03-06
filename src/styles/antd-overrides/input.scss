@@ -223,10 +223,11 @@ textarea.ant-input::placeholder {
   background: transparent;
 }
 
+.ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary),
 .ant-input-search-button {
   border: 1px solid;
   @apply stroke-primary;
-  @apply text-action-primary;
+  @apply text-primary;
 }
 
 .ant-input-clear-icon {

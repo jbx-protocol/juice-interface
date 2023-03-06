@@ -20,7 +20,7 @@ export const FUNDING_CYCLE_WARNING_TEXT: () => {
     noBallot: t`The project owner can edit the next cycle’s rules at any time.`,
     customBallot: t`The project is using an unknown contract for its edit deadline.`,
     allowMinting: t`The project owner can mint any amount of project tokens at any time.`,
-    metadataMaxReservedRate: t`Supporters won't receive project tokens when they pay this project.`,
+    metadataMaxReservedRate: t`Supporters won't receive tokens when they pay this project.`,
     metadataReservedRate: t`This project reserves most of its tokens. Supporters won't get many tokens when paying this project.`,
     zeroPaymentIssuanceNoDataSource: t`Supporters won't receive any tokens when paying this project. No ETH is available for redemption.`,
   }

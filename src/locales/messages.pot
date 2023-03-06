@@ -1949,7 +1949,7 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
-msgid "Next cycle, the <0>token issuance rate</0> will be <1>{0} tokens per 1 ETH.</1>The cycle after that, the token issuance rate will be <2>{1} tokens per 1 ETH </2>, and so on."
+msgid "Next cycle, the total issuance rate will be <0>{0} tokens per 1 ETH.</0>The cycle after that, the total issuance rate will be <1>{1} tokens per 1 ETH </1>, and so on."
 msgstr ""
 
 msgid "Next:"
@@ -2328,9 +2328,6 @@ msgid "Project ID: {projectId}"
 msgstr ""
 
 msgid "Project Links"
-msgstr ""
-
-msgid "Project NFTs"
 msgstr ""
 
 msgid "Project Name"
@@ -3008,7 +3005,7 @@ msgstr ""
 msgid "Supporters won't receive any tokens when paying this project. No ETH is available for redemption."
 msgstr ""
 
-msgid "Supporters won't receive project tokens when they pay this project."
+msgid "Supporters won't receive tokens when they pay this project."
 msgstr ""
 
 msgid "Switch network to {0}"
@@ -3297,9 +3294,6 @@ msgid "Token holders"
 msgstr ""
 
 msgid "Token holders <0>cannot redeem their tokens</0> for ETH when the redemption rate is 0%."
-msgstr ""
-
-msgid "Token issuance rate"
 msgstr ""
 
 msgid "Token migration"

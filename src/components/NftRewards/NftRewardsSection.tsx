@@ -36,7 +36,7 @@ function RewardTiersLoadingSkeleton() {
 function Header() {
   return (
     <>
-      <SectionHeader className="mb-0" text={t`Project NFTs`} />
+      <SectionHeader className="mb-0" text={t`NFTs`} />
       <span className="text-xs text-grey-500 dark:text-grey-300">
         <Trans>Pay this project to receive NFTs.</Trans>
       </span>

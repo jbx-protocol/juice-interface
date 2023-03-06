@@ -86,11 +86,11 @@ function DiscountRateExtra({
             </p>
             <p>
               <Trans>
-                Next cycle, the <strong>token issuance rate</strong> will be{' '}
+                Next cycle, the total issuance rate will be{' '}
                 <strong className="whitespace-nowrap">
                   {formattedNum(secondIssuanceRate)} tokens per 1 ETH.
                 </strong>
-                The cycle after that, the token issuance rate will be{' '}
+                The cycle after that, the total issuance rate will be{' '}
                 <strong className="whitespace-nowrap">
                   {' '}
                   {formattedNum(thirdIssuanceRate)} tokens per 1 ETH{' '}

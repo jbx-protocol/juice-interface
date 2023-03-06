@@ -17,7 +17,7 @@ export default function MintRateFormItem({
       <Form.Item
         label={
           <TooltipLabel
-            label={<Trans>Token issuance rate</Trans>}
+            label={<Trans>Total issuance rate</Trans>}
             tip={MINT_RATE_EXPLANATION}
           />
         }

@@ -1,6 +1,6 @@
 .ant-slider {
   .ant-slider-rail {
-    @apply bg-action-secondary;
+    @apply bg-smoke-200 dark:bg-slate-500;
   }
   .ant-slider-track {
     @apply bg-action-primary;
@@ -13,7 +13,7 @@
 
   &:hover {
     .ant-slider-rail {
-      @apply bg-action-secondary;
+      @apply bg-smoke-300 dark:bg-slate-400;
     }
     .ant-slider-track {
       @apply bg-action-primary;

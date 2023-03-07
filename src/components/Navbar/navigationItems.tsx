@@ -50,20 +50,17 @@ const DesktopDropDown = ({
     </Dropdown>
   )
 }
-export const resourcesMenuItems = (mobile?: boolean): ResourceItem[] => {
-  const linkStyle = {
+export const resourcesMenuItems = (): ResourceItem[] => {
+  const linkProps = {
     target: '_blank',
     rel: 'noopener noreferrer',
-    style: {
-      color: 'var(--text-primary)',
-      fontWeight: mobile ? 400 : 500,
-    },
+    className: 'text-primary',
   }
   return [
     {
       key: 'docs',
       label: (
-        <a href="https://docs.juicebox.money/" {...linkStyle}>
+        <a href="https://docs.juicebox.money/" {...linkProps}>
           <Trans>Docs</Trans>
         </a>
       ),
@@ -71,7 +68,7 @@ export const resourcesMenuItems = (mobile?: boolean): ResourceItem[] => {
     {
       key: 'newsletter',
       label: (
-        <a href="https://newsletter.juicebox.money" {...linkStyle}>
+        <a href="https://newsletter.juicebox.money" {...linkProps}>
           <Trans>Newsletter</Trans>
         </a>
       ),
@@ -79,7 +76,7 @@ export const resourcesMenuItems = (mobile?: boolean): ResourceItem[] => {
     {
       key: 'podcast',
       label: (
-        <a href="https://podcast.juicebox.money/" {...linkStyle}>
+        <a href="https://podcast.juicebox.money/" {...linkProps}>
           <Trans>Podcast</Trans>
         </a>
       ),
@@ -87,7 +84,7 @@ export const resourcesMenuItems = (mobile?: boolean): ResourceItem[] => {
     {
       key: 'contact',
       label: (
-        <a href="/contact" {...linkStyle} target="_self">
+        <a href="/contact" {...linkProps} target="_self">
           <Trans>Contact</Trans>
         </a>
       ),
@@ -206,7 +203,7 @@ export const mobileNavItems = ({
         </a>
       </Link>
     ),
-    children: [...resourcesMenuItems(true)],
+    children: [...resourcesMenuItems()],
   },
 
   { key: 'language-picker', label: <NavLanguageSelector /> },

@@ -72,8 +72,7 @@ export function V2V3ProjectSettings() {
   const { cv } = useContext(V2V3ContractsContext)
   const { projectOwnerAddress, handle } = useContext(V2V3ProjectContext)
   const { projectId, projectMetadata } = useContext(ProjectMetadataContext)
-  const { isDarkMode } = useContext(ThemeContext)
-
+  const { forThemeOption } = useContext(ThemeContext)
   const [collapsed, setCollapsed] = useState<boolean>(false)
 
   const router = useRouter()
@@ -237,7 +236,10 @@ export function V2V3ProjectSettings() {
                   activeSettingsPage ? [activeSettingsPage] : ['general']
                 }
                 mode="inline"
-                theme={isDarkMode ? 'dark' : 'light'}
+                theme={forThemeOption?.({
+                  dark: 'dark',
+                  light: 'light',
+                })}
                 items={items}
                 onSelect={handleMenuItemClick}
               />

@@ -1,21 +1,22 @@
 .ant-steps-item-finish {
   .ant-steps-item-icon {
-    .ant-steps-icon-dot {
-      background: var(--background-action-primary) !important;
+
+    .ant-steps-icon .ant-steps-icon-dot {
+      @apply bg-action-primary;
     }
     .ant-steps-icon {
-      color: var(--text-action-primary) !important;
+      @apply text-action-primary;
     }
 
-    border-color: var(--stroke-action-primary);
+    @apply stroke-action-primary;
   }
 
   .ant-steps-item-container {
     .ant-steps-item-tail::after {
-      background: var(--background-action-primary);
+      @apply bg-action-primary;
     }
     .ant-steps-item-content > .ant-steps-item-title::after {
-      background: var(--background-action-primary);
+      @apply bg-action-primary;
     }
   }
 }
@@ -23,27 +24,27 @@
 .ant-steps-item-wait {
   .ant-steps-item-icon {
     .ant-steps-icon-dot {
-      background: var(--stroke-secondary) !important;
+      @apply bg-l2;
     }
   }
 
   .ant-steps-item-container {
     .ant-steps-item-tail::after {
-      background: var(--stroke-tertiary);
+      @apply bg-l2;
     }
   }
 }
 
 .ant-steps-item-process {
   .ant-steps-item-icon {
-    .ant-steps-icon-dot {
-      background: var(--background-action-primary) !important;
+    .ant-steps-icon .ant-steps-icon-dot {
+      @apply bg-action-primary;
     }
   }
 
   .ant-steps-item-container {
     .ant-steps-item-tail::after {
-      background: var(--stroke-tertiary);
+      @apply bg-l2;
     }
   }
 }
@@ -52,10 +53,10 @@
   > .ant-steps-item-container
   > .ant-steps-item-content
   > .ant-steps-item-title {
-  color: var(--text-action-primary);
+  @apply text-action-primary;
 }
 
 .ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-icon {
-  background: var(--background-action-primary);
-  border-color: var(--stroke-action-primary);
+  @apply bg-action-primary;
+  @apply stroke-action-primary;
 }

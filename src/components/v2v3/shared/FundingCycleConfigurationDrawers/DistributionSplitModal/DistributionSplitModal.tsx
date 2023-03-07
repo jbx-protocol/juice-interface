@@ -285,6 +285,8 @@ export function DistributionSplitModal({
 
   const allocator = useWatch('allocator', form)
 
+  const hasAllocator = allocator && allocator !== NULL_ALLOCATOR_ADDRESS
+
   return (
     <Modal
       title={mode === 'Edit' ? t`Edit payout` : t`Add new payout`}
@@ -339,8 +341,7 @@ export function DistributionSplitModal({
             onChange={setProjectId}
           />
         )}
-        {editingSplitType === 'project' &&
-        allocator === NULL_ALLOCATOR_ADDRESS ? (
+        {editingSplitType === 'project' && !hasAllocator ? (
           <Form.Item
             name="beneficiary"
             label={t`Project token recipient`}

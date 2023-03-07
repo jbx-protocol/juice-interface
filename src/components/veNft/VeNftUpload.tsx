@@ -6,13 +6,12 @@ import { JuiceVideoThumbnailOrImage } from 'components/NftRewards/NftVideo/Juice
 import TooltipLabel from 'components/TooltipLabel'
 import { VeNftFormFields } from 'components/veNft/VeNftRewardTierModal'
 import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
-import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { pinFile } from 'lib/api/ipfs'
 import {
   UploadProgressEvent,
   UploadRequestOption,
 } from 'rc-upload/lib/interface'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { ipfsGatewayUrl, percentFromUploadProgressEvent } from 'utils/ipfs'
 import { emitErrorNotification } from 'utils/notifications'
 
@@ -21,9 +20,6 @@ const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif'].concat(
 )
 
 export function VeNftUpload({ form }: { form: FormInstance<VeNftFormFields> }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const [uploading, setUploading] = useState<boolean>()
   const [percent, setPercent] = useState<number | undefined>(undefined)
 
@@ -114,7 +110,6 @@ export function VeNftUpload({ form }: { form: FormInstance<VeNftFormFields> }) {
               <Progress
                 width={48}
                 className="mb-2 h-8 w-8"
-                strokeColor={colors.background.action.primary}
                 type="circle"
                 percent={percent}
                 format={percent => (

@@ -1,8 +1,7 @@
-import useMobile from 'hooks/Mobile'
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons'
-import { twJoin } from 'tailwind-merge'
-import { Tooltip } from 'antd'
+import { MinusOutlined, PlusOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
+import { Tooltip } from 'antd'
+import { twJoin } from 'tailwind-merge'
 
 // + / - buttons that appear in top-right of selected NFT cards on project page
 export function QuantitySelector({
@@ -16,18 +15,13 @@ export function QuantitySelector({
   onIncrement: VoidFunction
   onDecrement: VoidFunction
 }) {
-  const isMobile = useMobile()
   const iconClasses =
     'h-full flex items-center justify-center md:hover:bg-haze-600 active:bg-haze-600 w-5/12 md:w-[27px]'
   const valueIsMax = value === maxValue
 
   return (
     <div
-      className={twJoin(
-        'absolute right-1.5 top-1.5 items-center text-sm',
-        'flex justify-between rounded-full bg-haze-400 text-smoke-25',
-        isMobile ? 'h-9 w-3/5' : 'h-7 w-1/2',
-      )}
+      className="absolute right-1.5 top-1.5 flex h-9 w-3/5 items-center justify-between rounded-full bg-haze-400 text-sm text-smoke-25 md:h-7 md:w-1/2"
       onClick={e => e.stopPropagation()}
     >
       <div

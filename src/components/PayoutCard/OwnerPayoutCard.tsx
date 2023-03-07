@@ -6,9 +6,7 @@ import {
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { Allocation } from 'components/Allocation'
-import useMobile from 'hooks/Mobile'
 import { PayoutsSelection } from 'models/payoutsSelection'
-import { classNames } from 'utils/classNames'
 import { Amount } from './Amount'
 
 type OwnerPayoutCardType =
@@ -23,8 +21,6 @@ type OwnerPayoutCardType =
     }
 
 export const OwnerPayoutCard: React.FC<OwnerPayoutCardType> = props => {
-  const isMobile = useMobile()
-
   return (
     <Allocation.Item
       title={
@@ -47,9 +43,7 @@ export const OwnerPayoutCard: React.FC<OwnerPayoutCardType> = props => {
               </Trans>
             }
           >
-            <QuestionCircleOutlined
-              className={classNames(isMobile ? 'text-lg' : 'text-sm')}
-            />
+            <QuestionCircleOutlined className="text-lg md:text-sm" />
           </Tooltip>
         )
       }

@@ -14,15 +14,20 @@ import {
 } from 'utils/safe'
 
 function SafeIcon({ href }: { href: string }) {
-  const { isDarkMode } = useContext(ThemeContext)
-  const src = isDarkMode
-    ? '/assets/icons/gnosis_od.svg'
-    : '/assets/icons/gnosis_ol.svg'
+  const { forThemeOption } = useContext(ThemeContext)
 
   return (
     <Link href={href}>
       <a>
-        <img src={src} alt="Safe logo" width={15} height={15} />
+        <img
+          src={forThemeOption?.({
+            dark: '/assets/icons/gnosis_od.svg',
+            light: '/assets/icons/gnosis_ol.svg',
+          })}
+          alt="Safe logo"
+          width={15}
+          height={15}
+        />
       </a>
     </Link>
   )

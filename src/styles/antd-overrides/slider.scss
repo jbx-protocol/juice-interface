@@ -1,60 +1,56 @@
 .ant-slider {
   .ant-slider-rail {
-    background: var(--background-action-secondary);
+    @apply bg-smoke-200 dark:bg-slate-500;
   }
   .ant-slider-track {
-    background: var(--background-action-primary);
+    @apply bg-action-primary;
   }
 
   .ant-slider-handle {
-    background: var(--background-action-highlight);
-    border-color: var(--stroke-action-highlight);
+    @apply bg-action-highlight;
+    @apply stroke-action-highlight;
   }
 
   &:hover {
     .ant-slider-rail {
-      background: var(--background-action-secondary);
+      @apply bg-smoke-300 dark:bg-slate-400;
     }
     .ant-slider-track {
-      background: var(--background-action-primary);
+      @apply bg-action-primary;
     }
 
     .ant-slider-handle {
-      background: var(--background-action-highlight) !important;
-      border-color: var(--stroke-action-highlight) !important;
-      box-shadow: 0 0 0 5px var(--background-action-secondary);
+      @apply bg-action-highlight;
+      @apply stroke-action-highlight;
+      @apply shadow-sm;
     }
-  }
-
-  .ant-slider-handle:focus {
-    box-shadow: 0 0 0 5px var(--background-action-secondary);
   }
 }
 
 .ant-slider-disabled {
   .ant-slider-rail {
-    background: var(--background-disabled);
+    @apply bg-disabled;
   }
   .ant-slider-track {
-    background: var(--background-disabled);
+    @apply bg-disabled;
   }
 
   .ant-slider-handle {
-    background: var(--background-disabled);
-    border-color: var(--stroke-disabled);
+    @apply bg-disabled dark:bg-grey-300;
+    @apply stroke-disabled;
   }
 
   &:hover {
     .ant-slider-rail {
-      background: var(--background-disabled);
+      @apply bg-disabled;
       opacity: 0.7;
     }
     .ant-slider-track {
-      background: var(--background-disabled);
+      @apply bg-disabled;
     }
 
     .ant-slider-handle {
-      background: var(--background-disabled) !important;
+      @apply bg-disabled;
       border-color: transparent !important;
       box-shadow: 0 0 0 0 transparent;
     }

@@ -3,22 +3,22 @@
 }
 
 .ant-descriptions-item-label {
-  color: var(--text-secondary);
+  @apply text-secondary;
 }
 
 .ant-descriptions-item-content {
-  color: var(--text-primary);
+  @apply text-primary;
 }
 
 th.ant-descriptions-item-label {
-  font-weight: 500;
+  @apply font-medium;
 }
 
 .ant-descriptions-bordered {
   .ant-descriptions-view,
   .ant-descriptions-row,
   .ant-descriptions-item-label {
-    border-color: var(--stroke-secondary);
+    @apply stroke-secondary;
   }
 }
 

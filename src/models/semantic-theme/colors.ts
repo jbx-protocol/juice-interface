@@ -6,53 +6,17 @@ namespace SemanticColor {
   export type Secondary = { secondary: Property.Color }
   export type Tertiary = { tertiary: Property.Color }
   export type Success = { success: Property.Color }
-  export type Warn = { warn: Property.Color }
-  export type Failure = { failure: Property.Color }
-  export type Action = { action: Primary & Secondary }
+  export type Action = { action: Primary }
   export type ActionHighlight = {
-    action: Primary & Secondary & { highlight: Property.Color }
+    action: Primary
   }
-  export type Brand = { brand: Primary & Secondary }
-  export type Status = Success & Warn & Failure
-  export type Disabled = {
-    disabled: Property.Color
-    lightDisabled: Property.Color
-  }
-  export type Deselected = { deselected: Property.Color }
-  export type Placeholder = { placeholder: Property.Color }
-  export type Over = { over: ActionHighlight & Brand & Status & Disabled }
+  export type Brand = { brand: Primary }
 }
 
 export interface SemanticColors {
-  text: SemanticColor.Primary &
-    SemanticColor.Secondary &
-    SemanticColor.Tertiary &
-    SemanticColor.Status &
-    SemanticColor.Brand &
-    SemanticColor.ActionHighlight &
-    SemanticColor.Disabled &
-    SemanticColor.Placeholder &
-    SemanticColor.Over & { header: Property.Color }
-  icon: SemanticColor.Primary &
-    SemanticColor.Secondary &
-    SemanticColor.Tertiary &
-    SemanticColor.Status &
-    SemanticColor.Brand &
-    SemanticColor.Action &
-    SemanticColor.Disabled &
-    SemanticColor.Over
+  text: SemanticColor.Primary & SemanticColor.Tertiary & SemanticColor.Brand
   stroke: SemanticColor.Primary &
     SemanticColor.Secondary &
-    SemanticColor.Tertiary &
-    SemanticColor.Status &
-    SemanticColor.ActionHighlight &
-    SemanticColor.Disabled
-  background: SemanticColor.Status &
-    SemanticColor.Brand &
-    SemanticColor.ActionHighlight &
-    SemanticColor.Disabled &
-    SemanticColor.Deselected &
-    SemanticColor.Over &
-    Record<'l0' | 'l1' | 'l2' | 'l3', Property.Color>
-  boxShadow: SemanticColor.Primary
+    SemanticColor.Tertiary
+  background: SemanticColor.ActionHighlight
 }

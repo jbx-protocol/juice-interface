@@ -3,10 +3,8 @@ import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import ETHAmount from 'components/currency/ETHAmount'
 import FormattedAddress from 'components/FormattedAddress'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
-import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { DistributePayoutsEvent } from 'models/subgraph-entities/v2/distribute-payouts-event'
-import { useContext } from 'react'
 
 export default function DistributePayoutsElem({
   event,
@@ -26,10 +24,6 @@ export default function DistributePayoutsElem({
       >
     | undefined
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   // Load individual DistributeToPayoutSplit events, emitted by internal transactions of the DistributeReservedPayouts transaction
   const { data: distributePayoutsEvents } = useSubgraphQuery({
     entity: 'distributeToPayoutSplitEvent',
@@ -91,7 +85,7 @@ export default function DistributePayoutsElem({
                 :
               </div>
 
-              <div style={{ color: colors.text.secondary }}>
+              <div className="text-secondary">
                 <ETHAmount amount={e.amount} />
               </div>
             </div>

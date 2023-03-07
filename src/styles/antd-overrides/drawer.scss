@@ -1,13 +1,13 @@
 .ant-drawer-content {
-  background: var(--background-l0);
+  @apply bg-l0;
 }
 
 .ant-drawer-close {
-  color: var(--icon-secondary);
+  @apply text-secondary;
 }
 
 .ant-drawer-header {
-  background: var(--background-l0);
+  @apply bg-l0;
 }
 
 .ant-drawer {

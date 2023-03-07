@@ -1,18 +1,21 @@
+.ant-modal {
+  border-radius: 1px;
+}
+
 .ant-modal-content {
-  color: var(--text-primary);
-  background: var(--background-l0);
-  border-radius: var(--radius-md);
+  @apply text-primary;
+  @apply bg-l0;
 
   .ant-modal-header {
     background: transparent;
   }
 
   .ant-modal-title {
-    color: var(--text-header);
+    @apply text-primary;
   }
 
   .ant-modal-close-x {
-    color: var(--icon-secondary);
+    @apply text-secondary;
   }
 
   .ant-modal-footer,

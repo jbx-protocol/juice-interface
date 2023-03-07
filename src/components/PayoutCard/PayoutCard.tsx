@@ -1,19 +1,17 @@
 import { DeleteOutlined, LockFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Space, Tooltip } from 'antd'
+import { Allocation, AllocationSplit } from 'components/Allocation'
 import FormattedAddress from 'components/FormattedAddress'
+import { DeleteConfirmationModal } from 'components/modals/DeleteConfirmationModal'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
-import useMobile from 'hooks/Mobile'
 import { useModal } from 'hooks/Modal'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { useCallback } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
-import { classNames } from 'utils/classNames'
 import { formatDate } from 'utils/format/formatDate'
-import { Allocation, AllocationSplit } from 'components/Allocation'
-import { DeleteConfirmationModal } from 'components/modals/DeleteConfirmationModal'
-import { Amount } from './Amount'
 import { isProjectSplit } from 'utils/splits'
+import { Amount } from './Amount'
 
 export const PayoutCard = ({
   allocation,
@@ -26,7 +24,6 @@ export const PayoutCard = ({
   onClick?: VoidFunction
   onDeleteClick?: VoidFunction
 }) => {
-  const isMobile = useMobile()
   const deleteConfirmationModal = useModal()
 
   const handleDeleteConfirmationModalOk = useCallback(() => {
@@ -67,7 +64,7 @@ export const PayoutCard = ({
         extra={
           onDeleteClick ? (
             <DeleteOutlined
-              className={classNames(isMobile ? 'text-lg' : 'text-sm')}
+              className="text-lg md:text-sm"
               onClick={stopPropagation(deleteConfirmationModal.open)}
             />
           ) : (

@@ -5,11 +5,9 @@ import FormattedAddress from 'components/FormattedAddress'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
 import V2V3ProjectLink from 'components/v2v3/shared/V2V3ProjectLink'
 import { V1_V3_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
-import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { getAddress } from 'ethers/lib/utils'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { TapEvent } from 'models/subgraph-entities/v1/tap-event'
-import { useContext } from 'react'
 
 export default function TapEventElem({
   event,
@@ -27,10 +25,6 @@ export default function TapEventElem({
       >
     | undefined
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   // Load individual DistributeToPayoutMod events, emitted by internal transactions of the Tap transaction
   const { data: payoutEvents } = useSubgraphQuery(
     event?.id
@@ -101,7 +95,7 @@ export default function TapEventElem({
                 :
               </div>
 
-              <div style={{ color: colors.text.secondary }}>
+              <div className="text-secondary">
                 <ETHAmount amount={e.modCut} />
               </div>
             </div>
@@ -119,13 +113,7 @@ export default function TapEventElem({
               <div style={{ fontWeight: 500 }}>
                 <FormattedAddress address={event.beneficiary} />:
               </div>
-              <div
-                style={
-                  payoutEvents?.length && payoutEvents.length > 1
-                    ? { color: colors.text.secondary }
-                    : { fontWeight: 500 }
-                }
-              >
+              <div>
                 <ETHAmount amount={event.beneficiaryTransferAmount} />
               </div>
             </div>

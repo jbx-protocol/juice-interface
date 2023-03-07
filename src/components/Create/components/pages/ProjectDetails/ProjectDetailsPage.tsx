@@ -1,4 +1,4 @@
-import { RightCircleOutlined } from '@ant-design/icons'
+import { RightOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { ADDRESS_ZERO } from '@uniswap/v3-sdk'
 import { Col, Form, Row, Space } from 'antd'
@@ -164,17 +164,15 @@ export const ProjectDetailsPage: React.FC = () => {
       <Wizard.Page.ButtonControl />
 
       <div className="mt-12 text-center">
-        <Link href="/contact">
-          <a className="hover-text-decoration-underline cursor-pointer text-sm text-grey-500 dark:text-grey-300">
-            <Trans>Need help?</Trans>
-            <div>
-              <Space size="small" className="text-haze-500 dark:text-haze-300">
-                <Trans>Contact a contributor.</Trans>
-                <RightCircleOutlined />
-              </Space>
-            </div>
-          </a>
-        </Link>
+        <Trans>Need help?</Trans>
+        <div>
+          <Link href="/contact">
+            <a className="text-sm hover:underline">
+              <Trans>Contact a contributor</Trans>{' '}
+              <RightOutlined className="text-xs" />
+            </a>
+          </Link>
+        </div>
       </div>
     </Form>
   )

@@ -1,7 +1,7 @@
 .ant-steps-item-title {
   text-transform: uppercase;
-  font-weight: 500;
-  font-size: 14px;
+  @apply font-medium;
+  @apply text-sm;
   line-height: 24px;
 }
 
@@ -11,7 +11,7 @@
       .ant-steps-item-title,
       .ant-steps-item-subtitle,
       .ant-steps-item-description {
-        color: var(--text-primary);
+        @apply text-primary;
       }
     }
   }
@@ -23,8 +23,8 @@
   > .ant-steps-item-container
   > .ant-steps-item-content
   > .ant-steps-item-title {
-  color: var(--text-primary);
-  font-weight: 500;
+  @apply text-primary;
+  @apply font-medium;
 }
 
 // Process steps
@@ -33,7 +33,7 @@
   > .ant-steps-item-container
   > .ant-steps-item-content
   > .ant-steps-item-title {
-  color: var(--text-secondary);
+  @apply text-secondary;
   font-weight: 400;
 }
 
@@ -42,7 +42,7 @@
   > .ant-steps-item-container
   > .ant-steps-item-content
   > .ant-steps-item-title {
-  color: var(--text-secondary);
+  @apply text-secondary;
 }
 
 // Wait steps
@@ -50,6 +50,6 @@
   > .ant-steps-item-container
   > .ant-steps-item-content
   > .ant-steps-item-title {
-  color: var(--text-disabled);
+  @apply text-disabled;
   font-weight: 400;
 }

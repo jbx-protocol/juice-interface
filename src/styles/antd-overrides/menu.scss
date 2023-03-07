@@ -1,5 +1,5 @@
 .ant-menu-submenu-arrow {
-  color: var(--text-primary) !important;
+  @apply text-primary;
 }
 
 .ant-menu-item:active,
@@ -12,8 +12,8 @@
 }
 
 .ant-menu-submenu-title {
-  color: var(--text-primary) !important;
-  font-weight: 500;
+  @apply text-primary;
+  @apply font-medium;
 }
 
 .ant-menu-sub {
@@ -33,41 +33,52 @@
   margin-left: 15px;
 }
 
-.ant-menu-item:hover {
+nav .ant-menu-item:hover {
   background: none !important;
 }
 
 .menu-item-sider:hover {
-  background: var(--background-l2) !important;
+  @apply bg-l2;
 }
 
 .ant-menu-item-group-title {
   text-transform: uppercase;
   padding-bottom: 0;
-  font-size: 0.75rem;
+  @apply text-xs;
 }
 
 .ant-menu > .ant-menu-item-divider {
   margin: 1rem 0;
-  border-color: var(--stroke-tertiary);
+  @apply stroke-tertiary;
+}
+
+.ant-layout-sider {
+  .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected,
+  .ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    @apply bg-smoke-100 dark:bg-slate-500;
+    @apply text-primary;
+    @apply font-medium;
+    &:hover {
+      @apply bg-smoke-100 dark:bg-slate-500;
+    }
+  }
 }
 
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected,
-.ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
-  background-color: var(--background-l2);
-  color: var(--text-primary);
-  font-weight: 500;
+.ant-menu-dark.ant-menu-dark.ant-menu-item-selected {
+  background: none;
 }
 
+
 .ant-menu-light .ant-menu-item:hover {
-  color: var(--text-primary);
-  background-color: var(--background-l2);
+  @apply text-primary;
+  @apply bg-l1;
 }
 
 .ant-menu,
 .ant-menu-item,
 .ant-menu-item > a .ant-menu-item a {
-  color: var(--text-primary);
+  @apply text-primary;
   background: transparent;
   border: none;
   box-shadow: none;
@@ -85,7 +96,7 @@
 }
 
 .ant-menu-light .ant-menu-item-active {
-  color: var(--text-primary);
+  @apply text-primary;
 }
 
 ul.ant-dropdown-menu.ant-dropdown-menu-root.ant-dropdown-menu-vertical.ant-dropdown-menu {

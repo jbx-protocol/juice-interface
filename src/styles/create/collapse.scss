@@ -2,13 +2,14 @@
   .ant-collapse-header {
     padding: 1.5rem 0 !important;
     padding-left: 0 !important;
-    border-bottom: solid 1px var(--stroke-tertiary);
+    border-bottom: 1px solid;
+    @apply stroke-tertiary;
   }
 
   .ant-collapse-header-text {
-    color: var(--text-primary);
+    @apply text-primary;
     span {
-      color: var(--text-secondary);
+      @apply text-secondary;
     }
   }
 

@@ -106,3 +106,7 @@
     @apply text-action-primary;
   }
 }
+
+.ant-upload.ant-upload-select-picture-card:hover {
+  @apply stroke-action-primary;
+}

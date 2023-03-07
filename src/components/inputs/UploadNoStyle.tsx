@@ -162,7 +162,7 @@ export const UploadNoStyle = (props: UploadNoStyleProps) => {
 
 const UploadButton = () => {
   return (
-    <CreateButton icon={<UploadOutlined />} className="h-full w-full">
+    <CreateButton icon={<UploadOutlined />} className="h-[104px] w-full">
       Upload
     </CreateButton>
   )

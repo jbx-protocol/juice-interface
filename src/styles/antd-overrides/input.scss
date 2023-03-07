@@ -192,6 +192,7 @@ textarea.ant-input::placeholder {
   @apply bg-l1;
   width: 100%;
   min-height: 104px;
+  height: unset;
 }
 
 .ant-upload-list,

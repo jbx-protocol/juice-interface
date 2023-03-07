@@ -1,28 +1,17 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Empty, Space } from 'antd'
+import { Button, Empty } from 'antd'
 import { Callout } from 'components/Callout'
-import { AddEditRewardModal } from 'components/Create/components/RewardsList/AddEditRewardModal'
+import { RewardsList } from 'components/Create/components/RewardsList'
 import Loading from 'components/Loading'
-import { AddRewardTierButton } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/AddNftsSection/AddRewardTierButton'
-import NftRewardTierCard from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/AddNftsSection/NftRewardTierCard'
 import { useUpdateCurrentCollection } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/EditNftsPage/hooks/UpdateCurrentCollection'
 import { useHasNftRewards } from 'hooks/JB721Delegate/HasNftRewards'
-import { NftRewardTier } from 'models/nftRewardTier'
 import { useCallback, useState } from 'react'
-import { MAX_NFT_REWARD_TIERS } from 'utils/nftRewards'
 import { useEditingNfts } from './hooks/EditingNfts'
 
 export function EditNftsSection() {
-  const [addTierModalVisible, setAddTierModalVisible] = useState<boolean>(false)
   const [submitLoading, setSubmitLoading] = useState<boolean>(false)
-  const {
-    rewardTiers,
-    addRewardTier,
-    editRewardTier,
-    deleteRewardTier,
-    editedRewardTierIds,
-    loading,
-  } = useEditingNfts()
+  const { rewardTiers, setRewardTiers, editedRewardTierIds, loading } =
+    useEditingNfts()
   const { value: hasExistingNfts } = useHasNftRewards()
   const updateExistingCollection = useUpdateCurrentCollection({
     editedRewardTierIds,
@@ -45,36 +34,23 @@ export function EditNftsSection() {
         <Trans>Changes to NFTs will take effect immediately.</Trans>
       </Callout.Info>
 
-      {rewardTiers && rewardTiers.length > 0 && (
-        <Space direction="vertical" size="large" className="w-full">
-          {rewardTiers?.map((rewardTier, index) => (
-            <NftRewardTierCard
-              key={index}
-              rewardTier={rewardTier}
-              onChange={newRewardTier =>
-                editRewardTier({ newRewardTier, index })
-              }
-              onDelete={() => deleteRewardTier(index)}
-            />
-          ))}
-        </Space>
-      )}
+      <div className="mb-8">
+        {rewardTiers && rewardTiers.length > 0 && (
+          <RewardsList
+            value={rewardTiers}
+            onChange={setRewardTiers}
+            allowCreate
+          />
+        )}
 
-      {rewardTiers?.length === 0 && (
-        <Empty
-          className="mb-0"
-          description={t`No NFTs`}
-          image={Empty.PRESENTED_IMAGE_SIMPLE}
-        />
-      )}
-
-      <AddRewardTierButton
-        className="mb-8"
-        onClick={() => {
-          setAddTierModalVisible(true)
-        }}
-        disabled={rewardTiers && rewardTiers.length >= MAX_NFT_REWARD_TIERS}
-      />
+        {rewardTiers?.length === 0 && (
+          <Empty
+            className="mb-0"
+            description={t`No NFTs`}
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+          />
+        )}
+      </div>
 
       {hasExistingNfts && rewardTiers?.length === 0 && (
         <Callout.Warning className="mb-5 bg-smoke-100 dark:bg-slate-500">
@@ -102,15 +78,6 @@ export function EditNftsSection() {
           <Trans>Deploy edited NFTs</Trans>
         </span>
       </Button>
-
-      <AddEditRewardModal
-        open={addTierModalVisible}
-        onOk={(reward: NftRewardTier) => {
-          setAddTierModalVisible(false)
-          addRewardTier(reward)
-        }}
-        onCancel={() => setAddTierModalVisible(false)}
-      />
     </>
   )
 }

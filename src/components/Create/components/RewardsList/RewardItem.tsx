@@ -1,9 +1,11 @@
 import { DeleteOutlined, EditOutlined, LinkOutlined } from '@ant-design/icons'
+import { AddressZero } from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
 import FormattedAddress from 'components/FormattedAddress'
 import { JuiceVideoThumbnail } from 'components/NftRewards/NftVideo/JuiceVideoThumbnail'
 import TooltipLabel from 'components/TooltipLabel'
+import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
 import { useContentType } from 'hooks/ContentType'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { ReactNode } from 'react'
@@ -54,6 +56,8 @@ export const RewardItem = ({
   const { data: contentType } = useContentType(fileUrl)
   const isVideo = fileTypeIsVideo(contentType)
 
+  const hasBeneficiary = Boolean(beneficiary) && beneficiary !== AddressZero
+
   return (
     <div className="flex flex-col gap-4">
       {/* Title line */}
@@ -101,7 +105,7 @@ export const RewardItem = ({
               title={t`Minimum contribution`}
               stat={`${numberUpToPrecisionFormat(contributionFloor)} ETH`}
             />
-            {!!maxSupply && (
+            {!!maxSupply && maxSupply !== DEFAULT_NFT_MAX_SUPPLY && (
               <RewardStatLine
                 title={t`Supply`}
                 stat={numberUpToPrecisionFormat(maxSupply)}
@@ -113,7 +117,7 @@ export const RewardItem = ({
                 stat={`1/${reservedRate}`}
               />
             )}
-            {!!beneficiary && (
+            {hasBeneficiary && (
               <RewardStatLine
                 title={
                   <TooltipLabel

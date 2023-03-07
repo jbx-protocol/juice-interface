@@ -20,11 +20,6 @@ export function useEditingNfts() {
     setEditedRewardTierIds([...editedRewardTierIds, tierId])
   }
 
-  const addRewardTier = (newRewardTier: NftRewardTier) => {
-    const newRewardTiers = [...(rewardTiers ?? []), newRewardTier]
-    setRewardTiers(newRewardTiers)
-  }
-
   const editRewardTier = ({
     index,
     newRewardTier,
@@ -50,15 +45,6 @@ export function useEditingNfts() {
     setRewardTiers(newRewardTiers)
   }
 
-  const deleteRewardTier = (tierIndex: number) => {
-    if (!rewardTiers) return
-
-    const newRewardTiers = rewardTiers.filter((_, idx) => tierIndex !== idx)
-
-    setRewardTiers(newRewardTiers)
-    recordEditedTierId(rewardTiers[tierIndex].id)
-  }
-
   // Load the redux state into the state variable
   useEffect(() => {
     setRewardTiers(nftRewards.rewardTiers)
@@ -69,9 +55,7 @@ export function useEditingNfts() {
     setRewardTiers,
     marketplaceForm,
     editedRewardTierIds,
-    deleteRewardTier,
     editRewardTier,
-    addRewardTier,
     loading,
   }
 }

@@ -19,12 +19,6 @@ export function useAddNfts({
 
   const { nftRewards } = useAppSelector(state => state.editingV2Project)
 
-  const addRewardTier = (newRewardTier: NftRewardTier) => {
-    const newRewardTiers = [...(rewardTiers ?? []), newRewardTier]
-    setRewardTiers(newRewardTiers)
-    setFormUpdated?.(true)
-  }
-
   const editRewardTier = ({
     index,
     newRewardTier,
@@ -50,14 +44,6 @@ export function useAddNfts({
     setRewardTiers(newRewardTiers)
   }
 
-  const deleteRewardTier = (tierIndex: number) => {
-    if (!rewardTiers) return
-
-    const newRewardTiers = rewardTiers.filter((_, idx) => tierIndex !== idx)
-
-    setRewardTiers(newRewardTiers)
-  }
-
   // Load the redux state into the state variable
   useEffect(() => {
     setRewardTiers(nftRewards.rewardTiers)
@@ -68,8 +54,6 @@ export function useAddNfts({
     setRewardTiers,
     postPayModalForm,
     marketplaceForm,
-    deleteRewardTier,
     editRewardTier,
-    addRewardTier,
   }
 }

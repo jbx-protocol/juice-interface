@@ -6,7 +6,10 @@ import { useModal } from 'hooks/Modal'
 import { FormItemInput } from 'models/formItemInput'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { createContext, useCallback, useContext, useState } from 'react'
-import { MAX_NFT_REWARD_TIERS } from 'utils/nftRewards'
+import {
+  MAX_NFT_REWARD_TIERS,
+  sortNftsByContributionFloor,
+} from 'utils/nftRewards'
 import { AddEditRewardModal } from './AddEditRewardModal'
 import { useRewards } from './hooks'
 import { RewardItem } from './RewardItem'
@@ -72,25 +75,23 @@ export const RewardsList: React.FC<RewardsListProps> &
       <div className="flex flex-col gap-12">
         {!!rewards.length && (
           <>
-            {rewards
-              .sort((a, b) => a.contributionFloor - b.contributionFloor)
-              .map((reward, i) => (
-                <div key={reward.id}>
-                  <RewardItem
-                    reward={reward}
-                    onEditClicked={() => {
-                      setSelectedReward(reward)
-                      modal.open()
-                    }}
-                    onDeleteClicked={() => {
-                      removeReward(reward.id)
-                    }}
-                  />
-                  {shouldRenderNftDivider(i) ? (
-                    <Divider className="m-0 mt-12" />
-                  ) : null}
-                </div>
-              ))}
+            {sortNftsByContributionFloor(rewards).map((reward, i) => (
+              <div key={reward.id}>
+                <RewardItem
+                  reward={reward}
+                  onEditClicked={() => {
+                    setSelectedReward(reward)
+                    modal.open()
+                  }}
+                  onDeleteClicked={() => {
+                    removeReward(reward.id)
+                  }}
+                />
+                {shouldRenderNftDivider(i) ? (
+                  <Divider className="m-0 mt-12" />
+                ) : null}
+              </div>
+            ))}
           </>
         )}
         {allowCreate && (

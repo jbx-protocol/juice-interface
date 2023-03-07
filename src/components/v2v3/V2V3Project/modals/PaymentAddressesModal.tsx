@@ -7,7 +7,6 @@ import TooltipLabel from 'components/TooltipLabel'
 import useMobile from 'hooks/Mobile'
 import { ETHERC20ProjectPayer } from 'models/subgraph-entities/v2/eth-erc20-project-payer'
 import { isZeroAddress } from 'utils/address'
-import { classNames } from 'utils/classNames'
 
 export function PaymentAddressesModal({
   open,
@@ -123,12 +122,7 @@ export function PaymentAddressesModal({
                       />
                       :
                     </span>
-                    <div
-                      className={classNames(
-                        'text-right',
-                        isMobile ? 'max-w-[75%]' : 'max-w-[385px]',
-                      )}
-                    >
+                    <div className="max-w-[75%] text-right md:max-w-[385px]">
                       "{p.memo}"
                     </div>
                   </div>

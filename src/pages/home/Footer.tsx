@@ -52,7 +52,7 @@ export default function Footer() {
           </Trans>
         </p>
       </div>
-      <div className="flex justify-center gap-y-5 bg-slate-900 pb-7 text-center">
+      <div className="bg-slate-900 pb-7 text-center">
         <div className="mb-7 flex flex-wrap justify-center gap-y-2 gap-x-6">
           {link('Contact', '/contact')}
           {link('Discord', 'https://discord.gg/6jXrJSyDFf')}
@@ -63,12 +63,12 @@ export default function Footer() {
         </div>
 
         {gitCommit ? (
-          <span className="text-white">
+          <div className="text-white">
             Version:{' '}
             <ExternalLink href={gitCommitLink} className="text-sm">
               #{gitCommit}
             </ExternalLink>
-          </span>
+          </div>
         ) : null}
       </div>
     </div>

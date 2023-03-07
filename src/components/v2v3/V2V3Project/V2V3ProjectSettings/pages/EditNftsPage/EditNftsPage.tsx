@@ -32,7 +32,7 @@ export function EditNftsPage() {
 
   if (!hasExistingNfts) {
     return (
-      <div className="max-w-lg">
+      <div className="m-auto max-w-lg">
         <Empty
           image={
             <div className="m-auto h-24 w-24 grayscale">

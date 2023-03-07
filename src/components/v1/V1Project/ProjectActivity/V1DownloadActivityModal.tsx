@@ -63,7 +63,7 @@ export function V1DownloadActivityModal({
           onClick={() => downloadParticipants(blockNumber, projectId, pv)}
         >
           <span>
-            <Trans>Participants</Trans>
+            <Trans>Token holders</Trans>
           </span>
         </Button>
 

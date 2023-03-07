@@ -1,7 +1,7 @@
 import {
   CrownFilled,
   DeleteOutlined,
-  QuestionCircleOutlined
+  QuestionCircleOutlined,
 } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
@@ -37,9 +37,9 @@ export const OwnerPayoutCard: React.FC<OwnerPayoutCardType> = props => {
           <Tooltip
             title={
               <Trans>
-                You have configured for all funds to be distributed from the
-                treasury. Your current payouts do not sum to 100%, so the
-                remainder will go to the project owner.
+                This project is set to pay out all available ETH. Your payouts
+                do not sum to 100%, so the remainder will go to the project
+                owner.
               </Trans>
             }
           >

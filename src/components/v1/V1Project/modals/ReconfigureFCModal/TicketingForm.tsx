@@ -42,16 +42,16 @@ export default function TicketingForm({
 
         <p>
           <Trans>
-            Tokens are earned by anyone who pays your project, and can be
-            redeemed for overflow if your project has set a funding target.
+            Project tokens are sent to anyone who pays your project, and they
+            can be redeemed to reclaim ETH that isn't needed for payouts.
           </Trans>
         </p>
         <p>
           <Trans>
-            You'll be able to issue ERC-20 tokens once your project contract has
-            been deployed. Until then, the protocol will track token balances,
-            allowing your supporters to earn tokens and redeem for overflow in
-            the meantime.
+            Optionally, you can issue ERC-20 tokens once your project has been
+            deployed. Until then, the Juicebox protocol will track token
+            balances internally, allowing your supporters to receive tokens and
+            redeem them for ETH.
           </Trans>
         </p>
       </div>
@@ -86,10 +86,10 @@ export default function TicketingForm({
           mods={mods}
           onModsChanged={setMods}
           formItemProps={{
-            label: <Trans>Reserved token allocation (optional)</Trans>,
+            label: <Trans>Reserved token recipients (optional)</Trans>,
             extra: (
               <Trans>
-                Allocate a portion of your project's reserved tokens to other
+                Send a portion of your project's reserved tokens to other
                 Ethereum wallets or Juicebox projects.
               </Trans>
             ),

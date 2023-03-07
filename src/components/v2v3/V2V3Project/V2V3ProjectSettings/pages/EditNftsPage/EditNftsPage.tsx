@@ -48,15 +48,15 @@ export function EditNftsPage() {
             <>
               <p>
                 <Trans>
-                  You haven't launched an NFT collection yet! Reconfigure your
-                  funding cycle to include NFTs.
+                  You haven't launched an NFT collection yet! Edit your cycle to
+                  add NFTs.
                 </Trans>
               </p>
               <Link
                 href={settingsPagePath('reconfigurefc', { projectId, handle })}
               >
                 <Button type="primary">
-                  <Trans>Add NFTs to funding cycle</Trans>
+                  <Trans>Add NFTs to cycle</Trans>
                 </Button>
               </Link>
             </>

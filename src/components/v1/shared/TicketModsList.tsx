@@ -136,7 +136,7 @@ export default function TicketModsList({
       {fundingCycle && projectId && hasEditPermission ? (
         <div className="mt-2">
           <Button size="small" onClick={() => setModalVisible(true)}>
-            <Trans>Edit token allocation</Trans>
+            <Trans>Edit recipients</Trans>
           </Button>
         </div>
       ) : null}
@@ -144,8 +144,8 @@ export default function TicketModsList({
       {fundingCycle ? (
         <Modal
           open={modalVisible}
-          title={t`Edit reserved token allocation`}
-          okText={t`Save token allocation`}
+          title={t`Edit reserved token recipients`}
+          okText={t`Save recipients`}
           onOk={() => setMods()}
           onCancel={() => {
             setEditingMods(mods)

@@ -156,7 +156,7 @@ export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFun
       args,
       {
         ...txOpts,
-        title: t`Launch funding cycles for ${projectTitle}`,
+        title: t`Launch cycles for ${projectTitle}`,
       },
     )
   }

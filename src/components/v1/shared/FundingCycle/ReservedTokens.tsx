@@ -12,6 +12,7 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import TicketModsList from '../TicketModsList'
 import DistributeTokensModal from './modals/DistributeTokensModal'
+import { RESERVED_RATE_EXPLAINATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 
 export default function ReservedTokens({
   fundingCycle,
@@ -50,13 +51,7 @@ export default function ReservedTokens({
               ({perbicentToPercent(metadata?.reservedRate)}%)
             </h4>
           }
-          tip={
-            <Trans>
-              A project can reserve a percentage of tokens minted from every
-              payment it receives. Reserved tokens can be distributed according
-              to the allocation below at any time.
-            </Trans>
-          }
+          tip={RESERVED_RATE_EXPLAINATION}
         />
       </div>
 
@@ -82,7 +77,7 @@ export default function ReservedTokens({
             size="small"
             onClick={() => setModalIsVisible(true)}
           >
-            <Trans>Distribute {tokenTextPlural}</Trans>
+            <Trans>Send reserved {tokenTextPlural}</Trans>
           </Button>
 
           <DistributeTokensModal

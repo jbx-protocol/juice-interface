@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/macro'
 import { CardSection } from 'components/CardSection'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
@@ -38,7 +39,7 @@ export default function QueuedFundingCycle() {
         </div>
       ) : (
         <div className="text-grey-500 dark:text-slate-100">
-          No upcoming funding cycle
+          <Trans>No upcoming cycle</Trans>
         </div>
       )}
     </div>

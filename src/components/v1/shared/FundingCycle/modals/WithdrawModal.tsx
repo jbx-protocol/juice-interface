@@ -111,7 +111,7 @@ export default function WithdrawModal({
 
   return (
     <TransactionModal
-      title={t`Distribute funds`}
+      title={t`Send payouts`}
       open={open}
       onOk={executeTapTx}
       onCancel={() => {
@@ -123,14 +123,14 @@ export default function WithdrawModal({
       }}
       confirmLoading={loading}
       transactionPending={transactionPending}
-      okText={t`Distribute funds`}
-      connectWalletText={t`Connect wallet to distribute`}
+      okText={t`Send payouts`}
+      connectWalletText={t`Connect wallet to send payouts`}
       width={640}
     >
       <Space direction="vertical" size="large" className="w-full">
         <div>
           <div className="flex justify-between">
-            <Trans>Total funds:</Trans>{' '}
+            <Trans>Total:</Trans>{' '}
             <div>
               <CurrencySymbol currency={currentFCCurrency} />
               {formatWad(withdrawable, { precision: 4 })}
@@ -138,7 +138,9 @@ export default function WithdrawModal({
           </div>
           <div className="flex justify-between">
             <div>
-              <Trans>JBX Fee ({perbicentToPercent(currentFC.fee)}%):</Trans>
+              <Trans>
+                JBX membership fee ({perbicentToPercent(currentFC.fee)}%):
+              </Trans>
             </div>
             <div>
               - <CurrencySymbol currency={currentFCCurrency} />
@@ -192,7 +194,7 @@ export default function WithdrawModal({
         {currentPayoutMods?.length ? (
           <div>
             <h4>
-              <Trans>Funds will be distributed to:</Trans>
+              <Trans>Payouts will be sent to:</Trans>
             </h4>
             <PayoutModsList
               total={amountSubFee(parseWad(tapAmount || '0'), currentFC.fee)}

@@ -30,9 +30,9 @@ export default function ReconfigureFundingModalTrigger({
     <div className="text-right">
       <Button onClick={handleModalOpen} size="small">
         {fundingDuration?.gt(0) ? (
-          <Trans>Reconfigure upcoming</Trans>
+          <Trans>Edit upcoming cycle</Trans>
         ) : (
-          <Trans>Reconfigure</Trans>
+          <Trans>Edit cycle</Trans>
         )}
       </Button>
 

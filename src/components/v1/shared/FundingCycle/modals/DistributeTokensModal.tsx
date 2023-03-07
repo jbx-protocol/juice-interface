@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { Modal, Space } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
 import TicketModsList from 'components/v1/shared/TicketModsList'
@@ -47,14 +47,14 @@ export default function DistributeTokensModal({
 
   return (
     <Modal
-      title={`Distribute reserved ${tokenSymbolText({
+      title={t`Send reserved ${tokenSymbolText({
         tokenSymbol,
         capitalize: false,
         plural: true,
       })}`}
       open={open}
       onOk={distribute}
-      okText={`Distribute ${tokenSymbolText({
+      okText={t`Send ${tokenSymbolText({
         tokenSymbol,
         capitalize: false,
         plural: true,
@@ -77,7 +77,7 @@ export default function DistributeTokensModal({
         {currentTicketMods?.length ? (
           <div>
             <h4>
-              <Trans>Funds will be distributed to:</Trans>
+              <Trans>Payouts will be sent to:</Trans>
             </h4>
             <TicketModsList
               total={reservedTokens}

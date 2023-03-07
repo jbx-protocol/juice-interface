@@ -1,6 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Space } from 'antd'
 import FormItemWarningText from 'components/FormItemWarningText'
+import { OWNER_MINTING_EXPLAINATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 
 export default function TokenMintingExtra({
   showMintingWarning,
@@ -9,14 +10,11 @@ export default function TokenMintingExtra({
 }) {
   return (
     <Space direction="vertical">
-      <Trans>
-        When enabled, the project owner can manually mint any amount of tokens
-        to any address.
-      </Trans>
+      {OWNER_MINTING_EXPLAINATION}
       {showMintingWarning && (
         <FormItemWarningText>
           <Trans>
-            Enabling token minting will appear risky to contributors.
+            Enabling owner token minting will appear risky to contributors.
           </Trans>
         </FormItemWarningText>
       )}

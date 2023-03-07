@@ -19,7 +19,7 @@ export default function DeployETHERC20ProjectPayerEventElem({
   return (
     <ActivityEvent
       event={event}
-      header={t`Created Payment Address`}
+      header={t`Deployed a project payer address`}
       subject={
         <Trans>
           called by <FormattedAddress address={event.caller} />

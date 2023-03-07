@@ -33,7 +33,7 @@ export const useLaunchFundingCycles = ({
     const callbacks = {
       onDone() {
         console.info(
-          'Reconfigure transaction executed. Awaiting confirmation...',
+          'Cycle edit transaction executed. Awaiting confirmation...',
         )
       },
       onConfirmed() {
@@ -57,7 +57,7 @@ export const useLaunchFundingCycles = ({
 
     if (!txSuccessful) {
       setLaunchFundingCycleTxLoading(false)
-      emitErrorNotification('Failed to launch funding cycles.')
+      emitErrorNotification('Failed to launch cycles.')
     }
   }, [
     launchStandardFundingCycles,

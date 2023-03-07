@@ -49,7 +49,7 @@ export function useDistributePayoutsTx(): DistributePayoutsTx {
       ],
       {
         ...txOpts,
-        title: t`Distribute payouts of ${projectTitle}`,
+        title: t`Send ${projectTitle} payouts`,
       },
     )
   }

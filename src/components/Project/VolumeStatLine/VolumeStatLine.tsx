@@ -27,11 +27,10 @@ export const VolumeStatLine = ({
 
   return (
     <StatLine
-      statLabel={<Trans>Volume</Trans>}
+      statLabel={<Trans>Total volume</Trans>}
       statLabelTip={
         <Trans>
-          The total funds this Juicebox project has received since it was
-          created.
+          The amount of ETH this project has received since it was created.
         </Trans>
       }
       statValue={

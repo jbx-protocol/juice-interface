@@ -1,11 +1,11 @@
 import { Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
 import { Callout } from 'components/Callout'
-import ExternalLink from 'components/ExternalLink'
 import FormItemLabel from 'components/FormItemLabel'
 import FormItemWarningText from 'components/FormItemWarningText'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph/TokenRedemptionRateGraph'
+import { REDEMPTION_RATE_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { useState } from 'react'
 import NumberSlider from '../inputs/NumberSlider'
 import SwitchHeading from '../SwitchHeading'
@@ -24,16 +24,16 @@ function BondingCurveRateExtra({
     <Space className="text-sm" direction="vertical" size="large">
       <p className="m-0">
         <Trans>
-          The redemption rate determines the amount of overflow each token can
-          be redeemed for.
+          The redemption rate determines how token holders can burn their
+          tokens to reclaim a portion of the ETH not needed for payouts.
         </Trans>
       </p>
 
       {value === '0' ? (
         <Callout.Warning>
           <Trans>
-            Token holders <strong>cannot redeem their tokens</strong> for any
-            ETH when the redemption rate is 0.
+            Token holders <strong>cannot redeem their tokens</strong> for ETH
+            when the redemption rate is 0%.
           </Trans>
         </Callout.Warning>
       ) : null}
@@ -41,29 +41,14 @@ function BondingCurveRateExtra({
       <MinimalCollapse
         header={<Trans>How do I set the redemption rate?</Trans>}
       >
-        <Trans>
-          <p>
-            On a lower redemption rate, redeeming a token increases the value of
-            each remaining token, creating an incentive to hold tokens longer
-            than other holders.
-          </p>{' '}
-          <p>
-            A redemption rate of 100% means all tokens will have equal value
-            regardless of when they are redeemed.
-          </p>
-          Learn more in this{' '}
-          <ExternalLink href="https://youtu.be/dxqc3yMqi5M">
-            short video
-          </ExternalLink>
-          .
-        </Trans>
+        {REDEMPTION_RATE_EXPLANATION}
       </MinimalCollapse>
 
       {disabled && (
         <FormItemWarningText>
           <Trans>
-            Disabled when your funding cycle's payout amount is{' '}
-            <strong>Unlimited</strong>
+            Redemptions aren't possible when all of a project's ETH is being
+            used for payouts.
           </Trans>
         </FormItemWarningText>
       )}

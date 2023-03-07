@@ -110,7 +110,7 @@ export function FundingCycleListItems({
       />
       {distributionLimit && (
         <FundingCycleListItem
-          name={t`Distribution limit`}
+          name={t`Payouts`}
           value={
             <DistributionLimitValue
               distributionLimit={distributionLimit}

@@ -35,8 +35,8 @@ export default function FundingCycles() {
       <Tooltip
         title={
           <Trans>
-            This funding cycle may pose risks to contributors. Check the funding
-            cycle details before paying this project.
+            This cycle's rules may lead to unexpected behavior. Before paying
+            this project, know and understand its rules.
           </Trans>
         }
       >

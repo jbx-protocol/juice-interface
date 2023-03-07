@@ -83,7 +83,7 @@ export function RulesListItems({
   return (
     <>
       <FundingCycleListItem
-        name={t`Reconfiguration strategy`}
+        name={t`Edit deadline`}
         value={
           <ReconfigStratValue
             ballotStrategy={ballotStrategy}
@@ -120,7 +120,7 @@ export function RulesListItems({
         helperText={HOLD_FEES_EXPLAINATION}
       />
       <FundingCycleListItem
-        name={t`Payment Terminal configuration`}
+        name={t`Set payment terminals`}
         value={
           <AllowedValue
             value={fundingCycleMetadata?.global.allowSetTerminals}
@@ -136,7 +136,7 @@ export function RulesListItems({
         helperText={TERMINAL_CONFIG_EXPLAINATION}
       />
       <FundingCycleListItem
-        name={t`Controller configuration`}
+        name={t`Set controller`}
         value={
           <AllowedValue
             value={fundingCycleMetadata?.global.allowSetController}
@@ -152,7 +152,7 @@ export function RulesListItems({
         helperText={CONTROLLER_CONFIG_EXPLAINATION}
       />
       <FundingCycleListItem
-        name={t`Payment Terminal migration`}
+        name={t`Migrate payment terminal`}
         value={
           <AllowedValue value={fundingCycleMetadata?.allowTerminalMigration} />
         }
@@ -166,7 +166,7 @@ export function RulesListItems({
         helperText={TERMINAL_MIGRATION_EXPLAINATION}
       />
       <FundingCycleListItem
-        name={t`Controller migration`}
+        name={t`Migrate controller`}
         value={
           <AllowedValue
             value={fundingCycleMetadata?.allowControllerMigration}

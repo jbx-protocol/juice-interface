@@ -13,7 +13,7 @@ const DurationSwitch = ({
     <Space>
       <Switch checked={checked} onChange={onChange} />
       <label>
-        <Trans>Set a funding cycle duration</Trans>
+        <Trans>Set cycle duration</Trans>
       </label>
     </Space>
   )
@@ -64,15 +64,14 @@ export default function ProjectDuration({
         extra={
           <p>
             <Trans>
-              How long one funding cycle will last. Funding cycle{' '}
-              <strong>reconfigurations</strong> will only take effect for{' '}
-              <strong>upcoming</strong> funding cycles, i.e. once a current
-              funding cycle has ended.
+              How long one cycle will last. Your project's rules are locked
+              during each cycle. Edits you make to your project's rules during a
+              cycle will only take effect at the start of the next cycle.
             </Trans>
           </p>
         }
         name={name}
-        label={hideLabel ? undefined : t`Funding cycle duration`}
+        label={hideLabel ? undefined : t`Cycle duration`}
         {...formItemProps}
       >
         <FormattedNumberInput

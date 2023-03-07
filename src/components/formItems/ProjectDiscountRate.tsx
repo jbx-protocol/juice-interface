@@ -12,9 +12,7 @@ function DiscountRateExtra({ disabled }: { disabled?: boolean }) {
     <div>
       {disabled && (
         <FormItemWarningText>
-          <Trans>
-            Disabled when your project's funding cycle duration is 0.
-          </Trans>
+          <Trans>Disabled when your project's cycle has no duration.</Trans>
         </FormItemWarningText>
       )}
       {DISCOUNT_RATE_EXPLANATION}
@@ -46,7 +44,7 @@ export default function ProjectDiscountRate({
         hideLabel ? undefined : (
           <div className="flex">
             <FormItemLabel>
-              <Trans>Discount rate</Trans>
+              <Trans>Issuance reduction rate</Trans>
             </FormItemLabel>
             {onToggle ? (
               <>

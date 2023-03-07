@@ -117,7 +117,7 @@ export const useReconfigureFundingCycle = ({
     const txOpts = {
       onDone() {
         console.info(
-          'Reconfigure transaction executed. Awaiting confirmation...',
+          'Cycle edit transaction executed. Awaiting confirmation...',
         )
       },
       async onConfirmed() {

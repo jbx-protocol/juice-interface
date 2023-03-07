@@ -52,37 +52,37 @@ interface BallotStrategy {
 
 const durationBallotStrategyDescription = (days: number) =>
   plural(days, {
-    one: 'A reconfiguration to an upcoming funding cycle must be submitted at least # day before it starts.',
+    one: 'Edits to an upcoming cycle must be submitted at least # day before that cycle starts.',
     other:
-      'A reconfiguration to an upcoming funding cycle must be submitted at least # days before it starts.',
+      'Edits to an upcoming cycle must be submitted at least # days before that cycle starts.',
   })
 
 export function ballotStrategiesFn(network?: NetworkName): BallotStrategy[] {
   return [
     {
       id: 'none',
-      name: t`No delay`,
-      description: t`Any reconfiguration to an upcoming funding cycle will take effect once the current cycle ends. A project with no strategy may be vulnerable to being rug-pulled by its owner.`,
+      name: t`No deadline`,
+      description: t`Edits to upcoming cycles will take effect when the current cycle ends. A project with no deadline is vulnerable to last-second edits by its owner.`,
       address: constants.AddressZero,
       durationSeconds: 0,
     },
     {
       id: 'oneDay',
-      name: t`1-day delay`,
+      name: t`1-day deadline`,
       description: durationBallotStrategyDescription(1),
       address: BALLOT_ADDRESSES.ONE_DAY[network ?? readNetwork.name]!,
       durationSeconds: SECONDS_IN_DAY,
     },
     {
       id: 'threeDay',
-      name: t`3-day delay`,
+      name: t`3-day deadline`,
       description: durationBallotStrategyDescription(3),
       address: BALLOT_ADDRESSES.THREE_DAY[network ?? readNetwork.name]!,
       durationSeconds: SECONDS_IN_DAY * 3,
     },
     {
       id: 'sevenDay',
-      name: t`7-day delay`,
+      name: t`7-day deadline`,
       description: durationBallotStrategyDescription(7),
       address: BALLOT_ADDRESSES.SEVEN_DAY[network ?? readNetwork.name]!,
       durationSeconds: SECONDS_IN_DAY * 7,

@@ -11,7 +11,7 @@ import { useContext } from 'react'
 import {
   formatWad,
   perbicentToPercent,
-  permilleToPercent
+  permilleToPercent,
 } from 'utils/format/formatNumber'
 import { detailedTimeString } from 'utils/format/formatTime'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
@@ -51,7 +51,7 @@ export default function V1ConfigureEventElem({
   return (
     <ActivityEvent
       event={event}
-      header={t`Configured funding cycles`}
+      header={t`Edited cycle`}
       subject={null}
       extra={
         <MinimalTable
@@ -65,7 +65,7 @@ export default function V1ConfigureEventElem({
                 }),
               },
               {
-                key: t`Target`,
+                key: t`Payouts`,
                 value: (
                   <span>
                     <CurrencySymbol
@@ -87,17 +87,17 @@ export default function V1ConfigureEventElem({
                 value: perbicentToPercent(event.reservedRate) + '%',
               },
               {
-                key: t`Bonding curve`,
+                key: t`Redemption rate`,
                 value: perbicentToPercent(event.bondingCurveRate) + '%',
               },
               {
-                key: t`Discount rate`,
+                key: t`Issuance reduction rate`,
                 value: permilleToPercent(event.discountRate) + '%',
               },
             ],
             [
               {
-                key: t`Reconfiguration strategy`,
+                key: t`Edit deadline`,
                 value: BallotStrategyElem(event.ballot),
               },
             ],
@@ -105,7 +105,7 @@ export default function V1ConfigureEventElem({
               ? [
                   [
                     {
-                      key: t`Token printing allowed`,
+                      key: t`Owner token minting`,
                       value: event.ticketPrintingIsAllowed,
                     },
                     {

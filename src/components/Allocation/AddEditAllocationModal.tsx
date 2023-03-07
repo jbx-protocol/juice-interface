@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Form, Modal, Radio } from 'antd'
+import { LOCKED_PAYOUT_EXPLANATION } from 'components/Explanations'
 import { FeeTooltipLabel } from 'components/FeeTooltipLabel'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'
@@ -154,8 +155,8 @@ export const AddEditAllocationModal = ({
   const addressExtra =
     recipient === 'juiceboxProject' ? (
       <Trans>
-        Distributing funds to another Juicebox project may mint its tokens. Set
-        the address that should receive these project's tokens.
+        Paying another Juicebox project may mint its tokens. Select an address
+        to receive these tokens.
       </Trans>
     ) : undefined
 
@@ -313,12 +314,7 @@ export const AddEditAllocationModal = ({
             name="lockedUntil"
             label={t`Lock until`}
             requiredMark="optional"
-            extra={
-              <Trans>
-                If locked, this split can't be edited or removed until the lock
-                expires or the funding cycle is reconfigured.
-              </Trans>
-            }
+            extra={LOCKED_PAYOUT_EXPLANATION}
           >
             <JuiceDatePicker
               placeholder=""

@@ -79,11 +79,11 @@ export function SummaryTable({
       <Descriptions.Item
         label={
           <TooltipLabel
-            label={t`Tokens reserved`}
+            label={t`Reserved tokens`}
             tip={
               <Trans>
-                This project reserves some of the newly minted tokens for
-                itself.
+                This project reserves some tokens for recipients set by the
+                project owner.
               </Trans>
             }
           />

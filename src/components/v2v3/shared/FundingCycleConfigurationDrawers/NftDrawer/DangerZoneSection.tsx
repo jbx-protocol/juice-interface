@@ -27,18 +27,16 @@ export function DangerZoneSection({ close }: { close?: VoidFunction }) {
     <div>
       <Callout.Warning className="mb-5">
         <Trans>
-          Detaching NFTs from your funding cycle has the following effects:
+          Detaching NFTs from your cycle has the following effects:
           <ul>
-            <li>
-              Contributors won't receive NFTs when they fund your project.
-            </li>
-            <li>Existing NFT holders won't be able to redeem their NFTs.</li>
+            <li>Supporters won't receive NFTs when they pay your project.</li>
+            <li>Current NFT holders won't be able to redeem their NFTs.</li>
           </ul>
-          <p>This will take effect in your next funding cycle.</p>
+          <p>These changes will take effect in your next cycle.</p>
         </Trans>
       </Callout.Warning>
       <Button onClick={onDetach} type="primary">
-        <Trans>Detach NFTs from funding cycle</Trans>
+        <Trans>Detach NFTs from cycle</Trans>
       </Button>
     </div>
   )

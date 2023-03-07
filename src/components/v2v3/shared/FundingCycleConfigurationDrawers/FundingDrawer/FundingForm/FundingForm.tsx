@@ -172,7 +172,7 @@ export function FundingForm({
   const onFundingFormSave = useCallback(
     async (fields: FundingFormFields) => {
       if (!projectContracts?.JBETHPaymentTerminal)
-        throw new Error('Failed to save funding configuration.')
+        throw new Error('Failed to save edits.')
 
       const fundAccessConstraint:
         | SerializedV2V3FundAccessConstraint
@@ -308,14 +308,14 @@ export function FundingForm({
             }
           }}
         >
-          <Trans>Automate funding cycles</Trans>
+          <Trans>Locked cycles</Trans>
         </SwitchHeading>
 
         {!durationEnabled ? (
           <FormItemWarningText>
             <Trans>
-              With no funding cycles, the project's owner can start a new
-              funding cycle (Funding Cycle #2) on-demand.{' '}
+              With unlocked cycles, the project's owner can edit the project's
+              rules and start a new cycle (Cycle #2) at any time.{' '}
               <ExternalLink href={helpPagePath('dev/learn/risks')}>
                 Learn more.
               </ExternalLink>

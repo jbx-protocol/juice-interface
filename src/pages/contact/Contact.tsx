@@ -108,7 +108,7 @@ export default function Contact() {
                   options={[
                     {
                       value: 'project help',
-                      label: t`Get help planning or configuring my project.`,
+                      label: t`Get help planning or setting up my project.`,
                     },
                     { value: 'feature request', label: t`Request a feature.` },
                     {

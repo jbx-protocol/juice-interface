@@ -31,12 +31,12 @@ export function UpgradeFundingCycle() {
               Launch V3 funding cycle
             </h3>
             <p>
-              You currently have a funding cycle on Juicebox V2. Use the form
-              below to relaunch your funding cycle on Juicebox V3.
+              You currently have a cycle on Juicebox V2. Use the form below to
+              relaunch your cycle on Juicebox V3.
             </p>
 
             <Callout.Info className="mb-6">
-              Your V2 funding cycle configuration has been prefilled.
+              Your V2 cycle rules have been prefilled.
             </Callout.Info>
 
             <RelaunchV2FundingCycleForm />

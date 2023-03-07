@@ -70,9 +70,8 @@ export default function ConfirmUnstakeTokensModal({
         {!ticketsIssued && (
           <div className="bg-smoke-100 p-2 dark:bg-slate-600">
             <Trans>
-              <b>Note:</b> Tokens cannot be claimed because no ERC-20 token has
-              been issued for this project. ERC-20 tokens must be issued by the
-              project owner.
+              Tokens cannot be claimed because the project owner has not issued
+              an ERC-20 for this project.
             </Trans>
           </div>
         )}
@@ -86,16 +85,15 @@ export default function ConfirmUnstakeTokensModal({
           </p>
           <p className="font-medium">
             <Trans>
-              If you're unsure if you need to claim, you probably don't.
+              If you're not sure if you need to claim, you probably don't.
             </Trans>
           </p>
           <p>
             <Trans>
-              You can still redeem your {tokenSymbol} tokens for overflow
-              without claiming them, and you can transfer your unclaimed{' '}
-              {tokenSymbol} tokens to another address from the Tools menu, which
-              can be accessed from the wrench icon in the upper right hand
-              corner of this project.
+              You can redeem your {tokenSymbol} for ETH without claiming them.
+              You can transfer your unclaimed {tokenSymbol} to another address
+              from the Tools menu, which can be accessed from the wrench icon in
+              the upper right-hand corner of this project.
             </Trans>
           </p>
         </div>

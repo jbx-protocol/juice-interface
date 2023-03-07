@@ -64,14 +64,15 @@ export default function QAs(): {
             or NFTs (depending on how the project is set up).
           </p>
           <p>
-            By default, these tokens represent a partial claim on funds in the
-            treasury, and they are often used for governance rights, community
+            By default, these tokens represent a partial claim on the project's
+            funds, and they are often used for governance rights, community
             access, or other membership perks.
           </p>
           <p>
             All of this can change from project to project. Read everything
-            carefully, and make sure you understand the project's configurations
-            before you support it. If you need help, stop by the{' '}
+            carefully, and make sure you understand the project's rules before
+            you support it. If you need help,{' '}
+            <Link href="/contact">contact us</Link>, or stop by the{' '}
             <JBDiscordLink>Juicebox Discord server</JBDiscordLink>.
           </p>
         </Trans>
@@ -89,9 +90,9 @@ export default function QAs(): {
               websites, and other purposes.
             </li>
             <li>
-              Projects can distribute funds to the wallets or Juicebox projects
-              of their choosing. These distributions can be pre-defined, and
-              they can also be changed over time.
+              Projects can pay out ETH to the wallets or Juicebox projects of
+              their choosing. These payouts can be pre-defined, and they can
+              also be changed over time.
             </li>
             <li>
               If people are unhappy with the direction a project is headed, they
@@ -102,9 +103,9 @@ export default function QAs(): {
           <p>
             Project creators have powerful controls over each one of these
             mechanics. They can change token issuance rates, redemption rates,
-            distributions, and other project settings over time, leading to
-            powerful and elegant tokenomics. They can also lock the project's
-            settings in place for pre-determined amounts of time, guaranteeing
+            payouts, and other rules over time, leading to powerful and elegant
+            tokenomics. They can also lock their project's rules in place for
+            pre-determined amounts of time (called <i>cycles</i>), guaranteeing
             that they can't rugpull the community. Juicebox lets projects take
             control if they need to, but it also lets them give up control to
             build trust.
@@ -112,12 +113,12 @@ export default function QAs(): {
           <p>
             Importantly, Juicebox's crypto fundraising platform is on-chain and
             non-custodial. Project creators actually own their projects, and
-            JuiceboxDAO has no access to their funds or their project's
-            settings.
+            JuiceboxDAO has no way to access a project's funds or change its
+            rules.
           </p>
           <p>
             To learn more, visit{' '}
-            <ExternalLink href={helpPagePath('/')}>the Docs</ExternalLink>.
+            <ExternalLink href={helpPagePath('/')}>our docs</ExternalLink>.
           </p>
         </Trans>
       ),
@@ -127,10 +128,13 @@ export default function QAs(): {
       a: (
         <Trans>
           <p>
-            Juicebox is a governance-minimal protocol. There are only a few
-            levers that can be tuned, none of which impose changes for users
-            without their consent. The Juicebox governance smart contract can
-            adjust these levers.
+            Juicebox is a{' '}
+            <ExternalLink href={helpPagePath('/dev/learn/administration/')}>
+              governance-minimal
+            </ExternalLink>{' '}
+            protocol. There are only a few levers that can be tuned, none of
+            which impose changes for users without their consent. The Juicebox
+            governance smart contract can adjust these levers.
           </p>
           <p>
             The Juicebox protocol is governed by a community of JBX token
@@ -138,8 +142,8 @@ export default function QAs(): {
           </p>
           <p>
             Juicebox is on-chain and non-custodial. Project creators actually
-            own their projects, and JuiceboxDAO has no access to their funds or
-            their project's settings.
+            own their projects, and JuiceboxDAO has no way to access project's
+            funds or change their rules.
           </p>
         </Trans>
       ),
@@ -153,8 +157,7 @@ export default function QAs(): {
             <ExternalLink href={helpPagePath('/dev/resources/security/')}>
               multiple security audits
             </ExternalLink>
-            , and has handled tens of thousands of ETH through its protocol. So
-            far, Juicebox has had 0 security mishaps.
+            , and has handled tens of thousands of ETH through its protocol.
           </p>
           <p>
             However, Juicebox is still experimental software. Although the
@@ -183,12 +186,18 @@ export default function QAs(): {
             When Juicebox projects make payouts to external wallets (like
             "vitalik.eth"), they incur a {JB_FEE}% fee, which is paid to{' '}
             <Link href="/@juicebox">JuiceboxDAO</Link>. In exchange, they
-            receive JuiceboxDAO's project token, allowing them to govern the
+            receive JuiceboxDAO's project tokens, allowing them to govern the
             protocol. They can also redeem these tokens to reclaim some of the
             fees.
           </p>
           <p>
             <b>Payouts to other Juicebox projects don't incur any fees.</b>
+          </p>
+          <p>
+            <ExternalLink href={helpPagePath(`/dao/reference/jbx/#about-fees`)}>
+              Learn more about fees
+            </ExternalLink>
+            .
           </p>
         </Trans>
       ),
@@ -198,8 +207,9 @@ export default function QAs(): {
       a: (
         <Trans>
           <p>
-            <Link href="/@peel">Peel</Link> manages the juicebox.money frontend
-            interface. You can reach out to Peel through the{' '}
+            <Link href="/@peel">Peel</Link> manages this website — the
+            juicebox.money frontend interface. You can reach out to Peel through
+            the{' '}
             <ExternalLink href="https://discord.gg/XvmfY4Hkcz">
               Peel Discord
             </ExternalLink>
@@ -219,9 +229,11 @@ export default function QAs(): {
       a: (
         <Trans>
           <p>
-            For project configuration tips and more, take a look at the{' '}
+            If you're looking for help planning or deploying your project, you
+            can <Link href="/contact">contact onboarding</Link>. For project
+            setup tips and more resources, take a look at the{' '}
             <ExternalLink href={helpPagePath('/user/')}>
-              Project Creator Hub
+              Project Creator Docs
             </ExternalLink>
             . You should also join JuiceboxDAO's{' '}
             <JBDiscordLink>Discord server</JBDiscordLink>, where DAO
@@ -235,7 +247,8 @@ export default function QAs(): {
       a: (
         <Trans>
           <p>
-            For more information, or help with anything else, join the{' '}
+            For more information, or help with anything else,{' '}
+            <Link href="/contact">contact onboarding</Link> and join the{' '}
             <JBDiscordLink>JuiceboxDAO Discord server</JBDiscordLink>.
           </p>
         </Trans>

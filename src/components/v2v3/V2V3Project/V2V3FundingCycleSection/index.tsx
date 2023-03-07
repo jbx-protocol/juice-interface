@@ -44,8 +44,8 @@ const TabText = ({
     <Tooltip
       title={
         <Trans>
-          This funding cycle may pose risks to contributors. Check the funding
-          cycle details before paying this project.
+          This cycle's rules may lead to unexpected behavior. Before paying this
+          project, know and understand its rules.
         </Trans>
       }
     >
@@ -78,9 +78,9 @@ export default function V2V3FundingCycleSection() {
   }
 
   const reconfigureButtonText = currentCycleHasDuration ? (
-    <Trans>Reconfigure upcoming</Trans>
+    <Trans>Edit upcoming cycle</Trans>
   ) : (
-    <Trans>Reconfigure</Trans>
+    <Trans>Edit cycle</Trans>
   )
 
   const tabs = [

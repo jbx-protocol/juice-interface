@@ -31,7 +31,7 @@ export default function V2V3DownloadActivityModal(props: ModalProps) {
       cancelText={t`Close`}
       okButtonProps={{ hidden: true }}
       centered
-      title={<Trans>Download project activity CSV</Trans>}
+      title={<Trans>Download project activity CSVs</Trans>}
       {...props}
     >
       <label className="mb-1 block">
@@ -57,7 +57,7 @@ export default function V2V3DownloadActivityModal(props: ModalProps) {
           onClick={() => downloadParticipants(blockNumber, projectId, pv)}
         >
           <span>
-            <Trans>Participants</Trans>
+            <Trans>Token holders</Trans>
           </span>
         </Button>
 

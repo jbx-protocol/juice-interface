@@ -11,6 +11,10 @@ import { useContext, useState } from 'react'
 import { settingsPagePath } from 'utils/routes'
 import { LaunchProjectPayerModal } from './LaunchProjectPayerModal'
 import ExternalLink from 'components/ExternalLink'
+import {
+  ISSUE_ERC20_EXPLANATION,
+  PROJECT_PAYER_ADDRESS_EXPLANATION,
+} from 'components/Explanations'
 
 export const NEW_DEPLOY_QUERY_PARAM = 'np'
 
@@ -84,13 +88,7 @@ export default function NewDeployModal({
           className="mb-4"
           prefix="2"
           heading={<Trans>Issue an ERC-20 token (optional)</Trans>}
-          description={
-            <Trans>
-              Allow contributors to claim your project's tokens as an ERC-20.
-              This makes your project's tokens compatible with tools like
-              Uniswap.
-            </Trans>
-          }
+          description={ISSUE_ERC20_EXPLANATION}
           onClick={() => setIssueTokenModalVisible(true)}
           disabled={hasIssuedToken}
           icon={
@@ -105,13 +103,8 @@ export default function NewDeployModal({
         <RichButton
           className="mb-4"
           prefix="3"
-          heading={<Trans>Create a Payment Address (optional)</Trans>}
-          description={
-            <Trans>
-              Deploy an address which forwards funds to your project. This makes
-              it easier to pay your project with third-party tools.
-            </Trans>
-          }
+          heading={<Trans>Create a project payer address (optional)</Trans>}
+          description={PROJECT_PAYER_ADDRESS_EXPLANATION}
           onClick={() => setLaunchProjectPayerModalVisible(true)}
           disabled={hasLaunchedPayableAddress}
           icon={

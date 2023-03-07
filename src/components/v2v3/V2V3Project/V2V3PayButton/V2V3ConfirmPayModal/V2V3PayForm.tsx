@@ -83,9 +83,9 @@ export const V2V3PayForm = ({
                 <TooltipIcon
                   tip={
                     <Trans>
-                      Leave unchecked to have Juicebox track your token balance,
-                      saving gas on this transaction. You can claim your ERC-20
-                      tokens later.
+                      Leave unchecked to have the Juicebox protocol internally
+                      track your token balance, saving gas on this transaction.
+                      You can claim your ERC-20 tokens later.
                     </Trans>
                   }
                 ></TooltipIcon>

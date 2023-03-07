@@ -57,7 +57,7 @@ export function AmountFormItem({
   return (
     <Form.Item
       className="ant-form-item-extra-only"
-      label={t`Distribution amount`}
+      label={t`Payout amount`}
       required
       extra={
         fee && form.getFieldValue('percent') <= 100 ? (
@@ -68,7 +68,7 @@ export function AmountFormItem({
               </div>
             ) : (
               <Trans>
-                Distributing funds to Juicebox projects won't incur fees.
+                Payouts to other Juicebox projects won't incur fees.
               </Trans>
             )}
           </>
@@ -109,10 +109,10 @@ export function AmountFormItem({
             <TooltipIcon
               tip={
                 <Trans>
-                  If you don't raise the sum of all your payouts (
+                  If you don't raise the sum of your payouts (
                   <CurrencySymbol currency={currencyName} />
                   {distributionLimit}), this address will receive{' '}
-                  {form.getFieldValue('percent')}% of all the funds you raise.
+                  {form.getFieldValue('percent')}% of all the ETH you raise.
                 </Trans>
               }
               placement={'topLeft'}

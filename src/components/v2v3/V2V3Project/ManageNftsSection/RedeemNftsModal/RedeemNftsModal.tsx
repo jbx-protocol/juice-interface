@@ -144,9 +144,10 @@ export function RedeemNftsModal({
               </Callout.Info>
               <div>
                 <Trans>
-                  Redeem your NFTs for a portion of this project's overflow. The
-                  current funding cycle's <strong>redemption rate</strong>{' '}
-                  determines your redemption value.
+                  Redeem your NFTs to reclaim a portion of the ETH that isn't
+                  needed for payouts. This cycle's{' '}
+                  <strong>redemption rate</strong> determines how much ETH you
+                  will receive.
                 </Trans>
               </div>
             </Space>
@@ -154,13 +155,16 @@ export function RedeemNftsModal({
             <Callout.Info>
               {!hasOverflow && (
                 <Trans>
-                  <strong>This project has no overflow</strong>. You won't
-                  receive any ETH for burning your NFTs.
+                  <strong>
+                    This project is using all of its ETH for payouts, or has no
+                    ETH.
+                  </strong>
+                  You won't receive any ETH for burning your NFTs.
                 </Trans>
               )}
               {!hasRedemptionRate && (
                 <Trans>
-                  <strong>This project has a 0% redemption rate</strong>. You
+                  <strong>This project has redemptions turned off</strong>. You
                   won't receive any ETH for burning your NFTs.
                 </Trans>
               )}

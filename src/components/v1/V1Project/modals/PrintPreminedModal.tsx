@@ -16,6 +16,7 @@ import { Callout } from 'components/Callout'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 import { isZeroAddress } from 'utils/address'
+import { OWNER_MINTING_EXPLAINATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 
 export default function PrintPreminedModal({
   open,
@@ -80,7 +81,7 @@ export default function PrintPreminedModal({
         case '1':
           return {
             label: t`Payment equivalent`,
-            extra: t`The amount of tokens minted to the receiver will be calculated based on if they had paid this amount to the project in the current funding cycle.`,
+            extra: t`The amount of tokens minted to the receiver will be calculated as if they had paid this amount to the project in the current cycle.`,
           }
         case '1.1':
           return {
@@ -103,10 +104,9 @@ export default function PrintPreminedModal({
     >
       <Callout.Info className="mb-5">
         <Trans>
-          Tokens can be minted manually when allowed in the current funding
-          cycle. The project owner can enable or disable minting for upcoming
-          cycles.
+          Owner token minting can be enabled or disabled by editing your cycle.{' '}
         </Trans>
+        {OWNER_MINTING_EXPLAINATION}
       </Callout.Info>
 
       <Form layout="vertical" form={form} onFinish={mint}>
@@ -155,7 +155,7 @@ export default function PrintPreminedModal({
           valuePropName="checked"
           extra={
             erc20Issued
-              ? t`Enabling this will mint ${tokenSymbol} ERC-20 tokens. Otherwise unclaimed ${tokenSymbol} tokens will be minted, which can be claimed later as ERC-20 by the receiver.`
+              ? t`When enabled, ${tokenSymbol} ERC-20 tokens are minted. When disabled, unclaimed ${tokenSymbol} tokens will be minted, which the receiver can claim later as ERC-20.`
               : t`ERC-20 tokens can only be minted once an ERC-20 token has been issued for this project.`
           }
           initialValue={false}

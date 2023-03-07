@@ -5,6 +5,7 @@ import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useContext } from 'react'
 import V2V3CurrencyAmount from 'components/v2v3/shared/V2V3CurrencyAmount'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
+import { DISTRIBUTION_LIMIT_EXPLANATION } from '../V2V3FundingCycleSection/settingExplanations'
 
 export default function DistributedRatio() {
   const {
@@ -17,15 +18,8 @@ export default function DistributedRatio() {
   return (
     <StatLine
       loading={distributionLimitLoading}
-      statLabel={<Trans>Distributed</Trans>}
-      statLabelTip={
-        <Trans>
-          The amount distributed from the Juicebox balance in this funding
-          cycle, out of the current distribution limit. No more than the
-          distribution limit can be distributed in a single funding cycle. Any
-          remaining ETH in Juicebox is overflow until the next cycle begins.
-        </Trans>
-      }
+      statLabel={<Trans>Payouts</Trans>}
+      statLabelTip={DISTRIBUTION_LIMIT_EXPLANATION}
       statValue={
         distributionLimit?.gt(0) ? (
           <div className="text-sm font-medium uppercase text-black dark:text-slate-100">
@@ -50,13 +44,11 @@ export default function DistributedRatio() {
             <TooltipLabel
               tip={
                 <Trans>
-                  The distribution limit for this funding cycle is 0, meaning
-                  all funds in Juicebox are currently considered overflow.
-                  Overflow can be redeemed by token holders, but not
-                  distributed.
+                  No payouts are scheduled for this cycle. All funds are
+                  available for redemption (subject to the redemption rate).
                 </Trans>
               }
-              label={<Trans>100% overflow</Trans>}
+              label={<Trans>No payouts</Trans>}
             />
           </div>
         )

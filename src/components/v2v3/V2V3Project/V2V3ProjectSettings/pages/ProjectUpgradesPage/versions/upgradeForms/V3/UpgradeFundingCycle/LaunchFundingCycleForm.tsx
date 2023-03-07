@@ -117,12 +117,12 @@ export function LaunchFundingCycleForm() {
         />
         <RichButton
           heading={t`NFTs (optional)`}
-          description={t`Configure your project's NFTs.`}
+          description={t`Edit your project's NFTs.`}
           onClick={() => setNftDrawerVisible(true)}
         />
         <RichButton
           heading={t`Rules`}
-          description={t`Configure restrictions for your funding cycles.`}
+          description={t`Edit your cycle's rules.`}
           onClick={() => setRulesDrawerVisible(true)}
         />
 
@@ -186,7 +186,7 @@ export function LaunchFundingCycleForm() {
             size="large"
           >
             <span>
-              <Trans>Launch V3 funding cycle</Trans>
+              <Trans>Launch V3 cycle</Trans>
             </span>
           </Button>
         )}

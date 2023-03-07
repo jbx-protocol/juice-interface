@@ -32,7 +32,7 @@ export function useDistributeReservedTokens(): DistributeReserveTokensTx {
       [projectId, memo],
       {
         ...txOpts,
-        title: t`Distribute reserved ${tokenSymbolText({
+        title: t`Send reserved ${tokenSymbolText({
           tokenSymbol,
           plural: true,
         })}`,

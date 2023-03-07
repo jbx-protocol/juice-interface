@@ -71,10 +71,7 @@ export default function V1ProjectHeaderActions() {
           />
         </Tooltip>
         {hasEditPermission && (
-          <Tooltip
-            title={t`Reconfigure project and funding details`}
-            placement="bottom"
-          >
+          <Tooltip title={t`Edit project and cycle rules`} placement="bottom">
             <Button
               onClick={() => setEditProjectModalVisible(true)}
               icon={<SettingOutlined />}

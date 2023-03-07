@@ -3,6 +3,10 @@ import { Form } from 'antd'
 import FormItemLabel from 'components/FormItemLabel'
 import FormItemWarningText from 'components/FormItemWarningText'
 import {
+  CONTRIBUTOR_RATE_EXPLAINATION,
+  RESERVED_TOKENS_EXPLAINATION,
+} from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+import {
   FUNDING_CYCLE_WARNING_TEXT,
   RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
 } from 'constants/fundingWarningText'
@@ -42,8 +46,9 @@ export default function ProjectReserved({
   const riskNotice = (
     <FormItemWarningText>
       <Trans>
-        A reserved rate of more than 90% is risky for contributors. Contributors
-        won't receive many tokens for their contribution.
+        A reserved rate of more than {RESERVED_RATE_WARNING_THRESHOLD_PERCENT}%
+        is risky for contributors. Contributors won't receive many tokens for
+        their contribution.
       </Trans>
     </FormItemWarningText>
   )
@@ -73,13 +78,8 @@ export default function ProjectReserved({
             <div className="mb-1 flex w-full justify-between">
               <span>
                 <TooltipLabel
-                  label={t`Contributor rate`}
-                  tip={
-                    <Trans>
-                      Tokens <strong>contributors will receive</strong> when
-                      they contribute 1 ETH.
-                    </Trans>
-                  }
+                  label={t`Payer issuance rate`}
+                  tip={CONTRIBUTOR_RATE_EXPLAINATION}
                 />
                 :
               </span>
@@ -88,13 +88,8 @@ export default function ProjectReserved({
             <div className="flex w-full justify-between">
               <span>
                 <TooltipLabel
-                  label={t`Reserved rate`}
-                  tip={
-                    <Trans>
-                      Tokens <strong>reserved for the project</strong> when 1
-                      ETH is contributed.
-                    </Trans>
-                  }
+                  label={t`Reserved issuance rate`}
+                  tip={RESERVED_TOKENS_EXPLAINATION}
                 />
                 :
               </span>

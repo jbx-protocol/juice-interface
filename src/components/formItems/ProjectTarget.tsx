@@ -7,6 +7,7 @@ import { Trans } from '@lingui/macro'
 import { CurrencyName } from 'constants/currency'
 import BudgetTargetInput from '../inputs/BudgetTargetInput'
 import { FormItemExt } from './formItemExt'
+import { DISTRIBUTION_LIMIT_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 
 export default function ProjectTarget({
   hideLabel,
@@ -31,13 +32,7 @@ export default function ProjectTarget({
 } & FormItemExt) {
   return (
     <Form.Item
-      extra={
-        <Trans>
-          The maximum amount of funds that can be distributed from this project
-          in one funding cycle. Funds will be withdrawn in ETH no matter the
-          currency you choose.
-        </Trans>
-      }
+      extra={DISTRIBUTION_LIMIT_EXPLANATION}
       label={hideLabel ? undefined : <Trans>Funding target</Trans>}
       {...formItemProps}
     >

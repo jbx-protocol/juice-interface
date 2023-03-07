@@ -20,7 +20,7 @@ export function ExportSection({
               <Trans>Payouts</Trans>
             </h4>
             <p>
-              <Trans>Export the current funding cycle's payouts to CSV.</Trans>
+              <Trans>Export this cycle's payouts to CSV.</Trans>
             </p>
             {exportPayoutsButton}
           </div>
@@ -29,12 +29,11 @@ export function ExportSection({
         {exportReservedTokensButton && (
           <div>
             <h4 className="text-black dark:text-slate-100">
-              <Trans>Reserved token allocation</Trans>
+              <Trans>Reserved token recipients</Trans>
             </h4>
             <p>
               <Trans>
-                Export the current funding cycle's reserved token allocation to
-                CSV.
+                Export a list of this cycle's reserved token recipients to CSV.
               </Trans>
             </p>
             {exportReservedTokensButton}

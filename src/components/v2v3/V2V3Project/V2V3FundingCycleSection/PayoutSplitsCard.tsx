@@ -15,7 +15,6 @@ import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import Link from 'next/link'
 import { useContext, useState } from 'react'
-import { detailedTimeString } from 'utils/format/formatTime'
 import { settingsPagePath } from 'utils/routes'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
 import { formatFee, MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
@@ -27,13 +26,11 @@ export default function PayoutSplitsCard({
   payoutSplits,
   distributionLimitCurrency,
   distributionLimit,
-  fundingCycleDuration,
 }: {
   hideDistributeButton?: boolean
   payoutSplits: Split[] | undefined
   distributionLimitCurrency: BigNumber | undefined
   distributionLimit: BigNumber | undefined
-  fundingCycleDuration: BigNumber | undefined
 }) {
   const {
     usedDistributionLimit,
@@ -54,11 +51,6 @@ export default function PayoutSplitsCard({
     loading.balanceInDistributionLimitCurrencyLoading ||
     loading.usedDistributionLimitLoading
 
-  const formattedDuration = detailedTimeString({
-    timeSeconds: fundingCycleDuration?.toNumber(),
-    fullWords: true,
-  })
-  const hasDuration = fundingCycleDuration?.gt(0)
   const canEditPayouts = useV2ConnectedWalletHasPermission(
     V2V3OperatorPermission.SET_SPLITS,
   )
@@ -81,7 +73,7 @@ export default function PayoutSplitsCard({
   function DistributeButton(): JSX.Element {
     return (
       <Tooltip
-        title={<Trans>No funds available to distribute.</Trans>}
+        title={<Trans>No payouts remaining for this cycle.</Trans>}
         open={distributeButtonDisabled ? undefined : false}
       >
         <Button
@@ -90,7 +82,7 @@ export default function PayoutSplitsCard({
           onClick={() => setDistributePayoutsModalVisible(true)}
           disabled={distributeButtonDisabled}
         >
-          <Trans>Distribute funds</Trans>
+          <Trans>Send payouts</Trans>
         </Button>
       </Tooltip>
     )
@@ -135,15 +127,11 @@ export default function PayoutSplitsCard({
             <TooltipLabel
               label={
                 <h3 className="inline-block text-sm uppercase text-black dark:text-slate-100">
-                  <Trans>Funding distribution</Trans>
+                  <Trans>Payouts</Trans>
                 </h3>
               }
               tip={
-                <Trans>
-                  Available funds can be distributed according to the payouts
-                  below
-                  {hasDuration ? ` every ${formattedDuration}` : null}.
-                </Trans>
+                <Trans>This cycle's payouts. Payouts reset each cycle.</Trans>
               }
             />
             {canEditPayouts && (
@@ -171,7 +159,7 @@ export default function PayoutSplitsCard({
             />
           ) : (
             <span className="text-grey-500 dark:text-slate-100">
-              <Trans>This project has no distributions.</Trans>
+              <Trans>No payouts scheduled for this cycle.</Trans>
             </span>
           )}
         </div>

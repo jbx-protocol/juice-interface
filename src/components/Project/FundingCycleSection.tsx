@@ -40,12 +40,12 @@ export default function FundingCycleSection({
         ) : (
           <SectionHeader
             className="mb-2"
-            text={<Trans>Funding cycle</Trans>}
+            text={<Trans>Cycle</Trans>}
             tip={
               <Trans>
-                A project's lifetime is defined in funding cycles. If a funding
-                target is set, the project can withdraw no more than the target
-                for the duration of the cycle.
+                A project's rules are locked for the duration of each cycle. If
+                the cycle has no duration, the project's rules can change at any
+                time.
               </Trans>
             }
           />

@@ -19,9 +19,9 @@ export default function ProjectBalance() {
   return (
     <StatLine
       loading={balanceInDistributionLimitCurrencyLoading}
-      statLabel={<Trans>In treasury</Trans>}
+      statLabel={<Trans>Project balance</Trans>}
       statLabelTip={
-        <Trans>This project's balance in the Juicebox contract.</Trans>
+        <Trans>The amount of ETH that this project has right now.</Trans>
       }
       statValue={
         <div className="ml-2 text-lg font-medium text-juice-400 dark:text-juice-300">

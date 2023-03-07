@@ -64,7 +64,7 @@ export default function ReservedTokensSplitsCard({
         onClick={() => setDistributeReservedTokensModalVisible(true)}
         disabled={distributeButtonDisabled}
       >
-        <Trans>Distribute {tokensText}</Trans>
+        <Trans>Send {tokensText}</Trans>
       </Button>
     )
   }
@@ -95,14 +95,14 @@ export default function ReservedTokensSplitsCard({
                 }
                 tip={
                   <Trans>
-                    The amount of tokens this project has reserved. These tokens
-                    can be distributed to reserved token beneficiaries.
+                    Project tokens currently reserved for the recipients below.
+                    These tokens can be sent out at any time.
                   </Trans>
                 }
               />
             </div>
             {reservedTokens?.eq(0) ? (
-              <Tooltip title={t`No reserved tokens available to distribute.`}>
+              <Tooltip title={t`No reserved tokens to send.`}>
                 <div>
                   <DistributeButton />
                 </div>
@@ -124,9 +124,8 @@ export default function ReservedTokensSplitsCard({
               }
               tip={
                 <Trans>
-                  A project can reserve a percentage of tokens minted from every
-                  payment it receives. Reserved tokens can be distributed
-                  according to the allocation below at any time.
+                  Projects can reserve a percentage of token issuance for the
+                  recipients set by the project owner.
                 </Trans>
               }
             />
@@ -143,7 +142,7 @@ export default function ReservedTokensSplitsCard({
                   icon={<SettingOutlined />}
                 >
                   <span>
-                    <Trans>Edit allocation</Trans>
+                    <Trans>Edit recipients</Trans>
                   </span>
                 </Button>
               </Link>

@@ -57,7 +57,7 @@ export default function DistributeReservedTokensEventElem({
       event={event}
       header={
         <Trans>
-          Distributed reserved{' '}
+          Sent reserved{' '}
           {tokenSymbolText({
             tokenSymbol,
             capitalize: false,

@@ -37,13 +37,13 @@ export function V2V3EditReservedTokens({
     <>
       <Callout.Info className="mb-4">
         <Trans>
-          Changes to your reserved token allocation will take effect
+          Changes to your reserved token recipients will take effect
           immediately.
         </Trans>
       </Callout.Info>
       <Space className="min-h-0 w-full" direction="vertical" size="middle">
         <div className="flex justify-between">
-          <Trans>Reserved token allocation</Trans>
+          <Trans>Reserved token recipients</Trans>
           <CsvUpload
             onChange={onSplitsChanged}
             templateUrl={'/assets/csv/v2-splits-template.csv'}
@@ -59,8 +59,8 @@ export function V2V3EditReservedTokens({
             formItemProps={{
               extra: (
                 <Trans>
-                  Allocate a portion of your project's reserved tokens to other
-                  Ethereum wallets or Juicebox projects.
+                  Set aside a percentage of token issuance for the Ethereum
+                  wallets or Juicebox projects of your choice.
                 </Trans>
               ),
             }}

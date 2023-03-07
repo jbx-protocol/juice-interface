@@ -51,7 +51,7 @@ export function NftDrawer({
               </h2>
               <p>
                 <Trans>
-                  To edit you current NFT collection, go to the{' '}
+                  To edit your current NFT collection, go to the{' '}
                   <Link href={settingsPagePath('nfts', { projectId, handle })}>
                     Edit NFTs
                   </Link>{' '}

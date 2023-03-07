@@ -46,7 +46,7 @@ export function V2V3ProjectToolsDrawer({
       <Space direction="vertical" size="middle" className="w-full">
         <section>
           <h3 className="text-primary">
-            <Trans>Payment Address</Trans>
+            <Trans>Create project payer address</Trans>
           </h3>
 
           <PaymentAddressSection
@@ -86,7 +86,7 @@ export function V2V3ProjectToolsDrawer({
                   group: RESERVED_TOKEN_SPLIT_GROUP,
                 }}
               >
-                <Trans>Export token allocation CSV</Trans>
+                <Trans>Export reserved token recipient CSV</Trans>
               </ExportSplitsButton>
             ) : undefined
           }

@@ -21,6 +21,8 @@ import {
 } from 'utils/v1/payouts'
 
 import { CurrencyName } from 'constants/currency'
+import { CYCLE_EXPLANATION } from 'components/Explanations'
+import { DISTRIBUTION_LIMIT_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 
 const DEFAULT_TARGET_AFTER_FEE = '10000'
 
@@ -68,49 +70,17 @@ export default function BudgetForm({
   return (
     <Space direction="vertical" size="large" className="w-full">
       <h1>
-        <Trans>Funding cycle</Trans>
+        <Trans>Cycle</Trans>
       </h1>
 
-      <p>
-        <Trans>
-          Your project is funded across funding cycles. A funding cycle has a
-          funding target and a duration. Your project's funding cycle
-          configuration will depend on the kind of project you're starting.
-        </Trans>{' '}
-        <Trans>
-          <ExternalLink href={helpPagePath('dev/learn/glossary/funding-cycle')}>
-            Learn more
-          </ExternalLink>{' '}
-          about funding cycles.
-        </Trans>
-      </p>
+      {CYCLE_EXPLANATION}
 
       <Form layout="vertical">
         <div className="text-grey-500 dark:text-grey-300">
           <h4>
-            <Trans>Funding cycle target</Trans>
+            <Trans>Payouts</Trans>
           </h4>
-          <p>
-            <Trans>
-              Set the amount of funds you'd like to raise each funding cycle.
-              Any funds raised within the funding cycle target can be
-              distributed by the project, and can't be redeemed by your
-              project's token holders.
-            </Trans>
-          </p>
-          <p>
-            <Trans>
-              Overflow is created if your project's balance exceeds your funding
-              cycle target. Overflow can be redeemed by your project's token
-              holders.
-            </Trans>{' '}
-            <Trans>
-              <ExternalLink href={helpPagePath('dev/learn/glossary/overflow')}>
-                Learn more
-              </ExternalLink>{' '}
-              about overflow.
-            </Trans>
-          </p>
+          <p>{DISTRIBUTION_LIMIT_EXPLANATION}</p>
         </div>
 
         <Form.Item>
@@ -130,7 +100,7 @@ export default function BudgetForm({
               }}
             />
             <label>
-              <Trans>Set a funding cycle target</Trans>
+              <Trans>Set up payouts</Trans>
             </label>
           </Space>
         </Form.Item>
@@ -138,11 +108,11 @@ export default function BudgetForm({
         {!hasTarget && (
           <p className="text-black dark:text-slate-100">
             <span className="font-medium">
-              <Trans>No target set.</Trans>{' '}
+              <Trans>Unlimited payouts.</Trans>{' '}
             </span>
             <Trans>
-              All funds can be distributed by the project. The project will have
-              no overflow (the same as setting the target to infinity).
+              All ETH can be paid out from the project. No ETH will be available
+              for redemptions.
             </Trans>
           </p>
         )}
@@ -176,12 +146,8 @@ export default function BudgetForm({
         {showFundingFields && target === '0' && (
           <p className="text-black dark:text-slate-100">
             <Trans>
-              <span className="font-medium">Target is 0.</span> The project's
-              entire balance will be considered overflow.{' '}
-              <ExternalLink href={helpPagePath('dev/learn/glossary/overflow')}>
-                Learn more
-              </ExternalLink>{' '}
-              about overflow.
+              <span className="font-medium">No payouts.</span> All of the
+              project's ETH will be available for redemptions.
             </Trans>
           </p>
         )}
@@ -190,31 +156,22 @@ export default function BudgetForm({
 
         <div>
           <h4>
-            <Trans>Funding cycle duration</Trans>
+            <Trans>Cycle duration</Trans>
           </h4>
           <p className="text-grey-500 dark:text-grey-300">
-            <Trans>Set the length of your funding cycles.</Trans>{' '}
+            <Trans>
+              Your rules are locked during a cycle. With no duration, edits can
+              be made at any time.
+            </Trans>{' '}
             <Trans>
               <ExternalLink
                 href={helpPagePath('dev/learn/glossary/funding-cycle')}
               >
                 Learn more
               </ExternalLink>{' '}
-              about funding cycle duration.
+              about cycles.
             </Trans>
           </p>
-
-          {hasTarget && (
-            <p className="text-grey-500 dark:text-grey-300">
-              <span className="font-medium">
-                <Trans>You have set a funding cycle target.</Trans>
-              </span>{' '}
-              <Trans>
-                No more than the funding cycle target can be distributed by the
-                project in a single funding cycle.
-              </Trans>
-            </p>
-          )}
         </div>
 
         <FormItems.ProjectDuration
@@ -234,14 +191,13 @@ export default function BudgetForm({
         {duration === '0' && (
           <p className="mt-5 text-black dark:text-slate-100">
             <Trans>
-              <span className="font-medium">No duration set.</span>
-              Funding can be reconfigured at any time. Reconfigurations will
-              start a new funding cycle.
+              <span className="font-medium">No cycle duration.</span>
+              You can edit your rules and start new cycles at any time.
             </Trans>
             <FormItemWarningText>
               <Trans>
-                Using a duration is recommended. Allowing funding cycles to be
-                reconfigured at any time will appear risky to contributors.
+                Using a duration is recommended. Without one, you can edit your
+                cycle at any time, which may appear risky.
               </Trans>
             </FormItemWarningText>
           </p>
@@ -256,7 +212,7 @@ export default function BudgetForm({
               onSave(getV1CurrencyOption(currency), target, duration)
             }
           >
-            <Trans>Save funding configuration</Trans>
+            <Trans>Save rules</Trans>
           </Button>
         </Form.Item>
       </Form>

@@ -74,11 +74,11 @@ export default function DistributeReservedTokensModal({
 
   return (
     <TransactionModal
-      title={<Trans>Distribute reserved {tokenTextPlural}</Trans>}
+      title={<Trans>Send reserved {tokenTextPlural}</Trans>}
       open={open}
       onOk={() => distributeReservedTokens()}
-      okText={t`Distribute ${tokenTextPlural}`}
-      connectWalletText={t`Connect wallet to distribute`}
+      okText={t`Send ${tokenTextPlural}`}
+      connectWalletText={t`Connect wallet to send reserved ${tokenTextPlural}`}
       confirmLoading={loading}
       transactionPending={transactionPending}
       onCancel={onCancel}
@@ -103,8 +103,8 @@ export default function DistributeReservedTokensModal({
           {reservedTokensSplits?.length === 0 ? (
             <p>
               <Trans>
-                There are no reserved token recipients defined for this funding
-                cycle. The project owner will receive all available tokens.
+                The project owner is the only reserved token recipient. Any
+                reserved tokens sent out this cycle will go to them.
               </Trans>
             </p>
           ) : null}

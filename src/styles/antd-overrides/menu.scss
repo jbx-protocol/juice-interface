@@ -33,7 +33,7 @@
   margin-left: 15px;
 }
 
-.ant-menu-item:hover {
+nav .ant-menu-item:hover {
   background: none !important;
 }
 
@@ -52,16 +52,27 @@
   @apply stroke-tertiary;
 }
 
-.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected,
-.ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
-  @apply bg-l2;
-  @apply text-primary;
-  @apply font-medium;
+.ant-layout-sider {
+  .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected,
+  .ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    @apply bg-smoke-100 dark:bg-slate-500;
+    @apply text-primary;
+    @apply font-medium;
+    &:hover {
+      @apply bg-smoke-100 dark:bg-slate-500;
+    }
+  }
 }
+
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected,
+.ant-menu-dark.ant-menu-dark.ant-menu-item-selected {
+  background: none;
+}
+
 
 .ant-menu-light .ant-menu-item:hover {
   @apply text-primary;
-  @apply bg-l2;
+  @apply bg-l1;
 }
 
 .ant-menu,

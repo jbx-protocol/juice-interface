@@ -31,11 +31,6 @@ export const useLaunchFundingCycles = ({
     setLaunchFundingCycleTxLoading(true)
 
     const callbacks = {
-      onDone() {
-        console.info(
-          'Cycle edit transaction executed. Awaiting confirmation...',
-        )
-      },
       onConfirmed() {
         setLaunchFundingCycleTxLoading(false)
 

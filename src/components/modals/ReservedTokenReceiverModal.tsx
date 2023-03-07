@@ -42,7 +42,7 @@ export default function ReservedTokenReceiverModal({
     const realTokenAllocation = (reservedRate ?? 0) * percentOfReserved
     const realTokenAllocationPercent = (realTokenAllocation / 100).toFixed(2)
     const extra =
-      t`The portion this receipient will receive out of the ${reservedRate}% of token issuance being reserved.` +
+      t`The portion this recipient will receive out of the ${reservedRate}% of the project's reserved token issuance.` +
       `${
         realTokenAllocation
           ? ' ' + t`(${realTokenAllocationPercent}% of total token issuance).`

@@ -257,7 +257,7 @@ export default function QuickProjectSearch() {
             <span>
               <KeyboardButton>
                 <EnterOutlined />
-              </KeyboardButton>
+              </KeyboardButton>{' '}
               {t`to select`}
             </span>
             <span>
@@ -266,12 +266,11 @@ export default function QuickProjectSearch() {
               </KeyboardButton>
               <KeyboardButton>
                 <ArrowDownOutlined />
-              </KeyboardButton>
+              </KeyboardButton>{' '}
               {t`to navigate`}
             </span>
             <span>
-              <KeyboardButton>esc</KeyboardButton>
-              {t`to close`}
+              <KeyboardButton>esc</KeyboardButton> {t`to close`}
             </span>
           </div>
         </div>

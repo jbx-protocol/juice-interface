@@ -44,8 +44,7 @@ export default function V2V3ReconfigureUpcomingMessage() {
     message = (
       <Trans>
         Due to your <strong>{ballotStrategy.name}</strong> contract, edits you
-        make will not take effect until the first funding cycle which starts at
-        least{' '}
+        make will not take effect until the first cycle to start at least{' '}
         <strong>
           {detailedTimeString({
             timeSeconds: BigNumber.from(ballotStrategyLength),

@@ -84,8 +84,8 @@ const V1ReconfigureUpcomingMessage = ({
   } else if (ballotStrategyLength > secondsUntilNextFC) {
     return (
       <Trans>
-        Due to this project's <strong>{ballotStrategy.name}</strong>, edits you
-        make will not take effect until the first cycle which starts at least{' '}
+        Due to your <strong>{ballotStrategy.name}</strong> contract, edits you
+        make will not take effect until the first cycle to start at least{' '}
         <strong>
           {detailedTimeString({
             timeSeconds: BigNumber.from(ballotStrategyLength),

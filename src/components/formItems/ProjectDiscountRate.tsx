@@ -12,7 +12,7 @@ function DiscountRateExtra({ disabled }: { disabled?: boolean }) {
     <div>
       {disabled && (
         <FormItemWarningText>
-          <Trans>Disabled when your project's cycle has no duration.</Trans>
+          <Trans>Disabled when your project's cycle isn't locked.</Trans>
         </FormItemWarningText>
       )}
       {DISCOUNT_RATE_EXPLANATION}

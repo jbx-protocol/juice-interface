@@ -4,6 +4,7 @@ import { Form, Input } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { useWallet } from 'hooks/Wallet'
 import { FormItemInput } from 'models/formItemInput'
+import { NetworkName } from 'models/networkName'
 import { MouseEventHandler } from 'react'
 import { helpPagePath } from 'utils/routes'
 
@@ -23,7 +24,7 @@ export const CustomStrategyInput: React.FC<
             >
               ballot smart contract
             </ExternalLink>{' '}
-            deployed to {chain?.name ?? 'mainnet'}.
+            deployed to {chain?.name ?? NetworkName.mainnet}.
           </Trans>
         }
       >

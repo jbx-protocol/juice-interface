@@ -275,7 +275,6 @@ export async function downloadV1Payouts(
       }
 
       // Any better ways to do this?
-      // @ts-ignore
       payouts.splice(x, 0, {
         timestamp: t.timestamp,
         modCut: t.beneficiaryTransferAmount,

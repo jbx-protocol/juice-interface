@@ -1,18 +1,16 @@
 import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
 import SiteNavigation from 'components/Navbar/SiteNavigation'
-import useMobile from 'hooks/Mobile'
-import { useRouter } from 'next/router'
 import { ArcxProvider } from 'contexts/Arcx/ArcxProvider'
 import { EtherPriceProvider } from 'contexts/EtherPrice/EtherPriceProvider'
 import LanguageProvider from 'contexts/Language/LanguageProvider'
 import ReactQueryProvider from 'contexts/ReactQueryProvider'
 import { ThemeProvider } from 'contexts/Theme/ThemeProvider'
 import TxHistoryProvider from 'contexts/Transaction/TxHistoryProvider'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { Provider } from 'react-redux'
 import store from 'redux/store'
-import { classNames } from 'utils/classNames'
 import { redirectTo } from 'utils/windowUtils'
 
 /**
@@ -50,14 +48,11 @@ const _Wrapper: React.FC = ({ children }) => {
   if (router.asPath.match(/^\/#\//)) {
     redirectTo(router.asPath.replace('/#/', ''))
   }
-  const isMobile = useMobile()
 
   return (
     <Layout className="flex h-screen flex-col bg-transparent">
       <SiteNavigation />
-      <Content className={classNames(isMobile ? 'pt-16' : '')}>
-        {children}
-      </Content>
+      <Content className="pt-16 md:p-0">{children}</Content>
     </Layout>
   )
 }

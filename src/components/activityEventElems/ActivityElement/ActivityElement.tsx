@@ -2,13 +2,9 @@ import { ArrowRightOutlined } from '@ant-design/icons'
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
 import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
-import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { useV2V3TerminalVersion } from 'hooks/v2v3/V2V3TerminalVersion'
-import { useContext } from 'react'
 import { isEqualAddress } from 'utils/address'
 import { formatHistoricalDate } from 'utils/format/formatDate'
-import { smallHeaderStyle } from '../styles'
-
 import { ActivityElementEvent } from './activityElementEvent'
 
 const CallerBeneficiary = ({
@@ -58,10 +54,6 @@ function TimestampVersion({
   txHash,
   terminal,
 }: ActivityElementEvent) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const terminalVersion = useV2V3TerminalVersion(terminal)
 
   return (
@@ -72,10 +64,7 @@ function TimestampVersion({
           {terminalVersion && (
             <ProjectVersionBadge
               versionText={'V' + terminalVersion}
-              style={{
-                ...smallHeaderStyle(colors),
-                color: colors.text.secondary,
-              }}
+              className="text-secondary bg-transparent text-xs dark:bg-transparent"
             />
           )}{' '}
           <EtherscanLink

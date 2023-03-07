@@ -1,31 +1,31 @@
 .ant-radio-checked .ant-radio-inner {
-  border-color: var(--background-action-primary);
+  @apply stroke-action-primary;
 }
 
 .ant-radio-inner::after {
-  background-color: var(--background-action-primary);
+  @apply bg-action-primary;
 }
 
 .ant-radio-wrapper,
 .ant-radio-button-wrapper {
-  color: var(--text-primary);
+  @apply text-primary;
   &:hover {
-    color: var(--text-primary);
+    @apply text-primary;
   }
 }
 
 .ant-radio-wrapper-disabled span {
-  color: var(--text-disabled);
+  @apply text-disabled;
 }
 
 .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled),
 .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover,
 .ant-radio-button-wrapper-checked:not([class*=' ant-radio-button-wrapper-disabled']).ant-radio-button-wrapper:first-child,
 .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):first-child {
-  border-color: var(--stroke-action-primary);
-  color: var(--text-action-primary);
+  @apply stroke-action-primary;
+  @apply text-action-primary;
 
   &::before {
-    background-color: var(--stroke-action-primary);
+    @apply bg-action-primary
   }
 }

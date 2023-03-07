@@ -1,8 +1,6 @@
 import { Trans } from '@lingui/macro'
 import ETHAmount from 'components/currency/ETHAmount'
-import useMobile from 'hooks/Mobile'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
-import { classNames } from 'utils/classNames'
 import { formattedNum } from 'utils/format/formatNumber'
 
 const Stat = ({
@@ -14,16 +12,9 @@ const Stat = ({
   label: string | JSX.Element
   loading: boolean
 }) => {
-  const isMobile = useMobile()
-
   return (
     <div className="my-0 mx-auto flex w-full max-w-[200px] flex-col gap-2 text-center">
-      <div
-        className={classNames(
-          'font-semibold text-juice-400 dark:text-juice-300',
-          isMobile ? 'text-4xl' : 'text-5xl',
-        )}
-      >
+      <div className="text-4xl font-semibold text-juice-400 dark:text-juice-300 md:text-5xl">
         {loading ? '-' : value}
       </div>
       <div className="text-base">{label}</div>

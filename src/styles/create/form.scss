@@ -2,6 +2,6 @@
 // do - likely best way is to make a JuiceFormItem component.
 .wizard-create .ant-form-item-label {
   label {
-    font-size: 1rem;
+    @apply text-base;
   }
 }

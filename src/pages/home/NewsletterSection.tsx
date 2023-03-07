@@ -35,7 +35,7 @@ export function NewsletterSection() {
       <div className="my-0 mx-auto max-w-5xl">
         <Row align="middle" gutter={40}>
           <Col xs={24} md={14}>
-            <SectionHeading className="mb-6 text-left text-black dark:text-slate-100">
+            <SectionHeading className="mb-6 text-left">
               <Trans>Stay up to date.</Trans>
             </SectionHeading>
             <div className="text-black">

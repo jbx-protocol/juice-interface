@@ -1,14 +1,14 @@
 .ant-statistic-content {
   font-family: 'DM Mono', monospace;
-  font-size: 1.2rem;
-  color: var(--text-primary);
-  font-weight: 500;
+  @apply text-xl;
+  @apply text-primary;
+  @apply font-medium;
 }
 
 .ant-statistic-title {
-  color: var(--text-secondary);
+  @apply text-secondary;
   margin: 0;
   text-transform: uppercase;
-  font-size: 0.75rem;
+  @apply text-xs;
 }
 

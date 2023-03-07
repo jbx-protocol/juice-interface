@@ -5,7 +5,6 @@ import { ProjectHeader } from 'components/Project/ProjectHeader'
 import { V2V3ProjectHeaderActions } from 'components/v2v3/V2V3Project/V2V3ProjectHeaderActions'
 import { VeNftContent } from 'components/veNft/VeNftContent'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
-import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 import Link from 'next/link'
@@ -48,7 +47,6 @@ const items: MenuItem[] = [
 export function VeNft() {
   const { projectOwnerAddress, handle } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
-  const { isDarkMode } = useContext(ThemeContext)
 
   const router = useRouter()
   const isOwner = useIsUserAddress(projectOwnerAddress)
@@ -86,7 +84,6 @@ export function VeNft() {
                 defaultOpenKeys={['project', 'funding', 'manage']}
                 defaultSelectedKeys={[activeSettingsPage]}
                 mode="inline"
-                theme={isDarkMode ? 'dark' : 'light'}
                 items={items}
                 onSelect={handleMenuItemClick}
               />

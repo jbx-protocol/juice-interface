@@ -1,26 +1,46 @@
 .ant-picker-cell-selected,
-.ant-picker-time-panel-cell-selected {
+.ant-picker-time-panel-cell-selected,
+.ant-picker-cell-in-view.ant-picker-cell-selected {
   .ant-picker-cell-inner,
   .ant-picker-time-panel-cell-inner {
-    background: var(--background-action-primary) !important;
+    @apply bg-action-primary;
   }
 }
-.ant-picker-time-panel-cell-selected .ant-picker-time-panel-cell-inner {
-  color: #fff !important;
+
+.ant-picker-time-panel-column > li.ant-picker-time-panel-cell-selected .ant-picker-time-panel-cell-inner {
+  @apply text-primary;
+  @apply bg-haze-100 dark:bg-haze-800;
+}
+.ant-picker-time-panel-column > li.ant-picker-time-panel-cell .ant-picker-time-panel-cell-inner {
+  @apply text-primary;
+  &:hover {
+    @apply bg-haze-100 dark:bg-haze-800;
+  }
 }
 
+
 .ant-picker-today-btn {
-  color: var(--text-action-primary);
+  @apply text-action-primary;
 }
 
 .ant-picker-today-btn-disabled {
-  color: var(--text-disabled);
+  @apply text-disabled;
 }
 
 .ant-picker-cell-disabled {
-  background-color: var(--background-lightDisabled);
+  @apply bg-disabled;
+  @apply text-over-disabled;
+  &:before {
+    @apply bg-disabled;
+  }
+}
+
+
+.ant-picker-cell:hover:not(.ant-picker-cell-selected):not(.ant-picker-cell-range-start):not(.ant-picker-cell-range-end):not(.ant-picker-cell-range-hover-start):not(.ant-picker-cell-range-hover-end) .ant-picker-cell-inner {
+  @apply bg-haze-50 dark:bg-haze-800;
+  @apply text-primary;
 }
 
 .ant-picker-focused {
-  border-color: var(--stroke-action-secondary);
+  @apply input-focus;
 }

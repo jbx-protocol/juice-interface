@@ -13,7 +13,7 @@ export const JuiceSwitch = ({
     <Space className="flex items-baseline">
       <Switch
         className={classNames(
-          value ? 'bg-haze-400' : 'bg-smoke-200 dark:bg-slate-500',
+          value ? 'bg-haze-400' : 'bg-smoke-200 dark:bg-slate-300',
         )}
         id={switchId}
         checked={value}

@@ -161,7 +161,7 @@ export function TopProjectsSection() {
               </Link>
               <Link href="#how-it-works">
                 <a
-                  className="hover-text-decoration-underline cursor-pointer text-sm text-grey-500 dark:text-grey-300"
+                  className="cursor-pointer text-sm text-grey-500 hover:underline dark:text-grey-300"
                   role="button"
                   onClick={() => {
                     document

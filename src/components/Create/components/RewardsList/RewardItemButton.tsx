@@ -11,11 +11,7 @@ export const RewardItemButton: React.FC<{ onClick?: VoidFunction }> = ({
     <div
       className={classNames(isMobile ? 'flex h-11 w-11 justify-center' : '')}
     >
-      <Button
-        className={classNames(isMobile ? 'text-2xl' : 'p-0')}
-        type="link"
-        onClick={onClick}
-      >
+      <Button className="text-2xl md:p-0" type="link" onClick={onClick}>
         {children}
       </Button>
     </div>

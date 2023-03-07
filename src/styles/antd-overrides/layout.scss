@@ -1,18 +1,18 @@
 .ant-layout-header {
-  color: var(--text-primary);
+  @apply text-primary;
   z-index: 10;
 }
 
 .ant-divider {
-  border-color: var(--stroke-tertiary);
+  @apply stroke-tertiary;
 }
 
 .ant-layout-sider-zero-width-trigger {
-  color: var(--text-primary);
-  background-color: var(--background-l0);
+  @apply text-primary;
+  @apply bg-l0;
 }
 
 .settings-layout .ant-layout-sider-zero-width-trigger {
   top: -3px;
-  font-size: 1.5rem;
+  @apply text-2xl;
 }

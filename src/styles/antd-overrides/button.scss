@@ -10,14 +10,6 @@
     transition: margin 100ms linear;
   }
 
-  &:hover .anticon-arrow-left {
-    margin-right: 2px;
-  }
-
-  &:hover .anticon-arrow-right {
-    margin-left: 10px;
-  }
-
   &:hover {
     @apply bg-haze-50 dark:bg-haze-900;
     @apply stroke-action-secondary;
@@ -30,6 +22,16 @@
     @apply stroke-action-secondary;
     @apply text-over-action-secondary;
   }
+
+  &:not(.ant-btn[disabled]) {
+    &:hover .anticon-arrow-left {
+      margin-right: 2px;
+    }
+  
+    &:hover .anticon-arrow-right {
+      margin-left: 10px;
+    }
+  }  
 }
 
 .ant-btn-primary {

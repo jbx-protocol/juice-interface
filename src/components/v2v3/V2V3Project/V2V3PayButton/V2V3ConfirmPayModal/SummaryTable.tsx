@@ -82,8 +82,8 @@ export function SummaryTable({
             label={t`Reserved tokens`}
             tip={
               <Trans>
-                This project reserves some tokens for recipients chosen by the
-                project creator.
+                This project reserves some tokens for recipients set by the
+                project owner.
               </Trans>
             }
           />

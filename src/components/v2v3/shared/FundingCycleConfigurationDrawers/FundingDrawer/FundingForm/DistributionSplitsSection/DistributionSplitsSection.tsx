@@ -194,7 +194,7 @@ export function DistributionSplitsSection({
                   <Trans>
                     Pay out specific amounts of ETH to addresses and projects
                     each cycle. Any remaining ETH will stay in the project for
-                    future cycles and/or token redemption.
+                    future cycles.
                   </Trans>
                 </p>
               </Radio>

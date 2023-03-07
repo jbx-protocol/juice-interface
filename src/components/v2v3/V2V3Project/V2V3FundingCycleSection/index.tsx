@@ -78,9 +78,9 @@ export default function V2V3FundingCycleSection() {
   }
 
   const reconfigureButtonText = currentCycleHasDuration ? (
-    <Trans>Edit upcoming</Trans>
+    <Trans>Edit upcoming cycle</Trans>
   ) : (
-    <Trans>Edit</Trans>
+    <Trans>Edit cycle</Trans>
   )
 
   const tabs = [

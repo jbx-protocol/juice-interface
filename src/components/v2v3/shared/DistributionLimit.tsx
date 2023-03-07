@@ -50,7 +50,7 @@ export default function DistributionLimit({
   ) : null
 
   const _text = distributionLimitIsInfinite ? (
-    <Trans>Infinite (all available ETH)</Trans>
+    <Trans>No limit (all available ETH)</Trans>
   ) : distributionLimitIsZero ? (
     <Trans>Zero (no payouts)</Trans>
   ) : (

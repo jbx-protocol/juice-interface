@@ -125,7 +125,7 @@ export default function ReservedTokensSplitsCard({
               tip={
                 <Trans>
                   Projects can reserve a percentage of token issuance for the
-                  recipients chosen by the project creator.
+                  recipients set by the project owner.
                 </Trans>
               }
             />

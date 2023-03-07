@@ -24,7 +24,7 @@ function BondingCurveRateExtra({
     <Space className="text-sm" direction="vertical" size="large">
       <p className="m-0">
         <Trans>
-          The redemption rate determines if and how token holders can burn their
+          The redemption rate determines how token holders can burn their
           tokens to reclaim a portion of the ETH not needed for payouts.
         </Trans>
       </p>

@@ -40,7 +40,7 @@ export default function FundingCycleSection({
         ) : (
           <SectionHeader
             className="mb-2"
-            text={<Trans>Cycle cycle</Trans>}
+            text={<Trans>Cycle</Trans>}
             tip={
               <Trans>
                 A project's rules are locked for the duration of each cycle. If

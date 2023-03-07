@@ -30,7 +30,7 @@ export const VolumeStatLine = ({
       statLabel={<Trans>Total volume</Trans>}
       statLabelTip={
         <Trans>
-          The amount of ETH people have paid this project since it was created.
+          The amount of ETH this project has received since it was created.
         </Trans>
       }
       statValue={

@@ -2120,6 +2120,9 @@ msgstr ""
 msgid "On-chain Governance"
 msgstr ""
 
+msgid "Only available on Mainnet"
+msgstr ""
+
 msgid "Only lowercase letters"
 msgstr ""
 

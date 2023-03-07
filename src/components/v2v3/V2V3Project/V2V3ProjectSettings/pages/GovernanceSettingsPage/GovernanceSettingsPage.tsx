@@ -1,6 +1,5 @@
 import { Divider, Space } from 'antd'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { readNetwork } from 'constants/networks'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { VeNftContext } from 'contexts/VeNft/VeNftContext'
 import { VeNftProvider } from 'contexts/VeNft/VeNftProvider'
@@ -26,7 +25,7 @@ export function GovernanceSettingsPage() {
   return (
     <div>
       <Space direction="vertical" size="large" className="w-full">
-        {readNetwork.name === 'mainnet' && <SnapshotSettingsSection />}
+        <SnapshotSettingsSection />
 
         {featureFlagEnabled(FEATURE_FLAGS.VENFT) && (
           <>

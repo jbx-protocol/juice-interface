@@ -1,11 +1,13 @@
 import { Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import ExternalLink from 'components/ExternalLink'
+import { readNetwork } from 'constants/networks'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useSetENSTextRecordForHandleTx } from 'hooks/v2v3/transactor/SetENSTextRecordForHandleTx'
 import { pokeSnapshot, uploadSnapshotSettingsToIPFS } from 'lib/snapshot'
+import { NetworkName } from 'models/networkName'
 import Link from 'next/link'
 import { useContext, useState } from 'react'
 import { ipfsUri } from 'utils/ipfs'
@@ -85,23 +87,28 @@ export function SnapshotSettingsSection() {
   }
 
   const launchButtonText = <Trans>Deploy Snapshot space</Trans>
-  const launchButtonElement = !handle ? (
+  const canLaunchSnapshot = handle && readNetwork.name === NetworkName.mainnet
+  const launchButtonElement = canLaunchSnapshot ? (
+    <Button onClick={launchSnapshot} type="primary" loading={launchLoading}>
+      <span>{launchButtonText}</span>
+    </Button>
+  ) : (
     <Tooltip
       overlay={
-        <Trans>
-          Project handle required.{' '}
-          <Link href={`/v2/p/${projectId}/settings?page=projecthandle`}>
-            Set project handle.
-          </Link>
-        </Trans>
+        readNetwork.name !== NetworkName.mainnet ? (
+          <Trans>Only available on Mainnet</Trans>
+        ) : (
+          <Trans>
+            Project handle required.{' '}
+            <Link href={`/v2/p/${projectId}/settings?page=projecthandle`}>
+              Set project handle.
+            </Link>
+          </Trans>
+        )
       }
     >
       <Button disabled>{launchButtonText}</Button>
     </Tooltip>
-  ) : (
-    <Button onClick={launchSnapshot} type="primary" loading={launchLoading}>
-      <span>{launchButtonText}</span>
-    </Button>
   )
 
   const snapshotUrl = `https://snapshot.org/#/${handle}.eth`

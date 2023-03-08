@@ -80,7 +80,7 @@ export function NftTierCard({
         className={classNames(
           'flex h-full w-full cursor-pointer select-none flex-col rounded-sm transition-shadow duration-100',
           _isSelected
-            ? 'shadow-md shadow-smoke-300 outline outline-2 outline-haze-400'
+            ? 'shadow-md shadow-smoke-300 outline outline-2 outline-haze-400 dark:shadow-slate-400'
             : '',
         )}
         onClick={

@@ -1175,6 +1175,9 @@ msgstr ""
 msgid "Edited cycle"
 msgstr ""
 
+msgid "Edited payout"
+msgstr ""
+
 msgid "Editing NFTs"
 msgstr ""
 
@@ -2856,9 +2859,6 @@ msgid "Set custom rules & parameters for your project tokens."
 msgstr ""
 
 msgid "Set cycle duration"
-msgstr ""
-
-msgid "Set distribution limit"
 msgstr ""
 
 msgid "Set handle @{handle}"

@@ -1,4 +1,6 @@
+import { SettingOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { Button, Tabs } from 'antd'
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
@@ -8,9 +10,13 @@ import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
 import ProjectLogo from 'components/ProjectLogo'
 import { useContributedProjectsQuery, useMyProjectsQuery } from 'hooks/Projects'
 import { useWallet } from 'hooks/Wallet'
+import { AuthAPI } from 'lib/api/auth'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useCallback, useState } from 'react'
 import { ensAvatarUrlForAddress } from 'utils/ens'
 import { truncateEthAddress } from 'utils/format/formatAddress'
+import { v4 } from 'uuid'
 
 function ProjectsList({ projects }: { projects: ProjectCardProject[] }) {
   return (
@@ -100,6 +106,58 @@ export function AccountDashboard({
   address: string
   ensName?: string | null
 }) {
+  const wallet = useWallet()
+  const supabase = useSupabaseClient()
+  const router = useRouter()
+
+  const [settingsButtonLoading, setSettingsButtonLoading] = useState(false)
+
+  const onSettingsClicked = useCallback(async () => {
+    setSettingsButtonLoading(true)
+    if (wallet.chainUnsupported) {
+      const walletChanged = await wallet.changeNetworks()
+      if (!walletChanged) {
+        console.error('Wallet did not change network')
+        setSettingsButtonLoading(false)
+        return
+      }
+    }
+    if (!wallet.signer || !wallet.userAddress) {
+      console.error('Wallet not connected')
+      setSettingsButtonLoading(false)
+      return
+    }
+
+    const { data } = await supabase.auth.getSession()
+    if (data.session) {
+      await router.push(`/account/${wallet.userAddress}/settings`)
+      return
+    }
+
+    try {
+      const challengeMessage = await AuthAPI.getChallengeMessage({
+        wallet: wallet.userAddress,
+      })
+      const signature = await wallet.signer.signMessage(challengeMessage)
+      const accessToken = await AuthAPI.walletSignIn({
+        wallet: wallet.userAddress,
+        signature,
+        message: challengeMessage,
+      })
+      const { error } = await supabase.auth.setSession({
+        access_token: accessToken,
+        refresh_token: v4(), // Set to garbage token, no long lived tokens
+      })
+      if (error) throw error
+
+      await router.push(`/account/${wallet.userAddress}/settings`)
+    } catch (e) {
+      console.error('Error occurred while signing in', e)
+    } finally {
+      setSettingsButtonLoading(false)
+    }
+  }, [router, supabase.auth, wallet])
+
   const items = [
     {
       label: t`Contributions`,
@@ -112,6 +170,8 @@ export function AccountDashboard({
       children: <MyProjectsList address={address} />,
     },
   ]
+
+  const isOwner = wallet.userAddress?.toLowerCase() === address.toLowerCase()
 
   return (
     <div className="my-0 mx-auto max-w-5xl p-5">
@@ -137,6 +197,18 @@ export function AccountDashboard({
             )}
           </div>
         </div>
+
+        {isOwner && (
+          <Button
+            loading={settingsButtonLoading}
+            icon={<SettingOutlined />}
+            onClick={onSettingsClicked}
+          >
+            <span>
+              <Trans>Settings</Trans>
+            </span>
+          </Button>
+        )}
       </header>
 
       <Tabs items={items} />

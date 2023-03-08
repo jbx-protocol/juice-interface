@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
+import { DEFAULT_MIN_RETURNED_TOKENS } from 'constants/transactionDefaults'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
@@ -14,8 +15,6 @@ type DistributePayoutsTx = TransactorInstance<{
   amount: BigNumber | undefined
   currency: V2V3CurrencyOption | undefined
 }>
-
-const DEFAULT_MIN_RETURNED_TOKENS = 0
 
 export function useDistributePayoutsTx(): DistributePayoutsTx {
   const { transactor } = useContext(TransactionContext)

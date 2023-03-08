@@ -1,7 +1,6 @@
 import { CreatePage } from 'models/createPage'
 import { FundingTargetType } from 'models/fundingTargetType'
 import {
-  DelegateVersion,
   JB721GovernanceType,
   JBTiered721Flags,
   NftCollectionMetadata,
@@ -29,7 +28,6 @@ export type NftRewardsData = {
   collectionMetadata: NftCollectionMetadata
   postPayModal: NftPostPayModalConfig | undefined
   flags: JBTiered721Flags
-  contractVersion: DelegateVersion | undefined
   governanceType: JB721GovernanceType
 }
 

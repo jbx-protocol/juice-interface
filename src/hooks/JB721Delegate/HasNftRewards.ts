@@ -1,4 +1,4 @@
-import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
+import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { V2V3FundingCycleMetadata } from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
@@ -21,13 +21,14 @@ export function useHasNftRewards(): { value: boolean; loading: boolean } {
     fundingCycleMetadata,
     loading: { fundingCycleLoading },
   } = useContext(V2V3ProjectContext)
-  const {
-    nftRewards: { contractVersion },
-  } = useContext(NftRewardsContext)
+  const { version: JB721DelegateVersion } = useContext(
+    JB721DelegateContractsContext,
+  )
 
   return {
     value:
-      hasDataSourceForPay(fundingCycleMetadata) && Boolean(contractVersion),
+      hasDataSourceForPay(fundingCycleMetadata) &&
+      Boolean(JB721DelegateVersion),
     loading: fundingCycleLoading,
   }
 }

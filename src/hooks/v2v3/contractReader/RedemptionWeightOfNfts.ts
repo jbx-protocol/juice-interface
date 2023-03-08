@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { useStoreOfJB721TieredDelegate } from 'hooks/JB721Delegate/contracts/StoreofJB721TieredDelegate'
+import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
+import { useContext } from 'react'
 import useV2ContractReader from './V2ContractReader'
 
 export function useRedemptionWeightOfNfts({
@@ -9,15 +10,15 @@ export function useRedemptionWeightOfNfts({
   tokenIdsToRedeem: string[] | undefined
   dataSourceAddress: string | undefined
 }) {
-  const JBTiered721DelegateStore = useStoreOfJB721TieredDelegate({
-    JB721TieredDelegateAddress: dataSourceAddress,
-  })
+  const {
+    contracts: { JB721TieredDelegateStore },
+  } = useContext(JB721DelegateContractsContext)
 
   const _tokenIds = tokenIdsToRedeem?.map(idString => BigNumber.from(idString))
   const args =
     dataSourceAddress && _tokenIds ? [dataSourceAddress, _tokenIds] : null
   return useV2ContractReader<BigNumber>({
-    contract: JBTiered721DelegateStore,
+    contract: JB721TieredDelegateStore,
     functionName: 'redemptionWeightOf',
     args,
   })

@@ -1,6 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
-import { JB721_DELEGATE_V1 } from 'constants/delegateVersions'
 import { ONE_MILLION } from 'constants/numbers'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
@@ -119,7 +118,6 @@ const DEFAULT_PROJECT_STATE: ProjectState = {
     collectionMetadata: EMPTY_NFT_COLLECTION_METADATA,
     postPayModal: undefined,
     flags: DEFAULT_NFT_FLAGS,
-    contractVersion: JB721_DELEGATE_V1,
     governanceType: JB721GovernanceType.NONE,
   },
   mustStartAtOrAfter: DEFAULT_MUST_START_AT_OR_AFTER,

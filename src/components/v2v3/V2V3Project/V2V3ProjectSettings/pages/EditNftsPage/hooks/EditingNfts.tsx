@@ -13,36 +13,19 @@ export function useEditingNfts() {
 
   const { nftRewards, loading } = useContext(NftRewardsContext)
 
-  const recordEditedTierId = (tierId: number | undefined) => {
-    // only need to send tiers that have changed to adjustTiers
-    // when id == undefined, tier is new
-    if (!tierId || editedRewardTierIds.includes(tierId)) return
-    setEditedRewardTierIds([...editedRewardTierIds, tierId])
-  }
+  const deriveAndSetEditedIds = (newRewards: NftRewardTier[]) => {
+    if (!nftRewards.rewardTiers) return
+    const editedIds = nftRewards.rewardTiers
+      .filter(
+        oldReward =>
+          // oldReward does not exist (exactly) in newRewards.
+          !newRewards.some(newReward =>
+            tiersEqual({ tier1: oldReward, tier2: newReward }),
+          ),
+      )
+      .map(reward => reward.id)
 
-  const editRewardTier = ({
-    index,
-    newRewardTier,
-  }: {
-    index: number
-    newRewardTier: NftRewardTier
-  }) => {
-    if (
-      rewardTiers &&
-      !tiersEqual({ tier1: newRewardTier, tier2: rewardTiers[index] })
-    ) {
-      recordEditedTierId(rewardTiers[index].id)
-    }
-
-    const newRewardTiers = rewardTiers?.map((tier, idx) =>
-      idx === index
-        ? {
-            ...tier,
-            ...newRewardTier,
-          }
-        : tier,
-    ) ?? [newRewardTier]
-    setRewardTiers(newRewardTiers)
+    setEditedRewardTierIds(editedIds)
   }
 
   // Load the redux state into the state variable
@@ -55,7 +38,7 @@ export function useEditingNfts() {
     setRewardTiers,
     marketplaceForm,
     editedRewardTierIds,
-    editRewardTier,
+    deriveAndSetEditedIds,
     loading,
   }
 }

@@ -76,7 +76,7 @@ export const RewardsList: React.FC<RewardsListProps> &
         {!!rewards.length && (
           <>
             {sortNftsByContributionFloor(rewards).map((reward, i) => (
-              <div key={reward.id}>
+              <>
                 <RewardItem
                   reward={reward}
                   onEditClicked={() => {
@@ -90,7 +90,7 @@ export const RewardsList: React.FC<RewardsListProps> &
                 {shouldRenderNftDivider(i) ? (
                   <Divider className="m-0 mt-12" />
                 ) : null}
-              </div>
+              </>
             ))}
           </>
         )}

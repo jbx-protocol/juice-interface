@@ -25,7 +25,7 @@ export default function SetFundAccessConstraintsEventElem({
   return (
     <ActivityEvent
       event={event}
-      header={t`Set distribution limit`}
+      header={t`Edited payout`}
       subject={
         <div>
           <CurrencySymbol

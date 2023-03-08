@@ -182,6 +182,9 @@ export default function ProjectActivity() {
             <Select.Option value="configure">
               <Trans>Edited cycle</Trans>
             </Select.Option>
+            <Select.Option value="setFundAccessConstraints">
+              <Trans>Edited payout</Trans>
+            </Select.Option>
             <Select.Option value="addToBalance">
               <Trans>Transferred ETH to project</Trans>
             </Select.Option>

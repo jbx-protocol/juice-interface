@@ -13,7 +13,7 @@ import { TransactorInstance } from 'hooks/Transactor'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useContext } from 'react'
 import { useV2ProjectTitle } from '../ProjectTitle'
-import { ETH_PAYMENT_TERMINAL_V_3 } from '../V2V3ProjectContracts/projectContractLoaders/ProjectPrimaryEthTerminal'
+import { ETH_PAYMENT_TERMINAL_V_3_1 } from '../V2V3ProjectContracts/projectContractLoaders/ProjectPrimaryEthTerminal'
 
 interface DistributePayoutsTxBaseParams {
   amount: BigNumber | undefined
@@ -26,7 +26,7 @@ type DistributePayoutsTx3Params = DistributePayoutsTxBaseParams & {
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 type DistributePayoutsTx3_1Params = DistributePayoutsTxBaseParams & {
-  metadata?: string
+  metadata?: string // JB terminal 3.1 replaced `memo` with `metadata`
 }
 
 type DistributePayoutsTx = TransactorInstance<
@@ -61,9 +61,9 @@ export function useDistributePayoutsTx(): DistributePayoutsTx {
         args.currency,
         ETH_TOKEN_ADDRESS, // _token
         DEFAULT_MIN_RETURNED_TOKENS, // _minReturnedTokens
-        versions.JBETHPaymentTerminal === ETH_PAYMENT_TERMINAL_V_3
-          ? (args as DistributePayoutsTx3Params).memo ?? DEFAULT_MEMO
-          : (args as DistributePayoutsTx3_1Params).metadata ?? DEFAULT_METADATA, // _metadata
+        versions.JBETHPaymentTerminal === ETH_PAYMENT_TERMINAL_V_3_1
+          ? (args as DistributePayoutsTx3_1Params).metadata ?? DEFAULT_METADATA // _metadata
+          : (args as DistributePayoutsTx3Params).memo ?? DEFAULT_MEMO, // _memo
       ],
       {
         ...txOpts,

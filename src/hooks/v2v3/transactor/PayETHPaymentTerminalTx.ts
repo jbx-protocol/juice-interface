@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
+import { DEFAULT_MIN_RETURNED_TOKENS } from 'constants/transactionDefaults'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
@@ -9,7 +10,6 @@ import { useContext } from 'react'
 import { useV2ProjectTitle } from '../ProjectTitle'
 
 const DEFAULT_DELEGATE_METADATA = 0
-const DEFAULT_MIN_RETURNED_TOKENS = 0
 
 type PayV2ProjectTx = TransactorInstance<{
   memo: string

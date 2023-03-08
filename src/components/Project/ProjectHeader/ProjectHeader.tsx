@@ -29,7 +29,7 @@ function ProjectSubheading({
 
   return (
     <div className="flex items-center gap-x-4 text-grey-500 dark:text-grey-300">
-      <span className="flex items-center justify-between gap-3 font-medium">
+      <span className="flex items-center justify-between gap-2 font-medium">
         {handle ? (
           <Tooltip title={t`Project ID: ${projectId}`}>
             <span>@{handle}</span>

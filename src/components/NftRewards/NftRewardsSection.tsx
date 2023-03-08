@@ -4,9 +4,9 @@ import {
   NftPostPayModal,
   NFT_PAYMENT_CONFIRMED_QUERY_PARAM,
 } from 'components/NftRewards/NftPostPayModal'
-import { DEFAULT_ALLOW_OVERSPENDING } from 'components/Project/PayProjectForm/hooks/PayProjectForm'
 import { PayProjectFormContext } from 'components/Project/PayProjectForm/payProjectFormContext'
 import SectionHeader from 'components/SectionHeader'
+import { DEFAULT_ALLOW_OVERSPENDING } from 'constants/transactionDefaults'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { CurrencyContext } from 'contexts/shared/CurrencyContext'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'

@@ -29,14 +29,11 @@ export type JBTiered721Flags = {
 }
 export type DelegateVersion = JB721DELEGATE_V1 | JB721DELEGATE_V1_1
 
-// How the reward tiers are stored in the contracts
-export type JB721TierParams = {
-  id: BigNumber
-  remainingQuantity?: BigNumber //undefined for outgoing tier (in launch or adjustTiers tx)
-
-  contributionFloor: BigNumber //uint128
+// Used when launching or adjusting tiers.
+export interface JB721TierParams {
+  contributionFloor: BigNumber // uint128
   lockedUntil: BigNumber
-  initialQuantity: BigNumber //uint64
+  initialQuantity: BigNumber // uint64
   votingUnits: BigNumber
   reservedRate: BigNumber
   reservedTokenBeneficiary: string
@@ -44,6 +41,12 @@ export type JB721TierParams = {
   allowManualMint: boolean
   shouldUseBeneficiaryAsDefault: boolean
   transfersPausable: boolean
+}
+
+// Tiers as they are stored on-chain.
+export type JB721Tier = JB721TierParams & {
+  id: BigNumber
+  remainingQuantity?: BigNumber
 }
 
 type OpenSeaAttribute = {

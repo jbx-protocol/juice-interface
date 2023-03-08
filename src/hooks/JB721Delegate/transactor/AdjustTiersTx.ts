@@ -5,7 +5,7 @@ import { TransactorInstance } from 'hooks/Transactor'
 import { JB721TierParams } from 'models/nftRewardTier'
 import { useContext } from 'react'
 
-export function useNftRewardsAdjustTiersTx({
+export function useAdjustTiersTx({
   dataSourceAddress,
 }: {
   dataSourceAddress: string | undefined

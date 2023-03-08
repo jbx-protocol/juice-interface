@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { JB721GovernanceType } from 'models/nftRewardTier'
+import { JB721GovernanceType } from 'models/nftRewards'
 import {
   parseBigNumberKeyVals,
   parseSubgraphEntitiesFromJson,

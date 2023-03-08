@@ -4,7 +4,7 @@ import { Divider } from 'antd'
 import { CreateButton } from 'components/buttons/CreateButton'
 import { useModal } from 'hooks/Modal'
 import { FormItemInput } from 'models/formItemInput'
-import { NftRewardTier } from 'models/nftRewardTier'
+import { NftRewardTier } from 'models/nftRewards'
 import { createContext, useCallback, useContext, useState } from 'react'
 import {
   MAX_NFT_REWARD_TIERS,

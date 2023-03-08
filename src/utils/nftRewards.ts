@@ -23,7 +23,7 @@ import {
   JBDeployTiered721DelegateData,
   JBTiered721Flags,
   NftRewardTier,
-} from 'models/nftRewardTier'
+} from 'models/nftRewards'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import { decodeEncodedIpfsUri, encodeIpfsUri, ipfsUri } from 'utils/ipfs'
 import { V2V3_CURRENCY_ETH } from './v2v3/currency'

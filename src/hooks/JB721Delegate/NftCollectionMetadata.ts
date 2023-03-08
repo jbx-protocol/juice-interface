@@ -1,5 +1,5 @@
 import { ipfsGet } from 'lib/api/ipfs'
-import { NftCollectionMetadata } from 'models/nftRewardTier'
+import { NftCollectionMetadata } from 'models/nftRewards'
 import { useQuery } from 'react-query'
 import { cidFromUrl } from 'utils/ipfs'
 

@@ -5,7 +5,7 @@ import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useNftCollectionMetadataUri } from 'hooks/JB721Delegate/contractReader/NftCollectionMetadataUri'
 import { useNftFlagsOf } from 'hooks/JB721Delegate/contractReader/NftFlagsOf'
 import { useNftTiers } from 'hooks/JB721Delegate/contractReader/NftTiers'
-import { JB721GovernanceType } from 'models/nftRewardTier'
+import { JB721GovernanceType } from 'models/nftRewards'
 import { useContext } from 'react'
 import {
   DEFAULT_NFT_FLAGS,

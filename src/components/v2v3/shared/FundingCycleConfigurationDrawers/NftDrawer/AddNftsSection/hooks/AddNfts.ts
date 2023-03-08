@@ -1,5 +1,5 @@
 import { useForm } from 'antd/lib/form/Form'
-import { NftRewardTier } from 'models/nftRewardTier'
+import { NftRewardTier } from 'models/nftRewards'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { useAppSelector } from 'redux/hooks/AppSelector'
 import { tiersEqual } from 'utils/nftRewards'

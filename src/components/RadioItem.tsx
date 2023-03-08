@@ -1,5 +1,5 @@
 import { Radio } from 'antd'
-import { JB721GovernanceType } from 'models/nftRewardTier'
+import { JB721GovernanceType } from 'models/nftRewards'
 import { ReactNode } from 'react'
 
 export const RadioItem = ({

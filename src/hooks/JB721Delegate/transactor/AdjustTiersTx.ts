@@ -2,7 +2,7 @@ import { t } from '@lingui/macro'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { useJB721TieredDelegate } from 'hooks/JB721Delegate/contracts/JB721TieredDelegate'
 import { TransactorInstance } from 'hooks/Transactor'
-import { JB721TierParams } from 'models/nftRewardTier'
+import { JB721TierParams } from 'models/nftRewards'
 import { useContext } from 'react'
 
 export function useAdjustTiersTx({

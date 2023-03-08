@@ -5,7 +5,7 @@ import { JuiceVideoPreview } from 'components/NftRewards/NftVideo/JuiceVideoPrev
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useContentType } from 'hooks/ContentType'
-import { NftRewardTier } from 'models/nftRewardTier'
+import { NftRewardTier } from 'models/nftRewards'
 import { useContext } from 'react'
 import { classNames } from 'utils/classNames'
 import { fileTypeIsVideo } from 'utils/nftRewards'

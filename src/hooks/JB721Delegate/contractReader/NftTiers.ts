@@ -1,5 +1,5 @@
 import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
-import { JB721Tier } from 'models/nftRewardTier'
+import { JB721Tier } from 'models/nftRewards'
 import { useContext } from 'react'
 import { MAX_NFT_REWARD_TIERS } from 'utils/nftRewards'
 import useV2ContractReader from '../../v2v3/contractReader/V2ContractReader'

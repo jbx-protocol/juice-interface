@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
 import Modal from 'antd/lib/modal/Modal'
-import { NftPostPayModalConfig } from 'models/nftRewardTier'
+import { NftPostPayModalConfig } from 'models/nftRewards'
 import { withHttps } from 'utils/externalLink'
 
 export const NFT_PAYMENT_CONFIRMED_QUERY_PARAM = 'nft_s'

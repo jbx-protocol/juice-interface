@@ -5,7 +5,7 @@ import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
-import { JB721GovernanceType, JBTiered721Flags } from 'models/nftRewardTier'
+import { JB721GovernanceType, JBTiered721Flags } from 'models/nftRewards'
 import {
   LATEST_METADATA_VERSION,
   ProjectMetadataV7,

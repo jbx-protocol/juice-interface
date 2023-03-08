@@ -1,5 +1,5 @@
 import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
-import { JBTiered721Flags } from 'models/nftRewardTier'
+import { JBTiered721Flags } from 'models/nftRewards'
 import { useContext } from 'react'
 import useV2ContractReader from '../../v2v3/contractReader/V2ContractReader'
 

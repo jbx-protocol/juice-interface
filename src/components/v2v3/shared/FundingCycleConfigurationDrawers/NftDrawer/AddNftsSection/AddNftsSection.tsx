@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Empty, Form, Space } from 'antd'
 import { AddEditRewardModal } from 'components/Create/components/RewardsList/AddEditRewardModal'
-import { NftRewardTier } from 'models/nftRewardTier'
+import { NftRewardTier } from 'models/nftRewards'
 import { useCallback, useState } from 'react'
 import { MAX_NFT_REWARD_TIERS } from 'utils/nftRewards'
 import { useFundingCycleDrawer } from '../../hooks/FundingCycleDrawer'

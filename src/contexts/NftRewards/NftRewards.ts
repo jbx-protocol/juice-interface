@@ -1,11 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import axios from 'axios'
 import { ONE_BILLION } from 'constants/numbers'
-import {
-  IPFSNftRewardTier,
-  JB721Tier,
-  NftRewardTier,
-} from 'models/nftRewardTier'
+import { IPFSNftRewardTier, JB721Tier, NftRewardTier } from 'models/nftRewards'
 import { useQuery, UseQueryResult } from 'react-query'
 import { withHttps } from 'utils/externalLink'
 import { formatWad } from 'utils/format/formatNumber'

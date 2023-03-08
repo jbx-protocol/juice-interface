@@ -13,7 +13,7 @@ import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
 import { pinFile } from 'lib/api/ipfs'
 import { random } from 'lodash'
-import { NftRewardTier } from 'models/nftRewardTier'
+import { NftRewardTier } from 'models/nftRewards'
 import { UploadRequestOption } from 'rc-upload/lib/interface'
 import { useCallback, useEffect, useState } from 'react'
 import {

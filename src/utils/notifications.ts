@@ -23,6 +23,22 @@ export const emitErrorNotification = (
   })
 }
 
+export const emitInfoNotification = (
+  message: string,
+  opts?: {
+    description?: string
+    duration?: number | null
+  },
+) => {
+  const key = new Date().valueOf().toString()
+  return notification.info({
+    key,
+    message,
+    ...opts,
+    duration: opts?.duration ?? 5,
+  })
+}
+
 export const emitSuccessNotification = (
   message: string,
   opts?: {

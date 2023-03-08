@@ -152,6 +152,7 @@ export type EventFilter =
   | 'distributeReservedTokens'
   | 'deployETHERC20ProjectPayer'
   | 'configure'
+  | 'setFundAccessConstraints'
 
 export function useProjectActivity({
   eventFilter,
@@ -238,42 +239,45 @@ export function useProjectActivity({
   }, [projectId, eventFilter])
 
   const keys = useMemo(() => {
-    let _keys = undefined
+    let key = undefined
 
     switch (eventFilter) {
       case 'deployERC20':
-        _keys = [DEPLOYED_ERC20_EVENT_KEY]
+        key = DEPLOYED_ERC20_EVENT_KEY
         break
       case 'pay':
-        _keys = [PAY_EVENT_KEY]
+        key = PAY_EVENT_KEY
         break
       case 'burn':
-        _keys = [BURN_EVENT_KEY]
+        key = BURN_EVENT_KEY
         break
       case 'addToBalance':
-        _keys = [ADD_TO_BALANCE_EVENT_KEY]
+        key = ADD_TO_BALANCE_EVENT_KEY
         break
       case 'projectCreate':
-        _keys = [PROJECT_CREATE_EVENT_KEY]
+        key = PROJECT_CREATE_EVENT_KEY
         break
       case 'redeem':
-        _keys = [REDEEM_EVENT_KEY]
+        key = REDEEM_EVENT_KEY
         break
       case 'distributePayouts':
-        _keys = [DISTRIBUTED_PAYOUTS_EVENT_KEY]
+        key = DISTRIBUTED_PAYOUTS_EVENT_KEY
         break
       case 'distributeTokens':
-        _keys = [DISTRIBUTED_RESERVED_TOKENS_EVENT_KEY]
+        key = DISTRIBUTED_RESERVED_TOKENS_EVENT_KEY
         break
       case 'deployETHERC20ProjectPayer':
-        _keys = [DEPLOYED_PROJECT_PAYER_EVENT_KEY]
+        key = DEPLOYED_PROJECT_PAYER_EVENT_KEY
         break
       case 'configure':
-        _keys = [CONFIGURE_EVENT_KEY, SET_FUND_ACCESS_CONSTRAINTS_EVENT_KEY]
+        key = CONFIGURE_EVENT_KEY
+        break
+      case 'setFundAccessConstraints':
+        key = SET_FUND_ACCESS_CONSTRAINTS_EVENT_KEY
         break
     }
 
-    if (_keys) return _keys
+    if (key) return [key]
 
     // if no filter, fetch all
     return [

@@ -11,13 +11,8 @@ import { useEditingNfts } from './hooks/EditingNfts'
 
 export function EditNftsSection() {
   const [submitLoading, setSubmitLoading] = useState<boolean>(false)
-  const {
-    rewardTiers,
-    setRewardTiers,
-    editedRewardTierIds,
-    loading,
-    deriveAndSetEditedIds,
-  } = useEditingNfts()
+  const { rewardTiers, setRewardTiers, editedRewardTierIds, loading } =
+    useEditingNfts()
   const { value: hasExistingNfts } = useHasNftRewards()
   const updateExistingCollection = useUpdateCurrentCollection({
     editedRewardTierIds,
@@ -44,10 +39,7 @@ export function EditNftsSection() {
         {rewardTiers && rewardTiers.length > 0 && (
           <RewardsList
             value={rewardTiers}
-            onChange={newRewardTiers => {
-              deriveAndSetEditedIds(newRewardTiers)
-              setRewardTiers(newRewardTiers)
-            }}
+            onChange={setRewardTiers}
             allowCreate
           />
         )}

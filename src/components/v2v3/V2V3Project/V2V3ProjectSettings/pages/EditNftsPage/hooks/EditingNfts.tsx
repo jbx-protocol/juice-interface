@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from 'react'
 import { tiersEqual } from 'utils/nftRewards'
 
 export function useEditingNfts() {
-  const [rewardTiers, setRewardTiers] = useState<NftRewardTier[]>()
+  const [rewardTiers, _setRewardTiers] = useState<NftRewardTier[]>()
   const [marketplaceForm] = useForm<MarketplaceFormFields>()
   // a list of the `tierRanks` (IDs) of tiers that have been edited
   const [editedRewardTierIds, setEditedRewardTierIds] = useState<number[]>([])
@@ -28,9 +28,14 @@ export function useEditingNfts() {
     setEditedRewardTierIds(editedIds)
   }
 
+  const setRewardTiers = (newRewards: NftRewardTier[]) => {
+    deriveAndSetEditedIds(newRewards)
+    _setRewardTiers(newRewards)
+  }
+
   // Load the redux state into the state variable
   useEffect(() => {
-    setRewardTiers(nftRewards.rewardTiers)
+    _setRewardTiers(nftRewards.rewardTiers)
   }, [nftRewards.rewardTiers])
 
   return {
@@ -38,7 +43,6 @@ export function useEditingNfts() {
     setRewardTiers,
     marketplaceForm,
     editedRewardTierIds,
-    deriveAndSetEditedIds,
     loading,
   }
 }

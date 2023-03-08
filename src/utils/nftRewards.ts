@@ -266,13 +266,15 @@ export function buildJB721TierParams({
   cids: string[]
   rewardTiers: NftRewardTier[]
 }): JB721TierParams[] {
-  const _rewardTiers = sortNftsByContributionFloor(rewardTiers)
+  const sortedRewardTiers = sortNftsByContributionFloor(rewardTiers)
+
   // `cids` are ordered the same as `rewardTiers` so can get corresponding values from same index
   return cids
     .map((cid, index) => {
-      const rewardTier = _rewardTiers[index]
+      const rewardTier = sortedRewardTiers[index]
       return nftRewardTierToJB721TierParams(rewardTier, cid)
     })
+    .slice() // clone object
     .sort((a, b) => {
       // Tiers MUST BE in ascending order when sent to contract.
       if (a.contributionFloor.gt(b.contributionFloor)) return 1

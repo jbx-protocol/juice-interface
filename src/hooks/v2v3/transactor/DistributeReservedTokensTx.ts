@@ -2,6 +2,7 @@ import { t } from '@lingui/macro'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useContext } from 'react'
 
+import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
@@ -20,7 +21,7 @@ export function useDistributeReservedTokens(): DistributeReserveTokensTx {
   } = useContext(V2V3ProjectContractsContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
-  return ({ memo = '' }, txOpts) => {
+  return ({ memo = DEFAULT_MEMO }, txOpts) => {
     if (!transactor || !projectId || !JBController) {
       txOpts?.onDone?.()
       return Promise.resolve(false)

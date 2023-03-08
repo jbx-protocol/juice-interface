@@ -94,12 +94,13 @@
 }
 
 .ant-btn-link {
+  @apply px-2;
   @apply text-action-primary;
   border: none;
   @apply font-medium;
 
   &:hover {
-    @apply text-action-primary-hover;
+    @apply bg-haze-50;
   }
   &:focus,
   &:active {

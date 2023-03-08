@@ -5,8 +5,7 @@ import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useNftCollectionMetadataUri } from 'hooks/JB721Delegate/contractReader/NftCollectionMetadataUri'
 import { useNftFlagsOf } from 'hooks/JB721Delegate/contractReader/NftFlagsOf'
 import { useNftRewardTiersOf } from 'hooks/JB721Delegate/contractReader/NftRewardTiersOf'
-import { useJB721DelegateVersion } from 'hooks/JB721Delegate/DelegateVersion'
-import { useHasNftRewards } from 'hooks/JB721Delegate/HasNftRewards'
+import { useJB721DelegateVersion } from 'hooks/JB721Delegate/JB721DelegateVersion'
 import { JB721GovernanceType } from 'models/nftRewardTier'
 import { useContext } from 'react'
 import {
@@ -20,8 +19,12 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
   const { projectMetadata, projectId } = useContext(ProjectMetadataContext)
 
   const dataSourceAddress = fundingCycleMetadata?.dataSource
+  const contractVersion = useJB721DelegateVersion({
+    dataSourceAddress,
+  })
+
   // don't fetch stuff if there's no datasource in the first place.
-  const { value: hasNftRewards } = useHasNftRewards()
+  const hasNftRewards = Boolean(contractVersion)
 
   /**
    * Load NFT Rewards data
@@ -41,10 +44,6 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
     dataSourceAddress,
   )
 
-  const contractVersion = useJB721DelegateVersion({
-    dataSourceAddress,
-  })
-
   const { data: collectionMetadataUri, loading: collectionUriLoading } =
     useNftCollectionMetadataUri(dataSourceAddress)
 
@@ -52,11 +51,6 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
     useNftFlagsOf(dataSourceAddress)
 
   const CIDs = CIDsOfNftRewardTiersResponse(tierData)
-
-  // Assumes having `dataSource` means there are NFTs initially
-  // In worst case, if has `dataSource` but isn't for NFTs:
-  //    - loading will be true briefly
-  //    - will resolve false when `useNftRewardTiersOf` fails
 
   const loading = Boolean(
     nftRewardTiersLoading ||

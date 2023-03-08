@@ -5,7 +5,6 @@ export type PlayIconPosition = 'hidden' | 'default' | 'center'
 
 export function JuiceVideoThumbnail({
   src,
-  darkened,
   widthClass,
   heightClass,
   playIconPosition = 'default',
@@ -13,7 +12,6 @@ export function JuiceVideoThumbnail({
   onLoaded,
 }: {
   src: string
-  darkened?: boolean
   widthClass?: string | number // rem width
   heightClass?: string | number // rem height
   playIconPosition?: PlayIconPosition
@@ -35,9 +33,6 @@ export function JuiceVideoThumbnail({
       <video
         muted
         className={`h-full w-full ${className}`}
-        style={{
-          filter: darkened ? 'brightness(50%)' : 'unset',
-        }}
         onLoadedData={() => {
           setLoading(false)
           onLoaded?.()

@@ -78,10 +78,8 @@ export function NftTierCard({
     <>
       <div
         className={classNames(
-          'flex h-full w-full cursor-pointer select-none flex-col rounded-sm transition-shadow duration-100',
-          _isSelected
-            ? 'shadow-md shadow-smoke-300 outline outline-2 outline-haze-400'
-            : '',
+          'flex h-full w-full cursor-pointer select-none flex-col rounded-sm shadow-smoke-300 outline-2 outline-haze-400 transition-shadow duration-100 hover:shadow-md dark:shadow-slate-500',
+          _isSelected ? 'shadow-md outline' : '',
         )}
         onClick={
           (_isSelected && !previewDisabled) || !hasRemainingSupply
@@ -103,7 +101,6 @@ export function NftTierCard({
             <JuiceVideoThumbnailOrImage
               src={fileUrl}
               alt={rewardTier?.name ?? 'Juicebox NFT reward'}
-              darkened={!_isSelected}
               className="absolute w-full"
               heightClass={NFT_DISPLAY_HEIGHT_CLASS}
             />

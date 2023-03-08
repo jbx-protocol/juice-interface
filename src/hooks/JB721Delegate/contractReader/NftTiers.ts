@@ -3,7 +3,7 @@ import { JB721Tier } from 'models/nftRewardTier'
 import { MAX_NFT_REWARD_TIERS } from 'utils/nftRewards'
 import useV2ContractReader from '../../v2v3/contractReader/V2ContractReader'
 
-export function useNftRewardTiersOf({
+export function useNftTiers({
   dataSourceAddress,
   limit,
   shouldFetch,

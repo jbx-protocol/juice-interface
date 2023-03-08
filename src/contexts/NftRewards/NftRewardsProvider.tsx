@@ -4,7 +4,7 @@ import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useNftCollectionMetadataUri } from 'hooks/JB721Delegate/contractReader/NftCollectionMetadataUri'
 import { useNftFlagsOf } from 'hooks/JB721Delegate/contractReader/NftFlagsOf'
-import { useNftRewardTiersOf } from 'hooks/JB721Delegate/contractReader/NftRewardTiersOf'
+import { useNftTiers } from 'hooks/JB721Delegate/contractReader/NftTiers'
 import { useJB721DelegateVersion } from 'hooks/JB721Delegate/JB721DelegateVersion'
 import { JB721GovernanceType } from 'models/nftRewardTier'
 import { useContext } from 'react'
@@ -30,7 +30,7 @@ export const NftRewardsProvider: React.FC = ({ children }) => {
    * Load NFT Rewards data
    */
   const { data: nftRewardTiersResponse, loading: nftRewardsCIDsLoading } =
-    useNftRewardTiersOf({
+    useNftTiers({
       dataSourceAddress,
       shouldFetch: hasNftRewards,
     })

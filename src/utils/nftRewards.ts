@@ -15,7 +15,7 @@ import { defaultAbiCoder, parseEther } from 'ethers/lib/utils'
 import { pinJson } from 'lib/api/ipfs'
 import { round } from 'lodash'
 import {
-  IpfsNftCollectionMetadata,
+  IPFSNftCollectionMetadata,
   IPFSNftRewardTier,
   JB721GovernanceType,
   JB721PricingParams,
@@ -189,7 +189,7 @@ export async function pinNftCollectionMetadata({
   collectionLogoUri: string | undefined
   collectionInfoUri: string | undefined
 }) {
-  const ipfsNftCollectionMetadata: IpfsNftCollectionMetadata = {
+  const IPFSNftCollectionMetadata: IPFSNftCollectionMetadata = {
     name: collectionName,
     description: collectionDescription,
     image: collectionLogoUri?.length
@@ -202,7 +202,7 @@ export async function pinNftCollectionMetadata({
     fee_recipient: undefined,
   }
 
-  const res = await pinJson(ipfsNftCollectionMetadata)
+  const res = await pinJson(IPFSNftCollectionMetadata)
   return res.Hash
 }
 

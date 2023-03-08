@@ -6,62 +6,36 @@ import { useContext, useEffect, useState } from 'react'
 import { tiersEqual } from 'utils/nftRewards'
 
 export function useEditingNfts() {
-  const [rewardTiers, setRewardTiers] = useState<NftRewardTier[]>()
+  const [rewardTiers, _setRewardTiers] = useState<NftRewardTier[]>()
   const [marketplaceForm] = useForm<MarketplaceFormFields>()
   // a list of the `tierRanks` (IDs) of tiers that have been edited
   const [editedRewardTierIds, setEditedRewardTierIds] = useState<number[]>([])
 
   const { nftRewards, loading } = useContext(NftRewardsContext)
 
-  const recordEditedTierId = (tierId: number | undefined) => {
-    // only need to send tiers that have changed to adjustTiers
-    // when id == undefined, tier is new
-    if (!tierId || editedRewardTierIds.includes(tierId)) return
-    setEditedRewardTierIds([...editedRewardTierIds, tierId])
+  const deriveAndSetEditedIds = (newRewards: NftRewardTier[]) => {
+    if (!nftRewards.rewardTiers) return
+    const editedIds = nftRewards.rewardTiers
+      .filter(
+        oldReward =>
+          // oldReward does not exist (exactly) in newRewards.
+          !newRewards.some(newReward =>
+            tiersEqual({ tier1: oldReward, tier2: newReward }),
+          ),
+      )
+      .map(reward => reward.id)
+
+    setEditedRewardTierIds(editedIds)
   }
 
-  const addRewardTier = (newRewardTier: NftRewardTier) => {
-    const newRewardTiers = [...(rewardTiers ?? []), newRewardTier]
-    setRewardTiers(newRewardTiers)
-  }
-
-  const editRewardTier = ({
-    index,
-    newRewardTier,
-  }: {
-    index: number
-    newRewardTier: NftRewardTier
-  }) => {
-    if (
-      rewardTiers &&
-      !tiersEqual({ tier1: newRewardTier, tier2: rewardTiers[index] })
-    ) {
-      recordEditedTierId(rewardTiers[index].id)
-    }
-
-    const newRewardTiers = rewardTiers?.map((tier, idx) =>
-      idx === index
-        ? {
-            ...tier,
-            ...newRewardTier,
-          }
-        : tier,
-    ) ?? [newRewardTier]
-    setRewardTiers(newRewardTiers)
-  }
-
-  const deleteRewardTier = (tierIndex: number) => {
-    if (!rewardTiers) return
-
-    const newRewardTiers = rewardTiers.filter((_, idx) => tierIndex !== idx)
-
-    setRewardTiers(newRewardTiers)
-    recordEditedTierId(rewardTiers[tierIndex].id)
+  const setRewardTiers = (newRewards: NftRewardTier[]) => {
+    deriveAndSetEditedIds(newRewards)
+    _setRewardTiers(newRewards)
   }
 
   // Load the redux state into the state variable
   useEffect(() => {
-    setRewardTiers(nftRewards.rewardTiers)
+    _setRewardTiers(nftRewards.rewardTiers)
   }, [nftRewards.rewardTiers])
 
   return {
@@ -69,9 +43,6 @@ export function useEditingNfts() {
     setRewardTiers,
     marketplaceForm,
     editedRewardTierIds,
-    deleteRewardTier,
-    editRewardTier,
-    addRewardTier,
     loading,
   }
 }

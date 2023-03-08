@@ -1016,9 +1016,6 @@ msgstr ""
 msgid "Disconnect"
 msgstr ""
 
-msgid "Discontinue mints"
-msgstr ""
-
 msgid "Discord"
 msgstr ""
 
@@ -1758,9 +1755,6 @@ msgid "Manual Funding Cycles"
 msgstr ""
 
 msgid "Max Supply"
-msgstr ""
-
-msgid "Max. supply"
 msgstr ""
 
 msgid "Max. supply reached"

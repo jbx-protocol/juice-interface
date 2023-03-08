@@ -451,3 +451,7 @@ export const fileTypeIsVideo = (fileType: string | undefined) => {
 
   return VIDEO_FILE_TYPES.includes(fileType as NftFileType)
 }
+
+export const hasLimitedSupply = (maxSupply: number | undefined) => {
+  return Boolean(maxSupply) && maxSupply !== DEFAULT_NFT_MAX_SUPPLY
+}

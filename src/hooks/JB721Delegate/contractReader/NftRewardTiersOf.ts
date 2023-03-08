@@ -1,5 +1,5 @@
 import { useStoreOfJB721TieredDelegate } from 'hooks/JB721Delegate/contracts/StoreofJB721TieredDelegate'
-import { JB721TierParams } from 'models/nftRewardTier'
+import { JB721Tier } from 'models/nftRewardTier'
 import { MAX_NFT_REWARD_TIERS } from 'utils/nftRewards'
 import useV2ContractReader from '../../v2v3/contractReader/V2ContractReader'
 
@@ -21,7 +21,7 @@ export function useNftRewardTiersOf({
     ? [dataSourceAddress, 0, limit ?? MAX_NFT_REWARD_TIERS]
     : null
 
-  return useV2ContractReader<JB721TierParams[]>({
+  return useV2ContractReader<JB721Tier[]>({
     contract: JBTiered721DelegateStore,
     functionName: 'tiers',
     args,

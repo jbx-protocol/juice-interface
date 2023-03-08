@@ -266,7 +266,7 @@ export function buildJB721TierParams({
         allowManualMint: false,
         shouldUseBeneficiaryAsDefault: false,
         transfersPausable: false,
-      } as JB721TierParams
+      }
     })
     .sort((a, b) => {
       // Tiers MUST BE in ascending order when sent to contract.

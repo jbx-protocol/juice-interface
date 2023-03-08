@@ -5,7 +5,7 @@ import { AddEditRewardModal } from 'components/Create/components/RewardsList/Add
 import { JuiceVideoThumbnailOrImage } from 'components/NftRewards/NftVideo/JuiceVideoThumbnailOrImage'
 import Paragraph from 'components/Paragraph'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
-import { NftRewardTier } from 'models/nftRewardTier'
+import { NftRewardTier } from 'models/nftRewards'
 import { useState } from 'react'
 
 export default function NftRewardTierCard({

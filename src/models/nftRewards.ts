@@ -27,7 +27,7 @@ export type JBTiered721Flags = {
   lockManualMintingChanges: boolean
   preventOverspending: boolean
 }
-export type DelegateVersion = JB721DELEGATE_V1 | JB721DELEGATE_V1_1
+export type JB721DelegateVersion = JB721DELEGATE_V1 | JB721DELEGATE_V1_1
 
 // Used when launching or adjusting tiers.
 export interface JB721TierParams {

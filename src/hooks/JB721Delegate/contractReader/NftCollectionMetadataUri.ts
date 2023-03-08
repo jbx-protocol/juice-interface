@@ -1,14 +1,16 @@
-import { useStoreOfJB721TieredDelegate } from 'hooks/JB721Delegate/contracts/StoreofJB721TieredDelegate'
+import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
+import { useContext } from 'react'
 import useV2ContractReader from '../../v2v3/contractReader/V2ContractReader'
 
 export function useNftCollectionMetadataUri(
   dataSourceAddress: string | undefined,
 ) {
-  const JBTiered721DelegateStore = useStoreOfJB721TieredDelegate({
-    JB721TieredDelegateAddress: dataSourceAddress,
-  })
+  const {
+    contracts: { JB721TieredDelegateStore },
+  } = useContext(JB721DelegateContractsContext)
+
   return useV2ContractReader<string>({
-    contract: JBTiered721DelegateStore,
+    contract: JB721TieredDelegateStore,
     functionName: 'contractUriOf',
     args: [dataSourceAddress],
   })

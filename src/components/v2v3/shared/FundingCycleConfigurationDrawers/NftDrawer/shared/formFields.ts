@@ -1,4 +1,4 @@
-import { JB721GovernanceType } from 'models/nftRewardTier'
+import { JB721GovernanceType } from 'models/nftRewards'
 
 export type MarketplaceFormFields = {
   collectionName: string

@@ -1,7 +1,7 @@
 import { Space, Tooltip } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { JuiceVideoThumbnailOrImage } from 'components/NftRewards/NftVideo/JuiceVideoThumbnailOrImage'
-import { NftRewardTier } from 'models/nftRewardTier'
+import { NftRewardTier } from 'models/nftRewards'
 import { classNames } from 'utils/classNames'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 

@@ -7,7 +7,7 @@ import { AddRewardTierButton } from 'components/v2v3/shared/FundingCycleConfigur
 import NftRewardTierCard from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/AddNftsSection/NftRewardTierCard'
 import { useUpdateCurrentCollection } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/EditNftsPage/hooks/UpdateCurrentCollection'
 import { useHasNftRewards } from 'hooks/JB721Delegate/HasNftRewards'
-import { NftRewardTier } from 'models/nftRewardTier'
+import { NftRewardTier } from 'models/nftRewards'
 import { useCallback, useState } from 'react'
 import { MAX_NFT_REWARD_TIERS } from 'utils/nftRewards'
 import { useEditingNfts } from './hooks/EditingNfts'

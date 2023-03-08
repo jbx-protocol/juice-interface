@@ -12,7 +12,7 @@ import {
   JB721GovernanceType,
   JB721TierParams,
   JBTiered721Flags,
-} from 'models/nftRewardTier'
+} from 'models/nftRewards'
 import { JBPayDataSourceFundingCycleMetadata } from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'

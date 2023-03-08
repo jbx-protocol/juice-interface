@@ -1,5 +1,5 @@
 import isEqual from 'lodash/isEqual'
-import { NftRewardTier } from 'models/nftRewardTier'
+import { NftRewardTier } from 'models/nftRewards'
 import { useMemo } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
 import { tiersEqual } from 'utils/nftRewards'

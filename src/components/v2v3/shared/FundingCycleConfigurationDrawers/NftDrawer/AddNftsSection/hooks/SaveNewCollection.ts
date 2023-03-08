@@ -1,5 +1,5 @@
 import { FormInstance } from 'antd'
-import { JB721GovernanceType, NftRewardTier } from 'models/nftRewardTier'
+import { JB721GovernanceType, NftRewardTier } from 'models/nftRewards'
 import { useCallback } from 'react'
 import { useAppDispatch } from 'redux/hooks/AppDispatch'
 import { useAppSelector } from 'redux/hooks/AppSelector'

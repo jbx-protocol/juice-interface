@@ -1,4 +1,5 @@
 import { CV_V3 } from 'constants/cv'
+import { JB721DelegateContractsProvider } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsProvider'
 import { ProjectPageProps } from 'utils/server/pages/props'
 import { NftRewardsProvider } from '../NftRewards/NftRewardsProvider'
 import { V2V3ContractsProvider } from './Contracts/V2V3ContractsProvider'
@@ -19,7 +20,9 @@ export const V2V3ProjectPageProvider: React.FC<ProjectPageProps> = ({
       <V2V3ProjectContractsProvider projectId={projectId}>
         <V2V3ProjectMetadataProvider projectId={projectId} metadata={metadata}>
           <V2V3ProjectProvider projectId={projectId}>
-            <NftRewardsProvider>{children}</NftRewardsProvider>
+            <JB721DelegateContractsProvider>
+              <NftRewardsProvider>{children}</NftRewardsProvider>
+            </JB721DelegateContractsProvider>
           </V2V3ProjectProvider>
         </V2V3ProjectMetadataProvider>
       </V2V3ProjectContractsProvider>

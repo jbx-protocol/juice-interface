@@ -1,9 +1,9 @@
+import { DollarCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import ETHToUSD from 'components/currency/ETHToUSD'
 import CurrencySymbol from 'components/CurrencySymbol'
-import { Parenthesis } from 'components/Parenthesis'
 import { CurrencyName } from 'constants/currency'
 import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/ETHPaymentTerminalFee'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
@@ -71,19 +71,19 @@ export function SplitAmountValue({ props }: { props: SplitProps }) {
           {props.valueSuffix ? <span> {props.valueSuffix}</span> : null})
         </span>
       </Tooltip>
-
-      <Tooltip title={createTooltipTitle(curr, feeAmount)}>
-        <div className="ml-2 text-sm text-grey-500 dark:text-grey-300">
-          {props.showFee && !isJuiceboxProject && (
-            <Parenthesis>
-              <Trans>
-                <CurrencySymbol currency={curr} />
-                {feeAmountFormatted} fee
-              </Trans>
-            </Parenthesis>
-          )}
-        </div>
-      </Tooltip>
+      {props.showFee && !isJuiceboxProject && (
+        <Tooltip
+          title={
+            <Trans>
+              <CurrencySymbol currency={curr} />
+              {feeAmountFormatted} fee
+            </Trans>
+          }
+          className="ml-1"
+        >
+          <DollarCircleOutlined />
+        </Tooltip>
+      )}
     </>
   )
 }

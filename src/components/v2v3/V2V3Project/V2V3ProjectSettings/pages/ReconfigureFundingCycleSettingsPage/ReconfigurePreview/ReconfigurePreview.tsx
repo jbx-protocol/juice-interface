@@ -5,7 +5,7 @@ import { MinimalCollapse } from 'components/MinimalCollapse'
 import DiffedSplitList from 'components/v2v3/shared/DiffedSplits/DiffedSplitList'
 import FundingCycleDetails from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { NftRewardTier } from 'models/nftRewardTier'
+import { NftRewardTier } from 'models/nftRewards'
 import { Split } from 'models/splits'
 import {
   V2V3FundAccessConstraint,

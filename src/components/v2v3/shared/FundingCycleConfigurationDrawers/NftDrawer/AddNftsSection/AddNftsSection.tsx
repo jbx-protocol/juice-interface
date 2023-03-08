@@ -1,6 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Empty, Form } from 'antd'
 import { RewardsList } from 'components/Create/components/RewardsList'
+
 import { useCallback, useState } from 'react'
 import { useFundingCycleDrawer } from '../../hooks/FundingCycleDrawer'
 import { NftCollectionDetailsFormItems } from '../shared/NftCollectionDetailsFormItems'

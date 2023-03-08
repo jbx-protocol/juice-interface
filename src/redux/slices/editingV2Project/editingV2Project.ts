@@ -7,7 +7,7 @@ import {
   NftCollectionMetadata,
   NftPostPayModalConfig,
   NftRewardTier,
-} from 'models/nftRewardTier'
+} from 'models/nftRewards'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'

@@ -8,7 +8,7 @@ import {
   JB721_DELEGATE_V1_1,
 } from 'constants/delegateVersions'
 import { DEFAULT_ALLOW_OVERSPENDING } from 'constants/transactionDefaults'
-import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
+import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { useContext } from 'react'
 import {
   encodeJB721DelegateV1PayMetadata,
@@ -16,16 +16,17 @@ import {
 } from 'utils/nftRewards'
 
 export function useDelegateMetadata() {
-  const {
-    nftRewards: { contractVersion: nftContractVersion },
-  } = useContext(NftRewardsContext)
+  const { version: JB721DelegateVersion } = useContext(
+    JB721DelegateContractsContext,
+  )
+
   const { form: payProjectForm } = useContext(PayProjectFormContext)
 
-  return nftContractVersion === JB721_DELEGATE_V1
+  return JB721DelegateVersion === JB721_DELEGATE_V1
     ? encodeJB721DelegateV1PayMetadata({
         ...(payProjectForm?.payMetadata as JB721DELAGATE_V1_PAY_METADATA),
       })
-    : nftContractVersion === JB721_DELEGATE_V1_1
+    : JB721DelegateVersion === JB721_DELEGATE_V1_1
     ? encodeJB721DelegateV1_1PayMetadata({
         ...(payProjectForm?.payMetadata as JB721DELAGATE_V1_1_PAY_METADATA),
         allowOverspending: DEFAULT_ALLOW_OVERSPENDING,

@@ -1,7 +1,7 @@
 import { NEW_NFT_ID_LOWER_LIMIT } from 'components/Create/components/RewardsList/AddEditRewardModal'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useAdjustTiersTx } from 'hooks/JB721Delegate/transactor/AdjustTiersTx'
-import { NftRewardTier } from 'models/nftRewardTier'
+import { NftRewardTier } from 'models/nftRewards'
 import { useCallback, useContext } from 'react'
 import { buildJB721TierParams, pinNftRewards } from 'utils/nftRewards'
 import { reloadWindow } from 'utils/windowUtils'

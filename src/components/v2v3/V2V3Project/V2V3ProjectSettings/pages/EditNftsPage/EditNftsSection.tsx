@@ -5,6 +5,7 @@ import { RewardsList } from 'components/Create/components/RewardsList'
 import Loading from 'components/Loading'
 import { useUpdateCurrentCollection } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/EditNftsPage/hooks/UpdateCurrentCollection'
 import { useHasNftRewards } from 'hooks/JB721Delegate/HasNftRewards'
+
 import { useCallback, useState } from 'react'
 import { useEditingNfts } from './hooks/EditingNfts'
 

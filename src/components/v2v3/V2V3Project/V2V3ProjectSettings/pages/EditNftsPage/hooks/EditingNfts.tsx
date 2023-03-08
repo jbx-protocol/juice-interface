@@ -1,7 +1,7 @@
 import { useForm } from 'antd/lib/form/Form'
 import { MarketplaceFormFields } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer/shared/formFields'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
-import { NftRewardTier } from 'models/nftRewardTier'
+import { NftRewardTier } from 'models/nftRewards'
 import { useContext, useEffect, useState } from 'react'
 import { tiersEqual } from 'utils/nftRewards'
 

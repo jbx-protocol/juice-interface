@@ -13,7 +13,6 @@ export function JuiceVideoThumbnailOrImage({
   heightClass,
   widthClass,
   showPreviewOnClick,
-  darkened,
   ...props
 }: ImageProps & {
   playIconPosition?: PlayIconPosition
@@ -21,7 +20,6 @@ export function JuiceVideoThumbnailOrImage({
   widthClass?: string
   src: string
   showPreviewOnClick?: boolean
-  darkened?: boolean
 }) {
   const [loading, setLoading] = useState<boolean>(true)
   const [previewVisible, setPreviewVisible] = useState<boolean>(false)
@@ -55,7 +53,6 @@ export function JuiceVideoThumbnailOrImage({
         {isVideo ? (
           <JuiceVideoThumbnail
             src={props.src}
-            darkened={darkened}
             className={props.className}
             widthClass={widthClass}
             heightClass={heightClass}
@@ -67,9 +64,6 @@ export function JuiceVideoThumbnailOrImage({
             className={`${
               props.className ?? ''
             } top-0 h-full w-full object-cover`}
-            style={{
-              filter: darkened ? 'brightness(50%)' : 'unset',
-            }}
             src={props.src}
             onClick={props.onClick}
             crossOrigin="anonymous"

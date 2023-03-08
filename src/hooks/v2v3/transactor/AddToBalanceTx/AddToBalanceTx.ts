@@ -9,9 +9,9 @@ import {
   TransactorInstance,
 } from 'hooks/Transactor'
 import {
-  ETH_PAYMENT_TERMINAL_V_3,
-  ETH_PAYMENT_TERMINAL_V_3_1,
   JBETHPaymentTerminalVersion,
+  JB_ETH_PAYMENT_TERMINAL_V_3,
+  JB_ETH_PAYMENT_TERMINAL_V_3_1,
 } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/ProjectPrimaryEthTerminal'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
@@ -19,7 +19,10 @@ import { useV2ProjectTitle } from '../../ProjectTitle'
 import { getAddToBalanceParamsV3 } from './AddToBalanceParamsV3'
 import { getAddToBalanceParamsV3_1 } from './AddToBalanceParamsV3_1'
 
-function getParams({
+/**
+ * Factory function for building the arguments for the `addToBalance` function, depending on the version of the JBETHPaymentTerminal contract.
+ */
+function buildTxArgs({
   JBETHPaymentTerminalVersion,
   projectId,
   value,
@@ -28,10 +31,10 @@ function getParams({
   projectId: number
   value: BigNumber
 }) {
-  if (JBETHPaymentTerminalVersion === ETH_PAYMENT_TERMINAL_V_3) {
+  if (JBETHPaymentTerminalVersion === JB_ETH_PAYMENT_TERMINAL_V_3) {
     return getAddToBalanceParamsV3({ projectId, value })
   }
-  if (JBETHPaymentTerminalVersion === ETH_PAYMENT_TERMINAL_V_3_1) {
+  if (JBETHPaymentTerminalVersion === JB_ETH_PAYMENT_TERMINAL_V_3_1) {
     return getAddToBalanceParamsV3_1({ projectId, value })
   }
 }
@@ -50,18 +53,18 @@ export function useAddToBalanceTx(): TransactorInstance<{
     try {
       invariant(projectId && contracts?.JBETHPaymentTerminal)
 
-      const params = getParams({
+      const txArgs = buildTxArgs({
         JBETHPaymentTerminalVersion: versions.JBETHPaymentTerminal,
         projectId,
         value,
       })
 
-      invariant(transactor && projectTitle && params)
+      invariant(transactor && projectTitle && txArgs)
 
       return transactor(
         contracts.JBETHPaymentTerminal,
-        params?.functionName,
-        params?.args,
+        txArgs?.functionName,
+        txArgs?.args,
         {
           ...txOpts,
           value,

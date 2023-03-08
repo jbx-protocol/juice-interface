@@ -3,7 +3,7 @@ import axios from 'axios'
 import { ONE_BILLION } from 'constants/numbers'
 import {
   IPFSNftRewardTier,
-  JB721TierParams,
+  JB721Tier,
   NftRewardTier,
 } from 'models/nftRewardTier'
 import { useQuery, UseQueryResult } from 'react-query'
@@ -16,7 +16,7 @@ export const DEFAULT_NFT_MAX_SUPPLY = ONE_BILLION - 1
 async function fetchRewardTierMetadata({
   tier,
 }: {
-  tier: JB721TierParams
+  tier: JB721Tier
 }): Promise<NftRewardTier> {
   const tierCid = decodeEncodedIpfsUri(tier.encodedIPFSUri)
   const url = ipfsGatewayUrl(tierCid)
@@ -48,7 +48,7 @@ async function fetchRewardTierMetadata({
 // Retreives each NftRewardTier from IPFS given an array of CIDs (IpfsHashes)
 // Returns an array of NftRewardTiers
 export default function useNftRewards(
-  tiers: JB721TierParams[],
+  tiers: JB721Tier[],
   projectId: number | undefined,
   dataSourceAddress: string | undefined,
 ): UseQueryResult<NftRewardTier[]> {

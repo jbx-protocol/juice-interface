@@ -4,9 +4,9 @@ import {
   NftPostPayModal,
   NFT_PAYMENT_CONFIRMED_QUERY_PARAM,
 } from 'components/NftRewards/NftPostPayModal'
-import { DEFAULT_ALLOW_OVERSPENDING } from 'components/Project/PayProjectForm/hooks/PayProjectForm'
 import { PayProjectFormContext } from 'components/Project/PayProjectForm/payProjectFormContext'
 import SectionHeader from 'components/SectionHeader'
+import { DEFAULT_ALLOW_OVERSPENDING } from 'constants/transactionDefaults'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { CurrencyContext } from 'contexts/shared/CurrencyContext'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
@@ -15,7 +15,7 @@ import { useHasNftRewards } from 'hooks/JB721Delegate/HasNftRewards'
 import useMobile from 'hooks/Mobile'
 import { useContext } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
-import { sumTierFloors } from 'utils/nftRewards'
+import { sortNftsByContributionFloor, sumTierFloors } from 'utils/nftRewards'
 import { useModalFromUrlQuery } from '../modals/hooks/ModalFromUrlQuery'
 import { NftTierCard } from './NftTierCard'
 
@@ -137,9 +137,9 @@ export function NftRewardsSection() {
     return null
   }
 
-  const renderRewardTiers = [...(rewardTiers ?? [])]?.sort(
-    (a, b) => a.contributionFloor - b.contributionFloor,
-  )
+  const renderRewardTiers = rewardTiers
+    ? sortNftsByContributionFloor(rewardTiers)
+    : []
 
   return (
     <Space direction="vertical" size="large" className="w-full">

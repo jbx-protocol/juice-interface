@@ -10,13 +10,11 @@ import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { Project } from 'models/subgraph-entities/vX/project'
 import Link from 'next/link'
 import { useMemo } from 'react'
-import { classNames } from 'utils/classNames'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { TRENDING_WINDOW_DAYS } from './RankingExplanation'
 
 export default function TrendingProjectCard({
   project,
-  size,
   rank,
 }: {
   project: Pick<
@@ -31,7 +29,6 @@ export default function TrendingProjectCard({
     | 'pv'
     | 'projectId'
   >
-  size?: 'sm' | 'lg'
   rank: number
 }) {
   const { data: metadata } = useProjectMetadata(project.metadataUri)
@@ -88,15 +85,25 @@ export default function TrendingProjectCard({
     >
       <a>
         <div className="cursor-pointer overflow-hidden rounded-sm">
-          <div className="flex h-full items-center overflow-hidden whitespace-pre border border-solid border-smoke-300 py-6 px-5 transition-colors hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100">
-            <div className="mr-5 flex items-center">
+          <div className="flex h-full items-center overflow-hidden whitespace-pre py-4 transition-colors md:border md:border-solid md:border-smoke-300 md:px-5 md:py-6 md:hover:border-smoke-500 md:dark:border-slate-300 md:dark:hover:border-slate-100">
+            <div className="relative mr-5 h-24 w-24 md:hidden">
+              <div className="absolute left-0 top-0 flex h-8 w-8 items-center justify-center rounded-br bg-white text-xl font-normal font-bold text-black dark:bg-slate-800 dark:text-slate-100">
+                {rank}
+              </div>
+              <ProjectLogo
+                className="h-24 w-24"
+                uri={metadata?.logoUri}
+                name={metadata?.name}
+                projectId={project.projectId}
+              />
+            </div>
+
+            <div className="mr-5 hidden items-center md:flex">
               <div className="mr-4 w-6 text-center text-xl font-normal text-black dark:text-slate-100">
                 {rank}
               </div>
               <ProjectLogo
-                className={classNames(
-                  size === 'sm' ? 'h-16 w-16' : 'h-28 w-28',
-                )}
+                className="h-28 w-28"
                 uri={metadata?.logoUri}
                 name={metadata?.name}
                 projectId={project.projectId}
@@ -105,25 +112,16 @@ export default function TrendingProjectCard({
 
             <div className="min-w-0 flex-1 font-normal">
               {metadata ? (
-                <h2
-                  className={classNames(
-                    'm-0 overflow-hidden text-ellipsis text-black dark:text-slate-100',
-                    size === 'sm' ? 'text-base' : 'text-xl',
-                  )}
-                >
+                <h2 className="m-0 overflow-hidden text-ellipsis text-base text-black dark:text-slate-100 md:text-xl">
                   {metadata.name}
                 </h2>
               ) : (
                 <Skeleton paragraph={false} title={{ width: 120 }} active />
               )}
 
-              {size === 'sm' ? null : (
-                <div>
-                  <span className="font-medium text-black dark:text-slate-100">
-                    {handleText}
-                  </span>
-                </div>
-              )}
+              <div className="hidden font-medium text-black dark:text-slate-100 md:block">
+                {handleText}
+              </div>
 
               <div className="flex w-full flex-wrap text-black dark:text-slate-100">
                 <span className="flex flex-wrap items-baseline">

@@ -29,14 +29,11 @@ export type JBTiered721Flags = {
 }
 export type DelegateVersion = JB721DELEGATE_V1 | JB721DELEGATE_V1_1
 
-// How the reward tiers are stored in the contracts
-export type JB721TierParams = {
-  id: BigNumber
-  remainingQuantity?: BigNumber //undefined for outgoing tier (in launch or adjustTiers tx)
-
-  contributionFloor: BigNumber //uint128
+// Used when launching or adjusting tiers.
+export interface JB721TierParams {
+  contributionFloor: BigNumber // uint128
   lockedUntil: BigNumber
-  initialQuantity: BigNumber //uint64
+  initialQuantity: BigNumber // uint64
   votingUnits: BigNumber
   reservedRate: BigNumber
   reservedTokenBeneficiary: string
@@ -46,6 +43,23 @@ export type JB721TierParams = {
   transfersPausable: boolean
 }
 
+export type JB_721_TIER_PARAMS_V1_1 = Omit<
+  JB721TierParams,
+  'shouldUseBeneficiaryAsDefault'
+> & {
+  royaltyRate: number
+  royaltyBeneficiary: string // address
+  shouldUseReservedTokenBeneficiaryAsDefault: boolean
+  shouldUseRoyaltyBeneficiaryAsDefault: boolean
+  category: number // 1
+}
+
+// Tiers as they are stored on-chain.
+export type JB721Tier = JB721TierParams & {
+  id: BigNumber
+  remainingQuantity?: BigNumber
+}
+
 type OpenSeaAttribute = {
   //eslint-disable-next-line
   trait_type: string
@@ -53,7 +67,7 @@ type OpenSeaAttribute = {
 }
 
 // How the reward tiers are stored on IPFS
-// Tank - the following are guidelines on NFT keys and tier JSON, derivates from EIP-721, https://github.com/ethereum/EIPs/blob/master/EIPS/eip-721.md
+// The following are guidelines on NFT keys and tier JSON, derivates from EIP-721, https://github.com/ethereum/EIPs/blob/master/EIPS/eip-721.md
 export type IPFSNftRewardTier = {
   attributes: OpenSeaAttribute[]
   name: string
@@ -70,7 +84,7 @@ export type IPFSNftRewardTier = {
 }
 
 // Metadata for the whole collection on IPFS
-export type IpfsNftCollectionMetadata = {
+export type IPFSNftCollectionMetadata = {
   name: string
   description: string | undefined
   image: string | undefined

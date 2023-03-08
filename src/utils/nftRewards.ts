@@ -2,7 +2,6 @@ import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { NftFileType } from 'components/inputs/UploadNoStyle'
 import {
-  DEFAULT_ALLOW_OVERSPENDING,
   JB721DELAGATE_V1_1_PAY_METADATA,
   JB721DELAGATE_V1_PAY_METADATA,
 } from 'components/Project/PayProjectForm/hooks/PayProjectForm'
@@ -10,12 +9,13 @@ import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
 import { juiceboxEmojiImageUri } from 'constants/images'
 import { readNetwork } from 'constants/networks'
 import { WAD_DECIMALS } from 'constants/numbers'
+import { DEFAULT_ALLOW_OVERSPENDING } from 'constants/transactionDefaults'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
 import { defaultAbiCoder, parseEther } from 'ethers/lib/utils'
 import { pinJson } from 'lib/api/ipfs'
 import { round } from 'lodash'
 import {
-  IpfsNftCollectionMetadata,
+  IPFSNftCollectionMetadata,
   IPFSNftRewardTier,
   JB721GovernanceType,
   JB721PricingParams,
@@ -42,14 +42,6 @@ async function loadNftRewardsDeployment() {
   return latestNftContractDeployments
 }
 
-export function sortNftsByContributionFloor(
-  rewardTiers: NftRewardTier[],
-): NftRewardTier[] {
-  return rewardTiers
-    .slice()
-    .sort((a, b) => a.contributionFloor - b.contributionFloor)
-}
-
 export async function findJBTiered721DelegateProjectDeployerAddress() {
   const latestNftContractDeployments = await loadNftRewardsDeployment()
   return latestNftContractDeployments.transactions.find(
@@ -63,6 +55,14 @@ export async function findJBTiered721DelegateStoreAddress() {
   return latestNftContractDeployments.transactions.find(
     tx => tx.contractName === 'JBTiered721DelegateStore',
   )?.contractAddress
+}
+
+export function sortNftsByContributionFloor(
+  rewardTiers: NftRewardTier[],
+): NftRewardTier[] {
+  return rewardTiers
+    .slice()
+    .sort((a, b) => a.contributionFloor - b.contributionFloor)
 }
 
 // Returns the highest NFT reward tier that a payer is eligible given their pay amount
@@ -189,7 +189,7 @@ export async function pinNftCollectionMetadata({
   collectionLogoUri: string | undefined
   collectionInfoUri: string | undefined
 }) {
-  const ipfsNftCollectionMetadata: IpfsNftCollectionMetadata = {
+  const IPFSNftCollectionMetadata: IPFSNftCollectionMetadata = {
     name: collectionName,
     description: collectionDescription,
     image: collectionLogoUri?.length
@@ -202,7 +202,7 @@ export async function pinNftCollectionMetadata({
     fee_recipient: undefined,
   }
 
-  const res = await pinJson(ipfsNftCollectionMetadata)
+  const res = await pinJson(IPFSNftCollectionMetadata)
   return res.Hash
 }
 
@@ -225,49 +225,56 @@ export function tiersEqual({
   )
 }
 
-// Builds JB721TierParams[] (see juice-721-delegate:structs/JB721TierParams.sol)
+function nftRewardTierToJB721TierParams(
+  rewardTier: NftRewardTier,
+  cid: string,
+): JB721TierParams {
+  const contributionFloorWei = parseEther(
+    rewardTier.contributionFloor.toString(),
+  )
+  const maxSupply = rewardTier.maxSupply
+  const initialQuantity = BigNumber.from(maxSupply ?? DEFAULT_NFT_MAX_SUPPLY)
+  const encodedIPFSUri = encodeIpfsUri(cid)
+
+  const reservedRate = rewardTier.reservedRate
+    ? BigNumber.from(rewardTier.reservedRate - 1)
+    : BigNumber.from(0)
+  const reservedTokenBeneficiary =
+    rewardTier.beneficiary ?? constants.AddressZero
+  const votingUnits = rewardTier.votingWeight
+    ? BigNumber.from(rewardTier.votingWeight)
+    : BigNumber.from(0)
+
+  return {
+    contributionFloor: contributionFloorWei,
+    lockedUntil: BigNumber.from(0),
+    initialQuantity,
+    votingUnits,
+    reservedRate,
+    reservedTokenBeneficiary,
+    encodedIPFSUri,
+    allowManualMint: false,
+    transfersPausable: false,
+    shouldUseBeneficiaryAsDefault: false,
+  }
+}
+
 export function buildJB721TierParams({
-  cids, // MUST BE SORTED BY CONTRIBUTION FLOOD (not ideal)
+  cids, // MUST BE SORTED BY CONTRIBUTION FLOOR (TODO: not ideal)
   rewardTiers,
 }: {
   cids: string[]
   rewardTiers: NftRewardTier[]
 }): JB721TierParams[] {
-  const _rewardTiers = sortNftsByContributionFloor(rewardTiers)
+  const sortedRewardTiers = sortNftsByContributionFloor(rewardTiers)
+
   // `cids` are ordered the same as `rewardTiers` so can get corresponding values from same index
   return cids
     .map((cid, index) => {
-      const contributionFloorWei = parseEther(
-        _rewardTiers[index].contributionFloor.toString(),
-      )
-      const maxSupply = _rewardTiers[index].maxSupply
-      const initialQuantity = BigNumber.from(
-        maxSupply ?? DEFAULT_NFT_MAX_SUPPLY,
-      )
-      const encodedIPFSUri = encodeIpfsUri(cid)
-
-      const reservedRate = _rewardTiers[index].reservedRate
-        ? BigNumber.from(_rewardTiers[index].reservedRate! - 1)
-        : BigNumber.from(0)
-      const reservedTokenBeneficiary =
-        _rewardTiers[index].beneficiary ?? constants.AddressZero
-      const votingUnits = _rewardTiers[index].votingWeight
-        ? BigNumber.from(_rewardTiers[index].votingWeight)
-        : BigNumber.from(0)
-
-      return {
-        contributionFloor: contributionFloorWei,
-        lockedUntil: BigNumber.from(0),
-        initialQuantity,
-        votingUnits,
-        reservedRate,
-        reservedTokenBeneficiary,
-        encodedIPFSUri,
-        allowManualMint: false,
-        shouldUseBeneficiaryAsDefault: false,
-        transfersPausable: false,
-      } as JB721TierParams
+      const rewardTier = sortedRewardTiers[index]
+      return nftRewardTierToJB721TierParams(rewardTier, cid)
     })
+    .slice() // clone object
     .sort((a, b) => {
       // Tiers MUST BE in ascending order when sent to contract.
       if (a.contributionFloor.gt(b.contributionFloor)) return 1

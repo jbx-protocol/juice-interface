@@ -1,6 +1,6 @@
 import { NEW_NFT_ID_LOWER_LIMIT } from 'components/Create/components/RewardsList/AddEditRewardModal'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { useNftRewardsAdjustTiersTx } from 'hooks/JB721Delegate/transactor/NftRewardsAdjustTiersTx'
+import { useAdjustTiersTx } from 'hooks/JB721Delegate/transactor/AdjustTiersTx'
 import { NftRewardTier } from 'models/nftRewardTier'
 import { useCallback, useContext } from 'react'
 import { buildJB721TierParams, pinNftRewards } from 'utils/nftRewards'
@@ -14,7 +14,7 @@ export function useUpdateCurrentCollection({
   editedRewardTierIds: number[]
 }) {
   const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
-  const nftRewardsAdjustTiersTx = useNftRewardsAdjustTiersTx({
+  const nftRewardsAdjustTiersTx = useAdjustTiersTx({
     dataSourceAddress: fundingCycleMetadata?.dataSource,
   })
 

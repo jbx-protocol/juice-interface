@@ -126,10 +126,10 @@ export default function ProjectCard({
   return (
     <Link href={projectCardHref} as={projectCardUrl}>
       <a>
-        <div className="relative flex cursor-pointer items-center overflow-hidden whitespace-pre rounded-sm border border-solid border-smoke-300 py-6 px-5 transition-colors hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100">
+        <div className="relative flex cursor-pointer items-center overflow-hidden whitespace-pre rounded-sm py-4 md:border md:border-solid md:border-smoke-300 md:py-6 md:px-5 md:transition-colors md:hover:border-smoke-500 md:dark:border-slate-300 md:dark:hover:border-slate-100">
           <div className="mr-5">
             <ProjectLogo
-              className="h-28 w-28"
+              className="h-24 w-24 md:h-28 md:w-28"
               uri={metadata?.logoUri}
               name={metadata?.name}
               projectId={projectCardData.projectId}

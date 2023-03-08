@@ -6,8 +6,8 @@ import { useProjectPrimaryEthTerminalAddress } from '../../contractReader/Projec
 import { useLoadV2V3Contract } from '../../LoadV2V3Contract'
 
 export type JBETHPaymentTerminalVersion = '3' | '3.1'
-export const ETH_PAYMENT_TERMINAL_V_3: JBETHPaymentTerminalVersion = '3'
-export const ETH_PAYMENT_TERMINAL_V_3_1: JBETHPaymentTerminalVersion = '3.1'
+export const JB_ETH_PAYMENT_TERMINAL_V_3: JBETHPaymentTerminalVersion = '3'
+export const JB_ETH_PAYMENT_TERMINAL_V_3_1: JBETHPaymentTerminalVersion = '3.1'
 
 export function useProjectPrimaryEthTerminal({
   projectId,
@@ -25,21 +25,21 @@ export function useProjectPrimaryEthTerminal({
     primaryETHTerminal,
     contracts?.JBETHPaymentTerminal?.address,
   )
-    ? ETH_PAYMENT_TERMINAL_V_3
+    ? JB_ETH_PAYMENT_TERMINAL_V_3
     : isEqualAddress(
         primaryETHTerminal,
         contracts?.JBETHPaymentTerminal3_1?.address,
       )
-    ? ETH_PAYMENT_TERMINAL_V_3_1
+    ? JB_ETH_PAYMENT_TERMINAL_V_3_1
     : undefined
 
   const JBETHPaymentTerminal = useLoadV2V3Contract({
     cv,
     address: primaryETHTerminal,
     contractName:
-      version === ETH_PAYMENT_TERMINAL_V_3
+      version === JB_ETH_PAYMENT_TERMINAL_V_3
         ? V2V3ContractName.JBETHPaymentTerminal
-        : version === ETH_PAYMENT_TERMINAL_V_3_1
+        : version === JB_ETH_PAYMENT_TERMINAL_V_3_1
         ? V2V3ContractName.JBETHPaymentTerminal3_1
         : undefined,
   })

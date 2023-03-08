@@ -2,7 +2,6 @@ import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { NftFileType } from 'components/inputs/UploadNoStyle'
 import {
-  DEFAULT_ALLOW_OVERSPENDING,
   JB721DELAGATE_V1_1_PAY_METADATA,
   JB721DELAGATE_V1_PAY_METADATA,
 } from 'components/Project/PayProjectForm/hooks/PayProjectForm'
@@ -10,6 +9,7 @@ import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
 import { juiceboxEmojiImageUri } from 'constants/images'
 import { readNetwork } from 'constants/networks'
 import { WAD_DECIMALS } from 'constants/numbers'
+import { DEFAULT_ALLOW_OVERSPENDING } from 'constants/transactionDefaults'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
 import { defaultAbiCoder, parseEther } from 'ethers/lib/utils'
 import { pinJson } from 'lib/api/ipfs'

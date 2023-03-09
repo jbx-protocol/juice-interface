@@ -4,6 +4,7 @@ import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import { useDefaultJBETHPaymentTerminal } from 'hooks/defaultContracts/DefaultJBETHPaymentTerminal'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useLoadV2V3Contract } from 'hooks/v2v3/LoadV2V3Contract'
 import { LaunchFundingCyclesData } from 'hooks/v2v3/transactor/LaunchFundingCyclesTx'
@@ -48,6 +49,7 @@ export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFun
     cv: CV_V3,
     contractName: V2V3ContractName.JBPrices,
   })
+  const defaultJBETHPaymentTerminal = useDefaultJBETHPaymentTerminal()
 
   return async (
     {
@@ -78,7 +80,8 @@ export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFun
       V3JBDirectory &&
       V3JBFundingCycleStore &&
       V3JBPrices &&
-      JBTiered721DelegateStoreAddress
+      JBTiered721DelegateStoreAddress &&
+      defaultJBETHPaymentTerminal
 
     if (
       !transactor ||
@@ -140,7 +143,10 @@ export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFun
       mustStartAtOrAfter,
       groupedSplits,
       fundAccessConstraints,
-      terminals: getTerminalsFromFundAccessConstraints(fundAccessConstraints),
+      terminals: getTerminalsFromFundAccessConstraints(
+        fundAccessConstraints,
+        defaultJBETHPaymentTerminal?.address,
+      ),
       memo: DEFAULT_MEMO,
     }
 

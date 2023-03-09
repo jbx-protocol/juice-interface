@@ -24,6 +24,7 @@ import {
   otherUnitToSeconds,
   secondsToOtherUnit,
 } from 'utils/format/formatTime'
+import { emitErrorNotification } from 'utils/notifications'
 import { helpPagePath } from 'utils/routes'
 import { sanitizeSplit } from 'utils/splits'
 import {
@@ -171,8 +172,13 @@ export function FundingForm({
 
   const onFundingFormSave = useCallback(
     async (fields: FundingFormFields) => {
-      if (!projectContracts?.JBETHPaymentTerminal)
-        throw new Error('Failed to save edits.')
+      if (!projectContracts?.JBETHPaymentTerminal) {
+        emitErrorNotification('Failed to save edits.')
+        console.error(
+          'Failed to save form, project JBETHPaymentTerminal not found.',
+        )
+        return
+      }
 
       const fundAccessConstraint:
         | SerializedV2V3FundAccessConstraint

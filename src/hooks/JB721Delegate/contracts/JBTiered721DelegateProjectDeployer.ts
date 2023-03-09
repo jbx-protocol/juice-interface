@@ -4,7 +4,7 @@ import {
 } from 'constants/delegateVersions'
 import { readNetwork } from 'constants/networks'
 import { loadJB721DelegateJson } from 'hooks/JB721Delegate/contracts/JB721DelegateAbi'
-import { ContractJson, ForgeDeploy } from 'models/contracts'
+import { ForgeDeploy } from 'models/contracts'
 import { JB721DelegateVersion } from 'models/nftRewards'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 
@@ -44,7 +44,7 @@ export const loadJBTiered721DelegateProjectDeployerContract = async () => {
   const nftDeployerContractJson = {
     address: JBTiered721DelegateProjectDeployerContractAddress,
     abi: (
-      await loadJB721DelegateJson<ContractJson>(
+      await loadJB721DelegateJson(
         'IJBTiered721DelegateProjectDeployer',
         DEFAULT_JB_721_DELEGATE_VERSION,
       )

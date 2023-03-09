@@ -257,6 +257,12 @@ msgstr ""
 msgid "Add NFTs to cycle"
 msgstr ""
 
+msgid "Add a collection name"
+msgstr ""
+
+msgid "Add a collection symbol"
+msgstr ""
+
 msgid "Add a cover image to your project page. This will be displayed at the top of your project page."
 msgstr ""
 
@@ -264,6 +270,9 @@ msgid "Add a payout"
 msgstr ""
 
 msgid "Add amount"
+msgstr ""
+
+msgid "Add an NFT"
 msgstr ""
 
 msgid "Add an on-chain memo to this payment."
@@ -1169,7 +1178,7 @@ msgstr ""
 msgid "Edit {projectTitle}"
 msgstr ""
 
-msgid "Edit {projectTitle}'s rules'"
+msgid "Edit {projectTitle}'s rules"
 msgstr ""
 
 msgid "Edited cycle"

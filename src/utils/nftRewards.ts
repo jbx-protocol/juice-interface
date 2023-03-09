@@ -16,6 +16,7 @@ import { defaultAbiCoder, parseEther } from 'ethers/lib/utils'
 import { loadJB721DelegateJson } from 'hooks/JB721Delegate/contracts/JB721DelegateAbi'
 import { pinJson } from 'lib/api/ipfs'
 import { round } from 'lodash'
+import { ForgeDeploy } from 'models/contracts'
 import {
   IPFSNftCollectionMetadata,
   IPFSNftRewardTier,
@@ -29,8 +30,6 @@ import {
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import { decodeEncodedIpfsUri, encodeIpfsUri, ipfsUri } from 'utils/ipfs'
 import { V2V3_CURRENCY_ETH } from './v2v3/currency'
-
-import { ForgeDeploy } from './v2v3/loadV2V3Contract'
 
 export const MAX_NFT_REWARD_TIERS = 69
 const IJB721Delegate_INTERFACE_ID = '0xb3bcbb79'

@@ -1,6 +1,6 @@
 import { NETWORKS_BY_NAME } from 'constants/networks'
+import { ForgeDeploy } from 'models/contracts'
 import { NetworkName } from 'models/networkName'
-import { ForgeDeploy } from '../loadV2V3Contract'
 
 export const loadJBProjectHandlesContract = async (network: NetworkName) => {
   const contractJson = {

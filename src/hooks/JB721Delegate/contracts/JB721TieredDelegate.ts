@@ -1,5 +1,5 @@
 import { Contract } from '@ethersproject/contracts'
-import JB721TieredDelegateJson from '@jbx-protocol/juice-721-delegate/out/IJBTiered721Delegate.sol/IJBTiered721Delegate.json'
+import JB721TieredDelegateJson from '@jbx-protocol/juice-721-delegate-v1/out/IJBTiered721Delegate.sol/IJBTiered721Delegate.json'
 import { useLoadContractFromAddress } from 'hooks/LoadContractFromAddress'
 
 export function useJB721TieredDelegate({

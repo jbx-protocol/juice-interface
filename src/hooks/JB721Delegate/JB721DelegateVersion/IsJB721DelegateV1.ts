@@ -1,4 +1,4 @@
-import JB721TieredGovernanceJson from '@jbx-protocol/juice-721-delegate/out/JB721TieredGovernance.sol/JB721TieredGovernance.json'
+import JB721TieredGovernanceJson from '@jbx-protocol/juice-721-delegate-v1/out/JB721TieredGovernance.sol/JB721TieredGovernance.json'
 import { useContractReadValue } from 'hooks/ContractReader'
 import { useLoadContractFromAddress } from 'hooks/LoadContractFromAddress'
 

@@ -1,4 +1,7 @@
-import { JB721_DELEGATE_V1 } from 'constants/delegateVersions'
+import {
+  JB721_DELEGATE_V1,
+  JB721_DELEGATE_V1_1,
+} from 'constants/delegateVersions'
 import { readNetwork } from 'constants/networks'
 import { loadJB721DelegateJson } from 'hooks/JB721Delegate/contracts/JB721DelegateAbi'
 import { ContractJson, ForgeDeploy } from 'models/contracts'
@@ -8,12 +11,17 @@ import { V2V3ContractName } from 'models/v2v3/contracts'
 const DEFAULT_JB_721_DELEGATE_VERSION: JB721DelegateVersion = JB721_DELEGATE_V1 // TODO eventually bump to 1.1
 
 async function loadDefaultJB721DelegateDeployment() {
-  const latestNftContractDeployments = await loadJB721DelegateJson<ForgeDeploy>(
-    `broadcast/Deploy.s.sol/${readNetwork.chainId}/run-latest`,
-    DEFAULT_JB_721_DELEGATE_VERSION,
-  )
+  const versionString =
+    DEFAULT_JB_721_DELEGATE_VERSION === JB721_DELEGATE_V1
+      ? 'v1'
+      : DEFAULT_JB_721_DELEGATE_VERSION === JB721_DELEGATE_V1_1
+      ? 'v1-1'
+      : undefined
+  if (!versionString) return
 
-  return latestNftContractDeployments
+  return (await import(
+    `@jbx-protocol/juice-721-delegate-${versionString}/broadcast/Deploy.s.sol/${readNetwork.chainId}/run-latest.json`
+  )) as ForgeDeploy
 }
 
 async function findJBTiered721DelegateProjectDeployerAddress() {

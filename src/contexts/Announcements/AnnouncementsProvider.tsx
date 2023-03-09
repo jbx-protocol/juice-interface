@@ -2,6 +2,7 @@ import { t } from '@lingui/macro'
 import Modal from 'antd/lib/modal/Modal'
 import { announcements } from 'constants/announcements'
 import { readNetwork } from 'constants/networks'
+import useMobile from 'hooks/Mobile'
 import { useRouter } from 'next/router'
 import { useCallback, useMemo, useState } from 'react'
 
@@ -18,6 +19,8 @@ export const AnnouncementsProvider: React.FC = ({ children }) => {
   const [activeId, setActiveId] = useState<string>()
 
   const router = useRouter()
+
+  const isMobile = useMobile()
 
   // Store record of completed announcement in localStorage
   const markCompleted = useCallback(() => {
@@ -51,7 +54,11 @@ export const AnnouncementsProvider: React.FC = ({ children }) => {
       {children}
       {activeAnnouncement && (
         <Modal
-          centered
+          centered={isMobile}
+          maskClosable={false} // Force user to click OK instead of mask
+          style={
+            isMobile ? undefined : { position: 'absolute', right: 30, top: 30 }
+          }
           open={true}
           okText={activeAnnouncement.cta?.text ?? t`Got it`}
           onOk={() => {

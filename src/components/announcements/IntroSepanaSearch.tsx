@@ -1,9 +1,9 @@
 export default function IntroSepanaSearch() {
   return (
     <div>
-      <h1>New and improved search</h1>
-      Finally you can search for projects by name, description, and tags, as
-      well as project handle.
+      <h1>Search just got cooler</h1>
+      Now you can search projects by their name, description, and tags, as well
+      as their @handle.
     </div>
   )
 }

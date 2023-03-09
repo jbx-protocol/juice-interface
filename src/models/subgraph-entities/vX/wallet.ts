@@ -5,13 +5,10 @@ import {
 } from 'utils/graph'
 
 import { Json, primitives } from '../../json'
-import {
-  BaseProjectEntity,
-  parseBaseProjectEntityJson,
-} from '../base/base-project-entity'
 import { Participant } from './participant'
 
-export interface Wallet extends BaseProjectEntity {
+export interface Wallet {
+  id: string
   totalPaid: BigNumber
   totalPaidUSD: BigNumber
   lastPaidTimestamp: number
@@ -20,7 +17,6 @@ export interface Wallet extends BaseProjectEntity {
 
 export const parseWalletJson = (j: Json<Wallet>): Wallet => ({
   ...primitives(j),
-  ...parseBaseProjectEntityJson(j),
   ...parseBigNumberKeyVals(j, ['totalPaid', 'totalPaidUSD']),
   ...subgraphEntityJsonArrayToKeyVal(
     j.participants,

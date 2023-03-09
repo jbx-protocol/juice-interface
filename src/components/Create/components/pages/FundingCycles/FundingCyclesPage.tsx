@@ -13,6 +13,7 @@ import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'
 import { CREATE_FLOW } from 'constants/fathomEvents'
 import { trackFathomGoal } from 'lib/fathom'
 import moment from 'moment'
+import Link from 'next/link'
 import { useContext, useEffect } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { durationMustExistRule } from 'utils/antdRules'
@@ -37,12 +38,14 @@ const FundingCycleCallout: React.FC = () => {
         <Callout.Warning>
           <Space direction="vertical" size="middle">
             <Trans>
-              Funding Cycle #1 will start immediately after you launch your
-              project. You can't reconfigure Funding Cycle #1 after launch.
+              Cycle #1 starts when you create your project. With locked cycles,
+              if you attempt to edit your project's rules during Cycle #1, those
+              edits will be <em>queued</em> for the next cycle.
             </Trans>
             <Trans>
-              You can reconfigure your project's next funding cycle (Funding
-              Cycle #2) at any time within the bounds of the rules you set.
+              In other words: instead of going into effect immediately, those
+              edits will go into effect when the next cycle starts (Cycle #2).
+              If you need more flexibility, switch to unlocked cycles.
             </Trans>
           </Space>
         </Callout.Warning>
@@ -51,9 +54,10 @@ const FundingCycleCallout: React.FC = () => {
       return (
         <Callout.Warning>
           <Trans>
-            With manual funding cycles selected, the project's owner can start a
-            new funding cycle on-demand. This may pose a risk to some
-            contributors.
+            Cycle #1 starts when you create your project. With unlocked cycles,
+            you can edit your project's rules at any time. This gives you more
+            flexibility, but may appear risky to supporters. Switching to locked
+            cycles will help you build supporter confidence.
           </Trans>
         </Callout.Warning>
       )
@@ -108,14 +112,14 @@ export const FundingCyclesPage = () => {
                 name="automated"
                 title={
                   <>
-                    <Trans>Automated Funding Cycles</Trans>{' '}
+                    <Trans>Locked Cycles</Trans>{' '}
                     <CreateBadge.Recommended
                       tooltip={
                         <span>
                           <Trans>
                             <p>
-                              With Automated Funding Cycles, your funding
-                              configuration is locked for a set time period.
+                              With Locked Cycles, your project's rules are
+                              locked for a period of time.
                             </p>
                             <p>
                               <strong>
@@ -128,20 +132,20 @@ export const FundingCyclesPage = () => {
                     />
                   </>
                 }
-                description={t`Set a duration for automatically recurring funding cycles.`}
+                description={t`Set a duration for locked cycles.`}
                 icon={<RedoOutlined />}
               >
                 <Form.Item
                   name="duration"
-                  label={t`Funding cycle duration`}
+                  label={t`Cycle duration`}
                   extra={
                     <Trans>
-                      <InfoCircleOutlined /> Your project’s settings cannot be
-                      edited or changed during the first funding cycle.
+                      <InfoCircleOutlined /> Your project’s rules cannot be
+                      edited during the first cycle.
                     </Trans>
                   }
                   rules={lockPageRulesWrapper([
-                    durationMustExistRule({ label: t`Funding cycle duration` }),
+                    durationMustExistRule({ label: t`Cycle duration` }),
                   ])}
                 >
                   <DurationInput />
@@ -149,8 +153,8 @@ export const FundingCyclesPage = () => {
               </Selection.Card>
               <Selection.Card
                 name="manual"
-                title={t`Manual Funding Cycles`}
-                description={t`The project’s owner can change the project's settings and start a new funding cycle at any time.`}
+                title={t`Unlocked Cycles`}
+                description={t`The project’s owner can edit the project's rules and start new cycles at any time.`}
                 icon={<Icons.ManualSettings />}
               />
             </Selection>
@@ -173,15 +177,15 @@ export const FundingCyclesPage = () => {
                   label={
                     <span className="text-sm font-normal">
                       <Trans>
-                        Set a future date & time to launch your project's first
-                        Funding Cycle.
+                        Set a future date & time to start your project's first
+                        cycle.
                       </Trans>
                     </span>
                   }
                   extra={
                     launchDate ? (
                       <Trans>
-                        Your project’s first Funding Cycle will launch on{' '}
+                        Your project’s first cycle will start on{' '}
                         <Tooltip
                           title={
                             launchDate.clone().format('YYYY-MM-DD') +
@@ -192,14 +196,15 @@ export const FundingCyclesPage = () => {
                           {launchDate.clone().format('YYYY-MM-DD')} at{' '}
                           {launchDate.clone().format('HH:mm:ss z')}
                         </Tooltip>
-                        . Once deployed, your project will be visible but unable
-                        to receive funding or issue tokens until the date and
-                        time specified.
+                        . Your project will be visible on{' '}
+                        <Link href="/">juicebox.money</Link> once you finish
+                        setting your project up, but supporters won't be able to
+                        pay or interact with it until the first cycle begins.
                       </Trans>
                     ) : (
                       <Trans>
-                        If no date is selected Funding Cycle #1 will start
-                        immediately after your project is deployed.
+                        Leave this blank to start your first cycle immediately
+                        after you finish setting up your project.
                       </Trans>
                     )
                   }

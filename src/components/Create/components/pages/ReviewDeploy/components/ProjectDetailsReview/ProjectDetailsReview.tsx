@@ -127,7 +127,7 @@ export const ProjectDetailsReview = () => {
                   <Col span={16}>
                     <DescriptionCol
                       flex={1}
-                      title={t`Pay disclaimer`}
+                      title={t`Payment notice`}
                       desc={
                         payDisclosure ? (
                           <div className="overflow-hidden text-ellipsis text-base font-medium">

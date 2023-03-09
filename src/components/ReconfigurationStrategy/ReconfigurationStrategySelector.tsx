@@ -2,6 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import { Space } from 'antd'
 import FormItemWarningText from 'components/FormItemWarningText'
 import ReconfigurationStrategyOption from 'components/ReconfigurationStrategy/ReconfigurationStrategyOption'
+import { RECONFIG_RULES_WARN } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { BallotStrategy } from 'models/ballot'
 import { useState } from 'react'
 import { isEqualAddress } from 'utils/address'
@@ -35,14 +36,7 @@ export default function ReconfigurationStrategySelector({
       {isEqualAddress(
         ballotStrategies[selectedStrategyIndex]?.address,
         ballotStrategies[0].address,
-      ) && (
-        <FormItemWarningText>
-          <Trans>
-            Adding an edit deadline is recommended. Projects with no deadline
-            will appear risky to contributors.
-          </Trans>
-        </FormItemWarningText>
-      )}
+      ) && <FormItemWarningText>{RECONFIG_RULES_WARN}</FormItemWarningText>}
       {ballotStrategies.map((strategy: BallotStrategy, idx) => (
         <ReconfigurationStrategyOption
           title={strategy.name}

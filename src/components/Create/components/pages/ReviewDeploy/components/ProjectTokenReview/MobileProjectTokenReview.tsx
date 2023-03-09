@@ -25,19 +25,20 @@ export const MobileProjectTokenReview = () => {
   return (
     <>
       <DescriptionCol
-        title={t`Initial mint rate`}
+        title={t`Issuance rate`}
         desc={
           <div className="text-base font-medium">
             {formatAmount(
               weight
                 ? formatIssuanceRate(weight)
                 : ProjectTokenForm.DefaultSettings.initialMintRate,
-            )}
+            )}{' '}
+            / 1 ETH
           </div>
         }
       />
       <DescriptionCol
-        title={t`Reserved tokens`}
+        title={t`Reserved rate`}
         desc={
           <div className="text-base font-medium">
             {formatReservedRate(
@@ -49,7 +50,7 @@ export const MobileProjectTokenReview = () => {
         }
       />
       <DescriptionCol
-        title={t`Reserved token allocation`}
+        title={t`Reserved token recipients`}
         desc={
           <ReservedTokensList
             isEditable={false}
@@ -59,7 +60,7 @@ export const MobileProjectTokenReview = () => {
         }
       />
       <DescriptionCol
-        title={t`Discount rate`}
+        title={t`Issuance reduction rate`}
         desc={
           <div className="text-base font-medium">
             {formatDiscountRate(
@@ -83,7 +84,7 @@ export const MobileProjectTokenReview = () => {
         }
       />
       <DescriptionCol
-        title={t`Allow token minting`}
+        title={t`Owner token minting`}
         desc={<div className="text-base font-medium">{allowTokenMinting}</div>}
       />
       <DescriptionCol

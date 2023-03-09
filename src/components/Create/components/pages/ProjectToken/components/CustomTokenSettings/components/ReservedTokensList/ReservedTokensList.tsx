@@ -16,7 +16,7 @@ export const ReservedTokensList: React.FC<
       <Space className="w-full" direction="vertical" size="middle">
         <OwnerPayoutCard payoutsSelection={'percentages'} />
         <Allocation.List
-          allocationName={t`token allocation`}
+          allocationName={t`reserved token recipient`}
           availableModes={new Set(['percentage'])}
           isEditable={isEditable}
         >

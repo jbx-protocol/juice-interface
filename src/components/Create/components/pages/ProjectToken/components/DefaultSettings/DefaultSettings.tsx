@@ -1,6 +1,13 @@
-import { t, Trans } from '@lingui/macro'
+import { t } from '@lingui/macro'
 import { Divider, Space } from 'antd'
 import TooltipLabel from 'components/TooltipLabel'
+import {
+  DISCOUNT_RATE_EXPLANATION,
+  MINT_RATE_EXPLANATION,
+  OWNER_MINTING_EXPLAINATION,
+  REDEMPTION_RATE_EXPLANATION,
+  RESERVED_RATE_EXPLAINATION,
+} from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { ReactNode, useMemo } from 'react'
 import { formatAmount } from 'utils/format/formatAmount'
 import { formatBoolean } from 'utils/format/formatBoolean'
@@ -9,52 +16,27 @@ import * as ProjectTokenForm from '../../hooks/ProjectTokenForm'
 export const DefaultSettings: React.FC = () => {
   const data: Record<string, { data: string; tooltip: ReactNode }> = useMemo(
     () => ({
-      [t`Initial mint rate`]: {
+      [t`Total issuance rate`]: {
         data: `${formatAmount(
           ProjectTokenForm.DefaultSettings.initialMintRate,
         )} tokens / ETH`,
-        tooltip: (
-          <Trans>
-            Tokens <strong>contributors will receive</strong> when they
-            contribute 1 ETH.
-          </Trans>
-        ),
+        tooltip: { MINT_RATE_EXPLANATION },
       },
       [t`Reserved rate`]: {
         data: `${ProjectTokenForm.DefaultSettings.reservedTokensPercentage}%`,
-        tooltip: (
-          <Trans>
-            Tokens <strong>reserved for the project</strong> when 1 ETH is
-            contributed.
-          </Trans>
-        ),
+        tooltip: { RESERVED_RATE_EXPLAINATION },
       },
-      [t`Discount rate`]: {
+      [t`Issuance reduction rate`]: {
         data: `${ProjectTokenForm.DefaultSettings.discountRate}%`,
-        tooltip: (
-          <Trans>
-            Contributors will receive <strong>no extra tokens</strong> this
-            funding cycle.
-          </Trans>
-        ),
+        tooltip: { DISCOUNT_RATE_EXPLANATION },
       },
       [t`Redemption rate`]: {
         data: `${ProjectTokenForm.DefaultSettings.redemptionRate}%`,
-        tooltip: (
-          <Trans>
-            Determines the <strong>amount of overflow</strong> each token can be
-            redeemed for.
-          </Trans>
-        ),
+        tooltip: { REDEMPTION_RATE_EXPLANATION },
       },
-      [t`Token minting`]: {
+      [t`Owner token minting`]: {
         data: formatBoolean(ProjectTokenForm.DefaultSettings.tokenMinting),
-        tooltip: (
-          <Trans>
-            The project owner <strong>cannot manually mint</strong> any amount
-            of tokens to any address.
-          </Trans>
-        ),
+        tooltip: { OWNER_MINTING_EXPLAINATION },
       },
     }),
     [],

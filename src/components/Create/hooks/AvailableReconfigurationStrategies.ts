@@ -15,11 +15,11 @@ export const useAvailableReconfigurationStrategies = (network: NetworkName) => {
 
   if (!threeDay || !oneDay || !sevenDay || !none) {
     console.error(
-      'Unexpected error occurred - missing field in reconfiguration strategies',
+      'Unexpected error occurred - missing field in edit deadlines',
       { threeDay, oneDay, sevenDay, none },
     )
     throw new Error(
-      'Unexpected error occurred - missing field in reconfiguration strategies',
+      'Unexpected error occurred - missing field in edit deadlines',
     )
   }
 

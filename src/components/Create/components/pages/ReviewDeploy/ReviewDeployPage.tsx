@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux'
 import { useAppSelector } from 'redux/hooks/AppSelector'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import { helpPagePath } from 'utils/routes'
 import { CreateBadge } from '../../CreateBadge'
 import { CreateCollapse } from '../../CreateCollapse'
 import { Wizard } from '../../Wizard'
@@ -146,7 +147,7 @@ export const ReviewDeployPage = () => {
           key={ReviewDeployKey.FundingConfiguration}
           header={
             <Header>
-              <Trans>Funding Configuration</Trans>
+              <Trans>Cycles & Payouts</Trans>
             </Header>
           }
         >
@@ -156,7 +157,7 @@ export const ReviewDeployPage = () => {
           key={ReviewDeployKey.ProjectToken}
           header={
             <Header>
-              <Trans>Project Token</Trans>
+              <Trans>Token</Trans>
             </Header>
           }
         >
@@ -177,7 +178,7 @@ export const ReviewDeployPage = () => {
           key={ReviewDeployKey.Rules}
           header={
             <Header>
-              <Trans>Rules</Trans>
+              <Trans>Other Rules</Trans>
             </Header>
           }
         >
@@ -200,10 +201,12 @@ export const ReviewDeployPage = () => {
                 I have read and accept the{' '}
                 <ExternalLink href={TERMS_OF_SERVICE_URL}>
                   Terms of Service
+                </ExternalLink>{' '}
+                and{' '}
+                <ExternalLink href={helpPagePath(`/dev/learn/risks`)}>
+                  the risks
                 </ExternalLink>
-                , and understand that any changes I make to my project's funding
-                cycle will not be applied until AFTER Funding Cycle #1 has
-                finished.
+                .
               </Trans>
             </div>
           </div>
@@ -217,8 +220,8 @@ export const ReviewDeployPage = () => {
       <div className="flex flex-col gap-4 pt-20 text-grey-400 dark:text-slate-200">
         <div>
           <Trans>
-            Not quite ready to launch? Your project details will be saved as a
-            'draft' as long as you don't clear your browser's data.
+            Not ready? Your project will be saved as a 'draft' as long as you
+            don't clear your browser's data.
           </Trans>
         </div>
         <span>

@@ -9,7 +9,7 @@ export const CustomRuleCard = () => {
     <Selection.Card
       checkPosition="left"
       name="custom"
-      title={t`Custom strategy`}
+      title={t`Custom deadline contract`}
       description={
         <Form.Item
           // Can't use noStyle, so remove margin
@@ -17,9 +17,9 @@ export const CustomRuleCard = () => {
           className="m-0"
           name="customAddress"
           rules={[
-            inputMustExistRule({ label: t`Custom strategy` }),
+            inputMustExistRule({ label: t`An address` }),
             inputMustBeEthAddressRule({
-              label: t`Custom strategy`,
+              label: t`This custom deadline contract`,
               validateTrigger: 'onSubmit',
             }),
           ]}

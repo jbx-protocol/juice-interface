@@ -80,7 +80,7 @@ export const MobileProjectDetailsReview = () => {
         }
       />
       <DescriptionCol
-        title={t`Pay disclaimer`}
+        title={t`Payment notice`}
         desc={
           payDisclosure ? (
             <div className="overflow-hidden text-ellipsis text-base font-medium">

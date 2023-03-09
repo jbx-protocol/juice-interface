@@ -21,7 +21,7 @@ export const FundingConfigurationReview = () => {
       <>
         <div className="flex flex-col gap-y-10 md:grid md:grid-cols-4">
           <ReviewDescription
-            title={t`Funding cycles`}
+            title={t`Cycles`}
             desc={<div className="text-base font-medium">{fundingCycles}</div>}
           />
           <ReviewDescription
@@ -53,13 +53,13 @@ export const FundingConfigurationReview = () => {
             }
           />
           <ReviewDescription
-            title={t`Payout`}
+            title={t`Payouts`}
             desc={<div className="text-base font-medium">{fundingTarget}</div>}
           />
 
           <ReviewDescription
             className={twMerge(allocationSplits.length ? 'col-span-4' : '')}
-            title={t`Payout addresses`}
+            title={t`Payout recipients`}
             desc={
               allocationSplits.length > 0 ? (
                 <PayoutsList

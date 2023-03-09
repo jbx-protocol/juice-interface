@@ -22,6 +22,10 @@ export const CYCLE_EXPLANATION = (
       (like 3 minutes, 2 years, or 14 days), helping you build trust with your
       supporters.
     </p>
+    <p>
+      This choice isn't permanent — you can switch between locked and unlocked
+      cycles in the future.
+    </p>
   </Trans>
 )
 

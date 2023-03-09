@@ -79,8 +79,12 @@ export const NftRewardsPage = () => {
                     label={t`Collection Name`}
                     tip={
                       <Trans>
-                        Your collection's name is used on NFT marketplaces (for
-                        example, OpenSea).
+                        A collection's name is the full name used on NFT
+                        marketplaces (like{' '}
+                        <ExternalLink href="https://opensea.io/">
+                          OpenSea
+                        </ExternalLink>
+                        ).
                       </Trans>
                     }
                   />
@@ -100,8 +104,13 @@ export const NftRewardsPage = () => {
                     label={t`Collection Symbol`}
                     tip={
                       <Trans>
-                        Your collection's symbol is used on NFT marketplaces
-                        (for example, OpenSea).
+                        A collection's symbol is typically a 3-4 letter acronym
+                        or abbreviation of its name. The symbol is used on NFT
+                        marketplaces (like{' '}
+                        <ExternalLink href="https://opensea.io/">
+                          OpenSea
+                        </ExternalLink>
+                        ).
                       </Trans>
                     }
                   />
@@ -137,15 +146,15 @@ export const NftRewardsPage = () => {
                             <CreateBadge.Default />
                           </>
                         }
-                        description={t`Your project's NFTs will not have on-chain governance capabilities.`}
+                        description={t`Your project's NFTs will not have on-chain governance capabilities. Select this option if you don't want governance or plan to use an off-chain voting client (like Snapshot).`}
                       />
                       <RadioItem
                         value={JB721GovernanceType.GLOBAL}
                         title={t`Standard on-chain governance`}
                         description={
                           <Trans>
-                            Track the historical voting weight of each token
-                            holder across all tiers of NFTs.{' '}
+                            Track the total voting power of each address over
+                            time.{' '}
                             <ExternalLink
                               href={helpPagePath(
                                 '/user/configuration/#on-chain-governance',
@@ -161,8 +170,11 @@ export const NftRewardsPage = () => {
                         title={t`Tier-based on-chain governance`}
                         description={
                           <Trans>
-                            Track the historical voting weight of each token
-                            holder within each tier of NFTs.{' '}
+                            Instead of tracking total voting power, track each
+                            address' voting power within each tier over time.
+                            This can be useful for running multiple voting
+                            processes out of one treasury, or for complex
+                            on-chain governance.
                             <ExternalLink
                               href={helpPagePath(
                                 '/user/configuration/#on-chain-governance',
@@ -178,7 +190,7 @@ export const NftRewardsPage = () => {
                 </CreateCollapse.Panel>
                 <CreateCollapse.Panel
                   key={2}
-                  header={<OptionalHeader header={t`Payment Success Popup`} />}
+                  header={<OptionalHeader header={t`Payment Success Pop-up`} />}
                   hideDivider
                 >
                   <Space
@@ -188,7 +200,10 @@ export const NftRewardsPage = () => {
                   >
                     <p>
                       <Trans>
-                        Show contributors a popup when they receive an NFT.
+                        Show your supporters a pop-up with a message and a link
+                        after they pay for an NFT. You can use this to direct
+                        supporters to your project's website, a Discord server,
+                        or somewhere else.
                       </Trans>
                     </p>
                     <Form.Item
@@ -198,8 +213,8 @@ export const NftRewardsPage = () => {
                           label={t`Message`}
                           tip={
                             <Trans>
-                              The message that will be shown to the user after
-                              they pay for an NFT.
+                              The message that will be shown to the supporter
+                              after they pay for an NFT.
                             </Trans>
                           }
                         />
@@ -211,15 +226,11 @@ export const NftRewardsPage = () => {
                       name="postPayButtonText"
                       label={
                         <TooltipLabel
-                          label={t`Button Text`}
+                          label={t`Button label`}
                           tip={
                             <Trans>
-                              The text that will be shown to the user on the
-                              button post pay popup.
-                              <br />
-                              <strong>
-                                For more information, see the preview.
-                              </strong>
+                              The text on the button at the bottom of the
+                              pop-up. You can preview this below.
                             </Trans>
                           }
                         />
@@ -234,13 +245,14 @@ export const NftRewardsPage = () => {
                           label={t`Button link`}
                           tip={
                             <Trans>
-                              Link contributors to another page after they
-                              successfully mint one of your project's NFTs.
+                              Supporters will be sent to this page if they click
+                              the button on your pop-up. You can preview this
+                              below.
                             </Trans>
                           }
                         />
                       }
-                      extra={t`Button will close the modal if no link is given.`}
+                      extra={t`If you leave this blank, the button will close the pop-up.`}
                     >
                       <JuiceInput prefix={'https://'} />
                     </Form.Item>
@@ -264,7 +276,7 @@ export const NftRewardsPage = () => {
                     name="useDataSourceForRedeem"
                     extra={USE_DATASOURCE_FOR_REDEEM_EXPLAINATION}
                   >
-                    <JuiceSwitch label={t`Redeemable NFTs`} />
+                    <JuiceSwitch label={t`Use NFTs for redemptions`} />
                   </Form.Item>
                   {delegateV1_1Enabled ? (
                     <Form.Item

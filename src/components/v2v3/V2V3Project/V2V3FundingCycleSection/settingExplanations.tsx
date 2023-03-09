@@ -77,6 +77,13 @@ export const OWNER_MINTING_EXPLAINATION = (
   </Trans>
 )
 
+export const OWNER_MINTING_RISK = (
+  <Trans>
+    Enabling owner token minting isn't recommended as it allows the project
+    owner to create unlimited tokens, which appears risky to supporters.
+  </Trans>
+)
+
 export const TERMINAL_CONFIG_EXPLAINATION = (
   <Trans>
     While enabled, the project owner can change the project's{' '}
@@ -139,13 +146,20 @@ export const PAUSE_PAYMENTS_EXPLANATION = (
 export const RECONFIG_RULES_EXPLAINATION = (
   <Trans>
     <p>
-      Edits must be made before this deadline. This gives token holders time to
-      verify the edits before they take effect.
+      Edits to this project must be made before this deadline. This gives token
+      holders time to verify the edits before they take effect.
     </p>
     <p>
       For example: with a 1-day edit deadline, edits must be made at least 1 day
       before a cycle starts.
     </p>
+  </Trans>
+)
+
+export const RECONFIG_RULES_WARN = (
+  <Trans>
+    Adding an edit deadline is recommended. Projects with no deadline will
+    appear risky to contributors.
   </Trans>
 )
 

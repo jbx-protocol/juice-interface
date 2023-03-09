@@ -76,7 +76,7 @@ export const RewardsReview = () => {
       case JB721GovernanceType.GLOBAL:
         return t`Standard`
       case JB721GovernanceType.TIERED:
-        return `Tiered`
+        return `Tier-based`
       case JB721GovernanceType.NONE:
       default:
         return t`None`
@@ -89,7 +89,7 @@ export const RewardsReview = () => {
       <Row gutter={20} className="mt-4">
         <DescriptionCol
           span={6}
-          title={t`Redeemable NFTs`}
+          title={t`Use NFTs for redemptions`}
           desc={
             <div className="text-base font-medium">
               {shouldUseDataSourceForRedeem}
@@ -98,7 +98,7 @@ export const RewardsReview = () => {
         />
         <DescriptionCol
           span={6}
-          title={t`Governance type`}
+          title={t`On-chain governance type`}
           desc={
             <div className="text-base font-medium">{onChainGovernance}</div>
           }

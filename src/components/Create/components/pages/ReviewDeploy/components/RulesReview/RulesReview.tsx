@@ -28,7 +28,7 @@ export const RulesReview = () => {
           <Row gutter={20}>
             <DescriptionCol
               span={5}
-              title={t`Reconfiguration`}
+              title={t`Edit deadline`}
               desc={
                 <div className="text-base font-medium">
                   {strategy ? (
@@ -43,7 +43,7 @@ export const RulesReview = () => {
             />
             <DescriptionCol
               span={5}
-              title={t`Payments`}
+              title={t`Receiving payments`}
               desc={
                 <div className="text-base font-medium">{pausePayments}</div>
               }

@@ -24,7 +24,7 @@ export async function loadJB721DelegateJson<T>(
     contractName,
   )
   return await import(
-    `@jbx-protocol/juice-721-delegate-${versionString}/out/${contractName}.sol/${contractName}.json`
+    `@jbx-protocol/juice-721-delegate/out/${contractName}.sol/${contractName}.json` // TODO load from the version-specific NPM package
   )
 }
 

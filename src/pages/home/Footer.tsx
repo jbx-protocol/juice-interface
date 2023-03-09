@@ -99,7 +99,7 @@ export default function Footer() {
       <div className="bg-slate-900 px-12 pt-12 text-white">
         <div className="m-auto max-w-6xl">
           <div className="flex flex-col gap-y-10 md:grid md:grid-cols-6 md:items-start md:gap-x-10">
-            <div className="flex flex-col items-center gap-y-5 md:col-span-2 md:items-start">
+            <div className="flex flex-col gap-y-5 md:col-span-2 md:items-start">
               <Logo themeOverride="dark" />
               <Trans>
                 Big ups to the Ethereum community for crafting the

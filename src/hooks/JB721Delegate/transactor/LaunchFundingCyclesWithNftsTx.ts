@@ -23,7 +23,10 @@ import {
   isValidMustStartAtOrAfter,
 } from 'utils/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../../v2v3/ProjectTitle'
-import { findDefaultJBTiered721DelegateStoreAddress } from '../contracts/JBTiered721DelegateProjectDeployer'
+import {
+  DEFAULT_JB_721_DELEGATE_VERSION,
+  findDefaultJBTiered721DelegateStoreAddress,
+} from '../contracts/JBTiered721DelegateProjectDeployer'
 
 interface LaunchFundingCyclesWithNftsTxArgs {
   projectId: number
@@ -113,7 +116,11 @@ export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFun
 
       return Promise.resolve(false)
     }
-    const tiers = buildJB721TierParams({ cids: CIDs, rewardTiers })
+    const tiers = buildJB721TierParams({
+      cids: CIDs,
+      rewardTiers,
+      version: DEFAULT_JB_721_DELEGATE_VERSION,
+    })
 
     const delegateData = buildJBDeployTiered721DelegateData({
       collectionUri: collectionMetadata.uri ?? '',

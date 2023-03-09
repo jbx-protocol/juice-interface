@@ -11,7 +11,7 @@ export function useJB721TieredDelegateStore({
   version: JB721DelegateVersion | undefined
 }): Contract | undefined {
   const JB721DelegateStoreJson = useJB721DelegateAbi(
-    'out/IJBTiered721DelegateStore.sol/IJBTiered721DelegateStore',
+    'IJBTiered721DelegateStore',
     version,
   )
   return useLoadContractFromAddress({

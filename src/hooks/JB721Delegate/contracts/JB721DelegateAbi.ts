@@ -8,7 +8,7 @@ import { JB721DelegateVersion } from 'models/nftRewards'
 import { useEffect, useState } from 'react'
 
 export async function loadJB721DelegateJson<T>(
-  path: string,
+  contractName: string,
   version: JB721DelegateVersion,
 ): Promise<T | undefined> {
   const versionString =
@@ -18,9 +18,13 @@ export async function loadJB721DelegateJson<T>(
       ? 'v1-1'
       : undefined
   if (!versionString) return
-  console.info('Loading JB721Delegate contract json', versionString, path)
+  console.info(
+    'Loading JB721Delegate contract json',
+    versionString,
+    contractName,
+  )
   return await import(
-    `@jbx-protocol/juice-721-delegate-${versionString}/${path}.json`
+    `@jbx-protocol/juice-721-delegate-${versionString}/out/${contractName}.sol/${contractName}.json`
   )
 }
 

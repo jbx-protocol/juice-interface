@@ -18,7 +18,7 @@ export async function loadJB721DelegateJson<T>(
       ? 'v1-1'
       : undefined
   if (!versionString) return
-
+  console.info('Loading JB721Delegate contract json', versionString, path)
   return await import(
     `@jbx-protocol/juice-721-delegate-${versionString}/${path}.json`
   )

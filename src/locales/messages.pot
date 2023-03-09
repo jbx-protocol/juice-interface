@@ -3137,6 +3137,9 @@ msgstr ""
 msgid "The wallet address that reserved NFTs will be sent to"
 msgstr ""
 
+msgid "There are no NFT tiers to update."
+msgstr ""
+
 msgid "There is already a payout for this address"
 msgstr ""
 
@@ -3891,6 +3894,9 @@ msgid "Your project will appear as 'active'."
 msgstr ""
 
 msgid "Your project will appear as 'archived'."
+msgstr ""
+
+msgid "Your project's NFT contract version is not supported."
 msgstr ""
 
 msgid "Your project's NFTs will not have on-chain governance capabilities."

@@ -692,6 +692,9 @@ msgstr ""
 msgid "Collection symbol"
 msgstr ""
 
+msgid "Company"
+msgstr ""
+
 msgid "Configuration rules"
 msgstr ""
 
@@ -1385,6 +1388,9 @@ msgstr ""
 msgid "Get help planning or setting up my project."
 msgstr ""
 
+msgid "GitHub"
+msgstr ""
+
 msgid "Give permissions to {0} on project #{projectId}"
 msgstr ""
 
@@ -1595,6 +1601,9 @@ msgstr ""
 msgid "Join <0>hundreds of projects</0> sippin' the Juice."
 msgstr ""
 
+msgid "Juicebox"
+msgstr ""
+
 msgid "Juicebox Project"
 msgstr ""
 
@@ -1665,6 +1674,9 @@ msgid "Legacy balance"
 msgstr ""
 
 msgid "Legacy tokens to migrate"
+msgstr ""
+
+msgid "Legal"
 msgstr ""
 
 msgid "Light theme"
@@ -2286,6 +2298,9 @@ msgid "Prevent NFT overspending"
 msgstr ""
 
 msgid "Previous V1 Project ID:"
+msgstr ""
+
+msgid "Privacy Policy"
 msgstr ""
 
 msgid "Process held fees"
@@ -2939,6 +2954,9 @@ msgstr ""
 msgid "Snapshot voting"
 msgstr ""
 
+msgid "Socials"
+msgstr ""
+
 msgid "Something went wrong."
 msgstr ""
 
@@ -3015,6 +3033,9 @@ msgid "Terminal configuration"
 msgstr ""
 
 msgid "Terminal migration"
+msgstr ""
+
+msgid "Terms of Service"
 msgstr ""
 
 msgid "Text record is set"

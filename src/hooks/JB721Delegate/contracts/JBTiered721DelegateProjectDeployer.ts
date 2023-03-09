@@ -20,7 +20,7 @@ async function loadDefaultJB721DelegateDeployment() {
   if (!versionString) return
 
   return (await import(
-    `@jbx-protocol/juice-721-delegate-${versionString}/broadcast/Deploy.s.sol/${readNetwork.chainId}/run-latest.json` // TODO load from the version-specific NPM package
+    `@jbx-protocol/juice-721-delegate-${versionString}/broadcast/Deploy.s.sol/${readNetwork.chainId}/run-latest.json`
   )) as ForgeDeploy
 }
 

@@ -1,12 +1,11 @@
 import { DeleteOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
-import { Space, Tooltip } from 'antd'
+import { Space } from 'antd'
 import { Allocation, AllocationSplit } from 'components/Allocation'
+import { AllocationItemTitle } from 'components/Allocation/components/AllocationItemTitle'
 import { OwnerPayoutCard } from 'components/PayoutCard'
-import { formatPercent } from 'utils/format/formatPercent'
-import FormattedAddress from 'components/FormattedAddress'
 import { FormItemInput } from 'models/formItemInput'
-import { formatDate } from 'utils/format/formatDate'
+import { formatPercent } from 'utils/format/formatPercent'
 
 export const ReservedTokensList: React.FC<
   FormItemInput<AllocationSplit[]> & { isEditable?: boolean }
@@ -28,19 +27,7 @@ export const ReservedTokensList: React.FC<
               {allocations.map(allocation => (
                 <Allocation.Item
                   key={allocation.id}
-                  title={
-                    <Space>
-                      <FormattedAddress address={allocation.beneficiary} />
-                      {!!allocation.lockedUntil && (
-                        <Tooltip
-                          title={t`Locked until ${formatDate(
-                            allocation.lockedUntil * 1000,
-                            'yyyy-MM-DD',
-                          )}`}
-                        />
-                      )}
-                    </Space>
-                  }
+                  title={<AllocationItemTitle allocation={allocation} />}
                   amount={formatPercent(allocation.percent)}
                   extra={
                     <DeleteOutlined

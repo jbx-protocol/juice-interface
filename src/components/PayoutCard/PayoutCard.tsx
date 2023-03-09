@@ -1,16 +1,13 @@
-import { DeleteOutlined, LockFilled } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
-import { Space, Tooltip } from 'antd'
+import { DeleteOutlined } from '@ant-design/icons'
+import { Trans } from '@lingui/macro'
 import { Allocation, AllocationSplit } from 'components/Allocation'
+import { AllocationItemTitle } from 'components/Allocation/components/AllocationItemTitle'
 import FormattedAddress from 'components/FormattedAddress'
 import { DeleteConfirmationModal } from 'components/modals/DeleteConfirmationModal'
-import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 import { useModal } from 'hooks/Modal'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { useCallback } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
-import { formatDate } from 'utils/format/formatDate'
-import { isProjectSplit } from 'utils/splits'
 import { Amount } from './Amount'
 
 export const PayoutCard = ({
@@ -33,28 +30,7 @@ export const PayoutCard = ({
   return (
     <>
       <Allocation.Item
-        title={
-          <Space>
-            {isProjectSplit(allocation) && allocation.projectId ? (
-              <V2V3ProjectHandleLink
-                projectId={parseInt(allocation.projectId)}
-              />
-            ) : (
-              <FormattedAddress address={allocation.beneficiary} />
-            )}
-
-            {!!allocation.lockedUntil && (
-              <Tooltip
-                title={t`Locked until ${formatDate(
-                  allocation.lockedUntil * 1000,
-                  'yyyy-MM-DD',
-                )}`}
-              >
-                <LockFilled />
-              </Tooltip>
-            )}
-          </Space>
-        }
+        title={<AllocationItemTitle allocation={allocation} />}
         amount={
           <Amount
             allocationId={allocation.id}

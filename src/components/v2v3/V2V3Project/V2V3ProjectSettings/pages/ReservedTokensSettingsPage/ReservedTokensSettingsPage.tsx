@@ -69,6 +69,7 @@ export function ReservedTokensSettingsPage() {
         onClick={() => onSaveTokenAllocation()}
         disabled={totalPercentagesInvalid}
         type="primary"
+        className="mt-4"
       >
         <span>
           <Trans>Save token recipients</Trans>

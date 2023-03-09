@@ -88,6 +88,24 @@ const LinkCols: { title: ReactNode; items: LinkItem[] }[] = [
   },
 ]
 
+const ImageButtons = [
+  {
+    name: 'github',
+    image: <GithubFilled />,
+    link: 'https://github.com/jbx-protocol',
+  },
+  {
+    name: 'discord',
+    image: <Discord size={18} />,
+    link: 'https://discord.com/invite/wFTh4QnDzk',
+  },
+  {
+    name: 'twitter',
+    image: <TwitterCircleFilled />,
+    link: 'https://twitter.com/juiceboxETH',
+  },
+]
+
 export default function Footer() {
   const gitCommit = process.env.NEXT_PUBLIC_VERSION
 
@@ -116,10 +134,16 @@ export default function Footer() {
 
             <div className="flex gap-x-7">
               {gitCommit && <AppVersion gitCommit={gitCommit} />}
-              <div className="flex gap-x-4 text-lg leading-none text-grey-300">
-                <GithubFilled />
-                <Discord size={18} />
-                <TwitterCircleFilled />
+              <div className="flex gap-x-4 ">
+                {ImageButtons.map(({ name, image, link }) => (
+                  <ExternalLink
+                    key={name}
+                    className="text-lg leading-none text-grey-300 hover:text-haze-400"
+                    href={link}
+                  >
+                    {image}
+                  </ExternalLink>
+                ))}
               </div>
             </div>
           </div>

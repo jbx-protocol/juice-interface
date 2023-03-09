@@ -1,6 +1,6 @@
+import { ContractJson } from 'models/contracts'
 import { NetworkName } from 'models/networkName'
 import { V2V3ContractName } from 'models/v2v3/contracts'
-import { ContractJson } from '../loadV2V3Contract'
 
 /**
  * Courtesey of ser DrGorilla.eth

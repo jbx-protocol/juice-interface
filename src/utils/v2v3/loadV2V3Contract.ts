@@ -1,4 +1,5 @@
-import { Contract, ContractInterface } from '@ethersproject/contracts'
+import { Contract } from '@ethersproject/contracts'
+import { ContractJson } from 'models/contracts'
 import { NetworkName } from 'models/networkName'
 import { SignerOrProvider } from 'models/signerOrProvider'
 import { V2V3ContractName } from 'models/v2v3/contracts'
@@ -13,11 +14,6 @@ import { loadVeTokenUriResolver } from './contractLoaders/VeTokenUriResolver'
 export interface ForgeDeploy {
   receipts: { contractAddress: string }[]
   transactions: { contractName: string; contractAddress: string }[]
-}
-
-export interface ContractJson {
-  address: string | undefined
-  abi: ContractInterface | undefined
 }
 
 export const loadV2V3Contract = async (

@@ -1,3 +1,6 @@
+import { JB721_DELEGATE_V1 } from 'constants/delegateVersions'
+import { loadJB721DelegateJson } from 'hooks/JB721Delegate/contracts/JB721DelegateAbi'
+import { ContractJson } from 'models/contracts'
 import { findJBTiered721DelegateProjectDeployerAddress } from 'utils/nftRewards'
 
 export const loadJBTiered721DelegateProjectDeployerContract = async () => {
@@ -8,10 +11,11 @@ export const loadJBTiered721DelegateProjectDeployerContract = async () => {
   const nftDeployerContractJson = {
     address: JBTiered721DelegateProjectDeployerContractAddress,
     abi: (
-      await import(
-        `@jbx-protocol/juice-721-delegate/out/IJBTiered721DelegateProjectDeployer.sol/IJBTiered721DelegateProjectDeployer.json`
+      await loadJB721DelegateJson<ContractJson>(
+        'out/IJBTiered721DelegateProjectDeployer.sol/IJBTiered721DelegateProjectDeployer.json',
+        JB721_DELEGATE_V1,
       )
-    ).abi,
+    )?.abi,
   }
 
   return nftDeployerContractJson

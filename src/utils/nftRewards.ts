@@ -5,6 +5,7 @@ import {
   JB721DELAGATE_V1_1_PAY_METADATA,
   JB721DELAGATE_V1_PAY_METADATA,
 } from 'components/Project/PayProjectForm/hooks/PayProjectForm'
+import { JB721_DELEGATE_V1 } from 'constants/delegateVersions'
 import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
 import { juiceboxEmojiImageUri } from 'constants/images'
 import { readNetwork } from 'constants/networks'
@@ -12,6 +13,7 @@ import { WAD_DECIMALS } from 'constants/numbers'
 import { DEFAULT_ALLOW_OVERSPENDING } from 'constants/transactionDefaults'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
 import { defaultAbiCoder, parseEther } from 'ethers/lib/utils'
+import { loadJB721DelegateJson } from 'hooks/JB721Delegate/contracts/JB721DelegateAbi'
 import { pinJson } from 'lib/api/ipfs'
 import { round } from 'lodash'
 import {
@@ -35,16 +37,17 @@ const IJB721Delegate_INTERFACE_ID = '0xb3bcbb79'
 
 // Following three functions get the latest deployments of the NFT contracts from the NPM package
 async function loadNftRewardsDeployment() {
-  const latestNftContractDeployments = (await import(
-    `@jbx-protocol/juice-721-delegate/broadcast/Deploy.s.sol/${readNetwork.chainId}/run-latest.json`
-  )) as ForgeDeploy
+  const latestNftContractDeployments = await loadJB721DelegateJson<ForgeDeploy>(
+    `broadcast/Deploy.s.sol/${readNetwork.chainId}/run-latest.json`,
+    JB721_DELEGATE_V1,
+  )
 
   return latestNftContractDeployments
 }
 
 export async function findJBTiered721DelegateProjectDeployerAddress() {
   const latestNftContractDeployments = await loadNftRewardsDeployment()
-  return latestNftContractDeployments.transactions.find(
+  return latestNftContractDeployments?.transactions.find(
     tx =>
       tx.contractName === V2V3ContractName.JBTiered721DelegateProjectDeployer,
   )?.contractAddress
@@ -52,7 +55,7 @@ export async function findJBTiered721DelegateProjectDeployerAddress() {
 
 export async function findJBTiered721DelegateStoreAddress() {
   const latestNftContractDeployments = await loadNftRewardsDeployment()
-  return latestNftContractDeployments.transactions.find(
+  return latestNftContractDeployments?.transactions.find(
     tx => tx.contractName === 'JBTiered721DelegateStore',
   )?.contractAddress
 }

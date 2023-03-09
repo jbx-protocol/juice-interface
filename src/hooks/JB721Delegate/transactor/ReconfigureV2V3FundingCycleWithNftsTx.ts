@@ -19,7 +19,10 @@ import {
 import { isValidMustStartAtOrAfter } from 'utils/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../../v2v3/ProjectTitle'
 import { ReconfigureTxArgs } from '../../v2v3/transactor/ReconfigureV2V3FundingCycleTx'
-import { findDefaultJBTiered721DelegateStoreAddress } from '../contracts/JBTiered721DelegateProjectDeployer'
+import {
+  DEFAULT_JB_721_DELEGATE_VERSION,
+  findDefaultJBTiered721DelegateStoreAddress,
+} from '../contracts/JBTiered721DelegateProjectDeployer'
 
 type ReconfigureWithNftsTxArgs = {
   reconfigureData: ReconfigureTxArgs
@@ -79,7 +82,11 @@ export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<R
     }
 
     // build `delegateData`
-    const tiers = buildJB721TierParams({ cids: CIDs, rewardTiers })
+    const tiers = buildJB721TierParams({
+      cids: CIDs,
+      rewardTiers,
+      version: DEFAULT_JB_721_DELEGATE_VERSION,
+    })
 
     const delegateData = buildJBDeployTiered721DelegateData({
       collectionUri: collectionMetadata.uri ?? '',

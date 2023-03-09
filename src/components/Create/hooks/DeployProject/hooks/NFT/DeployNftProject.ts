@@ -1,12 +1,13 @@
+import { DEFAULT_JB_721_DELEGATE_VERSION } from 'hooks/JB721Delegate/contracts/JBTiered721DelegateProjectDeployer'
+import { useLaunchProjectWithNftsTx } from 'hooks/JB721Delegate/transactor/LaunchProjectWithNftsTx'
+import { TransactionCallbacks } from 'models/transaction'
+import { useCallback, useMemo } from 'react'
 import {
   useAppSelector,
   useEditingV2V3FundAccessConstraintsSelector,
   useEditingV2V3FundingCycleDataSelector,
   useEditingV2V3FundingCycleMetadataSelector,
 } from 'redux/hooks/AppSelector'
-import { useLaunchProjectWithNftsTx } from 'hooks/JB721Delegate/transactor/LaunchProjectWithNftsTx'
-import { TransactionCallbacks } from 'models/transaction'
-import { useCallback, useMemo } from 'react'
 import { DEFAULT_NFT_FLAGS } from 'redux/slices/editingV2Project'
 import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'utils/nftFundingCycleMetadataOverrides'
 import { buildJB721TierParams } from 'utils/nftRewards'
@@ -83,6 +84,7 @@ export const useDeployNftProject = () => {
       const tiers = buildJB721TierParams({
         cids: rewardTierCids,
         rewardTiers: nftRewards.rewardTiers,
+        version: DEFAULT_JB_721_DELEGATE_VERSION,
       })
 
       return await launchProjectWithNftsTx(

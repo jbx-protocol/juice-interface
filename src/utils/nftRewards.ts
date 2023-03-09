@@ -5,10 +5,14 @@ import {
   JB721DELAGATE_V1_1_PAY_METADATA,
   JB721DELAGATE_V1_PAY_METADATA,
 } from 'components/Project/PayProjectForm/hooks/PayProjectForm'
+import { JB721_DELEGATE_V1_1 } from 'constants/delegateVersions'
 import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
 import { juiceboxEmojiImageUri } from 'constants/images'
 import { WAD_DECIMALS } from 'constants/numbers'
-import { DEFAULT_ALLOW_OVERSPENDING } from 'constants/transactionDefaults'
+import {
+  DEFAULT_ALLOW_OVERSPENDING,
+  DEFAULT_JB_721_TIER_CATEGORY,
+} from 'constants/transactionDefaults'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
 import { defaultAbiCoder, parseEther } from 'ethers/lib/utils'
 import { pinJson } from 'lib/api/ipfs'
@@ -16,11 +20,13 @@ import { round } from 'lodash'
 import {
   IPFSNftCollectionMetadata,
   IPFSNftRewardTier,
+  JB721DelegateVersion,
   JB721GovernanceType,
   JB721PricingParams,
   JB721TierParams,
   JBDeployTiered721DelegateData,
   JBTiered721Flags,
+  JB_721_TIER_PARAMS_V1_1,
   NftRewardTier,
 } from 'models/nftRewards'
 import { decodeEncodedIpfsUri, encodeIpfsUri, ipfsUri } from 'utils/ipfs'
@@ -135,12 +141,17 @@ async function uploadNftRewardToIPFS({
   return res.Hash
 }
 
-// Uploads each nft reward tier to an individual location on IPFS
-// returns an array of CIDs which point to each rewardTier on IPFS
+/**
+ * Uploads each nft reward tier to an individual location on IPFS
+ * @returns array of CIDs which point to each rewardTier on IPFS
+ */
 export async function pinNftRewards(
   nftRewards: NftRewardTier[],
 ): Promise<string[]> {
   return await Promise.all(
+    // NOTE: Other code relies on the fact that the reward tiers are sorted by contribution floor
+    // DO NOT CHANGE without considering all implications.
+    // TODO: fix this ^
     sortNftsByContributionFloor(nftRewards).map((rewardTier, idx) =>
       uploadNftRewardToIPFS({
         rewardTier,
@@ -231,19 +242,64 @@ function nftRewardTierToJB721TierParams(
   }
 }
 
+function nftRewardTierToJB721TierParamsV1_1(
+  rewardTier: NftRewardTier,
+  cid: string,
+): JB_721_TIER_PARAMS_V1_1 {
+  const contributionFloorWei = parseEther(
+    rewardTier.contributionFloor.toString(),
+  )
+  const maxSupply = rewardTier.maxSupply
+  const initialQuantity = BigNumber.from(maxSupply ?? DEFAULT_NFT_MAX_SUPPLY)
+  const encodedIPFSUri = encodeIpfsUri(cid)
+
+  const reservedRate = rewardTier.reservedRate
+    ? BigNumber.from(rewardTier.reservedRate - 1)
+    : BigNumber.from(0)
+  const reservedTokenBeneficiary =
+    rewardTier.beneficiary ?? constants.AddressZero
+  const votingUnits = rewardTier.votingWeight
+    ? BigNumber.from(rewardTier.votingWeight)
+    : BigNumber.from(0)
+
+  return {
+    contributionFloor: contributionFloorWei,
+    lockedUntil: BigNumber.from(0),
+    initialQuantity,
+    votingUnits,
+    reservedRate,
+    reservedTokenBeneficiary,
+    encodedIPFSUri,
+    allowManualMint: false,
+    transfersPausable: false,
+    royaltyRate: 0,
+    royaltyBeneficiary: constants.AddressZero, // address
+    shouldUseReservedTokenBeneficiaryAsDefault: false,
+    shouldUseRoyaltyBeneficiaryAsDefault: false,
+    category: DEFAULT_JB_721_TIER_CATEGORY,
+  }
+}
+
 export function buildJB721TierParams({
   cids, // MUST BE SORTED BY CONTRIBUTION FLOOR (TODO: not ideal)
   rewardTiers,
+  version,
 }: {
   cids: string[]
   rewardTiers: NftRewardTier[]
-}): JB721TierParams[] {
+  version: JB721DelegateVersion
+}): (JB721TierParams | JB_721_TIER_PARAMS_V1_1)[] {
   const sortedRewardTiers = sortNftsByContributionFloor(rewardTiers)
 
   // `cids` are ordered the same as `rewardTiers` so can get corresponding values from same index
   return cids
-    .map((cid, index) => {
+    .map((cid, index): JB721TierParams | JB_721_TIER_PARAMS_V1_1 => {
       const rewardTier = sortedRewardTiers[index]
+      if (version === JB721_DELEGATE_V1_1) {
+        return nftRewardTierToJB721TierParamsV1_1(rewardTier, cid)
+      }
+
+      // default return v1 params
       return nftRewardTierToJB721TierParams(rewardTier, cid)
     })
     .slice() // clone object
@@ -383,7 +439,7 @@ export function buildJBDeployTiered721DelegateData({
   collectionUri: string
   collectionName: string
   collectionSymbol: string
-  tiers: JB721TierParams[]
+  tiers: (JB721TierParams | JB_721_TIER_PARAMS_V1_1)[]
   ownerAddress: string
   governanceType: JB721GovernanceType
   contractAddresses: {

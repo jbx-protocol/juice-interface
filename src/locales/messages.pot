@@ -257,6 +257,12 @@ msgstr ""
 msgid "Add NFTs to cycle"
 msgstr ""
 
+msgid "Add a collection name"
+msgstr ""
+
+msgid "Add a collection symbol"
+msgstr ""
+
 msgid "Add a cover image to your project page. This will be displayed at the top of your project page."
 msgstr ""
 
@@ -264,6 +270,9 @@ msgid "Add a payout"
 msgstr ""
 
 msgid "Add amount"
+msgstr ""
+
+msgid "Add an NFT"
 msgstr ""
 
 msgid "Add an on-chain memo to this payment."
@@ -1169,7 +1178,7 @@ msgstr ""
 msgid "Edit {projectTitle}"
 msgstr ""
 
-msgid "Edit {projectTitle}'s rules'"
+msgid "Edit {projectTitle}'s rules"
 msgstr ""
 
 msgid "Edited cycle"
@@ -3158,6 +3167,9 @@ msgstr ""
 msgid "The wallet address that reserved NFTs will be sent to"
 msgstr ""
 
+msgid "There are no NFT tiers to update."
+msgstr ""
+
 msgid "There is already a payout for this address"
 msgstr ""
 
@@ -3912,6 +3924,9 @@ msgid "Your project will appear as 'active'."
 msgstr ""
 
 msgid "Your project will appear as 'archived'."
+msgstr ""
+
+msgid "Your project's NFT contract version is not supported."
 msgstr ""
 
 msgid "Your project's NFTs will not have on-chain governance capabilities."

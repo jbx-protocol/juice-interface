@@ -258,7 +258,7 @@ export const PayoutsPage = () => {
                 <Divider className="my-5" />
               </>
             )}
-            <span className="text-grey-500 dark:text-slate-300">
+            <span className="text-grey-500 dark:text-slate-200">
               {hasAllocations && treasuryOption === 'amount' ? (
                 <Trans>
                   Any funds raised over this amount may be redeemed by your

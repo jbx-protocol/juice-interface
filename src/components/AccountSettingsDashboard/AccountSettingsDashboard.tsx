@@ -15,7 +15,9 @@ import {
 import { AccountSettingsForm } from './components/AccountSettingsForm'
 import { AccountSettingsSchema } from './lib/AccountSettingsSchema'
 
-type AccountSettingsFormType = { email: string | null }
+export type AccountSettingsFormType = {
+  email: string | null
+}
 
 export const AccountSettingsDashboard = ({ user }: { user: User }) => {
   const router = useRouter()
@@ -88,7 +90,7 @@ export const AccountSettingsDashboard = ({ user }: { user: User }) => {
         >
           {({ isSubmitting, dirty }) => (
             <>
-              <AccountSettingsForm />
+              <AccountSettingsForm address={user.wallet} />
               <div className="flex h-9 justify-between">
                 <Button onClick={onBackButtonClicked}>
                   <ArrowLeftOutlined /> Back

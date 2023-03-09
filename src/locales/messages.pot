@@ -515,6 +515,9 @@ msgstr ""
 msgid "Available:"
 msgstr ""
 
+msgid "Avatar"
+msgstr ""
+
 msgid "Awaiting IPFS response. This may take a while."
 msgstr ""
 
@@ -543,6 +546,9 @@ msgid "Beneficiary address"
 msgstr ""
 
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
+msgstr ""
+
+msgid "Bio"
 msgstr ""
 
 msgid "Block number"

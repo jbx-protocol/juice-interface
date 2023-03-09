@@ -12,7 +12,9 @@ export function useJB721DelegateVersion({
   dataSourceAddress: string | undefined
 }): JB721DelegateVersion | undefined {
   const { value: isV1 } = useIsJB721DelegateV1({ dataSourceAddress })
-  const { value: isV1_1 } = useIsJB721DelegateV1_1({ dataSourceAddress })
+  const { value: isV1_1 } = useIsJB721DelegateV1_1({
+    dataSourceAddress: isV1 === false ? dataSourceAddress : undefined, // only check v1_1 if v1 is false
+  })
 
   if (!dataSourceAddress) return
 

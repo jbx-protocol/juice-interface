@@ -1,6 +1,5 @@
-import JB721TieredGovernanceJson from '@jbx-protocol/juice-721-delegate-v1/out/JB721TieredGovernance.sol/JB721TieredGovernance.json'
 import { useContractReadValue } from 'hooks/ContractReader'
-import { useLoadContractFromAddress } from 'hooks/LoadContractFromAddress'
+import { useJB721TieredGovernance } from '../contracts/JB721TieredGovernance'
 
 const IJB721TieredDelegate_V1_INTERFACE_ID = '0xf34282c8'
 
@@ -9,9 +8,8 @@ export function useIsJB721DelegateV1({
 }: {
   dataSourceAddress: string | undefined
 }): { value: boolean; loading: boolean } {
-  const contract = useLoadContractFromAddress({
+  const contract = useJB721TieredGovernance({
     address: dataSourceAddress,
-    abi: JB721TieredGovernanceJson.abi,
   })
   const { value: isJB721DelegateV1, loading } = useContractReadValue({
     contract,

@@ -17,13 +17,13 @@ import { NftRewardsData } from 'redux/slices/editingV2Project/types'
 import {
   buildJB721TierParams,
   buildJBDeployTiered721DelegateData,
-  findJBTiered721DelegateStoreAddress,
 } from 'utils/nftRewards'
 import {
   getTerminalsFromFundAccessConstraints,
   isValidMustStartAtOrAfter,
 } from 'utils/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../../v2v3/ProjectTitle'
+import { findDefaultJBTiered721DelegateStoreAddress } from '../contracts/JBTiered721DelegateProjectDeployer'
 
 interface LaunchFundingCyclesWithNftsTxArgs {
   projectId: number
@@ -72,7 +72,7 @@ export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFun
     txOpts,
   ) => {
     const JBTiered721DelegateStoreAddress =
-      await findJBTiered721DelegateStoreAddress()
+      await findDefaultJBTiered721DelegateStoreAddress()
     const collectionName = collectionMetadata.name
 
     const contractsLoaded =

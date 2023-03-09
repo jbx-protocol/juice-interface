@@ -1,3 +1,4 @@
+import { JB721_DELEGATE_V1 } from 'constants/delegateVersions'
 import { useContractReadValue } from 'hooks/ContractReader'
 import { useJB721TieredGovernance } from '../contracts/JB721TieredGovernance'
 
@@ -10,6 +11,7 @@ export function useIsJB721DelegateV1({
 }): { value: boolean; loading: boolean } {
   const contract = useJB721TieredGovernance({
     address: dataSourceAddress,
+    version: JB721_DELEGATE_V1,
   })
   const { value: isJB721DelegateV1, loading } = useContractReadValue({
     contract,

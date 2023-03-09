@@ -25,6 +25,7 @@ export const JB721DelegateContractsProvider: React.FC = ({ children }) => {
     loading: JB721TieredDelegateStoreLoading,
   } = useStoreOfJB721TieredDelegate({
     JB721TieredDelegate,
+    version: contractVersion,
   })
 
   const contextData = {

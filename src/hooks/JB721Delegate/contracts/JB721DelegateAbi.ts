@@ -20,7 +20,7 @@ export async function loadJB721DelegateJson<T>(
   if (!versionString) return
 
   return await import(
-    `@jbx-protocol/juice-721-delegate-v${versionString}/${path}`
+    `@jbx-protocol/juice-721-delegate-${versionString}/${path}`
   )
 }
 

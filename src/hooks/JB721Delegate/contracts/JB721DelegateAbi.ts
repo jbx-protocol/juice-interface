@@ -30,6 +30,7 @@ export async function loadJB721DelegateJson(
     contractName,
   )
 
+  // NOTE: imports are specified explicitly to avoid Webpack causing V8 to run out of memory and crash during compilation.
   if (contractName === 'JB721TieredGovernance') {
     return await import(
       `@jbx-protocol/juice-721-delegate-${versionString}/out/JB721TieredGovernance.sol/JB721TieredGovernance.json`

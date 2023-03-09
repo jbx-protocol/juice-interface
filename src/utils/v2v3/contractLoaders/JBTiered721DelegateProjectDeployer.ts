@@ -12,7 +12,7 @@ export const loadJBTiered721DelegateProjectDeployerContract = async () => {
     address: JBTiered721DelegateProjectDeployerContractAddress,
     abi: (
       await loadJB721DelegateJson<ContractJson>(
-        'out/IJBTiered721DelegateProjectDeployer.sol/IJBTiered721DelegateProjectDeployer.json',
+        'out/IJBTiered721DelegateProjectDeployer.sol/IJBTiered721DelegateProjectDeployer',
         JB721_DELEGATE_V1,
       )
     )?.abi,

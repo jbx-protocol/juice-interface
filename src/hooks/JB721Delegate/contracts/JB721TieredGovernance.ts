@@ -11,7 +11,7 @@ export function useJB721TieredGovernance({
   version: JB721DelegateVersion | undefined
 }): Contract | undefined {
   const JB721TieredGovernanceJson = useJB721DelegateAbi(
-    'out/JB721TieredGovernance.sol/JB721TieredGovernance.json',
+    'out/JB721TieredGovernance.sol/JB721TieredGovernance',
     version,
   )
   return useLoadContractFromAddress({

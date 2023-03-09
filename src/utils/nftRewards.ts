@@ -38,7 +38,7 @@ const IJB721Delegate_INTERFACE_ID = '0xb3bcbb79'
 // Following three functions get the latest deployments of the NFT contracts from the NPM package
 async function loadNftRewardsDeployment() {
   const latestNftContractDeployments = await loadJB721DelegateJson<ForgeDeploy>(
-    `broadcast/Deploy.s.sol/${readNetwork.chainId}/run-latest.json`,
+    `broadcast/Deploy.s.sol/${readNetwork.chainId}/run-latest`,
     JB721_DELEGATE_V1,
   )
 

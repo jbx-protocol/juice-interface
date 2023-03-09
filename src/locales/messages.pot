@@ -692,9 +692,6 @@ msgstr ""
 msgid "Collection symbol"
 msgstr ""
 
-msgid "Company"
-msgstr ""
-
 msgid "Configuration rules"
 msgstr ""
 

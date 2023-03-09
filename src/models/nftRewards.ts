@@ -55,7 +55,7 @@ export type JB_721_TIER_PARAMS_V1_1 = Omit<
 }
 
 // Tiers as they are stored on-chain.
-export type JB721Tier = JB721TierParams & {
+export type JB721Tier = (JB721TierParams | JB_721_TIER_PARAMS_V1_1) & {
   id: BigNumber
   remainingQuantity?: BigNumber
 }

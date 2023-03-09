@@ -4,7 +4,6 @@ import { useForm } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
 import Loading from 'components/Loading'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
-import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useNftCollectionMetadata } from 'hooks/JB721Delegate/NftCollectionMetadata'
 import { useReconfigureNftCollectionMetadata } from 'hooks/v2v3/transactor/ReconfigureNftCollectionMetadata'
 import { NftCollectionMetadata } from 'models/nftRewards'
@@ -43,8 +42,6 @@ const useCollectionDetailsForm = () => {
 }
 
 export function EditCollectionDetailsSection() {
-  const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
-
   const {
     form: marketplaceForm,
     initialValues,
@@ -53,9 +50,7 @@ export function EditCollectionDetailsSection() {
   const [formHasUpdated, setFormHasUpdated] = useState<boolean>()
   const [txLoading, setTxLoading] = useState<boolean>()
 
-  const reconfigureNftCollectionMetadata = useReconfigureNftCollectionMetadata({
-    dataSourceAddress: fundingCycleMetadata?.dataSource,
-  })
+  const reconfigureNftCollectionMetadata = useReconfigureNftCollectionMetadata()
 
   const handleFormChange = useCallback(() => {
     const hasChanged = (name: string, initialValue: unknown) =>
@@ -89,7 +84,6 @@ export function EditCollectionDetailsSection() {
   useEffect(() => handleFormChange(), [handleFormChange])
 
   const submitCollectionMetadata = async () => {
-    if (!fundingCycleMetadata?.dataSource) return
     setTxLoading(true)
     const newCollectionMetadata: NftCollectionMetadata = {
       name: marketplaceForm.getFieldValue('collectionName'),
@@ -99,7 +93,6 @@ export function EditCollectionDetailsSection() {
 
     await reconfigureNftCollectionMetadata({
       ...newCollectionMetadata,
-      dataSource: fundingCycleMetadata?.dataSource,
     })
 
     setTxLoading(false)

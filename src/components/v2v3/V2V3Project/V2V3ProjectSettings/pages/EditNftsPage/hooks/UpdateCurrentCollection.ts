@@ -1,8 +1,7 @@
 import { NEW_NFT_ID_LOWER_LIMIT } from 'components/Create/components/RewardsList/AddEditRewardModal'
-import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useAdjustTiersTx } from 'hooks/JB721Delegate/transactor/AdjustTiersTx'
 import { NftRewardTier } from 'models/nftRewards'
-import { useCallback, useContext } from 'react'
+import { useCallback } from 'react'
 import { buildJB721TierParams, pinNftRewards } from 'utils/nftRewards'
 import { reloadWindow } from 'utils/windowUtils'
 
@@ -13,13 +12,10 @@ export function useUpdateCurrentCollection({
   rewardTiers: NftRewardTier[] | undefined
   editedRewardTierIds: number[]
 }) {
-  const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
-  const nftRewardsAdjustTiersTx = useAdjustTiersTx({
-    dataSourceAddress: fundingCycleMetadata?.dataSource,
-  })
+  const nftRewardsAdjustTiersTx = useAdjustTiersTx()
 
   const updateExistingCollection = useCallback(async () => {
-    if (!fundingCycleMetadata || !rewardTiers) return // TODO emit error notificaiton
+    if (!rewardTiers) return // TODO emit error notificaiton
 
     const newRewardTiers = rewardTiers.filter(
       rewardTier =>
@@ -48,12 +44,7 @@ export function useUpdateCurrentCollection({
         },
       },
     )
-  }, [
-    editedRewardTierIds,
-    fundingCycleMetadata,
-    nftRewardsAdjustTiersTx,
-    rewardTiers,
-  ])
+  }, [editedRewardTierIds, nftRewardsAdjustTiersTx, rewardTiers])
 
   return updateExistingCollection
 }

@@ -3,20 +3,24 @@ import { useJB721TieredDelegate } from 'hooks/JB721Delegate/contracts/JB721Tiere
 import { useStoreOfJB721TieredDelegate } from 'hooks/JB721Delegate/contracts/StoreofJB721TieredDelegate'
 import { useJB721DelegateVersion } from 'hooks/JB721Delegate/JB721DelegateVersion'
 import { useContext } from 'react'
+import { isZeroAddress } from 'utils/address'
 import { JB721DelegateContractsContext } from './JB721DelegateContractsContext'
 
 export const JB721DelegateContractsProvider: React.FC = ({ children }) => {
   const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
 
   const dataSourceAddress = fundingCycleMetadata?.dataSource
+  const hasDataSource = !isZeroAddress(dataSourceAddress)
+
   const contractVersion = useJB721DelegateVersion({
-    dataSourceAddress,
+    dataSourceAddress: hasDataSource ? dataSourceAddress : undefined, // only check if there's a non-zero datasource addr.
   })
 
   const isDataSourceJB721Delegate = Boolean(contractVersion)
 
   const JB721TieredDelegate = useJB721TieredDelegate({
     address: isDataSourceJB721Delegate ? dataSourceAddress : undefined, // only load if its a JB721Delegate
+    version: contractVersion,
   })
 
   const {
@@ -24,6 +28,7 @@ export const JB721DelegateContractsProvider: React.FC = ({ children }) => {
     loading: JB721TieredDelegateStoreLoading,
   } = useStoreOfJB721TieredDelegate({
     JB721TieredDelegate,
+    version: contractVersion,
   })
 
   const contextData = {

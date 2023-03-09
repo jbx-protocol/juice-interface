@@ -1,22 +1,18 @@
 import { t } from '@lingui/macro'
+import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
-import { useJB721TieredDelegate } from 'hooks/JB721Delegate/contracts/JB721TieredDelegate'
 import { TransactorInstance } from 'hooks/Transactor'
 import { JB721TierParams } from 'models/nftRewards'
 import { useContext } from 'react'
 
-export function useAdjustTiersTx({
-  dataSourceAddress,
-}: {
-  dataSourceAddress: string | undefined
-}): TransactorInstance<{
+export function useAdjustTiersTx(): TransactorInstance<{
   newTiers: JB721TierParams[]
   tierIdsChanged: number[]
 }> {
   const { transactor } = useContext(TransactionContext)
-  const JB721TieredDelegate = useJB721TieredDelegate({
-    address: dataSourceAddress,
-  })
+  const {
+    contracts: { JB721TieredDelegate },
+  } = useContext(JB721DelegateContractsContext)
 
   return async ({ newTiers, tierIdsChanged }, txOpts) => {
     if (!transactor || !JB721TieredDelegate) {

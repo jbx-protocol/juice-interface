@@ -7,7 +7,6 @@ import {
 } from 'components/Project/PayProjectForm/hooks/PayProjectForm'
 import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
 import { juiceboxEmojiImageUri } from 'constants/images'
-import { readNetwork } from 'constants/networks'
 import { WAD_DECIMALS } from 'constants/numbers'
 import { DEFAULT_ALLOW_OVERSPENDING } from 'constants/transactionDefaults'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
@@ -24,38 +23,11 @@ import {
   JBTiered721Flags,
   NftRewardTier,
 } from 'models/nftRewards'
-import { V2V3ContractName } from 'models/v2v3/contracts'
 import { decodeEncodedIpfsUri, encodeIpfsUri, ipfsUri } from 'utils/ipfs'
 import { V2V3_CURRENCY_ETH } from './v2v3/currency'
 
-import { ForgeDeploy } from './v2v3/loadV2V3Contract'
-
 export const MAX_NFT_REWARD_TIERS = 69
 const IJB721Delegate_INTERFACE_ID = '0xb3bcbb79'
-
-// Following three functions get the latest deployments of the NFT contracts from the NPM package
-async function loadNftRewardsDeployment() {
-  const latestNftContractDeployments = (await import(
-    `@jbx-protocol/juice-721-delegate/broadcast/Deploy.s.sol/${readNetwork.chainId}/run-latest.json`
-  )) as ForgeDeploy
-
-  return latestNftContractDeployments
-}
-
-export async function findJBTiered721DelegateProjectDeployerAddress() {
-  const latestNftContractDeployments = await loadNftRewardsDeployment()
-  return latestNftContractDeployments.transactions.find(
-    tx =>
-      tx.contractName === V2V3ContractName.JBTiered721DelegateProjectDeployer,
-  )?.contractAddress
-}
-
-export async function findJBTiered721DelegateStoreAddress() {
-  const latestNftContractDeployments = await loadNftRewardsDeployment()
-  return latestNftContractDeployments.transactions.find(
-    tx => tx.contractName === 'JBTiered721DelegateStore',
-  )?.contractAddress
-}
 
 export function sortNftsByContributionFloor(
   rewardTiers: NftRewardTier[],

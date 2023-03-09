@@ -15,11 +15,11 @@ import {
   buildJB721TierParams,
   buildJBDeployTiered721DelegateData,
   defaultNftCollectionName,
-  findJBTiered721DelegateStoreAddress,
 } from 'utils/nftRewards'
 import { isValidMustStartAtOrAfter } from 'utils/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../../v2v3/ProjectTitle'
 import { ReconfigureTxArgs } from '../../v2v3/transactor/ReconfigureV2V3FundingCycleTx'
+import { findDefaultJBTiered721DelegateStoreAddress } from '../contracts/JBTiered721DelegateProjectDeployer'
 
 type ReconfigureWithNftsTxArgs = {
   reconfigureData: ReconfigureTxArgs
@@ -55,7 +55,7 @@ export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<R
     txOpts,
   ) => {
     const JBTiered721DelegateStoreAddress =
-      await findJBTiered721DelegateStoreAddress()
+      await findDefaultJBTiered721DelegateStoreAddress()
 
     const collectionName =
       collectionMetadata.name ?? defaultNftCollectionName(projectTitle)

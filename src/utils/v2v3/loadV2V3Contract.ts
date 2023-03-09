@@ -1,24 +1,15 @@
-import { Contract, ContractInterface } from '@ethersproject/contracts'
+import { Contract } from '@ethersproject/contracts'
+import { ContractJson } from 'models/contracts'
 import { NetworkName } from 'models/networkName'
 import { SignerOrProvider } from 'models/signerOrProvider'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import { CV2V3 } from 'models/v2v3/cv'
+import { loadJBTiered721DelegateProjectDeployerContract } from '../../hooks/JB721Delegate/contracts/JBTiered721DelegateProjectDeployer'
 import { loadJBProjectHandlesContract } from './contractLoaders/JBProjectHandles'
-import { loadJBTiered721DelegateProjectDeployerContract } from './contractLoaders/JBTiered721DelegateProjectDeployer'
 import { loadJuiceboxV2OrV3Contract } from './contractLoaders/JuiceboxV2OrV3'
 import { loadPublicResolverContract } from './contractLoaders/PublicResolver'
 import { loadVeNftDeployer } from './contractLoaders/VeNftDeployer'
 import { loadVeTokenUriResolver } from './contractLoaders/VeTokenUriResolver'
-
-export interface ForgeDeploy {
-  receipts: { contractAddress: string }[]
-  transactions: { contractName: string; contractAddress: string }[]
-}
-
-export interface ContractJson {
-  address: string | undefined
-  abi: ContractInterface | undefined
-}
 
 export const loadV2V3Contract = async (
   contractName: V2V3ContractName,

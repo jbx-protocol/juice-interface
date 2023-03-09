@@ -17,15 +17,13 @@ import {
 import { JBPayDataSourceFundingCycleMetadata } from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
-import {
-  buildJBDeployTiered721DelegateData,
-  findJBTiered721DelegateStoreAddress,
-} from 'utils/nftRewards'
+import { buildJBDeployTiered721DelegateData } from 'utils/nftRewards'
 import {
   getTerminalsFromFundAccessConstraints,
   isValidMustStartAtOrAfter,
 } from 'utils/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../../v2v3/ProjectTitle'
+import { findDefaultJBTiered721DelegateStoreAddress } from '../contracts/JBTiered721DelegateProjectDeployer'
 
 interface DeployTiered721DelegateData {
   collectionUri: string
@@ -72,7 +70,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
     txOpts,
   ) => {
     const JBTiered721DelegateStoreAddress =
-      await findJBTiered721DelegateStoreAddress()
+      await findDefaultJBTiered721DelegateStoreAddress()
 
     if (
       !transactor ||

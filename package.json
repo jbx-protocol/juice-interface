@@ -60,7 +60,6 @@
     "@jbx-protocol/juice-v1-token-terminal": "1.0.1",
     "@jbx-protocol/juice-v3-migration": "^1.0.0",
     "@jbx-protocol/project-handles": "^2.0.4",
-    "@jbx-protocol/ve-nft": "0.0.6",
     "@lingui/cli": "^3.13.0",
     "@lingui/detect-locale": "^3.13.0",
     "@lingui/macro": "^3.13.0",

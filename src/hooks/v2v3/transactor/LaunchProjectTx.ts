@@ -4,6 +4,7 @@ import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { useDefaultJBController } from 'hooks/defaultContracts/DefaultJBController'
+import { useDefaultJBETHPaymentTerminal } from 'hooks/defaultContracts/DefaultJBETHPaymentTerminal'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useWallet } from 'hooks/Wallet'
 import { GroupedSplits, SplitGroup } from 'models/splits'
@@ -37,6 +38,7 @@ export function useLaunchProjectTx(): TransactorInstance<LaunchProjectData> {
   const { userAddress } = useWallet()
 
   const projectTitle = useV2ProjectTitle()
+  const defaultJBETHPaymentTerminal = useDefaultJBETHPaymentTerminal()
 
   return (
     {
@@ -54,6 +56,7 @@ export function useLaunchProjectTx(): TransactorInstance<LaunchProjectData> {
       !transactor ||
       !userAddress ||
       !defaultJBController ||
+      !defaultJBETHPaymentTerminal ||
       !isValidMustStartAtOrAfter(mustStartAtOrAfter, fundingCycleData.duration)
     ) {
       const missingParam = !transactor
@@ -84,7 +87,10 @@ export function useLaunchProjectTx(): TransactorInstance<LaunchProjectData> {
       mustStartAtOrAfter, // _mustStartAtOrAfter
       groupedSplits, // _groupedSplits,
       fundAccessConstraints, // _fundAccessConstraints,
-      getTerminalsFromFundAccessConstraints(fundAccessConstraints), // _terminals
+      getTerminalsFromFundAccessConstraints(
+        fundAccessConstraints,
+        defaultJBETHPaymentTerminal?.address,
+      ), // _terminals
       DEFAULT_MEMO,
     ]
 

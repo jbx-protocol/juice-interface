@@ -64,10 +64,18 @@ export function getTerminalsFromFundAccessConstraints(
     | SerializedV2V3FundAccessConstraint
     | V2V3FundAccessConstraint
   )[],
-) {
-  return fundAccessConstraints.map(
+  defaultJBETHPaymentTerminalAddress: string,
+): string[] {
+  const fundAccessConstraintTerminals = fundAccessConstraints.map(
     fundAccessConstraint => fundAccessConstraint.terminal,
   )
+
+  // if no terminals, add the default one
+  if (fundAccessConstraintTerminals.length === 0) {
+    return [defaultJBETHPaymentTerminalAddress]
+  }
+
+  return fundAccessConstraintTerminals
 }
 
 /**

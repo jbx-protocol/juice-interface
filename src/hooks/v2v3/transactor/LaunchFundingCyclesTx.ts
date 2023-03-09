@@ -3,6 +3,7 @@ import { t } from '@lingui/macro'
 import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { useDefaultJBController } from 'hooks/defaultContracts/DefaultJBController'
+import { useDefaultJBETHPaymentTerminal } from 'hooks/defaultContracts/DefaultJBETHPaymentTerminal'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
@@ -30,6 +31,7 @@ export function useLaunchFundingCyclesTx({
 > {
   const { transactor } = useContext(TransactionContext)
   const defaultJBController = useDefaultJBController()
+  const defaultJBETHPaymentTerminal = useDefaultJBETHPaymentTerminal()
 
   const { userAddress } = useWallet()
   const projectTitle = useV2ProjectTitle()
@@ -49,6 +51,7 @@ export function useLaunchFundingCyclesTx({
       !transactor ||
       !userAddress ||
       !defaultJBController ||
+      !defaultJBETHPaymentTerminal ||
       !isValidMustStartAtOrAfter(mustStartAtOrAfter, fundingCycleData.duration)
     ) {
       return Promise.resolve(false)
@@ -61,7 +64,10 @@ export function useLaunchFundingCyclesTx({
       mustStartAtOrAfter, // _mustStartAtOrAfter
       groupedSplits, // _groupedSplits,
       fundAccessConstraints, // _fundAccessConstraints,
-      getTerminalsFromFundAccessConstraints(fundAccessConstraints), // _terminals
+      getTerminalsFromFundAccessConstraints(
+        fundAccessConstraints,
+        defaultJBETHPaymentTerminal?.address,
+      ), // _terminals
       DEFAULT_MEMO,
     ]
 

@@ -4,6 +4,7 @@ import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain
 import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
+import { useDefaultJBETHPaymentTerminal } from 'hooks/defaultContracts/DefaultJBETHPaymentTerminal'
 import { TransactorInstance } from 'hooks/Transactor'
 import { LaunchProjectData } from 'hooks/v2v3/transactor/LaunchProjectTx'
 import { useWallet } from 'hooks/Wallet'
@@ -46,6 +47,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
 
   const { userAddress } = useWallet()
   const projectTitle = useV2ProjectTitle()
+  const defaultJBETHPaymentTerminal = useDefaultJBETHPaymentTerminal()
 
   return async (
     {
@@ -76,6 +78,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
       !transactor ||
       !userAddress ||
       !contracts ||
+      !defaultJBETHPaymentTerminal ||
       !JBTiered721DelegateStoreAddress ||
       !isValidMustStartAtOrAfter(mustStartAtOrAfter, fundingCycleData.duration)
     ) {
@@ -138,7 +141,10 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
         mustStartAtOrAfter,
         groupedSplits,
         fundAccessConstraints,
-        terminals: getTerminalsFromFundAccessConstraints(fundAccessConstraints),
+        terminals: getTerminalsFromFundAccessConstraints(
+          fundAccessConstraints,
+          defaultJBETHPaymentTerminal?.address,
+        ),
         memo: DEFAULT_MEMO,
       }, // _launchProjectData
     ]

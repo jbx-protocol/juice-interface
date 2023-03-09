@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
+import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
-import { useJB721TieredDelegate } from 'hooks/JB721Delegate/contracts/JB721TieredDelegate'
 import { TransactorInstance } from 'hooks/Transactor'
 import { NftCollectionMetadata } from 'models/nftRewards'
 import { useContext } from 'react'
@@ -9,17 +9,13 @@ import { ipfsUri } from 'utils/ipfs'
 import { pinNftCollectionMetadata } from 'utils/nftRewards'
 import { useV2ProjectTitle } from '../ProjectTitle'
 
-export function useReconfigureNftCollectionMetadata({
-  dataSourceAddress,
-}: {
-  dataSourceAddress: string | undefined
-}): TransactorInstance<NftCollectionMetadata & { dataSource: string }> {
+export function useReconfigureNftCollectionMetadata(): TransactorInstance<NftCollectionMetadata> {
   const { transactor } = useContext(TransactionContext)
   const { projectMetadata } = useContext(ProjectMetadataContext)
 
-  const JB721TieredDelegate = useJB721TieredDelegate({
-    address: dataSourceAddress,
-  })
+  const {
+    contracts: { JB721TieredDelegate },
+  } = useContext(JB721DelegateContractsContext)
 
   const projectTitle = useV2ProjectTitle()
 

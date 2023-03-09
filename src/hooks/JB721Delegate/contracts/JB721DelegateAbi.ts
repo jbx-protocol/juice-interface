@@ -24,16 +24,15 @@ export async function loadJB721DelegateJson<T>(
   )
 }
 
-export function useJB721DelegateAbi({
-  version,
-  path,
-}: {
-  version: JB721DelegateVersion
-  path: string
-}) {
+export function useJB721DelegateAbi(
+  path: string,
+  version: JB721DelegateVersion | undefined,
+) {
   const [abi, setAbi] = useState<ContractInterface | undefined>(undefined)
 
   useEffect(() => {
+    if (!version) return
+
     loadJB721DelegateJson<ContractJson>(path, version).then(json =>
       setAbi(json?.abi),
     )

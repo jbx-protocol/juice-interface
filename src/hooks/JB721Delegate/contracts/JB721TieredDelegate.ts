@@ -1,14 +1,21 @@
 import { Contract } from '@ethersproject/contracts'
-import JB721TieredDelegateJson from '@jbx-protocol/juice-721-delegate-v1/out/IJBTiered721Delegate.sol/IJBTiered721Delegate.json'
 import { useLoadContractFromAddress } from 'hooks/LoadContractFromAddress'
+import { JB721DelegateVersion } from 'models/nftRewards'
+import { useJB721DelegateAbi } from './JB721DelegateAbi'
 
 export function useJB721TieredDelegate({
   address,
+  version,
 }: {
   address: string | undefined
+  version: JB721DelegateVersion | undefined
 }): Contract | undefined {
+  const JB721TieredDelegateJson = useJB721DelegateAbi(
+    'out/IJBTiered721Delegate.sol/IJBTiered721Delegate.json',
+    version,
+  )
   return useLoadContractFromAddress({
     address,
-    abi: JB721TieredDelegateJson.abi,
+    abi: JB721TieredDelegateJson,
   })
 }

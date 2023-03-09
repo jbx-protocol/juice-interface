@@ -17,6 +17,7 @@ export const JB721DelegateContractsProvider: React.FC = ({ children }) => {
 
   const JB721TieredDelegate = useJB721TieredDelegate({
     address: isDataSourceJB721Delegate ? dataSourceAddress : undefined, // only load if its a JB721Delegate
+    version: contractVersion,
   })
 
   const {

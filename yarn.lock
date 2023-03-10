@@ -3774,10 +3774,10 @@
   resolved "https://registry.yarnpkg.com/@jbx-protocol/contracts-v2/-/contracts-v2-8.0.4.tgz#ceb72c01f56d528691d048d488fef2566961bb88"
   integrity sha512-AXEMkQzBOlllI0QNUadH1O+vkNnXCxfVXxff1OYWkx3qEqWNyPKifAv9ISECvEiFeN025dutivk3jNWjvbs+tQ==
 
-"@jbx-protocol/juice-721-delegate-v1-1@npm:@jbx-protocol/juice-721-delegate@5.0.1":
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-721-delegate/-/juice-721-delegate-5.0.1.tgz#9c3b21eaea3f664f08f999571c0a07f0f4baf681"
-  integrity sha512-5e5SbLlQrBY1DRDOOV0W0R5hN/oYhELqxpdCekzpXTcH5cJH248AmR3RjRNK6qp1tJkrD/kpGYEbdg8vBZXiHw==
+"@jbx-protocol/juice-721-delegate-v1-1@npm:@jbx-protocol/juice-721-delegate@5.0.2":
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-721-delegate/-/juice-721-delegate-5.0.2.tgz#d2d1cce2e5dfba52aab901dc9a068ab392ee4ac0"
+  integrity sha512-YrzrWeWQG9S6kT282nxyg/ikwN653mNEQ2Ju9t+wk5EtZEy9qCcMt8EkN+WXKDdXcWHaH/IjJK5qZQ5HGDpLDQ==
   dependencies:
     "@jbx-protocol/juice-contracts-v3" "^2.0.4"
     "@jbx-protocol/juice-delegates-registry" "^1.0.0"

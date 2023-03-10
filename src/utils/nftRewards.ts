@@ -27,6 +27,7 @@ import {
   JBDeployTiered721DelegateData,
   JBTiered721Flags,
   JB_721_TIER_PARAMS_V1_1,
+  JB_DEPLOY_TIERED_721_DELEGATE_DATA_V1_1,
   NftRewardTier,
 } from 'models/nftRewards'
 import { decodeEncodedIpfsUri, encodeIpfsUri, ipfsUri } from 'utils/ipfs'
@@ -443,13 +444,13 @@ export function buildDeployTiered721DelegateData({
   ownerAddress: string
   governanceType: JB721GovernanceType
   contractAddresses: {
-    JBDirectoryAddress: string
+    JBDirectoryAddress?: string // directory isn't used in v1.1
     JBFundingCycleStoreAddress: string
     JBPricesAddress: string
     JBTiered721DelegateStoreAddress: string
   }
   flags: JBTiered721Flags
-}): JBDeployTiered721DelegateData {
+}): JBDeployTiered721DelegateData | JB_DEPLOY_TIERED_721_DELEGATE_DATA_V1_1 {
   const pricing: JB721PricingParams = {
     tiers,
     currency: V2V3_CURRENCY_ETH,

@@ -1,17 +1,24 @@
 import { getAddress } from '@ethersproject/address'
 import { t } from '@lingui/macro'
+import {
+  JB721_DELEGATE_V1,
+  JB721_DELEGATE_V1_1,
+} from 'constants/delegateVersions'
 import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
 import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
+import { useDefaultJBController } from 'hooks/defaultContracts/DefaultJBController'
 import { useDefaultJBETHPaymentTerminal } from 'hooks/defaultContracts/DefaultJBETHPaymentTerminal'
 import { TransactorInstance } from 'hooks/Transactor'
 import { LaunchProjectData } from 'hooks/v2v3/transactor/LaunchProjectTx'
 import { useWallet } from 'hooks/Wallet'
 import omit from 'lodash/omit'
 import {
+  JB721DelegateVersion,
   JB721GovernanceType,
   JB721TierParams,
+  JBDeployTiered721DelegateData,
   JBTiered721Flags,
   JB_721_TIER_PARAMS_V1_1,
 } from 'models/nftRewards'
@@ -24,7 +31,11 @@ import {
   isValidMustStartAtOrAfter,
 } from 'utils/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../../v2v3/ProjectTitle'
-import { findDefaultJBTiered721DelegateStoreAddress } from '../contracts/JBTiered721DelegateProjectDeployer'
+import {
+  DEFAULT_JB_721_DELEGATE_VERSION,
+  findDefaultJBTiered721DelegateStoreAddress,
+} from '../contracts/JBTiered721DelegateProjectDeployer'
+import { JB721DelegateLaunchFundingCycleData } from './LaunchFundingCyclesWithNftsTx'
 
 interface DeployTiered721DelegateData {
   collectionUri: string
@@ -40,9 +51,45 @@ interface LaunchProjectWithNftsTxArgs {
   projectData: LaunchProjectData
 }
 
+type JB721DelegateLaunchProjectData = JB721DelegateLaunchFundingCycleData & {
+  projectMetadata: {
+    domain: number
+    content: string
+  }
+}
+
+function buildArgs(
+  version: JB721DelegateVersion,
+  {
+    owner,
+    deployTiered721DelegateData,
+    launchProjectData,
+    JBControllerAddress,
+  }: {
+    owner: string
+    JBControllerAddress: string
+    deployTiered721DelegateData: JBDeployTiered721DelegateData
+    launchProjectData: JB721DelegateLaunchProjectData
+  },
+) {
+  const baseArgs = [
+    owner,
+    deployTiered721DelegateData, //_deployTiered721DelegateData
+    launchProjectData, // _launchProjectData
+  ]
+
+  if (version === JB721_DELEGATE_V1) {
+    return baseArgs
+  }
+  if (version === JB721_DELEGATE_V1_1) {
+    return [...baseArgs, JBControllerAddress] // v1.1 requires us to pass the controller address in
+  }
+}
+
 export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWithNftsTxArgs> {
   const { transactor } = useContext(TransactionContext)
   const { contracts } = useContext(V2V3ContractsContext)
+  const JBController = useDefaultJBController()
 
   const { userAddress } = useWallet()
   const projectTitle = useV2ProjectTitle()
@@ -77,6 +124,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
       !transactor ||
       !userAddress ||
       !contracts ||
+      !JBController ||
       !defaultJBETHPaymentTerminal ||
       !JBTiered721DelegateStoreAddress ||
       !isValidMustStartAtOrAfter(mustStartAtOrAfter, fundingCycleData.duration)
@@ -87,6 +135,8 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
         ? 'userAddress'
         : !contracts
         ? 'contracts'
+        : !JBController
+        ? 'JBController'
         : !JBTiered721DelegateStoreAddress
         ? 'JBTiered721DelegateStoreAddress'
         : null
@@ -103,7 +153,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
     }
     const _owner = owner?.length ? owner : userAddress
 
-    const delegateData = buildDeployTiered721DelegateData({
+    const deployTiered721DelegateData = buildDeployTiered721DelegateData({
       collectionUri,
       collectionName,
       collectionSymbol,
@@ -127,26 +177,37 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
       ['useDataSourceForPay', 'dataSource'],
     )
 
-    const args = [
-      _owner, // _owner
-      delegateData, // _deployTiered721DelegateData
-      {
-        projectMetadata: {
-          domain: JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN,
-          content: projectMetadataCID,
-        },
-        data: fundingCycleData,
-        metadata: dataSourceFCMetadata,
-        mustStartAtOrAfter,
-        groupedSplits,
+    const launchProjectData: JB721DelegateLaunchProjectData = {
+      projectMetadata: {
+        domain: JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN,
+        content: projectMetadataCID,
+      },
+      data: fundingCycleData,
+      metadata: dataSourceFCMetadata,
+      mustStartAtOrAfter,
+      groupedSplits,
+      fundAccessConstraints,
+      terminals: getTerminalsFromFundAccessConstraints(
         fundAccessConstraints,
-        terminals: getTerminalsFromFundAccessConstraints(
-          fundAccessConstraints,
-          defaultJBETHPaymentTerminal?.address,
-        ),
-        memo: DEFAULT_MEMO,
-      }, // _launchProjectData
-    ]
+        defaultJBETHPaymentTerminal?.address,
+      ),
+      memo: DEFAULT_MEMO,
+    } // _launchProjectData
+
+    const args = buildArgs(DEFAULT_JB_721_DELEGATE_VERSION, {
+      owner: _owner,
+      deployTiered721DelegateData,
+      launchProjectData,
+      JBControllerAddress: JBController.address,
+    })
+
+    if (!args) {
+      txOpts?.onError?.(
+        new DOMException(`Transaction failed, failed to build args`),
+      )
+
+      return Promise.resolve(false)
+    }
 
     return transactor(
       contracts.JBTiered721DelegateProjectDeployer,

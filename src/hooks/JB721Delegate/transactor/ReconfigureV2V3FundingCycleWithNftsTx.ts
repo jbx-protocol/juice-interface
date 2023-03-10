@@ -10,6 +10,7 @@ import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsConte
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
 import { TransactorInstance } from 'hooks/Transactor'
+import { JB_CONTROLLER_V_3_1 } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/ProjectController'
 import omit from 'lodash/omit'
 import {
   JB721DelegateVersion,
@@ -85,6 +86,7 @@ export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<R
   const { contracts } = useContext(V2V3ContractsContext)
   const {
     contracts: { JBController },
+    versions,
   } = useContext(V2V3ProjectContractsContext)
   const { projectId } = useContext(ProjectMetadataContext)
   const { projectOwnerAddress } = useContext(V2V3ProjectContext)
@@ -177,12 +179,17 @@ export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<R
         memo,
       }
 
-    const args = buildArgs(DEFAULT_JB_721_DELEGATE_VERSION, {
-      projectId,
-      deployTiered721DelegateData,
-      reconfigureFundingCyclesData,
-      JBControllerAddress: JBController.address,
-    })
+    const args = buildArgs(
+      versions.JBController === JB_CONTROLLER_V_3_1
+        ? JB721_DELEGATE_V1_1 // use delegate v1.1 for controller v3.1
+        : JB721_DELEGATE_V1,
+      {
+        projectId,
+        deployTiered721DelegateData,
+        reconfigureFundingCyclesData,
+        JBControllerAddress: JBController.address,
+      },
+    )
 
     if (!args) {
       txOpts?.onDone?.()

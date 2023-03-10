@@ -13,6 +13,7 @@ import { useDefaultJBETHPaymentTerminal } from 'hooks/defaultContracts/DefaultJB
 import { TransactorInstance } from 'hooks/Transactor'
 import { useLoadV2V3Contract } from 'hooks/v2v3/LoadV2V3Contract'
 import { LaunchFundingCyclesData } from 'hooks/v2v3/transactor/LaunchFundingCyclesTx'
+import { JB_CONTROLLER_V_3_1 } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/ProjectController'
 import omit from 'lodash/omit'
 import {
   JB721DelegateVersion,
@@ -48,7 +49,7 @@ interface LaunchFundingCyclesWithNftsTxArgs {
   launchFundingCyclesData: LaunchFundingCyclesData
 }
 
-interface JB721DelegateLaunchFundingCycleData {
+export interface JB721DelegateLaunchFundingCycleData {
   data: V2V3FundingCycleData
   metadata: JBPayDataSourceFundingCycleMetadata
   memo?: string
@@ -91,6 +92,7 @@ export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFun
   const { contracts } = useContext(V2V3ContractsContext)
   const {
     contracts: { JBController },
+    versions,
   } = useContext(V2V3ProjectContractsContext)
   const { projectOwnerAddress } = useContext(V2V3ProjectContext)
 
@@ -213,16 +215,21 @@ export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFun
       memo: DEFAULT_MEMO,
     }
 
-    const args = buildArgs(DEFAULT_JB_721_DELEGATE_VERSION, {
-      projectId,
-      deployTiered721DelegateData,
-      launchFundingCyclesData,
-      JBControllerAddress: JBController.address,
-    })
+    const args = buildArgs(
+      versions.JBController === JB_CONTROLLER_V_3_1
+        ? JB721_DELEGATE_V1_1 // use delegate v1.1 for controller v3.1
+        : JB721_DELEGATE_V1,
+      {
+        projectId,
+        deployTiered721DelegateData,
+        launchFundingCyclesData,
+        JBControllerAddress: JBController.address,
+      },
+    )
 
     if (!args) {
       txOpts?.onError?.(
-        new DOMException(`Transaction failed, tx args failed to build.`),
+        new DOMException(`Transaction failed, failed to build args`),
       )
 
       return Promise.resolve(false)

@@ -77,7 +77,7 @@ msgstr ""
 msgid "<0/> Archived projects haven't been modified or deleted on-chain. They can still be interacted with directly through the Juicebox contracts."
 msgstr ""
 
-msgid "<0/> The Juicebox protocol is open to anyone, and project's rules can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the <1>risks</1> before committing your funds."
+msgid "<0/> The Juicebox protocol is open to anyone, and project's rules can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the <1>risks</1> before committing your ETH."
 msgstr ""
 
 msgid "<0/> Your project’s rules cannot be edited during the first cycle."
@@ -122,10 +122,10 @@ msgstr ""
 msgid "<0>Issuance reduction rate</0>. This allows you to predictably reduce your project token's issuance rate (tokens per ETH) over time without needing to manually edit your cycle."
 msgstr ""
 
-msgid "<0>Juicebox has had <1>multiple security audits</1>, and has handled tens of thousands of ETH through its protocol.</0><2>However, Juicebox is still experimental software. Although the Juicebox contract team have done their part to shape the smart contracts for public use and have tested the code thoroughly, the risk of exploits is never 0%.</2><3>Due to their public nature, any exploits to the contracts may have irreversible consequences, including loss of funds. Please use Juicebox with caution.</3><4><5>Learn more about the risks.</5></4>"
+msgid "<0>Juicebox has had <1>multiple security audits</1>, and has handled tens of thousands of ETH through its protocol.</0><2>However, Juicebox is still experimental software. Although the Juicebox contract team have done their part to shape the smart contracts for public use and have tested the code thoroughly, the risk of exploits is never 0%.</2><3>Due to their public nature, any exploits to the contracts may have irreversible consequences, including loss of ETH. Please use Juicebox with caution.</3><4><5>Learn more about the risks.</5></4>"
 msgstr ""
 
-msgid "<0>Juicebox is a <1>governance-minimal</1> protocol. There are only a few levers that can be tuned, none of which impose changes for users without their consent. The Juicebox governance smart contract can adjust these levers.</0><2>The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly.</2><3>Juicebox is on-chain and non-custodial. Project creators actually own their projects, and JuiceboxDAO has no way to access project's funds or change their rules.</3>"
+msgid "<0>Juicebox is a <1>governance-minimal</1> protocol. There are only a few levers that can be tuned, none of which impose changes for users without their consent. The Juicebox governance smart contract can adjust these levers.</0><2>The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly.</2><3>Juicebox is on-chain and non-custodial. Project creators actually own their projects, and JuiceboxDAO has no way to access project's ETH or change their rules.</3>"
 msgstr ""
 
 msgid "<0>Juicebox is a programmable crypto fundraising platform for web3. It helps people fund, operate, and scale their projects transparently using Ethereum, which is a type of programmable cryptocurrency.</0><1>Juicebox is funded and owned by its community.</1>"
@@ -170,7 +170,7 @@ msgstr ""
 msgid "<0>This website interacts with the Ethereum blockchain — to use it, you'll need to have a wallet and some ETH (ETH is the main currency on Ethereum). You can get a free wallet from <1>MetaMask.io</1>, and buy ETH from within the wallet by using a credit card.</0>"
 msgstr ""
 
-msgid "<0>To summarize:</0><1><2>When people pay a project, they receive the project's tokens. Like other tokens, these can be used for governance, for token-gated websites, and other purposes.</2><3>Projects can pay out ETH to the wallets or Juicebox projects of their choosing. These payouts can be pre-defined, and they can also be changed over time.</3><4>If people are unhappy with the direction a project is headed, they can redeem their tokens to claim a share of the ETH held in the project.</4></1><5>Project creators have powerful controls over each one of these mechanics. They can change token issuance rates, redemption rates, payouts, and other rules over time, leading to powerful and elegant tokenomics. They can also lock their project's rules in place for pre-determined amounts of time (called <6>cycles</6>), guaranteeing that they can't rugpull the community. Juicebox lets projects take control if they need to, but it also lets them give up control to build trust.</5><7>Importantly, Juicebox's crypto fundraising platform is on-chain and non-custodial. Project creators actually own their projects, and JuiceboxDAO has no way to access a project's funds or change its rules.</7><8>To learn more, visit <9>our docs</9>.</8>"
+msgid "<0>To summarize:</0><1><2>When people pay a project, they receive the project's tokens. Like other tokens, these can be used for governance, for token-gated websites, and other purposes.</2><3>Projects can pay out ETH to the wallets or Juicebox projects of their choosing. These payouts can be pre-defined, and they can also be changed over time.</3><4>If people are unhappy with the direction a project is headed, they can redeem their tokens to claim a share of the ETH held in the project.</4></1><5>Project creators have powerful controls over each one of these mechanics. They can change token issuance rates, redemption rates, payouts, and other rules over time, leading to powerful and elegant tokenomics. They can also lock their project's rules in place for pre-determined amounts of time (called <6>cycles</6>), guaranteeing that they can't rugpull the community. Juicebox lets projects take control if they need to, but it also lets them give up control to build trust.</5><7>Importantly, Juicebox's crypto fundraising platform is on-chain and non-custodial. Project creators actually own their projects, and JuiceboxDAO has no way to access a project's ETH or change its rules.</7><8>To learn more, visit <9>our docs</9>.</8>"
 msgstr ""
 
 msgid "<0>View transactions.</0>"
@@ -182,7 +182,7 @@ msgstr ""
 msgid "<0>When Juicebox projects make payouts to external wallets (like \"vitalik.eth\"), they incur a {JB_FEE}% fee, which is paid to <1>JuiceboxDAO</1>. In exchange, they receive JuiceboxDAO's project tokens, allowing them to govern the protocol. They can also redeem these tokens to reclaim some of the fees.</0><2><3>Payouts to other Juicebox projects don't incur any fees.</3></2><4><5>Learn more about fees</5>.</4>"
 msgstr ""
 
-msgid "<0>When you pay a project, you <1>may</1> receive that project's tokens or NFTs (depending on how the project is set up).</0><2>By default, these tokens represent a partial claim on the project's funds, and they are often used for governance rights, community access, or other membership perks.</2><3>All of this can change from project to project. Read everything carefully, and make sure you understand the project's rules before you support it. If you need help, <4>contact us</4>, or stop by the <5>Juicebox Discord server</5>.</3>"
+msgid "<0>When you pay a project, you <1>may</1> receive that project's tokens or NFTs (depending on how the project is set up).</0><2>By default, these tokens represent a partial claim on the project's ETH, and they are often used for governance rights, community access, or other membership perks.</2><3>All of this can change from project to project. Read everything carefully, and make sure you understand the project's rules before you support it. If you need help, <4>contact us</4>, or stop by the <5>Juicebox Discord server</5>.</3>"
 msgstr ""
 
 msgid "<0>With Locked Cycles, your project's rules are locked for a period of time.</0><1><2>This helps build trust with your contributors.</2></1>"
@@ -692,7 +692,7 @@ msgstr ""
 msgid "Configuration rules"
 msgstr ""
 
-msgid "Configure how your project will collect and spend funds."
+msgid "Configure how your project will collect and spend ETH."
 msgstr ""
 
 msgid "Configure your project's token."
@@ -1838,7 +1838,7 @@ msgstr ""
 msgid "More trending projects"
 msgstr ""
 
-msgid "Move funds"
+msgid "Move ETH"
 msgstr ""
 
 msgid "Move your unclaimed {tokensLabel} from your wallet to another wallet."
@@ -1958,7 +1958,7 @@ msgstr ""
 msgid "No payouts"
 msgstr ""
 
-msgid "No payouts are scheduled for this cycle. All funds are available for redemption (subject to the redemption rate)."
+msgid "No payouts are scheduled for this cycle. All ETH is available for redemption (subject to the redemption rate)."
 msgstr ""
 
 msgid "No payouts remaining for this cycle."
@@ -2990,7 +2990,7 @@ msgstr ""
 msgid "Text record is set"
 msgstr ""
 
-msgid "The <0>Juicebox protocol</0> could be vulnerable to bugs or hacks. All funds moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses."
+msgid "The <0>Juicebox protocol</0> could be vulnerable to bugs or hacks. All of the ETH moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses."
 msgstr ""
 
 msgid "The address of a custom <0>ballot smart contract</0> deployed to {0}."
@@ -3020,7 +3020,7 @@ msgstr ""
 msgid "The edits you make below may take effect, depending on the project's custom edit deadline contract."
 msgstr ""
 
-msgid "The held fees will reset as new funds are transferred to the project with the <0>transfer ETH to project</0> transaction above."
+msgid "The held fees will reset as ETH is transferred back to the project with the <0>transfer ETH to project</0> transaction above."
 msgstr ""
 
 msgid "The issuance rate is reduced by this amount each cycle (unless the owner changes the issuance rate)."
@@ -3155,7 +3155,7 @@ msgstr ""
 msgid "This cycle's rules may lead to unexpected behavior. Before paying this project, know and understand its rules."
 msgstr ""
 
-msgid "This is the amount of funds that you can pay out from your project each cycle."
+msgid "This is the amount of ETH that you can pay out from your project each cycle."
 msgstr ""
 
 msgid "This project doesn't reserve any tokens."
@@ -3188,7 +3188,7 @@ msgstr ""
 msgid "This transaction edits the project's cycle."
 msgstr ""
 
-msgid "This transaction will move your project's funds to the new Payment Terminal contract: <0>{terminalAddress}</0>."
+msgid "This transaction will move your project's ETH to the new Payment Terminal contract: <0>{terminalAddress}</0>."
 msgstr ""
 
 msgid "This transaction will set your project's Controller contract to: <0>{controllerAddress}</0>. Any reserved tokens will be sent out."
@@ -3527,7 +3527,7 @@ msgstr ""
 msgid "Uploaded to: <0>{imageUrl}</0>"
 msgstr ""
 
-msgid "Use <0>Percentages</0> if you'd like to pay out all of the ETH in the project. Since no funds will be left over, your token holders won't be able to redeem their tokens for ETH. This can make it harder to build trust with your community."
+msgid "Use <0>Percentages</0> if you'd like to pay out all of the ETH in the project. Since no ETH will be left over, your token holders won't be able to redeem their tokens for ETH. This can make it harder to build trust with your community."
 msgstr ""
 
 msgid "Use NFTs for redemptions"

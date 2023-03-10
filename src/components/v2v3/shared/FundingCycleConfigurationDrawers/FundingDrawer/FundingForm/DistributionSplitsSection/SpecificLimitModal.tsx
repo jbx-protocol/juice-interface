@@ -45,7 +45,7 @@ export default function SpecificLimitModal({
       title={
         <TooltipLabel
           label={t`Set up your payouts`}
-          tip={t`This is the amount of funds that you can pay out from your project each cycle.`}
+          tip={t`This is the amount of ETH that you can pay out from your project each cycle.`}
         />
       }
       onOk={setNewSplitsFromLimit}

@@ -49,7 +49,7 @@ export function UpgradeController() {
             title: 'Upgrade JBETHPaymentTerminal',
           },
           {
-            title: 'Move funds',
+            title: 'Move ETH',
           },
         ]}
         className="mb-5"

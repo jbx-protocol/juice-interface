@@ -99,7 +99,7 @@ export function TreasuryStatsSection() {
               <TooltipLabel
                 tip={
                   <Trans>
-                    No payouts are scheduled for this cycle. All funds are
+                    No payouts are scheduled for this cycle. All ETH is
                     available for redemption (subject to the redemption rate).
                   </Trans>
                 }

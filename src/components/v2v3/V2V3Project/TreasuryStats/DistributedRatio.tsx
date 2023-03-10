@@ -44,8 +44,8 @@ export default function DistributedRatio() {
             <TooltipLabel
               tip={
                 <Trans>
-                  No payouts are scheduled for this cycle. All funds are
-                  available for redemption (subject to the redemption rate).
+                  No payouts are scheduled for this cycle. All ETH is available
+                  for redemption (subject to the redemption rate).
                 </Trans>
               }
               label={<Trans>No payouts</Trans>}

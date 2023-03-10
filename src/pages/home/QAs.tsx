@@ -65,7 +65,7 @@ export default function QAs(): {
           </p>
           <p>
             By default, these tokens represent a partial claim on the project's
-            funds, and they are often used for governance rights, community
+            ETH, and they are often used for governance rights, community
             access, or other membership perks.
           </p>
           <p>
@@ -113,7 +113,7 @@ export default function QAs(): {
           <p>
             Importantly, Juicebox's crypto fundraising platform is on-chain and
             non-custodial. Project creators actually own their projects, and
-            JuiceboxDAO has no way to access a project's funds or change its
+            JuiceboxDAO has no way to access a project's ETH or change its
             rules.
           </p>
           <p>
@@ -143,7 +143,7 @@ export default function QAs(): {
           <p>
             Juicebox is on-chain and non-custodial. Project creators actually
             own their projects, and JuiceboxDAO has no way to access project's
-            funds or change their rules.
+            ETH or change their rules.
           </p>
         </Trans>
       ),
@@ -167,7 +167,7 @@ export default function QAs(): {
           </p>
           <p>
             Due to their public nature, any exploits to the contracts may have
-            irreversible consequences, including loss of funds. Please use
+            irreversible consequences, including loss of ETH. Please use
             Juicebox with caution.
           </p>
           <p>

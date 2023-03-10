@@ -55,7 +55,7 @@ export function HeldFeesSection() {
         />
         <p>
           <Trans>
-            The held fees will reset as new funds are transferred to the project
+            The held fees will reset as ETH is transferred back to the project
             with the <strong>transfer ETH to project</strong> transaction above.
           </Trans>{' '}
           <ExternalLink href={helpPagePath('/dev/learn/glossary/hold-fees/')}>

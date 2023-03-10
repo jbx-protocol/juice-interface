@@ -123,7 +123,7 @@ function Projects() {
               <ExternalLink href={helpPagePath('/dev/learn/risks')}>
                 risks
               </ExternalLink>{' '}
-              before committing your funds.
+              before committing your ETH.
             </Trans>
           </p>
         </div>

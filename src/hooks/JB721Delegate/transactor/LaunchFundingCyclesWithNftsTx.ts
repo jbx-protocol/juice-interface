@@ -15,8 +15,8 @@ import { useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
 import { NftRewardsData } from 'redux/slices/editingV2Project/types'
 import {
+  buildDeployTiered721DelegateData,
   buildJB721TierParams,
-  buildJBDeployTiered721DelegateData,
 } from 'utils/nftRewards'
 import {
   getTerminalsFromFundAccessConstraints,
@@ -122,7 +122,7 @@ export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFun
       version: DEFAULT_JB_721_DELEGATE_VERSION,
     })
 
-    const delegateData = buildJBDeployTiered721DelegateData({
+    const delegateData = buildDeployTiered721DelegateData({
       collectionUri: collectionMetadata.uri ?? '',
       collectionName,
       collectionSymbol: collectionMetadata.symbol ?? '',

@@ -18,7 +18,7 @@ import {
 import { JBPayDataSourceFundingCycleMetadata } from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
-import { buildJBDeployTiered721DelegateData } from 'utils/nftRewards'
+import { buildDeployTiered721DelegateData } from 'utils/nftRewards'
 import {
   getTerminalsFromFundAccessConstraints,
   isValidMustStartAtOrAfter,
@@ -103,7 +103,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
     }
     const _owner = owner?.length ? owner : userAddress
 
-    const delegateData = buildJBDeployTiered721DelegateData({
+    const delegateData = buildDeployTiered721DelegateData({
       collectionUri,
       collectionName,
       collectionSymbol,

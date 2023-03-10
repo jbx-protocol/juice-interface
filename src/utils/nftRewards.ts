@@ -421,7 +421,7 @@ export function sumTierFloors(
   )
 }
 
-export function buildJBDeployTiered721DelegateData({
+export function buildDeployTiered721DelegateData({
   collectionUri,
   collectionName,
   collectionSymbol,

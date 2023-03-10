@@ -1,4 +1,5 @@
 import { NextRouter } from 'next/router'
+import React from 'react'
 
 type AnnouncementCondition = ({
   router,
@@ -12,7 +13,7 @@ export type Announcement = {
   id: string
   conditions: AnnouncementCondition[]
   expire?: number // millis timestamp
-  content: JSX.Element
+  content: React.FC
   cta?: {
     text?: string
     fn?: (router: NextRouter) => void

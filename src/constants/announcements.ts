@@ -7,7 +7,7 @@ export const announcements: Announcement[] = [
   {
     id: 'introProjectTags',
     conditions: [({ isProjectOwner }) => isProjectOwner],
-    content: <IntroProjectTags />,
+    content: IntroProjectTags,
     cta: {
       text: 'Go to settings',
       fn: (router: NextRouter) => {
@@ -18,7 +18,7 @@ export const announcements: Announcement[] = [
   {
     id: 'introSepanaSearch',
     conditions: [({ router }) => router.pathname.includes('projects')],
-    content: <IntroSepanaSearch />,
+    content: IntroSepanaSearch,
   },
 ]
 

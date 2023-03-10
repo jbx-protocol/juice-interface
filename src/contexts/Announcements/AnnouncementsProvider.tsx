@@ -72,7 +72,7 @@ export const AnnouncementsProvider: React.FC = ({ children }) => {
             hidden: !activeAnnouncement.cta?.fn,
           }}
         >
-          {activeAnnouncement.content}
+          <activeAnnouncement.content />
         </Modal>
       )}
     </AnnouncementsContext.Provider>

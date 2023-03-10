@@ -4,24 +4,64 @@ const WALLET_CONNECT_URLS = [
   'https://*.walletconnect.com',
   'https://*.walletconnect.org',
   'wss://*.walletconnect.org',
-].join(' ')
+]
 
 const INFURA_IPFS_URLS = [
   'https://*.infura-ipfs.io',
   'https://ipfs.infura.io:5001',
-].join(' ')
+]
+
+const SCRIPT_SRC = [
+  'https://static.hotjar.com',
+  'https://script.hotjar.com',
+  'https://*.juicebox.money',
+]
+
+const STYLE_SRC = ['https://fonts.googleapis.com']
+
+const FONT_SRC = ['https://fonts.gstatic.com']
+
+const IMG_SRC = [
+  'https://*.juicebox.money',
+  'https://juicebox.money',
+  ...INFURA_IPFS_URLS,
+  'https://jbx.mypinata.cloud',
+  'https://gateway.pinata.cloud https://cdn.stamp.fyi',
+]
+
+const CONNECT_SRC = [
+  'https://*.juicebox.money',
+  'https://juicebox.money',
+  'https://*.infura.io',
+  ...INFURA_IPFS_URLS,
+  'https://api.pinata.cloud',
+  'https://jbx.mypinata.cloud',
+  'https://api.studio.thegraph.com',
+  'https://gateway.thegraph.com',
+  'https://api.arcx.money',
+  'https://api.tenderly.co',
+  'https://*.hotjar.com',
+  'https://*.hotjar.io',
+  'wss://*.hotjar.com',
+  'https://*.gnosis.io',
+  'https://*.safe.global',
+  'https://*.snapshot.org',
+  'https://*.wallet.coinbase.com',
+  ...WALLET_CONNECT_URLS,
+  'https://juicenews.beehiiv.com',
+]
 
 const ContentSecurityPolicy = `
   default-src 'none';
-  script-src 'self' https://static.hotjar.com https://script.hotjar.com https://*.juicebox.money 'unsafe-inline' 'unsafe-eval';
-  style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
-  font-src 'self' https://fonts.gstatic.com data:;
-  img-src 'self' https://*.juicebox.money https://juicebox.money ${INFURA_IPFS_URLS} https://jbx.mypinata.cloud https://gateway.pinata.cloud https://cdn.stamp.fyi data:;
-  connect-src 'self' https://*.juicebox.money https://juicebox.money https://*.infura.io ${INFURA_IPFS_URLS} https://api.pinata.cloud https://jbx.mypinata.cloud https://api.studio.thegraph.com https://gateway.thegraph.com https://api.arcx.money https://api.tenderly.co https://*.hotjar.com https://*.hotjar.io wss://*.hotjar.com https://*.gnosis.io https://*.safe.global https://*.snapshot.org https://*.wallet.coinbase.com ${WALLET_CONNECT_URLS} https://juicenews.beehiiv.com;
+  script-src 'self' ${SCRIPT_SRC.join(' ')} 'unsafe-inline' 'unsafe-eval';
+  style-src 'self' ${STYLE_SRC.join(' ')} 'unsafe-inline';
+  font-src 'self' ${FONT_SRC.join(' ')} data:;
+  img-src 'self' ${IMG_SRC.join(' ')}  data:;
+  connect-src 'self' ${CONNECT_SRC.join(' ')};
   manifest-src 'self';
   prefetch-src 'self';
   frame-src 'self' https://vars.hotjar.com/ https://gnosis-safe.io https://app.safe.global;
-  media-src 'self' https://jbx.mypinata.cloud ${INFURA_IPFS_URLS};
+  media-src 'self' https://jbx.mypinata.cloud ${INFURA_IPFS_URLS.join(' ')};
 `
 
 module.exports = {

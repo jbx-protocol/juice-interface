@@ -30,8 +30,9 @@
     "supabase:start": "supabase start",
     "supabase:stop": "supabase stop",
     "supabase:restart": "yarn supabase:stop && yarn supabase:start",
+    "supabase:login": "supabase login",
     "supabase:pushdb": "supabase db push",
-    "supabase:generate:local": "supabase gen types typescript --local > src/generated/database.types.ts"
+    "supabase:generate:local": "supabase gen types typescript --local > src/types/database.types.ts"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json,css}": [

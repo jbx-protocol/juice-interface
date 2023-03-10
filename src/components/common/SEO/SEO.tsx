@@ -2,6 +2,7 @@ import config from 'config/seo_meta.json'
 import Head from 'next/head'
 import { FC, ReactNode } from 'react'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
+import { QwestiveScript } from '../Head/scripts/QwestiveScripts'
 import { OpenGraphMetaTags } from './OpenGraphMetaTags'
 import {
   TwitterCardType,
@@ -78,6 +79,7 @@ export const SEO: FC<SEOProps> = ({
       />
 
       <Head>{children}</Head>
+      <QwestiveScript />
     </>
   )
 }

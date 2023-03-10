@@ -1,19 +1,38 @@
-import { CrownOutlined, LogoutOutlined } from '@ant-design/icons'
+import {
+  CrownOutlined,
+  DollarCircleOutlined,
+  LogoutOutlined,
+} from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Dropdown } from 'antd'
 import { ItemType } from 'antd/lib/menu/hooks/useItems'
 import CopyTextButton from 'components/buttons/CopyTextButton'
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
+import { useQwestiveSDK } from 'contexts/QwestiveReferral/QwestiveReferral'
 import useMobile from 'hooks/Mobile'
 import { useWallet } from 'hooks/Wallet'
 import Link from 'next/link'
+import { useEffect } from 'react'
 import Balance from './Balance'
 
 export default function WalletMenu({ userAddress }: { userAddress: string }) {
   const isMobile = useMobile()
+  const { isConnected, disconnect } = useWallet()
 
-  const { disconnect } = useWallet()
+  const { qwestiveTracker, qwestiveEmbedUI } = useQwestiveSDK()
+
+  useEffect(() => {
+    if (!isConnected || !userAddress || qwestiveEmbedUI.isLoading) return
+    // Send user address to log in embedUI
+    qwestiveEmbedUI?.setAlias({ publicKey: userAddress })
+  }, [userAddress, isConnected, qwestiveEmbedUI])
+
+  useEffect(() => {
+    if (!isConnected || !userAddress || qwestiveTracker.isLoading) return
+    // Send user address to track user
+    qwestiveTracker?.setAlias({ id: userAddress })
+  }, [userAddress, isConnected, qwestiveTracker])
 
   const CopyableAddress = () => (
     <div className="text-black dark:text-slate-100">
@@ -42,6 +61,15 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
     </>
   )
 
+  const Referral = () => (
+    <>
+      <span className="text-black dark:text-slate-100">
+        <Trans>Referral</Trans>
+      </span>
+      <DollarCircleOutlined className="text-black dark:text-slate-100" />
+    </>
+  )
+
   const items: ItemType[] = [
     {
       key: 0,
@@ -51,10 +79,16 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
       key: 1,
       label: <MyProjects />,
     },
+    {
+      key: 2,
+      label: <Referral />,
+      onClick: qwestiveEmbedUI?.openPopup,
+    },
   ]
+
   if (!isMobile) {
     items.push({
-      key: 2,
+      key: 3,
       label: <Disconnect />,
       onClick: async () => {
         await disconnect()

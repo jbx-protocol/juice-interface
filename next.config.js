@@ -15,6 +15,7 @@ const SCRIPT_SRC = [
   'https://static.hotjar.com',
   'https://script.hotjar.com',
   'https://*.juicebox.money',
+  'https://qwestive-referral-dev.web.app',
 ]
 
 const IMG_SRC = [
@@ -51,6 +52,14 @@ if (process.env.NODE_ENV === 'development') {
   CONNECT_SRC.push('localhost:*')
 }
 
+const FRAME_SRC = [
+  'https://vars.hotjar.com/',
+  'https://gnosis-safe.io',
+  'https://app.safe.global',
+  'https://qwestive-referral-dev.web.app',
+  'https://qwest-qwestive.referral-dev.qwestive.io',
+]
+
 const ContentSecurityPolicy = `
   default-src 'none';
   script-src 'self' ${SCRIPT_SRC.join(' ')} 'unsafe-inline' 'unsafe-eval';
@@ -60,7 +69,7 @@ const ContentSecurityPolicy = `
   connect-src 'self' ${CONNECT_SRC.join(' ')};
   manifest-src 'self';
   prefetch-src 'self';
-  frame-src 'self' https://vars.hotjar.com/ https://gnosis-safe.io https://app.safe.global;
+  frame-src 'self' ${FRAME_SRC.join(' ')};
   media-src 'self' https://jbx.mypinata.cloud ${INFURA_IPFS_URLS.join(' ')};
 `
 

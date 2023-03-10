@@ -1,7 +1,5 @@
-import { Col, Divider, Row, Space } from 'antd'
-import useMobile from 'hooks/Mobile'
 import { ReactNode } from 'react'
-import { classNames } from 'utils/classNames'
+import { twMerge } from 'tailwind-merge'
 
 export const AllocationItem = ({
   className,
@@ -16,44 +14,33 @@ export const AllocationItem = ({
   extra?: ReactNode
   onClick?: VoidFunction
 }) => {
-  const isMobile = useMobile()
   const isClickable = !!onClick
 
-  // TOOD: Remove border-solid once tailwind preflight is enabled
-  const containerClasses = classNames(
-    'select-none border border-solid border-smoke-200 dark:border-slate-300 bg-smoke-75 dark:bg-slate-400',
-    isClickable
-      ? 'cursor-pointer transition-colors hover:border-smoke-400 dark:hover:border-slate-100'
-      : '',
-  )
-
-  if (isMobile) {
-    return (
-      <div className={classNames(containerClasses, 'py-4')} onClick={onClick}>
-        <div className="flex justify-between pr-3 pl-7">
-          <div>{title}</div>
-          {extra}
-        </div>
-        <Divider className="m-0 my-3" />
-        <div className="pr-3 pl-7">{amount}</div>
-      </div>
-    )
-  }
-
   return (
-    <Row className={classNames(containerClasses, className)} onClick={onClick}>
-      <Col
-        span={13}
-        className="border-0 border-r-[1px] border-solid border-smoke-200 py-3 pl-7  dark:border-slate-300"
+    <div
+      className={twMerge(
+        'select-none border border-solid border-smoke-200 bg-smoke-75 dark:border-slate-300 dark:bg-slate-400',
+        'grid grid-cols-2 py-4 md:grid-cols-12 md:py-0',
+        isClickable
+          ? 'cursor-pointer transition-colors hover:border-smoke-400 dark:hover:border-slate-100'
+          : '',
+        className,
+      )}
+      onClick={onClick}
+    >
+      <div className="pb-3 pr-3 pl-7 md:col-span-6 md:py-3">{title}</div>
+      <div className="justify-self-end pr-3 md:col-start-12 md:py-3">
+        {extra}
+      </div>
+      <div
+        className={twMerge(
+          'col-span-2 border-t border-l-0 border-r-0 border-b-0 border-solid border-smoke-200 pt-3 pr-3 pl-7',
+          'md:col-span-5 md:col-start-7 md:row-start-1 md:w-full md:justify-self-end md:border-l md:border-t-0 md:text-end',
+          'dark:border-slate-300',
+        )}
       >
-        {title}
-      </Col>
-      <Col span={11} className="py-3 pr-4 text-end">
-        <Space size="large">
-          {amount}
-          {extra}
-        </Space>
-      </Col>
-    </Row>
+        {amount}
+      </div>
+    </div>
   )
 }

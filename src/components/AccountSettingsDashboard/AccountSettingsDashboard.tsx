@@ -1,5 +1,5 @@
 import { ArrowLeftOutlined } from '@ant-design/icons'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import axios from 'axios'
 import { Badge } from 'components/Badge'
@@ -7,7 +7,7 @@ import { Callout } from 'components/Callout'
 import { Formik, FormikHelpers } from 'formik'
 import { User } from 'models/database'
 import { useRouter } from 'next/router'
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import {
   emitErrorNotification,
   emitInfoNotification,
@@ -16,7 +16,27 @@ import { AccountSettingsForm } from './components/AccountSettingsForm'
 import { AccountSettingsSchema } from './lib/AccountSettingsSchema'
 
 export type AccountSettingsFormType = {
-  email: string | null
+  bio?: string | null | undefined
+  email?: string | null | undefined
+  website?: string | null | undefined
+  twitter?: string | null | undefined
+}
+
+const determinedTouched = (
+  values: AccountSettingsFormType,
+  initialValues: AccountSettingsFormType,
+): Record<keyof AccountSettingsFormType, boolean> => {
+  const touched: Record<keyof AccountSettingsFormType, boolean> = {} as Record<
+    keyof AccountSettingsFormType,
+    boolean
+  >
+
+  for (const k in values) {
+    const key = k as keyof AccountSettingsFormType
+    touched[key] = values[key] !== initialValues[key]
+  }
+
+  return touched
 }
 
 export const AccountSettingsDashboard = ({ user }: { user: User }) => {
@@ -24,44 +44,60 @@ export const AccountSettingsDashboard = ({ user }: { user: User }) => {
 
   const [lastEmailUpdated, setLastEmailUpdated] = useState<string>()
 
-  const initialValues: AccountSettingsFormType = {
-    email: user.email_verified ? user.email : null,
-  }
+  const initialValues: AccountSettingsFormType = useMemo(
+    () => ({
+      bio: user.bio,
+      email: user.email_verified ? user.email : null,
+      website: user.website,
+      twitter: user.twitter,
+    }),
+    [user.bio, user.email, user.email_verified, user.twitter, user.website],
+  )
+
   const onSubmit = useCallback(
     async (
       values: AccountSettingsFormType,
       helpers: FormikHelpers<AccountSettingsFormType>,
     ) => {
+      const touched = determinedTouched(values, initialValues)
+      const formWasTouched = Object.values(touched).reduce(
+        (acc, curr) => acc || curr,
+        false,
+      )
+      if (!formWasTouched) return
       try {
-        if (!values.email) throw new Error('no email')
-        await axios.post('/api/account/add-email', {
-          email: values.email,
-        })
-        emitInfoNotification(
-          `Check ${values.email} and verify your new email address.`,
-        )
-        setLastEmailUpdated(values.email)
+        await axios.post('/api/account/update-details', values)
+        const emailWasUpdated =
+          values.email && touched.email && lastEmailUpdated !== values.email
+        if (emailWasUpdated) {
+          emitInfoNotification(
+            t`Check ${values.email} and verify your new email address.`,
+          )
+          setLastEmailUpdated(values.email ?? '')
+        }
+        emitInfoNotification(t`Profile details were updated`)
       } catch (e) {
         console.error(
           'Error occurred whiling submitting account settings form',
           e,
         )
-      } finally {
-        helpers.setSubmitting(false)
       }
+      helpers.setSubmitting(false)
     },
-    [],
+    [initialValues, lastEmailUpdated],
   )
 
   const onEmailResendClicked = useCallback(async () => {
     if (!lastEmailUpdated)
-      emitErrorNotification('Something has gone wrong, please contact support.')
+      emitErrorNotification(
+        t`Something has gone wrong, please contact support.`,
+      )
 
-    await axios.post('/api/account/add-email', {
+    await axios.post('/api/account/update-email', {
       email: lastEmailUpdated,
     })
     emitInfoNotification(
-      `Check ${lastEmailUpdated} and verify your new email address.`,
+      t`Check ${lastEmailUpdated} and verify your new email address.`,
     )
   }, [lastEmailUpdated])
 

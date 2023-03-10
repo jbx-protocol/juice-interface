@@ -117,33 +117,67 @@ export interface Database {
       }
       users: {
         Row: {
+          bio: string | null
           created_at: string
           email: string | null
           email_verified: boolean
           id: string
+          twitter: string | null
           updated_at: string
           wallet: string
+          website: string | null
         }
         Insert: {
+          bio?: string | null
           created_at?: string
           email?: string | null
           email_verified?: boolean
           id: string
+          twitter?: string | null
           updated_at?: string
           wallet: string
+          website?: string | null
         }
         Update: {
+          bio?: string | null
           created_at?: string
           email?: string | null
           email_verified?: boolean
           id?: string
+          twitter?: string | null
           updated_at?: string
           wallet?: string
+          website?: string | null
         }
       }
     }
     Views: {
-      [_ in never]: never
+      user_profiles: {
+        Row: {
+          bio: string | null
+          created_at: string | null
+          id: string | null
+          twitter: string | null
+          wallet: string | null
+          website: string | null
+        }
+        Insert: {
+          bio?: string | null
+          created_at?: string | null
+          id?: string | null
+          twitter?: string | null
+          wallet?: string | null
+          website?: string | null
+        }
+        Update: {
+          bio?: string | null
+          created_at?: string | null
+          id?: string | null
+          twitter?: string | null
+          wallet?: string | null
+          website?: string | null
+        }
+      }
     }
     Functions: {
       [_ in never]: never

@@ -3026,13 +3026,25 @@ msgstr ""
 msgid "Starting over will erase all currently saved progress."
 msgstr ""
 
+msgid "Stay up to date 🧃"
+msgstr ""
+
 msgid "Stay up to date."
+msgstr ""
+
+msgid "Subcription to juicenews failed."
 msgstr ""
 
 msgid "Subject"
 msgstr ""
 
+msgid "Subscribe to Juicenews to get the latest updates from the Juicebox ecosystem."
+msgstr ""
+
 msgid "Successfully approved ERC-20 spending."
+msgstr ""
+
+msgid "Successfully subscribed to Juicenews!"
 msgstr ""
 
 msgid "Sum of percentages cannot exceed 100%"

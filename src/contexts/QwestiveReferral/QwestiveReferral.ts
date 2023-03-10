@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useEffect, useState } from 'react'
 import {
   TInitSDK,
@@ -45,6 +46,7 @@ export function useQwestiveSDK() {
           apiKey: QWESTIVE_REFERRAL_API_KEY,
           projectId: QWESTIVE_REFERRAL_PROJECT_ID,
         })
+        console.debug('QwestiveTracker', { apiMethods })
         setTrackerQwestiveMethods({ ...apiMethods, isLoading: false })
       } catch (e) {
         console.error(
@@ -53,6 +55,7 @@ export function useQwestiveSDK() {
         setTrackerQwestiveMethods({ isLoading: false })
       }
     }
+    console.debug(window?.QwestiveTracker)
     window?.QwestiveTracker?.loadQwestiveTracker(() => {
       loadTrackerMethods()
     })
@@ -65,6 +68,7 @@ export function useQwestiveSDK() {
           apiKey: QWESTIVE_REFERRAL_API_KEY,
           projectId: QWESTIVE_REFERRAL_PROJECT_ID,
         })
+        console.debug('EmbedUI', { apiMethods })
         setEmbedUIQwestiveMethods({ ...apiMethods, isLoading: false })
       } catch (e) {
         console.error(
@@ -73,6 +77,7 @@ export function useQwestiveSDK() {
         setEmbedUIQwestiveMethods({ isLoading: false })
       }
     }
+    console.debug(window?.EmbedUI)
     window?.EmbedUI?.loadEmbedUI(() => {
       loadEmbedUIMethods()
     })

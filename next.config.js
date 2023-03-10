@@ -15,7 +15,7 @@ const SCRIPT_SRC = [
   'https://static.hotjar.com',
   'https://script.hotjar.com',
   'https://*.juicebox.money',
-  'https://qwestive-referral-dev.web.app',
+  'https://qwestive-referral-prod.web.app',
 ]
 
 const IMG_SRC = [
@@ -56,8 +56,8 @@ const FRAME_SRC = [
   'https://vars.hotjar.com/',
   'https://gnosis-safe.io',
   'https://app.safe.global',
-  'https://qwestive-referral-dev.web.app',
-  'https://qwest-qwestive.referral-dev.qwestive.io',
+  'https://qwestive-referral-prod.web.app',
+  'https://juicebox.referral.qwestive.io',
 ]
 
 const ContentSecurityPolicy = `

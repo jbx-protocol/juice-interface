@@ -77,7 +77,7 @@ const queryOpts = (
   if (terminalAddress) {
     where.push({
       key: 'terminal',
-      value: terminalAddress.toLowerCase(),
+      value: terminalAddress,
     })
   }
 
@@ -227,7 +227,7 @@ export function useContributedProjectsQuery(wallet: string | undefined) {
     return [
       {
         key: 'wallet',
-        value: wallet.toLowerCase(),
+        value: wallet,
       },
       {
         key: 'totalPaid',
@@ -248,7 +248,7 @@ export function useHoldingsProjectsQuery(wallet: string | undefined) {
     return [
       {
         key: 'wallet',
-        value: wallet.toLowerCase(),
+        value: wallet,
       },
       {
         key: 'balance',

@@ -65,14 +65,6 @@ export default function ProjectActivity() {
         key: 'useAllowanceEvent',
         value: null, // Exclude all useAllowanceEvents, no UI support yet
       },
-      {
-        key: 'distributeToTicketModEvent',
-        value: null, // Exclude all distributeToTicketModEvent, no UI support
-      },
-      {
-        key: 'distributeToPayoutModEvent',
-        value: null, // Exclude all distributeToPayoutModEvent, no UI support
-      },
     ]
 
     if (projectId) {

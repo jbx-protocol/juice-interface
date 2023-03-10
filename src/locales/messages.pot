@@ -254,9 +254,6 @@ msgstr ""
 msgid "Activity"
 msgstr ""
 
-msgid "Add"
-msgstr ""
-
 msgid "Add Lock Duration Option"
 msgstr ""
 
@@ -512,6 +509,12 @@ msgstr ""
 msgid "Available:"
 msgstr ""
 
+msgid "Avatar"
+msgstr ""
+
+msgid "Avatar images are pulled from ENS."
+msgstr ""
+
 msgid "Awaiting IPFS response. This may take a while."
 msgstr ""
 
@@ -543,6 +546,9 @@ msgid "Beneficiary address"
 msgstr ""
 
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
+msgstr ""
+
+msgid "Bio"
 msgstr ""
 
 msgid "Block number"
@@ -627,6 +633,12 @@ msgid "Character"
 msgstr ""
 
 msgid "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked to have the Juicebox protocol internally track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
+msgstr ""
+
+msgid "Check {0} and verify your new email address."
+msgstr ""
+
+msgid "Check {lastEmailUpdated} and verify your new email address."
 msgstr ""
 
 msgid "Choose an ENS name before setting the text record"
@@ -2318,6 +2330,9 @@ msgstr ""
 msgid "Profile details"
 msgstr ""
 
+msgid "Profile details were updated"
+msgstr ""
+
 msgid "Project #{projectId}"
 msgstr ""
 
@@ -2511,9 +2526,6 @@ msgid "Receive ERC-20 tokens"
 msgstr ""
 
 msgid "Receive {receiveText}"
-msgstr ""
-
-msgid "Receiving payments"
 msgstr ""
 
 msgid "Recipient"
@@ -2946,6 +2958,9 @@ msgid "Snapshot voting"
 msgstr ""
 
 msgid "Socials"
+msgstr ""
+
+msgid "Something has gone wrong, please contact support."
 msgstr ""
 
 msgid "Something went wrong."

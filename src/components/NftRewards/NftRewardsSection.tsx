@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Col, Row, Space } from 'antd'
+import { Space } from 'antd'
 import {
   NftPostPayModal,
   NFT_PAYMENT_CONFIRMED_QUERY_PARAM,
@@ -12,7 +12,6 @@ import { CurrencyContext } from 'contexts/shared/CurrencyContext'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useHasNftRewards } from 'hooks/JB721Delegate/HasNftRewards'
-import useMobile from 'hooks/Mobile'
 import { useContext } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { sortNftsByContributionFloor, sumTierFloors } from 'utils/nftRewards'
@@ -20,16 +19,14 @@ import { useModalFromUrlQuery } from '../modals/hooks/ModalFromUrlQuery'
 import { NftTierCard } from './NftTierCard'
 
 function RewardTiersLoadingSkeleton() {
-  const isMobile = useMobile()
-
   return (
-    <Row className="mt-4" gutter={isMobile ? 8 : 24}>
+    <div className="mt-4 grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-3">
       {[...Array(3)]?.map((_, index) => (
-        <Col md={8} xs={8} key={`rewardTierLoading-${index}`}>
+        <div key={`rewardTierLoading-${index}`}>
           <NftTierCard loading onSelect={() => null} onDeselect={() => null} />
-        </Col>
+        </div>
       ))}
-    </Row>
+    </div>
   )
 }
 
@@ -54,7 +51,6 @@ export function NftRewardsSection() {
   } = useContext(CurrencyContext)
   const { form: payProjectForm } = useContext(PayProjectFormContext)
   const { projectMetadata } = useContext(ProjectMetadataContext)
-  const isMobile = useMobile()
 
   const { visible: nftPostPayModalVisible, hide: hideNftPostPayModal } =
     useModalFromUrlQuery(NFT_PAYMENT_CONFIRMED_QUERY_PARAM)
@@ -154,12 +150,10 @@ export function NftRewardsSection() {
             '-mt-3 -ml-3 -mr-5 max-h-[950px] overflow-auto pb-3 pt-3 pl-3 pr-5 md:max-h-[620px]'
           }
         >
-          <Row gutter={isMobile ? 12 : 20}>
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4">
             {renderRewardTiers?.map(rewardTier => (
-              <Col
+              <div
                 className="mb-4"
-                md={8}
-                xs={12}
                 key={`${rewardTier.contributionFloor}-${rewardTier.name}`}
               >
                 <NftTierCard
@@ -177,9 +171,9 @@ export function NftRewardsSection() {
                     handleTierDeselect(rewardTier.id, quantity)
                   }
                 />
-              </Col>
+              </div>
             ))}
-          </Row>
+          </div>
         </div>
       )}
 

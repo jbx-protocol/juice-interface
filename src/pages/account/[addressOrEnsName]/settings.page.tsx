@@ -31,7 +31,9 @@ export const getServerSideProps: GetServerSideProps<
 
   const user = await supabase
     .from('users')
-    .select('created_at, email, email_verified, id, updated_at, wallet')
+    .select(
+      'created_at, email, email_verified, id, updated_at, wallet, bio, website, twitter',
+    )
     .eq('id', session.user.id)
     .single()
 

@@ -239,6 +239,9 @@ msgstr ""
 msgid "Activity"
 msgstr ""
 
+msgid "Add"
+msgstr ""
+
 msgid "Add ETH from your wallet to this project's balance without minting tokens."
 msgstr ""
 

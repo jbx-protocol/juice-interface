@@ -34,6 +34,10 @@ declare global {
       NEXT_PUBLIC_INFURA_IPFS_PROJECT_ID: string
       NEXT_PUBLIC_INFURA_IPFS_API_SECRET: string
       NEXT_PUBLIC_INFURA_IPFS_HOSTNAME: string
+
+      NEXT_PUBLIC_SUPABASE_URL: string
+      SUPABASE_SERVICE_ROLE_KEY: string
+      SUPABASE_JWT_SECRET: string
     }
   }
 }

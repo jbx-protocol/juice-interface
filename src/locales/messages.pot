@@ -272,10 +272,19 @@ msgstr ""
 msgid "Add a banner to the top of your project's page."
 msgstr ""
 
+msgid "Add a collection name"
+msgstr ""
+
+msgid "Add a collection symbol"
+msgstr ""
+
 msgid "Add a cover image to your project page. This will be displayed at the top of your project page."
 msgstr ""
 
 msgid "Add a payout"
+msgstr ""
+
+msgid "Add an NFT"
 msgstr ""
 
 msgid "Add an on-chain memo to this payment."
@@ -881,6 +890,9 @@ msgstr ""
 msgid "Customize your project's \"pay\" button. Leave blank to use the default."
 msgstr ""
 
+msgid "Customize your public facing profile and add additional management information."
+msgstr ""
+
 msgid "Cycle"
 msgstr ""
 
@@ -1178,10 +1190,13 @@ msgstr ""
 msgid "Edit {projectTitle}"
 msgstr ""
 
-msgid "Edit {projectTitle}'s rules'"
+msgid "Edit {projectTitle}'s rules"
 msgstr ""
 
 msgid "Edited cycle"
+msgstr ""
+
+msgid "Edited payout"
 msgstr ""
 
 msgid "Editing NFTs"
@@ -1197,6 +1212,9 @@ msgid "Edits to upcoming cycles will take effect when the current cycle ends. A 
 msgstr ""
 
 msgid "Email"
+msgstr ""
+
+msgid "Email address"
 msgstr ""
 
 msgid "Enable unclaimed token spending"
@@ -1377,6 +1395,9 @@ msgid "General"
 msgstr ""
 
 msgid "Get help planning or setting up my project."
+msgstr ""
+
+msgid "GitHub"
 msgstr ""
 
 msgid "Give permissions to {0} on project #{projectId}"
@@ -1577,6 +1598,9 @@ msgstr ""
 msgid "Join <0>hundreds of projects</0> sippin' the Juice."
 msgstr ""
 
+msgid "Juicebox"
+msgstr ""
+
 msgid "Juicebox Project"
 msgstr ""
 
@@ -1647,6 +1671,9 @@ msgid "Legacy balance"
 msgstr ""
 
 msgid "Legacy tokens to migrate"
+msgstr ""
+
+msgid "Legal"
 msgstr ""
 
 msgid "Light theme"
@@ -2261,6 +2288,9 @@ msgstr ""
 msgid "Percentages must add up to 100% or less"
 msgstr ""
 
+msgid "Please check {lastEmailUpdated} and verify your new email address.<0/>Still no email after a couple of minutes? <1>Click here to resend.</1>"
+msgstr ""
+
 msgid "Podcast"
 msgstr ""
 
@@ -2273,6 +2303,9 @@ msgstr ""
 msgid "Previous V1 Project ID:"
 msgstr ""
 
+msgid "Privacy Policy"
+msgstr ""
+
 msgid "Process held fees"
 msgstr ""
 
@@ -2280,6 +2313,9 @@ msgid "Process project #{projectId}'s held fees"
 msgstr ""
 
 msgid "Processing held fees will pay <0>JuiceboxDAO</0> and mint JBX to the project owner's address."
+msgstr ""
+
+msgid "Profile details"
 msgstr ""
 
 msgid "Project #{projectId}"
@@ -2909,6 +2945,9 @@ msgstr ""
 msgid "Snapshot voting"
 msgstr ""
 
+msgid "Socials"
+msgstr ""
+
 msgid "Something went wrong."
 msgstr ""
 
@@ -2988,6 +3027,9 @@ msgid "Terminal configuration"
 msgstr ""
 
 msgid "Terminal migration"
+msgstr ""
+
+msgid "Terms of Service"
 msgstr ""
 
 msgid "Text record is set"
@@ -3102,6 +3144,9 @@ msgid "The veNFT contract is currently unable to lock project token. Contact the
 msgstr ""
 
 msgid "The wallet address that reserved NFTs will be sent to"
+msgstr ""
+
+msgid "There are no NFT tiers to update."
 msgstr ""
 
 msgid "There is already a payout for this address"
@@ -3846,6 +3891,9 @@ msgid "Your project will appear as 'archived'."
 msgstr ""
 
 msgid "Your project will pay out ETH to these addresses and Juicebox projects."
+msgstr ""
+
+msgid "Your project's NFT contract version is not supported."
 msgstr ""
 
 msgid "Your project's NFTs will not have on-chain governance capabilities."

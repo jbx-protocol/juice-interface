@@ -3,6 +3,7 @@ import { Button, Empty, Form } from 'antd'
 import { RewardsList } from 'components/Create/components/RewardsList'
 
 import { useCallback, useState } from 'react'
+import { emitErrorNotification } from 'utils/notifications'
 import { useFundingCycleDrawer } from '../../hooks/FundingCycleDrawer'
 import { NftCollectionDetailsFormItems } from '../shared/NftCollectionDetailsFormItems'
 import { useAddNfts } from './hooks/AddNfts'
@@ -23,7 +24,15 @@ export function AddNftsSection({ onClose }: { onClose: VoidFunction }) {
   const onNftFormSaved = useCallback(async () => {
     const collectionName = marketplaceForm.getFieldValue('collectionName')
     const collectionSymbol = marketplaceForm.getFieldValue('collectionSymbol')
-    if (!rewardTiers || !collectionName || !collectionSymbol) return
+    if (!rewardTiers || !collectionName || !collectionSymbol) {
+      const message = !rewardTiers
+        ? t`Add an NFT`
+        : !collectionName
+        ? t`Add a collection name`
+        : t`Add a collection symbol`
+      emitErrorNotification(message)
+      return
+    }
 
     setSubmitLoading(true)
 
@@ -66,12 +75,7 @@ export function AddNftsSection({ onClose }: { onClose: VoidFunction }) {
         <NftCollectionDetailsFormItems />
       </Form>
 
-      <Button
-        onClick={onNftFormSaved}
-        htmlType="submit"
-        type="primary"
-        loading={submitLoading}
-      >
+      <Button onClick={onNftFormSaved} type="primary" loading={submitLoading}>
         <span>
           <Trans>Save NFTs</Trans>
         </span>

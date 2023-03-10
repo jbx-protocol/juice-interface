@@ -6,6 +6,7 @@ import { useAppSelector } from 'redux/hooks/AppSelector'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { withHttps } from 'utils/externalLink'
 import { pinNftCollectionMetadata, pinNftRewards } from 'utils/nftRewards'
+import { emitErrorNotification } from 'utils/notifications'
 
 // When project didn't have any NFTs before reconfiguring.
 //    i.e. reconfiguring with a new NFT collection (calls `721Deployer.reconfigureFundingCyclesOf`
@@ -25,7 +26,10 @@ export function useSaveNewCollection({
   const dispatch = useAppDispatch()
 
   const saveNewCollection = useCallback(async () => {
-    if (!rewardTiers) return // TODO emit error notificaiton
+    if (!rewardTiers) {
+      emitErrorNotification('You must add an NFT tier.')
+      return
+    }
 
     const marketplaceFormValues = marketplaceForm.getFieldsValue(true)
     const collectionName = marketplaceFormValues.collectionName

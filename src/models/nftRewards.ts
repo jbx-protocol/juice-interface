@@ -1,10 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { CurrencyOption } from './currencyOption'
 
-export const NFT_METADATA_CONTRIBUTION_FLOOR_ATTRIBUTES_INDEX = 0
-
 export type JB721DELEGATE_V1 = '1'
 export type JB721DELEGATE_V1_1 = '1.1'
+export type JB721DelegateVersion = JB721DELEGATE_V1 | JB721DELEGATE_V1_1
 
 // How we store reward tiers for use around the app
 export type NftRewardTier = {
@@ -27,7 +26,6 @@ export type JBTiered721Flags = {
   lockManualMintingChanges: boolean
   preventOverspending: boolean
 }
-export type JB721DelegateVersion = JB721DELEGATE_V1 | JB721DELEGATE_V1_1
 
 // Used when launching or adjusting tiers.
 export interface JB721TierParams {
@@ -113,7 +111,7 @@ export enum JB721GovernanceType {
 }
 
 export interface JB721PricingParams {
-  tiers: JB721TierParams[]
+  tiers: (JB721TierParams | JB_721_TIER_PARAMS_V1_1)[]
   currency: CurrencyOption
   decimals: number
   prices: string

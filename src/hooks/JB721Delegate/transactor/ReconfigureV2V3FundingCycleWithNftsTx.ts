@@ -78,8 +78,6 @@ function buildArgs(
   if (version === JB721_DELEGATE_V1_1) {
     return [...baseArgs, JBControllerAddress] // v1.1 requires us to pass the controller address in
   }
-
-  return null
 }
 
 export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<ReconfigureWithNftsTxArgs> {

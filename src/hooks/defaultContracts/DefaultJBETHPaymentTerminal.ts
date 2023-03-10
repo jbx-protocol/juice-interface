@@ -4,5 +4,5 @@ import { useContext } from 'react'
 export function useDefaultJBETHPaymentTerminal() {
   const { contracts } = useContext(V2V3ContractsContext)
 
-  return contracts?.JBETHPaymentTerminal
+  return contracts?.JBETHPaymentTerminal3_1
 }

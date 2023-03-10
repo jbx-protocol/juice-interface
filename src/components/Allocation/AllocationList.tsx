@@ -1,7 +1,6 @@
 import { PlusCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
-import { t } from '@lingui/macro'
-import useMobile from 'hooks/Mobile'
+import { t, Trans } from '@lingui/macro'
 import { useModal } from 'hooks/Modal'
 import { ReactNode, useCallback, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -38,7 +37,6 @@ export const AllocationList = ({
     > & { setSelectedAllocation: (a: AllocationSplit | undefined) => void },
   ) => ReactNode
 }) => {
-  const isMobile = useMobile()
   const allocationInstance = Allocation.useAllocationInstance()
   const {
     setAllocations,
@@ -233,14 +231,14 @@ export const AllocationList = ({
           <CreateButton
             size="large"
             className={twMerge(
+              'overflow-hidden text-ellipsis',
               addButtonSize === 'large' ? 'mt-4 h-24' : undefined,
             )}
             icon={<PlusCircleOutlined />}
             onClick={modal.open}
           >
-            {isMobile
-              ? t`Add`
-              : t`Add ${allocationName ? ` ${allocationName}` : ''}`}
+            {' '}
+            <Trans>Add {allocationName ? allocationName : ''}</Trans>
           </CreateButton>
         )}
       </div>

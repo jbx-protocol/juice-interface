@@ -27,7 +27,7 @@ export default function ConfigureEventElem({
         | 'discountRate'
         | 'duration'
         | 'mintingAllowed'
-        | 'pausePay'
+        | 'payPaused'
         | 'redeemPaused'
         | 'burnPaused'
         | 'transfersPaused'
@@ -71,7 +71,7 @@ export default function ConfigureEventElem({
     },
     allowControllerMigration: event.controllerMigrationAllowed,
     allowTerminalMigration: event.terminalMigrationAllowed,
-    pausePay: event.pausePay,
+    pausePay: event.payPaused,
     pauseRedeem: event.redeemPaused,
     pauseBurn: event.burnPaused,
     pauseDistributions: event.distributionsPaused,

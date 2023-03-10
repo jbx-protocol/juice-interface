@@ -1199,9 +1199,6 @@ msgstr ""
 msgid "Edited cycle"
 msgstr ""
 
-msgid "Edited payout"
-msgstr ""
-
 msgid "Editing NFTs"
 msgstr ""
 

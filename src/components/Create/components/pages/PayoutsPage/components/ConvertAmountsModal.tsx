@@ -88,8 +88,8 @@ export const ConvertAmountsModal = ({
     >
       <section className="mb-8 text-sm text-grey-700 dark:text-slate-200">
         <Trans>
-          To switch to 'Limited' payouts, pick a total amount to split between
-          your current payouts.
+          To switch to 'Limited' payouts, enter a total amount of payouts to
+          split between your recipients.
         </Trans>
       </section>
 

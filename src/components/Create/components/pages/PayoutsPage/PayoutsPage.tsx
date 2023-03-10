@@ -61,7 +61,7 @@ export const PayoutsPage = () => {
   const calloutText = useMemo(() => {
     switch (treasuryOption) {
       case 'amount':
-        return t`A fixed amount of ETH can be paid out from your project each cycle. You can send specific ETH amounts or ETH amounts based on USD values to one or more recipients. Any remaining ETH will stay in your project for token redemptions or use in future cycles.`
+        return t`A fixed amount of ETH can be paid out from your project each cycle. You can send specific ETH amounts (or ETH amounts based on USD values) to one or more recipients. Any remaining ETH will stay in your project for token redemptions or use in future cycles.`
       case 'unlimited':
         return t`All of your project's ETH can be paid out at any time. You can send percentages of that ETH to one or more recipients.`
       case 'zero':

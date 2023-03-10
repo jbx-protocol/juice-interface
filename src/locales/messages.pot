@@ -212,7 +212,7 @@ msgstr ""
 msgid "A collection's symbol is typically a 3-4 letter acronym or abbreviation of its name. The symbol is used on NFT marketplaces (like <0>OpenSea</0>)."
 msgstr ""
 
-msgid "A fixed amount of ETH can be paid out from your project each cycle. You can send specific ETH amounts or ETH amounts based on USD values to one or more recipients. Any remaining ETH will stay in your project for token redemptions or use in future cycles."
+msgid "A fixed amount of ETH can be paid out from your project each cycle. You can send specific ETH amounts (or ETH amounts based on USD values) to one or more recipients. Any remaining ETH will stay in your project for token redemptions or use in future cycles."
 msgstr ""
 
 msgid "A percentage of token issuance which is set aside for addresses and other projects chosen by the project owner."
@@ -633,9 +633,6 @@ msgid "Choose an ENS name before setting the text record"
 msgstr ""
 
 msgid "Choose an ENS name to use as the project's handle. Subdomains are allowed and will be included in the handle. Handles won't include the \".eth\" extension."
-msgstr ""
-
-msgid "Choose an Ethereum address to be this project's owner, or leave this blank to make your address the project owner."
 msgstr ""
 
 msgid "Choose how you would like to set up payouts."
@@ -1659,6 +1656,9 @@ msgid "Launch veNFT {symbol}"
 msgstr ""
 
 msgid "Launch {projectTitle}"
+msgstr ""
+
+msgid "Leave this blank to make your currently connected wallet the project owner. Fill this out with an Ethereum address to make that address this project's owner."
 msgstr ""
 
 msgid "Leave this blank to start your first cycle immediately after you finish setting up your project."
@@ -3131,7 +3131,7 @@ msgstr ""
 msgid "The text on the button at the bottom of the pop-up. You can preview this below."
 msgstr ""
 
-msgid "The text on the button supporters click to pay your project"
+msgid "The text on the button supporters have to click to pay your project"
 msgstr ""
 
 msgid "The total amount of payouts each cycle."
@@ -3269,7 +3269,7 @@ msgstr ""
 msgid "To edit your current NFT collection, go to the <0>Edit NFTs</0> page."
 msgstr ""
 
-msgid "To switch to 'Limited' payouts, pick a total amount to split between your current payouts."
+msgid "To switch to 'Limited' payouts, enter a total amount of payouts to split between your recipients."
 msgstr ""
 
 msgid "To: <0/>"
@@ -3416,13 +3416,13 @@ msgstr ""
 msgid "Transaction unsuccessful"
 msgstr ""
 
-msgid "Transfer ETH"
-msgstr ""
-
 msgid "Transfer ETH from your wallet to this project without minting tokens."
 msgstr ""
 
 msgid "Transfer ETH to project"
+msgstr ""
+
+msgid "Transfer ETH to this project"
 msgstr ""
 
 msgid "Transfer ETH to {projectTitle}"
@@ -3899,7 +3899,7 @@ msgstr ""
 msgid "Your project's NFTs will not have on-chain governance capabilities."
 msgstr ""
 
-msgid "Your project's NFTs will not have on-chain governance capabilities. Select this option if you don't want governance or plan to use an off-chain voting client (like Snapshot)."
+msgid "Your project's NFTs will not have on-chain governance capabilities. Select this option if you don't want governance, or if you plan to use an off-chain voting client (like Snapshot)."
 msgstr ""
 
 msgid "Your project's NFTs."

@@ -53,7 +53,7 @@ export function AddToProjectBalanceForm({
   return (
     <Form form={addToBalanceForm} layout="vertical">
       <h3 className="text-primary">
-        <Trans>Transfer ETH</Trans>
+        <Trans>Transfer ETH to this project</Trans>
       </h3>
       <p>
         <Trans>

@@ -106,7 +106,7 @@ export const ProjectDetailsPage: React.FC = () => {
               className="pb-8 pt-5"
               name="inputProjectOwner"
               label={t`Project owner address`}
-              extra={t`Choose an Ethereum address to be this project's owner, or leave this blank to make your address the project owner.`}
+              extra={t`Leave this blank to make your currently connected wallet the project owner. Fill this out with an Ethereum address to make that address this project's owner.`}
               rules={lockPageRulesWrapper([
                 inputMustBeEthAddressRule({
                   label: t`Project owner address`,
@@ -144,7 +144,7 @@ export const ProjectDetailsPage: React.FC = () => {
                 <Form.Item
                   name="payButtonText"
                   label={<Trans>Pay button text</Trans>}
-                  tooltip={t`The text on the button supporters click to pay your project`}
+                  tooltip={t`The text on the button supporters have to click to pay your project`}
                   extra={t`Use a simple term like 'Pay' or 'Donate'.`}
                 >
                   <JuiceInput placeholder={t`Pay`} />

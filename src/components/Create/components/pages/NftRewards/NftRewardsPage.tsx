@@ -146,7 +146,7 @@ export const NftRewardsPage = () => {
                             <CreateBadge.Default />
                           </>
                         }
-                        description={t`Your project's NFTs will not have on-chain governance capabilities. Select this option if you don't want governance or plan to use an off-chain voting client (like Snapshot).`}
+                        description={t`Your project's NFTs will not have on-chain governance capabilities. Select this option if you don't want governance, or if you plan to use an off-chain voting client (like Snapshot).`}
                       />
                       <RadioItem
                         value={JB721GovernanceType.GLOBAL}

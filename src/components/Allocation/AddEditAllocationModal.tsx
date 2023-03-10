@@ -15,7 +15,7 @@ import {
   inputMustBeEthAddressRule,
   inputMustExistRule,
 } from 'utils/antdRules'
-import { parseWad, stripCommas } from 'utils/format/formatNumber'
+import { hexToInt, parseWad, stripCommas } from 'utils/format/formatNumber'
 import { ceilIfCloseToNextInteger } from 'utils/math'
 import { Allocation } from './Allocation'
 import { AmountInput } from './components/AmountInput'
@@ -112,7 +112,7 @@ export const AddEditAllocationModal = ({
     setRecipient(isValidJuiceboxProject ? 'juiceboxProject' : 'walletAddress')
     form.setFieldsValue({
       juiceboxProjectId: isValidJuiceboxProject
-        ? editingData.projectId
+        ? hexToInt(editingData?.projectId).toString()
         : undefined,
       address: editingData.beneficiary,
       amount: editingData.amount,
@@ -235,7 +235,10 @@ export const AddEditAllocationModal = ({
             required
             rules={[
               inputMustExistRule({ label: t`Juicebox Project ID` }),
-              inputIsIntegerRule({ label: t`Juicebox Project ID` }),
+              inputIsIntegerRule({
+                label: t`Juicebox Project ID`,
+                stringOkay: true,
+              }),
             ]}
           >
             <JuiceInputNumber className="w-full" min={1} step={1} />

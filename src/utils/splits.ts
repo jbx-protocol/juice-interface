@@ -1,8 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { isEqual } from 'lodash'
-import { PayoutMod } from 'models/v1/mods'
 import { OutgoingSplit, Split } from 'models/splits'
+import { PayoutMod } from 'models/v1/mods'
 import {
   percentToPermyriad,
   permyriadToPercent,
@@ -179,3 +179,6 @@ export const processUniqueSplits = ({
 export const isProjectSplit = (split: Split): boolean => {
   return Boolean(split.projectId) && BigNumber.from(split.projectId).gt(0)
 }
+
+export const projectIdToHex = (projectIdString: string | undefined) =>
+  BigNumber.from(projectIdString ?? 0).toHexString()

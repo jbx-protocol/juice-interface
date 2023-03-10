@@ -1,5 +1,6 @@
 import { RuleObject } from 'antd/lib/form'
 import { isEqual } from 'lodash'
+import { projectIdToHex } from 'utils/splits'
 
 /**
  * Rule is the same as {@link inputAlreadyExistsRule}, however will allow for
@@ -23,7 +24,7 @@ export const allocationInputAlreadyExistsRule = (props: {
 
     const currentInputToValidate = {
       beneficiary: value,
-      projectId: props.inputProjectId?.toString(),
+      projectId: projectIdToHex(props.inputProjectId),
     }
 
     if (

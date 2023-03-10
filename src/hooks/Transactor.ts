@@ -171,13 +171,12 @@ export function useTransactor(): Transactor | undefined {
           let json = message.split('(error=')[1]
           json = json.split(', method=')[0]
           description = JSON.parse(json).message || message
+          options?.onError?.(new DOMException(description))
         } catch (_) {
           description = message
           options?.onError?.(new DOMException(description))
           emitErrorNotification(t`Transaction failed`, { description })
         }
-
-        options?.onDone?.()
 
         return false
       }

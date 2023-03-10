@@ -35,7 +35,7 @@ export function TokenDrawer({
         <Callout.Info className="mb-8">
           <Trans>
             Project tokens <strong>aren't ERC-20 tokens</strong> by default.
-            Once you deploy your project, you can issue an ERC-20 for your
+            Once you deploy your project, you can create an ERC-20 for your
             holders to claim. This is <strong>optional</strong>.
           </Trans>
         </Callout.Info>

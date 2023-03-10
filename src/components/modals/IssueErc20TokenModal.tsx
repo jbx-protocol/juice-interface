@@ -85,7 +85,7 @@ export function IssueErc20TokenModal({
 
     if (!txSuccess) {
       emitErrorNotification(
-        t`Failed to issue ERC20 token. Check transaction and try again.`,
+        t`Failed to create ERC20 token. Check transaction and try again.`,
       )
 
       setLoading(false)
@@ -96,10 +96,10 @@ export function IssueErc20TokenModal({
   return (
     <TransactionModal
       open={open}
-      title={t`Issue ERC-20 token`}
-      okText={t`Issue token`}
+      title={t`Create ERC-20 token`}
+      okText={t`Create token`}
       cancelText={t`Later`}
-      connectWalletText={t`Connect wallet to issue`}
+      connectWalletText={t`Connect wallet to create`}
       onOk={executeErc20IssueTokenTx}
       onCancel={() => onClose()}
       confirmLoading={loading}

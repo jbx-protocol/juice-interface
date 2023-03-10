@@ -2,8 +2,8 @@ import { Trans } from '@lingui/macro'
 
 export const ISSUE_ERC20_EXPLANATION = (
   <Trans>
-    Issue an ERC-20, and allow your supporters to claim your project's tokens as
-    that ERC-20. This makes your tokens compatible with tools like Uniswap.
+    Create an ERC-20, and allow your supporters to claim your project's tokens
+    as that ERC-20. This makes your tokens compatible with tools like Uniswap.
   </Trans>
 )
 

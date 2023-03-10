@@ -713,10 +713,10 @@ msgstr ""
 msgid "Connect wallet to claim"
 msgstr ""
 
-msgid "Connect wallet to deploy"
+msgid "Connect wallet to create"
 msgstr ""
 
-msgid "Connect wallet to issue"
+msgid "Connect wallet to deploy"
 msgstr ""
 
 msgid "Connect wallet to pay"
@@ -794,13 +794,31 @@ msgstr ""
 msgid "Cover image"
 msgstr ""
 
+msgid "Create ERC-20"
+msgstr ""
+
+msgid "Create ERC-20 token"
+msgstr ""
+
 msgid "Create a project"
 msgstr ""
 
 msgid "Create a project on Juicebox"
 msgstr ""
 
+msgid "Create a project payer address"
+msgstr ""
+
 msgid "Create a project payer address (optional)"
+msgstr ""
+
+msgid "Create a project payer address for {projectTitle}"
+msgstr ""
+
+msgid "Create an ERC-20 token (optional)"
+msgstr ""
+
+msgid "Create an ERC-20, and allow your supporters to claim your project's tokens as that ERC-20. This makes your tokens compatible with tools like Uniswap."
 msgstr ""
 
 msgid "Create project"
@@ -809,7 +827,13 @@ msgstr ""
 msgid "Create project payer address"
 msgstr ""
 
+msgid "Create token"
+msgstr ""
+
 msgid "Created"
+msgstr ""
+
+msgid "Created a project payer address"
 msgstr ""
 
 msgid "Created project"
@@ -953,12 +977,6 @@ msgstr ""
 msgid "Deploy project"
 msgstr ""
 
-msgid "Deploy project payer address"
-msgstr ""
-
-msgid "Deploy project payer address for {projectTitle}"
-msgstr ""
-
 msgid "Deploy project to {0}"
 msgstr ""
 
@@ -969,12 +987,6 @@ msgid "Deployed ERC20 token"
 msgstr ""
 
 msgid "Deployed a project payer address"
-msgstr ""
-
-msgid "Deployed project payer address"
-msgstr ""
-
-msgid "Deployed project payer addresses can be found in the Tools drawer (<0/>) on the project page."
 msgstr ""
 
 msgid "Description"
@@ -1064,13 +1076,13 @@ msgstr ""
 msgid "ENS Name"
 msgstr ""
 
-msgid "ERC-20 tokens can only be minted once an ERC-20 token has been issued for this project."
+msgid "ERC-20 tokens can only be issued once an ERC-20 token has been created for this project."
 msgstr ""
 
 msgid "ERC20 transaction not ready. Try again."
 msgstr ""
 
-msgid "ETH available for this cycle's payouts (before the {feePercentage}% JBX fee). This amount won't roll over to the next cycle — make sure that somebody sends the payouts before the cycle ends!"
+msgid "ETH currently available to send to the payout recipients below (before the {feePercentage}% JBX fee). These payouts won't roll over to next cycle, so they must be sent out before then."
 msgstr ""
 
 msgid "ETH paid"
@@ -1253,6 +1265,9 @@ msgstr ""
 msgid "Ethereum wallet address"
 msgstr ""
 
+msgid "Existing project payer addresses can be found in the Tools drawer (<0/>) on the project page."
+msgstr ""
+
 msgid "Explore"
 msgstr ""
 
@@ -1289,13 +1304,13 @@ msgstr ""
 msgid "FAQ"
 msgstr ""
 
+msgid "Failed to create ERC20 token. Check transaction and try again."
+msgstr ""
+
 msgid "Failed to deploy migration token. Check the development console and contact our team in the JuiceboxDAO Discord."
 msgstr ""
 
 msgid "Failed to grant permission."
-msgstr ""
-
-msgid "Failed to issue ERC20 token. Check transaction and try again."
 msgstr ""
 
 msgid "Failed to send message."
@@ -1553,19 +1568,7 @@ msgstr ""
 msgid "Issue ${symbol}"
 msgstr ""
 
-msgid "Issue ERC-20"
-msgstr ""
-
-msgid "Issue ERC-20 token"
-msgstr ""
-
-msgid "Issue an ERC-20 token (optional)"
-msgstr ""
-
-msgid "Issue an ERC-20, and allow your supporters to claim your project's tokens as that ERC-20. This makes your tokens compatible with tools like Uniswap."
-msgstr ""
-
-msgid "Issue token"
+msgid "Issue as ERC-20"
 msgstr ""
 
 msgid "JBX membership fee ({0}%):"
@@ -2033,7 +2036,7 @@ msgstr ""
 msgid "Optional"
 msgstr ""
 
-msgid "Optionally, you can issue ERC-20 tokens once your project has been deployed. Until then, the Juicebox protocol will track token balances internally, allowing your supporters to receive tokens and redeem them for ETH."
+msgid "Optionally, you can create an ERC-20 token once your project has been deployed. Until then, the Juicebox protocol will track token balances internally, allowing your supporters to receive tokens and redeem them for ETH."
 msgstr ""
 
 msgid "Other Rules"
@@ -2378,7 +2381,7 @@ msgstr ""
 msgid "Project token recipient"
 msgstr ""
 
-msgid "Project tokens <0>aren't ERC-20 tokens</0> by default. Once you deploy your project, you can issue an ERC-20 for your holders to claim. This is <1>optional</1>."
+msgid "Project tokens <0>aren't ERC-20 tokens</0> by default. Once you deploy your project, you can create an ERC-20 for your holders to claim. This is <1>optional</1>."
 msgstr ""
 
 msgid "Project tokens are sent to anyone who pays your project, and they can be redeemed to reclaim ETH that isn't needed for payouts."
@@ -3636,6 +3639,9 @@ msgid "When enabled, fees are held in the project instead of being processed aut
 msgstr ""
 
 msgid "When enabled, supporters can only mint NFTs by paying their exact price. This ensures that they can reclaim their full payment amount if they redeem their NFT."
+msgstr ""
+
+msgid "When enabled, {tokenSymbol} ERC-20 tokens are issued. When disabled, unclaimed {tokenSymbol} tokens will be issued, which the receiver can claim later as ERC-20."
 msgstr ""
 
 msgid "When enabled, {tokenSymbol} ERC-20 tokens are minted. When disabled, unclaimed {tokenSymbol} tokens will be minted, which the receiver can claim later as ERC-20."

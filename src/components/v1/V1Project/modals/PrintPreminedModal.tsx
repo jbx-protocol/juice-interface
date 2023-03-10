@@ -151,12 +151,12 @@ export default function PrintPreminedModal({
         </Form.Item>
         <Form.Item
           name="preferUnstaked"
-          label={<Trans>Mint as ERC-20</Trans>}
+          label={<Trans>Issue as ERC-20</Trans>}
           valuePropName="checked"
           extra={
             erc20Issued
-              ? t`When enabled, ${tokenSymbol} ERC-20 tokens are minted. When disabled, unclaimed ${tokenSymbol} tokens will be minted, which the receiver can claim later as ERC-20.`
-              : t`ERC-20 tokens can only be minted once an ERC-20 token has been issued for this project.`
+              ? t`When enabled, ${tokenSymbol} ERC-20 tokens are issued. When disabled, unclaimed ${tokenSymbol} tokens will be issued, which the receiver can claim later as ERC-20.`
+              : t`ERC-20 tokens can only be issued once an ERC-20 token has been created for this project.`
           }
           initialValue={false}
         >

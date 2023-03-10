@@ -111,8 +111,8 @@ export function LaunchProjectPayerModal({
     <>
       <TransactionModal
         open={open}
-        title={t`Create project payer address`}
-        okText={t`Deploy project payer address`}
+        title={t`Create a project payer address`}
+        okText={t`Create project payer address`}
         connectWalletText={t`Connect wallet to deploy`}
         onOk={deployProjectPayer}
         onCancel={() => onClose()}
@@ -157,7 +157,7 @@ export function LaunchProjectPayerModal({
         <CopyTextButton className="text-2xl" value={projectPayerAddress} />
         <p className="mt-7">
           <Trans>
-            Deployed project payer addresses can be found in the Tools drawer (
+            Existing project payer addresses can be found in the Tools drawer (
             <ToolOutlined />) on the project page.
           </Trans>
         </p>

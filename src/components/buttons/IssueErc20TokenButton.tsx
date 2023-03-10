@@ -39,7 +39,7 @@ export function IssueErc20TokenButton({
           type="default"
         >
           <span>
-            <Trans>Issue ERC-20</Trans>
+            <Trans>Create ERC-20</Trans>
           </span>
         </Button>
       </Tooltip>

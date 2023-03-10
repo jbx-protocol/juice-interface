@@ -81,10 +81,10 @@ const getOrCreateUser = async (
   supabase: SupabaseClient<Database>,
   walletAddress: string,
 ) => {
-  let user: Database['public']['Tables']['users']['Row']
+  let user: { id: string }
   const userLookup = await supabase
     .from('users')
-    .select('*')
+    .select('id')
     .eq('wallet', walletAddress)
     .maybeSingle()
   if (userLookup.error) throw userLookup.error
@@ -102,7 +102,7 @@ const getOrCreateUser = async (
         id: userCreation.data.user.id,
         wallet: walletAddress,
       })
-      .select()
+      .select('id')
       .single()
     if (insertResult.error) throw insertResult.error
     if (!insertResult.data) throw new Error('Bad insert on user data')

@@ -875,6 +875,9 @@ msgstr ""
 msgid "Customize your project's \"pay\" button. Leave blank to use the default."
 msgstr ""
 
+msgid "Customize your public facing profile and add additional management information."
+msgstr ""
+
 msgid "Cycle"
 msgstr ""
 
@@ -1200,6 +1203,9 @@ msgid "Edits to upcoming cycles will take effect when the current cycle ends. A 
 msgstr ""
 
 msgid "Email"
+msgstr ""
+
+msgid "Email address"
 msgstr ""
 
 msgid "Enable unclaimed token spending"
@@ -2297,6 +2303,9 @@ msgstr ""
 msgid "Percentages must add up to 100% or less"
 msgstr ""
 
+msgid "Please check {lastEmailUpdated} and verify your new email address.<0/>Still no email after a couple of minutes? <1>Click here to resend.</1>"
+msgstr ""
+
 msgid "Podcast"
 msgstr ""
 
@@ -2319,6 +2328,9 @@ msgid "Process project #{projectId}'s held fees"
 msgstr ""
 
 msgid "Processing held fees will pay <0>JuiceboxDAO</0> and mint JBX to the project owner's address."
+msgstr ""
+
+msgid "Profile details"
 msgstr ""
 
 msgid "Project #{projectId}"

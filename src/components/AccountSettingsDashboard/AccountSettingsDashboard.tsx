@@ -36,7 +36,7 @@ export const AccountSettingsDashboard = ({ user }: { user: User }) => {
           email: values.email,
         })
         emitInfoNotification(
-          `Request sent! Please check ${values.email} and verify your new email address.`,
+          `Check ${values.email} and verify your new email address.`,
         )
         setLastEmailUpdated(values.email)
       } catch (e) {
@@ -59,7 +59,7 @@ export const AccountSettingsDashboard = ({ user }: { user: User }) => {
       email: lastEmailUpdated,
     })
     emitInfoNotification(
-      `Request sent! Please check ${lastEmailUpdated} and verify your new email address.`,
+      `Check ${lastEmailUpdated} and verify your new email address.`,
     )
   }, [lastEmailUpdated])
 

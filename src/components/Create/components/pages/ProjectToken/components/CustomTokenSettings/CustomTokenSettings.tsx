@@ -45,8 +45,9 @@ export const CustomTokenSettings = () => {
 
   const discountRateDisabled = !parseInt(duration)
 
-  const redemptionRateDisabled =
-    !distributionLimit || distributionLimit.amount.eq(MAX_DISTRIBUTION_LIMIT)
+  const redemptionRateDisabled = distributionLimit?.amount.eq(
+    MAX_DISTRIBUTION_LIMIT,
+  )
 
   const initalMintRateAccessory = (
     <span className="mr-5">

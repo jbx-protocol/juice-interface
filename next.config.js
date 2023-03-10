@@ -49,7 +49,11 @@ const CONNECT_SRC = [
   'https://*.wallet.coinbase.com',
   ...WALLET_CONNECT_URLS,
   'https://juicenews.beehiiv.com',
+  'https://*.supabase.co',
 ]
+if (process.env.NODE_ENV === 'development') {
+  CONNECT_SRC.push('localhost:*')
+}
 
 const ContentSecurityPolicy = `
   default-src 'none';

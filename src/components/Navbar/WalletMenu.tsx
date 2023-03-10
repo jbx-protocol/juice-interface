@@ -10,7 +10,7 @@ import { useWallet } from 'hooks/Wallet'
 import Link from 'next/link'
 import Balance from './Balance'
 
-export default function Wallet({ userAddress }: { userAddress: string }) {
+export default function WalletMenu({ userAddress }: { userAddress: string }) {
   const isMobile = useMobile()
 
   const { disconnect } = useWallet()

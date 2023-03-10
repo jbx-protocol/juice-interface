@@ -2,13 +2,12 @@ import { Menu } from 'antd'
 import QuickProjectSearch from 'components/QuickProjectSearch'
 import useMobile from 'hooks/Mobile'
 import { CSSProperties, useEffect, useState } from 'react'
-
-import Account from './Account'
 import MobileNavigation from './Mobile/MobileNavigation'
 import { desktopMenuItems, resourcesMenuItems } from './navigationItems'
 import NavLanguageSelector from './NavLanguageSelector'
 import ThemePicker from './ThemePicker'
 import { TransactionsList } from './TransactionList'
+import WalletButton from './WalletButton'
 
 export default function SiteNavigation() {
   const [resourcesOpen, setResourcesOpen] = useState<boolean>(false)
@@ -48,7 +47,7 @@ export default function SiteNavigation() {
 
         <TransactionsList listClassName="absolute top-[70px] right-[30px]" />
 
-        <Account />
+        <WalletButton />
 
         <QuickProjectSearch />
       </div>

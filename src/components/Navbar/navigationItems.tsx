@@ -5,10 +5,10 @@ import { TOP_NAV } from 'constants/fathomEvents'
 import { trackFathomGoal } from 'lib/fathom'
 import Link from 'next/link'
 import { CSSProperties } from 'react'
-import Account from './Account'
 import Logo from './Logo'
 import ThemePickerMobile from './Mobile/ThemePickerMobile'
 import NavLanguageSelector from './NavLanguageSelector'
+import WalletButton from './WalletButton'
 
 type ResourceItem = {
   label: JSX.Element
@@ -209,8 +209,8 @@ export const mobileNavItems = ({
   { key: 'language-picker', label: <NavLanguageSelector /> },
   { key: 'theme-picker', label: <ThemePickerMobile /> },
   {
-    key: 'account',
-    label: <Account />,
+    key: 'wallet',
+    label: <WalletButton />,
   },
   {
     key: 'disconnect',

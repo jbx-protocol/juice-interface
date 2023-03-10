@@ -26,7 +26,7 @@ export default function AddToBalanceEventElem({
   return (
     <ActivityEvent
       event={event}
-      header={t`Added to balance`}
+      header={t`Transferred ETH to project`}
       subject={
         <span className="text-base font-medium">
           <ETHAmount amount={event.amount} />

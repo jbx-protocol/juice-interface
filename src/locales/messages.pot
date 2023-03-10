@@ -257,9 +257,6 @@ msgstr ""
 msgid "Add"
 msgstr ""
 
-msgid "Add ETH from your wallet to this project's balance without minting tokens."
-msgstr ""
-
 msgid "Add Lock Duration Option"
 msgstr ""
 
@@ -279,9 +276,6 @@ msgid "Add a cover image to your project page. This will be displayed at the top
 msgstr ""
 
 msgid "Add a payout"
-msgstr ""
-
-msgid "Add amount"
 msgstr ""
 
 msgid "Add an on-chain memo to this payment."
@@ -317,12 +311,6 @@ msgstr ""
 msgid "Add to Metamask"
 msgstr ""
 
-msgid "Add to balance"
-msgstr ""
-
-msgid "Add to balance of {projectTitle}"
-msgstr ""
-
 msgid "Add token"
 msgstr ""
 
@@ -338,13 +326,7 @@ msgstr ""
 msgid "Add {allocationName}"
 msgstr ""
 
-msgid "Added to balance"
-msgstr ""
-
 msgid "Adding an edit deadline is recommended. Projects with no deadline will appear risky to contributors."
-msgstr ""
-
-msgid "Additions to balance"
 msgstr ""
 
 msgid "Address"
@@ -728,9 +710,6 @@ msgstr ""
 msgid "Connect wallet"
 msgstr ""
 
-msgid "Connect wallet to add to balance"
-msgstr ""
-
 msgid "Connect wallet to claim"
 msgstr ""
 
@@ -747,6 +726,9 @@ msgid "Connect wallet to send payouts"
 msgstr ""
 
 msgid "Connect wallet to send reserved {tokenTextPlural}"
+msgstr ""
+
+msgid "Connect wallet to transfer ETH"
 msgstr ""
 
 msgid "Connect your wallet to see your holdings."
@@ -1088,9 +1070,6 @@ msgstr ""
 msgid "ERC20 transaction not ready. Try again."
 msgstr ""
 
-msgid "ETH added"
-msgstr ""
-
 msgid "ETH available for this cycle's payouts (before the {feePercentage}% JBX fee). This amount won't roll over to the next cycle — make sure that somebody sends the payouts before the cycle ends!"
 msgstr ""
 
@@ -1098,6 +1077,15 @@ msgid "ETH paid"
 msgstr ""
 
 msgid "ETH received"
+msgstr ""
+
+msgid "ETH transferred"
+msgstr ""
+
+msgid "ETH transfers"
+msgstr ""
+
+msgid "ETH transfers to project"
 msgstr ""
 
 msgid "Each cycle, the project will issue {discountRate}% fewer tokens per ETH."
@@ -1223,7 +1211,7 @@ msgstr ""
 msgid "Enter your project's details. You can edit your project's details at any time after you deploy your project, but the transaction will cost gas."
 msgstr ""
 
-msgid "Error downloading additions to balance, try again."
+msgid "Error downloading ETH transfers to project, try again."
 msgstr ""
 
 msgid "Error downloading participants, try again."
@@ -1238,7 +1226,7 @@ msgstr ""
 msgid "Error downloading redemptions, try again."
 msgstr ""
 
-msgid "Error loading additions to balance"
+msgid "Error loading ETH transfers to project"
 msgstr ""
 
 msgid "Error loading holders"
@@ -3032,7 +3020,7 @@ msgstr ""
 msgid "The edits you make below may take effect, depending on the project's custom edit deadline contract."
 msgstr ""
 
-msgid "The held fees will reset as new funds are added to the project's balance with the <0>Add to balance</0> transaction above."
+msgid "The held fees will reset as new funds are transferred to the project with the <0>transfer ETH to project</0> transaction above."
 msgstr ""
 
 msgid "The issuance rate is reduced by this amount each cycle (unless the owner changes the issuance rate)."
@@ -3380,6 +3368,21 @@ msgstr ""
 msgid "Transaction unsuccessful"
 msgstr ""
 
+msgid "Transfer ETH"
+msgstr ""
+
+msgid "Transfer ETH from your wallet to this project without minting tokens."
+msgstr ""
+
+msgid "Transfer ETH to project"
+msgstr ""
+
+msgid "Transfer ETH to {projectTitle}"
+msgstr ""
+
+msgid "Transfer amount"
+msgstr ""
+
 msgid "Transfer ownership"
 msgstr ""
 
@@ -3396,6 +3399,9 @@ msgid "Transfer unclaimed {tokensLabel}"
 msgstr ""
 
 msgid "Transfer {tokenTextShort}"
+msgstr ""
+
+msgid "Transferred ETH to project"
 msgstr ""
 
 msgid "Transparently set your terms ahead of time, or take control when you need to. Juicebox lets you define elegant token issuance & redemption, payouts, and other rules in advance, acting as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
@@ -3416,13 +3422,13 @@ msgstr ""
 msgid "Twitter handle"
 msgstr ""
 
-msgid "USD value of ETH added"
-msgstr ""
-
 msgid "USD value of ETH paid"
 msgstr ""
 
 msgid "USD value of ETH received"
+msgstr ""
+
+msgid "USD value of ETH transferred"
 msgstr ""
 
 msgid "Unarchive project"
@@ -3662,7 +3668,7 @@ msgstr ""
 msgid "While enabled, the project owner can mint any amount of project tokens."
 msgstr ""
 
-msgid "While payments to this project are paused, your project will not be able to receive payments. Adding to balance will still work."
+msgid "While payments to this project are paused, your project will not be able to receive payments. Transferring ETH to this project will still work."
 msgstr ""
 
 msgid "While transfers are paused, this project's tokens can't be transferred to other addresses. The project's ERC-20 tokens (if already issued) are always transferable, and will not be affected by this rule."

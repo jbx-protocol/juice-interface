@@ -97,7 +97,7 @@ export default function V2V3DownloadActivityModal(props: ModalProps) {
           onClick={() => downloadAdditionsToBalance(blockNumber, projectId, pv)}
         >
           <span>
-            <Trans>Additions to balance</Trans>
+            <Trans>ETH transfers</Trans>
           </span>
         </Button>
       </Space>

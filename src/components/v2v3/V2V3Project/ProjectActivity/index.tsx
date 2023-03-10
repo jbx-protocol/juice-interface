@@ -175,7 +175,7 @@ export default function ProjectActivity() {
               <Trans>Edited cycle</Trans>
             </Select.Option>
             <Select.Option value="addToBalance">
-              <Trans>Added to balance</Trans>
+              <Trans>Transferred ETH to project</Trans>
             </Select.Option>
             <Select.Option value="deployERC20">
               <Trans>Deployed ERC20</Trans>

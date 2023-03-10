@@ -139,7 +139,7 @@ export const PAUSE_TRANSFERS_EXPLANATION = (
 export const PAUSE_PAYMENTS_EXPLANATION = (
   <Trans>
     While payments to this project are paused, your project will not be able to
-    receive payments. Adding to balance will still work.
+    receive payments. Transferring ETH to this project will still work.
   </Trans>
 )
 

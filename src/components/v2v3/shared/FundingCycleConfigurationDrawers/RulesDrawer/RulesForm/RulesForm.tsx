@@ -156,7 +156,7 @@ export default function RulesForm({
                   onChange={setPausePay}
                   checked={pausePay}
                 />
-                <Trans>Pause payments</Trans>
+                <Trans>Pause payments to this project</Trans>
               </div>
             </Form.Item>
             <Form.Item name="holdfees" extra={HOLD_FEES_EXPLAINATION}>
@@ -285,7 +285,7 @@ export default function RulesForm({
                   }}
                   checked={useDataSourceForRedeem}
                 />
-                <Trans>Redeemable NFTs</Trans>
+                <Trans>Use NFTs for redemptions</Trans>
               </div>
             </Form.Item>
           </div>

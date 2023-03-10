@@ -44,7 +44,7 @@ export function V2V3PayButton({ disabled, wrapperClassName }: PayButtonProps) {
   if (isArchived) {
     disabledMessage = t`This project is archived and can't be paid.`
   } else if (fundingCycleMetadata?.pausePay) {
-    disabledMessage = t`Payments are paused in this cycle.`
+    disabledMessage = t`Payments to this project are paused in this cycle.`
   }
 
   const isPayDisabled = Boolean(disabledMessage) || disabled

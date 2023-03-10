@@ -172,9 +172,9 @@ export function ArchiveProject({
                 </Trans>
               ) : (
                 <Trans>
-                  Unless payments are paused in your funding cycle settings,
-                  your project can still receive payments directly through the
-                  Juicebox protocol contracts.
+                  Unless payments to this project are paused in your cycle's
+                  rules, your project can still receive payments directly
+                  through the Juicebox protocol contracts.
                 </Trans>
               )}
             </li>

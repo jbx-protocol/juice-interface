@@ -2093,7 +2093,7 @@ msgstr ""
 msgid "Paid as <0/>"
 msgstr ""
 
-msgid "Pause payments"
+msgid "Pause payments to this project"
 msgstr ""
 
 msgid "Pause project token transfers"
@@ -2177,9 +2177,6 @@ msgstr ""
 msgid "Payments"
 msgstr ""
 
-msgid "Payments are paused in this cycle."
-msgstr ""
-
 msgid "Payments made"
 msgstr ""
 
@@ -2189,7 +2186,13 @@ msgstr ""
 msgid "Payments made through this address won't mint this project's tokens."
 msgstr ""
 
-msgid "Payments paused"
+msgid "Payments to this project"
+msgstr ""
+
+msgid "Payments to this project are paused in this cycle."
+msgstr ""
+
+msgid "Payments to this project paused"
 msgstr ""
 
 msgid "Payout Recipients"
@@ -2535,9 +2538,6 @@ msgid "Redeem {tokensLabel} for ETH"
 msgstr ""
 
 msgid "Redeem {tokensTextLong} for ETH"
-msgstr ""
-
-msgid "Redeemable NFTs"
 msgstr ""
 
 msgid "Redeemed"
@@ -3449,7 +3449,7 @@ msgstr ""
 msgid "Unknown Project"
 msgstr ""
 
-msgid "Unless payments are paused in your funding cycle settings, your project can still receive payments directly through the Juicebox protocol contracts."
+msgid "Unless payments to this project are paused in your cycle's rules, your project can still receive payments directly through the Juicebox protocol contracts."
 msgstr ""
 
 msgid "Unlimited"
@@ -3662,7 +3662,7 @@ msgstr ""
 msgid "While enabled, the project owner can mint any amount of project tokens."
 msgstr ""
 
-msgid "While payments are paused, your project will not be able to receive payments. Adding to balance will still work."
+msgid "While payments to this project are paused, your project will not be able to receive payments. Adding to balance will still work."
 msgstr ""
 
 msgid "While transfers are paused, this project's tokens can't be transferred to other addresses. The project's ERC-20 tokens (if already issued) are always transferable, and will not be affected by this rule."

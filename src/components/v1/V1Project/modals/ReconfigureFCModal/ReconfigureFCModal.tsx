@@ -518,7 +518,7 @@ export default function ReconfigureFCModal({
           {terminal.version === '1.1' && (
             <Space size="large">
               <Statistic
-                title={t`Payments paused`}
+                title={t`Payments to this project paused`}
                 value={editingFC.payIsPaused ? 'Yes' : 'No'}
               />
               <Statistic

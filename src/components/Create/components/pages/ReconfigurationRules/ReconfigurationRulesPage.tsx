@@ -74,7 +74,7 @@ export const ReconfigurationRulesPage = () => {
               name="pausePayments"
               extra={PAUSE_PAYMENTS_EXPLANATION}
             >
-              <JuiceSwitch label={t`Pause payments`} />
+              <JuiceSwitch label={t`Pause payments to this project`} />
             </Form.Item>
 
             <Form.Item name="holdFees" extra={HOLD_FEES_EXPLAINATION}>

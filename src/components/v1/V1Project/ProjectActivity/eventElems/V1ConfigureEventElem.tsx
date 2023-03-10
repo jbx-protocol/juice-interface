@@ -109,7 +109,7 @@ export default function V1ConfigureEventElem({
                       value: event.ticketPrintingIsAllowed,
                     },
                     {
-                      key: t`Payments paused`,
+                      key: t`Payments to this project paused`,
                       value: event.payIsPaused,
                     },
                   ],

@@ -138,8 +138,8 @@ export const PAUSE_TRANSFERS_EXPLANATION = (
 
 export const PAUSE_PAYMENTS_EXPLANATION = (
   <Trans>
-    While payments are paused, your project will not be able to receive
-    payments. Adding to balance will still work.
+    While payments to this project are paused, your project will not be able to
+    receive payments. Adding to balance will still work.
   </Trans>
 )
 

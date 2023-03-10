@@ -49,7 +49,7 @@ export default function RestrictedActionsForm({
       <Form form={form} layout="vertical">
         <Form.Item
           name="payIsPaused"
-          label={t`Pause payments`}
+          label={t`Pause payments to this project`}
           extra={PAUSE_PAYMENTS_EXPLANATION}
           valuePropName={'checked'}
         >

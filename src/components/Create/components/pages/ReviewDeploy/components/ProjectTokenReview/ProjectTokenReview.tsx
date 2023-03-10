@@ -8,7 +8,7 @@ import {
 } from 'utils/v2v3/math'
 import { ReservedTokensList } from '../../../ProjectToken/components/CustomTokenSettings/components'
 import * as ProjectTokenForm from '../../../ProjectToken/hooks/ProjectTokenForm'
-import { ReviewDescription } from '../DescriptionCol'
+import { ReviewDescription } from '../ReviewDescription'
 import { useProjectTokenReview } from './hooks/ProjectTokenReview'
 
 export const ProjectTokenReview = () => {

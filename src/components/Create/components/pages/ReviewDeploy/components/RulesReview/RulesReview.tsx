@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
 import FormattedAddress from 'components/FormattedAddress'
-import { ReviewDescription } from '../DescriptionCol'
+import { ReviewDescription } from '../ReviewDescription'
 import { useRulesReview } from './hooks/RulesReview'
 
 export const RulesReview = () => {

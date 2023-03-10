@@ -1,5 +1,4 @@
 import { t } from '@lingui/macro'
-import { Row } from 'antd'
 import { RewardsList } from 'components/Create/components/RewardsList'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { JB721GovernanceType, NftRewardTier } from 'models/nftRewards'
@@ -10,7 +9,7 @@ import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { formatEnabled } from 'utils/format/formatBoolean'
 import { v4 } from 'uuid'
-import { DescriptionCol } from '../DescriptionCol'
+import { ReviewDescription } from '../ReviewDescription'
 
 export const RewardsReview = () => {
   const {
@@ -84,11 +83,10 @@ export const RewardsReview = () => {
   }, [governanceType])
 
   return (
-    <>
+    <div className="flex flex-col gap-12">
       <RewardsList value={rewards} onChange={setRewards} />
-      <Row gutter={20} className="mt-4">
-        <DescriptionCol
-          span={6}
+      <div className="flex flex-col gap-12 md:flex-row">
+        <ReviewDescription
           title={t`Redeemable NFTs`}
           desc={
             <div className="text-base font-medium">
@@ -96,23 +94,21 @@ export const RewardsReview = () => {
             </div>
           }
         />
-        <DescriptionCol
-          span={6}
+        <ReviewDescription
           title={t`Governance type`}
           desc={
             <div className="text-base font-medium">{onChainGovernance}</div>
           }
         />
         {delegateV1_1Enabled ? (
-          <DescriptionCol
-            span={6}
+          <ReviewDescription
             title={t`Prevent NFT overspending`}
             desc={
               <div className="text-base font-medium">{preventOverspending}</div>
             }
           />
         ) : null}
-      </Row>
-    </>
+      </div>
+    </div>
   )
 }

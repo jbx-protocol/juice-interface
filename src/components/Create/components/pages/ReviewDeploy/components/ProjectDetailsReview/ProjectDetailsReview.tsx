@@ -2,7 +2,7 @@ import { t } from '@lingui/macro'
 import FormattedAddress from 'components/FormattedAddress'
 import ProjectLogo from 'components/ProjectLogo'
 import { useAppSelector } from 'redux/hooks/AppSelector'
-import { ReviewDescription } from '../DescriptionCol'
+import { ReviewDescription } from '../ReviewDescription'
 
 export const ProjectDetailsReview = () => {
   const {

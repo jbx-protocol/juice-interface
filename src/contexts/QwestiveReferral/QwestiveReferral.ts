@@ -25,8 +25,8 @@ declare global {
 }
 
 // MVP Test campaign
-const QWESTIVE_REFERRAL_PROJECT_ID = '7VveXIwMqTmecXhkjkUD'
-const QWESTIVE_REFERRAL_API_KEY = 'EsJ/IytawhhutlB+2A4LNFxVBuSYXdU2ruG6RjTCxe8='
+const QWESTIVE_REFERRAL_PROJECT_ID = 'ma6zYcqmv0hInMskIQf1'
+const QWESTIVE_REFERRAL_API_KEY = 'xgXZwdZMAAY71tcLAdexo2VM091EitpEL1ScpoP/Z4A='
 
 export function useQwestiveSDK() {
   const [trackerQwestiveMethods, setTrackerQwestiveMethods] =

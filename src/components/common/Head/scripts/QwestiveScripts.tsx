@@ -3,20 +3,20 @@ import Script from 'next/script'
 export function QwestiveScript() {
   return (
     <>
-      <Script src="https://qwestive-referral-dev.web.app/qwestiveCallback.js" />
+      <Script src="https://qwestive-referral-prod.web.app/qwestiveCallback.js" />
       <Script
         id="qwestiveTracker"
         async
         defer
-        src="https://qwestive-referral-dev.web.app/qwestive_sdk.js"
+        src="https://qwestive-referral-prod.web.app/qwestive_sdk.js"
       />
       <Script
         id="embedUI"
         async
         defer
-        project-key="qwest-qwestive.referral-dev"
-        campaign-id="YmyatbFoiK6ZMBZ25JPK"
-        src="https://qwestive-referral-dev.web.app/embed_ui_sdk.js"
+        project-key="juicebox.referral"
+        campaign-id="hJCUZVJIodVP6Ki6MP6e"
+        src="https://qwestive-referral-prod.web.app/embed_ui_sdk.js"
       />
     </>
   )

@@ -18,7 +18,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     const emailResult = await supabase.auth.updateUser({ email })
-    if (emailResult.error) throw emailResult.error
+    if (emailResult.error) {
+      if (emailResult.error.status === 422) {
+        return res.status(409).json({ message: 'Email is already registered.' })
+      }
+      throw emailResult.error
+    }
     const userResult = await supabase
       .from('users')
       .update({ bio, website, twitter })

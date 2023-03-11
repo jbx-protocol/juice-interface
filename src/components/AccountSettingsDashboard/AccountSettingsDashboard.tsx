@@ -46,10 +46,10 @@ export const AccountSettingsDashboard = ({ user }: { user: User }) => {
 
   const initialValues: AccountSettingsFormType = useMemo(
     () => ({
-      bio: user.bio,
-      email: user.email_verified ? user.email : null,
-      website: user.website,
-      twitter: user.twitter,
+      bio: user.bio ?? '',
+      email: user.email_verified ? user.email : '',
+      website: user.website ?? '',
+      twitter: user.twitter ?? '',
     }),
     [user.bio, user.email, user.email_verified, user.twitter, user.website],
   )

@@ -18,21 +18,21 @@ import Balance from './Balance'
 
 export default function WalletMenu({ userAddress }: { userAddress: string }) {
   const isMobile = useMobile()
-  const { isConnected, disconnect } = useWallet()
+  const { disconnect } = useWallet()
 
   const { qwestiveTracker, qwestiveEmbedUI } = useQwestiveSDK()
 
   useEffect(() => {
-    if (!isConnected || !userAddress || qwestiveEmbedUI.isLoading) return
+    if (!userAddress || qwestiveEmbedUI.isLoading) return
     // Send user address to log in embedUI
-    qwestiveEmbedUI?.setAlias({ publicKey: userAddress })
-  }, [userAddress, isConnected, qwestiveEmbedUI])
+    qwestiveEmbedUI?.setAlias?.({ publicKey: userAddress })
+  }, [userAddress, qwestiveEmbedUI])
 
   useEffect(() => {
-    if (!isConnected || !userAddress || qwestiveTracker.isLoading) return
+    if (!userAddress || qwestiveTracker.isLoading) return
     // Send user address to track user
-    qwestiveTracker?.setAlias({ id: userAddress })
-  }, [userAddress, isConnected, qwestiveTracker])
+    qwestiveTracker?.setAlias?.({ id: userAddress })
+  }, [userAddress, qwestiveTracker])
 
   const CopyableAddress = () => (
     <div className="text-black dark:text-slate-100">

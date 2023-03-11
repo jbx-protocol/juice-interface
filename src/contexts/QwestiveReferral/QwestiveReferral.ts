@@ -1,6 +1,7 @@
-/* eslint-disable no-console */
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import {
+  IQwestiveContext,
+  SDKContext,
   TInitSDK,
   TQwestiveEmbedUI,
   TQwestiveTracker,
@@ -14,6 +15,7 @@ declare global {
         projectId,
       }: TInitSDK) => Omit<TQwestiveTracker, 'isLoading'>
       loadQwestiveTracker: (callback: () => void) => void
+      isInitialized: boolean
     }
     EmbedUI: {
       init: ({
@@ -21,6 +23,7 @@ declare global {
         projectId,
       }: TInitSDK) => Omit<TQwestiveEmbedUI, 'isLoading'>
       loadEmbedUI: (callback: () => void) => void
+      isInitialized: boolean
     }
   }
 }
@@ -29,7 +32,7 @@ declare global {
 const QWESTIVE_REFERRAL_PROJECT_ID = 'ma6zYcqmv0hInMskIQf1'
 const QWESTIVE_REFERRAL_API_KEY = 'xgXZwdZMAAY71tcLAdexo2VM091EitpEL1ScpoP/Z4A='
 
-export function useQwestiveSDK() {
+export function useQwestiveSDKProvider() {
   const [trackerQwestiveMethods, setTrackerQwestiveMethods] =
     useState<TQwestiveTracker>({
       isLoading: true,
@@ -40,14 +43,16 @@ export function useQwestiveSDK() {
     })
 
   useEffect(() => {
+    if (window.QwestiveTracker.isInitialized) return
+
     const loadTrackerMethods = () => {
       try {
         const apiMethods = window?.QwestiveTracker?.init({
           apiKey: QWESTIVE_REFERRAL_API_KEY,
           projectId: QWESTIVE_REFERRAL_PROJECT_ID,
         })
-        console.debug('QwestiveTracker', { apiMethods })
         setTrackerQwestiveMethods({ ...apiMethods, isLoading: false })
+        window.QwestiveTracker.isInitialized = true
       } catch (e) {
         console.error(
           'Error occurred while loading QwestiveTracker API methods',
@@ -55,21 +60,22 @@ export function useQwestiveSDK() {
         setTrackerQwestiveMethods({ isLoading: false })
       }
     }
-    console.debug(window?.QwestiveTracker)
     window?.QwestiveTracker?.loadQwestiveTracker(() => {
       loadTrackerMethods()
     })
   }, [])
 
   useEffect(() => {
+    if (window.EmbedUI.isInitialized) return
+
     const loadEmbedUIMethods = () => {
       try {
         const apiMethods = window?.EmbedUI?.init({
           apiKey: QWESTIVE_REFERRAL_API_KEY,
           projectId: QWESTIVE_REFERRAL_PROJECT_ID,
         })
-        console.debug('EmbedUI', { apiMethods })
         setEmbedUIQwestiveMethods({ ...apiMethods, isLoading: false })
+        window.EmbedUI.isInitialized = true
       } catch (e) {
         console.error(
           'Error occurred while loading QwestiveEmbedUI API methods',
@@ -77,7 +83,6 @@ export function useQwestiveSDK() {
         setEmbedUIQwestiveMethods({ isLoading: false })
       }
     }
-    console.debug(window?.EmbedUI)
     window?.EmbedUI?.loadEmbedUI(() => {
       loadEmbedUIMethods()
     })
@@ -100,4 +105,13 @@ export function useQwestiveSDK() {
       logout: embedUIQwestiveMethods?.logout,
     },
   }
+}
+
+export function useQwestiveSDK(): IQwestiveContext {
+  const context = useContext(SDKContext)
+  if (!context)
+    throw new Error(
+      'useQwestiveSDK must be called from within the corresponding ContextProvider',
+    )
+  return context
 }

@@ -22,7 +22,7 @@ export type TQwestiveEmbedUI = {
   logout?: () => void
 }
 
-interface IQwestiveContext {
+export interface IQwestiveContext {
   qwestiveTracker: TQwestiveTracker
   qwestiveEmbedUI: TQwestiveEmbedUI
 }

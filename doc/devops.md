@@ -8,6 +8,10 @@ Pushing to the `main` branch trigger application deployments on Vercel.
 
 juice-interface relies on a [subgraph on TheGraph](https://github.com/jbx-protocol/juice-subgraph).
 
+## Supabase
+
+juice-interface uses a [Supabase deployment](https://supabase.com/) for storing and retrieving metadata on the site.
+
 ### New Subgraph version checklist
 
 The subgraph has a URL that we use to query it. This URL is associated with a particular version (a.k.a deployment) of the subgraph. TheGraph produces a new URL when a new version of the subgraph is deployed.

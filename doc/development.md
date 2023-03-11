@@ -16,6 +16,7 @@
    yarn install
    ```
 
+1. Install Docker (https://docs.docker.com/get-docker/).
 1. Create a `.env` file in the root directory which mirrors the `.example.env` file. Learn how to define each field in the `.env` file in [Setup](#setup).
 
 ## Setup
@@ -64,6 +65,29 @@ Take the following steps to set up Juicebox's subgraph for local development:
 1. Join [Peel's discord server](https://discord.gg/akpxJZ5HKR).
 2. Inquire about mainnet and Goerli subgraph URLs in the [`#dev` channel](https://discord.com/channels/939317843059679252/939705688563810304).
 3. Copy the URL into the `NEXT_PUBLIC_SUBGRAPH_URL` variable of the `.env` file.
+
+### Supabase
+
+Juicebox uses [Supabase](https://supabase.com/) to store metadata about the site.
+
+Take the following steps to setup Juicebox's Subgraph for local development:
+
+1. Ensure that Docker is installed locally (https://docs.docker.com/get-docker/).
+1. Run `yarn supabase:start`. This will need to be run every time during development.
+1. Once running, some environment variables will be printed to your CLI. Make sure to add them:
+
+```
+# This is the endpoint for the supabase service - locally it should be "http://localhost:54321"
+NEXT_PUBLIC_SUPABASE_URL=<FROM CLI - API UR>
+# This is the anonymous JWT used by non-authorized calls to supabase - generated on start (should persist as the same between runs).
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<FROM CLI - anon key>
+# This is the main role key. Think of it as a super user key. Is used on the server. This is also generated on start (should persist as the same between runs).
+SUPABASE_SERVICE_ROLE_KEY=<FROM CLI - service_role key>
+# This is the JWT used for signing session JWTs by the server. This is also generated on start (should persist as the same between runs).
+SUPABASE_JWT_SECRET=<FROM_CLI - JWT secret>
+```
+
+Locally, you can ignore `SUPABASE_PROJECT_ID`.
 
 ## Usage
 

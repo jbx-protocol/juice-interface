@@ -20,6 +20,10 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
   const isMobile = useMobile()
   const { disconnect } = useWallet()
 
+  /**
+   * Qwestive tracker SDK and embedUI SDK registering current user's wallet
+   * address
+   */
   const { qwestiveTracker, qwestiveEmbedUI } = useQwestiveSDK()
 
   useEffect(() => {

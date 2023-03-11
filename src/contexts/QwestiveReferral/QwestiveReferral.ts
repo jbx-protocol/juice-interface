@@ -7,6 +7,9 @@ import {
   TQwestiveTracker,
 } from './QwestiveReferralContext'
 
+/**
+ * Methods added on the window object by src/components/common/Head/scripts/QwestiveScripts.tsx
+ */
 declare global {
   interface Window {
     QwestiveTracker: {
@@ -28,7 +31,7 @@ declare global {
   }
 }
 
-// MVP Test campaign
+// Juicebox-referral campaign: https://juicebox.referral.qwestive.io/referral/hJCUZVJIodVP6Ki6MP6e
 const QWESTIVE_REFERRAL_PROJECT_ID = 'ma6zYcqmv0hInMskIQf1'
 const QWESTIVE_REFERRAL_API_KEY = 'xgXZwdZMAAY71tcLAdexo2VM091EitpEL1ScpoP/Z4A='
 

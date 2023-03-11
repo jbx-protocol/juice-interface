@@ -79,7 +79,11 @@ export const SEO: FC<SEOProps> = ({
       />
 
       <Head>{children}</Head>
-      <QwestiveScript />
+      {/**
+       * Load QwestiveScript outside Head, as recommended in Next docs to load next/script
+       * can be loaded directly with strategies like afterInteractive
+       */}
+      {process.env.NODE_ENV === 'production' && <QwestiveScript />}
     </>
   )
 }

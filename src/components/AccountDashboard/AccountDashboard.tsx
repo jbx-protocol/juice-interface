@@ -114,27 +114,28 @@ export function AccountDashboard({
   const supabase = useSupabaseClient()
   const router = useRouter()
 
-  const [settingsButtonLoading, setSettingsButtonLoading] = useState(false)
+  const [editProfileButtonLoading, setEditProfileButtonLoading] =
+    useState(false)
 
-  const onSettingsClicked = useCallback(async () => {
-    setSettingsButtonLoading(true)
+  const onEditProfileClicked = useCallback(async () => {
+    setEditProfileButtonLoading(true)
     if (wallet.chainUnsupported) {
       const walletChanged = await wallet.changeNetworks()
       if (!walletChanged) {
         console.error('Wallet did not change network')
-        setSettingsButtonLoading(false)
+        setEditProfileButtonLoading(false)
         return
       }
     }
     if (!wallet.signer || !wallet.userAddress) {
       console.error('Wallet not connected')
-      setSettingsButtonLoading(false)
+      setEditProfileButtonLoading(false)
       return
     }
 
     const { data } = await supabase.auth.getSession()
     if (data.session) {
-      await router.push(`/account/${wallet.userAddress}/settings`)
+      await router.push(`/account/${wallet.userAddress}/edit`)
       return
     }
 
@@ -154,11 +155,11 @@ export function AccountDashboard({
       })
       if (error) throw error
 
-      await router.push(`/account/${wallet.userAddress}/settings`)
+      await router.push(`/account/${wallet.userAddress}/edit`)
     } catch (e) {
       console.error('Error occurred while signing in', e)
     } finally {
-      setSettingsButtonLoading(false)
+      setEditProfileButtonLoading(false)
     }
   }, [router, supabase.auth, wallet])
 
@@ -206,12 +207,12 @@ export function AccountDashboard({
           </div>
           {isOwner && (
             <Button
-              loading={settingsButtonLoading}
+              loading={editProfileButtonLoading}
               icon={<SettingOutlined />}
-              onClick={onSettingsClicked}
+              onClick={onEditProfileClicked}
             >
               <span>
-                <Trans>Settings</Trans>
+                <Trans>Edit profile</Trans>
               </span>
             </Button>
           )}

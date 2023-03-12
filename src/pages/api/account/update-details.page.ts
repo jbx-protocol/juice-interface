@@ -1,5 +1,14 @@
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { YUP_TWITTER } from 'utils/yup'
+import * as Yup from 'yup'
+
+const Schema = Yup.object().shape({
+  bio: Yup.string().nullable(),
+  email: Yup.string().email('Invalid email').nullable(),
+  website: Yup.string().url('Invalid URL').nullable(),
+  twitter: YUP_TWITTER,
+})
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -12,7 +21,20 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(405).json({ message: 'Method not allowed.' })
     }
 
-    const { bio, email, website, twitter } = req.body ?? {}
+    let bio, email, website, twitter
+    try {
+      const result = await Schema.validate(req.body)
+      bio = result.bio
+      email = result.email
+      website = result.website
+      twitter = result.twitter
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      console.error('Error occurred', e)
+      return res
+        .status(400)
+        .json({ message: e?.errors?.[0] ?? 'Unexpected error.' })
+    }
 
     if (email) {
       const emailResult = await supabase.auth.updateUser({ email })

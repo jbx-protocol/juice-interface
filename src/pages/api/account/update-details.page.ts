@@ -4,9 +4,14 @@ import { YUP_TWITTER } from 'utils/yup'
 import * as Yup from 'yup'
 
 const Schema = Yup.object().shape({
-  bio: Yup.string().nullable(),
-  email: Yup.string().email('Invalid email').nullable(),
-  website: Yup.string().url('Invalid URL').nullable(),
+  bio: Yup.string()
+    .max(2048, 'Bio cannot be greater than 2048 characters')
+    .nullable(),
+  email: Yup.string()
+    .email('Invalid email')
+    .max(320, 'Invalid email')
+    .nullable(),
+  website: Yup.string().url('Invalid URL').max(2048, 'Invalid URL').nullable(),
   twitter: YUP_TWITTER,
 })
 

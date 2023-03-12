@@ -656,9 +656,6 @@ msgstr ""
 msgid "Choose how you would like to set up payouts."
 msgstr ""
 
-msgid "Choose wallets or Juicebox projects to receive reserved tokens."
-msgstr ""
-
 msgid "Choosing zero will delete all payouts and remove any target."
 msgstr ""
 
@@ -2892,9 +2889,6 @@ msgid "Set aside a percentage of freshly minted NFTs."
 msgstr ""
 
 msgid "Set aside a percentage of freshly minted tokens, which you can allocate below."
-msgstr ""
-
-msgid "Set aside a percentage of token issuance for the Ethereum wallets or Juicebox projects of your choice."
 msgstr ""
 
 msgid "Set controller"

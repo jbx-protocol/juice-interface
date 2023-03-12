@@ -1,14 +1,14 @@
 import { Trans } from '@lingui/macro'
-import { Form, Space } from 'antd'
+import { Space } from 'antd'
+import { AllocationSplit } from 'components/Allocation'
 import { Callout } from 'components/Callout'
+import { ReservedTokensList } from 'components/Create/components/pages/ProjectToken/components/CustomTokenSettings/components/ReservedTokensList'
 import { CsvUpload } from 'components/inputs/CsvUpload'
-import { FormItems } from 'components/formItems'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { Split } from 'models/splits'
 import { useCallback, useContext, useEffect } from 'react'
 import { parseV2SplitsCsv } from 'utils/csv'
-import { toMod, toSplit } from 'utils/splits'
-import { formatReservedRate } from 'utils/v2v3/math'
+import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 
 export function V2V3EditReservedTokens({
   editingReservedTokensSplits,
@@ -17,9 +17,7 @@ export function V2V3EditReservedTokens({
   editingReservedTokensSplits: Split[]
   setEditingReservedTokensSplits: (splits: Split[]) => void
 }) {
-  const { reservedTokensSplits, fundingCycleMetadata } =
-    useContext(V2V3ProjectContext)
-  const reservedRate = fundingCycleMetadata?.reservedRate
+  const { reservedTokensSplits } = useContext(V2V3ProjectContext)
 
   useEffect(() => {
     if (!reservedTokensSplits) return
@@ -32,6 +30,10 @@ export function V2V3EditReservedTokens({
     },
     [setEditingReservedTokensSplits],
   )
+
+  const onAllocationChanged = (newAllocations: AllocationSplit[]) => {
+    onSplitsChanged(newAllocations.map(allocationToSplit))
+  }
 
   return (
     <>
@@ -50,23 +52,10 @@ export function V2V3EditReservedTokens({
             parser={parseV2SplitsCsv}
           />
         </div>
-        <Form layout="vertical">
-          <FormItems.ProjectTicketMods
-            mods={editingReservedTokensSplits.map(toMod)}
-            onModsChanged={mods =>
-              setEditingReservedTokensSplits(mods.map(toSplit))
-            }
-            formItemProps={{
-              extra: (
-                <Trans>
-                  Set aside a percentage of token issuance for the Ethereum
-                  wallets or Juicebox projects of your choice.
-                </Trans>
-              ),
-            }}
-            reservedRate={parseInt(formatReservedRate(reservedRate))}
-          />
-        </Form>
+        <ReservedTokensList
+          onChange={onAllocationChanged}
+          value={editingReservedTokensSplits.map(splitToAllocation)}
+        />
       </Space>
     </>
   )

@@ -4,9 +4,9 @@ import { useState } from 'react'
 import { FormItems } from 'components/formItems'
 import { FormItemExt } from 'components/formItems/formItemExt'
 import FormItemWarningText from 'components/FormItemWarningText'
+import { V2V3EditReservedTokens } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/ReservedTokensSettingsPage/V2V3EditReservedTokens'
 import { Split } from 'models/splits'
 import { DEFAULT_FUNDING_CYCLE_METADATA } from 'redux/slices/editingV2Project'
-import { toMod, toSplit } from 'utils/splits'
 
 export default function ReservedTokensFormItem({
   className,
@@ -74,22 +74,9 @@ export default function ReservedTokensFormItem({
               </Trans>
             </FormItemWarningText>
           )}
-          <FormItems.ProjectTicketMods
-            mods={reservedTokensSplits.map(split => toMod(split))}
-            onModsChanged={mods => {
-              const splits = mods.map(mod => toSplit(mod))
-              onReservedTokensSplitsChange(splits)
-            }}
-            formItemProps={{
-              label: <Trans>Reserved token recipients (optional)</Trans>,
-              extra: (
-                <Trans>
-                  Choose wallets or Juicebox projects to receive reserved
-                  tokens.
-                </Trans>
-              ),
-            }}
-            reservedRate={reservedRate ?? 0}
+          <V2V3EditReservedTokens
+            editingReservedTokensSplits={reservedTokensSplits}
+            setEditingReservedTokensSplits={onReservedTokensSplitsChange}
           />
         </>
       ) : null}

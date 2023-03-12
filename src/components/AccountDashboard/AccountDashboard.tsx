@@ -185,7 +185,7 @@ export function AccountDashboard({
             <ProjectLogo
               uri={ensAvatarUrlForAddress(address, { size: 128 })}
               name={ensName ?? undefined}
-              className="mr-5 h-32 w-32"
+              className="mr-5 h-32 w-32 rounded-full"
             />
             <div className="flex flex-col gap-2">
               <h1 className="mb-0 text-4xl text-black dark:text-slate-100">

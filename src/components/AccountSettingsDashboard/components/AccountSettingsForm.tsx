@@ -3,8 +3,33 @@ import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import TooltipLabel from 'components/TooltipLabel'
 import { ErrorMessage, Field, FieldAttributes, Form } from 'formik'
+import { InputHTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { ensAvatarUrlForAddress } from 'utils/ens'
+
+// Hack: Had to rebuild the Input from antd as it wasn't playing nicely with Formik :(
+const InputPrefix = (
+  props: InputHTMLAttributes<HTMLInputElement> & { prefix?: string },
+) => {
+  if (props.prefix) {
+    return (
+      <span className="stroke-secondary relative box-border inline-flex w-full min-w-0 list-none gap-0.5 text-ellipsis border border-solid bg-smoke-50 py-1 px-3 outline-0 focus-within:shadow-inputLight  dark:bg-slate-600  dark:focus-within:shadow-inputDark">
+        <span className="text-secondary">{props.prefix}</span>
+        <input
+          className="relative m-0 inline-block w-full border-0 bg-transparent p-0 outline-0 placeholder:text-grey-400 dark:placeholder:text-slate-300"
+          {...props}
+        />
+      </span>
+    )
+  }
+
+  return (
+    <input
+      className="stroke-secondary w-full min-w-0 list-none text-ellipsis border border-solid py-1 px-3 outline-0 placeholder:text-grey-400 focus:shadow-inputLight  dark:placeholder:text-slate-300 dark:focus:shadow-inputDark"
+      {...props}
+    />
+  )
+}
 
 export const AccountSettingsForm = ({ address }: { address: string }) => (
   <Form
@@ -24,7 +49,6 @@ export const AccountSettingsForm = ({ address }: { address: string }) => (
     <FormInput
       name="bio"
       label={<Trans>Bio</Trans>}
-      // Hack to get JuiceTextArea working
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       as={JuiceTextArea as any}
     />
@@ -39,8 +63,11 @@ export const AccountSettingsForm = ({ address }: { address: string }) => (
     />
     <FormInput
       name="twitter"
+      prefix="@"
       label={<Trans>Twitter</Trans>}
-      placeholder="@JuiceboxETH"
+      placeholder="JuiceboxETH"
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      as={InputPrefix as any}
     />
   </Form>
 )
@@ -51,6 +78,7 @@ function FormInput<T>({
   label,
   placeholder,
   as = JuiceInput,
+  ...props
 }: FieldAttributes<T> & {
   label?: React.ReactNode
 }) {
@@ -63,7 +91,13 @@ function FormInput<T>({
           </label>
         </div>
       )}
-      <Field type={type} name={name} placeholder={placeholder} as={as} />
+      <Field
+        type={type}
+        name={name}
+        placeholder={placeholder}
+        as={as}
+        {...props}
+      />
       <ErrorMessage className="text-error pt-2" name={name} component="div" />
     </div>
   )

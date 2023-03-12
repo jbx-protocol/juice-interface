@@ -7,6 +7,12 @@ module.exports = {
   darkMode: 'class', // Use class for now, switch to media later
   important: true,
   theme: {
+    extend: {
+      boxShadow: {
+        inputDark: '0 0 0 2px #013944',
+        inputLight: '0 0 0 2px #E9F9FA',
+      },
+    },
     colors: {
       transparent: '#00000000',
       black: '#000000',

@@ -6,11 +6,14 @@ import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
 import Grid from 'components/Grid'
 import Loading from 'components/Loading'
+import Paragraph from 'components/Paragraph'
+import SocialLinks from 'components/Project/ProjectHeader/SocialLinks'
 import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
 import ProjectLogo from 'components/ProjectLogo'
 import { useContributedProjectsQuery, useMyProjectsQuery } from 'hooks/Projects'
 import { useWallet } from 'hooks/Wallet'
 import { AuthAPI } from 'lib/api/auth'
+import { Profile } from 'models/database'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
@@ -102,35 +105,38 @@ function MyProjectsList({ address }: { address: string }) {
 export function AccountDashboard({
   address,
   ensName,
+  profile,
 }: {
   address: string
-  ensName?: string | null
+  ensName: string | null
+  profile: Profile | null
 }) {
   const wallet = useWallet()
   const supabase = useSupabaseClient()
   const router = useRouter()
 
-  const [settingsButtonLoading, setSettingsButtonLoading] = useState(false)
+  const [editProfileButtonLoading, setEditProfileButtonLoading] =
+    useState(false)
 
-  const onSettingsClicked = useCallback(async () => {
-    setSettingsButtonLoading(true)
+  const onEditProfileClicked = useCallback(async () => {
+    setEditProfileButtonLoading(true)
     if (wallet.chainUnsupported) {
       const walletChanged = await wallet.changeNetworks()
       if (!walletChanged) {
         console.error('Wallet did not change network')
-        setSettingsButtonLoading(false)
+        setEditProfileButtonLoading(false)
         return
       }
     }
     if (!wallet.signer || !wallet.userAddress) {
       console.error('Wallet not connected')
-      setSettingsButtonLoading(false)
+      setEditProfileButtonLoading(false)
       return
     }
 
     const { data } = await supabase.auth.getSession()
     if (data.session) {
-      await router.push(`/account/${wallet.userAddress}/settings`)
+      await router.push(`/account/${wallet.userAddress}/edit`)
       return
     }
 
@@ -150,11 +156,11 @@ export function AccountDashboard({
       })
       if (error) throw error
 
-      await router.push(`/account/${wallet.userAddress}/settings`)
+      await router.push(`/account/${wallet.userAddress}/edit`)
     } catch (e) {
       console.error('Error occurred while signing in', e)
     } finally {
-      setSettingsButtonLoading(false)
+      setEditProfileButtonLoading(false)
     }
   }, [router, supabase.auth, wallet])
 
@@ -175,39 +181,45 @@ export function AccountDashboard({
 
   return (
     <div className="my-0 mx-auto max-w-5xl p-5">
-      <header className="flex flex-wrap items-start justify-between">
-        <div className="mb-10 flex">
-          <ProjectLogo
-            uri={ensAvatarUrlForAddress(address, { size: 128 })}
-            name={ensName ?? undefined}
-            className="mr-5 h-32 w-32"
-          />
-          <div>
-            <h1 className="mb-2 text-4xl text-black dark:text-slate-100">
-              {ensName ?? <FormattedAddress address={address} />}
-            </h1>
-            {ensName && (
-              <span>
+      <header className="mb-10">
+        <div className="flex flex-wrap items-start justify-between">
+          <div className="mb-5 flex">
+            <ProjectLogo
+              uri={ensAvatarUrlForAddress(address, { size: 128 })}
+              name={ensName ?? undefined}
+              className="mr-5 h-32 w-32 rounded-full"
+            />
+            <div className="flex flex-col gap-2">
+              <h1 className="mb-0 text-4xl text-black dark:text-slate-100">
+                {ensName ?? <FormattedAddress address={address} />}
+              </h1>
+              {ensName && (
                 <EtherscanLink
                   type="address"
                   value={truncateEthAddress({ address })}
                   className="text-grey-500 dark:text-slate-100"
                 />
-              </span>
-            )}
+              )}
+              <SocialLinks
+                infoUri={profile?.website ?? undefined}
+                twitter={profile?.twitter ?? undefined}
+              />
+            </div>
           </div>
+          {isOwner && (
+            <Button
+              loading={editProfileButtonLoading}
+              icon={<SettingOutlined />}
+              onClick={onEditProfileClicked}
+            >
+              <span>
+                <Trans>Edit profile</Trans>
+              </span>
+            </Button>
+          )}
         </div>
-
-        {isOwner && (
-          <Button
-            loading={settingsButtonLoading}
-            icon={<SettingOutlined />}
-            onClick={onSettingsClicked}
-          >
-            <span>
-              <Trans>Settings</Trans>
-            </span>
-          </Button>
+        {profile?.bio && (
+          <Paragraph description={profile.bio} characterLimit={250} />
         )}
       </header>
 

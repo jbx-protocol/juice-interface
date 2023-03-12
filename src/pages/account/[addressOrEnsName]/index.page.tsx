@@ -1,7 +1,6 @@
 import { AccountDashboard } from 'components/AccountDashboard'
 import { AppWrapper, SEO } from 'components/common'
-import { readProvider } from 'constants/readProvider'
-import { isAddress } from 'ethers/lib/utils'
+import { resolveEnsNameAddressPair } from 'lib/ssr/address'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { truncateEthAddress } from 'utils/format/formatAddress'
 
@@ -21,31 +20,20 @@ export const getServerSideProps: GetServerSideProps<
 
   const addressOrEnsName = context.params.addressOrEnsName as string
 
-  if (isAddress(addressOrEnsName)) {
-    const ensName = await readProvider.lookupAddress(addressOrEnsName)
+  const pair = await resolveEnsNameAddressPair(addressOrEnsName)
+  if (!pair) {
     return {
-      props: {
-        address: addressOrEnsName,
-        ensName,
-      },
+      notFound: true,
     }
   }
+  const { address, ensName } = pair
 
-  if (addressOrEnsName.includes('.eth')) {
-    const address = await readProvider.resolveName(addressOrEnsName)
-    if (!address) {
-      return { notFound: true }
-    }
-
-    return {
-      props: {
-        address,
-        ensName: addressOrEnsName,
-      },
-    }
+  return {
+    props: {
+      address,
+      ensName,
+    },
   }
-
-  return { notFound: true }
 }
 
 export default function AccountPage({

@@ -3,7 +3,10 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import * as Yup from 'yup'
 
 const Schema = Yup.object().shape({
-  email: Yup.string().email('Invalid email').required('Email is required'),
+  email: Yup.string()
+    .email('Invalid email')
+    .required('Email is required')
+    .max(320, 'Invalid email'),
 })
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -22,7 +25,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       email = result.email
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
-      console.error('Error occurred', e)
+      console.info('Error occurred', e)
       return res
         .status(400)
         .json({ message: e?.errors?.[0] ?? 'Unexpected error.' })

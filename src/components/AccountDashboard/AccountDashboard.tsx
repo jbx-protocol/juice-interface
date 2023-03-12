@@ -6,6 +6,7 @@ import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
 import Grid from 'components/Grid'
 import Loading from 'components/Loading'
+import Paragraph from 'components/Paragraph'
 import SocialLinks from 'components/Project/ProjectHeader/SocialLinks'
 import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
 import ProjectLogo from 'components/ProjectLogo'
@@ -217,7 +218,9 @@ export function AccountDashboard({
             </Button>
           )}
         </div>
-        {profile?.bio && <span>{profile.bio}</span>}
+        {profile?.bio && (
+          <Paragraph description={profile.bio} characterLimit={250} />
+        )}
       </header>
 
       <Tabs items={items} />

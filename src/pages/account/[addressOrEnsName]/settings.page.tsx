@@ -4,9 +4,11 @@ import {
 } from '@supabase/auth-helpers-nextjs'
 import { AccountSettingsDashboard } from 'components/AccountSettingsDashboard'
 import { AppWrapper } from 'components/common'
+import { resolveEnsNameAddressPair } from 'lib/ssr/address'
 import { User } from 'models/database'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { Database } from 'types/database.types'
+import { isEqualAddress } from 'utils/address'
 
 type AccountSettingsType = {
   initialSession: Session
@@ -20,7 +22,20 @@ export const getServerSideProps: GetServerSideProps<
   const {
     data: { session },
   } = await supabase.auth.getSession()
-  if (!session) {
+  if (
+    !session ||
+    !context.params?.addressOrEnsName ||
+    typeof context.params.addressOrEnsName !== 'string'
+  ) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+  const pair = await resolveEnsNameAddressPair(context.params.addressOrEnsName)
+  if (!pair) {
     return {
       redirect: {
         destination: '/',
@@ -38,6 +53,20 @@ export const getServerSideProps: GetServerSideProps<
     .single()
 
   if (!user.data) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
+  if (!isEqualAddress(user.data.wallet, pair.address)) {
+    try {
+      await supabase.auth.signOut()
+    } catch (e) {
+      console.info('Error occurred on signout', e)
+    }
     return {
       redirect: {
         destination: '/',

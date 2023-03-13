@@ -62,9 +62,9 @@ export const ProjectTokenPage: React.FC = () => {
             <Selection.Card
               name="default"
               title={
-                <span>
-                  <Trans> Default Token Settings</Trans> <CreateBadge.Default />
-                </span>
+                <div className="flex items-center gap-3">
+                  <Trans>Default Token Settings</Trans> <CreateBadge.Default />
+                </div>
               }
               icon={<Icons.Tokens />}
               description={<DefaultSettings />}

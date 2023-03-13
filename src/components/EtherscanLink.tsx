@@ -24,7 +24,7 @@ const EtherscanLink: React.FC<{
     return (
       <ExternalLink
         className={twMerge(
-          'text-grey-900 hover:text-haze-400 hover:underline dark:text-slate-100',
+          'text-grey-900 hover:text-bluebs-400 hover:underline dark:text-slate-100',
           className,
         )}
         href={etherscanLink(type, value)}
@@ -38,7 +38,7 @@ const EtherscanLink: React.FC<{
   return (
     <ExternalLink
       className={twMerge(
-        'text-grey-900 hover:text-haze-400 hover:underline dark:text-slate-100',
+        'text-grey-900 hover:text-bluebs-400 hover:underline dark:text-slate-100',
         className,
       )}
       href={etherscanLink(type, value)}

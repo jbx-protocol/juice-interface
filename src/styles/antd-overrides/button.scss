@@ -1,17 +1,18 @@
 .ant-btn {
   background: transparent;
-  @apply border-haze-400 dark:border-slate-300;
+  @apply border-bluebs-400 dark:border-slate-300;
   @apply text-over-action-secondary;
   @apply font-medium;
-  border-radius: 1px;
+  @apply rounded-lg;
   transition: all 100ms linear;
+  @apply h-10;
 
   .anticon {
     transition: margin 100ms linear;
   }
 
   &:hover {
-    @apply bg-haze-50 dark:bg-haze-900;
+    @apply bg-bluebs-50 dark:bg-bluebs-900;
     @apply stroke-action-secondary;
     @apply text-action-primary;
   }
@@ -100,12 +101,20 @@
   @apply font-medium;
 
   &:hover {
-    @apply bg-haze-50;
+    @apply bg-bluebs-50;
   }
   &:focus,
   &:active {
     @apply text-action-primary;
   }
+}
+
+.ant-btn-lg {
+  @apply h-12;
+}
+
+.ant-btn-sm {
+  padding: 4px 15px;
 }
 
 .ant-upload.ant-upload-select-picture-card:hover {

@@ -15,7 +15,7 @@ export function LinkToSafeButton({
   return (
     <div className={twMerge('ml-6 flex', className)}>
       <ExternalLink
-        className="text-black underline hover:text-haze-400 hover:underline dark:text-grey-100 dark:hover:text-haze-400"
+        className="text-black underline hover:text-bluebs-400 hover:underline dark:text-grey-100 dark:hover:text-bluebs-400"
         href={generateSafeTxUrl(transaction)}
       >
         <Trans>See Tx on Safe</Trans>

@@ -41,7 +41,7 @@ export default function VeNftVariantCard({
       >
         <Col className="flex flex-col justify-center" md={16}>
           <Row className="flex w-full items-center text-base">
-            <Col className="text-haze-400 dark:text-haze-300" md={7}>
+            <Col className="text-bluebs-400 dark:text-bluebs-300" md={7}>
               {tokensStakedLabel()}
             </Col>
             <Col className="flex font-medium" md={15}>

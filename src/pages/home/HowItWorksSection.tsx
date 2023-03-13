@@ -4,6 +4,7 @@ import { Button, Col, Divider, Row } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import useMobile from 'hooks/Mobile'
 import Image from 'next/image'
+import Link from 'next/link'
 import { helpPagePath } from 'utils/routes'
 import { SectionHeading } from './SectionHeading'
 
@@ -74,16 +75,13 @@ export function HowItWorksSection() {
                 </Trans>
               </FourthCol>
 
-              <div>
-                <Button
-                  size="large"
-                  type="primary"
-                  href="/create"
-                  block={isMobile}
-                >
-                  <Trans>Build your project</Trans>
-                </Button>
-              </div>
+              <Link href="/create">
+                <a>
+                  <Button size="large" type="primary" block={isMobile}>
+                    <Trans>Build your project</Trans>
+                  </Button>
+                </a>
+              </Link>
 
               <Divider className="mx-0 my-auto w-12 min-w-[unset]" />
 

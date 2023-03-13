@@ -182,9 +182,9 @@ export const AddEditAllocationModal = ({
       className={className}
       width={570}
       title={
-        <h2 className="mb-0 text-lg font-medium text-black dark:text-grey-200">
+        <h3 className="mb-0 text-xl font-medium text-black dark:text-grey-200">
           {isEditing ? t`Edit ${allocationName}` : t`Add new ${allocationName}`}
-        </h2>
+        </h3>
       }
       okText={isEditing ? t`Save ${allocationName}` : t`Add ${allocationName}`}
       open={open}

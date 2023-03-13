@@ -24,8 +24,8 @@ export default function TrendingSection() {
 
   return (
     <section className="my-0 mx-auto py-12 px-5">
-      <Row className="my-0 mx-auto max-w-5xl gap-y-10" gutter={40}>
-        <Col xs={24} md={12} className="px-0 md:px-5">
+      <Row className="my-0 mx-auto max-w-5xl gap-y-10">
+        <Col xs={24} md={12} className="px-0 md:px-10">
           <div className="flex flex-col gap-9">
             <SmallHeader
               text={
@@ -38,7 +38,7 @@ export default function TrendingSection() {
               }
             />
 
-            <Grid list>
+            <Grid list gutter={12}>
               {trendingProjects?.map((p, i) => (
                 <TrendingProjectCard
                   project={p}
@@ -58,7 +58,7 @@ export default function TrendingSection() {
           </div>
         </Col>
 
-        <Col xs={24} md={12} className="px-0 md:px-5">
+        <Col xs={24} md={12} className="px-0 md:px-10">
           <div className="flex flex-col gap-9">
             <SmallHeader text={<Trans>Latest payments</Trans>} />
             <div className="max-h-[784px] overflow-auto">

@@ -74,7 +74,7 @@ export default function ReservedTokensSplitsCard({
       <Space direction="vertical" size="large" className="w-full">
         {hideDistributeButton ? null : (
           <div className="flex flex-wrap justify-between gap-2">
-            <div className="mr-12">
+            <div className="mr-12 leading-10">
               <Skeleton
                 className="inline"
                 active
@@ -114,7 +114,7 @@ export default function ReservedTokensSplitsCard({
         )}
 
         <div>
-          <div className="flex flex-wrap justify-between gap-2">
+          <div className="flex flex-wrap justify-between gap-2 leading-10">
             <TooltipLabel
               label={
                 <h3 className="inline-block text-sm uppercase text-black dark:text-slate-100">

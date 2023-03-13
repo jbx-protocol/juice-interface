@@ -52,7 +52,7 @@ export function NftRewardCell({
                 className={classNames(
                   'ml-3 font-medium text-black dark:text-grey-100',
                   isLink
-                    ? 'cursor-pointer text-black hover:text-haze-400 hover:underline dark:text-grey-100 dark:hover:text-haze-400'
+                    ? 'cursor-pointer text-black hover:text-bluebs-400 hover:underline dark:text-grey-100 dark:hover:text-bluebs-400'
                     : 'cursor-default',
                 )}
                 href={isLink ? tier.externalLink : undefined}

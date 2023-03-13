@@ -7,11 +7,11 @@ export const RecommendedBadge = ({ tooltip }: { tooltip?: ReactNode }) => {
   return (
     <Tooltip title={tooltip}>
       {/* Span wrapper for tooltip */}
-      <span>
+      <div className="flex items-center">
         <Badge variant="info" upperCase>
           <Trans>Recommended</Trans>
         </Badge>
-      </span>
+      </div>
     </Tooltip>
   )
 }

@@ -162,7 +162,7 @@ export default function QuickProjectSearch() {
   return (
     <>
       <SearchOutlined
-        className="mt-1 text-2xl leading-none transition-colors hover:text-haze-400"
+        className="mt-1 text-2xl leading-none transition-colors hover:text-bluebs-400"
         onClick={() => {
           modal.open()
           trackFathomGoal(TOP_NAV.SEARCH_CTA)

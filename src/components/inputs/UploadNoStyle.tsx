@@ -180,7 +180,7 @@ const UploadedImage = ({
       <div className="relative">
         <RewardImage className="h-[11.5rem] w-[11.5rem]" src={imageUrl} />
         <CloseCircleFilled
-          className="absolute top-0 right-0 cursor-pointer text-2xl text-haze-400"
+          className="absolute top-0 right-0 cursor-pointer text-2xl text-bluebs-400"
           // TODO: We require @tailwind base to do this in className, so use style for now
           style={{ transform: 'translate(50%, -50%)' }}
           onClick={stopPropagation(onRemoveImageClicked)}

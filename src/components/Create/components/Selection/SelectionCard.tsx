@@ -10,7 +10,7 @@ const Container: React.FC<{
   isDisabled: boolean
 }> = ({ isDefocused, isSelected, isDisabled, children }) => {
   const borderColorClassNames = useMemo(() => {
-    if (isSelected) return 'border-haze-500'
+    if (isSelected) return 'border-bluebs-500'
     return classNames(
       !isDisabled ? 'hover:border-smoke-500 dark:hover:border-slate-100' : '',
       isDefocused
@@ -95,9 +95,13 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
         onClick={onClick}
       >
         <div className="px-4">
-          <div className="flex gap-4">
+          <div className="flex items-start gap-4">
             {checkPosition === 'left' && (
-              <CheckedCircle checked={isSelected} defocused={defocused} />
+              <CheckedCircle
+                checked={isSelected}
+                defocused={defocused}
+                className="mt-1"
+              />
             )}
             <div>
               {icon && (
@@ -107,7 +111,7 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
             <div className="flex flex-1 flex-col gap-1">
               <div
                 className={classNames(
-                  'm-0 mt-1 text-lg font-medium',
+                  'm-0 text-lg font-medium',
                   titleColorClassNames,
                 )}
               >

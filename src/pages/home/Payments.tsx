@@ -30,7 +30,7 @@ export default function Payments() {
     if (!project?.projectId) return null
 
     return (
-      <div className="font-medium text-haze-400 dark:text-haze-300">
+      <div className="font-medium text-bluebs-400 dark:text-bluebs-300">
         {project.pv === PV_V1 ? (
           <V1ProjectHandle
             projectId={project.projectId}

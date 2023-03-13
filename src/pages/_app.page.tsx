@@ -54,7 +54,7 @@ init({
     label: n.label,
   })),
   appMetadata: {
-    icon: '/assets/juice_logo-ol.png',
+    icon: '/assets/juice-logo-icon_black.png',
     name: config.title,
     description: config.description,
   },

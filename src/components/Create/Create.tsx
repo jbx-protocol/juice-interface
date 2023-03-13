@@ -124,7 +124,7 @@ export function Create() {
           <Wizard.Page
             name="nftRewards"
             title={
-              <div className="inline-flex items-center gap-2">
+              <div className="inline-flex items-center gap-3">
                 <Trans>NFTs</Trans>
                 <div>
                   <CreateBadge.Optional />

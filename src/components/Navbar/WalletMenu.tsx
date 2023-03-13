@@ -68,7 +68,7 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
       placement={!isMobile ? 'bottomRight' : 'top'}
       overlayClassName="p-0"
     >
-      <div className="flex h-11 w-full cursor-default select-all flex-col items-center rounded-sm bg-smoke-75 px-5 pt-1 pb-2 dark:bg-slate-400">
+      <div className="flex h-11 w-full cursor-default select-all flex-col items-center rounded-lg bg-smoke-75 px-5 pt-1 pb-2 dark:bg-slate-400">
         <FormattedAddress
           address={userAddress}
           tooltipDisabled

@@ -13,7 +13,7 @@ jobs:
     env:
       SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
       SUPABASE_DB_PASSWORD: ${{ secrets.GOERLI_DB_PASSWORD }}
-      STAGING_PROJECT_ID: ${{ secrets.GOERLI_PROJECT_ID }}
+      GOERLI_PROJECT_ID: ${{ secrets.GOERLI_PROJECT_ID }}
 
     steps:
       - uses: actions/checkout@v3

@@ -3437,6 +3437,9 @@ msgstr ""
 msgid "Total paid"
 msgstr ""
 
+msgid "Total payouts: {0}"
+msgstr ""
+
 msgid "Total raised"
 msgstr ""
 
@@ -3840,6 +3843,9 @@ msgid "You haven't created any projects yet."
 msgstr ""
 
 msgid "You haven't launched an NFT collection yet! Edit your cycle to add NFTs."
+msgstr ""
+
+msgid "You must <0>Edit your Cycle</0> to change your total payout amount."
 msgstr ""
 
 msgid "You must edit your cycle's rules to allow controller migrations."

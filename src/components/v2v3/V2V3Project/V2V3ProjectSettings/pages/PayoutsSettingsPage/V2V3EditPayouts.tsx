@@ -1,25 +1,27 @@
 import { t, Trans } from '@lingui/macro'
-import { Divider, Space } from 'antd'
+import { Space } from 'antd'
 import { CsvUpload } from 'components/inputs/CsvUpload'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { Split } from 'models/splits'
 import { useCallback, useContext, useEffect, useMemo } from 'react'
 import { getTotalSplitsPercentage } from 'utils/v2v3/distributions'
 
-import { Callout } from 'components/Callout'
 import { Allocation, AllocationSplit } from 'components/Allocation'
+import { Callout } from 'components/Callout'
 import { OwnerPayoutCard } from 'components/PayoutCard'
 import { PayoutCard } from 'components/PayoutCard/PayoutCard'
-import { formatFundingTarget } from 'utils/format/formatFundingTarget'
-import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
-import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
-import { parseV2SplitsCsv } from 'utils/csv'
-import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
-import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
-import { twMerge } from 'tailwind-merge'
+import TooltipIcon from 'components/TooltipIcon'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { PayoutsSelection } from 'models/payoutsSelection'
-import { calculateExpenseFromPercentageOfWad } from 'utils/calculateExpenseFromPercentageOfWad'
+import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
+import Link from 'next/link'
+import { twMerge } from 'tailwind-merge'
+import { parseV2SplitsCsv } from 'utils/csv'
+import { formatFundingTarget } from 'utils/format/formatFundingTarget'
 import { formatPercent } from 'utils/format/formatPercent'
+import { settingsPagePath } from 'utils/routes'
+import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
+import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 
 export const V2V3EditPayouts = ({
   editingSplits,
@@ -34,7 +36,9 @@ export const V2V3EditPayouts = ({
     payoutSplits: contextPayoutSplits,
     distributionLimit,
     distributionLimitCurrency: distributionLimitCurrencyBigNumber,
+    handle,
   } = useContext(V2V3ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const isLockedAllocation = useCallback(
     (allocation: AllocationSplit) => {
@@ -81,25 +85,10 @@ export const V2V3EditPayouts = ({
     return 'amounts'
   }, [distributionLimit])
 
-  const availablePayoutModesInModal = useMemo(() => {
-    // TODO: This is a discrepency between `AllocationList::availableModes` and `PayoutsSelection`.
-    const set = new Set<'percentage' | 'amount'>(['percentage'])
-    if (payoutsSelection === 'amounts') set.add('amount')
-    return set
-  }, [payoutsSelection])
-
   const distributionLimitCurrency = useMemo(
     () => distributionLimitCurrencyBigNumber?.toNumber() as V2V3CurrencyOption,
     [distributionLimitCurrencyBigNumber],
   )
-
-  const expenses = useMemo(() => {
-    if (!distributionLimit) return 0
-    return calculateExpenseFromPercentageOfWad({
-      percentage: totalSplitsPercentage,
-      wad: distributionLimit,
-    })
-  }, [distributionLimit, totalSplitsPercentage])
 
   // Load original splits from context into editing splits.
   useEffect(() => {
@@ -118,7 +107,7 @@ export const V2V3EditPayouts = ({
   )
 
   return (
-    <>
+    <div className="flex flex-col gap-4">
       <Space className="mb-8 w-full" direction="vertical" size="middle">
         <div>
           <Trans>
@@ -146,7 +135,7 @@ export const V2V3EditPayouts = ({
           <OwnerPayoutCard payoutsSelection={payoutsSelection} />
           <Allocation.List
             allocationName={t`payout`}
-            availableModes={availablePayoutModesInModal}
+            availableModes={new Set(['percentage'])}
           >
             {(
               modal,
@@ -181,32 +170,36 @@ export const V2V3EditPayouts = ({
         </Space>
       </Allocation>
 
-      {payoutsSelection === 'amounts' && (
-        <div
-          className={twMerge(
-            'flex items-center pt-4',
-            totalSplitsPercentageInvalid
-              ? 'text-warning-600 dark:text-warning-100'
-              : undefined,
-          )}
-        >
-          <span>
-            Current Funding Target:{' '}
-            {formatFundingTarget({
-              distributionLimitWad: distributionLimit,
-              distributionLimitCurrency,
-            })}
-          </span>
-          <Divider type="vertical" className="mx-4 h-6" />
-          <span>
-            Expenses:{' '}
-            {formatCurrencyAmount({
-              amount: expenses,
-              currency: distributionLimitCurrency,
-            })}
-          </span>
-        </div>
-      )}
+      <div
+        className={twMerge(
+          'flex items-center pt-2 font-medium',
+          totalSplitsPercentageInvalid
+            ? 'text-warning-600 dark:text-warning-100'
+            : undefined,
+        )}
+      >
+        <Trans>
+          Total payouts:{' '}
+          {formatFundingTarget({
+            distributionLimitWad: distributionLimit,
+            distributionLimitCurrency,
+          })}
+        </Trans>
+        <TooltipIcon
+          iconClassName="ml-2"
+          tip={
+            <Trans>
+              You must{' '}
+              <Link
+                href={settingsPagePath('reconfigurefc', { projectId, handle })}
+              >
+                Edit your Cycle
+              </Link>{' '}
+              to change your total payout amount.
+            </Trans>
+          }
+        />
+      </div>
 
       {totalSplitsPercentageInvalid && (
         <span className="text-error-500 dark:text-error-400">
@@ -220,6 +213,6 @@ export const V2V3EditPayouts = ({
           )}
         </span>
       )}
-    </>
+    </div>
   )
 }

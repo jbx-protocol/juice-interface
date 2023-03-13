@@ -27,11 +27,16 @@
     &:hover .anticon-arrow-left {
       margin-right: 2px;
     }
-  
+
     &:hover .anticon-arrow-right {
       margin-left: 10px;
     }
-  }  
+  }
+}
+
+.ant-btn.ant-btn-loading::before {
+  @apply opacity-25;
+  @apply bg-disabled;
 }
 
 .ant-btn-primary {

@@ -7,18 +7,12 @@ import Image from 'next/image'
 import { helpPagePath } from 'utils/routes'
 import { SectionHeading } from './SectionHeading'
 
-const SmallHeader = ({ text }: { text: string }) => {
-  return (
-    <h3 className="m-0 font-medium text-black dark:text-slate-100">{text}</h3>
-  )
-}
-
 const FourthCol = ({
   header,
   children,
 }: React.PropsWithChildren<{ header: string }>) => (
   <div>
-    <SmallHeader text={header} />
+    <h4 className="m-0 text-black dark:text-slate-100">{header}</h4>
     <p className="mb-0 mt-1">{children}</p>
   </div>
 )

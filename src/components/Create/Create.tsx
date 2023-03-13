@@ -35,8 +35,13 @@ export function Create() {
   if (initialStateLoading) return <Loading />
 
   return (
-    <>
-      <h1 className="text-center text-base font-medium uppercase text-black dark:text-slate-100">
+    <div className="mt-10">
+      <h1
+        className="mb-0 text-center text-base font-medium uppercase text-black dark:text-slate-100"
+        style={{
+          fontFamily: 'Agrandir',
+        }} // TODO: JB-108
+      >
         {!isMigration ? (
           <Trans>Create a project</Trans>
         ) : (
@@ -166,6 +171,6 @@ export function Create() {
         </Wizard>
       </div>
       <PayoutsMigrationModal />
-    </>
+    </div>
   )
 }

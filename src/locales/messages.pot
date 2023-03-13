@@ -74,9 +74,6 @@ msgstr ""
 msgid "<0/> Archived projects haven't been modified or deleted on-chain. They can still be interacted with directly through the Juicebox contracts."
 msgstr ""
 
-msgid "<0/> The Juicebox protocol is open to anyone, and project's rules can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the <1>risks</1> before committing your funds."
-msgstr ""
-
 msgid "<0/> Your project’s settings cannot be edited or changed during the first funding cycle."
 msgstr ""
 
@@ -1284,6 +1281,9 @@ msgid "Ethereum wallet address"
 msgstr ""
 
 msgid "Explore"
+msgstr ""
+
+msgid "Explore Projects"
 msgstr ""
 
 msgid "Explore projects"

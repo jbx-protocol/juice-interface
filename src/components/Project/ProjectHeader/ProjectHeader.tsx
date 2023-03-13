@@ -79,7 +79,8 @@ function ProjectHeading() {
   return (
     <div className="flex max-w-md items-center overflow-hidden">
       <h1
-        className="mb-0 overflow-hidden text-ellipsis text-4xl text-black dark:text-slate-100"
+        className="mb-0 overflow-hidden text-ellipsis text-4xl font-medium text-black dark:text-slate-100"
+        style={{ fontFamily: 'Agrandir' }} // TODO: make Tailwind variable `font-agrandir` (JB-108)
         title={projectTitle}
       >
         {projectTitle}

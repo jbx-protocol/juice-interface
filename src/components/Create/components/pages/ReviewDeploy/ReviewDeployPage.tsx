@@ -40,7 +40,7 @@ const Header: React.FC<{ skipped?: boolean }> = ({
   skipped = false,
 }) => {
   return (
-    <h2 className="mb-0 flex items-center gap-2 text-lg font-medium text-black dark:text-grey-200">
+    <h4 className="mb-0 flex items-center gap-2 text-xl font-medium text-black dark:text-grey-200">
       {children}
       {skipped ? (
         <span>
@@ -49,7 +49,7 @@ const Header: React.FC<{ skipped?: boolean }> = ({
       ) : (
         <CheckCircleFilled className="text-haze-400" />
       )}
-    </h2>
+    </h4>
   )
 }
 

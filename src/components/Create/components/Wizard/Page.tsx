@@ -57,9 +57,9 @@ export const Page: React.FC<PageProps> & {
         <div>
           <div className="flex justify-between">
             <div>
-              <h2 className="text-2xl font-medium text-black dark:text-grey-200">
+              <h3 className="text-3xl font-medium text-black dark:text-grey-200">
                 {title}
-              </h2>
+              </h3>
               {isMobile && nextPageName && (
                 <div className="pb-6 text-xs font-normal uppercase text-grey-500">
                   <Trans>Next:</Trans> {nextPageName}

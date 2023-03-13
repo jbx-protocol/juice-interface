@@ -112,9 +112,9 @@ export default function TrendingProjectCard({
 
             <div className="min-w-0 flex-1 font-normal">
               {metadata ? (
-                <h2 className="m-0 overflow-hidden text-ellipsis text-base text-black dark:text-slate-100 md:text-xl">
+                <h4 className="m-0 overflow-hidden text-ellipsis text-base text-black dark:text-slate-100 md:text-xl">
                   {metadata.name}
-                </h2>
+                </h4>
               ) : (
                 <Skeleton paragraph={false} title={{ width: 120 }} active />
               )}

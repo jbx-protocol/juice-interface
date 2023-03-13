@@ -12,35 +12,22 @@ export default function SectionHeader({
 }) {
   if (text === undefined) return null
 
+  const _className = twMerge(
+    'text-xl font-medium text-grey-900 dark:text-slate-100',
+    className,
+  )
+
   if (tip !== undefined) {
     return (
-      <h2>
+      <h3>
         <TooltipLabel
           className="text-sm"
-          label={
-            <span
-              className={twMerge(
-                'text-lg font-medium text-grey-900 dark:text-slate-100',
-                className,
-              )}
-            >
-              {text}
-            </span>
-          }
+          label={<span className={_className}>{text}</span>}
           tip={tip}
         />
-      </h2>
+      </h3>
     )
   } else {
-    return (
-      <h2
-        className={twMerge(
-          'text-lg font-medium text-grey-900 dark:text-slate-100',
-          className,
-        )}
-      >
-        {text}
-      </h2>
-    )
+    return <h3 className={_className}>{text}</h3>
   }
 }

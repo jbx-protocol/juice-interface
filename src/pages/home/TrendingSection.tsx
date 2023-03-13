@@ -12,11 +12,7 @@ import Payments from './Payments'
 const TRENDING_PROJECTS_LIMIT = 6
 
 const SmallHeader = ({ text }: { text: string | JSX.Element }) => {
-  return (
-    <h3 className="m-0 text-xl font-semibold text-black dark:text-slate-100">
-      {text}
-    </h3>
-  )
+  return <h3 className="m-0 text-black dark:text-slate-100">{text}</h3>
 }
 
 export default function TrendingSection() {

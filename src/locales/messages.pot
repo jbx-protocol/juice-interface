@@ -1619,6 +1619,9 @@ msgstr ""
 msgid "Issue token"
 msgstr ""
 
+msgid "JB721Delegate v{version}"
+msgstr ""
+
 msgid "JBX membership fee ({0}%):"
 msgstr ""
 
@@ -3555,6 +3558,9 @@ msgid "Unix timestamp in seconds. Leave blank to start immediately."
 msgstr ""
 
 msgid "Unknown Project"
+msgstr ""
+
+msgid "Unknown datasource"
 msgstr ""
 
 msgid "Unless payments are paused in your funding cycle settings, your project can still receive payments directly through the Juicebox protocol contracts."

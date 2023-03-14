@@ -7,6 +7,11 @@ module.exports = {
   darkMode: 'class', // Use class for now, switch to media later
   important: true,
   theme: {
+    fontFamily: {
+      display: ['Agrandir-Wide', 'Helvetica Neue', 'Arial', 'sans-serif'],
+      heading: ['Agrandir', 'Helvetica Neue', 'Arial', 'sans-serif'],
+      body: ['Beatrice', 'Helvetica Neue', 'Arial', 'sans-serif'],
+    },
     extend: {
       boxShadow: {
         inputDark: '0 0 0 2px #013944',

@@ -78,7 +78,7 @@ Take the following steps to setup Juicebox's Subgraph for local development:
 
 ```
 # This is the endpoint for the supabase service - locally it should be "http://localhost:54321"
-NEXT_PUBLIC_SUPABASE_URL=<FROM CLI - API UR>
+NEXT_PUBLIC_SUPABASE_URL=<FROM CLI - API URL>
 # This is the anonymous JWT used by non-authorized calls to supabase - generated on start (should persist as the same between runs).
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<FROM CLI - anon key>
 # This is the main role key. Think of it as a super user key. Is used on the server. This is also generated on start (should persist as the same between runs).

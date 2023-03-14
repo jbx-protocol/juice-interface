@@ -19,12 +19,10 @@ import type { AppProps } from 'next/app'
 import { useEffect, useState } from 'react'
 import { unpadLeadingZerosString } from 'utils/bigNumbers'
 import { installJuiceboxWindowObject } from '../lib/juicebox'
-import '../styles/globals.css'
+import '../styles/index.scss'
 
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { SessionContextProvider } from '@supabase/auth-helpers-react'
-import '../styles/antd.css'
-import '../styles/index.scss'
 
 const injected = injectedModule()
 const gnosis = gnosisModule()

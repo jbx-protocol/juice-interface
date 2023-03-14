@@ -4,4 +4,3 @@ node_modules
 .vscode
 public/vendor
 src/generated
-src/styles/globals.css

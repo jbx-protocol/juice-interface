@@ -3824,7 +3824,7 @@
   resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-v1-token-terminal/-/juice-v1-token-terminal-1.0.1.tgz#b3855be69d4ebce57747cee2603df88f7ed23aad"
   integrity sha512-HZXbb6eOxCKmb/VCXDTcLEKyX6jsJhfHAS4mUu+VR18ReibNnwcdjltqsCBkNJlPOMDd3q1MVTXMrnGaOEHzIA==
 
-"@jbx-protocol/juice-v3-migration@^1.0.0":
+"@jbx-protocol/juice-v3-migration@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-v3-migration/-/juice-v3-migration-1.0.0.tgz#008663d8e09005d19a4837d98b519a1058c9060a"
   integrity sha512-+jmoiGcvVlbYrs510UDGWcUy7r2+pkhP+BI2ZqAjH4numZ7FWMvyRFjyaWLhzVHnKNZCSTUvvTIwU4wH5n6LSg==

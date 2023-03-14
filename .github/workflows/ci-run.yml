@@ -106,7 +106,9 @@ jobs:
 
       - name: Verify generated types are up-to-date
         run: |
+          npm i -g prettier
           supabase gen types typescript --local > src/types/database.types.ts
+          prettier --write src/types/database.types.ts
           if [ "$(git diff --ignore-space-at-eol src/types/database.types.ts | wc -l)" -gt "0" ]; then
             echo "Detected uncommitted changes after build. See status below:"
             git diff

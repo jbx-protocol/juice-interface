@@ -22,8 +22,8 @@ export const V2V3ProjectContractsContext: React.Context<{
     }
   }
   versions: {
-    JBController?: JBControllerVersion
-    JBETHPaymentTerminal?: JBETHPaymentTerminalVersion
+    JBControllerVersion?: JBControllerVersion
+    JBETHPaymentTerminalVersion?: JBETHPaymentTerminalVersion
   }
 }> = createContext({
   contracts: {},

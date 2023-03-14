@@ -94,7 +94,7 @@ export function useDistributePayoutsTx(): DistributePayoutsTx {
     }
 
     const txArgs = buildTxArgs({
-      JBETHPaymentTerminalVersion: versions.JBETHPaymentTerminal,
+      JBETHPaymentTerminalVersion: versions.JBETHPaymentTerminalVersion,
       projectId,
       args,
     })

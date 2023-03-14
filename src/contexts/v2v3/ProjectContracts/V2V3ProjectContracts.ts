@@ -22,7 +22,7 @@ export function useV2V3ProjectContracts({ projectId }: { projectId: number }): {
     JBFundAccessConstraintsStoreLoading: boolean
   }
   versions: {
-    JBETHPaymentTerminal: JBETHPaymentTerminalVersion | undefined
+    JBETHPaymentTerminalVersion: JBETHPaymentTerminalVersion | undefined
     JBControllerVersion: JBControllerVersion | undefined
   }
 } {
@@ -37,7 +37,7 @@ export function useV2V3ProjectContracts({ projectId }: { projectId: number }): {
   const {
     JBETHPaymentTerminal,
     loading: JBETHPaymentTerminalLoading,
-    version,
+    version: JBETHPaymentTerminalVersion,
   } = useProjectPrimaryEthTerminal({
     projectId,
   })
@@ -69,7 +69,7 @@ export function useV2V3ProjectContracts({ projectId }: { projectId: number }): {
       JBFundAccessConstraintsStoreLoading,
     },
     versions: {
-      JBETHPaymentTerminal: version,
+      JBETHPaymentTerminalVersion,
       JBControllerVersion,
     },
   }

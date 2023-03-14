@@ -183,7 +183,7 @@ export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<R
       }
 
     const args = buildArgs(
-      versions.JBController === JB_CONTROLLER_V_3_1
+      versions.JBControllerVersion === JB_CONTROLLER_V_3_1
         ? JB721_DELEGATE_V1_1 // use delegate v1.1 for controller v3.1
         : JB721_DELEGATE_V1,
       {

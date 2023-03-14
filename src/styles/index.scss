@@ -3,12 +3,9 @@
 @import './fonts';
 @tailwind components;
 @tailwind utilities;
-@import './utilities';
-
 @import './antd';
-@import './antd-overrides/index.scss';
-
-@import './web3-onboard-overrides/index.scss';
-
+@import './utilities';
 @import './app';
+@import './antd-overrides/index.scss';
+@import './web3-onboard-overrides/index.scss';
 @import 'create/index.scss';

@@ -27,7 +27,7 @@ const Container: React.FC<{
   return (
     <div
       className={classNames(
-        'rounded-sm border border-solid transition-colors',
+        'rounded-lg border border-solid transition-colors',
         borderColorClassNames,
         backgroundColorClassNames,
       )}

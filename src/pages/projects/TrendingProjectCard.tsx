@@ -88,8 +88,8 @@ export default function TrendingProjectCard({
       }
     >
       <a>
-        <div className="cursor-pointer overflow-hidden rounded-sm">
-          <div className="flex h-full items-center overflow-hidden whitespace-pre py-4 transition-colors md:border md:border-solid md:border-smoke-300 md:px-5 md:py-6 md:hover:border-smoke-500 md:dark:border-slate-300 md:dark:hover:border-slate-100">
+        <div className="cursor-pointer overflow-hidden rounded-lg">
+          <div className="flex h-full items-center overflow-hidden whitespace-pre rounded-lg py-4 transition-colors md:border md:border-solid md:border-smoke-300 md:px-5 md:py-6 md:hover:border-smoke-500 md:dark:border-slate-300 md:dark:hover:border-slate-100">
             <div className="relative mr-5 h-20 w-20 md:hidden">
               <div className="absolute left-0 top-0 flex h-8 w-8 items-center justify-center rounded-br bg-white text-xl font-normal font-bold text-black dark:bg-slate-800 dark:text-slate-100">
                 {rank}

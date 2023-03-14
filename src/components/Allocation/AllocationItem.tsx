@@ -19,7 +19,7 @@ export const AllocationItem = ({
   return (
     <div
       className={twMerge(
-        'select-none border border-solid border-smoke-200 bg-smoke-75 dark:border-slate-300 dark:bg-slate-400',
+        'select-none rounded-lg border border-solid border-smoke-200 bg-smoke-75 dark:border-slate-300 dark:bg-slate-400',
         'grid grid-cols-2 py-4 md:grid-cols-12 md:py-0',
         isClickable
           ? 'cursor-pointer transition-colors hover:border-smoke-400 dark:hover:border-slate-100'

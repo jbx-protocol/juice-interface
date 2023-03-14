@@ -336,7 +336,7 @@ export default function ReconfigureFCModal({
               className={classNames(
                 'flex cursor-pointer justify-between rounded-sm border border-solid p-2',
                 active
-                  ? 'border-bluebs-400 dark:border-bluebs-300'
+                  ? 'border-bluebs-500 dark:border-bluebs-300'
                   : 'border-[#32c8db44] dark:border-[#e1e0e844]',
               )}
               key={step.title}
@@ -348,7 +348,7 @@ export default function ReconfigureFCModal({
               <div
                 className={classNames(
                   active
-                    ? 'font-medium text-bluebs-400 dark:text-bluebs-300'
+                    ? 'font-medium text-bluebs-500 dark:text-bluebs-300'
                     : 'font-normal text-black dark:text-slate-100',
                 )}
               >
@@ -357,7 +357,7 @@ export default function ReconfigureFCModal({
               <div
                 className={classNames(
                   active
-                    ? 'text-bluebs-400 dark:text-bluebs-300'
+                    ? 'text-bluebs-500 dark:text-bluebs-300'
                     : 'text-black dark:text-slate-100',
                 )}
               >

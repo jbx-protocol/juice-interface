@@ -38,7 +38,7 @@ export const MobileStep = ({
         <span>
           {index + 1}. {step.title}
         </span>
-        {isCompleted && <CheckCircleFilled className="text-bluebs-400" />}
+        {isCompleted && <CheckCircleFilled className="text-bluebs-500" />}
       </div>
     </div>
   )

@@ -138,7 +138,7 @@ export default function Footer() {
                 {ImageButtons.map(({ name, image, link }) => (
                   <ExternalLink
                     key={name}
-                    className="text-lg leading-none text-grey-300 hover:text-bluebs-400"
+                    className="text-lg leading-none text-grey-300 hover:text-bluebs-500"
                     href={link}
                   >
                     {image}
@@ -163,14 +163,14 @@ const LinkColumn: React.FC<{ title: ReactNode; items: LinkItem[] }> = ({
       <div key={i}>
         {externalLink ? (
           <ExternalLink
-            className="text-slate-100 hover:text-bluebs-400"
+            className="text-slate-100 hover:text-bluebs-500"
             href={link}
           >
             {title}
           </ExternalLink>
         ) : (
           <Link href={link}>
-            <a className="text-slate-100 hover:text-bluebs-400">{title}</a>
+            <a className="text-slate-100 hover:text-bluebs-500">{title}</a>
           </Link>
         )}
       </div>
@@ -185,7 +185,7 @@ const AppVersion = ({ gitCommit }: { gitCommit: string }) => {
       Version:{' '}
       <ExternalLink
         href={gitCommitLink}
-        className="text-grey-300 underline hover:text-bluebs-400"
+        className="text-grey-300 underline hover:text-bluebs-500"
       >
         #{gitCommit}
       </ExternalLink>

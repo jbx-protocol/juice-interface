@@ -19,7 +19,7 @@ export default function V2V3ProjectLink({
       <Link href={v2v3ProjectRoute({ projectId })}>
         <a
           className={twMerge(
-            'select-all leading-[22px] text-grey-900 hover:text-bluebs-400 hover:underline dark:text-slate-100',
+            'select-all leading-[22px] text-grey-900 hover:text-bluebs-500 hover:underline dark:text-slate-100',
             className,
           )}
         >

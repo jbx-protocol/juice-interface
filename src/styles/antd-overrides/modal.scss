@@ -12,6 +12,8 @@
 
   .ant-modal-title {
     @apply text-primary;
+    @apply font-heading;
+    @apply text-xl;
   }
 
   .ant-modal-close-x {

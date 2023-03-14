@@ -11,7 +11,7 @@ export const CheckedCircle: React.FC<{
     return (
       <CheckCircleFilled
         className={classNames(
-          `text-xl leading-none text-bluebs-400`,
+          `text-xl leading-none text-bluebs-500`,
           className,
         )}
       />

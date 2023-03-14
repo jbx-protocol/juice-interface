@@ -47,7 +47,7 @@ const Header: React.FC<{ skipped?: boolean }> = ({
           <CreateBadge.Skipped />
         </span>
       ) : (
-        <CheckCircleFilled className="text-bluebs-400" />
+        <CheckCircleFilled className="text-bluebs-500" />
       )}
     </h4>
   )

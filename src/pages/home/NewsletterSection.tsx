@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Button, Col, Form, Input, Row } from 'antd'
 import useMobile from 'hooks/Mobile'
 import { createJuicenewsSubscription } from 'lib/api/juicenews'
@@ -47,7 +47,11 @@ export function NewsletterSection() {
               <Form onFinish={() => onFormSubmit()} form={form}>
                 <Input.Group compact>
                   <Form.Item name="email" className="w-full md:w-3/5">
-                    <Input type="email" size="large" />
+                    <Input
+                      type="email"
+                      size="large"
+                      placeholder={t`Enter email address...`}
+                    />
                   </Form.Item>
                   <div className="ml-0 md:ml-2">
                     <Button

@@ -119,7 +119,7 @@ export function VeNftUpload({ form }: { form: FormInstance<VeNftFormFields> }) {
                 )}
               />
             ) : (
-              <UploadOutlined className="text-xl text-bluebs-400 dark:text-bluebs-300" />
+              <UploadOutlined className="text-xl text-bluebs-500 dark:text-bluebs-300" />
             )}
             <div className="mt-2 w-full">
               <div className="text-sm">

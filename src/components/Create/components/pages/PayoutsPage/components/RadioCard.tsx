@@ -15,7 +15,7 @@ export const RadioCard: React.FC<{
         selectable
           ? 'hover:border-grey-300 dark:hover:border-slate-100'
           : undefined,
-        checked ? 'border-bluebs-400 dark:border-bluebs-400' : undefined,
+        checked ? 'border-bluebs-500 dark:border-bluebs-500' : undefined,
       )}
     >
       <span className="flex gap-x-3">
@@ -23,9 +23,9 @@ export const RadioCard: React.FC<{
           className={twMerge(
             'transition-color fill-grey-400 text-2xl leading-none text-grey-400',
             selectable
-              ? 'group-hover:fill-bluebs-400 group-hover:text-bluebs-400'
+              ? 'group-hover:fill-bluebs-500 group-hover:text-bluebs-500'
               : undefined,
-            checked ? 'fill-bluebs-400 text-bluebs-400' : undefined,
+            checked ? 'fill-bluebs-500 text-bluebs-500' : undefined,
           )}
         >
           {icon}

@@ -42,7 +42,7 @@ export default function VeNftLockDurationOptionCard({
       <Row className="flex w-full cursor-pointer border border-solid border-smoke-200 bg-smoke-25 py-4 pr-2 pl-5 dark:border-grey-600 dark:bg-slate-800">
         <Col className="flex flex-col justify-center" md={16}>
           <Row className="flex w-full items-center text-base">
-            <Col className="text-bluebs-400 dark:text-bluebs-300 " md={7}></Col>
+            <Col className="text-bluebs-500 dark:text-bluebs-300 " md={7}></Col>
             <Col className="flex font-medium" md={15}>
               <span>{lockDurationOptionLabel()}</span>
             </Col>

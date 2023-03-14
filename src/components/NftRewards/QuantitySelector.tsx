@@ -21,7 +21,7 @@ export function QuantitySelector({
 
   return (
     <div
-      className="absolute right-1.5 top-1.5 flex h-9 w-3/5 items-center justify-between rounded-full bg-bluebs-400 text-sm text-smoke-25 md:h-7 md:w-1/2"
+      className="absolute right-1.5 top-1.5 flex h-9 w-3/5 items-center justify-between rounded-full bg-bluebs-500 text-sm text-smoke-25 md:h-7 md:w-1/2"
       onClick={e => e.stopPropagation()}
     >
       <div
@@ -40,7 +40,7 @@ export function QuantitySelector({
             iconClasses,
             'rounded-r-full pr-0.5',
             valueIsMax
-              ? 'text-tertiary cursor-default active:bg-bluebs-400 md:hover:bg-bluebs-400'
+              ? 'text-tertiary cursor-default active:bg-bluebs-500 md:hover:bg-bluebs-500'
               : '',
           )}
         >

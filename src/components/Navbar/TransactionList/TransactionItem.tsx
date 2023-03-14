@@ -23,7 +23,7 @@ export function TransactionItem({
 
         <ExternalLink
           href={tx.tx?.hash ? etherscanLink('tx', tx.tx.hash) : undefined}
-          className="text-sm text-black hover:text-bluebs-400 hover:underline dark:text-grey-100 dark:hover:text-bluebs-400"
+          className="text-sm text-black hover:text-bluebs-500 hover:underline dark:text-grey-100 dark:hover:text-bluebs-500"
         >
           {tx.title}
         </ExternalLink>
@@ -32,7 +32,7 @@ export function TransactionItem({
       {onRemoveTransaction && (
         <CloseCircleOutlined
           role="button"
-          className="hover:text-bluebs-400"
+          className="hover:text-bluebs-500"
           onClick={() => {
             onRemoveTransaction()
           }}

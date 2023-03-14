@@ -162,7 +162,7 @@ export const FundingCyclesPage = () => {
                   <div className="flex items-center gap-3">
                     <OptionalHeader header={t`Schedule launch`} />
                     {launchDate && (
-                      <CheckCircleFilled className="text-lg leading-none text-bluebs-400" />
+                      <CheckCircleFilled className="text-lg leading-none text-bluebs-500" />
                     )}
                   </div>
                 }

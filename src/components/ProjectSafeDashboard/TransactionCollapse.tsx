@@ -63,7 +63,7 @@ export function TransactionCollapse({
         >
           <div className="flex items-center">
             <Link href={`#${transaction.safeTxHash}`}>
-              <a className="text-black hover:text-bluebs-400 hover:underline dark:text-grey-100 dark:hover:text-bluebs-400">
+              <a className="text-black hover:text-bluebs-500 hover:underline dark:text-grey-100 dark:hover:text-bluebs-500">
                 {transactionTitle}
               </a>
             </Link>

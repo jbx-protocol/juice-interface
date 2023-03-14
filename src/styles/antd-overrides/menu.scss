@@ -9,6 +9,7 @@
 
 .ant-menu-inline .ant-menu-item {
   width: auto;
+  @apply rounded-lg;
 }
 
 .ant-menu-submenu-title {

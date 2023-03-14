@@ -1235,6 +1235,9 @@ msgstr ""
 msgid "End"
 msgstr ""
 
+msgid "Enter email address..."
+msgstr ""
+
 msgid "Enter your project's details. You can edit your project's details at any time after you deploy your project, but the transaction will cost gas."
 msgstr ""
 

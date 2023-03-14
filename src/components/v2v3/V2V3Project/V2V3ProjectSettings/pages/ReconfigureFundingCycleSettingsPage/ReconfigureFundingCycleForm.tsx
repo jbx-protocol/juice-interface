@@ -40,7 +40,7 @@ function ReconfigureButton({
       {...props}
       className={
         reconfigureHasChanges
-          ? 'border-2 border-solid border-bluebs-400 dark:border dark:border-bluebs-400'
+          ? 'border-2 border-solid border-bluebs-500 dark:border dark:border-bluebs-500'
           : ''
       }
     />

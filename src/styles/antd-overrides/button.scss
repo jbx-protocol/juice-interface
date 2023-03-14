@@ -1,11 +1,12 @@
 .ant-btn {
   background: transparent;
-  @apply border-bluebs-400 dark:border-slate-300;
+  @apply border-bluebs-500 dark:border-slate-300;
   @apply text-over-action-secondary;
   @apply font-medium;
   @apply rounded-lg;
   transition: all 100ms linear;
   @apply h-10;
+  @apply px-6;
 
   .anticon {
     transition: margin 100ms linear;
@@ -44,7 +45,7 @@
   }
 
   &:hover:not(.ant-btn[disabled]) {
-    @apply bg-action-highlight;
+    @apply bg-bluebs-600 dark:bg-bluebs-400;
     @apply text-over-action-primary;
   }
 
@@ -101,7 +102,8 @@
   @apply font-medium;
 
   &:hover {
-    @apply bg-bluebs-50;
+    @apply text-action-primary-hover;
+    @apply bg-transparent dark:bg-transparent;
   }
   &:focus,
   &:active {

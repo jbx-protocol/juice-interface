@@ -17,6 +17,8 @@ const SCRIPT_SRC = [
   'https://*.juicebox.money',
 ]
 
+const STYLE_SRC = ['unsafe-inline']
+
 const IMG_SRC = [
   'https://*.juicebox.money',
   'https://juicebox.money',
@@ -54,7 +56,7 @@ if (process.env.NODE_ENV === 'development') {
 const ContentSecurityPolicy = `
   default-src 'none';
   script-src 'self' ${SCRIPT_SRC.join(' ')} 'unsafe-inline' 'unsafe-eval';
-  style-src 'self';
+  style-src 'self' ${STYLE_SRC.join(' ')};
   font-src 'self' data:;
   img-src 'self' ${IMG_SRC.join(' ')}  data:;
   connect-src 'self' ${CONNECT_SRC.join(' ')};

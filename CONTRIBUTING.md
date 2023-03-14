@@ -6,10 +6,6 @@ If you're interested in contributing ideas or code to Juicebox, you're in the ri
 
 Read the [development guidelines](doc/development.md) for instructions on running the app in development.
 
-## Finding something to work on
-
-Start with issues labelled [`good first issue`](https://github.com/jbx-protocol/juice-juicehouse/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22).
-
 ## Getting your pull request reviewed, approved, and merged
 
 Create a pull request (PR) that targets the `main` branch. A live Fleek preview will be automatically deployed for each PR.

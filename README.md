@@ -13,27 +13,25 @@
 
 | Name                      | Link                                                                                                                                |
 | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| Mainnet site              | https://juicebox.money                                                                                                              |
+| Mainnet              | https://juicebox.money                                                                                                              |
 | Goerli                    | https://goerli.juicebox.money                                                                                                       |
 | Subgraph                  | [https://thegraph.com/explorer/subgraph...](https://thegraph.com/explorer/subgraph?id=FVmuv3TndQDNd2BWARV8Y27yuKKukryKXPzvAS5E7htC) |
 
-## Suggest a feature
-
-Have an idea or suggestion? [Create a feature request](https://github.com/jbx-protocol/juice-interface/issues/new?assignees=&labels=idea&template=feature_request.md&title=%5BIDEA%5D+) (or mention it in [Discord](https://discord.gg/6jXrJSyDFf)).
-
 ## Report a bug
 
-Notice something broken? [Create a bug report](https://github.com/jbx-protocol/juice-interface/issues/new?assignees=&labels=bug&template=bug_report.md&title=%5BBUG%5D+).
+Mention `@Peel` in [Discord](https://discord.gg/6jXrJSyDFf) and someone from our team will triage your request!
+
+## Development
+
+Read the [development guidelines](doc/development.md) for instructions on running the app in development.
 
 ## Contributing
 
 Anyone can contribute! [Start here](CONTRIBUTING.md).
 
-For developers, [learn more](doc/development.md) about development.
-
 [Learn more](https://www.notion.so/juicebox/Frontend-26b80fcb50b34f3b9356fc7fc5286e05) about the Peel team.
 
-## Support
+### Support
 
 Join the [JuiceboxDAO Discord](https://discord.gg/6jXrJSyDFf) and reach out to the development team for development support.
 

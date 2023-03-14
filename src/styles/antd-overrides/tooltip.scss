@@ -7,6 +7,7 @@
   padding: 12px 16px;
   box-shadow: 0 4px 12px #00000064;
   @apply text-xs;
+  @apply rounded-lg;
 }
 
 .ant-tooltip-arrow-content::before {

@@ -3,6 +3,7 @@ import { Plural, t, Trans } from '@lingui/macro'
 import { Skeleton } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
 import Loading from 'components/Loading'
+import { PROJECT_CARD_BG } from 'components/ProjectCard'
 import ProjectLogo from 'components/ProjectLogo'
 import { PV_V2 } from 'constants/pv'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
@@ -15,6 +16,7 @@ import { TRENDING_WINDOW_DAYS } from './RankingExplanation'
 export default function TrendingProjectCard({
   project,
   rank,
+  size = 'sm',
 }: {
   project: Pick<
     Project,
@@ -29,6 +31,7 @@ export default function TrendingProjectCard({
     | 'projectId'
   >
   rank: number
+  size?: 'sm' | 'lg'
 }) {
   const { data: metadata } = useProjectMetadata(project.metadataUri)
 
@@ -71,7 +74,7 @@ export default function TrendingProjectCard({
 
   const projectLogo = (
     <ProjectLogo
-      className="h-20 w-20"
+      className={size === 'sm' ? 'h-20 w-20' : 'h-28 w-28'}
       uri={metadata?.logoUri}
       name={metadata?.name}
       projectId={project.projectId}
@@ -88,7 +91,9 @@ export default function TrendingProjectCard({
       }
     >
       <a>
-        <div className="cursor-pointer overflow-hidden rounded-lg">
+        <div
+          className={`cursor-pointer overflow-hidden rounded-lg ${PROJECT_CARD_BG}`}
+        >
           <div className="flex h-full items-center overflow-hidden whitespace-pre rounded-lg py-4 transition-colors md:border md:border-solid md:border-smoke-300 md:px-5 md:py-6 md:hover:border-smoke-500 md:dark:border-slate-300 md:dark:hover:border-slate-100">
             <div className="relative mr-5 h-20 w-20 md:hidden">
               <div className="absolute left-0 top-0 flex h-8 w-8 items-center justify-center rounded-br bg-white text-xl font-normal font-bold text-black dark:bg-slate-800 dark:text-slate-100">

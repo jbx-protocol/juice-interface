@@ -1640,6 +1640,9 @@ msgstr ""
 msgid "Juicebox gives you the tools to automate web3 fundraising so you can focus on building."
 msgstr ""
 
+msgid "Juicebox has a fresh new look"
+msgstr ""
+
 msgid "Juicebox isn't guaranteed to be free of bugs or exploits. Before spending money, do your own research. <0>Ask questions</0>, check out the <1>code</1>, and understand the <2>risks </2>of crypto fundraising!"
 msgstr ""
 

@@ -36,11 +36,18 @@
   }  
 }
 
+.ant-btn-icon-only {
+  @apply px-0;
+  &:hover {
+    @apply bg-transparent dark:bg-transparent;
+  }
+}
+
 .ant-btn-primary {
   &:not(.ant-btn[disabled]) {
     @apply bg-action-primary;
     border-color: transparent;
-    @apply text-over-action-primary;
+    @apply text-over-action-primary dark:text-grey-900;
     box-shadow: none;
   }
 
@@ -93,6 +100,9 @@
 
 .ant-btn-text {
   border: transparent;
+  &:hover {
+    @apply bg-transparent dark:bg-transparent;
+  }
 }
 
 .ant-btn-link {

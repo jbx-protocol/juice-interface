@@ -319,9 +319,8 @@ export default function ProjectActivity() {
 
   return (
     <div>
-      <div className="mb-5 flex items-baseline justify-between">
+      <div className="mb-5 flex items-center justify-between">
         <SectionHeader className="m-0" text={t`Activity`} />
-
         <Space direction="horizontal" align="center" size="small">
           {count > 0 && (
             <Button

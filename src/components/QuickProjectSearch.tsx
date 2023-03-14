@@ -170,7 +170,7 @@ export default function QuickProjectSearch() {
       />
       <Modal
         closable={false}
-        className="top-16"
+        className="top-16 rounded-lg"
         open={modal.visible}
         onCancel={reset}
         okButtonProps={{ hidden: true }}
@@ -179,7 +179,7 @@ export default function QuickProjectSearch() {
         destroyOnClose
         bodyStyle={{ padding: 0 }}
       >
-        <div className="dark:bg-slate-700">
+        <div className="rounded-lg dark:bg-slate-700">
           <div className="flex items-center gap-5 px-5 pb-2 pt-8">
             <Input
               prefix={
@@ -253,7 +253,7 @@ export default function QuickProjectSearch() {
             )}
           </div>
 
-          <div className="mt-5 flex gap-6 border-t border-r-0 border-b-0 border-l-0 border-solid border-t-smoke-200 bg-smoke-75 py-4 px-5 text-xs dark:border-t-slate-300 dark:bg-slate-600">
+          <div className="mt-5 flex gap-6 rounded-b-lg border-t border-r-0 border-b-0 border-l-0 border-solid border-t-smoke-200 bg-smoke-75 py-4 px-5 text-xs dark:border-t-slate-300 dark:bg-slate-600">
             <span>
               <KeyboardButton>
                 <EnterOutlined />

@@ -41,6 +41,7 @@ export const AmountInput = ({
             onCurrencyChange={c =>
               setCurrency(c === 'ETH' ? V2V3_CURRENCY_ETH : V2V3_CURRENCY_USD)
             }
+            className="rounded"
           />
         }
       />

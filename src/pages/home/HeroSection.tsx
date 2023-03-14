@@ -68,7 +68,7 @@ export function HeroSection() {
     <section className="mt-20 mb-24 px-10">
       <div className="my-0 mx-auto max-w-6xl">
         <Row gutter={30} align="middle">
-          <Col className="flex items-center pb-6" xs={24} md={14}>
+          <Col className="flex items-center pb-6" xs={24} md={13}>
             <div>
               <Space direction="vertical" size="large">
                 <h1 className="text-brand m-0 text-5xl md:text-6xl">
@@ -86,14 +86,9 @@ export function HeroSection() {
               </Space>
             </div>
           </Col>
-          <Col xs={24} md={10} className="hidden md:block">
+          <Col xs={24} md={11} className="hidden md:block">
             <Image
               src={juiceHero}
-              // TODO: awaiting dark themed hero from Sage
-              // src={forThemeOption?.({
-              //   [ThemeOption.dark]: bananaOd,
-              //   [ThemeOption.light]: bananaOl,
-              // })}
               alt="Banny the chill Juicebox banana drinking juice"
               priority
             />

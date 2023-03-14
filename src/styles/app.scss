@@ -30,12 +30,12 @@ label {
 }
 
 a {
-  @apply text-action-primary;
+  @apply text-bluebs-500;
   @apply font-medium;
   transition: none;
 
   &:hover {
-    @apply text-action-primary-hover;
+    @apply text-bluebs-400;
   }
 }
 

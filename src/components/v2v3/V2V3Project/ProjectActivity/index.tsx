@@ -136,7 +136,7 @@ export default function ProjectActivity() {
 
   return (
     <div>
-      <div className="mb-5 flex items-baseline justify-between">
+      <div className="mb-5 flex items-start justify-between">
         <SectionHeader className="m-0" text={t`Activity`} />
 
         <Space direction="horizontal" align="center" size="small">
@@ -149,7 +149,7 @@ export default function ProjectActivity() {
           )}
 
           <Select
-            className="small w-[200px]"
+            className="w-[200px]"
             value={eventFilter}
             onChange={val => setEventFilter(val)}
           >

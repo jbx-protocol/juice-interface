@@ -4,9 +4,11 @@ import InputAccessoryButton from './buttons/InputAccessoryButton'
 export default function CurrencySwitch({
   currency,
   onCurrencyChange,
+  className,
 }: {
   currency: CurrencyName
   onCurrencyChange: (currency: CurrencyName) => void
+  className?: string
 }) {
   return (
     <InputAccessoryButton
@@ -17,6 +19,7 @@ export default function CurrencySwitch({
       content={currency}
       withArrow
       placement="suffix"
+      className={className}
     />
   )
 }

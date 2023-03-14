@@ -80,6 +80,12 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
     if (defocused) return 'text-grey-400 dark:text-slate-400'
   }, [defocused])
 
+  const checkedCircle = (
+    <div className="flex h-10 items-center">
+      <CheckedCircle checked={isSelected} defocused={defocused} />
+    </div>
+  )
+
   return (
     <Container
       isSelected={isSelected}
@@ -96,19 +102,13 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
       >
         <div className="px-4">
           <div className="flex items-start gap-4">
-            {checkPosition === 'left' && (
-              <CheckedCircle
-                checked={isSelected}
-                defocused={defocused}
-                className="mt-1"
-              />
-            )}
+            {checkPosition === 'left' && checkedCircle}
             <div>
               {icon && (
                 <RadialBackgroundIcon isDefocused={defocused} icon={icon} />
               )}
             </div>
-            <div className="flex flex-1 flex-col gap-1">
+            <div className="mt-2 flex flex-1 flex-col gap-1">
               <div
                 className={classNames(
                   'm-0 text-lg font-medium',
@@ -119,9 +119,7 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
               </div>
               {isSelected && description && <div>{description}</div>}
             </div>
-            {checkPosition === 'right' && (
-              <CheckedCircle checked={isSelected} defocused={defocused} />
-            )}
+            {checkPosition === 'right' && checkedCircle}
           </div>
         </div>
       </div>

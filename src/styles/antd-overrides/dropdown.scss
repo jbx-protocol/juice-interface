@@ -14,8 +14,9 @@
   @apply bg-l0;
   border: 1px solid;
   @apply stroke-tertiary;
-  @apply shadow-md;
+  @apply shadow-sm;
   @apply shadow-smoke-100 dark:shadow-slate-600;
+  @apply rounded-lg;
 }
 
 .ant-dropdown-menu-item {

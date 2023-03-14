@@ -22,6 +22,7 @@ export default function TrendingProjects({
               project={p}
               rank={i + 1}
               key={`${p.id}_${p.pv}`}
+              size="lg"
             />
           ))}
         </Grid>

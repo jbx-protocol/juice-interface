@@ -56,7 +56,11 @@ export default function Contact() {
   }
 
   const contactTypes = (
-    <Form.Item name="contactPlatform" initialValue="email" className="mb-0">
+    <Form.Item
+      name="contactPlatform"
+      initialValue="email"
+      className="mb-0 rounded-lg"
+    >
       <Select
         className="min-w-[9em] border-smoke-300 dark:border-slate-300"
         onSelect={handleSelect}

@@ -5,7 +5,10 @@ import {
   JB721DELAGATE_V1_1_PAY_METADATA,
   JB721DELAGATE_V1_PAY_METADATA,
 } from 'components/Project/PayProjectForm/hooks/PayProjectForm'
-import { JB721_DELEGATE_V1_1 } from 'constants/delegateVersions'
+import {
+  JB721_DELEGATE_V1,
+  JB721_DELEGATE_V1_1,
+} from 'constants/delegateVersions'
 import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
 import { juiceboxEmojiImageUri } from 'constants/images'
 import { WAD_DECIMALS } from 'constants/numbers'
@@ -15,6 +18,7 @@ import {
 } from 'constants/transactionDefaults'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
 import { defaultAbiCoder, parseEther } from 'ethers/lib/utils'
+import { DEFAULT_JB_721_DELEGATE_VERSION } from 'hooks/JB721Delegate/contracts/JBTiered721DelegateProjectDeployer'
 import { pinJson } from 'lib/api/ipfs'
 import { round } from 'lodash'
 import {
@@ -444,7 +448,7 @@ export function buildDeployTiered721DelegateData({
   ownerAddress: string
   governanceType: JB721GovernanceType
   contractAddresses: {
-    JBDirectoryAddress?: string // directory isn't used in v1.1
+    JBDirectoryAddress: string
     JBFundingCycleStoreAddress: string
     JBPricesAddress: string
     JBTiered721DelegateStoreAddress: string
@@ -458,8 +462,7 @@ export function buildDeployTiered721DelegateData({
     prices: JBPricesAddress,
   }
 
-  return {
-    directory: JBDirectoryAddress,
+  const baseArgs = {
     name: collectionName,
     symbol: collectionSymbol,
     fundingCycleStore: JBFundingCycleStoreAddress,
@@ -473,6 +476,16 @@ export function buildDeployTiered721DelegateData({
     flags,
     governanceType,
   }
+
+  // Only need to specify directory in V1
+  if (DEFAULT_JB_721_DELEGATE_VERSION === JB721_DELEGATE_V1) {
+    return {
+      ...baseArgs,
+      directory: JBDirectoryAddress,
+    }
+  }
+
+  return baseArgs
 }
 
 export const fileTypeIsVideo = (fileType: string | undefined) => {

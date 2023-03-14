@@ -86,7 +86,7 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
     {
       key: 2,
       label: <Referral />,
-      onClick: qwestiveEmbedUI?.openPopup,
+      onClick: () => qwestiveEmbedUI?.openPopup?.(),
     },
   ]
 
@@ -96,6 +96,7 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
       label: <Disconnect />,
       onClick: async () => {
         await disconnect()
+        qwestiveEmbedUI?.logout?.()
       },
     })
   }

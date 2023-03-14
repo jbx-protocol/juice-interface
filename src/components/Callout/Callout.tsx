@@ -33,7 +33,7 @@ export const Callout: React.FC<CalloutProps> & CalloutTypes = ({
   return (
     <div
       className={twMerge(
-        'flex items-start gap-4 p-4',
+        'flex items-start gap-4 rounded-lg p-4',
         collapsible ? 'cursor-pointer select-none' : undefined,
         className,
       )}

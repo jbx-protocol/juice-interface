@@ -1,7 +1,7 @@
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
 import { useContext, useMemo } from 'react'
 
-export function useProjectReservedTokensParamsV3_1({
+export function useProjectReservedTokensArgsV3_1({
   projectId,
 }: {
   projectId: number | undefined

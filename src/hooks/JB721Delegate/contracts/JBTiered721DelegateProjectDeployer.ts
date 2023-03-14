@@ -1,23 +1,20 @@
-import {
-  JB721_DELEGATE_V1,
-  JB721_DELEGATE_V1_1,
-} from 'constants/delegateVersions'
+import { JB721_DELEGATE_V1 } from 'constants/delegateVersions'
 import { readNetwork } from 'constants/networks'
-import { loadJB721DelegateJson } from 'hooks/JB721Delegate/contracts/JB721DelegateAbi'
+import {
+  JB721DelegatePackageVersion,
+  loadJB721DelegateJson,
+} from 'hooks/JB721Delegate/contracts/JB721DelegateAbi'
 import { ForgeDeploy } from 'models/contracts'
 import { JB721DelegateVersion } from 'models/nftRewards'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 
 export const DEFAULT_JB_721_DELEGATE_VERSION: JB721DelegateVersion =
-  JB721_DELEGATE_V1 // TODO eventually bump to 1.1
+  JB721_DELEGATE_V1
 
 async function loadDefaultJB721DelegateDeployment() {
-  const versionString =
-    DEFAULT_JB_721_DELEGATE_VERSION === JB721_DELEGATE_V1
-      ? 'v1'
-      : DEFAULT_JB_721_DELEGATE_VERSION === JB721_DELEGATE_V1_1
-      ? 'v1-1'
-      : undefined
+  const versionString = JB721DelegatePackageVersion(
+    DEFAULT_JB_721_DELEGATE_VERSION,
+  )
   if (!versionString) return
 
   return (await import(

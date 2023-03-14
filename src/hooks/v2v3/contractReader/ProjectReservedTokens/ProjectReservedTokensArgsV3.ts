@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
 import { useContext, useMemo } from 'react'
 
-export function useProjectReservedTokensParamsV3({
+export function useProjectReservedTokensArgsV3({
   projectId,
   reservedRate,
 }: {

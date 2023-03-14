@@ -15,6 +15,7 @@ import omit from 'lodash/omit'
 import {
   JB721DelegateVersion,
   JBDeployTiered721DelegateData,
+  JB_DEPLOY_TIERED_721_DELEGATE_DATA_V1_1,
 } from 'models/nftRewards'
 import { GroupedSplits, SplitGroup } from 'models/splits'
 import {
@@ -63,7 +64,9 @@ function buildArgs(
   }: {
     projectId: number
     JBControllerAddress: string
-    deployTiered721DelegateData: JBDeployTiered721DelegateData
+    deployTiered721DelegateData:
+      | JBDeployTiered721DelegateData
+      | JB_DEPLOY_TIERED_721_DELEGATE_DATA_V1_1
     reconfigureFundingCyclesData: JB721DelegateReconfigureFundingCycleData
   },
 ) {

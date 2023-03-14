@@ -21,6 +21,7 @@ import {
   JBDeployTiered721DelegateData,
   JBTiered721Flags,
   JB_721_TIER_PARAMS_V1_1,
+  JB_DEPLOY_TIERED_721_DELEGATE_DATA_V1_1,
 } from 'models/nftRewards'
 import { JBPayDataSourceFundingCycleMetadata } from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
@@ -68,7 +69,9 @@ function buildArgs(
   }: {
     owner: string
     JBControllerAddress: string
-    deployTiered721DelegateData: JBDeployTiered721DelegateData
+    deployTiered721DelegateData:
+      | JBDeployTiered721DelegateData
+      | JB_DEPLOY_TIERED_721_DELEGATE_DATA_V1_1
     launchProjectData: JB721DelegateLaunchProjectData
   },
 ) {

@@ -15,8 +15,8 @@ export function BrandUpdateBanner() {
 
   return (
     <div>
-      <div className="flex h-11 items-center justify-center bg-split-400">
-        <span className="text-grey-900">
+      <div className="flex h-9 items-center justify-center bg-split-400">
+        <span className="text-xs text-grey-900">
           <Trans>Juicebox has a fresh new look</Trans> &#128064;{' '}
           <ExternalLink
             href={twitterUrl}

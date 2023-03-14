@@ -16,8 +16,8 @@ import {
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
 import { useV2ProjectTitle } from '../../ProjectTitle'
-import { getAddToBalanceParamsV3 } from './AddToBalanceParamsV3'
-import { getAddToBalanceParamsV3_1 } from './AddToBalanceParamsV3_1'
+import { getAddToBalanceArgsV3 } from './AddToBalanceArgsV3'
+import { getAddToBalanceArgsV3_1 } from './AddToBalanceArgsV3_1'
 
 /**
  * Factory function for building the arguments for the `addToBalance` function, depending on the version of the JBETHPaymentTerminal contract.
@@ -32,10 +32,10 @@ function buildTxArgs({
   value: BigNumber
 }) {
   if (JBETHPaymentTerminalVersion === JB_ETH_PAYMENT_TERMINAL_V_3) {
-    return getAddToBalanceParamsV3({ projectId, value })
+    return getAddToBalanceArgsV3({ projectId, value })
   }
   if (JBETHPaymentTerminalVersion === JB_ETH_PAYMENT_TERMINAL_V_3_1) {
-    return getAddToBalanceParamsV3_1({ projectId, value })
+    return getAddToBalanceArgsV3_1({ projectId, value })
   }
 }
 

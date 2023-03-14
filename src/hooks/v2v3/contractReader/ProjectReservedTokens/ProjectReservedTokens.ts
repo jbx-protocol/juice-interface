@@ -7,8 +7,8 @@ import {
 } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/ProjectController'
 import { useContext, useMemo } from 'react'
 import useContractReader from '../V2ContractReader'
-import { useProjectReservedTokensParamsV3 } from './ProjectReservedTokensParamsV3'
-import { useProjectReservedTokensParamsV3_1 } from './ProjectReservedTokensParamsV3_1'
+import { useProjectReservedTokensArgsV3 } from './ProjectReservedTokensArgsV3'
+import { useProjectReservedTokensArgsV3_1 } from './ProjectReservedTokensArgsV3_1'
 
 export function useProjectReservedTokens({
   projectId,
@@ -19,11 +19,11 @@ export function useProjectReservedTokens({
 }) {
   const { versions } = useContext(V2V3ProjectContractsContext)
 
-  const JBControllerArgsV3_0 = useProjectReservedTokensParamsV3({
+  const JBControllerArgsV3_0 = useProjectReservedTokensArgsV3({
     projectId,
     reservedRate,
   })
-  const JBControllerArgsV3_1 = useProjectReservedTokensParamsV3_1({ projectId })
+  const JBControllerArgsV3_1 = useProjectReservedTokensArgsV3_1({ projectId })
 
   const args = useMemo(() => {
     if (

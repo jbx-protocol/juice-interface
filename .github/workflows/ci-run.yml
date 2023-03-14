@@ -92,25 +92,28 @@ jobs:
       - name: Compile
         run: 'yarn ts:compile'
 
-  ## Disabled for now
-  # build-db-types:
-  #   runs-on: ubuntu-22.04
-  #   steps:
-  #     - uses: actions/checkout@v3
+  build-db-types:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
 
-  #     - uses: supabase/setup-cli@v1
+      - uses: supabase/setup-cli@v1
+        with:
+          version: 1.38.7
 
-  #     - name: Start Supabase local development setup
-  #       run: supabase start
+      - name: Start Supabase local development setup
+        run: supabase start
 
-  #     - name: Verify generated types are up-to-date
-  #       run: |
-  #         supabase gen types typescript --local > src/types/database.types.ts
-  #         if [ "$(git diff --ignore-space-at-eol src/types/database.types.ts | wc -l)" -gt "0" ]; then
-  #           echo "Detected uncommitted changes after build. See status below:"
-  #           git diff
-  #           exit 1
-  #         fi
+      - name: Verify generated types are up-to-date
+        run: |
+          npm i -g prettier
+          supabase gen types typescript --local > src/types/database.types.ts
+          prettier --write src/types/database.types.ts
+          if [ "$(git diff --ignore-space-at-eol src/types/database.types.ts | wc -l)" -gt "0" ]; then
+            echo "Detected uncommitted changes after build. See status below:"
+            git diff
+            exit 1
+          fi
 
   # next-build:
   #   name: Build

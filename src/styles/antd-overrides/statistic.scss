@@ -1,5 +1,5 @@
 .ant-statistic-content {
-  font-family: 'DM Mono', monospace;
+  @apply font-body;
   @apply text-xl;
   @apply text-primary;
   @apply font-medium;

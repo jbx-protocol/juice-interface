@@ -99,7 +99,7 @@ export default function PayInputSubText({
   ])
 
   return (
-    <div className="mt-1 w-full text-xs text-grey-500 dark:text-grey-300">
+    <div className="mt-2 w-full text-xs text-grey-500 dark:text-grey-300">
       <span>
         <Trans>Receive {receiveText}</Trans>
       </span>

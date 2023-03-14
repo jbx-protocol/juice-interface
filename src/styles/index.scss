@@ -1,83 +1,11 @@
+/* Disable for now - this causes opinionated settings by tailwind (which we want eventually) - need to update all classes before we can do this */
+/* @tailwind base; */
+@import './fonts';
+@tailwind components;
+@tailwind utilities;
+@import './antd';
 @import './utilities';
-
-body {
-  margin: 0;
-  font-family: 'DM Mono', monospace;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  @apply text-grey-900;
-  @apply bg-smoke-25;
-}
-
-body.dark {
-  @apply bg-slate-800;
-  @apply text-slate-100;
-}
-
-div#__next {
-  height: 100%;
-}
-
-div,
-p,
-button,
-a,
-code {
-  font-family: 'DM Mono', monospace;
-}
-
-label {
-  @apply font-medium;
-  @apply text-secondary;
-}
-
-a {
-  @apply text-action-primary;
-  @apply font-medium;
-  transition: none;
-
-  &:hover {
-    @apply text-action-primary-hover;
-  }
-}
-
-input {
-  @apply bg-smoke-50 dark:bg-slate-600;
-  @apply text-primary;
-}
-
-b,
-strong {
-  @apply font-medium;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  @apply text-primary;
-}
-
-::selection {
-  @apply text-primary;
-  @apply bg-haze-200 dark:bg-haze-700;
-}
-
-html,
-p,
-span,
-li,
-button {
-  transition: background-color 100ms linear, background 100ms linear;
-}
-
-body,
-div {
-  transition: background-color, border 250ms linear;
-}
-
-@import 'antd-overrides/index.scss';
-@import 'web3-onboard-overrides/index.scss';
+@import './app';
+@import './antd-overrides/index.scss';
+@import './web3-onboard-overrides/index.scss';
 @import 'create/index.scss';

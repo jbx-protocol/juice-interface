@@ -107,7 +107,7 @@ export const FundingCyclesPage = () => {
               <Selection.Card
                 name="automated"
                 title={
-                  <>
+                  <div className="inline-flex items-center gap-3">
                     <Trans>Automated Funding Cycles</Trans>{' '}
                     <CreateBadge.Recommended
                       tooltip={
@@ -126,7 +126,7 @@ export const FundingCyclesPage = () => {
                         </span>
                       }
                     />
-                  </>
+                  </div>
                 }
                 description={t`Set a duration for automatically recurring funding cycles.`}
                 icon={<RedoOutlined />}
@@ -162,7 +162,7 @@ export const FundingCyclesPage = () => {
                   <div className="flex items-center gap-3">
                     <OptionalHeader header={t`Schedule launch`} />
                     {launchDate && (
-                      <CheckCircleFilled className="text-lg leading-none text-haze-400" />
+                      <CheckCircleFilled className="text-lg leading-none text-bluebs-500" />
                     )}
                   </div>
                 }

@@ -26,7 +26,7 @@ export default function RichButton({
   return (
     <div
       className={twMerge(
-        'flex cursor-pointer justify-between rounded-sm border border-solid border-smoke-300 bg-smoke-25 py-4 pl-4 transition-colors hover:border-haze-500 hover:bg-haze-50 dark:border-slate-300 dark:bg-slate-700 dark:hover:border-haze-500 dark:hover:bg-haze-900',
+        'flex cursor-pointer justify-between rounded-sm border border-solid border-smoke-300 bg-smoke-25 py-4 pl-4 transition-colors hover:border-bluebs-500 hover:bg-bluebs-50 dark:border-slate-300 dark:bg-slate-700 dark:hover:border-bluebs-500 dark:hover:bg-bluebs-900',
         className,
       )}
       {...props}

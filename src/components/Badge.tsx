@@ -20,7 +20,7 @@ export function Badge({
       case 'danger':
         return 'bg-error-200 text-error-800 dark:bg-error-800 dark:text-error-200 dark:border-error-200'
       case 'info':
-        return 'bg-haze-100 text-haze-500 dark:bg-haze-800 dark:text-haze-300 dark:border-haze-300'
+        return 'bg-bluebs-100 text-bluebs-500 dark:bg-bluebs-800 dark:text-bluebs-300 dark:border-bluebs-300'
       case 'tertiary':
         return 'bg-smoke-100 text-smoke-500 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-200'
     }

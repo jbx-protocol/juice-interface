@@ -19,17 +19,17 @@
 }
 
 .text-action-primary {
-  @apply text-haze-400 dark:text-haze-300;
+  @apply text-bluebs-500 dark:text-bluebs-300;
 }
 .text-action-primary-hover {
-  @apply text-haze-300 dark:text-haze-400;
+  @apply text-bluebs-300 dark:text-bluebs-500;
 }
 
 .text-over-action-primary {
-  @apply text-white dark:text-haze-900;
+  @apply text-white dark:text-bluebs-900;
 }
 .text-over-action-secondary {
-  @apply text-haze-400 dark:text-slate-100;
+  @apply text-bluebs-500 dark:text-slate-100;
 }
 
 .text-warning {
@@ -51,10 +51,10 @@
   @apply bg-smoke-200 dark:bg-slate-600;
 }
 .bg-action-primary {
-  @apply bg-haze-400 dark:bg-haze-400;
+  @apply bg-bluebs-500 dark:bg-bluebs-500;
 }
 .bg-action-highlight {
-  @apply bg-haze-500 dark:bg-haze-400;
+  @apply bg-bluebs-500 dark:bg-bluebs-500;
 }
 .bg-disabled {
   @apply bg-grey-300 dark:bg-slate-500;
@@ -71,26 +71,26 @@
   @apply border-grey-200 dark:border-slate-400;
 }
 .stroke-action-primary {
-  @apply border-haze-400 dark:border-haze-400;
+  @apply border-bluebs-500 dark:border-bluebs-500;
 }
 .stroke-action-secondary {
-  @apply border-haze-400 dark:border-haze-300;
+  @apply border-bluebs-500 dark:border-bluebs-300;
 }
 .stroke-action-highlight {
-  @apply border-haze-500 dark:border-haze-500;
+  @apply border-bluebs-500 dark:border-bluebs-500;
 }
 .stroke-disabled {
   @apply border-grey-400 dark:border-slate-200;
 }
 
 .shadow-action-secondary {
-  @apply shadow-haze-300 dark:shadow-haze-300;
+  @apply shadow-bluebs-300 dark:shadow-bluebs-300;
 }
 
 .input-focus {
-  box-shadow: 0 0 0 2px theme('colors.haze.50');
+  box-shadow: 0 0 0 2px theme('colors.bluebs.50');
 }
 
 .dark .input-focus {
-  box-shadow: 0 0 0 2px theme('colors.haze.800');
+  box-shadow: 0 0 0 2px theme('colors.bluebs.800');
 }

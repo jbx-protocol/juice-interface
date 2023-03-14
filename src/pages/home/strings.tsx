@@ -9,7 +9,7 @@ export const HeroSubheading = () => (
     anons.{' '}
     <a
       href="/p/juicebox"
-      className="text-black underline hover:text-haze-400 hover:underline dark:text-grey-100 dark:hover:text-haze-400"
+      className="text-black underline hover:text-bluebs-500 hover:underline dark:text-grey-100 dark:hover:text-bluebs-500"
       style={{
         // TODO: not supported in tailwind
         fontWeight: 'inherit',
@@ -37,7 +37,7 @@ export const TopProjectsSubheadingTwo = () => (
     Join{' '}
     <a
       href="/projects"
-      className="text-black hover:text-haze-400 hover:underline dark:text-grey-100 dark:hover:text-haze-400"
+      className="text-black hover:text-bluebs-500 hover:underline dark:text-grey-100 dark:hover:text-bluebs-500"
     >
       hundreds of projects
     </a>{' '}

@@ -17,10 +17,6 @@ const SCRIPT_SRC = [
   'https://*.juicebox.money',
 ]
 
-const STYLE_SRC = ['https://fonts.googleapis.com']
-
-const FONT_SRC = ['https://fonts.gstatic.com']
-
 const IMG_SRC = [
   'https://*.juicebox.money',
   'https://juicebox.money',
@@ -58,8 +54,8 @@ if (process.env.NODE_ENV === 'development') {
 const ContentSecurityPolicy = `
   default-src 'none';
   script-src 'self' ${SCRIPT_SRC.join(' ')} 'unsafe-inline' 'unsafe-eval';
-  style-src 'self' ${STYLE_SRC.join(' ')} 'unsafe-inline';
-  font-src 'self' ${FONT_SRC.join(' ')} data:;
+  style-src 'self' 'unsafe-inline';
+  font-src 'self' data:;
   img-src 'self' ${IMG_SRC.join(' ')}  data:;
   connect-src 'self' ${CONNECT_SRC.join(' ')};
   manifest-src 'self';

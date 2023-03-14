@@ -9,12 +9,12 @@
 
 .ant-picker-time-panel-column > li.ant-picker-time-panel-cell-selected .ant-picker-time-panel-cell-inner {
   @apply text-primary;
-  @apply bg-haze-100 dark:bg-haze-800;
+  @apply bg-bluebs-100 dark:bg-bluebs-800;
 }
 .ant-picker-time-panel-column > li.ant-picker-time-panel-cell .ant-picker-time-panel-cell-inner {
   @apply text-primary;
   &:hover {
-    @apply bg-haze-100 dark:bg-haze-800;
+    @apply bg-bluebs-100 dark:bg-bluebs-800;
   }
 }
 
@@ -37,7 +37,7 @@
 
 
 .ant-picker-cell:hover:not(.ant-picker-cell-selected):not(.ant-picker-cell-range-start):not(.ant-picker-cell-range-end):not(.ant-picker-cell-range-hover-start):not(.ant-picker-cell-range-hover-end) .ant-picker-cell-inner {
-  @apply bg-haze-50 dark:bg-haze-800;
+  @apply bg-bluebs-50 dark:bg-bluebs-800;
   @apply text-primary;
 }
 

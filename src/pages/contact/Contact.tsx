@@ -1,13 +1,13 @@
-import { Trans, t } from '@lingui/macro'
-import { Button, Form, Row, Col, Select } from 'antd'
+import { t, Trans } from '@lingui/macro'
+import { Button, Col, Form, Row, Select } from 'antd'
+import { JuiceSelect } from 'components/inputs/JuiceSelect'
+import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
+import { JuiceInput } from 'components/inputs/JuiceTextInput'
+import useMobile from 'hooks/Mobile'
+import { createContactMessage } from 'lib/api/discord'
 import Image from 'next/image'
 import { useState } from 'react'
 import apple from '/public/assets/apple-ol.webp'
-import useMobile from 'hooks/Mobile'
-import { createContactMessage } from 'lib/api/discord'
-import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
-import { JuiceInput } from 'components/inputs/JuiceTextInput'
-import { JuiceSelect } from 'components/inputs/JuiceSelect'
 
 export default function Contact() {
   const [contactPlaceholder, setContactPlaceholder] = useState<string>(
@@ -56,7 +56,11 @@ export default function Contact() {
   }
 
   const contactTypes = (
-    <Form.Item name="contactPlatform" initialValue="email" className="mb-0">
+    <Form.Item
+      name="contactPlatform"
+      initialValue="email"
+      className="mb-0 rounded-lg"
+    >
       <Select
         className="min-w-[9em] border-smoke-300 dark:border-slate-300"
         onSelect={handleSelect}
@@ -139,7 +143,7 @@ export default function Contact() {
 
             <p>
               {success && (
-                <span className="mt-4 text-haze-500">
+                <span className="mt-4 text-bluebs-500">
                   <Trans>Message sent!</Trans>
                 </span>
               )}

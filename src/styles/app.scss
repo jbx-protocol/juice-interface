@@ -1,0 +1,99 @@
+body {
+  margin: 0;
+  @apply font-body;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  @apply text-grey-900;
+  @apply bg-smoke-25;
+}
+
+body.dark {
+  @apply bg-slate-800;
+  @apply text-slate-100;
+}
+
+div#__next {
+  height: 100%;
+}
+
+div,
+p,
+button,
+a,
+code {
+  @apply font-body;
+}
+
+label {
+  @apply font-medium;
+  @apply text-secondary;
+}
+
+a {
+  @apply text-bluebs-500;
+  @apply font-medium;
+  transition: none;
+
+  &:hover {
+    @apply text-bluebs-600 dark:text-bluebs-400;
+  }
+}
+
+input {
+  @apply bg-smoke-50 dark:bg-slate-600;
+  @apply text-primary;
+}
+
+b,
+strong {
+  @apply font-medium;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply text-primary;
+}
+
+h1, h2 {
+  @apply font-display;
+  @apply font-bold;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  @apply font-heading;
+}
+
+h3 {
+  @apply text-2xl;
+}
+
+h4 {
+  @apply text-xl;
+}
+
+::selection {
+  @apply text-primary;
+  @apply bg-bluebs-200 dark:bg-bluebs-700;
+}
+
+html,
+p,
+span,
+li,
+button {
+  transition: background-color 100ms linear, background 100ms linear;
+}
+
+body,
+div {
+  transition: background-color, border 250ms linear;
+}
+
+

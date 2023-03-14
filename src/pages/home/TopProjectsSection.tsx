@@ -35,7 +35,7 @@ const SmallProjectCardMobile = ({
           : `/p/${project?.handle}`
       }
     >
-      <a className="flex w-full cursor-pointer items-center gap-2 overflow-hidden border border-solid border-smoke-300 py-2 px-4 text-center transition-colors hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100">
+      <a className="flex w-full cursor-pointer items-center gap-2 overflow-hidden rounded-lg border border-solid border-smoke-300 bg-white py-2 px-4 text-center transition-colors hover:border-smoke-500 dark:border-slate-300 dark:bg-slate-700 dark:hover:border-slate-100">
         <div className="flex justify-center">
           <ProjectLogo
             className="h-16 w-16"
@@ -76,7 +76,7 @@ const SmallProjectCard = ({ project }: { project: ProjectCardProject }) => {
       }
     >
       <a>
-        <div className="w-44 cursor-pointer overflow-hidden border border-solid border-smoke-300 p-4 text-center transition-colors hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100">
+        <div className="w-44 cursor-pointer overflow-hidden rounded-lg border border-solid border-smoke-300 bg-white p-4 text-center transition-colors hover:border-smoke-500 dark:border-slate-300  dark:bg-slate-700 dark:hover:border-slate-100">
           <div className="mb-2 flex justify-center">
             <ProjectLogo
               className="h-24 w-24"
@@ -161,7 +161,7 @@ export function TopProjectsSection() {
               </Link>
               <Link href="#how-it-works">
                 <a
-                  className="cursor-pointer text-sm text-grey-500 hover:underline dark:text-grey-300"
+                  className="cursor-pointer text-sm font-normal text-grey-500 hover:underline dark:text-grey-300"
                   role="button"
                   onClick={() => {
                     document

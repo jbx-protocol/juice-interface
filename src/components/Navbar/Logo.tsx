@@ -4,8 +4,8 @@ import Image from 'next/image'
 import { useContext, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-const DARK_JUICE_LOGO = '/assets/juice_logo-od.png'
-const LIGHT_JUICE_LOGO = '/assets/juice_logo-ol.png'
+const DARK_JUICE_LOGO = '/assets/juice-logo-full_white.png'
+const LIGHT_JUICE_LOGO = '/assets/juice-logo-full_black.png'
 
 export default function Logo({
   className,
@@ -32,7 +32,7 @@ export default function Logo({
   if (!imgSrc) return null
 
   return (
-    <div className={twMerge('relative h-9 w-7 md:h-10 md:w-8', className)}>
+    <div className={twMerge('relative h-9 w-36 md:h-10 md:w-36', className)}>
       <Image
         layout="fill"
         objectFit="contain"

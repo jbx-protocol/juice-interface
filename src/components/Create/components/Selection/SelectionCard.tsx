@@ -10,7 +10,7 @@ const Container: React.FC<{
   isDisabled: boolean
 }> = ({ isDefocused, isSelected, isDisabled, children }) => {
   const borderColorClassNames = useMemo(() => {
-    if (isSelected) return 'border-haze-500'
+    if (isSelected) return 'border-bluebs-500'
     return classNames(
       !isDisabled ? 'hover:border-smoke-500 dark:hover:border-slate-100' : '',
       isDefocused
@@ -27,7 +27,7 @@ const Container: React.FC<{
   return (
     <div
       className={classNames(
-        'rounded-sm border border-solid transition-colors',
+        'rounded-lg border border-solid transition-colors',
         borderColorClassNames,
         backgroundColorClassNames,
       )}
@@ -80,6 +80,12 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
     if (defocused) return 'text-grey-400 dark:text-slate-400'
   }, [defocused])
 
+  const checkedCircle = (
+    <div className="flex h-10 items-center">
+      <CheckedCircle checked={isSelected} defocused={defocused} />
+    </div>
+  )
+
   return (
     <Container
       isSelected={isSelected}
@@ -95,19 +101,17 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
         onClick={onClick}
       >
         <div className="px-4">
-          <div className="flex gap-4">
-            {checkPosition === 'left' && (
-              <CheckedCircle checked={isSelected} defocused={defocused} />
-            )}
+          <div className="flex items-start gap-4">
+            {checkPosition === 'left' && checkedCircle}
             <div>
               {icon && (
                 <RadialBackgroundIcon isDefocused={defocused} icon={icon} />
               )}
             </div>
-            <div className="flex flex-1 flex-col gap-1">
+            <div className="mt-2 flex flex-1 flex-col gap-1">
               <div
                 className={classNames(
-                  'm-0 mt-1 text-lg font-medium',
+                  'm-0 text-lg font-medium',
                   titleColorClassNames,
                 )}
               >
@@ -115,9 +119,7 @@ export const SelectionCard: React.FC<SelectionCardProps> = ({
               </div>
               {isSelected && description && <div>{description}</div>}
             </div>
-            {checkPosition === 'right' && (
-              <CheckedCircle checked={isSelected} defocused={defocused} />
-            )}
+            {checkPosition === 'right' && checkedCircle}
           </div>
         </div>
       </div>

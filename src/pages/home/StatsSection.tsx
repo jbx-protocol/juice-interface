@@ -14,10 +14,10 @@ const Stat = ({
 }) => {
   return (
     <div className="my-0 mx-auto flex w-full max-w-[200px] flex-col gap-2 text-center">
-      <div className="text-4xl font-semibold text-juice-400 dark:text-juice-300 md:text-5xl">
+      <div className="text-4xl font-medium text-juice-400 dark:text-juice-300 md:text-6xl">
         {loading ? '-' : value}
       </div>
-      <div className="text-base">{label}</div>
+      <div className="text-base font-medium">{label}</div>
     </div>
   )
 }

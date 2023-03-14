@@ -78,7 +78,7 @@ export function NftTierCard({
     <>
       <div
         className={classNames(
-          'flex h-full w-full cursor-pointer select-none flex-col rounded-sm shadow-smoke-300 outline-2 outline-haze-400 transition-shadow duration-100 hover:shadow-md dark:shadow-grey-900',
+          'flex h-full w-full cursor-pointer select-none flex-col rounded-lg shadow-smoke-300 outline-2 outline-bluebs-500 transition-shadow duration-100 hover:shadow-md dark:shadow-grey-900',
           _isSelected ? 'shadow-md outline' : '',
         )}
         onClick={
@@ -91,7 +91,7 @@ export function NftTierCard({
         {/* Image/video container */}
         <div
           className={classNames(
-            `relative flex w-full items-center justify-center ${NFT_DISPLAY_HEIGHT_CLASS}`,
+            `relative flex w-full items-center justify-center rounded-lg ${NFT_DISPLAY_HEIGHT_CLASS}`,
             _isSelected
               ? 'bg-smoke-25 dark:bg-slate-800'
               : 'bg-smoke-100 dark:bg-slate-600',
@@ -101,7 +101,7 @@ export function NftTierCard({
             <JuiceVideoThumbnailOrImage
               src={fileUrl}
               alt={rewardTier?.name ?? 'Juicebox NFT reward'}
-              className="absolute w-full"
+              className="absolute w-full rounded-t-lg"
               heightClass={NFT_DISPLAY_HEIGHT_CLASS}
             />
           ) : null}
@@ -124,7 +124,7 @@ export function NftTierCard({
         {/* Details section below image */}
         <div
           className={classNames(
-            'flex h-full w-full flex-col justify-center px-3 pb-1.5',
+            'flex h-full w-full flex-col justify-center rounded-b-lg px-3 pb-1.5',
             _isSelected
               ? 'bg-smoke-25 dark:bg-slate-800'
               : 'bg-smoke-100 dark:bg-slate-600',

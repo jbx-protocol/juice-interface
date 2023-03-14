@@ -4,21 +4,16 @@ import { Button, Col, Divider, Row } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import useMobile from 'hooks/Mobile'
 import Image from 'next/image'
+import Link from 'next/link'
 import { helpPagePath } from 'utils/routes'
 import { SectionHeading } from './SectionHeading'
-
-const SmallHeader = ({ text }: { text: string }) => {
-  return (
-    <h3 className="m-0 font-medium text-black dark:text-slate-100">{text}</h3>
-  )
-}
 
 const FourthCol = ({
   header,
   children,
 }: React.PropsWithChildren<{ header: string }>) => (
   <div>
-    <SmallHeader text={header} />
+    <h4 className="m-0 text-black dark:text-slate-100">{header}</h4>
     <p className="mb-0 mt-1">{children}</p>
   </div>
 )
@@ -80,16 +75,13 @@ export function HowItWorksSection() {
                 </Trans>
               </FourthCol>
 
-              <div>
-                <Button
-                  size="large"
-                  type="primary"
-                  href="/create"
-                  block={isMobile}
-                >
-                  <Trans>Build your project</Trans>
-                </Button>
-              </div>
+              <Link href="/create">
+                <a>
+                  <Button size="large" type="primary" block={isMobile}>
+                    <Trans>Build your project</Trans>
+                  </Button>
+                </a>
+              </Link>
 
               <Divider className="mx-0 my-auto w-12 min-w-[unset]" />
 

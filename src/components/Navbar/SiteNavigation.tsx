@@ -37,7 +37,7 @@ export default function SiteNavigation() {
 
   return (
     // top-nav is antd override
-    <nav className="top-nav z-[1] flex h-16 items-center justify-between bg-smoke-25 py-2 px-12 leading-[64px] dark:bg-slate-800">
+    <nav className="top-nav z-[1] flex h-16 items-center justify-between bg-smoke-25 px-12 py-11 leading-[64px] dark:bg-slate-800">
       <Menu className="flex flex-row" items={menuItems} mode="inline" />
 
       <div className="flex items-center gap-6">

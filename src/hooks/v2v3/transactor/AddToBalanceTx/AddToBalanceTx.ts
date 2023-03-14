@@ -54,7 +54,7 @@ export function useAddToBalanceTx(): TransactorInstance<{
       invariant(projectId && contracts?.JBETHPaymentTerminal)
 
       const txArgs = buildTxArgs({
-        JBETHPaymentTerminalVersion: versions.JBETHPaymentTerminal,
+        JBETHPaymentTerminalVersion: versions.JBETHPaymentTerminalVersion,
         projectId,
         value,
       })

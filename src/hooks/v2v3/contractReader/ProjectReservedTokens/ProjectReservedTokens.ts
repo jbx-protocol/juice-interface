@@ -27,18 +27,18 @@ export function useProjectReservedTokens({
 
   const args = useMemo(() => {
     if (
-      versions.JBController === JB_CONTROLLER_V_3 ||
-      versions.JBController === JB_CONTROLLER_V_3_0_1
+      versions.JBControllerVersion === JB_CONTROLLER_V_3 ||
+      versions.JBControllerVersion === JB_CONTROLLER_V_3_0_1
     ) {
       return JBControllerArgsV3_0
     }
 
-    if (versions.JBController === JB_CONTROLLER_V_3_1) {
+    if (versions.JBControllerVersion === JB_CONTROLLER_V_3_1) {
       return JBControllerArgsV3_1
     }
 
     return { contract: undefined, functionName: undefined, args: undefined }
-  }, [JBControllerArgsV3_0, JBControllerArgsV3_1, versions.JBController])
+  }, [JBControllerArgsV3_0, JBControllerArgsV3_1, versions.JBControllerVersion])
 
   return useContractReader<BigNumber>(args)
 }

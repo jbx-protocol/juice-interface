@@ -4,5 +4,5 @@ import { useContext } from 'react'
 export function useDefaultJBController() {
   const { contracts } = useContext(V2V3ContractsContext)
 
-  return contracts?.JBController3_1
+  return contracts?.JBController
 }

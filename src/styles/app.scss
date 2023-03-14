@@ -35,7 +35,7 @@ a {
   transition: none;
 
   &:hover {
-    @apply text-bluebs-400;
+    @apply text-bluebs-600 dark:text-bluebs-400;
   }
 }
 

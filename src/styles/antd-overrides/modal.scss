@@ -5,6 +5,7 @@
 .ant-modal-content {
   @apply text-primary;
   @apply bg-l0;
+  @apply rounded-lg;
 
   .ant-modal-header {
     background: transparent;

@@ -170,7 +170,8 @@ export default function QuickProjectSearch() {
       />
       <Modal
         closable={false}
-        className="top-16 rounded-lg"
+        className="top-16"
+        wrapClassName="rounded-lg"
         open={modal.visible}
         onCancel={reset}
         okButtonProps={{ hidden: true }}
@@ -180,7 +181,7 @@ export default function QuickProjectSearch() {
         bodyStyle={{ padding: 0 }}
       >
         <div className="rounded-lg dark:bg-slate-700">
-          <div className="flex items-center gap-5 px-5 pb-2 pt-8">
+          <div className="flex items-center gap-5 rounded-lg px-5 pb-2 pt-8">
             <Input
               prefix={
                 <SearchOutlined className="mt-1 mr-2 text-2xl leading-none" />

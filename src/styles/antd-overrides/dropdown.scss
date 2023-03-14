@@ -21,4 +21,10 @@
 
 .ant-dropdown-menu-item {
   padding: 10px 15px;
+  &:first-child {
+    @apply rounded-t-lg;
+  }
+  &:last-child {
+    @apply rounded-b-lg;
+  }
 }

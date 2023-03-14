@@ -9,7 +9,7 @@ import { JB721DelegateVersion } from 'models/nftRewards'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 
 export const DEFAULT_JB_721_DELEGATE_VERSION: JB721DelegateVersion =
-  JB721_DELEGATE_V1 // TODO eventually bump to 1.1
+  JB721_DELEGATE_V1
 
 async function loadDefaultJB721DelegateDeployment() {
   const versionString =

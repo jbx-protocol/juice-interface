@@ -10,14 +10,14 @@ import { isValidMustStartAtOrAfter } from 'utils/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../ProjectTitle'
 import { LaunchProjectData } from './LaunchProjectTx'
 
-export type ReconfigureTxArgs = Omit<
+export type ReconfigureFundingCycleTxParams = Omit<
   LaunchProjectData,
   'projectMetadataCID'
 > & {
   memo?: string
 }
 
-export function useReconfigureV2V3FundingCycleTx(): TransactorInstance<ReconfigureTxArgs> {
+export function useReconfigureV2V3FundingCycleTx(): TransactorInstance<ReconfigureFundingCycleTxParams> {
   const { transactor } = useContext(TransactionContext)
   const { contracts } = useContext(V2V3ProjectContractsContext)
   const { projectId } = useContext(ProjectMetadataContext)

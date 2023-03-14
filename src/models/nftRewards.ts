@@ -132,3 +132,8 @@ export interface JBDeployTiered721DelegateData {
   flags: JBTiered721Flags
   governanceType: JB721GovernanceType
 }
+
+export type JB_DEPLOY_TIERED_721_DELEGATE_DATA_V1_1 = Omit<
+  JBDeployTiered721DelegateData,
+  'directory'
+>

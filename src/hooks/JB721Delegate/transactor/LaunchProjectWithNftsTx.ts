@@ -164,6 +164,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
       ownerAddress: _owner,
       governanceType,
       contractAddresses: {
+        JBDirectoryAddress: getAddress(contracts.JBDirectory.address),
         JBFundingCycleStoreAddress: getAddress(
           contracts.JBFundingCycleStore.address,
         ),

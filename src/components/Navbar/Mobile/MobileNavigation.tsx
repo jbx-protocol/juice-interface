@@ -15,9 +15,9 @@ export default function MobileNavigation() {
   const { isConnected, disconnect } = useWallet()
 
   return (
-    <div className="fixed z-10">
+    <div className="fixed z-10 w-full">
       <BrandUpdateBanner />
-      <Menu className="bg-l0 w-full p-4" as="nav">
+      <Menu className="bg-l0 p-4" as="nav">
         <div className="flex items-center justify-between">
           <LogoHomeButton />
           <HamburgerMenuButton />

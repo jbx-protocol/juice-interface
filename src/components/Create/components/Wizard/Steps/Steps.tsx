@@ -1,15 +1,11 @@
 import { Progress, Steps as AntSteps } from 'antd'
-import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import useMobile from 'hooks/Mobile'
 import { useModal } from 'hooks/Modal'
-import { useCallback, useContext } from 'react'
+import { useCallback } from 'react'
 import { useSteps } from '../hooks/Steps'
 import { MobileProgressModal } from './MobileProgressModal'
 
 export const Steps = () => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const isMobile = useMobile()
   const { steps, current, furthestStepReached, onStepClicked } = useSteps()
   const progressModal = useModal()
@@ -49,7 +45,7 @@ export const Steps = () => {
           onClick={progressModal.open}
         >
           <Progress
-            strokeColor={colors.background.action.primary}
+            strokeColor={'#5777EB'} // bluebs-500
             width={80}
             format={() => (
               <div className="text-black dark:text-grey-200">

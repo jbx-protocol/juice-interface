@@ -38,8 +38,8 @@ export default function FormattedAddress({
   return (
     <Tooltip
       title={
-        <span className="text-sm">
-          {title ? <div className="text-xs font-medium">{title}</div> : null}
+        <span>
+          {title ? <div>{title}</div> : null}
           {address} <CopyTextButton value={address} />
         </span>
       }

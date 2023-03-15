@@ -13,6 +13,7 @@ const {
   FALLEN_DAO,
   WEB3_COOL_KIDS,
   SCHIZO_DAO,
+  PROJECT_445,
 } = V2V3_PROJECT_IDS
 
 const V2ArchivedProjectIdsByNetwork: Partial<Record<NetworkName, number[]>> = {
@@ -26,6 +27,7 @@ const V2ArchivedProjectIdsByNetwork: Partial<Record<NetworkName, number[]>> = {
     FALLEN_DAO,
     WEB3_COOL_KIDS,
     SCHIZO_DAO,
+    PROJECT_445,
   ],
   [NetworkName.goerli]: [],
 }

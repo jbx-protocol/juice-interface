@@ -28,7 +28,7 @@ export function BrandUpdateBanner({ className }: { className?: string }) {
             href={twitterUrl}
             className="font-normal text-black underline"
           >
-            Let us know what you think
+            <Trans>Let us know what you think</Trans>
           </ExternalLink>
           .
         </span>

@@ -144,7 +144,7 @@ export const ProjectDetailsPage: React.FC = () => {
                 <Form.Item
                   name="payButtonText"
                   label={<Trans>Pay button text</Trans>}
-                  tooltip={t`The text on the button supporters have to click to pay your project`}
+                  tooltip={t`The text on the button supporters will click to pay your project`}
                   extra={t`Use a simple term like 'Pay' or 'Donate'.`}
                 >
                   <JuiceInput placeholder={t`Pay`} />

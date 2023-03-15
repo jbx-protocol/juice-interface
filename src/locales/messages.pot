@@ -350,9 +350,6 @@ msgstr ""
 msgid "Advanced options"
 msgstr ""
 
-msgid "After reviewing your project, click the button below to deploy it to {0}."
-msgstr ""
-
 msgid "After {0} (your first cycle), your project will not issue any tokens unless you edit the issuance rate."
 msgstr ""
 
@@ -899,7 +896,7 @@ msgstr ""
 msgid "Cycle"
 msgstr ""
 
-msgid "Cycle #1 starts when you create your project. With locked cycles, if you attempt to edit your project's rules during Cycle #1, those edits will be <0>queued</0> for the next cycle."
+msgid "Cycle #1 starts when you create your project. With locked cycles, if you edit your project's rules during Cycle #1, those edits will be <0>queued</0> for the next cycle."
 msgstr ""
 
 msgid "Cycle #1 starts when you create your project. With unlocked cycles, you can edit your project's rules at any time. This gives you more flexibility, but may appear risky to supporters. Switching to locked cycles will help you build supporter confidence."
@@ -1556,7 +1553,7 @@ msgstr ""
 msgid "Immediately"
 msgstr ""
 
-msgid "In other words: instead of going into effect immediately, those edits will go into effect when the next cycle starts (Cycle #2). If you need more flexibility, switch to unlocked cycles."
+msgid "In other words: instead of taking effect immediately, those edits will take effect when the next cycle starts (Cycle #2). If you need more flexibility, switch to unlocked cycles."
 msgstr ""
 
 msgid "Included in search results on the <0>Projects</0> page."
@@ -1587,9 +1584,6 @@ msgid "Is not a valid number"
 msgstr ""
 
 msgid "Is not greater than zero"
-msgstr ""
-
-msgid "Issuance rate"
 msgstr ""
 
 msgid "Issuance reduction rate"
@@ -2690,10 +2684,13 @@ msgstr ""
 msgid "Review reconfiguration"
 msgstr ""
 
+msgid "Review your project and deploy it to {0}."
+msgstr ""
+
 msgid "Reward supporters with NFTs when they pay your project."
 msgstr ""
 
-msgid "Reward your supporters with one or more custom NFT tiers."
+msgid "Reward your supporters with custom NFTs."
 msgstr ""
 
 msgid "Rules"
@@ -2951,7 +2948,7 @@ msgstr ""
 msgid "Show a disclosure, a message, or a warning to supporters before they pay your project"
 msgstr ""
 
-msgid "Show your supporters a pop-up with a message and a link after they pay for an NFT. You can use this to direct supporters to your project's website, a Discord server, or somewhere else."
+msgid "Show your supporters a pop-up with a message and a link after they receive an NFT. You can use this to direct supporters to your project's website, a Discord server, or somewhere else."
 msgstr ""
 
 msgid "Simple token rules that will work for most projects. You can edit these rules in future cycles."
@@ -3116,7 +3113,7 @@ msgstr ""
 msgid "The maximum supply of this NFT in circulation."
 msgstr ""
 
-msgid "The message that will be shown to the supporter after they pay for an NFT."
+msgid "The message that will be shown to supporters after they receive an NFT."
 msgstr ""
 
 msgid "The number of tokens sent to someone who pays this project 1 ETH."
@@ -3164,7 +3161,7 @@ msgstr ""
 msgid "The text on the button at the bottom of the pop-up. You can preview this below."
 msgstr ""
 
-msgid "The text on the button supporters have to click to pay your project"
+msgid "The text on the button supporters will click to pay your project"
 msgstr ""
 
 msgid "The total amount of payouts each cycle."
@@ -3731,7 +3728,7 @@ msgstr ""
 msgid "When enabled, {tokenSymbol} ERC-20 tokens are minted. When disabled, unclaimed {tokenSymbol} tokens will be minted, which the receiver can claim later as ERC-20."
 msgstr ""
 
-msgid "When people pay your project, they receive its tokens — tokens can be used for governance or community access, and token holders can redeem their tokens to reclaim some ETH from your project. You can also reserve some tokens for recipients of your choosing."
+msgid "When people pay your project, they receive its tokens. Project tokens can be used for governance or community access, and token holders can redeem their tokens to reclaim some ETH from your project. You can also reserve some tokens for recipients of your choosing."
 msgstr ""
 
 msgid "When someone pays your project 1 ETH:"

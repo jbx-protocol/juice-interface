@@ -100,8 +100,8 @@ export function Create() {
             title={t`Token`}
             description={
               <Trans>
-                When people pay your project, they receive its tokens — tokens
-                can be used for governance or community access, and token
+                When people pay your project, they receive its tokens. Project
+                tokens can be used for governance or community access, and token
                 holders can redeem their tokens to reclaim some ETH from your
                 project. You can also reserve some tokens for recipients of your
                 choosing.
@@ -121,9 +121,7 @@ export function Create() {
               </div>
             }
             description={
-              <Trans>
-                Reward your supporters with one or more custom NFT tiers.
-              </Trans>
+              <Trans>Reward your supporters with custom NFTs.</Trans>
             }
           >
             <NftRewardsPage />
@@ -141,8 +139,8 @@ export function Create() {
             title={t`Review & Deploy`}
             description={
               <Trans>
-                After reviewing your project, click the button below to deploy
-                it to {readNetwork.name ?? NetworkName.mainnet}.
+                Review your project and deploy it to{' '}
+                {readNetwork.name ?? NetworkName.mainnet}.
               </Trans>
             }
           >

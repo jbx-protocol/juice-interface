@@ -26,7 +26,7 @@ export const ProjectTokenReview = () => {
   return (
     <div className="flex flex-col gap-y-10 pt-5 pb-12 md:grid md:grid-cols-4">
       <ReviewDescription
-        title={t`Issuance rate`}
+        title={t`Total issuance rate`}
         desc={
           <div className="text-base font-medium">
             {formatAmount(

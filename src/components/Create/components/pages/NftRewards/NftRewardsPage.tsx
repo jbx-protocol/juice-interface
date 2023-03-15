@@ -201,7 +201,7 @@ export const NftRewardsPage = () => {
                     <p>
                       <Trans>
                         Show your supporters a pop-up with a message and a link
-                        after they pay for an NFT. You can use this to direct
+                        after they receive an NFT. You can use this to direct
                         supporters to your project's website, a Discord server,
                         or somewhere else.
                       </Trans>
@@ -213,8 +213,8 @@ export const NftRewardsPage = () => {
                           label={t`Message`}
                           tip={
                             <Trans>
-                              The message that will be shown to the supporter
-                              after they pay for an NFT.
+                              The message that will be shown to supporters after
+                              they receive an NFT.
                             </Trans>
                           }
                         />

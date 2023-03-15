@@ -39,13 +39,13 @@ const FundingCycleCallout: React.FC = () => {
           <Space direction="vertical" size="middle">
             <Trans>
               Cycle #1 starts when you create your project. With locked cycles,
-              if you attempt to edit your project's rules during Cycle #1, those
-              edits will be <em>queued</em> for the next cycle.
+              if you edit your project's rules during Cycle #1, those edits will
+              be <em>queued</em> for the next cycle.
             </Trans>
             <Trans>
-              In other words: instead of going into effect immediately, those
-              edits will go into effect when the next cycle starts (Cycle #2).
-              If you need more flexibility, switch to unlocked cycles.
+              In other words: instead of taking effect immediately, those edits
+              will take effect when the next cycle starts (Cycle #2). If you
+              need more flexibility, switch to unlocked cycles.
             </Trans>
           </Space>
         </Callout.Warning>

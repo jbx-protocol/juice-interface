@@ -74,7 +74,7 @@ export default function TrendingProjectCard({
 
   const projectLogo = (
     <ProjectLogo
-      className={size === 'sm' ? 'h-20 w-20' : 'h-28 w-28'}
+      className={size === 'sm' ? 'h-20 w-20' : 'h-20 w-20 md:h-28 md:w-28'}
       uri={metadata?.logoUri}
       name={metadata?.name}
       projectId={project.projectId}

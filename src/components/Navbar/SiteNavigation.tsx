@@ -40,7 +40,7 @@ export default function SiteNavigation() {
     <>
       <BrandUpdateBanner />
       {/* top-nav is antd override */}
-      <nav className="top-nav z-[1] flex h-16 items-center justify-between bg-smoke-25 px-12 py-11 leading-[64px] dark:bg-slate-800">
+      <nav className="top-nav z-[1] flex h-16 items-center justify-between bg-smoke-25 py-11 leading-[64px] dark:bg-slate-800 md:px-4 xl:px-12">
         <Menu className="flex flex-row" items={menuItems} mode="inline" />
 
         <div className="flex items-center gap-6">
@@ -52,7 +52,7 @@ export default function SiteNavigation() {
 
           <WalletButton />
 
-          <QuickProjectSearch />
+          <QuickProjectSearch className="md:hidden xl:inline" />
         </div>
       </nav>
     </>

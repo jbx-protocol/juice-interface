@@ -33,7 +33,11 @@ const INPUT_ID = 'quickProjectSearch'
 const MAX_RESULTS = 8
 const DEBOUNCE_MILLIS = 250
 
-export default function QuickProjectSearch() {
+export default function QuickProjectSearch({
+  className,
+}: {
+  className?: string
+}) {
   const [inputText, setInputText] = useState<string>()
   const [searchText, setSearchText] = useState<string>()
   const [highlightIndex, setHighlightIndex] = useState<number>()
@@ -162,7 +166,10 @@ export default function QuickProjectSearch() {
   return (
     <>
       <SearchOutlined
-        className="mt-1 text-2xl leading-none transition-colors hover:text-bluebs-500"
+        className={twMerge(
+          'mt-1 text-2xl leading-none transition-colors hover:text-bluebs-500',
+          className,
+        )}
         onClick={() => {
           modal.open()
           trackFathomGoal(TOP_NAV.SEARCH_CTA)

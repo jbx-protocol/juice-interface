@@ -1,12 +1,15 @@
 import { CloseOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { disableFeatureFlag, featureFlagEnabled } from 'utils/featureFlags'
 
 export function BrandUpdateBanner({ className }: { className?: string }) {
-  const [visible, setVisible] = useState<boolean>(true)
-
+  const [visible, setVisible] = useState<boolean>(
+    featureFlagEnabled(FEATURE_FLAGS.BRAND_REFRESH_BANNER),
+  )
   const twitterMessage = `@juiceboxETH https://juicebox.money`
   const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
     twitterMessage,
@@ -35,7 +38,10 @@ export function BrandUpdateBanner({ className }: { className?: string }) {
         </span>
         <CloseOutlined
           className="justify-self-end text-black md:absolute md:right-5"
-          onClick={() => setVisible(false)}
+          onClick={() => {
+            disableFeatureFlag(FEATURE_FLAGS.BRAND_REFRESH_BANNER)
+            setVisible(false)
+          }}
         />
       </div>
     </div>
